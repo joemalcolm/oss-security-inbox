@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5064" "Tuesday" "27" "November" "2018" "16:11:36" "-0500" "=?UTF-8?B?UmFmYWVsIE1lbmRvbsOnYSBGcmFuw6dh?=" "rafaelmfranca@gmail.com" "<CAC9YFzeEZodrN9UoKYQhTG1_rPfa2B7CYxQEVnXmzRigDmzd8Q@mail.gmail.com>" "184" "[oss-security] [CVE-2018-16477] Bypass vulnerability in Active Storage" nil nil nil "11" "2018112721:11:36" "[oss-security] [CVE-2018-16477] Bypass vulnerability in Active Storage" (number mark "U       rafaelmfranc Nov 27  184/5064  " thread-indent "\"[oss-security] [CVE-2018-16477] Bypass vulnerability in Active Storage\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2410" "Wednesday" "22" "May" "2019" "09:23:51" "+0200" "Daniel Stenberg" "daniel@haxx.se" nil "85" nil "^Date:" nil nil "5" nil nil (number mark "        daniel@haxx. May 22   85/2410  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: Integer overflows in curl_url_set\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: Integer overflows in curl_url_set" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7760 invoked by uid 550); 27 Nov 2018 21:13:49 -0000
+Received: (qmail 5245 invoked by uid 550); 22 May 2019 07:24:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,224 +11,105 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1490 invoked from network); 27 Nov 2018 21:12:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=bVY3RsmoWnjduoQR/ytDChUWbEiKkTlHFMjooURU+co=;
-        b=UNtVlwdWdr4+3eQ1XD+QS6zBNMx8zTdXy0FTjFe69A+Owi/3MPPJgHXF+XjBmjkrQw
-         M5nfBOX/ukOyPqWgLTEMmX4Kbyx92XW+njS8/CuUJhZhMnyGK/trAnCfvHrmYb0PLdFk
-         uhFyWROwbzvHE8N4foQnq7P6fK5zst8JVp+uun8X7kePcZiAfPVd6kxK1diixzODCizR
-         3Qtr5W4SS87RtH3ny2b1GwzAalFUg6wOwyLek2JhWne1XvAFmuvBQanSImuN8wx6F0Eu
-         O9ebBmIy49pCuYW6WtrW6G2qBJe/Trx2peOEMlwxFCPrSnrCGrHpi2HmpSHmd9gVL5TU
-         TIZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=bVY3RsmoWnjduoQR/ytDChUWbEiKkTlHFMjooURU+co=;
-        b=rmjfliNnUOchHcSq26VPTzHLb3D+M5GK4hL2clytEsuaVfpLkIvoPrgmWt1FMdqDoT
-         3ESHeum/pgoFJ0LBOblsr8AXJ91J0CP/4gUc4sqWZhNqpLAw1rP6A7sEgzwe81pQbWYI
-         eoqgCt7RQbbHHMfwaGdzO2vhKbUH7aSi7ruifv8bNYgso+pd0UAsgLdj9U/E3VKH0guy
-         8aKbptd7p2POgOa9iBFZ+nYnQtj9MYO+LWNwIpRHlD/AUidgmSMsWQq6sigD5dmkjnGV
-         JwSg81OLu9DSMfS75bMRUYyFcfMlTj7ZckD2IBgNYuk71L9LXOszWV5aTzUTo7Z6H0GC
-         pVZw==
-X-Gm-Message-State: AA+aEWZJ5HMeKaU0T2EDiHNZb261qBWFulVt3E9cflGPtsmzvgiua4xN
-	PWCgs5IEPWUggl/d9MRIdcSEZgr3DT4b2XxhlSg=
-X-Google-Smtp-Source: AFSGD/UNkFMTgq1FPKu53vQTrzJL6YyF5xKqmKEVay7id9gIjXIWqVMIAHkaxi7juP6cl0LHe4v0ehMJ3dpzr1VNCCo=
-X-Received: by 2002:ae9:ef14:: with SMTP id d20mr31685892qkg.147.1543353132488;
- Tue, 27 Nov 2018 13:12:12 -0800 (PST)
+Received: (qmail 5227 invoked from network); 22 May 2019 07:24:04 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+X-X-Sender: dast@giant.haxx.se
+Message-ID: <alpine.DEB.2.20.1905201533020.21193@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-From: =?UTF-8?B?UmFmYWVsIE1lbmRvbsOnYSBGcmFuw6dh?= <rafaelmfranca@gmail.com>
-Date: Tue, 27 Nov 2018 16:11:36 -0500
-Message-ID: <CAC9YFzeEZodrN9UoKYQhTG1_rPfa2B7CYxQEVnXmzRigDmzd8Q@mail.gmail.com>
-To: Rubyonrails-Security <rubyonrails-security@googlegroups.com>, 
-	Ruby-Security-Ann <ruby-security-ann@googlegroups.com>, 
-	Oss-Security <oss-security@lists.openwall.com>
-Content-Type: multipart/alternative; boundary="00000000000039a422057babe7ef"
-Subject: [oss-security] [CVE-2018-16477] Bypass vulnerability in Active Storage
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Date: Wed, 22 May 2019 09:23:51 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [SECURITY ADVISORY] curl: Integer overflows in curl_url_set
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
 
---00000000000039a422057babe7ef
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Integer overflows in `curl_url_set()`
+=====================================
 
-There is a vulnerability in Active Storage. This vulnerability has been
-assigned the CVE identifier CVE-2018-16477.
+Project curl Security Advisory, May 22nd 2019 -
+[Permalink](https://curl.haxx.se/docs/CVE-2019-5435.html)
 
-Versions Affected:  >=3D 5.2.0
-Not affected:       < 5.2.0
-Fixed Versions:     5.2.1.1
+VULNERABILITY
+-------------
 
-Impact
-------
-Signed download URLs generated by `ActiveStorage` for Google Cloud Storage
-service and Disk service include `content-disposition` and `content-type`
-parameters that an attacker can modify. This can be used to upload specially
-crafted HTML files and have them served and executed inline. Combined with
-other techniques such as cookie bombing and specially crafted AppCache
-manifests,
-an attacker can gain access to private signed URLs within a specific
-storage path.
+libcurl contains two integer overflows in the `curl_url_set()` function that
+if triggered, can lead to a too small buffer allocation and a subsequent heap
+buffer overflow.
 
-Vulnerable apps are those using either GCS or the Disk service in
-production.
-Other storage services such as S3 or Azure aren't affected.
+The flaws only exist on 32 bit architectures and require excessive string
+input lengths.
 
-All users running an affected release should either upgrade or use one of
-the
-workarounds immediately. For those using GCS, it's also recommended to run
-the
-following to update existing blobs:
+We are not aware of any exploit of this flaw.
 
-```
-ActiveStorage::Blob.find_each do |blob|
-  blob.send :update_service_metadata
-end
-```
+INFO
+----
 
-Releases
+There are two entry points to this issue, on 32 bit architectures.
+
+By asking libcurl to parse a string, passing in a string longer than 2GB to
+this API: `curl_url_set(uh, CURLUPART_URL, "string", 0);` triggers the bug.
+
+Asking libcurl to update a URL with a new string, and URL encoded it in the
+process, by passing in a string longer than 1.33GB to this API:
+`curl_url_set(uh, CURLUPART_*, "string", CURLU_URLENCODE);` triggers the bug.
+
+This bug was introduced in August 2018 in
+[commit fb30ac5a2d](https://github.com/curl/curl/commit/fb30ac5a2d63773c52).
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2019-5435 to this issue.
+
+CWE-131: Incorrect Calculation of Buffer Size
+
+Severity: 3.7 (Low)
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.62.0 to and including 7.64.1
+- Not affected versions: libcurl < 7.62.0 and >= libcurl 7.65.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2019-5435](https://github.com/curl/curl/commit/5fc28510a4664f4) is already merged.
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.65.0
+
+  B - Apply the patch to your version and rebuild
+
+TIMELINE
 --------
-The FIXED releases are available at the normal locations.
 
-Workarounds
------------
-Putting the following monkey patches in an intializer can help to mitigate
-the issue:
+The issue was reported to the curl project on April 24, 2019. The patch was
+communicated to the reporter on April 25, 2019. We contacted distros@openwall
+on May 15.
 
-For GCS service:
-```
-require 'active_storage'
-require 'active_storage/service/gcs_service'
+curl 7.65.0 was released on May 22 2019, coordinated with the publication of
+this advisory.
 
-module ActiveStorage
-  module GCSMetadata
-    def upload(key, io, checksum: nil, content_type: nil, disposition: nil,
-filename: nil)
-      instrument :upload, key: key, checksum: checksum do
-        begin
-          content_disposition =3D content_disposition_with(type: dispositio=
-n,
-filename: filename) if disposition && filename
-          bucket.create_file(io, key, md5: checksum, content_type:
-content_type, content_disposition: content_disposition)
-        rescue Google::Cloud::InvalidArgumentError
-          raise ActiveStorage::IntegrityError
-        end
-      end
-    end
+CREDITS
+-------
 
-    def update_metadata(key, content_type:, disposition: nil, filename: nil)
-      instrument :update_metadata, key: key, content_type: content_type,
-disposition: disposition do
-        file_for(key).update do |file|
-          file.content_type =3D content_type
-          if disposition && filename
-            file.content_disposition =3D content_disposition_with(type:
-disposition, filename: filename)
-          end
-        end
-      end
-    end
-  end
+Reported by Wenchao Li. Patch by Daniel Stenberg
 
-  module StoreMetadata
-    def upload_without_unfurling(io)
-      service.upload key, io, checksum: checksum, **service_metadata
-    end
+Thanks a lot!
 
-    def identify
-      unless identified?
-        update! content_type: identify_content_type, identified: true
-        update_service_metadata
-      end
-    end
+-- 
 
-    private
-      def service_metadata
-        if forcibly_serve_as_binary?
-          { content_type: "application/octet-stream", disposition:
-:attachment, filename: filename }
-        else
-          { content_type: content_type }
-        end
-      end
-
-      def update_service_metadata
-        service.update_metadata key, service_metadata if
-service_metadata.any?
-      end
-  end
-end
-
-Rails.application.config.to_prepare do
-  ActiveStorage::Service::GCSService.prepend ActiveStorage::GCSMetadata
-  ActiveStorage::Blob.prepend ActiveStorage::StoreMetadata
-end
-```
-
-For Disk service:
-```
-require 'active_storage'
-require 'active_storage/service/disk_service'
-
-module ActiveStorage
-  module GetParamsFromKey
-    def show
-      if key =3D decode_verified_key
-        serve_file disk_service.path_for(key[:key]), content_type:
-key[:content_type], disposition: key[:disposition]
-      else
-        super
-      end
-    rescue Errno::ENOENT
-      head :not_found
-    end
-  end
-
-  module IncludeParamsInKey
-    def upload(key, io, checksum: nil, **)
-      super(key, io, checksum: checksum)
-    end
-
-    def update_metadata(key, **)
-    end
-
-    def url(key, expires_in:, filename:, disposition:, content_type:)
-      instrument :url, key: key do |payload|
-        content_disposition =3D content_disposition_with(type: disposition,
-filename: filename)
-        verified_key_with_expiration =3D ActiveStorage.verifier.generate(
-          {
-            key: key,
-            disposition: content_disposition,
-            content_type: content_type
-          },
-          { expires_in: expires_in,
-          purpose: :blob_key }
-        )
-
-        generated_url =3D
-url_helpers.rails_disk_service_url(verified_key_with_expiration,
-          host: current_host,
-          disposition: content_disposition,
-          content_type: content_type,
-          filename: filename
-        )
-        payload[:url] =3D generated_url
-
-        generated_url
-      end
-    end
-  end
-end
-
-Rails.application.config.to_prepare do
-  ActiveStorage::DiskController.prepend ActiveStorage::GetParamsFromKey
-  ActiveStorage::Service::DiskService.prepend
-ActiveStorage::IncludeParamsInKey
-end
-```
-
-Rafael Fran=C3=A7a
-
---00000000000039a422057babe7ef--
+  / daniel.haxx.se | Get the best commercial curl support there is - from me
+                   | Private help, bug fixes, support, ports, new features
+                   | https://www.wolfssl.com/contact/
