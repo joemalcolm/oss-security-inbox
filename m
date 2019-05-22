@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5082" "Tuesday" "30" "March" "2021" "12:01:39" "+0000" "Xen.org security team" "security@xen.org" nil "137" "[oss-security] Xen Security Advisory 371 v3 (CVE-2021-28688) - Linux: blkback driver may leak persistent grants" nil nil nil "3" nil nil (number mark "U       security@xen Mar 30  137/5082  " thread-indent "\"[oss-security] Xen Security Advisory 371 v3 (CVE-2021-28688) - Linux: blkback driver may leak persistent grants\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 371 v3 (CVE-2021-28688) - Linux: blkback driver may leak persistent grants" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["606" "Wednesday" "22" "May" "2019" "16:50:25" "+0530" "P J P" "ppandit@redhat.com" nil "18" nil "^Date:" nil nil "5" nil nil (number mark "U       ppandit@redh May 22   18/606   " thread-indent "\"[oss-security] CVE-2019-12247 QEMU: qemu-guest-agent: integer overflow while running guest-exec command\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-12247 QEMU: qemu-guest-agent: integer overflow while running guest-exec command" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12274 invoked by uid 550); 30 Mar 2021 12:02:03 -0000
+Received: (qmail 14008 invoked by uid 550); 22 May 2019 11:20:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,161 +11,35 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12253 invoked from network); 30 Mar 2021 12:02:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=NHPFu1XAUVlJbUfeISmXiuipVxaCU0mvsytRR5Xe7gc=; b=L9zjRtVYmmNayLh/y6MP7JX8ER
-	I3AgjlvIFboC04oIQZxXoJCdQ6p9v41/TZqHZCwuH6RVenbOFaBtQ/Hk5ff3aFmmrBVM6C8AZzcms
-	tAfIKTsKy8k/ZNv6aaLM1our1QttBgIeiQHanCx/DuDVXDuGGnwVpYwiAei6HHu3cC24=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 13984 invoked from network); 22 May 2019 11:20:48 -0000
+X-X-Sender: pjp@kaapi
+Message-ID: <nycvar.YSQ.7.76.1905221648340.6754@xnncv>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1lRD3z-0005Dv-Rd@xenbits.xenproject.org>
-Date: Tue, 30 Mar 2021 12:01:39 +0000
-Subject: [oss-security] Xen Security Advisory 371 v3 (CVE-2021-28688) - Linux: blkback
- driver may leak persistent grants
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.43]); Wed, 22 May 2019 11:20:36 +0000 (UTC)
+Date: Wed, 22 May 2019 16:50:25 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2019-12247 QEMU: qemu-guest-agent: integer overflow while running
+ guest-exec command
+To: oss security list <oss-security@lists.openwall.com>
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+   Hello,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+An integer overflow issue was found in the QEMU Guest Agent in QEMU, while 
+reading argument list passed to the 'guest-exec' qmp command. An attacker 
+could exploit this by sending a crafted QMP command to the agent via a 
+listening socket to trigger the overflow. It may crash the QEMU guest agent, 
+resulting in DoS.
 
-            Xen Security Advisory CVE-2021-28688 / XSA-371
-                               version 3
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2019-05/msg04596.html
 
-           Linux: blkback driver may leak persistent grants
+This issue was reported by Guoxiang Niu of huawei.com.
 
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The fix for XSA-365 includes initialization of pointers such that
-subsequent cleanup code wouldn't use uninitialized or stale values.
-This initialization went too far and may under certain conditions also
-overwrite pointers which are in need of cleaning up.  The lack of
-cleanup would result in leaking persistent grants.  The leak in turn
-would prevent fully cleaning up after a respective guest has died,
-leaving around zombie domains.
-
-IMPACT
-======
-
-A malicious or buggy frontend driver may be able to cause resource leaks
-from the corresponding backend driver.  This can result in a host-wide
-Denial of Sevice (DoS).
-
-VULNERABLE SYSTEMS
-==================
-
-All Linux versions having the fix for XSA-365 applied are vulnerable.
-XSA-365 was classified to affect versions back to at least 3.11.
-
-MITIGATION
-==========
-
-Reconfiguring guests to use alternative (e.g. qemu-based) backends may
-avoid the vulnerability.
-
-Avoiding the use of persistent grants will also avoid the vulnerability.
-This can be achieved by passing the "feature_persistent=0" module option
-to the xen-blkback driver.
-
-CREDITS
-=======
-
-This issue was discovered by Nicolai Stange of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa371-linux.patch           Linux 5.12-rc, 5.11.1 onwards, 5.10.18 onwards
-<not directly affected>      Linux 5.10.0 - 5.10.17, 5.11.0
-<applicability unknown>      Linux 4.4 - 5.9
-<no fix available>           Linux 3.11 - 4.3
-
-$ sha256sum xsa371*
-1b2472253aa82385b3eff280fa4adf52742f06813fc093f5f86cd4a3021f736c  xsa371-linux.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-HOWEVER, deployment of the mitigations described above is NOT permitted
-during the embargo on public-facing systems with untrusted guest users
-and administrators.  This is because such configuration changes may be
-recognizable by the affected guests.
-
-AND: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmBjBWYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZbkQIAKjv5DaESSOUA8DzOk4LmBZQHIMtTsN2wF2Q0/6g
-3hJ3HoGzQwul00eUem+sbAqrEKJAEGLrcWpAGlcp8jW5i+44dyHE4o4vDmUOLx/x
-eJGMKwhv2Xe7Us15Fh4ioOBtmO6/AH60Scbid3aZ6zlJiUEPwpotzD9Jm/nR+B/E
-/KRsXZ+dTIZpeke9vVXbml/nrq/xwvpAZrEGeXBg1FDUHNsGWEeqPFq2ZfygVw22
-x5loXeb8cqIETuA3EJQ1fx0Ioqnh3Q85TtNTCTpZrKcrTqJX+lZTlrEn4iAaMvp1
-Bp/Mu9dkFrIJaid0iwdJKk2STsROh5ZCXCOyFOo5LFvFoKE=
-=DlVS
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa371-linux.patch"
-Content-Disposition: attachment; filename="xsa371-linux.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiB4ZW4tYmxrYmFjazogZG9uJ3QgbGVhayBwZXJzaXN0ZW50IGdyYW50cyBm
-cm9tIHhlbl9ibGtia19tYXAoKQoKVGhlIGZpeCBmb3IgWFNBLTM2NSB6YXBw
-ZWQgdG9vIG1hbnkgb2YgdGhlIC0+cGVyc2lzdGVudF9nbnRbXSBlbnRyaWVz
-LgpPbmVzIHN1Y2Nlc3NmdWxseSBvYnRhaW5lZCBzaG91bGQgbm90IGJlIG92
-ZXJ3cml0dGVuLCBidXQgaW5zdGVhZCBsZWZ0CmZvciB4ZW5fYmxrYmtfdW5t
-YXBfcHJlcGFyZSgpIHRvIHBpY2sgdXAgYW5kIHB1dC4KClRoaXMgaXMgWFNB
-LTM3MS4KClJlcG9ydGVkLWJ5OiBOaWNvbGFpIFN0YW5nZSA8bnN0YW5nZUBz
-dXNlLmRlPgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hA
-c3VzZS5jb20+CkNjOiBzdGFibGVAdmdlci5rZXJuZWwub3JnClJldmlld2Vk
-LWJ5OiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+ClJldmlld2Vk
-LWJ5OiBXZWkgTGl1IDx3bEB4ZW4ub3JnPgoKLS0tIGEvZHJpdmVycy9ibG9j
-ay94ZW4tYmxrYmFjay9ibGtiYWNrLmMKKysrIGIvZHJpdmVycy9ibG9jay94
-ZW4tYmxrYmFjay9ibGtiYWNrLmMKQEAgLTg5MSw3ICs4OTEsNyBAQCBuZXh0
-Ogogb3V0OgogCWZvciAoaSA9IGxhc3RfbWFwOyBpIDwgbnVtOyBpKyspIHsK
-IAkJLyogRG9uJ3QgemFwIGN1cnJlbnQgYmF0Y2gncyB2YWxpZCBwZXJzaXN0
-ZW50IGdyYW50cy4gKi8KLQkJaWYoaSA+PSBsYXN0X21hcCArIHNlZ3NfdG9f
-bWFwKQorCQlpZihpID49IG1hcF91bnRpbCkKIAkJCXBhZ2VzW2ldLT5wZXJz
-aXN0ZW50X2dudCA9IE5VTEw7CiAJCXBhZ2VzW2ldLT5oYW5kbGUgPSBCTEtC
-QUNLX0lOVkFMSURfSEFORExFOwogCX0K
-
---=separator--
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
