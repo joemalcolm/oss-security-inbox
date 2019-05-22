@@ -1,88 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/22/2
-Message-Id: <7FA714F2-4FFA-4781-A2B8-8F18A7EC8015@gmail.com>
-Date: Fri, 22 Nov 2019 20:51:31 +0800
-From: qize wang <wangqize888888888@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/22/6
+Message-ID: <20190522163125.GA32400@kroah.com>
+Date: Wed, 22 May 2019 18:31:25 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: linux-distros 、 <linux-distros@...openwall.org>, amitkarwar 、 <amitkarwar@...il.com>, nishants 、 <nishants@...vell.com>, gbhat 、 <gbhat@...vell.com>, huxinming820 、 <huxinming820@...il.com>, kvalo 、 <kvalo@...eaurora.org>, greg 、 <greg@...ah.com>, security 、 <security@...nel.org>, "dan.carpenter" <dan.carpenter@...cle.com>, Solar Designer <solar@...nwall.com>
-Subject: Linux kernel: heap overflow in the marvell wifi driver
+Subject: Re: CVE-2019-10142 linux kernel: integer overflow in ioctl handling of fsl hypervisor
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-There are some heap overflows in marvell wifi chip driver in Linux
-kernel, allow remote users to cause a denial of service(system crash) or
-possibly execute arbitrary code.
+On Thu, May 23, 2019 at 12:52:17AM +1000, Wade Mealing wrote:
+> Gday,
+> 
+> >From the upstream git commit:
+> 
+> "The "param.count" value is a u64 that comes from the user. The code later
+> in the function assumes that param.count is at least one and if it's not
+> then it leads to an Oops when we dereference the ZERO_SIZE_PTR. Also the
+> addition can have an integer overflow which would lead us to allocate a
+> smaller "pages" array than required. I can't immediately tell what the
+> possible run times implications are, but it's safest to prevent the
+> overflow."
+> 
+> At this time Red Hat products are not affected this code is not built as
+> the CONFIG_FSL_HV_MANAGER build option is not enabled by default.    Device
+> (/dev/fsl-hv) ownership and permissions which prevent unprivileged users
+> from being able to exploit this without some elevated permissions (I think
+> this will default to user: root group:root with 0660 mask) however some
+> Linux distributions may use udev to set this to non root ownership or
+> another group.   In the default configuration, a user who is sufficiently
+> privileged to exploit this is likely able to attack the system without it.
+> 
+> I open the discussion and note the CVE listed above for discussions that
+> may reference this patch and perhaps save someone some time in
+> investigation.
+> 
+> Red Hat bugzilla:
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2019-10142
+> 
+> Upstream fix:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6a024330650e24556b8a18cc654ad00cfecf6c6c
 
-Description
-==========
+Note, this fix is in the following released stable kernels at this point
+in time:
+	3.18.140 4.4.180 4.9.177 4.14.120 4.19.44 5.0.17 5.1.3
 
-some flaws were found in the Linux kernel's Marvell wifi chip driver. 
-multi heap overflow in mwifiex_process_tdls_action_frame function in 
-marvell/mwifiex/tdls.c which allows remote attackers to cause a denial 
-of service(system crash) or execute arbitrary code.
+Also, to let oss-security know, the 3.18.y kernel tree is now really
+end-of-life on kernel.org, but if people care about it still, they can
+follow the android-common 3.18 branch as it will continue to get
+security updates for at least the rest of this year, if not maybe a bit
+longer.
 
-the station receive a tdls setup request or respone frame which IE 's 
-length is larger than the heap buffer assigned (for example : the 
-EID_SUPP_RATES IE's length > 255) will cause heap overflow。
+thanks,
 
-
-struct mwifiex_tdls_capab {
-	__le16 capab;
-	u8 rates[32];
-	u8 rates_len;
-	u8 qos_info;
-	u8 coex_2040;
-	u16 aid;
-	struct ieee80211_ht_cap ht_capb;
-	struct ieee80211_ht_operation ht_oper;
-	struct ieee_types_extcap extcap;
-	struct ieee_types_generic rsn_ie;
-	struct ieee80211_vht_cap vhtcap;
-	struct ieee80211_vht_operation vhtoper;
-};
-
-int mwifiex_process_rx_packet -> mwifiex_process_tdls_action_frame
-(struct mwifiex_private *priv,
-				       u8 *buf, int len)
-{
-.... 
-case WLAN_EID_SUPP_RATES:
-			sta_ptr->tdls_cap.rates_len = pos[1];   ;attacker can control 
-			                                        ;EID_SUPP_RATES IE 's length
-			for (i = 0; i < pos[1]; i++)
-				sta_ptr->tdls_cap.rates[i] = pos[i + 2];
-			break;
-…
-case WLAN_EID_EXT_SUPP_RATES:
-			basic = sta_ptr->tdls_cap.rates_len;
-			for (i = 0; i < pos[1]; i++)						;attacker can control 
-													;EID_SUPP_RATES IE 's length
-				sta_ptr->tdls_cap.rates[basic + i] = pos[i + 2];    
-			sta_ptr->tdls_cap.rates_len += pos[1];  
-			break;
-…
-case WLAN_EID_EXT_CAPABILITY:
-			memcpy((u8 *)&sta_ptr->tdls_cap.extcap, pos,
-			       sizeof(struct ieee_types_header) +
-			       min_t(u8, pos[1], 8));       ;extcap is tlv struct, 
-			       						;memcpy will cause a fata 
-			       						;len(p[1]) into extcap
-			break;
-case WLAN_EID_RSN:
-			memcpy((u8 *)&sta_ptr->tdls_cap.rsn_ie, pos,
-			       sizeof(struct ieee_types_header) +
-			       min_t(u8, pos[1], IEEE_MAX_IE_SIZE -
-				     sizeof(struct ieee_types_header)); rsn_ie is tlv struct ,
-											  ;memcpy will cause a fata 
-											  ;len(p[1]) into rsn_ie
-
-}
-
-Patch
-==========
-https://patchwork.kernel.org/patch/11257535/
-
-Credit
-==========
-This issue was discovered by wangqize(ADLab of VenusTech),huawen(ADLab of VenusTech)
-
+greg k-h
