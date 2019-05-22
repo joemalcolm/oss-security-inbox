@@ -1,53 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/14
-Message-ID: <20190711162601.RE3Tr%steffen@sdaoden.eu>
-Date: Thu, 11 Jul 2019 18:26:01 +0200
-From: Steffen Nurpmeso <steffen@...oden.eu>
-To: "Perry E. Metzger" <perry@...rmont.com>
-Cc: oss-security@...ts.openwall.com, Malte Kraus <malte.kraus@...e.com>
-Subject: Re: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/22/1
+Message-ID: <nycvar.YSQ.7.76.1905221234330.22124@xnncv>
+Date: Wed, 22 May 2019 12:38:24 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Bugs SysSec <bugs-syssec@....de>
+Subject: CVE-2019-12155 QEMU: qxl: null pointer dereference while releasing spice resources
 Content-Type: text/plain; charset=utf-8
 
-Perry E. Metzger wrote in <20190711114710.09ab5ad9@...berwock.cb.piermon\
-t.com>:
- |On Thu, 11 Jul 2019 13:57:19 +0000 Malte Kraus <malte.kraus@...e.com>
- |wrote:
- |> On Thu, 2019-07-11 at 09:33 -0400,  Perry E. Metzger wrote:
- ...
- |> I didn't (intend to) say there is an (additional) security problem.
- |> I just tried to succinctly explain why the desktop environments are
- |> coming up with these D-Bus interfaces now.
- |
- |It seems like a bad idea.
- |
- |If one wants to have mechanisms by which the operating system can
- |allow unprivileged programs to temporarily assume privileges (which
- |is a frequent idea in security), then they should be carefully
- |designed and part of the OS, rather than creating an ad hoc facility
- |via a subsystem that isn't intended for it. There are good ways to do
- |that, like capabilities.
+   Hello,
 
-Sending this remark because a few days ago i posted something
-similar to a gnupg ML.
+A null pointer dereference issue was found the QXL VGA card emulator of QEMU. 
+It could occur while releasing resources allocated for a SPICE server thread 
+in interface_release_resources().
 
-From my point of view there is root user hysteria in Unix and
-clones, maybe forever, but i see it consciously in the last years.
-If the solution against SETUID programs or other, finer grained
-privileges, but which anyway can be detected via file system
-tools, is that privilege adjustments u-boat away to something that
-needs source code or over-the-wire analysis to being detected at
-all, i fail to see how this leads to something better.
+A guest user could use this flaw to crash the QEMU process resulting in DoS 
+scenario.
 
-Without personally having made it there yet, i think the
-traditional way of in-application sandboxing fits better, even
-with SETUID programs which first perform some higher-privilege
-setup before going more secure, like capsicum on FreeBSD,
-pledge/unveil on OpenBSD, or prctl, seccomp (and apparmor) on
-Linux.  Or even interesting entire frameworks like CloudABI.
+Upstream patch:
+---------------
+   -> https://git.qemu.org/?p=qemu.git;a=commit;h=d52680fc932efb8a2f334cc6993e705ed1e31e99
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+This issue was reported by Sergej Schumilo, Cornelius Aschermann and Simon 
+Wrner of Ruhr University Bochum.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
