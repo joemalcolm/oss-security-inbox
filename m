@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9098" "Monday" "1" "June" "2015" "21:25:24" "+0800" "=?ISO-8859-1?Q?wen=5Fguanxing?=" "wen_guanxing@venustech.com.cn" "<tencent_04AA4B6777E925FE18737D03@qq.com>" "155" "[oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability" nil nil nil "6" "2015060113:25:24" "[oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability" (number mark "        wen_guanxing Jun  1  155/9098  " thread-indent "\"[oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2001" "Wednesday" "22" "May" "2019" "18:31:25" "+0200" "Greg KH" "greg@kroah.com" nil "45" nil nil nil nil "5" nil nil (number mark "U       greg@kroah.c May 22   45/2001  " thread-indent "\"Re: [oss-security] CVE-2019-10142 linux kernel: integer overflow in ioctl handling of fsl hypervisor\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-10142 linux kernel: integer overflow in ioctl handling of fsl hypervisor" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31856 invoked by uid 550); 1 Jun 2015 13:25:57 -0000
+Received: (qmail 32007 invoked by uid 550); 22 May 2019 16:34:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,193 +11,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31794 invoked from network); 1 Jun 2015 13:25:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=venustech.com.cn;
-	 h=x-mailer:message-id:date:date:content-transfer-encoding
-	:content-type:content-type:mime-version:subject:subject:to:from
-	:from; s=dkim; t=1433164915; x=1434028916; bh=brTzFUutqweAdDS8ck
-	zS0XFWRX4RLkn0i37IS65PxMs=; b=KGs8mA3NybgJxprpVMIBZcaAsMVgqoKrIH
-	IDMr0FDFTYBfEExz3X1hoa6xCO7gIlylVBvnicFIhAvteC3BPgjFlYDqLb5vYWED
-	fEIQAzstwfwGd3H5dF7cBs/RBhwKY27uspFRUk/jxnq7fRK2llIrFBXlT/gvQVQz
-	jJXcNLEqU=
-X-QQ-FEAT: 8ljHHSIBPRykjrOYglVSIIMrTL9x+4LdLsPcWPnOjg1/ThciBF/IVhusJ9xWp
-	/8IAd6ohXqfipnlEQK4GdxvNsWcDDyeNWbs/NAUG12/185wmtJazZliHlfFXwD+gNQboxmO
-	slpuPlrYZnnpRifMJ/DUBy+sJys+cTSuJjqah9H86L8A0jTreWL/kL3PiqjRCUbjlvwnqJw
-	Z7BsHrnfaXw==
-X-QQ-SSF: 00000000000000F000000000000000N
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 111.197.192.60
-X-QQ-STYLE: 
-X-QQ-mid: webmail802t1433165124t6219679
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_556C5D44_08675610_169F91C3"
-Content-Transfer-Encoding: 8Bit
-X-Priority: 3
-Message-ID: <tencent_04AA4B6777E925FE18737D03@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-Date: Mon, 1 Jun 2015 21:25:24 +0800
-From: "=?ISO-8859-1?B?d2VuX2d1YW54aW5n?=" <wen_guanxing@venustech.com.cn>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability
-To: "=?ISO-8859-1?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
+Received: (qmail 29722 invoked from network); 22 May 2019 16:31:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm3; bh=t0jtFqrAoifeXcEK4GLCRNqfni8
+	Jc+uPRN62h+M3oLU=; b=rndXvFIypP3HYRFdjKtYwOycgcOz3QaJi7/uUe0EJZV
+	z2z1/OTzFsDvlqBabKT7hI7a6hE+sXXuGJSo4OY1PUTriVtrqSTbFwo9qmHTiZVq
+	06ntXl+PJfDlp1mfyHZrt9HaIOOAsF4lf+ttBT5FCzG/ETQ9J+aTGX74po+SXANU
+	G86iNdpUjQuPXjUFKP/h5kEYvuByzpI8GxOtFpvfidevQwJZrmHDAciv4IEJe7Cp
+	WkbJUEHSvqBqAT23nlXGsZXvFzZYHAnRZFSgevn2x2C6tNSd/MaZMZjrFM03JIte
+	8+NMj7MvzKx+hfJd2kO8lDjoa+RYBlzu8pAPPVE4AXA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=t0jtFq
+	rAoifeXcEK4GLCRNqfni8Jc+uPRN62h+M3oLU=; b=WRA3EmN8/SueO6FjMcOfMV
+	x16Ds8afRBlLqgsv2l4xqT523NSRzbteDcFpgYG7rrZX434JLYE9EXMUGIk4326S
+	hJQUfC80Etkl/9/5nHNBLKmk/hlirr5oeL9m+r0QoUOxyz65SEc1eTlCuWtYfkyr
+	ctocw6KWqJuIUQwduJmqUmlog6qZF+7nXH70OHXA2vZTWrYdGZvk5KvGKJRqqWMl
+	uyCt7vPQjV1vTGVpk1G0B/Vo2UokNFpURtKp5jE4g1H/IVdptaeZaEcczBrR/N76
+	uDRlXZW5vrE4rAaQb8Xeh3N5mCH0RxD383tyi7K7GWdooOXV5/2K3c0gMExHHBNg
+	==
+X-ME-Sender: <xms:X3nlXMB1fja4sXlguqUQ3ykj0msWOIKvXUe-LOIU0LjsOJa2w-RUXw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudduvddguddtfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjfgesth
+    dtredttdervdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtgho
+    mheqnecuffhomhgrihhnpehrvgguhhgrthdrtghomhdpkhgvrhhnvghlrdhorhhgnecukf
+    hppeekfedrkeeirdekledruddtjeenucfrrghrrghmpehmrghilhhfrhhomhepghhrvghg
+    sehkrhhorghhrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:X3nlXMaod1dbueobky_v-Ci3NQrwgGyvI5a_wpezVIC_KNlro_ft3w>
+    <xmx:X3nlXIo08rXZPogt5srbxZF5Rs_I2pIvgZq4R-x0L0iANTlFz7GBng>
+    <xmx:X3nlXEC4nskUFcLvBj25vPKTrk7K2LBQLWXSdk2FKTviHbH7jQJToQ>
+    <xmx:YHnlXH60yPfRTpvVr_OICcsM7BPFZ7Oxr4pI2TD3ArwCIc50pLdspg>
+Date: Wed, 22 May 2019 18:31:25 +0200
+From: Greg KH <greg@kroah.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20190522163125.GA32400@kroah.com>
+References: <CALJHwhTO3R81kFF4sMdWakQ23E9MfR_JS_dAjXbMLtE1AKZbPg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALJHwhTO3R81kFF4sMdWakQ23E9MfR_JS_dAjXbMLtE1AKZbPg@mail.gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
+Subject: Re: [oss-security] CVE-2019-10142 linux kernel: integer overflow in
+ ioctl handling of fsl hypervisor
 
-------=_NextPart_556C5D44_08675610_169F91C3
-Content-Type: text/plain;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: base64
+On Thu, May 23, 2019 at 12:52:17AM +1000, Wade Mealing wrote:
+> Gday,
+> 
+> >From the upstream git commit:
+> 
+> "The "param.count" value is a u64 that comes from the user. The code later
+> in the function assumes that param.count is at least one and if it's not
+> then it leads to an Oops when we dereference the ZERO_SIZE_PTR. Also the
+> addition can have an integer overflow which would lead us to allocate a
+> smaller "pages" array than required. I can't immediately tell what the
+> possible run times implications are, but it's safest to prevent the
+> overflow."
+> 
+> At this time Red Hat products are not affected this code is not built as
+> the CONFIG_FSL_HV_MANAGER build option is not enabled by default.    Device
+> (/dev/fsl-hv) ownership and permissions which prevent unprivileged users
+> from being able to exploit this without some elevated permissions (I think
+> this will default to user: root group:root with 0660 mask) however some
+> Linux distributions may use udev to set this to non root ownership or
+> another group.   In the default configuration, a user who is sufficiently
+> privileged to exploit this is likely able to attack the system without it.
+> 
+> I open the discussion and note the CVE listed above for discussions that
+> may reference this patch and perhaps save someone some time in
+> investigation.
+> 
+> Red Hat bugzilla:
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2019-10142
+> 
+> Upstream fix:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6a024330650e24556b8a18cc654ad00cfecf6c6c
 
-UENSRSBMaWJyYXJ5IEhlYXAgT3ZlcmZsb3cgVnVsbmVyYWJpbGl0eSAtLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0gSS4gU3VtbWFyeSBQQ1JFIGlzIGEgcmVndWxh
-ciBleHByZXNzaW9uIEMgbGlicmFyeSBpbnNwaXJlZCBieSB0aGUgcmVndWxh
-ciBleHByZXNzaW9uIGNhcGFiaWxpdGllcyBpbiB0aGUgUGVybCBwcm9ncmFt
-bWluZyBsYW5ndWFnZS4gVGhlIFBDUkUgbGlicmFyeSBpcyBpbmNvcnBvcmF0
-ZWQgaW50byBhIG51bWJlciBvZiBwcm9taW5lbnQgcHJvZ3JhbXMsIHN1Y2gg
-YXMgQWRvYmUgRmxhc2gsIEFwYWNoZSwgTmdpbngsIFBIUC4gUENSRSBsaWJy
-YXJ5IGlzIHByb25lIHRvIGEgdnVsbmVyYWJpbGl0eSB3aGljaCBsZWFkcyB0
-byBIZWFwIE92ZXJmbG93LiBEdXJpbmcgdGhlIGNvbXBpbGF0aW9uIG9mIGEg
-bWFsZm9ybWVkIHJlZ3VsYXIgZXhwcmVzc2lvbiwgbW9yZSBkYXRhIGlzIHdy
-aXR0ZW4gb24gdGhlIG1hbGxvY2VkIGJsb2NrIHRoYW4gdGhlIGV4cGVjdGVk
-IHNpemUgb3V0cHV0IGJ5IGNvbXBpbGVfcmVnZXguIEV4cGxvaXRzIHdpdGgg
-YWR2YW5jZWQgSGVhcCBGZW5nc2h1aSB0ZWNobmlxdWVzIG1heSBhbGxvdyBh
-biBhdHRhY2tlciB0byBleGVjdXRlIGFyYml0cmFyeSBjb2RlIGluIHRoZSBj
-b250ZXh0IG9mIHRoZSB1c2VyIHJ1bm5pbmcgdGhlIGFmZmVjdGVkIGFwcGxp
-Y2F0aW9uLiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gSUkuIERlc2NyaXB0aW9u
-IExhdGVzdCB2ZXJzaW9uIG9mIFBDUkUgaXMgcHJvbmUgdG8gYSBIZWFwIE92
-ZXJmbG93IHZ1bG5lcmFiaWxpdHkgd2hpY2ggY291bGQgY2F1c2VkIGJ5IHRo
-ZSBmb2xsb3dpbmcgcmVndWxhciBleHByZXNzaW9uLiAvXig/UD1CKSgoP1A9
-QikoP0o6KD9QPEI+YykoP1A8Qj5hKD9QPUIpKSk+V0dYQ1JFRElUUykvIFRv
-IHJlcHJvZHVjZSB0aGUgcHJvYmxlbSwgd2UgY291bGQgdXNlIHBjcmV0ZXN0
-IHByb3ZpZGUgYnkgUENSRSBsaWJyYXJ5IG9yIGFwcGxpY2F0aW9ucyB3aGlj
-aCBpcyB3cmFwcGVkIHdpdGggUENSRSBzdWNoIGFzIFBIUC4gRm9yIHBjcmV0
-ZXN0LCBzaW1wbHkgdHlwZSB0aGUgcmVndWxhciBleHByZXNzaW9uIGFmdGVy
-IHRoZSByZT4gRm9yIFBIUCwgbGF0ZXN0IHZlcnNpb24gb2YgUEhQIDUuNi45
-ICh3cmFwcGVkIHdpdGggUENSRSA4LjM3KSBjb3VsZCBiZSB0cmlnZ2VyZWQg
-YnkgZm9sbG93aW5nIGNvZGUgc25pcHBldDogPD9waHAgcHJlZ19tYXRjaCgi
-L14oP1A9QikoKD9QPUIpKD9KOig/UDxCPmMpKD9QPEI+YSg/UD1CKSkpPldH
-WENSRURJVFMpLyIsIkFETEFCIiwkYXJyKTsgPz4gRmlyc3QsIHBjcmVfY29t
-cGlsZTIgaW52b2tlIGNvbXBpbGVfcmVnZXgoKSB0byBjYWx1Y2F0ZSB0aGUg
-c2l6ZSBvZiBtZW1vcnkgdGhhdCBpcyB1c2VkIHRvIHNhdmUgdGhlIHJlZ3Vs
-YXIgZXhwcmVzc2lvbi4gcmUgdGhlbiBwb2ludHMgdG8gdGhlIG5ldyBhbGxv
-Y2F0ZWQgbWVtb3J5IHdpdGggdGhlIHNpemUgYWJvdmUuIE5leHQsIHBjcmVf
-Y29tcGlsZTIgaW52b2tlIGNvbXBpbGVfcmVnZXgoKSBhZ2FpbiB0byBmaWxs
-IHRoZSByZWd1bGFyIGV4cHJlc3Npb24gaW50byB0aGUgYWxsb2NhdGVkIG1l
-bW9yeS4gVGhlIHByb2JsZW0gaGVyZSBpcyB0aGF0IG1vcmUgZGF0YSBpcyB3
-cml0dGVuIHRoZW4gZXhwZWN0ZWQuIEZvbGxvd2luZyB0ZXN0IGlzIGNvbnZl
-eWVkIHVuZGVyIEthbGkgTGludXggKGJhc2VkIG9uIERlYmlhbiB4NjQpIHdp
-dGggcGhwIDUuNi45OiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSBnZGIgcGhwIHBvYy5w
-aHAgOTIxNyAgICByZSA9IChSRUFMX1BDUkUgKikoUFVCTChtYWxsb2MpKShz
-aXplKTsgKGdkYikgeC8xMGkgJHJpcCA9PiAweDQ2ZjNjYiA8cGhwX3BjcmVf
-Y29tcGlsZTIrMjE4Nz46ICAgbW92ICAgIHJkaSxyYnAgICAgMHg0NmYzY2Ug
-PHBocF9wY3JlX2NvbXBpbGUyKzIxOTA+OiAgIGNhbGwgICBRV09SRCBQVFIg
-W3JheF0gKGdkYikgeCAkcmJwICAgIDB4OTc6ICAgICAgICBDYW5ub3QgYWNj
-ZXNzIG1lbW9yeSBhdCBhZGRyZXNzIDB4OTcgPT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0g
-U28gdGhlIGV4cGVjdGVkIHNpemUgb2YgdGhlIGFib3ZlIHJlZ3VsYXIgZXhw
-cmVzc2lvbiBpcyAweDk3ID0gMTUxLiBBbmQgdGhlIGJhc2UgYWRkcmVzcyBv
-ZiBhbGxvY2F0ZWQgbWVtb3J5IGlzIDB4MTAwNzQ4MC4gSGVyZSBpcyB0aGUg
-bGF5b3V0IG9mIDB4MTAwNzQ4MCBqdXN0IGJlZm9yZSB0aGUgc2Vjb25kIGNv
-bXBpbGVfcmVnZXhwOiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSAoZ2RiKSB4LzE2MHgg
-MHgxMDA3NDgwIDB4MTAwNzQ4MDogICAgIFsweDQ1ICAgIDB4NTIgICAgMHg0
-MyAgICAweDUwICAgIDB4OTcgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgx
-MDA3NDg4OiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAg
-MHgwMCAgICAweDA0ICAgIDB4MDAgICAgMHgwMCAweDEwMDc0OTA6ICAgICAg
-MHhmZiAgICAweGZmICAgIDB4ZmYgICAgMHhmZiAgICAweGZmICAgIDB4ZmYg
-ICAgMHhmZiAgICAweGZmIDB4MTAwNzQ5ODogICAgICAweDAwICAgIDB4MDAg
-ICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4
-MDAgMHgxMDA3NGEwOiAgICAgIDB4MDAgICAgMHgwMCAgICAweDQwICAgIDB4
-MDAgICAgMHgwNCAgICAweDAwICAgIDB4MDIgICAgMHgwMCAweDEwMDc0YTg6
-ICAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAg
-IDB4MDAgICAgMHgwMCAgICAweDAwIDB4MTAwNzRiMDogICAgICAweGQwICAg
-IDB4N2EgICAgMHgwMCAgICAweDAxICAgIDB4MDAgICAgMHgwMCAgICAweDAw
-ICAgIDB4MDAgMHgxMDA3NGI4OiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAw
-ICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAweDEw
-MDc0YzA6ICAgICAgMHgwMCAgICAweDAyICAgIDB4NDIgICAgMHgwMCAgICAw
-eDAwICAgIDB4MDMgICAgMHg0MiAgICAweDAwIDB4MTAwNzRjODogICAgICAw
-eDgzICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAg
-ICAweDAwICAgIDB4MDAgMHgxMDA3NGQwOiAgICAgIDB4MDAgICAgMHgwMCAg
-ICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgw
-MCAweDEwMDc0ZDg6ICAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgw
-MCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwIDB4MTAwNzRlMDog
-ICAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAg
-MHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NGU4OiAgICAgIDB4ODAgICAg
-MHg0OCAgICAweGQ4ICAgIDB4ZjYgICAgMHhmZiAgICAweDdmICAgIDB4MDAg
-ICAgMHgwMCAweDEwMDc0ZjA6ICAgICAgMHhmZiAgICAweGZmICAgIDB4ZmYg
-ICAgMHhmZiAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwIDB4MTAw
-NzRmODogICAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4
-MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NTAwOiAgICAgIDB4
-MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAg
-IDB4MDAgICAgMHgwMCAweDEwMDc1MDg6ICAgICAgMHg2MCAgICAweDc1ICAg
-IDB4MDAgICAgMHgwMSAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAw
-IDB4MTAwNzUxMDogICAgICAweGZmICAgIDB4ZmYgICAgMHhmZiAgICAweGZm
-ICAgIDB4ZmYgICAgMHhmZiAgICAweGZmXSAgIDB4ZmYgMHgxMDA3NTE4OiAg
-ICAgIDB4YTEgICAgMHgwMSAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAw
-eDAwICAgIDB4MDAgICAgMHgwMCA9PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSBBZnRlciB0
-aGUgc2Vjb25kIGNvbXBpbGVfcmVnZXhwOiA9PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSAo
-Z2RiKSB4LzE2MHggMHgxMDA3NDgwIDB4MTAwNzQ4MDogICAgIFsweDQ1ICAg
-IDB4NTIgICAgMHg0MyAgICAweDUwICAgIDB4OTcgICAgMHgwMCAgICAweDAw
-ICAgIDB4MDAgMHgxMDA3NDg4OiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAw
-ICAgIDB4MDAgICAgMHgwMCAgICAweDA0ICAgIDB4MDAgICAgMHgwMCAweDEw
-MDc0OTA6ICAgICAgMHhmZiAgICAweGZmICAgIDB4ZmYgICAgMHhmZiAgICAw
-eGZmICAgIDB4ZmYgICAgMHhmZiAgICAweGZmIDB4MTAwNzQ5ODogICAgICAw
-eDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAg
-ICAweDAwICAgIDB4MDAgMHgxMDA3NGEwOiAgICAgIDB4MDAgICAgMHgwMCAg
-ICAweDQwICAgIDB4MDAgICAgMHgwNCAgICAweDAwICAgIDB4MDIgICAgMHgw
-MCAweDEwMDc0YTg6ICAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgw
-MCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwIDB4MTAwNzRiMDog
-ICAgICAweGQwICAgIDB4N2EgICAgMHgwMCAgICAweDAxICAgIDB4MDAgICAg
-MHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NGI4OiAgICAgIDB4MDAgICAg
-MHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAg
-ICAgMHgwMCAweDEwMDc0YzA6ICAgICAgMHgwMCAgICAweDAyICAgIDB4NDIg
-ICAgMHgwMCAgICAweDAwICAgIDB4MDMgICAgMHg0MiAgICAweDAwIDB4MTAw
-NzRjODogICAgICAweDgzICAgIDB4MDAgICAgMHg1MSAgICAweDFiICAgIDB4
-NzMgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NGQwOiAgICAgIDB4
-MDIgICAgMHg4NSAgICAweDAwICAgIDB4NDUgICAgMHgwMCAgICAweDAxICAg
-IDB4NzMgICAgMHgwMCAweDEwMDc0ZDg6ICAgICAgMHgwMCAgICAweDAwICAg
-IDB4MDIgICAgMHg4MyAgICAweDAwICAgIDB4MjIgICAgMHg4NSAgICAweDAw
-IDB4MTAwNzRlMDogICAgICAweDA3ICAgIDB4MDAgICAgMHgwMiAgICAweDFk
-ICAgIDB4NjMgICAgMHg3OCAgICAweDAwICAgIDB4MDcgMHgxMDA3NGU4OiAg
-ICAgIDB4ODEgICAgMHgwMCAgICAweDEyICAgIDB4ODUgICAgMHgwMCAgICAw
-eDBjICAgIDB4MDAgICAgMHgwMyAweDEwMDc0ZjA6ICAgICAgMHgxZCAgICAw
-eDYxICAgIDB4NzMgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMiAg
-ICAweDc4IDB4MTAwNzRmODogICAgICAweDAwICAgIDB4MGMgICAgMHg3OCAg
-ICAweDAwICAgIDB4MTIgICAgMHg3OCAgICAweDAwICAgIDB4MjIgMHgxMDA3
-NTAwOiAgICAgIDB4MWQgICAgMHgzZSAgICAweDFkICAgIDB4NTcgICAgMHgx
-ZCAgICAweDQ3ICAgIDB4MWQgICAgMHg1OCAweDEwMDc1MDg6ICAgICAgMHgx
-ZCAgICAweDQzICAgIDB4MWQgICAgMHg1MiAgICAweDFkICAgIDB4NDUgICAg
-MHgxZCAgICAweDQ0IDB4MTAwNzUxMDogICAgICAweDFkICAgIDB4NDkgICAg
-MHgxZCAgICAweDU0ICAgIDB4MWQgICAgMHg1MyAgICAweDc4XSAgKjB4MDAg
-MHgxMDA3NTE4OiAgICAgKjB4NDUgICAqMHg3OCAgICoweDAwICAgKjB4NTEg
-ICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCA9PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PSBPYnZpb3VzbHksIDUgbW9yZSBieXRlcyBpcyB3cml0dGVuIG9uIHRo
-ZSBoZWFwIGluIHRoaXMgY2FzZS4gVGhpcyBvdmVyZmxvdyBjYW4gYmUgdXNl
-ZCB0byBtb2RpZnkgYWRqYWNlbnQgbGVuZ3RoIGZpZWxkIG9mIGFycmF5L3Zl
-Y3Rvci9zdHJpbmcsIGdhaW5pbmcgdGhlIGF0dGFja2VyIHRoZSBhYmlsaXR5
-IHRvIHJlYWQvd3JpdGUgdGhlIHdob2xlIG1lbW9yeSAgaW4gdGhlIGNvbnRl
-eHQgb2YgdGhlIGFmZmVjdGVkIGFwcGxpY2F0aW9uIChUaGUgc2FtZSB0cmlj
-ayBhcyBDVkUtMjAxMy0wNjM0KS4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIElJ
-SS4gSW1wYWN0IEhlYXAgT3ZlcmZsb3cgLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-IElWLiBBZmZlY3RlZCBQQ1JFIHZlcnNpb24gPiA4LjMzICg4LjM0LCA4LjM1
-LCA4LjM2LCA4LjM3IGFyZSBjb25maXJtZWQgdG8gYmUgdnVsbmVyYWJsZSku
-IFBDUkUyIDEwLjEwIGlzIGFsc28gY29uZmlybWVkIHRvIGJlIHZ1bG5lcmFi
-bGUuICBPdGhlciBhcHBsaWNhdGlvbnMgbWF5IGFsc28gYmUgYWZmZWN0ZWQu
-IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLSBWLiBDcmVkaXQgV2VuIEd1YW54aW5n
-IGZyb20gVmVudXN0ZWNoIEFETEFCIGlzIGNyZWRpdGVkIGZvciB0aGlzIHZ1
-bG5lcmFiaWxpdHku
+Note, this fix is in the following released stable kernels at this point
+in time:
+	3.18.140 4.4.180 4.9.177 4.14.120 4.19.44 5.0.17 5.1.3
 
-------=_NextPart_556C5D44_08675610_169F91C3--
+Also, to let oss-security know, the 3.18.y kernel tree is now really
+end-of-life on kernel.org, but if people care about it still, they can
+follow the android-common 3.18 branch as it will continue to get
+security updates for at least the rest of this year, if not maybe a bit
+longer.
 
+thanks,
+
+greg k-h
