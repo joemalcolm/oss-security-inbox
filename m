@@ -1,44 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/15/1
-Message-ID: <20191115084602.GA6327@cbuissar-ltop.localdomain>
-Date: Fri, 15 Nov 2019 09:46:02 +0100
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/22/5
+Message-ID: <CALJHwhTO3R81kFF4sMdWakQ23E9MfR_JS_dAjXbMLtE1AKZbPg@mail.gmail.com>
+Date: Thu, 23 May 2019 00:52:17 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-14869 ghostscript: -dSAFER escape in .charkeys
+Subject: CVE-2019-10142 linux kernel: integer overflow in ioctl handling of fsl hypervisor
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Gday,
 
-This is to publicly disclose CVE-2019-14869 : "-dSAFER escape in
-.charkeys"
+>From the upstream git commit:
 
-This is another instance of a highly priviledged operator being
-accessible by specially crafted Postscript code, that can be used to
-break out of the -dSAFER limitations.
+"The "param.count" value is a u64 that comes from the user. The code later
+in the function assumes that param.count is at least one and if it's not
+then it leads to an Oops when we dereference the ZERO_SIZE_PTR. Also the
+addition can have an integer overflow which would lead us to allocate a
+smaller "pages" array than required. I can't immediately tell what the
+possible run times implications are, but it's safest to prevent the
+overflow."
 
-It was found that `.forceput` operator was present and unprotected in
-the `.charkeys` method and could be retrieved via manipulation of the
-error handler.
+At this time Red Hat products are not affected this code is not built as
+the CONFIG_FSL_HV_MANAGER build option is not enabled by default.    Device
+(/dev/fsl-hv) ownership and permissions which prevent unprivileged users
+from being able to exploit this without some elevated permissions (I think
+this will default to user: root group:root with 0660 mask) however some
+Linux distributions may use udev to set this to non root ownership or
+another group.   In the default configuration, a user who is sufficiently
+privileged to exploit this is likely able to attack the system without it.
 
-The `.charkeys` method was vulnerable since ghostscript-9.15, in one way
-or another: the privileged operator was `superexec` instead of
-`.forceput` until a more recent version.
+I open the discussion and note the CVE listed above for discussions that
+may reference this patch and perhaps save someone some time in
+investigation.
+
+Red Hat bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2019-10142
 
 Upstream fix:
-https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=485904772c5f
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6a024330650e24556b8a18cc654ad00cfecf6c6c
 
-Upstream bug report (currently private):
-https://bugs.ghostscript.com/show_bug.cgi?id=701841
+-- 
 
-Red Hat would like to thank upstream, Artifex, for alerting us about the
-flaw. The vulnerability was originally reported by Paul Manfred & Lukas Schauer.
+Wade Mealing
 
-Note: similarly to other recent ghostscript vulnerabilities, this one is
-mitigated by the recent -dSAFER rework. However, ghostscript-9.27 and
-older are fully impacted.
+Product Security - Kernel, RHCE
 
---
-Cedric Buissart
-Red Hat Product Security
+Red Hat
 
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+<https://www.redhat.com>
+
+wmealing@...hat.com
+<https://red.ht/sig>
+TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
+
