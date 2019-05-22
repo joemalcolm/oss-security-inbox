@@ -1,52 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/10/4
-Message-ID: <2b9f664b4763f745dee7efa526285eb891c99c72.camel@neuling.org>
-Date: Tue, 10 Sep 2019 23:16:53 +1000
-From: Michael Neuling <mikey@...ling.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Michael Ellerman <michael@...erman.id.au>, linuxppc-dev@...ts.ozlabs.org,  linux-kernel@...r.kernel.org, Linuxppc-users <linuxppc-users@...ts.ozlabs.org>,  Gustavo Romero <gromero@...ux.vnet.ibm.com>
-Subject: CVE-2019-15031: Linux kernel: powerpc: data leak with FP/VMX  triggerable by interrupt in transaction
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/22/2
+Message-ID: <alpine.DEB.2.20.1905201533020.21193@tvnag.unkk.fr>
+Date: Wed, 22 May 2019 09:23:51 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: Integer overflows in curl_url_set
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel for powerpc since v4.15 has a bug in it's TM handling during
-interrupts where any user can read the FP/VMX registers of a difference user's
-process. Users of TM + FP/VMX can also experience corruption of their FP/VMX
-state.
+Integer overflows in `curl_url_set()`
+=====================================
 
-To trigger the bug, a process starts a transaction with FP/VMX off and then
-takes an interrupt. Due to the kernels incorrect handling of the interrupt,
-FP/VMX is turned on but the checkpointed state is not updated. If this
-transaction then rolls back, the checkpointed state may contain the state of a
-different process. This checkpointed state can then be read by the process hence
-leaking data from one process to another.
+Project curl Security Advisory, May 22nd 2019 -
+[Permalink](https://curl.haxx.se/docs/CVE-2019-5435.html)
 
-The trigger for this bug is an interrupt inside a transaction where FP/VMX is
-off, hence the process needs FP/VMX off when starting the transaction. FP/VMX
-availability is under the control of the kernel and is transparent to the user,
-hence the user has to retry the transaction many times to trigger this bug. High
-interrupt loads also help trigger this bug.
+VULNERABILITY
+-------------
 
-All 64-bit machines where TM is present are affected. This includes all POWER8
-variants and POWER9 VMs under KVM or LPARs under PowerVM. POWER9 bare metal
-doesn't support TM and hence is not affected.
+libcurl contains two integer overflows in the `curl_url_set()` function that
+if triggered, can lead to a too small buffer allocation and a subsequent heap
+buffer overflow.
 
-The bug was introduced in commit:
-  fa7771176b439 ("powerpc: Don't enable FP/Altivec if not checkpointed")
-Which was originally merged in v4.15
+The flaws only exist on 32 bit architectures and require excessive string
+input lengths.
 
-The upstream fix is here:
-  https://git.kernel.org/torvalds/c/a8318c13e79badb92bc6640704a64cc022a6eb97
+We are not aware of any exploit of this flaw.
 
-The fix can be verified by running the tm-poison from the kernel selftests. This
-test is in a patch here:
-https://patchwork.ozlabs.org/patch/1157467/
-which should eventually end up here:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/tools/testing/selftests/powerpc/tm/tm-poison.c
+INFO
+----
 
-cheers
-Mikey
+There are two entry points to this issue, on 32 bit architectures.
 
+By asking libcurl to parse a string, passing in a string longer than 2GB to
+this API: `curl_url_set(uh, CURLUPART_URL, "string", 0);` triggers the bug.
 
+Asking libcurl to update a URL with a new string, and URL encoded it in the
+process, by passing in a string longer than 1.33GB to this API:
+`curl_url_set(uh, CURLUPART_*, "string", CURLU_URLENCODE);` triggers the bug.
 
+This bug was introduced in August 2018 in
+[commit fb30ac5a2d](https://github.com/curl/curl/commit/fb30ac5a2d63773c52).
 
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2019-5435 to this issue.
 
+CWE-131: Incorrect Calculation of Buffer Size
+
+Severity: 3.7 (Low)
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.62.0 to and including 7.64.1
+- Not affected versions: libcurl < 7.62.0 and >= libcurl 7.65.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2019-5435](https://github.com/curl/curl/commit/5fc28510a4664f4) is already merged.
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.65.0
+
+  B - Apply the patch to your version and rebuild
+
+TIMELINE
+--------
+
+The issue was reported to the curl project on April 24, 2019. The patch was
+communicated to the reporter on April 25, 2019. We contacted distros@...nwall
+on May 15.
+
+curl 7.65.0 was released on May 22 2019, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+Reported by Wenchao Li. Patch by Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se | Get the best commercial curl support there is - from me
+                   | Private help, bug fixes, support, ports, new features
+                   | https://www.wolfssl.com/contact/
