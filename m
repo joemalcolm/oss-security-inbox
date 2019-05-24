@@ -1,63 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/2
-Message-ID: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
-Date: Sat, 15 Jun 2019 11:49:03 -0400
-From: Alex Gaynor <alex.gaynor@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/24/1
+Message-ID: <1475480713.4356448.1558688895617@mail.yahoo.com>
+Date: Fri, 24 May 2019 09:08:15 +0000 (UTC)
+From: Andrea Cosentino <ancosen1985@...oo.com>
+To: Dev <dev@...el.apache.org>, Users <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  JPCERT/CC <vuls@...ert.or.jp>
+Subject: [SECURITY] New security advisory CVE-2019-0188 released for Apache Camel
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
+A new security advisory has been released for Apache Camel, that is fixed in
+the recent 2.24.0 release.
 
-OSS-Fuzz is Google's project to provide continious large-scale fuzzing.
-Since it launched in 2016, it's found just shy of 3000 things it counts as
-security bugs [0][1]. I'm not a developer of OSS-Fuzz (at Google), but I've
-helped several projects integrate with it.
+CVE-2019-0188: Apache Camel vulnerable to XML external entity injection (XXE)
 
-You can see that it's had some amazing success across a variety of projects
--- I've written previously to this list about the things I thought made it
-particularly effective working with ImageMagick and GraphicsMagick [2].
+Severity: MEDIUM
 
-Today I'd like to highlight what I see as a tremendous issue: very few of
-these security bugs ever has a CVE issued for it. This is probably due to a
-few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
-a human reporter who is interested in obtaining one for "credit" purposes,
-c) the sheer number of bugs that we're talking about.
+Vendor: The Apache Software Foundation
 
-CVEs are not important for their own sake. The true value is in all of the
-downstream processing that uses them as input: the Linux distributions that
-use them to figure out what fixes to backport, the docker security scanners
-that look for vulnerable code on the system, the corporate
-threat-intelligence feeds, etc.
+Versions Affected: Apache Camel versions prior to 2.24.0
 
-A test of a random ImageMagick vulnerability against Ubuntu Xenial shows
-that it, indeed, continues to reproduce.
+Description: Apache Camel contains an XML external entity injection (XXE) vulnerability
 
-This is in addition to the >100 security bugs OSS-Fuzz found and publicly
-disclosed due to hitting their disclosure deadline, and which still have
-not been fixed [3].
+Mitigation: Update to version 2.24.0
 
-I haven't analyzed any of these vulnerabilities for exploitability, and I
-doubt anyone else has either.
+Credit: This issue was discovered by Takayoshi Isayama of Mitsui Bussan Secure Directions, Inc. 
 
-I do not have a solution to this problem. I wanted to raise awareness of
-it, in the hope that it would start a discussion which might come to a
-solution.
-
-Alex
+On behalf of the Apache Camel PMC
 
 
-[0]: Security bug is defined as roughly: heap/stack/global buffer overflow,
-heap use after free, heap double free, invalid free, stack use after scope,
-invalid typecast, other non-null segfaults, and a few other things.
-[1]:
-https://bugs.chromium.org/p/oss-fuzz/issues/list?can=1&q=status%3AVerified+Type%3ABug-Security&colspec=ID+Type+Component+Status+Library+Reported+Owner+Summary+Modified&sort=-modified&groupby=&mode=grid&y=Proj&x=Security_Severity&cells=counts&nobtn=Update
-[2]:
-https://alexgaynor.net/2019/feb/05/notes-fuzzing-imagemagick-graphicsmagick/
-[3]:
-https://bugs.chromium.org/p/oss-fuzz/issues/list?can=1&q=Type%3DBug-Security+status%3ANew+label%3ADeadline-exceeded&colspec=ID+Type+Component+Status+Library+Reported+Summary+Modified&sort=-modified&groupby=&mode=grid&y=Proj&x=--&cells=ids&nobtn=Update
-
-
--- 
-All that is necessary for evil to succeed is for good people to do nothing.
-
+--
+Andrea Cosentino 
+----------------------------------
+Apache Camel PMC Chair
+Apache Karaf Committer
+Apache Servicemix PMC Member
+Email: ancosen1985@...oo.com
+Twitter: @oscerd2
+Github: oscerd
