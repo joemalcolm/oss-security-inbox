@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1830" "Tuesday" "10" "December" "2019" "11:25:23" "+0100" "Riccardo Schirone" "rschiron@redhat.com" nil "54" nil "^Cc:" nil nil "12" nil nil (number mark "U       rschiron@red Dec 10   54/1830  " thread-indent "\"Re: [oss-security] CVE-2019-5544 openslp 1.2.1, 2.0.0 heap overflow vulnerability\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-5544 openslp 1.2.1, 2.0.0 heap overflow vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["932" "Friday" "24" "May" "2019" "09:19:51" "+0000" "Andrea Cosentino" "ancosen1985@yahoo.com" nil "33" nil "^Date:" nil nil "5" nil nil (number mark "U       ancosen1985@ May 24   33/932   " thread-indent "\"[oss-security] [SECURITY][ERRATA-CORRIGE] New security advisory CVE-2019-0188 released for Apache Camel\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY][ERRATA-CORRIGE] New security advisory CVE-2019-0188 released for Apache Camel" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24373 invoked by uid 550); 10 Dec 2019 11:33:44 -0000
+Received: (qmail 15619 invoked by uid 550); 24 May 2019 09:30:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,105 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32273 invoked from network); 10 Dec 2019 10:25:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1575973530;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1t6BOfkDS8HrttzRucRRwQKYSUY1gpjTYyT0f+5Sg3k=;
-	b=HD0v4ZDtX1FlpQUnadWwOK+Ks01sDP5LR2XYe0cv9JX3EdV0SUL7oWNh+OgWj3WU9XiEMY
-	W4ckiQjejFQtw3EtisRdjK4GlOpo6zNLajt6xuX8Tj+xzMUfatUQg2lFO8tBbS5F3RtRUE
-	XIRSY1Ly3vXC0Zjlrk072qBC7NC8qIM=
-X-MC-Unique: FTezuUZIM2OpSW4b2lC2Jw-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dpGEuPrz+D5ftmTiWaaYnCDNUS73R4V6SSbec1+SSEw=;
-        b=iA7FEiwntTypIs41P95lYm481E90D4wjq8lFoSEt93Qo5OP7By56XL0rfGNre4LnNr
-         YfqEF0F3SG2Xi4N8+GVYf+zqz0qiANcGBsvx7imUVHNKBEf+qtlAkpysOokTdTc0uxoZ
-         IJPS1gt6noJithbGwIUsgBo/LIVwbigmrK07/P2yz9nw7pkF6WrGNZcOoJnAGBSPWLuT
-         FwaMCgfmlb99IqTjEsB8mzaLfNZ6aw+nZNSN0JYW3f90tw2SrfOMNJXi1dvmYQQ3zGc+
-         Ux8MmB6D3YzuJttbMQwGzcRNlOLqW61vPecIxMXr01TmhbkKD8BsTP6vXz8mLWzOojo7
-         LuZQ==
-X-Gm-Message-State: APjAAAUb7CVZW0rZ3thrvot6OTP1RZ3XSQCcd6YJtraDLCfO7IO2SFss
-	HmX3fXb1rbeMOZhPOgAVryLn5svDBij4PHtSeg9qpjfI9JWlnjiqvVW10Ce/uwJWtyF1t2ywiJg
-	CKhsuPth15UkfIutzJKLjMFN3KwS3
-X-Received: by 2002:a5d:5308:: with SMTP id e8mr2326422wrv.77.1575973524895;
-        Tue, 10 Dec 2019 02:25:24 -0800 (PST)
-X-Google-Smtp-Source: APXvYqwZZ6krVD7eaLL08s4nW2CLLDBtys3kgGtZO3vj4jVAuzk2HeOCkPbSaC7TOFyxqeLcMQHB1g==
-X-Received: by 2002:a5d:5308:: with SMTP id e8mr2326394wrv.77.1575973524682;
-        Tue, 10 Dec 2019 02:25:24 -0800 (PST)
-Message-ID: <20191210102523.GB4424@fedorawork>
-References: <7FAE04BF-0229-4BF8-A2C5-756AD04425E5@vmware.com>
+Received: (qmail 4045 invoked from network); 24 May 2019 09:20:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1558689595; bh=trVCUI2VlnmLfC/Xo4k/K0ZldJ1zd3MEJ1PVakCNIn4=; h=Date:From:Reply-To:To:Subject:References:From:Subject; b=K41kjB1bUrpiEiLVks01IpiS+DUoBNXJfDbsXTPVoUaNhSFwazkrvmFis2F8bdCDrcW8GvP/f1qkVaXLKIofFunKHyhvN0Hcd79iGajzh0uReVYbpJe7fI7roCqA1tyyrPv5gcNRj/7YMyZhnKLcsaHUJCRThNzXhl1YR2g9C4B10AkuxDPQAK4PYbyyTlKpdlRa5pKy02zHCjHRHYyUhhL0eSrkq9I0kaeg+J1AyWRCkXZdHfsADBT7FFO5ddmkr1qYvF74t5FIDmFRim7VQuzohCXTnjgh64a1MoaKLFNJeyuNLP4TAgCBtM2M61mPaRUa/spgt6s+iw4o6ejocw==
+X-YMail-OSG: xh3pmVcVM1kcyOqZ4MIz.VN3fT6M77txLeFNnGBCwcvg8H4dPnvFTdc4NZ3OXwK
+ 0cMrkRng.CWvwmgqdtO2J7KiHXOqnR4d.JJhrLokV6vcuJOGS4r._WfB9uotJ3ca6Fl8SxglyETn
+ JmeyizxnyI85bSHmBpJQuIBOOZXwxt_HXKPQZdTwFKDPxGcBp6_3WNmFAxfjLMB8SA2uIjInAL5Z
+ _rys8vscpCr6PqwE4We.KtxaeMADqfQ6RNe1kct1vYxnyler6zpq6yWdAJffDm6cL9QP9X5zaV7T
+ 7NYoP6EgD.xPAeULuz517f.p94vUV86bc_AHuVUcCduqy6v.wdHR2c4RD.od9o3rcV.D2lPR_YyB
+ g9m5.._6CjK5Qfg557XfP0TGEves71ozcFDxUjmrYAL6UZUk5hC0bK.8OMKG2DAarT.DHqln5inr
+ 4alpciX0FB7kNpmEze7x2MwDLLWk47L71rhVIATBueRJF5ul8xYe2E6YFpa4.g2ohKKz9wWOGyVS
+ f0INMk8QMxU6vwlhOuU7QggMaX_yraYO1fevB.WHZOC1_FLRyhVCHZdNn_XJxOIv39OhH.2lL7v7
+ PXL53guTlywOW4fZFO5UQTUgt38WsmafFK1vTwCTq_J8t8k3AANbhg71yspkqewt6NQbzIcxU1dv
+ jtdjcelgZXMW0S8Z6y60JXq98Oz.RriP_dl8qHUIQdjthz4f9XqhhhqqQQhpVbr85lI8rQdJhLaM
+ DvHbldQYzRw9XkG_Te.WTVuqB0qqKdZrchMZ.acpqO.YMxVKxb79Jl3WHeci56IYldIBxHzb5JJx
+ xd9npL2S25Y4uSLe.lxbDl8kNMhBFwl93WNoriII2LjyFuUr2ySA3XioHBIM_IIdSjygW.kn1Rpe
+ sz7aADYM7xKIxaWD83580Uz7rksUqy156IiMaFgAoRttQJ1rPIudCbjwlwWkHfeGyTU4opJinIQg
+ S4qzoTz_wFndxp5EXlJp5g_qKBhu8VSU_vNDocu1TKdgtwiZI.A3loBcKYHjKew3CIoQ8RZTkTI3
+ uK1bFhesAqNgDmq561cJqzDaBniQUX9MGCd8YCVvEQEm6q7umLusYzWo4KsyuhqCkWd50wwXfdqi
+ 4R5xUgAwDDakXIpMt6hK8jE.2ataHIzIJI9Ko017Y4gQHxUV1mRfnhcOaIWva0Gd2KSU9SY7hgS2
+ W8MXN8THNNl9YYY_XE5HsdlYdIGgyVW82zymSH4gQcWTUXOu9Mtb2XtRD1jp1WEBrD9m._HArKFM
+ 8UGLzsgLTG6DdUl_lqOwvB.sj
+Message-ID: <1569210823.4344775.1558689591923@mail.yahoo.com>
 MIME-Version: 1.0
-In-Reply-To: <7FAE04BF-0229-4BF8-A2C5-756AD04425E5@vmware.com>
-X-PGP-Key: http://keyserv.sr32.net/pks/lookup?op=get&search=0x1E8AB789CF96E110
-User-Agent: Mutt/1.12.1 (2019-06-15)
-X-Mimecast-Spam-Score: 0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="l76fUT7nc3MelDdI"
-Content-Disposition: inline
-Cc: VMware Security Response Center <security@vmware.com>
-Date: Tue, 10 Dec 2019 11:25:23 +0100
-From: Riccardo Schirone <rschiron@redhat.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2019-5544 openslp 1.2.1, 2.0.0 heap overflow
- vulnerability
-To: oss-security@lists.openwall.com
-
---l76fUT7nc3MelDdI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+References: <1569210823.4344775.1558689591923.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.13634 YMailNorrin Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36
+Date: Fri, 24 May 2019 09:19:51 +0000 (UTC)
+From: Andrea Cosentino <ancosen1985@yahoo.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [SECURITY][ERRATA-CORRIGE] New security advisory CVE-2019-0188
+ released for Apache Camel
+To: Dev <dev@camel.apache.org>, Users <users@camel.apache.org>, 
+	Apache Security Team <security@apache.org>, 
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, 
+	JPCERT/CC <vuls@jpcert.or.jp>
 
-On 12/06, VMware Security Response Center wrote:
-> openslp has a heap overflow vulnerability that when exploited may result
-> in memory corruption and a crash of slpd or in remote code execution.
->=20
-> CVE-2019-5544 has been assigned to this issue.
->=20
-> Below you may find:
-> - a copy of the affected code with comments indicating the problem.
-> - patches for openslp versions 1.2.1 and 2.0.0
+A new security advisory has been released for Apache Camel, that is fixed in
+the recent 2.24.0 release.
 
-Are those fixes commited anywhere? I could not find them on GitHub.
+CVE-2019-0188: Apache Camel-XMLJson vulnerable to XML external entity injec=
+tion (XXE)=C2=A0
 
->=20
-> VMware would like to thank the 360Vulcan team working with the 2019
-> Tianfu Cup Pwn Contest for reporting this issue to us.
->=20
-> VMware Security Response Center
->=20
->=20
+Severity: MEDIUM
 
-Thanks,
---=20
-Riccardo Schirone
-Red Hat -- Product Security
-Email: rschiron@redhat.com
-PGP-Key ID: CF96E110
+Vendor: The Apache Software Foundation
 
---l76fUT7nc3MelDdI
-Content-Type: application/pgp-signature; name="signature.asc"
+Versions Affected: Apache Camel versions prior to 2.24.0
 
------BEGIN PGP SIGNATURE-----
+Description: Apache Camel provided contains an XML external entity injectio=
+n (XXE) vulnerability (CWE-611) due to using an outdated vulnerable JSON-li=
+b library. This affects only the camel-xmljson component, which was removed=
+.=C2=A0
 
-iQIzBAEBCgAdFiEE3bt3kyIFawQJu6PaHoq3ic+W4RAFAl3vco8ACgkQHoq3ic+W
-4RBtdA/+KhBAhPozTZyhC0dvbuaaNP0et5nCuFIcu5R9/l4+MbP5jlGRIUrZtmbc
-KmZsmVTvs1ssqPNdzviBt0xHzyLIymPYZMs5AhClw5c6H25tzd+Dg7rp3gVGBrMu
-jyAYZhRKjLSFA+WCA7vxEb7RQW7lTQ9j72iaQN65OvqpfMTNTSULw3yFNMpi6ZNw
-EDkbZXRu5wxmw1j9lLxgjyOhpNngVN07T8NJZh0xlGeXyLYNBZGQ6ulLhXAEzOeH
-xEN5RGKHVQkNtQx0q2Z5uOZlVOyV5Jquuu/U3gB7o4w/eoBrsYOguryBr/tDyw6I
-JfEG746DBndW3DB08zzukeFvCk/qTao8XXsFdwgV/cAMl6MkX3AepCDeIrVKWIKs
-SWWRd0z0BNCiBS6caEs1SHPPxSWYV63yFm7PykXzkgo9V1qTq5hdD5qT1qHbzsM/
-tuOqm3qNSa6vthc8QZyMd+o7QwrASDI/rDAs4TV8shhXKf4PzwQqCZBBr12Yo+HQ
-gpNh8Qr7jOvH8PJ4loJ83fMAu+oxKueJURnxsSNqr5sBwoiRP0QxIqAxrl1Nwbeh
-i8MX9oSFuwjWL5G0+Hz/V1AhWfRkpXNjXFH7KkL4lu8BoPu/ir87oSdOhiUnH75p
-Z/bD6J1yvBD7fYGGAL+s7lnoUKygmLH/OZtgRaO8Fmbh4up5uAw=
-=TToE
------END PGP SIGNATURE-----
+Mitigation: Update to version 2.24.0
 
---l76fUT7nc3MelDdI--
+Credit: This issue was discovered by Takayoshi Isayama of Mitsui Bussan Sec=
+ure Directions, Inc.=C2=A0
 
+On behalf of the Apache Camel PMC
+
+--
+Andrea Cosentino=C2=A0
+----------------------------------
+Apache Camel PMC Chair
+Apache Karaf Committer
+Apache Servicemix PMC Member
+Email: ancosen1985@yahoo.com
+Twitter: @oscerd2
+Github: oscerd
