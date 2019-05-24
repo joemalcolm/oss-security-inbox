@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/17/1
-Message-ID: <CAE=eJsfR_nb62gWqyM+4v5AQwgLziyJwQ9BwPHG+PFO7ezXMTA@mail.gmail.com>
-Date: Wed, 17 Jul 2019 10:15:31 +0300
-From: Tomer Brisker <tbrisker@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-10198: Authorization bypass in Foreman tasks plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/24/2
+Message-ID: <1569210823.4344775.1558689591923@mail.yahoo.com>
+Date: Fri, 24 May 2019 09:19:51 +0000 (UTC)
+From: Andrea Cosentino <ancosen1985@...oo.com>
+To: Dev <dev@...el.apache.org>, Users <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  JPCERT/CC <vuls@...ert.or.jp>
+Subject: [SECURITY][ERRATA-CORRIGE] New security advisory CVE-2019-0188 released for Apache Camel
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+A new security advisory has been released for Apache Camel, that is fixed in
+the recent 2.24.0 release.
 
-An authorization bypass was discovered in the Foreman tasks plugin which
-allows authenticated users to see details of tasks without validating the
-user has proper permissions to do so. Viewing the details requires prior
-knowledge of the task UUID, which can not be easily guessed.
+CVE-2019-0188: Apache Camel-XMLJson vulnerable to XML external entity injection (XXE) 
 
-This affects Foreman tasks since version 0.7.8, and fixed in versions
-0.15.7, 0.16.0 and newer.
-Further information: https://projects.theforeman.org/issues/27275
-Commit fixing the issue:
-https://github.com/theforeman/foreman-tasks/commit/3104a46cf669ae62f9034e9547cb93cc03384cd9
+Severity: MEDIUM
 
--- 
-Have a nice day,
-Tomer Brisker (he/him/his)
-Red Hat Engineering
+Vendor: The Apache Software Foundation
 
+Versions Affected: Apache Camel versions prior to 2.24.0
+
+Description: Apache Camel provided contains an XML external entity injection (XXE) vulnerability (CWE-611) due to using an outdated vulnerable JSON-lib library. This affects only the camel-xmljson component, which was removed. 
+
+Mitigation: Update to version 2.24.0
+
+Credit: This issue was discovered by Takayoshi Isayama of Mitsui Bussan Secure Directions, Inc. 
+
+On behalf of the Apache Camel PMC
+
+--
+Andrea Cosentino 
+----------------------------------
+Apache Camel PMC Chair
+Apache Karaf Committer
+Apache Servicemix PMC Member
+Email: ancosen1985@...oo.com
+Twitter: @oscerd2
+Github: oscerd
