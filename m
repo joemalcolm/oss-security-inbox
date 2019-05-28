@@ -1,24 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/7
-Message-ID: <1543f203-6032-8926-b722-6de2e06d3e71@redhat.com>
-Date: Tue, 25 Jun 2019 08:33:42 -0600
-From: Jeff Law <law@...hat.com>
-To: oss-security@...ts.openwall.com, Matthew Fernandez <matthew.fernandez@...il.com>
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/28/1
+Message-ID: <20190528042345.epozq4a25hwiduhx@yavin>
+Date: Tue, 28 May 2019 14:25:13 +1000
+From: Aleksa Sarai <cyphar@...har.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-15664: docker (all versions) is vulnerable to a symlink-race attack
 Content-Type: text/plain; charset=utf-8
 
-On 6/25/19 8:14 AM, Matthew Fernandez wrote:
-> 
->> On Jun 25, 2019, at 06:41, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us> wrote:
->>
->> * Consumption of uninitialized data (e.g. image data) which is not
->>   used to make important decisions.  This is usually due to unhandled
->>   cases or error handling which does not quit immediately.
-> 
-> C/C++ compilers will infer backwards from uninitialized variable reads (undefined behavior in these languages) that preceding code is unreachable. For example, when moving from GCC 6 series to GCC 7 series we found one of our code bases would produce a binary that would only segfault when compiled at >= -O2. We root caused this to exactly the situation you describe: an error handling path that read uninitialized variables. The compiler appeared to infer backwards that the error check itself was a no-op as the true branch led to unconditional UB (this is my interpretation of its actions; I did not delve into the compiler’s internals).
-Well, as a GCC developer, I can say it doesn't use an uninitialized read
-to allow back-propagation of state to eliminate conditionals.  It may
-have looked that way, but there had to be something else going on.
+There is no released Docker version with a fix for this issue at the
+time of writing. I've submitted a patch upstream[1] which is still
+undergoing code review, and after discussion with them they agreed that
+public disclosure of the issue was reasonable. Since the SUSE bug report
+contains exploit scripts[2], I've attached them here too.
 
+This attack was discovered by myself (Aleksa Sarai), though Tõnis Tiigi
+did mention the possibility of an attack like this in the past (at the
+time we thought the race window was to small to exploit). In addition,
+you could see this exploit as a continuation of some 'docker cp'
+security bugs that I helped find and fix more than 4 years ago in
+2014[3,4] (these were never assigned CVEs because at the time it was
+thought that attacks which used access to docker.sock were not valid
+security bugs).
 
-Jeff
+[[ Overview ]]
+
+The basic premise of this attack is that FollowSymlinkInScope suffers
+from a fairly fundamental TOCTOU attack. The purpose of
+FollowSymlinkInScope is to take a given path and safely resolve it as
+though the process was inside the container. After the full path has
+been resolved, the resolved path is passed around a bit and then
+operated on a bit later (in the case of 'docker cp' it is opened when
+creating the archive that is streamed to the client). If an attacker can
+add a symlink component to the path *after* the resolution but *before*
+it is operated on, then you could end up resolving the symlink path
+component on the host as root. In the case of 'docker cp' this gives you
+read *and* write access to any path on the host.
+
+As far as I'm aware there are no meaningful protections against this
+kind of attack (other than not allowing "docker cp" on running
+containers -- but that only helps with his particular attack through
+FollowSymlinkInScope). Unless you have restricted the Docker daemon
+through AppArmor, then it can affect the host filesystem -- I haven't
+verified if the issue is as exploitable under the default SELinux
+configuration on Fedora/CentOS/RHEL.
+
+[[ Exploit Scripts ]]
+
+Attacked are two reproducers of the issue. They both include a Docker
+image which contains a simple binary that does a RENAME_EXCHANGE of a
+symlink to "/" and an empty directory in a loop, hoping to hit the race
+condition. In both of the scripts, the user is trying to copy a file to
+or from a path containing the swapped symlink.
+
+In the case of run_read.sh, I get a <1% chance of hitting the race
+condition (my attack script is quite dumb, it's possible with better
+timing you'd be able to hit the race window much more effectively).
+However <1% still means it only takes 10s of trying to get read access
+to the host with root permissions.
+
+  % ./run_read.sh &>/dev/null & ; sleep 10s ; pkill -9 run.sh
+  % chmod 0644 ex*/out # to fix up permissions for grep
+  % grep 'SUCCESS' ex*/out | wc -l # managed to get it from the host
+  2
+  % grep 'FAILED'  ex*/out | wc -l # got the file from the container
+  334
+
+However, the run_write.sh script can overwrite the host filesystem in
+very few iterations -- this is because internally Docker has a
+"chrootarchive" concept where the archive is extracted from within a
+chroot. However, Docker doesn't chroot into the container's "/" (which
+would make this exploit ineffective), it chroots into the parent
+directory of the archive target -- which is attacker controlled. As a
+result, this actually results in the attack being more likely to succeed
+(once the chroot has hit the race, the rest of the attack is guaranteed
+to succeed).
+
+The scripts will ask for sudo permissions, but that is only to be able
+to create a "flag file" in /. You could modify the scripts to target
+/etc/shadow instead if you like.
+
+[[ Future Work ]]
+
+In an attempt to come up with a better solution for this problem, I've
+been working on some Linux kernel patches which add the ability to
+safely resolve paths from within a rootfs[5]. But they are still being
+reviewed and it will take a while for userspace to be able to take
+advantage of the new interfaces. However, I am also working on
+redesigning my "secure join" library's API[6] so that we can at least
+better detect these attacks on older kernels and take advantage of [5]
+in newer kernels.
+
+[1]: https://github.com/docker/docker/pull/39252
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=1096726
+[3]: https://github.com/docker/docker/pull/5720
+[4]: https://github.com/docker/docker/pull/6000
+[5]: https://marc.info/?l=linux-fsdevel&m=155835923516235&w=2
+[6]: https://github.com/cyphar/filepath-securejoin
+
+-- 
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
+
+Download attachment "symlink_race.tar.xz" of type "application/x-xz" (2360 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
