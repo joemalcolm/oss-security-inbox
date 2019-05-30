@@ -1,4 +1,9 @@
-Received: (qmail 26079 invoked by uid 550); 11 Apr 2024 13:43:42 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3691" "Thursday" "30" "May" "2019" "18:58:59" "+0800" "huangwen" "huangwen@venustech.com.cn" "<000f01d516d6$af59d490$0e0d7db0$@com.cn>" "167" "[oss-security] =?gb2312?B?Q1ZFLTIwMTktMzg0NqO6TWFydmVsbCBXaWZpIERyaXZlciBtd2lmaQ==?==?gb2312?B?ZXggbXdpZmlleF91cGRhdGVfYnNzX2Rlc2Nfd2l0aF9pZSBIZWFwIA==?==?gb2312?B?T3ZlcmZsb3c=?=" nil nil nil "5" "2019053010:58:59" "[oss-security] =?gb2312?B?Q1ZFLTIwMTktMzg0NqO6TWFydmVsbA==?= =?gb2312?B?V2lmaQ==?= =?gb2312?B?RHJpdmVy?= =?gb2312?B?bXdpZmk=?==?gb2312?B?ZXg=?= =?gb2312?B?bXdpZmlleF91cGRhdGVfYnNzX2Rlc2Nfd2l0aF9pZQ==?= =?gb2312?B?SGVhcA==?= =?gb2312?B?T3ZlcmZsb3c=?=" (number mark "U       huangwen@ven May 30  167/3691  " thread-indent "\"[oss-security] =?gb2312?B?Q1ZFLTIwMTktMzg0NqO6TWFydmVsbA==?= =?gb2312?B?V2lmaQ==?= =?gb2312?B?RHJpdmVy?= =?gb2312?B?bXdpZmk=?==?gb2312?B?ZXg=?= =?gb2312?B?bXdpZmlleF91cGRhdGVfYnNzX2Rlc2Nfd2l0aF9pZQ==?= =?gb2312?B?SGVhcA==?= =?gb2312?B?T3ZlcmZsb3c=?=\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] =?gb2312?B?Q1ZFLTIwMTktMzg0NqO6TWFydmVsbA==?= =?gb2312?B?V2lmaQ==?= =?gb2312?B?RHJpdmVy?= =?gb2312?B?bXdpZmk=?==?gb2312?B?ZXg=?= =?gb2312?B?bXdpZmlleF91cGRhdGVfYnNzX2Rlc2Nfd2l0aF9pZQ==?= =?gb2312?B?SGVhcA==?= =?gb2312?B?T3ZlcmZsb3c=?=" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30647 invoked by uid 550); 30 May 2019 12:21:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,59 +12,191 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11577 invoked from network); 11 Apr 2024 08:22:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712823766; x=1713428566; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=HeZDSb53o3G20EDpBt0V5eNDb9AvRlhgvD401/qIb/o=;
-        b=KvsIxeAK7WBhKZHRTaIQC/RAwnYnvgDDIeougA6WH1SQkuR/HYypj8SiZBz1ntACTV
-         amRbJO8ir6pK5zkNhJSMKdDmASyurFpR2+wZUgYuq7pUHhHOS97KOxc8rI7ixsMrj5s2
-         YfVuD51HQ/NrLUt/GLJy4n2t5gn67EGzde7OoT3esAHv/gViYxiIg5FEArmSK9OOceKM
-         cX+tR5xsWX49+qOh7W9jmuZiUPeyfJc9dClmr2fX8SWjNDjSNAl7VEoFoIAiy17J71Oo
-         krr927fSeGRVkoSGqfa81yZr4uKHaOYeW4hlhRu87XSzOJ4wS8cn/Cg27ymyoJ9tco6O
-         AWkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712823766; x=1713428566;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HeZDSb53o3G20EDpBt0V5eNDb9AvRlhgvD401/qIb/o=;
-        b=nL1jPO0lkUwACR0ZDxzp7yVbwmypA3SoLG968HxZQ8nhRpj0sb1+tkWvcLCc/QW5JM
-         T8/gC0RJMnxhKVtKJyAw3nbAv5mcBWaFDl2B2BqMhMOSDsl58RXoWhD5w46tbpJoMuGF
-         WwFQ9z/7MMJSnvD3YjeeyrkWfjypO441kUpSyVrImIXLjYx280wX3diSbdPzKGXR6Yzv
-         6964EOhfwbc2zjTjlxI9lE+pbJXDwCH5XcrJ/OatYudskdnmUEcnCTAkFJ0PZre9yyXS
-         e+YiGFhRK/lz75PJ2rl3+PQNafm5yFbM9d5WywgbXPVgTCT+XJgeVkSnTP0DTGS+iLQn
-         D2QA==
-X-Gm-Message-State: AOJu0YxVEGFwC3TGBQ6rvQnPmgARjOD2lSJho7J2vr4LagY5oz2tz2/2
-	0wjD2fqsmy7FKcN93yLAqR2TN0biqHuggpWhPqPXdrU8EZjamOCIOyc/OvXGtxi37gHRg6xc6BI
-	KmbG6bku0FSohFbfQnQchUYvtEGc=
-X-Google-Smtp-Source: AGHT+IHVhBxRWDnxVeFfpH8C7diH/966A8ZrglOtauWcJAPeHXxJX8WdJ4c5EyNrT8yZDwTZXCSz3tDcuOBLyADlKGg=
-X-Received: by 2002:a81:778a:0:b0:615:4e88:c029 with SMTP id
- s132-20020a81778a000000b006154e88c029mr4982131ywc.51.1712823765980; Thu, 11
- Apr 2024 01:22:45 -0700 (PDT)
+Received: (qmail 11858 invoked from network); 30 May 2019 10:59:15 -0000
+From: "huangwen" <huangwen@venustech.com.cn>
+To: <oss-security@lists.openwall.com>
+Date: Thu, 30 May 2019 18:58:59 +0800
+Message-ID: <000f01d516d6$af59d490$0e0d7db0$@com.cn>
 MIME-Version: 1.0
-From: Tianyu Chen <billchenchina2001@gmail.com>
-Date: Thu, 11 Apr 2024 16:22:35 +0800
-Message-ID: <CAG-20GTcXSo3=1UxEbRf7Ut_2j_g=Ru4yGHUQOxNSLMvvR-Umg@mail.gmail.com>
-To: oss-sec@mknap.com
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000022614e0615cddc4d"
-Subject: [oss-security] Re: CWE-121, CWE-122: libfreeimage 3.40-3.18/19+ buffer overflow
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_0010_01D51719.BD7D1490"
+X-Mailer: Microsoft Office Outlook 12.0
+Thread-Index: AdUW1q56iF2D4BQjT0yqpH9mVWgpRA==
+Content-Language: zh-cn
+x-cr-hashedpuzzle: BSzf Bpq4 EKU5 Ef8x EyZK FU0t FW6v Gtpb G24y G8st HD+m IwfH J+1/ KCMp KlZw K8Vl;1;bwBzAHMALQBzAGUAYwB1AHIAaQB0AHkAQABsAGkAcwB0AHMALgBvAHAAZQBuAHcAYQBsAGwALgBjAG8AbQA=;Sosha1_v1;7;{C516DB79-7245-47B8-8643-67B566B52DAB};aAB1AGEAbgBnAHcAZQBuAEAAdgBlAG4AdQBzAHQAZQBjAGgALgBjAG8AbQAuAGMAbgA=;Thu, 30 May 2019 10:58:58 GMT;QwBWAEUALQAyADAAMQA5AC0AMwA4ADQANgAa/00AYQByAHYAZQBsAGwAIABXAGkAZgBpACAARAByAGkAdgBlAHIAIABtAHcAaQBmAGkAZQB4ACAAbQB3AGkAZgBpAGUAeABfAHUAcABkAGEAdABlAF8AYgBzAHMAXwBkAGUAcwBjAF8AdwBpAHQAaABfAGkAZQAgAEgAZQBhAHAAIABPAHYAZQByAGYAbABvAHcA
+x-cr-puzzleid: {C516DB79-7245-47B8-8643-67B566B52DAB}
+X-FangMail-Miltered: at mailgateway1 with ID 5CEFB776.000 by FangMail milter!
+X-FangMail-Envelope: 1559213942/52B7C1FF5B/5CEFB776.000/36.110.117.222/[36.110.117.222]/DESKTOPJ0GVDJH/<huangwen@venustech.com.cn>
+X-FangMail-Bounce-Flag: 1559213942.5CEFB776.000
+X-FangMail-Outinfo: 1559213942/5CEFB776.000/52B7C1FF5B/huangwen@venustech.com.cn/1
+Subject: [oss-security] =?gb2312?B?Q1ZFLTIwMTktMzg0NqO6TWFydmVsbCBXaWZpIERyaXZlciBtd2lmaQ==?=
+	=?gb2312?B?ZXggbXdpZmlleF91cGRhdGVfYnNzX2Rlc2Nfd2l0aF9pZSBIZWFwIA==?=
+	=?gb2312?B?T3ZlcmZsb3c=?=
 
---00000000000022614e0615cddc4d
-Content-Type: text/plain; charset="UTF-8"
+------=_NextPart_000_0010_01D51719.BD7D1490
+Content-Type: text/plain;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Michael,
+Hi,
 
-I believe there may be a duplicate report for freeimage that you should be
-aware of. You can find it at the following link:
+There is a heap overflow in marvell wifi driver in Linux kernel allows
+remote attackers to cause a denial of service(system crash) or possibly
+execute arbitrary code.
 
-https://github.com/Ruanxingzhi/vul-report/tree/master/freeimage-r1909
+=20
 
-The linked report includes CVE-2024-28562, CVE-2024-28563, CVE-2024-28564,
-CVE-2024-28565, and more up to CVE-2024-28584.
+Description
 
-Best regards,
-Tianyu Chen
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
---00000000000022614e0615cddc4d--
+The problem is inside mwifiex_update_bss_desc_with_ie function in
+drivers/net/wireless/marvell/mwifiex/scan.c.=20
+
+When STA connects to AP, mwifiex_update_bss_desc_with_ie function will be
+called to update bss descriptor.In mwifiex_update_bss_desc_with_ie function,
+the IEs of beacon packet is parsed. When processing WLAN_EID_SUPP_RATES
+element,it does not check the length of rates data before calling memcpy,the
+dst buffer bss_entry->data_rates is a array with size
+MWIFIEX_SUPPORTED_RATES(14).=20
+
+Remote attacker can build a fakeAP sending malicous beacon packet with long
+WLAN_EID_SUPP_RATES element(element_len>14)=A3=ACwhen victim STA connects t=
+o the
+fakeAP, will trigger the heap buffer overflow.
+
+=20
+
+int mwifiex_update_bss_desc_with_ie(struct mwifiex_adapter *adapter,
+
+                                       struct mwifiex_bssdescriptor
+*bss_entry)
+
+{
+
+.....
+
+         /* Process variable IE */
+
+         while (bytes_left >=3D 2) {
+
+                  element_id =3D *current_ptr;
+
+                  element_len =3D *(current_ptr + 1);
+
+                  total_ie_len =3D element_len + sizeof(struct
+ieee_types_header);
+
+=20
+
+                  if (bytes_left < total_ie_len) {
+
+                          mwifiex_dbg(adapter, ERROR,
+
+                                       "err: InterpretIE: in processing\t"
+
+                                       "IE, bytes left < IE length\n");
+
+                          return -1;
+
+                  }
+
+                  switch (element_id) {
+
+                  case WLAN_EID_SSID:
+
+                          bss_entry->ssid.ssid_len =3D element_len;
+
+                          memcpy(bss_entry->ssid.ssid, (current_ptr + 2),=
+=20=20=20
+
+                                 element_len);
+
+                          mwifiex_dbg(adapter, INFO,
+
+                                       "info: InterpretIE: ssid: %-32s\n",
+
+                                       bss_entry->ssid.ssid);
+
+                          break;
+
+=20
+
+                  case WLAN_EID_SUPP_RATES:
+
+                          memcpy(bss_entry->data_rates, current_ptr + 2,
+//overflow!!!!!!!!!!!
+
+                                 element_len);
+
+                          memcpy(bss_entry->supported_rates, current_ptr +
+2,
+
+                                 element_len);
+
+                          rate_size =3D element_len;
+
+                          found_data_rate_ie =3D true;
+
+                          break;
+
+=20
+
+                  case WLAN_EID_FH_PARAMS:
+
+                          fh_param_set =3D
+
+                                   (struct ieee_types_fh_param_set *)
+current_ptr;
+
+                          memcpy(&bss_entry->phy_param_set.fh_param_set,
+
+                                 fh_param_set,
+
+                                 sizeof(struct ieee_types_fh_param_set));=20
+
+                          break;
+
+                  ......
+
+         }
+
+}
+
+=20
+
+=20
+
+Credit
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+This issue was discovered by huangwen of ADLab of Venustech
+
+=20
+
+=20
+
+Patch
+
+=3D=3D=3D=3D=3D
+
+https://lore.kernel.org/linux-wireless/20190529125220.17066-1-tiwai@suse.de/
+
+https://lore.kernel.org/linux-wireless/20190529125220.17066-2-tiwai@suse.de/
+
+https://lore.kernel.org/linux-wireless/20190529125220.17066-3-tiwai@suse.de/
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+
+------=_NextPart_000_0010_01D51719.BD7D1490--
+
