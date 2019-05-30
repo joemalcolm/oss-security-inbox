@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/4
-Message-ID: <20191209151808.GA35251@orca>
-Date: Mon, 9 Dec 2019 15:18:08 +0000
-From: Leonid Isaev <leonid.isaev@...x.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/30/1
+Message-ID: <CAP+3qq608wFjzEuSyGUSa1D8Lwnu7_XxoSuqBM94ZM9iYBfHqw@mail.gmail.com>
+Date: Thu, 30 May 2019 10:35:35 +0900
+From: Akira Ajisaka <aajisaka@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shell wildcards considered dangerous?
+Subject: CVE-2018-8029: Apache Hadoop Privilege escalation vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 09, 2019 at 03:42:47PM +0100, Noel Kuntze wrote:
-> That is only a problem if the developer(s) foolishly didn't use "--" to
-> terminate the command line options or they did, but the argument parser of
-> the called program does not understand that "--" is a command line option
-> terminator.
+CVE-2018-8029: Apache Hadoop Privilege escalation vulnerability
 
-I'm sorry, but this has nothing to do with developers of PROGRAM to use or not
-user "--", but rather with the user not properly sanitizing the input to the
-PROGRAM and not understanding how shell works. Specifically, doing
-PROGRAM *.tar is just asking for trouble for many reasons, not mentioned in the
-original email. See [1] (and in general BashPitfalls) for a proper discussion...
+Severity: Critical
 
-HTH,
-L.
+Vendor: The Apache Software Foundation
 
-[1] https://mywiki.wooledge.org/BashPitfalls#for_f_in_.24.28ls_.2A.mp3.29
+Versions Affected:
+3.0.0-alpha1 to 3.1.0, 2.9.0 to 2.9.1, 2.2.0 to 2.8.4
 
--- 
-Leonid Isaev
-Linux Support Engineer
-iFAX Solutions, Inc.
-www.ifax.com
+Description:
+A user who can escalate to yarn user can possibly run arbitrary
+commands as root user.
 
-+1.215.825.8700 ext 8126 (office)
-+1.215.825.8767 (fax)
+Mitigation:
+Users should upgrade to Apache Hadoop 2.8.5, 2.9.2, 3.1.1 or upper.
+If you are using the affected version of Apache Hadoop and there are
+any users who can escalate to yarn user and cannot escalate to root user,
+remove the permission to escalate to yarn user from them.
+
+Credit:
+This issue was discovered by Miklos Szegedi.
