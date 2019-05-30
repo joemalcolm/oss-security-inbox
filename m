@@ -1,63 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/11/1
-Message-ID: <2eb0be7f-bd31-e304-1787-09e47007d32a@suse.com>
-Date: Mon, 11 Nov 2019 17:49:45 +0100
-From: Wolfgang Frisch <wolfgang.frisch@...e.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-2201: libjpeg-turbo: code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/31/1
+Message-ID: <CAHHNuYcXG6rqgA+y3efW8yb5Kbd9CgJq_MfgKz8cUgp4AqbXRg@mail.gmail.com>
+Date: Thu, 30 May 2019 14:57:25 -0700
+From: Brandon Philips <bphilips@...hat.com>
+To: "Kubernetes developer/contributor discussion" <kubernetes-dev@...glegroups.com>,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss <kubernetes-security-discuss@...glegroups.com>,  oss-security@...ts.openwall.com,  kubernetes-distributors-announce@...glegroups.com
+Subject: [ANNOUNCE] Security regression in Kubernetes kubelet v1.13.6 and v1.14.2 only - CVE-2019-11245
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Kubernetes Community-
 
-there is an integer overflow and subsequent heap corruption in
-libjpeg-turbo 2.0.3 and earlier. While I did not have anything to do
-with the discovery of the issue [1][2], I'd like to raise attention due
-to the high possible impact.
+A security-related issue was discovered in kubelet versions v1.13.6 and
+v1.14.2. The issue is medium severity and can be mitigated with a pod spec
+configuration change OR by *****downgrading*** kubelets to v1.13.5 or
+v1.14.1.
 
-Steps to reproduce:
-- Create a JPEG image, size 26755 x 26755, RGB with 8 bits per channel.
-- Run gdb tjbench
+***Vulnerability Details***
 
->(gdb) run reproducer.jpeg
->
-> Image size: 26755 x 26755
-> 
-> Program received signal SIGSEGV, Segmentation fault.
-> 0x00007ffff7d44d9d in __memset_avx2_erms () from /lib64/libc.so.6
-> (gdb) bt
-> #0  0x00007ffff7d44d9d in __memset_avx2_erms () from /lib64/libc.so.6
-> #1  0x0000555555558f7a in memset (__len=18446744071562074395, __ch=127, __dest=<optimized out>) at /usr/include/bits/string_fortified.h:71
-> #2  decomp (srcBuf=0x0, jpegBuf=0x7fffffffd8e0, jpegSize=0x7fffffffd8e8, dstBuf=<optimized out>, w=26755, h=26755, subsamp=2, jpegQual=0, 
->     fileName=0x7fffffffdfaa "CVE-2019-2201-reproducer-SEGFAULT-26755x26755", tilew=26755, tileh=26755) at /usr/src/debug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:174
-> #3  0x0000555555557103 in decompTest (fileName=0x7fffffffdfaa "CVE-2019-2201-reproducer-SEGFAULT-26755x26755") at /usr/src/debug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:712
-> #4  main (argc=<optimized out>, argv=<optimized out>) at /usr/src/debug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:1003
+When a container runs for the first time on a node, it correctly respects
+the UID set by the container image (e.g. USER in a Dockerfile). However, on
+the second run, the container will run as UID 0 (aka root) which can be an
+undesired escalated privilege.
 
-We identified that it crashed on writing to a libc.so mapping.
+Pods that specify an explicit runAsUser are unaffected and continue to work
+properly.
 
-The reproducer is also described in our bug report [3].
+PodSecurityPolicies that force a runAsUser setting are also unaffected and
+continue to work properly.
 
-[1] https://source.android.com/security/bulletin/2019-11-01
-[2] https://github.com/libjpeg-turbo/libjpeg-turbo/issues/361
-[3] https://bugzilla.suse.com/show_bug.cgi?id=1156402
+Pods that specify mustRunAsNonRoot:true will refuse to start the container
+as uid 0, which can affect availability.
 
-Best regards,
-Wolfgang Frisch
+This issue is filed as CVE-2019-11245. See
+https://github.com/kubernetes/kubernetes/issues/78308 for more details.
 
--- 
-Wolfgang Frisch <wolfgang.frisch@...e.com>
-Security Engineer
-OpenPGP fingerprint: A2E6 B7D4 53E9 544F BC13  D26B D9B3 56BD 4D4A 2D15
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 Nuremberg, Germany
-(HRB 36809, AG Nürnberg)
-Managing Director: Felix Imendörffer
+***Am I vulnerable?***
+
+Run this to print out all nodes and their kubelet version:
 
 
+kubectl get nodes -o=jsonpath='{range
+.items[*]}{.status.nodeInfo.machineID}{"\t"}{.status.nodeInfo.kubeletVersion}{"\n"}{end}'
+
+If the output lists Kubelet versions listed below you are running a
+vulnerable version:
+
+   -
+
+   v1.13.6
+   -
+
+   v1.14.2
 
 
+***How do I mitigate the vulnerability?***
+
+There are two potential mitigations to this issue:
 
 
+   -
+
+   Downgrade to kubelet v1.13.5 or v1.14.1 as instructed by your Kubernetes
+   distribution.
+   -
+
+   Set RunAsUser on all pods in the cluster that should not run as root.
+   This is a Security Context feature; the docs are at
+   https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 
 
+***How do I upgrade?***
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+An upgrade addressing this issue is not yet available. But, will appear in
+v1.13.7 and v1.14.3 ASAP and will be announced here.
+
+***Thank you***
+
+Thank you to the <https://github.com/kubernetes/kubernetes/pull/78178> many
+<https://github.com/kubernetes/kubernetes/issues/78308> reporters
+<https://github.com/rancher/k3s/issues/511>, and Tim Pepper as release
+manager for the coordination in making this announcement.
+
+Thank You,
+
+Brandon on behalf of the Kubernetes Product Security Committee
+
