@@ -1,62 +1,144 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/02/2
-Message-ID: <06a94797-a7f9-2b5e-855d-9e779914d36a@mail.muni.cz>
-Date: Wed, 2 Oct 2019 23:00:22 +0200
-From: Ján Jančár <445358@...l.muni.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/31/2
+Message-Id: <F49D0793-E4F5-4B45-BD01-239C75DA13FD@beckweb.net>
+Date: Fri, 31 May 2019 16:13:45 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Minerva: ECDSA key recovery from bit-length leakage
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-*Webpage*
-=========
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-https://minerva.crocs.fi.muni.cz/
+* Gitea Plugin 1.1.2
+* InfluxDB Plugin 1.22
+* Pipeline Maven Integration Plugin 3.7.1
+* Pipeline Remote Loader Plugin 1.5
+* Warnings Next Generation Plugin 5.1.0
 
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-*Vulnerability*
-===============
+* Artifactory Plugin
 
-Minerva is a group of vulnerabilities in ECDSA/EdDSA implementations that allows
-for practical recovery of the long-term private key.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-05-31/
 
-We have found implementations which leak the bit-length of the scalar during
-scalar multiplication on an elliptic curve. This leakage might seem minuscule as
-the bit-length presents a very small amount of information present in the
-scalar. However, in the case of ECDSA/EdDSA signature generation, the leaked
-bit-length of the random nonce is enough for full recovery of the private key
-used after observing a few hundreds to a few thousands of signatures on known
-messages, due to the application of lattice techniques.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-https://minerva.crocs.fi.muni.cz/
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-
-*Affected*
-==========
-
- * Cards
-   - Athena IDProtect
- * Libraries
-   - libgcrypt upto 1.8.4, fixed in 1.8.5
-   - wolfSSL/wolfCrypt upto 4.0.0, fixed in 4.1.0
-   - MatrixSSL upto 4.2.1
-   - SunEC/OpenJDK/OracleJDK upto JDK 12
-   - Crypto++ upto 8.2.0
- * Other
-   - https://github.com/indutny/elliptic/ 875 stars,2670640 uses
-   - https://github.com/kjur/jsrsasign 2015 stars,7406 uses
+---
 
 
-*CVEs*
-======
+SECURITY-1373 / CVE-2019-10325
+Warnings Next Generation Plugin rendered the name of a custom warnings 
+parser unescaped on Jenkins web pages. This allowed attackers with 
+Job/Configure permission to define a custom parser whose name included 
+HTML and JavaScript, resulting in a persisted cross-site scripting 
+vulnerability.
 
- * CVE-2019-15809 - Athena IDProtect cards
- * CVE-2019-13627 - libgcrypt
- * CVE-2019-13628 - wolfSSL/wolfCrypt
- * CVE-2019-13629 - MatrixSSL
- * CVE-2019-2894  - SunEC/OpenJDK/OracleJDK
- * CVE-2019-14318 - Crypto++
-
-
+Warnings Next Generation Plugin now properly escapes custom warnings 
+parser names.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+SECURITY-1391 / CVE-2019-10326
+Warnings Next Generation Plugin did not require that requests sent to the 
+endpoint used to reset warning counts use POST. This resulted in a cross-
+site request forgery vulnerability that allows attackers to reset warning 
+counts for future builds.
+
+Warnings Next Generation Plugin now requires that these requests be sent 
+via POST.
+
+
+SECURITY-1409 / CVE-2019-10327
+Pipeline Maven Integration Plugin did not configure its XML parser in a 
+way that would prevent XML External Entity (XXE) processing.
+
+This allowed attackers able to control the contents of a temporary 
+directory on the agent that the Maven build is executing on to have 
+Jenkins parse a maliciously crafted XML file that uses external entities 
+for extraction of secrets from the Jenkins master, server-side request 
+forgery, or denial-of-service attacks.
+
+Pipeline Maven Integration Plugin no longer processes XML External 
+Entities in XML documents.
+
+
+SECURITY-921 / CVE-2019-10328
+Pipeline Remote Loader Plugin provides a custom Script Security whitelist. 
+Those entries apply to all scripts with sandbox protection, such as 
+Pipeline.
+
+One entry provided here was unsafe, as it allowed invoking arbitrary 
+methods, bypassing sandbox protection.
+
+The unsafe whitelist entry has been removed.
+
+
+SECURITY-1403 / CVE-2019-10329
+InfluxDB Plugin stored target passwords unencrypted in its global 
+configuration file on the Jenkins master. These credentials could be 
+viewed by users with access to the master file system.
+
+InfluxDB Plugin now stores its passwords encrypted.
+
+
+SECURITY-1046 / CVE-2019-10330
+Multibranch pipelines are typically configured so that only committers to 
+the repository are able to effectively propose changes to Jenkinsfiles. 
+Changes to Jenkinsfiles in pull requests created by other users would not 
+be trusted, and the target branch’s Jenkinsfile content is used instead.
+
+Gitea Plugin did not implement this behavior. Attackers without commit 
+access to the Git repository could therefore propose changes to 
+Jenkinsfiles and have those be applied for PR builds despite the 
+configuration declaring them to be untrusted.
+
+Gitea Plugin now implements the desired behavior of only trusting pull 
+request content when those are trusted.
+
+
+SECURITY-1015 (1) / CVE-2019-10321 (CSRF), CVE-2019-10322 (permission check)
+Artifactory Plugin does not perform permission checks on a method 
+implementing form validation. This allows users with Overall/Read access 
+to Jenkins to connect to an attacker-specified URL using attacker-
+specified credentials IDs obtained through another method, capturing 
+credentials stored in Jenkins.
+
+Additionally, this form validation method does not require POST requests, 
+resulting in a cross-site request forgery vulnerability.
+
+As of publication of this advisory, no release containing a fix is 
+available.
+
+
+SECURITY-1015 (2) / CVE-2019-10323
+Artifactory Plugin provides a list of applicable credential IDs to allow 
+users configuring the plugin to select the one to use.
+
+This functionality does not correctly check permissions, allowing any user 
+with Overall/Read permission to get a list of valid credentials IDs. Those 
+can be used as part of an attack to capture the credentials using another 
+vulnerability.
+
+As of publication of this advisory, no release containing a fix is 
+available.
+
+
+SECURITY-1347 / CVE-2019-10324
+Artifactory Plugin implements a number of API endpoints allowing users to 
+trigger various actions related to releasing and promotion.
+
+These endpoints do not require POST requests, resulting in a cross-site 
+request forgery vulnerability.
+
+As of publication of this advisory, no release containing a fix is 
+available.
+
