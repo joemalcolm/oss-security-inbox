@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2528" "Thursday" "20" "August" "2015" "00:26:28" "+0300" "Solar Designer" "solar@openwall.com" "<20150819212628.GA20648@openwall.com>" "54" "Re: [oss-security] CVE request - Processor side channels using out of order execution" nil nil nil "8" "2015081921:26:28" "[oss-security] CVE request - Processor side channels using out of order execution" (number mark "        solar@openwa Aug 20   54/2528  " thread-indent "\"Re: [oss-security] CVE request - Processor side channels using out of order execution\"\n") "<3F44AEC5-FF76-430D-BD8E-CC0E2E6BBDC0@trailofbits.com>" ("<9BA73C86-0475-4DBD-937E-AD20DD41C622@trailofbits.com>" "<20150812141846.GA8647@openwall.com>" "<E8AE9E00-F8B6-4823-B494-04138227F312@trailofbits.com>" "<E7604F6D-D738-4D0A-B29F-B3916B03792E@trailofbits.com>" "<CANO=Ty0hAqSf+-42msK6p8vwt4F4AswSDbmjxw5ZeNSSFDMDsg@mail.gmail.com>" "<3F44AEC5-FF76-430D-BD8E-CC0E2E6BBDC0@trailofbits.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5124" "Friday" "31" "May" "2019" "16:13:45" "+0200" "Daniel Beck" "ml@beckweb.net" "<F49D0793-E4F5-4B45-BD01-239C75DA13FD@beckweb.net>" "139" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "5" "2019053114:13:45" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n May 31  139/5124  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13934 invoked by uid 550); 19 Aug 2015 21:26:36 -0000
+Received: (qmail 20447 invoked by uid 550); 31 May 2019 14:13:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,157 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13909 invoked from network); 19 Aug 2015 21:26:35 -0000
-Message-ID: <20150819212628.GA20648@openwall.com>
-References: <9BA73C86-0475-4DBD-937E-AD20DD41C622@trailofbits.com> <20150812141846.GA8647@openwall.com> <E8AE9E00-F8B6-4823-B494-04138227F312@trailofbits.com> <E7604F6D-D738-4D0A-B29F-B3916B03792E@trailofbits.com> <CANO=Ty0hAqSf+-42msK6p8vwt4F4AswSDbmjxw5ZeNSSFDMDsg@mail.gmail.com> <3F44AEC5-FF76-430D-BD8E-CC0E2E6BBDC0@trailofbits.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3F44AEC5-FF76-430D-BD8E-CC0E2E6BBDC0@trailofbits.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 20 Aug 2015 00:26:28 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request - Processor side channels using out of order execution
+Received: (qmail 20425 invoked from network); 31 May 2019 14:13:58 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Message-Id: <F49D0793-E4F5-4B45-BD01-239C75DA13FD@beckweb.net>
+Date: Fri, 31 May 2019 16:13:45 +0200
 To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.9.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1559312038;216467e9;
+X-HE-SMSGID: 1hWiHz-0008M3-DY
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Sophia, Kurt, all -
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-This is an old-fashioned mailing list, not business correspondence.
-Top-posting and over-quoting are discouraged.  Also discouraged are what
-I call thanks-only postings.  It's polite to thank the person, but
-unless you have something valuable to add, those postings are not worth
-distributing to all the list subscribers.
+* Gitea Plugin 1.1.2
+* InfluxDB Plugin 1.22
+* Pipeline Maven Integration Plugin 3.7.1
+* Pipeline Remote Loader Plugin 1.5
+* Warnings Next Generation Plugin 5.1.0
 
-To make my own posting more valuable (rather than moderation-only):
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-> > On Wed, Aug 19, 2015 at 2:29 PM, sophia <sophia@trailofbits.com> wrote:
-> >> Just wondering how to get more information about the process for
-> >> requesting a CVE for this vulnerability.
+* Artifactory Plugin
 
-Kurt provided that, but more importantly: you should be patient.  MITRE
-are often slow at assigning CVE IDs.  It's only been a week.  They often
-need several weeks, unfortunately.  (In contrast, Kurt is usually quick
-to assign CVE IDs on the distros list, but this only works for not yet
-public issues and is only acceptable if those issues are disclosed to
-the distros list primarily for the purpose of informing the distros
-rather than for acquiring a CVE ID.  Having a CVE ID is too unimportant
-to be worth the risk.)
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-05-31/
 
-> >> On Aug 12, 2015, at 12:24 PM, sophia <sophia@trailofbits.com> wrote:
-> >>> The vulnerability definitely applies to hypervisors as used by popular
-> >>> commercial cloud platforms. These hypervisors try to guarantee that one
-> >>> user's processes in a VM are meant to be isolated from another VM's.
-> >>> Isolation is referenced as a feature multiple times in Xen's spec:
-> >>> http://www-archive.xenproject.org/files/Marketing/WhyXen.pdf.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-WhyXen.pdf does mention isolation, but it doesn't mention covert
-channels, leaving it ambiguous (to those of us aware of the possibility
-of covert channels) what level of isolation is actually intended.  Maybe
-they need to revise the document to explicitly exclude covert channels.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Historically, access control didn't automatically imply lack of covert
-channels.  For example, per the Orange Book covert channels weren't even
-considered for the lower classes such as C1 and C2, where typical and
-"Trusted" multi-user systems fell.  They are only considered starting
-with B2 and B3, which rarely applied:
+---
 
-https://en.wikipedia.org/wiki/Trusted_Computer_System_Evaluation_Criteria#Divisions_and_classes
 
-Once again, to avoid misunderstanding, I only use this as a historical
-reference.
+SECURITY-1373 / CVE-2019-10325
+Warnings Next Generation Plugin rendered the name of a custom warnings=20
+parser unescaped on Jenkins web pages. This allowed attackers with=20
+Job/Configure permission to define a custom parser whose name included=20
+HTML and JavaScript, resulting in a persisted cross-site scripting=20
+vulnerability.
 
-> >>> Also, I will release all of my code on my website when I get back to my
-> >>> server later today.
+Warnings Next Generation Plugin now properly escapes custom warnings=20
+parser names.
 
-Have you?  Please post the URL in here.
 
-Thank you!
+SECURITY-1391 / CVE-2019-10326
+Warnings Next Generation Plugin did not require that requests sent to the=20
+endpoint used to reset warning counts use POST. This resulted in a cross-
+site request forgery vulnerability that allows attackers to reset warning=20
+counts for future builds.
 
-Alexander
+Warnings Next Generation Plugin now requires that these requests be sent=20
+via POST.
+
+
+SECURITY-1409 / CVE-2019-10327
+Pipeline Maven Integration Plugin did not configure its XML parser in a=20
+way that would prevent XML External Entity (XXE) processing.
+
+This allowed attackers able to control the contents of a temporary=20
+directory on the agent that the Maven build is executing on to have=20
+Jenkins parse a maliciously crafted XML file that uses external entities=20
+for extraction of secrets from the Jenkins master, server-side request=20
+forgery, or denial-of-service attacks.
+
+Pipeline Maven Integration Plugin no longer processes XML External=20
+Entities in XML documents.
+
+
+SECURITY-921 / CVE-2019-10328
+Pipeline Remote Loader Plugin provides a custom Script Security whitelist.=
+=20
+Those entries apply to all scripts with sandbox protection, such as=20
+Pipeline.
+
+One entry provided here was unsafe, as it allowed invoking arbitrary=20
+methods, bypassing sandbox protection.
+
+The unsafe whitelist entry has been removed.
+
+
+SECURITY-1403 / CVE-2019-10329
+InfluxDB Plugin stored target passwords unencrypted in its global=20
+configuration file on the Jenkins master. These credentials could be=20
+viewed by users with access to the master file system.
+
+InfluxDB Plugin now stores its passwords encrypted.
+
+
+SECURITY-1046 / CVE-2019-10330
+Multibranch pipelines are typically configured so that only committers to=20
+the repository are able to effectively propose changes to Jenkinsfiles.=20
+Changes to Jenkinsfiles in pull requests created by other users would not=20
+be trusted, and the target branch=E2=80=99s Jenkinsfile content is used ins=
+tead.
+
+Gitea Plugin did not implement this behavior. Attackers without commit=20
+access to the Git repository could therefore propose changes to=20
+Jenkinsfiles and have those be applied for PR builds despite the=20
+configuration declaring them to be untrusted.
+
+Gitea Plugin now implements the desired behavior of only trusting pull=20
+request content when those are trusted.
+
+
+SECURITY-1015 (1) / CVE-2019-10321 (CSRF), CVE-2019-10322 (permission check)
+Artifactory Plugin does not perform permission checks on a method=20
+implementing form validation. This allows users with Overall/Read access=20
+to Jenkins to connect to an attacker-specified URL using attacker-
+specified credentials IDs obtained through another method, capturing=20
+credentials stored in Jenkins.
+
+Additionally, this form validation method does not require POST requests,=20
+resulting in a cross-site request forgery vulnerability.
+
+As of publication of this advisory, no release containing a fix is=20
+available.
+
+
+SECURITY-1015 (2) / CVE-2019-10323
+Artifactory Plugin provides a list of applicable credential IDs to allow=20
+users configuring the plugin to select the one to use.
+
+This functionality does not correctly check permissions, allowing any user=
+=20
+with Overall/Read permission to get a list of valid credentials IDs. Those=
+=20
+can be used as part of an attack to capture the credentials using another=20
+vulnerability.
+
+As of publication of this advisory, no release containing a fix is=20
+available.
+
+
+SECURITY-1347 / CVE-2019-10324
+Artifactory Plugin implements a number of API endpoints allowing users to=20
+trigger various actions related to releasing and promotion.
+
+These endpoints do not require POST requests, resulting in a cross-site=20
+request forgery vulnerability.
+
+As of publication of this advisory, no release containing a fix is=20
+available.
+
