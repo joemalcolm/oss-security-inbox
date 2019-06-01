@@ -1,196 +1,232 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/05/4
-Message-ID: <20190605172049.GD25856@localhost.localdomain>
-Date: Wed, 5 Jun 2019 17:28:21 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/01/1
+Message-ID: <000001d51861$e546e2a0$afd4a7e0$@com.cn>
+Date: Sat, 1 Jun 2019 18:07:57 +0800
+From: "huangwen" <huangwen@...usgroup.com.cn>
+To: <oss-security@...ts.openwall.com>
+Subject: Marvell Wifi Driver mwifiex_uap_parse_tail_ies Heap Overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi,
 
-On Wed, Jun 05, 2019 at 05:19:44PM +0200, Heiko Schlittermann wrote:
-> The fix for CVE-2019-10149 is public now.
-> Sorry for confusion about the public release. We were forced to react,
-> as details leaked.
+There is heap-based buffer overflow in marvell wifi chip driver in Linux
+kernel,allows local users to cause a denial of service(system crash) or
+possibly execute arbitrary code.
 
-As per the distros list policy:
+I provided a patch in mail attachment for reference only. 
 
-Below is an abridged version of our advisory (with all the vulnerability
-details, but without exploitation details); we will publish the complete
-version in 24 hours, or as soon as third-party exploits are published,
-whichever happens first.
+ 
 
-We believe that it makes no sense to delay this any longer than that:
-this vulnerability is trivially exploitable in the local and non-default
-cases (attackers will have working exploits before that, public or not);
-and in the default case, a remote attack takes a long time to succeed
-(to the best of our knowledge).
+ 
 
-------------------------------------------------------------------------
+Description
 
-Qualys Security Advisory
+==========
 
-The Return of the WIZard: RCE in Exim (CVE-2019-10149)
+The problem is inside mwifiex_uap_parse_tail_ies function in
+drivers/net/wireless/marvell/mwifiex/ie.c. 
+
+There are two memcpy in this function.The memcpy in while loop will be
+called when element_id is not equal to WLAN_EID_SSID,WLAN_EID_SUPP_RATES
+etc.
+
+The copy dst buffer gen_ie->ie_buffer is a array with size
+IEEE_MAX_IE_SIZE(256), the src buffer is element in cfg80211_beacon_data
+from user space. 
+
+There is not len check for two memcpy in this function.
+
+If special elements are constructed (E.g.
+WLAN_EID_SUPPORTED_OPERATING_CLASSES) to make memcpy called repeatedly, will
+finally trigger the overflow.
+
+ 
+
+ 
+
+struct mwifiex_ie {
+
+         __le16 ie_index;
+
+         __le16 mgmt_subtype_mask;
+
+         __le16 ie_length;
+
+         u8 ie_buffer[IEEE_MAX_IE_SIZE];
+
+} __packed;
+
+ 
+
+#define IEEE_MAX_IE_SIZE              256
+
+ 
+
+static int mwifiex_uap_parse_tail_ies(struct mwifiex_private *priv,
+
+                                           struct cfg80211_beacon_data
+*info)
+
+{
+
+         struct mwifiex_ie *gen_ie;
+
+         struct ieee_types_header *hdr;
+
+         struct ieee80211_vendor_ie *vendorhdr;
+
+         u16 gen_idx = MWIFIEX_AUTO_IDX_MASK, ie_len = 0;
+
+         int left_len, parsed_len = 0;
+
+ 
+
+         if (!info->tail || !info->tail_len)
+
+                   return 0;
+
+ 
+
+         gen_ie = kzalloc(sizeof(*gen_ie), GFP_KERNEL);
+
+         if (!gen_ie)
+
+                   return -ENOMEM;
+
+ 
+
+         left_len = info->tail_len;
+
+ 
+
+         /* Many IEs are generated in FW by parsing bss configuration.
+
+          * Let's not add them here; else we may end up duplicating these
+IEs
+
+          */
+
+         while (left_len > sizeof(struct ieee_types_header)) {
+
+                   hdr = (void *)(info->tail + parsed_len);
+
+                   switch (hdr->element_id) {
+
+                   case WLAN_EID_SSID:
+
+                   case WLAN_EID_SUPP_RATES:
+
+                   case WLAN_EID_COUNTRY:
+
+                   case WLAN_EID_PWR_CONSTRAINT:
+
+                   case WLAN_EID_ERP_INFO:
+
+                   case WLAN_EID_EXT_SUPP_RATES:
+
+                   case WLAN_EID_HT_CAPABILITY:
+
+                   case WLAN_EID_HT_OPERATION:
+
+                   case WLAN_EID_VHT_CAPABILITY:
+
+                   case WLAN_EID_VHT_OPERATION:
+
+                            break;
+
+                   case WLAN_EID_VENDOR_SPECIFIC:
+
+                            /* Skip only Microsoft WMM IE */
+
+                            if (cfg80211_find_vendor_ie(WLAN_OUI_MICROSOFT,
+
+ 
+WLAN_OUI_TYPE_MICROSOFT_WMM,
+
+                                                            (const u8 *)hdr,
+
+                                                            hdr->len +
+sizeof(struct ieee_types_header)))
+
+                                     break;
+
+                            /* fall through */
+
+                   default:
+
+                            memcpy(gen_ie->ie_buffer + ie_len, hdr,
+//!!!!!!overflow
+
+                                   hdr->len + sizeof(struct
+ieee_types_header));
+
+                            ie_len += hdr->len + sizeof(struct
+ieee_types_header);
+
+                            break;
+
+                   }
+
+                   left_len -= hdr->len + sizeof(struct ieee_types_header);
+
+                   parsed_len += hdr->len + sizeof(struct
+ieee_types_header);
+
+         }
+
+ 
+
+         /* parse only WPA vendor IE from tail, WMM IE is configured by
+
+          * bss_config command
+
+          */
+
+         vendorhdr = (void *)cfg80211_find_vendor_ie(WLAN_OUI_MICROSOFT,
+
+ 
+WLAN_OUI_TYPE_MICROSOFT_WPA,
+
+                                                            info->tail,
+info->tail_len);
+
+         if (vendorhdr) {
+
+                   memcpy(gen_ie->ie_buffer + ie_len, vendorhdr,
+//!!!!!!overflow
+
+                          vendorhdr->len + sizeof(struct
+ieee_types_header));
+
+                   ie_len += vendorhdr->len + sizeof(struct
+ieee_types_header);
+
+         }
+
+         .....
+
+}
+
+ 
+
+ 
+
+Credit
+
+==========
+
+This issue was discovered by huangwen of ADLab of Venustech
+
+ 
+
+ 
+
+Patch
+
+=====
+
+https://lore.kernel.org/linux-wireless/20190531131841.7552-1-tiwai@suse.de
+
+ 
 
 
-========================================================================
-Contents
-========================================================================
-
-Summary
-Local exploitation
-Remote exploitation
-- Non-default configurations
-- Default configuration
-Acknowledgments
-Timeline
-
-    Boromir: "What is this new devilry?"
-    Gandalf: "A Balrog. A demon of the Ancient World."
-        -- The Lord of the Rings: The Fellowship of the Ring
-
-
-========================================================================
-Summary
-========================================================================
-
-During a code review of the latest changes in the Exim mail server
-(https://en.wikipedia.org/wiki/Exim), we discovered an RCE vulnerability
-in versions 4.87 to 4.91 (inclusive). In this particular case, RCE means
-Remote *Command* Execution, not Remote Code Execution: an attacker can
-execute arbitrary commands with execv(), as root; no memory corruption
-or ROP (Return-Oriented Programming) is involved.
-
-This vulnerability is exploitable instantly by a local attacker (and by
-a remote attacker in certain non-default configurations). To remotely
-exploit this vulnerability in the default configuration, an attacker
-must keep a connection to the vulnerable server open for 7 days (by
-transmitting one byte every few minutes). However, because of the
-extreme complexity of Exim's code, we cannot guarantee that this
-exploitation method is unique; faster methods may exist.
-
-Exim is vulnerable by default since version 4.87 (released on April 6,
-2016), when #ifdef EXPERIMENTAL_EVENT became #ifndef DISABLE_EVENT; and
-older versions may also be vulnerable if EXPERIMENTAL_EVENT was enabled
-manually. Surprisingly, this vulnerability was fixed in version 4.92
-(released on February 10, 2019):
-
-https://github.com/Exim/exim/commit/7ea1237c783e380d7bdb86c90b13d8203c7ecf26
-https://bugs.exim.org/show_bug.cgi?id=2310
-
-but was not identified as a security vulnerability, and most operating
-systems are therefore affected. For example, we exploit an up-to-date
-Debian distribution (9.9) in this advisory.
-
-
-========================================================================
-Local exploitation
-========================================================================
-
-The vulnerable code is located in deliver_message():
-
-6122 #ifndef DISABLE_EVENT
-6123       if (process_recipients != RECIP_ACCEPT)
-6124         {
-6125         uschar * save_local =  deliver_localpart;
-6126         const uschar * save_domain = deliver_domain;
-6127
-6128         deliver_localpart = expand_string(
-6129                       string_sprintf("${local_part:%s}", new->address));
-6130         deliver_domain =    expand_string(
-6131                       string_sprintf("${domain:%s}", new->address));
-6132
-6133         (void) event_raise(event_action,
-6134                       US"msg:fail:internal", new->message);
-6135
-6136         deliver_localpart = save_local;
-6137         deliver_domain =    save_domain;
-6138         }
-6139 #endif
-
-Because expand_string() recognizes the "${run{<command> <args>}}"
-expansion item, and because new->address is the recipient of the mail
-that is being delivered, a local attacker can simply send a mail to
-"${run{...}}@...alhost" (where "localhost" is one of Exim's
-local_domains) and execute arbitrary commands, as root
-(deliver_drop_privilege is false, by default):
-
-[...]
-
-
-========================================================================
-Remote exploitation
-========================================================================
-
-Our local-exploitation method does not work remotely, because the
-"verify = recipient" ACL (Access-Control List) in Exim's default
-configuration requires the local part of the recipient's address (the
-part that precedes the @ sign) to be the name of a local user:
-
-[...]
-
-------------------------------------------------------------------------
-Non-default configurations
-------------------------------------------------------------------------
-
-We eventually devised an elaborate method for exploiting Exim remotely
-in its default configuration, but we first identified various
-non-default configurations that are easy to exploit remotely:
-
-- If the "verify = recipient" ACL was removed manually by an
-  administrator (maybe to prevent username enumeration via RCPT TO),
-  then our local-exploitation method also works remotely.
-
-- If Exim was configured to recognize tags in the local part of the
-  recipient's address (via "local_part_suffix = +* : -*" for example),
-  then a remote attacker can simply reuse our local-exploitation method
-  with an RCPT TO "balrog+${run{...}}@...alhost" (where "balrog" is the
-  name of a local user).
-
-- If Exim was configured to relay mail to a remote domain, as a
-  secondary MX (Mail eXchange), then a remote attacker can simply reuse
-  our local-exploitation method with an RCPT TO "${run{...}}@...zad.dum"
-  (where "khazad.dum" is one of Exim's relay_to_domains). Indeed, the
-  "verify = recipient" ACL can only check the domain part of a remote
-  address (the part that follows the @ sign), not the local part.
-
-------------------------------------------------------------------------
-Default configuration
-------------------------------------------------------------------------
-
-[...]
-
-
-========================================================================
-Acknowledgments
-========================================================================
-
-We thank Exim's developers, Solar Designer, and the members of
-distros@...nwall.
-
-"The Return of the WIZard" is a reference to Sendmail's ancient WIZ and
-DEBUG vulnerabilities:
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-1999-0145
-https://seclists.org/bugtraq/1995/Feb/56
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-1999-0095
-http://www.cheswick.com/ches/papers/berferd.pdf
-
-
-========================================================================
-Timeline
-========================================================================
-
-2019-05-27: Advisory sent to security@...m.
-
-2019-05-28: Advisory sent to distros@...nwall.
-
-
-
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
-
-
-
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
