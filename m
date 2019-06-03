@@ -1,196 +1,140 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/6
-Message-ID: <e83ca51f-c886-a300-91bf-5e1de09a4f51@igalia.com>
-Date: Fri, 8 Nov 2019 15:31:56 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2019-0006
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/2
+Message-ID: <20190603204826.GA9152@portlab.ipa.basealt.ru>
+Date: Mon, 3 Jun 2019 23:48:26 +0300
+From: "Vladimir D. Seleznev" <vseleznv@...linux.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Using quilt on untrusted RPM spec files
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2019-0006
-------------------------------------------------------------------------
+On Thu, Sep 27, 2018 at 05:59:34PM +0200, Matthias Gerstner wrote:
+> Hello list,
 
-Date reported           : November 08, 2019
-Advisory ID             : WSA-2019-0006
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2019-0006.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2019-0006.html
-CVE identifiers         : CVE-2019-8710, CVE-2019-8743, CVE-2019-8764,
-                          CVE-2019-8765, CVE-2019-8766, CVE-2019-8782,
-                          CVE-2019-8783, CVE-2019-8808, CVE-2019-8811,
-                          CVE-2019-8812, CVE-2019-8813, CVE-2019-8814,
-                          CVE-2019-8815, CVE-2019-8816, CVE-2019-8819,
-                          CVE-2019-8820, CVE-2019-8821, CVE-2019-8822,
-                          CVE-2019-8823.
+Hello!
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+> in the SUSE security team we have been recently looking into the security of
+> using quilt on untrusted RPM spec files and patches. The openSUSE distribution
+> is RPM based and uses the open build service (OBS) [1] for collaboration with
+> the community. Packagers, contributors and interested people can host their
+> packages in personal home projects and can become maintainers of development
+> packages that are targeted for inclusion in SUSE distributions.
+> 
+> Once packages are submitted into an actual SUSE distribution like openSUSE
+> Tumbleweed human and automated reviews of the package contents will take
+> place for quality assurance and security. One of the typical workflows for
+> many people concerned with managing the openSUSE distribution is to checkout
+> a (possible not yet reviewed) OBS package and run `quilt setup` on the RPM
+> spec file for extracting the package sources and applying any specified
+> patches. When building an RPM package on server or client side then this
+> happens in an isolated environment (e.g. a chroot [2] or in a virtual
+> machine). The `quilt setup` invocation, however, typically happens
+> interactively on client machines without special security measures.
+> 
+> It turns out that running `quilt setup` on untrusted sources is not a good
+> idea:
+> 
+> - The statements in the `%prep` section of the RPM spec file are
+>   plainly executed in the context of the calling user.
+> - Arbitrary flags can be passed to `patch` via `%define _default_patch_flags
+>   ...` in the spec file. By embedding semicolons into the flags also arbitrary
+>   commands can be injected this way.
+> - By combining the available vectors, difficult to spot malicious code can be
+>   hidden in RPM spec files. For example patch can be caused to follow
+>   symlinks, thereby "patching" files in a user's home directory as demonstrated
+>   in [3].
+> 
+> Now we would be interested in discussing this topic with the community. Do
+> other distributions have similar workflows and therefore similar attack
+> surface as we do? What would be viable countermeasures?
 
-CVE-2019-8710
-    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
-    2.26.0.
-    Credit to found by OSS-Fuzz.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+For more than one and a half decade long, we in ALT Linux Team are using
+hasher [1] [2], which isolates the host system, the build environment
+and the building process from each other, and makes the building process
+safe and reproducible.  There are some articles (in Russian) [3] [4].
 
-CVE-2019-8743
-    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
-    2.26.0.
-    Credit to zhunki from Codesafe Team of Legendsec at Qi'anxin Group.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+A short description of how it works based on the hasher documentation:
 
-CVE-2019-8764
-    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
-    2.26.0.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    universal cross site scripting. Description: A logic issue was
-    addressed with improved state management.
+The  hasher architecture is based on triple-user model: caller user (C)
+and two unprivileged pseudousers; the first one (R) emulates root  in
+the  generated build environment, the second one (U) emulates a regular
+user who builds software.
 
-CVE-2019-8765
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to Samuel Groß of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Switching between caller user and helper users is handled by a special
+privileged  program hasher-priv(8). hasher-priv(8) is a small privileged
+helper for the hasher project, which only does a small set of actions
+that require privileges during the generation of build chroot
+environment and starts the actual build process.  It is written with
+extreme caution to defend from attacks installed by unprivileged users.
+This helper is also  used  to purge processes left after pseudousers, to
+create device files, and to control resources allocated for unprivileged
+processes to defend from DoS-attacks.  hasher-priv(8) is designed to be
+as small as possible and well reviewed.
 
-CVE-2019-8766
-    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
-    2.26.0.
-    Credit to found by OSS-Fuzz.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+In  general,  the  path  of  source  package  in hasher during the build
+process looks as follows:
 
-CVE-2019-8782
-    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
-    2.26.0.
-    Credit to Cheolung Lee of LINE+ Security Team.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+1. *Generate aptbox*  User C generates environment (aptbox) for apt.
 
-CVE-2019-8783
-    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
-    2.26.1.
-    Credit to Cheolung Lee of LINE+ Graylab Security Team.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+2. *Remove build environment probably left by previous builds*  The
+removal is done sequentially: inside build chroot by user U, inside
+build chroot by user R and finally outside chroot by user C.
 
-CVE-2019-8808
-    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
-    2.26.0.
-    Credit to found by OSS-Fuzz.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+3. *Generate new build chroot framework*  User  C  generates  the
+framework,  which  consists  of helper directories  and  statically
+linked  helper  programs: ash(1), find(1) and cpio(1).  Basic device
+files like /dev/null  are  also created  at this  point  by  means  of
+hasher-priv(8).  These devices are necessary for build environment and
+are  secure  for the host system.
 
-CVE-2019-8811
-    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
-    2.26.1.
-    Credit to Soyeon Park of SSLab at Georgia Tech.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+4. *Generate basic install environment*  This  environment  contains
+everything  necessary  for regular package installs.  Using apt
+utilities, user C determines the set  of packages required to generate
+the install environment.  Using static helper programs, user R unpacks
+these packages.
 
-CVE-2019-8812
-    Versions affected: WebKitGTK before 2.26.2 and WPE WebKit before
-    2.26.2.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+5. *Generate basic build environment*  This environment  contains  tools
+deemed required  for  every package build.  Using apt utilities, user  C
+determines a set of packages, user R installs them.
 
-CVE-2019-8813
-    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
-    2.26.1.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    universal cross site scripting. Description: A logic issue was
-    addressed with improved state management.
+6. *Generate build environment for this particular package*  User U
+fetches package build  dependencies,  using  apt utilities, user  C
+determines  the set  of  packages  to install, and user R installs them.
 
-CVE-2019-8814
-    Versions affected: WebKitGTK before 2.26.2 and WPE WebKit before
-    2.26.2.
-    Credit to Cheolung Lee of LINE+ Security Team.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+7. *Build the package*  User U executes the build.
 
-CVE-2019-8815
-    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
-    2.26.0.
-    Credit to Apple.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+These schemes are designed to eliminate attacks of the type U->R, U->C,
+R->C, and all attacks targeted to root.
 
-CVE-2019-8816
-    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
-    2.26.1.
-    Credit to Soyeon Park of SSLab at Georgia Tech.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Sure, this solution is kinda ALT specific, e.g. it uses apt for
+dependency calculation, but it can be adapted for the use of any other
+instruments.
 
-CVE-2019-8819
-    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
-    2.26.1.
-    Credit to Cheolung Lee of LINE+ Security Team.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+P.S. It's been a while when the original message was sent, but it's
+better later than never, they say.
 
-CVE-2019-8820
-    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
-    2.26.1.
-    Credit to Samuel Groß of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+> Our current assessment is that most people that use quilt this way are
+> probably not aware of the potential dangers involved. Furthermore we think
+> that in order to fix this a simple to use default protection mechanism
+> would be required. While running `quilt setup` e.g. in a docker
+> container would provide fair security against such scenarios it would
+> introduce quite some dependencies and complexities that make it not well
+> suited for a default approach.
+> 
+> We are currently testing isolation of quilt with nsjail [4]. A first result,
+> the wrapper "squilt" [5], can confine quilt's execution to a package
+> directory, thereby reducing the attack surface significantly.
+> 
+> [1]: https://openbuildservice.org
+> [2]: https://build.opensuse.org/package/show/openSUSE:Tools/build
+> [3]: https://build.opensuse.org/package/show/home:mgerstner/surprise
+> [4]: http://nsjail.com
+> [5]: https://github.com/jsegitz/squilt
 
-CVE-2019-8821
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+[1] http://git.altlinux.org/gears/h/hasher.git
+[2] https://en.altlinux.org/Hasher
+[3] http://ftp.altlinux.org/pub/people/ldv/hasher/thesis-2004.html
+[4] http://ftp.altlinux.org/pub/people/ldv/hasher/thesis-2005.html
 
-CVE-2019-8822
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2019-8823
-    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
-    2.26.1.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-November 08, 2019
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+-- 
+   With best regards,
+   Vladimir D. Seleznev
