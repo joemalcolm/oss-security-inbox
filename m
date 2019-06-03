@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/5
-Message-ID: <20190722112953.GT67124@symphytum.spacehopper.org>
-Date: Mon, 22 Jul 2019 12:29:53 +0100
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/03/1
+Message-ID: <CALJHwhSOFA9exSx9hEHZ7BUQ7i+7nEOJpRNaEQxLTeWdn14DLA@mail.gmail.com>
+Date: Mon, 3 Jun 2019 12:51:07 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
+Subject: kernel: CVE-2018-16871 nfs: NULL pointer dereference due to an anomalized NFS message sequence
 Content-Type: text/plain; charset=utf-8
 
-On 2019/07/22 11:21, Mikhail Klementev wrote:
-> Kindly notice that this is a public mail list.
+A flaw was found in NFS in the Linux Kernel. An attacker who is able
+to mount an exported NFS file system  is able to trigger a null
+pointer dereference by an invalid NFS sequence.
 
-The sender is clearly aware of this, see the timeline.
+This can panic the machine with a null pointer dereference and
+therefore deny to the NFS server. Any outstanding disk writes to the
+NFS server will be lost.
 
-> On Mon, Jul 22, 2019 at 12:00:13PM +0200, Heiko Schlittermann wrote:
-> > More details and fixes are not yet public, but will be made public on
-> > CRD, July 25th.
-> > 
-> > Timeline
-> > ========
-> > 
-> > t0: Thu Jul 18 2019
-> >     - this notice to distros@...openwall.org and exim-maintainers@...m.org
-> >     - open limited access to our security Git repo. See below.
-> > 
-> > t0+~4d: Mon Jul 22 10:00:00 UTC 2019 [NOW]
-> >     - heads-up notice to oss-security@...ts.openwall.com,
-> >       exim-users@...m.org, and exim-announce@...m.org
-> > 
-> > t0+~7d: Thu Jul 25 10:00:00 UTC 2019
-> >     - Coordinated relase date
-> >     - publish the patches in our official and public Git repositories
-> >       and the packages on our FTP server.
+Upstream fix:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=01310bb7c9c98752cc763b36532fab028e0f8f81
+
+Red Hat bugzilla:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2018-16871
+
+Thanks,
+
+Wade Mealing
