@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2219" "Saturday" "18" "November" "2017" "08:22:51" "+0100" "Daniel Beck" "ml@beckweb.net" "<E384AC07-136D-426C-B71C-49099D6CCF86@beckweb.net>" "68" "Re: [oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "11" "2017111807:22:51" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Nov 18   68/2219  " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins\"\n") "<307E5A53-DC12-428C-ADD6-98D74D13B20E@beckweb.net>" ("<307E5A53-DC12-428C-ADD6-98D74D13B20E@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["576" "Monday" "3" "June" "2019" "12:51:07" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhSOFA9exSx9hEHZ7BUQ7i+7nEOJpRNaEQxLTeWdn14DLA@mail.gmail.com>" "19" "[oss-security] kernel: CVE-2018-16871 nfs: NULL pointer dereference due to an anomalized NFS message sequence" nil nil nil "6" "2019060302:51:07" "[oss-security] kernel: CVE-2018-16871 nfs: NULL pointer dereference due to an anomalized NFS message sequence" (number mark "U       wmealing@red Jun  3   19/576   " thread-indent "\"[oss-security] kernel: CVE-2018-16871 nfs: NULL pointer dereference due to an anomalized NFS message sequence\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] kernel: CVE-2018-16871 nfs: NULL pointer dereference due to an anomalized NFS message sequence" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13401 invoked by uid 550); 18 Nov 2017 07:23:04 -0000
+Received: (qmail 9409 invoked by uid 550); 3 Jun 2019 02:51:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,86 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13383 invoked from network); 18 Nov 2017 07:23:03 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Date: Sat, 18 Nov 2017 08:22:51 +0100
-References: <307E5A53-DC12-428C-ADD6-98D74D13B20E@beckweb.net>
+Received: (qmail 9386 invoked from network); 3 Jun 2019 02:51:31 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=gL6Avw4/LAtixmEirMXWRn6grk4TnNyDqmDEBhyne4A=;
+        b=kUpT9I2W2NY7oRham2JBSqMV8OEiEXDyEHzjn+9cj/wPGDkKcbSREdMT8i448e3Bk1
+         ECsxJmIgUVjfHLzvEx3lHCcxj2K0tdHA78QV77k14e09vMd3mGexAIp43qryEhwxR7SP
+         w8NJkPSyVqKJNM+Ya1g65/6/CwuS9n2zpPITEHogS63iyiVBNyI67WhgVhDeMcC7rk/s
+         tn3mbsfrN7pOT54jraezHBB8qFo7pg27ct1loxUmzhT+XVeTUbega6Rp/tmTGXCZmP7t
+         IgWdINE5B7NT5XdlBgd+NHZQlxvfsSiKWQv2CjGkUzeZNQSDBWlTsk8HDYl/y3nm5Ygp
+         ZE+g==
+X-Gm-Message-State: APjAAAWj8V8Xov6TrFGCxkcvaHTAcMrfUnAI9HKD4BFWeixZkO6nqx+0
+	Y7ujcrxT+6wqzCv7J2zdeXKIWi6GhiH30sfgCNiaaMszrbo=
+X-Google-Smtp-Source: APXvYqyFONE99iAFQUaaw//7yuSeCaev3MOO4zjJuC44ndl63yr/HJ8Pmc7L6uwIuPLRKYeZal0Xsw/5012hS39TVJk=
+X-Received: by 2002:a24:148b:: with SMTP id 133mr17504801itg.73.1559530279166;
+ Sun, 02 Jun 2019 19:51:19 -0700 (PDT)
+MIME-Version: 1.0
+From: Wade Mealing <wmealing@redhat.com>
+Date: Mon, 3 Jun 2019 12:51:07 +1000
+Message-ID: <CALJHwhSOFA9exSx9hEHZ7BUQ7i+7nEOJpRNaEQxLTeWdn14DLA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-In-Reply-To: <307E5A53-DC12-428C-ADD6-98D74D13B20E@beckweb.net>
-Message-Id: <E384AC07-136D-426C-B71C-49099D6CCF86@beckweb.net>
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1510989783;62904950;
-X-HE-SMSGID: 1eFxSm-0007rM-9N
-Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] kernel: CVE-2018-16871 nfs: NULL pointer dereference due to an
+ anomalized NFS message sequence
 
+A flaw was found in NFS in the Linux Kernel. An attacker who is able
+to mount an exported NFS file system  is able to trigger a null
+pointer dereference by an invalid NFS sequence.
 
-> On 11. Oct 2017, at 18:21, Daniel Beck <ml@beckweb.net> wrote:
->=20
-> SECURITY-478
-> Users with permission to create or configure agents in Jenkins could=20
-> configure a launch method called Launch agent via execution of command on=
-=20
-> master. This allowed them to run arbitrary shell commands on the master=20
-> node whenever the agent was supposed to be launched.
+This can panic the machine with a null pointer dereference and
+therefore deny to the NFS server. Any outstanding disk writes to the
+NFS server will be lost.
 
-CVE-2017-1000393
+Upstream fix:
 
-> SECURITY-514
-> Information about Jenkins user accounts is generally available to anyone=
-=20
-> with Overall/Read permissions via the /user/(username)/api remote API. Th=
-is=20
-> included e.g. Jenkins users' email addresses if the Mailer Plugin is=20
-> installed.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=01310bb7c9c98752cc763b36532fab028e0f8f81
 
-CVE-2017-1000395
+Red Hat bugzilla:
 
-> SECURITY-555
-> Jenkins bundled a version of the commons-httpclient library with the=20
-> vulnerability CVE-2012-6153 that incorrectly verified SSL certificates,=20
-> making it susceptible to man-in-the-middle attacks.
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2018-16871
 
-CVE-2017-1000396
+Thanks,
 
-> SECURITY-611
-> The remote API at /computer/(agent-name)/api showed information about tas=
-ks=20
-> (typically builds) currently running on that agent. This included=20
-> information about tasks that the current user otherwise has no access to,=
-=20
-> e.g. due to lack of Job/Read permission.
-
-CVE-2017-1000398
-
-> SECURITY-618
-> The remote API at /queue/item/(ID)/api showed information about tasks in=
-=20
-> the queue (typically builds waiting to start). This included information=
-=20
-> about tasks that the current user otherwise has no access to, e.g. due to=
-=20
-> lack of Job/Read permission.
-
-CVE-2017-1000399
-
-> SECURITY-617
-> The remote API at /job/(job-name)/api contained information about upstrea=
-m=20
-> and downstream projects. This included information about tasks that the=20
-> current user otherwise has no access to, e.g. due to lack of Job/Read=20
-> permission.
-
-CVE-2017-1000400
-
-> SECURITY-616
-> The Jenkins default form control for passwords and other secrets,=20
-> <f:password/>, supports form validation (e.g. for API keys). The form=20
-> validation AJAX requests were sent via GET, which could result in secrets=
-=20
-> being logged to a HTTP access log in non-default configurations of=20
-> Jenkins, and made available to users with access to these log files.
-
-CVE-2017-1000401=
+Wade Mealing
