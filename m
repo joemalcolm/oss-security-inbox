@@ -1,65 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/15/1
-Message-ID: <CAPsnWaD3YKPx6hnLoEmfM5VdKqFHrTKjvqRo1uG=8U1xU70-+Q@mail.gmail.com>
-Date: Mon, 15 Jul 2019 09:56:07 -0600
-From: Joe McManus <joe.mcmanus@...onical.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/03/3
+Message-ID: <878f6a682e3b533c003e3c06569784b1f442ad67.camel@gnome.org>
+Date: Mon, 03 Jun 2019 11:24:19 -0500
+From: Federico Mena Quintero <federico@...me.org>
+To: oss-security@...ts.openwall.com
+Cc: Albert Astals Cid <aacid@....org>
+Subject: Crash / fix in bzip2
 Content-Type: text/plain; charset=utf-8
 
-Hey Alexander-
+Hello,
 
-On Sun, Jul 14, 2019 at 11:45 AM Solar Designer <solar@...nwall.com> wrote:
->
-> Hi Joe,
->
-> On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
-> > Hey All - The Ubuntu Security Team would like to sign up for items 3,4
-> > & 5 from the technical list <
-> > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> > >:
-> >
-> > 3 - Review and/or test the proposed patches and point out potential issues
-> >   with them [...]
-> > 4 - Check if related issues exist in the same piece of software [...]
-> > 5 - Check if related issues exist in implementations of similar
-> >   functionality in other software [...]
-> >
-> > Please let me know how we get started helping out.
->
-> This will be much appreciated, thanks!
->
-> Will this be taken care of by Ubuntu Security Team members who are
-> already on linux-distros (highly preferable) or will we need to
-> subscribe more people just for these roles (would be non-ideal)?
->
-> For 3, do you prefer to be "primary" or "backup"?  (We already have
-> Amazon listed as "primary", but as discussed Amazon is yet to become
-> more active in this role.)
->
-> Will you personally be involved?  What's your role with the Ubuntu
-> Security Team?
->
-> I notice you don't appear to be on oss-security, so am copying this
-> reply to you and to the list.
->
-> Thanks again,
->
-> Alexander
+oss-fuzz found a crasher in bzip2, and Albert Astals Cid has written a
+patch for it.  The full context of the bug is here:
 
-Yes, this will be taken care of by Ubuntu Security Team members who
-are already on the list, however if after some time we need to cycle
-someone in or out I might come asking. I know you don't want to add
-anyone so we will do our best to prevent this from happening.
+https://gitlab.com/federicomenaquintero/bzip2/merge_requests/1
 
-For 3 we can be either primary or backup, just let me know your
-preference and we'll do the work.
+The patch itself is this:
 
-I will not personally be involved, I am the director of the Ubuntu
-Security Team and as much as I would like to... I probably wouldn't
-have time and I did not want to add another person to the list.  I am
-subscribed to oss-security now.
+https://gitlab.com/federicomenaquintero/bzip2/commit/15c918f1de00588321c857a10d0afdbaf96e4ce9
 
-Cheers,
--Joe
+  Federico
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
