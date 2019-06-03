@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1416" "Thursday" "13" "January" "2022" "16:21:09" "+0800" "tr3e wang" "tr3e.wang@gmail.com" nil "47" "[oss-security] Linux Kernel eBPF Improper Input Validation Vulnerability" nil nil nil "1" nil nil (number mark "U       tr3e.wang@gm Jan 13   47/1416  " thread-indent "\"[oss-security] Linux Kernel eBPF Improper Input Validation Vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux Kernel eBPF Improper Input Validation Vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6515" "Monday" "3" "June" "2019" "23:48:26" "+0300" "Vladimir D. Seleznev" "vseleznv@altlinux.org" "<20190603204826.GA9152@portlab.ipa.basealt.ru>" "131" "Re: [oss-security] Using quilt on untrusted RPM spec files" nil nil nil "6" "2019060320:48:26" "[oss-security] Using quilt on untrusted RPM spec files" (number mark "U       vseleznv@alt Jun  3  131/6515  " thread-indent "\"Re: [oss-security] Using quilt on untrusted RPM spec files\"\n") "<20180927155934.GB8696@f195.suse.de>" ("<20180927155934.GB8696@f195.suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] Using quilt on untrusted RPM spec files" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3408 invoked by uid 550); 13 Jan 2022 10:04:05 -0000
+Received: (qmail 15597 invoked by uid 550); 4 Jun 2019 09:41:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,85 +12,147 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29834 invoked from network); 13 Jan 2022 08:21:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=AF3GBgvm0irr2JUutuvhEcZt2JYHDCHgNKhv7Jvxq3A=;
-        b=RIOT9e5Ox+pS6bqnpHbx4q8Ytcw5a8T4ET3XF8+eFjXDDltnFSCIB8OnseRBilGndz
-         GlaGpU0Sa9vjvvu14EESQ1foVwS+gRrmhguMW+4cMZzSZRKvt36lnZIySYwNva3h+3ku
-         tsSC0QJp50y25PCUxnwyi4iGvgOaWNnQV+thDYzRzrcnlBHJFllsHVScFPb71WqD3cl3
-         DQ2oOK4InQroBlzzRjFRofsMK02ar5NLEcn8VCRMm3EFXFJ69kbckhCOP4RHMMsLsK/N
-         L0e7Po/U64nW0ghLKmObCkWfqSdTHq+K9nsMQLtm/7iSyhgZb7J32RjhoTRDGnNiIQuU
-         MxAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=AF3GBgvm0irr2JUutuvhEcZt2JYHDCHgNKhv7Jvxq3A=;
-        b=LI3chwmKMp2tZkzznYtcaULbxajcnIFr9oDgbJTOhP2FXmrShOjSwZkG96V5exzSOZ
-         i4kIYykJRHr3ONmP8JvTk2hwRsb7JbbtDRId5h9cEyfGscUniRdr50MK9Ls074+tCrQc
-         qOfJPXbgagFvtQLcNE7R05KdM0652NOK3jjZiLyfcBlbM2NDOSPYUggEumgy++UKYfHs
-         uPUtWFYSsHs40v9w6CQ4dFjIP+XzKMcLNPsbfTE/hhcM5p+hRLLJtAICJ/pfAcRsp5C/
-         5ZQex7yrXs8/lmnS0CYR+UDqby7uaU8WIGirym9Ra82VkXm3d0cXUptYrOU0ANZDXXWM
-         iblg==
-X-Gm-Message-State: AOAM5309WFDuBAQlE4hHazMuJxwO5Kn5ob6kzkhfuqfeNw6WdHN58+lx
-	AB5UVUHH2kBt3ecJnVgA0IS3iKF5IeYENTsQw2cRwNACIOs=
-X-Google-Smtp-Source: ABdhPJzJ+Sn4DADNFR6FKrrWdJtbRBix4wkxLFAPQsbtA4PemQJoVr8LtnY3Br94NT8ZLMt590XO9DcCTb7wExJebu8=
-X-Received: by 2002:a05:6830:2645:: with SMTP id f5mr2396972otu.19.1642062080597;
- Thu, 13 Jan 2022 00:21:20 -0800 (PST)
-MIME-Version: 1.0
-From: tr3e wang <tr3e.wang@gmail.com>
-Date: Thu, 13 Jan 2022 16:21:09 +0800
-Message-ID: <CA+eGCHaJ8Vcgm=+KqmFwmLd8BP+Vn8aos6RZzvbzHd544SdQZg@mail.gmail.com>
+Received: (qmail 3362 invoked from network); 3 Jun 2019 20:48:38 -0000
+Date: Mon, 3 Jun 2019 23:48:26 +0300
+From: "Vladimir D. Seleznev" <vseleznv@altlinux.org>
 To: oss-security@lists.openwall.com
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Content-Type: multipart/alternative; boundary="0000000000000361af05d5725f84"
-Subject: [oss-security] Linux Kernel eBPF Improper Input Validation Vulnerability
+Message-ID: <20190603204826.GA9152@portlab.ipa.basealt.ru>
+References: <20180927155934.GB8696@f195.suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180927155934.GB8696@f195.suse.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] Using quilt on untrusted RPM spec files
 
---0000000000000361af05d5725f84
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Sep 27, 2018 at 05:59:34PM +0200, Matthias Gerstner wrote:
+> Hello list,
 
-Hi all,
+Hello!
 
-This vulnerability allows local attackers to escalate privileges on
-affected installations of Linux Kernel. An attacker must first obtain the
-ability to execute low-privileged code on the target system in order to
-exploit this vulnerability.
+> in the SUSE security team we have been recently looking into the security of
+> using quilt on untrusted RPM spec files and patches. The openSUSE distribution
+> is RPM based and uses the open build service (OBS) [1] for collaboration with
+> the community. Packagers, contributors and interested people can host their
+> packages in personal home projects and can become maintainers of development
+> packages that are targeted for inclusion in SUSE distributions.
+> 
+> Once packages are submitted into an actual SUSE distribution like openSUSE
+> Tumbleweed human and automated reviews of the package contents will take
+> place for quality assurance and security. One of the typical workflows for
+> many people concerned with managing the openSUSE distribution is to checkout
+> a (possible not yet reviewed) OBS package and run `quilt setup` on the RPM
+> spec file for extracting the package sources and applying any specified
+> patches. When building an RPM package on server or client side then this
+> happens in an isolated environment (e.g. a chroot [2] or in a virtual
+> machine). The `quilt setup` invocation, however, typically happens
+> interactively on client machines without special security measures.
+> 
+> It turns out that running `quilt setup` on untrusted sources is not a good
+> idea:
+> 
+> - The statements in the `%prep` section of the RPM spec file are
+>   plainly executed in the context of the calling user.
+> - Arbitrary flags can be passed to `patch` via `%define _default_patch_flags
+>   ...` in the spec file. By embedding semicolons into the flags also arbitrary
+>   commands can be injected this way.
+> - By combining the available vectors, difficult to spot malicious code can be
+>   hidden in RPM spec files. For example patch can be caused to follow
+>   symlinks, thereby "patching" files in a user's home directory as demonstrated
+>   in [3].
+> 
+> Now we would be interested in discussing this topic with the community. Do
+> other distributions have similar workflows and therefore similar attack
+> surface as we do? What would be viable countermeasures?
 
-The specific flaw exists within the handling of eBPF programs. The issue
-results from the lack of proper validation of user-supplied eBPF programs
-prior to executing them. An attacker can leverage this vulnerability to
-escalate privileges and execute code in the context of the kernel.
-BE AWARE, unprivileged bpf is disabled by default in most distros.
+For more than one and a half decade long, we in ALT Linux Team are using
+hasher [1] [2], which isolates the host system, the build environment
+and the building process from each other, and makes the building process
+safe and reproducible.  There are some articles (in Russian) [3] [4].
 
-*Affected Version*
+A short description of how it works based on the hasher documentation:
 
-    Linux Kernel 5.8 or later
+The  hasher architecture is based on triple-user model: caller user (C)
+and two unprivileged pseudousers; the first one (R) emulates root  in
+the  generated build environment, the second one (U) emulates a regular
+user who builds software.
 
-*Root Cause Analysis*
+Switching between caller user and helper users is handled by a special
+privileged  program hasher-priv(8). hasher-priv(8) is a small privileged
+helper for the hasher project, which only does a small set of actions
+that require privileges during the generation of build chroot
+environment and starts the actual build process.  It is written with
+extreme caution to defend from attacks installed by unprivileged users.
+This helper is also  used  to purge processes left after pseudousers, to
+create device files, and to control resources allocated for unprivileged
+processes to defend from DoS-attacks.  hasher-priv(8) is designed to be
+as small as possible and well reviewed.
 
-The bpf verifier(kernel/bpf/verifier.c) did not properly restrict several
-*_OR_NULL pointer types which allows these types to do pointer arithmetic.
-This can be leveraged to bypass the verifier check and escalate privilege.
-(see
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/verifier.c?h=v5.10.83#n6022
-)
+In  general,  the  path  of  source  package  in hasher during the build
+process looks as follows:
 
-*Exploit Code*
+1. *Generate aptbox*  User C generates environment (aptbox) for apt.
 
-Exploit code will be delayed for 5 days and will be posted at 12:00 UTC,
-Jan 18, 2022
+2. *Remove build environment probably left by previous builds*  The
+removal is done sequentially: inside build chroot by user U, inside
+build chroot by user R and finally outside chroot by user C.
 
-*Mitigations*
+3. *Generate new build chroot framework*  User  C  generates  the
+framework,  which  consists  of helper directories  and  statically
+linked  helper  programs: ash(1), find(1) and cpio(1).  Basic device
+files like /dev/null  are  also created  at this  point  by  means  of
+hasher-priv(8).  These devices are necessary for build environment and
+are  secure  for the host system.
 
-set kernel.unprivileged_bpf_disabled to 1
+4. *Generate basic install environment*  This  environment  contains
+everything  necessary  for regular package installs.  Using apt
+utilities, user C determines the set  of packages required to generate
+the install environment.  Using static helper programs, user R unpacks
+these packages.
 
-BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
+5. *Generate basic build environment*  This environment  contains  tools
+deemed required  for  every package build.  Using apt utilities, user  C
+determines a set of packages, user R installs them.
 
-*Credits*
+6. *Generate build environment for this particular package*  User U
+fetches package build  dependencies,  using  apt utilities, user  C
+determines  the set  of  packages  to install, and user R installs them.
 
-tr3e of SecCoder Security Lab
-Best,
-tr3e
+7. *Build the package*  User U executes the build.
 
---0000000000000361af05d5725f84--
+These schemes are designed to eliminate attacks of the type U->R, U->C,
+R->C, and all attacks targeted to root.
+
+Sure, this solution is kinda ALT specific, e.g. it uses apt for
+dependency calculation, but it can be adapted for the use of any other
+instruments.
+
+P.S. It's been a while when the original message was sent, but it's
+better later than never, they say.
+
+> Our current assessment is that most people that use quilt this way are
+> probably not aware of the potential dangers involved. Furthermore we think
+> that in order to fix this a simple to use default protection mechanism
+> would be required. While running `quilt setup` e.g. in a docker
+> container would provide fair security against such scenarios it would
+> introduce quite some dependencies and complexities that make it not well
+> suited for a default approach.
+> 
+> We are currently testing isolation of quilt with nsjail [4]. A first result,
+> the wrapper "squilt" [5], can confine quilt's execution to a package
+> directory, thereby reducing the attack surface significantly.
+> 
+> [1]: https://openbuildservice.org
+> [2]: https://build.opensuse.org/package/show/openSUSE:Tools/build
+> [3]: https://build.opensuse.org/package/show/home:mgerstner/surprise
+> [4]: http://nsjail.com
+> [5]: https://github.com/jsegitz/squilt
+
+[1] http://git.altlinux.org/gears/h/hasher.git
+[2] https://en.altlinux.org/Hasher
+[3] http://ftp.altlinux.org/pub/people/ldv/hasher/thesis-2004.html
+[4] http://ftp.altlinux.org/pub/people/ldv/hasher/thesis-2005.html
+
+-- 
+   With best regards,
+   Vladimir D. Seleznev
