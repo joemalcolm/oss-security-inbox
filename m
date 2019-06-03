@@ -1,37 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/23/1
-Message-ID: <a508ca98-5954-b19a-0e7f-7319a4c94480@apache.org>
-Date: Tue, 22 Jan 2019 22:57:15 -0500
-From: Troy Curtis <troycurtisjr@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/1
+Message-ID: <20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>
+Date: Mon, 3 Jun 2019 22:19:23 +0200
+From: Heiko Schlittermann <hs@...littermann.de>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2018-11803] Apache Subversion Denial of Service Vulnerability
+Subject: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
 Content-Type: text/plain; charset=utf-8
 
-This is a security notification for Apache Subversion HTTP Servers:
+CVE-2019-10149 Exim 4.87 to 4.91
+================================
 
-CVE-2018-11803
-Severity: Medium
-Affected Versions: Apache Subversion 1.11.0, 1.10.0 to 1.10.3
+We received a report of a possible remote exploit.  Currently there is no
+evidenice of an active use of this exploit.
 
-Subversion's mod_dav_svn Apache HTTPD module versions 1.11.0 and 1.10.0 
-to 1.10.3 will crash after dereferencing an uninitialized pointer if the 
-client omits the root path in a recursive directory listing operation. 
-This issue can be triggered by any client on Subversion repositories 
-configured for anonymous read access. If read access requires 
-authentication, a denial of service attack can only be performed by an 
-authenticated user.
+A patch exists already, is being tested, and backported to all
+versions we released since (and including) 4.87.
 
-The Subversion releases 1.10.4 and 1.11.1 contain the fixes for this 
-vulnerability and are available immediately at:
+The severity depends on your configuration.  It depends on how close to
+the standard configuration your Exim runtime configuration is. The
+closer the better.
 
-https://dist.apache.org/repos/dist/release/subversion/?p=32084
+Exim 4.92 is not vulnerable.
 
-Additional details, including patches for 1.10.3 and 1.11.0 can be found at:
+Next steps:
 
-https://subversion.apache.org/security/CVE-2018-11803-advisory.txt
+* t0:    Distros will get access to our non-public security Git repo
+         (access is granted based on the SSH keys that are known to us)
 
-We encourage users of Subversion to upgrade to the latest appropriate 
-version as soon as reasonable.
+* t0+7d: Coordinated Release Date: Distros should push the patched
+         version to their repos. The Exim maintainers will publish
+         the fixed source to the official and public Git repo.
 
-Thanks,
-- The Subversion Team
+t0    is expected to be 2019-06-04, 10:00 UTC
+t0+7d is expected to be 2019-06-04, 10:00 UTC
+
+
+Timeline
+--------
+
+* 2019-05-27 Report from Qualys to exim-security list
+* 2019-05-27 Patch provided by Jeremy Harris
+* 2019-05-29 CVE-2019-10149 assigned from Qualys via RedHat
+* 2019-06-03 This announcement
+
+Updates will follow, here and on
+http://www.exim.org/static/doc/security/CVE-2019-10149.txt
+
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
