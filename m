@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1809" "Tuesday" "11" "January" "2022" "00:01:34" "+0000" "Sam James" "sam@gentoo.org" nil "54" "Re: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles" nil nil nil "1" nil nil (number mark "U       sam@gentoo.o Jan 11   54/1809  " thread-indent "\"Re: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4465" "Monday" "3" "June" "2019" "13:21:10" "+0200" "Carlton Gibson" "carlton.gibson@gmail.com" "<BCE707AC-83ED-4812-9759-3992110405AD@gmail.com>" "116" "[oss-security] Django: CVE-2019-12308 AdminURLFieldWidget XSS (plus patched bundled jQuery for CVE-2019-11358)" nil nil nil "6" "2019060311:21:10" "[oss-security] Django: CVE-2019-12308 AdminURLFieldWidget XSS (plus patched bundled jQuery for CVE-2019-11358)" (number mark "U       carlton.gibs Jun  3  116/4465  " thread-indent "\"[oss-security] Django: CVE-2019-12308 AdminURLFieldWidget XSS (plus patched bundled jQuery for CVE-2019-11358)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Django: CVE-2019-12308 AdminURLFieldWidget XSS (plus patched bundled jQuery for CVE-2019-11358)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20426 invoked by uid 550); 11 Jan 2022 13:02:04 -0000
+Received: (qmail 9294 invoked by uid 550); 3 Jun 2019 13:03:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,73 +12,159 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1688 invoked from network); 11 Jan 2022 00:01:51 -0000
-From: Sam James <sam@gentoo.org>
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_0EC77CCB-BC77-4351-A760-90BE6AB79703";
-	protocol="application/pgp-signature";
-	micalg=pgp-sha512
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
-Date: Tue, 11 Jan 2022 00:01:34 +0000
-References: <20220110180746.GA3527@localhost.localdomain>
-To: oss-security@lists.openwall.com
-In-Reply-To: <20220110180746.GA3527@localhost.localdomain>
-Message-Id: <F97E792C-1249-4C6C-A1B2-23A2A835A941@gentoo.org>
-X-Mailer: Apple Mail (2.3693.40.0.1.81)
-Subject: Re: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's
- systemd-tmpfiles
-
---Apple-Mail=_0EC77CCB-BC77-4351-A760-90BE6AB79703
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 5650 invoked from network); 3 Jun 2019 11:21:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=NC0HcTbDFkJKyLCvBAcM4n2mSlnjiVLD0f2lf5duR6k=;
+        b=Qg0Q3UN3Uil4pXvQ6bRu5RTbfvAIKAcCHfpz9NndiWOMyMVMdmIvqV0XYBN8oeoVuL
+         SYS3vg9nQMomVi70Y0QbUP0L4+hqmSbtAgcYj7verVpZiI5FSziLHuUfO2X44HYvdFsU
+         TWixEIM2LWyNiMrcUZzY6r5lI88Q6tGtdC3qSBR7odjI6nx8gNu5mDvhAGv3i1Bck5Jf
+         kP2IUZjK8atXHT/12chLInbWrPfYqITpEPAvsTXoUZgmpErshMbggIfQwf+hKy7QKP4u
+         mqBn6YUt8LWHVG7+jhdCu1gJ8ratuKPP1giRBgOjtV8qLFCGLNbwFfQV9qT7sNmFh791
+         pzkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=NC0HcTbDFkJKyLCvBAcM4n2mSlnjiVLD0f2lf5duR6k=;
+        b=mSZ3RA4OPChZrDM2pZAmWn5DHXoZDxXgqBQVfv0WcysDe1RyunCu8zV5rkAPQ6KzAw
+         Xp9xZq7rNxnZuyI7glLV++/hAA2S3cwOQ+Fdd/BajuMQ7u5/aqyJ/bAVSbsoaIsQAhZZ
+         zi6EAdZElQf/6l83QiZA5lM/HOzSYmeNkERrJxJV84/XPgL1h+/7UBaA6DeoyN/DWvcv
+         z26EBHhn1HgfloZKJ5bMT+yGBGgbjR7zUzApzlD2MGMlLWJz6nMPFvEs4AV/RUelgUsr
+         L0bjnfRvhDDhQwADOfUokfsB8nqIE4ynx7kpOEj7NSEJgjzYU2fmouszlOEPHOtlHR3m
+         N2xg==
+X-Gm-Message-State: APjAAAXYnnqYzkQEkGhgnGRvsnMz/UEt+x5m0bVYch75lxZBlK4RI6qC
+	RyN90xoo6KEq4Kj44kao6rVwiHDfFK4=
+X-Google-Smtp-Source: APXvYqyRHkXBCXj3Wsa0iVj9IrLYe7KEZv6ktFVg9UQz9pQv28MqBxj9kWO6bHbcAupPj54NHsruRw==
+X-Received: by 2002:adf:efcd:: with SMTP id i13mr2275224wrp.51.1559560873052;
+        Mon, 03 Jun 2019 04:21:13 -0700 (PDT)
+From: Carlton Gibson <carlton.gibson@gmail.com>
 Content-Type: text/plain;
 	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Message-Id: <BCE707AC-83ED-4812-9759-3992110405AD@gmail.com>
+Date: Mon, 3 Jun 2019 13:21:10 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.104.11)
+Subject: [oss-security] Django: CVE-2019-12308 AdminURLFieldWidget XSS (plus patched bundled
+ jQuery for CVE-2019-11358)
+
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django t=
+eam
+is issuing `Django 1.11.21
+<https://docs.djangoproject.com/en/dev/releases/1.11.21/>`_, `Django 2.1.9
+<https://docs.djangoproject.com/en/dev/releases/2.1.9/>`_, and `Django 2.2.2
+<https://docs.djangoproject.com/en/dev/releases/2.2.2/>`_. These releases
+addresses the security issues detailed below. We encourage all users of Dja=
+ngo
+to upgrade as soon as possible.
+
+CVE-2019-12308: AdminURLFieldWidget XSS
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+The clickable "Current URL" link generated by ``AdminURLFieldWidget`` displ=
+ayed
+the provided value without validating it as a safe URL. Thus, an unvalidated
+value stored in the database, or a value provided as a URL query parameter
+payload, could result in an clickable JavaScript link.
+
+``AdminURLFieldWidget`` now validates the provided value using ``URLValidat=
+or``
+before displaying the clickable link. You may customise the validator by
+passing a ``validator_class`` kwarg to ``AdminURLFieldWidget.__init__()``, =
+e.g.
+when using ``ModelAdmin.formfield_overrides``.
+
+Affected versions
+-----------------
+
+* Django master development branch
+* Django 2.2 before version 2.2.2
+* Django 2.1 before version 2.1.9
+* Django 1.11 before version 1.11.21
+
+Patched bundled jQuery for CVE-2019-11358: Prototype pollution
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+jQuery before 3.4.0, mishandles ``jQuery.extend(true, {}, ...)`` because of
+``Object.prototype`` pollution. If an unsanitized source object contained an
+enumerable ``__proto__`` property, it could extend the native
+``Object.prototype``.
+
+The bundled version of jQuery used by the Django admin has been patched to
+allow for the ``select2`` library's use of ``jQuery.extend()``.
+
+Affected versions
+-----------------
+
+* Django master development branch
+* Django 2.2 before version 2.2.2
+* Django 2.1 before version 2.1.9
+
+Resolution
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Patches to resolve these issues have been applied to Django's master branch=
+ and
+the 2.2, 2.1, and 1.11 release branches. The patches may be obtained from t=
+he
+following changesets:
+
+On the master branch:
+
+* `Admin XSS <https://github.com/django/django/commit/deeba6d92006999fee9ad=
+fbd8be79bf0a59e8008>`__
+* `jQuery prototype pollution <https://github.com/django/django/commit/34ec=
+52269ade54af31a021b12969913129571a3f>`__
+
+On the 2.2 release branch:
+
+* `Admin XSS <https://github.com/django/django/commit/afddabf8428ddc89a332f=
+7a78d0d21eaf2b5a673>`__
+* `jQuery prototype pollution <https://github.com/django/django/commit/baaf=
+187a4e354bf3976c51e2c83a0d2f8ee6e6ad>`__
+
+On the 2.1 release branch:
+
+* `Admin XSS <https://github.com/django/django/commit/09186a13d975de6d049f8=
+b3e05484f66b01ece62>`__
+* `jQuery prototype pollution <https://github.com/django/django/commit/9564=
+9bc08547a878cebfa1d019edec8cb1b80829>`__
+
+On the 1.11 release branch:
+
+* `Admin XSS <https://github.com/django/django/commit/c238701859a52d584f349=
+cce15d56c8e8137c52b>`__
+
+The following releases have been issued:
+
+* Django 1.11.21 (`download Django 1.11.21 <https://www.djangoproject.com/m=
+/releases/1.11/Django-1.11.21.tar.gz>`_ | `1.11.21 checksums <https://www.d=
+jangoproject.com/m/pgp/Django-1.11.21.checksum.txt>`_)
+* Django 2.1.9 (`download Django 2.1.9 <https://www.djangoproject.com/m/rel=
+eases/2.1/Django-2.1.9.tar.gz>`_ | `2.1.9 checksums <https://www.djangoproj=
+ect.com/m/pgp/Django-2.1.9.checksum.txt>`_)
+* Django 2.2.2 (`download Django 2.2.2 <https://www.djangoproject.com/m/rel=
+eases/2.1/Django-2.2.2.tar.gz>`_ | `2.2.2 checksums <https://www.djangoproj=
+ect.com/m/pgp/Django-2.2.2.checksum.txt>`_)
 
 
+The PGP key ID used for these releases is Carlton Gibson: E17DF5C82B4F9D00.
 
-> On 10 Jan 2022, at 18:08, Qualys Security Advisory <qsa@qualys.com> wrote:
->=20
-> Hi all,
->=20
-> We discovered a minor denial of service (an uncontrolled recursion) in
-> systemd-tmpfiles, CVE-2021-3997; the Coordinated Release Date is today
-> (January 10, 2022), and a patch is now available at (many thanks to
-> Zbigniew Jedrzejewski-Szmek for working on this):
->=20
-> https://github.com/systemd/systemd/commit/55a89ea1b4088a6d84ba0bd3cd8e648=
-bd51f1ebf
-> [...]
+General notes regarding security reporting
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Thanks.
+As always, we ask that potential security issues be reported via
+private email to ``security@djangoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
 
-Fix commit (as you linked): https://github.com/systemd/systemd/commit/55a89=
-ea1b4088a6d84ba0bd3cd8e648bd51f1ebf
-Backport release for 250.x: 250.2 (see https://github.com/systemd/systemd-s=
-table/compare/v250.1...v250.2)
-Backport release for 249.x: pending
-
-Best,
-sam
-
---Apple-Mail=_0EC77CCB-BC77-4351-A760-90BE6AB79703
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
-
------BEGIN PGP SIGNATURE-----
-
-iQGTBAEBCgB9FiEEYOpPv/uDUzOcqtTy9JIoEO6gSDsFAmHcyN5fFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDYw
-RUE0RkJGRkI4MzUzMzM5Q0FBRDRGMkY0OTIyODEwRUVBMDQ4M0IACgkQ9JIoEO6g
-SDvtFAgAqNXnt0ZQ910HXZCGNbbo4ubuGXffZejKCo9T/dljMhseCL4GbIu2ORbB
-46Yz40y58MA/gRQnRLRogJ7zJWBlm8O8z5+YJ6dmfhAtxqu7LJQ4TxLjAAl5bEAL
-KGuUpG+MPPopMx9WXTyZNR2dxu2JIoFpM88i7mEo6uxZEzYWnMqgnUX9bOdPsP2Q
-Y+CuwIw2yAOpwa0KUHgLiVaKZ35HbXRIdXJTCaauXM+gxYdj2XZgXhI3vUQ1Hgrb
-qPpLR2+ZtYTXAVpmMVNjsMNA5xOl9B8uvUiHpCskUCmgU//SozxQ3v4jEWWgDFpE
-DIgOOOEIVtDQTO3MPijKWewS4nSNYw==
-=i1Ch
------END PGP SIGNATURE-----
-
---Apple-Mail=_0EC77CCB-BC77-4351-A760-90BE6AB79703--
