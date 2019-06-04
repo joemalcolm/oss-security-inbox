@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5074" "Friday" "27" "October" "2017" "20:25:56" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<577273.647857027-sendEmail@localhost>" "70" "[oss-security] binutils: invalid memory read in find_abstract_instance_name (dwarf2.c)" "^Date:" nil nil "10" "2017102720:25:56" "[oss-security] binutils: invalid memory read in find_abstract_instance_name (dwarf2.c)" (number mark "U       ago@gentoo.o Oct 27   70/5074  " thread-indent "\"[oss-security] binutils: invalid memory read in find_abstract_instance_name (dwarf2.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1070" "Tuesday" "4" "June" "2019" "16:07:30" "+0200" "Heiko Schlittermann" "hs@schlittermann.de" "<20190604140730.7yz733eajye2kfbs@jumper.schlittermann.de>" "34" "Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" nil nil nil "6" "2019060414:07:30" "[oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" (number mark "U       hs@schlitter Jun  4   34/1070  " thread-indent "\"Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit\"\n") "<20190604132534.GA16994@openwall.com>" ("<20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>" "<20190604132534.GA16994@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7993 invoked by uid 550); 27 Oct 2017 20:26:15 -0000
+Received: (qmail 7746 invoked by uid 550); 4 Jun 2019 14:23:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7859 invoked from network); 27 Oct 2017 20:26:14 -0000
-Message-ID: <577273.647857027-sendEmail@localhost>
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-874608.076484041"
-Date: Fri, 27 Oct 2017 20:25:56 +0000
-From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] binutils: invalid memory read in find_abstract_instance_name (dwarf2.c)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 27759 invoked from network); 4 Jun 2019 14:07:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:Resent-Cc:Resent-To;
+	bh=FBsrCTrCMEUzBeDJEl6hoqulVMo+fXzrYz1qlqFRNu8=; b=gtJiQswknrTmlY/Ho3PAb1Y9OL
+	r+WANa/tD/e3R9KB5mLtSSEcHRoz8O5H57RlGBlKGOndX+onxyJy+jUqCOc28qbzUFVRgdHBEj6pK
+	3OdANPSebUyoajgd89dcAZQXhAM25gDq1X18CDv4ErpptKMIe9DaXcAH38rtbxjS/0W0=;
+Date: Tue, 4 Jun 2019 16:07:30 +0200
+From: Heiko Schlittermann <hs@schlittermann.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20190604140730.7yz733eajye2kfbs@jumper.schlittermann.de>
+References: <20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>
+ <20190604132534.GA16994@openwall.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="7lfmscslmv5lwgpd"
+Content-Disposition: inline
+In-Reply-To: <20190604132534.GA16994@openwall.com>
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible
+ remote exploit
 
-------MIME delimiter for sendEmail-874608.076484041
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--7lfmscslmv5lwgpd
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Description:
-binutils is a set of tools necessary to build programs.
+Solar Designer <solar@openwall.com> (Di 04 Jun 2019 15:25:34 CEST):
+> $ diff -urwx doc exim-4.91 exim-4.92 | diffstat -s
+>  131 files changed, 6898 insertions(+), 4395 deletions(-)
+> $ diff -urwx doc exim-4.91 exim-4.92 | wc
+>   27635  114347  935620
 
-The complete ASan output of the issue:
+I'll talk to the other devs about this.
 
-# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==23816==ERROR: AddressSanitizer: SEGV on unknown address 0x4700004008d0 (pc 0x0000005427b6 bp 0x7ffd49033690 sp 0x7ffd49033680 T0)                                                                               
-==23816==The signal is caused by a READ memory access.                                                                                                                                                            
-    #0 0x5427b5 in _bfd_safe_read_leb128 /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:1019:14                                                                                              
-    #1 0x6a9b25 in find_abstract_instance_name /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2918:19                                                                                        
-    #2 0x69a3ff in scan_unit_for_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3168:10                                                                                              
-    #3 0x6a2de6 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3660:9                                                                                    
-    #4 0x6a2de6 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3686                                                                                                   
-    #5 0x6a0369 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4798:11                                                                                      
-    #6 0x5f332e in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10                                                                                                    
-    #7 0x5176a3 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9                                                                                                       
-    #8 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7                                                                                                      
-    #9 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200                                                                                                     
-    #10 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7                                                                                                      
-    #11 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12                                                                                                             
-    #12 0x7f839bb03680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                   
-    #13 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)                                                                                                                                 
-                                                                                                                                                                                                                  
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:1019:14 in _bfd_safe_read_leb128
-==23816==ABORTING
-
-Affected version:
-2.29.51.20170925 and maybe past releases
-
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=1b86808a86077722ee4f42ff97f836b12420bb2a
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-15938
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00381-binutils-invalidread-find_abstract_instance_name
-
-Timeline:
-2017-09-26: bug discovered and reported to upstream
-2017-09-26: upstream released a patch
-2017-10-24: blog post about the issue
-2017-10-27: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/10/24/binutils-invalid-memory-read-in-find_abstract_instance_name-dwarf2-c/
+If the distros give their OK, we're fine to release the patches to the
+public sooner.
 
 --
-Agostino Sarubbo
-Gentoo Linux Developer
+Heiko
 
+--7lfmscslmv5lwgpd
+Content-Type: application/pgp-signature; name="signature.asc"
 
-------MIME delimiter for sendEmail-874608.076484041--
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAlz2eyIACgkQr0zGdqa2
+wUKBtgf+LO0ztE6eYz+zN3EtPQ7Dm8w6vRq+8xSd8XYLlYsDb/hAm8JaQJfk0Zpr
+HEi1xq4V+vwOcjR/LlVWpjStMhwa7ujQ1LZSIJ/2t9cjws06rl6SeEIp8+q86rYi
+ENggGmAu+UadYIdlWj52sadErLJGT9ieO63O10Eo4Kmm9HKMtoRlKw7vzqeDFpuW
+8fWL534NYLkm2XStL0aIb05stIloQ1HY3g8AQS5qhA2/UcndNksG/ieTK3uItv5q
+ibSPrxxMon2RZtkbvrXLYvHmzj0ZbI/gRgW3boUOBUkeqZF14f+OwhAQ0oVVp1Xx
+wNQuEBC2HurC+LJp/IHSYXuCRKjzzQ==
+=c7c5
+-----END PGP SIGNATURE-----
+
+--7lfmscslmv5lwgpd--
