@@ -1,66 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/13/3
-Message-ID: <20190313171454.GA90773@TC-275.local>
-Date: Wed, 13 Mar 2019 10:14:54 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2019-5420] Possible Remote Code Execution Exploit in Rails Development Mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/8
+Message-ID: <20190604140730.7yz733eajye2kfbs@jumper.schlittermann.de>
+Date: Tue, 4 Jun 2019 16:07:30 +0200
+From: Heiko Schlittermann <hs@...littermann.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
 Content-Type: text/plain; charset=utf-8
 
-There is a possible a possible remote code executing exploit in Rails when in
-development mode. This vulnerability has been assigned the CVE identifier
-CVE-2019-5420.
+Solar Designer <solar@...nwall.com> (Di 04 Jun 2019 15:25:34 CEST):
+> $ diff -urwx doc exim-4.91 exim-4.92 | diffstat -s
+>  131 files changed, 6898 insertions(+), 4395 deletions(-)
+> $ diff -urwx doc exim-4.91 exim-4.92 | wc
+>   27635  114347  935620
 
-Versions Affected:  6.0.0.X, 5.2.X.
-Not affected:       None.
-Fixed Versions:     6.0.0.beta3, 5.2.2.1
+I'll talk to the other devs about this.
 
-Impact
-------
-With some knowledge of a target application it is possible for an attacker to
-guess the automatically generated development mode secret token.  This secret
-token can be used in combination with other Rails internals to escalate to a
-remote code execution exploit.
+If the distros give their OK, we're fine to release the patches to the
+public sooner.
 
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
-
-Releases
---------
-The 6.0.0.beta3 and 5.2.2.1 releases are available at the normal locations.
-
-Workarounds
------------
-This issue can be mitigated by specifying a secret key in development mode.
-In "config/environments/development.rb" add this:
-
-  config.secret_key_base = SecureRandom.hex(64)
-
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 6-0-railties-dev-mode-token.patch - Patch for 6.0 series
-* 5-2-railties-dev-mode-token.patch - Patch for 5.2 series
-
-Please note that only the 5.2.x, 5.1.x, 5.0.x, and 4.2.x series are supported
-at present. Users of earlier unsupported releases are advised to upgrade as
-soon as possible as we cannot guarantee the continued availability of security
-fixes for unsupported releases.
-
-Credits
--------
-Thanks to ooooooo_q
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "5-2-railties-dev-mode-token.patch" of type "text/plain" (5512 bytes)
-
-View attachment "6-0-railties-dev-mode-token.patch" of type "text/plain" (5566 bytes)
+--
+Heiko
 
 Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
