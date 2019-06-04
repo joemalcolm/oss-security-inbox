@@ -1,48 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/15
-Message-ID: <CA+fCnZc5Qd0wkabhMgfte8OpPmTiYbT+pL7UC7xq6W_DMj1BZw@mail.gmail.com>
-Date: Fri, 25 Oct 2019 20:09:01 +0200
-From: Andrey Konovalov <andreyknvl@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/5
+Message-ID: <20190604101519.cpb7hppii3oa4epw@jumper.schlittermann.de>
+Date: Tue, 4 Jun 2019 12:15:19 +0200
+From: Heiko Schlittermann <hs@...littermann.de>
 To: oss-security@...ts.openwall.com
-Cc: mathias.payer@...elwelt.net, Hui Peng <benquike@...il.com>
-Subject: Do distros want to see CVEs for Linux kernel USB bugs?
+Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hi,
 
-As we keep getting more USB bugs reported by syzbot [1], I'd like to
-figure out what to do with those in regards to CVEs. Last time I
-requested a bunch of CVEs for USB bugs, there was a long discussion
-about whether that is the right thing to do, see the full thread here
-[2].
+our non-public security Git repo is
 
-I don't want to argue now whether CVEs are useful for the upstream
-Linux kernel. My question is: with CVEs as they work today, do Linux
-distros want to see CVEs filed for Linux kernel bugs that are
-triggerable by a malicious USB device?
+    ssh://git@....exim.org/exim.git
 
-Since not all USB bugs are the same, let's bucket them into:
+Access is granted to the known and trusted SSH keys we have.
 
-1. Different kinds of DoS (e.g. null-ptr-deref).
-2. Info / uninitialized memory leaks.
-3. Bugs that lead to arbitrary code execution.
-4. Non-triaged memory corruptions (UAF/OOB).
+The branch fix-CVE-2019-10149 contains the fix. It is one commit ahead
+of the exim-4_91+fixes branch and we'll eventuelly merge it into the
++fixes branch.
 
-Points 1-3 refer to the bugs that have been assessed for the impact
-that they cause, while point 4 refers to the bugs that haven't been
-looked at closely.
+The relevant commit is d740d2111f189760593a303124ff6b9b1f83453d and is
+signed with my GPG key, the same key that signed this message.
 
-Keep in mind that:
+If you need help backporting it to older releases, please do not
+hesitate to contact us.
 
-1. Most of the time physical access to the USB port is required to
-trigger these bugs.
-2. Sometimes, in cases of e.g. exposed USB/IP or USBAnywhere like
-vulnerabilities [3] these bugs can be triggered remotely.
+The planned CRD (coordinated release date) is 2019-06-11 10.00 UTC.
+Please do not publish any package or source until this date.
 
-Thanks!
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-[1] https://syzkaller.appspot.com/upstream?manager=ci2-upstream-usb
-
-[2] https://www.openwall.com/lists/oss-security/2019/08/20/2
-
-[3] https://github.com/eclypsium/USBAnywhere
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
