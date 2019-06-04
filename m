@@ -1,43 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/21/5
-Message-ID:  <MW2PR02MB378825576FA4EE8917BAE85CAA9F0@MW2PR02MB3788.namprd02.prod.outlook.com>
-Date: Mon, 21 Jan 2019 12:29:47 +0000
-From: Craig Young <cyoung@...pwire.com>
-To: Hanno Böck <hanno@...eck.de>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Apache web server use after free bugs (unfixed)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/4
+Message-ID: <20190604102246.GA15069@espresso.pseudorandom.co.uk>
+Date: Tue, 4 Jun 2019 11:22:46 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
 Content-Type: text/plain; charset=utf-8
 
+On Mon, 03 Jun 2019 at 22:19:23 +0200, Heiko Schlittermann wrote:
+> t0    is expected to be 2019-06-04, 10:00 UTC
+> t0+7d is expected to be 2019-06-04, 10:00 UTC
 
-The tpp.c error and child abort are also logged when testing without pool debugging or ASAN.
+Was t0+7d meant to be 2019-06-11?
 
--Craig
-________________________________
-From: Florian Weimer <fweimer@...hat.com>
-Sent: Monday, January 21, 2019 3:23:22 AM
-To: Hanno Böck
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] Apache web server use after free bugs (unfixed)
-
-* Hanno Böck:
-
-> threading related error
-> =======================
->
-> In addition to the ASAN use after free reports, httpd logs threading
-> related errors:
->
-> AH00052: child pid [pid] exit signal Aborted (6)
-> apache2: tpp.c:84: __pthread_tpp_change_priority: Assertion `new_prio
-> == -1 || (new_prio >= fifo_min_prio && new_prio <= fifo_max_prio)'
-> failed.
-
-This can happen if the mutex data is corrupted, so it's possible this
-also caused by a use-after-free issue (if the memory is reallocated and
-overwritten before the mutex operation that causes the assertion
-failure).
-
-Did you observe this with the pool debugger only?
-
-Thanks,
-Florian
-
+    smcv
