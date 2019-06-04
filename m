@@ -1,23 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/24/2
-Message-ID: <CAG09ER2cYOo+cN+BVotmxugxaMq_ogswvuQ+Z+8W2LahK-DyPg@mail.gmail.com>
-Date: Wed, 24 Jul 2019 09:26:18 +0200
-From: Stig Rohde Døssing <srdo@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/7
+Message-ID: <20190604132534.GA16994@openwall.com>
+Date: Tue, 4 Jun 2019 15:25:34 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-0202] Apache Storm Logviewer file system access vulnerability
+Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2019-0202[PRODUCT]:Apache Storm[VERSION]:Apache Storm
-0.9.1-incubating to 1.2.2[PROBLEMTYPE]:CWE-200: Information
-Exposure[DESCRIPTION]:The Apache Storm Logviewer daemon exposes
-HTTP-accessible endpoints to read/search log files on hosts running
-Storm.
-              In Apache Storm versions 0.9.1-incubating to 1.2.2, it
-is possible to read files off the
-              host's file system that were not intended to be
-accessible via these endpoints.
+On Mon, Jun 03, 2019 at 10:19:23PM +0200, Heiko Schlittermann wrote:
+> CVE-2019-10149 Exim 4.87 to 4.91
+> ================================
+> 
+> We received a report of a possible remote exploit.  Currently there is no
+> evidenice of an active use of this exploit.
+> 
+> A patch exists already, is being tested, and backported to all
+> versions we released since (and including) 4.87.
+> 
+> The severity depends on your configuration.  It depends on how close to
+> the standard configuration your Exim runtime configuration is. The
+> closer the better.
+> 
+> Exim 4.92 is not vulnerable.
 
-Mitigation: Upgrade to Apache Storm 1.2.3 or later.
+I guess I wasn't the only one wondering how revealing this is, so:
 
-Credit: Stig Rohde Døssing for discovery and fix
+$ diff -urwx doc exim-4.91 exim-4.92 | diffstat -s
+ 131 files changed, 6898 insertions(+), 4395 deletions(-)
+$ diff -urwx doc exim-4.91 exim-4.92 | wc
+  27635  114347  935620
 
+exim-4.92/doc/ChangeLog lists tens of changes.
+
+Exim 4.92 appears to have been released in February, when the security
+issue referred to here was not yet known as such, so this wasn't a
+deliberate decision to release the fix publicly yet keep it unmentioned.
+
+Keeping the issue in this semi-public state for 7 days feels weird to
+me, but given the above it doesn't look too unrealistic that the issue
+won't be rediscovered during this time period.  (The risk of leaks is
+probably higher.)  It'd be curious if someone ends up discovering a
+different and yet unknown security issue by reading that diff. ;-)
+
+Alexander
