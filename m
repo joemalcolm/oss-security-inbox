@@ -1,79 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/10/2
-Message-ID: <872-1557480054.563908@mmCb.bu1W.zlxn>
-Date: Fri, 10 May 2019 09:20:54 +0000
-From: halfdog <me@...fdog.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/3
+Message-ID: <8aa4538b-d3fb-c09f-a08e-d6d40c5025f7@gentoo.org>
+Date: Tue, 4 Jun 2019 03:13:14 +0200
+From: Thomas Deutschmann <whissi@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: fprintd: found storing user fingerprints without encryption
+Subject: Re: Crash / fix in bzip2
 Content-Type: text/plain; charset=utf-8
 
-Roman Drahtmueller writes:
-> [...]
->
-> > I am not insisting that encryption key should be on the disk or is
-> > encrypted with a static key that is embedded in the binary.
-> > Instead, we can make fprintd to use a TPM, if available.
->
->
-> The problem persists: The encryption key must be available for the FP 
-> data to be accessible, and so it is for an attacker. It doesn't matter 
-> where you store the key.
->
-> A TPM (and, transitively, products that encrypt with TPM-sealed or 
-> TPM-bound key material) is good for the situation where the system is 
-> physically stolen while powered down (or the drive fails). But that's not 
-> our problem here.
+Hi,
 
-Therefore dedicated tamper-proof IC-designs+embedded software
-exist, that perform the biometry template storage and matching
-on the chip (MoC). There are some vendors out there providing
-such hardware + MoC-algorithms, but mainly fingerprint and some
-iris biometry variants seem certified so far. These are intended
-for access cards or USB-tokens in two or more-factor authentication
-schemes in a 1-to-1 match fashion, not as centralized 1-to-many
-matching schemes also deployed rarely (e.g. in Japan where they
-really like biometrics as long as you do not have to touch the
-biometry reader ...).
+in Gentoo Linux we are shipping [1] for a while.
 
-> [...]
->
-> > Otherwise, but even though it is not perfect, it would be better to apply
-> > the fingerprint data protection, such as keyring or access control, rather
-> > than raw fingerprint template.
-> > FYI, Windows Hello might use Next Generation Cryptography (called CNG) to
-> > protect and store user private data and encryption keys.
->
-> There are not many options left to solve the stored credential problem, 
-> and it should be clear that saving a file, encrypted or not, is not the 
-> solution.
->
-> One possible solution is to use a hash algorithm, potentially cost-based, 
-> to derive a bit string (that is suitable for comparison with the 
-> persisted authoritative string) from the output of a fingerprint reader.
+Please note that this change will break some bzip2 archives which were
+created with lbzip2 because lbzip2 sometimes exceeded BZ_MAX_SELECTORS.
 
-At the momenent I do not know of any algorithms providing sufficient
-entropy binary hash data from fingerprints in a reliable way.
-Changing extraction to deliver more entropy results in higher
-FNR during authentication step later on, I think.
+There's a patch for lbzip2 [2] (not yet published in a release) to avoid
+that problem for new archives...
 
-> [...]
 
-When working on a project to provide highest security MoC solutions
-with Linux (for other type of biometry, not fingerprints), Nitrokey
-was offering an open-source USB-token hardware (even the PCBs are
-open source, if I remember correctly). That platform seemed closest
-to be a good starting point for developing such an open source MoC
-biometry solution as they sell also one part with a certified tamper
-proof trusted element that seemed to allow performing biometry
-template storage and comparison on chip if programmed correctly.
+See also:
+=========
+[1] https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=1948811390283ff8e5f122bd9ec68f2e7b907450
+[2] https://github.com/kjn/lbzip2/commit/b6dc48a7b9bfe6b340ed1f6d72133608ad57144b
 
-Time in the project was too limited to explore, if that hardware
-would REALLY allow to upgrade it to a powerful, highly secure but
-still affordable open source biometry system for use by journalists,
-human rights activists, NGOs ... and nerds, e.g. for password+biometry
-secured full disk encryption schemes.
 
-> [...]
+-- 
+Regards,
+Thomas Deutschmann / Gentoo Security Team
+C4DD 695F A713 8F24 2AA1 5638 5849 7EE5 1D5D 74A5
 
-hd
 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
