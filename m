@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/11/1
-Message-ID: <CAP+3qq7SubiwXMZFGwetLJ11CH4VuQAuX0x7YSZ+1zaU36oMmA@mail.gmail.com>
-Date: Mon, 11 Mar 2019 15:49:26 +0900
-From: Akira Ajisaka <aajisaka@...che.org>
-To: general@...oop.apache.org, user@...oop.apache.org,  oss-security@...ts.openwall.com,  "<security@...oop.apache.org>" <security@...oop.apache.org>, Wei-Chiu Chuang <weichiu@...udera.com>
-Subject: CVE-2018-11767: Apache Hadoop KMS ACL regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/9
+Message-ID: <20190604143721.GA18436@openwall.com>
+Date: Tue, 4 Jun 2019 16:37:21 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: huangwen <huangwen@...usgroup.com.cn>
+Subject: Re: Marvell Wifi Driver mwifiex_uap_parse_tail_ies Heap Overflow
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-11767: Apache Hadoop KMS ACL regression
+On Sat, Jun 01, 2019 at 06:07:57PM +0800, huangwen wrote:
+> There is heap-based buffer overflow in marvell wifi chip driver in Linux
+> kernel,allows local users to cause a denial of service(system crash) or
+> possibly execute arbitrary code.
 
-Severity: Severe
+> The problem is inside mwifiex_uap_parse_tail_ies function in
+> drivers/net/wireless/marvell/mwifiex/ie.c. 
+> 
+> There are two memcpy in this function.The memcpy in while loop will be
+> called when element_id is not equal to WLAN_EID_SSID,WLAN_EID_SUPP_RATES
+> etc.
+> 
+> The copy dst buffer gen_ie->ie_buffer is a array with size
+> IEEE_MAX_IE_SIZE(256), the src buffer is element in cfg80211_beacon_data
+> from user space. 
+> 
+> There is not len check for two memcpy in this function.
+> 
+> If special elements are constructed (E.g.
+> WLAN_EID_SUPPORTED_OPERATING_CLASSES) to make memcpy called repeatedly, will
+> finally trigger the overflow.
 
-Vendor: The Apache Hadoop Software Foundation
+This is now CVE-2019-10126.
 
-Versions affected: 2.9.0 to 2.9.1, 2.8.3 to 2.8.4, 2.7.5 to 2.7.6.
+> https://lore.kernel.org/linux-wireless/20190531131841.7552-1-tiwai@suse.de
 
-Description:
-After the security fix for CVE-2017-15713, KMS has an access control regression,
-blocking users or granting access to users incorrectly, if the system
-uses non-default groups mapping mechanisms such as LdapGroupsMapping,
-CompositeGroupsMapping, or NullGroupsMapping.
-
-Mitigation:
-Users should upgrade to Apache Hadoop 2.7.7, 2.8.5, or 2.9.2.
-
-Credit:
-This issue was discovered by Wei-Chiu Chuang.
+Alexander
