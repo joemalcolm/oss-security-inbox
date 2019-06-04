@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2278" "Wednesday" "26" "August" "2015" "20:22:48" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<55DE2018.50600@redhat.com>" "77" "[oss-security] [OSSA 2015-016] Information leak via Swift tempurls (CVE-2015-5223)" nil nil nil "8" "2015082620:22:48" "[oss-security] [OSSA 2015-016] Information leak via Swift tempurls (CVE-2015-5223)" (number mark "U       tdecacqu@red Aug 26   77/2278  " thread-indent "\"[oss-security] [OSSA 2015-016] Information leak via Swift tempurls (CVE-2015-5223)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1446" "Tuesday" "4" "June" "2019" "15:25:34" "+0200" "Solar Designer" "solar@openwall.com" "<20190604132534.GA16994@openwall.com>" "36" "Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" nil nil nil "6" "2019060413:25:34" "[oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" (number mark "U       solar@openwa Jun  4   36/1446  " thread-indent "\"Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit\"\n") "<20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>" ("<20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20180 invoked by uid 550); 26 Aug 2015 20:22:39 -0000
+Received: (qmail 10102 invoked by uid 550); 4 Jun 2019 13:26:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,95 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20162 invoked from network); 26 Aug 2015 20:22:38 -0000
+Received: (qmail 9921 invoked from network); 4 Jun 2019 13:26:04 -0000
+Date: Tue, 4 Jun 2019 15:25:34 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-From: Tristan Cacqueray <tdecacqu@redhat.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <55DE2018.50600@redhat.com>
-Date: Wed, 26 Aug 2015 20:22:48 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="EJkr2ws5qkaxhDpmAtfa4UVXJBrtDlOEw"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-Subject: [oss-security] [OSSA 2015-016] Information leak via Swift tempurls (CVE-2015-5223)
+Message-ID: <20190604132534.GA16994@openwall.com>
+References: <20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
 
---EJkr2ws5qkaxhDpmAtfa4UVXJBrtDlOEw
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, Jun 03, 2019 at 10:19:23PM +0200, Heiko Schlittermann wrote:
+> CVE-2019-10149 Exim 4.87 to 4.91
+> ================================
+> 
+> We received a report of a possible remote exploit.  Currently there is no
+> evidenice of an active use of this exploit.
+> 
+> A patch exists already, is being tested, and backported to all
+> versions we released since (and including) 4.87.
+> 
+> The severity depends on your configuration.  It depends on how close to
+> the standard configuration your Exim runtime configuration is. The
+> closer the better.
+> 
+> Exim 4.92 is not vulnerable.
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2015-016: Information leak via Swift tempurls
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+I guess I wasn't the only one wondering how revealing this is, so:
 
-:Date: August 26, 2015
-:CVE: CVE-2015-5223
+$ diff -urwx doc exim-4.91 exim-4.92 | diffstat -s
+ 131 files changed, 6898 insertions(+), 4395 deletions(-)
+$ diff -urwx doc exim-4.91 exim-4.92 | wc
+  27635  114347  935620
 
+exim-4.92/doc/ChangeLog lists tens of changes.
 
-Affects
-~~~~~~~
-- Swift: versions through 2.3.0
+Exim 4.92 appears to have been released in February, when the security
+issue referred to here was not yet known as such, so this wasn't a
+deliberate decision to release the fix publicly yet keep it unmentioned.
 
+Keeping the issue in this semi-public state for 7 days feels weird to
+me, but given the above it doesn't look too unrealistic that the issue
+won't be rediscovered during this time period.  (The risk of leaks is
+probably higher.)  It'd be curious if someone ends up discovering a
+different and yet unknown security issue by reading that diff. ;-)
 
-Description
-~~~~~~~~~~~
-Richard Hawkins from Rackspace and Swift core reviewers reported a
-vulnerability in Swift tempurls. When in possession of a tempurl key
-authorized for PUT, a malicious actor may retrieve other objects in
-the same Swift account (tenant). All Swift setups are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/217253 (Juno)
-- https://review.openstack.org/217254 (Kilo)
-- https://review.openstack.org/217255 (Kilo)
-- https://review.openstack.org/217259 (Liberty)
-- https://review.openstack.org/217260 (Liberty)
-
-
-Credits
-~~~~~~~
-- Richard Hawkins from Rackspace (CVE-2015-5223)
-- Swift core reviewers from OpenStack (CVE-2015-5223)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1453948
-- https://launchpad.net/bugs/1449212
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-5223
-
-
-Notes
-~~~~~
-- This fix will be included in future 2014.2.4 (juno) and 2015.1.2 (kilo)
-  releases.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
---EJkr2ws5qkaxhDpmAtfa4UVXJBrtDlOEw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBAgAGBQJV3iAYAAoJECK5oFySXMXYnbwH/1LvbjeyT5cCCaOul3FHCu4I
-KMlekF7+rlnN39QmnwRm3GnQrUEGsWy4GM+ccPyrhG3xfKDrHzm8D+tgho2Ge5Ut
-efpbBvQLv210h56eNN8QiNyWA5r+0rfjZ/ORPY0BqqfzYR/aNSGeGazDfehsDkAT
-cRzFHSfUkV1/vo8o45akbNbPoOOcZwcGVvSTN5QOZPdLvtb+12p93t0CdDhsTRbn
-F3OKJ0cquZ9TEXJURCNdvv9On1YnH5UoeHwdPDrB6aoXqUcHoQ9gHWilNGrSuK+5
-ayTIrOY6JatojvPskf25Xq8aUHd7s+JrP1VVnhCDTSK20MAYKQ+9FSDnEkNPZS4=
-=qUo0
------END PGP SIGNATURE-----
-
---EJkr2ws5qkaxhDpmAtfa4UVXJBrtDlOEw--
+Alexander
