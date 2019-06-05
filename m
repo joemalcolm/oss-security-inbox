@@ -1,104 +1,196 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/08/1
-Message-ID: <BC038B71-E3D7-437A-820E-2987B01D5B54@vmware.com>
-Date: Fri, 7 Jun 2019 23:31:51 +0000
-From: Tim Pepper <tpepper@...are.com>
-To: Brandon Philips <bphilips@...hat.com>, Kubernetes developer/contributor discussion <kubernetes-dev@...glegroups.com>, "kubernetes-security-announce@...glegroups.com" <kubernetes-security-announce@...glegroups.com>, kubernetes-security-discuss <kubernetes-security-discuss@...glegroups.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "kubernetes-distributors-announce@...glegroups.com" <kubernetes-distributors-announce@...glegroups.com>
-Subject: Re: [ANNOUNCE] Security regression in Kubernetes kubelet v1.13.6 and v1.14.2 only - CVE-2019-11245
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/05/4
+Message-ID: <20190605172049.GD25856@localhost.localdomain>
+Date: Wed, 5 Jun 2019 17:28:21 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
 Content-Type: text/plain; charset=utf-8
 
-Just in case anybody missed it explicitly…v1.13.7 and v1.14.3 were released yesterday, including the change for this CVE.
+Hi all,
 
---
-Tim Pepper
-Orchestration & Containers Lead
-VMware Open Source Technology Center
+On Wed, Jun 05, 2019 at 05:19:44PM +0200, Heiko Schlittermann wrote:
+> The fix for CVE-2019-10149 is public now.
+> Sorry for confusion about the public release. We were forced to react,
+> as details leaked.
 
-From: <kubernetes-dev@...glegroups.com> on behalf of Brandon Philips <bphilips@...hat.com>
-Date: Thursday, May 30, 2019 at 2:57 PM
-To: Kubernetes developer/contributor discussion <kubernetes-dev@...glegroups.com>, "kubernetes-security-announce@...glegroups.com" <kubernetes-security-announce@...glegroups.com>, kubernetes-security-discuss <kubernetes-security-discuss@...glegroups.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "kubernetes-distributors-announce@...glegroups.com" <kubernetes-distributors-announce@...glegroups.com>
-Subject: [ANNOUNCE] Security regression in Kubernetes kubelet v1.13.6 and v1.14.2 only - CVE-2019-11245
+As per the distros list policy:
 
+Below is an abridged version of our advisory (with all the vulnerability
+details, but without exploitation details); we will publish the complete
+version in 24 hours, or as soon as third-party exploits are published,
+whichever happens first.
 
-Hello Kubernetes Community-
+We believe that it makes no sense to delay this any longer than that:
+this vulnerability is trivially exploitable in the local and non-default
+cases (attackers will have working exploits before that, public or not);
+and in the default case, a remote attack takes a long time to succeed
+(to the best of our knowledge).
 
+------------------------------------------------------------------------
 
-A security-related issue was discovered in kubelet versions v1.13.6 and v1.14.2. The issue is medium severity and can be mitigated with a pod spec configuration change OR by **downgrading** kubelets to v1.13.5 or v1.14.1.
+Qualys Security Advisory
 
-
-**Vulnerability Details**
-
-
-When a container runs for the first time on a node, it correctly respects the UID set by the container image (e.g. USER in a Dockerfile). However, on the second run, the container will run as UID 0 (aka root) which can be an undesired escalated privilege.
-
-
-Pods that specify an explicit runAsUser are unaffected and continue to work properly.
-
-PodSecurityPolicies that force a runAsUser setting are also unaffected and continue to work properly.
-
-Pods that specify mustRunAsNonRoot:true will refuse to start the container as uid 0, which can affect availability.
-
-This issue is filed as CVE-2019-11245. See https://github.com/kubernetes/kubernetes/issues/78308<https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2Fkubernetes%2Fkubernetes%2Fissues%2F78308&data=02%7C01%7Ctpepper%40vmware.com%7C4656abfd3c4d492bb60108d6e549d643%7Cb39138ca3cee4b4aa4d6cd83d9dd62f0%7C0%7C0%7C636948502634407306&sdata=miB3xe0VtlfnmX%2BsX7%2BfPSH3dtmPiNnFMGtTD9MMvuY%3D&reserved=0> for more details.
+The Return of the WIZard: RCE in Exim (CVE-2019-10149)
 
 
-**Am I vulnerable?**
+========================================================================
+Contents
+========================================================================
+
+Summary
+Local exploitation
+Remote exploitation
+- Non-default configurations
+- Default configuration
+Acknowledgments
+Timeline
+
+    Boromir: "What is this new devilry?"
+    Gandalf: "A Balrog. A demon of the Ancient World."
+        -- The Lord of the Rings: The Fellowship of the Ring
 
 
-Run this to print out all nodes and their kubelet version:
+========================================================================
+Summary
+========================================================================
+
+During a code review of the latest changes in the Exim mail server
+(https://en.wikipedia.org/wiki/Exim), we discovered an RCE vulnerability
+in versions 4.87 to 4.91 (inclusive). In this particular case, RCE means
+Remote *Command* Execution, not Remote Code Execution: an attacker can
+execute arbitrary commands with execv(), as root; no memory corruption
+or ROP (Return-Oriented Programming) is involved.
+
+This vulnerability is exploitable instantly by a local attacker (and by
+a remote attacker in certain non-default configurations). To remotely
+exploit this vulnerability in the default configuration, an attacker
+must keep a connection to the vulnerable server open for 7 days (by
+transmitting one byte every few minutes). However, because of the
+extreme complexity of Exim's code, we cannot guarantee that this
+exploitation method is unique; faster methods may exist.
+
+Exim is vulnerable by default since version 4.87 (released on April 6,
+2016), when #ifdef EXPERIMENTAL_EVENT became #ifndef DISABLE_EVENT; and
+older versions may also be vulnerable if EXPERIMENTAL_EVENT was enabled
+manually. Surprisingly, this vulnerability was fixed in version 4.92
+(released on February 10, 2019):
+
+https://github.com/Exim/exim/commit/7ea1237c783e380d7bdb86c90b13d8203c7ecf26
+https://bugs.exim.org/show_bug.cgi?id=2310
+
+but was not identified as a security vulnerability, and most operating
+systems are therefore affected. For example, we exploit an up-to-date
+Debian distribution (9.9) in this advisory.
+
+
+========================================================================
+Local exploitation
+========================================================================
+
+The vulnerable code is located in deliver_message():
+
+6122 #ifndef DISABLE_EVENT
+6123       if (process_recipients != RECIP_ACCEPT)
+6124         {
+6125         uschar * save_local =  deliver_localpart;
+6126         const uschar * save_domain = deliver_domain;
+6127
+6128         deliver_localpart = expand_string(
+6129                       string_sprintf("${local_part:%s}", new->address));
+6130         deliver_domain =    expand_string(
+6131                       string_sprintf("${domain:%s}", new->address));
+6132
+6133         (void) event_raise(event_action,
+6134                       US"msg:fail:internal", new->message);
+6135
+6136         deliver_localpart = save_local;
+6137         deliver_domain =    save_domain;
+6138         }
+6139 #endif
+
+Because expand_string() recognizes the "${run{<command> <args>}}"
+expansion item, and because new->address is the recipient of the mail
+that is being delivered, a local attacker can simply send a mail to
+"${run{...}}@...alhost" (where "localhost" is one of Exim's
+local_domains) and execute arbitrary commands, as root
+(deliver_drop_privilege is false, by default):
+
+[...]
+
+
+========================================================================
+Remote exploitation
+========================================================================
+
+Our local-exploitation method does not work remotely, because the
+"verify = recipient" ACL (Access-Control List) in Exim's default
+configuration requires the local part of the recipient's address (the
+part that precedes the @ sign) to be the name of a local user:
+
+[...]
+
+------------------------------------------------------------------------
+Non-default configurations
+------------------------------------------------------------------------
+
+We eventually devised an elaborate method for exploiting Exim remotely
+in its default configuration, but we first identified various
+non-default configurations that are easy to exploit remotely:
+
+- If the "verify = recipient" ACL was removed manually by an
+  administrator (maybe to prevent username enumeration via RCPT TO),
+  then our local-exploitation method also works remotely.
+
+- If Exim was configured to recognize tags in the local part of the
+  recipient's address (via "local_part_suffix = +* : -*" for example),
+  then a remote attacker can simply reuse our local-exploitation method
+  with an RCPT TO "balrog+${run{...}}@...alhost" (where "balrog" is the
+  name of a local user).
+
+- If Exim was configured to relay mail to a remote domain, as a
+  secondary MX (Mail eXchange), then a remote attacker can simply reuse
+  our local-exploitation method with an RCPT TO "${run{...}}@...zad.dum"
+  (where "khazad.dum" is one of Exim's relay_to_domains). Indeed, the
+  "verify = recipient" ACL can only check the domain part of a remote
+  address (the part that follows the @ sign), not the local part.
+
+------------------------------------------------------------------------
+Default configuration
+------------------------------------------------------------------------
+
+[...]
+
+
+========================================================================
+Acknowledgments
+========================================================================
+
+We thank Exim's developers, Solar Designer, and the members of
+distros@...nwall.
+
+"The Return of the WIZard" is a reference to Sendmail's ancient WIZ and
+DEBUG vulnerabilities:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-1999-0145
+https://seclists.org/bugtraq/1995/Feb/56
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-1999-0095
+http://www.cheswick.com/ches/papers/berferd.pdf
+
+
+========================================================================
+Timeline
+========================================================================
+
+2019-05-27: Advisory sent to security@...m.
+
+2019-05-28: Advisory sent to distros@...nwall.
 
 
 
-kubectl get nodes -o=jsonpath='{range .items[*]}{.status.nodeInfo.machineID}{"\t"}{.status.nodeInfo.kubeletVersion}{"\n"}{end}'
+[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
 
 
-If the output lists Kubelet versions listed below you are running a vulnerable version:
 
-  *
-  *   v1.13.6
-  *
-  *
-  *
-  *   v1.14.2
-  *
-
-
-**How do I mitigate the vulnerability?**
-
-
-There are two potential mitigations to this issue:
-
-
-  *
-  *   Downgrade to kubelet v1.13.5 or v1.14.1
-  *   as instructed by your Kubernetes distribution.
-  *
-  *
-  *   Set RunAsUser on all pods in the cluster
-  *   that should not run as root. This is a Security Context feature; the docs are at
-  *   https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod<https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fkubernetes.io%2Fdocs%2Ftasks%2Fconfigure-pod-container%2Fsecurity-context%2F%23set-the-security-context-for-a-pod&data=02%7C01%7Ctpepper%40vmware.com%7C4656abfd3c4d492bb60108d6e549d643%7Cb39138ca3cee4b4aa4d6cd83d9dd62f0%7C0%7C0%7C636948502634407306&sdata=01A5f5Nzkf1dJVqJDvh4SZPA%2B%2FsF4MxYDQsJaifF5pA%3D&reserved=0>
-  *
-
-
-**How do I upgrade?**
-
-
-An upgrade addressing this issue is not yet available. But, will appear in v1.13.7 and v1.14.3 ASAP and will be announced here.
-
-
-**Thank you**
-
-
-Thank you to the<https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2Fkubernetes%2Fkubernetes%2Fpull%2F78178&data=02%7C01%7Ctpepper%40vmware.com%7C4656abfd3c4d492bb60108d6e549d643%7Cb39138ca3cee4b4aa4d6cd83d9dd62f0%7C0%7C0%7C636948502634417303&sdata=q%2FEhtXjiCYE6kYa%2Fjy%2B83MvezfBPR38P%2BrwMZRNEEZA%3D&reserved=0> many<https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2Fkubernetes%2Fkubernetes%2Fissues%2F78308&data=02%7C01%7Ctpepper%40vmware.com%7C4656abfd3c4d492bb60108d6e549d643%7Cb39138ca3cee4b4aa4d6cd83d9dd62f0%7C0%7C0%7C636948502634417303&sdata=bKKBm6g8tY9V%2FQZOHvd1ctuUCRg%2B0kQo65b42FfjbFA%3D&reserved=0> reporters<https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2Francher%2Fk3s%2Fissues%2F511&data=02%7C01%7Ctpepper%40vmware.com%7C4656abfd3c4d492bb60108d6e549d643%7Cb39138ca3cee4b4aa4d6cd83d9dd62f0%7C0%7C0%7C636948502634427294&sdata=SC1%2FvqrNPi2HQEHCfwRdJicUQlKDAmwv7W41R921FlI%3D&reserved=0>, and Tim Pepper as release manager for the coordination in making this announcement.
-
-
-Thank You,
-
-Brandon on behalf of the Kubernetes Product Security Committee
---
-You received this message because you are subscribed to the Google Groups "Kubernetes developer/contributor discussion" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to kubernetes-dev+unsubscribe@...glegroups.com<mailto:kubernetes-dev+unsubscribe@...glegroups.com>.
-To post to this group, send email to kubernetes-dev@...glegroups.com<mailto:kubernetes-dev@...glegroups.com>.
-Visit this group at https://groups.google.com/group/kubernetes-dev<https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgroups.google.com%2Fgroup%2Fkubernetes-dev&data=02%7C01%7Ctpepper%40vmware.com%7C4656abfd3c4d492bb60108d6e549d643%7Cb39138ca3cee4b4aa4d6cd83d9dd62f0%7C0%7C0%7C636948502634427294&sdata=SlZBCWaH6iykDnUtkh%2BRSFk68G5%2BDQLJ%2Bdqodzbe%2Bro%3D&reserved=0>.
-To view this discussion on the web visit https://groups.google.com/d/msgid/kubernetes-dev/CAHHNuYcXG6rqgA%2By3efW8yb5Kbd9CgJq_MfgKz8cUgp4AqbXRg%40mail.gmail.com<https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgroups.google.com%2Fd%2Fmsgid%2Fkubernetes-dev%2FCAHHNuYcXG6rqgA%252By3efW8yb5Kbd9CgJq_MfgKz8cUgp4AqbXRg%2540mail.gmail.com%3Futm_medium%3Demail%26utm_source%3Dfooter&data=02%7C01%7Ctpepper%40vmware.com%7C4656abfd3c4d492bb60108d6e549d643%7Cb39138ca3cee4b4aa4d6cd83d9dd62f0%7C0%7C0%7C636948502634437289&sdata=2Z6jQYx32El%2BfezZF1HSMExpgu%2FJ1b4UiJMjrySfS6o%3D&reserved=0>.
-For more options, visit https://groups.google.com/d/optout<https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgroups.google.com%2Fd%2Foptout&data=02%7C01%7Ctpepper%40vmware.com%7C4656abfd3c4d492bb60108d6e549d643%7Cb39138ca3cee4b4aa4d6cd83d9dd62f0%7C0%7C0%7C636948502634437289&sdata=Qu0%2F47BBRdCcjNaT1v5HKMnII1R3xqxQXNH7Lltdlk0%3D&reserved=0>.
-
+This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
