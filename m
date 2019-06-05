@@ -1,67 +1,141 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/15/2
-Message-ID: <CA+aC4kuU2KVonpSER4rPb5asFR+gw8t0RAWXX7Di=4nDEJQnJw@mail.gmail.com>
-Date: Mon, 15 Jul 2019 11:54:23 -0700
-From: Anthony Liguori <anthony@...emonkey.ws>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/05/1
+Message-ID: <20190605095931.GA13513@f195.suse.de>
+Date: Wed, 5 Jun 2019 11:59:31 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: Contributing Back
+Subject: pam-u2f: CVE-2019-12210: debug_file file descriptor leak, CVE-2019-12209: symlink attack on u2f_keys leading to possible information leak
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 15, 2019 at 11:47 AM Joe McManus <joe.mcmanus@...onical.com> wrote:
->
-> Hey Alexander-
->
-> On Sun, Jul 14, 2019 at 11:45 AM Solar Designer <solar@...nwall.com> wrote:
-> >
-> > Hi Joe,
-> >
-> > On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
-> > > Hey All - The Ubuntu Security Team would like to sign up for items 3,4
-> > > & 5 from the technical list <
-> > > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> > > >:
-> > >
-> > > 3 - Review and/or test the proposed patches and point out potential issues
-> > >   with them [...]
-> > > 4 - Check if related issues exist in the same piece of software [...]
-> > > 5 - Check if related issues exist in implementations of similar
-> > >   functionality in other software [...]
-> > >
-> > > Please let me know how we get started helping out.
-> >
-> > This will be much appreciated, thanks!
-> >
-> > Will this be taken care of by Ubuntu Security Team members who are
-> > already on linux-distros (highly preferable) or will we need to
-> > subscribe more people just for these roles (would be non-ideal)?
-> >
-> > For 3, do you prefer to be "primary" or "backup"?  (We already have
-> > Amazon listed as "primary", but as discussed Amazon is yet to become
-> > more active in this role.)
-> >
-> > Will you personally be involved?  What's your role with the Ubuntu
-> > Security Team?
-> >
-> > I notice you don't appear to be on oss-security, so am copying this
-> > reply to you and to the list.
-> >
-> > Thanks again,
-> >
-> > Alexander
->
-> Yes, this will be taken care of by Ubuntu Security Team members who
-> are already on the list, however if after some time we need to cycle
-> someone in or out I might come asking. I know you don't want to add
-> anyone so we will do our best to prevent this from happening.
->
-> For 3 we can be either primary or backup, just let me know your
-> preference and we'll do the work.
+Hello,
 
-I would be happy for y'all to be primary.  We don't ship as many
-packages as Ubuntu does so there will be more things that you are
-likely to test compared to what we do.
+pam-u2f [1] is a PAM module that allows to integrate universal 2nd
+factor authenticators like YubiKey into the PAM stack. In the context of
+a source code review [2] due to the inclusion of pam-u2f into SUSE Linux
+two security issues in this PAM module have been uncovered as described
+in the following sections.
 
-Regards,
+CVE-2019-12210: debug_file file descriptor leak
+-----------------------------------------------
 
-Anthony Liguori
+If the `debug` and `debug_file` options are set then the opened debug
+file will be inherited to the successfully authenticated user's process.
+Therefore this user can write further information to it, possibly
+filling up a privileged file system or manipulating the information
+found in the debug file.
+
+In some contexts the program utilizing PAM closes off leaked file
+descriptors but it does work with su, for example, use the following
+line in the PAM stack:
+
+```
+auth    optional        pam_u2f.so debug debug_file=/tmp/u2f-debug.txt
+```
+
+Then prepare the debug file such that the PAM module can open it:
+
+root# touch /tmp/u2f-debug.txt
+
+Then perform su on yourself as an unprivileged user:
+
+user$ su user
+Password: XXX
+user$ ls -l /proc/$$/fd
+[...]
+l-wx------ 1 user users 64  8. Mai 11:44 3 -> /tmp/u2f-debug.txt
+
+As you can see the new user shell now has an open file descriptor for
+the debug file.
+
+CVE-2019-12209: symlink attack on u2f_keys leading to possible information leak
+-------------------------------------------------------------------------------
+
+The file `$HOME/.config/Yubico/u2f_keys` is blindly followed by the PAM
+module. It can be a symlink pointing to an arbitrary file. The PAM
+module only rejects non-regular files and files owned by other users
+than root or the to-be-authenticated user. Even these checks are only
+made after open()'ing the file, which may already trigger certain logic
+in the kernel that is otherwise not reachable to regular users.
+
+If the PAM modules' `debug` option is also enabled then most of the
+content of the file is written either to stdout, stderr, syslog or to
+the defined debug file.  Therefore this can pose an information leak to
+access e.g.  the contents of /etc/shadow, /root/.bash_history or similar
+sensitive files. Furthermore the symlink attack can be used to use other
+users' u2f_keys files in the authentication process.
+
+For example use the following line in the PAM stack:
+
+```
+auth    optional        pam_u2f.so debug
+```
+
+Then prepare a suitable symlink:
+
+```
+user$ mkdir -p ~/.config/Yubico
+user$ ln -s /etc/shadow ~/.config/Yubico/u2f_keys
+```
+
+Then authenticate the user on a text console:
+
+host login: user
+Password: XXX
+[...]
+debug(pam_u2f):  Authorization line: avahi:!:18019::::::
+[...]
+
+Notice the lines from /etc/shadow being output on the terminal.
+
+Bugfixes and Mitigations
+------------------------
+
+The bugfix for CVE-2019-12210 is found in [3]. It solves the issue by
+passing `O_CLOEXEC` and more conservative flags to related `open()`
+calls.
+
+The bugfix for CVE-2019-12209 is found in [4]. It solves the issue by
+dropping privileges to the to-be-authenticated user before accessing the
+`u2f_keys` file.
+
+Both bugfixes are contained in the upstream release 1.0.8 [5].
+
+A major mitigation for both issues is to remove the `debug` and
+`debug_file` options for `pam_u2f.so` in the PAM configuration.
+Furthermore enabling the `openasuser` option will mitigate the symlink
+attack in CVE-2019-12209.
+
+Timeline and Responsible Disclosure
+-----------------------------------
+
+Communication with upstream was responsive and constructive over the
+complete timeline.
+
+2019-05-08: I reported the findings privately to the upstream maintainer.
+2019-05-20: security@...ico.com has been involved and we worked out and
+    reviewed patches together that have been agreed upon by this time.
+2019-05-22: Yubico assigned CVEs for the issues.
+2019-06-04: This was the established publication date and Yubico
+    released a fixed version as planned.
+
+References
+----------
+
+[1]: https://developers.yubico.com/pam-u2f/
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=1087061
+[3]: https://github.com/Yubico/pam-u2f/commit/18b1914e32b74ff52000f10e97067e841e5fff62
+[4]: https://github.com/Yubico/pam-u2f/commit/7db3386fcdb454e33a3ea30dcfb8e8960d4c3aa3
+[5]: https://developers.yubico.com/pam-u2f/Release_Notes.html
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Linux GmbH
+GF: Felix Imendörffer, Mary Higgins, Sri Rasiah
+HRB 21284 (AG Nuernberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
