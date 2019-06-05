@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3211" "Friday" "17" "June" "2016" "09:59:51" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160617135951.F3F486C05C4@smtpvmsrv1.mitre.org>" "81" "[oss-security] Re: Various invalid memory reads in ImageMagick (WPG, DDS, DCM)" "^Cc:" nil nil "6" "2016061713:59:51" "[oss-security] Re: Various invalid memory reads in ImageMagick (WPG, DDS, DCM)" (number mark "        cve-assign@m Jun 17   81/3211  " thread-indent "\"[oss-security] Re: Various invalid memory reads in ImageMagick (WPG, DDS, DCM)\"\n") "<20160614135328.34a1e4e4@pc1>" ("<20160614135328.34a1e4e4@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5656" "Wednesday" "5" "June" "2019" "11:59:31" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20190605095931.GA13513@f195.suse.de>" "161" "[oss-security] pam-u2f: CVE-2019-12210: debug_file file descriptor leak, CVE-2019-12209: symlink attack on u2f_keys leading to possible information leak" nil nil nil "6" "2019060509:59:31" "[oss-security] pam-u2f: CVE-2019-12210: debug_file file descriptor leak, CVE-2019-12209: symlink attack on u2f_keys leading to possible information leak" (number mark "U       mgerstner@su Jun  5  161/5656  " thread-indent "\"[oss-security] pam-u2f: CVE-2019-12210: debug_file file descriptor leak, CVE-2019-12209: symlink attack on u2f_keys leading to possible information leak\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] pam-u2f: CVE-2019-12210: debug_file file descriptor leak, CVE-2019-12209: symlink attack on u2f_keys leading to possible information leak" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15780 invoked by uid 550); 17 Jun 2016 14:00:14 -0000
+Received: (qmail 24510 invoked by uid 550); 5 Jun 2019 09:59:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,180 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15683 invoked from network); 17 Jun 2016 14:00:03 -0000
-In-Reply-To: <20160614135328.34a1e4e4@pc1>
-Message-Id: <20160617135951.F3F486C05C4@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 17 Jun 2016 09:59:51 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Various invalid memory reads in ImageMagick (WPG, DDS, DCM)
-To: hanno@hboeck.de
+Received: (qmail 24492 invoked from network); 5 Jun 2019 09:59:43 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Wed, 5 Jun 2019 11:59:31 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20190605095931.GA13513@f195.suse.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: [oss-security] pam-u2f: CVE-2019-12210: debug_file file descriptor leak,
+ CVE-2019-12209: symlink attack on u2f_keys leading to possible information
+ leak
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--sdtB3X0nJg68CQEu
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> https://blog.fuzzing-project.org/46-Various-invalid-memory-reads-in-ImageMagick-WPG,-DDS,-DCM.html
+Hello,
 
-> An out of bounds memory read in the VerticalFilter() function can be
-> triggered by a malformed DDS file.
-> 
-> https://github.com/ImageMagick/ImageMagick/commit/791aa82c8064ee8965a63ccf4384f56b95057e5b
+pam-u2f [1] is a PAM module that allows to integrate universal 2nd
+factor authenticators like YubiKey into the PAM stack. In the context of
+a source code review [2] due to the inclusion of pam-u2f into SUSE Linux
+two security issues in this PAM module have been uncovered as described
+in the following sections.
 
-The "out of bounds memory read" seems to be a valid concern, and is
-assigned the CVE-2016-5687 ID. However, we do not happen to understand
-why 791aa82c8064ee8965a63ccf4384f56b95057e5b is a fix.
+CVE-2019-12210: debug_file file descriptor leak
+-----------------------------------------------
 
+If the `debug` and `debug_file` options are set then the opened debug
+file will be inherited to the successfully authenticated user's process.
+Therefore this user can write further information to it, possibly
+filling up a privileged file system or manipulating the information
+found in the debug file.
 
-> Several bugs in the WPG parser could lead to a heap overflow and random
-> invalid memory writes. These bugs only seem to appear when a memory
-> limit is set.
-> 
-> Sample for heap write overflow in SetPixelIndex
-> 
-> Sample for unclear invalid write in ScaleCharToQuantum
-> 
-> Sample for unclear invalid write in SetPixelIndex
-> 
-> https://github.com/ImageMagick/ImageMagick/commit/fc43974d34318c834fbf78570ca1a3764ed8c7d7
-> https://github.com/ImageMagick/ImageMagick/commit/aecd0ada163a4d6c769cec178955d5f3e9316f2f
+In some contexts the program utilizing PAM closes off leaked file
+descriptors but it does work with su, for example, use the following
+line in the PAM stack:
 
-As far as we can tell, this can be thought of as a single issue in
-which some type of input validation (associated with a SetImageExtent
-return-value check) occurred in the wrong place, and was accompanied
-by incorrect error handling. The various write-access observations
-would then be consequences of this.
+```
+auth    optional        pam_u2f.so debug debug_file=3D/tmp/u2f-debug.txt
+```
 
-Use CVE-2016-5688 for this entire report about the WPG parser.
+Then prepare the debug file such that the PAM module can open it:
 
+root# touch /tmp/u2f-debug.txt
 
-> Null pointer accesses and unclear segfaults can happen in the DCM
-> parser.
-> 
-> Sample for null pointer access in ReadDCMImage
-> 
-> Sample for null pointer access in ReadDCMImage (different code)
-> 
-> Sample for unclear segfault in ReadDCMImage
-> 
-> https://github.com/ImageMagick/ImageMagick/commit/5511ef530576ed18fd636baa3bb4eda3d667665d
+Then perform su on yourself as an unprivileged user:
 
-As far as we can tell, there are three separate issues identified in
-the fix. (These do not necessarily map directly to the three samples.)
+user$ su user
+Password: XXX
+user$ ls -l /proc/$$/fd
+[...]
+l-wx------ 1 user users 64  8. Mai 11:44 3 -> /tmp/u2f-debug.txt
 
-Use CVE-2016-5689 for the lack of required NULL pointer checks.
+As you can see the new user shell now has an open file descriptor for
+the debug file.
 
-Use CVE-2016-5690 for the error in the for statement in the "Compute
-pixel scaling table" part of the ReadDCMImage function.
+CVE-2019-12209: symlink attack on u2f_keys leading to possible information =
+leak
+---------------------------------------------------------------------------=
+----
 
-Use CVE-2016-5691 for the lack of validation of pixel.red,
-pixel.green, and pixel.blue.
+The file `$HOME/.config/Yubico/u2f_keys` is blindly followed by the PAM
+module. It can be a symlink pointing to an arbitrary file. The PAM
+module only rejects non-regular files and files owned by other users
+than root or the to-be-authenticated user. Even these checks are only
+made after open()'ing the file, which may already trigger certain logic
+in the kernel that is otherwise not reachable to regular users.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+If the PAM modules' `debug` option is also enabled then most of the
+content of the file is written either to stdout, stderr, syslog or to
+the defined debug file.  Therefore this can pose an information leak to
+access e.g.  the contents of /etc/shadow, /root/.bash_history or similar
+sensitive files. Furthermore the symlink attack can be used to use other
+users' u2f_keys files in the authentication process.
+
+For example use the following line in the PAM stack:
+
+```
+auth    optional        pam_u2f.so debug
+```
+
+Then prepare a suitable symlink:
+
+```
+user$ mkdir -p ~/.config/Yubico
+user$ ln -s /etc/shadow ~/.config/Yubico/u2f_keys
+```
+
+Then authenticate the user on a text console:
+
+host login: user
+Password: XXX
+[...]
+debug(pam_u2f):  Authorization line: avahi:!:18019::::::
+[...]
+
+Notice the lines from /etc/shadow being output on the terminal.
+
+Bugfixes and Mitigations
+------------------------
+
+The bugfix for CVE-2019-12210 is found in [3]. It solves the issue by
+passing `O_CLOEXEC` and more conservative flags to related `open()`
+calls.
+
+The bugfix for CVE-2019-12209 is found in [4]. It solves the issue by
+dropping privileges to the to-be-authenticated user before accessing the
+`u2f_keys` file.
+
+Both bugfixes are contained in the upstream release 1.0.8 [5].
+
+A major mitigation for both issues is to remove the `debug` and
+`debug_file` options for `pam_u2f.so` in the PAM configuration.
+Furthermore enabling the `openasuser` option will mitigate the symlink
+attack in CVE-2019-12209.
+
+Timeline and Responsible Disclosure
+-----------------------------------
+
+Communication with upstream was responsive and constructive over the
+complete timeline.
+
+2019-05-08: I reported the findings privately to the upstream maintainer.
+2019-05-20: security@yubico.com has been involved and we worked out and
+    reviewed patches together that have been agreed upon by this time.
+2019-05-22: Yubico assigned CVEs for the issues.
+2019-06-04: This was the established publication date and Yubico
+    released a fixed version as planned.
+
+References
+----------
+
+[1]: https://developers.yubico.com/pam-u2f/
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=3D1087061
+[3]: https://github.com/Yubico/pam-u2f/commit/18b1914e32b74ff52000f10e97067=
+e841e5fff62
+[4]: https://github.com/Yubico/pam-u2f/commit/7db3386fcdb454e33a3ea30dcfb8e=
+8960d4c3aa3
+[5]: https://developers.yubico.com/pam-u2f/Release_Notes.html
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Linux GmbH
+GF: Felix Imend=F6rffer, Mary Higgins, Sri Rasiah
+HRB 21284 (AG Nuernberg)
+
+--sdtB3X0nJg68CQEu
+Content-Type: application/pgp-signature; name="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXZAH0AAoJEHb/MwWLVhi26YQP/1wB8tcmsY0Ljb68BDyylo+8
-Fsl4LBITCVw2cPLJKw/cPupFN0I4kTG38EEr4HNemfIt8zGSYKGfcdr+geTB+WGK
-Y/EgTBwJrSCLt7KQOADAi1uNHHuq9+7uoZ1zjhffO729MqY73g0Vh4oi7waNqJBm
-N52k4VJA24s0zHFLQX3A29gaVsdMHxW/bTdsOiI6+VicMWYdfSHSbzfK4MP0daCK
-Y2OGnAFJAhcsZHKjXSiyEBCdH2dATjLuBONW3Y+bYaDvZ9Q313eKoDXJZ7ng/Idp
-UAfHpKYgkkN4wbOS+Y5AFYSaGGpLeMxzg6z113sAPw8pB5ukEoQvjm5FQq78HDGk
-sQSrunAuZS/9vLLmypTEpj0tuTDzi4V+WDqcwneTYh5xMxtLcMlaECMVOealOwFV
-63Vf6sRV7TindQ3AulzIl+qux6cQJzh+8mWYfOA7UdpYrX1qDInPdX2ZiuSLQ9UW
-jusvHE1wbXj7F7VBmuZHmUOFQX0T2hI0jJa81YdQvoDXVxp+kerIIwVAcB7Xc/3+
-/Kh8kw0xiaewVhe4lo/SwkUhTecNxm3hw22aCITvCMo9Hcg6qzwBmMBKJtcRWbYd
-gIB/KopZv0CLwOGDvRcZql+QA811Ee9QBR28e7gJ48PjiJmKEgXvcNDhuGb29n2c
-z6A2Z9cyks8gJCWERGvF
-=Pvf8
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAlz3koAACgkQFMQFyXGS
+NVO+Zw/+I8jDbT8jzWp5Cs6Hs5s0u6Qpf/rHTQR7Fu98jtsCnmJtIfuOe/fNxNPO
+nQTl0b+MYCuit1cKel2Ay12f4gGaIsedHaAHh/i2KSDaySxvN1V+ubkhdNwVzJZ7
+fKExM3ahBf2wZlLam6JPIoSlmzWCFoSYQ0GOoq/Fr7eQ3d6+IWFCnljzwlAni76F
+RYCZKrtvoQBVd9o0SECQ8X8zzhWyANqkiDtwoB4KHV/+3Z1pez2SFdRm0yte4Gyj
+0iYf0KE1nsqZM64m2reMnH639PY+3kwPHMAK9uVX44CbX6FGsm2pHCFxK2gVRc2+
+EVKAgwq3n+/UNbLhandUYHbLrg+7FnbEe+89lSR7DW4kLZ+TK2YCdGvxQPxI48og
+NVfPdwJxSnZkK+ZYnaQrR8s1S96WH7JH1ABil6zuPzu6KfzBHcnNEy7/BfMK9wOo
+n0R7m2MrON9J21joBwg3efqOy0oHGKe1+8iUW+HNcCaG3SEK/oGwmHggsQOtmT9w
++8Ajr1CfGILo3xL8Hit0O6YtZpyOlU4XdyXgsmX9KeFMRc1Zg2CH+ms+vMw5y3Eq
+bs6jAeBq9d6nB6DcORyBuR4EZvMCU34CvDqQF/NOfI/qltkyN4pqp3PEItZt2zNP
+cTz2Jixj8iz6Ma5LGBCBDlx2Oedeot5liWhNep7vIYxg17WnrcU=
+=ddrQ
 -----END PGP SIGNATURE-----
+
+--sdtB3X0nJg68CQEu--
