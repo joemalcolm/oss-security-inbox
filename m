@@ -1,51 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/2
-Message-ID: <20190828122919.GA4151@cbuissar-ltop.localdomain>
-Date: Wed, 28 Aug 2019 14:29:19 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/05/3
+Message-ID: <20190605151944.5z5b35kydy2yenvm@jumper.schlittermann.de>
+Date: Wed, 5 Jun 2019 17:19:44 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
 To: oss-security@...ts.openwall.com
-Subject: ghostscript: CVE-2019-14811, CVE-2019-14812, CVE-2019-14813 and CVE-2019-14817 (.forceput exposed)
+Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+The fix for CVE-2019-10149 is public now.
 
-This is to report another 4 CVEs in ghostscript, rated important. They are all similar to the recently reported CVE-2019-10216 (reference to `.forceput` can be accessed)
+    https://git.exim.org/exim.git
+    Branch exim-4_91+fixes.
 
-Ghostscript is a suite of software providing an interpreter for Adobe Systems' PostScript (PS) and Portable Document Format (PDF) page description languages.  Its primary purpose includes displaying (rasterization & rendering) and printing of document pages, as well as conversions between different document formats.
-URL : www.ghostscript.com
+Thank you to
+    - Qualys for reporting it.
+    - Jeremy for fixing it.
+    - you for using Exim.
 
-1- CVE-2019-14811 : Safer Mode Bypass by .forceput Exposure in .pdf_hook_DSC_Creator (701445)
+Sorry for confusion about the public release. We were forced to react,
+as details leaked.
 
-2- CVE-2019-14812 : Safer Mode Bypass by .forceput Exposure in setuserparams (701444)
+The patch should apply cleanly to all affected versions (4.87->4.91). We
+do not do a security release, as the official Exim version is at 4.92
+already and older releases are considered to be outdated and not
+supported by the developers anymore.
 
-3- CVE-2019-14813 : Safer Mode Bypass by .forceput Exposure in setsystemparams (701443)
+Please do not hesitate to contact us if you need help backporting the
+fix.
 
-4- CVE-2019-14817 : Safer Mode Bypass by .forceput Exposure in .pdfexectoken and other procedures (701450)
+Details of the commit:
 
-In each case, a specially crafted script could get a reference to .forceput and use that to disable the -dSAFER protection. This then allows the script to access file system outside of resitricted areas and execute arbitrary commands.
-Regarding CVE-2019-14817, only the .pdfexectoken procedure was proven to be vulnerable, the other fixed methods were only potentially vulnerable.
-
-Preventing the modification of the error handler might protect most of these vulnerable functions
-
-The fixes have been pushed upstream :
-
-CVE-2019-14811, CVE-2019-14812, CVE-2019-14813 : 
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=885444fcbe10dc42787ecb76686c8ee4dd33bf33
-
-CVE-2019-14817 : 
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=cd1b1cacadac2479e291efe611979bdc1b3bdb19
-
-Acknowledgments :
-CVE-2019-14811, CVE-2019-14812, CVE-2019-14813 were reported to upstream by Hiroki MATSUKUMA of Cyber Defense Institute, Inc.
+    |commit d740d2111f189760593a303124ff6b9b1f83453d
+    |gpg: Signature made Di 04 Jun 2019 11:27:33 CEST
+    |gpg:                using RSA key D0BFD6B9ECA5694A6F149DCEAF4CC676A6B6C142
+    |gpg:                issuer "hs@...littermann.de"
+    |gpg: Good signature from "Heiko Schlittermann (Dresden) <hs@...littermann.de>" [full]
+    |gpg:                 aka "Heiko Schlittermann (HS12-RIPE) <hs@...littermann.de>" [full]
+    |gpg:                 aka "[jpeg image of size 4759]" [full]
+    |gpg:                 aka "Heiko Schlittermann (Exim MTA Maintainer) <heiko@...m.org>" [full]
+    |gpg:                 aka "Heiko Schlittermann (HS12-RIPE) <hs@...marc.schlittermann.de>" [undefined]
+    |Author: Jeremy Harris <jgh146exb@...mail.org>
+    |Date:   Mon May 27 21:57:31 2019 +0100
+    |
+    |   Fix CVE-2019-10149
 
 
-Noteworthy (similar to CVE-2019-10216) :
-A recent modification, started in upstream commit 7ecbfda92b4c8dbf6f6c2bf8fc82020a29219eff, changed the access to file permissions. After this commit, the ability to modify the /PermitFile* entries from systemdict's /userparams entry should have no effect.
-That is to say: getting a reference to highly privileged function (such as .forceput), can still be used to remove SAFER, and modify the /PermitFile* lists. However, the interpreter will still refuse to access files outside of a list provided from a set of command line options. This should mitigate the class of ghostscript vulnerabilities similar to the one described above.
-
-Best regards
-
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
 --
-Cedric Buissart
-Product Security
-Red Hat
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
