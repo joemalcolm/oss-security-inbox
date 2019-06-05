@@ -1,25 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/21/1
-Message-Id: <B2F781BF-7762-4FCF-99FA-4B46A349C49B@gmail.com>
-Date: Sat, 21 Sep 2019 08:59:28 -0400
-From: Rich Persaud <persaur@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/05/2
+Message-ID: <B64FBE57-16FA-41C7-8F02-8FDB96DD99B2@nodmarc.schlittermann.de>
+Date: Wed, 05 Jun 2019 14:41:19 +0000
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
 To: oss-security@...ts.openwall.com
-Subject: OSS platform security 
+Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
 Content-Type: text/plain; charset=utf-8
 
-If you are working on open firmware, boot loaders or virtualization, there is useful content and references at the conference links below.
+We will publish the fix today 2019-06-05 15:15 UTC on the exim-4_91+fixes branch of our public Git repo git.exim.org.
 
-Rich
+Distros can release their packages by that date.
 
-
-Open-Source Firmware Conference, Sep 3-6, 2019
-2019 slides: https://osfc.io/schedule
-2018 videos: https://osfc.io/archive
-
-Linux Plumbers 2019 Secure Boot microconference, Sep 11, 2019
-Notes: https://etherpad.net/p/LPC2019_System_Boot_and_Security/export/html
-
-Platform Security Summit, Oct 1-3, 2019
-2019 speakers: https://platformsecuritysummit.com
-2018 videos: https://platformsecuritysummit.com/2018/videos
-
+Sorry for the inconveniences.
+-- 
+Heiko Schlittermann (unterwegs)
+Download attachment "signature.asc" of type "application/pgp-signature" (530 bytes)
