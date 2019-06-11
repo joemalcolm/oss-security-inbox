@@ -1,30 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/24/2
-Message-ID: <20191023151355.1989c946@gandalf.local.home>
-Date: Wed, 23 Oct 2019 15:13:55 -0400
-From: Steven Rostedt <rostedt@...dmis.org>
-To: "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
-Cc: oss-security@...ts.openwall.com, sashal@...nel.org, amakhalov@...are.com, anishs@...are.com, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>
-Subject: Re: Membership application for linux-distros - VMware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/11/2
+Message-ID: <20190611150941.GA18705@espresso.pseudorandom.co.uk>
+Date: Tue, 11 Jun 2019 16:09:41 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-12749: DBusServer DBUS_COOKIE_SHA1 authentication bypass
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 23 Oct 2019 12:08:48 -0700
-"Srivatsa S. Bhat" <srivatsa@...il.mit.edu> wrote:
+Product: freedesktop.org dbus
+Vulnerable versions: all < 1.10.28, 1.12.x < 1.12.16, 1.13.x < 1.13.12
+Fixed versions: all >= 1.13.12, 1.12.x >= 1.12.16, 1.10.x >= 1.10.28
 
-> > 9. Have someone already on the private list, or at least someone else
-> > who has been active on oss-security for years but is not affiliated
-> > with your distro nor your organization, vouch for at least one of the
-> > people requesting membership on behalf of your distro (then that one
-> > vouched-for person will be able to vouch for others on your team, in
-> > case you'd like multiple people subscribed)  
-> 
-> Sasha Levin <sashal@...nel.org> has graciously agreed to vouch for
-> Steven Rostedt <rostedt@...dmis.org>, who is a part of the Open Source
-> Technology Center at VMware. Steven, in turn, will vouch for me,
-> (Srivatsa S. Bhat <srivatsa@...il.mit.edu>) and I'll represent the
-> Photon OS team on the list.
+dbus is the reference implementation of D-Bus, an asynchronous
+inter-process communication system commonly used for system services
+or within a desktop session on Linux and other operating systems.
 
-I can vouch for Srivatsa, and I hope that Sasha (and others) can vouch
-for me.
+Joe Vennix of Apple Information Security discovered an implementation flaw
+in the DBUS_COOKIE_SHA1 authentication mechanism. A malicious client with
+write access to its own home directory could manipulate a ~/.dbus-keyrings
+symlink to cause a DBusServer with a different uid to read and write
+in unintended locations. In the worst case, this could result in the
+DBusServer reusing a cookie that is known to the malicious client, and
+treating that cookie as evidence that a subsequent client connection
+came from an attacker-chosen uid, allowing authentication bypass.
 
--- Steve
+This vulnerability does not normally affect the standard system
+dbus-daemon, which only allows the EXTERNAL authentication mechanism.
+In supported branches of dbus it also does not normally affect the standard
+session dbus-daemon, for the same reason.
+
+However, this vulnerability can affect third-party users of DBusServer
+(such as Upstart in Ubuntu 14.04 LTS), third-party dbus-daemon instances,
+standard dbus-daemon instances with non-standard configuration, and the
+session bus in older/unsupported dbus branches (such as dbus 1.6.x in
+Ubuntu 14.04 LTS).
+
+Recommendations
+---------------
+
+Fix the vulnerability by upgrading to a
+fixed dbus version, or by applying upstream git commit
+https://gitlab.freedesktop.org/dbus/dbus/commit/47b1a4c41004bf494b87370987b222c934b19016
+which should be suitable for all recent branches. This resolves the
+vulnerability by rejecting attempts to authenticate with DBUS_COOKIE_SHA1
+as any user ID that is not the owner of the process with the DBusServer.
+
+A further git commit "test: Add basic test coverage for DBUS_COOKIE_SHA1"
+(available in different versions for the dbus-1.10/dbus-1.12 and master
+branches) adds basic unit test coverage, which is not required but might
+be useful.
+
+As additional hardening, we recommend that D-Bus servers on Unix platforms
+should only listen on AF_UNIX sockets, and that they should pass the array
+{"EXTERNAL", NULL} to dbus_server_set_auth_mechanisms() immediately after
+the DBusServer is created (before polling the server's socket), so that
+only EXTERNAL (credentials-passing) authentication is allowed. This is
+not the default behaviour of a DBusServer for compatibility reasons. In
+dbus-daemon(1) this can be achieved by having <auth>EXTERNAL</auth> as
+the only <auth> element in the configuration, similar to the standard
+system.conf and session.conf on Unix platforms. This hardening would have
+made the vulnerability inaccessible.
+
+Distributors who are maintaining an unsupported branch
+should apply that hardening to the standard session
+bus (dbus-daemon --session) by backporting upstream commit
+https://gitlab.freedesktop.org/dbus/dbus/commit/d9ab8931 from dbus 1.8.18
+if they have not done so already.
+
+Unsupported branches
+--------------------
+
+As announced in
+<https://lists.freedesktop.org/archives/dbus/2018-December/017644.html>,
+dbus 1.8.x, 1.6.x and all older branches have reached end-of-life and no
+longer receive upstream security support. There will not be releases from
+those branches to fix this vulnerability. If your long-term-supported
+distribution relies on one of these branches, and you would like to
+use the upstream dbus git repository to share tested patches with other
+distributions in the same situation, please contact the dbus maintainers
+via <dbus-security@...ts.freedesktop.org>.
+
+Acknowledgements
+----------------
+
+Thanks to Joe Vennix (Apple Information Security), Seth Arnold (Canonical)
+and Philip Withnall (Endless) for their assistance with this vulnerability.
+
+-- 
+Simon McVittie
+Collabora Ltd. / Debian
+on behalf of the dbus maintainers
