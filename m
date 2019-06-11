@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1085" "Tuesday" "11" "August" "2015" "10:47:46" "-0400" "Siddharth Sharma" "siddharth@redhat.com" "<971116748.5268998.1439304466167.JavaMail.zimbra@redhat.com>" "39" "Re: [oss-security] Duplicate Wireshark CVEs?" nil nil nil "8" "2015081114:47:46" "[oss-security] Duplicate Wireshark CVEs?" (number mark "        siddharth@re Aug 11   39/1085  " thread-indent "\"Re: [oss-security] Duplicate Wireshark CVEs?\"\n") "<87bnef1kxg.fsf@redhat.com>" ("<87bnef1kxg.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4000" "Tuesday" "11" "June" "2019" "16:09:41" "+0100" "Simon McVittie" "smcv@debian.org" "<20190611150941.GA18705@espresso.pseudorandom.co.uk>" "83" "[oss-security] CVE-2019-12749: DBusServer DBUS_COOKIE_SHA1 authentication bypass" "^Date:" nil nil "6" "2019061115:09:41" "[oss-security] CVE-2019-12749: DBusServer DBUS_COOKIE_SHA1 authentication bypass" (number mark "U       smcv@debian. Jun 11   83/4000  " thread-indent "\"[oss-security] CVE-2019-12749: DBusServer DBUS_COOKIE_SHA1 authentication bypass\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-12749: DBusServer DBUS_COOKIE_SHA1 authentication bypass" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1393 invoked by uid 550); 11 Aug 2015 14:47:59 -0000
+Received: (qmail 1373 invoked by uid 550); 11 Jun 2019 15:09:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1372 invoked from network); 11 Aug 2015 14:47:58 -0000
-Message-ID: <971116748.5268998.1439304466167.JavaMail.zimbra@redhat.com>
-In-Reply-To: <87bnef1kxg.fsf@redhat.com>
-References: <87bnef1kxg.fsf@redhat.com>
+Received: (qmail 1352 invoked from network); 11 Jun 2019 15:09:56 -0000
+Message-ID: <20190611150941.GA18705@espresso.pseudorandom.co.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.36.5.155]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF39 (Linux)/8.0.6_GA_5922)
-Thread-Topic: Duplicate Wireshark CVEs?
-Thread-Index: l8d4O/31RK4iOwz9fUp6ZcyqUpBwcw==
-Date: Tue, 11 Aug 2015 10:47:46 -0400 (EDT)
-From: Siddharth Sharma <siddharth@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Tue, 11 Jun 2019 16:09:41 +0100
+From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Duplicate Wireshark CVEs?
+Subject: [oss-security] CVE-2019-12749: DBusServer DBUS_COOKIE_SHA1 authentication bypass
 To: oss-security@lists.openwall.com
 
-Hi,
+Product: freedesktop.org dbus
+Vulnerable versions: all < 1.10.28, 1.12.x < 1.12.16, 1.13.x < 1.13.12
+Fixed versions: all >= 1.13.12, 1.12.x >= 1.12.16, 1.10.x >= 1.10.28
 
-Any information available on why both Wireshark CVEs
-CVE-2015-3811 CVE-2015-2188 point to one fix ?
+dbus is the reference implementation of D-Bus, an asynchronous
+inter-process communication system commonly used for system services
+or within a desktop session on Linux and other operating systems.
 
-Thanks
------------------------------------------------------------------
-Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A=20
-Fingerprint :  0x6F04C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A=20
+Joe Vennix of Apple Information Security discovered an implementation flaw
+in the DBUS_COOKIE_SHA1 authentication mechanism. A malicious client with
+write access to its own home directory could manipulate a ~/.dbus-keyrings
+symlink to cause a DBusServer with a different uid to read and write
+in unintended locations. In the worst case, this could result in the
+DBusServer reusing a cookie that is known to the malicious client, and
+treating that cookie as evidence that a subsequent client connection
+came from an attacker-chosen uid, allowing authentication bypass.
 
+This vulnerability does not normally affect the standard system
+dbus-daemon, which only allows the EXTERNAL authentication mechanism.
+In supported branches of dbus it also does not normally affect the standard
+session dbus-daemon, for the same reason.
 
------ Original Message -----
-From: "Martin Prpic" <mprpic@redhat.com>
-To: oss-security@lists.openwall.com
-Sent: Monday, August 10, 2015 4:15:31 PM
-Subject: [oss-security] Duplicate Wireshark CVEs?
+However, this vulnerability can affect third-party users of DBusServer
+(such as Upstart in Ubuntu 14.04 LTS), third-party dbus-daemon instances,
+standard dbus-daemon instances with non-standard configuration, and the
+session bus in older/unsupported dbus branches (such as dbus 1.6.x in
+Ubuntu 14.04 LTS).
 
-Hello,
+Recommendations
+---------------
 
-It looks like the following two Wireshark advisories fix the same flaw:
+Fix the vulnerability by upgrading to a
+fixed dbus version, or by applying upstream git commit
+https://gitlab.freedesktop.org/dbus/dbus/commit/47b1a4c41004bf494b87370987b222c934b19016
+which should be suitable for all recent branches. This resolves the
+vulnerability by rejecting attempts to authenticate with DBUS_COOKIE_SHA1
+as any user ID that is not the owner of the process with the DBusServer.
 
-https://www.wireshark.org/security/wnpa-sec-2015-14.html
-https://www.wireshark.org/security/wnpa-sec-2015-07.html
+A further git commit "test: Add basic test coverage for DBUS_COOKIE_SHA1"
+(available in different versions for the dbus-1.10/dbus-1.12 and master
+branches) adds basic unit test coverage, which is not required but might
+be useful.
 
-Both fix a flaw in the WCP dissector and refer to the following bug:
+As additional hardening, we recommend that D-Bus servers on Unix platforms
+should only listen on AF_UNIX sockets, and that they should pass the array
+{"EXTERNAL", NULL} to dbus_server_set_auth_mechanisms() immediately after
+the DBusServer is created (before polling the server's socket), so that
+only EXTERNAL (credentials-passing) authentication is allowed. This is
+not the default behaviour of a DBusServer for compatibility reasons. In
+dbus-daemon(1) this can be achieved by having <auth>EXTERNAL</auth> as
+the only <auth> element in the configuration, similar to the standard
+system.conf and session.conf on Unix platforms. This hardening would have
+made the vulnerability inaccessible.
 
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D10844
+Distributors who are maintaining an unsupported branch
+should apply that hardening to the standard session
+bus (dbus-daemon --session) by backporting upstream commit
+https://gitlab.freedesktop.org/dbus/dbus/commit/d9ab8931 from dbus 1.8.18
+if they have not done so already.
 
-Is there a reason two CVEs were assigned for this, or should one of them
-be rejected?
+Unsupported branches
+--------------------
 
-Thanks!
+As announced in
+<https://lists.freedesktop.org/archives/dbus/2018-December/017644.html>,
+dbus 1.8.x, 1.6.x and all older branches have reached end-of-life and no
+longer receive upstream security support. There will not be releases from
+those branches to fix this vulnerability. If your long-term-supported
+distribution relies on one of these branches, and you would like to
+use the upstream dbus git repository to share tested patches with other
+distributions in the same situation, please contact the dbus maintainers
+via <dbus-security@lists.freedesktop.org>.
 
-RH bugs:
-https://bugzilla.redhat.com/CVE-2015-2188
-https://bugzilla.redhat.com/CVE-2015-3811
+Acknowledgements
+----------------
 
---=20
-Martin Prpi=C4=8D / Red Hat Product Security
+Thanks to Joe Vennix (Apple Information Security), Seth Arnold (Canonical)
+and Philip Withnall (Endless) for their assistance with this vulnerability.
+
+-- 
+Simon McVittie
+Collabora Ltd. / Debian
+on behalf of the dbus maintainers
