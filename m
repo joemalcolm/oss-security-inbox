@@ -1,44 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/3
-Message-ID: <20190711093326.328948dc@jabberwock.cb.piermont.com>
-Date: Thu, 11 Jul 2019 09:33:26 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Malte Kraus <malte.kraus@...e.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/11/1
+Message-Id: <121B8053-3DA3-4BF8-903E-3615504626C5@beckweb.net>
+Date: Tue, 11 Jun 2019 15:10:00 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 11 Jul 2019 07:51:17 +0000 Malte Kraus <malte.kraus@...e.com>
-wrote:
-> Hi Perry,
-> 
-> On Tue, 2019-07-09 at 11:30 -0400,  Perry E. Metzger wrote:
-> > Can you explain (or point to) a description of why this is a
-> > problem?  
-> I'm not sure what exactly breaks, just that it does, see e.g. [1]
-> [2] [3]. Since we're talking about root it's not a matter of
-> technical impossibility, but a decision not to write the code to
-> make it work.
-> 
-> From a security perspective that seems like a great improvement.
-> Even if it should be the case that some programs don't follow best
-> practices re "least privileges", at least it's not the whole
-> application running as root.
-> 
-> 1: 
-> https://wiki.archlinux.org/index.php/Running_GUI_applications_as_root#Wayland
-> 2: 
-> https://wiki.debian.org/Wayland#I.27m_accustomed_to_running_various_programs_.28e.g._synaptic.29_as_root_in_my_X_session.__How_will_this_work_under_Wayland.3F
-> 3: 
-> https://fedoraproject.org/wiki/How_to_debug_Wayland_problems#Graphical_applications_can.27t_be_run_as_root_from_terminal
-> 
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-So these links seem to say that things have been structured so you
-*can't* run GUI apps as root, not that there is a special or unusual
-security problem in Wayland if you run an application as root; if
-you logged in as root, you could run GUI applications as root. That's
-rather different from the original statement. Am I misunderstanding?
+* ElectricFlow Plugin 1.1.7
+* JX Resources Plugin 1.0.37
+* Token Macro Plugin 2.8
 
-Perry
--- 
-Perry E. Metzger		perry@...rmont.com
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-06-11/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1399 / CVE-2019-10337
+Token Macro Plugin did not configure its XML parser in a way that would 
+prevent XML External Entity (XXE) processing.
+
+This allowed attackers able to control the contents of files processed with 
+the ${XML} macro to have Jenkins parse a maliciously crafted XML file that 
+uses external entities for extraction of secrets from the Jenkins agent, 
+server-side request forgery, or denial-of-service attacks.
+
+Token Macro Plugin no longer processes XML External Entities in XML documents.
+
+
+SECURITY-1379 / CVE-2019-10338 (CSRF), CVE-2019-10339 (improper authorization)
+JX Resources Plugin did not perform permission checks on a method 
+implementing form validation. This allowed users with Overall/Read access to 
+Jenkins to connect to an attacker-specified Kubernetes server and obtain 
+information about an attacker-specified namespace. Doing so might also leak 
+service account credentials used for the connection. Additionally, it allowed 
+attackers to obtain the value of any attacker-specified environment variable 
+for the Jenkins master process.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a cross-site request forgery vulnerability.
+
+This form validation method now requires POST requests and Overall/Administer 
+permissions.
+
+
+SECURITY-1410 (1) / CVE-2019-10331 (CSRF), CVE-2019-10332 (improper authorization)
+A missing permission check in a form validation method in ElectricFlow Plugin 
+allowed users with Overall/Read permission to initiate a connection test to 
+an attacker-specified server with attacker-specified username and password.
+
+Additionally, the form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+This form validation method now requires POST requests and Overall/Administer 
+permissions.
+
+
+SECURITY-1410 (2) / CVE-2019-10333
+Various form validation and form autocompletion methods in ElectricFlow 
+Plugin lacked permission checks. This allowed attackers with Overall/Read 
+access to obtain information about the configuration of ElectricFlow Plugin, 
+as well as the configuration and data of connected ElectricFlow servers.
+
+These form validation and autocompletion methods now require 
+Overall/Administer or Job/Configure permission, as appropriate for the given 
+method.
+
+
+SECURITY-1411 / CVE-2019-10334
+ElectricFlow Plugin unconditionally disabled SSL/TLS certificate validation 
+for the entire Jenkins master JVM during the deployment/publication of an 
+application.
+
+ElectricFlow Plugin no longer does that. Instead, the existing opt-in option to
+ignore SSL/TLS errors is used during deployment for the specific connection.
+
+
+SECURITY-1412 / CVE-2019-10335
+The plugin adds metadata displayed on build pages during its operations.
+
+Any user content was not escaped, resulting in a cross-site scripting 
+vulnerability allowing users with Job/Configure permission, or attackers 
+controlling API responses received from ElectricFlow to render arbitrary HTML 
+and JavaScript on Jenkins build pages.
+
+Build metadata is now filtered through a HTML formatter that only allows 
+showing basic HTML, neutralizing any unsafe data. Additionally, all builds 
+executed after the security update is applied will now properly escape 
+content received from ElectricFlow.
+
+
+SECURITY-1420 / CVE-2019-10336
+The configuration forms of various post-build steps contributed by 
+ElectricFlow Plugin were vulnerable to cross-site scripting.
+
+This allowed attackers able to control the output of connected ElectricFlow 
+servers' APIs to inject arbitrary HTML and JavaScript into the configuration 
+form.
+
+ElectricFlow Plugin no longer interprets HTML/JavaScript in responses from 
+ElectricFlow server APIs on job configuration forms.
+
