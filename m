@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/6
-Message-ID: <20190822162000.GA1670@kroah.com>
-Date: Thu, 22 Aug 2019 09:20:00 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/14/3
+Message-ID: <alpine.LRH.2.21.1906141258540.3958@fairfax.gathman.org>
+Date: Fri, 14 Jun 2019 13:04:32 -0400 (EDT)
+From: "Stuart D. Gathman" <stuart@...hman.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+Subject: Re: X41 D-Sec GmbH Security Advisory X41-2019-001: Heap-based buffer overflow in Thunderbird
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 22, 2019 at 05:16:03PM +0200, Andrey Konovalov wrote:
-> On a side note, currently there's an issue with many Linux kernel bugs
-> being fixed, but not backported to distro kernels. Those bugs might
-> have security implications, but there's no way to know that, unless
-> someone specifically spends time to assess them in that regard.
-> Requesting CVEs for those bugs is a way to get the fixes into distro
-> kernels (even though that doesn't always work promptly [1] :).
-> 
-> [1] https://www.openwall.com/lists/oss-security/2018/10/30/2
 
-Note, I am scraping the logs for anything that says it is fixed due do a
-syzbot find or report and backporting them to the stable kernel
-branches.  So those distros that do follow the LTS/stable kernel
-releases do get these fixes.  Luckily most of the "sane" distros these
-days do this.
+On 14.06.19 17:00, Brandon Perry wrote:
+> Thanks for re-reporting these. They didn't take them seriously at all when
+> I reported them originally. These bugs are why I stopped using Thunderbird
+> completely.
 
-Please don't abuse the CVE process just to try to get a fix backported
-to a Linux kernel release.  There is at least one company today that
-does this as it is a way to "route around" management, but really, that
-shouldn't be needed, fix your management processes instead please :)
+I stopped using thunderbird because it infinite loops on my imap (dovecot)
+inbox.  I took the opportunity to try a bunch of clients (all of which
+work fine) from alpine to geary to evolution to claws.
 
-thanks,
-
-greg k-h
+-- 
+ 	      Stuart D. Gathman <stuart@...hman.org>
+"Confutatis maledictis, flamis acribus addictis" - background song for
+a Microsoft sponsored "Where do you want to go from here?" commercial.
