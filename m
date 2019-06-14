@@ -1,39 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/27/4
-Message-ID: <20190627165515.GC25142@elm>
-Date: Thu, 27 Jun 2019 11:55:16 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/14/2
+Message-ID: <93cb2f44-e74f-cb47-ffe6-fdc37dda1460@johannes-bauer.com>
+Date: Fri, 14 Jun 2019 18:42:32 +0200
+From: zugtprgfwprz@...rnkuller.de
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+Subject: Re: X41 D-Sec GmbH Security Advisory X41-2019-001: Heap-based buffer overflow in Thunderbird
 Content-Type: text/plain; charset=utf-8
 
-On 2019-06-28 00:42:06, Greg KH wrote:
-> On Thu, Jun 27, 2019 at 04:03:21PM +0200, Solar Designer wrote:
-> > Hi Sasha,
-> > 
-> > Thank you for posting this application.
-> > 
-> > Are you also on security@...?  If so, then on one hand also being on
-> > linux-distros would probably be of less use to you since I suspect most
-> > of the issues relevant to Microsoft are in the Linux kernel, but on the
-> > other hand you could serve as a liaison to that group.
-> 
-> Sasha is not on security@k.o, someone else there is _supposed_ to be the
-> liason to the linux-distros list, but I don't know how well that is
-> working at the moment as I am not on -distros (nor do I want to be at
-> this point in time.)
+On 14.06.19 17:00, Brandon Perry wrote:
+> Thanks for re-reporting these. They didn't take them seriously at all when
+> I reported them originally. These bugs are why I stopped using Thunderbird
+> completely.
 
-I don't think it happens much, if ever these days. The only kernel
-issues that go to linux-distros seem to be ones that are reported up
-through a distro or where the discoverer makes a point to include both
-lists.
+Geeze, three years ago. No bounty because it's rated as "low" and they
+didn't bother to check if it affects TB. Unauthenticated, remotely
+triggered heap overflow, yeah, totally sounds like a "low".
 
-It would be good to improve the situation but I don't know if one person
-could manage it alone.
+What happened to you Mozilla? You used to be the cool kid. You have changed.
 
-Tyler
+Cheers,
+Joe
 
-> 
-> thanks,
-> 
-> greg k-h
+-- 
+"A PC without Windows is like a chocolate cake without mustard."
