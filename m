@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2345" "Thursday" "31" "May" "2018" "19:31:02" "+0100" "Matthew Wild" "mwild1@gmail.com" "<CAJt9-x4hcHPjWShOPMrZDQRoUvhJ7ZDo5ntANoTvR-m5ma2w6w@mail.gmail.com>" "90" "[oss-security] [CVE-2018-10847] prosody: insufficient stream header validation" nil nil nil "5" "2018053118:31:02" "[oss-security] [CVE-2018-10847] prosody: insufficient stream header validation" (number mark "U       mwild1@gmail May 31   90/2345  " thread-indent "\"[oss-security] [CVE-2018-10847] prosody: insufficient stream header validation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3183" "Saturday" "15" "June" "2019" "15:22:22" "-0400" "Alex Gaynor" "alex.gaynor@gmail.com" "<CAFRnB2WaDePSyVbXkV3tVVeqJXihytA-sDip9hTZcuf5BHoX9g@mail.gmail.com>" "79" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019061519:22:22" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        alex.gaynor@ Jun 15   79/3183  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<20190615205947.56f2315d@computer>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190615205947.56f2315d@computer>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28457 invoked by uid 550); 31 May 2018 18:38:09 -0000
+Received: (qmail 17461 invoked by uid 550); 15 Jun 2019 19:22:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,128 +11,121 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20271 invoked from network); 31 May 2018 18:31:35 -0000
+Received: (qmail 17409 invoked from network); 15 Jun 2019 19:22:47 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=qnTIZo0afaUUCUatRCsXxc/GL3crtPcguCOGbvOr6Co=;
-        b=F7i0nb9PIn/oXxT7MYU6BGx1ZIR3FQN5JzMJzZZyCtYFgcST3Brm+8z7K4pbr3Dy8u
-         cXgxvtK1T+truw9xnN7cEfM41T4AgUE4Lp+emCP1qZIFoEOLFrKuctxTtxvToXUaXGxY
-         UmXE7uuAdZt008msPSG5f4Sov1+YEUwiiFF2LZzhNGioB+OurL3OLIdeXgWaW4ZKwgI8
-         /poDZO8bYC89y6eNVuwD4ThzVD7u1FsBC7mkG4yVXcCRy+0nClkzoYbst4nOgYCwc0+q
-         6Bhp4Dm/YIu80PVQnavOUBxBHZ3ZW+mvllqDaRSd7vHLhX8LSIDVTTXmfjlSpjEnr5RG
-         +HbA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=b76X7dGIP7P+ph1r/taw5AQhYRyuV8w31Jte3v7VhCI=;
+        b=PIyfpXxKiMRfVGppwVxN8M5A1txRmYbeDJIVTxZ1fDGvrXu9UryXv1mQ/VLqq5wgTw
+         mYzwg+eAQaKeUh3iy1HcN10Tr0S17wD5VkZEMJZL6eaDiZ68WLezZn+xNtRTqAIuAeaZ
+         toyElGvU2h5B+0imvwyQa5WEwrXjSLzVhX+KykTXxQW8UQywnYnwMoNMXA4ekXg5+Q++
+         QxTmhiHzaDsqWcRb3pM1+MSpuEB6Gpwupvma2GriHkNjYjqir99uk+4ecUH7XBgGu7Lb
+         RiIArl93zA2P97JBR2CrHfaNSEKooRJFEXvrvbV2lgx33U8PA7BZE92gnOn8b3hYaVM5
+         o0YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=qnTIZo0afaUUCUatRCsXxc/GL3crtPcguCOGbvOr6Co=;
-        b=C8j9oBuJSFdxX8YTu0jYVk1X+sElNmB0WP1nQkn/f3k/bWWuYGkDVNNJz3aKIaq9n6
-         o9AOSJ7DCitfi0p6w3qxu0PWBMgLWWypGO5tcAwOXPQS9MiUwOEdngP691hg5eSHymOD
-         9vGroNdLDyvM/gGcdslw3Roo4qXtobpP4Hi8U6hEzxuI79ZfNAYoePUybAb8OUgiMlDX
-         AicYAdqQobVWSFXW0ZtH5B/dgqV+VmeEMfix8GJWHWPJAvAEdRIDe54uj9B9VhmabGaw
-         cV3cGbM7OdaOgV6daYkJvMCLmIJvljsUusvbrZw377/29FMInuqVHxM95+YVDIOSh5Yy
-         7GIA==
-X-Gm-Message-State: ALKqPwe3PhhfKfHjO7aMBbRsuvMQsBM4MG5DUxS1U/U9DFaaYA41XGpb
-	gw64VeV+v0z5flA2C30KJ+t8zRhzPZQkYdHdowb2WXc4
-X-Google-Smtp-Source: ADUXVKJMiS+XB9ptF/Stegk5XFrlZvmi+/logaXcvAuKzRuT/sxMJk9zWG7QeHouYpYsXVdTFHTFZ6BB5TEQhnZRRNM=
-X-Received: by 2002:a6b:e704:: with SMTP id b4-v6mr7928671ioh.239.1527791482835;
- Thu, 31 May 2018 11:31:22 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=b76X7dGIP7P+ph1r/taw5AQhYRyuV8w31Jte3v7VhCI=;
+        b=eXZhqAL9ci+RT7UT2dregsY2zVEHnACgSgzHR6mTF0q9FOJiSOf6ttjXuMOrnYlK3I
+         Bkw/05TSYcxPmAmb8GOUmFZro6hQTKVetvB/YZBQzm0IM1gxEyvWz3PweIYZHkvVid11
+         vQ/4LkprK70BhLUqMkHXb8Ry8uMjUv5AdDuq6JKMt4PdSiuCqQRLRse7NJy/nkWSwyNL
+         pJr9jbuQUP2UVRwm2/iNcMYUltChOM5MWi6xTfHOTJWKWh/QkvRP4iNpuiCTufuV0K0X
+         ooGLrgbxKIZvm0cprTKm5UgtQu59aaWS2EGqDTjv1v2kaD/IPaPpGJz5s6yBTZTV6wU6
+         eiRg==
+X-Gm-Message-State: APjAAAV1SXjTsrjGA9m5PE3nsVytbSw5jEGXTaOXUsUuUCKX+IzzfJ1C
+	2kKr0nrIDpfnSfwztxRP7U/QNUj5Y2rflyJWU48LkW8iHOI=
+X-Google-Smtp-Source: APXvYqxCmNgOhd3/L1TIGuXQ3MnDNSxlaISgonoL7zrCfec0uaQzt4HN2KMptTYFEjmn3dLnKJpXG0BKlwejA+0zI6w=
+X-Received: by 2002:aca:3242:: with SMTP id y63mr5653796oiy.148.1560626555145;
+ Sat, 15 Jun 2019 12:22:35 -0700 (PDT)
 MIME-Version: 1.0
-From: Matthew Wild <mwild1@gmail.com>
-Date: Thu, 31 May 2018 19:31:02 +0100
-Message-ID: <CAJt9-x4hcHPjWShOPMrZDQRoUvhJ7ZDo5ntANoTvR-m5ma2w6w@mail.gmail.com>
+References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
+ <20190615205947.56f2315d@computer>
+In-Reply-To: <20190615205947.56f2315d@computer>
+Message-ID: <CAFRnB2WaDePSyVbXkV3tVVeqJXihytA-sDip9hTZcuf5BHoX9g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000725457058b61afb4"
+Date: Sat, 15 Jun 2019 15:22:22 -0400
+From: Alex Gaynor <alex.gaynor@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 To: oss-security@lists.openwall.com
+
+--000000000000725457058b61afb4
 Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [CVE-2018-10847] prosody: insufficient stream header validation
+Content-Transfer-Encoding: quoted-printable
 
-Prosody security advisory 2018-05-31
-====================================
+You are completely right that this is not a novel phenomenon, though I
+think the scale at which OSS-Fuzz has found vulnerabilities has genuinely
+exacerbated this problem.
 
-CVE-2018-10847
-------------
+While it's true, some of the bugs found will not be exploitable, I think we
+should not be overly dismissive.
+https://scarybeastsecurity.blogspot.com/2016/11/0day-exploit-advancing-expl=
+oitation.html
+is
+an example of such a script-less exploit.
+https://scarybeastsecurity.blogspot.com/2017/05/bleed-continues-18-byte-fil=
+e-14k-bounty.html
+is
+an example of exploiting use of uninitialized value (one of the most common
+bug classes in OSS-Fuzz, probably because so few people test with MSAN).
 
-Project
-:   Prosody XMPP server
+I think you're quite right that the central challenge here is the mismatch
+between how Linux distributions operate and what their claims/people's
+expectations are.
 
-URL
-:   https://prosody.im/
+Alex
 
-CVE
-:   CVE-2018-10847
+PS: I'd be remiss if I didn't at least mention that basically all the bug
+classes we're discussing are induced by C/C++'s memory unsafety and better
+programming language prevent them outright.
 
-Date
-:   2018-05-31
+On Sat, Jun 15, 2019 at 3:01 PM Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
 
-Affected versions
-:   0.9.x prior to 0.9.14, 0.10.x prior to 0.10.2. All prior series affected.
+> Hi Alex,
+>
+> I think what you're describing has been going on for a while, even
+> before oss-fuzz.
+> A combination of compiler sanitizers and better fuzzing techniques has
+> scaled up bug finding and fixing to a level we haven't had before.
+>
+> For distributions that promise to backport all security fixes that
+> creates a situation where it's almost impossible to keep that promise,
+> they just don't have the manpower to scale up at the same speed as
+> people find bugs.
+> Maybe the main takeaway here is to just recognize that, and maybe
+> distros should be more honest here and be clear what they can and can't
+> do. And if you run a parser in a high risk environment you may not want
+> to rely on the outdated version shipping in some LTS distribution.
+>
+>
+> But I also think it's good to keep some perspective of the bugs we're
+> talking about.
+> Many of the bugs oss-fuzz finds are of bug classes where it's quite
+> unlikely that they directly lead to a security issue (e.g. out of
+> bounds memory reads - which asan controversially calls "overflows").
+> Even for the scarier looking vulns like write buffer overflows and use
+> after free the situation is that these are usually not straightforward
+> to exploit. All modern distributions have a combination of stack
+> canaries, ASLR and nonexecutable memory. It's my understanding that
+> while it's often possible to bypass those, doing so in non-scripting
+> scenarios (e.g. in an image parser) is really hard and often impossible.
+>
+> I guess therefore it's still an overall win. While there's a number of
+> bugs unfixed with public information, in the long term we'll get more
+> robust code and the number of bugs present should be in steep decline.
+>
+>
+> --
+> Hanno B=C3=B6ck
+> https://hboeck.de/
+>
+> mail/jabber: hanno@hboeck.de
+> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+>
 
-Fixed versions
-:   0.9.14, 0.10.2
 
-Description
------------
+--=20
+All that is necessary for evil to succeed is for good people to do nothing.
 
-Due to insufficient validation of client-provided parameters during XMPP
-stream restarts, authenticated users may override the realm associated
-with their session, potentially bypassing security policies and allowing
-impersonation.
-
-Details
--------
-
-Prosody did not verify that the virtual host associated with a user
-session remained the same across stream restarts.
-
-In practice this means that a user may authenticate to XMPP host A
-and migrate their authenticated session to XMPP host B of the same
-Prosody instance.
-
-Note that successful authentication to host A is required to initiate
-the attack. This includes SASL ANONYMOUS.
-
-Overriding the authenticated username is not possible via this exploit,
-and this limits impersonation to usernames on host B that the attacker
-also has access to on host A. In the case of ANONYMOUS authentication,
-the username is random and enforced by the server.
-
-If a user has the account user1@hosta.example, they may impersonate
-user1@hostb.example, with security policies of host B applied.
-
-Affected configurations
------------------------
-
-Prosody deployments configured with multiple virtual hosts are
-vulnerable.
-
-Standard TCP connections and websocket connections are affected,
-but BOSH connections are not affected - i.e. deployments where
-the only access to Prosody is via BOSH are not vulnerable.
-
-Temporary mitigation
---------------------
-
-Patch available.
-
--  stable 0.10 branch:
-https://prosody.im/security/advisory_20180531/issue1147-0.10.1.patch
-- old stable 0.9 branc:
-https://prosody.im/security/advisory_20180531/issue1147-0.9.patch
-
-Advice
-------
-
-All users should upgrade to at least 0.9.14, 0.10.2 or check their OS
-distribution for security updates. Users of development branches (0.10,
-trunk) should upgrade to the latest nightly builds.
-
-Credits
--------
-
-Reported by Princess Pepperoni from nonfree.pizza
-
-Links
------
-
-  - https://issues.prosody.im/1147
-  - https://blog.prosody.im/prosody-0-10-2-security-release/
+--000000000000725457058b61afb4--
