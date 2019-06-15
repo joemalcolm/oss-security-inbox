@@ -1,141 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/05/1
-Message-ID: <20190605095931.GA13513@f195.suse.de>
-Date: Wed, 5 Jun 2019 11:59:31 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/5
+Message-ID: <20190615173956.GA28900@openwall.com>
+Date: Sat, 15 Jun 2019 19:39:56 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: pam-u2f: CVE-2019-12210: debug_file file descriptor leak, CVE-2019-12209: symlink attack on u2f_keys leading to possible information leak
+Cc: security@...tpractical.com
+Subject: Re: Apache::Session's use of md5 and more
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-pam-u2f [1] is a PAM module that allows to integrate universal 2nd
-factor authenticators like YubiKey into the PAM stack. In the context of
-a source code review [2] due to the inclusion of pam-u2f into SUSE Linux
-two security issues in this PAM module have been uncovered as described
-in the following sections.
+On Sat, Jun 15, 2019 at 05:09:53PM +0200, Raphael Geissert wrote:
+> I just stumbled upon Apache::Session's Generate::MD5 module, which
+> appears to be used to generate the session ids for cookies and the
+> like.
+> 
+> Not only does it use MD5,
 
-CVE-2019-12210: debug_file file descriptor leak
------------------------------------------------
+Which is perfectly fine for this use case, except that it distracts
+attention from real issues, so might need to be "fixed" to be e.g.
+SHA-256 for that reason.
 
-If the `debug` and `debug_file` options are set then the opened debug
-file will be inherited to the successfully authenticated user's process.
-Therefore this user can write further information to it, possibly
-filling up a privileged file system or manipulating the information
-found in the debug file.
+Let's not confuse technical and psychological aspects.
 
-In some contexts the program utilizing PAM closes off leaked file
-descriptors but it does work with su, for example, use the following
-line in the PAM stack:
+> but its source of entropy is weak
 
-```
-auth    optional        pam_u2f.so debug debug_file=/tmp/u2f-debug.txt
-```
+That's the real issue.
 
-Then prepare the debug file such that the PAM module can open it:
+> and does two rounds of hashing.
 
-root# touch /tmp/u2f-debug.txt
+This is fine, but can be optimized out along with the move to SHA-256.
 
-Then perform su on yourself as an unprivileged user:
+> From the source code[1]:
+> 
+>     $session->{data}->{_session_id} =
+>         substr(Digest::MD5::md5_hex(Digest::MD5::md5_hex(time(). {}.
+> rand(). $$)), 0, $length);
+> 
+> (where $length is 32 by default)
 
-user$ su user
-Password: XXX
-user$ ls -l /proc/$$/fd
-[...]
-l-wx------ 1 user users 64  8. Mai 11:44 3 -> /tmp/u2f-debug.txt
+This uses 3 or 4 pieces of data: time in seconds since Unix epoch, an
+address within the process, whatever seed rand() was initialized with
+(might also be time, or not), and PID.  This might be insufficient to
+prevent successfully inferring these inputs from the hash (by probing
+likely inputs), in which case this also leaks these inputs - kind of a
+remote ASLR leak, which matters if the process is persistent, etc. - on
+top of the more obvious impact of being able to predict session IDs.
 
-As you can see the new user shell now has an open file descriptor for
-the debug file.
+Also, does this generate unique session IDs if called twice in a row
+from the same process?  It appears that due to the "{}" and the "rand()"
+call it usually does, but perhaps not reliably to an extent where we'd
+rely on that for security.
 
-CVE-2019-12209: symlink attack on u2f_keys leading to possible information leak
--------------------------------------------------------------------------------
+> Am I missing something, or has this code actually been in use for ages
+> and gone unnoticed ? I couldn't find any CVE for this.
+> 
+> So far I found this reference, but only mentions the use of MD5 as a weakness:
+> https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/695
 
-The file `$HOME/.config/Yubico/u2f_keys` is blindly followed by the PAM
-module. It can be a symlink pointing to an arbitrary file. The PAM
-module only rejects non-regular files and files owned by other users
-than root or the to-be-authenticated user. Even these checks are only
-made after open()'ing the file, which may already trigger certain logic
-in the kernel that is otherwise not reachable to regular users.
+That thread focuses on MD5 to an extent where everyone in there seems to
+think that replacing MD5 with SHA-256 would magically fix whatever issue
+they're thinking there is.  They're wrong.
 
-If the PAM modules' `debug` option is also enabled then most of the
-content of the file is written either to stdout, stderr, syslog or to
-the defined debug file.  Therefore this can pose an information leak to
-access e.g.  the contents of /etc/shadow, /root/.bash_history or similar
-sensitive files. Furthermore the symlink attack can be used to use other
-users' u2f_keys files in the authentication process.
+This is especially surprising given that Nuel Guillaume who opened the
+issue writes in one of the comments (5 years ago):
 
-For example use the following line in the PAM stack:
+| We can easily determine time()
+| 
+| {} A memory allocation for a hash (dict).
+| The output looks like "HASH (0x97b27ec)."
+| The last 3 characters: "7EC" are fixed to each machine.
+| 
+| Rand Perl function calls directly to the rand () function in libc.
+| rand() is not secure at all. Just find 30 values of rand() to determine the srand (the seed).
+| But it can be easier if we have Perl prior to 5.004. ( => srand(time() ).
+| If we have Perl 5.004 or upper, /dev/urandom is used for the default srand.
+| See:
+| http://turtle.ee.ncku.edu.tw/docs/perl/manual/pod/perlfunc/srand.html
+| http://stackoverflow.com/questions/12497045/what-are-the-weaknesses-of-perls-srand-default-seed-post-version-5-004
+| 
+| $$ Is the PID of the process and his value is between 1000 and 32768 (/proc/sys/kernel/pid_max = 32768)
 
-```
-auth    optional        pam_u2f.so debug
-```
+but then even with this understanding goes on to suggest merely "Replace
+md5 with SHA1 or SHA256 and keep your Perl version update."
 
-Then prepare a suitable symlink:
+I didn't review Perl's rand(), but apparently Nuel thought the
+initialization from /dev/urandom on newer Perl somehow made rand() safe
+from having its seed inferred?  I doubt this is the case, as I expect
+the seed and/or the internal state is tiny either way.  And I doubt it
+takes as many as "30 values of rand() to determine the srand (the
+seed)."  I'd expect 1 to be enough.  But we need to review the code
+before making any claims.
 
-```
-user$ mkdir -p ~/.config/Yubico
-user$ ln -s /etc/shadow ~/.config/Yubico/u2f_keys
-```
+...OK, I just took a look.  Perl's util.c: Perl_seed() reads just 32
+bits from /dev/urandom, with compile-time and runtime fallbacks to
+gettimeofday() and getpid() and some more ASLR leaks.  (Fun fact: the
+fallbacks will also occur when the 32-bit value read from /dev/urandom
+just happens to be 0.  As a result, the seed is almost never a 0.)
 
-Then authenticate the user on a text console:
+> From a quick look at the reverse dependencies of the Debian package,
+> there are some users of Apache::Session:
+> * RequestTracker (RT) : from a quick look at the session id in the
+> cookie set by rt.cpan.org I'd say it does use Generate::MD5
+> * Torrus: no idea if the Generate::MD5 module is used
+> * LemonLdap::NG : they replaced Generate::MD5 by a similar code using
+> SHA256, but still using two rounds of hashing
+> 
+> CC'ing BestPractical. Will open an issue on LemonLdap::NG's gitlab.
 
-host login: user
-Password: XXX
-[...]
-debug(pam_u2f):  Authorization line: avahi:!:18019::::::
-[...]
+Please focus on lack of (explicit) use of a CSPRNG such as /dev/urandom,
+not on use of MD5 nor the double-hashing (which are non-issues).
 
-Notice the lines from /etc/shadow being output on the terminal.
+> [1]https://metacpan.org/source/CHORNY/Apache-Session-1.93/lib/Apache/Session/Generate/MD5.pm
 
-Bugfixes and Mitigations
-------------------------
-
-The bugfix for CVE-2019-12210 is found in [3]. It solves the issue by
-passing `O_CLOEXEC` and more conservative flags to related `open()`
-calls.
-
-The bugfix for CVE-2019-12209 is found in [4]. It solves the issue by
-dropping privileges to the to-be-authenticated user before accessing the
-`u2f_keys` file.
-
-Both bugfixes are contained in the upstream release 1.0.8 [5].
-
-A major mitigation for both issues is to remove the `debug` and
-`debug_file` options for `pam_u2f.so` in the PAM configuration.
-Furthermore enabling the `openasuser` option will mitigate the symlink
-attack in CVE-2019-12209.
-
-Timeline and Responsible Disclosure
------------------------------------
-
-Communication with upstream was responsive and constructive over the
-complete timeline.
-
-2019-05-08: I reported the findings privately to the upstream maintainer.
-2019-05-20: security@...ico.com has been involved and we worked out and
-    reviewed patches together that have been agreed upon by this time.
-2019-05-22: Yubico assigned CVEs for the issues.
-2019-06-04: This was the established publication date and Yubico
-    released a fixed version as planned.
-
-References
-----------
-
-[1]: https://developers.yubico.com/pam-u2f/
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=1087061
-[3]: https://github.com/Yubico/pam-u2f/commit/18b1914e32b74ff52000f10e97067e841e5fff62
-[4]: https://github.com/Yubico/pam-u2f/commit/7db3386fcdb454e33a3ea30dcfb8e8960d4c3aa3
-[5]: https://developers.yubico.com/pam-u2f/Release_Notes.html
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Linux GmbH
-GF: Felix Imendörffer, Mary Higgins, Sri Rasiah
-HRB 21284 (AG Nuernberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Alexander
