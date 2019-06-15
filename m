@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2025" "Saturday" "16" "July" "2016" "10:25:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160716142508.AAA966C0D8A@smtpvmsrv1.mitre.org>" "45" "[oss-security] Re: CVE Request for KNewStuff/KArchive issue" nil nil nil "7" "2016071614:25:08" "[oss-security] Re: CVE Request for KNewStuff/KArchive issue" (number mark "U       cve-assign@m Jul 16   45/2025  " thread-indent "\"[oss-security] Re: CVE Request for KNewStuff/KArchive issue\"\n") "<86413253.kTlB1PI1Wh@asterixp50>" ("<86413253.kTlB1PI1Wh@asterixp50>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1576" "Saturday" "15" "June" "2019" "11:21:41" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1906151108210.1813@freddy.simplesystems.org>" "33" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019061516:21:41" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        bfriesen@sim Jun 15   33/1576  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3099 invoked by uid 550); 16 Jul 2016 14:25:21 -0000
+Received: (qmail 20447 invoked by uid 550); 15 Jun 2019 16:21:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 20427 invoked from network); 15 Jun 2019 16:21:54 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+In-Reply-To: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
+Message-ID: <alpine.GSO.2.20.1906151108210.1813@freddy.simplesystems.org>
+References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Sat, 15 Jun 2019 11:21:42 -0500 (CDT)
+Date: Sat, 15 Jun 2019 11:21:41 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3077 invoked from network); 16 Jul 2016 14:25:20 -0000
-From: cve-assign@mitre.org
-To: faure@kde.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, kde-security@kde.org
-In-Reply-To: <86413253.kTlB1PI1Wh@asterixp50>
-Message-Id: <20160716142508.AAA966C0D8A@smtpvmsrv1.mitre.org>
-Date: Sat, 16 Jul 2016 10:25:08 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request for KNewStuff/KArchive issue
+Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
+ OSS-Fuzz
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sat, 15 Jun 2019, Alex Gaynor wrote:
+>
+> Today I'd like to highlight what I see as a tremendous issue: very few of
+> these security bugs ever has a CVE issued for it. This is probably due to a
+> few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
+> a human reporter who is interested in obtaining one for "credit" purposes,
+> c) the sheer number of bugs that we're talking about.
 
-> When using KNewStuff, one of the KDE Frameworks, to download and install files
-> from the internet (e.g. a wallpaper, a plasma applet, etc.), it was possible
-> to download a maliciously crafted archive file (e.g. tar.gz or zip) containing
-> relative paths leading to outside the extraction directory (say
-> "../../../.bashrc" for instance).
-> 
-> The fix has already been reviewed and submitted:
->    https://git.reviewboard.kde.org/r/128185/
-> This fix is one layer below KNewStuff, in the framework called KArchive, which
-> handles extraction of .tar.gz / .zip archives. KArchive now prevents files from
-> being written outside of the extraction directory, in all cases.
+Many oss-fuzz "security" issues are not CVE-worthy although they are 
+bugs worthy to spend time fixing.
 
->> Switch to Tar's default behavior to avoid extraction
->> to arbitrary system locations outside of extraction folder. Instead,
->> extract such files to root location in extraction folder.
->> 
->> Submitted with commit 0cb243f64eef45565741b27364cece7d5c349c37 ... to branch master
+At least as pertains to the Debian project, I do feel that someone is 
+looking at each security issue I fix and creating CVEs for serious 
+issues.  A CVE summary page for GraphicsMagick is maintained at 
+https://security-tracker.debian.org/tracker/source-package/graphicsmagick.
 
-Use CVE-2016-6232.
+> This is in addition to the >100 security bugs OSS-Fuzz found and publicly
+> disclosed due to hitting their disclosure deadline, and which still have
+> not been fixed [3].
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Security bugs are often very hard to diagnose and fix.  The community 
+has become much better at producing bug reports than with helping to 
+solve the problems found.  Help with actually fixing issues is 
+appreciated.  I think that the objective should be open source 
+software which lacks bugs and still provides a useful purpose. 
+Finding bugs is just part of the effort.
 
-iQIcBAEBCAAGBQJXikNtAAoJEHb/MwWLVhi245oP/2iuIOTUeddF7pINd0p9zPom
-5OcVSolQNy3gaqYc/XlE36FbfnoLafjxW0NUO6xKWBs+ftbctcYWuCSJ4g8jodbI
-+fFzuSCGzVwYbZR3L+Ew2pzs0HM34B4lql1lb8PNl++qXA4pQf1V/XrkaHL7ucUX
-T/k/UAN3KNq1yluM+oxNcTajnzMd5rBKMwXgm1zDVx8k2A0NEgmUBbR6Iq5/MZRZ
-+SMOFEYR9pJdc8CXjCr7MkvcYY+5/XQ8zQxj53N4yxpaPGPBQ+zbbKK5//IppWa+
-AQEQHGn5nIz+FjekWMFm7vKXO61LFgwLFM1ZWD26ovb8NaFW2glgxtq3lB6suw94
-8uKSW5YMnEnizcdUmNhHsdWjAGwU5AkEWagh07bd5XkE/4+DWXtfz0uBqrThXytb
-9cY1YBth/9FYzac8ldfHxPjsc4dFuqG7Z+EdiR/mz4Emsjgca3YUcRfrz+M4+Xue
-+TlpNX4JtraXe/Op2OvQTgJVzkpqNTVlvfxKO+GKJX4NN0wYlQJG8DdcKm0HgtvE
-Ne1y/aMrOiB5JdP4I0OCuqGCx7MzGTNuiSXlNfEl0BWLg0Hmp3JIQ8SUMjTxi65N
-0oXRxexw5BDw0voT5mHnD7mJjc1xMhtnMGaSmqjUJ8G2IaDf6l0m3l0pRU9WcdxY
-fhHlAGOcUjFrFCQPvrv/
-=F3ot
------END PGP SIGNATURE-----
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
