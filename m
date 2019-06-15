@@ -1,48 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/1
-Message-ID: <CAA7hUgH2dCyNr0m_HmhLuVXO+ZD_TVOWdfrB-jzrLPnz7de4Dw@mail.gmail.com>
-Date: Sat, 15 Jun 2019 17:09:53 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Cc: security@...tpractical.com
-Subject: Apache::Session's use of md5 and more
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/7
+Message-ID: <CAFRnB2WaDePSyVbXkV3tVVeqJXihytA-sDip9hTZcuf5BHoX9g@mail.gmail.com>
+Date: Sat, 15 Jun 2019 15:22:22 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+You are completely right that this is not a novel phenomenon, though I
+think the scale at which OSS-Fuzz has found vulnerabilities has genuinely
+exacerbated this problem.
 
-I just stumbled upon Apache::Session's Generate::MD5 module, which
-appears to be used to generate the session ids for cookies and the
-like.
+While it's true, some of the bugs found will not be exploitable, I think we
+should not be overly dismissive.
+https://scarybeastsecurity.blogspot.com/2016/11/0day-exploit-advancing-exploitation.html
+is
+an example of such a script-less exploit.
+https://scarybeastsecurity.blogspot.com/2017/05/bleed-continues-18-byte-file-14k-bounty.html
+is
+an example of exploiting use of uninitialized value (one of the most common
+bug classes in OSS-Fuzz, probably because so few people test with MSAN).
 
-Not only does it use MD5, but its source of entropy is weak and does
-two rounds of hashing. From the source code[1]:
+I think you're quite right that the central challenge here is the mismatch
+between how Linux distributions operate and what their claims/people's
+expectations are.
 
-    $session->{data}->{_session_id} =
-        substr(Digest::MD5::md5_hex(Digest::MD5::md5_hex(time(). {}.
-rand(). $$)), 0, $length);
+Alex
 
-(where $length is 32 by default)
+PS: I'd be remiss if I didn't at least mention that basically all the bug
+classes we're discussing are induced by C/C++'s memory unsafety and better
+programming language prevent them outright.
 
-Am I missing something, or has this code actually been in use for ages
-and gone unnoticed ? I couldn't find any CVE for this.
+On Sat, Jun 15, 2019 at 3:01 PM Hanno Böck <hanno@...eck.de> wrote:
 
-So far I found this reference, but only mentions the use of MD5 as a weakness:
-https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/695
+> Hi Alex,
+>
+> I think what you're describing has been going on for a while, even
+> before oss-fuzz.
+> A combination of compiler sanitizers and better fuzzing techniques has
+> scaled up bug finding and fixing to a level we haven't had before.
+>
+> For distributions that promise to backport all security fixes that
+> creates a situation where it's almost impossible to keep that promise,
+> they just don't have the manpower to scale up at the same speed as
+> people find bugs.
+> Maybe the main takeaway here is to just recognize that, and maybe
+> distros should be more honest here and be clear what they can and can't
+> do. And if you run a parser in a high risk environment you may not want
+> to rely on the outdated version shipping in some LTS distribution.
+>
+>
+> But I also think it's good to keep some perspective of the bugs we're
+> talking about.
+> Many of the bugs oss-fuzz finds are of bug classes where it's quite
+> unlikely that they directly lead to a security issue (e.g. out of
+> bounds memory reads - which asan controversially calls "overflows").
+> Even for the scarier looking vulns like write buffer overflows and use
+> after free the situation is that these are usually not straightforward
+> to exploit. All modern distributions have a combination of stack
+> canaries, ASLR and nonexecutable memory. It's my understanding that
+> while it's often possible to bypass those, doing so in non-scripting
+> scenarios (e.g. in an image parser) is really hard and often impossible.
+>
+> I guess therefore it's still an overall win. While there's a number of
+> bugs unfixed with public information, in the long term we'll get more
+> robust code and the number of bugs present should be in steep decline.
+>
+>
+> --
+> Hanno Böck
+> https://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+>
 
->From a quick look at the reverse dependencies of the Debian package,
-there are some users of Apache::Session:
-* RequestTracker (RT) : from a quick look at the session id in the
-cookie set by rt.cpan.org I'd say it does use Generate::MD5
-* Torrus: no idea if the Generate::MD5 module is used
-* LemonLdap::NG : they replaced Generate::MD5 by a similar code using
-SHA256, but still using two rounds of hashing
 
-CC'ing BestPractical. Will open an issue on LemonLdap::NG's gitlab.
-
-
-[1]https://metacpan.org/source/CHORNY/Apache-Session-1.93/lib/Apache/Session/Generate/MD5.pm
-
-Cheers,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org
+All that is necessary for evil to succeed is for good people to do nothing.
+
