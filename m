@@ -1,59 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/03/4
-Message-ID: <a09d0918aa33cc80afea69c8d5bdfda7.squirrel@student-web1.dm.unipi.it>
-Date: Thu, 3 Jan 2019 20:55:43 +0100
-From: "Marco Bodrato" <bodrato@...l.dm.unipi.it>
-To: noloader@...il.com
-Cc: oss-security@...ts.openwall.com, gmp-bugs@...lib.org
-Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/2
+Message-ID: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
+Date: Sat, 15 Jun 2019 11:49:03 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-Ciao,
+Hi everyone,
 
-Il Lun, 31 Dicembre 2018 7:03 pm, Jeffrey Walton ha scritto:
-[...skipping opinions...]
+OSS-Fuzz is Google's project to provide continious large-scale fuzzing.
+Since it launched in 2016, it's found just shy of 3000 things it counts as
+security bugs [0][1]. I'm not a developer of OSS-Fuzz (at Google), but I've
+helped several projects integrate with it.
 
-> Here's a small example of triggering an assert using the Nettle
-> library.
+You can see that it's had some amazing success across a variety of projects
+-- I've written previously to this list about the things I thought made it
+particularly effective working with ImageMagick and GraphicsMagick [2].
 
-This absolutely is NOT a "small example", it requires to build two entire
-libraries!
-Anyway we analysed it, see below.
+Today I'd like to highlight what I see as a tremendous issue: very few of
+these security bugs ever has a CVE issued for it. This is probably due to a
+few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
+a human reporter who is interested in obtaining one for "credit" purposes,
+c) the sheer number of bugs that we're talking about.
 
-> ARM A-32 does not work at the moment due to GMP build errors.
+CVEs are not important for their own sake. The true value is in all of the
+downstream processing that uses them as input: the Linux distributions that
+use them to figure out what fixes to backport, the docker security scanners
+that look for vulnerable code on the system, the corporate
+threat-intelligence feeds, etc.
 
-Can we suggest you to read the GMP manual on how to build the library?
-GMP works fine on many ARM configurations we test and there are lots of
-projects out there (eg. many GNU/Linux distributions) that builds GMP for
-different ARM processors.
+A test of a random ImageMagick vulnerability against Ubuntu Xenial shows
+that it, indeed, continues to reproduce.
 
-> In the case below Nettle is using benign data and not maliciously
-> crafted data.
+This is in addition to the >100 security bugs OSS-Fuzz found and publicly
+disclosed due to hitting their disclosure deadline, and which still have
+not been fixed [3].
 
-I'm sorry, but your analysis was incorrect.
+I haven't analyzed any of these vulnerabilities for exploitability, and I
+doubt anyone else has either.
 
-I agree, Nettle is not using "maliciously crafted data", but I do not
-agree when you say that it "is using benign data".
+I do not have a solution to this problem. I wanted to raise awareness of
+it, in the hope that it would start a discussion which might come to a
+solution.
 
-With your build options, Nettle calls the GMP function mpn_sec_powm with
-an invalid parameter: ebn = 0.
+Alex
 
-Because of an error in the Nettle library you built, GMP receives "non
-benign data". To avoid further memory corruptions, GMP aborts.
 
-Thanks to this behaviour of GMP, you was able to catch the incorrect built
-of the library using it. ;-)
+[0]: Security bug is defined as roughly: heap/stack/global buffer overflow,
+heap use after free, heap double free, invalid free, stack use after scope,
+invalid typecast, other non-null segfaults, and a few other things.
+[1]:
+https://bugs.chromium.org/p/oss-fuzz/issues/list?can=1&q=status%3AVerified+Type%3ABug-Security&colspec=ID+Type+Component+Status+Library+Reported+Owner+Summary+Modified&sort=-modified&groupby=&mode=grid&y=Proj&x=Security_Severity&cells=counts&nobtn=Update
+[2]:
+https://alexgaynor.net/2019/feb/05/notes-fuzzing-imagemagick-graphicsmagick/
+[3]:
+https://bugs.chromium.org/p/oss-fuzz/issues/list?can=1&q=Type%3DBug-Security+status%3ANew+label%3ADeadline-exceeded&colspec=ID+Type+Component+Status+Library+Reported+Summary+Modified&sort=-modified&groupby=&mode=grid&y=Proj&x=--&cells=ids&nobtn=Update
 
-Using mpn_sec_powm with an exponent of zero bits is obviously a nonsense,
-and in general the documentation of GMP clearly says that arguments of
-size zero are not supported.
-
-On GMP side, we can only specify even more explicitly in the documentation
-of that function the need for non-zero sized arguments.
-
-Ĝis,
-m
 
 -- 
-http://bodrato.it/papers/
+All that is necessary for evil to succeed is for good people to do nothing.
 
