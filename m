@@ -1,51 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/11
-Message-ID: <CABXRUiTydpUuYpR7F8D0-CivT3afc2p0-Dd1j7TC2doOP_qNCA@mail.gmail.com>
-Date: Thu, 18 Apr 2019 21:32:29 +0800
-From: Fuqian Huang <huangfq.daxian@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel < 4.14.111 drivers/message/fusion/mptbase.c kernel address dumps to user space
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/1
+Message-ID: <CAA7hUgH2dCyNr0m_HmhLuVXO+ZD_TVOWdfrB-jzrLPnz7de4Dw@mail.gmail.com>
+Date: Sat, 15 Jun 2019 17:09:53 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: security@...tpractical.com
+Subject: Apache::Session's use of md5 and more
 Content-Type: text/plain; charset=utf-8
 
-In drivers/message/fusion/mptbase.c:2150,
-mpt_suspend will dump the address of dev into dmesg,
-the address of pdev is printed to user space.
-int
-mpt_suspend(struct pci_dev *pdev, pm_message_t state)
-{
-    ...
-    printk(MYIOC_s_INFO_FMT "pci-suspend: pdev=0x%p, slot=%s, Entering "
-        "operating state [D%d]\n", ioc->name, pdev, pci_name(pdev),
-        device_state);
-    ...
-}
+Hi,
 
-In drivers/message/fusion/mptbase.c:2191,
-mpt_resume will dump the address of dev into dmesg,
-the address of pdev is printed to user space.
-int
-mpt_resume(struct pci_dev *pdev)
-{
-    ...
-    printk(MYIOC_s_INFO_FMT "pci-resume: pdev=0x%p, slot=%s, Previous "
-        "operating state [D%d]\n", ioc->name, pdev, pci_name(pdev),
-        device_state);
-    ...
-}
+I just stumbled upon Apache::Session's Generate::MD5 module, which
+appears to be used to generate the session ids for cookies and the
+like.
 
-In drivers/message/fusion/mptbase.c:6749
-and drivers/message/fusion/mptbase.c:6762,
-mpt_iocinfo_proc_show will dump the address of req_frames/alloc into procfs,
-which allows local user to read the kernel address via /proc/mpt/info
+Not only does it use MD5, but its source of entropy is weak and does
+two rounds of hashing. From the source code[1]:
 
-static int mpt_iocinfo_proc_show(struct seq_file *m, void *v)
-{
-    ...
-    seq_printf(m, "  RequestFrames @ 0x%p (Dma @ 0x%p)\n",
-                    (void *)ioc->req_frames, (void
-*)(ulong)ioc->req_frames_dma);
-    ...
-    seq_printf(m, "  Frames   @ 0x%p (Dma @ 0x%p)\n",
-                    (void *)ioc->alloc, (void *)(ulong)ioc->alloc_dma);
-    ...
-}
+    $session->{data}->{_session_id} =
+        substr(Digest::MD5::md5_hex(Digest::MD5::md5_hex(time(). {}.
+rand(). $$)), 0, $length);
+
+(where $length is 32 by default)
+
+Am I missing something, or has this code actually been in use for ages
+and gone unnoticed ? I couldn't find any CVE for this.
+
+So far I found this reference, but only mentions the use of MD5 as a weakness:
+https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/695
+
+>From a quick look at the reverse dependencies of the Debian package,
+there are some users of Apache::Session:
+* RequestTracker (RT) : from a quick look at the session id in the
+cookie set by rt.cpan.org I'd say it does use Generate::MD5
+* Torrus: no idea if the Generate::MD5 module is used
+* LemonLdap::NG : they replaced Generate::MD5 by a similar code using
+SHA256, but still using two rounds of hashing
+
+CC'ing BestPractical. Will open an issue on LemonLdap::NG's gitlab.
+
+
+[1]https://metacpan.org/source/CHORNY/Apache-Session-1.93/lib/Apache/Session/Generate/MD5.pm
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org
