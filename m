@@ -1,80 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/23/1
-Message-Id: <305B88DB-999B-46B2-8842-7101CA1D91F4@beckweb.net>
-Date: Sat, 23 Feb 2019 11:59:26 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/4
+Message-ID: <alpine.GSO.2.20.1906151108210.1813@freddy.simplesystems.org>
+Date: Sat, 15 Jun 2019 11:21:41 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
+On Sat, 15 Jun 2019, Alex Gaynor wrote:
+>
+> Today I'd like to highlight what I see as a tremendous issue: very few of
+> these security bugs ever has a CVE issued for it. This is probably due to a
+> few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
+> a human reporter who is interested in obtaining one for "credit" purposes,
+> c) the sheer number of bugs that we're talking about.
 
+Many oss-fuzz "security" issues are not CVE-worthy although they are 
+bugs worthy to spend time fixing.
 
-> On 19. Feb 2019, at 19:33, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-1320
-> The previously implemented Script Security Plugin sandbox protections
-> prohibiting the use of unsafe AST transforming annotations such as @Grab 
-> could be circumvented through use of various Groovy language features:
-> 
-> * Using Groovy’s AnnotationCollector
-> * Import aliasing
-> * Referencing annotation types using their full class name
-> 
-> This allowed users with Overall/Read permission, or the ability to control
-> Jenkinsfile or sandboxed Pipeline shared library contents in SCM, to 
-> bypass the sandbox protection and execute arbitrary code on the Jenkins 
-> master.
-> 
-> Using AnnotationCollector is now newly prohibited in sandboxed scripts 
-> such as Pipelines. Importing any of the annotations considered unsafe will
-> now result in an error. During the compilation phase, both simple and 
-> full class names of prohibited annotations are rejected for element 
-> annotations.
+At least as pertains to the Debian project, I do feel that someone is 
+looking at each security issue I fix and creating CVEs for serious 
+issues.  A CVE summary page for GraphicsMagick is maintained at 
+https://security-tracker.debian.org/tracker/source-package/graphicsmagick.
 
-CVE-2019-1003024
+> This is in addition to the >100 security bugs OSS-Fuzz found and publicly
+> disclosed due to hitting their disclosure deadline, and which still have
+> not been fixed [3].
 
-> SECURITY-876
-> Cloud Foundry Plugin did not perform permission checks on a method 
-> implementing form validation. This allowed users with Overall/Read access 
-> to Jenkins to connect to an attacker-specified URL using attacker-
-> specified credentials IDs obtained through another method, capturing 
-> credentials stored in Jenkins.
-> 
-> Additionally, this form validation method did not require POST requests, 
-> resulting in a cross-site request forgery vulnerability.
+Security bugs are often very hard to diagnose and fix.  The community 
+has become much better at producing bug reports than with helping to 
+solve the problems found.  Help with actually fixing issues is 
+appreciated.  I think that the objective should be open source 
+software which lacks bugs and still provides a useful purpose. 
+Finding bugs is just part of the effort.
 
-CVE-2019-1003025
-
-> SECURITY-985
-> A missing permission check in a form validation method in Mattermost 
-> Notification Plugin allowed users with Overall/Read permission to 
-> initiate a connection test, connecting to an attacker-specified 
-> Mattermost server and room and posting a message.
-> 
-> Additionally, this form validation method did not require POST requests, 
-> resulting in a CSRF vulnerability.
-
-CVE-2019-1003026
-
-> SECURITY-817
-> A missing permission check in a form validation method in OctopusDeploy 
-> Plugin allowed users with Overall/Read permission to initiate a 
-> connection test, sending an HTTP HEAD request to an attacker-specified 
-> URL, returning HTTP response code if successful, or exception error 
-> message otherwise.
-> 
-> Additionally, this form validation method did not require POST requests, 
-> resulting in a CSRF vulnerability.
-
-CVE-2019-1003027
-
-> SECURITY-1033
-> A missing permission check in a form validation method in JMS Messaging 
-> Plugin allowed users with Overall/Read permission to initiate a 
-> connection test, sending an HTTP request to an attacker-specified URL.
-> 
-> Additionally, this form validation method did not require POST requests, 
-> resulting in a CSRF vulnerability.
-
-CVE-2019-1003028
-
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
