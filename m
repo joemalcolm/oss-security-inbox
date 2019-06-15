@@ -1,46 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/21/1
-Message-Id: <19147D1A-1B6D-4C97-AA6D-3FAD135FD080@beckweb.net>
-Date: Tue, 21 May 2019 14:57:46 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/10
+Message-Id: <E1hcFgj-0001CA-PR@rmmprod05.runbox>
+Date: Sat, 15 Jun 2019 16:54:13 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+CC: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+On Sat, 15 Jun 2019 20:59:47 +0200, Hanno Böck <hanno@...eck.de> wrote:
+> I think what you're describing has been going on for a while, even
+> before oss-fuzz.
+> A combination of compiler sanitizers and better fuzzing techniques has
+> scaled up bug finding and fixing to a level we haven't had before.
+> 
+> For distributions that promise to backport all security fixes that
+> creates a situation where it's almost impossible to keep that promise,
+> they just don't have the manpower to scale up at the same speed as
+> people find bugs.
+> Maybe the main takeaway here is to just recognize that, and maybe
+> distros should be more honest here and be clear what they can and can't do.
 
-* Credentials 2.1.19
-* PAM Authentication 1.5.1
+I think that's fair, but I think projects have their part to play too:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-05-21/
+1. Projects should work much harder at avoiding backwards-incompatible changes.
+  Some projects (though *not* the Linux kernel) seem to take a very
+  cavalier attitude to breaking changes.  Yes, change is sometimes necessary,
+  but projects need to work harder at providing graceful upgrades.
+  (Slow deprecations, providing altenative differently-named 'new' interfaces
+  with different semantics that let people gradually transition, and so on).
+  IN PARTICULAR: I believe the primary reason that distros
+  often backport, instead of using the "current" version, is because their
+  users correctly fear backwards-incompatible changes. If projects would stop
+  being the problem, then distros wouldn't feel the need to solve the problem.
+2. Everyone needs test suites to detect problems from changes & upgrades.
+  Since everyone is making changes, including upgrading components,
+  everyone should have test suites to detect problems before they ship.
+  Then upgrading will be much easier and less likely to cause problems.
+3. Projects should be using static analysis tools to detect problems
+  ahead-of-time.  Yes, they have false positives and false negatives.
+  Be kind to your users, and use tools to help find & fix the bugs
+  instead of inflicting them on your users.
+4. Input validation, input validation, input validation.
+   If projects' software would be pickier about what they accept,
+   many vulnerabilities and bugs wouldn't have a chance.
+5. Apply other good security techniques, like hardening against
+   the inevitable problems.
+6. I'd like to see more projects fuzzing themselves before they ship.
+  I'm probably dreaming on this point, but I can dream :-).
+These won't solve everything, but it will reduce the trauma.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Many of these points are covered by the CII Best Practices badge.
+I encourage OSS projects to work to get a badge:
+  https://bestpractices.coreinfrastructure.org/
+(Full disclosure: I lead that project.  But I hope it's useful anyway :-) .)
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+I'm not revealing any grand new ideas.  They're kind of basic.
+However, they seem to be ignored by too many projects today.
+I think if more projects would "do unto others as you
+would have them do unto you", then handling
+this stuff would be a lot less painful :-).
 
----
-
-SECURITY-1316 / CVE-2019-10319
-A missing permission check in PAM Authentication Plugin allowed users with 
-Overall/Read permission to invoke a form validation method to obtain 
-limited information about the file /etc/shadow on systems with that file 
-present, as well as the system user the Jenkins process is running as.
-
-
-SECURITY-1322 / CVE-2019-10320
-Credentials Plugin allowed the creation of Certificate credentials from a 
-PKCS#12 file on the Jenkins master. Users with permission to create or 
-update credentials could use the associated form validation to confirm the 
-existence of files with an attacker-specified path.
-
-Additionally, they could create credentials from any valid PKCS#12 file on 
-the Jenkins master. With the ability to configure jobs to access these 
-credentials, they could obtain the certificate content.
-
+--- David A. Wheeler
