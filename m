@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1911" "Friday" "16" "September" "2016" "13:24:32" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160916172432.9CAC052E020@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: CVE request Qemu: virtio: null pointer dereference in virtqueu_map_desc" nil nil nil "9" "2016091617:24:32" "[oss-security] Re: CVE request Qemu: virtio: null pointer dereference in virtqueu_map_desc" (number mark "U       cve-assign@m Sep 16   46/1911  " thread-indent "\"[oss-security] Re: CVE request Qemu: virtio: null pointer dereference in virtqueu_map_desc\"\n") "<alpine.LFD.2.20.1609161611510.28695@wniryva>" ("<alpine.LFD.2.20.1609161611510.28695@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["444" "Saturday" "15" "June" "2019" "17:57:40" "+0200" "Greg KH" "greg@kroah.com" "<20190615155740.GA2960@kroah.com>" "12" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019061515:57:40" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        greg@kroah.c Jun 15   12/444   " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9542 invoked by uid 550); 16 Sep 2016 17:24:45 -0000
+Received: (qmail 20155 invoked by uid 550); 15 Jun 2019 16:00:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16237 invoked from network); 15 Jun 2019 15:57:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm1; bh=cjgwwc6sflQy/ZSGArsGzoy85WR
+	2KeZa/PnYAOqkIWs=; b=H0c60lxnyqeFZrRiseMyJFvzyA5ryXFtQyk5n5C1gEI
+	0PxbdJAZninXG9dqShFpNNatPit3kZ5MvVRTmxgfWqizEsDF6r+iWeBrSaOCNGj2
+	jX9mj7ZcdMFj9pJkCtZtAdOQg9mqfIa/Vcd7uYa87H8da5CQVDlQZrbUA2fgH7Uv
+	MqmD9MXKV4Fs7g+Oln+wneDdTPI4IBmIEcN9YT/JgywkTQUH1usp6mlwzZPHEQ9Y
+	GWrBdgUvDcXjP+AsGcohY87h1bNq7wbSO75KQvj9CnlNOLCS1lrEvGOUwvCxNBZR
+	+3yUifs9Vs/Y1IgE+9V8ehNGHAmevhAv7XQNGgrK5Xg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=cjgwwc
+	6sflQy/ZSGArsGzoy85WR2KeZa/PnYAOqkIWs=; b=uB/D/pwwGvU1m6XV4dJ6Lm
+	IkjWkdsqv5XdhGj4ijCxMXbTM5oZFVnAEX+GHlfoF8nzBei0tShYaQcxcHUm3aP8
+	7sYpb6N4igvUWo+u2VUaE83QYbN8kxSb/wGu67loLKRvXX0ef4Ub+lHjtUz3moA8
+	NyaWfgUcdCP3nBbKQwM16u/BXV69PDv3VcAhxo13xCnBbucjDIkpOJTUIEddkTKO
+	3dQPOfjZWVhHMAEcnvpQnx2BTTUQbabJgQw4wywvfE3y+7w2kE302VhNYt+v4oli
+	YCN9ARMxUkOnDQfNjAQ+M4J1PbOn37/VwRH6q0JGB+KSUmAk6RgkF4RzrFnXYqrA
+	==
+X-ME-Sender: <xms:dhUFXSmieWAM3HOoSVLrAhF80zkWoY3w3a72ZC_UVPITUk4kSF5BeA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudeifedgleeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujggfsehttd
+    ertddtredvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhm
+    qeenucfkphepkeefrdekiedrkeelrddutdejnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgrhgvgheskhhrohgrhhdrtghomhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:dhUFXUrMqQngMcdBidcbERB-XD5HgK8hSSKoydUozkBg1THhbifihA>
+    <xmx:dhUFXWQ9kLwoZk8povpKLoTeFZxNLOtsVXwvcNhcOeG_OU4UsE7oAg>
+    <xmx:dhUFXbWSadClxCk6ME8NCkrozhYtKTQ35H3na-IQbR9LfjZBwUhXoA>
+    <xmx:dhUFXZVtQEunpNolhBL0EY4UE9ZxfGzqSTDcmJXWz0zvTmvv_oxF3Q>
+Message-ID: <20190615155740.GA2960@kroah.com>
+References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
+User-Agent: Mutt/1.12.0 (2019-05-25)
+Date: Sat, 15 Jun 2019 17:57:40 +0200
+From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9519 invoked from network); 16 Sep 2016 17:24:44 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, luodalongde@gmail.com, zhenhaohong@gmail.com
-In-Reply-To: <alpine.LFD.2.20.1609161611510.28695@wniryva>
-Message-Id: <20160916172432.9CAC052E020@smtpvbsrv1.mitre.org>
-Date: Fri, 16 Sep 2016 13:24:32 -0400 (EDT)
-Subject: [oss-security] Re: CVE request Qemu: virtio: null pointer dereference in virtqueu_map_desc
+Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
+ OSS-Fuzz
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sat, Jun 15, 2019 at 11:49:03AM -0400, Alex Gaynor wrote:
+> I do not have a solution to this problem. I wanted to raise awareness of
+> it, in the hope that it would start a discussion which might come to a
+> solution.
 
-> Quick emulator(Qemu) built with the virtio framework is vulnerable to a null
-> pointer dereference flaw. It could occur if the guest was to set the I/O
-> descriptor buffer length to a large value.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu instance
-> on the host resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03546.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1376755
+Why not just do a simple "you must upgrade to the latest version X to
+fix a bunch of bugs" type of announcement?  No need to worry about crazy
+backports and cherry-picking, that always fails in the end.
 
->> virtio back end uses set of buffers to facilitate I/O operations.
->> If its size is too large, 'cpu_physical_memory_map' could return
->> a null address. This would result in a null dereference
->> while un-mapping descriptors. Add check to avoid it.
+thanks,
 
-Use CVE-2016-7422.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/virtio/virtio.c but
-that may be an expected place for a later update.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX3CoJAAoJEHb/MwWLVhi22UAP/i8JPCu45VXEBOxfSHFq2RuT
-TFTLRJoGrzZSJmk0xJQzLevXfM/u/dP7M4bXXdiGETuXDoytygrZvpQX4TjhRcJa
-6B2gCLdlPpcH+m3BW9OzfR3mxMVwGwBMLpDIKo4lRMBkW4Sm9BT5druuJtnYqrpi
-28FtGgLimIIjWykf+XOPCSA1/7jOURlpQWp3AXzdJ4bbPekMIbwGjWDpsbxQFnWt
-UyutNxjJMXKegxNbgKmqtle6O63HewHzzmkMwFpq9VH6yA84kA3ckc+Kn5o88mAz
-4GOVBazW2WLaouT0mcNTSuEzKMVJZTFeMo9LkdOP70ds9ChkMUm4RE55jTTvy1HF
-0EE7q9z9dKnO0DWht7/KtBO4o7pPSiSvz3Amc56D4rUzww2w4SkBwwQp40Eyt9K0
-SNLEL62COpHMbqz0O+lZV/04ZgTvxwO82ALOOGHKzgFXEVZtr3QImugNKBDFItkF
-AzMP9005g6XoXKDNgMDJVz07cDiVU5/tOwTFaFe88CVJR6l9Ez6RSkMUbdloHZD0
-LlsaUPUhVLvKCV+RzUF1MH8Z8i4kIfbSkhSu65VqGeN05dUV+ClmUTj0Q10OGXnm
-UmsmrsdkTDRvye6giFtkXrnV6aPLNkY+SXIePG1IYChtR8XVrHH+3LNeFmkSUMJr
-r6mhE1RiIJ8ZeEkzvS3K
-=d+8E
------END PGP SIGNATURE-----
+greg k-h
