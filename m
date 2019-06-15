@@ -1,122 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/08/3
-Message-ID: <CAPZbWnfDh0dZ8wpnLN7OsXAkKrBPyfnt52Cnz=74t4XCVXG3BQ@mail.gmail.com>
-Date: Wed, 8 May 2019 19:04:25 +0900
-From: Seong-Joong Kim <sungjungk@...il.com>
-To: Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
-Cc: oss-security@...ts.openwall.com, Roman Drahtmueller <draht@...altsekun.de>
-Subject: Re: Re: fprintd: found storing user fingerprints without encryption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/6
+Message-ID: <20190615205947.56f2315d@computer>
+Date: Sat, 15 Jun 2019 20:59:47 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-In Microsoft's Windows Hello, fingerprint data is kept locally on user's PC
-in an encrypted way while Linux does not, even though they are based on
-same fingerprint reader hardware.
-Windows Hello may use Next Generation Cryptography (called CNG) to protect
-and store user private data and encryption keys.
-(see
-https://support.microsoft.com/en-au/help/4468253/windows-hello-and-privacy-microsoft-privacy
-)
+Hi Alex,
 
-Lenovo's Fingerprint Manager Pro also stores user's fingerprints encrypted
-in its local environment.
-In this regard, a flaw was discovered in Lenovo Fingerprint Manager Pro
-(see CVE-2017-3762).
-(see
-https://thenextweb.com/security/2018/01/26/lenovo-fingerprint-manager-flaw-windows/
-)
+I think what you're describing has been going on for a while, even
+before oss-fuzz.
+A combination of compiler sanitizers and better fuzzing techniques has
+scaled up bug finding and fixing to a level we haven't had before.
 
-Moreover, FireEye researchers Tao Wei and Yulong Zhang outlined new ways to
-attack Android devices to extract user fingerprints at Black Hat USA 2015
-(see Fingerprints On Mobile Devices: Abusing and Leaking?).
-(see
-https://www.zdnet.com/article/hackers-can-remotely-steal-fingerprints-from-android-phones/
-)
+For distributions that promise to backport all security fixes that
+creates a situation where it's almost impossible to keep that promise,
+they just don't have the manpower to scale up at the same speed as
+people find bugs.
+Maybe the main takeaway here is to just recognize that, and maybe
+distros should be more honest here and be clear what they can and can't
+do. And if you run a parser in a high risk environment you may not want
+to rely on the outdated version shipping in some LTS distribution.
 
 
-This vulnerability could allow a process to access the stored fingerprint
-and then it can be reverted to natural-looking original fingerprint image.
-It allows the attacker to impersonate a legitimate
-authentication/identification by using stolen fingerprints.
+But I also think it's good to keep some perspective of the bugs we're
+talking about.
+Many of the bugs oss-fuzz finds are of bug classes where it's quite
+unlikely that they directly lead to a security issue (e.g. out of
+bounds memory reads - which asan controversially calls "overflows").
+Even for the scarier looking vulns like write buffer overflows and use
+after free the situation is that these are usually not straightforward
+to exploit. All modern distributions have a combination of stack
+canaries, ASLR and nonexecutable memory. It's my understanding that
+while it's often possible to bypass those, doing so in non-scripting
+scenarios (e.g. in an image parser) is really hard and often impossible.
 
-Once fingerprint has been leaked, victims are leaked for the rest of life
-since it lasts for a life.
-Moreover, fingerprints are usually associated with every citizen’s identity
-and immigration record.
-It would be a hazard if the attacker can remotely harvest fingerprints in a
-large scale.
-
-What do you think of it?
+I guess therefore it's still an overall win. While there's a number of
+bugs unfixed with public information, in the long term we'll get more
+robust code and the number of bugs present should be in steep decline.
 
 
-2019년 5월 8일 (수) 오후 6:29, Noel Kuntze
-<noel.kuntze+oss-security@...rmi.consulting>님이 작성:
+-- 
+Hanno Böck
+https://hboeck.de/
 
-> Hello List,
->
-> Am 08.05.19 um 11:19 schrieb Roman Drahtmueller:
-> >>> Dear all,
-> >>>
-> >>> I would like to report a vulnerability of 'fprintd'.
-> >>>
-> >>> 'fprintd' does not encrypt sensitive information before storage.
-> >>> *CWE-311: Missing Encryption of Sensitive Data*
-> >
-> > [...]
-> >
-> > This misses the point.
-> >
-> > * Encryption shifts the problem to protecting the symmetric key, which
-> >   is the very same problem. => Encryption solves other problems, but not
-> >   this one.
-> > * If you have sufficient privileges to access the fingerprint data,
-> >   then you no longer need the data.
-> > * You can't "safeguard" the fingerprint data by applying additional O/S
-> >   controls such as SELinux, AppArmor, etc, you can only add more useful
-> >   privilege transitions and protect against attacks that exploit
-> >   implementation errors. Google "store fingerprint data ios android",
-> >   there are suitable solutions.
-> >
-> > Mostly: Your fingerprint is not a secret like a password, it is a
-> username.
-> >
-> > Since you can't change the fingerprint (biometrics problem), it is not
-> very useful as a single authentication factor. Either you live with this,
-> or you combine the fingerprint with a different authentication factor type.
-> >
-> > Roman.
->
-> Another argument: You leave your fingerprint on everything you touch. The
-> glass you drank from at the bar on Saturday evening? That has your
-> fingerprints. Your front door? It has those, too.
-> Fingerprints aren't sensitive information. The only entities attributing
-> any sensitivity to them are the following: Court systems where fingerprints
-> are allowed as evidence (although it's stupid because you can easily
-> duplicate fingerprints) and companies/persons using fingerprints for
-> authentication (which for the same reason as previously mentioned is not a
-> good idea).
-> And as Roman mentioned already, you can't change your fingerprints easily
-> (Sand paper and acids are your friends, but that's not comfortable at all
-> and compromises your ability to hold things in your hands. So don't to
-> that.).
->
-> If, for some reason, you still want to "securely" (at least with a higher
-> level of security than plain text) store your fingerprint, you need to use
-> a hardware backed kernel keyring that stores the encryption keys or use a
-> hardware based security solution for storing the fingerprints in the first
-> case. You likely won't find any such solution though that isn't broken
-> already in some regard.
->
-> Kind regards
->
-> Noel
->
-> --
-> Noel Kuntze
-> IT security consultant
->
-> GPG Key ID: 0x0739AD6C
-> Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
->
->
->
-
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
