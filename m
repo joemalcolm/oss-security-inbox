@@ -1,18 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/15/2
-Message-ID: <818ccecb7de32608@sudo.ws>
-Date: Tue, 15 Oct 2019 14:55:06 -0600
-From: "Todd C. Miller" <Todd.Miller@...o.ws>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/3
+Message-ID: <20190615155740.GA2960@kroah.com>
+Date: Sat, 15 Jun 2019 17:57:40 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Sudo: CVE-2019-14287
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-In an effort to aid distros trying to backport the fix for
-CVE-2019-14287 to earlier sudo versions I've attached versions of
-the fix for sudo 1.8.5 and 1.8.10.
+On Sat, Jun 15, 2019 at 11:49:03AM -0400, Alex Gaynor wrote:
+> I do not have a solution to this problem. I wanted to raise awareness of
+> it, in the hope that it would start a discussion which might come to a
+> solution.
 
- - todd
+Why not just do a simple "you must upgrade to the latest version X to
+fix a bunch of bugs" type of announcement?  No need to worry about crazy
+backports and cherry-picking, that always fails in the end.
 
-View attachment "sudo-1.8.10.patch" of type "text/x-patch" (3829 bytes)
+thanks,
 
-View attachment "sudo-1.8.5.patch" of type "text/x-patch" (18317 bytes)
+greg k-h
