@@ -1,51 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/10/4
-Message-ID: <20190410151534.GC5686@w1.fi>
-Date: Wed, 10 Apr 2019 18:15:34 +0300
-From: Jouni Malinen <j@...fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/16/1
+Message-ID: <20190616144730.GA31281@openwall.com>
+Date: Sun, 16 Jun 2019 16:47:30 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: hostapd: SAE confirm missing state validation
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-Published: April 10, 2019
-Identifiers:
-- CVE-2019-9496 (SAE confirm missing state validation in hostapd/AP)
-Latest version available from: https://w1.fi/security/2019-3/
+On Sat, Jun 15, 2019 at 11:49:03AM -0400, Alex Gaynor wrote:
+> A test of a random ImageMagick vulnerability against Ubuntu Xenial shows
+> that it, indeed, continues to reproduce.
+> 
+> This is in addition to the >100 security bugs OSS-Fuzz found and publicly
+> disclosed due to hitting their disclosure deadline, and which still have
+> not been fixed [3].
 
-Vulnerability
+Some people have interpreted this as implying there are ">100 security
+bugs OSS-Fuzz found and publicly disclosed [...], and which still have
+not been fixed" specifically in ImageMagick.  However, at the link you
+referenced there are currently "only" 38 bugs specifically in
+ImageMagick, with the rest of the >100 being in other projects:
 
-When hostapd is used to operate an access point with SAE (Simultaneous
-Authentication of Equals; also known as WPA3-Personal), an invalid
-authentication sequence could result in the hostapd process terminating
-due to a NULL pointer dereference when processing SAE confirm
-message. This was caused by missing state validation steps when
-processing the SAE confirm message in hostapd/AP mode.
+> [3]:
+> https://bugs.chromium.org/p/oss-fuzz/issues/list?can=1&q=Type%3DBug-Security+status%3ANew+label%3ADeadline-exceeded&colspec=ID+Type+Component+Status+Library+Reported+Summary+Modified&sort=-modified&groupby=&mode=grid&y=Proj&x=--&cells=ids&nobtn=Update
 
-Similar cases against the wpa_supplicant SAE station implementation had
-already been tested by the hwsim test cases, but those sequences did not
-trigger this specific code path in AP mode which is why the issue was
-not discovered earlier.
-
-An attacker in radio range of an access point using hostapd in SAE
-configuration could use this issue to perform a denial of service attack
-by forcing the hostapd process to terminate.
-
-
-Vulnerable versions/configurations
-
-All hostapd versions with SAE support (CONFIG_SAE=y in the build
-configuration and SAE being enabled in the runtime configuration).
-
-
-Possible mitigation steps
-
-- Merge the following commit to hostapd and rebuild:
-
-  SAE: Fix confirm message validation in error cases
-
-  These patches are available from https://w1.fi/security/2019-3/
-
-- Update to hostapd v2.8 or newer, once available
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
+Alexander
