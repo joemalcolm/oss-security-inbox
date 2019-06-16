@@ -1,21 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/24/4
-Message-ID: <CAG09ER1O_+YYQzj9dmTJ225JtiB-qLeMJe=ztPO1bPF0ukiLcA@mail.gmail.com>
-Date: Wed, 24 Jul 2019 09:27:15 +0200
-From: Stig Rohde Døssing <srdo@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/16/2
+Message-ID: <alpine.GSO.2.20.1906161200500.1813@freddy.simplesystems.org>
+Date: Sun, 16 Jun 2019 12:08:20 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2018-11779] Apache Storm UI Java deserialization vulnerability
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2018-11779[PRODUCT]:Apache Storm[VERSION]:Apache Storm
-1.1.0 to 1.2.2[PROBLEMTYPE]:CWE-502: Deserialization of Untrusted
-Data[DESCRIPTION]:In Apache Storm versions 1.1.0 to 1.2.2,
-              when the user is using the storm-kafka-client or
-storm-kafka modules,
-              it is possible to cause the Storm UI daemon to
-deserialize user provided bytes into a Java class.
+On Sun, 16 Jun 2019, Solar Designer wrote:
+>
+> Some people have interpreted this as implying there are ">100 security
+> bugs OSS-Fuzz found and publicly disclosed [...], and which still have
+> not been fixed" specifically in ImageMagick.  However, at the link you
+> referenced there are currently "only" 38 bugs specifically in
+> ImageMagick, with the rest of the >100 being in other projects:
 
-Mitigation: Upgrade to Apache Storm 1.2.3 or later.
+Using the ordinary public access I have, I see that ImageMagick has 
+129 open issues, and 1479 issues in total.  There are surely issues 
+that I can not see yet since they are hidden for up to 90 days.
 
-Credit: Bobby Evans for discovery and fix
+Taking the number 129, that would mean that there is a huge number of 
+issues already fixed (1350) which are gradually making it out to 
+users.  This is too many fixes to deal with via distribution-specific 
+patches.
 
+Using my privileged access for GraphicsMagick, I currently see 343 
+issues in total, with 12 issues remaining to fix.  Some of those 12 
+issues are open to the public for some time now. :-(
+
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
