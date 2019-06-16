@@ -1,29 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/26/1
-Message-ID: <CAGrd=aPxL96DK6YLr30=Lw7si00wW=RHBmn7b5uSpHt1dQSBEQ@mail.gmail.com>
-Date: Mon, 26 Aug 2019 09:25:18 -0300
-From: Carlos Eduardo <carlosecg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/16/3
+Message-ID: <20190616192914.GA876@openwall.com>
+Date: Sun, 16 Jun 2019 21:29:14 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-15525: Missing TLS/SSL certificate validation in pw3270
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-CVE: Missing TLS/SSL certificate validation in pw3270
+On Sun, Jun 16, 2019 at 12:08:20PM -0500, Bob Friesenhahn wrote:
+> On Sun, 16 Jun 2019, Solar Designer wrote:
+> >
+> >Some people have interpreted this as implying there are ">100 security
+> >bugs OSS-Fuzz found and publicly disclosed [...], and which still have
+> >not been fixed" specifically in ImageMagick.  However, at the link you
+> >referenced there are currently "only" 38 bugs specifically in
+> >ImageMagick, with the rest of the >100 being in other projects:
+> 
+> Using the ordinary public access I have, I see that ImageMagick has 
+> 129 open issues, and 1479 issues in total.  There are surely issues 
+> that I can not see yet since they are hidden for up to 90 days.
 
-Affected versions: all versions before 5.1
+I guess this is a distinction between all open deadline-exceeded issues
+(129) and only deemed security ones out of those (38).
 
-Description:
-pw3270 is a GTK based tn3270 terminal emulator. Versions up to 5.0 are
-vulnerable to a TLS/SSL certificate validation flaw, leading to attackers
-in a MitM position being able to affect confidentiality, integrity and
-availability of traffic between the client and host, including credentials
-used. This flaw was fixed in version 5.1.
+Removing "Type=Bug-Security status:New", but keeping
+"label:Deadline-exceeded" does show 129 issues for ImageMagick.
 
-Mitigation:
-Upgrade to version 5.1 and up.
+Also removing "label:Deadline-exceeded" still results in 129, perhaps
+because I'm not authorized to see other open issues.
 
-This vulnerability was discovered by Carlos Gonçalves.
+I am unfamiliar with OSS-Fuzz.  Please correct me if I got this wrong.
 
----
-Carlos Gonçalves
-IT Security Analyst
-
+Alexander
