@@ -1,54 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/17/2
-Message-ID: <CAAWM14evUCZs2UoyXw2FU9ZSuM2NFFR+sNi7bA=o+-r7vfUcHw@mail.gmail.com>
-Date: Wed, 17 Jul 2019 16:25:03 +0200
-From: Wadeck Follonier <wfollonier@...udbees.com>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/17/2
+Message-ID: <CAA7hUgF+ABzg1i6ajk=M-WbVFLYGLL--6LZn5CTLVDKQsx1QhQ@mail.gmail.com>
+Date: Mon, 17 Jun 2019 12:49:42 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: security@...tpractical.com
+Subject: Re: Apache::Session's use of md5 and more
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Hi,
 
-* Jenkins weekly 2.186
-* Jenkins LTS 2.176.2
+On Sat, 15 Jun 2019 at 19:42, Solar Designer <solar@...nwall.com> wrote:
+> On Sat, Jun 15, 2019 at 05:09:53PM +0200, Raphael Geissert wrote:
+> > Not only does it use MD5,
+>
+> Which is perfectly fine for this use case, except that it distracts
+> attention from real issues, so might need to be "fixed" to be e.g.
+> SHA-256 for that reason.
+>
+> Let's not confuse technical and psychological aspects.
+[...]
+> > and does two rounds of hashing.
+>
+> This is fine, but can be optimized out along with the move to SHA-256.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-07-17/
+Right, though I must argue that they are indicators, smells. Also, I
+hope that by getting rid of those people won't copy that code
+elsewhere.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+> I didn't review Perl's rand(), but apparently Nuel thought the
+> initialization from /dev/urandom on newer Perl somehow made rand() safe
+> from having its seed inferred?  I doubt this is the case, as I expect
+> the seed and/or the internal state is tiny either way.  And I doubt it
+> takes as many as "30 values of rand() to determine the srand (the
+> seed)."  I'd expect 1 to be enough.  But we need to review the code
+> before making any claims.
+>
+> ...OK, I just took a look.  Perl's util.c: Perl_seed() reads just 32
+> bits from /dev/urandom, with compile-time and runtime fallbacks to
+> gettimeofday() and getpid() and some more ASLR leaks.  (Fun fact: the
+> fallbacks will also occur when the 32-bit value read from /dev/urandom
+> just happens to be 0.  As a result, the seed is almost never a 0.)
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Which is more worrisome in the specific case of lemonldap-ng given the
+use of rand for quite many things. Not sure how RT is affected in that
+regard. From issue 1633 [2]:
 
----
+> From a quick survey through the code, I found that Perl's rand is used
+>
+> For password reset (::Portal::Lib::SMTP) through String::Random
+> For OpenID registration (::Portal::Issues::OpenIDConnect) through String::Random
+> For CSRF and OTP login token generation (::Portal::Lib::OneTimeToken)
+> For Session ID generation (::Common::Apache::Session::Generate::SHA256)
+> For password hashing in databases (::Portal::Lib::DBI)
+> For TOTP registration (::Common::TOTP)
 
-SECURITY-1424 / CVE-2019-10352
-Users with Job/Configure permission could specify a relative path escaping
-the base directory in the file name portion of a file parameter definition.
+So far the use of rand in the session id generation code has been
+replaced by data from urandom - but they left time, pid, and {}.
 
-This path would be used to store the uploaded file on the Jenkins master,
-resulting in an arbitrary file write vulnerability.
+FWIW I had opened issue 1803 [3] for the uses of String::Random, but
+it looks like it is best to just reopen 1633 - or whatever is
+necessary so that the remaining uses of rand are fixed.
 
+Oh and it appears that Apache::SessionX is a fork of Apache::Session,
+with the same session id generation function.
 
-SECURITY-626 / CVE-2019-10353
-By default, CSRF tokens in Jenkins only checked user authentication and IP
-address.
+[2] https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1633
+[3] https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1803
 
-This allowed attackers able to obtain a CSRF token for another user to
-implement CSRF attacks as long as the victim's IP address remained unchanged.
-
-
-SECURITY-534 / CVE-2019-10354
-Jenkins uses the Stapler web framework to render its UI views.
-
-These views are frequently comprised of several view fragments, enabling
-plugins to extend existing views with more content.
-
-In some cases attackers could directly access a view fragment containing
-sensitive information, bypassing any permission checks in the corresponding
-view.
+Cheers,
+--
+Raphael Geissert - Debian Developer
+www.debian.org
