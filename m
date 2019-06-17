@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2059" "Wednesday" "7" "March" "2018" "23:33:37" "+0100" "Patrick Forsberg" "fors@cert.sunet.se" "<fe452830-1090-7f3d-f740-df1ed6f2d9ee@cert.sunet.se>" "59" "Re: [oss-security] memcached UDP amplification attacks" "^Date:" nil nil "3" "2018030722:33:37" "[oss-security] memcached UDP amplification attacks" (number mark "        fors@cert.su Mar  7   59/2059  " thread-indent "\"Re: [oss-security] memcached UDP amplification attacks\"\n") "<D8D24F8C-3644-4DB1-960A-C418453F7F2C@akamai.com>" ("<20180302124428.440b9c3b@pc1>" "<CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>" "<CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>" "<20180307110950.4eb041a8@redhat.com>" "<D8D24F8C-3644-4DB1-960A-C418453F7F2C@akamai.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3736" "Monday" "17" "June" "2019" "13:32:03" "+0200" "Marcus Meissner" "meissner@suse.de" "<20190617113203.GH15432@suse.de>" "115" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019061711:32:03" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        meissner@sus Jun 17  115/3736  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1660 invoked by uid 550); 8 Mar 2018 08:41:37 -0000
+Received: (qmail 29790 invoked by uid 550); 17 Jun 2019 11:32:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,93 +11,137 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5482 invoked from network); 7 Mar 2018 22:33:54 -0000
-References: <20180302124428.440b9c3b@pc1>
- <CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>
- <CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>
- <20180307110950.4eb041a8@redhat.com>
- <D8D24F8C-3644-4DB1-960A-C418453F7F2C@akamai.com>
-Message-ID: <fe452830-1090-7f3d-f740-df1ed6f2d9ee@cert.sunet.se>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.6.0
+Received: (qmail 29769 invoked from network); 17 Jun 2019 11:32:14 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20190617113203.GH15432@suse.de>
+References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <D8D24F8C-3644-4DB1-960A-C418453F7F2C@akamai.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
-X-Bayes-Prob: 0.005 (Score 0, tokens from: outbound, outbound-sunet-se:default, sunet-se:default, base:default, @@RPTN)
-X-CanIt-Geo: ip=89.45.232.214; country=SE; latitude=59.3247; longitude=18.0560; http://maps.google.com/maps?q=59.3247,18.0560&z=6
-X-CanItPRO-Stream: outbound-sunet-se:outbound (inherits from outbound-sunet-se:default,sunet-se:default,base:default)
-X-Canit-Stats-ID: 09VjaxGUG - 66a6c6b67bd5 - 20180307
-X-CanIt-Archive-Cluster: PfMRe/vJWMiXwM2YIH5BVExnUnw
-Received-SPF: neutral (e-mailfilter01.sunet.se: 89.45.232.214 is neither permitted
-	nor denied by domain fors@cert.sunet.se)
-	receiver=e-mailfilter01.sunet.se; client-ip=89.45.232.214;
-	envelope-from=<fors@cert.sunet.se>; helo=smtp1.sunet.se;
-	identity=mailfrom
-X-Scanned-By: CanIt (www . roaringpenguin . com)
-Date: Wed, 7 Mar 2018 23:33:37 +0100
-From: Patrick Forsberg <fors@cert.sunet.se>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Mary_Higgins=2C_Sri_Rasiah=2C_HRB_21284_?=
+ =?iso-8859-1?Q?=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Mon, 17 Jun 2019 13:32:03 +0200
+From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] memcached UDP amplification attacks
+Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
+ OSS-Fuzz
 To: oss-security@lists.openwall.com
 
-On 2018-03-07 22:57, Seaman, Chad wrote:
-
-> Tomas,
->
-> You=E2=80=99re not wrong, that was a typo in the blog.
->
-> Regards,
-> Chad
-On the other hand I think the blog is wrong. (Just reading the protocol
-specs)
-
-The default maximum size of an item is 1M, but you can easily request
-more than one item using the gets command.
-=C2=A0=C2=A0 gets <key>*\r\n
-where <key>* is one or several keys separated by whitespace.
-A key is a text string that must not include control characters or
-whitespace. The maximum length of a key is 250 characters but I don't
-think there's a minimum size so one byte keys should be fine.
-
-/Patrick
->
-> On 3/7/18, 5:10 AM, "Tomas Hoger" <thoger@redhat.com> wrote:
->
->     On Fri, 2 Mar 2018 21:42:30 -0700 Kurt Seifried wrote:
->=20=20=20=20=20
->     > I have assigned CVE-2018-1000115 to this issue:
->     >=20
->     > Memcached version 1.5.5 contains an Insufficient Control of Network
->     > Message Volume (Network Amplification, CWE-406) vulnerability in the
->     > UDP support of the memcached server that can result in denial of
->     > service via network flood (traffic amplification of 1:50,000 has be=
-en
->     > reported by reliable sources). This attack appear to be exploitable
->     > via network connectivity to port 11211 UDP. This vulnerability
->     > appears to have been fixed in 1.5.6 due to the disabling of the UDP
->     > protocol by default.
->=20=20=20=20=20
->     Minor nitpick, the description mentions 1:50,000 ratio, apparently
->     based on the information in the following reference:
->=20=20=20=20=20
->     > https://blogs.akamai.com/2018/03/memcached-fueled-13-tbps-attacks.h=
-tml
->=20=20=20=20=20
->     where it's mentioned as:
->=20=20=20=20=20
->     """
->     Worse, memcached can have an amplification factor of over 50,000,
->     meaning a 203 byte request results in a 100 megabyte response.
->     """
->=20=20=20=20=20
->     However, 200 * 50k =3D 10m, not 100m.  Wonder if I'm doing my math wr=
-ong.
->=20=20=20=20=20
->     --=20
->     Tomas Hoger / Red Hat Product Security
->=20=20=20=20=20
->
+Hi,
 
 
+On Sat, Jun 15, 2019 at 11:49:03AM -0400, Alex Gaynor wrote:
+> Hi everyone,
+> 
+> OSS-Fuzz is Google's project to provide continious large-scale fuzzing.
+> Since it launched in 2016, it's found just shy of 3000 things it counts as
+> security bugs [0][1]. I'm not a developer of OSS-Fuzz (at Google), but I've
+> helped several projects integrate with it.
+> 
+> You can see that it's had some amazing success across a variety of projects
+> -- I've written previously to this list about the things I thought made it
+> particularly effective working with ImageMagick and GraphicsMagick [2].
+> 
+> Today I'd like to highlight what I see as a tremendous issue: very few of
+> these security bugs ever has a CVE issued for it. This is probably due to a
+> few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
+> a human reporter who is interested in obtaining one for "credit" purposes,
+> c) the sheer number of bugs that we're talking about.
+> 
+> CVEs are not important for their own sake. The true value is in all of the
+> downstream processing that uses them as input: the Linux distributions that
+> use them to figure out what fixes to backport, the docker security scanners
+> that look for vulnerable code on the system, the corporate
+> threat-intelligence feeds, etc.
+> 
+> A test of a random ImageMagick vulnerability against Ubuntu Xenial shows
+> that it, indeed, continues to reproduce.
+> 
+> This is in addition to the >100 security bugs OSS-Fuzz found and publicly
+> disclosed due to hitting their disclosure deadline, and which still have
+> not been fixed [3].
+> 
+> I haven't analyzed any of these vulnerabilities for exploitability, and I
+> doubt anyone else has either.
+> 
+> I do not have a solution to this problem. I wanted to raise awareness of
+> it, in the hope that it would start a discussion which might come to a
+> solution.
+
+So as this was not yet discussed, lets have it closer look at the gaps
+in the workflow.
+
+(I am not going into the orthogonal approaches, like surface reduction,
+mitigations, replacement etc.)
+
+"topic" vs "automation state"
+
+
+Bugfinding:
+
+- Is manual to fully automated these days, and improving.
+
+  The fully automated bugfinding is a significant contributor to amount of bugs.
+
+Bugfixing:
+
+- Largely manual. Some research in automation by DARPA et.al.
+
+
+  This is a significant gap of the scale issues, automated bugfinding
+  can easily overload opensource projects.
+
+
+Security IR Tracking:
+
+CVE Allocation:
+
+- Mostly manual, some tool help at most.
+
+  Significant gap here (as you wrote).
+
+  This seems to be low hanging fruit... There is nothing stopping to 
+
+  - allocate big CVE blocks to "automation sub-CNA"s
+  - have a OSS-Fuzz / Syzkaller / whatever CNA doing automated CVE assignments out of this block
+
+Rating:
+
+- largely manual / partially automated, done by NVD and distributions seperately.
+
+  Could be automated by "type" by the fuzzer, similar to above.
+
+
+Structured Vulnerability information storing:
+
+- Not really existing right now.
+
+- On top of CVE:
+  - referencing reproducers
+  - affected versions
+  - ratings
+  - referencing patches
+
+  These could be supplied / attached by automatisms in a automation CNA.
+
+
+Distribution tracking / update preparation / packaging / QA :
+
+- done by distributions, largely manual to semi automatic.
+
+  With better structured upstream vulnerability information storage its automation
+  could be improved.
+
+  Some thoughts are going betweenm distributions on sharing information / load, but as this
+  is a competition issue this might be hard.
+
+So main gaps I personally see:
+
+- bugfixing automation or help at least
+
+- (better) structured storage in a global database, either CVE or something entirely new.
+
+Ciao, Marcus
