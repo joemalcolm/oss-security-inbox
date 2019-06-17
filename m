@@ -1,26 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/27/1
-Message-ID: <20190927165004.GD1884@elm>
-Date: Fri, 27 Sep 2019 11:50:05 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/17/1
+Message-ID: <CAOfWR+FBYDFaMWnHSs6fVeJtSthbRYpPMQTSKHaYFjFZArFEpg@mail.gmail.com>
+Date: Mon, 17 Jun 2019 01:28:04 -0400
+From: Robert Watson <robertcwatson1@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-On 2019-08-20 20:20:34, Andrey Konovalov wrote:
-> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15290
-> 
-> An issue was discovered in the Linux kernel through 5.2.9. There is a
-> NULL pointer dereference caused by a malicious USB device in the
-> ath6kl_usb_alloc_urb_from_pipe function in the
-> drivers/net/wireless/ath/ath6kl/usb.c driver.
+So Mr Gayner, which of these bugs have you fixed?
 
-This seems like it might be a duplicate of CVE-2019-15098. The fix for
-CVE-2019-15098 was recently merged upstream:
+On Sat, Jun 15, 2019, 11:50 Alex Gaynor <alex.gaynor@...il.com> wrote:
 
- https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=39d170b3cb62ba98567f5c4f40c27b5864b304e5
+>
+> Today I'd like to highlight what I see as a tremendous issue: very few of
+> these security bugs ever has a CVE issued for it. This is probably due to a
+> few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
+> a human reporter who is interested in obtaining one for "credit" purposes,
+> c) the sheer number of bugs that we're talking about.
+>
 
-If you agree, could you request that MITRE mark CVE-2019-15290 as a
-duplicate of CVE-2019-15098?
+>
 
-Tyler
