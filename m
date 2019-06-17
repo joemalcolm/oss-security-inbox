@@ -1,15 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/15/1
-Message-ID: <1293109484.21742695.1555334270413.JavaMail.zimbra@redhat.com>
-Date: Mon, 15 Apr 2019 09:17:50 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/17/7
+Message-ID: <CAOp4FwSL6OWhK=1kC-q1=9thp7VnTRK5r8oNapF1q7WR_xDw-g@mail.gmail.com>
+Date: Tue, 18 Jun 2019 01:19:11 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel < 4.8 local generic ASLR - CVE-ID
+Cc: Security Report <security-report@...smail.netflix.com>, security-report@...flix.com
+Subject: Re: Linux and FreeBSD Kernel: Multiple TCP-based remote denial of service issues
 Content-Type: text/plain; charset=utf-8
 
-Just in case - this is CVE-2019-11190:
+Can the netflix guys tell us if they have seen exploits in the wild ?
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-11190
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security | Senior Software Engineer
+
+On Mon, Jun 17, 2019 at 10:56 PM Greg KH <greg@...ah.com> wrote:
+
+> On Mon, Jun 17, 2019 at 10:33:38AM -0700, Security Report wrote:
+> > Netflix has identified several TCP networking vulnerabilities in FreeBSD
+> > and Linux kernels.
+> >
+> > The vulnerabilities specifically relate to the minimum segment size
+> (MSS)
+> > and TCP Selective Acknowledgement (SACK) capabilities. The most serious,
+> > dubbed “SACK Panic,” allows a remotely-triggered kernel panic on recent
+> > Linux kernels.
+> >
+> > There are patches that address most of these vulnerabilities. If patches
+> > can not be applied, certain mitigations will be effective. We recommend
+> > that affected parties enact one of those described below, based on their
+> > environment.
+>
+> To answer all of the paniced emails I have already started to get, all
+> of these patches are now in the following Linux stable kernel releases
+> that just went out a few minutes ago:
+>         4.4.182
+>         4.9.182
+>         4.14.127
+>         4.19.52
+>         5.1.11
+>
+> Other than the 3.16.y kernel branch, all other kernel branches are
+> end-of-life, and will not be getting updates for these, or any other,
+> bugfixes.  I do not know when/if Ben will be doing a release for 3.16.y
+> with these fixes.
+>
+> thanks,
+>
+> greg k-h
+>
+
