@@ -1,43 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/01/2
-Message-ID: <20190301110704.4ff5b4ef@computer>
-Date: Fri, 1 Mar 2019 11:07:04 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/17/3
+Message-ID: <CAG_fn=UJptH_tAKj+yCER-eWPRxF0R-E2N5TUFoYpBb2Yabg3g@mail.gmail.com>
+Date: Mon, 17 Jun 2019 13:09:27 +0200
+From: Alexander Potapenko <glider@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Squirrelmail XSS Fixes
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-Sorry... I was struck by "hit the send button while still writing the
-mail"... Let's retry:
+On Mon, Jun 17, 2019 at 12:16 PM Robert Watson <robertcwatson1@...il.com> wrote:
+>
+> So Mr Gayner, which of these bugs have you fixed?
+I think the NEWS page of GraphicsMagick
+(http://www.graphicsmagick.org/NEWS.html) speaks for itself: the
+developers recognize contributions of Alex and do not blame him for
+not fixing all the bugs he found in the project.
+Setting up continuous fuzzing for an OSS project is an unhairy job,
+too. There doesn't seem to be a continuous flow of people doing that,
+despite fixing a bug with a clear reproducer and a readable error
+message is a lot easier than chasing the same bug in the wild.
+
+> On Sat, Jun 15, 2019, 11:50 Alex Gaynor <alex.gaynor@...il.com> wrote:
+>
+> >
+> > Today I'd like to highlight what I see as a tremendous issue: very few of
+> > these security bugs ever has a CVE issued for it. This is probably due to a
+> > few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
+> > a human reporter who is interested in obtaining one for "credit" purposes,
+> > c) the sheer number of bugs that we're talking about.
+> >
+>
+> >
 
 
-Hi,
-
-A while ago I saw that there were some very old XSS reports in the
-squirrelmail bugtracker and reported it to this list:
-https://www.openwall.com/lists/oss-security/2018/06/27/5
-
-If anyone's interested, squirrelmail upstream has now fixed those (in
-SVN, they don't do releases):
-https://sourceforge.net/p/squirrelmail/bugs/2831/
-
-I had proposed a different (and imho simpler) patch, I never got any
-feedback from the developer why he didn't like it. I also sent multiple
-fixes for warnings and issues with newer PHP versions that mostly
-haven't been applied, in case you are interested, see
-https://github.com/hannob/squirrelpatches
-
-I tried a few XSS vectors and it seems they're all closed, though I'd
-appreciate more eyes on it. Overall the whole filtering isn't ideal,
-it's a blacklisting approach and thus obviously error-prone.
-
-If any XSS ninjas want to play with it and don't have a squirrelmail
-installation you can mail me directly and I can give you a temporary
-test account.
 
 -- 
-Hanno Böck
-https://hboeck.de/
+Alexander Potapenko
+Software Engineer
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Google Germany GmbH
+Erika-Mann-Straße, 33
+80636 München
+
+Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
