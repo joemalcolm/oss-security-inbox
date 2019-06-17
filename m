@@ -1,34 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/13/3
-Message-ID: <20190913112045.GI43354@symphytum.spacehopper.org>
-Date: Fri, 13 Sep 2019 12:20:45 +0100
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/17/4
+Message-ID: <20190617113203.GH15432@suse.de>
+Date: Mon, 17 Jun 2019 13:32:03 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Telegram privacy fails again.
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-On 2019/09/12 18:29, notspam@...st wrote:
-> > IMO, If Whatsapp/Telegram wanted to take this functionality more seriously,
-> > they'd need to be writing the images to disk in an encrypted form from the
-> > outset. It increases the overhead of display, and wouldn't necessarily stop
-> > forensic recovery etc, but it would mean that other apps couldn't simply
-> > watch the directory and upload anything which appears in it in a usable
-> > form. That's a whole other can of worms though as it's another set of keys
-> > to manage.
+Hi,
+
+
+On Sat, Jun 15, 2019 at 11:49:03AM -0400, Alex Gaynor wrote:
+> Hi everyone,
 > 
-> There's no way to take this functionality seriously - the feature is a
-> joke. A privacy feature centered around trusting another user's
-> node to delete a file you already sent them is silly. Unfortunately,
-> it seems like nobody gets this; even Matrix clients are supposed to
-> have message redaction soon.
+> OSS-Fuzz is Google's project to provide continious large-scale fuzzing.
+> Since it launched in 2016, it's found just shy of 3000 things it counts as
+> security bugs [0][1]. I'm not a developer of OSS-Fuzz (at Google), but I've
+> helped several projects integrate with it.
+> 
+> You can see that it's had some amazing success across a variety of projects
+> -- I've written previously to this list about the things I thought made it
+> particularly effective working with ImageMagick and GraphicsMagick [2].
+> 
+> Today I'd like to highlight what I see as a tremendous issue: very few of
+> these security bugs ever has a CVE issued for it. This is probably due to a
+> few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
+> a human reporter who is interested in obtaining one for "credit" purposes,
+> c) the sheer number of bugs that we're talking about.
+> 
+> CVEs are not important for their own sake. The true value is in all of the
+> downstream processing that uses them as input: the Linux distributions that
+> use them to figure out what fixes to backport, the docker security scanners
+> that look for vulnerable code on the system, the corporate
+> threat-intelligence feeds, etc.
+> 
+> A test of a random ImageMagick vulnerability against Ubuntu Xenial shows
+> that it, indeed, continues to reproduce.
+> 
+> This is in addition to the >100 security bugs OSS-Fuzz found and publicly
+> disclosed due to hitting their disclosure deadline, and which still have
+> not been fixed [3].
+> 
+> I haven't analyzed any of these vulnerabilities for exploitability, and I
+> doubt anyone else has either.
+> 
+> I do not have a solution to this problem. I wanted to raise awareness of
+> it, in the hope that it would start a discussion which might come to a
+> solution.
 
-It is still a useful feature as long as you don't consider it "secure".
+So as this was not yet discussed, lets have it closer look at the gaps
+in the workflow.
 
-> The original email didn't contain a security vulnerability (remember
-> the name of this list?)  - it was blogspam. It didn't belong here for
-> the same reason that you don't see Snapchat bugs on this list.
+(I am not going into the orthogonal approaches, like surface reduction,
+mitigations, replacement etc.)
 
-If a user of the software took the "delete" claim at face value then it
-could be considered security related .. and unlike Snapchat, the Telegram
-client *is* open source.
+"topic" vs "automation state"
 
+
+Bugfinding:
+
+- Is manual to fully automated these days, and improving.
+
+  The fully automated bugfinding is a significant contributor to amount of bugs.
+
+Bugfixing:
+
+- Largely manual. Some research in automation by DARPA et.al.
+
+
+  This is a significant gap of the scale issues, automated bugfinding
+  can easily overload opensource projects.
+
+
+Security IR Tracking:
+
+CVE Allocation:
+
+- Mostly manual, some tool help at most.
+
+  Significant gap here (as you wrote).
+
+  This seems to be low hanging fruit... There is nothing stopping to 
+
+  - allocate big CVE blocks to "automation sub-CNA"s
+  - have a OSS-Fuzz / Syzkaller / whatever CNA doing automated CVE assignments out of this block
+
+Rating:
+
+- largely manual / partially automated, done by NVD and distributions seperately.
+
+  Could be automated by "type" by the fuzzer, similar to above.
+
+
+Structured Vulnerability information storing:
+
+- Not really existing right now.
+
+- On top of CVE:
+  - referencing reproducers
+  - affected versions
+  - ratings
+  - referencing patches
+
+  These could be supplied / attached by automatisms in a automation CNA.
+
+
+Distribution tracking / update preparation / packaging / QA :
+
+- done by distributions, largely manual to semi automatic.
+
+  With better structured upstream vulnerability information storage its automation
+  could be improved.
+
+  Some thoughts are going betweenm distributions on sharing information / load, but as this
+  is a competition issue this might be hard.
+
+So main gaps I personally see:
+
+- bugfixing automation or help at least
+
+- (better) structured storage in a global database, either CVE or something entirely new.
+
+Ciao, Marcus
