@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/02/1
-Message-ID: <87lfxgijmh.fsf@concordia.ellerman.id.au>
-Date: Wed, 03 Jul 2019 00:41:42 +1000
-From: Michael Ellerman <mpe@...erman.id.au>
-To: Sasha Levin <sashal@...nel.org>, oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/17/6
+Message-ID: <20190617182023.GA19768@kroah.com>
+Date: Mon, 17 Jun 2019 20:20:23 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: Security Report <security-report@...smail.netflix.com>, security-report@...flix.com
+Subject: Re: Linux and FreeBSD Kernel: Multiple TCP-based remote denial of service issues
 Content-Type: text/plain; charset=utf-8
 
-Sasha Levin <sashal@...nel.org> writes:
-> On Fri, Jun 28, 2019 at 02:57:43PM +0200, Solar Designer wrote:
-...
->>
->>Poll: What days of week work best for you for public disclosure by
->>others of vulnerabilities in software you (or your employer, etc.) use?
->>
->>23% No preference or Other
->>33% Mon
->>36% Tue, Wed, Thu
->> 8% Fri, Sat, Sun
->>
->>164 votes
->>
->>12:13 PM - 27 Oct 2017
->>
->>As you can see, Mon fared really well - almost same as Tue, Wed, Thu
->>combined, meaning that it might be _the_ preferred day of week for
->>vulnerability disclosures.  So we probably shouldn't exclude Mondays.
->
-> My concern with Monday is timezones: we should do the math here, but I'd
-> like to avoid spilling over to Sunday (or very early Monday for that
-> matter) for some timezones.
+On Mon, Jun 17, 2019 at 10:33:38AM -0700, Security Report wrote:
+> Netflix has identified several TCP networking vulnerabilities in FreeBSD 
+> and Linux kernels.
+> 
+> The vulnerabilities specifically relate to the minimum segment size (MSS) 
+> and TCP Selective Acknowledgement (SACK) capabilities. The most serious, 
+> dubbed “SACK Panic,” allows a remotely-triggered kernel panic on recent 
+> Linux kernels.
+> 
+> There are patches that address most of these vulnerabilities. If patches 
+> can not be applied, certain mitigations will be effective. We recommend 
+> that affected parties enact one of those described below, based on their 
+> environment.
 
-/me waves from UTC+11:00 :)
+To answer all of the paniced emails I have already started to get, all
+of these patches are now in the following Linux stable kernel releases
+that just went out a few minutes ago:
+	4.4.182
+	4.9.182
+	4.14.127
+	4.19.52
+	5.1.11
 
-Which makes 9am Monday for me Sunday afternoon for some folks.
+Other than the 3.16.y kernel branch, all other kernel branches are
+end-of-life, and will not be getting updates for these, or any other,
+bugfixes.  I do not know when/if Ben will be doing a release for 3.16.y
+with these fixes.
 
-cheers
+thanks,
+
+greg k-h
