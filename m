@@ -1,52 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/02/4
-Message-ID: <20191202173932.GA3369@thinkstation>
-Date: Mon, 2 Dec 2019 09:39:32 -0800
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/18/2
+Message-ID: <2c6d449c-583b-f9c3-d35f-7477baf70cd6@brondsema.net>
+Date: Tue, 18 Jun 2019 10:56:50 -0400
+From: Dave Brondsema <dave@...ndsema.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: virtual consoles
+Subject: [CVE-2019-10085] Apache Allura XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 02, 2019 at 06:28:12PM +0100, Solar Designer wrote:
-> On Mon, Dec 02, 2019 at 08:56:38AM -0800, Tavis Ormandy wrote:
-> > Regardless of your position, this is certainly possible on desktop Linux
-> > too, unprivileged users can start a new X server and switch virtual
-> > console, even over ssh.
-> > 
-> > e.g.
-> > 
-> > $ dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1/seat/seat0 org.freedesktop.login1.Seat.SwitchTo uint32:2
-> > 
-> > (note: object paths may vary by distro, change the 2 to a different
-> > number if you're already on VT2, or seat0 if you're on a different seat)
-> 
-> If this in fact works over SSH and from a user account different than
-> the one logged in on the currently active virtual console, then I'd say
-> it's a vulnerability on its own, regardless of the social engineering
-> aspects you mention.
+CVE-2019-10085 Apache Allura XSS vulnerability in ticket user dropdown selector
 
-Definitely does on Fedora and Ubuntu, an entirely remote unprivileged
-user can use it, even if root is logged in at the virtual console.
+Severity: Important
+Versions Affected: 1.10.0 and earlier
 
-It's very simple to switch to an X server displaying a fake screensaver
-while the user is sitting there.
+Description:
+A vulnerability exists for stored XSS on the user dropdown selector when
+creating or editing tickets.  The XSS executes when a user engages with that
+dropdown on that page.
 
-> 
-> Why does this functionality even exist?
-> 
-> > Should this have some policykit action requirement, or require physical
-> > presence? I don't know the answer.
-> 
-> Maybe simply drop the misfeature?
-> 
-> Alexander
+Mitigation:
+Users of Allura should upgrade to Allura 1.11.0 immediately.
 
-That would make things simpler! I can't think of any reason this would
-ever be useful.
-
-Tavis
-
--- 
--------------------------------------
-taviso@....lonestar.org | finger me for my pgp key.
--------------------------------------------------------
+Credit:
+This issue was discovered by Bob "Wombat" Hogg
