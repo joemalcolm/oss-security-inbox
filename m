@@ -1,49 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/05/3
-Message-ID: <b57e27f0-e9fd-5d88-6d46-1606e59b9a9a@johannes-bauer.com>
-Date: Mon, 5 Aug 2019 12:56:33 +0200
-From: zugtprgfwprz@...rnkuller.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/18/1
+Message-Id: <47D32179-6D58-4361-94DF-47229065BDF9@uwalumni.com>
+Date: Tue, 18 Jun 2019 06:39:34 -0400
+From: Nicholas Luedtke <nicholas.luedtke@...lumni.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: New Tool - Phishing Simulation
+Cc: Security Report <security-report@...smail.netflix.com>, security-report@...flix.com
+Subject: Re: Linux and FreeBSD Kernel: Multiple TCP-based remote denial of service issues
 Content-Type: text/plain; charset=utf-8
 
-Hi Jyoti,
 
-On 05.08.19 11:50, jeny raval wrote:
-
-> I have developed this tool "Phishing Simulation", which might be a good fit
-> for your arsenal.
+> On Mon, Jun 17, 2019 at 10:56 PM Greg KH <greg@...ah.com> wrote:
 > 
-> https://github.com/jenyraval/Phishing-Simulation
-> 
-> I will also be presenting this one at defcon this year. Let me know if any
-> more information is needed.
+>> On Mon, Jun 17, 2019 at 10:33:38AM -0700, Security Report wrote:
+>>> Netflix has identified several TCP networking vulnerabilities in FreeBSD
+>>> and Linux kernels.
+>>> 
+>>> The vulnerabilities specifically relate to the minimum segment size
+>> (MSS)
+>>> and TCP Selective Acknowledgement (SACK) capabilities. The most serious,
+>>> dubbed “SACK Panic,” allows a remotely-triggered kernel panic on recent
+>>> Linux kernels.
+>>> 
+>>> There are patches that address most of these vulnerabilities. If patches
+>>> can not be applied, certain mitigations will be effective. We recommend
+>>> that affected parties enact one of those described below, based on their
+>>> environment.
+>> 
+>> To answer all of the paniced emails I have already started to get, all
+>> of these patches are now in the following Linux stable kernel releases
+>> that just went out a few minutes ago:
+>>        4.4.182
+>>        4.9.182
+>>        4.14.127
+>>        4.19.52
+>>        5.1.11
+>> 
+>> Other than the 3.16.y kernel branch, all other kernel branches are
+>> end-of-life, and will not be getting updates for these, or any other,
+>> bugfixes.  I do not know when/if Ben will be doing a release for 3.16.y
+>> with these fixes.
+>> 
+>> thanks,
+>> 
+>> greg k-h
+>> 
 
-It sounds interesting, I checked it out. Here's some feedback: I had
-trouble figuring out immediately what the tool did. The information in
-the README doesn't make it all too clear in my opinion.
 
-For example, it says that it's an interactive tutorial, but you don't
-need "any actual setup". Further down it apparently requires a webserver
-and database server and mentions a future Docker setup description. So
-that's a tad bit confusing. I.e., I think when you're referring to "no
-infrastructure" is that you don't need to have an Internet-facing host
-or something like that? And that the tutorial infrastructure could be
-installed locally and users directed to that?
-
-Maybe you could add how it does actually work in practice. I.e., do I
-install it locally on one host and give out URIs to users who I want to
-test and they complete the tutorial/quiz? Maybe you could use GitHub
-pages to include screenshots of how that looks?
-
-I'd be curious as to how it all works, but it'd be really cool if I
-could get more info without having to go through the motions of actually
-installing everything :)
-
-Thanks for sharing,
-All the best,
-Joe
-
-
--- 
-"A PC without Windows is like a chocolate cake without mustard."
+Now that the upstream commit appears on the git, these fixes now also appear on https://www.linuxkernelcves.com <https://www.linuxkernelcves.com/>
+-Nicholas
