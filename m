@@ -1,4 +1,9 @@
-Received: (qmail 31963 invoked by uid 550); 23 Jan 2025 12:57:30 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1697" "Tuesday" "18" "June" "2019" "06:39:34" "-0400" "Nicholas Luedtke" "nicholas.luedtke@uwalumni.com" "<47D32179-6D58-4361-94DF-47229065BDF9@uwalumni.com>" "49" "Re: [oss-security] Linux and FreeBSD Kernel: Multiple TCP-based remote denial of service issues" "^Cc:" nil nil "6" "2019061810:39:34" "[oss-security] Linux and FreeBSD Kernel: Multiple TCP-based remote denial of service issues" (number mark "        nicholas.lue Jun 18   49/1697  " thread-indent "\"Re: [oss-security] Linux and FreeBSD Kernel: Multiple TCP-based remote denial of service issues\"\n") "<CAOp4FwSL6OWhK=1kC-q1=9thp7VnTRK5r8oNapF1q7WR_xDw-g@mail.gmail.com>" ("<84db7fe5-446a-4445-96db-8445fd43395c@saasmail.netflix.com>" "<20190617182023.GA19768@kroah.com>" "<CAOp4FwSL6OWhK=1kC-q1=9thp7VnTRK5r8oNapF1q7WR_xDw-g@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux and FreeBSD Kernel: Multiple TCP-based remote denial of service issues" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 18288 invoked by uid 550); 18 Jun 2019 11:19:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,122 +11,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13764 invoked from network); 18 Jun 2019 10:39:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=uwalumni.com; s=google;
+        h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
+         :references;
+        bh=+uQ4NGV7O/gyhnr5H+lj8hBy0zu1dYZtB5EtPc3u4aM=;
+        b=gQHKC4DmRDOZvh/dCrPoNayIrxOxpJMh325hwDBWWMwp9OY1TyIdyrQthnlX4d3VWV
+         CccHVulMjF6uy2ZYlvSoT4u3WbF2aX3xzrX3cqa2pSOKjp+Y5by+R1dig/EjPcbWUXQF
+         5+IdNBE7nnIshqhAhdlwo0ayvUKsKOJQWth+o=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:message-id:mime-version:subject:date
+         :in-reply-to:cc:to:references;
+        bh=+uQ4NGV7O/gyhnr5H+lj8hBy0zu1dYZtB5EtPc3u4aM=;
+        b=Q/4bRjBOlW732SgxgtUlKsDfFvFiLCscykKM6qNvm2qGV62bXjVZ9lXS6TBVzyvktt
+         05BNceGU5uE7aS1HM6kqBxeupMKAF/eE5RA3+UCnYRZwt3Jw17Cg0+NzWrAAHm8+nuPK
+         k+EcBCkNMo+ewtYt4j7g0pVPlx6RJBS0mhOjPx3U6NLi2KwD4JoZLgj3/yHZOFEsR1rX
+         jC2pODZD6rIcP8QbbrqJTYQFG974qxL1CRhVC1V0vRjpHoOkEOM0uZn+wX7fPomjoFBc
+         5iOoeF3fiXQkxcFJdAyLCf4KUAFE0ZWLG69D+DT7AenQpgzUUdwu36P8yRnf0PUZjY7K
+         07YQ==
+X-Gm-Message-State: APjAAAU0UwLYzGHlAWiCp8l0HUNFwyhTe56X4EJTIYbYtl/o1hGFf2Me
+	U1O2cXJrDtAGwgZZBjUJBfgFHW0LjZ4=
+X-Google-Smtp-Source: APXvYqzDnApqc2MqzwY/XyS0qFarDMN3tqTXmt5MCGiPIua3pKMbT4gIfG57NwVYASko29GHCgeGAg==
+X-Received: by 2002:a05:6830:1249:: with SMTP id s9mr13556966otp.33.1560854377511;
+        Tue, 18 Jun 2019 03:39:37 -0700 (PDT)
+Message-Id: <47D32179-6D58-4361-94DF-47229065BDF9@uwalumni.com>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_4C4757EA-74D8-4ACF-947E-FAD96E51D0DC"
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+In-Reply-To: <CAOp4FwSL6OWhK=1kC-q1=9thp7VnTRK5r8oNapF1q7WR_xDw-g@mail.gmail.com>
+References: <84db7fe5-446a-4445-96db-8445fd43395c@saasmail.netflix.com>
+ <20190617182023.GA19768@kroah.com>
+ <CAOp4FwSL6OWhK=1kC-q1=9thp7VnTRK5r8oNapF1q7WR_xDw-g@mail.gmail.com>
+X-Mailer: Apple Mail (2.3445.9.1)
+Cc: Security Report <security-report@saasmail.netflix.com>,
+ security-report@netflix.com
+Date: Tue, 18 Jun 2019 06:39:34 -0400
+From: Nicholas Luedtke <nicholas.luedtke@uwalumni.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 31938 invoked from network); 23 Jan 2025 12:57:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1737637041; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=b2fG6uYbENW4CQDZ/fW1+lzPtipNcjgqVFdHKKKz78M=;
-	b=ivMT6bdw9+nVF59qMUU/LoZBxbiRCNy8rVTBKFv9YUTW9U6g3/AA8kS0aWSRMxrpiA0qmx
-	/Hm5Y60VlFcJCV7OfmCDv3AGyPyg+OaUejDrlrkPKmCEu1Ie3EneI299QsttG0OQynCTal
-	0yOjAhg6nk+LS5pPTdCGFUQOBnVT6xE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1737637041;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=b2fG6uYbENW4CQDZ/fW1+lzPtipNcjgqVFdHKKKz78M=;
-	b=cn+BuCMOKee2V/4rVH8Hr3l+jb+K+jwbgVgwy4F2sKKQiY/tF0FObSiRDa0tdQzJDEutFE
-	j6DW84Pcs65NxuBQ==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lwLrxR3j;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=EtWXCNrT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1737637040; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=b2fG6uYbENW4CQDZ/fW1+lzPtipNcjgqVFdHKKKz78M=;
-	b=lwLrxR3jJyYiXb7VyUTciBKDjXSs+SvclOmfVCzdNHzmYuFETolhkLv6Gyg8nrCrPLfZCn
-	tFzsPHcLRQkmUViT4H04ygxJRFNT+4AAPWCWSAy4Ief9Le7ZYZBgmXvttqG3e5vfhExkeW
-	H3rQwAVtK59fMsn3yA9/qsuOE2t/l7U=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1737637040;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=b2fG6uYbENW4CQDZ/fW1+lzPtipNcjgqVFdHKKKz78M=;
-	b=EtWXCNrTAdh2yw3eLcKz32wIHSlGG+ITnJM/NOwfGD2S1fyOoGeRfeX/PlqeChrqAh3eD3
-	nipyTw+Kg/Lvm4CQ==
-Date: Thu, 23 Jan 2025 13:57:19 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
+Subject: Re: [oss-security] Linux and FreeBSD Kernel: Multiple TCP-based
+ remote denial of service issues
 To: oss-security@lists.openwall.com
-Message-ID: <Z5I8r_p6IC8A2ttG@kasco.suse.de>
-References: <Z5DF00lM-3Q36mhh@kasco.suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="pOLF89gjfiymb+xd"
-Content-Disposition: inline
-In-Reply-To: <Z5DF00lM-3Q36mhh@kasco.suse.de>
-Subject: Re: [oss-security] issue with stuck Mitre CVE requests
 
---pOLF89gjfiymb+xd
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
+--Apple-Mail=_4C4757EA-74D8-4ACF-947E-FAD96E51D0DC
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 23 Jan 2025 13:57:19 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] issue with stuck Mitre CVE requests
+Content-Type: text/plain;
+	charset=utf-8
 
-Hi list,
 
-thank you all for your input so far.
-
-It seems this thread somehow reached Mitre and my stuck CVE request got
-a CVE assignment by now. The reply also contains some additional
-information which I believe will be interesting to share in this thread
-as well:
-
-> On Thu, Jan 23, 2025 at 01:14:13AM -0500, cve-request@mitre.org wrote:
->
-> If you encounter unexpected behavior with CVE ID requests (e.g., one
-> answered and another not answered), then please report this as a
-> separate issue by using:
+> On Mon, Jun 17, 2019 at 10:56 PM Greg KH <greg@kroah.com> wrote:
 >=20
->    https://cveform.mitre.org
->=20
->    Request type:  Other
->    Type of comment:  Issue
->=20
-> "Request type: Other" items are read every day.
+>> On Mon, Jun 17, 2019 at 10:33:38AM -0700, Security Report wrote:
+>>> Netflix has identified several TCP networking vulnerabilities in FreeBSD
+>>> and Linux kernels.
+>>>=20
+>>> The vulnerabilities specifically relate to the minimum segment size
+>> (MSS)
+>>> and TCP Selective Acknowledgement (SACK) capabilities. The most serious,
+>>> dubbed =E2=80=9CSACK Panic,=E2=80=9D allows a remotely-triggered kernel=
+ panic on recent
+>>> Linux kernels.
+>>>=20
+>>> There are patches that address most of these vulnerabilities. If patches
+>>> can not be applied, certain mitigations will be effective. We recommend
+>>> that affected parties enact one of those described below, based on their
+>>> environment.
+>>=20
+>> To answer all of the paniced emails I have already started to get, all
+>> of these patches are now in the following Linux stable kernel releases
+>> that just went out a few minutes ago:
+>>        4.4.182
+>>        4.9.182
+>>        4.14.127
+>>        4.19.52
+>>        5.1.11
+>>=20
+>> Other than the 3.16.y kernel branch, all other kernel branches are
+>> end-of-life, and will not be getting updates for these, or any other,
+>> bugfixes.  I do not know when/if Ben will be doing a release for 3.16.y
+>> with these fixes.
+>>=20
+>> thanks,
+>>=20
+>> greg k-h
+>>=20
 
-Additionally Mitre expressed that they are working on improvements to
-prevent such situations in the future.
 
-Best Regards
+Now that the upstream commit appears on the git, these fixes now also appea=
+r on https://www.linuxkernelcves.com <https://www.linuxkernelcves.com/>
+-Nicholas=
 
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
-
---pOLF89gjfiymb+xd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmeSPK8ACgkQFMQFyXGS
-NVN6aA//Vj359kT1Yx7PdqbShNUtvzU1CFOrRHVSHo6E4ZEe8ylhigxCrtABrMjO
-QzGjgW0l/l3roibq3n2+0OTzj+2ON6TCF2Kl8KVd1m6sEhqHT/dcqAIjnQ10lQ1P
-1CSQ/HeeWdbF4SXTmfKemogVu5rU+C9dduroQN2zW/3FWMb2DD4LByK0FtiExRMZ
-6sOFmo0VpZa+Wd34x/FvJ24Hjggxfm1XMOf1q5lipIYAMBXIcd5TfLqd2gZ+3c/y
-rEpFcVwzT7DrBugpBgLZmh4TpT1FJIu2LdhR8rtD2Sw8CkpJVzrdqhQQqpPU3ftA
-Z+mQMOzZfNz45LfyhSPaoYgeBR10rkve/wwBXpvv7v0708r6vzlwvwHp4RLlpP7m
-7TWJYlZGASIudPXpR2sKOqQyioBi+QijdMsVUW9n2CkKO9vsaJR13o0lCeh+8NLq
-24rY8ufNluNy7M75+15ww58L/rDst/69e2p78uI9wD02nWourbYbKRGdUIpTAjCA
-v1Y2xtuvlRy+xLwDpr4d8IG+v68DMPpB69u+rCIwIIzz8aYO4jX6Ja7TnL9V/dCZ
-KeGdh2oS9c0d2QEnXPyOltWnX0SQxgEbgcTq94rqueVxCGy4GGwsrjv3IEua7HJn
-nCk6UauO/dnz9Z6ULEQWVrmoiNsc28rnMiQdUPdb6UpYzBcGcVU=
-=rREg
------END PGP SIGNATURE-----
-
---pOLF89gjfiymb+xd--
+--Apple-Mail=_4C4757EA-74D8-4ACF-947E-FAD96E51D0DC--
