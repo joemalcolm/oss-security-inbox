@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1019" "Friday" "11" "November" "2016" "07:51:26" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<865310648.12141994.1478868686544.JavaMail.zimbra@redhat.com>" "35" "[oss-security] CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c" nil nil nil "11" "2016111112:51:26" "[oss-security] CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c" (number mark "U       vdronov@redh Nov 11   35/1019  " thread-indent "\"[oss-security] CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c\"\n") "<39480345.12141721.1478868585777.JavaMail.zimbra@redhat.com>" ("<39480345.12141721.1478868585777.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["922" "Thursday" "20" "June" "2019" "07:22:18" "-0700" "Anthony Baker" "abaker@apache.org" "<CAEwge-Ei_WkFg5Jkq2H2adyDwt=DGuhY-Uc=0mM9DmhQvYcK4g@mail.gmail.com>" "35" "[oss-security] [CVE-2017-15694] Apache Geode metadata modification vulnerability" nil nil nil "6" "2019062014:22:18" "[oss-security] [CVE-2017-15694] Apache Geode metadata modification vulnerability" (number mark "U       abaker@apach Jun 20   35/922   " thread-indent "\"[oss-security] [CVE-2017-15694] Apache Geode metadata modification vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2017-15694] Apache Geode metadata modification vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14238 invoked by uid 550); 11 Nov 2016 12:51:39 -0000
+Received: (qmail 18404 invoked by uid 550); 20 Jun 2019 15:33:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14215 invoked from network); 11 Nov 2016 12:51:38 -0000
-Date: Fri, 11 Nov 2016 07:51:26 -0500 (EST)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <865310648.12141994.1478868686544.JavaMail.zimbra@redhat.com>
-In-Reply-To: <39480345.12141721.1478868585777.JavaMail.zimbra@redhat.com>
+Received: (qmail 11489 invoked from network); 20 Jun 2019 14:22:44 -0000
+X-Gm-Message-State: APjAAAWRfP/6ofP9RI3IwmnmaOfAvrD8/z12U3vmDdvA9vNU2yr4kueb
+	12uP7XoA+o3UaGONobw3XkDSvybyVKzjsYX/mrOW+z4SwBjnxAONcmAvaFUwzaD+OR2O+/d8jfs
+	iW2sNIJ1ywVG8F+taVluXWZu1f1CHzWOXLa9la/nhuso/rPYMSQlMVFGeFxZICyuPgspwkQ==
+X-Received: by 2002:ab0:32d5:: with SMTP id f21mr57966uao.55.1561040551319;
+        Thu, 20 Jun 2019 07:22:31 -0700 (PDT)
+X-Google-Smtp-Source: APXvYqw3KkgMaLrHcUEM2hBob0knWgnUsxTd6+wMVZyw6+0xMNG+e2N8eA5DJ53XC1e5KcY8resTA75AK5yNzpbPs68=
+X-Received: by 2002:ab0:32d5:: with SMTP id f21mr57956uao.55.1561040551199;
+ Thu, 20 Jun 2019 07:22:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.200.75]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF49 (Linux)/8.0.6_GA_5922)
-Thread-Topic: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c
-Thread-Index: a2o3R48ijNWqeyo+GpNHc3juzljDmg==
-Subject: [oss-security] CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in
- net/ipv4/tcp_input.c
+From: Anthony Baker <abaker@apache.org>
+Date: Thu, 20 Jun 2019 07:22:18 -0700
+X-Gmail-Original-Message-ID: <CAEwge-Ei_WkFg5Jkq2H2adyDwt=DGuhY-Uc=0mM9DmhQvYcK4g@mail.gmail.com>
+Message-ID: <CAEwge-Ei_WkFg5Jkq2H2adyDwt=DGuhY-Uc=0mM9DmhQvYcK4g@mail.gmail.com>
+To: user@geode.apache.org, geode <dev@geode.apache.org>, 
+	asf-security <security@apache.org>, oss-security@lists.openwall.com, announce@apache.org
+Content-Type: multipart/alternative; boundary="00000000000089708a058bc21334"
+Subject: [oss-security] [CVE-2017-15694] Apache Geode metadata modification vulnerability
 
-Hello,
+--00000000000089708a058bc21334
+Content-Type: text/plain; charset="UTF-8"
 
-Let me please inform that it was discovered by Marco
-Grassi <marco.gra@gmail.com> (many thanks) that the
-Linux kernels since at least v4.0 are crashing in
-tcp_collapse() after making a number of certain syscalls.
+CVE-2017-15694 Apache Geode metadata modification vulnerability
 
-RHEL-7 kernels (3.10.0-xxx) are not vulnerable. Also,
-the upstream kernels since v4.9-rc1 are not vulnerable too,
-as they have the commit c9c3321257. Unfortunately, this
-commit is not fix, but just a workaround. I'm not aware
-of any fix as of now.
+Severity: Medium
 
-CVE-2016-8645 was assigned to this flaw internally by
-the Red Hat, please, use this CVE-ID in communications
-regarding this flaw.
+Vendor: The Apache Software Foundation
 
-Discussion at stable@:
+Versions Affected:
+Apache Geode 1.0.0 through 1.8.0
 
-http://www.spinics.net/lists/stable/msg150470.html
+Description:
+When a Geode server is operating in secure mode, a user with write
+permissions for specific data regions can modify internal cluster
+metadata.  A malicious user could modify this data in a way that affects
+the operation of the cluster.
 
-Discussion at netdev@:
+Mitigation:
+Users of the affected versions should upgrade to Apache Geode 1.9.0 or
+later.
 
-http://www.spinics.net/lists/netdev/msg403701.html
+Credit:
+This issue was reported responsibly to the Apache Geode Security Team by
+Jason Huynh from Pivotal.
 
-http://marc.info/?l=linux-netdev&m=147878925724283&w=2
+References:
+[1] https://issues.apache.org/jira/browse/GEODE-3981
+[2]
+https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
 
-http://marc.info/?t=147878927800005&r=1&w=2 # the whole thread
+---
+The Geode PMC
 
-Red Hat public BZ:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1393904
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+--00000000000089708a058bc21334--
