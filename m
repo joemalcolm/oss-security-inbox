@@ -1,152 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/23/5
-Message-ID: <CAJ_zFkL2qMdEj6Y6BFy6tohxELAXA5Vap_GGAtNaQ3Ko68PM8A@mail.gmail.com>
-Date: Wed, 23 Jan 2019 06:38:09 -0800
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/20/1
+Message-ID: <f4082239-934b-1bdd-2125-0ad609ed5058@isc.org>
+Date: Wed, 19 Jun 2019 17:13:38 -0800
+From: Michael McNally <mcnally@....org>
 To: oss-security@...ts.openwall.com
-Subject: ghostscript: subroutines within pseudo-operators must themselves be pseudo-operators
+Subject: ISC disclosed BIND vulnerability CVE-2019-6471.
 Content-Type: text/plain; charset=utf-8
 
-Hello, I noticed ghostscript 9.26 was released, so decided to take a look
-and noticed some problems. For background, this is how you define a
-subroutine in postscript:
+Today ISC disclosed a vulnerability in our BIND software.
 
-/hello {
-    (hello\n) print
-} def
+Information about the vulnerability can be found in the ISC Knowledge
+Base:
 
-That's simple enough, but because a subroutine is just an executable array
-of commands, you need to mark it as executeonly if you're using powerful
-system operators. That way, users can't peek inside and get references to
-operators they shouldn't be allowed to use.
+   CVE-2019-6471:  A race condition when discarding malformed
+   packets can cause BIND to exit with an assertion failure
+   https://kb.isc.org/docs/cve-2019-6471
 
-/hello {
-    (hello\n) print
-} executeonly def
+New maintenance releases of BIND released today contain the fix
+for the vulnerability along with other bug fixes and feature
+improvements.  They may be downloaded from the ISC web site's
+download page (https://www.isc.org/downloads)
 
-That's still not enough though, because the routine might expose the
-contents to error handlers, so you also need to make it a pseudo-operator
-with odef. PostScript error handlers don't examine any deeper than the
-current operator (or pseudo-operator), so won't expose any of the contents
-if they stop.
+   -  9.11.8
+   -  9.12.4-P2
+   -  9.14.3
+   -  9.15.1
 
-/hello {
-    (hello\n) print
-} executeonly odef
+With the public disclosure of these vulnerabilities, parties which
+had been given advance notice concerning them are released from
+non-disclosure and packagers and redistributors are encouraged to
+publish updated packages containing fixes.
 
-Looks good, but it gets weirder. If you don't bind the contents, then name
-resolution happens on execution, not when you define it. That means that
-someone can change the dictstack (which kind of works like variable scope
-in other languages) so that commands and operators do something different
-than when you defined the subroutine.
+If you have additional questions, please direct them to
+security-officer@....org
 
-Like this:
+Thank you,
 
-GS>/hello { (hello\n) print } executeonly odef
-GS><< /print { (goodbye)= pop } >> begin
-GS>hello
-goodbye
-
-This means you also need to bind the routine, and also be very aware when
-you're writing it of what is and what isn't an operator at define-time
-(nobody ever said writing postscript was easy, lol). So now we have this:
-
-/hello {
-    (hello\n) print
-} bind executeonly odef
-
-I think that's good enough for simple routines, but what if it's more
-complicated? The way you branch in PostScript is to create an ephemeral
-subroutine and pass it to the `if` or `ifelse` operators, like this:
-
-/hello {
-    time 1200 lt {
-        (good morning\n) print
-    } {
-        (good afternoon\n) print
-    } ifelse
-} bind executeonly odef
-
-Do those ephemeral routines also need to be protected? The answer is *yes*,
-they're pushed on the operand stack just like everything else, so can cause
-errors like /stackoverflow or /execstackoverflow and will then be exposed
-to error handlers. In my opinion, this is a language specification flaw in
-PostScript.
-
-Regardless, ghostscript didn't protect a whole bunch of these ephemeral
-routines, here is one example, but there were dozens:
-
-http://git.ghostscript.com/?p=ghostpdl.git;a=blob;f=Resource/Init/pdf_draw.ps;h=79733df451c1ecc0a71b08d10e5412ac3e243a9e;hb=gs926#l1123
-
-1123       {
-1124         currentglobal pdfdict gcheck .setglobal
-1125         pdfdict /.Qqwarning_issued //true .forceput
-1126         .setglobal
-1127         pdfformaterror
-1128       } ifelse
-
-You can see the routine itself is bound, executeonly and odef, but the
-ephemeral routines inside it used for conditions and loops are not
-protected.
-
-These bugs are starting to get trickier to exploit, you have to make an
-operator fail very precisely, but I made a demo that works in 9.26. This
-uses the trick I described above of taking over names that couldn't be
-resolved at define time by pushing a new dict on the dictstack. This gives
-me a high degree of control over the routine.
-
-$ gs -dSAFER -f ghostscript-926-forceput.ps
-GPL Ghostscript 9.26 (2018-11-20)
-Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
-This software comes with NO WARRANTY: see the file PUBLIC for details.
-Stage 0: PDFfile
-Stage 1: q
-Stage 3: oget
-Stage 4: pdfemptycount
-Stage 5: gput
-Stage 6: resolvestream
-Stage 7: pdfopdict
-Stage 8: .pdfruncontext
-Stage 9: pdfdict
-Stage 10: /typecheck #1
-Stage 10: /typecheck #2
-Stage 11: Exploitation...
-Should now have complete control over ghostscript, attempting to read
-/etc/passwd...
-(root:x:0:0:root:/root:/bin/bash)
-Attempting to execute a shell command...
-uid=1000(taviso) gid=1000(primarygroup)
-groups=1000(primarygroup),4(adm),20(dialout),24(cdrom),25(floppy),44(video),46(plugdev),999(logindev)
-
-This exploit should work via evince, ImageMagick, nautilus, less (just
-rename it exploit.pcd), gimp, gv, etc, etc. It might require some
-adjustment to work on older versions, but 9.26 and earlier are all
-affected. Do not count on AppArmor protecting you, the policy is *very*
-relaxed.
-
-The patch required to protect ghostscript from attacks like this was
-non-trivial, and took a significant amount of work, these patches are
-required:
-
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=13b0a36f8181db66a91bcc8cea139998b53a8996
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=2db98f9c66135601efb103d8db7d020a672308db
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=99f13091a3f309bdc95d275ea9fec10bb9f42d9a
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=59d8f4deef90c1598ff50616519d5576756b4495
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=2768d1a6dddb83f5c061207a7ed2813999c1b5c9
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=49c8092da88ef6bb0aa281fe294ae0925a44b5b9
-
-This was Project Zero issue 1729
-<https://bugs.chromium.org/p/project-zero/issues/detail?id=1729>,
-Ghostscript issue 700317
-<https://bugs.ghostscript.com/show_bug.cgi?id=700317>, and CVE-2019-6116.
-
-Thanks, Tavis.
-
-p.s. I'm not regularly looking at ghostscript, this was just a random look
-at the new release.
-
-#DeprecateUntrustedPostscript
-
-Content of type "text/html" skipped
-
-Download attachment "ghostscript-926-forceput-typecheck-example.ps" of type "application/postscript" (2468 bytes)
+Michael McNally
+ISC Security Officer
