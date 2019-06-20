@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["406" "Wednesday" "27" "October" "2021" "15:10:11" "+0200" "Alberto Garcia" "berto@igalia.com" nil "11" "Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006" nil nil nil "10" nil nil (number mark "U       berto@igalia Oct 27   11/406   " thread-indent "\"Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["962" "Wednesday" "19" "June" "2019" "17:13:38" "-0800" "Michael McNally" "mcnally@isc.org" "<f4082239-934b-1bdd-2125-0ad609ed5058@isc.org>" "31" "[oss-security] ISC disclosed BIND vulnerability CVE-2019-6471." nil nil nil "6" "2019062001:13:38" "[oss-security] ISC disclosed BIND vulnerability CVE-2019-6471." (number mark "U       mcnally@isc. Jun 19   31/962   " thread-indent "\"[oss-security] ISC disclosed BIND vulnerability CVE-2019-6471.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] ISC disclosed BIND vulnerability CVE-2019-6471." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27941 invoked by uid 550); 27 Oct 2021 13:12:12 -0000
+Received: (qmail 5416 invoked by uid 550); 20 Jun 2019 01:13:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,35 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17867 invoked from network); 27 Oct 2021 13:10:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=xMqh9p2KYF4UCqBh+m/bZxrG1k50u+ZQmABSRaZ1RGI=;
-	b=Fnw6xTLCSkPJpY8MxcNOZKgf/ruVZbH9cEWxOHzgK3y50ydijq45MFVUe1IayPkva4+7tgF/ZYF02IzAeA2hicictbgM3yeJaTHIWRTRSWLWXictRHBS3lKZjtgh875IMRrF27dUQkZf1QX007BuiP4JhzKR9TfVWHJnPNh/mJtH5SHwPYT6gwE7+LCcYb+FcnLxFVPtfj+Y8h/gDqRFjUFQ63a+oArhGZS7s2pEPCKzGrXcbIsm2L7tIr55QDVuDmhmZ4eArA2r2POH0zdDIjvKAU+uCQGzORFb36fIR6MgJUL+3wD4NuE0v9762pTOBZjbUcWmnpbANSYchTAtVw==;
-Date: Wed, 27 Oct 2021 15:10:11 +0200
-From: Alberto Garcia <berto@igalia.com>
-To: Francis Perron <francis.perron@shopify.com>
-Cc: oss-security@lists.openwall.com,
-	Carlos Alberto Lopez Perez <clopez@igalia.com>, security@webkit.org
-Message-ID: <20211027131011.GA24452@igalia.com>
-References: <03eb1900-5593-09ff-8814-008632c46c5c@igalia.com>
- <YXjQiwOj3gF/phTC@elende.valinor.li>
- <CAJAmgfgpTF--5HsAaWrmWaoM5dHswtdNB2==gUdhSCiDYG6X+A@mail.gmail.com>
+Received: (qmail 5370 invoked from network); 20 Jun 2019 01:13:51 -0000
+To: oss-security@lists.openwall.com
+From: Michael McNally <mcnally@isc.org>
+Message-ID: <f4082239-934b-1bdd-2125-0ad609ed5058@isc.org>
+Date: Wed, 19 Jun 2019 17:13:38 -0800
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJAmgfgpTF--5HsAaWrmWaoM5dHswtdNB2==gUdhSCiDYG6X+A@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory
- WSA-2021-0006
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] ISC disclosed BIND vulnerability CVE-2019-6471.
 
-On Wed, Oct 27, 2021 at 09:02:02AM -0400, Francis Perron wrote:
+Today ISC disclosed a vulnerability in our BIND software.
 
-> Salvatore -
->   I think 30851 was not issued, and it may have been a mistake here.
-> There was no other CVE issued as part of WSA-2021-0006 according to
-> the GitHub repo for the CVE program:
-> https://github.com/CVEProject/cvelist/search?q=wsa-2021-0006
+Information about the vulnerability can be found in the ISC Knowledge
+Base:
 
-FWIW Apple listed that CVE as well https://support.apple.com/en-us/HT212816
+   CVE-2019-6471:  A race condition when discarding malformed
+   packets can cause BIND to exit with an assertion failure
+   https://kb.isc.org/docs/cve-2019-6471
 
-Berto
+New maintenance releases of BIND released today contain the fix
+for the vulnerability along with other bug fixes and feature
+improvements.  They may be downloaded from the ISC web site's
+download page (https://www.isc.org/downloads)
+
+   -  9.11.8
+   -  9.12.4-P2
+   -  9.14.3
+   -  9.15.1
+
+With the public disclosure of these vulnerabilities, parties which
+had been given advance notice concerning them are released from
+non-disclosure and packagers and redistributors are encouraged to
+publish updated packages containing fixes.
+
+If you have additional questions, please direct them to
+security-officer@isc.org
+
+Thank you,
+
+Michael McNally
+ISC Security Officer
