@@ -1,31 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/17/2
-Message-ID: <277A46CA87494176B1BBCF5D72624A2A@HAGGIS>
-Date: Thu, 17 Oct 2019 00:46:17 +0200
-From: "Jens Geyer" <jensg@...che.org>
-To: <oss-security@...ts.openwall.com>, <security@...che.org>, "Thrift-Dev" <dev@...ift.apache.org>, <user@...ift.apache.org>
-Subject: CVE-2019-0210: Apache Thrift: out-of-bounds read vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/20/3
+Message-ID: <20190620175621.GB2646@lindsey>
+Date: Thu, 20 Jun 2019 12:56:22 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: Security Report <security-report@...smail.netflix.com>, security-report@...flix.com, Arturo Borrero González <arturo@...filter.org>
+Subject: Re: Linux and FreeBSD Kernel: Multiple TCP-based remote denial of service issues
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-0210: Apache Thrift out-of-bounds read vulnerability
+On 2019-06-17 10:33:38, Security Report wrote:
+> #1: CVE-2019-11477: SACK Panic (Linux >= 2.6.29)
+> 
+> Description: A sequence of SACKs may be crafted such that one can trigger 
+> an integer overflow, leading to a kernel panic.
+> 
+> Fix: Apply the attached patch (“PATCH_net_1_4.patch”). Additionally, 
+> versions of the Linux kernel up to, and including, 4.14 require a second 
+> patch (“PATCH_net_1a.patch”).
+> 
+> Workaround #1: Block connections with a low MSS using one of the attached 
+> filters. (The values in the filters are examples. You can apply a higher or 
+> lower limit, as appropriate for your environment.) Note that these filters 
+> may break legitimate connections which rely on a low MSS. Also, note that 
+> this mitigation is only effective if TCP probing is disabled (that is, the 
+> net.ipv4.tcp_mtu_probing sysctl is set to 0, which appears to be the 
+> default value for that sysctl).
 
-Severity: Important
+Netflix graciously provided this example iptables rule as a workaround:
 
-Vendor:
-The Apache Software Foundation
+ # iptables -A INPUT -p tcp -m tcpmss --mss 1:500 -j DROP
 
-Versions Affected:
-Apache Thrift 0.9.3 to 0.12.0
+I have received a few questions about an equivalent nftables rule. I
+didn't have one but Arturo Borrero González has provided this equivalent
+rule:
 
-Description:
-A server implemented in Go using TJSONProtocol or TSimpleJSONProtocol may panic when feed with invalid input data.
+ # nft add rule inet filter input tcp flags syn tcp option maxseg size 1-500 drop
 
-Mitigation:
-Upgrade to version 0.13.0 
+I did a simple test of sending SYN packets with MSS values of 500 and
+lower to a server that had the nftables rule loaded. The packets were
+dropped by the server with no SYN-ACK response. Bumping the MSS value up
+to 501 resulted in the SYN packet not being dropped and a proper SYN-ACK
+response.
 
-Credit:
-This issue was reported by Alexandre Fiori of Facebook.
+Consider adding the nftables rule as an alternative in any written
+advisories on SACK Panic.
 
-On behalf of the Apache Thrift PMC,
-Jens Geyer
+Thanks for the nftables rule, Arturo!
 
+Tyler
