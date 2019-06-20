@@ -1,4 +1,9 @@
-Received: (qmail 22194 invoked by uid 550); 16 Jan 2024 14:37:14 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2257" "Thursday" "20" "June" "2019" "14:38:02" "-0600" "Joel Smith" "joelsmith@redhat.com" "<CAEftUarE+73RVs+D9QhDbFShJqttj0Y48Hg1WQFQevMP66jjKA@mail.gmail.com>" "85" "[oss-security] [ANNOUNCE] Incomplete fixes for CVE-2019-1002101, kubectl cp potential directory traversal - CVE-2019-11246" "^Date:" nil nil "6" "2019062020:38:02" "[oss-security] [ANNOUNCE] Incomplete fixes for CVE-2019-1002101, kubectl cp potential directory traversal - CVE-2019-11246" (number mark "        joelsmith@re Jun 20   85/2257  " thread-indent "\"[oss-security] [ANNOUNCE] Incomplete fixes for CVE-2019-1002101, kubectl cp potential directory traversal - CVE-2019-11246\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [ANNOUNCE] Incomplete fixes for CVE-2019-1002101, kubectl cp potential directory traversal - CVE-2019-11246" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5240 invoked by uid 550); 21 Jun 2019 08:32:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,98 +11,114 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20198 invoked from network); 16 Jan 2024 14:35:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1705415807;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=iW5RoEFnKD7UXYQjD3QFy9oaueJbUf4BQ51toIpAe4s=;
-	b=dnE61xYpqj27O1cK/D7rCJO3I2H6WiF/5r/MHMb1VX0VjSowHb+49JUN1gj+Y+OzvLMET9
-	p5Kwo8xRywYK8HrocmZ7RKDJRPHlr964V/zai4wmsxH/leG+KvMptOBZ+6lKrC3aJ8Y+Xn
-	jz39XcBTnGHpDuiGGM3G3BLuovHy+vU=
-X-MC-Unique: IsCEYIsEOIOuQgnUngV76w-1
+Received: (qmail 26318 invoked from network); 20 Jun 2019 20:38:29 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705415804; x=1706020604;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iW5RoEFnKD7UXYQjD3QFy9oaueJbUf4BQ51toIpAe4s=;
-        b=KrWQuP79KlBuqdz5IBEpCYDGzgaAhOoHsT1io4sYuMHkoEAvlb6+UuEYt8vAOBbmAX
-         4KnLLE43EZ5GoRg3wvVsHfhBCaSUzor3RwNgz7J6IV2B+o1earyhWcITrkkH0AsKzkEF
-         68XZpshFy5fTmC5N2ZkP/vJIy/aX0SXg23qtQzzfXFJVyBg0rHyEw6FUP+hYNxqylYjZ
-         3YJZbtG6X3WQU/JBnib+ecX1BAGvPyBKq4V360muyO5pm36ajhqqCFUQMzzNOdg70kuV
-         MHKqjvHqJwG368hKrY7SDlLiSNIP5IkWA5XNWHjpVafeF3nBPdq+Zo8c/LpJJfok6G3X
-         np8g==
-X-Gm-Message-State: AOJu0YwQl9Is7rPIIq18b9uVvBPbwFDAmV5JWrdd0x1ki0VX4na/T2T3
-	LHd/n8GUg1F322+BeS7Q3kLFf0ETpBV6MxpWUHLVJcfiyGpN/YuBJ/AYuNyd7esqBiaGpPutdzU
-	VZJxfx115JZ8a1HZj3y46AKii1viYw4bJgaeW3CQ/bXlx+f4Oclu0dAcd0BevUes=
-X-Received: by 2002:a17:90a:e989:b0:28c:ee72:512c with SMTP id v9-20020a17090ae98900b0028cee72512cmr4606276pjy.57.1705415804648;
-        Tue, 16 Jan 2024 06:36:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHV/rUj2vn66loDMHdyaxMVtpiD9GAhKVJ3+x+s1wqCYbvd/h3U6m6uw0H+g36AbL/p9qbv8wZZ7kjou/Ry0Gk=
-X-Received: by 2002:a17:90a:e989:b0:28c:ee72:512c with SMTP id
- v9-20020a17090ae98900b0028cee72512cmr4606264pjy.57.1705415804160; Tue, 16 Jan
- 2024 06:36:44 -0800 (PST)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=TLC2j2dxwn33g4+Nm4fjDliQonQtmiD5v7Cs8SD22nA=;
+        b=gpJOJZ9t1TAWlXbKYp8EWseUYWRbhNjn8dNeOalbzPui+FF7atZ+BroeaLfPioq/hZ
+         SLaDui1bcLXyB5TYT9fH2fBoMnG0nMhoLr0giEYWZgw/XpaQPK82exVUHTdOFq8lsOJO
+         0tNVY2ltBA3IkBE+4ykDQkkVTCgfjSh8UlLQUDasa27ePXsd3UithBlWfvKeYO7bgrwS
+         jGRFoZbFlcSe1McTnwbmQi+mXvGksi4/p5Q1uki2+vrSTCr8tKVI5knNwbtFW2jkvWoH
+         nMeX7wAopY0Z28pcpcaTzJGSZg9qoSYQxGZ4zJ1gI+R017cKT8phVwY0xLJSN+dkQMwM
+         IUMQ==
+X-Gm-Message-State: APjAAAUq1tY/jPDodwdhcRc1pwFN9NpnhlANWdNRhZ3ZdKq5q7V+0VLO
+	qEc83fZOH7x/uPFIb6t5scMV39hsNNkfcaQgWOeRzprWE2k=
+X-Google-Smtp-Source: APXvYqzUqE7woEinDsJD9WQmzX5R3hGdRslvIxMxXesGWts6ynpSD3GgdHIFQMFBDK8mmkIGct6Tgnd5heF6RaU7jv0=
+X-Received: by 2002:a50:883b:: with SMTP id b56mr47538029edb.178.1561063098053;
+ Thu, 20 Jun 2019 13:38:18 -0700 (PDT)
 MIME-Version: 1.0
-From: Marco Benatto <mbenatto@redhat.com>
-Date: Tue, 16 Jan 2024 11:36:07 -0300
-Message-ID: <CAOGQQ2-EaBO5nKO35Ni0sfVCncjGQqWU8XU-gsnV36BKZoLhQg@mail.gmail.com>
+Message-ID: <CAEftUarE+73RVs+D9QhDbFShJqttj0Y48Hg1WQFQevMP66jjKA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000006e89b3058bc753a2"
+Date: Thu, 20 Jun 2019 14:38:02 -0600
+From: Joel Smith <joelsmith@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [ANNOUNCE] Incomplete fixes for CVE-2019-1002101, kubectl cp
+ potential directory traversal - CVE-2019-11246
 To: oss-security@lists.openwall.com
-Cc: Pavel Raiskup <praiskup@redhat.com>, Zack Miele <zmiele@redhat.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
+
+--0000000000006e89b3058bc753a2
 Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2023-6395 Mock: Privilege escalation for users that can access
- mock configuration
+Content-Transfer-Encoding: quoted-printable
 
-Summary:
+Hello Kubernetes Community,
 
-There is a flaw in the Mock software
-(https://github.com/rpm-software-management/mock) where an attacker
-may achieve privilege escalation and execute arbitrary code as the
-root user. This is due to the lack of sandboxing when expanding and
-executing Jinja2 templates that may be included in some configuration
-parameters.
 
-Mock is a chroot build environment manager for building RPM packages.
-Mock uses Jinja2 templates for expanding configuration parameters
-through the TemplatedDictionary python class.
 
-This feature was introduced in mock 1.4 back in 2019 [1] and in 2021
-the TemplatedDictionary code was split out to a separate project [2].
+Another security issue was discovered with the Kubernetes kubectl cp
+command that could enable a directory traversal such that a malicious
+container could replace or create files on a user=E2=80=99s workstation. The
+vulnerability is a client-side defect and requires user interaction to be
+exploited. The issue is High severity and upgrading kubectl to Kubernetes
+1.12.9, 1.13.6, and 1.14.2 or later is encouraged to fix this issue.
 
-Mock documentation recommends that users added to the mock group on a
-system be treated as privileged users [3]. However, some build systems
-that invoke mock on behalf of users may unintentionally allow less
-privileged users to define configuration tags that will be passed to
-mock as parameters when run. Configuration tags that allow Jinja2
-templates could be used to achieve remote privilege escalation and run
-arbitrary code as root on the build server.
 
-This issue is being identified by the CVE ID: CVE-2023-6395 with the
-following CVSSv3.1 score:
 
-6.7/CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H
+*Am I vulnerable?*
 
-The upstream patches for this issue can be found at:
-https://github.com/xsuchy/templated-dictionary/commits/main/
-https://github.com/xsuchy/templated-dictionary/commit/bcd90f0dafa365575c4b101e6f5d98c4ef4e4b69
-https://github.com/xsuchy/templated-dictionary/commit/0740bd0ca8d487301881541028977d120f8b8933
 
-The provided patches target the templated-dictionary module [4].
 
-Please don't hesitate to reach us out in case of any doubts or concerns.
+Run kubectl version --client and if it does not say client version 1.12.9,
+1.13.6, or 1.14.2 or newer, you are running a vulnerable version.
 
-We would like to thank Sankin Nikita Alexeevich, an independent
-security researcher, for discovering and reporting this issue.
+
+
+*How do I upgrade?*
+
+
+
+Follow installation instructions here
+https://kubernetes.io/docs/tasks/tools/install-kubectl/
+
+
+
+Not all instructions will provide up-to-date kubectl versions at the time
+of this announcement. So, always confirm with kubectl version.
+
+
+
+*Vulnerability Details*
+
+
+
+The details for this vulnerability are very similar to CVE-2019-1002101.
+The original fix for that issue was incomplete and a new exploit method was
+discovered.
+
+
+
+The kubectl cp command allows copying files between containers and the user
+machine. To copy files from a container, Kubernetes runs tar inside the
+container to create a tar archive, copies it over the network, and kubectl
+unpacks it on the user=E2=80=99s machine.
+
+
+
+If the tar binary in the container is malicious, it could run any code and
+output unexpected, malicious results. An attacker could use this to write
+files to any path on the user=E2=80=99s machine when kubectl cp is called, =
+limited
+only by the system permissions of the local user.
+
+
+
+See https://github.com/kubernetes/kubernetes/pull/76788 for details.
+
+*Acknowledgements*
+
+
+
+This issue was discovered by Charles Holmes, Atredis Partners as part of
+the CNCF-sponsored Kubernetes Third-party Security Audit. Thanks to Maciej
+Szulik for the fix, to Tim Allclair for the test cases and fix review, and
+to the patch release managers for including the fix in their releases.
+
+
 
 Thanks,
 
-[1] https://github.com/rpm-software-management/mock/commit/426d973c2917a18303eea243bdf496ff6942bd27
-[2] https://github.com/rpm-software-management/mock/commit/c989e28ba92c571c0834e9b5d10ef29340e661f8
-[3] https://rpm-software-management.github.io/mock/#setup
-[4] https://github.com/xsuchy/templated-dictionary
 
-Marco Benatto
-Red Hat Product Security
-secalert@redhat.com for urgent response
 
+Joel Smith on behalf of the Kubernetes Product Security Committee
+
+--0000000000006e89b3058bc753a2--
