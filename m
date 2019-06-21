@@ -1,4 +1,9 @@
-Received: (qmail 27781 invoked by uid 550); 12 Apr 2023 16:14:27 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["988" "Friday" "21" "June" "2019" "08:08:36" "-0700" "Ian Zimmerman" "itz@very.loosely.org" "<20190621150836.ieiciui3n6vrd5wb@matica.foolinux.mooo.com>" "20" "[oss-security] Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062115:08:36" "[oss-security] Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        itz@very.loo Jun 21   20/988   " thread-indent "\"[oss-security] Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<20190621095616.GA5186@espresso.pseudorandom.co.uk>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190615155740.GA2960@kroah.com>" "<02594cdc8ff7c6ff19a3042d824fb27f9d3302c3.camel@debian.org>" "<20190621095616.GA5186@espresso.pseudorandom.co.uk>") nil nil nil nil nil nil nil "[oss-security] Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5252 invoked by uid 550); 21 Jun 2019 15:08:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,238 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5231 invoked from network); 21 Jun 2019 15:08:54 -0000
+Message-ID: <20190621150836.ieiciui3n6vrd5wb@matica.foolinux.mooo.com>
+References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
+ <20190615155740.GA2960@kroah.com>
+ <02594cdc8ff7c6ff19a3042d824fb27f9d3302c3.camel@debian.org>
+ <20190621095616.GA5186@espresso.pseudorandom.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190621095616.GA5186@espresso.pseudorandom.co.uk>
+User-Agent: NeoMutt/20180716
+X-Loosely-ASN: 7922
+Date: Fri, 21 Jun 2019 08:08:36 -0700
+From: Ian Zimmerman <itz@very.loosely.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27751 invoked from network); 12 Apr 2023 16:14:27 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
-Message-Id: <18477145-F7AD-455D-A0AB-77B3E402A7B7@beckweb.net>
-Date: Wed, 12 Apr 2023 18:14:15 +0200
+Subject: [oss-security] Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3696.120.41.1.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1681316067;72546b8b;
-X-HE-SMSGID: 1pmd6t-0001Te-Fi
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Azure Key Vault Plugin 188.vf46b_7fa_846a_1
-* Kubernetes Plugin 3910.ve59cec5e33ea_
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Assembla merge request builder Plugin
-* Consul KV Builder Plugin
-* Fogbugz Plugin
-* Image Tag Parameter Plugin
-* Lucene-Search Plugin
-* NeuVector Vulnerability Scanner Plugin
-* Quay.io trigger Plugin
-* Report Portal Plugin
-* Thycotic DevOps Secrets Vault Plugin
-* Thycotic Secret Server Plugin
-* TurboScript Plugin
-* WSO2 Oauth Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-04-12/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3075 / CVE-2023-30513 (Kubernetes) & CVE-2023-30514 (Azure Key Vau=
-lt)
-  & CVE-2023-30515 (Thycotic DevOps Secrets Vault)
-Multiple plugins do not properly mask (i.e., replace with asterisks)
-credentials printed in the build log from Pipeline steps like `sh` and
-`bat`, when both of the following conditions are met:
-
-* The credentials are printed in build steps executing on an agent
-  (typically inside a `node` block).
-* Push mode for durable task logging is enabled. This is a hidden option
-  in Pipeline: Nodes and Processes that can be enabled through the Java=20
-  system property `org.jenkinsci.plugins.workflow.steps.durable_task.Durabl=
-eTaskStep.USE_WATCHING`.
-  It is also automatically enabled by some plugins, e.g., OpenTelemetry
-  and Pipeline Logging over CloudWatch.
-
-The following plugins are affected by this vulnerability:
-
-* Kubernetes 3909.v1f2c633e8590 and earlier (SECURITY-3079 /
-  CVE-2023-30513)
-* Azure Key Vault 187.va_cd5fecd198a_ and earlier (SECURITY-3051 /
-  CVE-2023-30514)
-* Thycotic DevOps Secrets Vault 1.0.0 (SECURITY-3078 / CVE-2023-30515)
-
-
-SECURITY-2840 / CVE-2023-30516
-Image Tag Parameter Plugin 2.0 improperly introduces an option to opt out
-of SSL/TLS certificate validation when connecting to Docker registries.
-
-Job configurations using Image Tag Parameters that were created before 2.0
-will have SSL/TLS certificate validation disabled by default.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2841 / CVE-2023-30517
-NeuVector Vulnerability Scanner Plugin 1.22 and earlier unconditionally
-disables SSL/TLS certificate and hostname validation when connecting to a
-configured NeuVector Vulnerability Scanner server.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2837 / CVE-2023-30518
-Thycotic Secret Server Plugin 1.0.2 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2849 / CVE-2023-30519
-Quay.io trigger Plugin provides a webhook endpoint at `/quayio-webhook/`
-that can be used to trigger builds of jobs configured to use a specified
-repository.
-
-In Quay.io trigger Plugin 0.1 and earlier, this endpoint can be accessed
-without authentication.
-
-This allows unauthenticated attackers to trigger builds of jobs
-corresponding to the attacker-specified repository.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2850 / CVE-2023-30520
-Quay.io trigger Plugin 0.1 and earlier does not limit URL schemes for
-repository homepage URLs submitted via Quay.io trigger webhooks.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to submit crafted Quay.io trigger webhook
-payloads.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2872 / CVE-2023-30521
-Assembla merge request builder Plugin provides a webhook endpoint at
-`/assembla-webhook/` that can be used to trigger builds of jobs configured
-to use a specified repository.
-
-In Assembla merge request builder Plugin 1.1.13 and earlier, this endpoint
-can be accessed without authentication.
-
-This allows unauthenticated attackers to trigger builds of jobs
-corresponding to the attacker-specified repository.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2873 / CVE-2023-30522
-Fogbugz Plugin provides a webhook endpoint at `/fbTrigger/` that can be
-used to trigger builds of any jobs.
-
-In Fogbugz Plugin 2.2.17 and earlier, this endpoint can be accessed by
-attackers with Item/Read permission, allowing them to trigger builds of
-jobs specified in a `jobname` request parameter.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2945 / CVE-2023-30523 (storage) & CVE-2023-30524 (masking)
-Report Portal Plugin 0.5 and earlier stores ReportPortal access tokens
-unencrypted in job `config.xml` files on the Jenkins controller as part of
-its configuration.
-
-These tokens can be viewed by users with Item/Extended Read permission or
-access to the Jenkins controller file system.
-
-Additionally, the configuration form does not mask these tokens, increasing
-the potential for attackers to observe and capture them.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2950 / CVE-2023-30525 (CSRF) & CVE-2023-30526 (missing permission =
-check)
-Report Portal Plugin 0.5 and earlier does not perform a permission check in
-a method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified bearer token
-authentication.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2992 / CVE-2023-30527 (storage) & CVE-2023-30528 (masking)
-WSO2 Oauth Plugin 1.0 and earlier stores the WSO2 Oauth client secret
-unencrypted in the global `config.xml` file on the Jenkins controller as
-part of its configuration.
-
-This client secret can be viewed by users with access to the Jenkins
-controller file system.
-
-Additionally, the global configuration form does not mask the WSO2 Oauth
-client secret, increasing the potential for attackers to observe and
-capture it.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3013 / CVE-2023-30529
-Lucene-Search Plugin 387.v938a_ecb_f7fe9 and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to reindex the database.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2944 / CVE-2023-30530 (storage) & CVE-2023-30531 (masking)
-Consul KV Builder Plugin 2.0.13 and earlier stores the HashiCorp Consul ACL
-Token unencrypted in its global configuration file
-`org.jenkinsci.plugins.consulkv.GlobalConsulConfig.xml` on the Jenkins
-controller as part of its configuration.
-
-This token can be viewed by users with access to the Jenkins controller
-file system.
-
-Additionally, the global configuration form does not mask the token,
-increasing the potential for attackers to observe and capture it.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2851 / CVE-2023-30532
-TurboScript Plugin provides a webhook endpoint at `/turbo-webhook/` that
-can be used to trigger builds of jobs configured to use a specified
-repository.
-
-In TurboScript Plugin 1.3 and earlier, this endpoint can be accessed by
-attackers with Item/Read permission to trigger builds of jobs corresponding
-to the attacker-specified repository.
-
-As of publication of this advisory, there is no fix.=
+On 2019-06-21 10:57, Simon McVittie wrote:
+
+> If upstream projects have a stable branch that is genuinely stable
+> and bugfix-only to minimize the risk of regressions, and encourage
+> downstream distributions to align on the latest stable branch during
+> their development phase, then I think that goes a long way towards this.
+> If I understand correctly, PostgreSQL is one of the canonical examples of
+> a project that does this, and gets its upstream point releases included
+> in stability-focused projects like Debian as-is.
+
+Doesn't this simply shift the work of backporting ("crazy and bound to
+always fail in the end") from the distro maintainer to the upstream
+stable branch maintainer?  He/she is more like "midstream" working in
+that role.
+
+-- 
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet and on broken lists
+which rewrite From, fetch the TXT record for no-use.mooo.com.
