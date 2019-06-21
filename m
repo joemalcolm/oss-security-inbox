@@ -1,78 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/4
-Message-Id: <ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
-Date: Thu, 22 Aug 2019 11:59:15 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/21/7
+Message-ID: <d49124e0c81f204be7733c397539cc077ccd2a44.camel@debian.org>
+Date: Fri, 21 Jun 2019 17:41:49 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+On Fri, 2019-06-21 at 11:53 +0200, Greg KH wrote:
+> So it's a matter of "do I live with all of the bugs that everyone else
+> knows about and how to exploit, or do I live with a potential
+> regression?"  That sounds like an easy choice given that the reason you
+> should be updating is to resolve all of those known bugs :)
 
-> On 22 Aug 2019, at 10:31, Marcus Meissner <meissner@...e.de> wrote:
+I'm not really talking about potential regressions: I'm talking about real
+functional changes that the end-user doesn't expect (nor want) in a stable
+release. Backporting is often a pain, but full throttle to latest release also
+has a burden (for the end-user, for the distributor and so on). It really
+depends on the project (and I don't want to point fingers, it's not the
+point).
 > 
-> On Thu, Aug 22, 2019 at 10:04:42AM +0100, John Haxby wrote:
->> 
->> 
->>> On 20 Aug 2019, at 19:20, Andrey Konovalov <andreyknvl@...il.com> wrote:
->>> 
->>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15216
->>> 
->>> An issue was discovered in the Linux kernel before 5.0.14. There is a
->>> NULL pointer dereference caused by a malicious USB device in the
->>> drivers/usb/misc/yurex.c driver.
->>> 
->>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15217
->>> 
->>> An issue was discovered in the Linux kernel before 5.2.3. There is a
->>> NULL pointer dereference caused by a malicious USB device in the
->>> drivers/media/usb/zr364xx/zr364xx.c driver.
->>> 
->>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15218
->>> 
->>> An issue was discovered in the Linux kernel before 5.1.8. There is a
->>> NULL pointer dereference caused by a malicious USB device in the
->>> drivers/media/usb/siano/smsusb.c driver.
->>> 
->>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15219
->>> 
->>> An issue was discovered in the Linux kernel before 5.1.8. There is a
->>> NULL pointer dereference caused by a malicious USB device in the
->>> drivers/usb/misc/sisusbvga/sisusb.c driver.
->> 
->> 
->> Are these even realistic?   If I'm going to leave malicious USB devices in the parking lot for mischief am I going to rely on the unknown victim running a Linux distro with the requisite kernel modules or am I going to just drop a cheap and near-universal USB killer?
->> 
->> If I'm going to be connecting the USB device to unguarded laptops myself to crash them, as opposed to destroy them, why not just casually lean on the power button for a few seconds?[1]
->> 
->> Actually, this is the CVSS3 score for a laptop's power button: 4.6 (CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H (Medium).   There isn't a vector for a USB killer because there's no "A:P" (permanent loss).
->> 
->> I'm not saying that these aren't bugs that should be fixed, far from it.  That's not the issue.  The issue is that, for example, PCI DSS requires fixes for anything with a score >= 4.0 so we have endless end-users demanding fixes for their servers which don't have even physical access or, indeed, physical presence.  It's not even demanding the fixes as they may already be fixed or simply not applicable because the affected driver isn't present; it's the hours or days wasted verifying that the fix available or not present.[2]
->> 
->> 
->> 
->> Frustrated of Lancashire, jch
->> 
->> 
->> [1] Some may remember the VAX 11/750 reset button.  In order to be able to use the serial console (usually a DECwriter) you had to have the key in which also enabled the reset button.   Before I put the VAX "Do Not Copy this Key" key (yes, it fits all 750s) I pressed accidentally pressed the reset button a couple of times just by propping myself up on the machine.  Spectacularly bad design by today's standards.
->> 
->> 
->> [2] Full disclosure.  It's ultimately about me because it's me that eventually gets the "customer requires fix for CVE-2019-15216" :)
-> 
-> In the past we have considered Denial Of Service only USB vulnerabilites as non-issues, as physical access
-> can cause the same.
+> Regressions always happen, we are human, but there are ways to mitigate
+> them (testing, roll-back, preventing developers from not breaking things
+> on purpose, etc.)  And projects that do not do this type of work to
+> prevent regressions need to learn that they should change, or users will
+> go elsewhere.
 
-<nod>
+But then again the question is, who do the work (of backporting, regression
+testing, etc.) And again it's not always about bugs, it might very well be
+that there's a user interface change requiring a lot of documentation updates
+downwards, a dependency chain update or whatever.
 
-> 
-> USB Vulnerabilities where you can achieve code execution by a malicious USB device are something else though and in my opinion warrant a CVE.
-> 
+There might be good reasons for stability, even besides not introducing new
+bugs, that was just my point.
 
-I carefully didn't quote any of the UAF bugs -- those definitely do warrant a CVE.   Null pointer dereference is a DoS.
+Regards,
+- -- 
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
 
-jch
-
-> Ciao, Marcus
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAl0M+r0ACgkQ3rYcyPpX
+RFtnkAgAvxwmpnFT0hKbZViUO1j9BBkNo5KUhUMKs86OKSLGTQQNFfTMBs8EX5t5
+1oTXi/uzEMwEYbJcSOzwm3nDavhxJvibGQiRiYgQJaT7ckt0/Pvq1qH1514jWFhj
+CTGMu145VGLoYYx1BjAO8eHQFRbvBct+0C8aBYXzq+rTDZXf+7h/OkVu7OQDgNHM
+HAsiJ8SnUrXykHAE5sMnywI8atAdD9QAGp0aQ3MABxmKX1ZJ9qS/Qv+OfFEJH44U
+G3ZWM9JLwdbmyFOWOrVlhpmpHaFdKTUSC6gpihyR4g5F+KdR5NMnUv3W52S9jzAh
+7zFpM8sUtFsY4+Wta7HTaBTh1gATuQ==
+=zzq2
+-----END PGP SIGNATURE-----
