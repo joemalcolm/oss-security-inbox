@@ -1,55 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/2
-Message-ID: <CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>
-Date: Tue, 19 Nov 2019 13:33:48 +0200
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/21/4
+Message-ID: <20190621095300.GA9934@kroah.com>
+Date: Fri, 21 Jun 2019 11:53:00 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Mitigating malicious packages in gnu/linux
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-As end user and contributor of gnu/linux, I am concerned about malicious
-packages (either hostile developers or hacked developers or another reason)
-and have two questions:
+On Fri, Jun 21, 2019 at 11:32:05AM +0200, Yves-Alexis Perez wrote:
+> On Sat, 2019-06-15 at 17:57 +0200, Greg KH wrote:
+> > On Sat, Jun 15, 2019 at 11:49:03AM -0400, Alex Gaynor wrote:
+> > > I do not have a solution to this problem. I wanted to raise awareness of
+> > > it, in the hope that it would start a discussion which might come to a
+> > > solution.
+> > 
+> > Why not just do a simple "you must upgrade to the latest version X to
+> > fix a bunch of bugs" type of announcement?  No need to worry about crazy
+> > backports and cherry-picking, that always fails in the end.
+> 
+> I sympathize with this view, and I think we need to get better at updating,
+> but I really think not all projects can be “safely” just updated to the latest
+> version. End-users and IT admins still value stability and regressions is
+> still a thing in a lot of cases. And once a regression is introduced, it's not
+> always a short time before it's fixed upstream.
 
-* What do linux vendors to avoid malicious packages?
+So it's a matter of "do I live with all of the bugs that everyone else
+knows about and how to exploit, or do I live with a potential
+regression?"  That sounds like an easy choice given that the reason you
+should be updating is to resolve all of those known bugs :)
 
-* As end user what can I do to mitigate malicious packages?
+Regressions always happen, we are human, but there are ways to mitigate
+them (testing, roll-back, preventing developers from not breaking things
+on purpose, etc.)  And projects that do not do this type of work to
+prevent regressions need to learn that they should change, or users will
+go elsewhere.
 
-Some thoughts and rants:
+thanks,
 
-1. This already happened in 2003 with the micq package in debian:  unnoticed
-easter egg causing DOS, see [1].
-
-2. This already happened to Redhat in 2008? see [5], Red Hat OpenSSH Backdoor
-Vulnerability
-
-3. In 2015 Microsoft issued weird update, see [6],[7].
-
-4. Portable malware in portable languages (Java, Javascript), taking the
-worst from windoze.
-
-5. Google play. Google play has about 2.8M packages [2] for android. Debian
-has about 31K packages [3] XXXold_stat. To our surprise google play is only
-about 90 times bigger than debian per number of packages and the metrics
-is unclear for size of binary packages or lines of code. Google scans for
-malware, not sure how effective is this.Google's permissions of applications
-are mitigating factor.
-
-6. The art of backdooring: sufficiently sophisticated backdoor is
-indistinguishable from secure code, see Obfuscation contest [4].
-
-7. Getting root vs reading $HOME vs euid == DAEMON. Getting root is important,
-but there is more interesting in user's $HOME.
-
-[1](https://lists.debian.org/debian-devel/2003/02/msg00771.html)
-[2](https://www.statista.com/statistics/266210/number-of-available-applications-in-the-google-play-store/)
-[3](https://sources.debian.org/stats/)
-[4](https://ioccc.org/)
-[5](https://www.securityfocus.com/bid/30794/info)
-[6](https://j.ludost.net/blog/archives/2015/10/03/cheers_windows_admins_did_the_weird_garbled_windows_7_update_contains_message_to_microsoft/index.html)
-[7](https://j.ludost.net/blog/archives/2015/10/02/cheers_windows_admins_weird_garbled_windows_7_update/index.html)
-
--- 
-CV:    https://j.ludost.net/resumegg.pdf
-site:  http://www.guninski.com
-blog:  https://j.ludost.net/blog
+greg k-h
