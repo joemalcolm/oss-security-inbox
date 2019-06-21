@@ -1,41 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/07/3
-Message-ID: <CAOWZHxfwV6WviB8XqrpxguMdu2N577Fpj3qWj0QzWoZF=WuVLQ@mail.gmail.com>
-Date: Mon, 7 Jan 2019 10:14:01 -0500
-From: "James E. King III" <jking@...che.org>
-To: oss-security@...ts.openwall.com, security <security@...che.org>,  dev@...ift.apache.org, user@...ift.apache.org
-Subject: [SECURITY] CVE-2018-1320 Announcement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/21/8
+Message-ID: <20190621164433.GA13111@espresso.pseudorandom.co.uk>
+Date: Fri, 21 Jun 2019 17:44:33 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-Reported By: Sudheesh Katkam
-Vendor: The Apache Software Foundation
-Product: Apache Thrift
-Problem Type: Improper Authentication
-Versions Affected: Apache Thrift versions 0.5.0 through 0.11.0
-Mitigation: Upgrading to the latest 0.12.0 release
+On Fri, 21 Jun 2019 at 08:08:36 -0700, Ian Zimmerman wrote:
+> On 2019-06-21 10:57, Simon McVittie wrote:
+> > If upstream projects have a stable branch that is genuinely stable
+> > and bugfix-only to minimize the risk of regressions
+> 
+> Doesn't this simply shift the work of backporting ("crazy and bound to
+> always fail in the end") from the distro maintainer to the upstream
+> stable branch maintainer?
 
-Description:
-Apache Thrift Java client library TSaslTransport can bypass SASL negotiation
-isComplete validation. An assert was previously used to determine if the
-SASL handshake had successfully completed, but in some cases this assertion
-could be disabled in production settings making the validation incomplete.
+Yes. If we want fixes with minimal regression risk then someone has to
+do the work, and it might as well be someone who understands the upstream
+codebase and is releasing something that regression-averse redistributors
+can share, rather than each redistributor reinventing essentially the same
+backports. It isn't coincidence that the stable branches in dbus closely
+match what I need as a downstream maintainer, and I'd be delighted to
+see more downstream maintainers get involved upstream.
 
-Resolution:
-The assertion has been removed and an isComplete check has
-been moved within the handshake processing loop. The fix is contained
-in the 0.12.0 Apache Thrift release.
+I agree that backporting will always fail in the end, but to quote Keynes,
+"in the long run, we are all dead". Backporting indefinitely can't work,
+because eventually the backports either become infeasible, or have a
+greater regression risk than upgrading to the latest version; but if
+backports can remain feasible and lower-risk than the latest upstream
+development release for the support lifetime of a downstream stable
+release, or even for a fraction of the support lifetime of a downstream,
+then that finite lifetime has still provided value.
 
-Jira issue:
- - https://issues.apache.org/jira/browse/THRIFT-4506
+Sure, some projects are so fast-moving that backports quickly become
+infeasible, but a lot of projects just aren't that fast (perhaps despite
+their maintainers' best intentions). Similarly, I'm sure there are some
+projects that have such good QA that the latest feature release always
+has a lower regression risk than backporting fixes, but I'm not sure
+that I could name one.
 
-Mitre issue:
-  - https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1320
+A few high-profile projects like the Linux kernel are blessed with
+large numbers of developers, a strict review process, lots of QA and
+enough early-adopter users that release candidates actually get tested;
+but despite all that, even the Linux kernel suffers from regressions
+and destabilizing changes, and even the Linux kernel has backport-based
+stable-branches for downstreams' benefit (two tiers of stable-branches,
+even). For those of us who are trying to keep smaller projects afloat
+with resources that add up to a fraction of a full-time developer,
+trying to do better than the Linux kernel doesn't seem viable.
 
-Committed resolution:
- -
-https://github.com/apache/thrift/commit/d973409661f820d80d72c0034d06a12348c8705e
-
-On behalf of the Apache Thrift PMC,
-
-Thank you
-
+    smcv
