@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/21/2
-Message-ID: <20190221125750.GC869@suse.de>
-Date: Thu, 21 Feb 2019 13:57:50 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Kernel local root in SCTP / CVE-2019-8956
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/21/6
+Message-ID: <20190621150836.ieiciui3n6vrd5wb@matica.foolinux.mooo.com>
+Date: Fri, 21 Jun 2019 08:08:36 -0700
+From: Ian Zimmerman <itz@...y.loosely.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2019-06-21 10:57, Simon McVittie wrote:
 
-CVE-2019-8956 
+> If upstream projects have a stable branch that is genuinely stable
+> and bugfix-only to minimize the risk of regressions, and encourage
+> downstream distributions to align on the latest stable branch during
+> their development phase, then I think that goes a long way towards this.
+> If I understand correctly, PostgreSQL is one of the canonical examples of
+> a project that does this, and gets its upstream point releases included
+> in stability-focused projects like Debian as-is.
 
-Secunia just announced this a local root in SCTP:
+Doesn't this simply shift the work of backporting ("crazy and bound to
+always fail in the end") from the distro maintainer to the upstream
+stable branch maintainer?  He/she is more like "midstream" working in
+that role.
 
-	https://secuniaresearch.flexerasoftware.com/secunia_research/2019-5/
-
-There was a SCTP local root in the kernel due to a association list
-corruption.
-
-https://lore.kernel.org/netdev/20190201141522.GA20785@kroah.com/
-
-In sctp_sendmesg(), when walking the list of endpoint associations, the
-association can be dropped from the list, making the list corrupt.
-Properly handle this by using list_for_each_entry_safe()
-
-Fixes: 4910280503f3 ("sctp: add support for snd flag SCTP_SENDALL process in sendmsg")
-
-This issue is in 4.17 up to 5.0rc6.
-
-Ciao, Marcus
+-- 
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet and on broken lists
+which rewrite From, fetch the TXT record for no-use.mooo.com.
