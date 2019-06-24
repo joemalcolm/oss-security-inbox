@@ -1,74 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/23/1
-Message-ID: <CAN1YN0tUvJ4mE1WHDBeS_=BRt3M1iZ8p95hP8-3OU=_KgZrF3g@mail.gmail.com>
-Date: Mon, 22 Jul 2019 23:04:25 -0400
-From: Eugene Kolo <eugene@...enekolo.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/9
+Message-ID: <alpine.GSO.2.20.1906241135310.23351@scrappy.simplesystems.org>
+Date: Mon, 24 Jun 2019 11:42:17 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: Re: Two unauthenticated SQL injection vulnerabilities in Onionbuzz WordPress plugin
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-Assigned CVE-2019-14230 and CVE-2019-14231.
+On Mon, 24 Jun 2019, Stuart D. Gathman wrote:
+>
+> Question: is fuzzing useful for languages like Java/python?  Obviously,
+> you eventually reach a native code module in both cases, but fuzzing the 
+> entire virtual machine is cumbersome.  Maybe native code libraries
+> for "safe" languages should include fuzzing as part of testing.
 
-On Sat, Jul 20, 2019 at 6:35 PM Eugene Kolo <eugene@...enekolo.com> wrote:
+There is nothing about languages like Java and Python which 
+necessarily makes them safe.  Access outside of memory bounds is just 
+one issue which often afflicts C/C++.  Java and Python can easily do 
+something wrong such as use all available resources or never finish. 
+In the case of Python, Python can easily make arbitrary calls into C 
+code under control of the script.
 
-> Two unauthenticated/unprivileged SQL injection vulnerabilities in the
-> Viral Quiz Maker - Onionbuzz WordPress plugin.
->
-> Information
-> ===========
-> Affected Product: Viral Quiz Maker - OnionBuzz WordPress plugin
-> Vendor Homepage: Onionbuzz.com
-> Vulnerability Type: SQL Injection
-> Discoverer: Eugene Kolodenker
-> Date: July-20-2019
->
-> 1)
->
-> Description
-> ===========
-> Prior to v1.2.2, you could exploit the `points` parameter in the
-> `ob_get_results` ajax nopriv handler due to there being no sanitization on
-> the points argument. The points parameter is not sanitized prior to be used
-> in a SQL query in getResultByPointsTrivia. This allows an
-> unauthenticated/unprivileged user to perform a SQL injection attack capable
-> of remote code execution and information disclosure.
->
-> Proof of Concept (POC)
-> ======================
-> ```
-> curl http://site/wp-admin/admin-ajax.php?action=ob_get_results --data
-> "type=get_result&id=1&quiz_type=5&points=1 or 1=0 union all select
-> 1,1,version(),table_name,1,1,1,1,1 from information_schema.tables;#"
-> ```
->
-> And get back:
-> ```
-> {"quiz_id":1,"points":"1 or 1=0 union all select
-> 1,1,version(),table_name,1,1,1,1,1 from
-> information_schema.tables;#","title":<DBVERSION>","description":"CHARACTER_SETS","featured_image":"<img
-> src=\"1\">","image_caption":"1","is_image":1,"success":1}
-> ```
->
->
-> 2)
->
-> Description
-> ===========
-> Prior to v1.2.7, you could exploit the `id` parameter in the `set_count`
-> ajax nopriv handler due to there being no sanitization on the id argument.
-> The id parameter is not sanitized prior to be used in a SQL query in
-> saveQuestionVote. This allows an unauthenticated/unprivileged user to
-> perform a SQL injection attack capable of remote code execution and
-> information disclosure.
->
->
-> Proof of Concept (POC)
-> ======================
->
-> ```
-> curl http://site/wp-admin/admin-ajax.php?type=set_count --data
-> "action=ob_question_votes&id=1 or sleep(10);#"
-> ```
->
->
-
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
