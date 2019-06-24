@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/23/5
-Message-ID: <CAGJbjKad9c-kqKS9B3rqYfOsRwwvYRW7CftF1f5uyCxUs3vVpA@mail.gmail.com>
-Date: Tue, 23 Apr 2019 10:05:50 -0400
-From: Mike Dalessio <mike.dalessio@...il.com>
-To: Florian Weimer <fweimer@...hat.com>
-Cc: nokogiri-talk <nokogiri-talk@...glegroups.com>, ruby-talk <ruby-talk@...y-lang.org>,  ruby-security-ann@...glegroups.com, oss-security@...ts.openwall.com
-Subject: Re: Nokogiri security update v1.10.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/10
+Message-ID: <alpine.GSO.2.20.1906241142430.23351@scrappy.simplesystems.org>
+Date: Mon, 24 Jun 2019 11:44:31 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-Florian, thanks for the clarification.
+On Mon, 24 Jun 2019, Alexander Potapenko wrote:
+>>
+>> Most oss-fuzz issue detections are not CVE worthy.  For example, a
+>> one-byte read "heap overflow" is not likely to cause any actual harm
+>> but oss-fuzz would classify it as "heap overflow".
+> There's enough information in the report though to assign the severity
+> score depending on the access size, its type (read or write) the call
+> stack etc.
+> OSS-Fuzz deliberately doesn't do that now, but such scoring can be
+> done to prune the list of potential CVE candidates.
 
-NVD indicates that this is a CVSS v3.0 severity "9.8: Critical".
+Oss-fuzz does not take into account the important criteria which is 
+the actual underlying size of the heap allocation.  It is true that 
+this is implementation specific, but if the underlying heap allocation 
+is larger than the requested allocation, the program might not be 
+vulnerable.
 
-Here are permalinks:
-
-   - NVD entry:
-   https://nvd.nist.gov/vuln/detail/CVE-2019-11068#vulnCurrentDescriptionTitle
-   - expanded CVSS 3.0 score:
-   https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2019-11068&vector=AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
-
--m
-
-
-
-
-
-On Tue, Apr 23, 2019 at 5:00 AM Florian Weimer <fweimer@...hat.com> wrote:
-
-> * Mike Dalessio:
->
-> > This is a security release. It addresses a CVE in upstream libxslt rated
-> as
-> > "Priority: medium" by Canonical, and "NVD Severity: high" by Debian. More
-> > details are available below.
->
-> Note that the Debian security tracker only relays what NVD provides in
-> this field.  It is not updated if a separate review yields different
-> results.
->
-> Thanks,
-> Florian
->
-
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
