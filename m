@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/13/6
-Message-ID: <CAE_88GbjgOf0v=B7w2PTa039pmZg5jRM0iN_35vxMNNVR9EweQ@mail.gmail.com>
-Date: Fri, 13 Sep 2019 11:40:00 -0300
-From: "Thiago H. de Paula Figueiredo" <thiagohp@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-10071: Apache Tapestry vulnerability disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/11
+Message-Id: <E1hfSKS-00015J-V5@rmmprod07.runbox>
+Date: Mon, 24 Jun 2019 13:00:28 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-0207: Apache Tapestry 5.4.2 Path Traversal vulnerability
-Severity: important
-Vendor: The Apache Software Foundation
-Versions affected: all Apache Tapestry versions between 5.4.0, including
-its betas, and 5.4.3.
+> On Mon, 24 Jun 2019, Bob Friesenhahn wrote:
+> > Most oss-fuzz issue detections are not CVE worthy.  For example, a one-byte 
+> > read "heap overflow" is not likely to cause any actual harm but oss-fuzz 
+> > would classify it as "heap overflow".
 
-Description: The code which checks HMAC in form submissions used
-String.equals() for comparisons, which results in a timing side channel for
-the comparison of the HMAC signatures. This could lead to remote code
-execution if an attacker is able to determine the correct signature for
-their payload. The comparison should be done with a constant time algorithm
-instead.
+On Mon, 24 Jun 2019 11:59:43 -0400 (EDT), "Stuart D. Gathman" <stuart@...hman.org> wrote:
+> Nevertheless, it is a bug.  Fuzzers are amazing.  Going forward, the
+> best plan is for more projects to include fuzzing as part of the
+> build process testing.
 
-Mitigation:
-Upgrade to Tapestry 5.4.5, which is a drop-in replacement for any 5.4.x
-version.
+It is a bug, fuzzers are amazing, and more projects should include fuzzing.
 
-Credit:
-David Tomaschik of the Google Security Team
+But CVEs are supposed to only be assigned to vulnerabilities or exposures.
+Many bugs are not vulnerabilities or exposures that lead to vulnerabilities.
 
--- 
-Thiago H. de Paula Figueiredo
+If a bug *is* a vulnerability, then yes, it should have a CVE assignment,
+and there are clearly a lot of vulnerabilities without CVE assignments.
 
+In particular, many organizations have a rapid upgrade process
+if some software version has a CVE, and a slow process otherwise.
+(There are things that need doing besides upgrading software.)
+If a particular version of software has a serious vulnerability, it needs at least one
+of the most serious vulnerabilities assigned a CVE so that people will upgrade
+it more rapidly.  In the end, the goal should be to get software fixed
+*and* deployed - if it's not deployed when it needs to be, it didn't help.
+Downstream needs to do their part by being prepared to upgrade... but
+suppliers need to make it clear why something needs to be upgraded quickly
+(if that's the case) so that the faster process will be used.
+We should be focusing on the "final impact", that is,
+we should be trying to reduce the cases where an attacker can exploit
+a known vulnerability in deployed software... *without* breaking the bank.
+
+--- David A. Wheeler
