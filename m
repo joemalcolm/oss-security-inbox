@@ -1,13 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/06/1
-Message-ID: <CAGUWgD_P+4h-uWvA7yD5nM6w_26nfkGt9rR2WhLd8uso+fa9Fg@mail.gmail.com>
-Date: Sat, 6 Jul 2019 15:02:22 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/3
+Message-ID: <20190624061550.fimscknfhyxedktq@jwilk.net>
+Date: Mon, 24 Jun 2019 08:15:50 +0200
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-I am against giving access to microsoft and blogged:
+* Robert Watson <robertcwatson1@...il.com>, 2019-06-17, 01:28:
+>So Mr Gayner, which of these bugs have you fixed?
 
-https://j.ludost.net/blog/archives/2019/07/06/on_microsoft_request_to_access_private_linux_bugs/index.html
+This kind of rhetoric is not welcome on oss-security.
 
+-- 
+Jakub Wilk
