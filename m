@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3709" "Friday" "24" "March" "2017" "13:32:01" "+0100" "Solar Designer" "solar@openwall.com" "<20170324123201.GA24912@openwall.com>" "88" "Re: [oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP" nil nil nil "3" "2017032412:32:01" "[oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP" (number mark "U       solar@openwa Mar 24   88/3709  " thread-indent "\"Re: [oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP\"\n") "<alpine.LRH.2.20.1703241217250.10825@namei.org>" ("<alpine.LRH.2.20.1703241217250.10825@namei.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["915" "Monday" "24" "June" "2019" "10:42:40" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>" "21" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062415:42:40" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        bfriesen@sim Jun 24   21/915   " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190617113203.GH15432@suse.de>" "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13539 invoked by uid 550); 24 Mar 2017 12:32:44 -0000
+Received: (qmail 22312 invoked by uid 550); 24 Jun 2019 15:42:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,106 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 22288 invoked from network); 24 Jun 2019 15:42:53 -0000
+X-X-Sender: bfriesen@scrappy.simplesystems.org
+In-Reply-To: <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>
+Message-ID: <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
+References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com> <20190617113203.GH15432@suse.de> <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Mon, 24 Jun 2019 10:42:40 -0500 (CDT)
+Date: Mon, 24 Jun 2019 10:42:40 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12111 invoked from network); 24 Mar 2017 12:32:13 -0000
-Date: Fri, 24 Mar 2017 13:32:01 +0100
-From: Solar Designer <solar@openwall.com>
-To: James Morris <jmorris@namei.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20170324123201.GA24912@openwall.com>
-References: <alpine.LRH.2.20.1703241217250.10825@namei.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.LRH.2.20.1703241217250.10825@namei.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP
+Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
+ OSS-Fuzz
+To: oss-security@lists.openwall.com
 
-Hi James,
+On Mon, 24 Jun 2019, Dmitry Vyukov wrote:
+>
+> So what are community thoughts on automatic CVE assignment?
+> That would definitely get some attention to these bugs by vendors
+> (because that's open CVEs in their products then). And this should be
+> implementable because both OSS-Fuzz and syzbot are automated enough
+> already. However I afraid that these CVEs may be as automatically
+> sorted into a trashcan then :)
 
-With all due respect to you and recognition of the importance of this
-event, as I had pointed out last year, I wish you either informed
-oss-security of the outcomes of each year's LSS or didn't post the CFPs
-in here.  Posting only a CFP and then nothing until next year's CFP
-sort of works on other lists, but not on oss-security.  Please re-read:
+An excess of CVEs would cause CVEs to be not very meaningful any more.
 
-http://www.openwall.com/lists/oss-security/2016/03/25/7
+Most oss-fuzz issue detections are not CVE worthy.  For example, a 
+one-byte read "heap overflow" is not likely to cause any actual harm 
+but oss-fuzz would classify it as "heap overflow".
 
-Unless there's anything from LSS besides this CFP posted to here until
-next year's, I am going to reject next year's LSS CFP, as we should have
-been doing per the published oss-security guidelines in the first place.
-
-The same applies to other events focused on open source security,
-including non-Linux ones: CFPs only "no", generally useful material from
-such events "probably yes", CFPs from events for which there were other
-accepted postings "possibly yes".  Currently I don't recall any events
-with relevant focus that bothered communicating their materials to here,
-but they should have (if any of the substance could be provided in
-text/plain; for videos only, no).  For events not focused on open source
-security, I intend to make no exceptions regarding CFPs, not even if
-some materials were relevant and discussed in here.  So overall our "no
-CFPs" policy is still in place.
-
-This applies to oss-security only.  Having this same CFP on the
-kernel-hardening list is OK and desirable.  (And it's already there.)
-
-On Fri, Mar 24, 2017 at 12:26:43PM +1100, James Morris wrote:
->   Topic areas include, but are not limited to:
-> 
->     * Kernel self-protection
->     * Access control
->     * Cryptography and key management
->     * Integrity control
->     * Hardware Security
->     * Iot and embedded security
->     * Virtualization and containers
->     * System-specific system hardening
->     * Case studies
->     * Security tools
->     * Security UX
->     * Emerging technologies, threats & techniques 
-
-diff from last year's:
-
--    * Trust systems
--    * Storage and file systems
--    * Identity management
--    * Code analysis
--    * Security analytics
--    * Secure development and operational practices
-
-+    * Iot and embedded security
-+    * System-specific system hardening
-+    * Security tools
-+    * Security UX
-
-To make my posting useful, let me inform those not on kernel-hardening,
-but interested in how the project is doing, that it's been doing OK at
-least(*) in terms of activity lately, with last month being the busiest
-month so far by number of messages posted:
-
-http://www.openwall.com/lists/kernel-hardening/
-http://kernsec.org/wiki/index.php/Kernel_Self_Protection_Project
-
-(*) I say "at least" because I know that opinions vary as to the utility
-of such activity.
-
-Another good resource are Kees Cook's blog posts on "security things" in
-each new Linux kernel release:
-
-https://outflux.net/blog/archives/2017/02/27/security-things-in-linux-v4-10/
-https://outflux.net/blog/archives/2016/12/12/security-things-in-linux-v4-9/
-https://outflux.net/blog/archives/2016/10/04/security-things-in-linux-v4-8/
-https://outflux.net/blog/archives/2016/10/03/security-things-in-linux-v4-7/
-https://outflux.net/blog/archives/2016/09/30/security-things-in-linux-v4-6/
-https://outflux.net/blog/archives/2016/09/28/security-things-in-linux-v4-5/
-https://outflux.net/blog/archives/2016/09/27/security-things-in-linux-v4-4/
-https://outflux.net/blog/archives/2016/09/26/security-things-in-linux-v4-3/
-
-and his other blog posts as well, such as on security bugs' lifetime.
-
-These are so much more useful (or rather, to more people) than a CFP
-with no follow-ups.  I wish Kees, James, and others posted this kind of
-material in here in text/plain, in addition to blogging.
-
-Alexander
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
