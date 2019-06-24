@@ -1,49 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/23/4
-Message-ID: <CAB8XdGCSzjGtGOhbEv0QdfvwcfJpAr=kyAb4SYM+BKjgM7aJYw@mail.gmail.com>
-Date: Fri, 23 Aug 2019 16:45:10 +0100
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/2
+Message-Id: <93CB7010-1297-4AD4-80D6-ABCC920929AF@gmail.com>
+Date: Mon, 24 Jun 2019 16:44:03 -0700
+From: Matthew Fernandez <matthew.fernandez@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-12400] Apache Santuario potentially loads XML parsing code from an untrusted source
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-The following security advisory is announced for the Apache Santuario - XML
-Security for Java project, which is fixed in the recent 2.1.4 release.
-
-[CVEID]:CVE-2019-12400
-[PRODUCT]:Apache Santuario - XML Security for Java
-[VERSION]:All 2.0.x releases from 2.0.3, all 2.1.x releases before 2.1.4.
-[PROBLEMTYPE]:Process Control
-[REFERENCES]:
-http://santuario.apache.org/secadv.data/CVE-2019-12400.asc?version=1&modificationDate=1566573083000&api=v2
-[DESCRIPTION]:In version 2.0.3 of Apache Santuario XML Security for Java, a
-caching mechanism
-              was introduced to speed up creating new XML documents using a
-static pool of
-              DocumentBuilders.
-
-              However, if some untrusted code can register a malicious
-implementation with
-              the thread context class loader first, then this
-implementation might be
-              cached and re-used by Apache Santuario - XML Security for
-Java, leading to
-              potential security flaws when validating signed documents,
-etc.
-
-For more information, please see the security advisories page of Apache
-Santuario: http://santuario.apache.org/secadv.html
-
--- 
-Colm O hEigeartaigh
-
-Talend Community Coder
-http://coders.talend.com
 
 
--- 
-Colm O hEigeartaigh
+> On Jun 24, 2019, at 09:42, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us> wrote:
+> 
+> On Mon, 24 Jun 2019, Stuart D. Gathman wrote:
+>> 
+>> Question: is fuzzing useful for languages like Java/python?  Obviously,
+>> you eventually reach a native code module in both cases, but fuzzing the entire virtual machine is cumbersome.  Maybe native code libraries
+>> for "safe" languages should include fuzzing as part of testing.
+> 
+> There is nothing about languages like Java and Python which necessarily makes them safe.  Access outside of memory bounds is just one issue which often afflicts C/C++.  Java and Python can easily do something wrong such as use all available resources or never finish. In the case of Python, Python can easily make arbitrary calls into C code under control of the script.
 
-Talend Community Coder
-http://coders.talend.com
-
+With something like ctypes? I took Stuart’s point to be about fuzzing the language VM (e.g. CPython), rather than fuzzing extensions written in C. Fuzzing the FFI into native code seems like a reasonable idea for extension maintainers, but this is much less cumbersome than the VM fuzzing that Stuart’s comment seemed to be getting at.
