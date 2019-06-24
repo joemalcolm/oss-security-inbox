@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/20/1
-Message-Id: <52C7AFA8-8CAB-4613-95E9-3EED492B9693@apache.org>
-Date: Mon, 20 May 2019 19:15:24 +0200
-From: Andor Molnar <andor@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/6
+Message-ID: <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
+Date: Mon, 24 Jun 2019 10:42:40 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-0201] Information disclosure vulnerability in Apache ZooKeeper 
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-0201: Information disclosure vulnerability in Apache ZooKeeper
+On Mon, 24 Jun 2019, Dmitry Vyukov wrote:
+>
+> So what are community thoughts on automatic CVE assignment?
+> That would definitely get some attention to these bugs by vendors
+> (because that's open CVEs in their products then). And this should be
+> implementable because both OSS-Fuzz and syzbot are automated enough
+> already. However I afraid that these CVEs may be as automatically
+> sorted into a trashcan then :)
 
-Severity: Critical
+An excess of CVEs would cause CVEs to be not very meaningful any more.
 
-Vendor: The Apache Software Foundation
+Most oss-fuzz issue detections are not CVE worthy.  For example, a 
+one-byte read "heap overflow" is not likely to cause any actual harm 
+but oss-fuzz would classify it as "heap overflow".
 
-Versions Affected: ZooKeeper prior to 3.4.14, ZooKeeper 3.5.0-alpha through 3.5.4-beta. The unsupported ZooKeeper 1.x through 3.3.x versions may be also affected.
-
-Description: ZooKeeper’s getACL() command doesn’t check any permission when retrieves the ACLs of the requested node and returns all information contained in the ACL Id field as plaintext string. DigestAuthenticationProvider overloads the Id field with the hash value that is used for user authentication. As a consequence, if Digest Authentication is in use, the unsalted hash value will be disclosed by getACL() request for unauthenticated or unprivileged users.
-
-Mitigation: Use an authentication method other than Digest (e.g. Kerberos) or upgrade to 3.4.14 or later (3.5.5 or later if on the 3.5 branch).
-
-Credit: This issue was identified by Harrison Neal <harrison@...chadvisor.com> PatchAdvisor, Inc.
-
-References: https://issues.apache.org/jira/browse/ZOOKEEPER-1392
-
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
