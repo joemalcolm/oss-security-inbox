@@ -1,16 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/3
-Message-ID: <20190624061550.fimscknfhyxedktq@jwilk.net>
-Date: Mon, 24 Jun 2019 08:15:50 +0200
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/8
+Message-ID: <CAG_fn=VaVOERocqqh3wUBK5BRUWvVirT-+=HdGGxib+Ad90kjg@mail.gmail.com>
+Date: Mon, 24 Jun 2019 18:27:30 +0200
+From: Alexander Potapenko <glider@...gle.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-* Robert Watson <robertcwatson1@...il.com>, 2019-06-17, 01:28:
->So Mr Gayner, which of these bugs have you fixed?
+On Mon, Jun 24, 2019 at 5:44 PM Bob Friesenhahn
+<bfriesen@...ple.dallas.tx.us> wrote:
+>
+> On Mon, 24 Jun 2019, Dmitry Vyukov wrote:
+> >
+> > So what are community thoughts on automatic CVE assignment?
+> > That would definitely get some attention to these bugs by vendors
+> > (because that's open CVEs in their products then). And this should be
+> > implementable because both OSS-Fuzz and syzbot are automated enough
+> > already. However I afraid that these CVEs may be as automatically
+> > sorted into a trashcan then :)
+>
+> An excess of CVEs would cause CVEs to be not very meaningful any more.
+>
+> Most oss-fuzz issue detections are not CVE worthy.  For example, a
+> one-byte read "heap overflow" is not likely to cause any actual harm
+> but oss-fuzz would classify it as "heap overflow".
+There's enough information in the report though to assign the severity
+score depending on the access size, its type (read or write) the call
+stack etc.
+OSS-Fuzz deliberately doesn't do that now, but such scoring can be
+done to prune the list of potential CVE candidates.
+> Bob
+> --
+> Bob Friesenhahn
+> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
 
-This kind of rhetoric is not welcome on oss-security.
+
 
 -- 
-Jakub Wilk
+Alexander Potapenko
+Software Engineer
+
+Google Germany GmbH
+Erika-Mann-Straße, 33
+80636 München
+
+Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
