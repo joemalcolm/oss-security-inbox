@@ -1,44 +1,147 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/1
-Message-ID: <CAHk-=whRsN13=0Ey1Db3+5k4ij5arawVArG7Pu2MMoVrONNYzg@mail.gmail.com>
-Date: Sun, 21 Jul 2019 14:04:19 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Daniel Vetter <daniel@...ll.ch>
-Cc: Tavis Ormandy <taviso@...il.com>, Bartlomiej Zolnierkiewicz <b.zolnierkie@...sung.com>,  Daniel Vetter <daniel.vetter@...ll.ch>, oss-security@...ts.openwall.com
-Subject: Re: stack buffer overflow in fbdev
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/5
+Message-ID: <87lfxr82ls.fsf@concordia.ellerman.id.au>
+Date: Tue, 25 Jun 2019 00:44:31 +1000
+From: Michael Ellerman <mpe@...erman.id.au>
+To: oss-security@...ts.openwall.com
+Cc: linuxppc-dev@...ts.ozlabs.org, linux-kernel@...r.kernel.org, linuxppc-users@...ts.ozlabs.org
+Subject: CVE-2019-12817: Linux kernel: powerpc: Unrelated processes may be able to read/write to each other's virtual memory
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 21, 2019 at 1:09 PM Daniel Vetter <daniel@...ll.ch> wrote:
->
-> PS: git log -G disappoints by not using all the cores I have here ..
+The Linux kernel for powerpc since 4.17 has a bug where unrelated processes may
+be able to read/write to each other's virtual memory under certain conditions.
 
-Yeah, "git grep" is threaded (but if you want more than 8 threads you
-need to configure it). But "-G" is not.
+This bug only affects machines using 64-bit CPUs with the hash page table MMU,
+see below for more detail on affected CPUs.
 
-Part of it is that "-G" is actually very very different from grep.
-"grep" looks at all files, and is threaded over the number of files.
+To trigger the bug a process must allocate memory above 512TB. That only happens
+if userspace explicitly requests it with mmap(). That process must then fork(),
+at this point the child incorrectly inherits the "context id" of the parent
+associated with the mapping above 512TB. It may then be possible for the
+parent/child to write to each other's mappings above 512TB, which should not be
+possible, and constitutes memory corruption.
 
-"-G" looks at each file diff pair, does a diff of them, and then does
-a grep to see if the pattern is in the diff.
+If instead the child process exits, all its context ids are freed, including the
+context id that is still in use by the parent for the mapping above 512TB. That
+id can then be reallocated to a third process, that process can then read/write
+to the parent's mapping above 512TB. Additionally if the freed id is used for
+the third process's primary context id, then the parent is able to read/write to
+the third process's mappings *below* 512TB.
 
-And usually the number of file diff pairs is fairly small, and it
-would be non-trivial to parallelize it.
+If the parent and child both exit before another process is allocated the freed
+context id, the kernel will notice the double free of the id and print a warning
+such as:
 
-I guess git could parallelize over many commits, but it doesn't.
+  ida_free called for id=103 which is not allocated.
+  WARNING: CPU: 8 PID: 7293 at lib/idr.c:520 ida_free_rc+0x1b4/0x1d0
 
-Side note: "-S" is usually faster than "-G". It skips the "create
-diff" part, and instead just counts the number of occurrences of the
-string in the diffpairs, and shows the end result is the number is
-different. Odd semantics, but very useful exactly for the "when did
-this appear or disappear" kind of thing.
+The bug was introduced in commit:
+  f384796c40dc ("powerpc/mm: Add support for handling > 512TB address in SLB miss")
 
-So "git log -G fb_edid_add_monspecs" is indeed very slow.
+Which was originally merged in v4.17.
 
-If you limit the space that you grep over, you can speed things up
-enormously. So something like
+Only machines using the hash page table (HPT) MMU are affected, eg. PowerPC 970
+(G5), PA6T, Power5/6/7/8/9. By default Power9 bare metal machines (powernv) use
+the Radix MMU and are not affected, unless the machine has been explicitly
+booted in HPT mode (using disable_radix on the kernel command line). KVM guests
+on Power9 may be affected if the host or guest is configured to use the HPT MMU.
+LPARs under PowerVM on Power9 are affected as they always use the HPT MMU.
+Kernels built with PAGE_SIZE=4K are not affected.
 
-        git log -S fb_edid_add_monspecs drivers/video/fbdev/
+The upstream fix is here:
 
-isn't too horrendous.
+  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ca72d88378b2f2444d3ec145dd442d449d3fefbc
 
-                   Linus
+There's also a kernel selftest to verify the fix:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=16391bfc862342f285195013b73c1394fab28b97
+
+Or a similar standalone version is included below.
+
+cheers
+
+
+cat > test.c <<EOF
+#undef NDEBUG
+
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/mman.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+#ifndef MAP_FIXED_NOREPLACE
+#define MAP_FIXED_NOREPLACE	MAP_FIXED	// "Should be safe" above 512TB
+#endif
+
+int main(void)
+{
+	int p2c[2], c2p[2], rc, status, c, *p;
+	unsigned long page_size;
+	pid_t pid;
+
+	page_size = sysconf(_SC_PAGESIZE);
+	if (page_size != 65536) {
+		printf("Unsupported page size - not affected\n");
+		return 1;
+	}
+
+	// Create a mapping at 512TB to allocate an extended_id
+	p = mmap((void *)(512ul << 40), page_size, PROT_READ | PROT_WRITE,
+		MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED_NOREPLACE, -1, 0);
+	if (p == MAP_FAILED) {
+		perror("mmap");
+		printf("Error: couldn't mmap(), confirm kernel has 4TB support\n");
+		return 1;
+	}
+
+	printf("parent writing %p = 1\n", p);
+	*p = 1;
+
+	assert(pipe(p2c) != -1 && pipe(c2p) != -1);
+
+	pid = fork();
+	if (pid == 0) {
+		close(p2c[1]);
+		close(c2p[0]);
+		assert(read(p2c[0], &c, 1) == 1);
+
+		pid = getpid();
+		printf("child writing  %p = %d\n", p, pid);
+		*p = pid;
+
+		assert(write(c2p[1], &c, 1) == 1);
+		assert(read(p2c[0], &c, 1) == 1);
+		exit(0);
+	}
+	close(p2c[0]);
+	close(c2p[1]);
+
+	c = 0;
+	assert(write(p2c[1], &c, 1) == 1);
+	assert(read(c2p[0], &c, 1) == 1);
+
+	// Prevent compiler optimisation
+	asm volatile("" : : : "memory");
+
+	rc = 0;
+	printf("parent reading %p = %d\n", p, *p);
+	if (*p != 1) {
+		printf("Error: BUG! parent saw child's write! *p = %d\n", *p);
+		rc = 1;
+	}
+
+	assert(write(p2c[1], &c, 1) == 1);
+	assert(waitpid(pid, &status, 0) != -1);
+	assert(WIFEXITED(status) && WEXITSTATUS(status) == 0);
+
+	if (rc == 0)
+		printf("success: test completed OK\n");
+
+	return rc;
+}
+EOF
+
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
