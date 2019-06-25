@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/24/1
-Message-ID: <1475480713.4356448.1558688895617@mail.yahoo.com>
-Date: Fri, 24 May 2019 09:08:15 +0000 (UTC)
-From: Andrea Cosentino <ancosen1985@...oo.com>
-To: Dev <dev@...el.apache.org>, Users <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  JPCERT/CC <vuls@...ert.or.jp>
-Subject: [SECURITY] New security advisory CVE-2019-0188 released for Apache Camel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/1
+Message-ID: <20190625005341.GA26741@hunt>
+Date: Mon, 24 Jun 2019 17:53:41 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache Camel, that is fixed in
-the recent 2.24.0 release.
+On Mon, Jun 24, 2019 at 07:15:20PM -0400, Alex Gaynor wrote:
+> sounds very hard to me, at least without requiring more user involvement
+> than ASAN requires right now. This seems like a very cool area for academic
+> research though!
 
-CVE-2019-0188: Apache Camel vulnerable to XML external entity injection (XXE)
+Have you tried the gdb exploitable plugin yet?
 
-Severity: MEDIUM
+https://github.com/jfoote/exploitable
 
-Vendor: The Apache Software Foundation
+Some of the tools written around AFL have included support for running
+exploitable directly on the fuzzer results and helping to prioritize,
+roughly, in what order the specimens should be worked on:
 
-Versions Affected: Apache Camel versions prior to 2.24.0
+https://gitlab.com/rc0r/afl-utils
 
-Description: Apache Camel contains an XML external entity injection (XXE) vulnerability
+with a direct link to a pretty screenshot:
 
-Mitigation: Update to version 2.24.0
+https://gitlab.com/rc0r/afl-utils/raw/master/.scrots/afl_collect_sample.png
 
-Credit: This issue was discovered by Takayoshi Isayama of Mitsui Bussan Secure Directions, Inc. 
+I assume like most such tools, this is another case of being a good start
+but not nearly as reliable as a knowledgeable human. It's also probably
+completely useless for issues that aren't memory-safety issues. But it's
+something that exists today and may be helpful.
 
-On behalf of the Apache Camel PMC
+Thanks
 
-
---
-Andrea Cosentino 
-----------------------------------
-Apache Camel PMC Chair
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@...oo.com
-Twitter: @oscerd2
-Github: oscerd
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
