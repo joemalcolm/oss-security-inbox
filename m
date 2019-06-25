@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4497" "Wednesday" "10" "April" "2019" "18:16:30" "+0300" "Jouni Malinen" "j@w1.fi" nil "102" nil nil nil nil "4" nil nil (number mark "U       j@w1.fi      Apr 10  102/4497  " thread-indent "\"[oss-security] wpa_supplicant/hostapd: EAP-pwd missing commit validation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] wpa_supplicant/hostapd: EAP-pwd missing commit validation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2476" "Tuesday" "25" "June" "2019" "08:41:08" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>" "54" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062513:41:08" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        bfriesen@sim Jun 25   54/2476  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190617113203.GH15432@suse.de>" "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>" "<alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>" "<alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>" "<E1hfSKS-00015J-V5@rmmprod07.runbox>" "<20190624193048.GA8039@espresso.pseudorandom.co.uk>" "<CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20360 invoked by uid 550); 10 Apr 2019 15:16:46 -0000
+Received: (qmail 24154 invoked by uid 550); 25 Jun 2019 13:41:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,117 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20228 invoked from network); 10 Apr 2019 15:16:45 -0000
-X-Virus-Scanned: Debian amavisd-new at w1.fi
-Date: Wed, 10 Apr 2019 18:16:30 +0300
-From: Jouni Malinen <j@w1.fi>
-To: oss-security@lists.openwall.com
-Message-ID: <20190410151630.GD5686@w1.fi>
+Received: (qmail 24109 invoked from network); 25 Jun 2019 13:41:21 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+In-Reply-To: <CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>
+Message-ID: <alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>
+References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com> <20190617113203.GH15432@suse.de> <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com> <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
+ <alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org> <E1hfSKS-00015J-V5@rmmprod07.runbox> <20190624193048.GA8039@espresso.pseudorandom.co.uk> <CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] wpa_supplicant/hostapd: EAP-pwd missing commit validation
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Tue, 25 Jun 2019 08:41:09 -0500 (CDT)
+Date: Tue, 25 Jun 2019 08:41:08 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
+ OSS-Fuzz
+To: oss-security@lists.openwall.com
 
-Published: April 10, 2019
-Identifiers:
-- CVE-2019-9497 (EAP-pwd server not checking for reflection attack)
-- CVE-2019-9498 (EAP-pwd server missing commit validation for
-  scalar/element)
-- CVE-2019-9499 (EAP-pwd peer missing commit validation for
-  scalar/element)
-Latest version available from: https://w1.fi/security/2019-4/
+On Mon, 24 Jun 2019, Alex Gaynor wrote:
+> - Not having sooooo many vulnerabilities. While there's some dispute over
+> just what % of the bugs that OSS-Fuzz and syzbot turn up are exploitable,
+> there's no doubt that they find a _lot_ of them. Even if only 20% of
+> OSS-Fuzz reports were truly exploitable vulnerabilities, that'd still be
+>> 600 of them. We can't produce this many vulnerabilities and then try to
+> clean up afterwards by finding them with fuzzing -- at some point the
+> number of vulnerabilities simply overwhelms us. Tactics for reducing
+> vulnerabilities in the first instance, like memory safe languages, are an
+> important part of making this problem tractable.
+>
+> Do folks feel like there were important themes that this misses?
 
-Vulnerability
+I see the assumption that 20% of oss-fuzz reports are exploitable 
+vulnerabilities.  Where does this percentage estimate come from?  What 
+does it mean to be "exploitable"?
 
-EAP-pwd implementation in hostapd (EAP server) and wpa_supplicant (EAP
-peer) was discovered not to validate the received scalar and element
-values in EAP-pwd-Commit messages properly. This could result in attacks
-that would be able to complete EAP-pwd authentication exchange without
-the attacker having to know the used password.
+>From working on fixing oss-fuzz detected bugs in GraphicsMagick I see 
+that many/most of the issues are not significant from a security 
+standpoint, assuming that the software is deployed in a way suitable 
+for its level of exposure.  Common issues include:
 
-A reflection attack is possible against the EAP-pwd server since the
-hostapd EAP server did not verify that the EAP-pwd-Commit contains
-scalar/element values that differ from the ones the server sent out
-itself. This allows the attacker to complete EAP-pwd authentication
-without knowing the password, but this does not result in the attacker
-being able to derive the session key (MSK), i.e., the attacker would not
-be able to complete the following key exchange (e.g., 4-way handshake in
-RSN/WPA).
+  * Huge uninitialized memory allocations (which do not really matter
+    under Linux since Linux does not reserve anything but virtual
+    memory space).
 
-An attack using invalid scalar/element values is possible against both
-the EAP-pwd server and peer since hostapd and wpa_supplicant did not
-validate these values in the received EAP-pwd-Commit messages. If the
-used crypto library does not implement additional checks for the element
-(EC point), this could result in attacks where the attacker could use a
-specially crafted commit message values to manipulate the exchange to
-result in deriving a session key value from a very small set of possible
-values. This could further be used to attack the EAP-pwd server in a
-practical manner. An attack against the EAP-pwd peer is slightly more
-complex, but still consider practical. These invalid scalar/element
-attacks could result in the attacker being able to complete
-authentication and learn the session key and MSK to allow the key
-exchange to be completed as well, i.e., the attacker gaining access to
-the network in case of the attack against the EAP server or the attacker
-being able to operate a rogue AP in case of the attack against the EAP
-peer.
+  * Consumption of uninitialized data (e.g. image data) which is not
+    used to make important decisions.  This is usually due to unhandled
+    cases or error handling which does not quit immediately.
 
-While similar attacks might be applicable against SAE, it should be
-noted that the SAE implementation in hostapd and wpa_supplicant does
-have the validation steps that were missing from the EAP-pwd
-implementation and as such, these attacks do not apply to the current
-SAE implementation. Old versions of wpa_supplicant/hostapd did not
-include the reflection attack check in the SAE implementation, though,
-since that was added in June 2015 for v2.5 (commit 6a58444d27fd 'SAE:
-Verify that own/peer commit-scalar and COMMIT-ELEMENT are different').
+  * Tiny heap over-reads which are not past the bounds of the
+    underlying allocation.
 
+  * Heap over-reads or over-writes which cause an immediate core dump.
 
-Vulnerable versions/configurations
+  * Excessively slow code with the slowness emphasized by ASAN and
+    UBSAN code running vastly slower.  The excessively slow code is not
+    necessarily noticeable in a normal compilation.
 
-All hostapd versions with EAP-pwd support (CONFIG_EAP_PWD=y in the build
-configuration and EAP-pwd being enabled in the runtime configuration)
-are vulnerable against the reflection attack.
+  * Memory leaks.
 
-All wpa_supplicant and hostapd versions with EAP-pwd support
-(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
-in the runtime configuration) are vulnerable against the invalid
-scalar/element attack when built against a crypto library that does not
-have an explicit validation step on imported EC points. The following
-list indicates which cases are vulnerable/not vulnerable:
-- OpenSSL v1.0.2 or older: vulnerable
-- OpenSSL v1.1.0 or newer: not vulnerable
-- BoringSSL with commit 38feb990a183 ('Require that EC points are on the
-  curve.') from September 2015: not vulnerable
-- BoringSSL without commit 38feb990a183: vulnerable
-- LibreSSL: vulnerable
-- wolfssl: vulnerable
+  * "undefined behavior" which nevertheless has a common behavior that
+    compilers have followed since the dawn of time.
 
+The most important thing that oss-fuzz contributes is a large 
+collection of files which cause problems for unfixed software such 
+that only the unaware or foolish do not update to fixed versions.
 
-Acknowledgments
-
-Thanks to Mathy Vanhoef (New York University Abu Dhabi) for discovering
-and reporting the issues and for proposing changes to address them in
-the implementation.
-
-
-Possible mitigation steps
-
-- Merge the following commits to wpa_supplicant/hostapd and rebuild:
-
-  CVE-2019-9497:
-  EAP-pwd server: Detect reflection attacks
-  
-  CVE-2019-9498:
-  EAP-pwd server: Verify received scalar and element
-  EAP-pwd: Check element x,y coordinates explicitly
-
-  CVE-2019-9499:
-  EAP-pwd client: Verify received scalar and element
-  EAP-pwd: Check element x,y coordinates explicitly
-
-  These patches are available from https://w1.fi/security/2019-4/
-
-- Update to wpa_supplicant/hostapd v2.8 or newer, once available
-
+Bob
 -- 
-Jouni Malinen                                            PGP id EFC895FA
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
