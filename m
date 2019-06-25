@@ -1,38 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/29/1
-Message-ID: <CAG48ez04TXacCC8-PSw_gHofAux6tfxXBU6EMGpoqL=KzevKuw@mail.gmail.com>
-Date: Mon, 29 Apr 2019 14:56:06 -0400
-From: Jann Horn <jannhorn@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/9
+Message-ID: <alpine.GSO.2.20.1906250946080.7899@scrappy.simplesystems.org>
+Date: Tue, 25 Jun 2019 09:51:02 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: multiple issues
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-Here are several issues that became public somewhat recently:
+On Tue, 25 Jun 2019, Matthew Fernandez wrote:
 
-== page->_refcount overflow via FUSE with ~140GiB RAM usage ==
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6b3a707736301c2128ca85ce85fb13f60b5e350a
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1752
-CVE-2019-11487
-NOTE: not relevant (AFAIK) on machines with normal amounts of physical memory
+> I’m probably telling you things you already know and it sounds like 
+> you don’t consider such issues worth addressing, but I just wanted 
+> to point out that these are not theoretical. These cause real 
+> problems for users and, for open source software, you may not have 
+> full control over what toolchain/flags users build your code with.
 
-== missing locking in Siemens R3964 line discipline ==
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c7084edc3f6d67750f50d4183134c4fb5712a5c8
-https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.0.8
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.35
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.112
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.9.169
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1752
-CVE-2019-11486
-NOTE: Rather than fixing the various issues in the driver, the commit
-marks the driver as BROKEN to keep people from building it. If you
-actually use the Siemens R3964 line discipline for talking to
-Programmable Logic Controllers, or something like that, you may want
-to reach out to gregkh and help test things - see the commit message.
+I think that almost all bugs are issues worth addressing given 
+sufficent resources available to address them.  The issue discussed is 
+what proportion of bugs discovered via automated testing and claimed 
+to be "security" issues based on computer analysis are exploitable 
+vulnerabilities which deserve a CVE.
 
-== missing locking between ELF coredump code and userfaultfd VMA modification ==
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=04f5866e41fb70690e28397487d8bd8eea7d712a
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.114
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.37
-https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.0.10
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1790
-CVE-2019-11599
+A good point has been made that Linux heap memory allocation behavior 
+may be very different than other OSs and that behavior can also be 
+hardware-specific.
+
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
