@@ -1,28 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/21/1
-Message-ID: <nycvar.YSQ.7.76.1902211335290.504@xnncv>
-Date: Thu, 21 Feb 2019 13:36:45 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2019-8934 QEMU: ppc64: sPAPR emulator leaks the host hardware identity
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/26/1
+Message-ID: <068eb724241a91d08f36f2262c90ae30bf135fa1.camel@gmail.com>
+Date: Tue, 25 Jun 2019 23:09:36 +0200
+From: Martin Carpenter <martin.carpenter@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Tue, 2019-06-25 at 16:34 +0200, Florian Weimer wrote:
 
-It was found that the KVM PPC64 emulator for the sPAPR machine leaks the host 
-hardware identity to all running guests. The sPAPAR(hw/ppc/spapr.c) emulator 
-populates the device tree for the guest with two fields "host-serial" and 
-"host-model". The values for these fields are taken via hypervisor from the 
-host device tree data exposed in "/proc/device-tree/system-id" and 
-"/proc/device-tree/model" file respectively.
+> Fuzzing is used to show that a function is partial, when it is
+> expected to be total
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2019-02/msg04821.html
+This definition is cute but it misses the case where the function is
+defined over its entire domain but sometimes gives the wrong answer.
+Fuzzers can find these bugs, as well as C-style crashes. (Simple recipe
+for crash-seeking fuzzers is: test harness + abort(3)).
 
-CVE-2019-8934 assigned via https://cveform.mitre.org/
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
