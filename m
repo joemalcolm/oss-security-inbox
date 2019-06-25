@@ -1,133 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/16/2
-Message-ID: <df803446-d727-26db-de21-660690b00710@sba-research.org>
-Date: Wed, 16 Oct 2019 14:08:54 +0200
-From: SBA Research Advisory <advisory@...-research.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [SBA-ADV-20190913-01] CVE-2019-16522: WordPress Plugin - EU Cookie Law (GDPR) <= 3.0.6 and possibly upwards - Stored XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/11
+Message-ID: <ED9DF282-AA92-46A4-ACE0-E8A4EB386032@trust-in-soft.com>
+Date: Tue, 25 Jun 2019 15:02:54 +0000
+From: Pascal Cuoq <cuoq@...st-in-soft.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "law@...hat.com" <law@...hat.com>
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-# WordPress Plugin - EU Cookie Law (GDPR) - Stored XSS #
+Hello,
 
-Link: https://github.com/sbaresearch/advisories/tree/public/2019/SBA-ADV-20190913-01_WordPress_Plugin_EU_Cookie_Law
+> On 25 Jun 2019, at 16:33, Jeff Law <law@...hat.com> wrote:
+> 
+> On 6/25/19 8:14 AM, Matthew Fernandez wrote:
+>> 
+>> 
+>> C/C++ compilers will infer backwards from uninitialized variable reads (undefined behavior in these languages) that preceding code is unreachable. For example, when moving from GCC 6 series to GCC 7 series we found one of our code bases would produce a binary that would only segfault when compiled at >= -O2. We root caused this to exactly the situation you describe: an error handling path that read uninitialized variables. The compiler appeared to infer backwards that the error check itself was a no-op as the true branch led to unconditional UB (this is my interpretation of its actions; I did not delve into the compiler’s internals).
+> Well, as a GCC developer, I can say it doesn't use an uninitialized read
+> to allow back-propagation of state to eliminate conditionals.  It may
+> have looked that way, but there had to be something else going on.
 
-## Vulnerability Overview ##
+This is tangential to the subject and perhaps we should take this sub-discussion off the list, or at least make a new thread. I'm interested in your opinion of what is going on with Ubuntu's packaged GCC version 4.4.3 in the example under the section “The next example” in this blog post, where this very thing is happening (when invoked with fewer than 3 arguments, the compiled code claims that the result of an unsigned multiplication by 2 is odd):
 
-The eu-cookie-law plugin through 3.0.6 for WordPress (aka EU Cookie Law (GDPR))
-is susceptible to Stored XSS due to improper encoding of several configuration
-options in the admin area and the displayed cookie consent message.
-This affects Font Color, Background Color, and the Disable Cookie text.
-An attacker with high privileges can attack other users.
+http://blog.frama-c.com/index.php?post/2013/03/13/indeterminate-undefined
 
-* **Identifier**            : SBA-ADV-20190913-01
-* **Type of Vulnerability** : Cross-site Scripting
-* **Software/Product Name** : [EU Cookie Law (GDPR)](https://wordpress.org/plugins/eu-cookie-law/)
-* **Vendor**                : [Alex Moss, Marco Milesi](https://wordpress.org/plugins/eu-cookie-law/)
-* **Affected Versions**     : <= 3.0.6 and possibly upwards
-* **Fixed in Version**      : -
-* **CVE ID**                : CVE-2019-16522
-* **CVSSv3 Vector**         : AV:N/AC:L/PR:H/UI:R/S:U/C:L/I:L/A:N
-* **CVSSv3 Base Score**     : 3.5 (Low)
+I have not been able to reproduce this with any of the GCC versions hosted at Compiler Explorer, so I believe that this may never have been part of the GCC official tree, but the fact remains that all of Ubuntu 4.4.3 and all source programs that were compiled with Ubuntu 4.4.3's default compiler were compiled with a compiler that did this (surprising, dangerous in some contexts) thing.
 
-## Vendor Description ##
+Pascal
 
-> EU Cookie Law is a light, elegant and powerful solution to comply european cookie law and GDPR, with popup and options to lock scripts before acceptance.
->
-> Various customizations included to perfectly fit your website and keep cookies under control (before and after the consent).
->
-> Simply install the plugin and follow the instructions on the Settings page.
 
-Active Installations: 100,000+
-
-Source: <https://wordpress.org/plugins/eu-cookie-law/>
-
-## Impact ##
-
-By exploiting the documented vulnerability, an authenticated attacker with high
-privileges (admin) can execute JavaScript code in a victim's browser.
-This can be misused, e.g for phishing attacks by displaying a fake
-login form and sending the victim's credentials to the attacker.
-Furthermore malicious actions can be performed in the context of an authenticated
-user. The impact depends on the level of access of the attacked user.
-
-## Vulnerability Description ##
-
-In the configuration area `/wp-admin/options-general.php?page=peadig_eucookie`
-an admin can set several options for the plugin. Most of them are correctly
-escaped before inserted in the HTML page. However three values of settings can
-be exploited to insert arbitrary JavaScript and HTML.
-Those are:
-
-* Font Color
-* Background Color
-* "Disable Cookie" Text
-
-The value of "Fontcolor" will be inserted on every page where the cookie consent message
-is shown. The other two are by default only exploitable in the admin area.
-
-## Proof of Concept ##
-
-This example shows how an attacker can exploit this vulnerability through the
-value of "Font Color": By setting the value `#FFFFFF"><script>alert(1)</script>`,
-an attacker can break out of the HTML attribute and insert a `script` tag containing
-JavaScript. In this example a simple alert-popup-box will be shown.
-
-So when the attacker sends the following HTTP-Request:
-
-```http
-POST /wp-admin/options.php HTTP/1.1
-[...]
-
-[...]peadig_eucookie%5Bfontcolor%5D=%23FFFFFF%22%3E%3Cscript%3Ealert%281%29%3C/script%3E[...]
-```
-
-In the admin area, the resulting HTML page looks like the following (shortened for readability):
-
-```html
-[...]
-<input id="fontcolor" type="text" name="peadig_eucookie[fontcolor]" value="#FFFFFF">
-    <script>alert(1)</script>
-    " class="color-field" data-default-color="#ffffff"/>
-[...]
-```
-
-On the page with the cookie message the payload will be inserted multiple times.
-The resulting HTML looks like the following (shortened for readability):
-
-```html
-[...]
-<!-- Eu cookie Law 3.0.6 -->
-<div class="pea_cook_wrapper pea_cook_bottomcenter" style="color:#FFFFFF">
-    <script>alert(1)</script>
-    ;background:rgb(0,0,0);background: rgba(0,0,0,0.85);">
-[...]
-```
-
-## Recommended Countermeasures ##
-
-We recommend to escape the values using the `esc_attr`-[function][1] provided by WordPress.
-
-[1]: https://developer.wordpress.org/themes/theme-security/data-sanitization-escaping/#escaping-securing-output
-
-## Timeline ##
-
-* `2019-09-04` Identified the vulnerability
-* `2019-09-06` Contacted the authors
-* `2019-09-06` Response by authors about disclosure contact
-* `2019-09-09` Disclosed vulnerability to the authors
-* `2019-09-20` CVE assigned
-* `2019-09-20` Asked authors again for fix
-* `2019-10-16` Public disclosure, because authors did not respond
-
-## References ##
-
-* <https://wordpress.org/plugins/eu-cookie-law/>
-* <https://wordpress.org/plugins/eu-cookie-law/#developers>
-
-## Credits ##
-
-* Tobias Fink ([SBA Research](https://www.sba-research.org/))
-
-Download attachment "0xFBB8862F58F775B2.asc" of type "application/pgp-keys" (3542 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
