@@ -1,40 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/01/1
-Message-ID: <CA+W_RZia02oGCMn7wGk_WFSrwv72BfRiiC2UEZnytL=P0mVNQw@mail.gmail.com>
-Date: Wed, 1 May 2019 14:02:58 -0400
-From: Lou DeGenaro <lou.degenaro@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: uima-dev@...che.org
-Subject: [ANNOUNCE] CVE-2018-8035: Apache UIMA DUCC webserver cross-site scripting (XSS) vulnerability fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/8
+Message-ID: <87a7e5zqbl.fsf@oldenburg2.str.redhat.com>
+Date: Tue, 25 Jun 2019 16:34:38 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: "Stuart D. Gathman" <stuart@...hman.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8035: Apache UIMA DUCC webserver cross-site scripting (XSS)
-vulnerability due to unintended execution of user supplied javascript code.
+* Stuart D. Gathman:
 
-Severity: Important
+> Question: is fuzzing useful for languages like Java/python?
 
-Vendor:
-The Apache Software Foundation
+Fuzzing is used to show that a function is partial, when it is expected
+to be total.  That can be useful with any language which has partial
+functions.
 
-Versions Affected:
-   - Apache UIMA DUCC releases including and prior to 2.2.2
+If anything, it should be easier with Java and Python because these
+languages have many more language-defined checks causing abnormal
+function termination, while with C code, you have to inject such checks
+with complicated instrumentation.
 
-Description.
-The details of this vulnerability were reported to the Apache UIMA
-Private mailing list.
-
-This  vulnerability relates to the user's browser processing of DUCC web
-page input data.
-
-The javascript comprising Apache UIMA DUCC which runs in the user's
-browser does not sufficiently filter user supplied inputs, which may
-result in unintended execution of user supplied javascript code.
-
-Mitigation:
-Users are advised to upgrade these UIMA components to the following levels:
-   - Apache UIMA DUCC: upgrade to 3.0.0 or later
-
-Credit: Marshall Schor
-
-Lou DeGenaro, on behalf of the Apache UIMA Team
-
+Thanks,
+Florian
