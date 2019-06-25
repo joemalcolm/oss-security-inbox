@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10160" "Thursday" "15" "September" "2016" "14:42:44" "+0200" "Marcus Meissner" "meissner@suse.de" "<20160915124244.GG19475@suse.de>" "253" "[oss-security] CVE-2016-6519: openstack-manila: Persistent XSS in Metadata field" nil nil nil "9" "2016091512:42:44" "[oss-security] CVE-2016-6519: openstack-manila: Persistent XSS in Metadata field" (number mark "U       meissner@sus Sep 15  253/10160 " thread-indent "\"[oss-security] CVE-2016-6519: openstack-manila: Persistent XSS in Metadata field\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2803" "Tuesday" "25" "June" "2019" "09:46:39" "-0400" "Alex Gaynor" "alex.gaynor@gmail.com" "<CAFRnB2VB6htDEL2u1uNQbA1q_VugPeuqegSdBbdvb-XzNOqbeg@mail.gmail.com>" "67" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062513:46:39" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        alex.gaynor@ Jun 25   67/2803  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190617113203.GH15432@suse.de>" "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>" "<alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>" "<alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>" "<E1hfSKS-00015J-V5@rmmprod07.runbox>" "<20190624193048.GA8039@espresso.pseudorandom.co.uk>" "<CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>" "<alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26237 invoked by uid 550); 15 Sep 2016 12:42:58 -0000
+Received: (qmail 8078 invoked by uid 550); 25 Jun 2019 13:47:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,273 +11,113 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26215 invoked from network); 15 Sep 2016 12:42:58 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 15 Sep 2016 14:42:44 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: OSS Security List <oss-security@lists.openwall.com>
-Cc: ben@swartzlander.org
-Message-ID: <20160915124244.GG19475@suse.de>
+Received: (qmail 8053 invoked from network); 25 Jun 2019 13:47:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=hRaPOjE91rpWQbqG127UmcaHrYvgcpcmwkfTL9WKVhU=;
+        b=bypoGYJLdWzxsFTIblNRD4PbP3jb4je07HiZQeoFc7rzDWyEm2s1ZKS2wbY+r1ZfZS
+         1t8XKqXo9jrV3aWJf4duPFevt9t5mondytHl2bS3OUC8D5/XFovAAXY2s3KxiunWcaZo
+         IaE94sLwN4AJF1HG12QQJc23mN6msUBIlvpyWiuNhrl0W9MNwWvTbATnL/oy4L/WCqUc
+         dsh9z8fEAtt+EIPkNYmp3AJyk2+HiF8rV/czO5ZLQ5oHK4pmSSFTuPS8B5ceYXZf59h1
+         9CCcOSRyUEcZcyRJ0ahUwlgdq9f8rN6KGXdT4lliWr5bvPHAuCfsj6UOLaW7SAbdinvP
+         iSTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=hRaPOjE91rpWQbqG127UmcaHrYvgcpcmwkfTL9WKVhU=;
+        b=jurgGi787AhLViSX54np0p+4YpIdqLFtyAy1+dWFAENWY1CzeOO16CKBrpe/4qXMTE
+         98J/dN36u+JwGyouVozsxP602LiHuzygRMoHc0Jn+h4nw52+BrgPZepFN5W7AFAd34Ul
+         CTcpgPgpUOLTxfx+vQSxFCyIH/rlpOFGrgSVJtU745c34zOoSaRv9l90fYR0wvr5lqfb
+         0IoqA/Wm+kHA22IvsMb6pZHo5ovZzm7DeneMDbMBqVMxrQY5cA0qzAjlmBxZq9jfr24s
+         6sqBVfcw3yqEptorps4bHGSS9tWOz1qgoiV7LZ90oVvnBgUV/e80remY3rGWf4X9UTGb
+         BZ5w==
+X-Gm-Message-State: APjAAAWQgEWUgXh5IDjaJPGbcpICWEu3LwrnJoaopHQQYuVSzGXXIqBz
+	awAKiIiFmcy060t4itPwRIllia6I0iA3LOmqOAK4rg==
+X-Google-Smtp-Source: APXvYqySBTIYdVLcIZX1InHFJC9BK1zhPYoWXB/0NrEfFm7l5h3K9uGuUklwj2NoT3NGQvAT3/HSLXQkYk7Wcs2AHhc=
+X-Received: by 2002:a05:6830:95:: with SMTP id a21mr22320103oto.35.1561470410952;
+ Tue, 25 Jun 2019 06:46:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="HlL+5n6rz5pIUxbD"
-Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] CVE-2016-6519: openstack-manila: Persistent XSS in Metadata field
+References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
+ <20190617113203.GH15432@suse.de> <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>
+ <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
+ <alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org> <E1hfSKS-00015J-V5@rmmprod07.runbox>
+ <20190624193048.GA8039@espresso.pseudorandom.co.uk> <CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>
+ <alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>
+In-Reply-To: <alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>
+Message-ID: <CAFRnB2VB6htDEL2u1uNQbA1q_VugPeuqegSdBbdvb-XzNOqbeg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000002c150f058c262947"
+Date: Tue, 25 Jun 2019 09:46:39 -0400
+From: Alex Gaynor <alex.gaynor@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+To: oss-security@lists.openwall.com
 
---HlL+5n6rz5pIUxbD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--0000000000002c150f058c262947
+Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+20% was a completely made us number.
 
-One of SUSE customers has found Persistent XSS in Metadata field in Openstack Manila.
+Alex
 
-Openstack Manila is currently not covered by the Openstack Security Team, so they
-defered announcement to us.
+On Tue, Jun 25, 2019, 9:42 AM Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+wrote:
 
-------------------------------------
+> On Mon, 24 Jun 2019, Alex Gaynor wrote:
+> > - Not having sooooo many vulnerabilities. While there's some dispute over
+> > just what % of the bugs that OSS-Fuzz and syzbot turn up are exploitable,
+> > there's no doubt that they find a _lot_ of them. Even if only 20% of
+> > OSS-Fuzz reports were truly exploitable vulnerabilities, that'd still be
+> >> 600 of them. We can't produce this many vulnerabilities and then try to
+> > clean up afterwards by finding them with fuzzing -- at some point the
+> > number of vulnerabilities simply overwhelms us. Tactics for reducing
+> > vulnerabilities in the first instance, like memory safe languages, are an
+> > important part of making this problem tractable.
+> >
+> > Do folks feel like there were important themes that this misses?
+>
+> I see the assumption that 20% of oss-fuzz reports are exploitable
+> vulnerabilities.  Where does this percentage estimate come from?  What
+> does it mean to be "exploitable"?
+>
+> From working on fixing oss-fuzz detected bugs in GraphicsMagick I see
+> that many/most of the issues are not significant from a security
+> standpoint, assuming that the software is deployed in a way suitable
+> for its level of exposure.  Common issues include:
+>
+>   * Huge uninitialized memory allocations (which do not really matter
+>     under Linux since Linux does not reserve anything but virtual
+>     memory space).
+>
+>   * Consumption of uninitialized data (e.g. image data) which is not
+>     used to make important decisions.  This is usually due to unhandled
+>     cases or error handling which does not quit immediately.
+>
+>   * Tiny heap over-reads which are not past the bounds of the
+>     underlying allocation.
+>
+>   * Heap over-reads or over-writes which cause an immediate core dump.
+>
+>   * Excessively slow code with the slowness emphasized by ASAN and
+>     UBSAN code running vastly slower.  The excessively slow code is not
+>     necessarily noticeable in a normal compilation.
+>
+>   * Memory leaks.
+>
+>   * "undefined behavior" which nevertheless has a common behavior that
+>     compilers have followed since the dawn of time.
+>
+> The most important thing that oss-fuzz contributes is a large
+> collection of files which cause problems for unfixed software such
+> that only the unaware or foolish do not update to fixed versions.
+>
+> Bob
+> --
+> Bob Friesenhahn
+> bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+>
 
-CVE-2016-6519: OpenStack manila-ui: Persistent XSS in Metadata field
-
-It was discovered that the Metadata field in the "Create Share" form allows users to inject malicious HTML/JavaScript code that will be reflected in the "Shares" overview. The issue comes from a mark_safe() call on the user supplied metadata.
-
-https://github.com/openstack/manila-ui/blob/d5fe23e4ba30846acdd09fa1dc61a415016a7e26/manila_ui/dashboards/project/shares/shares/tabs.py#L49
-
-Remote, authenticated, but unprivileged users could exploit this vulnerability to escalate privileges by stealing session cookies.
-
-Due to the size limitation of metadata strings the malicious payload needs to be split over multiple keys. In order to reproduce this issue, in Horizon, go to Project -> Compute -> Shares -> Create Share. In the Metadata field, add the following payload:
-
-a=<script>alert("test")/*
-b=*/<script>
-
-As soon as the share is created, the payload is reflected in the browser. It will also be reflected each time the Shares list will be loaded (e.g. by clicking on Project -> Compute -> Shares).
-
-The issue was discovered by Niklaus Schiess, the fix was provided Valeriy Ponomaryov.
-
-MITRE assigned CVE-2016-6519 to this issue.
-The upstream bug is https://bugs.launchpad.net/manila-ui/+bug/1597738
-The SUSE bug is https://bugzilla.suse.com/show_bug.cgi?id=988935
-SUSE's evaluation has a CVSS base score 6.0 (AV:N/AC:M/Au:S/C:P/I:P/A:P)
-
------------------------------------
-
-The proposed upstream fix is attached.
-
-Ciao, Marcus
-
---HlL+5n6rz5pIUxbD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="fix_v2_for_bug_1597738_stable_mitaka_and_liberty.txt"
-
->From 9c1c1e4a096d5480444e025757692309be26a14b Mon Sep 17 00:00:00 2001
-From: Valeriy Ponomaryov <vponomaryov@mirantis.com>
-Date: Thu, 30 Jun 2016 20:19:22 +0300
-Subject: [PATCH] Fix metadata_to_str function code injection vulnerability
-
-It is possible to inject HTML/JavaScript code into shares table
-member page setting metadata to shares and share types table admin page
-setting extra specs. So, escape HTML-specific symbols in output
-string of 'metadata_to_str' function to make it interpreted
-as string and not as code.
-
-Change-Id: Ied567e06d91941e9aaac7d3117e03cd1770fb75e
-Security-Fix
-Closes-Bug: #1597738
----
- manila_ui/dashboards/admin/shares/tabs.py          |  8 ++---
- .../dashboards/project/shares/shares/tables.py     |  4 +--
- manila_ui/dashboards/project/shares/shares/tabs.py | 10 +++----
- manila_ui/dashboards/utils.py                      | 24 +++++++++++----
- manila_ui/test/dashboards/test_utils.py            | 34 ++++++++++++++++++++++
- 5 files changed, 60 insertions(+), 20 deletions(-)
-
-diff --git a/manila_ui/dashboards/admin/shares/tabs.py b/manila_ui/dashboards/admin/shares/tabs.py
-index 4544286..8aded92 100644
---- a/manila_ui/dashboards/admin/shares/tabs.py
-+++ b/manila_ui/dashboards/admin/shares/tabs.py
-@@ -12,7 +12,6 @@
- #    License for the specific language governing permissions and limitations
- #    under the License.
- 
--from django.utils.safestring import mark_safe
- from django.utils.translation import ugettext_lazy as _
- 
- from horizon import exceptions
-@@ -25,6 +24,7 @@ from manila_ui.api import manila
- from manila_ui.api import network
- from manila_ui.dashboards.admin.shares import tables
- from manila_ui.dashboards.admin.shares import utils
-+from manila_ui.dashboards import utils as common_utils
- 
- 
- class SnapshotsTab(tabs.TableTab):
-@@ -104,10 +104,8 @@ class ShareTypesTab(tabs.TableTab):
-                               _("Unable to retrieve share types"))
-         # Convert dict with extra specs to friendly view
-         for st in share_types:
--            es_str = ""
--            for k, v in st.extra_specs.iteritems():
--                es_str += "%s=%s\r\n<br />" % (k, v)
--            st.extra_specs = mark_safe(es_str)
-+            st.extra_specs = common_utils.metadata_to_str(
-+                st.extra_specs, 8, 45)
-         return share_types
- 
- 
-diff --git a/manila_ui/dashboards/project/shares/shares/tables.py b/manila_ui/dashboards/project/shares/shares/tables.py
-index f529ae9..09f7f96 100644
---- a/manila_ui/dashboards/project/shares/shares/tables.py
-+++ b/manila_ui/dashboards/project/shares/shares/tables.py
-@@ -17,7 +17,6 @@
- from django.core.urlresolvers import NoReverseMatch  # noqa
- from django.core.urlresolvers import reverse
- from django.template.defaultfilters import title  # noqa
--from django.utils.safestring import mark_safe
- from django.utils.translation import string_concat, ugettext_lazy  # noqa
- from django.utils.translation import pgettext_lazy
- from django.utils.translation import ugettext_lazy as _
-@@ -150,8 +149,7 @@ class UpdateRow(tables.Row):
-             share.share_network = share_net.name or share_net.id
-         else:
-             share.share_network = None
--        meta_str = utils.metadata_to_str(share.metadata)
--        share.metadata = mark_safe(meta_str)
-+        share.metadata = utils.metadata_to_str(share.metadata)
- 
-         return share
- 
-diff --git a/manila_ui/dashboards/project/shares/shares/tabs.py b/manila_ui/dashboards/project/shares/shares/tabs.py
-index cc5c7f1..7a126d8 100644
---- a/manila_ui/dashboards/project/shares/shares/tabs.py
-+++ b/manila_ui/dashboards/project/shares/shares/tabs.py
-@@ -10,7 +10,6 @@
- #    License for the specific language governing permissions and limitations
- #    under the License.
- 
--from django.utils.safestring import mark_safe
- from django.utils.translation import ugettext_lazy as _
- 
- from horizon import exceptions
-@@ -42,11 +41,10 @@ class SharesTab(tabs.TableTab):
-         try:
-             shares = manila.share_list(self.request)
-             for share in shares:
--                share.share_network = \
--                    share_nets_names.get(share.share_network_id) or \
--                    share.share_network_id
--                meta_str = utils.metadata_to_str(share.metadata)
--                share.metadata = mark_safe(meta_str)
-+                share.share_network = (
-+                    share_nets_names.get(share.share_network_id) or
-+                    share.share_network_id)
-+                share.metadata = utils.metadata_to_str(share.metadata)
- 
-             snapshots = manila.share_snapshot_list(self.request, detailed=True)
-             share_ids_with_snapshots = []
-diff --git a/manila_ui/dashboards/utils.py b/manila_ui/dashboards/utils.py
-index f622084..9912e18 100644
---- a/manila_ui/dashboards/utils.py
-+++ b/manila_ui/dashboards/utils.py
-@@ -13,9 +13,23 @@
- #    under the License.
- 
- from django.forms import ValidationError  # noqa
-+from django.utils.safestring import mark_safe
- from django.utils.translation import ugettext_lazy as _
- 
- 
-+html_escape_table = {
-+    "&": "&amp;",
-+    '"': "&quot;",
-+    "'": "&apos;",
-+    ">": "&gt;",
-+    "<": "&lt;",
-+}
-+
-+
-+def html_escape(text):
-+    return ''.join(html_escape_table.get(s, s) for s in text)
-+
-+
- def parse_str_meta(meta_s):
-     """Parse multiline string with data from form.
- 
-@@ -58,14 +72,12 @@ def parse_str_meta(meta_s):
-     return set_dict, unset_list
- 
- 
--def metadata_to_str(metadata):
-+def metadata_to_str(metadata, meta_visible_limit=4, text_length_limit=25):
- 
-     # Only convert dictionaries
-     if not hasattr(metadata, 'keys'):
-         return metadata
- 
--    meta_visible_limit = 4
--    text_length_limit = 25
-     meta = []
-     meta_keys = metadata.keys()
-     meta_keys.sort()
-@@ -77,8 +89,8 @@ def metadata_to_str(metadata):
-         v = metadata[k]
-         if len(v) > text_length_limit:
-             v = v[:text_length_limit] + '...'
--        meta.append("%s = %s" % (k_shortenned, v))
-+        meta.append("%s = %s" % (html_escape(k_shortenned), html_escape(v)))
-     meta_str = "<br/>".join(meta)
--    if len(metadata.keys()) > meta_visible_limit:
-+    if len(metadata.keys()) > meta_visible_limit and meta_str[-3:] != "...":
-         meta_str += '...'
--    return meta_str
-+    return mark_safe(meta_str)
-diff --git a/manila_ui/test/dashboards/test_utils.py b/manila_ui/test/dashboards/test_utils.py
-index dcde6c9..60f2afa 100644
---- a/manila_ui/test/dashboards/test_utils.py
-+++ b/manila_ui/test/dashboards/test_utils.py
-@@ -61,3 +61,37 @@ class ManilaDashboardsUtilsTests(base.TestCase):
-     )
-     def test_parse_str_meta_validation_error(self, input_data):
-         self.assertRaises(ValidationError, utils.parse_str_meta, input_data)
-+
-+    @ddt.data(
-+        (({"a": "<script>alert('A')/*", "b": "*/</script>"}, ),
-+         "a = &lt;script&gt;alert(&apos;A&apos;)/*<br/>b = */&lt;/script&gt;"),
-+        (({"fookey": "foovalue", "barkey": "barvalue"}, ),
-+         "barkey = barvalue<br/>fookey = foovalue"),
-+        (({"foo": "barquuz"}, 1, 2), "fo... = ba..."),
-+        (({"foo": "barquuz", "zfoo": "zbarquuz"}, 1, 3), "foo = bar..."),
-+        (({"foo": "barquuz", "zfoo": "zbarquuz"}, 2, 3),
-+         "foo = bar...<br/>zfo... = zba..."),
-+        (({"foo": "barquuz", "zfoo": "zbarquuz"}, 3, 3),
-+         "foo = bar...<br/>zfo... = zba..."),
-+        (({"foo": "barquuz", "zfoo": "zbarquuz"}, 3, 8),
-+         "foo = barquuz<br/>zfoo = zbarquuz"),
-+    )
-+    @ddt.unpack
-+    def test_metadata_to_str(self, input_args, expected_output):
-+        result = utils.metadata_to_str(*input_args)
-+
-+        self.assertEqual(expected_output, result)
-+
-+    @ddt.data(
-+        ("ldap", "LDAP"),
-+        ("active_directory", "Active Directory"),
-+        ("kerberos", "Kerberos"),
-+        ("FaKe", "FaKe"),
-+    )
-+    @ddt.unpack
-+    def test_get_nice_security_service_type(self, input_value, expected_value):
-+        security_service = type("FakeSS", (object, ), {"type": input_value})()
-+
-+        result = utils.get_nice_security_service_type(security_service)
-+
-+        self.assertEqual(expected_value, result)
--- 
-1.9.1
-
-
---HlL+5n6rz5pIUxbD--
+--0000000000002c150f058c262947--
