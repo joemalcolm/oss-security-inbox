@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["791" "Thursday" "22" "July" "2021" "11:52:05" "+0300" "Georgi Guninski" "gguninski@gmail.com" nil "26" "[oss-security] ipython3 may execute code from the current working directory" nil nil nil "7" nil nil (number mark "U       gguninski@gm Jul 22   26/791   " thread-indent "\"[oss-security] ipython3 may execute code from the current working directory\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] ipython3 may execute code from the current working directory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2636" "Tuesday" "25" "June" "2019" "15:02:54" "+0000" "Pascal Cuoq" "cuoq@trust-in-soft.com" "<ED9DF282-AA92-46A4-ACE0-E8A4EB386032@trust-in-soft.com>" "44" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^CC:" nil nil "6" "2019062515:02:54" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        cuoq@trust-i Jun 25   44/2636  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<1543f203-6032-8926-b722-6de2e06d3e71@redhat.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190617113203.GH15432@suse.de>" "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>" "<alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>" "<alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>" "<E1hfSKS-00015J-V5@rmmprod07.runbox>" "<20190624193048.GA8039@espresso.pseudorandom.co.uk>" "<CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>" "<alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>" "<2422A407-94F6-4AB2-9928-310C5089EA5D@gmail.com>" "<1543f203-6032-8926-b722-6de2e06d3e71@redhat.com>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7843 invoked by uid 550); 22 Jul 2021 10:53:14 -0000
+Received: (qmail 5579 invoked by uid 550); 25 Jun 2019 16:40:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20048 invoked from network); 22 Jul 2021 08:52:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Aipr+UZEyvnHZTeJbKPc2Z8YQ3Sb3cR1GVteugbfUtg=;
-        b=RL7vIDujH5Ll2dbxUixYGxRM6VIBCIO8s23B7AnmmGGZJTSsWr8LwWnD9AyYxBFU79
-         CvE4dgO2p3pPWeOIV1j5L4Z+GE936AuphhGZhp/RQT4EShKzqcx5rQ/t33tHTYfhHwkQ
-         FR8DR/GJUuSkb4HDVj9cGT0LRP1xYn4FQZx0JHW49zPtkzhJuwZZQExfqsgK0jzJjSm9
-         6mtXmuFB8c4TEAPfdT49xN17QM8jo8jxITx0KujabvEwmsWnHSI9h1vMN2MOIjqBH2h9
-         83O/a4O7gt+26rRJLZ7k6y9xNITJnaSB5qp0sJAXSksAub0kJYF/v3vPeyPorF0/XAsm
-         jKaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Aipr+UZEyvnHZTeJbKPc2Z8YQ3Sb3cR1GVteugbfUtg=;
-        b=GFC1P6eXKUX1LDO4X316mitKvNooBEh4g/0DJ3vCuBFKotIiTAY/3iNf60wl1QiUjP
-         DimtF3gxH+cYwV4V+/mv9po2RvGSs7PEn+XzRO+x+52HL3awZK/v7yMNusGAiXJNfekl
-         AwHq8/tD9brpmhxnrVGpOlkc8GD+slD865U6Rqm/ibE7rWP2A7uXW1N51ZpbqROy+ZYd
-         e0UZK6NWl4BSJcOFRXey/A7IMds4NwUOP7vocF6TAnh4HB57Yaxj+B3Ak3HvGlC1Uxks
-         8Xm4EZOlKHpiNxn+6Q8CeHrIJavwn/T7TBcBxja8jqDXaA6Or6fbn/sCN66MW7xhOdgN
-         54hw==
-X-Gm-Message-State: AOAM531KMzu+HpglYrVMPvX1qxQBAzFesHPd6fR3L/L/QnrMrxWt5EVv
-	qCvfYl/W6GpetdLPuxTXkPiDNjQrqywKOivy0e7/vhprPfM=
-X-Google-Smtp-Source: ABdhPJy2KiRsqYdNWZugnBW0gEfMGRFTmO9hwzz4u9wNc9uWsXWvXDyb1L/FbzHiJ5N4gy0wZCrVPCWF2L9gRLGLx7U=
-X-Received: by 2002:a05:600c:4e92:: with SMTP id f18mr7933649wmq.62.1626943936395;
- Thu, 22 Jul 2021 01:52:16 -0700 (PDT)
+Received: (qmail 24386 invoked from network); 25 Jun 2019 15:03:06 -0000
+Thread-Topic: [oss-security] Thousands of vulnerabilities, almost no CVEs:
+ OSS-Fuzz
+Thread-Index: AQHVI5IJb0Ki9SV0S0SnCEW/hJ0dS6afl+aAgAsZNgCAAC0hAIAABMSAgAAQ+QCAACoBAIAAPrwAgADx5gCAAAltAIAABUMAgAAIKIA=
+Message-ID: <ED9DF282-AA92-46A4-ACE0-E8A4EB386032@trust-in-soft.com>
+References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
+ <20190617113203.GH15432@suse.de>
+ <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>
+ <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
+ <alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>
+ <E1hfSKS-00015J-V5@rmmprod07.runbox>
+ <20190624193048.GA8039@espresso.pseudorandom.co.uk>
+ <CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>
+ <alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>
+ <2422A407-94F6-4AB2-9928-310C5089EA5D@gmail.com>
+ <1543f203-6032-8926-b722-6de2e06d3e71@redhat.com>
+In-Reply-To: <1543f203-6032-8926-b722-6de2e06d3e71@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [86.246.37.143]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <EB503DA5FCF7E14294968BC8C955DC7D@EX1688.lan>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-From: Georgi Guninski <gguninski@gmail.com>
-Date: Thu, 22 Jul 2021 11:52:05 +0300
-Message-ID: <CAGUWgD9MsQts5_jV9=nr8X6mwZyW-NU2JzYnosdMqQ0G06nH6w@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] ipython3 may execute code from the current working directory
+CC: "law@redhat.com" <law@redhat.com>
+Date: Tue, 25 Jun 2019 15:02:54 +0000
+From: Pascal Cuoq <cuoq@trust-in-soft.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
+ OSS-Fuzz
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Summary: under certain circumstances, ipython3 may execute
-code from the current working directory. This might be a
-problem if the current working directory is not trusted.
-
-python3 is safe.
-
-Tested on ubuntu 20.
-
-The following session illustrates it:
-
-joro@bialokote:~/tests/dir2$ pwd
-/home/joro/tests/dir2
-joro@bialokote:~/tests/dir2$ ipython3 --version
-7.13.0
-joro@bialokote:~/tests/dir2$ ls ~/tests/dir1
-a.py  joro-orig.py  __pycache__
-joro@bialokote:~/tests/dir2$ ls ~/tests/dir2
-joro.py  __pycache__
-joro@bialokote:~/tests/dir2$ cat ~/tests/dir1/a.py
-try:  import joro
-except:  print("error in import")
-joro@bialokote:~/tests/dir2$ cat ~/tests/dir2/joro.py
-print("imported joro :)")
-joro@bialokote:~/tests/dir2$ ipython3 ~/tests/dir1/a.py
-imported joro :)
-joro@bialokote:~/tests/dir2$
+SGVsbG8sDQoNCj4gT24gMjUgSnVuIDIwMTksIGF0IDE2OjMzLCBKZWZmIExh
+dyA8bGF3QHJlZGhhdC5jb20+IHdyb3RlOg0KPiANCj4gT24gNi8yNS8xOSA4
+OjE0IEFNLCBNYXR0aGV3IEZlcm5hbmRleiB3cm90ZToNCj4+IA0KPj4gDQo+
+PiBDL0MrKyBjb21waWxlcnMgd2lsbCBpbmZlciBiYWNrd2FyZHMgZnJvbSB1
+bmluaXRpYWxpemVkIHZhcmlhYmxlIHJlYWRzICh1bmRlZmluZWQgYmVoYXZp
+b3IgaW4gdGhlc2UgbGFuZ3VhZ2VzKSB0aGF0IHByZWNlZGluZyBjb2RlIGlz
+IHVucmVhY2hhYmxlLiBGb3IgZXhhbXBsZSwgd2hlbiBtb3ZpbmcgZnJvbSBH
+Q0MgNiBzZXJpZXMgdG8gR0NDIDcgc2VyaWVzIHdlIGZvdW5kIG9uZSBvZiBv
+dXIgY29kZSBiYXNlcyB3b3VsZCBwcm9kdWNlIGEgYmluYXJ5IHRoYXQgd291
+bGQgb25seSBzZWdmYXVsdCB3aGVuIGNvbXBpbGVkIGF0ID49IC1PMi4gV2Ug
+cm9vdCBjYXVzZWQgdGhpcyB0byBleGFjdGx5IHRoZSBzaXR1YXRpb24geW91
+IGRlc2NyaWJlOiBhbiBlcnJvciBoYW5kbGluZyBwYXRoIHRoYXQgcmVhZCB1
+bmluaXRpYWxpemVkIHZhcmlhYmxlcy4gVGhlIGNvbXBpbGVyIGFwcGVhcmVk
+IHRvIGluZmVyIGJhY2t3YXJkcyB0aGF0IHRoZSBlcnJvciBjaGVjayBpdHNl
+bGYgd2FzIGEgbm8tb3AgYXMgdGhlIHRydWUgYnJhbmNoIGxlZCB0byB1bmNv
+bmRpdGlvbmFsIFVCICh0aGlzIGlzIG15IGludGVycHJldGF0aW9uIG9mIGl0
+cyBhY3Rpb25zOyBJIGRpZCBub3QgZGVsdmUgaW50byB0aGUgY29tcGlsZXLi
+gJlzIGludGVybmFscykuDQo+IFdlbGwsIGFzIGEgR0NDIGRldmVsb3Blciwg
+SSBjYW4gc2F5IGl0IGRvZXNuJ3QgdXNlIGFuIHVuaW5pdGlhbGl6ZWQgcmVh
+ZA0KPiB0byBhbGxvdyBiYWNrLXByb3BhZ2F0aW9uIG9mIHN0YXRlIHRvIGVs
+aW1pbmF0ZSBjb25kaXRpb25hbHMuICBJdCBtYXkNCj4gaGF2ZSBsb29rZWQg
+dGhhdCB3YXksIGJ1dCB0aGVyZSBoYWQgdG8gYmUgc29tZXRoaW5nIGVsc2Ug
+Z29pbmcgb24uDQoNClRoaXMgaXMgdGFuZ2VudGlhbCB0byB0aGUgc3ViamVj
+dCBhbmQgcGVyaGFwcyB3ZSBzaG91bGQgdGFrZSB0aGlzIHN1Yi1kaXNjdXNz
+aW9uIG9mZiB0aGUgbGlzdCwgb3IgYXQgbGVhc3QgbWFrZSBhIG5ldyB0aHJl
+YWQuIEknbSBpbnRlcmVzdGVkIGluIHlvdXIgb3BpbmlvbiBvZiB3aGF0IGlz
+IGdvaW5nIG9uIHdpdGggVWJ1bnR1J3MgcGFja2FnZWQgR0NDIHZlcnNpb24g
+NC40LjMgaW4gdGhlIGV4YW1wbGUgdW5kZXIgdGhlIHNlY3Rpb24g4oCcVGhl
+IG5leHQgZXhhbXBsZeKAnSBpbiB0aGlzIGJsb2cgcG9zdCwgd2hlcmUgdGhp
+cyB2ZXJ5IHRoaW5nIGlzIGhhcHBlbmluZyAod2hlbiBpbnZva2VkIHdpdGgg
+ZmV3ZXIgdGhhbiAzIGFyZ3VtZW50cywgdGhlIGNvbXBpbGVkIGNvZGUgY2xh
+aW1zIHRoYXQgdGhlIHJlc3VsdCBvZiBhbiB1bnNpZ25lZCBtdWx0aXBsaWNh
+dGlvbiBieSAyIGlzIG9kZCk6DQoNCmh0dHA6Ly9ibG9nLmZyYW1hLWMuY29t
+L2luZGV4LnBocD9wb3N0LzIwMTMvMDMvMTMvaW5kZXRlcm1pbmF0ZS11bmRl
+ZmluZWQNCg0KSSBoYXZlIG5vdCBiZWVuIGFibGUgdG8gcmVwcm9kdWNlIHRo
+aXMgd2l0aCBhbnkgb2YgdGhlIEdDQyB2ZXJzaW9ucyBob3N0ZWQgYXQgQ29t
+cGlsZXIgRXhwbG9yZXIsIHNvIEkgYmVsaWV2ZSB0aGF0IHRoaXMgbWF5IG5l
+dmVyIGhhdmUgYmVlbiBwYXJ0IG9mIHRoZSBHQ0Mgb2ZmaWNpYWwgdHJlZSwg
+YnV0IHRoZSBmYWN0IHJlbWFpbnMgdGhhdCBhbGwgb2YgVWJ1bnR1IDQuNC4z
+IGFuZCBhbGwgc291cmNlIHByb2dyYW1zIHRoYXQgd2VyZSBjb21waWxlZCB3
+aXRoIFVidW50dSA0LjQuMydzIGRlZmF1bHQgY29tcGlsZXIgd2VyZSBjb21w
+aWxlZCB3aXRoIGEgY29tcGlsZXIgdGhhdCBkaWQgdGhpcyAoc3VycHJpc2lu
+ZywgZGFuZ2Vyb3VzIGluIHNvbWUgY29udGV4dHMpIHRoaW5nLg0KDQpQYXNj
+YWwNCg0KDQo=
