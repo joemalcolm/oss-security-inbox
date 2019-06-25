@@ -1,41 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/19/1
-Message-ID: <20190219164858.GC19026@espresso.pseudorandom.co.uk>
-Date: Tue, 19 Feb 2019 16:48:58 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/5
+Message-ID: <CAG_fn=VZfUE2k=so_OnDZFFNPyhH=QRvCyWgC1G3iajK_ZGVNA@mail.gmail.com>
+Date: Tue, 25 Jun 2019 16:08:29 +0200
+From: Alexander Potapenko <glider@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-6454: systemd (PID1) crash with specially crafted D-Bus message
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 18 Feb 2019 at 17:41:56 +0100, Chris Coulson wrote:
-> According to the dbus specification, the path "may be of any
-> length" (with the length being represented on the wire by a uint32),
-> but systemd seems to limit the size of incoming messages to 128MB
-> (BUS_MESSAGE_SIZE_MAX).
+On Tue, Jun 25, 2019 at 3:43 PM Bob Friesenhahn
+<bfriesen@...ple.dallas.tx.us> wrote:
+>
+> On Mon, 24 Jun 2019, Alex Gaynor wrote:
+> > - Not having sooooo many vulnerabilities. While there's some dispute over
+> > just what % of the bugs that OSS-Fuzz and syzbot turn up are exploitable,
+> > there's no doubt that they find a _lot_ of them. Even if only 20% of
+> > OSS-Fuzz reports were truly exploitable vulnerabilities, that'd still be
+> >> 600 of them. We can't produce this many vulnerabilities and then try to
+> > clean up afterwards by finding them with fuzzing -- at some point the
+> > number of vulnerabilities simply overwhelms us. Tactics for reducing
+> > vulnerabilities in the first instance, like memory safe languages, are an
+> > important part of making this problem tractable.
+> >
+> > Do folks feel like there were important themes that this misses?
+>
+> I see the assumption that 20% of oss-fuzz reports are exploitable
+> vulnerabilities.  Where does this percentage estimate come from?  What
+> does it mean to be "exploitable"?
+>
+> From working on fixing oss-fuzz detected bugs in GraphicsMagick I see
+> that many/most of the issues are not significant from a security
+> standpoint, assuming that the software is deployed in a way suitable
+> for its level of exposure.  Common issues include:
+>
+>   * Huge uninitialized memory allocations (which do not really matter
+>     under Linux since Linux does not reserve anything but virtual
+>     memory space).
+>
+>   * Consumption of uninitialized data (e.g. image data) which is not
+>     used to make important decisions.  This is usually due to unhandled
+>     cases or error handling which does not quit immediately.
+>
+>   * Tiny heap over-reads which are not past the bounds of the
+>     underlying allocation.
+>
+>   * Heap over-reads or over-writes which cause an immediate core dump.
+Please note that these particular bugs most certainly behave
+differently with different memory allocators.
+Even assuming these immediate core dumps happen regardless of the
+contents of data being written (e.g. the crash happens because you hit
+a protected page), there's no guarantee that using a different
+allocator won't let the malicious user silently corrupt the heap.
+(Not to mention different standard library versions, CPU architecture,
+bitness etc.)
+>   * Excessively slow code with the slowness emphasized by ASAN and
+>     UBSAN code running vastly slower.  The excessively slow code is not
+>     necessarily noticeable in a normal compilation.
+>
+>   * Memory leaks.
+>
+>   * "undefined behavior" which nevertheless has a common behavior that
+>     compilers have followed since the dawn of time.
+>
+> The most important thing that oss-fuzz contributes is a large
+> collection of files which cause problems for unfixed software such
+> that only the unaware or foolish do not update to fixed versions.
+>
+> Bob
+> --
+> Bob Friesenhahn
+> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
 
-D-Bus is a protocol and dbus is the reference implementation of the
-D-Bus protocol, so it's really the D-Bus specification.
 
-The 128M limit also comes from the D-Bus Specification, which isn't
-always as good as it might be about taking a rule from one part of the
-spec and noting its consequences in another part (patches welcome). The
-intention is that wherever rules rule1 and rule2 overlap, messages must
-obey (rule1 && rule2) - so for instance when a string or path can be
-any 32-bit length, a string or path is part of a message, and a message
-is up to 128M, the practical result is that the longest possible string
-or path is a bit less than 128M.
 
-> From testing on Ubuntu 18.10, it seems that the
-> real limit is actually much less than this - dbus-daemon drops the
-> connection when I try to send a message with an object path greater than
-> about 32MB.
+-- 
+Alexander Potapenko
+Software Engineer
 
-This lower limit is `dbus-daemon --system` policy/configuration to
-mitigate/limit denial-of-service attacks by resource exhaustion (and
-accidentally also mitigation for attacks like this one, although I don't
-think that was ever intentional) - part of dbus, the reference
-implementation of D-Bus, rather than part of the D-Bus spec. It can differ
-in other implementations like dbus-broker and gdbus-daemon, and it can
-also be changed by distros or sysadmins.
+Google Germany GmbH
+Erika-Mann-Straße, 33
+80636 München
 
-    smcv
+Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
