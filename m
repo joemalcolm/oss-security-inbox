@@ -1,138 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/9
-Message-Id: <E1iNxUU-0002vA-BF@xenbits.xenproject.org>
-Date: Fri, 25 Oct 2019 11:10:46 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 300 v3 (CVE-2019-17351) - Linux: No grant table and foreign mapping limits
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/6
+Message-Id: <2422A407-94F6-4AB2-9928-310C5089EA5D@gmail.com>
+Date: Tue, 25 Jun 2019 07:14:52 -0700
+From: Matthew Fernandez <matthew.fernandez@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-            Xen Security Advisory CVE-2019-17351 / XSA-300
-                              version 3
+> On Jun 25, 2019, at 06:41, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us> wrote:
+> 
+> * Consumption of uninitialized data (e.g. image data) which is not
+>   used to make important decisions.  This is usually due to unhandled
+>   cases or error handling which does not quit immediately.
 
-             Linux: No grant table and foreign mapping limits
+C/C++ compilers will infer backwards from uninitialized variable reads (undefined behavior in these languages) that preceding code is unreachable. For example, when moving from GCC 6 series to GCC 7 series we found one of our code bases would produce a binary that would only segfault when compiled at >= -O2. We root caused this to exactly the situation you describe: an error handling path that read uninitialized variables. The compiler appeared to infer backwards that the error check itself was a no-op as the true branch led to unconditional UB (this is my interpretation of its actions; I did not delve into the compiler’s internals).
 
-UPDATES IN VERSION 3
-====================
-
-CVE assigned.
-
-ISSUE DESCRIPTION
-=================
-
-Virtual device backends and device models running in domain 0, or
-other backend driver domains, need to be able to map guest memory
-(either via grant mappings, or via the foreign mapping interface).
-
-Inside Xen, mapped grants are tracked by the maptrack structure.  The
-size of this structure is chosen during domain creation, and has a
-fixed upper bound for the lifetime of the domain.
-
-For Linux to keep track of these mappings, it needs to have a page
-structure for each one.  In practice the number of page structures is
-usually limited.  In PV guests, a range of pfns are typically set
-aside at boot ("pre-ballooned") for this purpose.  For HVM/PVH and Arm
-guests, no memory is set aside to begin with.  In either case, when
-more of this "foreign / grant map pfn space" is needed, Linux will
-balloon out extra pages to use for this purpose.
-
-Unfortunately, in Linux, there are no limits, either on the total
-amount of memory which the domain will attempt to balloon out, nor on
-the amount of "foreign / grant map" memory which any individual guest
-can consume.
-
-For Linux userspace backends (e.g. QEMU) which use /dev/xen/gnttab or
-/proc/xen/gnttab, there is an arbitrary mapping limit which, if hit,
-will prevent further mappings from being established.
-
-As a result, a malicious guest may be able to, with crafted requests,
-cause a backend Linux domain to either:
-
- 1) Fill the maptrack table in Xen and/or hit the userspace limit.
-    This will starve I/O from other guests served by the same backend.
-
- 2) Balloon out sufficient RAM to cause it to swap excessively, or run
-    completely out of memory.  This may starve all operations from the
-    domain, including I/O from other guests, or may cause a crash of
-    the domain.
-
-IMPACT
-======
-
-Guest may be able to crash backend Linux domains, or starve operations
-inside the domain, including the processing of guest I/O requests
-(Guest Denial-of-Service).
-
-If the backend is domain 0, which is the most common configuration,
-then host-wide operations may be starved, or the host may crash (Host
-Denial-of-Service).
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Linux are vulnerable.  Only Linux guests acting as
-backend domains for other guests may be exploited.
-
-All Arm domains are vulnerable, as are x86 PVH/HVM guests.  The
-vulnerability of x86 PV guests depends on how they were configured at
-boot.
-
-MITIGATION
-==========
-
-PV guests can be constructed with "pre-ballooned" memory, by building
-it with maxmem > memory.  See `man 5 xl.cfg` for full details of these
-two parameters.
-
-For PV dom0, these are controlled by Xen's "dom0_mem=$X,max:$Y"
-command line parameter.
-
-The larger the difference between memory and maxmem, the more space
-Linux has to fill with grant/foreign mappings before it will start
-ballooning out real memory to satisfy further mapping requests.  This
-makes the attack more difficult to accomplish.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of ARM.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves the backend memory
-exhaustion issue.
-
-NOTE: This does NOT fix the guest starvation issue.  Fixing fixing
-this issue is more complex, and it was determined that it was better
-to work on a robust fix for the issue in public.  This advisory will
-be updated when fixes are available.
-
-xsa300-linux-5.2.patch     Linux 4.4 ... 5.2
-
-$ sha256sum xsa300*
-9c8a9aec52b147f8e8ef41444e1dd11803bacf3bd4d0f6efa863b16f7a9621ac  xsa300-linux-5.2.patch
-$
-
-NOTE ON LACK OF EMBARGO
-=======================
-
-The lack of predisclosure is due to a short schedule set by the
-discoverer, and efforts to resolve the advisory wording.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y2AYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ1zEH/0EshvAErWXqQzUnuqxyCeCOPnVtTbnGRDBR4B62
-znE6Kbu449nh7qnkqyRGQxwGgdKnsFPDbXuQJb1hyjSl1Ph+u5KbA3aDcIxNy4d0
-y0gumH8tcW+ag1P9Z9geACrRT+1dJ7RiMfi+IaBA7nD3raYUtHLdGrAHGTxX1B3u
-k3kXjP5pyXl96u9zCAd4lOe6hLnQr3gaPrBdDDkF+ArY8WO8+XaTqKPH0YsdrHxA
-kexqH3Ts9sBO+YC7LZdF9Q54K91xOfzwmmmZUTL99pJhzAAl4fwh/ZZj/rRZhC58
-FnRy0lL7D2lFyhzlPIrXk+sjuu4tS/ZslQKk14Q7etcXGFQ=
-=rVDQ
------END PGP SIGNATURE-----
-
-Download attachment "xsa300-linux-5.2.patch" of type "application/octet-stream" (2278 bytes)
+I’m probably telling you things you already know and it sounds like you don’t consider such issues worth addressing, but I just wanted to point out that these are not theoretical. These cause real problems for users and, for open source software, you may not have full control over what toolchain/flags users build your code with.
