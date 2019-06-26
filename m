@@ -1,42 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/13
-Message-ID: <20190624193048.GA8039@espresso.pseudorandom.co.uk>
-Date: Mon, 24 Jun 2019 20:30:48 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/27/1
+Message-ID: <20190626235834.GA32354@kroah.com>
+Date: Thu, 27 Jun 2019 07:58:34 +0800
+From: Greg KH <gregkh@...uxfoundation.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 24 Jun 2019 at 13:00:28 -0400, David A. Wheeler wrote:
-> In particular, many organizations have a rapid upgrade process
-> if some software version has a CVE, and a slow process otherwise.
-> (There are things that need doing besides upgrading software.)
-> If a particular version of software has a serious vulnerability, it needs at least one
-> of the most serious vulnerabilities assigned a CVE so that people will upgrade
-> it more rapidly.
+On Wed, Jun 26, 2019 at 10:13:58AM -0400, Sasha Levin wrote:
+> > 9. Have someone already on the private list, or at least someone else
+> > who has been active on oss-security for years but is not affiliated
+> > with your distro nor your organization, vouch for at least one of the
+> > people requesting membership on behalf of your distro (then that one
+> > vouched-for person will be able to vouch for others on your team, in
+> > case you'd like multiple people subscribed)
+> 
+> Greg Kroah-Hartman <gregkh@...uxfoundation.org> would vouch for me
+> (Sasha Levin <sashal@...nel.org>).
 
-I think you might have also been implying this, but just to say it
-explicitly: if a particular version of software has lots of fixed bugs,
-but they are not exploitable vulnerabilities in practice, then it would
-be counterproductive to try to fast-track upgrades (trick people into
-using their rapid upgrade process) by assigning CVE IDs to those bugs.
+To verify this, yes, I can vouch for Sasha.  He is a long-time kernel
+developer and has been helping with the stable kernel releases for a few
+years now, with full write permissions to the stable kernel trees.
 
-Fast-tracking upgrades of packages with CVE fixes is only going to happen
-as long as it's still a rational strategy for balancing vulnerability
-exposure against the risk of regressions. If lots of CVE IDs get assigned
-to issues that aren't exploitable in the real world, then that will teach
-consumers of software that they can safely ignore "most" CVEs, which
-will tend to result in some issues that *are* exploitable being missed
-and not fixed on deployed systems. Everyone loses (except attackers).
+I also suggested that Microsoft join linux-distros a year or so ago when
+it became evident that they were becoming a Linux distro, and it is good
+to see that they are now doing so.
 
-This is a particularly interesting trade-off for denial-of-service
-vulnerabilities, because regressions caused by flawed fixes for
-vulnerabilities often cause denial of service. (This is often a crash,
-but not necessarily - addressing local DoS vulnerability CVE-2014-3637
-in dbus led to some machines not booting reliably, denying service to
-rather more people than the original vulnerability.)
+thanks,
 
-In the worst case, a flawed fix for a vulnerability might contain a
-regression that is a more serious vulnerability.
-
-    smcv
+greg k-h
