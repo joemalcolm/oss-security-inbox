@@ -1,146 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/5
-Message-Id: <B9DB968B-E225-4245-85BE-6BB6CCD8791F@beckweb.net>
-Date: Tue, 30 Apr 2019 14:17:30 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/26/2
+Message-ID: <20190626141358.GK7898@sasha-vm>
+Date: Wed, 26 Jun 2019 10:13:58 -0400
+From: Sasha Levin <sashal@...nel.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Cc: gregkh@...uxfoundation.org
+Subject: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+> 1. Be an actively maintained Unix-like operating system distro with
+> substantial use of Open Source components
 
-* Ansible Tower Plugin 0.9.2
-* Aqua MicroScanner Plugin 1.0.6
-* Azure AD Plugin 0.3.4
-* GitHub Authentication Plugin 0.32
-* SiteMonitor Plugin 0.6
-* Static Analysis Utilities Plugin 1.96
+Microsoft provides several distro-like builds which are not derivative
+of an existing distribution that are based on open source components:
 
-Additionally, these plugin have security vulnerabilities that have been made
-public, but have no releases containing a fix yet:
+ - Azure Sphere
+   (https://azure.microsoft.com/en-us/services/azure-sphere/): This
+   Linux-based IoT device provides, among various things, security
+   updates to deployed IoT devices. As the project is about to step out
+   of public preview into the GA stage, we expect millions of these
+   devices to be publicly used.
 
-* Koji Plugin
-* Self-Organizing Swarm Plug-in Modules Plugin
-* Twitter Plugin
+ - Windows Subsystem for Linux v2
+   (https://devblogs.microsoft.com/commandline/wsl-2-is-now-available-in-windows-insiders/):
+   A Linux based distro that runs as a virtual machine on top of Windows
+   hosts. WSL2 is currently available for public preview and scheduled
+   for GA early 2020.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-04-30/
+ - Products such as Azure HDInsight
+   (https://azure.microsoft.com/en-us/free/hdinsight) and the Azure
+   Kubernetes Service
+   (https://azure.microsoft.com/en-us/services/kubernetes-service/)
+   provide public access to a Linux based distribution.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+> 2. Have a userbase not limited to your own organization
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Microsoft customers have millions of cores running the various workloads
+described above.
 
----
+> 3. Have a publicly verifiable track record, dating back at least 1
+> year and continuing to present day, of fixing security issues
+> (including some that had been handled on (linux-)distros, meaning that
+> membership would have been relevant to you) and releasing the fixes
+> within 10 days (and preferably much less than that) of the issues
+> being made public (if it takes you ages to fix an issue, your users
+> wouldn't substantially benefit from the additional time, often around
+> 7 days and sometimes up to 14 days, that list membership could give
+> you).
 
-SECURITY-1100 / CVE-2019-10307 (CSRF) and CVE-2019-10308 (permission check)
-Static Analysis Utilities Plugin has the capability to allow other plugins to 
-display trend graphs for their static analysis results. Static Analysis 
-Utilities Plugin provides the configuration form for the default settings of 
-each graph.
+Microsoft has decades long history of addressing security issues via
+MSRC (https://www.microsoft.com/en-us/msrc). While we are able to
+quickly (<1-2 hours) create a build to address disclosed security
+issues, we require extensive testing and validation before we make these
+builds public. Being members of this mailing list would provide us the
+additional time we need for extensive testing.
 
-The configuration form and form submission handler did not perform a 
-permission check, allowing attackers with Job/Read access to change the 
-per-job graph configuration defaults for all users.
+> 4. Not be (only) downstream or a rebuild of another distro (or else we
+> need convincing additional justification of how the list membership
+> would enable you to release fixes sooner, presumably not relying on
+> the upstream distro having released their fixes first?)
 
-Additionally, the form submission handler did not require POST requests, 
-resulting in a cross-site request forgery vulnerability.
+None of our builds are based on an existing distribution. For few of
+these workloads we have a very custom kernel and userspace (such as for
+Azure Sphere), while some share a more conventional kernel/userspace
+configuration.
 
-Static Analysis Utilities Plugin now requires Job/Configure permission and 
-POST requests to configure the per-job graph defaults for all users.
+> 5. Be a participant and preferably an active contributor in relevant
+> public communities (most notably, if you're not watching for issues
+> being made public on oss-security, which are a superset of those that
+> had been handled on (linux-)distros, then there's no valid reason for
+> you to be on (linux-)distros)
 
+We follow closely public discussions with regards to security issues
+that would affect us. While there was only a minor contribution back to
+these lists mostly as we did not have any value to add back.
 
-SECURITY-930 / CVE-2019-10317
-SiteMonitor Plugin unconditionally disables SSL/TLS certificate validation for 
-the entire Jenkins master JVM.
+During past years I've reported multiple security issues which were
+assigned CVEs.
 
-SiteMonitor Plugin no longer does that. Instead, it now has an opt-in option 
-to ignore SSL/TLS errors for each site check individually.
+> 6. Accept the list policy (see above)
 
+We accept the list's policy.
 
-SECURITY-1252 / CVE-2019-10309
-Self-Organizing Swarm Plug-in Modules Plugin allows clients to auto-discover 
-Jenkins instances on the same network through a UDP discovery request. 
-Responses to this request are XML documents.
+> 7. Be able and willing to contribute back (see above), preferably in
+> specific ways announced in advance (so that you're responsible for a
+> specific area and so that we know what to expect from which member),
+> and demonstrate actual contributions once you've been a member for a
+> while
 
-Self-Organizing Swarm Plug-in Modules Plugin does not configure the XML parser 
-in a way that would prevent XML External Entity (XXE) processing. This allows 
-unauthenticated attackers on the same network to have Swarm clients parse a 
-maliciously crafted XML response that uses external entities to read arbitrary 
-files from the Swarm client or denial-of-service attacks.
+We understand this need and will be contributing back. Looking at the
+list of vacant positions I can suggest the following, but I suspect that
+existing list members will have better suggestions.
 
-As of publication of this advisory, there is no fix.
+Technical:
 
+3. Review and/or test the proposed patches and point out potential
+issues with them (such as incomplete fixes for the originally reported
+issues, additional issues you might notice, and newly introduced bugs),
+and inform the list of the work done even if no issues were encountered
+- primary: Amazon, backup: vacant
 
-SECURITY-1355 (1) / CVE-2019-10310 (CSRF) and CVE-2019-10311 (permission check)
-Ansible Tower Plugin did not perform permission checks on a method 
-implementing form validation. This allowed users with Overall/Read access to 
-Jenkins to connect to an attacker-specified URL using attacker-specified 
-credentials IDs obtained through another method, capturing credentials stored 
-in Jenkins.
+Administrative:
 
-Additionally, this form validation method did not require POST requests, 
-resulting in a cross-site request forgery vulnerability.
+3. Evaluate if the issue (or one of the issues) is effectively already
+public (e.g., a fix is committed upstream with a descriptive message)
+or/and is low severity and thus the report (or its portion pertaining to
+the issue) should be made public right away for one or both of these
+reasons, get a few other list members to confirm this understanding, and
+if there are no objections then communicate this strong preference to
+the reporter - primary: CloudLinux, backup: vacant
 
-This form validation method now requires POST requests and Overall/Administer 
-permissions.
+> 8. Be able and willing to handle PGP-encrypted e-mail
 
+I am able and willing to handle PGP-encrypted e-mail.
 
-SECURITY-1355 (2) / CVE-2019-10312
-Ansible Tower Plugin provides a list of applicable credential IDs to allow 
-users configuring the plugin to select the one to use.
+> 9. Have someone already on the private list, or at least someone else
+> who has been active on oss-security for years but is not affiliated
+> with your distro nor your organization, vouch for at least one of the
+> people requesting membership on behalf of your distro (then that one
+> vouched-for person will be able to vouch for others on your team, in
+> case you'd like multiple people subscribed)
 
-This functionality did not check permissions, allowing any user with 
-Overall/Read permission to get a list of valid credentials IDs. Those could be 
-used as part of an attack to capture the credentials using another 
-vulnerability.
+Greg Kroah-Hartman <gregkh@...uxfoundation.org> would vouch for me
+(Sasha Levin <sashal@...nel.org>).
 
-An enumeration of credentials IDs in this plugin now requires 
-Overall/Administer permission.
-
-
-SECURITY-1390 / CVE-2019-10318
-Azure AD Plugin stored the client secret unencrypted in the global config.xml 
-configuration file on the Jenkins master. These credentials could be viewed by 
-users with access to the master file system.
-
-Azure AD Plugin now stores the client secret encrypted.
-
-
-SECURITY-1143 / CVE-2019-10313
-Twitter Plugin stores credentials unencrypted in its global configuration file 
-on the Jenkins master. These credentials could be viewed by users with access 
-to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-936 / CVE-2019-10314
-Koji Plugin unconditionally disables SSL/TLS certificate validation for the 
-entire Jenkins master JVM.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-443 / CVE-2019-10315
-GitHub Authentication Plugin did not manage the state parameter of OAuth to 
-prevent CSRF. This allowed an attacker to catch the redirect URL provided 
-during the authentication process using OAuth and send it to the victim. If 
-the victim was already connected to Jenkins, their Jenkins account would be 
-attached to the attacker’s GitHub account.
-
-The state parameter is now correctly managed.
-
-
-SECURITY-1380 / CVE-2019-10316
-Aqua MicroScanner Plugin stored credentials unencrypted in its global 
-configuration file on the Jenkins master. These credentials could be viewed by 
-users with access to the master file system.
-
-Aqua MicroScanner Plugin now stores credentials encrypted.
-
+--
+Thanks,
+Sasha
