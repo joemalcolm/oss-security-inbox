@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1379" "Sunday" "6" "March" "2016" "19:16:17" "+0300" "Solar Designer" "solar@openwall.com" "<20160306161617.GA30781@openwall.com>" "29" "Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" "^Date:" nil nil "3" "2016030616:16:17" "[oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "        solar@openwa Mar  6   29/1379  " thread-indent "\"Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<CAFHyJTqHw=Cjg6C-u4eUyUVe9bcntn+LombQ+fnosgXBy79OZA@mail.gmail.com>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56D9DD1F.1030302@cert.org>" "<20160305172039.GA20796@openwall.com>" "<20160306062700.GA25289@gremlin.ru>" "<110FE574-DEEC-4308-90BE-A83A5C53421A@gmail.com>" "<20160306150917.GA29105@openwall.com>" "<CAFHyJTqHw=Cjg6C-u4eUyUVe9bcntn+LombQ+fnosgXBy79OZA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["652" "Friday" "28" "June" "2019" "00:42:06" "+0800" "Greg KH" "greg@kroah.com" "<20190627164206.GA9692@kroah.com>" "18" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "6" "2019062716:42:06" "[oss-security] linux-distros membership application - Microsoft" (number mark "        greg@kroah.c Jun 28   18/652   " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190627140321.GA29338@openwall.com>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3794 invoked by uid 550); 6 Mar 2016 16:16:23 -0000
+Received: (qmail 28019 invoked by uid 550); 27 Jun 2019 16:44:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3774 invoked from network); 6 Mar 2016 16:16:23 -0000
-Message-ID: <20160306161617.GA30781@openwall.com>
-References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com> <56D9DD1F.1030302@cert.org> <20160305172039.GA20796@openwall.com> <20160306062700.GA25289@gremlin.ru> <110FE574-DEEC-4308-90BE-A83A5C53421A@gmail.com> <20160306150917.GA29105@openwall.com> <CAFHyJTqHw=Cjg6C-u4eUyUVe9bcntn+LombQ+fnosgXBy79OZA@mail.gmail.com>
-Mime-Version: 1.0
+Received: (qmail 27972 invoked from network); 27 Jun 2019 16:44:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm1; bh=Ohu7vgixuw2kjCJ+FgjcU3Bwoxe
+	NefeXG79Wpcue1fI=; b=WHT4+lUIBUFiROsmHFeQeiCdFt4YCb7WO8quB25DwCO
+	wv/ORTcjZrywxoDwkG2WuQez8cy+4W1nr2P3gy5B8rSzRuStRZfIe8dCETMEijWx
+	VzTKf71bhPPRAEToZEDFk7It5c38hf0+0A6ZiYR3nNAKKvuBWbKZBBB162NoBju5
+	MS/w7ZflJzGMN3Q7wJnfe0xCKI0PaLISXbF/h/+9k7Au8DMSxMKb2rwgBRdGZdjX
+	ovIhGsgSXGsqdsOQZYGef87HafJcsTXyumepBuA7KrFDilVUCAmcV0EwYm8WPK4h
+	rKXFX11/9OZYxfffEOR1TWJ5yJ+Mt2WGJNXTyZpyhog==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=Ohu7vg
+	ixuw2kjCJ+FgjcU3BwoxeNefeXG79Wpcue1fI=; b=DhZl0Of0u4AzgNxYPQWPJr
+	BgW2VKFeW9ROakFJahtHgHUtl483orwWpRY9p02Ks6oMA0dOjnVVi5Wfl86+T0Kc
+	qCONwkjSbM1Ys6bT8TKuhU7fJSYnga/IFtBlHboexxMjsAC/xBU6CaglXTm1WcE+
+	zk5Oed6m0jHHwzho1WnbOvYHG4T0BoXT7dYh0HLCfyOMElHvMnpCGefizPAXRNZ5
+	pjasOf0onyV/MV7L6f2KXgWd9Ix+SgTOuNseqne17ZvhpHeBuO6iQ06KVi3LMZ94
+	jlGHaAi0jHRFIWQC3pmppxL9xTtnZIlZ8j1lhZNPKqgbCV8vf3JsmTsKOPwd7CPA
+	==
+X-ME-Sender: <xms:W_IUXXuDswYv8EyxJ6VHTF7bs4J4dzKbCdx-sPeVS8K2MapoYgaJ9Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudekgddutdeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujggfsehttd
+    ertddtredvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhm
+    qeenucfkphepkeelrddvtdehrddufeeirddvvdeinecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehgrhgvgheskhhrohgrhhdrtghomhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:W_IUXWJkBwsO7MKy3FLOq4w_uRxYQJe8oeTy6Ip5v8jQNUHuSRMROw>
+    <xmx:W_IUXcizIDAOwsVJU_uBlZcFMZLGOSsg4STx-KZ1d1D04Xc4Qxvxuw>
+    <xmx:W_IUXSv1PYczw1jCQJ4JnwOQBXG3oDP8mn4tR9fbIGrXVtxhroGb4A>
+    <xmx:XPIUXfpNotZOfyHUMcmT-2cRD46x2XKo3tlHnszpO_mL6p-Q7S5yTw>
+Message-ID: <20190627164206.GA9692@kroah.com>
+References: <20190626141358.GK7898@sasha-vm>
+ <20190627140321.GA29338@openwall.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAFHyJTqHw=Cjg6C-u4eUyUVe9bcntn+LombQ+fnosgXBy79OZA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Sun, 6 Mar 2016 19:16:17 +0300
-From: Solar Designer <solar@openwall.com>
+In-Reply-To: <20190627140321.GA29338@openwall.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
+Date: Fri, 28 Jun 2019 00:42:06 +0800
+From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies
+Subject: Re: [oss-security] linux-distros membership application - Microsoft
 To: oss-security@lists.openwall.com
 
-On Sun, Mar 06, 2016 at 03:47:19PM +0000, op7ic x00 wrote:
-> agree, the vanity hunting is going to be there but I suppose as with any
-> bug ID that is going to happen.
-> But beyond that I don't think it matters as much. In the end of the day if
-> somebody can use OVI or OVE to identify their bug then at least we got some
-> level of reference to look it up on google.
+On Thu, Jun 27, 2019 at 04:03:21PM +0200, Solar Designer wrote:
+> Hi Sasha,
+> 
+> Thank you for posting this application.
+> 
+> Are you also on security@k.o?  If so, then on one hand also being on
+> linux-distros would probably be of less use to you since I suspect most
+> of the issues relevant to Microsoft are in the Linux kernel, but on the
+> other hand you could serve as a liaison to that group.
 
-Right.
+Sasha is not on security@k.o, someone else there is _supposed_ to be the
+liason to the linux-distros list, but I don't know how well that is
+working at the moment as I am not on -distros (nor do I want to be at
+this point in time.)
 
-> I was toying with 4digit IDs that would be random enough, thats a
-> possiblity too, the only problem is that there is a overhead of doing DB
-> sorting and lookups to make sure their don't clash. Thats why ovi uses
-> sequential numbers - its just easier to manage.
+thanks,
 
-Oh, you (would) use an actual database backend?  OVE currently uses a C
-program with a tiny binary data file (to keep track of per-IP and
-per-netblock consumption of IDs, as well as the current date and ID),
-and the file is wiped clean (by this same program) on first access after
-midnight.  I wrote this yesterday in response to the thread in here.
-
-For random IDs, if we wanted those, there are shuffling algorithms that
-don't require storage yet guarantee unique numbers (until the target
-range is exhausted) - they're good e.g. for IP ID and DNS sequence
-numbers - although checking against an array of 10k numbers is almost
-instant anyway (as far as this application is concerned).
-
-Anyway, this is getting off-topic.
-
-Alexander
+greg k-h
