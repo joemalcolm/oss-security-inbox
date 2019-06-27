@@ -1,4 +1,9 @@
-Received: (qmail 24152 invoked by uid 550); 3 Apr 2024 16:48:32 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1415" "Friday" "28" "June" "2019" "01:07:25" "+0800" "Greg KH" "greg@kroah.com" "<20190627170725.GA10540@kroah.com>" "33" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "6" "2019062717:07:25" "[oss-security] linux-distros membership application - Microsoft" (number mark "        greg@kroah.c Jun 28   33/1415  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190627165515.GC25142@elm>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627164206.GA9692@kroah.com>" "<20190627165515.GC25142@elm>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23951 invoked by uid 550); 27 Jun 2019 17:07:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,107 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 23920 invoked from network); 27 Jun 2019 17:07:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm1; bh=j2rLmLrJhO9oJrcck5NONCNj7Zc
+	17IDMjQX4sZclhY8=; b=gvDjqbiT2hlOItRbKt/91clJCoRwNPH/9PfglyEkiMq
+	Co/52hOEoMKvF62uabzoNGSt0JAXwFK+AHUhvqszAsTTAX9yzsI/5Y7FFQGRcJKA
+	idpejnavvL7RgBEw5c4MZyf5IDiKyeAO4nCuvIJ8qwRJLfvG4c5cSPbG0AbL/GDr
+	VhZoRfKjx/N6hB6dmtfXOL8/itWIOI00rS/r+IQIzKktybFbcQbBl2zxMhnsed71
+	IbVnzx+mh2MUGbNPj4JSiWm3hE6O5TMmvEUUHwn8gCR9VsgsimRVun/GfF6ei5Wi
+	luPGdcHmqCyJG5rmMKsyf0LVp5V/JqwCSjoQ5TgDVkw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=j2rLmL
+	rJhO9oJrcck5NONCNj7Zc17IDMjQX4sZclhY8=; b=PuXO2wUO4I2NOkihH4dHh8
+	9qHjS0q9lq2W8wecOfNC+W3/hGWrRdCY4oWlWLRzDRGu0nYevoXFr7cZa44rWK4v
+	YO1iurmF27qxe7XDH/LtNWC8xP5kB+Bz7vhXpgTPy6ZdAeXgNGi8Ze/MqClvZsKU
+	gzO5DLlVrIJbF59RTG1eFbq4jaNIYJt3ilA8Y+Jm7hPhxKGZNHLWFRez4FhDCwaZ
+	/suNJjjFe5xNGRhRg3m5VrDaHO700s7v1hwOanzCQuaNILkwX6dwMrXl4fbBEV6n
+	z7G85NV2dC/AprK/ix96EAz0+054RCmCL1Q6tkMN25t2091smiv2m96hqxRauJkQ
+	==
+X-ME-Sender: <xms:0fcUXb11uMBXtuQNYWWfPTR1kTNAK6oLVdGs_1yV31Qcmi8oauHSFA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudekgdduudduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujggfsehttd
+    ertddtredvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhm
+    qeenucfkphepkeegrddvgedurddvtddtrdeikeenucfrrghrrghmpehmrghilhhfrhhomh
+    epghhrvghgsehkrhhorghhrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:0fcUXUWiTUV3kVheG7Xv0P3hw9IvzFwrmWlz0GoVBA8IGjk9G1oXgQ>
+    <xmx:0fcUXRWxnExMXatKLXeo0R1pF6Xzwd2i5GILha6y8ac8vHLEHOqnHQ>
+    <xmx:0fcUXXFjyyVhM-C72ruHl1ilQZszO4I7PeO-fvWBvbqb1TV42jgywA>
+    <xmx:0vcUXUJQp9cbcwopDKh8Kqbwg1TN0MIjuQUTKwXBvSLY1QDEnC_tqQ>
+Message-ID: <20190627170725.GA10540@kroah.com>
+References: <20190626141358.GK7898@sasha-vm>
+ <20190627140321.GA29338@openwall.com>
+ <20190627164206.GA9692@kroah.com>
+ <20190627165515.GC25142@elm>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190627165515.GC25142@elm>
+User-Agent: Mutt/1.12.1 (2019-06-15)
+Date: Fri, 28 Jun 2019 01:07:25 +0800
+From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23912 invoked from network); 3 Apr 2024 16:48:25 -0000
-Date: Wed, 3 Apr 2024 18:48:04 +0200
-From: Solar Designer <solar@openwall.com>
-To: midawson <midawson@redhat.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20240403164804.GA10525@openwall.com>
-References: <4323cf07-8f42-46f8-b075-c12e50a917e7n@googlegroups.com> <7e6a9e00-1caf-4523-b969-fdb410b240f7n@googlegroups.com> <9f41b1da-6faa-4364-aed8-60ff5eaf7c06n@googlegroups.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="qDbXVdCdHGoSgWSk"
-Content-Disposition: inline
-In-Reply-To: <9f41b1da-6faa-4364-aed8-60ff5eaf7c06n@googlegroups.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Fwd: Node.js security update for all active release lines
+Subject: Re: [oss-security] linux-distros membership application - Microsoft
+To: oss-security@lists.openwall.com
 
---qDbXVdCdHGoSgWSk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Thu, Jun 27, 2019 at 11:55:16AM -0500, Tyler Hicks wrote:
+> On 2019-06-28 00:42:06, Greg KH wrote:
+> > On Thu, Jun 27, 2019 at 04:03:21PM +0200, Solar Designer wrote:
+> > > Hi Sasha,
+> > > 
+> > > Thank you for posting this application.
+> > > 
+> > > Are you also on security@k.o?  If so, then on one hand also being on
+> > > linux-distros would probably be of less use to you since I suspect most
+> > > of the issues relevant to Microsoft are in the Linux kernel, but on the
+> > > other hand you could serve as a liaison to that group.
+> > 
+> > Sasha is not on security@k.o, someone else there is _supposed_ to be the
+> > liason to the linux-distros list, but I don't know how well that is
+> > working at the moment as I am not on -distros (nor do I want to be at
+> > this point in time.)
+> 
+> I don't think it happens much, if ever these days. The only kernel
+> issues that go to linux-distros seem to be ones that are reported up
+> through a distro or where the discoverer makes a point to include both
+> lists.
+> 
+> It would be good to improve the situation but I don't know if one person
+> could manage it alone.
 
-On Wed, Apr 03, 2024 at 08:12:24AM -0700, midawson wrote:
-> The planned security releases are now available. You can read more about 
-> the details in - 
-> https://nodejs.org/en/blog/vulnerability/april-2024-security-releases/
+The number of "real" bugs reported to security@k.o is really low these
+days (max 1 per week, maybe lower, haven't kept track in a long time),
+the load shouldn't be that hard.  And again, there is at least one
+member on that alias that was supposed to be doing this already...
 
-Thank you for bringing these to oss-security.  Going forward, it'd be
-great if you post the actual detail - not only a title+link.
+thanks,
 
-I'm attaching to this message the Markdown content of the above blog
-post, as taken from
-https://github.com/nodejs/nodejs.org/blob/main/pages/en/blog/vulnerability/april-2024-security-releases.md
-
-Alexander
-
---qDbXVdCdHGoSgWSk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="april-2024-security-releases.md"
-
----
-date: 2024-04-03T03:00:00.000Z
-category: vulnerability
-title: Wednesday, April 3, 2024 Security Releases
-slug: april-2024-security-releases
-layout: blog-post
-author: The Node.js Project
----
-
-## Security releases available
-
-Updates are now available for the v18.x, v20.x and 21.x Node.js release lines for the
-following issues.
-
-This security release includes the following dependency updates to address public vulnerabilities:
-
-- llhttp version 9.2.1 on 21.x, 20.x, and 18.x
-- undici version 6.11.1 on 21.x
-- undici version 5.28.4 on 18.x and 20.x
-
-## Assertion failed in node::http2::Http2Session::\~Http2Session() leads to HTTP/2 server crash (CVE-2024-27983) - (High)
-
-An attacker can make the Node.js HTTP/2 server completely unavailable by sending a small amount of HTTP/2 frames packets with a few HTTP/2 frames inside. It is possible to leave some data in nghttp2 memory after reset when headers with HTTP/2 CONTINUATION frame are sent to the server and then a TCP connection is abruptly closed by the client triggering the Http2Session destructor while header frames are still being processed (and stored in memory) causing a race condition.
-
-Impacts:
-
-- This vulnerability affects all users in all active release lines: 18.x, 20.x and, 21.x.
-
-Thank you, to bart for reporting this vulnerability and [Anna Henningsen](https://github.com/addaleax) for fixing it.
-
-## HTTP Request Smuggling via Content Length Obfuscation - (CVE-2024-27982) - (Medium)
-
-The team has identified a vulnerability in the http server of the most recent version of Node, where malformed headers can lead to HTTP request smuggling. Specifically, if a space is placed before a content-length header, it is not interpreted correctly, enabling attackers to smuggle in a second request within the body of the first.
-
-Impacts:
-
-- This vulnerability affects all users in all active release lines: 18.x, 20.x and, 21.x.
-
-Thank you, to bpingel for reporting this vulnerability and [Paolo Insogna](https://github.com/ShogunPanda) for fixing it.
-
----
-
-# Summary
-
-The Node.js project will release new versions of the 18.x, 20.x, 21.x
-releases lines on or shortly after, Wednesday, April 3, 2024 in order to address:
-
-- 1 medium severity issue.
-- 1 high severity issue.
-
-## Impact
-
-The 18.x release line of Node.js is vulnerable to 1 medium severity issue, 1 high severity issue.
-The 20.x release line of Node.js is vulnerable to 1 medium severity issue, 1 high severity issue.
-The 21.x release line of Node.js is vulnerable to 1 medium severity issue, 1 high severity issue.
-
-## Release timing
-
-Releases will be available on, or shortly after, Wednesday, April 3, 2024.
-
-## Contact and future updates
-
-The current Node.js security policy can be found at [https://nodejs.org/en/security/](https://nodejs.org/en/security/). Please follow the process outlined in [https://github.com/nodejs/node/blob/master/SECURITY.md](https://github.com/nodejs/node/blob/master/SECURITY.md) if you wish to report a vulnerability in Node.js.
-
-Subscribe to the low-volume announcement-only nodejs-sec mailing list at [https://groups.google.com/forum/#!forum/nodejs-sec](https://groups.google.com/forum/#!forum/nodejs-sec) to stay up to date on security vulnerabilities and security-related releases of Node.js and the projects maintained in the nodejs GitHub organization.
-
---qDbXVdCdHGoSgWSk--
+greg k-h
