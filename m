@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/16/1
-Message-ID: <20190616144730.GA31281@openwall.com>
-Date: Sun, 16 Jun 2019 16:47:30 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/27/3
+Message-ID: <20190627164206.GA9692@kroah.com>
+Date: Fri, 28 Jun 2019 00:42:06 +0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 15, 2019 at 11:49:03AM -0400, Alex Gaynor wrote:
-> A test of a random ImageMagick vulnerability against Ubuntu Xenial shows
-> that it, indeed, continues to reproduce.
+On Thu, Jun 27, 2019 at 04:03:21PM +0200, Solar Designer wrote:
+> Hi Sasha,
 > 
-> This is in addition to the >100 security bugs OSS-Fuzz found and publicly
-> disclosed due to hitting their disclosure deadline, and which still have
-> not been fixed [3].
+> Thank you for posting this application.
+> 
+> Are you also on security@...?  If so, then on one hand also being on
+> linux-distros would probably be of less use to you since I suspect most
+> of the issues relevant to Microsoft are in the Linux kernel, but on the
+> other hand you could serve as a liaison to that group.
 
-Some people have interpreted this as implying there are ">100 security
-bugs OSS-Fuzz found and publicly disclosed [...], and which still have
-not been fixed" specifically in ImageMagick.  However, at the link you
-referenced there are currently "only" 38 bugs specifically in
-ImageMagick, with the rest of the >100 being in other projects:
+Sasha is not on security@k.o, someone else there is _supposed_ to be the
+liason to the linux-distros list, but I don't know how well that is
+working at the moment as I am not on -distros (nor do I want to be at
+this point in time.)
 
-> [3]:
-> https://bugs.chromium.org/p/oss-fuzz/issues/list?can=1&q=Type%3DBug-Security+status%3ANew+label%3ADeadline-exceeded&colspec=ID+Type+Component+Status+Library+Reported+Summary+Modified&sort=-modified&groupby=&mode=grid&y=Proj&x=--&cells=ids&nobtn=Update
+thanks,
 
-Alexander
+greg k-h
