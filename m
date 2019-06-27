@@ -1,16 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/19/2
-Message-ID: <LfF89C4--3-1@tuta.io>
-Date: Sun, 19 May 2019 14:50:24 +0200 (CEST)
-From: Wire Snark <wsnark@...a.io>
-To: Oss Security <oss-security@...ts.openwall.com>
-Subject: Re: Potential DoS vulnerability in CGit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/27/4
+Message-ID: <20190627165515.GC25142@elm>
+Date: Thu, 27 Jun 2019 11:55:16 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-Forgot to attach the reproducers.
+On 2019-06-28 00:42:06, Greg KH wrote:
+> On Thu, Jun 27, 2019 at 04:03:21PM +0200, Solar Designer wrote:
+> > Hi Sasha,
+> > 
+> > Thank you for posting this application.
+> > 
+> > Are you also on security@...?  If so, then on one hand also being on
+> > linux-distros would probably be of less use to you since I suspect most
+> > of the issues relevant to Microsoft are in the Linux kernel, but on the
+> > other hand you could serve as a liaison to that group.
+> 
+> Sasha is not on security@k.o, someone else there is _supposed_ to be the
+> liason to the linux-distros list, but I don't know how well that is
+> working at the moment as I am not on -distros (nor do I want to be at
+> this point in time.)
 
-Download attachment "afl_repr.bin" of type "application/octet-stream" (34327 bytes)
+I don't think it happens much, if ever these days. The only kernel
+issues that go to linux-distros seem to be ones that are reported up
+through a distro or where the discoverer makes a point to include both
+lists.
 
-View attachment "kernel.org_repr.txt" of type "text/plain" (3231 bytes)
+It would be good to improve the situation but I don't know if one person
+could manage it alone.
 
-View attachment "local_repr.txt" of type "text/plain" (8065 bytes)
+Tyler
+
+> 
+> thanks,
+> 
+> greg k-h
