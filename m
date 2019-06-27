@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2312" "Friday" "1" "April" "2016" "18:09:24" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160401220924.8B09373C090@smtpvmsrv1.mitre.org>" "56" "[oss-security] Re: CVE Request: Squid HTTP Proxy" "^Cc:" nil nil "4" "2016040122:09:24" "[oss-security] Re: CVE Request: Squid HTTP Proxy" (number mark "U       cve-assign@m Apr  1   56/2312  " thread-indent "\"[oss-security] Re: CVE Request: Squid HTTP Proxy\"\n") "<56FEE67B.70507@treenet.co.nz>" ("<56FEE67B.70507@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9158" "Thursday" "27" "June" "2019" "16:03:21" "+0200" "Solar Designer" "solar@openwall.com" "<20190627140321.GA29338@openwall.com>" "198" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "6" "2019062714:03:21" "[oss-security] linux-distros membership application - Microsoft" (number mark "        solar@openwa Jun 27  198/9158  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190626141358.GK7898@sasha-vm>" ("<20190626141358.GK7898@sasha-vm>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9594 invoked by uid 550); 1 Apr 2016 22:09:37 -0000
+Received: (qmail 2027 invoked by uid 550); 27 Jun 2019 14:04:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,215 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9572 invoked from network); 1 Apr 2016 22:09:36 -0000
-In-Reply-To: <56FEE67B.70507@treenet.co.nz>
-Message-Id: <20160401220924.8B09373C090@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri,  1 Apr 2016 18:09:24 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 1602 invoked from network); 27 Jun 2019 14:03:39 -0000
+Message-ID: <20190627140321.GA29338@openwall.com>
+References: <20190626141358.GK7898@sasha-vm>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190626141358.GK7898@sasha-vm>
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 27 Jun 2019 16:03:21 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Squid HTTP Proxy
-To: squid3@treenet.co.nz
+Subject: Re: [oss-security] linux-distros membership application - Microsoft
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Sasha,
 
-> 1) A buffer overrun (on write(2)) has been found in Squid proxy 'pinger'
-> process that allows an attacker to craft ICMPv6 messages that will
-> either crash the child process (if the OS prootects against over-write)
-> or alter heap contents allowing the attacker to bypass CVE-2014-7142
-> protection and leak arbitrary heap data into the Squid log files. The
-> pinger is setuid root (though it does drop those privileges prior to
-> this attack being possible).
+Thank you for posting this application.
+
+Are you also on security@k.o?  If so, then on one hand also being on
+linux-distros would probably be of less use to you since I suspect most
+of the issues relevant to Microsoft are in the Linux kernel, but on the
+other hand you could serve as a liaison to that group.
+
+On Wed, Jun 26, 2019 at 10:13:58AM -0400, Sasha Levin wrote:
+> >1. Be an actively maintained Unix-like operating system distro with
+> >substantial use of Open Source components
 > 
-> Patch for this issue is available at:
-> http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14015.patch
+> Microsoft provides several distro-like builds which are not derivative
+> of an existing distribution that are based on open source components:
 > 
-> The upstream advisory will be at this URL:
-> http://www.squid-cache.org/Advisories/SQUID-2016_3.txt
+> - Azure Sphere
+>   (https://azure.microsoft.com/en-us/services/azure-sphere/): This
+>   Linux-based IoT device provides, among various things, security
+>   updates to deployed IoT devices. As the project is about to step out
+>   of public preview into the GA stage, we expect millions of these
+>   devices to be publicly used.
 
-Use CVE-2016-3947.
+This does sound like it includes a Linux distro, but obviously there's
+no security track record for it yet, so it's hard to estimate relevance
+of information you'd obtain via linux-distros to that product.
 
+> - Windows Subsystem for Linux v2
+>   (https://devblogs.microsoft.com/commandline/wsl-2-is-now-available-in-windows-insiders/):
+>   A Linux based distro that runs as a virtual machine on top of Windows
+>   hosts. WSL2 is currently available for public preview and scheduled
+>   for GA early 2020.
 
-> 2) A secondary issue with the same Denial of Service effects as
-> CVE-2016-2569 has been found that is not covered by the existing fix.
-> All Squid-3.x versions up to and including 3.5.15, and 4.0.x versions up
-> to and including 4.0.7 are vulnerable to this issue independent of the
-> fix for CVE-2016-2569.
+You call this "a Linux based distro", but that's not clear to me from
+the web page you reference, which talks about managing (third-party?)
+distros in the WSL2 subsystem.  Can you clarify this, please?
+
+> - Products such as Azure HDInsight
+>   (https://azure.microsoft.com/en-us/free/hdinsight) and the Azure
+>   Kubernetes Service
+>   (https://azure.microsoft.com/en-us/services/kubernetes-service/)
+>   provide public access to a Linux based distribution.
+
+These look like SaaS offerings.  We do not have any explicit guidelines
+on whether "provide public access to a Linux based distribution" is
+potentially enough to qualify for linux-distros or not.  We do have
+Amazon as a member, so there's that precedent.
+
+> >2. Have a userbase not limited to your own organization
 > 
-> Patch for this is available at:
-> http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14016.patch
+> Microsoft customers have millions of cores running the various workloads
+> described above.
 > 
-> The upstream advisory will be at this URL:
-> http://www.squid-cache.org/Advisories/SQUID-2016_4.txt
+> >3. Have a publicly verifiable track record, dating back at least 1
+> >year and continuing to present day, of fixing security issues
+> >(including some that had been handled on (linux-)distros, meaning that
+> >membership would have been relevant to you) and releasing the fixes
+> >within 10 days (and preferably much less than that) of the issues
+> >being made public (if it takes you ages to fix an issue, your users
+> >wouldn't substantially benefit from the additional time, often around
+> >7 days and sometimes up to 14 days, that list membership could give
+> >you).
+> 
+> Microsoft has decades long history of addressing security issues via
+> MSRC (https://www.microsoft.com/en-us/msrc). While we are able to
+> quickly (<1-2 hours) create a build to address disclosed security
+> issues, we require extensive testing and validation before we make these
+> builds public. Being members of this mailing list would provide us the
+> additional time we need for extensive testing.
 
-Use CVE-2016-3948.
+It'd be helpful if you could directly address this part: "including some
+that had been handled on (linux-)distros, meaning that membership would
+have been relevant to you".  Without such examples yet, we'd have to be
+guessing whether the membership would have been relevant to you or not.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Right now, the statistics at:
 
-iQIcBAEBCAAGBQJW/vEJAAoJEL54rhJi8gl5CDQQAKX+bY+PFOebFBtOrDhYR7tI
-4zbp+0MHv8pZjM+o6xW1tU1zYl/+VwCt2qv/O3R4Gt7JWZfOQthrwA1yzU3fNku7
-kI6aQZWVisiY6gsjI9Wj1Sfklehm9qSTDXyesMy+RB+oXNqhhR3l9B1GzLwMIcOH
-I4chWJNXKoU1o3YWp27cnfLg4QgLzQn7pKLx+rpuOh//oFwfuOkWf3cNLXrRYLew
-JDnwc3l+XmwHRtkX/E+su8ipC1dmxovtvqfQtjkjPmuosElSP3RgvtiMro3iK3MV
-WF6vM+dV7cAa//mZPd8GDzSeAPYLjiSovwhNWAmW4AlsEpUvGdO5SJ3HrThuhaku
-7Lwx9BoRjH2yNqZl23jsLnwTTL2U5DjDePjpVzfKtaIDh5ccam1zHui7g8/j6Hpa
-cmWlrlFhhB/FeUNR3EdYrPUF60AcapqJu4sQcpiMdPVFtDnxySj4XKe9yqbvNG3w
-OoFxeqOs4n9D2bEA5yTcF5DjbYN/EK08cz7pAi1kUjdbtcG6DeTprJpfvwzjleY5
-lx7NFYAJe1I0V7ZplDsUacMuN0AbPDqbkpZ46oWLkiDPassty66SLnVoepsMAlrh
-8WF3zq19oyjUMp5gsxUEonZ4f4cVVNlD+jL/BDdWrbRBSvtw+ceQAwCvkFnS20Sh
-NcYcZZpfjqharCUG2qxn
-=ZN5k
------END PGP SIGNATURE-----
+https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+
+only go until the end of 2018, so you'd be able to use them for examples
+dating back to 2018 and earlier.  We should ask Gentoo to update these
+statistics soon, perhaps for period until end of June 2019, which will
+be possible soon.
+
+> >4. Not be (only) downstream or a rebuild of another distro (or else we
+> >need convincing additional justification of how the list membership
+> >would enable you to release fixes sooner, presumably not relying on
+> >the upstream distro having released their fixes first?)
+> 
+> None of our builds are based on an existing distribution. For few of
+> these workloads we have a very custom kernel and userspace (such as for
+> Azure Sphere), while some share a more conventional kernel/userspace
+> configuration.
+> 
+> >5. Be a participant and preferably an active contributor in relevant
+> >public communities (most notably, if you're not watching for issues
+> >being made public on oss-security, which are a superset of those that
+> >had been handled on (linux-)distros, then there's no valid reason for
+> >you to be on (linux-)distros)
+> 
+> We follow closely public discussions with regards to security issues
+> that would affect us. While there was only a minor contribution back to
+> these lists mostly as we did not have any value to add back.
+> 
+> During past years I've reported multiple security issues which were
+> assigned CVEs.
+> 
+> >6. Accept the list policy (see above)
+> 
+> We accept the list's policy.
+> 
+> >7. Be able and willing to contribute back (see above), preferably in
+> >specific ways announced in advance (so that you're responsible for a
+> >specific area and so that we know what to expect from which member),
+> >and demonstrate actual contributions once you've been a member for a
+> >while
+> 
+> We understand this need and will be contributing back. Looking at the
+> list of vacant positions I can suggest the following, but I suspect that
+> existing list members will have better suggestions.
+> 
+> Technical:
+> 
+> 3. Review and/or test the proposed patches and point out potential
+> issues with them (such as incomplete fixes for the originally reported
+> issues, additional issues you might notice, and newly introduced bugs),
+> and inform the list of the work done even if no issues were encountered
+> - primary: Amazon, backup: vacant
+> 
+> Administrative:
+> 
+> 3. Evaluate if the issue (or one of the issues) is effectively already
+> public (e.g., a fix is committed upstream with a descriptive message)
+> or/and is low severity and thus the report (or its portion pertaining to
+> the issue) should be made public right away for one or both of these
+> reasons, get a few other list members to confirm this understanding, and
+> if there are no objections then communicate this strong preference to
+> the reporter - primary: CloudLinux, backup: vacant
+
+If Microsoft volunteers for these, I'd like that to be in "primary" role
+at least for the technical task of "3. Review and/or test the proposed
+patches ..."  I think Amazon hasn't been doing enough on that front,
+especially given the request to "inform the list of the work done even
+if no issues were encountered".  Given this request, if this were
+seriously worked on, I would have expected such reports from Amazon on
+almost every issue handled on linux-distros, but this wasn't the case.
+
+I also would like a distro (maybe Microsoft) to volunteer for Technical:
+
+4. Check if related issues exist in the same piece of software (e.g.,
+same bug class common across the software, or other kinds of bugs exist
+in its problematic component), and inform the list either way
+
+and Administrative:
+
+4. Evaluate relevance to other parties such as the upstream, other
+affected distros (not present on the (sub-)list), and other Open Source
+projects, see if the report mentions notifying any of these, communicate
+your findings and possible concerns to the reporter and the list, and
+stay on top of the resulting discussion until a decision is made on who
+else to possibly notify (or not) and any such notifications are in fact
+made (with the reporter's approval)
+
+These are completely unclaimed now, but are much needed.
+
+For Technical "4. Check if related issues exist ...", we sometimes get
+some helpful for varying distros' package maintainers and such, but this
+is not consistent.  For example, recently Takashi Iwai of SUSE helped
+with Linux Marvell Wi-Fi driver issues - thanks! - but this is more of
+an exception than the rule.
+
+The lack of a volunteer distro for Administrative "4. Evaluate relevance
+to other parties ..." came up e.g. here:
+
+"Linux kernel: Bluetooth: two remote infoleaks (CVE-2019-3459, CVE-2019-3460)"
+https://www.openwall.com/lists/oss-security/2019/01/11/2
+
+> >8. Be able and willing to handle PGP-encrypted e-mail
+> 
+> I am able and willing to handle PGP-encrypted e-mail.
+> 
+> >9. Have someone already on the private list, or at least someone else
+> >who has been active on oss-security for years but is not affiliated
+> >with your distro nor your organization, vouch for at least one of the
+> >people requesting membership on behalf of your distro (then that one
+> >vouched-for person will be able to vouch for others on your team, in
+> >case you'd like multiple people subscribed)
+> 
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org> would vouch for me
+> (Sasha Levin <sashal@kernel.org>).
+
+Great.
+
+Let's discuss this further, and perhaps arrive at a decision in July.
+
+Thanks,
+
+Alexander
