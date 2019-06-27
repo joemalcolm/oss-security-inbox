@@ -1,42 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/13
-Message-ID: <20190722203315.GO1168@jumper.schlittermann.de>
-Date: Mon, 22 Jul 2019 22:33:15 +0200
-From: Heiko Schlittermann <hs@...littermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/27/9
+Message-Id: <CE800BE0-7398-4ABA-9980-ABC97A6EB67D@oracle.com>
+Date: Thu, 27 Jun 2019 19:56:45 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-Eric,
 
-Eric Blake <eblake@...hat.com> (Mo 22 Jul 2019 15:28:33 CEST):
->
-> Perhaps part of the confusion stems from:
->
-> >> t0: Thu Jul 18 2019
-> >>     - this notice to distros@...openwall.org and exim-maintainers@...m.org
-> >>     - open limited access to our security Git repo. See below.
->
-> This statement makes it sound like the fix can be downloaded by anyone
-> that knows about the git repo containing the fix...
 
-Yes, blame on me. I missed to redact that part of the message.
+> On 27 Jun 2019, at 18:48, Tyler Hicks <tyhicks@...onical.com> wrote:
+> 
+> On 2019-06-27 09:57:38, Anthony Liguori wrote:
+>> On Thu, Jun 27, 2019 at 7:05 AM Solar Designer <solar@...nwall.com> wrote:
+>>>>> 3. Have a publicly verifiable track record, dating back at least 1
+>>>>> year and continuing to present day, of fixing security issues
+>>>>> (including some that had been handled on (linux-)distros, meaning that
+>>>>> membership would have been relevant to you) and releasing the fixes
+>>>>> within 10 days (and preferably much less than that) of the issues
+>>>>> being made public (if it takes you ages to fix an issue, your users
+>>>>> wouldn't substantially benefit from the additional time, often around
+>>>>> 7 days and sometimes up to 14 days, that list membership could give
+>>>>> you).
+>>>> 
+>>>> Microsoft has decades long history of addressing security issues via
+>>>> MSRC (https://www.microsoft.com/en-us/msrc). While we are able to
+>>>> quickly (<1-2 hours) create a build to address disclosed security
+>>>> issues, we require extensive testing and validation before we make these
+>>>> builds public. Being members of this mailing list would provide us the
+>>>> additional time we need for extensive testing.
+>>> 
+>>> It'd be helpful if you could directly address this part: "including some
+>>> that had been handled on (linux-)distros, meaning that membership would
+>>> have been relevant to you".  Without such examples yet, we'd have to be
+>>> guessing whether the membership would have been relevant to you or not.
+>> 
+>> I'm not aware of issues on the distros list, but Microsoft has been
+>> very active in working with the broader community on Spectre/Meltdown
+>> style mitigations.  I think the community would benefit overall from
+>> their participation on distros.
+> 
+> I agree with Anthony on this point. They've been beneficial to the
+> greater Linux community and I feel like their direct involvement on
+> linux-distros would benefit other members.
+> 
+> Tyler
 
-> Or even the choice of tense in this paragraph may help: it sounds like
-> past tense ("is the officially released version") even though at the
-> time of the email it is a future tense ("will become the officially
-> released version").
 
-Thank you for your hints. Even I hope, we won't have a "next time", next
-time I'll try to improve the wording/grammer of the messages I send.
+I know this is "me too" but I agree with both Anthony and Tyler.  I'd also endorse Sasha personally from my association with him in the past.
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+jch
