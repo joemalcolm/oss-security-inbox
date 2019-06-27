@@ -1,45 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/24/1
-Message-ID: <110f8440-7612-6014-fd40-2f8c72097b9a@catalyst.net.nz>
-Date: Wed, 24 Jul 2019 09:55:13 +1200
-From: Douglas Bagnall <douglas.bagnall@...alyst.net.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/27/6
+Message-ID: <20190627170725.GA10540@kroah.com>
+Date: Fri, 28 Jun 2019 01:07:25 +0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: abartlet@...ba.org
-Subject: Security release pre-announcement messages
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-On 22/07/19 11:50 PM, Solar Designer wrote:
-> Exactly.  It's just an unusual disclosure process that involves giving
-> the users a heads-up a few days before public disclosure of the actual
-> vulnerabilities and fixes.  So far, this process is practiced by OpenSSL
-> and Exim (any others?)
+On Thu, Jun 27, 2019 at 11:55:16AM -0500, Tyler Hicks wrote:
+> On 2019-06-28 00:42:06, Greg KH wrote:
+> > On Thu, Jun 27, 2019 at 04:03:21PM +0200, Solar Designer wrote:
+> > > Hi Sasha,
+> > > 
+> > > Thank you for posting this application.
+> > > 
+> > > Are you also on security@...?  If so, then on one hand also being on
+> > > linux-distros would probably be of less use to you since I suspect most
+> > > of the issues relevant to Microsoft are in the Linux kernel, but on the
+> > > other hand you could serve as a liaison to that group.
+> > 
+> > Sasha is not on security@k.o, someone else there is _supposed_ to be the
+> > liason to the linux-distros list, but I don't know how well that is
+> > working at the moment as I am not on -distros (nor do I want to be at
+> > this point in time.)
 > 
+> I don't think it happens much, if ever these days. The only kernel
+> issues that go to linux-distros seem to be ones that are reported up
+> through a distro or where the discoverer makes a point to include both
+> lists.
+> 
+> It would be good to improve the situation but I don't know if one person
+> could manage it alone.
 
-On the Samba team we use wording like this:
+The number of "real" bugs reported to security@k.o is really low these
+days (max 1 per week, maybe lower, haven't kept track in a long time),
+the load shouldn't be that hard.  And again, there is at least one
+member on that alias that was supposed to be doing this already...
 
-https://lists.samba.org/archive/samba/2019-June/223621.html
+thanks,
 
-----------------------------
-Subject: Heads-up: Security Releases ahead!
-
-Hi,
-
-This is a heads-up that there will be Samba security updates on
-Wednesday, June 19 2019. Please make sure that your Samba
-servers will be updated soon after the release!
-
-Impacted components:
- - AD DC (CVSS 6.5, Medium)
------------------------------
-
-We now do this systematically, after a haphazard start.
-
-To help ourselves stay on track, we are trying to formalise our
-process into something approaching a checklist:
-
-https://wiki.samba.org/index.php/Samba_Security_Process
-
-and we are happy to hear suggestions for improvement.
-
-cheers,
-Douglas
+greg k-h
