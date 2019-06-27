@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1477" "Wednesday" "17" "May" "2017" "03:23:14" "+0200" "Marc Lehmann" "schmorp@schmorp.de" "<20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>" "34" "Re: [oss-security] terminal emulators' processing of escape sequences" "^Cc:" nil nil "5" "2017051701:23:14" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        schmorp@schm May 17   34/1477  " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>" "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["13092" "Thursday" "27" "June" "2019" "13:05:08" "-0400" "Sasha Levin" "sashal@kernel.org" "<20190627170508.GB11506@sasha-vm>" "276" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "6" "2019062717:05:08" "[oss-security] linux-distros membership application - Microsoft" (number mark "        sashal@kerne Jun 27  276/13092 " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190627140321.GA29338@openwall.com>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20336 invoked by uid 550); 17 May 2017 01:50:12 -0000
+Received: (qmail 7445 invoked by uid 550); 27 Jun 2019 17:33:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,301 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7470 invoked from network); 17 May 2017 01:23:27 -0000
-Message-ID: <20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>
-References: <20170501164428.GA12322@openwall.com>
- <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>
- <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>
- <20170516220345.GA10874@openwall.com>
- <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
+Received: (qmail 21951 invoked from network); 27 Jun 2019 17:05:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1561655109;
+	bh=uha2f7X0honqy6buMLjGVwmb5vqrzG+v9W1Km53fzXA=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=AdlYJO69lKSUhAIZklYOOLOugDUGTZ2ejoPPLGz3GwT5+VyromYSoWp3yR0QQ4o2+
+	 e672q8D4qIM8mCORaKnQ+PkfVBmORx8DHbRV0//m2+bNsocS4skehAJjKosyYYMQs0
+	 QMxgfUbjsxYIWVp6wyyrfY+4gh9tvm2CNCTvq2s0=
+Message-ID: <20190627170508.GB11506@sasha-vm>
+References: <20190626141358.GK7898@sasha-vm>
+ <20190627140321.GA29338@openwall.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
-OpenPGP: id=904ad2f81fb16978e7536f726dea2ba30bc39eb6;
- url=http://pgp.schmorp.de/schmorp-pgpkey.txt; preference=signencrypt
-Cc: oss-security <oss-security@lists.openwall.com>,
-	rxvt-unicode@lists.schmorp.de, rxvt@schmorp.de
-Date: Wed, 17 May 2017 03:23:14 +0200
-From: Marc Lehmann <schmorp@schmorp.de>
+In-Reply-To: <20190627140321.GA29338@openwall.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Thu, 27 Jun 2019 13:05:08 -0400
+From: Sasha Levin <sashal@kernel.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] terminal emulators' processing of escape sequences
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: [oss-security] linux-distros membership application - Microsoft
+To: oss-security@lists.openwall.com
 
-On Wed, May 17, 2017 at 12:15:55AM +0200, "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
-> On Wed, May 17, 2017 at 12:03 AM, Solar Designer <solar@openwall.com> wrote:
-> > Jason, Robert -
-> >
-> > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
-> >> A harmless example from rxvt - pushing back the new-line character:
-> >>
-> >> $ echo -ne "\eGQ;"
-> >> ;$ 0
-> >> bash: 0: command not found
-> >
-> > Does this also affect rxvt-unicode?
-> 
-> It does, actually. I've CCd rxvt-unicode upstream on this in order to
-> hear their assessment.
+On Thu, Jun 27, 2019 at 04:03:21PM +0200, Solar Designer wrote:
+>Hi Sasha,
+>
+>Thank you for posting this application.
+>
+>Are you also on security@k.o?  If so, then on one hand also being on
+>linux-distros would probably be of less use to you since I suspect most
+>of the issues relevant to Microsoft are in the Linux kernel, but on the
+>other hand you could serve as a liaison to that group.
 
-There can't be an assessment without knowledge of what to assess - there
-is little to no information in your mail. I can only guess that somebody
-for the hundredth time found out that terminals are more than dumb
-display devices and got excited that, somehow, this might be a security
-issue. Without knowing details, I can't say for sure, but most likely,
-this is a security issue the same way blindly feeding unknown commands to
-your shell is, i.e., it's a problem somewhere else - the protocol between
-terminals and programs is not a (strong) security barrier.
+I'm not a member of security@k.o, but that list isn't what we're looking
+for. We've talked about this with Greg before sending this application,
+and he has pointed out that security@k.o is not a disclosure list, but
+rather just a way to pull in kernel folks to fix issues. Some (most?) of
+the kernel bugs that get fixed don't go through that list to begin with.
 
-(your echo command is bash-specific, btw.)
+The kernel's documentation with regards to security issues and
+disclosure actually points to linux-distros:
+https://www.kernel.org/doc/Documentation/admin-guide/security-bugs.rst .
 
--- 
-                The choice of a       Deliantra, the free code+content MORPG
-      -----==-     _GNU_              http://www.deliantra.net
-      ----==-- _       generation
-      ---==---(_)__  __ ____  __      Marc Lehmann
-      --==---/ / _ \/ // /\ \/ /      schmorp@schmorp.de
-      -=====/_/_//_/\_,_/ /_/\_\
+To complicate your question further: the Linux usage on our cloud has
+surpassed Windows, as a by-product of that MSRC has started receiving
+security reports of issues with Linux code both from users and vendors.
+It's also the case that issues that are common for Windows and Linux
+(like those speculative hardware bugs) are shared with us via MSRC as
+well.
+
+If you think that there's value in connecting between these 3
+entities, I'd be happy to do so (maybe as part of a new task).
+
+>On Wed, Jun 26, 2019 at 10:13:58AM -0400, Sasha Levin wrote:
+>> >1. Be an actively maintained Unix-like operating system distro with
+>> >substantial use of Open Source components
+>>
+>> Microsoft provides several distro-like builds which are not derivative
+>> of an existing distribution that are based on open source components:
+>>
+>> - Azure Sphere
+>>   (https://azure.microsoft.com/en-us/services/azure-sphere/): This
+>>   Linux-based IoT device provides, among various things, security
+>>   updates to deployed IoT devices. As the project is about to step out
+>>   of public preview into the GA stage, we expect millions of these
+>>   devices to be publicly used.
+>
+>This does sound like it includes a Linux distro, but obviously there's
+>no security track record for it yet, so it's hard to estimate relevance
+>of information you'd obtain via linux-distros to that product.
+
+Indeed. When we debated linux-distros application internally, I tried to
+do this estimate based on issues previously handled by linux-distros,
+and it seemed like it would be valuable here.
+
+With Sphere it's also hard to guess how are customers will be using it,
+it's a rather unique mix of HaaS (the chip contains cores that would
+belong to the user) and SaaS (where we provide mechanism to manage the
+IoT device that the user will build on). I can go over this in more
+detail if you'd like.
+
+>> - Windows Subsystem for Linux v2
+>>   (https://devblogs.microsoft.com/commandline/wsl-2-is-now-available-in-windows-insiders/):
+>>   A Linux based distro that runs as a virtual machine on top of Windows
+>>   hosts. WSL2 is currently available for public preview and scheduled
+>>   for GA early 2020.
+>
+>You call this "a Linux based distro", but that's not clear to me from
+>the web page you reference, which talks about managing (third-party?)
+>distros in the WSL2 subsystem.  Can you clarify this, please?
+
+With WSLv2, users can choose to bring in a third party distro userspace
+to run on top our kernel+lightweight userspace. This means that users
+can be running a Debian/Ubuntu/Fedora/etc userspace modified to run on
+WSLv2, on top of a kernel we supply.
+
+For us it means that we are now the proud owners of multiple
+frankensteined distro userspaces as well as a custom kernel. You might
+call it out as being derivative of those distros, but I believe that at
+the very least this is similar to the OpenVZ/CloudLinux scenario.
+
+>> - Products such as Azure HDInsight
+>>   (https://azure.microsoft.com/en-us/free/hdinsight) and the Azure
+>>   Kubernetes Service
+>>   (https://azure.microsoft.com/en-us/services/kubernetes-service/)
+>>   provide public access to a Linux based distribution.
+>
+>These look like SaaS offerings.  We do not have any explicit guidelines
+>on whether "provide public access to a Linux based distribution" is
+>potentially enough to qualify for linux-distros or not.  We do have
+>Amazon as a member, so there's that precedent.
+
+Honestly, these ones are even harder to deal with than the regular IaaS
+offerings we have: customers who use these offerings expect (and
+rightfully so) to be able to boot/update into a secure environment
+moments after a public disclosure of a security issue, which is not
+something we are able to provide right now.
+
+>> >2. Have a userbase not limited to your own organization
+>>
+>> Microsoft customers have millions of cores running the various workloads
+>> described above.
+>>
+>> >3. Have a publicly verifiable track record, dating back at least 1
+>> >year and continuing to present day, of fixing security issues
+>> >(including some that had been handled on (linux-)distros, meaning that
+>> >membership would have been relevant to you) and releasing the fixes
+>> >within 10 days (and preferably much less than that) of the issues
+>> >being made public (if it takes you ages to fix an issue, your users
+>> >wouldn't substantially benefit from the additional time, often around
+>> >7 days and sometimes up to 14 days, that list membership could give
+>> >you).
+>>
+>> Microsoft has decades long history of addressing security issues via
+>> MSRC (https://www.microsoft.com/en-us/msrc). While we are able to
+>> quickly (<1-2 hours) create a build to address disclosed security
+>> issues, we require extensive testing and validation before we make these
+>> builds public. Being members of this mailing list would provide us the
+>> additional time we need for extensive testing.
+>
+>It'd be helpful if you could directly address this part: "including some
+>that had been handled on (linux-)distros, meaning that membership would
+>have been relevant to you".  Without such examples yet, we'd have to be
+>guessing whether the membership would have been relevant to you or not.
+>
+>Right now, the statistics at:
+>
+>https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+>
+>only go until the end of 2018, so you'd be able to use them for examples
+>dating back to 2018 and earlier.  We should ask Gentoo to update these
+>statistics soon, perhaps for period until end of June 2019, which will
+>be possible soon.
+
+Sure! Issues on the stats page that would not have been reported to MSRC
+but are relevant to us would include:
+
+ - On the kernel side, issues such as CVE-2017-7533
+  (https://www.openwall.com/lists/oss-security/2017/08/03/2) would be
+  relevant for all our offerings.
+
+ - Core libraries affect us as well, for example CVE-2017-1000408
+   (https://www.openwall.com/lists/oss-security/2017/12/11/4). This
+   would affect our Sphere and SaaS offerings, as well as probably make
+   us run through them through test gauntlet for WSLv2.
+
+ - Higher level Linux tools, such as the one in CVE-2018-14722
+   (https://www.openwall.com/lists/oss-security/2018/08/14/7) affect
+   mostly our IaaS offerings, but I expect that we'd again validate the
+   rest of our offerings with the fix.
+
+>> >4. Not be (only) downstream or a rebuild of another distro (or else we
+>> >need convincing additional justification of how the list membership
+>> >would enable you to release fixes sooner, presumably not relying on
+>> >the upstream distro having released their fixes first?)
+>>
+>> None of our builds are based on an existing distribution. For few of
+>> these workloads we have a very custom kernel and userspace (such as for
+>> Azure Sphere), while some share a more conventional kernel/userspace
+>> configuration.
+>>
+>> >5. Be a participant and preferably an active contributor in relevant
+>> >public communities (most notably, if you're not watching for issues
+>> >being made public on oss-security, which are a superset of those that
+>> >had been handled on (linux-)distros, then there's no valid reason for
+>> >you to be on (linux-)distros)
+>>
+>> We follow closely public discussions with regards to security issues
+>> that would affect us. While there was only a minor contribution back to
+>> these lists mostly as we did not have any value to add back.
+>>
+>> During past years I've reported multiple security issues which were
+>> assigned CVEs.
+>>
+>> >6. Accept the list policy (see above)
+>>
+>> We accept the list's policy.
+>>
+>> >7. Be able and willing to contribute back (see above), preferably in
+>> >specific ways announced in advance (so that you're responsible for a
+>> >specific area and so that we know what to expect from which member),
+>> >and demonstrate actual contributions once you've been a member for a
+>> >while
+>>
+>> We understand this need and will be contributing back. Looking at the
+>> list of vacant positions I can suggest the following, but I suspect that
+>> existing list members will have better suggestions.
+>>
+>> Technical:
+>>
+>> 3. Review and/or test the proposed patches and point out potential
+>> issues with them (such as incomplete fixes for the originally reported
+>> issues, additional issues you might notice, and newly introduced bugs),
+>> and inform the list of the work done even if no issues were encountered
+>> - primary: Amazon, backup: vacant
+>>
+>> Administrative:
+>>
+>> 3. Evaluate if the issue (or one of the issues) is effectively already
+>> public (e.g., a fix is committed upstream with a descriptive message)
+>> or/and is low severity and thus the report (or its portion pertaining to
+>> the issue) should be made public right away for one or both of these
+>> reasons, get a few other list members to confirm this understanding, and
+>> if there are no objections then communicate this strong preference to
+>> the reporter - primary: CloudLinux, backup: vacant
+>
+>If Microsoft volunteers for these, I'd like that to be in "primary" role
+>at least for the technical task of "3. Review and/or test the proposed
+>patches ..."  I think Amazon hasn't been doing enough on that front,
+>especially given the request to "inform the list of the work done even
+>if no issues were encountered".  Given this request, if this were
+>seriously worked on, I would have expected such reports from Amazon on
+>almost every issue handled on linux-distros, but this wasn't the case.
+
+Sure, we'd love to help with the list's pain points.
+
+>I also would like a distro (maybe Microsoft) to volunteer for Technical:
+>
+>4. Check if related issues exist in the same piece of software (e.g.,
+>same bug class common across the software, or other kinds of bugs exist
+>in its problematic component), and inform the list either way
+>
+>and Administrative:
+>
+>4. Evaluate relevance to other parties such as the upstream, other
+>affected distros (not present on the (sub-)list), and other Open Source
+>projects, see if the report mentions notifying any of these, communicate
+>your findings and possible concerns to the reporter and the list, and
+>stay on top of the resulting discussion until a decision is made on who
+>else to possibly notify (or not) and any such notifications are in fact
+>made (with the reporter's approval)
+>
+>These are completely unclaimed now, but are much needed.
+>
+>For Technical "4. Check if related issues exist ...", we sometimes get
+>some helpful for varying distros' package maintainers and such, but this
+>is not consistent.  For example, recently Takashi Iwai of SUSE helped
+>with Linux Marvell Wi-Fi driver issues - thanks! - but this is more of
+>an exception than the rule.
+>
+>The lack of a volunteer distro for Administrative "4. Evaluate relevance
+>to other parties ..." came up e.g. here:
+>
+>"Linux kernel: Bluetooth: two remote infoleaks (CVE-2019-3459, CVE-2019-3460)"
+>https://www.openwall.com/lists/oss-security/2019/01/11/2
+
+This could be interesting for us. we already work closely with multiple
+distros as part of our public IaaS offering, as well as my work
+maintaining the stable tree means I interact often with many subsystem
+maintainers. We could leverage that for this task.
+
+I think that this task would also benefit from collaboration with MSRC,
+where for example we could verify whether the Bluetooth issue you brought
+up would affect Windows, and whether issues reported to MSRC also affect
+Linux.
+
+>> >8. Be able and willing to handle PGP-encrypted e-mail
+>>
+>> I am able and willing to handle PGP-encrypted e-mail.
+>>
+>> >9. Have someone already on the private list, or at least someone else
+>> >who has been active on oss-security for years but is not affiliated
+>> >with your distro nor your organization, vouch for at least one of the
+>> >people requesting membership on behalf of your distro (then that one
+>> >vouched-for person will be able to vouch for others on your team, in
+>> >case you'd like multiple people subscribed)
+>>
+>> Greg Kroah-Hartman <gregkh@linuxfoundation.org> would vouch for me
+>> (Sasha Levin <sashal@kernel.org>).
+>
+>Great.
+>
+>Let's discuss this further, and perhaps arrive at a decision in July.
+
+Great! Sounds like a plan.
+
+--
+Thanks,
+Sasha
