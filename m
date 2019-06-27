@@ -1,24 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/07/1
-Message-ID: <20190707101052.eusd3knys5jnlk2a@inutil.org>
-Date: Sun, 7 Jul 2019 12:10:52 +0200
-From: Moritz Muehlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/27/8
+Message-ID: <20190627174858.GD25142@elm>
+Date: Thu, 27 Jun 2019 12:48:58 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 06, 2019 at 06:29:36PM -0400, Sasha Levin wrote:
-> On Sat, Jul 06, 2019 at 09:37:37PM +0200, Solar Designer wrote:
-> > Hi all,
-> > 
-> > Per our current policy and precedents, I see no valid reasons not to
-> > subscribe Microsoft (or part(s) of it, see below) to linux-distros.  So
-> > I intend to figure out some detail and proceed with the subscription.
+On 2019-06-27 09:57:38, Anthony Liguori wrote:
+> On Thu, Jun 27, 2019 at 7:05 AM Solar Designer <solar@...nwall.com> wrote:
+> > > >3. Have a publicly verifiable track record, dating back at least 1
+> > > >year and continuing to present day, of fixing security issues
+> > > >(including some that had been handled on (linux-)distros, meaning that
+> > > >membership would have been relevant to you) and releasing the fixes
+> > > >within 10 days (and preferably much less than that) of the issues
+> > > >being made public (if it takes you ages to fix an issue, your users
+> > > >wouldn't substantially benefit from the additional time, often around
+> > > >7 days and sometimes up to 14 days, that list membership could give
+> > > >you).
+> > >
+> > > Microsoft has decades long history of addressing security issues via
+> > > MSRC (https://www.microsoft.com/en-us/msrc). While we are able to
+> > > quickly (<1-2 hours) create a build to address disclosed security
+> > > issues, we require extensive testing and validation before we make these
+> > > builds public. Being members of this mailing list would provide us the
+> > > additional time we need for extensive testing.
+> >
+> > It'd be helpful if you could directly address this part: "including some
+> > that had been handled on (linux-)distros, meaning that membership would
+> > have been relevant to you".  Without such examples yet, we'd have to be
+> > guessing whether the membership would have been relevant to you or not.
+> 
+> I'm not aware of issues on the distros list, but Microsoft has been
+> very active in working with the broader community on Spectre/Meltdown
+> style mitigations.  I think the community would benefit overall from
+> their participation on distros.
 
-Sasha, could you please also add the respective links/information for
-"Windows Subsystem for Linux v2" and "Azure Sphere" to
-https://oss-security.openwall.org/wiki/distro-patches and add an entry
-for Microsoft to https://oss-security.openwall.org/wiki/vendors ?
+I agree with Anthony on this point. They've been beneficial to the
+greater Linux community and I feel like their direct involvement on
+linux-distros would benefit other members.
 
-Cheers,
-        Moritz
+Tyler
