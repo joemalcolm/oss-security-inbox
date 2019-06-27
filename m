@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["834" "Thursday" "20" "October" "2016" "17:40:50" "-0400" "Pierre Ernst" "pernst@salesforce.com" "<CAO8=cJ-0zddSyndp=8ot8BHxyeC2r0Ln0nQvbFx0JQ3Dpg=0dA@mail.gmail.com>" "40" "[oss-security] CVE request - textract 1.4.0 - OS Command Injection" nil nil nil "10" "2016102021:40:50" "[oss-security] CVE request - textract 1.4.0 - OS Command Injection" (number mark "U       pernst@sales Oct 20   40/834   " thread-indent "\"[oss-security] CVE request - textract 1.4.0 - OS Command Injection\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2162" "Thursday" "27" "June" "2019" "19:56:45" "+0100" "John Haxby" "john.haxby@oracle.com" "<CE800BE0-7398-4ABA-9980-ABC97A6EB67D@oracle.com>" "46" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "6" "2019062718:56:45" "[oss-security] linux-distros membership application - Microsoft" (number mark "        john.haxby@o Jun 27   46/2162  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190627174858.GD25142@elm>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<CA+aC4kvr6o0n0aFGUk0nXmAU1d8sMPRUy8jET+fU17B6MDPskQ@mail.gmail.com>" "<20190627174858.GD25142@elm>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5169 invoked by uid 550); 20 Oct 2016 22:03:43 -0000
+Received: (qmail 1919 invoked by uid 550); 27 Jun 2019 18:57:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 1848 invoked from network); 27 Jun 2019 18:57:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : content-type :
+ content-transfer-encoding : mime-version : subject : date : references :
+ to : in-reply-to : message-id; s=corp-2018-07-02;
+ bh=Viq/eUg5MOrnk7K/YvurVZKrQXbFlkZ8oI84HjmANss=;
+ b=4RIxFEu2Mlq/dkcX/dhsXHb4CGUjGcYmP2piYsQO+u1ZypON8zskdLsdfVAoP4fhyzAn
+ 4TU/EauXOo61oSV1HMy+Bw1Oqc9YIF+9Sgzw1EdNl2HIjPscAKPv7sxIb8JB+NRs1WkH
+ +kWUI6SJ5d3SJ0vxT15yKE9DveJDzUIizWbuObpbbeG9KngkVVNJRAZ/GLbAF/Y8ZHb3
+ FBvCXs6zBa7FMfz/qstEF0XuFXmub522RPdtjEP/DQD7t/zoe0o3ujiIF3DjXUrqzMoJ
+ x1pyDoM1F8WqUFt4UiyltLItVT/bBGwXKPwiVBFCTcWS3I+6Xhof8KQfmF8ILaDOxClO 7w== 
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+References: <20190626141358.GK7898@sasha-vm>
+ <20190627140321.GA29338@openwall.com>
+ <CA+aC4kvr6o0n0aFGUk0nXmAU1d8sMPRUy8jET+fU17B6MDPskQ@mail.gmail.com>
+ <20190627174858.GD25142@elm>
+In-Reply-To: <20190627174858.GD25142@elm>
+Message-Id: <CE800BE0-7398-4ABA-9980-ABC97A6EB67D@oracle.com>
+X-Mailer: Apple Mail (2.3445.104.11)
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9301 signatures=668688
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1810050000 definitions=main-1906270215
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9301 signatures=668688
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1034
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1810050000
+ definitions=main-1906270215
+Date: Thu, 27 Jun 2019 19:56:45 +0100
+From: John Haxby <john.haxby@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26199 invoked from network); 20 Oct 2016 21:41:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=salesforce.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=b5ST4PWKfk4lmm4jmTtxxr/bPiH65ySyEKgKiI5Z05g=;
-        b=HK4aDAN7bTVvDWSf6ULJhakWbzDkY2ckDbBKxW7WgdbgQorr+I4qLTEs8f/zYMPUsc
-         mfX9xIKn2YlDMM9aMVqTQSB7BdKp51gUfWZ95IA91UH7v7V2D0ydEiVnGRLT1jepWCoV
-         dVY3+9z3E95aArnM0ADv8GRd3zrFaoAckdeCE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=b5ST4PWKfk4lmm4jmTtxxr/bPiH65ySyEKgKiI5Z05g=;
-        b=FyfmtJNVKdSwFkpyT271QAOrTcSvxp6kvJ9lGvUF6gEUdi1hRMzURt5evGXc40Y93n
-         D0UWt3343xDbEA2N/ps+NKELDh8xphm6m8kSTiViduqGp956/9owNOfy/Y4Dm96sdS87
-         UMEPI+TGYYA6HXKuP3MFdvzmhkxzRF1v2L6Cck74p2WaLz/NNcdVfXMjy7GzKksChBnu
-         vKaPxMyunsAjIVZLuxe9SVtRnXrnya3f5plPdq2nb0sm0AmH1Lq6wdkpm8gfxldMn4eP
-         Ymhhs3UbVK91n2JMTtw9Dz+lLL/ztBW6wnbN9JlCcnoYw5SbSshHojVsJOMwZdC2V9Yf
-         xyLQ==
-X-Gm-Message-State: ABUngvfjYjMspKpeTvTP1jIML9Y4lK2eLY/Ef6P667lfpFbWQgQFiOccnyWivOwyaFahhaKpPC1e0GlXUotuUdRL
-X-Received: by 10.25.135.130 with SMTP id j124mr2093601lfd.44.1476999651317;
- Thu, 20 Oct 2016 14:40:51 -0700 (PDT)
-MIME-Version: 1.0
-From: Pierre Ernst <pernst@salesforce.com>
-Date: Thu, 20 Oct 2016 17:40:50 -0400
-Message-ID: <CAO8=cJ-0zddSyndp=8ot8BHxyeC2r0Ln0nQvbFx0JQ3Dpg=0dA@mail.gmail.com>
+Subject: Re: [oss-security] linux-distros membership application - Microsoft
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a113fbc448d0b6e053f52c775
-Subject: [oss-security] CVE request - textract 1.4.0 - OS Command Injection
-
---001a113fbc448d0b6e053f52c775
-Content-Type: text/plain; charset=UTF-8
-
-The Python textract component (
-https://github.com/deanmalmgren/textract/tree/v1.4.0) is vulnerable to OS
-command injection.
-
-this fork contains a fix:
-https://github.com/pierre-ernst/textract
 
 
-Parsing a file with a malicious name leads to arbitrary OS command
-injection, this is especially risky when parsing user-supplied files on a
-server (e.g. uploaded files)
 
-PoC:
+> On 27 Jun 2019, at 18:48, Tyler Hicks <tyhicks@canonical.com> wrote:
+>=20
+> On 2019-06-27 09:57:38, Anthony Liguori wrote:
+>> On Thu, Jun 27, 2019 at 7:05 AM Solar Designer <solar@openwall.com> wrot=
+e:
+>>>>> 3. Have a publicly verifiable track record, dating back at least 1
+>>>>> year and continuing to present day, of fixing security issues
+>>>>> (including some that had been handled on (linux-)distros, meaning that
+>>>>> membership would have been relevant to you) and releasing the fixes
+>>>>> within 10 days (and preferably much less than that) of the issues
+>>>>> being made public (if it takes you ages to fix an issue, your users
+>>>>> wouldn't substantially benefit from the additional time, often around
+>>>>> 7 days and sometimes up to 14 days, that list membership could give
+>>>>> you).
+>>>>=20
+>>>> Microsoft has decades long history of addressing security issues via
+>>>> MSRC (https://www.microsoft.com/en-us/msrc). While we are able to
+>>>> quickly (<1-2 hours) create a build to address disclosed security
+>>>> issues, we require extensive testing and validation before we make the=
+se
+>>>> builds public. Being members of this mailing list would provide us the
+>>>> additional time we need for extensive testing.
+>>>=20
+>>> It'd be helpful if you could directly address this part: "including some
+>>> that had been handled on (linux-)distros, meaning that membership would
+>>> have been relevant to you".  Without such examples yet, we'd have to be
+>>> guessing whether the membership would have been relevant to you or not.
+>>=20
+>> I'm not aware of issues on the distros list, but Microsoft has been
+>> very active in working with the broader community on Spectre/Meltdown
+>> style mitigations.  I think the community would benefit overall from
+>> their participation on distros.
+>=20
+> I agree with Anthony on this point. They've been beneficial to the
+> greater Linux community and I feel like their direct involvement on
+> linux-distros would benefit other members.
+>=20
+> Tyler
 
-import textract
-import sys
-import os
 
-# create a file with a malicious name and arbitrary content
-fileName = './test";gnome-calculator;#.pdf'
-file = open(fileName,'w+')
-file.write('Pierre Ernst, Salesforce')
-file.close()
+I know this is "me too" but I agree with both Anthony and Tyler.  I'd also =
+endorse Sasha personally from my association with him in the past.
 
-# parse newly created file
-text = textract.process(fileName)
-print text
-
-# cleanup
-os.remove(fileName);
-
-
--- 
-Pierre Ernst
-Salesforce
-
---001a113fbc448d0b6e053f52c775--
+jch=
