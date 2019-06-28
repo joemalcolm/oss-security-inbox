@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1482" "Friday" "15" "January" "2016" "16:58:28" "-0500" "Rich Felker" "dalias@libc.org" "<20160115215828.GI238@brightrain.aerifal.cx>" "33" "Re: [oss-security] Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" "^Date:" nil nil "1" "2016011521:58:28" "[oss-security] Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" (number mark "        dalias@libc. Jan 15   33/1482  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778\"\n") "<1452862593.9500.48.camel@opteya.com>" ("<20160114171301.GH28298@localhost.localdomain>" "<5698D299.6020202@redhat.com>" "<1452862593.9500.48.camel@opteya.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8654" "Friday" "28" "June" "2019" "13:08:12" "-0400" "Sasha Levin" "sashal@kernel.org" "<20190628170812.GG11506@sasha-vm>" "185" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "6" "2019062817:08:12" "[oss-security] linux-distros membership application - Microsoft" (number mark "        sashal@kerne Jun 28  185/8654  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190628125743.GA2187@openwall.com>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>" "<20190628125743.GA2187@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3320 invoked by uid 550); 15 Jan 2016 21:58:42 -0000
+Received: (qmail 15762 invoked by uid 550); 28 Jun 2019 17:08:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,212 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3299 invoked from network); 15 Jan 2016 21:58:41 -0000
-Message-ID: <20160115215828.GI238@brightrain.aerifal.cx>
-References: <20160114171301.GH28298@localhost.localdomain>
- <5698D299.6020202@redhat.com>
- <1452862593.9500.48.camel@opteya.com>
+Received: (qmail 15734 invoked from network); 28 Jun 2019 17:08:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1561741694;
+	bh=zrnTwJ/l1ftPDDE2elpEA0/kboVNKvQX0zaFJ298kFQ=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=0SkQzv/3Go0HVwSillBjDAmrfH0+F3hUPryt/vmLzwpZHJFGbW8fSqfikwD2ouvUP
+	 xWw90TGZP+4lHRm3aQOjE47f9/l6RH8PRzVwISjgLjwXiihr7z7wAYCgESUKI2i684
+	 9tqreV3jDs2CRhQcYR7venMs4GBcF3Zezkzr0vUY=
+Message-ID: <20190628170812.GG11506@sasha-vm>
+References: <20190626141358.GK7898@sasha-vm>
+ <20190627140321.GA29338@openwall.com>
+ <20190627170508.GB11506@sasha-vm>
+ <20190628125743.GA2187@openwall.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1452862593.9500.48.camel@opteya.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Fri, 15 Jan 2016 16:58:28 -0500
-From: Rich Felker <dalias@libc.org>
+In-Reply-To: <20190628125743.GA2187@openwall.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Fri, 28 Jun 2019 13:08:12 -0400
+From: Sasha Levin <sashal@kernel.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Rich Felker <dalias@aerifal.cx>
-Subject: Re: [oss-security] Qualys Security Advisory - Roaming through the
- OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+Subject: Re: [oss-security] linux-distros membership application - Microsoft
 To: oss-security@lists.openwall.com
 
-On Fri, Jan 15, 2016 at 01:56:33PM +0100, Yann Droneaud wrote:
-> Hi,
-> 
-> Le vendredi 15 janvier 2016 à 12:06 +0100, Florian Weimer a écrit :
-> > On 01/14/2016 06:13 PM, Qualys Security Advisory wrote:
-> > > Internal stdio buffering is the most severe of the three problems
-> > > discussed in this section, although GNU/Linux is not affected
-> > > because the glibc mmap()s and munmap()s (and therefore cleanses)
-> > > stdio buffers.
-> > 
-> > This will change in glibc 2.23, stdio will use regular malloc and
-> > free for its buffers.  I did not expect this change to have security
-> > implications.  Considering that the actual bug lies elsewhere, and
-> > stdio usage is based on copying out of the buffer (so leaks can still
-> > happen elsewhere), I do not wish to revert this change.
-> > 
-> 
-> Would setvbuf(stream, NULL, _IONBF, 0); be used to disable buffer
-> before reading/writting sensible data to a stream ?
+On Fri, Jun 28, 2019 at 02:57:43PM +0200, Solar Designer wrote:
+>On Thu, Jun 27, 2019 at 01:05:08PM -0400, Sasha Levin wrote:
+>> security@k.o is not a disclosure list, but
+>> rather just a way to pull in kernel folks to fix issues. Some (most?) of
+>> the kernel bugs that get fixed don't go through that list to begin with.
+>
+>"Some (most?) of the kernel [security] bugs that get fixed don't go
+>through" linux-distros as well.
 
-Yes. Or preferably you could provide a custom buffer pointer for the
-stdio FILE to use and clear it safely yourself after calling fclose.
+True, but we care about more than just the kernel side of things.
 
-> What about a buffering flag (_IOSBF) that would enable "secure" 
-> handling of the buffer, that is, on fclose() and fflush(), write
-> back and cleanse buffer on output stream, cleanse buffer on input
-> stream ?
+>> The kernel's documentation with regards to security issues and
+>> disclosure actually points to linux-distros:
+>> https://www.kernel.org/doc/Documentation/admin-guide/security-bugs.rst .
+>
+>I'm not entirely happy with the wording used there, which currently is:
+>
+>---
+>Fixes for sensitive bugs, such as those that might lead to privilege
+>escalations, may need to be coordinated with the private
+><linux-distros@vs.openwall.org> mailing list so that distribution vendors
+>are well prepared to issue a fixed kernel upon public disclosure of the
+>upstream fix. Distros will need some time to test the proposed patch and
+>will generally request at least a few days of embargo, and vendor update
+>publication prefers to happen Tuesday through Thursday. When appropriate,
+>the security team can assist with this coordination, or the reporter can
+>include linux-distros from the start. In this case, remember to prefix
+>the email Subject line with "[vs]" as described in the linux-distros wiki:
+><http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists>
+>---
+>
+>This says that "Distros [...] will generally request at least a few days
+>of embargo", but the actual policy of (linux-)distros is that the
+>reporter must provide a tentative public disclosure date/time in their
+>very first message.
+>
+>Also, this doesn't say that by disclosing something to (linux-)distros
+>the reporter accepts the list's policy, and leaves actually reading that
+>wiki page with the policy optional.
+>
+>I don't readily have suggested edits, but we should address these issues
+>somehow.  Please feel free to suggest edits.
 
-This sounds undesirable when there is already a portable fix (above).
-There are also some issues with compatibility for such a feature
-between versions and what symbol versioning might be needed.
+Can I suggest that we fork the discussion around security-bugs.rst to
+LKML? I can suggest an initial patch to address your comments here but I
+think that this is better handled on LKML.
 
-Rich
+>On a related note, this might not be representative, but I ran a Twitter
+>poll on days of week for vulnerability disclosures:
+>
+>https://twitter.com/solardiz/status/923885360001757185
+>
+>Poll: What days of week work best for you for public disclosure by
+>others of vulnerabilities in software you (or your employer, etc.) use?
+>
+>23% No preference or Other
+>33% Mon
+>36% Tue, Wed, Thu
+> 8% Fri, Sat, Sun
+>
+>164 votes
+>
+>12:13 PM - 27 Oct 2017
+>
+>As you can see, Mon fared really well - almost same as Tue, Wed, Thu
+>combined, meaning that it might be _the_ preferred day of week for
+>vulnerability disclosures.  So we probably shouldn't exclude Mondays.
+
+My concern with Monday is timezones: we should do the math here, but I'd
+like to avoid spilling over to Sunday (or very early Monday for that
+matter) for some timezones.
+
+>> To complicate your question further: the Linux usage on our cloud has
+>> surpassed Windows, as a by-product of that MSRC has started receiving
+>> security reports of issues with Linux code both from users and vendors.
+>> It's also the case that issues that are common for Windows and Linux
+>> (like those speculative hardware bugs) are shared with us via MSRC as
+>> well.
+>>
+>> If you think that there's value in connecting between these 3
+>> entities, I'd be happy to do so (maybe as part of a new task).
+>
+>I'm not sure.  The microarchitectural "bugs" would have been
+>inappropriate to bring to the distros list earlier than in 14 days prior
+>to their public disclosures, and I don't know if the public disclosure
+>dates on those were specific enough to achieve that.  Maybe you know?
+
+As far as I understand specific dates for the microarchitectural bugs
+were set pretty late in the process.
+
+It's not just the microarchitectural bugs I was referring to, we are
+getting security reports from users about security bugs in various
+distros and we end up circling back with relevant distros to patch them
+up. A recent example would be:
+https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1834499 where an
+internal user has reported a kernel memory leak due to a missing patch
+in Ubuntu.
+
+>> >It'd be helpful if you could directly address this part: "including some
+>> >that had been handled on (linux-)distros, meaning that membership would
+>> >have been relevant to you".  Without such examples yet, we'd have to be
+>> >guessing whether the membership would have been relevant to you or not.
+>> >
+>> >Right now, the statistics at:
+>> >
+>> >https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+>> >
+>> >only go until the end of 2018, so you'd be able to use them for examples
+>> >dating back to 2018 and earlier.  We should ask Gentoo to update these
+>> >statistics soon, perhaps for period until end of June 2019, which will
+>> >be possible soon.
+>>
+>> Sure! Issues on the stats page that would not have been reported to MSRC
+>> but are relevant to us would include:
+>>
+>> - On the kernel side, issues such as CVE-2017-7533
+>>  (https://www.openwall.com/lists/oss-security/2017/08/03/2) would be
+>>  relevant for all our offerings.
+>>
+>> - Core libraries affect us as well, for example CVE-2017-1000408
+>>   (https://www.openwall.com/lists/oss-security/2017/12/11/4). This
+>>   would affect our Sphere and SaaS offerings, as well as probably make
+>>   us run through them through test gauntlet for WSLv2.
+>>
+>> - Higher level Linux tools, such as the one in CVE-2018-14722
+>>   (https://www.openwall.com/lists/oss-security/2018/08/14/7) affect
+>>   mostly our IaaS offerings, but I expect that we'd again validate the
+>>   rest of our offerings with the fix.
+>
+>Thanks!  Ideally, you'd also demonstrate that Microsoft fixed those
+>issues (where relevant) within days of their public disclosure (so that
+>some days of advance notice would have made a difference).  Can you?
+>
+>Or are you merely pointing out the kind of issues that would have been
+>relevant to you and presumably fixed promptly now, but were not relevant
+>and thus were not fixed back then?  That's less than ideal if so.
+
+Microsoft's history with Linux is a rather recent one. I can offer the
+following examples if you're willing to give us a few months off of the
+"1 year" requirement:
+
+CVE-2018-1002105: https://azure.microsoft.com/en-us/updates/aks-clusters-patched-for-kubernetes-vulnerability/
+CVE-2018-5391, CVE-2018-5390: https://azure.microsoft.com/en-us/blog/security-bulletin-for-august-2018/
+CVE-2019-5736: https://azure.microsoft.com/en-us/updates/iot-edge-fix-cve-2019-5736/
+CVE-2019-11477, CVE-2019-11478, CVE-2019-11479: https://azure.microsoft.com/en-us/updates/security-advisory-on-linux-kernel-tcp-vulnerabilities-for-hdinsight-clusters/
+
+>> Sure, we'd love to help with the list's pain points.
+>
+>Great!
+>
+>> >The lack of a volunteer distro for Administrative "4. Evaluate relevance
+>> >to other parties ..." came up e.g. here:
+>> >
+>> >"Linux kernel: Bluetooth: two remote infoleaks (CVE-2019-3459,
+>> >CVE-2019-3460)"
+>> >https://www.openwall.com/lists/oss-security/2019/01/11/2
+>>
+>> This could be interesting for us. we already work closely with multiple
+>> distros as part of our public IaaS offering, as well as my work
+>> maintaining the stable tree means I interact often with many subsystem
+>> maintainers. We could leverage that for this task.
+>>
+>> I think that this task would also benefit from collaboration with MSRC,
+>> where for example we could verify whether the Bluetooth issue you brought
+>> up would affect Windows, and whether issues reported to MSRC also affect
+>> Linux.
+>
+>If Microsoft joins for its Linux offerings (including Linux on top of
+>Windows), then checking if the Linux issues also affect Windows (itself)
+>would involve sharing beyond the need-to-know condition of
+>(linux-)distros list policy, so isn't allowed by default.  It could
+>still be done with explicit approval of the reporter, though, and I
+>expect most people would give such approval if asked.
+
+I'd love to develop a framework that would allow for sharing of reports
+between linux-distros/security@k.o/MSRC given the explicit approval of
+the reporter. I think that the current "silo" model is broken.
+
+Microsoft in general, and MSRC in particular have proved during
+Meltdown/Spectre that they are a trusted entity which can work well with
+the open source community to advance our common goals. 
+
+--
+Thanks,
+Sasha
