@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1310" "Tuesday" "5" "May" "2015" "14:17:32" "+0200" "Florian Weimer" "fweimer@redhat.com" "<5548B4DC.4080305@redhat.com>" "36" "Re: [oss-security] Problems in automatic crash analysis frameworks" nil nil nil "5" "2015050512:17:32" "[oss-security] Problems in automatic crash analysis frameworks" (number mark "        fweimer@redh May  5   36/1310  " thread-indent "\"Re: [oss-security] Problems in automatic crash analysis frameworks\"\n") "<553943C3.5060704@redhat.com>" ("<CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>" "<55315C2B.6050207@redhat.com>" "<553943C3.5060704@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6493" "Friday" "28" "June" "2019" "14:57:43" "+0200" "Solar Designer" "solar@openwall.com" "<20190628125743.GA2187@openwall.com>" "144" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "6" "2019062812:57:43" "[oss-security] linux-distros membership application - Microsoft" (number mark "        solar@openwa Jun 28  144/6493  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190627170508.GB11506@sasha-vm>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1336 invoked by uid 550); 5 May 2015 12:17:48 -0000
+Received: (qmail 26309 invoked by uid 550); 28 Jun 2019 12:58:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,161 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32759 invoked from network); 5 May 2015 12:17:47 -0000
-Message-ID: <5548B4DC.4080305@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-References: <CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com> <55315C2B.6050207@redhat.com> <553943C3.5060704@redhat.com>
-In-Reply-To: <553943C3.5060704@redhat.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Date: Tue, 05 May 2015 14:17:32 +0200
-From: Florian Weimer <fweimer@redhat.com>
+Received: (qmail 25905 invoked from network); 28 Jun 2019 12:58:13 -0000
+Message-ID: <20190628125743.GA2187@openwall.com>
+References: <20190626141358.GK7898@sasha-vm> <20190627140321.GA29338@openwall.com> <20190627170508.GB11506@sasha-vm>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190627170508.GB11506@sasha-vm>
+User-Agent: Mutt/1.4.2.3i
+Date: Fri, 28 Jun 2019 14:57:43 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Problems in automatic crash analysis frameworks
+Subject: Re: [oss-security] linux-distros membership application - Microsoft
 To: oss-security@lists.openwall.com
 
-On 04/23/2015 09:10 PM, Florian Weimer wrote:
-> On 04/17/2015 09:16 PM, Florian Weimer wrote:
->> A quick update on the abrt situation.
+On Thu, Jun 27, 2019 at 01:05:08PM -0400, Sasha Levin wrote:
+> security@k.o is not a disclosure list, but
+> rather just a way to pull in kernel folks to fix issues. Some (most?) of
+> the kernel bugs that get fixed don't go through that list to begin with.
+
+"Some (most?) of the kernel [security] bugs that get fixed don't go
+through" linux-distros as well.
+
+> The kernel's documentation with regards to security issues and
+> disclosure actually points to linux-distros:
+> https://www.kernel.org/doc/Documentation/admin-guide/security-bugs.rst .
+
+I'm not entirely happy with the wording used there, which currently is:
+
+---
+Fixes for sensitive bugs, such as those that might lead to privilege
+escalations, may need to be coordinated with the private
+<linux-distros@vs.openwall.org> mailing list so that distribution vendors
+are well prepared to issue a fixed kernel upon public disclosure of the
+upstream fix. Distros will need some time to test the proposed patch and
+will generally request at least a few days of embargo, and vendor update
+publication prefers to happen Tuesday through Thursday. When appropriate,
+the security team can assist with this coordination, or the reporter can
+include linux-distros from the start. In this case, remember to prefix
+the email Subject line with "[vs]" as described in the linux-distros wiki:
+<http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists>
+---
+
+This says that "Distros [...] will generally request at least a few days
+of embargo", but the actual policy of (linux-)distros is that the
+reporter must provide a tentative public disclosure date/time in their
+very first message.
+
+Also, this doesn't say that by disclosing something to (linux-)distros
+the reporter accepts the list's policy, and leaves actually reading that
+wiki page with the policy optional.
+
+I don't readily have suggested edits, but we should address these issues
+somehow.  Please feel free to suggest edits.
+
+On a related note, this might not be representative, but I ran a Twitter
+poll on days of week for vulnerability disclosures:
+
+https://twitter.com/solardiz/status/923885360001757185
+
+Poll: What days of week work best for you for public disclosure by
+others of vulnerabilities in software you (or your employer, etc.) use?
+
+23% No preference or Other
+33% Mon
+36% Tue, Wed, Thu
+ 8% Fri, Sat, Sun
+
+164 votes
+
+12:13 PM - 27 Oct 2017
+
+As you can see, Mon fared really well - almost same as Tue, Wed, Thu
+combined, meaning that it might be _the_ preferred day of week for
+vulnerability disclosures.  So we probably shouldn't exclude Mondays.
+
+> To complicate your question further: the Linux usage on our cloud has
+> surpassed Windows, as a by-product of that MSRC has started receiving
+> security reports of issues with Linux code both from users and vendors.
+> It's also the case that issues that are common for Windows and Linux
+> (like those speculative hardware bugs) are shared with us via MSRC as
+> well.
 > 
-> Another update.  We now have a public tracking bug listing the issues:
+> If you think that there's value in connecting between these 3
+> entities, I'd be happy to do so (maybe as part of a new task).
+
+I'm not sure.  The microarchitectural "bugs" would have been
+inappropriate to bring to the distros list earlier than in 14 days prior
+to their public disclosures, and I don't know if the public disclosure
+dates on those were specific enough to achieve that.  Maybe you know?
+
+> >It'd be helpful if you could directly address this part: "including some
+> >that had been handled on (linux-)distros, meaning that membership would
+> >have been relevant to you".  Without such examples yet, we'd have to be
+> >guessing whether the membership would have been relevant to you or not.
+> >
+> >Right now, the statistics at:
+> >
+> >https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+> >
+> >only go until the end of 2018, so you'd be able to use them for examples
+> >dating back to 2018 and earlier.  We should ask Gentoo to update these
+> >statistics soon, perhaps for period until end of June 2019, which will
+> >be possible soon.
 > 
->   <https://bugzilla.redhat.com/show_bug.cgi?id=1214172>
+> Sure! Issues on the stats page that would not have been reported to MSRC
+> but are relevant to us would include:
+> 
+> - On the kernel side, issues such as CVE-2017-7533
+>  (https://www.openwall.com/lists/oss-security/2017/08/03/2) would be
+>  relevant for all our offerings.
+> 
+> - Core libraries affect us as well, for example CVE-2017-1000408
+>   (https://www.openwall.com/lists/oss-security/2017/12/11/4). This
+>   would affect our Sphere and SaaS offerings, as well as probably make
+>   us run through them through test gauntlet for WSLv2.
+> 
+> - Higher level Linux tools, such as the one in CVE-2018-14722
+>   (https://www.openwall.com/lists/oss-security/2018/08/14/7) affect
+>   mostly our IaaS offerings, but I expect that we'd again validate the
+>   rest of our offerings with the fix.
 
-We have identified one more issue:
+Thanks!  Ideally, you'd also demonstrate that Microsoft fixed those
+issues (where relevant) within days of their public disclosure (so that
+some days of advance notice would have made a difference).  Can you?
 
-abrt-action-install-debuginfo-to-abrt-cache is a SUID wrapper which
-incorrectly filters the process environment (umask and truncated command
-line arguments such as “--ca“) before invoking the actual program.  This
-allows a local attacker to create a world-writable problem directory and
-eventually escalate their privileges to root.  (Other attacks against
-the cpio extraction might be feasible.)  CVE-2015-3159
-<https://bugzilla.redhat.com/show_bug.cgi?id=1216962>
+Or are you merely pointing out the kind of issues that would have been
+relevant to you and presumably fixed promptly now, but were not relevant
+and thus were not fixed back then?  That's less than ideal if so.
 
-Jakub Filak has created several pull requests fixing all the issues
-identified so far:
+> Sure, we'd love to help with the list's pain points.
 
-  <https://github.com/abrt/abrt/pull/950>
-  <https://github.com/abrt/abrt/pull/955>
-  <https://github.com/abrt/libreport/pull/346>
+Great!
 
-There is a public build (against EPEL7) of the consolidated fixes,
-available as a Copr repository:
+> >The lack of a volunteer distro for Administrative "4. Evaluate relevance
+> >to other parties ..." came up e.g. here:
+> >
+> >"Linux kernel: Bluetooth: two remote infoleaks (CVE-2019-3459, 
+> >CVE-2019-3460)"
+> >https://www.openwall.com/lists/oss-security/2019/01/11/2
+> 
+> This could be interesting for us. we already work closely with multiple
+> distros as part of our public IaaS offering, as well as my work
+> maintaining the stable tree means I interact often with many subsystem
+> maintainers. We could leverage that for this task.
+> 
+> I think that this task would also benefit from collaboration with MSRC,
+> where for example we could verify whether the Bluetooth issue you brought
+> up would affect Windows, and whether issues reported to MSRC also affect
+> Linux.
 
-  <http://copr.fedoraproject.org/coprs/jfilak/abrt-hardened/>
+If Microsoft joins for its Linux offerings (including Linux on top of
+Windows), then checking if the Linux issues also affect Windows (itself)
+would involve sharing beyond the need-to-know condition of
+(linux-)distros list policy, so isn't allowed by default.  It could
+still be done with explicit approval of the reporter, though, and I
+expect most people would give such approval if asked.
 
-This also includes the consolidated fixes.
-
-At this stage, we'd appreciate additional comments/reviews.
-
--- 
-Florian Weimer / Red Hat Product Security
+Alexander
