@@ -1,153 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/28/1
-Message-ID: <20190628125743.GA2187@openwall.com>
-Date: Fri, 28 Jun 2019 14:57:43 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/29/1
+Message-ID: <23fd3ff9bc2b6faabbf2cbe55e0763d444e951d6.camel@gmail.com>
+Date: Sat, 29 Jun 2019 16:36:29 +0200
+From: Ailin Nemui <ailin.nemui@...il.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Irssi 1.2.1/1.1.3/1.0.8: CVE-2019-13045
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 27, 2019 at 01:05:08PM -0400, Sasha Levin wrote:
-> security@k.o is not a disclosure list, but
-> rather just a way to pull in kernel folks to fix issues. Some (most?) of
-> the kernel bugs that get fixed don't go through that list to begin with.
+IRSSI-SA-2019-06 Irssi Security Advisory [1]
+============================================
+CVE-2019-13045
 
-"Some (most?) of the kernel [security] bugs that get fixed don't go
-through" linux-distros as well.
+Description
+-----------
 
-> The kernel's documentation with regards to security issues and
-> disclosure actually points to linux-distros:
-> https://www.kernel.org/doc/Documentation/admin-guide/security-bugs.rst .
+(a) Use after free when sending SASL login to the server found by
+    ilbelkyr. (CWE-416, CWE-825)
 
-I'm not entirely happy with the wording used there, which currently is:
+    CVE-2019-13045 [2] was assigned to this issue.
 
----
-Fixes for sensitive bugs, such as those that might lead to privilege
-escalations, may need to be coordinated with the private
-<linux-distros@...openwall.org> mailing list so that distribution vendors
-are well prepared to issue a fixed kernel upon public disclosure of the
-upstream fix. Distros will need some time to test the proposed patch and
-will generally request at least a few days of embargo, and vendor update
-publication prefers to happen Tuesday through Thursday. When appropriate,
-the security team can assist with this coordination, or the reporter can
-include linux-distros from the start. In this case, remember to prefix
-the email Subject line with "[vs]" as described in the linux-distros wiki:
-<http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists>
----
 
-This says that "Distros [...] will generally request at least a few days
-of embargo", but the actual policy of (linux-)distros is that the
-reporter must provide a tentative public disclosure date/time in their
-very first message.
+Impact
+------
 
-Also, this doesn't say that by disclosing something to (linux-)distros
-the reporter accepts the list's policy, and leaves actually reading that
-wiki page with the policy optional.
+May affect the stability of Irssi. SASL logins may fail, especially
+during (manual and automated) reconnect.
 
-I don't readily have suggested edits, but we should address these issues
-somehow.  Please feel free to suggest edits.
 
-On a related note, this might not be representative, but I ran a Twitter
-poll on days of week for vulnerability disclosures:
+Affected versions
+-----------------
 
-https://twitter.com/solardiz/status/923885360001757185
+(a) Irssi 0.8.18 and later
 
-Poll: What days of week work best for you for public disclosure by
-others of vulnerabilities in software you (or your employer, etc.) use?
 
-23% No preference or Other
-33% Mon
-36% Tue, Wed, Thu
- 8% Fri, Sat, Sun
+Fixed in
+--------
 
-164 votes
+Irssi 1.0.8, 1.1.3, 1.2.1
 
-12:13 PM - 27 Oct 2017
 
-As you can see, Mon fared really well - almost same as Tue, Wed, Thu
-combined, meaning that it might be _the_ preferred day of week for
-vulnerability disclosures.  So we probably shouldn't exclude Mondays.
+Recommended action
+------------------
 
-> To complicate your question further: the Linux usage on our cloud has
-> surpassed Windows, as a by-product of that MSRC has started receiving
-> security reports of issues with Linux code both from users and vendors.
-> It's also the case that issues that are common for Windows and Linux
-> (like those speculative hardware bugs) are shared with us via MSRC as
-> well.
-> 
-> If you think that there's value in connecting between these 3
-> entities, I'd be happy to do so (maybe as part of a new task).
+Upgrade to the latest Irssi. We've published maintenance releases,
+without any new features.
 
-I'm not sure.  The microarchitectural "bugs" would have been
-inappropriate to bring to the distros list earlier than in 14 days prior
-to their public disclosures, and I don't know if the public disclosure
-dates on those were specific enough to achieve that.  Maybe you know?
+After installing the updated packages, one can issue the /upgrade
+command to load the new binary. TLS connections will require
+/reconnect.
 
-> >It'd be helpful if you could directly address this part: "including some
-> >that had been handled on (linux-)distros, meaning that membership would
-> >have been relevant to you".  Without such examples yet, we'd have to be
-> >guessing whether the membership would have been relevant to you or not.
-> >
-> >Right now, the statistics at:
-> >
-> >https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
-> >
-> >only go until the end of 2018, so you'd be able to use them for examples
-> >dating back to 2018 and earlier.  We should ask Gentoo to update these
-> >statistics soon, perhaps for period until end of June 2019, which will
-> >be possible soon.
-> 
-> Sure! Issues on the stats page that would not have been reported to MSRC
-> but are relevant to us would include:
-> 
-> - On the kernel side, issues such as CVE-2017-7533
->  (https://www.openwall.com/lists/oss-security/2017/08/03/2) would be
->  relevant for all our offerings.
-> 
-> - Core libraries affect us as well, for example CVE-2017-1000408
->   (https://www.openwall.com/lists/oss-security/2017/12/11/4). This
->   would affect our Sphere and SaaS offerings, as well as probably make
->   us run through them through test gauntlet for WSLv2.
-> 
-> - Higher level Linux tools, such as the one in CVE-2018-14722
->   (https://www.openwall.com/lists/oss-security/2018/08/14/7) affect
->   mostly our IaaS offerings, but I expect that we'd again validate the
->   rest of our offerings with the fix.
 
-Thanks!  Ideally, you'd also demonstrate that Microsoft fixed those
-issues (where relevant) within days of their public disclosure (so that
-some days of advance notice would have made a difference).  Can you?
+Mitigating facts
+----------------
 
-Or are you merely pointing out the kind of issues that would have been
-relevant to you and presumably fixed promptly now, but were not relevant
-and thus were not fixed back then?  That's less than ideal if so.
+Users who have not configured SASL, are not affected by this issue.
 
-> Sure, we'd love to help with the list's pain points.
 
-Great!
 
-> >The lack of a volunteer distro for Administrative "4. Evaluate relevance
-> >to other parties ..." came up e.g. here:
-> >
-> >"Linux kernel: Bluetooth: two remote infoleaks (CVE-2019-3459, 
-> >CVE-2019-3460)"
-> >https://www.openwall.com/lists/oss-security/2019/01/11/2
-> 
-> This could be interesting for us. we already work closely with multiple
-> distros as part of our public IaaS offering, as well as my work
-> maintaining the stable tree means I interact often with many subsystem
-> maintainers. We could leverage that for this task.
-> 
-> I think that this task would also benefit from collaboration with MSRC,
-> where for example we could verify whether the Bluetooth issue you brought
-> up would affect Windows, and whether issues reported to MSRC also affect
-> Linux.
+References
+----------
 
-If Microsoft joins for its Linux offerings (including Linux on top of
-Windows), then checking if the Linux issues also affect Windows (itself)
-would involve sharing beyond the need-to-know condition of
-(linux-)distros list policy, so isn't allowed by default.  It could
-still be done with explicit approval of the reporter, though, and I
-expect most people would give such approval if asked.
+[1] https://irssi.org/security/irssi_sa_2019_06.txt
+[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-13045
 
-Alexander
+
