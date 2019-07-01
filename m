@@ -1,36 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/03/1
-Message-ID: <20190303173117.58da9e69@computer>
-Date: Sun, 3 Mar 2019 17:31:17 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/01/1
+Message-ID: <21cb97a5-99a4-edc9-41ce-19ceb92e62bf@suse.de>
+Date: Mon, 1 Jul 2019 16:02:10 +0930
+From: Simon Lees <sflees@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Open Redirect in Tiny Tiny RSS (tt-rss)
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Via my personal Bug Bounty program on hackerone I got a report about an
-open redirect in a publicly accessible instance of Tiny Tiny RSS I have
-running on a subdomain.
 
-I'm aware that whether open redirects are vulnerabilities is debatable
-(which is also reflected in the discussion with tt-rss, but they fixed
-it nevertheless).
+On 29/06/2019 02:38, Sasha Levin wrote:
+> On Fri, Jun 28, 2019 at 02:57:43PM +0200, Solar Designer wrote:
+>> On Thu, Jun 27, 2019 at 01:05:08PM -0400, Sasha Levin wrote:
+>>> security@k.o is not a disclosure list, but
+>>> rather just a way to pull in kernel folks to fix issues. Some (most?) of
+>>> the kernel bugs that get fixed don't go through that list to begin with.
+>>
+>> "Some (most?) of the kernel [security] bugs that get fixed don't go
+>> through" linux-distros as well.
+> 
+> True, but we care about more than just the kernel side of things.
+> 
+>>> The kernel's documentation with regards to security issues and
+>>> disclosure actually points to linux-distros:
+>>> https://www.kernel.org/doc/Documentation/admin-guide/security-bugs.rst .
+>>
+>> I'm not entirely happy with the wording used there, which currently is:
+>>
+>> ---
+>> Fixes for sensitive bugs, such as those that might lead to privilege
+>> escalations, may need to be coordinated with the private
+>> <linux-distros@...openwall.org> mailing list so that distribution vendors
+>> are well prepared to issue a fixed kernel upon public disclosure of the
+>> upstream fix. Distros will need some time to test the proposed patch and
+>> will generally request at least a few days of embargo, and vendor update
+>> publication prefers to happen Tuesday through Thursday. When appropriate,
+>> the security team can assist with this coordination, or the reporter can
+>> include linux-distros from the start. In this case, remember to prefix
+>> the email Subject line with "[vs]" as described in the linux-distros 
+>> wiki:
+>> <http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists> 
+>>
+>> ---
+>>
+>> This says that "Distros [...] will generally request at least a few days
+>> of embargo", but the actual policy of (linux-)distros is that the
+>> reporter must provide a tentative public disclosure date/time in their
+>> very first message.
+>>
+>> Also, this doesn't say that by disclosing something to (linux-)distros
+>> the reporter accepts the list's policy, and leaves actually reading that
+>> wiki page with the policy optional.
+>>
+>> I don't readily have suggested edits, but we should address these issues
+>> somehow.  Please feel free to suggest edits.
+> 
+> Can I suggest that we fork the discussion around security-bugs.rst to
+> LKML? I can suggest an initial patch to address your comments here but I
+> think that this is better handled on LKML.
+> 
+>> On a related note, this might not be representative, but I ran a Twitter
+>> poll on days of week for vulnerability disclosures:
+>>
+>> https://twitter.com/solardiz/status/923885360001757185
+>>
+>> Poll: What days of week work best for you for public disclosure by
+>> others of vulnerabilities in software you (or your employer, etc.) use?
+>>
+>> 23% No preference or Other
+>> 33% Mon
+>> 36% Tue, Wed, Thu
+>> 8% Fri, Sat, Sun
+>>
+>> 164 votes
+>>
+>> 12:13 PM - 27 Oct 2017
+>>
+>> As you can see, Mon fared really well - almost same as Tue, Wed, Thu
+>> combined, meaning that it might be _the_ preferred day of week for
+>> vulnerability disclosures.  So we probably shouldn't exclude Mondays.
+> 
+> My concern with Monday is timezones: we should do the math here, but I'd
+> like to avoid spilling over to Sunday (or very early Monday for that
+> matter) for some timezones.
 
-PoC:
-https://[hostname]/public.php?return=http%3a%2f%2fevil.com%2f&op=login&login=password=&profile=0
+I missed the twitter poll but from my perspective as someone involved in 
+making and releasing such updates for SUSE customers Monday disclosures 
+tend to work for us but only due to timezones, generally disclosure 
+times happen into the late afternoon evening, which means that if 
+lengthy QA tests were left running over the weekend our QA team will 
+have time to review the results during Monday and we will be ready to 
+release. I am guessing that some other distro's wouldn't end up with 
+this luxury. Having said that it will often depend on the amount of 
+total time we have and the size of the test suite, having said that many 
+of our automated tests will finish over night.
 
-Report to tt-rss developers:
-https://discourse.tt-rss.org/t/open-redirect-via-public-php/2077
-Fix:
-https://git.tt-rss.org/fox/tt-rss/commit/c68ac04020d85a296c784de18f8def3f365f9f6a
-
-This was reported by Mariia Aleksandrova (zophi), I just forwarded the
-report to the tt-rss developers.
+I guess for distro's who employ people to fix security issues, a Monday 
+morning / lunch time disclosure is mostly going to mean that everyone 
+will aim to have update's ready on the Friday night if possible which 
+doesn't really help with keeping embargo times as short as practical. On 
+the other hand it might give people patching issues in there spare time 
+more of a chance.
 
 -- 
-Hanno Böck
-https://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Simon Lees (Simotek)                            http://simotek.net
+
+Emergency Update Team                           keybase.io/simotek
+SUSE Linux                           Adelaide Australia, UTC+10:30
+GPG Fingerprint: 5B87 DB9D 88DC F606 E489 CEC5 0922 C246 02F0 014B
