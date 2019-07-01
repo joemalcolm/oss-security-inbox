@@ -1,4 +1,9 @@
-Received: (qmail 1440 invoked by uid 550); 2 Jul 2022 08:03:21 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["693" "Monday" "1" "July" "2019" "10:32:17" "+0300" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD8TFq0E0yDf9sDMqLny755_Bh+19Q9ynA2RT9+Lidsxsg@mail.gmail.com>" "26" "[oss-security] pari/gp arbitrary file write" nil nil nil "7" "2019070107:32:17" "[oss-security] pari/gp arbitrary file write" (number mark "U       gguninski@gm Jul  1   26/693   " thread-indent "\"[oss-security] pari/gp arbitrary file write\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] pari/gp arbitrary file write" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1501 invoked by uid 550); 1 Jul 2019 11:26:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,301 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1422 invoked from network); 2 Jul 2022 08:03:21 -0000
+Received: (qmail 28332 invoked from network); 1 Jul 2019 07:32:41 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Src7aEUG9svtmkyBtNGhLwQ0Is0dn93UleN2OdKHqT4=;
-        b=Y6YHGghv5yhBXhJiGZ+uWwjRntB1U7P/AT2RZRP5wz1h6tdlGzciwte3YctxBLNHdt
-         ET+8wDq89yv473D4+m1J6zthIySRHvOg3gZ+ICzNPQrxUndC48g1ZqpMKADp0dxbVxh/
-         u6GmjNRdze97oZ4hqE/CI2cKhDX0DUDuVkjkzxDkYhK1FWGu53Bz7ozbOz2UcGe7IOx3
-         99Jnu4Gkc0ke9CO+7naUvof4CUTbmCuGG/+b8JywkI3/1XSi0vxnJVtwqO8qQ5rtoI0c
-         Srmvv67lrw7JcjvkhJLlFHKVtJkK866VHYGg4ybRm+EB6bRmT+NbFihh6+Mp3+rjcgZ6
-         5xlA==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=hTaXWAX4Y36nx/zUQfvYHs3WSfe6bI6PL8zk+ET3FqA=;
+        b=m9bi1nZCeYBNdZUGpcAaXE18oAuiayRrw+BoiyZ0T8edX5kHDp+hgFQ/ZxTup068tP
+         /N98QRUVLM4RPpEMxnUtmgKGzWp3ZlGIEmyAxxE3LZSCX8HwKS1VMSlCKbQ7GVYZeGC1
+         CusD62maB4pCh7aWLJbxmL5iXYf+qBFaz+SyDJBJ3X7w3LGjMVYrPNlSRec/1tGHUQpm
+         Cor82JMxz38fNcATFQe2L3mh5Lll88HBSfG1opAm80ZFMVpQmlQcwDsc7ehpt5vvLbNe
+         vN3L9aEzOwm4qNX4QWwSAEiPPdNvaGXIpQdIx8ojvwmhWWzczpDNq07ljn5VAqmBdK19
+         DacQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=Src7aEUG9svtmkyBtNGhLwQ0Is0dn93UleN2OdKHqT4=;
-        b=Lqy9sNUgnncZQbePw5h+npMh/owKOEPVQUYzpjXfp3Gx1QRTqywy1dGqmrYqo51MBI
-         /nv+gZf9PpIkJqTVX7lcWdumffFO2dcvYQ+BRha86hW8LwhznqCTyDdhh+HKXOXv92pn
-         vCQKV39ObWvwhvC5UzeMlV2kOMK5zNQPuKQUi7y5tVG/n33X75ToTujU3fTPt1XVJwB1
-         2ZeZVk0+0Hh3KzThqtzSsg+/cy2wVtKtdReH5q15xAPUxBZ5ToXcd/5sDNU19jL3VeJq
-         ycPcMiFe5sAnutoDdsD8mg53UKtpKzVPLGUHdIB4Hq5NR37qFEiM2+yCYQPAINA7muQo
-         8axg==
-X-Gm-Message-State: AJIora9afX/wElah0qnjoc5iakvWsYLGFfaJxMihNNnozfNHgXzrX5As
-	hgILluSVVVDSS/YjJpbEvxods1XMz9A66w==
-X-Google-Smtp-Source: AGRyM1u6zUPzfIb7WJrmHlsEat75Y0NVNwUk1BykQVDfvfXQtbjhgR4HPjXjEOFLkjaFCAEYNUsoXg==
-X-Received: by 2002:a17:907:2bdc:b0:72a:47b5:dbff with SMTP id gv28-20020a1709072bdc00b0072a47b5dbffmr15751457ejc.677.1656748989522;
-        Sat, 02 Jul 2022 01:03:09 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sat, 2 Jul 2022 10:03:08 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <Yr/7vHpUQYYX1Bu2@eldamar.lan>
-References: <Yr1AOUYow00A799A@itl-email>
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=hTaXWAX4Y36nx/zUQfvYHs3WSfe6bI6PL8zk+ET3FqA=;
+        b=eb+fe1pUf2QfX6CiWPsb8XP9KEFMTGxXd08cDAeSHTGVmBKk0aIfi8BqaBnLr0/mOq
+         AuaRiErCAn9fBeztb/ni2pWga7TYvez1kmu9U1anrxM5E+K8UhIs+Ck37gZlUrSPTYBq
+         iIJZikdntEurScApMBGVBz3cjaIdYT3zn5eD+U2vHPIlxsh/Wa1dTNNu0zAQjyAP2WOD
+         hzjG6h4VjlZLE3VY04LAlK+SE1c/KMUPSRsgjPAD2TdRmKLL2PPFEZCbg4zk9+hY7ztP
+         IxF0+xqf860i6wgz2/1C7gJVxCthTcDV6fd0q1KtMwgvlChKVi2A+dcBLjHgFfeUxIfI
+         EDgQ==
+X-Gm-Message-State: APjAAAUXpy3+v28Ey9ocPEdVEDHnf4TpiOr/NXvpX3uC/ZRlCG66U9LI
+	q4Si9PjvJcNjecU6VnnSP3f5da03lCYthn70ASGpg6JX
+X-Google-Smtp-Source: APXvYqwDw6z4Yi2hiwHXjN4Ds5QbZYs13bNp5518Z0IKUOwxe73kRtJL6uuX1Ki+Ye9bAz9XS7Z7lphdJwFkq1PB4FU=
+X-Received: by 2002:a6b:1494:: with SMTP id 142mr4667504iou.72.1561966348869;
+ Mon, 01 Jul 2019 00:32:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Yr1AOUYow00A799A@itl-email>
-Subject: Re: [oss-security] GnuPG signature spoofing via status line injection
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Mon, 1 Jul 2019 10:32:17 +0300
+Message-ID: <CAGUWgD8TFq0E0yDf9sDMqLny755_Bh+19Q9ynA2RT9+Lidsxsg@mail.gmail.com>
+To: oss-security <oss-security@lists.openwall.com>
+Content-Type: multipart/alternative; boundary="000000000000602642058c99a1ff"
+Subject: [oss-security] pari/gp arbitrary file write
 
-Hi,
+--000000000000602642058c99a1ff
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jun 30, 2022 at 02:18:33AM -0400, Demi Marie Obenour wrote:
-> # Background
-> 
-> After discovering that gpgv does not support
-> --exit-on-status-write-error, I decided to check if it handles write
-> errors on the status file descriptor properly.  I ultimately found that
-> while such errors are *not* handled properly, exploiting this flaw in
-> practice would likely be very difficult and unreliable.  However, in the
-> course of this research (and entirely accidentally), I found that if a
-> signature has a notation with a value of 8192 spaces, gpg will crash
-> while writing the notation’s value to the status FD.  This turned out to
-> be a far more severe flaw, with consequences including the ability to
-> make a signature that will appear to be ultimately valid and made by a
-> key with any fingerprint one wishes.
-> 
-> # Prerequisites for exploitation
-> 
-> For an attack to be possible, the attacker must control the secret part
-> of at least one key in the victim's keyring.  The key does *not* need to
-> be trusted, however.  Depending on the calling code, the attack may work
-> even if the key is revoked or the signature is expired.  However, if the
-> program requires that *all* signatures be valid (instead of merely *any*
-> signature being valid), then a revoked or expired key cannot be used.
-> 
-> Additionally the code calling GnuPG must either not read status data
-> until end of file, or satisfy both of the following:
-> 
-> - It uses a lax parser that is tolerant of invalid status lines.
-> - It does not treat a non-zero exit code from GnuPG as an error.
-> 
-> It turns out that gpgme satisfies both requirements, so programs using
-> gpgme are vulnerable.  Since gpgme is the recommended way to use GnuPG
-> from a program, I believe that the number of applications that are
-> vulnerable is very large.
-> 
-> # Impact
-> 
-> If the attacker controls the secret part of any signing-capable key or
-> subkey in the victim's keyring, they can provide a correctly-formed
-> signature that some software, including gpgme, will believe to have a
-> validity and signer fingerprint of the attacker's choosing.  The
-> consequences of this are highly application-dependent, but are likely to
-> be serious.  In an email client, this could allow spoofing emails, while
-> in a system using key fingerprints for access control, this could allow
-> for an access control bypass.
-> 
-> # Solution
-> 
-> I recommend cherry-picking upstream commit
-> 34c649b3601383cd11dbc76221747ec16fd68e1b, which can be found at
-> https://dev.gnupg.org/rG34c649b3601383cd11dbc76221747ec16fd68e1b.
-> Afterwards, it will be necessary to rebuild and reinstall GnuPG.  No
-> security advisory has been issued by upstream, no patch release is
-> planned, and no CVE has (to my knowledge) been requested.  Distributions
-> will need to carry this as an out-of-tree patch until the next upstream
-> release is made.  For those using GnuPG on Windows, the only solution
-> will be to build from source.
-> 
-> This does not fix the handling of write errors on the status file
-> descriptor.  However, I believe that exploiting the mishandling of such
-> errors is not feasable in general.  On the other hand, the out of bounds
-> read can be reliably exploited.
-> 
-> # Proof of concept
-> 
-> I have attached a public key, a revoked version of that key, and two
-> signatures made by the key.  Both signatures are of the empty string;
-> you can pass /dev/null if the program takes a file instead.
-> simple-exploit-sig.asc will not work if the key is revoked or expired,
-> while revoked-exploit-sig.asc *may* work even if the key is revoked or
-> expired.
-> 
-> # Details
-> 
-> ## The bug
-> 
-> GnuPG does not provide an OpenPGP or S/MIME library.  Instead, gpg,
-> gpgv, and gpgsm all support writing machine-readable text to a
-> user-provided file descriptor, which is set via the --status-fd
-> command-line argument.  Other programs and libraries then parse this
-> output to extract information about what GnuPG has done.
-> 
-> In the case of gpg and gpgv, all status output goes through one of the
-> functions in g10/cpr.c.  The one of interest here is
-> write_status_text_and_buffer(), of which the relevant part is reproduced
-> below.
-> 
-> 356  do
-> 357    {
-> 358      if (dowrap)
-> 359        {
-> 360          es_fprintf (statusfp, "[GNUPG:] %s ", text);
-> 361          count = dowrap = 0;
-> 362          if (first && string)
-> 363            {
-> 364              es_fputs (string, statusfp);
-> 365              count += strlen (string);
-> 366              /* Make sure that there is a space after the string.  */
-> 367              if (*string && string[strlen (string)-1] != ' ')
-> 368                {
-> 369                  es_putc (' ', statusfp);
-> 370                  count++;
-> 371                }
-> 372            }
-> 373          first = 0;
-> 374        }
-> 375      for (esc=0, s=buffer, n=len; n && !esc; s++, n--)
-> 376        {
-> 377          if (*s == '%' || *(const byte*)s <= lower_limit
-> 378              || *(const byte*)s == 127 )
-> 379            esc = 1;
-> 380          if (wrap && ++count > wrap)
-> 381            {
-> 382              dowrap=1;
-> 383              break;
-> 384            }
-> 385        }
-> 386      if (esc)
-> 387        {
-> 388          s--; n++;
-> 389        }
-> 390      if (s != buffer)
-> 391        es_fwrite (buffer, s-buffer, 1, statusfp);
-> 392      if ( esc )
-> 393        {
-> 394          es_fprintf (statusfp, "%%%02X", *(const byte*)s );
-> 395          s++; n--;
-> 396        }
-> 397      buffer = s;
-> 398      len = n;
-> 399      if (dowrap && len)
-> 400        es_putc ('\n', statusfp);
-> 401    }
-> 402  while (len);
-> 
-> When writing the data of a notation subpacket, GnuPG requests that
-> write_status_text_and_buffer() wrap the output at 50 bytes if the
-> notation is marked as human-readable, or 250 bytes otherwise.  ‘buffer’
-> points to the (unsanitized) notation data, and ‘length’ is the length of
-> that data.  For the subsequent discussion, I will only consider
-> human-readable notations.  Adapting the exploit to use binary notations
-> is easy and is left as an exercise for the reader.
-> 
-> If byte 50 needs escaping, esc will be set to 1 on line 379, causing the
-> loop to exit.  Line 388 will undo the effect of the s++, n-- on line
-> 375, but this will in turn be undone by line 395.  Therefore, line 397
-> will increase `buffer` by 50.
-> 
-> Now suppose the next byte also needs escaping.  This time, line 380 will
-> break out of the loop, so the s++, n-- on line 375 will be skipped.
-> However, the s--; n++ on line 388 will still run, so s is now one *less*
-> than buffer.  Subtracting them will thus return -1, which becomes
-> SIZE_MAX when converted to size_t.  As a result, es_fwrite() will try to
-> write the rest of the address space to the status stream, starting with
-> byte 51 of the notation data.
-> 
-> ## Exploitation
-> 
-> The result of the bug is that es_fwrite() will write bytes to the status
-> stream (with no escaping) until it hits unmapped memory and segfaults.
-> The first bytes written, in particular, come from the notation data
-> itself.  Therefore, they are fully controlled by the attacker.  The only
-> restriction is that the first byte must be one that needs to be escaped,
-> but this turns out to be no restriction at all.
-> 
-> Suppose that the the first byte injected is a newline.  At this point,
-> the status stream is at the start of a line, and the attacker can append
-> any bytes of their choice to it.  A good choice for the attacker would be:
-> 
-> [GNUPG:] VALIDSIG $subkey_fpr $date $timestamp 0 4 0 22 10 00 $primary_key_fpr
-> [GNUPG:] TRUST_ULTIMATE 0 pgp
-> 
-> Here $subkey_fpr should be replaced with the desired subkey fingerprint,
-> $date with the desired signing date, $timestamp with the desired
-> timestamp, and $primary_key_fpr with the desired primary key
-> fingerprint.  Obviously, the fingerprints can be those of *any* key, or
-> even ones (such as 0000000000000000000000000000000000000000) that do not
-> correspond to a real key.  TRUST_ULTIMATE tells the calling program that
-> the key is ultimately valid.
-> 
-> Following the notation data, gpg will write a bunch more garbage from
-> its heap before it eventually segfaults.  This garbage is not valid
-> status data, but it turns out that many programs do not care.  Git stops
-> at the first NUL byte and gpgme ignores any line that does not start
-> with "[GNUPG:] ".  Hence, this does not prevent exploitation.
-> 
-> # Timeline
-> 
-> - 2022-06-10: Message sent to security@gnupg.org requesting encryption
->   keys for subsequent communication.
-> 
-> - 2022-06-10 through 2022-06-11: Message with encrypted subjects sent to
->   GnuPG Security Team.  These messages are automatically discarded by
->   Werner Koch's email account.
-> 
-> - 2022-06-12: Message with unencrypted subject sent and received.
-> 
-> - 2022-06-13: Response asking for a specific case where a transient I/O
->   error can happen, and acknowledging that the out-of-bounds read is
->   real.  Bug is not considered critical and so no immediate security
->   release is planned.
-> 
-> - 2022-06-13: I respond mentioning ENOMEM and socket errors as potential
->   transient write errors.
-> 
-> - 2022-06-14: Werner Koch commits 34c649b3601383cd11dbc76221747ec16fd68e1b
->   to the GnuPG git repository.  From this commit, ticket T6027, and the
->   test signature attached to T6027, it is easy to reverse-engineer the
->   bug and create an exploit.  There is no public mention that this is a
->   security problem.
-> 
-> - 2022-06-15: I followed up stating that it may be possible to control
->   the contents of the out-of-bounds memory and that this would make the
->   bug much more severe.
-> 
-> - 2022-06-17: Werner responds stating that he has doubts as to whether
->   this can be done easily, and noting that GPGME still needs to accept
->   the injected data.
-> 
-> - 2022-06-17: I state that I am able to inject arbitrary data into the
->   status output, and that the only reason Git is not vulnerable is
->   because GnuPG eventually segfaults.
-> 
-> - 2022-06-18: I state that I can make GPGME mark a signature as “valid
->   green” (the highest trust level) with whatever fingerprint I wish.
-> 
-> - 2022-06-19: Werner replies stating that he is not able to reproduce
->   the injection of arbitrary data into the status output, though he can
->   reproduce improper escaping.
-> 
-> - 2022-06-19: I state that the flaw is indeed less severe in git master.
-> 
-> - 2022-06-19: Via `git bisect`, I discover that
->   34c649b3601383cd11dbc76221747ec16fd68e1b is in fact the commit that
->   fixed the vulnerability, and that arbitrary injection into the status
->   line is possible on the immediately preceeding commit
->   4dbef2addca8c76fb4953fd507bd800d2a19d3ec.  I provide a reproducer.
-> 
-> - 2022-06-22: I request that this be marked as a security vulnerability
->   and have a CVE assigned, and that an immediate security release be
->   made.  I note exactly what an attacker who exploits this vulnerability
->   can do to a program relying on gpgme.
-> 
-> - 2022-06-29: As Werner Koch has stopped replyng to my emails, and since
->   there is still no public indication that GnuPG has a security
->   vulnerability (despite the patch already being public), I am publicly
->   disclosing the issue.
+pari/gp is CAS (computer algebra system).
+pari/gp version 2.9.1 on debian stretch allows arbitrary file write and
+hence arbitrary code execution.
 
-CVE-2022-34903 is assigned for this issue.
+poc:
+========
+\\ a.gp
+\\ to run: \r a.gp
+default("logfile","/tmp/a.txt");default("log",1);print("log(1)");
+========
 
-Cf. https://www.cve.org/CVERecord?id=CVE-2022-34903
+Of mathematical interest is pari was missing solutions
+to Thue equations when assuming GRH (the fix changed polynomial
+bound to exponential bound):
+http://pari.math.u-bordeaux.fr/archives/pari-dev-1207/msg00000.html
+t=thue(thueinit(x^3+92*x+1,0),3^3);t
 
-Regards,
-Salvatore
+-- 
+joro
+http://www.guninski.com
+https://j.ludost.net/resumegg.pdf
+
+--000000000000602642058c99a1ff--
