@@ -1,77 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/05/5
-Message-ID: <20191105184228.GA27029@openwall.com>
-Date: Tue, 5 Nov 2019 19:42:28 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/01/3
+Message-ID: <c03af74b-c5df-bff4-375f-d9caa0cf9894@gmail.com>
+Date: Mon, 1 Jul 2019 09:57:33 +0200
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Joe McManus <joe.mcmanus@...onical.com>, Anthony Liguori <aliguori@...zon.com>
-Subject: Re: Contributing Back
+Subject: Django: CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting via HTTPS
 Content-Type: text/plain; charset=utf-8
 
-Hi Joe, hi Anthony -
+https://www.djangoproject.com/weblog/2019/jul/01/security-releases/
 
-I'll over-quote a bit since it's an old thread:
+In accordance with `our security release policy 
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team is issuing `Django 1.11.22 
+<https://docs.djangoproject.com/en/dev/releases/1.11.22/>`_, `Django 
+2.1.10 <https://docs.djangoproject.com/en/dev/releases/2.1.10/>`_, and 
+`Django 2.2.3 <https://docs.djangoproject.com/en/dev/releases/2.2.3/>`_. 
+These releases addresses the security issues detailed below. We 
+encourage all users of Django to upgrade as soon as possible.
 
-On Mon, Jul 15, 2019 at 09:28:01PM +0200, Solar Designer wrote:
-> On Mon, Jul 15, 2019 at 11:54:23AM -0700, Anthony Liguori wrote:
-> > On Mon, Jul 15, 2019 at 11:47 AM Joe McManus <joe.mcmanus@...onical.com> wrote:
-> > > > On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
-> > > > > Hey All - The Ubuntu Security Team would like to sign up for items 3,4
-> > > > > & 5 from the technical list <
-> > > > > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> > > > > >:
-> > > > >
-> > > > > 3 - Review and/or test the proposed patches and point out potential issues
-> > > > >   with them [...]
-> > > > > 4 - Check if related issues exist in the same piece of software [...]
-> > > > > 5 - Check if related issues exist in implementations of similar
-> > > > >   functionality in other software [...]
-> [...]
-> > > Yes, this will be taken care of by Ubuntu Security Team members who
-> > > are already on the list, however if after some time we need to cycle
-> > > someone in or out I might come asking. I know you don't want to add
-> > > anyone so we will do our best to prevent this from happening.
-> > >
-> > > For 3 we can be either primary or backup, just let me know your
-> > > preference and we'll do the work.
-> > 
-> > I would be happy for y'all to be primary.  We don't ship as many
-> > packages as Ubuntu does so there will be more things that you are
-> > likely to test compared to what we do.
-> 
-> OK, I've just listed Ubuntu as primary for 3, 4, 5.  Amazon is now
-> backup for 3.
-> 
-> Please note that these items include "and inform the list of the work
-> done even if no issues were encountered" (item 3), "and inform the list
-> either way" (items 4, 5), so we'll expect replies to the list as per
-> these items for each and every issue reported to there.
+Thanks Gavin Wahl for reporting this issue.
 
-I am not seeing this "inform the list either way" stuff actually
-happening.  Without it, no other distro has a way to know the work is
-actually being done.  Once I had pointed this need out a while before,
-Amazon briefly started making those mandatory postings for task 3, until
-they were replaced by Ubuntu as primary.  In fact, given the lack of
-such postings by Ubuntu, I would still expect Amazon to take over for
-task 3, which they're the backup for, and it looks like they did that
-exactly once:
+CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting 
+via HTTPS
+================================================================================
 
-As far as I can see, the last time Amazon handled task 3 was on July 25,
-which is 10 days after Ubuntu became primary for that task.  This was
-much appreciated.  Unfortunately, as far as I can see, neither distro
-(visibly) handled these tasks ever since, with one exception:
+When deployed behind a reverse-proxy connecting to Django via HTTPS, 
+``django.http.HttpRequest.scheme`` would incorrectly detect client 
+requests made via HTTP as using HTTPS. This entails incorrect results 
+for ``is_secure()``, and ``build_absolute_uri()``, and that HTTP 
+requests would not be redirected to HTTPS in accordance with 
+``SECURE_SSL_REDIRECT``.
 
-Ubuntu did point out that a patch didn't have a corresponding testsuite
-change, and thus tests failed, in a posting on October 10.  So hopefully
-they were doing the work, except for the "inform the list either way"
-part - but that's an important part!
+``HttpRequest.scheme`` now respects ``SECURE_PROXY_SSL_HEADER``, if it 
+is configured, and the appropriate header is set on the request, for 
+both HTTP and HTTPS requests.
 
-It is possible that I missed or don't recall some other occasions, but I
-think I got the overall picture right.
+If you deploy Django behind a reverse-proxy that forwards HTTP requests, 
+and that connects to Django via HTTPS, be sure to verify that your 
+application
+correctly handles code paths relying on ``scheme``, ``is_secure()``, 
+``build_absolute_uri()``, and ``SECURE_SSL_REDIRECT``.
 
-Joe, Anthony - can you please have your distros start handling these
-tasks fully, as described?
+Affected supported versions
+===========================
 
-Thanks in advance,
+* Django master development branch
+* Django 2.2 before version 2.2.3
+* Django 2.1 before version 2.1.10
+* Django 1.11 before version 1.11.22
 
-Alexander
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's master branch 
+and the 2.2, 2.1, and 1.11 release branches. The patches may be obtained 
+from the following changesets:
+
+* On the `master branch 
+<https://github.com/django/django/commit/54d0f5e62f54c29a12dd96f44bacd810cbe03ac8>`__
+* On the `2.2 release branch 
+<https://github.com/django/django/commit/77706a3e4766da5d5fb75c4db22a0a59a28e6cd6>`__
+* On the `2.1 release branch 
+<https://github.com/django/django/commit/1e40f427bb8d0fb37cc9f830096a97c36c97af6f>`__
+* On the `1.11 release branch 
+<https://github.com/django/django/commit/32124fc41e75074141b05f10fc55a4f01ff7f050>`__
+
+The following releases have been issued:
+
+* Django 1.11.22 (`download Django 1.11.22 
+<https://www.djangoproject.com/m/releases/1.11/Django-1.11.22.tar.gz>`_ 
+| `1.11.22 checksums 
+<https://www.djangoproject.com/m/pgp/Django-1.11.22.checksum.txt>`_)
+* Django 2.1.10 (`download Django 2.1.10 
+<https://www.djangoproject.com/m/releases/2.1/Django-2.1.10.tar.gz>`_ | 
+`2.1.10 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.1.10.checksum.txt>`_)
+* Django 2.2.3 (`download Django 2.2.3 
+<https://www.djangoproject.com/m/releases/2.2/Django-2.2.3.tar.gz>`_ | 
+`2.2.3 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.2.3.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 2EF56372BA48CD1B.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance, Django's GitHub repositories, or the django-developers list.
+Please see `our security policies 
+<https://www.djangoproject.com/security/>`_
+for further information.
+
+
