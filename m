@@ -1,4 +1,9 @@
-Received: (qmail 32650 invoked by uid 550); 10 Apr 2025 22:45:49 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3589" "Monday" "1" "July" "2019" "09:57:33" "+0200" "Mariusz Felisiak" "felisiak.mariusz@gmail.com" "<c03af74b-c5df-bff4-375f-d9caa0cf9894@gmail.com>" "86" "[oss-security] Django: CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting via HTTPS" nil nil nil "7" "2019070107:57:33" "[oss-security] Django: CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting via HTTPS" (number mark "U       felisiak.mar Jul  1   86/3589  " thread-indent "\"[oss-security] Django: CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting via HTTPS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Django: CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting via HTTPS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7230 invoked by uid 550); 1 Jul 2019 11:27:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,107 +12,130 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28339 invoked from network); 10 Apr 2025 21:51:17 -0000
+Received: (qmail 20052 invoked from network); 1 Jul 2019 07:57:46 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744321868; x=1744926668; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Nt92STsnZpsQF+lnPfn56nLYcTqWmCaggfcs8ysgd9c=;
-        b=FT6pX/d3eIfBRzjCilGBgP+tLFualzyriLC40pIsGFCT6S3GASimQlb885vXnvZk3j
-         +kPugBmLJ28LC6GsGRD4gmkGIcTQzh9Y72Usdj8T6Be7UkNB6odXI2RXE+MyNXuvJZPs
-         zFXWbmcz7jnukOiM8ZSIogjQblLCJCcwt4YDrCx7IzwpZIVQFd7OUiD+2L6qk9NfA+6N
-         LRafs1OnEt0HAK2/4s5SuVKLGBRroXRH26zxMYv4bk5NGK7qjXpklcTIxV8w+kDJl1nG
-         N9/dcZWQ99l82BxOnYJZ0traaBTxAZ+Sz+XuwpzATbxJYmGg4922tN+aAQHik4SOIPpJ
-         hwMg==
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=erl8Lkz2w4BH1k7m3/Zqg5r9wpZToCleDXHAo+SP+c0=;
+        b=W74/nc2lk4iShmjv+e2cgZiID+gcXrH3VLgrCGFknxpz2ct2OJAK2hI7XE8EBuQmiK
+         Ag+YGFiZ1c2xyTScUXXm3ERaBNfhEafq9m24ThkZg0SyB+2oap4bY7pAYWZE19dmPWcN
+         OUg0qiBallH6tqUbsVukPMTlO8WNvNQg3kWUN/9zWUkyXZHACf+8EfUZ1AH55k4SHwxB
+         14rjCn41kioBUQkvqZPp8cYImb8nKcFh/BgoLGAJdSP8Q/6xbh65YJ0+CoyAqY4/fvHo
+         W2APNbvDvE+vbns3uyltjlHQdqrqep7r8nLRMjZzn0840cnWNQXhuyWz6RDYLEMxvZn9
+         a5tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744321868; x=1744926668;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Nt92STsnZpsQF+lnPfn56nLYcTqWmCaggfcs8ysgd9c=;
-        b=QPET+F0KqMHrF/q/fKQU8xFpg2syHIXz5xkb/SrqUp9bNaSqeFHA40PX8v+ka5bK+p
-         iNXS3BQbc/s5I6ChMzJLRtIjo/PzYlmBAx6W1FSCxhxFWWATfZnKtE3JDOmEl5vs++TH
-         8prQ+gErwMI9c0IrTwGoRtJLuUTMu1yvsIYJlCRs8zx5R1Dt2NVIkn7U+mc+bMYm2FDa
-         /aCyVjpm1HRvO9Qm8pA2E/1/5QBiHCKqVxN5XTyLv2ug5R4iOYF8pX9Lu6S5gv1MPVPG
-         F24VqoCF8y0kgzFmzn5iaZybP7ZaqGO7doognnSMmoBg0JyO9baNBNvWZVNSdOrNeiXD
-         5Chw==
-X-Gm-Message-State: AOJu0YwqthZfonmWrdErI3p61WNNesuytcCnDKEj3VxbeoDxRW7LA/gT
-	F4xkeIgOZ0gMDFVeO2aP2uz1v7+QYm3XyNUd1TwzznBiVQt8OMygAML6Xg==
-X-Gm-Gg: ASbGncvfnLCP11q2PLZnGzwlAyB8ELhOCJyVFctT+jb5ifjYXKl2EcRj9KBxp/Tvrn6
-	mm+H3qHeuZ1LLecW2/tfVavtOESKSbTVFfqcsp14GFwGTAbtEjm2RovxS2+Apn1GJ0RSTDJPvVR
-	tIw0UWUKf37OOuGBzQlYRqOpfRMRB2I12f1H3duWi6n8TnJEYnS2KO795zJqd8inZ3uFlP84gTO
-	RWtafA8mNcXgE3zQi9t0ijdpdPwXUN1D9Z8eDUPvZGEZyLiSmqsgqvI1R7JfuZmpUB3/fkdobg/
-	Ln1HJJ/+1e6VCMRJk68gw09K9RL1vjxug7NxmyWY4bwqt3U=
-X-Google-Smtp-Source: AGHT+IGS3/U5QX4vpJCwrb0SydeOBxsg0JkjbY0VgtbNHanqaYAvR1IuTQltkiPH/ci+r9KBA1DEyA==
-X-Received: by 2002:a05:6902:478f:b0:e6d:f287:bfa with SMTP id 3f1490d57ef6-e704dfa6681mr1026895276.22.1744321867684;
-        Thu, 10 Apr 2025 14:51:07 -0700 (PDT)
-Message-ID: <bc692002-3fae-4692-bdf8-f1aab1853217@gmail.com>
-Date: Thu, 10 Apr 2025 17:51:36 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=erl8Lkz2w4BH1k7m3/Zqg5r9wpZToCleDXHAo+SP+c0=;
+        b=k2AwkkF7jZaL+5+kmQbYOCvEK8VroEkDy8YM8rn8tEja6LqImAcIkB4EbqQbFOsbp6
+         LKAJATSLhvkc0h3VptkYkIqYUNfuyp74soQnrCs76e5n+1vIF9zn4HsMRZkGWdNUInd1
+         AiBduP8ri3kmnV7NjhsDaXEA4ruGqACzBs0Un4NUoiFT9vGsGqikZd1LYTCa5RQg62YJ
+         wkjIYGoCDi9oxoie+tIBWw7qcrsBrNlbUy9eMAOFbU50/MKQAO8F4mTNwXszIouF9/ba
+         M2RuMtEUjCxRUJESON27RhxFdF7/eZyePzGII9QsPDVfGFpvhDrMUNJc0mQ/XlkwJrO1
+         zetg==
+X-Gm-Message-State: APjAAAVxJrKjiCgSrLfIVWnjdQQN1Wg1H/eppzA0JXl775GeovzF7ZF7
+	P4gjsNd220/4KAZ27FKis9potOSg
+X-Google-Smtp-Source: APXvYqxPlNXcnpCBTcgKc7eui6teLBI62+EMQPqN6p9Osv4aVUjvIdCxVm2udnyw32bVBEI7Bpxl5A==
+X-Received: by 2002:ac2:446b:: with SMTP id y11mr10926739lfl.158.1561967854626;
+        Mon, 01 Jul 2019 00:57:34 -0700 (PDT)
 To: oss-security@lists.openwall.com
-References: <VI0P189MB276612AABA4D5DB2B4018524AEB72@VI0P189MB2766.EURP189.PROD.OUTLOOK.COM>
+From: Mariusz Felisiak <felisiak.mariusz@gmail.com>
+Message-ID: <c03af74b-c5df-bff4-375f-d9caa0cf9894@gmail.com>
+Date: Mon, 1 Jul 2019 09:57:33 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-From: Demi Marie Obenour <demiobenour@gmail.com>
-Autocrypt: addr=demiobenour@gmail.com; keydata=
- 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
- +MYSfkEjBz0E8CLOcAw7JIwAaeBT
-In-Reply-To: <VI0P189MB276612AABA4D5DB2B4018524AEB72@VI0P189MB2766.EURP189.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] CVE-2024-50217: Linux kernel: btrfs:
- Use-after-free of block device file in __btrfs_free_extra_devids()
+Subject: [oss-security] Django: CVE-2019-12781: Incorrect HTTP detection with reverse-proxy
+ connecting via HTTPS
 
-On 4/10/25 8:22 AM, akendo@akendo.eu wrote:
-> Hey everyone,
-> 
-> Not too sure how or whom to ask about: But I saw that there is CVE-2024-50217 that affects every kernel since 4.8.
-> 
-> However, it is only fixed on more recent version of the linux kernel like 6.11 or 6.12. Any reason this wasn’t backported to older kernel versions?
-Linux kernel patch backporting is best effort, sadly.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
+https://www.djangoproject.com/weblog/2019/jul/01/security-releases/
+
+In accordance with `our security release policy 
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team is issuing `Django 1.11.22 
+<https://docs.djangoproject.com/en/dev/releases/1.11.22/>`_, `Django 
+2.1.10 <https://docs.djangoproject.com/en/dev/releases/2.1.10/>`_, and 
+`Django 2.2.3 <https://docs.djangoproject.com/en/dev/releases/2.2.3/>`_. 
+These releases addresses the security issues detailed below. We 
+encourage all users of Django to upgrade as soon as possible.
+
+Thanks Gavin Wahl for reporting this issue.
+
+CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting 
+via HTTPS
+================================================================================
+
+When deployed behind a reverse-proxy connecting to Django via HTTPS, 
+``django.http.HttpRequest.scheme`` would incorrectly detect client 
+requests made via HTTP as using HTTPS. This entails incorrect results 
+for ``is_secure()``, and ``build_absolute_uri()``, and that HTTP 
+requests would not be redirected to HTTPS in accordance with 
+``SECURE_SSL_REDIRECT``.
+
+``HttpRequest.scheme`` now respects ``SECURE_PROXY_SSL_HEADER``, if it 
+is configured, and the appropriate header is set on the request, for 
+both HTTP and HTTPS requests.
+
+If you deploy Django behind a reverse-proxy that forwards HTTP requests, 
+and that connects to Django via HTTPS, be sure to verify that your 
+application
+correctly handles code paths relying on ``scheme``, ``is_secure()``, 
+``build_absolute_uri()``, and ``SECURE_SSL_REDIRECT``.
+
+Affected supported versions
+===========================
+
+* Django master development branch
+* Django 2.2 before version 2.2.3
+* Django 2.1 before version 2.1.10
+* Django 1.11 before version 1.11.22
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's master branch 
+and the 2.2, 2.1, and 1.11 release branches. The patches may be obtained 
+from the following changesets:
+
+* On the `master branch 
+<https://github.com/django/django/commit/54d0f5e62f54c29a12dd96f44bacd810cbe03ac8>`__
+* On the `2.2 release branch 
+<https://github.com/django/django/commit/77706a3e4766da5d5fb75c4db22a0a59a28e6cd6>`__
+* On the `2.1 release branch 
+<https://github.com/django/django/commit/1e40f427bb8d0fb37cc9f830096a97c36c97af6f>`__
+* On the `1.11 release branch 
+<https://github.com/django/django/commit/32124fc41e75074141b05f10fc55a4f01ff7f050>`__
+
+The following releases have been issued:
+
+* Django 1.11.22 (`download Django 1.11.22 
+<https://www.djangoproject.com/m/releases/1.11/Django-1.11.22.tar.gz>`_ 
+| `1.11.22 checksums 
+<https://www.djangoproject.com/m/pgp/Django-1.11.22.checksum.txt>`_)
+* Django 2.1.10 (`download Django 2.1.10 
+<https://www.djangoproject.com/m/releases/2.1/Django-2.1.10.tar.gz>`_ | 
+`2.1.10 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.1.10.checksum.txt>`_)
+* Django 2.2.3 (`download Django 2.2.3 
+<https://www.djangoproject.com/m/releases/2.2/Django-2.2.3.tar.gz>`_ | 
+`2.2.3 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.2.3.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 2EF56372BA48CD1B.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@djangoproject.com``, and not via Django's
+Trac instance, Django's GitHub repositories, or the django-developers list.
+Please see `our security policies 
+<https://www.djangoproject.com/security/>`_
+for further information.
+
+
