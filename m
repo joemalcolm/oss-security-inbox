@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/20
-Message-ID: <dacb0f1a-296e-b839-86ca-237d7f39935a@apache.org>
-Date: Tue, 8 Jan 2019 22:18:19 +0000
-From: Ash Berlin-Taylor <ash@...che.org>
-To: dev@...flow.apache.org, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Cc: Seth Long <seth.long@...ditkarma.com>
-Subject: RCE, CSRF and Information leak vulnerabilities against Airflow <= 1.8.2 (CVE-2017-15720, CVE-2017-17835, CVE-2017-17836)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/01/4
+Message-ID: <20190701130837.GA18993@notk.org>
+Date: Mon, 1 Jul 2019 15:08:37 +0200
+From: Adrien Nader <adrien@...k.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
 Content-Type: text/plain; charset=utf-8
 
-Hi Airflow community,
+Hello,
 
-This post summaries some security vulnerabilities that were fixed in 
-Airflow 1.9.0 (which is quite a while ago now) but that we never 
-formally reported as such.
+On Mon, Jun 24, 2019, Stuart D. Gathman wrote:
+> Question: is fuzzing useful for languages like Java/python?  Obviously,
+> you eventually reach a native code module in both cases, but fuzzing
+> the entire virtual machine is cumbersome.  Maybe native code
+> libraries
+> for "safe" languages should include fuzzing as part of testing.
 
-If you are still on 1.8.2 or earlier we strongly encourage you to 
-upgrade to the latest version, but at least to 1.9.0 to get fixes for 
-these CVEs.
+AFL is used in the OCaml world despite it being clearly a "safe"
+language. There's a git repo with a couple examples and there are more
+in the wild: https://github.com/NathanReb/ocaml-afl-examples .
 
-CVE-2017-15720: An authenticated user can execute code remotely on the 
-Airflow webserver by creating a special object.
+OCaml guarantees that you don't have undefined behaviour but there's
+nothing that prevents you from doing a typo in a string value, using
+multiplication instead of addition, not catching an exception you wanted
+to catch or as others have said, use more memory than expected. These
+are basically logic errors and very few languages guarantee that you'll
+avoid them (static typing helps in more than 90% of cases but less than
+99.999% of them).
 
-CVE-2017-17835: CSRF Vulnerabilities - One of which allowed for a remote 
-command injection on a default install of Airflow
-
-CVE-2017-17836: An experimental Airflow feature displayed authenticated 
-cookies, as well as passwords to databases used by Airflow.  An attacker 
-who has limited access to airflow, weather it be via XSS or by leaving a 
-machine unlocked. An attacker can exfil all credentials from the system.
-
-These are quite old so I am have not managed to attribute these to any 
-specific reporter. If you reported one of these: sorry, and let me know 
-(off list) and I will correct this.
-
-Thanks,
-Ash
+-- 
+Adrien
