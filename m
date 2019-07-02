@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/4
-Message-ID: <1565815809.IOUUBKIQ@httpd.apache.org>
-Date: Wed, 14 Aug 2019 15:50:09 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-10092: Limited cross-site scripting in mod_proxy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/02/2
+Message-ID: <nycvar.YSQ.7.76.1907030056560.11695@xnncv>
+Date: Wed, 3 Jul 2019 01:01:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Riccardo Schirone <rschiron@...hat.com>
+Subject: CVE-2019-13164 Qemu: qemu-bridge-helper ACL bypassed with long interface names
 Content-Type: text/plain; charset=utf-8
 
+   Hello,
 
-CVE-2019-10092: Limited cross-site scripting in mod_proxy
+It was discovered that the Access Control List (ACL) implemented by 
+qemu-bridge-helper program could be bypassed in particular case when the 
+bridge interface names are as long as IFNAMSIZ-1, ie 15 characters. If the ACL 
+specified in the /etc/qemu/bridge.conf file denies access to a bridge 
+interface with name IFNAMSIZ-1 bytes long, but it allows all other interfaces. 
+It is possible for a local attacker to use qemu-bridge-helper to create a tap 
+device and attach it to a denied bridge interface, thus bypassing the ACL. 
+This could be used by the attacker to get access to confidential data 
+transmitted on the bridge.
 
-Severity: Low
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2019-07/msg00245.html
 
-Vendor: The Apache Software Foundation
+This issue was discovered by Riccardo Schirone of Red Hat Inc.
 
-Versions Affected:
-httpd 2.4.0-2.4.39
-
-Description:
-A limited cross-site scripting issue was reported affecting
-the mod_proxy error page. An attacker could cause the link on
-the error page to be malfomed and instead point to a page of
-their choice. This would only be exploitable where a server was
-set up with proxying enabled but was misconfigured in such a way
-that the Proxy Error page was displayed.
-
-Mitigation:
-None practical
-
-Credit:
-The issue was discovered by Matei "Mal" Badanoiu
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
