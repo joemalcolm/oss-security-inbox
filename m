@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/27/3
-Message-ID: <8f894e4f-533f-07e1-085e-06f41106ac0d@apache.org>
-Date: Wed, 27 Mar 2019 13:05:04 -0400
-From: Josh Elser <elserj@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-0212] Apache HBase REST Server incorrect user authorization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/03/1
+Message-ID: <nycvar.YSQ.7.76.1907031216340.17373@xnncv>
+Date: Wed, 3 Jul 2019 12:23:21 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2019-10183 virt-install: unattended option leaks password via command line argument
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-0212: HBase REST Server incorrect user authorization
+   Hello,
 
-Description: In all previously released Apache HBase 2.x versions, 
-authorization was incorrectly applied to users of the HBase REST server. 
-Requests sent to the HBase REST server were executed with the 
-permissions of the REST server itself, not with the permissions of the 
-end-user. This issue is only relevant when HBase is configured with 
-Kerberos authentication, HBase authorization is enabled, and the REST 
-server is configured with SPNEGO authentication. This issue does not 
-extend beyond the HBase REST server.
+Virt-install(1) utility used to provision new virtual machines has introduced 
+an option '--unattended' to create VMs without user interaction. This option 
+accepts guest VM passwords as command line arguments. Thus leaking them to 
+others users on the system via process listing.
 
-Versions affected: 2.0.0-2.0.4, 2.1.0-2.1.3
+   -> https://virt-manager.org/download/
 
-Mitigation: Stop the HBase REST server until your installation is 
-upgraded to HBase 2.0.5, 2.1.4, or any other later release. Upon 
-upgrading to a newer version, no other action is required.
+It was introduced recently in the virt-manager v2.2.0 release.
 
-Credit: This issue was discovered by Gaurav Kanade
+Upstream patch:
+---------------
+   -> https://www.redhat.com/archives/virt-tools-list/2019-July/msg00014.html
 
-- The Apache HBase PMC
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
