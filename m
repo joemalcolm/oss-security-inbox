@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/12/1
-Message-ID: <20191112121750.GA15193@laura.suse.cz>
-Date: Tue, 12 Nov 2019 13:17:50 +0100
-From: pgajdos <pgajdos@...e.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/05/1
+Message-ID: <8736jl0z7b.fsf@dja-thinkpad.axtens.net>
+Date: Fri, 05 Jul 2019 16:31:36 +1000
+From: Daniel Axtens <dja@...ens.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-2201: libjpeg-turbo: code execution
+Cc: Andrew Donnellan <ajd@...ux.ibm.com>
+Subject: CVE-2019-13122: Patchwork: XSS via Message-ID 
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 11, 2019 at 05:49:45PM +0100, Wolfgang Frisch wrote:
-> > Program received signal SIGSEGV, Segmentation fault.
-> > 0x00007ffff7d44d9d in __memset_avx2_erms () from /lib64/libc.so.6
-> > (gdb) bt
-> > #0  0x00007ffff7d44d9d in __memset_avx2_erms () from /lib64/libc.so.6
-> > #1  0x0000555555558f7a in memset (__len=18446744071562074395, __ch=127, __dest=<optimized out>) at /usr/include/bits/string_fortified.h:71
-> > #2  decomp (srcBuf=0x0, jpegBuf=0x7fffffffd8e0, jpegSize=0x7fffffffd8e8, dstBuf=<optimized out>, w=26755, h=26755, subsamp=2, jpegQual=0, 
-> >     fileName=0x7fffffffdfaa "CVE-2019-2201-reproducer-SEGFAULT-26755x26755", tilew=26755, tileh=26755) at /usr/src/debug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:174
-> > #3  0x0000555555557103 in decompTest (fileName=0x7fffffffdfaa "CVE-2019-2201-reproducer-SEGFAULT-26755x26755") at /usr/src/debug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:712
-> > #4  main (argc=<optimized out>, argv=<optimized out>) at /usr/src/debug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:1003
-> 
-> We identified that it crashed on writing to a libc.so mapping.
+Hello,
 
-https://github.com/libjpeg-turbo/libjpeg-turbo/issues/388
+Patchwork is a web-based patch tracking system designed to facilitate
+the contribution and management of contributions to an open-source
+project that uses a mailing list for contributions.
+(http://jk.ozlabs.org/projects/patchwork/)
 
-Petr
+Andrew Donnellan discovered an XSS via the message-id field. A malicious
+party could send a patch with a message ID that included a script
+tag. Because of the quirks of the email RFCs, such a message ID can
+survive being sent through many mail systems, including Gmail, and be
+parsed and stored by Patchwork. When a user views a patch detail page
+for the patch with this message id, the script would be run.
+
+This is due to an erroneous mark_safe() in the template tag that
+renders message IDs. This has been present since v1.1 of upstream
+Patchwork, but does not affect the FreeDesktop fork.
+
+Over the last few days, we have disclosed this bug to the admins of
+patchwork instances that we could identify. Several key instances have
+already been patched.
+
+The vulnerability is fixed in Patchwork v2.1.4 and v2.0.4, which have
+just been released.
+
+Kind regards,
+Daniel Axtens
+Patchwork maintainer
