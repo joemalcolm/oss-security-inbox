@@ -1,19 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/05/2
-Message-ID: <87v9vb973d.fsf@oldenburg2.str.redhat.com>
-Date: Mon, 05 Aug 2019 13:36:54 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/06/1
+Message-ID: <CAGUWgD_P+4h-uWvA7yD5nM6w_26nfkGt9rR2WhLd8uso+fa9Fg@mail.gmail.com>
+Date: Sat, 6 Jul 2019 15:02:22 +0300
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Current CVE policy on missing-hardening bugs
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-What's the current policy on assinging CVE IDs for bugs that are merely
-missed hardening opportunities?  One example is lack of full ASLR due to
-address space limits (47 or fewer bits instead of the theoretical limit
-of 64 bits).
+I am against giving access to microsoft and blogged:
 
-Are they eligible for CVE assignment?  Should we DISPUTE them if we
-encounter them?
+https://j.ludost.net/blog/archives/2019/07/06/on_microsoft_request_to_access_private_linux_bugs/index.html
 
-Thanks,
-Florian
