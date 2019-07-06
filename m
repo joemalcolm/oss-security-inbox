@@ -1,38 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/10/2
-Message-ID: <20191210102523.GB4424@fedorawork>
-Date: Tue, 10 Dec 2019 11:25:23 +0100
-From: Riccardo Schirone <rschiron@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/06/2
+Message-ID: <20190706125627.GA22675@openwall.com>
+Date: Sat, 6 Jul 2019 14:56:27 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: VMware Security Response Center <security@...are.com>
-Subject: Re: CVE-2019-5544 openslp 1.2.1, 2.0.0 heap overflow vulnerability
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-On 12/06, VMware Security Response Center wrote:
-> openslp has a heap overflow vulnerability that when exploited may result
-> in memory corruption and a crash of slpd or in remote code execution.
+On Sat, Jul 06, 2019 at 03:02:22PM +0300, Georgi Guninski wrote:
+> I am against giving access to microsoft and blogged:
 > 
-> CVE-2019-5544 has been assigned to this issue.
-> 
-> Below you may find:
-> - a copy of the affected code with comments indicating the problem.
-> - patches for openslp versions 1.2.1 and 2.0.0
+> https://j.ludost.net/blog/archives/2019/07/06/on_microsoft_request_to_access_private_linux_bugs/index.html
 
-Are those fixes commited anywhere? I could not find them on GitHub.
+Let's keep most essential content of postings directly on the list
+rather than only via reference.  Copy-paste from the above URL:
 
-> 
-> VMware would like to thank the 360Vulcan team working with the 2019
-> Tianfu Cup Pwn Contest for reporting this issue to us.
-> 
-> VMware Security Response Center
-> 
-> 
+---
+Georgi Guninski's blog
 
-Thanks,
--- 
-Riccardo Schirone
-Red Hat -- Product Security
-Email: rschiron@...hat.com
-PGP-Key ID: CF96E110
+Sat Jul 6 14:56:04 EEST 2019
+On Microsoft request to access private linux bugs
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+According to theregister [1] m$ wants to access private
+linux bugs. Theregister mentions that in 2001 she called
+linux "cancer". Another example of anti-opensource behavior
+are the Halloween documents [2] from 1998 (some current
+decision makers and journos have not be born then. History
+is written by the winners).
+
+It is well known that microsoft is entirely money driven
+and she will sell Gates' first born and Ballmer might even
+deliver it.
+
+First, a hostile kernel contributor is danger for the
+future of linux kernel IMHO.
+
+Unpopular suggestion for microsoft's request for private
+bugs: Find something that requires windows compatibility
+(say Wine, some cloud shit, whatever else). Tell microsoft:
+You want our bugs? We want your bugs. You show first.
+
+[1]:
+https://www.theregister.co.uk/2019/06/27/microsoft_linux_distro_list/
+[2]:
+https://en.wikipedia.org/w/index.php?title=Halloween_documents&oldid=895695365
+
+Posted by bugs for nothing and chix for free
+---
+
+Alexander
