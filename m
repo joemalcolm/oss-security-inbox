@@ -1,232 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/01/1
-Message-ID: <000001d51861$e546e2a0$afd4a7e0$@com.cn>
-Date: Sat, 1 Jun 2019 18:07:57 +0800
-From: "huangwen" <huangwen@...usgroup.com.cn>
-To: <oss-security@...ts.openwall.com>
-Subject: Marvell Wifi Driver mwifiex_uap_parse_tail_ies Heap Overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/06/4
+Message-ID: <20190706222936.GL10104@sasha-vm>
+Date: Sat, 6 Jul 2019 18:29:36 -0400
+From: Sasha Levin <sashal@...nel.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-There is heap-based buffer overflow in marvell wifi chip driver in Linux
-kernel,allows local users to cause a denial of service(system crash) or
-possibly execute arbitrary code.
-
-I provided a patch in mail attachment for reference only. 
-
- 
-
- 
-
-Description
-
-==========
-
-The problem is inside mwifiex_uap_parse_tail_ies function in
-drivers/net/wireless/marvell/mwifiex/ie.c. 
-
-There are two memcpy in this function.The memcpy in while loop will be
-called when element_id is not equal to WLAN_EID_SSID,WLAN_EID_SUPP_RATES
-etc.
-
-The copy dst buffer gen_ie->ie_buffer is a array with size
-IEEE_MAX_IE_SIZE(256), the src buffer is element in cfg80211_beacon_data
-from user space. 
-
-There is not len check for two memcpy in this function.
-
-If special elements are constructed (E.g.
-WLAN_EID_SUPPORTED_OPERATING_CLASSES) to make memcpy called repeatedly, will
-finally trigger the overflow.
-
- 
-
- 
-
-struct mwifiex_ie {
-
-         __le16 ie_index;
-
-         __le16 mgmt_subtype_mask;
-
-         __le16 ie_length;
-
-         u8 ie_buffer[IEEE_MAX_IE_SIZE];
-
-} __packed;
-
- 
-
-#define IEEE_MAX_IE_SIZE              256
-
- 
-
-static int mwifiex_uap_parse_tail_ies(struct mwifiex_private *priv,
-
-                                           struct cfg80211_beacon_data
-*info)
-
-{
-
-         struct mwifiex_ie *gen_ie;
-
-         struct ieee_types_header *hdr;
-
-         struct ieee80211_vendor_ie *vendorhdr;
-
-         u16 gen_idx = MWIFIEX_AUTO_IDX_MASK, ie_len = 0;
-
-         int left_len, parsed_len = 0;
-
- 
-
-         if (!info->tail || !info->tail_len)
-
-                   return 0;
-
- 
-
-         gen_ie = kzalloc(sizeof(*gen_ie), GFP_KERNEL);
-
-         if (!gen_ie)
-
-                   return -ENOMEM;
-
- 
-
-         left_len = info->tail_len;
-
- 
-
-         /* Many IEs are generated in FW by parsing bss configuration.
-
-          * Let's not add them here; else we may end up duplicating these
-IEs
-
-          */
-
-         while (left_len > sizeof(struct ieee_types_header)) {
-
-                   hdr = (void *)(info->tail + parsed_len);
-
-                   switch (hdr->element_id) {
-
-                   case WLAN_EID_SSID:
-
-                   case WLAN_EID_SUPP_RATES:
-
-                   case WLAN_EID_COUNTRY:
-
-                   case WLAN_EID_PWR_CONSTRAINT:
-
-                   case WLAN_EID_ERP_INFO:
-
-                   case WLAN_EID_EXT_SUPP_RATES:
-
-                   case WLAN_EID_HT_CAPABILITY:
-
-                   case WLAN_EID_HT_OPERATION:
-
-                   case WLAN_EID_VHT_CAPABILITY:
-
-                   case WLAN_EID_VHT_OPERATION:
-
-                            break;
-
-                   case WLAN_EID_VENDOR_SPECIFIC:
-
-                            /* Skip only Microsoft WMM IE */
-
-                            if (cfg80211_find_vendor_ie(WLAN_OUI_MICROSOFT,
-
- 
-WLAN_OUI_TYPE_MICROSOFT_WMM,
-
-                                                            (const u8 *)hdr,
-
-                                                            hdr->len +
-sizeof(struct ieee_types_header)))
-
-                                     break;
-
-                            /* fall through */
-
-                   default:
-
-                            memcpy(gen_ie->ie_buffer + ie_len, hdr,
-//!!!!!!overflow
-
-                                   hdr->len + sizeof(struct
-ieee_types_header));
-
-                            ie_len += hdr->len + sizeof(struct
-ieee_types_header);
-
-                            break;
-
-                   }
-
-                   left_len -= hdr->len + sizeof(struct ieee_types_header);
-
-                   parsed_len += hdr->len + sizeof(struct
-ieee_types_header);
-
-         }
-
- 
-
-         /* parse only WPA vendor IE from tail, WMM IE is configured by
-
-          * bss_config command
-
-          */
-
-         vendorhdr = (void *)cfg80211_find_vendor_ie(WLAN_OUI_MICROSOFT,
-
- 
-WLAN_OUI_TYPE_MICROSOFT_WPA,
-
-                                                            info->tail,
-info->tail_len);
-
-         if (vendorhdr) {
-
-                   memcpy(gen_ie->ie_buffer + ie_len, vendorhdr,
-//!!!!!!overflow
-
-                          vendorhdr->len + sizeof(struct
-ieee_types_header));
-
-                   ie_len += vendorhdr->len + sizeof(struct
-ieee_types_header);
-
-         }
-
-         .....
-
-}
-
- 
-
- 
-
-Credit
-
-==========
-
-This issue was discovered by huangwen of ADLab of Venustech
-
- 
-
- 
-
-Patch
-
-=====
-
-https://lore.kernel.org/linux-wireless/20190531131841.7552-1-tiwai@suse.de
-
- 
-
-
+On Sat, Jul 06, 2019 at 09:37:37PM +0200, Solar Designer wrote:
+>Hi all,
+>
+>Per our current policy and precedents, I see no valid reasons not to
+>subscribe Microsoft (or part(s) of it, see below) to linux-distros.  So
+>I intend to figure out some detail and proceed with the subscription.
+
+Thank you.
+
+[snip]
+
+>On Fri, Jun 28, 2019 at 01:08:12PM -0400, Sasha Levin wrote:
+>> Can I suggest that we fork the discussion around security-bugs.rst to
+>> LKML? I can suggest an initial patch to address your comments here but I
+>> think that this is better handled on LKML.
+>
+>Yes, please.
+
+Sure, give me a day or two to get it out. I'll cross-post
+LKML/ksummit-discuss/oss-security as I think it's one of those times it
+actually makes sense.
+
+>> Microsoft's history with Linux is a rather recent one. I can offer the
+>> following examples if you're willing to give us a few months off of the
+>> "1 year" requirement:
+>>
+>> CVE-2018-1002105:
+>> https://azure.microsoft.com/en-us/updates/aks-clusters-patched-for-kubernetes-vulnerability/
+>> CVE-2018-5391, CVE-2018-5390:
+>> https://azure.microsoft.com/en-us/blog/security-bulletin-for-august-2018/
+>> CVE-2019-5736:
+>> https://azure.microsoft.com/en-us/updates/iot-edge-fix-cve-2019-5736/
+>> CVE-2019-11477, CVE-2019-11478, CVE-2019-11479:
+>> https://azure.microsoft.com/en-us/updates/security-advisory-on-linux-kernel-tcp-vulnerabilities-for-hdinsight-clusters/
+>
+>The oldest of these is August 8, 2018, which is just 1 month short of
+>the 1 year term.  I suppose we could either give Microsoft this 1 month
+>off as you suggest based on Microsoft's track record of promptly dealing
+>with security issues in non-Linux products, or subscribe Microsoft to
+>linux-distros in August 2019 (or later).
+
+Whatever list admins/members are comfortable with.
+
+>More importantly, maybe we shouldn't list "Microsoft" as a member of
+>linux-distros.  Microsoft is so much more than the recent Linux-based
+>products and services.  We similarly list "Amazon Linux AMI" rather than
+>"Amazon", and "Chrome OS" rather than "Google" (and we had separately
+>listed "Android", which has since unsubscribed), and "Ubuntu" rather
+>than "Canonical".  OTOH, we were not as careful to list proper products,
+>etc. for some others such as "Oracle".
+>
+>If we list "Microsoft", this might be especially confusing since issues
+>being reported might also be relevant to Windows.  The reporters need to
+>know they're not reaching Windows security team unless they specifically
+>authorize that.
+>
+>Any suggestions on the above?
+
+Yes, this is tricky. Maybe "Microsoft Linux Systems Group"? Thats our
+group name within Microsoft. I guess that we can also add a short wiki
+page with references to the products/distros we support as well as a
+clarification that this has nothing to do with Windows and list MSRC's
+contact information.
+
+>Regardless, the list policy only allows use of the information for
+>"getting the issue fixed for your distro's users and, only in rare
+>extreme cases, for deployment of maximally non-revealing changes to
+>maintain security of your distro's infrastructure most essential to the
+>distro users' security in face of the security issue being dealt with.
+>The need-to-know condition is met only if the person needs to
+>participate in one of these two activities."  This is meant to preclude
+>sharing within the organization beyond its parts responsible for the
+>"distro" the organization is subscribed for.
+
+As I've indicated before, we intend to follow the list's policies.
+Information obtained from the list will be used only for the purposes
+listed in our original application, and any additional future use will
+go through the list for approvals first.
+
+--
+Thanks,
+Sasha
