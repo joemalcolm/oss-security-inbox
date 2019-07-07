@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["725" "Saturday" "29" "May" "2021" "15:50:37" "+0200" "Greg Kroah-Hartman" "gregkh@linuxfoundation.org" nil "24" "[oss-security] Re: Linux kernel: net/can/isotp: race condition leads to local privilege escalation" nil nil nil "5" nil nil (number mark "U       gregkh@linux May 29   24/725   " thread-indent "\"[oss-security] Re: Linux kernel: net/can/isotp: race condition leads to local privilege escalation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Linux kernel: net/can/isotp: race condition leads to local privilege escalation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2282" "Sunday" "7" "July" "2019" "15:42:58" "+0200" "Solar Designer" "solar@openwall.com" "<20190707134258.GA24975@openwall.com>" "46" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "7" "2019070713:42:58" "[oss-security] linux-distros membership application - Microsoft" (number mark "        solar@openwa Jul  7   46/2282  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>" "<20190628125743.GA2187@openwall.com>" "<20190628170812.GG11506@sasha-vm>" "<20190706193737.GA23344@openwall.com>" "<CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28556 invoked by uid 550); 29 May 2021 13:51:53 -0000
+Received: (qmail 6012 invoked by uid 550); 7 Jul 2019 13:46:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28331 invoked from network); 29 May 2021 13:50:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1622296240;
-	bh=pmUszLAIFXqkDbN7qnihaOpbZmlKj9puTywiwFFv5sk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mDbMzZTYUkwEU/so8X0BGzCUgs6TnnuzQJYSd9lgFiqxCqMOuSWvkJqot4wWNFbFE
-	 GbTYeL/VFJzTZ5xnjc+ihGD4rnKgRpeYBx4HXKbpWg6lOn6DVmlY4w8kf7WCAyydFF
-	 +H9VLrVXGfaZzCc0XDsbGhUCOw4NEpowI0swK+TE=
-Date: Sat, 29 May 2021 15:50:37 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Oliver Hartkopp <socketcan@hartkopp.net>
-Cc: mkl@pengutronix.de, alex.popov@linux.com, seth.arnold@canonical.com,
-	steve.beattie@canonical.com, cascardo@canonical.com,
-	oss-security@lists.openwall.com,
-	Norbert Slusarek <nslusarek@gmx.net>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>, security@kernel.org
-Message-ID: <YLJGrad5G0KL5Ls3@kroah.com>
-References: <trinity-10aeed49-cb96-47d9-818e-b938913e6fce-1620770433273@3c-app-gmx-bap63>
- <c80114dd-4a97-714d-232c-f4c6cf354332@gmx.net>
- <173ce2fa-fe90-4e00-e5a3-1f3163dfe13d@hartkopp.net>
-MIME-Version: 1.0
+Received: (qmail 5192 invoked from network); 7 Jul 2019 13:45:07 -0000
+Message-ID: <20190707134258.GA24975@openwall.com>
+References: <20190626141358.GK7898@sasha-vm> <20190627140321.GA29338@openwall.com> <20190627170508.GB11506@sasha-vm> <20190628125743.GA2187@openwall.com> <20190628170812.GG11506@sasha-vm> <20190706193737.GA23344@openwall.com> <CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <173ce2fa-fe90-4e00-e5a3-1f3163dfe13d@hartkopp.net>
-Subject: [oss-security] Re: Linux kernel: net/can/isotp: race condition leads to local
- privilege escalation
+In-Reply-To: <CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Sun, 7 Jul 2019 15:42:58 +0200
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] linux-distros membership application - Microsoft
+To: oss-security@lists.openwall.com
 
-On Fri, May 28, 2021 at 05:41:03PM +0200, Oliver Hartkopp wrote:
-> Hello Greg,
+On Sun, Jul 07, 2019 at 12:04:07PM +0300, Georgi Guninski wrote:
+> On Sat, Jul 6, 2019 at 10:40 PM Solar Designer <solar@openwall.com> wrote:
+> > I suppose we could either give Microsoft this 1 month
+> > off as you suggest based on Microsoft's track record of promptly dealing
+> > with security issues in non-Linux products, or subscribe Microsoft to
+> > linux-distros in August 2019 (or later).
 > 
-> this patch ("can: isotp: prevent race between isotp_bind() and
-> isotp_setsockopt()") has hit Linus' tree ~36h ago:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/can?id=2b17c400aeb44daf041627722581ade527bb3c1d
-> 
-> It has a CVE number and is potentially exploitable - but it was not in the
-> latest batch of stable kernels about ~4h ago.
+> Are you suggesting breaking the rules and giving microsoft
+> a present of one month?
 
-Give us a chance :)
+I don't view it as a present, but as us being reasonable.  The rules
+don't require the 1 year track record to be for Linux specifically:
 
-> 
-> It was obviously not tagged properly for stable kernels but has a fixes-tag:
-> 
-> Fixes: 921ca574cd38 ("can: isotp: add SF_BROADCAST support for functional
-> addressing")
-> 
-> which was introduced in 5.11
+"Have a publicly verifiable track record, dating back at least 1 year
+and continuing to present day, of fixing security issues (including some
+that had been handled on (linux-)distros, meaning that membership would
+have been relevant to you) and releasing the fixes within 10 days (and
+preferably much less than that) of the issues being made public (if it
+takes you ages to fix an issue, your users wouldn't substantially
+benefit from the additional time, often around 7 days and sometimes up
+to 14 days, that list membership could give you)"
 
-Now queued up, thanks.
+I think both the wording and the goal of us having this requirement have
+been met by Microsoft.  Sure we can wait 1 more month, but what for?
 
-greg k-h
+As I understand, your reason would be to hurt Microsoft a tiny bit out
+of spite for their past actions.  That's not a valid reason.
+
+A reason I consider valid has to do with what entity is to join the
+linux-distros list.  If it's not Microsoft at large, but "Microsoft
+Linux Systems Group" as it has just been suggested, then the wording
+above would apply to that group, and we probably do need to wait 1 more
+month in order not to set a precedent where some other company's distro
+could also join with less than 1 year of track record of fixes for the
+distro.  While I have no doubt the goal of the requirement has already
+been met by Microsoft, we could be in a less obvious situation with some
+other company.
+
+So I suggest we subscribe "Microsoft Linux Systems Group" on August 8.
+
+> What mailing list is best to discuss microsoft's involvement in
+> GPL? (last time I checked LKLM was extremely high traffic)
+
+I don't know.  Certainly not a list we host.
+
+Alexander
