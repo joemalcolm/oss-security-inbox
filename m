@@ -1,40 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/06/3
-Message-ID: <20191106134041.GA29158@openwall.com>
-Date: Wed, 6 Nov 2019 14:40:41 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com, Joe McManus <joe.mcmanus@...onical.com>
-Subject: Re: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/07/2
+Message-ID: <CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>
+Date: Sun, 7 Jul 2019 12:04:07 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 05, 2019 at 10:43:11PM +0000, Seth Arnold wrote:
-> I'm uneasy reporting "I saw no further instances of this" or "I saw no
-> issues with this patch" because I am keenly aware that I cannot be
-> confident in my assessments. I'm very accustomed to pointing out problems
-> when I see them, so that comes easily.
+On Sat, Jul 6, 2019 at 10:40 PM Solar Designer <solar@...nwall.com> wrote:
 
-Besides "I saw no issues", etc. please also describe the scope of your
-review - e.g., "I grepped the version X.Y tree for [some pattern] and
-there were only two hits, which I reviewed and they look correct to me"
-or "I've tried applying the patch to version X.Y, building with ASan,
-and running the test suite on Ubuntu 19.10, and all tests passed" or
-even "I skimmed over this lengthy patch in 10 minutes and didn't see
-anything obviously wrong" (not ideal, but also not misleading).  Of
-course, more detail (after a summary like this) would be even better -
-e.g., you could include code snippets for those two grep hits from my
-first example, which might result in others noticing issues in those.
+> Hi all,
+>
+> Per our current policy and precedents, I see no valid reasons not to
+> subscribe Microsoft (or part(s) of it, see below) to linux-distros.  So
+> I intend to figure out some detail and proceed with the subscription.
+>
+>
+>
+> > Microsoft's history with Linux is a rather recent one. I can offer the
+>
 
-For a real-world example, here's that message Anthony sent on July 25,
-which is as desired in that it makes the scope clear:
+No, it is not recent. The Halloween Documents are from 1998,
+which makes 21 years.
 
-"We have packaged the 4.92.1 release and performed some basic testing and
-can confirm it works.  We do not have a reproducer for this issue so I
-cannot confirm if the fix is correct but can confirm that the package is
-stable."
 
-> In any event I will do better.
+> > following examples if you're willing to give us a few months off of the
+> > "1 year" requirement:
+> >
 
-Thank you, Seth.  Also, thank you Anthony for ack'ing my reminder (in
-another message).
 
-Alexander
+LOL.
+
+
+>
+> >  I suppose we could either give Microsoft this 1 month
+> off as you suggest based on Microsoft's track record of promptly dealing
+> with security issues in non-Linux products, or subscribe Microsoft to
+> linux-distros in August 2019 (or later).
+>
+>
+
+Are you suggesting breaking the rules and giving microsoft
+a present of one month? As a long time gnu/linux user and
+linux kernel bug killer [1] I am disappointed by this.
+
+What mailing list is best to discuss microsoft's involvement in
+GPL? (last time I checked LKLM was extremely high traffic)
+
+[1]: http://www.guninski.com/misc.html
+
