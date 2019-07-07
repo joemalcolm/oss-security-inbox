@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/1
-Message-ID: <CAJDuW=AhXUDhK4Xo-rZbUT2JhaYkaJDx2-f0N5R-E+KMWjmSpQ@mail.gmail.com>
-Date: Wed, 10 Jul 2019 14:25:40 -0700
-From: Jason Gustafson <jason@...fluent.io>
-To: security@...ka.apache.org, oss-security@...ts.openwall.com,  announce@...che.org, Users <users@...ka.apache.org>, dev <dev@...ka.apache.org>,  kafka-clients <kafka-clients@...glegroups.com>
-Subject: CVE-2018-17196: Potential to bypass transaction/idempotent ACL checks in Apache Kafka
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/08/2
+Message-ID: <alpine.LRH.2.21.1907071720020.20952@fairfax.gathman.org>
+Date: Sun, 7 Jul 2019 17:29:25 -0400 (EDT)
+From: "Stuart D. Gathman" <stuart@...hman.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-17196: Potential to bypass transaction/idempotent ACL checks in
-Apache Kafka
+On Sun, 7 Jul 2019, Georgi Guninski wrote:
 
-Severity: Moderate
+> No, it is not recent. The Halloween Documents are from 1998,
+> which makes 21 years.
 
-Vendor: The Apache Software Foundation
+Just as young people today have forgotten the "crimes" (not
+necessarily illegal, but widely regarded at unethical) of Microsoft
+in the past, so most of the management responsible for those crimes
+at Microsoft have moved on, and the company is changing.
 
-Versions Affected: Apache Kafka 0.11.0.0 - 2.1.0
+On the same lines, do you believe Google continues to faithfully
+follow its founding mandate of "Don't be Evil"?
 
-Description: It is possible to manually craft a Produce request which
-bypasses transaction/idempotent ACL validation. Only authenticated clients
-with Write permission on the respective topics are able to exploit this
-vulnerability.
+The only thing you can count on staying the same is the profit motive,
+it is required by law for a publicly owned corporation.  But profit can
+be pursued ethically - or not.
 
-Mitigation: Apache Kafka users should upgrade to 2.1.1 or later where this
-vulnerability has been fixed.
-
-Acknowledgements: This issue was reported by Jason Gustafson
-
-
-Regards,
-Jason
-
+-- 
+ 	      Stuart D. Gathman <stuart@...hman.org>
+"Confutatis maledictis, flamis acribus addictis" - background song for
+a Microsoft sponsored "Where do you want to go from here?" commercial.
