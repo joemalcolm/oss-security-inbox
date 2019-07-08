@@ -1,4 +1,9 @@
-Received: (qmail 7382 invoked by uid 550); 13 Apr 2025 14:21:46 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2960" "Monday" "8" "July" "2019" "14:51:37" "+0200" "Solar Designer" "solar@openwall.com" "<20190708125137.GA26895@openwall.com>" "61" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "7" "2019070812:51:37" "[oss-security] linux-distros membership application - Microsoft" (number mark "U       solar@openwa Jul  8   61/2960  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190706222936.GL10104@sasha-vm>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>" "<20190628125743.GA2187@openwall.com>" "<20190628170812.GG11506@sasha-vm>" "<20190706193737.GA23344@openwall.com>" "<20190706222936.GL10104@sasha-vm>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18188 invoked by uid 550); 8 Jul 2019 12:52:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,82 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15493 invoked from network); 13 Apr 2025 13:23:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
-	t=1744550607;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=ZQWS4pWmJUVk4b7no8uGSXq2oYs+8M/2qFKT4TrF9Do=;
-	b=1Hect4I8RDUv2xvHRgxwx7nrLK4SlhbFX04y+BRaxJet8uaexAi+CqKYp2QYBWYvsLrPLe
-	CrhZL23ZTwdSZpOPlNjRWutsGUy3/jpNYDYu3mAKWRlu7fvwtuKLe4t89Cv4ilWycX4Hik
-	J3K9WasG/ZkfM9r4G4cxHIRP1XY6MObgEN0HIGBi4JKn7jmnGwM3yPLVeolx96/YA4HGpj
-	IFskiVOG6W4wnTjsiZKhXgiIuHYKRkZHGS0IHxI58lM6oRvQ4vB0fse8RyKL6XtMlIFYs+
-	mW9Q2NKbdR7VvfBqOYX/ONTqTbX2UHqwP7V5KVsge8xArnIghDBgOToDbjNmMQ==
-Date: Sun, 13 Apr 2025 15:23:25 +0200
-From: Stig Palmquist <stig@stig.io>
-To: oss-security@lists.openwall.com
-Message-ID: <gawci7t5wtkbk3kj3d3wjqqyy6jshli6mnyimynu5cngjvtm72@chxdlvz3vhsi>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Received: (qmail 17707 invoked from network); 8 Jul 2019 12:51:49 -0000
+Message-ID: <20190708125137.GA26895@openwall.com>
+References: <20190626141358.GK7898@sasha-vm> <20190627140321.GA29338@openwall.com> <20190627170508.GB11506@sasha-vm> <20190628125743.GA2187@openwall.com> <20190628170812.GG11506@sasha-vm> <20190706193737.GA23344@openwall.com> <20190706222936.GL10104@sasha-vm>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Subject: [oss-security] CVE-2024-56406: Perl 5.34, 5.36, 5.38 and 5.40 are vulnerable to a
- heap buffer overflow when transliterating non-ASCII bytes
+In-Reply-To: <20190706222936.GL10104@sasha-vm>
+User-Agent: Mutt/1.4.2.3i
+Date: Mon, 8 Jul 2019 14:51:37 +0200
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] linux-distros membership application - Microsoft
+To: oss-security@lists.openwall.com
 
-========================================================================
-CVE-2024-56406                                       CPAN Security Group
-========================================================================
+On Sat, Jul 06, 2019 at 06:29:36PM -0400, Sasha Levin wrote:
+> On Sat, Jul 06, 2019 at 09:37:37PM +0200, Solar Designer wrote:
+> >On Fri, Jun 28, 2019 at 01:08:12PM -0400, Sasha Levin wrote:
+> >>Can I suggest that we fork the discussion around security-bugs.rst to
+> >>LKML? I can suggest an initial patch to address your comments here but I
+> >>think that this is better handled on LKML.
+> >
+> >Yes, please.
+> 
+> Sure, give me a day or two to get it out. I'll cross-post
+> LKML/ksummit-discuss/oss-security
 
-        CVE ID:  CVE-2024-56406
-  Distribution:  perl
-      Versions:  from 5.40.0 until 5.40.2
-                 from 5.38.0 until 5.38.4
-                 from 5.36.0 through 5.36.3
-                 from 5.34.0 through 5.34.3
+Please just take this to LKML, without CC to oss-security.  We can
+summarize the changes for oss-security separately.  I don't know about
+relevance to ksummit-discuss.
 
-      MetaCPAN:  https://metacpan.org/dist/perl
-      VCS Repo:  https://github.com/Perl/perl5/
+> as I think it's one of those times it actually makes sense.
 
+This might or might not be an exception, but in general CC'ing a thread
+to LKML and oss-security is problematic and is specifically discouraged
+in oss-security content guidelines:
 
-Perl 5.34, 5.36, 5.38 and 5.40 are vulnerable to a heap buffer overflow
-when transliterating non-ASCII bytes
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-Description
------------
-A heap buffer overflow vulnerability was discovered in Perl. 
+"Please don't cross-post messages to oss-security and other mailing
+lists at once, especially not to high-volume lists such as LKML and
+netdev, as this tends to result in threads that wander partially or
+fully off-topic (e.g., Linux kernel coding style detail may end up being
+discussed in comments to a patch posted to LKML, but it would be
+off-topic for oss-security).  If you feel that something needs to be
+posted to oss-security and to another list, please make separate
+postings.  You may mention the other posting(s) in your oss-security
+posting, and even link to other lists' archives."
 
-When there are non-ASCII bytes in the left-hand-side of the `tr`
-operator, `S_do_trans_invmap` can overflow the destination pointer `d`.
+> >More importantly, maybe we shouldn't list "Microsoft" as a member of
+> >linux-distros.  Microsoft is so much more than the recent Linux-based
+> >products and services.  We similarly list "Amazon Linux AMI" rather than
+> >"Amazon", and "Chrome OS" rather than "Google" (and we had separately
+> >listed "Android", which has since unsubscribed), and "Ubuntu" rather
+> >than "Canonical".  OTOH, we were not as careful to list proper products,
+> >etc. for some others such as "Oracle".
+> >
+> >If we list "Microsoft", this might be especially confusing since issues
+> >being reported might also be relevant to Windows.  The reporters need to
+> >know they're not reaching Windows security team unless they specifically
+> >authorize that.
+> >
+> >Any suggestions on the above?
+> 
+> Yes, this is tricky. Maybe "Microsoft Linux Systems Group"? Thats our
+> group name within Microsoft. I guess that we can also add a short wiki
+> page with references to the products/distros we support as well as a
+> clarification that this has nothing to do with Windows and list MSRC's
+> contact information.
 
-   $ perl -e '$_ = "\x{FF}" x 1000000; tr/\xFF/\x{100}/;' 
-   Segmentation fault (core dumped)
+I think listing "Microsoft Linux Systems Group" is enough to avoid the
+confusion.  I support Moritz's request for you to add to our existing
+wiki pages with vendors' security contact information, and you can list
+the pertaining products/distros nearby.
 
-It is believed that this vulnerability can enable Denial of Service and
-possibly Code Execution attacks on platforms that lack sufficient
-defenses.
-
-Problem types
--------------
-CWE-122 Heap-based Buffer Overflow
-CWE-787 Out-of-bounds Write
-
-Mitigations
------------
-Users should update perl to 5.40.2 or 5.38.4, or apply the upstream
-patch provided in the References section.
-
-References
-----------
-https://github.com/Perl/perl5/commit/87f42aa0e0096e9a346c9672aa3a0bd3bef8c1dd.patch
-https://metacpan.org/release/SHAY/perl-5.38.4/changes
-https://metacpan.org/release/SHAY/perl-5.40.2/changes
-
-Credits
--------
-Nathan Mills, finder
-
-
-
--- 
-Stig Palmquist
+Alexander
