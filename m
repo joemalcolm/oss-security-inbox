@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1142" "Thursday" "30" "July" "2020" "18:41:40" "+0200" "Jann Horn" "jannh@google.com" nil "20" nil "^Cc:" nil nil "7" nil nil (number mark "        jannh@google Jul 30   20/1142  " thread-indent "\"[oss-security] Re: Alternative CET ABI\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Alternative CET ABI" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1575" "Monday" "8" "July" "2019" "12:15:48" "-0400" "David A. Wheeler" "dwheeler@dwheeler.com" "<E1hkWIu-0004Qz-Vq@rmmprod07.runbox>" "37" "Re: [oss-security] linux-distros membership application - Microsoft" "^CC:" nil nil "7" "2019070816:15:48" "[oss-security] linux-distros membership application - Microsoft" (number mark "        dwheeler@dwh Jul  8   37/1575  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190707134258.GA24975@openwall.com>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>" "<20190628125743.GA2187@openwall.com>" "<20190628170812.GG11506@sasha-vm>" "<20190706193737.GA23344@openwall.com>" "<CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>" "<20190707134258.GA24975@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17816 invoked by uid 550); 30 Jul 2020 16:42:47 -0000
+Received: (qmail 20348 invoked by uid 550); 8 Jul 2019 16:16:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15971 invoked from network); 30 Jul 2020 16:42:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uOgsUbAvtb07X2t6oCOXPaH/oAL+aoYjRmE457oKQVE=;
-        b=F/akzAAcghFkbb5rg2I+dUhbCLh5STTtsK7MimVF+Ch5DDzPABUu5CF+W+vBRvRLgS
-         ePuaSTbpwmciMZQHJEU47jnoOqSdnhckGm4nG13TjSQSQjX0gY0WbwBWahgzeVMpj/IM
-         b0eabTrV3OuLVQ/76ZO1iZziutwAD9nfjMcMldjskzEHHzFiVgTj1JGpoevduOyAc5JB
-         s9COTq/fxE+6qX0URVjIKtPxK+4JiFAGf5uCYqW8cFD/oi0MCSAC77+Kz7D4av0mRq1R
-         NjsxdcZHq3+X0fOJebWbt6A/XJZjnsbGjQ24sx5XtlhOAo0L5E3/MGOYiA2xOMKua07A
-         C9/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uOgsUbAvtb07X2t6oCOXPaH/oAL+aoYjRmE457oKQVE=;
-        b=T9yqlTBjRKfGiKcHOaAE0VyAadSBEwPrd+p1KLUa69/nUAmgxsJDObxhrbWsfZ0bgu
-         EH+q71azrKKtoJ/uXR6rk18ykSUm14qo36Uz8PLc7tgM5dPXR2e+A5/VNNA5FskfkXQn
-         dq6qsHbBW9rsIR0MRW/Sa98sp2mXrq5UAGLd42Q1DQzp8aKlm8t9OJ5IsVGJbC3aUNmv
-         2HQAytSkWFJKSPzLwlmOyGxIVcJA9m1vnHYqOHVxBho5LYTaP+eBufaN3yWFmm2eop+K
-         ByuvAVi/yXYmD/PGUWEnuiGGXFb1ajvlTm05veEAE6l5SyZMNyBkeG3e8VG6ZvUtuh7N
-         Lsgg==
-X-Gm-Message-State: AOAM530/ErzPd+JbeQCp6dxebXUvWi7eivwZ0GqHu49salSfR9bBdQzw
-	+plc7u4U/1sxf2M2iknndoTqX6LUAASa3qvutEr0iw==
-X-Google-Smtp-Source: ABdhPJwqLir8etUYa8a7uyi48sMcY0xMDD9OCpUUEIzG6Kyrg5O2YRcXX3ofIoRkrkqEUCyjzA8TyGUPErzO0SL5fIc=
-X-Received: by 2002:a2e:9251:: with SMTP id v17mr66150ljg.138.1596127327122;
- Thu, 30 Jul 2020 09:42:07 -0700 (PDT)
+Received: (qmail 20328 invoked from network); 8 Jul 2019 16:16:00 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <87k0ylgff0.fsf@oldenburg2.str.redhat.com>
-In-Reply-To: <87k0ylgff0.fsf@oldenburg2.str.redhat.com>
-Message-ID: <CAG48ez3OF7DPupKv9mBBKmg-9hDVhVe83KrJ4Jk=CL0nOc7=Jg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: oss-security@lists.openwall.com, x86-64-abi@googlegroups.com, 
-	Kernel Hardening <kernel-hardening@lists.openwall.com>, Szabolcs Nagy <szabolcs.nagy@arm.com>
-Date: Thu, 30 Jul 2020 18:41:40 +0200
-From: Jann Horn <jannh@google.com>
+X-Mailer: RMM6
+References: <20190626141358.GK7898@sasha-vm>
+ <20190627140321.GA29338@openwall.com> <20190627170508.GB11506@sasha-vm>
+ <20190628125743.GA2187@openwall.com> <20190628170812.GG11506@sasha-vm>
+ <20190706193737.GA23344@openwall.com>
+ <CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>
+ <20190707134258.GA24975@openwall.com>
+In-Reply-To: <20190707134258.GA24975@openwall.com>
+Message-Id: <E1hkWIu-0004Qz-Vq@rmmprod07.runbox>
+CC: "oss-security" <oss-security@lists.openwall.com>
+Date: Mon, 08 Jul 2019 12:15:48 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Alternative CET ABI
-To: Florian Weimer <fweimer@redhat.com>
+Subject: Re: [oss-security] linux-distros membership application - Microsoft
+To: "oss-security" <oss-security@lists.openwall.com>
 
-On Thu, Jul 30, 2020 at 6:02 PM Florian Weimer <fweimer@redhat.com> wrote:
-> Functions no longer start with the ENDBR64 prefix.  Instead, the link
-> editor produces a PLT entry with an ENDBR64 prefix if it detects any
-> address-significant relocation for it.  The PLT entry performs a NOTRACK
-> jump to the target address.  This assumes that the target address is
-> subject to RELRO, of course, so that redirection is not possible.
-> Without address-significant relocations, the link editor produces a PLT
-> entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
-> perhaps no PLT entry at all.
+On Sun, 7 Jul 2019 15:42:58 +0200, Solar Designer <solar@openwall.com> wrot=
+e:
+> I don't view it as a present, but as us being reasonable.  The rules
+> don't require the 1 year track record to be for Linux specifically...
+> So I suggest we subscribe "Microsoft Linux Systems Group" on August 8.
 
-How would this interact with function pointer comparisons? As in, if
-library A exports a function func1 without referencing it, and
-libraries B and C both take references to func1, would they end up
-with different function pointers (pointing to their respective PLT
-entries)? Would this mean that the behavior of a program that compares
-function pointers obtained through different shared libraries might
-change?
+I think that's entirely reasonable.  Indeed, I think it'd be reasonable to =
+add
+them now.  That said, ensuring that the "right sub-group" is added is appro=
+priate,
+since we want to ensure that people contact the correct group.
 
-I guess you could maybe canonicalize function pointers somehow, but
-that'd probably at least break dlclose(), right?
+
+Georgi Guninski:
+> ... The Halloween Documents are from 1998, which makes 21 years.
+
+That is a long time ago.  People and companies change, and
+in this case there's good evidence that change has occurred.
+Forgiveness is a good idea, for both people and companies.
+Yes, companies have a profit motive, but that's not at all disqualifying.
+
+Besides, the beneficiaries of linux-distros work aren't just
+the distros; they also include the *users* of those distros.  As noted in
+http://oss-security.openwall.org/wiki/mailing-lists/distros ,
+the list is only "to report and discuss security issues that are not yet pu=
+blic
+(but that are to be made public very soon...)...
+It is intended that these lists be used primarily to provide actionable inf=
+ormation
+to multiple distribution vendors at once."
+This enables everyone to coordinate so that users get *fixes*
+when the issue becomes public, not just a problem the users can't deal with.
+
+In short, I support allowing the Microsoft Linux Systems Group to join linu=
+x-distros.
+
+--- David A. Wheeler=
