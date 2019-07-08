@@ -1,107 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/1
-Message-ID: <alpine.DEB.2.20.1906240745030.23737@tvnag.unkk.fr>
-Date: Mon, 24 Jun 2019 07:46:14 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: curl: Windows OpenSSL engine code injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/08/5
+Message-Id: <E1hkWIu-0004Qz-Vq@rmmprod07.runbox>
+Date: Mon, 08 Jul 2019 12:15:48 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+CC: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-Windows OpenSSL engine code injection
-=====================================
+On Sun, 7 Jul 2019 15:42:58 +0200, Solar Designer <solar@...nwall.com> wrote:
+> I don't view it as a present, but as us being reasonable.  The rules
+> don't require the 1 year track record to be for Linux specifically...
+> So I suggest we subscribe "Microsoft Linux Systems Group" on August 8.
 
-Project curl Security Advisory, June 24th 2019 -
-[Permalink](https://curl.haxx.se/docs/CVE-2019-5443.html)
+I think that's entirely reasonable.  Indeed, I think it'd be reasonable to add
+them now.  That said, ensuring that the "right sub-group" is added is appropriate,
+since we want to ensure that people contact the correct group.
 
-VULNERABILITY
--------------
 
-A non-privileged user or program can put code and a config file in a known
-non-privileged path (under `C:/usr/local/`) that will make curl automatically
-run the code (as an openssl "engine") on invocation. If that curl is invoked
-by a privileged user it can do anything it wants.
+Georgi Guninski:
+> ... The Halloween Documents are from 1998, which makes 21 years.
 
-This flaw exists in the official curl-for-windows binaries built and hosted by
-the curl project (all versions up to and including 7.65.1_1). It **does not**
-exist in the curl executable shipped by Microsoft, bundled with Windows 10. It
-possibly exists in other curl builds for Windows too that uses OpenSSL.
+That is a long time ago.  People and companies change, and
+in this case there's good evidence that change has occurred.
+Forgiveness is a good idea, for both people and companies.
+Yes, companies have a profit motive, but that's not at all disqualifying.
 
-The curl project has provided official curl executable builds for Windows
-since [late August
-2018](https://daniel.haxx.se/blog/2018/08/27/blessed-curl-builds-for-windows/).
+Besides, the beneficiaries of linux-distros work aren't just
+the distros; they also include the *users* of those distros.  As noted in
+http://oss-security.openwall.org/wiki/mailing-lists/distros ,
+the list is only "to report and discuss security issues that are not yet public
+(but that are to be made public very soon...)...
+It is intended that these lists be used primarily to provide actionable information
+to multiple distribution vendors at once."
+This enables everyone to coordinate so that users get *fixes*
+when the issue becomes public, not just a problem the users can't deal with.
 
-There exists proof of concept exploits of this flaw.
+In short, I support allowing the Microsoft Linux Systems Group to join linux-distros.
 
-INFO
-----
-
-This bug sneaked in partly due to insecure default build options in OpenSSL
-when built cross-compiled and partly due to a misleading commit message in the
-curl commit that made it possible to disable this feature.
-
-This bug does not exist in the curl or libcurl source code but in the scripts
-for the Windows build.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2019-5443 to this issue.
-
-CWE-94: Code Injection
-
-Severity: High
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: all curl-for-windows downloads before **7.65.1_2**.
-
-THE SOLUTION
-------------
-
-Replace your downloaded curl version on Windows with the updated download
-package from the [curl site](https://curl.haxx.se/windows/).
-
-The build fix for curl-for-win correcting this flaw is in [this
-commit](https://github.com/curl/curl-for-win/commit/51b658a76594942cf1d6f227d8fc4732bb8ec277). It
-completely disables curl's ability to load an OpenSSL config when invoked.
-
-RECOMMENDATIONS
---------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade to a fixed curl executable
-
-  B - Remove curl executable downloaded from curl.haxx.se and instead use the
-      one shipped by Microsoft in Windows 10
-
-TIMELINE
---------
-
-The issue was reported to the curl project on June 12, 2019. The fix was done,
-verified and communicated with the reporter on June 12, 2019.
-
-While planning the release schedule of this advisory and coordinating with
-other affected projects, we discovered that this exact flaw had already been
-published and discussed in public before we were informed about it. A few
-other OpenSSL-using projects on Windows also had already fixed their builds
-for this exact problem. Realizing this, we switched gears and decided to
-publish as soon as possible to minimize user impact.
-
-curl 7.65.1_2 for Windows was uploaded and made available on June 21 2019 -
-the older, vulnerable builds, were removed from the site at the same time.
-
-This advisory was posted on June 24th 2019.
-
-CREDITS
--------
-
-Reported by Rich Mirch. OpenSSL patch by Viktor Szakats.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se | Get the best commercial curl support there is - from me
-                   | Private help, bug fixes, support, ports, new features
-                   | https://www.wolfssl.com/contact/
+--- David A. Wheeler
