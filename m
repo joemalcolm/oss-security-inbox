@@ -1,46 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/15/3
-Message-ID: <20190715192801.GA12290@openwall.com>
-Date: Mon, 15 Jul 2019 21:28:01 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/08/6
+Message-ID: <32fef869c240906d269ba83b0187479cd9637925.camel@debian.org>
+Date: Mon, 08 Jul 2019 17:23:43 +0100
+From: Luca Boccassi <bluca@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Contributing Back
+Subject: CVE-2019-13132: zeromq/libzmq: denial of service via stack overflow with arbitrary data
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 15, 2019 at 11:54:23AM -0700, Anthony Liguori wrote:
-> On Mon, Jul 15, 2019 at 11:47 AM Joe McManus <joe.mcmanus@...onical.com> wrote:
-> > > On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
-> > > > Hey All - The Ubuntu Security Team would like to sign up for items 3,4
-> > > > & 5 from the technical list <
-> > > > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> > > > >:
-> > > >
-> > > > 3 - Review and/or test the proposed patches and point out potential issues
-> > > >   with them [...]
-> > > > 4 - Check if related issues exist in the same piece of software [...]
-> > > > 5 - Check if related issues exist in implementations of similar
-> > > >   functionality in other software [...]
-[...]
-> > Yes, this will be taken care of by Ubuntu Security Team members who
-> > are already on the list, however if after some time we need to cycle
-> > someone in or out I might come asking. I know you don't want to add
-> > anyone so we will do our best to prevent this from happening.
-> >
-> > For 3 we can be either primary or backup, just let me know your
-> > preference and we'll do the work.
-> 
-> I would be happy for y'all to be primary.  We don't ship as many
-> packages as Ubuntu does so there will be more things that you are
-> likely to test compared to what we do.
+Hello,
 
-OK, I've just listed Ubuntu as primary for 3, 4, 5.  Amazon is now
-backup for 3.
+A security vulnerability has been reported in libzmq/zeromq.
 
-Please note that these items include "and inform the list of the work
-done even if no issues were encountered" (item 3), "and inform the list
-either way" (items 4, 5), so we'll expect replies to the list as per
-these items for each and every issue reported to there.
+CVE-2019-13132: a remote, unauthenticated client connecting to a
+libzmq application, running with a socket listening with CURVE
+encryption/authentication enabled, may cause a stack overflow and
+overwrite the stack with arbitrary data, due to a buffer overflow in
+the library. Users running public servers with the above configuration
+are highly encouraged to upgrade as soon as possible, as there are no
+known mitigations. All versions from 4.0.0 and upwards are affected.
 
-Thanks!
+Thank you Fang-Pen Lin for finding the issue and reporting it!
 
-Alexander
+The following upstream releases fixes the issue and will be shortly
+available:
+
+https://github.com/zeromq/libzmq/releases/tag/v4.3.2
+https://github.com/zeromq/zeromq4-x/releases/tag/v4.0.9
+https://github.com/zeromq/zeromq4-1/releases/tag/v4.1.7
+
+Individual backported patches can be found on the upstream bug tracker,
+and have been sent separately to the security teams of various
+distributions:
+
+https://github.com/zeromq/libzmq/issues/3558
+
+The programs to reproduce the issue will be shared on the 15th of July.
+
+-- 
+Kind regards,
+Luca Boccassi
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
