@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/3
-Message-ID: <20190615155740.GA2960@kroah.com>
-Date: Sat, 15 Jun 2019 17:57:40 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/08/3
+Message-ID: <nycvar.YSQ.7.76.1907081652370.24283@xnncv>
+Date: Mon, 8 Jul 2019 16:59:35 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Fabiano Fidencio <ffidenci@...hat.com>
+Subject: CVE-2019-13313, CVE-2019-13314: password disclosure via command line arguments
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 15, 2019 at 11:49:03AM -0400, Alex Gaynor wrote:
-> I do not have a solution to this problem. I wanted to raise awareness of
-> it, in the hope that it would start a discussion which might come to a
-> solution.
+   Hello,
 
-Why not just do a simple "you must upgrade to the latest version X to
-fix a bunch of bugs" type of announcement?  No need to worry about crazy
-backports and cherry-picking, that always fails in the end.
+CVE-2019-13313
+   Libosinfo: osinfo-install-script option leaks password via command line 
+argument. 'osinfo-install-script' is used to generate a script for automated 
+guest installations. It accepts user and admin passwords via command line 
+arguments, thus leaking them via process listing.
 
-thanks,
+CVE-2019-13314
+   virt-bootstrap: allows local users to discover root password via process 
+listing virt-bootstrap 1.1.0 allows local users to discover a root password 
+via process listing, because it's passed as command line parameter via 
+--root-password option.
 
-greg k-h
+These issues were reported by Fabiano Fidêncio of Red Hat Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
