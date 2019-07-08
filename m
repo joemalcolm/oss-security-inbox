@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1887" "Wednesday" "6" "May" "2015" "11:43:03" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150506154303.682FD52E067@smtpvbsrv1.mitre.org>" "41" "[oss-security] Re: Local privileges escalation in rubygem open-uri-cached" nil nil nil "5" "2015050615:43:03" "[oss-security] Re: Local privileges escalation in rubygem open-uri-cached" (number mark "        cve-assign@m May  6   41/1887  " thread-indent "\"[oss-security] Re: Local privileges escalation in rubygem open-uri-cached\"\n") "<20150505172741.GE17491@sisay.ephaone.org>" ("<20150505172741.GE17491@sisay.ephaone.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["688" "Monday" "8" "July" "2019" "05:06:45" "+0000" "Doran Moppert" "dmoppert@redhat.com" "<20190708050645.GA4714@dmoppert.redhat.com>" "20" "Re: [oss-security] [CVE-2019-0231] MINA SSLFilter security Issue" nil nil nil "7" "2019070805:06:45" "[oss-security] [CVE-2019-0231] MINA SSLFilter security Issue" (number mark "U       dmoppert@red Jul  8   20/688   " thread-indent "\"Re: [oss-security] [CVE-2019-0231] MINA SSLFilter security Issue\"\n") "<CAG8=FRi8zBopbw1AkoGM5yGN8P9G8rTxxPR2JfEG7RaV4BU8tQ@mail.gmail.com>" ("<CAG8=FRi8zBopbw1AkoGM5yGN8P9G8rTxxPR2JfEG7RaV4BU8tQ@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2019-0231] MINA SSLFilter security Issue" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26193 invoked by uid 550); 6 May 2015 15:43:21 -0000
+Received: (qmail 28437 invoked by uid 550); 8 Jul 2019 05:07:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26150 invoked from network); 6 May 2015 15:43:15 -0000
-In-Reply-To: <20150505172741.GE17491@sisay.ephaone.org>
-Message-Id: <20150506154303.682FD52E067@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed,  6 May 2015 11:43:03 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Local privileges escalation in rubygem open-uri-cached
-To: misc@zarb.org
+Received: (qmail 28414 invoked from network); 8 Jul 2019 05:07:04 -0000
+Date: Mon, 8 Jul 2019 05:06:45 +0000
+From: Doran Moppert <dmoppert@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20190708050645.GA4714@dmoppert.redhat.com>
+References: <CAG8=FRi8zBopbw1AkoGM5yGN8P9G8rTxxPR2JfEG7RaV4BU8tQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAG8=FRi8zBopbw1AkoGM5yGN8P9G8rTxxPR2JfEG7RaV4BU8tQ@mail.gmail.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.43]); Mon, 08 Jul 2019 05:06:52 +0000 (UTC)
+Subject: Re: [oss-security] [CVE-2019-0231] MINA SSLFilter security Issue
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, Apr 14, 2019 at 08:30:49AM +0200, Emmanuel Lecharny wrote:
+>Description: Handling of the close_notify SSL/TLS message does not
+>lead to a connection closure, leading the server to retain the socket
+>opened and to have the client potentially receive clear-text messages
+>which were supposed to be encrypted.
+>
+>This security issue is fixed by Apache MINA 2.0.21 or Apache MINA
+>2.0.21. Please migrate to those new versions.
 
-> open-uri-cached, a rubygem that will cache downloaded data when using
-> open-uri, is susceptible to a local attack
+Hi Emmanuel,
 
-It appears that the critical issue you've identified is execution of
-code found in an untrusted location under /tmp. Use CVE-2015-3649.
+I think the above should read "2.0.21 or Apache MINA 2.1.1".  Is the 
+commit fixing the issue 73e881ad9?  I am trying to figure out if our 
+products using 1.1 need to consider a back-port.
 
-In most cases, this specific class of /tmp misuse issues is unrelated
-to Symlink Following. However, when such an issue exists, it is
-conceivable that a Symlink Following vulnerability also exists, could
-be fixed independently, and would be of interest to an attacker who
-has a goal of overwriting a file rather than directly executing code.
-The MITRE CVE team has not done any original research to check for a
-Symlink Following vulnerability. If a Symlink Following vulnerability
-were to exist, it would not be within the scope of CVE-2015-3649.
+Thanks,
 
-Also, the message refers to "usage of YAML in a insecure way." We have
-not done any original research to determine whether, in a scenario
-where the "untrusted location under /tmp" were no longer used, a
-YAML-related vulnerability would still be exploitable. If an
-independent "YAML misuse" vulnerability were to exist, it would not be
-within the scope of CVE-2015-3649.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVSjYYAAoJEKllVAevmvmsBc0H/1rb5MtLd0UXcNc1Ez6dL3dC
-tLUB6CrujIs3yp5ynaNsg6b2cmBoF6GxGRTB4ea4Lg9n4Bv/Ovr6u1aRhtx1gz1f
-XtlPnlO4nOzC1Kh9aOa33SvxiRqUw+Ch7G4Vi9tAHYxaxBFH9DGhEvYCC3KWQ4Za
-dSMirU3CfkNIywwp3xzAAltXy/tg4VXq4tM0x6j9KK2URhaPJuNVcZDsp12OSpDO
-umhE3JJY0FL5eY1QD6YjbyrZbDe7HxjxjhpdpPV8Jh1qcdsttiY1vYq/CQWSwmDu
-v/4GfZjw7pR3Bh0uBfVgZ2CmmnWNFCgX2ECWH8D6Nyfy2Im5vG16eFE45ANtRkY=
-=NJDF
------END PGP SIGNATURE-----
+-- 
+Doran Moppert
+Red Hat Product Security
