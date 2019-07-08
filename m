@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7254" "Wednesday" "23" "October" "2019" "14:41:17" "+0200" "Daniel Beck" "ml@beckweb.net" "<97B9396D-7627-4EC0-9D42-C84A908DED08@beckweb.net>" "186" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "10" "2019102312:41:17" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Oct 23  186/7254  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["928" "Monday" "8" "July" "2019" "16:59:35" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1907081652370.24283@xnncv>" "25" "[oss-security] CVE-2019-13313, CVE-2019-13314: password disclosure via command line arguments" nil nil nil "7" "2019070811:29:35" "[oss-security] CVE-2019-13313, CVE-2019-13314: password disclosure via command line arguments" (number mark "U       ppandit@redh Jul  8   25/928   " thread-indent "\"[oss-security] CVE-2019-13313, CVE-2019-13314: password disclosure via command line arguments\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-13313, CVE-2019-13314: password disclosure via command line arguments" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16263 invoked by uid 550); 23 Oct 2019 12:41:29 -0000
+Received: (qmail 5539 invoked by uid 550); 8 Jul 2019 11:29:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,203 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16244 invoked from network); 23 Oct 2019 12:41:29 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Message-Id: <97B9396D-7627-4EC0-9D42-C84A908DED08@beckweb.net>
-Date: Wed, 23 Oct 2019 14:41:17 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.11)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1571834489;454763b0;
-X-HE-SMSGID: 1iNFwz-0007yC-IB
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Received: (qmail 5518 invoked from network); 8 Jul 2019 11:29:52 -0000
+Date: Mon, 8 Jul 2019 16:59:35 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+cc: Fabiano Fidencio <ffidenci@redhat.com>
+Message-ID: <nycvar.YSQ.7.76.1907081652370.24283@xnncv>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="-1463811583-790780837-1562585380=:24283"
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Mon, 08 Jul 2019 11:29:41 +0000 (UTC)
+Subject: [oss-security] CVE-2019-13313, CVE-2019-13314: password disclosure via command line
+ arguments
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+---1463811583-790780837-1562585380=:24283
+Content-Type: text/plain; format=flowed; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
-* Bitbucket OAuth Plugin 0.10
-* Dynatrace Application Monitoring Plugin 2.1.4
-* Mattermost Notification Plugin 2.7.1
-* Zulip Plugin 1.1.1
+   Hello,
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+CVE-2019-13313
+   Libosinfo: osinfo-install-script option leaks password via command line 
+argument. 'osinfo-install-script' is used to generate a script for automated 
+guest installations. It accepts user and admin passwords via command line 
+arguments, thus leaking them via process listing.
 
-* 360 FireLine Plugin
-* build-metrics Plugin
-* Deploy WebLogic Plugin
-* Dynatrace Application Monitoring Plugin
-* ElasticBox Jenkins Kubernetes CI/CD Plugin
-* Global Post Script Plugin
-* Libvirt Slaves Plugin
-* Sonar Gerrit Plugin
+CVE-2019-13314
+   virt-bootstrap: allows local users to discover root password via process 
+listing virt-bootstrap 1.1.0 allows local users to discover a root password 
+via process listing, because it's passed as command line parameter via 
+--root-password option.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-10-23/
+These issues were reported by Fabiano Fidêncio of Red Hat Inc.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1628 / CVE-2019-10459
-Mattermost allows the definition of incoming (from the perspective of the
-service) webhook URLs. These contain what is effectively a secret token as
-part of the URL.
-
-Mattermost Notification Plugin stored these webhook URLs as part of its
-global configuration file jenkins.plugins.mattermost.MattermostNotifier.xml
-and job config.xml files on the Jenkins master. These URLs could be viewed
-by users with Extended Read permission (in the case of job config.xml files)
-or access to the master file system.
-
-
-SECURITY-1546 / CVE-2019-10460
-Bitbucket OAuth Plugin stored a credential unencrypted in the global
-config.xml configuration file on the Jenkins master. This credential could
-be viewed by users with access to the master file system.
-
-Bitbucket OAuth Plugin now stores this credential encrypted.
-
-
-SECURITY-1621 / CVE-2019-10476
-Zulip Plugin stored a credential unencrypted in its global configuration
-file jenkins.plugins.zulip.ZulipNotifier.xml, as well as in the legacy
-configuration file hudson.plugins.humbug.HumbugNotifier.xml on the Jenkins
-master. This credential could be viewed by users with access to the master
-file system.
-
-
-SECURITY-1477 / CVE-2019-10461
-Dynatrace Application Monitoring Plugin stored a credential unencrypted in
-its global configuration file
-com.dynatrace.jenkins.dashboard.TAGlobalConfiguration.xml on the Jenkins
-master. This credential could be viewed by users with access to the master
-file system.
-
-
-SECURITY-1483 (1) / CVE-2019-10462
-Dynatrace Application Monitoring Plugin did not require POST requests on a
-method implementing form validation. This CSRF vulnerability allowed
-attackers to initiate a connection test to an attacker-specified server
-with attacker-specified username and password.
-
-
-SECURITY-1483 (2) / CVE-2019-10463
-Dynatrace Application Monitoring Plugin does not perform permission checks
-on a method implementing form validation. This allows users with
-Overall/Read access to Jenkins to initiate a connection test to an
-attacker-specified server with attacker-specified username and password.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-820 / CVE-2019-10464 (CSRF), CVE-2019-10465 (permission check)
-Deploy WebLogic Plugin does not perform permission checks on a method
-implementing form validation. This allows users with Overall/Read access to
-Jenkins to send an HTTP HEAD request to a user-specified URL, or confirm
-the existence of any file or directory on the Jenkins master.
-
-Additionally, the form validation method does not require POST requests,
-resulting in a CSRF vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-822 / CVE-2019-10466
-360 FireLine Plugin accepts XML for part of its configuration. It does not
-configure the XML parser to prevent XML external entity (XXE) attacks.
-
-A form validation method that accepts XML does not perform permission
-checks. This allows users with Overall/Read permission to have Jenkins
-parse a crafted XML file that uses external entities for extraction of
-secrets from the Jenkins agent, server-side request forgery, or
-denial-of-service attacks.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1003 / CVE-2019-10467
-Sonar Gerrit Plugin stores a credential unencrypted in job config.xml files
-on the Jenkins master if the 'Override Credentials' option is used. This
-credential can be viewed by users with Extended Read permission or access
-to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1005 (1) / CVE-2019-10468 (CSRF), CVE-2019-10469 (permission check)
-ElasticBox Jenkins Kubernetes CI/CD Plugin does not perform permission
-checks on a method implementing form validation. This allows users with
-Overall/Read access to Jenkins to connect to an attacker-specified URL
-using attacker-specified credentials IDs obtained through another method,
-capturing credentials stored in Jenkins.
-
-Additionally, the form validation method does not require POST requests,
-resulting in a CSRF vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1005 (2) / CVE-2019-10470
-ElasticBox Jenkins Kubernetes CI/CD Plugin provides a list of applicable
-credential IDs to allow users configuring the plugin to select the one to
-use.
-
-This functionality does not correctly check permissions, allowing any user
-with Overall/Read permission to get a list of valid credentials IDs. Those
-can be used as part of an attack to capture the credentials using another
-vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1014 (1) / CVE-2019-10471 (CSRF), CVE-2019-10472 (permission check)
-Libvirt Slaves Plugin does not perform permission checks on a method
-implementing form validation. This allows users with Overall/Read access to
-Jenkins to connect to an attacker-specified SSH server using
-attacker-specified credentials IDs obtained through another method,
-capturing credentials stored in Jenkins.
-
-Additionally, the form validation method does not require POST requests,
-resulting in a CSRF vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1014 (2) / CVE-2019-10473
-Libvirt Slaves Plugin provides a list of applicable credential IDs to allow
-users configuring the plugin to select the one to use.
-
-This functionality does not correctly check permissions, allowing any user
-with Overall/Read permission to get a list of valid credentials IDs. Those
-can be used as part of an attack to capture the credentials using another
-vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1073 / CVE-2019-10474
-Global Post Script Plugin does not perform permission checks on a method
-implementing form validation. This allows users with Overall/Read
-permission to list the files contained in $JENKINS_HOME/global-post-script
-that can be used by the plugin.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1490 / CVE-2019-10475
-build-metrics Plugin does not properly escape the label query parameter,
-resulting in a reflected cross-site scripting vulnerability.
-
-As of publication of this advisory, there is no fix.
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+---1463811583-790780837-1562585380=:24283--
