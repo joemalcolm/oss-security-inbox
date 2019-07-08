@@ -1,28 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/7
-Message-ID: <alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>
-Date: Mon, 24 Jun 2019 11:59:43 -0400 (EDT)
-From: "Stuart D. Gathman" <stuart@...hman.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/08/4
+Message-ID: <20190708125137.GA26895@openwall.com>
+Date: Mon, 8 Jul 2019 14:51:37 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 24 Jun 2019, Bob Friesenhahn wrote:
+On Sat, Jul 06, 2019 at 06:29:36PM -0400, Sasha Levin wrote:
+> On Sat, Jul 06, 2019 at 09:37:37PM +0200, Solar Designer wrote:
+> >On Fri, Jun 28, 2019 at 01:08:12PM -0400, Sasha Levin wrote:
+> >>Can I suggest that we fork the discussion around security-bugs.rst to
+> >>LKML? I can suggest an initial patch to address your comments here but I
+> >>think that this is better handled on LKML.
+> >
+> >Yes, please.
+> 
+> Sure, give me a day or two to get it out. I'll cross-post
+> LKML/ksummit-discuss/oss-security
 
-> Most oss-fuzz issue detections are not CVE worthy.  For example, a one-byte 
-> read "heap overflow" is not likely to cause any actual harm but oss-fuzz 
-> would classify it as "heap overflow".
+Please just take this to LKML, without CC to oss-security.  We can
+summarize the changes for oss-security separately.  I don't know about
+relevance to ksummit-discuss.
 
-Nevertheless, it is a bug.  Fuzzers are amazing.  Going forward, the
-best plan is for more projects to include fuzzing as part of the
-build process testing.
+> as I think it's one of those times it actually makes sense.
 
-Question: is fuzzing useful for languages like Java/python?  Obviously,
-you eventually reach a native code module in both cases, but fuzzing 
-the entire virtual machine is cumbersome.  Maybe native code libraries
-for "safe" languages should include fuzzing as part of testing.
+This might or might not be an exception, but in general CC'ing a thread
+to LKML and oss-security is problematic and is specifically discouraged
+in oss-security content guidelines:
 
--- 
- 	      Stuart D. Gathman <stuart@...hman.org>
-"Confutatis maledictis, flamis acribus addictis" - background song for
-a Microsoft sponsored "Where do you want to go from here?" commercial.
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+
+"Please don't cross-post messages to oss-security and other mailing
+lists at once, especially not to high-volume lists such as LKML and
+netdev, as this tends to result in threads that wander partially or
+fully off-topic (e.g., Linux kernel coding style detail may end up being
+discussed in comments to a patch posted to LKML, but it would be
+off-topic for oss-security).  If you feel that something needs to be
+posted to oss-security and to another list, please make separate
+postings.  You may mention the other posting(s) in your oss-security
+posting, and even link to other lists' archives."
+
+> >More importantly, maybe we shouldn't list "Microsoft" as a member of
+> >linux-distros.  Microsoft is so much more than the recent Linux-based
+> >products and services.  We similarly list "Amazon Linux AMI" rather than
+> >"Amazon", and "Chrome OS" rather than "Google" (and we had separately
+> >listed "Android", which has since unsubscribed), and "Ubuntu" rather
+> >than "Canonical".  OTOH, we were not as careful to list proper products,
+> >etc. for some others such as "Oracle".
+> >
+> >If we list "Microsoft", this might be especially confusing since issues
+> >being reported might also be relevant to Windows.  The reporters need to
+> >know they're not reaching Windows security team unless they specifically
+> >authorize that.
+> >
+> >Any suggestions on the above?
+> 
+> Yes, this is tricky. Maybe "Microsoft Linux Systems Group"? Thats our
+> group name within Microsoft. I guess that we can also add a short wiki
+> page with references to the products/distros we support as well as a
+> clarification that this has nothing to do with Windows and list MSRC's
+> contact information.
+
+I think listing "Microsoft Linux Systems Group" is enough to avoid the
+confusion.  I support Moritz's request for you to add to our existing
+wiki pages with vendors' security contact information, and you can list
+the pertaining products/distros nearby.
+
+Alexander
