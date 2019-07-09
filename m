@@ -1,62 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/11
-Message-ID: <CALzBtjLafJkFNKBEw4iH8D3fc_eMKV5bqt1F4n_7Edf=Lj9NMw@mail.gmail.com>
-Date: Tue, 8 Jan 2019 19:34:24 +0400
-From: Entropy Moe <3ntr0py1337@...il.com>
-To: Greg KH <gregkh@...uxfoundation.org>
-Cc: security@...nel.org, oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel 4.20(21) deadlock vulnerability.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/09/2
+Message-ID: <20190709163307.158714a5@computer>
+Date: Tue, 9 Jul 2019 16:33:07 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Data exfiltration with FPM servers (HHVM and rarely PHP)
 Content-Type: text/plain; charset=utf-8
 
-Hello Greg,
-thank you for reply,
-I have have them tested on the new kernel 5
+FPM daemons may lead to file exfiltration. This primarily affects HHVM.
 
-On Tue, Jan 8, 2019 at 7:26 PM Greg KH <gregkh@...uxfoundation.org> wrote:
+FPM is a method to execute PHP CGI scripts in a more performant way.
+The FPM daemon provides either a socket or TCP port (default 9000) that
+can be used with the FastCGI protocol, a client can request the
+execution of a PHP script.
 
-> On Tue, Jan 08, 2019 at 07:08:14PM +0400, Entropy Moe wrote:
-> > Hello,
-> > I wanted to let you know that there seem to be a deadlock vulnerability
-> on
-> > the linux kernel 4.20.
-> > I am attaching the result report from syzkaller which also got the c code
-> > for replication.
-> >
-> > thank you,
->
-> > Syzkaller hit 'possible deadlock in console_unlock' bug.
-> >
-> > RBP: 00000000006cb018 R08: 0000000000000001 R09: 0000000000000031
-> > R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000004
-> > R13: ffffffffffffffff R14: 0000000000000000 R15: 0000000000000000
-> >
-> > ======================================================
-> > WARNING: possible circular locking dependency detected
-> > 4.20.0-rc7+ #8 Not tainted
-> > ------------------------------------------------------
-> > syz-executor579/2028 is trying to acquire lock:
-> > 00000000e478796d (console_owner){-.-.}, at: log_next
-> kernel/printk/printk.c:489 [inline]
-> > 00000000e478796d (console_owner){-.-.}, at: console_unlock+0x33d/0xd30
-> kernel/printk/printk.c:2401
-> >
-> > but task is already holding lock:
-> > 0000000030388923 (&(&port->lock)->rlock){-.-.}, at: pty_write+0xcd/0x1d0
-> drivers/tty/pty.c:120
-> >
-> > which lock already depends on the new lock.
->
->
-> Are you sure this is a real problem?  Can you deadlock this when
-> running?
->
-> Also, try 5.0-rc1, a number of tty core changes went in there to try to
-> resolve these types of issues.  They have not been backported to 4.20.y
-> yet as they need to get more testing.  If you could run your same test
-> suite on that kernel, it would be great to find out your results.
->
-> thanks,
->
-> greg k-h
->
+FPM is supported both by upstream PHP and HHVM. HHVM was originally a
+reimplementation of PHP by Facebook, though in current versions it no
+longer supports PHP syntax, instead it supports the HACK programming
+language. THis distinction is relevant for this vulnerability, more
+below.
 
+
+When an FPM daemon is running on the public IP this may be used to
+exfiltrate files. The reason is how PHP scripts work. PHP is usually
+embedded within HTML files in <?php ?> tags, where the rest of the file
+is just passed through. This has the consequence that every file that
+doesn't have any php tags is still in a sense a valid PHP script that
+does nothing else than outputting itself.
+
+Thus one can connect to an open FPM port and request the execution of
+e.g. /etc/passwd or any other file that the attacker is interested in.
+This can be manually tested with the cgi-fcgi command line tool
+(available in the fcgi package in many distributions):
+
+SCRIPT_FILENAME=/etc/passwd SCRIPT_NAME=/etc/passwd REQUEST_METHOD=GET
+cgi-fcgi -bind -connect [targethost]:9000
+
+In HHVM 3.x this directly works in default settings. This works e.g. in
+a standard ubuntu system when using Ubuntu's own HHVM packages and no
+configuration changes.
+
+In HHVM 4.x the PHP syntax is no longer supported. I don't know the
+exact circumstances, but in my tests I was still able to exfiltrate some
+files, but not others, I guess it somehow depends on how the file is
+interpreted considering the HACK syntax.
+
+In response to my report facebook changed the default setting to not
+expose fpm on the public IP.
+
+In upstream PHP the vulnerability is mitigated by two facts. First of
+all in default settings the FPM daemon only listens on localhost, so
+unless an admin actively changes the setting or has some unusual
+network settings it is not available through the network.
+Second PHP's FPM has an option "security.limit_extensions" that
+restricts the file extensions that will be recognized as valid scripts.
+It's set to .php and .phar by default.
+This effectively means no arbitrary files can be exfiltrated unless
+this setting has been changed.
+Exposing FPM to the public may still pose a risk, however only if an
+attacker can gain knowledge of a path of a PHP file that should not be
+accessible publicly. (There may e.g. be a non-public PHP script that is
+protected via .htaccess.)
+However given the circumstances I find it very unlikely to be a big
+problem for PHP and in any case would consider this a configuration
+mistake and not a PHP vulnerability.
+
+In any case: If you have an FPM daemon running on the public interface
+on port 9000 this is almost certainly not what you want and may be a
+security risk.
+
+
+I've published something in German about this vuln here:
+https://www.golem.de/news/fpm-sicherheitsluecke-daten-exfiltrieren-mit-facebooks-hhvm-1907-142418.html
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
