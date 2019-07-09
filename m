@@ -1,35 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/02/2
-Message-ID: <1554168684.JAZHRVAC@httpd.apache.org>
-Date: Mon, 01 Apr 2019 20:31:24 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-0197: mod_http2, possible crash on late upgrade
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/09/3
+Message-ID: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
+Date: Tue, 9 Jul 2019 13:58:37 +0000
+From: Malte Kraus <malte.kraus@...e.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
+With Wayland, it's no longer supported to run graphical applications as
+root. The big desktop environments want to allow users to edit and
+manage files through graphical applications (mostly text editors and
+file managers). They have therefore implemented D-Bus services to
+perform file I/O as root, authenticated through polkit.
 
-CVE-2019-0197: mod_http2, possible crash on late upgrade
+We have reviewed various of these:
+     a) a specialized D-Bus service for ktexteditor, the framework
+        component powering the Kate editor
+     b) gvfs-admin, which allows all gtk-enabled applications to access
+        files as root
+     c) the kauth helper for ioslave, which allows KDE applications to
+        access files as root
 
-Severity: Low
+As privileged file I/O is notoriously hard to get right, we found some
+concrete security issues in them [1] [2], which the projects were glad
+to fix. However, we believe there also some deeper design design
+choices that also merit further discussion.
 
-Vendor: The Apache Software Foundation
+None of the solutions actually provided the user with the accessed path
+or file operation in the polkit auth prompt. Users are confronted with
+an unspecific request for privileges that they can only allow or deny
+without knowing what exactly they are allowing. (This is unfortunately
+a common theme, e.g. on KDE the framework is still missing support for
+parameterizing polkit prompts.)
 
-Versions Affected:
-httpd 2.4.34 to 2.4.38
+There's also a conceptual risk with the generic backends for file I/O:
+unwitting applications that were written expecting to be run from an
+unprivileged context can end up performing privileged file I/O
+operations when supplied with such a URI/path. As a result, even when
+the framework correctly implements all API guarantees for these
+backends, applications are likely to be too careless with their
+framework calls, resulting in situations where e.g. symlink attacks can
+be performed. Of course due to the authentication requirements, user
+interaction is involved in any such situation.
 
-Description:
-When HTTP/2 was enabled for a http: host or H2Upgrade was enabled for h2
-on a https: host, an Upgrade request from http/1.1 to http/2 that was
-not the first request on a connection could lead to a misconfiguration
-and crash. Servers that never enabled the h2 protocol or only enabled it
-for https: and did not set"H2Upgrade on" are unaffected by this issue.
+Another matter with gvfs-admin for example is what the desired
+behaviour is when files are copied or moved between the 'normal' file
+system and the virtual privileged file system - these operations are no
+longer symmetric like they are traditionally: A rename(2) call is
+either performed as root or not. But with a move of a file from file://
+(unprivileged) to admin:// (privileged), there are two different
+privilege levels involved. Since there is no equivalent to this
+situation in the UNIX file system semantics, it is unclear who should
+own the resulting file and what permissions it should have. Should file
+ownership be preserved? Should the file be owned by root? If an
+existing file is replaced, maybe the ownership and permissions of that
+file should be preserved? How does a setgid bit on a directory affect
+all this? What about higher-level flags in the framework like
+G_FILE_COPY_ALL_METADATA and G_FILE_COPY_TARGET_DEFAULT_PERMS?
 
-Mitigation:
-All httpd users deploying mod_http2 should upgrade to 2.4.39 or later.
+It's all quite underspecified, and we have the impression these
+questions weren't fully thought through before the feature shipped.
+Similar questions arise with the two KDE solutions, and some of the
+bugs probably arose exactly because these questions are not answered
+yet.
 
-Credit:
-The issue was discovered by Stefan Eissing, greenbytes.de.
 
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+Best regards
+Malte Kraus, Matthias Gerstner
 
+
+[1] CVE-2018-10361 https://seclists.org/oss-sec/2018/q2/65
+[2] CVE-2019-12447, CVE-2019-12448, CVE-2019-12449
+
+
+-- 
+Malte Kraus <malte.kraus@...e.com>
+Security Engineer
+PGP Key: 8AFC 3C58 6880 2DDD 4792  C3C2 FDBD 2984 D4C3 C2F0
+SUSE Linux GmbH, GF: Felix Imendörffer, Mary Higgins, Sri Rasiah, HRB
+21284 (AG Nürnberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
