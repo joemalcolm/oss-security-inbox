@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/14
-Message-ID: <CAGUWgD-Dhg-ORKcT5=rV5Dpz=6J0DAaOOHA5SaZ=HMPfvuZBmw@mail.gmail.com>
-Date: Fri, 25 Oct 2019 18:37:44 +0300
-From: Georgi Guninski <gguninski@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Formal verification of open source software
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/10/2
+Message-ID: <20190710175538.266b7a89@jabberwock.cb.piermont.com>
+Date: Wed, 10 Jul 2019 17:55:38 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Malte Kraus <malte.kraus@...e.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 25, 2019 at 3:17 PM Hanno Böck <hanno@...eck.de> wrote:
->
->
-> There's been a lot of work in the crypto community in this direction.
-> Most of it is code under OSS licenses:
->
+On Tue, 9 Jul 2019 11:30:36 -0400 "Perry E. Metzger"
+<perry@...rmont.com> wrote:
+> On Tue, 9 Jul 2019 13:58:37 +0000 Malte Kraus <malte.kraus@...e.com>
+> wrote:
+> > With Wayland, it's no longer supported to run graphical
+> > applications as root.  
+> 
+> Can you explain (or point to) a description of why this is a
+> problem? (It seems like preventing people from editing
+> administrative files as root and requiring that they use a dbus
+> based file i/o system is likely to be a source of bugs for years to
+> come...)
 
-Thanks for the links.
+FYI, I've googled around and been unable to easily find any mention
+of this problem or a description of why it might be an issue. A link
+to something talking about it would still be appreciated.
 
-Are there known bugs in formally verified software or hardware?
-
-Is there any software which comes with monetary warranty?
-
-Are loops sizes in C code serious problem for verification?
-(something like infinity in math. IIRC Coq have problem with this).
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
