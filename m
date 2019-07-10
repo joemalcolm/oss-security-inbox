@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1127" "Wednesday" "13" "February" "2019" "02:41:48" "-0800" "EJ Campbell" "ejc3@verizonmedia.com" "<CABOq=i38wC9q1hvydmhuYK7bPCDYbUjpTHHPRxD7gGMFNXmEPQ@mail.gmail.com>" "34" "Re: [oss-security] CVE-2019-5736: runc container breakout exploit code" "^Cc:" nil nil "2" "2019021310:41:48" "[oss-security] CVE-2019-5736: runc container breakout exploit code" (number mark "        ejc3@verizon Feb 13   34/1127  " thread-indent "\"Re: [oss-security] CVE-2019-5736: runc container breakout exploit code\"\n") "<20190213095743.ek3x42ok7bengua5@yavin>" ("<20190213093151.znxnjuqtwbdlwnom@yavin>" "<CABOq=i3PAbRT5GpJZiAHb-BDpQkx0n0k=M8JeupjNKUK+Wi78A@mail.gmail.com>" "<20190213095648.ibfskgddfa4zgdlo@yavin>" "<20190213095743.ek3x42ok7bengua5@yavin>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["722" "Wednesday" "10" "July" "2019" "14:25:40" "-0700" "Jason Gustafson" "jason@confluent.io" "<CAJDuW=AhXUDhK4Xo-rZbUT2JhaYkaJDx2-f0N5R-E+KMWjmSpQ@mail.gmail.com>" "27" "[oss-security] CVE-2018-17196: Potential to bypass transaction/idempotent ACL checks in Apache Kafka" nil nil nil "7" "2019071021:25:40" "[oss-security] CVE-2018-17196: Potential to bypass transaction/idempotent ACL checks in Apache Kafka" (number mark "U       jason@conflu Jul 10   27/722   " thread-indent "\"[oss-security] CVE-2018-17196: Potential to bypass transaction/idempotent ACL checks in Apache Kafka\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2018-17196: Potential to bypass transaction/idempotent ACL checks in Apache Kafka" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14122 invoked by uid 550); 13 Feb 2019 11:13:45 -0000
+Received: (qmail 5988 invoked by uid 550); 11 Jul 2019 10:03:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3894 invoked from network); 13 Feb 2019 10:42:11 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 13920 invoked from network); 10 Jul 2019 21:26:03 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verizonmedia.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RzdrmxVCCfqlKH12frnGnwhnh4Uerpoaf6ciE8A+C7E=;
-        b=DsM4QVp+n28ohfGBUja3gbKd4XpV+ze/AQjRpGaRQ+0NygccaiIKlv7d69lst4QoDR
-         XYvjrIQIz+BkDJRpBubh+JSJXJrGp7s2Il3abmXJDglhBUjbM7OeC80O1QJzzzkjnT3x
-         VcCuUAEtm45x4AR0xu+qCoxuUvYKSfqjXzPu0PgCwYtFWgs6UYr84+LG/902fZ9YJUWx
-         d/e5LXx5YvcJXDvMmQan3P4MUuOHoEUZblhI2nTJCzjjRksmjW5Ix1F187RiuE25rebG
-         ywYdurNphMYwy7X6GGlaEzSj+i/LiPxSIiKkV5P0BazUmQzfn9ds6VcGVRMNp9GXm3gd
-         xpkQ==
+        d=confluent.io; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=8nohZ4rLXZt9bezXZ/nqYATyyXM8V9wTU+VL+BTqi3k=;
+        b=HuEso4fZbFzLjLrn1TPuFKgoLmOu6j1+9o8JtfBOBkca+mE33AYg/9Vk+CUem5qLiz
+         tjIm9+e/57f1xPZEREB4UYTIor45cQBbJ8J9VW/XxleVCEoge7JbZ8JXkmxGO5RFOdSw
+         grD1xj4b96MB/rhutV+pwzQ+5Cef9ARxeu/pk80uLP8+mCcn5WJeoycQWWpksB1GGQDy
+         Tgr/2Pe/emU7gywovwJ7Ewh8s2P33viLfBdfE+Dyg7yOSVXIrPdSnrb40f7GYp9aqXAE
+         yQF5giqTUpln/3dHd0bxFkJ/a1uBAcOoXcAewqGxQYcaSWJN/dxfKOoKoMfuJz0sW4IK
+         qt6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RzdrmxVCCfqlKH12frnGnwhnh4Uerpoaf6ciE8A+C7E=;
-        b=t/n3EhPRfxOpwlj6BT8sMpIN8+J1VhH4e8HDt57jX+U1naE2Bkvt9dkyQg0TF8LZsw
-         tt9mHkaXp4/EnkqoXZgFmkrm3r62i4fSizSFd+lBvEBO8Sd24wnFvIdfNyvVsR3YefrY
-         0TW9vV7jIa7w7SGbxy8cRr046oiovpNcRkHbS2oxUxm5ZBSdMggLPsrdL9/YgBBE9k4U
-         zCqCXm40HY2uBrjE2rgWN9rYSmQGbVk5xPUgEJRN7gKdw9+LaQMJAPbiMGUSP5znS+rj
-         seCWHIqKbt5HtYISsxwsy5ZRAskA12QkWlDwjBSPraJD+iGYjpRto5eBqHYIyY2iNH23
-         hmVQ==
-X-Gm-Message-State: AHQUAuYCBlMT4quUtI6eFk1YGEl3YCmz7J81eg7FJ28blAMXaH3IhY94
-	JZDTULeOA1+uAsN4FiZz5SEMrye7HBsY7fLkeyPEpA==
-X-Google-Smtp-Source: AHgI3IbJ8aTAerHpuxmwoKkzSTRrtZbVhREPH1yGrsewHMxJvQ3akP2UgPaaeYloyzHakfUB31p0G3KkA3WDcUWX6wk=
-X-Received: by 2002:aca:e5c9:: with SMTP id c192mr297455oih.118.1550054519688;
- Wed, 13 Feb 2019 02:41:59 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=8nohZ4rLXZt9bezXZ/nqYATyyXM8V9wTU+VL+BTqi3k=;
+        b=WHLxo1Co/p91juK/aaMgTIJrilZEAKzIps+Xntz0wgTuTMD7vQ7HbYosMLMlgBsj0L
+         ey3AHssQqMqL49Ym+KZr6Y5Wil44xiqwCg/HjGijMdu6DF/DauFOVQznsIko8PEdBfuG
+         +tVDcM6aFhvshlEQHEnLH8ZnwUTxpwLGPMJUHjHXvMWV0jsjfw+uLDKb6GsZ31g4KTHQ
+         tKEoDTYxJlVyfHQ/AudzyzZoIsovCjSRiHIFz/QZWgfWJYva9GWzWCqcIVrzYabxCCUM
+         enxKbHMgmBxFTTbaulyECR/ta3I/4TbuhisqG9/JZ7P/zMJIf5IGSnDG0TlQ560aGGgF
+         gleg==
+X-Gm-Message-State: APjAAAVIBmiuyDAHqT94dHHv5wM7AOuLO7QEMviyTJs839l4nS+d13vP
+	7zk/f4yqX1jZiZeLIsbVqG4+e4hV52yTFkFqhSud/w==
+X-Google-Smtp-Source: APXvYqwp/5zerUzmJJ+LNLH2j+owf7MxBDTCm/QPPInTl+LN57xU+N4jbr8jdjiz4QPslnVW52Utrr2Xj8KJ/SemqjY=
+X-Received: by 2002:aca:55d7:: with SMTP id j206mr285947oib.146.1562793951346;
+ Wed, 10 Jul 2019 14:25:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190213093151.znxnjuqtwbdlwnom@yavin> <CABOq=i3PAbRT5GpJZiAHb-BDpQkx0n0k=M8JeupjNKUK+Wi78A@mail.gmail.com>
- <20190213095648.ibfskgddfa4zgdlo@yavin> <20190213095743.ek3x42ok7bengua5@yavin>
-In-Reply-To: <20190213095743.ek3x42ok7bengua5@yavin>
-Message-ID: <CABOq=i38wC9q1hvydmhuYK7bPCDYbUjpTHHPRxD7gGMFNXmEPQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000077dec0581c4314c"
-Cc: oss-security@lists.openwall.com
-Date: Wed, 13 Feb 2019 02:41:48 -0800
-From: EJ Campbell <ejc3@verizonmedia.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2019-5736: runc container breakout exploit code
-To: Aleksa Sarai <cyphar@cyphar.com>
+From: Jason Gustafson <jason@confluent.io>
+Date: Wed, 10 Jul 2019 14:25:40 -0700
+Message-ID: <CAJDuW=AhXUDhK4Xo-rZbUT2JhaYkaJDx2-f0N5R-E+KMWjmSpQ@mail.gmail.com>
+To: security@kafka.apache.org, oss-security@lists.openwall.com, 
+	announce@apache.org, Users <users@kafka.apache.org>, dev <dev@kafka.apache.org>, 
+	kafka-clients <kafka-clients@googlegroups.com>
+Content-Type: multipart/alternative; boundary="00000000000053dfe0058d5a52e9"
+Subject: [oss-security] CVE-2018-17196: Potential to bypass transaction/idempotent ACL checks
+ in Apache Kafka
 
---000000000000077dec0581c4314c
+--00000000000053dfe0058d5a52e9
 Content-Type: text/plain; charset="UTF-8"
 
-That should have been +i, sorry. Thank you for your quick response.
+CVE-2018-17196: Potential to bypass transaction/idempotent ACL checks in
+Apache Kafka
 
-EJ
+Severity: Moderate
 
-On Wed, Feb 13, 2019 at 1:58 AM Aleksa Sarai <cyphar@cyphar.com> wrote:
+Vendor: The Apache Software Foundation
 
-> On 2019-02-13, Aleksa Sarai <cyphar@cyphar.com> wrote:
-> > On 2019-02-13, EJ Campbell <ejc3@verizonmedia.com> wrote:
-> > > While fixing docker / runc is clearly the right fix, would using
-> chattr -i
-> > > on runc be a quick mitigation for the issue? I believe that will
-> prevent
-> > > the file from being overwritten by the exploit and Etienne Stalmans
-> > > verified that it helped:
-> > >  https://twitter.com/_staaldraad/status/1095354945073754112
-> >
-> > The privileged user in the container could just un-set the immutable
-> > bit using "/proc/self/fd/..." and then open it for writing. A read-only
-> > filesystem would work much better.
->
-> Sorry, I forgot that CAP_LINUX_IMMUTABLE is dropped by default in
-> Docker. Yes that mitigation would also work.
->
-> --
-> Aleksa Sarai
-> Senior Software Engineer (Containers)
-> SUSE Linux GmbH
-> <https://www.cyphar.com/>
->
+Versions Affected: Apache Kafka 0.11.0.0 - 2.1.0
 
---000000000000077dec0581c4314c--
+Description: It is possible to manually craft a Produce request which
+bypasses transaction/idempotent ACL validation. Only authenticated clients
+with Write permission on the respective topics are able to exploit this
+vulnerability.
+
+Mitigation: Apache Kafka users should upgrade to 2.1.1 or later where this
+vulnerability has been fixed.
+
+Acknowledgements: This issue was reported by Jason Gustafson
+
+
+Regards,
+Jason
+
+--00000000000053dfe0058d5a52e9--
