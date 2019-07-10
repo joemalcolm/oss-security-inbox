@@ -1,64 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/12/3
-Message-ID: <2160454.BXy79Bclyo@x2>
-Date: Tue, 12 Feb 2019 10:03:38 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Florian Weimer <fweimer@...hat.com>, Aleksa Sarai <cyphar@...har.com>, dev@...ncontainers.org, Christian Brauner <christian.brauner@...ntu.com>
-Subject: Re: CVE-2019-5736: runc container breakout (all versions)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/1
+Message-ID: <CAJDuW=AhXUDhK4Xo-rZbUT2JhaYkaJDx2-f0N5R-E+KMWjmSpQ@mail.gmail.com>
+Date: Wed, 10 Jul 2019 14:25:40 -0700
+From: Jason Gustafson <jason@...fluent.io>
+To: security@...ka.apache.org, oss-security@...ts.openwall.com,  announce@...che.org, Users <users@...ka.apache.org>, dev <dev@...ka.apache.org>,  kafka-clients <kafka-clients@...glegroups.com>
+Subject: CVE-2018-17196: Potential to bypass transaction/idempotent ACL checks in Apache Kafka
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday, February 12, 2019 8:55:18 AM EST Florian Weimer wrote:
-> * Aleksa Sarai:
-> > +	memfd = memfd_create(MEMFD_COMMENT, MFD_CLOEXEC|MFD_ALLOW_SEALING);
-> > +	if (memfd < 0)
-> > +		goto err_binfd;
-> 
-> Is it really necessary to use a memfd_create here?  Do you really need
-> sealing?  It's a bit odd to add a new system call dependency in a
-> security update.
+CVE-2018-17196: Potential to bypass transaction/idempotent ACL checks in
+Apache Kafka
 
-That's along the lines of what I was thinking also. This looks like more of a 
-workaround than a root cause fix. Without seeing the exploit or a full 
-discussion of the theory of operation, we really can't pinpoint where the 
-issue is. Was it because of CAP_DAC_OVERRIDE? Is there a missing permission 
-check crossing a trust boundary? Was excessive permissions requested in a 
-syscall? Given the patch, we can sort of see what the issue is but not the 
-exact issue.
+Severity: Moderate
 
-> The ability fexecve a memfd descriptor is also rather
-> odd.  I wouldn't have expected execute permissions on memfd descriptors,
-> so this sounds like a kernel bug (which now can't be fixed).
+Vendor: The Apache Software Foundation
 
-I was thinking the same thing last week but for a whole different reason. Bash 
-has tcp/ip. With it, you can create an in memory function, _wget. Using this, 
-you can pull a python script off of the internet and pipe it into stdin of 
-python. The python script can then pull an ELF shared object across the 
-internet and stuff it into memory using memfd_create and then execute the 
-shared object constructor using ctypes.CDLL() which points to the memfd. It's 
-really quite slick. Using this technique, you can do everything in memory 
-without ever touching disk.
+Versions Affected: Apache Kafka 0.11.0.0 - 2.1.0
 
-So, my thoughts were...why is this even permitted? Why should computer 
-languages execute anything piped to stdin? Should execution of memory only 
-objects be disallowed? Should the kernel have a 0111 umask for anything 
-created by memfd_create? Why doesn't ctypes.CDLL() do a permission check to 
-see if the execute bit is set before loading? Should descriptors that get 
-created by memfd_create go to the fanotify interface for inspection/
-permission? And now with this patch, how do you tell legitimate vs malicious 
-use of memfd's?
+Description: It is possible to manually craft a Produce request which
+bypasses transaction/idempotent ACL validation. Only authenticated clients
+with Write permission on the respective topics are able to exploit this
+vulnerability.
 
--Steve
+Mitigation: Apache Kafka users should upgrade to 2.1.1 or later where this
+vulnerability has been fixed.
+
+Acknowledgements: This issue was reported by Jason Gustafson
 
 
-> I saw some other patch with a O_TMPFILE replacement.  Does this really
-> work?  It's possible to create a new name with linkat, so that's not a
-> real win security-wise.  Could you just make a copy, under a different
-> owner, and not care how it is going to be modified?
-> 
-> Thanks,
-> Florian
-
-
-
+Regards,
+Jason
 
