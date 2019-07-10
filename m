@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["717" "Friday" "14" "October" "2016" "16:46:18" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1610141644230.13950@wniryva>" "25" "[oss-security] CVE request Qemu: char: divide by zero error in serial_update_parameters" nil nil nil "10" "2016101411:16:18" "[oss-security] CVE request Qemu: char: divide by zero error in serial_update_parameters" (number mark "U       ppandit@redh Oct 14   25/717   " thread-indent "\"[oss-security] CVE request Qemu: char: divide by zero error in serial_update_parameters\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["517" "Tuesday" "9" "July" "2019" "19:00:36" "-0600" "Joe McManus" "joe.mcmanus@canonical.com" "<CAPsnWaD_9QOiV+513eH=ECkwBo+AWN38N9x7xauKcFyVpvc-Og@mail.gmail.com>" "15" "[oss-security] Contributing Back" "^Date:" nil nil "7" "2019071001:00:36" "[oss-security] Contributing Back" (number mark "        joe.mcmanus@ Jul  9   15/517   " thread-indent "\"[oss-security] Contributing Back\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Contributing Back" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5474 invoked by uid 550); 14 Oct 2016 11:16:34 -0000
+Received: (qmail 29769 invoked by uid 550); 10 Jul 2019 05:59:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5455 invoked from network); 14 Oct 2016 11:16:33 -0000
-Date: Fri, 14 Oct 2016 16:46:18 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Huawei PSIRT <psirt@huawei.com>
-Message-ID: <alpine.LFD.2.20.1610141644230.13950@wniryva>
+Received: (qmail 29853 invoked from network); 10 Jul 2019 01:01:00 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=fS4NjSR+gXPM8c688iiPLJohI5te2QtNmfUHAqeLDsY=;
+        b=N2oJCMKgkREF+l4KAzJtL8mRrWb9+46Gu47kJbliRQugpMnBT8UxNPInW3MUBpNLqs
+         xi9Wpe8O/6YW/nV6AjKnUqHVWWRHyg2+gMzea5roNQ4D3lMt4/4xV66MtwTnzHxvKbIo
+         FprUZcn7vxI6tCrWPJh7LGn4t90ow9vH5pA3N5Z1PLRspob1NhQh1e3U35HLHFVtoHvF
+         ZQXp9RgUn255tgMwsuLdJfx0N51H06tT9vmmm6btKvvzb1pPDf5f84OhCn3JHk002m1x
+         pspvCWLwjF7dmhj84xrWf1Ce+8PYrBcjFhHS7nfegPolwllY9DfD4FPL3GJOlNVOllCZ
+         M5wQ==
+X-Gm-Message-State: APjAAAVpS14g+3KsBlqey7k2Y41hfTwQwYQEUWYC/d3ekA8cBnr2TRku
+	vahBKiSe7tfxIIXtyOWND2gyDDdd7WLh0hWHOTxwrC+tdZbyXSO3+3HMw5x5UmL+zI13mxXNGnJ
+	fg1oUg/5GBYEYzbd25zpuqzc7vfQzDbFwrR4+++xgAgnN4C2uG8KW8XSKU4gxhg==
+X-Received: by 2002:ac2:5094:: with SMTP id f20mr13733651lfm.186.1562720447739;
+        Tue, 09 Jul 2019 18:00:47 -0700 (PDT)
+X-Google-Smtp-Source: APXvYqxwoKC3YZLlNkDmF7r9iJPJMDwxw4xvUX0HfY1yL0QMdhkXBEvPBRTqJWhfALzTtVi1SM0Wr+pJuB74XMpPBQo=
+X-Received: by 2002:ac2:5094:: with SMTP id f20mr13733644lfm.186.1562720447562;
+ Tue, 09 Jul 2019 18:00:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Fri, 14 Oct 2016 11:16:21 +0000 (UTC)
-Subject: [oss-security] CVE request Qemu: char: divide by zero error in
- serial_update_parameters
+Message-ID: <CAPsnWaD_9QOiV+513eH=ECkwBo+AWN38N9x7xauKcFyVpvc-Og@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Tue, 9 Jul 2019 19:00:36 -0600
+From: Joe McManus <joe.mcmanus@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Contributing Back
+To: oss-security@lists.openwall.com
 
-   Hello,
+Hey All - The Ubuntu Security Team would like to sign up for items 3,4
+& 5 from the technical list <
+https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+>:
 
-Quick Emulator(Qemu) built with the 16550A UART emulation support is 
-vulnerable to a divide by zero issue. It could occur while updating serial 
-device parameters in 'serial_update_parameters'.
+3 - Review and/or test the proposed patches and point out potential issues
+  with them [...]
+4 - Check if related issues exist in the same piece of software [...]
+5 - Check if related issues exist in implementations of similar
+  functionality in other software [...]
 
-A privileged guest user could use this flaw to crash the Qemu process instance 
-on the host, resulting in DoS.
+Please let me know how we get started helping out.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02461.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1384909
-
-This issue was reported by Huawei Product Security Incident Response Team 
-(PSIRT), Huawei Inc.
-
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Cheers,
+-Joe
