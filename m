@@ -1,4 +1,9 @@
-Received: (qmail 27891 invoked by uid 550); 11 Apr 2024 13:44:01 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1919" "Thursday" "11" "July" "2019" "18:26:01" "+0200" "Steffen Nurpmeso" "steffen@sdaoden.eu" "<20190711162601.RE3Tr%steffen@sdaoden.eu>" "43" "Re: [oss-security] Privileged File Access from Desktop Applications" "^Cc:" nil nil "7" "2019071116:26:01" "[oss-security] Privileged File Access from Desktop Applications" (number mark "        steffen@sdao Jul 11   43/1919  " thread-indent "\"Re: [oss-security] Privileged File Access from Desktop Applications\"\n") "<20190711114710.09ab5ad9@jabberwock.cb.piermont.com>" ("<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>" "<20190709113036.0f12d057@jabberwock.cb.piermont.com>" "<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>" "<20190711093326.328948dc@jabberwock.cb.piermont.com>" "<de14296ba908c162036a15b1aeda95586ff8ba14.camel@suse.com>" "<20190711114710.09ab5ad9@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil "Re: [oss-security] Privileged File Access from Desktop Applications" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26100 invoked by uid 550); 11 Jul 2019 21:26:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,114 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9349 invoked from network); 11 Apr 2024 09:13:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spwhitton.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1712826769; x=
-	1712913169; bh=XuFkmio5B4kzkblNM4eNxp6uFKhE1gjXdBPpLn9za0g=; b=e
-	euzoDKSRFvQqMBWL4XGZj5DVTUiJaffUHGU4e9UUo5MPsnX6l6/kLe2Hit65Acr9
-	11G66TT79+vjlew6CHcNEdtsDhPQXl5ZNMvbSngvUExDX0VhspGGn+4nhqP8OLMQ
-	cSBgSg9I5zR0iojBZ2eCc/gUqffF/LvZPx82tttzAJEpm+A23pDwSgrLh6w9ufgY
-	bgsQNk0JFH1ILjjZ+Cr74BXzkUXL5HMIV/sFqH8+jgHnMt5xoMQwGvqZmREevEBE
-	U2He1+00p5j2YCTpTD88garHN1KNDUio2ALnixtkh/ZF665HOSJnKdiZ2ApUfWNR
-	KYf10WSsqsiQL8SA93N5g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712826769; x=1712913169; bh=XuFkmio5B4kzkblNM4eNxp6uFKhE
-	1gjXdBPpLn9za0g=; b=DGs7TQoKwXl0EqqinzRqhoAic0yLLzQYG3o/2yeNeIWx
-	c2qu2DbblxccG6Pt8FTrymZKKFtJ4JXVbaEeh1mYKwPnGp4PXGQM1osM+0/matfe
-	59nPU7DInx6x87ft62doePToDFpoWhXUvE1Dln3ivfTW1687FWxahE9pkknZfoxL
-	eNnEdsUJPUD+g3+YqjFh2ehPk/znRe9p9pWIfp1SagY25Ho7naTj1fOJmZXOy84c
-	2sLlocuXpDoNzThlhXOG4uNGbLYcHjdoZMAZXxbNXtzjZO2qk/MlUItQPFl/OU5M
-	YcUyTwqPskEJUtDl53nEYn3bRkBtNqBqYQl1DscgzQ==
-X-ME-Sender: <xms:kKkXZvG8UVRw-dZUK1oduyqsHmXNt0v3sfEal9RDCU4d7Rm6m0oyHA>
-    <xme:kKkXZsUUsMpiC5-3zrb7jz7N5sDpDC2Nc22R1FnKCnkgpnioakojbUvfNaMGOsrk8
-    sCJOKr3O8_DEqtPPA>
-X-ME-Received: <xmr:kKkXZhIunnKdAaRSOsjWum_N79yvn5h5o5xgTo-i7Iu5fUpwNpXTHHQepOl-vMzoqd_26-T5urDL7w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehkedgudefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhephffvvefujghffffkfgggtgesghdttdertdertdenucfhrhhomhepufgvrghn
-    ucghhhhithhtohhnuceoshhpfihhihhtthhonhesshhpfihhihhtthhonhdrnhgrmhgvqe
-    enucggtffrrghtthgvrhhnpeeivdegfedvgfelleehieejveffhfejheeltdekgffggffh
-    jeegieegteeivedvgfenucffohhmrghinhepmhhithhrvgdrohhrghenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehsphifhhhithhtohhnsehs
-    phifhhhithhtohhnrdhnrghmvg
-X-ME-Proxy: <xmx:kKkXZtE1OUTqUsT3BgYOitHLjv0CD5VqpGWlN6ytw0jEywCid0_RCg>
-    <xmx:kKkXZlV0pYnqOBJcMjLNSd72_kXx_18gUGHBRELmRxkS6ZZmpcslmA>
-    <xmx:kKkXZoOCObfXSEdS47RjhcpLR4LaKJA_l_HwKKttacwTVN-C3NuCZQ>
-    <xmx:kKkXZk3VHwxLeZ4-dRXsV2sgTlWbU8Zje2aMl6HlYfiPGykIy7dbgw>
-    <xmx:kakXZjeO_AHij0dD9P63x6VgysQebbDHI3AHWb2SRZJqZlCEJovqVmXA>
-Feedback-ID: i23c04076:Fastmail
-From: Sean Whitton <spwhitton@spwhitton.name>
-To: Max Nikulin <manikulin@gmail.com>
-Cc: oss-security@lists.openwall.com,  emacs@packages.debian.org,
-  emacs-devel@gnu.org,  Ihor Radchenko <yantar92@posteo.net>
-In-Reply-To: <fb09b3ff-6187-46b3-b544-182e7dd76412@gmail.com> (Max Nikulin's
-	message of "Wed, 10 Apr 2024 22:07:02 +0700")
-References: <874jccjpvy.fsf@melete.silentflame.com> <87y19nu22i.fsf@localhost>
-	<87bk6he8h4.fsf_-_@melete.silentflame.com> <87o7ahe85l.fsf@localhost>
-	<Zhafa3wcZONJX-_k@eldamar.lan>
-	<fb09b3ff-6187-46b3-b544-182e7dd76412@gmail.com>
-Date: Thu, 11 Apr 2024 17:12:37 +0800
-Message-ID: <8734rsdzzu.fsf@melete.silentflame.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: (qmail 25997 invoked from network); 11 Jul 2019 16:26:15 -0000
+Message-ID: <20190711162601.RE3Tr%steffen@sdaoden.eu>
+In-Reply-To: <20190711114710.09ab5ad9@jabberwock.cb.piermont.com>
+References: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
+ <20190709113036.0f12d057@jabberwock.cb.piermont.com>
+ <9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
+ <20190711093326.328948dc@jabberwock.cb.piermont.com>
+ <de14296ba908c162036a15b1aeda95586ff8ba14.camel@suse.com>
+ <20190711114710.09ab5ad9@jabberwock.cb.piermont.com>
+Mail-Followup-To: "Perry E. Metzger" <perry@piermont.com>,
+ oss-security@lists.openwall.com, Malte Kraus <malte.kraus@suse.com>
+User-Agent: s-nail v14.9.13-111-g4bb54f29
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: [oss-security] Re: Is CVE-2024-30203 bogus? (Emacs)
-
---=-=-=
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
+Cc: oss-security@lists.openwall.com, Malte Kraus <malte.kraus@suse.com>
+Date: Thu, 11 Jul 2019 18:26:01 +0200
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Privileged File Access from Desktop
+ Applications
+To: "Perry E. Metzger" <perry@piermont.com>
 
-Hello,
+Perry E. Metzger wrote in <20190711114710.09ab5ad9@jabberwock.cb.piermon\
+t.com>:
+ |On Thu, 11 Jul 2019 13:57:19 +0000 Malte Kraus <malte.kraus@suse.com>
+ |wrote:
+ |> On Thu, 2019-07-11 at 09:33 -0400,  Perry E. Metzger wrote:
+ ...
+ |> I didn't (intend to) say there is an (additional) security problem.
+ |> I just tried to succinctly explain why the desktop environments are
+ |> coming up with these D-Bus interfaces now.
+ |
+ |It seems like a bad idea.
+ |
+ |If one wants to have mechanisms by which the operating system can
+ |allow unprivileged programs to temporarily assume privileges (which
+ |is a frequent idea in security), then they should be carefully
+ |designed and part of the OS, rather than creating an ad hoc facility
+ |via a subsystem that isn't intended for it. There are good ways to do
+ |that, like capabilities.
 
-On Wed 10 Apr 2024 at 10:07pm +07, Max Nikulin wrote:
+Sending this remark because a few days ago i posted something
+similar to a gnupg ML.
 
-> On 10/04/2024 21:17, Salvatore Bonaccorso wrote:
->> On Wed, Apr 10, 2024 at 12:04:06PM +0000, Ihor Radchenko wrote:
->>>
->>> Yes, CVE-2024-30203 title is superfluous.
->>> And CVE-2024-30204 title is not accurate - it only applies to
->>> certain attachments with specific (text/x-org) mime type.
-> [...]
->> If you think the CVE assignment is not valid, then you might ask for a
->> REJECT on https://cveform.mitre.org/ .
->
-> Do 2 CVE numbers make sense to track fixes in Emacs and Org mode? Various
-> versions of Org mode may be loaded to different versions of Emacs and both
-> parties must have fixes to avoid the issue.
+=46rom my point of view there is root user hysteria in Unix and
+clones, maybe forever, but i see it consciously in the last years.
+If the solution against SETUID programs or other, finer grained
+privileges, but which anyway can be detected via file system
+tools, is that privilege adjustments u-boat away to something that
+needs source code or over-the-wire analysis to being detected at
+all, i fail to see how this leads to something better.
 
-My understanding is that one CVE for the same vulnerability in multiple
-code bases is normal.
+Without personally having made it there yet, i think the
+traditional way of in-application sandboxing fits better, even
+with SETUID programs which first perform some higher-privilege
+setup before going more secure, like capsicum on FreeBSD,
+pledge/unveil on OpenBSD, or prctl, seccomp (and apparmor) on
+Linux.  Or even interesting entire frameworks like CloudABI.
 
---=20
-Sean Whitton
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJNBAEBCgA3FiEEm5FwB64DDjbk/CSLaVt65L8GYkAFAmYXqYYZHHNwd2hpdHRv
-bkBzcHdoaXR0b24ubmFtZQAKCRBpW3rkvwZiQNIhD/0YfioHDT/4heoRCVmvo1Md
-OjJE9tL7UYBJcu9q5ujgxAS5PVBeckgcuXnzzC57vt8JVnKs5TLMxIYH/ARXAGsm
-D0sarTxXc6rqdswx4McU/itCGoGWQFmnmFwLcdriB9sLFhkC4HKF5pb+LJuNcL9f
-kMvN+JwjzSCUzvRp2i7AJAWbSkQQQXpPMwke3xWXsHXDhXJnCukxV7bsHF/xcQLI
-O5Mn+2alTLAEKh3pYUScc4DJ4DDkWjI5p0E24quLRm4EnzpMiZo77qXB8Psbx6mC
-lef8pyVDDCAQv+ONBtkicnvg4rIVrnQ5hRE3BpXYShLSSbEx/XH5sCpXWdOQD0j8
-a5xj5UiY2f5Rmf0qBpmCzPbsG6JDWxp2bICRaZB+W1lJFs9eDDX9PKSaRflvdFdb
-FG3A1bxQE+C3OStBz3NbmOlQqL0E+cgnm6brV/QXm5sIBYDjxDeshQQGyBcKciXH
-jBTlB/vubkG8ITme9JD9cStCgzOwabIOq3Dwly1muzMEnM4MnA36RyZ3qaDJtIi9
-0opPOfTqlDXHjgzt0AYcaSsGlR14v9VnOXdDfhTVjD3RehUv6WqRgjZhlV3YHs56
-67gbEIvi1cFGyrfefYDXs/cOfzB7sbBlaMuYLtK1tCU8lwtHgQubPiXS7Lgb7BbK
-iMelSecOx+IQbpA1PivkAw==
-=mOir
------END PGP SIGNATURE-----
---=-=-=--
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
