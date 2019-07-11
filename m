@@ -1,17 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/19/4
-Message-ID: <CAMufup5AeePBWrRNStPgmXVFwcQ-TVR6g9tOKtaOODp+OS-BBw@mail.gmail.com>
-Date: Sun, 19 May 2019 18:04:47 +0200
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-10076] Apache JSPWiki Cross-site scripting vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/6
+Message-ID: <de14296ba908c162036a15b1aeda95586ff8ba14.camel@suse.com>
+Date: Thu, 11 Jul 2019 13:57:19 +0000
+From: Malte Kraus <malte.kraus@...e.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "perry@...rmont.com" <perry@...rmont.com>
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2019-10076
-[PRODUCT]:Apache JSPWiki
-[VERSION]:Apache JSPWiki 2.9.0 to 2.11.0.M3
-[PROBLEMTYPE]:Cross-site scripting vulnerability
-[REFERENCES]:https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-10076
-[DESCRIPTION]: A carefully crafted malicious attachment could trigger an
-XSS vulnerability on Apache JSPWiki, which could lead to session hijacking.
+On Thu, 2019-07-11 at 09:33 -0400,  Perry E. Metzger wrote:
+> So these links seem to say that things have been structured so you
+> *can't* run GUI apps as root, not that there is a special or unusual
+> security problem in Wayland if you run an application as root
+I didn't (intend to) say there is an (additional) security problem. I
+just tried to succinctly explain why the desktop environments are
+coming up with these D-Bus interfaces now.
 
+
+-- 
+Malte Kraus <malte.kraus@...e.com>
+Security Engineer
+SUSE Software Solutions Germany GmbH, GF: Felix Imendörffer, Mary
+Higgins, Sri Rasiah, HRB 21284 (AG Nürnberg)
