@@ -1,121 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/11/1
-Message-ID: <CAPZbWncFa4YvkvGUEYW5L=50-brSWt_aBKthkCzC+5zd4Vk+WQ@mail.gmail.com>
-Date: Sat, 11 May 2019 09:20:12 +0900
-From: Seong-Joong Kim <sungjungk@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/4
+Message-Id: <94DB5F9B-7D5A-474C-A997-95C4C6F9E02A@beckweb.net>
+Date: Thu, 11 Jul 2019 15:46:00 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: fprintd: found storing user fingerprints without encryption
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Additionally,  I think that fingerprint reader is widely used on laptop,
-rather than standalone product for PC.
-It is hard to find standalone product in supporting device officially,
-except for Digital Persona U.are.U and Eikon Touch series.
-(see https://fprint.freedesktop.org/supported-devices.html)
-Most of them are forms of fingerprint module or no longer sell the
-standalone product.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Currently, most of major vendors' laptops, including Dell, HP and Lenovo,
-have been equipped with both embedded fingerprint module and TPM.
-Thus, I suggested implementing interfaces to talk with hardware security
-module.
+* Docker Plugin 1.1.7
+* Embeddable Build Status Plugin 2.0.2
+* Gogs Plugin 1.0.15
+* Mashup Portlets Plugin 1.1.0
 
-Sincerely,
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-2019년 5월 10일 (금) 오후 7:31, Seong-Joong Kim <sungjungk@...il.com>님이 작성:
+* Caliper CI Plugin
+* Dependency Graph Viewer Plugin
+* Port Allocator Plugin
 
-> I think my initial suggestion is not really good enough.
->
-> Currently, there is no way to defend this issue except for supporting
-> hardware, such as TPM or USB token, rather than encryption by software in
-> Linux environment.
->
-> If necessary, how about implementing interfaces to talk with hardware
-> security module, such as TPM or PKCS#11 compatible devices.
->
-> Otherwise, users should avoid using fingerprint
-> authentication/identification.
->
-> Any idea?
->
-> Sincerely,
->
-> 2019년 5월 10일 (금) 오후 6:22, halfdog <me@...fdog.net>님이 작성:
->
->> Roman Drahtmueller writes:
->> > [...]
->> >
->> > > I am not insisting that encryption key should be on the disk or is
->> > > encrypted with a static key that is embedded in the binary.
->> > > Instead, we can make fprintd to use a TPM, if available.
->> >
->> >
->> > The problem persists: The encryption key must be available for the FP
->> > data to be accessible, and so it is for an attacker. It doesn't matter
->> > where you store the key.
->> >
->> > A TPM (and, transitively, products that encrypt with TPM-sealed or
->> > TPM-bound key material) is good for the situation where the system is
->> > physically stolen while powered down (or the drive fails). But that's
->> not
->> > our problem here.
->>
->> Therefore dedicated tamper-proof IC-designs+embedded software
->> exist, that perform the biometry template storage and matching
->> on the chip (MoC). There are some vendors out there providing
->> such hardware + MoC-algorithms, but mainly fingerprint and some
->> iris biometry variants seem certified so far. These are intended
->> for access cards or USB-tokens in two or more-factor authentication
->> schemes in a 1-to-1 match fashion, not as centralized 1-to-many
->> matching schemes also deployed rarely (e.g. in Japan where they
->> really like biometrics as long as you do not have to touch the
->> biometry reader ...).
->>
->> > [...]
->> >
->> > > Otherwise, but even though it is not perfect, it would be better to
->> apply
->> > > the fingerprint data protection, such as keyring or access control,
->> rather
->> > > than raw fingerprint template.
->> > > FYI, Windows Hello might use Next Generation Cryptography (called
->> CNG) to
->> > > protect and store user private data and encryption keys.
->> >
->> > There are not many options left to solve the stored credential problem,
->> > and it should be clear that saving a file, encrypted or not, is not the
->> > solution.
->> >
->> > One possible solution is to use a hash algorithm, potentially
->> cost-based,
->> > to derive a bit string (that is suitable for comparison with the
->> > persisted authoritative string) from the output of a fingerprint reader.
->>
->> At the momenent I do not know of any algorithms providing sufficient
->> entropy binary hash data from fingerprints in a reliable way.
->> Changing extraction to deliver more entropy results in higher
->> FNR during authentication step later on, I think.
->>
->> > [...]
->>
->> When working on a project to provide highest security MoC solutions
->> with Linux (for other type of biometry, not fingerprints), Nitrokey
->> was offering an open-source USB-token hardware (even the PCBs are
->> open source, if I remember correctly). That platform seemed closest
->> to be a good starting point for developing such an open source MoC
->> biometry solution as they sell also one part with a certified tamper
->> proof trusted element that seemed to allow performing biometry
->> template storage and comparison on chip if programmed correctly.
->>
->> Time in the project was too limited to explore, if that hardware
->> would REALLY allow to upgrade it to a powerful, highly secure but
->> still affordable open source biometry system for use by journalists,
->> human rights activists, NGOs ... and nerds, e.g. for password+biometry
->> secured full disk encryption schemes.
->>
->> > [...]
->>
->> hd
->>
->>
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-07-11/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+
+
+SECURITY-1010 / CVE-2019-10340 (CSRF), CVE-2019-10341 (permission check)
+Docker Plugin did not perform permission checks on a method implementing 
+form validation. This allowed users with Overall/Read access to Jenkins to 
+connect to an attacker-specified URL using attacker-specified credentials 
+IDs obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a cross-site request forgery vulnerability.
+
+
+SECURITY-1400 / CVE-2019-10342
+Docker Plugin provides a list of applicable credential IDs to allow users 
+configuring the plugin to select the one to use.
+
+This functionality did not correctly check permissions, allowing any user 
+with Overall/Read permission to get a list of valid credentials IDs. Those 
+could be used as part of an attack to capture the credentials using another 
+vulnerability.
+
+
+SECURITY-1419 / CVE-2019-10346
+Embeddable Build Status Plugin did not sanitize arguments provided in the 
+query string, resulting in a reflected cross-site scripting vulnerability.
+
+
+SECURITY-775 / CVE-2019-10347
+Mashup Portlets Plugin stored SonarQube credentials unencrypted on the 
+Jenkins master. These credentials could be viewed by users with access to 
+the master file system.
+
+
+SECURITY-1438 / CVE-2019-10348
+Gogs Plugin stored credentials unencrypted in job config.xml files on the 
+Jenkins master. These credentials could be viewed by users with Extended 
+Read permission, or access to the master file system.
+
+
+SECURITY-1177 / CVE-2019-10349
+Dependency Graph Viewer Plugin does not correctly escape the Display Name 
+value for jobs in Jenkins, resulting in a stored cross-site scripting 
+vulnerability.
+
+
+SECURITY-1441 / CVE-2019-10350
+Port Allocator Plugin stores credentials unencrypted in job config.xml 
+files on the Jenkins master. These credentials can be viewed by users with 
+Extended Read permission, or access to the master file system.
+
+
+SECURITY-1437 / CVE-2019-10351
+Caliper CI Plugin stores credentials unencrypted in job config.xml files on 
+the Jenkins master. These credentials can be viewed by users with Extended 
+Read permission, or access to the master file system.
 
