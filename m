@@ -1,4 +1,9 @@
-Received: (qmail 32266 invoked by uid 550); 28 Mar 2023 14:06:02 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1459" "Thursday" "11" "July" "2019" "09:33:26" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20190711093326.328948dc@jabberwock.cb.piermont.com>" "34" "Re: [oss-security] Privileged File Access from Desktop Applications" "^Cc:" nil nil "7" "2019071113:33:26" "[oss-security] Privileged File Access from Desktop Applications" (number mark "        perry@piermo Jul 11   34/1459  " thread-indent "\"Re: [oss-security] Privileged File Access from Desktop Applications\"\n") "<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>" ("<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>" "<20190709113036.0f12d057@jabberwock.cb.piermont.com>" "<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>") nil nil nil nil nil nil nil "Re: [oss-security] Privileged File Access from Desktop Applications" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7407 invoked by uid 550); 11 Jul 2019 13:33:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,127 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28626 invoked from network); 28 Mar 2023 14:03:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1680012220; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type; bh=BxxwlNIygoZi3sJsqEEvPTPNih1wgjQLd4PrSLUu+6E=;
-	b=RQv12ksNxCJs4jQKaDgmryu7k8Qx0Ec5taszUwMBEtu/kdWCS/COva+J20+L9bGG61IwYW
-	fM3TckPj8G6JBafQadn0tGK4rqTh0MQ4EEq0HiXV/shr2FzC8d/FStpdJ66UVo5NuI2nDa
-	2KZQ8xv47LSg3mVAOdM3u8RL0fu/2WracTrGJKfSvkaBITK9cVXTE5r7oSI1WxGzo4zpbd
-	0/jIIybqFPkNjifLc/nwu1vseiUZHvR0LZUWvVfEuuYopz2IFEj9qSMzE/cr+nurXhOl0+
-	RniEb2kyn9DhpHsp2pTxemleg9UXncG2mA5jsCJV6gUEhQDy1/twLbQRw+e42g==
-Authentication-Results: mta.openssl.org;
-	dkim=none;
-	spf=pass (mta.openssl.org: domain of tomas@dev.openssl.org designates 2001:608:c00:180::1:ea as permitted sender) smtp.mailfrom=tomas@dev.openssl.org;
-	dmarc=pass (policy=none) header.from=openssl.org
-Date: Tue, 28 Mar 2023 14:03:39 +0000
-From: Tomas Mraz <tomas@openssl.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZCLzu6TDAOcf9OTz@openssl.org>
+Received: (qmail 7384 invoked from network); 11 Jul 2019 13:33:39 -0000
+Message-ID: <20190711093326.328948dc@jabberwock.cb.piermont.com>
+In-Reply-To: <9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
+References: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
+	<20190709113036.0f12d057@jabberwock.cb.piermont.com>
+	<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] OpenSSL Security Advisory
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: oss-security@lists.openwall.com
+Date: Thu, 11 Jul 2019 09:33:26 -0400
+From: "Perry E. Metzger" <perry@piermont.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Privileged File Access from Desktop Applications
+To: Malte Kraus <malte.kraus@suse.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, 11 Jul 2019 07:51:17 +0000 Malte Kraus <malte.kraus@suse.com>
+wrote:
+> Hi Perry,
+> 
+> On Tue, 2019-07-09 at 11:30 -0400,  Perry E. Metzger wrote:
+> > Can you explain (or point to) a description of why this is a
+> > problem?  
+> I'm not sure what exactly breaks, just that it does, see e.g. [1]
+> [2] [3]. Since we're talking about root it's not a matter of
+> technical impossibility, but a decision not to write the code to
+> make it work.
+> 
+> From a security perspective that seems like a great improvement.
+> Even if it should be the case that some programs don't follow best
+> practices re "least privileges", at least it's not the whole
+> application running as root.
+> 
+> 1: 
+> https://wiki.archlinux.org/index.php/Running_GUI_applications_as_root#Wayland
+> 2: 
+> https://wiki.debian.org/Wayland#I.27m_accustomed_to_running_various_programs_.28e.g._synaptic.29_as_root_in_my_X_session.__How_will_this_work_under_Wayland.3F
+> 3: 
+> https://fedoraproject.org/wiki/How_to_debug_Wayland_problems#Graphical_applications_can.27t_be_run_as_root_from_terminal
+> 
 
-OpenSSL Security Advisory [28th March 2023]
-===========================================
+So these links seem to say that things have been structured so you
+*can't* run GUI apps as root, not that there is a special or unusual
+security problem in Wayland if you run an application as root; if
+you logged in as root, you could run GUI applications as root. That's
+rather different from the original statement. Am I misunderstanding?
 
-Invalid certificate policies in leaf certificates are silently ignored (CVE-2023-0465)
-======================================================================================
-
-Severity: Low
-
-Applications that use a non-default option when verifying certificates may be
-vulnerable to an attack from a malicious CA to circumvent certain checks.
-
-Invalid certificate policies in leaf certificates are silently ignored by
-OpenSSL and other certificate policy checks are skipped for that certificate.
-A malicious CA could use this to deliberately assert invalid certificate policies
-in order to circumvent policy checking on the certificate altogether.
-
-Policy processing is disabled by default but can be enabled by passing
-the `-policy' argument to the command line utilities or by calling the
-`X509_VERIFY_PARAM_set1_policies()' function.
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit facfb1ab (for 3.1),
-commit 1dd43e07 (for 3.0), commit b013765a (for 1.1.1) in the OpenSSL
-git repository, and commit 10325176 (for 1.0.2) in the OpenSSL git
-repository for premium customers.
-
-This issue was reported on 12th January 2023 by David Benjamin (Google).
-The fix was developed by Matt Caswell.
-
-Certificate policy check not enabled (CVE-2023-0466)
-====================================================
-
-Severity: Low
-
-The function X509_VERIFY_PARAM_add0_policy() is documented to
-implicitly enable the certificate policy check when doing certificate
-verification. However the implementation of the function does not
-enable the check which allows certificates with invalid or incorrect
-policies to pass the certificate verification.
-
-As suddenly enabling the policy check could break existing deployments it was
-decided to keep the existing behavior of the X509_VERIFY_PARAM_add0_policy()
-function.
-
-Instead the applications that require OpenSSL to perform certificate
-policy check need to use X509_VERIFY_PARAM_set1_policies() or explicitly
-enable the policy check by calling X509_VERIFY_PARAM_set_flags() with
-the X509_V_FLAG_POLICY_CHECK flag argument.
-
-Certificate policy checks are disabled by default in OpenSSL and are not
-commonly used by applications.
-
-OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
-
-Applications need to be updated if they are affected by the issue.
-
-Due to the low severity of this issue we are not creating a new release at
-this time. The documentation fix is also available in commit fc814a30
-(for 3.1), commit 51e8a84c (for 3.0), commit 0d16b7e9 (for 1.1.1) in the
-OpenSSL git repository, and commit 73398dea (for 1.0.2) in the OpenSSL git
-repository for premium customers.
-
-This issue was reported on 12th January 2023 by David Benjamin (Google).
-The documentation fix was developed by Tomas Mraz.
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20230328.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
-
-OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
-fixes for 1.1.1 will only be available to premium support customers.
------BEGIN PGP SIGNATURE-----
-
-iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmQi8tMSHHRvbWFzQG9w
-ZW5zc2wub3JnAAoJEFJ0ZqIcp55tem4P/3ujaUzEUXSMAX58jCiMzScB8o1HFyo1
-KQguXKh41dM7ooehR4J8JjveH6PExw2C0fI7CzROjdlOkcd66jfokJb5CIOTf3zs
-0pDn0gH1TcY4skKlUkFoo8d51ql3zlySxLX5MGEUiUq43U+H2sog/cLaMl5KJRJ4
-kDBGksdgsAb1o6rCcXpTHw40Dq5cEr3HaSy6hbbxubjt8SQv8fbK2vkZPu3pVwfw
-RR6w8K43aiDwcEC6eMPO5QOx3xTOFGU0tUNEG11QZhb2gOkmgshjRBZmbf9mEyU2
-mTk0P8G6ttlVP80qqXA33lSXIJlfpTqqSx9rlx6ovO4iu0TZPJYETkAhP6nBvEU6
-eyy/RTSphBUK4uSh44K3RTMcnPAvplZdzlX9jOHfiuOjwG1ff8pxWnJZt0s77MNI
-ByCKaOWwhyoph3jxkt+k4AP0f229qxFxryz1UKXWQ+2BXtXusXFVGs70FwHIvSWV
-nGpLKXedCnebPaQqlYKqFWmJPsDf4iEcSgluFyFr4zYW7+dN+7hNF3gFzYJjSCIo
-jvnKktMk3Vuu8xOMJ6uQQNmGvsEyhmDYsxqNuM/6QxaQmnfEGe8+bdp21g8PBLtG
-z+tnX2/7Cltm/5oIHnqVclNChqjOev9rho5/QVK7eNFDcuDTWVosWPPyqbhkmVpw
-acx7hxvK++Zl
-=L6VH
------END PGP SIGNATURE-----
+Perry
+-- 
+Perry E. Metzger		perry@piermont.com
