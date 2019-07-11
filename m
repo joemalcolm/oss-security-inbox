@@ -1,115 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/09/1
-Message-Id: <1549676854.13064.0@mail.igalia.com>
-Date: Fri, 08 Feb 2019 19:47:34 -0600
-From: Michael Catanzaro <mcatanzaro@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ and WPE WebKit Security Advisory WSA-2019-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/7
+Message-ID: <20190711114710.09ab5ad9@jabberwock.cb.piermont.com>
+Date: Thu, 11 Jul 2019 11:47:10 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: oss-security@...ts.openwall.com
+Cc: Malte Kraus <malte.kraus@...e.com>
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ and WPE WebKit Security Advisory WSA-2019-0001
-------------------------------------------------------------------------
+On Thu, 11 Jul 2019 13:57:19 +0000 Malte Kraus <malte.kraus@...e.com>
+wrote:
+> On Thu, 2019-07-11 at 09:33 -0400,  Perry E. Metzger wrote:
+> > So these links seem to say that things have been structured so you
+> > *can't* run GUI apps as root, not that there is a special or
+> > unusual security problem in Wayland if you run an application as
+> > root  
+> I didn't (intend to) say there is an (additional) security problem.
+> I just tried to succinctly explain why the desktop environments are
+> coming up with these D-Bus interfaces now.
 
-Date reported : February 08, 2019
-Advisory ID : WSA-2019-0001
-WebKitGTK+ Advisory URL : 
-https://webkitgtk.org/security/WSA-2019-0001.html
-WPE WebKit Advisory URL : 
-https://wpewebkit.org/security/WSA-2019-0001.html
-CVE identifiers : CVE-2019-6212, CVE-2019-6215, CVE-2019-6216,
-                  CVE-2019-6217, CVE-2019-6226, CVE-2019-6227,
-                  CVE-2019-6229, CVE-2019-6233, CVE-2019-6234.
+It seems like a bad idea.
 
-Several vulnerabilities were discovered in WebKitGTK+ and WPE WebKit.
+If one wants to have mechanisms by which the operating system can
+allow unprivileged programs to temporarily assume privileges (which
+is a frequent idea in security), then they should be carefully
+designed and part of the OS, rather than creating an ad hoc facility
+via a subsystem that isn't intended for it. There are good ways to do
+that, like capabilities.
 
-CVE-2019-6212
-    Versions affected: WebKitGTK+ before 2.22.6 and WPE WebKit before
-    2.22.4.
-    Credit to an anonymous researcher.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
+The ad hoc solution creates a situation where quite ordinary programs
+like editors suddenly need two distinct sets of file i/o primitives
+with very distinct security properties to do ordinary things like
+editing files, and where (as I said) subsystems not intended to
+handle file security suddenly are in charge of it.
 
-CVE-2019-6215
-    Versions affected: WebKitGTK+ before 2.22.6 and WPE WebKit before
-    2.22.4.
-    Credit to Lokihardt of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A type confusion issue was addressed with improved
-    memory handling.
-
-CVE-2019-6216
-    Versions affected: WebKitGTK+ before 2.22.5 and WPE WebKit before
-    2.22.3.
-    Credit to Fluoroacetate working with Trend Micro's Zero Day
-    Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-6217
-    Versions affected: WebKitGTK+ before 2.22.5 and WPE WebKit before
-    2.22.3.
-    Credit to Fluoroacetate working with Trend Micro's Zero Day
-    Initiative, Proteas, Shrek_wzw, and Zhuo Liang of Qihoo 360 Nirvan
-    Team.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-6226
-    Versions affected: WebKitGTK+ and WPE WebKit before 2.22.0.
-    Credit to Apple.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-6227
-    Versions affected: WebKitGTK+ before 2.22.5 and WPE WebKit before
-    2.22.3.
-    Credit to Qixun Zhao of Qihoo 360 Vulcan Team.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
-
-CVE-2019-6229
-    Versions affected: WebKitGTK+ before 2.22.5 and WPE WebKit before
-    2.22.3.
-    Credit to Ryan Pickren.
-    Processing maliciously crafted web content may lead to universal
-    cross site scripting. A logic issue was addressed with improved
-    validation.
-
-CVE-2019-6233
-    Versions affected: WebKitGTK+ before 2.22.4 and WPE WebKit before
-    2.22.2.
-    Credit to G. Geshev from MWR Labs working with Trend Micro's Zero
-    Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
-
-CVE-2019-6234
-    Versions affected: WebKitGTK+ before 2.22.4 and WPE WebKit before
-    2.22.2.
-    Credit to G. Geshev from MWR Labs working with Trend Micro's Zero
-    Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+Honestly, for day to day editing of administration files, I'd
+far rather be able to pop open an editor on my machine as root for a
+moment than have a complicated facility. "Protecting" me from this
+probably has no significant benefit in terms of real-world threats,
+but having to add file i/o subsystems inside of dbus(!) probably does
+add lots of threats. Failing that, though, I'd rather people finally
+add a real solution (like a capability subsystem, see Capsicum for
+example) instead of fooling around with fragile, ad hoc designs.
 
 
-We recommend updating to the latest stable versions of WebKitGTK+ and
-WPE WebKit. It is the best way to ensure that you are running safe
-versions of WebKit. Please check our websites for information about the
-latest stable releases.
-
-Further information about WebKitGTK+ and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK+ and WPE WebKit team,
-February 08, 2019
-
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
