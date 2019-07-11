@@ -1,206 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/29/4
-Message-ID: <20190829174324.GB14146@momiji>
-Date: Thu, 29 Aug 2019 17:43:24 +0300
-From: Adrian Perez de Castro <aperez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2019-0004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/11
+Message-ID: <20190711202015.GA24270@espresso.pseudorandom.co.uk>
+Date: Thu, 11 Jul 2019 21:20:15 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2019-0004
-------------------------------------------------------------------------
+On Thu, 11 Jul 2019 at 11:47:10 -0400, Perry E. Metzger wrote:
+> having to add file i/o subsystems inside of dbus(!) probably does
+> add lots of threats
 
-Date reported           : August 29, 2019
-Advisory ID             : WSA-2019-0004
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2019-0004.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2019-0004.html
-CVE identifiers         : CVE-2019-8644, CVE-2019-8649, CVE-2019-8658,
-                          CVE-2019-8666, CVE-2019-8669, CVE-2019-8671,
-                          CVE-2019-8672, CVE-2019-8673, CVE-2019-8676,
-                          CVE-2019-8677, CVE-2019-8678, CVE-2019-8679,
-                          CVE-2019-8680, CVE-2019-8681, CVE-2019-8683,
-                          CVE-2019-8684, CVE-2019-8686, CVE-2019-8687,
-                          CVE-2019-8688, CVE-2019-8689, CVE-2019-8690.
+I think you might be misunderstanding the scope of D-Bus. D-Bus
+is an IPC mechanism, normally using AF_UNIX sockets; dbus is the
+reference implementation, including a message bus (broker) and a client
+library. System services and their clients can use D-Bus to communicate
+if they have been designed to do so, similar to the way they might use
+ONC RPC (aka SunRPC), CORBA, ZeroMQ, SOAP-over-HTTP, any other
+pre-existing IPC mechanism chosen by their designer, or their own
+unique/ad-hoc IPC mechanism.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+If someone writes a system service that provides file I/O over D-Bus,
+that does not imply adding code to dbus, in the same way that in the ONC
+RPC ecosystem (NFS etc.) adding a new RPC service didn't involve adding
+code to the portmapper, and in CORBA adding a new RPC service didn't
+involve adding code to the broker. The D-Bus protocol and the dbus
+implementation just carry messages, with some security and functional
+guarantees. Processing those messages (preferably securely, and making
+appropriate use of the guarantees given by the IPC mechanism where they
+are helpful) is a job for higher layers.
 
-CVE-2019-8644
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to G. Geshev working with Trend Micro's Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
+D-Bus is often used by system services as a reusable protocol over
+AF_UNIX sockets. Unlike protocols designed for network use, the concept
+of identity used in its authentication/authorization handshake is bound to
+Unix uids (and it normally authenticates using Linux SO_PEERCRED or other
+kernels' equivalents, so identity is guaranteed by the kernel). This is
+good if uids are an important part of your security model (conversely, if
+uids aren't the basis for your security model, then D-Bus is a poor fit).
 
-CVE-2019-8649
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Processing maliciously crafted web content may lead to universal
-    cross site scripting. A logic issue existed in the handling of
-    synchronous page loads. This issue was addressed with improved state
-    management.
+The security of each system service that happens to use D-Bus should
+be considered on its own merits, the same way that using HTTP does not
+automatically make a higher-layer protocol more or less secure than it
+would otherwise be. Some system services that communicate via D-Bus are
+carefully designed with security in mind, while others are not (and I've
+sent advisories in the past for some in the latter category).
 
-CVE-2019-8658
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to akayn working with Trend Micro's Zero Day Initiative.
-    Processing maliciously crafted web content may lead to universal
-    cross site scripting. A logic issue was addressed with improved
-    state management.
-
-CVE-2019-8666
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
-    Credit to Zongming Wang (王宗明) and Zhe Jin (金哲) from Chengdu Security
-    Response Center of Qihoo 360 Technology Co. Ltd.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8669
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to akayn working with Trend Micro's Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8671
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
-    Credit to Apple.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8672
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
-    Credit to Samuel Groß of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8673
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
-    Credit to Soyeon Park and Wen Xu of SSLab at Georgia Tech.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8676
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
-    Credit to Soyeon Park and Wen Xu of SSLab at Georgia Tech.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8677
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
-    Credit to Jihui Lu of Tencent KeenLab.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8678
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to an anonymous researcher, Anthony Lai (@darkfloyd1014) of
-    Knownsec, Ken Wong (@wwkenwong) of VXRL, Jeonghoon Shin (@singi21a)
-    of Theori, Johnny Yu (@straight_blast) of VX Browser Exploitation
-    Group, Chris Chan (@dr4g0nfl4me) of VX Browser Exploitation Group,
-    Phil Mok (@shadyhamsters) of VX Browser Exploitation Group, Alan Ho
-    (@alan_h0) of Knownsec, Byron Wai of VX Browser Exploitation.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8679
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
-    Credit to Jihui Lu of Tencent KeenLab.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8680
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to Jihui Lu of Tencent KeenLab.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8681
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
-    Credit to G. Geshev working with Trend Micro Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8683
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to lokihardt of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8684
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to lokihardt of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8686
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
-    Credit to G. Geshev working with Trend Micro's Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8687
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
-    Credit to Apple.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8688
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to Insu Yun of SSLab at Georgia Tech.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8689
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
-    Credit to lokihardt of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8690
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Processing maliciously crafted web content may lead to universal
-    cross site scripting. A logic issue existed in the handling of
-    document loads. This issue was addressed with improved state
-    management.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-August 29, 2019
-
-Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
+    smcv
