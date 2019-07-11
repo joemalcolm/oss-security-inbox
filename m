@@ -1,34 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/12/7
-Message-ID: <CAECwjAVRB1Nm6RRs4_L19OSs0576yp-d1hd=XTfxSxkaGKJfzw@mail.gmail.com>
-Date: Tue, 12 Feb 2019 11:48:27 -0800
-From: Tomas Fernandez Lobbe <tflobbe@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/5
+Message-ID: <20190711135702.GA16717@f195.suse.de>
+Date: Thu, 11 Jul 2019 15:57:02 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-3164: Apache Solr: SSRF issue
+Cc: Malte Kraus <malte.kraus@...e.com>
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-3164 SSRF issue in Apache Solr
+Hello,
 
-Severity: High
+> So these links seem to say that things have been structured so you
+> *can't* run GUI apps as root, not that there is a special or unusual
+> security problem in Wayland if you run an application as root; if
+> you logged in as root, you could run GUI applications as root. That's
+> rather different from the original statement. Am I misunderstanding?
 
-Vendor: The Apache Software Foundation
+running GUI applications as root is often considered bad practice. Some
+reasons may be things like:
 
-Versions Affected:
-Apache Solr versions from 1.3 to 7.6.0
+- the graphic system itself not being safely designed for this case.
+- the GUI applications are usually large programs that don't consider
+  security a lot or do not work securely when run with root privileges,
+  because this use case has never been considered by the developers.
+  Some GUI applications even actively refuse to start as root for those
+  reasons, even if it was possible with traditional X.
 
-Description:
-The "shards" parameter does not have a corresponding whitelist mechanism,
-so it can request any URL.
+Anyways, our report did not intend to discuss whether it is a good idea
+to run GUI applications as root and also not to judge whether it is a
+good idea for Wayland to prohibit doing so. However, it is a matter of
+fact that Wayland in its current form does not allow it.
 
-Mitigation:
-Upgrade to Apache Solr 7.7.0 or later.
-Ensure your network settings are configured so that only trusted traffic is
-allowed to ingress/egress your hosts running Solr.
+There is a number of GUI applications around that are traditionally
+run as root. Typical use cases are for example system configuration
+tools that need root privileges for practically everything they do,
+except for displaying the GUI elements. Also file browsers often did
+have or still have a feature to start them as root for being able to
+deal with privileged files. All of this becomes impossible when running
+on Wayland.
 
-Credit:
-dk from Chaitin Tech
+And for these reasons GUI application developers try to find
+alternatives to provide these features to users. Having a separate
+privileged backend for logical operations and an unprivileged frontend
+for display purposes is generally a good idea and a benefit to
+overall application design and security. Even though such a design can
+add its own share of complexity (the inter-process communication for
+example, often covered by frameworks of some kind these days).
 
-References:
-https://issues.apache.org/jira/browse/SOLR-12770
-https://wiki.apache.org/solr/SolrSecurity
+The frameworks we brought up in our report are fully generalized
+backends for performing privileged file operations, however, which is a
+different story again. I suppose this route was chosen to allow existing
+applications to be quickly ported to scenarios like running on Wayland
+without changing the actual application design. And that could exactly
+be the point where security suffers as outlined in our report.
 
+Cheers
+
+Matthias
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
