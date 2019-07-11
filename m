@@ -1,29 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/21/6
-Message-ID: <20190621150836.ieiciui3n6vrd5wb@matica.foolinux.mooo.com>
-Date: Fri, 21 Jun 2019 08:08:36 -0700
-From: Ian Zimmerman <itz@...y.loosely.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/8
+Message-ID: <20190711155623.GA17634@espresso.pseudorandom.co.uk>
+Date: Thu, 11 Jul 2019 16:56:23 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-On 2019-06-21 10:57, Simon McVittie wrote:
+On Thu, 11 Jul 2019 at 09:33:26 -0400, Perry E. Metzger wrote:
+> if you logged in as root, you could run GUI applications as root
 
-> If upstream projects have a stable branch that is genuinely stable
-> and bugfix-only to minimize the risk of regressions, and encourage
-> downstream distributions to align on the latest stable branch during
-> their development phase, then I think that goes a long way towards this.
-> If I understand correctly, PostgreSQL is one of the canonical examples of
-> a project that does this, and gets its upstream point releases included
-> in stability-focused projects like Debian as-is.
+Yes, that is my understanding. Apps run as uid N trust uid N's Wayland
+compositor, and uid N's Wayland compositor allows connections by apps
+run as uid N and rejects all others. This is approximately the same
+security policy as an Xorg X11 server with "xhost +si:localuser:USERNAME"
+(and nothing else that would allow access, e.g. no xauth(1) tokens).
 
-Doesn't this simply shift the work of backporting ("crazy and bound to
-always fail in the end") from the distro maintainer to the upstream
-stable branch maintainer?  He/she is more like "midstream" working in
-that role.
+Logging in to a typical graphical desktop environment as root is probably
+*also* a bad idea, because a full desktop environment is a huge attack
+surface to be running with a complete set of capabilities; but it does
+avoid some of the problems that come with running individual applications
+as root.
 
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet and on broken lists
-which rewrite From, fetch the TXT record for no-use.mooo.com.
+Graphical toolkits typically (have to!) trust their X11/Wayland display
+(to not send them forged input events, if nothing else), but an app
+running as uid 0 has no good reason why it should trust an X11 server
+or Wayland compositor running as uid 1000. By sending appropriate input
+events, the X11 server or Wayland compositor can make the app do anything
+for which it has UI. This makes the privilege boundary between uid 1000
+and uid 0, when a user with uid 1000 will escalate privileges to uid 0,
+somewhat illusory.
+
+If the graphical toolkit or app was not designed to be robust against
+a malicious display server, or if it was designed to be robust against
+a malicious display server but has bugs in the implementation of that
+design, then the user might also be able to subvert the app, escalating
+from limited root privileges (for example a GUI running as root for
+network configuration, which allows network configuration within certain
+parameters) to unlimited root privileges (arbitrary code execution).
+
+Similarly, if we want accessibility features (screen readers, magnifiers,
+on-screen keyboards, alternative input methods, etc.), then graphical
+toolkits have to trust the accessibility provider, but an app running
+as uid 0 doesn't really have any good reason to be trusting accessibility
+technologies running as uid 1000 either.
+
+In X11, there is also the problem that every client (app) can usually spy
+on the input and output of every other client, and fake input into every
+other client, which means compromising any app compromises every app.
+Wayland doesn't generally have that, because only special privileged
+connections are normally allowed to take screenshots, receive input while
+not in focus, or forge input events (but note that these connections
+are privileged within the context of a desktop session, not privileged
+within the context of the overall system).
+
+    smcv
