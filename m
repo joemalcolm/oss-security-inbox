@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2411" "Thursday" "6" "April" "2017" "01:50:17" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<03aa7ab9-e00e-f9dc-406d-e017f031f73d@redhat.com>" "79" "[oss-security] [OSSA-2017-003] XSS in Horizon federation mappings UI (CVE-2017-7400)" nil nil nil "4" "2017040601:50:17" "[oss-security] [OSSA-2017-003] XSS in Horizon federation mappings UI (CVE-2017-7400)" (number mark "U       tdecacqu@red Apr  6   79/2411  " thread-indent "\"[oss-security] [OSSA-2017-003] XSS in Horizon federation mappings UI (CVE-2017-7400)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1805" "Thursday" "11" "July" "2019" "17:27:19" "+0200" "Martin Steigerwald" "martin@lichtvoll.de" "<4358648.2BLBotf1RR@merkaba>" "48" "Re: [oss-security] Privileged File Access from Desktop Applications" "^Date:" nil nil "7" "2019071115:27:19" "[oss-security] Privileged File Access from Desktop Applications" (number mark "        martin@licht Jul 11   48/1805  " thread-indent "\"Re: [oss-security] Privileged File Access from Desktop Applications\"\n") "<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>" ("<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>") nil nil nil nil nil nil nil "Re: [oss-security] Privileged File Access from Desktop Applications" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32706 invoked by uid 550); 6 Apr 2017 01:50:07 -0000
+Received: (qmail 15550 invoked by uid 550); 11 Jul 2019 21:25:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,102 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32685 invoked from network); 6 Apr 2017 01:50:06 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 16B6D4E359
-Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=tdecacqu@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 16B6D4E359
-To: oss-security@lists.openwall.com
-From: Tristan Cacqueray <tdecacqu@redhat.com>
-Message-ID: <03aa7ab9-e00e-f9dc-406d-e017f031f73d@redhat.com>
-Date: Thu, 6 Apr 2017 01:50:17 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+Received: (qmail 20035 invoked from network); 11 Jul 2019 15:27:39 -0000
+Message-ID: <4358648.2BLBotf1RR@merkaba>
+In-Reply-To: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
+References: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="mC5sCBQotvwIh2NEpcM64ISbER2903nkh"
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Thu, 06 Apr 2017 01:49:55 +0000 (UTC)
-Subject: [oss-security] [OSSA-2017-003] XSS in Horizon federation mappings UI (CVE-2017-7400)
-
---mC5sCBQotvwIh2NEpcM64ISbER2903nkh
-Content-Type: multipart/mixed; boundary="m5CiWpcdQv9d7OGVTKHmUMSDtHfSJis1U";
- protected-headers="v1"
-From: Tristan Cacqueray <tdecacqu@redhat.com>
+Content-Type: multipart/signed; boundary="nextPart6063604.orh7Ms6XP9"; micalg="pgp-sha512"; protocol="application/pgp-signature"
+Authentication-Results: mail.lichtvoll.de;
+	auth=pass smtp.auth=martin smtp.mailfrom=martin@lichtvoll.de
+Date: Thu, 11 Jul 2019 17:27:19 +0200
+From: Martin Steigerwald <martin@lichtvoll.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Privileged File Access from Desktop Applications
 To: oss-security@lists.openwall.com
-Message-ID: <03aa7ab9-e00e-f9dc-406d-e017f031f73d@redhat.com>
-Subject: [OSSA-2017-003] XSS in Horizon federation mappings UI (CVE-2017-7400)
 
---m5CiWpcdQv9d7OGVTKHmUMSDtHfSJis1U
-Content-Type: text/plain; charset=utf-8
+--nextPart6063604.orh7Ms6XP9
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
-OSSA-2017-003: XSS in Horizon federation mappings UI
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
+Malte Kraus - 09.07.19, 15:58:
+> None of the solutions actually provided the user with the accessed
+> path or file operation in the polkit auth prompt. Users are
+> confronted with an unspecific request for privileges that they can
+> only allow or deny without knowing what exactly they are allowing.
+> (This is unfortunately a common theme, e.g. on KDE the framework is
+> still missing support for parameterizing polkit prompts.)
 
-:Date: April 04, 2017
-:CVE: CVE-2017-7400
+For me this looks like KDE developers address this now =E2=80=93 at least=20
+partly:
 
+[KAuth] Add support for action details in Polkit1 backend.
+https://phabricator.kde.org/D21795
 
-Affects
-~~~~~~~
-- Horizon: >=3D9.0.0 <=3D9.1.1, >=3D10.0.0 <=3D10.0.2, =3D=3D11.0.0
-
-
-Description
-~~~~~~~~~~~
-Eric Brown from VMware reported a vulnerability in Horizon. By
-creating a malicious federation mapping, an adminstrator may conduct a
-persistent XSS attack. All Horizon setups are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/442455 (Mitaka)
-- https://review.openstack.org/442454 (Newton)
-- https://review.openstack.org/442453 (Ocata)
-- https://review.openstack.org/442277 (Pike)
-
-
-Credits
-~~~~~~~
-- Eric Brown from VMware (CVE-2017-7400)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1667086
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2017-7400
-
+Thanks,
 --=20
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Martin=
 
-
---m5CiWpcdQv9d7OGVTKHmUMSDtHfSJis1U--
-
---mC5sCBQotvwIh2NEpcM64ISbER2903nkh
+--nextPart6063604.orh7Ms6XP9
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQEcBAEBCAAGBQJY5Z7aAAoJECK5oFySXMXYGdoH/RmYI8UiiOv+CbTbMMLvKlB2
-8jUiYokA0YxJyTurGMH2jwAZAQo/bQIUlQWLo1QR1cZmvXbEZbiwfGzmKdejTANq
-ubGPXAZR8lNCFeNTfmjPlB5tMzclCisT/CEUdgrCPTD8EpBQKr1EdnFkIuNiXZ2H
-ewzWejGKoXOTRLB5Novozsvj4xy7v/spcbFvUorsrBeHp76bia+SrRDmGpbrsxtD
-fsTtLlFAOmVG9UKYYidYACn5an7FPQO7vZvGvErI8bcsPykboEh5Hja7k1WPa4rx
-+S72W8MC4MPftJhorJ9pvkYZeHxmDegEF+iZE2h8zkPnVSvVvHMOw2aoJ/CIXMs=
-=FdZw
+iQIzBAABCgAdFiEEwHn5YLPw1O38fI3CelsxeW2boBgFAl0nVVcACgkQelsxeW2b
+oBghlQ/+Jrebyy4PpstW3WTwsotK0dcZGJZKGz0DbHCg2AFvVr7c+/Si2j+etwE4
+th9pyNH9mrtTRVTxuANq8Ecr9fO4T7SS6FlVnZcFKtmeE4FM115dVcA5+rDO9HSj
+6gqcYnJTmrco8BL/m5t4Y8QtjHiZ3i0RAbGShjSm/RxbhjvLx1/50Arie7km9kUb
+CMNojNNCV5RLd9hDnWh0yrhYu2K0ReMzUKdAI6Q1Bxpm282jzPZputpsB+V99Ryb
+an5NkTSezbqPritqXEAg9quXRv5dwygXXDxh6ekbtfLhvsVs54ikY1Dwd8blVlr9
+WIGmzdS4skr2lZIh+BaHXga4hllqUvy0is+4Z8j3Jw3/HrG5aUWLO9JwZSDH3APQ
+tOsL0xZ/ICF6TW1dfYWbajINu2wDQC3HTK5iKIzK1Bg9IS1tTE9A5LpAVIGNe/0u
+GiHQKDK+/zBh9mmQ0JHiAP+CXwQkNk248eGTUxxTfxeoyb0mRaLbEXhgEs9YJJb4
+eChX/x52+72MRS8n6nnzT0vB8Sub/VRtExhs/C2yKs5kthOEE8n+mQ9iInQ24DdX
+qzqjzbCRIHykarrDWS1tj9Qjc4qpatrfzCwvlfSvMx0cFCp58Uw7itenT6TjrIZJ
+Vs69m4h/V5UCk4ecR6wPg+nkQ+emRkL0K4Y6OlRH2oCQtqhhZu0=
+=xNni
 -----END PGP SIGNATURE-----
 
---mC5sCBQotvwIh2NEpcM64ISbER2903nkh--
+--nextPart6063604.orh7Ms6XP9--
+
+
+
