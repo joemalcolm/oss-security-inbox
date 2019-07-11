@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1696" "Thursday" "12" "April" "2018" "17:18:45" "-0400" "David A. Wheeler" "dwheeler@dwheeler.com" "<E1f6jcD-0002pc-T3@rmmprod07.runbox>" "41" "Re: [oss-security] Re: Terminal Control Chars" nil nil nil "4" "2018041221:18:45" "[oss-security] Re: Terminal Control Chars" (number mark "U       dwheeler@dwh Apr 12   41/1696  " thread-indent "\"Re: [oss-security] Re: Terminal Control Chars\"\n") "<20180412180720.qmtilbpi27kxa3dm@matica.foolinux.mooo.com>" ("<20180412180720.qmtilbpi27kxa3dm@matica.foolinux.mooo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3126" "Thursday" "11" "July" "2019" "15:46:00" "+0200" "Daniel Beck" "ml@beckweb.net" "<94DB5F9B-7D5A-474C-A997-95C4C6F9E02A@beckweb.net>" "85" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "7" "2019071113:46:00" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Jul 11   85/3126  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15679 invoked by uid 550); 12 Apr 2018 21:45:24 -0000
+Received: (qmail 3878 invoked by uid 550); 11 Jul 2019 13:46:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32509 invoked from network); 12 Apr 2018 21:18:57 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-To: "oss-security" <oss-security@lists.openwall.com>
-CC: "oss-security" <oss-security@lists.openwall.com>
-Date: Thu, 12 Apr 2018 17:18:45 -0400 (EDT)
-X-Mailer: RMM6
-In-Reply-To: <20180412180720.qmtilbpi27kxa3dm@matica.foolinux.mooo.com>
-Message-Id: <E1f6jcD-0002pc-T3@rmmprod07.runbox>
-Subject: Re: [oss-security] Re: Terminal Control Chars
+Received: (qmail 3858 invoked from network); 11 Jul 2019 13:46:14 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Message-Id: <94DB5F9B-7D5A-474C-A997-95C4C6F9E02A@beckweb.net>
+Date: Thu, 11 Jul 2019 15:46:00 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.9.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1562852774;232352ee;
+X-HE-SMSGID: 1hlZOc-0001Me-SX
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-On Thu, 12 Apr 2018 11:07:20 -0700, Ian Zimmerman <itz@very.loosely.org> wr=
-ote:
-> The term "invisible character" has some obvious (if perhaps informal)
-> meaning.  But I don't really know what "control character" means.  Is a
-> page separator (^L) a control character, for example?  Is DEL one (ASCII
-> 127)?
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-The term "control character" has a standard definition for every encoding
-I'm familiar with.  ASCII defined a set of control characters, and
-Unicode built on them.
+* Docker Plugin 1.1.7
+* Embeddable Build Status Plugin 2.0.2
+* Gogs Plugin 1.0.15
+* Mashup Portlets Plugin 1.1.0
 
-The Unicode list of control characters is here:
-https://www.fileformat.info/info/unicode/category/Cc/list.htm
-You'll see it includes:
-U+0007 	BELL
-U+0008 	BACKSPACE
-U+0009 	CHARACTER TABULATION
-U+000A 	LINE FEED (LF)
-U+000C 	FORM FEED (FF) (aka ^L)
-U+000D 	CARRIAGE RETURN (CR)
-U+007F 	DELETE
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-According to Wikipedia <https://en.wikipedia.org/wiki/ASCII>,
-the set of control characters in US-ASCII is 00..1F and 7F (hex).
+* Caliper CI Plugin
+* Dependency Graph Viewer Plugin
+* Port Allocator Plugin
 
-Russ Allbery:
-> I think a useful definition of "control character" in this context (and I
-> realize this doesn't exactly match the ASCII definition) is a character
-> that results in an action other than insertion being taken...
-> CR and LF would not be control characters in that definition, since they
-> insert a newline and don't cause an action. Similarly, TAB wouldn't be a
-> control character in that definition.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-07-11/
 
-As you noted, that definition doesn't match the ASCII definition, but
-I also think it's misleading.  If someone pastes a CR/LF into a shell promp=
-t,
-it certainly *DOES* cause an action, namely, execution of that line.
-That's probably not what you meant by "action", but from a security
-point-of-view, causing a script to execute is rather important :-).
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
---- David A. Wheeler
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+
+
+SECURITY-1010 / CVE-2019-10340 (CSRF), CVE-2019-10341 (permission check)
+Docker Plugin did not perform permission checks on a method implementing 
+form validation. This allowed users with Overall/Read access to Jenkins to 
+connect to an attacker-specified URL using attacker-specified credentials 
+IDs obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a cross-site request forgery vulnerability.
+
+
+SECURITY-1400 / CVE-2019-10342
+Docker Plugin provides a list of applicable credential IDs to allow users 
+configuring the plugin to select the one to use.
+
+This functionality did not correctly check permissions, allowing any user 
+with Overall/Read permission to get a list of valid credentials IDs. Those 
+could be used as part of an attack to capture the credentials using another 
+vulnerability.
+
+
+SECURITY-1419 / CVE-2019-10346
+Embeddable Build Status Plugin did not sanitize arguments provided in the 
+query string, resulting in a reflected cross-site scripting vulnerability.
+
+
+SECURITY-775 / CVE-2019-10347
+Mashup Portlets Plugin stored SonarQube credentials unencrypted on the 
+Jenkins master. These credentials could be viewed by users with access to 
+the master file system.
+
+
+SECURITY-1438 / CVE-2019-10348
+Gogs Plugin stored credentials unencrypted in job config.xml files on the 
+Jenkins master. These credentials could be viewed by users with Extended 
+Read permission, or access to the master file system.
+
+
+SECURITY-1177 / CVE-2019-10349
+Dependency Graph Viewer Plugin does not correctly escape the Display Name 
+value for jobs in Jenkins, resulting in a stored cross-site scripting 
+vulnerability.
+
+
+SECURITY-1441 / CVE-2019-10350
+Port Allocator Plugin stores credentials unencrypted in job config.xml 
+files on the Jenkins master. These credentials can be viewed by users with 
+Extended Read permission, or access to the master file system.
+
+
+SECURITY-1437 / CVE-2019-10351
+Caliper CI Plugin stores credentials unencrypted in job config.xml files on 
+the Jenkins master. These credentials can be viewed by users with Extended 
+Read permission, or access to the master file system.
+
