@@ -1,60 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/21/1
-Message-ID: <20190321153101.GA23870@cbuissar-ltop.localdomain>
-Date: Thu, 21 Mar 2019 16:31:01 +0100
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/12
+Message-ID: <20190711211400.GB24270@espresso.pseudorandom.co.uk>
+Date: Thu, 11 Jul 2019 22:14:00 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: ghostscript: 2 -dSAFER bypass: CVE-2019-3835 & CVE-2019-3838
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, 11 Jul 2019 at 17:31:38 +0100, John Haxby wrote:
+> Obviously one could split the process into its graphical half and its
+> messing-around-with-disks half
 
-This is to disclose 2 vulnerabilities in ghostscript (https://ghostscript.com/).
+This is not a new idea: one could, and some have. udisksd includes
+approximately the messing-around-with-disks half of gparted, and GNOME
+Disks (formerly palimpsest) is one example of the graphical half. I'm
+sure there are other UIs that use udisksd, such as a KDE equivalent of
+GNOME Disks, but I don't know their names. Their functionality is not
+identical (GNOME Disks and udisksd also cover other disk operations such
+as mounting and SMART checks, and I'm not sure whether they implement
+all the same corner cases of partitioning that parted does) but there
+is a lot of overlap.
 
+If there are useful things that can be expressed by parted APIs but
+not by udisks APIs, I would suggest opening feature requests with the
+udisks project.
 
-1- CVE-2019-3835 ghostscript: superexec operator is available
+As an example of how established this pattern is, the hal (Hardware
+Abstraction Layer) service was available in Debian stable releases
+from 2005 onwards. hal was later replaced by multiple domain-specific
+services like udisks, because other aspects of its design turned out
+to be inefficient and it had the "jack of all trades, master of none"
+problem, but the general concept of unprivileged UIs sending requests
+to a system service has continued.
 
-It was found that the superexec operator was available in the internal dictionary.  A specially crafted PostScript file could use this flaw in order to, for example, have access to the file system outside of the constrains imposed by -dSAFER.
+> but it's not clear to me how the graphical
+> half would handle authentication[*] for the process that needs to run
+> as root
 
-This one is considered particularly Important because it can be easily triggered inside popular Linux PostScript viewers, or embedded in a PDF when read by the `gs` command, and could be used to modify the content of bashrc.
+The part that runs as root is usually a system service that is made
+available as part of the OS and runs as root to begin with, either during
+boot or on-demand, often by an init system like systemd, sysvinit or
+Upstart or by the D-Bus system message bus' "activation" mechanism.
+It typically receives IPC messages via an AF_UNIX socket (or D-Bus,
+which is basically a higher-level layer around AF_UNIX), and can inspect
+the credentials of its client in a race-free way via OS-specific kernel
+APIs like Linux SO_PEERCRED, which cannot be faked by a malicious client.
 
-Upstream fixes:
- * Fix bug 700585: Restrict superexec and remove it from internals and gs_cet.ps
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=2055917
- * Bug 700585: Obliterate "superexec". We don't need it, nor do any known apps.
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=d683d1e6
+In particular, udisksd (see above) and polkitd (see below) are both
+system services designed to be launched by the OS in this way.
 
-Upstream bug report (currently restricted) : https://bugs.ghostscript.com/show_bug.cgi?id=700585
+> There are any number of administrative tasks that will need
+> to be redesigned to cope with this change.
 
-Note: The only important fix is the second one, d683d1e6, the other one is only a dependency.
+Again, this is not new. Many administrative tasks can already be done via
+system services that are addressable via IPC, often via D-Bus and with
+authorization carried out by polkit (formerly PolicyKit) according to a
+security policy codified by upstream defaults, distribution configuration
+by a vendor or local configuration by a sysadmin. In particular, more
+or less everything with a system-wide effect that is provided by GNOME's
+Settings app (internally named gnome-control-center), or its equivalents
+in other desktops, already works like this.
 
-To test if you are affected (on recent ghostscript, starting from gs-9.22 [starting from commit 8556b698892]):
+D-Bus is not the only suitable IPC mechanism (although it is a convenient
+and popular one, and the one I'm most familiar with) and polkit is
+not the only way to codify policy - some services offer their own IPC
+protocols over an AF_UNIX socket, and have their own configuration to
+determine who can do what using those protocols.
 
-$ gs -dSAFER -dNODISPLAY
-GS> 1183615869 internaldict /superexec known { (VULNERABLE\n) } { (SAFE\n) } ifelse print
-
-On versions older than 9.22, this would be sufficient :
-
-GS> /superexec where { (VULNERABLE\n) } { (SAFE\n) } ifelse print
-
-
-
-2- CVE-2019-3838 ghostscript: forceput in DefineResource is still accessible
-
-It was found that the forceput operator could be extracted from the DefineResource method using methods similar to the ones described in CVE-2019-6116. A specially crafted PostScript file could use this flaw in order to, for example, have access to the file system outside of the constrains imposed by -dSAFER.
-
-Upstream bug report (currently restricted) : https://bugs.ghostscript.com/show_bug.cgi?id=700576
-
-Upstream fixes:
-* https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ed9fcd95bb01
-* https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a82601e8f95a
-
-Don't hesitate to let me know if further information is required
-
-Best regards,
-
---
-Cedric Buissart
-Red Hat Product Security
-
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+    smcv
