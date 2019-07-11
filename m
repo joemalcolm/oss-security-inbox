@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2589" "Friday" "31" "August" "2018" "11:52:16" "-0400" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<87d0ty355b.fsf@fifthhorseman.net>" "60" "Re: [oss-security] Travis CI MITM RCE" nil nil nil "8" "2018083115:52:16" "[oss-security] Travis CI MITM RCE" (number mark "U       dkg@fifthhor Aug 31   60/2589  " thread-indent "\"Re: [oss-security] Travis CI MITM RCE\"\n") "<3e3fad60-244f-e11d-f3c9-4757be6e6f93@johannes-bauer.com>" ("<20180825214923.ppes3ivrw73mbmrm@jwilk.net>" "<20180826005658.GA5795@osmium.pennocktech.home.arpa>" "<87sh2y5tnf.fsf@fifthhorseman.net>" "<3e3fad60-244f-e11d-f3c9-4757be6e6f93@johannes-bauer.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2681" "Thursday" "11" "July" "2019" "16:56:23" "+0100" "Simon McVittie" "smcv@debian.org" "<20190711155623.GA17634@espresso.pseudorandom.co.uk>" "48" "Re: [oss-security] Privileged File Access from Desktop Applications" "^Date:" nil nil "7" "2019071115:56:23" "[oss-security] Privileged File Access from Desktop Applications" (number mark "        smcv@debian. Jul 11   48/2681  " thread-indent "\"Re: [oss-security] Privileged File Access from Desktop Applications\"\n") "<20190711093326.328948dc@jabberwock.cb.piermont.com>" ("<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>" "<20190709113036.0f12d057@jabberwock.cb.piermont.com>" "<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>" "<20190711093326.328948dc@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil "Re: [oss-security] Privileged File Access from Desktop Applications" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13986 invoked by uid 550); 31 Aug 2018 15:52:36 -0000
+Received: (qmail 1646 invoked by uid 550); 11 Jul 2019 15:56:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13965 invoked from network); 31 Aug 2018 15:52:35 -0000
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: zugtprgfwprz@spornkuller.de, oss-security@lists.openwall.com
-In-Reply-To: <3e3fad60-244f-e11d-f3c9-4757be6e6f93@johannes-bauer.com>
-References: <20180825214923.ppes3ivrw73mbmrm@jwilk.net> <20180826005658.GA5795@osmium.pennocktech.home.arpa> <87sh2y5tnf.fsf@fifthhorseman.net> <3e3fad60-244f-e11d-f3c9-4757be6e6f93@johannes-bauer.com>
-Date: Fri, 31 Aug 2018 11:52:16 -0400
-Message-ID: <87d0ty355b.fsf@fifthhorseman.net>
+Received: (qmail 1626 invoked from network); 11 Jul 2019 15:56:43 -0000
+Message-ID: <20190711155623.GA17634@espresso.pseudorandom.co.uk>
+References: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
+ <20190709113036.0f12d057@jabberwock.cb.piermont.com>
+ <9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
+ <20190711093326.328948dc@jabberwock.cb.piermont.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [oss-security] Travis CI MITM RCE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190711093326.328948dc@jabberwock.cb.piermont.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Thu, 11 Jul 2019 16:56:23 +0100
+From: Simon McVittie <smcv@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Privileged File Access from Desktop Applications
+To: oss-security@lists.openwall.com
 
---=-=-=
-Content-Type: text/plain
+On Thu, 11 Jul 2019 at 09:33:26 -0400, Perry E. Metzger wrote:
+> if you logged in as root, you could run GUI applications as root
 
-On Thu 2018-08-30 18:13:34 +0200, zugtprgfwprz@spornkuller.de wrote:
-> I agree about the "key ID" part, but not about the "fingerprint" part.
-> Pinning a cryptographic hash over a public key isn't a security
-> antipattern by any strech of the imagination. Sure, you could argue that
-> the SHA-1 used by GPG isn't state-of-the-art anymore, but we're not
-> talking about collision attacks, but second preimage attacks. Far worse
-> for the attacker.
->
-> The way you phrased it, however, all applications of fingerprints/hashes
-> would be broken (SSH fingerprints, HPKP, etc.), regardless of the hash
-> function they use.
+Yes, that is my understanding. Apps run as uid N trust uid N's Wayland
+compositor, and uid N's Wayland compositor allows connections by apps
+run as uid N and rejects all others. This is approximately the same
+security policy as an Xorg X11 server with "xhost +si:localuser:USERNAME"
+(and nothing else that would allow access, e.g. no xauth(1) tokens).
 
-sorry, i think i wasn't clear enough about my complaint.  I'm not
-claiming that fingerprints are broken, or that second preimage attacks
-against sha-1 are possible today.  I'm saying that they're ill-suited to
-many of the specific use cases where they show up.
+Logging in to a typical graphical desktop environment as root is probably
+*also* a bad idea, because a full desktop environment is a huge attack
+surface to be running with a complete set of capabilities; but it does
+avoid some of the problems that come with running individual applications
+as root.
 
-If all i send you is a fingerprint, you *still* need to get the public
-key somewhere.  This is a point of potential failure.
+Graphical toolkits typically (have to!) trust their X11/Wayland display
+(to not send them forged input events, if nothing else), but an app
+running as uid 0 has no good reason why it should trust an X11 server
+or Wayland compositor running as uid 1000. By sending appropriate input
+events, the X11 server or Wayland compositor can make the app do anything
+for which it has UI. This makes the privilege boundary between uid 1000
+and uid 0, when a user with uid 1000 will escalate privileges to uid 0,
+somewhat illusory.
 
-In nearly every case where we're talking about automated signature
-checking, the cost of shipping the public key instead of (or in addition
-to) the fingerprint is negligible.  and shipping just the fingerprint
-introduces robustness and reliability problems for the signature
-verification.
+If the graphical toolkit or app was not designed to be robust against
+a malicious display server, or if it was designed to be robust against
+a malicious display server but has bugs in the implementation of that
+design, then the user might also be able to subvert the app, escalating
+from limited root privileges (for example a GUI running as root for
+network configuration, which allows network configuration within certain
+parameters) to unlimited root privileges (arbitrary code execution).
 
-This is not to say that these sorts of things shouldn't consider looking
-for updates to the keys that they have -- revocation checks, new
-subkeys, etc all might be useful in some contexts.  But there's no good
-reason to ship a sophisticated, signature-verifying package with just a
-fingerprint in it, when you could ship the whole key instead.
+Similarly, if we want accessibility features (screen readers, magnifiers,
+on-screen keyboards, alternative input methods, etc.), then graphical
+toolkits have to trust the accessibility provider, but an app running
+as uid 0 doesn't really have any good reason to be trusting accessibility
+technologies running as uid 1000 either.
 
-so, where are fingerprints useful?  they're useful in *extremely
-bandwidth-limited* cases, such as situations dealing with human
-attention spans (e.g. fingerprint verification) or technically or
-socially constrained channels like twitter, visible e-mail .signatures,
-or SMS.  They're also useful internally in programs that deal with many
-keys, as concise references to known keys, or placeholders for unknown
-keys.
+In X11, there is also the problem that every client (app) can usually spy
+on the input and output of every other client, and fake input into every
+other client, which means compromising any app compromises every app.
+Wayland doesn't generally have that, because only special privileged
+connections are normally allowed to take screenshots, receive input while
+not in focus, or forge input events (but note that these connections
+are privileged within the context of a desktop session, not privileged
+within the context of the overall system).
 
-Fingerprints are even arguably too long for most human attention spans,
-so we need additional user research to look into better ways to do
-verification that involves humans.
-
-     --dkg
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQTTaP514aqS9uSbmdJsHx7ezFD6UwUCW4lkMQAKCRBsHx7ezFD6
-Uys+AQDsCUQQT0cbMCEPNQ+1ZX9/x8VrJEvH9PUgMVE24j+RyQD7BtLV94ZDTMcg
-kd8dwnWOSf6ot2pe/yb5U1sQY0PA8Aw=
-=WLEE
------END PGP SIGNATURE-----
---=-=-=--
+    smcv
