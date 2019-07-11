@@ -1,30 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/19/3
-Message-ID: <aef19c3ba928f5246be41adcb2bebb3ad209f511.camel@gathman.org>
-Date: Wed, 18 Dec 2019 23:09:40 -0500
-From: "Stuart D. Gathman" <stuart@...hman.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/9
+Message-ID: <alpine.GSO.2.20.1907111050290.8466@scrappy.simplesystems.org>
+Date: Thu, 11 Jul 2019 10:57:15 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack
+cc: Malte Kraus <malte.kraus@...e.com>
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2019-12-19 at 00:33 +0500, Alexander E. Patrakov wrote:
-> 
-> > The session id itself may be generated randomly, but the way the
-> > session is indexed by the backing store does not use a secure
-> > comparison.
-> 
-> I don't understand why this is reported as something Rack-specific.
-> 
-> On the other hand, I don't see how a timing attack would be possible
-> on the most common data structures (B-Tree and Hash) used for
-> database indexes.
+On Thu, 11 Jul 2019, Perry E. Metzger wrote:
+>
+> It seems like a bad idea.
+>
+> If one wants to have mechanisms by which the operating system can
+> allow unprivileged programs to temporarily assume privileges (which
+> is a frequent idea in security), then they should be carefully
+> designed and part of the OS, rather than creating an ad hoc facility
+> via a subsystem that isn't intended for it. There are good ways to do
+> that, like capabilities.
 
-My B-tree uses minimum unique key with leading duplicates not stored
-for all but the leaf nodes - so it would also (eventually - there is so
-much noise in the timing measurement) give away the key via timing
-attacks.  
+I agree.  It is rather common that more than one file needs to be 
+modified at one time.  If a more complex mechanism like a sqlite3 
+database needs to be updated, then the implementation of sqlite3 will 
+expect to be able to access files in a normal way and it will expect 
+to be use all the abilities it normally uses.  It is rather common 
+that atomic operations are required, locking is required, the ability 
+to link/rename files is required, and that synchronization of file 
+content and directories is required.
 
-I had not thought of that angle, and I hope I remember this the next
-time I am reinventing session ids.  Now I'm also wondering about other
-libraries that manage session ids.  Java servlets in  Apache Tomcat?
+In addition to the security concerns, it is difficult to see how a 
+virtual filesystem intended for use by simplistic GUI file managers 
+will satisfy common administrative requirements.
 
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
