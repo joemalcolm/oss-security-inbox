@@ -1,4 +1,9 @@
-Received: (qmail 6000 invoked by uid 550); 22 Feb 2023 15:27:09 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2010" "Thursday" "11" "July" "2019" "07:51:17" "+0000" "Malte Kraus" "malte.kraus@suse.com" "<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>" "53" "Re: [oss-security] Privileged File Access from Desktop Applications" "^CC:" nil nil "7" "2019071107:51:17" "[oss-security] Privileged File Access from Desktop Applications" (number mark "        malte.kraus@ Jul 11   53/2010  " thread-indent "\"Re: [oss-security] Privileged File Access from Desktop Applications\"\n") "<20190709113036.0f12d057@jabberwock.cb.piermont.com>" ("<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>" "<20190709113036.0f12d057@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil "Re: [oss-security] Privileged File Access from Desktop Applications" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 12180 invoked by uid 550); 11 Jul 2019 10:04:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,124 +11,101 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32054 invoked from network); 22 Feb 2023 15:17:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm1; t=1677079046; x=
-	1677165446; bh=dMfVJ9K93SO0r0XRbF7PemxSk0a2LF15Vo5mPufyX7I=; b=k
-	nNiJjlVgMB6XRGMLyJThV7MEI34IaixuQJESQBnd5V3KfVrQ1vDxxj7KW9dZuxta
-	VBooslIizMd9VFMpgMslC3AEdWyIs7S8mQdv505gFt0xhvnAvwilGnLmXDNuy/8J
-	zJAp6f/T66iE8kpHEPt4M+DdNgJCpZ/ey3QfHlWYINrsJyHzLK+fkfBRCYYVSHjM
-	UwlJlWsXYR6nCTXyk+QkmzopsGltl8JO/rWkGoZ24aBAsB6AregzYpwXmzwjdYXe
-	r+HMI4/ejsgRi4Vf0Ed8AMACBSDZRGzeAVHToOjWx3STtk1EgUi5j7VVf9tqCM4e
-	DPJlKfSv6jYSBZQEmsocw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1677079046; x=1677165446; bh=dMfVJ9K93SO0r0XRbF7PemxSk0a2
-	LF15Vo5mPufyX7I=; b=eFX4NLZhN8jPmUhPaptpbansZX4AWFffgIq56f/eCZZj
-	dhAHWzGk1BmhqmgHk6N3ID5DD8i2hJ7QOewjLtSxo1/Iyq8x5a9AVWsDWEKoZkkY
-	KkxwixVBCZMIxvcLmoFMCTunFGBVTaJ+QobfpnDSiVufty0htScCYx0pJXWaeez1
-	EkNGcn9mw807nTJKYnQRlIMY9dPHbNqqTKaI8iLtVLUh4cckZucFD2j2t0SIFQGE
-	3owMlPotATPCjrcdEo2lOmZzzl4mnRqB9hYiuZuOB0tRaMjRq1D58H8fURDdYmu9
-	g2eD0G0Vu2Nl4rpr+w2h/0LY2UpOcZ+HcsyfvwN5EA==
-X-ME-Sender: <xms:BTL2Y65jB1mA1ZLa1LRZD7FoK75YIwxdOozAYRW6xXnjn4c_cg9XrQ>
-    <xme:BTL2Yz7hEZw1OiR_YiT_dWNl9b5cpqc9izII7M7XMf9aLSD2WB7pJkM23DLr2t7OQ
-    5JjUdXgjc7NRdw>
-X-ME-Received: <xmr:BTL2Y5fzguTsZ7ZrLIVw-JkJs7mXngcQr-nxWVKmW6Hq38m55CNXCBm_H7R0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudejledgjeefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtjeenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
-    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
-    eptdettdeuiedvfeeiudfgjedtuedtleefvdeukeeltddugeejvdeiudekfefhueetnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepuggvmhhise
-    hinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomh
-X-ME-Proxy: <xmx:BTL2Y3LNsrjEjtXEAWFvp5yCVSx96onY91thDsDroQcOXC9El4lZeg>
-    <xmx:BTL2Y-KpEcahxwt05JA9IqTH9fZe1LpnwHGQ2sPKpS5-NHR_ibsqcw>
-    <xmx:BTL2Y4z9ZE0-S4MC4mpDIasTumRY_Ja1RyhWxm8C5uo458kPqrrHlQ>
-    <xmx:BjL2YzVWUxc90oZzEneNlpmoyEgBFc_0JtWo12VLLN1erltQMrKFPw>
-Feedback-ID: iac594737:Fastmail
-Date: Wed, 22 Feb 2023 10:17:19 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Message-ID: <Y/YyAyP4+WYltYm6@itl-email>
-References: <20230202130212.GA15689@localhost.localdomain>
- <20230213120214.GB19824@localhost.localdomain>
- <20230222055430.GA32113@localhost.localdomain>
+Received: (qmail 27886 invoked from network); 11 Jul 2019 08:19:56 -0000
+Thread-Topic: [oss-security] Privileged File Access from Desktop Applications
+Thread-Index: AQHVNl5nUBfPP5kO8kaBFmoFEO3kG6bCamhOgAKjjwA=
+Message-ID: <9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
+References: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
+	 <20190709113036.0f12d057@jabberwock.cb.piermont.com>
+In-Reply-To: <20190709113036.0f12d057@jabberwock.cb.piermont.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=malte.kraus@suse.com; 
+x-originating-ip: [2620:113:80c0:5::2222]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 8d360fab-dadd-41c7-dd3f-08d705d48e2c
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(49563074)(7193020);SRVR:BN6PR18MB1410;
+x-ms-traffictypediagnostic: BN6PR18MB1410:
+x-microsoft-antispam-prvs: <BN6PR18MB1410BE133ADF8CAE7D35E67984F30@BN6PR18MB1410.namprd18.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-forefront-prvs: 0095BCF226
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(4636009)(136003)(346002)(366004)(396003)(39860400002)(376002)(189003)(199004)(81166006)(5640700003)(6436002)(8936002)(2616005)(46003)(478600001)(81156014)(966005)(66476007)(8676002)(2906002)(446003)(36756003)(6512007)(71190400001)(6486002)(486006)(6306002)(5660300002)(6916009)(305945005)(7736002)(229853002)(25786009)(11346002)(66574012)(16799955002)(476003)(66556008)(66446008)(76116006)(91956017)(44832011)(64756008)(66616009)(6246003)(71200400001)(6116002)(14454004)(316002)(86362001)(99286004)(102836004)(53936002)(186003)(99936001)(256004)(2351001)(118296001)(66946007)(14444005)(68736007)(347745004)(6506007)(4326008)(2501003)(76176011)(15650500001);DIR:OUT;SFP:1102;SCL:1;SRVR:BN6PR18MB1410;H:BN6PR18MB1092.namprd18.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: suse.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: gsOqmXJTO+50cr+E/kjTRfATUGjithlTX5/Xei8WYqLMgQA4qb6v0nimGVSTqlpzHb+8pjciuOyIxEl7/LXM9+0drKvQQS1fYH9Bb2EeXJqH8rGWa99/S7RwFxJuoZs/mZ77VzmC7qT1cFNkGL/yfsy5CWGZBaYvNE7MvxzoKXEJ6nZZIsGCdqu53hN0YRhS99viHXKdyax8QOalfMnLQbHzMe7iyM3qd/zKqOdeqbp3vrA1ohJq+RVxxtIQ/NSq3V6YB1EaAfSD64diXaMlAshtTMJEso2pTXbafPNieANSFqRPEXNMXgjFCCQ5SJ3XoM0Qk44R/H22JdzHncSbQt1WSP5jM6Ife3rgR6SSCUV0wuaxSwBAjn7evq1ywypbbVNoMf78XW8On/A/Ujzk9OMIebkNX8WgLTY2LEuws54=
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="=-MPA3hgq9ta9YfjmxGa6A"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oAxBwtcY5uargp99"
-Content-Disposition: inline
-In-Reply-To: <20230222055430.GA32113@localhost.localdomain>
-Subject: Re: [oss-security] Re: double-free vulnerability in OpenSSH server
- 9.1 (CVE-2023-25136)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8d360fab-dadd-41c7-dd3f-08d705d48e2c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jul 2019 07:51:17.1065
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 856b813c-16e5-49a5-85ec-6f081e13b527
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: malte.kraus@suse.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR18MB1410
+X-OriginatorOrg: suse.com
+CC: "perry@piermont.com" <perry@piermont.com>
+Date: Thu, 11 Jul 2019 07:51:17 +0000
+From: Malte Kraus <malte.kraus@suse.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Privileged File Access from Desktop Applications
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---oAxBwtcY5uargp99
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
+--=-MPA3hgq9ta9YfjmxGa6A
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 22 Feb 2023 10:17:19 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: double-free vulnerability in OpenSSH server
- 9.1 (CVE-2023-25136)
 
-On Wed, Feb 22, 2023 at 05:54:36AM +0000, Qualys Security Advisory wrote:
-> Hi all,
->=20
-> Another quick update on the exploitation of this double-free bug on
-> OpenBSD:
->=20
-> a/ our previous attack (the arbitrary control of sshd's instruction
-> pointer via the EVP_AES_KEY structure) works only on OpenBSD amd64, not
-> on OpenBSD i386;
->=20
-> b/ we were able to recycle the chunk of memory where
-> options.kex_algorithms was allocated, into a chunk of a different size
-> (which gives us greater freedom), but this happens with such a low
-> probability (even on i386) that we do not consider this particular
-> attack to be practical;
->=20
-> c/ as a direct consequence of CVE-2023-25136, we found an information
-> leak (of bits and pieces from the memory of the unprivileged sshd
-> process), but it is unlikely to be useful in practice.
+Hi Perry,
 
-Is it possible to use this information leak to bypass ASLR without
-crashing the process?  If so, then one could use the control of the
-instruction pointer to jump to a ROP chain and get code execution.
-This flaw would then be at least the third RCE in OpenBSD=E2=80=99s default
-install, and the second in OpenSSH.
+On Tue, 2019-07-09 at 11:30 -0400,  Perry E. Metzger wrote:
+> Can you explain (or point to) a description of why this is a problem?
+I'm not sure what exactly breaks, just that it does, see e.g. [1] [2]
+[3]. Since we're talking about root it's not a matter of technical
+impossibility, but a decision not to write the code to make it work.
 
-Also, is this flaw expected to be exploitable for code execution on
-GNU/Linux?
+=46rom a security perspective that seems like a great improvement. Even
+if it should be the case that some programs don't follow best practices
+re "least privileges", at least it's not the whole application running
+as root.
+
+1:=20
+https://wiki.archlinux.org/index.php/Running_GUI_applications_as_root#Wayla=
+nd
+2:=20
+https://wiki.debian.org/Wayland#I.27m_accustomed_to_running_various_program=
+s_.28e.g._synaptic.29_as_root_in_my_X_session.__How_will_this_work_under_Wa=
+yland.3F
+3:=20
+https://fedoraproject.org/wiki/How_to_debug_Wayland_problems#Graphical_appl=
+ications_can.27t_be_run_as_root_from_terminal
+
 --=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Malte Kraus <malte.kraus@suse.com>
+Security Engineer
+PGP Key: 8AFC 3C58 6880 2DDD 4792  C3C2 FDBD 2984 D4C3 C2F0
+SUSE Software Solutions Germany GmbH, GF: Felix Imend=C3=B6rffer, Mary
+Higgins, Sri Rasiah, HRB 21284 (AG N=C3=BCrnberg)
 
---oAxBwtcY5uargp99
+--=-MPA3hgq9ta9YfjmxGa6A
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmP2MgMACgkQsoi1X/+c
-IsFXYRAAnh8LGak7k7CLIZSUISTYYW1Km4w5L/TJ8nPqHaO3s+X1Azx49eJ8cBYd
-bxqQ6ACF5xfVKdemTKRIJBol/KfpTb3v04qSQ81x0mlQ4i1lXfpKdFo/r/TJdOQ2
-JmqXMxH185OtTy317EDtPvm+EICZubJV3YJeFgzPtNaKp1BDRkGNdU4tYApxdtoW
-Adf7fpoPfz6yhNOr1wLMo6y8R6rhx1bMfPX108K1R1/FS/9NYT1HYG/CzZDXP4uv
-OgbSDiCSpT7iStiOH6lZQOCcSTM+E1T5Xt7xS3L+MCwBeCINumVYrE8eErHCGa0j
-l9aUtBVIJfvxniED/5FMZs0MkTKlxlj7gd53yAcwZZolNXpzUpRc0mTsn0DGA3+V
-Vb+MVGecTV8VzvM5oZ29xOz3KZILJrIuNFsbaa7dJGEJAlNm0FfJ+8ZjewuKAEtl
-y9z8kf5FDweHqaNLQdToalCWRDN7a0kEO7K0FSbwd2/ZP6dqRYJhV2RvLzjJxEK2
-eSkJxaj2PnaAA8TrahpmgF5loVhHZKsBCBL2IIr0lz0mSM2u7TSGeM5oDXXzP1/k
-yy2bJmkC/LNVbqYLenVQPS484d5O9h1xBwoxyv+2LtlUhgfSx5Dic1kL2Mpolipr
-7Mj6Ja8hsen/OwVxFN2jto3qaGFXpA3liUmwXJlhBTJnH+RNY+M=
-=xfJ6
+iQEzBAABCQAdFiEEivw8WGiALd1HksPC/b0phNTDwvAFAl0m6lgACgkQ/b0phNTD
+wvCPtAf9FfdWzdpC0+KRngDz7+1QHqoLScO/K8k4FYBz+ZLoPeXN0TR2D3IpqONx
+LJ+v3cQXxaX/21y2v/NLPpJQN3VskzFAXgZ3N/KK+2k1CjLKR2gUrpaZo9vPneMN
+QxnUwOBjrPrFpW9QCRzdiMa4yZSDjA7zRMdZj8h9WpjlpR5lKuuoqbxVaZDbHAMJ
+1nGwukJ71FbR9KPpnYa4rJEABhiyGNrbc3goK+Xh1SryqLm2oyvb7d2gb89sM917
+wHFmlVo4ScrxvCYw+NrSRXvHkw7SL3uEmDwEiA4LC+v4fVr+JApJJAALob7CWoZp
+9uspbOZxzFDS/AVp5g1mbwGs8/T/PA==
+=ZlXE
 -----END PGP SIGNATURE-----
 
---oAxBwtcY5uargp99--
+--=-MPA3hgq9ta9YfjmxGa6A--
