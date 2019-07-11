@@ -1,30 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/15
-Message-ID: <d494e8da-6f24-ffc3-7179-d604cc217bd5@gentoo.org>
-Date: Fri, 12 Jul 2019 00:28:27 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: linux-distros membership application - Microsoft
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/3
+Message-ID: <20190711093326.328948dc@jabberwock.cb.piermont.com>
+Date: Thu, 11 Jul 2019 09:33:26 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Malte Kraus <malte.kraus@...e.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-On 6/27/19 4:03 PM, Solar Designer wrote:
-> only go until the end of 2018, so you'd be able to use them for examples
-> dating back to 2018 and earlier.  We should ask Gentoo to update these
-> statistics soon, perhaps for period until end of June 2019, which will
-> be possible soon.
+On Thu, 11 Jul 2019 07:51:17 +0000 Malte Kraus <malte.kraus@...e.com>
+wrote:
+> Hi Perry,
+> 
+> On Tue, 2019-07-09 at 11:30 -0400,  Perry E. Metzger wrote:
+> > Can you explain (or point to) a description of why this is a
+> > problem?  
+> I'm not sure what exactly breaks, just that it does, see e.g. [1]
+> [2] [3]. Since we're talking about root it's not a matter of
+> technical impossibility, but a decision not to write the code to
+> make it work.
+> 
+> From a security perspective that seems like a great improvement.
+> Even if it should be the case that some programs don't follow best
+> practices re "least privileges", at least it's not the whole
+> application running as root.
+> 
+> 1: 
+> https://wiki.archlinux.org/index.php/Running_GUI_applications_as_root#Wayland
+> 2: 
+> https://wiki.debian.org/Wayland#I.27m_accustomed_to_running_various_programs_.28e.g._synaptic.29_as_root_in_my_X_session.__How_will_this_work_under_Wayland.3F
+> 3: 
+> https://fedoraproject.org/wiki/How_to_debug_Wayland_problems#Graphical_applications_can.27t_be_run_as_root_from_terminal
+> 
 
-yes, I'll hopefully get around to updating this later this week, the
-wait was indeed for full half-year figures, but due to holiday season
-the available time has been sporadic... Give me a week and it'll be
-updated :)
+So these links seem to say that things have been structured so you
+*can't* run GUI apps as root, not that there is a special or unusual
+security problem in Wayland if you run an application as root; if
+you logged in as root, you could run GUI applications as root. That's
+rather different from the original statement. Am I misunderstanding?
 
-FWIW; on a personal note, I would like for Sasha to become a participant.
-
+Perry
 -- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Perry E. Metzger		perry@...rmont.com
