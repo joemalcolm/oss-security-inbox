@@ -1,97 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/08/6
-Message-ID: <alpine.LNX.2.02.1905081352280.25606@v8.schaltsekun.de>
-Date: Wed, 8 May 2019 15:13:58 +0200 (CEST)
-From: Roman Drahtmueller <draht@...altsekun.de>
-To: Seong-Joong Kim <sungjungk@...il.com>
-cc: oss-security@...ts.openwall.com,  Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
-Subject: Re: Re: fprintd: found storing user fingerprints without encryption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/15
+Message-ID: <d494e8da-6f24-ffc3-7179-d604cc217bd5@gentoo.org>
+Date: Fri, 12 Jul 2019 00:28:27 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-[...]
+On 6/27/19 4:03 PM, Solar Designer wrote:
+> only go until the end of 2018, so you'd be able to use them for examples
+> dating back to 2018 and earlier.  We should ask Gentoo to update these
+> statistics soon, perhaps for period until end of June 2019, which will
+> be possible soon.
 
-> I am not insisting that encryption key should be on the disk or is
-> encrypted with a static key that is embedded in the binary.
-> Instead, we can make fprintd to use a TPM, if available.
+yes, I'll hopefully get around to updating this later this week, the
+wait was indeed for full half-year figures, but due to holiday season
+the available time has been sporadic... Give me a week and it'll be
+updated :)
 
+FWIW; on a personal note, I would like for Sasha to become a participant.
 
-The problem persists: The encryption key must be available for the FP 
-data to be accessible, and so it is for an attacker. It doesn't matter 
-where you store the key.
-
-A TPM (and, transitively, products that encrypt with TPM-sealed or 
-TPM-bound key material) is good for the situation where the system is 
-physically stolen while powered down (or the drive fails). But that's not 
-our problem here.
-
-
-> Otherwise, but even though it is not perfect, it would be better to apply
-> the fingerprint data protection, such as keyring or access control, rather
-> than raw fingerprint template.
-> FYI, Windows Hello might use Next Generation Cryptography (called CNG) to
-> protect and store user private data and encryption keys.
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
 
-There are not many options left to solve the stored credential problem, 
-and it should be clear that saving a file, encrypted or not, is not the 
-solution.
 
-One possible solution is to use a hash algorithm, potentially cost-based, 
-to derive a bit string (that is suitable for comparison with the 
-persisted authoritative string) from the output of a fingerprint reader.
-
-Another one is to use the fingerprint reader output as input to a KDF, 
-which unwraps the private key of an asymmetric key pair, against which a 
-challenge can be requested or which unwraps further wrapping material to 
-bootstrap a key hierarchy (that can be discarded and rebuilt at any 
-useful time). (*)
-
->> I think that this is similar approach with Lenovo Fingerprint Manager,
-> Microsoft Windows Hello and other products.
-
-I can only recommend to NOT TRUST in any security value that is not 
-satisfyingly documented and/or open-sourced, but instead to expect the 
-worst.
-
-The worst btw is introducing a false sense for a security value by 
-wipe-the-eye type of design (security by obscurity).
-
-
-(*) Note that the overall system design for a multi-purpose key hierarchy 
-must be able to cope with the requirement that "master key data", which 
-might encompass biometric data, must never be accessible even to 
-operating system components. A small portion of memory that is accessible 
-only for a very small, associated portion of code, doing only minimal 
-things, but never let go the secret. This is non-trivial to build and 
-typically mandates a root of trust beyond the O/S builder.
-
-> Have you read the following papers about fingerprint image reconstruction
-> technology from standard templates?
-
-[...]
-
-Those are all good papers, and all of them potentially lead to the 
-conclusion that
-a) your fingerprint is a username, yet not public, but not secret either
-b) your username is subject to being copied, regardless of how it is
-    manifested.
-c) biometric authentication is flawed unless combined with
-    other authentication factor types
-
-
-> Lastly, as you mentioned,  it is a stupid idea to use it for various
-> authentication.
-> But, it is still working on various authentication/identification system.
-
-
-Make informed desisions about the sufficiency and adequacy of your 
-protection measures based on:
-
-* the value of your assets
-* the threats against your assets
-* the risks that threats against your assets create damages
-
-In movies, the fingerprint-reader-protected-only "max security" lab 
-isn't.
-
-R.
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
