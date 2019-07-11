@@ -1,110 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/16/3
-Message-ID: <CAG_fn=XwtjiiqtRveFpvbpg_gE9McZbNUOckS0ox4ZdDvu4tHA@mail.gmail.com>
-Date: Wed, 16 Jan 2019 16:00:49 +0100
-From: Alexander Potapenko <glider@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Heap based buffer overflow in wolfSSL
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/14
+Message-ID: <20190711162601.RE3Tr%steffen@sdaoden.eu>
+Date: Thu, 11 Jul 2019 18:26:01 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
+To: "Perry E. Metzger" <perry@...rmont.com>
+Cc: oss-security@...ts.openwall.com, Malte Kraus <malte.kraus@...e.com>
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 16, 2019 at 12:44 PM Dhiraj Mishra
-<mishra.dhiraj95@...il.com> wrote:
->
-> Hi List,
-Hello,
+Perry E. Metzger wrote in <20190711114710.09ab5ad9@...berwock.cb.piermon\
+t.com>:
+ |On Thu, 11 Jul 2019 13:57:19 +0000 Malte Kraus <malte.kraus@...e.com>
+ |wrote:
+ |> On Thu, 2019-07-11 at 09:33 -0400,  Perry E. Metzger wrote:
+ ...
+ |> I didn't (intend to) say there is an (additional) security problem.
+ |> I just tried to succinctly explain why the desktop environments are
+ |> coming up with these D-Bus interfaces now.
+ |
+ |It seems like a bad idea.
+ |
+ |If one wants to have mechanisms by which the operating system can
+ |allow unprivileged programs to temporarily assume privileges (which
+ |is a frequent idea in security), then they should be carefully
+ |designed and part of the OS, rather than creating an ad hoc facility
+ |via a subsystem that isn't intended for it. There are good ways to do
+ |that, like capabilities.
 
-I cannot judge whether this is a real problem or not, but the report
-below is definitely missing critical information, like symbols,
-filenames and line numbers.
-Without those it's even impossible to tell a bug in wolfSSL code from
-a bug in the benchmark itself.
-You can refer to
-https://clang.llvm.org/docs/AddressSanitizer.html#symbolizing-the-reports
-for the instructions on how to get symbol information.
+Sending this remark because a few days ago i posted something
+similar to a gnupg ML.
 
-HTH,
-Alex
-> ## Summary:
-> wolfSSL is an C-language-based SSL/TLS library targeted at IoT, embedded,
-> and RTOS environments a heap-based-buffer overflow was observed in
-> tls_bench.c which is a benchmark tool in wolfSSL.
->
-> ## ASAN
-> ==4088==ERROR: AddressSanitizer: heap-buffer-overflow on address
-> 0x619000000480 at pc 0x00000050ff16 bp 0x7fef206fdbf0 sp 0x7fef206fdbe8
-> WRITE of size 1 at 0x619000000480 thread T2
->     #0 0x50ff15  (/wolfssl/examples/benchmark/tls_bench+0x50ff15)
->     #1 0x4dfa52  (/wolfssl/examples/benchmark/tls_bench+0x4dfa52)
->     #2 0x7fef243ac6da  (/lib/x86_64-linux-gnu/libpthread.so.0+0x76da)
->     #3 0x7fef23ab188e  (/lib/x86_64-linux-gnu/libc.so.6+0x12188e)
->
-> 0x619000000480 is located 0 bytes to the right of 1024-byte region
-> [0x619000000080,0x619000000480)
-> allocated by thread T2 here:
->     #0 0x4d1fa0  (/wolfssl/examples/benchmark/tls_bench+0x4d1fa0)
->     #1 0x50f277  (/wolfssl/examples/benchmark/tls_bench+0x50f277)
->     #2 0x4dfa52  (/wolfssl/examples/benchmark/tls_bench+0x4dfa52)
->
-> Thread T2 created by T0 here:
->     #0 0x435490  (/wolfssl/examples/benchmark/tls_bench+0x435490)
->     #1 0x50cbf5  (/wolfssl/examples/benchmark/tls_bench+0x50cbf5)
->     #2 0x5101d0  (/wolfssl/examples/benchmark/tls_bench+0x5101d0)
->     #3 0x7fef239b1b96  (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
->
-> SUMMARY: AddressSanitizer: heap-buffer-overflow
-> (/wolfssl/examples/benchmark/tls_bench+0x50ff15)
-> Shadow bytes around the buggy address:
->   0x0c327fff8040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->   0x0c327fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->   0x0c327fff8060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->   0x0c327fff8070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->   0x0c327fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-> =>0x0c327fff8090:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c327fff80a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c327fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c327fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c327fff80d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c327fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-> Shadow byte legend (one shadow byte represents 8 application bytes):
->   Addressable:           00
->   Partially addressable: 01 02 03 04 05 06 07
->   Heap left redzone:       fa
->   Freed heap region:       fd
->   Stack left redzone:      f1
->   Stack mid redzone:       f2
->   Stack right redzone:     f3
->   Stack after return:      f5
->   Stack use after scope:   f8
->   Global redzone:          f9
->   Global init order:       f6
->   Poisoned by user:        f7
->   Container overflow:      fc
->   Array cookie:            ac
->   Intra object redzone:    bb
->   ASan internal:           fe
->   Left alloca redzone:     ca
->   Right alloca redzone:    cb
-> ==4088==ABORTING
->
-> References:
-> https://github.com/wolfSSL/wolfssl
-> https://github.com/wolfSSL/wolfssl/issues/2032
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-6439
->
->
-> Thank you
-> @mishradhiraj_
+From my point of view there is root user hysteria in Unix and
+clones, maybe forever, but i see it consciously in the last years.
+If the solution against SETUID programs or other, finer grained
+privileges, but which anyway can be detected via file system
+tools, is that privilege adjustments u-boat away to something that
+needs source code or over-the-wire analysis to being detected at
+all, i fail to see how this leads to something better.
 
+Without personally having made it there yet, i think the
+traditional way of in-application sandboxing fits better, even
+with SETUID programs which first perform some higher-privilege
+setup before going more secure, like capsicum on FreeBSD,
+pledge/unveil on OpenBSD, or prctl, seccomp (and apparmor) on
+Linux.  Or even interesting entire frameworks like CloudABI.
 
-
--- 
-Alexander Potapenko
-Software Engineer
-
-Google Germany GmbH
-Erika-Mann-Straße, 33
-80636 München
-
-Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
