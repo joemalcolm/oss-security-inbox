@@ -1,93 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/06/2
-Message-ID: <alpine.DEB.2.20.1902060809030.28483@tvnag.unkk.fr>
-Date: Wed, 6 Feb 2019 08:12:33 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: NTLMv2 type-3 header stack buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/10
+Message-Id: <4477D0BC-DB12-4BE7-9CF6-90F09236EF99@oracle.com>
+Date: Thu, 11 Jul 2019 17:31:38 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Cc: Malte Kraus <malte.kraus@...e.com>
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-NTLMv2 type-3 header stack buffer overflow
-==========================================
 
-Project curl Security Advisory, February 6th 2019 -
-[Permalink](https://curl.haxx.se/docs/CVE-2019-3822.html)
 
-VULNERABILITY
--------------
+> On 11 Jul 2019, at 16:57, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us> wrote:
+> 
+> On Thu, 11 Jul 2019, Perry E. Metzger wrote:
+>> 
+>> It seems like a bad idea.
+>> 
+>> If one wants to have mechanisms by which the operating system can
+>> allow unprivileged programs to temporarily assume privileges (which
+>> is a frequent idea in security), then they should be carefully
+>> designed and part of the OS, rather than creating an ad hoc facility
+>> via a subsystem that isn't intended for it. There are good ways to do
+>> that, like capabilities.
+> 
+> I agree.  It is rather common that more than one file needs to be modified at one time.  If a more complex mechanism like a sqlite3 database needs to be updated, then the implementation of sqlite3 will expect to be able to access files in a normal way and it will expect to be use all the abilities it normally uses.  It is rather common that atomic operations are required, locking is required, the ability to link/rename files is required, and that synchronization of file content and directories is required.
+> 
+> In addition to the security concerns, it is difficult to see how a virtual filesystem intended for use by simplistic GUI file managers will satisfy common administrative requirements.
+> 
 
-libcurl contains a stack based buffer overflow vulnerability.
+This bit us recently with a graphical application that needed to run as root (I forget what for).   It also struck me that I often run gparted (don't ask why :)) which needs to dink with disks.
 
-The function creating an outgoing NTLM type-3 header
-(`lib/vauth/ntlm.c:Curl_auth_create_ntlm_type3_message()`), generates the
-request HTTP header contents based on previously received data. The check that
-exists to prevent the local buffer from getting overflowed is implemented
-wrongly (using unsigned math) and as such it does not prevent the overflow
-from happening.
+Obviously one could split the process into its graphical half and its messing-around-with-disks half but it's not clear to me how the graphical half would handle authentication[*] for the process that needs to run as root.   There are any number of administrative tasks that will need to be redesigned to cope with this change.
 
-This output data can grow larger than the local buffer if very large "nt
-response" data is extracted from a previous NTLMv2 header provided by the
-malicious or broken HTTP server.
+jch
 
-Such a "large value" needs to be around 1000 bytes or more. The actual payload
-data copied to the target buffer comes from the NTLMv2 type-2 response header.
 
-We are not aware of any exploit of this flaw.
+[*] Yes, you could, for example, use $SUDO_USER/UID/etc but you can bet that that will throw up all kinds of security problems that we don't have today.
 
-INFO
-----
 
-This bug was introduced in [commit
-86724581b6c](https://github.com/curl/curl/commit/86724581b6c), January 2014.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2019-3822 to this issue.
-
-CWE-121: Stack-based Buffer Overflow
-
-Severity: 7.3 (High)
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.36.0 to and including 7.63.0
-- Not affected versions: libcurl < 7.36.0 and >= 7.64.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-A [patch for CVE-2019-3822](https://github.com/curl/curl/commit/50c9484278c63b958655a717844f0721263939cc)
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.64.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Turn off NTLM authentication
-
-TIME LINE
----------
-
-It was reported to the curl project on December 30, 2018. We contacted
-distros@...nwall on January 28.
-
-curl 7.64.0 was released on February 6 2019, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Wenxiang Qian of Tencent Blade Team. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
