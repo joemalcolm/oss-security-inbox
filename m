@@ -1,55 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/7
-Message-ID: <20190425133024.GE13360@iolanthe>
-Date: Thu, 25 Apr 2019 08:30:24 -0500
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/13
+Message-ID: <4358648.2BLBotf1RR@merkaba>
+Date: Thu, 11 Jul 2019 17:27:19 +0200
+From: Martin Steigerwald <martin@...htvoll.de>
 To: oss-security@...ts.openwall.com
-Cc: Matthias Gerstner <matthias.gerstner@...e.de>, Zygmunt Krynicki <zygmunt.krynicki@...onical.com>
-Subject: Re: Security issues in snapcraft snap-confine set*id binary
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 18 Apr 2019, Matthias Gerstner wrote:
+Malte Kraus - 09.07.19, 15:58:
+> None of the solutions actually provided the user with the accessed
+> path or file operation in the polkit auth prompt. Users are
+> confronted with an unspecific request for privileges that they can
+> only allow or deny without knowing what exactly they are allowing.
+> (This is unfortunately a common theme, e.g. on KDE the framework is
+> still missing support for parameterizing polkit prompts.)
 
-> 1) Up and including to version 2.37.4 the /tmp directory within a snap
->   container was owned by the first user that entered the container. Since
->   snap containers can be used by multiple users at the same time or a
->   privileged program or daemon may run in a container, the security of
->   files and directories in /tmp is compromised.  An attacker can remove
->   or replace files and directories belonging to other users within the
->   container's /tmp to achieve an unspecified impact.
-> 
->   This issue was recently fixed by upstream via commit [3].
+For me this looks like KDE developers address this now – at least 
+partly:
 
-This is CVE-2019-11502
+[KAuth] Add support for action details in Polkit1 backend.
+https://phabricator.kde.org/D21795
 
-> 2) The `sc_join_preserved_ns()` function along with a number of other
->   function remembers the current working directory (CWD) of the calling
->   user outside of the container and attempts to restore this CWD again
->   within the container. The `chdir()` operation to restore the CWD is
->   performed with root privileges within the container and is prone to
->   symlink attacks. Therefore an unprivileged user can enter arbitrary
->   directories within the container. Example PoC:
-
-This is CVE-2019-11503
-
-> 3) In function `sc_parse_mountinfo_entry()` the pseudo file
-...
->   I don't see any viable attack vector here at the moment. To actually
->   control the behaviour of snap-confine we'd need to control the field
->   (4) of the mountinfo file. This field is only available to
->   unprivileged users if they can perform a bind mount.
-
-I agree, this is a legitimate bug that the snapd team will fix but because an
-unprivileged user can't gain privileges or other wise cross privilege
-boundaries, I did not request a CVE. We can revisit as necessary.
-
-> Best Regards
-> 
-> Matthias
-
-Thank you for the review!
-
+Thanks,
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
+Martin
 Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
