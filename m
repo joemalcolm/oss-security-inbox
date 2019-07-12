@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3054" "Monday" "30" "October" "2017" "10:24:22" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20171030102422.15d1d9c2@pc1>" "74" "[oss-security] Magento: Leaking of config file local.xml" "^Date:" nil nil "10" "2017103009:24:22" "[oss-security] Magento: Leaking of config file local.xml" (number mark "        hanno@hboeck Oct 30   74/3054  " thread-indent "\"[oss-security] Magento: Leaking of config file local.xml\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["763" "Friday" "12" "July" "2019" "09:01:28" "-0400" "Sasha Levin" "sashal@kernel.org" "<20190712130128.GE10104@sasha-vm>" "19" "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil "7" "2019071213:01:28" "[oss-security] linux-distros membership application - Microsoft" (number mark "U       sashal@kerne Jul 12   19/763   " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190707101052.eusd3knys5jnlk2a@inutil.org>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>" "<20190628125743.GA2187@openwall.com>" "<20190628170812.GG11506@sasha-vm>" "<20190706193737.GA23344@openwall.com>" "<20190706222936.GL10104@sasha-vm>" "<20190707101052.eusd3knys5jnlk2a@inutil.org>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24288 invoked by uid 550); 30 Oct 2017 09:24:37 -0000
+Received: (qmail 5343 invoked by uid 550); 12 Jul 2019 13:01:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24239 invoked from network); 30 Oct 2017 09:24:36 -0000
-Message-ID: <20171030102422.15d1d9c2@pc1>
-X-Mailer: Claws Mail 3.15.1-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 30 Oct 2017 10:24:22 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Magento: Leaking of config file local.xml
+Received: (qmail 5322 invoked from network); 12 Jul 2019 13:01:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1562936490;
+	bh=LifEUd6CEnd2fWwDhxWoUMgesrff7Op5DPp585EyV9k=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=uILyYqfcPUgh4azUwUXKi9ehYeEjejB8RWDFqFWR/cWP5rxvSdIKA0XurEKKDgoZ1
+	 bpZ4+nfhRdaqUDUw7zyC1IhqTzhrxfvkiF/gc1BSovekmXyfu06/VtL/YUeqQiCZWe
+	 2X1ZEWK2REU3idhCnWj2zQJSamevR5TCJ7M4JMZs=
+Date: Fri, 12 Jul 2019 09:01:28 -0400
+From: Sasha Levin <sashal@kernel.org>
 To: oss-security@lists.openwall.com
+Message-ID: <20190712130128.GE10104@sasha-vm>
+References: <20190626141358.GK7898@sasha-vm>
+ <20190627140321.GA29338@openwall.com>
+ <20190627170508.GB11506@sasha-vm>
+ <20190628125743.GA2187@openwall.com>
+ <20190628170812.GG11506@sasha-vm>
+ <20190706193737.GA23344@openwall.com>
+ <20190706222936.GL10104@sasha-vm>
+ <20190707101052.eusd3knys5jnlk2a@inutil.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20190707101052.eusd3knys5jnlk2a@inutil.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] linux-distros membership application - Microsoft
 
-Magento is a web shop written in PHP.
+On Sun, Jul 07, 2019 at 12:10:52PM +0200, Moritz Muehlenhoff wrote:
+>On Sat, Jul 06, 2019 at 06:29:36PM -0400, Sasha Levin wrote:
+>> On Sat, Jul 06, 2019 at 09:37:37PM +0200, Solar Designer wrote:
+>> > Hi all,
+>> >
+>> > Per our current policy and precedents, I see no valid reasons not to
+>> > subscribe Microsoft (or part(s) of it, see below) to linux-distros.  So
+>> > I intend to figure out some detail and proceed with the subscription.
+>
+>Sasha, could you please also add the respective links/information for
+>"Windows Subsystem for Linux v2" and "Azure Sphere" to
+>https://oss-security.openwall.org/wiki/distro-patches and add an entry
+>for Microsoft to https://oss-security.openwall.org/wiki/vendors ?
 
-Magento stores its configuration in a file local.xml, stored in the
-webroot under app/etc/local.xml. As it is an xml file by default a web
-server will not parse it in any way, but directly expose it to users.
+Now added, thanks for the pointer.
 
-Magento protects against this by shipping an .htaccess file that blocks
-access to that directory. However that is not a sufficient
-protection. .htaccess files are specific to the Apache web server.
-Other web servers like nginx don't support .htaccess. This leaves users
-with a situation where installation on any web server other than Apache
-will by default lead to a configuration where the local.xml file can be
-downloaded by anyone over the Internet. Even worse, the installation
-doc doesn't mention this issue [1].
-
-In June I scanned the Alexa top 1 Million and found 324 vulnerable
-installations (out of 10501 magento installations in total). I tried to
-inform the affected parties via their abuse contacts.
-
-
-Recommended Fix
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-The core of this issue is that using an XML file in the web root to
-configure a PHP application is inherently dangerous. There is no
-software-independent way to make sure such a configuration doesn't get
-exposed. I think the only reasonable safe way to store configurations
-for PHP applications is in .php files. If you want to keep using XML
-configurations you could store them in a multiline string within a PHP
-file.
-
-As this is a severe change a mitigation would be to let the backend
-interface check via javascript whether access to the config file is
-properly prevented. If the local.xml is accessible magento should
-refuse to operate.
-
-At the very least this needs to be properly documented within the
-installation docs.
-
-[1] http://devdocs.magento.com/guides/m1x/install/installing.html
-
-
-Comment / relation to other issues
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-There is a general problem for PHP applications that there is no
-server-independent way to prevent access to files. Many use htaccess,
-which is insufficient, as it only works on Apache. Recently the Free
-Software Foundation had a security issue [2] with Drupal's
-backup_migrate module that was based on a very similar problem.
-
-Therefore it should generally be considered an anti-pattern to store
-secret files within PHP apps in the web root. Possible solutions are
-storage outside of the web root, storage in databases or storage within
-PHP code (as it's commonly done for configuration files).
-
-[2] http://www.openwall.com/lists/oss-security/2017/10/29/1
-
-Disclosure
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-2017-06-17 Reported via Magento's Bugcrowd Bug Bounty
-2017-06-19 Reply that this has already been reported on 2017-03-28 by
-someone else.
-2017-06-24 I asked whether this will be fixed/changed and whether there
-is a timeline for disclosing the original report. No reply.
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+--
+Thanks,
+Sasha
