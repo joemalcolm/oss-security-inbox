@@ -1,40 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/07/1
-Message-ID: <CAECwjAWWcYFtuxjHYXRkJ_w9Gz6__ObzTGOP+BGb6KiHFdgaBQ@mail.gmail.com>
-Date: Wed, 6 Mar 2019 22:41:37 -0800
-From: Tomas Fernandez Lobbe <tflobbe@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/12/7
+Message-ID: <20190712181207.I0_DA%steffen@sdaoden.eu>
+Date: Fri, 12 Jul 2019 20:12:07 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-0192 Deserialization of untrusted data via jmx.serviceUrl in Apache Solr
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
+Perry E. Metzger wrote in <20190712121202.403b2f5f@...berwock.cb.piermon\
+t.com>:
+ |On Fri, 12 Jul 2019 11:53:26 -0400 "Perry E. Metzger"
+ |<perry@...rmont.com> wrote:
+ |>>> What's the right way to handle this stuff? Capabilities,
+ |>>> probably. It's what they're designed for.
+ |>> 
+ |>> They're completely not designed for this case. Setting
+ |>> CAP_DAC_OVERRIDE or CAP_SYS_ADMIN is very close to SUID root. See:
+ |>> https://grsecurity.net/false_boundaries_and_arbitrary_code_execution.php
+ |> 
+ |> Those aren't capabilities. Those are this POSIX mechanism that got
+ |> the same name for no good reason and doesn't do anything like what
+ |> an actual capability system does.
+ |
+ |It occurs to me that people without a background in computer security
+ |might not know what a capability actually is, or how a capability
+ |based security system manages access control.
 
-Vendor: The Apache Software Foundation
+Some people are too lazy to switch to a different graphical
+console or terminal, or are settled on using their very own
+graphical editor in the very current graphical session, instead of
+indirecting through sshfs or simply doing a ssh to root in some
+graphical console on the current box, and edit through that.
 
-Versions Affected:
-5.0.0 to 5.5.5
-6.0.0 to 6.6.5
+I personally have a TLS setup and a SSH setup and a PGP (GnuPG
+actually) setup, and there is a PAM setup here with passwords not
+some (Yubi)key, and i also have some encfs which could make many
+of you shiver (since it is not the block level GELI i think or
+dmcrypt/LUKS on Linux), that makes five things to care about, and
+five things people have to audit and often do not, even though
+many are talking, with best intentions.
 
-Description:
-ConfigAPI allows to configure Solr's JMX server via an HTTP POST request.
-By pointing it to a malicious RMI server, an attacker could take advantage
-of Solr's unsafe deserialization to trigger remote code execution on the
-Solr side.
+I do not have dbus running except when firefox is started (which
+hangs often for scripts sourced from derstandard.at especially
+when opening several tabs there, looking at images, whatever,
+twice yesterday and i am not sooo active, so that is on the bus),
+which i have a special account for.  (Two, in fact.)
 
-Mitigation:
-Any of the following are enough to prevent this vulnerability:
-* Upgrade to Apache Solr 7.0 or later.
-* Disable the ConfigAPI if not in use, by running Solr with the system
-property “disable.configEdit=true”
-* If upgrading or disabling the Config API are not viable options, apply
-patch in [1] and re-compile Solr.
-* Ensure your network settings are configured so that only trusted traffic
-is allowed to ingress/egress your hosts running Solr.
+The Tso of Linux once told how he performs a git commit to the
+Linux kernel, and it was about plugging in some keycard into some
+cardreader in order to sign.  If you pass a border or in police
+control you have to show your passport.  If i want to edit
+a system configuration file i have to type the root password (no
+XKey here still), either for sudo/super/doas/su or login.  If
+a younger person thinks this sucks i understand in parts, but i am
+almost certain he is the one who screams for security when
+something bad happens and takes away the toy.
+No to webmin, no to admin://, no to sending mails from within
+TheGimp, that all can be done in a better way from within emacs.
+Hasta la victoria siempre.  Some things just don't work out.
 
-Credit:
-Michael Stepankin
+ |This Wikipedia page:
+ |https://en.wikipedia.org/wiki/Capability-based_security
+ |isn't the best, but it does have good pointers to real explanations.
+ |
+ |For a look at how you can implement a capability system on top
+ |of Unix, see Capsicum, which was built for FreeBSD but never actually
+ |ported to Linux (which is sad and should be corrected):
+ |https://www.cl.cam.ac.uk/research/security/capsicum/papers/2010usenix-se\
+ |curity-capsicum-website.pdf
+ |
+ |Note that a primitive form of capabilities can be achieved in the
+ |current Linux kernel by passing file descriptors between processes, a
+ |tool relatively few people seem to know exists. Given that the
+ |"correct" mechanism (something like Capsicum) doesn't exist in Linux
+ |yet, it's a poor man's second best. Again, porting Capsicum would be
+ |the smart thing to do instead of all this ad hoc stuff.
 
-References:
-[1] https://issues.apache.org/jira/browse/SOLR-13301
-[2] https://wiki.apache.org/solr/SolrSecurity
+It is painful programming.  Now there is Casper (not Kasper) which
+improves this a bit, i think.
+And well it cannot be helped.  Model View Controller for anything,
+or at least Frontend and Machine like Mr. Pike did the first time
+for Sam as far as i know, almost fourty years ago, that is what
+i am going for myself.  Much of it is about hardware too, i am in
+video and audio and kvm groups, and this matters down to the
+hardware, which is not compartmentalised on rather cheap consumer
+level as far as i know.
 
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
