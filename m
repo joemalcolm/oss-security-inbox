@@ -1,48 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/7
-Message-ID: <20190101124110.GA15804@espresso.pseudorandom.co.uk>
-Date: Tue, 1 Jan 2019 12:41:10 +0000
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Jeffrey Walton <noloader@...il.com>, gmp-bugs@...lib.org
-Subject: Re: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/12/5
+Message-ID: <20190712115326.5db9130a@jabberwock.cb.piermont.com>
+Date: Fri, 12 Jul 2019 11:53:26 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Jordan Glover <Golden_Miller83@...tonmail.ch>
+Cc: oss-security@...ts.openwall.com, Simon McVittie <smcv@...ian.org>
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 01 Jan 2019 at 12:07:17 +0100, Niels Möller wrote:
-> A security sensitive application can easily disable generation of core
-> files, using setrlimit (on the linux kernel, prctl may also be useful).
+On Fri, 12 Jul 2019 14:40:19 +0000 Jordan Glover
+<Golden_Miller83@...tonmail.ch> wrote:
+> > > I think you might be misunderstanding the scope of D-Bus.  
+> >
+> > Not really. The whole point is that instead of having the
+> > operating system alone as part of your file security
+> > implementation you now have a brand new service, an IPC
+> > mechanism, and loads of other stuff, instead of having your app
+> > just do open(2) and write(2) etc.  
+> 
+> Do you mean that IPC and D-bus aren't part of the OS? Then what is?
 
-If you want to avoid core dumps being recorded on Linux in the presence of
-system configuration that writes them into a pipe to a command instead
-of to a core file (systemd-coredump, corekeeper, abrt, apport etc.,
-using a string starting with | in /proc/sys/kernel/core_pattern), then
-you need to use prctl PR_SET_DUMPABLE. Setting RLIMIT_CORE to 0 prevents
-the kernel from creating core dump files itself, but does not prevent
-it from writing them to pipes.
+There's already a file i/o mechanism in the kernel, and it's already
+doing access control. You're building a second one. This is bad.
 
-It might be helpful to look at a recent version of dbus, which has a
-reasonably portable implementation of "don't write core dumps", in a unit
-test helper program that deliberately segfaults (so that the actual unit
-test can assert that a segfaulting child process is handled correctly).
-This was implemented to avoid core-collecting programs wasting time and
-I/O bandwidth during unit test runs, rather than to avoid information
-leaks, but the procedure is the same.
+Again, if you need fine grained access grants, there's a mechanism
+for that which has been intensely studied for decades now, which is
+capabilities. Building ad-hoc secondary file i/o handlers isn't going
+to be as secure as a capability system, and is going to yield yet
+more surface area for attackers, not to mention adding complexity
+which makes reasoning about the security of the system harder.
 
-Some processes (including those that are setuid or setgid, I think?) are
-automatically undumpable.
+None of this should require saying, but apparently it does.
 
-> And besides, most systems have zero ulimit -c as the system default
-> these days
+> > It seems architecturally bad from a security perspective. The
+> > number the number of trusted entities, the number of moving
+> > parts, the number of mechanisms, and thus the number of ways
+> > things can go wrong keeps going up. This is a mistake. And btw,
+> > this is a major piece of mechanism being added just to handle the
+> > problem of someone wanting to pop open an editor inside a GUI to
+> > edit a system config file, which is not a major attack vector.
+> > But, now I have to worry about this new file access service
+> > providing an attack surface that didn't exist before.
+> >
+> > What's the right way to handle this stuff? Capabilities,
+> > probably. It's what they're designed for.  
+> 
+> They're completely not designed for this case. Setting
+> CAP_DAC_OVERRIDE or CAP_SYS_ADMIN is very close to SUID root. See:
+> https://grsecurity.net/false_boundaries_and_arbitrary_code_execution.php
 
-As noted above, this does not prevent writing the cores to pipes
-(precisely to make crash-recording services like systemd-coredump more
-useful).
 
-> to get proper core dumps, including
-> disabling the core dump collection "services" you mention
+Those aren't capabilities. Those are this POSIX mechanism that got
+the same name for no good reason and doesn't do anything like what an
+actual capability system does.
 
-Crash-recording services should be able to provide a way to extract
-the core from wherever they saved it, for example `coredumpctl -o... dump`
-with systemd-coredump.
 
-    smcv
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
