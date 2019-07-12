@@ -1,4 +1,9 @@
-Received: (qmail 32331 invoked by uid 550); 18 Oct 2023 15:29:29 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1269" "Thursday" "11" "July" "2019" "20:37:14" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20190711203714.7f3019ad@jabberwock.cb.piermont.com>" "29" "Re: [oss-security] Privileged File Access from Desktop Applications" "^Cc:" nil nil "7" "2019071200:37:14" "[oss-security] Privileged File Access from Desktop Applications" (number mark "        perry@piermo Jul 11   29/1269  " thread-indent "\"Re: [oss-security] Privileged File Access from Desktop Applications\"\n") "<20190711202015.GA24270@espresso.pseudorandom.co.uk>" ("<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>" "<20190709113036.0f12d057@jabberwock.cb.piermont.com>" "<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>" "<20190711093326.328948dc@jabberwock.cb.piermont.com>" "<de14296ba908c162036a15b1aeda95586ff8ba14.camel@suse.com>" "<20190711114710.09ab5ad9@jabberwock.cb.piermont.com>" "<20190711202015.GA24270@espresso.pseudorandom.co.uk>") nil nil nil nil nil nil nil "Re: [oss-security] Privileged File Access from Desktop Applications" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7308 invoked by uid 550); 12 Jul 2019 00:37:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,50 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32306 invoked from network); 18 Oct 2023 15:29:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1697642955; bh=hdBThOpu+eFwGeM1J1TJySo29nrfHNT9j5P6S0HSiP8=;
-	h=Subject:From:To:Date:In-Reply-To:References;
-	b=yro+cvnTft28aqRaAg0iIk9/XfyZC1ge/bu3EzRAKPRCSFv/JGp6BvWKD75Wwjonn
-	 iyjTlsUpdk+ycft6JNjI393wUO6GIWQtkfomTvMPhoobHLB7fNiz6WCZ7+fh97ydnz
-	 xamOKGwNoLv42vUQ+Jyi7TzBJMKJrlUhQ48qeVZg=
-Message-ID: <a0b0eca3540cf1cb5e7ccb1d4e20d4edee9333da.camel@orlitzky.com>
-From: Michael Orlitzky <michael@orlitzky.com>
-To: oss-security@lists.openwall.com
-Date: Wed, 18 Oct 2023 11:29:15 -0400
-In-Reply-To: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
-References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.48.4 
+Received: (qmail 7281 invoked from network); 12 Jul 2019 00:37:27 -0000
+Message-ID: <20190711203714.7f3019ad@jabberwock.cb.piermont.com>
+In-Reply-To: <20190711202015.GA24270@espresso.pseudorandom.co.uk>
+References: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
+	<20190709113036.0f12d057@jabberwock.cb.piermont.com>
+	<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
+	<20190711093326.328948dc@jabberwock.cb.piermont.com>
+	<de14296ba908c162036a15b1aeda95586ff8ba14.camel@suse.com>
+	<20190711114710.09ab5ad9@jabberwock.cb.piermont.com>
+	<20190711202015.GA24270@espresso.pseudorandom.co.uk>
 MIME-Version: 1.0
-Subject: Re: [oss-security] with firefox on X11, any page can pastejack you
- anytime
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: oss-security@lists.openwall.com
+Date: Thu, 11 Jul 2019 20:37:14 -0400
+From: "Perry E. Metzger" <perry@piermont.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Privileged File Access from Desktop Applications
+To: Simon McVittie <smcv@debian.org>
 
-On Tue, 2023-10-17 at 03:17 +0300, turistu wrote:
-> Note to the moderator: I have already submitted this to the firefox people
-> three weeks ago, and according to them, this is not a real security issue,
-> or at least not worse than those pesky scripts which you cannot kill with=
-out
-> killing firefox itself; if you think the same, just ignore this without
-> replying.
+On Thu, 11 Jul 2019 21:20:15 +0100 Simon McVittie <smcv@debian.org>
+wrote:
+> On Thu, 11 Jul 2019 at 11:47:10 -0400, Perry E. Metzger wrote:
+> > having to add file i/o subsystems inside of dbus(!) probably does
+> > add lots of threats  
+> 
+> I think you might be misunderstanding the scope of D-Bus.
 
-If there's more than one bug they must be features, duh.
+Not really. The whole point is that instead of having the operating
+system alone as part of your file security implementation you now
+have a brand new service, an IPC mechanism, and loads of other stuff,
+instead of having your app just do open(2) and write(2) etc.
 
+It seems architecturally bad from a security perspective. The number
+the number of trusted entities, the number of moving parts, the number
+of mechanisms, and thus the number of ways things can go wrong keeps
+going up. This is a mistake. And btw, this is a major piece of
+mechanism being added just to handle the problem of someone wanting to
+pop open an editor inside a GUI to edit a system config file, which is
+not a major attack vector. But, now I have to worry about this new
+file access service providing an attack surface that didn't exist
+before.
 
-> I would however appreciate if you let this through and so give it some
-> visibility so that the other 2 or 3 people who may be affected by this
-> could learn about it.
+What's the right way to handle this stuff? Capabilities,
+probably. It's what they're designed for.
 
-Thanks for this. Since nobody else has responded, I agree that it's a
-security issue. The data in the clipboard are mine and there should be
-exactly one way for me to overwrite them. This is a problem even if the
-data is not sensitive and if the terminal paste is not exploitable:
-
-1. A third party
-2. Has tricked my computer
-3. Into doing something I didn't want it to
-
-Those are the three criteria for a vulnerability that I just made up.
-
+Perry
+-- 
+Perry E. Metzger		perry@piermont.com
