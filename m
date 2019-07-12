@@ -1,58 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/04/6
-Message-ID: <20191204220511.GA16998@openwall.com>
-Date: Wed, 4 Dec 2019 23:05:11 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Authentication vulnerabilities in OpenBSD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/12/4
+Message-ID: <eLEcaAZ84viV-VsSdpXT33_w8eR6Sg6SPnu8naoZWbu5LE7Dm9Tn6HawkbPVhQXfCToNDJBsX7JZ_fZHsDj4xSp9UCrgBltJaT65sR3NUu4=@protonmail.ch>
+Date: Fri, 12 Jul 2019 14:40:19 +0000
+From: Jordan Glover <Golden_Miller83@...tonmail.ch>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: Simon McVittie <smcv@...ian.org>
+Subject: Re: Privileged File Access from Desktop Applications
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 04, 2019 at 08:49:22PM +0000, Qualys Security Advisory wrote:
-> 1. CVE-2019-19521: Authentication bypass
+On Friday, July 12, 2019 12:37 AM, Perry E. Metzger <perry@...rmont.com> wrote:
 
-> This is the second piece of the puzzle: if an attacker specifies the
-> username "-schallenge" (or "-schallenge:passwd" to force a passwd-style
-> authentication), then the authentication is automatically successful and
-> therefore bypassed.
+> On Thu, 11 Jul 2019 21:20:15 +0100 Simon McVittie smcv@...ian.org
+> wrote:
+>
+> > On Thu, 11 Jul 2019 at 11:47:10 -0400, Perry E. Metzger wrote:
+> >
+> > > having to add file i/o subsystems inside of dbus(!) probably does
+> > > add lots of threats
+> >
+> > I think you might be misunderstanding the scope of D-Bus.
+>
+> Not really. The whole point is that instead of having the operating
+> system alone as part of your file security implementation you now
+> have a brand new service, an IPC mechanism, and loads of other stuff,
+> instead of having your app just do open(2) and write(2) etc.
 
-Wow, this is the new -froot.
+Do you mean that IPC and D-bus aren't part of the OS? Then what is?
 
-> 2. CVE-2019-19520: Local privilege escalation via xlock
-> ==============================================================================
-> 
-> On OpenBSD, /usr/X11R6/bin/xlock is installed by default and is
-> set-group-ID "auth", not set-user-ID; the following check is therefore
-> incomplete and should use issetugid() instead:
-> 
-> ------------------------------------------------------------------------------
-> 101 _X_HIDDEN void *
-> 102 driOpenDriver(const char *driverName)
-> 103 {
-> ...
-> 113    if (geteuid() == getuid()) {
-> 114       /* don't allow setuid apps to use LIBGL_DRIVERS_PATH */
-> 115       libPaths = getenv("LIBGL_DRIVERS_PATH");
-> ------------------------------------------------------------------------------
-> 
-> A local attacker can exploit this vulnerability and dlopen() their own
-> driver to obtain the privileges of the group "auth":
+> It seems architecturally bad from a security perspective. The number
+> the number of trusted entities, the number of moving parts, the number
+> of mechanisms, and thus the number of ways things can go wrong keeps
+> going up. This is a mistake. And btw, this is a major piece of
+> mechanism being added just to handle the problem of someone wanting to
+> pop open an editor inside a GUI to edit a system config file, which is
+> not a major attack vector. But, now I have to worry about this new
+> file access service providing an attack surface that didn't exist
+> before.
+>
+> What's the right way to handle this stuff? Capabilities,
+> probably. It's what they're designed for.
 
-I think this library issue isn't OpenBSD-specific.  A quick Google web
-search for LIBGL_DRIVERS_PATH finds that Mesa appears to have the same
-issue, and it also finds that we should also search for GBM_DRIVERS_PATH
-(apparently, for older Mesa) and maybe EGL_DRIVERS_PATH and EGL_DRIVER,
-and LIBVA_DRIVERS_PATH and LIBVA_DRIVER_NAME.  There are probably more.
+They're completely not designed for this case. Setting CAP_DAC_OVERRIDE
+or CAP_SYS_ADMIN is very close to SUID root. See:
+https://grsecurity.net/false_boundaries_and_arbitrary_code_execution.php
 
-Related discussion for X.Org, which ends with Alan Coopersmith saying:
-
-"Yeah, I really would rather not have a setuid-root program dlopen and execute
-code from a user supplied path.  Can we have something in there to prevent
-disasters, such as issetugid() or secure_getenv()?"
-
-[PATCH xserver] Search for DRI drivers at LIBGL_DRIVERS_PATH environment variable.
-https://lists.x.org/archives/xorg-devel/2016-April/049336.html
-
-It sounds like the patch adding the dangerous getenv() didn't get in,
-but I didn't verify that.
-
-Alexander
+Jordan
