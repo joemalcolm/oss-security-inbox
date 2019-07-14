@@ -1,64 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/09/2
-Message-ID: <CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>
-Date: Mon, 9 Sep 2019 23:16:37 +0400
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/14/1
+Message-ID: <3464b63f-21cb-c894-a832-63e1a8d07f88@nic.cz>
+Date: Sun, 14 Jul 2019 09:27:13 +0200
+From: Vladimír Čunát <vladimir.cunat@....cz>
 To: oss-security@...ts.openwall.com
-Subject: Telegram privacy fails again.
+Cc: Petr Špaček <petr.spacek@....cz>, Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Knot Resolver 4.1.0 security release
 Content-Type: text/plain; charset=utf-8
 
-TL; DR
+Hello.
+
+This Wednesday there was a Knot Resolver release and embargo lift for
+two CVEs, both allowing the server to incorrectly accept DNS records:
+CVE-2019-10190 and CVE-2019-10191; more details at the end of this e-mail.
+
+We apologize for forgetting our responsibility to also post to
+oss-security on that day.  Thanks to Salvatore Bonaccorso for notifying us.
+
+Minimal patches are attached, but we generally do not recommend
+backporting them.  Announcement:
+https://lists.nic.cz/pipermail/knot-resolver-users/2019/000189.html
+
+--Vladimir (upstream dev, discovered and fixed)
+
+#### CVE-2019-10190
+
+Impact
+======
+Under certain circumstances, improper input validation bug in DNS
+resolver component of Knot Resolver allows remote attacker to bypass
+DNSSEC validation for non-existence answer.
+
+An NXDOMAIN answer would get passed through to the client even if its
+DNSSEC validation failed, instead of sending a SERVFAIL packet.
+Caching is not affected by this particular bug but see the other CVE.
 
 
-This is not a security vulnerability it’s a privacy issue.
+[Affected version (required)]:
+3.2.0 <= Knot Resolver <= 4.0.0
+
+[Vulnerability type (required)]:
+CWE-20: Improper Input Validation
+
+[Affected component (required)]:
+resolver
+
+[Impact of exploitation (required)]:
+Under certain circumstances this bug allows an attacker to hijack
+DNS domains.
+
+[Description of vulnerability]:
+Under certain circumstances, improper input validation bug in DNS
+resolver component of Knot Resolver allows remote attacker to bypass
+DNSSEC validation for non-existence answer.
+
+An NXDOMAIN answer would get passed through to the client even if its
+DNSSEC validation failed, instead of sending a SERVFAIL packet.
+Caching is not affected by this particular bug but see the other CVE.
+
+Attack Vector (AV): Network
+Attack Complexity (AC): Low
+Privileges Required (PR): None
+User Interaction (UI): None
+Scope (S): Moderate
+Confidentiality (C): None
+Integrity (I): Medium
+Availability (A): None
+
+Technical Details:
+CWE-20
 
 
-As I understand Telegram a messaging app focuses on privacy which has over
-10,00,00,000+ downloads in Playstore. In this case, we are abusing a
-well-known feature of deleting messages, which allows users to delete
-messages sent by mistake or genuinely to any recipient. It was observed
-that once the message (image) is sent to the recipient, it still remains in
-the internal storage of the user which is located at `/Telegram/Telegram
-Images/`path.
 
-I found this bug when I was researching about Telegram and MTProto
-protocol. To demonstrate this bug let's assume two people here, Bob and
-Alice.
+#### CVE-2019-10191
+
+Impact
+======
+Under certain circumstances this bug allows an network attacker with
+ability to spoof packets to downgrade a DNSSEC-secured domain to
+DNSSEC-insecure state, thus opening possibilities for further attacks.
 
 
-Assume a scenario where Bob sends a message which is a confidential image
-and was mistakenly sent to Alice, Bob proceeds to utilize a feature of
-Telegram known as "*Also delete for Alice*" which would essentially delete
-the message for Alice. Apparently, this feature does not work as intended,
-as Alice would still be able to see the image stored under `*/Telegram/Telegram
-Images/` *folder, concluding that the feature only deletes the image from
-the chat window.
+[Affected version (required)]:
+Knot Resolver <= 4.0.0
+(probably since 2.0.0, we did not check older versions thoroughly)
 
-The highlighted issue is valid when we talk about Telegram "supergroups" as
-well, assume a case wherein you're a part of a group with 2,000,00 members
-and you accidentally share a media file not meant to be shared in that
-particular group and proceed to delete, by checking "delete for all
-members" present in the group.
+[Vulnerability type (required)]:
+CWE-20: Improper Input Validation
 
-You're relying on a functionality that is broken since your file would
-still be present in storage for all users. Aside from this, I found that
-since Telegram takes `read/write/modify` permission of the USB storage
-which technically means the confidential photo should have been deleted
-from Alice's device or storage.
+[Affected component (required)]:
+resolver
 
+[Impact of exploitation (required)]:
+Under certain circumstances this bug allows an attacker to downgrade
+DNSSEC-secure domains to DNSSEC-insecure state, opening possibility of
+domain hijack using attacks against insecure DNS protocol.
 
-A compete, app for Telegram which is WhatsApp also has the same
-feature to "*Delete
-for everyone*". If you perform the following steps mentioned above in
-WhatsApp it deletes the confidential photo from Alice's `*/Whatsapp/Whatsapp
-Media/Whatsapp Images/*` folder and maintains the privacy however Telegram
-fails. WhatsApp takes the same permission when it comes to storage which is
-`read/write/modify`.
+[Description of vulnerability]:
+Improper input validation bug in DNS resolver component of Knot Resolver
+allows remote attacker to poison cache by an unsigned negative answer.
 
+Attack Vector (AV): Network
+Attack Complexity (AC): Low
+Privileges Required (PR): None
+User Interaction (UI): None
+Scope (S): All
+Confidentiality (C): None
+Integrity (I): High
+Availability (A): None
 
-I submitted this to Telegram sec-team via security[at]telegram[dot]org and
-a fix was pushed for same.
+Technical Details:
+CWE-20
 
 
-Blog: https://www.inputzero.io/2019/09/telegram-privacy-fails-again.html
+View attachment "CVE-2019-10190.patch" of type "text/x-patch" (1339 bytes)
 
+View attachment "CVE-2019-10191.patch" of type "text/x-patch" (2688 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
