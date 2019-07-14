@@ -1,48 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/07/1
-Message-ID: <20190407093032.syufxuqogu7oul54@tunkki.bugs.fi>
-Date: Sun, 7 Apr 2019 12:30:32 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: XSS in roundup bug tracker 404 page
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/14/2
+Message-ID: <20190714174509.GA8267@openwall.com>
+Date: Sun, 14 Jul 2019 19:45:09 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Joe McManus <joe.mcmanus@...onical.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Joe,
 
-On Fri, Apr 05, 2019 at 11:45:01AM +0200, Hanno Böck wrote:
-> I recently discovered that the python bug tracker had a trivial
-> reflected Cross Site Scripting vulnerability on the 404 error page.
+On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
+> Hey All - The Ubuntu Security Team would like to sign up for items 3,4
+> & 5 from the technical list <
+> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> >:
 > 
-> It essentially just reflected the URL path, so anything like
-> http://hostname/<img src=x onerror=alert(1)>
-> (properly URL-encoded, but browsers do this automatically)
-> would result in XSS.
+> 3 - Review and/or test the proposed patches and point out potential issues
+>   with them [...]
+> 4 - Check if related issues exist in the same piece of software [...]
+> 5 - Check if related issues exist in implementations of similar
+>   functionality in other software [...]
 > 
-> The software python is using here is the Roundup issue tracker, it's
-> been reported there as well [2] and fixed in their repo (but no release
-> yet).
-> 
-> [1] https://github.com/python/bugs.python.org/issues/34
-> [2] https://issues.roundup-tracker.org/issue2551035
+> Please let me know how we get started helping out.
 
-MITRE assigned CVE-2019-10904 for this vulnerability.
+This will be much appreciated, thanks!
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
+Will this be taken care of by Ubuntu Security Team members who are
+already on linux-distros (highly preferable) or will we need to
+subscribe more people just for these roles (would be non-ideal)?
 
-iQIzBAEBCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAlypwzcACgkQJ633pE6q
-dXTd0hAAp4/CcLcf1EAEkk3OjPwYTmCWb35N/NeWV3YsK/c+iqAu9U+4zqhuFqqC
-hzCjW5/4wGrZPsjQhNGlRiXo+dNmh3mDdO7wGXMe5rDCR60MDS+95WjBu53nf8pO
-L1DSZOohH216w6dzlGjyzXuqhYN5j3lOBPi5Eib4zAzYxBq0uEOkj7LKgZxWY8H2
-zR63LlDgSlzntB2vITRxQ0H84YFO3MWq5j8wokbozdLS8CwGmgb9gr0BrHfE2QqU
-x11h38sfErrbEe9fVLeHvPqeOr3kw/S3mKNtuu48uaiEczMpTKca6d7oeSJiPkw7
-4z12A80sdQHp95hXWZAGe3gmLAJDMx5k00uuCbTMvuU6fZT8DGIxf93IoqF4fzjM
-+HT/7CWdY+Itf9c5JcibE7eAMCmXRI5AFtrS3ClpPU+vAf3ZXwJsnJuIsBZr3xl/
-xfKCKW3bkK6O8ZF4YEP8dy/SQDnJV59YIR3MAsrV6DiJEh+6WVV+ca8c4AF99zt1
-Q6xrZbxkphQuUdgNNGjLbu4kPoc1e/E711QyqYW+5uzCQsl5kqcB1Xe8ZzlH1mo1
-298a8TW6HyL3+W22pu+Wz6vp7/KWf7AL5mPJMt460jvNsvIcpcj9+tV2OZMF9ufK
-8yHVUEHMND3DAew6Hc4ZYcIr1nfanDL3aO79sPi8lPSeyE0WApo=
-=9EYa
------END PGP SIGNATURE-----
+For 3, do you prefer to be "primary" or "backup"?  (We already have
+Amazon listed as "primary", but as discussed Amazon is yet to become
+more active in this role.)
+
+Will you personally be involved?  What's your role with the Ubuntu
+Security Team?
+
+I notice you don't appear to be on oss-security, so am copying this
+reply to you and to the list.
+
+Thanks again,
+
+Alexander
