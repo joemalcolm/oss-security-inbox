@@ -1,34 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/3
-Message-ID: <1565815809.MOLRKPLE@httpd.apache.org>
-Date: Wed, 14 Aug 2019 15:50:09 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/14/3
+Message-ID: <d24b7c57-3e3e-1d98-6775-a3c15bd08835@oracle.com>
+Date: Sun, 14 Jul 2019 10:59:24 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-10082: mod_http2, read-after-free in h2 connection shutdown
+Subject: Fwd: [ANNOUNCE] libICE 1.0.10
 Content-Type: text/plain; charset=utf-8
 
+The CVE-2017-2626 issue was already disclosed at:
+  https://www.x41-dsec.de/lab/advisories/x41-2017-001-xorg/
+  https://www.openwall.com/lists/oss-security/2017/02/28/3
 
-CVE-2019-10082: mod_http2, read-after-free in h2 connection shutdown
+This just upgrades the fix from a git commit/patch to a released tarball.
 
-Severity: Moderate
+    -Alan Coopersmith-              alan.coopersmith@...cle.com
+      X.Org Security Response Team - xorg-security@...ts.x.org
 
-Vendor: The Apache Software Foundation
+Download attachment "[ANNOUNCE] libICE 1_0_10.eml" of type "message/rfc822" (11932 bytes)
 
-Versions Affected:
-httpd 2.4.18 to 2.4.39
-
-Description:
-Using fuzzed network input, the http/2 session
-handling could be made to read memory after being freed,
-during connection shutdown.
- 
-Mitigation:
-All httpd users deploying mod_http2 should upgrade to 2.4.40 or later.
-Unpatch servers can disable the h2/h2c protocol.
-
-Credit:
-The issue was discovered by Craig Young of Tripwire VERT, <vuln-report@...ur3.us>.
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
