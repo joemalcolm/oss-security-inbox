@@ -1,4 +1,9 @@
-Received: (qmail 7376 invoked by uid 550); 5 Nov 2023 23:08:42 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1692" "Monday" "15" "July" "2019" "21:28:01" "+0200" "Solar Designer" "solar@openwall.com" "<20190715192801.GA12290@openwall.com>" "37" "Re: [oss-security] Contributing Back" nil nil nil "7" "2019071519:28:01" "[oss-security] Contributing Back" (number mark "U       solar@openwa Jul 15   37/1692  " thread-indent "\"Re: [oss-security] Contributing Back\"\n") "<CA+aC4kuU2KVonpSER4rPb5asFR+gw8t0RAWXX7Di=4nDEJQnJw@mail.gmail.com>" ("<CAPsnWaD_9QOiV+513eH=ECkwBo+AWN38N9x7xauKcFyVpvc-Og@mail.gmail.com>" "<20190714174509.GA8267@openwall.com>" "<CAPsnWaD3YKPx6hnLoEmfM5VdKqFHrTKjvqRo1uG=8U1xU70-+Q@mail.gmail.com>" "<CA+aC4kuU2KVonpSER4rPb5asFR+gw8t0RAWXX7Di=4nDEJQnJw@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Contributing Back" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13922 invoked by uid 550); 15 Jul 2019 19:37:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,104 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6116 invoked from network); 5 Nov 2023 23:08:18 -0000
-Date: Mon, 6 Nov 2023 00:08:10 +0100
+Received: (qmail 5522 invoked from network); 15 Jul 2019 19:28:16 -0000
+Date: Mon, 15 Jul 2019 21:28:01 +0200
 From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Cc: Pietro Albini <pietro@pietroalbini.org>
-Message-ID: <20231105230810.GA26924@openwall.com>
-References: <0c602545-dfad-4d49-beaa-b5094b343af8@app.fastmail.com>
+Message-ID: <20190715192801.GA12290@openwall.com>
+References: <CAPsnWaD_9QOiV+513eH=ECkwBo+AWN38N9x7xauKcFyVpvc-Og@mail.gmail.com> <20190714174509.GA8267@openwall.com> <CAPsnWaD3YKPx6hnLoEmfM5VdKqFHrTKjvqRo1uG=8U1xU70-+Q@mail.gmail.com> <CA+aC4kuU2KVonpSER4rPb5asFR+gw8t0RAWXX7Di=4nDEJQnJw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0c602545-dfad-4d49-beaa-b5094b343af8@app.fastmail.com>
+In-Reply-To: <CA+aC4kuU2KVonpSER4rPb5asFR+gw8t0RAWXX7Di=4nDEJQnJw@mail.gmail.com>
 User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2022-46176: Cargo does not check SSH host keys
+Subject: Re: [oss-security] Contributing Back
 
-Hi,
-
-On Tue, Jan 10, 2023 at 05:45:06PM +0100, Pietro Albini wrote:
-> The Rust Security Response WG was notified that Cargo did not perform SSH host
-> key verification when cloning indexes and dependencies via SSH. An attacker
-> could exploit this to perform man-in-the-middle (MITM) attacks.
+On Mon, Jul 15, 2019 at 11:54:23AM -0700, Anthony Liguori wrote:
+> On Mon, Jul 15, 2019 at 11:47 AM Joe McManus <joe.mcmanus@canonical.com> wrote:
+> > > On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
+> > > > Hey All - The Ubuntu Security Team would like to sign up for items 3,4
+> > > > & 5 from the technical list <
+> > > > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> > > > >:
+> > > >
+> > > > 3 - Review and/or test the proposed patches and point out potential issues
+> > > >   with them [...]
+> > > > 4 - Check if related issues exist in the same piece of software [...]
+> > > > 5 - Check if related issues exist in implementations of similar
+> > > >   functionality in other software [...]
+[...]
+> > Yes, this will be taken care of by Ubuntu Security Team members who
+> > are already on the list, however if after some time we need to cycle
+> > someone in or out I might come asking. I know you don't want to add
+> > anyone so we will do our best to prevent this from happening.
+> >
+> > For 3 we can be either primary or backup, just let me know your
+> > preference and we'll do the work.
 > 
-> This vulnerability has been assigned CVE-2022-46176.
+> I would be happy for y'all to be primary.  We don't ship as many
+> packages as Ubuntu does so there will be more things that you are
+> likely to test compared to what we do.
 
-In the distros thread leading to the above oss-security posting, Pietro
-Albini also wrote:
+OK, I've just listed Ubuntu as primary for 3, 4, 5.  Amazon is now
+backup for 3.
 
-> Note that while investigating this we discovered that the underlying library
-> Cargo uses for git operations, libgit2, does not perform SSH host key checking
-> either. We've been coordinating with them, and they'll also release a fix on
-> 2023-01-10.
+Please note that these items include "and inform the list of the work
+done even if no issues were encountered" (item 3), "and inform the list
+either way" (items 4, 5), so we'll expect replies to the list as per
+these items for each and every issue reported to there.
 
-I think the libgit2 issue was never brought to oss-security, so I am
-passing its mention to here now.  Also per that thread, CVE-2022-46176
-is only for the Cargo issue.  libgit2 was supposed to get its own CVE,
-but no one in the thread knew whether they actually did.
-
-I don't know whether libgit2 was actually fixed on that date as planned.
+Thanks!
 
 Alexander
-
-P.S. I'm quoting the rest of the oss-security posting I'm "replying" to
-below, for context since it's been a while.
-
-On Tue, Jan 10, 2023 at 05:45:06PM +0100, Pietro Albini wrote:
-> The Rust Security Response WG was notified that Cargo did not perform SSH host
-> key verification when cloning indexes and dependencies via SSH. An attacker
-> could exploit this to perform man-in-the-middle (MITM) attacks.
-> 
-> This vulnerability has been assigned CVE-2022-46176.
-> 
-> ## Overview
-> 
-> When an SSH client establishes communication with a server, to prevent MITM
-> attacks the client should check whether it already communicated with that
-> server in the past and what the server's public key was back then. If the key
-> changed since the last connection, the connection must be aborted as a MITM
-> attack is likely taking place.
-> 
-> It was discovered that Cargo never implemented such checks, and performed no
-> validation on the server's public key, leaving Cargo users vulnerable to MITM
-> attacks.
-> 
-> ## Affected Versions
-> 
-> All Rust versions containing Cargo before 1.66.1 are vulnerable.
-> 
-> Note that even if you don't explicitly use SSH for alternate registry indexes
-> or crate dependencies, you might be affected by this vulnerability if you have
-> configured git to replace HTTPS connections to GitHub with SSH (through git's
-> [`url.<base>.insteadOf`][1] setting), as that'd cause you to clone the
-> crates.io index through SSH.
-> 
-> ## Mitigations
-> 
-> We will be releasing Rust 1.66.1 today, 2023-01-10, changing Cargo to check the
-> SSH host key and abort the connection if the server's public key is not already
-> trusted. We recommend everyone to upgrade as soon as possible.
-> 
-> Patch files for Rust 1.66.0 are also available [here][2] for custom-built
-> toolchains.
-> 
-> For the time being Cargo will not ask the user whether to trust a server's
-> public key during the first connection. Instead, Cargo will show an error
-> message detailing how to add that public key to the list of trusted keys. Note
-> that this might break your automated builds if the hosts you clone dependencies
-> or indexes from are not already trusted.
-> 
-> ## Acknowledgments
-> 
-> Thanks to the Julia Security Team for disclosing this to us according to our
-> [security policy][1]!
-> 
-> We also want to thank the members of the Rust project who contributed to fixing
-> this issue. Thanks to Eric Huss and Weihang Lo for writing and reviewing the
-> patch, Pietro Albini for coordinating the disclosure and writing this advisory,
-> and Josh Stone, Josh Triplett and Jacob Finkelman for advising during the
-> disclosure.
-> 
-> [1]: https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtinsteadOf
-> [2]: https://github.com/rust-lang/wg-security-response/tree/main/patches/CVE-2022-46176
-> [3]: https://www.rust-lang.org/policies/security
