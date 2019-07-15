@@ -1,29 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/6
-Message-ID: <20190828183420.17d2662c@computer>
-Date: Wed, 28 Aug 2019 18:34:20 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: aki.tuomi@...ecot.fi
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Critical Dovecot and Pigeonhole vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/15/3
+Message-ID: <20190715192801.GA12290@openwall.com>
+Date: Mon, 15 Jul 2019 21:28:01 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 28 Aug 2019 19:28:18 +0300 (EEST)
-aki.tuomi@...ecot.fi wrote:
+On Mon, Jul 15, 2019 at 11:54:23AM -0700, Anthony Liguori wrote:
+> On Mon, Jul 15, 2019 at 11:47 AM Joe McManus <joe.mcmanus@...onical.com> wrote:
+> > > On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
+> > > > Hey All - The Ubuntu Security Team would like to sign up for items 3,4
+> > > > & 5 from the technical list <
+> > > > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> > > > >:
+> > > >
+> > > > 3 - Review and/or test the proposed patches and point out potential issues
+> > > >   with them [...]
+> > > > 4 - Check if related issues exist in the same piece of software [...]
+> > > > 5 - Check if related issues exist in implementations of similar
+> > > >   functionality in other software [...]
+[...]
+> > Yes, this will be taken care of by Ubuntu Security Team members who
+> > are already on the list, however if after some time we need to cycle
+> > someone in or out I might come asking. I know you don't want to add
+> > anyone so we will do our best to prevent this from happening.
+> >
+> > For 3 we can be either primary or backup, just let me know your
+> > preference and we'll do the work.
+> 
+> I would be happy for y'all to be primary.  We don't ship as many
+> packages as Ubuntu does so there will be more things that you are
+> likely to test compared to what we do.
 
-> I can see 0.5.7.2, we even announced it today.
+OK, I've just listed Ubuntu as primary for 3, 4, 5.  Amazon is now
+backup for 3.
 
-Ok, sorry.
+Please note that these items include "and inform the list of the work
+done even if no issues were encountered" (item 3), "and inform the list
+either way" (items 4, 5), so we'll expect replies to the list as per
+these items for each and every issue reported to there.
 
-What confused me: There's a "changes" link right to the Download and
-that points to a changelog that was last updated in july and didn't
-mention anything sounding like that bug. It's for 0.5.7, not 0.5.7.2.
-You should probably fix that link (changing the URL accordingly works):
-https://raw.githubusercontent.com/dovecot/pigeonhole/0.5.7.2/NEWS
+Thanks!
 
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Alexander
