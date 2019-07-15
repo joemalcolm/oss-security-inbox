@@ -1,4 +1,9 @@
-Received: (qmail 32049 invoked by uid 550); 16 Jul 2025 22:27:08 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1980" "Monday" "15" "July" "2019" "09:56:07" "-0600" "Joe McManus" "joe.mcmanus@canonical.com" "<CAPsnWaD3YKPx6hnLoEmfM5VdKqFHrTKjvqRo1uG=8U1xU70-+Q@mail.gmail.com>" "55" "Re: [oss-security] Contributing Back" nil nil nil "7" "2019071515:56:07" "[oss-security] Contributing Back" (number mark "U       joe.mcmanus@ Jul 15   55/1980  " thread-indent "\"Re: [oss-security] Contributing Back\"\n") "<20190714174509.GA8267@openwall.com>" ("<CAPsnWaD_9QOiV+513eH=ECkwBo+AWN38N9x7xauKcFyVpvc-Og@mail.gmail.com>" "<20190714174509.GA8267@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Contributing Back" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12076 invoked by uid 550); 15 Jul 2019 18:47:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,112 +12,90 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 2023 invoked from network); 16 Jul 2025 17:25:40 -0000
-ARC-Filter: OpenARC Filter v1.0.0 mx.pao1.isc.org B508E4D0BA6
-Authentication-Results: mx.pao1.isc.org; arc=none smtp.remote-ip=149.20.2.90
-ARC-Seal: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1752686730; cv=none; b=N+FO/b+VtlrDPYn0J+3Y+lVd7Nkmj+TeB2fTjGVLvwJxIWF2yestEUwe1plTjORlSMuMoT+vaQEC1rBNg5bNCHEz6fQ8zmL4glJcp5Cz3RggpO+/c3IkjADhL/btyuHgaesnf0m0WZcpj1ALrWquEMEcz1NIXykcr5IuvnnQOgw=
-ARC-Message-Signature: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1752686730;
-	c=relaxed/relaxed; bh=PmtAx/HJJ2SA1moH7Po6oHfKaqY77idCxVH2cW2NtB4=;
-	h=DKIM-Signature:DKIM-Signature:Message-ID:Date:MIME-Version:To:
-	 From:Subject; b=N05GuYhzYzSKmdDxR9qBlr5tbnZO0YRSnltmsbrLjCZ/TcNYkwQnoPWZtA5Kd2fM3ZwQbHPhdPvpY/AWv4dP5QDc7pFaKtnP7j8VzvOIRqHcH2eUj2BuI796lb5Szw6GUO3Rh45s4e0mHXoo5yHuRYfYWPpCbYaHWOxujbLNOIg=
-ARC-Authentication-Results: i=1; mx.pao1.isc.org
-DKIM-Filter: OpenDKIM Filter v2.10.3 mx.pao1.isc.org B508E4D0BA6
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
-	t=1752686730; bh=J0XRhin6oJBMwhOHE7wqYqh9n0SB4Fxp0HqFBbpLQnQ=;
-	h=Date:To:From:Cc:Subject;
-	b=BNOKwFvE6oDBDHnssoV6wKWe9frGDsFGPUCp90N4QZ+EHn9+/lSoNQ4pqKSV311WT
-	 T8oOM5q10SYCbsZwucmv/3U8ovJHgMDOX9EU6io2WHRub5TUELDfw9Fys1y5AipoBv
-	 AW6HTusEAFy9gJ/+QAS6X1eeSjH137ChURjiwIiw=
-DKIM-Filter: OpenDKIM Filter v2.10.3 zimbra10.isc.org 9C5712E6006F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
-	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1752686730;
-	bh=PmtAx/HJJ2SA1moH7Po6oHfKaqY77idCxVH2cW2NtB4=;
-	h=Message-ID:Date:MIME-Version:To:From;
-	b=XcHF7f9dkaNpJN5xqMnMXja0q0hTbwdrwZKotAgizX6+RclFW0ZoVoJd1iojF+HFC
-	 +VeeeUSzBC7dA2yM7OF0C0YpmCKkuTKNspg397zdBIMQryxLcSiuuR9By0GwIICpvg
-	 gd7bDFdkKZJACtF1Ali0RjOZnQm0jT3rWX0tMN7c=
-Message-ID: <4e37271c-6fd1-4717-9220-55fc583958fe@isc.org>
-Date: Wed, 16 Jul 2025 12:25:29 -0500
+Received: (qmail 9550 invoked from network); 15 Jul 2019 15:56:31 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=N/JmpZuUFvU5Ms29bHe/wyqpUYeTtHdS93D7vtNMSjc=;
+        b=QBHFdv0UpUkTLvAgSiGBU+9w6OG1kdGu7bGPSqK4z7/SUjF1wQAfIOo4tXDmig/2fL
+         53pwipccwQx3tTux9c+9/mHbVIvFh6i67JoOV5xNnlDrE+qeimwljC4siOPivuBMYLnJ
+         wr/EunriuodgzIsFhBG371Pfs0z3SnWW4V8os/nCKAfPsgl5Su9QmVdnDB3ah8d9APRn
+         Pyi5TORJWr+YY7+gM7TT1xMSQEC6u5OK6SgzUn43rydgAb6ELp3ugAI9u+Lq+FJAaLrr
+         wf+L0oSouAuP/DziJQ2Z3adGghqtEWwROBsbjH6N3zOI6fTyXg4XOARlPG5yaz/1DflX
+         BB0Q==
+X-Gm-Message-State: APjAAAX3Z6PG46yYeZ0t/8kATQxc6B6xc7s33ahuKa2buB4niq9DqLgd
+	21gFPwVhHT2gXa82ZOStTAZaXkWI7gcd723fyEYh6qMyVyKKU4RDFKdQxqMXxz/+KNY0/Npvbt2
+	Y78Bc2UmiS5A6vANVAfD5O8Sz/VH5FaTzxTkJxfzcvlDGNuW5VIMult7Y86KCqg==
+X-Received: by 2002:a2e:124b:: with SMTP id t72mr14701418lje.143.1563206178903;
+        Mon, 15 Jul 2019 08:56:18 -0700 (PDT)
+X-Google-Smtp-Source: APXvYqxTAvlEVsl5tyyCrFmOlclBVw3q4KrUfqiT0hE5pnZdg0ZXGDfpRMQkGeOya/zRcLz9h8+TVbGRLXiXLaORXUo=
+X-Received: by 2002:a2e:124b:: with SMTP id t72mr14701408lje.143.1563206178746;
+ Mon, 15 Jul 2019 08:56:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: "Everett B. Fulton" <ebf@isc.org>
-Autocrypt: addr=ebf@isc.org; keydata=
- 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
- AOqWNBhCZIHLci/7nA==
-Cc: security-officer@isc.org
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] ISC has disclosed one vulnerability in BIND 9 (CVE-2025-40777)
+References: <CAPsnWaD_9QOiV+513eH=ECkwBo+AWN38N9x7xauKcFyVpvc-Og@mail.gmail.com>
+ <20190714174509.GA8267@openwall.com>
+In-Reply-To: <20190714174509.GA8267@openwall.com>
+From: Joe McManus <joe.mcmanus@canonical.com>
+Date: Mon, 15 Jul 2019 09:56:07 -0600
+Message-ID: <CAPsnWaD3YKPx6hnLoEmfM5VdKqFHrTKjvqRo1uG=8U1xU70-+Q@mail.gmail.com>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] Contributing Back
 
-On 16 July 2025 we (Internet Systems Consortium) disclosed one 
-vulnerability affecting our BIND 9 software:
+Hey Alexander-
 
-- CVE-2025-40777:       A possible assertion failure when 
-'stale-answer-client-timeout' is set to '0' 
-https://kb.isc.org/docs/cve-2025-40777
+On Sun, Jul 14, 2019 at 11:45 AM Solar Designer <solar@openwall.com> wrote:
+>
+> Hi Joe,
+>
+> On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
+> > Hey All - The Ubuntu Security Team would like to sign up for items 3,4
+> > & 5 from the technical list <
+> > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> > >:
+> >
+> > 3 - Review and/or test the proposed patches and point out potential issues
+> >   with them [...]
+> > 4 - Check if related issues exist in the same piece of software [...]
+> > 5 - Check if related issues exist in implementations of similar
+> >   functionality in other software [...]
+> >
+> > Please let me know how we get started helping out.
+>
+> This will be much appreciated, thanks!
+>
+> Will this be taken care of by Ubuntu Security Team members who are
+> already on linux-distros (highly preferable) or will we need to
+> subscribe more people just for these roles (would be non-ideal)?
+>
+> For 3, do you prefer to be "primary" or "backup"?  (We already have
+> Amazon listed as "primary", but as discussed Amazon is yet to become
+> more active in this role.)
+>
+> Will you personally be involved?  What's your role with the Ubuntu
+> Security Team?
+>
+> I notice you don't appear to be on oss-security, so am copying this
+> reply to you and to the list.
+>
+> Thanks again,
+>
+> Alexander
 
-New versions of BIND 9 are available from https://www.isc.org/downloads
+Yes, this will be taken care of by Ubuntu Security Team members who
+are already on the list, however if after some time we need to cycle
+someone in or out I might come asking. I know you don't want to add
+anyone so we will do our best to prevent this from happening.
 
-Operators and package maintainers who prefer to apply patches 
-selectively can find individual vulnerability-specific patches in the 
-"patches" subdirectory of each published release directory:
+For 3 we can be either primary or backup, just let me know your
+preference and we'll do the work.
 
-- https://downloads.isc.org/isc/bind9/9.20.11/patches/
-- https://downloads.isc.org/isc/bind9/9.21.10/patches/
+I will not personally be involved, I am the director of the Ubuntu
+Security Team and as much as I would like to... I probably wouldn't
+have time and I did not want to add another person to the list.  I am
+subscribed to oss-security now.
 
-With the public announcement of these vulnerabilities, the embargo 
-period is ended and any updated software packages that have been 
-prepared may be released.
+Cheers,
+-Joe
