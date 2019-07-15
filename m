@@ -1,78 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/3
-Message-ID: <20191119121910.g6tc5zwbmbdiuiuh@anathema>
-Date: Tue, 19 Nov 2019 13:19:10 +0100
-From: Morten Linderud <morten@...derud.pw>
-To: oss-security@...ts.openwall.com
-Subject: Re: Mitigating malicious packages in gnu/linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/15/1
+Message-ID: <CAPsnWaD3YKPx6hnLoEmfM5VdKqFHrTKjvqRo1uG=8U1xU70-+Q@mail.gmail.com>
+Date: Mon, 15 Jul 2019 09:56:07 -0600
+From: Joe McManus <joe.mcmanus@...onical.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 19, 2019 at 01:33:48PM +0200, Georgi Guninski wrote:
-> As end user and contributor of gnu/linux, I am concerned about malicious
-> packages (either hostile developers or hacked developers or another reason)
-> and have two questions:
-> 
-> * What do linux vendors to avoid malicious packages?
-> 
-> * As end user what can I do to mitigate malicious packages?
+Hey Alexander-
 
-Yo!
+On Sun, Jul 14, 2019 at 11:45 AM Solar Designer <solar@...nwall.com> wrote:
+>
+> Hi Joe,
+>
+> On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
+> > Hey All - The Ubuntu Security Team would like to sign up for items 3,4
+> > & 5 from the technical list <
+> > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> > >:
+> >
+> > 3 - Review and/or test the proposed patches and point out potential issues
+> >   with them [...]
+> > 4 - Check if related issues exist in the same piece of software [...]
+> > 5 - Check if related issues exist in implementations of similar
+> >   functionality in other software [...]
+> >
+> > Please let me know how we get started helping out.
+>
+> This will be much appreciated, thanks!
+>
+> Will this be taken care of by Ubuntu Security Team members who are
+> already on linux-distros (highly preferable) or will we need to
+> subscribe more people just for these roles (would be non-ideal)?
+>
+> For 3, do you prefer to be "primary" or "backup"?  (We already have
+> Amazon listed as "primary", but as discussed Amazon is yet to become
+> more active in this role.)
+>
+> Will you personally be involved?  What's your role with the Ubuntu
+> Security Team?
+>
+> I notice you don't appear to be on oss-security, so am copying this
+> reply to you and to the list.
+>
+> Thanks again,
+>
+> Alexander
 
-The answer to this is complicated. Different distributions has widely different
-threat models and supply chains for dealing with packages. This can be from the
-perspective of developers uploading pre-built binary packages to a repository,
-then distributed. Another factor is distributions where source packages are
-uploaded to a centralized builder, then distributed.
+Yes, this will be taken care of by Ubuntu Security Team members who
+are already on the list, however if after some time we need to cycle
+someone in or out I might come asking. I know you don't want to add
+anyone so we will do our best to prevent this from happening.
 
-You also got source-based distributions, such as Gentoo and probably NixOS,
-where the problem domain is a bit more complicated as the users might be
-building the packages themselves.
+For 3 we can be either primary or backup, just let me know your
+preference and we'll do the work.
 
-Some attack vector are:
+I will not personally be involved, I am the director of the Ubuntu
+Security Team and as much as I would like to... I probably wouldn't
+have time and I did not want to add another person to the list.  I am
+subscribed to oss-security now.
 
-* A malicious build server
-* Compromised source tarballs
-* Compromised packagers
-* Compromised mirrors/repositories
-
-
-There is not a definitive solution here. But there are multiple efforts and
-research going on. The most important one, in my opinion, is the reproducible
-builds project [1]. We need to ensure we are not inserting random or
-non-deterministic data into our build artifacts. This stretches from upstream
-developers providing tarballs, to pre-compiled sources and packages from
-distributions. There is no distribution today that has full reproducible builds,
-but there are many projects that work towards this and work on reproducible
-builds.
-
-Arch Linux has recently been trying to get the core repository 100%
-reproducible, and we have done a lot of effort towards this just the past week
-[2]. I have also written up a blog post describing the effort that has gone into
-this [3].
-
-There are also other efforts, like Benjamin Hof which has done work attempting
-to provide transparency logs for Debian package repositories. This can work as a
-guard detecting compromised signing keys. Either from build servers or packagers [4].
-
-The current status quo is a bit grim. You can't protect yourself against
-malicious packages. You need to trust the source and build the packages
-yourself, preferably write your own package files.
-
-As long as we use distributions we are bound to trusting the packagers and
-believe they are doing the right thing. However, reproducible builds will allow
-users to verify the work done by packagers in the future.
-
-
-I hope this gives some insight and answers parts of your question :)
-
-
-[1]: https://reproducible-builds.org/
-[2]: https://lists.archlinux.org/pipermail/arch-dev-public/2019-November/029721.html
-[3]: https://linderud.dev/blog/reproducible-arch-linux-packages/
-[4]: https://debconf18.debconf.org/talks/104-software-transparency-package-security-beyond-signatures-and-reproducible-builds/
-
--- 
-Morten Linderud
-PGP: 9C02FF419FECBE16
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Cheers,
+-Joe
