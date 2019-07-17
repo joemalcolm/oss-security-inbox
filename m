@@ -1,56 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/12
-Message-ID: <CABXRUiTEQs=qocLyQuGSXaAkk_tkA+=dQO=6EyhqfGeU3Pm_dg@mail.gmail.com>
-Date: Thu, 18 Apr 2019 21:33:19 +0800
-From: Fuqian Huang <huangfq.daxian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/17/2
+Message-ID: <CAAWM14evUCZs2UoyXw2FU9ZSuM2NFFR+sNi7bA=o+-r7vfUcHw@mail.gmail.com>
+Date: Wed, 17 Jul 2019 16:25:03 +0200
+From: Wadeck Follonier <wfollonier@...udbees.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel < 4.14.111 drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c kernel address dumps to user space
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-In drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c:320
-ppm_destory will dump the address of ppm into dmesg,
-which allows local user to read the kernel address via dmesg.
-static void ppm_destroy(struct kref *kref)
-{
-    ...
-    pr_info("ippm: kref 0, destroy %s ppm 0x%p.\n",
-        ppm->ndev->name, ppm);
-    ...
-}
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-In drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c:396
-and drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c:458
-and drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c:468,
-cxgbi_ppm_init will dump the address of ppm into dmesg,
-which allows local user to read the kernel address via dmesg.
-int cxgbi_ppm_init(void **ppm_pp, struct net_device *ndev,
-           struct pci_dev *pdev, void *lldev,
-           struct cxgbi_tag_format *tformat,
-           unsigned int ppmax,
-           unsigned int llimit,
-           unsigned int start,
-           unsigned int reserve_factor)
-{
-    ...
-    if (ppm) {
-        pr_info("ippm: %s, ppm 0x%p,0x%p already initialized, %u/%u.\n",
-            ndev->name, ppm_pp, ppm, ppm->ppmax, ppmax);
-        kref_get(&ppm->refcnt);
-        return 1;
-    }
-    ...
-    if (*ppm_pp) {
-        ...
-        pr_info("ippm: %s, ppm 0x%p,0x%p already initialized, %u/%u.\n",
-            ndev->name, ppm_pp, *ppm_pp, ppm->ppmax, ppmax);
+* Jenkins weekly 2.186
+* Jenkins LTS 2.176.2
 
-        kref_get(&ppm->refcnt);
-        return 1;
-    }
-    ...
-    pr_info("ippm %s: ppm 0x%p, 0x%p, base %u/%u, pg %lu,%u, rsvd %u,%u.\n",
-        ndev->name, ppm_pp, ppm, ppm->base_idx, ppm->ppmax, PAGE_SIZE,
-        ppm->tformat.pgsz_idx_dflt, ppm->pool_rsvd,
-        ppm->pool_index_max);
-    ...
-}
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-07-17/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1424 / CVE-2019-10352
+Users with Job/Configure permission could specify a relative path escaping
+the base directory in the file name portion of a file parameter definition.
+
+This path would be used to store the uploaded file on the Jenkins master,
+resulting in an arbitrary file write vulnerability.
+
+
+SECURITY-626 / CVE-2019-10353
+By default, CSRF tokens in Jenkins only checked user authentication and IP
+address.
+
+This allowed attackers able to obtain a CSRF token for another user to
+implement CSRF attacks as long as the victim's IP address remained unchanged.
+
+
+SECURITY-534 / CVE-2019-10354
+Jenkins uses the Stapler web framework to render its UI views.
+
+These views are frequently comprised of several view fragments, enabling
+plugins to extend existing views with more content.
+
+In some cases attackers could directly access a view fragment containing
+sensitive information, bypassing any permission checks in the corresponding
+view.
