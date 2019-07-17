@@ -1,68 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/11
-Message-ID: <729c6afa-a07f-a171-fc0f-3057a40c4e49@oracle.com>
-Date: Sat, 15 Jun 2019 14:57:19 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, "David A. Wheeler" <dwheeler@...eeler.com>
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/17/1
+Message-ID: <CAE=eJsfR_nb62gWqyM+4v5AQwgLziyJwQ9BwPHG+PFO7ezXMTA@mail.gmail.com>
+Date: Wed, 17 Jul 2019 10:15:31 +0300
+From: Tomer Brisker <tbrisker@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-10198: Authorization bypass in Foreman tasks plugin
 Content-Type: text/plain; charset=utf-8
 
-As one of the maintainers of a pile of packages included in pretty much every
-Linux distro (the X.Org libraries, clients, servers, & drivers), which has had
-a fair number of CVE's, I would love to do all of these - and we do what we can
-now (mostly 1 & 3).   We're not ignoring the rest - we just don't have enough
-contributors to do all that, and I know we're far from the only FOSS project
-with this problem.
+Hello,
 
-This is a lot of work, and when the people making money off the software aren't
-using that money to pay for this work, they can't be surprised when it doesn't
-get done.
+An authorization bypass was discovered in the Foreman tasks plugin which
+allows authenticated users to see details of tasks without validating the
+user has proper permissions to do so. Viewing the details requires prior
+knowledge of the task UUID, which can not be easily guessed.
 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	  X.Org Security Response Team - xorg-security@...ts.x.org
+This affects Foreman tasks since version 0.7.8, and fixed in versions
+0.15.7, 0.16.0 and newer.
+Further information: https://projects.theforeman.org/issues/27275
+Commit fixing the issue:
+https://github.com/theforeman/foreman-tasks/commit/3104a46cf669ae62f9034e9547cb93cc03384cd9
 
-On 6/15/19 1:54 PM, David A. Wheeler wrote:
-> I think that's fair, but I think projects have their part to play too:
-> 
-> 1. Projects should work much harder at avoiding backwards-incompatible changes.
->    Some projects (though *not* the Linux kernel) seem to take a very
->    cavalier attitude to breaking changes.  Yes, change is sometimes necessary,
->    but projects need to work harder at providing graceful upgrades.
->    (Slow deprecations, providing altenative differently-named 'new' interfaces
->    with different semantics that let people gradually transition, and so on).
->    IN PARTICULAR: I believe the primary reason that distros
->    often backport, instead of using the "current" version, is because their
->    users correctly fear backwards-incompatible changes. If projects would stop
->    being the problem, then distros wouldn't feel the need to solve the problem.
-> 2. Everyone needs test suites to detect problems from changes & upgrades.
->    Since everyone is making changes, including upgrading components,
->    everyone should have test suites to detect problems before they ship.
->    Then upgrading will be much easier and less likely to cause problems.
-> 3. Projects should be using static analysis tools to detect problems
->    ahead-of-time.  Yes, they have false positives and false negatives.
->    Be kind to your users, and use tools to help find & fix the bugs
->    instead of inflicting them on your users.
-> 4. Input validation, input validation, input validation.
->     If projects' software would be pickier about what they accept,
->     many vulnerabilities and bugs wouldn't have a chance.
-> 5. Apply other good security techniques, like hardening against
->     the inevitable problems.
-> 6. I'd like to see more projects fuzzing themselves before they ship.
->    I'm probably dreaming on this point, but I can dream :-).
-> These won't solve everything, but it will reduce the trauma.
-> 
-> Many of these points are covered by the CII Best Practices badge.
-> I encourage OSS projects to work to get a badge:
->    https://bestpractices.coreinfrastructure.org/
-> (Full disclosure: I lead that project.  But I hope it's useful anyway :-) .)
-> 
-> I'm not revealing any grand new ideas.  They're kind of basic.
-> However, they seem to be ignored by too many projects today.
-> I think if more projects would "do unto others as you
-> would have them do unto you", then handling
-> this stuff would be a lot less painful :-).
-> 
-> --- David A. Wheeler
-> 
-
+-- 
+Have a nice day,
+Tomer Brisker (he/him/his)
+Red Hat Engineering
 
