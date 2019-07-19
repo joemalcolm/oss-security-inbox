@@ -1,52 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/11/2
-Message-ID: <2A58D60A-BDD0-4546-BB2E-A5D53E6CD866@vmware.com>
-Date: Wed, 11 Dec 2019 00:10:31 +0000
-From: VMware Security Response Center <security@...are.com>
-To: Riccardo Schirone <rschiron@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: VMware Security Response Center <security@...are.com>
-Subject: Re: CVE-2019-5544 openslp 1.2.1, 2.0.0 heap overflow vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/19/2
+Message-ID: <20190719140343.GA12952@thinkstation>
+Date: Fri, 19 Jul 2019 07:03:43 -0700
+From: Tavis Ormandy <taviso@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: stack buffer overflow in fbdev
 Content-Type: text/plain; charset=utf-8
 
+Hello, during a conversation on twitter we noticed a stack buffer
+overflow in fbdev with malicious edid data:
 
+https://github.com/torvalds/linux/blob/22051d9c4a57d3b4a8b5a7407efc80c71c7bfb16/drivers/video/fbdev/core/fbmon.c#L1033
 
-﻿> On 12/10/19, 2:25 AM, "Riccardo Schirone" <rschiron@...hat.com> wrote:
+There is enough space to have 52 1-byte length values, which makes svd_n
+52, then make the final value length 0x1f (the maximum), which makes
+svd_n 83 and overflows the 64 byte stack buffer svd[] with controlled
+data.
 
-    > On 12/06, VMware Security Response Center wrote:
-    >> openslp has a heap overflow vulnerability that when exploited may result
-   > > in memory corruption and a crash of slpd or in remote code execution.
-   > > 
-   > > CVE-2019-5544 has been assigned to this issue.
-   > > 
-   > > Below you may find:
-   > > - a copy of the affected code with comments indicating the problem.
-   > > - patches for openslp versions 1.2.1 and 2.0.0
-    
-    > Are those fixes commited anywhere? I could not find them on GitHub.
+This requires a malicious monitor / projector / etc, so pretty low impact.
 
-The patches have been provided to the maintainer of openslp. These are the
-same patches as mentioned in our initial post at
-https://www.openwall.com/lists/oss-security/2019/12/06/1.
+I pulled out the code to make a demo (I removed the checksum, but it
+doesnt prevent the bug):
 
-The openslp github repository has not yet been updated, see
-https://github.com/openslp-org/openslp.
-    
-    >> 
-    >> VMware would like to thank the 360Vulcan team working with the 2019
-    >> Tianfu Cup Pwn Contest for reporting this issue to us.
-    >> 
-    >> VMware Security Response Center
-    >> 
-    >> 
-    
-    > Thanks,
-    > -- 
-    > Riccardo Schirone
-    > Red Hat -- Product Security
-    > Email: rschiron@...hat.com
-    >PGP-Key ID: CF96E110
+https://gist.github.com/taviso/923776e633cb8fb1ab847cce761a0f10
 
-Thanks,
-VMware Security Response Center
-    
+This was discovered by Nico Waisman of Semmle.
 
+Tavis.
+
+-- 
+-------------------------------------
+taviso@....lonestar.org | finger me for my pgp key.
+-------------------------------------------------------
