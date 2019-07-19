@@ -1,44 +1,143 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/10/6
-Message-Id: <ADC20BCD-A200-4808-B6D3-6A7C339ED840@apache.org>
-Date: Wed, 10 Apr 2019 19:03:42 +0100
-From: Ash Berlin-Taylor <ash@...che.org>
-To: dev@...flow.apache.org, oss-security@...ts.openwall.com
-Cc: Apache Security Team <security@...che.org>
-Subject: CVE-2019-0216, CVE-2019-0229 vulnerabilities affecting  Apache Airflow <= 1.10.2  webserver component
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/19/1
+Message-Id: <E1hoTKI-0000dF-Ng@xenbits.xenproject.org>
+Date: Fri, 19 Jul 2019 13:53:34 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 300 v2 - Linux: No grant table and foreign mapping limits
 Content-Type: text/plain; charset=utf-8
 
-There were two vulnerabilities fixed in release of Apache Airflow 1.10.3 affecting the `airflow webserver` service:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+                    Xen Security Advisory XSA-300
+                              version 2
 
-CVE-2019-0216: Stored XSS
+             Linux: No grant table and foreign mapping limits
 
-  Versions Affected: <= 1.10.2
+UPDATES IN VERSION 2
+====================
 
-  Description:
-  A malicious admin user could edit the state of objects in the  Airflow
-  metadata database to execute arbitrary javascript on certain page views.
+Drop inapplicable "Deployment during embargo" section.
 
-  Credit:
-  Thanks to Nicolas Heiniger ( of photochrome.ch), Matt S, and Francesco
-  Soncina (of ABN AMRO), and "Media Rest" for all independently reporting
-  this vulnerability.
+Rewrite for clarity, and to remove most references to dom0.  The issue
+is equally applicable to domU's providing backend services.
 
-CVE-2019-0229: Improper CSRF validation against various endpoints
-  
-  Versions Affected: <= 1.10.2
+Add information about the arbitrary limit for userspace backends.
 
-  Description:
-  A number of HTTP endpoints in the Airflow webserver (both RBAC and classic)
-  did not have adequate protection and were vulnerable to cross-site request
-  forgery attacks.
+ISSUE DESCRIPTION
+=================
 
-  Credit:
-  Thanks to Erik Mulder at bol.com for reporting this.
+Virtual device backends and device models running in domain 0, or
+other backend driver domains, need to be able to map guest memory
+(either via grant mappings, or via the foreign mapping interface).
 
+Inside Xen, mapped grants are tracked by the maptrack structure.  The
+size of this structure is chosen during domain creation, and has a
+fixed upper bound for the lifetime of the domain.
 
-(CVE-2019-0216 is similar to CVE-2018-20244 form 1.10.2. We missed some cases of this in the previous fix)
+For Linux to keep track of these mappings, it needs to have a page
+structure for each one.  In practice the number of page structures is
+usually limited.  In PV guests, a range of pfns are typically set
+aside at boot ("pre-ballooned") for this purpose.  For HVM/PVH and Arm
+guests, no memory is set aside to begin with.  In either case, when
+more of this "foreign / grant map pfn space" is needed, Linux will
+balloon out extra pages to use for this purpose.
 
-Thanks,
-Ash
-Apache Airflow PMC member
+Unfortunately, in Linux, there are no limits, either on the total
+amount of memory which the domain will attempt to balloon out, nor on
+the amount of "foreign / grant map" memory which any individual guest
+can consume.
+
+For Linux userspace backends (e.g. QEMU) which use /dev/xen/gnttab or
+/proc/xen/gnttab, there is an arbitrary mapping limit which, if hit,
+will prevent further mappings from being established.
+
+As a result, a malicious guest may be able to, with crafted requests,
+cause a backend Linux domain to either:
+
+ 1) Fill the maptrack table in Xen and/or hit the userspace limit.
+    This will starve I/O from other guests served by the same backend.
+
+ 2) Balloon out sufficient RAM to cause it to swap excessively, or run
+    completely out of memory.  This may starve all operations from the
+    domain, including I/O from other guests, or may cause a crash of
+    the domain.
+
+IMPACT
+======
+
+Guest may be able to crash backend Linux domains, or starve operations
+inside the domain, including the processing of guest I/O requests
+(Guest Denial-of-Service).
+
+If the backend is domain 0, which is the most common configuration,
+then host-wide operations may be starved, or the host may crash (Host
+Denial-of-Service).
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Linux are vulnerable.  Only Linux guests acting as
+backend domains for other guests may be exploited.
+
+All Arm domains are vulnerable, as are x86 PVH/HVM guests.  The
+vulnerability of x86 PV guests depends on how they were configured at
+boot.
+
+MITIGATION
+==========
+
+PV guests can be constructed with "pre-ballooned" memory, by building
+it with maxmem > memory.  See `man 5 xl.cfg` for full details of these
+two parameters.
+
+For PV dom0, these are controlled by Xen's "dom0_mem=$X,max:$Y"
+command line parameter.
+
+The larger the difference between memory and maxmem, the more space
+Linux has to fill with grant/foreign mappings before it will start
+ballooning out real memory to satisfy further mapping requests.  This
+makes the attack more difficult to accomplish.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of ARM.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves the backend memory
+exhaustion issue.
+
+NOTE: This does NOT fix the guest starvation issue.  Fixing fixing
+this issue is more complex, and it was determined that it was better
+to work on a robust fix for the issue in public.  This advisory will
+be updated when fixes are available.
+
+xsa300-linux-5.2.patch     Linux 4.4 ... 5.2
+
+$ sha256sum xsa300*
+9c8a9aec52b147f8e8ef41444e1dd11803bacf3bd4d0f6efa863b16f7a9621ac  xsa300-linux-5.2.patch
+$
+
+NOTE ON LACK OF EMBARGO
+=======================
+
+The lack of predisclosure is due to a short schedule set by the
+discoverer, and efforts to resolve the advisory wording.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl0xyy0MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZyzUH/3hhOLPLuiTnKQd3idx0iIrpRkQfcdl9pxWWARWx
+xiVKyyMIajokrq5besT01Ztizz6B80DN+m4W14yi+j8nDyR3W4v/JriZQY48Tj1i
+nd+jvBGfvQcjNc5WaVjBtU/x9j0HDCUrBP+uJMGdt9jl6fppvMwnBcv/OeEvl/eE
+TjwEMs/RQ69LcjpwGGPSAh8AR2i1+oL3LiHtwO31hdkw0Ritqa32Uw4c+ENuo/OE
+PApIX8O8TMgRX0/LriGy6dtlb/L4SljTPa592EHH1cPfDelHmzpWEeIx77nbq8v/
+/Ex6Gjd/19ArWvofxQkQk1+aNfvBPnPCaboc7JrlCuFEDP4=
+=OcOD
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa300-linux-5.2.patch" of type "application/octet-stream" (2278 bytes)
