@@ -1,47 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/12/6
-Message-ID: <20190712121202.403b2f5f@jabberwock.cb.piermont.com>
-Date: Fri, 12 Jul 2019 12:12:02 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Jordan Glover <Golden_Miller83@...tonmail.ch>
-Cc: oss-security@...ts.openwall.com, Simon McVittie <smcv@...ian.org>
-Subject: Re: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/1
+Message-ID: <CAHk-=whRsN13=0Ey1Db3+5k4ij5arawVArG7Pu2MMoVrONNYzg@mail.gmail.com>
+Date: Sun, 21 Jul 2019 14:04:19 -0700
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: Daniel Vetter <daniel@...ll.ch>
+Cc: Tavis Ormandy <taviso@...il.com>, Bartlomiej Zolnierkiewicz <b.zolnierkie@...sung.com>,  Daniel Vetter <daniel.vetter@...ll.ch>, oss-security@...ts.openwall.com
+Subject: Re: stack buffer overflow in fbdev
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 12 Jul 2019 11:53:26 -0400 "Perry E. Metzger"
-<perry@...rmont.com> wrote:
-> > > What's the right way to handle this stuff? Capabilities,
-> > > probably. It's what they're designed for.
-> > 
-> > They're completely not designed for this case. Setting
-> > CAP_DAC_OVERRIDE or CAP_SYS_ADMIN is very close to SUID root. See:
-> > https://grsecurity.net/false_boundaries_and_arbitrary_code_execution.php
-> 
-> Those aren't capabilities. Those are this POSIX mechanism that got
-> the same name for no good reason and doesn't do anything like what
-> an actual capability system does.
+On Sun, Jul 21, 2019 at 1:09 PM Daniel Vetter <daniel@...ll.ch> wrote:
+>
+> PS: git log -G disappoints by not using all the cores I have here ..
 
-It occurs to me that people without a background in computer security
-might not know what a capability actually is, or how a capability
-based security system manages access control.
+Yeah, "git grep" is threaded (but if you want more than 8 threads you
+need to configure it). But "-G" is not.
 
-This Wikipedia page:
-https://en.wikipedia.org/wiki/Capability-based_security
-isn't the best, but it does have good pointers to real explanations.
+Part of it is that "-G" is actually very very different from grep.
+"grep" looks at all files, and is threaded over the number of files.
 
-For a look at how you can implement a capability system on top
-of Unix, see Capsicum, which was built for FreeBSD but never actually
-ported to Linux (which is sad and should be corrected):
-https://www.cl.cam.ac.uk/research/security/capsicum/papers/2010usenix-security-capsicum-website.pdf
+"-G" looks at each file diff pair, does a diff of them, and then does
+a grep to see if the pattern is in the diff.
 
-Note that a primitive form of capabilities can be achieved in the
-current Linux kernel by passing file descriptors between processes, a
-tool relatively few people seem to know exists. Given that the
-"correct" mechanism (something like Capsicum) doesn't exist in Linux
-yet, it's a poor man's second best. Again, porting Capsicum would be
-the smart thing to do instead of all this ad hoc stuff.
+And usually the number of file diff pairs is fairly small, and it
+would be non-trivial to parallelize it.
 
+I guess git could parallelize over many commits, but it doesn't.
 
-Perry
--- 
-Perry E. Metzger		perry@...rmont.com
+Side note: "-S" is usually faster than "-G". It skips the "create
+diff" part, and instead just counts the number of occurrences of the
+string in the diffpairs, and shows the end result is the number is
+different. Odd semantics, but very useful exactly for the "when did
+this appear or disappear" kind of thing.
+
+So "git log -G fb_edid_add_monspecs" is indeed very slow.
+
+If you limit the space that you grep over, you can speed things up
+enormously. So something like
+
+        git log -S fb_edid_add_monspecs drivers/video/fbdev/
+
+isn't too horrendous.
+
+                   Linus
