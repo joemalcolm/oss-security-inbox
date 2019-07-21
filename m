@@ -1,44 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/06/1
-Message-ID: <20190806000539.GQ9017@oevtugenva.nrevsny.pk>
-Date: Mon, 5 Aug 2019 20:05:39 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Cc: musl@...ts.openwall.com
-Subject: Re: [musl] CVE request: musl libc 1.1.23 and earlier x87 float stack imbalance
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/21/2
+Message-ID: <CAHk-=wiZpdb=PzvJd8EbvS43F9=oy_ou2r7LRHrFyqqpE3vnjQ@mail.gmail.com>
+Date: Sun, 21 Jul 2019 11:03:01 -0700
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: Tavis Ormandy <taviso@...il.com>, Bartlomiej Zolnierkiewicz <b.zolnierkie@...sung.com>,  Daniel Vetter <daniel.vetter@...ll.ch>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: stack buffer overflow in fbdev
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 05, 2019 at 07:27:37PM -0400, Rich Felker wrote:
-> I've discovered a flaw in musl libc's arch-specific math assembly code
-> for i386, whereby at least the log1p function and possibly others
-> return with more than one item on the x87 stack. This can lead to x87
-> stack overflow in the execution of subsequent math code, causing it to
-> incorrectly produce a NAN in place of the actual result. If floating
-> point results are used in flow control, this can lead to runaway wrong
-> code execution. For example, in Python (version 3.6.8 tested), at
-> least one code path of the dtoa function becomes an infinite loop
-> performing what's effectively an unbounded-length memset when entered
-> under such a condition.
-> 
-> This bug is potentially exploitable in software which calls affected
-> math functions with inputs under user control. Impact depends on how
-> the application handles the ABI-violating x87 state; in Python it
-> seems to be limited to producing a crash.
-> 
-> The bug is present in all versions after 0.9.12, up through the
-> current (1.1.23) release. Only 32-bit x86 systems (aka IA32, musl's
-> "i386" arch) are affected. Users of other archs, including x86_64, can
-> safely ignore this issue.
-> 
-> Affected users are advised to apply the following patch:
-> 
-> https://git.musl-libc.org/cgit/musl/patch/?id=f3ed8bfe8a82af1870ddc8696ed4cc1d5aa6b441
+Completely untested patch attached. There are probably better ways to do this.
 
-The patch contains an error that was missed for unknown reasons,
-probably failure to rebuild a file. I'm attaching an aggregate patch
-that works. Alternaatively, these two commits can be applied:
+Adding the proper people to the cc, and quoting Tavis' email in its entirety.
 
-https://git.musl-libc.org/cgit/musl/patch/?id=f3ed8bfe8a82af1870ddc8696ed4cc1d5aa6b441
-https://git.musl-libc.org/cgit/musl/patch/?id=6818c31c9bc4bbad5357f1de14bedf781e5b349e
+Daniel - you got added despite not being explicitly listed as
+maintainer because you've touched fbdev/core/ more than most lately,
+plus you know edid anyway. As such: "tag, you're it, sucker".
 
-View attachment "x87_stack_bug.diff" of type "text/plain" (3105 bytes)
+                Linus
+
+On Sat, Jul 20, 2019 at 5:35 PM Tavis Ormandy <taviso@...il.com> wrote:
+>
+> Hello, during a conversation on twitter we noticed a stack buffer
+> overflow in fbdev with malicious edid data:
+>
+> https://github.com/torvalds/linux/blob/22051d9c4a57d3b4a8b5a7407efc80c71c7bfb16/drivers/video/fbdev/core/fbmon.c#L1033
+>
+> There is enough space to have 52 1-byte length values, which makes svd_n
+> 52, then make the final value length 0x1f (the maximum), which makes
+> svd_n 83 and overflows the 64 byte stack buffer svd[] with controlled
+> data.
+>
+> This requires a malicious monitor / projector / etc, so pretty low impact.
+>
+> I pulled out the code to make a demo (I removed the checksum, but it
+> doesnt prevent the bug):
+>
+> https://gist.github.com/taviso/923776e633cb8fb1ab847cce761a0f10
+>
+> This was discovered by Nico Waisman of Semmle.
+>
+> Tavis.
+>
+> --
+> -------------------------------------
+> taviso@....lonestar.org | finger me for my pgp key.
+> -------------------------------------------------------
+
+View attachment "patch.diff" of type "text/x-patch" (942 bytes)
