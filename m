@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1062" "Saturday" "1" "February" "2020" "01:17:26" "+0530" "Hardik Vyas" "hvyas@redhat.com" "<CAOo2v=A-zfgSrFy73_XMGxV4FbV_fv3Ptj_JdWa3W6U=iowWsA@mail.gmail.com>" "36" "[oss-security] CVE-2020-1700 ceph: connection leak in the RGW Beast front-end permits a DoS against the RGW server" "^Date:" nil nil "2" "2020013119:47:26" "[oss-security] CVE-2020-1700 ceph: connection leak in the RGW Beast front-end permits a DoS against the RGW server" (number mark "        hvyas@redhat Feb  1   36/1062  " thread-indent "\"[oss-security] CVE-2020-1700 ceph: connection leak in the RGW Beast front-end permits a DoS against the RGW server\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-1700 ceph: connection leak in the RGW Beast front-end permits a DoS against the RGW server" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3011" "Sunday" "21" "July" "2019" "11:03:01" "-0700" "Linus Torvalds" "torvalds@linux-foundation.org" "<CAHk-=wiZpdb=PzvJd8EbvS43F9=oy_ou2r7LRHrFyqqpE3vnjQ@mail.gmail.com>" "71" "[oss-security] Re: stack buffer overflow in fbdev" "^Cc:" nil nil "7" "2019072118:03:01" "[oss-security] Re: stack buffer overflow in fbdev" (number mark "        torvalds@lin Jul 21   71/3011  " thread-indent "\"[oss-security] Re: stack buffer overflow in fbdev\"\n") "<20190719140343.GA12952@thinkstation>" ("<20190719140343.GA12952@thinkstation>") nil nil nil nil nil nil nil "[oss-security] Re: stack buffer overflow in fbdev" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26392 invoked by uid 550); 31 Jan 2020 23:08:34 -0000
+Received: (qmail 3623 invoked by uid 550); 21 Jul 2019 18:07:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24481 invoked from network); 31 Jan 2020 19:47:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1580500063;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=jIgplJu5lqYPXKkdVcnQZArMteVGRWCRxfCOPDYSfHA=;
-	b=Wlkmew2X60NRdLx3sheXe1bZoXdUYq2RHM8abKGlTFmYk6cvDNKb0PCA+7z48xCBbiej8H
-	7Erec4Nolgclp4ssoQt6zJDMG2BKrS1LVvruanZn3rNhwUA5Ba4SxT4q6FAz4S8gISALeG
-	PCdnFaSajcNPMYAZ/xrIMMDd8X0L+es=
+Received: (qmail 28573 invoked from network); 21 Jul 2019 18:03:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=B50ZjF+JAirOO384o99CzdlUHX2W7LanisWtPifetZM=;
+        b=JdKOO268c8F69ZI0EGLwf/QQkVHaQbe9MI/ZJIo7qgcYuvgKzpCCOyVMmlpNoCKd/L
+         2h9Ka+DVymZ39En3z3KbhFoJWr6DRZEVwgCCLUmSTQm/szhmLIuENVs5gwxVEq7afd3v
+         HGOObqDXVeIFAOBlwikqAzmb+s9dd1GQMWRpU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=nWIbKyrEs5aK7DG4FI0BNzwkE7n/zm2uW1rKeuGFxRo=;
-        b=QVHx/NR9s/zygU3vw78oX88zz1zRxfvo/5444DSfDaYwfgNvr/iUXquBlO0bjBIi5+
-         mmlGR5/KZ0YB3c0SacFFIDW5qF1gywVwRG/Dp1YwktXUTBFjqR4knkweg73KuIFzhs17
-         Jaa84AP0FWOsbdpIBbet00jzlofak85LR0xS3Z09h9j9aywSGD7W+OgKVGuNt2jtl24R
-         Lrxn9e+lwUkgJcKaRZE/jcEIoIA7j0rY7xb7Znf9vaUaPLt/I2Yw19Ntf77x8p0SDXVr
-         HMWUuZHh6oZ5RV5mEFge/w89X/Ay39SPgDcRiLysns7/ryvVl6cFAFTTDI4yNRGDZ447
-         29Lw==
-X-Gm-Message-State: APjAAAUdaALz4Lc+DT6F9xL5zD/2xeayTxwxTK9wviMm7/fK83vmexPQ
-	TeAhNgnWT91hku9V5MQWe2YoXlty/lcN2phk4oChVTv8kybD22dCP0YV4blJUyS1oFPcAsExCUr
-	BbsBTk21OE+pvu2h/LCBBSJChV0DavrV5gondswT5FE+r
-X-Received: by 2002:ae9:c205:: with SMTP id j5mr11834399qkg.58.1580500058148;
-        Fri, 31 Jan 2020 11:47:38 -0800 (PST)
-X-Google-Smtp-Source: APXvYqzlTsHifPtiPbS2d+axSlwQubmS3mereYIWKfokkcKOgIJf8IlHaKKLx6rQmJmWjUJwy4Q7O7a0epUBo5hVZZw=
-X-Received: by 2002:ae9:c205:: with SMTP id j5mr11834370qkg.58.1580500057740;
- Fri, 31 Jan 2020 11:47:37 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=B50ZjF+JAirOO384o99CzdlUHX2W7LanisWtPifetZM=;
+        b=sYo+QEOlNdC1nlbEwsAy6yWX3JsZHepeRaSqhMYKwxeXgRU9TaxSOeelVVBonu5aEB
+         VWIdErj8EIE2dEYrBoPj0wxArtkXk2qV8y02FnVEgVrE5jOPlS3LFOy2roWst5uySW03
+         ZCSqJFgWQj4oA5NF3l5cvsdFKzAHoHgWZZIpQnX6t/M+Ijp+RcxOOleGEIMTQeeEHRk1
+         kQ/02ychMZrnqGdU40KukJY4sBdY9Nl7JQYhSB5SQ6kdQVFT3PuKInlKYNHRmuIeThrn
+         AMnQBpMUr9aqaNqNEyh/7azMdPaY2bl2/JQ46YxBrhBY+vPFwE9TyLDn34MfsIW+8NMT
+         5Nsg==
+X-Gm-Message-State: APjAAAWBTcUFEMWZeR/ibHLMvrt2GUDWZWMi6m1wYKJ3Eqq3BINVOwy0
+	0V7/6edLMUgwmNGwVnuzCWm+0g8BHtk=
+X-Google-Smtp-Source: APXvYqyyLBjVm49yRPamb5nxq3rRvs/nqkrK6+2o4jCkKYgOTnzLc+Z5ShokbLameSjWSawT0ZZSiw==
+X-Received: by 2002:a2e:9c19:: with SMTP id s25mr11795885lji.188.1563732199131;
+        Sun, 21 Jul 2019 11:03:19 -0700 (PDT)
+X-Received: by 2002:a2e:9a58:: with SMTP id k24mr34038180ljj.165.1563732197944;
+ Sun, 21 Jul 2019 11:03:17 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <CAOo2v=A-zfgSrFy73_XMGxV4FbV_fv3Ptj_JdWa3W6U=iowWsA@mail.gmail.com>
-X-MC-Unique: ryarjj2YNg22v65W9kZtZQ-1
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="000000000000826e0b059d74d885"
-Date: Sat, 1 Feb 2020 01:17:26 +0530
-From: Hardik Vyas <hvyas@redhat.com>
+References: <20190719140343.GA12952@thinkstation>
+In-Reply-To: <20190719140343.GA12952@thinkstation>
+X-Gmail-Original-Message-ID: <CAHk-=wiZpdb=PzvJd8EbvS43F9=oy_ou2r7LRHrFyqqpE3vnjQ@mail.gmail.com>
+Message-ID: <CAHk-=wiZpdb=PzvJd8EbvS43F9=oy_ou2r7LRHrFyqqpE3vnjQ@mail.gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000002f0f42058e34c6e3"
+Cc: oss-security@lists.openwall.com
+Date: Sun, 21 Jul 2019 11:03:01 -0700
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2020-1700 ceph: connection leak in the RGW Beast front-end
- permits a DoS against the RGW server
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: stack buffer overflow in fbdev
+To: Tavis Ormandy <taviso@gmail.com>, Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>, 
+	Daniel Vetter <daniel.vetter@ffwll.ch>
 
---000000000000826e0b059d74d885
+--0000000000002f0f42058e34c6e3
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hello,
+Completely untested patch attached. There are probably better ways to do this.
 
-A flaw was found in the way the Ceph RGW Beast front-end handles unexpected
-disconnects.
-An authenticated attacker can abuse this flaw by making multiple disconnect
-attempts resulting
-in a permanent leak of a socket connection by radosgw. This flaw could lead
-to a denial of service
-condition by pile up of CLOSE_WAIT sockets, eventually leading to the
-exhaustion of available
-resources, preventing legitimate users from connecting to the system.
+Adding the proper people to the cc, and quoting Tavis' email in its entirety.
 
-This flaw affects Nautilus based versions. If Beast front end is in use,
-switch to CivetWeb to mitigate
-the issue. Red Hat has assigned CVE-2020-1700 and rated as Moderate impact
-flaw.
+Daniel - you got added despite not being explicitly listed as
+maintainer because you've touched fbdev/core/ more than most lately,
+plus you know edid anyway. As such: "tag, you're it, sucker".
 
-PR: https://github.com/ceph/ceph/pull/33017
-Patch:
-https://github.com/ceph/ceph/commit/ff72c50a2c43c57aead933eb4903ad1ca6d1748a
+                Linus
 
-Credit: Or Friedmann(Red Hat)
+On Sat, Jul 20, 2019 at 5:35 PM Tavis Ormandy <taviso@gmail.com> wrote:
+>
+> Hello, during a conversation on twitter we noticed a stack buffer
+> overflow in fbdev with malicious edid data:
+>
+> https://github.com/torvalds/linux/blob/22051d9c4a57d3b4a8b5a7407efc80c71c7bfb16/drivers/video/fbdev/core/fbmon.c#L1033
+>
+> There is enough space to have 52 1-byte length values, which makes svd_n
+> 52, then make the final value length 0x1f (the maximum), which makes
+> svd_n 83 and overflows the 64 byte stack buffer svd[] with controlled
+> data.
+>
+> This requires a malicious monitor / projector / etc, so pretty low impact.
+>
+> I pulled out the code to make a demo (I removed the checksum, but it
+> doesnt prevent the bug):
+>
+> https://gist.github.com/taviso/923776e633cb8fb1ab847cce761a0f10
+>
+> This was discovered by Nico Waisman of Semmle.
+>
+> Tavis.
+>
+> --
+> -------------------------------------
+> taviso@sdf.lonestar.org | finger me for my pgp key.
+> -------------------------------------------------------
 
-Regards,
---=20
+--0000000000002f0f42058e34c6e3
+Content-Type: text/x-patch; charset="US-ASCII"; name="patch.diff"
+Content-Disposition: attachment; filename="patch.diff"
+Content-Transfer-Encoding: base64
+Content-ID: <f_jyd9iu9u0>
+X-Attachment-Id: f_jyd9iu9u0
 
-Hardik Vyas / Red Hat Product Security
+IGRyaXZlcnMvdmlkZW8vZmJkZXYvY29yZS9mYm1vbi5jIHwgOCArKysrKysr
+LQogMSBmaWxlIGNoYW5nZWQsIDcgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlv
+bigtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvdmlkZW8vZmJkZXYvY29yZS9m
+Ym1vbi5jIGIvZHJpdmVycy92aWRlby9mYmRldi9jb3JlL2ZibW9uLmMKaW5k
+ZXggMzU1OGE3MGE2NjY0Li4yYWIxZmQ2ZTMzYjcgMTAwNjQ0Ci0tLSBhL2Ry
+aXZlcnMvdmlkZW8vZmJkZXYvY29yZS9mYm1vbi5jCisrKyBiL2RyaXZlcnMv
+dmlkZW8vZmJkZXYvY29yZS9mYm1vbi5jCkBAIC0xMDMwLDcgKzEwMzAsOSBA
+QCB2b2lkIGZiX2VkaWRfYWRkX21vbnNwZWNzKHVuc2lnbmVkIGNoYXIgKmVk
+aWQsIHN0cnVjdCBmYl9tb25zcGVjcyAqc3BlY3MpCiAJCWlmICh0eXBlID09
+IDIpIHsKIAkJCWZvciAoaSA9IHBvczsgaSA8IHBvcyArIGxlbjsgaSsrKSB7
+CiAJCQkJdTggaWR4ID0gZWRpZFtwb3MgKyBpXSAmIDB4N2Y7Ci0JCQkJc3Zk
+W3N2ZF9uKytdID0gaWR4OworCQkJCWlmIChzdmRfbiA8IHNpemVvZihzdmQp
+KQorCQkJCQlzdmRbc3ZkX25dID0gaWR4OworCQkJCXN2ZF9uKys7CiAJCQkJ
+cHJfZGVidWcoIk4lc2F0aXZlIG1vZGUgIyVkXG4iLAogCQkJCQkgZWRpZFtw
+b3MgKyBpXSAmIDB4ODAgPyAiIiA6ICJvbi1uIiwgaWR4KTsKIAkJCX0KQEAg
+LTEwNDQsNiArMTA0NiwxMCBAQCB2b2lkIGZiX2VkaWRfYWRkX21vbnNwZWNz
+KHVuc2lnbmVkIGNoYXIgKmVkaWQsIHN0cnVjdCBmYl9tb25zcGVjcyAqc3Bl
+Y3MpCiAJCXBvcyArPSBsZW4gKyAxOwogCX0KIAorCS8qIEV2aWwgbW9uaXRv
+cj8gKi8KKwlpZiAoV0FSTl9PTl9PTkNFKHN2ZF9uID4gc2l6ZW9mKHN2ZCkp
+KQorCQlyZXR1cm47CisKIAlibG9jayA9IGVkaWQgKyBlZGlkWzJdOwogCiAJ
+RFBSSU5USygiICBFeHRlbmRlZCBEZXRhaWxlZCBUaW1pbmdzXG4iKTsK
 
-BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
-
---000000000000826e0b059d74d885--
-
+--0000000000002f0f42058e34c6e3--
