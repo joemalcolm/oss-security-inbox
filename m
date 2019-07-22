@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4644" "Monday" "21" "August" "2017" "06:54:12" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<873891.467784659-sendEmail@localhost>" "71" "[oss-security] openjpeg: memory allocation failure in opj_aligned_alloc_n (opj_malloc.c)" nil nil nil "8" "2017082106:54:12" "[oss-security] openjpeg: memory allocation failure in opj_aligned_alloc_n (opj_malloc.c)" (number mark "U       ago@gentoo.o Aug 21   71/4644  " thread-indent "\"[oss-security] openjpeg: memory allocation failure in opj_aligned_alloc_n (opj_malloc.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3235" "Monday" "22" "July" "2019" "11:21:46" "+0000" "Mikhail Klementev" "root@dumpstack.io" "<20190722112146.z4ey7777h5zci2zl@local>" "91" "Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" "^Date:" nil nil "7" "2019072211:21:46" "[oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" (number mark "        root@dumpsta Jul 22   91/3235  " thread-indent "\"Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead\"\n") "<20190722100013.GJ1168@jumper.schlittermann.de>" ("<20190722100013.GJ1168@jumper.schlittermann.de>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 8053 invoked by uid 550); 21 Aug 2017 06:54:31 -0000
+Received: (qmail 9487 invoked by uid 550); 22 Jul 2019 11:24:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8010 invoked from network); 21 Aug 2017 06:54:29 -0000
-Message-ID: <873891.467784659-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 21 Aug 2017 06:54:12 +0000
+Received: (qmail 5826 invoked from network); 22 Jul 2019 11:22:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dumpstack.io; s=mail;
+	t=1563794507; bh=2SVO9kwVg3wfswU6k2vAm4FFaaEvi6mi/rZaHGskuP4=;
+	h=Date:From:To:Subject:References:In-Reply-To;
+	b=LxHwhwv6GxYViXkkDbRQwlXImNmYbJ0mEHo87FmKWJFfeCNYLk3/KR9w1eGSbGVMw
+	 hE19Xo5NNBUaDDgGnd3or8MsAoDJbvx3J7e30qRKgd9wFRFi8JWrQ5bT8IXG9N058l
+	 60sVdhEMWXUziFb706pGFSiZTNM6sEAzbxRg0178=
+Message-ID: <20190722112146.z4ey7777h5zci2zl@local>
+References: <20190722100013.GJ1168@jumper.schlittermann.de>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-435904.817962186"
-Subject: [oss-security] openjpeg: memory allocation failure in opj_aligned_alloc_n (opj_malloc.c)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190722100013.GJ1168@jumper.schlittermann.de>
+Date: Mon, 22 Jul 2019 11:21:46 +0000
+From: Mikhail Klementev <root@dumpstack.io>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security
+ release ahead
+To: oss-security@lists.openwall.com
 
-------MIME delimiter for sendEmail-435904.817962186
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Kindly notice that this is a public mail list.
 
-Description:
-openjpeg is an open-source JPEG 2000 library.
+On Mon, Jul 22, 2019 at 12:00:13PM +0200, Heiko Schlittermann wrote:
+> *** Note: EMBARGO is still in effect until July 25th, 10:00 UTC. ***
+> *** Distros must not publish any detail nor release updates yet. ***
+> 
+> CVE ID:     CVE-2019-13917
+> OVE ID:     OVE-20190718-0006
+> Date:       2019-07-18
+> Credits:    Jeremy Harris
+> Version(s): 4.85 up to and including 4.92
+> Issue:      A local or remote attacker can execute programs with root
+>             privileges - if you've an unusual configuration. For details
+>             see below.
+> 
+> Coordinated Release Date (CRD) for Exim 4.92.1:
+>             Thu Jul 25 10:00:00 UTC 2019
+> 
+> Contact:    security@exim.org
+> 
+> This is a *heads-up* notice about the upcoming release.
+> You may plan your availability and schedule an update of the Exim
+> packages supplied by your distribution or build the new release from the
+> source, once the release goes public on CRD.
+> 
+> Details
+> =======
+> 
+> We discovered a vulnerability. We consider the risk of an exploit as
+> low, you need to have a fairly unusual runtime configuration. Neither
+> our default runtime configuration nor the runtime configuration shipped
+> by the Debian distribution is vulnerable.
+> 
+> The vulnerability is exploitable either remotely or locally and could
+> be used to execute other programs with root privilege.
+> 
+> More details and fixes are not yet public, but will be made public on
+> CRD, July 25th.
+> 
+> Timeline
+> ========
+> 
+> t0: Thu Jul 18 2019
+>     - this notice to distros@vs.openwall.org and exim-maintainers@exim.org
+>     - open limited access to our security Git repo. See below.
+> 
+> t0+~4d: Mon Jul 22 10:00:00 UTC 2019 [NOW]
+>     - heads-up notice to oss-security@lists.openwall.com,
+>       exim-users@exim.org, and exim-announce@exim.org
+> 
+> t0+~7d: Thu Jul 25 10:00:00 UTC 2019
+>     - Coordinated relase date
+>     - publish the patches in our official and public Git repositories
+>       and the packages on our FTP server.
+> 
+> Downloads available starting at CRD
+> ====================================
+> 
+> For release tarballs (exim-4.92.1):
+> 
+>     http://ftp.exim.org/pub/exim/exim4/
+> 
+> The package files are signed with my GPG key.
+> 
+> For the full Git repo:
+> 
+>     https://git.exim.org/exim.git
+>     https://github.com/Exim/exim    [mirror of the above]
+>     - tag    exim-4.92.1
+>     - branch exim-4.92.1+fixes
+> 
+> The tagged commit is the officially released version. The tag is signed
+> with my GPG key.  The +fixes branch isn't officially maintained, but
+> contains useful patches *and* the security fix. The relevant commit is
+> signed with my GPG key. The old exim-4.92+fixes branch is being functionally
+> replaced by the new exim-4.92.1+fixes branch.
+> 
+>     Best regards from Dresden/Germany
+>     Viele Grüße aus Dresden
+>     Heiko Schlittermann
+> --
+>  SCHLITTERMANN.de ---------------------------- internet & unix support -
+>  Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+>  gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+>  ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-The complete ASan output of the issue:
-
-# opj_compress -n 1 -i $FILE -o null.j2c
-==78690==ERROR: AddressSanitizer failed to allocate 0x5ea7983000 (406538694656) bytes of LargeMmapAllocator (error code: 12)
-==78690==Process memory map follows:
-	[..cut here..]
-==78690==End of process memory map.
-==78690==AddressSanitizer CHECK failed: /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" 
-(0x0, 0x0)
-    #0 0x4db60f in AsanCheckFailed /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_rtl.cc:69
-    #1 0x4f6375 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_termination.cc:79
-    #2 0x4e59a2 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120
-    #3 0x4ef2a5 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_posix.cc:132
-    #4 0x426caa in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
-    #5 0x426caa in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalcache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
-    #6 0x426caa in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:407
-    #7 0x42138d in __asan::asan_posix_memalign(void**, unsigned long, unsigned long, __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:815
-    #8 0x4d206d in __interceptor_posix_memalign /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:144
-    #9 0x7f2627d95aa4 in opj_aligned_alloc_n /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/opj_malloc.c:61:9
-    #10 0x7f2627d95aa4 in opj_aligned_malloc /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/opj_malloc.c:209
-    #11 0x7f2627c79d09 in opj_image_create /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/image.c:77:39
-    #12 0x53437b in bmptoimage /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/convertbmp.c:768:13
-    #13 0x50b635 in main /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/opj_compress.c:1844:21
-    #14 0x7f2626681680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #15 0x41bc78 in _start (/usr/bin/opj_compress+0x41bc78)
-
-Affected version:
-2.2.0
-
-Fixed version:
-N/A
-
-Commit fix:
-https://github.com/uclouvain/openjpeg/commit/baf0c1ad4572daa89caa3b12985bdd93530f0dd7
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-12982
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00315-openjpeg-memallocfailure-opj_aligned_alloc_n
-
-Timeline:
-2017-08-14: bug discovered and reported to upstream
-2017-08-14: blog post about the issue
-2017-08-21: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/14/openjpeg-memory-allocation-failure-in-opj_aligned_alloc_n-opj_malloc-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
 
 
-------MIME delimiter for sendEmail-435904.817962186--
-
+-- 
+Mikhail Klementev,
+https://dumpstack.io
