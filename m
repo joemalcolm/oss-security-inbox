@@ -1,65 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/5
-Message-ID: <87zhh6a5rk.fsf@canonical.com>
-Date: Fri, 08 Nov 2019 23:23:35 +1030
-From: Alex Murray <alex.murray@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/13
+Message-ID: <20190722203315.GO1168@jumper.schlittermann.de>
+Date: Mon, 22 Jul 2019 22:33:15 +0200
+From: Heiko Schlittermann <hs@...littermann.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-18397 - Stack buffer overflow in GNU FriBidi >= 1.0.0
+Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-18397 - GNU FriBidi stack buffer overflow >= 1.0.0
------------------------------------------------------------
+Eric,
 
-Overview:
- A stack buffer overflow in the fribidi_get_par_embedding_levels_ex()
- function in lib/fribidi-bidi.c of GNU FriBidi 1.0.0 through 1.0.7
- allows an attacker to cause a denial of service or possibly execute
- arbitrary code by delivering crafted text content to a user, when this
- content is then rendered by an application that uses FriBidi for text
- layout calculations. Examples include any GNOME or GTK+ based
- application that uses Pango for text rendering, as this internally uses
- FriBidi for bidirectional text layout. For example, the attacker can
- construct a crafted text file to be opened in GEdit, a crafted IRC
- message to be viewed in HexChat or a crafted email to be viewed in
- Evolution.
+Eric Blake <eblake@...hat.com> (Mo 22 Jul 2019 15:28:33 CEST):
+>
+> Perhaps part of the confusion stems from:
+>
+> >> t0: Thu Jul 18 2019
+> >>     - this notice to distros@...openwall.org and exim-maintainers@...m.org
+> >>     - open limited access to our security Git repo. See below.
+>
+> This statement makes it sound like the fix can be downloaded by anyone
+> that knows about the git repo containing the fix...
 
-Detailed analysis:
- The function fribidi_get_par_embedding_levels_ex()
- in lib/fribidi-bidi.c of GNU FriBidi 1.0.0 through 1.0.7 contains a
- fixed size buffer base_level_per_iso_level which is used to accumulate
- the current isolate level while calculating the bi-directional
- embedding levels of the requested text paragraph.
+Yes, blame on me. I missed to redact that part of the message.
 
- ...
- FriBidiLevel base_level_per_iso_level[FRIBIDI_BIDI_MAX_EXPLICIT_LEVEL];
- ...
+> Or even the choice of tense in this paragraph may help: it sounds like
+> past tense ("is the officially released version") even though at the
+> time of the email it is a future tense ("will become the officially
+> released version").
 
- When accumulating into this buffer, the index is incremented without
- any check for overflow of the buffer length, resulting in a stack
- buffer overflow when processing more then
- FRIBIDI_BIDI_MAX_EXPLICIT_LEVEL elements.
+Thank you for your hints. Even I hope, we won't have a "next time", next
+time I'll try to improve the wording/grammer of the messages I send.
 
- ...
-          RL_ISOLATE_LEVEL (pp) = isolate_level++;
-          base_level_per_iso_level[isolate_level] = new_level;
- ...
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
- This is fixed by checking the current value of isolate_level against
- the size of base_level_per_iso_level
- (ie. FRIBIDI_BIDI_MAX_EXPLICIT_LEVEL) to ensure this is only
- incremented when it will not subsequently overflow the bounds of the
- array.
-
-Affected Versions:
- From 1.0.0 to 1.0.7 (no official upstream release has been made
- containing the fix)
-
-References:
- https://github.com/fribidi/fribidi/commit/034c6e9a1d296286305f4cfd1e0072b879f52568
-
-CRD:
- 2019-11-07 17:00 UTC
-
-Credit:
- Alex Murray of the Ubuntu Security Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
