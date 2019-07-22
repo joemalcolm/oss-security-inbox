@@ -1,29 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/26/4
-Message-ID: <20190726081641.GA18818@openwall.com>
-Date: Fri, 26 Jul 2019 10:16:41 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/6
+Message-ID: <20190722113631.GM1168@jumper.schlittermann.de>
+Date: Mon, 22 Jul 2019 13:36:31 +0200
+From: Heiko Schlittermann <hs@...littermann.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Statistics for distros lists updated for 2019Q2
+Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 25, 2019 at 11:01:08PM +0200, Kristian Fiskerstrand wrote:
-> On 25.07.2019 21:23, Solar Designer wrote:
-> > On Thu, Jul 25, 2019 at 08:54:55PM +0200, Kristian Fiskerstrand wrote:
-> >> Apologies for the delay, and a short notice that the statistics for the
-> >> distros list have been updated for the 2nd quarter of 2019 at
-> >> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
-> > 
-> > You have two entries for Exim CVE-2019-10149, which is wrong.
-[...]
-> > Correcting this will probably affect the averages.
-> 
-> Indeed, moving this one into one entry and including full disclosure as
-> end of timeline changes the avg from 6.31 to 6.69 for may
-> 
-> Stats updated.
+Mikhail Klementev <root@...pstack.io> (Mo 22 Jul 2019 13:21:46 CEST):
+> Kindly notice that this is a public mail list.
+Yes, therefore no further details are included, except the CRD.
+--
+Heiko
 
-Now you have updated stats, but you've dropped all of the detail. :-(
-Please re-add it ASAP.
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
