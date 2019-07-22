@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/02/1
-Message-ID: <20190902141502.GH3837@jumper.schlittermann.de>
-Date: Mon, 2 Sep 2019 16:15:02 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: MITRE response time
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/12
+Message-ID: <20190722141221.uf5ae5l4qkucmksl@matica.foolinux.mooo.com>
+Date: Mon, 22 Jul 2019 07:12:21 -0700
+From: Ian Zimmerman <itz@...y.loosely.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 2019-07-22 13:50, Solar Designer wrote:
 
-what is your experience with MITRE's response time to an CVE request?
+> Exactly.  It's just an unusual disclosure process that involves giving
+> the users a heads-up a few days before public disclosure of the actual
+> vulnerabilities and fixes.  So far, this process is practiced by
+> OpenSSL and Exim (any others?)
+> 
+> Unfortunately, this keeps confusing people, which is why this time
+> Heiko's message starts with "Note: EMBARGO is still in effect".
+> Judging by Mikhail's reply, this wasn't good enough to avoid
+> confusion, and I don't know what would be - maybe a paragraph of text
+> acknowledging that the disclosure process is unusual?  Somehow I
+> didn't notice such confusion in response to OpenSSL's
+> pre-announcements (not here, but on their own announce list), so maybe
+> Exim should try to reuse OpenSSL's wording.  Here's an example:
+> 
+> https://mta.openssl.org/pipermail/openssl-announce/2019-February/000145.html
 
-Last thursday I requested a CVE on behalf of a project I'm involved in
-(and which is not covered by any of the CNAs listed on
-https://cve.mitre.org/cve/request_id.html.
+FWIW, I really appreciate this way (Exim's and OpenSSL's) and I wish it
+was the norm, rather than the exception.
 
-Where do you request CVEs for projects not listed there?
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+-- 
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet and on broken lists
+which rewrite From, fetch the TXT record for no-use.mooo.com.
