@@ -1,92 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/16/1
-Message-ID: <fdd8218f-e06f-9ebe-5554-99e2b898dfa9@oracle.com>
-Date: Sat, 16 Mar 2019 09:54:39 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/4
+Message-ID: <20190722112146.z4ey7777h5zci2zl@local>
+Date: Mon, 22 Jul 2019 11:21:46 +0000
+From: Mikhail Klementev <root@...pstack.io>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: [ANNOUNCE] libXdmcp 1.1.3 [fix for CVE-2017-2625]
+Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
 Content-Type: text/plain; charset=utf-8
 
-This issue was already disclosed at:
-   https://www.x41-dsec.de/lab/advisories/x41-2017-001-xorg/
-   https://www.openwall.com/lists/oss-security/2017/02/28/3
+Kindly notice that this is a public mail list.
 
-This just upgrades the fix from a git commit/patch to a released tarball.
+On Mon, Jul 22, 2019 at 12:00:13PM +0200, Heiko Schlittermann wrote:
+> *** Note: EMBARGO is still in effect until July 25th, 10:00 UTC. ***
+> *** Distros must not publish any detail nor release updates yet. ***
+> 
+> CVE ID:     CVE-2019-13917
+> OVE ID:     OVE-20190718-0006
+> Date:       2019-07-18
+> Credits:    Jeremy Harris
+> Version(s): 4.85 up to and including 4.92
+> Issue:      A local or remote attacker can execute programs with root
+>             privileges - if you've an unusual configuration. For details
+>             see below.
+> 
+> Coordinated Release Date (CRD) for Exim 4.92.1:
+>             Thu Jul 25 10:00:00 UTC 2019
+> 
+> Contact:    security@...m.org
+> 
+> This is a *heads-up* notice about the upcoming release.
+> You may plan your availability and schedule an update of the Exim
+> packages supplied by your distribution or build the new release from the
+> source, once the release goes public on CRD.
+> 
+> Details
+> =======
+> 
+> We discovered a vulnerability. We consider the risk of an exploit as
+> low, you need to have a fairly unusual runtime configuration. Neither
+> our default runtime configuration nor the runtime configuration shipped
+> by the Debian distribution is vulnerable.
+> 
+> The vulnerability is exploitable either remotely or locally and could
+> be used to execute other programs with root privilege.
+> 
+> More details and fixes are not yet public, but will be made public on
+> CRD, July 25th.
+> 
+> Timeline
+> ========
+> 
+> t0: Thu Jul 18 2019
+>     - this notice to distros@...openwall.org and exim-maintainers@...m.org
+>     - open limited access to our security Git repo. See below.
+> 
+> t0+~4d: Mon Jul 22 10:00:00 UTC 2019 [NOW]
+>     - heads-up notice to oss-security@...ts.openwall.com,
+>       exim-users@...m.org, and exim-announce@...m.org
+> 
+> t0+~7d: Thu Jul 25 10:00:00 UTC 2019
+>     - Coordinated relase date
+>     - publish the patches in our official and public Git repositories
+>       and the packages on our FTP server.
+> 
+> Downloads available starting at CRD
+> ====================================
+> 
+> For release tarballs (exim-4.92.1):
+> 
+>     http://ftp.exim.org/pub/exim/exim4/
+> 
+> The package files are signed with my GPG key.
+> 
+> For the full Git repo:
+> 
+>     https://git.exim.org/exim.git
+>     https://github.com/Exim/exim    [mirror of the above]
+>     - tag    exim-4.92.1
+>     - branch exim-4.92.1+fixes
+> 
+> The tagged commit is the officially released version. The tag is signed
+> with my GPG key.  The +fixes branch isn't officially maintained, but
+> contains useful patches *and* the security fix. The relevant commit is
+> signed with my GPG key. The old exim-4.92+fixes branch is being functionally
+> replaced by the new exim-4.92.1+fixes branch.
+> 
+>     Best regards from Dresden/Germany
+>     Viele Grüße aus Dresden
+>     Heiko Schlittermann
+> --
+>  SCHLITTERMANN.de ---------------------------- internet & unix support -
+>  Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+>  gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+>  ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	  X.Org Security Response Team - xorg-security@...ts.x.org
-
-
--------- Forwarded Message --------
-Subject: [ANNOUNCE] libXdmcp 1.1.3
-Date: Sat, 16 Mar 2019 09:31:57 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: xorg-announce@...ts.x.org
-CC: xorg@...ts.x.org
-
-libXdmcp is the X Display Manager Control Protocol library, used by both
-X servers and display managers to handle both ends of the XDMCP connection.
-
-This release provides a fix for CVE-2017-2625 for platforms which don't have
-arc4random_buf() in their default libraries but do have getentropy(), such
-as Linux platforms with a kernel version of 3.17 or newer and a glibc version
-of 2.25 or newer.   (libXdmcp 1.1.2 already ensured that arc4random_buf()
-is used on platforms that have it to provide sufficient entropy in XDMCP
-key generation, but left other platforms with the weaker methods.  Linux
-platforms could also have linked against libbsd to use arc4random_buf()
-with libXdmcp 1.1.2 for stronger keys.)
-
-Alan Coopersmith (2):
-       Update README for gitlab migration
-       libXdmcp 1.1.3
-
-Benjamin Tissoires (2):
-       Use getentropy() if arc4random_buf() is not available
-       Fix compilation error when arc4random_buf is not available
-
-Emil Velikov (1):
-       autogen.sh: use quoted string variables
-
-Helmut Grohne (1):
-       do not use &fullrelvers; in xdmcp.xml (Debian bug 761628)
-
-Jon TURNEY (1):
-       Link with winsock library for socket functions on MinGW
-
-Mihail Konev (1):
-       autogen: add default patch prefix
-
-Peter Hutterer (1):
-       autogen.sh: use exec instead of waiting for configure to finish
-
-git tag: libXdmcp-1.1.3
-
-https://xorg.freedesktop.org/archive/individual/lib/libXdmcp-1.1.3.tar.bz2
-MD5:  115c5c12ecce0e749cd91d999a5fd160  libXdmcp-1.1.3.tar.bz2
-SHA1: 0a8f8a274f829331efb1e8e2027c38631b204dd0  libXdmcp-1.1.3.tar.bz2
-SHA256: 20523b44aaa513e17c009e873ad7bbc301507a3224c232610ce2e099011c6529 
-libXdmcp-1.1.3.tar.bz2
-SHA512: 
-cb1d4650f97d66e73acd2465ec7d757b9b797cce2f85e301860a44997a461837eea845ec9bd5b639ec5ca34c804f8bdd870697a5ce3f4e270b687c9ef74f25ec 
-  libXdmcp-1.1.3.tar.bz2
-PGP:  https://xorg.freedesktop.org/archive/individual/lib/libXdmcp-1.1.3.tar.bz2.sig
-
-https://xorg.freedesktop.org/archive/individual/lib/libXdmcp-1.1.3.tar.gz
-MD5:  4855eb078703d3f9a6692fa67a3eb28a  libXdmcp-1.1.3.tar.gz
-SHA1: a94cd4ce575b2a9b2620b1630a7bc4f0e59cab56  libXdmcp-1.1.3.tar.gz
-SHA256: 2ef9653d32e09d1bf1b837d0e0311024979653fe755ad3aaada8db1aa6ea180c 
-libXdmcp-1.1.3.tar.gz
-SHA512: 
-edd05654ad9ea893e9e08269e25ea050d10eaf9f997a08494e24127d1ba0c896cd5338b4595b155c8cbf576e1d910b76e6ad7820fee62d74644f1f276551e2f2 
-  libXdmcp-1.1.3.tar.gz
-PGP:  https://xorg.freedesktop.org/archive/individual/lib/libXdmcp-1.1.3.tar.gz.sig
 
 
 -- 
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
-
-View attachment "Attached Message Part" of type "text/plain" (224 bytes)
+Mikhail Klementev,
+https://dumpstack.io
