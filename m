@@ -1,4 +1,9 @@
-Received: (qmail 17506 invoked by uid 550); 27 Nov 2023 09:01:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["895" "Monday" "22" "July" "2019" "12:29:53" "+0100" "Stuart Henderson" "stu@spacehopper.org" "<20190722112953.GT67124@symphytum.spacehopper.org>" "24" "Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" nil nil nil "7" "2019072211:29:53" "[oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" (number mark "U       stu@spacehop Jul 22   24/895   " thread-indent "\"Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead\"\n") "<20190722112146.z4ey7777h5zci2zl@local>" ("<20190722100013.GJ1168@jumper.schlittermann.de>" "<20190722112146.z4ey7777h5zci2zl@local>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28273 invoked by uid 550); 22 Jul 2019 11:30:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,109 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17484 invoked from network); 27 Nov 2023 09:01:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1701075678; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
+Received: (qmail 28255 invoked from network); 22 Jul 2019 11:30:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3; t=1563794993; h=from:from:subject:subject:date:date:message-id:message-id:
 	 in-reply-to:in-reply-to:references:references;
-	bh=gIvAVYyvCzoRGpoj9A/Xyjrl6+8515RD67LDUUM2Krs=;
-	b=MYk8crn2WEbnmDVzyYlc8hQ2jLlUQEJErVjCIFvCD1m87y2YTyiugCnW7CGK17tGoQGK5N
-	++OUIPaE5ucgiwHXyGil6jzFCVB7EsjBy1XSExfBtJjhwoenxlMK8sGcvmKXy/rYdxTmHS
-	3G0ODfD2qXNWzO0ffqBsvgSBDNvwoZE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1701075678;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gIvAVYyvCzoRGpoj9A/Xyjrl6+8515RD67LDUUM2Krs=;
-	b=jsy7G6o8Kqmq31m0+ahdijG2qdE7rgLmvp9KZ0jTnGHrV/RIfiU55Esfa/988wuksnI/qP
-	mU6Vfu/iPLkpPOCg==
-Date: Mon, 27 Nov 2023 10:01:16 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
+	bh=aAzXuuvpdjW++W0cbJpJDQg7etLjmxR7AzzQZhlvH1g=;
+	b=iSCSHUJxj8Qjl6g1ZOygcxGuHq8hJpgAKcqTeCDyGbovRBx9urOWIzV/jb4xhrW98y8H+j
+	Ws1r2jLUaFnFtirmSMu3I58/3TG2z641jPmEnmn8fvclZ8O/MZZlUgFYLdTXLx2TnJQohD
+	LL3gnq5NJULWzM4f0GPsjTVAssaE+O1p+069nUY3qS5jPJqbicLp3udTkyS2Ggr9Me50+D
+	xUQhRdSLDjU7afcnDklyvxQATUr1TV2VqFpwtOfPf79Qx4usaOpfnP1BFr60RoeKpcwKU5
+	MH+2VwCU5fumY5x3oOWyGsZtuJ4BFtU9ilXX+IE9v0v3ov14ZvRH53rWT7C8wg==
+Date: Mon, 22 Jul 2019 12:29:53 +0100
+From: Stuart Henderson <stu@spacehopper.org>
 To: oss-security@lists.openwall.com
-Message-ID: <ZWRa3EI5Oa-5621n@kasco.suse.de>
-References: <AEBE0F32-EAA7-4BC5-ABDB-2EBA7B3046C9@vmware.com>
- <ZTuJmmJnWifdT1RJ@kasco.suse.de>
- <ZWOeyo-BtEAvbBXV@gentoo.org>
+Message-ID: <20190722112953.GT67124@symphytum.spacehopper.org>
+References: <20190722100013.GJ1168@jumper.schlittermann.de>
+ <20190722112146.z4ey7777h5zci2zl@local>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="FHiN7tzUB+mDlgjp"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZWOeyo-BtEAvbBXV@gentoo.org>
-Authentication-Results: smtp-out2.suse.de;
-	none
-Subject: Re: [oss-security] CVE-2023-34059 - File Descriptor Hijack
- vulnerability in open-vm-tools
+In-Reply-To: <20190722112146.z4ey7777h5zci2zl@local>
+User-Agent: Mutt/1.12.1 (2019-06-15)
+Subject: Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security
+ release ahead
 
---FHiN7tzUB+mDlgjp
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Nov 2023 10:01:16 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2023-34059 - File Descriptor Hijack
- vulnerability in open-vm-tools
+On 2019/07/22 11:21, Mikhail Klementev wrote:
+> Kindly notice that this is a public mail list.
 
-Hi,
+The sender is clearly aware of this, see the timeline.
 
-On Sun, Nov 26, 2023 at 11:38:50AM -0800, John Helmert III wrote:
-> On Fri, Oct 27, 2023 at 11:57:46AM +0200, Matthias Gerstner wrote:
-> > Hello list,
-> >=20
-> > I want to share my full report for this finding, please find it below.
-> >=20
-> > Introduction
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >=20
-> > During a routine review of the setuid-root binary
-> > "vmware-user-suid-wrapper" from the open-vm-tools [1] repository I
-> > discovered the vulnerability described in this report. The version under
-> > review was open-vm-tools version 12.2.0. The setuid-root binary's source
-> > code in the open-vm-tools repository did not change since version 10.3.0
-> > (released in 2018), however, so likely most current installations of
-> > open-vm-tools are affected by this finding.
->=20
-> Hm, it looks like there *was* a commit to vmware-user-suid-wrapper
-> that looks very similar to the patch that was linked in the original
-> advisory mail:
->=20
-> https://github.com/vmware/open-vm-tools/commit/63f7c79c4aecb14d37cc4ce9da=
-509419e31d394f
->=20
-> Was that fix insufficient, or maybe wasn't there when your mail was sent?
-
-There seems to be a misunderstanding here. It seems I phrased that not
-properly. I did not mean to say that the issue is unfixed. As the
-initial email from VMware states there is a patch and bugfix release
-available.
-
-What I wanted to express is that all versions of open-vm-tools ranging
-from 10.3.0 up until before the bugfix release are likely affected by
-the issue.
-
-Cheers
-
-Matthias
-
---FHiN7tzUB+mDlgjp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmVkWtwACgkQFMQFyXGS
-NVM2wg//bx9d+uEwLHes1UWdVKJi/tbhLFBS5xJfPOEVacBc6G9t8/BiQZtq21wZ
-evVE3K/pRjrvLF+AU7Nhx0bbpJguNOGq5Wqrbe5h5bjIj2tsKQFVXr6jhvfcW4uO
-IcgtbdtFgNFfQSP7ShMu3NXu4pNO4LNKORnSkYsiek6yyfl8cua85282G21RlVms
-1CDfY060zj8pA3gfjicpCwYDiYqYAqSuc56K7kvU5yWwIa5IWoCurUsw1kGwjyrx
-CPH+KaErjAMUsjMdv4mKo06LHQfbs4eAXtq0KnjbYX9wuZdrNF5MUcy0vjv9JOma
-jg93VrLUEnkbbNniRwiUdrwvBid5g12sRoJUHBxJdgb6+3n8jFUrcDvtOsRMCY5f
-4eUimdfkmHDfgm6D1YrHopg9/Iip6oEA8/D3AkmLu0vpsRnyswKypwDpb2JdipFP
-VcXeqQ2XNhp/kfcyY8SNStoqlj5fUvnvDVrIGFDvMqYJKGjyl8M5VALDiPdTlS1b
-SVUOlwPZTAz/wkBFHVt6+/wudPQP6DeieW9F3Vl+ZHzr2edcPxccuyAo7vTYDFxb
-XhNbc/osSUPQXc5plsQIgxp/34vNovf0ItMMj5wvKRAv/BHjp4wbxMVuphbX0FIl
-YYM/8JOLIi3qevALycfpAzuSy0osrCNMFUdv8ZaQIHYfAYZX+f8=
-=DSJq
------END PGP SIGNATURE-----
-
---FHiN7tzUB+mDlgjp--
+> On Mon, Jul 22, 2019 at 12:00:13PM +0200, Heiko Schlittermann wrote:
+> > More details and fixes are not yet public, but will be made public on
+> > CRD, July 25th.
+> > 
+> > Timeline
+> > ========
+> > 
+> > t0: Thu Jul 18 2019
+> >     - this notice to distros@vs.openwall.org and exim-maintainers@exim.org
+> >     - open limited access to our security Git repo. See below.
+> > 
+> > t0+~4d: Mon Jul 22 10:00:00 UTC 2019 [NOW]
+> >     - heads-up notice to oss-security@lists.openwall.com,
+> >       exim-users@exim.org, and exim-announce@exim.org
+> > 
+> > t0+~7d: Thu Jul 25 10:00:00 UTC 2019
+> >     - Coordinated relase date
+> >     - publish the patches in our official and public Git repositories
+> >       and the packages on our FTP server.
