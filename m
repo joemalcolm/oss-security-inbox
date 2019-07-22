@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6141" "Tuesday" "2" "August" "2016" "13:44:20" "-0400" "Jesse Hertz" "jesse.hertz@nccgroup.trust" "<D777B0B9-DB4B-40FD-A5CC-5757458A9B54@nccgroup.trust>" "169" "[oss-security] CVE Request: Denial-of-Service / Unexploitable Memory Corruption in mmap() on OpenBSD" nil nil nil "8" "2016080217:44:20" "[oss-security] CVE Request: Denial-of-Service / Unexploitable Memory Corruption in mmap() on OpenBSD" (number mark "U       jesse.hertz@ Aug  2  169/6141  " thread-indent "\"[oss-security] CVE Request: Denial-of-Service / Unexploitable Memory Corruption in mmap() on OpenBSD\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3649" "Monday" "22" "July" "2019" "16:05:37" "+0200" "Bartlomiej Zolnierkiewicz" "b.zolnierkie@samsung.com" "<ef549144-6992-d1fe-8f07-47757cd4ad85@samsung.com>" "102" "[oss-security] Re: stack buffer overflow in fbdev" nil nil nil "7" "2019072214:05:37" "[oss-security] Re: stack buffer overflow in fbdev" (number mark "U       b.zolnierkie Jul 22  102/3649  " thread-indent "\"[oss-security] Re: stack buffer overflow in fbdev\"\n") "<20190721200904.GR15868@phenom.ffwll.local>" ("<20190719140343.GA12952@thinkstation>" "<CAHk-=wiZpdb=PzvJd8EbvS43F9=oy_ou2r7LRHrFyqqpE3vnjQ@mail.gmail.com>" "<CGME20190721200912epcas1p34fe747875c1d2a16340ceb173b7c8e68@epcas1p3.samsung.com>" "<20190721200904.GR15868@phenom.ffwll.local>") nil nil nil nil nil nil nil "[oss-security] Re: stack buffer overflow in fbdev" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3493 invoked by uid 550); 2 Aug 2016 17:44:40 -0000
+Received: (qmail 4042 invoked by uid 550); 22 Jul 2019 14:11:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,194 +12,168 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3465 invoked from network); 2 Aug 2016 17:44:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nccgroup.trust; s=dkim20160329; t=1470159867; bh=LYnIWTLmhR55ZeDDuHFOmZwMYmZ4iaEcHkdFOsrEpEU=; h=From:Content-Type:Subject:Date:Message-ID:CC:To:MIME-Version; b=KF2qijiDHciQrTWUMT0/oOMtVHWEChTdYOHdzqX5Mi9Fh5lUfRNxCBMsugg0Mj9PKccHmzM8ig6fvbJmTFuogFy6hagzeB+TmCyCs7XMfxvjEsbAnRCzCFiYWUl7J+2LMAmmC5gCynjgZTUXcfuExhQ3iFMsTlM5QeRrlnGV22U=
-X-MC-Unique: bcg2_NgKN2a4F1BUQQLl8A-1
-X-PGP-Universal: processed;
-	by man1srvpgp01p.nccgroup.local on Tue, 02 Aug 2016 18:44:23 +0100
-From: Jesse Hertz <jesse.hertz@nccgroup.trust>
-X-Pgp-Agent: GPGMail
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_8AA92ECD-A256-421D-A2E3-30D486A79026";
-	protocol="application/pgp-signature"; micalg=pgp-sha512
-Date: Tue, 2 Aug 2016 13:44:20 -0400
-Message-ID: <D777B0B9-DB4B-40FD-A5CC-5757458A9B54@nccgroup.trust>
-CC: <cve-assign@mitre.org>, Tim Newsham <Tim.Newsham@nccgroup.trust>
-To: <oss-security@lists.openwall.com>
-MIME-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
-X-Mailer: Apple Mail (2.2104)
-X-Originating-IP: [172.20.1.120]
-X-ClientProxiedBy: MANCASEXCH02.nccgroup.local (10.1.120.102) To
- MANDBSEXCH03.nccgroup.local (10.1.120.104)
-signature: OK
-Subject: [oss-security] CVE Request: Denial-of-Service / Unexploitable Memory Corruption in mmap() on OpenBSD
-
---Apple-Mail=_8AA92ECD-A256-421D-A2E3-30D486A79026
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
-
-Hi All,
-
-As part of NCC Group=E2=80=99s Project Triforce, a generic syscall fuzzing =
-effort by
-myself and Tim Newsham, a new vulnerability was discovered in the
-OpenBSD kernel. It has been fixed now. Please assign a CVE for this issue.
-
-/*
- * mmap_dup_panic.c
- *    Demonstrate a panic through the mmap system call.
- *
- * gcc -g mmap_dup_panic.c -o mmap_dup_panic
- */
-
-#ifdef BUG_WRITEUP //---------------------------------------------------
-Any user can trigger a panic in mmap with an overlapping mapping
-
-Impact:
-Any user can trigger a panic by requesting a large mapping
-that overlaps with an existing mapping.
-
-Risk: Medium (if someone can figure out a way to exploit this for more than=
- a DoS, then this risk rating should be elevated).
-
-Description:
-It is possible for an mmap() call to request a mapping at a
-virtual address that overlaps an existing mapping.  This is checked
-for in uvm_map() by calling uvm_map_isavail() with the hint address and
-size..  There is a flaw in uvm_map_isavail() when the requested size is very
-large. The code looks up the maps at the start and end address with:
-
-    if (*start_ptr =3D=3D NULL) {
-        *start_ptr =3D uvm_map_entrybyaddr(atree, addr);
-        if (*start_ptr =3D=3D NULL)
-            return 0;
-    } else
-        KASSERT(*start_ptr =3D=3D uvm_map_entrybyaddr(atree, addr));
-    if (*end_ptr =3D=3D NULL) {
-        if (VMMAP_FREE_END(*start_ptr) >=3D addr + sz)
-            *end_ptr =3D *start_ptr;
-        else {
-            *end_ptr =3D uvm_map_entrybyaddr(atree, addr + sz - 1);
-            if (*end_ptr =3D=3D NULL)
-                return 0;
-        }
-    } else
-        KASSERT(*end_ptr =3D=3D uvm_map_entrybyaddr(atree, addr + sz - 1));
-
-Due to an integer overflow that can occur when computing
-"addr + sz" it is possible for the end_ptr map to be
-computed incorrectly (setting "*end_ptr =3D *start_ptr"). Later
-when this same function iterates over the maps between the start
-and end maps, the function may fail to notice that a large mapping
-overlaps with an existing mapping.
-
-If uvm_map_isavail() indicates that the hint address is available,
-uvm_map() will continue its processing without assigning a new
-address.  It will eventually call uvm_map_fix_space() which
-performs its own sanity lookup with uvm_mapent_addr_insert(),
-and panics if an overlapping mapping is added:
-
-    res =3D RB_INSERT(uvm_map_addr, &map->addr, entry);
-    if (res !=3D NULL) {
-        panic("uvm_mapent_addr_insert: map %p entry %p "
-            "(0x%lx-0x%lx G=3D0x%lx F=3D0x%lx) insert collision "
-            "with entry %p (0x%lx-0x%lx G=3D0x%lx F=3D0x%lx)",
-            map, entry,
-            entry->start, entry->end, entry->guard, entry->fspace,
-            res, res->start, res->end, res->guard, res->fspace);
-    }
-
-An attacker can take advantage of this to intentionally
-trigger a panic to crash the system.  This does not require
-any special privileges.
-
-In theory this flaw might allow an attacker to make a mapping
-that wraps around from user addresses, through kernel addresses
-and back to low user addresses.  Such a mapping might allow
-access to kernel memory or to the NULL page (useful for performing
-certain attacks against NULL pointer use in the kernel).
-However neither Tim nor myself were able to find any way to create such a m=
-apping
-without causing a panic, since it does not appear to be possible
-to make a mapping above the stack segment.  All wrap-around mappings
-lower than this address overlap with the stack segment and result
-in a panic.
-
-Reproduction:
-Run the mmap_dup_panic.c program. It first maps a
-page in and then performs a second mmap() call to request
-another mapping at the next page address.  This second mapping overlaps
-the first due to the large size, and causes a panic message such as
-"panic: uvm_mapent_addr_insert: map 0xffffff00036be300 entry 0xffffff000311=
-d178 (0x1dcc56000000-0x1dcc56000000 G=3D0x0 F=3D0x200000000) insert collisi=
-on with entry 0xffffff000272de08 (0x1dcc56000000-0x1dcc56000000 G=3D0x0 F=
-=3D0x1000)=E2=80=9D
-
-NCC Group was able to reproduce this issue on OpenBSD 5.9-stable kernel
-pulled from CVS on July 25, 2016.
-
-Recommendation:
-Detect when "addr + sz" causes an integer overflow in uvm_map_isavail().
-Return zero indicating that this mapping is not available in this case.
-
-Reported: 2016-07-28
-Fixed:    http://ftp.openbsd.org/pub/OpenBSD/patches/5.9/common/023_uvmisav=
-ail.patch.sig
-CVE Assigned: TBD
-#endif // BUG_WRITEUP ---------------------------------------------------
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/mman.h>
-
-void xperror(int cond, char *msg)
-{
-    if(cond) {
-        perror(msg);
-        exit(1);
-    }
-}
-
-int main(int argc, char **argv)
-{
-    int fd;
-    char *p, *pg;
-
-    fd =3D open("/tmp/mapfile", O_RDWR|O_CREAT, 0666);
-    xperror(fd =3D=3D -1, "/tmp/mapfile");
-    write(fd, "testing\n", 8);
-
-    pg =3D mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONY=
-MOUS, -1, 0);
-    xperror(pg =3D=3D MAP_FAILED, "mmap");
-
-    p =3D mmap(pg+4096, 0xffffff0000000000, 0, 0, fd, 0);
-    xperror(pg =3D=3D MAP_FAILED, "mmap2");
-    printf("no crash!\n");
-    return 0;
-}
-
-
---Apple-Mail=_8AA92ECD-A256-421D-A2E3-30D486A79026
+Received: (qmail 31905 invoked from network); 22 Jul 2019 14:06:03 -0000
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190722140550euoutp01ffc94f19ddbe996c669985fb5460bbed~zv8WM6MEa1468514685euoutp01f
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1563804350;
+	bh=7TZOjxfcV0UmxyCie53xO4Q/3NiuDIjcYtAtc9QFj04=;
+	h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+	b=LCWOgAth9OiWfJS91sZJCZ1g+e9F5itRG14+AWVIj2Klpli9Vm5WyTf1N/EUAouAu
+	 nmJc9c8Uy0tAnjrd9ljlUcK/4aEfJaQeP7inTlWTNvShtRKFbkKdlt0kLAuo8KV5ad
+	 Gb7YMCjkeW27il1ldeqb1ElpXrPuoaN9nfYjFNxI=
+X-AuditID: cbfec7f2-f13ff700000010ca-bc-5d35c2be4378
+To: Daniel Vetter <daniel@ffwll.ch>, Linus Torvalds
+	<torvalds@linux-foundation.org>
+Cc: Tavis Ormandy <taviso@gmail.com>, Daniel Vetter
+	<daniel.vetter@ffwll.ch>, oss-security@lists.openwall.com
+From: Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+Message-ID: <ef549144-6992-d1fe-8f07-47757cd4ad85@samsung.com>
+Date: Mon, 22 Jul 2019 16:05:37 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+	Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <20190721200904.GR15868@phenom.ffwll.local>
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename="signature.asc"
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Message signed with OpenPGP using GPGMail
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsWy7djPc7r7DpnGGqxrZrVY+PAus8X/bROZ
+	LZb9d7NY1jyf0eJR31t2B1aPvd8WsHjsnHWX3ePEjN8sHis7H7MFsERx2aSk5mSWpRbp2yVw
+	ZTT8v8RWsFS24nbTLZYGxg3iXYwcHBICJhKdb726GLk4hARWMEpsntfMDOF8YZR4tu8kC4Tz
+	mVFi2q3n7F2MnGAdL8/tZwSxhQSWM0rsfmYHUfSWUWL64bUsIAlhAW2JeQf+gzWICIRKrJi6
+	iRXEZhbIl1h09CpYM5uAlcTE9lVgNq+AnUTbx4NgvSwCqhKvbjeD2aICERL3j21ghagRlDg5
+	8wkLyNmcAhYSy9YXQIwUl7j1ZD4ThC0vsf3tHLAPJATmsUu0tc9mhjjaRWLahGYoW1ji1fEt
+	UM/ISPzfCdIM0rCOUeJvxwuo7u2MEssn/2ODqLKWOHz8IivIZmYBTYn1u/Qhwo4SO79tYIeE
+	I5/EjbeCEEfwSUzaNp0ZIswr0dEmBFGtJrFh2QY2mLVdO1cyT2BUmoXks1lI3pmF5J1ZCHsX
+	MLKsYhRPLS3OTU8tNsxLLdcrTswtLs1L10vOz93ECEwxp/8d/7SD8eulpEOMAhyMSjy8G/aY
+	xgqxJpYVV+YeYpTgYFYS4c0zAArxpiRWVqUW5ccXleakFh9ilOZgURLnrWZ4EC0kkJ5Ykpqd
+	mlqQWgSTZeLglGpg5D8lWCPgm7JrSXzYD79wb4nWhf9t/PvPzN9o1dD73CxQavLtiDnrpW4G
+	FyVYPO2cXpZ3dUtx+v/gh0/1s5ofRks+mHbKy+Z1VFFin5zW4v0r7h5lWWdytX3DpkA7/pjE
+	T/dPxq3avO/cRAX/yx69HcvlxaS/cl68e2QNu09WdXXjyolvqgtdlFiKMxINtZiLihMBl+w7
+	Py0DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrDIsWRmVeSWpSXmKPExsVy+t/xu7p7D5nGGrx8y2+x8OFdZov/2yYy
+	Wyz772axrHk+o8WjvrfsDqwee78tYPHYOesuu8eJGb9ZPFZ2PmYLYInSsynKLy1JVcjILy6x
+	VYo2tDDSM7S00DMysdQzNDaPtTIyVdK3s0lJzcksSy3St0vQy2j4f4mtYKlsxe2mWywNjBvE
+	uxg5OSQETCRentvP2MXIxSEksJRRomt2J3MXIwdQQkbi+PoyiBphiT/Xutggal4zShzZcoQZ
+	JCEsoC0x78B/dhBbRCBU4vWSZkYQm1kgX6Lh+VkWEFtI4BejxKa5JSA2m4CVxMT2VWA1vAJ2
+	Em0fD4LVsAioSry63QxmiwpESJx5v4IFokZQ4uTMJywg93AKWEgsW18AMV5d4s+8S8wQtrjE
+	rSfzmSBseYntb+cwT2AUmoWkexaSlllIWmYhaVnAyLKKUSS1tDg3PbfYSK84Mbe4NC9dLzk/
+	dxMjMKa2Hfu5ZQdj17vgQ4wCHIxKPLwb9pjGCrEmlhVX5h5ilOBgVhLhzTMACvGmJFZWpRbl
+	xxeV5qQWH2I0BfptIrOUaHI+MN7zSuINTQ3NLSwNzY3Njc0slMR5OwQOxggJpCeWpGanphak
+	FsH0MXFwSjUwHnOsv99SePZBXNHbn2vPmT3q+lxSPPFOcZpR7JP2QI57QWmT+KXWCe5/+1po
+	1h+ZqUtToq4Gf8rJnXlV3IiJ8VJy2fe0ujWHE7jaw6fmZz888GOPloDt80tOWvm6+zVSWra2
+	pqxODFwTl+T/56CAvALfkmuXBBIa0pck5lTM++2/vVYre9ZCJZbijERDLeai4kQAMVu4Pr8C
+	AAA=
+X-CMS-MailID: 20190722140549eucas1p2bdd85b2604b367a4989f7f04322b6742
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190721200912epcas1p34fe747875c1d2a16340ceb173b7c8e68
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190721200912epcas1p34fe747875c1d2a16340ceb173b7c8e68
+References: <20190719140343.GA12952@thinkstation>
+	<CAHk-=wiZpdb=PzvJd8EbvS43F9=oy_ou2r7LRHrFyqqpE3vnjQ@mail.gmail.com>
+	<CGME20190721200912epcas1p34fe747875c1d2a16340ceb173b7c8e68@epcas1p3.samsung.com>
+	<20190721200904.GR15868@phenom.ffwll.local>
+Subject: [oss-security] Re: stack buffer overflow in fbdev
 
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
 
-iQEcBAEBCgAGBQJXoNv0AAoJEPhkPVYKhDWbqOsH/2S6s83WhqZDLJMgskUl4BFV
-JbnQk2Lyw0GOUtjiF0R48T9Ndr35ROWptLup5VSDuWpRpJrAXeXd1vfO1siqSZNn
-qRkpW6IByqVljyTjt2c7ULzJXSxarKFwycD6VfJ4vVArINYzAxpq17g0eFBxTKzl
-1ZAQ0GZSHUwqwbP9G3FsoFenkgJH4O+4bbLRAZ1pQ32EArmk2FKjL3naxKLMo3ck
-/S2NtgDYddPdeHMxizeRuGxfISs6WmxRYoZDw0vObY7DAA4nV3f8k9vM3BgF8ty+
-mMKK1YDzPFaEvWYsjgsfolAcIwBpAW0JAQZqE7T1SM0O5bdzMMr6tac747d1OF0=
-=k8If
------END PGP SIGNATURE-----
+On 7/21/19 10:09 PM, Daniel Vetter wrote:
+> On Sun, Jul 21, 2019 at 11:03:01AM -0700, Linus Torvalds wrote:
+>> Completely untested patch attached. There are probably better ways to do this.
+>>
+>> Adding the proper people to the cc, and quoting Tavis' email in its entirety.
+>>
+>> Daniel - you got added despite not being explicitly listed as
+>> maintainer because you've touched fbdev/core/ more than most lately,
+>> plus you know edid anyway. As such: "tag, you're it, sucker".
+> 
+> Yeah I also realized with regrets that get_maintainers thinks I'm
+> responsible for fbdev core :-/
 
---Apple-Mail=_8AA92ECD-A256-421D-A2E3-30D486A79026--
+Well, I've been thinking lately about officially adding you as
+a co-maintainer to MAINTAINERS file. 8)
 
+The patch documenting (already agreed) moving of fbdev handling to
+drm-misc tree seems like a perfect occasion..
+
+Ack?
+
+Best regards,
+--
+Bartlomiej Zolnierkiewicz
+Samsung R&D Institute Poland
+Samsung Electronics
+
+> Wrt the bug: I had a multi-paragraph explanation here about how fbmon.c
+> edid parser is only used by old crap drivers, and not when you have a
+> drm-kms driver providing the fbdev emulation (like pretty much every
+> modern system). Also that the version in fbmon.c seriously lacks compared
+> to the drm_edid.c one.
+> 
+> And then I ran grep and noticed it's dead code. The last user disappeared
+> in 34280340b1dc ("fbdev: Remove unused SH-Mobile HDMI driver") from 2015.
+> I'll type a patch for 5.4 to remove this outright.
+> 
+> Cheers, Daniel
+> 
+> PS: git log -G disappoints by not using all the cores I have here ..
+> 
+>>
+>>                 Linus
+>>
+>> On Sat, Jul 20, 2019 at 5:35 PM Tavis Ormandy <taviso@gmail.com> wrote:
+>>>
+>>> Hello, during a conversation on twitter we noticed a stack buffer
+>>> overflow in fbdev with malicious edid data:
+>>>
+>>> https://github.com/torvalds/linux/blob/22051d9c4a57d3b4a8b5a7407efc80c71c7bfb16/drivers/video/fbdev/core/fbmon.c#L1033
+>>>
+>>> There is enough space to have 52 1-byte length values, which makes svd_n
+>>> 52, then make the final value length 0x1f (the maximum), which makes
+>>> svd_n 83 and overflows the 64 byte stack buffer svd[] with controlled
+>>> data.
+>>>
+>>> This requires a malicious monitor / projector / etc, so pretty low impact.
+>>>
+>>> I pulled out the code to make a demo (I removed the checksum, but it
+>>> doesnt prevent the bug):
+>>>
+>>> https://gist.github.com/taviso/923776e633cb8fb1ab847cce761a0f10
+>>>
+>>> This was discovered by Nico Waisman of Semmle.
+>>>
+>>> Tavis.
+>>>
+>>> --
+>>> -------------------------------------
+>>> taviso@sdf.lonestar.org | finger me for my pgp key.
+>>> -------------------------------------------------------
+> 
+>>  drivers/video/fbdev/core/fbmon.c | 8 +++++++-
+>>  1 file changed, 7 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/video/fbdev/core/fbmon.c b/drivers/video/fbdev/core/fbmon.c
+>> index 3558a70a6664..2ab1fd6e33b7 100644
+>> --- a/drivers/video/fbdev/core/fbmon.c
+>> +++ b/drivers/video/fbdev/core/fbmon.c
+>> @@ -1030,7 +1030,9 @@ void fb_edid_add_monspecs(unsigned char *edid, struct fb_monspecs *specs)
+>>  		if (type == 2) {
+>>  			for (i = pos; i < pos + len; i++) {
+>>  				u8 idx = edid[pos + i] & 0x7f;
+>> -				svd[svd_n++] = idx;
+>> +				if (svd_n < sizeof(svd))
+>> +					svd[svd_n] = idx;
+>> +				svd_n++;
+>>  				pr_debug("N%sative mode #%d\n",
+>>  					 edid[pos + i] & 0x80 ? "" : "on-n", idx);
+>>  			}
+>> @@ -1044,6 +1046,10 @@ void fb_edid_add_monspecs(unsigned char *edid, struct fb_monspecs *specs)
+>>  		pos += len + 1;
+>>  	}
+>>  
+>> +	/* Evil monitor? */
+>> +	if (WARN_ON_ONCE(svd_n > sizeof(svd)))
+>> +		return;
+>> +
+>>  	block = edid + edid[2];
+>>  
+>>  	DPRINTK("  Extended Detailed Timings\n");
