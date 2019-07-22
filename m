@@ -1,43 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/4
-Message-ID: <be36326e-6705-28e1-a1c3-6e8e9203af04@ruhr-uni-bochum.de>
-Date: Tue, 30 Apr 2019 14:03:26 +0200
-From: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/8
+Message-ID: <20190722115009.GA4117@openwall.com>
+Date: Mon, 22 Jul 2019 13:50:09 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Spoofing OpenPGP and S/MIME Signatures in Emails (multiple clients)
+Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
 Content-Type: text/plain; charset=utf-8
 
-We demonstrate how an attacker can spoof email signatures in 70% of the
-tested clients, including Thunderbird, Outlook with GpgOL, KMail,
-Evolution, Trojitá, Apple Mail with GPGTools, Airmail, K-9 Mail,
-Roundcube and Mailpile.
+On Mon, Jul 22, 2019 at 12:29:53PM +0100, Stuart Henderson wrote:
+> On 2019/07/22 11:21, Mikhail Klementev wrote:
+> > Kindly notice that this is a public mail list.
+> 
+> The sender is clearly aware of this, see the timeline.
 
-Title: "Johnny, you are fired! – Spoofing OpenPGP and S/MIME Signatures
-in Emails"
+Exactly.  It's just an unusual disclosure process that involves giving
+the users a heads-up a few days before public disclosure of the actual
+vulnerabilities and fixes.  So far, this process is practiced by OpenSSL
+and Exim (any others?)
 
-To appear at USENIX Security '19. Joint work with Jens Müller, Marcus
-Brinkmann, Damian Poddebniak, Hanno Böck, Sebastian Schinzel, Juraj
-Somorovsky, Jörg Schwenk.
+Unfortunately, this keeps confusing people, which is why this time
+Heiko's message starts with "Note: EMBARGO is still in effect".  Judging
+by Mikhail's reply, this wasn't good enough to avoid confusion, and I
+don't know what would be - maybe a paragraph of text acknowledging that
+the disclosure process is unusual?  Somehow I didn't notice such
+confusion in response to OpenSSL's pre-announcements (not here, but on
+their own announce list), so maybe Exim should try to reuse OpenSSL's
+wording.  Here's an example:
 
-PDF:
-https://github.com/RUB-NDS/Johnny-You-Are-Fired/raw/master/paper/johnny-fired.pdf
+https://mta.openssl.org/pipermail/openssl-announce/2019-February/000145.html
 
-Artifacts: https://github.com/RUB-NDS/Johnny-You-Are-Fired
+---
+Subject: Forthcoming OpenSSL Releases
+Date: Tue, 19 Feb 2019 16:10:20 +0000
 
-Tracking numbers: CVE-2018-18509, CVE-2018-12019, CVE-2018-12020,
-CVE-2017-17848, CVE-2018-15586, CVE-2018-15587, CVE-2018-15588,
-CVE-2019-8338, CVE-2018-12356, CVE-2018-12556, CVE-2019-728
+The OpenSSL project team would like to announce the forthcoming release
+of OpenSSL versions 1.1.1b and 1.0.2r. There will be no new 1.1.0 release at
+this time.
 
-Thanks!
-Marcus
+These releases will be made available on 26th February 2019 between
+approximately 1300-1700 UTC.
 
--- 
-Dipl.-Math. Marcus Brinkmann
+OpenSSL 1.0.2r is a security-fix release. The highest severity issue fixed in
+this release is MODERATE:
+https://www.openssl.org/policies/secpolicy.html#moderate
 
-Lehrstuhl für Netz- und Datensicherheit
-Ruhr Universität Bochum
-Universitätsstr. 150, Geb. ID 2/461
-D-44780 Bochum
+OpenSSL 1.1.1b is a bug-fix release.
 
-Telefon: +49 (0) 234 / 32-25030
-http://www.nds.rub.de/chair/people/mbrinkmann
+Yours
+
+The OpenSSL Project Team
+---
+
+Alexander
