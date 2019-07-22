@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2725" "Friday" "29" "January" "2016" "19:49:16" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<56ABC23C.3080202@redhat.com>" "84" "[oss-security] [OSSA 2016-005] Potential reuse of revoked Identity tokens (CVE-2015-7546)" "^Date:" nil nil "1" "2016012919:49:16" "[oss-security] [OSSA 2016-005] Potential reuse of revoked Identity tokens (CVE-2015-7546)" (number mark "U       tdecacqu@red Jan 29   84/2725  " thread-indent "\"[oss-security] [OSSA 2016-005] Potential reuse of revoked Identity tokens (CVE-2015-7546)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1648" "Monday" "22" "July" "2019" "13:50:09" "+0200" "Solar Designer" "solar@openwall.com" "<20190722115009.GA4117@openwall.com>" "45" "Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" "^Date:" nil nil "7" "2019072211:50:09" "[oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" (number mark "        solar@openwa Jul 22   45/1648  " thread-indent "\"Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead\"\n") "<20190722112953.GT67124@symphytum.spacehopper.org>" ("<20190722100013.GJ1168@jumper.schlittermann.de>" "<20190722112146.z4ey7777h5zci2zl@local>" "<20190722112953.GT67124@symphytum.spacehopper.org>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12039 invoked by uid 550); 29 Jan 2016 19:49:04 -0000
+Received: (qmail 7872 invoked by uid 550); 22 Jul 2019 11:51:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,104 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12013 invoked from network); 29 Jan 2016 19:49:04 -0000
-X-Enigmail-Draft-Status: N1110
-Message-ID: <56ABC23C.3080202@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="NXqbUSlex0HXCTSDRInE7wdbqQFKTj6FR"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Date: Fri, 29 Jan 2016 19:49:16 +0000
-From: Tristan Cacqueray <tdecacqu@redhat.com>
+Received: (qmail 3871 invoked from network); 22 Jul 2019 11:50:55 -0000
+Message-ID: <20190722115009.GA4117@openwall.com>
+References: <20190722100013.GJ1168@jumper.schlittermann.de> <20190722112146.z4ey7777h5zci2zl@local> <20190722112953.GT67124@symphytum.spacehopper.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190722112953.GT67124@symphytum.spacehopper.org>
+User-Agent: Mutt/1.4.2.3i
+Date: Mon, 22 Jul 2019 13:50:09 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [OSSA 2016-005] Potential reuse of revoked Identity tokens
- (CVE-2015-7546)
+Subject: Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
 To: oss-security@lists.openwall.com
 
---NXqbUSlex0HXCTSDRInE7wdbqQFKTj6FR
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, Jul 22, 2019 at 12:29:53PM +0100, Stuart Henderson wrote:
+> On 2019/07/22 11:21, Mikhail Klementev wrote:
+> > Kindly notice that this is a public mail list.
+> 
+> The sender is clearly aware of this, see the timeline.
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
-OSSA-2016-005: Potential reuse of revoked Identity tokens
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
+Exactly.  It's just an unusual disclosure process that involves giving
+the users a heads-up a few days before public disclosure of the actual
+vulnerabilities and fixes.  So far, this process is practiced by OpenSSL
+and Exim (any others?)
 
-:Date: January 29, 2016
-:CVE: CVE-2015-7546
+Unfortunately, this keeps confusing people, which is why this time
+Heiko's message starts with "Note: EMBARGO is still in effect".  Judging
+by Mikhail's reply, this wasn't good enough to avoid confusion, and I
+don't know what would be - maybe a paragraph of text acknowledging that
+the disclosure process is unusual?  Somehow I didn't notice such
+confusion in response to OpenSSL's pre-announcements (not here, but on
+their own announce list), so maybe Exim should try to reuse OpenSSL's
+wording.  Here's an example:
 
+https://mta.openssl.org/pipermail/openssl-announce/2019-February/000145.html
 
-Affects
-~~~~~~~
-- Keystone: <=3D 2015.1.2, >=3D 8.0.0 <=3D 8.0.1
-- Keystonemiddleware: >=3D 1.5.0 <=3D 1.5.3, >=3D 1.6.0 <=3D 2.3.2
+---
+Subject: Forthcoming OpenSSL Releases
+Date: Tue, 19 Feb 2019 16:10:20 +0000
 
+The OpenSSL project team would like to announce the forthcoming release
+of OpenSSL versions 1.1.1b and 1.0.2r. There will be no new 1.1.0 release at
+this time.
 
-Description
-~~~~~~~~~~~
-Liu Sheng reported a vulnerability in Keystone. By manipulating a
-token content, an authenticated user may prevent its revocation. This
-can allow unauthorized access to cloud resources if a revoked token is
-intercepted by an attacker. Only keystone setups using PKI or PKIZ
-token are affected
+These releases will be made available on 26th February 2019 between
+approximately 1300-1700 UTC.
 
+OpenSSL 1.0.2r is a security-fix release. The highest severity issue fixed in
+this release is MODERATE:
+https://www.openssl.org/policies/secpolicy.html#moderate
 
-Patches
-~~~~~~~
-- https://review.openstack.org/266045 (keystone) (Kilo)
-- https://review.openstack.org/266607 (keystonemiddleware) (Kilo)
-- https://review.openstack.org/266022 (keystone) (Liberty)
-- https://review.openstack.org/265988 (keystonemiddleware) (Liberty)
-- https://review.openstack.org/258141 (keystone) (Mitaka)
-- https://review.openstack.org/258143 (keystonemiddleware) (Mitaka)
+OpenSSL 1.1.1b is a bug-fix release.
 
+Yours
 
-Credits
-~~~~~~~
-- Liu Sheng from Huawei (CVE-2015-7546)
+The OpenSSL Project Team
+---
 
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1490804
-- https://wiki.openstack.org/wiki/OSSN/OSSN-0062
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-7546
-
-
-Notes
-~~~~~
-- The keystone fix is included in 2015.1.3 (Kilo) and will be included
-  in a future 8.0.2 (Liberty) releases.
-- The keystonemiddleware fix will be included in future 1.5.4 (Kilo)
-  and 2.3.3 (Liberty) releases.
-- Both keystone and keystonemiddleware needs to be updated
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
---NXqbUSlex0HXCTSDRInE7wdbqQFKTj6FR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBCAAGBQJWq8I8AAoJECK5oFySXMXYDaAIAJumbQov6020KLZCXmRWcUY1
-rDwzx+bABf0ECVg2x9Ji7S3N3PLVACdh2gGEuMo8vZJuNSHGyb8tTYNaRAruo3je
-Ys1TaVbAPEPZu+JiJD+hlsWD53g5b40y1BlnvByjYv3LR/FyyQb+vVOKQdFJvlnK
-VvNEWvGNLegyrL+ApQXX//UwievtTP1JFfpcmZ14BegJB89gGz4GVguXua/MT4vF
-EBPATUUZaB9U5+Ds3qv0Br0Yk/7J75yvLL+MERILPRhrnH6sJhf0dwcuUXAgKEXL
-ZphJbSbhaq/umzfKOEkItgW37Ir8FR5xsOPbYUXUcvu4fBqmJMH/6aDEf6CpgZs=
-=jIoT
------END PGP SIGNATURE-----
-
---NXqbUSlex0HXCTSDRInE7wdbqQFKTj6FR--
+Alexander
