@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/12
-Message-ID: <CAEhjM2Dr85nH_JNFJQ=f+uS7ptcht+zhKSL0w1gTXa6QvD+mWA@mail.gmail.com>
-Date: Tue, 19 Nov 2019 13:41:36 -0500
-From: Nathan Gough <thenatog@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/5
+Message-ID: <20190722112953.GT67124@symphytum.spacehopper.org>
+Date: Mon, 22 Jul 2019 12:29:53 +0100
+From: Stuart Henderson <stu@...cehopper.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-10080] Apache NiFi XXE information disclosure
+Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2019-10080
+On 2019/07/22 11:21, Mikhail Klementev wrote:
+> Kindly notice that this is a public mail list.
 
-[PRODUCT]:Apache NiFi
+The sender is clearly aware of this, see the timeline.
 
-[VERSION]:Apache NiFi 1.3.0 to 1.9.2
-
-[PROBLEMTYPE]:Information Disclosure
-
-[REFERENCES]:https://nifi.apache.org/security.html#CVE-2019-10080
-
-[DESCRIPTION]:As reported by RunningSnail, the XMLFileLookupService in NiFi
-versions 1.3.0 to 1.9.2 allowed trusted users to inadvertently configure a
-potentially malicious XML file. The XML file has the ability to make
-external calls to services (via XXE) and reveal information such as the
-versions of Java, Jersey, and Apache that the NiFI instance uses.
-
+> On Mon, Jul 22, 2019 at 12:00:13PM +0200, Heiko Schlittermann wrote:
+> > More details and fixes are not yet public, but will be made public on
+> > CRD, July 25th.
+> > 
+> > Timeline
+> > ========
+> > 
+> > t0: Thu Jul 18 2019
+> >     - this notice to distros@...openwall.org and exim-maintainers@...m.org
+> >     - open limited access to our security Git repo. See below.
+> > 
+> > t0+~4d: Mon Jul 22 10:00:00 UTC 2019 [NOW]
+> >     - heads-up notice to oss-security@...ts.openwall.com,
+> >       exim-users@...m.org, and exim-announce@...m.org
+> > 
+> > t0+~7d: Thu Jul 25 10:00:00 UTC 2019
+> >     - Coordinated relase date
+> >     - publish the patches in our official and public Git repositories
+> >       and the packages on our FTP server.
