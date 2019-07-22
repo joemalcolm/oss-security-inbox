@@ -1,111 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/08/4
-Message-ID: <dc36d64e-ac76-29f7-5d54-225b54c2d707@thermi.consulting>
-Date: Wed, 8 May 2019 12:24:56 +0200
-From: Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
-To: Seong-Joong Kim <sungjungk@...il.com>
-Cc: oss-security@...ts.openwall.com, Roman Drahtmueller <draht@...altsekun.de>
-Subject: Re: Re: fprintd: found storing user fingerprints without encryption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/3
+Message-ID: <20190722100013.GJ1168@jumper.schlittermann.de>
+Date: Mon, 22 Jul 2019 12:00:13 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
 Content-Type: text/plain; charset=utf-8
 
-Am 08.05.19 um 12:04 schrieb Seong-Joong Kim:
-> 2019년 5월 8일 (수) 오후 6:29, Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>님이 작성:
->
->     Hello List,
->
->     Am 08.05.19 um 11:19 schrieb Roman Drahtmueller:
->     >>> Dear all,
->     >>>
->     >>> I would like to report a vulnerability of 'fprintd'.
->     >>>
->     >>> 'fprintd' does not encrypt sensitive information before storage.
->     >>> *CWE-311: Missing Encryption of Sensitive Data*
->     >
->     > [...]
->     >
->     > This misses the point.
->     >
->     > * Encryption shifts the problem to protecting the symmetric key, which
->     >   is the very same problem. => Encryption solves other problems, but not
->     >   this one.
->     > * If you have sufficient privileges to access the fingerprint data,
->     >   then you no longer need the data.
->     > * You can't "safeguard" the fingerprint data by applying additional O/S
->     >   controls such as SELinux, AppArmor, etc, you can only add more useful
->     >   privilege transitions and protect against attacks that exploit
->     >   implementation errors. Google "store fingerprint data ios android",
->     >   there are suitable solutions.
->     >
->     > Mostly: Your fingerprint is not a secret like a password, it is a username.
->     >
->     > Since you can't change the fingerprint (biometrics problem), it is not very useful as a single authentication factor. Either you live with this, or you combine the fingerprint with a different authentication factor type.
->     >
->     > Roman.
->
->     Another argument: You leave your fingerprint on everything you touch. The glass you drank from at the bar on Saturday evening? That has your fingerprints. Your front door? It has those, too.
->     Fingerprints aren't sensitive information. The only entities attributing any sensitivity to them are the following: Court systems where fingerprints are allowed as evidence (although it's stupid because you can easily duplicate fingerprints) and companies/persons using fingerprints for authentication (which for the same reason as previously mentioned is not a good idea).
->     And as Roman mentioned already, you can't change your fingerprints easily (Sand paper and acids are your friends, but that's not comfortable at all and compromises your ability to hold things in your hands. So don't to that.).
->
->     If, for some reason, you still want to "securely" (at least with a higher level of security than plain text) store your fingerprint, you need to use a hardware backed kernel keyring that stores the encryption keys or use a hardware based security solution for storing the fingerprints in the first case. You likely won't find any such solution though that isn't broken already in some regard.
->
->     Kind regards
->
->     Noel
->
->     -- 
->     Noel Kuntze
->     IT security consultant
->
->     GPG Key ID: 0x0739AD6C
->     Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
->
-> In Microsoft's Windows Hello, fingerprint data is kept locally on user's PC in an encrypted way while Linux does not, even though they are based on same fingerprint reader hardware.
-> Windows Hello may use Next Generation Cryptography (called CNG) to protect and store user private data and encryption keys.
-> (see https://support.microsoft.com/en-au/help/4468253/windows-hello-and-privacy-microsoft-privacy)
->
-> Lenovo's Fingerprint Manager Pro also stores user's fingerprints encrypted in its local environment.
-> In this regard, a flaw was discovered in Lenovo Fingerprint Manager Pro (see CVE-2017-3762).
-> (see https://thenextweb.com/security/2018/01/26/lenovo-fingerprint-manager-flaw-windows/)
->
-> Moreover, FireEye researchers Tao Wei and Yulong Zhang outlined new ways to attack Android devices to extract user fingerprints at Black Hat USA 2015 (see Fingerprints On Mobile Devices: Abusing and Leaking?).
-> (see https://www.zdnet.com/article/hackers-can-remotely-steal-fingerprints-from-android-phones/)
->
->
-> This vulnerability could allow a process to access the stored fingerprint and then it can be reverted to natural-looking original fingerprint image.
-> It allows the attacker to impersonate a legitimate authentication/identification by using stolen fingerprints.
->
-> Once fingerprint has been leaked, victims are leaked for the rest of life since it lasts for a life. 
-> Moreover, fingerprints are usually associated with every citizen’s identity and immigration record. 
-> It would be a hazard if the attacker can remotely harvest fingerprints in a large scale.
->
-> What do you think of it?
->
-(I moved your message down because evidently people bottom post here. Don't top post.)
+*** Note: EMBARGO is still in effect until July 25th, 10:00 UTC. ***
+*** Distros must not publish any detail nor release updates yet. ***
 
-Hello,
+CVE ID:     CVE-2019-13917
+OVE ID:     OVE-20190718-0006
+Date:       2019-07-18
+Credits:    Jeremy Harris
+Version(s): 4.85 up to and including 4.92
+Issue:      A local or remote attacker can execute programs with root
+            privileges - if you've an unusual configuration. For details
+            see below.
 
-You do realize that every secret that is stored in a way that is readable by software without authentication that is independent of any software running on the host is in fact readable, right?
-It is irrelevant if you encrypt your "secret" storage with a key that is on the disk or is encrypted with a static key that is embedded in the binary. It's on the same level of security as storing it in plain text regarding attackers that have access to the host on a software level. What Windows Hello does is only any more secure if the key storage is backed by, for example, a TPM that needs to be unlocked first using attestation. The whole problem reverts to securing a host against intrusion via software in this scenario.
+Coordinated Release Date (CRD) for Exim 4.92.1:
+            Thu Jul 25 10:00:00 UTC 2019
 
-> This vulnerability could allow a process to access the stored fingerprint and then it can be reverted to natural-looking original fingerprint image.
+Contact:    security@...m.org
 
-That is only the case if an actual picture is stored. If you only store any detected minutiae, you can't revert to an image. That's because the detection of the minutiae is fuzzy and every measurement is different.
+This is a *heads-up* notice about the upcoming release.
+You may plan your availability and schedule an update of the Exim
+packages supplied by your distribution or build the new release from the
+source, once the release goes public on CRD.
 
-> Once fingerprint has been leaked, victims are leaked for the rest of life since it lasts for a life. 
-> Moreover, fingerprints are usually associated with every citizen’s identity and immigration record. 
-> It would be a hazard if the attacker can remotely harvest fingerprints in a large scale.
->
+Details
+=======
 
-Yes, exactly like I mentioned. It's a stupid idea to use it for any type of authentication, verification or evidence.
+We discovered a vulnerability. We consider the risk of an exploit as
+low, you need to have a fairly unusual runtime configuration. Neither
+our default runtime configuration nor the runtime configuration shipped
+by the Debian distribution is vulnerable.
 
-Kind regards
+The vulnerability is exploitable either remotely or locally and could
+be used to execute other programs with root privilege.
 
-Noel
+More details and fixes are not yet public, but will be made public on
+CRD, July 25th.
 
--- 
-Noel Kuntze
-IT security consultant
+Timeline
+========
 
-GPG Key ID: 0x0739AD6C
-Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
+t0: Thu Jul 18 2019
+    - this notice to distros@...openwall.org and exim-maintainers@...m.org
+    - open limited access to our security Git repo. See below.
 
+t0+~4d: Mon Jul 22 10:00:00 UTC 2019 [NOW]
+    - heads-up notice to oss-security@...ts.openwall.com,
+      exim-users@...m.org, and exim-announce@...m.org
+
+t0+~7d: Thu Jul 25 10:00:00 UTC 2019
+    - Coordinated relase date
+    - publish the patches in our official and public Git repositories
+      and the packages on our FTP server.
+
+Downloads available starting at CRD
+====================================
+
+For release tarballs (exim-4.92.1):
+
+    http://ftp.exim.org/pub/exim/exim4/
+
+The package files are signed with my GPG key.
+
+For the full Git repo:
+
+    https://git.exim.org/exim.git
+    https://github.com/Exim/exim    [mirror of the above]
+    - tag    exim-4.92.1
+    - branch exim-4.92.1+fixes
+
+The tagged commit is the officially released version. The tag is signed
+with my GPG key.  The +fixes branch isn't officially maintained, but
+contains useful patches *and* the security fix. The relevant commit is
+signed with my GPG key. The old exim-4.92+fixes branch is being functionally
+replaced by the new exim-4.92.1+fixes branch.
+
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
