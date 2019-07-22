@@ -1,62 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/27/1
-Message-ID: <20190727141359.07cf0a8c@computer>
-Date: Sat, 27 Jul 2019 14:13:59 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: RCE through open PHP-FPM ports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/9
+Message-ID: <8a0fc7f0-4648-2ed0-0c36-1da42fc1d267@redhat.com>
+Date: Mon, 22 Jul 2019 08:28:33 -0500
+From: Eric Blake <eblake@...hat.com>
+To: oss-security@...ts.openwall.com, Mikhail Klementev <root@...pstack.io>, Heiko Schlittermann <hs@...marc.schlittermann.de>
+Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 7/22/19 6:21 AM, Mikhail Klementev wrote:
+> Kindly notice that this is a public mail list.
+> 
+> On Mon, Jul 22, 2019 at 12:00:13PM +0200, Heiko Schlittermann wrote:
+>> *** Note: EMBARGO is still in effect until July 25th, 10:00 UTC. ***
+>> *** Distros must not publish any detail nor release updates yet. ***
 
-I recently reported here [1] that open FPM ports may be used to
-exfiltrate data and this particularly affected HHVM. Originally I
-assumed that this is much less of an issue with upstream PHP. However
-swagpgs [2] pointed out to me that this is actually much more dangerous
-than I originally thought.
+Perhaps part of the confusion stems from:
 
-Background: FPM is a method to execute PHP in modern environments. A
-daemon is listening for incoming connections, so PHP doesn't need to be
-started for each request, the web server will forward requests to FPM.
-It can run either on a file socket or on a TCP port.
-The TCP port should never be exposed to the public.
+>> t0: Thu Jul 18 2019
+>>     - this notice to distros@...openwall.org and exim-maintainers@...m.org
+>>     - open limited access to our security Git repo. See below.
 
-Here's how this can be used for remote code execution:
-The FPM daemon supports passing PHP configuration options via the
-PHP_VALUE variable. This can be used to inject PHP code via the
-auto_prepend_file configuration option (this is basically an option to
-provide a script that will be prependet to every other script
-execution).
-This may be prevented by settings for allow_url_include or
-allow_url_fopen. However these settings can be changed with PHP_VALUE
-as well, so this is no protection.
+This statement makes it sound like the fix can be downloaded by anyone
+that knows about the git repo containing the fix...
 
-The only thing an attacker needs is a file with a .php or .phar
-extension on the target systems (other files won't be executed due to
-to an option "security.limit_extensions" in the FPM daemon that by
-default only allows these two). However this is usually not very hard
-to achieve by guessing files on standard paths. For example on
-Debian/Ubuntu systems a file /usr/bin/phar.phar exists, alternatively
-on systems that have PEAR installed this can be used.
+>>
+>> t0+~4d: Mon Jul 22 10:00:00 UTC 2019 [NOW]
+>>     - heads-up notice to oss-security@...ts.openwall.com,
+>>       exim-users@...m.org, and exim-announce@...m.org
+>>
+>> t0+~7d: Thu Jul 25 10:00:00 UTC 2019
+>>     - Coordinated relase date
+>>     - publish the patches in our official and public Git repositories
+>>       and the packages on our FTP server.
+>>
+>> Downloads available starting at CRD
+>> ====================================
+>>
+>> For release tarballs (exim-4.92.1):
+>>
+>>     http://ftp.exim.org/pub/exim/exim4/
+>>
+>> The package files are signed with my GPG key.
+>>
+>> For the full Git repo:
 
-I've put this all together in a bash script [3] that should illustrate
-how this attack works.
+...and when we see below, it looks like you are giving away that repo.
+But in reality,
 
-Notably HHVM is not affected by this attack vector, as it doesn't
-support PHP_VALUE [4]. However it is affected more severely by the
-original file exfiltration issue [1].
+>>
+>>     https://git.exim.org/exim.git
+>>     https://github.com/Exim/exim    [mirror of the above]
+>>     - tag    exim-4.92.1
+>>     - branch exim-4.92.1+fixes
 
-tl;dr Never run FPM on a public network interface. With HHVM this means
-arbitrary file exfiltration, with PHP it means remote code execution.
+you only published the public repo, which does not yet contain either
+the tag exim-4.92.1 nor the branch exim-4.92.1+fixes until CRD (as
+promised in the headline).  Perhaps the wording could be improved to
+explicitly mention that the private repo mentioned earlier is
+specifically redacted from this more public pre-release announcement,
+and/or repeating the fact that the public repo will not contain the fix
+until CRD (some readers will miss details that are presented only in a
+headline but not reiterated in the body, on the grounds that headlines
+typically only summarize contents rather than add details, such that you
+can read slightly faster by skipping headlines if you are going to read
+the full version instead).
 
+>>
+>> The tagged commit is the officially released version. The tag is signed
+>> with my GPG key.  The +fixes branch isn't officially maintained, but
+>> contains useful patches *and* the security fix. The relevant commit is
+>> signed with my GPG key. The old exim-4.92+fixes branch is being functionally
+>> replaced by the new exim-4.92.1+fixes branch.
 
-[1] https://www.openwall.com/lists/oss-security/2019/07/09/2
-[2] https://twitter.com/swapgs
-[3] https://github.com/hannob/fpmvuln/blob/master/fpmrce
-[4] https://github.com/facebook/hhvm/issues/3730
+Or even the choice of tense in this paragraph may help: it sounds like
+past tense ("is the officially released version") even though at the
+time of the email it is a future tense ("will become the officially
+released version").
+
 -- 
-Hanno Böck
-https://hboeck.de/
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.           +1-919-301-3226
+Virtualization:  qemu.org | libvirt.org
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
