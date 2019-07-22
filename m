@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["867" "Sunday" "12" "February" "2017" "11:23:49" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0PmeERNq+=vPhL=UM-LWVarr_Ry06NPc_OhpzXztZLbg@mail.gmail.com>" "24" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" nil nil nil "2" "2017021218:23:49" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "U       kseifried@re Feb 12   24/867   " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<20170211233541.GA6315@openwall.com>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>" "<20170211233541.GA6315@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1259" "Monday" "22" "July" "2019" "07:12:21" "-0700" "Ian Zimmerman" "itz@very.loosely.org" "<20190722141221.uf5ae5l4qkucmksl@matica.foolinux.mooo.com>" "26" "[oss-security] Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" nil nil nil "7" "2019072214:12:21" "[oss-security] Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" (number mark "U       itz@very.loo Jul 22   26/1259  " thread-indent "\"[oss-security] Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead\"\n") "<20190722115009.GA4117@openwall.com>" ("<20190722100013.GJ1168@jumper.schlittermann.de>" "<20190722112146.z4ey7777h5zci2zl@local>" "<20190722112953.GT67124@symphytum.spacehopper.org>" "<20190722115009.GA4117@openwall.com>") nil nil nil nil nil nil nil "[oss-security] Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24156 invoked by uid 550); 12 Feb 2017 18:24:02 -0000
+Received: (qmail 11384 invoked by uid 550); 22 Jul 2019 14:12:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24107 invoked from network); 12 Feb 2017 18:24:01 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=UJs7k2SzK4DpXBZS9oTruSivqOYikjI+x6UNUiv3K2M=;
-        b=rETaiyeGc3bI/35LnFW92N/Q1SpmJXhCC4RDOe2SfnD6+6K/JYCz6mwLWzoFM4Sbyp
-         Q4hQ/BnXRwzifxLWbV6jX10OSx+ObV6qXEGPepE2GY1vo3c7rTZBzuIZaKB8jWt2brqF
-         6tJv2o4BHjFb1YjHZMzpxHsp3NuQB0XopRyQklIHGd/hHh3LNvt/83JTCfsCDQG9KMlj
-         489BcEX5OZsaE0uOyJbGwuWp512aVHT8GwMIXtYM520ctu03K2pZ/qo5zbNGVWCxK926
-         F3IyuDQGMmsIPV7c/1IfPjzumR+2aBAyckkhunaC/FT6spsJt/uBDA6eTL5Vw1zvI74O
-         2rkA==
-X-Gm-Message-State: AMke39kzYYN2pPZ9MhrzxUl7YFdsQsYlF5E8HxagcY54be24X5HemIpArQZgDpRicsnvuulXXYm8ViTmax3RXrzu
-X-Received: by 10.202.75.76 with SMTP id y73mr10410814oia.16.1486923829887;
- Sun, 12 Feb 2017 10:23:49 -0800 (PST)
+Received: (qmail 11304 invoked from network); 22 Jul 2019 14:12:41 -0000
+Date: Mon, 22 Jul 2019 07:12:21 -0700
+From: Ian Zimmerman <itz@very.loosely.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20190722141221.uf5ae5l4qkucmksl@matica.foolinux.mooo.com>
+References: <20190722100013.GJ1168@jumper.schlittermann.de>
+ <20190722112146.z4ey7777h5zci2zl@local>
+ <20190722112953.GT67124@symphytum.spacehopper.org>
+ <20190722115009.GA4117@openwall.com>
 MIME-Version: 1.0
-In-Reply-To: <20170211233541.GA6315@openwall.com>
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
- <b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG> <20170211233541.GA6315@openwall.com>
-From: Kurt Seifried <kseifried@redhat.com>
-Date: Sun, 12 Feb 2017 11:23:49 -0700
-Message-ID: <CANO=Ty0PmeERNq+=vPhL=UM-LWVarr_Ry06NPc_OhpzXztZLbg@mail.gmail.com>
-To: oss-security <oss-security@lists.openwall.com>
-Content-Type: multipart/alternative; boundary=001a11c183b2b058bd0548596ed1
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190722115009.GA4117@openwall.com>
+User-Agent: NeoMutt/20180716
+X-Loosely-ASN: 7922
+Subject: [oss-security] Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
 
---001a11c183b2b058bd0548596ed1
-Content-Type: text/plain; charset=UTF-8
+On 2019-07-22 13:50, Solar Designer wrote:
 
-Daily update stuff already exists:
+> Exactly.  It's just an unusual disclosure process that involves giving
+> the users a heads-up a few days before public disclosure of the actual
+> vulnerabilities and fixes.  So far, this process is practiced by
+> OpenSSL and Exim (any others?)
+> 
+> Unfortunately, this keeps confusing people, which is why this time
+> Heiko's message starts with "Note: EMBARGO is still in effect".
+> Judging by Mikhail's reply, this wasn't good enough to avoid
+> confusion, and I don't know what would be - maybe a paragraph of text
+> acknowledging that the disclosure process is unusual?  Somehow I
+> didn't notice such confusion in response to OpenSSL's
+> pre-announcements (not here, but on their own announce list), so maybe
+> Exim should try to reuse OpenSSL's wording.  Here's an example:
+> 
+> https://mta.openssl.org/pipermail/openssl-announce/2019-February/000145.html
 
-https://cve.mitre.org/cve/data_updates.html
-
-We could also have the MITRE CVE ID feed new stuff into oss-security but it
-would include non open source stuff.
-
-As for the DWF it's simple: we're using git, so I guess if people really
-want up to the minute updates they can simply subscribe to the repos in
-GitHub, or pull and do it on their own end. I don't have plans for a
-notification service yet, on of my main goals it to make the data more
-easily available and then see what people need/do with it (and of course
-co-opt the useful ideas and use them!).
+FWIW, I really appreciate this way (Exim's and OpenSSL's) and I wish it
+was the norm, rather than the exception.
 
 -- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a11c183b2b058bd0548596ed1--
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet and on broken lists
+which rewrite From, fetch the TXT record for no-use.mooo.com.
