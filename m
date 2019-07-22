@@ -1,26 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/11
-Message-ID: <CAEhjM2B+ETHZVMTjQfiDXAkFN4TTygM6HzQb7WEpdG5_9O=oOg@mail.gmail.com>
-Date: Tue, 19 Nov 2019 13:41:36 -0500
-From: Nathan Gough <thenatog@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/10
+Message-ID: <a80d70ed-eb56-450f-35fa-dfe248932f89@treenet.co.nz>
+Date: Tue, 23 Jul 2019 01:09:40 +1200
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-12421] Apache NiFi 'Log out' button did not completely log user out
+Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2019-12421
+On 22/07/19 11:50 pm, Solar Designer wrote:
+> On Mon, Jul 22, 2019 at 12:29:53PM +0100, Stuart Henderson wrote:
+>> On 2019/07/22 11:21, Mikhail Klementev wrote:
+>>> Kindly notice that this is a public mail list.
+>>
+>> The sender is clearly aware of this, see the timeline.
+> 
+> Exactly.  It's just an unusual disclosure process that involves giving
+> the users a heads-up a few days before public disclosure of the actual
+> vulnerabilities and fixes.  So far, this process is practiced by OpenSSL
+> and Exim (any others?)
+> 
+> Unfortunately, this keeps confusing people, which is why this time
+> Heiko's message starts with "Note: EMBARGO is still in effect".  Judging
+> by Mikhail's reply, this wasn't good enough to avoid confusion, and I
+> don't know what would be 
 
-[PRODUCT]:Apache NiFi
 
-[VERSION]:Apache NiFi 1.0.0 to 1.10.0
+IMHO the key difference between the two is the initial impression one
+gets from the message layout.
 
-[PROBLEMTYPE]:Authentication
 
-[REFERENCES]:https://nifi.apache.org/security.html#CVE-2019-12421
+This Exim message looks just like any other full-detail disclosure
+report. It takes time to read the text and clicking through to the
+repository links to realize that this is not actually leaking code
+changes and detail about the issue.
 
-[DESCRIPTION]:As reported by Abdu Sahin, when using an authentication
-mechanism other than PKI, when the user clicks Log Out in NiFi versions
-1.0.0 to 1.9.2, NiFi invalidates the authentication token on the client
-side but not on the server side. This permits the user's client-side token
-to be used for up to 12 hours after logging out to make API requests to
-NiFi.
 
+The OpenSSL is just a warning that a new version X is about to land.
+
+People who care are left to do their own research into where to get it.
+The distro teams who need the warning already know that.
+
+
+AYJ
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
