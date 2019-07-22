@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/01/2
-Message-ID: <nycvar.YSQ.7.76.1908011343470.30404@xnncv>
-Date: Thu, 1 Aug 2019 13:46:44 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Vishnu Dev <vishnudevtj@...il.com>
-Subject: CVE-2019-14378 QEMU: slirp: heap buffer overflow during packet reassembly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/7
+Message-ID: <20190722113826.7m3yxgncujznwnbc@local>
+Date: Mon, 22 Jul 2019 11:38:26 +0000
+From: Mikhail Klementev <root@...pstack.io>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Ah, ok. Just misread, sorry.
 
-A heap buffer overflow issue was found in the SLiRP networking implementation 
-of the QEMU emulator. It occurs in ip_reass() routine while reassembling 
-incoming packets, if the first fragment is bigger than the m->m_dat[] buffer.
+On Mon, Jul 22, 2019 at 12:29:53PM +0100, Stuart Henderson wrote:
+> On 2019/07/22 11:21, Mikhail Klementev wrote:
+> > Kindly notice that this is a public mail list.
+> 
+> The sender is clearly aware of this, see the timeline.
+> 
+> > On Mon, Jul 22, 2019 at 12:00:13PM +0200, Heiko Schlittermann wrote:
+> > > More details and fixes are not yet public, but will be made public on
+> > > CRD, July 25th.
+> > > 
+> > > Timeline
+> > > ========
+> > > 
+> > > t0: Thu Jul 18 2019
+> > >     - this notice to distros@...openwall.org and exim-maintainers@...m.org
+> > >     - open limited access to our security Git repo. See below.
+> > > 
+> > > t0+~4d: Mon Jul 22 10:00:00 UTC 2019 [NOW]
+> > >     - heads-up notice to oss-security@...ts.openwall.com,
+> > >       exim-users@...m.org, and exim-announce@...m.org
+> > > 
+> > > t0+~7d: Thu Jul 25 10:00:00 UTC 2019
+> > >     - Coordinated relase date
+> > >     - publish the patches in our official and public Git repositories
+> > >       and the packages on our FTP server.
 
-A user/process could use this flaw to crash the Qemu process on the host 
-resulting in DoS or potentially execute arbitrary code with privileges of the 
-QEMU process.
-
-Upstream patch:
----------------
-   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/126c04acbabd7ad32c2b018fe10dfac2a3bc1210
-
-This issue was reported by Vishnu Dev(CC'd).
-
-CVE requested via -> https://cveform.mitre.org/
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+-- 
+Mikhail Klementev,
+https://dumpstack.io
