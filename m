@@ -1,142 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/05/4
-Message-Id: <E1h194c-0001G4-TC@xenbits.xenproject.org>
-Date: Tue, 05 Mar 2019 12:21:30 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 287 v2 - x86: steal_page violates page_struct access discipline
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/11
+Message-ID: <ef549144-6992-d1fe-8f07-47757cd4ad85@samsung.com>
+Date: Mon, 22 Jul 2019 16:05:37 +0200
+From: Bartlomiej Zolnierkiewicz <b.zolnierkie@...sung.com>
+To: Daniel Vetter <daniel@...ll.ch>, Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Tavis Ormandy <taviso@...il.com>, Daniel Vetter <daniel.vetter@...ll.ch>, oss-security@...ts.openwall.com
+Subject: Re: stack buffer overflow in fbdev
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-                    Xen Security Advisory XSA-287
-                              version 2
+On 7/21/19 10:09 PM, Daniel Vetter wrote:
+> On Sun, Jul 21, 2019 at 11:03:01AM -0700, Linus Torvalds wrote:
+>> Completely untested patch attached. There are probably better ways to do this.
+>>
+>> Adding the proper people to the cc, and quoting Tavis' email in its entirety.
+>>
+>> Daniel - you got added despite not being explicitly listed as
+>> maintainer because you've touched fbdev/core/ more than most lately,
+>> plus you know edid anyway. As such: "tag, you're it, sucker".
+> 
+> Yeah I also realized with regrets that get_maintainers thinks I'm
+> responsible for fbdev core :-/
 
-         x86: steal_page violates page_struct access discipline
+Well, I've been thinking lately about officially adding you as
+a co-maintainer to MAINTAINERS file. 8)
 
-UPDATES IN VERSION 2
-====================
+The patch documenting (already agreed) moving of fbdev handling to
+drm-misc tree seems like a perfect occasion..
 
-Metadata updated to remove dependency on XSA-283.
+Ack?
 
-Public release.
+Best regards,
+--
+Bartlomiej Zolnierkiewicz
+Samsung R&D Institute Poland
+Samsung Electronics
 
-ISSUE DESCRIPTION
-=================
-
-Xen's reference counting rules were designed to allow pages to change
-owner and state without requiring a global lock.  Each page has a page
-structure, and a very specific set of access disciplines must be
-observed to ensure that pages are freed properly, and that no writable
-mappings exist for PV pagetable pages.
-
-Unfortunately, when the XENMEM_exchange hypercall was introduced,
-these access disciplines were violated, opening up several potential
-race conditions.
-
-IMPACT
-======
-
-A single PV guest can leak arbitrary amounts of memory, leading to a
-denial of service.
-
-A cooperating pair of PV and HVM/PVH guests can get a writable
-pagetable entry, leading to information disclosure or privilege
-escalation.
-
-Privilege escalation attacks using only a single PV guest or a pair of
-PV guests have not been ruled out.
-
-Note that both of these attacks require very precise timing, which may
-be difficult to exploit in practice.
-
-VULNERABLE SYSTEMS
-==================
-
-Only x86 systems are vulnerable.
-
-Only systems which run PV guests are vulnerable.  Systems which run
-only HVM/PVH guests are not vulnerable.
-
-MITIGATION
-==========
-
-Running only HVM or PVH guests will avoid these vulnerabilities.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa287.patch           xen-unstable
-xsa287-4.11.patch      Xen 4.11.x
-xsa287-4.10.patch      Xen 4.10.x
-xsa287-4.9.patch       Xen 4.9.x
-xsa287-4.8.patch       Xen 4.8.x
-xsa287-4.7.patch       Xen 4.7.x
-
-$ sha256sum xsa287*
-ae2b9261e26df871693478629c63970ba30817ee1dcb2266b89d8b067833c1b3  xsa287.meta
-7de1b886d69dd7c497f88d41adf9a6f7cf9a305fd8ae9d714e1125e2a22208ab  xsa287.patch
-55f40f2f9bb41c85ac80dac775352e28b25fada80dae574e9d10300d5e2b91ce  xsa287-4.7.patch
-57312ff131eb6b51235723e862adf42ad3529ed13135375875c054fa0b55f80b  xsa287-4.8.patch
-34f4b835766a38bcf4066ccbab74676eda176e15ed2a6bd7884678a64507f89a  xsa287-4.9.patch
-c7eaf8a325011dda84b02ee097ddbc7b5f2f4d3399de545a3a7b14e2d23f4278  xsa287-4.10.patch
-6793315f714a249a4fad12b36559640b2f97f19f5b85f0d58694c6e78aa3d567  xsa287-4.11.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlx+aa0MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ4ZMH/2inEgYog1U9+y+3hMQSMYx69bjZ6/0uHn4FnqPm
-39Z/FUTjVjCz3GF2zHjsA1YpKCQJ6WLZhtADyed6NyXd8ux64+henAwiStVhSdvC
-4HgxQIIenqM/ixJSYWHv6iEJKAAbCcN0Q4OW4/CH2Pax+pm58axor1zOGisLhopN
-pNJRlQ6uTFSLvTd7N2UGg/q0HADChtIOM/iZi3jMiQ1JJvWG2EjWHQdSpW5kxkV3
-LYzaMa7tfeQ2EkCkji5xS/nWkET817b/obTWl3YlTAbPoDsTNMHhjwtsWmqLw4/r
-eg7+HGB2tAPrG0pqE9DPH99OMeDnLE2A917nXmNF6S8EgKU=
-=/95T
------END PGP SIGNATURE-----
-
-Download attachment "xsa287.meta" of type "application/octet-stream" (1822 bytes)
-
-Download attachment "xsa287.patch" of type "application/octet-stream" (11786 bytes)
-
-Download attachment "xsa287-4.7.patch" of type "application/octet-stream" (11891 bytes)
-
-Download attachment "xsa287-4.8.patch" of type "application/octet-stream" (11901 bytes)
-
-Download attachment "xsa287-4.9.patch" of type "application/octet-stream" (11962 bytes)
-
-Download attachment "xsa287-4.10.patch" of type "application/octet-stream" (11891 bytes)
-
-Download attachment "xsa287-4.11.patch" of type "application/octet-stream" (11880 bytes)
+> Wrt the bug: I had a multi-paragraph explanation here about how fbmon.c
+> edid parser is only used by old crap drivers, and not when you have a
+> drm-kms driver providing the fbdev emulation (like pretty much every
+> modern system). Also that the version in fbmon.c seriously lacks compared
+> to the drm_edid.c one.
+> 
+> And then I ran grep and noticed it's dead code. The last user disappeared
+> in 34280340b1dc ("fbdev: Remove unused SH-Mobile HDMI driver") from 2015.
+> I'll type a patch for 5.4 to remove this outright.
+> 
+> Cheers, Daniel
+> 
+> PS: git log -G disappoints by not using all the cores I have here ..
+> 
+>>
+>>                 Linus
+>>
+>> On Sat, Jul 20, 2019 at 5:35 PM Tavis Ormandy <taviso@...il.com> wrote:
+>>>
+>>> Hello, during a conversation on twitter we noticed a stack buffer
+>>> overflow in fbdev with malicious edid data:
+>>>
+>>> https://github.com/torvalds/linux/blob/22051d9c4a57d3b4a8b5a7407efc80c71c7bfb16/drivers/video/fbdev/core/fbmon.c#L1033
+>>>
+>>> There is enough space to have 52 1-byte length values, which makes svd_n
+>>> 52, then make the final value length 0x1f (the maximum), which makes
+>>> svd_n 83 and overflows the 64 byte stack buffer svd[] with controlled
+>>> data.
+>>>
+>>> This requires a malicious monitor / projector / etc, so pretty low impact.
+>>>
+>>> I pulled out the code to make a demo (I removed the checksum, but it
+>>> doesnt prevent the bug):
+>>>
+>>> https://gist.github.com/taviso/923776e633cb8fb1ab847cce761a0f10
+>>>
+>>> This was discovered by Nico Waisman of Semmle.
+>>>
+>>> Tavis.
+>>>
+>>> --
+>>> -------------------------------------
+>>> taviso@....lonestar.org | finger me for my pgp key.
+>>> -------------------------------------------------------
+> 
+>>  drivers/video/fbdev/core/fbmon.c | 8 +++++++-
+>>  1 file changed, 7 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/video/fbdev/core/fbmon.c b/drivers/video/fbdev/core/fbmon.c
+>> index 3558a70a6664..2ab1fd6e33b7 100644
+>> --- a/drivers/video/fbdev/core/fbmon.c
+>> +++ b/drivers/video/fbdev/core/fbmon.c
+>> @@ -1030,7 +1030,9 @@ void fb_edid_add_monspecs(unsigned char *edid, struct fb_monspecs *specs)
+>>  		if (type == 2) {
+>>  			for (i = pos; i < pos + len; i++) {
+>>  				u8 idx = edid[pos + i] & 0x7f;
+>> -				svd[svd_n++] = idx;
+>> +				if (svd_n < sizeof(svd))
+>> +					svd[svd_n] = idx;
+>> +				svd_n++;
+>>  				pr_debug("N%sative mode #%d\n",
+>>  					 edid[pos + i] & 0x80 ? "" : "on-n", idx);
+>>  			}
+>> @@ -1044,6 +1046,10 @@ void fb_edid_add_monspecs(unsigned char *edid, struct fb_monspecs *specs)
+>>  		pos += len + 1;
+>>  	}
+>>  
+>> +	/* Evil monitor? */
+>> +	if (WARN_ON_ONCE(svd_n > sizeof(svd)))
+>> +		return;
+>> +
+>>  	block = edid + edid[2];
+>>  
+>>  	DPRINTK("  Extended Detailed Timings\n");
