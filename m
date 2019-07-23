@@ -1,34 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/1
-Message-ID: <CAK7Z5T9-mgfJR-Bc=GsBb4MXihZAkARazkkyQXzefqwxVVopTA@mail.gmail.com>
-Date: Thu, 7 Nov 2019 21:34:36 -0800
-From: Micah Kornfield <emkornfield@...che.org>
-To: oss-security@...ts.openwall.com
-Cc: security@...che.org
-Subject: [CVE-2019-12408][CVE-2019-12410] Uninitialized Memory Vulnerabilities fixed in Apache Arrow 0.15.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/23/2
+Message-ID: <CAKMK7uF5KeJkO4dy7DxJGxMO6T-0RwDXCEEyQxd2RFZvnn3kBw@mail.gmail.com>
+Date: Tue, 23 Jul 2019 09:25:25 +0200
+From: Daniel Vetter <daniel@...ll.ch>
+To: Bartlomiej Zolnierkiewicz <b.zolnierkie@...sung.com>
+Cc: Linus Torvalds <torvalds@...ux-foundation.org>, Tavis Ormandy <taviso@...il.com>,  oss-security@...ts.openwall.com
+Subject: Re: stack buffer overflow in fbdev
 Content-Type: text/plain; charset=utf-8
 
-The Apache Arrow project would like to hereby disclose that our 0.15.1
-release patches two uninitialized memory bugs (CVE-2019-12408 and
-CVE-2019-12410) in the the C++ implementation (which in turn can affect,
-Python, Ruby and R).  In both cases there is a potential vulnerability
-where data in memory can be unintentionally shared if Arrow Arrays are
-transmitted over the wire (for instance with Flight) or persisted in the
-streaming IPC and file formats.  Neither bug affects data persisted to the
-Apache Parquet file format.
+On Mon, Jul 22, 2019 at 4:05 PM Bartlomiej Zolnierkiewicz
+<b.zolnierkie@...sung.com> wrote:
+>
+>
+> On 7/21/19 10:09 PM, Daniel Vetter wrote:
+> > On Sun, Jul 21, 2019 at 11:03:01AM -0700, Linus Torvalds wrote:
+> >> Completely untested patch attached. There are probably better ways to do this.
+> >>
+> >> Adding the proper people to the cc, and quoting Tavis' email in its entirety.
+> >>
+> >> Daniel - you got added despite not being explicitly listed as
+> >> maintainer because you've touched fbdev/core/ more than most lately,
+> >> plus you know edid anyway. As such: "tag, you're it, sucker".
+> >
+> > Yeah I also realized with regrets that get_maintainers thinks I'm
+> > responsible for fbdev core :-/
+>
+> Well, I've been thinking lately about officially adding you as
+> a co-maintainer to MAINTAINERS file. 8)
+>
+> The patch documenting (already agreed) moving of fbdev handling to
+> drm-misc tree seems like a perfect occasion..
+>
+> Ack?
+
+If we pull fbdev into drm then Dave&me (and drm-misc maintainers) will
+be the fallback anyway. And I kinda prefer not to be explicitly
+listed, that just leads to lots of people gating on my ack
+unecessarily and creates a bottleneck. Plus intentionally leaving gaps
+motivates others to step up and help out.
+
+Hence I prefer not to get listed, but I guess if you absolutely want
+to add me that's ok too.
+-Daniel
+
+>
+> Best regards,
+> --
+> Bartlomiej Zolnierkiewicz
+> Samsung R&D Institute Poland
+> Samsung Electronics
+>
+> > Wrt the bug: I had a multi-paragraph explanation here about how fbmon.c
+> > edid parser is only used by old crap drivers, and not when you have a
+> > drm-kms driver providing the fbdev emulation (like pretty much every
+> > modern system). Also that the version in fbmon.c seriously lacks compared
+> > to the drm_edid.c one.
+> >
+> > And then I ran grep and noticed it's dead code. The last user disappeared
+> > in 34280340b1dc ("fbdev: Remove unused SH-Mobile HDMI driver") from 2015.
+> > I'll type a patch for 5.4 to remove this outright.
+> >
+> > Cheers, Daniel
+> >
+> > PS: git log -G disappoints by not using all the cores I have here ..
+> >
+> >>
+> >>                 Linus
+> >>
+> >> On Sat, Jul 20, 2019 at 5:35 PM Tavis Ormandy <taviso@...il.com> wrote:
+> >>>
+> >>> Hello, during a conversation on twitter we noticed a stack buffer
+> >>> overflow in fbdev with malicious edid data:
+> >>>
+> >>> https://github.com/torvalds/linux/blob/22051d9c4a57d3b4a8b5a7407efc80c71c7bfb16/drivers/video/fbdev/core/fbmon.c#L1033
+> >>>
+> >>> There is enough space to have 52 1-byte length values, which makes svd_n
+> >>> 52, then make the final value length 0x1f (the maximum), which makes
+> >>> svd_n 83 and overflows the 64 byte stack buffer svd[] with controlled
+> >>> data.
+> >>>
+> >>> This requires a malicious monitor / projector / etc, so pretty low impact.
+> >>>
+> >>> I pulled out the code to make a demo (I removed the checksum, but it
+> >>> doesnt prevent the bug):
+> >>>
+> >>> https://gist.github.com/taviso/923776e633cb8fb1ab847cce761a0f10
+> >>>
+> >>> This was discovered by Nico Waisman of Semmle.
+> >>>
+> >>> Tavis.
+> >>>
+> >>> --
+> >>> -------------------------------------
+> >>> taviso@....lonestar.org | finger me for my pgp key.
+> >>> -------------------------------------------------------
+> >
+> >>  drivers/video/fbdev/core/fbmon.c | 8 +++++++-
+> >>  1 file changed, 7 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/video/fbdev/core/fbmon.c b/drivers/video/fbdev/core/fbmon.c
+> >> index 3558a70a6664..2ab1fd6e33b7 100644
+> >> --- a/drivers/video/fbdev/core/fbmon.c
+> >> +++ b/drivers/video/fbdev/core/fbmon.c
+> >> @@ -1030,7 +1030,9 @@ void fb_edid_add_monspecs(unsigned char *edid, struct fb_monspecs *specs)
+> >>              if (type == 2) {
+> >>                      for (i = pos; i < pos + len; i++) {
+> >>                              u8 idx = edid[pos + i] & 0x7f;
+> >> -                            svd[svd_n++] = idx;
+> >> +                            if (svd_n < sizeof(svd))
+> >> +                                    svd[svd_n] = idx;
+> >> +                            svd_n++;
+> >>                              pr_debug("N%sative mode #%d\n",
+> >>                                       edid[pos + i] & 0x80 ? "" : "on-n", idx);
+> >>                      }
+> >> @@ -1044,6 +1046,10 @@ void fb_edid_add_monspecs(unsigned char *edid, struct fb_monspecs *specs)
+> >>              pos += len + 1;
+> >>      }
+> >>
+> >> +    /* Evil monitor? */
+> >> +    if (WARN_ON_ONCE(svd_n > sizeof(svd)))
+> >> +            return;
+> >> +
+> >>      block = edid + edid[2];
+> >>
+> >>      DPRINTK("  Extended Detailed Timings\n");
 
 
-The first issue (CVE-2019-12408) affected ArrayBuilder classes in 0.14.0
-and 0.14.1 releases.  In some cases arrays with null values could be built
-using uninitialized memory for their data segment.
 
-
-The second bug (CVE-2019-12410) affected Apache Arrow versions since at
-least 0.12.0.  The bug left data read from Apache Parquet files with RLE
-null encoded data uninitialized.
-
-
-It is recommended that users upgrade to 0.15.1 as soon as possible and
-audit any data that has been persisted in the Arrow IPC format or the Arrow
-File Format.
-
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
++41 (0) 79 365 57 48 - http://blog.ffwll.ch
