@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/02/3
-Message-ID: <CAC1dCwWXeiCT8i9S1LqX8V6bJTyn0frFbciJmQFczuMO9JPA-Q@mail.gmail.com>
-Date: Fri, 2 Aug 2019 07:34:26 -0400
-From: Tim Allison <tallison@...che.org>
-To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  oss-security@...ts.openwall.com
-Subject: [CVE-2019-10093] Denial of Service in Apache Tika's 2003ml and 2006ml Parsers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/23/3
+Message-ID: <CAHk-=wggoL7jRHTVxm=XLhtGwCwQ3On=GmqZ01OZpN7JU_072Q@mail.gmail.com>
+Date: Tue, 23 Jul 2019 10:08:17 -0700
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: Tavis Ormandy <taviso@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: stack buffer overflow in fbdev
 Content-Type: text/plain; charset=utf-8
 
-Title: [CVE-2019-10093] Denial of Service in Apache Tika's 2003ml and
-2006ml Parsers
+On Sat, Jul 20, 2019 at 5:35 PM Tavis Ormandy <taviso@...il.com> wrote:
+>
+> There is enough space to have 52 1-byte length values, which makes svd_n
+> 52, then make the final value length 0x1f (the maximum), which makes
+> svd_n 83 and overflows the 64 byte stack buffer svd[] with controlled
+> data.
+>
+> This requires a malicious monitor / projector / etc, so pretty low impact.
 
-Severity: Medium
+Ok, so I went back all the way to 3.16, and in 4.4 and earlier the
+only user of fb_edid_add_monspecs() was that SH-Mobile SoCs driver
+that got removed for no use.
 
-Vendor: The Apache Software Foundation
+So I think we can ignore this even for stable kernels, and I'll get
+the pull request that removes the function entirely some time in the
+future.
 
-Versions Affected: Apache Tika  1.19 to 1.21
-
-Description:
-A carefully crafted 2003ml or 2006ml file could consume all available
-SAXParsers in the pool and lead to very long hangs.
-
-
-Mitigation:
-Apache Tika users should upgrade to 1.22 or later.
-
-
-Credit:
-This issue was discovered by Tim Allison on the Apache Tika team.
+             Linus
