@@ -1,30 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/18/1
-Message-ID: <nycvar.YSQ.7.76.1903181240570.16639@xnncv>
-Date: Mon, 18 Mar 2019 12:44:20 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: William Bowling <will@...wling.info>
-Subject: CVE-2019-9824 QEMU: Slirp: information leakage in tcp_emu() due to uninitialized stack variables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/24/1
+Message-ID: <110f8440-7612-6014-fd40-2f8c72097b9a@catalyst.net.nz>
+Date: Wed, 24 Jul 2019 09:55:13 +1200
+From: Douglas Bagnall <douglas.bagnall@...alyst.net.nz>
+To: oss-security@...ts.openwall.com
+Cc: abartlet@...ba.org
+Subject: Security release pre-announcement messages
 Content-Type: text/plain; charset=utf-8
 
-     Hello,
+On 22/07/19 11:50 PM, Solar Designer wrote:
+> Exactly.  It's just an unusual disclosure process that involves giving
+> the users a heads-up a few days before public disclosure of the actual
+> vulnerabilities and fixes.  So far, this process is practiced by OpenSSL
+> and Exim (any others?)
+> 
 
-An information leakage issue was found in the SLiRP networking implementation 
-of the QEMU emulator. It occurs in tcp_emu() routine while emulating 
-Identification protocol, when crafted messages are sent to make it return 
-uninitialized variables.
+On the Samba team we use wording like this:
 
-A user/process could use this flaw to read uninitialised stack memory contents 
-from the QEMU process resulting in information leakage.
+https://lists.samba.org/archive/samba/2019-June/223621.html
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2019-03/msg01871.html
+----------------------------
+Subject: Heads-up: Security Releases ahead!
 
-This issue was reported by William Bowling. CVE requested via https://cveform.mitre.org/
+Hi,
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This is a heads-up that there will be Samba security updates on
+Wednesday, June 19 2019. Please make sure that your Samba
+servers will be updated soon after the release!
+
+Impacted components:
+ - AD DC (CVSS 6.5, Medium)
+-----------------------------
+
+We now do this systematically, after a haphazard start.
+
+To help ourselves stay on track, we are trying to formalise our
+process into something approaching a checklist:
+
+https://wiki.samba.org/index.php/Samba_Security_Process
+
+and we are happy to hear suggestions for improvement.
+
+cheers,
+Douglas
