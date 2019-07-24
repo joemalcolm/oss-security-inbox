@@ -1,42 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/11
-Message-Id: <E1hfSKS-00015J-V5@rmmprod07.runbox>
-Date: Mon, 24 Jun 2019 13:00:28 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/24/2
+Message-ID: <CAG09ER2cYOo+cN+BVotmxugxaMq_ogswvuQ+Z+8W2LahK-DyPg@mail.gmail.com>
+Date: Wed, 24 Jul 2019 09:26:18 +0200
+From: Stig Rohde Døssing <srdo@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2019-0202] Apache Storm Logviewer file system access vulnerability
 Content-Type: text/plain; charset=utf-8
 
-> On Mon, 24 Jun 2019, Bob Friesenhahn wrote:
-> > Most oss-fuzz issue detections are not CVE worthy.  For example, a one-byte 
-> > read "heap overflow" is not likely to cause any actual harm but oss-fuzz 
-> > would classify it as "heap overflow".
+[CVEID]:CVE-2019-0202[PRODUCT]:Apache Storm[VERSION]:Apache Storm
+0.9.1-incubating to 1.2.2[PROBLEMTYPE]:CWE-200: Information
+Exposure[DESCRIPTION]:The Apache Storm Logviewer daemon exposes
+HTTP-accessible endpoints to read/search log files on hosts running
+Storm.
+              In Apache Storm versions 0.9.1-incubating to 1.2.2, it
+is possible to read files off the
+              host's file system that were not intended to be
+accessible via these endpoints.
 
-On Mon, 24 Jun 2019 11:59:43 -0400 (EDT), "Stuart D. Gathman" <stuart@...hman.org> wrote:
-> Nevertheless, it is a bug.  Fuzzers are amazing.  Going forward, the
-> best plan is for more projects to include fuzzing as part of the
-> build process testing.
+Mitigation: Upgrade to Apache Storm 1.2.3 or later.
 
-It is a bug, fuzzers are amazing, and more projects should include fuzzing.
+Credit: Stig Rohde Døssing for discovery and fix
 
-But CVEs are supposed to only be assigned to vulnerabilities or exposures.
-Many bugs are not vulnerabilities or exposures that lead to vulnerabilities.
-
-If a bug *is* a vulnerability, then yes, it should have a CVE assignment,
-and there are clearly a lot of vulnerabilities without CVE assignments.
-
-In particular, many organizations have a rapid upgrade process
-if some software version has a CVE, and a slow process otherwise.
-(There are things that need doing besides upgrading software.)
-If a particular version of software has a serious vulnerability, it needs at least one
-of the most serious vulnerabilities assigned a CVE so that people will upgrade
-it more rapidly.  In the end, the goal should be to get software fixed
-*and* deployed - if it's not deployed when it needs to be, it didn't help.
-Downstream needs to do their part by being prepared to upgrade... but
-suppliers need to make it clear why something needs to be upgraded quickly
-(if that's the case) so that the faster process will be used.
-We should be focusing on the "final impact", that is,
-we should be trying to reduce the cases where an attacker can exploit
-a known vulnerability in deployed software... *without* breaking the bank.
-
---- David A. Wheeler
