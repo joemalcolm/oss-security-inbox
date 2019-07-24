@@ -1,51 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/07/2
-Message-ID: <CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>
-Date: Sun, 7 Jul 2019 12:04:07 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/24/4
+Message-ID: <CAG09ER1O_+YYQzj9dmTJ225JtiB-qLeMJe=ztPO1bPF0ukiLcA@mail.gmail.com>
+Date: Wed, 24 Jul 2019 09:27:15 +0200
+From: Stig Rohde Døssing <srdo@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+Subject: [CVE-2018-11779] Apache Storm UI Java deserialization vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 6, 2019 at 10:40 PM Solar Designer <solar@...nwall.com> wrote:
+[CVEID]:CVE-2018-11779[PRODUCT]:Apache Storm[VERSION]:Apache Storm
+1.1.0 to 1.2.2[PROBLEMTYPE]:CWE-502: Deserialization of Untrusted
+Data[DESCRIPTION]:In Apache Storm versions 1.1.0 to 1.2.2,
+              when the user is using the storm-kafka-client or
+storm-kafka modules,
+              it is possible to cause the Storm UI daemon to
+deserialize user provided bytes into a Java class.
 
-> Hi all,
->
-> Per our current policy and precedents, I see no valid reasons not to
-> subscribe Microsoft (or part(s) of it, see below) to linux-distros.  So
-> I intend to figure out some detail and proceed with the subscription.
->
->
->
-> > Microsoft's history with Linux is a rather recent one. I can offer the
->
+Mitigation: Upgrade to Apache Storm 1.2.3 or later.
 
-No, it is not recent. The Halloween Documents are from 1998,
-which makes 21 years.
-
-
-> > following examples if you're willing to give us a few months off of the
-> > "1 year" requirement:
-> >
-
-
-LOL.
-
-
->
-> >  I suppose we could either give Microsoft this 1 month
-> off as you suggest based on Microsoft's track record of promptly dealing
-> with security issues in non-Linux products, or subscribe Microsoft to
-> linux-distros in August 2019 (or later).
->
->
-
-Are you suggesting breaking the rules and giving microsoft
-a present of one month? As a long time gnu/linux user and
-linux kernel bug killer [1] I am disappointed by this.
-
-What mailing list is best to discuss microsoft's involvement in
-GPL? (last time I checked LKLM was extremely high traffic)
-
-[1]: http://www.guninski.com/misc.html
+Credit: Bobby Evans for discovery and fix
 
