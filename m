@@ -1,49 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/21/2
-Message-ID: <CAHk-=wiZpdb=PzvJd8EbvS43F9=oy_ou2r7LRHrFyqqpE3vnjQ@mail.gmail.com>
-Date: Sun, 21 Jul 2019 11:03:01 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Tavis Ormandy <taviso@...il.com>, Bartlomiej Zolnierkiewicz <b.zolnierkie@...sung.com>,  Daniel Vetter <daniel.vetter@...ll.ch>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: stack buffer overflow in fbdev
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/24/3
+Message-ID: <CAG09ER1gaptDPN3W-03BTQh_-P1Ta-GWicCprr_VLOz_FARagA@mail.gmail.com>
+Date: Wed, 24 Jul 2019 09:26:45 +0200
+From: Stig Rohde Døssing <srdo@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2018-1320] Apache Storm vulnerable Thrift version
 Content-Type: text/plain; charset=utf-8
 
-Completely untested patch attached. There are probably better ways to do this.
+[CVEID]:CVE-2018-1320[PRODUCT]:Apache Storm[VERSION]:Apache Storm
+0.9.1-incubating to 1.2.2[PROBLEMTYPE]:CWE-20: Input
+Validation[DESCRIPTION]:Apache Storm versions 0.9.1-incubating to
+1.2.2
+              use Thrift library versions vulnerable to CVE-2018-1320.
 
-Adding the proper people to the cc, and quoting Tavis' email in its entirety.
+Mitigation: Upgrade to Apache Storm 1.2.3 or later.
 
-Daniel - you got added despite not being explicitly listed as
-maintainer because you've touched fbdev/core/ more than most lately,
-plus you know edid anyway. As such: "tag, you're it, sucker".
+Credit: Arun Mahadevan for discovery and fix
 
-                Linus
-
-On Sat, Jul 20, 2019 at 5:35 PM Tavis Ormandy <taviso@...il.com> wrote:
->
-> Hello, during a conversation on twitter we noticed a stack buffer
-> overflow in fbdev with malicious edid data:
->
-> https://github.com/torvalds/linux/blob/22051d9c4a57d3b4a8b5a7407efc80c71c7bfb16/drivers/video/fbdev/core/fbmon.c#L1033
->
-> There is enough space to have 52 1-byte length values, which makes svd_n
-> 52, then make the final value length 0x1f (the maximum), which makes
-> svd_n 83 and overflows the 64 byte stack buffer svd[] with controlled
-> data.
->
-> This requires a malicious monitor / projector / etc, so pretty low impact.
->
-> I pulled out the code to make a demo (I removed the checksum, but it
-> doesnt prevent the bug):
->
-> https://gist.github.com/taviso/923776e633cb8fb1ab847cce761a0f10
->
-> This was discovered by Nico Waisman of Semmle.
->
-> Tavis.
->
-> --
-> -------------------------------------
-> taviso@....lonestar.org | finger me for my pgp key.
-> -------------------------------------------------------
-
-View attachment "patch.diff" of type "text/x-patch" (942 bytes)
