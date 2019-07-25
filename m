@@ -1,55 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/29/2
-Message-ID: <20190829144244.4cvuomwersv65t4o@yuggoth.org>
-Date: Thu, 29 Aug 2019 14:42:44 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/26/1
+Message-ID: <aa6TE4xteynh2_Ca6HNTpGBRXN0UKjaeO1QKfmh9JLPDcl0GZvbZgnMqCqUIjY7tqZ7EfR1cxFot8QGtkhtBlQrlcpMdnmnCH6qxIcETRas=@protonmail.ch>
+Date: Thu, 25 Jul 2019 21:35:45 +0000
+From: Stiepan <stie@...tonmail.ch>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2019-004] Ageing time of 0 disables linuxbridge MAC learning (CVE-2019-15753)
+Subject: Re: Security release pre-announcement messages
 Content-Type: text/plain; charset=utf-8
 
-=================================================================
-OSSA-2019-004: Ageing time of 0 disables linuxbridge MAC learning
-=================================================================
+I would like to congratulate the teams that do that. If public disclosure is deemed too dangerous before a patch is available, this looks like The reasonable tradeoff. Wish it was the same with Linux...
 
-:Date: August 29, 2019
-:CVE: CVE-2019-15753
+Rationale: people could switch meanwhile to a known safe kernel. That would provide peace of mind to the "rest of us" who don't have the keys to the linux-distros kingdom of the elected few, yet wish to have secure OSes, without a window of vulnerability open to whoever hacked into the elected few's machines (or are entitled another way to this secret information).
+It would also make Linux governance way more democratic, which seems to be a must for such a "too big to fail" core open-source software.
 
+Cheers,
+Stiepan
 
-Affects
-~~~~~~~
-- Os-vif: >=1.15.0<1.15.2, 1.16.0
+Envoyé depuis ProtonMail mobile
 
+-------- Message d'origine --------
+On 23 juil. 2019 à 23:55, Douglas Bagnall a écrit :
 
-Description
-~~~~~~~~~~~
-James Denton with Rackspace reported a vulnerability in os-vif, the
-Nova/Neutron network integration library. A hard-coded MAC ageing
-time
-of 0 disables MAC learning in linuxbridge, forcing obligatory
-Ethernet
-flooding for non-local destinations which both impedes network
-performance and allows users to possibly view the content of packets
-for instances belonging to other tenants sharing the same network.
-Only deployments using the linuxbridge backend are affected.
+> On 22/07/19 11:50 PM, Solar Designer wrote:
+>> Exactly. It's just an unusual disclosure process that involves giving
+>> the users a heads-up a few days before public disclosure of the actual
+>> vulnerabilities and fixes. So far, this process is practiced by OpenSSL
+>> and Exim (any others?)
+>>
+>
+> On the Samba team we use wording like this:
+>
+> https://lists.samba.org/archive/samba/2019-June/223621.html
+>
+> ----------------------------
+> Subject: Heads-up: Security Releases ahead!
+>
+> Hi,
+>
+> This is a heads-up that there will be Samba security updates on
+> Wednesday, June 19 2019. Please make sure that your Samba
+> servers will be updated soon after the release!
+>
+> Impacted components:
+> - AD DC (CVSS 6.5, Medium)
+> -----------------------------
+>
+> We now do this systematically, after a haphazard start.
+>
+> To help ourselves stay on track, we are trying to formalise our
+> process into something approaching a checklist:
+>
+> https://wiki.samba.org/index.php/Samba_Security_Process
+>
+> and we are happy to hear suggestions for improvement.
+>
+> cheers,
+> Douglas
+Content of type "text/html" skipped
 
-
-Patches
-~~~~~~~
-- https://review.opendev.org/678098 (Stein)
-- https://review.opendev.org/672834 (Train)
-
-
-Credits
-~~~~~~~
-- James Denton from Rackspace (CVE-2019-15753)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1837252
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15753
-
--- 
-Jeremy Stanley, on behalf of the OpenStack VMT
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+Download attachment "publickey - stie@...tonmail.ch - 0xADF18750.asc" of type "application/pgp-keys" (1761 bytes)
