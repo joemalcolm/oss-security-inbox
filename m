@@ -1,64 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/17/1
-Message-ID: <20190317151442.g5po7ljl64gnzuoq@tunkki.bugs.fi>
-Date: Sun, 17 Mar 2019 17:14:42 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/25/2
+Message-ID: <CA+fCnZe-OJiGRGC7h9VDG5H4JyiJ6dO15VWoz0tvZ+2_inYbPg@mail.gmail.com>
+Date: Thu, 25 Jul 2019 14:46:19 +0200
+From: Andrey Konovalov <andreyknvl@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-9573 / CVE-2019-9574: WordPress plugin hrm missing server side authorization checks
+Subject: Re: CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Jul 25, 2019 at 2:32 PM Vladis Dronov <vdronov@...hat.com> wrote:
+>
+> Hello,
+>
+> It was found (by the syzkaller initially) that a 0x0 address execution is
+> possible as nonprivileged user in the latest Linux kernel (considering
+> protection measures like SMEP, vm.mmap_min_addr, etc are disabled).
+>
+> The Linux kernel must have any of following config options enabled:
+>
+> CONFIG_BT_HCIUART_MRVL (easy to hit)
+> CONFIG_BT_HCIUART_QCA (hard to hit)
+> CONFIG_BT_HCIUART_BCM
+> CONFIG_BT_HCIUART_INTEL
+> CONFIG_BT_HCIUART_ATH3K
+>
+> The suggested fix is posted at:
+>
+> https://lore.kernel.org/linux-bluetooth/20190725120909.31235-1-vdronov@redhat.com/T/#u
+>
+> The bug and the reproducer are public, as they were found by the syzcaller
+> several months ago:
+>
+> https://syzkaller.appspot.com/bug?id=1b42faa2848963564a5b1b7f8c837ea7b55ffa50
+>
+> CVE-2019-10207 was assigned to this bug.
+>
+> $ id
+> uid=1000(vladis) gid=1000(vladis) groups=1000(vladis)
+> $ uname -r
+> 5.2.0
+> $ ./hci-proto-crash 11
+> proto = 11
+> ioctl(SET_HCI_UART_PROTO): Success
+> [   99.894572] BUG: kernel NULL pointer dereference, address: 0000000000000000
+> [   99.897287] #PF: supervisor instruction fetch in kernel mode
+> [   99.897863] #PF: error_code(0x0010) - not-present page
+> [   99.898389] PGD 0 P4D 0
+> [   99.899036] Oops: 0010 [#1] SMP
+> [   99.899795] CPU: 2 PID: 691 Comm: kworker/u17:0 Not tainted 5.2.0 #23
+> [   99.900836] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+> [   99.902912] Workqueue: hci0 hci_power_on
+> [   99.903673] RIP: 0010:0x0
+> [   99.904416] Code: Bad RIP value.
+> [   99.905137] RSP: 0018:ffff92d8822c7d98 EFLAGS: 00010246
+> [   99.906014] RAX: ffffffff97e7a3e0 RBX: ffff8af7b5dd9e00 RCX: 00000000000010b2
+> [   99.907075] RDX: 00000000ffffffff RSI: ffff92d8822c7d44 RDI: ffff8af7b46c0400
+> [   99.908127] RBP: ffff8af7b46c0400 R08: 0000000000000000 R09: 000000000001cb00
+> [   99.909232] R10: 000000000000001e R11: 000000000001b900 R12: ffff8af7b45d4000
+> [   99.910332] R13: ffff8af7b45d4a08 R14: 0000000000000000 R15: 0ffff8af7b167ad0
+> [   99.911452] FS:  0000000000000000(0000) GS:ffff8af7b7880000(0000) knlGS:0000000000000000
+> [   99.912709] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> [   99.913682] CR2: ffffffffffffffd6 CR3: 000000007060a003 CR4: 00000000001606e0
+> [   99.914764] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+> [   99.915830] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+> [   99.916877] Call Trace:
+> [   99.917538]  hci_uart_set_flow_control+0x149/0x1b0
+> [   99.918441]  mrvl_setup+0xe/0x70
+> [   99.919209]  hci_dev_do_open+0x1eb/0x690
+> [   99.920013]  ? sched_clock+0x5/0x10
+> [   99.920784]  hci_power_on+0x45/0x250
+> [   99.921549]  ? __wake_up_common_lock+0x87/0xc0
+> [   99.922399]  process_one_work+0x1c4/0x3a0
+> [   99.923230]  worker_thread+0x45/0x3c0
+> [   99.924019]  kthread+0xf3/0x130
+> [   99.924735]  ? trace_event_raw_event_workqueue_execute_start+0xb0/0xb0
+> [   99.925755]  ? kthread_park+0x80/0x80
+> [   99.926546]  ret_from_fork+0x1f/0x30
+> [   99.927399] Modules linked in:
+> [   99.928152] CR2: 0000000000000000
+> [   99.928882] ---[ end trace 577d1af3066a9585 ]---
 
-I found several vulnerabilities from WordPress plugin hrm (WP Human Resource
-Management) where server side authorization checks are missing. Plugin URL
-https://wordpress.org/plugins/hrm/. Affected 2.2.5 and possibly below. Fixed in
-2.2.6 according to developer who didn't respond to me, but communicated with
-WordPress.
+Does this always happen in a worker thread? Does this therefore mean
+that this is not exploitable by a local user even if vm.mmap_min_addr
+and SMEP/SMAP are disabled, since the user can't mmap zero page in the
+worker thread context?
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-9574
-
-When creating new leave as admin user there is user picker visible in the UI.
-Using same queries as picker functionality any logged in user (e.g.
-Subscriber) can use search_emp_leave_records action to print all WordPress
-users credentials from database.
-
-{"success":true,"data":[{"ID":"1","user_login":"henri","user_pass":"$P$Bho3..
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-9573
-
-Any user can create new leave and can change status of leave (approving,
-canceling etc).
-
-Recommendation for developers:
-
-Authorize users using a whitelist of roles allowed to call specific actions.
-Define roles for all actions with secure default e.g. admin only. Ensure that
-password hashes are not printed to any user. Function
-https://codex.wordpress.org/Function_Reference/get_users could be used to list
-the users.
-
-Timeline:
-
-2019-01-22: Report to developer and WordPress plugins team
-2019-02-23: Fix released
-2019-03-05: CVEs assigned by MITRE
-
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAlyOZGIACgkQJ633pE6q
-dXTogxAAoUAq4SSPBl3ayd4f2FZfQQjxALKIx7m8wa+4ygC1G3YBLB4PvArH+JyD
-52AmyRNt1Px14XBsE7tJutWPV8RazUuo88oyJxMeoU6LRXLjGmYQYoawtEayLcp1
-YKu9DWFViIUQZJn936LOOUeEtm2Sb0QiewBJGBbaI0MwCpZmRgt8KmZReAtWyjDp
-Jll3A290g6QpDay/14AJ5kMHdm5MwihkXbhTKJ20pOR0ds5VN/gVDFleXUhRBPeT
-sPaZznCpi4ZF/d3IlVK8j5VkSEEfHqq3XMjbbO6RKJV++WjPaF/DBcRea4yDGUDu
-K4OiL/m6/8Cs3wGB/Nedgx/D//xAWqV4/qVjVoTV1gy6zLlVbv9S8L11I2O5QzpL
-TfnxWEDl9zrDN7C/Ha//SinrbDsvcdklh2Uw8cFJDi0NdwSfmo4VF3kimgw+mj5+
-S6PWX/5/JZ+tgRrR8X2vUwVun9uvEbI217iRrStsuz5w6OsXrHkBT4tUAkQV6sLA
-Iegx8GlhReATbVIYuL3Xy7u9nrlokcHo5U1l6nxmpgomZ0UeD3HCFgmiXzwWj7fS
-y/pYpWzZLUzDf4TqD/MeRepLYQfqCcs2t2ApkS3XaTs8aFbviLgoEpQ+vJznNt4i
-4traM4dIqD/o5IyN/8uWj/d2Jp/vLjaMZNPNftxzC2BaHSQsmFs=
-=Rnac
------END PGP SIGNATURE-----
+>
+> Best regards,
+> Vladis Dronov | Red Hat, Inc. | The Core Kernel | Senior Software Engineer
