@@ -1,4 +1,9 @@
-Received: (qmail 22478 invoked by uid 550); 20 Jan 2025 15:26:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3075" "Thursday" "25" "July" "2019" "08:31:29" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<613396710.4527654.1564057889289.JavaMail.zimbra@redhat.com>" "72" "[oss-security] CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user" nil nil nil "7" "2019072512:31:29" "[oss-security] CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user" (number mark "U       vdronov@redh Jul 25   72/3075  " thread-indent "\"[oss-security] CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user\"\n") "<470270831.4241339.1563979659491.JavaMail.zimbra@redhat.com>" ("<470270831.4241339.1563979659491.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil "[oss-security] CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28377 invoked by uid 550); 25 Jul 2019 12:31:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,45 +12,93 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20334 invoked from network); 20 Jan 2025 15:25:51 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AOJu0YztQuYf/hc7ylHfnDOrymVi5iMj+ZlP4u/zBJrTxOjvLB9Ik/JB
-	DB267J9Yza0JqtlAcqv9V0FJBlPz+pVjjQ4E4V3RlHWYyYHkuyY8wDmdknDGZ6yvKF+I27c7s+f
-	2QXi9fwt19U6UzzeWtBPJ4c4jI9Y=
-X-Google-Smtp-Source: AGHT+IGkgpObxMLwmSi/wfrke6MPW4r4DxLrC0NKP09Z/Ylr40lKzF7xoxSLF1rVxc40XmX03crjZO6XmeOJZSugIAo=
-X-Received: by 2002:a05:6a21:999e:b0:1db:e0d7:675c with SMTP id
- adf61e73a8af0-1eb2148cc78mr22277825637.13.1737386669958; Mon, 20 Jan 2025
- 07:24:29 -0800 (PST)
-MIME-Version: 1.0
-From: Colm O hEigeartaigh <coheigea@apache.org>
-Date: Mon, 20 Jan 2025 15:24:18 +0000
-X-Gmail-Original-Message-ID: <CAB8XdGDHH_p+JHm8X=h10nBzJjFhcwH2ueiAccrHDfeGhcDTzw@mail.gmail.com>
-X-Gm-Features: AbW1kvYKSmzqlrbkSl822hyG0p9jrISB80yvr0AHMN7kOb9AWOrO76EtgzrwPss
-Message-ID: <CAB8XdGDHH_p+JHm8X=h10nBzJjFhcwH2ueiAccrHDfeGhcDTzw@mail.gmail.com>
+Received: (qmail 28357 invoked from network); 25 Jul 2019 12:31:41 -0000
+Date: Thu, 25 Jul 2019 08:31:29 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2025-23184: Apache CXF: Denial of Service vulnerability with
- temporary files
+Message-ID: <613396710.4527654.1564057889289.JavaMail.zimbra@redhat.com>
+In-Reply-To: <470270831.4241339.1563979659491.JavaMail.zimbra@redhat.com>
+References: <470270831.4241339.1563979659491.JavaMail.zimbra@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.43.2.29, 10.4.195.6]
+Thread-Topic: bluetooth: hci_uart: 0x0 address execution as nonprivileged user
+Thread-Index: nQ2NW4PMqDCIyYMsAp+X/R9JmEkJkMZhkuUh
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.44]); Thu, 25 Jul 2019 12:31:29 +0000 (UTC)
+Subject: [oss-security] CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address
+ execution as nonprivileged user
 
-Affected versions:
+Hello,
 
-- Apache CXF before 3.5.10
-- Apache CXF 3.6.0 before 3.6.5
-- Apache CXF 4.0.0 before 4.0.6
+It was found (by the syzkaller initially) that a 0x0 address execution is
+possible as nonprivileged user in the latest Linux kernel (considering
+protection measures like SMEP, vm.mmap_min_addr, etc are disabled).
 
-Description:
+The Linux kernel must have any of following config options enabled:
 
-A potential denial of service vulnerability is present in versions of
-Apache CXF before 3.5.10, 3.6.5 and 4.0.6. In some edge cases, the
-CachedOutputStream instances may not be closed and, if backed by
-temporary files, may fill up the file system (it applies to servers
-and clients).
+CONFIG_BT_HCIUART_MRVL (easy to hit)
+CONFIG_BT_HCIUART_QCA (hard to hit)
+CONFIG_BT_HCIUART_BCM
+CONFIG_BT_HCIUART_INTEL
+CONFIG_BT_HCIUART_ATH3K
 
-This issue is being tracked as CXF-7396
+The suggested fix is posted at:
 
-References:
+https://lore.kernel.org/linux-bluetooth/20190725120909.31235-1-vdronov@redhat.com/T/#u
 
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2025-23184
-https://issues.apache.org/jira/browse/CXF-7396
+The bug and the reproducer are public, as they were found by the syzcaller
+several months ago:
+
+https://syzkaller.appspot.com/bug?id=1b42faa2848963564a5b1b7f8c837ea7b55ffa50
+
+CVE-2019-10207 was assigned to this bug.
+
+$ id
+uid=1000(vladis) gid=1000(vladis) groups=1000(vladis)
+$ uname -r
+5.2.0
+$ ./hci-proto-crash 11
+proto = 11
+ioctl(SET_HCI_UART_PROTO): Success
+[   99.894572] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[   99.897287] #PF: supervisor instruction fetch in kernel mode
+[   99.897863] #PF: error_code(0x0010) - not-present page
+[   99.898389] PGD 0 P4D 0
+[   99.899036] Oops: 0010 [#1] SMP
+[   99.899795] CPU: 2 PID: 691 Comm: kworker/u17:0 Not tainted 5.2.0 #23
+[   99.900836] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+[   99.902912] Workqueue: hci0 hci_power_on
+[   99.903673] RIP: 0010:0x0
+[   99.904416] Code: Bad RIP value.
+[   99.905137] RSP: 0018:ffff92d8822c7d98 EFLAGS: 00010246
+[   99.906014] RAX: ffffffff97e7a3e0 RBX: ffff8af7b5dd9e00 RCX: 00000000000010b2
+[   99.907075] RDX: 00000000ffffffff RSI: ffff92d8822c7d44 RDI: ffff8af7b46c0400
+[   99.908127] RBP: ffff8af7b46c0400 R08: 0000000000000000 R09: 000000000001cb00
+[   99.909232] R10: 000000000000001e R11: 000000000001b900 R12: ffff8af7b45d4000
+[   99.910332] R13: ffff8af7b45d4a08 R14: 0000000000000000 R15: 0ffff8af7b167ad0
+[   99.911452] FS:  0000000000000000(0000) GS:ffff8af7b7880000(0000) knlGS:0000000000000000
+[   99.912709] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   99.913682] CR2: ffffffffffffffd6 CR3: 000000007060a003 CR4: 00000000001606e0
+[   99.914764] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[   99.915830] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[   99.916877] Call Trace:
+[   99.917538]  hci_uart_set_flow_control+0x149/0x1b0
+[   99.918441]  mrvl_setup+0xe/0x70
+[   99.919209]  hci_dev_do_open+0x1eb/0x690
+[   99.920013]  ? sched_clock+0x5/0x10
+[   99.920784]  hci_power_on+0x45/0x250
+[   99.921549]  ? __wake_up_common_lock+0x87/0xc0
+[   99.922399]  process_one_work+0x1c4/0x3a0
+[   99.923230]  worker_thread+0x45/0x3c0
+[   99.924019]  kthread+0xf3/0x130
+[   99.924735]  ? trace_event_raw_event_workqueue_execute_start+0xb0/0xb0
+[   99.925755]  ? kthread_park+0x80/0x80
+[   99.926546]  ret_from_fork+0x1f/0x30
+[   99.927399] Modules linked in:
+[   99.928152] CR2: 0000000000000000
+[   99.928882] ---[ end trace 577d1af3066a9585 ]---
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | The Core Kernel | Senior Software Engineer
