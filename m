@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["15794" "Thursday" "16" "July" "2015" "12:34:13" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<13202626.As8AotmUy7@willoughby>" "130" "[oss-security] libav: divide-by-zero in ff_h263_decode_mba()" nil nil nil "7" "2015071610:34:13" "[oss-security] libav: divide-by-zero in ff_h263_decode_mba()" (number mark "        ago@gentoo.o Jul 16  130/15794 " thread-indent "\"[oss-security] libav: divide-by-zero in ff_h263_decode_mba()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2636" "Thursday" "25" "July" "2019" "23:01:08" "+0200" "Kristian Fiskerstrand" "k_f@gentoo.org" "<d576c29f-32ca-bd1f-a0e8-5558774e52c6@gentoo.org>" "69" "Re: [oss-security] Statistics for distros lists updated for 2019Q2" nil nil nil "7" "2019072521:01:08" "[oss-security] Statistics for distros lists updated for 2019Q2" (number mark "U       k_f@gentoo.o Jul 25   69/2636  " thread-indent "\"Re: [oss-security] Statistics for distros lists updated for 2019Q2\"\n") "<20190725192324.GA17297@openwall.com>" ("<3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>" "<20190725192324.GA17297@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Statistics for distros lists updated for 2019Q2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21504 invoked by uid 550); 16 Jul 2015 10:34:41 -0000
+Received: (qmail 22363 invoked by uid 550); 25 Jul 2019 21:03:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,145 +11,148 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20424 invoked from network); 16 Jul 2015 10:34:32 -0000
-Message-ID: <13202626.As8AotmUy7@willoughby>
-User-Agent: KMail/4.14.8 (Linux/3.14.37-gentoo; KDE/4.14.8; x86_64; ; )
-MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="nextPart1655470.aOdPlMRS2E"
-Content-Transfer-Encoding: 7Bit
-Date: Thu, 16 Jul 2015 12:34:13 +0200
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] libav: divide-by-zero in ff_h263_decode_mba()
-To: oss-security@lists.openwall.com
+Received: (qmail 22313 invoked from network); 25 Jul 2019 21:03:52 -0000
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
+References: <3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>
+ <20190725192324.GA17297@openwall.com>
+From: Kristian Fiskerstrand <k_f@gentoo.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=k_f@gentoo.org; prefer-encrypt=mutual; keydata=
+ mQINBEdj//4BEAC3zjKRryW1mLec38x0w9ByG50h6KJddkZe3UNdGhAa3S5E4NAi/fUoe3gD
+ LUDDmpHZNqtbMgrobwUNjLrp+PDZNdMJFAnbWXvmsMwuax0SWJzy4alem34tvir3a2PpnVr9
+ ylyAyxPChMM0ANelT/fiYIEysjAbHXjri89qdT+yA16CMljoun7vIOmq7ohKdNd1Dci6qoyj
+ 0NllvR2AiBI+ZJnoF4hkRKO1PNUJROzn/ku88idaNkWyq7rREI+WkhS+K6xg1R/d6mTp+bHP
+ tmwGlN4U1Lgx9qeitYzirkQeA8EGK/EEPPZG85WvXSrTftoPvQswOtW7I+jkTdd30GHXf6JH
+ Rq4oR0mT65mqckycPjXNw6RM0fxyx06/kbVG8x3tzc3roJF+hR+h5QWIWsQOc3ZAhbJPWnfP
+ D/kEN20yvb6EXWha+70QJbrBsnN0M8MLF7x+ZWTKESOVpshUBG67iq/FWCpv3st2VTq4M0Ep
+ b/ORIKlfEgSsGv6waooF0ik41ey3k6PIcuHTq/sCoFoC6EH75wqsbmLkVSyqTKm3MSjlN26d
+ ei425iCXJSyH0L1WmeS0i0rzcF5BCu9V280DmNFHWkr4iHiyrVcNyccocMTeh6/ZG7XSI0wc
+ TONVNnKtofVHkzwHMdDlDx4lFRG+V0ftimR5THlxtG8AzQKY9QARAQABtCZLcmlzdGlhbiBG
+ aXNrZXJzdHJhbmQgPGtfZkBnZW50b28ub3JnPokCPQQTAQgAJwIbAwULCQgHAwUVCgkICwUW
+ AgMBAAIeAQIXgAUCXBkr/wUJFqcqNAAKCRALf4tg4+364+jcD/93QVM8oueXqsMoMpBGN6Mm
+ M2PbcVS3ZiBFjGPeqm7g29tzR2+OhzGmI17IbwUjwBiCVthym4ekF9vbGh8brSm168r/i+Q8
+ vQmVyzbJS1PO/M4sVzXnge3oo2Q57nhQewS1RGQIadtC3nTCzyAN7CHZg2/tnkci9U5Uljrx
+ FrMgOTjQT/ylEC0efKR013ccFcxi1h5rHr4mnNrW2fNjJ30kyHvu896TZiHZYi3d3W/RTdyD
+ URCX+6eRAyI64RpWiSdaSdFL9M8W4LXv8UD9BEnrd3aYqIx8lRtirG9MZtURaQK6RcE/+/OU
+ JnGOXu08z9jYRNQ4LWnelrL1gNH6yQnCpWlP1f60iyrQ5vWj7fClEcOtlqYuMUvLRmZtbp7V
+ sN2SY09dh4SgrlFXS8dVdESTJlpoHOe5GsmESIYSLKoxNg8JnjmGDCcZAeC4DGQOz9OyKQSk
+ W4L4yeDt/PUTf4jJ6mIgrVfLIyZIF9uQka4/Xh/ECOJsKKyqaEZQ6rRuXtpL2SZsNxpYYTfr
+ JXE7AOH6pehDhOJ0dxchfEhiQKKHC6dDXLVj7eauiRn0brPCbqgLufa5lU5CSy0v/I2YHcXr
+ xtp0HRfcoOKH6SC/6NaeE+QDikLv3V0706KdRWH+sn1ZM4eml0P7B+dgAj6LFbDjJrwRncIB
+ 087bE6YTHNL7rrkBDQRcGSkhAQgAu/B9sChWogJod8L3i0Pf+4YwUG/elFZtHtXPk06TdbMp
+ +KxhY0cIit5J422HME7P4fxPnu1zaGm40nUjc/bzKdUNbVjtHFDJJAQeI+W8VGDxpHOrDoY0
+ WYnKhABNWCcuj6eH/MyxkjVblZvTxuEuKJQQ5yL44hsBQmA6aNHwkJnB+pd7NvUBRpfEnBoF
+ Cp2Wma3VZgdrDJ0s/eoHTc8uPkKWaixkQYTtwSJ/2Z2qncSe61V6u+HAHxdyaNceSTf1W58W
+ DNcNdKlMUEcFK5E2ya+oikZUVHUbyHR+GgZ/UmZQO9xVLmghjCaKq7L65yAUuMpsB7npdUMF
+ mHpY+9Jl8QARAQABiQNEBBgBCAAPBQJcGSkhAhsCBQkB8gEAASkJEAt/i2Dj7frjwF0gBBkB
+ CAAGBQJcGSkhAAoJENuBfg4Xj5s/JTMH/iFMxlDX5MR+Td75hX8H55nx7SDNcJczfxxFqFyv
+ qUUTYGzkSbRVRudSh8iD7Btb0Q9/VfmBax9L5JobbB5nAWAJ6gKPIAYKiQ3khBLJgtFUjC27
+ EfyGafqBPgq7F1pC6uyyRDFc0Axg0ZwR/1m1MD4wZ1RjWth1K7P4xPipKdumn4fSpZYn8a+s
+ G/OmjG9/7pnyVi2yW6Q5ameKstDdFzy1BuZTiS0RoUvQZqOgGkJQ8Ckzn7FUty9GEQ5+9/im
+ 80OUKN7wQ1xoijVvM/WhrpDINmMQhbXE/ut5mG0+qZd0DwQXG0uSCzfiRgQQ1srtW2a67Hvc
+ dYajfda/N5697YCDZRAAon9l+aZP6Z80A98lC+U33LvuGVJoWOzMW/SgQo9XXtW3LhpSbctU
+ 58hI0hJkBdYTp9vT+ZsAb4DGYdIu50tY3w1a1tMuNb414h5X5ssGKc36XQiMoS4cnok5xT0u
+ Uhh85hz7KmOVUH0mrQUeCsdl6DMU0DUjaTKP5sgl8E34A/ioqWWdH7rLLsR9KxOVEQgL3wC8
+ 5yCIjnmGAPT+ZeD3VAziV3W8PHcWEihFnDUx5sqX411AGpzoWfFbBa6kNnl9aZCTs1KUUIYb
+ PsBMu612JkUM3S1wI+cZT284JV3NwgqrG6mQAcDlm5SnNHYvmWdUAbd1cVbSpplU9FyU7VCw
+ YhOKxSfGFY/7QJi9FcrooQpuXzV3bDPTFLFFYQ0uwFfAZgDOERG3ccjycYsByNeEFR8A/Fzl
+ GPNHPoacS05cpMo0hyn5XmyynduDVQja4kXVKnj7Qok99wU943nhRnKI8g3vbqi8m3QFhoMu
+ YBDKc2j0MC28V5ASyZZWOWsQfb+o3B2pxQvtgsrv2hy3b94F0qoIp4X0V16nLGfrPbfGoHHB
+ fN2ndkSH/+THgMvF2DLtrOqFqF5SZJlo2Qjx2LLjyBG7qbbwxyCzgIto5U9hF/2OGaq0swna
+ hMCNI8Mm07eUTcAbfdVup44DjzqFugVUAYTYeDje43Q5y+KF8cWERX+5AQ0EXBkqNAEIALeW
+ +e+/K1ZrbVS8zsA8loDW8WUqibZzBjEcmSvZyzvy9ZURrSXowPFG4thrE/fmg0IKm3NCfYHn
+ la9bFI8tTuOFL3rZCSaGxfcxq9ocHUkXf3TviZ08qZG7Ql+Tgspn9LUlgUKNO5IZNZpX3YJC
+ EVijYRFW1uXr7bZPfPHgYijV7uPrTmfwsopBDkfmGa25ACGqBsFi1i+1F7o3T0hJrHavdpG+
+ pF/CCUxFAETbJp4GWj8oSqbk6C4++8D0qLrKxGtUrDT1y5CC+NinXImDI3yjTQUXRSlTVO6z
+ 18M5yowcRT/vxRnlCYcW8cWCdO//XQ9zXyGL5bL9isvJVC+PQ6cAEQEAAYkCJQQYAQgADwUC
+ XBkqNAIbDAUJAfH/5gAKCRALf4tg4+364ydGEAC0EMGpe8MYqbfDGgqti8jg724kwwXjTk1A
+ 01Q9EaTVSlVgaK4sL3IZ0+xfXzeyRHFWf9TTWm4657ni7bAudZGoLxUxKK7QABS3CCW5fxub
+ KSxXQ+yDQpyim8NgrHoVeOht9drPKHQF/Q2YfZ6XqRCf0WaR8Lq3DLJpVpRS6W8JG4egTXdY
+ oG842fO0uMwfbfKn22+bxr6KGolKX+4lgKU90+FLcgqDuXS8cAlMOFuhrgwL7lxlStYO/w6/
+ CGyFxrAnlZ/sXKbC34SZiVuOtJw7P87MNyQHw8XTBf/SlRTvm5JLdVIAGYxjJK6Fr7Fx5IHU
+ vCP/PF2skyxE7L6TjEP8ZHrwdjhlrrxJXUDgRtsNGpDDp4Zn771m90qxOhHJ/c79fGf1S4go
+ yxwM+4UqeBwDA3adC65XF2ASo0Z97/rgLJOU+C1sOp4xNUUCquUl8eivcco3EPTIP1UDPn2h
+ zdoXPOqT0bdR6XloYmwNJZPwgDJYadSGR5Z6X+CTFzEejgq40xNUbfYR0lARRRw5bUT90KM9
+ uqM7ILmqESP6W+hB8tFsZF1Uk1RYco2caRPFPiPC059IY5RlKaZ5OwjwCU55A+yb3UA1qPKM
+ KbRdVUDFvaRxzNxpFdYUkhl5Zu2P5aFjWEZeL8E+/1rZCuKkXj3ED22luoa4XmWEwtfpTw5S kQ==
+Message-ID: <d576c29f-32ca-bd1f-a0e8-5558774e52c6@gentoo.org>
+Date: Thu, 25 Jul 2019 23:01:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
+MIME-Version: 1.0
+In-Reply-To: <20190725192324.GA17297@openwall.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="Q65JFqdh8XAZjrqpZeSXdcYrX7bnAbiRn"
+Subject: Re: [oss-security] Statistics for distros lists updated for 2019Q2
 
---nextPart1655470.aOdPlMRS2E
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+--Q65JFqdh8XAZjrqpZeSXdcYrX7bnAbiRn
+Content-Type: multipart/mixed; boundary="7Ji5256EtqFX9ATm70bgmpv8TPg9ECkuu";
+ protected-headers="v1"
+From: Kristian Fiskerstrand <k_f@gentoo.org>
+Reply-To: k_f@gentoo.org
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
+Message-ID: <d576c29f-32ca-bd1f-a0e8-5558774e52c6@gentoo.org>
+Subject: Re: [oss-security] Statistics for distros lists updated for 2019Q2
+References: <3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>
+ <20190725192324.GA17297@openwall.com>
+In-Reply-To: <20190725192324.GA17297@openwall.com>
 
-Description:                                                                                                                                                                                                                                                                   
-Libav is an open source set of tools for audio and video processing.                                                                                                                                                                                                           
-                                                                                                                                                                                                                                                                               
-After talking with Luca Barbato which is both a Gentoo and Libav 
-developer, I spent a bit of my time fuzzing libav and in particular I 
-fuzzed libavcodec though avplay.                                                                                                        
-I hit a crash and after I reported it to upstream, they confirmed the 
-issue as a divide-by-zero.                                                                                                                                                                               
-                                                                                                                                                                                                                                                                               
-The complete gdb output:                                                                                                                                                                                                                                                       
-                                                                                                                                                                                                                                                                               
-ago@willoughby $ gdb --args /usr/bin/avplay avplay.crash                                                                                                                                                                                                                       
-GNU gdb (Gentoo 7.7.1 p1) 7.7.1                                                                                                                                                                                                                                                
-Copyright (C) 2014 Free Software Foundation, Inc.                                                                                                                                                                                                                              
-License GPLv3+: GNU GPL version 3 or later                                                                                                                                                                                                                                     
-This is free software: you are free to change and redistribute it.                                                                                                                                                                                                             
-There is NO WARRANTY, to the extent permitted by law.  Type "show 
-copying"                                                                                                                                                                                                     
-and "show warranty" for details.                                                                                                                                                                                                                                               
-This GDB was configured as "x86_64-pc-linux-gnu".                                                                                                                                                                                                                              
-Type "show configuration" for configuration details.                                                                                                                                                                                                                           
-For bug reporting instructions, please see:                                                                                                                                                                                                                                    
-.                                                                                                                                                                                                                                                                              
-Find the GDB manual and other documentation resources online at:                                                                                                                                                                                                               
-.                                                                                                                                                                                                                                                                              
-For help, type "help".                                                                                                                                                                                                                                                         
-Type "apropos word" to search for commands related to "word"...                                                                                                                                                                                                                
-Reading symbols from /usr/bin/avplay...Reading symbols from 
-/usr/lib64/debug//usr/bin/avplay.debug...done.                                                                                                                                                                     
-done.                                                                                                                                                                                                                                                                          
-(gdb) run                                                                                                                                                                                                                                                                      
-Starting program: /usr/bin/avplay avplay.crash                                                                                                                                                                                                                                 
-warning: Could not load shared library symbols for linux-vdso.so.1.                                                                                                                                                                                                            
-Do you need "set solib-search-path" or "set sysroot"?                                                                                                                                                                                                                          
-[Thread debugging using libthread_db enabled]                                                                                                                                                                                                                                  
-Using host libthread_db library "/lib64/libthread_db.so.1".                                                                                                                                                                                                                    
-avplay version 11.3, Copyright (c) 2003-2014 the Libav developers                                                                                                                                                                                                              
-  built on Jun 19 2015 09:50:59 with gcc 4.8.4 (Gentoo 4.8.4 p1.6, 
-pie-0.6.1)                                                                                                                                                                                                  
-[New Thread 0x7fffec4c7700 (LWP 7016)]                                                                                                                                                                                                                                         
-[New Thread 0x7fffeb166700 (LWP 7017)]                                                                                                                                                                                                                                         
-INFO: AddressSanitizer ignores mlock/mlockall/munlock/munlockall                                                                                                                                                                                                               
-[New Thread 0x7fffe9e28700 (LWP 7018)]                                                                                                                                                                                                                                         
-[h263 @ 0x60480000f680] Format detected only with low score of 25, 
-misdetection possible!                                                                                                                                                                                      
-[h263 @ 0x60440001f980] Syntax-based Arithmetic Coding (SAC) not 
-supported                                                                                                                                                                                                     
-[h263 @ 0x60440001f980] Reference Picture Selection not supported                                                                                                                                                                                                              
-[h263 @ 0x60440001f980] Independent Segment Decoding not supported                                                                                                                                                                                                             
-[h263 @ 0x60440001f980] header damaged                                                                                                                                                                                                                                         
-                                                                                                                                                                                                                                                                               
-Program received signal SIGFPE, Arithmetic exception.                                                                                                                                                                                                                          
-[Switching to Thread 0x7fffe9e28700 (LWP 7018)]                                                                                                                                                                                                                                
-0x00007ffff21e3313 in ff_h263_decode_mba (s=s@entry=0x60720005a100) at 
-/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/ituh263dec.c:142                                                                                                                         
-142     /tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/ituh263dec.c: No such file 
-or directory.                                                                                                                                                                
-(gdb) bt                                                                                                                                                                                                                                                                       
-#0  0x00007ffff21e3313 in ff_h263_decode_mba (s=s@entry=0x60720005a100) 
-at /tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/ituh263dec.c:142                                                                                                                     
-#1  0x00007ffff21f3c2d in ff_h263_decode_picture_header 
-(s=0x60720005a100) at /tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/ituh263dec.c:1112                                                                                                                 
-#2  0x00007ffff1ae16ed in ff_h263_decode_frame (avctx=0x60440001f980, 
-data=0x60380002f480, got_frame=0x7fffe9e272f0, avpkt=) at 
-/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/h263dec.c:444
-#3  0x00007ffff2cd963e in avcodec_decode_video2 (avctx=0x60440001f980, 
-picture=0x60380002f480, 
-got_picture_ptr=got_picture_ptr@entry=0x7fffe9e272f0, 
-avpkt=avpkt@entry=0x7fffe9e273b0) at /tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/utils.c:1600
-#4  0x00007ffff44d4fb4 in try_decode_frame (st=st@entry=0x60340002fb00, 
-avpkt=avpkt@entry=0x601c00037b00, options=) at /tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavformat/utils.c:1910
-#5  0x00007ffff44ebd89 in avformat_find_stream_info (ic=0x60480000f680, 
-options=0x600a00009e80) at /tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavformat/utils.c:2276
-#6  0x0000000000431834 in decode_thread (arg=0x7ffff7e0b800) at 
-/tmp/portage/media-video/libav-11.3/work/libav-11.3/avplay.c:2268
-#7  0x00007ffff0284b08 in ?? () from /usr/lib64/libSDL-1.2.so.0
-#8  0x00007ffff02b4be9 in ?? () from /usr/lib64/libSDL-1.2.so.0
-#9  0x00007ffff4e65aa8 in ?? () from /usr/lib/gcc/x86_64-pc-linux-
-gnu/4.8.4/libasan.so.0
-#10 0x00007ffff0062204 in start_thread () from /lib64/libpthread.so.0
-#11 0x00007fffefda957d in clone () from /lib64/libc.so.6
-(gdb)
+--7Ji5256EtqFX9ATm70bgmpv8TPg9ECkuu
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+
+On 25.07.2019 21:23, Solar Designer wrote:
+> Hi,
+>=20
+> On Thu, Jul 25, 2019 at 08:54:55PM +0200, Kristian Fiskerstrand wrote:
+>> Apologies for the delay, and a short notice that the statistics for the
+>> distros list have been updated for the 2nd quarter of 2019 at
+>> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+>=20
+> You have two entries for Exim CVE-2019-10149, which is wrong.  Also,
+> some of the dates are wrong (e.g., the date of Exim's pre-announcement
+> to oss-security is irrelevant).  Please combine this into one entry and
+> update the dates.  I guess the range of dates should be from 2019-05-28
+> (initial notification to distros) to 2019-06-05 (full publication).
+>=20
+
+Thanks for the feedback, I was a bit unsure how to handle this given two
+different reporters.
+
+> Correcting this will probably affect the averages.
+
+Indeed, moving this one into one entry and including full disclosure as
+end of timeline changes the avg from 6.31 to 6.69 for may
+
+Stats updated.
 
 
-Affected version:
-11.3 (and maybe past versions)
+--=20
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
-Fixed version:
-11.5 and 12.0
 
-Commit fix:
-https://git.libav.org/?p=libav.git;a=commitdiff;h=0a49a62f998747cfa564d98d36a459fe70d3299b;hp=6f4cd33efb5a9ec75db1677d5f7846c60337129f
+--7Ji5256EtqFX9ATm70bgmpv8TPg9ECkuu--
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+--Q65JFqdh8XAZjrqpZeSXdcYrX7bnAbiRn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-CVE:
-CVE-2015-5479
+-----BEGIN PGP SIGNATURE-----
 
-Timeline:
-2015-06-21: bug discovered
-2015-06-22: bug reported privately to upstream
-2015-06-30: upstream commit the fix
-2015-07-14: CVE assigned
-2015-07-16: advisory release
+iQEzBAEBCgAdFiEEICl/zzfUVEdaBsDU24F+DhePmz8FAl06GJQACgkQ24F+DheP
+mz+DaAf/czo2fnVnsrxpPx/+8u4Yj8y/6WRgohG3ShpuUuY0v4fMCkd6o5kMxDDW
+9wra62SdQoUNnWG2HP1vVnzN+B/+jQfxqk4btByAZ+dBuLidesf1I9J8rcuVL2Fh
+I9/hVmeoCJLBjc1ehM3Qc0aiWtE/J7rb5mk5ZFctMJ5m86GI087/R7LHwR0kjLb2
+Mm8wG8qDFI9Sin+qXB4HLsU0AnTHlCDRr4oh2nsSyddZcSnaYZ2G9taw1/B5LLxV
+UwTwtRLKCwa48KuF+lO8mn9LCEP2lIROrkaUw3tCbmnQZu+ZVeVTySRMCKpv4LnJ
+fOqtgKOgy2+QgCDL/866N9ARzRaa/Q==
+=1D6o
+-----END PGP SIGNATURE-----
 
-Note:
-This bug was found with American Fuzzy Lop.
-This bug does not affect ffmpeg.
-
-Permalink:
-http://blogs.gentoo.org/ago/2015/07/16/libav-divide-by-zero-in-ff_h263_decode_mba
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
---nextPart1655470.aOdPlMRS2E--
-
+--Q65JFqdh8XAZjrqpZeSXdcYrX7bnAbiRn--
