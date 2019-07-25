@@ -1,4 +1,9 @@
-Received: (qmail 29893 invoked by uid 550); 24 Feb 2026 20:34:43 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9000" "Thursday" "25" "July" "2019" "21:35:45" "+0000" "Stiepan" "stie@protonmail.ch" "<aa6TE4xteynh2_Ca6HNTpGBRXN0UKjaeO1QKfmh9JLPDcl0GZvbZgnMqCqUIjY7tqZ7EfR1cxFot8QGtkhtBlQrlcpMdnmnCH6qxIcETRas=@protonmail.ch>" "162" "Re: [oss-security] Security release pre-announcement messages" "^Date:" nil nil "7" "2019072521:35:45" "[oss-security] Security release pre-announcement messages" (number mark "        stie@protonm Jul 25  162/9000  " thread-indent "\"Re: [oss-security] Security release pre-announcement messages\"\n") "<110f8440-7612-6014-fd40-2f8c72097b9a@catalyst.net.nz>" ("<20190722100013.GJ1168@jumper.schlittermann.de>" "<20190722112146.z4ey7777h5zci2zl@local>" "<20190722112953.GT67124@symphytum.spacehopper.org>" "<20190722115009.GA4117@openwall.com>" "<110f8440-7612-6014-fd40-2f8c72097b9a@catalyst.net.nz>") nil nil nil nil nil nil nil "Re: [oss-security] Security release pre-announcement messages" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9780 invoked by uid 550); 26 Jul 2019 08:07:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,40 +11,191 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7922 invoked from network); 25 Jul 2019 21:36:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
+	s=default; t=1564090549;
+	bh=trqglsQUIH0QQLghHS8hrT7K4r1vdqns4CfjKDWYwGQ=;
+	h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
+	 From;
+	b=VaR6/17vka4n76AKUBQsl4DxgD6AFIqm5TrUJ+zU0uBspwmbf1gY1kHYcJPEj0n+y
+	 8P5tO2TkYi8ZYA+BSqA/jUcLNMe8k8Z+36USjRqjl3rVvzehNQn/SRj7gggcIGr9lY
+	 yN+qFj3rV3iSe4MSx2N32Q9zoLF6bOfSYqkxhtv0=
+Message-ID: <aa6TE4xteynh2_Ca6HNTpGBRXN0UKjaeO1QKfmh9JLPDcl0GZvbZgnMqCqUIjY7tqZ7EfR1cxFot8QGtkhtBlQrlcpMdnmnCH6qxIcETRas=@protonmail.ch>
+In-Reply-To: <110f8440-7612-6014-fd40-2f8c72097b9a@catalyst.net.nz>
+References: <20190722100013.GJ1168@jumper.schlittermann.de>
+ <20190722112146.z4ey7777h5zci2zl@local>
+ <20190722112953.GT67124@symphytum.spacehopper.org>
+ <20190722115009.GA4117@openwall.com>
+ <110f8440-7612-6014-fd40-2f8c72097b9a@catalyst.net.nz>
+Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="b1_16d03c19c2177a15364e211ac70d907f"
+Date: Thu, 25 Jul 2019 21:35:45 +0000
+From: Stiepan <stie@protonmail.ch>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25786 invoked from network); 24 Feb 2026 20:33:52 -0000
-Date: Tue, 24 Feb 2026 21:33:37 +0100
-From: Solar Designer <solar@openwall.com>
-To: kf503bla@duck.com
-Cc: oss-security@lists.openwall.com,
-	"bug-inetutils@gnu.org" <bug-inetutils@gnu.org>,
-	"ron.benyizhak@safebreach.com" <ron.benyizhak@safebreach.com>,
-	"simon@josefsson.org" <simon@josefsson.org>,
-	"auerswal@unix-ag.uni-kl.de" <auerswal@unix-ag.uni-kl.de>,
-	"justin.swartz@risingedge.co.za" <justin.swartz@risingedge.co.za>
-Message-ID: <20260224203337.GA17345@openwall.com>
-References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com> <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org> <20260224011702.27987-1-justin.swartz@risingedge.co.za> <B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com> <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Telnetd Vulnerability Report
+Subject: Re: [oss-security] Security release pre-announcement messages
+To: oss-security@lists.openwall.com
 
-On Tue, Feb 24, 2026 at 05:05:58AM -0500, kf503bla@duck.com wrote:
-> Who uses telnet anyway? It's deprecated. Everyone uses ssh for any kind of remote access.
+--b1_16d03c19c2177a15364e211ac70d907f
+Content-Type: multipart/alternative;
+	boundary="b2_16d03c19c2177a15364e211ac70d907f"
 
-Indeed.  Yet:
+--b2_16d03c19c2177a15364e211ac70d907f
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Quite many people surely do still use a telnet client to access various
-older/smaller devices, as well as online resources - in particular, in
-the field of astronomy, as it was brought up in last month's discussion
-elsewhere.  Also online retro computers and BBSes.
+SSB3b3VsZCBsaWtlIHRvIGNvbmdyYXR1bGF0ZSB0aGUgdGVhbXMgdGhhdCBk
+byB0aGF0LiBJZiBwdWJsaWMgZGlzY2xvc3VyZSBpcyBkZWVtZWQgdG9vIGRh
+bmdlcm91cyBiZWZvcmUgYSBwYXRjaCBpcyBhdmFpbGFibGUsIHRoaXMgbG9v
+a3MgbGlrZSBUaGUgcmVhc29uYWJsZSB0cmFkZW9mZi4gV2lzaCBpdCB3YXMg
+dGhlIHNhbWUgd2l0aCBMaW51eC4uLgoKUmF0aW9uYWxlOiBwZW9wbGUgY291
+bGQgc3dpdGNoIG1lYW53aGlsZSB0byBhIGtub3duIHNhZmUga2VybmVsLiBU
+aGF0IHdvdWxkIHByb3ZpZGUgcGVhY2Ugb2YgbWluZCB0byB0aGUgInJlc3Qg
+b2YgdXMiIHdobyBkb24ndCBoYXZlIHRoZSBrZXlzIHRvIHRoZSBsaW51eC1k
+aXN0cm9zIGtpbmdkb20gb2YgdGhlIGVsZWN0ZWQgZmV3LCB5ZXQgd2lzaCB0
+byBoYXZlIHNlY3VyZSBPU2VzLCB3aXRob3V0IGEgd2luZG93IG9mIHZ1bG5l
+cmFiaWxpdHkgb3BlbiB0byB3aG9ldmVyIGhhY2tlZCBpbnRvIHRoZSBlbGVj
+dGVkIGZldydzIG1hY2hpbmVzIChvciBhcmUgZW50aXRsZWQgYW5vdGhlciB3
+YXkgdG8gdGhpcyBzZWNyZXQgaW5mb3JtYXRpb24pLgpJdCB3b3VsZCBhbHNv
+IG1ha2UgTGludXggZ292ZXJuYW5jZSB3YXkgbW9yZSBkZW1vY3JhdGljLCB3
+aGljaCBzZWVtcyB0byBiZSBhIG11c3QgZm9yIHN1Y2ggYSAidG9vIGJpZyB0
+byBmYWlsIiBjb3JlIG9wZW4tc291cmNlIHNvZnR3YXJlLgoKQ2hlZXJzLApT
+dGllcGFuCgpFbnZvecOpIGRlcHVpcyBQcm90b25NYWlsIG1vYmlsZQoKLS0t
+LS0tLS0gTWVzc2FnZSBkJ29yaWdpbmUgLS0tLS0tLS0KT24gMjMganVpbC4g
+MjAxOSDDoCAyMzo1NSwgRG91Z2xhcyBCYWduYWxsIGEgw6ljcml0IDoKCj4g
+T24gMjIvMDcvMTkgMTE6NTAgUE0sIFNvbGFyIERlc2lnbmVyIHdyb3RlOgo+
+PiBFeGFjdGx5LiBJdCdzIGp1c3QgYW4gdW51c3VhbCBkaXNjbG9zdXJlIHBy
+b2Nlc3MgdGhhdCBpbnZvbHZlcyBnaXZpbmcKPj4gdGhlIHVzZXJzIGEgaGVh
+ZHMtdXAgYSBmZXcgZGF5cyBiZWZvcmUgcHVibGljIGRpc2Nsb3N1cmUgb2Yg
+dGhlIGFjdHVhbAo+PiB2dWxuZXJhYmlsaXRpZXMgYW5kIGZpeGVzLiBTbyBm
+YXIsIHRoaXMgcHJvY2VzcyBpcyBwcmFjdGljZWQgYnkgT3BlblNTTAo+PiBh
+bmQgRXhpbSAoYW55IG90aGVycz8pCj4+Cj4KPiBPbiB0aGUgU2FtYmEgdGVh
+bSB3ZSB1c2Ugd29yZGluZyBsaWtlIHRoaXM6Cj4KPiBodHRwczovL2xpc3Rz
+LnNhbWJhLm9yZy9hcmNoaXZlL3NhbWJhLzIwMTktSnVuZS8yMjM2MjEuaHRt
+bAo+Cj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo+IFN1YmplY3Q6
+IEhlYWRzLXVwOiBTZWN1cml0eSBSZWxlYXNlcyBhaGVhZCEKPgo+IEhpLAo+
+Cj4gVGhpcyBpcyBhIGhlYWRzLXVwIHRoYXQgdGhlcmUgd2lsbCBiZSBTYW1i
+YSBzZWN1cml0eSB1cGRhdGVzIG9uCj4gV2VkbmVzZGF5LCBKdW5lIDE5IDIw
+MTkuIFBsZWFzZSBtYWtlIHN1cmUgdGhhdCB5b3VyIFNhbWJhCj4gc2VydmVy
+cyB3aWxsIGJlIHVwZGF0ZWQgc29vbiBhZnRlciB0aGUgcmVsZWFzZSEKPgo+
+IEltcGFjdGVkIGNvbXBvbmVudHM6Cj4gLSBBRCBEQyAoQ1ZTUyA2LjUsIE1l
+ZGl1bSkKPiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo+Cj4gV2Ug
+bm93IGRvIHRoaXMgc3lzdGVtYXRpY2FsbHksIGFmdGVyIGEgaGFwaGF6YXJk
+IHN0YXJ0Lgo+Cj4gVG8gaGVscCBvdXJzZWx2ZXMgc3RheSBvbiB0cmFjaywg
+d2UgYXJlIHRyeWluZyB0byBmb3JtYWxpc2Ugb3VyCj4gcHJvY2VzcyBpbnRv
+IHNvbWV0aGluZyBhcHByb2FjaGluZyBhIGNoZWNrbGlzdDoKPgo+IGh0dHBz
+Oi8vd2lraS5zYW1iYS5vcmcvaW5kZXgucGhwL1NhbWJhX1NlY3VyaXR5X1By
+b2Nlc3MKPgo+IGFuZCB3ZSBhcmUgaGFwcHkgdG8gaGVhciBzdWdnZXN0aW9u
+cyBmb3IgaW1wcm92ZW1lbnQuCj4KPiBjaGVlcnMsCj4gRG91Z2xhcw==
 
-This means that some kind of telnet server is also still in use on those
-devices and in those places.  Probably in most of those cases it is not
-one from InetUtils, but who knows.  I suppose some astronomy site may
-have migrated their telnet gateway to a Debian or Ubuntu system.
+--b2_16d03c19c2177a15364e211ac70d907f
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Alexander
+SSB3b3VsZCBsaWtlIHRvIGNvbmdyYXR1bGF0ZSB0aGUgdGVhbXMgdGhhdCBk
+byB0aGF0LiBJZiBwdWJsaWMgZGlzY2xvc3VyZSBpcyBkZWVtZWQgdG9vIGRh
+bmdlcm91cyBiZWZvcmUgYSBwYXRjaCBpcyBhdmFpbGFibGUsIHRoaXMgbG9v
+a3MgbGlrZSBUaGUgcmVhc29uYWJsZSB0cmFkZW9mZi4gV2lzaCBpdCB3YXMg
+dGhlIHNhbWUgd2l0aCBMaW51eC4uLiA8YnI+PGJyPlJhdGlvbmFsZTogcGVv
+cGxlIGNvdWxkIHN3aXRjaCBtZWFud2hpbGUgdG8gYSBrbm93biBzYWZlIGtl
+cm5lbC4gVGhhdCB3b3VsZCBwcm92aWRlIHBlYWNlIG9mIG1pbmQgdG8gdGhl
+ICJyZXN0IG9mIHVzIiB3aG8gZG9uJ3QgaGF2ZSB0aGUga2V5cyB0byB0aGUg
+bGludXgtZGlzdHJvcyBraW5nZG9tIG9mIHRoZSBlbGVjdGVkIGZldywgeWV0
+IHdpc2ggdG8gaGF2ZSBzZWN1cmUgT1Nlcywgd2l0aG91dCBhIHdpbmRvdyBv
+ZiB2dWxuZXJhYmlsaXR5IG9wZW4gdG8gd2hvZXZlciBoYWNrZWQgaW50byB0
+aGUgZWxlY3RlZCBmZXcncyBtYWNoaW5lcyAob3IgYXJlIGVudGl0bGVkIGFu
+b3RoZXIgd2F5IHRvIHRoaXMgc2VjcmV0IGluZm9ybWF0aW9uKS48YnI+SXQg
+d291bGQgYWxzbyBtYWtlIExpbnV4IGdvdmVybmFuY2Ugd2F5IG1vcmUgZGVt
+b2NyYXRpYywgd2hpY2ggc2VlbXMgdG8gYmUgYSBtdXN0IGZvciBzdWNoIGEg
+InRvbyBiaWcgdG8gZmFpbCIgY29yZSBvcGVuLXNvdXJjZSBzb2Z0d2FyZS48
+YnI+PGJyPkNoZWVycyw8YnI+U3RpZXBhbjxicj48YnI+PGJyPkVudm95w6kg
+ZGVwdWlzIFByb3Rvbk1haWwgbW9iaWxlPGJyPjxicj48YnI+PGJyPi0tLS0t
+LS0tIE1lc3NhZ2UgZCdvcmlnaW5lIC0tLS0tLS0tPGJyPk9uIDIzIGp1aWwu
+IDIwMTkgw6AgMjM6NTUsIERvdWdsYXMgQmFnbmFsbCA8IGRvdWdsYXMuYmFn
+bmFsbEBjYXRhbHlzdC5uZXQubnogPiBhIMOpY3JpdMKgOjxibG9ja3F1b3Rl
+IGNsYXNzPSJwcm90b25tYWlsX3F1b3RlIj48YnI+PHAgZGlyPSJsdHIiPk9u
+IDIyLzA3LzE5IDExOjUwIFBNLCBTb2xhciBEZXNpZ25lciB3cm90ZTo8YnI+
+DQomZ3Q7IEV4YWN0bHkuIEl0J3MganVzdCBhbiB1bnVzdWFsIGRpc2Nsb3N1
+cmUgcHJvY2VzcyB0aGF0IGludm9sdmVzIGdpdmluZzxicj4NCiZndDsgdGhl
+IHVzZXJzIGEgaGVhZHMtdXAgYSBmZXcgZGF5cyBiZWZvcmUgcHVibGljIGRp
+c2Nsb3N1cmUgb2YgdGhlIGFjdHVhbDxicj4NCiZndDsgdnVsbmVyYWJpbGl0
+aWVzIGFuZCBmaXhlcy4gU28gZmFyLCB0aGlzIHByb2Nlc3MgaXMgcHJhY3Rp
+Y2VkIGJ5IE9wZW5TU0w8YnI+DQomZ3Q7IGFuZCBFeGltIChhbnkgb3RoZXJz
+Pyk8YnI+DQomZ3Q7PC9wPg0KPHAgZGlyPSJsdHIiPk9uIHRoZSBTYW1iYSB0
+ZWFtIHdlIHVzZSB3b3JkaW5nIGxpa2UgdGhpczo8L3A+DQo8cCBkaXI9Imx0
+ciI+PGEgaHJlZj0iaHR0cHM6Ly9saXN0cy5zYW1iYS5vcmcvYXJjaGl2ZS9z
+YW1iYS8yMDE5LUp1bmUvMjIzNjIxLmh0bWwiPmh0dHBzOi8vbGlzdHMuc2Ft
+YmEub3JnL2FyY2hpdmUvc2FtYmEvMjAxOS1KdW5lLzIyMzYyMS5odG1sPC9h
+PjwvcD4NCjxwIGRpcj0ibHRyIj4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tPGJyPg0KU3ViamVjdDogSGVhZHMtdXA6IFNlY3VyaXR5IFJlbGVhc2Vz
+IGFoZWFkITwvcD4NCjxwIGRpcj0ibHRyIj5IaSw8L3A+DQo8cCBkaXI9Imx0
+ciI+VGhpcyBpcyBhIGhlYWRzLXVwIHRoYXQgdGhlcmUgd2lsbCBiZSBTYW1i
+YSBzZWN1cml0eSB1cGRhdGVzIG9uPGJyPg0KV2VkbmVzZGF5LCBKdW5lIDE5
+IDIwMTkuIFBsZWFzZSBtYWtlIHN1cmUgdGhhdCB5b3VyIFNhbWJhPGJyPg0K
+c2VydmVycyB3aWxsIGJlIHVwZGF0ZWQgc29vbiBhZnRlciB0aGUgcmVsZWFz
+ZSE8L3A+DQo8cCBkaXI9Imx0ciI+SW1wYWN0ZWQgY29tcG9uZW50czo8YnI+
+DQotIEFEIERDIChDVlNTIDYuNSwgTWVkaXVtKTxicj4NCi0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tPC9wPg0KPHAgZGlyPSJsdHIiPldlIG5vdyBk
+byB0aGlzIHN5c3RlbWF0aWNhbGx5LCBhZnRlciBhIGhhcGhhemFyZCBzdGFy
+dC48L3A+DQo8cCBkaXI9Imx0ciI+VG8gaGVscCBvdXJzZWx2ZXMgc3RheSBv
+biB0cmFjaywgd2UgYXJlIHRyeWluZyB0byBmb3JtYWxpc2Ugb3VyPGJyPg0K
+cHJvY2VzcyBpbnRvIHNvbWV0aGluZyBhcHByb2FjaGluZyBhIGNoZWNrbGlz
+dDo8L3A+DQo8cCBkaXI9Imx0ciI+PGEgaHJlZj0iaHR0cHM6Ly93aWtpLnNh
+bWJhLm9yZy9pbmRleC5waHAvU2FtYmFfU2VjdXJpdHlfUHJvY2VzcyI+aHR0
+cHM6Ly93aWtpLnNhbWJhLm9yZy9pbmRleC5waHAvU2FtYmFfU2VjdXJpdHlf
+UHJvY2VzczwvYT48L3A+DQo8cCBkaXI9Imx0ciI+YW5kIHdlIGFyZSBoYXBw
+eSB0byBoZWFyIHN1Z2dlc3Rpb25zIGZvciBpbXByb3ZlbWVudC48L3A+DQo8
+cCBkaXI9Imx0ciI+Y2hlZXJzLDxicj4NCkRvdWdsYXM8YnI+DQo8L3A+DQo8
+L2Rpdj4=
+
+--b2_16d03c19c2177a15364e211ac70d907f--
+
+--b1_16d03c19c2177a15364e211ac70d907f
+Content-Type: application/pgp-keys; name="publickey - stie@protonmail.ch - 0xADF18750.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - stie@protonmail.ch - 0xADF18750.asc"
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tClZlcnNpb246
+IFBtY3J5cHRvIEdvbGFuZyAwLjAuMSAoZGRhY2ViZTApCkNvbW1lbnQ6IGh0
+dHBzOi8vcHJvdG9ubWFpbC5jb20KCnhzQk5CRmZxZEg0QkNBREQyeFhCMVFU
+UG5CMk40V3ZwZDAyWjdXbnZQSFpFTVBvRUtyNGRVOUQ4aG1LQ21JNWsKZnJH
+UktSSGpXWEVsTGcrOWdtVG5tSGVremsxbnFXKzBhbzFMbis3cmt1eXZRMkk4
+Y29aV2dOY0FCb01EUjZmbgozMmtwbE4rSGt0b1R0TW9ydXRNd0hNU3ZOcmJ0
+SHhoSGlydTFWK2hUaktpK0w0b3JJMGJmdDdWSUJFSm5KTGpOCmZ6Q0lQS09j
+WTBZZHZhSFMvSlZGclA0Qi9MSlFQNkZ6ajE3WnB3QzROK3k0TEV2SS92WmFL
+cWxocTIyVzRHOE4KNXBEUXFtbTgyMlF2N1QzSisyTTI1M09GMFc4L3h4SzZt
+T0NxYW5kUjdFMW5zS09hTmgyNW1zbHZpS0hSelRXdwoweThPYXlzYXdJYkxQ
+TTk2ZGlrdWtyTmlNeSt1bEU5djJjMkZBQkVCQUFITkozTjBhV1ZBY0hKdmRH
+OXViV0ZwCmJDNWphQ0E4YzNScFpVQndjbTkwYjI1dFlXbHNMbU5vUHNMQWRR
+UVFBUWdBS1FVQ1dOL3Bld1lMQ1FjSUF3SUoKRUQ4U0RmL21wS0F2QkJVSUNn
+SURGZ0lCQWhrQkFoc0RBaDRCQUFBbFl3Z0FvTDRsZ2pmNFQwZ1ordUhRUVR6
+SwpNM0l2ck12M1dmZFFpbUtxbmhOM0syTWhFTTROWmNPSXFjSkFDS3lwcHlh
+RkJNVkVYSm9EckZVanZ3bCtZemQyClViaDJDUThiUEdTVzRtczJNY0kyT2ZH
+V1c0UzMyOVRxRnRGQWVHS0J3eERWMHJzZTl6YmNTQ3lGRHBEbmx5Qk4KSjJi
+SGdiaUh0TVpUTkZRbHlUYmo5NzNHek8zdjZlT20zQmplT2lZZ0ZnRUlPWFkw
+Y0xjMWlEVmNraFQ4aEpvVwp2VHR0SVVXajJyc0VManFYTlhJeGk4eHJDejB6
+RFJYWUxLZFJFWTVKbE4vWHB3UE1FbkhmS2VQV0pNdlFNN1pnClBjQmt5SzNE
+N2lBNmJuZ2kzamI1OElmWW9UN2pqbndjdHJ2cDl5aWU1bjJ1b3FFSkh0S29x
+Wkp3dEowOFUzajMKT3M3QVRRUlg2blIrQVFnQXAxczRqc1lGRjdUOHZWUEZu
+OWVGMmVyNzJhWmdYMTMxUjJHV2VtSnhONEwrLzNzeAp0VVZPL2dCSDY0L2Jz
+VUZLM1ZQK0F2N2MvYnpzamhtdkFhTHYvbGF0dDVnZFNGOTBtMjNJbWlNK3pC
+aWxFbHFiCm5PT1BxaTBNeTVWYVhoQXdFR0FOdmppcVhwaW4wV0tydlRXWnY0
+bEV0SUY5cGtRYjMwT0g1WXo2RXhrQS9ZcXEKWFNvTEhjNllLZFpJVUpRVGdq
+cHF4U0M3RTNRdm5MTDhWR1Z4dFJvWXAxQ242ZngzYjQwc3VwVXhJTXNpWVFl
+MgpzNWVRbFBnUVhVbTlHQk52bXlNMHVCcUtoeWxwMU94VFQ0aHcraUR1SkRL
+UjhSVTVLcFo1UDQ5NjJMYWZEMVRVClZDRWNrVzI5aU5ZRlpiaTI3SlM2a2hL
+OHZJRGZSMkpHZVJ6M3FRQVJBUUFCd3NCZkJCZ0JDQUFUQlFKWTMrbDcKQ1JB
+L0VnMy81cVNnTHdJYkRBQUFrdUFILzFlbGlyQXRMTit4YWJGYVA5NkRjeUZ5
+eTdvWmZHWjRWV2dqOVErbgpnOXdIcWpZNVU0Um1UVitKbjViWGNYRkJzYUxK
+VTl4NmZ3NUpPdWNtU2VtWUtSenBwK21YcElrazFsNk02Z3lVCjc2TWxybklq
+NGJrdnFBcERNNFJJY0hNUHVpK2t1SlcvQVo5S2RrcStYN0hHR3hLWWNMQk5w
+V2tOL2F1MTllV2EKbnlKNDc5NkkvV1h4YjNDV1JHTk83WlQ2Zll3d0ZVWWFq
+RHVuNzFRbWFPeHljOEdSOXl0VWd4MXBzcFdmbG83TgpvUHBzcC9kL2dsWmox
+U0dVVnpydWRpYmNrV1Ivb29LZk1Gck1uTStwQmFFMjByMWhPRUdjVWx5QzBI
+QWNGZ24yCnNydlFXdW5mNmttUHZaWmUyVWwxUXkxRDZZNE1YSEljbDVESDhy
+RnY4YUxsZlhjPQo9dXo2TwotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBCTE9D
+Sy0tLS0t
+
+--b1_16d03c19c2177a15364e211ac70d907f--
+
