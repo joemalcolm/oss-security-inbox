@@ -1,49 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/06/1
-Message-ID: <1c9e7212-f8a7-04b2-a956-17f7bce8c3bb@nanthrax.net>
-Date: Sun, 6 Jan 2019 07:23:52 +0100
-From: Jean-Baptiste Onofré <jb@...thrax.net>
-To: user@...af.apache.org, Karaf Dev <dev@...af.apache.org>, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com, Brian Wang <brianwangrewa@...il.com>
-Subject: [SECURITY] New security advisory for CVE-2018-11788 released for Apache Karaf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/25/1
+Message-ID: <613396710.4527654.1564057889289.JavaMail.zimbra@redhat.com>
+Date: Thu, 25 Jul 2019 08:31:29 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache Karaf, that is
-fixed in recent 4.1.7 and 4.2.2 releases.
+Hello,
 
-CVS-2018-11788: XXE vulnerability found on Apache Karaf
+It was found (by the syzkaller initially) that a 0x0 address execution is
+possible as nonprivileged user in the latest Linux kernel (considering
+protection measures like SMEP, vm.mmap_min_addr, etc are disabled).
 
-Severity: Moderate
+The Linux kernel must have any of following config options enabled:
 
-Vendor: The Apache Software Foundation
+CONFIG_BT_HCIUART_MRVL (easy to hit)
+CONFIG_BT_HCIUART_QCA (hard to hit)
+CONFIG_BT_HCIUART_BCM
+CONFIG_BT_HCIUART_INTEL
+CONFIG_BT_HCIUART_ATH3K
 
-Versions Affected: all versions of Apache Karaf prior to 4.1.7, 4.2.2.
+The suggested fix is posted at:
 
-Description:
+https://lore.kernel.org/linux-bluetooth/20190725120909.31235-1-vdronov@redhat.com/T/#u
 
-Apache Karaf provides a features deployer, which allows users to "hot
-deploy"
-a features XML by dropping the file directly in the deploy folder.
+The bug and the reproducer are public, as they were found by the syzcaller
+several months ago:
 
-The features XML is parsed by XMLInputFactory class.
+https://syzkaller.appspot.com/bug?id=1b42faa2848963564a5b1b7f8c837ea7b55ffa50
 
-Apache Karaf XMLInputFactory class doesn't contain any mitigation codes
-against XXE.
-This is a potential security risk as an user can inject external XML
-entities.
+CVE-2019-10207 was assigned to this bug.
 
-The mitigation is to prevent XXE by disabling external entities loading
-feature
-in XMLInputFactory and XmlUtils.
+$ id
+uid=1000(vladis) gid=1000(vladis) groups=1000(vladis)
+$ uname -r
+5.2.0
+$ ./hci-proto-crash 11
+proto = 11
+ioctl(SET_HCI_UART_PROTO): Success
+[   99.894572] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[   99.897287] #PF: supervisor instruction fetch in kernel mode
+[   99.897863] #PF: error_code(0x0010) - not-present page
+[   99.898389] PGD 0 P4D 0
+[   99.899036] Oops: 0010 [#1] SMP
+[   99.899795] CPU: 2 PID: 691 Comm: kworker/u17:0 Not tainted 5.2.0 #23
+[   99.900836] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+[   99.902912] Workqueue: hci0 hci_power_on
+[   99.903673] RIP: 0010:0x0
+[   99.904416] Code: Bad RIP value.
+[   99.905137] RSP: 0018:ffff92d8822c7d98 EFLAGS: 00010246
+[   99.906014] RAX: ffffffff97e7a3e0 RBX: ffff8af7b5dd9e00 RCX: 00000000000010b2
+[   99.907075] RDX: 00000000ffffffff RSI: ffff92d8822c7d44 RDI: ffff8af7b46c0400
+[   99.908127] RBP: ffff8af7b46c0400 R08: 0000000000000000 R09: 000000000001cb00
+[   99.909232] R10: 000000000000001e R11: 000000000001b900 R12: ffff8af7b45d4000
+[   99.910332] R13: ffff8af7b45d4a08 R14: 0000000000000000 R15: 0ffff8af7b167ad0
+[   99.911452] FS:  0000000000000000(0000) GS:ffff8af7b7880000(0000) knlGS:0000000000000000
+[   99.912709] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   99.913682] CR2: ffffffffffffffd6 CR3: 000000007060a003 CR4: 00000000001606e0
+[   99.914764] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[   99.915830] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[   99.916877] Call Trace:
+[   99.917538]  hci_uart_set_flow_control+0x149/0x1b0
+[   99.918441]  mrvl_setup+0xe/0x70
+[   99.919209]  hci_dev_do_open+0x1eb/0x690
+[   99.920013]  ? sched_clock+0x5/0x10
+[   99.920784]  hci_power_on+0x45/0x250
+[   99.921549]  ? __wake_up_common_lock+0x87/0xc0
+[   99.922399]  process_one_work+0x1c4/0x3a0
+[   99.923230]  worker_thread+0x45/0x3c0
+[   99.924019]  kthread+0xf3/0x130
+[   99.924735]  ? trace_event_raw_event_workqueue_execute_start+0xb0/0xb0
+[   99.925755]  ? kthread_park+0x80/0x80
+[   99.926546]  ret_from_fork+0x1f/0x30
+[   99.927399] Modules linked in:
+[   99.928152] CR2: 0000000000000000
+[   99.928882] ---[ end trace 577d1af3066a9585 ]---
 
-This has been fixed in revision:
-
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=cc3332e
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=1ffa6d1
-
-Mitigation: Apache Karaf users should upgrade to 4.1.7, 4.2.2
-or later as soon as possible.
-
-JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-5911
-
-Credit: This issue was reported by Brian Wang.
-
+Best regards,
+Vladis Dronov | Red Hat, Inc. | The Core Kernel | Senior Software Engineer
