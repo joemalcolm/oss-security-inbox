@@ -1,42 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/20/8
-Message-ID: <4a79bee5-ad58-83bf-8279-26c3f7224ee0@isc.org>
-Date: Wed, 20 Nov 2019 19:52:11 +0000
-From: ISC Security Officer <security-officer@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/26/8
+Message-ID: <HP4s7z37GTsoDW43jgPPfFMSpfknopZFj995TBm7xpl2cc6CEmZGe6oZoXCXz81Ny11QA9ACQTGwluFzbMZyyFQv3hWuHd77hZ9VwApBptM=@protonmail.ch>
+Date: Fri, 26 Jul 2019 12:59:25 +0000
+From: Stiepan <stie@...tonmail.ch>
 To: oss-security@...ts.openwall.com
-Subject: BIND9 CVE-2019-6477
+Subject: Re: Security release pre-announcement messages
 Content-Type: text/plain; charset=utf-8
 
-Today (2019-11-20) ISC announced a vulnerability in our BIND 9 software.
+Thank you for the details.
 
-   CVE-2019-6477, TCP-pipelined queries can bypass tcp-clients limit
+Which color, the pony ? ;)
 
-This issue affects BIND 9.11, BIND 9.14, and BIND 9.15.
+Regarding the a bug is a bug rationale you are referring to, I don't discuss it and think that much progress has been made to treat the subset of those which are also security bugs, including the enlightening participation of Mr. Torvalds himself to this list.
+I wouldn't advocate cherry-picking bugfixes either, the Android examples you mention in your reference are a real nightmare indeed. My point is that we would have at any time the most secure available option. This would involve a system to switch among kernel versions when needed, eg when a "pure" security bug with high impact is identified and cannot be published yet, nor its fix, yet people could switch meanwhile to a safer, known kernel version.
+I hope that makes it clearer.
 
-Our full CVE text can be found at:
+Cheers,
+Stiepan
 
-    https://kb.isc.org/docs/cve-2019-6477
+Envoyé depuis ProtonMail mobile
 
-New releases of BIND, including security fixes for this vulnerability,
-are available at:
+-------- Message d'origine --------
+On 26 juil. 2019 à 10:16, Greg KH a écrit :
 
-    https://www.isc.org/download
+> On Fri, Jul 26, 2019 at 10:14:08AM +0200, Greg KH wrote:
+>> On Thu, Jul 25, 2019 at 09:35:45PM +0000, Stiepan wrote:
+>> > I would like to congratulate the teams that do that. If public
+>> > disclosure is deemed too dangerous before a patch is available, this
+>> > looks like The reasonable tradeoff. Wish it was the same with Linux...
+>>
+>> I too want a pony :)
+>>
+>> > Rationale: people could switch meanwhile to a known safe kernel. That
+>> > would provide peace of mind to the "rest of us" who don't have the
+>> > keys to the linux-distros kingdom of the elected few, yet wish to have
+>> > secure OSes, without a window of vulnerability open to whoever hacked
+>> > into the elected few's machines (or are entitled another way to this
+>> > secret information).
+>> > It would also make Linux governance way more democratic, which seems
+>> > to be a must for such a "too big to fail" core open-source software.
+>>
+>> The "best known safe kernel" is the latest one we release from the
+>> stable kernel series. It has all of the fixes that that the kernel
+>> developers possibly know about at that point in time.
+>>
+>> There's no need to worry about being on linux-distros or anything else,
+>> just keep updating your kernel, test in in your infrastructure to ensure
+>> it all works properly, and then push it out to all of your other systems
+>> and all is good.
+>
+> And before all of the usual objections take place, please read this long
+> write up:
+> http://kroah.com/log/blog/2018/02/05/linux-kernel-release-model/
+> specifically the "Security" section for details as to why the kernel
+> does not do "pre-release" announcements.
+>
+> thanks,
+>
+> greg k-h
+Content of type "text/html" skipped
 
-Release notes for the new versions can be obtained using the following
-links:
-
-
-https://downloads.isc.org/isc/bind9/9.15.6/RELEASE-NOTES-bind-9.15.6.html
-
-https://downloads.isc.org/isc/bind9/9.14.8/RELEASE-NOTES-bind-9.14.8.html
-
-https://downloads.isc.org/isc/bind9/9.11.13/RELEASE-NOTES-bind-9.11.13.html
-
--- 
-Cathy Almond
-ISC Support
-Acting Security Officer
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (530 bytes)
+Download attachment "publickey - stie@...tonmail.ch - 0xADF18750.asc" of type "application/pgp-keys" (1761 bytes)
