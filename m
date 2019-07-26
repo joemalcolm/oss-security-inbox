@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/09/1
-Message-ID: <CALiX4iavwQ6UVboSJCkO2S_e5vkH61BCKtAsq1G058npDKp0bA@mail.gmail.com>
-Date: Thu, 9 May 2019 21:42:58 +0200
-From: Michael Vorburger <vorburger@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2018-11800] and [CVE-2018-11801] Apache Fineract SQL Injection Vulnerabilities fixed in v1.3.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/26/6
+Message-ID: <fb798362-44b7-b673-6551-60af4cb48d70@gentoo.org>
+Date: Fri, 26 Jul 2019 12:25:47 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: Statistics for distros lists updated for 2019Q2
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security@...ts.openwall.com,
+On 26.07.2019 10:16, Solar Designer wrote:
+> Now you have updated stats, but you've dropped all of the detail. :-(
+> Please re-add it ASAP.
+> 
 
-As suggested on https://apache.org/security/committers.html, forwarding you
-the below:
+Woops, had indeed overwritten wrong CSV file. Fixed :)
 
----------- Forwarded message ---------
-From: Michael Vorburger <vorburger@...che.org>
-Date: Thu, May 9, 2019 at 9:35 PM
-Subject: [CVE-2018-11800] and [CVE-2018-11801] Apache Fineract SQL
-Injection Vulnerabilities fixed in v1.3.0
-To: <dev@...eract.apache.org>
-Cc: Apache Security Team <security@...che.org>
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
 
-Hello,
 
-The Apache Fineract project would like to hereby disclose that our 1.3.0
-release includes fixes for the CVE-2018-11800 and CVE-2018-11801 SQL
-Injection vulnerabilities (the first one in a query on the
-GroupSummaryCounts table, the second on the m_center data table).
-
-We would like to thank Niels Heinen from Google for reporting this issue
-and the Apache Security team for their assistance.
-
-See also
-https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+Security+Report
-.
-
-Best,
-M.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
