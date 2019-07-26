@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/03/1
-Message-ID: <891206008.3759791.1556876093022@mail.yahoo.com>
-Date: Fri, 3 May 2019 09:34:53 +0000 (UTC)
-From: "Bruno P. Kinoshita" <kinow@...che.org>
-To: "announce@...che.org" <announce@...che.org>,  "dev@...mons.apache.org" <dev@...mons.apache.org>,  "guidovranken@...il.com" <guidovranken@...il.com>,  "security@...mons.apache.org" <security@...mons.apache.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [CVE-2018-17201]: Apache Commons Imaging information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/26/4
+Message-ID: <20190726081641.GA18818@openwall.com>
+Date: Fri, 26 Jul 2019 10:16:41 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Statistics for distros lists updated for 2019Q2
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium
+On Thu, Jul 25, 2019 at 11:01:08PM +0200, Kristian Fiskerstrand wrote:
+> On 25.07.2019 21:23, Solar Designer wrote:
+> > On Thu, Jul 25, 2019 at 08:54:55PM +0200, Kristian Fiskerstrand wrote:
+> >> Apologies for the delay, and a short notice that the statistics for the
+> >> distros list have been updated for the 2nd quarter of 2019 at
+> >> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+> > 
+> > You have two entries for Exim CVE-2019-10149, which is wrong.
+[...]
+> > Correcting this will probably affect the averages.
+> 
+> Indeed, moving this one into one entry and including full disclosure as
+> end of timeline changes the avg from 6.31 to 6.69 for may
+> 
+> Stats updated.
 
-Vendor:
-The Apache Software Foundation
+Now you have updated stats, but you've dropped all of the detail. :-(
+Please re-add it ASAP.
 
-Versions Affected:
-Apache Sanselan 0.97-incubator
-
-Description:
-Certain input files could make the code hang when Apache Sanselan 0.97-incubator was used to parse them, which could be used in a DoS attack. Note that Apache Sanselan (incubating) was renamed to Apache Commons Imaging.
-
-Mitigation:
-0.97-incubator users should upgrade to commons-imaging-1.0-alpha1
-
-Credit:
-This issue was discovered by ﻿Guido Vranken.
-
-References:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-17201
-https://lists.apache.org/thread.html/48a64566999f44290e4fb3b0d2e9a0e1c996902db51258e7aff00dda@%3Cdev.commons.apache.org%3E
+Alexander
