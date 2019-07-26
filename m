@@ -1,19 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/6
-Message-Id: <2422A407-94F6-4AB2-9928-310C5089EA5D@gmail.com>
-Date: Tue, 25 Jun 2019 07:14:52 -0700
-From: Matthew Fernandez <matthew.fernandez@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/26/3
+Message-ID: <20190726081640.GA4778@kroah.com>
+Date: Fri, 26 Jul 2019 10:16:40 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: Re: Security release pre-announcement messages
 Content-Type: text/plain; charset=utf-8
 
-
-> On Jun 25, 2019, at 06:41, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us> wrote:
+On Fri, Jul 26, 2019 at 10:14:08AM +0200, Greg KH wrote:
+> On Thu, Jul 25, 2019 at 09:35:45PM +0000, Stiepan wrote:
+> > I would like to congratulate the teams that do that. If public
+> > disclosure is deemed too dangerous before a patch is available, this
+> > looks like The reasonable tradeoff. Wish it was the same with Linux...
 > 
-> * Consumption of uninitialized data (e.g. image data) which is not
->   used to make important decisions.  This is usually due to unhandled
->   cases or error handling which does not quit immediately.
+> I too want a pony :)
+> 
+> > Rationale: people could switch meanwhile to a known safe kernel. That
+> > would provide peace of mind to the "rest of us" who don't have the
+> > keys to the linux-distros kingdom of the elected few, yet wish to have
+> > secure OSes, without a window of vulnerability open to whoever hacked
+> > into the elected few's machines (or are entitled another way to this
+> > secret information).
+> > It would also make Linux governance way more democratic, which seems
+> > to be a must for such a "too big to fail" core open-source software.
+> 
+> The "best known safe kernel" is the latest one we release from the
+> stable kernel series.  It has all of the fixes that that the kernel
+> developers possibly know about at that point in time.
+> 
+> There's no need to worry about being on linux-distros or anything else,
+> just keep updating your kernel, test in in your infrastructure to ensure
+> it all works properly, and then push it out to all of your other systems
+> and all is good.
 
-C/C++ compilers will infer backwards from uninitialized variable reads (undefined behavior in these languages) that preceding code is unreachable. For example, when moving from GCC 6 series to GCC 7 series we found one of our code bases would produce a binary that would only segfault when compiled at >= -O2. We root caused this to exactly the situation you describe: an error handling path that read uninitialized variables. The compiler appeared to infer backwards that the error check itself was a no-op as the true branch led to unconditional UB (this is my interpretation of its actions; I did not delve into the compiler’s internals).
+And before all of the usual objections take place, please read this long
+write up:
+	http://kroah.com/log/blog/2018/02/05/linux-kernel-release-model/
+specifically the "Security" section for details as to why the kernel
+does not do "pre-release" announcements.
 
-I’m probably telling you things you already know and it sounds like you don’t consider such issues worth addressing, but I just wanted to point out that these are not theoretical. These cause real problems for users and, for open source software, you may not have full control over what toolchain/flags users build your code with.
+thanks,
+
+greg k-h
