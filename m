@@ -1,45 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/14/2
-Message-ID: <20190714174509.GA8267@openwall.com>
-Date: Sun, 14 Jul 2019 19:45:09 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Joe McManus <joe.mcmanus@...onical.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/26/2
+Message-ID: <20190726081408.GA32730@kroah.com>
+Date: Fri, 26 Jul 2019 10:14:08 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Security release pre-announcement messages
 Content-Type: text/plain; charset=utf-8
 
-Hi Joe,
+On Thu, Jul 25, 2019 at 09:35:45PM +0000, Stiepan wrote:
+> I would like to congratulate the teams that do that. If public
+> disclosure is deemed too dangerous before a patch is available, this
+> looks like The reasonable tradeoff. Wish it was the same with Linux...
 
-On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
-> Hey All - The Ubuntu Security Team would like to sign up for items 3,4
-> & 5 from the technical list <
-> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> >:
-> 
-> 3 - Review and/or test the proposed patches and point out potential issues
->   with them [...]
-> 4 - Check if related issues exist in the same piece of software [...]
-> 5 - Check if related issues exist in implementations of similar
->   functionality in other software [...]
-> 
-> Please let me know how we get started helping out.
+I too want a pony :)
 
-This will be much appreciated, thanks!
+> Rationale: people could switch meanwhile to a known safe kernel. That
+> would provide peace of mind to the "rest of us" who don't have the
+> keys to the linux-distros kingdom of the elected few, yet wish to have
+> secure OSes, without a window of vulnerability open to whoever hacked
+> into the elected few's machines (or are entitled another way to this
+> secret information).
+> It would also make Linux governance way more democratic, which seems
+> to be a must for such a "too big to fail" core open-source software.
 
-Will this be taken care of by Ubuntu Security Team members who are
-already on linux-distros (highly preferable) or will we need to
-subscribe more people just for these roles (would be non-ideal)?
+The "best known safe kernel" is the latest one we release from the
+stable kernel series.  It has all of the fixes that that the kernel
+developers possibly know about at that point in time.
 
-For 3, do you prefer to be "primary" or "backup"?  (We already have
-Amazon listed as "primary", but as discussed Amazon is yet to become
-more active in this role.)
+There's no need to worry about being on linux-distros or anything else,
+just keep updating your kernel, test in in your infrastructure to ensure
+it all works properly, and then push it out to all of your other systems
+and all is good.
 
-Will you personally be involved?  What's your role with the Ubuntu
-Security Team?
+thanks,
 
-I notice you don't appear to be on oss-security, so am copying this
-reply to you and to the list.
-
-Thanks again,
-
-Alexander
+greg k-h
