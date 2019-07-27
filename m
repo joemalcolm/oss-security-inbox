@@ -1,4 +1,9 @@
-Received: (qmail 9419 invoked by uid 550); 24 Feb 2025 17:21:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2874" "Saturday" "27" "July" "2019" "20:40:10" "+0200" "Kristian Fiskerstrand" "k_f@gentoo.org" "<170f95aa-dd99-6dea-fc1d-113324b8f535@gentoo.org>" "75" "Re: [oss-security] Statistics for distros lists updated for 2019Q2" nil nil nil "7" "2019072718:40:10" "[oss-security] Statistics for distros lists updated for 2019Q2" (number mark "U       k_f@gentoo.o Jul 27   75/2874  " thread-indent "\"Re: [oss-security] Statistics for distros lists updated for 2019Q2\"\n") "<20190726110743.GA20519@openwall.com>" ("<3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>" "<20190725192324.GA17297@openwall.com>" "<d576c29f-32ca-bd1f-a0e8-5558774e52c6@gentoo.org>" "<20190726081641.GA18818@openwall.com>" "<fb798362-44b7-b673-6551-60af4cb48d70@gentoo.org>" "<20190726110743.GA20519@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Statistics for distros lists updated for 2019Q2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1580 invoked by uid 550); 27 Jul 2019 18:43:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,144 +12,157 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1288 invoked from network); 24 Feb 2025 17:19:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1740417551;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=iihzL26MI4Qt6jDn4LGId4fzSrj/WTX5zxMefu6c4KI=;
-	b=cIdmmrTvJtQkTbcJ1hPAAfHdsUN1yckeHlsKd5TgH3CZcEMi55fQW/nOovgEiKUIShON0L
-	6x0Yxih1k2327eUjloGvrcrlxrAntFZlzhw8d9/iHncwlQAHGt1hpSppCLxG29yR2hnfZP
-	JydXKPcmMzNQsXAP8y7GhTOPxFVsK+Y=
-X-MC-Unique: DN8DJm4-O2y2DYdVZva0IQ-1
-X-Mimecast-MFC-AGG-ID: DN8DJm4-O2y2DYdVZva0IQ_1740417548
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740417548; x=1741022348;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iihzL26MI4Qt6jDn4LGId4fzSrj/WTX5zxMefu6c4KI=;
-        b=QsIgZpIuA0PMAhN+gcZDDMogUgL7lXKOD5YR08hS5r8QMH8XNYmb1mBqRHSbDMGSNC
-         GW/ycOBkYwedB08ostHFv1mSdDPa8tP6KIbK+8V/69nYxfosIkzhFeHkwW6nwaq1SOcc
-         LNsG2qefR8CcXSWzDKafHR2IhYvhI8x0CMSbcW8yi5zrGc5rSWDFrBEQoeXtSfJOXRBs
-         5AZxYqtSDODZyMvIJSdnFYe+YbFHZL+x39nSLuJ2DwJ2vbmj2+OAEv1+v1B77LLDxg27
-         JNv8bI3Xzy0klfs6pGzHExFBLd7KC1yytEL1IvNKOF5+TXPtbfY1/C/da2FYtEKgNK0u
-         KCLQ==
-X-Gm-Message-State: AOJu0Yy3npfQz8QaYeCrF9eHeI9OEJY2f5sJ8XE39KFXg0zO2JjXqWjx
-	EAH/pX/wAtLfx0nsK2TuwJlm284VDVzpsOKvH7RwJwDMuB0hu7KyvdJzrhgZg0JcsYnAQi8KYXI
-	JZrdZi2898lOSH4MrpTPbTBtPuHUlccWNP0kMbKyGJIrOSm3Ks0V1/uTD2fTD2+kaXQRdTAyikT
-	kkWABIppz0iPU1qfpfzlg+71PGXT3jGYOqN51DFSOR
-X-Gm-Gg: ASbGncsnjvXaB4XU4hyJyLgVeU8ix+iMWNM5NqaO8sdxuexBicamclE4xPZAULGMvVd
-	kdjc0wkG1rWf2bk0hYA1KiZOd3/eEDodhu/56q5/oMnZCjczk++RJvGp9QbQ2AYpS3OZu6g==
-X-Received: by 2002:a05:651c:c5:b0:309:d7f:f156 with SMTP id 38308e7fff4ca-30a59895c77mr38639201fa.13.1740417547780;
-        Mon, 24 Feb 2025 09:19:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGalvhkg10NfIzQg21uWSRWbUiyHWW6UwUliDzyfzRYAGLbOeFRQ5yoKz1+/LOsegZIw0X9vK0KQ1gejFovtJs=
-X-Received: by 2002:a05:651c:c5:b0:309:d7f:f156 with SMTP id
- 38308e7fff4ca-30a59895c77mr38639061fa.13.1740417547345; Mon, 24 Feb 2025
- 09:19:07 -0800 (PST)
+Received: (qmail 1532 invoked from network); 27 Jul 2019 18:43:03 -0000
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
+References: <3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>
+ <20190725192324.GA17297@openwall.com>
+ <d576c29f-32ca-bd1f-a0e8-5558774e52c6@gentoo.org>
+ <20190726081641.GA18818@openwall.com>
+ <fb798362-44b7-b673-6551-60af4cb48d70@gentoo.org>
+ <20190726110743.GA20519@openwall.com>
+From: Kristian Fiskerstrand <k_f@gentoo.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=k_f@gentoo.org; prefer-encrypt=mutual; keydata=
+ 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 kQ==
+Message-ID: <170f95aa-dd99-6dea-fc1d-113324b8f535@gentoo.org>
+Date: Sat, 27 Jul 2019 20:40:10 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-References: <20250218091414.GA26981@localhost.localdomain> <20250222032521.GA30890@openwall.com>
- <CAOcQRVX639qNrgqbKjPFpZL0_SHEdpGrcLmbLySH15fE5p5Pwg@mail.gmail.com> <20250224171331.GA8720@openwall.com>
-In-Reply-To: <20250224171331.GA8720@openwall.com>
-From: Dmitry Belyavskiy <dbelyavs@redhat.com>
-Date: Mon, 24 Feb 2025 18:18:56 +0100
-X-Gm-Features: AWEUYZnQUs2PmH9gmZZ9wB_hFLBjmL2CaA1yRUJb_E5KpkuC0629_0Z70GY-RvQ
-Message-ID: <CAOcQRVU_vqzL77e=QkB24P5r+1=zkjoDzbNKk=HCkAGpDduR8Q@mail.gmail.com>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com, Qualys Security Advisory <qsa@qualys.com>, 
-	Jordy Zomer <jordy@pwning.systems>, Damien Miller <djm@mindrot.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: j1kGTqp4KEHA99qlIJSIUMl3tVYfd4IsNMR6Yq83l30_1740417548
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="000000000000abc449062ee689c3"
-Subject: Re: [oss-security] MitM attack against OpenSSH's VerifyHostKeyDNS-enabled
- client
+In-Reply-To: <20190726110743.GA20519@openwall.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="6hlQf8Mpu1iVWaq8zAtYyhaDQmHcU1mnH"
+Subject: Re: [oss-security] Statistics for distros lists updated for 2019Q2
 
---000000000000abc449062ee689c3
-Content-Type: text/plain; charset="UTF-8"
+--6hlQf8Mpu1iVWaq8zAtYyhaDQmHcU1mnH
+Content-Type: multipart/mixed; boundary="TS2U9SKW0DCE47gobwVJeXdz5monkuF83";
+ protected-headers="v1"
+From: Kristian Fiskerstrand <k_f@gentoo.org>
+Reply-To: k_f@gentoo.org
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
+Message-ID: <170f95aa-dd99-6dea-fc1d-113324b8f535@gentoo.org>
+Subject: Re: [oss-security] Statistics for distros lists updated for 2019Q2
+References: <3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>
+ <20190725192324.GA17297@openwall.com>
+ <d576c29f-32ca-bd1f-a0e8-5558774e52c6@gentoo.org>
+ <20190726081641.GA18818@openwall.com>
+ <fb798362-44b7-b673-6551-60af4cb48d70@gentoo.org>
+ <20190726110743.GA20519@openwall.com>
+In-Reply-To: <20190726110743.GA20519@openwall.com>
+
+--TS2U9SKW0DCE47gobwVJeXdz5monkuF83
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 24, 2025 at 6:13=E2=80=AFPM Solar Designer <solar@openwall.com>=
- wrote:
+On 26.07.2019 13:07, Solar Designer wrote:
+> On Fri, Jul 26, 2019 at 12:25:47PM +0200, Kristian Fiskerstrand wrote:
+>> On 26.07.2019 10:16, Solar Designer wrote:
 
-> Hi Dmitry,
->
-> Thank you for taking a look at this.
->
-> On Mon, Feb 24, 2025 at 05:57:13PM +0100, Dmitry Belyavskiy wrote:
-> > On Sat, Feb 22, 2025 at 4:27???AM Solar Designer <solar@openwall.com>
-> wrote:
-> > > +++ openssh-8.7p1-43.el9-tree.krb5-ssh_asprintf_append/auth-krb5.c
-> > > 2025-02-21 03:37:13.106465704 +0000
-> > > @@ -309,13 +309,14 @@ ssh_asprintf_append(char **dsc, const ch
-> > >         i =3D vasprintf(&src, fmt, ap);
-> > >         va_end(ap);
-> > >
-> > > -       if (i =3D=3D -1 || src =3D=3D NULL)
-> > > +       if (i =3D=3D -1)
-> > >                 return -1;
-> > >
-> > >         old =3D *dsc;
-> > >
-> > >         i =3D asprintf(dsc, "%s%s", *dsc, src);
-> > > -       if (i =3D=3D -1 || src =3D=3D NULL) {
-> > > +       if (i =3D=3D -1) {
-> > > +               *dsc =3D old;
-> > >                 free(src);
-> > >                 return -1;
-> > >         }
-> > >
-> > > This is in RH-added Kerberos support code.  The issue was that if the
-> > > second asprintf() call failed, it'd leave *dsc undefined, yet the
-> caller
-> > > of this function would free() memory via that pointer.  In practice,
-> > > glibc would either leave the pointer unchanged or reset it to NULL
-> > > (varying by glibc version and specific error condition), both of which
-> > > are safe to free().  Yet resetting "*dsc =3D old;" should be safer, a=
-nd
-> > > should avoid the memory leak that happens if *dsc got reset to NULL.
-> > > That memory leak shouldn't have mattered anyway because it'd only occ=
-ur
-> > > when the process already has trouble allocating more memory here.
-> > >
-> > > The "src =3D=3D NULL" checks are dropped because the first one should=
-n't
-> > > matter if asprintf() behaves correctly and wouldn't help if it does n=
-ot
-> > > (as src isn't initialized to NULL before the call), the second one
-> > > is wrong (was probably meant to check *dsc, not src), and further code
-> > > in this same source file relies on asprintf() return value anyway.
-> >
-> > I'm not sure that the check for the  src =3D=3D NULL should be removed =
-at
-> least
-> > for the 1st branch.
->
-> It's OK to keep it.  This really shouldn't matter.
->
-> > Unfortunately I came across implementations that caused segfault on
-> passing
-> > NULL pointers to sprintf-like functions.
->
-> Of course, we shouldn't pass NULL pointers to sprintf-like functions.
-> But if the first asprintf() call returns other than -1, the pointer is
-> supposed to be non-NULL.  And if we somehow don't trust asprintf()
-> return value (even though it's standardized, unlike what happens to the
-> pointer on error), then the check for NULL is insufficient because the
-> pointer may as well remain uninitialized (formally it's undefined), so
-> you'd need to start by "src =3D NULL;" before the first asprintf() call
-> for this defensive programming to make sense.  And the second "src =3D=3D
-> NULL" check is redundant with the first (not reached if src is NULL).
->
+> Even if we set it to zero, it'd continue to skew the
+> averages.  So we should probably consistently exclude non-positive
+> embargo periods from the calculation of averages.  Will you, please?
+>=20
 
-Ah. Fair point, I missed that src is freshly allocated. Yes, you are
-correct.
+Sure
 
+> This brings up and leaves open the question of what to do with very
+> short embargo periods like a few hours.  My suggestion is that we
+> continue to include them in the averages, but also add calculation and
+> reporting of median embargo times (also excluding just the non-positive
+> embargo periods from the calculation of the medians).  Can you do it,
+> please?
+
+Adding medians is no problem
+
+>=20
+> The non-positive embargo periods should probably continue to be listed
+> in the detail table, but a (foot)note should be added explaining that
+> they're excluded from the calculations.
+
+That's also no issue, that said; likely won't spend too much time in
+front of computer the next week.
 
 --=20
-Dmitry Belyavskiy
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
---000000000000abc449062ee689c3--
 
+--TS2U9SKW0DCE47gobwVJeXdz5monkuF83--
+
+--6hlQf8Mpu1iVWaq8zAtYyhaDQmHcU1mnH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEICl/zzfUVEdaBsDU24F+DhePmz8FAl08mo4ACgkQ24F+DheP
+mz/pRQf/bhUGV9KNFBg0K19Q0HsxSuEXKcRQK5K/tvO3OLIGL32mtq/l1EzQvEI4
+QKpbh/ku4oNHkAaTYl9vOXppbBP0AWt9VpDhmTeljShY4zyeDYtMVG4KCtuBnXNc
+uau0nwTcBjB9lWlDODc301hg0V0s/tacYL57FoUnc7i7Ey4hEHhZcWSNSM2EKjyV
+LSIaFHmvJF3n2ZZGVlwwSARkx5MKqpRs26hBhXN0/IJrpeEPP0hodqaCahtdjXIP
+FpXmzQq+hnwhani6+O+5L3mGvOvZqLjTTvDbOCR3yU6wKA1P7yL3VnJqEnN17iae
+k49hifP1A52crv8R9UDBVoMljkTyfQ==
+=SDK3
+-----END PGP SIGNATURE-----
+
+--6hlQf8Mpu1iVWaq8zAtYyhaDQmHcU1mnH--
