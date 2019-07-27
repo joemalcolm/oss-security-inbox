@@ -1,56 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/11/8
-Message-ID: <CAE4Awf8Sifdqyy_oXTBVieKLLQW66UXMvGkE1VZpuUmOA+98qQ@mail.gmail.com>
-Date: Wed, 11 Dec 2019 10:33:45 -0600
-From: Gage Hugo <gagehugo@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/27/1
+Message-ID: <20190727141359.07cf0a8c@computer>
+Date: Sat, 27 Jul 2019 14:13:59 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2019-006] Keystone: Credentials API allows listing and retrieving of all users credentials (CVE-2019-19687)
+Subject: RCE through open PHP-FPM ports
 Content-Type: text/plain; charset=utf-8
 
-=====================================================================================
-OSSA-2019-006: Credentials API allows listing and retrieving of all users
-credentials
-=====================================================================================
+Hi,
 
-:Date: December 09, 2019
-:CVE: CVE-2019-19687
+I recently reported here [1] that open FPM ports may be used to
+exfiltrate data and this particularly affected HHVM. Originally I
+assumed that this is much less of an issue with upstream PHP. However
+swagpgs [2] pointed out to me that this is actually much more dangerous
+than I originally thought.
+
+Background: FPM is a method to execute PHP in modern environments. A
+daemon is listening for incoming connections, so PHP doesn't need to be
+started for each request, the web server will forward requests to FPM.
+It can run either on a file socket or on a TCP port.
+The TCP port should never be exposed to the public.
+
+Here's how this can be used for remote code execution:
+The FPM daemon supports passing PHP configuration options via the
+PHP_VALUE variable. This can be used to inject PHP code via the
+auto_prepend_file configuration option (this is basically an option to
+provide a script that will be prependet to every other script
+execution).
+This may be prevented by settings for allow_url_include or
+allow_url_fopen. However these settings can be changed with PHP_VALUE
+as well, so this is no protection.
+
+The only thing an attacker needs is a file with a .php or .phar
+extension on the target systems (other files won't be executed due to
+to an option "security.limit_extensions" in the FPM daemon that by
+default only allows these two). However this is usually not very hard
+to achieve by guessing files on standard paths. For example on
+Debian/Ubuntu systems a file /usr/bin/phar.phar exists, alternatively
+on systems that have PEAR installed this can be used.
+
+I've put this all together in a bash script [3] that should illustrate
+how this attack works.
+
+Notably HHVM is not affected by this attack vector, as it doesn't
+support PHP_VALUE [4]. However it is affected more severely by the
+original file exfiltration issue [1].
+
+tl;dr Never run FPM on a public network interface. With HHVM this means
+arbitrary file exfiltration, with PHP it means remote code execution.
 
 
-Affects
-~~~~~~~
-- Keystone: ==15.0.0, ==16.0.0
+[1] https://www.openwall.com/lists/oss-security/2019/07/09/2
+[2] https://twitter.com/swapgs
+[3] https://github.com/hannob/fpmvuln/blob/master/fpmrce
+[4] https://github.com/facebook/hhvm/issues/3730
+-- 
+Hanno Böck
+https://hboeck.de/
 
-
-Description
-~~~~~~~~~~~
-Daniel Preussker reported a vulnerability in Keystone's list
-credentials API. Any user with a role on a project is able to list any
-credentials with the /v3/credentials API when [oslo_policy]
-enforce_scope is false. Users with a role on a project are able to
-view any other users credentials, which could leak sign-on information
-for Time-based One Time Passwords (TOTP) or othewise. Deployments
-running keystone with [oslo_policy] enforce_scope set to false are
-affected. There will be a slight performance impact for the list
-credentials API once this issue is fixed.
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/697731 (Stein)
-- https://review.opendev.org/697611 (Train)
-- https://review.opendev.org/697355 (Ussuri)
-
-
-Credits
-~~~~~~~
-- Daniel Preussker (CVE-2019-19687)
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/keystone/+bug/1855080
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19687
-
-Content of type "text/html" skipped
-
-View attachment "signature.asc" of type "text/plain" (833 bytes)
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
