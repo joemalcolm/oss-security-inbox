@@ -1,60 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/26/1
-Message-ID: <20191026064347.GR7189@suse.de>
-Date: Sat, 26 Oct 2019 08:43:47 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: mathias.payer@...elwelt.net, Hui Peng <benquike@...il.com>
-Subject: Re: Do distros want to see CVEs for Linux kernel USB bugs?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/27/2
+Message-ID: <170f95aa-dd99-6dea-fc1d-113324b8f535@gentoo.org>
+Date: Sat, 27 Jul 2019 20:40:10 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: Statistics for distros lists updated for 2019Q2
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 25, 2019 at 08:09:01PM +0200, Andrey Konovalov wrote:
-> Hi!
-> 
-> As we keep getting more USB bugs reported by syzbot [1], I'd like to
-> figure out what to do with those in regards to CVEs. Last time I
-> requested a bunch of CVEs for USB bugs, there was a long discussion
-> about whether that is the right thing to do, see the full thread here
-> [2].
-> 
-> I don't want to argue now whether CVEs are useful for the upstream
-> Linux kernel. My question is: with CVEs as they work today, do Linux
-> distros want to see CVEs filed for Linux kernel bugs that are
-> triggerable by a malicious USB device?
-> 
-> Since not all USB bugs are the same, let's bucket them into:
-> 
-> 1. Different kinds of DoS (e.g. null-ptr-deref).
-> 2. Info / uninitialized memory leaks.
-> 3. Bugs that lead to arbitrary code execution.
-> 4. Non-triaged memory corruptions (UAF/OOB).
-> 
-> Points 1-3 refer to the bugs that have been assessed for the impact
-> that they cause, while point 4 refers to the bugs that haven't been
-> looked at closely.
-> 
-> Keep in mind that:
-> 
-> 1. Most of the time physical access to the USB port is required to
-> trigger these bugs.
-> 2. Sometimes, in cases of e.g. exposed USB/IP or USBAnywhere like
-> vulnerabilities [3] these bugs can be triggered remotely.
-> 
-> Thanks!
-> 
-> [1] https://syzkaller.appspot.com/upstream?manager=ci2-upstream-usb
-> 
-> [2] https://www.openwall.com/lists/oss-security/2019/08/20/2
-> 
-> [3] https://github.com/eclypsium/USBAnywhere
+On 26.07.2019 13:07, Solar Designer wrote:
+> On Fri, Jul 26, 2019 at 12:25:47PM +0200, Kristian Fiskerstrand wrote:
+>> On 26.07.2019 10:16, Solar Designer wrote:
 
-As discussed previously, "denial of service" (e.g. NULL ptr) via USB
-device seems not to classify as CVE. (With the guidance that with physical
-access you can cause more "denial of service" in other ways, like powering down the machine.)
+> Even if we set it to zero, it'd continue to skew the
+> averages.  So we should probably consistently exclude non-positive
+> embargo periods from the calculation of averages.  Will you, please?
+> 
 
-So 2-3 could be CVE worthy from a distro perspective.
+Sure
 
-For 4 I would assume reasonable guess work if its "just" a denial of service or
-more for CVE guidance.
+> This brings up and leaves open the question of what to do with very
+> short embargo periods like a few hours.  My suggestion is that we
+> continue to include them in the averages, but also add calculation and
+> reporting of median embargo times (also excluding just the non-positive
+> embargo periods from the calculation of the medians).  Can you do it,
+> please?
 
-Ciao, Marcus
+Adding medians is no problem
+
+> 
+> The non-positive embargo periods should probably continue to be listed
+> in the detail table, but a (foot)note should be added explaining that
+> they're excluded from the calculations.
+
+That's also no issue, that said; likely won't spend too much time in
+front of computer the next week.
+
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
