@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2039" "Monday" "16" "April" "2018" "13:25:08" "+0200" "Daniel Beck" "ml@beckweb.net" "<05E0E047-0C5E-4459-890A-39522576EF0F@beckweb.net>" "57" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "4" "2018041611:25:08" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Apr 16   57/2039  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2303" "Saturday" "27" "July" "2019" "14:13:59" "+0200" "Hanno =?iso-8859-1?Q?B=F6c?==?iso-8859-1?Q?k?=" "hanno@hboeck.de" "<20190727141359.07cf0a8c@computer>" "53" "[oss-security] RCE through open PHP-FPM ports" nil nil nil "7" "2019072712:13:59" "[oss-security] RCE through open PHP-FPM ports" (number mark "U       hanno@hboeck Jul 27   53/2303  " thread-indent "\"[oss-security] RCE through open PHP-FPM ports\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] RCE through open PHP-FPM ports" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17590 invoked by uid 550); 16 Apr 2018 11:25:20 -0000
+Received: (qmail 14295 invoked by uid 550); 27 Jul 2019 12:14:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,73 +12,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17569 invoked from network); 16 Apr 2018 11:25:20 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-Id: <05E0E047-0C5E-4459-890A-39522576EF0F@beckweb.net>
-Date: Mon, 16 Apr 2018 13:25:08 +0200
+Received: (qmail 14258 invoked from network); 27 Jul 2019 12:14:14 -0000
+Date: Sat, 27 Jul 2019 14:13:59 +0200
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1523877920;0637b6db;
-X-HE-SMSGID: 1f82Fw-0004Yf-I5
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Message-ID: <20190727141359.07cf0a8c@computer>
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] RCE through open PHP-FPM ports
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Hi,
 
-* Email Extension 2.62
-* Google Login 1.3.1
-* HTML Publisher 1.16
-* S3 Publisher 0.11.0
+I recently reported here [1] that open FPM ports may be used to
+exfiltrate data and this particularly affected HHVM. Originally I
+assumed that this is much less of an issue with upstream PHP. However
+swagpgs [2] pointed out to me that this is actually much more dangerous
+than I originally thought.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-04-16/
+Background: FPM is a method to execute PHP in modern environments. A
+daemon is listening for incoming connections, so PHP doesn't need to be
+started for each request, the web server will forward requests to FPM.
+It can run either on a file socket or on a TCP port.
+The TCP port should never be exposed to the public.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Here's how this can be used for remote code execution:
+The FPM daemon supports passing PHP configuration options via the
+PHP_VALUE variable. This can be used to inject PHP code via the
+auto_prepend_file configuration option (this is basically an option to
+provide a script that will be prependet to every other script
+execution).
+This may be prevented by settings for allow_url_include or
+allow_url_fopen. However these settings can be changed with PHP_VALUE
+as well, so this is no protection.
 
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+The only thing an attacker needs is a file with a .php or .phar
+extension on the target systems (other files won't be executed due to
+to an option "security.limit_extensions" in the FPM daemon that by
+default only allows these two). However this is usually not very hard
+to achieve by guessing files on standard paths. For example on
+Debian/Ubuntu systems a file /usr/bin/phar.phar exists, alternatively
+on systems that have PEAR installed this can be used.
 
----
+I've put this all together in a bash script [3] that should illustrate
+how this attack works.
 
-SECURITY-442
-Google Login Plugin did not invalidate the previous session and create a=20
-new one upon successful login, allowing attackers able to control or=20
-obtain another user=E2=80=99s pre-login session ID to impersonate them.
+Notably HHVM is not affected by this attack vector, as it doesn't
+support PHP_VALUE [4]. However it is affected more severely by the
+original file exfiltration issue [1].
 
-
-SECURITY-684
-Google Login Plugin redirected users to an arbitrary URL specified as a=20
-query parameter after successful login, enabling phishing attacks.
-
-
-SECURITY-729
-Email Extension Plugin stores an SMTP password in the global Jenkins=20
-configuration.
-
-While the password is stored encrypted on disk, it was transmitted in=20
-plain text as part of the configuration form. This could result in=20
-exposure of the password through browser extensions, cross-site scripting=20
-vulnerabilities, and similar situations.
-
-
-SECURITY-730
-S3 Publisher Plugin did not properly escape file names shown on the
-Jenkins UI. This resulted in a cross-site scripting vulnerability
-exploitable by users able to control the names of uploaded files.
+tl;dr Never run FPM on a public network interface. With HHVM this means
+arbitrary file exfiltration, with PHP it means remote code execution.
 
 
-SECURITY-784
-HTML Publisher Plugin allows specifying a name for the HTML reports it=20
-publishes. This report name was used in the URL of the report and as a=20
-directory name on the Jenkins master without further processing, resulting=
-=20
-in a path traversal vulnerability that allowed overriding files outside=20
-the intended directory.
+[1] https://www.openwall.com/lists/oss-security/2019/07/09/2
+[2] https://twitter.com/swapgs
+[3] https://github.com/hannob/fpmvuln/blob/master/fpmrce
+[4] https://github.com/facebook/hhvm/issues/3730
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
