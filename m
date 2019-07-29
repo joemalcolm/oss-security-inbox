@@ -1,192 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/20/2
-Message-Id: <1558380492.22997.0@igalia.com>
-Date: Mon, 20 May 2019 14:28:12 -0500
-From: Michael Catanzaro <mcatanzaro@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2019-0003
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/29/3
+Message-ID: <11594027.E43Who7y30@treebeard>
+Date: Mon, 29 Jul 2019 11:55:34 -0400
+From: Josh Thompson <jfthomps@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2018-11774] Apache VCL SQL injection attack in VM management
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory WSA-2019-0003
-------------------------------------------------------------------------
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Date reported : May 20, 2019
-Advisory ID : WSA-2019-0003
-WebKitGTK Advisory URL : 
-https://webkitgtk.org/security/WSA-2019-0003.html
-WPE WebKit Advisory URL : 
-https://wpewebkit.org/security/WSA-2019-0003.html
-CVE identifiers : CVE-2019-6237, CVE-2019-8571, CVE-2019-8583,
-                  CVE-2019-8584, CVE-2019-8586, CVE-2019-8587,
-                  CVE-2019-8594, CVE-2019-8595, CVE-2019-8596,
-                  CVE-2019-8597, CVE-2019-8601, CVE-2019-8607,
-                  CVE-2019-8608, CVE-2019-8609, CVE-2019-8610,
-                  CVE-2019-8615, CVE-2019-8611, CVE-2019-8619,
-                  CVE-2019-8622, CVE-2019-8623.
+CVE-2018-11774: Apache VCL SQL injection attack in VM management
+ 
+Severity: Medium
+ 
+Versions Affected: 2.1 through 2.5
+ 
+Description: Apache VCL versions 2.1 through 2.5 do not properly validate form 
+input when adding and removing VMs to and from hosts. The form data is then 
+used in SQL statements. This allows for an SQL injection attack. Access to 
+this portion of a VCL system requires admin level rights.  Other layers of 
+security seem to protect against malicious attack. However, all VCL systems 
+running versions earlier than 2.5.1 should be upgraded or patched.
+ 
+Mitigation: Upgrade to 2.5.1 or apply patches from https://vcl.apache.org/
+security.html
+ 
+Credit: This vulnerability was found and reported to the Apache VCL project by 
+ADLab of Venustech.
+ 
+CVE Released: July 29th, 2019
+-----BEGIN PGP SIGNATURE-----
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+iQIzBAEBCAAdFiEEI0cOQm0VAdkhDARZSNnzl+fhyFkFAl0/FvcACgkQSNnzl+fh
+yFkinA/9ECNBbbzcUhhCIawkPhv3tc4w3iEKVzaY8q/cya1tco4iBqshqD1EXt+d
+6MdNy3MTs9diXG/jD/hwuxl2hdtAi012fla7RjRwkq0Raoew2G08E9X6NlKCmbMr
+klDoMsZWCknITnlYS91IjZevrIZnz9emJLO4ub9So8CqBzjEinsXftgPeSYHgD0U
+ES1B1ThwOEaxTjoMJ3V6/kfC5Y5LLe/v9pwtZvggBY06X+4DCKt3Z/aCfvzGwPol
+iGCWhO9XobIoi8Z8garw6NqCDluHPWKTzb7Et8NS1y6xiuTTWAvfctpWOlPwN+cH
+1gHyqG+W9LRj2+vYdG8RCaQKAZfeUB7myfNvSIvWAAABYbku0molCC+CJZbnC/qp
+vUdwde9V9fTU0jVFiMMX78zXENAWME/G4tDLfn8AQXb+EpJBTMAATqLcuzavjN5Q
+GUByhNIOWABbyCDXk/0/eGjZ+QwYL2iOenVx0Si86aLBgi9u7mORqihRjcj5l85j
+XijHgT5mlPyiQxE58KKUkF6Sa7cSlakO5Jpmfzfxy4gmoC3fnUQFjFOPhZsJ8NR7
+jBB9VPJ65UWk/HVsuqaR8nQxM4JpcrDdaOIWgyey8ya60JRx3rWsAlmxe4ScUQyx
+lChlY5iZgKGGSoY9o/wXc9etEWUkfXxQ9pBCLKg4QUTMnUzN6Ao=
+=UDWM
+-----END PGP SIGNATURE-----
 
-CVE-2019-6237
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
-    Credit to G. Geshev working with Trend Micro Zero Day Initiative,
-    Liu Long of Qihoo 360 Vulcan Team.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8571
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to 01 working with Trend Micro's Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8583
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to sakura of Tencent Xuanwu Lab, jessica (@babyjess1ca_) of
-    Tencent Keen Lab, and dwfault working at ADLab of Venustech.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8584
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
-    Credit to G. Geshev of MWR Labs working with Trend Micro Zero Day
-    Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8586
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to an anonymous researcher.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8587
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
-    Credit to G. Geshev working with Trend Micro Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8594
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to Suyoung Lee and Sooel Son of KAIST Web Security & Privacy
-    Lab and HyungSeok Han and Sang Kil Cha of KAIST SoftSec Lab.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8595
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
-    Credit to G. Geshev from MWR Labs working with Trend Micro Zero Day
-    Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8596
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
-    Credit to Wen Xu of SSLab at Georgia Tech.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8597
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
-    Credit to 01 working with Trend Micro Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8601
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
-    Credit to Fluoroacetate working with Trend Micro's Zero Day
-    Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8607
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
-    Credit to Junho Jang and Hanul Choi of LINE Security Team.
-    Processing maliciously crafted web content may result in the
-    disclosure of process memory. An out-of-bounds read was addressed
-    with improved input validation.
-
-CVE-2019-8608
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
-    Credit to G. Geshev working with Trend Micro Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8609
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to Wen Xu of SSLab, Georgia Tech.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8610
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
-    Credit to Anonymous working with Trend Micro Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8615
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
-    Credit to G. Geshev from MWR Labs working with Trend Micro's Zero
-    Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8611
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to Samuel Groß of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8619
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
-    Credit to Wen Xu of SSLab at Georgia Tech and Hanqing Zhao of
-    Chaitin Security Research Lab.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8622
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to Samuel Groß of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8623
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to Samuel Groß of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-May 20, 2019
 
 
