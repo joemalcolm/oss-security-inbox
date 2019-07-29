@@ -1,54 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/22/6
-Message-ID: <20190522163125.GA32400@kroah.com>
-Date: Wed, 22 May 2019 18:31:25 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/29/2
+Message-ID: <19319537.BvfTLQxH9x@treebeard>
+Date: Mon, 29 Jul 2019 11:55:32 -0400
+From: Josh Thompson <jfthomps@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-10142 linux kernel: integer overflow in ioctl handling of fsl hypervisor
+Subject: [CVE-2018-11773] Apache VCL improper form validation in block allocation management
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 23, 2019 at 12:52:17AM +1000, Wade Mealing wrote:
-> Gday,
-> 
-> >From the upstream git commit:
-> 
-> "The "param.count" value is a u64 that comes from the user. The code later
-> in the function assumes that param.count is at least one and if it's not
-> then it leads to an Oops when we dereference the ZERO_SIZE_PTR. Also the
-> addition can have an integer overflow which would lead us to allocate a
-> smaller "pages" array than required. I can't immediately tell what the
-> possible run times implications are, but it's safest to prevent the
-> overflow."
-> 
-> At this time Red Hat products are not affected this code is not built as
-> the CONFIG_FSL_HV_MANAGER build option is not enabled by default.    Device
-> (/dev/fsl-hv) ownership and permissions which prevent unprivileged users
-> from being able to exploit this without some elevated permissions (I think
-> this will default to user: root group:root with 0660 mask) however some
-> Linux distributions may use udev to set this to non root ownership or
-> another group.   In the default configuration, a user who is sufficiently
-> privileged to exploit this is likely able to attack the system without it.
-> 
-> I open the discussion and note the CVE listed above for discussions that
-> may reference this patch and perhaps save someone some time in
-> investigation.
-> 
-> Red Hat bugzilla:
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2019-10142
-> 
-> Upstream fix:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6a024330650e24556b8a18cc654ad00cfecf6c6c
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Note, this fix is in the following released stable kernels at this point
-in time:
-	3.18.140 4.4.180 4.9.177 4.14.120 4.19.44 5.0.17 5.1.3
+CVE-2018-11773: Apache VCL improper form validation in block allocation 
+management
 
-Also, to let oss-security know, the 3.18.y kernel tree is now really
-end-of-life on kernel.org, but if people care about it still, they can
-follow the android-common 3.18 branch as it will continue to get
-security updates for at least the rest of this year, if not maybe a bit
-longer.
+Severity: Medium
 
-thanks,
+Versions Affected: 2.1 through 2.5
 
-greg k-h
+Description: Apache VCL versions 2.1 through 2.5 do not properly validate form 
+input when processing a submitted block allocation. The form data is then used 
+as an argument to the php built in function strtotime. This allows for an 
+attack against the underlying implementation of that function. The 
+implementation of strtotime at the time the issue was discovered appeared to 
+be resistant to a malicious attack. However, all VCL systems running versions 
+earlier than 2.5.1 should be upgraded or patched.
+
+Mitigation: Upgrade to 2.5.1 or apply patches from https://vcl.apache.org/
+security.html
+
+Credit: This vulnerability was found and reported to the Apache VCL project by 
+ADLab of Venustech.
+
+CVE Released: July 29th, 2019
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEI0cOQm0VAdkhDARZSNnzl+fhyFkFAl0/FvQACgkQSNnzl+fh
+yFm1sg/7B/d2H93fCdsBl1N5lhob5Phe23rJ0EYs8ELkptr0+lXSIYLCcQ8brhcj
+0lM0aCnzobkJiI/t42HnebJ8rcMIo6fzQ1y4kMzKTVNLc8MiEU3kRV+ZpDMBTN1u
+iAhBkjNzNoqZqOP5klmmInEhwbFHsYclFY0OCgabriMxY2WNbiuZEm/v7DwjDTEZ
+3Z0xjo3TveMKPtdgfz+hiHm2z8gAOyWbyUVvHBL/+9BewNQXgUHuysD2M0roTZpj
+46T4LMu8YKGBWIIRlTDQO463zI4H6bSd5xN7mpDCz1u/sqM2f4JdSP554MIQxpOa
+orcJLTaI+jYOplGsxfVM/QXb3jLCuJvuu8ZxHhc4R2GMH3qukWEZ6Mt8r9Rr3JUS
+R9AD/y0ZnIhsU+nEjzxs4y7H3B6BK9imQxVhctlOsIGj0hlSpb+xngSnTA/5aZ30
+Iay5ZFibntAAefByOS451Ex8rZPJNWcCR22uOnV6YILLiQzWX+gumzkzcAD9g3Rn
+/STt4o84WSyjMpBvsKC8Fif8FR/DNEZ5spsHujfzgNfPbRjLLXXQDzqC0yVrRbRM
+84OPDIPtmj1Q4bpeMmNDhuuejUekuMCDWX1hlDMyaJO/YsiWGE1ITzcNBuWSbTYJ
+uT1KYnnno1S+/EMDsxhdYPGJ6leXVz+5nLpXxQSFOfDzf4ruDDI=
+=Qhgv
+-----END PGP SIGNATURE-----
+
+
+
