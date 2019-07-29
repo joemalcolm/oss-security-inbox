@@ -1,15 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/27/3
-Message-ID: <20190427173124.ulpzqadd7fbl7sfi@ranzbook>
-Date: Sat, 27 Apr 2019 19:31:24 +0200
-From: andreas@...mhold.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/29/1
+Message-ID: <2365364.TfTq3mqfPN@treebeard>
+Date: Mon, 29 Jul 2019 11:55:25 -0400
+From: Josh Thompson <jfthomps@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)
+Subject: [CVE-2018-11772] Apache VCL SQL injection attack in privilege management
 Content-Type: text/plain; charset=utf-8
 
-I just became aware of a relevant thread on the bind-users mailing list
-that sheds some more light onto the issue:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://www.mail-archive.com/bind-users@lists.isc.org/msg27479.html
+CVE-2018-11772: Apache VCL SQL injection attack in privilege management
+ 
+Severity: Medium
+ 
+Versions Affected: 2.1 through 2.5
+ 
+Description: Apache VCL versions 2.1 through 2.5 do not properly validate 
+cookie input when determining what node (if any) was previously selected in 
+the privilege tree. The cookie data is then used in an SQL statement. This 
+allows for an SQL injection attack. Access to this portion of a VCL system 
+requires admin level rights.  Other layers of security seem to protect against 
+malicious attack. However, all VCL systems running versions earlier than 2.5.1 
+should be upgraded or patched. 
+ 
+Mitigation: Upgrade to 2.5.1 or apply patches from https://vcl.apache.org/
+security.html
+ 
+Credit: This vulnerability was found and reported to the Apache VCL project by 
+ADLab of Venustech.
+ 
+CVE Released: July 29th, 2019
+-----BEGIN PGP SIGNATURE-----
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+iQIzBAEBCAAdFiEEI0cOQm0VAdkhDARZSNnzl+fhyFkFAl0/Fu0ACgkQSNnzl+fh
+yFk5yQ//Rn63ZYLD70vLNX9nTiXhVdCHe81prGpLG7JWUlSxt4zz7hYDT3pfgMcw
+1A9Mjs2+tRTjRmSmb07MWhXokhT7TnF/UhikE//c0wjNSvMyrDktGkAWuS1oqc7C
+kZxsVaPIBnR3irc3QHj1xYzQMYPHbVnGonXsiaU/VoYXu1Th7qH5XJnkw5xMpPHp
+SI/uXtj9w9tgPSKZv43RvG/T/LGyzdJwujbRDywDDal2LkKSft/poZTN73l6WnSG
+xLdFzl0DYb197kisdRMtZYx1IKhQ0JO62sxY8D2nJTGjcj+SH/gVRIvfIzA/qsbZ
+eQz6ghoUMy3AGY4RfkoUS/HDrMayAWPiwiUWEolndwnbcrGYoOE1A/iD2iTbAsSc
+SqvxrX6d9/U1s9Pnxh3D8lsU50//UVa5f3MY3dfcIWpZ7Ii2o2o5yDBzPj3ZW4up
+DlTD6bmE9VRGidQGM5kky1RDKnXKYbRAeOVHKF/B0nh8dcg+iITvaqjVrmVFbMT/
++C9YM0sN7XJEtSmlJ/Za+ESgjaUbr+SqpL4XxisC6fU0WK9T2QC4aCCTjGdgw+CY
+cEqmgfuiGhVdpMwZttOJJIqXT8WmSu+g/BF2xbn0fzbkV98YYYSCowRjiOvPA3hQ
+ALJ1qRzhBf/ilxr/LnPyUoAbxo+OyETZ/chPxkp18PO6+M8DyVM=
+=lR/Y
+-----END PGP SIGNATURE-----
+
+
+
