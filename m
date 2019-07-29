@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1081" "Wednesday" "2" "September" "2015" "14:28:59" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3i9JGHOm9J=XbQDLq9POLa2=G5FVzKs58b4YHrS=-iqA@mail.gmail.com>" "40" "Re: [oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue" nil nil nil "9" "2015090220:28:59" "[oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue" (number mark "        kseifried@re Sep  2   40/1081  " thread-indent "\"Re: [oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue\"\n") "<alpine.LFD.2.20.1509030058080.6240@wniryva>" ("<alpine.LFD.2.20.1509030058080.6240@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1756" "Monday" "29" "July" "2019" "11:55:32" "-0400" "Josh Thompson" "jfthomps@apache.org" "<19319537.BvfTLQxH9x@treebeard>" "44" "[oss-security] [CVE-2018-11773] Apache VCL improper form validation in block allocation management" nil nil nil "7" "2019072915:55:32" "[oss-security] [CVE-2018-11773] Apache VCL improper form validation in block allocation management" (number mark "U       jfthomps@apa Jul 29   44/1756  " thread-indent "\"[oss-security] [CVE-2018-11773] Apache VCL improper form validation in block allocation management\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2018-11773] Apache VCL improper form validation in block allocation management" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18041 invoked by uid 550); 2 Sep 2015 20:29:12 -0000
+Received: (qmail 3949 invoked by uid 550); 29 Jul 2019 16:04:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18023 invoked from network); 2 Sep 2015 20:29:11 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=EZ8KbZJvhfLe8oWeQp7Gq969IQsTIOslqpoeU5B8BWo=;
-        b=lNVwps391/zWMMRpP/vV/lZrMt/WkTwNNqm2+fAHPCrXsOVrUJiliNk4ECI1wTqac/
-         oJ85uorwVfX1Wx8/8pVmv/OhZco4oPZpzQhe0VN5v5oku8BcbEI4475sWCB4SHdWr6W3
-         M+Zj64j7t1sB7/Mj4s2xo2CoPTmB7k3LclY0R7fmYW0fAvb0xBfrf7Fz2VMi8qPUS8XF
-         bOqOT6/lWo/jaOdlVZV/wocTVqK0/qtPTl69BeZTwiRm0j73SlgfbcambPun8RJafddf
-         rlffRhWc8AzTalDwQpbKTkw2gFjs/sNeszGrwYuWzSIHRSalU93+KaTpwwFdBpNRqBAJ
-         Ifmg==
-X-Gm-Message-State: ALoCoQl6bvtjlyg2kyRM5AnzkdnlZ6bMVHDJu86ucaGQalEWTpx6t4SaLSFYp5UUuvzxslogPvMV
-MIME-Version: 1.0
-X-Received: by 10.129.79.198 with SMTP id d189mr19332872ywb.159.1441225739871;
- Wed, 02 Sep 2015 13:28:59 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.20.1509030058080.6240@wniryva>
-References: <alpine.LFD.2.20.1509030058080.6240@wniryva>
-Message-ID: <CANO=Ty3i9JGHOm9J=XbQDLq9POLa2=G5FVzKs58b4YHrS=-iqA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a114db2ea44662f051ec984af
-Cc: lianyihan@360.cn
-Date: Wed, 2 Sep 2015 14:28:59 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue
-To: oss-security <oss-security@lists.openwall.com>, Prasad Pandit <ppandit@redhat.com>
+Received: (qmail 30315 invoked from network); 29 Jul 2019 15:56:51 -0000
+From: Josh Thompson <jfthomps@apache.org>
+To: oss-security@lists.openwall.com
+Date: Mon, 29 Jul 2019 11:55:32 -0400
+Message-ID: <19319537.BvfTLQxH9x@treebeard>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Subject: [oss-security] [CVE-2018-11773] Apache VCL improper form validation in block allocation management
 
---001a114db2ea44662f051ec984af
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-PJP are you sure this isn't
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2015-5239 ? Mitre: can you
-please hold off in case this already has a CVE assigned. Thanks.
+CVE-2018-11773: Apache VCL improper form validation in block allocation 
+management
 
-On Wed, Sep 2, 2015 at 1:33 PM, P J P <ppandit@redhat.com> wrote:
+Severity: Medium
 
->   Hello,
->
-> Qemu emulator built with the VNC display driver is vulnerable to an
-> infinite loop issue. It could occur while processing a CLIENT_CUT_TEXT
-> message with specially crafted payload message.
->
-> A privileged guest user could use this flaw to crash the Qemu process on
-> the host, resulting in DoS.
->
-> Upstream fix:
-> -------------
->   ->
-> http://git.qemu.org/?p=qemu.git;a=commit;h=f9a70e79391f6d7c2a912d785239ee8effc1922d
->
->
-> Thank you.
-> --
-> Prasad J Pandit / Red Hat Product Security Team
-> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
->
+Versions Affected: 2.1 through 2.5
+
+Description: Apache VCL versions 2.1 through 2.5 do not properly validate form 
+input when processing a submitted block allocation. The form data is then used 
+as an argument to the php built in function strtotime. This allows for an 
+attack against the underlying implementation of that function. The 
+implementation of strtotime at the time the issue was discovered appeared to 
+be resistant to a malicious attack. However, all VCL systems running versions 
+earlier than 2.5.1 should be upgraded or patched.
+
+Mitigation: Upgrade to 2.5.1 or apply patches from https://vcl.apache.org/
+security.html
+
+Credit: This vulnerability was found and reported to the Apache VCL project by 
+ADLab of Venustech.
+
+CVE Released: July 29th, 2019
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEI0cOQm0VAdkhDARZSNnzl+fhyFkFAl0/FvQACgkQSNnzl+fh
+yFm1sg/7B/d2H93fCdsBl1N5lhob5Phe23rJ0EYs8ELkptr0+lXSIYLCcQ8brhcj
+0lM0aCnzobkJiI/t42HnebJ8rcMIo6fzQ1y4kMzKTVNLc8MiEU3kRV+ZpDMBTN1u
+iAhBkjNzNoqZqOP5klmmInEhwbFHsYclFY0OCgabriMxY2WNbiuZEm/v7DwjDTEZ
+3Z0xjo3TveMKPtdgfz+hiHm2z8gAOyWbyUVvHBL/+9BewNQXgUHuysD2M0roTZpj
+46T4LMu8YKGBWIIRlTDQO463zI4H6bSd5xN7mpDCz1u/sqM2f4JdSP554MIQxpOa
+orcJLTaI+jYOplGsxfVM/QXb3jLCuJvuu8ZxHhc4R2GMH3qukWEZ6Mt8r9Rr3JUS
+R9AD/y0ZnIhsU+nEjzxs4y7H3B6BK9imQxVhctlOsIGj0hlSpb+xngSnTA/5aZ30
+Iay5ZFibntAAefByOS451Ex8rZPJNWcCR22uOnV6YILLiQzWX+gumzkzcAD9g3Rn
+/STt4o84WSyjMpBvsKC8Fif8FR/DNEZ5spsHujfzgNfPbRjLLXXQDzqC0yVrRbRM
+84OPDIPtmj1Q4bpeMmNDhuuejUekuMCDWX1hlDMyaJO/YsiWGE1ITzcNBuWSbTYJ
+uT1KYnnno1S+/EMDsxhdYPGJ6leXVz+5nLpXxQSFOfDzf4ruDDI=
+=Qhgv
+-----END PGP SIGNATURE-----
 
 
 
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a114db2ea44662f051ec984af--
