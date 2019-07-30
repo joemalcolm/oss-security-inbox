@@ -1,51 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/10/3
-Message-ID: <856d6efa0e9b4dd39030e7372a17e3dba2db2aef.camel@neuling.org>
-Date: Tue, 10 Sep 2019 23:16:48 +1000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/30/1
+Message-ID: <67db82ab73dbb630c45003795f7597274f30983e.camel@neuling.org>
+Date: Tue, 30 Jul 2019 15:01:52 +1000
 From: Michael Neuling <mikey@...ling.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Michael Ellerman <michael@...erman.id.au>, linuxppc-dev@...ts.ozlabs.org,  linux-kernel@...r.kernel.org, Linuxppc-users <linuxppc-users@...ts.ozlabs.org>,  Gustavo Romero <gromero@...ux.vnet.ibm.com>
-Subject: CVE-2019-15030: Linux kernel: powerpc: data leak with FP/VMX  triggerable by unavailable exception in transaction
+To: oss-security@...ts.openwall.com
+Cc: linuxppc-dev@...ts.ozlabs.org, linux-kernel@...r.kernel.org, Linuxppc-users <linuxppc-users@...ts.ozlabs.org>, Michael Ellerman <michael@...erman.id.au>
+Subject: CVE-2019-13648: Linux kernel: powerpc: kernel crash in TM handling triggerable by any local user
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel for powerpc since v4.12 has a bug in it's TM handling where any
-user can read the FP/VMX registers of a difference user's process. Users of TM +
-FP/VMX can also experience corruption of their FP/VMX state.
+The Linux kernel for powerpc since v3.9 has a bug in the TM handling  where any
+unprivileged local user may crash the operating system.
 
-To trigger the bug, a process starts a transaction and reads a FP/VMX register.
-This transaction can then fail which causes a rollback to the checkpointed
-state. Due to the kernel taking an FP/VMX unavaliable exception inside a
-transaction and the kernel's incorrect handling of this, the checkpointed state
-can be set to the FP/VMX registers of another process. This checkpointed state
-can then be read by the process hence leaking data from one process to another.
+This bug affects machines using 64-bit CPUs where Transactional Memory (TM) is
+not present or has been disabled (see below for more details on affected CPUs).
 
-The trigger for this bug is an FP/VMX unavailable exception inside a
-transaction, hence the process needs FP/VMX off when starting the transaction.
-FP/VMX availability is under the control of the kernel and is transparent to the
-user, hence the user has to retry the transaction many times to trigger this
-bug. 
+To trigger the bug a process constructs a signal context which still has the MSR
+TS bits set. That process then passes this signal context to the sigreturn()
+system call. When returning back to userspace, the kernel then crashes with a
+bad TM transition (TM Bad Thing) or by executing TM code on a non-TM system.
 
-All 64-bit machines where TM is present are affected. This includes all POWER8
-variants and POWER9 VMs under KVM or LPARs under PowerVM. POWER9 bare metal
-doesn't support TM and hence is not affected.
+All 64bit machines where TM is not present are affected. This includes PowerPC
+970 (G5), PA6T, POWER5/6/7 VMs under KVM or LPARs under PowerVM and POWER9 bare
+metal. 
+
+Additionally systems with TM hardware but where TM is disabled in software (via
+ppc_tm=off kernel cmdline) are also affected. This includes POWER8/9 VMs under
+KVM or LPARs under PowerVM and POWER8 bare metal.
 
 The bug was introduced in commit:
-  f48e91e87e67 ("powerpc/tm: Fix FP and VMX register corruption")
-Which was originally merged in v4.12
+  2b0a576d15e0 ("powerpc: Add new transactional memory state to the signal context")
+
+Which was originally merged in v3.9. 
 
 The upstream fix is here:
-  https://git.kernel.org/torvalds/c/8205d5d98ef7f155de211f5e2eb6ca03d95a5a60
+  https://git.kernel.org/torvalds/c/f16d80b75a096c52354c6e0a574993f3b0dfbdfe
 
-The fix can be verified by running the tm-poison from the kernel selftests. This
-test is in a patch here:
-https://patchwork.ozlabs.org/patch/1157467/
-which should eventually end up here:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/tools/testing/selftests/powerpc/tm/tm-poison.c
+The fix can be verified by running `sigfuz -m` from the kernel selftests:
+ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/tools/testing/selftests/powerpc/signal/sigfuz.c?h=v5.2
 
 cheers
 Mikey
-
-
-
-
 
