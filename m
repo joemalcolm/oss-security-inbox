@@ -1,37 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/01/2
-Message-ID: <20190201122721.GA17576@eldamar.local>
-Date: Fri, 1 Feb 2019 13:27:21 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/30/2
+Message-ID: <cdfea5779d02a81804aba92e092d8207f395c8d6.camel@powerdns.com>
+Date: Tue, 30 Jul 2019 13:37:15 +0200
+From: Peter van Dijk <peter.van.dijk@...erdns.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie
+Subject: PowerDNS Security Advisory 2019-06: Denial of service via crafted zone records
 Content-Type: text/plain; charset=utf-8
 
-Hi Mike,
+Hello,
 
-On Wed, Jan 23, 2019 at 02:21:30PM -0800, Mike Jumper wrote:
-> CVE-2018-1340: Secure flag missing from Apache Guacamole session cookie
-> 
-> Versions affected:
-> Apache Guacamole 0.9.4 through 0.9.14
-> 
-> Description:
-> Prior to 1.0.0, Apache Guacamole used a cookie for client-side storage
-> of the user's session token. This cookie lacked the "secure" flag,
-> which could allow an attacker eavesdropping on the network to
-> intercept the user's session token if unencrypted HTTP requests are
-> made to the same domain.
-> 
-> Mitigation:
-> Users of Apache Guacamole 0.9.14 or older should upgrade to 1.0.0.
-> 
-> Credit:
-> We would like to thank Ross Golder for reporting this issue.
+please find below the text of PowerDNS Security Advisory 2019-06.
+Updated packages (that only contain a Postgres schema change) will be
+released later. Just upgrading at that time will not fix the
+vulnerability - applying the schema change is mandatory.
 
-Would it be possible to confirm, is this 
-https://issues.apache.org/jira/browse/GUACAMOLE-549
-https://github.com/apache/guacamole-client/commit/884a9c0ee987f9cb49a69
-?
+> PowerDNS Security Advisory 2019-06: Denial of service via crafted zone records
+> ==============================================================================
+> 
+> -  CVE: CVE-2019-10203
+> -  Date: July 30th, 2019
+> -  Affects: PowerDNS Authoritative 4.0.0 and up, when using the gpgsql (PostgreSQL) backend
+> -  Not affected: 4.2.0, 4.1.11, 4.0.9
+> -  Severity: Low
+> -  Impact: Denial of Service
+> -  Exploit: This problem can be triggered via crafted records
+> -  Risk of system compromise: No
+> -  Solution: Update the database schema
+> -  Workaround: run the process inside the guardian or inside a supervisor
+> 
+> An issue has been found in PowerDNS Authoritative Server allowing an
+> authorized user to cause the server to exit by inserting a crafted record in a
+> MASTER type zone under their control. The issue is due to the fact that the
+> Authoritative Server will exit when it tries to store the notified serial in
+> the PostgreSQL database, if this serial cannot be represented in 31 bits.
+> 
+> This issue has been assigned CVE-2019-10203.
+> 
+> PowerDNS Authoritative up to and including 4.1.10 is affected. Please note
+> that at the time of writing, PowerDNS Authoritative 3.4 and below are no
+> longer supported, as described in
+> https://doc.powerdns.com/authoritative/appendices/EOL.html.
+> 
+> To fix the issue, run the following command against your PostgreSQL pdns
+> database: `ALTER TABLE domains ALTER notified_serial TYPE bigint USING CASE
+> WHEN notified_serial >= 0 THEN notified_serial::bigint END;`. No software
+> changes are required.
+> 
+> We would like to thank Klaus Darilion for finding and subsequently reporting
+> this issue!
 
-Regards,
-Salvatore
+Kind regards,
+-- 
+Peter van Dijk
+PowerDNS.COM BV - https://www.powerdns.com/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (915 bytes)
