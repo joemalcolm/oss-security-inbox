@@ -1,4 +1,9 @@
-Received: (qmail 13368 invoked by uid 550); 14 Nov 2025 07:53:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1499" "Tuesday" "30" "July" "2019" "15:01:52" "+1000" "Michael Neuling" "mikey@neuling.org" "<67db82ab73dbb630c45003795f7597274f30983e.camel@neuling.org>" "44" "[oss-security] CVE-2019-13648: Linux kernel: powerpc: kernel crash in TM handling triggerable by any local user" nil nil nil "7" "2019073005:01:52" "[oss-security] CVE-2019-13648: Linux kernel: powerpc: kernel crash in TM handling triggerable by any local user" (number mark "U       mikey@neulin Jul 30   44/1499  " thread-indent "\"[oss-security] CVE-2019-13648: Linux kernel: powerpc: kernel crash in TM handling triggerable by any local user\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-13648: Linux kernel: powerpc: kernel crash in TM handling triggerable by any local user" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11489 invoked by uid 550); 30 Jul 2019 07:52:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,33 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13512 invoked from network); 14 Nov 2025 07:48:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=schafweide.org;
-	s=2007; t=1763106525;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=DkGVkBoeJ7poI1koqIf1VEmn/2cIMhyvB/ZgNrpBp00=;
-	b=iySp4I1zqlmGa2scTu8CyCH6GzZvFxUkN/G5QltM8fNVa4EvCWRbA0KaO3uMH6B2JDnobq
-	Xgnqgl6je7e23U2uD/8lqcqDgms1Tjozj1RkpNjuMIv1e2J5mCrMn2m9OZ+qFQa9iywHND
-	42IpqKGB+afEoniNrb3JOmUJH+raLvs=
-Message-ID: <70e25a3d-7652-44da-8e4d-4e0a2e3a7a63@schafweide.org>
-Date: Fri, 14 Nov 2025 08:48:44 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Received: (qmail 32717 invoked from network); 30 Jul 2019 05:02:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=neuling.org;
+	s=201811; t=1564462913;
+	bh=Vgdma4M3NjY+571qzaaGNdc2/IobJXlKXEZw6X3gf8k=;
+	h=Subject:From:To:Cc:Date:From;
+	b=HL7zp8pO6qQEj4dGzi3XO2/xjjxFw+mjFHz9ELt1et+Qb5Kg1SP+80KBlrU3bnHLP
+	 i2T3e4+XYcH6f9pVp2gvL5+J2e12HgKos6AigFv04AnbPj+tLVy2dxoXVaJ7QeueUS
+	 nzDHNN0S5SqRSTY+EgWo909aN5sPTE4rVkr8ccVJHSGGg4yfm5/2SsD3oW1EZl2+mM
+	 UW1Or3Rg35OuZPHc6moAgT4G6tXWVIIXpjgdQ/J3pHMt4zR80QTjWlo0X5M+7pa6OK
+	 VMpd1GmwNAzgo7vEZ89nri2jDKn+OzIGqsVeF2wE74JOCcrFcEfBz4Dmx07gXTV7fK
+	 +/AGVgaRQ3Zqw==
+Message-ID: <67db82ab73dbb630c45003795f7597274f30983e.camel@neuling.org>
+From: Michael Neuling <mikey@neuling.org>
 To: oss-security@lists.openwall.com
-Content-Language: de-DE, en-US
-From: Bjoern Franke <bjo@schafweide.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2025-40300 / VMScape
+Cc: linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Linuxppc-users <linuxppc-users@lists.ozlabs.org>, Michael Ellerman
+ <michael@ellerman.id.au>
+Date: Tue, 30 Jul 2019 15:01:52 +1000
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.32.4 (3.32.4-1.fc30) 
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2019-13648: Linux kernel: powerpc: kernel crash in TM handling
+ triggerable by any local user
 
-Hi,
+The Linux kernel for powerpc since v3.9 has a bug in the TM handling  where=
+ any
+unprivileged local user may crash the operating system.
 
-I stumbled at work upon CVE-2025-40300 (as it caused Ubuntus USN-7860-1) 
-and was wondering that it wasn't mentioned on this list. Usually CVEs 
-are posted here before some distro specific fixes appear.
+This bug affects machines using 64-bit CPUs where Transactional Memory (TM)=
+ is
+not present or has been disabled (see below for more details on affected CP=
+Us).
 
-Regards
-Bjoern
+To trigger the bug a process constructs a signal context which still has th=
+e MSR
+TS bits set. That process then passes this signal context to the sigreturn()
+system call. When returning back to userspace, the kernel then crashes with=
+ a
+bad TM transition (TM Bad Thing) or by executing TM code on a non-TM system.
+
+All 64bit machines where TM is not present are affected. This includes Powe=
+rPC
+970 (G5), PA6T, POWER5/6/7 VMs under KVM or LPARs under PowerVM and POWER9 =
+bare
+metal.=20
+
+Additionally systems with TM hardware but where TM is disabled in software =
+(via
+ppc_tm=3Doff kernel cmdline) are also affected. This includes POWER8/9 VMs =
+under
+KVM or LPARs under PowerVM and POWER8 bare metal.
+
+The bug was introduced in commit:
+  2b0a576d15e0 ("powerpc: Add new transactional memory state to the signal =
+context")
+
+Which was originally merged in v3.9.=20
+
+The upstream fix is here:
+  https://git.kernel.org/torvalds/c/f16d80b75a096c52354c6e0a574993f3b0dfbdfe
+
+The fix can be verified by running `sigfuz -m` from the kernel selftests:
+ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/to=
+ols/testing/selftests/powerpc/signal/sigfuz.c?h=3Dv5.2
+
+cheers
+Mikey
+
