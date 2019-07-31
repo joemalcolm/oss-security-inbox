@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1172" "Saturday" "7" "August" "2021" "02:14:12" "+0000" "Thorsten Glaser" "tg@mirbsd.de" nil "28" "[oss-security] Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)" nil nil nil "8" nil nil (number mark "U       tg@mirbsd.de Aug  7   28/1172  " thread-indent "\"[oss-security] Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2425" "Wednesday" "31" "July" "2019" "17:26:22" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<20190731152622.GA24743@cbuissar-ltop.localdomain>" "70" "[oss-security] icedtea-web: CVE-2019-10181 CVE-2019-10182 CVE-2019-10185" nil nil nil "7" "2019073115:26:22" "[oss-security] icedtea-web: CVE-2019-10181 CVE-2019-10182 CVE-2019-10185" (number mark "U       cbuissar@red Jul 31   70/2425  " thread-indent "\"[oss-security] icedtea-web: CVE-2019-10181 CVE-2019-10182 CVE-2019-10185\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] icedtea-web: CVE-2019-10181 CVE-2019-10182 CVE-2019-10185" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31842 invoked by uid 550); 7 Aug 2021 12:23:25 -0000
+Received: (qmail 32220 invoked by uid 550); 31 Jul 2019 15:26:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +12,87 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23799 invoked from network); 7 Aug 2021 02:16:21 -0000
-Date: Sat, 7 Aug 2021 02:14:12 +0000 (UTC)
-From: Thorsten Glaser <tg@mirbsd.de>
-X-X-Sender: tg@herc.mirbsd.org
-To: Axel Beckert <abe@debian.org>
-cc: lynx-dev@nongnu.org, oss-security@lists.openwall.com, security@debian.org,
-        991971@bugs.debian.org
-In-Reply-To: <20210807015102.ea4f5immh2l5ku4n@sym.noone.org>
-Message-ID: <Pine.BSM.4.64L.2108070210210.904@herc.mirbsd.org>
-References: <Pine.BSM.4.64L.2108061711590.28219@herc.mirbsd.org>
- <20210807015102.ea4f5immh2l5ku4n@sym.noone.org>
-Content-Language: de-DE-1901, en-GB
-X-Message-Flag: Your mailer is broken. Get an update at http://www.washington.edu/pine/getpine/pcpine.html for free.
+Received: (qmail 32196 invoked from network); 31 Jul 2019 15:26:37 -0000
+Date: Wed, 31 Jul 2019 17:26:22 +0200
+From: Cedric Buissart <cbuissar@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20190731152622.GA24743@cbuissar-ltop.localdomain>
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Subject: [oss-security] Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks
- password in clear text via SNI (under some circumstances)
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ZPt4rx8FFjLCG7dd"
+Content-Disposition: inline
+User-Agent: Mutt/1.12.0 (2019-05-25)
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.48]); Wed, 31 Jul 2019 15:26:25 +0000 (UTC)
+Subject: [oss-security] icedtea-web: CVE-2019-10181 CVE-2019-10182 CVE-2019-10185
 
-Axel Beckert dixit:
+--ZPt4rx8FFjLCG7dd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
->This is more severe than it initially looked like: Due to TLS Server
->Name Indication (SNI) the hostname as parsed by Lynx (i.e with
->"user:pass@" included) is sent in _clear_ text over the wire even
+Hello,
 
-I *ALWAYS* SAID SNI IS A SHIT THING ONLY USED AS BAD EXCUSE FOR NAT
-BY PEOPLE WHO ARE TOO STUPID TO CONFIGURE THEIR SERVERS RIGHT AND AS
-BAD EXCUSE FOR LACKING IPv6 SUPPORT, AND THEN THE FUCKING IDIOTS WENT
-AND MADE SNI *MANDATORY* FOR TLSv1.3, AND I FEEL *SO* VINDICATED RIGHT
-NOW! IDIOTS IN CHARGE OF SECURITY, FUCKING IDIOTS=E2=80=A6
+The IcedTea-Web project provides a Java web browser plug-in and an
+implementation of Java Web Start, which is based on the Netx project.
 
->But given that the symptoms Thorsten discovered stayed unreported for
->quite some years, I assume that this use case is a rather seldom one.
+Upstream URL : http://icedtea.classpath.org/wiki/IcedTea-Web
 
-Nah, SNI is a rather recent thing. But=E2=80=A6
+This is to disclose the following 3 vulnerabilities :
 
->IMHO this nevertheless needs a CVE-ID.
+CVE-2019-10182 and CVE-2019-10185 are considered High, since they can
+easily be used to take over the client before checking signatures.
 
-=E2=80=A6 it probably does. Other browsers also need checking.
+All versions of icedtea-web are believed to be vulnerable.
 
-Thanks for the detective work,
-//mirabilos
---=20
-<diogenese> Beware of ritual lest you forget the meaning behind it.
-<igli> yeah but it means if you really care about something, don't
-    ritualise it, or you will lose it. don't fetishise it, don't
-    obsess. or you'll forget why you love it in the first place.
+See the following pull request for the proposed fixes :
+https://github.com/AdoptOpenJDK/IcedTea-Web/pull/344
+
+
+* CVE-2019-10182 icedtea-web: path traversal while processing <jar/>
+elements of JNLP files results in arbitrary file overwrite
+
+It was found that icedtea-web did not properly sanitize paths from
+<jar/> elements in JNLP files. An attacker could trick a victim into
+running a specially crafted application and use this flaw to upload
+arbitrary files to arbitrary locations in the context of the user.
+
+
+* CVE-2019-10185 icedtea-web: directory traversal in the nested jar
+auto-extraction leading to arbitrary file overwrite
+
+It was found that icedtea-web was vulnerable to a zip-slip attack during
+auto-extraction of a JAR file. An attacker could use this flaw to write
+files to arbitrary locations. This could also be used to replace the
+main running application and, possibly, break out of the sandbox.
+
+
+* CVE-2019-10181 icedtea-web: unsigned code injection in a signed JAR
+file
+
+It was found that executable code could be injected in a JAR file
+without compromising the signature verification. An attacker could use
+this flaw to inject code in a trusted JAR. The code would be executed
+inside the sandbox.
+
+
+Red Hat would like to thank Imre Rad for reporting all the
+vulnerabilities above.
+
+
+Thanks!
+
+--ZPt4rx8FFjLCG7dd
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBCgAGBQJdQbMRAAoJECISsYvaK7kIbvgH/1uIrenXmOCKlmdhYJbBm94L
+3dsge26LPK8Mi5Wkr6aC/nD7irusZrkGomchv7COtux8bgd0uF58Kwzyt2kuAydD
+QNsMu9GOBIRwGWAWfAxomZyqhH9NGQPJgyXwHA2TRw3cc9MYxOjVHJqZjx2U95bx
+k3Kzfmi989RPDNuYVOy1/430jFFK9l5v/UOHs3Ir97g94FqzvVZQAkqx6u7Vk1PE
+z0/+NsTlq9zFOVfKsT6Je3u87taEBop6WP781NP77eReRvGq5mYujlfpABsU/5qQ
+kXdrV1MeQUGuqMDf/Uj440mZS271sYVjijaU3WUS6eZxHC68Y69o/36mjGG5bCw=
+=g6jF
+-----END PGP SIGNATURE-----
+
+--ZPt4rx8FFjLCG7dd--
