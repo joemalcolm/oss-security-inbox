@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3466" "Wednesday" "6" "January" "2016" "03:07:59" "+0000" "Serge Hallyn" "serge.hallyn@ubuntu.com" "<20160106030759.GB512@ubuntumail>" "83" "Re: [oss-security] Re: CVE Request: Linux kernel: privilege escalation in user namespaces" "^Cc:" nil nil "1" "2016010603:07:59" "[oss-security] Re: CVE Request: Linux kernel: privilege escalation in user namespaces" (number mark "        serge.hallyn Jan  6   83/3466  " thread-indent "\"Re: [oss-security] Re: CVE Request: Linux kernel: privilege escalation in user namespaces\"\n") "<87bn8zjxmg.fsf@x220.int.ebiederm.org>" ("<20151231194350.6E71936E244@smtpvbsrv1.mitre.org>" "<87bn8zjxmg.fsf@x220.int.ebiederm.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1322" "Thursday" "1" "August" "2019" "00:25:42" "+0200" "David Smiley" "dsmiley@apache.org" "<CABEwPvFHSuV=-exfjiCedkJrEvo6Kvc0S72nsze7x1+kJ-nLhA@mail.gmail.com>" "32" "[oss-security] [CVE-2019-0193] Apache Solr, Remote Code Execution via DataImportHandler" nil nil nil "8" "2019073122:25:42" "[oss-security] [CVE-2019-0193] Apache Solr, Remote Code Execution via DataImportHandler" (number mark "U       dsmiley@apac Aug  1   32/1322  " thread-indent "\"[oss-security] [CVE-2019-0193] Apache Solr, Remote Code Execution via DataImportHandler\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-0193] Apache Solr, Remote Code Execution via DataImportHandler" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21764 invoked by uid 550); 6 Jan 2016 03:08:13 -0000
+Received: (qmail 16312 invoked by uid 550); 1 Aug 2019 06:42:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21746 invoked from network); 6 Jan 2016 03:08:13 -0000
-Message-ID: <20160106030759.GB512@ubuntumail>
-References: <20151231194350.6E71936E244@smtpvbsrv1.mitre.org>
- <87bn8zjxmg.fsf@x220.int.ebiederm.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87bn8zjxmg.fsf@x220.int.ebiederm.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: cve-assign@mitre.org, john.johansen@canonical.com
-Date: Wed, 6 Jan 2016 03:07:59 +0000
-From: Serge Hallyn <serge.hallyn@ubuntu.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request: Linux kernel: privilege
- escalation in user namespaces
+Received: (qmail 24346 invoked from network); 31 Jul 2019 22:25:29 -0000
+X-Gm-Message-State: APjAAAUdbmfbzExgtlPsoe2woEyMlyCb7M2X8zKOyvq54TlbkThmfd9+
+	guINZE7mDqzRpYToS2PKEG6KK5S/ydXikCnDaA==
+X-Google-Smtp-Source: APXvYqz3QofGgp7sTy2eCr6GiQ+BPie+SMTxlIPQCSquXD5c/qzofvlaV7AKiffHbTgqWQbZ7Ygasfbk5RaKf+MDfA8=
+X-Received: by 2002:aca:f441:: with SMTP id s62mr64078350oih.109.1564611916905;
+ Wed, 31 Jul 2019 15:25:16 -0700 (PDT)
+MIME-Version: 1.0
+From: David Smiley <dsmiley@apache.org>
+Date: Thu, 1 Aug 2019 00:25:42 +0200
+X-Gmail-Original-Message-ID: <CABEwPvFHSuV=-exfjiCedkJrEvo6Kvc0S72nsze7x1+kJ-nLhA@mail.gmail.com>
+Message-ID: <CABEwPvFHSuV=-exfjiCedkJrEvo6Kvc0S72nsze7x1+kJ-nLhA@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000084c2d4058f019977"
+Subject: [oss-security] [CVE-2019-0193] Apache Solr, Remote Code Execution via DataImportHandler
 
-Quoting Eric W. Biederman (ebiederm@xmission.com):
-> cve-assign@mitre.org writes:
-> 
-> > Use CVE-2015-8709 for the issue fixed in the
-> > https://lkml.org/lkml/2015/12/25/71 post.
-> >
-> > (This is not yet available at
-> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/kernel/ptrace.c
-> > and http://marc.info/?l=linux-kernel&m=145118185526359 might be the
-> > current end of the earlier discussion.)
-> >
-> > This issue has been covered in security advisories from one or more
-> > Linux distributions, e.g.,
-> >
-> >>> http://www.ubuntu.com/usn/usn-2847-1
-> >>> 
-> >>> Jann Horn discovered a ptrace issue with user namespaces in the Linux
-> >>> kernel. The namespace owner could potentially exploit this flaw by ptracing
-> >>> a root owned process entering the user namespace to elevate its privileges
-> >>> and potentially gain access outside of the namespace.
-> >>> (http://bugs.launchpad.net/bugs/1527374)
-> >
-> >
-> > There has been some discussion of whether the finding was a
-> > vulnerability discovery, e.g.,
-> >
-> >>>> Date: Fri, 18 Dec 2015 00:07:19 +0100
-> >>>> From: Jann Horn <jann@thejh.net>
-> >>>> 
-> >>>> I'm not sure whether this is CVE-worthy - the user_namespaces
-> >>>> manpage says "the process has full privileges for operations
-> >>>> inside the user namespace, but is unprivileged for operations
-> >>>> outside the namespace". ptrace()ing a process in the
-> >>>> namespace can reasonably be considered an "operation inside
-> >>>> the user namespace" ...
-> >>>> 
-> >>>> In my opinion, this patch is somewhere between hardening and
-> >>>> a security feature, but I wouldn't really call it a vuln fix.
-> >
-> >
-> >>>>> Date: Thu, 17 Dec 2015 23:54:03 +0000
-> >>>>> From: Serge Hallyn <serge.hallyn@ubuntu.com>
-> >>>>> 
-> >>>>>> ptrace()ing a process in the
-> >>>>>> namespace can reasonably be considered an "operation inside
-> >>>>>> the user namespace"
-> >>>>> 
-> >>>>> Except by creating a file in the host namespace, you were, as
-> >>>>> root in the container, able to escape your namespace, right?
-> >
-> > We feel that, more generally, the usn-2847-1 mention of "and
-> > potentially gain access outside of the namespace" is a realistic
-> > concern.
-> 
-> My mind is boggling at some of the logic involved here.
-> 
-> There is no potentially gaining access outside of the namespace when it
-> is access to things that were put inside the namespace.
-> 
-> The discussion was about how to make it easier for userspace not to do
-> stupid things, not how to fix a bug in the kernel.
-> 
-> The code we have been discussing most definitely does not make it safe
-> for a arbitrary root owned processes to call setns and enter a user
-> namespace with a hostile user namespace root.  You have to close file
-> descriptors, unmap files and do I don't know what else.  Properly
-> and safely dropping privileges is a challenging problem.
-> 
-> Calling bug because it is possible to use a kernel feature wrong feels
-> completely inappropriate.
+--00000000000084c2d4058f019977
+Content-Type: text/plain; charset="UTF-8"
 
-I could be wrong but think you are misunderstanding the cve.
+The DataImportHandler, an optional but popular module to pull in data from
+databases and other sources, has a feature in which the whole DIH
+configuration can come from a request's "dataConfig" parameter. The debug
+mode of the DIH admin screen uses this to allow convenient debugging /
+development of a DIH config. Since a DIH config can contain scripts, this
+parameter is a security risk. Starting with version 8.2.0 of Solr, use of
+this parameter requires setting the Java System property
+"enable.dih.dataConfigParam" to true.
 
-IIRC the situation was:  if you setns(some-userns); setresgid(0,0);
-setresuid(0,0); then between the setns and the setuids the container
-can ptrace your task and do things using the host uids.  That's bad.
+Mitigations:
+* Upgrade to 8.2.0 or later, which is secure by default.
+* or, edit solrconfig.xml to configure all DataImportHandler usages with an
+"invariants" section listing the "dataConfig" parameter set to am empty
+string.
+* Ensure your network settings are configured so that only trusted traffic
+communicates with Solr, especially to the DIH request handler.  This is a
+best practice to all of Solr.
 
-You can't stop the container from messing with you in general (by
-ptracing later - though as you say we could set nodump, but I don't
-think people would want htat), but it shouldn't be able to mess with the
-host root uid.
+Credits:
+* Michael Stepankin (JPMorgan Chase)
 
--serge
+References:
+* https://issues.apache.org/jira/browse/SOLR-13669
+* https://cwiki.apache.org/confluence/display/solr/SolrSecurity
+
+Please direct any replies as either comments in the JIRA issue above or to
+solr-user@lucene.apache.org
+
+--00000000000084c2d4058f019977--
