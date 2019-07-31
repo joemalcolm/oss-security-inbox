@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/02/5
-Message-ID: <20191202174638.GB28519@orca>
-Date: Mon, 2 Dec 2019 17:46:38 +0000
-From: Leonid Isaev <leonid.isaev@...x.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/01/1
+Message-ID: <CABEwPvFHSuV=-exfjiCedkJrEvo6Kvc0S72nsze7x1+kJ-nLhA@mail.gmail.com>
+Date: Thu, 1 Aug 2019 00:25:42 +0200
+From: David Smiley <dsmiley@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: virtual consoles
+Subject: [CVE-2019-0193] Apache Solr, Remote Code Execution via DataImportHandler
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 02, 2019 at 08:56:38AM -0800, Tavis Ormandy wrote:
-> $ dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1/seat/seat0 org.freedesktop.login1.Seat.SwitchTo uint32:2
-> 
-> (note: object paths may vary by distro, change the 2 to a different
-> number if you're already on VT2, or seat0 if you're on a different seat)
-> 
-> The obvious attack is to switch to a fake screensaver, then switch back
-> after authentication, or make a fake gdm login.
-> 
-> I'm sure this has been documented a million times, and most of us will
-> be familiar with the "Secure Attention Key" idea, but this is slightly
-> different from that attack as it's possible for an entirely remote user
-> (active, physically local users usually have additional privileges, as
-> it's assumed they can tamper with hardware anyway, etc).
-> 
-> Should this have some policykit action requirement, or require physical
-> presence? I don't know the answer.
+The DataImportHandler, an optional but popular module to pull in data from
+databases and other sources, has a feature in which the whole DIH
+configuration can come from a request's "dataConfig" parameter. The debug
+mode of the DIH admin screen uses this to allow convenient debugging /
+development of a DIH config. Since a DIH config can contain scripts, this
+parameter is a security risk. Starting with version 8.2.0 of Solr, use of
+this parameter requires setting the Java System property
+"enable.dih.dataConfigParam" to true.
 
-Pls no policykit... This "attack" works only because there is systemd, so that
-is where such calls should be blocked, IMHO.
+Mitigations:
+* Upgrade to 8.2.0 or later, which is secure by default.
+* or, edit solrconfig.xml to configure all DataImportHandler usages with an
+"invariants" section listing the "dataConfig" parameter set to am empty
+string.
+* Ensure your network settings are configured so that only trusted traffic
+communicates with Solr, especially to the DIH request handler.  This is a
+best practice to all of Solr.
 
-It turns out, that if as an unprivileged user I do "pkill -9 systemd" (this
-line is infact in my .bash_profile) to eliminate all systemd --user processes,
-this still works, i.e. I am able to send messages to the system bus.
+Credits:
+* Michael Stepankin (JPMorgan Chase)
 
-Thanks,
-L.
+References:
+* https://issues.apache.org/jira/browse/SOLR-13669
+* https://cwiki.apache.org/confluence/display/solr/SolrSecurity
+
+Please direct any replies as either comments in the JIRA issue above or to
+solr-user@...ene.apache.org
+
