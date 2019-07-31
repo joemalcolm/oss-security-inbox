@@ -1,159 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/14/2
-Message-ID: <2958-1557824058.656142@_q-Y.dRjQ.knDW>
-Date: Tue, 14 May 2019 08:54:18 +0000
-From: halfdog <me@...fdog.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/31/2
+Message-ID: <20190731152622.GA24743@cbuissar-ltop.localdomain>
+Date: Wed, 31 Jul 2019 17:26:22 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: fprintd: found storing user fingerprints without encryption
+Subject: icedtea-web: CVE-2019-10181 CVE-2019-10182 CVE-2019-10185
 Content-Type: text/plain; charset=utf-8
 
-Seong-Joong Kim writes:
-> Additionally,  I think that fingerprint reader is widely used
-> on laptop, rather than standalone product for PC. It is hard
-> to find standalone product in supporting device officially,
-> except for Digital Persona U.are.U and Eikon Touch series.
-> (see https://fprint.freedesktop.org/supported-devices.html)
-> Most of them are forms of fingerprint module or no longer sell
-> the standalone product.
+Hello,
 
-Lack of external fingerprint readers with very short unsecured
-biometric data path from reader to smart-card is most likely
-due to the weak security of fingerprint data. Therefore this
-device would fulfill highest biometric data storage and processing
-requirements but using biometric data of nearly lowest security
-value (latent fingerprints, high resolution (press) images of
-fingers, reconstruction of fingerprint from biometric templates,
-ease of printing fingerprints and spoofing alive-detection, ...).
-Therefore external devices for fingerprint processing should
-be rare. The situation is different when looking at other biometric
-methods.
+The IcedTea-Web project provides a Java web browser plug-in and an
+implementation of Java Web Start, which is based on the Netx project.
 
-But still security could be improved getting rid of at least
-unencrypted/unprotected storage of the fingerprint templates
-for comparison, e.g. in schemes like: using notebook fingerprint
-reader, performing biometric template generation on notebook
-main processor (if attacker has already access to the processor,
-RAM at this moment, the fingerprint data for unlocking is usually
-of no great value any more), submit the biometric data to the
-secure element for comparison (a NFC smart card, inserted smart
-card or USB dongle) and use the then unlocked key data to perform
-e.g. decryption. Therefore the biometric data is only left unsecured
-on weak hardware from ackquisition to processing but not on disk.
+Upstream URL : http://icedtea.classpath.org/wiki/IcedTea-Web
 
-> Currently, most of major vendors' laptops, including Dell,
-> HP and Lenovo, have been equipped with both embedded fingerprint
-> module and TPM. Thus, I suggested implementing interfaces to
-> talk with hardware security module.
+This is to disclose the following 3 vulnerabilities :
 
-If I understand correctly, TPMs usually cannot be loaded with
-special purpose secure applets, e.g. to perform the fingerprint
-comparison on chip. If current TPMs are already capable, this
-would be really the way to go for the average customer (average
-security usecases/requirements).
+CVE-2019-10182 and CVE-2019-10185 are considered High, since they can
+easily be used to take over the client before checking signatures.
 
-I personally would not like that solution too much and would
-appreciate something where the key data is not located within
-the device or at least require two simultaneous factors to unlock
-the TPM, e.g. a passphrase + biometric data.
+All versions of icedtea-web are believed to be vulnerable.
 
-Otherwise you can just use the fingerprints on the stolen laptop
-to recover the biometric data - unless you are working with gloves
-all the time :-)
+See the following pull request for the proposed fixes :
+https://github.com/AdoptOpenJDK/IcedTea-Web/pull/344
 
-If your master key storage can be removed easily, e.g. an USB-dongle
-(mind the max number of plug/unplug cycles for common connectors),
-theft of key storage and device at the same time will be quite
-rare. Apart from that, the key store can also be used to perform
-emergency locking/shutdown of the device, e.g. by unplugging it.
 
-hd
+* CVE-2019-10182 icedtea-web: path traversal while processing <jar/>
+elements of JNLP files results in arbitrary file overwrite
 
-> 2019년 5월 10일 (금) 오후 7:31, Seong-Joong Kim
-> <sungjungk@...il.com>님이 작성:
->
->> I think my initial suggestion is not really good enough.
->>
->> Currently, there is no way to defend this issue except for
->> supporting hardware, such as TPM or USB token, rather than
->> encryption by software in Linux environment.
->>
->> If necessary, how about implementing interfaces to talk with
->> hardware security module, such as TPM or PKCS#11 compatible
->> devices.
->>
->> Otherwise, users should avoid using fingerprint
->> authentication/identification.
->>
->> Any idea?
->>
->> Sincerely,
->>
->> 2019년 5월 10일 (금) 오후 6:22, halfdog
->> <me@...fdog.net>님이 작성:
->>
->>> Roman Drahtmueller writes: > [...] > > > I am not insisting
->>> that encryption key should be on the disk or is > > encrypted
->>> with a static key that is embedded in the binary. > > Instead,
->>> we can make fprintd to use a TPM, if available. > > > The
->>> problem persists: The encryption key must be available for
->>> the FP > data to be accessible, and so it is for an attacker.
->>> It doesn't matter > where you store the key. > > A TPM (and,
->>> transitively, products that encrypt with TPM-sealed or >
->>> TPM-bound key material) is good for the situation where the
->>> system is > physically stolen while powered down (or the
->>> drive fails). But that's not > our problem here.
->>>
->>> Therefore dedicated tamper-proof IC-designs+embedded software
->>> exist, that perform the biometry template storage and matching
->>> on the chip (MoC). There are some vendors out there providing
->>> such hardware + MoC-algorithms, but mainly fingerprint and
->>> some iris biometry variants seem certified so far. These
->>> are intended for access cards or USB-tokens in two or more-factor
->>> authentication schemes in a 1-to-1 match fashion, not as
->>> centralized 1-to-many matching schemes also deployed rarely
->>> (e.g. in Japan where they really like biometrics as long
->>> as you do not have to touch the biometry reader ...).
->>>
->>> > [...] > > > Otherwise, but even though it is not perfect,
->>> it would be better to apply > > the fingerprint data protection,
->>> such as keyring or access control, rather > > than raw fingerprint
->>> template. > > FYI, Windows Hello might use Next Generation
->>> Cryptography (called CNG) to > > protect and store user private
->>> data and encryption keys. > > There are not many options
->>> left to solve the stored credential problem, > and it should
->>> be clear that saving a file, encrypted or not, is not the
->>> > solution. > > One possible solution is to use a hash algorithm,
->>> potentially cost-based, > to derive a bit string (that is
->>> suitable for comparison with the > persisted authoritative
->>> string) from the output of a fingerprint reader.
->>>
->>> At the momenent I do not know of any algorithms providing
->>> sufficient entropy binary hash data from fingerprints in
->>> a reliable way. Changing extraction to deliver more entropy
->>> results in higher FNR during authentication step later on,
->>> I think.
->>>
->>> > [...]
->>>
->>> When working on a project to provide highest security MoC
->>> solutions with Linux (for other type of biometry, not
->>> fingerprints), Nitrokey was offering an open-source USB-token
->>> hardware (even the PCBs are open source, if I remember correctly).
->>> That platform seemed closest to be a good starting point
->>> for developing such an open source MoC biometry solution
->>> as they sell also one part with a certified tamper proof
->>> trusted element that seemed to allow performing biometry
->>> template storage and comparison on chip if programmed correctly.
->>>
->>> Time in the project was too limited to explore, if that hardware
->>> would REALLY allow to upgrade it to a powerful, highly secure
->>> but still affordable open source biometry system for use
->>> by journalists, human rights activists, NGOs ... and nerds,
->>> e.g. for password+biometry secured full disk encryption schemes.
->>>
->>> > [...]
->>>
->>> hd
->>>
->>>
+It was found that icedtea-web did not properly sanitize paths from
+<jar/> elements in JNLP files. An attacker could trick a victim into
+running a specially crafted application and use this flaw to upload
+arbitrary files to arbitrary locations in the context of the user.
 
+
+* CVE-2019-10185 icedtea-web: directory traversal in the nested jar
+auto-extraction leading to arbitrary file overwrite
+
+It was found that icedtea-web was vulnerable to a zip-slip attack during
+auto-extraction of a JAR file. An attacker could use this flaw to write
+files to arbitrary locations. This could also be used to replace the
+main running application and, possibly, break out of the sandbox.
+
+
+* CVE-2019-10181 icedtea-web: unsigned code injection in a signed JAR
+file
+
+It was found that executable code could be injected in a JAR file
+without compromising the signature verification. An attacker could use
+this flaw to inject code in a trusted JAR. The code would be executed
+inside the sandbox.
+
+
+Red Hat would like to thank Imre Rad for reporting all the
+vulnerabilities above.
+
+
+Thanks!
+
+Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
