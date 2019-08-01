@@ -1,54 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/22/1
-Message-ID: <CAGJbjKasPtcqfRSrsyg=Ae_oM6xknf9V4qyUoFW6aTsL3rLkaw@mail.gmail.com>
-Date: Tue, 22 Oct 2019 09:15:06 -0400
-From: Mike Dalessio <mike.dalessio@...il.com>
-To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com, loofah-talk@...glegroups.com
-Subject: [CVE-2019-15587] Loofah XSS Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/01/2
+Message-ID: <nycvar.YSQ.7.76.1908011343470.30404@xnncv>
+Date: Thu, 1 Aug 2019 13:46:44 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Vishnu Dev <vishnudevtj@...il.com>
+Subject: CVE-2019-14378 QEMU: slirp: heap buffer overflow during packet reassembly
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+   Hello,
 
-A *medium* severity vulnerability has been identified and patched in Loofah
-v2.3.1, which is a dependency of `rails-html-sanitizer`. This issue has
-been assigned CVE-2019-15587.
+A heap buffer overflow issue was found in the SLiRP networking implementation 
+of the QEMU emulator. It occurs in ip_reass() routine while reassembling 
+incoming packets, if the first fragment is bigger than the m->m_dat[] buffer.
 
-The public notice can be found here:
+A user/process could use this flaw to crash the Qemu process on the host 
+resulting in DoS or potentially execute arbitrary code with privileges of the 
+QEMU process.
 
-  https://github.com/flavorjones/loofah/issues/171
+Upstream patch:
+---------------
+   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/126c04acbabd7ad32c2b018fe10dfac2a3bc1210
 
-To save you a click, I've reproduced the contents of the announcement here.
+This issue was reported by Vishnu Dev(CC'd).
 
----
+CVE requested via -> https://cveform.mitre.org/
 
-
-*# CVE-2019-15587 - Loofah XSS Vulnerability*
-This issue has been created for public disclosure of an XSS vulnerability
-that was responsibly reported by https://hackerone.com/vxhex
-
-I'd like to thank [HackerOne](https://hackerone.com/loofah) for providing a
-secure, responsible mechanism for reporting, and for providing their
-fantastic service to the Loofah maintainers.
-
-
-*## Severity*
-Loofah maintainers have evaluated this as [Medium (CVSS3 6.4)](
-https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:L
-).
-
-
-
-*## Description*
-In the Loofah gem, through v2.3.0, unsanitized JavaScript may occur in
-sanitized output when a crafted SVG element is republished.
-
-
-
-*## Affected Versions*
-Loofah < v2.3.0
-
-
-
-*## Mitigation*
-Upgrade to Loofah v2.3.1 or later.
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
