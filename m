@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/17/1
-Message-ID: <1E3D402E-6B24-473A-B858-296847B072A4@apache.org>
-Date: Sun, 17 Nov 2019 09:13:53 -0800
-From: Madhan Neethiraj <madhan@...che.org>
-To: <oss-security@...ts.openwall.com>
-CC: "private@...as.apache.org" <private@...as.apache.org>
-Subject: [CVE-2019-10070] Apache Atlas Stored XSS Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/02/2
+Message-ID: <CAC1dCwXdKaJiiOgt7YD79eB5muo2UE1kFe7kGFjpWhU+kipcJg@mail.gmail.com>
+Date: Fri, 2 Aug 2019 07:33:38 -0400
+From: Tim Allison <tallison@...che.org>
+To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [CVE-2019-10088] OOM from a crafted Zip File in Apache Tika's RecursiveParserWrapper
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Title: [CVE-2019-10088] OOM from a crafted Zip File in Apache Tika's
+RecursiveParserWrapper
 
-Please find below details on CVE fixed in Apache Atlas releases 0.8.4 and 1.2.0.
+Severity: Medium
 
--------------------------------------------------------------------------------------------------
-CVE-2019-10070:    Apache Atlas Stored XSS Vulnerability in the search functionality
-Severity:          Critical
-Vendor:            The Apache Software Foundation
-Versions Affected: Apache Atlas versions 0.8.3, 1.1.0
-Users affected:    Users of Apache Atlas UI search functionality
-Description:       Apache Atlas UI was found vulnerable to stored XSS in the search functionality
-Fix detail:        Apache Atlas was updated to sanitize the user input
-Mitigation:        Users should upgrade to 0.8.4 or 1.2.0 or later version of Apache Atlas
-Credit:            Jakub Heba
--------------------------------------------------------------------------------------------------
+Vendor: The Apache Software Foundation
 
-Thanks,
-Madhan
+Versions Affected: Apache Tika  1.7 to 1.21
+
+Description:
+A carefully crafted or corrupt zip file can cause an OOM in Apache
+Tika's RecursiveParserWrapper in versions 1.7-1.21.
 
 
+Mitigation:
+Apache Tika users should upgrade to 1.22 or later.
+
+
+Credit:
+This issue was discovered by RunningSnail.
