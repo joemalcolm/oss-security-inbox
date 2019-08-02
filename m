@@ -1,4 +1,9 @@
-Received: (qmail 1839 invoked by uid 550); 29 Jun 2024 20:50:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["446" "Friday" "2" "August" "2019" "07:33:38" "-0400" "Tim Allison" "tallison@apache.org" "<CAC1dCwXdKaJiiOgt7YD79eB5muo2UE1kFe7kGFjpWhU+kipcJg@mail.gmail.com>" "20" "[oss-security] [CVE-2019-10088] OOM from a crafted Zip File in Apache Tika's RecursiveParserWrapper" nil nil nil "8" "2019080211:33:38" "[oss-security] [CVE-2019-10088] OOM from a crafted Zip File in Apache Tika's RecursiveParserWrapper" (number mark "U       tallison@apa Aug  2   20/446   " thread-indent "\"[oss-security] [CVE-2019-10088] OOM from a crafted Zip File in Apache Tika's RecursiveParserWrapper\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-10088] OOM from a crafted Zip File in Apache Tika's RecursiveParserWrapper" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9721 invoked by uid 550); 2 Aug 2019 11:34:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,57 +12,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32502 invoked from network); 29 Jun 2024 20:50:03 -0000
-Date: Sat, 29 Jun 2024 22:50:01 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20240629205001.GA12674@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Linux non-security almost non-issue: stack-out-of-bounds Read in profile_pc
+Received: (qmail 9695 invoked from network); 2 Aug 2019 11:34:02 -0000
+X-Gm-Message-State: APjAAAWM23sNUYlhf4bO4ZZdVWLJ9ipHgcVl3aDsHFYPwa++lvY8YDN4
+	U84tixxqdlMzFnegIqoHEk89A2LDF82RqcPIKHk=
+X-Google-Smtp-Source: APXvYqyqLBfeghl8qL83sey+NyxFyh22499ZsEqjKzfIFPZ0Qh3OlV8lTnmmPbfe1aWPeiU/hgrtMUmBtVQAQI3T5Vk=
+X-Received: by 2002:a81:8706:: with SMTP id x6mr81034242ywf.512.1564745629325;
+ Fri, 02 Aug 2019 04:33:49 -0700 (PDT)
+MIME-Version: 1.0
+From: Tim Allison <tallison@apache.org>
+Date: Fri, 2 Aug 2019 07:33:38 -0400
+X-Gmail-Original-Message-ID: <CAC1dCwXdKaJiiOgt7YD79eB5muo2UE1kFe7kGFjpWhU+kipcJg@mail.gmail.com>
+Message-ID: <CAC1dCwXdKaJiiOgt7YD79eB5muo2UE1kFe7kGFjpWhU+kipcJg@mail.gmail.com>
+To: announce@apache.org, dev@tika.apache.org, user@tika.apache.org, 
+	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [CVE-2019-10088] OOM from a crafted Zip File in Apache Tika's RecursiveParserWrapper
 
-Hi,
+Title: [CVE-2019-10088] OOM from a crafted Zip File in Apache Tika's
+RecursiveParserWrapper
 
-On Friday, we got a report CC'ed to s@k.o and linux-distros (which is a
-misuse of linux-distros per the currently published instructions, don't
-do that) of what turned out to be not a security issue and already
-public.  I am posting about it in here not to make an exception that
-we'd need to explain anyway.  Just for consistency and transparency.
+Severity: Medium
 
-The corresponding public report from March is:
+Vendor: The Apache Software Foundation
 
-https://lore.kernel.org/all/CAK55_s7Xyq=nh97=K=G1sxueOFrJDAvPOJAL4TPTCAYvmxO9_A@mail.gmail.com/
+Versions Affected: Apache Tika  1.7 to 1.21
 
----
-BUG: KASAN: stack-out-of-bounds in profile_pc+0x120/0x130
-arch/x86/kernel/time.c:42
-Read of size 8 at addr ffff888108567cc8 by task syz-executor308/360
+Description:
+A carefully crafted or corrupt zip file can cause an OOM in Apache
+Tika's RecursiveParserWrapper in versions 1.7-1.21.
 
-CPU: 0 PID: 360 Comm: syz-executor308 Not tainted 6.1.82 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.13.0-1ubuntu1.1 04/01/2014
-Call Trace:
- <IRQ>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x4d/0x66 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:284 [inline]
- print_report+0x16c/0x4a3 mm/kasan/report.c:395
- kasan_report+0xb3/0x130 mm/kasan/report.c:495
- profile_pc+0x120/0x130 arch/x86/kernel/time.c:42
----
 
-As Vegard Nossum pointed out:
+Mitigation:
+Apache Tika users should upgrade to 1.22 or later.
 
-> Writing to /sys/kernel/profiling requires root, so AFAICT this is only a
-> security issue for lockdown in the worst case.
 
-and then it's just a harmless out of bounds read that is only detected
-in KASan builds.
-
-Nevertheless, Linus promptly fixed the issue by dropping this code in:
-
-   093d9603b600 ("x86: stop playing stack games in profile_pc()")
-
-Alexander
+Credit:
+This issue was discovered by RunningSnail.
