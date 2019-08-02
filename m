@@ -1,49 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/16/4
-Message-Id: <7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>
-Date: Wed, 16 Jan 2019 17:51:47 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/02/4
+Message-ID: <CAC1dCwXDrvMA_Mt_Rqzpq2RAqxfUaYwP0gEebS+sNW59i-2Yzg@mail.gmail.com>
+Date: Fri, 2 Aug 2019 07:35:09 -0400
+From: Tim Allison <tallison@...che.org>
+To: dev@...a.apache.org, user@...a.apache.org,  Apache Security Team <security@...che.org>, announce@...che.org, oss-security@...ts.openwall.com
+Subject: [CVE-2019-10094] StackOverflow from Crafted Package/Compressed Files in Apache Tika's RecursiveParserWrapper
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Title: [CVE-2019-10094] StackOverflow from Crafted Package/Compressed
+Files in Apache Tika's RecursiveParserWrapper
 
-* Jenkins weekly 2.160
-* Jenkins LTS 2.150.2
+Severity: Medium
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-01-16/
+Vendor: The Apache Software Foundation
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Versions Affected: Apache Tika  1.7 to 1.21
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-868
-Users with the Overall/RunScripts permission (typically administrators) 
-were able to use the Jenkins script console to craft a 'Remember me' 
-cookie that would never expire.
-
-This allowed attackers access to a Jenkins instance while the 
-corresponding user in the configured security realm exists, for example to 
-persist access after another successful attack. 
+Description:
+A carefully crafted package/compressed file that, when
+unzipped/uncompressed yields the same file (a quine), causes a
+StackOverflowError in Apache Tika's RecursiveParserWrapper in versions
+1.7-1.21 of Apache Tika.
 
 
-SECURITY-901
-When using an external security realm such as LDAP or Active Directory, 
-deleting a user from the security realm does not result in the user losing 
-access to Jenkins.
+Mitigation:
+Apache Tika users should upgrade to 1.22 or later.
 
-While deleting the user record from Jenkins did invalidate the 'Remember 
-me' cookie, there was no way to invalidate active sessions besides 
-restarting Jenkins or terminating sessions through other means, such as 
-Monitoring Plugin.
 
+Credit:
+This issue was discovered by Tim Allison on the Apache Tika team. Many
+thanks to Matthew Barber and Erling Ellingson for crafting examples
+and contributing these files to Tika's unit tests.
