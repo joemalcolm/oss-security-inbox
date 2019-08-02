@@ -1,73 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/18/2
-Message-ID: <20191218181602.GA62521@tc-lan-adapter.local>
-Date: Wed, 18 Dec 2019 10:16:02 -0800
-From: Aaron Patterson <aaron.patterson@...il.com>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/02/3
+Message-ID: <CAC1dCwWXeiCT8i9S1LqX8V6bJTyn0frFbciJmQFczuMO9JPA-Q@mail.gmail.com>
+Date: Fri, 2 Aug 2019 07:34:26 -0400
+From: Tim Allison <tallison@...che.org>
+To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  oss-security@...ts.openwall.com
+Subject: [CVE-2019-10093] Denial of Service in Apache Tika's 2003ml and 2006ml Parsers
 Content-Type: text/plain; charset=utf-8
 
-There is a possible information leak / session hijacking vulnerability
-in Rack. This vulnerability has been assigned the CVE identifier
-CVE-2019-16782.
+Title: [CVE-2019-10093] Denial of Service in Apache Tika's 2003ml and
+2006ml Parsers
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     1.6.12, 2.0.8
+Severity: Medium
 
-There's a possible information leak / session hijack vulnerability in
-Rack. Attackers may be able to find and hijack sessions by using timing
-attacks targeting the session id. Session ids are usually stored and
-indexed in a database that uses some kind of scheme for speeding up
-lookups of that session id. By carefully measuring the amount of time it
-takes to look up a session, an attacker may be able to find a valid
-session id and hijack the session.
+Vendor: The Apache Software Foundation
 
-The session id itself may be generated randomly, but the way the session
-is indexed by the backing store does not use a secure comparison.
+Versions Affected: Apache Tika  1.19 to 1.21
+
+Description:
+A carefully crafted 2003ml or 2006ml file could consume all available
+SAXParsers in the pool and lead to very long hangs.
 
 
-Impact
-------
+Mitigation:
+Apache Tika users should upgrade to 1.22 or later.
 
-The session id stored in a cookie is the same id that is used when
-querying the backing session storage engine. Most storage mechanisms
-(for example a database) use some sort of indexing in order to speed up
-the lookup of that id. By carefully timing requests and session lookup
-failures, an attacker may be able to perform a timing attack to
-determine an existing session id and hijack that session.
 
-Releases
---------
-
-The 1.6.12 and 2.0.8 releases are available at the normal locations.
-
-Workarounds
------------
-
-There are no known workarounds.
-
-Patches
--------
-
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-1-6-session-timing-attack.patch - Patch for 1.6 series
-2-0-session-timing-attack.patch - Patch for 2.6 series
-
-Credits
--------
-
-Thanks Will Leinweber for reporting this!
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "1-6-session-timing-attack.patch" of type "text/plain" (17949 bytes)
-
-View attachment "2-0-session-timing-attack.patch" of type "text/plain" (16516 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Credit:
+This issue was discovered by Tim Allison on the Apache Tika team.
