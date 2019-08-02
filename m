@@ -1,75 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/23/3
-Message-ID: <CAPZbWnf64OLnNjuJuzmmsVNSi8tOPX+Kaiy0Evd47dw+NQP3NQ@mail.gmail.com>
-Date: Tue, 23 Apr 2019 09:41:02 +0900
-From: Seong-Joong Kim <sungjungk@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/02/1
+Message-ID: <1514907576.6426295.1564738554354.JavaMail.zimbra@redhat.com>
+Date: Fri, 2 Aug 2019 05:35:54 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: fprintd: found storing user fingerprints without encryption
+Subject: Re: CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user
 Content-Type: text/plain; charset=utf-8
 
-Dear all,
+The fix was accepted upstream as:
 
-I would like to report a vulnerability of 'fprintd'.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b36a1552d7319bbfd5cf7f08726c23c5c66d4f73
 
-'fprintd' does not encrypt sensitive information before storage.
-*CWE-311: Missing Encryption of Sensitive Data*
-
-*Description:*
-‘fprintd’ saves fingerprint template and without any encryption, to a file
-on the host.
-This could allow a process to access the stored fingerprint and then create
-natural-looking original fingerprint image.
-The stolen template can be replayed to the fingerprint authentication to
-gain unauthorized access.
-FYI, most commercial software products for fingerprint authentication
-provide fingerprint data (template) encryption.
-
-*Additional information:*
-It was found that 'fprintd' saves fingerprint template and without any
-encryption, to a file on the host.
-This could allow a process to access the stored fingerprint.
-In 'fprintd', MINDTCT feature extractor from the NIST Biometric Image
-Software (NBIS) extracts fingerprint minutiae that are compliant to ANSI
-INCITS 378-2004 and ISO/IEC 197942-2.
-The generated template file can be easily converted to ISO/IEC 19794-2
-format since it is a minor modification of the earlier ANSI-INCITS 378-2004.
-Currently, it is well known threat model that the standard fingerprint
-template can be reverted to original fingerprint image.
-[1-5] are presented to create sophisticated and natural-looking
-fingerprints only from the numerical template data format as defined in
-standard format.
-They also successfully evaluated these approaches against a number of
-undisclosed state-of-the-art algorithms and the NBIS.
-
-*Resolve the vulnerability:*
-As per upstream, the only way to safeguard the fingerprint data is to run
-with SELinux, AppArmor or another LSM enabled one.
-(link:
-https://gitlab.freedesktop.org/libfprint/fprintd/issues/16#note_141207)
-Currently, Fedora and Red Hat Enterprise Linux have a safeguard the
-fingerprint data since they uses SELinux by default while Ubuntu and Debian
-did not.
-
-*Final remark:*
-Once fingerprint has been leaked, victims are leaked for the rest of life
-since it lasts for a life.
-It is necessary to prepare for the problem.
-
-[1] R. Cappelli et al., “Fingerprint Image Reconstruction from Standard
-Templates”, IEEE Trans. on Pattern Analysis and Machine Intelligence,
-vol.29, no.9, pp.1489-1503, 2007.
-[2] A. Ross et al., “From template to image: Reconstructing fingerprints
-from minutiae points”, IEEE Trans on Pattern Analysis and Machine
-Intelligence, vol.29, no.4, pp.544-560, 2007.
-[3] R. Cappelli et al., “Can Fingerprints be reconstructed from ISO
-Templates?”, IEEE ICARCV 2006.
-[4] J. Feng et al., “Fingerprint Reconstruction: From Minutiae to Phase”,
-IEEE Trans on Pattern Analysis and Machine Intelligence, vol.33, no.2,
-pp.209-223, 2011.
-[5] A. Rozsa et al., "Genetic Algorithm Attack on Minutiae-Based
-Fingerprint Authentication and Protected Template Fingerprint Systems",
-CVPR 2015.
-
-Sincerely,
-Seong-Joong Kim
-
+Best regards,
+Vladis Dronov | Red Hat, Inc. | The Core Kernel | Senior Software Engineer
