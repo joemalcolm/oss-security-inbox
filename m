@@ -1,41 +1,150 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/10
-Message-Id: <4477D0BC-DB12-4BE7-9CF6-90F09236EF99@oracle.com>
-Date: Thu, 11 Jul 2019 17:31:38 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/05/4
+Message-ID: <20190805135159.GD9991@f195.suse.de>
+Date: Mon, 5 Aug 2019 15:51:59 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Malte Kraus <malte.kraus@...e.com>
-Subject: Re: Privileged File Access from Desktop Applications
+Subject: Security issues in various deepin D-Bus services and tools
 Content-Type: text/plain; charset=utf-8
 
+We've been reviewing a number of D-Bus services and applications that
+are part of the deepin desktop environment (a desktop environment
+focused on Chinese users). There are a larger number of security related
+findings in these components. Since there has been little progress in
+the communication with upstream to fully fix these issues for some time
+I'm hereby making them available more publicly. It seems to us that
+upstream is lacking a designated security contact and a security policy.
 
+deepin-api
+==========
 
-> On 11 Jul 2019, at 16:57, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us> wrote:
-> 
-> On Thu, 11 Jul 2019, Perry E. Metzger wrote:
->> 
->> It seems like a bad idea.
->> 
->> If one wants to have mechanisms by which the operating system can
->> allow unprivileged programs to temporarily assume privileges (which
->> is a frequent idea in security), then they should be carefully
->> designed and part of the OS, rather than creating an ad hoc facility
->> via a subsystem that isn't intended for it. There are good ways to do
->> that, like capabilities.
-> 
-> I agree.  It is rather common that more than one file needs to be modified at one time.  If a more complex mechanism like a sqlite3 database needs to be updated, then the implementation of sqlite3 will expect to be able to access files in a normal way and it will expect to be use all the abilities it normally uses.  It is rather common that atomic operations are required, locking is required, the ability to link/rename files is required, and that synchronization of file content and directories is required.
-> 
-> In addition to the security concerns, it is difficult to see how a virtual filesystem intended for use by simplistic GUI file managers will satisfy common administrative requirements.
-> 
+This package provides some common system services for the deepin desktop
+environment. It employs polkit for permissions management. Full details
+can be found in [1]. The following issues have been found:
 
-This bit us recently with a graphical application that needed to run as root (I forget what for).   It also struck me that I often run gparted (don't ask why :)) which needs to dink with disks.
+1) com.deepin.api.Device.conf: The service allows anybody to run
+  /usr/sbin/rfkill with arbitrary arguments. Polkit protection is not
+  implemented, only a TODO in the source code hints at it.
 
-Obviously one could split the process into its graphical half and its messing-around-with-disks half but it's not clear to me how the graphical half would handle authentication[*] for the process that needs to run as root.   There are any number of administrative tasks that will need to be redesigned to cope with this change.
+2) com.deepin.api.SoundThemePlayer.conf: The service allows any user to
+  pass arbitrary files to it and it will try to read it in as an audio
+  file and play it as `root`.
+  While the service supposedly only looks into a couple of system
+  directories for the files like in /usr/share/sounds/..., it can be
+  tricked by passing relative path components like so:
 
-jch
+  ```
+  dbus-send --system --print-reply --dest=com.deepin.api.SoundThemePlayer \
+     /com/deepin/api/SoundThemePlayer com.deepin.api.SoundThemePlayer.Play \
+     string:goodtheme string:../../../../../home/mgerstner/test string:alsa
+  ```
 
+  This allows to specify files within user control like e.g. a very big
+  file, a specially constructed file that triggers a buffer overflow or
+  even a special device file like a FIFO which will DoS the system
+  service.
 
-[*] Yes, you could, for example, use $SUDO_USER/UID/etc but you can bet that that will throw up all kinds of security problems that we don't have today.
+3) com.deepin.api.LocaleHelper: This service employs polkit
+  authentication but is using the deprecated unix process subject to do
+  so.
 
+  Furthermore in locale-helper/main.go: in doGenLocaleWithParam() it
+  calls ("/bin/sh", "-c", cmd) where `cmd` is a user supplied parameter.
+  This allows injection of special shell characters that can lead to
+  code execution or other unexpected results.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+Most of these issues have by now been adressed by upstream in some way.
+
+[1]: https://bugzilla.suse.com/show_bug.cgi?id=1070943
+
+deepin-file-manager
+===================
+
+This package provides a file manager for the deepin desktop environment.
+Full details about the findings can be found in [2].
+
+com.deepin.pkexec.usb-device-formatter.policy: This allows any locally
+logged in regular user to run /usr/bin/usb-device-formatter without any
+authentication.
+
+The usb-device-formatter has the following issues:
+
+- it crashes when called without parameters
+- It can be used to determine the existence of arbitrary files, since
+  all paths can be passed and the error message differentiates between
+  not existing and not a block device.
+- When operating on a symlinked block device the application allows to
+  unmount arbitrary block devices as far as they're not busy.
+- The same symlink attack can be used to format arbitrary file systems
+  as long as they're not busy.
+- it reads from users `~/.pam_environment` w/o any protection. It looks
+  like other PAM applications do that as well. Linking /dev/zero there
+  causes fun things. This should only be done after dropping privilege
+  to the calling user and by not following symlinks.
+
+So this program is certainly not fit to be run without root
+authentication.
+
+A couple of the issues have in some way been adressed by upstream, but
+some are still incomplete.
+
+The com.deepin.filemanager.daemon.conf D-Bus configuration allows any
+user to own the D-Bus service on the system bus, thereby any user can
+spoof clients of this service.
+
+None of the exported D-Bus functions is protected by polkit which would
+be necessary, as is shown by the following findings:
+
+Findings in the UserShareManager interface:
+
+- setUserSharePassword: allows to set arbitrary users' smb password.
+  Changes the database in /var/lib/samba/private. If at all then this
+  must only be allowed for the caller's username.
+- addGroup: calls `groupadd` so regular users can create arbitrary
+  groups.
+- addUserToGroup: allows arbitrary users to add arbitrary other users to
+  arbitrary other groups. Luckily doesn't work on SUSE, because
+  `/usr/sbin/adduser` is called but we have `useradd`.
+- restartSambaService calls `smbd restart`
+
+Findings in UsbFormatter:
+
+- mkfs: create jfs, ext2/3/4, btrfs, swap, hfs, dosfs, xfs, reiserfs on
+  arbitrary paths. This can overwrite arbitrary regular files, too, if
+  they are large enough.
+
+Findings in DeviceInfoManager:
+
+- The methods in this interface are somehwat okay but they still allow
+  to call lsblk and various low level file system information tools on
+  arbitrary block devices or other paths.
+
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=1134131
+
+deepin-anything
+===============
+
+This is a file search tool. Full details about the findings can be found
+in [3]. The D-Bus configuration com.deepin.anything.conf allows anybody
+to own the service com.deepin.anything on the system bus, thereby any
+user can spoof clients of this service. We did not look further into its
+code base.
+
+[3]: https://bugzilla.suse.com/show_bug.cgi?id=1136026
+
+Regards
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Linux GmbH
+GF: Felix Imendörffer, Mary Higgins, Sri Rasiah
+HRB 21284 (AG Nuernberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
