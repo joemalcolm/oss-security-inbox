@@ -1,4 +1,9 @@
-Received: (qmail 20176 invoked by uid 550); 24 May 2026 16:43:20 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6724" "Monday" "5" "August" "2019" "15:51:59" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20190805135159.GD9991@f195.suse.de>" "167" "[oss-security] Security issues in various deepin D-Bus services and tools" nil nil nil "8" "2019080513:51:59" "[oss-security] Security issues in various deepin D-Bus services and tools" (number mark "U       mgerstner@su Aug  5  167/6724  " thread-indent "\"[oss-security] Security issues in various deepin D-Bus services and tools\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Security issues in various deepin D-Bus services and tools" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1436 invoked by uid 550); 5 Aug 2019 13:52:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,88 +12,183 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25913 invoked from network); 24 May 2026 11:58:39 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1779623908; cv=none; 
-	d=zohomailcloud.ca; s=zohoarc; 
-	b=puxd0NNC7HTmTo6eXsy8J5+yrWVL/aGgzSPIAPnBPEqbppfaMjIQKnzmDqXF292upEPXl3x/pX+GkywdWD6tpFR10qTNYY1UAPPbiZJ//N7J9m87eTj0fcHCFCM1On+Y82sbHT6jOQkFhYn++DSRJywtueb5dR7UlIiDkkp0X1Q=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomailcloud.ca; s=zohoarc; 
-	t=1779623908; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=Cv6R+hYCtYD8/aS0grJ5qlJ4bhmAU62PIVWjCcGcgR4=; 
-	b=FPpxvDP0WlzTey9uWLHLHiDK6W//VK0TZW0PTN9QtN5p7GVpq3Mlr6OXvnIGn2CAT/UXnvjtEqgU4RIrZ4l7TsSsXWnvfGjgulQpYTZpKmAspdtVKIah8E03pELUDGrHI5gGSDwjp9x5LnjtI2H8XkGIMyw6dBilMQRucJhmq4A=
-ARC-Authentication-Results: i=1; mx.zohomailcloud.ca;
-	dkim=pass  header.i=roiai.ca;
-	spf=pass  smtp.mailfrom=sales@roiai.ca;
-	dmarc=pass header.from=<sales@roiai.ca>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1779623908;
-	s=zmail; d=roiai.ca; i=sales@roiai.ca;
-	h=Date:Date:From:From:To:To:Cc:Cc:Message-Id:Message-Id:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Reply-To;
-	bh=Cv6R+hYCtYD8/aS0grJ5qlJ4bhmAU62PIVWjCcGcgR4=;
-	b=ne1QtuC63+cZsBsZG4TdGoEQxqabQ5BcG6OzJdvqG+lcU4n30ZALLDPYrc0OsgJG
-	Nk8aG/3EehKP9C2NBeVvdN5vn36tnDb14wweSsassFjDIDvktO+P13bimySusmTmp0p
-	tpEBBRke4Z/f9uURxE8Vxh289wziuih5GVod8/xY=
-Date: Sun, 24 May 2026 04:58:26 -0700
-From: ROI AI <sales@roiai.ca>
-To: "jcb62281" <jcb62281@gmail.com>
-Cc: "oss-security" <oss-security@lists.openwall.com>
-Message-Id: <19e59d9cddf.5c251df4215598.6259862364259739522@roiai.ca>
-In-Reply-To: <bab07bb5-aa3c-4a06-b8a7-c33efd179b41@gmail.com>
-References: <afDLFWVMK-r70PB0@yuggoth.org>
- <ed61471e-5674-4ad6-9b4c-729027f1073f@oracle.com>
- <19e48ffc072.20eeee58126634.4537984379441699684@roiai.ca>
- <19e494d88f3.fa2e5b9128090.8772053311417055861@roiai.ca>
- <f63f5a7e-6485-4bdc-866d-ab294a22536d@gmail.com>
- <19e4e2af936.4b7051cf156989.7683180300004644154@roiai.ca> <bab07bb5-aa3c-4a06-b8a7-c33efd179b41@gmail.com>
+Received: (qmail 1401 invoked from network); 5 Aug 2019 13:52:11 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Mon, 5 Aug 2019 15:51:59 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20190805135159.GD9991@f195.suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_324000_415198543.1779623906783"
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
-Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="LTeJQqWS0MN7I/qa"
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: [oss-security] Security issues in various deepin D-Bus services and tools
 
-------=_Part_324000_415198543.1779623906783
-Content-Type: text/plain; charset="UTF-8"
+--LTeJQqWS0MN7I/qa
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-> In case you have forgotten, this discussion *started* with a maintainer=20
-suspecting that LLM-detected vulnerabilities
+We've been reviewing a number of D-Bus services and applications that
+are part of the deepin desktop environment (a desktop environment
+focused on Chinese users). There are a larger number of security related
+findings in these components. Since there has been little progress in
+the communication with upstream to fully fix these issues for some time
+I'm hereby making them available more publicly. It seems to us that
+upstream is lacking a designated security contact and a security policy.
 
+deepin-api
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-I replied to this thread because I reported a dozen issues to OpenStack, wh=
-ich the OP is a VMT lead for.=C2=A0 He has yet to claim any of the issues I=
-'ve reported are invalid or duplicate.=C2=A0I believe people are overclaimi=
-ng this.=C2=A0 I also believe duplicates, when found, are a good sign for p=
-rioritization.=C2=A0 =C2=A0=C2=A0
+This package provides some common system services for the deepin desktop
+environment. It employs polkit for permissions management. Full details
+can be found in [1]. The following issues have been found:
 
+1) com.deepin.api.Device.conf: The service allows anybody to run
+  /usr/sbin/rfkill with arbitrary arguments. Polkit protection is not
+  implemented, only a TODO in the source code hints at it.
 
+2) com.deepin.api.SoundThemePlayer.conf: The service allows any user to
+  pass arbitrary files to it and it will try to read it in as an audio
+  file and play it as `root`.
+  While the service supposedly only looks into a couple of system
+  directories for the files like in /usr/share/sounds/..., it can be
+  tricked by passing relative path components like so:
 
-I was also disappointed to see a serious security bug I reported on OpenSta=
-ck pushed to public.=C2=A0 If I had know that would happen, I wouldn't have=
- reported it.=C2=A0 I don't want to be a part of what I feel to be negligen=
-t and unprofessional activities.=C2=A0 My goal was not credit, but rather t=
-o improve the security of OpenStack as I wanted to see it as a solution to =
-sovereign cloud.=C2=A0 Pushing it to public undermined that.
+  ```
+  dbus-send --system --print-reply --dest=3Dcom.deepin.api.SoundThemePlayer=
+ \
+     /com/deepin/api/SoundThemePlayer com.deepin.api.SoundThemePlayer.Play \
+     string:goodtheme string:../../../../../home/mgerstner/test string:alsa
+  ```
 
-=C2=A0
-Using LLMs, I am farming careless engineers who reveal security sensitive i=
-nfo in bug reports, commit comments, and code reviews.=C2=A0 This 'public' =
-attitude is just making it much easier for me to do so.
+  This allows to specify files within user control like e.g. a very big
+  file, a specially constructed file that triggers a buffer overflow or
+  even a special device file like a FIFO which will DoS the system
+  service.
 
+3) com.deepin.api.LocaleHelper: This service employs polkit
+  authentication but is using the deprecated unix process subject to do
+  so.
 
-Security sensitive communication should remain in a restricted discussion a=
-rea and teams should be using LLMs to analyze it for further issues to clos=
-e.
+  Furthermore in locale-helper/main.go: in doGenLocaleWithParam() it
+  calls ("/bin/sh", "-c", cmd) where `cmd` is a user supplied parameter.
+  This allows injection of special shell characters that can lead to
+  code execution or other unexpected results.
 
+Most of these issues have by now been adressed by upstream in some way.
 
+[1]: https://bugzilla.suse.com/show_bug.cgi?id=3D1070943
 
+deepin-file-manager
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
--- Jacob
-Confidential communication. No warranties or commitments unless in a signed=
- agreement. If received in error, notify sender and delete. Unauthorized us=
-e prohibited.
+This package provides a file manager for the deepin desktop environment.
+Full details about the findings can be found in [2].
 
+com.deepin.pkexec.usb-device-formatter.policy: This allows any locally
+logged in regular user to run /usr/bin/usb-device-formatter without any
+authentication.
 
+The usb-device-formatter has the following issues:
 
+- it crashes when called without parameters
+- It can be used to determine the existence of arbitrary files, since
+  all paths can be passed and the error message differentiates between
+  not existing and not a block device.
+- When operating on a symlinked block device the application allows to
+  unmount arbitrary block devices as far as they're not busy.
+- The same symlink attack can be used to format arbitrary file systems
+  as long as they're not busy.
+- it reads from users `~/.pam_environment` w/o any protection. It looks
+  like other PAM applications do that as well. Linking /dev/zero there
+  causes fun things. This should only be done after dropping privilege
+  to the calling user and by not following symlinks.
 
-------=_Part_324000_415198543.1779623906783--
+So this program is certainly not fit to be run without root
+authentication.
+
+A couple of the issues have in some way been adressed by upstream, but
+some are still incomplete.
+
+The com.deepin.filemanager.daemon.conf D-Bus configuration allows any
+user to own the D-Bus service on the system bus, thereby any user can
+spoof clients of this service.
+
+None of the exported D-Bus functions is protected by polkit which would
+be necessary, as is shown by the following findings:
+
+Findings in the UserShareManager interface:
+
+- setUserSharePassword: allows to set arbitrary users' smb password.
+  Changes the database in /var/lib/samba/private. If at all then this
+  must only be allowed for the caller's username.
+- addGroup: calls `groupadd` so regular users can create arbitrary
+  groups.
+- addUserToGroup: allows arbitrary users to add arbitrary other users to
+  arbitrary other groups. Luckily doesn't work on SUSE, because
+  `/usr/sbin/adduser` is called but we have `useradd`.
+- restartSambaService calls `smbd restart`
+
+Findings in UsbFormatter:
+
+- mkfs: create jfs, ext2/3/4, btrfs, swap, hfs, dosfs, xfs, reiserfs on
+  arbitrary paths. This can overwrite arbitrary regular files, too, if
+  they are large enough.
+
+Findings in DeviceInfoManager:
+
+- The methods in this interface are somehwat okay but they still allow
+  to call lsblk and various low level file system information tools on
+  arbitrary block devices or other paths.
+
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=3D1134131
+
+deepin-anything
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+This is a file search tool. Full details about the findings can be found
+in [3]. The D-Bus configuration com.deepin.anything.conf allows anybody
+to own the service com.deepin.anything on the system bus, thereby any
+user can spoof clients of this service. We did not look further into its
+code base.
+
+[3]: https://bugzilla.suse.com/show_bug.cgi?id=3D1136026
+
+Regards
+
+Matthias
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Linux GmbH
+GF: Felix Imend=F6rffer, Mary Higgins, Sri Rasiah
+HRB 21284 (AG Nuernberg)
+
+--LTeJQqWS0MN7I/qa
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl1INH4ACgkQFMQFyXGS
+NVNdExAAjxc3ewrdRJW2vS0Eyb4pvvy0zS96AfTlw+TV6bmPUHLuKEzBgnNS2pn1
+wl+rwtpelUJEEnC8PdmFmcKXmtc8qbnXtpUjNQsh09WNBOB0o0Du8fRphZVQJORB
+NkTcrwIRNnlPJKoJccWlU3tQ91t8SqnIdVJ+9GkrXQdE7vAwifuququL5Wnb/cbR
+nh8ZWA4B30LHdHNTlGYUM2hwivxU69wXr0a/X8Og0ldiXZi9VRNRzzkv73V8687U
+VCrYZepwytyUj4ceBK55XssQmZEk/lcUPJnO8rf3mR4LP0UB8PoErxb8UntQzexC
+2CVdgtNE0Ee5+tPEG85sk+GddplrvntEdhkAW3yDc3WMVwyroA2Y75umsixTlqy3
+YhoZm0uQEBJZ8Tk3CiL1C0CCD6TEtTWUwiekgm+rbwSQuiSHjvs9HPElWg4gZqIN
+IMeq4oYrOWgS2o+xxOJjOLYQnOrFDgSprW92sggEVfOKDEuqXIAzlkThB/191C5O
+lksUXYyITmkBJhZ9oHlwKFHzyxZPcJxan8n916+NeFXqqZpV2MYWI9t7xtzqLhB8
+cvb9jQ+Oq0ur+gCmN2sX2ZHO8u/eUUtxH0wCHyJmrw9/ZmMJnBg2vQbeSMVwHd7u
+t0Cb/cTCjC+iSIbS6IrZC44U5TkGTR9E8SsPQZWqppGJmHwfcNY=
+=6/E3
+-----END PGP SIGNATURE-----
+
+--LTeJQqWS0MN7I/qa--
