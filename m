@@ -1,35 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/12
-Message-ID: <20190722141221.uf5ae5l4qkucmksl@matica.foolinux.mooo.com>
-Date: Mon, 22 Jul 2019 07:12:21 -0700
-From: Ian Zimmerman <itz@...y.loosely.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/05/2
+Message-ID: <87v9vb973d.fsf@oldenburg2.str.redhat.com>
+Date: Mon, 05 Aug 2019 13:36:54 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
+Subject: Current CVE policy on missing-hardening bugs
 Content-Type: text/plain; charset=utf-8
 
-On 2019-07-22 13:50, Solar Designer wrote:
+What's the current policy on assinging CVE IDs for bugs that are merely
+missed hardening opportunities?  One example is lack of full ASLR due to
+address space limits (47 or fewer bits instead of the theoretical limit
+of 64 bits).
 
-> Exactly.  It's just an unusual disclosure process that involves giving
-> the users a heads-up a few days before public disclosure of the actual
-> vulnerabilities and fixes.  So far, this process is practiced by
-> OpenSSL and Exim (any others?)
-> 
-> Unfortunately, this keeps confusing people, which is why this time
-> Heiko's message starts with "Note: EMBARGO is still in effect".
-> Judging by Mikhail's reply, this wasn't good enough to avoid
-> confusion, and I don't know what would be - maybe a paragraph of text
-> acknowledging that the disclosure process is unusual?  Somehow I
-> didn't notice such confusion in response to OpenSSL's
-> pre-announcements (not here, but on their own announce list), so maybe
-> Exim should try to reuse OpenSSL's wording.  Here's an example:
-> 
-> https://mta.openssl.org/pipermail/openssl-announce/2019-February/000145.html
+Are they eligible for CVE assignment?  Should we DISPUTE them if we
+encounter them?
 
-FWIW, I really appreciate this way (Exim's and OpenSSL's) and I wish it
-was the norm, rather than the exception.
-
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet and on broken lists
-which rewrite From, fetch the TXT record for no-use.mooo.com.
+Thanks,
+Florian
