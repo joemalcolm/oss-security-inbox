@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3110" "Friday" "18" "August" "2017" "16:13:00" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170818141300.GH13079@suse.de>" "130" "Re: [oss-security] Re: ***UNCHECKED*** [oss-security] UnRAR: directory traversal + memory safety bugs" nil nil nil "8" "2017081814:13:00" "[oss-security] Re: ***UNCHECKED*** [oss-security] UnRAR: directory traversal + memory safety bugs" (number mark "U       meissner@sus Aug 18  130/3110  " thread-indent "\"Re: [oss-security] Re: ***UNCHECKED*** [oss-security] UnRAR: directory traversal + memory safety bugs\"\n") "<20170818132450.GE13079@suse.de>" ("<20170814223948.w4j6rsznsgixhc43@jwilk.net>" "<20170818132450.GE13079@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1997" "Monday" "5" "August" "2019" "12:01:22" "-0400" "Joel Smith" "joelsmith@redhat.com" "<CAEftUaoQGR5-iZtSCJth9==+eN913R_hPoUTHNBJ9fmgABhO8w@mail.gmail.com>" "50" "[oss-security] Kubernetes v1.13.9, v1.14.5, v1.15.2 released to address CVE-2019-11247, CVE-2019-11249" nil nil nil "8" "2019080516:01:22" "[oss-security] Kubernetes v1.13.9, v1.14.5, v1.15.2 released to address CVE-2019-11247, CVE-2019-11249" (number mark "U       joelsmith@re Aug  5   50/1997  " thread-indent "\"[oss-security] Kubernetes v1.13.9, v1.14.5, v1.15.2 released to address CVE-2019-11247, CVE-2019-11249\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Kubernetes v1.13.9, v1.14.5, v1.15.2 released to address CVE-2019-11247, CVE-2019-11249" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9633 invoked by uid 550); 18 Aug 2017 14:13:13 -0000
+Received: (qmail 13913 invoked by uid 550); 5 Aug 2019 16:05:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,152 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9602 invoked from network); 18 Aug 2017 14:13:12 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Fri, 18 Aug 2017 16:13:00 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20170818141300.GH13079@suse.de>
-References: <20170814223948.w4j6rsznsgixhc43@jwilk.net>
- <20170818132450.GE13079@suse.de>
+Received: (qmail 11799 invoked from network); 5 Aug 2019 16:01:45 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=s8T1Mr/FFh0BQ+kv7Zld8n/cm5P4ezvM106CJUtSBpU=;
+        b=X4KIkCK2WJEQIZ+w0SU7giZ3HF98It09Y+AFTbGm20zapB0BEBa/zsXg68pwdPEu56
+         EncWeorJJpaDQCTsG14Lr8Ex60CwL8hnraI/zOruaeg12IKHzWLV9HOx9b6rJ/n0wFa6
+         skySKUu6yBQW/fEBaSI2LRx3S6tD2Z+AdIQ/cUXzRXCML86YjraurDljt/r0uruUCrTd
+         sobEbfLAnOYjnd7JKzmZaiIt4izs6SXf7VmGhkSgb7M8a4WApqHNBZg8Egj8sBse/fsX
+         pcttudjlRFRPHPHpXzAKbwKgTJeOl/TcncqOLWgu4bfUZvYneDAMeBXlZruGGpyc/l9f
+         C21Q==
+X-Gm-Message-State: APjAAAUWpa5Gj8cXL6HQjfOl/hrvggKWMROeynLg3wu/xewaam8V/cya
+	2023J9DaTFx2svaBEERwwmUrTs1q6+OoBditCZGw+ifxdfbCXw==
+X-Google-Smtp-Source: APXvYqwMi0GVwrjeWuj3UPTZWs9sOKNWOVlk6Uxcc4Xm01wmfJARbN6qDVFXmWQCZZEgfHwkzK//NXzmffoNPG8nxy0=
+X-Received: by 2002:a17:906:c785:: with SMTP id cw5mr71687605ejb.215.1565020894200;
+ Mon, 05 Aug 2019 09:01:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170818132450.GE13079@suse.de>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] Re: ***UNCHECKED*** [oss-security] UnRAR:
- directory traversal + memory safety bugs
+From: Joel Smith <joelsmith@redhat.com>
+Date: Mon, 5 Aug 2019 12:01:22 -0400
+Message-ID: <CAEftUaoQGR5-iZtSCJth9==+eN913R_hPoUTHNBJ9fmgABhO8w@mail.gmail.com>
+To: oss-security@lists.openwall.com, 
+	kubernetes-security-announce@googlegroups.com, 
+	kubernetes-security-discuss@googlegroups.com
+Content-Type: multipart/alternative; boundary="000000000000771d1c058f60d244"
+Subject: [oss-security] Kubernetes v1.13.9, v1.14.5, v1.15.2 released to address CVE-2019-11247, CVE-2019-11249
 
-Quoting from MITRE:
+--000000000000771d1c058f60d244
+Content-Type: text/plain; charset="UTF-8"
 
->> There is also a memory overread / corruption issues, are you going to assign
->> more CVEs?
+Hello Kubernetes Community,
 
-Yes, we looked further and it appears that all of the other issues can
-have CVEs.
+We have released Kubernetes 1.13.9
+<https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1139>,
+1.14.5
+<https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1145>,
+and 1.15.2
+<https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.15.md#v1152>
+to address two security issues in Kubernetes. We recommend all clusters and
+kubectl clients update to one of these releases immediately.
 
-Specifically, the UnRAR license says "UnRAR source code may be used in
-any software to handle RAR archives without limitations free of
-charge, but cannot be used to develop RAR (WinRAR) compatible archiver
-and to re-create RAR compression algorithm, which is proprietary."
-Also, the makefile can be used to build libraries from the code
-(libunrar.a, etc.). Therefore, someone might have a long-running
-process executing the UnRAR code, and any arbitrary crash
-(out-of-bounds read, etc.) could be a denial of service.
+CVE-2019-11247: API server allows access to custom resources via wrong scope
 
-Although this scenario may be unlikely, here are the three CVE IDs
-anyway.
+This vulnerability allows access to a cluster-scoped custom resource if the
+request is made as if the resource were namespaced. Authorizations for the
+resource accessed in this manner are enforced using roles and role bindings
+within the namespace, meaning that a user with access only to a resource in
+one namespace could create, view update or delete the cluster-scoped
+resource (according to their namespace role privileges).
 
+See Kubernetes issue #80983
+<https://github.com/kubernetes/kubernetes/issues/80983> for details. Thanks
+to Prabu Shyam of Verizon Media for reporting this problem.
 
-> [Suggested description]
-> libunrar.a in UnRAR before 5.5.7 has an out-of-bounds read in the EncodeFileName::Decode
-> call within the Archive::ReadHeader15 function.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> Someone else might have requested CVEs.
-> 
-> ------------------------------------------
-> 
-> [Vulnerability Type]
-> memory safety
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> unrar
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> unrar - 5.5.7
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> http://seclists.org/oss-sec/2017/q3/290
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
+CVE-2019-11249: Incomplete fixes for CVE-2019-1002101 and CVE-2019-11246,
+kubectl cp potential directory traversal
 
-Use CVE-2017-12940.
+This vulnerability allows a malicious container to cause a file to be
+created or replaced on the client computer when the client uses the kubectl
+cp operation. The vulnerability is a client-side defect and requires user
+interaction to be exploited.
 
+See Kubernetes issue #80984
+<https://github.com/kubernetes/kubernetes/issues/80984> for details. Thanks
+to Yang Yang of Amazon for reporting this problem.
 
-> [Suggested description]
-> libunrar.a in UnRAR before 5.5.7 has an out-of-bounds read in the Unpack::Unpack20
-> function.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> Someone else might have requested CVEs.
-> 
-> ------------------------------------------
-> 
-> [Vulnerability Type]
-> memory safety
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> unrar
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> unrar - 5.5.7
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> http://seclists.org/oss-sec/2017/q3/290
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
+As a reminder, if you find a security vulnerability in Kubernetes, please
+report it following the security disclosure process
+<https://kubernetes.io/security/>.
 
-Use CVE-2017-12941.
+Thanks,
 
+Joel Smith
 
-> [Suggested description]
-> libunrar.a in UnRAR before 5.5.7 has a buffer overflow in the Unpack::LongLZ
-> function.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> Someone else might have requested CVEs.
-> 
-> ------------------------------------------
-> 
-> [Vulnerability Type]
-> memory safety
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> unrar
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> unrar - 5.5.7
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> http://seclists.org/oss-sec/2017/q3/290
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
+(on behalf of the Kubernetes Product Security Team)
 
-Use CVE-2017-12942.
+--000000000000771d1c058f60d244--
