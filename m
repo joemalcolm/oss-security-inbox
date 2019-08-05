@@ -1,54 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/8
-Message-ID: <2149-1546348324.866586@kBWv.VBuL.JgNP>
-Date: Tue, 01 Jan 2019 13:12:04 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/05/5
+Message-ID: <CAEftUaoQGR5-iZtSCJth9==+eN913R_hPoUTHNBJ9fmgABhO8w@mail.gmail.com>
+Date: Mon, 5 Aug 2019 12:01:22 -0400
+From: Joel Smith <joelsmith@...hat.com>
+To: oss-security@...ts.openwall.com,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss@...glegroups.com
+Subject: Kubernetes v1.13.9, v1.14.5, v1.15.2 released to address CVE-2019-11247, CVE-2019-11249
 Content-Type: text/plain; charset=utf-8
 
-Jeffrey Walton writes:
-> The GMP library uses asserts to crash a program at runtime
-> when presented with data it did not expect.  ...
+Hello Kubernetes Community,
 
-For me, that seems to be the best way. In the end the discussion
-is mostly about if you value confidentiality and integrity over
-availability (and a little confidentiality as shown by you).
+We have released Kubernetes 1.13.9
+<https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1139>,
+1.14.5
+<https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1145>,
+and 1.15.2
+<https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.15.md#v1152>
+to address two security issues in Kubernetes. We recommend all clusters and
+kubectl clients update to one of these releases immediately.
 
-Usually for highly secure systems (those where availability
-is top priority are quite often safety-critical, not security),
-you can mitigate effects of such a DoS permanently (by fixing
-the program) but you cannot reverse the effects of leaked data,
-which happens more easily by corrupting/manipulating a target
-program state and get the data exfiltrated by the target itself
-than gaining access to the machine another way and read (unnoticed)
-core dumps created even via another mechanism.
+CVE-2019-11247: API server allows access to custom resources via wrong scope
 
-Also cleaning up corrupted data is often much more expensive
-than having some outage and then start again. This is what your
-24/7 devops team is for (with highly secure systems).
+This vulnerability allows access to a cluster-scoped custom resource if the
+request is made as if the resource were namespaced. Authorizations for the
+resource accessed in this manner are enforced using roles and role bindings
+within the namespace, meaning that a user with access only to a resource in
+one namespace could create, view update or delete the cluster-scoped
+resource (according to their namespace role privileges).
 
+See Kubernetes issue #80983
+<https://github.com/kubernetes/kubernetes/issues/80983> for details. Thanks
+to Prabu Shyam of Verizon Media for reporting this problem.
 
-So in my opinion your example, even when it demonstrates a small
-information leak on aborting, is even a better example, why
-aborting was the right thing to do: on the first highly secure
-system, where your software aborted, the malfunction was detected
-immediately and easily. Thus it was possible to fix it timely
-and you avoided having broken software running for years without
-getting noticed (by developers, operators or worse: attackers).
+CVE-2019-11249: Incomplete fixes for CVE-2019-1002101 and CVE-2019-11246,
+kubectl cp potential directory traversal
 
-Note 1: The only exception for functions NOT aborting on corrupted
-data are secure "validate-data-functions" or "parse-functions"
-(if they provide secure data validation also).
+This vulnerability allows a malicious container to cause a file to be
+created or replaced on the client computer when the client uses the kubectl
+cp operation. The vulnerability is a client-side defect and requires user
+interaction to be exploited.
 
-Note 2: Little off-topic, but in the same line more APIs should
-abort on insane requests. So for example I do not understand, why
-read(2) should EFAULT on bad addresses instead of SEGV. The only
-thing I use this feature for is to probe memory maps inside chroots
-(or where /proc/self/maps is inaccessible for other reasons).
-But maybe EFAULT is a very useful POSIX feature in use cases
-I did not think about yet.
+See Kubernetes issue #80984
+<https://github.com/kubernetes/kubernetes/issues/80984> for details. Thanks
+to Yang Yang of Amazon for reporting this problem.
 
-hd
+As a reminder, if you find a security vulnerability in Kubernetes, please
+report it following the security disclosure process
+<https://kubernetes.io/security/>.
 
+Thanks,
+
+Joel Smith
+
+(on behalf of the Kubernetes Product Security Team)
 
