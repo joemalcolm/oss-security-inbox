@@ -1,86 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/06/3
-Message-ID: <alpine.DEB.2.20.1902060809320.28483@tvnag.unkk.fr>
-Date: Wed, 6 Feb 2019 08:12:37 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: SMTP end-of-response out-of-bounds read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/05/3
+Message-ID: <b57e27f0-e9fd-5d88-6d46-1606e59b9a9a@johannes-bauer.com>
+Date: Mon, 5 Aug 2019 12:56:33 +0200
+From: zugtprgfwprz@...rnkuller.de
+To: oss-security@...ts.openwall.com
+Subject: Re: New Tool - Phishing Simulation
 Content-Type: text/plain; charset=utf-8
 
-SMTP end-of-response out-of-bounds read
-=======================================
+Hi Jyoti,
 
-Project curl Security Advisory, February 6th 2019 -
-[Permalink](https://curl.haxx.se/docs/CVE-2019-3823.html)
+On 05.08.19 11:50, jeny raval wrote:
 
-VULNERABILITY
--------------
+> I have developed this tool "Phishing Simulation", which might be a good fit
+> for your arsenal.
+> 
+> https://github.com/jenyraval/Phishing-Simulation
+> 
+> I will also be presenting this one at defcon this year. Let me know if any
+> more information is needed.
 
-libcurl contains a heap out-of-bounds read in the code handling the
-end-of-response for SMTP.
+It sounds interesting, I checked it out. Here's some feedback: I had
+trouble figuring out immediately what the tool did. The information in
+the README doesn't make it all too clear in my opinion.
 
-If the buffer passed to `smtp_endofresp()` isn't NUL terminated and contains
-no character ending the parsed number, and `len` is set to 5, then the
-`strtol()` call reads beyond the allocated buffer. The read contents will not
-be returned to the caller.
+For example, it says that it's an interactive tutorial, but you don't
+need "any actual setup". Further down it apparently requires a webserver
+and database server and mentions a future Docker setup description. So
+that's a tad bit confusing. I.e., I think when you're referring to "no
+infrastructure" is that you don't need to have an Internet-facing host
+or something like that? And that the tutorial infrastructure could be
+installed locally and users directed to that?
 
-We are not aware of any exploit of this flaw.
+Maybe you could add how it does actually work in practice. I.e., do I
+install it locally on one host and give out URIs to users who I want to
+test and they complete the tutorial/quiz? Maybe you could use GitHub
+pages to include screenshots of how that looks?
 
-INFO
-----
+I'd be curious as to how it all works, but it'd be really cool if I
+could get more info without having to go through the motions of actually
+installing everything :)
 
-This bug was introduced in October 2013 in
-[commit 2766262a68](https://github.com/curl/curl/commit/2766262a68).
+Thanks for sharing,
+All the best,
+Joe
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2019-3823 to this issue.
-
-CWE-125: Out-of-bounds Read
-
-Severity: 3.7 (Low)
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.34.0 to and including 7.63.0
-- Not affected versions: libcurl < 7.34.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-A [patch for CVE-2019-3823](https://github.com/curl/curl/commit/39df4073e5413fcdbb5a38da0c1ce6f1c0ceb484) is available.
-
-RECOMMENDATIONS
---------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.64.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Turn off SMTP
-
-TIMELINE
---------
-
-The issue was reported to the curl project on January 18, 2019. A patch was
-communicated to the reporter on January 19, 2019. We contacted distros@...nwall
-on January 28.
-
-curl 7.64.0 was released on February 6 2019, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Brian Carpenter, Geeknik Labs. Patch by Daniel Gustafsson
-
-Thanks a lot!
 
 -- 
-
-  / daniel.haxx.se
+"A PC without Windows is like a chocolate cake without mustard."
