@@ -1,41 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/02/4
-Message-ID: <nn7efnnyvs.fsf@armitage.lysator.liu.se>
-Date: Wed, 02 Jan 2019 11:21:27 +0100
-From: nisse@...ator.liu.se (Niels Möller)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/05/1
+Message-ID: <CANo=s0aWS_38_o4MU0v=RwH_aAbVzhYtYHiM0yT8dD3M_Sah7w@mail.gmail.com>
+Date: Mon, 5 Aug 2019 15:20:11 +0530
+From: jeny raval <jenyraval@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Disabling ptrace
+Subject: New Tool - Phishing Simulation
 Content-Type: text/plain; charset=utf-8
 
-Jakub Wilk <jwilk@...lk.net> writes:
+Hello Team,
 
-> * Niels Möller <nisse@...ator.liu.se>, 2019-01-01, 12:27:
->>Matthew Fernandez <matthew.fernandez@...il.com> writes:
->>> E.g. you can attach to the victim process with gdb/ptrace and
->>> simply read its memory, if the sysadmin has not blocked this with
->>> Yama or similar.
->>
->> I think one can disable this in the process itself, using prctl with
->> PR_SET_DUMPABLE. But documentation is a bit unclear and doesn't
->> exlicitly mention effect on ptrace
->
-> The prctl(2) man page reads: “Processes that are not dumpable can not
-> be attached via ptrace(2) PTRACE_ATTACH; see ptrace(2) for further
-> details.”
+I have developed this tool "Phishing Simulation", which might be a good fit
+for your arsenal.
 
-Thanks, I somehow missed that. So prctl should be the right tool, then.
+https://github.com/jenyraval/Phishing-Simulation
 
->>(and other debugging interfaces).
->
-> What other interfaces do you have in mind?
+I will also be presenting this one at defcon this year. Let me know if any
+more information is needed.
 
-I had the impression that ptrace was old-fashined, and that current gdb
-used other interfaces via /proc (with permissions also affected by
-prctl). But I may be mistaken; I've never looked into those details.
+Thanks!
+Jyoti Raval
 
-Regards,
-/Niels
-
--- 
-Niels Möller. PGP-encrypted email is preferred. Keyid 368C6677.
-Internet email is subject to wholesale government surveillance.
