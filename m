@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/9
-Message-ID: <alpine.GSO.2.20.1906241135310.23351@scrappy.simplesystems.org>
-Date: Mon, 24 Jun 2019 11:42:17 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/05/6
+Message-ID: <20190805232737.GA11260@oevtugenva.nrevsny.pk>
+Date: Mon, 5 Aug 2019 19:27:37 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Cc: musl@...ts.openwall.com
+Subject: CVE request: musl libc 1.1.23 and earlier x87 float stack imbalance
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 24 Jun 2019, Stuart D. Gathman wrote:
->
-> Question: is fuzzing useful for languages like Java/python?  Obviously,
-> you eventually reach a native code module in both cases, but fuzzing the 
-> entire virtual machine is cumbersome.  Maybe native code libraries
-> for "safe" languages should include fuzzing as part of testing.
+I've discovered a flaw in musl libc's arch-specific math assembly code
+for i386, whereby at least the log1p function and possibly others
+return with more than one item on the x87 stack. This can lead to x87
+stack overflow in the execution of subsequent math code, causing it to
+incorrectly produce a NAN in place of the actual result. If floating
+point results are used in flow control, this can lead to runaway wrong
+code execution. For example, in Python (version 3.6.8 tested), at
+least one code path of the dtoa function becomes an infinite loop
+performing what's effectively an unbounded-length memset when entered
+under such a condition.
 
-There is nothing about languages like Java and Python which 
-necessarily makes them safe.  Access outside of memory bounds is just 
-one issue which often afflicts C/C++.  Java and Python can easily do 
-something wrong such as use all available resources or never finish. 
-In the case of Python, Python can easily make arbitrary calls into C 
-code under control of the script.
+This bug is potentially exploitable in software which calls affected
+math functions with inputs under user control. Impact depends on how
+the application handles the ABI-violating x87 state; in Python it
+seems to be limited to producing a crash.
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+The bug is present in all versions after 0.9.12, up through the
+current (1.1.23) release. Only 32-bit x86 systems (aka IA32, musl's
+"i386" arch) are affected. Users of other archs, including x86_64, can
+safely ignore this issue.
+
+Affected users are advised to apply the following patch:
+
+https://git.musl-libc.org/cgit/musl/patch/?id=f3ed8bfe8a82af1870ddc8696ed4cc1d5aa6b441
+
