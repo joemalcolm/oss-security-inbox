@@ -1,44 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/20/3
-Message-ID: <20191120174915.GA27616@openwall.com>
-Date: Wed, 20 Nov 2019 18:49:15 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/06/1
+Message-ID: <20190806000539.GQ9017@oevtugenva.nrevsny.pk>
+Date: Mon, 5 Aug 2019 20:05:39 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Mitigating malicious packages in gnu/linux
+Cc: musl@...ts.openwall.com
+Subject: Re: [musl] CVE request: musl libc 1.1.23 and earlier x87 float stack imbalance
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 20, 2019 at 09:06:57AM -0800, Russ Allbery wrote:
-> Solar Designer <solar@...nwall.com> writes:
+On Mon, Aug 05, 2019 at 07:27:37PM -0400, Rich Felker wrote:
+> I've discovered a flaw in musl libc's arch-specific math assembly code
+> for i386, whereby at least the log1p function and possibly others
+> return with more than one item on the x87 stack. This can lead to x87
+> stack overflow in the execution of subsequent math code, causing it to
+> incorrectly produce a NAN in place of the actual result. If floating
+> point results are used in flow control, this can lead to runaway wrong
+> code execution. For example, in Python (version 3.6.8 tested), at
+> least one code path of the dtoa function becomes an infinite loop
+> performing what's effectively an unbounded-length memset when entered
+> under such a condition.
 > 
-> > Contrary to traditional best practices, update only what and when needs
-> > to be updated.  (Of course, you take responsibility to watch for any
-> > relevant security updates, or accept the risk if you neglect to do that.
-> > You also miss silent security fixes, but on the other hand you similarly
-> > miss newly introduced vulnerabilities.)
+> This bug is potentially exploitable in software which calls affected
+> math functions with inputs under user control. Impact depends on how
+> the application handles the ABI-violating x87 state; in Python it
+> seems to be limited to producing a crash.
 > 
-> I'm very reluctant to give this advice, not because it's wrong, but
-> because the failure mode is misaligned for most people.
+> The bug is present in all versions after 0.9.12, up through the
+> current (1.1.23) release. Only 32-bit x86 systems (aka IA32, musl's
+> "i386" arch) are affected. Users of other archs, including x86_64, can
+> safely ignore this issue.
 > 
-> The average user of a distribution (personal or professional) is at much
-> greater risk of a compromise due to an unpatched security vulnerability
-> than due to malicious code introduced in the distribution package update
-> stream.  Both are *possible*, but one of them is far more common (I would
-> even say by orders of magnitude).  Determining which updates are security
-> updates is tedious and requires a lot of discipline; it's something that
-> humans are generally bad at, and the failure mode is usually to not apply
-> the update.  Many security updates are not explicitly flagged as such (see
-> all the recent discussions on this list about CVEs).
+> Affected users are advised to apply the following patch:
 > 
-> The average user is therefore best served by applying all distribution
-> updates.  Choosing not to update to reduce your risk of a supply chain
-> attack is a very advanced technique, and I would tell people to think very
-> hard about whether they want to sign up for the necessary cognitive load
-> and disciplined decision-making required to identify relevant security
-> updates that they need to apply.
+> https://git.musl-libc.org/cgit/musl/patch/?id=f3ed8bfe8a82af1870ddc8696ed4cc1d5aa6b441
 
-I fully agree.
+The patch contains an error that was missed for unknown reasons,
+probably failure to rebuild a file. I'm attaching an aggregate patch
+that works. Alternaatively, these two commits can be applied:
 
-Yet I think it's an option that people with a background and concerns
-like Georgi's would want to at least consider.  Not typical end-users.
+https://git.musl-libc.org/cgit/musl/patch/?id=f3ed8bfe8a82af1870ddc8696ed4cc1d5aa6b441
+https://git.musl-libc.org/cgit/musl/patch/?id=6818c31c9bc4bbad5357f1de14bedf781e5b349e
 
-Alexander
+View attachment "x87_stack_bug.diff" of type "text/plain" (3105 bytes)
