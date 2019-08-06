@@ -1,177 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/11/1
-Message-Id: <1554951062.13418.0@igalia.com>
-Date: Wed, 10 Apr 2019 21:51:02 -0500
-From: Michael Catanzaro <mcatanzaro@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2019-0002
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/06/4
+Message-ID: <20190806153615.GW9017@oevtugenva.nrevsny.pk>
+Date: Tue, 6 Aug 2019 11:36:15 -0400
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Cc: musl@...ts.openwall.com
+Subject: Re: [musl] CVE request: musl libc 1.1.23 and earlier x87 float stack imbalance
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory WSA-2019-0002
-------------------------------------------------------------------------
+On Mon, Aug 05, 2019 at 08:05:39PM -0400, Rich Felker wrote:
+> On Mon, Aug 05, 2019 at 07:27:37PM -0400, Rich Felker wrote:
+> > I've discovered a flaw in musl libc's arch-specific math assembly code
+> > for i386, whereby at least the log1p function and possibly others
+> > return with more than one item on the x87 stack. This can lead to x87
+> > stack overflow in the execution of subsequent math code, causing it to
+> > incorrectly produce a NAN in place of the actual result. If floating
+> > point results are used in flow control, this can lead to runaway wrong
+> > code execution. For example, in Python (version 3.6.8 tested), at
+> > least one code path of the dtoa function becomes an infinite loop
+> > performing what's effectively an unbounded-length memset when entered
+> > under such a condition.
+> > 
+> > This bug is potentially exploitable in software which calls affected
+> > math functions with inputs under user control. Impact depends on how
+> > the application handles the ABI-violating x87 state; in Python it
+> > seems to be limited to producing a crash.
+> > 
+> > The bug is present in all versions after 0.9.12, up through the
+> > current (1.1.23) release. Only 32-bit x86 systems (aka IA32, musl's
+> > "i386" arch) are affected. Users of other archs, including x86_64, can
+> > safely ignore this issue.
+> > 
+> > Affected users are advised to apply the following patch:
+> > 
+> > https://git.musl-libc.org/cgit/musl/patch/?id=f3ed8bfe8a82af1870ddc8696ed4cc1d5aa6b441
+> 
+> The patch contains an error that was missed for unknown reasons,
+> probably failure to rebuild a file. I'm attaching an aggregate patch
+> that works. Alternaatively, these two commits can be applied:
+> 
+> https://git.musl-libc.org/cgit/musl/patch/?id=f3ed8bfe8a82af1870ddc8696ed4cc1d5aa6b441
+> https://git.musl-libc.org/cgit/musl/patch/?id=6818c31c9bc4bbad5357f1de14bedf781e5b349e
 
-Date reported : April 10, 2019
-Advisory ID : WSA-2019-0002
-WebKitGTK Advisory URL : 
-https://webkitgtk.org/security/WSA-2019-0002.html
-WPE WebKit Advisory URL : 
-https://wpewebkit.org/security/WSA-2019-0002.html
-CVE identifiers : CVE-2019-6201, CVE-2019-6251, CVE-2019-7285,
-                          CVE-2019-7292, CVE-2019-8503, CVE-2019-8506,
-                          CVE-2019-8515, CVE-2019-8518, CVE-2019-8523,
-                          CVE-2019-8524, CVE-2019-8535, CVE-2019-8536,
-                          CVE-2019-8544, CVE-2019-8551, CVE-2019-8558,
-                          CVE-2019-8559, CVE-2019-8563, CVE-2019-11070.
-
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-
-CVE-2019-6201
-    Versions affected: WebKitGTK before 2.22.6 and WPE WebKit before
-    2.22.4.
-    Credit to dwfault working with ADLab of Venustech.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-6251
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
-    Credit to Dhiraj.
-    Processing maliciously crafted web content may lead to spoofing.
-    WebKitGTK and WPE WebKit were vulnerable to a URI spoofing attack
-    similar to the CVE-2018-8383 issue in Microsoft Edge.
-
-CVE-2019-7285
-    Versions affected: WebKitGTK before 2.22.6 and WPE WebKit before
-    2.22.4.
-    Credit to dwfault working at ADLab of Venustech.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A use after free issue was addressed with improved
-    memory management.
-
-CVE-2019-7292
-    Versions affected: WebKitGTK before 2.22.6 and WPE WebKit before
-    2.22.4.
-    Credit to Zhunki and Zhiyi Zhang of 360 ESG Codesafe Team.
-    Processing maliciously crafted web content may result in the
-    disclosure of process memory. A validation issue was addressed with
-    improved logic.
-
-CVE-2019-8503
-    Versions affected: WebKitGTK before 2.22.6 and WPE WebKit before
-    2.22.4.
-    Credit to Linus Särud of Detectify.
-    A malicious website may be able to execute scripts in the context of
-    another website. A logic issue was addressed with improved
-    validation.
-
-CVE-2019-8506
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to Samuel Groß of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A type confusion issue was addressed with improved
-    memory handling.
-
-CVE-2019-8515
-    Versions affected: WebKitGTK before 2.22.6 and WPE WebKit before
-    2.22.4.
-    Credit to James Lee, @Windowsrcer.
-    Processing maliciously crafted web content may disclose sensitive
-    user information. A cross-origin issue existed with the fetch API.
-    This was addressed with improved input validation.
-
-CVE-2019-8518
-    Versions affected: WebKitGTK before 2.22.7 and WPE WebKit before
-    2.22.5.
-    Credit to Samuel Groß of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8523
-    Versions affected: WebKitGTK before 2.22.7 and WPE WebKit before
-    2.22.5.
-    Credit to Apple.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8524
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to G. Geshev working with Trend Micro Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8535
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to Zhiyang Zeng, @Wester, of Tencent Blade Team.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved state management.
-
-CVE-2019-8536
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to Apple.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
-
-CVE-2019-8544
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to an anonymous researcher.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
-
-CVE-2019-8551
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to Ryan Pickren, ryanpickren.com.
-    Processing maliciously crafted web content may lead to universal
-    cross site scripting. A logic issue was addressed with improved
-    validation.
-
-CVE-2019-8558
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to Samuel Groß of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8559
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to Apple.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-8563
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
-    Credit to Apple.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-CVE-2019-11070
-    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
-    Credit to Igalia.
-    WebKitGTK and WPE WebKit failed to properly apply configured HTTP
-    proxy settings when downloading livestream video (HLS, DASH, or
-    Smooth Streaming), an error resulting in deanonymization. This issue
-    was corrected by changing the way livestreams are downloaded.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-April 10, 2019
-
-
+CVE-2019-14697 has been assigned for this issue.
