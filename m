@@ -1,48 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/10
-Message-ID: <a80d70ed-eb56-450f-35fa-dfe248932f89@treenet.co.nz>
-Date: Tue, 23 Jul 2019 01:09:40 +1200
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/06/3
+Message-ID: <20190806105341.71a55acf@computer>
+Date: Tue, 6 Aug 2019 10:53:41 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
+Subject: clamav: denial of service through "better zip bomb"
 Content-Type: text/plain; charset=utf-8
 
-On 22/07/19 11:50 pm, Solar Designer wrote:
-> On Mon, Jul 22, 2019 at 12:29:53PM +0100, Stuart Henderson wrote:
->> On 2019/07/22 11:21, Mikhail Klementev wrote:
->>> Kindly notice that this is a public mail list.
->>
->> The sender is clearly aware of this, see the timeline.
-> 
-> Exactly.  It's just an unusual disclosure process that involves giving
-> the users a heads-up a few days before public disclosure of the actual
-> vulnerabilities and fixes.  So far, this process is practiced by OpenSSL
-> and Exim (any others?)
-> 
-> Unfortunately, this keeps confusing people, which is why this time
-> Heiko's message starts with "Note: EMBARGO is still in effect".  Judging
-> by Mikhail's reply, this wasn't good enough to avoid confusion, and I
-> don't know what would be 
+Hi,
 
+Recently David Fifield presented a new variant of a ZIP bomb where by
+using overlapping segments he was able to achieve very high compression
+ratios (42kb->5GB, 10MB->281TB).
 
-IMHO the key difference between the two is the initial impression one
-gets from the message layout.
+Passing the example files to clamav causes extreme CPU spikes and
+extremely long scanning times. In a setup with clamd (a daemon-ized
+version of clamav) this is particularly nasty, as even interrupting the
+scanning process doesn't stop the CPU spikes in the daemon and the
+daemon cannot be killed gracefully.
 
+clamav is often used to automatically scan incoming mails on
+mailservers, in this case this is can be effective way to make a server
+unusable.
 
-This Exim message looks just like any other full-detail disclosure
-report. It takes time to read the text and clicking through to the
-repository links to realize that this is not actually leaking code
-changes and detail about the issue.
+The upstream bug report is here [2]. Clamav made a new release 0.101.3
+[3] with a mitigation.
 
+However David Fifield commented in the bug report [4] that the fix is
+incomplete, by using some slight variations of his methods he could
+bypass the fix.
 
-The OpenSSL is just a warning that a new version X is about to land.
+Mitigation
+==========
 
-People who care are left to do their own research into where to get it.
-The distro teams who need the warning already know that.
+This can be mitigated by disabling scanning of compressed archives. In
+the case of clamd there's a setting "ScanArchive" in clamd.conf [5].
 
+Downside: Obviously that means compressed files won't be scanned.
 
-AYJ
+misc
+====
 
+Firefox sometimes showed Safebrowsing warnings for the "better zip
+bomb" web page by David Fifield. Not sure how it ended up in the safe
+browsing list, though I believe it's bad practice to mark legit
+security research as "malicious" by blacklists.
 
+A similar DoS is happening in Chrome when downloading the sample ZIP
+bombs. This has already been mentioned in public comments, e.g. here
+[6]. I had reported this to Chrome, it was marked as a duplicate of a
+non-public bug.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+It's likely that there are more applications affected.
+I recommend that people try to test other applications that might
+unpack ZIP files in an automated setting with these sample files.
+
+[1] https://www.bamsoftware.com/hacks/zipbomb/
+[2] https://bugzilla.clamav.net/show_bug.cgi?id=12356
+[3]
+https://blog.clamav.net/2019/08/clamav-01013-security-patch-release-and.html
+[4] https://bugzilla.clamav.net/show_bug.cgi?id=12356#c6
+[5] https://linux.die.net/man/5/clamd.conf
+[6] https://news.ycombinator.com/item?id=20352537
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
