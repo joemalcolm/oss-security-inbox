@@ -1,31 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/27/1
-Message-ID: <20190626235834.GA32354@kroah.com>
-Date: Thu, 27 Jun 2019 07:58:34 +0800
-From: Greg KH <gregkh@...uxfoundation.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/06/5
+Message-ID: <CADtktAVB-QncVS9OcDzceb0_6+8OY_b3xQ2Sag+r9m_f80f4+g@mail.gmail.com>
+Date: Tue, 6 Aug 2019 09:35:44 -0700
+From: Tim Allclair <tallclair@...gle.com>
+To: "Kubernetes developer/contributor discussion" <kubernetes-dev@...glegroups.com>,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss@...glegroups.com, oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] CVE-2019-11248: /debug/pprof exposed on kubelet's healthz port
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 26, 2019 at 10:13:58AM -0400, Sasha Levin wrote:
-> > 9. Have someone already on the private list, or at least someone else
-> > who has been active on oss-security for years but is not affiliated
-> > with your distro nor your organization, vouch for at least one of the
-> > people requesting membership on behalf of your distro (then that one
-> > vouched-for person will be able to vouch for others on your team, in
-> > case you'd like multiple people subscribed)
-> 
-> Greg Kroah-Hartman <gregkh@...uxfoundation.org> would vouch for me
-> (Sasha Levin <sashal@...nel.org>).
+Hello Kubernetes Community,
 
-To verify this, yes, I can vouch for Sasha.  He is a long-time kernel
-developer and has been helping with the stable kernel releases for a few
-years now, with full write permissions to the stable kernel trees.
+The debugging endpoint /debug/pprof is exposed over the unauthenticated
+Kubelet healthz port. Versions prior to 1.15.0, 1.14.4, 1.13.8, and 1.12.10
+are affected. The issue is of medium severity, but only exposed locally by
+the default configuration. If you are exposed we recommend upgrading to at
+least one of the versions listed.
 
-I also suggested that Microsoft join linux-distros a year or so ago when
-it became evident that they were becoming a Linux distro, and it is good
-to see that they are now doing so.
+Am I vulnerable?
 
-thanks,
+By default, the Kubelet exposes unauthenticated healthz endpoints on port
+:10248, but only over localhost. If your nodes are using a non-localhost
+healthzBindAddress (--health-bind-address), and an older version, you may
+be vulnerable. If your nodes are using the default localhost
+healthzBindAddress, it is only exposed to pods or processes running in the
+host network namespace.
 
-greg k-h
+Run `kubectl get nodes` to see whether nodes are running a vulnerable
+version.
+
+Run `kubectl get --raw /api/v1/nodes/${NODE_NAME}/proxy/configz` to check
+whether the "healthzBindAddress" is non-local.
+
+How do I mitigate the vulnerability?
+
+Upgrade to the latest patch releases for 1.15, 1.14 or 1.13
+
+Or, update node configurations to set the "healthzBindAddress" to
+"127.0.0.1".
+
+Vulnerability Details
+
+The go pprof <https://golang.org/pkg/net/http/pprof/> endpoint is exposed
+over the Kubelet's healthz port. This debugging endpoint can potentially
+leak sensitive information such as internal Kubelet memory addresses and
+configuration, or for limited denial of service.
+
+This issue has been filed as CVE-2019-11248. See
+https://github.com/kubernetes/kubernetes/issues/81023 for more details
+
+Thanks to Jordan Zebor of F5 Networks for reporting this problem.
+
+Thank You,
+
+Tim Allclair on behalf of the Kubernetes Product Security Committee
+
