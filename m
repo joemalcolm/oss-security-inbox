@@ -1,47 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/06/1
-Message-ID: <5ae336cf-623c-6aee-e50f-9d60c6dc15a4@nanthrax.net>
-Date: Mon, 6 May 2019 09:33:49 +0200
-From: Jean-Baptiste Onofré <jb@...thrax.net>
-To: user@...af.apache.org, Karaf Dev <dev@...af.apache.org>, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com, malingtao1019@....com
-Subject: [SECURITY] New security advisory for CVE-2019-0226 released for Apache Karaf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/07/2
+Message-ID: <20190807144733.GA12078@w1.fi>
+Date: Wed, 7 Aug 2019 17:47:33 +0300
+From: Jouni Malinen <j@...fi>
+To: oss-security@...ts.openwall.com
+Subject: wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache Karaf, that is
-fixed in recent 4.2.5 release.
+Published: August 7, 2019
+Latest version available from: https://w1.fi/security/2019-6/
 
-CVE-2019-0226: Arbitrary file write vulnerability in Config service
+This is an update on earlier security advisories 2019-1 and
+2019-2. Please see those advisories for more details in the issues.
+https://w1.fi/security/2019-1/
+https://w1.fi/security/2019-2/
 
-Severity: Low
+Vulnerability
 
-Vendor: The Apache Software Foundation
+hostapd and wpa_supplicant security advisories 2019-1 and 2019-2
+addressed side-channel attacks related to SAE and EAP-pwd. The
+improvements identified in those advisories made it more difficult to
+observe external differences in timing or memory access to mitigate
+against this type of attacks. However, the identified changes did not
+remove all differences. Especially when using ECC groups that use a
+prime that is not close to a power of two, those improvements were not
+complete. In practice, use of groups that use Brainpool curves (groups
+28-30) are in this category.
 
-Versions Affected: all versions of Apache Karaf prior to 4.2.5
+Additional implementation changes are now available to improve
+mitigation against potential attacks. While these are expected to
+improve security of SAE and EAP-pwd in general to some extend, the
+largest help from these would be to the cases where groups 28-30 are
+used. However, for those groups, additional changes would likely be
+needed to make the protection against timing differences be at similar
+level as it is for other ECC groups. That would result in significantly
+higher need for CPU and that may not be practical for all devices. As
+such, the current recommended practice is to disable all use of the
+Brainpool curves in the context of SAE and EAP-pwd. This does not mean
+that these curves themselves have issues, but the way the SAE and
+EAP-pwd derivation of PWE is designed is not convenient for the primes
+used in these curves. In other words, this has no impact to other uses
+of the Brainpool curves.
 
-Description:
-
-Apache Karaf Config service provides a install method (via service or
-MBean) that could be used to travel in any directory and overwrite
-existing file.
-
-The vulnerability is low if the Karaf process user has limited
-permission on the filesystem.
-
-The mitigation is to prevent travel "outside" of Karaf etc folder by
-checking the path argument of the method and prevent use of ".." in the
-path.
-
-This has been fixed in revision:
-
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=fe3bc41
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=bf5ed62
-
-Mitigation: Apache Karaf users should upgrade to 4.2.5
-or later as soon as possible, or limit filesystem permission for the
-Karaf process user.
-
-JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-6230
-
-Credit: This issue was reported by 马凌涛 <malingtao1019@....com>
+The timing differences even when using groups 28-30 are non-trivial to
+attack in practice, but cannot be ruled impossible. Cache attacks (see
+advisories 2019-1 and 2019-2 for more details) can still be feasible
+when using these groups in SAE or EAP-pwd with wpa_supplicant/hostapd
+v2.8.
 
 
+Vulnerable versions/configurations
+
+All wpa_supplicant and hostapd versions with SAE support (CONFIG_SAE=y
+in the build configuration and SAE with groups 28-30 enabled in the
+runtime configuration and supported by the used crypto library). Note
+that the applicable groups are not enabled by default in v2.8 (and in
+case of wpa_supplicant, in any version) and they would need to be
+explicitly enabled by adding the group identifies into the sae_groups
+configuration parameter.
+
+All wpa_supplicant and hostapd versions with EAP-pwd support
+(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
+in the runtime configuration). Note that EAP-pwd server implementation
+in hostapd enables only a single group at the time (pwd_group parameter)
+and by default, group 19 is used. As such, this would be applicable only
+if the pwd_group parameter is set to use one of the groups 28-30. The
+EAP-pwd peer implementation wpa_supplicant, follows the group selected
+by the server and as such, it would be vulnerable for the case where an
+attacker controls the authentication server (e.g., through a rogue AP)
+if the crypto library supports groups 28-30.
+
+As far as crypto library support for Brainpool curves is concerned,
+OpenSSL 1.0.2 and newer have support for them while BoringSSL does not.
+
+
+Possible mitigation steps
+
+- Update to wpa_supplicant/hostapd v2.9 or newer
+
+- Merge the following commits to wpa_supplicant/hostapd v2.8 and
+  rebuild:
+  
+  SAE: Use const_time_memcmp() for pwd_value >= prime comparison
+  EAP-pwd: Use const_time_memcmp() for pwd_value >= prime comparison
+  OpenSSL: Use BN_bn2binpad() or BN_bn2bin_padded() if available
+  SAE: Run through prf result processing even if it >= prime
+  EAP-pwd: Run through prf result processing even if it >= prime
+  dragonfly: Disable use of groups using Brainpool curves
+
+  These patches are available from https://w1.fi/security/2019-6/
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
