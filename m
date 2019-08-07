@@ -1,4 +1,9 @@
-Received: (qmail 26609 invoked by uid 550); 2 Apr 2022 08:28:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4061" "Wednesday" "7" "August" "2019" "17:47:33" "+0300" "Jouni Malinen" "j@w1.fi" "<20190807144733.GA12078@w1.fi>" "85" "[oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update" nil nil nil "8" "2019080714:47:33" "[oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update" (number mark "U       j@w1.fi      Aug  7   85/4061  " thread-indent "\"[oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5200 invoked by uid 550); 7 Aug 2019 14:47:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,115 +12,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13805 invoked from network); 2 Apr 2022 08:14:52 -0000
-X-Originating-IP: [10.192.67.219]
-Date: Sat, 2 Apr 2022 16:14:37 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?5ZGo5aSa5piO?= <duoming@zju.edu.cn>
+Received: (qmail 5124 invoked from network); 7 Aug 2019 14:47:49 -0000
+X-Virus-Scanned: Debian amavisd-new at w1.fi
+Date: Wed, 7 Aug 2019 17:47:33 +0300
+From: Jouni Malinen <j@w1.fi>
 To: oss-security@lists.openwall.com
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.8 build 20200806(7a9be5e8)
- Copyright (c) 2002-2022 www.mailtech.cn zju.edu.cn
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+Message-ID: <20190807144733.GA12078@w1.fi>
 MIME-Version: 1.0
-Message-ID: <56c38247.32aa9.17fe95728b3.Coremail.duoming@zju.edu.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: cS_KCgBXX6ftBUhiJsqwAA--.25816W
-X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAgEIAVZdtZAk4AABsh
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
-Subject: [oss-security] CVE-2022-1205 kernel: Null pointer dereference and use-after-free
- in net/ax25/ax25_timer.c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update
 
-SGVsbG8gdGhlcmUsCgpUaGVyZSBhcmUgTlBEIGFuZCB1c2UtYWZ0ZXItZnJl
-ZSB2dWxuZXJhYmlsaXRpZXMgaW4gbmV0L2F4MjUvYXgyNV90aW1lci5jCm9m
-IGxpbnV4IHRoYXQgYWxsb3cgYXR0YWNrZXIgdG8gY3Jhc2ggbGludXgga2Vy
-bmVsIGJ5IHNpbXVsYXRpbmcgYXgyNSBkZXZpY2UKZnJvbSB1c2VyIHNwYWNl
-LgoKPSo9Kj0qPSo9Kj0qPSo9Kj0gIEJ1ZyBEZXRhaWxzICA9Kj0qPSo9Kj0q
-PSo9Kj0qPQoKVGhlcmUgYXJlIHJhY2UgY29uZGl0aW9ucyB0aGF0IG1heSBs
-ZWFkIHRvIG51bGwgcG9pbnRlciBkZXJlZmVyZW5jZXMgaW4KYXgyNV9oZWFy
-dGJlYXRfZXhwaXJ5KCksIGF4MjVfdDF0aW1lcl9leHBpcnkoKSwgYXgyNV90
-MnRpbWVyX2V4cGlyeSgpLApheDI1X3QzdGltZXJfZXhwaXJ5KCkgYW5kIGF4
-MjVfaWRsZXRpbWVyX2V4cGlyeSgpLCB3aGVuIHdlIHVzZQpheDI1X2tpbGxf
-YnlfZGV2aWNlKCkgdG8gZGV0YWNoIHRoZSBheDI1IGRldmljZS4KCk9uZSBv
-ZiB0aGUgcmFjZSBjb25kaXRpb25zIHRoYXQgY2F1c2UgbnVsbCBwb2ludGVy
-IGRlcmVmZXJlbmNlcyBjYW4gYmUKc2hvd24gYXMgYmVsb3c6CgogICAgICAo
-VGhyZWFkIDEpICAgICAgICAgICAgICAgICAgICB8ICAgICAgKFRocmVhZCAy
-KQpheDI1X2Nvbm5lY3QoKSAgICAgICAgICAgICAgICAgICAgICB8CiBheDI1
-X3N0ZF9lc3RhYmxpc2hfZGF0YV9saW5rKCkgICAgIHwKICBheDI1X3N0YXJ0
-X3QxdGltZXIoKSAgICAgICAgICAgICAgfAogICBtb2RfdGltZXIoJmF4MjUt
-PnQxdGltZXIsLi4pICAgICB8CiAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIHwgYXgyNV9raWxsX2J5X2RldmljZSgpCiAgICh3YWl0IGEg
-dGltZSkgICAgICAgICAgICAgICAgICAgIHwgIC4uLgogICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICB8ICBzLT5heDI1X2RldiA9IE5VTEw7
-IC8vKDEpCiAgIGF4MjVfdDF0aW1lcl9leHBpcnkoKSAgICAgICAgICAgIHwK
-ICAgIGF4MjUtPmF4MjVfZGV2LT52YWx1ZXNbLi5dIC8vKDIpfCAgLi4uCiAg
-ICAgLi4uICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwKCldlIHNldCBu
-dWxsIHRvIGF4MjVfY2ItPmF4MjVfZGV2IGluIHBvc2l0aW9uICgxKSBhbmQg
-ZGVyZWZlcmVuY2UKdGhlIG51bGwgcG9pbnRlciBpbiBwb3NpdGlvbiAoMiku
-CgpUaGVyZSBhcmUgYWxzbyByYWNlIGNvbmRpdGlvbnMgdGhhdCBtYXkgbGVh
-ZCB0byBVQUYgYnVncyBpbgpheDI1X2hlYXJ0YmVhdF9leHBpcnkoKSwgYXgy
-NV90MXRpbWVyX2V4cGlyeSgpLCBheDI1X3QydGltZXJfZXhwaXJ5KCksCmF4
-MjVfdDN0aW1lcl9leHBpcnkoKSBhbmQgYXgyNV9pZGxldGltZXJfZXhwaXJ5
-KCksIHdoZW4gd2UgY2FsbApheDI1X3JlbGVhc2UoKSB0byBkZWFsbG9jYXRl
-IGF4MjVfZGV2LgoKICAgICAgKFRocmVhZCAxKSAgICAgICAgICAgICAgICAg
-ICAgfCAgICAgIChUaHJlYWQgMikKYXgyNV9kZXZfZGV2aWNlX3VwKCkgLy8o
-MSkgICAgICAgICAgfAouLi4gICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICB8IGF4MjVfa2lsbF9ieV9kZXZpY2UoKQpheDI1X2JpbmQoKSAgICAg
-ICAgICAvLygyKSAgICAgICAgICB8CmF4MjVfY29ubmVjdCgpICAgICAgICAg
-ICAgICAgICAgICAgIHwgLi4uCiBheDI1X3N0ZF9lc3RhYmxpc2hfZGF0YV9s
-aW5rKCkgICAgIHwKICBheDI1X3N0YXJ0X3QxdGltZXIoKSAgICAgICAgICAg
-ICAgfCBheDI1X2Rldl9kZXZpY2VfZG93bigpIC8vKDMpCiAgIG1vZF90aW1l
-cigmYXgyNS0+dDF0aW1lciwuLikgICAgIHwKICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgfCBheDI1X3JlbGVhc2UoKQogICAod2FpdCBh
-IHRpbWUpICAgICAgICAgICAgICAgICAgICB8ICAuLi4KICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgfCAgYXgyNV9kZXZfcHV0KGF4MjVf
-ZGV2KSAvLyg0KUZSRUUKICAgYXgyNV90MXRpbWVyX2V4cGlyeSgpICAgICAg
-ICAgICAgfAogICAgYXgyNS0+YXgyNV9kZXYtPnZhbHVlc1suLl0gLy9VU0V8
-ICAuLi4KICAgICAuLi4gICAgICAgICAgICAgICAgICAgICAgICAgICAgfAoK
-V2UgaW5jcmVhc2UgdGhlIHJlZmNvdW50IG9mIGF4MjVfZGV2IGluIHBvc2l0
-aW9uICgxKSBhbmQgKDIpLCBhbmQKZGVjcmVhc2UgdGhlIHJlZmNvdW50IG9m
-IGF4MjVfZGV2IGluIHBvc2l0aW9uICgzKSBhbmQgKDQpLgpUaGUgYXgyNV9k
-ZXYgd2lsbCBiZSBmcmVlZCBpbiBwb3NpdGlvbiAoNCkgYW5kIGJlIHVzZWQg
-aW4KYXgyNV90MXRpbWVyX2V4cGlyeSgpLgoKPSo9Kj0qPSo9Kj0qPSo9Kj0g
-IEJ1ZyBFZmZlY3RzICA9Kj0qPSo9Kj0qPSo9Kj0qPQoKV2UgY2FuIHN1Y2Nl
-c3NmdWxseSB0cmlnZ2VyIHRoZSBOUEQgYW5kIFVBRiB2dWxuZXJhYmlsaXRp
-ZXMgdG8gY3Jhc2ggdGhlIGxpbnV4IGtlcm5lbC4KCkJVRzoga2VybmVsIE5V
-TEwgcG9pbnRlciBkZXJlZmVyZW5jZSwgYWRkcmVzczogMDAwMDAwMDAwMDAw
-MDA1MApDUFU6IDEgUElEOiAwIENvbW06IHN3YXBwZXIvMSBOb3QgdGFpbnRl
-ZCA1LjE3LjAtcmM2LTAwNzk0LWc0NTY5MGI3ZDAKUklQOiAwMDEwOmF4MjVf
-dDF0aW1lcl9leHBpcnkrMHgxMi8weDQwCi4uLgpDYWxsIFRyYWNlOgogY2Fs
-bF90aW1lcl9mbisweDIxLzB4MTIwCiBfX3J1bl90aW1lcnMucGFydC4wKzB4
-MWNhLzB4MjUwCiBydW5fdGltZXJfc29mdGlycSsweDJjLzB4NjAKIF9fZG9f
-c29mdGlycSsweGVmLzB4MmYzCiBpcnFfZXhpdF9yY3UrMHhiNi8weDEwMAog
-c3lzdmVjX2FwaWNfdGltZXJfaW50ZXJydXB0KzB4YTIvMHhkMAouLi4KCj09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09CgpbICAxMDYuMTE2OTQyXSBCVUc6IEtBU0FOOiB1
-c2UtYWZ0ZXItZnJlZSBpbiBheDI1X3QxdGltZXJfZXhwaXJ5KzB4MWMvMHg2
-MApbICAxMDYuMTE2OTQyXSBSZWFkIG9mIHNpemUgOCBhdCBhZGRyIGZmZmY4
-ODgwMGJkYTkwMjggYnkgdGFzayBzd2FwcGVyLzAvMApbICAxMDYuMTE2OTQy
-XSBDUFU6IDAgUElEOiAwIENvbW06IHN3YXBwZXIvMCBOb3QgdGFpbnRlZCA1
-LjE3LjAtMDYxMjMtZzA5MDVlZWM1NzQKWyAgMTA2LjExNjk0Ml0gSGFyZHdh
-cmUgbmFtZTogUUVNVSBTdGFuZGFyZCBQQyAoaTQ0MEZYICsgUElJWCwgMTk5
-NiksIEJJT1MgcmVsLTE0ClsgIDEwNi4xMTY5NDJdIENhbGwgVHJhY2U6Ci4u
-LgpbICAxMDYuMTE2OTQyXSAgYXgyNV90MXRpbWVyX2V4cGlyeSsweDFjLzB4
-NjAKWyAgMTA2LjExNjk0Ml0gIGNhbGxfdGltZXJfZm4rMHgxMjIvMHgzZDAK
-WyAgMTA2LjExNjk0Ml0gIF9fcnVuX3RpbWVycy5wYXJ0LjArMHgzZjYvMHg1
-MjAKWyAgMTA2LjExNjk0Ml0gIHJ1bl90aW1lcl9zb2Z0aXJxKzB4NGYvMHhi
-MApbICAxMDYuMTE2OTQyXSAgX19kb19zb2Z0aXJxKzB4MWMyLzB4NjUxCi4u
-LgoKPSo9Kj0qPSo9Kj0qPSo9Kj0gIEJ1ZyBGaXggID0qPSo9Kj0qPSo9Kj0q
-PSo9CgpUaGUgcGF0Y2ggdGhhdCBoYXZlIGJlZW4gYXBwbGllZCB0byBtYWlu
-bGluZSBMaW51eCBrZXJuZWwgaXMgc2hvd24gYmVsb3cuCmh0dHBzOi8vZ2l0
-aHViLmNvbS90b3J2YWxkcy9saW51eC9jb21taXQvZmM2ZDAxZmY5ZWYwM2I2
-NmQ0YTNhMjNiNDZmYzNjM2Q4Y2Y5MjAwOQpodHRwczovL2dpdGh1Yi5jb20v
-dG9ydmFsZHMvbGludXgvY29tbWl0LzgyZTMxNzU1ZTU1ZmJjZWE2YTlkZmFh
-ZTVmZTQ4NjBhZGUxN2NiYzAKCj0qPSo9Kj0qPSo9Kj0qPSo9ICBUaW1lbGlu
-ZSAgPSo9Kj0qPSo9Kj0qPSo9Kj0KCjIwMjItMDMtMjE6IGNvbW1pdCBmYzZk
-MDFmZjllZjAgYWNjZXB0ZWQgdG8gbWFpbmxpbmUga2VybmVsCjIwMjItMDMt
-Mjk6IGNvbW1pdCA4MmUzMTc1NWU1NWYgYWNjZXB0ZWQgdG8gbWFpbmxpbmUg
-a2VybmVsCjIwMjItMDQtMDE6IENWRS0yMDIyLTEyMDUgaXMgYXNzaWduZWQK
-Cj0qPSo9Kj0qPSo9Kj0qPSo9ICBDcmVkaXQgID0qPSo9Kj0qPSo9Kj0qPSo9
-CgpEdW9taW5nIFpob3UgPGR1b21pbmdAemp1LmVkdS5jbj4KCkJlc3QgUmVn
-YXJkcywKRHVvbWluZyBaaG91
+Published: August 7, 2019
+Latest version available from: https://w1.fi/security/2019-6/
+
+This is an update on earlier security advisories 2019-1 and
+2019-2. Please see those advisories for more details in the issues.
+https://w1.fi/security/2019-1/
+https://w1.fi/security/2019-2/
+
+Vulnerability
+
+hostapd and wpa_supplicant security advisories 2019-1 and 2019-2
+addressed side-channel attacks related to SAE and EAP-pwd. The
+improvements identified in those advisories made it more difficult to
+observe external differences in timing or memory access to mitigate
+against this type of attacks. However, the identified changes did not
+remove all differences. Especially when using ECC groups that use a
+prime that is not close to a power of two, those improvements were not
+complete. In practice, use of groups that use Brainpool curves (groups
+28-30) are in this category.
+
+Additional implementation changes are now available to improve
+mitigation against potential attacks. While these are expected to
+improve security of SAE and EAP-pwd in general to some extend, the
+largest help from these would be to the cases where groups 28-30 are
+used. However, for those groups, additional changes would likely be
+needed to make the protection against timing differences be at similar
+level as it is for other ECC groups. That would result in significantly
+higher need for CPU and that may not be practical for all devices. As
+such, the current recommended practice is to disable all use of the
+Brainpool curves in the context of SAE and EAP-pwd. This does not mean
+that these curves themselves have issues, but the way the SAE and
+EAP-pwd derivation of PWE is designed is not convenient for the primes
+used in these curves. In other words, this has no impact to other uses
+of the Brainpool curves.
+
+The timing differences even when using groups 28-30 are non-trivial to
+attack in practice, but cannot be ruled impossible. Cache attacks (see
+advisories 2019-1 and 2019-2 for more details) can still be feasible
+when using these groups in SAE or EAP-pwd with wpa_supplicant/hostapd
+v2.8.
+
+
+Vulnerable versions/configurations
+
+All wpa_supplicant and hostapd versions with SAE support (CONFIG_SAE=y
+in the build configuration and SAE with groups 28-30 enabled in the
+runtime configuration and supported by the used crypto library). Note
+that the applicable groups are not enabled by default in v2.8 (and in
+case of wpa_supplicant, in any version) and they would need to be
+explicitly enabled by adding the group identifies into the sae_groups
+configuration parameter.
+
+All wpa_supplicant and hostapd versions with EAP-pwd support
+(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
+in the runtime configuration). Note that EAP-pwd server implementation
+in hostapd enables only a single group at the time (pwd_group parameter)
+and by default, group 19 is used. As such, this would be applicable only
+if the pwd_group parameter is set to use one of the groups 28-30. The
+EAP-pwd peer implementation wpa_supplicant, follows the group selected
+by the server and as such, it would be vulnerable for the case where an
+attacker controls the authentication server (e.g., through a rogue AP)
+if the crypto library supports groups 28-30.
+
+As far as crypto library support for Brainpool curves is concerned,
+OpenSSL 1.0.2 and newer have support for them while BoringSSL does not.
+
+
+Possible mitigation steps
+
+- Update to wpa_supplicant/hostapd v2.9 or newer
+
+- Merge the following commits to wpa_supplicant/hostapd v2.8 and
+  rebuild:
+  
+  SAE: Use const_time_memcmp() for pwd_value >= prime comparison
+  EAP-pwd: Use const_time_memcmp() for pwd_value >= prime comparison
+  OpenSSL: Use BN_bn2binpad() or BN_bn2bin_padded() if available
+  SAE: Run through prf result processing even if it >= prime
+  EAP-pwd: Run through prf result processing even if it >= prime
+  dragonfly: Disable use of groups using Brainpool curves
+
+  These patches are available from https://w1.fi/security/2019-6/
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
