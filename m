@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/17
-Message-ID: <20191025212309.GA18967@pisco.westfalen.local>
-Date: Fri, 25 Oct 2019 23:23:09 +0200
-From: Moritz Mühlenhoff <jmm@...til.org>
-To: oss-security@...ts.openwall.com
-Subject: Security fixes from Android 10 release which are relevant outside the Android ecosystem?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/08/1
+Message-Id: <09D4A543-35B4-4416-A0E3-CF88CFDFDE12@apache.org>
+Date: Thu, 8 Aug 2019 12:15:54 -0400
+From: Velmurugan Periasamy <vel@...che.org>
+To: security@...che.org, oss-security@...ts.openwall.com
+Cc: private@...ger.apache.org, dev@...ger.apache.org, user@...ger.apache.org
+Subject: CVE update - fixed in Apache Ranger 2.0.0
 Content-Type: text/plain; charset=utf-8
 
-Android advisories used to contain commit references to AOSP change sets, but
-that's not the case for https://source.android.com/security/bulletin/android-10.
+Hello:
 
-Typically most of these issues are specific to Android, but there are a few which
-per the CVE description are possibly affecting software packaged/used by Linux
-distros as well, one example:
+Please find below details on CVE fixed in Ranger 2.0.0 release. Release details can be found at https://cwiki.apache.org/confluence/display/RANGER/2.0.0+Release+-+Apache+Ranger
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-9325:
-"In libvpx, there is a possible out of bounds read due to a missing bounds check.
-This could lead to remote information disclosure with no additional execution
-privileges needed. "
+———————————————————————————————————————————————————
+CVE-2019-12397: Apache Ranger cross site scripting issue
+Severity: Normal
+Vendor: The Apache Software Foundation
+Versions Affected: 0.7.0 to 1.2.0 versions of Apache Ranger, prior to 2.0.0
+Users affected: All users of ranger policy admin tool
+Description: Apache Ranger was found to be vulnerable to a Cross-Site Scripting in policy import functionality. 
+Fix detail: Added logic to sanitize the user input.
+Mitigation: Users should upgrade to 2.0.0 or later version of Apache Ranger with the fix.
+Credit: Jan Kaszycki from STM Solutions
+———————————————————————————————————————————————————
 
-Similar for CVE-2019-9232, CVE-2019-9278, CVE-2019-9325, CVE-2019-9371, CVE-2019-9433,
-CVE-2019-9423 (also libexif and opencv)
+Thank you,
+Velmurugan Periasamy
 
-Is there anyone from Android/Google on the list, who can comment on this? Can these
-references be added again for the benefit of non-Android distros?
-
-Cheers,
-        Moritz
-	
