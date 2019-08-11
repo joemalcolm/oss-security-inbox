@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["313" "Friday" "3" "February" "2017" "10:57:22" "+0100" "Adam Maris" "amaris@redhat.com" "<1486115842.8276.10.camel@redhat.com>" "15" "[oss-security] CVE request for two input validation flaws in gtk-vnc" nil nil nil "2" "2017020309:57:22" "[oss-security] CVE request for two input validation flaws in gtk-vnc" (number mark "U       amaris@redha Feb  3   15/313   " thread-indent "\"[oss-security] CVE request for two input validation flaws in gtk-vnc\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1028" "Sunday" "11" "August" "2019" "15:51:14" "-0400" "Mike Dalessio" "mike.dalessio@gmail.com" "<CAGJbjKY8tDaW0D1bxYRJ4gbgty5k9a=67-YhHEr3gNBX8T4nfg@mail.gmail.com>" "31" "[oss-security] Nokogiri security update v1.10.4" nil nil nil "8" "2019081119:51:14" "[oss-security] Nokogiri security update v1.10.4" (number mark "U       mike.dalessi Aug 11   31/1028  " thread-indent "\"[oss-security] Nokogiri security update v1.10.4\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Nokogiri security update v1.10.4" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3693 invoked by uid 550); 3 Feb 2017 09:57:36 -0000
+Received: (qmail 26265 invoked by uid 550); 11 Aug 2019 20:32:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,30 +12,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3666 invoked from network); 3 Feb 2017 09:57:35 -0000
-Message-ID: <1486115842.8276.10.camel@redhat.com>
-From: Adam Maris <amaris@redhat.com>
-To: oss-security <oss-security@lists.openwall.com>
-Date: Fri, 03 Feb 2017 10:57:22 +0100
+Received: (qmail 7949 invoked from network); 11 Aug 2019 19:51:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=2Yc7LM9ylXHgF6Pkptc7M2TKb3TJvqrTowBuhihYLmE=;
+        b=pqm0caRM44fuopiVpz9myTAO7aFzqLrSS+NBG+a+GAU1clD3v6FCs+CJOimAX4StBe
+         jiNI9r477/XIKHgMgsqZkV/9etN30IC9wmSp90HYcJdCTOp3jDlQ0MZo0gIM68TPdLA3
+         61iNMdJ4cPkjNNWK9dvidDvUFNAPe9CSiFq/Erjr1EwN6DqnvKLRtWHB53uuMIe7U0Kf
+         8EZGP8w4jSUkyxclIl2He3xCjIn/qVnC+sRbfwR0HHkTHRMUdqD3bf2jeSazd5vr4on/
+         5QP/Iaj9P/xkO8dnI23WS8+CJjuri8S/Oj7klCfkDWGK6IRoIZznAIjQOGKs3JOqKfzm
+         BG1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=2Yc7LM9ylXHgF6Pkptc7M2TKb3TJvqrTowBuhihYLmE=;
+        b=Zl485HkBr1IfCFxFvzQNXm+fuZMvvOAyKcykHeF2JRAy1s2/yrAIBQE6S4lzljX/Lg
+         ErzPJ7XbOrNCEReX/+WTROBfQzvlvlE/lDktl5S6wEuCryeXHvKht+wObkA9+FLGupRb
+         XaScGfTIzaOpD59M0t73WL8RA4VMDvQshstihvkWe+nBld5VtcS37+Ids05iMp/3to6h
+         TKEuEhdF/qGwVTqCkjQDbDP/1XnflfjxqQbbPdOVjDdclPrZp6YzpNbASaKOT3n3Qrr7
+         k+YzptfzbwbMdaCJqDIC1Je2MS8PBI6LNkSfdL1iX72t80JVG+jzazvEiMC/63Mz2sIg
+         eHYw==
+X-Gm-Message-State: APjAAAW27FbUp3P66lniWt8CPQ0ZWFlOFSheDcM1ErnOBEgE+9VtFhhl
+	iC2OzvCsnbb7jsjacVaH28RMdsuP52MdmKe9tTY=
+X-Google-Smtp-Source: APXvYqyMXb/z4oyZD35Cj6E2wUGh3JjLHxYlsxE3bEBl9UPJIiAecPSXNLtmLJ4eG45gX8mNTuomtOdtvElVdyeYfwE=
+X-Received: by 2002:a9d:1982:: with SMTP id k2mr14577037otk.140.1565553085716;
+ Sun, 11 Aug 2019 12:51:25 -0700 (PDT)
+MIME-Version: 1.0
+From: Mike Dalessio <mike.dalessio@gmail.com>
+Date: Sun, 11 Aug 2019 15:51:14 -0400
+Message-ID: <CAGJbjKY8tDaW0D1bxYRJ4gbgty5k9a=67-YhHEr3gNBX8T4nfg@mail.gmail.com>
+To: nokogiri-talk <nokogiri-talk@googlegroups.com>, ruby-talk <ruby-talk@ruby-lang.org>, 
+	ruby-security-ann@googlegroups.com, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000008d1e03058fdcbb01"
+Subject: [oss-security] Nokogiri security update v1.10.4
+
+--0000000000008d1e03058fdcbb01
 Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Fri, 03 Feb 2017 09:57:25 +0000 (UTC)
-Subject: [oss-security] CVE request for two input validation flaws in gtk-vnc
 
-Hello,
+Nokogiri 1.10.4 has been released.
 
-Could you please allocate CVE IDs for these input validation issues in
-gtk-vnc?
+This is a security release. Summary details are below, and full details are
+at https://github.com/sparklemotion/nokogiri/issues/1915
 
-https://bugzilla.gnome.org/show_bug.cgi?id=778048
-https://bugzilla.gnome.org/show_bug.cgi?id=778050
+---
 
-Thank you!
+## 1.10.4 / 2019-08-11
 
-Best Regards,
+### Security
 
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
+#### Address CVE-2019-5477 (#1915)
+
+A command injection vulnerability in Nokogiri v1.10.3 and earlier allows
+commands to be executed in a subprocess by Ruby's `Kernel.open` method.
+Processes are vulnerable only if the undocumented method
+`Nokogiri::CSS::Tokenizer#load_file` is being passed untrusted user input.
+
+This vulnerability appears in code generated by the Rexical gem versions
+v1.0.6 and earlier. Rexical is used by Nokogiri to generate lexical scanner
+code for parsing CSS queries. The underlying vulnerability was addressed in
+Rexical v1.0.7 and Nokogiri upgraded to this version of Rexical in Nokogiri
+v1.10.4.
+
+This CVE's public notice is
+https://github.com/sparklemotion/nokogiri/issues/1915
+
+--0000000000008d1e03058fdcbb01--
