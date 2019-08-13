@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/24/1
-Message-ID: <CABVqxwCYodUFPHcR407OMiOSThCXyd3d+6xZz1ODGcyRTsznsQ@mail.gmail.com>
-Date: Wed, 24 Apr 2019 17:04:55 +1000
-From: Noble Paul <noble@...che.org>
-To: Lucene Dev <dev@...ene.apache.org>, java-user@...ene.apache.org, security@...che.org,  oss-security@...ts.openwall.com
-Subject: CVE-2018-11802: Apache Solr authorization bug vulnerability disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/13/1
+Message-ID: <CAKG8Do7Eqdq8HpAqyBSBrAHUCrXnwWrhb3e8seQJZDYjNKeszw@mail.gmail.com>
+Date: Tue, 13 Aug 2019 09:49:19 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-11802: Apache Solr authorization bug disclosure
-Severity: Important
-Vendor: The Apache Software Foundation
-Versions Affected: Apache Solr 7.6 or less
+On Mon, Aug 12, 2019 at 4:48 PM Bob Friesenhahn
+<bfriesen@...ple.dallas.tx.us> wrote:
+>
+> Is it known if this issue also impacts the PDF reader?  I see that the
+> involved code is Resource/Init/gs_type1.ps which is presumably related
+> to Postscript Type 1 fonts, which might be included in a PDF file.
 
-Description:
-jira  ticket : https://issues.apache.org/jira/browse/SOLR-12514
-In apache Solr the cluster can be partitioned into multiple
-collections and only a subset of nodes actually host any given
-collection. However, if a node receives a request for a collection it
-does not host, it proxies the request to a relevant node and serves
-the request. Solr bypasses all authorization settings for such
-requests. This affects all Solr versions that uses the default
-authorization mechanism of Solr (RuleBasedAuthorizationPlugin)
+My personal experience so far is that vulnerabilities requiring to
+modify error handlers do not work when embedded in a PDF.
+That being said, maybe I do it wrong and there might be other ways.
+I didn't have an attempt with that one so far.
 
-Mitigation:
-A fix is provided in Solr 7.7 version and upwards. If you use Solr's
-authorization mechanism, please upgrade to a version newer than Solr
-7.7.
+>
+> Bob
+> --
+> Bob Friesenhahn
+> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
 
-Credit: This issue was discovered by Mahesh Kumar Vasanthu Somashekar.
+
+
+--
+Cedric Buissart,
+Product Security
