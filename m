@@ -1,81 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/09/2
-Message-ID: <20190709163307.158714a5@computer>
-Date: Tue, 9 Jul 2019 16:33:07 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/3
+Message-ID: <1565815809.MOLRKPLE@httpd.apache.org>
+Date: Wed, 14 Aug 2019 15:50:09 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Data exfiltration with FPM servers (HHVM and rarely PHP)
+Subject: CVE-2019-10082: mod_http2, read-after-free in h2 connection shutdown
 Content-Type: text/plain; charset=utf-8
 
-FPM daemons may lead to file exfiltration. This primarily affects HHVM.
 
-FPM is a method to execute PHP CGI scripts in a more performant way.
-The FPM daemon provides either a socket or TCP port (default 9000) that
-can be used with the FastCGI protocol, a client can request the
-execution of a PHP script.
+CVE-2019-10082: mod_http2, read-after-free in h2 connection shutdown
 
-FPM is supported both by upstream PHP and HHVM. HHVM was originally a
-reimplementation of PHP by Facebook, though in current versions it no
-longer supports PHP syntax, instead it supports the HACK programming
-language. THis distinction is relevant for this vulnerability, more
-below.
+Severity: Moderate
 
+Vendor: The Apache Software Foundation
 
-When an FPM daemon is running on the public IP this may be used to
-exfiltrate files. The reason is how PHP scripts work. PHP is usually
-embedded within HTML files in <?php ?> tags, where the rest of the file
-is just passed through. This has the consequence that every file that
-doesn't have any php tags is still in a sense a valid PHP script that
-does nothing else than outputting itself.
+Versions Affected:
+httpd 2.4.18 to 2.4.39
 
-Thus one can connect to an open FPM port and request the execution of
-e.g. /etc/passwd or any other file that the attacker is interested in.
-This can be manually tested with the cgi-fcgi command line tool
-(available in the fcgi package in many distributions):
+Description:
+Using fuzzed network input, the http/2 session
+handling could be made to read memory after being freed,
+during connection shutdown.
+ 
+Mitigation:
+All httpd users deploying mod_http2 should upgrade to 2.4.40 or later.
+Unpatch servers can disable the h2/h2c protocol.
 
-SCRIPT_FILENAME=/etc/passwd SCRIPT_NAME=/etc/passwd REQUEST_METHOD=GET
-cgi-fcgi -bind -connect [targethost]:9000
+Credit:
+The issue was discovered by Craig Young of Tripwire VERT, <vuln-report@...ur3.us>.
 
-In HHVM 3.x this directly works in default settings. This works e.g. in
-a standard ubuntu system when using Ubuntu's own HHVM packages and no
-configuration changes.
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
 
-In HHVM 4.x the PHP syntax is no longer supported. I don't know the
-exact circumstances, but in my tests I was still able to exfiltrate some
-files, but not others, I guess it somehow depends on how the file is
-interpreted considering the HACK syntax.
-
-In response to my report facebook changed the default setting to not
-expose fpm on the public IP.
-
-In upstream PHP the vulnerability is mitigated by two facts. First of
-all in default settings the FPM daemon only listens on localhost, so
-unless an admin actively changes the setting or has some unusual
-network settings it is not available through the network.
-Second PHP's FPM has an option "security.limit_extensions" that
-restricts the file extensions that will be recognized as valid scripts.
-It's set to .php and .phar by default.
-This effectively means no arbitrary files can be exfiltrated unless
-this setting has been changed.
-Exposing FPM to the public may still pose a risk, however only if an
-attacker can gain knowledge of a path of a PHP file that should not be
-accessible publicly. (There may e.g. be a non-public PHP script that is
-protected via .htaccess.)
-However given the circumstances I find it very unlikely to be a big
-problem for PHP and in any case would consider this a configuration
-mistake and not a PHP vulnerability.
-
-In any case: If you have an FPM daemon running on the public interface
-on port 9000 this is almost certainly not what you want and may be a
-security risk.
-
-
-I've published something in German about this vuln here:
-https://www.golem.de/news/fpm-sicherheitsluecke-daten-exfiltrieren-mit-facebooks-hhvm-1907-142418.html
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
