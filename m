@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["549" "Wednesday" "20" "May" "2015" "17:23:40" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<555D258C.6070902@oracle.com>" "14" "Re: [oss-security] Logjam attack /  Imperfect Forward Secrecy: How Diffie-Hellman Fails in Practice" nil nil nil "5" "2015052100:23:40" "[oss-security] Logjam attack / Imperfect Forward Secrecy: How Diffie-Hellman Fails in Practice" (number mark "        alan.coopers May 20   14/549   " thread-indent "\"Re: [oss-security] Logjam attack /  Imperfect Forward Secrecy: How Diffie-Hellman Fails in Practice\"\n") "<1432123050.6062.5.camel@debian.org>" ("<1432123050.6062.5.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["649" "Wednesday" "14" "August" "2019" "15:50:09" "-0500" "Daniel Ruggeri" "druggeri@apache.org" "<1565815809.XRRYARAT@httpd.apache.org>" "25" "[oss-security] CVE-2019-10098: mod_rewrite configurations vulnerable to open redirect" nil nil nil "8" "2019081420:50:09" "[oss-security] CVE-2019-10098: mod_rewrite configurations vulnerable to open redirect" (number mark "U       druggeri@apa Aug 14   25/649   " thread-indent "\"[oss-security] CVE-2019-10098: mod_rewrite configurations vulnerable to open redirect\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-10098: mod_rewrite configurations vulnerable to open redirect" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18079 invoked by uid 550); 21 May 2015 00:24:04 -0000
+Received: (qmail 23864 invoked by uid 550); 15 Aug 2019 07:39:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,34 +11,36 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18055 invoked from network); 21 May 2015 00:24:03 -0000
-Message-ID: <555D258C.6070902@oracle.com>
-User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:17.0) Gecko/20150418 Thunderbird/17.0.11
-MIME-Version: 1.0
-References: <1432123050.6062.5.camel@debian.org>
-In-Reply-To: <1432123050.6062.5.camel@debian.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Source-IP: aserv0021.oracle.com [141.146.126.233]
-CC: Yves-Alexis Perez <corsac@debian.org>
-Date: Wed, 20 May 2015 17:23:40 -0700
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Logjam attack /  Imperfect Forward Secrecy: How
- Diffie-Hellman Fails in Practice
+Received: (qmail 11888 invoked from network); 14 Aug 2019 20:52:45 -0000
+From: Daniel Ruggeri <druggeri@apache.org>
 To: oss-security@lists.openwall.com
+Date: Wed, 14 Aug 2019 15:50:09 -0500
+Message-ID: <1565815809.XRRYARAT@httpd.apache.org>
+Subject: [oss-security] CVE-2019-10098: mod_rewrite configurations vulnerable to open redirect
 
-On 05/20/15 04:57 AM, Yves-Alexis Perez wrote:
-> I guess most people will already have seen that, but just in case,
-> because it might interest readers (even though it's not specifically
-> about open source stuff).
->
-> https://weakdh.org/
-> https://weakdh.org/imperfect-forward-secrecy.pdf
 
-The OpenSSL developers have posted their response now:
-https://www.openssl.org/blog/blog/2015/05/20/logjam-freak-upcoming-changes/
+CVE-2019-10098: mod_rewrite configurations vulnerable to open redirect
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@oracle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+Severity: Low
+
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+httpd 2.4.0 to 2.4.39
+
+Description:
+Redirects configured with mod_rewrite that were intended to be self-referential
+might be fooled by encoded newlines and redirect instead to an an unexpected 
+URL within the request URL.
+    
+Mitigation:
+Anchor captures used as back-references, prefix self-referential redirects with
+/ or scheme, host, and port.
+
+Credit:
+The issue was discovered by Yukitsugu Sasaki <yukitugu.sasaki@gmail.com>
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
+
