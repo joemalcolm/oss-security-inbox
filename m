@@ -1,59 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/15
-Message-ID: <20190822195653.GA25735@kroah.com>
-Date: Thu, 22 Aug 2019 12:56:53 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/7
+Message-ID: <1565815809.YSSF0CVU@httpd.apache.org>
+Date: Wed, 14 Aug 2019 15:50:09 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+Subject: CVE-2019-9517: mod_http2, DoS attack by exhausting h2 workers
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 22, 2019 at 12:59:14PM -0400, Brad Spengler wrote:
-> Sorry, a little too much marketing coming out of this camp these days, and
-> this one demands a response.
-> 
-> On Thu, Aug 22, 2019 at 09:20:00AM -0700, Greg KH wrote:
-> > On Thu, Aug 22, 2019 at 05:16:03PM +0200, Andrey Konovalov wrote:
-> > > On a side note, currently there's an issue with many Linux kernel bugs
-> > > being fixed, but not backported to distro kernels. Those bugs might
-> > > have security implications, but there's no way to know that, unless
-> > > someone specifically spends time to assess them in that regard.
-> > > Requesting CVEs for those bugs is a way to get the fixes into distro
-> > > kernels (even though that doesn't always work promptly [1] :).
-> > > 
-> > > [1] https://www.openwall.com/lists/oss-security/2018/10/30/2
-> > 
-> > Note, I am scraping the logs for anything that says it is fixed due do a
-> > syzbot find or report and backporting them to the stable kernel
-> > branches.  So those distros that do follow the LTS/stable kernel
-> > releases do get these fixes.
-> 
-> All of the fixes, Greg?
 
-All of the ones that say they are found by the syzbot, yes.  If I have
-missed any, please let me know, I am only human.
+CVE-2019-9517: mod_http2, DoS attack by exhausting h2 workers.
 
-> You'd also need to explain very easy to find examples like this:
-> https://www.spinics.net/lists/stable/msg317698.html
-> of random LTS kernels not receiving security fixes.  This particular issue was
-> public since April (which is when we backported fixes for it to 4.4/4.14).
-> It's now 4 months later and your 4.4 6-year "supported" LTS kernel still
-> doesn't contain the fixes.
+Severity: Moderate
 
-I don't track CVEs nor care about them at all, and rely on others who
-depend on those older kernels to provide complex backports as they can
-test them the best.  Nothing new at all, it's always been that way.
+Vendor: The Apache Software Foundation
 
-If you know of specific fixes that I have missed, I am glad to accept
-backports.  Right now we are averaging about 22 patches a day in the
-latest stable release, and 19 in the latest LTS release.  That's a tiny
-5.5% of the number of patches that are being developed and merged
-upstream, which means that we know we are missing stuff and we rely on
-people to point out where we have done so.
+Versions Affected:
+httpd 2.4.20 to 2.4.39
 
-We take patches from all distros and companies and users where they
-notice that we have missed things, I would love to take anything that
-you have noticed that I missed.
+Description:
+A malicious client could perform a DoS attack by flooding
+a connection with requests and basically never reading responses
+on the TCP connection. Depending on h2 worker dimensioning, it was
+possible to block those with relatively few connections.
+ 
+Mitigation:
+All httpd users deploying mod_http2 should upgrade to 2.4.40 or later.
+Unpatched servers can disable HTTP/2 protocol.
 
-thanks!
+Credit:
+The issue was discovered by Jonathan Looney of Netflix.
 
-greg k-h
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
+
