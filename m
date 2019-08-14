@@ -1,23 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/06/4
-Message-ID: <20191106134554.GA29332@openwall.com>
-Date: Wed, 6 Nov 2019 14:45:54 +0100
-From: Solar Designer <solar@...nwall.com>
-To: "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
-Cc: oss-security@...ts.openwall.com, Steven Rostedt <rostedt@...dmis.org>, sashal@...nel.org, Alexey Makhalov <amakhalov@...are.com>, Anish Swaminathan <anishs@...are.com>, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>
-Subject: Re: Membership application for linux-distros - VMware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/6
+Message-ID: <1565815809.XRRYARAT@httpd.apache.org>
+Date: Wed, 14 Aug 2019 15:50:09 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-10098: mod_rewrite configurations vulnerable to open redirect
 Content-Type: text/plain; charset=utf-8
 
-Hi Srivatsa,
 
-On Wed, Nov 06, 2019 at 12:00:44AM -0800, Srivatsa S. Bhat wrote:
-> Great! I'd like to request that Alexey Makhalov (amakhalov@...are.com)
-> from the Photon OS team be added to the linux-distros list. I have
-> worked with Alexey closely for several years and I'm happy to vouch
-> for him.
+CVE-2019-10098: mod_rewrite configurations vulnerable to open redirect
 
-Please send me Alexey's key off-list, with him CC'ed.  In general,
-changes in who else is subscribed for a distro are handled off-list,
-not on oss-security.
+Severity: Low
 
-Alexander
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+httpd 2.4.0 to 2.4.39
+
+Description:
+Redirects configured with mod_rewrite that were intended to be self-referential
+might be fooled by encoded newlines and redirect instead to an an unexpected 
+URL within the request URL.
+    
+Mitigation:
+Anchor captures used as back-references, prefix self-referential redirects with
+/ or scheme, host, and port.
+
+Credit:
+The issue was discovered by Yukitsugu Sasaki <yukitugu.sasaki@...il.com>
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
+
