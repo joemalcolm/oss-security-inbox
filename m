@@ -1,82 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/29/3
-Message-ID: <d10b3b3b-0c8b-bcc6-906d-2d2ca266d024@zetafleet.com>
-Date: Mon, 29 Apr 2019 15:21:48 -0500
-From: Colin Snover <mx1xcb@...afleet.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/5
+Message-ID: <1565815809.0ELYBFHH@httpd.apache.org>
+Date: Wed, 14 Aug 2019 15:50:09 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-9826] phpBB Native Fulltext Search denial of service
+Subject: CVE-2019-10097: mod_remoteip stack buffer overflow and NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability information
-=========================
 
-Title: phpBB Native Fulltext Search denial of service
-CVE ID: CVE-2019-9826
-CVSSv3 score: 8.6 (AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H)
+CVE-2019-10097: mod_remoteip stack buffer overflow and NULL pointer dereference
 
-Vulnerability description
-=========================
+Severity: Moderate
 
-Improper input validation in the Native Fulltext Search component of 
-phpBB 3.2.5 and earlier allows an unauthenticated remote user to trigger 
-a denial of service attack via the keywords URL parameter of search.php.
+Vendor: The Apache Software Foundation
 
-Successful exploitation generates a slow SQL query which causes the 
-database engine used by phpBB to consume all available CPU resources. 
-Depending upon the database engine, users will also be completely unable 
-to create or modify posts due to locks on the search index tables. The 
-slowness of the query depends on the size of the search_wordlist and 
-search_wordmatch tables.
+Versions Affected:
+httpd 2.4.32 to 2.4.39
 
-Because the denial of service is caused by a long-running database 
-query, for a typical phpBB installation running on MySQL/Linux, only <# 
-CPUs> requests need to be made by an attacker in order to consume all 
-CPU resources available to the database engine. The slow query will 
-continue to run after the attacker disconnects because PHP does not 
-detect connection aborts until it tries to send data back to the client.
+Description:
+When mod_remoteip was configured to use a trusted intermediary proxy
+server using the "PROXY" protocol, a specially crafted PROXY header
+could trigger a stack buffer overflow or NULL pointer deference.
+This vulnerability could only be triggered by a trusted proxy and not
+by untrusted HTTP clients.
 
-Vulnerable packages
-===================
+PROXY protocol support was added to mod_remoteip in release 2.4.33.
 
-phpBB 3.2.5 and earlier when configured to use the Native Fulltext 
-search component. (This is the default configuration.)
+Mitigation:
+All httpd users should upgrade to 2.4.41 or later.
 
-Solutions and workarounds
-=========================
+Credit:
+The issue was discovered by Daniel McCarney <cpu@...sencrypt.org> Let's Encrypt / Internet Security Research Group (ISRG)
 
-The vendor has released phpBB 3.2.6, which improves input validation in 
-the Native Fulltext Search component.
-
-Mitigations are available for earlier versions of phpBB:
-
-1. Set “Search backend” to an engine other than “phpBB Native Fulltext”
-2. Set the “Can search board” group permission to “No” for all untrusted 
-user groups
-3. Set “Enable search facilities” to “No”
-
-Proof of concept
-================
-
-Due to the triviality of the attack, proof of concept code is withheld 
-for the moment in order to allow users some time to test and install the 
-vendor patch.
-
-Report timeline
-===============
-
-The vendor was given a initial disclosure deadline of 2019-04-22. A one 
-week grace period was granted so that a fixed release could be available 
-at the time of disclosure.
-
-2019-02-18: Initial disclosure to vendor with PoC and candidate patch
-2019-02-19: Vendor acknowledges receipt of report
-2019-03-12: Update requested
-2019-03-13: Vendor verifies vulnerability
-2019-03-15: Vendor assigns CVE ID
-2019-03-19: Follow-up, no response
-2019-04-15: Second follow-up
-2019-04-18: Vendor requests extension to disclosure date
-2019-04-22: One week extension granted
-2019-04-29: Vendor patch released
-2019-04-29: Public disclosure
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
 
