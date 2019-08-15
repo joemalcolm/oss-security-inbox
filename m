@@ -1,46 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/16/1
-Message-ID: <CACqpLw+Qygv_-C86OPUeA=7hs00MLPZVx3b-i+cOJKKAFk1MDg@mail.gmail.com>
-Date: Tue, 15 Oct 2019 23:28:44 -0700
-From: Vishwas Babu <vishwasbabuaj@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: [CVE-2016-4977] Apache Fineract remote code execution vulnerabilities fixed in v1.3.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/8
+Message-ID: <ee167438-797d-71e5-879c-5c4782e9d5e7@redhat.com>
+Date: Thu, 15 Aug 2019 13:58:04 +1000
+From: Sam Fowler <sfowler@...hat.com>
+To: oss-security@...ts.openwall.com, Frederic Branczyk <fbranczy@...hat.com>, kubernetes-dev@...glegroups.com, kubernetes-security-announce@...glegroups.com, kubernetes-security-discuss@...glegroups.com
+Subject: Re: [ANNOUNCE] Security release of kube-state-metrics v1.7.2
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+CVE-2019-10223 has been assigned to this issue.
 
-As suggested on https://apache.org/security/committers.html, forwarding
-the below:
+--
+Sam Fowler, Red Hat Product Security
 
-
----------- Forwarded message ---------
-From: Vishwas Babu (Apache) <vishwasbabu@...che.org>
-Date: Tue, 15 Oct 2019 at 23:25
-Subject: [CVE-2016-4977] Apache Fineract remote code execution
-vulnerabilities fixed in v1.3.0
-To: <dev@...eract.apache.org>, <announce@...che.org>
-Cc: <extranewbugs@...il.com>, <security@...eract.apache.org>
-
-
-Hello,
-
-The Apache Fineract project would like to hereby disclose that our 1.3.0
-
-release includes a fix for CVE-2016-4977 : A known vulnerability in spring
-
-security upstream dependencies allowed malicious users to trigger remote code
-
-execution. See https://nvd.nist.gov/vuln/detail/CVE-2016-4977 for details of
-
-the upstream CVE.
-
-We would like to thank Roberto (extranewbugs@...il.com) for reporting
-
-this issue and the Apache Security team for their assistance.
-
-Additional details at
-https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+Security+Report.
-
-Regards,
-Vishwas
-
+On 9/8/19 11:08 pm, Frederic Branczyk wrote:
+> Hello Kubernetes Community-
+> 
+> A security issue was discovered in the v1.7.0 and v1.7.1 versions of
+> kube-state-metrics [1]. The issue is of Medium severity level and upgrading
+> to the latest release v1.7.2 [2] of kube-state-metrics is highly encouraged
+> to fix this issue, as well as deleting the time-series data that could
+> potentially disclose secret information.
+> 
+> 
+> *Am I vulnerable?*
+> If you are using the kube-state-metrics versions v1.7.0 or v1.7.1, you are
+> running a vulnerable version. To find out which version you are running,
+> you can verify the image tag of your kube-state-metrics deployment.
+> 
+> The following commands should give you the deployed image tag. (Please note
+> that this may vary depending on which namespace kube-state-metrics is
+> deployed in and the deployment name itself):
+> 
+> ```
+> kubectl get deployment -n kube-system kube-state-metrics -o yaml | grep
+> image:
+> ```
+> 
+> 
+> *How do I mitigate the vulnerability?*
+> Update the image of kube-state-metrics to `
+> quay.io/coreos/kube-state-metrics:v1.7.2`.
+> 
+> If you are unable to upgrade to the latest version of kube-state-metrics,
+> you can filter out all of the annotation metrics by passing the following
+> flag to `kube-state-metrics`:
+> 
+> ```
+> --metric-blacklist="kube_.*_annotations"
+> ```
+> 
+> Make sure to delete all the time series data from Prometheus as well, below
+> is an example command. (Note that this will only work from Prometheus v2.1
+> onward. More details on time series data deletion can be found in the
+> Prometheus docs [3])
+> 
+> ```
+> # This command deletes all of the annotation metrics emitted by
+> kube-state-metrics
+> curl -X POST -g '
+> http://localhost:9090/api/v1/admin/tsdb/delete_series?match[]={__name__=~
+> "kube_.+_annotations"}'
+> ```
+> 
+> This requires the Admin APIs to be enabled. Start Prometheus with the
+> `--web.enable-admin-api` flag to do so.
+> Please remember that the delete API only marks the time-series data for
+> deletion. The actual removal happens during the next compaction process. To
+> trigger this, the clean tombstones API can be used:
+> 
+> ```
+> curl -X POST http://localhost:9090/api/v1/admin/tsdb/clean_tombstones
+> ```
+> 
+> 
+> *Vulnerability Details*
+> An experimental feature was added to the v1.7.0 release that enabled
+> annotations to be exposed as metrics. By default, the kube-state-metrics
+> metrics only expose metadata about Secrets. However, a combination of the
+> default `kubectl` behavior and this new feature can cause the entire secret
+> content to end up in metric labels thus inadvertently exposing the secret
+> content in metrics.
+> 
+> We are not aware of other annotations that disclose information in the same
+> way, but as a precaution we have reverted the feature and will think more
+> thoroughly about the implications should we ever introduce something like
+> it again.
+> 
+> This feature has been reverted and released as the v1.7.2 release. If you
+> are running the v1.7.0 or v1.7.1 release, please upgrade to the v1.7.2
+> release as soon as possible.
+> 
+> Thank you to Moritz S. for reporting this issue! Also thank you to Tariq
+> Ibrahim, Frederic Branczyk and Lili Cosic for the coordination in making
+> the fix and release.
+> 
+> Thank you for your understanding,
+> kube-state-metrics maintainers
+> 
+> [1] https://github.com/kubernetes/kube-state-metrics
+> [2] https://github.com/kubernetes/kube-state-metrics/releases/tag/v1.7.2
+> [3] https://prometheus.io/docs/prometheus/latest/querying/api/#delete-series
+> 
