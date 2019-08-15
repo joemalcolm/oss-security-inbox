@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/2
-Message-ID: <nycvar.YSQ.7.76.1904251435470.3256@xnncv>
-Date: Thu, 25 Apr 2019 14:39:18 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Jason Wang <jasowang@...hat.com>
-Subject: CVE-2019-3900 Kernel: vhost_net: infinite loop while receiving packets leads to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/1
+Message-ID: <CALJHwhSEmNwChg-TCRYpyUGZWOM37zofntrsMk_WSEBbeZW3Vg@mail.gmail.com>
+Date: Thu, 15 Aug 2019 13:37:57 +1000
+From: Wade Mealing <wmealing@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-10140 - linux kernel - system panic in overlayfs directory creation.
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Red Hats kernel has a flaw in overlayfs which can cause a kernel panic and
+possibly memory corruption.
 
-An infinite loop issue was found in the vhost_net kernel module, while 
-handling incoming packets in handle_rx(). It could occur if one end sends 
-packets faster than the other end can process them.
+An attacker with local access can create a denial of service situation via
+NULL pointer dereference in ovl_posix_acl_create function in
+fs/overlayfs/dir.c. The ovl_create function can return a positive number
+leading to a null pointer derference of path in may_open. This can allow
+attackers with ability to create directories on overlayfs to crash the
+kernel creating a Denial Of Service (DOS) and possibly other memory
+corruption.
 
-A guest user, maybe remote one, could use this flaw to stall the vhost_net 
-kernel thread, resulting in a DoS scenario.
+The memory corruption claim may be a bit of a stretch, but it could be
+possible that an attacker could pre-groom the memory where the null pointer
+dereference exists, but I couldn't get this to work in practice, YMMV.
 
-Upstream patch:
----------------
-   -> https://www.spinics.net/lists/kernel/msg3111012.html
+This flaw likely only affects Red Hat Enterprise Linux 7 based products as
+this issue was created by by human-error in the back-porting process.  It
+is very unlikely that non Red Hat Enterprise Linux derived distributions
+contain this flaw.
 
-This issue was discovered by Jason Wang(CC'd) of Red Hat Inc.
-'CVE-2019-3900' assigned by Red Hat Inc.
+Thanks,
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Wade Mealing
+Red Hat Product Security
+
+
+Red Hat bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2019-10140
+
+Proposed patch:
+https://bugzilla.redhat.com/attachment.cgi?id=1535840
+
