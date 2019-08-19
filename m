@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1538" "Friday" "27" "November" "2015" "15:54:23" "+0100" "Johannes Segitz" "jsegitz@suse.com" "<20151127145423.GI5585@suse.de>" "41" "[oss-security] CVE request: Linux kernel, information disclosure after file truncate on BTRFS" nil nil nil "11" "2015112714:54:23" "[oss-security] CVE request: Linux kernel, information disclosure after file truncate on BTRFS" (number mark "U       jsegitz@suse Nov 27   41/1538  " thread-indent "\"[oss-security] CVE request: Linux kernel, information disclosure after file truncate on BTRFS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3104" "Monday" "19" "August" "2019" "22:55:47" "+0000" "Hausler, Micah" "mhausler@amazon.com" "<CA34227E-D1DF-4535-84D1-55A9EE812364@amazon.com>" "54" "[oss-security] [ANNOUNCE] Security release of Kubernetes v1.15.3, v1.14.6, v1.13.10 - CVE-2019-9512 and CVE-2019-9514" nil nil nil "8" "2019081922:55:47" "[oss-security] [ANNOUNCE] Security release of Kubernetes v1.15.3, v1.14.6, v1.13.10 - CVE-2019-9512 and CVE-2019-9514" (number mark "U       mhausler@ama Aug 19   54/3104  " thread-indent "\"[oss-security] [ANNOUNCE] Security release of Kubernetes v1.15.3, v1.14.6, v1.13.10 - CVE-2019-9512 and CVE-2019-9514\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [ANNOUNCE] Security release of Kubernetes v1.15.3, v1.14.6, v1.13.10 - CVE-2019-9512 and CVE-2019-9514" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3769 invoked by uid 550); 27 Nov 2015 14:54:37 -0000
+Received: (qmail 17865 invoked by uid 550); 20 Aug 2019 05:54:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3751 invoked from network); 27 Nov 2015 14:54:36 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Fri, 27 Nov 2015 15:54:23 +0100
-From: Johannes Segitz <jsegitz@suse.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20151127145423.GI5585@suse.de>
+Received: (qmail 1936 invoked from network); 19 Aug 2019 22:56:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1566255365; x=1597791365;
+  h=from:to:subject:date:message-id:mime-version;
+  bh=KiN8UBXsVDsQTCws+eWbmjiXsTVp5q7M/jYezKplZ3g=;
+  b=qIfqLXyqfqnvH2l6A0U+dvLrU23ZQvV1ythyfR4p6cT07VtHY9IaMSnu
+   GeO+YsFWyB/ZiaDPzCgzCJEprtnXkhMnxWqyIZtL9fAoHslPLpTYh5NYj
+   f/nhsY4qQhREbbOnpyJmexrODA1vPcpF8nJbXXmNfHrzpEtSna7KjeXco
+   4=;
+X-IronPort-AV: E=Sophos;i="5.64,406,1559520000"; 
+   d="scan'208,217";a="695303707"
+From: "Hausler, Micah" <mhausler@amazon.com>
+To: "kubernetes-announce@googlegroups.com"
+	<kubernetes-announce@googlegroups.com>, "kubernetes-dev@googlegroups.com"
+	<kubernetes-dev@googlegroups.com>,
+	"kubernetes-security-announce@googlegroups.com"
+	<kubernetes-security-announce@googlegroups.com>,
+	"kubernetes-security-discuss@googlegroups.com"
+	<kubernetes-security-discuss@googlegroups.com>,
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+	"kubernetes+announcements@discoursemail.com"
+	<kubernetes+announcements@discoursemail.com>
+Thread-Topic: [ANNOUNCE] Security release of Kubernetes v1.15.3, v1.14.6,
+ v1.13.10 - CVE-2019-9512 and CVE-2019-9514
+Thread-Index: AQHVVuE9IkCUWVE3tkOI/TYQCdDisQ==
+Date: Mon, 19 Aug 2019 22:55:47 +0000
+Message-ID: <CA34227E-D1DF-4535-84D1-55A9EE812364@amazon.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.43.160.20]
+Content-Type: multipart/alternative;
+	boundary="_000_CA34227ED1DF453584D155A9EE812364amazoncom_"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KasUm1oH6X2AfSvU"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] CVE request: Linux kernel, information disclosure after file
- truncate on BTRFS
+Subject: [oss-security] [ANNOUNCE] Security release of Kubernetes v1.15.3, v1.14.6, v1.13.10
+ - CVE-2019-9512 and CVE-2019-9514
 
---KasUm1oH6X2AfSvU
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--_000_CA34227ED1DF453584D155A9EE812364amazoncom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Hello,
+SGVsbG8gS3ViZXJuZXRlcyBDb21tdW5pdHksDQoNCg0KDQpBIHNlY3VyaXR5
+IGlzc3VlIGhhcyBiZWVuIGZvdW5kIGluIHRoZSBuZXQvaHR0cCBsaWJyYXJ5
+IG9mIHRoZSBHbyBsYW5ndWFnZSB0aGF0IGFmZmVjdHMgYWxsIHZlcnNpb25z
+IGFuZCBhbGwgY29tcG9uZW50cyBvZiBLdWJlcm5ldGVzLiBUaGUgdnVsbmVy
+YWJpbGl0aWVzIGNhbiByZXN1bHQgaW4gYSBEb1MgYWdhaW5zdCBhbnkgcHJv
+Y2VzcyB3aXRoIGFuIEhUVFAgb3IgSFRUUFMgbGlzdGVuZXIuDQoNCg0KDQpB
+bSBJIHZ1bG5lcmFibGU/DQoNCg0KDQpZZXMuIEFsbCB2ZXJzaW9ucyBvZiBL
+dWJlcm5ldGVzIGFyZSBhZmZlY3RlZC4NCg0KDQpHbyBoYXMgcmVsZWFzZWQg
+dmVyc2lvbnMgZ28xLjEyLjggYW5kIGdvMS4xMS4xMywgYW5kIHdlIGhhdmUg
+cmVsZWFzZWQgdGhlIGZvbGxvd2luZyB2ZXJzaW9ucyBvZiBLdWJlcm5ldGVz
+IGJ1aWx0IHVzaW5nIHBhdGNoZWQgdmVyc2lvbnMgb2YgR28uDQoNCg0KDQrC
+tyAgICAgICAgIEt1YmVybmV0ZXMgdjEuMTUuMyAtIGdvMS4xMi45DQoNCsK3
+ICAgICAgICAgS3ViZXJuZXRlcyB2MS4xNC42IC0gZ28xLjEyLjkNCg0Kwrcg
+ICAgICAgICBLdWJlcm5ldGVzIHYxLjEzLjEwIC0gZ28xLjExLjEzDQoNCg0K
+SG93IGRvIEkgbWl0aWdhdGUgdGhlIHZ1bG5lcmFiaWxpdHk/DQoNCg0KVXBn
+cmFkZSB0byBhIHBhdGNoZWQgdmVyc2lvbiBvZiBLdWJlcm5ldGVzLCBsaXN0
+ZWQgYWJvdmUuDQoNCg0KSG93IGRvIEkgdXBncmFkZT8NCg0KDQoNCldoZW4g
+bmV3IHZlcnNpb25zIGFyZSByZWxlYXNlZCwgeW91IGNhbiBmb2xsb3cgdGhl
+IHVwZ3JhZGUgaW5zdHJ1Y3Rpb25zIGF0IGh0dHBzOi8va3ViZXJuZXRlcy5p
+by9kb2NzL3Rhc2tzL2FkbWluaXN0ZXItY2x1c3Rlci9jbHVzdGVyLW1hbmFn
+ZW1lbnQvI3VwZ3JhZGluZy1hLWNsdXN0ZXINCg0KDQoNClZ1bG5lcmFiaWxp
+dHkgZGV0YWlscw0KDQoNCg0KTmV0ZmxpeCByZWNlbnRseSBhbm5vdW5jZWQg
+YSBzZWN1cml0eSBhZHZpc29yeSB0aGF0IGlkZW50aWZpZWQgc2V2ZXJhbCBE
+ZW5pYWwgb2YgU2VydmljZSBhdHRhY2sgdmVjdG9ycyB0aGF0IGNhbiBhZmZl
+Y3Qgc2VydmVyIGltcGxlbWVudGF0aW9ucyBvZiB0aGUgSFRUUC8yIHByb3Rv
+Y29sLCBhbmQgaGFzIGlzc3VlZCBlaWdodCBDVkVzLiBbMV0NCg0KDQoNCkdv
+IGlzIGFmZmVjdGVkIGJ5IHR3byBvZiB0aGUgdnVsbmVyYWJpbGl0aWVzIChD
+VkUtMjAxOS05NTEyIGFuZCBDVkUtMjAxOS05NTE0KSBhbmQgc28gS3ViZXJu
+ZXRlcyBjb21wb25lbnRzIHRoYXQgc2VydmUgSFRUUC8yIHRyYWZmaWMgKGlu
+Y2x1ZGluZyAvaGVhbHRoeikgYXJlIGFsc28gYWZmZWN0ZWQuIFsyXQ0KDQoN
+Cg0KVGhlc2UgdnVsbmVyYWJpbGl0aWVzIGFsbG93IHVudHJ1c3RlZCBjbGll
+bnRzIHRvIGFsbG9jYXRlIGFuIHVubGltaXRlZCBhbW91bnQgb2YgbWVtb3J5
+LCB1bnRpbCB0aGUgc2VydmVyIGNyYXNoZXMuIFRoZSBQcm9kdWN0IFNlY3Vy
+aXR5IENvbW1pdHRlZSBoYXMgYXNzaWduZWQgdGhpcyBzZXQgb2YgdnVsbmVy
+YWJpbGl0aWVzIHdpdGggYSBDVlNTIHNjb3JlIG9mIDcuNSBbM10NCg0KDQoN
+ClsxXS4gaHR0cHM6Ly9naXRodWIuY29tL05ldGZsaXgvc2VjdXJpdHktYnVs
+bGV0aW5zL2Jsb2IvbWFzdGVyL2Fkdmlzb3JpZXMvdGhpcmQtcGFydHkvMjAx
+OS0wMDIubWQNCg0KWzJdLiBodHRwczovL2dvbGFuZy5vcmcvZG9jL2RldmVs
+L3JlbGVhc2UuaHRtbCNnbzEuMTINCg0KWzNdLiBodHRwczovL3d3dy5maXJz
+dC5vcmcvY3Zzcy9jYWxjdWxhdG9yLzMuMCNDVlNTOjMuMC9BVjpOL0FDOkwv
+UFI6Ti9VSTpOL1M6VS9DOk4vSTpOL0E6SA0KDQoNCg0KVGhhbmsgeW91DQoN
+Cg0KVGhhbmtzIHRvIEpvbmF0aGFuIExvb25leSBmcm9tIE5ldGZsaXggZm9y
+IGRpc2NvdmVyaW5nIGFuZCByZXBvcnRpbmcgdGhlc2UgaXNzdWVzIHRvIHRo
+ZSBHbyBjb21tdW5pdHkuDQoNCg0KDQpUaGFua3MgdG8gQ2hyaXN0b3BoIEJs
+ZWNrZXIsIEJlbmphbWluIEVsZGVyLCBhbmQgVGltIFBlcHBlciBmb3IgY29v
+cmRpbmF0aW5nIHRoZSBmaXggYW5kIHJlbGVhc2UuDQoNCg0KDQpUaGFuayBZ
+b3UsDQoNCg0KDQpNaWNhaCBIYXVzbGVyIG9uIGJlaGFsZiBvZiB0aGUgS3Vi
+ZXJuZXRlcyBQcm9kdWN0IFNlY3VyaXR5IENvbW1pdHRlZQ0KDQoNCg==
 
-please assign a CVE for this information disclosure issue:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=
-=3D0305cd5f7fca85dae392b9ba85b116896eb7c1c7
-
-Thanks,
-Johannes
---=20
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Linux GmbH, GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton
-HRB 21284 (AG N=FCrnberg)
-
---KasUm1oH6X2AfSvU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCgAGBQJWWG6fAAoJELwn3Z0sxP1mEGEQAJobDikevWUQwi6/KnMMnhFX
-pMTwXWguvEkxdpYvkN2eCrtQiAKemjahLupWUfyspRm126IEzaEPade9Qul867aG
-EBGBCDv5wmOg2VK0CD0WHTE5w1eKNX4n1hyN3Rw5jgYtirYf1rydxmiCZAUrbdVQ
-dT7Rta7yM8NaxPh+Z2+RBYuiXiqckGdvEHvzs1D6fRudeEy+lbSM9xHXATKCBqZd
-v5Fg6QVt0xj3faMz+HCffdiAtcx2deBqQKcGDQKXdboe4AcpoAmjJanQrc3rRV/F
-zLQC/2SdtlHywvbBfaSwio/5Wh9/PVuSbJmj2JCa7NN5UVZHyiEz2Z+SgWBgpN1b
-piMvtfxqY6/teKDy//4/feumJQoZV2RLx5YbOaYiI/sNgDRN3GY4AeG6bwNfmEPh
-IzoKeL9/SpaQBVQY0dODhA/IjKIE8CpWXTRzJXnEiiRD8MKvFZzEzIjxryAdeb7j
-ul57U2ivYa5k3okHWbOJFjY93QRTbLcCykPLJcoOo5q5AkXKarDc6ed1EhmuXi4m
-vdfzTBfKMnXjwNhJZ3PxKKjJIH5By7ttbwPN1j9KTBzORe66ujxHjkdcJOZvSPEm
-rKWSb/MnmEuYPRm7XcpOqH3tlrehTyG49ysw/Ktu5RPTGFBbrWmsqLypzcP20Sow
-MazFtLG5Svw8Hew47X7X
-=3k1b
------END PGP SIGNATURE-----
-
---KasUm1oH6X2AfSvU--
+--_000_CA34227ED1DF453584D155A9EE812364amazoncom_--
