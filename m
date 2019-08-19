@@ -1,21 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/11/1
-Message-Id: <B20E8928-1375-490B-B6B9-97FBE4A19B51@gmail.com>
-Date: Mon, 11 Feb 2019 12:05:50 +0100
-From: Carlton Gibson <carlton.gibson@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-6975 -- Django fixed memory exhaustion in utils.numberformat.format().
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/20/1
+Message-ID: <CA34227E-D1DF-4535-84D1-55A9EE812364@amazon.com>
+Date: Mon, 19 Aug 2019 22:55:47 +0000
+From: "Hausler, Micah" <mhausler@...zon.com>
+To: "kubernetes-announce@...glegroups.com" <kubernetes-announce@...glegroups.com>, "kubernetes-dev@...glegroups.com" <kubernetes-dev@...glegroups.com>, "kubernetes-security-announce@...glegroups.com" <kubernetes-security-announce@...glegroups.com>, "kubernetes-security-discuss@...glegroups.com" <kubernetes-security-discuss@...glegroups.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "kubernetes+announcements@...coursemail.com" <kubernetes+announcements@...coursemail.com>
+Subject: [ANNOUNCE] Security release of Kubernetes v1.15.3, v1.14.6, v1.13.10 - CVE-2019-9512 and CVE-2019-9514
 Content-Type: text/plain; charset=utf-8
 
-In accordance with our security release policy, the Django team is issuing Django 1.11.19, Django 2.1.6, and Django 2.0.11. These releases addresses the security issue detailed below. We encourage all users of Django to upgrade as soon as possible.
+Hello Kubernetes Community,
 
-CVE-2019-6975: Memory exhaustion in django.utils.numberformat.format()
 
-If django.utils.numberformat.format() -- used by contrib.admin as well as the the floatformat, filesizeformat, and intcomma templates filters -- received a Decimal with a large number of digits or a large exponent, it could lead to significant memory usage due to a call to '{:f}'.format().
 
-To avoid this, decimals with more than 200 digits are now formatted using scientific notation.
+A security issue has been found in the net/http library of the Go language that affects all versions and all components of Kubernetes. The vulnerabilities can result in a DoS against any process with an HTTP or HTTPS listener.
 
-See Django blog for more details and download links: 
-https://www.djangoproject.com/weblog/2019/feb/11/security-releases/ <https://www.djangoproject.com/weblog/2019/feb/11/security-releases/>
+
+
+Am I vulnerable?
+
+
+
+Yes. All versions of Kubernetes are affected.
+
+
+Go has released versions go1.12.8 and go1.11.13, and we have released the following versions of Kubernetes built using patched versions of Go.
+
+
+
+·         Kubernetes v1.15.3 - go1.12.9
+
+·         Kubernetes v1.14.6 - go1.12.9
+
+·         Kubernetes v1.13.10 - go1.11.13
+
+
+How do I mitigate the vulnerability?
+
+
+Upgrade to a patched version of Kubernetes, listed above.
+
+
+How do I upgrade?
+
+
+
+When new versions are released, you can follow the upgrade instructions at https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
+
+
+
+Vulnerability details
+
+
+
+Netflix recently announced a security advisory that identified several Denial of Service attack vectors that can affect server implementations of the HTTP/2 protocol, and has issued eight CVEs. [1]
+
+
+
+Go is affected by two of the vulnerabilities (CVE-2019-9512 and CVE-2019-9514) and so Kubernetes components that serve HTTP/2 traffic (including /healthz) are also affected. [2]
+
+
+
+These vulnerabilities allow untrusted clients to allocate an unlimited amount of memory, until the server crashes. The Product Security Committee has assigned this set of vulnerabilities with a CVSS score of 7.5 [3]
+
+
+
+[1]. https://github.com/Netflix/security-bulletins/blob/master/advisories/third-party/2019-002.md
+
+[2]. https://golang.org/doc/devel/release.html#go1.12
+
+[3]. https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+
+
+
+Thank you
+
+
+Thanks to Jonathan Looney from Netflix for discovering and reporting these issues to the Go community.
+
+
+
+Thanks to Christoph Blecker, Benjamin Elder, and Tim Pepper for coordinating the fix and release.
+
+
+
+Thank You,
+
+
+
+Micah Hausler on behalf of the Kubernetes Product Security Committee
 
 
