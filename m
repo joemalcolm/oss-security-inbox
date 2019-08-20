@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5200" "Tuesday" "25" "June" "2019" "00:44:31" "+1000" "Michael Ellerman" "mpe@ellerman.id.au" "<87lfxr82ls.fsf@concordia.ellerman.id.au>" "159" "[oss-security] CVE-2019-12817: Linux kernel: powerpc: Unrelated processes may be able to read/write to each other's virtual memory" nil nil nil "6" "2019062414:44:31" "[oss-security] CVE-2019-12817: Linux kernel: powerpc: Unrelated processes may be able to read/write to each other's virtual memory" (number mark "U       mpe@ellerman Jun 25  159/5200  " thread-indent "\"[oss-security] CVE-2019-12817: Linux kernel: powerpc: Unrelated processes may be able to read/write to each other's virtual memory\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-12817: Linux kernel: powerpc: Unrelated processes may be able to read/write to each other's virtual memory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4748" "Tuesday" "20" "August" "2019" "20:20:34" "+0200" "Andrey Konovalov" "andreyknvl@gmail.com" "<CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>" "119" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" "^Date:" nil nil "8" "2019082018:20:34" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" (number mark "        andreyknvl@g Aug 20  119/4748  " thread-indent "\"[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30183 invoked by uid 550); 24 Jun 2019 15:29:25 -0000
+Received: (qmail 29825 invoked by uid 550); 20 Aug 2019 18:20:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,174 +11,157 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18064 invoked from network); 24 Jun 2019 14:44:58 -0000
-From: Michael Ellerman <mpe@ellerman.id.au>
-To: oss-security@lists.openwall.com
-Cc: linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org, linuxppc-users@lists.ozlabs.org
-Date: Tue, 25 Jun 2019 00:44:31 +1000
-Message-ID: <87lfxr82ls.fsf@concordia.ellerman.id.au>
+Received: (qmail 29797 invoked from network); 20 Aug 2019 18:20:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=kyAEZ3ndywg3RuxTHXv/fvN5SZZVL9gNcBaUoKeDxIY=;
+        b=FF4zswymC4iT7RfC+OhWnkCWwoEpoxEUP7eqcDdPOi5pdiIHjldx54WQKzMTTWrF3i
+         ndzi7FsobK52eI/yn1RDCOP4SBx9/MimFg7fJKCLPWVD9jQgYch37guGXzvs+8c9HxSG
+         V/48OarvLA5Q2OLHayF5+pkyQSDfLq02tKtngH+rqRNnh2Zak49pqXAqVyBiJcKu73Ld
+         mLEnZqo/KiRhVPC6n74z/x0G8Mg4f8V83zOzIOtY0Cxn0THfPd9J0xMklzWk32IWU06O
+         y1wJ2ef1gtQwOX6MZbeDmk7ki/c7GHRWLKzB6fYclXtJ8q2dlahsyKUVzvJilameBe1P
+         KD1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=kyAEZ3ndywg3RuxTHXv/fvN5SZZVL9gNcBaUoKeDxIY=;
+        b=p8Z7SNTluBNXvmxZ8EvaJcSxjuHIPJdJTC9eLxbzIgglIkfENI34L8NjwpYQxmTHOn
+         D1vf9T3nNZOTwG3Zfx/EVOenT7Zl1pTYQAumw9gZNYDmb7HaNZ+F/UvZUi+Y/JmGeW1L
+         1nPvh8Fnu9VDALt8fst73NfydOI1GjnyuSYEN156U8H0NMvSYnLuquRkiGmjyPWaueyc
+         xpJVeN5RdWBHcgf19fpTWhqo1lqHSGfM0w56JIbR5V5VnsrcrgiFBWePH6c0aDvjCxTJ
+         JMW1xiRAqHMBLFj4FWIKSf0tmvESJjUamHu7JyHM01Dq6jfMpicnZgDAcM0S5d8vSFmI
+         zw/A==
+X-Gm-Message-State: APjAAAUJTczMz18HMyc8194xro9nkH2A0ZXiuxyWo6ZeCEJA66TB91em
+	J3JY3aEOXFS25RmD3oFFqgQ5B5o4xuqZix+jX+FuXedd
+X-Google-Smtp-Source: APXvYqzaumMmLCAqDVxdq5iNM4YDQtiearvIoypgJW+3INyNr/u4f+dPq2IbPKR/xXKXuNCXZiJYCahzdvjiX3Zbp5s=
+X-Received: by 2002:a2e:948:: with SMTP id 69mr15248651ljj.39.1566325245269;
+ Tue, 20 Aug 2019 11:20:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha256; protocol="application/pgp-signature"
-Subject: [oss-security] CVE-2019-12817: Linux kernel: powerpc: Unrelated processes may be able to read/write to each other's virtual memory
+Message-ID: <CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Tue, 20 Aug 2019 20:20:34 +0200
+From: Andrey Konovalov <andreyknvl@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2
+To: oss-security@lists.openwall.com
 
---=-=-=
-Content-Type: text/plain
+Hi!
 
-The Linux kernel for powerpc since 4.17 has a bug where unrelated processes may
-be able to read/write to each other's virtual memory under certain conditions.
+I've previously reported vulnerabilities in the Linux kernel USB
+drivers on this list [1] found with syzkaller [2]. The USB fuzzing
+project has been on hold for a while, but has been resumed earlier
+this year. Here's a new bunch of 15 CVEs.
 
-This bug only affects machines using 64-bit CPUs with the hash page table MMU,
-see below for more detail on affected CPUs.
+As an experiment this time I've requested CVEs for 2 bugs
+(CVE-2019-15290, CVE-2019-15291) that haven't yet been fixed (fixes
+for the other 13 bugs are in the upstream kernel). Both have been
+reported by syzbot over 4 months ago. I've made sure that these 2 bugs
+are reproducible with a crafted USB device and crash a Linux laptop
+(or rather crash the USB worker thread) with one of the distro
+kernels.
 
-To trigger the bug a process must allocate memory above 512TB. That only happens
-if userspace explicitly requests it with mmap(). That process must then fork(),
-at this point the child incorrectly inherits the "context id" of the parent
-associated with the mapping above 512TB. It may then be possible for the
-parent/child to write to each other's mappings above 512TB, which should not be
-possible, and constitutes memory corruption.
+There are many more still not fixed bugs shown here [3].
 
-If instead the child process exits, all its context ids are freed, including the
-context id that is still in use by the parent for the mapping above 512TB. That
-id can then be reallocated to a third process, that process can then read/write
-to the parent's mapping above 512TB. Additionally if the freed id is used for
-the third process's primary context id, then the parent is able to read/write to
-the third process's mappings *below* 512TB.
+[1] https://www.openwall.com/lists/oss-security/2017/12/12/7
 
-If the parent and child both exit before another process is allocated the freed
-context id, the kernel will notice the double free of the id and print a warning
-such as:
+[2] https://github.com/google/syzkaller/blob/master/docs/linux/external_fuzzing_usb.md
 
-  ida_free called for id=103 which is not allocated.
-  WARNING: CPU: 8 PID: 7293 at lib/idr.c:520 ida_free_rc+0x1b4/0x1d0
+[3] https://syzkaller.appspot.com/upstream?manager=ci2-upstream-usb
 
-The bug was introduced in commit:
-  f384796c40dc ("powerpc/mm: Add support for handling > 512TB address in SLB miss")
+### CVEs
 
-Which was originally merged in v4.17.
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15290
 
-Only machines using the hash page table (HPT) MMU are affected, eg. PowerPC 970
-(G5), PA6T, Power5/6/7/8/9. By default Power9 bare metal machines (powernv) use
-the Radix MMU and are not affected, unless the machine has been explicitly
-booted in HPT mode (using disable_radix on the kernel command line). KVM guests
-on Power9 may be affected if the host or guest is configured to use the HPT MMU.
-LPARs under PowerVM on Power9 are affected as they always use the HPT MMU.
-Kernels built with PAGE_SIZE=4K are not affected.
+An issue was discovered in the Linux kernel through 5.2.9. There is a
+NULL pointer dereference caused by a malicious USB device in the
+ath6kl_usb_alloc_urb_from_pipe function in the
+drivers/net/wireless/ath/ath6kl/usb.c driver.
 
-The upstream fix is here:
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15291
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ca72d88378b2f2444d3ec145dd442d449d3fefbc
+An issue was discovered in the Linux kernel through 5.2.9. There is a
+NULL pointer dereference caused by a malicious USB device in the
+flexcop_usb_probe function in the drivers/media/usb/b2c2/flexcop-usb.c
+driver.
 
-There's also a kernel selftest to verify the fix:
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15211
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=16391bfc862342f285195013b73c1394fab28b97
+An issue was discovered in the Linux kernel before 5.2.6. There is a
+use-after-free caused by a malicious USB device in the
+drivers/media/v4l2-core/v4l2-dev.c driver because
+drivers/media/radio/radio-raremono.c does not properly allocate
+memory.
 
-Or a similar standalone version is included below.
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15212
 
-cheers
+An issue was discovered in the Linux kernel before 5.1.8. There is a
+double-free caused by a malicious USB device in the
+drivers/usb/misc/rio500.c driver.
 
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15213
 
-cat > test.c <<EOF
-#undef NDEBUG
+An issue was discovered in the Linux kernel before 5.2.3. There is a
+use-after-free caused by a malicious USB device in the
+drivers/media/usb/dvb-usb/dvb-usb-init.c driver.
 
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/mman.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15214
 
-#ifndef MAP_FIXED_NOREPLACE
-#define MAP_FIXED_NOREPLACE	MAP_FIXED	// "Should be safe" above 512TB
-#endif
+An issue was discovered in the Linux kernel before 5.0.10. There is a
+use-after-free in the sound subsystem because card disconnection
+causes certain data structures to be deleted too early. This is
+related to sound/core/init.c and sound/core/info.c.
 
-int main(void)
-{
-	int p2c[2], c2p[2], rc, status, c, *p;
-	unsigned long page_size;
-	pid_t pid;
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15215
 
-	page_size = sysconf(_SC_PAGESIZE);
-	if (page_size != 65536) {
-		printf("Unsupported page size - not affected\n");
-		return 1;
-	}
+An issue was discovered in the Linux kernel before 5.2.6. There is a
+use-after-free caused by a malicious USB device in the
+drivers/media/usb/cpia2/cpia2_usb.c driver.
 
-	// Create a mapping at 512TB to allocate an extended_id
-	p = mmap((void *)(512ul << 40), page_size, PROT_READ | PROT_WRITE,
-		MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED_NOREPLACE, -1, 0);
-	if (p == MAP_FAILED) {
-		perror("mmap");
-		printf("Error: couldn't mmap(), confirm kernel has 4TB support\n");
-		return 1;
-	}
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15216
 
-	printf("parent writing %p = 1\n", p);
-	*p = 1;
+An issue was discovered in the Linux kernel before 5.0.14. There is a
+NULL pointer dereference caused by a malicious USB device in the
+drivers/usb/misc/yurex.c driver.
 
-	assert(pipe(p2c) != -1 && pipe(c2p) != -1);
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15217
 
-	pid = fork();
-	if (pid == 0) {
-		close(p2c[1]);
-		close(c2p[0]);
-		assert(read(p2c[0], &c, 1) == 1);
+An issue was discovered in the Linux kernel before 5.2.3. There is a
+NULL pointer dereference caused by a malicious USB device in the
+drivers/media/usb/zr364xx/zr364xx.c driver.
 
-		pid = getpid();
-		printf("child writing  %p = %d\n", p, pid);
-		*p = pid;
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15218
 
-		assert(write(c2p[1], &c, 1) == 1);
-		assert(read(p2c[0], &c, 1) == 1);
-		exit(0);
-	}
-	close(p2c[0]);
-	close(c2p[1]);
+An issue was discovered in the Linux kernel before 5.1.8. There is a
+NULL pointer dereference caused by a malicious USB device in the
+drivers/media/usb/siano/smsusb.c driver.
 
-	c = 0;
-	assert(write(p2c[1], &c, 1) == 1);
-	assert(read(c2p[0], &c, 1) == 1);
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15219
 
-	// Prevent compiler optimisation
-	asm volatile("" : : : "memory");
+An issue was discovered in the Linux kernel before 5.1.8. There is a
+NULL pointer dereference caused by a malicious USB device in the
+drivers/usb/misc/sisusbvga/sisusb.c driver.
 
-	rc = 0;
-	printf("parent reading %p = %d\n", p, *p);
-	if (*p != 1) {
-		printf("Error: BUG! parent saw child's write! *p = %d\n", *p);
-		rc = 1;
-	}
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15220
 
-	assert(write(p2c[1], &c, 1) == 1);
-	assert(waitpid(pid, &status, 0) != -1);
-	assert(WIFEXITED(status) && WEXITSTATUS(status) == 0);
+An issue was discovered in the Linux kernel before 5.2.1. There is a
+use-after-free caused by a malicious USB device in the
+drivers/net/wireless/intersil/p54/p54usb.c driver.
 
-	if (rc == 0)
-		printf("success: test completed OK\n");
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15221
 
-	return rc;
-}
-EOF
+An issue was discovered in the Linux kernel before 5.1.17. There is a
+NULL pointer dereference caused by a malicious USB device in the
+sound/usb/line6/pcm.c driver.
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15222
 
------BEGIN PGP SIGNATURE-----
+An issue was discovered in the Linux kernel before 5.2.8. There is a
+NULL pointer dereference caused by a malicious USB device in the
+sound/usb/helper.c (motu_microbookii) driver.
 
-iQIzBAEBCAAdFiEEJFGtCPCthwEv2Y/bUevqPMjhpYAFAl0Q4c8ACgkQUevqPMjh
-pYBBARAAqM95nzwHVCnSIMUqAqRSuLV3UOx4KxNylmdSu3ig42AgS75KeCYyBKuT
-q8bXq4sSKS5mZAp42/YgaIQpBtv8nOGutMSivZEJmMNnL3riEd7bT63BOw8EnA20
-ryhXsqf504anqzPXYv7P5xKeoQjEbK7MhuaN9d86erot/6cWh7tCcIF0SdiPGX3W
-PLlPrptRMnPCm0QhKCZxlKPxd3qd+HPNr2RVP2bIbv+8x0fldVTR+N2+gD+a5i5p
-rLsxERpaAsPvDbQNeXN/9Wck19wx+ZQMlCxStSY+VECM2jwsXty2f93hZmQ5Nm5E
-HV+nE57IF7tI/7lrlQfQ3Xml5bhVnFXwxQhbdeZfxg5vKm8YDSB0Vu0FaA59TqK7
-ANS2VLgGZV+F0VqCkWx3mVgmJsAAKfOrTjqsQAV0zH42siyYV9AvKZDdYYOxbbkf
-ZZjol8VGh684uKxZRlHeGMBL0kztUE32FiNqrhioJfpCkNhBKPcTljfVgHdPYfzz
-ULAd4QoIUcKa4RgNN5KQgMpxajXgaLxqk8K8R566dRz1KyZnpIn41v3Mq88ApBTv
-0UQarN0AYEyWyO+YI7Q0ngFWxrrcVhA9nFMRXdIdfI581hBqtWPbvItEMFVy30fZ
-3FXzj07zCVIqm7oy21QabFaLUPAEopARj7ByxutyPJT8efdhkRc=
-=21oU
------END PGP SIGNATURE-----
---=-=-=--
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15223
+
+An issue was discovered in the Linux kernel before 5.1.8. There is a
+NULL pointer dereference caused by a malicious USB device in the
+sound/usb/line6/driver.c driver.
