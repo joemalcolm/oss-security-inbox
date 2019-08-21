@@ -1,44 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/03/2
-Message-ID: <CAPyX2nfQGVziUEt2V-KF-zht5xoa0bPHFQ3nRFSj_-gs=07xCQ@mail.gmail.com>
-Date: Sun, 3 Mar 2019 16:58:48 +0000
-From: Mark Steward <marksteward@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Open Redirect in Tiny Tiny RSS (tt-rss)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/21/1
+Message-ID: <5ecdbecd29a54a5c859fb5020914d178@MSNWINEXCH2.ALI.PRI>
+Date: Wed, 21 Aug 2019 15:03:20 +0000
+From: "Vogl, Todd" <ToddVogl@...iantenergy.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: CVE-2018-15664: docker (all versions) is vulnerable to a symlink-race attack
 Content-Type: text/plain; charset=utf-8
 
-This fix isn't sufficient - there are URLs that browsers process that
-don't have a host when passed through parse_url.
 
 
-Mark
+-----Original Message-----
+From: Aleksa Sarai [mailto:cyphar@...har.com] 
+Sent: Monday, May 27, 2019 11:25 PM
+To: oss-security@...ts.openwall.com
+Subject: [oss-security] CVE-2018-15664: docker (all versions) is vulnerable to a symlink-race attack
 
-On Sun, Mar 3, 2019 at 4:32 PM Hanno Böck <hanno@...eck.de> wrote:
->
-> Hi,
->
-> Via my personal Bug Bounty program on hackerone I got a report about an
-> open redirect in a publicly accessible instance of Tiny Tiny RSS I have
-> running on a subdomain.
->
-> I'm aware that whether open redirects are vulnerabilities is debatable
-> (which is also reflected in the discussion with tt-rss, but they fixed
-> it nevertheless).
->
-> PoC:
-> https://[hostname]/public.php?return=http%3a%2f%2fevil.com%2f&op=login&login=password=&profile=0
->
-> Report to tt-rss developers:
-> https://discourse.tt-rss.org/t/open-redirect-via-public-php/2077
-> Fix:
-> https://git.tt-rss.org/fox/tt-rss/commit/c68ac04020d85a296c784de18f8def3f365f9f6a
->
-> This was reported by Mariia Aleksandrova (zophi), I just forwarded the
-> report to the tt-rss developers.
->
-> --
-> Hanno Böck
-> https://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+[This is an external email. Be cautious with links, attachments and responses.]
+
+**********************************************************************
+There is no released Docker version with a fix for this issue at the time of writing. I've submitted a patch upstream[1] which is still undergoing code review, and after discussion with them they agreed that public disclosure of the issue was reasonable. Since the SUSE bug report contains exploit scripts[2], I've attached them here too.
+
+This attack was discovered by myself (Aleksa Sarai), though Tõnis Tiigi did mention the possibility of an attack like this in the past (at the time we thought the race window was to small to exploit). In addition, you could see this exploit as a continuation of some 'docker cp'
+security bugs that I helped find and fix more than 4 years ago in 2014[3,4] (these were never assigned CVEs because at the time it was thought that attacks which used access to docker.sock were not valid security bugs).
+
+[[ Overview ]]
+
+The basic premise of this attack is that FollowSymlinkInScope suffers from a fairly fundamental TOCTOU attack. The purpose of FollowSymlinkInScope is to take a given path and safely resolve it as though the process was inside the container. After the full path has been resolved, the resolved path is passed around a bit and then operated on a bit later (in the case of 'docker cp' it is opened when creating the archive that is streamed to the client). If an attacker can add a symlink component to the path *after* the resolution but *before* it is operated on, then you could end up resolving the symlink path component on the host as root. In the case of 'docker cp' this gives you read *and* write access to any path on the host.
+
+As far as I'm aware there are no meaningful protections against this kind of attack (other than not allowing "docker cp" on running containers -- but that only helps with his particular attack through FollowSymlinkInScope). Unless you have restricted the Docker daemon through AppArmor, then it can affect the host filesystem -- I haven't verified if the issue is as exploitable under the default SELinux configuration on Fedora/CentOS/RHEL.
+
+[[ Exploit Scripts ]]
+
+Attacked are two reproducers of the issue. They both include a Docker image which contains a simple binary that does a RENAME_EXCHANGE of a symlink to "/" and an empty directory in a loop, hoping to hit the race condition. In both of the scripts, the user is trying to copy a file to or from a path containing the swapped symlink.
+
+In the case of run_read.sh, I get a <1% chance of hitting the race condition (my attack script is quite dumb, it's possible with better timing you'd be able to hit the race window much more effectively).
+However <1% still means it only takes 10s of trying to get read access to the host with root permissions.
+
+  % ./run_read.sh &>/dev/null & ; sleep 10s ; pkill -9 run.sh
+  % chmod 0644 ex*/out # to fix up permissions for grep
+  % grep 'SUCCESS' ex*/out | wc -l # managed to get it from the host
+  2
+  % grep 'FAILED'  ex*/out | wc -l # got the file from the container
+  334
+
+However, the run_write.sh script can overwrite the host filesystem in very few iterations -- this is because internally Docker has a "chrootarchive" concept where the archive is extracted from within a chroot. However, Docker doesn't chroot into the container's "/" (which would make this exploit ineffective), it chroots into the parent directory of the archive target -- which is attacker controlled. As a result, this actually results in the attack being more likely to succeed (once the chroot has hit the race, the rest of the attack is guaranteed to succeed).
+
+The scripts will ask for sudo permissions, but that is only to be able to create a "flag file" in /. You could modify the scripts to target /etc/shadow instead if you like.
+
+[[ Future Work ]]
+
+In an attempt to come up with a better solution for this problem, I've been working on some Linux kernel patches which add the ability to safely resolve paths from within a rootfs[5]. But they are still being reviewed and it will take a while for userspace to be able to take advantage of the new interfaces. However, I am also working on redesigning my "secure join" library's API[6] so that we can at least better detect these attacks on older kernels and take advantage of [5] in newer kernels.
+
+[1]: https://github.com/docker/docker/pull/39252
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=1096726
+[3]: https://github.com/docker/docker/pull/5720
+[4]: https://github.com/docker/docker/pull/6000
+[5]: https://marc.info/?l=linux-fsdevel&m=155835923516235&w=2
+[6]: https://github.com/cyphar/filepath-securejoin
+
+--
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
