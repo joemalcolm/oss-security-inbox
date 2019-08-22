@@ -1,63 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/26/8
-Message-ID: <HP4s7z37GTsoDW43jgPPfFMSpfknopZFj995TBm7xpl2cc6CEmZGe6oZoXCXz81Ny11QA9ACQTGwluFzbMZyyFQv3hWuHd77hZ9VwApBptM=@protonmail.ch>
-Date: Fri, 26 Jul 2019 12:59:25 +0000
-From: Stiepan <stie@...tonmail.ch>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/4
+Message-Id: <ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
+Date: Thu, 22 Aug 2019 11:59:15 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security release pre-announcement messages
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-Thank you for the details.
 
-Which color, the pony ? ;)
 
-Regarding the a bug is a bug rationale you are referring to, I don't discuss it and think that much progress has been made to treat the subset of those which are also security bugs, including the enlightening participation of Mr. Torvalds himself to this list.
-I wouldn't advocate cherry-picking bugfixes either, the Android examples you mention in your reference are a real nightmare indeed. My point is that we would have at any time the most secure available option. This would involve a system to switch among kernel versions when needed, eg when a "pure" security bug with high impact is identified and cannot be published yet, nor its fix, yet people could switch meanwhile to a safer, known kernel version.
-I hope that makes it clearer.
+> On 22 Aug 2019, at 10:31, Marcus Meissner <meissner@...e.de> wrote:
+> 
+> On Thu, Aug 22, 2019 at 10:04:42AM +0100, John Haxby wrote:
+>> 
+>> 
+>>> On 20 Aug 2019, at 19:20, Andrey Konovalov <andreyknvl@...il.com> wrote:
+>>> 
+>>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15216
+>>> 
+>>> An issue was discovered in the Linux kernel before 5.0.14. There is a
+>>> NULL pointer dereference caused by a malicious USB device in the
+>>> drivers/usb/misc/yurex.c driver.
+>>> 
+>>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15217
+>>> 
+>>> An issue was discovered in the Linux kernel before 5.2.3. There is a
+>>> NULL pointer dereference caused by a malicious USB device in the
+>>> drivers/media/usb/zr364xx/zr364xx.c driver.
+>>> 
+>>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15218
+>>> 
+>>> An issue was discovered in the Linux kernel before 5.1.8. There is a
+>>> NULL pointer dereference caused by a malicious USB device in the
+>>> drivers/media/usb/siano/smsusb.c driver.
+>>> 
+>>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15219
+>>> 
+>>> An issue was discovered in the Linux kernel before 5.1.8. There is a
+>>> NULL pointer dereference caused by a malicious USB device in the
+>>> drivers/usb/misc/sisusbvga/sisusb.c driver.
+>> 
+>> 
+>> Are these even realistic?   If I'm going to leave malicious USB devices in the parking lot for mischief am I going to rely on the unknown victim running a Linux distro with the requisite kernel modules or am I going to just drop a cheap and near-universal USB killer?
+>> 
+>> If I'm going to be connecting the USB device to unguarded laptops myself to crash them, as opposed to destroy them, why not just casually lean on the power button for a few seconds?[1]
+>> 
+>> Actually, this is the CVSS3 score for a laptop's power button: 4.6 (CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H (Medium).   There isn't a vector for a USB killer because there's no "A:P" (permanent loss).
+>> 
+>> I'm not saying that these aren't bugs that should be fixed, far from it.  That's not the issue.  The issue is that, for example, PCI DSS requires fixes for anything with a score >= 4.0 so we have endless end-users demanding fixes for their servers which don't have even physical access or, indeed, physical presence.  It's not even demanding the fixes as they may already be fixed or simply not applicable because the affected driver isn't present; it's the hours or days wasted verifying that the fix available or not present.[2]
+>> 
+>> 
+>> 
+>> Frustrated of Lancashire, jch
+>> 
+>> 
+>> [1] Some may remember the VAX 11/750 reset button.  In order to be able to use the serial console (usually a DECwriter) you had to have the key in which also enabled the reset button.   Before I put the VAX "Do Not Copy this Key" key (yes, it fits all 750s) I pressed accidentally pressed the reset button a couple of times just by propping myself up on the machine.  Spectacularly bad design by today's standards.
+>> 
+>> 
+>> [2] Full disclosure.  It's ultimately about me because it's me that eventually gets the "customer requires fix for CVE-2019-15216" :)
+> 
+> In the past we have considered Denial Of Service only USB vulnerabilites as non-issues, as physical access
+> can cause the same.
 
-Cheers,
-Stiepan
+<nod>
 
-Envoyé depuis ProtonMail mobile
+> 
+> USB Vulnerabilities where you can achieve code execution by a malicious USB device are something else though and in my opinion warrant a CVE.
+> 
 
--------- Message d'origine --------
-On 26 juil. 2019 à 10:16, Greg KH a écrit :
+I carefully didn't quote any of the UAF bugs -- those definitely do warrant a CVE.   Null pointer dereference is a DoS.
 
-> On Fri, Jul 26, 2019 at 10:14:08AM +0200, Greg KH wrote:
->> On Thu, Jul 25, 2019 at 09:35:45PM +0000, Stiepan wrote:
->> > I would like to congratulate the teams that do that. If public
->> > disclosure is deemed too dangerous before a patch is available, this
->> > looks like The reasonable tradeoff. Wish it was the same with Linux...
->>
->> I too want a pony :)
->>
->> > Rationale: people could switch meanwhile to a known safe kernel. That
->> > would provide peace of mind to the "rest of us" who don't have the
->> > keys to the linux-distros kingdom of the elected few, yet wish to have
->> > secure OSes, without a window of vulnerability open to whoever hacked
->> > into the elected few's machines (or are entitled another way to this
->> > secret information).
->> > It would also make Linux governance way more democratic, which seems
->> > to be a must for such a "too big to fail" core open-source software.
->>
->> The "best known safe kernel" is the latest one we release from the
->> stable kernel series. It has all of the fixes that that the kernel
->> developers possibly know about at that point in time.
->>
->> There's no need to worry about being on linux-distros or anything else,
->> just keep updating your kernel, test in in your infrastructure to ensure
->> it all works properly, and then push it out to all of your other systems
->> and all is good.
->
-> And before all of the usual objections take place, please read this long
-> write up:
-> http://kroah.com/log/blog/2018/02/05/linux-kernel-release-model/
-> specifically the "Security" section for details as to why the kernel
-> does not do "pre-release" announcements.
->
-> thanks,
->
-> greg k-h
-Content of type "text/html" skipped
+jch
 
-Download attachment "publickey - stie@...tonmail.ch - 0xADF18750.asc" of type "application/pgp-keys" (1761 bytes)
+> Ciao, Marcus
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
