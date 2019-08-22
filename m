@@ -1,26 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/24/2
-Message-ID: <CALKeL-M8wreyyeUigfN=au1foco8K1fJXDEe-5EEEjXoYzsbiA@mail.gmail.com>
-Date: Wed, 23 Jan 2019 14:21:30 -0800
-From: Mike Jumper <mjumper@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/5
+Message-ID: <CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
+Date: Thu, 22 Aug 2019 17:16:03 +0200
+From: Andrey Konovalov <andreyknvl@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1340: Secure flag missing from Apache Guacamole session cookie
+On Thu, Aug 22, 2019 at 1:00 PM John Haxby <john.haxby@...cle.com> wrote:
+>
+>
+>
+> > On 22 Aug 2019, at 10:31, Marcus Meissner <meissner@...e.de> wrote:
+> >
+> > On Thu, Aug 22, 2019 at 10:04:42AM +0100, John Haxby wrote:
+> >>
+> >>
+> >>> On 20 Aug 2019, at 19:20, Andrey Konovalov <andreyknvl@...il.com> wrote:
+> >>>
+> >>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15216
+> >>>
+> >>> An issue was discovered in the Linux kernel before 5.0.14. There is a
+> >>> NULL pointer dereference caused by a malicious USB device in the
+> >>> drivers/usb/misc/yurex.c driver.
+> >>>
+> >>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15217
+> >>>
+> >>> An issue was discovered in the Linux kernel before 5.2.3. There is a
+> >>> NULL pointer dereference caused by a malicious USB device in the
+> >>> drivers/media/usb/zr364xx/zr364xx.c driver.
+> >>>
+> >>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15218
+> >>>
+> >>> An issue was discovered in the Linux kernel before 5.1.8. There is a
+> >>> NULL pointer dereference caused by a malicious USB device in the
+> >>> drivers/media/usb/siano/smsusb.c driver.
+> >>>
+> >>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15219
+> >>>
+> >>> An issue was discovered in the Linux kernel before 5.1.8. There is a
+> >>> NULL pointer dereference caused by a malicious USB device in the
+> >>> drivers/usb/misc/sisusbvga/sisusb.c driver.
+> >>
+> >>
+> >> Are these even realistic?   If I'm going to leave malicious USB devices in the parking lot for mischief am I going to rely on the unknown victim running a Linux distro with the requisite kernel modules or am I going to just drop a cheap and near-universal USB killer?
+> >>
+> >> If I'm going to be connecting the USB device to unguarded laptops myself to crash them, as opposed to destroy them, why not just casually lean on the power button for a few seconds?[1]
+> >>
+> >> Actually, this is the CVSS3 score for a laptop's power button: 4.6 (CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H (Medium).   There isn't a vector for a USB killer because there's no "A:P" (permanent loss).
+> >>
+> >> I'm not saying that these aren't bugs that should be fixed, far from it.  That's not the issue.  The issue is that, for example, PCI DSS requires fixes for anything with a score >= 4.0 so we have endless end-users demanding fixes for their servers which don't have even physical access or, indeed, physical presence.  It's not even demanding the fixes as they may already be fixed or simply not applicable because the affected driver isn't present; it's the hours or days wasted verifying that the fix available or not present.[2]
+> >>
+> >>
+> >>
+> >> Frustrated of Lancashire, jch
+> >>
+> >>
+> >> [1] Some may remember the VAX 11/750 reset button.  In order to be able to use the serial console (usually a DECwriter) you had to have the key in which also enabled the reset button.   Before I put the VAX "Do Not Copy this Key" key (yes, it fits all 750s) I pressed accidentally pressed the reset button a couple of times just by propping myself up on the machine.  Spectacularly bad design by today's standards.
+> >>
+> >>
+> >> [2] Full disclosure.  It's ultimately about me because it's me that eventually gets the "customer requires fix for CVE-2019-15216" :)
+> >
+> > In the past we have considered Denial Of Service only USB vulnerabilites as non-issues, as physical access
+> > can cause the same.
+>
+> <nod>
+>
+> >
+> > USB Vulnerabilities where you can achieve code execution by a malicious USB device are something else though and in my opinion warrant a CVE.
+> >
+>
+> I carefully didn't quote any of the UAF bugs -- those definitely do warrant a CVE.   Null pointer dereference is a DoS.
 
-Versions affected:
-Apache Guacamole 0.9.4 through 0.9.14
+Yeah, I don't think those DoS USB bugs are in any way useful to an
+attacker. I've looked at existing USB CVEs before I've started
+reporting these, and MITRE does assign CVEs to such issues. I don't
+know whether they should warrant CVEs or not.
 
-Description:
-Prior to 1.0.0, Apache Guacamole used a cookie for client-side storage
-of the user's session token. This cookie lacked the "secure" flag,
-which could allow an attacker eavesdropping on the network to
-intercept the user's session token if unencrypted HTTP requests are
-made to the same domain.
+On a side note, currently there's an issue with many Linux kernel bugs
+being fixed, but not backported to distro kernels. Those bugs might
+have security implications, but there's no way to know that, unless
+someone specifically spends time to assess them in that regard.
+Requesting CVEs for those bugs is a way to get the fixes into distro
+kernels (even though that doesn't always work promptly [1] :).
 
-Mitigation:
-Users of Apache Guacamole 0.9.14 or older should upgrade to 1.0.0.
-
-Credit:
-We would like to thank Ross Golder for reporting this issue.
+[1] https://www.openwall.com/lists/oss-security/2018/10/30/2
