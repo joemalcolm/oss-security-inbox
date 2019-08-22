@@ -1,125 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/13/5
-Message-ID: <20190313171842.GC90773@TC-275.local>
-Date: Wed, 13 Mar 2019 10:18:42 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2019-5418] File Content Disclosure in Action View
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/6
+Message-ID: <20190822162000.GA1670@kroah.com>
+Date: Thu, 22 Aug 2019 09:20:00 -0700
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-There is a possible file content disclosure vulnerability in Action View. This
-vulnerability has been assigned the CVE identifier CVE-2019-5418.
+On Thu, Aug 22, 2019 at 05:16:03PM +0200, Andrey Konovalov wrote:
+> On a side note, currently there's an issue with many Linux kernel bugs
+> being fixed, but not backported to distro kernels. Those bugs might
+> have security implications, but there's no way to know that, unless
+> someone specifically spends time to assess them in that regard.
+> Requesting CVEs for those bugs is a way to get the fixes into distro
+> kernels (even though that doesn't always work promptly [1] :).
+> 
+> [1] https://www.openwall.com/lists/oss-security/2018/10/30/2
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     6.0.0.beta3, 5.2.2.1, 5.1.6.2, 5.0.7.2, 4.2.11.1
+Note, I am scraping the logs for anything that says it is fixed due do a
+syzbot find or report and backporting them to the stable kernel
+branches.  So those distros that do follow the LTS/stable kernel
+releases do get these fixes.  Luckily most of the "sane" distros these
+days do this.
 
-Impact
-------
-There is a possible file content disclosure vulnerability in Action View.
-Specially crafted accept headers in combination with calls to `render file:`
-can cause arbitrary files on the target server to be rendered, disclosing the
-file contents.
+Please don't abuse the CVE process just to try to get a fix backported
+to a Linux kernel release.  There is at least one company today that
+does this as it is a way to "route around" management, but really, that
+shouldn't be needed, fix your management processes instead please :)
 
-The impact is limited to calls to `render` which render file contents without
-a specified accept format.  Impacted code in a controller looks something like
-this:
+thanks,
 
-```
-class UserController < ApplicationController
-  def index
-    render file: "#{Rails.root}/some/file"
-  end
-end
-```
-
-Rendering templates as opposed to files is not impacted by this vulnerability.
-
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
-
-Releases
---------
-The 6.0.0.beta3, 5.2.2.1, 5.1.6.2, 5.0.7.2, and 4.2.11.1 releases are
-available at the normal locations.
-
-Workarounds
------------
-This vulnerability can be mitigated by specifying a format for file rendering,
-like this:
-
-```
-class UserController < ApplicationController
-  def index
-    render file: "#{Rails.root}/some/file", formats: [:html]
-  end
-end
-```
-
-In summary, impacted calls to `render` look like this:
-
-```
-render file: "#{Rails.root}/some/file"
-```
-
-The vulnerability can be mitigated by changing to this:
-
-```
-render file: "#{Rails.root}/some/file", formats: [:html]
-```
-
-Other calls to `render` are not impacted.
-
-Alternatively, the following monkey patch can be applied in an initializer:
-
-```
-$ cat config/initializers/formats_filter.rb
-# frozen_string_literal: true
-
-ActionDispatch::Request.prepend(Module.new do
-  def formats
-    super().select do |format|
-      format.symbol || format.ref == "*/*"
-    end
-  end
-end)
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 6-0-action-view-file-disclosure.patch - Patch for 6.0 series
-* 5-2-action-view-file-disclosure.patch - Patch for 5.2 series
-* 5-1-action-view-file-disclosure.patch - Patch for 5.1 series
-* 5-0-action-view-file-disclosure.patch - Patch for 5.0 series
-* 4-2-action-view-file-disclosure.patch - Patch for 4.2 series
-
-Please note that only the 5.2.x, 5.1.x, 5.0.x, and 4.2.x series are supported
-at present. Users of earlier unsupported releases are advised to upgrade as
-soon as possible as we cannot guarantee the continued availability of security
-fixes for unsupported releases.
-
-Also note that the patches for this vulnerability are the same as CVE-2019-5419.
-
-Credits
--------
-Thanks to John Hawthorn <john@...thorn.email> of GitHub
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "4-2-action-view-file-disclosure.patch" of type "text/plain" (4299 bytes)
-
-View attachment "5-0-action-view-file-disclosure.patch" of type "text/plain" (3713 bytes)
-
-View attachment "5-1-action-view-file-disclosure.patch" of type "text/plain" (3713 bytes)
-
-View attachment "5-2-action-view-file-disclosure.patch" of type "text/plain" (3713 bytes)
-
-View attachment "6-0-action-view-file-disclosure.patch" of type "text/plain" (3732 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+greg k-h
