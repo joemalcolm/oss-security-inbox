@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/29/1
-Message-ID: <CAO8bUynPUPExH92au4cajrVW3xkHm3AjUnYzuHoS_fApMzc4bg@mail.gmail.com>
-Date: Sun, 29 Dec 2019 18:47:27 +0100
-From: Frank Morgner <frankmorgner@...il.com>
-To: OpenSC Development <opensc-devel@...ts.sourceforge.net>,  opensc-announce@...ts.sourceforge.net
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/1
+Message-ID: <20190822040059.GD6111@zzz.localdomain>
+Date: Wed, 21 Aug 2019 21:00:59 -0700
+From: Eric Biggers <ebiggers@...nel.org>
+To: Andrey Konovalov <andreyknvl@...il.com>
 Cc: oss-security@...ts.openwall.com
-Subject: OpenSC 0.20.0 released
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-Hi all!
+On Tue, Aug 20, 2019 at 08:20:34PM +0200, Andrey Konovalov wrote:
+> Hi!
+> 
+> I've previously reported vulnerabilities in the Linux kernel USB
+> drivers on this list [1] found with syzkaller [2]. The USB fuzzing
+> project has been on hold for a while, but has been resumed earlier
+> this year. Here's a new bunch of 15 CVEs.
+> 
+> As an experiment this time I've requested CVEs for 2 bugs
+> (CVE-2019-15290, CVE-2019-15291) that haven't yet been fixed (fixes
+> for the other 13 bugs are in the upstream kernel). Both have been
+> reported by syzbot over 4 months ago. I've made sure that these 2 bugs
+> are reproducible with a crafted USB device and crash a Linux laptop
+> (or rather crash the USB worker thread) with one of the distro
+> kernels.
+> 
+> There are many more still not fixed bugs shown here [3].
+> 
+> [1] https://www.openwall.com/lists/oss-security/2017/12/12/7
+> 
+> [2] https://github.com/google/syzkaller/blob/master/docs/linux/external_fuzzing_usb.md
+> 
+> [3] https://syzkaller.appspot.com/upstream?manager=ci2-upstream-usb
+> 
 
-I'm happy to finally announce the new release 0.20.0 of OpenSC. You can
-read a full summary of the changes and get the release binaries on GitHub
-<https://github.com/OpenSC/OpenSC/releases/tag/0.20.0>.
+Thanks for filing CVEs for these.
 
-We've extended our continuous testing by fuzzing the code with OSS-Fuzz
-<https://google.github.io/oss-fuzz>. It is running billions of tests each
-weak and has found around 100 unique crashes, most notable the security
-issues tracked as CVE-2019-6502, CVE-2019-15946, CVE-2019-15945,
-CVE-2019-19480, CVE-2019-19481 and CVE-2019-19479. Getting our hands on all
-the problems reported by the fuzzing was very challenging. Special thanks
-to Jakub Jelen, who spend many hours on analyzing and fixing many of the
-issues.
+FWIW, link [3] seems to be missing some of the USB bugs since it only includes
+bugs seen on the "ci2-upstream-usb" syzbot manager, when in fact USB bugs are
+also being reported from the "ci-upstream-kmsan-gce" manager.
 
-Regards,
-Frank Morgner.
+Based on my categorization of all open syzbot reports, as of today there are 80
+USB-related ones, 52 of which have occurred in the last week.  The 52 are listed
+at https://lore.kernel.org/linux-usb/20190822032841.GC6111@zzz.localdomain/T/#u
+These include use-after-frees, out of bounds reads/writes, using uninitialized
+memory, general protection faults, etc.  More are reported each week, and syzbot
+has covered only a tiny percentage of Linux's USB driver code so far.
 
+- Eric
