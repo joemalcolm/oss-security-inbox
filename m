@@ -1,152 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/14/1
-Message-ID: <CAOJKFBD9b1sVRVsJi4PVaV3NnP3ZDBdtfdYLx1DhM3P9JqWKfQ@mail.gmail.com>
-Date: Fri, 14 Jun 2019 10:00:56 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/2
+Message-Id: <C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>
+Date: Thu, 22 Aug 2019 10:04:42 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: X41 D-Sec GmbH Security Advisory X41-2019-001: Heap-based buffer overflow in Thunderbird
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-Thanks for re-reporting these. They didn't take them seriously at all when
-I reported them originally. These bugs are why I stopped using Thunderbird
-completely.
-
-On Thu, Jun 13, 2019 at 3:32 PM X41 D-Sec GmbH Advisories <
-advisories@...-dsec.de> wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> X41 D-Sec GmbH Security Advisory: X41-2019-001
->
-> Heap-based buffer overflow in Thunderbird
-> =========================================
-> Severity Rating: High
-> Confirmed Affected Versions: All versions affected
-> Confirmed Patched Versions: Thunderbird ESR 60.7.XXX
-> Vendor: Thunderbird
-> Vendor URL: https://www.thunderbird.net/
-> Vendor Reference: https://bugzilla.mozilla.org/show_bug.cgi?id=1553814
-> Vector: Incoming mail with calendar attachment
-> Credit: X41 D-SEC GmbH, Luis Merino
-> Status: Public
-> CVE: CVE-2019-11704
-> CWE: 122
-> CVSS Score: 7.8
-> CVSS Vector: CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H/E:U/RL:O
-> Advisory-URL:
-> https://www.x41-dsec.de/lab/advisories/x41-2019-002-thunderbird
->
-> Summary and Impact
-> ==================
-> A heap-based buffer overflow has been identified in the Thunderbird
-> email client. The issue is present in the libical implementation, which
-> was forked from upstream libical version 0.47.
-> The issue can be triggered remotely, when an attacker sends an specially
-> crafted calendar attachment and does not require user interaction. It
-> might be used by a remote attacker to crash or gain remote code
-> execution in the client system.
->
-> This issue was initially reported by Brandon Perry here:
->
-> https://bugzilla.mozilla.org/show_bug.cgi?id=1280832
->
-> and fixed in libical upstream, but was never fixed in Thunderbird.
-> X41 did not perform a full test or audit on the software.
->
-> Product Description
-> ===================
-> Thunderbird is a free and open source email, newsfeed, chat, and
-> calendaring client, that's easy to set up and customize.
->
-> Analysis
-> ========
-> A heap-based buffer overflow in icalvalue.c
-> icalmemory_strdup_and_dequote() can be triggered while parsing a
-> calendar attachment containing a malformed or specially crafted
-> string.
->
-> ~~~
-> static char *icalmemorystrdupanddequote(const char *str)
-> {
->     char *out = (char *)malloc(sizeof(char) * strlen(str) + 1);
->     char *pout = out;
->     // ...
->     for (p = str; *p!=0; p++){
->         if( *p == '\')
->         {
->             p++;
->         // ...
->         else
->     {
->             *pout = *p;
->     }
->     }
-> ~~~
->
-> Bounds checking in `icalmemorystrdupanddequote()can be bypassed when the
-> inputp` ends with a backslash, which enables an attacker to read out
-> of bounds of the input buffer and writing out of bounds of a
-> heap-allocated
-> output buffer.
-> The issue manifests in several ways, including out of bounds read and
-> write, null-pointer dereference and frequently leads to heap corruption.
->
-> It is expected that an attacker can exploit this vulnerability to
-> achieve remote code execution.
->
-> Proof of Concept
-> ================
-> A reproducer EML file can be found in:
->
-> https://github.com/x41sec/advisories/tree/master/X41-2019-001
->
-> Workarounds
-> ===========
-> A fix is available from upstream. Alternatively, libical can be replaced
-> by icaljs, a JavaScript implementation of ical parsing, by setting
-> calendar.icaljs = true in Thunderbird configuration.
->
-> Timeline
-> ========
-> 2016-06-19 Issue reported by Brandon Perry to the vendor
-> 2019-05-23 Issue reported by X41 D-SEC to the vendor
-> 2019-05-23 Vendor reply
-> 2019-06-12 CVE IDs assigned
-> 2019-06-13 Patched Version released
-> 2019-06-13 Advisory released
->
-> About X41 D-SEC GmbH
-> ====================
-> X41 is an expert provider for application security services.
-> Having extensive industry experience and expertise in the area of
-> information security, a strong core security team of world class
-> security experts enables X41 to perform premium security services.
-> Fields of expertise in the area of application security are security
-> centered code reviews, binary reverse engineering and vulnerability
-> discovery.
-> Custom research and a IT security consulting and support services are
-> core competencies of X41.
-> -----BEGIN PGP SIGNATURE-----
->
-> iQIzBAEBCAAdFiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAl0CsaYACgkQo5Klpg50
-> CxD8xhAApvuDdylL5aBLklap8Rt9P6qDLhlXvEDS2rlYtuThRW6ctX4Jvoi4IfeA
-> qIi4VR/sQ8Gh9/ycA+ztH7AJPQatkrt01r4Rlv9fxAQD2VMfbhtk15vahcxffb35
-> kKB1HYR3CZiPPWiVc6Rylddrqv6o5KeKBlVCVSIvYRiCM3mDDxMckCj0TP0uxCZ2
-> Z6MCD0rv/6qwan1tiAVUYK4kct9H9d0qoh6X9Ta6xkB55DbP3HJDXJnFHQtTFI9D
-> K2Uh3OJN0lM/VNv8E61aT/IIY9dkK42zu1Q+18oYqbrU4PKaPfohtB5D7N8MjHuG
-> 9krP224jax3WUU8K/eUinqgw+kp76Sd/XMSc+ZQjcslHODDFgJWSNmC69BTWKcDp
-> WMD9rv03Jx8OGWD5z4Jhhdyi6oAJyM4/gSswHwr5VH4EumVUDWei8Ri7LwzdDQ0X
-> j5vHhKk921GV5ZGzCSyPqIy/tfg0+NsQ2/KXeo4FkzfUaSRHJNgJIIZ15z+sTor5
-> qXWv5wI8lxUZuDyj1a9WWZn93fMa3WOhf7XZk59bIVrr5alPa8N4GR6k62dQwCJq
-> 7vhZsDg9bZU8BDTMxUpLwR+Tswg8jyZ/VstL7zVygzOrzbS9TiOZh6c0EOMOPWz1
-> hfDHUPQxzP/EUYpdRMrV+qQPv832w2Tc+ektJtlyShmW6TMhoAw=
-> =eQlm
-> -----END PGP SIGNATURE-----
->
 
 
--- 
-http://volatile-minds.blogspot.com -- blog
-http://www.volatileminds.net -- website
+> On 20 Aug 2019, at 19:20, Andrey Konovalov <andreyknvl@...il.com> wrote:
+> 
+> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15216
+> 
+> An issue was discovered in the Linux kernel before 5.0.14. There is a
+> NULL pointer dereference caused by a malicious USB device in the
+> drivers/usb/misc/yurex.c driver.
+> 
+> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15217
+> 
+> An issue was discovered in the Linux kernel before 5.2.3. There is a
+> NULL pointer dereference caused by a malicious USB device in the
+> drivers/media/usb/zr364xx/zr364xx.c driver.
+> 
+> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15218
+> 
+> An issue was discovered in the Linux kernel before 5.1.8. There is a
+> NULL pointer dereference caused by a malicious USB device in the
+> drivers/media/usb/siano/smsusb.c driver.
+> 
+> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15219
+> 
+> An issue was discovered in the Linux kernel before 5.1.8. There is a
+> NULL pointer dereference caused by a malicious USB device in the
+> drivers/usb/misc/sisusbvga/sisusb.c driver.
 
+
+Are these even realistic?   If I'm going to leave malicious USB devices in the parking lot for mischief am I going to rely on the unknown victim running a Linux distro with the requisite kernel modules or am I going to just drop a cheap and near-universal USB killer?
+
+If I'm going to be connecting the USB device to unguarded laptops myself to crash them, as opposed to destroy them, why not just casually lean on the power button for a few seconds?[1]
+
+Actually, this is the CVSS3 score for a laptop's power button: 4.6 (CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H (Medium).   There isn't a vector for a USB killer because there's no "A:P" (permanent loss).
+
+I'm not saying that these aren't bugs that should be fixed, far from it.  That's not the issue.  The issue is that, for example, PCI DSS requires fixes for anything with a score >= 4.0 so we have endless end-users demanding fixes for their servers which don't have even physical access or, indeed, physical presence.  It's not even demanding the fixes as they may already be fixed or simply not applicable because the affected driver isn't present; it's the hours or days wasted verifying that the fix available or not present.[2]
+
+
+
+Frustrated of Lancashire, jch
+
+
+[1] Some may remember the VAX 11/750 reset button.  In order to be able to use the serial console (usually a DECwriter) you had to have the key in which also enabled the reset button.   Before I put the VAX "Do Not Copy this Key" key (yes, it fits all 750s) I pressed accidentally pressed the reset button a couple of times just by propping myself up on the machine.  Spectacularly bad design by today's standards.
+
+
+[2] Full disclosure.  It's ultimately about me because it's me that eventually gets the "customer requires fix for CVE-2019-15216" :)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
