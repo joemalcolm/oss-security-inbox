@@ -1,53 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/05/1
-Message-ID: <20191105070729.GA7195@lorien.valinor.li>
-Date: Tue, 5 Nov 2019 08:07:30 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/7
+Message-ID: <20190822165914.GA29435@grsecurity.net>
+Date: Thu, 22 Aug 2019 12:59:14 -0400
+From: Brad Spengler <spender@...ecurity.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Sorry, a little too much marketing coming out of this camp these days, and
+this one demands a response.
 
-On Sat, Nov 02, 2019 at 10:27:27PM +0300, Alexander Popov wrote:
-> Hello!
+On Thu, Aug 22, 2019 at 09:20:00AM -0700, Greg KH wrote:
+> On Thu, Aug 22, 2019 at 05:16:03PM +0200, Andrey Konovalov wrote:
+> > On a side note, currently there's an issue with many Linux kernel bugs
+> > being fixed, but not backported to distro kernels. Those bugs might
+> > have security implications, but there's no way to know that, unless
+> > someone specifically spends time to assess them in that regard.
+> > Requesting CVEs for those bugs is a way to get the fixes into distro
+> > kernels (even though that doesn't always work promptly [1] :).
+> > 
+> > [1] https://www.openwall.com/lists/oss-security/2018/10/30/2
 > 
-> I used the syzkaller fuzzer with custom modifications and found a bunch of
-> 5-year old bugs in the Linux kernel. I managed to exploit one of them for a
-> local privilege escalation.
-> 
-> These vulnerabilities are caused by wrong mutex locking in the vivid driver of
-> the V4L2 subsystem. Please see the fixing patch that I've just sent to LKML:
-> https://lore.kernel.org/lkml/20191102190327.24903-1-alex.popov@linux.com/
-> 
-> The vivid driver doesn't require any special hardware. It is shipped in Ubuntu,
-> Debian, Arch Linux, SUSE Linux Enterprise and openSUSE.
-> 
-> On Ubuntu the devices created by this driver are available to the normal user,
-> since Ubuntu applies RW ACL when the user is logged in:
->   a13x@...ntu_server_1804:~$ getfacl /dev/video0
->   getfacl: Removing leading '/' from absolute path names
->   # file: dev/video0
->   # owner: root
->   # group: video
->   user::rw-
->   user:a13x:rw-
->   group::rw-
->   mask::rw-
->   other::---
-> 
-> (Un)fortunately, I don't know how to autoload the vulnerable driver, which
-> limits the severity of these vulnerabilities. That's why the Linux kernel
-> security team allows me to do the full disclosure.
-> 
-> But there is an interesting aspect -- my PoC exploit bypasses SMEP and SMAP on
-> the fresh Ubuntu Server 18.04. Moreover, it gains the local privilege escalation
-> from the kthread context (where the userspace is not mapped). I'm going to share
-> the details about the exploit techniques later.
-> 
-> For now I would recommend to blacklist the vivid kernel module on your machines.
+> Note, I am scraping the logs for anything that says it is fixed due do a
+> syzbot find or report and backporting them to the stable kernel
+> branches.  So those distros that do follow the LTS/stable kernel
+> releases do get these fixes.
 
-CVE-2019-18683 was assigned for this issue.
+All of the fixes, Greg?  Who backports them?  Would you like to share with
+the list what happens when an upstream fix doesn't apply cleanly to an
+earlier kernel?  What happens when a volunteer doesn't show up to backport
+the fix for you?
 
-Regards,
-Salvatore
+If security fixes are being tracked as your "everything is fine, nothing to
+see here" reply suggests, we wouldn't be carrying hundreds of security fixes
+your LTS kernels are missing.
+
+You'd also need to explain very easy to find examples like this:
+https://www.spinics.net/lists/stable/msg317698.html
+of random LTS kernels not receiving security fixes.  This particular issue was
+public since April (which is when we backported fixes for it to 4.4/4.14).
+It's now 4 months later and your 4.4 6-year "supported" LTS kernel still
+doesn't contain the fixes.
+
+This list should be for informing people, not for spreading misinformation
+and a sense of security that you must know is false.
+
+Thanks,
+-Brad
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
