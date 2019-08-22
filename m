@@ -1,4 +1,9 @@
-Received: (qmail 14099 invoked by uid 550); 17 Apr 2026 15:56:52 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4470" "Thursday" "22" "August" "2019" "17:16:03" "+0200" "Andrey Konovalov" "andreyknvl@gmail.com" "<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>" "102" "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" "^Date:" nil nil "8" "2019082215:16:03" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" (number mark "        andreyknvl@g Aug 22  102/4470  " thread-indent "\"Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2\"\n") "<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>" ("<CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>" "<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>" "<20190822093122.GQ6086@suse.de>" "<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 19990 invoked by uid 550); 22 Aug 2019 15:16:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,117 +11,148 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22378 invoked from network); 17 Apr 2026 13:09:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1776431343;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=FRU0LZTYLGGkchz93JqcA091GKG8LrkyEcZUNQBG/Gg=;
-	b=NkNSfzADyNpbBzyTfGDk5inCRurMyxryp3N3ovI8v8VU4E+n3gHiFE8Ff8humF4R4Vd0cS
-	wmCREZZkyp8uk6TZQKAI70wvJ8wNnpI/a7uX5EmxMug9wOe/t3hqmzhxEpdF2EpI2Nl3EW
-	hc3zgLM/bN+bSGt2tyVe+Nc2pcZirpg=
-X-MC-Unique: 0nBqIi56ODueXsRJzJuVRw-1
-X-Mimecast-MFC-AGG-ID: 0nBqIi56ODueXsRJzJuVRw_1776431341
+Received: (qmail 19972 invoked from network); 22 Aug 2019 15:16:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=hNUwMLztI6uPLWoKM1J9Gv99vIPF+ot2iZc6QfWZTrc=;
+        b=EmE8NxvT49LMHpHo2swaj6lUGTi4KHjOOJYciu6V8L6a7dYn20COtAXWC4OcPQCF+3
+         tvieGZCN3tYymHK0skcrQ8xRkcSCzgw3R2+r9rlw6378xYyt8BoeJrHi+VfCS/huQDef
+         iOApALSQRpBZiW0kDhFWm7fCuPYDv7izTLBIHp8RmnLMpoFNokHajsNbmcx/gFXT3Hou
+         GdiXqKYMv9eo1uGh0B8FmCrbLor2EBHiQjyQrNeh0unV8d+n5sydWgHCfeTM32sgftZ6
+         KR3J8SDKe01jj88Fc8xz8j0LXYan2JCNeEgToGtKMOESv2Qc5bGD/HLIdnnGuAqBCuFx
+         Q/tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776431338; x=1777036138;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FRU0LZTYLGGkchz93JqcA091GKG8LrkyEcZUNQBG/Gg=;
-        b=aV6wPhOZCyUjKj4b3EEGZwmfSS9NE97p/95GyYgQWzGnssDN0Eee22a3apnfWHH/6o
-         EB4Hb1nBLOXDaSSfFDN7kFWPfMErcMHmJi4kUIa2Zv9YY+Gd49AJGqw18aUWSSjpnDT/
-         0q2CvQsPwQy8Aylgct5uKPazHyHZijaDKVkgNRteA54Mf+YsyqPI2RPCUNRqMZVK4WA7
-         xJMPNr8Jvv/XfyyXt2GP8HVHfgIOgB9ptzILglgcPnl86zf26KFztRWItpeNdh5Lek4k
-         lfLa2k8xq3kqfoCxM2t7AebxHgSrGEf2gwo2HqbE6x7yXJpESL1li18hGyZYSkGkcXzs
-         LZxw==
-X-Gm-Message-State: AOJu0Yy9AlSFWLg4xlL3uA74U66E3FWcgtjjD90hFXxD8abnGWzoZLmr
-	dyZdDzWaKC9D3IVTXwdxUkvzda/xvFE7NmyfebkXJUqR8BsDg9AHAnQYlUt46geR572u2tGaaUF
-	2EcKCh0lNtAznt/t8q/+JrP+psg6QxFGT4n5xtJY/8GfQmKfruLeIPwlVAzUUZr1OYX5N7iFEhF
-	7eejnbXXnDvF3krzVtZwJECqaFVnzzqMYmc3g16QbAkjqav9lAO/s+
-X-Gm-Gg: AeBDiese0U2B5Rc6TofXPQLL8/Sf/eL92kXlAFlqo3wKj88XYGIch1yLtgk1ZhTQLPw
-	XVZSu6RDdWlmM34VGj0OVnZfNexH51a3d4IRZ+bFbaX3NC/O/WyYzN6qz+5YHI+54r5CEIGWYtT
-	AcUAOmWRXcFDU7h1HWnVraMwEKjd/3VJZbvruD9QIq5MhsrJn6vhsh6bQFBQIZE1D177t5OWFF6
-	Pw1dYRUm4V/Gclx+2zRxvTMtmbAio8weWqK6f8g4WVkTKG01sfPscdBdfMGvSAvA2bOyNb7KsI2
-	vAUPLjEHGoarsf6knkhP9cQpT/e4BBt1SA2C4pYP62eVfyTbT7qit+haVGZ+7q4hk/1arFFoEqh
-	Z5wOTtcOzi63xr/ancfExJ8Ek0+cDC8q4vIR7yObjN3nN
-X-Received: by 2002:a05:600c:5285:b0:485:1878:7b8c with SMTP id 5b1f17b1804b1-488fb77812dmr45008105e9.18.1776431338091;
-        Fri, 17 Apr 2026 06:08:58 -0700 (PDT)
-X-Received: by 2002:a05:600c:5285:b0:485:1878:7b8c with SMTP id 5b1f17b1804b1-488fb77812dmr45007145e9.18.1776431337439;
-        Fri, 17 Apr 2026 06:08:57 -0700 (PDT)
-Message-ID: <b669fa9d-6dce-42ad-967f-167ed6cc0a59@redhat.com>
-Date: Fri, 17 Apr 2026 15:08:53 +0200
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=hNUwMLztI6uPLWoKM1J9Gv99vIPF+ot2iZc6QfWZTrc=;
+        b=OGzTWHrPFJ8N+ikHvvOu7mB4iuFu168YQK1+2vB40UhF/yE8Mh09/xpFOyTebtSDCh
+         SaTT6IVqBqA+MUvGgEVfYtM+cy/MyQCYb4BN7EycJCenixK9ReDL++wF4W6Aqn6oZLLs
+         82d8AG8X45mSkb32SolmI3aIuY5ZNILSl7o/+mTwGmfbrV3eSpqVTKxuGmbw/GL9XQK2
+         KnggMLCdgaitTwQB0L2ZzZ9Jymrk+vHPFXF67q8kkU1kGSyL6lm4t9JBGZFVIFe5F20A
+         5O+iyMM5yyH+gkHTC87b1IK7s72ri4d5iowNtxfO4QglnlacuOU8CGy4Y89MALEHt5Uf
+         2H5g==
+X-Gm-Message-State: APjAAAUjfpJipALNkvQBtN/tsUdfnnyQ11cl3YBexx0JV1oeC7yOtCYg
+	zkrjlB9Kdga40ko6HQFaeYF5I+LkOMxHFc6r7+Nq8fPF
+X-Google-Smtp-Source: APXvYqy26UPE2hOxX+WDUsq4u53mUovtTkve+ekum32nYUv9429vkM+BqnxvUoprxtUKoTWHkfRKaV6d0TDNIMy50GY=
+X-Received: by 2002:a2e:948:: with SMTP id 69mr21149502ljj.39.1566486974973;
+ Thu, 22 Aug 2019 08:16:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>
+ <C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com> <20190822093122.GQ6086@suse.de>
+ <ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
+In-Reply-To: <ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
+Message-ID: <CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 22 Aug 2019 17:16:03 +0200
+From: Andrey Konovalov <andreyknvl@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB
+ subsystem x2
 To: oss-security@lists.openwall.com
-From: Zdenek Dohnal <zdohnal@redhat.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: GrMga8yKdzu1dfXK9a8kJwqtv5UMaX6JGV5kWGJhAGg_1776431341
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] cups: 8 various moderate vulnerabilities
 
-Hi all,
+On Thu, Aug 22, 2019 at 1:00 PM John Haxby <john.haxby@oracle.com> wrote:
+>
+>
+>
+> > On 22 Aug 2019, at 10:31, Marcus Meissner <meissner@suse.de> wrote:
+> >
+> > On Thu, Aug 22, 2019 at 10:04:42AM +0100, John Haxby wrote:
+> >>
+> >>
+> >>> On 20 Aug 2019, at 19:20, Andrey Konovalov <andreyknvl@gmail.com> wro=
+te:
+> >>>
+> >>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2019-15216
+> >>>
+> >>> An issue was discovered in the Linux kernel before 5.0.14. There is a
+> >>> NULL pointer dereference caused by a malicious USB device in the
+> >>> drivers/usb/misc/yurex.c driver.
+> >>>
+> >>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2019-15217
+> >>>
+> >>> An issue was discovered in the Linux kernel before 5.2.3. There is a
+> >>> NULL pointer dereference caused by a malicious USB device in the
+> >>> drivers/media/usb/zr364xx/zr364xx.c driver.
+> >>>
+> >>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2019-15218
+> >>>
+> >>> An issue was discovered in the Linux kernel before 5.1.8. There is a
+> >>> NULL pointer dereference caused by a malicious USB device in the
+> >>> drivers/media/usb/siano/smsusb.c driver.
+> >>>
+> >>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2019-15219
+> >>>
+> >>> An issue was discovered in the Linux kernel before 5.1.8. There is a
+> >>> NULL pointer dereference caused by a malicious USB device in the
+> >>> drivers/usb/misc/sisusbvga/sisusb.c driver.
+> >>
+> >>
+> >> Are these even realistic?   If I'm going to leave malicious USB device=
+s in the parking lot for mischief am I going to rely on the unknown victim =
+running a Linux distro with the requisite kernel modules or am I going to j=
+ust drop a cheap and near-universal USB killer?
+> >>
+> >> If I'm going to be connecting the USB device to unguarded laptops myse=
+lf to crash them, as opposed to destroy them, why not just casually lean on=
+ the power button for a few seconds?[1]
+> >>
+> >> Actually, this is the CVSS3 score for a laptop's power button: 4.6 (CV=
+SS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H (Medium).   There isn't a vector=
+ for a USB killer because there's no "A:P" (permanent loss).
+> >>
+> >> I'm not saying that these aren't bugs that should be fixed, far from i=
+t.  That's not the issue.  The issue is that, for example, PCI DSS requires=
+ fixes for anything with a score >=3D 4.0 so we have endless end-users dema=
+nding fixes for their servers which don't have even physical access or, ind=
+eed, physical presence.  It's not even demanding the fixes as they may alre=
+ady be fixed or simply not applicable because the affected driver isn't pre=
+sent; it's the hours or days wasted verifying that the fix available or not=
+ present.[2]
+> >>
+> >>
+> >>
+> >> Frustrated of Lancashire, jch
+> >>
+> >>
+> >> [1] Some may remember the VAX 11/750 reset button.  In order to be abl=
+e to use the serial console (usually a DECwriter) you had to have the key i=
+n which also enabled the reset button.   Before I put the VAX "Do Not Copy =
+this Key" key (yes, it fits all 750s) I pressed accidentally pressed the re=
+set button a couple of times just by propping myself up on the machine.  Sp=
+ectacularly bad design by today's standards.
+> >>
+> >>
+> >> [2] Full disclosure.  It's ultimately about me because it's me that ev=
+entually gets the "customer requires fix for CVE-2019-15216" :)
+> >
+> > In the past we have considered Denial Of Service only USB vulnerabilite=
+s as non-issues, as physical access
+> > can cause the same.
+>
+> <nod>
+>
+> >
+> > USB Vulnerabilities where you can achieve code execution by a malicious=
+ USB device are something else though and in my opinion warrant a CVE.
+> >
+>
+> I carefully didn't quote any of the UAF bugs -- those definitely do warra=
+nt a CVE.   Null pointer dereference is a DoS.
 
-we had several security reports in CUPS which are fixed in the released 
-CUPS 2.4.17:
+Yeah, I don't think those DoS USB bugs are in any way useful to an
+attacker. I've looked at existing USB CVEs before I've started
+reporting these, and MITRE does assign CVEs to such issues. I don't
+know whether they should warrant CVEs or not.
 
-- no known CVE yet, requested from Github - 
-https://github.com/OpenPrinting/cups/security/advisories/GHSA-6wpw-g8g6-wvrv 
-- Heap out-of-bounds read in SNMP supply-level polling leaks stack 
-memory to authenticated users - moderate severity
+On a side note, currently there's an issue with many Linux kernel bugs
+being fixed, but not backported to distro kernels. Those bugs might
+have security implications, but there's no way to know that, unless
+someone specifically spends time to assess them in that regard.
+Requesting CVEs for those bugs is a way to get the fixes into distro
+kernels (even though that doesn't always work promptly [1] :).
 
-- CVE-2026-39314 - 
-https://github.com/OpenPrinting/cups/security/advisories/GHSA-pp8w-2g52-7vj7 
-- Integer underflow in `_ppdCreateFromIPP` causes root cupsd crash via 
-negative `job-password-supported` - moderate severity
-
-- CVE-2026-39316 - 
-https://github.com/OpenPrinting/cups/security/advisories/GHSA-pjv5-prqp-46rg 
-- Use-after-free in `cupsdDeleteTemporaryPrinters` via dangling 
-subscription pointer - moderate severity
-
-- CVE-2026-34990 - 
-https://github.com/OpenPrinting/cups/security/advisories/GHSA-c54j-2vqw-wpwp 
-- Local print admin token disclosure using temporary printers - moderate 
-severity
-
-- CVE-2026-34980 - 
-https://github.com/OpenPrinting/cups/security/advisories/GHSA-4852-v58g-6cwf 
-- Shared PostScript queue lets anonymous Print-Job requests reach `lp` 
-code execution over the network - moderate severity
-
-- CVE-2026-34979 - 
-https://github.com/OpenPrinting/cups/security/advisories/GHSA-6qxf-7jx6-86fh 
-- Heap overflow in `get_options()` - moderate severity
-
-- CVE-2026-34978 - 
-https://github.com/OpenPrinting/cups/security/advisories/GHSA-f53q-7mxp-9gcr 
-- Path traversal in RSS notify-recipient-uri enables file write outside 
-CacheDir/rss (and clobbering of job.cache) - moderate severity
-
-- CVE-2026-27447 - 
-https://github.com/OpenPrinting/cups/security/advisories/GHSA-v987-m8hp-phj9 
-- Authorization bypass via case-insensitive group-member lookup - 
-moderate severity
-
-We thank all the researchers for the reports!
-
-Have a nice day,
-
-
-Zdenek
-
-
-P.S. I hope you don't mind such bulk email - it was a number of CVEs at 
-the same time, but all relevant information are at the links.
-
--- 
-Zdenek Dohnal
-Senior Software Engineer
-Red Hat, BRQ-TPBC
-
+[1] https://www.openwall.com/lists/oss-security/2018/10/30/2
