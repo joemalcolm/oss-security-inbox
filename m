@@ -1,75 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/12/2
-Message-ID: <ee1c083f-733a-181a-8a64-d5fe4fbe4d76@intel.com>
-Date: Tue, 12 Nov 2019 15:04:34 +0000
-From: Ferruh Yigit <ferruh.yigit@...el.com>
-To: dpdk-announce <announce@...k.org>
-Cc: security@...k.org, security-prerelease@...k.org, oss-security@...ts.openwall.com
-Subject: DPDK security advisory: CVE-2019-14818
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/12
+Message-ID: <9c8ef246-0e75-793b-6995-51e50a730701@ehuk.net>
+Date: Thu, 22 Aug 2019 19:44:50 +0100
+From: Eddie Chapman <eddie@...k.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was fixed in DPDK.
+On 22/08/2019 18:57, Perry E. Metzger wrote:
+> Android phones run Linux. People routinely plug those phones in to USB
+> charging stations in airports, on airplanes, at booths in public
+> places, etc.
+> 
+> Perry
 
-Some downstream stakeholders were warned in advance in order to coordinate the
-release of fixes and reduce the vulnerability window.
+I would argue that this kind of behaviour is far too trusting and asking 
+for trouble. Should we request a CVE for foolish user behaviour? Yes, 
+USB was designed to make it easy be able to plug/unplug devices without 
+having to open your device up, but it doesn't mean people should do 
+stupid things with it. Ok there are different levels of risk, you can 
+never be totally sure if any device is safe unless you open it up and 
+start examining. If it is a dumb charger or you know the person who 
+supplies you with a more sophisticated charging device (either a 
+manufacturer you trust you bought it from or a friend you trust obtained 
+the device from a trusted manufacturer) then the risk is lower, but not 
+eliminated completely.
 
-Problem:
-A malicious container which has direct access to the vhost-user socket can keep
-sending messages which may cause leaking resources until resulting a DOS.
-
-All users of the vhost library are strongly encouraged to upgrade as soon as
-possible.
-
-CVE-2019-14818
-Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=363
-Severity: Medium
-CVSS scores: 6.8
-
-
-
-Commits:
-main repo
-https://git.dpdk.org/dpdk/commit/?id=612e17cf6d7b
-https://git.dpdk.org/dpdk/commit/?id=bf472259dde6
-
-19.08.1
-https://git.dpdk.org/dpdk-stable/commit/?h=19.08&id=fa674d08985f
-https://git.dpdk.org/dpdk-stable/commit/?h=19.08&id=6547dd563ea9
-
-18.11.4 (LTS)
-https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=70583a6b9b1c
-https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=f8898927bb16
-
-17.11.8 (LTS)
-https://git.dpdk.org/dpdk-stable/commit/?h=17.11&id=3b1b44a1c82a
-https://git.dpdk.org/dpdk-stable/commit/?h=17.11&id=8a8dbd0ec19e
-https://git.dpdk.org/dpdk-stable/commit/?h=17.11&id=1f6147d9a01f
-
-16.11.10 (LTS EOL)
-https://git.dpdk.org/dpdk-stable/commit/?h=16.11&id=5fbb5c2919b6
-https://git.dpdk.org/dpdk-stable/commit/?h=16.11&id=3863340f93b8
-https://git.dpdk.org/dpdk-stable/commit/?h=16.11&id=8790f4c3bcd2
-https://git.dpdk.org/dpdk-stable/commit/?h=16.11&id=1bf11cfb7c7c
-
-
-Stable Releases download links:
-DPDK 19.08.1
-http://fast.dpdk.org/rel/dpdk-19.08.1.tar.xz
-
-DPDK 18.11.4 (LTS)
-http://fast.dpdk.org/rel/dpdk-18.11.4.tar.xz
-
-DPDK 17.11.8 (LTS)
-http://fast.dpdk.org/rel/dpdk-17.11.8.tar.xz
-
-DPDK 16.11.10 (LTS EOL)
-http://fast.dpdk.org/rel/dpdk-16.11.10.tar.xz
-
-
--- 
-DPDK Security Team
-http://core.dpdk.org/security/
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+If I designed a box with PCIe slots on the outside of the case, would 
+you go around plugging in random circuit boards into it if they were 
+available at an airport and provided some useful function? I would not. 
+Whatever interface it is I will only plug it in if I have some 
+reasonable level of confidence about the device. Or maybe people have 
+already started reviewing the kernel code looking for ways in which a 
+malicious PCIe device could own the system.
