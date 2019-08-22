@@ -1,50 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/06/3
-Message-ID: <194874fc-8b0e-1139-d8f7-08b3bd1a98ad@valdikss.org.ru>
-Date: Fri, 6 Dec 2019 16:14:42 +0300
-From: ValdikSS <iam@...dikss.org.ru>
-To: oss-security@...ts.openwall.com
-Cc: "William J. Tolley" <william@...akpointingbad.com>, Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
-Subject: Re: [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/13
+Message-ID: <20190822150054.1a7ef060@jabberwock.cb.piermont.com>
+Date: Thu, 22 Aug 2019 15:00:54 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Eddie Chapman <eddie@...k.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-Please also note that my kind of attack could be performed over the Internet, without direct
-connectivity between the attacker and victim, Wi-Fi network or anything.
+On Thu, 22 Aug 2019 19:44:50 +0100 Eddie Chapman <eddie@...k.net>
+wrote:
+> On 22/08/2019 18:57, Perry E. Metzger wrote:
+> > Android phones run Linux. People routinely plug those phones in
+> > to USB charging stations in airports, on airplanes, at booths in
+> > public places, etc.
+>
+> I would argue that this kind of behaviour is far too trusting and
+> asking for trouble.
 
-It has been tested in a real-world Internet environment in 2015, and it worked flawlessly.
+You can argue anything you like. Power charging points have popped up
+around the world, and you're not in a position to stop
+them. Furthermore, I'll note that over the air exploitable bugs in
+things like WiFi stacks and Bluetooth stacks have also appeared over
+time; perhaps it's foolish to have your phone on at all, and yet
+people will continue to turn their phones on, and even to use them.
 
-
-On 06.12.2019 16:07, ValdikSS wrote:
-> Please also check my article on this topic from 2015
-> https://medium.com/@ValdikSS/another-critical-vpn-vulnerability-and-why-port-fail-is-bullshit-352b2ebd22e2
-> 
-> I used the same technique but with UDP, and it works (at least worked) with Linux, OS X, Windows and Android.
-> 
-> I used it with old p2p Skype, which allowed to get users' IP address using special "resolver" software or services,
-> by user nick name. After getting IP address, you could send UDP packet to the user from your IP address (without
-> spoofing) and receive the reply from Skype user, but with VPN source IP address, which allowed to detect
-> whether the exact Skype user is connected to the VPN, and to which one, given that his connection is direct (without NAT).
-> 
-> This also (still) applies to Bittorrent uTP protocol.
-> 
-> 
-> On 05.12.2019 05:38, unknown wrote:
->> Posted by William J. Tolley on Dec 04
->>
->> Hi all,
->>
->> I am reporting a vulnerability that exists on most Linux distros, and
->> other *nix operating systems which allows a network adjacent attacker
->> to determine if another user is connected to a VPN, the virtual IP
->> address they have been assigned by the VPN server, and whether or not
->> there is an active connection to a given website. Additionally, we are
->> able to determine the exact seq and ack numbers by counting encrypted
->> packets and/or...
->>
->>
-> 
-> 
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (869 bytes)
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
