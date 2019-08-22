@@ -1,128 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/20/2
-Message-ID: <CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>
-Date: Tue, 20 Aug 2019 20:20:34 +0200
-From: Andrey Konovalov <andreyknvl@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/14
+Message-ID: <e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>
+Date: Thu, 22 Aug 2019 20:33:54 +0100
+From: Eddie Chapman <eddie@...k.net>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On 22/08/2019 20:00, Perry E. Metzger wrote:
+> You can argue anything you like. Power charging points have popped up
+> around the world, and you're not in a position to stop
+> them. Furthermore, I'll note that over the air exploitable bugs in
+> things like WiFi stacks and Bluetooth stacks have also appeared over
+> time; perhaps it's foolish to have your phone on at all, and yet
+> people will continue to turn their phones on, and even to use them.
+> 
+> Perry
 
-I've previously reported vulnerabilities in the Linux kernel USB
-drivers on this list [1] found with syzkaller [2]. The USB fuzzing
-project has been on hold for a while, but has been resumed earlier
-this year. Here's a new bunch of 15 CVEs.
+Well, I certainly am not deluded enough to think I have the power to 
+stop power charging points popping up everywhere :-) Or to stop people 
+making mistakes. Just because something is possible and everyone else 
+does it doesn't make something less stupid.
 
-As an experiment this time I've requested CVEs for 2 bugs
-(CVE-2019-15290, CVE-2019-15291) that haven't yet been fixed (fixes
-for the other 13 bugs are in the upstream kernel). Both have been
-reported by syzbot over 4 months ago. I've made sure that these 2 bugs
-are reproducible with a crafted USB device and crash a Linux laptop
-(or rather crash the USB worker thread) with one of the distro
-kernels.
-
-There are many more still not fixed bugs shown here [3].
-
-[1] https://www.openwall.com/lists/oss-security/2017/12/12/7
-
-[2] https://github.com/google/syzkaller/blob/master/docs/linux/external_fuzzing_usb.md
-
-[3] https://syzkaller.appspot.com/upstream?manager=ci2-upstream-usb
-
-### CVEs
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15290
-
-An issue was discovered in the Linux kernel through 5.2.9. There is a
-NULL pointer dereference caused by a malicious USB device in the
-ath6kl_usb_alloc_urb_from_pipe function in the
-drivers/net/wireless/ath/ath6kl/usb.c driver.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15291
-
-An issue was discovered in the Linux kernel through 5.2.9. There is a
-NULL pointer dereference caused by a malicious USB device in the
-flexcop_usb_probe function in the drivers/media/usb/b2c2/flexcop-usb.c
-driver.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15211
-
-An issue was discovered in the Linux kernel before 5.2.6. There is a
-use-after-free caused by a malicious USB device in the
-drivers/media/v4l2-core/v4l2-dev.c driver because
-drivers/media/radio/radio-raremono.c does not properly allocate
-memory.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15212
-
-An issue was discovered in the Linux kernel before 5.1.8. There is a
-double-free caused by a malicious USB device in the
-drivers/usb/misc/rio500.c driver.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15213
-
-An issue was discovered in the Linux kernel before 5.2.3. There is a
-use-after-free caused by a malicious USB device in the
-drivers/media/usb/dvb-usb/dvb-usb-init.c driver.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15214
-
-An issue was discovered in the Linux kernel before 5.0.10. There is a
-use-after-free in the sound subsystem because card disconnection
-causes certain data structures to be deleted too early. This is
-related to sound/core/init.c and sound/core/info.c.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15215
-
-An issue was discovered in the Linux kernel before 5.2.6. There is a
-use-after-free caused by a malicious USB device in the
-drivers/media/usb/cpia2/cpia2_usb.c driver.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15216
-
-An issue was discovered in the Linux kernel before 5.0.14. There is a
-NULL pointer dereference caused by a malicious USB device in the
-drivers/usb/misc/yurex.c driver.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15217
-
-An issue was discovered in the Linux kernel before 5.2.3. There is a
-NULL pointer dereference caused by a malicious USB device in the
-drivers/media/usb/zr364xx/zr364xx.c driver.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15218
-
-An issue was discovered in the Linux kernel before 5.1.8. There is a
-NULL pointer dereference caused by a malicious USB device in the
-drivers/media/usb/siano/smsusb.c driver.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15219
-
-An issue was discovered in the Linux kernel before 5.1.8. There is a
-NULL pointer dereference caused by a malicious USB device in the
-drivers/usb/misc/sisusbvga/sisusb.c driver.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15220
-
-An issue was discovered in the Linux kernel before 5.2.1. There is a
-use-after-free caused by a malicious USB device in the
-drivers/net/wireless/intersil/p54/p54usb.c driver.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15221
-
-An issue was discovered in the Linux kernel before 5.1.17. There is a
-NULL pointer dereference caused by a malicious USB device in the
-sound/usb/line6/pcm.c driver.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15222
-
-An issue was discovered in the Linux kernel before 5.2.8. There is a
-NULL pointer dereference caused by a malicious USB device in the
-sound/usb/helper.c (motu_microbookii) driver.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15223
-
-An issue was discovered in the Linux kernel before 5.1.8. There is a
-NULL pointer dereference caused by a malicious USB device in the
-sound/usb/line6/driver.c driver.
+It's a similar principle with wifi/bluetooth, which is why I avoid 
+connecting even to a family member's wifi access point unless it's 
+absolutely necessary. But USB is a physical interface directly into a 
+device's circuitry, I think that carries more risk than radio. ok, usb 
+2.0 is only 2 x power and 2 x data, but radio waves are at least 
+filtered somewhat after hitting an antenna. Physical interfaces on a 
+device, on the other hand, the circuit designer does not usually design 
+them "defensively" (apart from e.g. fuses on the power lines).
