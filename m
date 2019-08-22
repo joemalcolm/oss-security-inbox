@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/1
-Message-ID: <CALJHwhSEmNwChg-TCRYpyUGZWOM37zofntrsMk_WSEBbeZW3Vg@mail.gmail.com>
-Date: Thu, 15 Aug 2019 13:37:57 +1000
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/10
+Message-Id: <63686C1A-E1C5-4351-948B-EFAE6FBA616A@oracle.com>
+Date: Thu, 22 Aug 2019 19:17:34 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-10140 - linux kernel - system panic in overlayfs directory creation.
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-Red Hats kernel has a flaw in overlayfs which can cause a kernel panic and
-possibly memory corruption.
-
-An attacker with local access can create a denial of service situation via
-NULL pointer dereference in ovl_posix_acl_create function in
-fs/overlayfs/dir.c. The ovl_create function can return a positive number
-leading to a null pointer derference of path in may_open. This can allow
-attackers with ability to create directories on overlayfs to crash the
-kernel creating a Denial Of Service (DOS) and possibly other memory
-corruption.
-
-The memory corruption claim may be a bit of a stretch, but it could be
-possible that an attacker could pre-groom the memory where the null pointer
-dereference exists, but I couldn't get this to work in practice, YMMV.
-
-This flaw likely only affects Red Hat Enterprise Linux 7 based products as
-this issue was created by by human-error in the back-porting process.  It
-is very unlikely that non Red Hat Enterprise Linux derived distributions
-contain this flaw.
-
-Thanks,
-
-Wade Mealing
-Red Hat Product Security
 
 
-Red Hat bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2019-10140
+> On 22 Aug 2019, at 18:57, Perry E. Metzger <perry@...rmont.com> wrote:
+> 
+>> Are these [null pointer deref] even realistic?   If I'm going to leave malicious
+>> USB devices in the parking lot for mischief am I going to rely
+>> on the unknown victim running a Linux distro with the
+>> requisite kernel modules or am I going to just drop a cheap
+>> and near-universal USB killer?
+> 
+> Android phones run Linux. People routinely plug those phones in to USB
+> charging stations in airports, on airplanes, at booths in public
+> places, etc.
+> 
 
-Proposed patch:
-https://bugzilla.redhat.com/attachment.cgi?id=1535840
+If I'm going to attack random devices I'm not going to do it with some random driver that may or may not be present on a phone.  And as this is a null pointer reference we're talking about you plug the phone and and it reboots so you won't do that more than once.   That's it, that's the limit of the vulnerability.
+
+If I'm going to go to the trouble of emulating a device so I can sneak it into a public charging point I'm not going to do it just to make a phone reboot.  I'm going to pick a UAF vulnerability with an exploit that actually does something useful, something beyond just making the phone reboot.
+
+Either that or I'm going to sneak in a USB killer and destroy the phones.
+
+No matter what, emulating a device just to cause a null dereference is not CVE worthy.   If it is, then we need a CVE for power buttons on laptops and phones.
+
+jch
 
