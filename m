@@ -1,4 +1,9 @@
-Received: (qmail 28143 invoked by uid 550); 23 Dec 2022 16:08:47 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["476" "Thursday" "22" "August" "2019" "13:57:53" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20190822135753.10d124a4@jabberwock.cb.piermont.com>" "13" "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" "^Date:" nil nil "8" "2019082217:57:53" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" (number mark "        perry@piermo Aug 22   13/476   " thread-indent "\"Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2\"\n") "<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>" ("<CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>" "<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>" "<20190822093122.GQ6086@suse.de>" "<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>" "<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30652 invoked by uid 550); 22 Aug 2019 17:58:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,66 +11,34 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26430 invoked from network); 23 Dec 2022 15:19:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=laJorxLEiwR5fOaX/4aHm4WcOW+QUdVYG6UsMcguc5k=;
-        b=bhWXc9m3iZWl2z4RyuBql8j3Pc00ddPZtqeD+sVtPpXWfufDnVN6naeY8QmW1BWCmh
-         SD3yuEQMTTsS0muByItuQKhF4bGN3YrzVShQmSSIrZQcIFENuBfwUZeKWiNheQs353Sk
-         3aR0bHD0zbA8SQ6/+BqZAaLEACS9VWyQNj8jd7jhH9Ad42+gj0nJ1Phf3VLKMPDbNERG
-         4EVEQuxZXCQ+xawKrDnfQcM0NFw/s2nzg/apQFp9zMhLQ57ojC3F8KXHj5DZdjkD5FEM
-         eBp7fqYz+xKza0qIrHc8qgheIK/NcGev5K8VoA6JJT/KVf2D1XpV1xKQwQhotNt8NUQY
-         0fAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=laJorxLEiwR5fOaX/4aHm4WcOW+QUdVYG6UsMcguc5k=;
-        b=3+iUppEnCE+QqMrh88+yQId1Zt3O7Ey/NPhmMHH/Seow4dfOtl17DrgNb/tqMz576S
-         2sbPLwJHSkxBLM5CN/FoateEJhfeWYnTlQmIFRV1AQZTB4O3v5MOFrlkFbxBVzsO9Bpr
-         IRElXlKu6EPIiTFacLED9F4N1nIl1Qw5V0COob//BMj+gJ0UlHXmRHujgKuPlsZoflrC
-         wiVFKSb6Gq+yVkp3LgAFgI6sMLcrc9h7tiTmOMapXRvRImlGAriviQw9f27OO3XnDHyA
-         pCyBZekTJVATNQi2Wo+CRM73ChNmI6oRZV+EfuhqpZoyHHxGKZ96+av4LTuypqqhhXKU
-         WoPQ==
-X-Gm-Message-State: AFqh2kra6QS9GgbClfSB7MzcmPSPa9zwf7Kf2AdhITZaC6xzlx+aEz2h
-	U12L/QzOrTXf5GljCmb4moHP54o/TeHgjEmZFhQiOM6EXso=
-X-Google-Smtp-Source: AMrXdXsdbP+mMhr40plzY+cwj0tBHMnxua8fnHaU6E0+iIkQdOWhfRYgBST68JoCR3y1hqhqAAw3G5vXKi7XTJdq+Kw=
-X-Received: by 2002:a17:90a:6806:b0:213:1944:dde2 with SMTP id
- p6-20020a17090a680600b002131944dde2mr1047095pjj.193.1671808752131; Fri, 23
- Dec 2022 07:19:12 -0800 (PST)
+Received: (qmail 30634 invoked from network); 22 Aug 2019 17:58:05 -0000
+Message-ID: <20190822135753.10d124a4@jabberwock.cb.piermont.com>
+In-Reply-To: <CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
+References: <CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>
+	<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>
+	<20190822093122.GQ6086@suse.de>
+	<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
+	<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <CAKoP-y-rbU=xEowJGp6my0khWMSbE05+ncDiE3wtXTOWwvyScA@mail.gmail.com>
- <Y6TQ0HyCJOMkKSDn@netmeister.org> <Y6VTdO608VUE38Ke@kroah.com>
- <20221223081727.GB2404@suse.de> <Y6Vppxpq+PHTb/Qe@sol.localdomain>
-In-Reply-To: <Y6Vppxpq+PHTb/Qe@sol.localdomain>
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Fri, 23 Dec 2022 10:19:00 -0500
-Message-ID: <CAH8yC8nSE6BOU_JBTiYWWKXx2LeYUazTDN1tzzvcE5mg6WJf6Q@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Date: Thu, 22 Aug 2019 13:57:53 -0400
+From: "Perry E. Metzger" <perry@piermont.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel: multiple vulnerabilities in the
+ USB subsystem x2
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Details on this supposed Linux Kernel ksmbd RCE
 
-On Fri, Dec 23, 2022 at 8:22 AM Eric Biggers <ebiggers@kernel.org> wrote:
->
-> On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
-> >
-> > tldr: I requested 5 CVEs for the new ZDI issues Josh and Jan referenced.
-> >
-> > long form:
-> >
-> > Nice surprise 1 day before Christmas.
->
-> Note that these bugs were already fixed in upstream and all affected Long Term
-> Support (LTS) kernels months ago.  So this is really only a "surprise" for
-> people who choose to use known buggy and insecure kernels that don't follow LTS.
+> Are these even realistic?   If I'm going to leave malicious
+> USB devices in the parking lot for mischief am I going to rely
+> on the unknown victim running a Linux distro with the
+> requisite kernel modules or am I going to just drop a cheap
+> and near-universal USB killer?
 
-Comes to mind: https://thenewstack.io/design-system-can-update-greg-kroah-hartman-linux-security/
+Android phones run Linux. People routinely plug those phones in to USB
+charging stations in airports, on airplanes, at booths in public
+places, etc.
 
-> Anyway, these sorts of bugs are totally predictable in a complex, new network
-> filesystem server (ksmbd).  Personally I recommend not using ksmbd.
-
-Jeff
+Perry
+-- 
+Perry E. Metzger		perry@piermont.com
