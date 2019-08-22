@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1365" "Thursday" "14" "March" "2019" "19:48:22" "-0400" "Paul Moore" "paul@paul-moore.com" "<CAHC9VhSQRyh=4wRJTehjDYF8F0uRR3geqfFkAT+VTqrzoYSw4w@mail.gmail.com>" "31" "[oss-security] libseccomp: incorrect generation of syscall argument filters" "^Cc:" nil nil "3" "2019031423:48:22" "[oss-security] libseccomp: incorrect generation of syscall argument filters" (number mark "        paul@paul-mo Mar 14   31/1365  " thread-indent "\"[oss-security] libseccomp: incorrect generation of syscall argument filters\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] libseccomp: incorrect generation of syscall argument filters" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1910" "Thursday" "22" "August" "2019" "18:02:14" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20190822180214.z5vssydiobp6uy6x@yuggoth.org>" "46" "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" "^Date:" nil nil "8" "2019082218:02:14" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" (number mark "        fungi@yuggot Aug 22   46/1910  " thread-indent "\"Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2\"\n") "<20190822135753.10d124a4@jabberwock.cb.piermont.com>" ("<CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>" "<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>" "<20190822093122.GQ6086@suse.de>" "<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>" "<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>" "<20190822135753.10d124a4@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5577 invoked by uid 550); 15 Mar 2019 09:44:41 -0000
+Received: (qmail 13772 invoked by uid 550); 22 Aug 2019 18:02:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10186 invoked from network); 14 Mar 2019 23:48:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paul-moore-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=kE8XK5tHt0FKznenkEeBFBfEtTurQFTSUYN2u5HNmiE=;
-        b=YHLgabAIf1tUjaam6ITYdHILJ1lEH1jVC3QVK5hrvdWGAX9QEKKyLttZrAXp0HKKqh
-         2t6+oWHue/31dh4HlNod0hKoZIeQqxkQgqT3kLc4O7VxK22PK82shOQ+l8k02clBbaz1
-         sFcKo1GR8YRXdqDHpq15cIKCCLAAZh0vIIqnv8+Bu87EgBopAkKcUfy2T5lreWXArAFC
-         /RdVpsk0eX1qXNahI4DabpB2nHLitopfm7wPArUcngJkGHDba/7OI/uzqmKtNdb5Sews
-         McXY9lHue/HWIL0nzI/tCZ4tjHjw6oTCrI2RjbHR49JPxTvIBnaf5d80+AiPy66QutIN
-         e89Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=kE8XK5tHt0FKznenkEeBFBfEtTurQFTSUYN2u5HNmiE=;
-        b=bu8gqr+GSPhK3CAcGw+oCuoLJX+j2XfHH/vm3fZkZC9q3EzJ3Gnsr5NMYZff8ecGza
-         MD9lsoYhI4i0cP2clDhmFYyjjpvA+2SuIU0525/P7d56eTZCPCrs+zzRYIVU2zHc8Opr
-         MkShOLG8sqqbgmcK2xVs+qil3u5lO6pkmkwr3VfTiWN2NSnHcnXv8ohiq00wUzR3BHaz
-         wZKSUpldSTSeHUXfivSyy4Rk1xTK02UKS50fvmtRqrWDfufA0OEVayfRe4613As5sFJ8
-         lLhH9DXVqRNxKppxcrZD2yicUy3pdQFiBmpOaPq854C5fv7ZU/xYA/eJ+sgstxf8XFu7
-         Z1fA==
-X-Gm-Message-State: APjAAAVjlz4r6gJzm8H2E37Q7iPQHW+A+lrn9L2iCwtyR39ML1rPn0im
-	icvegbFj9FFW2/s+x5rH3aCpTlEYOe9W0/9jfCecHOAVWA==
-X-Google-Smtp-Source: APXvYqzGST9sqrL+fkOQ+V8U/ZDWVvUj8JRMoH3oNPkYqETkA4GYYXQfn8teOJppaImmkt8f2UazhoXF0ZzfXrHO6f8=
-X-Received: by 2002:a2e:968c:: with SMTP id q12mr371176lji.95.1552607313141;
- Thu, 14 Mar 2019 16:48:33 -0700 (PDT)
+Received: (qmail 13752 invoked from network); 22 Aug 2019 18:02:29 -0000
+Message-ID: <20190822180214.z5vssydiobp6uy6x@yuggoth.org>
+References: <CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>
+ <C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>
+ <20190822093122.GQ6086@suse.de>
+ <ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
+ <CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
+ <20190822135753.10d124a4@jabberwock.cb.piermont.com>
 MIME-Version: 1.0
-Message-ID: <CAHC9VhSQRyh=4wRJTehjDYF8F0uRR3geqfFkAT+VTqrzoYSw4w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: Jann Horn <jannh@google.com>
-Date: Thu, 14 Mar 2019 19:48:22 -0400
-From: Paul Moore <paul@paul-moore.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="agk2vs2qbhotbzbb"
+Content-Disposition: inline
+In-Reply-To: <20190822135753.10d124a4@jabberwock.cb.piermont.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Date: Thu, 22 Aug 2019 18:02:14 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] libseccomp: incorrect generation of syscall argument filters
+Subject: Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB
+ subsystem x2
 To: oss-security@lists.openwall.com
 
-Jann Horn (CC'd) identified a problem in current versions of
-libseccomp where the library did not correctly generate 64-bit syscall
-argument comparisons using the arithmetic operators (LT, GT, LE, GE).
-Jann has done a search using codesearch.debian.net and it would appear
-that only systemd and Tor are using libseccomp in such a way as to
-trigger the bad code.  In the case of systemd this appears to affect
-the socket address family and scheduling class filters.  In the case
-of Tor it appears that the bad filters could impact the memory
-addresses passed to mprotect(2).
+--agk2vs2qbhotbzbb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The libseccomp v2.4.0 release fixes this problem, and should be a
-direct drop-in replacement for previous v2.x releases.  Due the
-complexity, and associated risk, of backporting the fix to the v2.3.x
-release stream, I've made the difficult decision not to backport the
-fix.  Further, I'm not aware of any workarounds for this issue.
-Adminstrators and distros are strongly encouraged to upgrade to
-libseccomp v2.4.0 as soon as possible.
+On 2019-08-22 13:57:53 -0400 (-0400), Perry E. Metzger wrote:
+> > Are these even realistic?   If I'm going to leave malicious
+> > USB devices in the parking lot for mischief am I going to rely
+> > on the unknown victim running a Linux distro with the
+> > requisite kernel modules or am I going to just drop a cheap
+> > and near-universal USB killer?
+>=20
+> Android phones run Linux. People routinely plug those phones in to USB
+> charging stations in airports, on airplanes, at booths in public
+> places, etc.
 
-The related GitHub issue, complete with a brief discussion of the
-problem and a list of the assocated patches can be found at the link
-below:
+Exploitation of which is commonly referred to as "juice jacking"[*]
+and has led to a booming demand for "USB condoms" lately.
 
-* https://github.com/seccomp/libseccomp/issues/139
+[*] https://en.wikipedia.org/wiki/Juice_jacking
+--=20
+Jeremy Stanley
 
-The libseccomp v2.4.0 release can be found at the link below:
+--agk2vs2qbhotbzbb
+Content-Type: application/pgp-signature; name="signature.asc"
 
-* https://github.com/seccomp/libseccomp/releases/tag/v2.4.0
+-----BEGIN PGP SIGNATURE-----
 
--- 
-paul moore
-www.paul-moore.com
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAl1e2KFfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCmSVRAAmYj7Aq+RT4NIQaaZLyDbih3Z42zaAaPwSc6uC2Jd0GMhd/MkUcrxMrSM
+SsL5/mtiMfoVWbOTvtwh1g4bDaPGEl3Ccju4FZ1F5jmQm5RLJEtVCAw6a/B+cWTp
+9dzaknM+sXg6T6De94N3fJA+XDS5zc9sYphlCkkv7HR9cXnUXP/RNM5JeRAlSRa9
+OrtshHFS4d4AQcNU1Oor3SU1jV0/ttA/aD8A7z+GO9fVsRDTweGP26BlcRebMlzC
+6xOnmq/dqt9hK8KigjXfihKcfLLQDXvd6mDs6S4gvm2Mi9FVcG4zUKTXDnM84eS2
+1k2oJQpi9F9aoC3bJtcO6jJ8ifrlcy/fZl84ukWlq2pNHU9sfs4axkJtqFR4BC+A
+th64aAdYs7VtmtcKPHJboInwZRZIKsoP8pyCJs8pE9q62xILErk5NOo38YWBoLM/
+qfyQJJEcpaN0Odjx+NfWx5nmw/7/w+M6Nzke1+B757zTM6U4+uli1JnlgIwMeM5i
+fiMOP0B7zDZAxAT/Cul/CbHS1rOkuT8UkOc1HBTO3dS5nU/3mG+CXGOrlR0uvd8h
+uYoA0A6zyfLnyzR7XYk3fjA4BovPpWHSoNeUiME3y3+NIEgYHyiDcz2bI5HBW1KB
+9GwHvz+l4hR/4I4Bdh9oxq4M77L9sfM+EHHW6o45YWQ9wqECvK8=
+=cifl
+-----END PGP SIGNATURE-----
+
+--agk2vs2qbhotbzbb--
