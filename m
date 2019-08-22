@@ -1,41 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/5
-Message-ID: <nn1s5wpqic.fsf_-_@armitage.lysator.liu.se>
-Date: Tue, 01 Jan 2019 12:27:07 +0100
-From: nisse@...ator.liu.se (Niels Möller)
-To: Matthew Fernandez <matthew.fernandez@...il.com>
-Cc: oss-security@...ts.openwall.com,  Jeffrey Walton <noloader@...il.com>
-Subject: Disabling ptrace (was Re: Asserts considered harmful (or GMP spills its sensitive information))
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/9
+Message-ID: <20190822180214.z5vssydiobp6uy6x@yuggoth.org>
+Date: Thu, 22 Aug 2019 18:02:14 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-Matthew Fernandez <matthew.fernandez@...il.com> writes:
+On 2019-08-22 13:57:53 -0400 (-0400), Perry E. Metzger wrote:
+> > Are these even realistic?   If I'm going to leave malicious
+> > USB devices in the parking lot for mischief am I going to rely
+> > on the unknown victim running a Linux distro with the
+> > requisite kernel modules or am I going to just drop a cheap
+> > and near-universal USB killer?
+> 
+> Android phones run Linux. People routinely plug those phones in to USB
+> charging stations in airports, on airplanes, at booths in public
+> places, etc.
 
-> E.g. you can attach
-> to the victim process with gdb/ptrace and simply read its memory, if
-> the sysadmin has not blocked this with Yama or similar.
+Exploitation of which is commonly referred to as "juice jacking"[*]
+and has led to a booming demand for "USB condoms" lately.
 
-I think one can disable this in the process itself, using prctl with
-PR_SET_DUMPABLE. But documentation is a bit unclear and doesn't
-exlicitly mention effect on ptrace (and other debugging interfaces).
-
-If there are any documented best practices, that would be very nice.
-
-My main usecase is lshd (an ssh daemon), which spawns a helper process
-with uid of the logged in user, but with gid set to the utmp group, to
-provide restricted write access to the utmp database. This is spawned by
-a process running as root, so no setuid or setgid executables involved.
-
-Attaching to that process with gdb may imply privilege escalation to
-compromise utmp. Last time I tried to investigate, including reading
-some linux kernel sources, PR_SET_DUMPABLE looked promising.
-
-(Note I'm not subscribed to the oss-security list, and I'm dropping the
-gmp-bugs list where this is off-topic. So please include my email in any
-replies).
-
-Regards,
-/Niels
-
+[*] https://en.wikipedia.org/wiki/Juice_jacking
 -- 
-Niels Möller. PGP-encrypted email is preferred. Keyid 368C6677.
-Internet email is subject to wholesale government surveillance.
+Jeremy Stanley
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
