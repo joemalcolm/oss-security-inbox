@@ -1,34 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/6
-Message-ID: <1565815809.XRRYARAT@httpd.apache.org>
-Date: Wed, 14 Aug 2019 15:50:09 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/8
+Message-ID: <20190822135753.10d124a4@jabberwock.cb.piermont.com>
+Date: Thu, 22 Aug 2019 13:57:53 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-10098: mod_rewrite configurations vulnerable to open redirect
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
+> Are these even realistic?   If I'm going to leave malicious
+> USB devices in the parking lot for mischief am I going to rely
+> on the unknown victim running a Linux distro with the
+> requisite kernel modules or am I going to just drop a cheap
+> and near-universal USB killer?
 
-CVE-2019-10098: mod_rewrite configurations vulnerable to open redirect
+Android phones run Linux. People routinely plug those phones in to USB
+charging stations in airports, on airplanes, at booths in public
+places, etc.
 
-Severity: Low
-
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-httpd 2.4.0 to 2.4.39
-
-Description:
-Redirects configured with mod_rewrite that were intended to be self-referential
-might be fooled by encoded newlines and redirect instead to an an unexpected 
-URL within the request URL.
-    
-Mitigation:
-Anchor captures used as back-references, prefix self-referential redirects with
-/ or scheme, host, and port.
-
-Credit:
-The issue was discovered by Yukitsugu Sasaki <yukitugu.sasaki@...il.com>
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
-
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
