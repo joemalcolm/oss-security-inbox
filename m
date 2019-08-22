@@ -1,79 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/26/2
-Message-ID: <CA+-XxSH0BqMYE51UAjNynhdCkecCv45q9pKanRRyyH=iWhDDUQ@mail.gmail.com>
-Date: Sat, 26 Oct 2019 06:37:29 -0700
-From: Igor Seletskiy <i@...udlinux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/15
+Message-ID: <20190822195653.GA25735@kroah.com>
+Date: Thu, 22 Aug 2019 12:56:53 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: mathias.payer@...elwelt.net, Hui Peng <benquike@...il.com>
-Subject: Re: Do distros want to see CVEs for Linux kernel USB bugs?
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-I thought the DoS issue wasn't settled specifically due to USB over IP.
+On Thu, Aug 22, 2019 at 12:59:14PM -0400, Brad Spengler wrote:
+> Sorry, a little too much marketing coming out of this camp these days, and
+> this one demands a response.
+> 
+> On Thu, Aug 22, 2019 at 09:20:00AM -0700, Greg KH wrote:
+> > On Thu, Aug 22, 2019 at 05:16:03PM +0200, Andrey Konovalov wrote:
+> > > On a side note, currently there's an issue with many Linux kernel bugs
+> > > being fixed, but not backported to distro kernels. Those bugs might
+> > > have security implications, but there's no way to know that, unless
+> > > someone specifically spends time to assess them in that regard.
+> > > Requesting CVEs for those bugs is a way to get the fixes into distro
+> > > kernels (even though that doesn't always work promptly [1] :).
+> > > 
+> > > [1] https://www.openwall.com/lists/oss-security/2018/10/30/2
+> > 
+> > Note, I am scraping the logs for anything that says it is fixed due do a
+> > syzbot find or report and backporting them to the stable kernel
+> > branches.  So those distros that do follow the LTS/stable kernel
+> > releases do get these fixes.
+> 
+> All of the fixes, Greg?
 
-Regards,
-Igor Seletskiy |  CEO
-CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
-<https://www.cloudlinux.com/kernelcare>   |   Imunify360
-<http://imunify360.com/>
+All of the ones that say they are found by the syzbot, yes.  If I have
+missed any, please let me know, I am only human.
 
-Get 24/7 free, exceptionally good support at cloudlinux.zendesk.com
-Follow us on twitter for technical updates: @CloudLinuxOS
-<https://twitter.com/cloudlinuxos>
+> You'd also need to explain very easy to find examples like this:
+> https://www.spinics.net/lists/stable/msg317698.html
+> of random LTS kernels not receiving security fixes.  This particular issue was
+> public since April (which is when we backported fixes for it to 4.4/4.14).
+> It's now 4 months later and your 4.4 6-year "supported" LTS kernel still
+> doesn't contain the fixes.
 
+I don't track CVEs nor care about them at all, and rely on others who
+depend on those older kernels to provide complex backports as they can
+test them the best.  Nothing new at all, it's always been that way.
 
-On Fri, Oct 25, 2019 at 11:44 PM Marcus Meissner <meissner@...e.de> wrote:
+If you know of specific fixes that I have missed, I am glad to accept
+backports.  Right now we are averaging about 22 patches a day in the
+latest stable release, and 19 in the latest LTS release.  That's a tiny
+5.5% of the number of patches that are being developed and merged
+upstream, which means that we know we are missing stuff and we rely on
+people to point out where we have done so.
 
-> On Fri, Oct 25, 2019 at 08:09:01PM +0200, Andrey Konovalov wrote:
-> > Hi!
-> >
-> > As we keep getting more USB bugs reported by syzbot [1], I'd like to
-> > figure out what to do with those in regards to CVEs. Last time I
-> > requested a bunch of CVEs for USB bugs, there was a long discussion
-> > about whether that is the right thing to do, see the full thread here
-> > [2].
-> >
-> > I don't want to argue now whether CVEs are useful for the upstream
-> > Linux kernel. My question is: with CVEs as they work today, do Linux
-> > distros want to see CVEs filed for Linux kernel bugs that are
-> > triggerable by a malicious USB device?
-> >
-> > Since not all USB bugs are the same, let's bucket them into:
-> >
-> > 1. Different kinds of DoS (e.g. null-ptr-deref).
-> > 2. Info / uninitialized memory leaks.
-> > 3. Bugs that lead to arbitrary code execution.
-> > 4. Non-triaged memory corruptions (UAF/OOB).
-> >
-> > Points 1-3 refer to the bugs that have been assessed for the impact
-> > that they cause, while point 4 refers to the bugs that haven't been
-> > looked at closely.
-> >
-> > Keep in mind that:
-> >
-> > 1. Most of the time physical access to the USB port is required to
-> > trigger these bugs.
-> > 2. Sometimes, in cases of e.g. exposed USB/IP or USBAnywhere like
-> > vulnerabilities [3] these bugs can be triggered remotely.
-> >
-> > Thanks!
-> >
-> > [1] https://syzkaller.appspot.com/upstream?manager=ci2-upstream-usb
-> >
-> > [2] https://www.openwall.com/lists/oss-security/2019/08/20/2
-> >
-> > [3] https://github.com/eclypsium/USBAnywhere
->
-> As discussed previously, "denial of service" (e.g. NULL ptr) via USB
-> device seems not to classify as CVE. (With the guidance that with physical
-> access you can cause more "denial of service" in other ways, like powering
-> down the machine.)
->
-> So 2-3 could be CVE worthy from a distro perspective.
->
-> For 4 I would assume reasonable guess work if its "just" a denial of
-> service or
-> more for CVE guidance.
->
-> Ciao, Marcus
->
+We take patches from all distros and companies and users where they
+notice that we have missed things, I would love to take anything that
+you have noticed that I missed.
 
+thanks!
+
+greg k-h
