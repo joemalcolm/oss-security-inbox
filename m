@@ -1,45 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/7
-Message-ID: <20190604132534.GA16994@openwall.com>
-Date: Tue, 4 Jun 2019 15:25:34 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/16
+Message-ID: <76ba070a-286d-c15d-d01d-4c30d183402d@nebelwelt.net>
+Date: Thu, 22 Aug 2019 16:00:15 -0400
+From: Mathias Payer <mathias.payer@...elwelt.net>
+To: oss-security@...ts.openwall.com, Eddie Chapman <eddie@...k.net>
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 03, 2019 at 10:19:23PM +0200, Heiko Schlittermann wrote:
-> CVE-2019-10149 Exim 4.87 to 4.91
-> ================================
+
+
+On 8/22/19 3:33 PM, Eddie Chapman wrote:
+> On 22/08/2019 20:00, Perry E. Metzger wrote:
+>> You can argue anything you like. Power charging points have popped up
+>> around the world, and you're not in a position to stop
+>> them. Furthermore, I'll note that over the air exploitable bugs in
+>> things like WiFi stacks and Bluetooth stacks have also appeared over
+>> time; perhaps it's foolish to have your phone on at all, and yet
+>> people will continue to turn their phones on, and even to use them.
+>>
+>> Perry
 > 
-> We received a report of a possible remote exploit.  Currently there is no
-> evidenice of an active use of this exploit.
-> 
-> A patch exists already, is being tested, and backported to all
-> versions we released since (and including) 4.87.
-> 
-> The severity depends on your configuration.  It depends on how close to
-> the standard configuration your Exim runtime configuration is. The
-> closer the better.
-> 
-> Exim 4.92 is not vulnerable.
+> Well, I certainly am not deluded enough to think I have the power to stop power
+> charging points popping up everywhere :-) Or to stop people making mistakes.
+> Just because something is possible and everyone else does it doesn't make
+> something less stupid.
 
-I guess I wasn't the only one wondering how revealing this is, so:
+I would also like to point out the availability of USB-over-Ethernet and
+USB-over-IP [1] that exposes such endpoints to the network. Especially in data
+centers where KVMs are virtualized, such systems seem to be commonly used.
 
-$ diff -urwx doc exim-4.91 exim-4.92 | diffstat -s
- 131 files changed, 6898 insertions(+), 4395 deletions(-)
-$ diff -urwx doc exim-4.91 exim-4.92 | wc
-  27635  114347  935620
+Considering that USB can be routed over networks (with extensions/additional
+hardware), these bugs should also be evaluated under a different angle.
 
-exim-4.92/doc/ChangeLog lists tens of changes.
+Cheers,
+Mathias
 
-Exim 4.92 appears to have been released in February, when the security
-issue referred to here was not yet known as such, so this wasn't a
-deliberate decision to release the fix publicly yet keep it unmentioned.
+[1] https://www.newegg.com/p/pl?d=usb+over+ip
 
-Keeping the issue in this semi-public state for 7 days feels weird to
-me, but given the above it doesn't look too unrealistic that the issue
-won't be rediscovered during this time period.  (The risk of leaks is
-probably higher.)  It'd be curious if someone ends up discovering a
-different and yet unknown security issue by reading that diff. ;-)
 
-Alexander
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
