@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/06/2
-Message-ID: <20190906111406.GB3837@jumper.schlittermann.de>
-Date: Fri, 6 Sep 2019 13:14:06 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
-To: oss-security <oss-security@...ts.openwall.com>, Exim Users <exim-users@...m.org>
-Subject: Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/23/3
+Message-ID: <20190823132526.GA28250@kroah.com>
+Date: Fri, 23 Aug 2019 06:25:26 -0700
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: Eddie Chapman <eddie@...k.net>
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-An Update to the mitigation for the current CVE:
+On Thu, Aug 22, 2019 at 09:13:11PM -0400, Perry E. Metzger wrote:
+> Given this, I think fixing bugs that might lead to privilege
+> escalation, even if they require physical connection of USB devices,
+> does indeed seem reasonable.
 
-Add - as part of the mail ACL (the ACL referenced by the main config
-option "acl_smtp_mail"):
+No one has said anything about not fixing these bugs.  The Linux USB
+developers have been spending a lot of time in the past weeks doing just
+that, so please do not think that is an issue here.
 
-     deny    condition = ${if eq{\\}{${substr{-1}{1}{$tls_in_sni}}}}
-     deny    condition = ${if eq{\\}{${substr{-1}{1}{$tls_in_peerdn}}}}
+Now the "mount a purposfully corrupted filesystem image" issues, that's
+another story :)  CERT has a long-running thread with a number of kernel
+developers about issues they have found in that area over the past
+years, which has not lead to many fixes for various reasons :(
 
-This should prevent the currently known attack vector.
+thanks,
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+greg k-h
