@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2258" "Wednesday" "7" "February" "2018" "11:39:43" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" "<20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>" "64" "[oss-security] CVE-2018-6789 Exim 4.90 and earlier: buffer overflow" nil nil nil "2" "2018020710:39:43" "[oss-security] CVE-2018-6789 Exim 4.90 and earlier: buffer overflow" (number mark "U       hs@schlitter Feb  7   64/2258  " thread-indent "\"[oss-security] CVE-2018-6789 Exim 4.90 and earlier: buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["721" "Friday" "23" "August" "2019" "06:25:26" "-0700" "Greg KH" "greg@kroah.com" "<20190823132526.GA28250@kroah.com>" "17" "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" "^Cc:" nil nil "8" "2019082313:25:26" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" (number mark "        greg@kroah.c Aug 23   17/721   " thread-indent "\"Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2\"\n") "<20190822211311.1d435223@jabberwock.cb.piermont.com>" ("<CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>" "<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>" "<20190822093122.GQ6086@suse.de>" "<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>" "<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>" "<20190822135753.10d124a4@jabberwock.cb.piermont.com>" "<9c8ef246-0e75-793b-6995-51e50a730701@ehuk.net>" "<20190822150054.1a7ef060@jabberwock.cb.piermont.com>" "<e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>" "<20190822211311.1d435223@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21776 invoked by uid 550); 7 Feb 2018 12:09:32 -0000
+Received: (qmail 18174 invoked by uid 550); 23 Aug 2019 13:25:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26296 invoked from network); 7 Feb 2018 10:39:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=Content-Type:MIME-Version:Message-ID:
-	Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:In-Reply-To:References:Resent-Cc:Resent-To;
-	bh=QQFHXoeiWbHJVY33zGfjcxBybdKa9tuEt5qlDUfWqOU=; b=F49rFpFuLg83caQZz9++kY2P2x
-	FbxCVCXgeDnKCkcesPqx2B7KlYYeI//yAHxpUkF+yagEU9uHwS3jk52mg/5tixuWzC2plOgWlgVcv
-	YOPuCQUDTD0yq4sawL2IEYNsz1pKAmnx9wNa7oeUA1DCiOEqv0ZAEJBXoivCWSsw/cEs=;
-Date: Wed, 7 Feb 2018 11:39:43 +0100
-From: Heiko Schlittermann <hs@schlittermann.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>
+Received: (qmail 18156 invoked from network); 23 Aug 2019 13:25:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm1; bh=r4ice2tXD+oL0hteLG+1llhQ06g
+	fRMJd0QwpzDlTiL4=; b=T6Ce5UA4wLdXzPtvAmfpEdjGVaLpFdXWrIsZzfeeyus
+	38sMy653YisGrFgxgbF42IRkgSDdhxZOFsaEtjRppmsjAhQHH2DTFIeHh/ejBPgC
+	hMuDEgCBydzVml5Jb35WksskFH1kimlGrS+5yVKfWdRo6viK70WWK2Jg8KctrWjU
+	WMKWvO6i7o/tqdeaWcXTHRluUT6NA4XLZOIUIWqC3Ws+58BY27mXtHOiAsqUdNnl
+	mGkATJtIiRzDQzhWr0el6WuQqKf4hvvf15+qrf1Iq4+2loSXim6mDYMQt/aScZpr
+	sXFArNr9Rmmyp1iQwF1QUP6L3iO01qRvxPXePTNgFKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=r4ice2
+	tXD+oL0hteLG+1llhQ06gfRMJd0QwpzDlTiL4=; b=g4wq8NQis4SaN/e4ve9IKJ
+	/jatN1ws+/ZRHG3I0zHEVkyQs+X7dNtI8r113Naxc79y0M60c7y/KDAvuGgwH4/n
+	UBED5vjGVHRf/aoDwyW/P1SUsngeMF26QepR9TlBNJ3cdal/3Wfj+bkfQVsiS9e5
+	mydqjMR9zGg1/b8JntLSu6AmdxXbvhOJdPAX2vGySNPGRBlXEGieFfhnL36jGvyY
+	jyA9Hfql1A0okWCdIvD6cRqCuzSF+Cni2ZXD352RxO6B70jFVU5z+So9riensPwo
+	z9OyfmFzyJnGgZNwyTPNHVFiAqmPITChKkZAem9+goSaEKfPMPZe8DbRuJln4pTQ
+	==
+X-ME-Sender: <xms:R-lfXb6_GuXW_wIBmmvSwKBiHunWY22ZfmNBL_8yMxTV0X-EUxXaPw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudegkedgieduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjfgesthdtredttdervdenucfhrhhomhepifhrvghg
+    ucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheqnecukfhppeduvddrudeiiedrudejge
+    drheenucfrrghrrghmpehmrghilhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhmnecu
+    vehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:R-lfXe2fCXJrtqH_7HP5fo1kY51FU8GaPoxuat6WS_VgX3tnvdsW7g>
+    <xmx:R-lfXUxHtR8bT-mTLkR9l95c9WAkpKAobClhfltpmKypRJA_r-is3w>
+    <xmx:R-lfXQv-EEnwKTAAfDnYFVxcaGb-giB_5Hw3Y_v4c_35gdSidiUyeg>
+    <xmx:SOlfXbEsKsxSsBWdSJUxQYPXrGzLVnDhFyyX-AhvR4lSCaOOdOaR8w>
+Message-ID: <20190823132526.GA28250@kroah.com>
+References: <CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>
+ <C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>
+ <20190822093122.GQ6086@suse.de>
+ <ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
+ <CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
+ <20190822135753.10d124a4@jabberwock.cb.piermont.com>
+ <9c8ef246-0e75-793b-6995-51e50a730701@ehuk.net>
+ <20190822150054.1a7ef060@jabberwock.cb.piermont.com>
+ <e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>
+ <20190822211311.1d435223@jabberwock.cb.piermont.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3xk23uo3r7moxclp"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: [oss-security] CVE-2018-6789 Exim 4.90 and earlier: buffer overflow
+In-Reply-To: <20190822211311.1d435223@jabberwock.cb.piermont.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
+Cc: Eddie Chapman <eddie@ehuk.net>
+Date: Fri, 23 Aug 2019 06:25:26 -0700
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB
+ subsystem x2
+To: oss-security@lists.openwall.com
 
---3xk23uo3r7moxclp
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Aug 22, 2019 at 09:13:11PM -0400, Perry E. Metzger wrote:
+> Given this, I think fixing bugs that might lead to privilege
+> escalation, even if they require physical connection of USB devices,
+> does indeed seem reasonable.
 
-CVE-2018-6789 Exim 4.90 and earlier
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+No one has said anything about not fixing these bugs.  The Linux USB
+developers have been spending a lot of time in the past weeks doing just
+that, so please do not think that is an issue here.
 
-There is a buffer overflow in an utility function, if some pre-conditions
-are met.  Using a handcrafted message, remote code execution seems to be
-possible.
+Now the "mount a purposfully corrupted filesystem image" issues, that's
+another story :)  CERT has a long-running thread with a number of kernel
+developers about issues they have found in that area over the past
+years, which has not lead to many fixes for various reasons :(
 
-A patch exists already and is being tested.
+thanks,
 
-Currently we're unsure about the severity, we *believe*, an exploit
-is difficult. A mitigation isn't known.
-
-Next steps:
-
-* t0:     Distros will get access to our "security" non-public git repo
-          (based on the SSH keys known to us)
-* t0 +7d: Patch will be published on the official public git repo
-
-t0 will be around 2018-02-08.
-
-Timeline
---------
-
-* 2018-02-05 Report from Meh Chang <meh@devco.re> via exim-security mailing=
- list
-* 2018-02-06 Request CVE on https://cveform.mitre.org/ (heiko)
-             CVE-2018-6789
-* 2018-02-07 Announcement to the public via exim-users, exim-maintainers
-             mailing lists and on oss-security mailing list
-
-Updates will follow. Here and on https://exim.org/security/CVE-2018-6789.txt
-(Link will start to exist around 11.00 UTC).
-
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---=20
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
---3xk23uo3r7moxclp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAlp6124ACgkQr0zGdqa2
-wULZWAf9EZCMaxlXZGWBjVSqgnNrSvOulFShQcj+DD9IXw2ybxKNjd4wgyh84cLk
-FmqeL64wBTVGMuuCoLTQEfSm5EkLW+QeX2lUOY0lhnSdXQK1hvSRPxdNv8WxNxKq
-kdWn6X0RxWlClgMPfeWhZnxKe6WpmW9TRrdqOxxGWqQwiIA8FDZmL/C6nESjnW1Q
-KtuHnrnt1XwhPCfmLm0iytFEw5DLnpI2wc0WOqTMmTzJYldQ3MmbI0jbOSiWk2M6
-SdetYwLJ/858yAlhgM1+IV4JxI745+6hgevChmYiNjqCFEUvoJT1uSOxrWqaoZRW
-LwtOzXLlYCfUxGps47g0Re7RcDM2kQ==
-=Pjrp
------END PGP SIGNATURE-----
-
---3xk23uo3r7moxclp--
+greg k-h
