@@ -1,25 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/31/1
-Message-ID: <CAMufup6pAEfJQv4MvELhYmcLigG-hKKoVO=At+Udh3ao4ZZkAg@mail.gmail.com>
-Date: Wed, 30 Jan 2019 21:01:43 +0100
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/23/4
+Message-ID: <CAB8XdGCSzjGtGOhbEv0QdfvwcfJpAr=kyAb4SYM+BKjgM7aJYw@mail.gmail.com>
+Date: Fri, 23 Aug 2019 16:45:10 +0100
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2018-20242] Apache JSPWiki Cross-site scripting vulnerability on Apache JSPWiki
+Subject: [CVE-2019-12400] Apache Santuario potentially loads XML parsing code from an untrusted source
 Content-Type: text/plain; charset=utf-8
 
- Severity: Medium
+The following security advisory is announced for the Apache Santuario - XML
+Security for Java project, which is fixed in the recent 2.1.4 release.
 
-Vendor: The Apache Software Foundation
+[CVEID]:CVE-2019-12400
+[PRODUCT]:Apache Santuario - XML Security for Java
+[VERSION]:All 2.0.x releases from 2.0.3, all 2.1.x releases before 2.1.4.
+[PROBLEMTYPE]:Process Control
+[REFERENCES]:
+http://santuario.apache.org/secadv.data/CVE-2019-12400.asc?version=1&modificationDate=1566573083000&api=v2
+[DESCRIPTION]:In version 2.0.3 of Apache Santuario XML Security for Java, a
+caching mechanism
+              was introduced to speed up creating new XML documents using a
+static pool of
+              DocumentBuilders.
 
-Versions Affected: Apache JSPWiki up to 2.10.5
+              However, if some untrusted code can register a malicious
+implementation with
+              the thread context class loader first, then this
+implementation might be
+              cached and re-used by Apache Santuario - XML Security for
+Java, leading to
+              potential security flaws when validating signed documents,
+etc.
 
-Description:
-A carefully crafted URL could trigger an XSS vulnerability on Apache
-JSPWiki, which could lead to session hijacking.
+For more information, please see the security advisories page of Apache
+Santuario: http://santuario.apache.org/secadv.html
 
-Mitigation:
-Apache JSPWiki users should upgrade to 2.11.0.M1 or later.
+-- 
+Colm O hEigeartaigh
 
-Credit:
-This issue was discovered by Jamie Parfet.
+Talend Community Coder
+http://coders.talend.com
+
+
+-- 
+Colm O hEigeartaigh
+
+Talend Community Coder
+http://coders.talend.com
 
