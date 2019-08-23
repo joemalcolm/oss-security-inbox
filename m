@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["453" "Friday" "17" "January" "2020" "09:10:07" "+0100" "Sven Schwedas" "sven.schwedas@tao.at" "<3a7ec6d5-2959-3daa-a540-ac6389dc15f0@tao.at>" "10" "Re: [oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume" "^Date:" nil nil "1" "2020011708:10:07" "[oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume" (number mark "        sven.schweda Jan 17   10/453   " thread-indent "\"Re: [oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume\"\n") "<CAH8yC8n6X75L0dC_50wjc+Cq-Cubj568g=NXon19s_-Kxgz+2w@mail.gmail.com>" ("<CAH8yC8n6X75L0dC_50wjc+Cq-Cubj568g=NXon19s_-Kxgz+2w@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3015" "Friday" "23" "August" "2019" "04:40:30" "+0100" "Eddie Chapman" "eddie@ehuk.net" "<df75b26c-da5c-e1be-7602-030370bdff3f@ehuk.net>" "56" "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" "^Date:" nil nil "8" "2019082303:40:30" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" (number mark "        eddie@ehuk.n Aug 23   56/3015  " thread-indent "\"Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2\"\n") "<20190822211311.1d435223@jabberwock.cb.piermont.com>" ("<CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>" "<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>" "<20190822093122.GQ6086@suse.de>" "<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>" "<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>" "<20190822135753.10d124a4@jabberwock.cb.piermont.com>" "<9c8ef246-0e75-793b-6995-51e50a730701@ehuk.net>" "<20190822150054.1a7ef060@jabberwock.cb.piermont.com>" "<e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>" "<20190822211311.1d435223@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27653 invoked by uid 550); 17 Jan 2020 11:29:59 -0000
+Received: (qmail 1576 invoked by uid 550); 23 Aug 2019 04:07:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23908 invoked from network); 17 Jan 2020 08:10:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tao.at; s=mail;
-	t=1579248607;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=kPanfQ/dVFtrdKbQVj5vWcc4fGhpIeSDzYlmBfVGLBs=;
-	b=tpXNepLvzm7lhsovwIjVH8Z4pqi/UN0s6M0Ur+a4HFo/xgOzVe1/kdGzJ//5J01esVMzTh
-	+0fr9f+72Vx0Uq5OnFRpDwyFEOWqH8BW6/o32lOmnGugDXhxad7Tu5c1yOu/Nu3HoCgQiO
-	C4qgrhbXrrKIG+4adKWcAkUvQTM6Y5tmnuzeDVxunkeW7HwOE9lx5LWyKeOugWlTfAiJz5
-	JbCexkiC2528y/X+oxuRD4Whmuhk/4yqj1DBlm+rLNdoKDMhkKCQPfeeJzqpZ65VCzOEhs
-	TsiApu8gGFf1zzkqr1ck0j01GpJhMYEagsPz2MkVE5K/fDc/3IxEFa59xk2dRw==
-References: <CAH8yC8n6X75L0dC_50wjc+Cq-Cubj568g=NXon19s_-Kxgz+2w@mail.gmail.com>
-Autocrypt: addr=sven.schwedas@tao.at; prefer-encrypt=mutual; keydata=
- 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
-Organization: TAO Digital
-Message-ID: <3a7ec6d5-2959-3daa-a540-ac6389dc15f0@tao.at>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+Received: (qmail 18215 invoked from network); 23 Aug 2019 03:40:42 -0000
+DKIM-Filter: OpenDKIM Filter v2.10.3 schatzi.steelbluetech.co.uk 59567BFEAF
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
+	t=1566531630; bh=UDUqpgEGU7llEXkgaVJtIn+6RYksMzqV7tUgPXuGBbM=;
+	h=Reply-To:Subject:To:References:From:Date:In-Reply-To:From;
+	b=qn4eaqNWrHkOPkVIsBuSI6yNhvHFZgku7cLfkparDVlzETeL9gYAyIB9WtmjvB++U
+	 EV2k4IAjVm1KZzkCaTwv0D0X7XNiq0npkn8qPqvLGdhj7e6FF5BN05YWIem+AYw5OS
+	 XRo6qN3V3rN54kiXYPi2hbQjGNiJ8cvH6q3tWFkQ=
+References: <CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>
+ <C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>
+ <20190822093122.GQ6086@suse.de>
+ <ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
+ <CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
+ <20190822135753.10d124a4@jabberwock.cb.piermont.com>
+ <9c8ef246-0e75-793b-6995-51e50a730701@ehuk.net>
+ <20190822150054.1a7ef060@jabberwock.cb.piermont.com>
+ <e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>
+ <20190822211311.1d435223@jabberwock.cb.piermont.com>
+Message-ID: <df75b26c-da5c-e1be-7602-030370bdff3f@ehuk.net>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAH8yC8n6X75L0dC_50wjc+Cq-Cubj568g=NXon19s_-Kxgz+2w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US-large
-Content-Transfer-Encoding: 8bit
-Date: Fri, 17 Jan 2020 09:10:07 +0100
-From: Sven Schwedas <sven.schwedas@tao.at>
+In-Reply-To: <20190822211311.1d435223@jabberwock.cb.piermont.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+Date: Fri, 23 Aug 2019 04:40:30 +0100
+From: Eddie Chapman <eddie@ehuk.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Some AMD cpus with RDRAND fail to produce random
- numbers after suspend/resume
+Subject: Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB
+ subsystem x2
 To: oss-security@lists.openwall.com
 
-On 17.01.20 05:21, Jeffrey Walton wrote:
-> I agree with Lennart Poettering. This seems CVE worthy given RDRAND is
-> often used to get the kernel generator (and other userland generators)
-> in good working order.
+On 23/08/2019 02:13, Perry E. Metzger wrote:
+> On Thu, 22 Aug 2019 20:33:54 +0100 Eddie Chapman <eddie@ehuk.net>
+> wrote:
+>> On 22/08/2019 20:00, Perry E. Metzger wrote:
+>>> You can argue anything you like. Power charging points have
+>>> popped up around the world, and you're not in a position to stop
+>>> them. Furthermore, I'll note that over the air exploitable bugs in
+>>> things like WiFi stacks and Bluetooth stacks have also appeared
+>>> over time; perhaps it's foolish to have your phone on at all, and
+>>> yet people will continue to turn their phones on, and even to use
+>>> them.
+>>
+>> Well, I certainly am not deluded enough to think I have the power
+>> to stop power charging points popping up everywhere :-) Or to stop
+>> people making mistakes. Just because something is possible and
+>> everyone else does it doesn't make something less stupid.
+>>
+>> It's a similar principle with wifi/bluetooth, which is why I avoid
+>> connecting even to a family member's wifi access point unless it's
+>> absolutely necessary.
+> 
+> I think the fact that you avoid connecting to WiFi access points,
+> even ones owned by family members, unless absolutely necessary, may
+> demonstrate that your model of what does and does not constitute
+> a ordinary user behavior might not be the same as other
+> people's. Most people do use WiFi in a variety of places, and most
+> people do charge off of USB ports they have not personally vetted.
+> 
+> Given this, I think fixing bugs that might lead to privilege
+> escalation, even if they require physical connection of USB devices,
+> does indeed seem reasonable.
 
->From my understanding it's harmless as far as linux's kernel generator
-is concerned, as it's just xor'd to other entropy sources?
+Yep, my behaviour with these things I'd say is quite unusual compared to 
+  most people's. But I wouldn't say I'm particularly paranoid. By the 
+way my reasons for not trusting wifi access points in general is not 
+because I'm worried about wifi protocols. I'm worried about what might 
+be running on the never-been-updated access point from 
+doesnt-really-care-after-its-shipped manufacturer, that's been connected 
+to the internet for a long time, with a root password of london1982 or 
+such like, and a web interface listening on the wan port. Combined with 
+the fact I don't fully trust my handset's ability to defend itself while 
+connected to said access point, due to its difficult to keep up-to-date 
+OS and heavily locked down firmware. I feel somewhat safer connecting 
+with my laptop. But that's all veering far off topic.
 
-CVEs should only be needed on a case-by-case basis for userland
-generators that aren't properly engineered.
+What I do find very interesting is the question of what is CVE-worthy, 
+particularly with regards to USB flaws in the kernel. The wider question 
+of should the CVE process be driven, to whatever extent, by most 
+people's behaviour, even if that behaviour is ill-advised for whatever 
+reason (simply unaware of/don't care about the risks in most cases).
+
+By the way, I'm not arguing that people should not put any effort into 
+fixing these issues, I believe a flaw is always worth fixing, nothing is 
+too trivial to submit a patch to a kernel mailing list for.
+
+Rest my case :-)
