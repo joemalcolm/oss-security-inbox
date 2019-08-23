@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1298" "Sunday" "13" "September" "2015" "14:32:21" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150913123221.GA31867@eldamar.local>" "35" "Re: [oss-security] libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment" nil nil nil "9" "2015091312:32:21" "[oss-security] libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment" (number mark "        carnil@debia Sep 13   35/1298  " thread-indent "\"Re: [oss-security] libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment\"\n") "<CALPTtNW6v=fPnjNj5ra9vGfqMFo4bUKyb+a+415MNjsR-5hKjQ@mail.gmail.com>" ("<CALPTtNW6v=fPnjNj5ra9vGfqMFo4bUKyb+a+415MNjsR-5hKjQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1391" "Friday" "23" "August" "2019" "16:45:10" "+0100" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGCSzjGtGOhbEv0QdfvwcfJpAr=kyAb4SYM+BKjgM7aJYw@mail.gmail.com>" "44" "[oss-security] [CVE-2019-12400] Apache Santuario potentially loads XML parsing code from an untrusted source" "^Date:" nil nil "8" "2019082315:45:10" "[oss-security] [CVE-2019-12400] Apache Santuario potentially loads XML parsing code from an untrusted source" (number mark "U       coheigea@apa Aug 23   44/1391  " thread-indent "\"[oss-security] [CVE-2019-12400] Apache Santuario potentially loads XML parsing code from an untrusted source\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-12400] Apache Santuario potentially loads XML parsing code from an untrusted source" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5696 invoked by uid 550); 13 Sep 2015 12:32:36 -0000
+Received: (qmail 11927 invoked by uid 550); 23 Aug 2019 16:08:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5665 invoked from network); 13 Sep 2015 12:32:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=2k3IojreC1tm6nsUkGl1wa/j29DdX0SgIt4IgOi5gSs=;
-        b=FkCbGbvy0s3w8svq29SNzDkXMj0V6cMDc4w7VUP+8xhs6NhMAtVbvXeMUwSeHp+lU8
-         KjiPtnrNksmVfhAG1fvNJbr1t2w43UraqOOIfh4Q3dJDYLgtO55UUi4oDRRJG2izBaGF
-         ch8LzYIWsGDVCq99gSNgXDn+wRwrHP8yA+0L+7Dxcf5tzVmUvrkJsSb6XafwGvgtoRov
-         vk/a6tvYRT/UNE7PQ/IxC/jTM5fY5L0UIISS+8GvV5/k/GL3rAFxwwycfVknJfPxmW+U
-         UKVE6bW+tqS0qhGfIvPgSXis5SIP1OcJcgLXje8WvqZwNQa6iKCg2uYDfE4ggZDU5uA0
-         vDdA==
-X-Received: by 10.194.19.169 with SMTP id g9mr16884247wje.64.1442147544280;
-        Sun, 13 Sep 2015 05:32:24 -0700 (PDT)
-Message-ID: <20150913123221.GA31867@eldamar.local>
-References: <CALPTtNW6v=fPnjNj5ra9vGfqMFo4bUKyb+a+415MNjsR-5hKjQ@mail.gmail.com>
+Received: (qmail 30218 invoked from network); 23 Aug 2019 15:45:34 -0000
+X-Gm-Message-State: APjAAAV8Q3CO9AW+Ogxtpr/VJBlAJPztMJi3Qu3W3KxBwtttfNRUKnUn
+	rs7azbB7So/aNZVtmW4OhHdYoulJ/Tx938HpJf0=
+X-Google-Smtp-Source: APXvYqyK4leWvDTCarzE1kDPg0mD/vCKpogpIClOjFqQ86W9Lryq3RGXCl84EZfBNqyq/2WNubMGnSBi87qhaR0DKuc=
+X-Received: by 2002:a17:902:7581:: with SMTP id j1mr5509844pll.289.1566575121716;
+ Fri, 23 Aug 2019 08:45:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALPTtNW6v=fPnjNj5ra9vGfqMFo4bUKyb+a+415MNjsR-5hKjQ@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: Assign a CVE Identifier <cve-assign@mitre.org>
-Date: Sun, 13 Sep 2015 14:32:21 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
+X-Gmail-Original-Message-ID: <CAB8XdGCSzjGtGOhbEv0QdfvwcfJpAr=kyAb4SYM+BKjgM7aJYw@mail.gmail.com>
+Message-ID: <CAB8XdGCSzjGtGOhbEv0QdfvwcfJpAr=kyAb4SYM+BKjgM7aJYw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000a4dd990590cab167"
+Date: Fri, 23 Aug 2019 16:45:10 +0100
+From: Colm O hEigeartaigh <coheigea@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] libxml2 issue: out-of-bounds memory access when
- parsing an unclosed HTML comment
+Subject: [oss-security] [CVE-2019-12400] Apache Santuario potentially loads XML parsing code
+ from an untrusted source
 To: oss-security@lists.openwall.com
 
-Hi MITRE CVE assignment team,
+--000000000000a4dd990590cab167
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Apr 19, 2015 at 10:11:58AM -0700, Reed Loden wrote:
-> (saw this randomly today on Twitter, so figured I'd send it on to make sure
-> it gets a CVE and actually gets fixed)
-> 
-> https://hackerone.com/reports/57125#activity-384861
-> 
-> """
-> This is an out-of-bounds memory access in libxml2. By entering a unclosed
-> html comment such as <!-- the libxml2 parser didn't stop parsing at the end
-> of the buffer, causing random memory to be included in the parsed comment
-> that was returned to ruby. In Shopify, this caused ruby objects from
-> previous http requests to be disclosed in the rendered page.
-> 
-> Link to the issue in libxml2's bugtracker:
-> https://bugzilla.gnome.org/show_bug.cgi?id=746048
-> 
-> A patched version of nokogiri (which uses a embedded libxml2) is available
-> here:
-> https://github.com/Shopify/nokogiri/compare/1b1fcad8bd64ab70256666c38d2c998e86ade8c0...master
-> 
-> This bug is still not patched upstream, but both libxml2 and nokogiri
-> developers are aware of the issue.
-> """
+The following security advisory is announced for the Apache Santuario - XML
+Security for Java project, which is fixed in the recent 2.1.4 release.
 
-TTBOMK, this and as well
-http://www.openwall.com/lists/oss-security/2015/04/19/5 has a pending
-CVE assignment request.
+[CVEID]:CVE-2019-12400
+[PRODUCT]:Apache Santuario - XML Security for Java
+[VERSION]:All 2.0.x releases from 2.0.3, all 2.1.x releases before 2.1.4.
+[PROBLEMTYPE]:Process Control
+[REFERENCES]:
+http://santuario.apache.org/secadv.data/CVE-2019-12400.asc?version=1&modificationDate=1566573083000&api=v2
+[DESCRIPTION]:In version 2.0.3 of Apache Santuario XML Security for Java, a
+caching mechanism
+              was introduced to speed up creating new XML documents using a
+static pool of
+              DocumentBuilders.
 
-Can you assign CVEs for it, or does both actually do not warrant a CVE
-id assignment?
+              However, if some untrusted code can register a malicious
+implementation with
+              the thread context class loader first, then this
+implementation might be
+              cached and re-used by Apache Santuario - XML Security for
+Java, leading to
+              potential security flaws when validating signed documents,
+etc.
 
-Regards and thanks for all your work,
-Salvatore
+For more information, please see the security advisories page of Apache
+Santuario: http://santuario.apache.org/secadv.html
+
+-- 
+Colm O hEigeartaigh
+
+Talend Community Coder
+http://coders.talend.com
+
+
+-- 
+Colm O hEigeartaigh
+
+Talend Community Coder
+http://coders.talend.com
+
+--000000000000a4dd990590cab167--
