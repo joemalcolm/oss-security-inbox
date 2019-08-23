@@ -1,4 +1,9 @@
-Received: (qmail 29830 invoked by uid 550); 16 Apr 2024 13:44:27 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1565" "Thursday" "22" "August" "2019" "21:13:11" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20190822211311.1d435223@jabberwock.cb.piermont.com>" "33" "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" "^Cc:" nil nil "8" "2019082301:13:11" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" (number mark "        perry@piermo Aug 22   33/1565  " thread-indent "\"Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2\"\n") "<e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>" ("<CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>" "<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>" "<20190822093122.GQ6086@suse.de>" "<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>" "<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>" "<20190822135753.10d124a4@jabberwock.cb.piermont.com>" "<9c8ef246-0e75-793b-6995-51e50a730701@ehuk.net>" "<20190822150054.1a7ef060@jabberwock.cb.piermont.com>" "<e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13477 invoked by uid 550); 23 Aug 2019 01:13:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,50 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11523 invoked from network); 15 Apr 2024 23:33:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
-	s=protonmail3; t=1713224028; x=1713483228;
-	bh=/BW76e1ew0smlLEjbQgRLFgXSeVV0Wa1qYp0JbQe+Uk=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=b9kkcg+0HJdrLdLjMB7TJYY6KVQqQSyW4e8h6ljPz5YSykAkEcuHWixuLuitLM6ez
-	 ZhtcST8JQUjMMfGUAYccz4cTctTXzICs58u8nT6KDAcBRprjxUdNVUMZR9Q0TK57tl
-	 HYAkH7ZbOkp9QwEWCow7sk/x7ssa5VrfmXgjG0/MZlkqZvujS31bWJgAfLvPEhi9+F
-	 B8Hjq26phJKCPCAg+hdJoG+tBm+4iirNnF6X5SxXgpx+OZuBwKdqFwQqjk3zUL2Kog
-	 CSDW6BXgwgDaT4YysK9YwCrUYrJMiA1Y99gA+jzljAmlR8G10kteialV7yHQo8r2gI
-	 WbO2dbCNyuyiQ==
-Date: Mon, 15 Apr 2024 23:33:32 +0000
-To: oss-security@lists.openwall.com
-From: Jordan Glover <Golden_Miller83@protonmail.ch>
-Message-ID: <ivMjj3lATlzwIHIHrMAPFX2ukGAAB-DvUg5TU30lGkyffNLHJEHJy7bN3uLbes9XLXnEXIHHDhYfFdmvxlSHKbTLlQLfQZycdSlE1ICaQ_E=@protonmail.ch>
-In-Reply-To: <Zh1MBrBG8YOvqHmM@remnant.pseudorandom.co.uk>
-References: <20240414190855.GA12716@openwall.com> <ZhxdDyIBazJYRDeR@itl-email> <20240415151309.GA15253@openwall.com> <Zh1MBrBG8YOvqHmM@remnant.pseudorandom.co.uk>
-Feedback-ID: 3367390:user:proton
+Received: (qmail 13459 invoked from network); 23 Aug 2019 01:13:23 -0000
+Message-ID: <20190822211311.1d435223@jabberwock.cb.piermont.com>
+In-Reply-To: <e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>
+References: <CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>
+	<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>
+	<20190822093122.GQ6086@suse.de>
+	<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
+	<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
+	<20190822135753.10d124a4@jabberwock.cb.piermont.com>
+	<9c8ef246-0e75-793b-6995-51e50a730701@ehuk.net>
+	<20190822150054.1a7ef060@jabberwock.cb.piermont.com>
+	<e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Linux: Disabling network namespaces
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: oss-security@lists.openwall.com
+Date: Thu, 22 Aug 2019 21:13:11 -0400
+From: "Perry E. Metzger" <perry@piermont.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel: multiple vulnerabilities in the
+ USB subsystem x2
+To: Eddie Chapman <eddie@ehuk.net>
 
-On Monday, April 15th, 2024 at 5:47 PM, Simon McVittie <smcv@debian.org> wr=
-ote:
+On Thu, 22 Aug 2019 20:33:54 +0100 Eddie Chapman <eddie@ehuk.net>
+wrote:
+> On 22/08/2019 20:00, Perry E. Metzger wrote:
+> > You can argue anything you like. Power charging points have
+> > popped up around the world, and you're not in a position to stop
+> > them. Furthermore, I'll note that over the air exploitable bugs in
+> > things like WiFi stacks and Bluetooth stacks have also appeared
+> > over time; perhaps it's foolish to have your phone on at all, and
+> > yet people will continue to turn their phones on, and even to use
+> > them.
+> 
+> Well, I certainly am not deluded enough to think I have the power
+> to stop power charging points popping up everywhere :-) Or to stop
+> people making mistakes. Just because something is possible and
+> everyone else does it doesn't make something less stupid.
+> 
+> It's a similar principle with wifi/bluetooth, which is why I avoid 
+> connecting even to a family member's wifi access point unless it's 
+> absolutely necessary.
 
-> On Mon, 15 Apr 2024 at 17:13:09 +0200, Solar Designer wrote:
->=20
-> I am not a kernel developer, so this is second-hand information; but I
-> believe the implementation of kernel.unprivileged_userns_clone used in
-> Debian (and subsequently copied from Debian by various other distros)
-> is derived from patches that were already proposed and rejected upstream,
-> so the feeling was that trying again to upstream that feature would be a
-> waste of time and upstream goodwill, because it would just get rejected
-> again by the same kernel maintainer.
->=20
+I think the fact that you avoid connecting to WiFi access points,
+even ones owned by family members, unless absolutely necessary, may
+demonstrate that your model of what does and does not constitute
+a ordinary user behavior might not be the same as other
+people's. Most people do use WiFi in a variety of places, and most
+people do charge off of USB ports they have not personally vetted.
 
-Perhaps it's best to link old article covering the situation back then:
-https://lwn.net/Articles/673597/
+Given this, I think fixing bugs that might lead to privilege
+escalation, even if they require physical connection of USB devices,
+does indeed seem reasonable.
 
-And yes, current kernel maintainers are biggest proponents of unpriv
-userns so any restriction is rather impossible sell.
-
-Jordan
+--
+Perry E. Metzger		perry@piermont.com
