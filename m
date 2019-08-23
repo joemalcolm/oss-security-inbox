@@ -1,98 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/11/5
-Message-ID: <alpine.DEB.2.20.1909102021410.29885@tvnag.unkk.fr>
-Date: Wed, 11 Sep 2019 08:01:03 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: FTP-KRB double-free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/23/5
+Message-ID: <CAOAQt7WYP3ZhgHZexBUh_PFpEFyNSz+xJzYLpiNdihQf1weJ+Q@mail.gmail.com>
+Date: Fri, 23 Aug 2019 11:01:42 -0700
+From: David Tomaschik <davidtomaschik@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-10071: Timing Attack in HMAC Verification in Apache Tapestry
 Content-Type: text/plain; charset=utf-8
 
-FTP-KRB double-free
-===================
+CVE-2019-10071: Timing Attack in HMAC Verification in Apache Tapestry
 
-Project curl Security Advisory, September 11th 2019 -
-[Permalink](https://curl.haxx.se/docs/CVE-2019-5481.html)
+Affected versions:
+- Apache Tapestry 5.3.6 through current releases.
 
-VULNERABILITY
--------------
+Description:
+Apache Tapestry uses HMACs to verify the integrity of objects stored on the
+client side.  This was added to address the Java deserialization
+vulnerability
+disclosed in CVE-2014-1972.  In the fix for the previous vulnerability, the
+HMACs were compared by string comparison, which is known to be vulnerable to
+timing attacks.
 
-libcurl can be told to use kerberos over FTP to a server, as set with the
-`CURLOPT_KRBLEVEL` option.
+Mitigation:
+No new release of Tapestry has occurred since the issue was reported.
+Affected
+organizations may want to consider locally applying commit
+d3928ad44714b949d247af2652c84dae3c27e1b1.
 
-During such kerberos FTP data transfer, the server sends data to curl in
-blocks with the 32 bit size of each block first and then that amount of data
-immediately following.
+Timeline:
+- 2019-03-12: Issue discovered.
+- 2019-03-13: Issue reported to security@...che.org.
+- 2019-03-29: Pinged thread to ask for update.
+- 2019-04-19: Fix committed.
+- 2019-04-23: Asked about release timeline, response "in the upcoming
+months"
+- 2019-05-28: Pinging again about release.
+- 2019-06-24: Asked again, asked for CVE number assigned.  No update on
+  timeline.
+- 2019-08-22: Disclosure posted.
 
-A malicious or just broken server can claim to send a very large block and if
-by doing that it makes curl's subsequent call to `realloc()` to fail, curl
-would then misbehave in the exit path and double-free the memory.
-
-In practical terms, an up to 4 GB memory area may very well be fine to
-allocate on a modern 64 bit system but on 32 bit systems it will fail.
-
-Kerberos FTP is a rarely used protocol with curl. Also, Kerberos
-authentication is usually only attempted and used with servers that the client
-has a previous association with.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This bug was introduced in November 2016 in [commit
-0649433da53c7165f839e2](https://github.com/curl/curl/commit/0649433da53c7165f839e2).
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2019-5481 to this issue.
-
-CWE-415: Double Free
-
-Severity: 6.3 (Medium)
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl >= 7.52.0 to and including 7.65.3
-- Not affected versions: libcurl < 7.52.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2019-5481](https://github.com/curl/curl/commit/9069838b30fb3b48af0123e39f664cea683254a5)
-
-RECOMMENDATIONS
---------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.66.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - do not use `CURLOPT_KRBLEVEL`
-
-TIMELINE
---------
-
-The issue was reported to the curl project on September 3, 2019. The fix was done,
-verified and communicated with the reporter on September 3, 2019.
-
-We contacted distros@...nwall on September 5.
-
-This advisory was posted on September 11th 2019.
-
-CREDITS
--------
-
-Reported by Thomas Vegas. Patch by Daniel Stenberg.
-
-Thanks a lot!
+This vulnerability was discovered by David Tomaschik of the Google Security
+Team.
 
 -- 
+David Tomaschik
+Security Engineer
+ISA Assessments
 
-  / daniel.haxx.se | Get the best commercial curl support there is - from me
-                   | Private help, bug fixes, support, ports, new features
-                   | https://www.wolfssl.com/contact/
