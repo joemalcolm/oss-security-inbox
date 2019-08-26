@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["820" "Saturday" "19" "September" "2015" "10:41:18" "-0500" "Nathan Van Gheem" "nathan.van.gheem@plone.org" "<CAL8hw9HF3ohJHgGrBUgV2Z5RPHADf6UgDjOD7o2iEhmkf2XZWA@mail.gmail.com>" "27" "[oss-security] CVE Request: Plone Unauthorized user creation" nil nil nil "9" "2015091915:41:18" "[oss-security] CVE Request: Plone Unauthorized user creation" (number mark "U       nathan.van.g Sep 19   27/820   " thread-indent "\"[oss-security] CVE Request: Plone Unauthorized user creation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["749" "Monday" "26" "August" "2019" "09:25:18" "-0300" "Carlos Eduardo" "carlosecg@gmail.com" nil "25" nil nil nil nil "8" nil nil (number mark "U       carlosecg@gm Aug 26   25/749   " thread-indent "\"[oss-security] CVE-2019-15525: Missing TLS/SSL certificate validation in pw3270\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-15525: Missing TLS/SSL certificate validation in pw3270" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5152 invoked by uid 550); 19 Sep 2015 15:42:43 -0000
+Received: (qmail 22140 invoked by uid 550); 26 Aug 2019 17:31:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3729 invoked from network); 19 Sep 2015 15:41:30 -0000
+Received: (qmail 21838 invoked from network); 26 Aug 2019 12:25:41 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=o3F/36L1+y2qCtSMRPXdfY5E/fUp4JeZmPdgjRLUXTM=;
-        b=fB06plDjo8A5hCgzSlXdCtsvhLyK/iibpzP9bFSEa54WYj+7o7C3ziMkEZvGH9X0KD
-         AAZbIr3ovUFeY/8N2665s7sE5C8nJUE9ppZ7vC7h7HnRYOpsMiqvaF/lUE+k52hAYTAv
-         hAg8CJPZsi4eDMstSuNx6ITD/X+ShzRcOdDj2+XjCWKdu9X29iRCdViihL9mhukVEYwI
-         nVnQ0b2CKmMQkFJNFegoSfX2xKZqVctNFqyBYUCOxGDL8pCSAlofuPYJSUB/UMEJ8S+F
-         zW0yErhqfmOngiqgIiQiRaAlTpMFCanISmQblv0zI3gF6b6Jvl2B8hDZO9HdmxjZppS5
-         KSTQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=xfVDEoz5RkmkcFe8/Np7/2Otd99w/caHk9GyCz7B/lc=;
+        b=usxuE1d2Z+wB2/qjOv1rEyfQ70FM6nuMD3qFu2vC5KAKlKNq2HJ6NMsy3/tx4jg1Us
+         kGjlFrKhwb0+0MoiWrf5OGofnmMAH+/1Q3GdYMzlocR2VlhKq97A4dMI840tAxxlpYCD
+         DPxse2F/N9oxdgfRoW4fGjpSTb98b2J/n8j/Wpe0VGPzU/7jZbc1/n351+llibOZeW5x
+         VYKOmbG3yN5ow94XxxXigzsXxiFJYb82hXfblsE7iF6Z1dyLAf/ms84/He297cSSC/Cj
+         poa7ged9DjTpK/glM4S0l25UNuatD6oWSQd6EpPBqKL355Awwbr/WgligZHv/ewsfzvu
+         Pu5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=xfVDEoz5RkmkcFe8/Np7/2Otd99w/caHk9GyCz7B/lc=;
+        b=IUoBEQK1rtyzlzhPN05FmbTau5CLiW2H8W29exVD3qhDl9F8vFaRtQnVLzCKdw61ul
+         Zm8q6m02hl4JqLM685aFcALb+Iu8V0YMwlu0p1YsTqogYPof1lsSF9L303WpJQgivDg4
+         cifGXRvXV2Q4eTTYXzAJRHJpy87mQkq8+ccUNmtNoU/xknDZpF0qVM2MT+r0RyZD4n8I
+         zeOP1SSLshHrI8LijPlkT6gJK5B2+N1LOj6vq0N7wUBVUQzh/b9SKYyi4g3DA003qExr
+         qT9PTj08B4cbeoWCUglkS2HYmjpKdOD+qWUbcXxeeuyWUUhox6I1E/G4TAISQvLyJThq
+         DCdg==
+X-Gm-Message-State: APjAAAWby186WGleimLo/Ztt0OBAw84Mg5VXmAJWZSRFUB0IWSGqAKxz
+	+4uYOXY2XzAHB0L3swYFeTE9mCENvD9xpM/NwDsmC1dK
+X-Google-Smtp-Source: APXvYqwpASJB1Tri1u/O+d7aRZVyOULOYXShe7gJ+RW8E7HvqJLenCjpPZcD269kln6c17BrUdSHM3ZjDKU0BCuYSjM=
+X-Received: by 2002:a50:c908:: with SMTP id o8mr18495756edh.187.1566822329795;
+ Mon, 26 Aug 2019 05:25:29 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.31.164.146 with SMTP id n140mr6800557vke.148.1442677278794;
- Sat, 19 Sep 2015 08:41:18 -0700 (PDT)
-Sender: vangheem@gmail.com
-Date: Sat, 19 Sep 2015 10:41:18 -0500
-X-Google-Sender-Auth: qV4lRxwj1_qUcHtRgYctwvLelUs
-Message-ID: <CAL8hw9HF3ohJHgGrBUgV2Z5RPHADf6UgDjOD7o2iEhmkf2XZWA@mail.gmail.com>
-From: Nathan Van Gheem <nathan.van.gheem@plone.org>
+From: Carlos Eduardo <carlosecg@gmail.com>
+Date: Mon, 26 Aug 2019 09:25:18 -0300
+Message-ID: <CAGrd=aPxL96DK6YLr30=Lw7si00wW=RHBmn7b5uSpHt1dQSBEQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a11414f88ba685005201b7a34
-Subject: [oss-security] CVE Request: Plone Unauthorized user creation
+Content-Type: multipart/alternative; boundary="00000000000064c947059104408e"
+Subject: [oss-security] CVE-2019-15525: Missing TLS/SSL certificate validation in pw3270
 
---001a11414f88ba685005201b7a34
-Content-Type: text/plain; charset=UTF-8
+--00000000000064c947059104408e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+CVE: Missing TLS/SSL certificate validation in pw3270
 
-Can a CVE be assigned to this issue, please?
+Affected versions: all versions before 5.1
 
+Description:
+pw3270 is a GTK based tn3270 terminal emulator. Versions up to 5.0 are
+vulnerable to a TLS/SSL certificate validation flaw, leading to attackers
+in a MitM position being able to affect confidentiality, integrity and
+availability of traffic between the client and host, including credentials
+used. This flaw was fixed in version 5.1.
 
-https://plone.org/security/20150910/anonymous-is-able-to-create-plone-members
+Mitigation:
+Upgrade to version 5.1 and up.
 
-It's a vulnerability that allows remote attackers to add a new member to a
-Plone site when registration is enabled, without acknowledgment of site
-administrator. Versions affected are Plone 3.x, 4.1.x, 4.2.x, <4.3.7,
-<5.0rc1. A hotfix has been posted for earlier versions of Plone that are no
-longer provided new releases.
+This vulnerability was discovered by Carlos Gon=C3=A7alves.
 
-The relevant commit is:
+---
+Carlos Gon=C3=A7alves
+IT Security Analyst
 
-https://github.com/zopefoundation/Products.CMFCore/commit/e1d981bfa14b664317285f0f36498f4be4a23406
-
-The vendor credits with the discovery: Maurits van Rees at Zest Software
-
-Thanks, let me know if you'd like more information.
-
-Nathan
-
---001a11414f88ba685005201b7a34--
+--00000000000064c947059104408e--
