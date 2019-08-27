@@ -1,48 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/28/2
-Message-ID: <CAA7hUgF2iQ+danfsTDqjY2weCXGay71363bbgBWbb_6kyiBNgg@mail.gmail.com>
-Date: Thu, 28 Nov 2019 20:46:55 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Cc: yadd@...ian.org
-Subject: Multiple issues in lemonldap-ng
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/27/1
+Message-ID: <871rx6mnbv.fsf@v45346.1blu.de>
+Date: Tue, 27 Aug 2019 21:15:48 +0200
+From: Stefan Bodewig <bodewig@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2019-12402] Apache Commons Compress denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Looking at lemonldap-ng I noticed that it uses low-level crypto
-primitives, not without some issues.
-Notably:
+Severity: Low
 
-* it uses AES in CBC mode directly without setting an IV to encrypt
-data that is stored client-side
-* that same data is not signed, only encrypted
+Vendor:
+The Apache Software Foundation
 
-Despite my strong recommendation to use a library that abstracts some
-of the fine details, like NaCl, libsodium, etc, upstream has responded
-to the issue by issuing version 2.0.5 with the following changes[1]:
+Versions Affected:
+Apache Commons Compress 1.15 to 1.18
 
-* an IV is set but it might be generated with rand() and time() in
-case of urandom being unavailable or in case the code asks for a "low"
-mode
-* using sha256 as a checksum (literally just sha256 of the data, not
-HMAC-SHA256 despite the code using the name hmac in some places), as
-in: message = ENCRYPT(SHA256(data) || data, key, iv). Upstream calling
-this MtE and using this approach instead of my recommendation of using
-EtM
+Description:
+The file name encoding algorithm used internally in Apache Commons
+Compress can get into an infinite loop when faced with specially
+crafted inputs. This can lead to a denial of service attack if an
+attacker can choose the file names inside of an archive created by
+Compress.
 
-Some "minor" issues were also fixed, like the use of a prng instead of a csprng.
+Mitigation:
+Commons Compress users should upgrade to 1.19 or later.
 
-Tracked with issue #1823 [2], the main issue is still open to possibly
-use an abstraction library in a future version.
+Credit:
+This issue was discovered by Masaya Suzuki of Google.
 
-I've neglected making a public report of this but I hope that it is
-going to help things move forward.
+References:
+https://commons.apache.org/proper/commons-compress/security-reports.html
 
-[1]https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/merge_requests/81/diffs
-[2]https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1823
+Stefan Bodewig
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org
+iEYEARECAAYFAl1lgVkACgkQohFa4V9ri3Js/ACg2fvtHg9R8k7uoI3SlIaUDocs
+afsAnRXOsfdKVRGoB28g4mSXSMRh8KHu
+=HJty
+-----END PGP SIGNATURE-----
