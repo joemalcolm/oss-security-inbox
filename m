@@ -1,63 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/3
-Message-ID: <alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>
-Date: Tue, 25 Jun 2019 08:41:08 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/9
+Message-ID: <7ade7a65-f829-c4f6-66b5-ee334eaebf68@suse.com>
+Date: Wed, 28 Aug 2019 15:27:48 +0000
+From: Alexandros Toptsoglou <atoptsoglou@...e.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2019-10222: ceph: unauthenticated clients can crash RGW
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 24 Jun 2019, Alex Gaynor wrote:
-> - Not having sooooo many vulnerabilities. While there's some dispute over
-> just what % of the bugs that OSS-Fuzz and syzbot turn up are exploitable,
-> there's no doubt that they find a _lot_ of them. Even if only 20% of
-> OSS-Fuzz reports were truly exploitable vulnerabilities, that'd still be
->> 600 of them. We can't produce this many vulnerabilities and then try to
-> clean up afterwards by finding them with fuzzing -- at some point the
-> number of vulnerabilities simply overwhelms us. Tactics for reducing
-> vulnerabilities in the first instance, like memory safe languages, are an
-> important part of making this problem tractable.
->
-> Do folks feel like there were important themes that this misses?
+Hi all,
 
-I see the assumption that 20% of oss-fuzz reports are exploitable 
-vulnerabilities.  Where does this percentage estimate come from?  What 
-does it mean to be "exploitable"?
+an improper exception handling was found in RGW component of Ceph.
+Please find the details below.
 
->From working on fixing oss-fuzz detected bugs in GraphicsMagick I see 
-that many/most of the issues are not significant from a security 
-standpoint, assuming that the software is deployed in a way suitable 
-for its level of exposure.  Common issues include:
+CVE-2019-10222: ceph: unauthenticated clients can crash RGW
 
-  * Huge uninitialized memory allocations (which do not really matter
-    under Linux since Linux does not reserve anything but virtual
-    memory space).
+Affected versions:
+Nautilus (version 14.2.X)
+Mimic (version 13.2.X)
+Luminous (version 12.2.X) only if an experimental feature is enabled in
+ceph.conf:
+  enable_experimental_unrecoverable_data_corrupting_features=true
+  enable experimental unrecoverable data corrupting features =
+rgw-beast-frontend
 
-  * Consumption of uninitialized data (e.g. image data) which is not
-    used to make important decisions.  This is usually due to unhandled
-    cases or error handling which does not quit immediately.
 
-  * Tiny heap over-reads which are not past the bounds of the
-    underlying allocation.
+Description:
+An improper exception condition handling in Ceph allows to any single
+unauthenticated
+client to crash RGW component of Ceph by sending a special crafted HTTP
+request which lead
+to denial of service.
+The vulnerability affects the RGW component of Ceph, specifically the
+ceph-radosgw.
 
-  * Heap over-reads or over-writes which cause an immediate core dump.
+Mitigation:
+Apply the fix of pull request in https://github.com/ceph/ceph/pull/29967
 
-  * Excessively slow code with the slowness emphasized by ASAN and
-    UBSAN code running vastly slower.  The excessively slow code is not
-    necessarily noticeable in a normal compilation.
+Timeline:
+- 2019-08-07: Issue discovered.
+- 2019-08-08: Issue reported to security@...h.io
+- 2019-08-16: Coordinated release date set on 28th
+- 2019-08-28: Disclosure
 
-  * Memory leaks.
+Reference:
+https://bugzilla.suse.com/show_bug.cgi?id=1145093
 
-  * "undefined behavior" which nevertheless has a common behavior that
-    compilers have followed since the dawn of time.
-
-The most important thing that oss-fuzz contributes is a large 
-collection of files which cause problems for unfixed software such 
-that only the unaware or foolish do not update to fixed versions.
-
-Bob
+Credit:
+This vulnerability was discovered by Abhishek Lekshmanan of SUSE
+Software Solutions Germany GmbH
 -- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+Alexandros Toptsoglou <atoptsoglou@...e.com>
+Security Engineer
+OpenPGP fingerprint: C270 3848 AA4A 783A 9848  BB06 56A3 3D9C B652 1869
+
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5
+90409 Nuremberg
+Germany
+(HRB 247165, AG München)
+Managing Director: Felix Imendörffer
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
