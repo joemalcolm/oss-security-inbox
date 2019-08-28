@@ -1,112 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/11
-Message-ID: <ef549144-6992-d1fe-8f07-47757cd4ad85@samsung.com>
-Date: Mon, 22 Jul 2019 16:05:37 +0200
-From: Bartlomiej Zolnierkiewicz <b.zolnierkie@...sung.com>
-To: Daniel Vetter <daniel@...ll.ch>, Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Tavis Ormandy <taviso@...il.com>, Daniel Vetter <daniel.vetter@...ll.ch>, oss-security@...ts.openwall.com
-Subject: Re: stack buffer overflow in fbdev
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/7
+Message-ID: <1678718219.1177.1567010577565@appsuite-dev.open-xchange.com>
+Date: Wed, 28 Aug 2019 19:42:57 +0300 (EEST)
+From: aki.tuomi@...ecot.fi
+To: Hanno Böck <hanno@...eck.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Critical Dovecot and Pigeonhole vulnerability
 Content-Type: text/plain; charset=utf-8
 
 
-On 7/21/19 10:09 PM, Daniel Vetter wrote:
-> On Sun, Jul 21, 2019 at 11:03:01AM -0700, Linus Torvalds wrote:
->> Completely untested patch attached. There are probably better ways to do this.
->>
->> Adding the proper people to the cc, and quoting Tavis' email in its entirety.
->>
->> Daniel - you got added despite not being explicitly listed as
->> maintainer because you've touched fbdev/core/ more than most lately,
->> plus you know edid anyway. As such: "tag, you're it, sucker".
+> On 28/08/2019 19:34 Hanno Böck <hanno@...eck.de> wrote:
 > 
-> Yeah I also realized with regrets that get_maintainers thinks I'm
-> responsible for fbdev core :-/
+>  
+> On Wed, 28 Aug 2019 19:28:18 +0300 (EEST)
+> aki.tuomi@...ecot.fi wrote:
+> 
+> > I can see 0.5.7.2, we even announced it today.
+> 
+> Ok, sorry.
+> 
+> What confused me: There's a "changes" link right to the Download and
+> that points to a changelog that was last updated in july and didn't
+> mention anything sounding like that bug. It's for 0.5.7, not 0.5.7.2.
+> You should probably fix that link (changing the URL accordingly works):
+> https://raw.githubusercontent.com/dovecot/pigeonhole/0.5.7.2/NEWS
+> 
+> -- 
+> Hanno Böck
+> https://hboeck.de/
+> 
+> mail/jabber: hanno@...eck.de
+> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-Well, I've been thinking lately about officially adding you as
-a co-maintainer to MAINTAINERS file. 8)
+Seems the other MUA only sent html mail and none of my replies got to the list...
 
-The patch documenting (already agreed) moving of fbdev handling to
-drm-misc tree seems like a perfect occasion..
+The problem is now fixed and changes should indicate that fix is present.
 
-Ack?
-
-Best regards,
---
-Bartlomiej Zolnierkiewicz
-Samsung R&D Institute Poland
-Samsung Electronics
-
-> Wrt the bug: I had a multi-paragraph explanation here about how fbmon.c
-> edid parser is only used by old crap drivers, and not when you have a
-> drm-kms driver providing the fbdev emulation (like pretty much every
-> modern system). Also that the version in fbmon.c seriously lacks compared
-> to the drm_edid.c one.
-> 
-> And then I ran grep and noticed it's dead code. The last user disappeared
-> in 34280340b1dc ("fbdev: Remove unused SH-Mobile HDMI driver") from 2015.
-> I'll type a patch for 5.4 to remove this outright.
-> 
-> Cheers, Daniel
-> 
-> PS: git log -G disappoints by not using all the cores I have here ..
-> 
->>
->>                 Linus
->>
->> On Sat, Jul 20, 2019 at 5:35 PM Tavis Ormandy <taviso@...il.com> wrote:
->>>
->>> Hello, during a conversation on twitter we noticed a stack buffer
->>> overflow in fbdev with malicious edid data:
->>>
->>> https://github.com/torvalds/linux/blob/22051d9c4a57d3b4a8b5a7407efc80c71c7bfb16/drivers/video/fbdev/core/fbmon.c#L1033
->>>
->>> There is enough space to have 52 1-byte length values, which makes svd_n
->>> 52, then make the final value length 0x1f (the maximum), which makes
->>> svd_n 83 and overflows the 64 byte stack buffer svd[] with controlled
->>> data.
->>>
->>> This requires a malicious monitor / projector / etc, so pretty low impact.
->>>
->>> I pulled out the code to make a demo (I removed the checksum, but it
->>> doesnt prevent the bug):
->>>
->>> https://gist.github.com/taviso/923776e633cb8fb1ab847cce761a0f10
->>>
->>> This was discovered by Nico Waisman of Semmle.
->>>
->>> Tavis.
->>>
->>> --
->>> -------------------------------------
->>> taviso@....lonestar.org | finger me for my pgp key.
->>> -------------------------------------------------------
-> 
->>  drivers/video/fbdev/core/fbmon.c | 8 +++++++-
->>  1 file changed, 7 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/video/fbdev/core/fbmon.c b/drivers/video/fbdev/core/fbmon.c
->> index 3558a70a6664..2ab1fd6e33b7 100644
->> --- a/drivers/video/fbdev/core/fbmon.c
->> +++ b/drivers/video/fbdev/core/fbmon.c
->> @@ -1030,7 +1030,9 @@ void fb_edid_add_monspecs(unsigned char *edid, struct fb_monspecs *specs)
->>  		if (type == 2) {
->>  			for (i = pos; i < pos + len; i++) {
->>  				u8 idx = edid[pos + i] & 0x7f;
->> -				svd[svd_n++] = idx;
->> +				if (svd_n < sizeof(svd))
->> +					svd[svd_n] = idx;
->> +				svd_n++;
->>  				pr_debug("N%sative mode #%d\n",
->>  					 edid[pos + i] & 0x80 ? "" : "on-n", idx);
->>  			}
->> @@ -1044,6 +1046,10 @@ void fb_edid_add_monspecs(unsigned char *edid, struct fb_monspecs *specs)
->>  		pos += len + 1;
->>  	}
->>  
->> +	/* Evil monitor? */
->> +	if (WARN_ON_ONCE(svd_n > sizeof(svd)))
->> +		return;
->> +
->>  	block = edid + edid[2];
->>  
->>  	DPRINTK("  Extended Detailed Timings\n");
+Aki
