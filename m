@@ -1,69 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/15/1
-Message-ID: <CAJ_zFkKvd44vX+cHJdOm3gXXe0T2wJKBPG7njqBfq1QEqkgHMQ@mail.gmail.com>
-Date: Thu, 14 Feb 2019 16:05:38 -0800
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/2
+Message-ID: <20190828122919.GA4151@cbuissar-ltop.localdomain>
+Date: Wed, 28 Aug 2019 14:29:19 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: MatrixSSL stack buffer overflow
+Subject: ghostscript: CVE-2019-14811, CVE-2019-14812, CVE-2019-14813 and CVE-2019-14817 (.forceput exposed)
 Content-Type: text/plain; charset=utf-8
 
-Hello, while auditing some code using the MatrixSSL library (currently sold
-as the Inside Secure TLS Toolkit, previously also called GUARD TLS
-Toolkit), I happened to notice that a public X.509 certificate testcase
-for CVE-2014-1569 caused a stack buffer overflow.
+Hello,
 
-I did not create the testcase <https://github.com/FiloSottile/BERserk>, it
-was produced by Filippo Valsorda <https://twitter.com/FiloSottile> to
-accompany an advisory published by McAfee
-<https://www.mcafee.com/enterprise/en-us/threat-center/advanced-threat-research/crypto-software.html>.
-At the time, they had rebranded as Intel Security, but have since rebranded
-back to McAfee).
+This is to report another 4 CVEs in ghostscript, rated important. They are all similar to the recently reported CVE-2019-10216 (reference to `.forceput` can be accessed)
 
-Intel listed MatrixSSL as affected by various ASN.1 parsing
-vulnerabilities, but didn't provide any testcases, so I guess the
-vulnerabilities were never fixed. As this testcase and advisory are already
-public, I see no need for any embargo here.
+Ghostscript is a suite of software providing an interpreter for Adobe Systems' PostScript (PS) and Portable Document Format (PDF) page description languages.  Its primary purpose includes displaying (rasterization & rendering) and printing of document pages, as well as conversions between different document formats.
+URL : www.ghostscript.com
 
-I cleaned up the testcase a bit, to make a better demonstration. You can
-test it with the certValidate tool that comes with MatrixSSL.
+1- CVE-2019-14811 : Safer Mode Bypass by .forceput Exposure in .pdf_hook_DSC_Creator (701445)
 
-$ gdb -q --args matrixssl/matrixssl/test/certValidate
-stackbufferoverflow.pem
-Reading symbols from matrixssl/matrixssl/test/certValidate...done.
-(gdb) r
-Starting program: matrixssl/matrixssl/test/certValidate
-stackbufferoverflow.pem
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-  Loaded chain file stackbufferoverflow.pem
-        [0]:berserk.filippo.io
-        [1]:(null)
-WARN subject not provided, SUBJ validation will be skipped
+2- CVE-2019-14812 : Safer Mode Bypass by .forceput Exposure in setuserparams (701444)
 
-Program received signal SIGSEGV, Segmentation fault.
-0x00005555555c5164 in pubRsaDecryptSignedElementExt
-(gdb) bt
-#0  0x00005555555c5164 in pubRsaDecryptSignedElementExt
-#1  0x4141414141414141 in ?? ()
-#2  0x0000000000000000 in ?? ()
+3- CVE-2019-14813 : Safer Mode Bypass by .forceput Exposure in setsystemparams (701443)
 
-(I had to bruteforce the encrypted data to get the 0x414141.. output, but
-you can do so one byte at a time)
+4- CVE-2019-14817 : Safer Mode Bypass by .forceput Exposure in .pdfexectoken and other procedures (701450)
 
-I believe any client or server that validates certificates will be affected
-by this, and as MatrixSSL is usually used in embedded devices where
-mitigations are usually not quite as thorough as modern distributions,
-exploitation might not be difficult.
+In each case, a specially crafted script could get a reference to .forceput and use that to disable the -dSAFER protection. This then allows the script to access file system outside of resitricted areas and execute arbitrary commands.
+Regarding CVE-2019-14817, only the .pdfexectoken procedure was proven to be vulnerable, the other fixed methods were only potentially vulnerable.
 
-The bug is that pubRsaDecryptSignedElementExt() uses a fixed size stack
-buffer, but then doesn't check if the key size exceeds it. The attached
-patch should solve it.
+Preventing the modification of the error handler might protect most of these vulnerable functions
+
+The fixes have been pushed upstream :
+
+CVE-2019-14811, CVE-2019-14812, CVE-2019-14813 : 
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=885444fcbe10dc42787ecb76686c8ee4dd33bf33
+
+CVE-2019-14817 : 
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=cd1b1cacadac2479e291efe611979bdc1b3bdb19
+
+Acknowledgments :
+CVE-2019-14811, CVE-2019-14812, CVE-2019-14813 were reported to upstream by Hiroki MATSUKUMA of Cyber Defense Institute, Inc.
 
 
-Tavis.
+Noteworthy (similar to CVE-2019-10216) :
+A recent modification, started in upstream commit 7ecbfda92b4c8dbf6f6c2bf8fc82020a29219eff, changed the access to file permissions. After this commit, the ability to modify the /PermitFile* entries from systemdict's /userparams entry should have no effect.
+That is to say: getting a reference to highly privileged function (such as .forceput), can still be used to remove SAFER, and modify the /PermitFile* lists. However, the interpreter will still refuse to access files outside of a list provided from a set of command line options. This should mitigate the class of ghostscript vulnerabilities similar to the one described above.
 
-Content of type "text/html" skipped
+Best regards
 
-View attachment "patch.diff" of type "text/x-patch" (469 bytes)
-
-Download attachment "stackbufferoverflow.pem" of type "application/x-x509-ca-cert" (2880 bytes)
+--
+Cedric Buissart
+Product Security
+Red Hat
