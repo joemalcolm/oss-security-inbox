@@ -1,111 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/20/1
-Message-ID: <CAC5HUDw-PAELT_0woSyyfuO=CEf+B16VG=gCd+emgR==1VkrKA@mail.gmail.com>
-Date: Fri, 20 Dec 2019 13:11:08 +0530
-From: Mohammad Tausif Siddiqui <msiddiqu@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/4
+Message-Id: <F41F4F95-9437-437A-A2C7-DC86D5A47AE2@beckweb.net>
+Date: Wed, 28 Aug 2019 17:24:34 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: three vulnerabilities in ImageMagick
+Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi Galycannon,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Whom did you request the CVE ? Please follow this:
-https://cve.mitre.org/cve/request_id.html
+* Jenkins weekly 2.192
+* Jenkins LTS 2.176.3
+* IBM Application Security on Cloud 1.2.5
+* Splunk Plugin 1.8.0
 
-On Thu, Dec 19, 2019 at 5:14 PM GalyCannon <galycannon@...il.com> wrote:
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-08-28/
 
-> Hi,
->    I have found three vulnerabilities in ImageMagick and all this have
-> patched by ImageMagick developer team. However, I requested cve ids for
-> these vulveribilities and get no any response. How should I  request CVE
-> ids for vulnerilities I found in ImageMagick now? Which CNA should I
-> contact with to assign CVE ids for open source software such as
-> imagemagick?
->    The three vulnerabilities details as below.
->     1. heap-buffer-overflow in WritePNGImage of png.c
-> [Suggested description]
-> In ImageMagick  7.0.8-43  and ImageMagick6  6.9.10-43, there is a
-> heap-buffer-overflow overflow in the function WritePNGImage of png.c ,
-> which allows remote attackers to cause  arbitrary code execution, denial of
-> service or possibly have unspecified other impact via a crafted image file
-> .
-> [Vendor of Product]
-> https://imagemagick.org
-> [Affected Component]
-> function WritePNGImage of png.c
-> [Attack Type]
-> Remote
-> [Attack Vectors]
-> magick convert $poc ./test.png
-> [Reference]
-> https://github.com/ImageMagick/ImageMagick/issues/1561
->
-> https://github.com/ImageMagick/ImageMagick6/commit/34adc98afd5c7e7fb774d2ebdaea39e831c24dce
->
->
-> https://github.com/ImageMagick/ImageMagick/commit/d17c047f7bff7c0edbf304470cd2ab9d02fbf617
->
-> [Discoverer]
-> galycannon of JDCloud Security Team
->
->    2. heap-buffer-overflow in WriteSGIImage of coders/sgi.c
-> [Suggested description]
-> In ImageMagick  7.0.8-43  and ImageMagick6  6.9.10-43, there is a
-> heap-buffer-overflow overflow in the function WriteSGIImage of coders/sgi.c
-> , which allows remote attackers to cause  arbitrary code execution, denial
-> of service or possibly have unspecified other impact via a crafted image
-> file  .
-> [Vendor of Product]
-> https://imagemagick.org
-> [Affected Component]
-> function WriteSGIImage of coders/sgi.c
-> [Attack Type]
-> Remote
-> [Attack Vectors]
-> magick convert $poc ./test.sgi
-> [Reference]
-> https://github.com/ImageMagick/ImageMagick/issues/1562
->
-> https://github.com/ImageMagick/ImageMagick/commit/6ae32a9038e360b3491969d5d03d490884f02b4c
->
->
-> https://github.com/ImageMagick/ImageMagick6/commit/9e7db22f8c374301db3f968757f0d08070fd4e54
->
-> [Discoverer]
-> galycannon of JDCloud Security Team
->
->  3. heap-use-after-free in MngInfoDiscardObject of coders/png.c
-> [Suggested description]
-> In ImageMagick   7.0.9-7, there is a heap-use-after-free in function
-> MngInfoDiscardObject of coders/png.c , which allows remote attackers to
-> cause  arbitrary code execution, denial of service or possibly have
-> unspecified other impact via a crafted image file  .
-> [Vendor of Product]
-> https://imagemagick.org
-> [Affected Component]
-> function MngInfoDiscardObject of coders/png.c
-> [Attack Type]
-> Remote
-> [Attack Vectors]
-> magick convert $poc /dev/null
-> [Reference]
-> https://github.com/ImageMagick/ImageMagick/issues/1791
->
-> https://github.com/ImageMagick/ImageMagick/commit/916d7bbd2c66a286d379dbd94bc6035c8fab937c
->
-> [Discoverer]
-> galycannon of JDCloud Security Team
->
-> Regards,
-> galycannon
->
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1453 / CVE-2019-10383
+Jenkins did not properly escape the update site URL in some status 
+messages shown in the update center, resulting in a stored cross-site 
+scripting vulnerability that is exploitable by administrators and affects 
+other administrators.
 
 
--- 
+SECURITY-1491 / CVE-2019-10384
+Jenkins allowed the creation of CSRF tokens without a corresponding web 
+session ID. This is the result of an incomplete fix for SECURITY-626 in 
+the 2019-07-17 security advisory. This allowed attackers able to obtain a 
+CSRF token without associated session ID to implement CSRF attacks with 
+the following constraints:
 
-Tausif Siddiqui
+* The token had to be created for the anonymous user (and could only be 
+  used for actions the anonymous user can perform)
+* The victim’s IP address needed to remain unchanged (unless the proxy 
+  compatibility option was enabled)
+* The victim must not have a valid web session at the time of the attack
 
-Red Hat Product Security
 
-0EE1 F6BF 8991 9A65 0A79  A0A7 5849 60EC 88B8 2C71
+SECURITY-1294 / CVE-2019-10390
+Splunk Plugin has a form validation HTTP endpoint used to validate a user-
+submitted Groovy script through compilation, which was not subject to 
+sandbox protection. This allowed attackers with Overall/Read access to 
+execute arbitrary code on the Jenkins master by applying AST transforming 
+annotations such as @Grab to source code elements.
+
+
+SECURITY-1512 / CVE-2019-10391
+IBM Application Security on Cloud Plugin stores service passwords in job
+configurations.
+
+While the password is stored encrypted on disk, it was transmitted in 
+plain text as part of the configuration form. This could result in 
+exposure of the password through browser extensions, cross-site scripting 
+vulnerabilities, and similar situations.
 
