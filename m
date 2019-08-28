@@ -1,50 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/17/7
-Message-ID: <CAOp4FwSL6OWhK=1kC-q1=9thp7VnTRK5r8oNapF1q7WR_xDw-g@mail.gmail.com>
-Date: Tue, 18 Jun 2019 01:19:11 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Security Report <security-report@...smail.netflix.com>, security-report@...flix.com
-Subject: Re: Linux and FreeBSD Kernel: Multiple TCP-based remote denial of service issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/3
+Message-ID: <e2153c6f-a5a1-b8d5-93cb-f0af0c94fb2a@dovecot.fi>
+Date: Wed, 28 Aug 2019 15:06:23 +0300
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Critical Dovecot and Pigeonhole vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Can the netflix guys tell us if they have seen exploits in the wild ?
+Dear subscribers, we have been made aware of critical vulnerability in
+Dovecot and Pigeonhole.
+
+Please find patches attached for dovecot 2.3.7 and pigeonhole 0.5.7
+
+---
+
+Open-Xchange Security Advisory 2019-08-14
+ 
+Product: Dovecot
+Vendor: OX Software GmbH
+ 
+Internal reference: DOV-3278
+Vulnerability type: Improper input validation (CWE-20)
+Vulnerable version: All versions prior to 2.3.7.2 and 2.2.36.4
+Vulnerable component: IMAP and ManageSieve protocol parsers (before and
+after login)
+Report confidence: Confirmed
+Solution status: Fixed by Vendor
+Fixed version: 2.3.7.2, 2.2.36.4
+Researcher credits: Nick Roessler and Rafi Rubin, University of Pennsylvania
+Vendor notification: 2019-04-13
+Solution date: 2019-06-05
+Public disclosure: 2019-08-28
+CVE reference: CVE-2019-11500
+CVSS: 8.1 (CVSS3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H)
+ 
+Vulnerability Details:
+
+IMAP and ManageSieve protocol parsers do not properly handle NUL byte
+when scanning data in quoted strings, leading to out of bounds heap
+memory writes.
+
+Risk:
+
+This vulnerability allows for out-of-bounds writes to objects stored on
+the heap up to 8096 bytes in pre-login phase, and 65536 bytes post-login
+phase, allowing sufficiently skilled attacker to perform complicated
+attacks that can lead to leaking private information or remote code
+execution. Abuse of this bug is very difficult to observe, as it does
+not necessarily cause a crash. Attempts to abuse this bug are not
+directly evident from logs.
+
+Steps to reproduce:
+
+This bug is best observed using valgrind to see the out of bounds read
+with following snippet:
+
+perl -e 'print "a id (\"foo\" \"".("x"x1021)."\\A\" \"bar\"
+\"\000".("x"x1020)."\\A\")\n"' | nc localhost 143
+
+
+Solution:
+
+Operators should update to the latest Patch Release. There is no
+workaround for the issue.
+
+---
+
+Aki Tuomi
+
+Open-Xchange oy
 
 
 
-On Mon, Jun 17, 2019 at 10:56 PM Greg KH <greg@...ah.com> wrote:
 
-> On Mon, Jun 17, 2019 at 10:33:38AM -0700, Security Report wrote:
-> > Netflix has identified several TCP networking vulnerabilities in FreeBSD
-> > and Linux kernels.
-> >
-> > The vulnerabilities specifically relate to the minimum segment size
-> (MSS)
-> > and TCP Selective Acknowledgement (SACK) capabilities. The most serious,
-> > dubbed “SACK Panic,” allows a remotely-triggered kernel panic on recent
-> > Linux kernels.
-> >
-> > There are patches that address most of these vulnerabilities. If patches
-> > can not be applied, certain mitigations will be effective. We recommend
-> > that affected parties enact one of those described below, based on their
-> > environment.
->
-> To answer all of the paniced emails I have already started to get, all
-> of these patches are now in the following Linux stable kernel releases
-> that just went out a few minutes ago:
->         4.4.182
->         4.9.182
->         4.14.127
->         4.19.52
->         5.1.11
->
-> Other than the 3.16.y kernel branch, all other kernel branches are
-> end-of-life, and will not be getting updates for these, or any other,
-> bugfixes.  I do not know when/if Ben will be doing a release for 3.16.y
-> with these fixes.
->
-> thanks,
->
-> greg k-h
->
+View attachment "0001-lib-imap-Don-t-accept-strings-with-NULs.patch" of type "text/x-patch" (1267 bytes)
 
+View attachment "0001-lib-managesieve-Don-t-accept-strings-with-NULs.patch" of type "text/x-patch" (1205 bytes)
+
+View attachment "0002-lib-imap-Make-sure-str_unescape-won-t-be-writing-pas.patch" of type "text/x-patch" (1206 bytes)
+
+View attachment "0002-lib-managesieve-Make-sure-str_unescape-won-t-be-writ.patch" of type "text/x-patch" (1304 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
