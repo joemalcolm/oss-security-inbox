@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1700" "Wednesday" "25" "January" "2017" "03:44:30" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<6b21533852d44795ba8d3bc376692029@imshyb01.MITRE.ORG>" "41" "[oss-security] Re: CVE request Virglrenderer: OOB access while parsing texture instruction" nil nil nil "1" "2017012508:44:30" "[oss-security] Re: CVE request Virglrenderer: OOB access while parsing texture instruction" (number mark "U       cve-assign@m Jan 25   41/1700  " thread-indent "\"[oss-security] Re: CVE request Virglrenderer: OOB access while parsing texture instruction\"\n") "<alpine.LFD.2.20.1701241547390.10545@wniryva>" ("<alpine.LFD.2.20.1701241547390.10545@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2637" "Wednesday" "28" "August" "2019" "14:29:19" "+0200" "Cedric Buissart" "cbuissar@redhat.com" nil "67" nil nil nil nil "8" nil nil (number mark "U       cbuissar@red Aug 28   67/2637  " thread-indent "\"[oss-security] ghostscript: CVE-2019-14811, CVE-2019-14812, CVE-2019-14813 and CVE-2019-14817 (.forceput exposed)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] ghostscript: CVE-2019-14811, CVE-2019-14812, CVE-2019-14813 and CVE-2019-14817 (.forceput exposed)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20162 invoked by uid 550); 25 Jan 2017 08:44:43 -0000
+Received: (qmail 3477 invoked by uid 550); 28 Aug 2019 12:29:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20097 invoked from network); 25 Jan 2017 08:44:42 -0000
-From: <cve-assign@mitre.org>
-To: <ppandit@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<liqiang6-s@360.cn>
-In-Reply-To: <alpine.LFD.2.20.1701241547390.10545@wniryva>
-Message-ID: <6b21533852d44795ba8d3bc376692029@imshyb01.MITRE.ORG>
-Date: Wed, 25 Jan 2017 03:44:30 -0500
+Received: (qmail 3458 invoked from network); 28 Aug 2019 12:29:34 -0000
+Date: Wed, 28 Aug 2019 14:29:19 +0200
+From: Cedric Buissart <cbuissar@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20190828122919.GA4151@cbuissar-ltop.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request Virglrenderer: OOB access while parsing texture instruction
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Mutt/1.12.0 (2019-05-25)
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Wed, 28 Aug 2019 12:29:22 +0000 (UTC)
+Subject: [oss-security] ghostscript: CVE-2019-14811, CVE-2019-14812, CVE-2019-14813 and
+ CVE-2019-14817 (.forceput exposed)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support
-> for the virtio GPU, is vulnerable to an OOB array access issue. It could occur
-> when parsing texture instructions in parse_instruction().
-> 
-> A guest user/process could use this flaw to crash the Qemu process instance
-> resulting DoS.
-> 
-> https://lists.freedesktop.org/archives/virglrenderer-devel/2017-January/000105.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1415986
+This is to report another 4 CVEs in ghostscript, rated important. They are =
+all similar to the recently reported CVE-2019-10216 (reference to `.forcepu=
+t` can be accessed)
 
-Use CVE-2017-5580.
+Ghostscript is a suite of software providing an interpreter for Adobe Syste=
+ms' PostScript (PS) and Portable Document Format (PDF) page description lan=
+guages.  Its primary purpose includes displaying (rasterization & rendering=
+) and printing of document pages, as well as conversions between different =
+document formats.
+URL : www.ghostscript.com
 
-This is not yet available at
-https://cgit.freedesktop.org/virglrenderer/log/src/gallium/auxiliary/tgsi/tgsi_text.c
-but that may be an expected place for a later update.
+1- CVE-2019-14811 : Safer Mode Bypass by .forceput Exposure in .pdf_hook_DS=
+C_Creator (701445)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+2- CVE-2019-14812 : Safer Mode Bypass by .forceput Exposure in setuserparam=
+s (701444)
 
-iQIcBAEBCAAGBQJYiGPKAAoJEHb/MwWLVhi2438P/AtuBKdNEJ5lVOpdCtO3qU8B
-OywpoakBGGu0+b3pbeQ7zshonl5YeVnguaxmV7TNMej3cEgiXOtsdIW1pcwRjnxE
-H7vTGK3Lw1OPvJQZpcdYUf1NAJQRcNiYJ/x26dRK5D2vhBut5WaAylN4EXpuX9sw
-jU3wKXa9KvPfw8Iald1VB/sZWMc8HclhUTVxNVacA2PbdSnHYH27RT+jWLR9K+vV
-jE8m+vZrGvuUlEoPVhxwQ2x096+hadiQXlWEK/q50iLGIw/GMMLO17Jd7+Sbi8zH
-PNjFt5TR/bb9obHrABGg9DUHUv+/65UevkyKeuj5NI9ZoZneKvbR+NCLXm3wOdMb
-3BrlFe26wQRmA379YnWdlPeH65p7pMYeUDpddocGoV0O2Ile4y1E0RL9kz3NCLgn
-F2IVNTqZIyHwDxIgRprqd/WMWfu+azn62mnYoheCOrFealenyZBq8Z8A7Al6hF7P
-VXcanbg11IhZD/AACZUrDrids7xz5TujmA+Yt09I5GReHYmEmWZlJeHFcXaZP+iM
-dMW1i98cStTbMMv42a1QG0hQaGuYAWEN2J/JnMZP4YYsfx+Wq/vReHhyhmeoBsTV
-4dz/XLAXTdXD1v8//Gff0wXnTRm3dDUiLuQCegVSdruZmdUy7pdm5mn2v9CqTszL
-WPlCZPkCAUA7uSEe6srn
-=+9vv
------END PGP SIGNATURE-----
+3- CVE-2019-14813 : Safer Mode Bypass by .forceput Exposure in setsystempar=
+ams (701443)
+
+4- CVE-2019-14817 : Safer Mode Bypass by .forceput Exposure in .pdfexectoke=
+n and other procedures (701450)
+
+In each case, a specially crafted script could get a reference to .forceput=
+ and use that to disable the -dSAFER protection. This then allows the scrip=
+t to access file system outside of resitricted areas and execute arbitrary =
+commands.
+Regarding CVE-2019-14817, only the .pdfexectoken procedure was proven to be=
+ vulnerable, the other fixed methods were only potentially vulnerable.
+
+Preventing the modification of the error handler might protect most of thes=
+e vulnerable functions
+
+The fixes have been pushed upstream :
+
+CVE-2019-14811, CVE-2019-14812, CVE-2019-14813 :=20
+http://git.ghostscript.com/?p=3Dghostpdl.git;a=3Dcommitdiff;h=3D885444fcbe1=
+0dc42787ecb76686c8ee4dd33bf33
+
+CVE-2019-14817 :=20
+http://git.ghostscript.com/?p=3Dghostpdl.git;a=3Dcommitdiff;h=3Dcd1b1cacada=
+c2479e291efe611979bdc1b3bdb19
+
+Acknowledgments :
+CVE-2019-14811, CVE-2019-14812, CVE-2019-14813 were reported to upstream by=
+ Hiroki MATSUKUMA of Cyber Defense Institute, Inc.
+
+
+Noteworthy (similar to CVE-2019-10216) :
+A recent modification, started in upstream commit 7ecbfda92b4c8dbf6f6c2bf8f=
+c82020a29219eff, changed the access to file permissions. After this commit,=
+ the ability to modify the /PermitFile* entries from systemdict's /userpara=
+ms entry should have no effect.
+That is to say: getting a reference to highly privileged function (such as =
+.forceput), can still be used to remove SAFER, and modify the /PermitFile* =
+lists. However, the interpreter will still refuse to access files outside o=
+f a list provided from a set of command line options. This should mitigate =
+the class of ghostscript vulnerabilities similar to the one described above.
+
+Best regards
+
+--
+Cedric Buissart
+Product Security
+Red Hat
