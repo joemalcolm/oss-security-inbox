@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1390" "Saturday" "27" "August" "2016" "23:16:56" "+0200" "Damien Regad" "dregad@mantisbt.org" "<ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>" "64" "[oss-security] MantisBT weakened CSP when using bundled Gravatar plugin" nil nil nil "8" "2016082721:16:56" "[oss-security] MantisBT weakened CSP when using bundled Gravatar plugin" (number mark "U       dregad@manti Aug 27   64/1390  " thread-indent "\"[oss-security] MantisBT weakened CSP when using bundled Gravatar plugin\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2475" "Wednesday" "28" "August" "2019" "17:24:34" "+0200" "Daniel Beck" "ml@beckweb.net" nil "61" nil "^Date:" nil nil "8" nil nil (number mark "U       ml@beckweb.n Aug 28   61/2475  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24182 invoked by uid 550); 28 Aug 2016 06:10:45 -0000
+Received: (qmail 9815 invoked by uid 550); 28 Aug 2019 15:24:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,106 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9740 invoked from network); 28 Aug 2019 15:24:47 -0000
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Message-Id: <F41F4F95-9437-437A-A2C7-DC86D5A47AE2@beckweb.net>
+X-Mailer: Apple Mail (2.3445.104.11)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1567005887;b4fefd4b;
+X-HE-SMSGID: 1i2zoJ-0000VM-BV
+Date: Wed, 28 Aug 2019 17:24:34 +0200
+From: Daniel Beck <ml@beckweb.net>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16046 invoked from network); 27 Aug 2016 21:17:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=cIKspK7bUoCnu6P+GaiSmNVxrcBSs++tKfrVTlcWdTg=;
-        b=bgsH39zIInpyetJioUTVP6HmbaxmX99Ka7Js/t0V9+/IJ1NBK8eEnxsp9+6Z9Y+AIC
-         LoN68Q3Y34FAwUf3RBaQccFUO9KP8tthEV6YCMeo7lhKQepkE7rPSifGewq3wpjRl6CG
-         eA4pkdE9MAGvhMs+nJUTINXwaA3E8eUvHIwbPx2Hq/efWfTjQRI858KicuwGfBciLY2B
-         M2PNuxEGHoroeAQvDAir0EN7dgCBzkUE3EQIWJs3hRM+vMkbe6tWCm2V3NL8ASc7tiC5
-         4lo9U33LMcqP20WsreTFSNMrWtyall3OMJPNGcO8iXV02KrkQVt+VbwjcGwxONJqEw5b
-         hv/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:to:from:subject:message-id:date
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=cIKspK7bUoCnu6P+GaiSmNVxrcBSs++tKfrVTlcWdTg=;
-        b=MKIKUUa8FYQtD+7NDKz7slOQtfTIty6sidUeS/tqTtv21VlvokDm/1QwvCTHAGlnuJ
-         Tbrg0W6iIdKaTzKsHcybwP815z4jDuXcxCat+grcdbG2gesbdDGeUqyNLDXtFXqcJAPB
-         bFcTryjL3At0ByDc48r0SLMbYd1FU7j4bsHz2n8vpL+t/E9Ku/FJ8nV/LDnyUuklP/Ve
-         nja4M722CWLtriwqNugqjQ0AiYnrBNVRIHXJspTvo2nirmn3Z2jvSkv5malZvAwo7I9S
-         rw208hCjm+4SFYM1cCq8N0Y5mKUpNICLaopTTpA4Z60hn/bOe1sPUTdcFy/KnskloYwi
-         mjXg==
-X-Gm-Message-State: AE9vXwMqB6uXo4ptAK6x4Dv8Ob9HW3S15/gTFES7WDl7Neyx57E/pN78TUi/Rg9aPh4ySQ==
-X-Received: by 10.194.126.72 with SMTP id mw8mr8941572wjb.193.1472332618573;
-        Sat, 27 Aug 2016 14:16:58 -0700 (PDT)
-Sender: Damien Regad <dregad@gmail.com>
+Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 To: oss-security@lists.openwall.com
-From: Damien Regad <dregad@mantisbt.org>
-Message-ID: <ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>
-Date: Sat, 27 Aug 2016 23:16:56 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] MantisBT weakened CSP when using bundled Gravatar plugin
 
-Greetings,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Please assign a CVE ID for the following issue.
+* Jenkins weekly 2.192
+* Jenkins LTS 2.176.3
+* IBM Application Security on Cloud 1.2.5
+* Splunk Plugin 1.8.0
 
-Description
------------
-MantisBT 1.3.0-rc.2 introduced a new bundled plugin to handle display of
-users' avatars using Gravatar.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-08-28/
 
-Instead of adding the Gravatar web site to the list of allowed image
-sources in MantisBT's Content Security Policy, the plugin was replacing
-the whole policy by:
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-   img-src 'self' http://www.gravatar.com/
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-instead of the more strict default one of:
+---
 
-   default-src 'self'; frame-ancestors 'none'; style-src 'self';
-   script-src 'self'
-
-Relaxed policy allows execution of remote and inline scripts, e.g.
-potentially enabling XSS attacks.
+SECURITY-1453 / CVE-2019-10383
+Jenkins did not properly escape the update site URL in some status=20
+messages shown in the update center, resulting in a stored cross-site=20
+scripting vulnerability that is exploitable by administrators and affects=20
+other administrators.
 
 
-Affected versions
------------------
-- >= 1.3.0-rc.2
-- >= 2.0.0-beta.1
+SECURITY-1491 / CVE-2019-10384
+Jenkins allowed the creation of CSRF tokens without a corresponding web=20
+session ID. This is the result of an incomplete fix for SECURITY-626 in=20
+the 2019-07-17 security advisory. This allowed attackers able to obtain a=20
+CSRF token without associated session ID to implement CSRF attacks with=20
+the following constraints:
 
-Fixed in versions:
-------------------
-- 1.3.1
-- 2.0.0-beta.2
-
-As of this writing, these have not been released yet, but both should be
-available in the coming days. Until then, installations should be
-patched manually.
-
-As a workaround, disabling the Gravatar plugin restores the safer
-default policy.
-
-Patch
------
-See Github [1]
-
-Credits
--------
-The issue was discovered by Johannes Schultz, and fixed by Victor Boctor
-(MantisBT Developer).
-
-References
-----------
-Further details available in our issue tracker [2]
+* The token had to be created for the anonymous user (and could only be=20
+  used for actions the anonymous user can perform)
+* The victim=E2=80=99s IP address needed to remain unchanged (unless the pr=
+oxy=20
+  compatibility option was enabled)
+* The victim must not have a valid web session at the time of the attack
 
 
-Best regards,
-D. Regad
-MantisBT Developer
-http://mantisbt.org
+SECURITY-1294 / CVE-2019-10390
+Splunk Plugin has a form validation HTTP endpoint used to validate a user-
+submitted Groovy script through compilation, which was not subject to=20
+sandbox protection. This allowed attackers with Overall/Read access to=20
+execute arbitrary code on the Jenkins master by applying AST transforming=20
+annotations such as @Grab to source code elements.
 
 
-[1] https://github.com/mantisbt/mantisbt/commit/b3511d2f
-[2] https://mantisbt.org/bugs/view.php?id=21263
+SECURITY-1512 / CVE-2019-10391
+IBM Application Security on Cloud Plugin stores service passwords in job
+configurations.
+
+While the password is stored encrypted on disk, it was transmitted in=20
+plain text as part of the configuration form. This could result in=20
+exposure of the password through browser extensions, cross-site scripting=20
+vulnerabilities, and similar situations.
 
