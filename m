@@ -1,18 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/02/5
-Message-ID: <20190902145238.GJ3837@jumper.schlittermann.de>
-Date: Mon, 2 Sep 2019 16:52:38 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: MITRE response time
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/5
+Message-ID: <20190828181722.7f0d04aa@computer>
+Date: Wed, 28 Aug 2019 18:17:22 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: Aki Tuomi <aki.tuomi@...ecot.fi>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Critical Dovecot and Pigeonhole vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Florian Weimer <fweimer@...hat.com> (Mo 02 Sep 2019 16:30:05 CEST):
-> For me as well.  The Labor Day Weekend may have interfered with Heiko's
-> request.
+On Wed, 28 Aug 2019 15:06:23 +0300
+Aki Tuomi <aki.tuomi@...ecot.fi> wrote:
 
-Ah, ok, that I didn't obey. Thank you.
---
-Heiko
+> Please find patches attached for dovecot 2.3.7 and pigeonhole 0.5.7
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+It seems Pigeonhole doesn't have a new release yet as far as I can see:
+https://pigeonhole.dovecot.org/download.html
+
+So this needs to be manually patched for now? Any ETA for a new release
+here?
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+Content of type "application/pgp-signature" skipped
