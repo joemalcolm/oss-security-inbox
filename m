@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4818" "Saturday" "17" "September" "2016" "00:12:09" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1954849.FvxM1m0O36@arcadia>" "119" "[oss-security] libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)" nil nil nil "9" "2016091622:12:09" "[oss-security] libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)" (number mark "U       ago@gentoo.o Sep 17  119/4818  " thread-indent "\"[oss-security] libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1653" "Wednesday" "28" "August" "2019" "18:17:22" "+0200" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" nil "45" nil "^Cc:" nil nil "8" nil nil (number mark "        hanno@hboeck Aug 28   45/1653  " thread-indent "\"Re: [oss-security] Critical Dovecot and Pigeonhole vulnerability\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Critical Dovecot and Pigeonhole vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9870 invoked by uid 550); 16 Sep 2016 22:12:28 -0000
+Received: (qmail 19715 invoked by uid 550); 28 Aug 2019 16:17:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,134 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19694 invoked from network); 28 Aug 2019 16:17:42 -0000
+Message-ID: <20190828181722.7f0d04aa@computer>
+In-Reply-To: <e2153c6f-a5a1-b8d5-93cb-f0af0c94fb2a@dovecot.fi>
+References: <e2153c6f-a5a1-b8d5-93cb-f0af0c94fb2a@dovecot.fi>
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="=_zucker.schokokeks.org-21220-1567009050-0001-2"
+Cc: oss-security@lists.openwall.com
+Date: Wed, 28 Aug 2019 18:17:22 +0200
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9841 invoked from network); 16 Sep 2016 22:12:26 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Sat, 17 Sep 2016 00:12:09 +0200
-Message-ID: <1954849.FvxM1m0O36@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)
+Subject: Re: [oss-security] Critical Dovecot and Pigeonhole vulnerability
+To: Aki Tuomi <aki.tuomi@dovecot.fi>
 
-If suitable for a CVE please assign one. 
-Thanks.
+--=_zucker.schokokeks.org-21220-1567009050-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-Libav is an open source set of tools for audio and video processing.
+On Wed, 28 Aug 2019 15:06:23 +0300
+Aki Tuomi <aki.tuomi@dovecot.fi> wrote:
 
-A fuzzing, with an mp3 file as input, discovered a null pointer access in 
-put_no_rnd_pixels8_xy2_mmx.
+> Please find patches attached for dovecot 2.3.7 and pigeonhole 0.5.7
 
-The complete ASan output:
+It seems Pigeonhole doesn't have a new release yet as far as I can see:
+https://pigeonhole.dovecot.org/download.html
 
-# avconv -i $FILE -f null -
-avconv version 11.7, Copyright (c) 2000-2016 the Libav developers
-  built on Aug 16 2016 15:34:42 with clang version 3.8.1 
-(tags/RELEASE_381/final)
-[h263 @ 0x61a00001f280] Format detected only with low score of 25, 
-misdetection possible!
-[IMGUTILS @ 0x7ff589955420] Picture size 0x0 is invalid
-[h263 @ 0x619000000580] header damaged
-[h263 @ 0x619000000580] Syntax-based Arithmetic Coding (SAC) not supported
-[h263 @ 0x619000000580] Independent Segment Decoding not supported
-[h263 @ 0x619000000580] warning: first frame is no keyframe
-[h263 @ 0x619000000580] cbpc damaged at 0 0
-[h263 @ 0x619000000580] Error at MB: 0
-[h263 @ 0x619000000580] concealing 1584 DC, 1584 AC, 1584 MV errors
-[h263 @ 0x61a00001f280] Estimating duration from bitrate, this may be 
-inaccurate
-Input #0, h263, from '9.crashes':
-  Duration: N/A, bitrate: N/A
-    Stream #0.0: Video: h263, yuv420p, 704x576 [PAR 12:11 DAR 4:3], 25 fps, 25 
-tbn, 18.73 tbc
-Output #0, null, to 'pipe:':
-  Metadata:
-    encoder         : Lavf56.1.0
-    Stream #0.0: Video: rawvideo, yuv420p, 704x576 [PAR 12:11 DAR 4:3], 
-q=2-31, 200 kb/s, 25 tbn, 25 tbc
-    Metadata:
-      encoder         : Lavc56.1.0 rawvideo
-Stream mapping:
-  Stream #0:0 -> #0:0 (h263 (native) -> rawvideo (native))
-Press ctrl-c to stop encoding
-[h263 @ 0x61900001ea80] warning: first frame is no keyframe
-ASAN:DEADLYSIGNAL
-=================================================================
-==26790==ERROR: AddressSanitizer: SEGV on unknown address 0x7ff584ddb77f (pc 
-0x7ff5910cdeee bp 0x7ffdc464d7f0 sp 0x7ffdc464d780 T0)
-    #0 0x7ff5910cdeed in put_no_rnd_pixels8_xy2_mmx /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/x86/rnd_template.c:37:5
-    #1 0x7ff590209de0 in hpel_motion /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:224:5
-    #2 0x7ff590209de0 in apply_8x8 /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:798
-    #3 0x7ff590209de0 in mpv_motion_internal /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:877
-    #4 0x7ff590209de0 in ff_mpv_motion /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:981
-    #5 0x7ff59013659b in mpv_decode_mb_internal /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo.c:2223:21
-    #6 0x7ff59013659b in ff_mpv_decode_mb /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo.c:2358
-    #7 0x7ff58f048c95 in decode_slice /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/h263dec.c:273:13
-    #8 0x7ff58f0442cd in ff_h263_decode_frame /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/h263dec.c:575:11
-    #9 0x7ff5909cf906 in avcodec_decode_video2 /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/utils.c:1600:19
-    #10 0x5647eb in decode_video /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:1259:11
-    #11 0x5647eb in process_input_packet /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:1398
-    #12 0x550e63 in process_input /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:2440:11
-    #13 0x550e63 in transcode /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:2488
-    #14 0x550e63 in main /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:2647
-    #15 0x7ff58cd6461f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #16 0x41d098 in _init (/usr/bin/avconv+0x41d098)
+So this needs to be manually patched for now? Any ETA for a new release
+here?
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/x86/rnd_template.c:37:5 in 
-put_no_rnd_pixels8_xy2_mmx
-==26790==ABORTING
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-Affected version:
-11.7
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-Fixed version:
-N/A
+--=_zucker.schokokeks.org-21220-1567009050-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
-Commit fix:
-https://git.libav.org/?p=libav.git;a=commit;h=136f55207521f0b03194ef5b55ba70f1635d6aee
+-----BEGIN PGP SIGNATURE-----
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+iQIzBAEBCAAdFiEEn3wfQCCb9MicJwD8dkhfABMwL8oFAl1mqRIACgkQdkhfABMw
+L8o4HRAApZBRyGbCI2A1mVSfSGHNgwv55aAaNiLxx48dShlOSQBi3IBsxmsRvnsP
+X49rEmoDTVH9ZWc3gGStUkbLpiH4n/oQIKVAoCvd7Phx/DHVPQgsgEbx/NwljxP/
+DUfCFHReArjFCJ5xCMzCyVTX/4raSCmizDMdOXd/wNeKiaDn04xt4VcLY0iS9ciD
+KTlzi31BmtZfKbRFd3Ln5XNJWj6A4EIbb4xU81C5jNWU7OMYw7vwOT5/g3ccvZgX
+cyxK0gPHexaCwSATOP1Okki9mRIBbygDMoOqzp1dOyp9DU3y2i6ZZKxN1lfL/VEt
+5jEhnSx+mHqIeuwkqBjYp3x6EgDcFqr9X12vlDipRUxrzpyhb3GBaPTltn618XLC
+LUSiBmwdju2jfaq3tqJ34FoBPK0vo9qKNTLtHgWoAs6NiZ76pRgmMpZs3WwghN//
+BB0L5zYEwFPBLdJZDhb/YjVl9juC0aSMsWKxSTursx1yidp7D4LCgeJqzzdi2UpD
+JU2vu1axSkInR7Mx3c5/RCx/6jjG7sEexmXGVZv/34JNu7XCmH9eM7RRX3xOhuHD
+1HCHGVmiY8PS+vpxMkKqncT1HlLoPCaeJZ6Ck6H5Wqa3WLtXe/rOAF2a0RhZNAzd
+ga1s8cNXyq6AsWluVwjMJbCEzlu4HQWCW7Nq0POGpL7iXyocK+M=
+=DJOi
+-----END PGP SIGNATURE-----
 
-CVE:
-N/A
-
-Timeline:
-2016-08-15: bug discovered
-2016-08-16: bug reported to upstream
-2016-09-16: upstream released a patch
-2016-09-17: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was reported F4B3CD@STARLAB on 2016-09-12 via libav-security while it 
-was already public since 2016-08-15 on the upstream bugtracker.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/17/libav-null-pointer-dereference-in-put_no_rnd_pixels8_xy2_mmx-rnd_template-c/
-
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+--=_zucker.schokokeks.org-21220-1567009050-0001-2--
