@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/11/1
-Message-ID: <CAEvdU_35sTnyFYsZKLeeW=V1G9P3mKWbvqNFV0q300x5E7GKow@mail.gmail.com>
-Date: Tue, 10 Sep 2019 15:29:17 -0700
-From: Jacopo Cappellato <jacopoc@...che.org>
-To: "user@...iz.apache.org ML" <user@...iz.apache.org>, Dev list <dev@...iz.apache.org>,  security@...iz.apache.org, announce@...che.org,  oss-security@...ts.openwall.com, hizhangsword@...il.com,  security-reports@...mle.com
-Subject: [CVE-2018-17200] Apache OFBiz unauthenticated remote code execution vulnerability in HttpEngine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/6
+Message-ID: <20190828183420.17d2662c@computer>
+Date: Wed, 28 Aug 2019 18:34:20 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: aki.tuomi@...ecot.fi
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Critical Dovecot and Pigeonhole vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-Important
+On Wed, 28 Aug 2019 19:28:18 +0300 (EEST)
+aki.tuomi@...ecot.fi wrote:
 
-Vendor:
-The Apache Software Foundation
+> I can see 0.5.7.2, we even announced it today.
 
-Versions Affected:
-OFBiz 16.11.01 to 16.11.05
+Ok, sorry.
 
-Description:
-The OFBiz HTTP engine (org.apache.ofbiz.service.engine.HttpEngine.java)
-handles requests for HTTP services via the /webtools/control/httpService
-endpoint.  This service takes the `serviceContent` parameter in the request
-and
- deserializes it using XStream. This `XStream` instance is slightly guarded
-by
- disabling the creation of `ProcessBuilder`.  However, this can be easily
- bypassed (and in multiple ways).
+What confused me: There's a "changes" link right to the Download and
+that points to a changelog that was last updated in july and didn't
+mention anything sounding like that bug. It's for 0.5.7, not 0.5.7.2.
+You should probably fix that link (changing the URL accordingly works):
+https://raw.githubusercontent.com/dovecot/pigeonhole/0.5.7.2/NEWS
 
-Mitigation:
-Upgrade to 16.11.06
-or manually apply the following commits on branch 16
-r1850017+1850019
-----
+-- 
+Hanno Böck
+https://hboeck.de/
 
-Credit:
-Man Yue Mo of the Semmle Security Research Team
-张剑 <hizhangsword@...il.com>
-
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
-
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
