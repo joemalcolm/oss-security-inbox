@@ -1,135 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/18
-Message-Id: <E1gguTu-0005Vo-MG@xenbits.xenproject.org>
-Date: Tue, 08 Jan 2019 16:43:58 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 275 v3 (CVE-2018-19961,CVE-2018-19962) - insufficient TLB flushing / improper large page mappings with AMD IOMMUs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/1
+Message-ID: <CADt2dQe-nHwQSFHtbMzcB2C+XjcRMgkHqikf1tX+QtTEA-j5mQ@mail.gmail.com>
+Date: Wed, 28 Aug 2019 13:50:53 +0800
+From: huangwen <huangwenabc@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: three heap overflow in the marvell wifi driver
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-    Xen Security Advisory CVE-2018-19961,CVE-2018-19962 / XSA-275
-                              version 3
+There are three heap-based buffer overflows in marvell wifi chip driver in
+Linux kernel, allow local users to cause a denial
 
-  insufficient TLB flushing / improper large page mappings with AMD IOMMUs
+of service(system crash) or possibly execute arbitrary code.The bugs can be
+triggered by sending crafted  packet via netlink.
 
-UPDATES IN VERSION 3
-====================
 
-CVEs assigned.
+Description
 
-ISSUE DESCRIPTION
-=================
-
-In order to be certain that no undue access to memory is possible
-anymore after IOMMU mappings of this memory have been removed,
-Translation Lookaside Buffers (TLBs) need to be flushed after most
-changes to such mappings.  Xen bypassed certain IOMMU flushes on AMD
-x86 hardware.  (CVE-2018-19961)
-
-Furthermore logic exists Xen to re-combine small page mappings
-into larger ones.  Such re-combination could have occured in cases
-when it was not really safe/correct to do so.  (CVE-2018-19962)
-
-IMPACT
-======
-
-A malicious or buggy guest may be able to escalate its privileges, may
-cause a Denial of Service (DoS) affecting the entire host, or may be
-able to access data it is not supposed to access (information leak).
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions from at least 3.2 onwards are affected.  Note that the
-situation is worse in 4.1 and earlier, in that there's no flushing of
-the TLB at all.
-
-Only systems with AMD x86 hardware with enabled IOMMU are affected.
-
-ARM and Intel x86 systems, and AMD x86 systems without enabled IOMMU,
-are not affected.
-
-Only systems where physical PCI devices are assigned to untrusted guests
-are vulnerable.
-
-MITIGATION
 ==========
 
-There is no known mitigation for affected system/guest combinations.
+[1]CVE-2019-14814:Heap Overflow in mwifiex_set_uap_rates() function of
+Marvell Wifi Driver in Linux kernel
 
-CREDITS
-=======
 
-This issue was discovered by Paul Durrant of Citrix.
+The problem is inside mwifiex_set_uap_rates() in
+drivers/net/wireless/marvell/mwifiex/uap_cmd.c.
+There are two memcpy calls in this function to copy WLAN_EID_SUPP_RATES
+element and WLAN_EID_EXT_SUPP_RATES element
 
-RESOLUTION
+without checking length. The dst buffer bss_cfg->rates is a array of length
+MWIFIEX_SUPPORTED_RATES(14). The two elements in
+
+cfg80211_ap_settings are from user space.
+
+
+
+[2]CVE-2019-14815: Heap Overflow in mwifiex_set_wmm_params() function of
+Marvell Wifi Driver in Linux kernel
+
+
+The problem is inside mwifiex_set_wmm_params() in
+drivers/net/wireless/marvell/mwifiex/uap_cmd.c.
+mwifiex_set_wmm_params() calls memcpy to copy WLAN_OUI_MICROSOFT element to
+bss_cfg->wmm_info without checking  length.
+
+bss_cfg->wmm_info is struct mwifiex_types_wmm_info type with fixed len 24.
+
+
+
+[3]CVE-2019-14816:Heap Overflow in mwifiex_update_vs_ie() function of
+Marvell Wifi Driver in Linux kernel
+
+
+
+The problem is inside mwifiex_update_vs_ie() in
+drivers/net/wireless/marvell/mwifiex/ie.c.
+
+mwifiex_set_mgmt_beacon_data_ies()  parses beacon IEs, probe response IEs,
+association response IEs from cfg80211_ap_settings->beacon,
+
+will call mwifiex_update_vs_ie() twice for each IEs if there exists IEs.
+For beacon_ies as example, on the first call, mwifiex_update_vs_ie() alloc
+
+memory ie and then copy WLAN_OUI_MICROSOFT element to ie->ie_buffer,
+ie->ie_buffer
+is a array of length IEEE_MAX_IE_SIZE(256); on the
+
+Second call, mwifiex_update_vs_ie() copy WLAN_OUI_WFA elment to
+previous allocated
+ie->ie_buffer. If sum of  length of the two elements is
+
+greater than IEEE_MAX_IE_SIZE, will cause buffer overflow.
+
+
+
+Patch
+
+=====
+
+https://lore.kernel.org/linux-wireless/20190828020751.13625-1-huangwenabc@gmail.com/
+
+
+
+Credit
+
 ==========
 
-Applying the appropriate set of attached patches resolves this issue.
+This issue was discovered by huangwen of ADLab of Venustech
 
-xsa275-?.patch           xen-unstable
-xsa275-4.11-?.patch      Xen 4.11.x ... Xen 4.8.x
-xsa275-4.7-?.patch       Xen 4.7.x
-
-$ sha256sum xsa275*
-b5a02598cd2cffcc2cb59c724eeabb50220fa55f2cbe571726a5228909bf7bfe  xsa275.meta
-7a3360e61fbb088f7d9f2b92921c9dceb08a1e01563c42ba4cf4a9999fe42fc4  xsa275-1.patch
-4783a3abd2d87386ce9a7b790666ad398c5e027a6a146fce6424f0bcbfd8a7c6  xsa275-2.patch
-49844d06f24ea129f1a501b4b0d5cb6ec3b288f3a2b41377ce793cc6fc81a788  xsa275-4.7-1.patch
-7ea8bf2ff2c8c92cb064a70959a1148229c4577109015bd5aab72603ccb8f7e3  xsa275-4.7-2.patch
-15d1aa7528368ed92caf8ea9baf77a406e1de26d0697dafd8a85da0d66eb95dc  xsa275-4.11-1.patch
-0806e8c904ac9e8eb89404dffd227fcd56da84b7eb0150ee1e9b4bee54a05b4e  xsa275-4.11-2.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlw00ygMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZrwAH/0mx4lHIIBWxfYYHVxrIrC598duLahYlIrscn+Fw
-WaiXnx5DaPyyLtgeOOfhjjhKwr+v1t17nzTefz/ToA3o4SW4vAKc+b/27JRZcHWg
-ktZkBfT/u/xEp4ar+bTnLTXuo0K69giZg1OFznBuKpOsl+a+pPaLsAMG5Q7WYky/
-QoqixsvMBAaXhS1lOgOgsyMZXjARvzTu2tLIJ2IpnxhFXsMNu2JagLix+fTx/Emh
-BEOvnXwcEwGdEdlCaj2wxpJS1+yDrZS8+DjR3ECtBb71Jt2ZxH/FfJA7xZB/3fjv
-RVkBS8yOiRfUgp7wJlB/atFkYoDkkROYMzoiRkMTgsjQf5o=
-=UTEA
------END PGP SIGNATURE-----
-
-Download attachment "xsa275.meta" of type "application/octet-stream" (1572 bytes)
-
-Download attachment "xsa275-1.patch" of type "application/octet-stream" (4463 bytes)
-
-Download attachment "xsa275-2.patch" of type "application/octet-stream" (2441 bytes)
-
-Download attachment "xsa275-4.7-1.patch" of type "application/octet-stream" (4214 bytes)
-
-Download attachment "xsa275-4.7-2.patch" of type "application/octet-stream" (3680 bytes)
-
-Download attachment "xsa275-4.11-1.patch" of type "application/octet-stream" (4217 bytes)
-
-Download attachment "xsa275-4.11-2.patch" of type "application/octet-stream" (2420 bytes)
