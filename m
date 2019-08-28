@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6404" "Wednesday" "15" "April" "2020" "20:59:44" "+0200" "Solar Designer" "solar@openwall.com" "<20200415185944.GA18943@openwall.com>" "176" "[oss-security] CVE-2020-5260: Git: malicious URLs may cause Git to present stored credentials to the wrong server" "^Date:" nil nil "4" "2020041518:59:44" "[oss-security] CVE-2020-5260: Git: malicious URLs may cause Git to present stored credentials to the wrong server" (number mark "        solar@openwa Apr 15  176/6404  " thread-indent "\"[oss-security] CVE-2020-5260: Git: malicious URLs may cause Git to present stored credentials to the wrong server\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-5260: Git: malicious URLs may cause Git to present stored credentials to the wrong server" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2299" "Wednesday" "28" "August" "2019" "13:50:53" "+0800" "huangwen" "huangwenabc@gmail.com" nil "86" nil nil nil nil "8" nil nil (number mark "U       huangwenabc@ Aug 28   86/2299  " thread-indent "\"[oss-security] Linux kernel: three heap overflow in the marvell wifi driver\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: three heap overflow in the marvell wifi driver" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15582 invoked by uid 550); 15 Apr 2020 19:00:16 -0000
+Received: (qmail 3243 invoked by uid 550); 28 Aug 2019 09:34:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,191 +11,124 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15453 invoked from network); 15 Apr 2020 18:59:54 -0000
-Message-ID: <20200415185944.GA18943@openwall.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="ibTvN161/egqYuK8"
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Date: Wed, 15 Apr 2020 20:59:44 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2020-5260: Git: malicious URLs may cause Git to present stored credentials to the wrong server
+Received: (qmail 21598 invoked from network); 28 Aug 2019 05:51:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=zQchW2JpetavlZFGgp09UpMC6s/M8toCYKJcelKcNUU=;
+        b=ex1Nka6/S9CWcJsNBfFZILzcBbnX1V/hljxpOgz+WmDPrzQYjbv4cyvwcb5z5RDCL0
+         +w/bUFEai68y+CEU4AwZ+bUDrGbX7D4JML/0JksSnZYyPhVzZipSSplgXThV31gTRdSF
+         gxsZ+xCoqHk5jnsG3tOZlg2vhwQkMywCfbHdm91PzTG+R9yngjVAk/LzqW+WK22wggvY
+         SUr8RIOjK2UeKrwfItpLgB6utcSO1RqyR7Ia48uYetLniPQLdTIqpUQNQLdRU8TU2tZy
+         K3vD1s85SMZmOFf0caKjERDXDgdBhPfnxOKd8QkkVw2AXbYyYKVAf4Y18DLRVcfJlEMo
+         h5XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=zQchW2JpetavlZFGgp09UpMC6s/M8toCYKJcelKcNUU=;
+        b=ZUEiGg0IPnVOB6xY4QY9C1jMbxpZqcKPizw57jjd4pSDoawa3SrIPHOu8vVQPjV/LR
+         vRTFyyQHSBtMlrR+UVsgU7CWOTUhQKsMOWeYM13emAagLfsPrLtLQYDwGoWovVcyCnia
+         ec2vJ+ihJozb6ftBYCEbiX31rzMowsWgX10kZ/xBpCMaSbHmYdK0c68BQ+3tytCjPOeB
+         0/W7Qme8bFZtZblynp/qDkAjvGbQrvcIn88bMzKXzk1wYEREn8KW+e2AKHOiNb3PggEY
+         J2hQVr+OBbOwP7syUVFMQQAD2HvzQ/IzbjxeLXmvCzl98OG024cVuDlr0bjpFs+7bgnC
+         m2wg==
+X-Gm-Message-State: APjAAAXXJDiXWGuNPxZreQyQC6W0wLp02mYcnanKRFWFHpYVW8vtdNHF
+	7+nzxFbwjdojDdjTdIQ+jv3AkoXoZc9jEoN53HqCpFPp2AE=
+X-Google-Smtp-Source: APXvYqwqxhHONSVZAHZN3mQzW/bvX2tWztDJr9oHlhlzPA3mPWp04ScDomMOKcm5d8mY5qBGW5l2IzOWM3zCN8n9o5E=
+X-Received: by 2002:aa7:cccd:: with SMTP id y13mr2166867edt.301.1566971476232;
+ Tue, 27 Aug 2019 22:51:16 -0700 (PDT)
+MIME-Version: 1.0
+From: huangwen <huangwenabc@gmail.com>
+Date: Wed, 28 Aug 2019 13:50:53 +0800
+Message-ID: <CADt2dQe-nHwQSFHtbMzcB2C+XjcRMgkHqikf1tX+QtTEA-j5mQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000036ccb7059126fad9"
+Subject: [oss-security] Linux kernel: three heap overflow in the marvell wifi driver
 
---ibTvN161/egqYuK8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--00000000000036ccb7059126fad9
+Content-Type: text/plain; charset="UTF-8"
 
 Hi,
 
-Taylor Blau brought this to the distros list a week ago (thanks!), but
-unfortunately failed to follow the distros list policy (despite of being
-specifically informed of that requirement by distros list members,
-twice) to post the information to oss-security on the public disclosure
-date/time.  So as list admin, after a delay of more than a day, I am
-taking over and do this (being unhappy that I have to do it for others).
+There are three heap-based buffer overflows in marvell wifi chip driver in
+Linux kernel, allow local users to cause a denial
 
-Quoting Taylor's original notification to distros:
+of service(system crash) or possibly execute arbitrary code.The bugs can be
+triggered by sending crafted  packet via netlink.
 
----
-The addressed issue is:
 
- * CVE-2020-5260:
-   With a crafted URL that contains a newline in it, the credential
-   helper machinery can be fooled to give credential information for a
-   wrong host.  The attack has been made impossible by forbidding a
-   newline character in any value passed via the credential protocol.
+Description
 
-Credit for finding the vulnerability goes to Felix Wilhelm of Google
-Project Zero.
----
+==========
 
-I've attached Taylor's original message (sans its large attachment) to
-this posting.
+[1]CVE-2019-14814:Heap Overflow in mwifiex_set_uap_rates() function of
+Marvell Wifi Driver in Linux kernel
 
-Git security releases were made and a security advisory published
-yesterday:
 
-https://github.com/git/git/security/advisories/GHSA-qm7j-c969-7j4q
+The problem is inside mwifiex_set_uap_rates() in
+drivers/net/wireless/marvell/mwifiex/uap_cmd.c.
+There are two memcpy calls in this function to copy WLAN_EID_SUPP_RATES
+element and WLAN_EID_EXT_SUPP_RATES element
 
-I've also attached a text export from the above URL to this posting.
+without checking length. The dst buffer bss_cfg->rates is a array of length
+MWIFIEX_SUPPORTED_RATES(14). The two elements in
 
-(We also have a policy in here that most essential content must be
-included in the posting itself rather than only linked to, so that the
-posting remains valuable even when the external resources are gone.)
+cfg80211_ap_settings are from user space.
 
-Alexander
 
---ibTvN161/egqYuK8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="distros-ttaylorr-20200407.txt"
 
-From: Taylor Blau <ttaylorr at github.com>
-Date: Tue, 7 Apr 2020 11:22:01 -0600
+[2]CVE-2019-14815: Heap Overflow in mwifiex_set_wmm_params() function of
+Marvell Wifi Driver in Linux kernel
 
-Team,
 
-The Git project will release new versions on Tuesday, April 14th, 2020,
-at or around 11:00am PDT (6:00pm UTC). Attached is a Git bundle which
-you can fetch into a clone of 'https://github.com/git/git' via:
+The problem is inside mwifiex_set_wmm_params() in
+drivers/net/wireless/marvell/mwifiex/uap_cmd.c.
+mwifiex_set_wmm_params() calls memcpy to copy WLAN_OUI_MICROSOFT element to
+bss_cfg->wmm_info without checking  length.
 
-  $ git fetch /path/to/git_cve_2020_5260.bundle 'refs/tags/*:refs/tags/*'
+bss_cfg->wmm_info is struct mwifiex_types_wmm_info type with fixed len 24.
 
-containing the tags for versions v2.26.1, v2.25.3, v2.24.2, v2.23.2,
-v2.22.3, v2.21.2, v2.20.3, v2.19.4, v2.18.3, and v2.17.4.
 
-You can verify with `git tag -v <tag>` that the versions were signed by
-the Git maintainer, using the same GPG key as v2.26.0.
 
-Please use these tags to prepare `git` packages for your various
-distributions, using the appropriate tagged versions.
+[3]CVE-2019-14816:Heap Overflow in mwifiex_update_vs_ie() function of
+Marvell Wifi Driver in Linux kernel
 
-In the case that you need to backport this fix to earlier versions,
-please cherry-pick 9a6bbee800 (credential: avoid writing values with
-newlines, 2020-03-11). The additional patches are nice-to-have, but are
-not strictly necessary. The test case in 't0300-credentials.sh' can help
-verify the cherry-pick's correctness.
 
-The addressed issue is:
 
- * CVE-2020-5260:
-   With a crafted URL that contains a newline in it, the credential
-   helper machinery can be fooled to give credential information for a
-   wrong host.  The attack has been made impossible by forbidding a
-   newline character in any value passed via the credential protocol.
+The problem is inside mwifiex_update_vs_ie() in
+drivers/net/wireless/marvell/mwifiex/ie.c.
 
-Credit for finding the vulnerability goes to Felix Wilhelm of Google
-Project Zero.
+mwifiex_set_mgmt_beacon_data_ies()  parses beacon IEs, probe response IEs,
+association response IEs from cfg80211_ap_settings->beacon,
 
-Thanks,
-Taylor
+will call mwifiex_update_vs_ie() twice for each IEs if there exists IEs.
+For beacon_ies as example, on the first call, mwifiex_update_vs_ie() alloc
 
---ibTvN161/egqYuK8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="GHSA-qm7j-c969-7j4q.txt"
+memory ie and then copy WLAN_OUI_MICROSOFT element to ie->ie_buffer,
+ie->ie_buffer
+is a array of length IEEE_MAX_IE_SIZE(256); on the
 
- malicious URLs may cause Git to present stored credentials to the wrong server
+Second call, mwifiex_update_vs_ie() copy WLAN_OUI_WFA elment to
+previous allocated
+ie->ie_buffer. If sum of  length of the two elements is
 
-   peff published GHSA-qm7j-c969-7j4q Apr 14, 2020
+greater than IEEE_MAX_IE_SIZE, will cause buffer overflow.
 
-   Severity
-           high
 
-   Packages
-           Git
 
-   Affected versions
-           <= 2.17.3, 2.18.2, 2.19.3, 2.20.2, 2.21.1, 2.22.2, 2.23.1, 2.24.1,
-           2.25.2, 2.26.0
+Patch
 
-   Patched versions
-           2.17.4, 2.18.3, 2.19.4, 2.20.3, 2.21.2, 2.22.3, 2.23.2, 2.24.2,
-           2.25.3, 2.26.1
+=====
 
-   CVE identifier
-           CVE-2020-5260
+https://lore.kernel.org/linux-wireless/20190828020751.13625-1-huangwenabc@gmail.com/
 
-  Impact
 
-   Git uses external "credential helper" programs to store and retrieve
-   passwords or other credentials from secure storage provided by the
-   operating system. Specially-crafted URLs that contain an encoded newline
-   can inject unintended values into the credential helper protocol stream,
-   causing the credential helper to retrieve the password for one server
-   (e.g., good.example.com) for an HTTP request being made to another server
-   (e.g., evil.example.com), resulting in credentials for the former being
-   sent to the latter. There are no restrictions on the relationship between
-   the two, meaning that an attacker can craft a URL that will present stored
-   credentials for any host to a host of their choosing.
 
-   The vulnerability can be triggered by feeding a malicious URL to git
-   clone. However, the affected URLs look rather suspicious; the likely
-   vector would be through systems which automatically clone URLs not visible
-   to the user, such as Git submodules, or package systems built around Git.
+Credit
 
-  Patches
+==========
 
-   The problem has been patched in the versions published on April 14th,
-   2020, going back to v2.17.x. Anyone wishing to backport the change further
-   can do so by applying commit 9a6bbee (the full release includes extra
-   checks for git fsck, but that commit is sufficient to protect clients
-   against the vulnerability).
+This issue was discovered by huangwen of ADLab of Venustech
 
-  Workarounds
-
-   The most complete workaround is to disable credential helpers altogether:
-
- git config --unset credential.helper
- git config --global --unset credential.helper
- git config --system --unset credential.helper
-
-   An alternative is to avoid malicious URLs:
-
-     * examine the hostname and username portion of URLs fed to git clone for
-       the presence of encoded newlines (%0a) or evidence of
-       credential-protocol injections (e.g., host=github.com)
-
-     * avoid using submodules with untrusted repositories (don't use clone
-       --recurse-submodules; use git submodule update only after examining
-       the URLs found in .gitmodules)
-
-     * avoid tools which may run git clone on untrusted URLs under the hood
-
-  Credits
-
-   This vulnerability was found by Felix Wilhelm of Google Project Zero and
-   fixed by Jeff King of GitHub.
-
-  References
-
-     * release announcement
-     * commits introducing fix
-
-   Visible links
-   . https://github.com/git/git/security/advisories/GHSA-qm7j-c969-7j4q#start-of-content
-   . https://github.com/git/git/commit/9a6bbee8006c24b46a85d29e7b38cfa79e9ab21b
-   . https://lore.kernel.org/git/xmqqy2qy7xn8.fsf@gitster.c.googlers.com/
-   . https://github.com/git/git/compare/v2.17.3...v2.17.4
-
---ibTvN161/egqYuK8--
+--00000000000036ccb7059126fad9--
