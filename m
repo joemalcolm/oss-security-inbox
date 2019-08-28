@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["309" "Tuesday" "1" "August" "2017" "15:57:58" "+0200" "Damien Regad" "dregad@mantisbt.org" "<olq1d0$a2j$1@blaine.gmane.org>" "12" "[oss-security] Re: Advisory: XSS issues in MantisBT (CVE-2017-12061, CVE-2017-12062)" nil nil nil "8" "2017080113:57:58" "[oss-security] Re: Advisory: XSS issues in MantisBT (CVE-2017-12061, CVE-2017-12062)" (number mark "U       dregad@manti Aug  1   12/309   " thread-indent "\"[oss-security] Re: Advisory: XSS issues in MantisBT (CVE-2017-12061, CVE-2017-12062)\"\n") "<olpvai$s2$1@blaine.gmane.org>" ("<olpvai$s2$1@blaine.gmane.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["596" "Wednesday" "28" "August" "2019" "18:34:20" "+0200" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" nil "19" nil "^Cc:" nil nil "8" nil nil (number mark "        hanno@hboeck Aug 28   19/596   " thread-indent "\"Re: [oss-security] Critical Dovecot and Pigeonhole vulnerability\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Critical Dovecot and Pigeonhole vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1405 invoked by uid 550); 1 Aug 2017 14:01:47 -0000
+Received: (qmail 7694 invoked by uid 550); 28 Aug 2019 16:34:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,33 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7676 invoked from network); 28 Aug 2019 16:34:33 -0000
+Message-ID: <20190828183420.17d2662c@computer>
+In-Reply-To: <147864946.1327.1567009698008@appsuite-dev.open-xchange.com>
+References: <e2153c6f-a5a1-b8d5-93cb-f0af0c94fb2a@dovecot.fi>
+	<20190828181722.7f0d04aa@computer>
+	<147864946.1327.1567009698008@appsuite-dev.open-xchange.com>
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Cc: oss-security@lists.openwall.com
+Date: Wed, 28 Aug 2019 18:34:20 +0200
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31764 invoked from network); 1 Aug 2017 13:58:18 -0000
-X-Injected-Via-Gmane: http://gmane.org/
-To: oss-security@lists.openwall.com
-From: Damien Regad <dregad@mantisbt.org>
-Date: Tue, 1 Aug 2017 15:57:58 +0200
-Message-ID: <olq1d0$a2j$1@blaine.gmane.org>
-References: <olpvai$s2$1@blaine.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Complaints-To: usenet@blaine.gmane.org
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-In-Reply-To: <olpvai$s2$1@blaine.gmane.org>
-Content-Language: en-US
-Subject: [oss-security] Re: Advisory: XSS issues in MantisBT (CVE-2017-12061, CVE-2017-12062)
+Subject: Re: [oss-security] Critical Dovecot and Pigeonhole vulnerability
+To: aki.tuomi@dovecot.fi
 
-On 2017-08-01 15:22, Damien Regad wrote:
-> * Releases 1.3.9, 2.1.3, 2.2.3 and 2.3.0 are scheduled for release on
-> coming week-end
+On Wed, 28 Aug 2019 19:28:18 +0300 (EEST)
+aki.tuomi@dovecot.fi wrote:
 
-That was a copy/paste error. The above should have read:
+> I can see 0.5.7.2, we even announced it today.
 
-* Releases 1.3.12, 2.5.2 and 2.6.0 are scheduled for release in the
-coming week.
+Ok, sorry.
 
-Apologies for any confusion.
-Damien
+What confused me: There's a "changes" link right to the Download and
+that points to a changelog that was last updated in july and didn't
+mention anything sounding like that bug. It's for 0.5.7, not 0.5.7.2.
+You should probably fix that link (changing the URL accordingly works):
+https://raw.githubusercontent.com/dovecot/pigeonhole/0.5.7.2/NEWS
 
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
