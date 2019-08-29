@@ -1,122 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/11/2
-Message-ID: <20190211130520.xwi6vpay3sc56pza@yavin>
-Date: Tue, 12 Feb 2019 00:05:20 +1100
-From: Aleksa Sarai <cyphar@...har.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/29/2
+Message-ID: <20190829144244.4cvuomwersv65t4o@yuggoth.org>
+Date: Thu, 29 Aug 2019 14:42:44 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Cc: dev@...ncontainers.org, security-announce@...ncontainers.org
-Subject: CVE-2019-5736: runc container breakout (all versions)
+Subject: [OSSA-2019-004] Ageing time of 0 disables linuxbridge MAC learning (CVE-2019-15753)
 Content-Type: text/plain; charset=utf-8
 
-[[        Patch CRD: 2019-02-11 15:00 CET ]]
-[[ Exploit Code CRD: 2019-02-18 15:00 CET ]]
+=================================================================
+OSSA-2019-004: Ageing time of 0 disables linuxbridge MAC learning
+=================================================================
 
-Hello,
+:Date: August 29, 2019
+:CVE: CVE-2019-15753
 
-I am one of the maintainers of runc (the underlying container runtime
-underneath Docker, cri-o, containerd, Kubernetes, and so on). We
-recently had a vulnerability reported which we have verified and have a
-patch for.
 
-The researchers who found this vulnerability are:
-  * Adam Iwaniuk
-  * Borys Popławski
+Affects
+~~~~~~~
+- Os-vif: >=1.15.0<1.15.2, 1.16.0
 
-In addition, Aleksa Sarai (me) discovered that LXC was also vulnerable
-to a more convoluted version of this flaw.
 
-== OVERVIEW ==
+Description
+~~~~~~~~~~~
+James Denton with Rackspace reported a vulnerability in os-vif, the
+Nova/Neutron network integration library. A hard-coded MAC ageing
+time
+of 0 disables MAC learning in linuxbridge, forcing obligatory
+Ethernet
+flooding for non-local destinations which both impedes network
+performance and allows users to possibly view the content of packets
+for instances belonging to other tenants sharing the same network.
+Only deployments using the linuxbridge backend are affected.
 
-The vulnerability allows a malicious container to (with minimal user
-interaction) overwrite the host runc binary and thus gain root-level
-code execution on the host. The level of user interaction is being able
-to run any command (it doesn't matter if the command is not
-attacker-controlled) as root within a container in either of these
-contexts:
 
-  * Creating a new container using an attacker-controlled image.
-  * Attaching (docker exec) into an existing container which the
-    attacker had previous write access to.
+Patches
+~~~~~~~
+- https://review.opendev.org/678098 (Stein)
+- https://review.opendev.org/672834 (Train)
 
-This vulnerability is *not* blocked by the default AppArmor policy, nor
-by the default SELinux policy on Fedora[++] (because container processes
-appear to be running as container_runtime_t). However, it *is* blocked
-through correct use of user namespaces (where the host root is not
-mapped into the container's user namespace).
 
-Our CVSSv3 vector is (with a score of 7.2):
+Credits
+~~~~~~~
+- James Denton from Rackspace (CVE-2019-15753)
 
-  AV:L/AC:H/PR:L/UI:R/S:C/C:N/I:H/A:H
 
-The assigned CVE for this issue is CVE-2019-5736.
-
-[++]: This is only the case for the "moby-engine" package on Fedora. The
-	  "docker" package as well as podman are protected against this
-	  exploit because they run container processes as container_t.
-
-== PATCHES ==
-
-I have attached the relevant patch which fixes this issue. This patch is
-based on HEAD, but the code in libcontainer/nsenter/ changes so
-infrequently that it should apply cleanly to any old version of the runc
-codebase you are dealing with.
-
-Please note that the patch I have pushed to runc master[1] is a modified
-version of this patch -- even though it is functionally identical
-(though we would recommend using the upstream one if you haven't patched
-using the attached one already).
-
-== NON-ESSENTIAL EXPLOIT CODE ==
-
-Several vendors have asked for exploit code to ensure that the patches
-actually solve the issue. Due to the severity of the issue (especially
-for public cloud vendors), we decided to provide the attached exploit
-code. This exploit code was written by me, and is more generic than the
-original exploit code provided by the researchers and works against LXC
-(it could likely be used on other vulnerable runtimes with no
-significant modification). Details on how to use the exploit code are
-provided in the README.
-
-As per OpenWall rules, this exploit code will be published *publicly* 7
-days after the CRD (which is 2019-02-18). *If you have a container
-runtime, please verify that you are not vulnerable to this issue
-beforehand.*
-
-== IMPACT ON OTHER PROJECTS ==
-
-It should be noted that upon further investigation I've discovered that
-LXC has a similar vulnerability, and they have also pushed a similar
-patch[2] which we co-developed. LXC is a bit harder to exploit, but the
-same fundamental flaw exists.
-
-After some discussion with the systemd-nspawn folks, it appears that
-they aren't vulnerable (because their method of attaching to a container
-uses a different method to LXC and runc).
-
-I have been contacted by folks from Apache Mesos who said they were also
-vulnerable (I believe just using the exploit code that will be
-provided). It is quite likely that most container runtimes are
-vulnerable to this flaw, unless they took very strange mitigations
-before-hand.
-
-== OTHER NEWS ==
-
-We have set up an announcement list for future security vulnerabilities,
-and you can see the process for joining here[3] (it's based on the
-Kubernetes security-announce mailing list). Please join if you
-distribute any container runtimes that depend on runc (or other OCI
-projects).
-
-[1]: https://github.com/opencontainers/runc/commit/0a8e4117e7f715d5fbeef398405813ce8e88558b
-[2]: https://github.com/lxc/lxc/commit/6400238d08cdf1ca20d49bafb85f4e224348bf9d
-[3]: https://github.com/opencontainers/org/blob/master/security.md
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1837252
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15753
 
 -- 
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
+Jeremy Stanley, on behalf of the OpenStack VMT
 
-View attachment "0001-nsenter-clone-proc-self-exe-to-avoid-exposing-host-b.patch" of type "text/x-patch" (7643 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
