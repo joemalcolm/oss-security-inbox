@@ -1,37 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/27/3
-Message-ID: <20190927185309.GE1884@elm>
-Date: Fri, 27 Sep 2019 13:53:10 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: mathias.payer@...elwelt.net, benquike@...il.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/29/3
+Message-ID: <fccdd50d1a8afe0fa1b3d9d45a92aa245ad05121.camel@gmail.com>
+Date: Thu, 29 Aug 2019 17:59:34 +0200
+From: Ailin Nemui <ailin.nemui@...il.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Irssi 1.2.2:CVE-2019-15717
 Content-Type: text/plain; charset=utf-8
 
-On 2019-09-27 19:01:48, Andrey Konovalov wrote:
-> On Fri, Sep 27, 2019 at 6:51 PM Tyler Hicks <tyhicks@...onical.com> wrote:
-> >
-> > On 2019-08-20 20:20:34, Andrey Konovalov wrote:
-> > > * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15290
-> > >
-> > > An issue was discovered in the Linux kernel through 5.2.9. There is a
-> > > NULL pointer dereference caused by a malicious USB device in the
-> > > ath6kl_usb_alloc_urb_from_pipe function in the
-> > > drivers/net/wireless/ath/ath6kl/usb.c driver.
-> >
-> > This seems like it might be a duplicate of CVE-2019-15098. The fix for
-> > CVE-2019-15098 was recently merged upstream:
-> >
-> >  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=39d170b3cb62ba98567f5c4f40c27b5864b304e5
-> >
-> > If you agree, could you request that MITRE mark CVE-2019-15290 as a
-> > duplicate of CVE-2019-15098?
-> 
-> Oh, nice, Mathias and Hui found it as well and fixed it! =)
-> 
-> Yes, these two CVEs are for the same issue, feel free to mark them as such.
+IRSSI-SA-2019-08 Irssi Security Advisory [1]
+============================================
+CVE-2019-15717
 
-I've requested that MITRE mark CVE-2019-15290 as a dupe of
-CVE-2019-15098. Thanks!
+Description
+-----------
 
-Tyler
+(a) Use after free when receiving duplicate CAP found by Joseph Bisch.
+    (CWE-416)
+
+    CVE-2019-15717 [2] was assigned to this issue.
+
+
+Impact
+------
+
+May affect the stability of Irssi.
+
+
+Affected versions
+-----------------
+
+(a) Irssi 1.2.0 and later
+
+
+Fixed in
+--------
+
+Irssi 1.2.2
+
+
+Recommended action
+------------------
+
+Upgrade to Irssi 1.2.2. We've published maintenance releases, without
+any new features.
+
+After installing the updated packages, one can issue the /upgrade
+command to load the new binary. TLS connections will require /reconnect.
+
+
+Mitigating facts
+----------------
+
+Most servers do not send duplicate CAP
+
+
+
+References
+----------
+
+[1] https://irssi.org/security/irssi_sa_2019_08.txt
+[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15717
+
+
