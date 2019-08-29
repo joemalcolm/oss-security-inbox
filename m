@@ -1,46 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/17
-Message-ID: <CABXRUiRed3B0GU-BeiUGMnkKd9X5=KGg7VCEPL=xTxrY46nHrQ@mail.gmail.com>
-Date: Thu, 18 Apr 2019 21:34:30 +0800
-From: Fuqian Huang <huangfq.daxian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/29/5
+Message-ID: <20190829191847.g4rzva7jqdtmc2lv@LykOS.localdomain>
+Date: Thu, 29 Aug 2019 15:18:47 -0400
+From: Santiago Torres <torresariass@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel < 4.14.111 drivers/scsi/cxgbi/cxgb3i/cxgb3i.c kernel address dumps to user space
+Subject: Re: Irssi 1.2.2:CVE-2019-15717
 Content-Type: text/plain; charset=utf-8
 
-In drivers/scsi/cxgbi/cxgb3i/cxgb3i.c:576,
-do_act_open_rpl will dump the address of csk to dmesg
-which allows local user to read kernel address via dmesg.
+On Thu, Aug 29, 2019 at 05:59:34PM +0200, Ailin Nemui wrote:
+> IRSSI-SA-2019-08 Irssi Security Advisory [1]
+> ============================================
+> CVE-2019-15717
+Hi,
 
-static int do_act_open_rpl(struct t3cdev *tdev, struct sk_buff *skb, void *ctx)
-{
-    ...
-    pr_info("csk 0x%p,%u,0x%lx,%u, status %u, %pI4:%u-%pI4:%u.\n",
-        csk, csk->state, csk->flags, csk->atid, rpl->status,
-        &csk->saddr.sin_addr.s_addr, ntohs(csk->saddr.sin_port),
-        &csk->daddr.sin_addr.s_addr, ntohs(csk->daddr.sin_port));
-    ...
-}
+is there any other information about this UAF? namely, it says it would
+affect the stability, yet I wonder if impact could lead to ACE.
 
-In drivers/scsi/cxgbi/cxgb3i/cxgb3i.c:1064,
-cxgb3i_ofld_init will dump the address of cdev to dmesg
-which allows local user to read kernel address via dmesg.
+Thanks!
+-Santiago.
 
-static int cxgb3i_ofld_init(struct cxgbi_device *cdev)
-{
-    ...
-    pr_info("cdev 0x%p, offload up, added.\n", cdev);
-    ...
-}
-
-In drivers/scsi/cxgbi/cxgb3i/cxgb3i.c:1343,
-cxgb3i_dev_open will dump the address of cdev to dmesg
-which allows local user to read kernel address via dmesg.
-
-static void cxgb3i_dev_open(struct t3cdev *t3dev)
-{
-    ...
-    pr_info("cdev 0x%p, f 0x%x, t3dev 0x%p open, err %d.\n",
-        cdev, cdev ? cdev->flags : 0, t3dev, err);
-    return;
-    ...
-}
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
