@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/08/1
-Message-ID: <nycvar.YSQ.7.76.1904081004200.6584@xnncv>
-Date: Mon, 8 Apr 2019 10:07:52 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Marc Orr <marcorr@...gle.com>
-Subject: CVE-2019-3887 Kernel: KVM: nVMX: guest accesses L0 MSR causes potential DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/29/1
+Message-ID: <d8544143-4a18-ef44-b4bd-b2efc1c3aa60@isc.org>
+Date: Wed, 28 Aug 2019 23:46:31 -0800
+From: Michael McNally <mcnally@....org>
+To: oss-security@...ts.openwall.com
+Subject: Three vulnerabilities in Kea DHCP disclosed by ISC, 28 August 2019
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Earlier today (28 Aug 2019) ISC disclosed three vulnerabilities in our
+Kea DHCP software.
 
-A flaw was found in the way KVM hypervisor handled x2APIC Machine Specific 
-Rregister(MSR) access with nested(=1) virtualization enabled. In that, L1 
-guest could access L0's APIC register values via L2 guest, when 'virtualize 
-x2APIC mode' is enabled.
+   CVE-2019-6472 affects the Kea DHCPv6 server, which can exit
+   with an assertion failure if the DHCPv6 server process receives
+   a request containing DUID value which is too large.
+   (https://kb.isc.org/docs/cve-2019-6474)
 
-A guest could use this flaw to potentially crash the host kernel resulting in 
-DoS issue.
+   CVE-2019-6473 affects the Kea DHCPv4 server, which can exit with
+   an assertion failure if it receives a packed containing a malformed
+   option.  (https://kb.isc.org/docs/cve-2019-6473)
 
-Upstream patches:
------------------
-   -> https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=acff78477b9b4f26ecdf65733a4ed77fe837e9dc
-   -> https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=c73f4c998e1fd4249b9edfa39e23f4fda2b9b041
+   CVE-2019-6474 can cause a condition where the server cannot be
+   restarted without manual operator intervention to correct a problem
+   that can be deliberately introduced into the stored leases.
+   CVE-2019-6474 can only affect servers which are using memfile
+   for lease storage.  (https://kb.isc.org/docs/cve-2019-6474)
 
-This issue was discovered by Marc Orr of Google Inc.
+To correct these vulnerabilities new releases of Kea were issued:
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+   -  Kea 1.6.0
+   -  Kea 1.5.0-P1
+   -  Kea 1.4.0-P2
+
+any of which can be downloaded via the ISC downloads page,
+https://www.isc.org/downloads.
+
+If you are a distributor of packages based on ISC's Kea DHCP
+software, you may consider the issue publicly disclosed and proceed
+with your own packages.
+
+Sincerely,
+
+Michael McNally
+ISC Security Officer
