@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["902" "Monday" "18" "April" "2016" "17:44:21" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1604181740160.24870@wniryva>" "27" "[oss-security] Qemu: usb: Infinite loop vulnerability in usb_ehci using siTD process" nil nil nil "4" "2016041812:14:21" "[oss-security] Qemu: usb: Infinite loop vulnerability in usb_ehci using siTD process" (number mark "U       ppandit@redh Apr 18   27/902   " thread-indent "\"[oss-security] Qemu: usb: Infinite loop vulnerability in usb_ehci using siTD process\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2615" "Thursday" "29" "August" "2019" "14:42:44" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" nil "77" nil nil nil nil "8" nil nil (number mark "U       fungi@yuggot Aug 29   77/2615  " thread-indent "\"[oss-security] [OSSA-2019-004] Ageing time of 0 disables linuxbridge MAC learning (CVE-2019-15753)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [OSSA-2019-004] Ageing time of 0 disables linuxbridge MAC learning (CVE-2019-15753)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9897 invoked by uid 550); 18 Apr 2016 12:14:39 -0000
+Received: (qmail 13355 invoked by uid 550); 29 Aug 2019 14:42:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +12,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9879 invoked from network); 18 Apr 2016 12:14:39 -0000
-Date: Mon, 18 Apr 2016 17:44:21 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: dushaobo@360.cn
-Message-ID: <alpine.LFD.2.20.1604181740160.24870@wniryva>
+Received: (qmail 13317 invoked from network); 29 Aug 2019 14:42:58 -0000
+Date: Thu, 29 Aug 2019 14:42:44 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20190829144244.4cvuomwersv65t4o@yuggoth.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Subject: [oss-security] Qemu: usb: Infinite loop vulnerability in usb_ehci using siTD
- process
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="2mabyim7sklanip5"
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: [oss-security] [OSSA-2019-004] Ageing time of 0 disables linuxbridge MAC learning
+ (CVE-2019-15753)
 
-   Hello,
+--2mabyim7sklanip5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Qemu emulator built with the USB EHCI emulation support is vulnerable to an 
-infinite loop issue. It occurs during communication between host controller 
-interface(EHCI) and a respective device driver. These two communicate via a 
-split isochronous transfer descriptor list(siTD) and an infinite loop unfolds 
-if there is a closed loop in this list.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2019-004: Ageing time of 0 disables linuxbridge MAC learning
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-A privileges used inside guest could use this flaw to consume excessive CPU 
-cycles & resources on the host.
+:Date: August 29, 2019
+:CVE: CVE-2019-15753
 
-This issue is similar to CVE-2015-8558, but using siTD instead of iTD.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg02691.html
+Affects
+~~~~~~~
+- Os-vif: >=3D1.15.0<1.15.2, 1.16.0
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1325129
 
-This issue are discovered by Du Shaobo of Qihoo 360 Inc.
+Description
+~~~~~~~~~~~
+James Denton with Rackspace reported a vulnerability in os-vif, the
+Nova/Neutron network integration library. A hard-coded MAC ageing
+time
+of 0 disables MAC learning in linuxbridge, forcing obligatory
+Ethernet
+flooding for non-local destinations which both impedes network
+performance and allows users to possibly view the content of packets
+for instances belonging to other tenants sharing the same network.
+Only deployments using the linuxbridge backend are affected.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+Patches
+~~~~~~~
+- https://review.opendev.org/678098 (Stein)
+- https://review.opendev.org/672834 (Train)
+
+
+Credits
+~~~~~~~
+- James Denton from Rackspace (CVE-2019-15753)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1837252
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2019-15753
+
+--=20
+Jeremy Stanley, on behalf of the OpenStack VMT
+
+--2mabyim7sklanip5
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAl1n5GRfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCmerw//aaj2lbq53scVY0wvL+oHBoUd5K+iWWr599oeg2s9WPq66eTXyLOE1fHe
+n6fu0MOGWc04ll6YJ4yy3KJP+qRHXNU8ArIbrRdUhAIITp4X0unTJa41TOY3V/CY
+X0O0DjpzUA9CDGydMCzktEHwBBuM3BkOwMuebOKpEpjrjX5JixaUB11C3obhGI9n
+zk7tGu54BU0I94NdglN4Mv6LRsP3pyIvef/TyvJB2/nQsInu/UOFNd5T1owAND8P
++wmT92WT+QrAGIT7ZEvU3aeVVr71BP2O1lX83/y1PCX3qaTWGholJgt3sJId1GEd
+XyA17O5w6FiSRwg8p8XrI2ypwE8PNCxQIsuKUouNqKr8lvNdzEONlrJefeS5kkDb
+U485J+UTXoA36CSg7LZ/BmBB8iPUr34Sblg+mDJckv4QI5BveLmaqLrTp2cmimub
+JiGpR3GpD6S4pgxnt+y8EQ3TaYjLdoADhRNyt0NPhFKS7IFcwf4Udt0QhyT8sYsb
+KmFtWj/HZ8U8MpF1o+2umbu4gss/rJTXwxCeN8cZ/PJTWOMql0hUZF423w50BNoC
+IwbYkOuodkbYh3Z8IIh83SD3PI0KxydagpXG0K/McnIuQCkGHKcveTQTYEIPOWe0
+8iGZugtHipJGi2hIpgkgBm+IqM2ZKWCWr+7HJXSDSgd5CicsaoM=
+=8nFF
+-----END PGP SIGNATURE-----
+
+--2mabyim7sklanip5--
