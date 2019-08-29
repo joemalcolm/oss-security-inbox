@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6219" "Friday" "3" "November" "2017" "15:18:49" "+0100" "Solar Designer" "solar@openwall.com" "<20171103141849.GA2264@openwall.com>" "122" "Re: [oss-security] Security risk of server side text editing in general and vim.tiny specifically" "^Date:" nil nil "11" "2017110314:18:49" "[oss-security] Security risk of server side text editing in general and vim.tiny specifically" (number mark "U       solar@openwa Nov  3  122/6219  " thread-indent "\"Re: [oss-security] Security risk of server side text editing in general and vim.tiny specifically\"\n") "<2ECE9D9EEF1F524185270138AE23265955B0BAE7@S0MSMAIL112.arc.local>" ("<2ECE9D9EEF1F524185270138AE23265955B0BAE7@S0MSMAIL112.arc.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["12000" "Thursday" "29" "August" "2019" "17:43:24" "+0300" "Adrian Perez de Castro" "aperez@igalia.com" nil "207" nil nil nil nil "8" nil nil (number mark "U       aperez@igali Aug 29  207/12000 " thread-indent "\"[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2019-0004\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2019-0004" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11545 invoked by uid 550); 3 Nov 2017 14:19:21 -0000
+Received: (qmail 11840 invoked by uid 550); 29 Aug 2019 17:15:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,139 +11,226 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11266 invoked from network); 3 Nov 2017 14:18:54 -0000
-Message-ID: <20171103141849.GA2264@openwall.com>
-References: <2ECE9D9EEF1F524185270138AE23265955B0BAE7@S0MSMAIL112.arc.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2ECE9D9EEF1F524185270138AE23265955B0BAE7@S0MSMAIL112.arc.local>
-User-Agent: Mutt/1.4.2.3i
-Date: Fri, 3 Nov 2017 15:18:49 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Security risk of server side text editing in general and vim.tiny specifically
-To: oss-security@lists.openwall.com
+Received: (qmail 19575 invoked from network); 29 Aug 2019 14:43:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
+	h=Content-Type:MIME-Version:References:Subject:Cc:To:From:Message-ID:Date; bh=Vi5UZpbFyRK4vzl84/YTTYcjit81E7YW2yhuRJGGQgU=;
+	b=X65qZ/uKDos4OQ7XBvPkUj2LK1muIaX1ooSoxQt5P+Ze78UWnK6w63jrYVdGLLIsbLLM/vVXPw5BMj5X6nsKF1I57NqEbSZ1QrtqP8eMjL1dU9/XkHyWl/tkiVRl3FqW0QLfS8CZFkxDjoR2vdHr0u2IMATOO8PD5o0b1RMl2icoKBcbhLEV5QBWpksKghuiBCKKGJYf9twmGq2kpxQFu74HqW4bx/Z377AKkXSEa7kGU54LkIanAYbpnNMVF4KIH776EEyThriFo9K0PkJgF4ntJufi0uugP7TVKlq4iy6c7soZdG4WGC1+o0jJsOw7gJ//V2zfKA2kclCQ5Qi9GA==;
+Date: Thu, 29 Aug 2019 17:43:24 +0300
+Message-ID: <20190829174324.GB14146@momiji>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+References: 
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="+vUlT59VfB3nDkEU"; micalg="pgp-sha1"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2019-0004
 
-On Fri, Nov 03, 2017 at 12:57:25PM +0000, Fiedler Roman wrote:
-> I want to lessen possible legal issues
+--+vUlT59VfB3nDkEU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
-Oh.  I wouldn't have guessed.
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BF
+IFdlYktpdCBTZWN1cml0eSBBZHZpc29yeSAgICAgICAgICAgICAgICAgV1NB
+LTIwMTktMDAwNAotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUg
+cmVwb3J0ZWQgICAgICAgICAgIDogQXVndXN0IDI5LCAyMDE5CkFkdmlzb3J5
+IElEICAgICAgICAgICAgIDogV1NBLTIwMTktMDAwNApXZWJLaXRHVEsgQWR2
+aXNvcnkgVVJMICA6IGh0dHBzOi8vd2Via2l0Z3RrLm9yZy9zZWN1cml0eS9X
+U0EtMjAxOS0wMDA0Lmh0bWwKV1BFIFdlYktpdCBBZHZpc29yeSBVUkwgOiBo
+dHRwczovL3dwZXdlYmtpdC5vcmcvc2VjdXJpdHkvV1NBLTIwMTktMDAwNC5o
+dG1sCkNWRSBpZGVudGlmaWVycyAgICAgICAgIDogQ1ZFLTIwMTktODY0NCwg
+Q1ZFLTIwMTktODY0OSwgQ1ZFLTIwMTktODY1OCwKICAgICAgICAgICAgICAg
+ICAgICAgICAgICBDVkUtMjAxOS04NjY2LCBDVkUtMjAxOS04NjY5LCBDVkUt
+MjAxOS04NjcxLAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDE5
+LTg2NzIsIENWRS0yMDE5LTg2NzMsIENWRS0yMDE5LTg2NzYsCiAgICAgICAg
+ICAgICAgICAgICAgICAgICAgQ1ZFLTIwMTktODY3NywgQ1ZFLTIwMTktODY3
+OCwgQ1ZFLTIwMTktODY3OSwKICAgICAgICAgICAgICAgICAgICAgICAgICBD
+VkUtMjAxOS04NjgwLCBDVkUtMjAxOS04NjgxLCBDVkUtMjAxOS04NjgzLAog
+ICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDE5LTg2ODQsIENWRS0y
+MDE5LTg2ODYsIENWRS0yMDE5LTg2ODcsCiAgICAgICAgICAgICAgICAgICAg
+ICAgICAgQ1ZFLTIwMTktODY4OCwgQ1ZFLTIwMTktODY4OSwgQ1ZFLTIwMTkt
+ODY5MC4KClNldmVyYWwgdnVsbmVyYWJpbGl0aWVzIHdlcmUgZGlzY292ZXJl
+ZCBpbiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQuCgpDVkUtMjAxOS04NjQ0
+CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGJlZm9yZSAyLjI0
+LjQgYW5kIFdQRSBXZWJLaXQgYmVmb3JlCiAgICAyLjI0LjMuCiAgICBDcmVk
+aXQgdG8gRy4gR2VzaGV2IHdvcmtpbmcgd2l0aCBUcmVuZCBNaWNybydzIFpl
+cm8gRGF5IEluaXRpYXRpdmUuCiAgICBQcm9jZXNzaW5nIG1hbGljaW91c2x5
+IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYXJiaXRyYXJ5CiAg
+ICBjb2RlIGV4ZWN1dGlvbi4gTXVsdGlwbGUgbWVtb3J5IGNvcnJ1cHRpb24g
+aXNzdWVzIHdlcmUgYWRkcmVzc2VkCiAgICB3aXRoIGltcHJvdmVkIG1lbW9y
+eSBoYW5kbGluZy4KCkNWRS0yMDE5LTg2NDkKICAgIFZlcnNpb25zIGFmZmVj
+dGVkOiBXZWJLaXRHVEsgYmVmb3JlIDIuMjQuNCBhbmQgV1BFIFdlYktpdCBi
+ZWZvcmUKICAgIDIuMjQuMy4KICAgIENyZWRpdCB0byBTZXJnZWkgR2xhenVu
+b3Ygb2YgR29vZ2xlIFByb2plY3QgWmVyby4KICAgIFByb2Nlc3NpbmcgbWFs
+aWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byB1bml2
+ZXJzYWwKICAgIGNyb3NzIHNpdGUgc2NyaXB0aW5nLiBBIGxvZ2ljIGlzc3Vl
+IGV4aXN0ZWQgaW4gdGhlIGhhbmRsaW5nIG9mCiAgICBzeW5jaHJvbm91cyBw
+YWdlIGxvYWRzLiBUaGlzIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aCBpbXBy
+b3ZlZCBzdGF0ZQogICAgbWFuYWdlbWVudC4KCkNWRS0yMDE5LTg2NTgKICAg
+IFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYmVmb3JlIDIuMjQuNCBh
+bmQgV1BFIFdlYktpdCBiZWZvcmUKICAgIDIuMjQuMy4KICAgIENyZWRpdCB0
+byBha2F5biB3b3JraW5nIHdpdGggVHJlbmQgTWljcm8ncyBaZXJvIERheSBJ
+bml0aWF0aXZlLgogICAgUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVk
+IHdlYiBjb250ZW50IG1heSBsZWFkIHRvIHVuaXZlcnNhbAogICAgY3Jvc3Mg
+c2l0ZSBzY3JpcHRpbmcuIEEgbG9naWMgaXNzdWUgd2FzIGFkZHJlc3NlZCB3
+aXRoIGltcHJvdmVkCiAgICBzdGF0ZSBtYW5hZ2VtZW50LgoKQ1ZFLTIwMTkt
+ODY2NgogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BF
+IFdlYktpdCBiZWZvcmUgMi4yNC4zLgogICAgQ3JlZGl0IHRvIFpvbmdtaW5n
+IFdhbmcgKOeOi+Wul+aYjikgYW5kIFpoZSBKaW4gKOmHkeWTsikgZnJvbSBD
+aGVuZ2R1IFNlY3VyaXR5CiAgICBSZXNwb25zZSBDZW50ZXIgb2YgUWlob28g
+MzYwIFRlY2hub2xvZ3kgQ28uIEx0ZC4KICAgIFByb2Nlc3NpbmcgbWFsaWNp
+b3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhcmJpdHJh
+cnkKICAgIGNvZGUgZXhlY3V0aW9uLiBNdWx0aXBsZSBtZW1vcnkgY29ycnVw
+dGlvbiBpc3N1ZXMgd2VyZSBhZGRyZXNzZWQKICAgIHdpdGggaW1wcm92ZWQg
+bWVtb3J5IGhhbmRsaW5nLgoKQ1ZFLTIwMTktODY2OQogICAgVmVyc2lvbnMg
+YWZmZWN0ZWQ6IFdlYktpdEdUSyBiZWZvcmUgMi4yNC40IGFuZCBXUEUgV2Vi
+S2l0IGJlZm9yZQogICAgMi4yNC4zLgogICAgQ3JlZGl0IHRvIGFrYXluIHdv
+cmtpbmcgd2l0aCBUcmVuZCBNaWNybydzIFplcm8gRGF5IEluaXRpYXRpdmUu
+CiAgICBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRl
+bnQgbWF5IGxlYWQgdG8gYXJiaXRyYXJ5CiAgICBjb2RlIGV4ZWN1dGlvbi4g
+TXVsdGlwbGUgbWVtb3J5IGNvcnJ1cHRpb24gaXNzdWVzIHdlcmUgYWRkcmVz
+c2VkCiAgICB3aXRoIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KCkNWRS0y
+MDE5LTg2NzEKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5k
+IFdQRSBXZWJLaXQgYmVmb3JlIDIuMjQuMi4KICAgIENyZWRpdCB0byBBcHBs
+ZS4KICAgIFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29u
+dGVudCBtYXkgbGVhZCB0byBhcmJpdHJhcnkKICAgIGNvZGUgZXhlY3V0aW9u
+LiBNdWx0aXBsZSBtZW1vcnkgY29ycnVwdGlvbiBpc3N1ZXMgd2VyZSBhZGRy
+ZXNzZWQKICAgIHdpdGggaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgoKQ1ZF
+LTIwMTktODY3MgogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBh
+bmQgV1BFIFdlYktpdCBiZWZvcmUgMi4yNC4yLgogICAgQ3JlZGl0IHRvIFNh
+bXVlbCBHcm/DnyBvZiBHb29nbGUgUHJvamVjdCBaZXJvLgogICAgUHJvY2Vz
+c2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFk
+IHRvIGFyYml0cmFyeQogICAgY29kZSBleGVjdXRpb24uIE11bHRpcGxlIG1l
+bW9yeSBjb3JydXB0aW9uIGlzc3VlcyB3ZXJlIGFkZHJlc3NlZAogICAgd2l0
+aCBpbXByb3ZlZCBtZW1vcnkgaGFuZGxpbmcuCgpDVkUtMjAxOS04NjczCiAg
+ICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0
+IGJlZm9yZSAyLjI0LjMuCiAgICBDcmVkaXQgdG8gU295ZW9uIFBhcmsgYW5k
+IFdlbiBYdSBvZiBTU0xhYiBhdCBHZW9yZ2lhIFRlY2guCiAgICBQcm9jZXNz
+aW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQg
+dG8gYXJiaXRyYXJ5CiAgICBjb2RlIGV4ZWN1dGlvbi4gTXVsdGlwbGUgbWVt
+b3J5IGNvcnJ1cHRpb24gaXNzdWVzIHdlcmUgYWRkcmVzc2VkCiAgICB3aXRo
+IGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KCkNWRS0yMDE5LTg2NzYKICAg
+IFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQg
+YmVmb3JlIDIuMjQuMy4KICAgIENyZWRpdCB0byBTb3llb24gUGFyayBhbmQg
+V2VuIFh1IG9mIFNTTGFiIGF0IEdlb3JnaWEgVGVjaC4KICAgIFByb2Nlc3Np
+bmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0
+byBhcmJpdHJhcnkKICAgIGNvZGUgZXhlY3V0aW9uLiBNdWx0aXBsZSBtZW1v
+cnkgY29ycnVwdGlvbiBpc3N1ZXMgd2VyZSBhZGRyZXNzZWQKICAgIHdpdGgg
+aW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgoKQ1ZFLTIwMTktODY3NwogICAg
+VmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBi
+ZWZvcmUgMi4yNC4yLgogICAgQ3JlZGl0IHRvIEppaHVpIEx1IG9mIFRlbmNl
+bnQgS2VlbkxhYi4KICAgIFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRl
+ZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhcmJpdHJhcnkKICAgIGNvZGUg
+ZXhlY3V0aW9uLiBNdWx0aXBsZSBtZW1vcnkgY29ycnVwdGlvbiBpc3N1ZXMg
+d2VyZSBhZGRyZXNzZWQKICAgIHdpdGggaW1wcm92ZWQgbWVtb3J5IGhhbmRs
+aW5nLgoKQ1ZFLTIwMTktODY3OAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdl
+YktpdEdUSyBiZWZvcmUgMi4yNC40IGFuZCBXUEUgV2ViS2l0IGJlZm9yZQog
+ICAgMi4yNC4zLgogICAgQ3JlZGl0IHRvIGFuIGFub255bW91cyByZXNlYXJj
+aGVyLCBBbnRob255IExhaSAoQGRhcmtmbG95ZDEwMTQpIG9mCiAgICBLbm93
+bnNlYywgS2VuIFdvbmcgKEB3d2tlbndvbmcpIG9mIFZYUkwsIEplb25naG9v
+biBTaGluIChAc2luZ2kyMWEpCiAgICBvZiBUaGVvcmksIEpvaG5ueSBZdSAo
+QHN0cmFpZ2h0X2JsYXN0KSBvZiBWWCBCcm93c2VyIEV4cGxvaXRhdGlvbgog
+ICAgR3JvdXAsIENocmlzIENoYW4gKEBkcjRnMG5mbDRtZSkgb2YgVlggQnJv
+d3NlciBFeHBsb2l0YXRpb24gR3JvdXAsCiAgICBQaGlsIE1vayAoQHNoYWR5
+aGFtc3RlcnMpIG9mIFZYIEJyb3dzZXIgRXhwbG9pdGF0aW9uIEdyb3VwLCBB
+bGFuIEhvCiAgICAoQGFsYW5faDApIG9mIEtub3duc2VjLCBCeXJvbiBXYWkg
+b2YgVlggQnJvd3NlciBFeHBsb2l0YXRpb24uCiAgICBQcm9jZXNzaW5nIG1h
+bGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYXJi
+aXRyYXJ5CiAgICBjb2RlIGV4ZWN1dGlvbi4gTXVsdGlwbGUgbWVtb3J5IGNv
+cnJ1cHRpb24gaXNzdWVzIHdlcmUgYWRkcmVzc2VkCiAgICB3aXRoIGltcHJv
+dmVkIG1lbW9yeSBoYW5kbGluZy4KCkNWRS0yMDE5LTg2NzkKICAgIFZlcnNp
+b25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3Jl
+IDIuMjQuMi4KICAgIENyZWRpdCB0byBKaWh1aSBMdSBvZiBUZW5jZW50IEtl
+ZW5MYWIuCiAgICBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2Vi
+IGNvbnRlbnQgbWF5IGxlYWQgdG8gYXJiaXRyYXJ5CiAgICBjb2RlIGV4ZWN1
+dGlvbi4gTXVsdGlwbGUgbWVtb3J5IGNvcnJ1cHRpb24gaXNzdWVzIHdlcmUg
+YWRkcmVzc2VkCiAgICB3aXRoIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4K
+CkNWRS0yMDE5LTg2ODAKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRH
+VEsgYmVmb3JlIDIuMjQuNCBhbmQgV1BFIFdlYktpdCBiZWZvcmUKICAgIDIu
+MjQuMy4KICAgIENyZWRpdCB0byBKaWh1aSBMdSBvZiBUZW5jZW50IEtlZW5M
+YWIuCiAgICBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNv
+bnRlbnQgbWF5IGxlYWQgdG8gYXJiaXRyYXJ5CiAgICBjb2RlIGV4ZWN1dGlv
+bi4gTXVsdGlwbGUgbWVtb3J5IGNvcnJ1cHRpb24gaXNzdWVzIHdlcmUgYWRk
+cmVzc2VkCiAgICB3aXRoIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KCkNW
+RS0yMDE5LTg2ODEKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsg
+YW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuMjQuMy4KICAgIENyZWRpdCB0byBH
+LiBHZXNoZXYgd29ya2luZyB3aXRoIFRyZW5kIE1pY3JvIFplcm8gRGF5IElu
+aXRpYXRpdmUuCiAgICBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQg
+d2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYXJiaXRyYXJ5CiAgICBjb2RlIGV4
+ZWN1dGlvbi4gTXVsdGlwbGUgbWVtb3J5IGNvcnJ1cHRpb24gaXNzdWVzIHdl
+cmUgYWRkcmVzc2VkCiAgICB3aXRoIGltcHJvdmVkIG1lbW9yeSBoYW5kbGlu
+Zy4KCkNWRS0yMDE5LTg2ODMKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJL
+aXRHVEsgYmVmb3JlIDIuMjQuNCBhbmQgV1BFIFdlYktpdCBiZWZvcmUKICAg
+IDIuMjQuMy4KICAgIENyZWRpdCB0byBsb2tpaGFyZHQgb2YgR29vZ2xlIFBy
+b2plY3QgWmVyby4KICAgIFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRl
+ZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhcmJpdHJhcnkKICAgIGNvZGUg
+ZXhlY3V0aW9uLiBNdWx0aXBsZSBtZW1vcnkgY29ycnVwdGlvbiBpc3N1ZXMg
+d2VyZSBhZGRyZXNzZWQKICAgIHdpdGggaW1wcm92ZWQgbWVtb3J5IGhhbmRs
+aW5nLgoKQ1ZFLTIwMTktODY4NAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdl
+YktpdEdUSyBiZWZvcmUgMi4yNC40IGFuZCBXUEUgV2ViS2l0IGJlZm9yZQog
+ICAgMi4yNC4zLgogICAgQ3JlZGl0IHRvIGxva2loYXJkdCBvZiBHb29nbGUg
+UHJvamVjdCBaZXJvLgogICAgUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFm
+dGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFyYml0cmFyeQogICAgY29k
+ZSBleGVjdXRpb24uIE11bHRpcGxlIG1lbW9yeSBjb3JydXB0aW9uIGlzc3Vl
+cyB3ZXJlIGFkZHJlc3NlZAogICAgd2l0aCBpbXByb3ZlZCBtZW1vcnkgaGFu
+ZGxpbmcuCgpDVkUtMjAxOS04Njg2CiAgICBWZXJzaW9ucyBhZmZlY3RlZDog
+V2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjI0LjIuCiAgICBD
+cmVkaXQgdG8gRy4gR2VzaGV2IHdvcmtpbmcgd2l0aCBUcmVuZCBNaWNybydz
+IFplcm8gRGF5IEluaXRpYXRpdmUuCiAgICBQcm9jZXNzaW5nIG1hbGljaW91
+c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYXJiaXRyYXJ5
+CiAgICBjb2RlIGV4ZWN1dGlvbi4gTXVsdGlwbGUgbWVtb3J5IGNvcnJ1cHRp
+b24gaXNzdWVzIHdlcmUgYWRkcmVzc2VkCiAgICB3aXRoIGltcHJvdmVkIG1l
+bW9yeSBoYW5kbGluZy4KCkNWRS0yMDE5LTg2ODcKICAgIFZlcnNpb25zIGFm
+ZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuMjQu
+My4KICAgIENyZWRpdCB0byBBcHBsZS4KICAgIFByb2Nlc3NpbmcgbWFsaWNp
+b3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhcmJpdHJh
+cnkKICAgIGNvZGUgZXhlY3V0aW9uLiBNdWx0aXBsZSBtZW1vcnkgY29ycnVw
+dGlvbiBpc3N1ZXMgd2VyZSBhZGRyZXNzZWQKICAgIHdpdGggaW1wcm92ZWQg
+bWVtb3J5IGhhbmRsaW5nLgoKQ1ZFLTIwMTktODY4OAogICAgVmVyc2lvbnMg
+YWZmZWN0ZWQ6IFdlYktpdEdUSyBiZWZvcmUgMi4yNC40IGFuZCBXUEUgV2Vi
+S2l0IGJlZm9yZQogICAgMi4yNC4zLgogICAgQ3JlZGl0IHRvIEluc3UgWXVu
+IG9mIFNTTGFiIGF0IEdlb3JnaWEgVGVjaC4KICAgIFByb2Nlc3NpbmcgbWFs
+aWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhcmJp
+dHJhcnkKICAgIGNvZGUgZXhlY3V0aW9uLiBNdWx0aXBsZSBtZW1vcnkgY29y
+cnVwdGlvbiBpc3N1ZXMgd2VyZSBhZGRyZXNzZWQKICAgIHdpdGggaW1wcm92
+ZWQgbWVtb3J5IGhhbmRsaW5nLgoKQ1ZFLTIwMTktODY4OQogICAgVmVyc2lv
+bnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUg
+Mi4yNC4zLgogICAgQ3JlZGl0IHRvIGxva2loYXJkdCBvZiBHb29nbGUgUHJv
+amVjdCBaZXJvLgogICAgUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVk
+IHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFyYml0cmFyeQogICAgY29kZSBl
+eGVjdXRpb24uIE11bHRpcGxlIG1lbW9yeSBjb3JydXB0aW9uIGlzc3VlcyB3
+ZXJlIGFkZHJlc3NlZAogICAgd2l0aCBpbXByb3ZlZCBtZW1vcnkgaGFuZGxp
+bmcuCgpDVkUtMjAxOS04NjkwCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2Vi
+S2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjI0LjMuCiAgICBDcmVk
+aXQgdG8gU2VyZ2VpIEdsYXp1bm92IG9mIEdvb2dsZSBQcm9qZWN0IFplcm8u
+CiAgICBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRl
+bnQgbWF5IGxlYWQgdG8gdW5pdmVyc2FsCiAgICBjcm9zcyBzaXRlIHNjcmlw
+dGluZy4gQSBsb2dpYyBpc3N1ZSBleGlzdGVkIGluIHRoZSBoYW5kbGluZyBv
+ZgogICAgZG9jdW1lbnQgbG9hZHMuIFRoaXMgaXNzdWUgd2FzIGFkZHJlc3Nl
+ZCB3aXRoIGltcHJvdmVkIHN0YXRlCiAgICBtYW5hZ2VtZW50LgoKCldlIHJl
+Y29tbWVuZCB1cGRhdGluZyB0byB0aGUgbGF0ZXN0IHN0YWJsZSB2ZXJzaW9u
+cyBvZiBXZWJLaXRHVEsgYW5kIFdQRQpXZWJLaXQuIEl0IGlzIHRoZSBiZXN0
+IHdheSB0byBlbnN1cmUgdGhhdCB5b3UgYXJlIHJ1bm5pbmcgc2FmZSB2ZXJz
+aW9ucwpvZiBXZWJLaXQuIFBsZWFzZSBjaGVjayBvdXIgd2Vic2l0ZXMgZm9y
+IGluZm9ybWF0aW9uIGFib3V0IHRoZSBsYXRlc3QKc3RhYmxlIHJlbGVhc2Vz
+LgoKRnVydGhlciBpbmZvcm1hdGlvbiBhYm91dCBXZWJLaXRHVEsgYW5kIFdQ
+RSBXZWJLaXQgc2VjdXJpdHkgYWR2aXNvcmllcwpjYW4gYmUgZm91bmQgYXQ6
+IGh0dHBzOi8vd2Via2l0Z3RrLm9yZy9zZWN1cml0eS5odG1sIG9yCmh0dHBz
+Oi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS8uCgpUaGUgV2ViS2l0R1RLIGFu
+ZCBXUEUgV2ViS2l0IHRlYW0sCkF1Z3VzdCAyOSwgMjAxOQo=
 
-> The bug may be in the documentation/specification: in my opinion, 
-> documentation of good, security aware software should a) implement things 
-> considering security bordercases (vim.tiny reporting, that a file was replaced 
-> or symlink encountered, proceed?)
+--+vUlT59VfB3nDkEU
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Those special cases you list are just a tip of the iceberg.
+-----BEGIN PGP SIGNATURE-----
 
-> or b) state, they are not made for that 
-> purpose. Even when such statements are redundant for many different tools, 
-> they give users at least the chance to learn, that an operation is dangerous 
-> and may link to additional information, e.g. the link you provided below on 
-> secure root file access.
-> 
-> Why has each plastic bag of a new consumer device printed "There is a risk 
-> that children pull them over their head and suffocate." for safety reasons, 
+iF0EABECAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCXWfkjAAKCRCRxVnb5MkS
+O+nTAJ9PwBav9vNl6JghxetOma0u4nDN5wCdHKi7mqWSABfZn2L3GAPj10Qomc8=
+=eSrV
+-----END PGP SIGNATURE-----
 
-My guess is mostly for legal reasons, although safety was also involved
-at some point.
-
-> but in software development, we assume, everybody knows and do not include 
-> such warnings at least in the footer of man pages?
-
-I don't assume everybody knows.  On the contrary, I know that most
-people don't know, nor do they want to know.  When I tell, or ask my
-fellow sysadmins to follow safer practices, they just get annoyed, in
-part because the safer practices are too complicated, too brittle, and
-sometimes also not perfectly safe.  But do we really need to include
-this in every man page?  I wish there were a better place.
-
-> > Editing of non-root files by root should be safe (or be made safe by
-> > making changes to the editors where necessary) only in the rare special
-> > case when those files are located in a trusted directory.  For example,
-> > editing as root /var/run/foo owned by user foo should be safe as long as
-> > /, /var, and /var/run are owned by root, but editing as root
-> > /home/foo/foo or /tmp/foo is unsafe and is likely to stay so.
-> 
-> I would need to check that on vim.tiny. As stat-ing, getxattr, renaming, 
-> chmod, ... are not atomic, I am not sure if vim.tiny as example would fulfil 
-> your expectations.
-> 
-> But before that: why do you expect the software to behave like that, when it 
-> is not stated anywhere?
-
-What I said in the paragraph quoted above is that I expect very little
-("only in the rare special case"), and even that might not be true yet
-(but we should make it true for specific tools if so).
-
-I focus on this special case because it's tenable.
-
-What you say about non-atomicity of those syscalls is not a security
-issue when the directory and all parent directories are trusted.  It can
-still be a reliability and a safety issue e.g. if two sysadmins try to
-edit a file, but I thought that was beyond scope of our discussion.
-
-> > I doubt this belongs to "SECURITY section of man pages" because this is
-> > by no means limited to just text editors.  Most tools are unsafe to use
-> > on files in untrusted directories, with very few exceptions - for
-> > example, "cp" and "mv" are generally unsafe, but "ln" is generally safe.
-> 
-> But also those tools seem not state, how they really behave regarding security 
-> in man-pages, declaring what security expectations they fulfil and which the 
-> will not fulfil (I searched for security/concurrent/user/owner/privileg but no 
-> relevant hits in the man page). How should a normal user know the difference?
-
-I am not saying things are good as they are; I think they are not.  Like
-I say, people neither know nor want to know this, and it means they
-continue to do things insecurely.  I don't currently have a solution.
-
-> > It is tricky to access files in an untrusted directory safely.  Programs
-> > that knowingly do it end up using O_EXCL or O_NOFOLLOW|O_NOCTTY and
-> > such, and doing various *stat() calls, and even that is sometimes not
-> > enough.  It'd be naive to expect the same from every other program
-> > accepting an arbitrary pathname.
-> 
-> From my point of view, this mandates something like a "libSecureOpen" (trying 
-> to get that into libc as first step might be in vain), which has a solid 
-> implementation also considering different UNIX-system peculiarities and should 
-> be used by open source software doing that kind of risky operations.
-
-IIRC, something like this was proposed in 1990s, albeit not for that
-extensive a use.
-
-You say "risky operations", but under the threat model you imply (root
-using almost any tool on pathnames with components writable by a user)
-almost all filesystem accesses are risky.
-
-To partially achieve what you seem to want to achieve, almost all uses
-of open(2) and fopen(3), etc. would need to be replaced with "secure"
-alternatives, and that would be bad in many ways, including breaking of
-customary behavior of traditional Unix command-line programs, which
-existing scripts rely on.  We could proceed with introduction of
-isatty(3) and env var checks, but this would get messy.
-
-I say "partially" because there's no way for a program to know that the
-file it's looking at is still the file the user had looked at when they
-decided to run the program against that pathname.  Not only the file
-itself could have been replaced, but an upper directory could have been.
-I included some steps to deal with this in the example referenced in my
-previous message, and one of the steps is a double-check by the user
-themselves after having created a hard link in a trusted directory.
-
-I suppose some alternate OS could introduce a paradigm where a user's
-view of the filesystem would be frozen when they stat() a file or list a
-directory and unfrozen after they've accessed a file in there.  This is
-another can of worms.  I guess it's more realistically (or less
-unrealistically) done for one thread in a program (with each thread
-having its own filesystem view freeze) rather than for a user's shell
-running multiple programs one after another.
-
-> Other 
-> software should explicitely declare: "is not safe for operating on file of 
-> different users/NFS in untrusted environments".
-
-This is true for 99%+ of Unix software.  Exceptions are few (like some
-uses of "ln", and even then there's the issue of parent directories).
-
-Alexander
+--+vUlT59VfB3nDkEU--
