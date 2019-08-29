@@ -1,120 +1,206 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/14/1
-Message-ID: <3464b63f-21cb-c894-a832-63e1a8d07f88@nic.cz>
-Date: Sun, 14 Jul 2019 09:27:13 +0200
-From: Vladimír Čunát <vladimir.cunat@....cz>
-To: oss-security@...ts.openwall.com
-Cc: Petr Špaček <petr.spacek@....cz>, Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Knot Resolver 4.1.0 security release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/29/4
+Message-ID: <20190829174324.GB14146@momiji>
+Date: Thu, 29 Aug 2019 17:43:24 +0300
+From: Adrian Perez de Castro <aperez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2019-0004
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2019-0004
+------------------------------------------------------------------------
 
-This Wednesday there was a Knot Resolver release and embargo lift for
-two CVEs, both allowing the server to incorrectly accept DNS records:
-CVE-2019-10190 and CVE-2019-10191; more details at the end of this e-mail.
+Date reported           : August 29, 2019
+Advisory ID             : WSA-2019-0004
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2019-0004.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2019-0004.html
+CVE identifiers         : CVE-2019-8644, CVE-2019-8649, CVE-2019-8658,
+                          CVE-2019-8666, CVE-2019-8669, CVE-2019-8671,
+                          CVE-2019-8672, CVE-2019-8673, CVE-2019-8676,
+                          CVE-2019-8677, CVE-2019-8678, CVE-2019-8679,
+                          CVE-2019-8680, CVE-2019-8681, CVE-2019-8683,
+                          CVE-2019-8684, CVE-2019-8686, CVE-2019-8687,
+                          CVE-2019-8688, CVE-2019-8689, CVE-2019-8690.
 
-We apologize for forgetting our responsibility to also post to
-oss-security on that day.  Thanks to Salvatore Bonaccorso for notifying us.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Minimal patches are attached, but we generally do not recommend
-backporting them.  Announcement:
-https://lists.nic.cz/pipermail/knot-resolver-users/2019/000189.html
+CVE-2019-8644
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to G. Geshev working with Trend Micro's Zero Day Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
 
---Vladimir (upstream dev, discovered and fixed)
+CVE-2019-8649
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Processing maliciously crafted web content may lead to universal
+    cross site scripting. A logic issue existed in the handling of
+    synchronous page loads. This issue was addressed with improved state
+    management.
 
-#### CVE-2019-10190
+CVE-2019-8658
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to akayn working with Trend Micro's Zero Day Initiative.
+    Processing maliciously crafted web content may lead to universal
+    cross site scripting. A logic issue was addressed with improved
+    state management.
 
-Impact
-======
-Under certain circumstances, improper input validation bug in DNS
-resolver component of Knot Resolver allows remote attacker to bypass
-DNSSEC validation for non-existence answer.
+CVE-2019-8666
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
+    Credit to Zongming Wang (王宗明) and Zhe Jin (金哲) from Chengdu Security
+    Response Center of Qihoo 360 Technology Co. Ltd.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
 
-An NXDOMAIN answer would get passed through to the client even if its
-DNSSEC validation failed, instead of sending a SERVFAIL packet.
-Caching is not affected by this particular bug but see the other CVE.
+CVE-2019-8669
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to akayn working with Trend Micro's Zero Day Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8671
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
+    Credit to Apple.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8672
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
+    Credit to Samuel Groß of Google Project Zero.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8673
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
+    Credit to Soyeon Park and Wen Xu of SSLab at Georgia Tech.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8676
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
+    Credit to Soyeon Park and Wen Xu of SSLab at Georgia Tech.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8677
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
+    Credit to Jihui Lu of Tencent KeenLab.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8678
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to an anonymous researcher, Anthony Lai (@darkfloyd1014) of
+    Knownsec, Ken Wong (@wwkenwong) of VXRL, Jeonghoon Shin (@singi21a)
+    of Theori, Johnny Yu (@straight_blast) of VX Browser Exploitation
+    Group, Chris Chan (@dr4g0nfl4me) of VX Browser Exploitation Group,
+    Phil Mok (@shadyhamsters) of VX Browser Exploitation Group, Alan Ho
+    (@alan_h0) of Knownsec, Byron Wai of VX Browser Exploitation.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8679
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
+    Credit to Jihui Lu of Tencent KeenLab.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8680
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to Jihui Lu of Tencent KeenLab.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8681
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
+    Credit to G. Geshev working with Trend Micro Zero Day Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8683
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to lokihardt of Google Project Zero.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8684
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to lokihardt of Google Project Zero.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8686
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.2.
+    Credit to G. Geshev working with Trend Micro's Zero Day Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8687
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
+    Credit to Apple.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8688
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to Insu Yun of SSLab at Georgia Tech.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8689
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
+    Credit to lokihardt of Google Project Zero.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8690
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.3.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Processing maliciously crafted web content may lead to universal
+    cross site scripting. A logic issue existed in the handling of
+    document loads. This issue was addressed with improved state
+    management.
 
 
-[Affected version (required)]:
-3.2.0 <= Knot Resolver <= 4.0.0
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
-[Vulnerability type (required)]:
-CWE-20: Improper Input Validation
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-[Affected component (required)]:
-resolver
+The WebKitGTK and WPE WebKit team,
+August 29, 2019
 
-[Impact of exploitation (required)]:
-Under certain circumstances this bug allows an attacker to hijack
-DNS domains.
-
-[Description of vulnerability]:
-Under certain circumstances, improper input validation bug in DNS
-resolver component of Knot Resolver allows remote attacker to bypass
-DNSSEC validation for non-existence answer.
-
-An NXDOMAIN answer would get passed through to the client even if its
-DNSSEC validation failed, instead of sending a SERVFAIL packet.
-Caching is not affected by this particular bug but see the other CVE.
-
-Attack Vector (AV): Network
-Attack Complexity (AC): Low
-Privileges Required (PR): None
-User Interaction (UI): None
-Scope (S): Moderate
-Confidentiality (C): None
-Integrity (I): Medium
-Availability (A): None
-
-Technical Details:
-CWE-20
-
-
-
-#### CVE-2019-10191
-
-Impact
-======
-Under certain circumstances this bug allows an network attacker with
-ability to spoof packets to downgrade a DNSSEC-secured domain to
-DNSSEC-insecure state, thus opening possibilities for further attacks.
-
-
-[Affected version (required)]:
-Knot Resolver <= 4.0.0
-(probably since 2.0.0, we did not check older versions thoroughly)
-
-[Vulnerability type (required)]:
-CWE-20: Improper Input Validation
-
-[Affected component (required)]:
-resolver
-
-[Impact of exploitation (required)]:
-Under certain circumstances this bug allows an attacker to downgrade
-DNSSEC-secure domains to DNSSEC-insecure state, opening possibility of
-domain hijack using attacks against insecure DNS protocol.
-
-[Description of vulnerability]:
-Improper input validation bug in DNS resolver component of Knot Resolver
-allows remote attacker to poison cache by an unsigned negative answer.
-
-Attack Vector (AV): Network
-Attack Complexity (AC): Low
-Privileges Required (PR): None
-User Interaction (UI): None
-Scope (S): All
-Confidentiality (C): None
-Integrity (I): High
-Availability (A): None
-
-Technical Details:
-CWE-20
-
-
-View attachment "CVE-2019-10190.patch" of type "text/x-patch" (1339 bytes)
-
-View attachment "CVE-2019-10191.patch" of type "text/x-patch" (2688 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
