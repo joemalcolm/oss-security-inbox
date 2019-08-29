@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1470" "Monday" "5" "September" "2016" "18:41:47" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160905224147.43F636C0FB8@smtpvmsrv1.mitre.org>" "34" "[oss-security] Re: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert" nil nil nil "9" "2016090522:41:47" "[oss-security] Re: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert" (number mark "U       cve-assign@m Sep  5   34/1470  " thread-indent "\"[oss-security] Re: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert\"\n") "<1649028.3J7HsOb28o@kdudka-nb>" ("<1649028.3J7HsOb28o@kdudka-nb>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1362" "Thursday" "29" "August" "2019" "15:18:47" "-0400" "Santiago Torres" "torresariass@gmail.com" nil "37" nil "^Date:" nil nil "8" nil nil (number mark "U       torresariass Aug 29   37/1362  " thread-indent "\"Re: [oss-security] Irssi 1.2.2:CVE-2019-15717\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Irssi 1.2.2:CVE-2019-15717" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25769 invoked by uid 550); 5 Sep 2016 22:41:59 -0000
+Received: (qmail 29919 invoked by uid 550); 29 Aug 2019 19:25:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 27690 invoked from network); 29 Aug 2019 19:19:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=W4akzsEN/RHQjvip+/A5uuvIHMNSt5Bo1c+BGCs3fCA=;
+        b=PMHZk/1BOd6BvTvd5h6ALdMZQsl/v9OI+DuVogBtoTa5YOapIVObNmOGc6jGH/Y0CZ
+         cqlOFY7vKpGQ3LapBAAUIhavPcoWPwZDOTe+A+gipd54BPbTJp5+T5AWdTNt2Ox4kDNW
+         hIYPzQAgb3tKi88qPIrS8hcjyoeWfC2IWWFcRgBrg3jUhDZl00hXK8ioWXvdfGOcO/rK
+         y9blXwktsM/x6nx8WpnmnByJYMZOa0G7IgrUaXjwygrcVdHeOmglOJ5O/e51fG35Jhq6
+         JaJocXaGfhuK3OggaBirVrllk9kQUzS4IuNSqF9N/uJtGfCOPyXbj9K+lfDRc/Sg5mma
+         yZSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=W4akzsEN/RHQjvip+/A5uuvIHMNSt5Bo1c+BGCs3fCA=;
+        b=s3U2ZHKJD5g8s8z2MajwMFOGwcpMgBDgDA+IMogYj32lAW805pvzLtm5700RPZKsTW
+         AEU6pS+KF02vkp6lK9mvlW7ViG5zwwqRYpuWzWsCxwldufcSbdTmB76hIJKpTZIfGR0u
+         PrX8RikYstqNcSHlORf5psB8wXW8r6ziL6IaaF/C7hXDLbky4YAbOryjCbZ2Bn0YEXrv
+         LJkodiXdFkpCx3YQpig7Q2UzL9YKT9oqX3OzXiAKbN5yCvhrs9Anbhfyb8SOZdW5EFlp
+         37/WVZJwtWIRb2+Hr3YQTZkO2S/Ld24TttYhnalsaBOyoHUyhrxyTqdkT7xPMROTbMRq
+         jiQA==
+X-Gm-Message-State: APjAAAXoXBrvxNIQMGcrxwqn3EMPcT4KYsSDHtwLtyvHgTEHCpY7s/cs
+	Kn2kKonOlodUa64f/mRJ/29F/2yp
+X-Google-Smtp-Source: APXvYqy9FSF7bUZg1YBUh08N/vp6cdLnaefGANHegsDRsquDXslUS/h8VlpVD71tN8gfR8wsIkPHDw==
+X-Received: by 2002:ac8:4315:: with SMTP id z21mr11650653qtm.157.1567106328629;
+        Thu, 29 Aug 2019 12:18:48 -0700 (PDT)
+Message-ID: <20190829191847.g4rzva7jqdtmc2lv@LykOS.localdomain>
+References: <fccdd50d1a8afe0fa1b3d9d45a92aa245ad05121.camel@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="egibiu6aiahtxkcs"
+Content-Disposition: inline
+In-Reply-To: <fccdd50d1a8afe0fa1b3d9d45a92aa245ad05121.camel@gmail.com>
+Date: Thu, 29 Aug 2019 15:18:47 -0400
+From: Santiago Torres <torresariass@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25751 invoked from network); 5 Sep 2016 22:41:59 -0000
-From: cve-assign@mitre.org
-To: kdudka@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <1649028.3J7HsOb28o@kdudka-nb>
-Message-Id: <20160905224147.43F636C0FB8@smtpvmsrv1.mitre.org>
-Date: Mon,  5 Sep 2016 18:41:47 -0400 (EDT)
-Subject: [oss-security] Re: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert
+Subject: Re: [oss-security] Irssi 1.2.2:CVE-2019-15717
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--egibiu6aiahtxkcs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> libcurl built on top of NSS (Network Security Services) still incorrectly
-> re-uses client certificates if a certificate from file is used for one TLS
-> connection but no certificate is set for a subsequent TLS connection.
-> 
-> This problem was caused by an implementation detail of the NSS backend
-> in libcurl, which is orthogonal to the cause of CVE-2016-5420.
+On Thu, Aug 29, 2019 at 05:59:34PM +0200, Ailin Nemui wrote:
+> IRSSI-SA-2019-08 Irssi Security Advisory [1]
+> ============================================
+> CVE-2019-15717
+Hi,
 
-Use CVE-2016-7141 for this additional vulnerability.
+is there any other information about this UAF? namely, it says it would
+affect the stability, yet I wonder if impact could lead to ACE.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Thanks!
+-Santiago.
+
+--egibiu6aiahtxkcs
+Content-Type: application/pgp-signature; name="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXzfQ7AAoJEHb/MwWLVhi2JxoP/jhAg0xmSqjBWgmM9DjHYtgE
-5mH15/YJkalUBLA1v3YFThjBxLgUsCDxzYozC282c536nPbGhOJsYJuyUW/U9EO9
-+hFC2a3i2Zthe8VQg78eIYN7XvrxsVwJrFlzH8yxtrZmOxgr0u4d+KwDYY6d83yQ
-hNvOlnoqKuVuuHI5xx7GciJvQZZJT8HzG5LbrwHX1oJUPPKkULK+47vKzXPdJqyp
-kpKkqa4qYxpnlg9CES1lRL5GQzzIaMWhX//qMy7Itkj+E58ww6e1h/YCa1krqRfV
-mDv05V+s+kofoPGUrcc2zqfM6PW5795QfJBOPK//vd7ugSTtj+OKhmL/YMwBP9w/
-ncDoOFzRm6lykh9s4huDTmV3oNQ/ohbtgRQNBVXl4CQ5G8cfKdjMCgxl6nTJXv74
-FIBUmQ9BzZrsSZjgOUYhbGDxTnnPR8H7mMu64nY+nNFDG6mEuTE+5J/QPNkrg5LJ
-TLFwQLijgy+ehn00Gp/c252OqgiWlOjVAUXjgEGqLlk4sXFGGu/sC0V89jRcbv/M
-L8mqa9E+5uarFRAuQF2aSv9C26ZcHwW6WKjO/T8BsLVYsQSi5RFCddx5NmqysRf7
-5Lguj0K9nCVYSkfkhS4Mwrj+sSbpTKDCeiMXfcfGA2gWjX2KWFQqboMoNEVNonDc
-0KNha7mMSmK/gVR3SCWO
-=LzSU
+iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAl1oJRYACgkQRo8SLOgW
+IpUQtxAAm9lCPA6c4MzErJelSBSxcNgfJos1A1yT+w31l9RqgvZQ0o+fUSncveVO
+PhhVc5KEd/kZdCipsX7q+V+CfBUP+L6yv5yyUgpRhuZxrUn7a4BPlUHCkTZIfjA4
+XjaHHuFGswcpCb6Rvp1nDLcTK4weLYD7lUaWoozWElXI6IrAygIClgJKDN0VsQ9u
+VjA1jYOxKg+QeHa/GmhhfHHj1V7MvgCWEA9rRFZM2BTNqojZZtA9Eo/kppZO6ZU7
+BsQDedQM+NXi4JlscF+Tbqd+vuEWCj/MkGxvPTXwfryVIHZbKXNxNel7A4II602b
+Z3++eJ+8KavRMXXekYKolNAkDlY2Y2EZD9SJsI7n4nVqsK24I7q7jl8X43WC6z4L
+1uvCFKQ417LWY2iXmhnIhYSyFACft0T/88OwmhYa9e4HgorBGRTTBkPOeGephoE9
+FqIAaKUR6G1todTPhcz5dAL7DMTTgPcJue9f6mP3DgCf8wAfJPJaN41KfGYIQmqu
+KRN/znIw+coMEWvi660dGaD/3iStdXnk1QZm2LtUzxQ2ufGJZBt3cbRRwnK+wDen
+SRBvgo0D4vSHkzRkXfiwfmdHdqLCm35C+iZHsgleol+wmB4TFf8gcT4zuJiAtvfW
+4b2zB/ZF/WMANfqB7TDytDZ7DtetVXOnq9w4j9Z6YXspfUmktyA=
+=rsir
 -----END PGP SIGNATURE-----
+
+--egibiu6aiahtxkcs--
