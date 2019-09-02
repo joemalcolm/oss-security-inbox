@@ -1,4 +1,9 @@
-Received: (qmail 5122 invoked by uid 550); 10 Apr 2024 23:03:18 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1427" "Monday" "2" "September" "2019" "16:15:02" "+0200" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" nil "40" nil "^Date:" nil nil "9" nil nil (number mark "        hs@nodmarc.s Sep  2   40/1427  " thread-indent "\"[oss-security] MITRE response time\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] MITRE response time" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 12083 invoked by uid 550); 2 Sep 2019 14:15:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,144 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15892 invoked from network); 10 Apr 2024 22:54:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=almalinux.org; s=google; t=1712789650; x=1713394450; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vbWsba2PPo82TEbXqz+u8A442Fz5CaV38ic6zcYKOZc=;
-        b=AAhcBC9YXcxHATtWrqRqSpcOFvNQwOIZf9bJLbR/OD3Uv8+tnRc+28gNR+ZnPI2QTS
-         eHLmt7GXtd2w7+SiwH0HmjIKfPIckFre0GPuTb/E2bEwRRNq/2qLg0j6VY9faOWRpFE7
-         EL1bfFI8RDDAjcfQKh5qLhrCbLSKJ93nBmroSeaiH+1qFKmRZODwGw3WKZom9jpEFaxG
-         pGEgtl1l5AvhGvD7PRcY7JoGfxE0yh9sy4ZSe5HYlgxib7RcdVnisLZIq6gyI9WVAnQp
-         gpNBcKGSa+ZX6wtTltNaBCx/NKRoEE5CeLpz1xRer882a7E+4NARUTF/cFWiHkCHNya9
-         iqKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712789650; x=1713394450;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vbWsba2PPo82TEbXqz+u8A442Fz5CaV38ic6zcYKOZc=;
-        b=th1URGqFuIUjvGLPsvfK9umTOeHSRKHCuOtDGXN0QwQvGYdFlFXe7AzV+qT9sRcqRH
-         ZgyGTrZrR4bOjkR7EdlvgXRznLFoqonOiKAqjRdxtK9dPOZdv3hX2MlxmGDwwvBIAgpn
-         zuP3eMHr8olXZoc19NuS1FrkWnZjp7X0gm4f2JiZ0rgYDNO0JRdwI5A062cxWz0hJIR3
-         N6kCkeDcT4I95H8OALG1JGwPcxOGVoPbpd1io5JB6VjaH1XXLqlCJngUHEzs7mFwkUwX
-         KZl0BGorKUm/mLB1Ku9hiW9EFij3GY0vYnhos+4XKCLsbZBZ7m7pAuCF4UXSNVIPCj7H
-         D4tg==
-X-Gm-Message-State: AOJu0Yx/Z3J0LfqFD2k4FGTexfuv2zF4fW5HY+lpOf71D/6mhGzzQI6C
-	lfAVuv1PmOasAn/iizxivq/9SdqhJEx19uFOQ5UPL3W0NbTmKEvGbCxF8GF7u6nC9agA6VpksDR
-	ex6Wc7DKV2B4oQzshxQkaAT7E/t+xCURKfW4s+gELIMmQ2keK
-X-Google-Smtp-Source: AGHT+IG+EkTO3xsq7Vh44ViXdt0lGx1AGFPMS2RQgtEi5BNdebvad9kX/U8fFku3FrZ40vTD64Di7W7arAtcqoA2j20=
-X-Received: by 2002:a50:9512:0:b0:56d:f7ce:e879 with SMTP id
- u18-20020a509512000000b0056df7cee879mr2767419eda.37.1712789649794; Wed, 10
- Apr 2024 15:54:09 -0700 (PDT)
+Received: (qmail 12050 invoked from network); 2 Sep 2019 14:15:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=Content-Type:MIME-Version:Message-ID:
+	Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:In-Reply-To:References:Resent-Cc:Resent-To;
+	bh=Idh3Ln8GSacz0tGzkwE1vwmoq06j7yk+Hbb6kjaiBmA=; b=oIMz/UMAptGZ6IP014zDSrlsoF
+	A97A2rL1fCNhztf8zABHuiaK6ImPCGi1Uh8ccEPtLgKtpDpeZgZrugDASaaitwMlMqBu7KDFPJwSX
+	sOEXipOvbL1HhodKG4HtXWHNdQbgIxW9e3BMWoE/haq/JqiHgaBjJhIm5N53QRgpO5Wo=;
+Message-ID: <20190902141502.GH3837@jumper.schlittermann.de>
 MIME-Version: 1.0
-References: <20240410225113.GA21187@openwall.com>
-In-Reply-To: <20240410225113.GA21187@openwall.com>
-From: Jonathan Wright <jonathan@almalinux.org>
-Date: Wed, 10 Apr 2024 17:54:00 -0500
-Message-ID: <CAKe4=-JL1N+jq2jrADSyCy3tAbpOc8UR0n2LqnrjMwfw_X4Tnw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000a6be650615c5eac4"
-Subject: Re: [oss-security] CVE-2024-1086: Linux: nf_tables: use-after-free
- vulnerability in the nft_verdict_init() function
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Y1L3PTX8QE8cb2T+"
+Content-Disposition: inline
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Mon, 2 Sep 2019 16:15:02 +0200
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] MITRE response time
+To: oss-security <oss-security@lists.openwall.com>
 
---000000000000a6be650615c5eac4
-Content-Type: text/plain; charset="UTF-8"
+--Y1L3PTX8QE8cb2T+
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-For what it's worth for RHEL 8/9 derivatives, the kpatches on my blog have
-been used over 1000 times with no reported issues.
+Hello,
 
-On Wed, Apr 10, 2024, 17:52 Solar Designer <solar@openwall.com> wrote:
+what is your experience with MITRE's response time to an CVE request?
 
-> Hi,
->
-> Quoting the CVE description:
->
-> A use-after-free vulnerability in the Linux kernel's netfilter:
-> nf_tables component can be exploited to achieve local privilege
-> escalation. The nft_verdict_init() function allows positive values as
-> drop error within the hook verdict, and hence the nf_hook_slow()
-> function can cause a double free vulnerability when NF_DROP is issued
-> with a drop error which resembles NF_ACCEPT.
->
-> Introduced in February 2014:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e0abdadcc6e1
->
-> Fixed in January 2024:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f342de4e2f33e0e39165d8639387aa6c19dff660
->
-> This is old news, but it's still relevant.  Out of major distros,
-> notably RHEL 9.3 (and most rebuilds) is still not fixed, and Notselwyn's
-> exploit that just works all the way to a root shell was recently widely
-> publicized:
->
-> https://github.com/Notselwyn/CVE-2024-1086
->
-> There are known mitigations: blacklist the nf_tables kernel module if
-> unused, disallow access to user namespaces if containers are not used,
-> load Jonathan Wright's unofficial AlmaLinux kpatch (link below), or/and
-> load LKRG (kills the published exploit at its last stage, leaving the
-> system unstable).
->
-> https://jonathanspw.com/posts/2024-03-31-dealing-with-cve-2024-1086/
->
-> $ sha256sum AlmaLinux-9--5-14-0-362--CVE-2024-1086-Patch.ko
-> 446a2f0a78f92a5530c45d443680171536888c4e6f6a3edaff95a412ca1aafbe
-> AlmaLinux-9--5-14-0-362--CVE-2024-1086-Patch.ko
->
-> The above exploit's author Notselwyn also wrote an extensive blog post
-> on March 26:
->
-> https://pwning.tech/nftables/
->
-> Its title and abstract are:
->
-> "Flipping Pages: An analysis of a new Linux vulnerability in nf_tables
-> and hardened exploitation techniques
->
-> A tale about exploiting KernelCTF Mitigation, Debian, and Ubuntu
-> instances with a double-free in nf_tables in the Linux kernel, using
-> novel techniques like Dirty Pagedirectory. All without even having to
-> recompile the exploit for different kernel targets once."
->
-> I asked and was hoping Notselwyn would bring this to oss-security
-> directly, but since that's not happening I am posting this relatively
-> brief message now.  I understand it'd be a lot of work to process the
-> whole blog post into a plain text message.
->
-> Another reason for me to post this is that a somewhat obscure public
-> GitHub repo link (0 forks, 0 stars) for a different reproducer (crashing
-> the kernel) for what turned out to be the same bug was brought to
-> linux-distros (and wrongly also to distros) on March 29 (asking for a
-> CVE assignment).  By linux-distros policy we need to have the underlying
-> vulnerability, once it's public, brought up on oss-security.
->
-> As the reporter wouldn't communicate with linux-distros any further, we
-> ended up directly bringing this to s@k.o and found out the reporter did
-> also bring the issue to there.  What happened next highlighted what may
-> be a gap in report handling by s@k.o.  Due to the reproducer being on a
-> public GitHub repo, s@k.o merely redirected the reporter to take it to
-> the normal developer mailing lists.  Which the reporter neglected to do.
-> When a "public" issue enters this state, it's apparently not tracked by
-> s@k.o anymore.  So if it were not for linux-distros, I think the report
-> would just fall through the cracks and remain uninvestigated.  Which
-> means if the bug were not already fixed, it'd remain unfixed until maybe
-> rediscovered.  Via linux-distros, we pinged s@k.o further, and Greg got
-> the Netfilter maintainers involved, who determined it's the fixed bug
-> above.  Luckily, this did not matter (the bug is already known and fixed
-> anyway), but for some other bug it could.
->
-> Incidentally, that reporter in question is the same person accused of
-> exploit plagiarism in the other Linux kernel oss-security posting today.
-> So you can find their reproducer by following links from there to their
-> other repo.  I don't want to directly promote it here (no need given the
-> real exploit is so public, plus s@k.o previously expressed they dislike
-> publication of reproducers), but perhaps it's somewhat more visible now.
->
-> Alexander
->
+Last thursday I requested a CVE on behalf of a project I'm involved in
+(and which is not covered by any of the CNAs listed on
+https://cve.mitre.org/cve/request_id.html.
 
---000000000000a6be650615c5eac4--
+Where do you request CVEs for projects not listed there?
+
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+--Y1L3PTX8QE8cb2T+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAl1tI+UACgkQr0zGdqa2
+wUL2awgAyEWTu8V7+IMFLyPLiHt7QwPS30KXLl1ZwnY+kzaP3aHIik1FExouCK36
+klPOsndMChKaRxtcK+lVrbvxIprGkCZ/y3KWh4ujj/NeDmPmoZaFLPeh5AYfQMxd
+5w5pQucbw4UAs7R+ABGZ/8D/bwAqISRejp+TyRgYebzXu42I0JY4DsJh8pDrUyG+
++wY1t39pp2HsS3E5J4Ib7leC/3KyODbjQa8TbfmSbqiGSPMUMPwiywJwQAvgIVH9
+5aKmP0FYEJU58cUzO5xafOrq7/6267iS6iQ/inT7wPGoICuDNAvHBPKQSfXSVOEu
+eezPJc/N/+xzmuBbb2mJwXoCCiyNSg==
+=URaW
+-----END PGP SIGNATURE-----
+
+--Y1L3PTX8QE8cb2T+--
