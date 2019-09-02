@@ -1,54 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/8
-Message-ID: <20190722115009.GA4117@openwall.com>
-Date: Mon, 22 Jul 2019 13:50:09 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/02/1
+Message-ID: <20190902141502.GH3837@jumper.schlittermann.de>
+Date: Mon, 2 Sep 2019 16:15:02 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: MITRE response time
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 22, 2019 at 12:29:53PM +0100, Stuart Henderson wrote:
-> On 2019/07/22 11:21, Mikhail Klementev wrote:
-> > Kindly notice that this is a public mail list.
-> 
-> The sender is clearly aware of this, see the timeline.
+Hello,
 
-Exactly.  It's just an unusual disclosure process that involves giving
-the users a heads-up a few days before public disclosure of the actual
-vulnerabilities and fixes.  So far, this process is practiced by OpenSSL
-and Exim (any others?)
+what is your experience with MITRE's response time to an CVE request?
 
-Unfortunately, this keeps confusing people, which is why this time
-Heiko's message starts with "Note: EMBARGO is still in effect".  Judging
-by Mikhail's reply, this wasn't good enough to avoid confusion, and I
-don't know what would be - maybe a paragraph of text acknowledging that
-the disclosure process is unusual?  Somehow I didn't notice such
-confusion in response to OpenSSL's pre-announcements (not here, but on
-their own announce list), so maybe Exim should try to reuse OpenSSL's
-wording.  Here's an example:
+Last thursday I requested a CVE on behalf of a project I'm involved in
+(and which is not covered by any of the CNAs listed on
+https://cve.mitre.org/cve/request_id.html.
 
-https://mta.openssl.org/pipermail/openssl-announce/2019-February/000145.html
+Where do you request CVEs for projects not listed there?
 
----
-Subject: Forthcoming OpenSSL Releases
-Date: Tue, 19 Feb 2019 16:10:20 +0000
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-The OpenSSL project team would like to announce the forthcoming release
-of OpenSSL versions 1.1.1b and 1.0.2r. There will be no new 1.1.0 release at
-this time.
-
-These releases will be made available on 26th February 2019 between
-approximately 1300-1700 UTC.
-
-OpenSSL 1.0.2r is a security-fix release. The highest severity issue fixed in
-this release is MODERATE:
-https://www.openssl.org/policies/secpolicy.html#moderate
-
-OpenSSL 1.1.1b is a bug-fix release.
-
-Yours
-
-The OpenSSL Project Team
----
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
