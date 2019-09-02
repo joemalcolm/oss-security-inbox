@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/8
-Message-ID: <2614535.bqnvQ5soFs@golgafrichnam>
-Date: Tue, 30 Apr 2019 17:23:22 +0200
-From: Martin <martin_s@...che.org>
-To: users@...hiva.apache.org, users@...en.apache.org, announce@...che.org
-Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [SECURITY] CVE-2019-0214: Apache Archiva arbitrary file write and delete on the server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/02/4
+Message-ID: <87a7bmvkia.fsf@oldenburg2.str.redhat.com>
+Date: Mon, 02 Sep 2019 16:30:05 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Johannes Segitz <jsegitz@...e.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: MITRE response time
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-0214: Apache Archiva arbitrary file write and delete on the server
+* Johannes Segitz:
 
-Severity: Medium
+> On Mon, Sep 02, 2019 at 04:15:02PM +0200, Heiko Schlittermann wrote:
+>> what is your experience with MITRE's response time to an CVE request?
+>
+> Usually one or two days
 
-Vendor:
-The Apache Software Foundation
+For me as well.  The Labor Day Weekend may have interfered with Heiko's
+request.
 
-Versions Affected:
-    Apache Archiva 2.0.0 - 2.2.3
-    The unsupported versions 1.x are also affected.  
+>> Last thursday I requested a CVE on behalf of a project I'm involved in
+>> (and which is not covered by any of the CNAs listed on
+>> https://cve.mitre.org/cve/request_id.html.
+>> 
+>> Where do you request CVEs for projects not listed there?
+>
+> Directly from MITRE: https://cveform.mitre.org/
 
-It is possible to write files to the archiva server at arbitrary locations by using the artifact upload mechanism. 
-Existing files can be overwritten, if the archiva run user has appropriate permission on the filesystem for the target file.
+Right.
 
-Mitigation:
-  It is highly recommended to upgrade to Archiva 2.2.4 or higher, where additional validations are implemented to prevent such malicious parameter values.
-  As intermediate action you may reduce the number of users that are allowed to upload to archiva and make sure, that the archiva run user may have only 
-  write permission to the directories needed.
-
-References:
-http://archiva.apache.org/security.html#CVE-2019-0214
-
-The newest Archiva version can be downloaded from:
-http://archiva.apache.org/download.cgi
-
-
-
+Thanks,
+Florian
