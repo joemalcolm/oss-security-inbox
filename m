@@ -1,15 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/5
-Message-ID: <881804474.22515745.1555594854508.JavaMail.zimbra@redhat.com>
-Date: Thu, 18 Apr 2019 09:40:54 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel < 4.8 local generic ASLR - another CVE-ID
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/02/2
+Message-ID: <644B8CEF-F82D-4FB8-AE63-6F499D63E7B2@redcoded.com>
+Date: Mon, 2 Sep 2019 14:22:17 +0000
+From: "(RS) Tyler Schroder" <redorhcs@...coded.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: MITRE response time
 Content-Type: text/plain; charset=utf-8
 
-Just in another case - this flaw in a.out binaries has got the CVE-2019-11191:
+Heiko,
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-11191
+My usual response time from them is 2-5 business days (sometimes not too much longer if the team is short handed) requesting individual IDs. 
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security | Senior Software Engineer
+MITRE is the correct CNA for projects not already listed on that page covered by a different CNA. Make sure to use the web form at CVE.mitre.org
+
+
+Tyler
+==============
+R. S. Tyler Schroder
+K12 Technician
+
+
+
+(Disclaimer: former intern there but not with the CVE program)
+
+> On Sep 2, 2019, at 10:16 AM, Heiko Schlittermann <hs@...marc.schlittermann.de> wrote:
+> 
+> Hello,
+> 
+> what is your experience with MITRE's response time to an CVE request?
+> 
+> Last thursday I requested a CVE on behalf of a project I'm involved in
+> (and which is not covered by any of the CNAs listed on
+> https://cve.mitre.org/cve/request_id.html.
+> 
+> Where do you request CVEs for projects not listed there?
+> 
+>    Best regards from Dresden/Germany
+>    Viele Grüße aus Dresden
+>    Heiko Schlittermann
+> --
+> SCHLITTERMANN.de ---------------------------- internet & unix support -
+> Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+> gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+> ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Content of type "text/html" skipped
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (2374 bytes)
