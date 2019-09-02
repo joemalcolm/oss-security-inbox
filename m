@@ -1,42 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/7
-Message-ID: <877e3vrh4v.fsf@gnu.org>
-Date: Tue, 19 Nov 2019 17:00:00 +0100
-From: Ludovic Courtès <ludo@....org>
-To: Tim Kuijsten <info+oss-security@...send.nl>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Mitigating malicious packages in gnu/linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/02/3
+Message-ID: <20190902142521.GI28748@suse.com>
+Date: Mon, 2 Sep 2019 16:25:21 +0200
+From: Johannes Segitz <jsegitz@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: MITRE response time
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Sep 02, 2019 at 04:15:02PM +0200, Heiko Schlittermann wrote:
+> what is your experience with MITRE's response time to an CVE request?
 
-Tim Kuijsten <info+oss-security@...send.nl> skribis:
+Usually one or two days
 
->> There is not a definitive solution here. But there are multiple efforts and
->> research going on. The most important one, in my opinion, is the reproducible
->> builds project [1]. We need to ensure we are not inserting random or
->> non-deterministic data into our build artifacts. This stretches from upstream
->> developers providing tarballs, to pre-compiled sources and packages from
->> distributions. There is no distribution today that has full reproducible builds,
->> but there are many projects that work towards this and work on reproducible
->> builds.
->
-> One attack that is not solved by reproducible builds is one on the toolchain.
-> This can be solved with bootstrappable builds[1] which is about minimizing the
-> number of trusted binaries that are needed to produce the toolchain, that
-> produced the toolchain, ... that was used to build your package.
+> Last thursday I requested a CVE on behalf of a project I'm involved in
+> (and which is not covered by any of the CNAs listed on
+> https://cve.mitre.org/cve/request_id.html.
+> 
+> Where do you request CVEs for projects not listed there?
 
-Efforts in that area are fruitful and have already led to a smaller set
-of “bootstrap seeds” (binaries from which the rest of the system is
-built from source) for GNU Guix, an important step forward:
+Directly from MITRE: https://cveform.mitre.org/
 
-  https://guix.gnu.org/blog/2019/guix-reduces-bootstrap-seed-by-50/
+Johannes
+-- 
+GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Software Solutions Germany GmbH, Maxfeldstr. 5, 90409 Nuernberg
+Geschäftsführer: Felix Imendörffer (HRB 247165, AG München)
 
-Thanks to people working on GNU Mes and related projects at
-<https://bootstrappable.org/>, we have good hope to see that set of
-bootstrap seeds further reduced soon.
 
-Reproducible builds and bootstrappable builds enable provenance tracking
-and auditing, which are key to security.
-
-Ludo’.
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
