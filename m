@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1289" "Sunday" "7" "July" "2019" "12:04:07" "+0300" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>" "46" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "7" "2019070709:04:07" "[oss-security] linux-distros membership application - Microsoft" (number mark "        gguninski@gm Jul  7   46/1289  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190706193737.GA23344@openwall.com>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>" "<20190628125743.GA2187@openwall.com>" "<20190628170812.GG11506@sasha-vm>" "<20190706193737.GA23344@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["594" "Monday" "2" "September" "2019" "16:30:05" "+0200" "Florian Weimer" "fweimer@redhat.com" nil "22" nil "^Cc:" nil nil "9" nil nil (number mark "        fweimer@redh Sep  2   22/594   " thread-indent "\"Re: [oss-security] MITRE response time\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] MITRE response time" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1900 invoked by uid 550); 7 Jul 2019 12:58:33 -0000
+Received: (qmail 20421 invoked by uid 550); 2 Sep 2019 14:30:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20148 invoked from network); 7 Jul 2019 09:04:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=Eqx46qP+BeIYPqBj/j/hVVBgwASlIShU+Xtyc0zeWGA=;
-        b=lbALLBr9aBJHvY0qGGHpYj+nhDr1uTgGYrmtc8Xz9JuzoMdNz8hsWksf07MZE1RVK2
-         LvLKsXNnsiRJDt//gpu+mQrIpxEfm3lYo2eE0SdZjrnEpcwMfZj4oHZfe9Y+qAPrbuaE
-         +NMoaq0aUxJTJoLQRD3zYTva96v7QHeDAkdWtdKykgIti/Ai0GE7GeYu+SSsRBKhWo1z
-         oe9KalyFB+mB9ToVDUKa0Xtq8pc13q7zoQtZQeKhK5xWLuau5P6VpK23ZsMGlRICKe+X
-         PEf0fj+9gxEzwPvSfkrTjFS5gZCJ4V+hLfvGsPpm0kozFsIvPQ/E18GAbyUmamZHVxCg
-         +j0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=Eqx46qP+BeIYPqBj/j/hVVBgwASlIShU+Xtyc0zeWGA=;
-        b=cVxJXterRGWaF4vavPEalX+kvE/ko5mOcpF7NgZdKy5G3fxfd3bv2jghVK/jc2UK5l
-         EPFIceysgXHxpwt8urOfDqO/ZaL1r3E43qpYXuKKwJG8whGWz+xgQzq79TzkvDYj0461
-         yMsNvzikYmyZVyR0Cr+Gu7pvSBJoTKuBJGfW2X85IUqTTE8ypUqVikbm4KJX/KoNIdMi
-         dNFPUDe6r7ihSB1niCxmTG20HYhBTXcrzPCErr7kVkChLsm1YriX9+SqfzZ3RQBOVZK6
-         OEP8ii2AU0I0bl+2XuNmZ5syRiCbl49PXyBndtq0eOH65Sg78wEFJ6LuaQp9u2/J17Gm
-         ndsg==
-X-Gm-Message-State: APjAAAV8/xYPW6P1QeI9SGIjosME/6UGPblrp5TvT2tRFDlpWuxw8ezs
-	Vp6Rnf+cn5U80oqOkzd9H5bdlLhz7rVPA+DMzrVJnAy9
-X-Google-Smtp-Source: APXvYqyDiO3/iY2t9FP1nJsoJ3uUMZT9eyKnlYf7gEoh1/yx1b9zZZLXOgemfhU38R7zBFN8SaQQTRYXhTiVJKTkdh8=
-X-Received: by 2002:a02:c519:: with SMTP id s25mr13868940jam.11.1562490260095;
- Sun, 07 Jul 2019 02:04:20 -0700 (PDT)
+Received: (qmail 20402 invoked from network); 2 Sep 2019 14:30:20 -0000
+References: <20190902141502.GH3837@jumper.schlittermann.de>
+	<20190902142521.GI28748@suse.com>
+In-Reply-To: <20190902142521.GI28748@suse.com> (Johannes Segitz's message of
+	"Mon, 2 Sep 2019 16:25:21 +0200")
+Message-ID: <87a7bmvkia.fsf@oldenburg2.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20190626141358.GK7898@sasha-vm> <20190627140321.GA29338@openwall.com>
- <20190627170508.GB11506@sasha-vm> <20190628125743.GA2187@openwall.com>
- <20190628170812.GG11506@sasha-vm> <20190706193737.GA23344@openwall.com>
-In-Reply-To: <20190706193737.GA23344@openwall.com>
-Message-ID: <CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000eb0590058d139c26"
-Date: Sun, 7 Jul 2019 12:04:07 +0300
-From: Georgi Guninski <gguninski@gmail.com>
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.6.2 (mx1.redhat.com [10.5.110.65]); Mon, 02 Sep 2019 14:30:08 +0000 (UTC)
+Cc: oss-security@lists.openwall.com
+Date: Mon, 02 Sep 2019 16:30:05 +0200
+From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] linux-distros membership application - Microsoft
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] MITRE response time
+To: Johannes Segitz <jsegitz@suse.de>
 
---000000000000eb0590058d139c26
-Content-Type: text/plain; charset="UTF-8"
+* Johannes Segitz:
 
-On Sat, Jul 6, 2019 at 10:40 PM Solar Designer <solar@openwall.com> wrote:
-
-> Hi all,
+> On Mon, Sep 02, 2019 at 04:15:02PM +0200, Heiko Schlittermann wrote:
+>> what is your experience with MITRE's response time to an CVE request?
 >
-> Per our current policy and precedents, I see no valid reasons not to
-> subscribe Microsoft (or part(s) of it, see below) to linux-distros.  So
-> I intend to figure out some detail and proceed with the subscription.
+> Usually one or two days
+
+For me as well.  The Labor Day Weekend may have interfered with Heiko's
+request.
+
+>> Last thursday I requested a CVE on behalf of a project I'm involved in
+>> (and which is not covered by any of the CNAs listed on
+>> https://cve.mitre.org/cve/request_id.html.
+>> 
+>> Where do you request CVEs for projects not listed there?
 >
->
->
-> > Microsoft's history with Linux is a rather recent one. I can offer the
->
+> Directly from MITRE: https://cveform.mitre.org/
 
-No, it is not recent. The Halloween Documents are from 1998,
-which makes 21 years.
+Right.
 
-
-> > following examples if you're willing to give us a few months off of the
-> > "1 year" requirement:
-> >
-
-
-LOL.
-
-
->
-> >  I suppose we could either give Microsoft this 1 month
-> off as you suggest based on Microsoft's track record of promptly dealing
-> with security issues in non-Linux products, or subscribe Microsoft to
-> linux-distros in August 2019 (or later).
->
->
-
-Are you suggesting breaking the rules and giving microsoft
-a present of one month? As a long time gnu/linux user and
-linux kernel bug killer [1] I am disappointed by this.
-
-What mailing list is best to discuss microsoft's involvement in
-GPL? (last time I checked LKLM was extremely high traffic)
-
-[1]: http://www.guninski.com/misc.html
-
---000000000000eb0590058d139c26--
+Thanks,
+Florian
