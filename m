@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["430" "Friday" "27" "January" "2017" "10:51:09" "+0300" "Luc Lynx" "luc.lynx@yandex.ru" "<60bcff1f-fa22-502f-8b1e-95a662a52f0d@yandex.ru>" "18" "[oss-security] SSRF issue in the svgsalamander library" nil nil nil "1" "2017012707:51:09" "[oss-security] SSRF issue in the svgsalamander library" (number mark "U       luc.lynx@yan Jan 27   18/430   " thread-indent "\"[oss-security] SSRF issue in the svgsalamander library\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["883" "Monday" "2" "September" "2019" "16:52:38" "+0200" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" nil "28" nil "^Date:" nil nil "9" nil nil (number mark "        hs@nodmarc.s Sep  2   28/883   " thread-indent "\"Re: [oss-security] MITRE response time\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] MITRE response time" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30636 invoked by uid 550); 27 Jan 2017 07:54:48 -0000
+Received: (qmail 7651 invoked by uid 550); 2 Sep 2019 14:52:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28389 invoked from network); 27 Jan 2017 07:51:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1485503470;
-	bh=0vbUaS6VkefvCV5zD0/yGxqobe5lTp9dqpefyqlaeVg=;
-	h=To:From:Subject:Message-ID:Date;
-	b=sa7rPdLkzkUxFBcdne3wgyAk3HZ6OlbzthV2mIj2GUQDP/4GHfeY3UmJ4JVu9yinR
-	 VSG/USu+e3nXelmkwoXdiST15pvsGQR8u49aDSqZRAUpWO9MHBpFs+34m4yFw/mPRZ
-	 qZR7kMyAANdFvk5X47jVeSWNjm/w7/AUDBamjjYQ=
-Authentication-Results: smtp2o.mail.yandex.net; dkim=pass header.i=@yandex.ru
-X-Yandex-Suid-Status: 1 0
-To: oss-security@lists.openwall.com
-From: Luc Lynx <luc.lynx@yandex.ru>
-Message-ID: <60bcff1f-fa22-502f-8b1e-95a662a52f0d@yandex.ru>
-Date: Fri, 27 Jan 2017 10:51:09 +0300
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.6.0
+Received: (qmail 7633 invoked from network); 2 Sep 2019 14:52:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:Resent-Cc:Resent-To;
+	bh=Ukn/0OfCCXzvcLhAHUXs9sEt3ESUe2BJ2K4O6Xf010M=; b=Ol42eKe7ENvamZ0K6KoQ5JHEKM
+	kxilYMOQtsMawlCdpKMYrhu0dN+Lc84qoRPmdzpYj+BR1n436I95LtuvOHIyObsvwGp/gzKdR7jpF
+	kdSZq1V5gh39G3UBCSDLnHjAiOk4xLrLwjgTRpiuBkPS9IYHGaRpBlhWq7jCRPrMdFSY=;
+Message-ID: <20190902145238.GJ3837@jumper.schlittermann.de>
+References: <20190902141502.GH3837@jumper.schlittermann.de>
+ <20190902142521.GI28748@suse.com>
+ <87a7bmvkia.fsf@oldenburg2.str.redhat.com>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="a8sldprk+5E/pDEv"
+Content-Disposition: inline
+In-Reply-To: <87a7bmvkia.fsf@oldenburg2.str.redhat.com>
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Mon, 2 Sep 2019 16:52:38 +0200
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] MITRE response time
+To: oss-security@lists.openwall.com
+
+--a8sldprk+5E/pDEv
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] SSRF issue in the svgsalamander library
+Content-Disposition: inline
 
-Hello,
+Florian Weimer <fweimer@redhat.com> (Mo 02 Sep 2019 16:30:05 CEST):
+> For me as well.  The Labor Day Weekend may have interfered with Heiko's
+> request.
 
-There is a java library for processing svg files called svgSalamander:
-
-https://github.com/blackears/svgSalamander
-
-It can also be found in maven:
-
-http://search.maven.org/#search%7Cga%7C1%7Csvg-salamander
-
-If the library is used in a web application, SSRF isssue is possible. I
-created a ticket on github:
-https://github.com/blackears/svgSalamander/issues/11
-
-The issue seems to be in all versions of the library.
-
+Ah, ok, that I didn't obey. Thank you.
 --
-LL
+Heiko
+
+--a8sldprk+5E/pDEv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAl1tLLUACgkQr0zGdqa2
+wUKa0Af+IXUAs2lB+9XnazsFq1VAeCbR+8x63ePacnMjbZcqRiLPDQVI7jHwu22T
+lS2SGyDW4nVVLt0W5fXeCm7akhvdXd3KVN0htKXxwp6lZNnS5iM8BEt7H+O6wLac
+LxVNAGOOYsDTIh01uWpqm1SQbdfN17ljoqHTFg9CRY/vwvwHcT691D/F9RFd2Lch
+1q7rl7kVL4gR1k0y/nvBFpalghqEvFsny5yeHI41XwqKGgyQTfN7yC3b/lulHZ5t
+IrkCp9B3GG0GRNmS8FHG/nmfHzw2cVfWcbA3FXRtnirsARFRrCu1XdbedwDeDwi6
+tjcaz2g2SPymAbWRrgVIoPSrh/QaGw==
+=dDa+
+-----END PGP SIGNATURE-----
+
+--a8sldprk+5E/pDEv--
