@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2002" "Friday" "10" "February" "2017" "22:44:48" "-0500" "Adam Caudill" "adam@adamcaudill.com" "<CAFJuDmNbvyh=qy__VTjOP9PuL158E8ENeRN+Fx7ciSCwTCoc4w@mail.gmail.com>" "37" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" "^Date:" nil nil "2" "2017021103:44:48" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        adam@adamcau Feb 10   37/2002  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<20170211001023.cfe5enzugromqdm6@sentinelchicken.org>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>" "<20170210205916.GB28439@hunt>" "<D999895D83BF47489B7647E60E228B4702FE7609@EX10MBOX05.pnnl.gov>" "<20170210224910.neeqi3e5265dgnxh@sentinelchicken.org>" "<MWHPR01MB2237C510B601793B63595572F1440@MWHPR01MB2237.prod.exchangelabs.com>" "<20170211001023.cfe5enzugromqdm6@sentinelchicken.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3088" "Wednesday" "4" "September" "2019" "11:22:48" "+0200" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" nil "91" nil "^Date:" nil nil "9" nil nil (number mark "        hs@nodmarc.s Sep  4   91/3088  " thread-indent "\"[oss-security] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26523 invoked by uid 550); 11 Feb 2017 04:23:40 -0000
+Received: (qmail 19563 invoked by uid 550); 4 Sep 2019 09:23:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,130 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30518 invoked from network); 11 Feb 2017 03:45:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=adamcaudill.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=GPPJKWhkemEo9IG9+PBUhQOm0DQIQihRhpMdF2x7czg=;
-        b=n6zUnlO9it4kpkIA3ui9GGl75PQn2/eJFamIJucW046kJ6HWeBhH9f4q72Df2Tk9eb
-         ishz66DLRaIlIDFnbX7tm/blSpPkAnMpgzhTP77LJ8Tc3ltstxjOdcEWzsF3A1dsmOeo
-         nBWd3ILApezz27Ox0G9EhAj56ly3Nge/EVx2k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=GPPJKWhkemEo9IG9+PBUhQOm0DQIQihRhpMdF2x7czg=;
-        b=IfdlrrcbxR9QN086P+O8mdmUw+z20k1lfY9pX+5NRdTjJ3zOWxLswhXTM6CGJLl6km
-         ngRv3IjzISNPURfrNPwA+yNT7UdNobYqqdbKaftkHwF8gdmTQ7Dl5tqmMUe1yKr2kNkn
-         USLsumWCu5txRWaOLoFrz8aEXe22l7pCwCHzrUTzQPUEOD8TC/Uc15z8PRfvgp46I9Ff
-         +4HCXp3DoiGHlmdGjbkPBFjLhu67wbzBYTXw2hn3Y6tiY+YA0fX0WpEfrlm/0TQE8iaV
-         h2l8cPpgbtaWXkrkzZ8l23wvtCFcfoSrAwnEir+y2o6ax0kiRqag2Wkj41IoznNBzHzH
-         8l3Q==
-X-Gm-Message-State: AMke39lLHkJoWzRFF0NqJDF3Hu4k0cFnSeMaljbY5ISZhFfrm4pVrTXyzEHRMdDKWOCrQNToq+UDb/3OOlor5Q==
-X-Received: by 10.36.127.73 with SMTP id r70mr12105842itc.11.1486784708947;
- Fri, 10 Feb 2017 19:45:08 -0800 (PST)
+Received: (qmail 19545 invoked from network); 4 Sep 2019 09:23:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=Content-Type:MIME-Version:Message-ID:
+	Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:In-Reply-To:References:Resent-Cc:Resent-To;
+	bh=Rek3pqLmWI7O3lFrY5npa2OBtGy6Mql56VJ8RCt4qQE=; b=Jb7+2tM3x+Z5dYzpwSXEzIXkZ+
+	NVbImpvwrBozp75ZnENvaaWh/piXLsWf0Sji5XgiKszKaieUMaRs8sbTCqloIb0EumGfuV6F9lvJq
+	gFptaDgMTfVe6+OoQip7ZM61yNe3UZkfcx/v0IAzSxO6DZG5/2834VsBltWkax8Pik/U=;
+Message-ID: <20190904092248.GQ3837@jumper.schlittermann.de>
+Mail-Followup-To: oss-security <oss-security@lists.openwall.com>,
+	Exim Users <exim-users@exim.org>,
+	Exim Announce <exim-announce@exim.org>
 MIME-Version: 1.0
-In-Reply-To: <20170211001023.cfe5enzugromqdm6@sentinelchicken.org>
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
- <616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov> <20170210205916.GB28439@hunt>
- <D999895D83BF47489B7647E60E228B4702FE7609@EX10MBOX05.pnnl.gov>
- <20170210224910.neeqi3e5265dgnxh@sentinelchicken.org> <MWHPR01MB2237C510B601793B63595572F1440@MWHPR01MB2237.prod.exchangelabs.com>
- <20170211001023.cfe5enzugromqdm6@sentinelchicken.org>
-Message-ID: <CAFJuDmNbvyh=qy__VTjOP9PuL158E8ENeRN+Fx7ciSCwTCoc4w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 10 Feb 2017 22:44:48 -0500
-From: Adam Caudill <adam@adamcaudill.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="PEfPc/DjvCj+JzNg"
+Content-Disposition: inline
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Wed, 4 Sep 2019 11:22:48 +0200
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Subject: [oss-security] CVE-2019-15846: Exim - local or remote attacker can execute programs
+ with root privileges.
+To: oss-security <oss-security@lists.openwall.com>,
+	Exim Users <exim-users@exim.org>,
+	Exim Announce <exim-announce@exim.org>
 
-On Fri, Feb 10, 2017 at 7:10 PM, Tim <tim-security@sentinelchicken.org> wrote:
-> - The fact that so many lesser known researchers couldn't get an ID
->   for so long when they asked for one.
->
-> - As already discussed, the web form's "Please ensure vendor or
->   product exists in the Products and Sources list".  For an open
->   source project, they give up and outsource the process, which then
->   can't be used for obtaining an ID before release.
+--PEfPc/DjvCj+JzNg
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Once it's completely up and running, DWF should address these issues.
-Researchers and organizations can easily become CNAs under DWF, with
-assigned CVE blocks. For OSS, the process of getting a CVE (including
-pre-publication) should be much simpler than it has been, especially
-in recent years. It's not quite there yet, but Kurt and team have put
-a lot of effort into laying the groundwork for a much better solution
-than the ad-hoc "send an email and hope" process that we've become
-accustomed to.
+*** Note: EMBARGO is still in effect!       ***
+*** Distros must not publish any detail yet ***
 
-The old system was far from perfect, as is the interim MITRE web form
-- hopefully with the help of the community, DWF will be able to
-provide a better process for all involved. For OSS, DWF is the
-solution we need to be focused on, and helping it to evolve to suit
-the needs of everyone.
+Head up! Security release ahead!
 
-> - The most telling though is the entire CNA program, particularly when
->   it allowed only commercial vendors.  If a vendor decides something
->   isn't a problem, they can block or slow CVE assignment.  It's a
->   corruption of service that ought to be for the public benefit.  (And
->   yes, this does happen.)
+CVE ID:     CVE-2019-15846
+Version(s): up to and including 4.92.1
+Issue:      A local or remote attacker can execute programs with root
+            privileges.
+Details:    Will be made public at CRD. Currently there is no known
+            exploit, but a rudimentary POC exists.
 
-While I believe that DWF represents a substantial step forward for
-OSS, and getting CVEs to those that need them, when they need them; my
-feelings on CVEs for commercial software remain rather negative. I've
-stopped requesting CVEs for commercial software due to all of the
-issues - if I discover something where I believe a CVE is especially
-important, I direct the request through CERT/CC or another
-origination. But, this is getting off-topic.
+Coordinated Release Date (CRD) for Exim 4.92.2:
+            2019-09-06 10:00 UTC
+
+Contact:    security@exim.org
+
+Proposed Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+2019-09-03:
+    - initial notification to distros@openwall.org and
+      exim-maintainers@exim.org
+
+2019-09-04: <-- NOW
+    - This Heads-up notice to oss-security@lists.openwall.com,
+      exim-users@exim.org, and exim-announce@exim.org
+
+2019-09-06 10:00 UTC:
+    - Coordinated relase date
+    - Notice to oss-security, exim-users, and exim-announce
+    - Publish the patches in our official and public Git repositories
+      and the packages on our FTP server.
+
+Downloads available starting at CRD (not yet)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+The downloads are not yet available. They will be made available
+at the above mentioned CRD.
+
+Release tarballs (exim-4.92.2):
+
+    https://ftp.exim.org/pub/exim/exim4/
+
+The package files are signed with my GPG key.
+
+The full Git repo:
+
+    https://git.exim.org/exim.git
+    https://github.com/Exim/exim    [mirror of the above]
+    - tag    exim-4.92.2
+    - branch exim-4.92.2+fixes
+
+The tagged commit is the officially released version. The tag is signed
+with my GPG key.  The +fixes branch isn't officially maintained, but
+contains useful patches *and* the security fix. The relevant commit is
+signed with my GPG key. The old exim-4.92.1+fixes branch is being functiona=
+lly
+replaced by the new exim-4.92.2+fixes branch.
+
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+--PEfPc/DjvCj+JzNg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAl1vgmgACgkQr0zGdqa2
+wULCmQf8COw+yp2fYQ7ZNNvkHhGFiQ9FPtURDLJ/Ysg3HpkcZxxAXRfB6IRfaE1W
+N3yS8YN781m+uCEiNCztEwgAULLouOQWy4asKa7K40cMphW+tJT3TQtsllqp/NtT
+5SE+Tht68GsjJt1iWiw+OPbEljRnx4wyCT7MLKWFgBinGCr/jN2jNLuJ7zkrZToW
+MjzOFHUgOT9kGo4UvbcdbGJ6mV4hV3uScVOaEfK0v3OEnO+4RJvB2e5Pt10SijFl
+ZINAizEKP5KhMnjSSgErlwVjeUfS1RXCDf7hbwV10qRalWtL6GdAJqOv6aRXiPJS
+SHkc0MfzudJZmMXEHRxt9HlRQMT2gQ==
+=kfZm
+-----END PGP SIGNATURE-----
+
+--PEfPc/DjvCj+JzNg--
