@@ -1,4 +1,9 @@
-Received: (qmail 25875 invoked by uid 550); 15 Apr 2024 15:32:14 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2885" "Friday" "6" "September" "2019" "12:20:39" "+0200" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" nil "83" nil "^Date:" nil nil "9" nil nil (number mark "        hs@nodmarc.s Sep  6   83/2885  " thread-indent "\"[oss-security] Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13825 invoked by uid 550); 6 Sep 2019 18:41:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,60 +11,128 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25857 invoked from network); 15 Apr 2024 15:32:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=FnYgVeCVeO5csrnfWsHPB357il5O5uraS/NnxN0iB/0=; b=PLQijsiwK9T9FfY2VPtSbkiTZn
-	qwdO/M9vavf56v/93FAkZXRQz6kRM6q0d7MTJm4ulcnauO/TAdH7n3NrUm8UwAaIRwRZqzJXnYoyZ
-	gQ5XM0ON1e79EfbGPgFJVcK/+cgi5HIWdgCfzwCj+/IPqRZ80W6PKxCb1tlUJp4M+4pSn2OxidNIM
-	0gEdXpHAGXiQonKDNjCzjsc5ccQcM8yt084hGzK0m8/e1OZNN3TgoB3qKjv/MplkmRrTPX4bDBsnp
-	Xi8aZD5jG2wRQCIPqYYTk33CEKpNico7TYA5qbP4GdwCySaHf7K6gnEkObPhUpBs02LBkNPtLHHUK
-	T3NLXx8Q==;
-Date: Mon, 15 Apr 2024 16:32:02 +0100
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <Zh1IcvB2TL4dItr9@remnant.pseudorandom.co.uk>
-References: <20240414190855.GA12716@openwall.com>
+Received: (qmail 25922 invoked from network); 6 Sep 2019 11:59:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Resent-To:Cc:Content-Description:
+	Content-ID:Content-Transfer-Encoding:Resent-Cc;
+	bh=6/oi5s5uLrdfFJCM8uYHAZxPOnzYiCWgco16hsP1Kfs=; b=sVe2T56VTU7YhOJrv9xPvY5iVT
+	ajyuEScJwP3jh61rcOQuij2jwmWAzIY+2SGeYxHxXQqp6eLWUcLljv7FL0Uf5sKZoqLdUzpnWPfcf
+	GxG9+R2NQ2DJr/XUf96Ybw0fGU/JKkB8jQPOm/sooL/npzhXMVHrz7I7JFerOPRmIOmI=;
+Message-ID: <20190906102039.GZ3837@jumper.schlittermann.de>
+Mail-Followup-To: oss-security <oss-security@lists.openwall.com>,
+        Exim Users <exim-users@exim.org>,
+        Exim Announce <exim-announce@exim.org>
+References: <20190904092248.GQ3837@jumper.schlittermann.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="im83/wVv0jiGQj4J"
 Content-Disposition: inline
-In-Reply-To: <20240414190855.GA12716@openwall.com>
-X-Debian-User: smcv
-Subject: Re: [oss-security] Linux: Disabling network namespaces
+In-Reply-To: <20190904092248.GQ3837@jumper.schlittermann.de>
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Fri, 6 Sep 2019 12:20:39 +0200
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
+Reply-To: oss-security@lists.openwall.com
+Resent-From: Heiko Schlittermann <hs@schlittermann.de>
+Resent-Date: Fri, 6 Sep 2019 13:59:27 +0200
+Resent-Message-ID: <20190906115927.GE3837@jumper.schlittermann.de>
+Resent-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE-2019-15846: Exim - local or remote attacker can execute
+ programs with root privileges.
+To: oss-security <oss-security@lists.openwall.com>,
+        Exim Users <exim-users@exim.org>,
+        Exim Announce <exim-announce@exim.org>
 
-On Sun, 14 Apr 2024 at 21:08:55 +0200, Solar Designer forwarded:
-> Some other container runtimes such as Docker and Podman do make use
-> of network namespaces by default.
+--im83/wVv0jiGQj4J
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-As an example of a less traditional container environment, Flatpak
-optionally uses network namespaces (as implemented by bubblewrap,
-bwrap(1)) to isolate apps from the network, and disabling
-network namespaces will break the ability to run apps that have
-`--unshare=network` in their manifests. I believe it will "fail closed"
-in this situation (refusing to run the affected app, rather than running
-the app but giving it unintended network access).
+CVE ID:     CVE-2019-15846
+Credits:    Zerons <sironhide0null@gmail.com>, Qualys
+Version(s): all versions up to and including 4.92.1
+Issue:      The SMTP Delivery process in all=C2=B9 versions up to and
+            including Exim 4.92.1 has a Buffer Overflow.  In the default
+            runtime configuration, this is exploitable with crafted Server
+            Name Indication (SNI) data during a TLS negotiation. In other
+            configurations, it is exploitable with a crafted client TLS cer=
+tificate.
+Details:    doc/doc-txt/cve-2019-15846 in the downloaded source tree
 
-A workaround would be to run the affected apps with
-`flatpak run --share=network ...`, or permanently reconfigure their
-sandboxing parameters with `flatpak override --share=network ...`, but
-either of those workarounds would remove the network isolation feature
-and give the affected apps unrestricted network access.
+Coordinated Release Date (CRD) for Exim 4.92.2:
+            2019-09-06 10:00 UTC
 
-Similarly, libgnome-desktop uses bubblewrap to run sandboxed thumbnailers
-with no network access, mitigating vulnerabilities that might exist in
-thumbnailers or the libraries that they use. Again, I believe it will
-"fail closed", but I haven't checked.
+Contact:    security@exim.org
 
-Similarly, WebKitGTK uses bubblewrap to sandbox parts of itself with no
-network access, xdg-desktop-portal uses bubblewrap for sandboxed icon
-validation, and I'm sure there are others.
-(<https://codesearch.debian.net/search?q=--unshare-net>)
+We released Exim 4.92.2. This is a security update based on 4.92.1.
 
-So I suspect that the mitigation of disabling network namespaces is
-likely to be too disruptive to be applicable on desktops, and only useful
-on servers.
+Mitigation
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-    smcv
+Do not offer TLS for incomming connections (tls_advertise_hosts).
+This mitigation is *not* recommended!
+
+Downloads
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Starting at CRD the downloads will be available from the following
+sources:
+
+Release tarballs (exim-4.92.2):
+
+    https://ftp.exim.org/pub/exim/exim4/
+
+The package files are signed with my GPG key.
+
+The full Git repo:
+
+    https://git.exim.org/exim.git
+    https://github.com/Exim/exim    [mirror of the above]
+    - tag    exim-4.92.2
+    - branch exim-4.92.2+fixes
+
+The tagged commit is the officially released version. The tag is signed
+with my GPG key.  The +fixes branch isn't officially maintained, but
+contains useful patches *and* the security fix. The relevant commit is
+signed with my GPG key. The old exim-4.92.1+fixes branch is being functiona=
+lly
+replaced by the new exim-4.92.2+fixes branch.
+
+=C2=B9) We've indication, that only versions starting with 4.80 up to and
+including 4.92.1 are affected.
+
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+--im83/wVv0jiGQj4J
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAl1yMvYACgkQr0zGdqa2
+wUJkugf/RPtUQQMm9rkWnns0lu74rhT4h+pBW8BfpwY2IFT6HQeyqFkZmfAJ1E9L
+e9y8e6Xa3ovd08vhC9gcguiUXj/QJbtK4LXYR9SDHkvtRHHYJCYkLvsHubNAtmIT
+d0j65NUfL6U9y0Z33Nnq5L7RIKpSe/8aYX8jHx4IS4p/qqoqy9VJNKhTzB/rugrG
+gKigutxsIwEuXYJbP1Zhcxsmw9jbApI7e2LHYg4bl88XjAfNHRJolZ+ANGSpAGyI
+geB1MTW0Q2T4Xxun5X5WvcRvg1JUNmWLpejAC6+Vqh0qk6z/ZXtZ8I3DGUHUbyLK
+E2ylNRnEBBQfCjabLucjCfw0WRxLzg==
+=5ddF
+-----END PGP SIGNATURE-----
+
+--im83/wVv0jiGQj4J--
