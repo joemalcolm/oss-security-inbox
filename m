@@ -1,36 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/23/2
-Message-Id: <33ACD1E8-76A6-46A3-8CA9-10E78E9F5FC5@beckweb.net>
-Date: Wed, 23 Jan 2019 11:17:46 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/06/8
+Message-ID: <65720388-e6ae-13fc-aa87-847e0eba5c99@mvista.com>
+Date: Fri, 6 Sep 2019 16:33:30 -0700
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com, Heiko Schlittermann <hs@...marc.schlittermann.de>
+Subject: Re: Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.
 Content-Type: text/plain; charset=utf-8
 
 
 
-> On 16. Jan 2019, at 17:51, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-868
-> Users with the Overall/RunScripts permission (typically administrators) 
-> were able to use the Jenkins script console to craft a 'Remember me' 
-> cookie that would never expire.
-> 
-> This allowed attackers access to a Jenkins instance while the 
-> corresponding user in the configured security realm exists, for example to 
-> persist access after another successful attack. 
+On 9/5/19 11:00 PM, Heiko Schlittermann wrote:
+> [ This is a re-post w/o dmarc protection of the sender (me). ]
+>
+> *** Note: EMBARGO is still in effect!       ***
+If this is true, why is this on the public list?
 
-CVE-2019-1003003
+> *** Distros must not publish any detail yet ***
 
-> SECURITY-901
-> When using an external security realm such as LDAP or Active Directory, 
-> deleting a user from the security realm does not result in the user losing 
-> access to Jenkins.
-> 
-> While deleting the user record from Jenkins did invalidate the 'Remember 
-> me' cookie, there was no way to invalidate active sessions besides 
-> restarting Jenkins or terminating sessions through other means, such as 
-> Monitoring Plugin.
 
-CVE-2019-1003004
 
+- armin
+>
+> In case you are entitled to access the security repo:
+> *and* use the 4.92.2+fixes branch:
+>
+> The branch got two new commits, fixing a small tool. This tool is not
+> designed to process untrusted data, so there is no security issue, but
+> it was buggy. It is unlikely to be critical.
+>
+> You may consider including the fix in the packages to be
+> released at CRD (today, 10.00 UTC) or schedule it for a later
+> maintainance release of the Exim packages.
+>
+> commit cdc7f9a9667ecf31d803fc8d1a31b466284360bd
+> Author: Heiko Schlittermann (HS12-RIPE) <hs@...littermann.de>
+> Date:   Fri Sep 6 06:57:11 2019 +0200
+>
+> commit 66935633816a88460f5222f40dc29d1a4e877978
+> Author: Heiko Schlittermann (HS12-RIPE) <hs@...littermann.de>
+> Date:   Thu Sep 5 14:56:22 2019 +0200
+>
+>     Best regards from Dresden/Germany
+>     Viele Grüße aus Dresden
+>     Heiko Schlittermann
+> --
+>  SCHLITTERMANN.de ---------------------------- internet & unix support -
+>  Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+>  gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+>  ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
