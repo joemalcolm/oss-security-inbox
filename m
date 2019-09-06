@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4753" "Sunday" "26" "February" "2017" "11:53:02" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<285721.180818172-sendEmail@localhost>" "105" "[oss-security] audiofile: heap-based buffer overflow in MSADPCM::decodeBlock (MSADPCM.cpp)" "^Date:" nil nil "2" "2017022611:53:02" "[oss-security] audiofile: heap-based buffer overflow in MSADPCM::decodeBlock (MSADPCM.cpp)" (number mark "U       ago@gentoo.o Feb 26  105/4753  " thread-indent "\"[oss-security] audiofile: heap-based buffer overflow in MSADPCM::decodeBlock (MSADPCM.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["634" "Friday" "6" "September" "2019" "18:12:47" "+0530" "P J P" "ppandit@redhat.com" nil "18" nil "^Date:" nil nil "9" nil nil (number mark "        ppandit@redh Sep  6   18/634   " thread-indent "\"[oss-security] CVE-2019-15890 QEMU: Slirp: use-after-free during packet reassembly\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-15890 QEMU: Slirp: use-after-free during packet reassembly" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21989 invoked by uid 550); 26 Feb 2017 11:53:20 -0000
+Received: (qmail 8061 invoked by uid 550); 6 Sep 2019 12:43:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,119 +11,34 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21883 invoked from network); 26 Feb 2017 11:53:19 -0000
-Message-ID: <285721.180818172-sendEmail@localhost>
-X-Mailer: sendEmail-1.56
+Received: (qmail 8035 invoked from network); 6 Sep 2019 12:43:04 -0000
+X-X-Sender: pjp@kaapi
+Message-ID: <nycvar.YSQ.7.76.1909061810360.25514@xnncv>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-222416.723686369"
-Date: Sun, 26 Feb 2017 11:53:02 +0000
-From: "Agostino Sarubbo" <ago@gentoo.org>
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Fri, 06 Sep 2019 12:42:53 +0000 (UTC)
+Date: Fri, 6 Sep 2019 18:12:47 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] audiofile: heap-based buffer overflow in MSADPCM::decodeBlock (MSADPCM.cpp)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Subject: [oss-security] CVE-2019-15890 QEMU: Slirp: use-after-free during packet reassembly
+To: oss security list <oss-security@lists.openwall.com>
 
-------MIME delimiter for sendEmail-222416.723686369
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+   Hello,
 
-Description:
-audiofile is a C-based library for reading and writing audio files in many common formats.
+A use-after-free issue was found in the SLiRP networking implementation of the 
+QEMU emulator. It occurs in ip_reass() routine while reassembling incoming 
+packets, if the first fragment is bigger than the m->m_dat[] buffer. A 
+user/process could use this flaw to crash the Qemu process on the host 
+resulting in DoS.
 
-A fuzz on it discovered an heap overflow.
+Upstream patch:
+---------------
+   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/c59279437eda91841b9d26079c70b8a540d41204
 
-The complete ASan output:
+CVE-2019-15890 assigned via -> https://cveform.mitre.org/
 
-# sfconvert @@ out.mp3 format aiff
-==2512==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62d00001c45a at pc 0x7fe7476f387d bp 0x7ffc3b0e3bf0 sp 0x7ffc3b0e3be8
-WRITE of size 2 at 0x62d00001c45a thread T0
-    #0 0x7fe7476f387c in MSADPCM::decodeBlock(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:222:14
-    #1 0x7fe7476c1ac9 in BlockCodec::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:55:3
-    #2 0x7fe7476fac20 in RebufferModule::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/RebufferModule.cpp:122:3
-    #3 0x7fe7476ab05a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14
-    #4 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29
-    #5 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
-    #6 0x7fe74678078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #7 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)
-
-0x62d00001c45a is located 0 bytes to the right of 32858-byte region [0x62d000014400,0x62d00001c45a)
-allocated by thread T0 here:
-    #0 0x4d2d08 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x7fe746419687 in operator new(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xb2687)
-    #2 0x7fe7476af43c in afGetFrameCount /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/format.cpp:205:41
-    #3 0x50bb5c in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:329:29
-    #4 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
-    #5 0x7fe74678078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:222:14 in 
-MSADPCM::decodeBlock(unsigned char const*, short*)
-Shadow bytes around the buggy address:
-  0x0c5a7fffb830: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c5a7fffb840: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c5a7fffb850: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c5a7fffb860: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c5a7fffb870: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c5a7fffb880: 00 00 00 00 00 00 00 00 00 00 00[02]fa fa fa fa
-  0x0c5a7fffb890: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c5a7fffb8a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c5a7fffb8b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c5a7fffb8c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c5a7fffb8d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==2512==ABORTING
-
-Affected version:
-0.3.6
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00186-audiofile-heapoverflow-MSADPCM-decodeBlock
-
-Timeline:
-2017-02-20: bug discovered and reported to upstream
-2017-02-20: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-msadpcmdecodeblock-msadpcm-cpp
-
+Thank you.
 --
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-222416.723686369--
-
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
