@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["647" "Tuesday" "22" "December" "2020" "18:06:13" "+0100" "Mauro Matteo Cascella" "mcascell@redhat.com" "<CAA8xKjULWQ+28j6enr=N30Y1h07EUNMO7pyHDmLQVLx4mM1kPA@mail.gmail.com>" "21" "[oss-security] CVE-2020-25723 QEMU: assertion failure through usb_packet_unmap() in hw/usb/hcd-ehci.c" nil nil nil "12" "2020122217:06:13" "[oss-security] CVE-2020-25723 QEMU: assertion failure through usb_packet_unmap() in hw/usb/hcd-ehci.c" (number mark "U       mcascell@red Dec 22   21/647   " thread-indent "\"[oss-security] CVE-2020-25723 QEMU: assertion failure through usb_packet_unmap() in hw/usb/hcd-ehci.c\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-25723 QEMU: assertion failure through usb_packet_unmap() in hw/usb/hcd-ehci.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1531" "Friday" "6" "September" "2019" "12:44:30" "+0200" "Heiko Schlittermann" "hs@schlittermann.de" nil "46" nil "^Date:" nil nil "9" nil nil (number mark "        hs@schlitter Sep  6   46/1531  " thread-indent "\"[oss-security] Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3117 invoked by uid 550); 22 Dec 2020 17:30:22 -0000
+Received: (qmail 3798 invoked by uid 550); 6 Sep 2019 18:40:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17473 invoked from network); 22 Dec 2020 17:06:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1608656790;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=kASPFSG458wIw8FOksAnM/+fjrU/ApvAp0jX3kIfITQ=;
-	b=XGMHSL9Q8lu4Pkx92JdbjtZJipyStqmluUn26rgIAwWo1rYPUeL277GCAm+39xF4m5k90o
-	d5j73fDjFIkyieC/we2y829nDDjseHQKw0yh1yY9uXG6L7WYmMsCZmHbzxR/4bM0lS8YBX
-	Iw5ZU0kBEYFYbYM0Q7ySO8JszvZZeE0=
-X-MC-Unique: tn1bQAv4OmuXqT94txuwgQ-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=kASPFSG458wIw8FOksAnM/+fjrU/ApvAp0jX3kIfITQ=;
-        b=TmaOkDJiky5JHvsWG4odTfCyUhW/Foc5majTduseIgWvueLdYng8Raj8+S31sjkhQC
-         IU7E6wEkl4owdzKiSslsN67Bwq7dyuCaLqEtUnd2b5vwZ0NG69mEqV3JWPrC0KdE0JID
-         OG4XcJC97f7m3MtArJjQhepHhAP/ys8vrZdWH6rngwmrWozpt7aW4hJYHnpj6fNXOLCa
-         8yhT85lSOAskkWM+zneXS2vKptWtzDoMXjchjbQAKsGSXgkczLHlyHSEW5ZcvsF+smjx
-         s5FEMUs5STkezDDvgZiCPbzaG9buT5//aggPteIyZGbCKy1itjewRIEUO+GDnXMwhLKc
-         yG1A==
-X-Gm-Message-State: AOAM530ALItDDDn7Jm4jXkCRmpDq6Za1bkhQApfhZbeDlJcBCX+p3qE2
-	cV3rLomoNiAUOc55yHnL3Xj30r3lLxtdvxEpf6x2/Um7Y0nI36y390X/Qc0EgF6CW2LhRHItiaF
-	NuLFYzmj+t6NhqJPO6y1rqEvDGGamDMT0PDdVKUToI3vG
-X-Received: by 2002:a17:906:4e53:: with SMTP id g19mr20367938ejw.454.1608656784137;
-        Tue, 22 Dec 2020 09:06:24 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJxX/gaNJE4WrCX7AWBHjI/J9V1mwMonUQhEWqMYyQsWaNNTUu/1nJGjEGgyWJw9n9Gds56zX7E0ZDgUeizJNOU=
-X-Received: by 2002:a17:906:4e53:: with SMTP id g19mr20367921ejw.454.1608656784019;
- Tue, 22 Dec 2020 09:06:24 -0800 (PST)
+Received: (qmail 26106 invoked from network); 6 Sep 2019 10:44:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:Resent-Cc:Resent-To;
+	bh=WgjzbHA6dJthGXojwqb3kJ9l1diF6b1vLYfRQDhCZFo=; b=mk4VsoaH5ulf/Z5AaOPaVgG6R4
+	AUxHt3Y+MgXzkV11Iedmot5tXYzXX02SyTqpsVstGctNZTZixAom+h/vGYioyiHYZ1mvJYIEGCrVE
+	paIAOLH9zoN18+c1jLXxd3dF+ETpvEaWFEQ1XeOmatzHNTQa7WiJUiV/I4JeDlE4jXYw=;
+Message-ID: <20190906104430.GA3837@jumper.schlittermann.de>
+Mail-Followup-To: oss-security <oss-security@lists.openwall.com>,
+	Exim Users <exim-users@exim.org>,
+	Exim Announce <exim-announce@exim.org>
+References: <20190904092248.GQ3837@jumper.schlittermann.de>
+ <20190906102039.GZ3837@jumper.schlittermann.de>
 MIME-Version: 1.0
-From: Mauro Matteo Cascella <mcascell@redhat.com>
-Date: Tue, 22 Dec 2020 18:06:13 +0100
-Message-ID: <CAA8xKjULWQ+28j6enr=N30Y1h07EUNMO7pyHDmLQVLx4mM1kPA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: 330cjfdn@gmail.com
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=mcascell@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2020-25723 QEMU: assertion failure through
- usb_packet_unmap() in hw/usb/hcd-ehci.c
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="qZLIv6EoKi7YuaSc"
+Content-Disposition: inline
+In-Reply-To: <20190906102039.GZ3837@jumper.schlittermann.de>
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Fri, 6 Sep 2019 12:44:30 +0200
+From: Heiko Schlittermann <hs@schlittermann.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE-2019-15846: Exim - local or remote attacker can execute
+ programs with root privileges.
+To: oss-security <oss-security@lists.openwall.com>,
+	Exim Users <exim-users@exim.org>,
+	Exim Announce <exim-announce@exim.org>
 
-Hello,
+--qZLIv6EoKi7YuaSc
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-A flaw was found in the USB EHCI controller emulation of QEMU. It
-could occur while processing USB requests due to DMA memory map
-failure not being properly detected. This was fixed in the following
-commit by checking the return value of usb_packet_map(), thus
-preventing a reachable assertion issue from occuring in a later call
-of usb_packet_unmap().
+Heiko Schlittermann <hs@dmarc.schlittermann.de> (Fr 06 Sep 2019 12:20:39 CE=
+ST):
+> Mitigation
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> Do not offer TLS for incomming connections (tls_advertise_hosts).
+> This mitigation is *not* recommended!
 
-Upstream commit:
-https://git.qemu.org/?p=qemu.git;a=commit;h=2fdb42d840400d58f2e706ecca82c142b97bcbd6
+This should block the most popular attack vector:
 
-This issue was reported by Cheolwoo Myung (cc'd).
-CVE-2020-25723 was assigned by Red Hat Inc.
+In your MAIL ACL:
 
-Best regards.
--- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
+    deny    condition =3D ${if eq{\\}{${substr{-1}{1}{$tls_in_sni}}}}
+            message =3D sorry
 
+
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+--qZLIv6EoKi7YuaSc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAl1yOI4ACgkQr0zGdqa2
+wULT9AgAi4Tik4cZ0O+yz6oHNpKh5/a82Xk2sIlZp73riuaxcazDwHWKuyAmSJC4
+UH0OPSHJRD/P+8A3bZOVyqyrWmDQ0KUVRecKLdzTa3S6ugw1Xe26voNDjjMg4u0g
+b9b8kNopaa+xF7jysckqi8924KzfK63Po029lI/4n4ppV3RyYd2hkrj0TzOCL+Xl
+P7ELvJIAio0+HyWAjiMhcHHptwHuKwnx+VoJ6x0pVaZiGvhDnjdjNxURu7Ss4KbJ
+oiLWyhcruvuWzp0etHeyJVTP8yqbyBUNczucV/k37IyCSmD+/6TKRlQn36mJapeB
+5fDTbLCJHvO0KILIgTqRJcIUI7ALnw==
+=3BA0
+-----END PGP SIGNATURE-----
+
+--qZLIv6EoKi7YuaSc--
