@@ -1,101 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/28/2
-Message-Id: <5C33B233-181D-45E1-8982-7ED07AD858B1@stablepoint.com>
-Date: Sat, 28 Sep 2019 01:56:11 +0100
-From: Dominic Taylor <dom@...blepoint.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/06/7
+Message-ID: <CA+5ZNX8MVdu=TstQr+xz9ZX0FuOBPY-dSeM-Qzd=PTq-vKYRmw@mail.gmail.com>
+Date: Fri, 6 Sep 2019 13:54:47 -0600
+From: Rawlin Peters <rawlin@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Exim CVE-2019-16928 RCE using a heap-based buffer overflow
+Subject: CVE-2019-12405: Apache Traffic Control LDAP-based authentication vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi Heiko,
+CVE-2019-12405: Apache Traffic Control LDAP-based authentication vulnerability
 
-Good find, but why no embargo?
+Severity: Critical
 
-Presumably because privs are dropped so this is maybe not as bad as previous?
+Vendor: The Apache Software Foundation
 
-Regards
+Versions affected:
+Traffic Control 3.0.0
+Traffic Control 3.0.1
 
-Dom
+Description:
+The Traffic Ops API component of the Apache Traffic Control project is
+vulnerable to improper authentication when LDAP is enabled. Given a username
+for a user that can be authenticated via LDAP, it is possible to improperly
+authenticate as that user without that user's correct password.
 
-> On 28 Sep 2019, at 01:34, Heiko Schlittermann <hs@...marc.schlittermann.de> wrote:
-> 
-> CVE ID:     CVE-2019-16928
-> Date:       2019-09-27 (CVE assigned)
-> Version(s): from 4.92 up to and including 4.92.2
-> Reporter:   areuu@...look.com
-> Reference:  https://bugs.exim.org/show_bug.cgi?id=2449
-> Issue:      Heap-based buffer overflow in string_vformat,
->            remote code execution seems to be possible
-> 
-> Conditions to be vulnerable
-> ===========================
-> 
-> All versions from (and including) 4.92 up to (and including) 4.92.2 are
-> vulnerable.
-> 
-> Details
-> =======
-> 
-> There is a heap-based buffer overflow in string_vformat (string.c).
-> The currently known exploit uses a extraordinary long EHLO string to
-> crash the Exim process that is receiving the message. While at this
-> mode of operation Exim already dropped its privileges, other paths to
-> reach the vulnerable code may exist.
-> 
-> Mitigation
-> ==========
-> 
-> There is - beside updating the server - no known mitigation.
-> 
-> Fix
-> ===
-> 
-> We plan to publish a new security release (*will* be 4.92.3) of Exim
-> during the next 48 hours, ideally before monday 8.00 UTC. (We're still
-> running regression tests.) We'll send another notification as soon as
-> the new release is available.
-> 
-> Distros may have already picked the patch mentioned below and may have
-> already released a fixed version. Please check your distribution's
-> changelogs.
-> 
-> If you can't wait, please use use our git repository http://git.exim.org/exim.git,
-> checkout the branch exim-4.92.2+fixes and use the commit 478effbfd9c3cc5a627fc671d4bf94d13670d65f
-> 
-> A direct link to the commit is:
-> https://git.exim.org/exim.git/patch/478effbfd9c3cc5a627fc671d4bf94d13670d65f
-> 
-> which basically does:
-> 
-> --- a/src/src/string.c
-> +++ b/src/src/string.c
-> @@ -1132,7 +1132,7 @@ store_reset(g->s + (g->size = g->ptr + 1));
-> Arguments:
->   g            the growable-string
->   p            current end of data
-> -  count                amount to grow by
-> +  count                amount to grow by, offset from p
-> */
-> 
-> static void
-> @@ -1590,7 +1590,7 @@ while (*fp)
->        }
->       else if (g->ptr >= lim - width)
->        {
-> -       gstring_grow(g, g->ptr, width - (lim - g->ptr));
-> +       gstring_grow(g, g->ptr, width);
->        lim = g->size - 1;
->        gp = CS g->s + g->ptr;
->        }
-> 
-> We thank you for using Exim.
-> 
->    Best regards from Dresden/Germany
->    Viele Grüße aus Dresden
->    Heiko Schlittermann
-> --
-> SCHLITTERMANN.de ---------------------------- internet & unix support -
-> Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
-> gnupg encrypted messages are welcome --------------- key ID: F69376CE -
-> ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+Mitigation:
+3.x users should upgrade to 3.0.2.
+If the upgrade cannot be done immediately, LDAP authentication can be disabled
+by removing the Traffic Ops LDAP configuration file -- ldap.conf -- in order to
+mitigate the vulnerability until an upgrade to 3.0.2 can be performed.
 
+References:
+    Downloads:
+        http://trafficcontrol.apache.org/releases/
+    CVE:
+        https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-12405
+    Project security:
+        http://trafficcontrol.apache.org/security/
+--
+Thanks,
+Rawlin
