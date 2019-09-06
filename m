@@ -1,82 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/10
-Message-ID: <ab9c5d55-c33e-5a0b-6877-178a2dc23503@redhat.com>
-Date: Tue, 25 Jun 2019 09:37:53 -0600
-From: Jeff Law <law@...hat.com>
-To: Pascal Cuoq <cuoq@...st-in-soft.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/06/4
+Message-ID: <20190906104430.GA3837@jumper.schlittermann.de>
+Date: Fri, 6 Sep 2019 12:44:30 +0200
+From: Heiko Schlittermann <hs@...littermann.de>
+To: oss-security <oss-security@...ts.openwall.com>, Exim Users <exim-users@...m.org>, Exim Announce <exim-announce@...m.org>
+Subject: Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.
 Content-Type: text/plain; charset=utf-8
 
-On 6/25/19 9:02 AM, Pascal Cuoq wrote:
-> Hello,
-> 
->> On 25 Jun 2019, at 16:33, Jeff Law <law@...hat.com> wrote:
->> 
->> On 6/25/19 8:14 AM, Matthew Fernandez wrote:
->>> 
->>> 
->>> C/C++ compilers will infer backwards from uninitialized variable
->>> reads (undefined behavior in these languages) that preceding code
->>> is unreachable. For example, when moving from GCC 6 series to GCC
->>> 7 series we found one of our code bases would produce a binary
->>> that would only segfault when compiled at >= -O2. We root caused
->>> this to exactly the situation you describe: an error handling
->>> path that read uninitialized variables. The compiler appeared to
->>> infer backwards that the error check itself was a no-op as the
->>> true branch led to unconditional UB (this is my interpretation of
->>> its actions; I did not delve into the compiler’s internals).
->> Well, as a GCC developer, I can say it doesn't use an uninitialized
->> read to allow back-propagation of state to eliminate conditionals.
->> It may have looked that way, but there had to be something else
->> going on.
-> 
-> This is tangential to the subject and perhaps we should take this
-> sub-discussion off the list, or at least make a new thread. I'm
-> interested in your opinion of what is going on with Ubuntu's packaged
-> GCC version 4.4.3 in the example under the section “The next example”
-> in this blog post, where this very thing is happening (when invoked
-> with fewer than 3 arguments, the compiled code claims that the result
-> of an unsigned multiplication by 2 is odd):
-> 
-> http://blog.frama-c.com/index.php?post/2013/03/13/indeterminate-undefined
+Heiko Schlittermann <hs@...rc.schlittermann.de> (Fr 06 Sep 2019 12:20:39 CEST):
+> Mitigation
+> ==========
 >
->  I have not been able to reproduce this with any of the GCC versions
-> hosted at Compiler Explorer, so I believe that this may never have
-> been part of the GCC official tree, but the fact remains that all of
-> Ubuntu 4.4.3 and all source programs that were compiled with Ubuntu
-> 4.4.3's default compiler were compiled with a compiler that did this
-> (surprising, dangerous in some contexts) thing.
+> Do not offer TLS for incomming connections (tls_advertise_hosts).
+> This mitigation is *not* recommended!
+
+This should block the most popular attack vector:
+
+In your MAIL ACL:
+
+    deny    condition = ${if eq{\\}{${substr{-1}{1}{$tls_in_sni}}}}
+            message = sorry
 
 
-#include <stdio.h>
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-int main(int c, char **v)
-{
-  unsigned int j;
-  if (c==4)
-    j = 1;
-  else
-    j *= 2;
-  printf("j:%u ",j);
-  printf("c:%d\n",c);
-}
-
-Just like the first example, the compiler can choose any value for the
-input and output of the j *= 2 statement.  It does not have to be even.
- The compiler does not have to actually perform the multiplication or
-any computation for that matter.  It can just use whatever value is
-conveniently lying around in a register for the result.
-
-In theory that would in turn allow the compiler to elide the conditional
-because it could make the else clause be "j = 1" and once the then/else
-are identical the conditional can be eliminated because it serves no
-purpose.  GCC doesn't do that, but it could.  I believe LLVM is more
-aggressive in this kind of stuff.
-
-Now if the else clause has an observable side effect, then that would
-prevent this kind of optimization because those side effects still have
-to happen.
-
-Jeff
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
