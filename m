@@ -1,29 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/4
-Message-ID: <CALzBtjKNnihJ0byES5JbJ_CuiMUnKBzCrz0Fw_7X3LQH2DT4Rw@mail.gmail.com>
-Date: Tue, 8 Jan 2019 19:14:04 +0400
-From: Entropy Moe <3ntr0py1337@...il.com>
-To: security@...nel.org, oss-security@...ts.openwall.com
-Subject: Re: KASAN stack out of bound bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/06/5
+Message-ID: <20190906102039.GZ3837@jumper.schlittermann.de>
+Date: Fri, 6 Sep 2019 12:20:39 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+To: oss-security <oss-security@...ts.openwall.com>, Exim Users <exim-users@...m.org>, Exim Announce <exim-announce@...m.org>
+Subject: Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.
 Content-Type: text/plain; charset=utf-8
 
-sorry, I forgot to include the source code for replication.
+CVE ID:     CVE-2019-15846
+Credits:    Zerons <sironhide0null@...il.com>, Qualys
+Version(s): all versions up to and including 4.92.1
+Issue:      The SMTP Delivery process in all¹ versions up to and
+            including Exim 4.92.1 has a Buffer Overflow.  In the default
+            runtime configuration, this is exploitable with crafted Server
+            Name Indication (SNI) data during a TLS negotiation. In other
+            configurations, it is exploitable with a crafted client TLS certificate.
+Details:    doc/doc-txt/cve-2019-15846 in the downloaded source tree
 
+Coordinated Release Date (CRD) for Exim 4.92.2:
+            2019-09-06 10:00 UTC
 
+Contact:    security@...m.org
 
-On Tue, Jan 8, 2019 at 7:13 PM Entropy Moe <3ntr0py1337@...il.com> wrote:
+We released Exim 4.92.2. This is a security update based on 4.92.1.
 
-> Hello folks,
-> I am reporting another set of bugs related to out of bounds in multiple
-> source codes.
->
-> please see the attached files report for more information.
->
-> if I reporting it wrongly, please correct me.
->
->
->
+Mitigation
+==========
 
-Content of type "text/html" skipped
+Do not offer TLS for incomming connections (tls_advertise_hosts).
+This mitigation is *not* recommended!
 
-Download attachment "repro.cprog" of type "application/octet-stream" (4148 bytes)
+Downloads
+=========
+
+Starting at CRD the downloads will be available from the following
+sources:
+
+Release tarballs (exim-4.92.2):
+
+    https://ftp.exim.org/pub/exim/exim4/
+
+The package files are signed with my GPG key.
+
+The full Git repo:
+
+    https://git.exim.org/exim.git
+    https://github.com/Exim/exim    [mirror of the above]
+    - tag    exim-4.92.2
+    - branch exim-4.92.2+fixes
+
+The tagged commit is the officially released version. The tag is signed
+with my GPG key.  The +fixes branch isn't officially maintained, but
+contains useful patches *and* the security fix. The relevant commit is
+signed with my GPG key. The old exim-4.92.1+fixes branch is being functionally
+replaced by the new exim-4.92.2+fixes branch.
+
+¹) We've indication, that only versions starting with 4.80 up to and
+including 4.92.1 are affected.
+
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
