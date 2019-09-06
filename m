@@ -1,54 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/1
-Message-ID: <20190213090320.lce4bdign5rzqjzm@mikami>
-Date: Wed, 13 Feb 2019 20:03:20 +1100
-From: Aleksa Sarai <asarai@...e.de>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Aleksa Sarai <cyphar@...har.com>, dev@...ncontainers.org, Christian Brauner <christian.brauner@...ntu.com>
-Subject: Re: CVE-2019-5736: runc container breakout (all versions)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/06/3
+Message-ID: <nycvar.YSQ.7.76.1909061810360.25514@xnncv>
+Date: Fri, 6 Sep 2019 18:12:47 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2019-15890 QEMU: Slirp: use-after-free during packet reassembly
 Content-Type: text/plain; charset=utf-8
 
-On 2019-02-12, Solar Designer <solar@...nwall.com> wrote:
->  static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
->  {
->         struct task_struct *task;
-> @@ -1628,10 +1780,15 @@ static int proc_exe_link(struct dentry *dentry,
-> struct path *exe_path)
->         exe_file = get_task_exe_file(task);
->         put_task_struct(task);
->         if (exe_file) {
-> -               *exe_path = exe_file->f_path;
-> -               path_get(&exe_file->f_path);
-> +               int result;
-> +
-> +               result = path_in_ve(&exe_file->f_path);
-> +               if (result == 0) {
-> +                       *exe_path = exe_file->f_path;
-> +                       path_get(&exe_file->f_path);
-> +               }
->                 fput(exe_file);
-> -               return 0;
-> +               return result;
->         } else
->                 return -ENOENT;
->  }
-> ---
-> 
-> This uses Virtuozzo/OpenVZ specific APIs, so won't be directly usable
-> elsewhere, but maybe a similar approach could be used upstream?
+   Hello,
 
-I have just sent v5 of my AT_THIS_ROOT patchset to LKML[1] -- which
-allows userspace processes to block resolution of magic links. While
-blocking access through /proc/self/exe helps block this issues, being
-able to block (from userspace) resolution of all magic links would
-massively help avoid problems like this.
+A use-after-free issue was found in the SLiRP networking implementation of the 
+QEMU emulator. It occurs in ip_reass() routine while reassembling incoming 
+packets, if the first fragment is bigger than the m->m_dat[] buffer. A 
+user/process could use this flaw to crash the Qemu process on the host 
+resulting in DoS.
 
-[1]: https://marc.info/?l=linux-api&m=155002737629350&w=2
+Upstream patch:
+---------------
+   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/c59279437eda91841b9d26079c70b8a540d41204
 
--- 
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
+CVE-2019-15890 assigned via -> https://cveform.mitre.org/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
