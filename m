@@ -1,164 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/31/1
-Message-Id: <33295FEC-7C08-4AFD-A55C-B5DCB0042AAB@beckweb.net>
-Date: Wed, 31 Jul 2019 14:41:03 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/06/6
+Message-ID: <005d01d564e3$cbf48090$63dd81b0$@sebbe.eu>
+Date: Fri, 06 Sep 2019 20:50:37 +0200
+From: "Sebastian Nielsen" <sebastian@...be.eu>
+To: "'Heiko Schlittermann'" <hs@...marc.schlittermann.de>, "'oss-security'" <oss-security@...ts.openwall.com>, <exim-users@...m.org>
+Subject: Sv: [exim] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Shouldn't this be in connect ACL?
+How would the deny in MAIL FROM prevent the exploit? What I have understand is that there is exploit in the SNI of the TLS negotiation, thus the whole connect attempt must be rejected right?
 
-* Amazon EC2 Plugin 1.44
-* Configuration as Code Plugin 1.25
-* Google Kubernetes Engine Plugin 0.6.3
-* Maven Integration Plugin 3.4
-* Maven Release Plug-in Plugin 0.15.0
-* Pipeline: Shared Groovy Libraries Plugin 2.15
-* Script Security Plugin 1.62
-* Skytap Cloud CI Plugin 2.07
+-----Ursprungligt meddelande-----
+Från: Exim-users <exim-users-bounces+sebastian=sebbe.eu@...m.org> För Heiko Schlittermann via Exim-users
+Skickat: den 6 september 2019 13:22
+Till: oss-security <oss-security@...ts.openwall.com>; Exim Users <exim-users@...m.org>
+Ämne: Re: [exim] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-07-31/
+An Update to the mitigation for the current CVE:
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Add - as part of the mail ACL (the ACL referenced by the main config
+option "acl_smtp_mail"):
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+     deny    condition = ${if eq{\\}{${substr{-1}{1}{$tls_in_sni}}}}
+     deny    condition = ${if eq{\\}{${substr{-1}{1}{$tls_in_peerdn}}}}
 
----
+This should prevent the currently known attack vector.
 
-
-SECURITY-1465 (1) / CVE-2019-10355
-Sandbox protection in Script Security Plugin could be circumvented by
-casting crafted objects to other types. This allowed attackers able to
-specify sandboxed scripts to invoke constructors that weren’t whitelisted.
-
-Additionally, this could be used to read arbitrary files on the Jenkins
-master.
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
 
-SECURITY-1465 (2) / CVE-2019-10356
-Sandbox protection in Script Security Plugin could be circumvented through
-crafted subexpressions used as arguments to method pointer expressions. This
-allowed attackers able to specify sandboxed scripts to execute arbitrary
-code in the context of the Jenkins master JVM.
-
-
-SECURITY-1422 / CVE-2019-10357
-Pipeline: Shared Groovy Libraries Plugin provides form validation to
-determine whether the revision (e.g. commit, tag, or branch name) specified
-for a global library exists in the repository. This form validation method
-lacked a permission check, allowing attackers with Overall/Read access to
-determine whether an attacker-specified revision exists in an SCM repository
-configured for use in an existing shared library.
-
-
-SECURITY-713 / CVE-2019-10358
-Maven Integration Plugin did not apply build log decorators from the Build
-Environment configuration to module builds. This could prevent sensitive
-content in module build logs from being masked.
-
-
-SECURITY-1098 / CVE-2019-10359
-Maven Release Plug-in Plugin did not require that requests sent to the
-endpoint used to initiate the release process use POST. This resulted in a
-cross-site request forgery vulnerability that allows attackers to perform
-releases.
-
-
-SECURITY-1184 / CVE-2019-10360
-Maven Release Plug-in Plugin did not properly escape variables in multiple
-views, resulting in a stored cross-site scripting vulnerability.
-
-
-SECURITY-1435 / CVE-2019-10361
-Maven Release Plug-in Plugin stored credentials unencrypted in its global
-configuration file org.jvnet.hudson.plugins.m2release.M2ReleaseBuildWrapper.
-xml on the Jenkins master. These credentials could be viewed by users with
-access to the master file system.
-
-
-SECURITY-1279 / CVE-2019-10343
-Configuration as Code Plugin logs the changes it applies to the Jenkins
-system log. Secrets such as passwords should be masked (i.e. replaced with
-asterisks) in that log to prevent accidental disclosure.
-
-Between Configuration as Code Plugin 0.8-alpha and 1.0, log messages
-contained values if the values were specified using properties in the YAML
-file (SECURITY-929).
-Since Configuration as Code Plugin 1.1, log messages in Configuration as
-Code Plugin instead mask values of type Secret, which is used in Jenkins to
-store the values encrypted on disk. This did not work in many instances, as
-plugins could use the Secret type to store credentials encrypted on disk
-while not having the Secret type appear in their Java API.
-
-
-SECURITY-1290 / CVE-2019-10344
-Configuration as Code Plugin provides a generated schema and reference
-documentation for the configuration options supported on the current Jenkins
-instance. These URLs did not perform additional permission checks, resulting
-in their content being available to users with Overall/Read access. This
-included detailed information about installed plugins that may not be
-available otherwise.
-
-
-SECURITY-1303 / CVE-2019-10345
-Configuration as Code Plugin provides a custom configurator for the Jenkins
-proxy configuration.
-
-This feature did not mask the password for logging or encrypt it in the
-export.
-
-
-SECURITY-1446 / CVE-2019-10362
-Configuration as Code Plugin allows exporting the live Jenkins
-configuration, as well as importing and applying a configuration provided in
-the same format. One of the features of the import is that it allows
-specifying variable references (e.g. ${VARIABLE_NAME}) in the configuration
-YAML file. These will be replaced by the value of the corresponding
-environment variable (or other source of secrets) during import (
-interpolation). If such a value should not be interpolated, the escape
-character ^ can be used before (e.g. ^${VARIABLE_NAME}).
-
-Exporting did not add ^ escape characters to exported strings, such as
-various entity descriptions. This allowed attackers with permission to
-configure certain entities, such as credentials or agents, to specify
-crafted descriptions containing variable references. These would be replaced
-by the corresponding environment variable’s value during a subsequent import.
-
-
-SECURITY-1458 / CVE-2019-10363
-Configuration as Code Plugin allows to export the current Jenkins
-configuration as a YAML file. Secrets such as passwords should be exported
-in their encrypted form to prevent accidental disclosure.
-
-Configuration as Code Plugin did not reliably detect which values in the
-exported YAML file need to be considered sensitive (e.g. credentials and
-other secrets), as plugins could use the Secret type to store credentials
-encrypted on disk while not having the Secret type appear in their Java API.
-This resulted in credentials being exported in plain text in some cases.
-
-
-SECURITY-673 / CVE-2019-10364
-Amazon EC2 Plugin printed a log message that contained the beginning of the
-private key to the Jenkins system log.
-
-
-SECURITY-1345 / CVE-2019-10365
-Google Kubernetes Engine Plugin created a temporary file named .kube…config
-containing a temporary access token in the project workspace. This allowed
-the file to be accessed via workspace browsers, or accidentally archived,
-disclosing the token.
-
-
-SECURITY-1429 / CVE-2019-10366
-Skytap Cloud CI Plugin stored credentials unencrypted in job config.xml
-files on the Jenkins master. These credentials could be viewed by users with
-Extended Read permission, or access to the master file system.
-
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (5261 bytes)
