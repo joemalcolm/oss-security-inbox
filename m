@@ -1,25 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/03/3
-Message-ID: <20190103113422.386e0244@computer>
-Date: Thu, 3 Jan 2019 11:34:22 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: wget / chromium: URL metadata and potential password leaks via extended filesystem attributes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/06/2
+Message-ID: <20190906111406.GB3837@jumper.schlittermann.de>
+Date: Fri, 6 Sep 2019 13:14:06 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+To: oss-security <oss-security@...ts.openwall.com>, Exim Users <exim-users@...m.org>
+Subject: Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 1 Jan 2019 11:15:40 +0100
-Hanno Böck <hanno@...eck.de> wrote:
+An Update to the mitigation for the current CVE:
 
-> It's been reported to Chrome as well. (Currently private bug report,
-> but given this was already discussed on Twitter I don't think this
-> needs to be kept confidential.)
+Add - as part of the mail ACL (the ACL referenced by the main config
+option "acl_smtp_mail"):
 
-Chromium/Chrome variant of this issue got
-CVE-2018-20073
+     deny    condition = ${if eq{\\}{${substr{-1}{1}{$tls_in_sni}}}}
+     deny    condition = ${if eq{\\}{${substr{-1}{1}{$tls_in_peerdn}}}}
 
--- 
-Hanno Böck
-https://hboeck.de/
+This should prevent the currently known attack vector.
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
