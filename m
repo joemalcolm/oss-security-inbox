@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1426" "Saturday" "8" "May" "2021" "14:32:45" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "55" "Re: [oss-security] Linux kernel: f2fs: out-of-bounds memory access bug" nil nil nil "5" nil nil (number mark "U       butterflyhua May  8   55/1426  " thread-indent "\"Re: [oss-security] Linux kernel: f2fs: out-of-bounds memory access bug\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: f2fs: out-of-bounds memory access bug" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1647" "Friday" "6" "September" "2019" "20:52:56" "-0400" "Phil Pennock" "pdp@exim.org" nil "36" nil "^Cc:" nil nil "9" nil nil (number mark "        pdp@exim.org Sep  6   36/1647  " thread-indent "\"Re: [oss-security] Sv: [exim] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Sv: [exim] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18289 invoked by uid 550); 8 May 2021 06:59:08 -0000
+Received: (qmail 3132 invoked by uid 550); 7 Sep 2019 06:56:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9558 invoked from network); 8 May 2021 06:33:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=tSKJboQl3IAQe781/NiDkIN6zV7VYXpyqGWbIlk1E98=;
-        b=bK6WYN2/cQk9MiSahv/KChaofvNd2SPry/RxDSHCjdE49JqsvWRGShgLnNCsTwLPj+
-         WObdu2FDBI+4/rFQX82CDpzcu+0VXLQdWRqDg7p5WlNimnhZtVug7eNtzHKkm52c7kfy
-         +noaWYwFrazgcQFd8sApbMlGIl9Pw6TvzD0PTUEepzjQETz3acXQOMrQQiY+lHeiSYZO
-         ovtBC+yxC/udNdhGNX74JstEL/CC1KQkW2HlXzRSRlAe05fxu5pNYG4ijBpVD2CVij7H
-         KTgmCZPyPYaXTsBo+H2T+fnktGy0KWuS0pWQ0sbosyRNQc9efNHHeFzaEpKGtFZ2VD8E
-         lyrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=tSKJboQl3IAQe781/NiDkIN6zV7VYXpyqGWbIlk1E98=;
-        b=fzwfNANpOUA996NltZ4vtjQmhlE+GWRSfRIXgd4iyjIQwf6UzhzV4DfTmm2SQTMWKj
-         O2o2XHG0MZkmkluXpbGnWC6JD+5g2PCINnEfvFZzUJ5EGrjFAwy4g+PexC78WwsKb9Nm
-         c7a+4NmBY4S6m1yrUbY+hTpAWMFgBCu6RW8l9QvQRkPIpUbyxUOyZ0zK7FAW09YxEXmb
-         SGXUl/pJxriG/6g+2n/vcBOGTj08RHCYqY2o5yxluuk64LXFzZ4mHfHdTHWpVEY2FBBh
-         hDA/s/2DO7GgLUy8M8i3oVAyijQSy8XizxtDE8A5D/nIML8boYcNDMqwRwc3Q0GjzlYE
-         rQ1A==
-X-Gm-Message-State: AOAM533apcZvdP9cNGjLnviXqb/sm6kmV21dRZmrHBQNI0GAIAzHJtXk
-	qt6Ibv+EMxGpMDozY7hWSu/6lEY7lWsUshUrcp9B7WgJSpE=
-X-Google-Smtp-Source: ABdhPJwq95Y9incJ08gG0T/CV9oJVEZBk4UkU48ylRaF21XjyB/dh8ggYlIhED/rtKnKTxsI8YQAufPHzegp93BYR6g=
-X-Received: by 2002:a5b:ccf:: with SMTP id e15mr10922094ybr.365.1620455575313;
- Fri, 07 May 2021 23:32:55 -0700 (PDT)
+Received: (qmail 6027 invoked from network); 7 Sep 2019 00:53:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=exim.org;
+	 s=d201908; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=7OF87tkEWte8FLN7KRpEXRAtBB3zHrd+UxGGlj+LQqI=; b=u3I3HsQxDzv/VhYmf3e2K1A0wb
+	vfzdZPuC2GT2ruiXYBjkVUnPkjpos9HXW51QpnUadqK+MVl1kyII3BEgZonQsMTqxSuYziQAssh++
+	l4oTj6V/wWPAL1y6QGEirfCEzOq/yEh7mWscasbcagLjpfEg7jQmfD7gW87xG7aw5n1E5hRm26NYK
+	5wf44WbH3KU4uYPP67JSxricnKpvTmI9qGvaBSiLn62f2tngB/qlr4flnOO2oHNBNemTQWVmm581v
+	C1Gn7/bTl24j4JdtUNlIx6Yzcii8LO3mN3LYu0p0Ol4J8XGqOiS4r6n5mfUyLMssBFfH0ipVrkjmO
+	u+28u82A==;
+Message-ID: <20190907005255.GA22947@spodhuis.org>
+Mail-Followup-To: oss-security@lists.openwall.com,
+	'Heiko Schlittermann' <hs@nodmarc.schlittermann.de>,
+	exim-users@exim.org
+References: <20190904092248.GQ3837@jumper.schlittermann.de>
+ <20190906102039.GZ3837@jumper.schlittermann.de>
+ <20190906104430.GA3837@jumper.schlittermann.de>
+ <20190906111406.GB3837@jumper.schlittermann.de>
+ <005d01d564e3$cbf48090$63dd81b0$@sebbe.eu>
 MIME-Version: 1.0
-References: <CAFcO6XO2k=X2H24tg_GTgoTQMLv=0ajAyuyeK0YKgvqiM5vPWg@mail.gmail.com>
- <CAFcO6XOOjFd7XKuMVDyGXka+jdk3=RXFAe2a11SV20_JZzYHqw@mail.gmail.com>
-In-Reply-To: <CAFcO6XOOjFd7XKuMVDyGXka+jdk3=RXFAe2a11SV20_JZzYHqw@mail.gmail.com>
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Sat, 8 May 2021 14:32:45 +0800
-Message-ID: <CAFcO6XNzAKQ2Pwxbi-KPqCtY_8Ex3UribKrFGgr28ghsnNaK=w@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <005d01d564e3$cbf48090$63dd81b0$@sebbe.eu>
+OpenPGP: url=https://www.security.spodhuis.org/PGP/keys/0x4D1E900E14C1CC04.asc
+Cc: 'Heiko Schlittermann' <hs@nodmarc.schlittermann.de>,
+	exim-users@exim.org
+Date: Fri, 6 Sep 2019 20:52:56 -0400
+From: Phil Pennock <pdp@exim.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Sv: [exim] CVE-2019-15846: Exim - local or remote
+ attacker can execute programs with root privileges
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Linux kernel: f2fs: out-of-bounds memory access bug
 
-Hi, RedHat has assigned CVE-2021-3506 to this issue.
+On 2019-09-06 at 20:50 +0200, Sebastian Nielsen wrote:
+> Shouldn't this be in connect ACL?
+> How would the deny in MAIL FROM prevent the exploit? What I have understand is that there is exploit in the SNI of the TLS negotiation, thus the whole connect attempt must be rejected right?
 
-Regards,
- butt3rflyh4ck.
+The connect ACL won't protect you against STARTTLS usage, which is far
+more common for email than TLS-on-connect.
 
+I myself use the HELO ACL.
 
+Blocking in the MAIL ACL is safe.  The problem is not in the TLS SNI
+itself.  The problem relates to safely storing the SNI in spool files
+for messages and what happens when Exim reads those values back later.
 
-On Sat, May 8, 2021 at 12:24 AM butt3rflyh4ck
-<butterflyhuangxx@gmail.com> wrote:
->
-> The patch is for this issue in upstream linux:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs.git/commit/?h=dev&id=b862676e371715456c9dade7990c8004996d0d9e
->
-> Regards,
->  butt3rflyh4ck.
->
->
-> On Mon, Mar 29, 2021 at 12:00 AM butt3rflyh4ck
-> <butterflyhuangxx@gmail.com> wrote:
-> >
-> > Hi,
-> >
-> > I reported an out of bounds memory access bug in get_next_net_page()
-> > in fs/f2fs/node.c and reproduce in 5.12.0-rc3. Now the patch is out
-> > and tested it in 5.12.0-rc4.
-> >
-> > Root Cause:
-> >  the f2fs_flush_nat_entries()  function is called during the
-> > checkpointing process,
-> > when it flush dirty nats in nat entry sets, it will call
-> > __flush_nat_entry_set(), but before call it,the legality of nids is
-> > not correctly tested. If the nids is out of range, may access
-> > out-of-bounds memory.
-> >
-> > Some details and Patch for this issue:
-> > https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg2520013.html
-> > Now the patch is not available in upstream, CVE is not assigned.
-> >
-> > Now announced on oss-security@lists.openwl.com.
-> >
-> > This issue was discovered by the ADLab of venustech.
-> >
-> > Regards,
-> >  butt3rflyh4ck.
->
->
->
-> --
-> Active Defense Lab of Venustech
+Unless and until an email is spooled, there is no security hole.
 
+Some time back, the TLS SNI would be written unescaped to the spool
+files.  That meant that a newline in SNI would let attackers introduce
+arbitrary metadata into the spool (which includes ACL variables,
+commonly subject to expansion, so ${run ...} could be injected).  So I
+fixed it, by escaping the SNI when writing it to the spool file and
+unescaping when reading it back.
 
+I remember sighing wistfully because I'm not fond of escaping/quoting
+and much prefer using DJB netstrings, but didn't fancy rewriting all of
+Exim's spool file handling, so just used the escape/unescape functions
+we had.
 
---
-Active Defense Lab of Venustech
+I missed that the escape function didn't escape everything which the
+unescape function would unescape, and that this provided a means to mess
+up Exim's internal state.  Qualys were able to prove out that yes, this
+is exploitable.
+
+AFAIK that's the first remote execution exploitable security hole I've
+ever introduced to a project.  :(
+
+-Phil
