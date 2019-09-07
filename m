@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/12/1
-Message-ID: <87va1pdsc9.fsf@oldenburg2.str.redhat.com>
-Date: Tue, 12 Feb 2019 14:55:18 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: Aleksa Sarai <cyphar@...har.com>
-Cc: oss-security@...ts.openwall.com,  dev@...ncontainers.org, Christian Brauner <christian.brauner@...ntu.com>
-Subject: Re: CVE-2019-5736: runc container breakout (all versions)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/07/1
+Message-ID: <20190907062333.GY25997@jumper.schlittermann.de>
+Date: Sat, 7 Sep 2019 08:23:33 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+To: exim-users@...m.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Sv: [exim] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges
 Content-Type: text/plain; charset=utf-8
 
-* Aleksa Sarai:
+Phil Pennock <pdp@...m.org> (Sa 07 Sep 2019 02:52:56 CEST):
+> The connect ACL won't protect you against STARTTLS usage, which is far
+> more common for email than TLS-on-connect.
+>
+> I myself use the HELO ACL.
 
-> +	memfd = memfd_create(MEMFD_COMMENT, MFD_CLOEXEC|MFD_ALLOW_SEALING);
-> +	if (memfd < 0)
-> +		goto err_binfd;
+This doesn't seem to be sufficient, you can start "submitting" a message to
+a remote Exim with the following sequence
 
-Is it really necessary to use a memfd_create here?  Do you really need
-sealing?  It's a bit odd to add a new system call dependency in a
-security update.  The ability fexecve a memfd descriptor is also rather
-odd.  I wouldn't have expected execute permissions on memfd descriptors,
-so this sounds like a kernel bug (which now can't be fixed).
+    connect
+        <-- 250
+    EHLO …
+        <-- 250
+    STARTTLS
+        <-- 220
+    MAIL
+        <-- 250
 
-I saw some other patch with a O_TMPFILE replacement.  Does this really
-work?  It's possible to create a new name with linkat, so that's not a
-real win security-wise.  Could you just make a copy, under a different
-owner, and not care how it is going to be modified?
+The client is free to skip the 2nd EHLO/HELO. Tested with OpenSSL
+s_client -servername 'foobar\' -starttls smtp -connect …
 
-Thanks,
-Florian
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
