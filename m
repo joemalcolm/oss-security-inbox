@@ -1,87 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/9
-Message-ID: <8a0fc7f0-4648-2ed0-0c36-1da42fc1d267@redhat.com>
-Date: Mon, 22 Jul 2019 08:28:33 -0500
-From: Eric Blake <eblake@...hat.com>
-To: oss-security@...ts.openwall.com, Mikhail Klementev <root@...pstack.io>, Heiko Schlittermann <hs@...marc.schlittermann.de>
-Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/07/2
+Message-ID: <20190907005255.GA22947@spodhuis.org>
+Date: Fri, 6 Sep 2019 20:52:56 -0400
+From: Phil Pennock <pdp@...m.org>
+To: oss-security@...ts.openwall.com
+Cc: 'Heiko Schlittermann' <hs@...marc.schlittermann.de>, exim-users@...m.org
+Subject: Re: Sv: [exim] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges
 Content-Type: text/plain; charset=utf-8
 
-On 7/22/19 6:21 AM, Mikhail Klementev wrote:
-> Kindly notice that this is a public mail list.
-> 
-> On Mon, Jul 22, 2019 at 12:00:13PM +0200, Heiko Schlittermann wrote:
->> *** Note: EMBARGO is still in effect until July 25th, 10:00 UTC. ***
->> *** Distros must not publish any detail nor release updates yet. ***
+On 2019-09-06 at 20:50 +0200, Sebastian Nielsen wrote:
+> Shouldn't this be in connect ACL?
+> How would the deny in MAIL FROM prevent the exploit? What I have understand is that there is exploit in the SNI of the TLS negotiation, thus the whole connect attempt must be rejected right?
 
-Perhaps part of the confusion stems from:
+The connect ACL won't protect you against STARTTLS usage, which is far
+more common for email than TLS-on-connect.
 
->> t0: Thu Jul 18 2019
->>     - this notice to distros@...openwall.org and exim-maintainers@...m.org
->>     - open limited access to our security Git repo. See below.
+I myself use the HELO ACL.
 
-This statement makes it sound like the fix can be downloaded by anyone
-that knows about the git repo containing the fix...
+Blocking in the MAIL ACL is safe.  The problem is not in the TLS SNI
+itself.  The problem relates to safely storing the SNI in spool files
+for messages and what happens when Exim reads those values back later.
 
->>
->> t0+~4d: Mon Jul 22 10:00:00 UTC 2019 [NOW]
->>     - heads-up notice to oss-security@...ts.openwall.com,
->>       exim-users@...m.org, and exim-announce@...m.org
->>
->> t0+~7d: Thu Jul 25 10:00:00 UTC 2019
->>     - Coordinated relase date
->>     - publish the patches in our official and public Git repositories
->>       and the packages on our FTP server.
->>
->> Downloads available starting at CRD
->> ====================================
->>
->> For release tarballs (exim-4.92.1):
->>
->>     http://ftp.exim.org/pub/exim/exim4/
->>
->> The package files are signed with my GPG key.
->>
->> For the full Git repo:
+Unless and until an email is spooled, there is no security hole.
 
-...and when we see below, it looks like you are giving away that repo.
-But in reality,
+Some time back, the TLS SNI would be written unescaped to the spool
+files.  That meant that a newline in SNI would let attackers introduce
+arbitrary metadata into the spool (which includes ACL variables,
+commonly subject to expansion, so ${run ...} could be injected).  So I
+fixed it, by escaping the SNI when writing it to the spool file and
+unescaping when reading it back.
 
->>
->>     https://git.exim.org/exim.git
->>     https://github.com/Exim/exim    [mirror of the above]
->>     - tag    exim-4.92.1
->>     - branch exim-4.92.1+fixes
+I remember sighing wistfully because I'm not fond of escaping/quoting
+and much prefer using DJB netstrings, but didn't fancy rewriting all of
+Exim's spool file handling, so just used the escape/unescape functions
+we had.
 
-you only published the public repo, which does not yet contain either
-the tag exim-4.92.1 nor the branch exim-4.92.1+fixes until CRD (as
-promised in the headline).  Perhaps the wording could be improved to
-explicitly mention that the private repo mentioned earlier is
-specifically redacted from this more public pre-release announcement,
-and/or repeating the fact that the public repo will not contain the fix
-until CRD (some readers will miss details that are presented only in a
-headline but not reiterated in the body, on the grounds that headlines
-typically only summarize contents rather than add details, such that you
-can read slightly faster by skipping headlines if you are going to read
-the full version instead).
+I missed that the escape function didn't escape everything which the
+unescape function would unescape, and that this provided a means to mess
+up Exim's internal state.  Qualys were able to prove out that yes, this
+is exploitable.
 
->>
->> The tagged commit is the officially released version. The tag is signed
->> with my GPG key.  The +fixes branch isn't officially maintained, but
->> contains useful patches *and* the security fix. The relevant commit is
->> signed with my GPG key. The old exim-4.92+fixes branch is being functionally
->> replaced by the new exim-4.92.1+fixes branch.
+AFAIK that's the first remote execution exploitable security hole I've
+ever introduced to a project.  :(
 
-Or even the choice of tense in this paragraph may help: it sounds like
-past tense ("is the officially released version") even though at the
-time of the email it is a future tense ("will become the officially
-released version").
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.           +1-919-301-3226
-Virtualization:  qemu.org | libvirt.org
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+-Phil
