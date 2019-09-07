@@ -1,138 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/4
-Message-ID: <20190418104355.GD9248@f195.suse.de>
-Date: Thu, 18 Apr 2019 12:43:55 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Security issues in snapcraft snap-confine set*id binary
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/08/1
+Message-ID: <4d3798e1-7fb4-7524-7a53-8465caaf71b3@beuc.net>
+Date: Sun, 8 Sep 2019 01:18:02 +0200
+From: Sylvain Beucler <beuc@...c.net>
+To: oss-security@...ts.openwall.com, akuster <akuster@...sta.com>
+Subject: Re: Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-a couple of security issues have been found in the snapcraft package
-manager [1] during the course of a security review for inclusion of
-snapcraft in openSUSE [2]. The basis for this review was upstream
-version 2.37.4.
+Check this thread:
+https://www.openwall.com/lists/oss-security/2019/07/22/3
+https://www.openwall.com/lists/oss-security/2019/07/22/8
 
-snapcraft uses a setuid/setgid root program called `snap-confine` to
-setup namespace based containers for snap packages. While the program's
-code is generally of good quality the following moderate security issues
-have been found:
+Cheers!
 
-1) Up and including to version 2.37.4 the /tmp directory within a snap
-  container was owned by the first user that entered the container. Since
-  snap containers can be used by multiple users at the same time or a
-  privileged program or daemon may run in a container, the security of
-  files and directories in /tmp is compromised.  An attacker can remove
-  or replace files and directories belonging to other users within the
-  container's /tmp to achieve an unspecified impact.
-
-  This issue was recently fixed by upstream via commit [3].
-
-2) The `sc_join_preserved_ns()` function along with a number of other
-  function remembers the current working directory (CWD) of the calling
-  user outside of the container and attempts to restore this CWD again
-  within the container. The `chdir()` operation to restore the CWD is
-  performed with root privileges within the container and is prone to
-  symlink attacks. Therefore an unprivileged user can enter arbitrary
-  directories within the container. Example PoC:
-
-  ```
-  user1 $ snap run --shell opera
-    user1 $ cd /tmp
-    user1 $ umask 077
-    user1 $ mkdir user1_private
-    user1 $ cd user1_private
-    user1 $ umask 022
-    user1 $ mkdir subdir
-    user1 $ cd subdir
-    user1 $ echo secret >file
-
-  user2 $ cd /tmp
-  user2 $ mkdir -p user1_private/subdir
-  user2 $ ln -s /tmp/user1_private/subdir user2_private
-  user2 $ cd user2_private
-  user2 $ snap run --shell opera
-    user2 $ /tmp/user1_private/subdir
-    user2 $ cat file
-    secret
-  ```
-
-  In this example user2 enters the public sub-directories of a private
-  tmp directory of user1 within the application container. Basically
-  this can also be used to enter /root or /var/lib/snapd/hostfs/root/.config
-  and so on.
-
-  The severity of this issue is reduced, because snap-confine employs
-  extensive AppArmor profiles that prevent many file system accesses
-  beyond classic DAC permission checks.
-
-  This issue is addressed by an upstream PR [4].
-
-3) In function `sc_parse_mountinfo_entry()` the pseudo file
-  /proc/self/mountinfo is parsed. In the subsequently called helper
-  function `parse_next_string_field()` most of the content of each line
-  from that file is parsed. This helper function uses `sscanf()` with a
-  "%s%n" format. %s in `sscanf()` extracts a whitespace delimited
-  string. While the kernel protects e.g. against newlines found in
-  directory names by encoding them specially in the mountinfo file,
-  there are whitespace characters that are not protected against.
-  Unprivileged users can use mechanisms like FUSE based file systems
-  like sshfs to mount file systems onto such strangely named
-  directories:
-
-  ```
-  user $ cd /tmp
-  user $ mkdir `echo -e "strange\rdir"`
-  user $ sshfs localhost:/tmp strange?dir
-  ```
-
-  The result will be an entry in /proc/self/mountinfo that looks like
-  this:
-
-  ```
-  111 107 0:49 / /tmp/strange\rdir rw,nosuid,nodev,relatime shared:59 - fuse.sshfs localhost:/tmp/ rw,user_id=1000,group_id=100\n
-  ```
-
-  The parsing logic in snap-confine will wrongly treat "/tmp/strange" as
-  the `mount_dir` and continue parsing "the next field" after the
-  carriage return.  Basically this allows the attacker to provide the
-  rest of the fields parsed by snap-confine via the directory name. In
-  my tests no failure was detected by `sc_parse_mountinfo()`, since
-  parsing "%s" always works as long there is data left to parse.
-
-  I don't see any viable attack vector here at the moment. To actually
-  control the behaviour of snap-confine we'd need to control the field
-  (4) of the mountinfo file. This field is only available to
-  unprivileged users if they can perform a bind mount. Maybe there is a
-  setuid tool around that allows such things, then it would be a tool to
-  further influence what snap-confine does. In such a case it could e.g.
-  be used to force triggering of the discard-ns logic of snap-confine.
-
-  This issue is addressed by an upstream PR [5].
-
-I've asked upstream to assign CVEs for issues 1) and 2) but they're not
-available yet.
-
-Best Regards
-
-Matthias
-
-[1]: https://snapcraft.io/
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=1127368
-[3]: https://github.com/snapcore/snapd/commit/bdbfeebef03245176ae0dc323392bb0522a339b1
-[4]: https://github.com/snapcore/snapd/pull/6642
-[5]: https://github.com/snapcore/snapd/pull/6605
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Linux GmbH
-GF: Felix Imendörffer, Mary Higgins, Sri Rasiah
-HRB 21284 (AG Nuernberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+On 07/09/2019 01:33, akuster wrote:
+>
+> On 9/5/19 11:00 PM, Heiko Schlittermann wrote:
+>> [ This is a re-post w/o dmarc protection of the sender (me). ]
+>>
+>> *** Note: EMBARGO is still in effect!       ***
+> If this is true, why is this on the public list?
+>
+>> *** Distros must not publish any detail yet ***
+>
+>
+> - armin
+>> In case you are entitled to access the security repo:
+>> *and* use the 4.92.2+fixes branch:
+>>
+>> The branch got two new commits, fixing a small tool. This tool is not
+>> designed to process untrusted data, so there is no security issue, but
+>> it was buggy. It is unlikely to be critical.
+>>
+>> You may consider including the fix in the packages to be
+>> released at CRD (today, 10.00 UTC) or schedule it for a later
+>> maintainance release of the Exim packages.
+>>
+>> commit cdc7f9a9667ecf31d803fc8d1a31b466284360bd
+>> Author: Heiko Schlittermann (HS12-RIPE) <hs@...littermann.de>
+>> Date:   Fri Sep 6 06:57:11 2019 +0200
+>>
+>> commit 66935633816a88460f5222f40dc29d1a4e877978
+>> Author: Heiko Schlittermann (HS12-RIPE) <hs@...littermann.de>
+>> Date:   Thu Sep 5 14:56:22 2019 +0200
+>>
+>>     Best regards from Dresden/Germany
+>>     Viele Grüße aus Dresden
+>>     Heiko Schlittermann
+>> --
+>>  SCHLITTERMANN.de ---------------------------- internet & unix support -
+>>  Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+>>  gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+>>  ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+>
