@@ -1,20 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/27/2
-Message-ID: <CAGeh-pFCN4a1c5gfBM0bbEjs3fCAH8gB0sKc3q_Ytgq==sH9fA@mail.gmail.com>
-Date: Wed, 27 Mar 2019 13:11:53 +0100
-From: Dejan Bosanac <dejan@...httale.net>
-To: "dev@...ivemq.apache.org" <dev@...ivemq.apache.org>,  "users@...ivemq.apache.org" <users@...ivemq.apache.org>, "insi_2304@...il.com" <insi_2304@...il.com>
-Cc: Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] CVE-2019-0222 - Apache ActiveMQ: Corrupt MQTT frame can cause broker shutdown
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/10/1
+Message-ID: <CAECwjAXAK+JLxRLrUfn3c6+BA=d9=0iGGPYPpN8qSt8DYN94iA@mail.gmail.com>
+Date: Mon, 9 Sep 2019 15:04:33 -0700
+From: Tomas Fernandez Lobbe <tflobbe@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2019-12401: XML Bomb in Apache Solr versions prior to 5.0
 Content-Type: text/plain; charset=utf-8
 
-The following security vulnerability was reported against Apache
-ActiveMQ 5.15.8 and older versions.
+Severity: Medium
 
-Please check the following document and see if you’re affected by the issue.
+Vendor: The Apache Software Foundation
 
-http://activemq.apache.org/security-advisories.data/CVE-2019-0222-announcement.txt
+Versions Affected:
+1.3.0 to 1.4.1
+3.1.0 to 3.6.2
+4.0.0 to 4.10.4
 
-Apache ActiveMQ 5.15.9 has been released with appropriate fixes and is
-available for upgrade.
+Description: Solr versions prior to 5.0.0 are vulnerable to an XML resource
+consumption attack (a.k.a. Lol Bomb) via it’s update handler. By leveraging
+XML DOCTYPE and ENTITY type elements, the attacker can create a pattern
+that will expand when the server parses the XML causing OOMs
+
+Mitigation:
+* Upgrade to Apache Solr 5.0 or later.
+* Ensure your network settings are configured so that only trusted traffic
+is allowed to post documents to the running Solr instances.
+
+Credit: Matei "Mal" Badanoiu
+
+References:
+[1] https://issues.apache.org/jira/browse/SOLR-13750
+[2] https://wiki.apache.org/solr/SolrSecurity
 
