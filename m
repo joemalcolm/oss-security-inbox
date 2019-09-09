@@ -1,131 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/09/1
-Message-Id: <E1hkqb8-0005kj-Mn@xenbits.xenproject.org>
-Date: Tue, 09 Jul 2019 13:55:58 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 300 v1 - Linux: No grant table and foreign mapping limits
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/09/1
+Message-ID: <20190909185052.GA20873@spodhuis.org>
+Date: Mon, 9 Sep 2019 14:50:52 -0400
+From: Phil Pennock <pdp@...m.org>
+To: exim-users@...m.org, oss-security@...ts.openwall.com
+Subject: Re: Sv: [exim] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 2019-09-07 at 08:23 +0200, Heiko Schlittermann wrote:
+> Phil Pennock <pdp@...m.org> (Sa 07 Sep 2019 02:52:56 CEST):
+> > The connect ACL won't protect you against STARTTLS usage, which is far
+> > more common for email than TLS-on-connect.
+> >
+> > I myself use the HELO ACL.
+> 
+> This doesn't seem to be sufficient, you can start "submitting" a message to
+> a remote Exim with the following sequence
 
-                    Xen Security Advisory XSA-300
+Yeah sorry folks, that was a little embarrassing: my setup, and various
+common configurations (including apparently RedHat's) enforce
+EHLO-after-STARTTLS.  But that's Exim configuration, not hard-enforced
+in the code.
 
-             Linux: No grant table and foreign mapping limits
+"Be lenient in what you accept" ... bah humbug.
 
-ISSUE DESCRIPTION
-=================
+Exim's default configuration has included this check, at RCPT time
+(which still works for our purposes) since commit 731c6a9043 in 2016,
+included in releases 4.87 onwards.
 
-Virtual device backends and device models running in domain 0, or
-other backend driver domains, need to be able to map guest memory
-(either via grant mappings, or via the foreign mapping interface).
-For Linux to keep track of these mappings, it needs to have a page
-structure for each one.  In practice the number of page structures is
-usually limited.  In PV dom0, a range of pfns are typically set aside
-at boot ("pre-ballooned") for this purpose; for PVH and Arm dom0s, no
-memory is set aside to begin with.  In either case, when more of this
-"foreign / grant map pfn space" is needed, dom0 will balloon out extra
-pages to use for this purpose.
+So I use the HELO ACL and it's safe in "many" configurations, but we
+have to be more cautious in recommending mitigating workarounds.
 
-Unfortunately, in Linux, there are no limits, either on the total
-amount of memory which dom0 will attempt to balloon down to, nor on
-the amount of "foreign / grant map" memory which any individual guest
-can consume.
-
-As a result, a malicious guest may be able, with crafted requests to
-the backend, to cause dom0 to exhaust its own memory, leading to a
-host crash; and if this is not possible, it may be able to monopolize
-all of the foreign / grant map pfn space, starving out other guests.
-
-IMPACT
-======
-
-Guest may be able to crash domain 0 (Host Denial-of-Service); or may
-be able to starve out I/O requests from other guests (Guest
-Denial-of-Service).
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Linux are vulnerable.
-
-All Arm dom0s are vulnerable; on x86, PVH dom0 is generally vulnerable,
-while PV dom0's vulnerability depends on what, if any, "dom0_mem="
-option was passed to Xen.
-
-MITIGATION
-==========
-
-On PV dom0, the amount of "pre-ballooned" memory can be increased by
-limiting dom0 memory via "dom0_mem=", but avoiding use of the
-"dom0_mem=max:<value>" form of the command line option, or by making
-the delta between "actual" and "maximum" sufficiently large.  This makes
-the attack more difficult to accomplish.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of ARM.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves the domain 0 memory
-exhaustion issue.
-
-NOTE: This does NOT fix the guest starvation issue.  Fixing fixing
-this issue is more complex, and it was determined that it was better
-to work on a robust fix for the issue in public.  This advisory will
-be updated when fixes are available.
-
-xsa300-linux-5.1.patch     Linux 4.4 ... 5.2-rc
-
-$ sha256sum xsa300*
-9c8a9aec52b147f8e8ef41444e1dd11803bacf3bd4d0f6efa863b16f7a9621ac  xsa300-linux-5.1.patch
-$
-
-NOTE ON LACK OF EMBARGO
-=======================
-
-The lack of predisclosure is due to a short schedule set by the
-discoverer, and efforts to resolve the advisory wording.
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl0knK4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZVp0H/2P+7XAtIAS2owhUnTBPSmM/93LZBHr67DCGSoix
-afHEumj4b3omIssAEo912BXpG0tjzCBlStwacRDc/11Ku4XtB/hlr5TG89c2tfVd
-QMtvWeAdDjWE2YkwZ3TK5BgaYMwoUSMdwXtG2NGpVGFj4jy4AUL5e+sZKAiMTbl2
-f3ursyyts/cgJTLq1KHfX3jVlqcRLvv0yGXLsZ0BQbktnEpptETPPtBvEQQ+Uqkb
-WjqxCvzmh0Szc9mnhLSxS2LDA6W/y/r37XawpwJIZNpE12+sQRZ48KqeFysTK4Yp
-MRZokgzOBOXfHVa25LpgtZzL5DmRR5AfWYkmgmIX8s7NaH8=
-=OKdx
------END PGP SIGNATURE-----
-
-Download attachment "xsa300-linux-5.1.patch" of type "application/octet-stream" (2278 bytes)
+-Phil
