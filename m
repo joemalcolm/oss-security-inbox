@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/24/4
-Message-ID: <e04349fc26ad12ba9a8d3b74848b42c88bba5dc3.camel@debian.org>
-Date: Thu, 24 Jan 2019 10:30:28 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel: Missing access_ok() checks in IOCTL function (gpu/drm/i915 Driver)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/11/2
+Message-ID: <CAEvdU_1cTZYcGzH-yfZowAvhcgcD9kxFnH2TXwLHQ0ZksvDsyw@mail.gmail.com>
+Date: Tue, 10 Sep 2019 15:29:21 -0700
+From: Jacopo Cappellato <jacopoc@...che.org>
+To: "user@...iz.apache.org ML" <user@...iz.apache.org>, Dev list <dev@...iz.apache.org>, announce@...che.org,  security@...iz.apache.org, oss-security@...ts.openwall.com,  security-reports@...mle.com, ricterzheng@...cent.com
+Subject: [CVE-2019-0189] Apache OFBiz remote code execution and arbitrary file delete via Java deserialization
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity:
+Important
 
-On Wed, 2019-01-23 at 14:28 -0600, Timothy Michaud wrote:
-> NOTE: I have requested a CVE identifier, and I'm sending this message, to
-> make tracking of the fix easier; however, to avoid missing security fixes
-> without CVE identifiers, you should *NOT* be cherry-picking a specific
-> patch in response to a notification about a kernel security bug.
-> 
-> Due to a lack of "access_ok()" checks in i915_gem_execbuffer2_ioctl[1], it
-> is possible to escalate privileges similar to the waitid vulnerability[2]
+Vendor:
+The Apache Software Foundation
 
-Hi, thanks for the report.
+Versions Affected:
+OFBiz 16.11.01 to 16.11.05
 
-The patch doesn't seem CC: stable, could you give us a status on the various
-stable releases?
+Description:
+The java.io.ObjectInputStream is known to cause Java serialisation issues.
+This issue here is exposed by the "webtools/control/httpService" URL,
+and uses Java deserialization to perform code execution.
+In the HttpEngine, the value of the request parameter "serviceContext"
+is passed to the "deserialize" method of "XmlSerializer".
 
-Regards,
-- -- 
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
+Ofbiz is affected via two different dependencies:
+"commons-beanutils" and an out-dated version of "commons-fileupload"
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlxJhbQACgkQ3rYcyPpX
-RFsNSwf/WQH9UPK9YIFBdu47hZUKOr2tRkFosjnyEecG8HsBxI1191fXsZcGgeJk
-YVzL+oWvlvQcTajPnbBLPU6qey9ZFz8AdNkXGSKXnejaPpn9LvkJntT086s6lX1i
-dWSgDbhAX0PT2UO1I1k4GJ5KA8SxEIzPnqq2moB8WjcIIWuqFEFJIjYkL36Wovhp
-/rKIBZGMX25zxKHzCckGYcski/KKFpgqbqbyQ2jLydht3nHczlhGP/lTa/DVr8IN
-YH//6ayr0Kml/G9X8ZIV1ciu+UKQGFAVwrXNAmugNmy6tZwRVDezvP2+JfWZNAG/
-bjhyac/xqmS/VquQjKKgyTQPoPBUkg==
-=Xt1Y
------END PGP SIGNATURE-----
+Mitigation:
+Upgrade to 16.11.06
+or manually apply the commits from
+OFBIZ-10770 AND OFBIZ-10837 on branch 16
+----
+
+Credit:
+Man Yue Mo of the Semmle Security Research Team
+ricterzheng(郑杜涛) <ricterzheng@...cent.com>
+
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
+
