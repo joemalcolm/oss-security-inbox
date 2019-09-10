@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/20/6
-Message-ID: <CAMufup6OGHYUE=ZuHys-9S0Lg+De7peWXm7dvAodCkE3EYc-wg@mail.gmail.com>
-Date: Fri, 20 Sep 2019 15:34:01 +0200
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/10/2
+Message-Id: <F8EB26DC-CA65-4511-9D60-5A8ED0F4980F@gmail.com>
+Date: Tue, 10 Sep 2019 11:34:34 +0400
+From: Ilya Matveychikov <matvejchikov@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-12407] Apache JSPWiki Cross-site scripting vulnerability related to the remember parameter
+Subject: Re: Telegram privacy fails again.
 Content-Type: text/plain; charset=utf-8
 
- Severity
-Medium
 
-Vendor
-The Apache Software Foundation
 
-Versions Affected
-Apache JSPWiki up to 2.11.0.M4
+> On Sep 9, 2019, at 11:16 PM, Dhiraj Mishra <mishra.dhiraj95@...il.com> wrote:
 
-Description
-A carefully crafted plugin link invocation could trigger an XSS
-vulnerability on Apache JSPWiki, related to the remember parameter on some
-of the JSPs, which could allow the attacker to execute javascript in the
-victim's browser and get some sensitive information about the victim.
+[ ... ]
 
-Mitigation
-Apache JSPWiki users should upgrade to 2.11.0.M5 or later.
+> 
+> Assume a scenario where Bob sends a message which is a confidential image
+> and was mistakenly sent to Alice, Bob proceeds to utilize a feature of
+> Telegram known as "*Also delete for Alice*" which would essentially delete
+> the message for Alice.
 
-Credit
-This issue was discovered by ADLab of VenusTech.
 
-ref: https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-12407
+> ... Bob (!!!) sends (!!!) a message which is a confidential (!!!) image and
+> was mistakenly (!!!) sent (!!!) to Alice ...
+
+"Telegram privacy fails again”, sure, sure.
 
