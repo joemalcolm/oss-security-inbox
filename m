@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["775" "Thursday" "25" "February" "2021" "16:58:53" "+0530" "P J P" "ppandit@redhat.com" nil "23" "[oss-security] CVE-2021-20257 QEMU: net: e1000: infinite loop while processing transmit descriptors" nil nil nil "2" nil nil (number mark "U       ppandit@redh Feb 25   23/775   " thread-indent "\"[oss-security] CVE-2021-20257 QEMU: net: e1000: infinite loop while processing transmit descriptors\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-20257 QEMU: net: e1000: infinite loop while processing transmit descriptors" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["533" "Tuesday" "10" "September" "2019" "11:34:34" "+0400" "Ilya Matveychikov" "matvejchikov@gmail.com" "<F8EB26DC-CA65-4511-9D60-5A8ED0F4980F@gmail.com>" "20" "Re: [oss-security] Telegram privacy fails again." "^Date:" nil nil "9" "2019091007:34:34" "[oss-security] Telegram privacy fails again." (number mark "        matvejchikov Sep 10   20/533   " thread-indent "\"Re: [oss-security] Telegram privacy fails again.\"\n") "<CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>" ("<CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Telegram privacy fails again." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13989 invoked by uid 550); 25 Feb 2021 11:29:17 -0000
+Received: (qmail 18255 invoked by uid 550); 10 Sep 2019 11:31:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32711 invoked from network); 10 Sep 2019 07:34:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:date:references
+         :to:in-reply-to:message-id;
+        bh=RZpdo1z1ep7v9BmsV7OcKbIvwvNovK6farbwzE3cDC8=;
+        b=uyyQ2WJTbZrOYkn7ZyYEL7D865Qm9Z3a+00nlwzt4nKxxm4HsSU1wvDCFBk2bOdz3f
+         Enx0QL91wl4OAa402nbrD90w/wJ1x824JXmMlLaZXCiGkSRUbI7thWMHnjoj0ct9xLWq
+         FdB9Heo/Xj1zjuVRLxNl/DXv4S0XCHnDb15O768uWZsa09FRxaP9sWKkJFFTIl1QHfJL
+         m0D1HdmIbRCT3iwMkTiByEPr5fxzRHMR5LxKZsORSksBTj/ECNpcKWW9YybZFNLi0MTl
+         cqJD5sabU/22+iGs4h48X98KU6Jqn38hUIjOSdxo3PDXg1bmhs6yHHs3evSdGZsGqw/y
+         NOFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:date:references:to:in-reply-to:message-id;
+        bh=RZpdo1z1ep7v9BmsV7OcKbIvwvNovK6farbwzE3cDC8=;
+        b=Xk8fppnljhjsCLahNhPeLpnfKhCNM4mqaOBF9kxqshTQ+L21PKkLSKGndK3m/3fYIf
+         r8YPWYCce1MjBO76gNB3OvsM7NipVctAoA8eD6EjPy9xuDqhUo8M/YWffI9uyL/GfDpl
+         z8LZMws/BjfQFYRWECaToyk3AZu3ccb6i7oq1clQ5L3szzBmIYaTVAkO9rsFAsuynfWi
+         yFEQJcX8meGFkFenzML+Osm7h2tpcuXdd5nEswvEdupaXZy8P6NvFQJ5cfPzqcVFodIo
+         e9OF7ApDQzU0BWg+j7kvo4vYmZvp81xJzGIfD4QuF5iPtL4J3mI8B07LPhWGObNNpCBg
+         rVrQ==
+X-Gm-Message-State: APjAAAXo1F3W3G8rq9sL5xBfkuR9gQsLUI/aV1vm60KqX8AWns4G3Ojw
+	g/Y0QgzRSHfesR4OYUbzMBFue1h2vOk=
+X-Google-Smtp-Source: APXvYqwOmIs7WLTmFtZxMGWNC6qKU7RJWSnnBJ9JU+jr86enCR94pAO2EdxRu9i10yWEUJq7z3uUQQ==
+X-Received: by 2002:a5d:6192:: with SMTP id j18mr3085534wru.336.1568100877455;
+        Tue, 10 Sep 2019 00:34:37 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+References: <CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>
+In-Reply-To: <CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>
+Message-Id: <F8EB26DC-CA65-4511-9D60-5A8ED0F4980F@gmail.com>
+X-Mailer: Apple Mail (2.3445.104.11)
+Date: Tue, 10 Sep 2019 11:34:34 +0400
+From: Ilya Matveychikov <matvejchikov@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13968 invoked from network); 25 Feb 2021 11:29:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1614252544;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=pN6rw0gEn2+SCfQPm3f29xZfW1zShFrO9R4Xez8XTXg=;
-	b=D3HR0CQuOYsj/9dhvMxrq8UwkY5Dc1ag/32GVsFBMqxiuwMqxq5BxPAYSk2+wkhy+T61vW
-	j8GrZOf4WGBCN2qjM4CjESLh8x36lKX8UJISSHJcet1w+pZHXt5Dc5sHxHNVYnkpUelebv
-	nrvlDE+c/p9llXqXvvSv1CdGiR0Ghso=
-X-MC-Unique: HXlbgxSRNDK9DKY-eTiNbg-1
-Date: Thu, 25 Feb 2021 16:58:53 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-To: oss security list <oss-security@lists.openwall.com>
-cc: Ruhr-University Bochum <bugs-syssec@rub.de>, 
-    Cheolwoo Myung <cwmyung@snu.ac.kr>, Alexander Bulekov <alxndr@bu.edu>
-Message-ID: <o215932q-o26q-5o78-nr77-p0s99088rr23@erqung.pbz>
-MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ppandit@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] CVE-2021-20257 QEMU: net: e1000: infinite loop while processing
- transmit descriptors
-
-   Hello,
-
-An infinite loop issue was found in the e1000 NIC emulator of the QEMU. It 
-occurs while processing transmit (tx) descriptors in process_tx_desc, if 
-various descriptor fields are initialised with invalid values. A guest may use 
-this flaw to consume cpu cycles on the host resulting in DoS scenario.
-
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg07428.html
-
-'CVE-2021-20257' assigned by Red Hat Inc.
-
-This issue was independently reported by Sergej Schumilo, Cornelius 
-Aschermann, Simon Werner of Ruhr-University Bochum; Cheolwoo Myung of Seoul 
-National University; And Alexander Bulekov (CC'd).
+Subject: Re: [oss-security] Telegram privacy fails again.
+To: oss-security@lists.openwall.com
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+
+> On Sep 9, 2019, at 11:16 PM, Dhiraj Mishra <mishra.dhiraj95@gmail.com> wr=
+ote:
+
+[ ... ]
+
+>=20
+> Assume a scenario where Bob sends a message which is a confidential image
+> and was mistakenly sent to Alice, Bob proceeds to utilize a feature of
+> Telegram known as "*Also delete for Alice*" which would essentially delete
+> the message for Alice.
+
+
+> ... Bob (!!!) sends (!!!) a message which is a confidential (!!!) image a=
+nd
+> was mistakenly (!!!) sent (!!!) to Alice ...
+
+"Telegram privacy fails again=E2=80=9D, sure, sure.
 
