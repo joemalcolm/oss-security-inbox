@@ -1,24 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/6
-Message-ID: <de14296ba908c162036a15b1aeda95586ff8ba14.camel@suse.com>
-Date: Thu, 11 Jul 2019 13:57:19 +0000
-From: Malte Kraus <malte.kraus@...e.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "perry@...rmont.com" <perry@...rmont.com>
-Subject: Re: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/11/1
+Message-ID: <CAEvdU_35sTnyFYsZKLeeW=V1G9P3mKWbvqNFV0q300x5E7GKow@mail.gmail.com>
+Date: Tue, 10 Sep 2019 15:29:17 -0700
+From: Jacopo Cappellato <jacopoc@...che.org>
+To: "user@...iz.apache.org ML" <user@...iz.apache.org>, Dev list <dev@...iz.apache.org>,  security@...iz.apache.org, announce@...che.org,  oss-security@...ts.openwall.com, hizhangsword@...il.com,  security-reports@...mle.com
+Subject: [CVE-2018-17200] Apache OFBiz unauthenticated remote code execution vulnerability in HttpEngine
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2019-07-11 at 09:33 -0400,  Perry E. Metzger wrote:
-> So these links seem to say that things have been structured so you
-> *can't* run GUI apps as root, not that there is a special or unusual
-> security problem in Wayland if you run an application as root
-I didn't (intend to) say there is an (additional) security problem. I
-just tried to succinctly explain why the desktop environments are
-coming up with these D-Bus interfaces now.
+Severity:
+Important
 
+Vendor:
+The Apache Software Foundation
 
--- 
-Malte Kraus <malte.kraus@...e.com>
-Security Engineer
-SUSE Software Solutions Germany GmbH, GF: Felix Imendörffer, Mary
-Higgins, Sri Rasiah, HRB 21284 (AG Nürnberg)
+Versions Affected:
+OFBiz 16.11.01 to 16.11.05
+
+Description:
+The OFBiz HTTP engine (org.apache.ofbiz.service.engine.HttpEngine.java)
+handles requests for HTTP services via the /webtools/control/httpService
+endpoint.  This service takes the `serviceContent` parameter in the request
+and
+ deserializes it using XStream. This `XStream` instance is slightly guarded
+by
+ disabling the creation of `ProcessBuilder`.  However, this can be easily
+ bypassed (and in multiple ways).
+
+Mitigation:
+Upgrade to 16.11.06
+or manually apply the following commits on branch 16
+r1850017+1850019
+----
+
+Credit:
+Man Yue Mo of the Semmle Security Research Team
+张剑 <hizhangsword@...il.com>
+
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
+
