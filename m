@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/23/3
-Message-ID: <20190823132526.GA28250@kroah.com>
-Date: Fri, 23 Aug 2019 06:25:26 -0700
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: Eddie Chapman <eddie@...k.net>
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/11/3
+Message-ID: <CAEvdU_2eGL_EiXRRUCHgaE=HMGtfn1uDH1-ckaWAuJ=CTvNfdg@mail.gmail.com>
+Date: Tue, 10 Sep 2019 15:29:24 -0700
+From: Jacopo Cappellato <jacopoc@...che.org>
+To: "user@...iz.apache.org ML" <user@...iz.apache.org>, Dev list <dev@...iz.apache.org>, announce@...che.org,  security@...iz.apache.org, oss-security@...ts.openwall.com,  Vikash Patnaik <vikash.patnaik@...look.com>, kiitkp03@...il.com
+Subject: [CVE-2019-10073] Apache OFBiz XSS vulnerability in the "ecommerce" component
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 22, 2019 at 09:13:11PM -0400, Perry E. Metzger wrote:
-> Given this, I think fixing bugs that might lead to privilege
-> escalation, even if they require physical connection of USB devices,
-> does indeed seem reasonable.
+Severity:
+Important
 
-No one has said anything about not fixing these bugs.  The Linux USB
-developers have been spending a lot of time in the past weeks doing just
-that, so please do not think that is an issue here.
+Vendor:
+The Apache Software Foundation
 
-Now the "mount a purposfully corrupted filesystem image" issues, that's
-another story :)  CERT has a long-running thread with a number of kernel
-developers about issues they have found in that area over the past
-years, which has not lead to many fixes for various reasons :(
+Versions Affected:
+OFBiz 16.11.01 to 16.11.05
 
-thanks,
+Description:
+The "Blog", "Forum", "Contact Us" screens of the template "ecommerce"
+application bundled in Apache OFBiz are weak to Stored XSS attacks.
 
-greg k-h
+Mitigation:
+Upgrade to 16.11.06
+or manually apply the following commits on branch 16.11:
+1858438, 1858543, 1860595 and 1860616
+----
+
+Credit:
+Vikash Patnaik <vikash.patnaik@...look.com>
+Dinesh Kumar Mohanty <kiitkp03@...il.com>
+
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
+
