@@ -1,19 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/24/3
-Message-ID: <CAG09ER1gaptDPN3W-03BTQh_-P1Ta-GWicCprr_VLOz_FARagA@mail.gmail.com>
-Date: Wed, 24 Jul 2019 09:26:45 +0200
-From: Stig Rohde Døssing <srdo@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2018-1320] Apache Storm vulnerable Thrift version
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/10/3
+Message-ID: <856d6efa0e9b4dd39030e7372a17e3dba2db2aef.camel@neuling.org>
+Date: Tue, 10 Sep 2019 23:16:48 +1000
+From: Michael Neuling <mikey@...ling.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Michael Ellerman <michael@...erman.id.au>, linuxppc-dev@...ts.ozlabs.org,  linux-kernel@...r.kernel.org, Linuxppc-users <linuxppc-users@...ts.ozlabs.org>,  Gustavo Romero <gromero@...ux.vnet.ibm.com>
+Subject: CVE-2019-15030: Linux kernel: powerpc: data leak with FP/VMX  triggerable by unavailable exception in transaction
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2018-1320[PRODUCT]:Apache Storm[VERSION]:Apache Storm
-0.9.1-incubating to 1.2.2[PROBLEMTYPE]:CWE-20: Input
-Validation[DESCRIPTION]:Apache Storm versions 0.9.1-incubating to
-1.2.2
-              use Thrift library versions vulnerable to CVE-2018-1320.
+The Linux kernel for powerpc since v4.12 has a bug in it's TM handling where any
+user can read the FP/VMX registers of a difference user's process. Users of TM +
+FP/VMX can also experience corruption of their FP/VMX state.
 
-Mitigation: Upgrade to Apache Storm 1.2.3 or later.
+To trigger the bug, a process starts a transaction and reads a FP/VMX register.
+This transaction can then fail which causes a rollback to the checkpointed
+state. Due to the kernel taking an FP/VMX unavaliable exception inside a
+transaction and the kernel's incorrect handling of this, the checkpointed state
+can be set to the FP/VMX registers of another process. This checkpointed state
+can then be read by the process hence leaking data from one process to another.
 
-Credit: Arun Mahadevan for discovery and fix
+The trigger for this bug is an FP/VMX unavailable exception inside a
+transaction, hence the process needs FP/VMX off when starting the transaction.
+FP/VMX availability is under the control of the kernel and is transparent to the
+user, hence the user has to retry the transaction many times to trigger this
+bug. 
+
+All 64-bit machines where TM is present are affected. This includes all POWER8
+variants and POWER9 VMs under KVM or LPARs under PowerVM. POWER9 bare metal
+doesn't support TM and hence is not affected.
+
+The bug was introduced in commit:
+  f48e91e87e67 ("powerpc/tm: Fix FP and VMX register corruption")
+Which was originally merged in v4.12
+
+The upstream fix is here:
+  https://git.kernel.org/torvalds/c/8205d5d98ef7f155de211f5e2eb6ca03d95a5a60
+
+The fix can be verified by running the tm-poison from the kernel selftests. This
+test is in a patch here:
+https://patchwork.ozlabs.org/patch/1157467/
+which should eventually end up here:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/tools/testing/selftests/powerpc/tm/tm-poison.c
+
+cheers
+Mikey
+
+
+
+
 
