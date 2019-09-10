@@ -1,58 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/08/2
-Message-ID: <6fe9f0a9-01d6-369c-5146-23c7a6d9555c@thermi.consulting>
-Date: Wed, 8 May 2019 11:29:39 +0200
-From: Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
-To: oss-security@...ts.openwall.com, Roman Drahtmueller <draht@...altsekun.de>, Seong-Joong Kim <sungjungk@...il.com>
-Subject: Re: Re: fprintd: found storing user fingerprints without encryption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/10/4
+Message-ID: <2b9f664b4763f745dee7efa526285eb891c99c72.camel@neuling.org>
+Date: Tue, 10 Sep 2019 23:16:53 +1000
+From: Michael Neuling <mikey@...ling.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Michael Ellerman <michael@...erman.id.au>, linuxppc-dev@...ts.ozlabs.org,  linux-kernel@...r.kernel.org, Linuxppc-users <linuxppc-users@...ts.ozlabs.org>,  Gustavo Romero <gromero@...ux.vnet.ibm.com>
+Subject: CVE-2019-15031: Linux kernel: powerpc: data leak with FP/VMX  triggerable by interrupt in transaction
 Content-Type: text/plain; charset=utf-8
 
-Hello List,
+The Linux kernel for powerpc since v4.15 has a bug in it's TM handling during
+interrupts where any user can read the FP/VMX registers of a difference user's
+process. Users of TM + FP/VMX can also experience corruption of their FP/VMX
+state.
 
-Am 08.05.19 um 11:19 schrieb Roman Drahtmueller:
->>> Dear all,
->>>
->>> I would like to report a vulnerability of 'fprintd'.
->>>
->>> 'fprintd' does not encrypt sensitive information before storage.
->>> *CWE-311: Missing Encryption of Sensitive Data*
->
-> [...]
->
-> This misses the point.
->
-> * Encryption shifts the problem to protecting the symmetric key, which
->   is the very same problem. => Encryption solves other problems, but not
->   this one.
-> * If you have sufficient privileges to access the fingerprint data,
->   then you no longer need the data.
-> * You can't "safeguard" the fingerprint data by applying additional O/S
->   controls such as SELinux, AppArmor, etc, you can only add more useful
->   privilege transitions and protect against attacks that exploit
->   implementation errors. Google "store fingerprint data ios android",
->   there are suitable solutions.
->
-> Mostly: Your fingerprint is not a secret like a password, it is a username.
->
-> Since you can't change the fingerprint (biometrics problem), it is not very useful as a single authentication factor. Either you live with this, or you combine the fingerprint with a different authentication factor type.
->
-> Roman.
+To trigger the bug, a process starts a transaction with FP/VMX off and then
+takes an interrupt. Due to the kernels incorrect handling of the interrupt,
+FP/VMX is turned on but the checkpointed state is not updated. If this
+transaction then rolls back, the checkpointed state may contain the state of a
+different process. This checkpointed state can then be read by the process hence
+leaking data from one process to another.
 
-Another argument: You leave your fingerprint on everything you touch. The glass you drank from at the bar on Saturday evening? That has your fingerprints. Your front door? It has those, too.
-Fingerprints aren't sensitive information. The only entities attributing any sensitivity to them are the following: Court systems where fingerprints are allowed as evidence (although it's stupid because you can easily duplicate fingerprints) and companies/persons using fingerprints for authentication (which for the same reason as previously mentioned is not a good idea).
-And as Roman mentioned already, you can't change your fingerprints easily (Sand paper and acids are your friends, but that's not comfortable at all and compromises your ability to hold things in your hands. So don't to that.).
+The trigger for this bug is an interrupt inside a transaction where FP/VMX is
+off, hence the process needs FP/VMX off when starting the transaction. FP/VMX
+availability is under the control of the kernel and is transparent to the user,
+hence the user has to retry the transaction many times to trigger this bug. High
+interrupt loads also help trigger this bug.
 
-If, for some reason, you still want to "securely" (at least with a higher level of security than plain text) store your fingerprint, you need to use a hardware backed kernel keyring that stores the encryption keys or use a hardware based security solution for storing the fingerprints in the first case. You likely won't find any such solution though that isn't broken already in some regard.
+All 64-bit machines where TM is present are affected. This includes all POWER8
+variants and POWER9 VMs under KVM or LPARs under PowerVM. POWER9 bare metal
+doesn't support TM and hence is not affected.
 
-Kind regards
+The bug was introduced in commit:
+  fa7771176b439 ("powerpc: Don't enable FP/Altivec if not checkpointed")
+Which was originally merged in v4.15
 
-Noel
+The upstream fix is here:
+  https://git.kernel.org/torvalds/c/a8318c13e79badb92bc6640704a64cc022a6eb97
 
--- 
-Noel Kuntze
-IT security consultant
+The fix can be verified by running the tm-poison from the kernel selftests. This
+test is in a patch here:
+https://patchwork.ozlabs.org/patch/1157467/
+which should eventually end up here:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/tools/testing/selftests/powerpc/tm/tm-poison.c
 
-GPG Key ID: 0x0739AD6C
-Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
+cheers
+Mikey
+
+
+
 
 
