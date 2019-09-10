@@ -1,4 +1,9 @@
-Received: (qmail 9356 invoked by uid 550); 18 Apr 2023 19:29:11 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["790" "Tuesday" "10" "September" "2019" "15:29:27" "-0700" "Jacopo Cappellato" "jacopoc@apache.org" "<CAEvdU_1YsVy-7xZNn-uHDjzsbsUHvQNL-8ue5Dzb2q1kaF1UdA@mail.gmail.com>" "32" "[oss-security] [CVE-2019-10074] Apache OFBiz RCE (template injection)" nil nil nil "9" "2019091022:29:27" "[oss-security] [CVE-2019-10074] Apache OFBiz RCE (template injection)" (number mark "U       jacopoc@apac Sep 10   32/790   " thread-indent "\"[oss-security] [CVE-2019-10074] Apache OFBiz RCE (template injection)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-10074] Apache OFBiz RCE (template injection)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25998 invoked by uid 550); 11 Sep 2019 05:19:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,77 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7735 invoked from network); 18 Apr 2023 19:28:43 -0000
-Date: Tue, 18 Apr 2023 21:28:22 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20230418192822.GA2959@openwall.com>
-References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv> <20230418154016.GA959@openwall.com> <a88cee5ff23401457a8b156ceb5a5553.854673b9@michele.blotching>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a88cee5ff23401457a8b156ceb5a5553.854673b9@michele.blotching>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+Received: (qmail 16111 invoked from network); 10 Sep 2019 22:29:55 -0000
+X-Gm-Message-State: APjAAAXKP589o5TZD0+wK1MFjg49HWdFLy4f0GKFrQ1I2YeqjtOW9oYJ
+	somjyEnHFpN8p9y8ukSfTVzjKzEx4WX5uhBvc+0=
+X-Google-Smtp-Source: APXvYqzKZXvFUyznQ37HesXG9ZLnKDOHftz8gkzMsPAg61mk6Y5GAjAK6se3ZXqgt1kay5dk09VruxwQwlJaNwGYtA0=
+X-Received: by 2002:a5d:6b49:: with SMTP id x9mr5790550wrw.80.1568154578009;
+ Tue, 10 Sep 2019 15:29:38 -0700 (PDT)
+MIME-Version: 1.0
+From: Jacopo Cappellato <jacopoc@apache.org>
+Date: Tue, 10 Sep 2019 15:29:27 -0700
+X-Gmail-Original-Message-ID: <CAEvdU_1YsVy-7xZNn-uHDjzsbsUHvQNL-8ue5Dzb2q1kaF1UdA@mail.gmail.com>
+Message-ID: <CAEvdU_1YsVy-7xZNn-uHDjzsbsUHvQNL-8ue5Dzb2q1kaF1UdA@mail.gmail.com>
+To: "user@ofbiz.apache.org ML" <user@ofbiz.apache.org>, Dev list <dev@ofbiz.apache.org>, announce@apache.org, 
+	security@ofbiz.apache.org, oss-security@lists.openwall.com, 
+	heinenn@google.com
+Content-Type: multipart/alternative; boundary="0000000000009346db05923a70ee"
+Subject: [oss-security] [CVE-2019-10074] Apache OFBiz RCE (template injection)
 
-On Tue, Apr 18, 2023 at 08:13:24PM +0300, 0xef967c36@gmail.com wrote:
-> On Tue, Apr 18, 2023 at 05:40:16PM +0200, Solar Designer wrote:
-> > BTW, even with the kernel bug fixed, there are ioctl number clashes
-> > between different devices, so even e.g. isatty(3) is not necessarily
-> > safe if called with elevated privileges under a possible confused deputy
-> > scenario.  Here's strace showing some clashes on older Linux/i386:
-> > 
-> > $ cat isatty.c
-> > int main(void) { return isatty(0); }
-> > $ gcc isatty.c -o isatty
-> > $ strace -e ioctl ./isatty
-> > ioctl(0, SNDCTL_TMR_TIMEBASE or SNDRV_TIMER_IOCTL_NEXT_DEVICE or TCGETS, {B38400 opost isig icanon echo ...}) = 0
-> 
-> No, there's no clash. That was a bug in strace (fortunately fixed in
-> newer versions).
-> 
-> Those values macros are different; and they were ALWAYS different.
+--0000000000009346db05923a70ee
+Content-Type: text/plain; charset="UTF-8"
 
-Oh, I didn't recall the full story.  Thank you for correcting me.
+Severity:
+Important
 
-> > IIRC, I was the one to add this feature to strace 20+ years ago:
-> > 
-> > * Sat Jun 08 2002 Solar Designer <solar-at-owl.openwall.com>
-> > - Updated to today's CVS version (post-4.4) with an additional fix for
-> > displaying all possible ioctl names when there's more than one match,
+Vendor:
+The Apache Software Foundation
 
-So what I did back then was actually work around the shortcoming of
-older strace not decoding the full 32 bits, which I did not realize was
-the case.
+Versions Affected:
+OFBiz 16.11.01 to 16.11.05
 
-> There was no number clash. That 'foo or bar or quux' "fix" in strace
-> was stupid.
+An RCE is possible by entering Freemarker markup in an OFBiz Form Widget
+textarea field when encoding has been disabled on such a field.  This was
+the case for the Customer Request "story" input in the Order Manager
+application.  Encoding should not be disabled without good reason and never
+within a field that accepts user input.
 
-It was indeed stupid of me not to realize what was going on, but the
-"fix" nevertheless made things slightly better at the time - before it,
-strace reported an arbitrary one of the 16-bit matches.  So in the above
-example, we could have seen just SNDCTL_TMR_TIMEBASE whereas the program
-more likely meant TCGETS.  It took until 2015 for the proper fix by the
-new strace maintainer Dmitry V. Levin, now referenced by Ruihan Li in
-this thread, and that fix involved that "the tools for generating ioctl
-definitions from kernel headers have been rewritten, and the source
-format of ioctl definitions has been extended" resulting in "118 changed
-files with 7,272 additions and 3,004 deletions."
 
-> $ cc -xc - <<EOT && ./a.out
-> #include <sys/ioctl.h>
-> #include <linux/soundcard.h>
-> #include <sound/asound.h>
-> #include <stdio.h>
-> 
-> int main(int ac, char **av){
->      printf("%#lx %#lx %#x\n", SNDCTL_TMR_TIMEBASE, SNDRV_TIMER_IOCTL_NEXT_DEVICE, TCGETS);
->     return 0;
-> }
-> EOT
-> 0xc0045401 0xc0145401 0x5401
+Mitigation:
+Upgrade to 16.11.06
+or manually apply the following commit on branch 16.11:
+r1858533
+----
 
-Yes, these are the values I get on the same old test system as well.  So
-it was indeed just strace not decoding the high 16 bits.
+Credit:
+Niels Heinen of the Google security team <heinenn@google.com>
 
-Alexander
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
+
+--0000000000009346db05923a70ee--
