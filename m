@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2605" "Friday" "10" "June" "2016" "08:34:34" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160610123434.D865C13B51E@smtpvmsrv1.mitre.org>" "64" "[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" nil nil nil "6" "2016061012:34:34" "[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" (number mark "U       cve-assign@m Jun 10   64/2605  " thread-indent "\"[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack\"\n") "<8dce1875-f41f-ebdb-707d-267ede9ae655@redhat.com>" ("<8dce1875-f41f-ebdb-707d-267ede9ae655@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1029" "Tuesday" "10" "September" "2019" "15:29:21" "-0700" "Jacopo Cappellato" "jacopoc@apache.org" "<CAEvdU_1cTZYcGzH-yfZowAvhcgcD9kxFnH2TXwLHQ0ZksvDsyw@mail.gmail.com>" "37" "[oss-security] [CVE-2019-0189] Apache OFBiz remote code execution and arbitrary file delete via Java deserialization" nil nil nil "9" "2019091022:29:21" "[oss-security] [CVE-2019-0189] Apache OFBiz remote code execution and arbitrary file delete via Java deserialization" (number mark "U       jacopoc@apac Sep 10   37/1029  " thread-indent "\"[oss-security] [CVE-2019-0189] Apache OFBiz remote code execution and arbitrary file delete via Java deserialization\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-0189] Apache OFBiz remote code execution and arbitrary file delete via Java deserialization" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7513 invoked by uid 550); 10 Jun 2016 12:34:47 -0000
+Received: (qmail 21628 invoked by uid 550); 11 Sep 2019 05:19:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,76 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7488 invoked from network); 10 Jun 2016 12:34:46 -0000
-From: cve-assign@mitre.org
-To: huzaifas@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <8dce1875-f41f-ebdb-707d-267ede9ae655@redhat.com>
-Message-Id: <20160610123434.D865C13B51E@smtpvmsrv1.mitre.org>
-Date: Fri, 10 Jun 2016 08:34:34 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
+Received: (qmail 15911 invoked from network); 10 Sep 2019 22:29:44 -0000
+X-Gm-Message-State: APjAAAUPvbYzCWCye+84i5l+ArXOEU6upvmxaWKC8mrQGkSX/pBL2DYl
+	3iwVA0Az9UqzhXcHbyxs5wTindr9eJqFufZZ55o=
+X-Google-Smtp-Source: APXvYqxkgabsbStBgXKDD1fULM3rSSwD55/h5BrG1W6aEohpSAqySDEwNpDIG2zXsaJ+5Z1Fj3HkzC+LPpd7rTp4/kU=
+X-Received: by 2002:a5d:6612:: with SMTP id n18mr7297068wru.314.1568154572227;
+ Tue, 10 Sep 2019 15:29:32 -0700 (PDT)
+MIME-Version: 1.0
+From: Jacopo Cappellato <jacopoc@apache.org>
+Date: Tue, 10 Sep 2019 15:29:21 -0700
+X-Gmail-Original-Message-ID: <CAEvdU_1cTZYcGzH-yfZowAvhcgcD9kxFnH2TXwLHQ0ZksvDsyw@mail.gmail.com>
+Message-ID: <CAEvdU_1cTZYcGzH-yfZowAvhcgcD9kxFnH2TXwLHQ0ZksvDsyw@mail.gmail.com>
+To: "user@ofbiz.apache.org ML" <user@ofbiz.apache.org>, Dev list <dev@ofbiz.apache.org>, announce@apache.org, 
+	security@ofbiz.apache.org, oss-security@lists.openwall.com, 
+	security-reports@semmle.com, ricterzheng@tencent.com
+Content-Type: multipart/alternative; boundary="0000000000003b0e9c05923a70f8"
+Subject: [oss-security] [CVE-2019-0189] Apache OFBiz remote code execution and arbitrary file
+ delete via Java deserialization
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--0000000000003b0e9c05923a70f8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> I would like to request a CVE for the protocol flaw in IKEv1, details below:
+Severity:
+Important
 
-> https://www.kb.cert.org/vuls/id/419128
-> https://blogs.akamai.com/2016/02/ikeikev2-ripe-for-ddos-abuse.html
+Vendor:
+The Apache Software Foundation
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1308508
-> https://github.com/libreswan/libreswan/commit/152d6d95632d8b9477c170f1de99bcd86d7fb1d6
-> https://lists.libreswan.org/pipermail/swan-dev/2016-March/001394.html
+Versions Affected:
+OFBiz 16.11.01 to 16.11.05
 
-> Can a CVE id be please assigned to this?
+Description:
+The java.io.ObjectInputStream is known to cause Java serialisation issues.
+This issue here is exposed by the "webtools/control/httpService" URL,
+and uses Java deserialization to perform code execution.
+In the HttpEngine, the value of the request parameter "serviceContext"
+is passed to the "deserialize" method of "XmlSerializer".
 
-CVE IDs are not assigned to UDP protocols solely on the basis of an
-observed amplification-attack risk. A CVE ID can exist if the UDP
-reply traffic simply cannot ever have any legitimate purpose for users
-of a protocol. The general case of the interaction between UDP
-amplification and CVE was discussed between MITRE and CERT in 2013;
-this may be the reason that no CVE ID is listed in the
-https://www.kb.cert.org/vuls/id/419128 document.
+Ofbiz is affected via two different dependencies:
+"commons-beanutils" and an out-dated version of "commons-fileupload"
 
-We can, however, assign a CVE ID to a vendor's announcement of a
-required security update, such as on the https://libreswan.org/ home
-page:
+Mitigation:
+Upgrade to 16.11.06
+or manually apply the commits from
+OFBIZ-10770 AND OFBIZ-10837 on branch 16
+----
 
-  "libreswan 3.16 vulnerable to DDOS attack. Please upgrade to 3.17"
+Credit:
+Man Yue Mo of the Semmle Security Research Team
+ricterzheng(=E9=83=91=E6=9D=9C=E6=B6=9B) <ricterzheng@tencent.com>
 
-Use CVE-2016-5361 for this issue only in the libreswan codebase.
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
 
-
-> https://bugzilla.redhat.com/show_bug.cgi?id=1308508#c6
-
-> This is tracked via upstream bug:
-
-> https://bugs.libreswan.org/show_bug.cgi?id=262
-
-We don't think that Bug 262 tracks this "one update to libreswan IKEv1
-to reduce amplification caused by retransmits" issue. Bug 262 is about
-a possible functionality problem in the 3.17 release, It is marked
-"Importance: Low enhancement."
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXWrL9AAoJEHb/MwWLVhi2DokP/05yJL+xl3qdCOdoJ3Y+QqhR
-2B2ktnsgySAPkPSaBQCQd2PcRTedM+yRzXTqOiBsiPm1PrB85YOemhLn37H4bwM2
-C17TMsrwXa2tnPQAxjqZNP6j6fg2Y0Cw2/odUsXdV0ZR9VxtePQUI0GBKq5RBmJn
-BtCfHlQFf145H9MO8tUJ3LNxu076JmfAy33q25Ha7/bU46H6HiiybSB4UOUziiDL
-0OEAbCMKVDEorTW0Cu9OcdhVFi3u13WO3GUmTIGaXVboMnq0N1Swdlg7V18XSikZ
-P61tdEBVA9565cEKR+OnAG4nC5uFZ8Sri0FJCPS21nbQ8J0srOtlBBZt55+W5SzX
-0JPLSc6maxtDH8XVYLHHlLyMYCFkUmMztifnEzV2WAulrzW5fZZyo6hkSo1dMQ3S
-uLfm8bvfwopIYRGCeTPesDIQIPoqSy9lfh01Z9GJ2G59Jg8SZIPIzH09h7ft4OYv
-cK79yb5v/XdyNH3PUHTEmEm4wkQeJY/X2TFob5iGCxOSmKUs+rWMMliVIJd22K25
-2e0Y2nOv1Z4PTS2+c2uncswFPP1IQmSN9/jP8sIKXeg+NjthgzUJ7V69iMyFkkLZ
-dZVGvK3VGm5qM1Zmh7AG7iIjj0IRIHEIh7TJD/LmFqCDC6Qkjm4gVXbXiAZjsr2R
-8pFYiRXpWVYsrwtR+nBs
-=L6xn
------END PGP SIGNATURE-----
+--0000000000003b0e9c05923a70f8--
