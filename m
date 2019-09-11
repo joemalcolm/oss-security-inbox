@@ -1,135 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/10/2
-Message-ID: <20190410151324.GA5686@w1.fi>
-Date: Wed, 10 Apr 2019 18:13:24 +0300
-From: Jouni Malinen <j@...fi>
-To: oss-security@...ts.openwall.com
-Subject: wpa_supplicant/hostapd: SAE side-channel attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/11/6
+Message-ID: <alpine.DEB.2.20.1909102024100.29885@tvnag.unkk.fr>
+Date: Wed, 11 Sep 2019 08:01:09 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: TFTP small blocksize heap buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Published: April 10, 2019
-Identifiers:
-- VU#871675
-- CVE-2019-9494 (cache attack against SAE)
-Latest version available from: https://w1.fi/security/2019-1/
+TFTP small blocksize heap buffer overflow
+=========================================
 
-Vulnerability
+Project curl Security Advisory, September 11th 2019 -
+[Permalink](https://curl.haxx.se/docs/CVE-2019-5482.html)
 
-Number of potential side channel attacks were discovered in the SAE
-implementations used by both hostapd (AP) and wpa_supplicant
-(infrastructure BSS station/mesh station). SAE (Simultaneous
-Authentication of Equals) is also known as WPA3-Personal. The discovered
-side channel attacks may be able to leak information about the used
-password based on observable timing differences and cache access
-patterns. This might result in full password recovery when combined with
-an offline dictionary attack and if the password is not strong enough to
-protect against dictionary attacks.
+VULNERABILITY
+-------------
 
+libcurl contains a heap buffer overflow in the function
+(`tftp_receive_packet()`) that receives data from a TFTP server. It can call
+`recvfrom()` with the default size for the buffer rather than with the size
+that was used to allocate it. Thus, the content that might overwrite the heap
+memory is controlled by the server.
 
-Cache attack
+This flaw is only triggered if the TFTP server sends an OACK without the BLKSIZE
+option, when a BLKSIZE smaller than 512 bytes was requested by the TFTP client.
+OACK is a TFTP extension and is not used by all TFTP servers.
 
-A novel cache-based attack against SAE handshake was discovered. This
-attack targets SAE with ECC groups. ECC group 19 being the mandatory
-group to support and the most likely used group for SAE today, so this
-attack applies to the most common SAE use case. Even though the PWE
-derivation iteration in SAE has protections against timing attacks, this
-new cache-based attack enables an attacker to determine which code
-branch is taken in the iteration if the attacker is able to run
-unprivileged code on the victim machine (e.g., an app installed on a
-smart phone or potentially a JavaScript code on a web site loaded by a
-web browser). This depends on the used CPU not providing sufficient
-protection to prevent unprivileged applications from observing memory
-access patterns through the shared cache (which is the most likely case
-with today's designs).
+Users choosing a smaller block size than default should be rare as the primary
+use case for changing the size is to make it larger.
 
-The attacker can use information about the selected branch to learn
-information about the password and combine this information from number
-of handshake instances with an offline dictionary attack. With
-sufficient number of handshakes and sufficiently weak password, this
-might result in full discovery of the used password.
+It is rare for users to use TFTP across the Internet. It is most commonly used
+within local networks. TFTP as a protocol is always inherently insecure.
 
-This attack requires the attacker to be able to run a program on the
-target device. This is not commonly the case on access points, so the
-most likely target for this would be a client device using SAE in an
-infrastructure BSS or mesh BSS.
+This issue was introduced by the add of the TFTP BLKSIZE option handling. It
+was previously incompletely fixed by an almost identical issue called
+CVE-2019-5436.
 
-The commits listed in the end of this advisory change the SAE
-implementation shared by hostapd and wpa_supplicant to perform the PWE
-derivation loop using operations that use constant time and memory
-access pattern to minimize the externally observable differences from
-operations that depend on the password even for the case where the
-attacker might be able to run unprivileged code on the same device.
+We are not aware of any exploit of this flaw.
 
+INFO
+----
 
-Timing attack
+This bug was introduced in January 2009 in [commit
+0516ce7786e9500c2e44](https://github.com/curl/curl/commit/0516ce7786e9500c2e44).
 
-The timing attack applies to the MODP groups 22, 23, and 24 where the
-PWE generation algorithm defined for SAE can have sufficient timing
-differences for an attacker to be able to determine how many rounds were
-needed to find the PWE based on the used password and MAC
-addresses. When the attack is repeated with multiple times, the attacker
-may be able to gather enough information about the password to be able
-to recover it fully using an offline dictionary attack if the password
-is not strong enough to protect against dictionary attacks. This attack
-could be performed by an attacker in radio range of an access point or a
-station enabling the specific MODP groups.
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2019-5482 to this issue.
 
-This timing attack requires the applicable MODP groups to be enabled
-explicitly in hostapd/wpa_supplicant configuration (sae_groups
-parameter). All versions of hostapd/wpa_supplicant have disabled these
-groups by default.
+CWE-122: Heap-based Buffer Overflow
 
-While this security advisory lists couple of commits introducing
-additional protection for MODP groups in SAE, it should be noted that
-the groups 22, 23, and 24 are not considered strong enough to meet the
-current expectation for a secure system. As such, their use is
-discouraged even if the additional protection mechanisms in the
-implementation are included.
+Severity: 5.2 (Medium)
 
+AFFECTED VERSIONS
+-----------------
 
-Vulnerable versions/configurations
+- Affected versions: libcurl >= 7.19.4 to and including 7.65.3
+- Not affected versions: libcurl < 7.19.4
 
-All wpa_supplicant and hostapd versions with SAE support (CONFIG_SAE=y
-in the build configuration and SAE being enabled in the runtime
-configuration).
+libcurl is used by many applications, but not always advertised as such.
 
+THE SOLUTION
+------------
 
-Acknowledgments
+A [fix for CVE-2019-5482](https://github.com/curl/curl/commit/facb0e4662415b5f28163e853dc6742ac5fafb3d)
 
-Thanks to Mathy Vanhoef (New York University Abu Dhabi) and Eyal Ronen
-(Tel Aviv University) for discovering the issues and for discussions on
-how to address them.
+RECOMMENDATIONS
+--------------
 
+We suggest you take one of the following actions immediately, in order of
+preference:
 
-Possible mitigation steps
+  A - Upgrade curl to version 7.66.0
 
-- Merge the following commits to wpa_supplicant/hostapd and rebuild:
+  B - Apply the patch to your version and rebuild
 
-  OpenSSL: Use constant time operations for private bignums
-  Add helper functions for constant time operations
-  OpenSSL: Use constant time selection for crypto_bignum_legendre()
-  SAE: Minimize timing differences in PWE derivation
-  SAE: Avoid branches in is_quadratic_residue_blind()
-  SAE: Mask timing of MODP groups 22, 23, 24
-  SAE: Use const_time selection for PWE in FFC
-  SAE: Use constant time operations in sae_test_pwd_seed_ffc()
+  C - do not use TFTP with curl with smaller than the default BLKSIZE
 
-  These patches are available from https://w1.fi/security/2019-1/
+TIMELINE
+--------
 
-- Update to wpa_supplicant/hostapd v2.8 or newer, once available
+The issue was reported to the curl project on August 29, 2019. The fix was done,
+verified and communicated with the reporter on September 2, 2019.
 
-- In addition to either of the above alternatives, disable MODP groups
-  1, 2, 5, 22, 23, and 24 by removing them from hostapd/wpa_supplicant
-  sae_groups runtime configuration parameter, if they were explicitly
-  enabled since those groups are not considered strong enough to meet
-  current security expectations. The groups 22, 23, and 24 are related
-  to the discovered side channel (timing) attack. The other groups in
-  the list are consider too weak to provide sufficient security. Note
-  that all these groups have been disabled by default in all
-  hostapd/wpa_supplicant versions and these would be used only if
-  explicitly enabled in the configuration.
+We contacted distros@...nwall on September 5.
 
-- Use strong passwords to prevent dictionary attacks
+This advisory was posted on September 11th 2019.
+
+CREDITS
+-------
+
+Reported and patched by Thomas Vegas.
+
+Thanks a lot!
 
 -- 
-Jouni Malinen                                            PGP id EFC895FA
+
+  / daniel.haxx.se | Get the best commercial curl support there is - from me
+                   | Private help, bug fixes, support, ports, new features
+                   | https://www.wolfssl.com/contact/
