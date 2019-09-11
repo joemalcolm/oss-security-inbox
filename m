@@ -1,57 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/05/3
-Message-ID: <20190605151944.5z5b35kydy2yenvm@jumper.schlittermann.de>
-Date: Wed, 5 Jun 2019 17:19:44 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/11/7
+Message-ID: <20190911103701.GB10457@w1.fi>
+Date: Wed, 11 Sep 2019 13:37:01 +0300
+From: Jouni Malinen <j@...fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
+Subject: hostapd/wpa_supplicant: AP mode PMF disconnection protection bypass
 Content-Type: text/plain; charset=utf-8
 
-The fix for CVE-2019-10149 is public now.
+Published: September 11, 2019
+Latest version available from: https://w1.fi/security/2019-7/
 
-    https://git.exim.org/exim.git
-    Branch exim-4_91+fixes.
+Vulnerability
 
-Thank you to
-    - Qualys for reporting it.
-    - Jeremy for fixing it.
-    - you for using Exim.
+hostapd (and wpa_supplicant when controlling AP mode) did not perform
+sufficient source address validation for some received Management frames
+and this could result in ending up sending a frame that caused
+associated stations to incorrectly believe they were disconnected from
+the network even if management frame protection (also known as PMF) was
+negotiated for the association. This could be considered to be a denial
+of service vulnerability since PMF is supposed to protect from this type
+of issues. It should be noted that if PMF is not enabled, there would be
+no protocol level protection against this type of denial service
+attacks.
 
-Sorry for confusion about the public release. We were forced to react,
-as details leaked.
-
-The patch should apply cleanly to all affected versions (4.87->4.91). We
-do not do a security release, as the official Exim version is at 4.92
-already and older releases are considered to be outdated and not
-supported by the developers anymore.
-
-Please do not hesitate to contact us if you need help backporting the
-fix.
-
-Details of the commit:
-
-    |commit d740d2111f189760593a303124ff6b9b1f83453d
-    |gpg: Signature made Di 04 Jun 2019 11:27:33 CEST
-    |gpg:                using RSA key D0BFD6B9ECA5694A6F149DCEAF4CC676A6B6C142
-    |gpg:                issuer "hs@...littermann.de"
-    |gpg: Good signature from "Heiko Schlittermann (Dresden) <hs@...littermann.de>" [full]
-    |gpg:                 aka "Heiko Schlittermann (HS12-RIPE) <hs@...littermann.de>" [full]
-    |gpg:                 aka "[jpeg image of size 4759]" [full]
-    |gpg:                 aka "Heiko Schlittermann (Exim MTA Maintainer) <heiko@...m.org>" [full]
-    |gpg:                 aka "Heiko Schlittermann (HS12-RIPE) <hs@...marc.schlittermann.de>" [undefined]
-    |Author: Jeremy Harris <jgh146exb@...mail.org>
-    |Date:   Mon May 27 21:57:31 2019 +0100
-    |
-    |   Fix CVE-2019-10149
+An attacker in radio range of the access point could inject a specially
+constructed unauthenticated IEEE 802.11 frame to the access point to
+cause associated stations to be disconnected and require a reconnection
+to the network.
 
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+Vulnerable versions/configurations
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+All hostapd and wpa_supplicants versions with PMF support
+(CONFIG_IEEE80211W=y) and a runtime configuration enabled AP mode with
+PMF being enabled (optional or required). In addition, this would be
+applicable only when using user space based MLME/SME in AP mode, i.e.,
+when hostapd (or wpa_supplicant when controlling AP mode) would process
+authentication and association management frames. This condition would
+be applicable mainly with drivers that use mac80211.
+
+
+Possible mitigation steps
+
+- Merge the following commit to wpa_supplicant/hostapd and rebuild:
+
+  AP: Silently ignore management frame from unexpected source address
+
+  This patch is available from https://w1.fi/security/2019-7/
+
+- Update to wpa_supplicant/hostapd v2.10 or newer, once available
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
