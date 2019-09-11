@@ -1,91 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/06/4
-Message-ID: <20190706222936.GL10104@sasha-vm>
-Date: Sat, 6 Jul 2019 18:29:36 -0400
-From: Sasha Levin <sashal@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/11/8
+Message-ID: <20190911124319.23022e80@computer>
+Date: Wed, 11 Sep 2019 12:43:19 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+Subject: OpenDMARC signature bypass with multiple From addresses
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 06, 2019 at 09:37:37PM +0200, Solar Designer wrote:
->Hi all,
->
->Per our current policy and precedents, I see no valid reasons not to
->subscribe Microsoft (or part(s) of it, see below) to linux-distros.  So
->I intend to figure out some detail and proceed with the subscription.
+Hi,
 
-Thank you.
+Protonmail reported about a phishing incident in July:
+https://protonmail.com/blog/bellingcat-cyberattack-phishing/
 
-[snip]
+This had this somewhat mysterious chapter:
+"Furthermore, the attackers attempted to exploit an unpatched
+vulnerability in an open source software that is widely used by email
+providers in an effort to bypass spam and abuse filters. We were
+previously aware of this vulnerability and have already been watching
+it for some time, but we will not disclose it here because the software
+in question is not developed by ProtonMail, and it has not yet been
+patched by the software maintainers. This vulnerability, however, is
+not widely known and indicates a higher level of sophistication on the
+part of the attackers."
 
->On Fri, Jun 28, 2019 at 01:08:12PM -0400, Sasha Levin wrote:
->> Can I suggest that we fork the discussion around security-bugs.rst to
->> LKML? I can suggest an initial patch to address your comments here but I
->> think that this is better handled on LKML.
->
->Yes, please.
+After asking protonmail multiple times for a statement they answered
+and I learned that it's about this issue in OpenDMARC:
+https://github.com/trusteddomainproject/OpenDMARC/pull/48
 
-Sure, give me a day or two to get it out. I'll cross-post
-LKML/ksummit-discuss/oss-security as I think it's one of those times it
-actually makes sense.
+It's an issue where by specifying multiple From addresses only one of
+them gets DMARC-checked.
 
->> Microsoft's history with Linux is a rather recent one. I can offer the
->> following examples if you're willing to give us a few months off of the
->> "1 year" requirement:
->>
->> CVE-2018-1002105:
->> https://azure.microsoft.com/en-us/updates/aks-clusters-patched-for-kubernetes-vulnerability/
->> CVE-2018-5391, CVE-2018-5390:
->> https://azure.microsoft.com/en-us/blog/security-bulletin-for-august-2018/
->> CVE-2019-5736:
->> https://azure.microsoft.com/en-us/updates/iot-edge-fix-cve-2019-5736/
->> CVE-2019-11477, CVE-2019-11478, CVE-2019-11479:
->> https://azure.microsoft.com/en-us/updates/security-advisory-on-linux-kernel-tcp-vulnerabilities-for-hdinsight-clusters/
->
->The oldest of these is August 8, 2018, which is just 1 month short of
->the 1 year term.  I suppose we could either give Microsoft this 1 month
->off as you suggest based on Microsoft's track record of promptly dealing
->with security issues in non-Linux products, or subscribe Microsoft to
->linux-distros in August 2019 (or later).
+There's no reaction from the OpenDMARC developers and it's unclear
+whether it's still actively developed. Given this is already actively
+exploited I think people should be aware of it and distros should
+probably apply the patch from the PR.
 
-Whatever list admins/members are comfortable with.
+-- 
+Hanno Böck
+https://hboeck.de/
 
->More importantly, maybe we shouldn't list "Microsoft" as a member of
->linux-distros.  Microsoft is so much more than the recent Linux-based
->products and services.  We similarly list "Amazon Linux AMI" rather than
->"Amazon", and "Chrome OS" rather than "Google" (and we had separately
->listed "Android", which has since unsubscribed), and "Ubuntu" rather
->than "Canonical".  OTOH, we were not as careful to list proper products,
->etc. for some others such as "Oracle".
->
->If we list "Microsoft", this might be especially confusing since issues
->being reported might also be relevant to Windows.  The reporters need to
->know they're not reaching Windows security team unless they specifically
->authorize that.
->
->Any suggestions on the above?
-
-Yes, this is tricky. Maybe "Microsoft Linux Systems Group"? Thats our
-group name within Microsoft. I guess that we can also add a short wiki
-page with references to the products/distros we support as well as a
-clarification that this has nothing to do with Windows and list MSRC's
-contact information.
-
->Regardless, the list policy only allows use of the information for
->"getting the issue fixed for your distro's users and, only in rare
->extreme cases, for deployment of maximally non-revealing changes to
->maintain security of your distro's infrastructure most essential to the
->distro users' security in face of the security issue being dealt with.
->The need-to-know condition is met only if the person needs to
->participate in one of these two activities."  This is meant to preclude
->sharing within the organization beyond its parts responsible for the
->"distro" the organization is subscribed for.
-
-As I've indicated before, we intend to follow the list's policies.
-Information obtained from the list will be used only for the purposes
-listed in our original application, and any additional future use will
-go through the list for approvals first.
-
---
-Thanks,
-Sasha
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
