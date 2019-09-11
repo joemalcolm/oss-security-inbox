@@ -1,125 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/09/2
-Message-ID: <740749273.376258.1570600416658@email.ionos.fr>
-Date: Wed, 9 Oct 2019 07:53:36 +0200 (CEST)
-From: Guillaume Quéré <guillaume@...re.eu>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Centreon-Web and Centreon-VM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/11/5
+Message-ID: <alpine.DEB.2.20.1909102021410.29885@tvnag.unkk.fr>
+Date: Wed, 11 Sep 2019 08:01:03 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: FTP-KRB double-free
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+FTP-KRB double-free
+===================
 
-My advisory posted yesterday contains a problematic typo: CVE-2019-17017 should have been written CVE-2019-17107. Sorry for the inconvenience it may have caused.
+Project curl Security Advisory, September 11th 2019 -
+[Permalink](https://curl.haxx.se/docs/CVE-2019-5481.html)
 
-Here is the corrected context:
-> High impact
-> ===========
->
-> CVE-2019-17107: Authenticated RCE in minPlayCommand.php
-> -------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7099
-> Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7245)
-> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7232)
+VULNERABILITY
+-------------
 
-Original advisory follows.
-Guillaume Quéré
+libcurl can be told to use kerberos over FTP to a server, as set with the
+`CURLOPT_KRBLEVEL` option.
 
-> Centreon
-> ========
-> "Centreon is the N°1 Open Source IT Infrastructure Monitoring Solution."
-> 
-> Multiple vulnerabilites were discovered in Centreon-Web in december 2018 and fixed in early 2019 over the course of two minor releases on both branches in versions 2.8.27/2.8.28 and 18.10.4/18.10.5.
-> 
-> https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-2.8/centreon-2.8.27.html
-> https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-2.8/centreon-2.8.28.html
-> https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-18.10/centreon-18.10.4.html
-> https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-18.10/centreon-18.10.5.html
-> 
-> Additional vulnerabilities were found in Centreon-VM that have not yet been fixed.
-> 
-> 
-> High impact
-> ===========
-> 
-> CVE-2019-17017: Authenticated RCE in minPlayCommand.php
-> -------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7099
-> Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7245)
-> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7232)
-> 
-> CVE-2018-21023: Authenticated RCE in getStats.php
-> -------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7083
-> Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7271)
-> Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7195)
-> 
-> CVE-2018-21024: Arbitrary File Upload in licenseUpload.php
-> ----------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7085
-> Did not affect branch 2.8.x
-> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7171)
-> 
-> CVE-2018-21021: Authenticated SQL injection in img_gantt.php
-> ------------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7086
-> Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7169)
-> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7086)
-> 
-> CVE-2018-21022: Authenticated SQL injection in makeXML_ListServices.php
-> -----------------------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7087
-> Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7229)
-> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7229)
-> 
-> CVE-2019-17108: Stored XSS in brokerPerformance.php
-> ---------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7101
-> Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7226)
-> Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7227)
-> 
-> 
-> Medium impact
-> =============
-> CVE-2018-21025: Privilege Escalation in Centreon-VM
-> ---------------------------------------------------
-> Details: https://github.com/centreon/centreon/issues/7082
-> Not yet fixed.
-> While checking if this was still possible in centreon-vm-19.04-2 (it is), I found another similar privesc which didn't exist at the time:
-> ```
-> [root@...treon-central ~]# grep centreon_autodisco /etc/cron.d/centreon-auto-disco
-> 30 22 * * * root /usr/share/centreon/www/modules/centreon-autodiscovery-server//cron/centreon_autodisco --config='/etc/centreon/conf.pm' --config-extra='/etc/centreon/centreon_autodisco.pm' --severity=error >> /var/log/centreon/centreon_auto_discovery.log 2>&1
-> [root@...treon-central ~]# ls -la /usr/share/centreon/www/modules/centreon-autodiscovery-server//cron/centreon_autodisco
-> -rwxr-xr-x 1 apache apache 4995482 24 avril 13:48 /usr/share/centreon/www/modules/centreon-autodiscovery-server//cron/centreon_autodisco
-> ```
-> 
-> CVE-2019-17104: Unsecured cookies in Centreon-VM
-> ------------------------------------------------
-> Details: https://github.com/centreon/centreon/issues/7097
-> Not yet fixed.
-> 
-> CVE-2019-17106: Display of cleartext external passwords in modules
-> ------------------------------------------------------------------
-> Details: https://github.com/centreon/centreon/issues/7098
-> Not yet fixed.
-> 
-> 
-> Low impact
-> ==========
-> CVE-2018-21020: Type juggling on authentication in centreonAuth.class.php
-> -------------------------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7084
-> Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7084)
-> Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7219)
-> 
-> CVE-2019-17105: Usage of a predictable generator for a security token in index.php
-> ----------------------------------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7100
-> Not fixed in 2.8.x  (https://github.com/centreon/centreon/pull/7224)
-> Fixed in 18.10.5    (commit 4faf5919f89bd06a5c25152c39ba3f25a4f16a81)
-> 
-> 
-> Acknowledgements
-> ================
-> Thanks to Centreon for their quick and enthusiastic response as well as their commitment to patching.
-> 
-> Guillaume Quéré
+During such kerberos FTP data transfer, the server sends data to curl in
+blocks with the 32 bit size of each block first and then that amount of data
+immediately following.
+
+A malicious or just broken server can claim to send a very large block and if
+by doing that it makes curl's subsequent call to `realloc()` to fail, curl
+would then misbehave in the exit path and double-free the memory.
+
+In practical terms, an up to 4 GB memory area may very well be fine to
+allocate on a modern 64 bit system but on 32 bit systems it will fail.
+
+Kerberos FTP is a rarely used protocol with curl. Also, Kerberos
+authentication is usually only attempted and used with servers that the client
+has a previous association with.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This bug was introduced in November 2016 in [commit
+0649433da53c7165f839e2](https://github.com/curl/curl/commit/0649433da53c7165f839e2).
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2019-5481 to this issue.
+
+CWE-415: Double Free
+
+Severity: 6.3 (Medium)
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl >= 7.52.0 to and including 7.65.3
+- Not affected versions: libcurl < 7.52.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2019-5481](https://github.com/curl/curl/commit/9069838b30fb3b48af0123e39f664cea683254a5)
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.66.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - do not use `CURLOPT_KRBLEVEL`
+
+TIMELINE
+--------
+
+The issue was reported to the curl project on September 3, 2019. The fix was done,
+verified and communicated with the reporter on September 3, 2019.
+
+We contacted distros@...nwall on September 5.
+
+This advisory was posted on September 11th 2019.
+
+CREDITS
+-------
+
+Reported by Thomas Vegas. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se | Get the best commercial curl support there is - from me
+                   | Private help, bug fixes, support, ports, new features
+                   | https://www.wolfssl.com/contact/
