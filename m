@@ -1,144 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/26/2
-Message-Id: <E1iZZVo-0005iD-8p@xenbits.xenproject.org>
-Date: Tue, 26 Nov 2019 12:00:08 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 306 v2 - Device quarantine for alternate pci assignment methods
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/12/2
+Message-Id: <A5414228-4516-4048-B84F-92519BB679C3@beckweb.net>
+Date: Thu, 12 Sep 2019 15:50:36 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-                    Xen Security Advisory XSA-306
-                              version 2
+* Aqua Security Serverless Scanner Plugin 1.0.5
+* Beaker builder Plugin 1.10
+* Build Environment Plugin 1.7
+* Dashboard View Plugin 2.12
+* Git client Plugin 2.8.5
+* Script Security Plugin 1.63
 
-        Device quarantine for alternate pci assignment methods
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-09-12/
 
-UPDATES IN VERSION 2
-====================
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Public release.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-ISSUE DESCRIPTION
-=================
+---
 
-XSA-302 relies on the use of libxl's "assignable-add" feature to
-prepare devices to be assigned to untrusted guests.
-
-Unfortunately, this is not considered a strictly required step for
-device assignment.  The PCI passthrough documentation on the wiki
-describes alternate ways of preparing devices for assignment, and
-libvirt uses its own ways as well.  Hosts where these "alternate"
-methods are used will still leave the system in a vulnerable state
-after the device comes back from a guest.
-
-IMPACT
-======
-
-An untrusted domain with access to a physical device can DMA into host
-memory, leading to privilege escalation.
-
-VULNERABLE SYSTEMS
-==================
-
-Only systems where guests are given direct access to physical devices
-capable of DMA (PCI pass-through) are vulnerable.  Systems which do
-not use PCI pass-through are not vulnerable.
-
-Only systems which use "alternate" methods to assign devices to pciback
-before assignment are vulnerable.  These methods include:
- - Assigning devices on the Linux command-line using `xen-pciback.hide`
- - Assigning devices via xen-pciback module parameters
- - Assigning devices manually via sysfs
- - Assigning devices using libvirt
-
-Systems which use `xl pci-assignable-add` or
-libxl_device_pci_assignable_add, or have the assignable state handled
-automatically via setting the `seize` parameter, are not affected.
-
-MITIGATION
-==========
-
-For xl and libvirt, before assigning a device to a guest, manually run
-`xl pci-assignable-add`.  This will quarantine the device even if the
-device has already been assigned to pciback by one of the alternate
-methods.  This may also work for other libxl-based toolstacks,
-depending on the particular implementation.
-
-CREDITS
-=======
-
-This issue was discovered by Marek Marczykowski-Górecki of Invisible
-Things Lab.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that this patch will quarantine the device after the domain is
-destroyed by default.  It must be un-quarantined before it can be used
-by domain 0 again.  This can be done by executing `xl
-pci-assignable-remove`.  This will be effective even if the device was
-assigned to pciback with one of the alternate methods.
-
-xsa306.patch           xen-unstable
-xsa306-4.12.patch      Xen 4.12.x
-xsa306-4.11.patch      Xen 4.11.x, Xen 4.10.x
-xsa306-4.9.patch       Xen 4.9.x, Xen 4.8.x
-
-$ sha256sum xsa306*
-07468dcdfbe34b794fd0618bce7d6d1edb6b10b234dccf1e5dd1f1120a0affe7  xsa306.meta
-3534ec46f03bb8dac3011e0e3739fc75400559078e4361bbe5385d97b7892650  xsa306.patch
-426e32bfa7d7787fe6778685e623966f8762857f7920443a0ca73347df9d6624  xsa306-4.9.patch
-b00e58c9f96b0ff654dfd4904c675a54356148af718eb9b2adca0253b900dfc1  xsa306-4.11.patch
-69857d08969903452fbf009905a145e06a5aef9966e969de9fbb22e62c557ffd  xsa306-4.12.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+SECURITY-1534 / CVE-2019-10392
+Git client Plugin accepts user-specified values as argument to an invocation 
+of `git ls-remote` to validate the existence of a Git repository at the 
+specified URL. This was implemented in a way that allowed attackers with
+Job/Configure permission to execute an arbitrary system command on the 
+Jenkins master as the OS user that the Jenkins process is running as.
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+SECURITY-1538 / CVE-2019-10393, CVE-2019-10394, CVE-2019-10399, CVE-2019-10400
+Sandbox protection in Script Security Plugin could be circumvented through 
+any of the following:
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+- Crafted method names in method call expressions (CVE-2019-10393)
+- Crafted property names in property expressions on the left-hand side of 
+  assignment expressions (CVE-2019-10394)
+- Crafted property names in property expressions in increment and decrement 
+  expressions (CVE-2019-10399)
+- Crafted subexpressions in increment and decrement expressions not 
+  involving actual assignment (CVE-2019-10400)
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl3dE7EMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZdj0H/1MUzg8URNtE5FsG5Q0OwszcNXSuV1qW9B6mZCRJ
-ffGyGtTmhM2M/KXao9j15Hn83BVxTh5iFVkmZ9LoQSFiwu4L9nhx8KGw+nnspb9G
-v2+NrEbZRpxbloPxDplMfWLx1/GNFCs+wK550LtGC+yzITqMckacD6cTkbEGmIwR
-otLTU3JTlfwMnvhZraDzVrICyX/+vNri9EvHd7Tviz1yXk83QMapgZ+xJCocUY3n
-kA93XN2yG/xFB0jHky75wBT2HFRR1RpmLECSodiOP0ONLPJiRBl3O2ziqb8OtdRD
-mkMvTMWEJawTPiWKc5CS4ieD2YyiUngFC806r2LDpRk6468=
-=gi2B
------END PGP SIGNATURE-----
+This allowed attackers able to specify and run sandboxed scripts to execute
+arbitrary code in the context of the Jenkins master JVM.
 
-Download attachment "xsa306.meta" of type "application/octet-stream" (1561 bytes)
 
-Download attachment "xsa306.patch" of type "application/octet-stream" (4180 bytes)
+SECURITY-1476 / CVE-2019-10395
+Build Environment Plugin did not escape values of environment variables 
+shown on its views. This resulted in a cross-site scripting vulnerability 
+exploitable by attackers able to control the values of build environment 
+variables, typically users with Job/Configure or Job/Build permission.
 
-Download attachment "xsa306-4.9.patch" of type "application/octet-stream" (3987 bytes)
 
-Download attachment "xsa306-4.11.patch" of type "application/octet-stream" (4080 bytes)
+SECURITY-1489 / CVE-2019-10396
+Dashboard View Plugin did not escape the build description on the Latest 
+Builds View. This resulted in a cross-site scripting vulnerability 
+exploitable by attackers able to control the description of builds shown on 
+that view.
 
-Download attachment "xsa306-4.12.patch" of type "application/octet-stream" (4144 bytes)
+
+SECURITY-1509 / CVE-2019-10397
+Aqua Security Serverless Scanner Plugin stores service passwords in job 
+configurations.
+
+While the password is stored encrypted on disk, it was transmitted in plain 
+text as part of the configuration form. This could result in exposure of the 
+password through browser extensions, cross-site scripting vulnerabilities, 
+and similar situations.
+
+
+SECURITY-1545 / CVE-2019-10398
+Beaker builder Plugin stored the Beaker password unencrypted on the Jenkins 
+master. This password could be viewed by users with access to the master 
+file system.
+
