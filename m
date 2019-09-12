@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2960" "Monday" "12" "August" "2019" "15:25:15" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<20190812132515.GA4647@cbuissar-ltop.localdomain>" "74" "[oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1" "^Date:" nil nil "8" "2019081213:25:15" "[oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1" (number mark "        cbuissar@red Aug 12   74/2960  " thread-indent "\"[oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1\"\n") "<20190807065737.GA3930@cbuissar-ltop.localdomain>" ("<20190807065737.GA3930@cbuissar-ltop.localdomain>") nil nil nil nil nil nil nil "[oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7566" "Thursday" "12" "September" "2019" "17:39:27" "+0200" "Solar Designer" "solar@openwall.com" "<20190912153927.GA27634@openwall.com>" "115" "Re: [oss-security] Telegram privacy fails again." "^Date:" nil nil "9" "2019091215:39:27" "[oss-security] Telegram privacy fails again." (number mark "U       solar@openwa Sep 12  115/7566  " thread-indent "\"Re: [oss-security] Telegram privacy fails again.\"\n") "<CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>" ("<CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Telegram privacy fails again." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14330 invoked by uid 550); 12 Aug 2019 13:25:33 -0000
+Received: (qmail 14311 invoked by uid 550); 12 Sep 2019 15:42:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,132 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14307 invoked from network); 12 Aug 2019 13:25:32 -0000
-Message-ID: <20190812132515.GA4647@cbuissar-ltop.localdomain>
-References: <20190807065737.GA3930@cbuissar-ltop.localdomain>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NzB8fVQJ5HfG6fxh"
-Content-Disposition: inline
-In-Reply-To: <20190807065737.GA3930@cbuissar-ltop.localdomain>
-User-Agent: Mutt/1.12.0 (2019-05-25)
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Mon, 12 Aug 2019 13:25:20 +0000 (UTC)
-Date: Mon, 12 Aug 2019 15:25:15 +0200
-From: Cedric Buissart <cbuissar@redhat.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1
-To: oss-security@lists.openwall.com
-
---NzB8fVQJ5HfG6fxh
+Received: (qmail 13560 invoked from network); 12 Sep 2019 15:39:55 -0000
+Message-ID: <20190912153927.GA27634@openwall.com>
+References: <CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 12 Sep 2019 17:39:27 +0200
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Telegram privacy fails again.
+To: oss-security@lists.openwall.com
 
-Hello,
+On Mon, Sep 09, 2019 at 11:16:37PM +0400, Dhiraj Mishra wrote:
+> well-known feature of deleting messages, which allows users to delete
+> messages sent by mistake or genuinely to any recipient. It was observed
+> that once the message (image) is sent to the recipient, it still remains in
+> the internal storage of the user which is located at `/Telegram/Telegram
+> Images/`path.
+[...]
+> Assume a scenario where Bob sends a message which is a confidential image
+> and was mistakenly sent to Alice, Bob proceeds to utilize a feature of
+> Telegram known as "*Also delete for Alice*" which would essentially delete
+> the message for Alice. Apparently, this feature does not work as intended,
+> as Alice would still be able to see the image stored under `*/Telegram/Telegram
+> Images/` *folder, concluding that the feature only deletes the image from
+> the chat window.
+[...]
+> You're relying on a functionality that is broken since your file would
+> still be present in storage for all users. Aside from this, I found that
+> since Telegram takes `read/write/modify` permission of the USB storage
+> which technically means the confidential photo should have been deleted
+> from Alice's device or storage.
+> 
+> A compete, app for Telegram which is WhatsApp also has the same
+> feature to "*Delete
+> for everyone*". If you perform the following steps mentioned above in
+> WhatsApp it deletes the confidential photo from Alice's `*/Whatsapp/Whatsapp
+> Media/Whatsapp Images/*` folder and maintains the privacy however Telegram
+> fails. WhatsApp takes the same permission when it comes to storage which is
+> `read/write/modify`.
 
-This is to disclose a new vulnerability in ghostscript, rated as Important.
+A question here is what the intended behavior is.  Another question is
+what the users' reasonable expectations are.
 
-Ghostscript is a suite of software providing an interpreter for Adobe Syste=
-ms' PostScript (PS) and Portable Document Format (PDF) page description lan=
-guages.  Its primary purpose includes displaying (rasterization & rendering=
-) and printing of document pages, as well as conversions between different =
-document formats.
-URL : www.ghostscript.com
+Sender-imposed message deletion or expiry is necessarily unreliable: the
+recipient might have taken a copy of the message prior to deletion e.g.
+by taking a picture of the device's screen.  This should be clearly
+communicated to users of such features.
 
-The flaw is a usual "getting a reference to a privileged function" (the scr=
-ipt must successfully be able to overload the error handling code to take a=
-dvantage of that flaw), allowing arbitrary file access.
+However, it gets worse.  Sure, a reasonably informed sender knows they
+effectively trust the recipient not to bypass the message deletion
+or/and knowingly accepts the risk.  But do they also realize the deleted
+message can possibly be extracted from the device(s) by a third-party
+later?  This, too, should be clearly communicated.
 
+And, speaking of intended behavior, a question is: to what extent should
+the messenger app protect deleted messages from possible recovery?
+Another question is: to what extent such protection is even possible?
 
-* CVE-2019-10216 ghostscript: -dSAFER escape via .buildfont1 (701394):
-It was found that the .buildfont1 procedure did not properly secure its pri=
-vileged calls, enabling scripts to bypass `-dSAFER` restrictions. A special=
-ly crafted PostScript file could use this flaw to escalate its privileges a=
-nd, for example, access files outside of restricted areas.
+Dhiraj's message implies WhatsApp does what it should while Telegram
+does not.  This might be so.  However, without clearly stated security
+(or privacy) properties the apps are supposed to have, we can't tell.
 
-All released versions of ghostscript are believed to be impacted, up to, an=
-d including, 9.27 (however, master should not be affected: see below for bu=
-ilds post commit 7ecbfda92).
+Sure, by common sense Telegram should also delete the file since it's so
+easy to do and defeats such an easy bypass, but I doubt the expected
+behavior is clearly stated anywhere for either app.
 
-Upstream bug report (currently restricted) : https://bugs.ghostscript.com/s=
-how_bug.cgi?id=3D701394
-Upstream fix : http://git.ghostscript.com/?p=3Dghostpdl.git;a=3Dcommitdiff;=
-h=3D5b85ddd19=20
+Quite likely, WhatsApp merely deletes (aka unlinks) the file from the
+filesystem.  If so, that does not actually wipe the file's content,
+likely allowing for its recovery by a more advanced user (or attacker).
 
-Acknowledgements:
-* Red Hat would like to thank Artifex for alerting us.
-* The vulnerability was originally discovered by Netanel from Cloudinary.
+Even if it did wipe the file's content, it is almost certainly unable to
+reasonably achieve that at a physical level through portable Android
+APIs due to how modern flash memories work.  For wear leveling, the
+flash memory controller would likely allocate new physical blocks for
+the new writes, and leave the blocks with the deleted file's content
+untouched until a lot later (such as until the total writes from that
+point on exceed the device's free capacity, which might be never).
+Again, an even more advanced user (or attacker) would possibly be able
+to recover the deleted and wiped file through vendor-specific low-level
+access to the flash memory chip.
 
+What can we do to make data deletion more reliable?  One thing we can do
+is only store the data encrypted, and to use per-datum encryption keys.
+Then if we can reliably delete the key, the data is lost for good.
 
-Noteworthy :=20
-A recent modification, started in upstream commit 7ecbfda92b4c8dbf6f6c2bf8f=
-c82020a29219eff, changed the access to file permissions. After this commit,=
- the ability to modify the /PermitFile* entries from systemdict's /userpara=
-ms entry should have no effect.
-That is to say: getting a reference to highly privileged function (such as =
-.forceput), can still be used to remove SAFER, and modify the /PermitFile* =
-lists. However, the interpreter will still refuse to access files outside o=
-f a list provided from a set of command line options. This should mitigate =
-the class of ghostscript vulnerabilities similar to the one described above.
+Can we reliably delete a key?  That's similarly tricky.  Some devices
+provide a hardware key store separate from the main flash memory, and
+maybe by reusing key slots we can in fact delete old keys.  Or maybe
+not.  I'd like more research on this.
 
-Best regards,
+Besides, use of (only) a hardware key store with a low number of key
+slots is incompatible with the need to have per-datum keys (rather than
+per-app).  You wouldn't comfortably reinstall the messaging app each
+time you want to have greater assurance the deleted messages are gone.
+(And you wouldn't impose this on recipients of your messages.)
 
---
-Cedric Buissart
-Product Security
-Red Hat
+So I welcome research on use of (large) per-datum keys and their
+deletion from flash memory, like I had suggested in this tweet thread in
+May 2018:
 
---NzB8fVQJ5HfG6fxh
-Content-Type: application/pgp-signature; name="signature.asc"
+https://twitter.com/solardiz/status/1002264067887763456
 
------BEGIN PGP SIGNATURE-----
+<solardiz> Use case for >256-bit symmetric keys: temporary storage on flash media (e.g., extra key material, on top of OS key store, for messaging apps' DBs on Android) with key bits spread across files numerous/large enough that unknown order of known bits provides security after deletion.
 
-iQEcBAEBCgAGBQJdUWiwAAoJECISsYvaK7kI5VcH/3jK50zSrdL1Si6P3XwRdiSl
-6vxbpLbwrVeFFP56Kv12FamR/rOzTEFwKv4Qu1Rce3L356XhtbDaP8MDEuBiamsp
-RjHh6LvIjFaCOE6aCg6Nr2Xv4GGjQJ4DKBKfJMKHV+PFLE7sgI3UxhWC2KCB4pVa
-x3Rppbhc9fYk7FMG1NYAdFBfw9kOgy42Lp4SOABI4rGxp2UBeuy2pg0JZ6E1P1s1
-zDw6BEmXVhqk5gJT8VbCDeiIWo91mDujXyTgMxr7rzDLGO3Tsk7+tTA/bPMGf179
-gip79Z7UuOrCIx9FFtagE2Sokt1d4IoHFghY47FXFDybG61UbrzaxtpiTVpZU5E=
-=SThX
------END PGP SIGNATURE-----
+<mik235> I think that's already what LUKS does.  If it changes a lot, you end up with atomicity/integrity issues.
 
---NzB8fVQJ5HfG6fxh--
+<ryancdotorg> Yes, LUKS uses something it calls "anti-forensic information splitting".  I'm not sure what the default size is. Here's a paper describing the scheme (TKS1): http://clemens.endorphin.org/TKS1-draft.pdf
+
+<solardiz> Thanks! I just read this paper. It's related, but different: it talks about blocks (not) surviving whereas I talk about the ordering of blocks not sufficiently surviving (it'll take some research to figure out the probability and how to improve it for real-world flash media).
+
+<ryancdotorg> If I'm understanding correctly then, your unstated assumption is that a large enough key will not be stored in a predictable sequence of blocks on the physical flash, and that erasure of the file will cause the bookkeeping data containing the sequence to be lost?
+
+<solardiz> Sort of. But I realize this assumption might not hold true, or not on its own, which is why I say "it'll take some research [...] to improve it for real-world flash media". Not storing in a predictable sequence feels easier, ensuring the bookkeeping is lost feels hard/unreliable.
+
+<ryancdotorg> I'd be very interested in seeing some research on how this works out on real-world flash media. WRT Signal specifically, are you aware that it (at least on Android) stores the db key in the secure element? You won't be able to read it from a filesystem or flash dump.
+
+<solardiz> Per the tweet thread below, this is a relatively recent change (compared to Signal on iOS) and the actual behavior is at best device-specific - I asked whether any (only Google's own latest?) Android devices do it already and got no reply yet. Do you know?
+Quote Tweet
+<solardiz> @moxie @CopperheadOS Per Signal-Android commit "Migrate from SQLite and ciphertext blobs to SQLCipher + KeyStore" from Jan 2018, it looks like that's when Signal for Android also started to use OS native key store.  Does that also use a secure enclave on any Android devices?
+
+<ryancdotorg> My understanding is that it uses the secure enclave if available, but I might be wrong. I don't know what's needed to support it device and os wise. From the API docs, it sounds like the KeyStore API decides how to store it. There's a ".isInsideSecurityHardware()" call.
+
+(There were more branches of these Twitter threads at the time; I quoted
+the one I found most relevant.)
+
+Alexander
