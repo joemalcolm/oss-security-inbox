@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5816" "Thursday" "14" "June" "2018" "09:48:50" "-0500" "Michael Catanzaro" "mcatanzaro@igalia.com" "<1528987730.4808.1@mail.igalia.com>" "141" "[oss-security] WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0005" nil nil nil "6" "2018061414:48:50" "[oss-security] WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0005" (number mark "U       mcatanzaro@i Jun 14  141/5816  " thread-indent "\"[oss-security] WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0005\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1941" "Thursday" "12" "September" "2019" "13:43:47" "-0400" "Randy Barlow" "randy@electronsweatshop.com" "<12565f8bad84ea9a77dadaaae0509b4cfa122fc3.camel@electronsweatshop.com>" "62" "[oss-security] 3 CVEs in dino" nil nil nil "9" "2019091217:43:47" "[oss-security] 3 CVEs in dino" (number mark "U       randy@electr Sep 12   62/1941  " thread-indent "\"[oss-security] 3 CVEs in dino\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] 3 CVEs in dino" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23948 invoked by uid 550); 14 Jun 2018 15:01:50 -0000
+Received: (qmail 30400 invoked by uid 550); 12 Sep 2019 17:46:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,160 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13629 invoked from network); 14 Jun 2018 14:49:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-Id:Cc:To:Subject:From:Date; bh=OzfEjZzXpU3xIXzUhzaNh4ckLJtScYdfasGNM6s8z+c=;
-	b=FM8DM5wU/39SPJZg02w3A+L7dSKG9SoMfMnm+ZuG4Hg2mwn7lTdbXj+8VncxgkOgUAY5GGiqVtlMZssaOIwQzBkmWjDYX1sGOtjg/Z449yk0xA5fnOmNTsjsMYl9SHXancTtbwckNpiBuzDHWjcDC/Q7f87RXTVZ+hLYdnQA51MCVTIcgr2msyrwDPKl1CZHJV+RK7MvOf0Jh+QHyM3MeJaACq0KGPL4nB9tG1A3LSmrqqbk8Eb0rYyRidpAILxVjAb2vjb+zahoTf3cmqjRzS0Pm6NDno0BQ8JJWzVg8J9523ps7NhSW4SqoDmuxzCGvkWqIEyGG3YhZXXwIAxXKg==;
-Date: Thu, 14 Jun 2018 09:48:50 -0500
-From: Michael Catanzaro <mcatanzaro@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, distributor-list@gnome.org,
-	oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Message-Id: <1528987730.4808.1@mail.igalia.com>
-X-Mailer: geary/0.12.2
+Received: (qmail 28541 invoked from network); 12 Sep 2019 17:44:04 -0000
+Message-ID: <12565f8bad84ea9a77dadaaae0509b4cfa122fc3.camel@electronsweatshop.com>
+From: Randy Barlow <randy@electronsweatshop.com>
+To: oss-security@lists.openwall.com
+Date: Thu, 12 Sep 2019 13:43:47 -0400
+Organization: electronsweatshop.com
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-0kKRQImMX+c7Pz8FlGRn"
+User-Agent: Evolution 3.32.4 (3.32.4-1.fc30) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
+X-CMAE-Envelope: MS4wfBA8hsPFBKtPKW4deWsmxHUv0GzkmTiy1ZyGoQUXvroAjWcVF4a2wDRfmmHK+sPQAwz0TZ4TRw7SIh21BGScMqTRS5j2h1YOGfkzUkuRhb+mvd0NNpkB
+ aJdViW7Ccm0/gbA+jr0Ai1WG4oIuiYaGDtrT5kRNBjLHWVzwI+bcouq0RumxM/2ETSn8sxxTnC/BxXr90/h8eZOk1X4k/Zroh6A=
+Subject: [oss-security] 3 CVEs in dino
+
+--=-0kKRQImMX+c7Pz8FlGRn
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0005
 
-------------------------------------------------------------------------
-WebKitGTK+ and WPE WebKit Security Advisory                WSA-2018-0005
-------------------------------------------------------------------------
+Three CVEs have been identified and fixed in Dino.
 
-Date reported           : June 13, 2018
-Advisory ID             : WSA-2018-0005
-WebKitGTK+ Advisory URL :=20
-https://webkitgtk.org/security/WSA-2018-0005.html
-WPE WebKit Advisory URL :=20
-https://wpewebkit.org/security/WSA-2018-0005.html
-CVE identifiers         : CVE-2018-4190, CVE-2018-4192, CVE-2018-4199,
-                          CVE-2018-4201, CVE-2018-4214, CVE-2018-4218,
-                          CVE-2018-4222, CVE-2018-4232, CVE-2018-4233,
-                          CVE-2018-11646, CVE-2018-11712,
-                          CVE-2018-11713, CVE-2018-12293,
-                          CVE-2018-12294.
+CVE-2019-16235
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Several vulnerabilities were discovered in WebKitGTK+ and WPE WebKit.
+Dino did not properly check the source of message carbons.
 
-CVE-2018-4190
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Jun Kokatsu (@shhnjk).
-    Impact: Visiting a maliciously crafted website may leak sensitive
-    data. Description: Credentials were unexpectedly sent when fetching
-    CSS mask images. This was addressed by using a CORS-enabled fetch
-    method.
+https://nvd.nist.gov/vuln/detail/CVE-2019-16235
 
-CVE-2018-4192
-    Versions affected: WebKitGTK+ before 2.20.1.
-    Credit to Markus Gaasedelen, Nick Burnett, and Patrick Biernat of
-    Ret2 Systems, Inc working with Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A race condition was
-    addressed with improved locking.
-
-CVE-2018-4199
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Alex Plaskett, Georgi Geshev, Fabi Beterke, and Nils of
-    MWR Labs working with Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A buffer overflow issue was
-    addressed with improved memory handling.
-
-CVE-2018-4201
-    Versions affected: WebKitGTK+ before 2.20.1.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4214
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to OSS-Fuzz.
-    Impact: Processing maliciously crafted web content may lead to an
-    unexpected application crash. Description: A memory corruption issue
-    was addressed with improved input validation.
-
-CVE-2018-4218
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Natalie Silvanovich of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4222
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Natalie Silvanovich of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An out-of-bounds read was
-    addressed with improved input validation.
-
-CVE-2018-4232
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Aymeric Chaib.
-    Impact: Visiting a maliciously crafted website may lead to cookies
-    being overwritten. Description: A permissions issue existed in the
-    handling of web browser cookies. This issue was addressed with
-    improved restrictions.
-
-CVE-2018-4233
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Samuel Gro=DF (@5aelo) working with Trend Micro's Zero Day
-    Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-11646
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Mishra Dhiraj.
-    Maliciously crafted web content could trigger an application crash
-    in WebKitFaviconDatabase, caused by mishandling unexpected input.
-
-CVE-2018-11712
-    Versions affected: WebKitGTK+ 2.20.0 and 2.20.1.
-    Credit to Metrological Group B.V.
-    The libsoup network backend of WebKit failed to perform TLS
-    certificate verification for WebSocket connections.
-
-CVE-2018-11713
-    Versions affected: WebKitGTK+ before 2.20.0 or without libsoup
-    2.62.0.
-    Credit to Dirkjan Ochtman.
-    The libsoup network backend of WebKit unexpectedly failed to use
-    system proxy settings for WebSocket connections. As a result, users
-    could be deanonymized by crafted web sites via a WebSocket
-    connection.
-
-CVE-2018-12293
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to ADlab of Venustech.
-    Maliciously crafted web content could achieve a heap buffer overflow
-    in ImageBufferCairo by exploiting multiple integer overflow issues.
-
-CVE-2018-12294
-    Versions affected: WebKitGTK+ before 2.20.2.
-    Credit to ADlab of Venustech.
-    Maliciously crafted web content could trigger a use-after-free of a
-    TextureMapperLayer object.
+Fixed in https://github.com/dino/dino/commit/e84f2c49567e86d2a261ea264d65c4=
+adc549c930
 
 
-We recommend updating to the latest stable versions of WebKitGTK+ and
-WPE WebKit. It is the best way to ensure that you are running a safe
-version of WebKit. Please check our websites for information about the
-latest stable releases.
+CVE-2019-16236
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Further information about WebKitGTK+ and WPE WebKit security advisories
-can be found at https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+Dino did not check roster push authorization.
 
-The WebKitGTK+ and WPE WebKit team,
-June 13, 2018
+https://nvd.nist.gov/vuln/detail/CVE-2019-16236
+
+Fixed in https://github.com/dino/dino/commit/dd33f5f949248d87d34f399e8846d5=
+ee5b8823d9
+
+
+CVE-2019-16237
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Dinot did not properly check the source of MAM messages.
+
+https://nvd.nist.gov/vuln/detail/CVE-2019-16237
+
+Fixed in https://github.com/dino/dino/commit/307f16cc86dd2b95aa02ab8a85110e=
+4a2d5e7363
+
+--=-0kKRQImMX+c7Pz8FlGRn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEtaW+t5vwm7qNSBIDeETMuDvdJGIFAl16g9MACgkQeETMuDvd
+JGIWThAAjuQqFwDvievULI2TWPXYk1CSzK216vcPVpvevxW2koilUYd6ZrqPwflv
+J/qx/9ykgtubGLNrLgqkTZYFfDP67GHDF+8mKz9CjX0rwYORK1LdP6iEnn5PlF7a
+5ghRedy49M4sPVPtJqa5zWv+j1bAZmra7rwTYlCy180p3SQxR+OLVyo5d3d5OgcJ
+u6jO60HtUoQk0myjjq4xLYIa1BhDeuinRoW4abr5IllvMyHWe9tGX6CGgD9kEZxr
+ow6PJ8Ey0+lyQLAJYZxaY65f4WeGwxmTOB4io+ARp+X+OfGnex/jDnHmHUCjlbiG
+wX/gCjWIAP9GH4ujeVeCUNPFb/07FvL00eglZ2hBrX0z81EyYoZbzZ4CV4Epfagg
+JyA0UhqecXcZX9Bsx0xQ6lCt8jbGF98Q6jOqm8dOgpH7k03VgjxncbrKLK4fDPsv
+m7DC8ATJhfIeKB86FLZpXB8sYgLVNMlIxvQj8Prntp9WtQTa7F4W1JJ0Is8fvcK2
+pdSPPEPM3vZjc2VJq2R1YCTpaGJfrcR2LyFddTuubuPJWrRvZWQZzph8HCGYOeQE
+7KTaLMUuhCn5SWBbDQkxiOL+2sODvxdLofFUA2BmBGXmdBdWc6VxvSeHqNlzLOyb
+Bo+o2W2Y4O5Qwi77szPO6xQFzu0P9E8/gEComx+c925Bp7dah6c=
+=ezgU
+-----END PGP SIGNATURE-----
+
+--=-0kKRQImMX+c7Pz8FlGRn--
 
