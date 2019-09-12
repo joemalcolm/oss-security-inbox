@@ -1,42 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/06/2
-Message-ID: <882addbe-cea2-96c3-f59a-b79607884403@valdikss.org.ru>
-Date: Fri, 6 Dec 2019 16:07:21 +0300
-From: ValdikSS <iam@...dikss.org.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/12/5
+Message-ID: <12565f8bad84ea9a77dadaaae0509b4cfa122fc3.camel@electronsweatshop.com>
+Date: Thu, 12 Sep 2019 13:43:47 -0400
+From: Randy Barlow <randy@...ctronsweatshop.com>
 To: oss-security@...ts.openwall.com
-Cc: "William J. Tolley" <william@...akpointingbad.com>, Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
-Subject: Re: [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections.
+Subject: 3 CVEs in dino
 Content-Type: text/plain; charset=utf-8
 
-Please also check my article on this topic from 2015
-https://medium.com/@ValdikSS/another-critical-vpn-vulnerability-and-why-port-fail-is-bullshit-352b2ebd22e2
+Three CVEs have been identified and fixed in Dino.
 
-I used the same technique but with UDP, and it works (at least worked) with Linux, OS X, Windows and Android.
+CVE-2019-16235
+==============
 
-I used it with old p2p Skype, which allowed to get users' IP address using special "resolver" software or services,
-by user nick name. After getting IP address, you could send UDP packet to the user from your IP address (without
-spoofing) and receive the reply from Skype user, but with VPN source IP address, which allowed to detect
-whether the exact Skype user is connected to the VPN, and to which one, given that his connection is direct (without NAT).
+Dino did not properly check the source of message carbons.
 
-This also (still) applies to Bittorrent uTP protocol.
+https://nvd.nist.gov/vuln/detail/CVE-2019-16235
 
-
-On 05.12.2019 05:38, unknown wrote:
-> Posted by William J. Tolley on Dec 04
-> 
-> Hi all,
-> 
-> I am reporting a vulnerability that exists on most Linux distros, and
-> other *nix operating systems which allows a network adjacent attacker
-> to determine if another user is connected to a VPN, the virtual IP
-> address they have been assigned by the VPN server, and whether or not
-> there is an active connection to a given website. Additionally, we are
-> able to determine the exact seq and ack numbers by counting encrypted
-> packets and/or...
-> 
-> 
+Fixed in https://github.com/dino/dino/commit/e84f2c49567e86d2a261ea264d65c4adc549c930
 
 
+CVE-2019-16236
+==========
+
+Dino did not check roster push authorization.
+
+https://nvd.nist.gov/vuln/detail/CVE-2019-16236
+
+Fixed in https://github.com/dino/dino/commit/dd33f5f949248d87d34f399e8846d5ee5b8823d9
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (869 bytes)
+CVE-2019-16237
+==========
+
+Dinot did not properly check the source of MAM messages.
+
+https://nvd.nist.gov/vuln/detail/CVE-2019-16237
+
+Fixed in https://github.com/dino/dino/commit/307f16cc86dd2b95aa02ab8a85110e4a2d5e7363
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
