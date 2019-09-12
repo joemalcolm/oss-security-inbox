@@ -1,60 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/7
-Message-ID: <CABOq=i3PAbRT5GpJZiAHb-BDpQkx0n0k=M8JeupjNKUK+Wi78A@mail.gmail.com>
-Date: Wed, 13 Feb 2019 01:53:10 -0800
-From: EJ Campbell <ejc3@...izonmedia.com>
-To: "cyphar@...har.com" <cyphar@...har.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-5736: runc container breakout exploit code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/13/2
+Message-ID: <20190912222921.ozyhvh4t6gqzczrn@wrycode>
+Date: Thu, 12 Sep 2019 18:29:22 -0400
+From: notspam@...st
+To: oss-security@...ts.openwall.com
+Subject: Re: Telegram privacy fails again.
 Content-Type: text/plain; charset=utf-8
 
-While fixing docker / runc is clearly the right fix, would using chattr -i
-on runc be a quick mitigation for the issue? I believe that will prevent
-the file from being overwritten by the exploit and Etienne Stalmans
-verified that it helped:
- https://twitter.com/_staaldraad/status/1095354945073754112
+>IMO, If Whatsapp/Telegram wanted to take this functionality more seriously,
+>they'd need to be writing the images to disk in an encrypted form from the
+>outset. It increases the overhead of display, and wouldn't necessarily stop
+>forensic recovery etc, but it would mean that other apps couldn't simply
+>watch the directory and upload anything which appears in it in a usable
+>form. That's a whole other can of worms though as it's another set of keys
+>to manage.
 
-(Note I tried top posting this to mailing list and it didn’t work).
+There's no way to take this functionality seriously - the feature is a
+joke. A privacy feature centered around trusting another user's
+node to delete a file you already sent them is silly. Unfortunately,
+it seems like nobody gets this; even Matrix clients are supposed to
+have message redaction soon.
 
-EJ
-
-On Wed, Feb 13, 2019 at 1:32 AM Aleksa Sarai <cyphar@...har.com> wrote:
-
-> Someone outside of the embargo has posted a PoC of the exploit for
-> CVE-2019-5736 (which is related though not using the same vector)[1].
-> Since the original researchers have posted a blog post explaining the
-> exploit in some detail[2], I've decided to post the exploit code early
-> -- since the cat is out of the bag anyway.
->
-> CVE-2019-5736.tar.xz has the exploit code and an explanation of how to
-> use it. Our exploit code uses shared libraries, but you can create a
-> similar exploit by doing something like (thanks to Darren Shepherd from
-> Rancher Labs for pointing this out):
->
-> 1. Run a script with a #!-line of "#!/proc/self/exe events" which will
->    run "runc events" (which blocks for long enough).
-> 2. A malicious process then opens /proc/$pid/exe (this is now allowed
->    because the non-dumpable bit was cleared on execve).
-> 3. Kill "runc events" and then re-open the exe fd read-write using the
->    "/proc/self/fd/..." trick.
->
-> This is basically what [1] does -- but it does come with the downside
-> that you can't craft a malicious image that does this, you need to have
-> a separate program already running in the container and then attack
-> "docker exec".
->
-> As discussed in the previous mail, this exploit code also impacts LXC
-> (and several other runtimes have contacted me to say that they are also
-> vulnerable -- I would suggest that runtimes should ask to join
-> <security-announce@...ncontainers.org>).
->
-> [1]: https://github.com/feexd/pocs/blob/master/CVE-2019-5736/exploit.c
-> [2]:
-> https://blog.dragonsector.pl/2019/02/cve-2019-5736-escape-from-docker-and.html
->
-> --
-> Aleksa Sarai
-> Senior Software Engineer (Containers)
-> SUSE Linux GmbH
-> <https://www.cyphar.com/>
->
-
+The original email didn't contain a security vulnerability (remember
+the name of this list?)  - it was blogspam. It didn't belong here for
+the same reason that you don't see Snapchat bugs on this list.
