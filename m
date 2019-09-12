@@ -1,30 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/03/2
-Message-ID: <1599629190.3791268.1556876196651@mail.yahoo.com>
-Date: Fri, 3 May 2019 09:36:36 +0000 (UTC)
-From: "Bruno P. Kinoshita" <kinow@...che.org>
-To: "announce@...che.org" <announce@...che.org>,  "dev@...mons.apache.org" <dev@...mons.apache.org>,  "guidovranken@...il.com" <guidovranken@...il.com>,  "security@...mons.apache.org" <security@...mons.apache.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [CVE-2018-17202]: Apache Commons Imaging information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/12/6
+Message-ID: <20190912191453.GA3629@eldamar.local>
+Date: Thu, 12 Sep 2019 21:14:53 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Jouni Malinen <j@...fi>
+Subject: Re: hostapd/wpa_supplicant: AP mode PMF disconnection protection bypass
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium
+On Wed, Sep 11, 2019 at 01:37:01PM +0300, Jouni Malinen wrote:
+> Published: September 11, 2019
+> Latest version available from: https://w1.fi/security/2019-7/
+> 
+> Vulnerability
+> 
+> hostapd (and wpa_supplicant when controlling AP mode) did not perform
+> sufficient source address validation for some received Management frames
+> and this could result in ending up sending a frame that caused
+> associated stations to incorrectly believe they were disconnected from
+> the network even if management frame protection (also known as PMF) was
+> negotiated for the association. This could be considered to be a denial
+> of service vulnerability since PMF is supposed to protect from this type
+> of issues. It should be noted that if PMF is not enabled, there would be
+> no protocol level protection against this type of denial service
+> attacks.
+> 
+> An attacker in radio range of the access point could inject a specially
+> constructed unauthenticated IEEE 802.11 frame to the access point to
+> cause associated stations to be disconnected and require a reconnection
+> to the network.
+> 
+> 
+> Vulnerable versions/configurations
+> 
+> All hostapd and wpa_supplicants versions with PMF support
+> (CONFIG_IEEE80211W=y) and a runtime configuration enabled AP mode with
+> PMF being enabled (optional or required). In addition, this would be
+> applicable only when using user space based MLME/SME in AP mode, i.e.,
+> when hostapd (or wpa_supplicant when controlling AP mode) would process
+> authentication and association management frames. This condition would
+> be applicable mainly with drivers that use mac80211.
+> 
+> 
+> Possible mitigation steps
+> 
+> - Merge the following commit to wpa_supplicant/hostapd and rebuild:
+> 
+>   AP: Silently ignore management frame from unexpected source address
+> 
+>   This patch is available from https://w1.fi/security/2019-7/
+> 
+> - Update to wpa_supplicant/hostapd v2.10 or newer, once available
 
-Vendor:
-The Apache Software Foundation
+CVE-2019-16275 was assigned for this issue (requested via
+https://cveform.mitre.org/).
 
-Versions Affected:
-Apache Sanselan 0.97-incubator
-
-Description:
-Certain input files could make the code to enter into an infinite loop when Apache Sanselan  0.97-incubator was used to parse them, which could be used in a DoS attack. Note that Apache Sanselan (incubating) was renamed to Apache Commons Imaging.
-
-Mitigation:
-0.97-incubator users should upgrade to commons-imaging-1.0-alpha1
-
-Credit:
-This issue was discovered by ﻿Guido Vranken.
-
-References:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-17202
-https://lists.apache.org/thread.html/48a64566999f44290e4fb3b0d2e9a0e1c996902db51258e7aff00dda@%3Cdev.commons.apache.org%3E
-
+Regards,
+Salvatore
