@@ -1,69 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/4
-Message-Id: <F41F4F95-9437-437A-A2C7-DC86D5A47AE2@beckweb.net>
-Date: Wed, 28 Aug 2019 17:24:34 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/13/4
+Message-ID: <CAE_88GZ56+bOh7t_Og1LOMmif4aQo3Y-Zdx_zzp_ufJciOhQ9w@mail.gmail.com>
+Date: Fri, 13 Sep 2019 11:19:05 -0300
+From: "Thiago H. de Paula Figueiredo" <thiagohp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+Subject: [CVE-2019-0195] Apache Tapestry vulnerability disclosure
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+CVE-2019-0195: File reading Leads Java Deserialization Vulnerability
+Severity: important
+Vendor: The Apache Software Foundation
+Versions affected: all Apache Tapestry versions between 5.4.0, including
+its betas, and 5.4.3
 
-* Jenkins weekly 2.192
-* Jenkins LTS 2.176.3
-* IBM Application Security on Cloud 1.2.5
-* Splunk Plugin 1.8.0
+Description:
+Manipulating classpath asset file URLs, an attacker could guess the path to
+a known file in the classpath and have it downloaded. If the attacker found
+the file with the value of the tapestry.hmac-passphrase configuration
+symbol, most probably the webapp's AppModule class, the value of this
+symbol could be used to craft a Java deserialization attack, thus running
+malicious injected Java code. The vector would be the t:formdata parameter
+from the Form component.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-08-28/
+Mitigation:
+Upgrade to Tapestry 5.4.5, which is a drop-in replacement for any 5.4.x
+version.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Credit:
+Ricter Zheng
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1453 / CVE-2019-10383
-Jenkins did not properly escape the update site URL in some status 
-messages shown in the update center, resulting in a stored cross-site 
-scripting vulnerability that is exploitable by administrators and affects 
-other administrators.
-
-
-SECURITY-1491 / CVE-2019-10384
-Jenkins allowed the creation of CSRF tokens without a corresponding web 
-session ID. This is the result of an incomplete fix for SECURITY-626 in 
-the 2019-07-17 security advisory. This allowed attackers able to obtain a 
-CSRF token without associated session ID to implement CSRF attacks with 
-the following constraints:
-
-* The token had to be created for the anonymous user (and could only be 
-  used for actions the anonymous user can perform)
-* The victim’s IP address needed to remain unchanged (unless the proxy 
-  compatibility option was enabled)
-* The victim must not have a valid web session at the time of the attack
-
-
-SECURITY-1294 / CVE-2019-10390
-Splunk Plugin has a form validation HTTP endpoint used to validate a user-
-submitted Groovy script through compilation, which was not subject to 
-sandbox protection. This allowed attackers with Overall/Read access to 
-execute arbitrary code on the Jenkins master by applying AST transforming 
-annotations such as @Grab to source code elements.
-
-
-SECURITY-1512 / CVE-2019-10391
-IBM Application Security on Cloud Plugin stores service passwords in job
-configurations.
-
-While the password is stored encrypted on disk, it was transmitted in 
-plain text as part of the configuration form. This could result in 
-exposure of the password through browser extensions, cross-site scripting 
-vulnerabilities, and similar situations.
+-- 
+Thiago H. de Paula Figueiredo
 
