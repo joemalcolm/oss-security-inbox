@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/14/2
-Message-ID: <CAE=eJseTPHETZ75m9DZ-sbt7THgZSyk8S+KvqCVp27rZjvbE_w@mail.gmail.com>
-Date: Sun, 14 Apr 2019 15:49:58 +0300
-From: Tomer Brisker <tbrisker@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/13/1
+Message-ID: <20190913071802.GE4936@fedorawork>
+Date: Fri, 13 Sep 2019 09:18:08 +0200
+From: Riccardo Schirone <rschiron@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-3893: Foreman: Compute resource credentials exposed during deletion on API
+Subject: CVE-2019-14822 ibus: missing authorization flaw
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+A security flaw in ibus was reported by Simon McVittie (Collabora Ltd.). It was
+discovered that any unprivileged user could monitor and send method calls to the
+ibus bus of another user, due to a misconfiguration during the setup of the DBus
+server. CVE-2019-14822 has been assigned to this flaw.
 
-An information disclosure vulnerability has been discovered in the Foreman API.
+When ibus is in use, a local attacker, who discovers the UNIX socket used by
+another user connected on a graphical environment, could use this flaw to
+intercept all keystrokes of the victim user or modify input related
+configurations through DBus method calls.
 
-When deleting a compute resource via the API, the API responded with
-details of the compute resource, including credentials in clear text.
+ibus uses a GDBusServer with G_DBUS_SERVER_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS,
+and doesn't set a GDBusAuthObserver, which allows anyone who can connect to its
+AF_UNIX socket to authenticate and be authorized to send method calls.
 
-Users not able to upgrade should ensure the `delete_compute_resource`
-permission is not granted to users not trusted with the credentials.
+ibus can be manually selected by setting GTK_IM_MODLUE=ibus or it could be
+automatically selected by graphical environments like Gnome, when input method
+sources (e.g. Korean, Chinese input method sources) are in use. In these
+cases, all the key strokes of the victim user are sent to the ibus interface
+and they could be intercepted by an attacker.
 
-This issue affects Foreman 1.1 and higher. The fix has been released
-with Foreman 1.21.1.
-Further details are available at https://projects.theforeman.org/issues/26450.
+Upstream fix:
+https://github.com/ibus/ibus/commit/3d442dbf936d197aa11ca0a71663c2bc61696151
 
+Thanks,
 -- 
-Have a nice day,
-Tomer Brisker
-Red Hat Engineering
+Riccardo Schirone
+Red Hat -- Product Security
+Email: rschiron@...hat.com
+PGP-Key ID: CF96E110
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
