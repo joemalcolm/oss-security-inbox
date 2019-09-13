@@ -1,55 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/06/5
-Message-ID: <CADtktAVB-QncVS9OcDzceb0_6+8OY_b3xQ2Sag+r9m_f80f4+g@mail.gmail.com>
-Date: Tue, 6 Aug 2019 09:35:44 -0700
-From: Tim Allclair <tallclair@...gle.com>
-To: "Kubernetes developer/contributor discussion" <kubernetes-dev@...glegroups.com>,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss@...glegroups.com, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] CVE-2019-11248: /debug/pprof exposed on kubelet's healthz port
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/13/3
+Message-ID: <20190913112045.GI43354@symphytum.spacehopper.org>
+Date: Fri, 13 Sep 2019 12:20:45 +0100
+From: Stuart Henderson <stu@...cehopper.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Telegram privacy fails again.
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+On 2019/09/12 18:29, notspam@...st wrote:
+> > IMO, If Whatsapp/Telegram wanted to take this functionality more seriously,
+> > they'd need to be writing the images to disk in an encrypted form from the
+> > outset. It increases the overhead of display, and wouldn't necessarily stop
+> > forensic recovery etc, but it would mean that other apps couldn't simply
+> > watch the directory and upload anything which appears in it in a usable
+> > form. That's a whole other can of worms though as it's another set of keys
+> > to manage.
+> 
+> There's no way to take this functionality seriously - the feature is a
+> joke. A privacy feature centered around trusting another user's
+> node to delete a file you already sent them is silly. Unfortunately,
+> it seems like nobody gets this; even Matrix clients are supposed to
+> have message redaction soon.
 
-The debugging endpoint /debug/pprof is exposed over the unauthenticated
-Kubelet healthz port. Versions prior to 1.15.0, 1.14.4, 1.13.8, and 1.12.10
-are affected. The issue is of medium severity, but only exposed locally by
-the default configuration. If you are exposed we recommend upgrading to at
-least one of the versions listed.
+It is still a useful feature as long as you don't consider it "secure".
 
-Am I vulnerable?
+> The original email didn't contain a security vulnerability (remember
+> the name of this list?)  - it was blogspam. It didn't belong here for
+> the same reason that you don't see Snapchat bugs on this list.
 
-By default, the Kubelet exposes unauthenticated healthz endpoints on port
-:10248, but only over localhost. If your nodes are using a non-localhost
-healthzBindAddress (--health-bind-address), and an older version, you may
-be vulnerable. If your nodes are using the default localhost
-healthzBindAddress, it is only exposed to pods or processes running in the
-host network namespace.
-
-Run `kubectl get nodes` to see whether nodes are running a vulnerable
-version.
-
-Run `kubectl get --raw /api/v1/nodes/${NODE_NAME}/proxy/configz` to check
-whether the "healthzBindAddress" is non-local.
-
-How do I mitigate the vulnerability?
-
-Upgrade to the latest patch releases for 1.15, 1.14 or 1.13
-
-Or, update node configurations to set the "healthzBindAddress" to
-"127.0.0.1".
-
-Vulnerability Details
-
-The go pprof <https://golang.org/pkg/net/http/pprof/> endpoint is exposed
-over the Kubelet's healthz port. This debugging endpoint can potentially
-leak sensitive information such as internal Kubelet memory addresses and
-configuration, or for limited denial of service.
-
-This issue has been filed as CVE-2019-11248. See
-https://github.com/kubernetes/kubernetes/issues/81023 for more details
-
-Thanks to Jordan Zebor of F5 Networks for reporting this problem.
-
-Thank You,
-
-Tim Allclair on behalf of the Kubernetes Product Security Committee
+If a user of the software took the "delete" claim at face value then it
+could be considered security related .. and unlike Snapchat, the Telegram
+client *is* open source.
 
