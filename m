@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["881" "Friday" "1" "February" "2019" "13:27:21" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20190201122721.GA17576@eldamar.local>" "28" "Re: [oss-security] CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie" "^Date:" nil nil "2" "2019020112:27:21" "[oss-security] CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie" (number mark "U       carnil@debia Feb  1   28/881   " thread-indent "\"Re: [oss-security] CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie\"\n") "<CALKeL-M8wreyyeUigfN=au1foco8K1fJXDEe-5EEEjXoYzsbiA@mail.gmail.com>" ("<CALKeL-M8wreyyeUigfN=au1foco8K1fJXDEe-5EEEjXoYzsbiA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["879" "Friday" "13" "September" "2019" "11:40:00" "-0300" "Thiago H. de Paula Figueiredo" "thiagohp@gmail.com" "<CAE_88GbjgOf0v=B7w2PTa039pmZg5jRM0iN_35vxMNNVR9EweQ@mail.gmail.com>" "27" "[oss-security] CVE-2019-10071: Apache Tapestry vulnerability disclosure" nil nil nil "9" "2019091314:40:00" "[oss-security] CVE-2019-10071: Apache Tapestry vulnerability disclosure" (number mark "U       thiagohp@gma Sep 13   27/879   " thread-indent "\"[oss-security] CVE-2019-10071: Apache Tapestry vulnerability disclosure\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-10071: Apache Tapestry vulnerability disclosure" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13939 invoked by uid 550); 1 Feb 2019 12:27:36 -0000
+Received: (qmail 1186 invoked by uid 550); 13 Sep 2019 17:47:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13919 invoked from network); 1 Feb 2019 12:27:36 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 32694 invoked from network); 13 Sep 2019 14:40:22 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=c9DKxqF2bSVuUEM8z+PSQzYoOkJSUnVAcNk3WfO8Gok=;
-        b=oP/Vu4kO1zyEc68+fu1OwYo52gWPNFxXeso5NvydFkeR2v7qKH7YxGkye/ATw4Zs27
-         FS92W0v3L8QrnzWUU1VoLEYDppq5H3+4eKDIpu9gTgOezTmJlcy4bUpQuJBUJ69yVeal
-         pdQeiOt9bMRUUmLr1dmZNrsg/4jui5f2ZWf9euL4UYNCPvJ8UMOGTuklpJr30JkrFWlO
-         e8/89GahaU04nr8TdTB59yzpQd2TMyjOvuDgALJo9QPHuCxlcHSlG7HhL9LYSX9w06DH
-         w1FSgtN2gy6S8BgxOedBeUaP0JcBC0aGM7OqF0Fdy6ELLUo10/FytdM4U/SrxESQ66d3
-         F5jw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=lBcbainsUgjQvBPCVB8QdHqYcdQwy+Geh19thIpjrGI=;
+        b=ZoEn3Oa9jnpjP6vKVSnmKepRo0Q3fF6Ft7rb1FDQZW+iUgY4WDsUCgNSM6Gnok5ol1
+         avPFPM5SFHd3LLAJLxECryDwOnJ34yZVxA5nb8w0XkcZZB+PCOF3KeUakJLSy5nvh3hu
+         WhFQz6Uxe3gd8SbOLY/lVfJN0RwcTAIx9mtrcwQzElvfNTOQyAB3+EIQA9JisZgSLzB5
+         A4rtNh6cIv6HYW9Ey6qUYCxBO5wRnqr2eHXjLDz0O27UW9IjbnvPKLcS+jyApxk3MBMe
+         jXE1n9L0EXbHZXCfTms9vgOHuturCcEdYG4goEqFW8DlvXxF74szaCGFMBVxqGmKK6zB
+         pjvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=c9DKxqF2bSVuUEM8z+PSQzYoOkJSUnVAcNk3WfO8Gok=;
-        b=PljRXnuZNoTwNXJyQbvxZI5OpZSxIc2ydovP1Bp96KMpE2uxmKzlQi4fOm7IEr57jb
-         ehDLmXVZjEcPNNv2aCsjwh1O6pfT85euFE5ZKOLlzXZR3NWNjzZ0cMTbKfntreuexFGF
-         dQsS37S/+bcY4F58M5ZmDA3w5XvUM1/oqie4e7q4TQCjbM9XBsqKtBJXZca2k0OWTnPT
-         SORErtvQhw9VmHBJ0kPIf19o64tME/ULcxJy79IDbK1anYR7PFg5oDVk4w0icGtksiOT
-         b9YWOjOiDXH1CtTHaNMfUcxa/0RzwYxifCSRQToW86fGfOMu/vOfZY5Or6n5S030GDZh
-         TyJA==
-X-Gm-Message-State: AJcUukcG29xeGsbDJzCohes0wHCQ6aZbjFzlco+oeRUc4FKQP+Qnm4oz
-	5AljbI9EwnlNdcL3Jawq6bA=
-X-Google-Smtp-Source: ALg8bN4nxAb3ZQlpZTm4iQHLnDccJNR5GVRf8sXzRM1tF2pTQ2GBB2sB3DjLI0y00fPyrDYjOP2nQA==
-X-Received: by 2002:aa7:ccc8:: with SMTP id y8mr36683275edt.118.1549024044714;
-        Fri, 01 Feb 2019 04:27:24 -0800 (PST)
-Message-ID: <20190201122721.GA17576@eldamar.local>
-References: <CALKeL-M8wreyyeUigfN=au1foco8K1fJXDEe-5EEEjXoYzsbiA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=lBcbainsUgjQvBPCVB8QdHqYcdQwy+Geh19thIpjrGI=;
+        b=nYvTWq+zhPHVKd/3ACXvr2OzrxGEswMyeDLf/u23DFPRTHYmWbBlX4b8J5EXmVjt+F
+         qWWrPDP/q9ovrQc1NlG9F7n5KtrI29hvu3lISf6UMlhoFOmeHOMMrUb6yzCVDQWBlWQ8
+         LskiujcxcXa21LX1Q7va9jHb4xVRl+Syvv1/62Js8fWfqBBoY5AFpdrQruKPLJcxsJo7
+         fKdeCajnT5h6idaYd426dSnS4018e+ALaiD0aETbf7XJL3vVDnUyP5HUeLLCONb8IkXo
+         cRVCk20YAEC+Cv2aBXorObiZI3gUguaZa7iEGZqm2Km5cpm8J5Rp6LNdki8kT+/QLCMk
+         Bzig==
+X-Gm-Message-State: APjAAAUdIdEZNeo7rY3ShQ0VTecbkSoVre62hYQkyy+eQyctkiQWRTsH
+	Mf4WBZ7U1CMdmjHgPK0tLoPoCSWwlrtOvzxbgM0EWjZJ
+X-Google-Smtp-Source: APXvYqyqP1TUwJfZqACdDvBmg6PMsRvtwDN/FPq5MI5gTyDoTukx2/MB8L0yVTtsyssg6vLLzzARos3bXp84aGB9faE=
+X-Received: by 2002:ac2:5090:: with SMTP id f16mr32636093lfm.66.1568385611412;
+ Fri, 13 Sep 2019 07:40:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALKeL-M8wreyyeUigfN=au1foco8K1fJXDEe-5EEEjXoYzsbiA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Fri, 1 Feb 2019 13:27:21 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] CVE-2018-1340: Apache Guacamole: Secure flag
- missing from session cookie
+From: "Thiago H. de Paula Figueiredo" <thiagohp@gmail.com>
+Date: Fri, 13 Sep 2019 11:40:00 -0300
+Message-ID: <CAE_88GbjgOf0v=B7w2PTa039pmZg5jRM0iN_35vxMNNVR9EweQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000003d37640592703b3e"
+Subject: [oss-security] CVE-2019-10071: Apache Tapestry vulnerability disclosure
 
-Hi Mike,
+--0000000000003d37640592703b3e
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jan 23, 2019 at 02:21:30PM -0800, Mike Jumper wrote:
-> CVE-2018-1340: Secure flag missing from Apache Guacamole session cookie
-> 
-> Versions affected:
-> Apache Guacamole 0.9.4 through 0.9.14
-> 
-> Description:
-> Prior to 1.0.0, Apache Guacamole used a cookie for client-side storage
-> of the user's session token. This cookie lacked the "secure" flag,
-> which could allow an attacker eavesdropping on the network to
-> intercept the user's session token if unencrypted HTTP requests are
-> made to the same domain.
-> 
-> Mitigation:
-> Users of Apache Guacamole 0.9.14 or older should upgrade to 1.0.0.
-> 
-> Credit:
-> We would like to thank Ross Golder for reporting this issue.
+CVE-2019-0207: Apache Tapestry 5.4.2 Path Traversal vulnerability
+Severity: important
+Vendor: The Apache Software Foundation
+Versions affected: all Apache Tapestry versions between 5.4.0, including
+its betas, and 5.4.3.
 
-Would it be possible to confirm, is this 
-https://issues.apache.org/jira/browse/GUACAMOLE-549
-https://github.com/apache/guacamole-client/commit/884a9c0ee987f9cb49a69
-?
+Description: The code which checks HMAC in form submissions used
+String.equals() for comparisons, which results in a timing side channel for
+the comparison of the HMAC signatures. This could lead to remote code
+execution if an attacker is able to determine the correct signature for
+their payload. The comparison should be done with a constant time algorithm
+instead.
 
-Regards,
-Salvatore
+Mitigation:
+Upgrade to Tapestry 5.4.5, which is a drop-in replacement for any 5.4.x
+version.
+
+Credit:
+David Tomaschik of the Google Security Team
+
+-- 
+Thiago H. de Paula Figueiredo
+
+--0000000000003d37640592703b3e--
