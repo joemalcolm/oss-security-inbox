@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/7
-Message-ID: <1565815809.YSSF0CVU@httpd.apache.org>
-Date: Wed, 14 Aug 2019 15:50:09 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/13/6
+Message-ID: <CAE_88GbjgOf0v=B7w2PTa039pmZg5jRM0iN_35vxMNNVR9EweQ@mail.gmail.com>
+Date: Fri, 13 Sep 2019 11:40:00 -0300
+From: "Thiago H. de Paula Figueiredo" <thiagohp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-9517: mod_http2, DoS attack by exhausting h2 workers
+Subject: CVE-2019-10071: Apache Tapestry vulnerability disclosure
 Content-Type: text/plain; charset=utf-8
 
-
-CVE-2019-9517: mod_http2, DoS attack by exhausting h2 workers.
-
-Severity: Moderate
-
+CVE-2019-0207: Apache Tapestry 5.4.2 Path Traversal vulnerability
+Severity: important
 Vendor: The Apache Software Foundation
+Versions affected: all Apache Tapestry versions between 5.4.0, including
+its betas, and 5.4.3.
 
-Versions Affected:
-httpd 2.4.20 to 2.4.39
+Description: The code which checks HMAC in form submissions used
+String.equals() for comparisons, which results in a timing side channel for
+the comparison of the HMAC signatures. This could lead to remote code
+execution if an attacker is able to determine the correct signature for
+their payload. The comparison should be done with a constant time algorithm
+instead.
 
-Description:
-A malicious client could perform a DoS attack by flooding
-a connection with requests and basically never reading responses
-on the TCP connection. Depending on h2 worker dimensioning, it was
-possible to block those with relatively few connections.
- 
 Mitigation:
-All httpd users deploying mod_http2 should upgrade to 2.4.40 or later.
-Unpatched servers can disable HTTP/2 protocol.
+Upgrade to Tapestry 5.4.5, which is a drop-in replacement for any 5.4.x
+version.
 
 Credit:
-The issue was discovered by Jonathan Looney of Netflix.
+David Tomaschik of the Google Security Team
 
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+-- 
+Thiago H. de Paula Figueiredo
 
