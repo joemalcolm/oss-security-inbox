@@ -1,25 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/14/2
-Message-ID: <93cb2f44-e74f-cb47-ffe6-fdc37dda1460@johannes-bauer.com>
-Date: Fri, 14 Jun 2019 18:42:32 +0200
-From: zugtprgfwprz@...rnkuller.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/16/2
+Message-ID: <20190916185403.6pv72jornoxsehho@wrycode>
+Date: Mon, 16 Sep 2019 14:54:03 -0400
+From: notspam@...st
 To: oss-security@...ts.openwall.com
-Subject: Re: X41 D-Sec GmbH Security Advisory X41-2019-001: Heap-based buffer overflow in Thunderbird
+Subject: Re: Telegram privacy fails again.
 Content-Type: text/plain; charset=utf-8
 
-On 14.06.19 17:00, Brandon Perry wrote:
-> Thanks for re-reporting these. They didn't take them seriously at all when
-> I reported them originally. These bugs are why I stopped using Thunderbird
-> completely.
+>> There's no way to take this functionality seriously - the feature is a
+>> joke. A privacy feature centered around trusting another user's
+>> node to delete a file you already sent them is silly. Unfortunately,
+>> it seems like nobody gets this; even Matrix clients are supposed to
+>> have message redaction soon.
+>
+>It is still a useful feature as long as you don't consider it
+>"secure".
 
-Geeze, three years ago. No bounty because it's rated as "low" and they
-didn't bother to check if it affects TB. Unauthenticated, remotely
-triggered heap overflow, yeah, totally sounds like a "low".
+In the immediate term, yes, it's easy to see potential benefits. In
+the long term, it will harm people.
 
-What happened to you Mozilla? You used to be the cool kid. You have changed.
+>If a user of the software took the "delete" claim at face value then it
+>could be considered security related ..
 
-Cheers,
-Joe
+Second line of the original email: "This is not a security vulnerability it’s a privacy issue."
 
--- 
-"A PC without Windows is like a chocolate cake without mustard."
+>and unlike Snapchat, the Telegram client *is* open source.
+
+The Telegram ecosystem is closed-source.
+
+Regardless, Telegram clients don't have to respect this setting, so
+the feature is a lie. The only way to enforce message deletion is
+through drm-like means (Snapchat...), which doesn't work anyway. That
+Telegram allows third-party clients only makes it worse, in a way.
