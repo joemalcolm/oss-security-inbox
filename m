@@ -1,4 +1,9 @@
-Received: (qmail 5867 invoked by uid 550); 4 Jun 2025 05:52:58 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1695" "Monday" "16" "September" "2019" "14:34:19" "+0200" "Jiri 'Ghormoon' Novak" "ghormoon@gmail.com" "<d1f53010-1e58-c4f5-7a91-e8fa3402f984@gmail.com>" "32" "Re: [oss-security] Telegram privacy fails again." "^Date:" nil nil "9" "2019091612:34:19" "[oss-security] Telegram privacy fails again." (number mark "        ghormoon@gma Sep 16   32/1695  " thread-indent "\"Re: [oss-security] Telegram privacy fails again.\"\n") "<20190913112045.GI43354@symphytum.spacehopper.org>" ("<CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>" "<20190912153927.GA27634@openwall.com>" "<CABMkiz5Fh9tiBgJFD8g4nZWOAz5PLGYDVuXXEa6FGWds6QY7KA@mail.gmail.com>" "<20190912222921.ozyhvh4t6gqzczrn@wrycode>" "<20190913112045.GI43354@symphytum.spacehopper.org>") nil nil nil nil nil nil nil "Re: [oss-security] Telegram privacy fails again." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32471 invoked by uid 550); 16 Sep 2019 12:35:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,110 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5847 invoked from network); 4 Jun 2025 05:52:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
-	t=1749016367; bh=Mbz8sWfcqIZZ3XUvw0Czp4FOoaMU/rEFBOzlvx0fopM=;
-	h=Date:From:To:Subject:From;
-	b=E54zmmwljnOoGn4gEHcMU3Ow0Rde8JwfoQVSGeMDhpiZIiLQj565M8L0D2KyQ+Bad
-	 hWpPbTUUyUj9sOEn7Eb6xambVuOMtcAUequQtGWMGtI/OhWiSDDvGZsexYhfG0Caew
-	 Pckwk59fzWzdkx66RJQmrz5obnf4OXHMw9RRzIfm6zfziocaWgNURmZLbm4VoGD3kl
-	 CV3XAR0hwT6ww5Rk8WjJgbBO7cqH7OdAWNHUoV2Twc0jnf84g1drO7JNH9lyFlMuRt
-	 UCS+KLzU4E9RJqPTdv9eP5cjiyj/zuIKdTLwehd78GHgs14WodraMYtuYV93SdSpiZ
-	 SoIXUZ6R7goYw==
-Date: Wed, 4 Jun 2025 07:52:47 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <os8027r9-2440-1srn-0ps7-60n9n9p4ooq1@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 31961 invoked from network); 16 Sep 2019 12:34:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=AWjyjrbb26vUGnxNHMRbvVB4YMjRbxW7aOJt42kUQus=;
+        b=sXzpHuxkUYw1CdfZq3xqxbPoWgvcw4hEa8jDH9rxftEFLeQ2XBCoRYJQXT2kiKUNnW
+         7hqjE8QxvyYHhshftZvVqhzYEpN5uS4Zqm1B4yKj5H+liXefizbFw52vgwcCFOA+Zi37
+         kq6vJwkwi2rgZhDCmyV5dHBgxRNUlhRGFiZ9Wc3zfNT3Obz/Eue7u7jGo2PYLBEciSTP
+         Ec5Kd6NigT8znmHmFrEFVmlP6zkAAsbNX0IhSrg2w412yqS4TYY1UW1ZsqFynaEOzdzi
+         2yWmVsmz/YUjLY8P16QePr2nB08fFcVNNWJkL+ngPC4i4FW/0JPFsCFfZ8gb9VlQL8ZN
+         bY8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=AWjyjrbb26vUGnxNHMRbvVB4YMjRbxW7aOJt42kUQus=;
+        b=nydtQhFF5tXMrSUr8lIq+8y9gv1cpv2t6O2JZse6RRbxpjshW4I6+/UK77lUJUUygi
+         RyjohH51MjeSVrYgaY7oXwb8cVB29mvTRyYz7sTPyJpfaI3LuAqeffzcgs4QC4Vp10Uh
+         /epgS4oSeLP6OcRO6O5GCo8tM81Frcwf3sa6/YIiiZgg+qbNS9/eI3AJ/pDeW1DmVz2/
+         jvsqAl/7RRNMkEq2VQlG1BIXmmet0Rh3WfcKhFzFbl/cvIyXYthmgD+E0R+uskvi8SU1
+         YjLCn4HsoLcQ/yvk1+1g5kjpR4Kh/zdKn9h4ygKn6Bq3vxJdtgoDKORObN6iheAXjzmm
+         d2Vw==
+X-Gm-Message-State: APjAAAVXzz/niPrNtm1eQUhbSVEPlJWZHRCt2GFOszb2ImuSNILIBVwI
+	sqvqlGKOWeWirsVFyMSYYw41M4MD
+X-Google-Smtp-Source: APXvYqxrScOTQShYhzMbpmu2TiZK6FCmL2Mk3zHELHY+hLlf5juK9U0guqlctuCBa9N1EJ0HB6fMyQ==
+X-Received: by 2002:a5d:4985:: with SMTP id r5mr9829053wrq.139.1568637262167;
+        Mon, 16 Sep 2019 05:34:22 -0700 (PDT)
+References: <CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>
+ <20190912153927.GA27634@openwall.com>
+ <CABMkiz5Fh9tiBgJFD8g4nZWOAz5PLGYDVuXXEa6FGWds6QY7KA@mail.gmail.com>
+ <20190912222921.ozyhvh4t6gqzczrn@wrycode>
+ <20190913112045.GI43354@symphytum.spacehopper.org>
+Message-ID: <d1f53010-1e58-c4f5-7a91-e8fa3402f984@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY AVISORY] curl: CVE-2025-5399: WebSocket endless loop
+In-Reply-To: <20190913112045.GI43354@symphytum.spacehopper.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+Date: Mon, 16 Sep 2019 14:34:19 +0200
+From: Jiri 'Ghormoon' Novak <ghormoon@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Telegram privacy fails again.
+To: oss-security@lists.openwall.com
 
-WebSocket endless loop
-======================
+Honestly, the biggest issue with that feature is that by default, the
+checkbox is not ticked and if you delete it accidentally for yourself
+first, you won't ever remove it for the other person.
 
-Project curl Security Advisory, June 4 2025 -
-[Permalink](https://curl.se/docs/CVE-2025-5399.html)
+Regarding the average user thinking the feature is secure, how would you
+think it should be done? rephrase it to "try to delete" or what?
 
-VULNERABILITY
--------------
+Gh.
 
-Due to a mistake in libcurl's WebSocket code, a malicious server can send a
-particularly crafted packet which makes libcurl get trapped in an endless
-busy-loop.
-
-There is no other way for the application to escape or exit this loop other
-than killing the thread/process.
-
-This might be used to DoS libcurl-using application.
-
-INFO
-----
-
-The problem does not occur if "auto-pong" is disabled with the
-`CURLWS_NOAUTOPONG` option.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2025-5399 to this issue.
-
-CWE-835: Loop with Unreachable Exit Condition ('Infinite Loop')
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 8.13.0 to and including 8.14.0
-- Not affected versions: curl < 8.13.0 and >= 8.14.1
-- Introduced-in: https://github.com/curl/curl/commit/3588df9478d7c270
-
-libcurl is used by many applications, but not always advertised as such!
-
-This bug is **not** considered a *C mistake*. It is not likely to have been
-avoided had we not been using C.
-
-This flaw does not affect the curl command line tool.
-
-SOLUTION
-------------
-
-Starting in curl 8.14.1, this mistake is fixed.
-
-- Fixed-in: https://github.com/curl/curl/commit/d1145df24de8f80e6b16
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.14.1
-
-  B - Apply the patch to your local version
-
-  C - Avoid using WebSocket
-
-TIMELINE
---------
-
-This issue was reported to the curl project on May 30, 2025. We contacted
-distros@openwall on June 2, 2025.
-
-curl 8.14.1 was released on June 4 2025 around 07:00 UTC, coordinated with the
-publication of this advisory.
-
-The curl security team is not aware of any active exploits using this
-vulnerability.
-
-CREDITS
--------
-
-- Reported-by: z2_ on hackerone
-- Patched-by: z2_ on hackerone
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se || https://rock-solid.curl.dev
+On 9/13/19 1:20 PM, Stuart Henderson wrote:
+> On 2019/09/12 18:29, notspam@mm.st wrote:
+>>> IMO, If Whatsapp/Telegram wanted to take this functionality more seriously,
+>>> they'd need to be writing the images to disk in an encrypted form from the
+>>> outset. It increases the overhead of display, and wouldn't necessarily stop
+>>> forensic recovery etc, but it would mean that other apps couldn't simply
+>>> watch the directory and upload anything which appears in it in a usable
+>>> form. That's a whole other can of worms though as it's another set of keys
+>>> to manage.
+>> There's no way to take this functionality seriously - the feature is a
+>> joke. A privacy feature centered around trusting another user's
+>> node to delete a file you already sent them is silly. Unfortunately,
+>> it seems like nobody gets this; even Matrix clients are supposed to
+>> have message redaction soon.
+> It is still a useful feature as long as you don't consider it "secure".
+>
+>> The original email didn't contain a security vulnerability (remember
+>> the name of this list?)  - it was blogspam. It didn't belong here for
+>> the same reason that you don't see Snapchat bugs on this list.
+> If a user of the software took the "delete" claim at face value then it
+> could be considered security related .. and unlike Snapchat, the Telegram
+> client *is* open source.
+>
