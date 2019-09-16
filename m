@@ -1,94 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/4
-Message-Id: <94DB5F9B-7D5A-474C-A997-95C4C6F9E02A@beckweb.net>
-Date: Thu, 11 Jul 2019 15:46:00 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/16/1
+Message-ID: <d1f53010-1e58-c4f5-7a91-e8fa3402f984@gmail.com>
+Date: Mon, 16 Sep 2019 14:34:19 +0200
+From: Jiri 'Ghormoon' Novak <ghormoon@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: Telegram privacy fails again.
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Honestly, the biggest issue with that feature is that by default, the
+checkbox is not ticked and if you delete it accidentally for yourself
+first, you won't ever remove it for the other person.
 
-* Docker Plugin 1.1.7
-* Embeddable Build Status Plugin 2.0.2
-* Gogs Plugin 1.0.15
-* Mashup Portlets Plugin 1.1.0
+Regarding the average user thinking the feature is secure, how would you
+think it should be done? rephrase it to "try to delete" or what?
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+Gh.
 
-* Caliper CI Plugin
-* Dependency Graph Viewer Plugin
-* Port Allocator Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-07-11/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-
-
-SECURITY-1010 / CVE-2019-10340 (CSRF), CVE-2019-10341 (permission check)
-Docker Plugin did not perform permission checks on a method implementing 
-form validation. This allowed users with Overall/Read access to Jenkins to 
-connect to an attacker-specified URL using attacker-specified credentials 
-IDs obtained through another method, capturing credentials stored in Jenkins.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a cross-site request forgery vulnerability.
-
-
-SECURITY-1400 / CVE-2019-10342
-Docker Plugin provides a list of applicable credential IDs to allow users 
-configuring the plugin to select the one to use.
-
-This functionality did not correctly check permissions, allowing any user 
-with Overall/Read permission to get a list of valid credentials IDs. Those 
-could be used as part of an attack to capture the credentials using another 
-vulnerability.
-
-
-SECURITY-1419 / CVE-2019-10346
-Embeddable Build Status Plugin did not sanitize arguments provided in the 
-query string, resulting in a reflected cross-site scripting vulnerability.
-
-
-SECURITY-775 / CVE-2019-10347
-Mashup Portlets Plugin stored SonarQube credentials unencrypted on the 
-Jenkins master. These credentials could be viewed by users with access to 
-the master file system.
-
-
-SECURITY-1438 / CVE-2019-10348
-Gogs Plugin stored credentials unencrypted in job config.xml files on the 
-Jenkins master. These credentials could be viewed by users with Extended 
-Read permission, or access to the master file system.
-
-
-SECURITY-1177 / CVE-2019-10349
-Dependency Graph Viewer Plugin does not correctly escape the Display Name 
-value for jobs in Jenkins, resulting in a stored cross-site scripting 
-vulnerability.
-
-
-SECURITY-1441 / CVE-2019-10350
-Port Allocator Plugin stores credentials unencrypted in job config.xml 
-files on the Jenkins master. These credentials can be viewed by users with 
-Extended Read permission, or access to the master file system.
-
-
-SECURITY-1437 / CVE-2019-10351
-Caliper CI Plugin stores credentials unencrypted in job config.xml files on 
-the Jenkins master. These credentials can be viewed by users with Extended 
-Read permission, or access to the master file system.
-
+On 9/13/19 1:20 PM, Stuart Henderson wrote:
+> On 2019/09/12 18:29, notspam@...st wrote:
+>>> IMO, If Whatsapp/Telegram wanted to take this functionality more seriously,
+>>> they'd need to be writing the images to disk in an encrypted form from the
+>>> outset. It increases the overhead of display, and wouldn't necessarily stop
+>>> forensic recovery etc, but it would mean that other apps couldn't simply
+>>> watch the directory and upload anything which appears in it in a usable
+>>> form. That's a whole other can of worms though as it's another set of keys
+>>> to manage.
+>> There's no way to take this functionality seriously - the feature is a
+>> joke. A privacy feature centered around trusting another user's
+>> node to delete a file you already sent them is silly. Unfortunately,
+>> it seems like nobody gets this; even Matrix clients are supposed to
+>> have message redaction soon.
+> It is still a useful feature as long as you don't consider it "secure".
+>
+>> The original email didn't contain a security vulnerability (remember
+>> the name of this list?)  - it was blogspam. It didn't belong here for
+>> the same reason that you don't see Snapchat bugs on this list.
+> If a user of the software took the "delete" claim at face value then it
+> could be considered security related .. and unlike Snapchat, the Telegram
+> client *is* open source.
+>
