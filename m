@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1692" "Thursday" "1" "June" "2017" "07:14:46" "-0600" "Kurt Seifried" "kseifrie@redhat.com" "<EC58D857-2282-4632-95E5-00205A75C51D@redhat.com>" "51" "Re: [oss-security] Information on recent sqlite3 issues?" "^Date:" nil nil "6" "2017060113:14:46" "[oss-security] Information on recent sqlite3 issues?" (number mark "        kseifrie@red Jun  1   51/1692  " thread-indent "\"Re: [oss-security] Information on recent sqlite3 issues?\"\n") "<20170601062046.GI15203@suse.com>" ("<20170531203037.hxl4v36govklpenk@pisco.westfalen.local>" "<95c188ba-76a3-7190-94ea-a369d011ae6c@suse.com>" "<20170601062046.GI15203@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1494" "Tuesday" "17" "September" "2019" "18:54:53" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" nil "36" nil "^Date:" nil nil "9" nil nil (number mark "        carnil@debia Sep 17   36/1494  " thread-indent "\"Re: [oss-security] OpenDMARC signature bypass with multiple From addresses\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] OpenDMARC signature bypass with multiple From addresses" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14023 invoked by uid 550); 1 Jun 2017 13:15:00 -0000
+Received: (qmail 20271 invoked by uid 550); 17 Sep 2019 16:55:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13999 invoked from network); 1 Jun 2017 13:14:59 -0000
+Received: (qmail 20253 invoked from network); 17 Sep 2019 16:55:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=89gjAOCpWh39dAQGZ/dVyMBk5KavRtgEBx1hH8LLBpE=;
+        b=SC6yEhp8puEo2SwhKM7hJtCyEzNBolubh+gOR/Q+mZ0eZwzra205LgRxnhtEKV4M0t
+         xxsKxMKap/Xy2QI0DBVI9LSH/cSyIY0iTLavc4SdbCenXeEB1HkA2KLYL101vV/ERemf
+         LDst6ljXF46F5RuMP5zaSx0STJdDrYXVbc7hVKJLdAL3BuTGCCurFcosQnIn8WBYXBgI
+         /VxhZhycS4/cP64doPULEPzAkYVv3vUMpIsqkfpmPckTD6mk/VbUzuG7vimEeoTRmg0U
+         IF/kqaPxGrXyxd+8Qq7FZ4loPrSRgNa9NaVwFO2CbwM97QUg17hAoYLh3v/LyFhYHsqQ
+         hEtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version:date
-         :subject:message-id:references:in-reply-to:to;
-        bh=LJcz11N40LVkOa9+YAq55VqNSIKNh6CRfZBMievcXM0=;
-        b=i7rdyy7pBIUFI8Bya/pId0MZgTpaGtajhywBHbMggy+cN++YlwdRa6ilttXtd6gpMu
-         nuFrdvZf/zQu/qQStaH4Yt1SrzPJmrqLQ9S8B/1LFsYYDkCfSw27lRdmo2N4iepi5UzX
-         iMlB306r4rJOT4vZGLd4+rvdlxa9HKh9C7A8aflo4uDAnzKoHZO7uFHwfWI+9jWSlWaE
-         IwO7iwet0tqJaNLxRcl/39wxq+oZ3DZM7WDsnCTX5x2UxHevcvdve0u+Zo+9gNy7fu/C
-         FiU+kh7V03OaVtDftMLdcqC4X53O++55KEuQV0AeFYJ1nRjZtI9jY/TpzvH2Kx9XAdw5
-         wUYQ==
-X-Gm-Message-State: AODbwcAE1+G+3KVn2colX93RLqxj2sjWDBcZdPvkGmegKDm9tNHK+7Jz
-	+78KfhugMUXj39e40hCHiA==
-X-Received: by 10.107.59.67 with SMTP id i64mr1944299ioa.43.1496322887851;
-        Thu, 01 Jun 2017 06:14:47 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (1.0)
-Message-Id: <EC58D857-2282-4632-95E5-00205A75C51D@redhat.com>
-References: <20170531203037.hxl4v36govklpenk@pisco.westfalen.local> <95c188ba-76a3-7190-94ea-a369d011ae6c@suse.com> <20170601062046.GI15203@suse.com>
-In-Reply-To: <20170601062046.GI15203@suse.com>
-X-Mailer: iPhone Mail (14F89)
-Date: Thu, 1 Jun 2017 07:14:46 -0600
-From: Kurt Seifried <kseifrie@redhat.com>
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=89gjAOCpWh39dAQGZ/dVyMBk5KavRtgEBx1hH8LLBpE=;
+        b=rSBtTMxKxlh3GUlafBr7SStC4n6EzyAYQUBayPjmcJju1ZDswkaK1HFOHpT1+JtgHF
+         US2qz5CK5PE19StQwzc1F7/1ydrKXo9rVP5JbnOTKR9nAGP2KMYOU+247/ZkQh2Fbtot
+         DXFHQFQoslohvw4ckmnRf3Xb24p0fPS/FiY6fGHyaXQbpZ/A3m7bEdHj+YW3MEszcA1G
+         D8nNMm5bt/Kw9p6gcetT+M366IE1T4Y7qQBQALaI+8ts1wwJ85bVJrAMknhCzFPsNU2C
+         XOh5skFTU6cdDRCnGdXI7xjhw8ZrTVMCRUIRmn7O4nyKh4rSNXgG6PfTndKxgcfnC7bJ
+         E3pg==
+X-Gm-Message-State: APjAAAW/FOpz68xCwcVhOKzW74OCEzWRsuaIFLNeZEJidzD04hZt34Ww
+	cFTwM/Z30044WMoGY3YaTc70LJeVqRU=
+X-Google-Smtp-Source: APXvYqzthwhe75+7jCK/kEFTxRlS4nTdtZbdWFhAZi0MfhF6fk1Lj1/hMKsGhPjfUDUfCuNgEfjiag==
+X-Received: by 2002:a17:906:cf81:: with SMTP id um1mr5734395ejb.257.1568739296509;
+        Tue, 17 Sep 2019 09:54:56 -0700 (PDT)
+Message-ID: <20190917165453.GA17293@eldamar.local>
+References: <20190911124319.23022e80@computer>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190911124319.23022e80@computer>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Tue, 17 Sep 2019 18:54:53 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Information on recent sqlite3 issues?
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] OpenDMARC signature bypass with multiple From
+ addresses
 To: oss-security@lists.openwall.com
 
-I will bring this up at the next cve board meeting (2 weeks from now).
+Hi,
 
+On Wed, Sep 11, 2019 at 12:43:19PM +0200, Hanno Böck wrote:
+> Hi,
+> 
+> Protonmail reported about a phishing incident in July:
+> https://protonmail.com/blog/bellingcat-cyberattack-phishing/
+> 
+> This had this somewhat mysterious chapter:
+> "Furthermore, the attackers attempted to exploit an unpatched
+> vulnerability in an open source software that is widely used by email
+> providers in an effort to bypass spam and abuse filters. We were
+> previously aware of this vulnerability and have already been watching
+> it for some time, but we will not disclose it here because the software
+> in question is not developed by ProtonMail, and it has not yet been
+> patched by the software maintainers. This vulnerability, however, is
+> not widely known and indicates a higher level of sophistication on the
+> part of the attackers."
+> 
+> After asking protonmail multiple times for a statement they answered
+> and I learned that it's about this issue in OpenDMARC:
+> https://github.com/trusteddomainproject/OpenDMARC/pull/48
+> 
+> It's an issue where by specifying multiple From addresses only one of
+> them gets DMARC-checked.
+> 
+> There's no reaction from the OpenDMARC developers and it's unclear
+> whether it's still actively developed. Given this is already actively
+> exploited I think people should be aware of it and distros should
+> probably apply the patch from the PR.
 
--Kurt
+MITRE has assigned CVE-2019-16378 for this issue (requested via the
+https://cveform.mitre.org/).
 
-
-
-
-
-> On Jun 1, 2017, at 00:20, Johannes Segitz <jsegitz@suse.de> wrote:
->=20
->> On Thu, Jun 01, 2017 at 12:24:10AM +0200, Andreas Stieger wrote:
->> Hello,
->>=20
->>=20
->>> On 05/31/2017 10:30 PM, Moritz Muehlenhoff wrote:
->>> one of the latest Apple advisories mentions several vulnerabilities in =
-sqlite:
->>> https://support.apple.com/en-us/HT207798
->>>=20
->>> CVE-2017-2513: found by OSS-Fuzz
->>> CVE-2017-2518: found by OSS-Fuzz
->>> CVE-2017-2520: found by OSS-Fuzz
->>> CVE-2017-2519: found by OSS-Fuzz
->>> CVE-2017-6983: Chaitin Security Research Lab (@ChaitinTech) working wit=
-h Trend Micro's Zero Day Initiative
->>> CVE-2017-6991: Chaitin Security Research Lab (@ChaitinTech) working wit=
-h Trend Micro's Zero Day Initiative
->>>=20
->>> Does anyone have additional information on those and whether that
->>> applies to the standard sqlite releases or Apple-specific changes?
->>=20
->> SUSE has asked Apple, but has not yet received an answer as far as I am
->> aware.
->=20
-> They replied:
->=20
->> Thank you for contacting the Apple Product Security team.
->>=20
->> Please contact the SQLite maintainers to coordinate.
->=20
-> I think it is problematic that they assign CVEs but don't provice any
-> details even if it's not only their code. I contacted the sqlite-devs for
-> details but didn't receive a reply up to this point.
->=20
-> Johannes
-> --=20
-> GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-> Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-> SUSE Linux GmbH, GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton
-> HRB 21284 (AG N=C3=BCrnberg)
+Regards,
+Salvatore
