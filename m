@@ -1,4 +1,9 @@
-Received: (qmail 10026 invoked by uid 550); 9 May 2022 11:51:48 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8085" "Tuesday" "17" "September" "2019" "08:19:33" "+0000" "=?gb2312?B?Y3JhZG1pbnpoYW5nKNXFsqkp?=" "cradminzhang@tencent.com" "<fd63e16ea8e74eeca5852706930d8076@tencent.com>" "133" "[oss-security] CVE-2019-14835: QEMU-KVM Guest to Host Kernel Escape Vulnerability: vhost/vhost_net kernel buffer overflow" "^Date:" nil nil "9" "2019091708:19:33" "[oss-security] CVE-2019-14835: QEMU-KVM Guest to Host Kernel Escape Vulnerability: vhost/vhost_net kernel buffer overflow" (number mark "        cradminzhang Sep 17  133/8085  " thread-indent "\"[oss-security] CVE-2019-14835: QEMU-KVM Guest to Host Kernel Escape Vulnerability: vhost/vhost_net kernel buffer overflow\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-14835: QEMU-KVM Guest to Host Kernel Escape Vulnerability: vhost/vhost_net kernel buffer overflow" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 20284 invoked by uid 550); 17 Sep 2019 08:37:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,70 +11,156 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11620 invoked from network); 17 Sep 2019 08:19:53 -0000
+Thread-Topic: CVE-2019-14835: QEMU-KVM Guest to Host Kernel Escape
+ Vulnerability: vhost/vhost_net kernel buffer overflow
+Thread-Index: AdVtMElsPUcewu5qTaKVODaOG61j3A==
+Message-ID: <fd63e16ea8e74eeca5852706930d8076@tencent.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.14.87.220]
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+Date: Tue, 17 Sep 2019 08:19:33 +0000
+From: =?gb2312?B?Y3JhZG1pbnpoYW5nKNXFsqkp?= <cradminzhang@tencent.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28302 invoked from network); 9 May 2022 09:41:28 -0000
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
-From: Jan Lehnardt <jan@apache.org>
-In-Reply-To: <62df0f69-5768-80ea-9dbf-f3e1c6f1e69c@activis.me>
-Date: Mon, 9 May 2022 11:41:13 +0200
-Cc: oss-security@lists.openwall.com,
- Security CouchDB <security@couchdb.apache.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <063FB760-CBFF-4669-9BDD-49B9D1CD56DD@apache.org>
-References: <a388a13c-2f49-a36d-668a-633583013717@apache.org>
- <62df0f69-5768-80ea-9dbf-f3e1c6f1e69c@activis.me>
-To: Archange <archange@activis.me>
-X-Mailer: Apple Mail (2.3696.80.82.1.1)
-Subject: Re: [oss-security] CVE-2022-24706: Apache CouchDB: Remote Code
- Execution Vulnerability in Packaging
+Subject: [oss-security] CVE-2019-14835: QEMU-KVM Guest to Host Kernel Escape Vulnerability:
+ vhost/vhost_net kernel buffer overflow
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Hi Bruno,
-
-first of all, thanks for maintaining CouchDB for Arch. Secondly, for any se=
-curity related questions, please do not hesitate to contact security@couchd=
-b.apache.org instead of any one of the team individually, as we can=E2=80=
-=99t know if any of is available at all times (vacations and whatnot :)
-
-As for your questions, see this PR to our packaging infrastructure for how =
-we handle this on Debian and Centos/Rocky: https://github.com/apache/couchd=
-b-pkg/pull/92/files
-
-Best
-Jan
-=E2=80=94
-
-> On 9. May 2022, at 10:54, Archange <archange@activis.me> wrote:
->=20
-> Hi,
->=20
-> Le 26/04/2022 =C3=A0 12:44, Jan Lehnardt a =C3=A9crit :
->> [=E2=80=A6]
->>=20
->> In addition, all binary packages have been updated to bind `epmd` as
->> well as the CouchDB distribution port to `127.0.0.1` and/or `::1`
->> respectively.
->>=20
->> Credit:
->>=20
->> The Apache CouchDB Team would like to thank Alex Vandiver <alexmv@zulip.=
-com> for the report of this issue.
->>=20
->> References:
->>=20
->> https://lists.apache.org/thread/w24wo0h8nlctfps65txvk0oc5hdcnv00
->=20
-> Regarding epmd, how is this achieved in the binary packages? Because on A=
-rch at least, setting `ERL_EPMD_ADDRESS=3D127.0.0.1` as stated in https://g=
-ithub.com/apache/couchdb/issues/999#issuecomment-345068280 is still require=
-d. Should Arch make that a default in the systemd service file? For now thi=
-s has just been a recommandation for single node security since 2017 (https=
-://wiki.archlinux.org/title/CouchDB#Single_node_setup_&_Security), but I ca=
-n make it the default (the second part of the wiki advice being now an upst=
-ream default, I think it would make some sense).
->=20
-> Regards,
-> Bruno/Archange (Arch maintainer for CouchDB)
->=20
-
+U2V2ZXJpdHk6IEltcG9ydGFudA0KVmVuZG9yOg0KVmVyc2lvbnMgYWZmZWN0
+ZWQ6IA0KSXQgbG9va3MgbGlrZSB0aGlzIHZ1bG5lcmFiaWxpdHkgd2FzIGlu
+dHJvZHVjZWQgaW4gdGhpcyBjb21taXQgaHR0cHM6Ly9naXRodWIuY29tL3Rv
+cnZhbGRzL2xpbnV4L2NvbW1pdC8zYTRkNWM5NGU5NTkzNTllY2U2ZDZiNTUw
+NDVjM2YwNDY2NzdmNTVjLA0KZnJvbSBrZXJuZWwgdmVyc2lvbiAyLjYuMzQg
+YW5kIGZpeGVkIGluIGxhdGVzdCBzdGFibGUga2VybmVsIDUuMy4NCg0KVGVu
+Y2VudCBCbGFkZSBUZWFtIGRpc2NvdmVyZWQgYSBRRU1VLUtWTSBHdWVzdCB0
+byBIb3N0IEtlcm5lbCBFc2NhcGUgVnVsbmVyYWJpbGl0eSB3aGljaCBpcyBp
+biB2aG9zdC92aG9zdF9uZXQga2VybmVsIG1vZHVsZS4NCg0KRGVzY3JpcHRp
+b246DQoNClRoZSB2dWxuZXJhYmlsaXR5IGlzIGluIHZob3N0L3Zob3N0X25l
+dCBrZXJuZWwgbW9kdWxlLCB2aG9zdC92aG9zdF9uZXQgaXMgYSB2aXJ0aW8g
+bmV0d29yayBiYWNrZW5kLg0KDQpUaGUgYnVnIGhhcHBlbnMgaW4gdGhlIGxp
+dmUgbWlncmF0ZSBmbG93LCB3aGVuIG1pZ3JhdGluZywgUUVNVSBuZWVkcyB0
+byBrbm93IHRoZSBkaXJ0eSBwYWdlcywgdmhvc3Qvdmhvc3RfbmV0IHVzZXMg
+YSBrZXJuZWwgYnVmZmVyIHRvIHJlY29yZCB0aGUgZGlydHkgbG9nLCBidXQg
+aXQgZG9lc24ndCBjaGVjayB0aGUgYm91bmRzIG9mIHRoZSBsb2cgYnVmZmVy
+Lg0KU28gd2UgY2FuIGZvcmdlIHRoZSBkZXNjIHRhYmxlIGluIGd1ZXN0LCB3
+YWl0IGZvciBtaWdyYXRlIG9yIGRvaW5nIHNvbWV0aGluZyAobGlrZSBpbmNy
+ZWFzZSBob3N0IG1hY2hpbmUgd29ya2xvYWQgb3IgY29tYmluZSBhIG1lbSBs
+ZWFrIGJ1ZywgZGVwZW5kcyBvbiB2ZW5kb3Khr3MgbWlncmF0ZSBzY2hlZHVs
+ZSBwb2xpY3kpIHRvIHRyaWdnZXIgY2xvdWQgdmVuZG9yIHRvIG1pZ3JhdGUg
+dGhpcyBndWVzdC4gDQpXaGVuIHRoZSBndWVzdCBtaWdyYXRpbmcsIGl0IHdp
+bGwgbWFrZSB0aGUgaG9zdCBrZXJuZWwgbG9nIGJ1ZmZlciBvdmVyZmxvdy4N
+Cg0KVGhlIHZ1bG5lcmFibGUgY2FsbCBwYXRoIGlzIDogIGhhbmRsZV9yeChk
+cml2ZXJzL3Zob3N0L25ldC5jKSAtPiBnZXRfcnhfYnVmcyAtPiB2aG9zdF9n
+ZXRfdnFfZGVzYyAtPiBnZXRfaW5kaXJlY3QoZHJpdmVycy92aG9zdC92aG9z
+dC5jKQ0KDQpJbiBWTSBndWVzdCwgYXR0YWNrIGNhbiBtYWtlIGEgaW5kaXJl
+Y3QgZGVzYyB0YWJsZSBpbiBWTSBkcml2ZXIgdG8gbGV0IHZob3N0IHRvIGVu
+dGVyIGFib3ZlIGNhbGwgcGF0aCB3aGVuIGxpdmUgbWlncmF0ZXMgdGhlIFZN
+LCBmaW5hbGx5IHRvIGVudGVyIGludG8gZnVuY3Rpb24gZ2V0X2luZGlyZWN0
+Lg0KDQpJbiBnZXRfaW5kaXJlY3QsIHRoZXJlIGlzIHRoZSBsb2cgYnVmZmVy
+IG92ZXJmbG93IGJ1ZyBjYW4gYmUgdHJpZ2dlcmVkIGFzIGNvbW1lbnRzIGJl
+bG93Og0KDQpzdGF0aWMgaW50IGdldF9pbmRpcmVjdChzdHJ1Y3Qgdmhvc3Rf
+dmlydHF1ZXVlICp2cSwNCgkJCXN0cnVjdCBpb3ZlYyBpb3ZbXSwgdW5zaWdu
+ZWQgaW50IGlvdl9zaXplLA0KCQkJdW5zaWduZWQgaW50ICpvdXRfbnVtLCB1
+bnNpZ25lZCBpbnQgKmluX251bSwNCgkJCXN0cnVjdCB2aG9zdF9sb2cgKmxv
+ZywgdW5zaWduZWQgaW50ICpsb2dfbnVtLA0KCQkJc3RydWN0IHZyaW5nX2Rl
+c2MgKmluZGlyZWN0KQ0Kew0KCXN0cnVjdCB2cmluZ19kZXNjIGRlc2M7DQoJ
+dW5zaWduZWQgaW50IGkgPSAwLCBjb3VudCwgZm91bmQgPSAwOw0KCXUzMiBs
+ZW4gPSB2aG9zdDMyX3RvX2NwdSh2cSwgaW5kaXJlY3QtPmxlbik7ICA8LS0t
+LS0tLS0tLS0tLS0tLSBsZW4gY2FuIGJlIGNvbnRyb2xsZWQgZnJvbSBWTSBn
+dWVzdA0KCXN0cnVjdCBpb3ZfaXRlciBmcm9tOw0KCWludCByZXQsIGFjY2Vz
+czsNCg0KCS8qIFNhbml0eSBjaGVjayAqLw0KCWlmICh1bmxpa2VseShsZW4g
+JSBzaXplb2YgZGVzYykpIHsNCgkJdnFfZXJyKHZxLCAiSW52YWxpZCBsZW5n
+dGggaW4gaW5kaXJlY3QgZGVzY3JpcHRvcjogIg0KCQkgICAgICAgImxlbiAw
+eCVsbHggbm90IG11bHRpcGxlIG9mIDB4JXp4XG4iLA0KCQkgICAgICAgKHVu
+c2lnbmVkIGxvbmcgbG9uZylsZW4sDQoJCSAgICAgICBzaXplb2YgZGVzYyk7
+DQoJCXJldHVybiAtRUlOVkFMOw0KCX0NCg0KCXJldCA9IHRyYW5zbGF0ZV9k
+ZXNjKHZxLCB2aG9zdDY0X3RvX2NwdSh2cSwgaW5kaXJlY3QtPmFkZHIpLCBs
+ZW4sIHZxLT5pbmRpcmVjdCwNCgkJCSAgICAgVUlPX01BWElPViwgVkhPU1Rf
+QUNDRVNTX1JPKTsNCglpZiAodW5saWtlbHkocmV0IDwgMCkpIHsNCgkJaWYg
+KHJldCAhPSAtRUFHQUlOKQ0KCQkJdnFfZXJyKHZxLCAiVHJhbnNsYXRpb24g
+ZmFpbHVyZSAlZCBpbiBpbmRpcmVjdC5cbiIsIHJldCk7DQoJCXJldHVybiBy
+ZXQ7DQoJfQ0KCWlvdl9pdGVyX2luaXQoJmZyb20sIFJFQUQsIHZxLT5pbmRp
+cmVjdCwgcmV0LCBsZW4pOw0KDQoJLyogV2Ugd2lsbCB1c2UgdGhlIHJlc3Vs
+dCBhcyBhbiBhZGRyZXNzIHRvIHJlYWQgZnJvbSwgc28gbW9zdA0KCSAqIGFy
+Y2hpdGVjdHVyZXMgb25seSBuZWVkIGEgY29tcGlsZXIgYmFycmllciBoZXJl
+LiAqLw0KCXJlYWRfYmFycmllcl9kZXBlbmRzKCk7DQoNCgljb3VudCA9IGxl
+biAvIHNpemVvZiBkZXNjOyAgICAgICAgICAgICA8LS0tLS0tLS0tIHNvLCBj
+b3VudCBjYW4gYmUgY29udHJvbGxlZCBmcm9tIFZNIGd1ZXN0DQoJLyogQnVm
+ZmVycyBhcmUgY2hhaW5lZCB2aWEgYSAxNiBiaXQgbmV4dCBmaWVsZCwgc28N
+CgkgKiB3ZSBjYW4gaGF2ZSBhdCBtb3N0IDJeMTYgb2YgdGhlc2UuICovDQoJ
+aWYgKHVubGlrZWx5KGNvdW50ID4gVVNIUlRfTUFYICsgMSkpIHsgICAgICAg
+ICAgIDwtLS0tLS0tLS0tIHRoZSBtYXggdmFsdWUgb2YgY291bnQgY2FuIGJl
+IFVTSFJUX01BWCArIDENCgkJdnFfZXJyKHZxLCAiSW5kaXJlY3QgYnVmZmVy
+IGxlbmd0aCB0b28gYmlnOiAlZFxuIiwNCgkJICAgICAgIGluZGlyZWN0LT5s
+ZW4pOw0KCQlyZXR1cm4gLUUyQklHOw0KCX0NCg0KCWRvIHsNCgkJdW5zaWdu
+ZWQgaW92X2NvdW50ID0gKmluX251bSArICpvdXRfbnVtOw0KCQlpZiAodW5s
+aWtlbHkoKytmb3VuZCA+IGNvdW50KSkgeyAgICAgICAgIDwtLS0tLS0tLS0t
+IHNvLCB0aGlzIHdoaWxlIGxvb3AgY2FuIHJ1biBVU0hSVF9NQVgrMSB0aW1l
+cw0KCQkJdnFfZXJyKHZxLCAiTG9vcCBkZXRlY3RlZDogbGFzdCBvbmUgYXQg
+JXUgIg0KCQkJICAgICAgICJpbmRpcmVjdCBzaXplICV1XG4iLA0KCQkJICAg
+ICAgIGksIGNvdW50KTsNCgkJCXJldHVybiAtRUlOVkFMOw0KCQl9DQoJCWlm
+ICh1bmxpa2VseSghY29weV9mcm9tX2l0ZXJfZnVsbCgmZGVzYywgc2l6ZW9m
+KGRlc2MpLCAmZnJvbSkpKSB7ICA8LS0tLS0tLSBpdGVyIGRlc2MgZnJvbSB0
+aGUgaW5kaXJlY3QgdGFibGUsIGVhY2ggZGVzYyBjYW4gYmUgY29udHJvbGxl
+ZA0KCQkJdnFfZXJyKHZxLCAiRmFpbGVkIGluZGlyZWN0IGRlc2NyaXB0b3I6
+IGlkeCAlZCwgJXp4XG4iLA0KCQkJICAgICAgIGksIChzaXplX3Qpdmhvc3Q2
+NF90b19jcHUodnEsIGluZGlyZWN0LT5hZGRyKSArIGkgKiBzaXplb2YgZGVz
+Yyk7DQoJCQlyZXR1cm4gLUVJTlZBTDsNCgkJfQ0KCQlpZiAodW5saWtlbHko
+ZGVzYy5mbGFncyAmIGNwdV90b192aG9zdDE2KHZxLCBWUklOR19ERVNDX0Zf
+SU5ESVJFQ1QpKSkgew0KCQkJdnFfZXJyKHZxLCAiTmVzdGVkIGluZGlyZWN0
+IGRlc2NyaXB0b3I6IGlkeCAlZCwgJXp4XG4iLA0KCQkJICAgICAgIGksIChz
+aXplX3Qpdmhvc3Q2NF90b19jcHUodnEsIGluZGlyZWN0LT5hZGRyKSArIGkg
+KiBzaXplb2YgZGVzYyk7DQoJCQlyZXR1cm4gLUVJTlZBTDsNCgkJfQ0KDQoJ
+CWlmIChkZXNjLmZsYWdzICYgY3B1X3RvX3Zob3N0MTYodnEsIFZSSU5HX0RF
+U0NfRl9XUklURSkpDQoJCQlhY2Nlc3MgPSBWSE9TVF9BQ0NFU1NfV087DQoJ
+CWVsc2UNCgkJCWFjY2VzcyA9IFZIT1NUX0FDQ0VTU19STzsNCg0KCQlyZXQg
+PSB0cmFuc2xhdGVfZGVzYyh2cSwgdmhvc3Q2NF90b19jcHUodnEsIGRlc2Mu
+YWRkciksDQoJCQkJICAgICB2aG9zdDMyX3RvX2NwdSh2cSwgZGVzYy5sZW4p
+LCBpb3YgKyBpb3ZfY291bnQsICAgICAgPC0tLS0tLS0tLS0gc2V0IGRlc2Mu
+bGVuIHRvIDAsIHRyYW5zbGF0ZV9kZXNjIHdpbGwgcmV0dXJuIHdpdGhvdXQg
+ZXJyb3IgYW5kIHJldCA9PSAwDQoJCQkJICAgICBpb3Zfc2l6ZSAtIGlvdl9j
+b3VudCwgYWNjZXNzKTsNCgkJaWYgKHVubGlrZWx5KHJldCA8IDApKSB7DQoJ
+CQlpZiAocmV0ICE9IC1FQUdBSU4pDQoJCQkJdnFfZXJyKHZxLCAiVHJhbnNs
+YXRpb24gZmFpbHVyZSAlZCBpbmRpcmVjdCBpZHggJWRcbiIsDQoJCQkJCXJl
+dCwgaSk7DQoJCQlyZXR1cm4gcmV0Ow0KCQl9DQoJCS8qIElmIHRoaXMgaXMg
+YW4gaW5wdXQgZGVzY3JpcHRvciwgaW5jcmVtZW50IHRoYXQgY291bnQuICov
+DQoJCWlmIChhY2Nlc3MgPT0gVkhPU1RfQUNDRVNTX1dPKSB7DQoJCQkqaW5f
+bnVtICs9IHJldDsgICAgICAgICA8LS0tLS0tLS0tLS0tIGJlY2F1c2UgcmV0
+ID09IDAsIHNvIHRoZSB2YWx1ZSBvZiBpbl9udW0gbm90IGNoYW5nZWQuIChp
+ZiBpbl9udW0gYmlnZ2VyIHRoYW4gaW92X3NpemUsIHdpbGwgY2F1c2UgdHJh
+bnNsYXRlX2Rlc2MgcmV0dXJuIGVycm9yKQ0KCQkJaWYgKHVubGlrZWx5KGxv
+ZykpIHsgICAgICA8LS0tLS0tLS0tLS0tLSB3aGVuIGxpdmUgbWlncmF0ZSwg
+dGhlIGxvZyBidWZmZXIgd2lsbCBub3QgYmUgTlVMTA0KCQkJCWxvZ1sqbG9n
+X251bV0uYWRkciA9IHZob3N0NjRfdG9fY3B1KHZxLCBkZXNjLmFkZHIpOyAg
+IDwtLS0tLS0tLSBsb2cgYnVmZmVyIG92ZXJmbG93LCBiZWNhdXNlIGxvZ19u
+dW0gY2FuIGJlIFVTSFJUX01BWCwgYnV0IGxvZyBidWZmZXIgc2l6ZSBpcyBm
+YXIgYmVsb3cgdGhhbiBVU0hSVF9NQVgNCgkJCQlsb2dbKmxvZ19udW1dLmxl
+biA9IHZob3N0MzJfdG9fY3B1KHZxLCBkZXNjLmxlbik7DQoJCQkJKysqbG9n
+X251bTsNCgkJCX0NCgkJfSBlbHNlIHsNCgkJCS8qIElmIGl0J3MgYW4gb3V0
+cHV0IGRlc2NyaXB0b3IsIHRoZXkncmUgYWxsIHN1cHBvc2VkDQoJCQkgKiB0
+byBjb21lIGJlZm9yZSBhbnkgaW5wdXQgZGVzY3JpcHRvcnMuICovDQoJCQlp
+ZiAodW5saWtlbHkoKmluX251bSkpIHsNCgkJCQl2cV9lcnIodnEsICJJbmRp
+cmVjdCBkZXNjcmlwdG9yICINCgkJCQkgICAgICAgImhhcyBvdXQgYWZ0ZXIg
+aW46IGlkeCAlZFxuIiwgaSk7DQoJCQkJcmV0dXJuIC1FSU5WQUw7DQoJCQl9
+DQoJCQkqb3V0X251bSArPSByZXQ7DQoJCX0NCgl9IHdoaWxlICgoaSA9IG5l
+eHRfZGVzYyh2cSwgJmRlc2MpKSAhPSAtMSk7DQoJcmV0dXJuIDA7DQp9DQoN
+CkZ1bmN0aW9uIHZob3N0X2dldF92cV9kZXNjIGFsc28gaGFzIGFib3ZlIHdo
+aWxlIGxvb3Agd2hpY2ggbWF5IGNhdXNlIGxvZyBidWZmZXIgb3ZlcmZsb3cu
+DQoNCk1pdGlnYXRpb246DQp1cGRhdGUgdG8gbGF0ZXN0IHN0YWJsZSBrZXJu
+ZWwgNS4zIG9yIGFwcGx5IHRoZSB1cHN0cmVhbSBwYXRjaC4NCnVwc3RyZWFt
+IHBhdGNoOiANCmh0dHBzOi8vZ2l0aHViLmNvbS90b3J2YWxkcy9saW51eC9j
+b21taXQvMDYwNDIzYmZkZWUzZjhiYzZlMmMxYmFjOTdkZTI0ZDU0MTVlMmJj
+NA0KaHR0cHM6Ly9naXQua2VybmVsLm9yZy9wdWIvc2NtL2xpbnV4L2tlcm5l
+bC9naXQvbXN0L3Zob3N0LmdpdC9jb21taXQvP2g9Zm9yX2xpbnVzJmlkPTA2
+MDQyM2JmZGVlM2Y4YmM2ZTJjMWJhYzk3ZGUyNGQ1NDE1ZTJiYzQNCg0KQWJv
+dXQgdGhlIFBvb2Ygb2YgY29uY2VwdDoNCldlKFRlbmNlbnQgQmxhZGUgVGVh
+bSkgcGxhbiB0byBwdWJsaXNoIHNpbXBsZSByZXByb2R1Y2Ugc3RlcHMgb2Yg
+dGhpcyB2dWxuZXJhYmlsaXR5IGFib3V0IGEgd2VlayBsYXRlci4NCg0KQ3Jl
+ZGl0Og0KVGhlIHZ1bG5lcmFiaWxpdHkgd2FzIGRpc2NvdmVyZWQgYnkgUGV0
+ZXIgUGkgb2YgVGVuY2VudCBCbGFkZSBUZWFtDQoNCi0tLQ0KQ3JhZG1pbiBv
+ZiBUZW5jZW50IEJsYWRlIFRlYW0NCg==
