@@ -1,42 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/12
-Message-ID: <20191025141540.10b322fe@computer>
-Date: Fri, 25 Oct 2019 14:15:40 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/17/2
+Message-ID: <20190917165453.GA17293@eldamar.local>
+Date: Tue, 17 Sep 2019 18:54:53 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Formal verification of open source software
+Subject: Re: OpenDMARC signature bypass with multiple From addresses
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 25 Oct 2019 13:43:57 +0300
-Georgi Guninski <gguninski@...il.com> wrote:
+Hi,
 
-> Are there success stories of formal verification of open source
-> software?
+On Wed, Sep 11, 2019 at 12:43:19PM +0200, Hanno Böck wrote:
+> Hi,
+> 
+> Protonmail reported about a phishing incident in July:
+> https://protonmail.com/blog/bellingcat-cyberattack-phishing/
+> 
+> This had this somewhat mysterious chapter:
+> "Furthermore, the attackers attempted to exploit an unpatched
+> vulnerability in an open source software that is widely used by email
+> providers in an effort to bypass spam and abuse filters. We were
+> previously aware of this vulnerability and have already been watching
+> it for some time, but we will not disclose it here because the software
+> in question is not developed by ProtonMail, and it has not yet been
+> patched by the software maintainers. This vulnerability, however, is
+> not widely known and indicates a higher level of sophistication on the
+> part of the attackers."
+> 
+> After asking protonmail multiple times for a statement they answered
+> and I learned that it's about this issue in OpenDMARC:
+> https://github.com/trusteddomainproject/OpenDMARC/pull/48
+> 
+> It's an issue where by specifying multiple From addresses only one of
+> them gets DMARC-checked.
+> 
+> There's no reaction from the OpenDMARC developers and it's unclear
+> whether it's still actively developed. Given this is already actively
+> exploited I think people should be aware of it and distros should
+> probably apply the patch from the PR.
 
-There's been a lot of work in the crypto community in this direction.
-Most of it is code under OSS licenses:
+MITRE has assigned CVE-2019-16378 for this issue (requested via the
+https://cveform.mitre.org/).
 
-Hacl* is a formally verified crypto library. Some of the crypto
-algorithm implementations are used in Mozilla's NSS:
-https://blog.mozilla.org/security/2017/09/13/verified-cryptography-firefox-57/
-
-Also NSS/Mozilla, they have identified a flaw in their gcm
-implementation with cryptol:
-https://timtaubert.de/blog/2017/06/verified-binary-multiplication-for-ghash/
-
-There's been a formal verification of (a subset of) PolarSSL:
-https://blog.regehr.org/archives/1261
-
-This is an incomplete list, just the first things I remembered, there's
-a lot more.
-
-In terms of operating system kernels there's sel4:
-https://sel4.systems/
-
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Regards,
+Salvatore
