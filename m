@@ -1,92 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/11/2
-Message-ID: <20190611150941.GA18705@espresso.pseudorandom.co.uk>
-Date: Tue, 11 Jun 2019 16:09:41 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-12749: DBusServer DBUS_COOKIE_SHA1 authentication bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/17/5
+Message-ID: <5f571403-9a7f-2967-737d-e8b754c288d8@thomas-ward.net>
+Date: Tue, 17 Sep 2019 14:57:34 -0400
+From: Thomas Ward <teward@...mas-ward.net>
+To: oss-security@...ts.openwall.com, Alyssa Ross <hi@...ssa.is>, Hanno Böck <hanno@...eck.de>
+Subject: Re: OpenDMARC buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-Product: freedesktop.org dbus
-Vulnerable versions: all < 1.10.28, 1.12.x < 1.12.16, 1.13.x < 1.13.12
-Fixed versions: all >= 1.13.12, 1.12.x >= 1.12.16, 1.10.x >= 1.10.28
+On 9/17/19 2:20 PM, Alyssa Ross wrote:
+> Hanno Böck <hanno@...eck.de> writes:
+>
+>> In light of the recent OpenDMARC issue I had a look at their Github PR
+>> tracker. This one
+>> https://github.com/trusteddomainproject/OpenDMARC/pull/45
+>> caught my attention.
+> So a signature bypass, a buffer overflow, and no activity in years
+> despite vulnerabilities having been reported months ago?
+>
+> Certainly doesn't look like software that people should be relying on
+> for security...
 
-dbus is the reference implementation of D-Bus, an asynchronous
-inter-process communication system commonly used for system services
-or within a desktop session on Linux and other operating systems.
+... which is why I think distros are distro-patching it, like Scott 
+Kitterman is doing for Debian.
 
-Joe Vennix of Apple Information Security discovered an implementation flaw
-in the DBUS_COOKIE_SHA1 authentication mechanism. A malicious client with
-write access to its own home directory could manipulate a ~/.dbus-keyrings
-symlink to cause a DBusServer with a different uid to read and write
-in unintended locations. In the worst case, this could result in the
-DBusServer reusing a cookie that is known to the malicious client, and
-treating that cookie as evidence that a subsequent client connection
-came from an attacker-chosen uid, allowing authentication bypass.
+I have a host of other detections in line with OpenDMARC for detecting 
+invalid message structure, though, but it's definitely concerning to see 
+something like this - one of the few DMARC checkers that actually exists 
+in the OSS world - to be so behind from a Security perspective...
 
-This vulnerability does not normally affect the standard system
-dbus-daemon, which only allows the EXTERNAL authentication mechanism.
-In supported branches of dbus it also does not normally affect the standard
-session dbus-daemon, for the same reason.
 
-However, this vulnerability can affect third-party users of DBusServer
-(such as Upstart in Ubuntu 14.04 LTS), third-party dbus-daemon instances,
-standard dbus-daemon instances with non-standard configuration, and the
-session bus in older/unsupported dbus branches (such as dbus 1.6.x in
-Ubuntu 14.04 LTS).
-
-Recommendations
----------------
-
-Fix the vulnerability by upgrading to a
-fixed dbus version, or by applying upstream git commit
-https://gitlab.freedesktop.org/dbus/dbus/commit/47b1a4c41004bf494b87370987b222c934b19016
-which should be suitable for all recent branches. This resolves the
-vulnerability by rejecting attempts to authenticate with DBUS_COOKIE_SHA1
-as any user ID that is not the owner of the process with the DBusServer.
-
-A further git commit "test: Add basic test coverage for DBUS_COOKIE_SHA1"
-(available in different versions for the dbus-1.10/dbus-1.12 and master
-branches) adds basic unit test coverage, which is not required but might
-be useful.
-
-As additional hardening, we recommend that D-Bus servers on Unix platforms
-should only listen on AF_UNIX sockets, and that they should pass the array
-{"EXTERNAL", NULL} to dbus_server_set_auth_mechanisms() immediately after
-the DBusServer is created (before polling the server's socket), so that
-only EXTERNAL (credentials-passing) authentication is allowed. This is
-not the default behaviour of a DBusServer for compatibility reasons. In
-dbus-daemon(1) this can be achieved by having <auth>EXTERNAL</auth> as
-the only <auth> element in the configuration, similar to the standard
-system.conf and session.conf on Unix platforms. This hardening would have
-made the vulnerability inaccessible.
-
-Distributors who are maintaining an unsupported branch
-should apply that hardening to the standard session
-bus (dbus-daemon --session) by backporting upstream commit
-https://gitlab.freedesktop.org/dbus/dbus/commit/d9ab8931 from dbus 1.8.18
-if they have not done so already.
-
-Unsupported branches
---------------------
-
-As announced in
-<https://lists.freedesktop.org/archives/dbus/2018-December/017644.html>,
-dbus 1.8.x, 1.6.x and all older branches have reached end-of-life and no
-longer receive upstream security support. There will not be releases from
-those branches to fix this vulnerability. If your long-term-supported
-distribution relies on one of these branches, and you would like to
-use the upstream dbus git repository to share tested patches with other
-distributions in the same situation, please contact the dbus maintainers
-via <dbus-security@...ts.freedesktop.org>.
-
-Acknowledgements
-----------------
-
-Thanks to Joe Vennix (Apple Information Security), Seth Arnold (Canonical)
-and Philip Withnall (Endless) for their assistance with this vulnerability.
-
--- 
-Simon McVittie
-Collabora Ltd. / Debian
-on behalf of the dbus maintainers
