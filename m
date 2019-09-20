@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/11
-Message-ID: <20190822182723.GA77294@wopr>
-Date: Thu, 22 Aug 2019 11:27:23 -0700
-From: Kurt H Maier <khm@...ops.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/20/4
+Message-ID: <CAMufup624wBE-jowWQo9wuTaMT7Hf3QC-VMniFUTJhwM7C4ikQ@mail.gmail.com>
+Date: Fri, 20 Sep 2019 15:32:05 +0200
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+Subject: [CVE-2019-10090] Apache JSPWiki Cross-site scripting vulnerability on plain editor
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 22, 2019 at 07:17:34PM +0100, John Haxby wrote:
-> 
-> If I'm going to attack random devices I'm not going to do it with some random driver that may or may not be present on a phone.  And as this is a null pointer reference we're talking about you plug the phone and and it reboots so you won't do that more than once.   That's it, that's the limit of the vulnerability.
-> 
-> If I'm going to go to the trouble of emulating a device so I can sneak it into a public charging point I'm not going to do it just to make a phone reboot.  I'm going to pick a UAF vulnerability with an exploit that actually does something useful, something beyond just making the phone reboot.
-> 
-> Either that or I'm going to sneak in a USB killer and destroy the phones.
-> 
-> No matter what, emulating a device just to cause a null dereference is not CVE worthy.   If it is, then we need a CVE for power buttons on laptops and phones.
-> 
-> jch
-> 
+ Severity
+Medium
 
-Undisclosed impromptu power buttons are absolutely a concern, regardless
-of your personal pen-testing preferences.
+Vendor
+The Apache Software Foundation
 
-khm
+Versions Affected
+Apache JSPWiki up to 2.11.0.M4
+
+Description
+A carefully crafted plugin link invocation could trigger an XSS
+vulnerability on Apache JSPWiki, related to the plain editor, which could
+allow the attacker to execute javascript in the victim's browser and get
+some sensitive information about the victim.
+
+Mitigation
+Apache JSPWiki users should upgrade to 2.11.0.M5 or later.
+
+Credit
+This issue was discovered by Dirk Frederickx, from Apache JSPWiki.
+
+ref: https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-10090
+
