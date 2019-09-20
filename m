@@ -1,50 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/21/2
-Message-ID: <02594cdc8ff7c6ff19a3042d824fb27f9d3302c3.camel@debian.org>
-Date: Fri, 21 Jun 2019 11:32:05 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/20/6
+Message-ID: <CAMufup6OGHYUE=ZuHys-9S0Lg+De7peWXm7dvAodCkE3EYc-wg@mail.gmail.com>
+Date: Fri, 20 Sep 2019 15:34:01 +0200
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: [CVE-2019-12407] Apache JSPWiki Cross-site scripting vulnerability related to the remember parameter
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+ Severity
+Medium
 
-On Sat, 2019-06-15 at 17:57 +0200, Greg KH wrote:
-> On Sat, Jun 15, 2019 at 11:49:03AM -0400, Alex Gaynor wrote:
-> > I do not have a solution to this problem. I wanted to raise awareness of
-> > it, in the hope that it would start a discussion which might come to a
-> > solution.
-> 
-> Why not just do a simple "you must upgrade to the latest version X to
-> fix a bunch of bugs" type of announcement?  No need to worry about crazy
-> backports and cherry-picking, that always fails in the end.
+Vendor
+The Apache Software Foundation
 
-I sympathize with this view, and I think we need to get better at updating,
-but I really think not all projects can be “safely” just updated to the latest
-version. End-users and IT admins still value stability and regressions is
-still a thing in a lot of cases. And once a regression is introduced, it's not
-always a short time before it's fixed upstream.
+Versions Affected
+Apache JSPWiki up to 2.11.0.M4
 
-And before reaching the end-user, some project latest versions might depend on
-a lot of “latest version” of other projects. In some case the dependency tree
-might involve large scale changes affecting the whole system.
+Description
+A carefully crafted plugin link invocation could trigger an XSS
+vulnerability on Apache JSPWiki, related to the remember parameter on some
+of the JSPs, which could allow the attacker to execute javascript in the
+victim's browser and get some sensitive information about the victim.
 
-So sure, in some cases it makes sense to just update to latest versions, but
-I' m really not sure it's the general case. I'm not entirely satisfied by the
-situation either but I don't have a magic way to fix it.
+Mitigation
+Apache JSPWiki users should upgrade to 2.11.0.M5 or later.
 
-Regards,
-- -- 
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
+Credit
+This issue was discovered by ADLab of VenusTech.
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAl0MpBUACgkQ3rYcyPpX
-RFv88gf+NZG3Q3Q0s8gmEbgS76y8umnGk6DR3dHgstPP1A2pnCBhDhauQbNX/UKZ
-pLvdSMJw1LrlbNhfGtuKjuF9HqefulWfO2ex2l0ljmXbLuG0qYzehgAGvFCkv142
-mZZW+yMDAB/O6gaDtBxhaOfKeK1h+oVE9H4u3Nu+AmyL17CW2DVrVYoBWXxsR5C6
-RFITOyR24nc+gkLvW1IsIWM8S/Jfe/cTHvXdALYLAKD8EwTTasy3k1d3e5bHp6HW
-j35ERngM+5fcxgVGbBNRQh5ANKsrIWjxqtqH1ndJV4hSfdZTmso/cyztQnL7LZoy
-XG8fn/neQ2/GNlXdzB99anO6JQLoAQ==
-=sAOD
------END PGP SIGNATURE-----
+ref: https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-12407
+
