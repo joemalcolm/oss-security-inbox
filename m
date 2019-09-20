@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/13
-Message-ID: <4358648.2BLBotf1RR@merkaba>
-Date: Thu, 11 Jul 2019 17:27:19 +0200
-From: Martin Steigerwald <martin@...htvoll.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/20/3
+Message-ID: <CAMufup7+V+OQ+pEVYgdcXGDTXWa+DCodQOyRbU0WFvbxY9DnjA@mail.gmail.com>
+Date: Fri, 20 Sep 2019 15:28:49 +0200
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Privileged File Access from Desktop Applications
+Subject: [CVE-2019-10089] Apache JSPWiki Cross-site scripting vulnerability on WYSIWYG editor
 Content-Type: text/plain; charset=utf-8
 
-Malte Kraus - 09.07.19, 15:58:
-> None of the solutions actually provided the user with the accessed
-> path or file operation in the polkit auth prompt. Users are
-> confronted with an unspecific request for privileges that they can
-> only allow or deny without knowing what exactly they are allowing.
-> (This is unfortunately a common theme, e.g. on KDE the framework is
-> still missing support for parameterizing polkit prompts.)
+ Severity
+Medium
 
-For me this looks like KDE developers address this now – at least 
-partly:
+Vendor
+The Apache Software Foundation
 
-[KAuth] Add support for action details in Polkit1 backend.
-https://phabricator.kde.org/D21795
+Versions Affected
+Apache JSPWiki up to 2.11.0.M4
 
-Thanks,
--- 
-Martin
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Description
+A carefully crafted plugin link invocation could trigger an XSS
+vulnerability on Apache JSPWiki, related to the WYSIWYG editor, which could
+allow the attacker to execute javascript in the victim's browser and get
+some sensitive information about the victim.
+
+Mitigation
+Apache JSPWiki users should upgrade to 2.11.0.M5 or later.
+
+Credit
+This issue was discovered by Jegatheesh A, from ZOHO-CRM Security team.
+
+ref: https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-10089
+
