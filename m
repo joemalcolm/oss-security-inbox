@@ -1,105 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/11/3
-Message-ID: <CAG8b5tTjsyxF+TN1_oL_LQh=Mo0A2FdHu06e2TNqS9mJ4qGhqg@mail.gmail.com>
-Date: Fri, 11 Jan 2019 23:43:46 +0530
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/20/5
+Message-ID: <CAMufup4AocOaLbmDttDrMdEfx9QscBwEKcK4tgAYtacvq90TkA@mail.gmail.com>
+Date: Fri, 20 Sep 2019 15:33:17 +0200
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Memory leak in libiec61850 protocol
+Subject: [CVE-2019-12404] Apache JSPWiki Cross-site scripting vulnerability on InfoContent.jsp
 Content-Type: text/plain; charset=utf-8
 
-Hi List,
+ Severity
+Medium
 
-## Summary:
-An issue has been found in libIEC61850 v1.3.1. Memory_malloc in
-hal/memory/lib_memory.c has a memory leak when called from
-Asn1PrimitiveValue_create in mms/asn1/asn1_ber_primitive_value.c, as
-demonstrated by goose_publisher_example.c and iec61850_9_2_LE_example.c.
+Vendor
+The Apache Software Foundation
 
-## Snip code from goose_publisher_example.c#L30 :
-    LinkedList_add(dataSetValues, MmsValue_newIntegerFromInt32(1234));
-    LinkedList_add(dataSetValues, MmsValue_newBinaryTime(false));
-    LinkedList_add(dataSetValues, MmsValue_newIntegerFromInt32(5678));
+Versions Affected
+Apache JSPWiki up to 2.11.0.M4
 
-## Memory leak:
+Description
+A carefully crafted plugin link invocation could trigger an XSS
+vulnerability on Apache JSPWiki, related to InfoContent.jsp, which could
+allow the attacker to execute javascript in the victim's browser and get
+some sensitive information about the victim.
 
-==1276==ERROR: LeakSanitizer: detected memory leaks
-Direct leak of 10 byte(s) in 1 object(s) allocated from:
-    #0 0x7f98bdabdb50 in __interceptor_malloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.4+0xdeb50)
-    #1 0x55c2071bac8b in Memory_malloc
-/home/input0/Desktop/libiec61850/hal/memory/lib_memory.c:47
-    #2 0x55c2071abca3 in Asn1PrimitiveValue_create
-/home/input0/Desktop/libiec61850/src/mms/asn1/asn1_ber_primitive_value.c:31
-    #3 0x55c2071ac49b in BerInteger_createInt32
-/home/input0/Desktop/libiec61850/src/mms/asn1/ber_integer.c:49
-    #4 0x55c2071ac8e3 in BerInteger_createFromInt32
-/home/input0/Desktop/libiec61850/src/mms/asn1/ber_integer.c:97
-    #5 0x55c2071a27e1 in MmsValue_newIntegerFromInt32
-/home/input0/Desktop/libiec61850/src/mms/iso_mms/common/mms_value.c:827
-    #6 0x55c20719c192 in main
-/home/input0/Desktop/libiec61850/examples/goose_publisher/goose_publisher_example.c:30
-    #7 0x7f98bd3f0b96 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
+Mitigation
+Apache JSPWiki users should upgrade to 2.11.0.M5 or later.
 
-Direct leak of 10 byte(s) in 1 object(s) allocated from:
-    #0 0x7f98bdabdb50 in __interceptor_malloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.4+0xdeb50)
-    #1 0x55c2071bac8b in Memory_malloc
-/home/input0/Desktop/libiec61850/hal/memory/lib_memory.c:47
-    #2 0x55c2071abca3 in Asn1PrimitiveValue_create
-/home/input0/Desktop/libiec61850/src/mms/asn1/asn1_ber_primitive_value.c:31
-    #3 0x55c2071ac49b in BerInteger_createInt32
-/home/input0/Desktop/libiec61850/src/mms/asn1/ber_integer.c:49
-    #4 0x55c2071ac8e3 in BerInteger_createFromInt32
-/home/input0/Desktop/libiec61850/src/mms/asn1/ber_integer.c:97
-    #5 0x55c2071a27e1 in MmsValue_newIntegerFromInt32
-/home/input0/Desktop/libiec61850/src/mms/iso_mms/common/mms_value.c:827
-    #6 0x55c20719c1d0 in main
-/home/input0/Desktop/libiec61850/examples/goose_publisher/goose_publisher_example.c:32
-    #7 0x7f98bd3f0b96 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
+Credit
+This issue was discovered by ADLab of VenusTech.
 
-Direct leak of 5 byte(s) in 1 object(s) allocated from:
-    #0 0x7f98bdabdd38 in __interceptor_calloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.4+0xded38)
-    #1 0x55c2071bacc4 in Memory_calloc
-/home/input0/Desktop/libiec61850/hal/memory/lib_memory.c:59
-    #2 0x55c2071abd39 in Asn1PrimitiveValue_create
-/home/input0/Desktop/libiec61850/src/mms/asn1/asn1_ber_primitive_value.c:35
-    #3 0x55c2071ac49b in BerInteger_createInt32
-/home/input0/Desktop/libiec61850/src/mms/asn1/ber_integer.c:49
-    #4 0x55c2071ac8e3 in BerInteger_createFromInt32
-/home/input0/Desktop/libiec61850/src/mms/asn1/ber_integer.c:97
-    #5 0x55c2071a27e1 in MmsValue_newIntegerFromInt32
-/home/input0/Desktop/libiec61850/src/mms/iso_mms/common/mms_value.c:827
-    #6 0x55c20719c1d0 in main
-/home/input0/Desktop/libiec61850/examples/goose_publisher/goose_publisher_example.c:32
-    #7 0x7f98bd3f0b96 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
-
-Direct leak of 5 byte(s) in 1 object(s) allocated from:
-    #0 0x7f98bdabdd38 in __interceptor_calloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.4+0xded38)
-    #1 0x55c2071bacc4 in Memory_calloc
-/home/input0/Desktop/libiec61850/hal/memory/lib_memory.c:59
-    #2 0x55c2071abd39 in Asn1PrimitiveValue_create
-/home/input0/Desktop/libiec61850/src/mms/asn1/asn1_ber_primitive_value.c:35
-    #3 0x55c2071ac49b in BerInteger_createInt32
-/home/input0/Desktop/libiec61850/src/mms/asn1/ber_integer.c:49
-    #4 0x55c2071ac8e3 in BerInteger_createFromInt32
-/home/input0/Desktop/libiec61850/src/mms/asn1/ber_integer.c:97
-    #5 0x55c2071a27e1 in MmsValue_newIntegerFromInt32
-/home/input0/Desktop/libiec61850/src/mms/iso_mms/common/mms_value.c:827
-    #6 0x55c20719c192 in main
-/home/input0/Desktop/libiec61850/examples/goose_publisher/goose_publisher_example.c:30
-    #7 0x7f98bd3f0b96 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
-
-SUMMARY: AddressSanitizer: 30 byte(s) leaked in 4 allocation(s).
-
-Later CVE-2019-6135 was assigned to this issue.
-
-
-Thank you
-@mishradhiraj_
+rel: https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-12404
 
