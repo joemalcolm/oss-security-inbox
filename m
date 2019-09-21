@@ -1,40 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/8
-Message-ID: <CABOq=i38wC9q1hvydmhuYK7bPCDYbUjpTHHPRxD7gGMFNXmEPQ@mail.gmail.com>
-Date: Wed, 13 Feb 2019 02:41:48 -0800
-From: EJ Campbell <ejc3@...izonmedia.com>
-To: Aleksa Sarai <cyphar@...har.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-5736: runc container breakout exploit code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/21/1
+Message-Id: <B2F781BF-7762-4FCF-99FA-4B46A349C49B@gmail.com>
+Date: Sat, 21 Sep 2019 08:59:28 -0400
+From: Rich Persaud <persaur@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: OSS platform security 
 Content-Type: text/plain; charset=utf-8
 
-That should have been +i, sorry. Thank you for your quick response.
+If you are working on open firmware, boot loaders or virtualization, there is useful content and references at the conference links below.
 
-EJ
+Rich
 
-On Wed, Feb 13, 2019 at 1:58 AM Aleksa Sarai <cyphar@...har.com> wrote:
 
-> On 2019-02-13, Aleksa Sarai <cyphar@...har.com> wrote:
-> > On 2019-02-13, EJ Campbell <ejc3@...izonmedia.com> wrote:
-> > > While fixing docker / runc is clearly the right fix, would using
-> chattr -i
-> > > on runc be a quick mitigation for the issue? I believe that will
-> prevent
-> > > the file from being overwritten by the exploit and Etienne Stalmans
-> > > verified that it helped:
-> > >  https://twitter.com/_staaldraad/status/1095354945073754112
-> >
-> > The privileged user in the container could just un-set the immutable
-> > bit using "/proc/self/fd/..." and then open it for writing. A read-only
-> > filesystem would work much better.
->
-> Sorry, I forgot that CAP_LINUX_IMMUTABLE is dropped by default in
-> Docker. Yes that mitigation would also work.
->
-> --
-> Aleksa Sarai
-> Senior Software Engineer (Containers)
-> SUSE Linux GmbH
-> <https://www.cyphar.com/>
->
+Open-Source Firmware Conference, Sep 3-6, 2019
+2019 slides: https://osfc.io/schedule
+2018 videos: https://osfc.io/archive
+
+Linux Plumbers 2019 Secure Boot microconference, Sep 11, 2019
+Notes: https://etherpad.net/p/LPC2019_System_Boot_and_Security/export/html
+
+Platform Security Summit, Oct 1-3, 2019
+2019 speakers: https://platformsecuritysummit.com
+2018 videos: https://platformsecuritysummit.com/2018/videos
 
