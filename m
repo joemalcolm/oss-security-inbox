@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["462" "Saturday" "3" "December" "2016" "12:22:43" "+0800" "Baozeng Ding" "sploving1@gmail.com" "<a4156d1d-7f4c-d5ea-0687-3dd6d9ace541@gmail.com>" "14" "[oss-security] CVE Request: -- Linux kernel: double free in netlink_dump" nil nil nil "12" "2016120304:22:43" "[oss-security] CVE Request: -- Linux kernel: double free in netlink_dump" (number mark "U       sploving1@gm Dec  3   14/462   " thread-indent "\"[oss-security] CVE Request: -- Linux kernel: double free in netlink_dump\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["561" "Saturday" "21" "September" "2019" "08:59:28" "-0400" "Rich Persaud" "persaur@gmail.com" nil "17" nil "^Date:" nil nil "9" nil nil (number mark "        persaur@gmai Sep 21   17/561   " thread-indent "\"[oss-security] OSS platform security \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] OSS platform security " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19479 invoked by uid 550); 3 Dec 2016 04:23:29 -0000
+Received: (qmail 28478 invoked by uid 550); 21 Sep 2019 13:03:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18431 invoked from network); 3 Dec 2016 04:23:29 -0000
+Received: (qmail 27917 invoked from network); 21 Sep 2019 12:59:41 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:from:cc:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=RvOcQk2xMO2EZatd3ehsT+Cu8H/9RRY1bfF96wd9C74=;
-        b=KFTdE0UrhInPotO+HRrUs8nr7aGILQOAcMm3QzE8XrUVaAHF5N0zW3JCX2qBgIt0aH
-         VCY9mo+hnn2+jt57Ytx9LWACXqJYyONhJD2DV4bVocon//qaW7oihgRqdmMdN4i83f7h
-         jfxRrSX5aXiqDo0tFL3oBMz9Ba/XNynMvSpGBf42EVVuAPsaQHCM7ZI1nYZoCu5FZjHc
-         tqeXDtua5L9XT2eBLz/puX3OIYWLSed89biGiUDUL7gS3gGyqdyDS03wkBY2BK3AI8WF
-         ADeJXbYW4lSMFgtW5M/yb6NPPOacrY+OkXZiLV/lt/2/V9NQ/A6C/1PiZrBZOO+VAmWQ
-         XDTg==
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:date:subject:message-id
+         :to;
+        bh=KAuG7h2jsitxM2DMAboPVmLc82FckVVIK5yhMVGM6wM=;
+        b=LfyV/ZYGn5qVLYn3zRwCbFdGvQFwMeMsftnuwqG5fWRCbinv+gIqjaaLF/PLoKE4sx
+         OJas2oi4N11ty96eORy4/yvzaAE8Mi4fwRpP8R5dPVswxtfXvchQ+XfSyvvHrL7KknSW
+         G3IacUj/ssKZjK8BXN769rNq25ExIz1MzYKz/HyOF2VJXpVOSA7JGV9poOSH/8Rruj7t
+         0dFY1R4sE6WOtfeMtDK0Toc8zDNA0vWA16/ZkETxdJz/3b8cLcy2rYMOBnnhWj0UCxLi
+         Q1tD+ornGne3WIYrvUvSYYCKwV8d7JX0ghJuOZVF/SJxsDDhasu89j2o8iRxu6GMRMuh
+         0Dqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:from:cc:message-id:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=RvOcQk2xMO2EZatd3ehsT+Cu8H/9RRY1bfF96wd9C74=;
-        b=kzdvV/wJLX1ihWi8vv/axl8EnF8XfX/+4R7J4U83nTBnchj1f7Cl9mjP5GoOxAN27O
-         RIfEJvipeDQmnC5uJg53xy4b34splDEycYKUTZ7pFxs1VDYvPRxM8xzy2PCCyZ7L1AD7
-         Oa43gfGEAhar8+9HalYtrp45o3o3QUwB53C49lhFKLGXb9O0L3tdGmrEJffeULt6q6ii
-         6B6aC4/q2gunFavZnC0E0sHMZzl2v1j2Za8N6qxuXLBGXqxGxulwZRFh3FkJU1+UsHpB
-         4x+q1DxPzVaAcM9ooyYZjlfKfJDMinvFjMUftHkyV5wdpAHNwWg9chw3W8vvR68BH30G
-         Yprg==
-X-Gm-Message-State: AKaTC00eMvkHTxuRF+7hvqzM4TDqofU1HB+IXmsUm6iIPsW67DtYepCJ6BLkQxKI20DtcQ==
-X-Received: by 10.157.59.180 with SMTP id k49mr24474436otc.255.1480738997064;
-        Fri, 02 Dec 2016 20:23:17 -0800 (PST)
-To: cve-assign@mitre.org, oss-security@lists.openwall.com
-From: Baozeng Ding <sploving1@gmail.com>
-Cc: herbert@gondor.apana.org.au
-Message-ID: <a4156d1d-7f4c-d5ea-0687-3dd6d9ace541@gmail.com>
-Date: Sat, 3 Dec 2016 12:22:43 +0800
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE Request: -- Linux kernel: double free in netlink_dump
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version:date
+         :subject:message-id:to;
+        bh=KAuG7h2jsitxM2DMAboPVmLc82FckVVIK5yhMVGM6wM=;
+        b=KUGeYCC/QYxf9Uf58gg29ezzEamAOrLANzU6Rq9oO0CP/yaJJu7vrY1TCyLkwe+zpf
+         7TCiURPc3EyxaHzewR0hy2/uizcVlKo9XBW22rOiHRIcD0z01vNlRQAAr+/idmuAMbKW
+         Q2Qjh04Y+GWL3jXyOIpehvE8MbNGPiVPYu8KiT3Yqwz7pR9nITYfu32ZUNYGX906WAnS
+         RG5nDnH5RymW3YYM/nxiBTGTWcH/c2bTdVH5HayQReMlUoXxJWK3Nuuzvi2RUoThWP5Y
+         pd8aGPmGbfpgKz6MCtUbyUQ3ylN77oDcwGfaWsVoefwSGNWO0XbInUAvWU+ytdJJuchg
+         +P8A==
+X-Gm-Message-State: APjAAAWR+EPTXobbiS0dy3jE0aVfIETB5CnS/m4GBFHxh7j3Iwe+wMrC
+	3lwvUXUN/8IqNIpAniMNP/JOgG1q
+X-Google-Smtp-Source: APXvYqwIqZOYi9mvjdn0iimub7v9B60I6d7KKXeZquWe1Pr/eslT0Xu7GS9+OfBsnYoh9G9/uWt2wg==
+X-Received: by 2002:ac8:5143:: with SMTP id h3mr8209056qtn.26.1569070769940;
+        Sat, 21 Sep 2019 05:59:29 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (1.0)
+Message-Id: <B2F781BF-7762-4FCF-99FA-4B46A349C49B@gmail.com>
+X-Mailer: iPhone Mail (16G102)
+Date: Sat, 21 Sep 2019 08:59:28 -0400
+From: Rich Persaud <persaur@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] OSS platform security 
+To: oss-security@lists.openwall.com
 
-Hello all,
-A double free vulnerability was found in netlink_dump, which could cause a denial of service or possibly other unspecified impact. 
+If you are working on open firmware, boot loaders or virtualization, there =
+is useful content and references at the conference links below.
 
-Reference:
-------------------
-  --> http://lists.openwall.net/netdev/2016/05/15/69
+Rich
 
-Fixed in upstream:
---------------------
-  --> https://github.com/torvalds/linux/commit/92964c79b357efd980812c4de5c1fd2ec8bb5520#diff-8eef21016eaab5b2a6e8019e94f4a710
 
-Could you please assign a CVE for this vulnerability? 
+Open-Source Firmware Conference, Sep 3-6, 2019
+2019 slides: https://osfc.io/schedule
+2018 videos: https://osfc.io/archive
 
-Thank you.
+Linux Plumbers 2019 Secure Boot microconference, Sep 11, 2019
+Notes: https://etherpad.net/p/LPC2019_System_Boot_and_Security/export/html
+
+Platform Security Summit, Oct 1-3, 2019
+2019 speakers: https://platformsecuritysummit.com
+2018 videos: https://platformsecuritysummit.com/2018/videos
+
