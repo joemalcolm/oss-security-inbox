@@ -1,130 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/13/4
-Message-ID: <20190313171640.GB90773@TC-275.local>
-Date: Wed, 13 Mar 2019 10:16:40 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2019-5419] Denial of Service Vulnerability in Action View
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/24/2
+Message-ID: <CAFcO6XOjcW7g=sS6DbjRY983i1nteHyA2nNBK_+Gbj6OmFVNXQ@mail.gmail.com>
+Date: Tue, 24 Sep 2019 18:28:40 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-16714: info leak in RDS rds6_inc_info_copy
 Content-Type: text/plain; charset=utf-8
 
-There is a potential denial of service vulnerability in MODULE / COMPONENT.
-This vulnerability has been assigned the CVE identifier CVE-2019-5419.
+Hi, there is a info leak vulnerability in rds modules in linux kernel.
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     6.0.0.beta3, 5.2.2.1, 5.1.6.2, 5.0.7.2, 4.2.11.1
+CVE-2019-16714
+================
+description:
 
-Impact
-------
-Specially crafted accept headers can cause the Action View template location
-code to consume 100% CPU, causing the server unable to process requests.  This
-impacts all Rails applications that render views.
+In the Linux kernel before 5.2.14, rds6_inc_info_copy in net/rds/recv.c
+allows attackers to obtain sensitive information from kernel stack memory
+because tos and flags fields are not initialized.
 
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
 
-Releases
---------
-The 6.0.0.beta3, 5.2.2.1, 5.1.6.2, 5.0.7.2, and 4.2.11.1 releases are
-available at the normal locations.
+Fixed in
+https://github.com/torvalds/linux/commit/7d0a06586b2686ba80c4a2da5f91cb10ffbea736
 
-Workarounds
------------
-This vulnerability can be mitigated by wrapping `render` calls with
-`respond_to` blocks.  For example, the following example is vulnerable:
+================
 
-```
-class UserController < ApplicationController
-  def index
-    render "index"
-  end
-end
-```
+credit by :
 
-But the following code is not vulnerable:
+the ADLab of venustech.
 
-```
-class UserController < ApplicationController
-  def index
-    respond_to |format|
-      format.html { render "index" }
-    end
-  end
-end
-```
-
-Implicit rendering is impacted, so this code is vulnerable:
-
-```
-class UserController < ApplicationController
-  def index
-  end
-end
-```
-
-But can be changed this this:
-
-```
-class UserController < ApplicationController
-  def index
-    respond_to |format|
-      format.html { render "index" }
-    end
-  end
-end
-```
-
-Alternatively to specifying the format, the following monkey patch can be
-applied in an initializer:
-
-```
-$ cat config/initializers/formats_filter.rb
-# frozen_string_literal: true
-
-ActionDispatch::Request.prepend(Module.new do
-  def formats
-    super().select do |format|
-      format.symbol || format.ref == "*/*"
-    end
-  end
-end)
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 6-0-action-view-dos.patch - Patch for 6.0 series
-* 5-2-action-view-dos.patch - Patch for 5.2 series
-* 5-1-action-view-dos.patch - Patch for 5.1 series
-* 5-0-action-view-dos.patch - Patch for 5.0 series
-* 4-2-action-view-dos.patch - Patch for 4.2 series
-
-Please note that only the 5.2.x, 5.1.x, 5.0.x, and 4.2.x series are supported
-at present. Users of earlier unsupported releases are advised to upgrade as
-soon as possible as we cannot guarantee the continued availability of security
-fixes for unsupported releases.
-
-Also note that the patches for this vulnerability are the same as CVE-2019-5418.
-
-Credits
--------
-Thanks to John Hawthorn <john@...thorn.email> of GitHub
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "4-2-action-view-dos.patch" of type "text/plain" (4299 bytes)
-
-View attachment "5-0-action-view-dos.patch" of type "text/plain" (3713 bytes)
-
-View attachment "5-1-action-view-dos.patch" of type "text/plain" (3713 bytes)
-
-View attachment "5-2-action-view-dos.patch" of type "text/plain" (3713 bytes)
-
-View attachment "6-0-action-view-dos.patch" of type "text/plain" (3732 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
