@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2011" "Friday" "16" "June" "2017" "15:12:46" "+0200" "Peter Korsgaard" "peter@korsgaard.com" "<8760fwhy9d.fsf@dell.be.48ers.dk>" "71" "Re: [oss-security] two vulns in  uClibc-0.9.33.2" "^Cc:" nil nil "6" "2017061613:12:46" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        peter@korsga Jun 16   71/2011  " thread-indent "\"Re: [oss-security] two vulns in  uClibc-0.9.33.2\"\n") "<tencent_18C312B86EA079DA42B11D83@qq.com>" ("<tencent_18C312B86EA079DA42B11D83@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["571" "Tuesday" "24" "September" "2019" "18:28:40" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "24" nil nil nil nil "9" nil nil (number mark "U       butterflyhua Sep 24   24/571   " thread-indent "\"[oss-security] CVE-2019-16714: info leak in RDS rds6_inc_info_copy\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-16714: info leak in RDS rds6_inc_info_copy" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17898 invoked by uid 550); 16 Jun 2017 13:46:49 -0000
+Received: (qmail 25932 invoked by uid 550); 24 Sep 2019 11:10:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,116 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29852 invoked from network); 16 Jun 2017 13:13:01 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 30037 invoked from network); 24 Sep 2019 10:29:03 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=VpivsViFxasAp+UEBeAEdmAVKwv7yxfkWOD42B2eA+c=;
-        b=qCD2LqBicKWYo8XOF2kEuqD5vJOvdNRyKWQR5N+nKuneJUr5osgrEqh9OYd1wgmNOu
-         y7gIPSejdP7lBHFUd9PPosBUzPkZ04wJkr86GHDAx/P4KiIToQzDO+8CLfmQvTkJJMid
-         oZI3CzYqUQ0z7bMacYgnGPOoMalcE4vY8q2155G/nOSL/bNBN6XNXPWzG6NiP0yGxCtA
-         Jw2x1OhBNEO+xlb0WJv4BrApoGLnN4tJ7n/quk/4vPmTF5tZe008eAFrc1tffSLNskM0
-         VLKHZqCE1/HdF2tPKW6afCDteK6mr67FOy4vOEn+qosCL/DsDTE+QLT/lRFe6PWdbKAS
-         g+Iw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=SELhgMb3+zH8LyveETWy2x0kF6F9RNcv3nXJK9d6x6E=;
+        b=Nhuru8nL5JjcXsqU7kZiJQVMwypmoo3kI88gwPAFkmXAJNJEYkJMHOsP4Tt7Cd6vJZ
+         EJ6KZyTzwHFky3HKroKkbV0iZ9m0XnyGkHo4o+gyPChahUeEFOzZyW0ETeyKLSS1PwFg
+         CN1Xyac8HLsMvh20UqEPcW1eZ4Sc4mPnenHkHG/3dOGYXOGJ7Ighbov9srYdGUCpY5ey
+         myMltdQC/mnn0gLZcdi/z4s4Lbt1o8iAuexK3qskrhUM3HJK3u31EoQ19xEY5EtAf2TG
+         Dr4vevgGRCYhYkVyXjWbNWCaYuylLmRtHapnalVQX6NwE+IKtMOGTJ2KTyARlyxlX5R0
+         nXcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=VpivsViFxasAp+UEBeAEdmAVKwv7yxfkWOD42B2eA+c=;
-        b=bmWMi7QS+T2WqJxiiM+KMqRLeBaEWByZgYkxCvoAIGplknp6M0WhswNlx3CWcM/r/U
-         gBwbaUQ7hn7HuqNyw61ZVPXYGJ1ivZFrSnQqlnZSw+lEwhSpV8iMkg6afa6eJ1WHN17x
-         PxMAozZJEmcDS29VxxzJoSxZ5cY/rAIKo6ZMuEVRVm/v8f2KYXDNJABBIah8iyHTcTUE
-         nTJBZw5M6EAyDDxpRHHpE3huBU5aqHxVP+zGUcmfQa68leyVy+TN3yYrPS0KEiaKwkoE
-         CufqBGgEMh0p7YHsl4hT3dk1wsJHin0WjfyjQJJf1dYyx7I1M1KwSQjD5sj6y+UtcSua
-         EiAg==
-X-Gm-Message-State: AKS2vOx1gTzyymwdn+hAgErLhiLQ3nHHweSP3P/WgtHKkFNSv46cLjqe
-	oF9MKJAgEM2guQ==
-X-Received: by 10.80.216.136 with SMTP id p8mr7486964edj.136.1497618769925;
-        Fri, 16 Jun 2017 06:12:49 -0700 (PDT)
-References: <tencent_18C312B86EA079DA42B11D83@qq.com>
-In-Reply-To: <tencent_18C312B86EA079DA42B11D83@qq.com> (fefe's message of
-	"Fri, 16 Jun 2017 11:53:09 +0800")
-Message-ID: <8760fwhy9d.fsf@dell.be.48ers.dk>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=SELhgMb3+zH8LyveETWy2x0kF6F9RNcv3nXJK9d6x6E=;
+        b=TxwkSnYlghI6nEjrBZsHzD2aCAW6OMan3FbGJ7xP96Mf0JO5S8y0gGhdDAgrZNmVDX
+         JSahiUJaEkUkIa5xk9FxMN3lhccWKWrKI+U3Av021oIDhIvj78DEJq9yvCXf1OlEX3rp
+         aQoPeW1ldrU6qow5M36NIBgvFEDA6DxWaCow/vVJcsppYZebu3F+MzRFI/VzbHBs1na2
+         8ZebHleR4qyaaSiRB2bIQVsOG8P9FBlHzfs4byoHStlk5yTTg/KFfVmoUhqIt4OYig6r
+         6Rla8e0nnrFLftUdwshUsZfu4VHrs/2lTjIqXz5jq6uT5gky+8lDEHHKIW6J+EkKUEUr
+         az3A==
+X-Gm-Message-State: APjAAAWyY1CTQVy20QH4YnzyJLJEHqLsRiGmibgYv8Q8CoXjpIC59wNT
+	/1F4OEGFAcvsGTVqPl8q1gbnENql1fjaS6LIC2cCX3p0
+X-Google-Smtp-Source: APXvYqyhk/gSpY79dRkKAmex8Ze2SL9VWDB6pLv3I+fAy6OtAhSmvDgzfwcvGj4Sdd0iK5p6n2VfKHl7+3t9IhihnBw=
+X-Received: by 2002:a19:4f5a:: with SMTP id a26mr1436807lfk.116.1569320931679;
+ Tue, 24 Sep 2019 03:28:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Cc: "oss-security" <oss-security@lists.openwall.com>
-Date: Fri, 16 Jun 2017 15:12:46 +0200
-From: Peter Korsgaard <peter@korsgaard.com>
-Reply-To: oss-security@lists.openwall.com
-Sender: Peter Korsgaard <jacmet@gmail.com>
-Subject: Re: [oss-security] two vulns in  uClibc-0.9.33.2
-To: "fefe" <qbenjin@qq.com>, wbx@openadk.org
+From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Date: Tue, 24 Sep 2019 18:28:40 +0800
+Message-ID: <CAFcO6XOjcW7g=sS6DbjRY983i1nteHyA2nNBK_+Gbj6OmFVNXQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000abe0da05934a0083"
+Subject: [oss-security] CVE-2019-16714: info leak in RDS rds6_inc_info_copy
 
->>>>> "fefe" == fefe  <qbenjin@qq.com> writes:
+--000000000000abe0da05934a0083
+Content-Type: text/plain; charset="UTF-8"
 
- > I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
+Hi, there is a info leak vulnerability in rds modules in linux kernel.
 
-uClibc is dead. Active development happens on uClibc-ng. Is uClibc-ng
-also affected by these issues?
+CVE-2019-16714
+================
+description:
 
-
-> one is about line 2682 of get_subexp.c :
-
-I take it you are referring to libc/misc/regex/regexec.c?
-
-
- > 		if (BE (bkref_str_off >= mctx->input.valid_len, 0))
- > 		{
- > 		  /* If we are at the end of the input, we cannot match.  */
- > 		  if (bkref_str_off >= mctx->input.len)
- > 		    break;
+In the Linux kernel before 5.2.14, rds6_inc_info_copy in net/rds/recv.c
+allows attackers to obtain sensitive information from kernel stack memory
+because tos and flags fields are not initialized.
 
 
- > 		  err = extend_buffers (mctx);
- > 		  if (BE (err != REG1_NOERROR, 0))
- > 		    return err;
+Fixed in
+https://github.com/torvalds/linux/commit/7d0a06586b2686ba80c4a2da5f91cb10ffbea736
 
+================
 
- > 		  buf = (const char *) re_string_get_buffer (&mctx->input);
- > 		}
- > 	      if (buf [bkref_str_off++] != buf[sl_str - 1])
- > 		break; /* We don't need to search this sub expression
-		
- > "bkref_str_off >= mctx->input.valid_len" , when  bkref_str_off == mctx->input.valid_len, "buf [bkref_str_off++] != buf[sl_str - 1]" case Out of one bit bounds read
+credit by :
 
+the ADLab of venustech.
 
- > The poc code like:
-	
- > 	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
- > 	{		
- >         	reg1match_t pmatch[1];
- > 		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
- > 		regfree(&regtmp);
- > 	}
-
-
- > The another is aout line 1837 of regexce.c :
-
-
- > 		check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
- > 			     int subexp_idx, int from_node, int bkref_idx)
- >                 .......
-
-
- > 		  cpos =
- > 		    check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx,
- > 						 dst, bkref_idx);
-
-
-		
- > check_dst_limits_calc_pos_1 recursive calls case DDOS, because of stack exhaustion.
-
-
- > The poc code like:	
-	
- > 	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\xBD", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
- > 	{		
- >         	reg1match_t pmatch[1];
- > 		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
- > 		regfree(&regtmp);
- > 	}
-
--- 
-Bye, Peter Korsgaard
+--000000000000abe0da05934a0083--
