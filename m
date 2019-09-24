@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/08/2
-Message-ID: <alpine.LRH.2.21.1907071720020.20952@fairfax.gathman.org>
-Date: Sun, 7 Jul 2019 17:29:25 -0400 (EDT)
-From: "Stuart D. Gathman" <stuart@...hman.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/24/1
+Message-ID: <67c3c942b4854b6e8a14a29d16c6af96@tencent.com>
+Date: Tue, 24 Sep 2019 09:29:10 +0000
+From: peterpi(皮罡) <peterpi@...cent.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, cradminzhang(张博) <cradminzhang@...cent.com>
+Subject: Re: CVE-2019-14835: QEMU-KVM Guest to Host Kernel Escape Vulnerability: vhost/vhost_net kernel buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 7 Jul 2019, Georgi Guninski wrote:
+Reproduce method of CVE-2019-14835 with Ubuntu and virt-manager.
 
-> No, it is not recent. The Halloween Documents are from 1998,
-> which makes 21 years.
+The reproduce method will hit the log buffer overflow in function get_indirect and crash the host kernel.
+We will use virt-manager to do live migrate. If you have your own live migrate method, then you only need the "setup guest" step, then trigger live migrate to test the bug.
 
-Just as young people today have forgotten the "crimes" (not
-necessarily illegal, but widely regarded at unethical) of Microsoft
-in the past, so most of the management responsible for those crimes
-at Microsoft have moved on, and the company is changing.
+Two Hosts: A local host installed Ubuntu 18.04 LTS with [your target kernel] and with virt-manager installed, and can create and start a QEMU-KVM VM by virt-manager. And a remote host with same setup (no need latest mainline stable kernel) for live migrate.
+Guest: Create a Ubuntu 16.04 LTS guest by virt-manager on local host.
 
-On the same lines, do you believe Google continues to faithfully
-follow its founding mandate of "Don't be Evil"?
+We will setup virt-manager live migrate connection, and setup the guest kernel with indirect desc table, then trigger live migrate by virt-manager, local host kernel will be crashed.
+It seems virt-manger will use vhost/vhost_net as default virtio network backend on my environment.
 
-The only thing you can count on staying the same is the profit motive,
-it is required by law for a publicly owned corporation.  But profit can
-be pursued ethically - or not.
+1> Connect to remote host for live migrate
+Start virt-manager on local host by : sudo virt-manager --no-fork
+After using --no-fork, you can add connection to remote host using SSH.
+In the virt-manager main window, select File -> Add Connection -> Connect to remote host (Method: SSH, Username : [remote host ssh login username], Hostname : [remote host IP])
+Click connect, then in the "sudo virt-manager --no-fork" shell will let you to input SSH login password.
 
--- 
- 	      Stuart D. Gathman <stuart@...hman.org>
-"Confutatis maledictis, flamis acribus addictis" - background song for
-a Microsoft sponsored "Where do you want to go from here?" commercial.
+
+2> setup guest
+After connected to remote host, you can start your guest to setup it.
+Start guest, virt-manager will new a VM window to start your guest vm.
+
+In guest, I cloned Linux kernel from ubuntu kernel source git(git://kernel.ubuntu.com/ubuntu/ubuntu-xenial.git) according to ubuntu wiki.
+And "git checkout Ubuntu-hwe-4.15.0-50.54_16.04.1". Build the kernel with attached patches and install the built kernel.
+
+In the guest with built kernel, do below steps:
+
+root@...Standard-PC-i440FX-PIIX-1996:~# find /sys -name "*mergeable*"
+/sys/devices/pci0000:00/0000:00:03.0/virtio0/net/ens3/queues/rx-0/virtio_net/mergeable_rx_buffer_size
+root@...Standard-PC-i440FX-PIIX-1996:~# echo 60000 > /sys/devices/pci0000:00/0000:00:03.0/virtio0/net/ens3/queues/rx-0/virtio_net/mergeable_rx_buffer_size
+root@...Standard-PC-i440FX-PIIX-1996:~# modprobe -r virtio_net
+root@...Standard-PC-i440FX-PIIX-1996:~# modprobe  virtio_net
+root@...Standard-PC-i440FX-PIIX-1996:~#
+
+
+3> Trigger live migrate
+In the virt-manager VM window, select Virtual Machine -> Migrate -> if the "Address" field displays remote host machine name, change it to remote host IP.
+When start migrate, it will cause local host kernel crash after some seconds.
+
+Peter Pi of Tencent Blade Team
+
+Content of type "text/html" skipped
+
+Download attachment "poc_guest_virtio_ring.diff" of type "application/octet-stream" (2790 bytes)
+
+Download attachment "poc_guest_virtio_net.diff" of type "application/octet-stream" (2024 bytes)
