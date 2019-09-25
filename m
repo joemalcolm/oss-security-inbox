@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10739" "Tuesday" "14" "August" "2018" "15:42:49" "+0200" "X41 D-Sec GmbH Advisories" "advisories@x41-dsec.de" "<724f3f14-e7d2-c00a-6a38-eb73c1450fed@x41-dsec.de>" "304" "[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-002: Multiple Vulnerabilities in OpenSC" nil nil nil "8" "2018081413:42:49" "[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-002: Multiple Vulnerabilities in OpenSC" (number mark "U       advisories@x Aug 14  304/10739 " thread-indent "\"[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-002: Multiple Vulnerabilities in OpenSC\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10052" "Wednesday" "25" "September" "2019" "13:56:52" "+0200" "SBA Research Advisory" "advisory@sba-research.org" nil "239" nil nil nil nil "9" nil nil (number mark "U       advisory@sba Sep 25  239/10052 " thread-indent "\"[oss-security] [SBA-ADV-20190911-01] CVE-2019-16524: Easy FancyBox Wordpress Plugin 1.8.17 or below Stored Cross-site Scripting (XSS)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SBA-ADV-20190911-01] CVE-2019-16524: Easy FancyBox Wordpress Plugin 1.8.17 or below Stored Cross-site Scripting (XSS)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30326 invoked by uid 550); 14 Aug 2018 13:44:43 -0000
+Received: (qmail 17837 invoked by uid 550); 25 Sep 2019 12:37:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,366 +12,300 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23716 invoked from network); 14 Aug 2018 13:43:07 -0000
-To: bugtraq@securityfocus.com, oss-security@lists.openwall.com,
- fulldisclosure@seclists.org
-From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
-Openpgp: preference=signencrypt
-Autocrypt: addr=advisories@x41-dsec.de; prefer-encrypt=mutual; keydata=
- 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
- S5yAdSfAS//MdarwnFJC6O/YHWYwRw==
-Message-ID: <724f3f14-e7d2-c00a-6a38-eb73c1450fed@x41-dsec.de>
-Date: Tue, 14 Aug 2018 15:42:49 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+Received: (qmail 7516 invoked from network); 25 Sep 2019 11:57:09 -0000
+To: <oss-security@lists.openwall.com>
+From: SBA Research Advisory <advisory@sba-research.org>
+Autocrypt: addr=advisory@sba-research.org; keydata=
+ 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 XQ==
+Message-ID: <72af8786-98dd-f006-fefd-4761bb8fb005@sba-research.org>
+Date: Wed, 25 Sep 2019 13:56:52 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.0
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature";
+	boundary="u2vqMjKXKWQfzPckPkW29uVXedMcTVBVW"
+X-Originating-IP: [10.2.0.33]
+Subject: [oss-security] [SBA-ADV-20190911-01] CVE-2019-16524: Easy FancyBox Wordpress Plugin
+ 1.8.17 or below Stored Cross-site Scripting (XSS)
+
+--u2vqMjKXKWQfzPckPkW29uVXedMcTVBVW
+Content-Type: multipart/mixed; boundary="53WJFzpGCLWplQkX6eU0NBHra57HiMTm2";
+ protected-headers="v1"
+From: SBA Research Advisory <advisory@sba-research.org>
+To: oss-security@lists.openwall.com
+Message-ID: <72af8786-98dd-f006-fefd-4761bb8fb005@sba-research.org>
+Subject: [SBA-ADV-20190911-01] CVE-2019-16524: Easy FancyBox Wordpress Plugin
+ 1.8.17 or below Stored Cross-site Scripting (XSS)
+
+--53WJFzpGCLWplQkX6eU0NBHra57HiMTm2
+Content-Type: multipart/mixed;
+ boundary="------------B4CF1FAAAA0959F1C7A7453B"
+Content-Language: en-US
+
+This is a multi-part message in MIME format.
+--------------B4CF1FAAAA0959F1C7A7453B
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US-large
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] X41 D-Sec GmbH Security Advisory X41-2018-002: Multiple
- Vulnerabilities in OpenSC
+Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+# Easy FancyBox Wordpress Plugin Stored Cross-site Scripting (XSS) #
 
-X41 D-Sec GmbH Security Advisory: X41-2018-002
+Link: https://github.com/sbaresearch/advisories/tree/public/2019/SBA-ADV-20=
+190911-01_Easy_FancyBox_WP_Plugin_Stored_XSS
 
-Multiple Vulnerabilities in OpenSC
-==================================
+## Vulnerability Overview ##
 
+The Easy FancyBox WordPress Plugin Version 1.8.17 is susceptible to Stored
+Cross-site Scripting in the Settings > Media admin page `/wp-admin/options-=
+media.php`
+due to improper encoding of arbitrarily submitted setting parameters. The v=
+ulnerability
+affects every publicly accessible page of the WordPress site.
 
-Overview
-- --------
-Confirmed Affected Versions: 0.18.0
-Confirmed Patched Versions: possibly 0.19.0
-Vendor: OpenSC
-Vendor URL: https://github.com/OpenSC/OpenSC
-Credit: X41 D-Sec GmbH, Eric Sesterhenn
-Status: Public
-Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2018-002-OpenSC/
+* **Identifier**            : SBA-ADV-2010911-01
+* **Type of Vulnerability** : Cross-site Scripting
+* **Software/Product Name** : [Easy FancyBox](https://wordpress.org/plugins=
+/easy-fancybox/)
+* **Vendor**                : [RavanH](https://status301.net/)
+* **Affected Versions**     : <=3D 1.8.17
+* **Fixed in Version**      : 1.8.18
+* **CVE ID**                : CVE-2019-16524
+* **CVSSv3 Vector**         : AV:N/AC:L/PR:H/UI:R/S:U/C:L/I:L/A:N
+* **CVSSv3 Base Score**     : 3.5 (Low)
 
+## Vendor Description ##
 
-Summary and Impact
-- ------------------
-Multiple issues have been identified in OpenSC, ranging from stack
-based buffer overflows to out of bounds reads and writes on the heap.
-They can be triggered by malicious smartcards sending malformed
-responses to APDU commands. Additionally to those fixes reported here,
-a lot of minor issues (eg. OOB reads and similar) have been reported
-and fixed. The OpenSC team (especially Frank Morgner) did an excellent
-job on identifying and fixing further issues.
-Due to the large amount of issues, no individual issues have been
-rated with CVSS / CVE ID yet.
-X41 did not perform a full test or audit on the software, but tried to
-help identifying as many bugs as possible in over the course of a year.
+> Easy FancyBox plugin for WordPress websites gives you a flexible and
+> aesthetic light box solution for just about all media links on your websi=
+te.
+> Easy FancyBox uses an updated version of the traditional FancyBox jQuery
+> extension and is WP 3+ Multi-Site compatible. After activation you can fi=
+nd
+> a new section FancyBox on your Settings > Media admin page where you can
+> manage the media light box options.
 
+Source: <https://wordpress.org/plugins/easy-fancybox/>
 
-Product Description
-- -------------------
-OpenSC provides a set of libraries and utilities to work with smart
-cards. Its main focus is on cards that support cryptographic
-operations, and facilitate their use in security applications such as
-authentication, mail encryption and digital signatures.
+## Impact ##
 
-OOB Write in musclelistfiles()
-==============================
-In function muscle_list_files() in file src/libopensc/card-muscle.c an
-out of bounds write might occur, since bufLen is not checked.
+By exploiting the documented vulnerability, an attacker can execute
+JavaScript code in a victim's browser within the origin of the target
+site. This can be misused, for example, by taking over future administrative
+web management sessions.
 
-{% highlight c %}
-static int musclelistfiles(sccardt card, u8 *buf, sizet bufLen)
-{
-        muscleprivate_t priv = MUSCLEDATA(card);
-        mscfst fs = priv->fs;
-        int x;
-        int count = 0;
-        mscfscheckcache(priv->fs);
-        for(x = 0; x < fs->cache.size; x++) {
-                u8 oid= fs->cache.array[x].objectId.id;
-                scdebug(card->ctx, SCLOGDEBUGNORMAL,
-                        "FILE: %02X%02X%02X%02X\n",
-                        oid[0],oid[1],oid[2],oid[3]);
-                if(0 == memcmp(fs->currentPath, oid, 2)) {
-                        buf[0] = oid[2];
-                        buf[1] = oid[3];
-                        if(buf[0] == 0x00 && buf[1] == 0x00) continue;
-/* No directories/null names outside of root */
-                        buf += 2;
-                        count+=2;
-                }
-        }
-        return count;
-}
-{% endhighlight %}
+## Vulnerability Description ##
 
+Several parameters of the file `/inc/class-easyfancybox.php` are affected by
+stored cross-site scripting vulnerabilities. The file is a part of the
+Settings > Media admin page of the WordPress instance.
 
-OOB Write in tcosselectfile()
-=============================
-In function tcos_select_file) in file src/libopensc/card-tcos.c a
-filename is extracted from an APDU response and written into the
-internal file->name variable.
+These setting parameters are embedded in CSS blocks without encoding or
+sanitization, that are sent to the client's browser. The style sheet is sent
+along with every publicly accessible page, no matter if the plugin is needed
+on some pages or not.
 
-{% highlight c %}
-                case 0x84:
-                        memcpy(file->name, d, len);
-                        file->namelen = len;
-                        break;
-{% endhighlight %}
+For example, the following parameters are vulnerable:
 
-No check is performed whether the string retrieved from the card fits
-into the buffer, which could trigger an OOB write.
+* `/inc/class-easyfancybox.php`
+  * fancybox_titleColor
+  * fancybox_paddingColor
 
-OOB Write in pivvalidategeneral_authentication()
-================================================
-In case piv_validate_general_authentication()in
-src/libopensc/card-piv.c is called with a datalen parameter greater
-than 4096, an out of bound write occurs. Currently no caller seems to
-do this.
+There are many more vulnerable parameters, the above listed are given only =
+as
+an example.
 
-OOB Write in gemsafegetcert_len()
-=================================
-The function gemsafe_get_cert_len() in file
-src/libopensc/pkcs15-gemsafeV1.c might write beyond the gemsafe_prkeys
-and gemsafe_cert arrays in case more than 12 containers are stored on
-the card.
+The vulnerabilities are located in `/inc/class-easyfancybox.php`:
 
-{% highlight c %}
-        ind = 2; /* skip length */
-        while (ibuf[ind] == 0x01) {
-                if (ibuf[ind+1] == 0xFE) {
-                        gemsafeprkeys[i].ref = ibuf[ind+4];
-                        sclog(card->ctx, "Key container %d is
-allocated and uses keyref %d",
-                                        i+1, gemsafeprkeys[i].ref);
-                        ind += 9;
-                }
-                else {
-                        gemsafeprkeys[i].label = NULL;
-                        gemsafecert[i].label = NULL;
-                        sc_log(card->ctx, "Key container %d is
-unallocated", i+1);
-                        ind += 8;
-                }
-                i++;
-        }
-{% endhighlight %}
+```php
+[...]
+		if ( !empty($paddingColor) )
+			$content_style .=3D 'border-color:'.$paddingColor.';';
+[...]
+		if ( !empty($titleColor) )
+			$styles .=3D '#fancybox-title,#fancybox-title-float-main{color:'.$titleC=
+olor.'}';
+[...]
+```
+
+As the above code snippet shows, the parameters `$paddingColor` and
+`$titleColor` contains user input and is concatenated into `$content_style`
+or respectively `$styles` without performing any sanitization or escaping.
+
+## Proof of Concept ##
+
+An attacker can exploit this vulnerability by, firstly having access to the
+`Settings > Media page` within the administrative portal and secondly setti=
+ng
+as `$titleColor` the following string:
 
 
-OOB Write in utilaclto_str()
-============================
-In function util_acl_to_str() in file src/tools/util.c no checks are
-performed whether the string put together fits into line, which could
-be abused to trigger limited out of bounds writes.
+```text
+#44}</style><img src=3D"" onerror=3D"alert(1)">
+```
 
-OOB Write in readpublickey() and readprivatekey()
-=================================================
-In function read_public_key() in file src/tools/cryptoflex-tool.c the
-bufsize variable is overwritten with file->size retrieved from the
-smartcard. This could be bigger than 2048, allowing for a stack based
-buffer overflow in the sc_read_binary() call.
+This leads to the following HTML response (shortened for readability):
 
-{% highlight c %}
-        u8 buf[2048], *p = buf;
-        sizet bufsize, keysize;
-        r = selectappdf();
-        if (r)
-                return 1;
-        scformatpath("I1012", &path);
-        r = scselectfile(card, &path, &file);
-        if (r) {
-                fprintf(stderr, "Unable to select public key file:
-%s\n", scstrerror(r));
-                return 2;
-        }
-        bufsize = file->size;
-        scfilefree(file);
-        r = screadbinary(card, 0, buf, bufsize, 0);
-{% endhighlight %}
+```html
+<style id=3D'fancybox-inline-css' type=3D'text/css'>
+#fancybox-title,#fancybox-title-float-main{color:#44}</style><img src=3D"" =
+onerror=3D"alert(1)">}
+</style>
+```
 
-The same issue can be found in read_private_key()
+## Recommended Countermeasures ##
 
-{% highlight c %}
-        bufsize = file->size;
-        scfilefree(file);
-        r = screadbinary(card, 0, buf, bufsize, 0);
-{% endhighlight %}
+We recommend strictly whitelisting the user input before it is being used. =
+The only allowed characters should be alphanumeric characters and the hash =
+sign.
+
+## Timeline ##
+
+* `2019-09-11` Identified the vulnerability in version 1.8.17
+* `2019-09-11` Contacted the vendor via support
+* `2019-09-16` Vendor closed the vulnerability in version 1.8.18
+* `2019-09-23` Publication of CVE-2019-16524
 
 
-OOB Write in decrypt_response()
-===============================
-In function decrypt_response() in file src/libopensc/card-epass2003.c
-an out of bounds overwrite can occur. No check is performed if the
-plaintext buffer fits into the out buffer before copying, leading to a
-memory overwrite.
+## References ##
 
-{% highlight c %}
-        memcpy(out, plaintext, inlen - 2);
-        *outlen = in_len - 2;
-        return 0;
-{% endhighlight %}
+* ([Easy Fancybox Plugin Page](https://wordpress.org/plugins/easy-fancybox/=
+))
 
+## Credits ##
 
-OOB Write in cacgetserialnrfrom_CUID()
-======================================
-In function cac_get_serial_nr_from_CUID() in file
-src/libopensc/card-cac.c a serial number is copied into serial->value.
-The length argument of the memcpy() is the length of the source, not
-the destination, which can lead to an out of bounds memory write.
+* Jakob Hagl ([SBA Research](https://www.sba-research.org/))
 
-{% highlight c %}
-        if (priv->cacidlen) {
-                serial->len = MIN(priv->cacidlen, SCMAXSERIALNR);
-                memcpy(serial->value, priv->cacid, priv->cacidlen);
-                SCFUNCRETURN(card->ctx, SCLOGDEBUGNORMAL, SC_SUCCESS);
-        }
-{% endhighlight %}
+--------------B4CF1FAAAA0959F1C7A7453B
+Content-Type: application/pgp-keys;
+ name="0xFBB8862F58F775B2.asc"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+ filename="0xFBB8862F58F775B2.asc"
 
+-----BEGIN PGP PUBLIC KEY BLOCK-----=0A=
+=0A=
+mQINBFYydZgBEADJRw9wo4WeBOtCXODKDpyqVaiSSMmEvwIoyu9ZVcQ5yw5wzczu=0A=
+M7bcLUhAEwEsiWmfJy6XzF1N6gBcOErFzh8vz+HZFlMirsm5oZ3aRt8TaMkuoCCh=0A=
+CxxT637yxAFq/7NPq8swiUwps345SI5LuBn34SphQbZvdoPfkIG+VfvyxHOuMM33=0A=
+S+78QGRFZyNMiNjCWscw/1kWIKf61cfX4uzV/dxzvFyRba6zF2rSD0tVURXTDCys=0A=
+3NQ8NFTrLFJ9044005iktRXXSxjTvHzL5qfjLpKHXHWUwzveBaT/rEyS/YGHLP9B=0A=
+SKm8MMpQMUqI5nqq/LUceJmOfIM1loSz/hxGpP54QLYlaC0sJQBciucXkwm2eFoH=0A=
+6N6zS6aVHK527/tCAQdZ3uR1LzuViCK1SnrOuoHrzds5b1/gPegMUn6EatJ5gpO/=0A=
+I3p+uxXHUEjOCgwnY/l5kpyzTAqvgUY/Zl+oI6FfdVDhEjUsZ/JQpZI70HoG9Gp8=0A=
+UTAqrtIjXkPOEQF3xlvDaDHq7R0H5Fsjg1Icpddz7fWjnlwfJGzK2zKOVGaZfKnS=0A=
+NvRqqljkNpc4DyQUe7WsfONhrxID3opavGrNbg7pp/qpCfhOCqtJPECwgmJHHBaN=0A=
+vwDwet4GMcl7F/4NVk0xg7lDMd+GFuYlN8taJpEiVlASDKoB9dxM9pDNSwARAQAB=0A=
+tCRhZHZpc29yeSA8YWR2aXNvcnlAc2JhLXJlc2VhcmNoLm9yZz6JAlUEEwEIAD8C=0A=
+GwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAFiEEL9Wp/yZWFD9OpIt6+7iGL1j3=0A=
+dbIFAl2LVYUFCQsbRu0ACgkQ+7iGL1j3dbKzYA//c97J83NAP6uC/DVXBMmF5zQ0=0A=
++jnvqjbhiqyHSq6gte7rlzHQXL1ljMq4moSv3JwLRLkHggkzHohdhYICq+aZpV53=0A=
+P31wqNeHCSxEuwtL2BrFbVFN4eyXfsgjsqkyqbYmrTx6IrFmeueufXSnkmGsXC95=0A=
+ZlMJv4FjLHUnSNu0SisYzWd8iM3ZavBNwBHVHMVuFUeLT3QoO/Erp6bytch0/vfo=0A=
+1nbkju+tQlsEYHIplUIhRVLClgGl+HzL3CtK38p6UKLhkYuA5KqgaZnBUJLRtfBs=0A=
+pm5eoRUYvm9f2xBDR4QxNiSwyG8Mhc2j/fNqWSTWmlk91JqmEN7wlgCcHZPiDBQo=0A=
+BYZ/GRwFrDxNo9Cx2Y+x0HDVJTL+xa449ra8ZhqLzTtxweAygeK7wJFvR2pwqBo6=0A=
+1UtSexPyGZc+evt3KuDf3lVcjUEw6N770q4f9YM592HosflZ+2MzSnjcyWXLBRzM=0A=
+eK9CS/I0Pus/zqqrp68AlOKH5eRis6pVVdmiM1yAkjp+fsRo9R/a2X+CtMWoUT3O=0A=
+LO24wCWNfISiOQKqUFFka2f2pqC3KLuncskLsE+vUoGbqtxuSMg0M2RvNfszyV4u=0A=
+PVhjVWUl0mB63AlqYMd1OdlJo/j3NnSNkKGDZYEmnqKELSxPAzaTbe4WQ8xNQS9V=0A=
+FLNsY5UtG+MNG8WbOfmJARwEEwECAAYFAlY7DWYACgkQDRrTyTuMq0vDOwf/V2jI=0A=
+i1azdptb8f/WrI9nRp/dMpCwCiEZSTHIkKnQnUzhLYcBBfjSMYwZKCSsfRzD/T45=0A=
+PL5K+7rFMZeuwyJ/MUkdEoSmep7eFsqQw0djc5dd6p0wgRmzwmJ5uqh04v6BMqrE=0A=
+n/ublwPfnjknIMiuBzjOcNwK1oFSIo/iNRqJDmSVtEoAI8By2qNOVjL1HYhnNTLX=0A=
+74ehGPZ13xyI3D8BOh4ysrAdSX5/0EUINjMYDZqQUqg8zsNVb4wGmhzcD3kmZnf+=0A=
+PKNQM5q451xo+3SS0M7TgNo0Gm6qvIgaXjpgG+8sVAg0+Bkg5wcULnrGksaGCq9T=0A=
+xAxWmFv6k9lS2WItobkCDQRWMnWYARAA4RDRVIUR67dvybZKYNclam1vlIazayzi=0A=
+exQlQoqHi1WQoBedGcC57qbtHGXykR35HUShJ6IOy2s6IoA7xq8g12Yf+RBZ4cXs=0A=
+wYknB1nwzRzc/9/xErct+nsI2LIISS2c4F/amvoVtUyGoBDDlh8mPAZwPw/lwch6=0A=
+7e58Nbfr6u0BJFJV7+LAljD7vHT3+PrNy1qS08dyfoEcqogJIYUG/dBMnQRE5S7N=0A=
+Kxr2VLdQomtioJWyajkQiSIWALSMttlKj382UX2sPQrHZZlXirdeVKitdJum6m27=0A=
+XSOKdGeD5WFRw61vFcnhIo+WqYddADJnNpJaaUqKF7ePX0UYHt9eJuVlm7Vcia2s=0A=
+v9G2fSUyB0+DVVrQbGPyLUH+WK0861gNn485XvqUMbTzXzLCi887ON440Lyn19Eh=0A=
+lUeGAQ/s2G7ZFYk8bOSkStTiqOBkRf12nrSMBXdt2vtcPB4EQpQNx+5CgMTpyh8P=0A=
+VTl2KLsQI7AbpcOvBFcYh6q3vI9IXvXbLK0oswfx/rDUmM869cgchqTFdj1kaUXG=0A=
+E4thRc0/aAdMrsdso2Xu5no1ATWbD3M0CpFBR14UtxZuJDQFjtMC8CcNYJwxnidS=0A=
+jeX1No0sNi/p1S+BpUFG0qtGjz7RRkElnpCHy8+cOExBaguQl7fHrxmM5ThtzEIh=0A=
+jO2xZL7ljVUAEQEAAYkCPAQYAQgAJgIbDBYhBC/Vqf8mVhQ/TqSLevu4hi9Y93Wy=0A=
+BQJdi1WRBQkLG0b5AAoJEPu4hi9Y93WyyeIP/2rdPyuiNePH8zuOavSVxl3JKfk6=0A=
+Qjhn0C/k7glHf+40td/CH9ZMrUF+FlVtKeN73HGCQzIyJ9feLJ/jec3PnOXuGPuo=0A=
+JLqv2uL2G34ep8xffq9zaY/+uVfNy5N4yC0lwlqkbO14Ferjw/chvqMMB4XY9Gov=0A=
+Xj7b6z/nip5ryiPmu8a8tC5Lk7hlbLq7Q2SkiCtII0AGY7zHTNpjYFlKfjm/lnqv=0A=
+nbVrVn3aUTuML9zPjOmfBd17pUJF24IaLN47Og/Vd8HSZNcpOzgrtgmtWcE6TtUW=0A=
++BH8wQAq5WqrO8c5N/FXqzk/pEakLfTt9vqSjpi7lhoo2v5wb0kGkhJDb/G2pOyw=0A=
+nXsxgTJQ9CqBTXlLZZd85EqogMi9EIJ1CiLujl+wdWkbO1kkzrZc3J4K7Lp5mjA0=0A=
+uF3Ke5tS1dvl2HHbCiR5HITXdJksi4sS1TJA+PTQ0b4H6PtF4a8p6Pm4MvatvnX6=0A=
+tt09pZM8WqVVD7bg+GD30Dv5sEeqmjlZrsoLSY/Q8ZfpFSx2PhJQnqxDS1JXI6C6=0A=
+Bij9bQ5aLT/w8q0uPXIlHQ5n7X+Tguv2mCqGb+NlIywdeMCTvy9AZyIx6EhdTbdP=0A=
+mmjvg7S103T9xddjloNC44d583h+TXdCTUDKALLZtST5krhgkY4pEqmKD7372o0k=0A=
+d9YC/jDTSC/QUJdd=0A=
+=3DIISl=0A=
+-----END PGP PUBLIC KEY BLOCK-----=0A=
 
-Off by One Write in scpkcs15emuesteid_init()
-============================================
-In function sc_pkcs15emu_esteid_init() in file
-src/libopensc/pkcs15-esteid.c an off by one write with a \x00 occurs
-in case the sc_read_record() functions returns sizeof(buf) read bytes.
+--------------B4CF1FAAAA0959F1C7A7453B--
 
-{% highlight c %}
-        /* read the serial (document number) */
-        r = screadrecord (card, SCESTEIDPDDOCUMENTNR, buff,
-sizeof(buff), SCRECORDBYRECNR);
-        SCTESTRET(card->ctx, SCLOGDEBUG_NORMAL, r, "read document
-number failed");
-        buff[r] = '\0';
-{% endhighlight %}
+--53WJFzpGCLWplQkX6eU0NBHra57HiMTm2--
 
+--u2vqMjKXKWQfzPckPkW29uVXedMcTVBVW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Double Free in scfilesetsecattr()
-=================================
-In function sc_file_set_sec_attr() in file src/libopensc/sc.c a double
-free occurs in case sec_attr_len is equal to 0, since the call to
-realloc() will free file->sec_attr and return NULL. The variable is
-then freed again in the error handling path.
-
-{% highlight c %}
-        tmp = (u8 *) realloc(file->secattr, secattrlen);
-        if (!tmp) {
-                if (file->secattr)
-                        free(file->secattr);
-                file->secattr     = NULL;
-                file->secattrlen = 0;
-                return SCERROROUTOFMEMORY;
-        }
-{% endhighlight %}
-
-
-Double Free in read_file()
-==========================
-In function read_file() in file src/tools/egk-tool.c a double free can
-be triggered in case two calls to sc_select_file() return a file->size
-of zero. The first call to realloc() frees the memory, the second
-frees it again.
-
-{% highlight c %}
-        len = file ? file->size : 4096;
-        p = realloc(*data, len);
-        if (!p) {
-                goto err;
-        }
-{% endhighlight %}
-
-
-Double free in scpkcs15emuschsminit()
-=====================================
-In function sc_pkcs15emu_sc_hsm_init() in file
-src/libopensc/pkcs15-sc-hsm.c a double free can occur, since this
-function can be called twice. The call to realloc() with a size of 0
-would free priv->EF_C_DevAut with a second call freeing the already
-freed memory.
-
-{% highlight c %}
-                /* save EFCDevAut for further use */
-                ptr = realloc(priv->EFCDevAut, len);
-                if (ptr) {
-                        memcpy(ptr, efbin, len);
-                        priv->EFCDevAut = ptr;
-                        priv->EFCDevAut_len = len;
-                }
-                ptr = efbin;
-{% endhighlight %}
-
-
-Unbound Recursion in iaseccselectmf()/iaseccselectfile()
-========================================================
-Function iasecc_select_file() in file src/libopensc/card-iasecc.c
-calls iasecc_select_mf() in the same file, which calls
-iasecc_select_file() again. This can lead to an infinite recursion
-exhausting the stack.
-
-Timeline
-========
-2018-02-03 Issues found
-2018-04-18 Vendor contacted
-2018-04-18 Vendor reply
-2018-05-18 Technical details provided
-2018-05-24 Private git branch created, fixing started
-2018-08-11 Patched version released: https://github.com/x41sec/OpenSC
-2018-08-11 Advisory released
-- -- 
-X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
-T: +49 241 9809418-0, Fax: -9
-Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
-Geschäftsführer: Markus Vervier
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAlty3FkACgkQo5Klpg50
-CxCAsA//alpu0RpyO1ar9wyKSVFKAYjVEtqrxKyhejQVX74dWV9oC6NB8iRM5hPE
-uQC9CHSI7XS/1SsPlDExazDBVsgIW5i6aq6T1nlLAYjIQ9+osAyM5eV/K/ls9l1A
-MfjGuGK+jRY98uu00Zgux6Zzv8F9bouoG5B6qs/cvlp1kh7pB0pptBJtHGguB/GH
-kQtAWMi+dNaqPEGlBGs0b1UJVDK+NlVPEkGO7qx/hInYRz1u8fFmmSM28CDTst/S
-+dM9tbgSrPig36VcgBBn1wqXzYPKStRV0epDM+30S/ABvrHglyVKZUt+CM8Yatvo
-jtOONMpVLAhPemyrHyEIL0rj1BX+LmzhwSe0Hgd3MhxXKLTPz+ejK+Z2VskzXN3e
-wWgpdATNJYmWRqpQ6BQrS7h/9mCexU5ZZMWoONPYgRNUfEYWMgEkInJBcCbLL+zT
-fUmmG6g0Fe3iqgzAcwdbN91q22CBBMb8rSn2DeJzFCeqoxnn3VurKMV5XtKhlVyX
-HNWiOjHI87XfwypL1rcPrLtweVb8PTA0Cv47GYBkoshW1xJ6HM+FDWFOnf8C7aSD
-kjdfxBP0owRNXb76fu1xJ+f5r3tHBtLTBsnecTJCI1B4Zzv4ePa/R/9E0dAS7SnC
-MzHuoOVaNpAGbbSbseZJP4fO3WOAtKG5iFvj5KjGK0TzqxKl5v0=
-=/aWX
+iQIzBAEBCAAdFiEEL9Wp/yZWFD9OpIt6+7iGL1j3dbIFAl2LVgUACgkQ+7iGL1j3
+dbIg8g/8CL+EHRDNpMnMmOsADY9uoV2pXVQIRZo7RNjKtGxrZKoh8TBXYhETr+Ad
+EcrTkCkxu3xWI5NXF2ff/kVjaA0TvGS/ZKMkNpZppI/FFWkvvYA/uj6BOt8ch618
+DyHDeeRXjrymclhoDbDTnyKfuNNFAri+1MsdcbtK3yHS7ZsuJAJdpnfH2M1lsc3N
+i83qy6OjtHz2fGgfz9NibCJ017WwIE4gJ03SlUTD/z8SHzLVzeJM4yYxfFJD9jSH
+RLcNvV5DiyfJ2frmj2QwHW67MJdts0Ldb3opcdgF9OH+KX7iQ0yWqYSRsfOJ/6sd
+KGwcnEMnypNerN04OOJO1Qa28+Hg0V0DB/ozM3KEd9q4F0hoJ6t4FV8hKeWOEC1n
+TXGBI9VrxxpqvnBTzVNz4JT4BaJXXM5VgiICrRaDH2WAtJAmTZrb0Iy1F9tiAOXc
+S5ERMftceRwXD/LwOB/NMdkyETmq2C8Z3dDFTYVFSrC3BwrvQb6y1mEeirtXwTDH
++/6Hao4iA/vSYsYBNxp9/diQhxuaoXygQZSvunM8PdfOox5/BwpwIkFCpu3UfSe0
+bxI9SP/aauLlMgV/lq+Xi67RRswBEdP1FK8iApe9VLzhqv2CK51T0CI5FW6S9sCh
+iXlfbsgJKxSgCj4yhOUKGlUfRYuRj4ZLnT/QmuG5IiaoeUNjnR0=
+=kzdU
 -----END PGP SIGNATURE-----
+
+--u2vqMjKXKWQfzPckPkW29uVXedMcTVBVW--
