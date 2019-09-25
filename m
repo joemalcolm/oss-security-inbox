@@ -1,65 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/4
-Message-ID: <20190425121236.GB9152@f195.suse.de>
-Date: Thu, 25 Apr 2019 14:12:36 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: no permission check during open() time of /proc/[pid]/maps in kernels < 3.18
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/25/2
+Message-ID: <72af8786-98dd-f006-fefd-4761bb8fb005@sba-research.org>
+Date: Wed, 25 Sep 2019 13:56:52 +0200
+From: SBA Research Advisory <advisory@...-research.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [SBA-ADV-20190911-01] CVE-2019-16524: Easy FancyBox Wordpress Plugin 1.8.17 or below Stored Cross-site Scripting (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+# Easy FancyBox Wordpress Plugin Stored Cross-site Scripting (XSS) #
 
-I stumbled over a leak of memory mappings for arbitrary processes in
-kernels older than version 3.18.
+Link: https://github.com/sbaresearch/advisories/tree/public/2019/SBA-ADV-20190911-01_Easy_FancyBox_WP_Plugin_Stored_XSS
 
-As it turns out the permissions check for the pseudo file in
-/proc/[pid]/maps in affected kernels is performed not during open() time
-but during read() time. This allows an unprivileged user to open a valid
-file descriptor for these maps files and pass it to privileged programs
-like setuid root binaries or D-Bus services running as root that support
-file descriptor passing in their interface.
+## Vulnerability Overview ##
 
-The privileged program needs behave in a way that the passed file
-descriptor is read() with root premissions and the content is passed
-back to the unprivileged user in some way.
+The Easy FancyBox WordPress Plugin Version 1.8.17 is susceptible to Stored
+Cross-site Scripting in the Settings > Media admin page `/wp-admin/options-media.php`
+due to improper encoding of arbitrarily submitted setting parameters. The vulnerability
+affects every publicly accessible page of the WordPress site.
 
-For example the opiesu program from OPIE [1], if installed setuid root,
-provides the necessary features to read arbitrary /proc/[pid]/maps files
-as an unprivileged user. It reads only one line from the user's stdin
-and outputs it again on stdout. By repeatedly performing this operation
-the complete maps file content can be obtained. This is a quick PoC bash
-script to exploit this to obtain the maps contents of PID 1:
+* **Identifier**            : SBA-ADV-2010911-01
+* **Type of Vulnerability** : Cross-site Scripting
+* **Software/Product Name** : [Easy FancyBox](https://wordpress.org/plugins/easy-fancybox/)
+* **Vendor**                : [RavanH](https://status301.net/)
+* **Affected Versions**     : <= 1.8.17
+* **Fixed in Version**      : 1.8.18
+* **CVE ID**                : CVE-2019-16524
+* **CVSSv3 Vector**         : AV:N/AC:L/PR:H/UI:R/S:U/C:L/I:L/A:N
+* **CVSSv3 Base Score**     : 3.5 (Low)
 
+## Vendor Description ##
+
+> Easy FancyBox plugin for WordPress websites gives you a flexible and
+> aesthetic light box solution for just about all media links on your website.
+> Easy FancyBox uses an updated version of the traditional FancyBox jQuery
+> extension and is WP 3+ Multi-Site compatible. After activation you can find
+> a new section FancyBox on your Settings > Media admin page where you can
+> manage the media light box options.
+
+Source: <https://wordpress.org/plugins/easy-fancybox/>
+
+## Impact ##
+
+By exploiting the documented vulnerability, an attacker can execute
+JavaScript code in a victim's browser within the origin of the target
+site. This can be misused, for example, by taking over future administrative
+web management sessions.
+
+## Vulnerability Description ##
+
+Several parameters of the file `/inc/class-easyfancybox.php` are affected by
+stored cross-site scripting vulnerabilities. The file is a part of the
+Settings > Media admin page of the WordPress instance.
+
+These setting parameters are embedded in CSS blocks without encoding or
+sanitization, that are sent to the client's browser. The style sheet is sent
+along with every publicly accessible page, no matter if the plugin is needed
+on some pages or not.
+
+For example, the following parameters are vulnerable:
+
+* `/inc/class-easyfancybox.php`
+  * fancybox_titleColor
+  * fancybox_paddingColor
+
+There are many more vulnerable parameters, the above listed are given only as
+an example.
+
+The vulnerabilities are located in `/inc/class-easyfancybox.php`:
+
+```php
+[...]
+		if ( !empty($paddingColor) )
+			$content_style .= 'border-color:'.$paddingColor.';';
+[...]
+		if ( !empty($titleColor) )
+			$styles .= '#fancybox-title,#fancybox-title-float-main{color:'.$titleColor.'}';
+[...]
 ```
-exec 3</proc/1/maps
-while true; do
-    OUT=`/usr/bin/opiesu <&3 2>/dev/null | grep response | cut -d ' ' -f 3-`
-    echo "$OUT"
-    [ -z "$OUT" ] && break
-done
+
+As the above code snippet shows, the parameters `$paddingColor` and
+`$titleColor` contains user input and is concatenated into `$content_style`
+or respectively `$styles` without performing any sanitization or escaping.
+
+## Proof of Concept ##
+
+An attacker can exploit this vulnerability by, firstly having access to the
+`Settings > Media page` within the administrative portal and secondly setting
+as `$titleColor` the following string:
+
+
+```text
+#44}</style><img src="" onerror="alert(1)">
 ```
 
-The issue was fixed in the kernel via commit [2]. I don't think this
-ever got a CVE or a security note. As a result on systems running an
-affected kernel hardenings like ASLR aren't effective against local
-users.
+This leads to the following HTML response (shortened for readability):
 
-[1]: https://en.wikipedia.org/wiki/OPIE_Authentication_System
-[2]: https://github.com/torvalds/linux/commit/29a40ace841cba9b661711f042d1821cdc4ad47c
+```html
+<style id='fancybox-inline-css' type='text/css'>
+#fancybox-title,#fancybox-title-float-main{color:#44}</style><img src="" onerror="alert(1)">}
+</style>
+```
 
-Best regards
+## Recommended Countermeasures ##
 
-Matthias
+We recommend strictly whitelisting the user input before it is being used. The only allowed characters should be alphanumeric characters and the hash sign.
 
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
+## Timeline ##
 
-SUSE Linux GmbH
-GF: Felix Imendörffer, Mary Higgins, Sri Rasiah
-HRB 21284 (AG Nuernberg)
+* `2019-09-11` Identified the vulnerability in version 1.8.17
+* `2019-09-11` Contacted the vendor via support
+* `2019-09-16` Vendor closed the vulnerability in version 1.8.18
+* `2019-09-23` Publication of CVE-2019-16524
+
+
+## References ##
+
+* ([Easy Fancybox Plugin Page](https://wordpress.org/plugins/easy-fancybox/))
+
+## Credits ##
+
+* Jakob Hagl ([SBA Research](https://www.sba-research.org/))
+
+Download attachment "0xFBB8862F58F775B2.asc" of type "application/pgp-keys" (3542 bytes)
 
 Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
