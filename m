@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/13/1
-Message-ID: <c42cbaa1-9e07-acec-3518-c422888a67f4@gentoo.org>
-Date: Sun, 13 Oct 2019 13:13:25 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/27/2
+Message-ID: <CA+fCnZcH6Q-i89E0oB=KmxXZAvoT5v+uhS9MV=8xR05BVX-+QA@mail.gmail.com>
+Date: Fri, 27 Sep 2019 19:01:48 +0200
+From: Andrey Konovalov <andreyknvl@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Gentoo Security <security@...too.org>
-Subject: Statistics for distros lists updated for 2019Q3
+Cc: mathias.payer@...elwelt.net, benquike@...il.com
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Sep 27, 2019 at 6:51 PM Tyler Hicks <tyhicks@...onical.com> wrote:
+>
+> On 2019-08-20 20:20:34, Andrey Konovalov wrote:
+> > * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15290
+> >
+> > An issue was discovered in the Linux kernel through 5.2.9. There is a
+> > NULL pointer dereference caused by a malicious USB device in the
+> > ath6kl_usb_alloc_urb_from_pipe function in the
+> > drivers/net/wireless/ath/ath6kl/usb.c driver.
+>
+> This seems like it might be a duplicate of CVE-2019-15098. The fix for
+> CVE-2019-15098 was recently merged upstream:
+>
+>  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=39d170b3cb62ba98567f5c4f40c27b5864b304e5
+>
+> If you agree, could you request that MITRE mark CVE-2019-15290 as a
+> duplicate of CVE-2019-15098?
 
-The statistics for the distros list have been updated for the 3rd
-quarter of 2019 at
-http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+Oh, nice, Mathias and Hui found it as well and fixed it! =)
 
-Data rows not included in calculation due to negative embargos are now
-marked in data with "ND" in the calculated columns.
+Yes, these two CVEs are for the same issue, feel free to mark them as such.
 
-Adding the median is not done at this point to make sure the updated
-figures are available. It turns out to not be quite as easy as I first
-projected given LibreOffice doesn't have a median counterpart to
-[AVERAGEIFS] so I likely need to use some array formula instead, so I'll
-do that as a separate update when I get around to it.
-
-References:
-[AVERAGEIFS]
-https://help.libreoffice.org/Calc/AVERAGEIFS_function
-
--- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Thanks!
