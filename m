@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/19/2
-Message-ID: <20190719140343.GA12952@thinkstation>
-Date: Fri, 19 Jul 2019 07:03:43 -0700
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/27/3
+Message-ID: <20190927185309.GE1884@elm>
+Date: Fri, 27 Sep 2019 13:53:10 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: stack buffer overflow in fbdev
+Cc: mathias.payer@...elwelt.net, benquike@...il.com
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-Hello, during a conversation on twitter we noticed a stack buffer
-overflow in fbdev with malicious edid data:
+On 2019-09-27 19:01:48, Andrey Konovalov wrote:
+> On Fri, Sep 27, 2019 at 6:51 PM Tyler Hicks <tyhicks@...onical.com> wrote:
+> >
+> > On 2019-08-20 20:20:34, Andrey Konovalov wrote:
+> > > * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15290
+> > >
+> > > An issue was discovered in the Linux kernel through 5.2.9. There is a
+> > > NULL pointer dereference caused by a malicious USB device in the
+> > > ath6kl_usb_alloc_urb_from_pipe function in the
+> > > drivers/net/wireless/ath/ath6kl/usb.c driver.
+> >
+> > This seems like it might be a duplicate of CVE-2019-15098. The fix for
+> > CVE-2019-15098 was recently merged upstream:
+> >
+> >  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=39d170b3cb62ba98567f5c4f40c27b5864b304e5
+> >
+> > If you agree, could you request that MITRE mark CVE-2019-15290 as a
+> > duplicate of CVE-2019-15098?
+> 
+> Oh, nice, Mathias and Hui found it as well and fixed it! =)
+> 
+> Yes, these two CVEs are for the same issue, feel free to mark them as such.
 
-https://github.com/torvalds/linux/blob/22051d9c4a57d3b4a8b5a7407efc80c71c7bfb16/drivers/video/fbdev/core/fbmon.c#L1033
+I've requested that MITRE mark CVE-2019-15290 as a dupe of
+CVE-2019-15098. Thanks!
 
-There is enough space to have 52 1-byte length values, which makes svd_n
-52, then make the final value length 0x1f (the maximum), which makes
-svd_n 83 and overflows the 64 byte stack buffer svd[] with controlled
-data.
-
-This requires a malicious monitor / projector / etc, so pretty low impact.
-
-I pulled out the code to make a demo (I removed the checksum, but it
-doesnt prevent the bug):
-
-https://gist.github.com/taviso/923776e633cb8fb1ab847cce761a0f10
-
-This was discovered by Nico Waisman of Semmle.
-
-Tavis.
-
--- 
--------------------------------------
-taviso@....lonestar.org | finger me for my pgp key.
--------------------------------------------------------
+Tyler
