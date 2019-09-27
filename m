@@ -1,82 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/01/2
-Message-Id: <B6CBEED3-F9D1-445F-8F6D-643C6F9F0EAE@beckweb.net>
-Date: Tue, 1 Oct 2019 15:27:41 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/27/1
+Message-ID: <20190927165004.GD1884@elm>
+Date: Fri, 27 Sep 2019 11:50:05 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+On 2019-08-20 20:20:34, Andrey Konovalov wrote:
+> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15290
+> 
+> An issue was discovered in the Linux kernel through 5.2.9. There is a
+> NULL pointer dereference caused by a malicious USB device in the
+> ath6kl_usb_alloc_urb_from_pipe function in the
+> drivers/net/wireless/ath/ath6kl/usb.c driver.
 
-* HTML Publisher Plugin 1.21
-* Script Security Plugin 1.65
+This seems like it might be a duplicate of CVE-2019-15098. The fix for
+CVE-2019-15098 was recently merged upstream:
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=39d170b3cb62ba98567f5c4f40c27b5864b304e5
 
-* Dingding[钉钉] Plugin
-* LDAP Email
-* SourceGear Vault
+If you agree, could you request that MITRE mark CVE-2019-15290 as a
+duplicate of CVE-2019-15098?
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-10-01/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1579 / CVE-2019-10431
-Sandbox protection in Script Security Plugin could be circumvented through
-default parameter expressions in constructors.
-
-This allowed attackers able to specify and run sandboxed scripts to
-execute arbitrary code in the context of the Jenkins master JVM.
-
-
-SECURITY-1590 / CVE-2019-10432
-HTML Publisher Plugin did not escape the project or build display name
-shown in the frame HTML page. This resulted in a cross-site scripting
-vulnerability exploitable by attackers able to control the project or
-build display name, typically users with Job/Configure or Build/Update
-permission.
-
-
-SECURITY-1423 / CVE-2019-10433
-Dingding[钉钉] Plugin stores an access token unencrypted in job config.xml
-files on the Jenkins master. This token can be viewed by users with
-Extended Read permission, or access to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1515 / CVE-2019-10434
-LDAP Email Plugin stores an LDAP bind password in its global Jenkins
-configuration.
-
-While the password is stored encrypted on disk, it is transmitted in plain
-text as part of the configuration form. This can result in exposure of the
-password through browser extensions, cross-site scripting vulnerabilities,
-and similar situations.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1524 / CVE-2019-10435
-SourceGear Vault Plugin stores an SCM password in job configurations.
-
-While the password is stored encrypted on disk, it is transmitted in plain
-text as part of the configuration form. This can result in exposure of the
-password through browser extensions, cross-site scripting vulnerabilities,
-and similar situations.
-
-As of publication of this advisory, there is no fix.
-
+Tyler
