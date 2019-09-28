@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3850" "Friday" "24" "June" "2016" "12:01:11" "-0700" "Alvaro Hoyos" "alvaro.hoyos@onelogin.com" "<0c58fc24-0b8d-48e1-8df8-f580454f8e86@googlegroups.com>" "74" "[oss-security] Re: [CVE-2016-5697] signature wrapping attack vulnerability in ruby-saml prior to version 1.3.0" nil nil nil "6" "2016062419:01:11" "[oss-security] Re: [CVE-2016-5697] signature wrapping attack vulnerability in ruby-saml prior to version 1.3.0" (number mark "U       alvaro.hoyos Jun 24   74/3850  " thread-indent "\"[oss-security] Re: [CVE-2016-5697] signature wrapping attack vulnerability in ruby-saml prior to version 1.3.0\"\n") "<CAAdSu-FbGNfOsfRv9saHTCso0fPQJ+QrJ5JamZf4_gcCq7LD6w@mail.gmail.com>" ("<CAAdSu-FbGNfOsfRv9saHTCso0fPQJ+QrJ5JamZf4_gcCq7LD6w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2699" "Sunday" "29" "September" "2019" "01:20:24" "+0200" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" nil "82" nil "^Date:" nil nil "9" nil nil (number mark "        hs@nodmarc.s Sep 29   82/2699  " thread-indent "\"Re: [oss-security] Exim CVE-2019-16928 RCE using a heap-based buffer overflow\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Exim CVE-2019-16928 RCE using a heap-based buffer overflow" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23631 invoked by uid 550); 24 Jun 2016 20:01:12 -0000
+Received: (qmail 7237 invoked by uid 550); 28 Sep 2019 23:20:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,117 +11,121 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10137 invoked from network); 24 Jun 2016 19:01:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=onelogin.com; s=google;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version;
-        bh=YB7fvblCMsTQDSqtf9/m2k1TFnVw8yKJhY2xbTGzxdY=;
-        b=SGTctJy0KD/I3h7zjnL5jES0WrfaDPT19HEFBgfHkg0Fg9zIU/TYH2aM/2MHhuzQHQ
-         QNnuGzHD2y6CeYxGU9kVbK8FTspFqy6N/0MSMl4JmQ4zcpz8iomoiuz7lDBB0o4YDdCR
-         ppy0Tapg21uRK4DNG4ev9EIX3aEvblzEUEcpQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version;
-        bh=YB7fvblCMsTQDSqtf9/m2k1TFnVw8yKJhY2xbTGzxdY=;
-        b=f+VZZGiqrnPyBaBbezX/JG5AFWAgrBUfkGd0huqx2ae2QjVyAZUNpA+BTBPmHpnlsf
-         TCivHXGX8WOjbmOUW+R8NWudYERn1xaX21oxxEtkqR8QrxEAZoZ7SqS0zhJeEFLe/PQs
-         0qggDAi92DQhN+ojMtk0EDmz80xWKoMY1HCCdIgpX/o+QUff938kPv/s16GV3Vv+kHuG
-         SufyP0SDdyLBSC2VsLcScQuTPvUYfIC+GC8yZyTXQZpRvX33VJTYuXgswsdwAr4VZZ/5
-         sizDxXkvhhnCed50KLQdOXuf7fiNQnQjjxZZWKbiqP40ZziN7c+BumF+1NxEPMQFku+N
-         A11w==
-X-Gm-Message-State: ALyK8tIgm6aCyAZFUq9ptYJ82BJeNwpmdIRd9+ehMOZBoVWddrLqNNrFM0hBO/Cw5VWWH2xfbVZsw78=
-X-Received: by 10.157.37.28 with SMTP id k28mr307377otb.18.1466794872178;
-        Fri, 24 Jun 2016 12:01:12 -0700 (PDT)
-X-Google-Web-Client: true
-Date: Fri, 24 Jun 2016 12:01:11 -0700 (PDT)
-From: Alvaro Hoyos <alvaro.hoyos@onelogin.com>
-To: rubysec-announce <rubysec-announce@googlegroups.com>
-Cc: ruby-security-ann@googlegroups.com, oss-security@lists.openwall.com
-Message-Id: <0c58fc24-0b8d-48e1-8df8-f580454f8e86@googlegroups.com>
-In-Reply-To: <CAAdSu-FbGNfOsfRv9saHTCso0fPQJ+QrJ5JamZf4_gcCq7LD6w@mail.gmail.com>
-References: <CAAdSu-FbGNfOsfRv9saHTCso0fPQJ+QrJ5JamZf4_gcCq7LD6w@mail.gmail.com>
+Received: (qmail 7219 invoked from network); 28 Sep 2019 23:20:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:Resent-Cc:Resent-To;
+	bh=DfFblB+QOScwyFTI7+zhnU6VEHEyJFQZVwWJJzwB2FM=; b=H1uMfVNYWun1iiO+O/L69DLOXr
+	YuHZhIDPHARYvgB9blKPXiHsPals+ld24pgBGFAYrAXFF60zV1boP5Bkihd7tpKsErRyZJuPEPvuA
+	dTmkboWsadsqyrlSxfNJk9lPCPa7Y+9F0UTOunU5h0OFKUCY35Abbv96O1XtyV589I0I=;
+Message-ID: <20190928232024.GK16334@jumper.schlittermann.de>
+Mail-Followup-To: oss-security@lists.openwall.com, exim-users@exim.org,
+	exim-maintainers@exim.org, exim-announce@exim.org
+References: <20190928003428.GI16334@jumper.schlittermann.de>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_2358_290521511.1466794871898"
-X-Google-Token: EPeGtrsFiCHBk2Enj2Q0
-X-Google-IP: 174.46.233.4
-Subject: [oss-security] Re: [CVE-2016-5697] signature wrapping attack vulnerability in
- ruby-saml prior to version 1.3.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="0ywUhQCikZ2Y3PNw"
+Content-Disposition: inline
+In-Reply-To: <20190928003428.GI16334@jumper.schlittermann.de>
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Sun, 29 Sep 2019 01:20:24 +0200
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Exim CVE-2019-16928 RCE using a heap-based buffer
+ overflow
+To: oss-security@lists.openwall.com, exim-users@exim.org,
+	exim-maintainers@exim.org, exim-announce@exim.org
 
-------=_Part_2358_290521511.1466794871898
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_2359_107972653.1466794871898"
+--0ywUhQCikZ2Y3PNw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-------=_Part_2359_107972653.1466794871898
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+** Exim 4.92.3 released (security release) **
 
-Thanks to Robert Clancy from swrve.com for discovering and responsibly 
-reporting this issue.
+CVE ID:     CVE-2019-16928
+Date:       2019-09-27 (CVE assigned)
+Version(s): from 4.92 up to and including 4.92.2
+Reporter:   QAX-A-TEAM <areuu@outlook.com>
+Reference:  https://bugs.exim.org/show_bug.cgi?id=2449
+Issue:      Heap-based buffer overflow in string_vformat,
+            remote code execution seems to be possible
 
-On Friday, June 24, 2016 at 11:35:34 AM UTC-7, Alvaro Hoyos wrote:
->
-> Overview: 
-> Ruby-saml prior to version 1.3.0 is vulnerable to an XML signature 
-> wrapping attack. Ruby-saml users must update to 1.3.0 version which 
-> implements 3 extra validations to mitigate this kind of attack.
->
-> Overall CVSS Score 6.1
->
-> Fix: Add extra validations to prevent Signature wrapping attacks [1]
->
-> [1] https://github.com/onelogin/ruby-saml
->
-> alvaro j hoyos | chief information security officer | 
-> alvaro.hoyos@onelogin.com | +1 415.653.1893 | skype: alvaroonelogin
->
+Conditions to be vulnerable
+===========================
 
-------=_Part_2359_107972653.1466794871898
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+All versions from (and including) 4.92 up to (and including) 4.92.2 are
+vulnerable.
 
-<div dir=3D"ltr">Thanks to Robert Clancy from <span class=3D"s2"><a href=3D=
-"http://swrve.com/">swrve.com</a>=C2=A0for discovering and responsibly repo=
-rting this issue.</span><br><br>On Friday, June 24, 2016 at 11:35:34 AM UTC=
--7, Alvaro Hoyos wrote:<blockquote class=3D"gmail_quote" style=3D"margin: 0=
-;margin-left: 0.8ex;border-left: 1px #ccc solid;padding-left: 1ex;"><div di=
-r=3D"ltr"><p style=3D"font-size:12.8px;margin:10px 0px 0px;padding:0px;colo=
-r:rgb(51,51,51);font-family:Arial,sans-serif;line-height:20px">Overview:=C2=
-=A0<br>Ruby-saml prior to version 1.3.0 is vulnerable to an XML signature w=
-rapping attack. Ruby-saml users must update to 1.3.0 version which implemen=
-ts 3 extra validations to mitigate this kind of attack.</p><p style=3D"font=
--size:12.8px;margin:10px 0px 0px;padding:0px;color:rgb(51,51,51);font-famil=
-y:Arial,sans-serif;line-height:20px">Overall CVSS Score	6.1</p><p style=3D"=
-font-size:12.8px;margin:10px 0px 0px;padding:0px;color:rgb(51,51,51);font-f=
-amily:Arial,sans-serif;line-height:20px">Fix: Add extra validations to prev=
-ent Signature wrapping attacks=C2=A0[1]</p><p style=3D"margin:10px 0px 0px;=
-padding:0px"><font color=3D"#333333" face=3D"Arial, sans-serif"><span style=
-=3D"font-size:12.8px;line-height:20px">[1]=C2=A0</span></font><font color=
-=3D"#3b73af" face=3D"Arial, sans-serif"><span style=3D"font-size:12.8px;lin=
-e-height:20px"><a href=3D"https://github.com/onelogin/ruby-saml" target=3D"=
-_blank" rel=3D"nofollow" onmousedown=3D"this.href=3D&#39;https://www.google=
-.com/url?q\x3dhttps%3A%2F%2Fgithub.com%2Fonelogin%2Fruby-saml\x26sa\x3dD\x2=
-6sntz\x3d1\x26usg\x3dAFQjCNFC6N42EjkjushynFfsipbbIJRHsA&#39;;return true;" =
-onclick=3D"this.href=3D&#39;https://www.google.com/url?q\x3dhttps%3A%2F%2Fg=
-ithub.com%2Fonelogin%2Fruby-saml\x26sa\x3dD\x26sntz\x3d1\x26usg\x3dAFQjCNFC=
-6N42EjkjushynFfsipbbIJRHsA&#39;;return true;">https://github.com/<wbr>onelo=
-gin/ruby-saml</a></span></font></p><div><div><div dir=3D"ltr"><div><div dir=
-=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr">=
-<div><div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"><div><br></div=
-><div><font size=3D"2">alvaro j hoyos | chief information security officer =
-| <a href=3D"mailto:alvaro.hoyos@onelogin.com" target=3D"_blank" rel=3D"nof=
-ollow" onmousedown=3D"this.href=3D&#39;mailto:alvaro.hoyos@onelogin.com&#39=
-;;return true;" onclick=3D"this.href=3D&#39;mailto:alvaro.hoyos@onelogin.co=
-m&#39;;return true;">alvaro.hoyos@onelogin.com</a> | +1=C2=A0415.653.1893=
-=C2=A0| skype:=C2=A0alvaroonelogin</font></div><div></div></div></div></div=
-></div></div></div></div></div></div></div></div></div></div></div></div></=
-div>
-</div>
-</blockquote></div>=
+Details
+=======
 
-------=_Part_2359_107972653.1466794871898--
+There is a heap-based buffer overflow in string_vformat (string.c).
+The currently known exploit uses a extraordinary long EHLO string to
+crash the Exim process that is receiving the message. While at this
+mode of operation Exim already dropped its privileges, other paths to
+reach the vulnerable code may exist.
 
-------=_Part_2358_290521511.1466794871898--
+Mitigation
+==========
+
+There is - beside updating the server - no known mitigation.
+
+Fix
+===
+
+Download and build the fixed version 4.92.3
+
+    Tarballs: https://ftp.exim.org/pub/exim/exim4/
+    Git:      https://github.com/Exim/exim.git (mirror)
+                git://git.exim.org/exim.git
+              - tag    exim-4.92.3
+              - branch exim-4.92.3+fixes
+
+The tagged commit is the officially released version. The +fixes branch
+isn't officially maintained, but contains the security fix *and* useful
+fixes.
+
+The tarballs, the Git tag, and the Git commits are signed with my GPG
+key (same as I used to sign this mail.)
+
+If you can't install the above versions, ask your package maintainer for
+a version containing the backported fix. On request and depending on our
+resources we will support you in backporting the fix.  (Please note,
+the Exim project officially doesn't support versions prior the current
+stable version.)
+
+Timeline
+=========
+
+- 2019-09-27    Report as Bug 2499
+- 2019-09-28    Announcement to exim-maintainers, oss-security
+- 2019-09-28    Release 4.92.3, Release-Announcements to
+                exim-{announce,users,maintainers}, oss-security
+
+--0ywUhQCikZ2Y3PNw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAl2P6rcACgkQr0zGdqa2
+wUL1DQf9HM4pvPtoWBLFN/WMwuO72WPPeBl1FyHi3a1z/ZplT5ZvMbRSFAi3xhrs
+4lhibAsYn6kaC4Cn82gbcxDoOcURFDKTRROpXWTV6QH0aDAV4KWamHjpfUE8IPMw
+TcRDuQcd9UsZ3W/+zznBS5j6ojlN9YdXWUpKHuNFLUoV7t2WgP45gk4aKNhMGLal
+WeR53eu2T8zLdP57PyJlewYcduBxDvLyxq0BofOl62iyKOvKhoYwXbPfHj5OE+7p
+cJECsO1Ozujpg0gtkr1lYrWe4jipJOxBDCBmnpeocVhlx0uM7k4TxQRydLD9J2mf
+l9YvRuAjKulaCQPJ2/nifr+bGHFbEg==
+=wTZT
+-----END PGP SIGNATURE-----
+
+--0ywUhQCikZ2Y3PNw--
