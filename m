@@ -1,70 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/06/3
-Message-ID: <20190806105341.71a55acf@computer>
-Date: Tue, 6 Aug 2019 10:53:41 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/28/2
+Message-Id: <5C33B233-181D-45E1-8982-7ED07AD858B1@stablepoint.com>
+Date: Sat, 28 Sep 2019 01:56:11 +0100
+From: Dominic Taylor <dom@...blepoint.com>
 To: oss-security@...ts.openwall.com
-Subject: clamav: denial of service through "better zip bomb"
+Subject: Re: Exim CVE-2019-16928 RCE using a heap-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Heiko,
 
-Recently David Fifield presented a new variant of a ZIP bomb where by
-using overlapping segments he was able to achieve very high compression
-ratios (42kb->5GB, 10MB->281TB).
+Good find, but why no embargo?
 
-Passing the example files to clamav causes extreme CPU spikes and
-extremely long scanning times. In a setup with clamd (a daemon-ized
-version of clamav) this is particularly nasty, as even interrupting the
-scanning process doesn't stop the CPU spikes in the daemon and the
-daemon cannot be killed gracefully.
+Presumably because privs are dropped so this is maybe not as bad as previous?
 
-clamav is often used to automatically scan incoming mails on
-mailservers, in this case this is can be effective way to make a server
-unusable.
+Regards
 
-The upstream bug report is here [2]. Clamav made a new release 0.101.3
-[3] with a mitigation.
+Dom
 
-However David Fifield commented in the bug report [4] that the fix is
-incomplete, by using some slight variations of his methods he could
-bypass the fix.
+> On 28 Sep 2019, at 01:34, Heiko Schlittermann <hs@...marc.schlittermann.de> wrote:
+> 
+> CVE ID:     CVE-2019-16928
+> Date:       2019-09-27 (CVE assigned)
+> Version(s): from 4.92 up to and including 4.92.2
+> Reporter:   areuu@...look.com
+> Reference:  https://bugs.exim.org/show_bug.cgi?id=2449
+> Issue:      Heap-based buffer overflow in string_vformat,
+>            remote code execution seems to be possible
+> 
+> Conditions to be vulnerable
+> ===========================
+> 
+> All versions from (and including) 4.92 up to (and including) 4.92.2 are
+> vulnerable.
+> 
+> Details
+> =======
+> 
+> There is a heap-based buffer overflow in string_vformat (string.c).
+> The currently known exploit uses a extraordinary long EHLO string to
+> crash the Exim process that is receiving the message. While at this
+> mode of operation Exim already dropped its privileges, other paths to
+> reach the vulnerable code may exist.
+> 
+> Mitigation
+> ==========
+> 
+> There is - beside updating the server - no known mitigation.
+> 
+> Fix
+> ===
+> 
+> We plan to publish a new security release (*will* be 4.92.3) of Exim
+> during the next 48 hours, ideally before monday 8.00 UTC. (We're still
+> running regression tests.) We'll send another notification as soon as
+> the new release is available.
+> 
+> Distros may have already picked the patch mentioned below and may have
+> already released a fixed version. Please check your distribution's
+> changelogs.
+> 
+> If you can't wait, please use use our git repository http://git.exim.org/exim.git,
+> checkout the branch exim-4.92.2+fixes and use the commit 478effbfd9c3cc5a627fc671d4bf94d13670d65f
+> 
+> A direct link to the commit is:
+> https://git.exim.org/exim.git/patch/478effbfd9c3cc5a627fc671d4bf94d13670d65f
+> 
+> which basically does:
+> 
+> --- a/src/src/string.c
+> +++ b/src/src/string.c
+> @@ -1132,7 +1132,7 @@ store_reset(g->s + (g->size = g->ptr + 1));
+> Arguments:
+>   g            the growable-string
+>   p            current end of data
+> -  count                amount to grow by
+> +  count                amount to grow by, offset from p
+> */
+> 
+> static void
+> @@ -1590,7 +1590,7 @@ while (*fp)
+>        }
+>       else if (g->ptr >= lim - width)
+>        {
+> -       gstring_grow(g, g->ptr, width - (lim - g->ptr));
+> +       gstring_grow(g, g->ptr, width);
+>        lim = g->size - 1;
+>        gp = CS g->s + g->ptr;
+>        }
+> 
+> We thank you for using Exim.
+> 
+>    Best regards from Dresden/Germany
+>    Viele Grüße aus Dresden
+>    Heiko Schlittermann
+> --
+> SCHLITTERMANN.de ---------------------------- internet & unix support -
+> Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+> gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+> ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-Mitigation
-==========
-
-This can be mitigated by disabling scanning of compressed archives. In
-the case of clamd there's a setting "ScanArchive" in clamd.conf [5].
-
-Downside: Obviously that means compressed files won't be scanned.
-
-misc
-====
-
-Firefox sometimes showed Safebrowsing warnings for the "better zip
-bomb" web page by David Fifield. Not sure how it ended up in the safe
-browsing list, though I believe it's bad practice to mark legit
-security research as "malicious" by blacklists.
-
-A similar DoS is happening in Chrome when downloading the sample ZIP
-bombs. This has already been mentioned in public comments, e.g. here
-[6]. I had reported this to Chrome, it was marked as a duplicate of a
-non-public bug.
-
-It's likely that there are more applications affected.
-I recommend that people try to test other applications that might
-unpack ZIP files in an automated setting with these sample files.
-
-[1] https://www.bamsoftware.com/hacks/zipbomb/
-[2] https://bugzilla.clamav.net/show_bug.cgi?id=12356
-[3]
-https://blog.clamav.net/2019/08/clamav-01013-security-patch-release-and.html
-[4] https://bugzilla.clamav.net/show_bug.cgi?id=12356#c6
-[5] https://linux.die.net/man/5/clamd.conf
-[6] https://news.ycombinator.com/item?id=20352537
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
