@@ -1,46 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/10/3
-Message-ID: <nycvar.YSQ.7.76.1912101658430.54987@xnncv>
-Date: Tue, 10 Dec 2019 17:10:40 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2019-19338 Kernel: KVM: export MSR_IA32_TSX_CTRL to guest - incomplete fix for TAA (CVE-2019-11135)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/28/3
+Message-ID: <20190928103219.GJ16334@jumper.schlittermann.de>
+Date: Sat, 28 Sep 2019 12:32:19 +0200
+From: Heiko Schlittermann <hs@...littermann.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Exim CVE-2019-16928 RCE using a heap-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Dominic Taylor <dom@...blepoint.com> (Sa 28 Sep 2019 02:56:11 CEST):
+> Hi Heiko,
+> Good find, but why no embargo?
 
-Transaction Asynchronous Abort (TAA) h/w issue, which affects Intel CPUs, is 
-mitigated in two ways. One is by disabling Transactional Synchronisation 
-Extensions (TSX) feature of the CPU. And second is by clearing the affected 
-Store/Fill/Load port architectural buffers, which may hold sensitive 
-information bits.
+The issue was reported publicly via our bugtracker. No point in having
+an embargo.
 
-It was found that the current kernel fixes don't completely fix TAA issue for 
-guest VMs. When a guest is running on a host CPU affected by TAA (ie. 
-TAA_NO=0) but not affected by MDS issue (ie MDS_NO=1), to mitigate TAA issue, 
-guest was to clear the affected buffers by using VERW instruction mechanism. 
-But when MDS_NO=1 bit was exported to the guests, it did not quite use the 
-VERW mechanism to clear the affected buffers.
+> Presumably because privs are dropped so this is maybe not as bad as previous?
 
-This issue affects guests running on Cascade Lake CPUs, which are affected by 
-the TAA (ie. TAA_NO=0) issue, but are not affected by the MDS (ie. MDS_NO=1) 
-issue.
+Yes, the privs are dropped in the reported case, but there may be other ways to call the
+vulnerable function.
 
-It requires that host has 'TSX' enabled.
-
-Upstream patches:
------------------
-   -> https://git.kernel.org/linus/cbbaa2727aa3ae9e0a844803da7cef7fd3b94f2b
-   -> https://git.kernel.org/linus/c11f83e0626bdc2b6c550fc8b9b6eeefbd8cefaa
-   -> https://git.kernel.org/linus/b07a5c53d42a8c87b208614129e947dd2338ff9c
-
-Another option: Export MDS_NO=0 to guests when TSX is enabled
-   -> https://git.kernel.org/linus/e1d38b63acd843cfdd4222bf19a26700fd5c699e
-
-'CVE-2019-19338' is assigned by Red Hat Inc.
-
-Thank you.
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
 --
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
