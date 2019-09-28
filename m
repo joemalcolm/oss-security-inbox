@@ -1,43 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/23/1
-Message-ID: <20190822211311.1d435223@jabberwock.cb.piermont.com>
-Date: Thu, 22 Aug 2019 21:13:11 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Eddie Chapman <eddie@...k.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/28/4
+Message-ID: <20190928232024.GK16334@jumper.schlittermann.de>
+Date: Sun, 29 Sep 2019 01:20:24 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+To: oss-security@...ts.openwall.com, exim-users@...m.org, exim-maintainers@...m.org, exim-announce@...m.org
+Subject: Re: Exim CVE-2019-16928 RCE using a heap-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 22 Aug 2019 20:33:54 +0100 Eddie Chapman <eddie@...k.net>
-wrote:
-> On 22/08/2019 20:00, Perry E. Metzger wrote:
-> > You can argue anything you like. Power charging points have
-> > popped up around the world, and you're not in a position to stop
-> > them. Furthermore, I'll note that over the air exploitable bugs in
-> > things like WiFi stacks and Bluetooth stacks have also appeared
-> > over time; perhaps it's foolish to have your phone on at all, and
-> > yet people will continue to turn their phones on, and even to use
-> > them.
-> 
-> Well, I certainly am not deluded enough to think I have the power
-> to stop power charging points popping up everywhere :-) Or to stop
-> people making mistakes. Just because something is possible and
-> everyone else does it doesn't make something less stupid.
-> 
-> It's a similar principle with wifi/bluetooth, which is why I avoid 
-> connecting even to a family member's wifi access point unless it's 
-> absolutely necessary.
+** Exim 4.92.3 released (security release) **
 
-I think the fact that you avoid connecting to WiFi access points,
-even ones owned by family members, unless absolutely necessary, may
-demonstrate that your model of what does and does not constitute
-a ordinary user behavior might not be the same as other
-people's. Most people do use WiFi in a variety of places, and most
-people do charge off of USB ports they have not personally vetted.
+CVE ID:     CVE-2019-16928
+Date:       2019-09-27 (CVE assigned)
+Version(s): from 4.92 up to and including 4.92.2
+Reporter:   QAX-A-TEAM <areuu@...look.com>
+Reference:  https://bugs.exim.org/show_bug.cgi?id=2449
+Issue:      Heap-based buffer overflow in string_vformat,
+            remote code execution seems to be possible
 
-Given this, I think fixing bugs that might lead to privilege
-escalation, even if they require physical connection of USB devices,
-does indeed seem reasonable.
+Conditions to be vulnerable
+===========================
 
---
-Perry E. Metzger		perry@...rmont.com
+All versions from (and including) 4.92 up to (and including) 4.92.2 are
+vulnerable.
+
+Details
+=======
+
+There is a heap-based buffer overflow in string_vformat (string.c).
+The currently known exploit uses a extraordinary long EHLO string to
+crash the Exim process that is receiving the message. While at this
+mode of operation Exim already dropped its privileges, other paths to
+reach the vulnerable code may exist.
+
+Mitigation
+==========
+
+There is - beside updating the server - no known mitigation.
+
+Fix
+===
+
+Download and build the fixed version 4.92.3
+
+    Tarballs: https://ftp.exim.org/pub/exim/exim4/
+    Git:      https://github.com/Exim/exim.git (mirror)
+                git://git.exim.org/exim.git
+              - tag    exim-4.92.3
+              - branch exim-4.92.3+fixes
+
+The tagged commit is the officially released version. The +fixes branch
+isn't officially maintained, but contains the security fix *and* useful
+fixes.
+
+The tarballs, the Git tag, and the Git commits are signed with my GPG
+key (same as I used to sign this mail.)
+
+If you can't install the above versions, ask your package maintainer for
+a version containing the backported fix. On request and depending on our
+resources we will support you in backporting the fix.  (Please note,
+the Exim project officially doesn't support versions prior the current
+stable version.)
+
+Timeline
+=========
+
+- 2019-09-27    Report as Bug 2499
+- 2019-09-28    Announcement to exim-maintainers, oss-security
+- 2019-09-28    Release 4.92.3, Release-Announcements to
+                exim-{announce,users,maintainers}, oss-security
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
