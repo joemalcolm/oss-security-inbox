@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1074" "Monday" "16" "November" "2015" "02:56:41" "+0000" "=?gb2312?B?ufk=?==?gb2312?B?08C41Q==?=" "guoyonggang@360.cn" "<2166DED8C457614D95A6AAC18B144F082B48AE@EX02.corp.qihoo.net>" "21" "[oss-security] CVE request-HUAWEI P8 GRA-UL00" "^Date:" nil nil "11" "2015111602:56:41" "[oss-security] CVE request-HUAWEI P8 GRA-UL00" (number mark "U       guoyonggang@ Nov 16   21/1074  " thread-indent "\"[oss-security] CVE request-HUAWEI P8 GRA-UL00\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2605" "Tuesday" "1" "October" "2019" "15:27:41" "+0200" "Daniel Beck" "ml@beckweb.net" "<B6CBEED3-F9D1-445F-8F6D-643C6F9F0EAE@beckweb.net>" "74" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "10" "2019100113:27:41" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Oct  1   74/2605  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10068 invoked by uid 550); 16 Nov 2015 12:50:26 -0000
+Received: (qmail 3428 invoked by uid 550); 1 Oct 2019 13:27:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3779 invoked from network); 16 Nov 2015 02:56:55 -0000
-Thread-Topic: CVE request-HUAWEI P8 GRA-UL00
-Thread-Index: AdEgGlizhhl1UL0dSbSLp46oeqCeqw==
-Message-ID: <2166DED8C457614D95A6AAC18B144F082B48AE@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.32.47]
-Content-Type: multipart/alternative;
-	boundary="_000_2166DED8C457614D95A6AAC18B144F082B48AEEX02corpqihoonet_"
-MIME-Version: 1.0
-Date: Mon, 16 Nov 2015 02:56:41 +0000
-From: =?gb2312?B?ufnTwLjV?= <guoyonggang@360.cn>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request-HUAWEI P8 GRA-UL00
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 3410 invoked from network); 1 Oct 2019 13:27:52 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Message-Id: <B6CBEED3-F9D1-445F-8F6D-643C6F9F0EAE@beckweb.net>
+Date: Tue, 1 Oct 2019 15:27:41 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.104.11)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1569936472;7c166ee8;
+X-HE-SMSGID: 1iFIBp-000515-6C
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
---_000_2166DED8C457614D95A6AAC18B144F082B48AEEX02corpqihoonet_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Q29kZSBiZWxvdyB3aWxsIGxlYWQgUDggcmVzdGFydCA6DQoNCiNpbmNsdWRl
-IDxzdGRsaWIuaD4NCiNpbmNsdWRlIDxzdGRpby5oPg0KI2luY2x1ZGUgPHN5
-cy90eXBlcy5oPg0KI2luY2x1ZGUgPHN5cy9zdGF0Lmg+DQojaW5jbHVkZSA8
-ZmNudGwuaD4NCiNpbmNsdWRlIDxlcnJuby5oPg0KDQppbnQgbWFpbih2b2lk
-KQ0Kew0KICBpbnQgcmV0Ow0KICBpbnQgZmQ7DQogIHZvaWQgKnAgPSBOVUxM
-Ow0KDQogIGZkID0gb3BlbigiL3Byb2MvaGk2NDAyZGJnL2hpNjQwMmRlYnVn
-bGV2ZWwiLCBPX1JET05MWSk7DQogIGlmKGZkID09IC0xKSAgICB7DQogICAg
-ICAgICBwcmludGYoIlstXSBPcGVuIGZhaWxlZCAoJWQgLSAlcylcbiIsIGVy
-cm5vLCBzdHJlcnJvcihlcnJubykpOw0KICAgICAgICAgcmV0dXJuIC0xOw0K
-ICB9DQogIHByaW50ZigiT3BlbiBzdWNjZXNzZnVsbHlcbiIpOw0KDQogIHAg
-PSAodm9pZCAqKTA7DQogIHJldCA9IHJlYWQoZmQsIHAsIDQpOw0KICBpZihy
-ZXQgPT0gLTEpICAgew0KICAgICAgICAgcHJpbnRmKCJbLV1mYWlsZWQgKCVk
-IC0gJXMpXG4iLCBlcnJubywgc3RyZXJyb3IoZXJybm8pKTsNCiAgICAgICAg
-IHJldHVybiAtMTsNCiAgfQ0KDQogIGNsb3NlKGZkKTsNCiAgcmV0dXJuIDA7
-DQp9DQoNCg==
+* HTML Publisher Plugin 1.21
+* Script Security Plugin 1.65
 
---_000_2166DED8C457614D95A6AAC18B144F082B48AEEX02corpqihoonet_--
+Additionally, we announce unresolved security issues in the following
+plugins:
+
+* Dingding[=E9=92=89=E9=92=89] Plugin
+* LDAP Email
+* SourceGear Vault
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-10-01/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1579 / CVE-2019-10431
+Sandbox protection in Script Security Plugin could be circumvented through
+default parameter expressions in constructors.
+
+This allowed attackers able to specify and run sandboxed scripts to
+execute arbitrary code in the context of the Jenkins master JVM.
+
+
+SECURITY-1590 / CVE-2019-10432
+HTML Publisher Plugin did not escape the project or build display name
+shown in the frame HTML page. This resulted in a cross-site scripting
+vulnerability exploitable by attackers able to control the project or
+build display name, typically users with Job/Configure or Build/Update
+permission.
+
+
+SECURITY-1423 / CVE-2019-10433
+Dingding[=E9=92=89=E9=92=89] Plugin stores an access token unencrypted in j=
+ob config.xml
+files on the Jenkins master. This token can be viewed by users with
+Extended Read permission, or access to the master file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1515 / CVE-2019-10434
+LDAP Email Plugin stores an LDAP bind password in its global Jenkins
+configuration.
+
+While the password is stored encrypted on disk, it is transmitted in plain
+text as part of the configuration form. This can result in exposure of the
+password through browser extensions, cross-site scripting vulnerabilities,
+and similar situations.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1524 / CVE-2019-10435
+SourceGear Vault Plugin stores an SCM password in job configurations.
+
+While the password is stored encrypted on disk, it is transmitted in plain
+text as part of the configuration form. This can result in exposure of the
+password through browser extensions, cross-site scripting vulnerabilities,
+and similar situations.
+
+As of publication of this advisory, there is no fix.
+
