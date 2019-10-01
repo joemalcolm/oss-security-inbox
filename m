@@ -1,52 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/16
-Message-ID: <20191025205144.231de493@sybil.lepiller.eu>
-Date: Fri, 25 Oct 2019 20:52:02 +0200
-From: Julien Lepiller <security@...iller.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/01/2
+Message-Id: <B6CBEED3-F9D1-445F-8F6D-643C6F9F0EAE@beckweb.net>
+Date: Tue, 1 Oct 2019 15:27:41 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Formal verification of open source software
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Le Fri, 25 Oct 2019 18:37:44 +0300,
-Georgi Guninski <gguninski@...il.com> a écrit :
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-> On Fri, Oct 25, 2019 at 3:17 PM Hanno Böck <hanno@...eck.de> wrote:
-> >
-> >
-> > There's been a lot of work in the crypto community in this
-> > direction. Most of it is code under OSS licenses:
-> >  
-> 
-> Thanks for the links.
-> 
-> Are there known bugs in formally verified software or hardware?
+* HTML Publisher Plugin 1.21
+* Script Security Plugin 1.65
 
-Hi, I think it's my first time writing to the list :)
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-CompCert is not FOSS, but it's a verified compiler. This paper:
-https://www.cs.utah.edu/~regehr/papers/pldi11-preprint.pdf
-tried to find bugs in multiple C compilers. Here is what they say about
-CompCert:
+* Dingding[钉钉] Plugin
+* LDAP Email
+* SourceGear Vault
 
-"The striking thing about our CompCert results is that the middle-
- end bugs we found in all other compilers are absent. As of early 2011,
- the under-development version of CompCert is the only compiler we
- have tested for which Csmith cannot find wrong-code errors. This is
- not for lack of trying: we have devoted about six CPU-years to the
- task. The apparent unbreakability of CompCert supports a strong
- argument that developing compiler optimizations within a proof
- framework, where safety checks are explicit and machine-checked,
- has tangible benefits for compiler users"
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-10-01/
 
-(they have found a few bugs in unverified parts of the compiler,
-though)
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-So there is a real impact of formal methods on program correctness. I
-don't know much about other verified software, so I'll be happy to read
-anything about bugs in them.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-> 
-> Is there any software which comes with monetary warranty?
-> 
-> Are loops sizes in C code serious problem for verification?
-> (something like infinity in math. IIRC Coq have problem with this).
+---
+
+SECURITY-1579 / CVE-2019-10431
+Sandbox protection in Script Security Plugin could be circumvented through
+default parameter expressions in constructors.
+
+This allowed attackers able to specify and run sandboxed scripts to
+execute arbitrary code in the context of the Jenkins master JVM.
+
+
+SECURITY-1590 / CVE-2019-10432
+HTML Publisher Plugin did not escape the project or build display name
+shown in the frame HTML page. This resulted in a cross-site scripting
+vulnerability exploitable by attackers able to control the project or
+build display name, typically users with Job/Configure or Build/Update
+permission.
+
+
+SECURITY-1423 / CVE-2019-10433
+Dingding[钉钉] Plugin stores an access token unencrypted in job config.xml
+files on the Jenkins master. This token can be viewed by users with
+Extended Read permission, or access to the master file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1515 / CVE-2019-10434
+LDAP Email Plugin stores an LDAP bind password in its global Jenkins
+configuration.
+
+While the password is stored encrypted on disk, it is transmitted in plain
+text as part of the configuration form. This can result in exposure of the
+password through browser extensions, cross-site scripting vulnerabilities,
+and similar situations.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1524 / CVE-2019-10435
+SourceGear Vault Plugin stores an SCM password in job configurations.
+
+While the password is stored encrypted on disk, it is transmitted in plain
+text as part of the configuration form. This can result in exposure of the
+password through browser extensions, cross-site scripting vulnerabilities,
+and similar situations.
+
+As of publication of this advisory, there is no fix.
+
