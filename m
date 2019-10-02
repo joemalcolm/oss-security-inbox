@@ -1,23 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/14/3
-Message-ID: <alpine.LRH.2.21.1906141258540.3958@fairfax.gathman.org>
-Date: Fri, 14 Jun 2019 13:04:32 -0400 (EDT)
-From: "Stuart D. Gathman" <stuart@...hman.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/02/2
+Message-ID: <06a94797-a7f9-2b5e-855d-9e779914d36a@mail.muni.cz>
+Date: Wed, 2 Oct 2019 23:00:22 +0200
+From: Ján Jančár <445358@...l.muni.cz>
 To: oss-security@...ts.openwall.com
-Subject: Re: X41 D-Sec GmbH Security Advisory X41-2019-001: Heap-based buffer overflow in Thunderbird
+Subject: Minerva: ECDSA key recovery from bit-length leakage
 Content-Type: text/plain; charset=utf-8
 
+*Webpage*
+=========
 
-On 14.06.19 17:00, Brandon Perry wrote:
-> Thanks for re-reporting these. They didn't take them seriously at all when
-> I reported them originally. These bugs are why I stopped using Thunderbird
-> completely.
+https://minerva.crocs.fi.muni.cz/
 
-I stopped using thunderbird because it infinite loops on my imap (dovecot)
-inbox.  I took the opportunity to try a bunch of clients (all of which
-work fine) from alpine to geary to evolution to claws.
 
--- 
- 	      Stuart D. Gathman <stuart@...hman.org>
-"Confutatis maledictis, flamis acribus addictis" - background song for
-a Microsoft sponsored "Where do you want to go from here?" commercial.
+*Vulnerability*
+===============
+
+Minerva is a group of vulnerabilities in ECDSA/EdDSA implementations that allows
+for practical recovery of the long-term private key.
+
+We have found implementations which leak the bit-length of the scalar during
+scalar multiplication on an elliptic curve. This leakage might seem minuscule as
+the bit-length presents a very small amount of information present in the
+scalar. However, in the case of ECDSA/EdDSA signature generation, the leaked
+bit-length of the random nonce is enough for full recovery of the private key
+used after observing a few hundreds to a few thousands of signatures on known
+messages, due to the application of lattice techniques.
+
+https://minerva.crocs.fi.muni.cz/
+
+
+*Affected*
+==========
+
+ * Cards
+   - Athena IDProtect
+ * Libraries
+   - libgcrypt upto 1.8.4, fixed in 1.8.5
+   - wolfSSL/wolfCrypt upto 4.0.0, fixed in 4.1.0
+   - MatrixSSL upto 4.2.1
+   - SunEC/OpenJDK/OracleJDK upto JDK 12
+   - Crypto++ upto 8.2.0
+ * Other
+   - https://github.com/indutny/elliptic/ 875 stars,2670640 uses
+   - https://github.com/kjur/jsrsasign 2015 stars,7406 uses
+
+
+*CVEs*
+======
+
+ * CVE-2019-15809 - Athena IDProtect cards
+ * CVE-2019-13627 - libgcrypt
+ * CVE-2019-13628 - wolfSSL/wolfCrypt
+ * CVE-2019-13629 - MatrixSSL
+ * CVE-2019-2894  - SunEC/OpenJDK/OracleJDK
+ * CVE-2019-14318 - Crypto++
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
