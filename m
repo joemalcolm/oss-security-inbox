@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2217" "Friday" "14" "July" "2017" "20:07:42" "+0200" "Kristian Fiskerstrand" "k_f@gentoo.org" "<170783ca-312c-1211-2f2c-08c91e288cae@gentoo.org>" "56" "Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?" "^Date:" nil nil "7" "2017071418:07:42" "[oss-security] Estimate for the total number of exploitable bugs in large linux distro?" (number mark "        k_f@gentoo.o Jul 14   56/2217  " thread-indent "\"Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?\"\n") "<20170714175201.7C393138544@mail.altsci.com>" ("<20170714094520.GA1885@kroah.com>" "<20170714093401.GB865@sivokote.iziade.m$>" "<20170714175201.7C393138544@mail.altsci.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1163" "Friday" "4" "October" "2019" "10:33:25" "+0900" "Akira Ajisaka" "aajisaka@apache.org" "<CAP+3qq42G5=pb8CmhTbEhuXpThr7S882-_1pPAPNV0cCc9QW_A@mail.gmail.com>" "43" "[oss-security] CVE-2018-11768: Apache Hadoop HDFS FSImage Corruption" nil nil nil "10" "2019100401:33:25" "[oss-security] CVE-2018-11768: Apache Hadoop HDFS FSImage Corruption" (number mark "U       aajisaka@apa Oct  4   43/1163  " thread-indent "\"[oss-security] CVE-2018-11768: Apache Hadoop HDFS FSImage Corruption\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2018-11768: Apache Hadoop HDFS FSImage Corruption" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13594 invoked by uid 550); 14 Jul 2017 18:08:08 -0000
+Received: (qmail 1697 invoked by uid 550); 4 Oct 2019 07:03:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13574 invoked from network); 14 Jul 2017 18:08:07 -0000
-References: <20170714094520.GA1885@kroah.com>
- <20170714093401.GB865@sivokote.iziade.m$>
- <20170714175201.7C393138544@mail.altsci.com>
-Message-ID: <170783ca-312c-1211-2f2c-08c91e288cae@gentoo.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.0
-MIME-Version: 1.0
-In-Reply-To: <20170714175201.7C393138544@mail.altsci.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="hqGL4JX2ntr3IHf5LMHXGQqONghekPsru"
-Date: Fri, 14 Jul 2017 20:07:42 +0200
-From: Kristian Fiskerstrand <k_f@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Estimate for the total number of exploitable bugs
- in large linux distro?
-To: oss-security@lists.openwall.com, Javantea <jvoss@altsci.com>
+Received: (qmail 19933 invoked from network); 4 Oct 2019 01:34:43 -0000
+X-Gm-Message-State: APjAAAVYUTSIYmRNE8E+QlI805okOWBAumaN0IE7z3IT9u6cf4dAWPhA
+	yvq65pLyQhL0eLk5VN2bWn3gCEqJDpCqZ84HRAc=
+X-Google-Smtp-Source: APXvYqx8303leyk0/e6/LVDXjijDwzWxv60q8g6ABVZ9GMLtEFpMbb4DVYoY2QuuQGYmF8FONeWt96UUHyewiQfqfXc=
+X-Received: by 2002:a19:ef17:: with SMTP id n23mr7024379lfh.109.1570152869638;
+ Thu, 03 Oct 2019 18:34:29 -0700 (PDT)
+MIME-Version: 1.0
+From: Akira Ajisaka <aajisaka@apache.org>
+Date: Fri, 4 Oct 2019 10:33:25 +0900
+X-Gmail-Original-Message-ID: <CAP+3qq42G5=pb8CmhTbEhuXpThr7S882-_1pPAPNV0cCc9QW_A@mail.gmail.com>
+Message-ID: <CAP+3qq42G5=pb8CmhTbEhuXpThr7S882-_1pPAPNV0cCc9QW_A@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000009b73305940bb4f8"
+Subject: [oss-security] CVE-2018-11768: Apache Hadoop HDFS FSImage Corruption
 
---hqGL4JX2ntr3IHf5LMHXGQqONghekPsru
-Content-Type: multipart/mixed; boundary="RkksHDL1pEb30nm2atg6tAaObbrSF7a86";
- protected-headers="v1"
-From: Kristian Fiskerstrand <k_f@gentoo.org>
-Reply-To: k_f@gentoo.org
-To: oss-security@lists.openwall.com, Javantea <jvoss@altsci.com>
-Message-ID: <170783ca-312c-1211-2f2c-08c91e288cae@gentoo.org>
-Subject: Re: [oss-security] Estimate for the total number of exploitable bugs
- in large linux distro?
-References: <20170714094520.GA1885@kroah.com>
- <20170714093401.GB865@sivokote.iziade.m$>
- <20170714175201.7C393138544@mail.altsci.com>
-In-Reply-To: <20170714175201.7C393138544@mail.altsci.com>
-
---RkksHDL1pEb30nm2atg6tAaObbrSF7a86
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+--00000000000009b73305940bb4f8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 07/14/2017 07:52 PM, Javantea wrote:
-> This shows that GLSAs are neither increasing nor decreasing within the ma=
-rgin of error over the past 10 years.
-
-As a metric it likely doesn't provide much though; a high number of
-tracked issues are fixed without GLSA, depending on severity and
-expected install base of the package, and multiple fixes are combined
-into single GLSAs if related to same package etc, so as a metric it is
-probably quite bad and number depending on factors such as available
-manpower from year to year.
-
---=20
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+CVE-2018-11768: HDFS FSImage Corruption
 
 
---RkksHDL1pEb30nm2atg6tAaObbrSF7a86--
+Severity: Critical
 
---hqGL4JX2ntr3IHf5LMHXGQqONghekPsru
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+Vendor: The Apache Software Foundation
 
-iQEzBAEBCgAdFiEEtOrRIMf4mkrqRycHJQt6/tY3nYUFAllpCG8ACgkQJQt6/tY3
-nYV0TAgArQWK0IFC5KVDKMIKGD3RvX4lK3iqbhTwsx7q7FEeyr+Eb8rO4W4JrwJP
-OlCSExSbiE3AWOyzp/zoal21eAQtt00dOj906s7wMlVN66B8dWa4z198hJcE/dng
-XFI9mx59/B1f0R5O0uj5XB1MHr3R9DvdnveMpupwaiSyh+2FxYW05Knoq5bz9K4Q
-jTFkhJswqC82ZsSIGNtCBog6XHKwyPZyfrjNR5oVjYTmG2EABn69aKi9MtAshlT1
-7HWYXoV0Me++VjFkWes7pcMnuskABBNP2qDjIJd+0KEAkMVLPSIVLFGpAvp+/0J6
-T3ZHD3F405IH3duXohLhNqBC6k4+JQ==
-=laOo
------END PGP SIGNATURE-----
 
---hqGL4JX2ntr3IHf5LMHXGQqONghekPsru--
+Versions affected:
+
+3.1.0 to 3.1.1, 3.0.0-alpha1 to 3.0.3, 2.9.0 to 2.9.1, 2.0.0-alpha to 2.8.4
+
+
+Description:
+
+There is a mismatch in the size of the fields used to store user/group
+information between memory and disk representation. This causes the
+user/group information to be corrupted across storing in fsimage and
+reading back from fsimage.
+
+
+Mitigation:
+
+Users should upgrade to Apache Hadoop 2.8.5, 2.9.2, 3.1.2 or upper. This
+vulnerability fix contains a fsimage layout change, so once the image is
+saved in the new layout format you cannot go back to a version that doesn=
+=E2=80=99t
+support the newer layout. This means that once 2.7.x users upgraded to the
+fixed version, they cannot downgrade to 2.7.x because there is no fixed
+version in 2.7.x. We suggest downgrade to 2.8.5 or upper version that
+contains the vulnerability fix.
+
+
+Credit:
+
+This issue was discovered by Ekanth Sethuramalingam.
+
+--00000000000009b73305940bb4f8--
