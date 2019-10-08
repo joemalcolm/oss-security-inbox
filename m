@@ -1,125 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/4
-Message-Id: <E1iNxUK-0002k5-SN@xenbits.xenproject.org>
-Date: Fri, 25 Oct 2019 11:10:36 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 291 v3 (CVE-2019-17345) - x86/PV: page type reference counting issue with failed IOMMU update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/08/2
+Message-ID: <23864967-5f4e-f048-7ea7-553f72a2746e@preussker.net>
+Date: Tue, 8 Oct 2019 11:24:09 +0200
+From: Daniel 'f0o' Preussker <daniel@...ussker.net>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2019-005] Octavia Amphora-Agent not requiring Client-Certificate (CVE-2019-17134)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+=====================================================================
+OSSA-2019-005: Octavia Amphora-Agent not requiring Client-Certificate
+=====================================================================
 
-            Xen Security Advisory CVE-2019-17345 / XSA-291
-                              version 3
+:Date: October 07, 2019
+:CVE: CVE-2019-17134
 
-  x86/PV: page type reference counting issue with failed IOMMU update
 
-UPDATES IN VERSION 3
-====================
+Affects
+~~~~~~~
+- Octavia: >=0.10.0 <2.1.2, >=3.0.0 <3.2.0, >=4.0.0 <4.1.0
 
-CVE assigned.
 
-ISSUE DESCRIPTION
-=================
+Description
+~~~~~~~~~~~
+Daniel Preussker reported a vulnerability in amphora-agent, running
+within Octavia Amphora Instances which allows unauthenticated access
+from the management network. This leads to information disclosure and
+also allows changes to the configuration of the Amphora via simple
+HTTP requests because cmd/agent.py gunicorn cert_reqs option is
+incorrectly set to True instead of ssl.CERT_REQUIRED.
 
-When an x86 PV domain has a passed-through PCI device assigned, IOMMU
-mappings may need to be updated when the type of a particular page
-changes.  Such an IOMMU operation may fail.  In the event of failure,
-while at present the affected guest would be forcibly crashed, the
-already recorded additional type reference was not dropped again.  This
-causes a bug check to trigger while cleaning up after the crashed
-guest.
 
-IMPACT
-======
+Patches
+~~~~~~~
+- https://review.opendev.org/686547 (Ocata)
+- https://review.opendev.org/686546 (Pike)
+- https://review.opendev.org/686545 (Queens)
+- https://review.opendev.org/686544 (Rocky)
+- https://review.opendev.org/686543 (Stein)
+- https://review.opendev.org/686541 (Train)
 
-Malicious or buggy x86 PV guest kernels can mount a Denial of Service
-(DoS) attack affecting the whole system.
 
-VULNERABLE SYSTEMS
-==================
+Credits
+~~~~~~~
+- Daniel Preussker (CVE-2019-17134)
 
-Xen versions from 4.8 onwards are vulnerable.
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+References
+~~~~~~~~~~
+- https://storyboard.openstack.org/#!/story/2006660
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-17134
 
-Only x86 PV guests can exploit the vulnerability.  x86 HVM and PVH
-guests cannot exploit the vulnerability.
 
-Only guests which are assigned a physical device can exploit this
-vulnerability.  Guests which are not assigned physical devices cannot
-exploit this vulnerability.
+Notes
+~~~~~
+- The stable/ocata and stable/pike branches are under extended maintenance and
+  will receive no new point releases, but patches for them are provided as a
+  courtesy.
 
-MITIGATION
-==========
 
-Running only HVM or PVH guests avoids the vulnerability.
+Content of type "text/html" skipped
 
-Not passing through PCI devices to PV guests also avoids the
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Igor Druzhinin and Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa291.patch           xen-unstable
-xsa291-4.11.patch      Xen 4.11.x, Xen 4.10.x
-xsa291-4.9.patch       Xen 4.9.x, Xen 4.8.x
-
-$ sha256sum xsa291*
-01883c11ae45a5771644270445e463538a61d98c66adbba852de74ccd272eae9  xsa291.meta
-fb5f2a75ba113f21e9cb2dfbc22520495c69a4fef631c030a4834c680045e587  xsa291.patch
-299bb4913e7ddb46ce90f415f91ee5e5480050631281c87e1a764b66fb116d89  xsa291-4.9.patch
-16087ba5c59b9644f4f61c0c7fa124d9e04e88089b235aaae91daa04cdf1b8a1  xsa291-4.11.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y1+EMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZlLUIAIIHkQgn80yjzaDnIGp0iFhcoTjDGlwk47MaQiJ2
-QbmVstpVbg4ZUuPmxJ6eWTJXoMbdelthA9klXX9zc0LWEOrMwWeykAxkWB8uVj+b
-URN6fJrLu73U2tqjmPT/P63FVgETXDbFGQcjsSkZ17VHcblmsysCUPmjLWn4r3Tc
-/lCXcEjwHYV2HnYUBrXO2biDVChRt3ClLhJZW9pfvI8hIzCqL+tdtNuvvqVSwR3Y
-SzR75k2lKwkmHQju2rpL00mNsyHsUOl3tDVeHTQa9V7yW4WO4vSb83oZExz9ChgH
-g9ro6epGfGYCQYB9mNSaQbOM3LhOrWeiR1i3nUcR0qRG1wY=
-=r9AC
------END PGP SIGNATURE-----
-
-Download attachment "xsa291.meta" of type "application/octet-stream" (1790 bytes)
-
-Download attachment "xsa291.patch" of type "application/octet-stream" (1829 bytes)
-
-Download attachment "xsa291-4.9.patch" of type "application/octet-stream" (1863 bytes)
-
-Download attachment "xsa291-4.11.patch" of type "application/octet-stream" (1847 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
