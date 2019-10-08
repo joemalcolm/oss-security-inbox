@@ -1,4 +1,9 @@
-Received: (qmail 9533 invoked by uid 550); 28 Jul 2024 19:43:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["746" "Tuesday" "8" "October" "2019" "18:11:31" "+0200" "Pietro Albini" "pietro@pietroalbini.org" "<cbfc13d8-ea1d-9523-7d17-c83e1535bb04@pietroalbini.org>" "19" "[oss-security] CVE-2019-16760: Cargo prior to Rust 1.26.0 may download the wrong dependency" nil nil nil "10" "2019100816:11:31" "[oss-security] CVE-2019-16760: Cargo prior to Rust 1.26.0 may download the wrong dependency" (number mark "U       pietro@pietr Oct  8   19/746   " thread-indent "\"[oss-security] CVE-2019-16760: Cargo prior to Rust 1.26.0 may download the wrong dependency\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-16760: Cargo prior to Rust 1.26.0 may download the wrong dependency" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 8065 invoked by uid 550); 8 Oct 2019 16:12:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,103 +12,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6018 invoked from network); 28 Jul 2024 19:42:31 -0000
-Date: Sun, 28 Jul 2024 21:42:23 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 7820 invoked from network); 8 Oct 2019 16:11:43 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <20240728194223.GA20674@openwall.com>
-References: <d2ed9e542682bf82@cvs.openbsd.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d2ed9e542682bf82@cvs.openbsd.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Announce: OpenSSH 9.8 released
+From: Pietro Albini <pietro@pietroalbini.org>
+Message-ID: <cbfc13d8-ea1d-9523-7d17-c83e1535bb04@pietroalbini.org>
+Date: Tue, 8 Oct 2019 18:11:31 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2019-16760: Cargo prior to Rust 1.26.0 may download the wrong
+ dependency
 
-Some nitpicks:
+On 2019-09-30 the Rust Security team disclosed a vulnerability affecting 
+all Rust releases prior to 1.26.0, causing Cargo to download and compile 
+the wrong dependency under the right circumstances.
 
-CVE-2006-5051 found by Mark Dowd, which was the original bug that got
-relatively recently reintroduced as CVE-2024-6387, still has in its
-description an erroneous reference to GSSAPI:
+The vulnerability has been assigned CVE-2019-16760.
 
-> Signal handler race condition in OpenSSH before 4.4 allows remote
-> attackers to cause a denial of service (crash), and possibly execute
-> arbitrary code if GSSAPI authentication is enabled, via unspecified
-> vectors that lead to a double-free.
+As the affected versions are not supported anymore upstream we won't be 
+issuing patch releases addressing this vulnerability. Official patches 
+(signed with the security team's GPG key) for Rust 1.19.0 to Rust 1.25.0 
+are available here:
 
-It was understood back in 2006 that this bug's exposure did not in fact
-depend on GSSAPI:
+https://gist.github.com/pietroalbini/0d293b24a44babbeb6187e06eebd4992
 
-https://bugzilla.redhat.com/show_bug.cgi?id=208347
+More information on the vulnerability can be found in the advisory:
 
-> Josh Bressers 2006-09-28 15:17:17 UTC
-> 
-> I've done some analysis of this issue and received a mail from Mark Dowd
-> regarding this vulnerability.  The upstream details are misleading.
-> 
-> The problem is that the signal handling in openssh does quite a lot and can
-> introduce a race condition during cleanup.  This flaw could possibly cause a
-> double free condition within the kerberos cleanup code.  The GSSAPI code is
-> completely harmless, upstream calling this issue a GSSAPI issue leads me to
-> believe they did not analyze, nor try to understand this issue.
-> 
-> There is also PAM cleanup code which is executed.  This PAM source hasn't been
-> investigated so the possible outcome is currently unknown.
+https://groups.google.com/forum/#!topic/rustlang-security-announcements/rVQ5e3TDnpQ
 
-I suggest removing " if GSSAPI authentication is enabled" from
-CVE-2006-5051 description.  Maybe someone reading this can correct that.
-
-Maybe I pay too much attention to historical detail, but this error in
-CVE-2006-5051 did cause the question of GSSAPI (ir)relevance to come up
-in CVE-2024-6387 discussions at least twice (that I know of).
-
-On Mon, Jul 01, 2024 at 02:10:04AM -0600, Damien Miller wrote:
-> 2) Logic error in ssh(1) ObscureKeystrokeTiming
-> 
-> In OpenSSH version 9.5 through 9.7 (inclusive), when connected to an
-> OpenSSH server version 9.5 or later, a logic error in the ssh(1)
-> ObscureKeystrokeTiming feature (on by default) rendered this feature
-> ineffective - a passive observer could still detect which network
-> packets contained real keystrokes when the countermeasure was active
-> because both fake and real keystroke packets were being sent
-> unconditionally.
-> 
-> This bug was found by Philippos Giavridis and also independently by
-> Jacky Wei En Kung, Daniel Hugenroth and Alastair Beresford of the
-> University of Cambridge Computer Lab.
-> 
-> Worse, the unconditional sending of both fake and real keystroke
-> packets broke another long-standing timing attack mitigation. Since
-> OpenSSH 2.9.9 sshd(8) has sent fake keystoke echo packets for
-> traffic received on TTYs in echo-off mode, such as when entering a
-> password into su(8) or sudo(8). This bug rendered these fake
-> keystroke echoes ineffective and could allow a passive observer of
-> a SSH session to once again detect when echo was off and obtain
-> fairly limited timing information about keystrokes in this situation
-> (20ms granularity by default).
-> 
-> This additional implication of the bug was identified by Jacky Wei
-> En Kung, Daniel Hugenroth and Alastair Beresford and we thank them
-> for their detailed analysis.
-> 
-> This bug does not affect connections when ObscureKeystrokeTiming
-> was disabled or sessions where no TTY was requested.
-
-Dug Song and I designed the original fake keystroke echo packets
-mitigation, and per our advisory/article back then this was "initially
-applied to OpenSSH starting with version 2.5.0.  OpenSSH 2.5.2 contains
-the more complete versions of the fixes and solves certain
-interoperability issues associated with the earlier versions."
-
-https://www.openwall.com/articles/SSH-Traffic-Analysis
-
-After the 9.8 release, I've added an update (clearly marked as such) to
-the article above to refer to the issue reintroduction and the new fix.
-I was also surprised by the reference to 2.9.9 above, so I checked
-OpenSSH-portable commits.  To me, our original references to 2.5.x look
-correct, and I have no idea where 2.9.9 came from.
-
-Luckily, those old version references are not part of the CVE-2024-39894
-description, so nothing to correct there.
-
-Alexander
+Pietro.
+Rust Security team
