@@ -1,159 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/31/6
-Message-Id: <E1iQ9bP-0004PX-AC@xenbits.xenproject.org>
-Date: Thu, 31 Oct 2019 12:30:59 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 302 v5 (CVE-2019-18424) - passed through PCI devices may corrupt host memory after deassignment
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/08/1
+Message-ID: <1231027090.320367.1570526433648@email.ionos.fr>
+Date: Tue, 8 Oct 2019 11:20:33 +0200 (CEST)
+From: Guillaume Quéré <guillaume@...re.eu>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Centreon-Web and Centreon-VM
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Centreon
+========
+"Centreon is the N°1 Open Source IT Infrastructure Monitoring Solution."
 
-            Xen Security Advisory CVE-2019-18424 / XSA-302
-                               version 5
+Multiple vulnerabilites were discovered in Centreon-Web in december 2018 and fixed in early 2019 over the course of two minor releases on both branches in versions 2.8.27/2.8.28 and 18.10.4/18.10.5.
 
- passed through PCI devices may corrupt host memory after deassignment
+https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-2.8/centreon-2.8.27.html
+https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-2.8/centreon-2.8.28.html
+https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-18.10/centreon-18.10.4.html
+https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-18.10/centreon-18.10.5.html
 
-UPDATES IN VERSION 5
-====================
+Additional vulnerabilities were found in Centreon-VM that have not yet been fixed.
 
-Public release.
 
-The patches are broken on ARM (which is not affected by the issue).
-Don't apply the patches on ARM.  See Resolution.
+High impact
+===========
 
-ISSUE DESCRIPTION
-=================
+CVE-2019-17017: Authenticated RCE in minPlayCommand.php
+-------------------------------------------------------
+Details: https://github.com/centreon/centreon/pull/7099
+Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7245)
+Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7232)
 
-When a PCI device is assigned to an untrusted domain, it is possible
-for that domain to program the device to DMA to an arbitrary address.
-The IOMMU is used to protect the host from malicious DMA by making
-sure that the device addresses can only target memory assigned to the
-guest. However, when the guest domain is torn down, or the device is
-deassigned, the device is assigned back to dom0, thus allowing any
-in-flight DMA to potentially target critical host data.
+CVE-2018-21023: Authenticated RCE in getStats.php
+-------------------------------------------------
+Details: https://github.com/centreon/centreon/pull/7083
+Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7271)
+Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7195)
 
-IMPACT
-======
+CVE-2018-21024: Arbitrary File Upload in licenseUpload.php
+----------------------------------------------------------
+Details: https://github.com/centreon/centreon/pull/7085
+Did not affect branch 2.8.x
+Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7171)
 
-An untrusted domain with access to a physical device can DMA into host
-memory, leading to privilege escalation.
+CVE-2018-21021: Authenticated SQL injection in img_gantt.php
+------------------------------------------------------------
+Details: https://github.com/centreon/centreon/pull/7086
+Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7169)
+Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7086)
 
-VULNERABLE SYSTEMS
-==================
+CVE-2018-21022: Authenticated SQL injection in makeXML_ListServices.php
+-----------------------------------------------------------------------
+Details: https://github.com/centreon/centreon/pull/7087
+Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7229)
+Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7229)
 
-Only systems where guests are given direct access to physical devices
-capable of DMA (PCI pass-through) are vulnerable.  Systems which do
-not use PCI pass-through are not vulnerable.
+CVE-2019-17108: Stored XSS in brokerPerformance.php
+---------------------------------------------------
+Details: https://github.com/centreon/centreon/pull/7101
+Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7226)
+Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7227)
 
-MITIGATION
+
+Medium impact
+=============
+CVE-2018-21025: Privilege Escalation in Centreon-VM
+---------------------------------------------------
+Details: https://github.com/centreon/centreon/issues/7082
+Not yet fixed.
+While checking if this was still possible in centreon-vm-19.04-2 (it is), I found another similar privesc which didn't exist at the time:
+```
+[root@...treon-central ~]# grep centreon_autodisco /etc/cron.d/centreon-auto-disco
+30 22 * * * root /usr/share/centreon/www/modules/centreon-autodiscovery-server//cron/centreon_autodisco --config='/etc/centreon/conf.pm' --config-extra='/etc/centreon/centreon_autodisco.pm' --severity=error >> /var/log/centreon/centreon_auto_discovery.log 2>&1
+[root@...treon-central ~]# ls -la /usr/share/centreon/www/modules/centreon-autodiscovery-server//cron/centreon_autodisco
+-rwxr-xr-x 1 apache apache 4995482 24 avril 13:48 /usr/share/centreon/www/modules/centreon-autodiscovery-server//cron/centreon_autodisco
+```
+
+CVE-2019-17104: Unsecured cookies in Centreon-VM
+------------------------------------------------
+Details: https://github.com/centreon/centreon/issues/7097
+Not yet fixed.
+
+CVE-2019-17106: Display of cleartext external passwords in modules
+------------------------------------------------------------------
+Details: https://github.com/centreon/centreon/issues/7098
+Not yet fixed.
+
+
+Low impact
 ==========
+CVE-2018-21020: Type juggling on authentication in centreonAuth.class.php
+-------------------------------------------------------------------------
+Details: https://github.com/centreon/centreon/pull/7084
+Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7084)
+Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7219)
 
-In some configurations, use of passthrough can be replaced with a
-higher-level protocol such as Xen PV block or network devices.
+CVE-2019-17105: Usage of a predictable generator for a security token in index.php
+----------------------------------------------------------------------------------
+Details: https://github.com/centreon/centreon/pull/7100
+Not fixed in 2.8.x  (https://github.com/centreon/centreon/pull/7224)
+Fixed in 18.10.5    (commit 4faf5919f89bd06a5c25152c39ba3f25a4f16a81)
 
-CREDITS
-=======
 
-This issue was discovered by Paul Durrant of Citrix.
+Acknowledgements
+================
+Thanks to Centreon for their quick and enthusiastic response as well as their commitment to patching.
 
-RESOLUTION
-==========
-
-Applying the appropriate attached patchset should resolve this issue.
-For Xen 4.9 and earlier at least the first patch of XSA-299
-(whitespace cleanup) is also needed for XSA-302 to apply.
-
-Unfortunately, at the time of writing, these patches have not been
-tested to our satisfaction.
-
-The patches are known to break on ARM.  ARM is not affected by the
-issue, so do not apply these patches on ARM systems.  (On x86, there
-is a latent bug but the patches are good to use.)
-
-xsa302/*.patch         xen-unstable
-xsa302-4.12/*.patch    Xen 4.12.x
-xsa302-4.11/*.patch    Xen 4.11.x
-xsa302-4.10/*.patch    Xen 4.10.x
-xsa302-4.9/*.patch     Xen 4.9.x, Xen 4.8.x
-
-$ sha256sum xsa302* xsa302*/*
-d722d1bed2440a5d35f0fd041e4a77966b7d26980a0f874d38d48710db0b9ebd  xsa302.meta
-703faced133ca21142f484acd8cf16578258e12ae0cf1413a5d9252f1e099465  xsa302-4.9/0001-IOMMU-add-missing-HVM-check.patch
-edb4753b91fa66e2f4b51d0075d106fc28d8451241ba482a33c2db4be53f21d1  xsa302-4.9/0002-passthrough-quarantine-PCI-devices.patch
-3c79107d8fd94807543443192fb31f3d188912c208f4dbda61f1f2ff92701afc  xsa302-4.10/0001-IOMMU-add-missing-HVM-check.patch
-2a76add5a907baf0217e57e2a4dca91a6a8ce84c67b9ff87be1bcbb1f29efdc6  xsa302-4.10/0002-passthrough-quarantine-PCI-devices.patch
-a75723160c52c2c65d563905d0904b587beda1cfb6ca3ee18fb70e79818d3faa  xsa302-4.11/0001-IOMMU-add-missing-HVM-check.patch
-48b9dae7adbe2438dcaa00f969532d835061cb4a06ab2bf47ada2afb644de4c5  xsa302-4.11/0002-passthrough-quarantine-PCI-devices.patch
-a21efa6cae14e87318ca3927f0ac310aee2dd1323f2dbf040c0fe80789d78712  xsa302-4.12/0001-IOMMU-add-missing-HVM-check.patch
-0a95f750ad1d5eb1838b6488e4ac188acdc2e568eb21b26306d5af2980bffb58  xsa302-4.12/0002-passthrough-quarantine-PCI-devices.patch
-11d7015960eab265b1f9ce372dd14597b6c4cc7907d77ed3eed14d161dd50e5c  xsa302/0001-passthrough-quarantine-PCI-devices.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the *patches* described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Also: deployment of the reconfiguration *mitigation* is NOT permitted
-(except where all the affected systems and VMs are administered and
-used only by organisations which are members of the Xen Project
-Security Issues Predisclosure List).  Specifically, deployment on
-public cloud systems is NOT permitted.
-
-This is because this reconfiguration reveals that a PCI passthrough
-vulnerability is involved.
-
-Deployment of that migitation is permitted only AFTER the embargo
-ends.
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl260/wMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ2TYH/A+tmA2Wsw0NbdEhSzztj6cVFZpev16S75vOxLUm
-/dFTQSxNVeqyzZjI7u9JPZUatQVIHwdDPi9Oiwygn8pFid1RBe+fn3saM3JdNQrA
-pYVOCEYGoxnz/lpPLWfcI8aUIkdhU4Ns/hwXVa6lUNno9MaqqJR278k6nmB9/0QS
-bFvsMirqTKHm7wQptY5mRcULdjcpn+u4W45nje3+TU0mMRQkbm+pnNX57qzn/LFI
-/atzBQ8iyv9/y3e/soAXv3AkWzs/lUVIAZepaFhXCHi3WuMsMUyZAdDOUBmD0tBt
-pjQzx408ZoMPtqqDKpY1qEn9Bu1MsIxx/4htqlgG0c9Kh1U=
-=cUbr
------END PGP SIGNATURE-----
-
-Download attachment "xsa302.meta" of type "application/octet-stream" (2035 bytes)
-
-Download attachment "xsa302-4.9/0001-IOMMU-add-missing-HVM-check.patch" of type "application/octet-stream" (1426 bytes)
-
-Download attachment "xsa302-4.9/0002-passthrough-quarantine-PCI-devices.patch" of type "application/octet-stream" (17769 bytes)
-
-Download attachment "xsa302-4.10/0001-IOMMU-add-missing-HVM-check.patch" of type "application/octet-stream" (1436 bytes)
-
-Download attachment "xsa302-4.10/0002-passthrough-quarantine-PCI-devices.patch" of type "application/octet-stream" (17721 bytes)
-
-Download attachment "xsa302-4.11/0001-IOMMU-add-missing-HVM-check.patch" of type "application/octet-stream" (1436 bytes)
-
-Download attachment "xsa302-4.11/0002-passthrough-quarantine-PCI-devices.patch" of type "application/octet-stream" (17704 bytes)
-
-Download attachment "xsa302-4.12/0001-IOMMU-add-missing-HVM-check.patch" of type "application/octet-stream" (1411 bytes)
-
-Download attachment "xsa302-4.12/0002-passthrough-quarantine-PCI-devices.patch" of type "application/octet-stream" (17835 bytes)
-
-Download attachment "xsa302/0001-passthrough-quarantine-PCI-devices.patch" of type "application/octet-stream" (17314 bytes)
+Guillaume Quéré
