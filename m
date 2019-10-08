@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/10/1
-Message-ID: <CAPsnWaD_9QOiV+513eH=ECkwBo+AWN38N9x7xauKcFyVpvc-Og@mail.gmail.com>
-Date: Tue, 9 Jul 2019 19:00:36 -0600
-From: Joe McManus <joe.mcmanus@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/08/3
+Message-ID: <cbfc13d8-ea1d-9523-7d17-c83e1535bb04@pietroalbini.org>
+Date: Tue, 8 Oct 2019 18:11:31 +0200
+From: Pietro Albini <pietro@...troalbini.org>
 To: oss-security@...ts.openwall.com
-Subject: Contributing Back
+Subject: CVE-2019-16760: Cargo prior to Rust 1.26.0 may download the wrong dependency
 Content-Type: text/plain; charset=utf-8
 
-Hey All - The Ubuntu Security Team would like to sign up for items 3,4
-& 5 from the technical list <
-https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->:
+On 2019-09-30 the Rust Security team disclosed a vulnerability affecting 
+all Rust releases prior to 1.26.0, causing Cargo to download and compile 
+the wrong dependency under the right circumstances.
 
-3 - Review and/or test the proposed patches and point out potential issues
-  with them [...]
-4 - Check if related issues exist in the same piece of software [...]
-5 - Check if related issues exist in implementations of similar
-  functionality in other software [...]
+The vulnerability has been assigned CVE-2019-16760.
 
-Please let me know how we get started helping out.
+As the affected versions are not supported anymore upstream we won't be 
+issuing patch releases addressing this vulnerability. Official patches 
+(signed with the security team's GPG key) for Rust 1.19.0 to Rust 1.25.0 
+are available here:
 
-Cheers,
--Joe
+https://gist.github.com/pietroalbini/0d293b24a44babbeb6187e06eebd4992
+
+More information on the vulnerability can be found in the advisory:
+
+https://groups.google.com/forum/#!topic/rustlang-security-announcements/rVQ5e3TDnpQ
+
+Pietro.
+Rust Security team
