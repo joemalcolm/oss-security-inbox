@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/10/2
-Message-Id: <F8EB26DC-CA65-4511-9D60-5A8ED0F4980F@gmail.com>
-Date: Tue, 10 Sep 2019 11:34:34 +0400
-From: Ilya Matveychikov <matvejchikov@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Telegram privacy fails again.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/09/3
+Message-ID: <CAAt3=A5YsFK-UEJFOqpXQsNFjAey+0hpJsksohjyoiypLQL8_A@mail.gmail.com>
+Date: Wed, 9 Oct 2019 10:56:15 +0800
+From: bo Zhang <zhangbo5891001@...il.com>
+To: oss-security@...ts.openwall.com, Tina Li <tli@...italocean.com>,  tiangangpi@...il.com
+Cc: Vineeth Remanan Pillai <vpillai@...italocean.com>
+Subject: Re: CVE-2019-14835: QEMU-KVM Guest to Host Kernel Escape Vulnerability: vhost/vhost_net kernel buffer overflow
 Content-Type: text/plain; charset=utf-8
 
+Hi, Tina
+This vulnerability is a kernel vul and different verison of Qemu should not
+affect the reproduce. Try the following steps:
 
+1. The guest kernel patch is for this version:
+Ubuntu-hwe-4.15.0-50.54_16.04.1(
+https://kernel.ubuntu.com/git/ubuntu/ubuntu-xenial.git/tree/drivers/virtio/virtio_ring.c?h=Ubuntu-hwe-4.15.0-50.54_16.04.1),
+if you use different kernel version, the patch may need to be modified
+slightly.
+The patch makes the guest kernel create a invalid descriptor table and the
+echo command is just to trigger the bug through a kernel variable.
 
-> On Sep 9, 2019, at 11:16 PM, Dhiraj Mishra <mishra.dhiraj95@...il.com> wrote:
+2. Ubuntu had released the patched kernel, the host kernel you used should
+not be patched(< 5.2.x) for reproducing the vulnerability.
 
-[ ... ]
-
-> 
-> Assume a scenario where Bob sends a message which is a confidential image
-> and was mistakenly sent to Alice, Bob proceeds to utilize a feature of
-> Telegram known as "*Also delete for Alice*" which would essentially delete
-> the message for Alice.
-
-
-> ... Bob (!!!) sends (!!!) a message which is a confidential (!!!) image and
-> was mistakenly (!!!) sent (!!!) to Alice ...
-
-"Telegram privacy fails again”, sure, sure.
+Thanks!
+cradmin of Tencent Blade Team
 
