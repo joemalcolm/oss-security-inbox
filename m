@@ -1,4 +1,9 @@
-Received: (qmail 16104 invoked by uid 550); 6 Jun 2025 01:22:02 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["677" "Wednesday" "9" "October" "2019" "16:57:52" "+0200" "Patrick Uiterwijk" "puiterwijk@redhat.com" "<20191009145752.GA32134@crime.home.puiterwijk.org>" "31" "[oss-security] Koji CVE-2019-17109: koji hub allows arbitrary upload destinations" nil nil nil "10" "2019100914:57:52" "[oss-security] Koji CVE-2019-17109: koji hub allows arbitrary upload destinations" (number mark "U       puiterwijk@r Oct  9   31/677   " thread-indent "\"[oss-security] Koji CVE-2019-17109: koji hub allows arbitrary upload destinations\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Koji CVE-2019-17109: koji hub allows arbitrary upload destinations" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24562 invoked by uid 550); 9 Oct 2019 14:58:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9539 invoked from network); 6 Jun 2025 01:21:40 -0000
-Date: Fri, 6 Jun 2025 03:20:27 +0200
-From: Solar Designer <solar@openwall.com>
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-Cc: oss-security@lists.openwall.com,
-	Qualys Security Advisory <qsa@qualys.com>
-Message-ID: <20250606012027.GA31670@openwall.com>
-References: <20250529171556.GA9260@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Received: (qmail 24542 invoked from network); 9 Oct 2019 14:58:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1570633088;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=BqLnXn0uG8Jf9kE5K87QGSnano60XGN+TA66xcaf3Ds=;
+	b=RlHcmCtsGuJQx3S94AiJylhdMy41pVFiRqbNBqNoNpKlTGXE31LQzrvQIbWGa+iBCFZ4V+
+	uX5co6/ahTN7516R0UB8kXTipXA5shhaltQVGnGUhcH8ZF3B7fqSc99ubEConAGT4GB2/v
+	+/aXNDcvcsuV642ba+mf5gS3nBMh+5k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=omu5dTd+CWIND2HX9RmEvPS1VLlu20N4JmoWu5jcnWc=;
+        b=W1lW3sioeWlJbDN9g/k5/nqVv7njl1u6t+ha3H38eCJYV7Qa+5PRRjR/AT4EeNTt/N
+         Rj47GIZsSvvdkh3ZaqpzIyTAl6n74isWIgwJ7PxApAwk6XvH7S1AVzaHnkRs9FmfoHVJ
+         hDkR8FiES3WLD89nqmF5z6qHi9UwyQtaw3luu55IullzeXLQr3rZoEv71GD4heQDPMQ3
+         snwDcBzlRew9ihLGWOfJLC2TQYsfEEXmP7gqj0iDifNSC77sGP1XoIJWkYCnbwofpMoe
+         dPAonxbpoYLBbT0UsgaUmOVZFxa0eJYq1v03GVAAcE1CXwEJfjsbLXEhvHak5RLY2Xyr
+         lUVg==
+X-Gm-Message-State: APjAAAX2lmRv8zutflFOdCuLbU8dEguzTfa04qho6U/kHDYGRnQm7zyF
+	f55Li7gw4koybCCQN/TNUgFzUwFlzxupUxA9Yzl4+Majrw+Dd93te2Ore5vxe6pqSKo7OvH30zq
+	6gQpO7k1ov8caeny1cnb2IdmOp/Hg
+X-Received: by 2002:aa7:d045:: with SMTP id n5mr3422907edo.24.1570633085875;
+        Wed, 09 Oct 2019 07:58:05 -0700 (PDT)
+X-Google-Smtp-Source: APXvYqzLl+TJGYunt+TLDmpU+sMF1mNSGK1suTX8j8Hgjkz+rdiGf/eXzmTFndN3BA9wnccardeh/Q==
+X-Received: by 2002:aa7:d045:: with SMTP id n5mr3422884edo.24.1570633085561;
+        Wed, 09 Oct 2019 07:58:05 -0700 (PDT)
+Date: Wed, 9 Oct 2019 16:57:52 +0200
+From: Patrick Uiterwijk <puiterwijk@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20191009145752.GA32134@crime.home.puiterwijk.org>
+MIME-Version: 1.0
+User-Agent: Mutt/1.12.1 (2019-06-15)
+X-MC-Unique: q_SPXBtmMvaeHCaihs4Bmg-1
+X-Mimecast-Spam-Score: 0
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250529171556.GA9260@localhost.localdomain>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Local information disclosure in apport and systemd-coredump
+Subject: [oss-security] Koji CVE-2019-17109: koji hub allows arbitrary upload destinations
 
-Hi Zbigniew,
+Description
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-On Thu, May 29, 2025 at 05:17:08PM +0000, Qualys Security Advisory wrote:
-> - always take account of the kernel's per-process "dumpable" flag (the
->   %d specifier), in every code path, to decide whether a non-root user
->   should be given read access to a core dump or not;
+The way that the hub code validates upload paths allows for an attacker to =
+choose an arbitrary destination for the uploaded file.=20
 
-Thank you for fixing the issue in systemd, and for sharing patches with
-linux-distros.  I have a question on those.  Since this is now public,
-let's discuss this in the public oss-security thread.
 
-In your message to linux-distros, you shared these two patches:
+Affected versions
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-0001-coredump-get-rid-of-_META_MANDATORY_MAX.patch
-0003-coredump-also-stop-forwarding-non-dumpable-processes.patch
+All prior versions of Koji are vulnerable.
 
-So it looks like you omitted patch number 2.  Yet to me that omitted
-patch would have been the most important part of the fix.  Was this
-omission inadvertent, or am I missing some reason to skip that patch?
 
-I think it's these 3 commits (as they appear in the main branch, and I
-see equivalent ones are also in v257-stable and v256-stable):
+Patched versions
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-commit 8fc7b2a211eb13ef1a94250b28e1c79cab8bdcb9
-Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-Date:   Mon May 5 15:48:40 2025 +0200
+Koji versions 1.14.3, 1.15.3, 1.16.3, 1.17.1, and 1.18.1 are available on t=
+he website, and all include patches to solve this problem.
 
-    coredump: also stop forwarding non-dumpable processes
-    
-    See the comment in the patch for details.
-    
-    Suggested-by: Qualys Security Advisory <qsa@qualys.com>
 
-commit 0c49e0049b7665bb7769a13ef346fef92e1ad4d6
-Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-Date:   Tue Apr 29 14:47:59 2025 +0200
+Credits
+=3D=3D=3D=3D=3D=3D=3D
 
-    coredump: use %d in kernel core pattern
-    
-    The kernel provides %d which is documented as
-    "dump mode—same as value returned by prctl(2) PR_GET_DUMPABLE".
-    
-    We already query /proc/pid/auxv for this information, but unfortunately this
-    check is subject to a race, because the crashed process may be replaced by an
-    attacker before we read this data, for example replacing a SUID process that
-    was killed by a signal with another process that is not SUID, tricking us into
-    making the coredump of the original process readable by the attacker.
-    
-    With this patch, we effectively add one more check to the list of conditions
-    that need be satisfied if we are to make the coredump accessible to the user.
-    
-    Reportedy-by: Qualys Security Advisory <qsa@qualys.com>
-    
-    In principle, %d might return a value other than 0, 1, or 2 in the future.
-    Thus, we accept those, but emit a notice.
+This issue was discovered by Yu Ming Zhu of Red Hat.
 
-commit 49f1f2d4a7612bbed5211a73d11d6a94fbe3bb69
-Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-Date:   Mon May 26 12:04:44 2025 +0200
 
-    coredump: get rid of _META_MANDATORY_MAX
-    
-    No functional change. This change is done in preparation for future changes.
-    Currently, the list of fields which are received on the command line is a
-    strict subset of the fields which are always expected to be received on a
-    socket. But when we add new kernel args in the future, we'll have two
-    non-overlapping sets and this approach will not work. Get rid of the variable
-    and enumerate the required fields. This set will never change, so this is
-    actually more maintainable.
-    
-    The message with the hint where to add new fields is switched with
-    _META_ARGV_MAX. The new order is more correct.
+References
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Alexander
+https://docs.pagure.org/koji/CVE-2019-17109/
+
