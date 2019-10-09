@@ -1,28 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/5
-Message-ID: <CANn89iLnNC16YVkNJ4y8Bet2C2Yy0F=wjyii1RRpqfCUL=Okxw@mail.gmail.com>
-Date: Tue, 8 Jan 2019 07:14:11 -0800
-From: Eric Dumazet <edumazet@...gle.com>
-To: 3ntr0py1337@...il.com
-Cc: security@...nel.org, oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel 4.20(21) deadlock vulnerability.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/09/6
+Message-Id: <fb9538aa-b43d-4a35-bf5b-7d1f72caddde@www.fastmail.com>
+Date: Wed, 09 Oct 2019 11:33:52 -0400
+From: "Graham Christensen" <graham@...hamc.com>
+To: "Michael Orlitzky" <michael@...itzky.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2019-17365: Nix per-user profile directory hijack
 Content-Type: text/plain; charset=utf-8
 
-Hello Entropy Moe
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-syzbot reported dozens of similar issues involving printk
+Hello Michael and oss-security,
 
-https://syzkaller.appspot.com/
+I'm from the NixOS Security Team[0]. We handle security reports for
+Nix, NixOS, and the Nix ecosystem.
 
-Not sure why this would be a security concern ?
+> Bug report: Reported privately to the NixOS security team on 2019-08-19.
 
-Thanks.
+I can confirm we received, validated, and improperly handled this
+report.
 
-On Tue, Jan 8, 2019 at 7:08 AM Entropy Moe <3ntr0py1337@...il.com> wrote:
->
-> Hello,
-> I wanted to let you know that there seem to be a deadlock vulnerability on the linux kernel 4.20.
-> I am attaching the result report from syzkaller which also got the c code for replication.
->
-> thank you,
->
+I took lead on this issue and began authoring a patch to fix it. We
+had a partial fix, and I dropped the ball. I have opened up my partial
+patch to the greater NixOS security community[1] to get help in
+finishing this off.
+
+Unfortunately, the problem is in a challenging spot: the code must be
+authored very carefully to not fail. More unfortunately, the root of
+this issue has been known for some time[2].
+
+As soon as we are comfortable with a fix, we will release a new
+version of Nix.
+
+We will also examine how we handle security issues, and publish a
+post-mortem of how this happened and how our processes will be changed
+to prevent this from happening again.
+
+Thank you, Michael for bringing this issue to the public eye.
+
+[0] https://nixos.org/nixos/security.html
+[1] https://github.com/NixOS/nix/pull/3134
+[2] https://github.com/NixOS/nix/issues/509
+
+
+Graham Christensen
+NixOS Security Team
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEgej9zkMfmhiSsTqdrKHB0SDIPVwFAl2d/MUACgkQrKHB0SDI
+PVxPuA/5AfX/pu3fjXK7OQbxI6euYkbebjKy8wCk9cXc24CY1V/aqPchN6a79hVw
+gE9UkIxryVACKZdZVQvsvNi9D54cxJM6yRwf0nReZETqzlaT2B7sjbzGhg4QBhuj
+klqViy+cIp3vP7qH+baZSRGEoq5T/sV6Jk+Y9Dzr0CpgNav+tvYdtk47KkrocKxy
+Pg3pclWUiAqY45bQRn/zhbv3SneKjlKEe3cQYp7hUuH24peZrAm5LQrD8RImWDcq
+yeQqHr0OlH6UHxVXKjkMYW07ZHN5y7u11ACicM9Nb4hb/+pKeQ9k2hqJKYe6eIZJ
+yFiyLFLLuMR39g72Kzx1mpXlr1cx5LaY9woWJkUwinemWe5sO0Ql5kiFdc1hdF6e
+7Uy+0yH+8/WRhT3x13Ec4nDaCLz0bnYahD2OXDJRmtzXGG4/LYRHsY7IFYJrrEXn
+AUTG7NaX8KAatDY3XTKMeAY00yUvyDx0hol0uL+APQwKTzBGw5eu7vlpN4Z/B91/
+UNJNF2sDHDndkduPlYrvXiSkRvR4a3kBoLOZBjftIlZbk9kjIw3Cc0YTemlvckat
+rFNgaLe0DXDPQ4Bt/8uUizfyo1uYUp7HbBLs8CTsU1on8GxCdBlFcZ4dae/O0VTc
+rcPTto9TChK8U/cFkeFIrix6hbG5u+2EbhY6BkzDmTtxaifd0uM=
+=FG5p
+-----END PGP SIGNATURE-----
