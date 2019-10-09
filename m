@@ -1,68 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/03/1
-Message-ID: <CAH8yC8kY-oSpFTTY2QEyM9HAWj6_h69xUAFSD=5PF7iLczqdAA@mail.gmail.com>
-Date: Wed, 2 Jan 2019 16:53:16 -0500
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/09/5
+Message-ID: <20191009145752.GA32134@crime.home.puiterwijk.org>
+Date: Wed, 9 Oct 2019 16:57:52 +0200
+From: Patrick Uiterwijk <puiterwijk@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: gmp-bugs@...lib.org
-Subject: Re: Re: Asserts considered harmful (or GMP spills its sensitive information)
+Subject: Koji CVE-2019-17109: koji hub allows arbitrary upload destinations
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 1, 2019 at 7:42 AM Simon McVittie <smcv@...ian.org> wrote:
->
-> On Tue, 01 Jan 2019 at 12:07:17 +0100, Niels Möller wrote:
-> > A security sensitive application can easily disable generation of core
-> > files, using setrlimit (on the linux kernel, prctl may also be useful).
->
-> If you want to avoid core dumps being recorded on Linux in the presence of
-> system configuration that writes them into a pipe to a command instead
-> of to a core file (systemd-coredump, corekeeper, abrt, apport etc.,
-> using a string starting with | in /proc/sys/kernel/core_pattern), then
-> you need to use prctl PR_SET_DUMPABLE. Setting RLIMIT_CORE to 0 prevents
-> the kernel from creating core dump files itself, but does not prevent
-> it from writing them to pipes.
+Description
+===========
 
-This is kind of interesting. It looks like systems running systemd
-with coredumpctl store the dumps in journald. Systemd does not appear
-to offer a way to clear them, so a '/var/log/journal/*/*' is needed.
-
-$ cat coredump.c
-#include <stdio.h>
-#include <assert.h>
-
-int main(int argc, char* argv[])
-{
-    char password[128];
-    printf("Please enter your password:\n");
-    if(fgets(password, sizeof(password), stdin) != NULL) {
-        /* do some real work, detect an error condition, then... */
-        assert(0);
-    }
-
-    return 0;
-}
+The way that the hub code validates upload paths allows for an attacker to choose an arbitrary destination for the uploaded file. 
 
 
-$ gcc coredump.c -o coredump.exe
-$ ./coredump.exe
-Please enter your password:
-supersecretpassword
-coredump.exe: coredump.c:11: main: Assertion `0' failed.
-Aborted (core dumped)
+Affected versions
+=================
+
+All prior versions of Koji are vulnerable.
 
 
-$ coredumpctl list
-TIME                            PID   UID   GID SIG COREFILE  EXE
-Wed 2019-01-02 16:23:15 EST   10827  1000  1000   6 present   /home/jwalton/...
+Patched versions
+================
+
+Koji versions 1.14.3, 1.15.3, 1.16.3, 1.17.1, and 1.18.1 are available on the website, and all include patches to solve this problem.
 
 
-$ coredumpctl -o coredump.exe.core dump 10827
-           PID: 10827 (coredump.exe)
-           UID: 1000 (jwalton)
-           GID: 1000 (jwalton)
-        Signal: 6 (ABRT)
+Credits
+=======
+
+This issue was discovered by Yu Ming Zhu of Red Hat.
 
 
-$ strings coredump.exe.core | grep supersecret
-supersecretpassword
-supersecretpassword
+References
+=========
+
+https://docs.pagure.org/koji/CVE-2019-17109/
+
