@@ -1,4 +1,9 @@
-Received: (qmail 14214 invoked by uid 550); 9 Apr 2025 08:59:55 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4903" "Wednesday" "9" "October" "2019" "10:14:30" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<e758e2d9-3c1f-c006-4ad2-f0f38ec7e669@orlitzky.com>" "131" "[oss-security] CVE-2019-17365: Nix per-user profile directory hijack" nil nil nil "10" "2019100914:14:30" "[oss-security] CVE-2019-17365: Nix per-user profile directory hijack" (number mark "U       michael@orli Oct  9  131/4903  " thread-indent "\"[oss-security] CVE-2019-17365: Nix per-user profile directory hijack\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-17365: Nix per-user profile directory hijack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 31785 invoked by uid 550); 9 Oct 2019 14:14:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,290 +12,228 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 14179 invoked from network); 9 Apr 2025 08:59:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=selector1; bh=BEwPwQN3FI
-	RP/JqmP3ZFGTJn2jpDwjr/xTs1nUz5eMI=; h=subject:to:date:from;
-	d=openbsd.org; b=LszylfQzQ5zuYWxjcyUMsrMsKjm0OgEUMYFAH98ofq2QNU/8FrYm8
-	/IeV9argBtA3+SHjlq/HQgDSNoUR/IqICTejPY6cdhiY92a+LJK77efJ0TuLlwgAHDXPKP
-	48vUp2hajbd8iNSBQxZ9iuHBu3Wixe0BDHuN92iSKYdXi7Uo7DcxbPCXD6vpNcEpyMNpNg
-	EXCR3aUoWK21yXoLmPZcQ/KLMUUCTcu5Qajijx0BSYJM64zS0ph46K2ZQCPpkNaJ8K4FQQ
-	iW3SgKYeh978euezy8ApFcE13H0YrBP6RJC879VAQ9Pm7rGWPHTwEmzTWuiGaDeoVzGMOD
-	frEgFG1HQ==
-From: Damien Miller <djm@cvs.openbsd.org>
-Date: Wed, 9 Apr 2025 02:59:42 -0600 (MDT)
+Received: (qmail 31764 invoked from network); 9 Oct 2019 14:14:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1570630474; bh=+MsY0tVmm5CivgXyAZKEHoS+EQ5u1eWm+V3xGxrQnBo=;
+	h=From:Subject:To:Date;
+	b=wXiFXpJu2lSAPy1EOWtjW6xEl7+WuWAiei9xvoHa239WYi7zJ/fekye5Lp8BEkOU3
+	 6KIrwoiSTbcT7OuIlx9XIf5pm0oYmsvLqCBTkzPYfQ8MeV0ZzPYlGIdWI/NYEe646p
+	 ck86Liivqw7q2BTqi31F8OiFdM/yBlNpg0Vnvpys=
+From: Michael Orlitzky <michael@orlitzky.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=michael@orlitzky.com; prefer-encrypt=mutual; keydata=
+ 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
 To: oss-security@lists.openwall.com
-Message-ID: <9a8c0d83568d25c2@cvs.openbsd.org>
-Subject: [oss-security] Announce: OpenSSH 10.0 released
-
-OpenSSH 10.0 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
-
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
-
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
-
-Potentially-incompatible changes
---------------------------------
-
- * This release removes support for the weak DSA signature
-   algorithm, completing the deprecation process that began in
-   2015 (when DSA was disabled by default) and repeatedly warned
-   over the last 12 months.
-
- * scp(1), sftp(1): pass "ControlMaster no" to ssh when invoked by
-   scp & sftp. This disables implicit session creation by these
-   tools when ControlMaster was set to yes/auto by configuration,
-   which some users found surprising. This change will not prevent
-   scp/sftp from using an existing multiplexing session if one had
-   already been created. GHPR557
-
- * This release has the version number 10.0 and announces itself
-   as "SSH-2.0-OpenSSH_10.0". Software that naively matches
-   versions using patterns like "OpenSSH_1*" may be confused by
-   this.
-
- * sshd(8): this release removes the code responsible for the
-   user authentication phase of the protocol from the per-
-   connection sshd-session binary to a new sshd-auth binary.
-   Splitting this code into a separate binary ensures that the
-   crucial pre-authentication attack surface has an entirely
-   disjoint address space from the code used for the rest of the
-   connection. It also yields a small runtime memory saving as the
-   authentication code will be unloaded after the authentication
-   phase completes. This change should be largely invisible to
-   users, though some log messages may now come from "sshd-auth"
-   instead of "sshd-session". Downstream distributors of OpenSSH
-   will need to package the sshd-auth binary.
-
- * sshd(8): this release disables finite field (a.k.a modp)
-   Diffie-Hellman key exchange in sshd by default. Specifically,
-   this removes the "diffie-hellman-group*" and
-   "diffie-hellman-group-exchange-*" methods from the default
-   KEXAlgorithms list. The client is unchanged and continues to
-   support these methods by default. Finite field Diffie Hellman
-   is slow and computationally expensive for the same security
-   level as Elliptic Curve DH or PQ key agreement while offering
-   no redeeming advantages. ECDH has been specified for the SSH
-   protocol for 15 years and some form of ECDH has been the default
-   key exchange in OpenSSH for the last 14 years.
-
- * sshd(8): this release removes the implicit fallback to compiled-
-   in groups for Diffie-Hellman Group Exchange KEX when the moduli
-   file exists but does not contain moduli within the client-
-   requested range.  The fallback behaviour remains for the case
-   where the moduli file does not exist at all. This allows
-   administrators more explicit control over which DH groups will
-   be selected, but can lead to connection failures if the moduli
-   file is edited incorrectly. bz#2793
-
-Changes since OpenSSH 9.9
-=========================
-
-This release contains a minor security fix as well as a number of
-feature improvements and bugfixes.
-
-Security
-========
-
-* sshd(8): fix the DisableForwarding directive, which was failing
-  to disable X11 forwarding and agent forwarding as documented.
-  X11 forwarding is disabled by default in the server and agent
-  forwarding is off by default in the client.
-
-New features
-------------
-
- * ssh(1): the hybrid post-quantum algorithm mlkem768x25519-sha256
-   is now used by default for key agreement. This algorithm is
-   considered to be safe against attack by quantum computers,
-   is guaranteed to be no less strong than the popular
-   curve25519-sha256 algorithm, has been standardised by NIST
-   and is considerably faster than the previous default.
-
- * ssh(1): prefer AES-GCM to AES-CTR mode when selecting a cipher
-   for the connection. The default cipher preference list is now
-   Chacha20/Poly1305, AES-GCM (128/256) followed by AES-CTR
-   (128/192/256).
-
- * ssh(1): add %-token and environment variable expansion to the
-   ssh_config SetEnv directive.
-
- * ssh(1): allow %-token and environment variable expansion in
-   the ssh_config User directive, with the exception of %r and %C
-   which would be self-referential. bz#3477
+Message-ID: <e758e2d9-3c1f-c006-4ad2-f0f38ec7e669@orlitzky.com>
+Date: Wed, 9 Oct 2019 10:14:30 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2019-17365: Nix per-user profile directory hijack
+
+Product: Nix
+Versions affected: 2.3 and earlier
+Author: Michael Orlitzky
+Bug report: Reported privately to the NixOS security team on 2019-08-19.
+
+
+== Summary ==
+
+Out of the box, Nix creates an empty, world-writable, per-user profile
+directory. After Nix is installed but before a victim has (re)logged in,
+the victim's personal profile directory can be hijacked by an attacker
+on on the system who has no other special privileges. Thenceforth, the
+attacker controls that profile directory and can take over the target
+account.
 
- * ssh(1), sshd(8): add "Match version" support to ssh_config and
-   sshd_config. Allows matching on the local version of OpenSSH,
-   e.g. "Match version OpenSSH_10.*".
+
+== Details ==
+
+Nix is a package manager that can install software both globally (for
+the system) and locally (for each user). One critical aspect of the
+per-user support is that each user has a unique local "Nix profile"
+directory. After installing Nix, the intent is that the next time a
+user logs in, her per-user profile directory is created automatically
+and some tweaks are made to allow her to use Nix right away.
+
+The automatic profile-directory creation involves two key things.
+First, the Nix installation script (scripts/install-multi-user.sh)
+modifies /etc/bashrc, /etc/zshrc, and /etc/profile.d/nix.sh to include
+the upstream file scripts/nix-profile-daemon.sh.in every time a user
+logs in. That script, in turn, is supposed to create the user's Nix
+profile directory if it does not exist:
+
+  # Set up the per-user profile.
+  mkdir -m 0755 -p $NIX_USER_PROFILE_DIR
+  if ! test -O "$NIX_USER_PROFILE_DIR"; then
+    echo "WARNING: bad ownership on $NIX_USER_PROFILE_DIR" >&2
+  fi
+
+If the directory does not exist, then when the user creates it, he
+will own it and everything is fine.
+
+However the second key aspect of this process is that, for the user to
+be able to create $NIX_USER_PROFILE_DIR, he must be able to write to
+its parent directory. That parent directory is shared by all users on
+the system, and as a result, is world-writable (so that everyone can
+create his own subdirectory thereof). This is enforced by the
+installation script scripts/install-multi-user.sh...
+
+  _sudo "to make the basic directory structure of Nix (part 2)" \
+    mkdir -pv -m 1777 /nix/var/nix/{gcroots,profiles}/per-user
+
+by the RPM spec file nix.spec.in...
+
+  # make per-user directories
+  for d in profiles gcroots;
+  do
+    mkdir -p $RPM_BUILD_ROOT/nix/var/nix/$d/per-user
+    chmod 1777 $RPM_BUILD_ROOT/nix/var/nix/$d/per-user
+  done
+
+and even in one place by the Nix "LocalStore" class in
+src/libstore/local-store.cc,
+
+  Path perUserDir = profilesDir + "/per-user";
+  createDirs(perUserDir);
+  if (chmod(perUserDir.c_str(), 01777) == -1) ...
+
+The sticky bit here is better than nothing, but is ultimately
+insufficient. The problem with this approach is that after Nix is
+installed, _any_ user on the system can create and thereafter own
+_any_ local profile directory. I can't overwrite an existing one, but
+I can create your profile directory before you have ever logged in.
+Since the global hacks above load code from your Nix profile
+directory, this lets me run code when you log in.
+
+To make the situation a bit worse, the very last thing that gets
+executed by scripts/nix-profile-daemon.sh.in when you log in is,
+
+  export PATH="$HOME/.nix-profile/bin:...:$PATH"
+
+where $HOME/.nix-profile is a symlink to your Nix local profile directory,
+
+  if test "$USER" != root; then
+    ln -s $NIX_USER_PROFILE_DIR/profile $HOME/.nix-profile
+  else
+
+Since I can write to your local profile directory, and since that
+location is prepended to your path, I can override all of your system
+executables with my own copies. Putting everything together, this
+allows any user on the system to escalate his privileges to that of
+any other non-root user. The root user is probably safe since he does
+not use a local profile directory; however, on many systems, "root" is
+not the only super-user account.
 
- * ssh(1): add support for "Match sessiontype" to ssh_config.
-   Allows matching on the type of session initially requested,
-   either "shell" for interactive sessions, "exec" for command
-   execution sessions, "subsystem" for subsystem requests, such as
-   sftp, or "none" for transport/forwarding-only sessions.
 
- * ssh(1): add support for "Match command ..." support to
-   ssh_config, allowing matching on the remote command as specified
-   on the command-line.
+== Exploitation ==
 
- * ssh(1): allow 'Match tagged ""' and 'Match command ""' to match
-   empty tag and command values respectively.
+The following example takes over the "toor" account using an
+unprivileged "user" account.
 
- * sshd(8): allow glob(3) patterns to be used in sshd_config
-   AuthorizedKeysFile and AuthorizedPrincipalsFile directives.
-   bz2755
-
- * sshd(1): support the VersionAddendum in the client, mirroring
-   the option of the same name in the server; bz2745
+  1. Install Nix as root.
 
- * ssh-agent(1): the agent will now delete all loaded keys when
-   signaled with SIGUSR1. This allows deletion of keys without
-   having access to $SSH_AUTH_SOCK.
+  2. As "user", create the directory that "toor" would like to use for
+     his per-user profile:
 
- * Portable OpenSSH, ssh-agent(1): support systemd-style socket
-   activation in ssh-agent using the LISTEN_PID/LISTEN_FDS
-   mechanism. Activated when these environment variables are set,
-   the agent is started with the -d or -D option and no socket path
-   is set. GHPR502
+       user $ cd /nix/var/nix/profiles/per-user
+       user $ mkdir toor
 
- * ssh-keygen(1): support FIDO tokens that return no attestation
-   data, e.g. recent WinHello. GHPR542
+     At this point, "user" owns toor's profile directory; the end is
+     nigh.
 
- * ssh-agent(1): add a "-Owebsafe-allow=..." option to allow the
-   default FIDO application ID allow-list to be overridden.
+  3. To make matters worse, the unprivileged "user" can inject programs
+     into toor's PATH:
 
- * Add a work-in-progress tool to verify FIDO attestation blobs
-   that ssh-keygen can optionally write when enrolling FIDO keys.
-   This tool is available under regress/misc/ssh-verify-attestation
-   for experimentation but is not installed by "make install".
+       user $ mkdir -p toor/profile/bin
+       user $ cp /path/to/exploit toor/profile/bin/cd
+       user $ cp /path/to/exploit toor/profile/bin/cp
+       user $ cp /path/to/exploit toor/profile/bin/ls
+       user $ cp /path/to/exploit toor/profile/bin/exit
+       user $ ...
 
- * ssh-keygen(1): allow "-" as output file for moduli screening.
-   GHPR393
+  4. Log in as toor; a warning is issued:
 
-Bugfixes
---------
+       Nix: WARNING: bad ownership on /nix/var/nix/profiles/per-
+       user/toor, should be toor
+       toor $
 
- * sshd(8): remove assumption that the sshd_config and any configs
-   it includes can fit in a (possibly enlarged) socket buffer.
-   Previously it was possible to create a sufficiently large
-   configuration that could cause sshd to fail to accept any
-   connection. sshd(8) will now actively manage sending its config
-   to the sshd-session sub-process.
+     This is better than nothing, but it's too late.
 
- * ssh(1): don't start the ObscureKeystrokeTiming mitigations if
-   there has been traffic on a X11 forwarding channel recently.
-   Should fix X11 forwarding performance problems when this setting
-   is enabled. bz3655
-
- * ssh(1): prohibit the comma character in hostnames accepted, but
-   allow an underscore as the first character in a hostname.
-
- * sftp(1): set high-water when resuming a "put". Prevents bogus
-   "server reordered acks" debug message.
-
- * ssh(1), sshd(8): fix regression in openssh-9.8, which would fail
-   to accept "Match criteria=argument" as well as the documented
-   "Match criteria argument" syntax in ssh_config and sshd_config.
-   bz3739
-
- * sftp(1), ssh(1): fix a number possible NULL dereference bugs,
-   including Coverity CIDs 405019 and 477813.
-
- * sshd(8): fix PerSourcePenalty incorrectly using "crash" penalty
-   when LoginGraceTime was exceeded. bz3797
-
- * sshd(8): fix "Match invalid-user" from incorrectly being
-   activated in initial configuration pass when no other predicates
-   were present on the match line
-
- * sshd(8): fix debug logging of user specific delay. GHPR#552
-
- * sshd(8): improve debug logging across sub-process boundaries.
-   Previously some log messages were lost early in the sshd-auth and
-   sshd-session processes' life.
-
- * ssh(1): require control-escape character sequences passed via
-   the '-e ^x' command-line to be exactly two characters long. Avoids
-   one byte out-of-bounds read if ssh is invoked as "ssh -e^ ..."
-   GHPR368
-
- * ssh(1), sshd(8): prevent integer overflow in x11 port handling.
-   These are theoretically possible if the admin misconfigured
-   X11DisplayOffset or the user misconfigures their own $DISPLAY,
-   but don't happen in normal operation. bz#3730
-
- * ssh-keygen(1): don't mess up ssh-keygen -l output when the file
-   contains CR characters; GHPR236 bz3385.
-
- * sshd(8): add rate limits to logging of connections dropped by
-   PerSourcePenalties. Previously these could be noisy in logs.
-
- * ssh(1): fix argument of "Compression" directive in ssh -G config
-   dump, which regressed in openssh-9.8.
-
- * sshd(8): fix a corner-case triggered by UpdateHostKeys when sshd
-   refuses to accept the signature returned by an agent holding host
-   keys during the hostkey rotation sub-protocol. This situation
-   could occur in situations where a PKCS#11 smartcard that lacked
-   support for particular signature algorithms was used to store
-   host keys.
-
- * ssh-keygen(1): when using RSA keys to sign messages with
-   "ssh-keygen -Y", select the signature algorithm based on the
-   requested hash algorithm ("-Ohashalg=xxx"). This allows using
-   something other than the default of rsa-sha2-512, which may not
-   be supported on all signing backends, e.g. some smartcards only
-   support SHA256.
-
- * ssh(1), sshd(8), ssh-keyscan(1): fix ML-KEM768x25519 KEX on
-   big-endian systems.
-
- * Many regression and interop test improvements.
-
-Portability
------------
-
- * All: add support for AWS-LC (AWS libcrypto). bz3784
-
- * sshd(8): add wtmpdb support as a Y2038 safe wtmp replacement.
-
- * sshd(8): add support for locking sshd into memory, enabled with
-   the --with-linux-memlock-onfault configure flag.
-
- * Add support for building a standalone sk-libfido2 library,
-   enabled by --with-security-key-standalone
-
- * ssh(1), sshd(8), ssh-keyscan(1): include __builtin_popcount
-   replacement function. for compilers that lack it.
-
- * All: Check for and replace le32toh, le64toh, htole64 separately.
-   It appears that at least some versions of endian.h in glibc do
-   not have the latter two. bz#3794
-
- * Remove ancient RHL 6.x config in RPM spec.
-
-Checksums:
-==========
-
- - SHA1 (openssh-10.0.tar.gz) = 933f4fded0497ef6a588381257276e156a70f9c3
- - SHA256 (openssh-10.0.tar.gz) = oaJ+cXLCVoCZAz9W5W1vF7ko4GJW6iq7JmblrPUA34Q=
-
- - SHA1 (openssh-10.0p1.tar.gz) = ac4205e827aea383bf316a33a0e2d5b66b85fcf8
- - SHA256 (openssh-10.0p1.tar.gz) = AhoucJoO30JQsSVr1anlAEEakN3avqgw7VnO+Q652Fw=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available from the mirror sites:
-https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@openssh.com
+  5. Anything "toor" does (cd, cp, ls, exit,...) gives the unprivileged
+     user control of his account.
