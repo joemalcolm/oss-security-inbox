@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1817" "Thursday" "14" "April" "2016" "11:16:42" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160414151642.2DD166C0020@smtpvmsrv1.mitre.org>" "45" "[oss-security] Re: CVE request Qemu: i386: leakage of stack memory to guest in kvmvapic.c" nil nil nil "4" "2016041415:16:42" "[oss-security] Re: CVE request Qemu: i386: leakage of stack memory to guest in kvmvapic.c" (number mark "U       cve-assign@m Apr 14   45/1817  " thread-indent "\"[oss-security] Re: CVE request Qemu: i386: leakage of stack memory to guest in kvmvapic.c\"\n") "<alpine.LFD.2.20.1604132336250.29012@wniryva>" ("<alpine.LFD.2.20.1604132336250.29012@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil t nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8394" "Tuesday" "8" "October" "2019" "20:41:56" "-0600" "Damien Miller" "djm@openbsd.org" "<3b1ca587d1faad82@openbsd.org>" "208" "[oss-security] Announce: OpenSSH 8.1 released" "^Date:" nil nil "10" "2019100902:41:56" "[oss-security] Announce: OpenSSH 8.1 released" (number mark "  z     djm@openbsd. Oct  8  208/8394  " thread-indent "\"[oss-security] Announce: OpenSSH 8.1 released\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Announce: OpenSSH 8.1 released" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 1001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24303 invoked by uid 550); 14 Apr 2016 15:16:54 -0000
+Received: (qmail 25688 invoked by uid 550); 9 Oct 2019 02:42:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,219 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 25654 invoked from network); 9 Oct 2019 02:42:09 -0000
+Message-ID: <3b1ca587d1faad82@openbsd.org>
+Date: Tue, 8 Oct 2019 20:41:56 -0600 (MDT)
+From: Damien Miller <djm@openbsd.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24283 invoked from network); 14 Apr 2016 15:16:54 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, donghai.zdh@alibaba-inc.com
-In-Reply-To: <alpine.LFD.2.20.1604132336250.29012@wniryva>
-Message-Id: <20160414151642.2DD166C0020@smtpvmsrv1.mitre.org>
-Date: Thu, 14 Apr 2016 11:16:42 -0400 (EDT)
-Subject: [oss-security] Re: CVE request Qemu: i386: leakage of stack memory to guest in kvmvapic.c
+Subject: [oss-security] Announce: OpenSSH 8.1 released
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+OpenSSH 8.1 has just been released. It will be available from the
+mirrors listed at http://www.openssh.com/ shortly.
 
-> Qemu emulator built with the Task Priority Register(TPR) optimizations for
-> 32-bit Windows guests, is vulnerable to a information leakage issue. It could
-> occur while accessing Task Priority Register(TPR).
-> 
-> A privileged user/process inside guest could use this issue to leak host
-> memory bytes.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1313686
-> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01118.html
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
->> When processing Task Priorty Register(TPR) access, it could leak
->> automatic stack variable 'imm32' in patch_instruction().
->> Initialise the variable to avoid it.
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+http://www.openssh.com/donations.html
 
-Use CVE-2016-4020.
+Security
+========
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/i386/kvmvapic.c but
-that may be an expected place for a later update.
+ * ssh(1), sshd(8), ssh-add(1), ssh-keygen(1): an exploitable integer
+   overflow bug was found in the private key parsing code for the XMSS
+   key type. This key type is still experimental and support for it is
+   not compiled by default. No user-facing autoconf option exists in
+   portable OpenSSH to enable it. This bug was found by Adam Zabrocki
+   and reported via SecuriTeam's SSD program.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+ * ssh(1), sshd(8), ssh-agent(1): add protection for private keys at
+   rest in RAM against speculation and memory side-channel attacks like
+   Spectre, Meltdown and Rambleed. This release encrypts private keys
+   when they are not in use with a symmetric key that is derived from a
+   relatively large "prekey" consisting of random data (currently 16KB).
 
-iQIcBAEBCAAGBQJXD7OfAAoJEL54rhJi8gl5NBYQAKBSeM2gEBAxQGcp0H36CMHx
-rLWnSGdlLDaM5bv0wnVZcLCu11AB2IXbNuAhYbqVRQXUVVNMjSdqGPLKA6wh2J0D
-jPf7ur2NZ+IkhYMQBbISQo+8OuHq/64BITfw+uIyEpwn/TpemTst0msVE9gTJ307
-0Rv96p7Fr4JhndHp270OdxysYnXl886pBSuh1aQOg0QSdZb1Ij1j85Q5+N6b8VbU
-mVyjRnAMTiVSFVqnED3qxZTJ9ZGrKVXbr470569D7PepR+L5kdG2lN/eeSiBSXKk
-iihqYwmlL21+7dCrJNWDe82UAkk6D1qjXibvpcT4+K890Fw1RSlLQiNNpbX/cVaY
-Tg4dA8txzW7IuU9dHuI8/x1Usg/XLf0YYUghtQ93wjVZqk+AkkZdh4kCwSA7q6QW
-wDWNagwX0FTmRmGPKvHLy5IRGOKhqmQ8IMSOG3/sWG0hbbTBK7xJxh/8hudjk66J
-NaeBosQw7AkUj9QTw/YZk6+yIPlbpEMiiJENMsmkq+cocp2qtu1XPNVf7yODe2Ap
-3B7OheWRaGq9SJZjAbK9PSnDGcZUmmjEHrpJn6m4CpjUWHTw4A1cfCiTgKQRibTO
-TMlR9QoYDL/GEzdm6hi8QrO1gjhIFahtU3jZyek27DF7pSd+UZ0MoizxpCLb5+5X
-kw7IG5V5vr0N+jlmOj64
-=9E7h
------END PGP SIGNATURE-----
+Potentially-incompatible changes
+================================
+
+This release includes a number of changes that may affect existing
+configurations:
+
+ * ssh-keygen(1): when acting as a CA and signing certificates with
+   an RSA key, default to using the rsa-sha2-512 signature algorithm.
+   Certificates signed by RSA keys will therefore be incompatible
+   with OpenSSH versions prior to 7.2 unless the default is
+   overridden (using "ssh-keygen -t ssh-rsa -s ...").
+
+Changes since OpenSSH 8.0
+=========================
+
+This release is focused on bug-fixing.
+
+New Features
+------------
+
+ * ssh(1): Allow %n to be expanded in ProxyCommand strings
+
+ * ssh(1), sshd(8): Allow prepending a list of algorithms to the
+   default set by starting the list with the '^' character, E.g.
+   "HostKeyAlgorithms ^ssh-ed25519"
+
+ * ssh-keygen(1): add an experimental lightweight signature and
+   verification ability. Signatures may be made using regular ssh keys
+   held on disk or stored in a ssh-agent and verified against an
+   authorized_keys-like list of allowed keys. Signatures embed a
+   namespace that prevents confusion and attacks between different
+   usage domains (e.g. files vs email).
+
+ * ssh-keygen(1): print key comment when extracting public key from a
+   private key.  bz#3052
+
+ * ssh-keygen(1): accept the verbose flag when searching for host keys
+   in known hosts (i.e. "ssh-keygen -vF host") to print the matching
+   host's random-art signature too. bz#3003
+
+ * All: support PKCS8 as an optional format for storage of private
+   keys to disk.  The OpenSSH native key format remains the default,
+   but PKCS8 is a superior format to PEM if interoperability with
+   non-OpenSSH software is required, as it may use a less insecure
+   key derivation function than PEM's.
+
+Bugfixes
+--------
+
+ * ssh(1): if a PKCS#11 token returns no keys then try to login and
+   refetch them. Based on patch from Jakub Jelen; bz#2430
+
+ * ssh(1): produce a useful error message if the user's shell is set
+   incorrectly during "match exec" processing. bz#2791
+
+ * sftp(1): allow the maximum uint32 value for the argument passed
+   to -b which allows better error messages from later validation.
+   bz#3050
+
+ * ssh(1): avoid pledge sandbox violations in some combinations of
+   remote forwarding, connection multiplexing and ControlMaster.
+
+ * ssh-keyscan(1): include SHA2-variant RSA key algorithms in KEX
+   proposal; allows ssh-keyscan to harvest keys from servers that
+   disable old SHA1 ssh-rsa. bz#3029
+
+ * sftp(1): print explicit "not modified" message if a file was
+   requested for resumed download but was considered already complete.
+   bz#2978
+
+ * sftp(1): fix a typo and make <esc><right> move right to the
+   closest end of a word just like <esc><left> moves left to the
+   closest beginning of a word.
+
+ * sshd(8): cap the number of permitopen/permitlisten directives
+   allowed to appear on a single authorized_keys line.
+
+ * All: fix a number of memory leaks (one-off or on exit paths).
+
+ * Regression tests: a number of fixes and improvements, including
+   fixes to the interop tests, adding the ability to run most tests
+   on builds that disable OpenSSL support, better support for running
+   tests under Valgrind and a number of bug-fixes.
+
+ * ssh(1), sshd(8): check for convtime() refusing to accept times that
+   resolve to LONG_MAX Reported by Kirk Wolf bz2977
+
+ * ssh(1): slightly more instructive error message when the user
+   specifies multiple -J options on the command-line. bz3015
+
+ * ssh-agent(1): process agent requests for RSA certificate private
+   keys using correct signature algorithm when requested. bz3016
+
+ * sftp(1): check for user@host when parsing sftp target. This
+   allows user@[1.2.3.4] to work without a path.  bz#2999
+
+ * sshd(8): enlarge format buffer size for certificate serial
+   number so the log message can record any 64-bit integer without
+   truncation. bz#3012
+
+ * sshd(8): for PermitOpen violations add the remote host and port to
+   be able to more easily ascertain the source of the request. Add the
+   same logging for PermitListen violations which where not previously
+   logged at all.
+
+ * scp(1), sftp(1): use the correct POSIX format style for left
+   justification for the transfer progress meter. bz#3002
+
+ * sshd(8) when examining a configuration using sshd -T, assume any
+   attribute not provided by -C does not match, which allows it to work
+   when sshd_config contains a Match directive with or without -C.
+   bz#2858
+
+ * ssh(1), ssh-keygen(1): downgrade PKCS#11 "provider returned no
+   slots" warning from log level error to debug. This is common when
+   attempting to enumerate keys on smartcard readers with no cards
+   plugged in. bz#3058
+
+ * ssh(1), ssh-keygen(1): do not unconditionally log in to PKCS#11
+   tokens. Avoids spurious PIN prompts for keys not selected for
+   authentication in ssh(1) and when listing public keys available in
+   a token using ssh-keygen(1). bz#3006
+
+Portability
+-----------
+
+ * ssh(1): fix SIGWINCH delivery of Solaris for multiplexed sessions
+   bz#3030
+
+ * ssh(1), sshd(8): fix typo that prevented detection of Linux VRF
+
+ * sshd(8): add no-op implementation of pam_putenv to avoid build
+   breakage on platforms where the PAM implementation lacks this
+   function (e.g. HP-UX). bz#3008
+
+ * sftp-server(8): fix Solaris privilege sandbox from preventing
+   the legacy sftp rename operation from working (was refusing to
+   allow hard links to files owned by other users). bz#3036
+
+ * All: add a proc_pidinfo()-based closefrom() for OS X to avoid
+   the need to brute-force close all high-numbered file descriptors.
+   bz#3049
+
+ * sshd(8): in the Linux seccomp-bpf sandbox, allow mprotect(2) with
+   PROT_(READ|WRITE|NONE) only. This syscall is used by some hardened
+   heap allocators. Github PR#142
+
+ * sshd(8): in the Linux seccomp-bpf sandbox, allow the s390-specific
+   ioctl for ECC hardware support.
+
+ * All: use "doc" man page format if the mandoc(1) tool is present on
+   the system. Previously configure would not select the "doc" man
+   page format if mandoc was present but nroff was not.
+
+ * sshd(8): don't install duplicate STREAMS modules on Solaris; check
+   if STREAMS modules are already installed on a pty before installing
+   since when compiling with XPG>=4 they will likely be installed
+   already. Prevents hangs and duplicate lines on the terminal.
+   bz#2945 and bz#2998,
+
+Checksums:
+==========
+
+ - SHA1 (openssh-8.1.tar.gz) = bf7b0c65a7c0afa5ba9c787f345b8a24fa459add
+ - SHA256 (openssh-8.1.tar.gz) = vamkKxZTFfgxQXSxGeJ1vbuot0H3Vx9bNBgrvChSrFg=
+
+ - SHA1 (openssh-8.1p1.tar.gz) = c44b96094869f177735ae053d92bd5fcab1319de
+ - SHA256 (openssh-8.1p1.tar.gz) = AvXb7zg10HU1VvlzzVe0wZtrH2zSTANEXiOsd8obk/8=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available as RELEASE_KEY.asc from
+the mirror sites.
+
+Reporting Bugs:
+===============
+
+- Please read http://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
+
