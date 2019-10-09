@@ -1,53 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/29/2
-Message-ID: <19319537.BvfTLQxH9x@treebeard>
-Date: Mon, 29 Jul 2019 11:55:32 -0400
-From: Josh Thompson <jfthomps@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/09/2
+Message-ID: <740749273.376258.1570600416658@email.ionos.fr>
+Date: Wed, 9 Oct 2019 07:53:36 +0200 (CEST)
+From: Guillaume Quéré <guillaume@...re.eu>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2018-11773] Apache VCL improper form validation in block allocation management
+Subject: Re: Multiple vulnerabilities in Centreon-Web and Centreon-VM
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-CVE-2018-11773: Apache VCL improper form validation in block allocation 
-management
+My advisory posted yesterday contains a problematic typo: CVE-2019-17017 should have been written CVE-2019-17107. Sorry for the inconvenience it may have caused.
 
-Severity: Medium
+Here is the corrected context:
+> High impact
+> ===========
+>
+> CVE-2019-17107: Authenticated RCE in minPlayCommand.php
+> -------------------------------------------------------
+> Details: https://github.com/centreon/centreon/pull/7099
+> Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7245)
+> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7232)
 
-Versions Affected: 2.1 through 2.5
+Original advisory follows.
+Guillaume Quéré
 
-Description: Apache VCL versions 2.1 through 2.5 do not properly validate form 
-input when processing a submitted block allocation. The form data is then used 
-as an argument to the php built in function strtotime. This allows for an 
-attack against the underlying implementation of that function. The 
-implementation of strtotime at the time the issue was discovered appeared to 
-be resistant to a malicious attack. However, all VCL systems running versions 
-earlier than 2.5.1 should be upgraded or patched.
-
-Mitigation: Upgrade to 2.5.1 or apply patches from https://vcl.apache.org/
-security.html
-
-Credit: This vulnerability was found and reported to the Apache VCL project by 
-ADLab of Venustech.
-
-CVE Released: July 29th, 2019
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEI0cOQm0VAdkhDARZSNnzl+fhyFkFAl0/FvQACgkQSNnzl+fh
-yFm1sg/7B/d2H93fCdsBl1N5lhob5Phe23rJ0EYs8ELkptr0+lXSIYLCcQ8brhcj
-0lM0aCnzobkJiI/t42HnebJ8rcMIo6fzQ1y4kMzKTVNLc8MiEU3kRV+ZpDMBTN1u
-iAhBkjNzNoqZqOP5klmmInEhwbFHsYclFY0OCgabriMxY2WNbiuZEm/v7DwjDTEZ
-3Z0xjo3TveMKPtdgfz+hiHm2z8gAOyWbyUVvHBL/+9BewNQXgUHuysD2M0roTZpj
-46T4LMu8YKGBWIIRlTDQO463zI4H6bSd5xN7mpDCz1u/sqM2f4JdSP554MIQxpOa
-orcJLTaI+jYOplGsxfVM/QXb3jLCuJvuu8ZxHhc4R2GMH3qukWEZ6Mt8r9Rr3JUS
-R9AD/y0ZnIhsU+nEjzxs4y7H3B6BK9imQxVhctlOsIGj0hlSpb+xngSnTA/5aZ30
-Iay5ZFibntAAefByOS451Ex8rZPJNWcCR22uOnV6YILLiQzWX+gumzkzcAD9g3Rn
-/STt4o84WSyjMpBvsKC8Fif8FR/DNEZ5spsHujfzgNfPbRjLLXXQDzqC0yVrRbRM
-84OPDIPtmj1Q4bpeMmNDhuuejUekuMCDWX1hlDMyaJO/YsiWGE1ITzcNBuWSbTYJ
-uT1KYnnno1S+/EMDsxhdYPGJ6leXVz+5nLpXxQSFOfDzf4ruDDI=
-=Qhgv
------END PGP SIGNATURE-----
-
-
-
+> Centreon
+> ========
+> "Centreon is the N°1 Open Source IT Infrastructure Monitoring Solution."
+> 
+> Multiple vulnerabilites were discovered in Centreon-Web in december 2018 and fixed in early 2019 over the course of two minor releases on both branches in versions 2.8.27/2.8.28 and 18.10.4/18.10.5.
+> 
+> https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-2.8/centreon-2.8.27.html
+> https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-2.8/centreon-2.8.28.html
+> https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-18.10/centreon-18.10.4.html
+> https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-18.10/centreon-18.10.5.html
+> 
+> Additional vulnerabilities were found in Centreon-VM that have not yet been fixed.
+> 
+> 
+> High impact
+> ===========
+> 
+> CVE-2019-17017: Authenticated RCE in minPlayCommand.php
+> -------------------------------------------------------
+> Details: https://github.com/centreon/centreon/pull/7099
+> Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7245)
+> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7232)
+> 
+> CVE-2018-21023: Authenticated RCE in getStats.php
+> -------------------------------------------------
+> Details: https://github.com/centreon/centreon/pull/7083
+> Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7271)
+> Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7195)
+> 
+> CVE-2018-21024: Arbitrary File Upload in licenseUpload.php
+> ----------------------------------------------------------
+> Details: https://github.com/centreon/centreon/pull/7085
+> Did not affect branch 2.8.x
+> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7171)
+> 
+> CVE-2018-21021: Authenticated SQL injection in img_gantt.php
+> ------------------------------------------------------------
+> Details: https://github.com/centreon/centreon/pull/7086
+> Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7169)
+> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7086)
+> 
+> CVE-2018-21022: Authenticated SQL injection in makeXML_ListServices.php
+> -----------------------------------------------------------------------
+> Details: https://github.com/centreon/centreon/pull/7087
+> Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7229)
+> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7229)
+> 
+> CVE-2019-17108: Stored XSS in brokerPerformance.php
+> ---------------------------------------------------
+> Details: https://github.com/centreon/centreon/pull/7101
+> Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7226)
+> Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7227)
+> 
+> 
+> Medium impact
+> =============
+> CVE-2018-21025: Privilege Escalation in Centreon-VM
+> ---------------------------------------------------
+> Details: https://github.com/centreon/centreon/issues/7082
+> Not yet fixed.
+> While checking if this was still possible in centreon-vm-19.04-2 (it is), I found another similar privesc which didn't exist at the time:
+> ```
+> [root@...treon-central ~]# grep centreon_autodisco /etc/cron.d/centreon-auto-disco
+> 30 22 * * * root /usr/share/centreon/www/modules/centreon-autodiscovery-server//cron/centreon_autodisco --config='/etc/centreon/conf.pm' --config-extra='/etc/centreon/centreon_autodisco.pm' --severity=error >> /var/log/centreon/centreon_auto_discovery.log 2>&1
+> [root@...treon-central ~]# ls -la /usr/share/centreon/www/modules/centreon-autodiscovery-server//cron/centreon_autodisco
+> -rwxr-xr-x 1 apache apache 4995482 24 avril 13:48 /usr/share/centreon/www/modules/centreon-autodiscovery-server//cron/centreon_autodisco
+> ```
+> 
+> CVE-2019-17104: Unsecured cookies in Centreon-VM
+> ------------------------------------------------
+> Details: https://github.com/centreon/centreon/issues/7097
+> Not yet fixed.
+> 
+> CVE-2019-17106: Display of cleartext external passwords in modules
+> ------------------------------------------------------------------
+> Details: https://github.com/centreon/centreon/issues/7098
+> Not yet fixed.
+> 
+> 
+> Low impact
+> ==========
+> CVE-2018-21020: Type juggling on authentication in centreonAuth.class.php
+> -------------------------------------------------------------------------
+> Details: https://github.com/centreon/centreon/pull/7084
+> Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7084)
+> Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7219)
+> 
+> CVE-2019-17105: Usage of a predictable generator for a security token in index.php
+> ----------------------------------------------------------------------------------
+> Details: https://github.com/centreon/centreon/pull/7100
+> Not fixed in 2.8.x  (https://github.com/centreon/centreon/pull/7224)
+> Fixed in 18.10.5    (commit 4faf5919f89bd06a5c25152c39ba3f25a4f16a81)
+> 
+> 
+> Acknowledgements
+> ================
+> Thanks to Centreon for their quick and enthusiastic response as well as their commitment to patching.
+> 
+> Guillaume Quéré
