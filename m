@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/04/2
-Message-ID: <CAGSZ4d6LBTEQyr_qB5xHEkhv83DL42Pysgh6BNBoJSouvshAiw@mail.gmail.com>
-Date: Wed, 4 Dec 2019 06:27:11 +0100
-From: mibo <mibo@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/13/1
+Message-ID: <c42cbaa1-9e07-acec-3518-c422888a67f4@gentoo.org>
+Date: Sun, 13 Oct 2019 13:13:25 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-17555: Olingo: DoS via Retry-After header vulnerability
+Cc: Gentoo Security <security@...too.org>
+Subject: Statistics for distros lists updated for 2019Q3
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-17555: DoS via Retry-After header vulnerability
+Hi,
 
-Severity: Important
-Vendor: The Apache Software Foundation
+The statistics for the distros list have been updated for the 3rd
+quarter of 2019 at
+http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
 
-Versions Affected:
-Olingo 4.0.0 to 4.6.0
-The OData v2 versions of Olingo 2.x are not affected
+Data rows not included in calculation due to negative embargos are now
+marked in data with "ND" in the calculated columns.
 
-Description:
-The AsyncResponseWrapperImpl class reads the Retry-After header and
-passes it to the Thread.sleep() method without any check. If a
-malicious server returns a huge value in the header, then it can help
-to implement a DoS attack.
+Adding the median is not done at this point to make sure the updated
+figures are available. It turns out to not be quite as easy as I first
+projected given LibreOffice doesn't have a median counterpart to
+[AVERAGEIFS] so I likely need to use some array formula instead, so I'll
+do that as a separate update when I get around to it.
 
-Mitigation:
-4.x.x users should upgrade to 4.7.0
+References:
+[AVERAGEIFS]
+https://help.libreoffice.org/Calc/AVERAGEIFS_function
 
-Credit:
-This issue was discovered by ﻿Artem Smotrakov of SAP SE.
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
-Links:
-https://issues.apache.org/jira/browse/OLINGO-1411
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
