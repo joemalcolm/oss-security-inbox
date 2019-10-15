@@ -1,4 +1,9 @@
-Received: (qmail 30403 invoked by uid 550); 1 Jun 2026 22:07:25 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["22744" "Tuesday" "15" "October" "2019" "14:55:06" "-0600" "Todd C. Miller" "Todd.Miller@sudo.ws" "<818ccecb7de32608@sudo.ws>" "747" "Re: [oss-security] Sudo: CVE-2019-14287" "^Date:" nil nil "10" "2019101520:55:06" "[oss-security] Sudo: CVE-2019-14287" (number mark "        Todd.Miller@ Oct 15  747/22744 " thread-indent "\"Re: [oss-security] Sudo: CVE-2019-14287\"\n") "<818cb36f5cb471ae@sudo.ws>" ("<818cb36f5cb471ae@sudo.ws>") nil nil nil nil nil nil nil "Re: [oss-security] Sudo: CVE-2019-14287" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9578 invoked by uid 550); 15 Oct 2019 21:07:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,169 +11,777 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30066 invoked from network); 1 Jun 2026 21:20:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
-	s=s31663417; t=1780348835; x=1780953635; i=shvedov@gmx.com;
-	bh=4ZVQJD5e3IEwA1uQwPQiFdRt09aE0kjbs29dxyCfvGM=;
-	h=X-UI-Sender-Class:MIME-Version:Message-ID:From:To:Subject:
-	 Content-Type:Date:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=fl6nxfreqi2GV6K7HjI+lntZ5Or8wjss/VM4ufqpRPLcaOcEHAh73OFxhHnrG00e
-	 aekdtAngsepx4mLNVHBI1fSm5PhDyLHlm1LFkjFdT8hgp1ejZ9Cgqoja1YuANNG7n
-	 7nPlD//HXjp4ucwcOcdn/urQPLWLLqQHhrgevNKY5+dKmH/452et1aVzhYwRkajMt
-	 QMLNNjOMcCHLd1wfU5Zo/2y/yREK4PmD3eSvc2XOEqT6x6271pTSW4Pf7+bT5nMYu
-	 bD7opu06Ccp4QNesJwtahnSlNYqEhUO09Tcgv5n8MfCPdyt7eEnypKxgox1IYuaWV
-	 dV2TX9wPgbFz1x5pGg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: (qmail 6107 invoked from network); 15 Oct 2019 20:55:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=sudo.ws; h=from:to
+	:subject:in-reply-to:references:mime-version:content-type
+	:content-id:date:message-id; s=selector1; bh=D6NIgrKQHaX12KqdmEX
+	trc57nskBlXbmbBW8b1KddT4=; b=Q98XeAu8jPZbaDVnArsMYs+NIyKBsJuzVW/
+	F8aXXbIycxT3rl9ht5/leMoJu78JQpYGlT99RTP/38CuPkwx+/Tq9/rl/xEoAXnx
+	l4lNY8++CkiZPmYf4bOq6d/t/LmAQPu1deb4LWkupYdkq+uC5dTeAASs5DoSGaUB
+	P18GcYg4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=sudo.ws; h=from:to:subject
+	:in-reply-to:references:mime-version:content-type:content-id
+	:date:message-id; q=dns; s=selector1; b=itQh1OFlsuctSqR2cdeb6s1Y
+	6WHB7t7As4AuqFhSoob8BS93uqcq94TruaaqzVyuGWjVQbCpbTIbgCtexxS5J38p
+	PMLdgLLgoEshD2Uh3yYvtEg9e2phkKs7MfI62Mq6hH3Oeqmxl5ZIJRI+pLSKOxEo
+	OLm28k2FGENdrAf2hrU=
+In-reply-to: Your message of "Mon, 14 Oct 2019 09:00:31 -0600."
+             <818cb36f5cb471ae@sudo.ws>
+References: <818cb36f5cb471ae@sudo.ws>
 MIME-Version: 1.0
-Message-ID: <trinity-73d3b99b-f98c-433f-9274-d9929ce5b558-1780348835736@3c-app-mailcom-bs08>
-From: "Alexander A. Shvedov" <shvedov@gmx.com>
+Content-Type: multipart/mixed; boundary="----- =_aaaaaaaaaa0"
+Content-ID: <72397.1571172879.0@xerxes.sudo.ws>
+Message-ID: <818ccecb7de32608@sudo.ws>
+Date: Tue, 15 Oct 2019 14:55:06 -0600
+From: "Todd C. Miller" <Todd.Miller@sudo.ws>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Sudo: CVE-2019-14287
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 1 Jun 2026 23:20:35 +0200
-Importance: normal
-Sensitivity: Normal
-Content-Transfer-Encoding: quoted-printable
-X-Priority: 3
-X-Provags-ID: V03:K1:6+F7660ZCf9Uj5/h7XGeNFxuTgvkV6E+496KBYZ1IFJsjJ3O2nKUAyQ+Ky/MYyPtoj796
- lu3FUNzZmPGAktbOKs+918cecl4O9evF0tjpVgxuADarIxEOPUaNwtCZiHExXQdYQYYBbSL6NHpc
- mGoJHOLGRWx2zlOX69oiF3TiRmlNjyq3UlHDGEZTvnddevbNFjfGSvXlaUUh2eAfXpjWwG9VA8OV
- wFAC7lAsT3KBmXgyS0J0QL4I5L5YCWrW1TDvV00Zej1bNL38+AwFKsRuDiVqdTZuOOfDiNcR1nIb
- Kg=
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Rqmsc7kA9r0=;f9TlqjlT2Qdf8WXO5T1FI42JhLl
- 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
- wsuqmHaBrZIvC/qttIgT548slBNxH
-Subject: [oss-security] CVE-2025-55664: Heap-based Buffer Overflow in GPAC/MP4Box via
- m2tsdmx_send_packet on crafted MPEG-2 TS file
 
-Product:   GPAC (MP4Box)
-Affected:  gpac/MP4Box prior to fix commit 8e3b5e1dde7b9ea041dbdc14456a5bb7=
-4a9851ea (GPAC version 2.5-DEV-rev1644-g8e3b5e1dd-master)
-CVE:       CVE-2025-55664
-CWE:       CWE-122 (Heap-based Buffer Overflow)
-CVSS 3.1:  8.8 HIGH (AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H)
-Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
+------- =_aaaaaaaaaa0
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <72397.1571172879.1@xerxes.sudo.ws>
 
-Description:
-  The m2tsdmx_send_packet function in filters/dmx_m2ts.c performs a memcpy =
-whose
-  size argument is derived from stream-controlled PES packet data without
-  validation. A crafted MPEG-2 TS file with missing sync markers (0x47), co=
-rrupted
-  PMT descriptor sizes, PID conflicts, and packet discontinuities causes the
-  computed copy size to wrap to 4294967295 (0xFFFFFFFF) at line 916.
+In an effort to aid distros trying to backport the fix for
+CVE-2019-14287 to earlier sudo versions I've attached versions of
+the fix for sudo 1.8.5 and 1.8.10.
 
-  The resulting memcpy reads and writes starting one byte past the end of a
-  183-byte heap-allocated region, resulting in a heap buffer overflow. Due =
-to the
-  write-capable nature of the oversized memcpy, arbitrary code execution ca=
-nnot
-  be ruled out.
+ - todd
 
-  Crash is reproducible on the current master branch at the time of
-  discovery. No authentication or special privileges required beyond
-  ability to provide a crafted file.
+------- =_aaaaaaaaaa0
+Content-Type: text/x-patch; name="sudo-1.8.10.patch"; charset="us-ascii"
+Content-ID: <72397.1571172879.2@xerxes.sudo.ws>
 
-Reproduction:
-  -Build-opts: `--static-build --static-bin --static-modules --enable-debug=
- --extra-cflags=3D"-g -O0"` ;
-  -Command: ./MP4Box -dash 100 51_m2tsdmx_send_packet_filters_dmx_m2ts_c_916
+diff -urN sudo-1.8.10/common/atoid.c sudo-1.8.10.patched/common/atoid.c
+--- sudo-1.8.10/common/atoid.c	Fri Mar  7 14:51:19 2014
++++ sudo-1.8.10.patched/common/atoid.c	Tue Oct 15 14:51:52 2019
+@@ -37,6 +37,7 @@
+ #else
+ # include "compat/stdbool.h"
+ #endif
++#include <ctype.h>
+ #include <errno.h>
+ #include <limits.h>
+ 
+@@ -48,6 +49,27 @@
+ #include "sudo_util.h"
+ 
+ /*
++ * Make sure that the ID ends with a valid separator char.
++ */
++static bool
++valid_separator(const char *p, const char *ep, const char *sep)
++{
++    bool valid = false;
++    debug_decl(valid_separator, SUDO_DEBUG_UTIL)
++
++    if (ep != p) {
++	/* check for valid separator (including '\0') */
++	if (sep == NULL)
++	    sep = "";
++	do {
++	    if (*ep == *sep)
++		valid = true;
++	} while (*sep++ != '\0');
++    }
++    debug_return_bool(valid);
++}
++
++/*
+  * Parse a uid/gid in string form.
+  * If sep is non-NULL, it contains valid separator characters (e.g. comma, space)
+  * If endp is non-NULL it is set to the next char after the ID.
+@@ -59,27 +81,15 @@
+ {
+     char *ep;
+     id_t rval = 0;
+-    bool valid = false;
+     debug_decl(atoid, SUDO_DEBUG_UTIL)
+ 
+-    if (sep == NULL)
+-	sep = "";
++    /* skip leading space so we can pick up the sign, if any */
++    while (isspace((unsigned char)*p))
++	p++;
++
+     errno = 0;
+     if (*p == '-') {
+ 	long lval = strtol(p, &ep, 10);
+-	if (ep != p) {
+-	    /* check for valid separator (including '\0') */
+-	    do {
+-		if (*ep == *sep)
+-		    valid = true;
+-	    } while (*sep++ != '\0');
+-	}
+-	if (!valid) {
+-	    if (errstr != NULL)
+-		*errstr = N_("invalid value");
+-	    errno = EINVAL;
+-	    goto done;
+-	}
+ 	if ((errno == ERANGE && lval == LONG_MAX) || lval > INT_MAX) {
+ 	    errno = ERANGE;
+ 	    if (errstr != NULL)
+@@ -92,26 +102,29 @@
+ 		*errstr = N_("value too small");
+ 	    goto done;
+ 	}
+-	rval = (id_t)lval;
+-    } else {
+-	unsigned long ulval = strtoul(p, &ep, 10);
+-	if (ep != p) {
+-	    /* check for valid separator (including '\0') */
+-	    do {
+-		if (*ep == *sep)
+-		    valid = true;
+-	    } while (*sep++ != '\0');
+-	}
+-	if (!valid) {
++
++	/* Disallow id -1, which means "no change". */
++	if (!valid_separator(p, ep, sep) || lval == -1) {
+ 	    if (errstr != NULL)
+ 		*errstr = N_("invalid value");
+ 	    errno = EINVAL;
+ 	    goto done;
+ 	}
++	rval = (id_t)lval;
++    } else {
++	unsigned long ulval = strtoul(p, &ep, 10);
+ 	if ((errno == ERANGE && ulval == ULONG_MAX) || ulval > UINT_MAX) {
+ 	    errno = ERANGE;
+ 	    if (errstr != NULL)
+ 		*errstr = N_("value too large");
++	    goto done;
++	}
++
++	/* Disallow id -1, which means "no change". */
++	if (!valid_separator(p, ep, sep) || ulval == UINT_MAX) {
++	    if (errstr != NULL)
++		*errstr = N_("invalid value");
++	    errno = EINVAL;
+ 	    goto done;
+ 	}
+ 	rval = (id_t)ulval;
+diff -urN sudo-1.8.10/plugins/sudoers/regress/testsudoers/test5.out.ok sudo-1.8.10.patched/plugins/sudoers/regress/testsudoers/test5.out.ok
+--- sudo-1.8.10/plugins/sudoers/regress/testsudoers/test5.out.ok	Fri Mar  7 14:50:56 2014
++++ sudo-1.8.10.patched/plugins/sudoers/regress/testsudoers/test5.out.ok	Tue Oct 15 14:33:30 2019
+@@ -4,7 +4,7 @@
+ Entries for user root:
+ 
+ Command unmatched
+-testsudoers: test5.inc should be owned by gid 4294967295
++testsudoers: test5.inc should be owned by gid 4294967294
+ Parse error in sudoers near line 1.
+ 
+ Entries for user root:
+diff -urN sudo-1.8.10/plugins/sudoers/regress/testsudoers/test5.sh sudo-1.8.10.patched/plugins/sudoers/regress/testsudoers/test5.sh
+--- sudo-1.8.10/plugins/sudoers/regress/testsudoers/test5.sh	Fri Mar  7 14:50:56 2014
++++ sudo-1.8.10.patched/plugins/sudoers/regress/testsudoers/test5.sh	Tue Oct 15 14:33:33 2019
+@@ -21,7 +21,7 @@
+ 
+ # Test group writable
+ chmod 664 $TESTFILE
+-./testsudoers -U $MYUID -G -1 root id <<EOF
++./testsudoers -U $MYUID -G -2 root id <<EOF
+ #include $TESTFILE
+ EOF
+ 
 
-Asan-log:
-=3D=3D294950=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address =
-0x5100000006f8 at pc 0x7fc5766f2956 bp 0x7ffde8b91e70 sp 0x7ffde8b91630
-=3D=3D294950=3D=3DThe signal is caused by a READ memory access.
-    #0 0x7fc5766f2955 in memcpy ../../../../src/libsanitizer/sanitizer_comm=
-on/sanitizer_common_interceptors_memintrinsics.inc:115
-    #1 0x7fc57582aec6 in m2tsdmx_send_packet filters/dmx_m2ts.c:916
-    #2 0x7fc57582aec6 in m2tsdmx_on_event filters/dmx_m2ts.c:1164
+------- =_aaaaaaaaaa0
+Content-Type: text/x-patch; name="sudo-1.8.5.patch"; charset="us-ascii"
+Content-ID: <72397.1571172879.3@xerxes.sudo.ws>
 
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/51/51_m2tsdmx_=
-send_packet_filters_dmx_m2ts_c_916
+diff -urN sudo-1.8.5/common/Makefile.in sudo-1.8.5.patched/common/Makefile.in
+--- sudo-1.8.5/common/Makefile.in	Tue May 15 10:22:01 2012
++++ sudo-1.8.5.patched/common/Makefile.in	Tue Oct 15 13:41:38 2019
+@@ -52,7 +52,7 @@
+ 
+ SHELL = @SHELL@
+ 
+-LTOBJS = alloc.lo atobool.lo fileops.lo fmt_string.lo lbuf.lo list.lo \
++LTOBJS = alloc.lo atobool.lo atoid.lo fileops.lo fmt_string.lo lbuf.lo list.lo \
+ 	 secure_path.lo setgroups.lo sudo_conf.lo sudo_debug.lo term.lo \
+ 	 ttysize.lo zero_bytes.lo @COMMON_OBJS@
+ 
+@@ -113,6 +113,9 @@
+ atobool.lo: $(srcdir)/atobool.c $(top_builddir)/config.h $(incdir)/missing.h \
+             $(incdir)/sudo_debug.h
+ 	$(LIBTOOL) --mode=compile $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $(DEFS) $(srcdir)/atobool.c
++atoid.lo: $(srcdir)/atoid.c $(top_builddir)/config.h $(incdir)/missing.h \
++          $(incdir)/sudo_debug.h
++	$(LIBTOOL) --mode=compile $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $(PIE_CFLAGS) $(SSP_CFLAGS) $(DEFS) $(srcdir)/atoid.c
+ fileops.lo: $(srcdir)/fileops.c $(top_builddir)/config.h \
+             $(top_srcdir)/compat/stdbool.h $(top_srcdir)/compat/timespec.h \
+             $(incdir)/missing.h $(incdir)/fileops.h $(incdir)/sudo_debug.h
+diff -urN sudo-1.8.5/common/atoid.c sudo-1.8.5.patched/common/atoid.c
+--- sudo-1.8.5/common/atoid.c	Wed Dec 31 17:00:00 1969
++++ sudo-1.8.5.patched/common/atoid.c	Tue Oct 15 14:51:36 2019
+@@ -0,0 +1,135 @@
++/*
++ * Copyright (c) 2013 Todd C. Miller <Todd.Miller@courtesan.com>
++ *
++ * Permission to use, copy, modify, and distribute this software for any
++ * purpose with or without fee is hereby granted, provided that the above
++ * copyright notice and this permission notice appear in all copies.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
++ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
++ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
++ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
++ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
++ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
++ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
++ */
++
++#include <config.h>
++
++#include <sys/types.h>
++
++#include <stdio.h>
++#ifdef STDC_HEADERS
++# include <stdlib.h>
++# include <stddef.h>
++#else
++# ifdef HAVE_STDLIB_H
++#  include <stdlib.h>
++# endif
++#endif /* STDC_HEADERS */
++#if defined(HAVE_STDINT_H)
++# include <stdint.h>
++#elif defined(HAVE_INTTYPES_H)
++# include <inttypes.h>
++#endif
++#ifdef HAVE_STDBOOL_H
++# include <stdbool.h>
++#else
++# include "compat/stdbool.h"
++#endif
++#include <ctype.h>
++#include <errno.h>
++#include <limits.h>
++
++#include "missing.h"
++#include "sudo_debug.h"
++#include "gettext.h"
++
++/*
++ * Make sure that the ID ends with a valid separator char.
++ */
++static bool
++valid_separator(const char *p, const char *ep, const char *sep)
++{
++    bool valid = false;
++    debug_decl(valid_separator, SUDO_DEBUG_UTIL)
++
++    if (ep != p) {
++	/* check for valid separator (including '\0') */
++	if (sep == NULL)
++	    sep = "";
++	do {
++	    if (*ep == *sep)
++		valid = true;
++	} while (*sep++ != '\0');
++    }
++    debug_return_bool(valid);
++}
++
++/*
++ * Parse a uid/gid in string form.
++ * If sep is non-NULL, it contains valid separator characters (e.g. comma, space)
++ * If endp is non-NULL it is set to the next char after the ID.
++ * On success, returns the parsed ID and clears errstr.
++ * On error, returns 0 and sets errstr.
++ */
++id_t
++atoid(const char *p, const char *sep, char **endp, const char **errstr)
++{
++    char *ep;
++    id_t rval = 0;
++    debug_decl(atoid, SUDO_DEBUG_UTIL)
++
++    /* skip leading space so we can pick up the sign, if any */
++    while (isspace((unsigned char)*p))
++	p++;
++
++    errno = 0;
++    if (*p == '-') {
++	long lval = strtol(p, &ep, 10);
++	if ((errno == ERANGE && lval == LONG_MAX) || lval > INT_MAX) {
++	    errno = ERANGE;
++	    if (errstr != NULL)
++		*errstr = _("value too large");
++	    goto done;
++	}
++	if ((errno == ERANGE && lval == LONG_MIN) || lval < INT_MIN) {
++	    errno = ERANGE;
++	    if (errstr != NULL)
++		*errstr = _("value too small");
++	    goto done;
++	}
++
++	/* Disallow id -1, which means "no change". */
++	if (!valid_separator(p, ep, sep) || lval == -1) {
++	    if (errstr != NULL)
++		*errstr = _("invalid value");
++	    errno = EINVAL;
++	    goto done;
++	}
++	rval = (id_t)lval;
++    } else {
++	unsigned long ulval = strtoul(p, &ep, 10);
++	if ((errno == ERANGE && ulval == ULONG_MAX) || ulval > UINT_MAX) {
++	    errno = ERANGE;
++	    if (errstr != NULL)
++		*errstr = _("value too large");
++	    goto done;
++	}
++
++	/* Disallow id -1, which means "no change". */
++	if (!valid_separator(p, ep, sep) || ulval == UINT_MAX) {
++	    if (errstr != NULL)
++		*errstr = _("invalid value");
++	    errno = EINVAL;
++	    goto done;
++	}
++	rval = (id_t)ulval;
++    }
++    if (errstr != NULL)
++	*errstr = NULL;
++    if (endp != NULL)
++	*endp = ep;
++done:
++    debug_return_int(rval);
++}
+diff -urN sudo-1.8.5/compat/getgrouplist.c sudo-1.8.5.patched/compat/getgrouplist.c
+--- sudo-1.8.5/compat/getgrouplist.c	Mon Mar 12 12:02:04 2012
++++ sudo-1.8.5.patched/compat/getgrouplist.c	Tue Oct 15 12:01:19 2019
+@@ -58,9 +58,10 @@
+     aix_setauthdb((char *) name);
+ #endif
+     if ((grset = getgrset(name)) != NULL) {
++	const char *errstr;
+ 	for (cp = strtok(grset, ","); cp != NULL; cp = strtok(NULL, ",")) {
+-	    gid = atoi(cp);
+-	    if (gid != basegid) {
++	    gid = atoid(cp, NULL, NULL, &errstr);
++	    if (errstr == NULL && gid != basegid) {
+ 		if (ngroups == grpsize)
+ 		    goto done;
+ 		groups[ngroups++] = gid;
+diff -urN sudo-1.8.5/plugins/sudoers/match.c sudo-1.8.5.patched/plugins/sudoers/match.c
+--- sudo-1.8.5/plugins/sudoers/match.c	Tue May 15 10:22:03 2012
++++ sudo-1.8.5.patched/plugins/sudoers/match.c	Tue Oct 15 12:05:36 2019
+@@ -633,11 +633,13 @@
+ bool
+ userpw_matches(char *sudoers_user, char *user, struct passwd *pw)
+ {
++    const char *errstr;
++    uid_t uid;
+     debug_decl(userpw_matches, SUDO_DEBUG_MATCH)
+ 
+     if (pw != NULL && *sudoers_user == '#') {
+-	uid_t uid = (uid_t) atoi(sudoers_user + 1);
+-	if (uid == pw->pw_uid)
++	uid = (uid_t) atoid(sudoers_user + 1, NULL, NULL, &errstr);
++	if (errstr == NULL && uid == pw->pw_uid)
+ 	    debug_return_bool(true);
+     }
+     debug_return_bool(strcmp(sudoers_user, user) == 0);
+@@ -650,11 +652,13 @@
+ bool
+ group_matches(char *sudoers_group, struct group *gr)
+ {
++    const char *errstr;
++    gid_t gid;
+     debug_decl(group_matches, SUDO_DEBUG_MATCH)
+ 
+     if (*sudoers_group == '#') {
+-	gid_t gid = (gid_t) atoi(sudoers_group + 1);
+-	if (gid == gr->gr_gid)
++	gid = (gid_t) atoid(sudoers_group + 1, NULL, NULL, &errstr);
++	if (errstr == NULL && gid == gr->gr_gid)
+ 	    debug_return_bool(true);
+     }
+     debug_return_bool(strcmp(gr->gr_name, sudoers_group) == 0);
+diff -urN sudo-1.8.5/plugins/sudoers/pwutil.c sudo-1.8.5.patched/plugins/sudoers/pwutil.c
+--- sudo-1.8.5/plugins/sudoers/pwutil.c	Tue May 15 10:22:03 2012
++++ sudo-1.8.5.patched/plugins/sudoers/pwutil.c	Tue Oct 15 13:21:55 2019
+@@ -400,9 +400,12 @@
+ struct passwd *
+ sudo_fakepwnam(const char *user, gid_t gid)
+ {
++    const char *errstr;
+     uid_t uid;
+ 
+-    uid = (uid_t) atoi(user + 1);
++    uid = (uid_t) atoid(user + 1, NULL, NULL, &errstr);
++    if (errstr != NULL)
++	return NULL;
+     return sudo_fakepwnamid(user, uid, gid);
+ }
+ 
+@@ -726,6 +729,7 @@
+ sudo_fakegrnam(const char *group)
+ {
+     struct cache_item_gr *gritem;
++    const char *errstr;
+     struct group *gr;
+     struct rbnode *node;
+     size_t len, namelen;
+@@ -738,9 +742,15 @@
+     for (i = 0; i < 2; i++) {
+ 	gritem = ecalloc(1, len);
+ 	gr = &gritem->gr;
+-	gr->gr_gid = (gid_t) atoi(group + 1);
++	gr->gr_gid = (gid_t) atoid(group + 1, NULL, NULL, &errstr);
+ 	gr->gr_name = (char *)(gritem + 1);
+ 	memcpy(gr->gr_name, group, namelen + 1);
++	if (errstr != NULL) {
++	    sudo_debug_printf(SUDO_DEBUG_DEBUG|SUDO_DEBUG_DIAG,
++		"gid %s %s", group, errstr);
++	    efree(gritem);
++	    debug_return_ptr(NULL);
++	}
+ 
+ 	gritem->cache.refcnt = 1;
+ 	gritem->cache.d.gr = gr;
+@@ -922,6 +932,7 @@
+ {
+     struct group_list *grlist;
+     struct group *grp = NULL;
++    const char *errstr;
+     int i;
+     bool matched = false;
+     debug_decl(user_in_group, SUDO_DEBUG_NSS)
+@@ -931,15 +942,20 @@
+ 	 * If it could be a sudo-style group ID check gids first.
+ 	 */
+ 	if (group[0] == '#') {
+-	    gid_t gid = atoi(group + 1);
+-	    if (gid == pw->pw_gid) {
+-		matched = true;
+-		goto done;
+-	    }
+-	    for (i = 0; i < grlist->ngids; i++) {
+-		if (gid == grlist->gids[i]) {
++	    gid_t gid = (gid_t) atoid(group + 1, NULL, NULL, &errstr);
++	    if (errstr != NULL) {
++		sudo_debug_printf(SUDO_DEBUG_DEBUG|SUDO_DEBUG_DIAG,
++		    "gid %s %s", group, errstr);
++	    } else {
++		if (gid == pw->pw_gid) {
+ 		    matched = true;
+ 		    goto done;
++		}
++		for (i = 0; i < grlist->ngids; i++) {
++		    if (gid == grlist->gids[i]) {
++			matched = true;
++			goto done;
++		    }
+ 		}
+ 	    }
+ 	}
+diff -urN sudo-1.8.5/plugins/sudoers/sudoers.c sudo-1.8.5.patched/plugins/sudoers/sudoers.c
+--- sudo-1.8.5/plugins/sudoers/sudoers.c	Tue May 15 10:22:03 2012
++++ sudo-1.8.5.patched/plugins/sudoers/sudoers.c	Tue Oct 15 14:52:44 2019
+@@ -409,11 +409,15 @@
+      * Look up the timestamp dir owner if one is specified.
+      */
+     if (def_timestampowner) {
+-	struct passwd *pw;
++	struct passwd *pw = NULL;
+ 
+-	if (*def_timestampowner == '#')
+-	    pw = sudo_getpwuid(atoi(def_timestampowner + 1));
+-	else
++	if (*def_timestampowner == '#') {
++	    const char *errstr;
++	    uid_t uid = atoid(def_timestampowner + 1, NULL, NULL, &errstr);
++	    if (errstr == NULL)
++		pw = sudo_getpwuid(uid);
++	}
++	if (pw == NULL)
+ 	    pw = sudo_getpwnam(def_timestampowner);
+ 	if (pw != NULL) {
+ 	    timestamp_uid = pw->pw_uid;
+@@ -1103,17 +1107,24 @@
+ static void
+ set_runaspw(const char *user)
+ {
++    struct passwd *pw = NULL;
+     debug_decl(set_runaspw, SUDO_DEBUG_PLUGIN)
+ 
+-    if (runas_pw != NULL)
+-	pw_delref(runas_pw);
+     if (*user == '#') {
+-	if ((runas_pw = sudo_getpwuid(atoi(user + 1))) == NULL)
+-	    runas_pw = sudo_fakepwnam(user, runas_gr ? runas_gr->gr_gid : 0);
+-    } else {
+-	if ((runas_pw = sudo_getpwnam(user)) == NULL)
+-	    log_fatal(NO_MAIL|MSG_ONLY, _("unknown user: %s"), user);
++	const char *errstr;
++	uid_t uid = atoid(user + 1, NULL, NULL, &errstr);
++	if (errstr == NULL) {
++	    if ((pw = sudo_getpwuid(uid)) == NULL)
++		pw = sudo_fakepwnam(user, runas_gr ? runas_gr->gr_gid : 0);
++	}
+     }
++    if (pw == NULL) {
++	if ((pw = sudo_getpwnam(user)) == NULL)
++	    log_fatal(NO_MAIL|MSG_ONLY, N_("unknown user: %s"), user);
++    }
++    if (runas_pw != NULL)
++	pw_delref(runas_pw);
++    runas_pw = pw;
+     debug_return;
+ }
+ 
+@@ -1124,17 +1135,24 @@
+ static void
+ set_runasgr(const char *group)
+ {
++    struct group *gr = NULL;
+     debug_decl(set_runasgr, SUDO_DEBUG_PLUGIN)
+ 
+-    if (runas_gr != NULL)
+-	gr_delref(runas_gr);
+     if (*group == '#') {
+-	if ((runas_gr = sudo_getgrgid(atoi(group + 1))) == NULL)
+-	    runas_gr = sudo_fakegrnam(group);
+-    } else {
+-	if ((runas_gr = sudo_getgrnam(group)) == NULL)
+-	    log_fatal(NO_MAIL|MSG_ONLY, _("unknown group: %s"), group);
++	const char *errstr;
++	gid_t gid = atoid(group + 1, NULL, NULL, &errstr);
++	if (errstr == NULL) {
++	    if ((gr = sudo_getgrgid(gid)) == NULL)
++		gr = sudo_fakegrnam(group);
++	}
+     }
++    if (gr == NULL) {
++	if ((gr = sudo_getgrnam(group)) == NULL)
++	    log_fatal(NO_MAIL|MSG_ONLY, N_("unknown group: %s"), group);
++    }
++    if (runas_gr != NULL)
++	gr_delref(runas_gr);
++    runas_gr = gr;
+     debug_return;
+ }
+ 
+@@ -1211,7 +1229,7 @@
+ deserialize_info(char * const args[], char * const settings[], char * const user_info[])
+ {
+     char * const *cur;
+-    const char *p, *groups = NULL;
++    const char *p, *errstr, *groups = NULL;
+     const char *debug_flags = NULL;
+     int flags = 0;
+     debug_decl(deserialize_info, SUDO_DEBUG_PLUGIN)
+@@ -1226,11 +1244,17 @@
+ 		continue;
+ 	    }
+ 	    if (MATCHES(*cur, "sudoers_uid=")) {
+-		sudoers_uid = (uid_t) atoi(*cur + sizeof("sudoers_uid=") - 1);
++		p = *cur + sizeof("sudoers_uid=") - 1;
++		sudoers_uid = (uid_t) atoid(p, NULL, NULL, &errstr);
++		if (errstr != NULL)
++		    errorx(1, "%s: %s", *cur, errstr);
+ 		continue;
+ 	    }
+ 	    if (MATCHES(*cur, "sudoers_gid=")) {
+-		sudoers_gid = (gid_t) atoi(*cur + sizeof("sudoers_gid=") - 1);
++		p = *cur + sizeof("sudoers_gid=") - 1;
++		sudoers_gid = (gid_t) atoid(p, NULL, NULL, &errstr);
++		if (errstr != NULL)
++		    errorx(1, "%s: %s", *cur, errstr);
+ 		continue;
+ 	    }
+ 	    if (MATCHES(*cur, "sudoers_mode=")) {
+@@ -1352,12 +1376,17 @@
+ 	    continue;
+ 	}
+ 	if (MATCHES(*cur, "uid=")) {
+-	    user_uid = (uid_t) atoi(*cur + sizeof("uid=") - 1);
++	    p = *cur + sizeof("uid=") - 1;
++	    user_uid = (uid_t) atoid(p, NULL, NULL, &errstr);
++	    if (errstr != NULL)
++		errorx(1, "%s: %s", *cur, errstr);
+ 	    continue;
+ 	}
+ 	if (MATCHES(*cur, "gid=")) {
+ 	    p = *cur + sizeof("gid=") - 1;
+-	    user_gid = (gid_t) atoi(p);
++	    user_gid = (gid_t) atoid(p, NULL, NULL, &errstr);
++	    if (errstr != NULL)
++		errorx(1, "%s: %s", *cur, errstr);
+ 	    continue;
+ 	}
+ 	if (MATCHES(*cur, "groups=")) {
+@@ -1396,6 +1425,7 @@
+ 
+     if (groups != NULL && groups[0] != '\0') {
+ 	const char *cp;
++	char *ep;
+ 	GETGROUPS_T *gids;
+ 	int ngids;
+ 
+@@ -1412,13 +1442,14 @@
+ 	ngids = 1;
+ 	cp = groups;
+ 	for (;;) {
+-	    gids[ngids] = atoi(cp);
++	    gids[ngids] = atoid(cp, ",", &ep, &errstr);
++	    if (errstr != NULL)
++		errorx(1, "%s: %s", cp, errstr);
+ 	    if (gids[0] != gids[ngids])
+ 		ngids++;
+-	    cp = strchr(cp, ',');
+-	    if (cp == NULL)
++	    if (*ep == '\0')
+ 		break;
+-	    cp++; /* skip over comma */
++	    cp = ep + 1;
+ 	}
+ 	set_group_list(user_name, gids, ngids);
+ 	efree(gids);
+diff -urN sudo-1.8.5/plugins/sudoers/sudoers.h sudo-1.8.5.patched/plugins/sudoers/sudoers.h
+--- sudo-1.8.5/plugins/sudoers/sudoers.h	Tue May 15 10:22:03 2012
++++ sudo-1.8.5.patched/plugins/sudoers/sudoers.h	Tue Oct 15 13:37:09 2019
+@@ -292,6 +292,9 @@
+ /* atobool.c */
+ int atobool(const char *str);
+ 
++/* atoid.c */
++id_t atoid(const char *p, const char *sep, char **endp, const char **errstr);
++
+ /* boottime.c */
+ int get_boottime(struct timeval *);
+ 
+diff -urN sudo-1.8.5/src/sudo.c sudo-1.8.5.patched/src/sudo.c
+--- sudo-1.8.5/src/sudo.c	Tue May 15 10:22:03 2012
++++ sudo-1.8.5.patched/src/sudo.c	Tue Oct 15 14:14:26 2019
+@@ -516,9 +516,11 @@
+ command_info_to_details(char * const info[], struct command_details *details)
+ {
+     int i;
++    id_t id;
+     long lval;
+     unsigned long ulval;
+     char *cp, *ep;
++    const char *errstr;
+     debug_decl(command_info_to_details, SUDO_DEBUG_PCOMM)
+ 
+     memset(details, 0, sizeof(*details));
+@@ -589,41 +591,29 @@
+ 	    case 'r':
+ 		if (strncmp("runas_egid=", info[i], sizeof("runas_egid=") - 1) == 0) {
+ 		    cp = info[i] + sizeof("runas_egid=") - 1;
+-		    if (*cp == '\0')
+-			break;
+-		    errno = 0;
+-		    ulval = strtoul(cp, &ep, 0);
+-		    if (*cp != '\0' && *ep == '\0' &&
+-			(errno != ERANGE || ulval != ULONG_MAX)) {
+-			details->egid = (gid_t)ulval;
+-			SET(details->flags, CD_SET_EGID);
+-		    }
++		    id = atoid(cp, NULL, NULL, &errstr);
++		    if (errstr != NULL)
++			errorx(1, "%s: %s", info[i], errstr);
++		    details->egid = (gid_t)id;
++		    SET(details->flags, CD_SET_EGID);
+ 		    break;
+ 		}
+ 		if (strncmp("runas_euid=", info[i], sizeof("runas_euid=") - 1) == 0) {
+ 		    cp = info[i] + sizeof("runas_euid=") - 1;
+-		    if (*cp == '\0')
+-			break;
+-		    errno = 0;
+-		    ulval = strtoul(cp, &ep, 0);
+-		    if (*cp != '\0' && *ep == '\0' &&
+-			(errno != ERANGE || ulval != ULONG_MAX)) {
+-			details->euid = (uid_t)ulval;
+-			SET(details->flags, CD_SET_EUID);
+-		    }
++		    id = atoid(cp, NULL, NULL, &errstr);
++		    if (errstr != NULL)
++			errorx(1, "%s: %s", info[i], errstr);
++		    details->euid = (uid_t)id;
++		    SET(details->flags, CD_SET_EUID);
+ 		    break;
+ 		}
+ 		if (strncmp("runas_gid=", info[i], sizeof("runas_gid=") - 1) == 0) {
+ 		    cp = info[i] + sizeof("runas_gid=") - 1;
+-		    if (*cp == '\0')
+-			break;
+-		    errno = 0;
+-		    ulval = strtoul(cp, &ep, 0);
+-		    if (*cp != '\0' && *ep == '\0' &&
+-			(errno != ERANGE || ulval != ULONG_MAX)) {
+-			details->gid = (gid_t)ulval;
+-			SET(details->flags, CD_SET_GID);
+-		    }
++		    id = atoid(cp, NULL, NULL, &errstr);
++		    if (errstr != NULL)
++			errorx(1, "%s: %s", info[i], errstr);
++		    details->gid = (gid_t)id;
++		    SET(details->flags, CD_SET_GID);
+ 		    break;
+ 		}
+ 		if (strncmp("runas_groups=", info[i], sizeof("runas_groups=") - 1) == 0) {
+@@ -644,13 +634,10 @@
+ 			    emalloc2(details->ngroups, sizeof(GETGROUPS_T));
+ 			cp = info[i] + sizeof("runas_groups=") - 1;
+ 			for (j = 0; j < details->ngroups;) {
+-			    errno = 0;
+-			    ulval = strtoul(cp, &ep, 0);
+-			    if (*cp == '\0' || (*ep != ',' && *ep != '\0') ||
+-				(ulval == ULONG_MAX && errno == ERANGE)) {
+-				break;
+-			    }
+-			    details->groups[j++] = (gid_t)ulval;
++			    id = atoid(cp, ",", &ep, &errstr);
++			    if (errstr != NULL)
++				errorx(1, "%s: %s", cp, errstr);
++			    details->groups[j++] = (gid_t)id;
+ 			    cp = ep + 1;
+ 			}
+ 			details->ngroups = j;
+@@ -659,15 +646,11 @@
+ 		}
+ 		if (strncmp("runas_uid=", info[i], sizeof("runas_uid=") - 1) == 0) {
+ 		    cp = info[i] + sizeof("runas_uid=") - 1;
+-		    if (*cp == '\0')
+-			break;
+-		    errno = 0;
+-		    ulval = strtoul(cp, &ep, 0);
+-		    if (*cp != '\0' && *ep == '\0' &&
+-			(errno != ERANGE || ulval != ULONG_MAX)) {
+-			details->uid = (uid_t)ulval;
+-			SET(details->flags, CD_SET_UID);
+-		    }
++		    id = atoid(cp, NULL, NULL, &errstr);
++		    if (errstr != NULL)
++			errorx(1, "%s: %s", info[i], errstr);
++		    details->uid = (uid_t)id;
++		    SET(details->flags, CD_SET_UID);
+ 		    break;
+ 		}
+ 		break;
+diff -urN sudo-1.8.5/src/sudo.h sudo-1.8.5.patched/src/sudo.h
+--- sudo-1.8.5/src/sudo.h	Tue May 15 10:22:03 2012
++++ sudo-1.8.5.patched/src/sudo.h	Tue Oct 15 14:49:25 2019
+@@ -191,6 +191,9 @@
+ /* atobool.c */
+ bool atobool(const char *str);
+ 
++/* atoid.c */
++id_t atoid(const char *p, const char *sep, char **endp, const char **errstr);
++
+ /* parse_args.c */
+ int parse_args(int argc, char **argv, int *nargc, char ***nargv,
+     char ***settingsp, char ***env_addp);
 
-References:
-  https://github.com/gpac/gpac/issues/3310
-  https://nvd.nist.gov/vuln/detail/CVE-2025-55664
-  https://www.cve.org/CVERecord?id=3DCVE-2025-55664
-
-=C2=A0
----
-Best regards,
-Alexander A. Shvedov
-https://github.com/sigdevel
+------- =_aaaaaaaaaa0--
