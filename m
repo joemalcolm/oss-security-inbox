@@ -1,44 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/29/1
-Message-ID: <d8544143-4a18-ef44-b4bd-b2efc1c3aa60@isc.org>
-Date: Wed, 28 Aug 2019 23:46:31 -0800
-From: Michael McNally <mcnally@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/15/2
+Message-ID: <818ccecb7de32608@sudo.ws>
+Date: Tue, 15 Oct 2019 14:55:06 -0600
+From: "Todd C. Miller" <Todd.Miller@...o.ws>
 To: oss-security@...ts.openwall.com
-Subject: Three vulnerabilities in Kea DHCP disclosed by ISC, 28 August 2019
+Subject: Re: Sudo: CVE-2019-14287
 Content-Type: text/plain; charset=utf-8
 
-Earlier today (28 Aug 2019) ISC disclosed three vulnerabilities in our
-Kea DHCP software.
+In an effort to aid distros trying to backport the fix for
+CVE-2019-14287 to earlier sudo versions I've attached versions of
+the fix for sudo 1.8.5 and 1.8.10.
 
-   CVE-2019-6472 affects the Kea DHCPv6 server, which can exit
-   with an assertion failure if the DHCPv6 server process receives
-   a request containing DUID value which is too large.
-   (https://kb.isc.org/docs/cve-2019-6474)
+ - todd
 
-   CVE-2019-6473 affects the Kea DHCPv4 server, which can exit with
-   an assertion failure if it receives a packed containing a malformed
-   option.  (https://kb.isc.org/docs/cve-2019-6473)
+View attachment "sudo-1.8.10.patch" of type "text/x-patch" (3829 bytes)
 
-   CVE-2019-6474 can cause a condition where the server cannot be
-   restarted without manual operator intervention to correct a problem
-   that can be deliberately introduced into the stored leases.
-   CVE-2019-6474 can only affect servers which are using memfile
-   for lease storage.  (https://kb.isc.org/docs/cve-2019-6474)
-
-To correct these vulnerabilities new releases of Kea were issued:
-
-   -  Kea 1.6.0
-   -  Kea 1.5.0-P1
-   -  Kea 1.4.0-P2
-
-any of which can be downloaded via the ISC downloads page,
-https://www.isc.org/downloads.
-
-If you are a distributor of packages based on ISC's Kea DHCP
-software, you may consider the issue publicly disclosed and proceed
-with your own packages.
-
-Sincerely,
-
-Michael McNally
-ISC Security Officer
+View attachment "sudo-1.8.5.patch" of type "text/x-patch" (18317 bytes)
