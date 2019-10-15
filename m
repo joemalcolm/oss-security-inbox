@@ -1,23 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/4
-Message-Id: <5B458214-EF60-45B1-B20C-585B5306D66A@oracle.com>
-Date: Fri, 8 Nov 2019 12:29:50 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/15/1
+Message-ID: <fe819c2d-81fa-bd20-f700-bad3e05753b7@gentoo.org>
+Date: Tue, 15 Oct 2019 10:49:13 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
+Cc: Gentoo Security <security@...too.org>
+Subject: Re: Statistics for distros lists updated for 2019Q3
 Content-Type: text/plain; charset=utf-8
 
-
-
-> On 8 Nov 2019, at 12:06, John Haxby <john.haxby@...cle.com> wrote:
+On 13.10.2019 13:13, Kristian Fiskerstrand wrote:
+> Hi,
 > 
-> In this particular case, the assert() will always trigger if the assert is on "a > INT_MAX-100" because that is well defined.   Does ubsan catch this issue?
+> The statistics for the distros list have been updated for the 3rd
+> quarter of 2019 at
+> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+> 
+> Data rows not included in calculation due to negative embargos are now
+> marked in data with "ND" in the calculated columns.
+> 
+> Adding the median is not done at this point to make sure the updated
+> figures are available. It turns out to not be quite as easy as I first
+> projected given LibreOffice doesn't have a median counterpart to
+> [AVERAGEIFS] so I likely need to use some array formula instead, so I'll
+> do that as a separate update when I get around to it.
+> 
+> References:
+> [AVERAGEIFS]
+> https://help.libreoffice.org/Calc/AVERAGEIFS_function
 
-Answering my own question:
+Medians are now added.
 
-foo.c:6:2: runtime error: signed integer overflow: 2147483647 + 99 cannot be represented in type 'int'
-a.out: foo.c:6: foo: Assertion `a+100 > a' failed.
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
-jch
 
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
