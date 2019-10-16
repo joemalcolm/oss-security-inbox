@@ -1,80 +1,135 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/2
-Message-ID: <8bd059ae-5faa-46fa-71d0-bb0f61ea8e62@thermi.consulting>
-Date: Mon, 9 Dec 2019 15:42:47 +0100
-From: Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
-To: oss-security@...ts.openwall.com
-Subject: Re: Shell wildcards considered dangerous?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/16/3
+Message-ID: <46eef40c-d8be-431f-cd62-7cb832c34818@sba-research.org>
+Date: Wed, 16 Oct 2019 14:12:17 +0200
+From: SBA Research Advisory <advisory@...-research.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [SBA-ADV-20190913-02] CVE-2019-16521: WordPress Plugin - Broken Link Checker <= 1.11.8 - Reflected XSS
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+# WordPress Plugin - Broken Link Checker - Reflected XSS #
 
-That is only a problem if the developer(s) foolishly didn't use "--" to terminate the command line options
-or they did, but the argument parser of the called program does not understand that "--" is a command line option terminator.
-See how the man page for GNU optarg (man 3 optarg).
-Quote below:
-[...]
-       By default, getopt() permutes the contents of argv as it scans, so that
-       eventually all the nonoptions are at the end.  Two other modes are also
-       implemented.   If  the first character of optstring is '+' or the envi‐
-       ronment variable POSIXLY_CORRECT is set, then option  processing  stops
-       as soon as a nonoption argument is encountered.  If the first character
-       of optstring is '-', then each nonoption argv-element is handled as  if
-       it were the argument of an option with character code 1.  (This is used
-       by programs that were written to expect options and other argv-elements
-       in any order and that care about the ordering of the two.)  The special
-       argument "--" forces an end of option-scanning regardless of the  scan‐
-       ning mode.
+Link: https://github.com/sbaresearch/advisories/tree/public/2019/SBA-ADV-20190913-02_WordPress_Plugin_Broken_Link_Checker
 
-So no, if the developers took care and thought about this beforehand and checked, it's not a problem.
+## Vulnerability Overview ##
 
-TL;DR: Best practice is to do prog --arg1 --arg2 [...] -- non-opt-args
-Check if prog understands that -- terminates the list of passed options.
+The broken-link-checker plugin through 1.11.8 for WordPress (aka Broken Link Checker)
+is susceptible to Reflected XSS due to improper encoding and insertion of an HTTP GET
+parameter into HTML. The filter function on the page listing all detected broken links
+can be exploited by providing an XSS payload in the s_filter GET parameter in a
+filter_id=search request.
+NOTE: this is an end-of-life product.
 
-Kind regards
+* **Identifier**            : SBA-ADV-20190913-02
+* **Type of Vulnerability** : Cross-site Scripting
+* **Software/Product Name** : [Broken Link Checker](https://wordpress.org/plugins/broken-link-checker/)
+* **Vendor**                : [ManageWP](https://managewp.com/)
+* **Affected Versions**     : <= 1.11.8
+* **Fixed in Version**      : -
+* **CVE ID**                : CVE-2019-16521
+* **CVSSv3 Vector**         : AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N
+* **CVSSv3 Base Score**     : 8.1 (High)
 
-Noel
+## Vendor Description ##
 
+> This plugin will monitor your blog looking for broken links and let you know if any are found.
 
-Am 09.12.19 um 14:23 schrieb Georgi Guninski:
-> Remote version of this affects wu-ftpd from 2003:
-> https://www.debian.org/security/2003/dsa-377
->
-> Summary:  For trusted command PROGRAM, executing
-> PROGRAM *.EXT
-> may lead to arbitrary code execution, e.g. for
-> PROGRAM=EXT=tar
->
-> The main idea is the wildcard to add program options.
->
-> Open problem:
->
-> Are popular programs other than tar vulnerable?
->
-> Since shell wildcards are unlikely to change, should best practice
-> include not using *.EXT in shell?
->
->
-> Example exploit vector: starting program in untrusted
-> directories.
->
-> Poc:
-> ====
-> $rm -rf /tmp/1 ;mkdir /tmp/1 ; cd /tmp/1 ; tar cf a.tar /etc/issue
-> $ : >  --to-command="yes .tar"
->
-> #end creating, starts PoC
-> tar xf *.tar
->
-> #.tar (repeats)
-> ====
->
->
+Active Installations: 700,000+
 
--- 
-Noel Kuntze
-IT security consultant
+Source: <https://wordpress.org/plugins/broken-link-checker/>
 
-GPG Key ID: 0x0739AD6C
-Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
+## Impact ##
 
+By exploiting the documented vulnerability, an external attacker without
+any privileges can execute JavaScript code in a victim's browser.
+This can be misused, e.g for phishing attacks by displaying a fake
+login form and sending the victim's credentials to the attacker.
+Furthermore malicious actions can be performed in the context of an authenticated
+user. The impact depends on the level of access of the attacked user.
+In case of an admin this can lead to the execution of PHP code and the compromise
+of the server.
+
+## Vulnerability Description ##
+
+The filter function on the page listing all detected broken links can be exploited
+by providing HTML and JavaScript code in one of the parameters.
+All users with access to the "Broken Link Checker" are in danger.
+
+This is possible because the CSS class of the table contains the value of the
+`s_filter` GET parameter if it is not empty. Additionally it is necessary to provide
+the special filter id "search" via parameter `filter_id=search` in order to reach this
+execution path:
+
+In `includes/link-query.php` (L803-810) the value of `$base_filter` is determined,
+with `filter_id=search` the right path will be reached:
+
+```php
+$base_filter = '';
+if ( array_key_exists($filter_id, $this->native_filters) ) {
+    $base_filter = $filter_id;
+} else if ( isset($current_filter['params']['s_filter']) && !empty($current_filter['params']['s_filter']) ) {
+    $base_filter = $current_filter['params']['s_filter'];
+} else if ( isset($_GET['s_filter']) && !empty($_GET['s_filter']) ) {
+    $base_filter = $_GET['s_filter'];
+}
+```
+
+In `admin/table-printer.php` (L71-82) the value of the CSS class of the table is determined and set.
+Here the value of the GET parameter is inside `$current_filter['base_filter']`.
+
+```php
+$table_classes = array( 'widefat' );
+if ( $compact ) {
+    $table_classes[] = 'compact';
+};
+if ( $this->core->conf->options['table_color_code_status'] ) {
+    $table_classes[] = 'color-code-link-status';
+};
+$table_classes[] = 'base-filter-' . $current_filter['base_filter'];
+printf(
+    '<table class="%s" id="blc-links"><thead><tr>',
+    implode( ' ', $table_classes )
+);
+```
+
+## Proof of Concept ##
+
+This example shows how an attacker can craft a URL to execute a payload in the
+browser of the victim. When a user clicks on the link and is logged-in, the payload
+(in this case a simple JavaScript alert) will be executed. Otherwise the user will be taken
+to the login page and redirected to the exploit after a successful login.
+Replace `<YOUR_DOMAIN_HERE>` with the URL to your WordPress installation:
+
+```text
+<YOUR_DOMAIN_HERE>/wp-admin/tools.php?page=view-broken-links&filter_id=search&s_filter=%22+id%3D%22blc-links%22%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E
+```
+
+## Recommended Countermeasures ##
+
+We recommend to properly escape the output by using the encoding functions provided by WordPress,
+like the `esc_*`- or `wp_kses_*`-[functions][1].
+
+[1]: https://developer.wordpress.org/themes/theme-security/data-sanitization-escaping/#escaping-securing-output
+
+## Timeline ##
+
+* `2019-09-05` Identified the vulnerability
+* `2019-09-06` Contacted ManageWP
+* `2019-09-09` Contacted plugins@...dpress.org
+* `2019-09-10` Response by ManageWP requesting more details
+* `2019-09-11` Response by ManageWP that they are not actively maintaining the plugin and don't provide support
+* `2019-09-20` CVE assigned
+* `2019-10-16` Public disclosure
+
+## References ##
+
+* <https://wordpress.org/plugins/broken-link-checker/>
+* <https://wordpress.org/plugins/broken-link-checker/#developers>
+
+## Credits ##
+
+* Tobias Fink ([SBA Research](https://www.sba-research.org/))
+
+Download attachment "0xFBB8862F58F775B2.asc" of type "application/pgp-keys" (3542 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
