@@ -1,115 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/11/1
-Message-Id: <121B8053-3DA3-4BF8-903E-3615504626C5@beckweb.net>
-Date: Tue, 11 Jun 2019 15:10:00 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/17/1
+Message-ID:  <VI1PR0101MB2142E0EA19F582429C3AEBCBB1920@VI1PR0101MB2142.eurprd01.prod.exchangelabs.com>
+Date: Wed, 16 Oct 2019 22:46:15 +0000
+From: Jens Geyer <jensgeyer@...mail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@...che.org" <security@...che.org>, Thrift-Dev <dev@...ift.apache.org>, "user@...ift.apache.org" <user@...ift.apache.org>
+Subject: CVE-2019-0205: Apache Thrift: potential DoS when processing untrusted Thrift payload
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+CVE-2019-0205: potential DoS when processing untrusted Thrift payloads
 
-* ElectricFlow Plugin 1.1.7
-* JX Resources Plugin 1.0.37
-* Token Macro Plugin 2.8
+Severity: Important
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-06-11/
+Vendor:
+The Apache Software Foundation
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Versions Affected:
+Apache Thrift up to and including 0.12.0
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Description:
+A server or client may run into an endless loop when feed with specific input data.
 
----
+Because the issue had already been partially fixed by THRIFT-4024 in version 0.11.0, depending on the installed version it affects only certain language bindings.
 
-SECURITY-1399 / CVE-2019-10337
-Token Macro Plugin did not configure its XML parser in a way that would 
-prevent XML External Entity (XXE) processing.
+Mitigation:
+Upgrade to version 0.13.0
 
-This allowed attackers able to control the contents of files processed with 
-the ${XML} macro to have Jenkins parse a maliciously crafted XML file that 
-uses external entities for extraction of secrets from the Jenkins agent, 
-server-side request forgery, or denial-of-service attacks.
+Credit:
+This issue was discovered by Hasnain Lakhani of Facebook.
 
-Token Macro Plugin no longer processes XML External Entities in XML documents.
-
-
-SECURITY-1379 / CVE-2019-10338 (CSRF), CVE-2019-10339 (improper authorization)
-JX Resources Plugin did not perform permission checks on a method 
-implementing form validation. This allowed users with Overall/Read access to 
-Jenkins to connect to an attacker-specified Kubernetes server and obtain 
-information about an attacker-specified namespace. Doing so might also leak 
-service account credentials used for the connection. Additionally, it allowed 
-attackers to obtain the value of any attacker-specified environment variable 
-for the Jenkins master process.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a cross-site request forgery vulnerability.
-
-This form validation method now requires POST requests and Overall/Administer 
-permissions.
-
-
-SECURITY-1410 (1) / CVE-2019-10331 (CSRF), CVE-2019-10332 (improper authorization)
-A missing permission check in a form validation method in ElectricFlow Plugin 
-allowed users with Overall/Read permission to initiate a connection test to 
-an attacker-specified server with attacker-specified username and password.
-
-Additionally, the form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-This form validation method now requires POST requests and Overall/Administer 
-permissions.
-
-
-SECURITY-1410 (2) / CVE-2019-10333
-Various form validation and form autocompletion methods in ElectricFlow 
-Plugin lacked permission checks. This allowed attackers with Overall/Read 
-access to obtain information about the configuration of ElectricFlow Plugin, 
-as well as the configuration and data of connected ElectricFlow servers.
-
-These form validation and autocompletion methods now require 
-Overall/Administer or Job/Configure permission, as appropriate for the given 
-method.
-
-
-SECURITY-1411 / CVE-2019-10334
-ElectricFlow Plugin unconditionally disabled SSL/TLS certificate validation 
-for the entire Jenkins master JVM during the deployment/publication of an 
-application.
-
-ElectricFlow Plugin no longer does that. Instead, the existing opt-in option to
-ignore SSL/TLS errors is used during deployment for the specific connection.
-
-
-SECURITY-1412 / CVE-2019-10335
-The plugin adds metadata displayed on build pages during its operations.
-
-Any user content was not escaped, resulting in a cross-site scripting 
-vulnerability allowing users with Job/Configure permission, or attackers 
-controlling API responses received from ElectricFlow to render arbitrary HTML 
-and JavaScript on Jenkins build pages.
-
-Build metadata is now filtered through a HTML formatter that only allows 
-showing basic HTML, neutralizing any unsafe data. Additionally, all builds 
-executed after the security update is applied will now properly escape 
-content received from ElectricFlow.
-
-
-SECURITY-1420 / CVE-2019-10336
-The configuration forms of various post-build steps contributed by 
-ElectricFlow Plugin were vulnerable to cross-site scripting.
-
-This allowed attackers able to control the output of connected ElectricFlow 
-servers' APIs to inject arbitrary HTML and JavaScript into the configuration 
-form.
-
-ElectricFlow Plugin no longer interprets HTML/JavaScript in responses from 
-ElectricFlow server APIs on job configuration forms.
+On behalf of the Apache Thrift PMC,
+Jens Geyer
 
