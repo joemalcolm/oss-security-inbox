@@ -1,55 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/19
-Message-ID: <20190418170058.GA22985@openwall.com>
-Date: Thu, 18 Apr 2019 19:00:58 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/16/7
+Message-ID: <62521803-4966-bdc8-733c-2d30e4afd7d7@isc.org>
+Date: Wed, 16 Oct 2019 13:05:58 -0500
+From: ISC Security Officer <security-officer@....org>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel address leaks
+Cc: ISC Security Officer <security-officer@....org>
+Subject: BIND9 CVE-2019-6475 and CVE-2019-6476
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Today (2019-10-16) ISC announced two vulnerabilities in our BIND 9 software.
 
-Fuqian just sent us all 13 of these in 2 days, and I guess there might
-be many more to come.  Do we really want to see them in here?  And in
-that many individual messages?  I doubt it - but not enough to have used
-my moderator powers to outright reject the messages without discussion.
+   CVE-2019-6475, a DNSSEC validation bypass for mirror zones
 
-This in part depends on upstream Linux kernel's policy as to kernel
-address leaks.  Are those treated as vulnerabilities or as not yet fully
-completed kernel hardening effort?  I think it's the latter, in which
-case such reports are better sent to the kernel-hardening mailing list.
+   CVE-2019-6476, a flaw in QNAME minimization that can lead to
+                  an assertion failure.
 
-Also, what's the current approach at dealing with them?  I haven't been
-keeping track of that.  Is the kptr_restrict sysctl possibly supposed to
-be sufficient, and %p format specifiers can stay intact?  If so, are
-those many individual findings by Fuqian actually non-issues?
+These issues affect all prior BIND 9.14 releases and all prior BIND 9.15
+releases.
 
-A proposed patch is generally better than a mere problem report, so if
-the issues do need individual fixes, then:
+Our full CVE text can be found at:
+   https://kb.isc.org/docs/cve-2019-6475
+   https://kb.isc.org/docs/cve-2019-6476
 
-I think these issues should be grouped by subsystem (one message per
-subsystem) and sent in the form of proposed patches (fixing the issues
-how exactly? need to discuss that first) to LKML and to proper
-per-subsystem lists and addresses (per the MAINTAINERS file), CC'ing
-kernel-hardening.
+New releases of BIND, including security fixes for this vulnerability,
+are available at: www.isc.org/downloads/
 
-I'd appreciate it if someone currently involved in dealing with similar
-issues comments on this in a reply-to-all to this message.
+Release notes for the new versions can be obtained using the following
+links:
 
-Thanks,
+https://downloads.isc.org/isc/bind9/9.15.5/RELEASE-NOTES-bind-9.15.5.html
+https://downloads.isc.org/isc/bind9/9.14.7/RELEASE-NOTES-bind-9.14.7.html
 
-Alexander
+-- 
+Brian Conry
+ISC Support
+Acting Security Officer
 
-On Tue, Apr 16, 2019 at 10:08:10AM +0800, Fuqian Huang wrote:
-> In ascot2e_attach, dev_info will print the address of adapter to
-> dmesg, sensitive kernel information will be leaked to user space.
-> struct dvb_frontend *ascot2e_attach(struct dvb_frontend *fe,
->   const struct ascot2e_config *config,
->   struct i2c_adapter *i2c)
-> {
->   ...
->   dev_info(&priv->i2c->dev,
->   "Sony ASCOT2E attached on addr=%x at I2C adapter %p\n",
->   priv->i2c_address, priv->i2c);
->   ...
-> }
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
