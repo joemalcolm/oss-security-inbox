@@ -1,29 +1,214 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/03/1
-Message-ID: <nycvar.YSQ.7.76.1907031216340.17373@xnncv>
-Date: Wed, 3 Jul 2019 12:23:21 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2019-10183 virt-install: unattended option leaks password via command line argument
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/16/6
+Message-Id: <98C55BF9-E4EB-4EAA-BE9C-2AE6A47E2F00@beckweb.net>
+Date: Wed, 16 Oct 2019 14:59:44 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Virt-install(1) utility used to provision new virtual machines has introduced 
-an option '--unattended' to create VMs without user interaction. This option 
-accepts guest VM passwords as command line arguments. Thus leaking them to 
-others users on the system via process listing.
+* Bumblebee HP ALM Plugin 4.1.4
+* Cadence vManager Plugin 2.7.1
+* CRX Content Package Deployer Plugin 1.9
+* Google Kubernetes Engine Plugin 0.7.1
+* Google OAuth Credentials Plugin 0.10
+* iceScrum Plugin 1.1.6
+* NeoLoad Plugin 2.2.6
 
-   -> https://virt-manager.org/download/
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-It was introduced recently in the virt-manager v2.2.0 release.
+* Delphix Plugin
+* ElasticBox CI Plugin
+* Extensive Testing Plugin
+* Fortify on Demand Plugin
+* Puppet Enterprise Pipeline Plugin
+* Oracle Cloud Infrastructure Compute Classic Plugin
+* Rundeck Plugin
+* SOASTA CloudTest Plugin
+* Sofy.AI Plugin
+* View26 Test-Reporting Plugin
 
-Upstream patch:
----------------
-   -> https://www.redhat.com/archives/virt-tools-list/2019-July/msg00014.html
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-10-16/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+SECURITY-1583 / CVE-2019-10436
+Google OAuth Credentials Plugin allowed the creation of credentials based 
+on the content of files on the Jenkins master through a feature retaining 
+backwards compatibility with earlier plugin releases.
+
+This allowed users with the permission to configure jobs and credentials to 
+read arbitrary files on the Jenkins master by creating a credential 
+referencing an arbitrary file on the Jenkins master.
+
+
+SECURITY-1006 (1) / CVE-2019-10437 (CSRF), CVE-2019-10438 (permission check)
+CRX Content Package Deployer Plugin did not perform permission checks on a 
+method implementing form validation. This allowed users with Overall/Read 
+access to Jenkins to connect to an attacker-specified URL using attacker-
+specified credentials IDs obtained through another method, capturing 
+credentials stored in Jenkins.
+
+Additionally, the form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1006 (2) / CVE-2019-10439
+CRX Content Package Deployer Plugin provides a list of applicable 
+credential IDs to allow users configuring the plugin to select the one to 
+use.
+
+This functionality did not correctly check permissions, allowing any user 
+with Overall/Read permission to get a list of valid credentials IDs. Those 
+could be used as part of an attack to capture the credentials using another 
+vulnerability.
+
+
+SECURITY-1427 / CVE-2019-10440
+NeoLoad Plugin stored credentials unencrypted in its global configuration 
+file org.jenkinsci.plugins.neoload.integration.NeoGlobalConfig.xml and in 
+job config.xml files on the Jenkins master. These credentials could be 
+viewed by users with Extended Read permission or access to the master file 
+system.
+
+
+SECURITY-1484 / CVE-2019-10441 (CSRF), CVE-2019-10442 (permission check)
+iceScrum Plugin did not perform permission checks on a method implementing 
+form validation. This allowed users with Overall/Read access to Jenkins to 
+initiate a connection test to an attacker-specified server with attacker-
+specified access token or username and password.
+
+Additionally, the form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1436 / CVE-2019-10443
+iceScrum Plugin stored credentials unencrypted in job config.xml files on 
+the Jenkins master. These credentials could be viewed by users with 
+Extended Read permission or access to the master file system.
+
+
+SECURITY-1481 / CVE-2019-10444
+Bumblebee HP ALM Plugin unconditionally disabled SSL/TLS certificate 
+validation for connections to the HP ALM service.
+
+
+SECURITY-1607 / CVE-2019-10445
+Missing permission checks in Google Kubernetes Engine Plugin allowed users 
+with Overall/Read permission to obtain limited information about the scope 
+and access of a credential with an attacker-specified credential ID 
+obtained through another method.
+
+
+SECURITY-1615 / CVE-2019-10446
+Cadence vManager Plugin unconditionally disabled SSL/TLS certificate 
+validation for the entire Jenkins master JVM.
+
+
+SECURITY-918 / CVE-2019-10458
+Puppet Enterprise Pipeline Plugin defines a custom whitelist for all 
+scripts protected by the Script Security sandbox.
+
+This custom whitelist allows the use of methods that can be used to bypass 
+Script Security sandbox protection. This results in arbitrary code 
+execution on any Jenkins instance with this plugin installed.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1431 / CVE-2019-10447
+Sofy.AI Plugin stores an API token unencrypted in job config.xml files on 
+the Jenkins master. This token can be viewed by users with Extended Read 
+permission or access to the master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1432 / CVE-2019-10448
+Extensive Testing Plugin stores credentials unencrypted in job config.xml 
+files on the Jenkins master. These credentials can be viewed by users with 
+Extended Read permission or access to the master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1433 / CVE-2019-10449
+Fortify on Demand Plugin stores credentials unencrypted in job config.xml 
+files on the Jenkins master. These credentials can be viewed by users with 
+Extended Read permission or access to the master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1434 / CVE-2019-10450
+ElasticBox CI Plugin stores an access token unencrypted in the global config
+.xml configuration file on the Jenkins master. This token can be viewed by 
+users with Extended Read permission or access to the master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1439 / CVE-2019-10451
+SOASTA CloudTest Plugin stores credentials unencrypted in its global 
+configuration file com.soasta.jenkins.CloudTestServer.xml on the Jenkins 
+master. These credentials could be viewed by users with access to the 
+master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1440 / CVE-2019-10452
+View26 Test-Reporting Plugin stores an access token unencrypted in job 
+config.xml files on the Jenkins master. This token can be viewed by users 
+with Extended Read permission or access to the master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1450 / CVE-2019-10453
+Delphix Plugin stores credentials unencrypted in its global configuration 
+file io.jenkins.plugins.delphix.GlobalConfiguration.xml on the Jenkins 
+master. These credentials could be viewed by users with access to the 
+master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1460 / CVE-2019-10454 (CSRF), CVE-2019-10455 (permission check)
+Rundeck Plugin does not perform permission checks on a method implementing 
+form validation. This allows users with Overall/Read access to Jenkins to 
+initiate a connection test to an attacker-specified server with attacker-
+specified username and password.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1462 / CVE-2019-10456 (CSRF), CVE-2019-10457 (permission check)
+Oracle Cloud Infrastructure Compute Classic Plugin does not perform 
+permission checks on a method implementing form validation. This allows 
+users with Overall/Read access to Jenkins to initiate a connection test to 
+an attacker-specified server with attacker-specified username and password.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+As of publication of this advisory there is no fix.
+
