@@ -1,81 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/18
-Message-ID: <CABXRUiT_PGoMJTkeEUeUguZWC0sZQoBPe+URKY9p7KuRsT2sXA@mail.gmail.com>
-Date: Thu, 18 Apr 2019 21:35:40 +0800
-From: Fuqian Huang <huangfq.daxian@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel < 4.14.111 drivers/scsi/cxgbi/cxgb4i/cxgb4i.c kernel address dumps to user space
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/16/5
+Message-ID: <933cbc09-958c-d74d-a183-738e7a3059ff@sba-research.org>
+Date: Wed, 16 Oct 2019 14:17:15 +0200
+From: SBA Research Advisory <advisory@...-research.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [SBA-ADV-20190913-04] CVE-2019-16520: WordPress Plugin - All in One SEO Pack <= 3.2.6 - Stored XSS
 Content-Type: text/plain; charset=utf-8
 
-In drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:299,
-send_act_open_req will dump the address of csk to dmesg
-which allows local user to read kernel address via dmesg.
+# WordPress Plugin - All in One SEO Pack - Stored XSS #
 
-static void send_act_open_req(struct cxgbi_sock *csk, struct sk_buff *skb,
-                struct l2t_entry *e)
-{
-    ...
-    pr_info_ipaddr("t%d csk 0x%p,%u,0x%lx,%u, rss_qid %u.\n",
-               (&csk->saddr), (&csk->daddr),
-               CHELSIO_CHIP_VERSION(lldi->adapter_type), csk,
-               csk->state, csk->flags, csk->atid, csk->rss_qid);
-    ...
+Link: https://github.com/sbaresearch/advisories/tree/public/2019/SBA-ADV-20190913-04_WordPress_Plugin_All_in_One_SEO_Pack
+
+## Vulnerability Overview ##
+
+The all-in-one-seo-pack plugin before 3.2.7 for WordPress (aka All in One SEO Pack)
+is susceptible to Stored XSS due to improper encoding of the SEO-specific description
+for posts provided by the plugin via unsafe placeholder replacement.
+
+* **Identifier**            : SBA-ADV-20190913-04
+* **Type of Vulnerability** : Cross-site Scripting
+* **Software/Product Name** : [All in One SEO Pack](https://wordpress.org/plugins/all-in-one-seo-pack/)
+* **Vendor**                : [Semper Plugins](https://semperplugins.com/)
+* **Affected Versions**     : <= 3.2.6
+* **Fixed in Version**      : 3.2.7
+* **CVE ID**                : CVE-2019-16520
+* **CVSSv3 Vector**         : AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N
+* **CVSSv3 Base Score**     : 7.3 (High)
+
+## Vendor Description ##
+
+> THE ORIGINAL WORDPRESS SEO PLUGIN, DOWNLOADED OVER 50,000,000 TIMES SINCE 2007.
+> Use All in One SEO Pack to optimize your WordPress site for SEO. It’s easy and works out of the box for beginners, and has advanced features and an API for developers.
+
+Active Installations: 2+ million
+
+Source: <https://wordpress.org/plugins/all-in-one-seo-pack/>
+
+## Impact ##
+
+By exploiting the documented vulnerability, an authenticated attacker with the
+ability to create posts can execute JavaScript code in a victim's browser.
+This can be misused, e.g for phishing attacks by displaying a fake
+login form and sending the victim's credentials to the attacker.
+Furthermore malicious actions can be performed in the context of an authenticated
+user. The impact depends on the level of access of the attacked user.
+In case of an admin this can lead to the execution of PHP code and the compromise
+of the server.
+
+## Vulnerability Description ##
+
+The plugin adds several fields to the page where a post can be created or edited.
+This allows setting a custom title and description for each post.
+The information provided there, will be inserted in corresponding `meta`-tags on the page
+of the post. The values of the fields are escaped before they are inserted into the
+HTML of the page.
+
+However, in the description field, there is the possibility to insert placeholders that
+get replaced with certain values before output. A placeholders can be also
+set for the previously mentioned title field. The relevant code can be found in
+`aioseop_class.php` lines 4546-4548:
+
+```php
+if ( false !== strpos( $description, '%post_title%', 0 ) ) {
+    $description = str_replace( '%post_title%', $this->get_aioseop_title( $post, false ), $description );
 }
+```
 
+When an attacker sets a payload in the title field and provides a placeholder for the
+value of the title field in the description field, the raw value of the title field will get inserted
+in the description. The description is not sanitized or encoded afterwards.
+This allows the attacker to break out of the `meta`-tag attribute and insert arbitrary
+HTML and JavaScript.
 
-In drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:1792,
-cxgb4i_ofld_init will dump the address of cdev to dmesg
-which allows local user to read kernel address via dmesg.
+## Proof of Concept ##
 
-static int cxgb4i_ofld_init(struct cxgbi_device *cdev)
-{
-    ...
-    pr_info("cdev 0x%p, offload up, added.\n", cdev);
-    ...
-}
+When a post is created or edited the following values can be set to show the vulnerability:
 
-In drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2047,
-t4_uld_add will dump the address of cdev to dmesg
-which allows local user to read kernel address via dmesg.
+* Title: `test_aiosp_title&<>"';><script src='data:text/javascript,alert(1)'></script>a`
+* Description: `test_aiosp_desc&<>"'; pt:%post_title% wp_title:%wp_title% bd:%blog_description% sd:%site_description% bt: %blog_title% st: %site_title% desc:%description%`
 
-static void *t4_uld_add(const struct cxgb4_lld_info *lldi)
-{
-    ...
-    pr_info("cdev 0x%p,%s, pfvf %u.\n",
-        cdev, lldi->ports[0]->name, cdev->pfvf);
-    ...
-}
+When the post is saved and accessed later the JavaScript alert-popup will be shown.
+The resulting HTML page will contain the following code (shortened for readability):
 
-In drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2129
-and drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2132
-and drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2136
-and drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2139
-and drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2143,
-t4_uld_state_change will dump the address of cdev to dmesg
-which allows local user to read kernel address via dmesg.
+```html
+[...]
+<title>test_aiosp_title&amp;&lt;&gt;&quot;&#039;;&lt;script src=&#039;data:text/javascript,alert(1)&#039;&gt;&lt;/script&gt; | XXXXXXX</title>
 
-static int t4_uld_state_change(void *handle, enum cxgb4_state state)
-{
-    struct cxgbi_device *cdev = handle;
+<!-- All in One SEO Pack 3.2.5 by Michael Torbert of Semper Fi Web Design[197,235] -->
+<meta name="description"  content="test_aiosp_desc&amp;&quot;&#039;; pt:test_aiosp_title&<>"';<script src='data:text/javascript,alert(1)'></script> wp_title:test_aiosp bd: sd: bt: XXXXXXX st: XXXXXXX desc:%description%" />
+[...]
+```
 
-    switch (state) {
-    case CXGB4_STATE_UP:
-        pr_info("cdev 0x%p, UP.\n", cdev);
-        break;
-    case CXGB4_STATE_START_RECOVERY:
-        pr_info("cdev 0x%p, RECOVERY.\n", cdev);
-        /* close all connections */
-        break;
-    case CXGB4_STATE_DOWN:
-        pr_info("cdev 0x%p, DOWN.\n", cdev);
-        break;
-    case CXGB4_STATE_DETACH:
-        pr_info("cdev 0x%p, DETACH.\n", cdev);
-        cxgbi_device_unregister(cdev);
-        break;
-    default:
-        pr_info("cdev 0x%p, unknown state %d.\n", cdev, state);
-        break;
-    }
-    return 0;
-}
+## Recommended Countermeasures ##
+
+We recommend to properly escape the output by applying the encoding functions provided by WordPress,
+like the `esc_*`- or `wp_kses_*`-[functions][1] after all placeholders were substituted.
+
+[1]: https://developer.wordpress.org/themes/theme-security/data-sanitization-escaping/#escaping-securing-output
+
+## Timeline ##
+
+* `2019-09-09` Identified the vulnerability
+* `2019-09-10` Contacted vendor
+* `2019-09-10` Response by vendor about disclosure contact
+* `2019-09-10` Vulnerability disclosed to vendor
+* `2019-09-10` Vulnerability verified by vendor
+* `2019-09-10` Vulnerability fixed by vendor, public disclosure coordinated
+* `2019-09-20` CVE assigned
+* `2019-10-16` Public disclosure
+
+## References ##
+
+* <https://wordpress.org/plugins/broken-link-checker/>
+* <https://wordpress.org/plugins/broken-link-checker/#developers>
+* <https://semperplugins.com/all-in-one-seo-pack-changelog/>
+* <https://github.com/semperfiwebdesign/all-in-one-seo-pack/issues/2888>
+
+## Credits ##
+
+* Tobias Fink ([SBA Research](https://www.sba-research.org/))
+
+Download attachment "0xFBB8862F58F775B2.asc" of type "application/pgp-keys" (3542 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
