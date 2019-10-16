@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1200" "Monday" "18" "April" "2016" "08:05:30" "+0000" "=?UTF-8?B?U8OpYmFzdGllbg==?= Delafond" "seb@debian.org" "<20160418100103.581@usenet.piggo.com>" "32" "[oss-security] Re: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL" nil nil nil "4" "2016041808:05:30" "[oss-security] Re: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL" (number mark "U       seb@debian.o Apr 18   32/1200  " thread-indent "\"[oss-security] Re: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL\"\n") "<CABEc15Xut2gOVj1_Luzu-y7gwESwT5Q0n+dCtK6R+HOcR9cDDw@mail.gmail.com>" ("<CABEc15Xut2gOVj1_Luzu-y7gwESwT5Q0n+dCtK6R+HOcR9cDDw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7813" "Wednesday" "16" "October" "2019" "14:59:44" "+0200" "Daniel Beck" "ml@beckweb.net" "<98C55BF9-E4EB-4EAA-BE9C-2AE6A47E2F00@beckweb.net>" "205" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "10" "2019101612:59:44" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Oct 16  205/7813  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30184 invoked by uid 550); 18 Apr 2016 08:05:55 -0000
+Received: (qmail 3409 invoked by uid 550); 16 Oct 2019 12:59:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,222 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30166 invoked from network); 18 Apr 2016 08:05:54 -0000
-X-Injected-Via-Gmane: http://gmane.org/
+Received: (qmail 3391 invoked from network); 16 Oct 2019 12:59:56 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Message-Id: <98C55BF9-E4EB-4EAA-BE9C-2AE6A47E2F00@beckweb.net>
+Date: Wed, 16 Oct 2019 14:59:44 +0200
 To: oss-security@lists.openwall.com
-From: =?UTF-8?Q?S=C3=A9bastien?= Delafond <seb@debian.org>
-Date: Mon, 18 Apr 2016 08:05:30 +0000 (UTC)
-Message-ID: <20160418100103.581@usenet.piggo.com>
-References: <CABEc15Xut2gOVj1_Luzu-y7gwESwT5Q0n+dCtK6R+HOcR9cDDw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: static.60.129.47.78.clients.your-server.de
-User-Agent: slrn/1.0.2 (Linux)
-Subject: [oss-security] Re: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP
- Smuggling issues: Double Content Length and bad EOL
+X-Mailer: Apple Mail (2.3445.104.11)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1571230796;f5856738;
+X-HE-SMSGID: 1iKiu1-0000XG-2F
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-On 2016-04-16, Régis Leroy wrote:
-> Varnish 4.x serie is not impacted. Flaws Fixed in version 3.0.7 in march 2015.
->
-> Changelog is:
->  * Requests with multiple Content-Length headers will now fail.
->  * Stop recognizing a single CR (r) as a HTTP line separator. This
-> opened up a possible cache poisoning attack in stacked installations
-> where sslterminator/varnish/backend had different CR handling.
->
-> https://github.com/varnish/Varnish-Cache/commit/29870c8fe95e4e8a672f6f28c5fbe692bea09e9c
-> https://github.com/varnish/Varnish-Cache/commit/85e8468bec9416bd7e16b0d80cb820ecd2b330c3
->
-> Combinations of theses two flaws in HTTP protocol handling allows for
-> "HTTP Response Splitting" attacks
-> when another actor in front of Varnish3 can transmit headers in this
-> form (for example):
->
->     Dummy: header\rContent-Length: 0\r\n
->
-> This is a one year old issue, on the old last release of this serie.
-> But we still find some installations. A CVE would maybe help removal
-> of 3.x installations, or at least upgrades to 3.0.7.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Hi Mitre,
+* Bumblebee HP ALM Plugin 4.1.4
+* Cadence vManager Plugin 2.7.1
+* CRX Content Package Deployer Plugin 1.9
+* Google Kubernetes Engine Plugin 0.7.1
+* Google OAuth Credentials Plugin 0.10
+* iceScrum Plugin 1.1.6
+* NeoLoad Plugin 2.2.6
 
-the Debian Security team considers the issue serious enough to release
-a DSA, so we'd also appreciate if this could be assigned a CVE.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-Cheers,
+* Delphix Plugin
+* ElasticBox CI Plugin
+* Extensive Testing Plugin
+* Fortify on Demand Plugin
+* Puppet Enterprise Pipeline Plugin
+* Oracle Cloud Infrastructure Compute Classic Plugin
+* Rundeck Plugin
+* SOASTA CloudTest Plugin
+* Sofy.AI Plugin
+* View26 Test-Reporting Plugin
 
---Seb
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-10-16/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+
+SECURITY-1583 / CVE-2019-10436
+Google OAuth Credentials Plugin allowed the creation of credentials based 
+on the content of files on the Jenkins master through a feature retaining 
+backwards compatibility with earlier plugin releases.
+
+This allowed users with the permission to configure jobs and credentials to 
+read arbitrary files on the Jenkins master by creating a credential 
+referencing an arbitrary file on the Jenkins master.
+
+
+SECURITY-1006 (1) / CVE-2019-10437 (CSRF), CVE-2019-10438 (permission check)
+CRX Content Package Deployer Plugin did not perform permission checks on a 
+method implementing form validation. This allowed users with Overall/Read 
+access to Jenkins to connect to an attacker-specified URL using attacker-
+specified credentials IDs obtained through another method, capturing 
+credentials stored in Jenkins.
+
+Additionally, the form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1006 (2) / CVE-2019-10439
+CRX Content Package Deployer Plugin provides a list of applicable 
+credential IDs to allow users configuring the plugin to select the one to 
+use.
+
+This functionality did not correctly check permissions, allowing any user 
+with Overall/Read permission to get a list of valid credentials IDs. Those 
+could be used as part of an attack to capture the credentials using another 
+vulnerability.
+
+
+SECURITY-1427 / CVE-2019-10440
+NeoLoad Plugin stored credentials unencrypted in its global configuration 
+file org.jenkinsci.plugins.neoload.integration.NeoGlobalConfig.xml and in 
+job config.xml files on the Jenkins master. These credentials could be 
+viewed by users with Extended Read permission or access to the master file 
+system.
+
+
+SECURITY-1484 / CVE-2019-10441 (CSRF), CVE-2019-10442 (permission check)
+iceScrum Plugin did not perform permission checks on a method implementing 
+form validation. This allowed users with Overall/Read access to Jenkins to 
+initiate a connection test to an attacker-specified server with attacker-
+specified access token or username and password.
+
+Additionally, the form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1436 / CVE-2019-10443
+iceScrum Plugin stored credentials unencrypted in job config.xml files on 
+the Jenkins master. These credentials could be viewed by users with 
+Extended Read permission or access to the master file system.
+
+
+SECURITY-1481 / CVE-2019-10444
+Bumblebee HP ALM Plugin unconditionally disabled SSL/TLS certificate 
+validation for connections to the HP ALM service.
+
+
+SECURITY-1607 / CVE-2019-10445
+Missing permission checks in Google Kubernetes Engine Plugin allowed users 
+with Overall/Read permission to obtain limited information about the scope 
+and access of a credential with an attacker-specified credential ID 
+obtained through another method.
+
+
+SECURITY-1615 / CVE-2019-10446
+Cadence vManager Plugin unconditionally disabled SSL/TLS certificate 
+validation for the entire Jenkins master JVM.
+
+
+SECURITY-918 / CVE-2019-10458
+Puppet Enterprise Pipeline Plugin defines a custom whitelist for all 
+scripts protected by the Script Security sandbox.
+
+This custom whitelist allows the use of methods that can be used to bypass 
+Script Security sandbox protection. This results in arbitrary code 
+execution on any Jenkins instance with this plugin installed.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1431 / CVE-2019-10447
+Sofy.AI Plugin stores an API token unencrypted in job config.xml files on 
+the Jenkins master. This token can be viewed by users with Extended Read 
+permission or access to the master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1432 / CVE-2019-10448
+Extensive Testing Plugin stores credentials unencrypted in job config.xml 
+files on the Jenkins master. These credentials can be viewed by users with 
+Extended Read permission or access to the master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1433 / CVE-2019-10449
+Fortify on Demand Plugin stores credentials unencrypted in job config.xml 
+files on the Jenkins master. These credentials can be viewed by users with 
+Extended Read permission or access to the master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1434 / CVE-2019-10450
+ElasticBox CI Plugin stores an access token unencrypted in the global config
+.xml configuration file on the Jenkins master. This token can be viewed by 
+users with Extended Read permission or access to the master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1439 / CVE-2019-10451
+SOASTA CloudTest Plugin stores credentials unencrypted in its global 
+configuration file com.soasta.jenkins.CloudTestServer.xml on the Jenkins 
+master. These credentials could be viewed by users with access to the 
+master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1440 / CVE-2019-10452
+View26 Test-Reporting Plugin stores an access token unencrypted in job 
+config.xml files on the Jenkins master. This token can be viewed by users 
+with Extended Read permission or access to the master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1450 / CVE-2019-10453
+Delphix Plugin stores credentials unencrypted in its global configuration 
+file io.jenkins.plugins.delphix.GlobalConfiguration.xml on the Jenkins 
+master. These credentials could be viewed by users with access to the 
+master file system.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1460 / CVE-2019-10454 (CSRF), CVE-2019-10455 (permission check)
+Rundeck Plugin does not perform permission checks on a method implementing 
+form validation. This allows users with Overall/Read access to Jenkins to 
+initiate a connection test to an attacker-specified server with attacker-
+specified username and password.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+As of publication of this advisory there is no fix.
+
+
+SECURITY-1462 / CVE-2019-10456 (CSRF), CVE-2019-10457 (permission check)
+Oracle Cloud Infrastructure Compute Classic Plugin does not perform 
+permission checks on a method implementing form validation. This allows 
+users with Overall/Read access to Jenkins to initiate a connection test to 
+an attacker-specified server with attacker-specified username and password.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+As of publication of this advisory there is no fix.
 
