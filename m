@@ -1,55 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/02/1
-Message-ID: <CAH9fUpaUQaFbgY1Zh4OvKSL4wdvGAmVt+n4fegibDoAxK5XARw@mail.gmail.com>
-Date: Sat, 2 Mar 2019 18:18:44 +0100
-From: Philippe Mouawad <pmouawad@...che.org>
-To: ApacheJMeter dev list <dev@...ter.apache.org>, JMeter Users List <user@...ter.apache.org>, announce@...che.org,  asf-security <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2019-0187: Apache JMeter Missing client auth for RMI connection when distributed test is used
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/17/2
+Message-ID: <277A46CA87494176B1BBCF5D72624A2A@HAGGIS>
+Date: Thu, 17 Oct 2019 00:46:17 +0200
+From: "Jens Geyer" <jensg@...che.org>
+To: <oss-security@...ts.openwall.com>, <security@...che.org>, "Thrift-Dev" <dev@...ift.apache.org>, <user@...ift.apache.org>
+Subject: CVE-2019-0210: Apache Thrift: out-of-bounds read vulnerability
 Content-Type: text/plain; charset=utf-8
 
-This is a security notification for Apache JMeter:
+CVE-2019-0210: Apache Thrift out-of-bounds read vulnerability
 
-CVE-2019-0187
 Severity: Important
-Vendor: The Apache Software Foundation
-Affected Versions : JMeter 4.0, 5.0
 
-Description [0]:
+Vendor:
+The Apache Software Foundation
 
-Unauthenticated RCE is possible when JMeter is used in distributed mode (-r
-or -R command line options).
-Attacker can establish a RMI connection to a jmeter-server using
-RemoteJMeterEngine and proceed with an attack using untrusted data
-deserialization.
-This only affect tests running in Distributed mode.
-Note that versions before 4.0 are not able to encrypt traffic between the
-nodes, nor authenticate the participating nodes so even for those versions,
-upgrade to JMeter 5.1 is
-also advised.
+Versions Affected:
+Apache Thrift 0.9.3 to 0.12.0
+
+Description:
+A server implemented in Go using TJSONProtocol or TSimpleJSONProtocol may panic when feed with invalid input data.
 
 Mitigation:
-  * Users must use last minor version of Java 8 to Java 11
-  * Users must upgrade to last JMeter 5.1 version and use the default /
-enabled authenticated SSL RMI connection.
-
-Besides, we remind users that in distributed mode, JMeter makes an
-Architectural assumption
-that it is operating on a 'safe' network. i.e. everyone with access to the
-network is considered trusted.
-
-This typically means a dedicated VPN or similar is being used.
-
-Example:
-  * Start JMeter server using either jmeter-server or jmeter -s
-  * Using another keystore file, if you're able to connect to first server
-instance and you don't get "SSLHandshakeException: Received fatal alert:
-bad_certificate", you are vulnerable
+Upgrade to version 0.13.0 
 
 Credit:
-This issue was reported responsibly to the Apache Security Team by Brenden
-Meeder.
+This issue was reported by Alexandre Fiori of Facebook.
 
-- The Apache JMeter Team
-
-[0] https://bz.apache.org/bugzilla/show_bug.cgi?id=62743
+On behalf of the Apache Thrift PMC,
+Jens Geyer
 
