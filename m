@@ -1,86 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/06/2
-Message-ID: <CA+aC4ktDM9-TmhOOKx_C7zSZbKnAJVVe4XSLCGXvaY59q+vBzA@mail.gmail.com>
-Date: Tue, 5 Nov 2019 19:04:00 -0800
-From: Anthony Liguori <anthony@...emonkey.ws>
-To: oss-security@...ts.openwall.com
-Cc: Joe McManus <joe.mcmanus@...onical.com>, Anthony Liguori <aliguori@...zon.com>
-Subject: Re: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/16/2
+Message-ID: <df803446-d727-26db-de21-660690b00710@sba-research.org>
+Date: Wed, 16 Oct 2019 14:08:54 +0200
+From: SBA Research Advisory <advisory@...-research.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [SBA-ADV-20190913-01] CVE-2019-16522: WordPress Plugin - EU Cookie Law (GDPR) <= 3.0.6 and possibly upwards - Stored XSS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 5, 2019 at 10:45 AM Solar Designer <solar@...nwall.com> wrote:
->
-> Hi Joe, hi Anthony -
->
-> I'll over-quote a bit since it's an old thread:
->
-> On Mon, Jul 15, 2019 at 09:28:01PM +0200, Solar Designer wrote:
-> > On Mon, Jul 15, 2019 at 11:54:23AM -0700, Anthony Liguori wrote:
-> > > On Mon, Jul 15, 2019 at 11:47 AM Joe McManus <joe.mcmanus@...onical.com> wrote:
-> > > > > On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
-> > > > > > Hey All - The Ubuntu Security Team would like to sign up for items 3,4
-> > > > > > & 5 from the technical list <
-> > > > > > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> > > > > > >:
-> > > > > >
-> > > > > > 3 - Review and/or test the proposed patches and point out potential issues
-> > > > > >   with them [...]
-> > > > > > 4 - Check if related issues exist in the same piece of software [...]
-> > > > > > 5 - Check if related issues exist in implementations of similar
-> > > > > >   functionality in other software [...]
-> > [...]
-> > > > Yes, this will be taken care of by Ubuntu Security Team members who
-> > > > are already on the list, however if after some time we need to cycle
-> > > > someone in or out I might come asking. I know you don't want to add
-> > > > anyone so we will do our best to prevent this from happening.
-> > > >
-> > > > For 3 we can be either primary or backup, just let me know your
-> > > > preference and we'll do the work.
-> > >
-> > > I would be happy for y'all to be primary.  We don't ship as many
-> > > packages as Ubuntu does so there will be more things that you are
-> > > likely to test compared to what we do.
-> >
-> > OK, I've just listed Ubuntu as primary for 3, 4, 5.  Amazon is now
-> > backup for 3.
-> >
-> > Please note that these items include "and inform the list of the work
-> > done even if no issues were encountered" (item 3), "and inform the list
-> > either way" (items 4, 5), so we'll expect replies to the list as per
-> > these items for each and every issue reported to there.
->
-> I am not seeing this "inform the list either way" stuff actually
-> happening.  Without it, no other distro has a way to know the work is
-> actually being done.  Once I had pointed this need out a while before,
-> Amazon briefly started making those mandatory postings for task 3, until
-> they were replaced by Ubuntu as primary.  In fact, given the lack of
-> such postings by Ubuntu, I would still expect Amazon to take over for
-> task 3, which they're the backup for, and it looks like they did that
-> exactly once:
->
-> As far as I can see, the last time Amazon handled task 3 was on July 25,
-> which is 10 days after Ubuntu became primary for that task.  This was
-> much appreciated.  Unfortunately, as far as I can see, neither distro
-> (visibly) handled these tasks ever since, with one exception:
->
-> Ubuntu did point out that a patch didn't have a corresponding testsuite
-> change, and thus tests failed, in a posting on October 10.  So hopefully
-> they were doing the work, except for the "inform the list either way"
-> part - but that's an important part!
->
-> It is possible that I missed or don't recall some other occasions, but I
-> think I got the overall picture right.
->
-> Joe, Anthony - can you please have your distros start handling these
-> tasks fully, as described?
+# WordPress Plugin - EU Cookie Law (GDPR) - Stored XSS #
 
-Ack.
+Link: https://github.com/sbaresearch/advisories/tree/public/2019/SBA-ADV-20190913-01_WordPress_Plugin_EU_Cookie_Law
 
-Regards,
+## Vulnerability Overview ##
 
-Anthony Liguori
+The eu-cookie-law plugin through 3.0.6 for WordPress (aka EU Cookie Law (GDPR))
+is susceptible to Stored XSS due to improper encoding of several configuration
+options in the admin area and the displayed cookie consent message.
+This affects Font Color, Background Color, and the Disable Cookie text.
+An attacker with high privileges can attack other users.
 
+* **Identifier**            : SBA-ADV-20190913-01
+* **Type of Vulnerability** : Cross-site Scripting
+* **Software/Product Name** : [EU Cookie Law (GDPR)](https://wordpress.org/plugins/eu-cookie-law/)
+* **Vendor**                : [Alex Moss, Marco Milesi](https://wordpress.org/plugins/eu-cookie-law/)
+* **Affected Versions**     : <= 3.0.6 and possibly upwards
+* **Fixed in Version**      : -
+* **CVE ID**                : CVE-2019-16522
+* **CVSSv3 Vector**         : AV:N/AC:L/PR:H/UI:R/S:U/C:L/I:L/A:N
+* **CVSSv3 Base Score**     : 3.5 (Low)
+
+## Vendor Description ##
+
+> EU Cookie Law is a light, elegant and powerful solution to comply european cookie law and GDPR, with popup and options to lock scripts before acceptance.
 >
-> Thanks in advance,
+> Various customizations included to perfectly fit your website and keep cookies under control (before and after the consent).
 >
-> Alexander
+> Simply install the plugin and follow the instructions on the Settings page.
+
+Active Installations: 100,000+
+
+Source: <https://wordpress.org/plugins/eu-cookie-law/>
+
+## Impact ##
+
+By exploiting the documented vulnerability, an authenticated attacker with high
+privileges (admin) can execute JavaScript code in a victim's browser.
+This can be misused, e.g for phishing attacks by displaying a fake
+login form and sending the victim's credentials to the attacker.
+Furthermore malicious actions can be performed in the context of an authenticated
+user. The impact depends on the level of access of the attacked user.
+
+## Vulnerability Description ##
+
+In the configuration area `/wp-admin/options-general.php?page=peadig_eucookie`
+an admin can set several options for the plugin. Most of them are correctly
+escaped before inserted in the HTML page. However three values of settings can
+be exploited to insert arbitrary JavaScript and HTML.
+Those are:
+
+* Font Color
+* Background Color
+* "Disable Cookie" Text
+
+The value of "Fontcolor" will be inserted on every page where the cookie consent message
+is shown. The other two are by default only exploitable in the admin area.
+
+## Proof of Concept ##
+
+This example shows how an attacker can exploit this vulnerability through the
+value of "Font Color": By setting the value `#FFFFFF"><script>alert(1)</script>`,
+an attacker can break out of the HTML attribute and insert a `script` tag containing
+JavaScript. In this example a simple alert-popup-box will be shown.
+
+So when the attacker sends the following HTTP-Request:
+
+```http
+POST /wp-admin/options.php HTTP/1.1
+[...]
+
+[...]peadig_eucookie%5Bfontcolor%5D=%23FFFFFF%22%3E%3Cscript%3Ealert%281%29%3C/script%3E[...]
+```
+
+In the admin area, the resulting HTML page looks like the following (shortened for readability):
+
+```html
+[...]
+<input id="fontcolor" type="text" name="peadig_eucookie[fontcolor]" value="#FFFFFF">
+    <script>alert(1)</script>
+    " class="color-field" data-default-color="#ffffff"/>
+[...]
+```
+
+On the page with the cookie message the payload will be inserted multiple times.
+The resulting HTML looks like the following (shortened for readability):
+
+```html
+[...]
+<!-- Eu cookie Law 3.0.6 -->
+<div class="pea_cook_wrapper pea_cook_bottomcenter" style="color:#FFFFFF">
+    <script>alert(1)</script>
+    ;background:rgb(0,0,0);background: rgba(0,0,0,0.85);">
+[...]
+```
+
+## Recommended Countermeasures ##
+
+We recommend to escape the values using the `esc_attr`-[function][1] provided by WordPress.
+
+[1]: https://developer.wordpress.org/themes/theme-security/data-sanitization-escaping/#escaping-securing-output
+
+## Timeline ##
+
+* `2019-09-04` Identified the vulnerability
+* `2019-09-06` Contacted the authors
+* `2019-09-06` Response by authors about disclosure contact
+* `2019-09-09` Disclosed vulnerability to the authors
+* `2019-09-20` CVE assigned
+* `2019-09-20` Asked authors again for fix
+* `2019-10-16` Public disclosure, because authors did not respond
+
+## References ##
+
+* <https://wordpress.org/plugins/eu-cookie-law/>
+* <https://wordpress.org/plugins/eu-cookie-law/#developers>
+
+## Credits ##
+
+* Tobias Fink ([SBA Research](https://www.sba-research.org/))
+
+Download attachment "0xFBB8862F58F775B2.asc" of type "application/pgp-keys" (3542 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
