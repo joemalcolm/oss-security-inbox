@@ -1,167 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/30/2
-Message-ID: <000f01d516d6$af59d490$0e0d7db0$@com.cn>
-Date: Thu, 30 May 2019 18:58:59 +0800
-From: "huangwen" <huangwen@...ustech.com.cn>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE-2019-3846：Marvell Wifi Driver mwifiex mwifiex_update_bss_desc_with_ie Heap Overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/17/3
+Message-ID: <87d0evjd41.fsf@gnu.org>
+Date: Thu, 17 Oct 2019 23:06:38 +0200
+From: Ludovic Courtès <ludo@....org>
+To: oss-security@...ts.openwall.com
+Cc: Michael Orlitzky <michael@...itzky.com>
+Subject: CVE-2019-18192: Insecure permissions on Guix profile directory
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-There is a heap overflow in marvell wifi driver in Linux kernel allows
-remote attackers to cause a denial of service(system crash) or possibly
-execute arbitrary code.
+GNU Guix is a transactional package manager and associated GNU/Linux
+distribution.
 
- 
+Similar to what Michael Orlitzky reported for Nix (CVE-2019-17365),
+the profile directory in GNU Guix would be world-writable, allowing a
+malicious user to populate the profile of a user that has never logged
+in on the machine.
 
-Description
+This issue has been assigned CVE-2019-18192 and affects all versions of
+Guix up to 1.0.1 included.  The fix is similar to that written for Nix
+by Eelco Dolstra (the build daemon of Guix derives from that of Nix).
+It can be deployed via ‘guix pull’ as specified in the announcement below.
 
-==========
+Announcement:
+https://guix.gnu.org/blog/2019/insecure-permissions-on-profile-directory-cve-2019-18192/
 
-The problem is inside mwifiex_update_bss_desc_with_ie function in
-drivers/net/wireless/marvell/mwifiex/scan.c. 
+Issue:
+https://issues.guix.gnu.org/issue/37744
 
-When STA connects to AP, mwifiex_update_bss_desc_with_ie function will be
-called to update bss descriptor.In mwifiex_update_bss_desc_with_ie function,
-the IEs of beacon packet is parsed. When processing WLAN_EID_SUPP_RATES
-element,it does not check the length of rates data before calling memcpy,the
-dst buffer bss_entry->data_rates is a array with size
-MWIFIEX_SUPPORTED_RATES(14). 
+Commit:
+https://git.savannah.gnu.org/cgit/guix.git/commit/?id=81c580c8664bfeeb767e2c47ea343004e88223c7
 
-Remote attacker can build a fakeAP sending malicous beacon packet with long
-WLAN_EID_SUPP_RATES element(element_len>14)，when victim STA connects to the
-fakeAP, will trigger the heap buffer overflow.
+Ludo’.
 
- 
-
-int mwifiex_update_bss_desc_with_ie(struct mwifiex_adapter *adapter,
-
-                                       struct mwifiex_bssdescriptor
-*bss_entry)
-
-{
-
-.....
-
-         /* Process variable IE */
-
-         while (bytes_left >= 2) {
-
-                  element_id = *current_ptr;
-
-                  element_len = *(current_ptr + 1);
-
-                  total_ie_len = element_len + sizeof(struct
-ieee_types_header);
-
- 
-
-                  if (bytes_left < total_ie_len) {
-
-                          mwifiex_dbg(adapter, ERROR,
-
-                                       "err: InterpretIE: in processing\t"
-
-                                       "IE, bytes left < IE length\n");
-
-                          return -1;
-
-                  }
-
-                  switch (element_id) {
-
-                  case WLAN_EID_SSID:
-
-                          bss_entry->ssid.ssid_len = element_len;
-
-                          memcpy(bss_entry->ssid.ssid, (current_ptr + 2),   
-
-                                 element_len);
-
-                          mwifiex_dbg(adapter, INFO,
-
-                                       "info: InterpretIE: ssid: %-32s\n",
-
-                                       bss_entry->ssid.ssid);
-
-                          break;
-
- 
-
-                  case WLAN_EID_SUPP_RATES:
-
-                          memcpy(bss_entry->data_rates, current_ptr + 2,
-//overflow!!!!!!!!!!!
-
-                                 element_len);
-
-                          memcpy(bss_entry->supported_rates, current_ptr +
-2,
-
-                                 element_len);
-
-                          rate_size = element_len;
-
-                          found_data_rate_ie = true;
-
-                          break;
-
- 
-
-                  case WLAN_EID_FH_PARAMS:
-
-                          fh_param_set =
-
-                                   (struct ieee_types_fh_param_set *)
-current_ptr;
-
-                          memcpy(&bss_entry->phy_param_set.fh_param_set,
-
-                                 fh_param_set,
-
-                                 sizeof(struct ieee_types_fh_param_set)); 
-
-                          break;
-
-                  ......
-
-         }
-
-}
-
- 
-
- 
-
-Credit
-
-==========
-
-This issue was discovered by huangwen of ADLab of Venustech
-
- 
-
- 
-
-Patch
-
-=====
-
-https://lore.kernel.org/linux-wireless/20190529125220.17066-1-tiwai@suse.de/
-
-https://lore.kernel.org/linux-wireless/20190529125220.17066-2-tiwai@suse.de/
-
-https://lore.kernel.org/linux-wireless/20190529125220.17066-3-tiwai@suse.de/
-
- 
-
- 
-
- 
-
- 
-
- 
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
