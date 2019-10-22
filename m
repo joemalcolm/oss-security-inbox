@@ -1,4 +1,9 @@
-Received: (qmail 16013 invoked by uid 550); 4 Aug 2025 16:10:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["817" "Tuesday" "22" "October" "2019" "23:00:45" "+0200" "Dominik Stadler" "centic@apache.org" "<CABdJj56vHPvGo=nqZPYb1tPGVa_cSOwgBn6-TFj3FCE6KQXSEw@mail.gmail.com>" "29" "[oss-security] CVE-2019-12415 - XML External Entity (XXE) Processing in Apache POI" nil nil nil "10" "2019102221:00:45" "[oss-security] CVE-2019-12415 - XML External Entity (XXE) Processing in Apache POI" (number mark "U       centic@apach Oct 22   29/817   " thread-indent "\"[oss-security] CVE-2019-12415 - XML External Entity (XXE) Processing in Apache POI\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-12415 - XML External Entity (XXE) Processing in Apache POI" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5571 invoked by uid 550); 23 Oct 2019 09:35:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,88 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19971 invoked from network); 4 Aug 2025 09:22:27 -0000
-Date: Mon, 4 Aug 2025 11:22:17 +0200
-From: Vincent Lefevre <vincent@vinc17.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20250804092217.GA962280@qaa.vinc17.org>
-Mail-Followup-To: oss-security@lists.openwall.com
+Received: (qmail 20031 invoked from network); 22 Oct 2019 21:01:09 -0000
+X-Gm-Message-State: APjAAAWjpJhT6CVCStgCh+TRIiQoUZkSUokUAVUHwwlgqeIRWZ9puswF
+	91ZGdhH6IGhOaK9croEjGBc0oZpI7aHQERY+RYo=
+X-Google-Smtp-Source: APXvYqyTlpM1nXH14NejarHatV2rZYfgiSwKe3ibPIiEBWOu0oT98RshqV9zCFIajXNARAsWOl+woHLMkKv/G3htOag=
+X-Received: by 2002:a05:620a:1211:: with SMTP id u17mr5049027qkj.310.1571778056707;
+ Tue, 22 Oct 2019 14:00:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-Mailer-Info: https://www.vinc17.net/mutt/
-User-Agent: Mutt/2.2.13+86 (bb2064ae) vl-169878 (2025-02-08)
-Subject: [oss-security] StarDict sends the user's X11 selection to the network
+From: Dominik Stadler <centic@apache.org>
+Date: Tue, 22 Oct 2019 23:00:45 +0200
+X-Gmail-Original-Message-ID: <CABdJj56vHPvGo=nqZPYb1tPGVa_cSOwgBn6-TFj3FCE6KQXSEw@mail.gmail.com>
+Message-ID: <CABdJj56vHPvGo=nqZPYb1tPGVa_cSOwgBn6-TFj3FCE6KQXSEw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000bc63af059586187c"
+Subject: [oss-security] CVE-2019-12415 - XML External Entity (XXE) Processing in Apache POI
 
-With some plugins, StarDict sends the user's X11 selection from
-other applications to some servers: dict.youdao.com and dict.cn
-(both Chinese servers).
+--000000000000bc63af059586187c
+Content-Type: text/plain; charset="UTF-8"
 
-This happens *by default* under Debian testing (future Debian 13)
-at least, without any warning. These plugins are installed and
-enabled automatically when the user installs stardict / stardict-gtk
-(stardict-gtk has a Recommends on stardict-plugin), which is just
-advertised as being an international dictionary lookup program.
-But this would still be an issue if the user had installed the
-stardict-plugin package explicitly (which contains many plugins),
-as such a feature is uncommon and unexpected.
+Severity: Important
 
-To reproduce under Debian / X11[*], just run the StarDict application,
-and select some word in some other application. StarDict immediately
-scans the selection and sends it to some servers.
+Vendor:
+The Apache Software Foundation
 
-[*] According to a post in the debian-user list, there is no such
-issue in Wayland:
+Versions Affected:
+Apache POI up to version 4.1.0
 
-  https://lists.debian.org/debian-user/2025/08/msg00076.html
+Description:
+When using the tool XSSFExportToXml to convert user-provided Microsoft
+Excel documents, a specially crafted document can allow an attacker to
+read files from the local filesystem or from internal network resources
+via XML External Entity (XXE) Processing.
 
-For instance, when I select "relation" in some application, an strace
-on stardict shows:
+Mitigation:
+Apache POI 4.1.0 and before: users who do not use the tool XSSFExportToXml
+are not affected. affected users are advised to update to Apache POI 4.1.1
+which fixes this vulnerability.
 
-911565 write(16, "GET HTTP://dict.youdao.com/fsearch?q=relation HTTP/1.0\r\nUser-Agent: Mozilla/4.0(compatible;MSIE 5.00;Windows 98)\r\nAccept: */*\r\nHost: dict.youdao.com\r\nConnection: close\r\n\r\n", 171) = 171
+Credit:
+This issue was discovered by Artem Smotrakov from SAP
 
-and
+References:
+https://en.wikipedia.org/wiki/XML_external_entity_attack
 
-911565 write(17, "GET HTTP://dict.cn/ws.php?utf8=true&q=relation HTTP/1.0\r\nUser-Agent: Mozilla/4.0(compatible;MSIE 5.00;Windows 98)\r\nAccept: */*\r\nHost: dict.cn\r\nConnection: close\r\n\r\n", 164) = 164
-
-Note also that this is transmitted via HTTP only, thus not encrypted
-on the network. So someone closer to the user might also be able to
-see the data.
-
-This is a major issue as selections are used to copy data between
-applications, not with the purpose to do a dictionary lookup, and
-such data may be confidential (could be passwords, for instance).
-
-I reported this bug in the Debian BTS:
-
-  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1110370
-
-but the maintainer of the package regards this "feature" as fine.
-
-A similar behavior ("stardict broadcasts clipboard context over network")
-had already been reported in the past and got CVE-2009-2260:
-
-  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=534731
-  https://security-tracker.debian.org/tracker/CVE-2009-2260
-
-It as fixed at that time by disabling netdict at build time, but
-has apparently reappeared.
-
-This was mentioned at
-
-  https://lists.debian.org/debian-user/2025/08/msg00078.html
-
-Here, this is even worse, because this occurs on the user's selection
-(the X11 PRIMARY selection?), i.e. the user does not even have to
-copy the selection to the clipboard (or was bug 534731 actually also
-about the selection, though not mentioned in this bug report?).
-
-I don't know whether other distributions are also concerned by default
-and/or have sufficient warnings.
-
--- 
-Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
+--000000000000bc63af059586187c--
