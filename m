@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/20/3
-Message-ID: <CAMufup7+V+OQ+pEVYgdcXGDTXWa+DCodQOyRbU0WFvbxY9DnjA@mail.gmail.com>
-Date: Fri, 20 Sep 2019 15:28:49 +0200
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/23/1
+Message-ID: <CABdJj56vHPvGo=nqZPYb1tPGVa_cSOwgBn6-TFj3FCE6KQXSEw@mail.gmail.com>
+Date: Tue, 22 Oct 2019 23:00:45 +0200
+From: Dominik Stadler <centic@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-10089] Apache JSPWiki Cross-site scripting vulnerability on WYSIWYG editor
+Subject: CVE-2019-12415 - XML External Entity (XXE) Processing in Apache POI
 Content-Type: text/plain; charset=utf-8
 
- Severity
-Medium
+Severity: Important
 
-Vendor
+Vendor:
 The Apache Software Foundation
 
-Versions Affected
-Apache JSPWiki up to 2.11.0.M4
+Versions Affected:
+Apache POI up to version 4.1.0
 
-Description
-A carefully crafted plugin link invocation could trigger an XSS
-vulnerability on Apache JSPWiki, related to the WYSIWYG editor, which could
-allow the attacker to execute javascript in the victim's browser and get
-some sensitive information about the victim.
+Description:
+When using the tool XSSFExportToXml to convert user-provided Microsoft
+Excel documents, a specially crafted document can allow an attacker to
+read files from the local filesystem or from internal network resources
+via XML External Entity (XXE) Processing.
 
-Mitigation
-Apache JSPWiki users should upgrade to 2.11.0.M5 or later.
+Mitigation:
+Apache POI 4.1.0 and before: users who do not use the tool XSSFExportToXml
+are not affected. affected users are advised to update to Apache POI 4.1.1
+which fixes this vulnerability.
 
-Credit
-This issue was discovered by Jegatheesh A, from ZOHO-CRM Security team.
+Credit:
+This issue was discovered by Artem Smotrakov from SAP
 
-ref: https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-10089
+References:
+https://en.wikipedia.org/wiki/XML_external_entity_attack
 
