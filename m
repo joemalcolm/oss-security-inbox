@@ -1,70 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/27/1
-Message-ID: <87h82p12eh.fsf@mpe.ellerman.id.au>
-Date: Thu, 28 Nov 2019 07:37:42 +1100
-From: Michael Ellerman <mpe@...erman.id.au>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-18660: Linux kernel: powerpc: missing Spectre-RSB mitigation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/22/1
+Message-ID: <CAGJbjKasPtcqfRSrsyg=Ae_oM6xknf9V4qyUoFW6aTsL3rLkaw@mail.gmail.com>
+Date: Tue, 22 Oct 2019 09:15:06 -0400
+From: Mike Dalessio <mike.dalessio@...il.com>
+To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com, loofah-talk@...glegroups.com
+Subject: [CVE-2019-15587] Loofah XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel for powerpc fails to activate the mitigation for Spectre-RSB
-(Return Stack Buffer, aka. ret2spec) on context switch, on CPUs prior to Power9
-DD2.3.
+Hello all,
 
-This allows a process to poison the RSB (called Link Stack on Power CPUs) and
-possibly misdirect speculative execution of another process. If the victim
-process can be induced to execute a leak gadget then it may be possible to
-extract information from the victim via a side channel.
+A *medium* severity vulnerability has been identified and patched in Loofah
+v2.3.1, which is a dependency of `rails-html-sanitizer`. This issue has
+been assigned CVE-2019-15587.
 
-Mitigation for Spectre-RSB was introduced in commit:
-  ee13cb249fab (“powerpc/64s: Add support for software count cache flush”)
+The public notice can be found here:
 
-Which was originally merged in v4.19.
+  https://github.com/flavorjones/loofah/issues/171
 
-However that commit incorrectly tied the code to flush the link stack to a
-firmware feature which is only enabled on newer CPUs (P9N DD2.3 or later), when
-it should have been applied to all CPUs that are affected by Spectre v2.
+To save you a click, I've reproduced the contents of the announcement here.
 
-The fix is to enable the link stack flush on all CPUs that have any mitigation
-of Spectre v2 in userspace enabled.
-
-This issue is assigned CVE-2019-18660.
-
-CVSS 3.1 Score: 5.6
-AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:N
-
-This issue was discovered by Anthony Steinhauser of Google's Safeside Project.
-
-Additionally we have determined that when returning from a guest, there is the
-possibility that poisoned values on the link stack could be used by function
-returns in the host kernel. To mitigate this we have added a flush of the link
-stack in the guest exit path.
-
-The fix is in mainline as:
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=39e72bf96f5847ba87cc5bd7a3ce0fed813dc9ad
-
-And the KVM fix is:
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=af2e8c68b9c5403f77096969c516f742f5bb29e0
-
-Both will be released in v5.5-rc1.
-
-There's a test case attached, extracted from Google's safeside project. It can
-be built with:
-  $ g++ -O2 -Wall -std=c++11 -m64 -o ret2spec_recursion_ca ret2spec_recursion_ca.cc
-
-Output on an unpatched system:
-  $ ./ret2spec_recursion_ca
-  Leaking the string: It's a s3kr3t!!!
-  16 bytes successfully leaked
-  FAIL! Was able to leak the secret
-
-vs patched:
-  $ ./ret2spec_recursion_ca
-  Leaking the string: ????????????????
-  0 bytes successfully leaked
-  PASS! Unable to leak the secret
-
-cheers
+---
 
 
-View attachment "ret2spec_recursion_ca.cc" of type "text/plain" (15243 bytes)
+*# CVE-2019-15587 - Loofah XSS Vulnerability*
+This issue has been created for public disclosure of an XSS vulnerability
+that was responsibly reported by https://hackerone.com/vxhex
+
+I'd like to thank [HackerOne](https://hackerone.com/loofah) for providing a
+secure, responsible mechanism for reporting, and for providing their
+fantastic service to the Loofah maintainers.
+
+
+*## Severity*
+Loofah maintainers have evaluated this as [Medium (CVSS3 6.4)](
+https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:L
+).
+
+
+
+*## Description*
+In the Loofah gem, through v2.3.0, unsanitized JavaScript may occur in
+sanitized output when a crafted SVG element is republished.
+
+
+
+*## Affected Versions*
+Loofah < v2.3.0
+
+
+
+*## Mitigation*
+Upgrade to Loofah v2.3.1 or later.
+
