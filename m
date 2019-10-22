@@ -1,49 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/12/4
-Message-ID: <20190212153112.xntebicjokknhqcy@yavin>
-Date: Wed, 13 Feb 2019 02:31:12 +1100
-From: Aleksa Sarai <cyphar@...har.com>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com, Florian Weimer <fweimer@...hat.com>, dev@...ncontainers.org, Christian Brauner <christian.brauner@...ntu.com>
-Subject: Re: CVE-2019-5736: runc container breakout (all versions)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/22/2
+Message-ID: <CAGJbjKaXJTFspSssmXqo8YNkeMddVuHYT3MuBHRozHZGXvO4Bg@mail.gmail.com>
+Date: Tue, 22 Oct 2019 09:24:20 -0400
+From: Mike Dalessio <mike.dalessio@...il.com>
+To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com, loofah-talk@...glegroups.com
+Subject: Re: [CVE-2019-15587] Loofah XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 2019-02-12, Steve Grubb <sgrubb@...hat.com> wrote:
-> On Tuesday, February 12, 2019 8:55:18 AM EST Florian Weimer wrote:
-> > * Aleksa Sarai:
-> > > +	memfd = memfd_create(MEMFD_COMMENT, MFD_CLOEXEC|MFD_ALLOW_SEALING);
-> > > +	if (memfd < 0)
-> > > +		goto err_binfd;
-> > 
-> > Is it really necessary to use a memfd_create here?  Do you really need
-> > sealing?  It's a bit odd to add a new system call dependency in a
-> > security update.
-> 
-> That's along the lines of what I was thinking also. This looks like more of a 
-> workaround than a root cause fix. Without seeing the exploit or a full 
-> discussion of the theory of operation, we really can't pinpoint where the 
-> issue is. Was it because of CAP_DAC_OVERRIDE? Is there a missing permission 
-> check crossing a trust boundary? Was excessive permissions requested in a 
-> syscall? Given the patch, we can sort of see what the issue is but not the 
-> exact issue.
+Apologies - the "Affected Versions" section should have read *Loofah <=
+v2.3.0*
 
-It's not because of CAP_DAC_OVERRIDE. It's just regular DAC. As for it
-not being a root cause fix, I disagree (it protects against a variety of
-concerning attacks that aren't related to this CVE). Obviously if
-everyone used correctly-configured user namespaces then this wouldn't be
-a problem -- but here were are.
+On Tue, Oct 22, 2019 at 9:15 AM Mike Dalessio <mike.dalessio@...il.com>
+wrote:
 
-But if you would like an even better fix there is the O_THISROOT
-patchset[1] which I'm going to re-send tomorrow and would help fix this
-and could help fix a wide variety of other container runtime issues that
-have been bothering me for a couple of years. :P
+> Hello all,
+>
+> A *medium* severity vulnerability has been identified and patched in
+> Loofah v2.3.1, which is a dependency of `rails-html-sanitizer`. This issue
+> has been assigned CVE-2019-15587.
+>
+> The public notice can be found here:
+>
+>   https://github.com/flavorjones/loofah/issues/171
+>
+> To save you a click, I've reproduced the contents of the announcement here.
+>
+> ---
+>
+>
+> *# CVE-2019-15587 - Loofah XSS Vulnerability*
+> This issue has been created for public disclosure of an XSS vulnerability
+> that was responsibly reported by https://hackerone.com/vxhex
+>
+> I'd like to thank [HackerOne](https://hackerone.com/loofah) for providing
+> a secure, responsible mechanism for reporting, and for providing their
+> fantastic service to the Loofah maintainers.
+>
+>
+> *## Severity*
+> Loofah maintainers have evaluated this as [Medium (CVSS3 6.4)](
+> https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:L
+> ).
+>
+>
+>
+> *## Description*
+> In the Loofah gem, through v2.3.0, unsanitized JavaScript may occur in
+> sanitized output when a crafted SVG element is republished.
+>
+>
+>
+> *## Affected Versions*
+> Loofah < v2.3.0
+>
+>
+>
+> *## Mitigation*
+> Upgrade to Loofah v2.3.1 or later.
+>
+>
+>
 
-[1]: https://lwn.net/Articles/767547/
-
--- 
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
