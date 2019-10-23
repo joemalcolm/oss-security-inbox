@@ -1,58 +1,195 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/21/3
-Message-ID: <20190221143806.GA12473@foreshadow.home.puiterwijk.org>
-Date: Thu, 21 Feb 2019 15:38:06 +0100
-From: Patrick Uiterwijk <puiterwijk@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/23/2
+Message-Id: <97B9396D-7627-4EC0-9D42-C84A908DED08@beckweb.net>
+Date: Wed, 23 Oct 2019 14:41:17 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1002161 - Koji - SQL injection in multiple remote calls
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Description
-===========
+* Bitbucket OAuth Plugin 0.10
+* Dynatrace Application Monitoring Plugin 2.1.4
+* Mattermost Notification Plugin 2.7.1
+* Zulip Plugin 1.1.1
 
-SQL injection vulnerabilities have been found in multiple call handlers in Koji’s hub code. An anonymous attacker can use these vulnerabilities to issue arbitrary database commands. 
+Additionally, we announce unresolved security issues in the following
+plugins:
+
+* 360 FireLine Plugin
+* build-metrics Plugin
+* Deploy WebLogic Plugin
+* Dynatrace Application Monitoring Plugin
+* ElasticBox Jenkins Kubernetes CI/CD Plugin
+* Global Post Script Plugin
+* Libvirt Slaves Plugin
+* Sonar Gerrit Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-10-23/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1628 / CVE-2019-10459
+Mattermost allows the definition of incoming (from the perspective of the
+service) webhook URLs. These contain what is effectively a secret token as
+part of the URL.
+
+Mattermost Notification Plugin stored these webhook URLs as part of its
+global configuration file jenkins.plugins.mattermost.MattermostNotifier.xml
+and job config.xml files on the Jenkins master. These URLs could be viewed
+by users with Extended Read permission (in the case of job config.xml files)
+or access to the master file system.
 
 
-Affected versions
-=================
+SECURITY-1546 / CVE-2019-10460
+Bitbucket OAuth Plugin stored a credential unencrypted in the global
+config.xml configuration file on the Jenkins master. This credential could
+be viewed by users with access to the master file system.
 
-All versions of Koji are vulnerable.
-
-
-Patched versions
-================
-
-Koji versions 1.11.1, 1.12.2, 1.13.2, 1.14.2, 1.15.2, and 1.16.2 are available on the website, and
-all include patches to solve this problem.
+Bitbucket OAuth Plugin now stores this credential encrypted.
 
 
-Credits
-=======
+SECURITY-1621 / CVE-2019-10476
+Zulip Plugin stored a credential unencrypted in its global configuration
+file jenkins.plugins.zulip.ZulipNotifier.xml, as well as in the legacy
+configuration file hudson.plugins.humbug.HumbugNotifier.xml on the Jenkins
+master. This credential could be viewed by users with access to the master
+file system.
 
-This issue was discovered by Mike McLean and Patrick Uiterwijk of Red Hat.
+
+SECURITY-1477 / CVE-2019-10461
+Dynatrace Application Monitoring Plugin stored a credential unencrypted in
+its global configuration file
+com.dynatrace.jenkins.dashboard.TAGlobalConfiguration.xml on the Jenkins
+master. This credential could be viewed by users with access to the master
+file system.
 
 
-References
-==========
+SECURITY-1483 (1) / CVE-2019-10462
+Dynatrace Application Monitoring Plugin did not require POST requests on a
+method implementing form validation. This CSRF vulnerability allowed
+attackers to initiate a connection test to an attacker-specified server
+with attacker-specified username and password.
 
-https://docs.pagure.org/koji/CVE-2018-1002161/
 
------BEGIN PGP SIGNATURE-----
+SECURITY-1483 (2) / CVE-2019-10463
+Dynatrace Application Monitoring Plugin does not perform permission checks
+on a method implementing form validation. This allows users with
+Overall/Read access to Jenkins to initiate a connection test to an
+attacker-specified server with attacker-specified username and password.
 
-iQIcBAEBCgAGBQJcbrfOAAoJEIZXmA2atR5Qe4QP/1iLTjcM1H6i9WUFmhHKxGNY
-UJKCX+LDwhkVX+mHQuogQg8iouoyMnUb0jzpwRFg5N1Y8Qo18GJltdcqrPTg5Lu9
-oy8ShQENJCKwFz+LgWoggteFtcduKj1yJMUtlpW4iOeGK7sf6MXDMzX9egyJbWiZ
-4xiJaeYlU585TEMQROPL+LmypRBIfYalalVO6RofufwkJ/hS/cTLJ4Fsvt+6uoq2
-xUoiPGQfkMuBZfzxCDDAXb2AA614CjjOArwBzE6AUE6JMwR+6XgG6gP5LgLsLSnp
-Ce7y7JV7D01z3YvbJ3sa+880LMQtPw5lesIJc1Aj6kEehSKj01/QdH+H3hNmr+3z
-5zHzx1koMq5+E/SHvAxQxA7azS9KF9j35cgyIygrS0P1PnjymjN59gxol2xOZqxU
-eiVc4X/vDpRf+3oNGDn/+XdHDWMR0k2w08SMBnAX7dOq0oaZ8oll2jmV1QPeXttv
-s4H8HiKtqmZse5QS2Yt6+1QoKcwD3qLVcRlsBNYoIzA4nTCVc78QDxsUVqoFe6Al
-8EXd1rac7kIJjM5kauVy+DBbUrgFYH3O77VwnVB/qwYjStWRV60vfkecBpJVYN/A
-9JgGpXR3zR5LBLRQIsHxQEJfgtOKccBJrrJGq7nLCV/G7hYql2iTyiqPEF+Lr0bF
-4HxEdKZcQJ6KHgePsL9q
-=rS+E
------END PGP SIGNATURE-----
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-820 / CVE-2019-10464 (CSRF), CVE-2019-10465 (permission check)
+Deploy WebLogic Plugin does not perform permission checks on a method
+implementing form validation. This allows users with Overall/Read access to
+Jenkins to send an HTTP HEAD request to a user-specified URL, or confirm
+the existence of any file or directory on the Jenkins master.
+
+Additionally, the form validation method does not require POST requests,
+resulting in a CSRF vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-822 / CVE-2019-10466
+360 FireLine Plugin accepts XML for part of its configuration. It does not
+configure the XML parser to prevent XML external entity (XXE) attacks.
+
+A form validation method that accepts XML does not perform permission
+checks. This allows users with Overall/Read permission to have Jenkins
+parse a crafted XML file that uses external entities for extraction of
+secrets from the Jenkins agent, server-side request forgery, or
+denial-of-service attacks.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1003 / CVE-2019-10467
+Sonar Gerrit Plugin stores a credential unencrypted in job config.xml files
+on the Jenkins master if the 'Override Credentials' option is used. This
+credential can be viewed by users with Extended Read permission or access
+to the master file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1005 (1) / CVE-2019-10468 (CSRF), CVE-2019-10469 (permission check)
+ElasticBox Jenkins Kubernetes CI/CD Plugin does not perform permission
+checks on a method implementing form validation. This allows users with
+Overall/Read access to Jenkins to connect to an attacker-specified URL
+using attacker-specified credentials IDs obtained through another method,
+capturing credentials stored in Jenkins.
+
+Additionally, the form validation method does not require POST requests,
+resulting in a CSRF vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1005 (2) / CVE-2019-10470
+ElasticBox Jenkins Kubernetes CI/CD Plugin provides a list of applicable
+credential IDs to allow users configuring the plugin to select the one to
+use.
+
+This functionality does not correctly check permissions, allowing any user
+with Overall/Read permission to get a list of valid credentials IDs. Those
+can be used as part of an attack to capture the credentials using another
+vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1014 (1) / CVE-2019-10471 (CSRF), CVE-2019-10472 (permission check)
+Libvirt Slaves Plugin does not perform permission checks on a method
+implementing form validation. This allows users with Overall/Read access to
+Jenkins to connect to an attacker-specified SSH server using
+attacker-specified credentials IDs obtained through another method,
+capturing credentials stored in Jenkins.
+
+Additionally, the form validation method does not require POST requests,
+resulting in a CSRF vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1014 (2) / CVE-2019-10473
+Libvirt Slaves Plugin provides a list of applicable credential IDs to allow
+users configuring the plugin to select the one to use.
+
+This functionality does not correctly check permissions, allowing any user
+with Overall/Read permission to get a list of valid credentials IDs. Those
+can be used as part of an attack to capture the credentials using another
+vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1073 / CVE-2019-10474
+Global Post Script Plugin does not perform permission checks on a method
+implementing form validation. This allows users with Overall/Read
+permission to list the files contained in $JENKINS_HOME/global-post-script
+that can be used by the plugin.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1490 / CVE-2019-10475
+build-metrics Plugin does not properly escape the label query parameter,
+resulting in a reflected cross-site scripting vulnerability.
+
+As of publication of this advisory, there is no fix.
+
