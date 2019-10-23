@@ -1,23 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/23/6
-Message-ID: <CAO5rKUP1iPL87rTg5jUKE43uNxVEoAJb+aGOsAfi+vuwkbtNMg@mail.gmail.com>
-Date: Wed, 23 Jan 2019 14:28:51 -0600
-From: Timothy Michaud <tmm08a@....edu>
-To: oss-security@...ts.openwall.com
-Subject: Linux Kernel: Missing access_ok() checks in IOCTL function (gpu/drm/i915 Driver)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/24/2
+Message-ID: <20191023151355.1989c946@gandalf.local.home>
+Date: Wed, 23 Oct 2019 15:13:55 -0400
+From: Steven Rostedt <rostedt@...dmis.org>
+To: "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
+Cc: oss-security@...ts.openwall.com, sashal@...nel.org, amakhalov@...are.com, anishs@...are.com, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>
+Subject: Re: Membership application for linux-distros - VMware
 Content-Type: text/plain; charset=utf-8
 
-NOTE: I have requested a CVE identifier, and I'm sending this message, to
-make tracking of the fix easier; however, to avoid missing security fixes
-without CVE identifiers, you should *NOT* be cherry-picking a specific
-patch in response to a notification about a kernel security bug.
+On Wed, 23 Oct 2019 12:08:48 -0700
+"Srivatsa S. Bhat" <srivatsa@...il.mit.edu> wrote:
 
-Due to a lack of "access_ok()" checks in i915_gem_execbuffer2_ioctl[1], it
-is possible to escalate privileges similar to the waitid vulnerability[2]
+> > 9. Have someone already on the private list, or at least someone else
+> > who has been active on oss-security for years but is not affiliated
+> > with your distro nor your organization, vouch for at least one of the
+> > people requesting membership on behalf of your distro (then that one
+> > vouched-for person will be able to vouch for others on your team, in
+> > case you'd like multiple people subscribed)  
+> 
+> Sasha Levin <sashal@...nel.org> has graciously agreed to vouch for
+> Steven Rostedt <rostedt@...dmis.org>, who is a part of the Open Source
+> Technology Center at VMware. Steven, in turn, will vouch for me,
+> (Srivatsa S. Bhat <srivatsa@...il.mit.edu>) and I'll represent the
+> Photon OS team on the list.
 
-This is CVE-2018-20669
+I can vouch for Srivatsa, and I hope that Sasha (and others) can vouch
+for me.
 
-[1] -
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=594cc251fdd0d231d342d88b2fdff4bc42fb0690
-[2] - https://salls.github.io/Linux-Kernel-CVE-2017-5123/
-
+-- Steve
