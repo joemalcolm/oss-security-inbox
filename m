@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["956" "Monday" "9" "October" "2017" "01:04:30" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNW35RHRmVgfdAG118m9Yghfa0X6ZHFRzpUuhCsQbWE8Xw@mail.gmail.com>" "32" "Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" nil nil nil "10" "2017100908:04:30" "[oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" (number mark "U       reed@reedlod Oct  9   32/956   " thread-indent "\"Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)\"\n") "<20171008214807.GA17602@nb4>" ("<20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>" "<CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>" "<CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com>" "<20170929151218.0cfb25c2@pc1>" "<CALPTtNXNQyq_P5FodjEOpf0J_UBEKWhioRqdGhQLfYOFSQHdiw@mail.gmail.com>" "<20171008214807.GA17602@nb4>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2768" "Thursday" "24" "October" "2019" "20:32:30" "+0200" "Solar Designer" "solar@openwall.com" "<20191024183230.GA4963@openwall.com>" "70" "[oss-security] CVE-2019-11043: PHP: env_path_info underflow in fpm_main.c can lead to RCE" "^Date:" nil nil "10" "2019102418:32:30" "[oss-security] CVE-2019-11043: PHP: env_path_info underflow in fpm_main.c can lead to RCE" (number mark "        solar@openwa Oct 24   70/2768  " thread-indent "\"[oss-security] CVE-2019-11043: PHP: env_path_info underflow in fpm_main.c can lead to RCE\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-11043: PHP: env_path_info underflow in fpm_main.c can lead to RCE" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15608 invoked by uid 550); 9 Oct 2017 08:05:04 -0000
+Received: (qmail 6139 invoked by uid 550); 24 Oct 2019 18:33:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 6012 invoked from network); 24 Oct 2019 18:33:17 -0000
+Message-ID: <20191024183230.GA4963@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 24 Oct 2019 20:32:30 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15581 invoked from network); 9 Oct 2017 08:05:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=reedloden.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=xoe/sJKfY2dfztTox6IxOO3cl3aBLoQVm9F6eBqDfto=;
-        b=ke15CZPJ0Pe9mFBtipKuEw1YO1TAPxeyZYcNdCngDQ5KOJTHFK5nlCSd0EsAElaylX
-         w6zdJjQwiiBohsRpvFJjaB/5Q5+9c2gXB1I6Cfb9lB1Pg1FhMPq/8XTMYHRGFUd8jweM
-         Pnj6BOWmZWTCrDU9O0IWtj0W2N0PbmF2EL9z+qtOE2VzczATOMK5m/jlzT4r3NwJ7eWy
-         qE3dkyQA/Xww/v5TmtwoDETJETu38Ru9n96oWLNzEKXg2JmZa3VA9k2oajuNwfgXW9X3
-         YqDn4O/5ut/NCF3Fbl84hXsdQ5lCyc+4+pEuh2ha3dJUANgNF7wzsM6l0YCCDoR4MUg8
-         1klQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=xoe/sJKfY2dfztTox6IxOO3cl3aBLoQVm9F6eBqDfto=;
-        b=QIyLCN+R5SKYVjnM8zXzuxVPcLsxw7OFZSzgp+n5UrcnaU69wqQyg/ntG+7NbauAeg
-         Cj5Nujs6ch8C3XkCb3Sgt9jaTnfsu6KPReeLyu6vx8CMV5yymGBuE6GyieKZFl8l0Oka
-         kJEI7stNvV7TbqyflDsZ/yyUeT1iR46qLNtw1zDIFMrQcG0UHqXesSa+cbfwQRA7KdyA
-         l73ZXMdLKnKbwPI4DLg1660H6IajKq1BkTOd5gLvLPPsUeNak/hRUpbZ1kIhXDcpxARl
-         cvX01rTP5ydJpzRPmviNnjyVqr0mqbH6nb+b+ZoCUd/K/R4dIEfm360tBC55hoWLamZZ
-         H/sg==
-X-Gm-Message-State: AMCzsaUi1oDl5z2k7ifXtR8EEHB7rozO0cbfAKS4bButLoH5YP2pdvgN
-	636opfFCmcOwGgtPImatLq6nw7EhXc7CvEh+c/LBRJeX
-X-Google-Smtp-Source: AOwi7QAT1rok5LWkD4l3rvdiiYb9bWg4z7SOvb1L3HmKtxr9mlv/098dX24NPdqedd0y17XgRJn/k8KBnCnu+z4ZA3s=
-X-Received: by 10.159.50.72 with SMTP id y8mr5051493uad.194.1507536290820;
- Mon, 09 Oct 2017 01:04:50 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20171008214807.GA17602@nb4>
-References: <20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>
- <CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>
- <CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com>
- <20170929151218.0cfb25c2@pc1> <CALPTtNXNQyq_P5FodjEOpf0J_UBEKWhioRqdGhQLfYOFSQHdiw@mail.gmail.com>
- <20171008214807.GA17602@nb4>
-From: Reed Loden <reed@reedloden.com>
-Date: Mon, 9 Oct 2017 01:04:30 -0700
-Message-ID: <CALPTtNW35RHRmVgfdAG118m9Yghfa0X6ZHFRzpUuhCsQbWE8Xw@mail.gmail.com>
+Subject: [oss-security] CVE-2019-11043: PHP: env_path_info underflow in fpm_main.c can lead to RCE
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="001a1147608219caba055b18a5ea"
-Subject: Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)
 
---001a1147608219caba055b18a5ea
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Sun, Oct 8, 2017 at 11:24 PM Michael Niedermayer <michael@niedermayer.cc>
-wrote:
+Although I had nothing to do with discovery nor handling of this issue,
+I was asked off-list to bring it to the attention of distros.  Since the
+issue is already public, I am simply posting in here.  (I'd appreciate
+it if people post stuff on their own instead of asking me, though.)
 
-> > We=E2=80=99d love to have FFmpeg in-scope, but the simple reason is tha=
-t they
-> don=E2=80=99t
-> > reply to our e-mails. All projects participating must explicitly opt-in,
-> > and we can=E2=80=99t get anybody at FFmpeg to let us know their thought=
-s on if
-> they
-> > would like to be added or not.
->
-> Your mails where misidentified as spam on my side at least, and while
-> i admit i saw them and wanted to reply later i forgot and somehow
-> apparently everyone else forgot to reply too.
-> Finally replied and yes of course FFmpeg wants to participate
->
+This bug was reported against PHP a month ago:
 
-Awesome! Thanks for getting back to us.
+https://bugs.php.net/bug.php?id=78599
 
-We've added FFmpeg to the scope at the bottom of
-https://hackerone.com/ibb-data.
+| Sec Bug #78599 	env_path_info underflow in fpm_main.c can lead to RCE
+| 
+| [2019-09-26 16:17 UTC] neex dot emil+phpeb at gmail dot com
+| 
+| Description:
+| ------------
+| The line 1140 in file sapi/fpm/fpm/fpm_main.c
+| (https://github.com/php/php-src/blob/master/sapi/fpm/fpm/fpm_main.c#L1140)
+| contains pointer arithmetics that assumes that env_path_info has a
+| prefix equal to the path to the php script. However, the code does not
+| check this assumption is satisfied. The absence of the check can lead to
+| an invalid pointer in the "path_info" variable.
+| 
+| Such conditions can be achieved in a pretty standard Nginx
+| configuration. If one has Nginx config like this:
+| 
+| ```
+|    location ~ [^/]\.php(/|$) {
+|         fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+|         fastcgi_param PATH_INFO       $fastcgi_path_info;
+|         fastcgi_pass   php:9000;
+|         ...
+|   }
+| }
+| ```
+| 
+| The regexp in `fastcgi_split_path_info` directive can be broken using
+| the newline character (in encoded form, %0a). Broken regexp leads to
+| empty PATH_INFO, which triggers the bug.
+| 
+| This issue leads to code execution. Later in the code, the value of
+| path_info[0] is set to zero
+| (https://github.com/php/php-src/blob/master/sapi/fpm/fpm/fpm_main.c#L1150);
+| then FCGI_PUTENV is called. Using a carefully chosen length of the URL
+| path and query string, an attacker can make path_info point precisely to
+| the first byte of _fcgi_data_seg structure. Putting zero into it moves
+| `char* pos` field backwards, and following FCGI_PUTENV overwrites some
+| data (including other fast cgi variables) with the script path. Using
+| this technique, I was able to create a fake PHP_VALUE fcgi variable and
+| then use a chain of carefully chosen config values to get code
+| execution.
+| 
+| I have a working exploit PoC, but I'm not sure how to share it using
+| this form. This security research is done by three people: me, @beched
+| and @d90pwn.
 
-Happy hacking,
-~reed
-(for the IBB)
+This is followed with steps to reproduce the bug on a PHP build "with
+--enable-fpm and ASAN enabled."  There are many further comments,
+including suggestion to fix the issue in "the next security relevant
+releases" on October 24, which is today.
 
---001a1147608219caba055b18a5ea--
+PHP 7.2.24 and 7.3.11 released today are documented to include the fix.
+
+There are also exploits here:
+
+https://github.com/neex/phuip-fpizdam
+https://github.com/jas502n/CVE-2019-11043
+
+Alexander
