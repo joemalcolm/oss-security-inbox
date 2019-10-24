@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/07/1
-Message-ID: <20190107074340.GA14850@suse.de>
-Date: Mon, 7 Jan 2019 08:43:40 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: New pagecache based sidechannel attack published
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/24/3
+Message-ID: <3d60b4e1-6d26-59e8-8ebf-8e50c1bc3bd5@oracle.com>
+Date: Thu, 24 Oct 2019 10:42:36 -0700
+From: Dhaval Giani <dhaval.giani@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Membership application for linux-distros - VMware
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2019-10-23 3:44 p.m., Sasha Levin wrote:
+> On Wed, Oct 23, 2019 at 03:13:55PM -0400, Steven Rostedt wrote:
+>> On Wed, 23 Oct 2019 12:08:48 -0700
+>> "Srivatsa S. Bhat" <srivatsa@...il.mit.edu> wrote:
+>>
+>>> > 9. Have someone already on the private list, or at least someone else
+>>> > who has been active on oss-security for years but is not affiliated
+>>> > with your distro nor your organization, vouch for at least one of the
+>>> > people requesting membership on behalf of your distro (then that one
+>>> > vouched-for person will be able to vouch for others on your team, in
+>>> > case you'd like multiple people subscribed)
+>>>
+>>> Sasha Levin <sashal@...nel.org> has graciously agreed to vouch for
+>>> Steven Rostedt <rostedt@...dmis.org>, who is a part of the Open Source
+>>> Technology Center at VMware. Steven, in turn, will vouch for me,
+>>> (Srivatsa S. Bhat <srivatsa@...il.mit.edu>) and I'll represent the
+>>> Photon OS team on the list.
+>>
+>> I can vouch for Srivatsa, and I hope that Sasha (and others) can vouch
+>> for me.
+> 
+> I'm happy to vouch for Steve; he is a trusted member of the kernel
+> community, and we have been working together for quite a while now.
+> 
 
-https://www.theregister.co.uk/2019/01/05/boffins_beat_page_cache/
-https://arxiv.org/abs/1901.01161
+And I am happy to vouch for vatsa who I have worked with in the past.
 
-Daniel Gruss, Erik Kraft, Trishita Tiwari, Michael Schwarz, Ari Trachtenberg, Jason Hennessey, Alex Ionescu, Anders Fogh
-have published a paper describing side channels attacks using OS pagecache statistics, allowing looking at
-things like keystroke timing and others.
-
-This affects not just Linux, but also Windows and potentially other OS.
-
-Linux mainline patch:
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=574823bfab82d9d8fa47f422778043fbb4b4f50e
-
-I have requested a Linux specific CVE.
-
-Ciao, Marcus
+Dhaval
