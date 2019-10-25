@@ -1,51 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/29/3
-Message-ID: <11594027.E43Who7y30@treebeard>
-Date: Mon, 29 Jul 2019 11:55:34 -0400
-From: Josh Thompson <jfthomps@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2018-11774] Apache VCL SQL injection attack in VM management
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/4
+Message-Id: <E1iNxUK-0002k5-SN@xenbits.xenproject.org>
+Date: Fri, 25 Oct 2019 11:10:36 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 291 v3 (CVE-2019-17345) - x86/PV: page type reference counting issue with failed IOMMU update
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-CVE-2018-11774: Apache VCL SQL injection attack in VM management
- 
-Severity: Medium
- 
-Versions Affected: 2.1 through 2.5
- 
-Description: Apache VCL versions 2.1 through 2.5 do not properly validate form 
-input when adding and removing VMs to and from hosts. The form data is then 
-used in SQL statements. This allows for an SQL injection attack. Access to 
-this portion of a VCL system requires admin level rights.  Other layers of 
-security seem to protect against malicious attack. However, all VCL systems 
-running versions earlier than 2.5.1 should be upgraded or patched.
- 
-Mitigation: Upgrade to 2.5.1 or apply patches from https://vcl.apache.org/
-security.html
- 
-Credit: This vulnerability was found and reported to the Apache VCL project by 
-ADLab of Venustech.
- 
-CVE Released: July 29th, 2019
+            Xen Security Advisory CVE-2019-17345 / XSA-291
+                              version 3
+
+  x86/PV: page type reference counting issue with failed IOMMU update
+
+UPDATES IN VERSION 3
+====================
+
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+When an x86 PV domain has a passed-through PCI device assigned, IOMMU
+mappings may need to be updated when the type of a particular page
+changes.  Such an IOMMU operation may fail.  In the event of failure,
+while at present the affected guest would be forcibly crashed, the
+already recorded additional type reference was not dropped again.  This
+causes a bug check to trigger while cleaning up after the crashed
+guest.
+
+IMPACT
+======
+
+Malicious or buggy x86 PV guest kernels can mount a Denial of Service
+(DoS) attack affecting the whole system.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions from 4.8 onwards are vulnerable.
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+Only x86 PV guests can exploit the vulnerability.  x86 HVM and PVH
+guests cannot exploit the vulnerability.
+
+Only guests which are assigned a physical device can exploit this
+vulnerability.  Guests which are not assigned physical devices cannot
+exploit this vulnerability.
+
+MITIGATION
+==========
+
+Running only HVM or PVH guests avoids the vulnerability.
+
+Not passing through PCI devices to PV guests also avoids the
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Igor Druzhinin and Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa291.patch           xen-unstable
+xsa291-4.11.patch      Xen 4.11.x, Xen 4.10.x
+xsa291-4.9.patch       Xen 4.9.x, Xen 4.8.x
+
+$ sha256sum xsa291*
+01883c11ae45a5771644270445e463538a61d98c66adbba852de74ccd272eae9  xsa291.meta
+fb5f2a75ba113f21e9cb2dfbc22520495c69a4fef631c030a4834c680045e587  xsa291.patch
+299bb4913e7ddb46ce90f415f91ee5e5480050631281c87e1a764b66fb116d89  xsa291-4.9.patch
+16087ba5c59b9644f4f61c0c7fa124d9e04e88089b235aaae91daa04cdf1b8a1  xsa291-4.11.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEI0cOQm0VAdkhDARZSNnzl+fhyFkFAl0/FvcACgkQSNnzl+fh
-yFkinA/9ECNBbbzcUhhCIawkPhv3tc4w3iEKVzaY8q/cya1tco4iBqshqD1EXt+d
-6MdNy3MTs9diXG/jD/hwuxl2hdtAi012fla7RjRwkq0Raoew2G08E9X6NlKCmbMr
-klDoMsZWCknITnlYS91IjZevrIZnz9emJLO4ub9So8CqBzjEinsXftgPeSYHgD0U
-ES1B1ThwOEaxTjoMJ3V6/kfC5Y5LLe/v9pwtZvggBY06X+4DCKt3Z/aCfvzGwPol
-iGCWhO9XobIoi8Z8garw6NqCDluHPWKTzb7Et8NS1y6xiuTTWAvfctpWOlPwN+cH
-1gHyqG+W9LRj2+vYdG8RCaQKAZfeUB7myfNvSIvWAAABYbku0molCC+CJZbnC/qp
-vUdwde9V9fTU0jVFiMMX78zXENAWME/G4tDLfn8AQXb+EpJBTMAATqLcuzavjN5Q
-GUByhNIOWABbyCDXk/0/eGjZ+QwYL2iOenVx0Si86aLBgi9u7mORqihRjcj5l85j
-XijHgT5mlPyiQxE58KKUkF6Sa7cSlakO5Jpmfzfxy4gmoC3fnUQFjFOPhZsJ8NR7
-jBB9VPJ65UWk/HVsuqaR8nQxM4JpcrDdaOIWgyey8ya60JRx3rWsAlmxe4ScUQyx
-lChlY5iZgKGGSoY9o/wXc9etEWUkfXxQ9pBCLKg4QUTMnUzN6Ao=
-=UDWM
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y1+EMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZlLUIAIIHkQgn80yjzaDnIGp0iFhcoTjDGlwk47MaQiJ2
+QbmVstpVbg4ZUuPmxJ6eWTJXoMbdelthA9klXX9zc0LWEOrMwWeykAxkWB8uVj+b
+URN6fJrLu73U2tqjmPT/P63FVgETXDbFGQcjsSkZ17VHcblmsysCUPmjLWn4r3Tc
+/lCXcEjwHYV2HnYUBrXO2biDVChRt3ClLhJZW9pfvI8hIzCqL+tdtNuvvqVSwR3Y
+SzR75k2lKwkmHQju2rpL00mNsyHsUOl3tDVeHTQa9V7yW4WO4vSb83oZExz9ChgH
+g9ro6epGfGYCQYB9mNSaQbOM3LhOrWeiR1i3nUcR0qRG1wY=
+=r9AC
 -----END PGP SIGNATURE-----
 
+Download attachment "xsa291.meta" of type "application/octet-stream" (1790 bytes)
 
+Download attachment "xsa291.patch" of type "application/octet-stream" (1829 bytes)
 
+Download attachment "xsa291-4.9.patch" of type "application/octet-stream" (1863 bytes)
+
+Download attachment "xsa291-4.11.patch" of type "application/octet-stream" (1847 bytes)
