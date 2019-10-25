@@ -1,103 +1,140 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/8
-Message-ID: <ee167438-797d-71e5-879c-5c4782e9d5e7@redhat.com>
-Date: Thu, 15 Aug 2019 13:58:04 +1000
-From: Sam Fowler <sfowler@...hat.com>
-To: oss-security@...ts.openwall.com, Frederic Branczyk <fbranczy@...hat.com>, kubernetes-dev@...glegroups.com, kubernetes-security-announce@...glegroups.com, kubernetes-security-discuss@...glegroups.com
-Subject: Re: [ANNOUNCE] Security release of kube-state-metrics v1.7.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/2
+Message-Id: <E1iNxUH-0002hA-3u@xenbits.xenproject.org>
+Date: Fri, 25 Oct 2019 11:10:33 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 287 v3 (CVE-2019-17342) - x86: steal_page violates page_struct access discipline
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-10223 has been assigned to this issue.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---
-Sam Fowler, Red Hat Product Security
+            Xen Security Advisory CVE-2019-17342 / XSA-287
+                              version 3
 
-On 9/8/19 11:08 pm, Frederic Branczyk wrote:
-> Hello Kubernetes Community-
-> 
-> A security issue was discovered in the v1.7.0 and v1.7.1 versions of
-> kube-state-metrics [1]. The issue is of Medium severity level and upgrading
-> to the latest release v1.7.2 [2] of kube-state-metrics is highly encouraged
-> to fix this issue, as well as deleting the time-series data that could
-> potentially disclose secret information.
-> 
-> 
-> *Am I vulnerable?*
-> If you are using the kube-state-metrics versions v1.7.0 or v1.7.1, you are
-> running a vulnerable version. To find out which version you are running,
-> you can verify the image tag of your kube-state-metrics deployment.
-> 
-> The following commands should give you the deployed image tag. (Please note
-> that this may vary depending on which namespace kube-state-metrics is
-> deployed in and the deployment name itself):
-> 
-> ```
-> kubectl get deployment -n kube-system kube-state-metrics -o yaml | grep
-> image:
-> ```
-> 
-> 
-> *How do I mitigate the vulnerability?*
-> Update the image of kube-state-metrics to `
-> quay.io/coreos/kube-state-metrics:v1.7.2`.
-> 
-> If you are unable to upgrade to the latest version of kube-state-metrics,
-> you can filter out all of the annotation metrics by passing the following
-> flag to `kube-state-metrics`:
-> 
-> ```
-> --metric-blacklist="kube_.*_annotations"
-> ```
-> 
-> Make sure to delete all the time series data from Prometheus as well, below
-> is an example command. (Note that this will only work from Prometheus v2.1
-> onward. More details on time series data deletion can be found in the
-> Prometheus docs [3])
-> 
-> ```
-> # This command deletes all of the annotation metrics emitted by
-> kube-state-metrics
-> curl -X POST -g '
-> http://localhost:9090/api/v1/admin/tsdb/delete_series?match[]={__name__=~
-> "kube_.+_annotations"}'
-> ```
-> 
-> This requires the Admin APIs to be enabled. Start Prometheus with the
-> `--web.enable-admin-api` flag to do so.
-> Please remember that the delete API only marks the time-series data for
-> deletion. The actual removal happens during the next compaction process. To
-> trigger this, the clean tombstones API can be used:
-> 
-> ```
-> curl -X POST http://localhost:9090/api/v1/admin/tsdb/clean_tombstones
-> ```
-> 
-> 
-> *Vulnerability Details*
-> An experimental feature was added to the v1.7.0 release that enabled
-> annotations to be exposed as metrics. By default, the kube-state-metrics
-> metrics only expose metadata about Secrets. However, a combination of the
-> default `kubectl` behavior and this new feature can cause the entire secret
-> content to end up in metric labels thus inadvertently exposing the secret
-> content in metrics.
-> 
-> We are not aware of other annotations that disclose information in the same
-> way, but as a precaution we have reverted the feature and will think more
-> thoroughly about the implications should we ever introduce something like
-> it again.
-> 
-> This feature has been reverted and released as the v1.7.2 release. If you
-> are running the v1.7.0 or v1.7.1 release, please upgrade to the v1.7.2
-> release as soon as possible.
-> 
-> Thank you to Moritz S. for reporting this issue! Also thank you to Tariq
-> Ibrahim, Frederic Branczyk and Lili Cosic for the coordination in making
-> the fix and release.
-> 
-> Thank you for your understanding,
-> kube-state-metrics maintainers
-> 
-> [1] https://github.com/kubernetes/kube-state-metrics
-> [2] https://github.com/kubernetes/kube-state-metrics/releases/tag/v1.7.2
-> [3] https://prometheus.io/docs/prometheus/latest/querying/api/#delete-series
-> 
+         x86: steal_page violates page_struct access discipline
+
+UPDATES IN VERSION 3
+====================
+
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+Xen's reference counting rules were designed to allow pages to change
+owner and state without requiring a global lock.  Each page has a page
+structure, and a very specific set of access disciplines must be
+observed to ensure that pages are freed properly, and that no writable
+mappings exist for PV pagetable pages.
+
+Unfortunately, when the XENMEM_exchange hypercall was introduced,
+these access disciplines were violated, opening up several potential
+race conditions.
+
+IMPACT
+======
+
+A single PV guest can leak arbitrary amounts of memory, leading to a
+denial of service.
+
+A cooperating pair of PV and HVM/PVH guests can get a writable
+pagetable entry, leading to information disclosure or privilege
+escalation.
+
+Privilege escalation attacks using only a single PV guest or a pair of
+PV guests have not been ruled out.
+
+Note that both of these attacks require very precise timing, which may
+be difficult to exploit in practice.
+
+VULNERABLE SYSTEMS
+==================
+
+Only x86 systems are vulnerable.
+
+Only systems which run PV guests are vulnerable.  Systems which run
+only HVM/PVH guests are not vulnerable.
+
+MITIGATION
+==========
+
+Running only HVM or PVH guests will avoid these vulnerabilities.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa287.patch           xen-unstable
+xsa287-4.11.patch      Xen 4.11.x
+xsa287-4.10.patch      Xen 4.10.x
+xsa287-4.9.patch       Xen 4.9.x
+xsa287-4.8.patch       Xen 4.8.x
+xsa287-4.7.patch       Xen 4.7.x
+
+$ sha256sum xsa287*
+ae2b9261e26df871693478629c63970ba30817ee1dcb2266b89d8b067833c1b3  xsa287.meta
+7de1b886d69dd7c497f88d41adf9a6f7cf9a305fd8ae9d714e1125e2a22208ab  xsa287.patch
+55f40f2f9bb41c85ac80dac775352e28b25fada80dae574e9d10300d5e2b91ce  xsa287-4.7.patch
+57312ff131eb6b51235723e862adf42ad3529ed13135375875c054fa0b55f80b  xsa287-4.8.patch
+34f4b835766a38bcf4066ccbab74676eda176e15ed2a6bd7884678a64507f89a  xsa287-4.9.patch
+c7eaf8a325011dda84b02ee097ddbc7b5f2f4d3399de545a3a7b14e2d23f4278  xsa287-4.10.patch
+6793315f714a249a4fad12b36559640b2f97f19f5b85f0d58694c6e78aa3d567  xsa287-4.11.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y18cMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZMbcIAKcMpCX29ANW9/W2cnGremzicicGAQW9KvmZVK5e
+weLBItv9pTqIGeVm71/X2dXt5KeRryh+Py53zYtUhy4pFQXQAezEzlRs+Y4TtX3l
++XVsfDFqks+bfyduBKMerwJpqr2Hd3DOdvir8iSqH2jHLLd5JqTYho+m0L0HPD9J
+Smn43rwurMChSjSFR4H+TnrOcX/1iUWgj3BVUkswGn3CrUdBJFe5mp6QeoYlyiL1
+CN6rmx5+CWLvBTwMkEiA8/3GX322qv4f2P0woOnaFW+aNgj1VRcyB2l1V0ParYYw
+0Yfj32XNIhdzNfUanenRAUNnTYSzVFFdbTMgV2sgwZjXNgE=
+=7jA5
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa287.meta" of type "application/octet-stream" (1822 bytes)
+
+Download attachment "xsa287.patch" of type "application/octet-stream" (11786 bytes)
+
+Download attachment "xsa287-4.7.patch" of type "application/octet-stream" (11891 bytes)
+
+Download attachment "xsa287-4.8.patch" of type "application/octet-stream" (11901 bytes)
+
+Download attachment "xsa287-4.9.patch" of type "application/octet-stream" (11962 bytes)
+
+Download attachment "xsa287-4.10.patch" of type "application/octet-stream" (11891 bytes)
+
+Download attachment "xsa287-4.11.patch" of type "application/octet-stream" (11880 bytes)
