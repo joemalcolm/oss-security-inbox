@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/6
-Message-ID: <20190604104311.xt2gunr7g2zqgnew@jumper.schlittermann.de>
-Date: Tue, 4 Jun 2019 12:43:11 +0200
-From: Heiko Schlittermann <hs@...littermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/11
+Message-ID: <CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>
+Date: Fri, 25 Oct 2019 13:43:57 +0300
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
+Subject: Formal verification of open source software
 Content-Type: text/plain; charset=utf-8
 
-Simon McVittie <smcv@...ian.org> (Di 04 Jun 2019 12:22:46 CEST):
-> On Mon, 03 Jun 2019 at 22:19:23 +0200, Heiko Schlittermann wrote:
-> > t0    is expected to be 2019-06-04, 10:00 UTC
-> > t0+7d is expected to be 2019-06-04, 10:00 UTC
->
-> Was t0+7d meant to be 2019-06-11?
+Are there success stories of formal verification of open source
+software?
 
-Yes. Definitly.
---
-Heiko
+IIRC there was kernel verified by the Isabelle prover.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+>From experience, I am skeptical about bugs in provers
+and had false proofs in CBMC and Coq (long ago).
+
+PS: I am looking for remote job. Probably you don't I
+want to sell out to the communist party of
+People's Republic of China or the NORKs ;)
+CV: https://j.ludost.net/resumegg.pdf
