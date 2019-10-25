@@ -1,72 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/28/4
-Message-ID: <20190928232024.GK16334@jumper.schlittermann.de>
-Date: Sun, 29 Sep 2019 01:20:24 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
-To: oss-security@...ts.openwall.com, exim-users@...m.org, exim-maintainers@...m.org, exim-announce@...m.org
-Subject: Re: Exim CVE-2019-16928 RCE using a heap-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/17
+Message-ID: <20191025212309.GA18967@pisco.westfalen.local>
+Date: Fri, 25 Oct 2019 23:23:09 +0200
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com
+Subject: Security fixes from Android 10 release which are relevant outside the Android ecosystem?
 Content-Type: text/plain; charset=utf-8
 
-** Exim 4.92.3 released (security release) **
+Android advisories used to contain commit references to AOSP change sets, but
+that's not the case for https://source.android.com/security/bulletin/android-10.
 
-CVE ID:     CVE-2019-16928
-Date:       2019-09-27 (CVE assigned)
-Version(s): from 4.92 up to and including 4.92.2
-Reporter:   QAX-A-TEAM <areuu@...look.com>
-Reference:  https://bugs.exim.org/show_bug.cgi?id=2449
-Issue:      Heap-based buffer overflow in string_vformat,
-            remote code execution seems to be possible
+Typically most of these issues are specific to Android, but there are a few which
+per the CVE description are possibly affecting software packaged/used by Linux
+distros as well, one example:
 
-Conditions to be vulnerable
-===========================
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-9325:
+"In libvpx, there is a possible out of bounds read due to a missing bounds check.
+This could lead to remote information disclosure with no additional execution
+privileges needed. "
 
-All versions from (and including) 4.92 up to (and including) 4.92.2 are
-vulnerable.
+Similar for CVE-2019-9232, CVE-2019-9278, CVE-2019-9325, CVE-2019-9371, CVE-2019-9433,
+CVE-2019-9423 (also libexif and opencv)
 
-Details
-=======
+Is there anyone from Android/Google on the list, who can comment on this? Can these
+references be added again for the benefit of non-Android distros?
 
-There is a heap-based buffer overflow in string_vformat (string.c).
-The currently known exploit uses a extraordinary long EHLO string to
-crash the Exim process that is receiving the message. While at this
-mode of operation Exim already dropped its privileges, other paths to
-reach the vulnerable code may exist.
-
-Mitigation
-==========
-
-There is - beside updating the server - no known mitigation.
-
-Fix
-===
-
-Download and build the fixed version 4.92.3
-
-    Tarballs: https://ftp.exim.org/pub/exim/exim4/
-    Git:      https://github.com/Exim/exim.git (mirror)
-                git://git.exim.org/exim.git
-              - tag    exim-4.92.3
-              - branch exim-4.92.3+fixes
-
-The tagged commit is the officially released version. The +fixes branch
-isn't officially maintained, but contains the security fix *and* useful
-fixes.
-
-The tarballs, the Git tag, and the Git commits are signed with my GPG
-key (same as I used to sign this mail.)
-
-If you can't install the above versions, ask your package maintainer for
-a version containing the backported fix. On request and depending on our
-resources we will support you in backporting the fix.  (Please note,
-the Exim project officially doesn't support versions prior the current
-stable version.)
-
-Timeline
-=========
-
-- 2019-09-27    Report as Bug 2499
-- 2019-09-28    Announcement to exim-maintainers, oss-security
-- 2019-09-28    Release 4.92.3, Release-Announcements to
-                exim-{announce,users,maintainers}, oss-security
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Cheers,
+        Moritz
+	
