@@ -1,4 +1,9 @@
-Received: (qmail 5338 invoked by uid 550); 30 Mar 2024 19:16:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7869" "Friday" "25" "October" "2019" "11:10:46" "+0000" "Xen.org security team" "security@xen.org" "<E1iNxUU-0002vA-BF@xenbits.xenproject.org>" "190" "[oss-security] Xen Security Advisory 300 v3 (CVE-2019-17351) - Linux: No grant table and foreign mapping limits" "^CC:" nil nil "10" "2019102511:10:46" "[oss-security] Xen Security Advisory 300 v3 (CVE-2019-17351) - Linux: No grant table and foreign mapping limits" (number mark "U       security@xen Oct 25  190/7869  " thread-indent "\"[oss-security] Xen Security Advisory 300 v3 (CVE-2019-17351) - Linux: No grant table and foreign mapping limits\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 300 v3 (CVE-2019-17351) - Linux: No grant table and foreign mapping limits" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1712 invoked by uid 550); 25 Oct 2019 11:11:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,91 +11,208 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24494 invoked from network); 30 Mar 2024 19:06:15 -0000
-Date: Sat, 30 Mar 2024 20:06:06 +0100
-From: Axel Beckert <abe@deuxchevaux.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20240330190606.x3bndyr7gyqytmvo@sym.noone.org>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <CAN_LGv3GAmdpaXVCjwp1UAH_Z6KKDnqydj68Oj4jmXRwwPE=Uw@mail.gmail.com>
+Received: (qmail 1664 invoked from network); 25 Oct 2019 11:11:04 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="wsqbbzafhpil2fhu"
+X-Mailer: MIME-tools 5.508 (Entity 5.508)
+Message-Id: <E1iNxUU-0002vA-BF@xenbits.xenproject.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Date: Fri, 25 Oct 2019 11:10:46 +0000
+From: Xen.org security team <security@xen.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Xen Security Advisory 300 v3 (CVE-2019-17351) - Linux: No grant
+ table and foreign mapping limits
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <CAN_LGv3GAmdpaXVCjwp1UAH_Z6KKDnqydj68Oj4jmXRwwPE=Uw@mail.gmail.com>
-X-Operating-System: Linux 5.10.0-0.deb9.24-amd64
-X-Machine: sym2 x86_64
-X-Editor: GNU Emacs 25.1.1
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAALVBMVEVEREQiIiL///9VVVUzMzNm
- ZmYRERF3d3eIiIju7u6ZmZnd3d27u7uqqqrMzMx6FhjdAAACUklEQVQ4y3XUMYvUQBQH8BcnnDZC
- xosRhRPZ47hbdllG3g5YWGTYYRsVjhuHoF2aqRck5ECURYtdBJs0tnIIp9htZ3cINoKNWPkFLPwS
- vuyRZLN7plryy755M/Ofgc5/Hqh/db8Und7fYgMGM5vMsuRtsQaDUwOATOYv2tCbZchIpLWfWvAt
- MQIRJVp7r1iBd9YKwPNHnjTQNWgEo5eCCRRPGtgHuayEAiCGqw2cMYNojUGhQ63ZooZDBtLmBgE0
- 51yfVDAAzWyeofB9zdMovFTBgQ6QQAjQikc8fVDBHT6SCQH4BDxNdyrY41Rplhvhl0Ok0fV6DC7z
- fJ5b9LhzkXNBBV2V5PlxnhmfRy6NHC+qdkVmrUGbiXWY0lIozdAoKuQcX1Qw4bFP/YRaRfSHBrpD
- FT5WoRcyMXYubUohfR74YQgMhy7i47qr36/VNhp6TbvCld7arqA/F1em1FZynBmtgq0b9er+ME9P
- bZLP55kBP/Bu1dDL3nzEZDlH2sIV6Nv5bELLklnBZDZuYGAtGpbYMhLSuJVSBlQgpCk3Xd51O01K
- Dj0+oqQgbW48drebXBmPx+cpiXWU3mzgmR/GsEyPhsitwHtaQj5C2luNXnqtgTNaWR2XKYkJjhrY
- BUqoD5pUDu8XDewzGoFAhSM5/LqS9n55NmgAHjIrW+eDsijKBmK0D1sw0RRbx0NAcdSCX1QmSjlN
- xl+0YF9R1rgGEI/WTu33D5R/Av/V+jnfo6YILm9cALvl9AB/bsCBLuH55l3SnRK8vOiS6fyRny+8
- fdaef/SP2dCp/isOAAAAAElFTkSuQmCC
-Organization: DeuxChevaux.org -- The =?iso-8859-1?Q?Citr?=
- =?iso-8859-1?B?b+tu?= 2CV Database
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
+Content-Transfer-Encoding: 7bit
 
---wsqbbzafhpil2fhu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi,
+            Xen Security Advisory CVE-2019-17351 / XSA-300
+                              version 3
 
-On Sat, Mar 30, 2024 at 07:00:42PM +0800, Alexander E. Patrakov wrote:
-> As GitHub has disabled the repository, the commit links in the
-> original message no longer work. One of the remaining mirrors is
-> https://git.rootprojects.org/root/xz
+             Linux: No grant table and foreign mapping limits
 
-Note that this is not a mirror of the adversary controlled git repo on
-Github but a mirror of https://git.tukaani.org/xz.git which is
-controlled by the original maintainer according to
-https://tukaani.org/xz-backdoor/. (And that repo is still there, too,
-even if it gives a 403 Forbidden when accessed with a web browser. You
-can still "git clone" from it.)
+UPDATES IN VERSION 3
+====================
 
-BTW, both repos miss that most recent commit on Github by the adversary
-with the now infamous "simplification of SECURITY.md".
+CVE assigned.
 
-		Kind regards, Axel
---=20
-PGP: 2FF9CD59612616B5      /~\  Plain Text Ribbon Campaign, http://arc.pasp=
-.de/
-Mail: abe@deuxchevaux.org  \ /  Say No to HTML in E-Mail and Usenet
-Mail+Jabber: abe@noone.org  X
-https://axel.beckert.ch/   / \  I love long mails: https://email.is-not-s.m=
-s/
+ISSUE DESCRIPTION
+=================
 
---wsqbbzafhpil2fhu
-Content-Type: application/pgp-signature; name="signature.asc"
+Virtual device backends and device models running in domain 0, or
+other backend driver domains, need to be able to map guest memory
+(either via grant mappings, or via the foreign mapping interface).
 
+Inside Xen, mapped grants are tracked by the maptrack structure.  The
+size of this structure is chosen during domain creation, and has a
+fixed upper bound for the lifetime of the domain.
+
+For Linux to keep track of these mappings, it needs to have a page
+structure for each one.  In practice the number of page structures is
+usually limited.  In PV guests, a range of pfns are typically set
+aside at boot ("pre-ballooned") for this purpose.  For HVM/PVH and Arm
+guests, no memory is set aside to begin with.  In either case, when
+more of this "foreign / grant map pfn space" is needed, Linux will
+balloon out extra pages to use for this purpose.
+
+Unfortunately, in Linux, there are no limits, either on the total
+amount of memory which the domain will attempt to balloon out, nor on
+the amount of "foreign / grant map" memory which any individual guest
+can consume.
+
+For Linux userspace backends (e.g. QEMU) which use /dev/xen/gnttab or
+/proc/xen/gnttab, there is an arbitrary mapping limit which, if hit,
+will prevent further mappings from being established.
+
+As a result, a malicious guest may be able to, with crafted requests,
+cause a backend Linux domain to either:
+
+ 1) Fill the maptrack table in Xen and/or hit the userspace limit.
+    This will starve I/O from other guests served by the same backend.
+
+ 2) Balloon out sufficient RAM to cause it to swap excessively, or run
+    completely out of memory.  This may starve all operations from the
+    domain, including I/O from other guests, or may cause a crash of
+    the domain.
+
+IMPACT
+======
+
+Guest may be able to crash backend Linux domains, or starve operations
+inside the domain, including the processing of guest I/O requests
+(Guest Denial-of-Service).
+
+If the backend is domain 0, which is the most common configuration,
+then host-wide operations may be starved, or the host may crash (Host
+Denial-of-Service).
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Linux are vulnerable.  Only Linux guests acting as
+backend domains for other guests may be exploited.
+
+All Arm domains are vulnerable, as are x86 PVH/HVM guests.  The
+vulnerability of x86 PV guests depends on how they were configured at
+boot.
+
+MITIGATION
+==========
+
+PV guests can be constructed with "pre-ballooned" memory, by building
+it with maxmem > memory.  See `man 5 xl.cfg` for full details of these
+two parameters.
+
+For PV dom0, these are controlled by Xen's "dom0_mem=$X,max:$Y"
+command line parameter.
+
+The larger the difference between memory and maxmem, the more space
+Linux has to fill with grant/foreign mappings before it will start
+ballooning out real memory to satisfy further mapping requests.  This
+makes the attack more difficult to accomplish.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of ARM.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves the backend memory
+exhaustion issue.
+
+NOTE: This does NOT fix the guest starvation issue.  Fixing fixing
+this issue is more complex, and it was determined that it was better
+to work on a robust fix for the issue in public.  This advisory will
+be updated when fixes are available.
+
+xsa300-linux-5.2.patch     Linux 4.4 ... 5.2
+
+$ sha256sum xsa300*
+9c8a9aec52b147f8e8ef41444e1dd11803bacf3bd4d0f6efa863b16f7a9621ac  xsa300-linux-5.2.patch
+$
+
+NOTE ON LACK OF EMBARGO
+=======================
+
+The lack of predisclosure is due to a short schedule set by the
+discoverer, and efforts to resolve the advisory wording.
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEERoyJeTtCmBnp12Ema+Zjx1o1yXUFAmYIYpsACgkQa+Zjx1o1
-yXXsXg//cL6vJEX4KfQL4WHF02GUvtle53ZDVsbaz6peDwH+tW7t4DRZX9eDLD5+
-HDNyInvptTDm/Mh3KrTUZ47AMz0JkVUWlu9NOLZ/OYUB1YUTj8KXjm1FDvY9YyyS
-rNKxjFLbZ6JQQATF38/ECRQC1j7scsOP18nBSXK0wNy+NiZEnmawYP4dYJ2ZaqWQ
-f6DbFSFW9zUxaOmPmP8XKMNKheu86UzbuIfe3LzfCXKXmhLXiTfmWh7syfUOEjus
-yFwwjd8HI3kHfOLzaytyYflOUdwCzpzWCs/Sr9Q5QOeQd60OdJW62aKgxWWS8rR2
-MxvjSOYo6GVjc3uM1cfR9N5tcH9aX7gBaCf6yd2aTfNdSoo/x0HykL3lbKIwkwxY
-JTrQEk98SCC+GBE95yjhe5fw2djaXEKLZGr7gMpRzvgpWSsYsKygO4X3CvIUs9JC
-RzJHnqBqYYWvUy+u6iR7/wmde9GiXufAw9FoVlsw4FzIazSy/rp0QwQkGlEKxWrS
-c6bDgV1DVjz5qxSMtYEiSjNeVHVYQPl5IME8HXJyc6E19/5Y7ndDHXO3HLCx4t6R
-B3cbP8ySDUVsES5QW2eIKe83XQLH3Kl+zTA06tr5wGtmXQgQhogy0rB4gf3ytLig
-rnAXUz8UdY2VyPKRnDkwaPahYlW6Ni1kiXMNz63/HwTDaOHROLg=
-=pNw/
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y2AYMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ1zEH/0EshvAErWXqQzUnuqxyCeCOPnVtTbnGRDBR4B62
+znE6Kbu449nh7qnkqyRGQxwGgdKnsFPDbXuQJb1hyjSl1Ph+u5KbA3aDcIxNy4d0
+y0gumH8tcW+ag1P9Z9geACrRT+1dJ7RiMfi+IaBA7nD3raYUtHLdGrAHGTxX1B3u
+k3kXjP5pyXl96u9zCAd4lOe6hLnQr3gaPrBdDDkF+ArY8WO8+XaTqKPH0YsdrHxA
+kexqH3Ts9sBO+YC7LZdF9Q54K91xOfzwmmmZUTL99pJhzAAl4fwh/ZZj/rRZhC58
+FnRy0lL7D2lFyhzlPIrXk+sjuu4tS/ZslQKk14Q7etcXGFQ=
+=rVDQ
 -----END PGP SIGNATURE-----
 
---wsqbbzafhpil2fhu--
+--=separator
+Content-Type: application/octet-stream; name="xsa300-linux-5.2.patch"
+Content-Disposition: attachment; filename="xsa300-linux-5.2.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBlYTQ5NDUwZGVkNTc1ZmFjYzBlNjRlMGQ2YWRjYjFjYThhYWFkMGJh
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
+IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IFdlZCwgMTkgSnVuIDIwMTkgMTE6
+MDA6NTYgKzAyMDAKU3ViamVjdDogW1BBVENIXSB4ZW46IGxldCBhbGxvY194
+ZW5iYWxsb29uZWRfcGFnZXMoKSBmYWlsIGlmIG5vdCBlbm91Z2ggbWVtb3J5
+CiBmcmVlCgpJbnN0ZWFkIG9mIHRyeWluZyB0byBhbGxvY2F0ZSBwYWdlcyB3
+aXRoIEdGUF9VU0VSIGluCmFkZF9iYWxsb29uZWRfcGFnZXMoKSBjaGVjayB0
+aGUgYXZhaWxhYmxlIGZyZWUgbWVtb3J5IHZpYQpzaV9tZW1fYXZhaWxhYmxl
+KCkuIEdGUF9VU0VSIGlzIGZhciBsZXNzIGxpbWl0aW5nIG1lbW9yeSBleGhh
+dXN0aW9uCnRoYW4gdGhlIHRlc3QgdmlhIHNpX21lbV9hdmFpbGFibGUoKS4K
+ClRoaXMgd2lsbCBhdm9pZCBkb20wIHJ1bm5pbmcgb3V0IG9mIG1lbW9yeSBk
+dWUgdG8gZXhjZXNzaXZlIGZvcmVpZ24KcGFnZSBtYXBwaW5ncyBlc3BlY2lh
+bGx5IG9uIEFSTSBhbmQgb24geDg2IGluIFBWSCBtb2RlLCBhcyB0aG9zZSBk
+b24ndApoYXZlIGEgcHJlLWJhbGxvb25lZCBhcmVhIHdoaWNoIGNhbiBiZSB1
+c2VkIGZvciBmb3JlaWduIG1hcHBpbmdzLgoKQXMgdGhlIG5vcm1hbCBiYWxs
+b29uaW5nIHN1ZmZlcnMgZnJvbSB0aGUgc2FtZSBwcm9ibGVtIGRvbid0IGJh
+bGxvb24KZG93biBtb3JlIHRoYW4gc2lfbWVtX2F2YWlsYWJsZSgpIHBhZ2Vz
+IGluIG9uZSBpdGVyYXRpb24uIEF0IHRoZSBzYW1lCnRpbWUgbGltaXQgdGhl
+IGRlZmF1bHQgbWF4aW11bSBudW1iZXIgb2YgcmV0cmllcy4KClJlcG9ydGVk
+LWJ5OiBKdWxpZW4gR3JhbGwgPGp1bGllbi5ncmFsbEBhcm0uY29tPgpTaWdu
+ZWQtb2ZmLWJ5OiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+Ci0t
+LQogZHJpdmVycy94ZW4vYmFsbG9vbi5jIHwgMTYgKysrKysrKysrKysrKy0t
+LQogMSBmaWxlIGNoYW5nZWQsIDEzIGluc2VydGlvbnMoKyksIDMgZGVsZXRp
+b25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy94ZW4vYmFsbG9vbi5jIGIv
+ZHJpdmVycy94ZW4vYmFsbG9vbi5jCmluZGV4IGQzN2RkNWJiN2E4Zi4uNTU5
+NzY4ZGMyNTY3IDEwMDY0NAotLS0gYS9kcml2ZXJzL3hlbi9iYWxsb29uLmMK
+KysrIGIvZHJpdmVycy94ZW4vYmFsbG9vbi5jCkBAIC01MzgsOCArNTM4LDE1
+IEBAIHN0YXRpYyB2b2lkIGJhbGxvb25fcHJvY2VzcyhzdHJ1Y3Qgd29ya19z
+dHJ1Y3QgKndvcmspCiAJCQkJc3RhdGUgPSByZXNlcnZlX2FkZGl0aW9uYWxf
+bWVtb3J5KCk7CiAJCX0KIAotCQlpZiAoY3JlZGl0IDwgMCkKLQkJCXN0YXRl
+ID0gZGVjcmVhc2VfcmVzZXJ2YXRpb24oLWNyZWRpdCwgR0ZQX0JBTExPT04p
+OworCQlpZiAoY3JlZGl0IDwgMCkgeworCQkJbG9uZyBuX3BhZ2VzOworCisJ
+CQluX3BhZ2VzID0gbWluKC1jcmVkaXQsIHNpX21lbV9hdmFpbGFibGUoKSk7
+CisJCQlzdGF0ZSA9IGRlY3JlYXNlX3Jlc2VydmF0aW9uKG5fcGFnZXMsIEdG
+UF9CQUxMT09OKTsKKwkJCWlmIChzdGF0ZSA9PSBCUF9ET05FICYmIG5fcGFn
+ZXMgIT0gLWNyZWRpdCAmJgorCQkJICAgIG5fcGFnZXMgPCB0b3RhbHJlc2Vy
+dmVfcGFnZXMpCisJCQkJc3RhdGUgPSBCUF9FQUdBSU47CisJCX0KIAogCQlz
+dGF0ZSA9IHVwZGF0ZV9zY2hlZHVsZShzdGF0ZSk7CiAKQEAgLTU3OCw2ICs1
+ODUsOSBAQCBzdGF0aWMgaW50IGFkZF9iYWxsb29uZWRfcGFnZXMoaW50IG5y
+X3BhZ2VzKQogCQl9CiAJfQogCisJaWYgKHNpX21lbV9hdmFpbGFibGUoKSA8
+IG5yX3BhZ2VzKQorCQlyZXR1cm4gLUVOT01FTTsKKwogCXN0ID0gZGVjcmVh
+c2VfcmVzZXJ2YXRpb24obnJfcGFnZXMsIEdGUF9VU0VSKTsKIAlpZiAoc3Qg
+IT0gQlBfRE9ORSkKIAkJcmV0dXJuIC1FTk9NRU07CkBAIC03MTAsNyArNzIw
+LDcgQEAgc3RhdGljIGludCBfX2luaXQgYmFsbG9vbl9pbml0KHZvaWQpCiAJ
+YmFsbG9vbl9zdGF0cy5zY2hlZHVsZV9kZWxheSA9IDE7CiAJYmFsbG9vbl9z
+dGF0cy5tYXhfc2NoZWR1bGVfZGVsYXkgPSAzMjsKIAliYWxsb29uX3N0YXRz
+LnJldHJ5X2NvdW50ID0gMTsKLQliYWxsb29uX3N0YXRzLm1heF9yZXRyeV9j
+b3VudCA9IFJFVFJZX1VOTElNSVRFRDsKKwliYWxsb29uX3N0YXRzLm1heF9y
+ZXRyeV9jb3VudCA9IDQ7CiAKICNpZmRlZiBDT05GSUdfWEVOX0JBTExPT05f
+TUVNT1JZX0hPVFBMVUcKIAlzZXRfb25saW5lX3BhZ2VfY2FsbGJhY2soJnhl
+bl9vbmxpbmVfcGFnZSk7Ci0tIAoyLjE2LjQKCg==
+
+--=separator--
