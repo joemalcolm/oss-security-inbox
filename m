@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/02/2
-Message-ID: <CAC1dCwXdKaJiiOgt7YD79eB5muo2UE1kFe7kGFjpWhU+kipcJg@mail.gmail.com>
-Date: Fri, 2 Aug 2019 07:33:38 -0400
-From: Tim Allison <tallison@...che.org>
-To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [CVE-2019-10088] OOM from a crafted Zip File in Apache Tika's RecursiveParserWrapper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/12
+Message-ID: <20191025141540.10b322fe@computer>
+Date: Fri, 25 Oct 2019 14:15:40 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Formal verification of open source software
 Content-Type: text/plain; charset=utf-8
 
-Title: [CVE-2019-10088] OOM from a crafted Zip File in Apache Tika's
-RecursiveParserWrapper
+On Fri, 25 Oct 2019 13:43:57 +0300
+Georgi Guninski <gguninski@...il.com> wrote:
 
-Severity: Medium
+> Are there success stories of formal verification of open source
+> software?
 
-Vendor: The Apache Software Foundation
+There's been a lot of work in the crypto community in this direction.
+Most of it is code under OSS licenses:
 
-Versions Affected: Apache Tika  1.7 to 1.21
+Hacl* is a formally verified crypto library. Some of the crypto
+algorithm implementations are used in Mozilla's NSS:
+https://blog.mozilla.org/security/2017/09/13/verified-cryptography-firefox-57/
 
-Description:
-A carefully crafted or corrupt zip file can cause an OOM in Apache
-Tika's RecursiveParserWrapper in versions 1.7-1.21.
+Also NSS/Mozilla, they have identified a flaw in their gcm
+implementation with cryptol:
+https://timtaubert.de/blog/2017/06/verified-binary-multiplication-for-ghash/
+
+There's been a formal verification of (a subset of) PolarSSL:
+https://blog.regehr.org/archives/1261
+
+This is an incomplete list, just the first things I remembered, there's
+a lot more.
+
+In terms of operating system kernels there's sel4:
+https://sel4.systems/
 
 
-Mitigation:
-Apache Tika users should upgrade to 1.22 or later.
+-- 
+Hanno Böck
+https://hboeck.de/
 
-
-Credit:
-This issue was discovered by RunningSnail.
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
