@@ -1,32 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/20/1
-Message-ID: <nycvar.YSQ.7.76.1909201557410.24344@xnncv>
-Date: Fri, 20 Sep 2019 16:02:32 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Matt Delco <delco@...omium.org>
-Subject: CVE-2019-14821 Kernel: KVM: OOB memory access via mmio ring buffer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/13
+Message-ID: <327D945D-1D11-4629-98BC-8E8C4BE3683D@trust-in-soft.com>
+Date: Fri, 25 Oct 2019 14:37:59 +0000
+From: Pascal Cuoq <cuoq@...st-in-soft.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Formal verification of open source software
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hello,
 
-An out-of-bounds access issue was found in the way Linux kernel's KVM 
-hypervisor implements Coalesced MMIO write operation. It operates on a MMIO 
-ring buffer 'struct kvm_coalesced_mmio' object, wherein write indices 
-'ring->first' and 'ring->last' value could be supplied by a host user-space 
-process.
+I work for the company that did a report on PolarSSL, as it was called
+then.  We have applied similar tech to other open-source components,
+at least partially, and identified some interesting bugs in the process.
+For some of the components the formal guarantee may be as low as:
 
-An unprivileged host user/process with access to '/dev/kvm' device could use 
-this flaw to crash the host kernel resulting in DoS OR potentially escalate 
-privileges on the system.
+"when executing the provided tests, or fuzzer-generated tests, for all
+possible results of calls to malloc (success or failure),
+the result of execution does not depend on the memory layout
+and the execution is free of undefined behavior (for a pretty strict
+definition of undefined behavior)".
 
-Upstream patch:
----------------
-   -> https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=b60fe990c6b07ef6d4df67bc0530c7c90a62623a
+For some other software components, the guarantee is more what you
+would expect from formal methods, that is, for all of (billions of)
+inputs for one or several specific usage patterns of the
+library. Please look at the PolarSSL report for an example of what
+this means. It does not make sense to claim that a C *library* is
+formally verified without qualification, because any nontrivial
+C function is unsafe when used wrongly. It can only be verified safe
+for one or several ways of using it, which the person doing the
+verification usually defines, and which may not cover all possible
+ways the library is used in practice.
 
-This issue was reported by Matt Delco of Google Inc.
+OpenSSL: we have had some open bugs for functions that could allocate
+(and thus fail) but were returning void without reporting success or
+failure, so that their callers would dereference NULL or worse.
+They were reported at the time OpenSSL bug reports were ignored in majority,
+but I think all the things we reported have been fixed now.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+zlib: https://trust-in-soft.com/auditing-zlib/
+
+tiny-AES128-C: https://trust-in-soft.com/the-sociology-of-open-source-security-fixes-continued/
+
+libwebp: https://trust-in-soft.com/out-of-bounds-pointers-a-common-pattern-and-how-to-avoid-it/
+
+SQLite: https://blog.regehr.org/archives/1292
+
+There are more, but these are the ones that come to mind for which
+a bit of writeup is available.
+
+​Pascal
+
