@@ -1,4 +1,9 @@
-Received: (qmail 32673 invoked by uid 550); 1 Jun 2026 22:07:36 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8146" "Friday" "25" "October" "2019" "11:10:13" "+0000" "Xen.org security team" "security@xen.org" "<E1iNxTx-0002eb-OQ@xenbits.xenproject.org>" "194" "[oss-security] Xen Security Advisory 284 v3 (CVE-2019-17340) - grant table transfer issues on large hosts" "^CC:" nil nil "10" "2019102511:10:13" "[oss-security] Xen Security Advisory 284 v3 (CVE-2019-17340) - grant table transfer issues on large hosts" (number mark "        security@xen Oct 25  194/8146  " thread-indent "\"[oss-security] Xen Security Advisory 284 v3 (CVE-2019-17340) - grant table transfer issues on large hosts\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 284 v3 (CVE-2019-17340) - grant table transfer issues on large hosts" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30316 invoked by uid 550); 25 Oct 2019 11:10:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,169 +11,212 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22272 invoked from network); 1 Jun 2026 21:26:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
-	s=s31663417; t=1780349152; x=1780953952; i=shvedov@gmx.com;
-	bh=+TYbH2w+pxg7OOJomDS7UzwEdbnNtaiFDHRLr6I0Nzk=;
-	h=X-UI-Sender-Class:MIME-Version:Message-ID:From:To:Subject:
-	 Content-Type:Date:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=FO8QplI7OXbT6d3ToQlwyyDWzFT0bYcjOc4rnh7x7ck0qqpik0aUCIHfrEJe9aga
-	 R8tklo0PYcryD5knYUTempK4hRKC388gNnlgfloPUH0ScmajbjNaaXDQXKDMnq/DN
-	 MZVzE0p0qugkQh9K0icO4ZPReUucXpojLVU7xiY/f5uEhB/IDWSlk2c2p3U2nlEOB
-	 wBmf2NsC7/Ws7EDeVbt7BVDJzWBXC85T3Ne7r7hTVblDcPNfpg/UDtR+53PaxVyLI
-	 2GchGGZ9Nulpl0EbJBrDATe1/ZRJt+qnzGN47S8Ue3gEpiZuAOTMR8FCgjGECCJ7A
-	 2EhlKP0eO+lGjT7oxg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: (qmail 30298 invoked from network); 25 Oct 2019 11:10:32 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Message-ID: <trinity-00f7ac88-5044-4b60-8967-48b956e032be-1780349152227@3c-app-mailcom-bs08>
-From: "Alexander A. Shvedov" <shvedov@gmx.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 1 Jun 2026 23:25:52 +0200
-Importance: normal
-Sensitivity: Normal
-Content-Transfer-Encoding: quoted-printable
-X-Priority: 3
-X-Provags-ID: V03:K1:P3eaZZT14hQJSxINg0DmR26M479yHQNoJWtDkXNrnk/942kj9YFmqDRWu3NFAscuL/wMq
- gkyREps/HRmgAkfqxr4uGBByTwyauL756oHZ100DK2ZSUW8bxAEJd/LSue0H+N4H2O2d/7i7EbZQ
- bMpVyqR7QY7Xo8ALCilgt/1pSO0YMO4hZ93pN7ZC8xDC/gqNiVGuCGtBFB1SXfE+CvF0GEf8azb2
- MGrXoT3W1oxX6zsLNTzAUD6D2SEe3ck6HRCxo+OOv8ZsGclGMVLe7M7XsjP4qNwY2fJ8BHyVzfHk
- i0=
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:FX2Z4VnLZ90=;e05MFZXeo8v9EQsn0AgdT0S98m/
- mWzfIKGUvju/rdsDn6bpZ5cLJA5b8ynsYxMLESGDEm0brOfbHQrJa93uabQQP+aCz34wRw7F4
- HNFOIuytUMHG+hPIZC1a2ZNAAx8uH7TkB8apr14lWzgJpgjRSmU8fMCPeuRIXrCvRR6lKW9b2
- xpbjKNOc7PwM4lorWN/h/CvlM3tqg+Z64dHl41chsk3kS4MYAaHYwQxz8h1Cf7tnofXp13t11
- rNjRurUiGVPJflClXVz4RuPE9wI4JVT96XuljREt931mX4p4cFtUBJquYAi9h2baw27kc6Ujg
- FJzwjCP70u4tLHDtvDo6ZzjTXYAK7jDUls4Y5SdKz3Gwwe6pxy5Z/yVGLT6cU2SylHhaMU2rm
- FSgoz13W4ret+KflBHuHTagIkOqS85AvPuq1NMoRGjQGmJ+agLE3su6VMF/dMLnX7s2dJ/LXR
- ckdrsjpP/XSyvfFmiaWjI+GWefGAjHFoWphP9poymUQaNvHRPYv2aOwfyNXAG/gsOI818w9N1
- dcBukriOH+JrKSEdgwBcqLBrH/1orMNqYiJM7A6Sn8oaCAepuaI38TK9+jkNn+UdXqpM85iWh
- thPrCAap0xhiphENS8dhq/oz03fcs3p0b8GQHoDRC8anA6q/qKJwoU1jGWyszQLGmTxziE2bp
- ZnGFbmvAM7qbwNkQXoLyJBhrmvZqwp4cIhvGh60+vTGUQv/8YwfLZQOIJ0EBXbmBxAZC0ENzn
- pQHNV7QzRo/+apxeOAgaljny+PdJoT8Pki9p+jdjSFis59BfdxIN6l1+BCz6gqYG+MkU2ECUH
- PA07gHjMm9Xih8z3yqyzxMkBtvSNCQRg9QiM3EIbHYSIT/97s7LyeyHweh5MHdH17ez2YCqXG
- pfPpItpACkGx+KaPPr2V/fN611xCa2+1GLib7ndwr71yXofmM0hqZAO7Mj6EvkIE+eWddoSZl
- Rwvqy6WFUYoh7hpQb14QPMLYfT9TQJJ8DP0+GIVuG7jjQt6SfxCNlWaHl65s6Jrn6Ag/aFocl
- IlleKCyEXtK2Dif+e6bizZBntiDnPJp2MC4O7eTcFs5D3E0AYxzycFWnF2IH2DQum1nB4xNql
- 8f+MrsGN+DUOhOG5z4Jl6zeHdWlClo1ZJt7EoSQKcgst7wjgRD21ePYFG3HlGMYNDGef/xzuP
- O8UmswCoCrqjIK0zwkrZhgCE4hDOk5nhmlN/9Q9MaLROE/so4xsKb4XIyGKA+RqxHGc6agEyw
- wifOj6+7/AolV5AQXsTkRqQbVOnzP2Tjv3tjva6lDErNh4E41QC1WZUbMyliu/GyHpgBM2fry
- oFOCNu1bhijzot3rLlXFpXc+hj+5/iRIDvxnOpbswcwshTBqlM+I9I7hUF98OhiOdrUTNN2pT
- wKzJ5Z7oYspY1R6wRQl6FFr12RiK3Gv66DScOO0YgSnEHzt51mpENt12yBWlquC04QQ6Ic5Bn
- UURTAsH77ZixjDzJDqtyNeGiNaGKuk24yw2FoshNNyVACtYqw0KdowxoXo/OY8NNy6aA9zWhH
- BGdYRqe4xZnRUm908trZPowxSOwMXwute0FNxjPVNBOSrS3uX7hGLaa4CcULHoKCbA0Va3m4C
- sQdEBdqGNVs3CpxAniM5Vv+blD58XpbhaXTkbbGUuNEA1PJGc/9SCXo+e8d9tHW5r3NWBieDQ
- nAy9dWlLLV+o96CLvBKNBnVFPsEMOEnpL93W5QZO9f2bAP1gbXb0xqT6jk9X/QhKn/d52b0XX
- XlTr7ZVLBz67SqUhZeGJtc9bG47DY0vOSHWGI47xMy8n/4o9qQtdiu5hG+b0rpxZNv0l6u9Dw
- lMgH6J6j3gwWdi9ataDtjaNqWQiygmwLZucLTFxVdJUytB8ZgrNGxO97IZX2WUYj4uJRwpFb3
- J/XjZeSiq0ix3yZ99DBz8ae30bKI62treUTKccxf/Wu6Gc6Em808QPH27lPoipCsjv7k51b+0
- pBPtljekwGTMdwbTaFHiwK/mxNgFqTwWgt+P3stZOM8tAnmU3hZnCUXrBqGxoazVx1LoOn4/R
- irNgtqHwCPZ49K6neFxL1FxnHMcTWugbghaEKn3seYBrGiEp5JyksH5sXfJi+tiVC28L3JxGV
- P/RWRRjwOlu9vIB0C7GkcRSFYs8n6MOWs0BOt+ZoEkltyjMZfTP69dKz8CJasl1LbJGWeadkh
- v977dh6m7il/OeUrj4ZsOwWKvkaTVNNAQf+u7938gNu7H8+rlBDa38mEwwCE4PeKLDQo/NABj
- HSreNnPAFyCqWj+AWpTSwikUsWJFrxwBqUNsRQ8q1W/pHyaCt2GBYA6pOg7S1NaEyXfdc1MkI
- lstQ6nHTCTYd00irTyR8LuI7nZr1IEN3OQm/drHcDUYkcLf7Zmu+hGy98YHLCF3f+iQXcEfB2
- llFlfrm6rGxBZavHj9Wf+HGDmD7shW+yLWK2hqiavwsaBRxSEDHFKLnI1OUyXxyoMVjY1t8gQ
- MK+FFW5vXGKlgOay+JHUWxvl3TfP6yqz280juIMAFAJiWoztmXccJAx6p4tD5qZAGIm3oXUxH
- rQzM9xzzmTYigKa00DbzDl/fbjkRePDbmuotu09PVhCJHPs3KoXswFbpz/0ZwYImBOpP9+VYo
- QaK1kTT+N+iuWLB7dHsPw2dcJGb+gbozz3U9p1N56649KgeziF0VNhCzKfUPkN+2atxd3MfDl
- l+rrczO8RDRWkhFFkGpVAvJcWqP/ldM0BPwAfwuyy1/EDyDYfKc/fBjYsPtsUTFiqiPcpzIX4
- /ZXJKGvP9/KYHu/ztK6Pm2iiiHI3vpUI3GjSVyw907M1oxZdhSzkPIxO4jul0XKZHqke2uw1U
- ZfgSWVXomXPEj2PFbt47ZA6BX1yBiGzXtn4WOdhe9slieK9GVueMDVZmKfWb51K2ssd8j43zD
- EuPdDUr4hW1SuFGNldDG41/Ucy6F4xfLy/4fI1Zx30/RqIBzwQvKlzOVFJMti13guLCCBI5lM
- m0RvlFb7MoNZCkZtuedIXnflLryluUsaNpE1MvErU30LULXJfj3j6xqP++Wk2k+4Z1yv2JIIp
- U4SUCFWA+CE0VwrQ9IjCZrsMuPrA5EuhCEyE/KOSEpYFwwhgI/DxGNS8kgk7iBZs0zMa+Y+eA
- AhVLMDFWxTAZ2rqD9yqu+WJ5Y8ezqMIL8Yib+1JzvzZ4OndS2YBXPVcH7tjaf9MfKx0paPNrz
- aJJByTVPivVA5YH5XXb8yftmMU1Os0Vqw9P+JZXMQBkC8sO8PBFEx0K0HF7nazlqfWSvgNYY1
- 54+OWRZ3Fl47WaQ0QgPFUfeRUXarTUlUQvq+zAdx83xAQ3RlKeZ6Bt/AHmanqkzQB2VnNQxpA
- Ap8rVjf8d7byyK+/bfEdAn2B6UKZ7461pujrkh9CSKcC1EriKZQ8hf7OQrNLJlnT8J38GWHwW
- +KrgMLmFcPOtvjOly7s/zSvU57z7YYKp6JsgUOOTKNwOIE8xm57ULL6LTspUZNc3NlZlvILD0
- s/APVVE9wDuodU6K8v6gWLDXrJkUmi+HzMeC4eoxbu9HzA627CA99JTxU9EWG0c/mB89uv0j+
- cE4UqHAr0cg7lIoFvP/Ga9SyAl+Z5OYv/ToHUHD0/H56ZxB2UDrk0Wy2y81tsLrWcv/egFC4L
- 15s2HZ5VBsQLvexxqSzIAF1lW/rqbNgI3nxKy7Dpt0AHNb10x6gd5c6VJtKAPWWogDXAXazLR
- RiKmaD0ls7nc9rvFiAJPI/LIMVNRkH24DXnK8RdaPPUAOdO+7RTYth4SqpC5+nTzB6ul6a0sB
- AH5LlT5598cL/UsJstY61OM6j2Gf5XF2Kam3xgVTLQ2m3x7V+fRfBdMU001fiErMP0VwS9Qor
- TWMm0YmrjGsFvbQ89mqIOTxMMXyrnRxIN8k0EmfZpRmoFUOKLLVS7F44nI96qA/CCnBeQzZY8
- Rb06zjCsOaHcK/HQBZBXGuY3uvP+H7+jScNakulrVUqu/kYoUzSlA9kLUstMA8VDSyvdk5Zv3
- B6Iz4QlfcfOwDJC0YS8CitnlhfB4qLzpVqi82JgaK3diwKvlv+75z3lgvzMt1zTAFLebEZ8xM
- ytAGU8uw23CxR0WQOrRfCt/ErFJh48gbYaoewT/ZMrq/MrzbnwY3VKoiL0/xbzHMWNqKHmvsK
- Rz/mNlpJq3Qwe7yzdFihMqZIWk9RZutTvMyxz8z21QiNfTpVvjXAWqD6QZboV+ke0Jl6ueQml
- 0iyOu57k7WUJUfl1W8ob6h12aOSDVVG32DwLPaE06UsGcNFFv18iP0HDlDwIwYarJh6ai3+72
- V6v+Y0Bm7jqRFbX/yYJKbkms5zv0SyR5w9VpOOZ7pGSvC6LuRL/wuI/5Q5PSBE4NUE93uAZcz
- DFelCOD4A2+wK7h0J8WbuM0PxA6KKBzazid1Ts/c4Ik7d9qKeYy8mGYUOACZonu34j3EhQbgS
- XrtjG6BU/wMa7NAiGDpeCIGzPkut4stHcYegTYyxpTAI3VKbMyY2mpKJ//xnLdaTFILGmQaUI
- Tp4RTn3hichL2ijBvJWpq5VqQtDfb0jS57T5TePnYhdsRUyk0PlIrCXo8OHOo7osw8xIRJtPQ
- nefUG7tvMBW1DHc+7mAsR/8iFY6aQ7XYIstWaVRX1p5DdRZvDjpcrcIpaNvuzJmRfZYv+PMA2
- 9LBgjiuQ2+PqpPZVzpb1EQ+iXUT7xX2kao+uNU0AVlLL5Pm7C3Jl+0bOf4cZLEDh6xn2tx13e
- nS0WRoS3bZiq2YPznkPS39dPzevdifGcQpoCwuH0J3V53DUWJMfMIFXzqj3iATEkls6VokE/r
- JuT5gPwB4V/q65PXwIKIVatsrFgueXqVZITDYwvJpedXxgOC6VQXL2eSmfAsQHstcFFpRGioJ
- veSJ7WyVx0yn5uB8SeUgFrbnEevw0XQLmBbUlnQYfZHhQH/n/5ylKcw+w6nDWTC8Mtdb8f5zE
- OT8Xl+OJUWHZCKakkagJXZxtcmaVfMYZvgWQlT4KgauebBdmfaWmWFOkBq+MiuT1AOJvPfDaO
- B8i6oiIpoDuY/mvr1axXML6/dXMo3ghVepKphUV0Wd6YAB5cpBsrBMl8r4G89ZMqM5/MPNBZr
- vF5JNLRgm2FHqlJcIE++ZRlIBO94vA+0Y9F3HTyzfWrhoRtHs0tVyXj0SSOg34PVv1GIE6Td6
- 28bjRn0NLv6GBzDexiiubHEvIzPgEiQ6SmxHvp
-Subject: [oss-security] CVE-2025-60486: Use-After-Free in GPAC/MP4Box via dasher_process on
- crafted MPEG-2 TS file
+X-Mailer: MIME-tools 5.508 (Entity 5.508)
+Message-Id: <E1iNxTx-0002eb-OQ@xenbits.xenproject.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Date: Fri, 25 Oct 2019 11:10:13 +0000
+From: Xen.org security team <security@xen.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Xen Security Advisory 284 v3 (CVE-2019-17340) - grant table
+ transfer issues on large hosts
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
 
-Product:   GPAC (MP4Box)
-Affected:  gpac/gpac prior to fix commit 3f20eb0cd22116367c036e6ffe6ace299b=
-38d686 (GPAC version 2.5-DEV-rev1665-g3f20eb0cd-master)
-CVE:       CVE-2025-60486
-CWE:       CWE-416 (Use After Free)
-CVSS 3.1:  8.8 HIGH (AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H)
-Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Description:
-  The dasher_configure_pid function in filters/dasher.c frees a PID context
-  structure at line 976 when reconfiguring a stream during DASH segmentatio=
-n.
-  The freed pointer is not cleared after deallocation, and dasher_process
-  subsequently accesses the same memory region at line 9445 during the next
-  processing cycle, creating a heap use-after-free condition.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-  A crafted MPEG-2 TS file with repeated sync marker violations, broken PMT
-  descriptor sizes, and conflicting PID assignments triggers the reconfigur=
-ation
-  sequence that exposes the stale pointer. The subsequent READ of 4 bytes at
-  316 bytes into the freed 1096-byte region terminates the process. Code ex=
-ecution
-  cannot be ruled out; use-after-free vulnerabilities can allow an attacker=
- to
-  control freed memory contents and redirect execution flow.
+            Xen Security Advisory CVE-2019-17340 / XSA-284
+                              version 3
 
-  Crash is reproducible on the current master branch at the time of
-  discovery. No authentication or special privileges required beyond
-  ability to provide a crafted file.
+              grant table transfer issues on large hosts
 
-Reproduction:
-  -Build-opts: `--static-build --static-bin --static-modules --enable-debug=
- --extra-cflags=3D"-g -O0"` ;
-  -Command: ./MP4Box -dash 100 53_dasher_process_filters_dasher_c_9445
+UPDATES IN VERSION 3
+====================
 
-Asan-log:
-=3D=3D55065=3D=3DERROR: AddressSanitizer: heap-use-after-free on address 0x=
-519000022cbc at pc 0x7f2fc41c3300 bp 0x7ffe86651b00 sp 0x7ffe86651af8
-=3D=3D55065=3D=3DThe signal is caused by a READ memory access.
-    #0 0x7f2fc41c32ff in dasher_process filters/dasher.c:9445
-    #1 0x7f2fc4119440 in gf_filter_process_task filter_core/filter.c:3208
-    #2 0x7f2fc40ed45e in gf_fs_thread_proc filter_core/filter_session.c:2393
+CVE assigned.
 
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/53/53_dasher_p=
-rocess_filters_dasher_c_9445
+ISSUE DESCRIPTION
+=================
 
-References:
-  https://github.com/gpac/gpac/issues/3314
-  https://nvd.nist.gov/vuln/detail/CVE-2025-60486
-  https://www.cve.org/CVERecord?id=3DCVE-2025-60486
+When the code processing grant table transfer requests finds a page with
+an address too large to be represented in the interface with the guest,
+it allocates a replacement page and copies page contents.  However, the
+code doing so fails to set the newly allocated page's accounting
+properties correctly, resulting in the page becoming not only unusable
+by the target domain, but also unfreeable upon domain cleanup.  The page
+as well as certain other remnants of an affected guest will be leaked.
 
-=C2=A0
----
-Best regards,
-Alexander A. Shvedov
-https://github.com/sigdevel
+Furthermore internal state of the processing code was also not updated
+correctly, resulting in the insertion of an IOMMU mapping to the page
+being replaced (and subsequently freed), allowing the domain access to
+memory it does not own.
+
+IMPACT
+======
+
+The primary impact is a memory leak.  Malicious or buggy guests with
+passed through PCI devices may also be able to escalate their
+privileges, crash the host, or access data belonging to other guests.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from at least 3.2 onwards are vulnerable.
+
+64-bit x86 PV guests can leverage the vulnerability on hosts with
+physical memory extending past the 16 TiB boundary.  This is only
+possible for hypervisors built with CONFIG_BIGMEM enabled.
+
+32-bit x86 PV guests can leverage the vulnerability on hosts with
+physical memory extending past the 168 GiB boundary.
+
+x86 HVM and PVH guests cannot leverage the vulnerability on libxl
+based systems.  On xend based systems x86 HVM guests can leverage
+the vulnerability if their guest config file has a
+'machine_address_size' setting.
+
+ARM systems are not vulnerable.
+
+MITIGATION
+==========
+
+Running only x86 HVM/PVH guests will avoid this vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa284.patch           xen-unstable, Xen 4.11.x ... 4.7.x
+
+$ sha256sum xsa284*
+5359796890fc59dd2bbf8d23398c229153c8b9b716c01842dfb9f95d063a3ad4  xsa284.meta
+3a95ae9faef3886fd3a4ed5b22d944939bb2f819bb5a2a8061b2311cf3c05776  xsa284.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y17gMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZkqwH/3M5SYKUH8RiLQierb63SJuwkRsxtQeFERCTZMh2
+Q5jgE9RX3/QqubExkVV5gSJRDu0QtOGoo0cG1HwEgJ9fMRg1jtap1AGzGLyvSLMZ
+KQBRVuiaLhsQlrfQ3hRIbvUt/XcF58PWlX923bx7o7HJIUUpmF3+vr5V5QQ2SPz9
+5/7extQJKeDG1lixlQfGGr3dLX1d7J20Rh5/vgdfpPYcjX9+Cl+EF1BlW6BQrQz3
+S6MiHkxU4GUtPhJjZvqPupJcB5qDw2BTlEtcjzqhe1e60jzniPJW61D5xSFVcPmW
+uRAV3oDHzG2N2kOk61dTVhI53XdL81IwiGcMeVYg9drzPAo=
+=Nq7N
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa284.meta"
+Content-Disposition: attachment; filename="xsa284.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAyODQsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xMSIsCiAgICAiNC4xMCIsCiAgICAiNC45IiwK
+ICAgICI0LjgiLAogICAgIjQuNyIKICBdLAogICJUcmVlcyI6IFsKICAgICJ4
+ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAgICAi
+UmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJs
+ZVJlZiI6ICJhMDE2YjhmMjA3YzdhM2ZlOGJkZDJiNmY3YzA4MDAyMGUzZTFj
+ODIzIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgXSwKICAg
+ICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjg0LnBhdGNo
+IgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0
+LjExIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewog
+ICAgICAgICAgIlN0YWJsZVJlZiI6ICI4N2Y1MWJmMzY2Y2E3OWI5OGUxZTIw
+MWJmOWJkN2E5YzE2NDYzMWUyIiwKICAgICAgICAgICJQcmVyZXFzIjogWwog
+ICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAg
+ICAieHNhMjg0LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAg
+fQogICAgfSwKICAgICI0LjciOiB7CiAgICAgICJSZWNpcGVzIjogewogICAg
+ICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjcxMGNjMDk2
+OTcxMDE5YmMyZTVhOWFhYmI5YWYxYWNjYTBiNWI5ZTciLAogICAgICAgICAg
+IlByZXJlcXMiOiBbCiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMi
+OiBbCiAgICAgICAgICAgICJ4c2EyODQucGF0Y2giCiAgICAgICAgICBdCiAg
+ICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuOCI6IHsKICAgICAgIlJl
+Y2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVS
+ZWYiOiAiOTA4ZTc2OGZhZTQ5YThkYjAwODllNjgxODg2NTIwNzllM2JmYWE2
+NiIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgIF0sCiAgICAg
+ICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTI4NC5wYXRjaCIK
+ICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC45
+IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAg
+ICAgICAgIlN0YWJsZVJlZiI6ICJmNWFjZjk3ZjY2OWM2YmM5NjkxZTAzNzcx
+YWQwNjcwM2RhNzdlMGQ1IiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAg
+ICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAi
+eHNhMjg0LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQog
+ICAgfSwKICAgICJtYXN0ZXIiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAg
+ICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjI0ZDUyODI1
+MjdmNDY0NzkwN2IzNTcyODIwYjUzMzVjMTVjZDAzNTYiLAogICAgICAgICAg
+IlByZXJlcXMiOiBbCiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMi
+OiBbCiAgICAgICAgICAgICJ4c2EyODQucGF0Y2giCiAgICAgICAgICBdCiAg
+ICAgICAgfQogICAgICB9CiAgICB9CiAgfQp9
+
+--=separator
+Content-Type: application/octet-stream; name="xsa284.patch"
+Content-Disposition: attachment; filename="xsa284.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiBnbnR0YWI6IHNldCBwYWdlIHJlZmNvdW50IGZvciBjb3B5LW9uLWdyYW50
+LXRyYW5zZmVyCgpDb21taXQgNWNjNzdmOTA5OCAoIjMyLW9uLTY0OiBGaXgg
+ZG9tYWluIGFkZHJlc3Mtc2l6ZSBjbGFtcGluZywKaW1wbGVtZW50IiksIHdo
+aWNoIGludHJvZHVjZWQgdGhpcyBmdW5jdGlvbmFsaXR5LCB0b29rIGNhcmUg
+b2YgY2xlYXJpbmcKdGhlIG9sZCBwYWdlJ3MgUEdDX2FsbG9jYXRlZCwgYnV0
+IGZhaWxlZCB0byBzZXQgdGhlIGJpdCAoYW5kIGluc3RhbGwgdGhlCmFzc29j
+aWF0ZWQgcmVmZXJlbmNlKSBvbiB0aGUgbmV3bHkgYWxsb2NhdGVkIG9uZS4g
+RnVydGhlcm1vcmUgdGhlICJtZm4iCmxvY2FsIHZhcmlhYmxlIHdhcyBuZXZl
+ciB1cGRhdGVkLCBhbmQgaGVuY2UgdGhlIHdyb25nIE1GTiB3YXMgcGFzc2Vk
+IHRvCmd1ZXN0X3BoeXNtYXBfYWRkX3BhZ2UoKSAoYW5kIGJhY2sgdG8gdGhl
+IGRlc3RpbmF0aW9uIGRvbWFpbikgaW4gdGhpcwpjYXNlLCBsZWFkaW5nIHRv
+IGFuIElPTU1VIG1hcHBpbmcgaW50byBhbiB1bm93bmVkIHBhZ2UuCgpJZGVh
+bGx5IHRoZSBjb2RlIHdvdWxkIHVzZSBhc3NpZ25fcGFnZXMoKSwgYnV0IHRo
+ZSBjYWxsIHRvCmdudHRhYl9wcmVwYXJlX2Zvcl90cmFuc2ZlcigpIHNpdHMg
+aW4gdGhlIG1pZGRsZSBvZiB0aGUgYWN0aW9ucwptaXJyb3JpbmcgdGhhdCBm
+dW5jdGlvbi4KClRoaXMgaXMgWFNBLTI4NC4KClNpZ25lZC1vZmYtYnk6IEph
+biBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KQWNrZWQtYnk6IEdlb3Jn
+ZSBEdW5sYXAgPGdlb3JnZS5kdW5sYXBAY2l0cml4LmNvbT4KCi0tLSBhL3hl
+bi9jb21tb24vZ3JhbnRfdGFibGUuYworKysgYi94ZW4vY29tbW9uL2dyYW50
+X3RhYmxlLmMKQEAgLTIxODMsNiArMjE4Myw4IEBAIGdudHRhYl90cmFuc2Zl
+cigKICAgICAgICAgICAgIHBhZ2UtPmNvdW50X2luZm8gJj0gfihQR0NfY291
+bnRfbWFza3xQR0NfYWxsb2NhdGVkKTsKICAgICAgICAgICAgIGZyZWVfZG9t
+aGVhcF9wYWdlKHBhZ2UpOwogICAgICAgICAgICAgcGFnZSA9IG5ld19wYWdl
+OworICAgICAgICAgICAgcGFnZS0+Y291bnRfaW5mbyA9IFBHQ19hbGxvY2F0
+ZWQgfCAxOworICAgICAgICAgICAgbWZuID0gcGFnZV90b19tZm4ocGFnZSk7
+CiAgICAgICAgIH0KIAogICAgICAgICBzcGluX2xvY2soJmUtPnBhZ2VfYWxs
+b2NfbG9jayk7Cg==
+
+--=separator--
