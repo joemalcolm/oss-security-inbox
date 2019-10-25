@@ -1,125 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/05/2
-Message-Id: <E1h194b-0001Er-AZ@xenbits.xenproject.org>
-Date: Tue, 05 Mar 2019 12:21:29 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 285 v2 - race with pass-through device hotplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/16
+Message-ID: <20191025205144.231de493@sybil.lepiller.eu>
+Date: Fri, 25 Oct 2019 20:52:02 +0200
+From: Julien Lepiller <security@...iller.eu>
+To: oss-security@...ts.openwall.com
+Subject: Re: Formal verification of open source software
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Le Fri, 25 Oct 2019 18:37:44 +0300,
+Georgi Guninski <gguninski@...il.com> a écrit :
 
-                    Xen Security Advisory XSA-285
-                              version 2
+> On Fri, Oct 25, 2019 at 3:17 PM Hanno Böck <hanno@...eck.de> wrote:
+> >
+> >
+> > There's been a lot of work in the crypto community in this
+> > direction. Most of it is code under OSS licenses:
+> >  
+> 
+> Thanks for the links.
+> 
+> Are there known bugs in formally verified software or hardware?
 
-                 race with pass-through device hotplug
+Hi, I think it's my first time writing to the list :)
 
-UPDATES IN VERSION 2
-====================
+CompCert is not FOSS, but it's a verified compiler. This paper:
+https://www.cs.utah.edu/~regehr/papers/pldi11-preprint.pdf
+tried to find bugs in multiple C compilers. Here is what they say about
+CompCert:
 
-Metadata updated to remove dependency on XSA-283.
+"The striking thing about our CompCert results is that the middle-
+ end bugs we found in all other compilers are absent. As of early 2011,
+ the under-development version of CompCert is the only compiler we
+ have tested for which Csmith cannot find wrong-code errors. This is
+ not for lack of trying: we have devoted about six CPU-years to the
+ task. The apparent unbreakability of CompCert supports a strong
+ argument that developing compiler optimizations within a proof
+ framework, where safety checks are explicit and machine-checked,
+ has tangible benefits for compiler users"
 
-Public release.
+(they have found a few bugs in unverified parts of the compiler,
+though)
 
-ISSUE DESCRIPTION
-=================
+So there is a real impact of formal methods on program correctness. I
+don't know much about other verified software, so I'll be happy to read
+anything about bugs in them.
 
-When adding a passed-through PCI device to a domain after it was already
-started, IOMMU page tables may need constructing on the fly.  For PV
-guests the decision whether a page ought to have a mapping is based on
-whether the page is writable, to prevent IOMMU access to things like
-page tables.  Writablility of a page may, however, change at any time.
-Failure of the relevant code to respect this possible race may lead
-to IOMMU mappings of, in particular, page tables, allowing the guest
-to alter such page tables without Xen auditing the changes.
-
-IMPACT
-======
-
-Malicious PV guests can escalate their privilege to that of the
-hypervisor.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are vulnerable.
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-Only x86 PV guests can exploit the vulnerability.  x86 HVM and PVH
-guests cannot exploit the vulnerability.
-
-Only guests which are assigned a device after domain creation can
-exploit this vulnerability.  Guests which are not assigned devices, or
-guests assigned devices at domain creation time, cannot exploit this
-vulnerability.
-
-MITIGATION
-==========
-
-Running only HVM or PVH guests avoids the vulnerability.
-
-Assigning passed-through PCI devices to PV guests at domain creation
-time also avoids the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa285.patch           xen-unstable
-xsa285-4.11.patch      Xen 4.7.x - Xen 4.11.x
-
-$ sha256sum xsa285*
-0851a4a9120220e2b03eafaf94648077154b6a6f27c29055d3779ccad7684fce  xsa285.meta
-9e96d3763158edde8d664c3e26761e63ca6f96bb921e0d7eb68351fe47499bde  xsa285.patch
-38ec20b04e0a859abe9850803ae00a33e48591a9949e5287dfa3725f3bd179f3  xsa285-4.11.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlx+aa0MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZhOAIAMZ/Q0Pq2cnicghrabKDMjKUsdyAcbK20sxXdx9y
-l0abU4kMQcnsejlbGfAhZQaDIpkGZN+rNw0BnC3VBH61en22q3yNlQsxP/eQhGKm
-du7sdN6DBayqX1Sjdn+UPzrDFTu7JoSsXN9NrHKgVXNS+jKWZOR9yfZBYFAk3RQB
-R1oYL2OYiyYFibxzNwbiLxzgEhGls38JzDtvTDuN6YBViaWQWgE9aOCzTZ6vOlzn
-BcZf5fHc6F/zg5xI3FhBYEPfBdAZvno/xJJymxENWegqwhdgfx6uWetT3M6axv89
-h0HdmJ5KaMOdD96Tf+CUVI3N7UcVcuyAaMQqJVAM/+gAiU0=
-=+pPX
------END PGP SIGNATURE-----
-
-Download attachment "xsa285.meta" of type "application/octet-stream" (1723 bytes)
-
-Download attachment "xsa285.patch" of type "application/octet-stream" (2148 bytes)
-
-Download attachment "xsa285-4.11.patch" of type "application/octet-stream" (2077 bytes)
+> 
+> Is there any software which comes with monetary warranty?
+> 
+> Are loops sizes in C code serious problem for verification?
+> (something like infinity in math. IIRC Coq have problem with this).
