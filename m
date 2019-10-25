@@ -1,47 +1,144 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/12/4
-Message-ID: <eLEcaAZ84viV-VsSdpXT33_w8eR6Sg6SPnu8naoZWbu5LE7Dm9Tn6HawkbPVhQXfCToNDJBsX7JZ_fZHsDj4xSp9UCrgBltJaT65sR3NUu4=@protonmail.ch>
-Date: Fri, 12 Jul 2019 14:40:19 +0000
-From: Jordan Glover <Golden_Miller83@...tonmail.ch>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: Simon McVittie <smcv@...ian.org>
-Subject: Re: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/10
+Message-Id: <E1iNxUx-0003zV-7X@xenbits.xenproject.org>
+Date: Fri, 25 Oct 2019 11:11:15 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 288 v3 (CVE-2019-17343) - x86: Inconsistent PV IOMMU discipline
 Content-Type: text/plain; charset=utf-8
 
-On Friday, July 12, 2019 12:37 AM, Perry E. Metzger <perry@...rmont.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Thu, 11 Jul 2019 21:20:15 +0100 Simon McVittie smcv@...ian.org
-> wrote:
->
-> > On Thu, 11 Jul 2019 at 11:47:10 -0400, Perry E. Metzger wrote:
-> >
-> > > having to add file i/o subsystems inside of dbus(!) probably does
-> > > add lots of threats
-> >
-> > I think you might be misunderstanding the scope of D-Bus.
->
-> Not really. The whole point is that instead of having the operating
-> system alone as part of your file security implementation you now
-> have a brand new service, an IPC mechanism, and loads of other stuff,
-> instead of having your app just do open(2) and write(2) etc.
+            Xen Security Advisory CVE-2019-17343 / XSA-288
+                              version 3
 
-Do you mean that IPC and D-bus aren't part of the OS? Then what is?
+                 x86: Inconsistent PV IOMMU discipline
 
-> It seems architecturally bad from a security perspective. The number
-> the number of trusted entities, the number of moving parts, the number
-> of mechanisms, and thus the number of ways things can go wrong keeps
-> going up. This is a mistake. And btw, this is a major piece of
-> mechanism being added just to handle the problem of someone wanting to
-> pop open an editor inside a GUI to edit a system config file, which is
-> not a major attack vector. But, now I have to worry about this new
-> file access service providing an attack surface that didn't exist
-> before.
->
-> What's the right way to handle this stuff? Capabilities,
-> probably. It's what they're designed for.
+UPDATES IN VERSION 3
+====================
 
-They're completely not designed for this case. Setting CAP_DAC_OVERRIDE
-or CAP_SYS_ADMIN is very close to SUID root. See:
-https://grsecurity.net/false_boundaries_and_arbitrary_code_execution.php
+CVE assigned.
 
-Jordan
+ISSUE DESCRIPTION
+=================
+
+In order for a PV domain to set up DMA from a passed-through device to
+one of its pages, the page must be mapped in the IOMMU.  On the other
+hand, before a PV page may be used as a "special" page type (such as a
+pagetable or descriptor table), it _must not_ be writable in the IOMMU
+(otherwise a malicious guest could DMA arbitrary page tables into the
+memory, bypassing Xen's safety checks); and Xen's current rule is to
+have such pages not in the IOMMU at all.
+
+Until now, in order to accomplish this, the code has borrowed HVM
+domain's "physmap" concept: When a page is assigned to a guest,
+guess_physmap_add_entry() is called, which for PV guests, will create
+a writable IOMMU mapping; and when a page is removed,
+guest_physmap_remove_entry() is called, which will remove the mapping.
+
+Additionally, when a page gains the PGT_writable page type, the page
+will be added into the IOMMU; and when the page changes away from a
+PGT_writable type, the page will be removed from the IOMMU.
+
+Unfortunately, borrowing the "physmap" concept from HVM domains is
+problematic.  HVM domains have a lock on their p2m tables, ensuring
+synchronization between modifications to the p2m; and all hypercall
+parameters must first be translated through the p2m before being used.
+Trying to mix this locked-and-gated approach with PV's lock-free
+approach leads to several races and inconsistencies.
+
+IMPACT
+======
+
+An untrusted PV domain with access to a physical device can DMA into
+its own pagetables, leading to privilege escalation.
+
+VULNERABLE SYSTEMS
+==================
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+Only systems where PV guests are given direct access to physical
+devices (PCI pass-through) are vulnerable.  Systems with only HVM
+guests, or systems which do not use PCI pass-through, are not
+vulnerable.
+
+MITIGATION
+==========
+
+Only assigning devices to HVM guests will avoid these vulnerabilities.
+
+CREDITS
+=======
+
+This issue was discovered by Paul Durrant of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa288.patch           xen-unstable
+xsa288-4.11.patch      Xen 4.11.x, Xen 4.10.x
+xsa288-4.9.patch       Xen 4.9.x
+xsa288-4.8.patch       Xen 4.8.x
+xsa288-4.7.patch       Xen 4.7.x
+
+$ sha256sum xsa288*
+7254f0ce791b5543aec68643ec47e2bcf7823650949c7eb32db5122591f12e8c  xsa288.meta
+e1159cb5c1c5a01b28753739b6a78b555ebe4b920cae766db47e0f2a1a21c188  xsa288.patch
+e9986ceda84e7391c27d80fd541a0e5edf1eadef302a560b4e445ca9bad4c56e  xsa288-4.7.patch
+14856543ccaa5b3db2a209d25637ed025f2eb940294d0cd07e03f56630a9e5af  xsa288-4.8.patch
+df5e4a367f58491d54c778e2997142792c881d4f7b5a2a1d3339d2a3f1abafe5  xsa288-4.9.patch
+58ba46b4814695dc34beaa5fb644931253bd0b0c6a8dc843c735beec152ae722  xsa288-4.11.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y19AMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZmCoH/3PTKQLGVnhe5iGtXVgfbb1h+vz/8t/BATDFgreL
+LXSvxxK42FZ+inbr/qz/NUPS21yISOUu9agqWFzTq5qYpU1E4+FybwdjvIHBE6tG
+16gFjHYfawvA3QAPndaZR8vdWVqOEu/YdhOSa7m9vRiUnxh2B44nX0oT/bXuGdKv
+pyKrQk91hpeWPXxWzJ2k1hy1+/I+eEDxLvauvVaIulO/0bQyMTWcCDRCYdzShJEp
+njdVj3+4ZvvNbtc4zrWmVtfyZfMLWFdYwCTcTQ7Gy0b9wVmGhD1UhZsgXd4i8H2Z
+62HfUOesi7yO2OtI1T08GaRFoo9ArcUbyEKvxTGW5Iyh6NE=
+=EvlR
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa288.meta" of type "application/octet-stream" (1924 bytes)
+
+Download attachment "xsa288.patch" of type "application/octet-stream" (11688 bytes)
+
+Download attachment "xsa288-4.7.patch" of type "application/octet-stream" (11857 bytes)
+
+Download attachment "xsa288-4.8.patch" of type "application/octet-stream" (12251 bytes)
+
+Download attachment "xsa288-4.9.patch" of type "application/octet-stream" (12226 bytes)
+
+Download attachment "xsa288-4.11.patch" of type "application/octet-stream" (12244 bytes)
