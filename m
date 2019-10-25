@@ -1,16 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/4
-Message-ID: <20190604102246.GA15069@espresso.pseudorandom.co.uk>
-Date: Tue, 4 Jun 2019 11:22:46 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/15
+Message-ID: <CA+fCnZc5Qd0wkabhMgfte8OpPmTiYbT+pL7UC7xq6W_DMj1BZw@mail.gmail.com>
+Date: Fri, 25 Oct 2019 20:09:01 +0200
+From: Andrey Konovalov <andreyknvl@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
+Cc: mathias.payer@...elwelt.net, Hui Peng <benquike@...il.com>
+Subject: Do distros want to see CVEs for Linux kernel USB bugs?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 03 Jun 2019 at 22:19:23 +0200, Heiko Schlittermann wrote:
-> t0    is expected to be 2019-06-04, 10:00 UTC
-> t0+7d is expected to be 2019-06-04, 10:00 UTC
+Hi!
 
-Was t0+7d meant to be 2019-06-11?
+As we keep getting more USB bugs reported by syzbot [1], I'd like to
+figure out what to do with those in regards to CVEs. Last time I
+requested a bunch of CVEs for USB bugs, there was a long discussion
+about whether that is the right thing to do, see the full thread here
+[2].
 
-    smcv
+I don't want to argue now whether CVEs are useful for the upstream
+Linux kernel. My question is: with CVEs as they work today, do Linux
+distros want to see CVEs filed for Linux kernel bugs that are
+triggerable by a malicious USB device?
+
+Since not all USB bugs are the same, let's bucket them into:
+
+1. Different kinds of DoS (e.g. null-ptr-deref).
+2. Info / uninitialized memory leaks.
+3. Bugs that lead to arbitrary code execution.
+4. Non-triaged memory corruptions (UAF/OOB).
+
+Points 1-3 refer to the bugs that have been assessed for the impact
+that they cause, while point 4 refers to the bugs that haven't been
+looked at closely.
+
+Keep in mind that:
+
+1. Most of the time physical access to the USB port is required to
+trigger these bugs.
+2. Sometimes, in cases of e.g. exposed USB/IP or USBAnywhere like
+vulnerabilities [3] these bugs can be triggered remotely.
+
+Thanks!
+
+[1] https://syzkaller.appspot.com/upstream?manager=ci2-upstream-usb
+
+[2] https://www.openwall.com/lists/oss-security/2019/08/20/2
+
+[3] https://github.com/eclypsium/USBAnywhere
