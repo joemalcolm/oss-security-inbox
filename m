@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9347" "Tuesday" "14" "August" "2018" "17:19:35" "+0000" "Xen.org security team" "security@xen.org" "<E1fpcyl-0001qx-Dd@xenbits.xenproject.org>" "239" "[oss-security] Xen Security Advisory 272 v2 - oxenstored does not apply quota-maxentity" nil nil nil "8" "2018081417:19:35" "[oss-security] Xen Security Advisory 272 v2 - oxenstored does not apply quota-maxentity" (number mark "U       security@xen Aug 14  239/9347  " thread-indent "\"[oss-security] Xen Security Advisory 272 v2 - oxenstored does not apply quota-maxentity\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["414" "Friday" "25" "October" "2019" "13:43:57" "+0300" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>" "12" "[oss-security] Formal verification of open source software" "^Date:" nil nil "10" "2019102510:43:57" "[oss-security] Formal verification of open source software" (number mark "        gguninski@gm Oct 25   12/414   " thread-indent "\"[oss-security] Formal verification of open source software\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Formal verification of open source software" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23956 invoked by uid 550); 14 Aug 2018 17:19:56 -0000
+Received: (qmail 28190 invoked by uid 550); 25 Oct 2019 11:15:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,257 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23850 invoked from network); 14 Aug 2018 17:19:54 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 19805 invoked from network); 25 Oct 2019 10:44:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=w2vaoeYkboExSpQ5+fq1v9RWg49ZieHMZEYD45LHcWg=;
+        b=Z2MqOL853MdQJ+llxNl4Z8FTehljGP+H1B3WQ11xLNcPtQ3/0aU6AWucKjwN92e2sf
+         CNg0kdaXtWIRhQ730QMGUkz9EN5dQLt+ZrfF5iiM9dDmdH6jd1ASEAL4E4sHQLynkkKj
+         mrUoXj1ozeoHmPlKojGaexkc+IS6u9Ue1clmt3uOMLeUuLfstR0f96tSj4zImdScqfC/
+         mnucyKP2q4XPDtllpoyoDkTqw4Q/UOans1sAHVobSDuGCBXJgUOzzrmDAC+FP9SCHt+f
+         hL+SBNiu1u3d9ebNXwgw1IAa00/spHAEL69B9/tf2+lMdJPZpwizFDiCBrV+A4hPJLGx
+         UfkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=w2vaoeYkboExSpQ5+fq1v9RWg49ZieHMZEYD45LHcWg=;
+        b=ufXQLWXW9Uib16rKUBJ0rb3DWd5GvvMGq84nGyJ7sTNfuFJo3VUOoosZ8+ftvu4Po7
+         4a/ukDyrLl+p0PuYKN89fL1VSZgdHsLZPBQ+qiA/GUDHuCAZ2swIuPpkMC3Cn6/hHl30
+         BHOJYxSJ6dY67m+bAGfIr0wLqeljhTgGTX5x8bIpeawEoldLlXrlQ+dpw5o3uwr/jcDB
+         VpWLfonaMqp1k58huCRjUc3lDfb53xNIkxb7WWQWUcQFUmp/M/RO/mMKluZXR1h3VIG1
+         5CFKCZ7G0Oobe9nwRDi0x5Xs/Gwsxg/621cSVZ+PgcsJYQAa5QfOe/LzEBADFKyqxAax
+         0dig==
+X-Gm-Message-State: APjAAAWWrD+Lr73UXDVpoqvXLtgEYkHmgUCOWjdWm/6TUSTpYBO4pLdo
+	5BefumQCRS3nIeJKNJ2SBGY6lfyGTlZe5piWwlrYT0LV
+X-Google-Smtp-Source: APXvYqyTw7bqutcMRSyAGwVgAOugUV9ybCqYpqpMwzM/15c4dc33CCNIgG7QrSeGP62vjgSGb/BFvaCztN7IcjhiVL4=
+X-Received: by 2002:a02:300f:: with SMTP id q15mr3280979jaq.6.1572000250792;
+ Fri, 25 Oct 2019 03:44:10 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1fpcyl-0001qx-Dd@xenbits.xenproject.org>
-Date: Tue, 14 Aug 2018 17:19:35 +0000
-Subject: [oss-security] Xen Security Advisory 272 v2 - oxenstored does not apply
- quota-maxentity
+Message-ID: <CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Fri, 25 Oct 2019 13:43:57 +0300
+From: Georgi Guninski <gguninski@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Formal verification of open source software
+To: oss-security@lists.openwall.com
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Are there success stories of formal verification of open source
+software?
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+IIRC there was kernel verified by the Isabelle prover.
 
-                    Xen Security Advisory XSA-272
-                              version 2
+>From experience, I am skeptical about bugs in provers
+and had false proofs in CBMC and Coq (long ago).
 
-               oxenstored does not apply quota-maxentity
-
-UPDATES IN VERSION 2
-====================
-
-Ammend patch to reference XSA-272 in the commit message.
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The logic in oxenstored for handling writes depended on the order of
-evaluation of expressions making up a tuple.
-
-As indicated in section 7.7.3 "Operations on data structures" of the
-OCaml manual:
-
-  http://caml.inria.fr/pub/docs/manual-ocaml/expr.html
-
-the order of evaluation of subexpressions is not specified.  In
-practice, different implementations behave differently.
-
-IMPACT
-======
-
-oxenstored may not enforce the configured quota-maxentity.
-
-This allows a malicious or buggy guest to write as many xenstore entries
-as it wishes, causing unbounded memory usage in oxenstored.  This can
-lead to a system-wide DoS.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.1 and later are potentially vulnerable.
-
-Only systems using the OCaml xenstored implementation are potentially
-vulnerable.  Systems using the C xenstored implementation are not
-vulnerable.
-
-Whether the compiled oxenstored binary is vulnerable depends on which
-compiler was used.  OCaml can be compiled either as bytecode (with
-ocamlc) or as a native binary (with ocamlopt).
-
-The following OCaml program demonstrates the issue, and identifies
-whether the resulting oxenstored binary will skip the quota enforcement.
-
-  $ cat order.ml
-  let check () =
-    let flag = ref false in
-    let update _ = flag := true; () in
-    List.iter update [1;2;3], !flag
-
-  let main () =
-    let _, flag = check () in
-    if flag then
-    print_endline "This code is not vulnerable!"
-    else
-    print_endline "This code is vulnerable!"
-
-  let () = main ()
-
-  $ ocamlc order.ml -o order.bytecode
-  $ ./order.bytecode
-  This code is vulnerable!
-  $ ocamlopt order.ml -o order.native
-  $ ./order.native
-  This code is not vulnerable!
-
-To confirm whether an OCaml binary is bytecode or native, use file.
-
-  $ file order.bytecode
-  order.bytecode: a /usr/bin/ocamlrun script executable (binary data)
-  $ file order.native
-  order.native: ELF 64-bit LSB executable, ...
-
-NOTE: These results are applicable to OCaml 4.01.0-5 as distributed in
-Debian Jessie.  These results are not representative of other versions
-of OCaml, or of other OS distributions.
-
-MITIGATION
-==========
-
-There are no mitigations available.
-
-CREDITS
-=======
-
-This issue was discovered by Christian Lindig of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa272.patch           All versions of Xen
-
-$ sha256sum xsa272*
-0da953ca48d0cf0688ecff6a074304a9d2217871809a76ef26b9addeb66ecb3e  xsa272.meta
-6e0359d89bf65794f16d39198cc90f5c3137bce4eb850e54625ab00e2c568c2c  xsa272.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbcw8fAAoJEIP+FMlX6CvZ1VYIALce26h9Sf0P0joLd/fhUwf4
-JcCIaTWvHsy0ucJgpi7i+SCMa7Iz60CriK6dSYlwIuPvka8XU5MDmZ56gbENApDZ
-ibWMwvyCrgb0BH3VIwJZfk7eaKM7OwKeEnnIrIWaVGsT2StwoZOHgdLRLCTSFJ/K
-iss3ALSzZ8z7/WqEkBE3JeJ7skrh5nmNp428fJXWYhOyYbqkqyggn6XzBQg/EzGD
-vabxz4CdYCr1ox7sq42Q/UFeLoWB6CKCLgRgqOGyCrm7K324ymBzRXtXpPUrLEaq
-ugR27W/zr09e8N/fOhH4dBNCzkktuqclwrfMlFr1WUfiltSDmVwNZkURkvVGeu0=
-=TPZD
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa272.meta"
-Content-Disposition: attachment; filename="xsa272.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAyNzIsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xMSIsCiAgICAiNC4xMCIsCiAgICAiNC45IiwK
-ICAgICI0LjgiLAogICAgIjQuNyIsCiAgICAiNC42IgogIF0sCiAgIlRyZWVz
-IjogWwogICAgInhlbiIKICBdLAogICJSZWNpcGVzIjogewogICAgIjQuMTAi
-OiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAg
-ICAgICAiU3RhYmxlUmVmIjogIjg3YzgzYWYzMzNlMDI0OGFkYTJlNjU2MDk2
-NWFjYTYwOTZlYzdmMmIiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAg
-ICAgICAgIDI2OCwKICAgICAgICAgICAgMjY5CiAgICAgICAgICBdLAogICAg
-ICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EyNzIucGF0Y2gi
-CiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQu
-MTEiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAg
-ICAgICAgICAiU3RhYmxlUmVmIjogIjMzY2VkNzI1ZTExYWY0ZWFiZDMzMzRk
-MTJmNTNlZDgwN2U5ZTI1ODYiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAg
-ICAgICAgICAgIDI2OCwKICAgICAgICAgICAgMjY5CiAgICAgICAgICBdLAog
-ICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EyNzIucGF0
-Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAg
-IjQuNiI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsK
-ICAgICAgICAgICJTdGFibGVSZWYiOiAiOThkNzk0OGI1MGI0ZTkxZWM0ZWZh
-ODYwZGEzMmQ5YWM0ZmU2OTMwMCIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsK
-ICAgICAgICAgICAgMjY4LAogICAgICAgICAgICAyNjkKICAgICAgICAgIF0s
-CiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTI3Mi5w
-YXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAg
-ICAiNC43IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjog
-ewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI5MWNhODRjODYyYjE1ZmU3NGFi
-OWI1ODcwZTY2OTAzYWVjNGY4NmRkIiwKICAgICAgICAgICJQcmVyZXFzIjog
-WwogICAgICAgICAgICAyNjgsCiAgICAgICAgICAgIDI2OQogICAgICAgICAg
-XSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjcy
-LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwK
-ICAgICI0LjgiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4i
-OiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogImFhNDUwMTUzZjJkOTYwYzIx
-NzE0OWIzMWI2OGE4YjU3YzVhOGU1OTUiLAogICAgICAgICAgIlByZXJlcXMi
-OiBbCiAgICAgICAgICAgIDI2OCwKICAgICAgICAgICAgMjY5CiAgICAgICAg
-ICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ey
-NzIucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9
-LAogICAgIjQuOSI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhl
-biI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiYTFiMjIzYjc1NmYzNTQ4
-OTU1MjUwNjBiZDNmOWYxZjA3ODk5YTA4MiIsCiAgICAgICAgICAiUHJlcmVx
-cyI6IFsKICAgICAgICAgICAgMjY4LAogICAgICAgICAgICAyNjkKICAgICAg
-ICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhz
-YTI3Mi5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAg
-IH0sCiAgICAibWFzdGVyIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAg
-ICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJhY2QwMGEzMDMz
-NzhjZTQ4YmQ2YmJkOGE1NzlmMWZlMmYxYjIxYTdkIiwKICAgICAgICAgICJQ
-cmVyZXFzIjogWwogICAgICAgICAgICAyNjgsCiAgICAgICAgICAgIDI2OQog
-ICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAg
-ICAieHNhMjcyLnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAg
-fQogICAgfQogIH0KfQ==
-
---=separator
-Content-Type: application/octet-stream; name="xsa272.patch"
-Content-Disposition: attachment; filename="xsa272.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQ2hyaXN0aWFuIExpbmRpZyA8Y2hyaXN0aWFuLmxpbmRpZ0BjaXRy
-aXguY29tPgpTdWJqZWN0OiB0b29scy9veGVuc3RvcmVkOiBNYWtlIGV2YWx1
-YXRpb24gb3JkZXIgZXhwbGljaXQKCkluIFN0b3JlLnBhdGhfd3JpdGUoKSwg
-UGF0aC5hcHBseV9tb2RpZnkoKSB1cGRhdGVzIHRoZSBub2RlX2NyZWF0ZWQK
-cmVmZXJlbmNlIGFuZCBib3RoIHRoZSB2YWx1ZSBvZiBhcHBseV9tb2RpZnko
-KSBhbmQgbm9kZV9jcmVhdGVkIGFyZQpyZXR1cm5lZCBieSBwYXRoX3dyaXRl
-KCkuCgpBdCBsZWFzdCB3aXRoIE9DYW1sIDQuMDYuMSB0aGlzIGxlYWRzIHRv
-IHRoZSB2YWx1ZSBvZiBub2RlX2NyZWF0ZWQgYmVpbmcKcmV0dXJuZWQgKmJl
-Zm9yZSogaXQgaXMgdXBkYXRlZCBieSBhcHBseV9tb2RpZnkoKS4gIFRoaXMg
-aW4gdHVybiBsZWFkcwp0byB0aGUgcXVvdGEgZm9yIGEgZG9tYWluIG5vdCBi
-ZWluZyB1cGRhdGVkIGluIFN0b3JlLndyaXRlKCkuICBIZW5jZSwgYQpndWVz
-dCBjYW4gY3JlYXRlIGFuIHVubGltaXRlZCBudW1iZXIgb2YgZW50cmllcyBp
-biB4ZW5zdG9yZS4KClRoZSBmaXggaXMgdG8gbWFrZSBldmFsdWF0aW9uIG9y
-ZGVyIGV4cGxpY2l0LgoKVGhpcyBpcyBYU0EtMjcyLgoKU2lnbmVkLW9mZi1i
-eTogQ2hyaXN0aWFuIExpbmRpZyA8Y2hyaXN0aWFuLmxpbmRpZ0BjaXRyaXgu
-Y29tPgpSZXZpZXdlZC1ieTogUm9iIEhvZXMgPHJvYi5ob2VzQGNpdHJpeC5j
-b20+CgpkaWZmIC0tZ2l0IGEvdG9vbHMvb2NhbWwveGVuc3RvcmVkL3N0b3Jl
-Lm1sIGIvdG9vbHMvb2NhbWwveGVuc3RvcmVkL3N0b3JlLm1sCmluZGV4IDlm
-NjE5YjhmZDUuLjhiMDcyN2Y4YTggMTAwNjQ0Ci0tLSBhL3Rvb2xzL29jYW1s
-L3hlbnN0b3JlZC9zdG9yZS5tbAorKysgYi90b29scy9vY2FtbC94ZW5zdG9y
-ZWQvc3RvcmUubWwKQEAgLTI1Nyw3ICsyNTcsOCBAQCBsZXQgcGF0aF93cml0
-ZSBzdG9yZSBwZXJtIHBhdGggdmFsdWUgPQogCQlOb2RlLmNoZWNrX3Blcm0g
-c3RvcmUucm9vdCBwZXJtIFBlcm1zLldSSVRFOwogCQlOb2RlLnNldF92YWx1
-ZSBzdG9yZS5yb290IHZhbHVlLCBmYWxzZQogCSkgZWxzZQotCQlQYXRoLmFw
-cGx5X21vZGlmeSBzdG9yZS5yb290IHBhdGggZG9fd3JpdGUsICFub2RlX2Ny
-ZWF0ZWQKKwkJbGV0IHJvb3QgPSBQYXRoLmFwcGx5X21vZGlmeSBzdG9yZS5y
-b290IHBhdGggZG9fd3JpdGUgaW4KKwkJcm9vdCwgIW5vZGVfY3JlYXRlZAog
-CiBsZXQgcGF0aF9ybSBzdG9yZSBwZXJtIHBhdGggPQogCWxldCBkb19ybSBu
-b2RlIG5hbWUgPQo=
-
---=separator--
+PS: I am looking for remote job. Probably you don't I
+want to sell out to the communist party of
+People's Republic of China or the NORKs ;)
+CV: https://j.ludost.net/resumegg.pdf
