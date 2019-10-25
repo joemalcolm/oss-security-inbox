@@ -1,38 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/2
-Message-ID: <9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
-Date: Thu, 11 Jul 2019 07:51:17 +0000
-From: Malte Kraus <malte.kraus@...e.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "perry@...rmont.com" <perry@...rmont.com>
-Subject: Re: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/6
+Message-Id: <E1iNxUF-0002fv-DR@xenbits.xenproject.org>
+Date: Fri, 25 Oct 2019 11:10:31 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 285 v3 (CVE-2019-17341) - race with pass-through device hotplug
 Content-Type: text/plain; charset=utf-8
 
-Hi Perry,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, 2019-07-09 at 11:30 -0400,  Perry E. Metzger wrote:
-> Can you explain (or point to) a description of why this is a problem?
-I'm not sure what exactly breaks, just that it does, see e.g. [1] [2]
-[3]. Since we're talking about root it's not a matter of technical
-impossibility, but a decision not to write the code to make it work.
+            Xen Security Advisory CVE-2019-17341 / XSA-285
+                              version 3
 
-From a security perspective that seems like a great improvement. Even
-if it should be the case that some programs don't follow best practices
-re "least privileges", at least it's not the whole application running
-as root.
+                 race with pass-through device hotplug
 
-1: 
-https://wiki.archlinux.org/index.php/Running_GUI_applications_as_root#Wayland
-2: 
-https://wiki.debian.org/Wayland#I.27m_accustomed_to_running_various_programs_.28e.g._synaptic.29_as_root_in_my_X_session.__How_will_this_work_under_Wayland.3F
-3: 
-https://fedoraproject.org/wiki/How_to_debug_Wayland_problems#Graphical_applications_can.27t_be_run_as_root_from_terminal
+UPDATES IN VERSION 3
+====================
 
--- 
-Malte Kraus <malte.kraus@...e.com>
-Security Engineer
-PGP Key: 8AFC 3C58 6880 2DDD 4792  C3C2 FDBD 2984 D4C3 C2F0
-SUSE Software Solutions Germany GmbH, GF: Felix Imendörffer, Mary
-Higgins, Sri Rasiah, HRB 21284 (AG Nürnberg)
+CVE assigned.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+ISSUE DESCRIPTION
+=================
+
+When adding a passed-through PCI device to a domain after it was already
+started, IOMMU page tables may need constructing on the fly.  For PV
+guests the decision whether a page ought to have a mapping is based on
+whether the page is writable, to prevent IOMMU access to things like
+page tables.  Writablility of a page may, however, change at any time.
+Failure of the relevant code to respect this possible race may lead
+to IOMMU mappings of, in particular, page tables, allowing the guest
+to alter such page tables without Xen auditing the changes.
+
+IMPACT
+======
+
+Malicious PV guests can escalate their privilege to that of the
+hypervisor.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+Only x86 PV guests can exploit the vulnerability.  x86 HVM and PVH
+guests cannot exploit the vulnerability.
+
+Only guests which are assigned a device after domain creation can
+exploit this vulnerability.  Guests which are not assigned devices, or
+guests assigned devices at domain creation time, cannot exploit this
+vulnerability.
+
+MITIGATION
+==========
+
+Running only HVM or PVH guests avoids the vulnerability.
+
+Assigning passed-through PCI devices to PV guests at domain creation
+time also avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa285.patch           xen-unstable
+xsa285-4.11.patch      Xen 4.7.x - Xen 4.11.x
+
+$ sha256sum xsa285*
+0851a4a9120220e2b03eafaf94648077154b6a6f27c29055d3779ccad7684fce  xsa285.meta
+9e96d3763158edde8d664c3e26761e63ca6f96bb921e0d7eb68351fe47499bde  xsa285.patch
+38ec20b04e0a859abe9850803ae00a33e48591a9949e5287dfa3725f3bd179f3  xsa285-4.11.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y178MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZnhUIALWg5ROzP7vpvNOEQDICm/A/AxjPLB6uHnj95bBJ
+CxfLZPZyxUak9jmn8bJJrhJBNGS/RFUWrwWm+mHku8ywNKTcHkhGtweS8/GjuMeG
+I7hhh/Ux39vs/kPWvy7uydMIMrcIsiG69NWXl6xWMGkcmcmlkJCAi2KHX20Jb5qi
+Izy7swNoBFWuuGMaBTg8YJ+XfqQGonemzgviY01EHQqJo/2wPyJjgsbZzu6XlNJc
+R3K9K4RDzjtemIEQps9CWA8ilEXxv6DIhVKBx0gNLIrJZPVEh2awLr5Ve2YZIdk6
+N5hSP2LFyueDhmKvwrMnrrKF4XqHlfyIsW0l8TXwa/OUTVI=
+=6noj
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa285.meta" of type "application/octet-stream" (1723 bytes)
+
+Download attachment "xsa285.patch" of type "application/octet-stream" (2148 bytes)
+
+Download attachment "xsa285-4.11.patch" of type "application/octet-stream" (2077 bytes)
