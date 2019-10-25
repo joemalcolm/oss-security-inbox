@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/24/1
-Message-ID: <nycvar.YSQ.7.76.1901241241500.20220@xnncv>
-Date: Thu, 24 Jan 2019 12:43:37 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2019-6501 QEMU: scsi-generic: possible OOB access while handling inquiry request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/14
+Message-ID: <CAGUWgD-Dhg-ORKcT5=rV5Dpz=6J0DAaOOHA5SaZ=HMPfvuZBmw@mail.gmail.com>
+Date: Fri, 25 Oct 2019 18:37:44 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Formal verification of open source software
 Content-Type: text/plain; charset=utf-8
 
-  Hello,
+On Fri, Oct 25, 2019 at 3:17 PM Hanno Böck <hanno@...eck.de> wrote:
+>
+>
+> There's been a lot of work in the crypto community in this direction.
+> Most of it is code under OSS licenses:
+>
 
-An out of bounds r/w access issue was found in the way QEMU handled inquiry 
-request coming from a guest in scsi_handle_inquiry_reply(). A guest 
-user/process could use this flaw to corrupt byte of QEMU process memory.
+Thanks for the links.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2019-01/msg02324.html
+Are there known bugs in formally verified software or hardware?
 
-CVE-2019-6501 requested via -> https://cveform.mitre.org/
+Is there any software which comes with monetary warranty?
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Are loops sizes in C code serious problem for verification?
+(something like infinity in math. IIRC Coq have problem with this).
