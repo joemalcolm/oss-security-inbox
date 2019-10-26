@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["876" "Friday" "17" "April" "2015" "09:41:46" "+0200" "Florian Weimer" "fweimer@redhat.com" "<5530B93A.5090701@redhat.com>" "21" "[oss-security] Re: kernel: fs.suid_dumpable=2 privilege escalation" nil nil nil "4" "2015041707:41:46" "[oss-security] Re: kernel: fs.suid_dumpable=2 privilege escalation" (number mark "        fweimer@redh Apr 17   21/876   " thread-indent "\"[oss-security] Re: kernel: fs.suid_dumpable=2 privilege escalation\"\n") "<CAGXu5jK2m4qZ0Qmhr9zUFjCxNPza6bRsAaAxDaxM9oUi+b=99Q@mail.gmail.com>" ("<552FAE4F.6070300@redhat.com>" "<CAGXu5jK2m4qZ0Qmhr9zUFjCxNPza6bRsAaAxDaxM9oUi+b=99Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1890" "Saturday" "26" "October" "2019" "08:43:47" "+0200" "Marcus Meissner" "meissner@suse.de" "<20191026064347.GR7189@suse.de>" "50" "Re: [oss-security] Do distros want to see CVEs for Linux kernel USB bugs?" "^Cc:" nil nil "10" "2019102606:43:47" "[oss-security] Do distros want to see CVEs for Linux kernel USB bugs?" (number mark "        meissner@sus Oct 26   50/1890  " thread-indent "\"Re: [oss-security] Do distros want to see CVEs for Linux kernel USB bugs?\"\n") "<CA+fCnZc5Qd0wkabhMgfte8OpPmTiYbT+pL7UC7xq6W_DMj1BZw@mail.gmail.com>" ("<CA+fCnZc5Qd0wkabhMgfte8OpPmTiYbT+pL7UC7xq6W_DMj1BZw@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Do distros want to see CVEs for Linux kernel USB bugs?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3413 invoked by uid 550); 17 Apr 2015 07:59:16 -0000
+Received: (qmail 24561 invoked by uid 550); 26 Oct 2019 06:44:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3382 invoked from network); 17 Apr 2015 07:59:15 -0000
-Message-ID: <5530B93A.5090701@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+Received: (qmail 24543 invoked from network); 26 Oct 2019 06:44:00 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20191026064347.GR7189@suse.de>
+References: <CA+fCnZc5Qd0wkabhMgfte8OpPmTiYbT+pL7UC7xq6W_DMj1BZw@mail.gmail.com>
 MIME-Version: 1.0
-References: <552FAE4F.6070300@redhat.com> <CAGXu5jK2m4qZ0Qmhr9zUFjCxNPza6bRsAaAxDaxM9oUi+b=99Q@mail.gmail.com>
-In-Reply-To: <CAGXu5jK2m4qZ0Qmhr9zUFjCxNPza6bRsAaAxDaxM9oUi+b=99Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-CC: oss-security@lists.openwall.com
-Date: Fri, 17 Apr 2015 09:41:46 +0200
-From: Florian Weimer <fweimer@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+fCnZc5Qd0wkabhMgfte8OpPmTiYbT+pL7UC7xq6W_DMj1BZw@mail.gmail.com>
+Organization: SUSE Software Solutions Germany GmbH, Maxfeldstr. 5, 90409
+ Nuernberg, Germany
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: mathias.payer@nebelwelt.net, Hui Peng <benquike@gmail.com>
+Date: Sat, 26 Oct 2019 08:43:47 +0200
+From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: kernel: fs.suid_dumpable=2 privilege escalation
-To: Kees Cook <keescook@chromium.org>
+Subject: Re: [oss-security] Do distros want to see CVEs for Linux kernel USB
+ bugs?
+To: oss-security@lists.openwall.com
 
-On 04/16/2015 08:41 PM, Kees Cook wrote:
-> On Thu, Apr 16, 2015 at 5:42 AM, Florian Weimer <fweimer@redhat.com> wrote:
->> Should this be treated as a security vulnerability?
->>
->> “fs: make dumpable=2 require fully qualified path”
->> <http://lwn.net/Articles/503682/>
->>
->> Some widely-used cronie versions still do not have hardening and parse
->> commands in core dumps.
+On Fri, Oct 25, 2019 at 08:09:01PM +0200, Andrey Konovalov wrote:
+> Hi!
 > 
-> I didn't seek a CVE for this at the time since it requires a pretty
-> specific combination of configurations. Namely: setting dumpable=2
-> without a dump handler, which I couldn't find any distro doing. I have
-> no objection, of course.
+> As we keep getting more USB bugs reported by syzbot [1], I'd like to
+> figure out what to do with those in regards to CVEs. Last time I
+> requested a bunch of CVEs for USB bugs, there was a long discussion
+> about whether that is the right thing to do, see the full thread here
+> [2].
+> 
+> I don't want to argue now whether CVEs are useful for the upstream
+> Linux kernel. My question is: with CVEs as they work today, do Linux
+> distros want to see CVEs filed for Linux kernel bugs that are
+> triggerable by a malicious USB device?
+> 
+> Since not all USB bugs are the same, let's bucket them into:
+> 
+> 1. Different kinds of DoS (e.g. null-ptr-deref).
+> 2. Info / uninitialized memory leaks.
+> 3. Bugs that lead to arbitrary code execution.
+> 4. Non-triaged memory corruptions (UAF/OOB).
+> 
+> Points 1-3 refer to the bugs that have been assessed for the impact
+> that they cause, while point 4 refers to the bugs that haven't been
+> looked at closely.
+> 
+> Keep in mind that:
+> 
+> 1. Most of the time physical access to the USB port is required to
+> trigger these bugs.
+> 2. Sometimes, in cases of e.g. exposed USB/IP or USBAnywhere like
+> vulnerabilities [3] these bugs can be triggered remotely.
+> 
+> Thanks!
+> 
+> [1] https://syzkaller.appspot.com/upstream?manager=ci2-upstream-usb
+> 
+> [2] https://www.openwall.com/lists/oss-security/2019/08/20/2
+> 
+> [3] https://github.com/eclypsium/USBAnywhere
 
-Ah, right.  I noticed this while looking at the file-based coredump
-emulation in abrt-hook-ccpp.  It's not the default, either, so we have
-not yet assigned a CVE, and we probably won't call it a vulnerability.
+As discussed previously, "denial of service" (e.g. NULL ptr) via USB
+device seems not to classify as CVE. (With the guidance that with physical
+access you can cause more "denial of service" in other ways, like powering down the machine.)
 
--- 
-Florian Weimer / Red Hat Product Security
+So 2-3 could be CVE worthy from a distro perspective.
+
+For 4 I would assume reasonable guess work if its "just" a denial of service or
+more for CVE guidance.
+
+Ciao, Marcus
