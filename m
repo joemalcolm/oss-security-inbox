@@ -1,78 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/17/2
-Message-Id: <473F72F1-A06B-436D-952A-A04DFE1BA918@beckweb.net>
-Date: Wed, 17 Apr 2019 16:40:14 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/27/1
+Message-ID: <NdwFuQOPjKC52xswSya1RvTkfft8C51AgZmmfCHmCTam-k3vqW8IlM0Gqm-Q2jCXB_uH4YWL4MAOjSiGOCaaHVR4jmlNu7r1so9j4Yi40bU=@protonmail.ch>
+Date: Sat, 26 Oct 2019 22:44:16 +0000
+From: Stiepan <stie@...tonmail.ch>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Security fixes from Android 10 release which are relevant outside the Android ecosystem?
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+As someone who used Android & did my studies on how to secure it and what was missing for that, I can say that Androids still dream of electric blowfishes - or rather threefish-512 ;) - and will do so for a while, especially now that the only part that was open seems is no more. By that virtue, it lost the biggest  advantage it had versus the better polished iOS. And doing that helps red-scarfed black-hats, who can hack into most of the open-source Android variants, which would not be the case if the latter had access to up to date, well-vetted security infos (unlike that late 2018 fix that made it even more vulnerable), and that extends to linux-distros by the by. Embargoes are bad.
+Sure, that made me buy an iPhone, which is good commercially for Apple and I salute their privacy makeup*, but being forced to do so as the collateral victim of a trade war is less cool.
+*as in definition 6 of the wordreference entry for that word, "A special examination for a student who has been absent ...".
 
-* Azure PublisherSettings Credentials Plugin 1.5
-* GitLab Plugin 1.5.12
-* jira-ext Plugin 0.9
-* ontrack Jenkins Plugin 3.4.1
+‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
+On Friday, October 25, 2019 11:23 PM, Moritz Mühlenhoff <jmm@...til.org> wrote:
 
-Additionally, these plugin have security vulnerabilities that have been made
-public, but have no releases containing a fix yet:
+> Android advisories used to contain commit references to AOSP change sets, but
+> that's not the case for https://source.android.com/security/bulletin/android-10.
+> 
 
-* XebiaLabs XL Deploy Plugin
+> Typically most of these issues are specific to Android, but there are a few which
+> per the CVE description are possibly affecting software packaged/used by Linux
+> distros as well, one example:
+> 
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-04-17/
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-9325:
+> "In libvpx, there is a possible out of bounds read due to a missing bounds check.
+> This could lead to remote information disclosure with no additional execution
+> privileges needed. "
+> 
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+> Similar for CVE-2019-9232, CVE-2019-9278, CVE-2019-9325, CVE-2019-9371, CVE-2019-9433,
+> CVE-2019-9423 (also libexif and opencv)
+> 
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+> Is there anyone from Android/Google on the list, who can comment on this? Can these
+> references be added again for the benefit of non-Android distros?
+> 
 
----
-
-SECURITY-1357 / CVE-2019-10300 (CSRF) and CVE-2019-10301 (permission check)
-GitLab Plugin did not perform permission checks on a method implementing 
-form validation. This allowed users with Overall/Read access to Jenkins to 
-connect to an attacker-specified URL using attacker-specified credentials 
-IDs obtained through another method, capturing credentials stored in Jenkins.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a cross-site request forgery vulnerability.
+> Cheers,
+> Moritz
 
 
-SECURITY-836 / CVE-2019-10302
-jira-ext Plugin stored credentials unencrypted in its global configuration 
-file hudson.plugins.jira.JiraProjectProperty.xml on the Jenkins master. 
-These credentials could be viewed by users with access to the master file 
-system.
+Download attachment "publickey - stie@...tonmail.ch - 0xADF18750.asc" of type "application/pgp-keys" (1809 bytes)
 
-
-SECURITY-844 / CVE-2019-10303
-Azure PublisherSettings Credentials Plugin stored the service management 
-certificate unencrypted in credentials.xml on the Jenkins master. These 
-credentials could be viewed by users with access to the master file system.
-
-
-SECURITY-983 / CVE-2019-10304 (CSRF) and CVE-2019-10305 (permission check)
-A missing permission check in a form validation method in XebiaLabs XL 
-Deploy Plugin allows users with Overall/Read permission to initiate a 
-connection test to an attacker-specified server with attacker-specified 
-credentials.
-
-Additionally, the form validation method does not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-1341 / CVE-2019-10306
-ontrack Jenkins Plugin supports sandboxed Groovy expressions. Its sandbox 
-protection could be circumvented during parsing, compilation, and script 
-instantiation by providing a crafted Groovy script.
-
-This allowed users able to control the plugin’s job-specific configuration 
-to bypass the sandbox protection and execute arbitrary code on the Jenkins 
-master.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (478 bytes)
