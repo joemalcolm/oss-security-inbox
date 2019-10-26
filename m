@@ -1,29 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/2
-Message-ID: <20190213090934.mnnitmk4onepvenu@mikami>
-Date: Wed, 13 Feb 2019 20:09:34 +1100
-From: Aleksa Sarai <asarai@...e.de>
-To: Loganaden Velvindron <loganaden@...il.com>
-Cc: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Aleksa Sarai <cyphar@...har.com>, dev@...ncontainers.org, Christian Brauner <christian.brauner@...ntu.com>
-Subject: Re: CVE-2019-5736: runc container breakout (all versions)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/26/2
+Message-ID: <CA+-XxSH0BqMYE51UAjNynhdCkecCv45q9pKanRRyyH=iWhDDUQ@mail.gmail.com>
+Date: Sat, 26 Oct 2019 06:37:29 -0700
+From: Igor Seletskiy <i@...udlinux.com>
+To: oss-security@...ts.openwall.com
+Cc: mathias.payer@...elwelt.net, Hui Peng <benquike@...il.com>
+Subject: Re: Do distros want to see CVEs for Linux kernel USB bugs?
 Content-Type: text/plain; charset=utf-8
 
-On 2019-02-13, Loganaden Velvindron <loganaden@...il.com> wrote:
-> I think that someone already posted a PoC on github, AFAIK.
+I thought the DoS issue wasn't settled specifically due to USB over IP.
 
-Yes, there is a PoC that someone outside of the embargo posted on
-GitHub (it is quite different to the one we have but it is using a
-related issue which our patch also fixed). At this point I might as well
-post the actual exploit code (given that the original vulnerability
-authors have published a blog post that basically outlines the
-exploit[1]).
+Regards,
+Igor Seletskiy |  CEO
+CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
+<https://www.cloudlinux.com/kernelcare>   |   Imunify360
+<http://imunify360.com/>
 
-[1]: https://blog.dragonsector.pl/2019/02/cve-2019-5736-escape-from-docker-and.html
+Get 24/7 free, exceptionally good support at cloudlinux.zendesk.com
+Follow us on twitter for technical updates: @CloudLinuxOS
+<https://twitter.com/cloudlinuxos>
 
--- 
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+On Fri, Oct 25, 2019 at 11:44 PM Marcus Meissner <meissner@...e.de> wrote:
+
+> On Fri, Oct 25, 2019 at 08:09:01PM +0200, Andrey Konovalov wrote:
+> > Hi!
+> >
+> > As we keep getting more USB bugs reported by syzbot [1], I'd like to
+> > figure out what to do with those in regards to CVEs. Last time I
+> > requested a bunch of CVEs for USB bugs, there was a long discussion
+> > about whether that is the right thing to do, see the full thread here
+> > [2].
+> >
+> > I don't want to argue now whether CVEs are useful for the upstream
+> > Linux kernel. My question is: with CVEs as they work today, do Linux
+> > distros want to see CVEs filed for Linux kernel bugs that are
+> > triggerable by a malicious USB device?
+> >
+> > Since not all USB bugs are the same, let's bucket them into:
+> >
+> > 1. Different kinds of DoS (e.g. null-ptr-deref).
+> > 2. Info / uninitialized memory leaks.
+> > 3. Bugs that lead to arbitrary code execution.
+> > 4. Non-triaged memory corruptions (UAF/OOB).
+> >
+> > Points 1-3 refer to the bugs that have been assessed for the impact
+> > that they cause, while point 4 refers to the bugs that haven't been
+> > looked at closely.
+> >
+> > Keep in mind that:
+> >
+> > 1. Most of the time physical access to the USB port is required to
+> > trigger these bugs.
+> > 2. Sometimes, in cases of e.g. exposed USB/IP or USBAnywhere like
+> > vulnerabilities [3] these bugs can be triggered remotely.
+> >
+> > Thanks!
+> >
+> > [1] https://syzkaller.appspot.com/upstream?manager=ci2-upstream-usb
+> >
+> > [2] https://www.openwall.com/lists/oss-security/2019/08/20/2
+> >
+> > [3] https://github.com/eclypsium/USBAnywhere
+>
+> As discussed previously, "denial of service" (e.g. NULL ptr) via USB
+> device seems not to classify as CVE. (With the guidance that with physical
+> access you can cause more "denial of service" in other ways, like powering
+> down the machine.)
+>
+> So 2-3 could be CVE worthy from a distro perspective.
+>
+> For 4 I would assume reasonable guess work if its "just" a denial of
+> service or
+> more for CVE guidance.
+>
+> Ciao, Marcus
+>
+
