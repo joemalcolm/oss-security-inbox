@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/14
-Message-ID: <e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>
-Date: Thu, 22 Aug 2019 20:33:54 +0100
-From: Eddie Chapman <eddie@...k.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/29/1
+Message-ID: <133fcd41f0466a9efbfc1c1d5fa6f21f586436b4.camel@electronsweatshop.com>
+Date: Tue, 29 Oct 2019 10:12:35 -0400
+From: Randy Barlow <randy@...ctronsweatshop.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+Subject: Bodhi: Script injection
 Content-Type: text/plain; charset=utf-8
 
-On 22/08/2019 20:00, Perry E. Metzger wrote:
-> You can argue anything you like. Power charging points have popped up
-> around the world, and you're not in a position to stop
-> them. Furthermore, I'll note that over the air exploitable bugs in
-> things like WiFi stacks and Bluetooth stacks have also appeared over
-> time; perhaps it's foolish to have your phone on at all, and yet
-> people will continue to turn their phones on, and even to use them.
-> 
-> Perry
+A script injection vulnerability[0] was recently reported in Bodhi[1],
+and a patch[2] has been merged in response. Users with packager
+privileges were able to create or edit updates that included <script>
+tags.
 
-Well, I certainly am not deluded enough to think I have the power to 
-stop power charging points popping up everywhere :-) Or to stop people 
-making mistakes. Just because something is possible and everyone else 
-does it doesn't make something less stupid.
+There is not yet a CVE for this issue.
 
-It's a similar principle with wifi/bluetooth, which is why I avoid 
-connecting even to a family member's wifi access point unless it's 
-absolutely necessary. But USB is a physical interface directly into a 
-device's circuitry, I think that carries more risk than radio. ok, usb 
-2.0 is only 2 x power and 2 x data, but radio waves are at least 
-filtered somewhat after hitting an antenna. Physical interfaces on a 
-device, on the other hand, the circuit designer does not usually design 
-them "defensively" (apart from e.g. fuses on the power lines).
+
+[0] https://pagure.io/fedora-infrastructure/issue/8324
+[1] https://github.com/fedora-infra/bodhi
+[2] https://github.com/fedora-infra/bodhi/pull/3657
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
