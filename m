@@ -1,71 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/03/1
-Message-ID: <07f528ea-fa65-cf85-6b2b-25e8117d8665@canonical.com>
-Date: Tue, 3 Sep 2019 19:35:00 +0100
-From: Chris Coulson <chris.coulson@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-15718: Missing access controls on systemd-resolved's D-Bus interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/29/2
+Message-ID: <71e5f6d0-8085-4947-d4ce-46cfe70873ef@igalia.com>
+Date: Tue, 29 Oct 2019 17:16:22 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org, bugtraq@...urityfocus.com
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2019-0005
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2019-0005
+------------------------------------------------------------------------
 
-Nadav Markus from Palo Alto Networks discovered that systemd-resolved
-does not enforce appropriate access controls on its D-Bus interface and
-allows unprivileged users to execute methods that are meant to be
-available only to privileged users. This can be exploited by local users
-to modify the system's DNS resolver settings.
+Date reported           : October 29, 2019
+Advisory ID             : WSA-2019-0005
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2019-0005.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2019-0005.html
+CVE identifiers         : CVE-2019-8625, CVE-2019-8674, CVE-2019-8707,
+                          CVE-2019-8719, CVE-2019-8720, CVE-2019-8726,
+                          CVE-2019-8733, CVE-2019-8735, CVE-2019-8763,
+                          CVE-2019-8768, CVE-2019-8769, CVE-2019-8771.
 
-Details of the issue follow:
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
------
+CVE-2019-8625
+    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
+    2.26.0.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A logic issue was
+    addressed with improved state management.
 
-manager_connect_bus() in src/resolve/resolved-bus.c opens a connection
-to the system bus using the
-bus_open_system_watch_bind_with_description() helper function, which is
-defined in src/shared/bus-util.c.
+CVE-2019-8674
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A logic issue was
+    addressed with improved state management.
 
-This helper function calls sd_bus_set_trusted(). This has the effect of
-disabling access controls, even for members that are defined without the
-SD_BUS_VTABLE_UNPRIVILEGED flag - the absence of which should deny
-access from unprivileged clients. See check_access() in
-src/libsystemd/sd-bus/bus-objects.c:
+CVE-2019-8707
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to an anonymous researcher working with Trend Micro's Zero
+    Day Initiative, cc working with Trend Micro Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-static int check_access(sd_bus *bus, sd_bus_message *m, struct
-vtable_member *c, sd_bus_error *error) {
-        uint64_t cap;
-        int r;
+CVE-2019-8719
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A logic issue was
+    addressed with improved state management.
 
-        assert(bus);
-        assert(m);
-        assert(c);
+CVE-2019-8720
+    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
+    2.26.0.
+    Credit to Wen Xu of SSLab at Georgia Tech.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-        /* If the entire bus is trusted let's grant access */
-        if (bus->trusted)
-                return 0;
+CVE-2019-8726
+    Versions affected: WebKitGTK before 2.24.3 and WPE WebKit before
+    2.24.3.
+    Credit to Jihui Lu of Tencent KeenLab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-        /* If the member is marked UNPRIVILEGED let's grant access */
-        if (c->vtable->flags & SD_BUS_VTABLE_UNPRIVILEGED)
-                return 0;
-        ...
+CVE-2019-8733
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-timesyncd and networkd both use the same helper function to connect to
-the system bus, but both of these are unaffected by this bug. In
-timesyncd's case, it only exposes some read-only properties and these
-don't have access controls. In networkd's case, all methods are
-annotated with SD_BUS_VTABLE_UNPRIVILEGED and it uses policykit for
-enforcing access controls.
+CVE-2019-8735
+    Versions affected: WebKitGTK before 2.24.2 and WPE WebKit before
+    2.24.2.
+    Credit to G. Geshev working with Trend Micro Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
------
+CVE-2019-8763
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-The complete fix for this issue can be found at
-https://github.com/systemd/systemd/pull/13457 and is in the systemd v243
-release, although
-https://github.com/systemd/systemd/pull/13457/commits/35e528018f315798d3bffcb592b32a0d8f5162bd
-on its own is sufficient to address the vulnerability.
+CVE-2019-8768
+    Versions affected: WebKitGTK before 2.24.0 and WPE WebKit before
+    2.24.0.
+    Credit to Hugo S. Diaz (coldpointblue).
+    Impact: A user may be unable to delete browsing history items.
+    Description: "Clear History and Website Data" did not clear the
+    history. The issue was addressed with improved data deletion.
 
-Many thanks
-- Chris
+CVE-2019-8769
+    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
+    2.26.0.
+    Credit to Piérre Reimertz (@reimertz).
+    Impact: Visiting a maliciously crafted website may reveal browsing
+    history. Description: An issue existed in the drawing of web page
+    elements. The issue was addressed with improved logic.
+
+CVE-2019-8771
+    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
+    2.26.0.
+    Credit to Eliya Stein of Confiant.
+    Impact: Maliciously crafted web content may violate iframe
+    sandboxing policy. Description: This issue was addressed with
+    improved iframe sandbox enforcement.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+October 29, 2019
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
