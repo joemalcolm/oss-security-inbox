@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1285" "Tuesday" "14" "December" "2021" "16:52:05" "+0000" "Ron Grabowski" "rgrabowski@apache.org" nil "27" "[oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack " nil nil nil "12" nil nil (number mark "U       rgrabowski@a Dec 14   27/1285  " thread-indent "\"[oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["603" "Wednesday" "30" "October" "2019" "09:06:24" "+0000" "Ash Berlin-Taylor" "ash@apache.org" "<BE259830-444F-44E4-B57E-25CD9D78476F@apache.org>" "19" "[oss-security] [CVE-2019-12417] Apache Airflow stored xss and local file disclosure vulnerability <= 1.10.5 " nil nil nil "10" "2019103009:06:24" "[oss-security] [CVE-2019-12417] Apache Airflow stored xss and local file disclosure vulnerability <= 1.10.5" (number mark "U       ash@apache.o Oct 30   19/603   " thread-indent "\"[oss-security] [CVE-2019-12417] Apache Airflow stored xss and local file disclosure vulnerability <= 1.10.5 \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-12417] Apache Airflow stored xss and local file disclosure vulnerability <= 1.10.5 " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13581 invoked by uid 550); 14 Dec 2021 17:09:07 -0000
+Received: (qmail 11950 invoked by uid 550); 30 Oct 2019 09:15:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32159 invoked from network); 14 Dec 2021 16:52:46 -0000
-Content-Type: text/plain; charset=utf-8
-From: Ron Grabowski <rgrabowski@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <b1b3fb6f-a394-ede3-0c3c-ea2c11018062@apache.org>
+Received: (qmail 9357 invoked from network); 30 Oct 2019 09:06:39 -0000
+From: Ash Berlin-Taylor <ash@apache.org>
+Content-Type: text/plain;
+	charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 14 Dec 2021 16:52:05 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and
- Context Lookup Pattern vulnerable to a denial of service attack 
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Date: Wed, 30 Oct 2019 09:06:24 +0000
+Message-Id: <BE259830-444F-44E4-B57E-25CD9D78476F@apache.org>
+Cc: dev@airflow.apache.org,
+ Apache Security Team <security@apache.org>,
+ Pawel.Kurylowicz@securing.pl,
+ Frantisek Uhrecky <frantisek.uhrecky@citadelo.com>,
+ Marek Takac <marek.takac@citadelo.com>
+To: users@airflow.apache.org,
+ oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.104.11)
+Subject: [oss-security] [CVE-2019-12417] Apache Airflow stored xss and local file disclosure
+ vulnerability <= 1.10.5 
 
-Severity: moderate (CVSS: 3.7 AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L)
+CVE-2019-12417: Stored XSS and Local File Disclosure vulnerability=20
 
-Description:
+  Versions Affected:
+  <=3D 1.10.5
 
-It was found that the fix to address CVE-2021-44228 in Apache Log4j 2.15.0 =
-was incomplete in certain non-default configurations. This could allows att=
-ackers with control over Thread Context Map (MDC) input data when the loggi=
-ng configuration uses a non-default Pattern Layout with either a Context Lo=
-okup (for example, $${ctx:loginId}) or a Thread Context Map pattern (%X, %m=
-dc, or %MDC) to craft malicious input data using a JNDI Lookup pattern resu=
-lting in a denial of service (DOS) attack. Log4j 2.15.0 restricts JNDI LDAP=
- lookups to localhost by default. Note that previous mitigations involving =
-configuration such as to set the system property `log4j2.noFormatMsgLookup`=
- to `true` do NOT mitigate this specific vulnerability.
+  Description:
+    A malicious admin user could edit the state of objects in the Airflow m=
+etadata database to execute arbitrary javascript on certain page views. Thi=
+s also presented a Local File Disclosure vulnerability to any file readable=
+ by the webserver process.
 
-Log4j 2.16.0 fixes this issue by removing support for message lookup patter=
-ns and disabling JNDI functionality by default.=20=20
-
-This issue can be mitigated in prior releases (<2.16.0) by removing the Jnd=
-iLookup class from the classpath (example: zip -q -d log4j-core-*.jar org/a=
-pache/logging/log4j/core/lookup/JndiLookup.class).
-
-References:
-
-https://logging.apache.org/log4j/2.x/security.html
-https://www.cve.org/CVERecord?id=3DCVE-2021-44228
-
+  Credit:
+    Thanks to Pawel.Kurylowicz (of securing.pl), and Frantisek Uhrecky and =
+Marek Takac (both of citadelo.com) for all independently reporting this vul=
+nerability.=20
+=20
+Thanks,
+Ash
+Apache Airflow PMC member=
