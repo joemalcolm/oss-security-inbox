@@ -1,126 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/25/2
-Message-ID: <72af8786-98dd-f006-fefd-4761bb8fb005@sba-research.org>
-Date: Wed, 25 Sep 2019 13:56:52 +0200
-From: SBA Research Advisory <advisory@...-research.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [SBA-ADV-20190911-01] CVE-2019-16524: Easy FancyBox Wordpress Plugin 1.8.17 or below Stored Cross-site Scripting (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/30/4
+Message-ID: <20191030162423.GA9147@openwall.com>
+Date: Wed, 30 Oct 2019 17:24:23 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Steven Rostedt <rostedt@...dmis.org>, sashal@...nel.org, amakhalov@...are.com, anishs@...are.com, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>, "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
+Subject: Re: Membership application for linux-distros - VMware
 Content-Type: text/plain; charset=utf-8
 
-# Easy FancyBox Wordpress Plugin Stored Cross-site Scripting (XSS) #
+Hello Srivatsa,
 
-Link: https://github.com/sbaresearch/advisories/tree/public/2019/SBA-ADV-20190911-01_Easy_FancyBox_WP_Plugin_Stored_XSS
+I've reviewed your request and the external resources you referenced,
+and more, and I find the request very reasonable and satisfying our
+stated requirements.  I also gave others on oss-security time to comment
+if they wanted to, and we've only seen comments in favor.
 
-## Vulnerability Overview ##
+Please send me your PGP key off-list and I'll add you to linux-distros.
 
-The Easy FancyBox WordPress Plugin Version 1.8.17 is susceptible to Stored
-Cross-site Scripting in the Settings > Media admin page `/wp-admin/options-media.php`
-due to improper encoding of arbitrarily submitted setting parameters. The vulnerability
-affects every publicly accessible page of the WordPress site.
+Please see below on contributing back:
 
-* **Identifier**            : SBA-ADV-2010911-01
-* **Type of Vulnerability** : Cross-site Scripting
-* **Software/Product Name** : [Easy FancyBox](https://wordpress.org/plugins/easy-fancybox/)
-* **Vendor**                : [RavanH](https://status301.net/)
-* **Affected Versions**     : <= 1.8.17
-* **Fixed in Version**      : 1.8.18
-* **CVE ID**                : CVE-2019-16524
-* **CVSSv3 Vector**         : AV:N/AC:L/PR:H/UI:R/S:U/C:L/I:L/A:N
-* **CVSSv3 Base Score**     : 3.5 (Low)
+On Wed, Oct 23, 2019 at 12:08:48PM -0700, Srivatsa S. Bhat wrote:
+> We would like to volunteer for the following tasks (but we would love
+> your suggestions on taking up other tasks instead, depending on the
+> current needs of the list).
+> 
+> Technical:
+> 
+> 4. Check if related issues exist in the same piece of software (e.g.,
+> same bug class common across the software, or other kinds of bugs
+> exist in its problematic component), and inform the list either way -
+> primary: Ubuntu, backup: vacant
+> 
+> Administrative:
+> 
+> 5. Determine if the reported issues are Linux-specific, and if so help
+> ensure that (further) private discussion goes on the linux-distros
+> sub-list only (thus, not spamming and unnecessarily disclosing to the
+> non-Linux distros) - primary: SUSE, backup: vacant
 
-## Vendor Description ##
+This is a good choice, thanks!
 
-> Easy FancyBox plugin for WordPress websites gives you a flexible and
-> aesthetic light box solution for just about all media links on your website.
-> Easy FancyBox uses an updated version of the traditional FancyBox jQuery
-> extension and is WP 3+ Multi-Site compatible. After activation you can find
-> a new section FancyBox on your Settings > Media admin page where you can
-> manage the media light box options.
+I'd like you to pick a primary role for some task.  As an option, we can
+make you primary for "5. Determine if the reported issues are
+Linux-specific ...", moving SUSE to backup.
 
-Source: <https://wordpress.org/plugins/easy-fancybox/>
+Please let me know of your final choice, as well as where you'd like to
+be primary and where to join as a backup.
 
-## Impact ##
+We also need a distro to volunteer for the only currently completely
+unassigned task requiring list membership, Technical 6:
 
-By exploiting the documented vulnerability, an attacker can execute
-JavaScript code in a victim's browser within the origin of the target
-site. This can be misused, for example, by taking over future administrative
-web management sessions.
+6. Produce and share well-reasoned estimates for the time required to
+handle the issues under embargo (such as to (re)negotiate the public
+disclosure date and/or to choose between the different ways to handle an
+issue)
 
-## Vulnerability Description ##
+I mention this not only in response to you, but also in case any other
+distro would take this opportunity to volunteer for this task.  I guess
+that same distro could also be involved in Technical 1 and/or 2 since
+the time estimates and schedules could reasonably come out of such work:
 
-Several parameters of the file `/inc/class-easyfancybox.php` are affected by
-stored cross-site scripting vulnerabilities. The file is a part of the
-Settings > Media admin page of the WordPress instance.
+1. Propose (other) ways to fix, work around, or mitigate the reported
+issues - primary: Red Hat, backup: vacant
 
-These setting parameters are embedded in CSS blocks without encoding or
-sanitization, that are sent to the client's browser. The style sheet is sent
-along with every publicly accessible page, no matter if the plugin is needed
-on some pages or not.
+2. Develop and share fixes, workarounds, or mitigations - primary: Red Hat,
+backup: vacant
 
-For example, the following parameters are vulnerable:
+Any takers?
 
-* `/inc/class-easyfancybox.php`
-  * fancybox_titleColor
-  * fancybox_paddingColor
-
-There are many more vulnerable parameters, the above listed are given only as
-an example.
-
-The vulnerabilities are located in `/inc/class-easyfancybox.php`:
-
-```php
-[...]
-		if ( !empty($paddingColor) )
-			$content_style .= 'border-color:'.$paddingColor.';';
-[...]
-		if ( !empty($titleColor) )
-			$styles .= '#fancybox-title,#fancybox-title-float-main{color:'.$titleColor.'}';
-[...]
-```
-
-As the above code snippet shows, the parameters `$paddingColor` and
-`$titleColor` contains user input and is concatenated into `$content_style`
-or respectively `$styles` without performing any sanitization or escaping.
-
-## Proof of Concept ##
-
-An attacker can exploit this vulnerability by, firstly having access to the
-`Settings > Media page` within the administrative portal and secondly setting
-as `$titleColor` the following string:
-
-
-```text
-#44}</style><img src="" onerror="alert(1)">
-```
-
-This leads to the following HTML response (shortened for readability):
-
-```html
-<style id='fancybox-inline-css' type='text/css'>
-#fancybox-title,#fancybox-title-float-main{color:#44}</style><img src="" onerror="alert(1)">}
-</style>
-```
-
-## Recommended Countermeasures ##
-
-We recommend strictly whitelisting the user input before it is being used. The only allowed characters should be alphanumeric characters and the hash sign.
-
-## Timeline ##
-
-* `2019-09-11` Identified the vulnerability in version 1.8.17
-* `2019-09-11` Contacted the vendor via support
-* `2019-09-16` Vendor closed the vulnerability in version 1.8.18
-* `2019-09-23` Publication of CVE-2019-16524
-
-
-## References ##
-
-* ([Easy Fancybox Plugin Page](https://wordpress.org/plugins/easy-fancybox/))
-
-## Credits ##
-
-* Jakob Hagl ([SBA Research](https://www.sba-research.org/))
-
-Download attachment "0xFBB8862F58F775B2.asc" of type "application/pgp-keys" (3542 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Alexander
