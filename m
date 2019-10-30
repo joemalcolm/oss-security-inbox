@@ -1,46 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/17/3
-Message-ID: <CAG_fn=UJptH_tAKj+yCER-eWPRxF0R-E2N5TUFoYpBb2Yabg3g@mail.gmail.com>
-Date: Mon, 17 Jun 2019 13:09:27 +0200
-From: Alexander Potapenko <glider@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/30/5
+Message-ID: <20191030184628.GA10699@openwall.com>
+Date: Wed, 30 Oct 2019 19:46:28 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Cc: Steven Rostedt <rostedt@...dmis.org>, sashal@...nel.org, amakhalov@...are.com, anishs@...are.com, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>, "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
+Subject: Re: Membership application for linux-distros - VMware
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 17, 2019 at 12:16 PM Robert Watson <robertcwatson1@...il.com> wrote:
->
-> So Mr Gayner, which of these bugs have you fixed?
-I think the NEWS page of GraphicsMagick
-(http://www.graphicsmagick.org/NEWS.html) speaks for itself: the
-developers recognize contributions of Alex and do not blame him for
-not fixing all the bugs he found in the project.
-Setting up continuous fuzzing for an OSS project is an unhairy job,
-too. There doesn't seem to be a continuous flow of people doing that,
-despite fixing a bug with a clear reproducer and a readable error
-message is a lot easier than chasing the same bug in the wild.
+On Wed, Oct 30, 2019 at 05:24:23PM +0100, Solar Designer wrote:
+> Please send me your PGP key off-list and I'll add you to linux-distros.
 
-> On Sat, Jun 15, 2019, 11:50 Alex Gaynor <alex.gaynor@...il.com> wrote:
->
-> >
-> > Today I'd like to highlight what I see as a tremendous issue: very few of
-> > these security bugs ever has a CVE issued for it. This is probably due to a
-> > few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
-> > a human reporter who is interested in obtaining one for "credit" purposes,
-> > c) the sheer number of bugs that we're talking about.
-> >
->
-> >
+This has been taken care of - VMware Photon OS is now on linux-distros.
 
+Srivatsa, please note that your subscription is only for Photon OS.
+You're expected not to share the information within VMware beyond the
+need-to-know for Photon OS fixes.  If an issue comes up that you think
+is relevant to other VMware products and you'd like to pass the
+information on, you need the reporter's explicit permission to do so.
 
+Thanks,
 
--- 
-Alexander Potapenko
-Software Engineer
-
-Google Germany GmbH
-Erika-Mann-Straße, 33
-80636 München
-
-Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
+Alexander
