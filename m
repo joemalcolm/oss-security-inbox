@@ -1,169 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/12
-Message-Id: <159D0B1B-83D0-4C1F-A91E-DA544F7F4C7E@oracle.com>
-Date: Mon, 24 Jun 2019 18:08:55 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/31/7
+Message-ID: <65fba71e1eb02e277f02de7549614237f977c11c.camel@powerdns.com>
+Date: Thu, 31 Oct 2019 09:13:31 +0100
+From: Peter van Dijk <peter.van.dijk@...erdns.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: Re: Python-3.5.8.tar.xz does NOT contain the fix for bpo-38243
 Content-Type: text/plain; charset=utf-8
 
-
-
-> On 24 Jun 2019, at 14:01, Dmitry Vyukov <dvyukov@...gle.com> wrote:
+Python 3.5.8 is supposed to contain a fix for bpo-38243, as mentioned
+> at 
+> https://docs.python.org/3.5/whatsnew/changelog.html#python-3-5-8-final
 > 
-> On Mon, Jun 17, 2019 at 1:32 PM Marcus Meissner <meissner@...e.de> wrote:
->> 
->> Hi,
->> 
->> 
->> On Sat, Jun 15, 2019 at 11:49:03AM -0400, Alex Gaynor wrote:
->>> Hi everyone,
->>> 
->>> OSS-Fuzz is Google's project to provide continious large-scale fuzzing.
->>> Since it launched in 2016, it's found just shy of 3000 things it counts as
->>> security bugs [0][1]. I'm not a developer of OSS-Fuzz (at Google), but I've
->>> helped several projects integrate with it.
->>> 
->>> You can see that it's had some amazing success across a variety of projects
->>> -- I've written previously to this list about the things I thought made it
->>> particularly effective working with ImageMagick and GraphicsMagick [2].
->>> 
->>> Today I'd like to highlight what I see as a tremendous issue: very few of
->>> these security bugs ever has a CVE issued for it. This is probably due to a
->>> few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
->>> a human reporter who is interested in obtaining one for "credit" purposes,
->>> c) the sheer number of bugs that we're talking about.
->>> 
->>> CVEs are not important for their own sake. The true value is in all of the
->>> downstream processing that uses them as input: the Linux distributions that
->>> use them to figure out what fixes to backport, the docker security scanners
->>> that look for vulnerable code on the system, the corporate
->>> threat-intelligence feeds, etc.
->>> 
->>> A test of a random ImageMagick vulnerability against Ubuntu Xenial shows
->>> that it, indeed, continues to reproduce.
->>> 
->>> This is in addition to the >100 security bugs OSS-Fuzz found and publicly
->>> disclosed due to hitting their disclosure deadline, and which still have
->>> not been fixed [3].
->>> 
->>> I haven't analyzed any of these vulnerabilities for exploitability, and I
->>> doubt anyone else has either.
->>> 
->>> I do not have a solution to this problem. I wanted to raise awareness of
->>> it, in the hope that it would start a discussion which might come to a
->>> solution.
->> 
->> So as this was not yet discussed, lets have it closer look at the gaps
->> in the workflow.
->> 
->> (I am not going into the orthogonal approaches, like surface reduction,
->> mitigations, replacement etc.)
->> 
->> "topic" vs "automation state"
->> 
->> 
->> Bugfinding:
->> 
->> - Is manual to fully automated these days, and improving.
->> 
->>  The fully automated bugfinding is a significant contributor to amount of bugs.
->> 
->> Bugfixing:
->> 
->> - Largely manual. Some research in automation by DARPA et.al.
->> 
->> 
->>  This is a significant gap of the scale issues, automated bugfinding
->>  can easily overload opensource projects.
->> 
->> 
->> Security IR Tracking:
->> 
->> CVE Allocation:
->> 
->> - Mostly manual, some tool help at most.
->> 
->>  Significant gap here (as you wrote).
->> 
->>  This seems to be low hanging fruit... There is nothing stopping to
->> 
->>  - allocate big CVE blocks to "automation sub-CNA"s
->>  - have a OSS-Fuzz / Syzkaller / whatever CNA doing automated CVE assignments out of this block
+> It turns out python.org has accidentally shipped 3.5.8 without that
+> fix, if you pick tar.xz instead of .tgz. Please find attached the email
+> I have sent them.
 > 
-> Hi,
-> 
-> I see syzkaller come up already. Yes, syzbot (automated continuous
-> kernel fuzzing) has the same problem: thousands of crashes, most don't
-> have any security assessment (too expensive):
-> https://syzkaller.appspot.com/upstream
-> Besides the update problem, there is also bug fixing problem: loud
-> CVEs attract lots of attention and gets fixed quickly, but require up
-> to months of manual labor (per bug). "Just a use-after-free" may not
-> get any attention, while being more harmful in the end. Even a WARNING
-> (Linux kernel term for a non-fatal assertion) may be a VM info leak in
-> the end.
-> 
-> So what are community thoughts on automatic CVE assignment?
-> That would definitely get some attention to these bugs by vendors
-> (because that's open CVEs in their products then). And this should be
-> implementable because both OSS-Fuzz and syzbot are automated enough
-> already. However I afraid that these CVEs may be as automatically
-> sorted into a trashcan then :)
+> I'm reporting this to oss-security so that no downstream distributors
+> accidentally ship the wrong 3.5.8. I have also reported it directly to
+> FreeBSD at https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=241586 as
+> they are the only distribution I could think of that still actually
+> ship vanilla Python 3.5.
 
+Reply from the Python project:
 
-Unfortunately there are people who runs scans to see what CVEs are fixed and if all the known CVEs aren't fixed then they scream and shout.   It doesn't matter whether the CVE represents a viable exploit, it has to be fixed.
+Thanks for the heads-up.  During the 3.5.8 release process, I actually generated the tarball multiple times, and although I never officially released these previous versions, somehow the CDN latched onto this one .xz file from one of these test versions.  As you note, the MD5 sum and file size on the release page were correct for the final version; also, the v3.5.8 tag in the Git repo and the GPG checksum file also match this final (correct) version.
 
-Yes, off-by-one errors, overflows and the like are all *potential* security flaws, but by allocating a CVE for all those potential issues you're trying to turn CVEs into a bug database.
+Still, it's a messy situation.  Fedora has already updated to 3.5.8, and they got the tarball without the fix for bpo-38243.
 
-I'm looking at one here that says "allows local users to cause a denial of service (NULL pointer dereference) or possibly have unspecified other impact".   That gets a CVSS score up in the stratosphere when, in this case, it's a bug that a user would have to inflict on themselves provided they have the right hardware.   I know I'm over-simplifying this one, but it remains that the "unspecified other impact" is highly speculative, not to mention dubious, and the DoS is not the total loss of service that the stratospheric score indicates.
+As you suggest, the best way to ameliorate this debacle is to just release a 3.5.9.  I'll do that in the next day or so.  In the meantime I'll send a quick note to the clp newsgroups.
 
-On the face of it, even a partial DoS is a security problem, but in this case the pre-requisites for exercising this particular bug would pretty much also categorise "rm -rf /*" as a security issue.
+Kind regards,
+-- 
+Peter van Dijk
+PowerDNS.COM BV - https://www.powerdns.com/
 
-Automatically creating CVEs from fuzzer results is going to just mean that the real problems get passed by: a little thought needs to go into it first.
-
-jch
-
-
-> 
-> 
->> Rating:
->> 
->> - largely manual / partially automated, done by NVD and distributions seperately.
->> 
->>  Could be automated by "type" by the fuzzer, similar to above.
->> 
->> 
->> Structured Vulnerability information storing:
->> 
->> - Not really existing right now.
->> 
->> - On top of CVE:
->>  - referencing reproducers
->>  - affected versions
->>  - ratings
->>  - referencing patches
->> 
->>  These could be supplied / attached by automatisms in a automation CNA.
->> 
->> 
->> Distribution tracking / update preparation / packaging / QA :
->> 
->> - done by distributions, largely manual to semi automatic.
->> 
->>  With better structured upstream vulnerability information storage its automation
->>  could be improved.
->> 
->>  Some thoughts are going betweenm distributions on sharing information / load, but as this
->>  is a competition issue this might be hard.
->> 
->> So main gaps I personally see:
->> 
->> - bugfixing automation or help at least
->> 
->> - (better) structured storage in a global database, either CVE or something entirely new.
->> 
->> Ciao, Marcus
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
