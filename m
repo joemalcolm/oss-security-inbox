@@ -1,79 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/24/4
-Message-ID: <20191024183230.GA4963@openwall.com>
-Date: Thu, 24 Oct 2019 20:32:30 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-11043: PHP: env_path_info underflow in fpm_main.c can lead to RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/31/2
+Message-Id: <E1iQ9Zi-0002qc-7S@xenbits.xenproject.org>
+Date: Thu, 31 Oct 2019 12:29:14 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 298 v3 (CVE-2019-18425) - missing descriptor table limit checking in x86 PV emulation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Although I had nothing to do with discovery nor handling of this issue,
-I was asked off-list to bring it to the attention of distros.  Since the
-issue is already public, I am simply posting in here.  (I'd appreciate
-it if people post stuff on their own instead of asking me, though.)
+            Xen Security Advisory CVE-2019-18425 / XSA-298
+                               version 3
 
-This bug was reported against PHP a month ago:
+      missing descriptor table limit checking in x86 PV emulation
 
-https://bugs.php.net/bug.php?id=78599
+UPDATES IN VERSION 3
+====================
 
-| Sec Bug #78599 	env_path_info underflow in fpm_main.c can lead to RCE
-| 
-| [2019-09-26 16:17 UTC] neex dot emil+phpeb at gmail dot com
-| 
-| Description:
-| ------------
-| The line 1140 in file sapi/fpm/fpm/fpm_main.c
-| (https://github.com/php/php-src/blob/master/sapi/fpm/fpm/fpm_main.c#L1140)
-| contains pointer arithmetics that assumes that env_path_info has a
-| prefix equal to the path to the php script. However, the code does not
-| check this assumption is satisfied. The absence of the check can lead to
-| an invalid pointer in the "path_info" variable.
-| 
-| Such conditions can be achieved in a pretty standard Nginx
-| configuration. If one has Nginx config like this:
-| 
-| ```
-|    location ~ [^/]\.php(/|$) {
-|         fastcgi_split_path_info ^(.+?\.php)(/.*)$;
-|         fastcgi_param PATH_INFO       $fastcgi_path_info;
-|         fastcgi_pass   php:9000;
-|         ...
-|   }
-| }
-| ```
-| 
-| The regexp in `fastcgi_split_path_info` directive can be broken using
-| the newline character (in encoded form, %0a). Broken regexp leads to
-| empty PATH_INFO, which triggers the bug.
-| 
-| This issue leads to code execution. Later in the code, the value of
-| path_info[0] is set to zero
-| (https://github.com/php/php-src/blob/master/sapi/fpm/fpm/fpm_main.c#L1150);
-| then FCGI_PUTENV is called. Using a carefully chosen length of the URL
-| path and query string, an attacker can make path_info point precisely to
-| the first byte of _fcgi_data_seg structure. Putting zero into it moves
-| `char* pos` field backwards, and following FCGI_PUTENV overwrites some
-| data (including other fast cgi variables) with the script path. Using
-| this technique, I was able to create a fake PHP_VALUE fcgi variable and
-| then use a chain of carefully chosen config values to get code
-| execution.
-| 
-| I have a working exploit PoC, but I'm not sure how to share it using
-| this form. This security research is done by three people: me, @beched
-| and @d90pwn.
+Public release.
 
-This is followed with steps to reproduce the bug on a PHP build "with
---enable-fpm and ASAN enabled."  There are many further comments,
-including suggestion to fix the issue in "the next security relevant
-releases" on October 24, which is today.
+ISSUE DESCRIPTION
+=================
 
-PHP 7.2.24 and 7.3.11 released today are documented to include the fix.
+When emulating certain PV guest operations, descriptor table accesses
+are performed by the emulating code.  Such accesses should respect the
+guest specified limits, unless otherwise guaranteed to fail in such a
+case.  Without this, emulation of 32-bit guest user mode calls through
+call gates would allow guest user mode to install and then use
+descriptors of their choice, as long as the guest kernel did not
+itself install an LDT.  (Most OSes don't install any LDT by default).
 
-There are also exploits here:
+IMPACT
+======
 
-https://github.com/neex/phuip-fpizdam
-https://github.com/jas502n/CVE-2019-11043
+32-bit PV guest user mode can elevate its privileges to that of the
+guest kernel.
 
-Alexander
+VULNERABLE SYSTEMS
+==================
+
+Xen versions from at least 3.2 onwards are affected.
+
+Only 32-bit PV guest user mode can leverage this vulnerability.
+
+HVM, PVH, as well as 64-bit PV guests cannot leverage this
+vulnerability.
+
+Arm systems are unaffected.
+
+MITIGATION
+==========
+
+Running only HVM, PVH, or 64-bit PV guests will avoid this
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa298.patch           xen-unstable, Xen 4.12.x
+xsa298-4.11.patch      Xen 4.11.x
+xsa298-4.10.patch      Xen 4.10.x
+xsa298-4.9.patch       Xen 4.9.x, Xen 4.8.x, Xen 4.7.x
+
+$ sha256sum xsa298*
+82c6f626732f99711212155b280270fe2f6683460299b1a6fc3f70b3932970ce  xsa298.meta
+3f422ad83abb54fe6afed460a5982cf1faa1717e51ab19fbf2375be1b5f8f4a3  xsa298.patch
+da8d5bad97a46c072dd1715c96401b145cecda14f0303043e6dca313e7ffff0c  xsa298-4.9.patch
+92dba14b6a208379c2569b9c1c11438da384ec47db2508b4761af30d74a9403d  xsa298-4.10.patch
+d2d8eb5de5601b88f2a6503ecf6bb83207e4b2f17833d61a74fcd185ac7f5a71  xsa298-4.11.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2601AMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZk/AH/iLP9TpdOKNoW8fJDuOjlIQHsI0RPtU6KIdSc1a8
+nzrcPfwpdP3/89GJQyEHwi5ZZdXAnNcXSK7BC+EEzqznV/VwHRDusCBH0enjUe0z
+jDpOsxeI5RsuyJnSFojhI2E+y1khjKtVvnbNWbHzBfWMPD9Inc+nw9Q1KWfpSkk6
+TTS8OwR9DwNiVXz9Na+BKuIBOVinFd1wA+HBNZKJl3JCz8N0Oa6RHDKFQQKJ4Uy2
+KzBdzm5dWr0xP4stQmnYoU7JobGbcvKyMVMwwryS3cffLyhOLuzCWjDO+n7RkoRy
+xWmGWVeQWAeIzqvvtb104NrHSVwVeFSOsen0cqFLvV82MRw=
+=tmUK
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa298.meta" of type "application/octet-stream" (1718 bytes)
+
+Download attachment "xsa298.patch" of type "application/octet-stream" (3501 bytes)
+
+Download attachment "xsa298-4.9.patch" of type "application/octet-stream" (3322 bytes)
+
+Download attachment "xsa298-4.10.patch" of type "application/octet-stream" (3516 bytes)
+
+Download attachment "xsa298-4.11.patch" of type "application/octet-stream" (3468 bytes)
