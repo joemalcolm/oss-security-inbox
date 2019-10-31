@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1926" "Thursday" "31" "December" "2015" "16:13:50" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151231211350.7A81D6C02D1@smtpvmsrv1.mitre.org>" "47" "[oss-security] Re: libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment" nil nil nil "12" "2015123121:13:50" "[oss-security] Re: libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment" (number mark "U       cve-assign@m Dec 31   47/1926  " thread-indent "\"[oss-security] Re: libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment\"\n") "<20150913123221.GA31867@eldamar.local>" ("<20150913123221.GA31867@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1512" "Thursday" "31" "October" "2019" "09:13:31" "+0100" "Peter van Dijk" "peter.van.dijk@powerdns.com" "<65fba71e1eb02e277f02de7549614237f977c11c.camel@powerdns.com>" "27" "Re: [oss-security] Python-3.5.8.tar.xz does NOT contain the fix for bpo-38243" "^Date:" nil nil "10" "2019103108:13:31" "[oss-security] Python-3.5.8.tar.xz does NOT contain the fix for bpo-38243" (number mark "        peter.van.di Oct 31   27/1512  " thread-indent "\"Re: [oss-security] Python-3.5.8.tar.xz does NOT contain the fix for bpo-38243\"\n") "<5f3a1c2215eb23adf527755ef7b49111332b63e1.camel@powerdns.com>" ("<8e3418e156a0219b465f4d44a39992eae1461386.camel@powerdns.com>" "<5f3a1c2215eb23adf527755ef7b49111332b63e1.camel@powerdns.com>") nil nil nil nil nil nil nil "Re: [oss-security] Python-3.5.8.tar.xz does NOT contain the fix for bpo-38243" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22346 invoked by uid 550); 31 Dec 2015 21:14:07 -0000
+Received: (qmail 7600 invoked by uid 550); 31 Oct 2019 13:10:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5345 invoked from network); 31 Oct 2019 08:13:43 -0000
+Message-ID: <65fba71e1eb02e277f02de7549614237f977c11c.camel@powerdns.com>
+In-Reply-To: <5f3a1c2215eb23adf527755ef7b49111332b63e1.camel@powerdns.com>
+References: <8e3418e156a0219b465f4d44a39992eae1461386.camel@powerdns.com>
+	 <5f3a1c2215eb23adf527755ef7b49111332b63e1.camel@powerdns.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.30.5-1.1 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Date: Thu, 31 Oct 2019 09:13:31 +0100
+From: Peter van Dijk <peter.van.dijk@powerdns.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22312 invoked from network); 31 Dec 2015 21:14:02 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20150913123221.GA31867@eldamar.local>
-Message-Id: <20151231211350.7A81D6C02D1@smtpvmsrv1.mitre.org>
-Date: Thu, 31 Dec 2015 16:13:50 -0500 (EST)
-Subject: [oss-security] Re: libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment
+Subject: Re: [oss-security] Python-3.5.8.tar.xz does NOT contain the fix for
+ bpo-38243
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Python 3.5.8 is supposed to contain a fix for bpo-38243, as mentioned
+> at 
+> https://docs.python.org/3.5/whatsnew/changelog.html#python-3-5-8-final
+> 
+> It turns out python.org has accidentally shipped 3.5.8 without that
+> fix, if you pick tar.xz instead of .tgz. Please find attached the email
+> I have sent them.
+> 
+> I'm reporting this to oss-security so that no downstream distributors
+> accidentally ship the wrong 3.5.8. I have also reported it directly to
+> FreeBSD at https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=241586 as
+> they are the only distribution I could think of that still actually
+> ship vanilla Python 3.5.
 
->> https://hackerone.com/reports/57125#activity-384861
+Reply from the Python project:
 
->> This is an out-of-bounds memory access in libxml2. By entering a unclosed
->> html comment such as <!-- the libxml2 parser didn't stop parsing at the end
->> of the buffer, causing random memory to be included in the parsed comment
->> that was returned to ruby. In Shopify, this caused ruby objects from
->> previous http requests to be disclosed in the rendered page.
+Thanks for the heads-up.  During the 3.5.8 release process, I actually generated the tarball multiple times, and although I never officially released these previous versions, somehow the CDN latched onto this one .xz file from one of these test versions.  As you note, the MD5 sum and file size on the release page were correct for the final version; also, the v3.5.8 tag in the Git repo and the GPG checksum file also match this final (correct) version.
 
->> https://bugzilla.gnome.org/show_bug.cgi?id=746048
+Still, it's a messy situation.  Fedora has already updated to 3.5.8, and they got the tarball without the fix for bpo-38243.
 
->>> https://git.gnome.org/browse/libxml2/commit/?id=e724879d964d774df9b7969fc846605aa1bac54c
+As you suggest, the best way to ameliorate this debacle is to just release a 3.5.9.  I'll do that in the next day or so.  In the meantime I'll send a quick note to the clp newsgroups.
 
-Use CVE-2015-8710 for this 746048 issue.
+Kind regards,
+-- 
+Peter van Dijk
+PowerDNS.COM BV - https://www.powerdns.com/
 
-
-> TTBOMK, this and as well
-> http://www.openwall.com/lists/oss-security/2015/04/19/5 has a pending
-> CVE assignment request.
-
-We don't think that one is pending. It was about 744980, covered in the
-http://www.openwall.com/lists/oss-security/2015/10/22/8 post.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWhZojAAoJEL54rhJi8gl52/EQAL+VOp+6ITwzseIKn9FIhL4d
-kYNzBU5M04ZbD7o0w3RMv27LuZwUrVub3FTrOr103N7HeBOw12QIoHfP2MgMH2fK
-/hrIegU17nJ1XAI0mYIU/9dt9Djn91eglFlkhdo7L1PUIDF1/c2Mb4g1rxvU6jD1
-R+ypGj/cGdiTGlPaS+ITeDxrYzD1Ik05QsvuEWLYpEla/EXbUSofVUsZeVS8UcaR
-AINjmBSfYiP4AJlKfqxP8jOfoUuLyZeNg65zxHbcKKjVXnDGjF+61jQyxRyTOK65
-K0HJTxr1pYCXOx7D8HhLSJHVqY+B689p/ubZqE2dZ2yyWRQuLO1faH9ifzPFs7cN
-STX4TibmdXUj2EyAONhrAlqnVJRsaawAK2II6oXUMop/59Qs4+a0IZ8sdkObNn8m
-leeUxV1C5+H987Jyzw1r66+nl5HFY4aFBwQ2epx+09MY3WL/HF9BfUwloBygKV1w
-OsfWZV7dlnQPXYuAnWA4PvCQN+9MwatFQvHrOsljYaBxaprO8K84g64lt1XK+Tkf
-lUuqdLstspxLdXt4LYxBlmJgkr0KuR2WxqNt6C6Q0dxBxJASGmQztSWgwjQEMhfi
-KDtSsQ/OJdKxAB9cKIAZfPF+Dij8WLsupnqpyGirHecvZakgxGUEDiMZZMpOjvBh
-LNAZVp6z3y8iO+ZipSuz
-=g9Mv
------END PGP SIGNATURE-----
