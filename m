@@ -1,107 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/05/9
-Message-Id: <E1h19As-0005ZL-LS@xenbits.xenproject.org>
-Date: Tue, 05 Mar 2019 12:27:58 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/31/5
+Message-Id: <E1iQ9bA-0004NO-AA@xenbits.xenproject.org>
+Date: Thu, 31 Oct 2019 12:30:44 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 294 v2 - x86 shadow: Insufficient TLB flushing when using PCID
+Subject: Xen Security Advisory 303 v4 (CVE-2019-18422) - ARM: Interrupts are unconditionally unmasked in exception handlers
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-                    Xen Security Advisory XSA-294
-                              version 2
+            Xen Security Advisory CVE-2019-18422 / XSA-303
+                               version 4
 
-         x86 shadow: Insufficient TLB flushing when using PCID
+  ARM: Interrupts are unconditionally unmasked in exception handlers
 
-UPDATES IN VERSION 2
+UPDATES IN VERSION 4
 ====================
+
+Fix typoes in the series and add more reviewed-by tag.
 
 Public release.
 
 ISSUE DESCRIPTION
 =================
 
-Use of Process Context Identifiers (PCID) was introduced into Xen in
-order to improve performance after XSA-254 (and in particular its
-Meltdown sub-issue).  This enablement implied changes to the TLB
-flushing logic.  One aspect which was overlooked is the safety of
-switching between shadow pagetables, which previously relied on the
-unconditional flushing of a write to CR3.
-
-With PCID enabled, a switch of shadow pagetable for a 64bit PV guest
-fails to invalidate the linear mappings of the previous shadow
-pagetable.  As a result, subsequent accesses to the shadow pagetables
-may be deemed to be safe by the shadow logic (based on the old shadow
-pagetable) but fault when made in practice.
+When an exception occurs on an ARM system which is handled without
+changing processor level, some interrupts are unconditionally enabled
+during exception entry.  So exceptions which occur when interrupts are
+masked will effectively unmask the interrupts.
 
 IMPACT
 ======
 
-Malicious 64bit PV guests may be able to cause a host crash (Denial of
-Service).
-
-Additionally, vulnerable configurations are unstable even in the absence
-of an attack.
+A malicious guest might contrive to arrange for critical Xen code to
+run with interrupts erroneously enabled.  This could lead to data
+corruption, denial of service, or possibly even privilege escalation.
+However a precise attack technique has not been identified.
 
 VULNERABLE SYSTEMS
 ==================
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+All ARM systems are vulnerable.  x86 systems are not vulnerable.
 
-Only systems running 64-bit x86 PV guests are vulnerable.  Systems running
-only x86 HVM or PVH or 32bit PV guests are not vulnerable.
-
-Only systems with at least one PCID-enabled PV guest are vulnerable.
-
-Systems where PCID or INVPCID are unavailable or entirely disabled are
-not vulnerable.
-
-Note that PCID is enabled by default for both 64-bit dom0 and 64-bit
-domU when hardware supports it.  PCID acceleration has been backported
-to the following versions:
- - Xen 4.11.x,
- - Xen 4.10.2 and onwards,
- - Xen 4.9.3 and onwards,
- - Xen 4.8.4 and onwards,
- - Xen 4.7.6.
-
-MITIGATION
-==========
-
-Running only HVM or PVH guests will avoid this vulnerability.
-
-Disabling use of PCID entirely, by passing "pcid=0" or "invpcid=0" as a
-command line option to the hypervisor, will also avoid this
-vulnerability (albeit re-introducing the XPTI performance regression
-use of PCID was intended to reduce).
+On some platforms this issue could possibly be exploited by an
+unprivileged userspace attacker.
 
 CREDITS
 =======
 
-This issue was discovered by Jan Beulich of SUSE.
+This issue was discovered by Julian Grall of Arm.
 
 RESOLUTION
 ==========
 
 Applying the appropriate attached patch resolves this issue.
 
-xsa294/unstable.patch           xen-unstable
-xsa294/4.11.patch               Xen 4.11.x
-xsa294/4.10.patch               Xen 4.10.x
-xsa294/4.9.patch                Xen 4.9.x
-xsa294/4.8.patch                Xen 4.8.x
-xsa294/4.7.patch                Xen 4.7.x
+xsa303/*.patch         xen-unstable .. Xen 4.9
+xsa303-4.8/*.patch     Xen 4.8
 
-$ sha256sum xsa294*/*
-c10b7b79a2067cc6d95e40bc78ee8fddaf31f8614bb183fdd5f00e4272e08a0e  xsa294/4.7.patch
-3ac1c3caf01feaf341e977fcbae691f2e4425aa9691f2dfa66795acfe823d76e  xsa294/4.8.patch
-a8dfc8b2d2f0d0865b70fb0051f9d5a80a6c7456d004957a0155d989ec875611  xsa294/4.9.patch
-c6fe1e0173b665a88cbab423737dcb060eed1f634f9bca880d9ddfa2ac855d03  xsa294/4.10.patch
-61a341510f45c0cf63a7438645f5c2b3ab1cd72bc2476e5fad331e322f834f4a  xsa294/4.11.patch
-1fb22eab53f9b1e93fc25f5a08d37121a9278854174f1fbd495b3fe6e8babf3a  xsa294/unstable.patch
+$ sha256sum xsa303* xsa303*/*
+66b3eb28cfa633999da7480a37cd919293eb87aa730e7bc58b12c47bcdb0c9c0  xsa303.meta
+7769eee9b876cdb7dde2ec664d34a5067f9b639d5c543ee89ff2eda818f04cab  xsa303-4.8/0001-Revert-xen-arm32-entry-Consolidate-DEFINE_TRAP_ENTRY.patch
+f1337aa8c4b38f4ab61e7206c7bd8f5c782583947d9b9e1e8c6f139db73ca2cb  xsa303-4.8/0002-xen-arm32-entry-Consolidate-DEFINE_TRAP_ENTRY-macros.patch
+160ea6acfba85faf1cbb670b0a3873f025c0dab388f73018a22a61104e1a5fe1  xsa303-4.8/0003-xen-arm32-entry-Fold-the-macro-SAVE_ALL-in-the-macro.patch
+2cc1e3282263f03c6b9c6e05039f84173b8dbc893a2cd88f80ce2275ff7478d8  xsa303-4.8/0004-xen-arm32-Don-t-blindly-unmask-interrupts-on-trap-wi.patch
+63c4a90c45ae28032e0149353cafd495cce5caa8c84ad022d21b8078710e996d  xsa303-4.8/0005-xen-arm64-Don-t-blindly-unmask-interrupts-on-trap-wi.patch
+4da48a29aaad85a410021952b2b3cb4dae14365c688e724ed7fc80feea1334df  xsa303/0001-xen-arm32-entry-Split-__DEFINE_ENTRY_TRAP-in-two.patch
+99773cbfb6f0df5f0c83477c9dcd39127cb361213455bd2cb1f6bcfe4566d5a2  xsa303/0002-xen-arm32-entry-Fold-the-macro-SAVE_ALL-in-the-macro.patch
+9e8241c311aa8da7fcb1da09b9d8b5a55c26a10f02355e37e97d1e7a3b6db7be  xsa303/0003-xen-arm32-Don-t-blindly-unmask-interrupts-on-trap-wi.patch
+4c9bc0d0b27eff06f65f1a679263ffbcc8aa4c65117840284dc115ae49e7966d  xsa303/0004-xen-arm64-Don-t-blindly-unmask-interrupts-on-trap-wi.patch
 $
 
 DEPLOYMENT DURING EMBARGO
@@ -119,7 +88,6 @@ Predisclosure list members who wish to deploy significantly different
 patches and/or mitigations, please contact the Xen Project Security
 Team.
 
-
 (Note: this during-embargo deployment notice is retained in
 post-embargo publicly released Xen Project advisories, even though it
 is then no longer applicable.  This is to enable the community to have
@@ -130,24 +98,32 @@ consult the Xen Project community's agreed Security Policy:
   http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlx+a0YMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZkrsIAK1qu+18MSwMzh7jWNgtAHtlYftiAOScJaJDytAv
-Q0iIClp6Liu9A7VkvG0T5XZvOT2y2jLadsOZX0t4TgWz9dOgkZ2ElXtRYd7XlosX
-QhEEAQKAy2qTANHOPR6KJ7iuFAiR5Us9XZUqYUcWevP4PBvODFUbdJz12QaL7+eu
-e9Tcd6BHQMpyZN3Z39g4yVKSaA/pi1SYT7w7T/pGy+QtnBh1t5zbdpJwQ+gz6eg8
-tRsYVZAxNsfQDInLuj27FzcxJbiIue1M++fJ0MazULb5rFKj1AfW+Z8KNhzppv7M
-OLU+r8lwJtRhVc/+Qqgc/AEYQypn3kx6ftCKCUKWlpn3W1E=
-=rkY1
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl26014MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ79IIALZ04OSkaCmDXeNhb7mXPjqyNPGY8bqXwD1TQd51
+W7yLo+DM/cnkj+u3UR96Mkma3eAj8sJLKeuQGRMScyyfNCj/b0pY0M1h6XRi5NLN
+zV6EWk7rR/87ID4Z82nwAq4lhsTgfgglH4I39oKZzFflHQtmij4DKuf/5K9g+6qT
+8lc70ylgBep3Q3e73qJ1aLEvBYVnhs0lxY8QJDHOIS9GWY6/kqSVoWzK1dUtJDhD
+vB/MPBtG1WxJETrCjC1Fat6lmfErjqiqX/tunFVFASFPL4aOTSVA7Oo9IJYX9XSY
+6f3le7BYj8xJUp7A0z2vv0YBQvOQ/bsvs4ONMRpRswwDA+Q=
+=eraI
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa294/4.7.patch" of type "application/octet-stream" (3155 bytes)
+Download attachment "xsa303.meta" of type "application/octet-stream" (2088 bytes)
 
-Download attachment "xsa294/4.8.patch" of type "application/octet-stream" (3161 bytes)
+Download attachment "xsa303-4.8/0001-Revert-xen-arm32-entry-Consolidate-DEFINE_TRAP_ENTRY.patch" of type "application/octet-stream" (3018 bytes)
 
-Download attachment "xsa294/4.9.patch" of type "application/octet-stream" (3161 bytes)
+Download attachment "xsa303-4.8/0002-xen-arm32-entry-Consolidate-DEFINE_TRAP_ENTRY-macros.patch" of type "application/octet-stream" (3604 bytes)
 
-Download attachment "xsa294/4.10.patch" of type "application/octet-stream" (2956 bytes)
+Download attachment "xsa303-4.8/0003-xen-arm32-entry-Fold-the-macro-SAVE_ALL-in-the-macro.patch" of type "application/octet-stream" (4188 bytes)
 
-Download attachment "xsa294/4.11.patch" of type "application/octet-stream" (2900 bytes)
+Download attachment "xsa303-4.8/0004-xen-arm32-Don-t-blindly-unmask-interrupts-on-trap-wi.patch" of type "application/octet-stream" (7353 bytes)
 
-Download attachment "xsa294/unstable.patch" of type "application/octet-stream" (2850 bytes)
+Download attachment "xsa303-4.8/0005-xen-arm64-Don-t-blindly-unmask-interrupts-on-trap-wi.patch" of type "application/octet-stream" (3350 bytes)
+
+Download attachment "xsa303/0001-xen-arm32-entry-Split-__DEFINE_ENTRY_TRAP-in-two.patch" of type "application/octet-stream" (3111 bytes)
+
+Download attachment "xsa303/0002-xen-arm32-entry-Fold-the-macro-SAVE_ALL-in-the-macro.patch" of type "application/octet-stream" (4294 bytes)
+
+Download attachment "xsa303/0003-xen-arm32-Don-t-blindly-unmask-interrupts-on-trap-wi.patch" of type "application/octet-stream" (7578 bytes)
+
+Download attachment "xsa303/0004-xen-arm64-Don-t-blindly-unmask-interrupts-on-trap-wi.patch" of type "application/octet-stream" (4059 bytes)
