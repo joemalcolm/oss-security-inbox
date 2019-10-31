@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["14090" "Wednesday" "13" "March" "2019" "10:14:54" "-0700" "Aaron Patterson" "tenderlove@ruby-lang.org" "<20190313171454.GA90773@TC-275.local>" "391" "[oss-security] [CVE-2019-5420] Possible Remote Code Execution Exploit in Rails Development Mode" nil nil nil "3" "2019031317:14:54" "[oss-security] [CVE-2019-5420] Possible Remote Code Execution Exploit in Rails Development Mode" (number mark "U       tenderlove@r Mar 13  391/14090 " thread-indent "\"[oss-security] [CVE-2019-5420] Possible Remote Code Execution Exploit in Rails Development Mode\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-5420] Possible Remote Code Execution Exploit in Rails Development Mode" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["26648" "Thursday" "31" "October" "2019" "12:29:09" "+0000" "Xen.org security team" "security@xen.org" "<E1iQ9Zd-0002pV-Ht@xenbits.xenproject.org>" "500" "[oss-security] Xen Security Advisory 296 v4 (CVE-2019-18420) - VCPUOP_initialise DoS" nil nil nil "10" "2019103112:29:09" "[oss-security] Xen Security Advisory 296 v4 (CVE-2019-18420) - VCPUOP_initialise DoS" (number mark "U       security@xen Oct 31  500/26648 " thread-indent "\"[oss-security] Xen Security Advisory 296 v4 (CVE-2019-18420) - VCPUOP_initialise DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 296 v4 (CVE-2019-18420) - VCPUOP_initialise DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32069 invoked by uid 550); 13 Mar 2019 17:15:12 -0000
+Received: (qmail 9980 invoked by uid 550); 31 Oct 2019 12:29:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,436 +12,516 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32051 invoked from network); 13 Mar 2019 17:15:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tenderlovemaking-com.20150623.gappssmtp.com; s=20150623;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=i02QD0SjzkVkQRI12jShCyL5okf69H/Nxitx+LkR3zs=;
-        b=ctGZHJaX6IPUP2WksRigjCsNWIDfq+BeKf2FojqrgBtjtQxBfmdqJwaEW0d3J+31V7
-         swFHwqKmIJpgfKodu1Pbi+MqZJhWVCaPnePWxyiDWhuOMrc9QUaQuUN1iFB68axDdEtx
-         d+MOXwgBLLiwI53Q9ZOJMC5if3A2u0CZmHmMh/SPHBZte5QXsmsLlz4LCR7sqT7hqPnS
-         r3uFoDEiDAjZqwZu/WmTwtlo05jKAvb76cHX5mj8rm1MwvOmQp7OWki69ckvDvVzSoRn
-         VPb7Uu57N49Cv/sYK06zCiK8qzkROjfqyE6ejnfSZSNlOzu6RCmtwEPooRlrvZmhKRF9
-         68jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=i02QD0SjzkVkQRI12jShCyL5okf69H/Nxitx+LkR3zs=;
-        b=neVo43goMDPcVI42BVBJqvBRh23dhZA1Bnz+CwdImJD99pNfuiCh4AvPT9gFyPUhNO
-         M/8/5Bve36KBwh0icaJZiaHC0Ds1JsWhAF+o84J315zBLj8j6E2EdYhdz9G3epeDaJY4
-         d72AOnx7p64RDL/qu9m9uqBLQ5VLAs6999/Rmj7fRmyKy4+sUArvHb+JbHwC/tmdxAh1
-         YvMfk0Hpkqc091LSlg8M/ZqUeQ4k85l80MaRgFHS1WLStCLvooofPcy424uQPBP+2Cy3
-         lXmvKs+Yo4uvZmcmZbCkC4j/Y9zgB+7MxM1f1N80GoBnLQdkJ6tCueHZ4UcbI15/kIXb
-         TBag==
-X-Gm-Message-State: APjAAAWD0XtajG2crQKzmarjdBgPM0qfWixNitCWjdOyDFQ9WBvYoSfL
-	B6qbPkfUFlMK7nIZ8E6DKtOraw==
-X-Google-Smtp-Source: APXvYqy7hofNrWfSQJ49wE/lOSDs1AUpap/EXmBK2RSjT0s3SEx68Zp5kbSbp48L+E8Jryw9v/aE5A==
-X-Received: by 2002:a17:902:9893:: with SMTP id s19mr47114777plp.165.1552497298420;
-        Wed, 13 Mar 2019 10:14:58 -0700 (PDT)
-Sender: Aaron Patterson <aaron@tenderlovemaking.com>
-Date: Wed, 13 Mar 2019 10:14:54 -0700
-From: Aaron Patterson <tenderlove@ruby-lang.org>
-To: security@suse.de, rubyonrails-security@googlegroups.com,
-	oss-security@lists.openwall.com, ruby-security-ann@googlegroups.com
-Message-ID: <20190313171454.GA90773@TC-275.local>
+Received: (qmail 9962 invoked from network); 31 Oct 2019 12:29:26 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="IrhDeMKUP4DT/M7F"
+X-Mailer: MIME-tools 5.508 (Entity 5.508)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1iQ9Zd-0002pV-Ht@xenbits.xenproject.org>
+Date: Thu, 31 Oct 2019 12:29:09 +0000
+Subject: [oss-security] Xen Security Advisory 296 v4 (CVE-2019-18420) - VCPUOP_initialise DoS
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-User-Agent: Mutt/1.9.5 (2018-04-13)
-Subject: [oss-security] [CVE-2019-5420] Possible Remote Code Execution Exploit in Rails
- Development Mode
+Content-Transfer-Encoding: 7bit
 
---IrhDeMKUP4DT/M7F
-Content-Type: multipart/mixed; boundary="SLDf9lqlvOQaIe6s"
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+            Xen Security Advisory CVE-2019-18420 / XSA-296
+                               version 4
 
---SLDf9lqlvOQaIe6s
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+                         VCPUOP_initialise DoS
 
-There is a possible a possible remote code executing exploit in Rails when =
-in
-development mode. This vulnerability has been assigned the CVE identifier
-CVE-2019-5420.
+UPDATES IN VERSION 4
+====================
 
-Versions Affected:  6.0.0.X, 5.2.X.
-Not affected:       None.
-Fixed Versions:     6.0.0.beta3, 5.2.2.1
+Public release.
 
-Impact
-------
-With some knowledge of a target application it is possible for an attacker =
-to
-guess the automatically generated development mode secret token.  This secr=
-et
-token can be used in combination with other Rails internals to escalate to a
-remote code execution exploit.
+ISSUE DESCRIPTION
+=================
 
-All users running an affected release should either upgrade or use one of t=
-he
-workarounds immediately.
+hypercall_create_continuation() is a variadic function which uses a
+printf-like format string to interpret its parameters.  Error handling
+for a bad format character was done using BUG(), which crashes Xen.
 
-Releases
---------
-The 6.0.0.beta3 and 5.2.2.1 releases are available at the normal locations.
+One path, via the VCPUOP_initialise hypercall, has a bad format
+character.  The BUG() can be hit if VCPUOP_initialise executes for a
+sufficiently long period of time for a continuation to be created.
 
-Workarounds
------------
-This issue can be mitigated by specifying a secret key in development mode.
-In "config/environments/development.rb" add this:
+IMPACT
+======
 
-  config.secret_key_base =3D SecureRandom.hex(64)
+Malicious guests may cause a hypervisor crash, resulting in a Denial of
+Service (Dos).
 
+VULNERABLE SYSTEMS
+==================
 
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patche=
-s for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
+Xen versions 4.6 and newer are vulnerable.  Xen versions 4.5 and earlier
+are not vulnerable.
 
-* 6-0-railties-dev-mode-token.patch - Patch for 6.0 series
-* 5-2-railties-dev-mode-token.patch - Patch for 5.2 series
+Only x86 PV guests can exploit the vulnerability.  HVM and PVH guests,
+and guests on ARM systems, cannot exploit the vulnerability.
 
-Please note that only the 5.2.x, 5.1.x, 5.0.x, and 4.2.x series are support=
-ed
-at present. Users of earlier unsupported releases are advised to upgrade as
-soon as possible as we cannot guarantee the continued availability of secur=
-ity
-fixes for unsupported releases.
+MITIGATION
+==========
 
-Credits
--------
-Thanks to ooooooo_q
+There are no mitigations.
 
---=20
-Aaron Patterson
-http://tenderlovemaking.com/
+CREDITS
+=======
 
---SLDf9lqlvOQaIe6s
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="5-2-railties-dev-mode-token.patch"
-Content-Transfer-Encoding: quoted-printable
+This issue was discovered by Andrew Cooper of Citrix.
 
-=46rom 7f5ccda38bfecbe0bf00f15e5b8f5e40d52ab3f1 Mon Sep 17 00:00:00 2001
-From: Aaron Patterson <aaron.patterson@gmail.com>
-Date: Sun, 10 Mar 2019 16:37:46 -0700
-Subject: [PATCH] Fix possible dev mode RCE
+RESOLUTION
+==========
 
-If the secret_key_base is nil in dev or test generate a key from random
-bytes and store it in a tmp file. This prevents the app developers from
-having to share / checkin the secret key for dev / test but also
-maintains a key between app restarts in dev/test.
+Applying the appropriate attached patch resolves this issue.
 
-[CVE-2019-5420]
+xsa296.patch           Xen 4.9 ... unstable
+xsa296-4.8.patch       Xen 4.7 ... 4.8
 
-Co-Authored-By: eileencodes <eileencodes@gmail.com>
-Co-Authored-By: John Hawthorn <john@hawthorn.email>
----
- .../middleware/session/cookie_store.rb        |  7 +++---
- railties/lib/rails/application.rb             | 19 ++++++++++++++--
- .../test/application/configuration_test.rb    | 22 ++++++++++++++++++-
- railties/test/isolation/abstract_unit.rb      |  1 +
- 4 files changed, 43 insertions(+), 6 deletions(-)
+$ sha256sum xsa296*
+71bd433f788dd511fad90165bc5ba9bcabe949eecd912f2a616e3c996960d67d  xsa296.meta
+ccfd81b162b8535d952f56b1f87dfdd960e71bf07c1cf8388976e78e2e86cde5  xsa296.patch
+b283be3df6789402553172b7fd582bfffb4fa72a6b33543439bd2fb1b87bfbd4  xsa296-4.8.patch
+$
 
-diff --git a/actionpack/lib/action_dispatch/middleware/session/cookie_store=
-.rb b/actionpack/lib/action_dispatch/middleware/session/cookie_store.rb
-index 4ea96196d3..b7475d3682 100644
---- a/actionpack/lib/action_dispatch/middleware/session/cookie_store.rb
-+++ b/actionpack/lib/action_dispatch/middleware/session/cookie_store.rb
-@@ -29,9 +29,10 @@
-     #
-     #   Rails.application.config.session_store :cookie_store, key: '_your_=
-app_session'
-     #
--    # By default, your secret key base is derived from your application na=
-me in
--    # the test and development environments. In all other environments, it=
- is stored
--    # encrypted in the <tt>config/credentials.yml.enc</tt> file.
-+    # In the development and test environments your application's secret k=
-ey base is
-+    # generated by Rails and stored in a temporary file in <tt>tmp/develop=
-ment_secret.txt</tt>.
-+    # In all other environments, it is stored encrypted in the
-+    # <tt>config/credentials.yml.enc</tt> file.
-     #
-     # If your application was not updated to Rails 5.2 defaults, the secre=
-t_key_base
-     # will be found in the old <tt>config/secrets.yml</tt> file.
-diff --git a/railties/lib/rails/application.rb b/railties/lib/rails/applica=
-tion.rb
-index e346d5cc3a..6a30e8cfa0 100644
---- a/railties/lib/rails/application.rb
-+++ b/railties/lib/rails/application.rb
-@@ -426,8 +426,8 @@ def secrets=3D(secrets) #:nodoc:
-     # then credentials.secret_key_base, and finally secrets.secret_key_bas=
-e. For most applications,
-     # the correct place to store it is in the encrypted credentials file.
-     def secret_key_base
--      if Rails.env.test? || Rails.env.development?
--        secrets.secret_key_base || Digest::MD5.hexdigest(self.class.name)
-+      if Rails.env.development? || Rails.env.test?
-+        secrets.secret_key_base ||=3D generate_development_secret
-       else
-         validate_secret_key_base(
-           ENV["SECRET_KEY_BASE"] || credentials.secret_key_base || secrets=
-.secret_key_base
-@@ -588,6 +588,21 @@ def validate_secret_key_base(secret_key_base)
-=20
-     private
-=20
-+      def generate_development_secret
-+        if secrets.secret_key_base.nil?
-+          key_file =3D Rails.root.join("tmp/development_secret.txt")
-+
-+          if !File.exist?(key_file)
-+            random_key =3D SecureRandom.hex(64)
-+            File.binwrite(key_file, random_key)
-+          end
-+
-+          secrets.secret_key_base =3D File.binread(key_file)
-+        end
-+
-+        secrets.secret_key_base
-+      end
-+
-       def build_request(env)
-         req =3D super
-         env["ORIGINAL_FULLPATH"] =3D req.fullpath
-diff --git a/railties/test/application/configuration_test.rb b/railties/tes=
-t/application/configuration_test.rb
-index 293a1a7dbd..68c2199aba 100644
---- a/railties/test/application/configuration_test.rb
-+++ b/railties/test/application/configuration_test.rb
-@@ -513,6 +513,27 @@ def index
-     end
-=20
-=20
-+    test "application will generate secret_key_base in tmp file if blank i=
-n development" do
-+      app_file "config/initializers/secret_token.rb", <<-RUBY
-+        Rails.application.credentials.secret_key_base =3D nil
-+      RUBY
-+
-+      app "development"
-+
-+      assert_not_nil app.secrets.secret_key_base
-+      assert File.exist?(app_path("tmp/development_secret.txt"))
-+    end
-+
-+    test "application will not generate secret_key_base in tmp file if bla=
-nk in production" do
-+      app_file "config/initializers/secret_token.rb", <<-RUBY
-+        Rails.application.credentials.secret_key_base =3D nil
-+      RUBY
-+
-+      assert_raises ArgumentError do
-+        app "production"
-+      end
-+    end
-+
-     test "raises when secret_key_base is blank" do
-       app_file "config/initializers/secret_token.rb", <<-RUBY
-         Rails.application.credentials.secret_key_base =3D nil
-@@ -550,7 +571,6 @@ def index
-=20
-     test "application verifier can build different verifiers" do
-       make_basic_app do |application|
--        application.credentials.secret_key_base =3D "b3c631c314c0bbca50c1b=
-2843150fe33"
-         application.config.session_store :disabled
-       end
-=20
-diff --git a/railties/test/isolation/abstract_unit.rb b/railties/test/isola=
-tion/abstract_unit.rb
-index 6568a356d6..fe850d45ec 100644
---- a/railties/test/isolation/abstract_unit.rb
-+++ b/railties/test/isolation/abstract_unit.rb
-@@ -155,6 +155,7 @@ def self.name; "RailtiesTestApp"; end
-       @app.config.active_support.deprecation =3D :log
-       @app.config.active_support.test_order =3D :random
-       @app.config.log_level =3D :info
-+      @app.secrets.secret_key_base =3D "b3c631c314c0bbca50c1b2843150fe33"
-=20
-       yield @app if block_given?
-       @app.initialize!
---=20
-2.21.0
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
---SLDf9lqlvOQaIe6s
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="6-0-railties-dev-mode-token.patch"
-Content-Transfer-Encoding: quoted-printable
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-=46rom 4c743587ad6a31908503ab317e37d70361d49e66 Mon Sep 17 00:00:00 2001
-From: Aaron Patterson <aaron.patterson@gmail.com>
-Date: Sun, 10 Mar 2019 16:37:46 -0700
-Subject: [PATCH] Fix possible dev mode RCE
-
-If the secret_key_base is nil in dev or test generate a key from random
-bytes and store it in a tmp file. This prevents the app developers from
-having to share / checkin the secret key for dev / test but also
-maintains a key between app restarts in dev/test.
-
-[CVE-2019-5420]
-
-Co-Authored-By: eileencodes <eileencodes@gmail.com>
-Co-Authored-By: John Hawthorn <john@hawthorn.email>
----
- .../middleware/session/cookie_store.rb        |  7 +++---
- railties/lib/rails/application.rb             | 19 ++++++++++++++--
- .../test/application/configuration_test.rb    | 22 ++++++++++++++++++-
- railties/test/isolation/abstract_unit.rb      |  1 +
- 4 files changed, 43 insertions(+), 6 deletions(-)
-
-diff --git a/actionpack/lib/action_dispatch/middleware/session/cookie_store=
-.rb b/actionpack/lib/action_dispatch/middleware/session/cookie_store.rb
-index 02ccfbc81a..7c43c781c7 100644
---- a/actionpack/lib/action_dispatch/middleware/session/cookie_store.rb
-+++ b/actionpack/lib/action_dispatch/middleware/session/cookie_store.rb
-@@ -24,9 +24,10 @@
-     #
-     #   Rails.application.config.session_store :cookie_store, key: '_your_=
-app_session'
-     #
--    # By default, your secret key base is derived from your application na=
-me in
--    # the test and development environments. In all other environments, it=
- is stored
--    # encrypted in the <tt>config/credentials.yml.enc</tt> file.
-+    # In the development and test environments your application's secret k=
-ey base is
-+    # generated by Rails and stored in a temporary file in <tt>tmp/develop=
-ment_secret.txt</tt>.
-+    # In all other environments, it is stored encrypted in the
-+    # <tt>config/credentials.yml.enc</tt> file.
-     #
-     # If your application was not updated to Rails 5.2 defaults, the secre=
-t_key_base
-     # will be found in the old <tt>config/secrets.yml</tt> file.
-diff --git a/railties/lib/rails/application.rb b/railties/lib/rails/applica=
-tion.rb
-index fbad3e5db3..558a4d1f57 100644
---- a/railties/lib/rails/application.rb
-+++ b/railties/lib/rails/application.rb
-@@ -415,8 +415,8 @@ def secrets
-     # then credentials.secret_key_base, and finally secrets.secret_key_bas=
-e. For most applications,
-     # the correct place to store it is in the encrypted credentials file.
-     def secret_key_base
--      if Rails.env.test? || Rails.env.development?
--        secrets.secret_key_base || Digest::MD5.hexdigest(self.class.name)
-+      if Rails.env.development? || Rails.env.test?
-+        secrets.secret_key_base ||=3D generate_development_secret
-       else
-         validate_secret_key_base(
-           ENV["SECRET_KEY_BASE"] || credentials.secret_key_base || secrets=
-.secret_key_base
-@@ -581,6 +581,21 @@ def validate_secret_key_base(secret_key_base)
-=20
-     private
-=20
-+      def generate_development_secret
-+        if secrets.secret_key_base.nil?
-+          key_file =3D Rails.root.join("tmp/development_secret.txt")
-+
-+          if !File.exist?(key_file)
-+            random_key =3D SecureRandom.hex(64)
-+            File.binwrite(key_file, random_key)
-+          end
-+
-+          secrets.secret_key_base =3D File.binread(key_file)
-+        end
-+
-+        secrets.secret_key_base
-+      end
-+
-       def build_request(env)
-         req =3D super
-         env["ORIGINAL_FULLPATH"] =3D req.fullpath
-diff --git a/railties/test/application/configuration_test.rb b/railties/tes=
-t/application/configuration_test.rb
-index 73773602a3..377dab1a13 100644
---- a/railties/test/application/configuration_test.rb
-+++ b/railties/test/application/configuration_test.rb
-@@ -596,6 +596,27 @@ def index
-       assert_equal "some_value", verifier.verify(message)
-     end
-=20
-+    test "application will generate secret_key_base in tmp file if blank i=
-n development" do
-+      app_file "config/initializers/secret_token.rb", <<-RUBY
-+        Rails.application.credentials.secret_key_base =3D nil
-+      RUBY
-+
-+      app "development"
-+
-+      assert_not_nil app.secrets.secret_key_base
-+      assert File.exist?(app_path("tmp/development_secret.txt"))
-+    end
-+
-+    test "application will not generate secret_key_base in tmp file if bla=
-nk in production" do
-+      app_file "config/initializers/secret_token.rb", <<-RUBY
-+        Rails.application.credentials.secret_key_base =3D nil
-+      RUBY
-+
-+      assert_raises ArgumentError do
-+        app "production"
-+      end
-+    end
-+
-     test "raises when secret_key_base is blank" do
-       app_file "config/initializers/secret_token.rb", <<-RUBY
-         Rails.application.credentials.secret_key_base =3D nil
-@@ -619,7 +640,6 @@ def index
-=20
-     test "application verifier can build different verifiers" do
-       make_basic_app do |application|
--        application.credentials.secret_key_base =3D "b3c631c314c0bbca50c1b=
-2843150fe33"
-         application.config.session_store :disabled
-       end
-=20
-diff --git a/railties/test/isolation/abstract_unit.rb b/railties/test/isola=
-tion/abstract_unit.rb
-index 3f1638a516..b10701aa55 100644
---- a/railties/test/isolation/abstract_unit.rb
-+++ b/railties/test/isolation/abstract_unit.rb
-@@ -226,6 +226,7 @@ def self.name; "RailtiesTestApp"; end
-       @app.config.session_store :cookie_store, key: "_myapp_session"
-       @app.config.active_support.deprecation =3D :log
-       @app.config.log_level =3D :info
-+      @app.secrets.secret_key_base =3D "b3c631c314c0bbca50c1b2843150fe33"
-=20
-       yield @app if block_given?
-       @app.initialize!
---=20
-2.21.0
-
-
---SLDf9lqlvOQaIe6s--
-
---IrhDeMKUP4DT/M7F
-Content-Type: application/pgp-signature; name="signature.asc"
-
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEETOkbdaeYKOhrGqi7lTFwvLT/r8YFAlyJOo4ACgkQlTFwvLT/
-r8azVAgAj3Ibng4TXQ8eWjG8k38CoWvCz2c6FxxEPB3tvNffXwFKYm/Yfycd9OiA
-4pgLH5anA2GmQdKqxDUOLSuV1aVNpyQESIn+zSDy20xlV+4dEuUg9/HYjEmG4PSR
-iDFljoYr6cR+Cv4TRoJjaUYdoQPSZJJxt4sWCaBxlr23tIW3UbNHA6ohTwUU8Tmm
-k2kQfrQBSMuzEWgtHYTKQWQj8zwQBYnYGSNWR0AqXQu3CdQNmvvFnFkJ/nQtFDJJ
-sBTpmPjccUGl0PJexWoR4izYO7HqmmL+yIxWBvv2y9r76A0ZtXXgbBMt18tdiitk
-Lh5G1MNHKd4+ZgaymNw/iG1euwjF/A==
-=7F7O
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2600kMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZn10IAKQhLY9RfkgZhY/6cACYnXqFGWhS6MvyeZrVs1L4
+BaojMJilpAo7kc9Xcf+0ThxKI5M/eEeDUdGjFHfBtOUrjOAhaZjaYI1paJwX0JEV
+QoAMQERTtopFnkCNtvykrMiKZQ2xp6hiios+32PvDdVnjO+rkrKESRNoBVNYlC1f
+qN8SbZ6m0C5jP4C82ifDEeJHJsVJtfYQSeRl95pgCmsmxxd3x7q7ubPcR6kizT5t
+Bu4sAtrWNF5zaBrb5kL29yohn4oBLmMV5NO0hSlCbR3FgeFZ7LTwiz8y4d7tVSHg
+fjbsvhmhfhYO1OnZWFea3QXMgfZjsg6qq9jBnpmGu35WVMY=
+=xUlU
 -----END PGP SIGNATURE-----
 
---IrhDeMKUP4DT/M7F--
+--=separator
+Content-Type: application/octet-stream; name="xsa296.meta"
+Content-Disposition: attachment; filename="xsa296.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAyOTYsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xMiIsCiAgICAiNC4xMSIsCiAgICAiNC4xMCIs
+CiAgICAiNC45IiwKICAgICI0LjgiCiAgXSwKICAiVHJlZXMiOiBbCiAgICAi
+eGVuIgogIF0sCiAgIlJlY2lwZXMiOiB7CiAgICAiNC4xMCI6IHsKICAgICAg
+IlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFi
+bGVSZWYiOiAiMzEzMWJmOTU2YWIxNTkyOTVlY2RkZTBjNWFkMDAzZDBjNWFm
+NDY5NSIsCiAgICAgICAgICAiUHJlcmVxcyI6IFtdLAogICAgICAgICAgIlBh
+dGNoZXMiOiBbXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjEx
+IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAg
+ICAgICAgIlN0YWJsZVJlZiI6ICIzMzQyZWU5MzE4Y2QzOGJhMDA2MjU1YjY4
+N2FiN2ExNDUzOTllYTkyIiwKICAgICAgICAgICJQcmVyZXFzIjogW10sCiAg
+ICAgICAgICAiUGF0Y2hlcyI6IFtdCiAgICAgICAgfQogICAgICB9CiAgICB9
+LAogICAgIjQuMTIiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4
+ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjU5OWQ2ZDIzY2JiNzkw
+YTc4OGY3YTQ5YWI0ZjExZjFhM2I1YjQyOWUiLAogICAgICAgICAgIlByZXJl
+cXMiOiBbXSwKICAgICAgICAgICJQYXRjaGVzIjogW10KICAgICAgICB9CiAg
+ICAgIH0KICAgIH0sCiAgICAiNC44IjogewogICAgICAiUmVjaXBlcyI6IHsK
+ICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJjNjcy
+MTBmNjBkZmE4MzU2NWQyNmFlNzEwZTRmNWU3MjlhOTVkY2U1IiwKICAgICAg
+ICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAg
+ICAgICAgICAgInhzYTI5Ni00LjgucGF0Y2giCiAgICAgICAgICBdCiAgICAg
+ICAgfQogICAgICB9CiAgICB9LAogICAgIjQuOSI6IHsKICAgICAgIlJlY2lw
+ZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYi
+OiAiOGQyYTY4ODAxNTE5M2UyMGFlNDdmZTNjMjA4Zjk5MTI4MjQwZjgyMSIs
+CiAgICAgICAgICAiUHJlcmVxcyI6IFtdLAogICAgICAgICAgIlBhdGNoZXMi
+OiBbXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICJtYXN0ZXIiOiB7
+CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAg
+ICAiU3RhYmxlUmVmIjogIjU1YWIyOTJjNDJkYjQxYjA1Y2ZkYmEwMTI2ODBi
+ZjFlMGVhMDJmN2EiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAg
+ICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjk2LnBhdGNoIgog
+ICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfQogIH0KfQ==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa296.patch"
+Content-Disposition: attachment; filename="xsa296.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeGVuL2h5cGVyY2FsbDogRG9uJ3QgdXNlIEJVRygpIGZv
+ciBwYXJhbWV0ZXIgY2hlY2tpbmcgaW4gaHlwZXJjYWxsX2NyZWF0ZV9jb250
+aW51YXRpb24oKQoKU2luY2UgYy9zIDFkNDI5MDM0ICJoeXBlcmNhbGw6IHVw
+ZGF0ZSB2Y3B1X29wIHRvIHRha2UgYW4gdW5zaWduZWQgdmNwdWlkIiwKd2hp
+Y2ggaW5jb3JyZWN0bHkgc3dhcHBlZCAnaScgZm9yICd1JyBpbiB0aGUgcGFy
+YW1ldGVyIHR5cGUgbGlzdCwgZ3Vlc3RzIGhhdmUKYmVlbiBhYmxlIHRvIGhp
+dCB0aGUgQlVHKCkgaW4gbmV4dF9hcmdzKCkncyBkZWZhdWx0IGNhc2UuCgpD
+b3JyZWN0IHRoZXNlIGJhY2sgdG8gJ2knLgoKSW4gYWRkaXRpb24sIG1ha2Ug
+YWRqdXN0bWVudHMgdG8gcHJldmVudCB0aGlzIGNsYXNzIG9mIGlzc3VlIGZy
+b20gb2NjdXJyaW5nIGluCnRoZSBmdXR1cmUgLSBjcmFzaGluZyBYZW4gaXMg
+bm90IGFuIGFwcHJvcHJpYXRlIGZvcm0gb2YgcGFyYW1ldGVyIGNoZWNraW5n
+LgoKQ2FwaXRhbGlzZSBORVhUX0FSRygpIHRvIGNhdGNoIGFsbCB1c2VzLCB0
+byBoaWdobGlnaHQgdGhhdCBpdCBpcyBhIG1hY3JvIGRvaW5nCm5vbi1mdW5j
+dGlvbi1saWtlIHRoaW5ncyBiZWhpbmQgdGhlIHNjZW5lcywgYW5kIHVuZGVm
+IGl0IHdoZW4gYXBwcm9wcmlhdGUuCkltcGxlbWVudCBhIGJhZF9mbXQ6IGJs
+b2NrIHdoaWNoIHByaW50cyBhbiBlcnJvciwgYXNzZXJ0cyB1bnJlYWNoYWJs
+ZSwgYW5kCmNyYXNoZXMgdGhlIGd1ZXN0LgoKT24gdGhlIEFSTSBzaWRlLCBk
+cm9wIGFsbCBwYXJhbWV0ZXIgY2hlY2tpbmcgb2YgcC4gIEl0IGlzIGFzeW1t
+ZXRyaWMgd2l0aCB0aGUKeDg2IHNpZGUsIGFuZCBha2luIHRvIGV4cGVjdGlu
+ZyBtZW1jcHkoKSBvciBzcHJpbnRmKCkgdG8gY2hlY2sgdGhlaXIgc3JjL2Zt
+dApwYXJhbWV0ZXIgYmVmb3JlIHVzZS4gIEEgY2FsbGVyIHBhc3NpbmcgIiIg
+b3Igc29tZXRoaW5nIG90aGVyIHRoYW4gYSBzdHJpbmcKbGl0ZXJhbCB3aWxs
+IGJlIG9idmlvdXMgZHVyaW5nIGNvZGUgcmV2aWV3LgoKVGhpcyBpcyBYU0Et
+Mjk2LgoKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNv
+b3BlcjNAY2l0cml4LmNvbT4KQWNrZWQtYnk6IEp1bGllbiBHcmFsbCA8anVs
+aWVuLmdyYWxsQGFybS5jb20+CgpkaWZmIC0tZ2l0IGEveGVuL2FyY2gvYXJt
+L2RvbWFpbi5jIGIveGVuL2FyY2gvYXJtL2RvbWFpbi5jCmluZGV4IDk0MWJi
+ZmY0ZmUuLmEzZGE4ZTljMDggMTAwNjQ0Ci0tLSBhL3hlbi9hcmNoL2FybS9k
+b21haW4uYworKysgYi94ZW4vYXJjaC9hcm0vZG9tYWluLmMKQEAgLTM4Mywx
+NCArMzgzLDE1IEBAIHZvaWQgc3luY192Y3B1X2V4ZWNzdGF0ZShzdHJ1Y3Qg
+dmNwdSAqdikKICAgICAvKiBOb3RoaW5nIHRvIGRvIC0tIG5vIGxhenkgc3dp
+dGNoaW5nICovCiB9CiAKLSNkZWZpbmUgbmV4dF9hcmcoZm10LCBhcmdzKSAo
+eyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICBcCisjZGVmaW5lIE5FWFRfQVJHKGZtdCwgYXJncykgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorKHsgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIFwKICAgICB1bnNpZ25lZCBsb25n
+IF9fYXJnOyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICBcCiAgICAgc3dpdGNoICggKihmbXQpKysgKSAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgXAogICAgIHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwKICAgICBj
+YXNlICdpJzogX19hcmcgPSAodW5zaWduZWQgbG9uZyl2YV9hcmcoYXJncywg
+dW5zaWduZWQgaW50KTsgIGJyZWFrOyAgICBcCiAgICAgY2FzZSAnbCc6IF9f
+YXJnID0gKHVuc2lnbmVkIGxvbmcpdmFfYXJnKGFyZ3MsIHVuc2lnbmVkIGxv
+bmcpOyBicmVhazsgICAgXAogICAgIGNhc2UgJ2gnOiBfX2FyZyA9ICh1bnNp
+Z25lZCBsb25nKXZhX2FyZyhhcmdzLCB2b2lkICopOyAgICAgICAgYnJlYWs7
+ICAgIFwKLSAgICBkZWZhdWx0OiAgX19hcmcgPSAwOyBCVUcoKTsgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcCisgICAg
+ZGVmYXVsdDogIGdvdG8gYmFkX2ZtdDsgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAgIH0gICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIFwKICAgICBfX2FyZzsgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBcCiB9KQpAQCAtNDA1LDkgKzQwNiw2IEBAIHVuc2lnbmVkIGxvbmcg
+aHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRpb24oCiAgICAgdW5zaWduZWQg
+aW50IGk7CiAgICAgdmFfbGlzdCBhcmdzOwogCi0gICAgLyogQWxsIGh5cGVy
+Y2FsbHMgdGFrZSBhdCBsZWFzdCBvbmUgYXJndW1lbnQgKi8KLSAgICBCVUdf
+T04oICFwIHx8ICpwID09ICdcMCcgKTsKLQogICAgIGN1cnJlbnQtPmhjYWxs
+X3ByZWVtcHRlZCA9IHRydWU7CiAKICAgICB2YV9zdGFydChhcmdzLCBmb3Jt
+YXQpOwpAQCAtNDE1LDcgKzQxMyw3IEBAIHVuc2lnbmVkIGxvbmcgaHlwZXJj
+YWxsX2NyZWF0ZV9jb250aW51YXRpb24oCiAgICAgaWYgKCBtY3MtPmZsYWdz
+ICYgTUNTRl9pbl9tdWx0aWNhbGwgKQogICAgIHsKICAgICAgICAgZm9yICgg
+aSA9IDA7ICpwICE9ICdcMCc7IGkrKyApCi0gICAgICAgICAgICBtY3MtPmNh
+bGwuYXJnc1tpXSA9IG5leHRfYXJnKHAsIGFyZ3MpOworICAgICAgICAgICAg
+bWNzLT5jYWxsLmFyZ3NbaV0gPSBORVhUX0FSRyhwLCBhcmdzKTsKIAogICAg
+ICAgICAvKiBSZXR1cm4gdmFsdWUgZ2V0cyB3cml0dGVuIGJhY2sgdG8gbWNz
+LT5jYWxsLnJlc3VsdCAqLwogICAgICAgICByYyA9IG1jcy0+Y2FsbC5yZXN1
+bHQ7CkBAIC00MzEsNyArNDI5LDcgQEAgdW5zaWduZWQgbG9uZyBoeXBlcmNh
+bGxfY3JlYXRlX2NvbnRpbnVhdGlvbigKIAogICAgICAgICAgICAgZm9yICgg
+aSA9IDA7ICpwICE9ICdcMCc7IGkrKyApCiAgICAgICAgICAgICB7Ci0gICAg
+ICAgICAgICAgICAgYXJnID0gbmV4dF9hcmcocCwgYXJncyk7CisgICAgICAg
+ICAgICAgICAgYXJnID0gTkVYVF9BUkcocCwgYXJncyk7CiAKICAgICAgICAg
+ICAgICAgICBzd2l0Y2ggKCBpICkKICAgICAgICAgICAgICAgICB7CkBAIC00
+NTQsNyArNDUyLDcgQEAgdW5zaWduZWQgbG9uZyBoeXBlcmNhbGxfY3JlYXRl
+X2NvbnRpbnVhdGlvbigKIAogICAgICAgICAgICAgZm9yICggaSA9IDA7ICpw
+ICE9ICdcMCc7IGkrKyApCiAgICAgICAgICAgICB7Ci0gICAgICAgICAgICAg
+ICAgYXJnID0gbmV4dF9hcmcocCwgYXJncyk7CisgICAgICAgICAgICAgICAg
+YXJnID0gTkVYVF9BUkcocCwgYXJncyk7CiAKICAgICAgICAgICAgICAgICBz
+d2l0Y2ggKCBpICkKICAgICAgICAgICAgICAgICB7CkBAIC00NzUsOCArNDcz
+LDE2IEBAIHVuc2lnbmVkIGxvbmcgaHlwZXJjYWxsX2NyZWF0ZV9jb250aW51
+YXRpb24oCiAgICAgdmFfZW5kKGFyZ3MpOwogCiAgICAgcmV0dXJuIHJjOwor
+CisgYmFkX2ZtdDoKKyAgICBncHJpbnRrKFhFTkxPR19FUlIsICJCYWQgaHlw
+ZXJjYWxsIGNvbnRpbnVhdGlvbiBmb3JtYXQgJyVjJ1xuIiwgKnApOworICAg
+IEFTU0VSVF9VTlJFQUNIQUJMRSgpOworICAgIGRvbWFpbl9jcmFzaChjdXJy
+ZW50LT5kb21haW4pOworICAgIHJldHVybiAwOwogfQogCisjdW5kZWYgTkVY
+VF9BUkcKKwogdm9pZCBzdGFydHVwX2NwdV9pZGxlX2xvb3Aodm9pZCkKIHsK
+ICAgICBzdHJ1Y3QgdmNwdSAqdiA9IGN1cnJlbnQ7CmRpZmYgLS1naXQgYS94
+ZW4vYXJjaC94ODYvaHlwZXJjYWxsLmMgYi94ZW4vYXJjaC94ODYvaHlwZXJj
+YWxsLmMKaW5kZXggZDQ4M2RiYWE2Yi4uNDY0M2U1ZWI0MyAxMDA2NDQKLS0t
+IGEveGVuL2FyY2gveDg2L2h5cGVyY2FsbC5jCisrKyBiL3hlbi9hcmNoL3g4
+Ni9oeXBlcmNhbGwuYwpAQCAtODAsMTQgKzgwLDE1IEBAIGNvbnN0IGh5cGVy
+Y2FsbF9hcmdzX3QgaHlwZXJjYWxsX2FyZ3NfdGFibGVbTlJfaHlwZXJjYWxs
+c10gPQogI3VuZGVmIENPTVAKICN1bmRlZiBBUkdTCiAKLSNkZWZpbmUgbmV4
+dF9hcmcoZm10LCBhcmdzKSAoeyAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICBcCisjZGVmaW5lIE5FWFRfQVJHKGZtdCwg
+YXJncykgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgXAorKHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwK
+ICAgICB1bnNpZ25lZCBsb25nIF9fYXJnOyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcCiAgICAgc3dpdGNo
+ICggKihmbXQpKysgKSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgXAogICAgIHsgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIFwKICAgICBjYXNlICdpJzogX19hcmcgPSAodW5zaWduZWQg
+bG9uZyl2YV9hcmcoYXJncywgdW5zaWduZWQgaW50KTsgIGJyZWFrOyAgICBc
+CiAgICAgY2FzZSAnbCc6IF9fYXJnID0gKHVuc2lnbmVkIGxvbmcpdmFfYXJn
+KGFyZ3MsIHVuc2lnbmVkIGxvbmcpOyBicmVhazsgICAgXAogICAgIGNhc2Ug
+J2gnOiBfX2FyZyA9ICh1bnNpZ25lZCBsb25nKXZhX2FyZyhhcmdzLCB2b2lk
+ICopOyAgICAgICAgYnJlYWs7ICAgIFwKLSAgICBkZWZhdWx0OiAgX19hcmcg
+PSAwOyBCVUcoKTsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICBcCisgICAgZGVmYXVsdDogIGdvdG8gYmFkX2ZtdDsgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+XAogICAgIH0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwKICAgICBfX2Fy
+ZzsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICBcCiB9KQpAQCAtMTA5LDcgKzExMCw3
+IEBAIHVuc2lnbmVkIGxvbmcgaHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRp
+b24oCiAgICAgaWYgKCBtY3MtPmZsYWdzICYgTUNTRl9pbl9tdWx0aWNhbGwg
+KQogICAgIHsKICAgICAgICAgZm9yICggaSA9IDA7ICpwICE9ICdcMCc7IGkr
+KyApCi0gICAgICAgICAgICBtY3MtPmNhbGwuYXJnc1tpXSA9IG5leHRfYXJn
+KHAsIGFyZ3MpOworICAgICAgICAgICAgbWNzLT5jYWxsLmFyZ3NbaV0gPSBO
+RVhUX0FSRyhwLCBhcmdzKTsKICAgICB9CiAgICAgZWxzZQogICAgIHsKQEAg
+LTEyMSw3ICsxMjIsNyBAQCB1bnNpZ25lZCBsb25nIGh5cGVyY2FsbF9jcmVh
+dGVfY29udGludWF0aW9uKAogICAgICAgICB7CiAgICAgICAgICAgICBmb3Ig
+KCBpID0gMDsgKnAgIT0gJ1wwJzsgaSsrICkKICAgICAgICAgICAgIHsKLSAg
+ICAgICAgICAgICAgICBhcmcgPSBuZXh0X2FyZyhwLCBhcmdzKTsKKyAgICAg
+ICAgICAgICAgICBhcmcgPSBORVhUX0FSRyhwLCBhcmdzKTsKICAgICAgICAg
+ICAgICAgICBzd2l0Y2ggKCBpICkKICAgICAgICAgICAgICAgICB7CiAgICAg
+ICAgICAgICAgICAgY2FzZSAwOiByZWdzLT5yZGkgPSBhcmc7IGJyZWFrOwpA
+QCAtMTM3LDcgKzEzOCw3IEBAIHVuc2lnbmVkIGxvbmcgaHlwZXJjYWxsX2Ny
+ZWF0ZV9jb250aW51YXRpb24oCiAgICAgICAgIHsKICAgICAgICAgICAgIGZv
+ciAoIGkgPSAwOyAqcCAhPSAnXDAnOyBpKysgKQogICAgICAgICAgICAgewot
+ICAgICAgICAgICAgICAgIGFyZyA9IG5leHRfYXJnKHAsIGFyZ3MpOworICAg
+ICAgICAgICAgICAgIGFyZyA9IE5FWFRfQVJHKHAsIGFyZ3MpOwogICAgICAg
+ICAgICAgICAgIHN3aXRjaCAoIGkgKQogICAgICAgICAgICAgICAgIHsKICAg
+ICAgICAgICAgICAgICBjYXNlIDA6IHJlZ3MtPnJieCA9IGFyZzsgYnJlYWs7
+CkBAIC0xNTQsOCArMTU1LDE2IEBAIHVuc2lnbmVkIGxvbmcgaHlwZXJjYWxs
+X2NyZWF0ZV9jb250aW51YXRpb24oCiAgICAgdmFfZW5kKGFyZ3MpOwogCiAg
+ICAgcmV0dXJuIG9wOworCisgYmFkX2ZtdDoKKyAgICBncHJpbnRrKFhFTkxP
+R19FUlIsICJCYWQgaHlwZXJjYWxsIGNvbnRpbnVhdGlvbiBmb3JtYXQgJyVj
+J1xuIiwgKnApOworICAgIEFTU0VSVF9VTlJFQUNIQUJMRSgpOworICAgIGRv
+bWFpbl9jcmFzaChjdXJyLT5kb21haW4pOworICAgIHJldHVybiAwOwogfQog
+CisjdW5kZWYgTkVYVF9BUkcKKwogaW50IGh5cGVyY2FsbF94bGF0X2NvbnRp
+bnVhdGlvbih1bnNpZ25lZCBpbnQgKmlkLCB1bnNpZ25lZCBpbnQgbnIsCiAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHVuc2lnbmVkIGludCBt
+YXNrLCAuLi4pCiB7CmRpZmYgLS1naXQgYS94ZW4vY29tbW9uL2NvbXBhdC9k
+b21haW4uYyBiL3hlbi9jb21tb24vY29tcGF0L2RvbWFpbi5jCmluZGV4IDM5
+ODc3YjNhYjIuLjI1MzFmYTc0MjEgMTAwNjQ0Ci0tLSBhL3hlbi9jb21tb24v
+Y29tcGF0L2RvbWFpbi5jCisrKyBiL3hlbi9jb21tb24vY29tcGF0L2RvbWFp
+bi5jCkBAIC04MSw3ICs4MSw3IEBAIGludCBjb21wYXRfdmNwdV9vcChpbnQg
+Y21kLCB1bnNpZ25lZCBpbnQgdmNwdWlkLCBYRU5fR1VFU1RfSEFORExFX1BB
+UkFNKHZvaWQpIGFyCiAgICAgICAgIH0KIAogICAgICAgICBpZiAoIHJjID09
+IC1FUkVTVEFSVCApCi0gICAgICAgICAgICByYyA9IGh5cGVyY2FsbF9jcmVh
+dGVfY29udGludWF0aW9uKF9fSFlQRVJWSVNPUl92Y3B1X29wLCAiaXVoIiwK
+KyAgICAgICAgICAgIHJjID0gaHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRp
+b24oX19IWVBFUlZJU09SX3ZjcHVfb3AsICJpaWgiLAogICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjbWQsIHZjcHVp
+ZCwgYXJnKTsKIAogICAgICAgICBicmVhazsKZGlmZiAtLWdpdCBhL3hlbi9j
+b21tb24vZG9tYWluLmMgYi94ZW4vY29tbW9uL2RvbWFpbi5jCmluZGV4IDIz
+MDg1ODgwNTIuLjY1YmNkODVlMzQgMTAwNjQ0Ci0tLSBhL3hlbi9jb21tb24v
+ZG9tYWluLmMKKysrIGIveGVuL2NvbW1vbi9kb21haW4uYwpAQCAtMTQxMSw3
+ICsxNDExLDcgQEAgbG9uZyBkb192Y3B1X29wKGludCBjbWQsIHVuc2lnbmVk
+IGludCB2Y3B1aWQsIFhFTl9HVUVTVF9IQU5ETEVfUEFSQU0odm9pZCkgYXJn
+KQogCiAgICAgICAgIHJjID0gYXJjaF9pbml0aWFsaXNlX3ZjcHUodiwgYXJn
+KTsKICAgICAgICAgaWYgKCByYyA9PSAtRVJFU1RBUlQgKQotICAgICAgICAg
+ICAgcmMgPSBoeXBlcmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbihfX0hZUEVS
+VklTT1JfdmNwdV9vcCwgIml1aCIsCisgICAgICAgICAgICByYyA9IGh5cGVy
+Y2FsbF9jcmVhdGVfY29udGludWF0aW9uKF9fSFlQRVJWSVNPUl92Y3B1X29w
+LCAiaWloIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgY21kLCB2Y3B1aWQsIGFyZyk7CiAKICAgICAgICAgYnJl
+YWs7Cg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa296-4.8.patch"
+Content-Disposition: attachment; filename="xsa296-4.8.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeGVuL2h5cGVyY2FsbDogRG9uJ3QgdXNlIEJVRygpIGZv
+ciBwYXJhbWV0ZXIgY2hlY2tpbmcgaW4gaHlwZXJjYWxsX2NyZWF0ZV9jb250
+aW51YXRpb24oKQoKU2luY2UgYy9zIDFkNDI5MDM0ICJoeXBlcmNhbGw6IHVw
+ZGF0ZSB2Y3B1X29wIHRvIHRha2UgYW4gdW5zaWduZWQgdmNwdWlkIiwKd2hp
+Y2ggaW5jb3JyZWN0bHkgc3dhcHBlZCAnaScgZm9yICd1JyBpbiB0aGUgcGFy
+YW1ldGVyIHR5cGUgbGlzdCwgZ3Vlc3RzIGhhdmUKYmVlbiBhYmxlIHRvIGhp
+dCB0aGUgQlVHKCkgaW4gbmV4dF9hcmdzKCkncyBkZWZhdWx0IGNhc2UuCgpD
+b3JyZWN0IHRoZXNlIGJhY2sgdG8gJ2knLgoKSW4gYWRkaXRpb24sIG1ha2Ug
+YWRqdXN0bWVudHMgdG8gcHJldmVudCB0aGlzIGNsYXNzIG9mIGlzc3VlIGZy
+b20gb2NjdXJyaW5nIGluCnRoZSBmdXR1cmUgLSBjcmFzaGluZyBYZW4gaXMg
+bm90IGFuIGFwcHJvcHJpYXRlIGZvcm0gb2YgcGFyYW1ldGVyIGNoZWNraW5n
+LgoKQ2FwaXRhbGlzZSBORVhUX0FSRygpIHRvIGNhdGNoIGFsbCB1c2VzLCB0
+byBoaWdobGlnaHQgdGhhdCBpdCBpcyBhIG1hY3JvIGRvaW5nCm5vbi1mdW5j
+dGlvbi1saWtlIHRoaW5ncyBiZWhpbmQgdGhlIHNjZW5lcywgYW5kIHVuZGVm
+IGl0IHdoZW4gYXBwcm9wcmlhdGUuCkltcGxlbWVudCBhIGJhZF9mbXQ6IGJs
+b2NrIHdoaWNoIHByaW50cyBhbiBlcnJvciwgYXNzZXJ0cyB1bnJlYWNoYWJs
+ZSwgYW5kCmNyYXNoZXMgdGhlIGd1ZXN0LgoKT24gdGhlIEFSTSBzaWRlLCBk
+cm9wIGFsbCBwYXJhbWV0ZXIgY2hlY2tpbmcgb2YgcC4gIEl0IGlzIGFzeW1t
+ZXRyaWMgd2l0aCB0aGUKeDg2IHNpZGUsIGFuZCBha2luIHRvIGV4cGVjdGlu
+ZyBtZW1jcHkoKSBvciBzcHJpbnRmKCkgdG8gY2hlY2sgdGhlaXIgc3JjL2Zt
+dApwYXJhbWV0ZXIgYmVmb3JlIHVzZS4gIEEgY2FsbGVyIHBhc3NpbmcgIiIg
+b3Igc29tZXRoaW5nIG90aGVyIHRoYW4gYSBzdHJpbmcKbGl0ZXJhbCB3aWxs
+IGJlIG9idmlvdXMgZHVyaW5nIGNvZGUgcmV2aWV3LgoKVGhpcyBpcyBYU0Et
+Mjk2LgoKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNv
+b3BlcjNAY2l0cml4LmNvbT4KQWNrZWQtYnk6IEp1bGllbiBHcmFsbCA8anVs
+aWVuLmdyYWxsQGFybS5jb20+CgpkaWZmIC0tZ2l0IGEveGVuL2FyY2gvYXJt
+L2RvbWFpbi5jIGIveGVuL2FyY2gvYXJtL2RvbWFpbi5jCmluZGV4IGQ5ZTc5
+NmRjYmUuLmY2Njc4ZDIyMjcgMTAwNjQ0Ci0tLSBhL3hlbi9hcmNoL2FybS9k
+b21haW4uYworKysgYi94ZW4vYXJjaC9hcm0vZG9tYWluLmMKQEAgLTMzNiwx
+NCArMzM2LDE1IEBAIHZvaWQgc3luY192Y3B1X2V4ZWNzdGF0ZShzdHJ1Y3Qg
+dmNwdSAqdikKICAgICAvKiBOb3RoaW5nIHRvIGRvIC0tIG5vIGxhenkgc3dp
+dGNoaW5nICovCiB9CiAKLSNkZWZpbmUgbmV4dF9hcmcoZm10LCBhcmdzKSAo
+eyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICBcCisjZGVmaW5lIE5FWFRfQVJHKGZtdCwgYXJncykgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorKHsgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIFwKICAgICB1bnNpZ25lZCBsb25n
+IF9fYXJnOyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICBcCiAgICAgc3dpdGNoICggKihmbXQpKysgKSAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgXAogICAgIHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwKICAgICBj
+YXNlICdpJzogX19hcmcgPSAodW5zaWduZWQgbG9uZyl2YV9hcmcoYXJncywg
+dW5zaWduZWQgaW50KTsgIGJyZWFrOyAgICBcCiAgICAgY2FzZSAnbCc6IF9f
+YXJnID0gKHVuc2lnbmVkIGxvbmcpdmFfYXJnKGFyZ3MsIHVuc2lnbmVkIGxv
+bmcpOyBicmVhazsgICAgXAogICAgIGNhc2UgJ2gnOiBfX2FyZyA9ICh1bnNp
+Z25lZCBsb25nKXZhX2FyZyhhcmdzLCB2b2lkICopOyAgICAgICAgYnJlYWs7
+ICAgIFwKLSAgICBkZWZhdWx0OiAgX19hcmcgPSAwOyBCVUcoKTsgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcCisgICAg
+ZGVmYXVsdDogIGdvdG8gYmFkX2ZtdDsgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAgIH0gICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIFwKICAgICBfX2FyZzsgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBcCiB9KQpAQCAtMzczLDkgKzM3NCw2IEBAIHVuc2lnbmVkIGxvbmcg
+aHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRpb24oCiAgICAgdW5zaWduZWQg
+aW50IGk7CiAgICAgdmFfbGlzdCBhcmdzOwogCi0gICAgLyogQWxsIGh5cGVy
+Y2FsbHMgdGFrZSBhdCBsZWFzdCBvbmUgYXJndW1lbnQgKi8KLSAgICBCVUdf
+T04oICFwIHx8ICpwID09ICdcMCcgKTsKLQogICAgIHZhX3N0YXJ0KGFyZ3Ms
+IGZvcm1hdCk7CiAKICAgICBpZiAoIG1jcy0+ZmxhZ3MgJiBNQ1NGX2luX211
+bHRpY2FsbCApCkBAIC0zODMsNyArMzgxLDcgQEAgdW5zaWduZWQgbG9uZyBo
+eXBlcmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbigKICAgICAgICAgX19zZXRf
+Yml0KF9NQ1NGX2NhbGxfcHJlZW1wdGVkLCAmbWNzLT5mbGFncyk7CiAKICAg
+ICAgICAgZm9yICggaSA9IDA7ICpwICE9ICdcMCc7IGkrKyApCi0gICAgICAg
+ICAgICBtY3MtPmNhbGwuYXJnc1tpXSA9IG5leHRfYXJnKHAsIGFyZ3MpOwor
+ICAgICAgICAgICAgbWNzLT5jYWxsLmFyZ3NbaV0gPSBORVhUX0FSRyhwLCBh
+cmdzKTsKIAogICAgICAgICAvKiBSZXR1cm4gdmFsdWUgZ2V0cyB3cml0dGVu
+IGJhY2sgdG8gbWNzLT5jYWxsLnJlc3VsdCAqLwogICAgICAgICByYyA9IG1j
+cy0+Y2FsbC5yZXN1bHQ7CkBAIC00MDIsNyArNDAwLDcgQEAgdW5zaWduZWQg
+bG9uZyBoeXBlcmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbigKIAogICAgICAg
+ICAgICAgZm9yICggaSA9IDA7ICpwICE9ICdcMCc7IGkrKyApCiAgICAgICAg
+ICAgICB7Ci0gICAgICAgICAgICAgICAgYXJnID0gbmV4dF9hcmcocCwgYXJn
+cyk7CisgICAgICAgICAgICAgICAgYXJnID0gTkVYVF9BUkcocCwgYXJncyk7
+CiAKICAgICAgICAgICAgICAgICBzd2l0Y2ggKCBpICkKICAgICAgICAgICAg
+ICAgICB7CkBAIC00MjUsNyArNDIzLDcgQEAgdW5zaWduZWQgbG9uZyBoeXBl
+cmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbigKIAogICAgICAgICAgICAgZm9y
+ICggaSA9IDA7ICpwICE9ICdcMCc7IGkrKyApCiAgICAgICAgICAgICB7Ci0g
+ICAgICAgICAgICAgICAgYXJnID0gbmV4dF9hcmcocCwgYXJncyk7CisgICAg
+ICAgICAgICAgICAgYXJnID0gTkVYVF9BUkcocCwgYXJncyk7CiAKICAgICAg
+ICAgICAgICAgICBzd2l0Y2ggKCBpICkKICAgICAgICAgICAgICAgICB7CkBA
+IC00NDYsOCArNDQ0LDE2IEBAIHVuc2lnbmVkIGxvbmcgaHlwZXJjYWxsX2Ny
+ZWF0ZV9jb250aW51YXRpb24oCiAgICAgdmFfZW5kKGFyZ3MpOwogCiAgICAg
+cmV0dXJuIHJjOworCisgYmFkX2ZtdDoKKyAgICBncHJpbnRrKFhFTkxPR19F
+UlIsICJCYWQgaHlwZXJjYWxsIGNvbnRpbnVhdGlvbiBmb3JtYXQgJyVjJ1xu
+IiwgKnApOworICAgIEFTU0VSVF9VTlJFQUNIQUJMRSgpOworICAgIGRvbWFp
+bl9jcmFzaChjdXJyZW50LT5kb21haW4pOworICAgIHJldHVybiAwOwogfQog
+CisjdW5kZWYgTkVYVF9BUkcKKwogdm9pZCBzdGFydHVwX2NwdV9pZGxlX2xv
+b3Aodm9pZCkKIHsKICAgICBzdHJ1Y3QgdmNwdSAqdiA9IGN1cnJlbnQ7CmRp
+ZmYgLS1naXQgYS94ZW4vYXJjaC94ODYvZG9tYWluLmMgYi94ZW4vYXJjaC94
+ODYvZG9tYWluLmMKaW5kZXggZGRlYjY4Zjk2Ny4uMzk0NmVhMzhmZCAxMDA2
+NDQKLS0tIGEveGVuL2FyY2gveDg2L2RvbWFpbi5jCisrKyBiL3hlbi9hcmNo
+L3g4Ni9kb21haW4uYwpAQCAtMjQwMywxNCArMjQwMywxNSBAQCB2b2lkIHN5
+bmNfdmNwdV9leGVjc3RhdGUoc3RydWN0IHZjcHUgKnYpCiAgICAgZmx1c2hf
+dGxiX21hc2sodi0+dmNwdV9kaXJ0eV9jcHVtYXNrKTsKIH0KIAotI2RlZmlu
+ZSBuZXh0X2FyZyhmbXQsIGFyZ3MpICh7ICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIFwKKyNkZWZpbmUgTkVYVF9BUkco
+Zm10LCBhcmdzKSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICBcCisoeyAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgXAogICAgIHVuc2lnbmVkIGxvbmcgX19hcmc7ICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwKICAgICBz
+d2l0Y2ggKCAqKGZtdCkrKyApICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICBcCiAgICAgeyAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgXAogICAgIGNhc2UgJ2knOiBfX2FyZyA9ICh1bnNp
+Z25lZCBsb25nKXZhX2FyZyhhcmdzLCB1bnNpZ25lZCBpbnQpOyAgYnJlYWs7
+ICAgIFwKICAgICBjYXNlICdsJzogX19hcmcgPSAodW5zaWduZWQgbG9uZyl2
+YV9hcmcoYXJncywgdW5zaWduZWQgbG9uZyk7IGJyZWFrOyAgICBcCiAgICAg
+Y2FzZSAnaCc6IF9fYXJnID0gKHVuc2lnbmVkIGxvbmcpdmFfYXJnKGFyZ3Ms
+IHZvaWQgKik7ICAgICAgICBicmVhazsgICAgXAotICAgIGRlZmF1bHQ6ICBf
+X2FyZyA9IDA7IEJVRygpOyAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIFwKKyAgICBkZWZhdWx0OiAgZ290byBiYWRfZm10
+OyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBcCiAgICAgfSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAg
+IF9fYXJnOyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwKIH0pCkBAIC0yNDQ5LDcg
+KzI0NTAsNyBAQCB1bnNpZ25lZCBsb25nIGh5cGVyY2FsbF9jcmVhdGVfY29u
+dGludWF0aW9uKAogICAgICAgICBfX3NldF9iaXQoX01DU0ZfY2FsbF9wcmVl
+bXB0ZWQsICZtY3MtPmZsYWdzKTsKIAogICAgICAgICBmb3IgKCBpID0gMDsg
+KnAgIT0gJ1wwJzsgaSsrICkKLSAgICAgICAgICAgIG1jcy0+Y2FsbC5hcmdz
+W2ldID0gbmV4dF9hcmcocCwgYXJncyk7CisgICAgICAgICAgICBtY3MtPmNh
+bGwuYXJnc1tpXSA9IE5FWFRfQVJHKHAsIGFyZ3MpOwogICAgIH0KICAgICBl
+bHNlCiAgICAgewpAQCAtMjQ3MCw3ICsyNDcxLDcgQEAgdW5zaWduZWQgbG9u
+ZyBoeXBlcmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbigKICAgICAgICAgewog
+ICAgICAgICAgICAgZm9yICggaSA9IDA7ICpwICE9ICdcMCc7IGkrKyApCiAg
+ICAgICAgICAgICB7Ci0gICAgICAgICAgICAgICAgYXJnID0gbmV4dF9hcmco
+cCwgYXJncyk7CisgICAgICAgICAgICAgICAgYXJnID0gTkVYVF9BUkcocCwg
+YXJncyk7CiAgICAgICAgICAgICAgICAgc3dpdGNoICggaSApCiAgICAgICAg
+ICAgICAgICAgewogICAgICAgICAgICAgICAgIGNhc2UgMDogcmVncy0+cmRp
+ID0gYXJnOyBicmVhazsKQEAgLTI0ODYsNyArMjQ4Nyw3IEBAIHVuc2lnbmVk
+IGxvbmcgaHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRpb24oCiAgICAgICAg
+IHsKICAgICAgICAgICAgIGZvciAoIGkgPSAwOyAqcCAhPSAnXDAnOyBpKysg
+KQogICAgICAgICAgICAgewotICAgICAgICAgICAgICAgIGFyZyA9IG5leHRf
+YXJnKHAsIGFyZ3MpOworICAgICAgICAgICAgICAgIGFyZyA9IE5FWFRfQVJH
+KHAsIGFyZ3MpOwogICAgICAgICAgICAgICAgIHN3aXRjaCAoIGkgKQogICAg
+ICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICBjYXNlIDA6IHJlZ3Mt
+PmVieCA9IGFyZzsgYnJlYWs7CkBAIC0yNTAzLDggKzI1MDQsMTYgQEAgdW5z
+aWduZWQgbG9uZyBoeXBlcmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbigKICAg
+ICB2YV9lbmQoYXJncyk7CiAKICAgICByZXR1cm4gb3A7CisKKyBiYWRfZm10
+OgorICAgIGdwcmludGsoWEVOTE9HX0VSUiwgIkJhZCBoeXBlcmNhbGwgY29u
+dGludWF0aW9uIGZvcm1hdCAnJWMnXG4iLCAqcCk7CisgICAgQVNTRVJUX1VO
+UkVBQ0hBQkxFKCk7CisgICAgZG9tYWluX2NyYXNoKGN1cnJlbnQtPmRvbWFp
+bik7CisgICAgcmV0dXJuIDA7CiB9CiAKKyN1bmRlZiBORVhUX0FSRworCiBp
+bnQgaHlwZXJjYWxsX3hsYXRfY29udGludWF0aW9uKHVuc2lnbmVkIGludCAq
+aWQsIHVuc2lnbmVkIGludCBuciwKICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgdW5zaWduZWQgaW50IG1hc2ssIC4uLikKIHsKZGlmZiAtLWdp
+dCBhL3hlbi9jb21tb24vY29tcGF0L2RvbWFpbi5jIGIveGVuL2NvbW1vbi9j
+b21wYXQvZG9tYWluLmMKaW5kZXggODhiZmRjODM2ZC4uZDQ0NmVkMTMxYiAx
+MDA2NDQKLS0tIGEveGVuL2NvbW1vbi9jb21wYXQvZG9tYWluLmMKKysrIGIv
+eGVuL2NvbW1vbi9jb21wYXQvZG9tYWluLmMKQEAgLTgxLDcgKzgxLDcgQEAg
+aW50IGNvbXBhdF92Y3B1X29wKGludCBjbWQsIHVuc2lnbmVkIGludCB2Y3B1
+aWQsIFhFTl9HVUVTVF9IQU5ETEVfUEFSQU0odm9pZCkgYXIKICAgICAgICAg
+fQogCiAgICAgICAgIGlmICggcmMgPT0gLUVSRVNUQVJUICkKLSAgICAgICAg
+ICAgIHJjID0gaHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRpb24oX19IWVBF
+UlZJU09SX3ZjcHVfb3AsICJpdWgiLAorICAgICAgICAgICAgcmMgPSBoeXBl
+cmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbihfX0hZUEVSVklTT1JfdmNwdV9v
+cCwgImlpaCIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIGNtZCwgdmNwdWlkLCBhcmcpOwogCiAgICAgICAgIGJy
+ZWFrOwpkaWZmIC0tZ2l0IGEveGVuL2NvbW1vbi9kb21haW4uYyBiL3hlbi9j
+b21tb24vZG9tYWluLmMKaW5kZXggNzQwMTYzZWU3Ny4uMjhkNzkwM2E5NiAx
+MDA2NDQKLS0tIGEveGVuL2NvbW1vbi9kb21haW4uYworKysgYi94ZW4vY29t
+bW9uL2RvbWFpbi5jCkBAIC0xMjc3LDcgKzEyNzcsNyBAQCBsb25nIGRvX3Zj
+cHVfb3AoaW50IGNtZCwgdW5zaWduZWQgaW50IHZjcHVpZCwgWEVOX0dVRVNU
+X0hBTkRMRV9QQVJBTSh2b2lkKSBhcmcpCiAKICAgICAgICAgcmMgPSBhcmNo
+X2luaXRpYWxpc2VfdmNwdSh2LCBhcmcpOwogICAgICAgICBpZiAoIHJjID09
+IC1FUkVTVEFSVCApCi0gICAgICAgICAgICByYyA9IGh5cGVyY2FsbF9jcmVh
+dGVfY29udGludWF0aW9uKF9fSFlQRVJWSVNPUl92Y3B1X29wLCAiaXVoIiwK
+KyAgICAgICAgICAgIHJjID0gaHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRp
+b24oX19IWVBFUlZJU09SX3ZjcHVfb3AsICJpaWgiLAogICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjbWQsIHZjcHVp
+ZCwgYXJnKTsKIAogICAgICAgICBicmVhazsK
+
+--=separator--
