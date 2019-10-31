@@ -1,91 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/20/1
-Message-ID: <CA34227E-D1DF-4535-84D1-55A9EE812364@amazon.com>
-Date: Mon, 19 Aug 2019 22:55:47 +0000
-From: "Hausler, Micah" <mhausler@...zon.com>
-To: "kubernetes-announce@...glegroups.com" <kubernetes-announce@...glegroups.com>, "kubernetes-dev@...glegroups.com" <kubernetes-dev@...glegroups.com>, "kubernetes-security-announce@...glegroups.com" <kubernetes-security-announce@...glegroups.com>, "kubernetes-security-discuss@...glegroups.com" <kubernetes-security-discuss@...glegroups.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "kubernetes+announcements@...coursemail.com" <kubernetes+announcements@...coursemail.com>
-Subject: [ANNOUNCE] Security release of Kubernetes v1.15.3, v1.14.6, v1.13.10 - CVE-2019-9512 and CVE-2019-9514
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/31/4
+Message-Id: <E1iQ9ao-0004LS-NU@xenbits.xenproject.org>
+Date: Thu, 31 Oct 2019 12:30:22 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 301 v3 (CVE-2019-18423) - add-to-physmap can be abused to DoS Arm hosts
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+            Xen Security Advisory CVE-2019-18423 / XSA-301
+                               version 3
 
+             add-to-physmap can be abused to DoS Arm hosts
 
-A security issue has been found in the net/http library of the Go language that affects all versions and all components of Kubernetes. The vulnerabilities can result in a DoS against any process with an HTTP or HTTPS listener.
+UPDATES IN VERSION 3
+====================
 
+Public release.
 
+ISSUE DESCRIPTION
+=================
 
-Am I vulnerable?
+p2m->max_mapped_gfn is used by the functions
+p2m_resolve_translation_fault() and p2m_get_entry() to sanity check
+guest physical frame.  The rest of the code in the two functions will
+assume that there is a valid root table and check that with BUG_ON().
 
+The function p2m_get_root_pointer() will ignore the unused top bits of
+a guest physical frame.  This means that the function p2m_set_entry()
+will alias the frame.  However, p2m->max_mapped_gfn will be updated
+using the original frame.
 
+It would be possible to set p2m->max_mapped_gfn high enough to cover a
+frame that would lead p2m_get_root_pointer() to return NULL in
+p2m_get_entry() and p2m_resolve_translation_fault().
 
-Yes. All versions of Kubernetes are affected.
+Additionally, the sanity check on p2m->max_mapped_gfn is off-by-one
+allowing "highest mapped + 1" to be considered valid.  However,
+p2m_get_root_pointer() will return NULL.
 
+The problem could be triggered with a specially crafted hypercall
+XENMEM_add_to_physmap{, _batch} followed by an access to an address
+(via hypercall or direct access) that passes the sanity check but
+cause p2m_get_root_pointer() to return NULL.
 
-Go has released versions go1.12.8 and go1.11.13, and we have released the following versions of Kubernetes built using patched versions of Go.
+IMPACT
+======
 
+A malicious guest administrator may cause a hypervisor crash,
+resulting in a Denial of Service (DoS).
 
+VULNERABLE SYSTEMS
+==================
 
-·         Kubernetes v1.15.3 - go1.12.9
+Xen version 4.8 and newer are vulnerable.
 
-·         Kubernetes v1.14.6 - go1.12.9
+Only Arm systems are vulnerable.  x86 systems are not affected.
 
-·         Kubernetes v1.13.10 - go1.11.13
+MITIGATION
+==========
 
+There are no mitigations.
 
-How do I mitigate the vulnerability?
+CREDITS
+=======
 
+This issue was discovered by Julian Grall of Arm.
 
-Upgrade to a patched version of Kubernetes, listed above.
+RESOLUTION
+==========
 
+Applying the appropriate attached patch resolves this issue.
 
-How do I upgrade?
+xsa301-master-*.patch  xen-unstable to Xen 4.12
+xsa301-4.11-*.patch    Xen 4.11 to Xen 4.8
 
+$ sha256sum xsa301*
+c3f334d3de1fd7385a5b73edca1f979b6027595d8aa2a3fce451ee5a37d57662  xsa301.meta
+1f6f76e0da4bd8cbce38a127d446593058a76565bade57672d6a00357fdc64fa  xsa301-4.11-1.patch
+b1ea7b323f509a6150983ece24ecd38f3a9ea97a11360d7a36f715ebaf85e8b1  xsa301-4.11-2.patch
+67fffdd5f827f783e8752ca779a3234d30f26df5c42844c5b2b4a34618d7a0c2  xsa301-4.11-3.patch
+3dba13afd3449b85215058c596f6a60a255e5a11c6865cbcaa05e9768f535b46  xsa301-master-1.patch
+dbf952c2333807d5ee0fe4cccb069ddfda87e295c83a43ec46621b486b19f6e8  xsa301-master-2.patch
+ad544e5e2da130540d5475954b1512fc00743773cad382c4c0451fd91536287d  xsa301-master-3.patch
+$
 
+DEPLOYMENT DURING EMBARGO
+=========================
 
-When new versions are released, you can follow the upgrade instructions at https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
-Vulnerability details
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2601sMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZV3sH/0LnX74pFsicNGw73H2zrLQuvXQolWvThF3sZDKj
+VeeX6WZ3u7n4au3TNytoFcx6IKR5ysqWWL2NpTW2ZXq+5ZZ3TSv39e7mGrUdQ/tC
+YB/bWc8IxIgfwpL10ph12heqcQXUbpppBLIVgklCMUEpNTHWPubJuPEeMp5xPexK
+cmpCuIck7HcyiSpTMAdZ+cj8voV3h3Wmc2pLXPgR3+T56KsuV5IdoIr5I9s4kPAM
+hsh+4Ip/uYa4JUepxap3AD+yqLBDXggGwua50wVEtSPPVR6FEMvDYtuiMUEq+G7d
+3DOKy6ylf9XzMOQWSHEvWOLzu5CSAxwMnVB0KJ8T0bI+HxU=
+=wp/o
+-----END PGP SIGNATURE-----
 
-Netflix recently announced a security advisory that identified several Denial of Service attack vectors that can affect server implementations of the HTTP/2 protocol, and has issued eight CVEs. [1]
+Download attachment "xsa301.meta" of type "application/octet-stream" (1950 bytes)
 
+Download attachment "xsa301-4.11-1.patch" of type "application/octet-stream" (3115 bytes)
 
+Download attachment "xsa301-4.11-2.patch" of type "application/octet-stream" (3392 bytes)
 
-Go is affected by two of the vulnerabilities (CVE-2019-9512 and CVE-2019-9514) and so Kubernetes components that serve HTTP/2 traffic (including /healthz) are also affected. [2]
+Download attachment "xsa301-4.11-3.patch" of type "application/octet-stream" (1770 bytes)
 
+Download attachment "xsa301-master-1.patch" of type "application/octet-stream" (3116 bytes)
 
+Download attachment "xsa301-master-2.patch" of type "application/octet-stream" (3361 bytes)
 
-These vulnerabilities allow untrusted clients to allocate an unlimited amount of memory, until the server crashes. The Product Security Committee has assigned this set of vulnerabilities with a CVSS score of 7.5 [3]
-
-
-
-[1]. https://github.com/Netflix/security-bulletins/blob/master/advisories/third-party/2019-002.md
-
-[2]. https://golang.org/doc/devel/release.html#go1.12
-
-[3]. https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
-
-
-
-Thank you
-
-
-Thanks to Jonathan Looney from Netflix for discovering and reporting these issues to the Go community.
-
-
-
-Thanks to Christoph Blecker, Benjamin Elder, and Tim Pepper for coordinating the fix and release.
-
-
-
-Thank You,
-
-
-
-Micah Hausler on behalf of the Kubernetes Product Security Committee
-
-
+Download attachment "xsa301-master-3.patch" of type "application/octet-stream" (2436 bytes)
