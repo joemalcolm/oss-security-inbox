@@ -1,26 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/17/3
-Message-ID: <CAC7nai00CbzPWbcd2pF-E6hi8pKBrUF5+oanEd++ME1FtsJaoQ@mail.gmail.com>
-Date: Wed, 17 Apr 2019 14:21:35 -0400
-From: Havoc Pennington <hp@...elift.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/02/1
+Message-ID: <ab2c1aae-38d8-c15e-6109-f522f85936d2@linux.com>
+Date: Sat, 2 Nov 2019 22:27:27 +0300
+From: Alexander Popov <alex.popov@...ux.com>
 To: oss-security@...ts.openwall.com
-Subject: urllib3: adds system certificates to ssl_context
+Subject: [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability has been discovered in the urllib3 Python library.
+Hello!
 
-When verifying HTTPS connections when an SSLContext is passed to
-urllib3, system CA certificates will be loaded into the SSLContext
-by default in addition to any manually-specified CA certificates.
-This causes TLS handshakes that should fail given only the
-manually specified certs to succeed based on system CA certs.
+I used the syzkaller fuzzer with custom modifications and found a bunch of
+5-year old bugs in the Linux kernel. I managed to exploit one of them for a
+local privilege escalation.
 
-This affects urllib3 1.24.1 and below. The fix has been released
-in version 1.24.2.
+These vulnerabilities are caused by wrong mutex locking in the vivid driver of
+the V4L2 subsystem. Please see the fixing patch that I've just sent to LKML:
+https://lore.kernel.org/lkml/20191102190327.24903-1-alex.popov@linux.com/
 
-The vulnerability was reported by Christian Heimes.
+The vivid driver doesn't require any special hardware. It is shipped in Ubuntu,
+Debian, Arch Linux, SUSE Linux Enterprise and openSUSE.
 
-A CVE ID has been requested, will follow up with it when we have it.
+On Ubuntu the devices created by this driver are available to the normal user,
+since Ubuntu applies RW ACL when the user is logged in:
+  a13x@...ntu_server_1804:~$ getfacl /dev/video0
+  getfacl: Removing leading '/' from absolute path names
+  # file: dev/video0
+  # owner: root
+  # group: video
+  user::rw-
+  user:a13x:rw-
+  group::rw-
+  mask::rw-
+  other::---
 
-Best
-Havoc / on behalf of Tidelift security team & urllib3 team
+(Un)fortunately, I don't know how to autoload the vulnerable driver, which
+limits the severity of these vulnerabilities. That's why the Linux kernel
+security team allows me to do the full disclosure.
+
+But there is an interesting aspect -- my PoC exploit bypasses SMEP and SMAP on
+the fresh Ubuntu Server 18.04. Moreover, it gains the local privilege escalation
+from the kthread context (where the userspace is not mapped). I'm going to share
+the details about the exploit techniques later.
+
+For now I would recommend to blacklist the vivid kernel module on your machines.
+
+Best regards,
+Alexander
