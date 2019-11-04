@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1297" "Sunday" "11" "February" "2018" "09:59:05" "+0100" "Philippe Mouawad" "pmouawad@apache.org" "<CAH9fUpaNzk5am8oFe07RQ-kynCsQv54yB-uYs9bEnz7tbX-O7g@mail.gmail.com>" "46" "[oss-security] CVE-2018-1297: Apache JMeter uses an unsecure RMI connection in Distributed mode" "^Date:" nil nil "2" "2018021108:59:05" "[oss-security] CVE-2018-1297: Apache JMeter uses an unsecure RMI connection in Distributed mode" (number mark "        pmouawad@apa Feb 11   46/1297  " thread-indent "\"[oss-security] CVE-2018-1297: Apache JMeter uses an unsecure RMI connection in Distributed mode\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2061" "Monday" "4" "November" "2019" "09:26:50" "-0800" "Tim Armstrong" "tarmstrong@apache.org" "<CAEoRBew=EvETjHzcQVbUGKmqxJ5BnghbJ-C=vejjaa0XB4Sn1g@mail.gmail.com>" "46" "[oss-security] [CVE-2019-10084] privilege escalation by authenticated Apache Impala users" nil nil nil "11" "2019110417:26:50" "[oss-security] [CVE-2019-10084] privilege escalation by authenticated Apache Impala users" (number mark "U       tarmstrong@a Nov  4   46/2061  " thread-indent "\"[oss-security] [CVE-2019-10084] privilege escalation by authenticated Apache Impala users\"\n") "<CAEoRBewNamuG_iHx=71Vwjj=kQV-Q1UioYYebG02j61ZEX0SXw@mail.gmail.com>" ("<CAEoRBewNamuG_iHx=71Vwjj=kQV-Q1UioYYebG02j61ZEX0SXw@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] [CVE-2019-10084] privilege escalation by authenticated Apache Impala users" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17788 invoked by uid 550); 11 Feb 2018 09:01:16 -0000
+Received: (qmail 21949 invoked by uid 550); 4 Nov 2019 17:36:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15555 invoked from network); 11 Feb 2018 08:59:21 -0000
-X-Gm-Message-State: APf1xPBdxeWJq+EuI5bTSp67WhJeZ3kgP2zHHB78tXnB0/hlU2Ehn4xH
-	Ohf7ENalcE7pxzQei/uuDYf4wmXgZCTH4DxzdE8=
-X-Google-Smtp-Source: AH8x225aN+Dw0ll6diFNKJfhRgSV3dmY+tObOVibw2jPFypH58e7mCJPF8tM8/GdcrfeczS/BVDNCtdHufmPMkXGaRU=
-X-Received: by 10.55.92.133 with SMTP id q127mr12022535qkb.225.1518339546326;
- Sun, 11 Feb 2018 00:59:06 -0800 (PST)
-MIME-Version: 1.0
-X-Gmail-Original-Message-ID: <CAH9fUpaNzk5am8oFe07RQ-kynCsQv54yB-uYs9bEnz7tbX-O7g@mail.gmail.com>
-Message-ID: <CAH9fUpaNzk5am8oFe07RQ-kynCsQv54yB-uYs9bEnz7tbX-O7g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="001a114e3d724eacd60564ebf96f"
-Date: Sun, 11 Feb 2018 09:59:05 +0100
-From: Philippe Mouawad <pmouawad@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2018-1297: Apache JMeter uses an unsecure RMI connection in
- Distributed mode
-To: JMeter Users List <user@jmeter.apache.org>, dev@jmeter.apache.org, announce@apache.org, 
-	asf-security <security@apache.org>, oss-security@lists.openwall.com, 
-	Brenden Meeder <fishing.for.jormungandr@gmail.com>
+Received: (qmail 17831 invoked from network); 4 Nov 2019 17:27:29 -0000
+X-Gm-Message-State: APjAAAV8OTMg8MkhN20QcndYf6El5MBe3sacsSrFn7jR3ojfdU7zamjV
+	XEJ7m52/o4YlgmyIq0phhP9tOewIxGLl2xWlMQcMWQ==
+X-Google-Smtp-Source: APXvYqylNcVDjtQP3bAug6TUm90WskCEaGa/ASNsLozgKEuDIuNVPxx+4gw8Sc3v4B8mgxM6Fjr0BOnVVaJ78cNmyB0=
+X-Received: by 2002:a05:6102:355:: with SMTP id e21mr12743808vsa.202.1572888436402;
+ Mon, 04 Nov 2019 09:27:16 -0800 (PST)
+MIME-Version: 1.0
+References: <CAEoRBewNamuG_iHx=71Vwjj=kQV-Q1UioYYebG02j61ZEX0SXw@mail.gmail.com>
+In-Reply-To: <CAEoRBewNamuG_iHx=71Vwjj=kQV-Q1UioYYebG02j61ZEX0SXw@mail.gmail.com>
+From: Tim Armstrong <tarmstrong@apache.org>
+Date: Mon, 4 Nov 2019 09:26:50 -0800
+X-Gmail-Original-Message-ID: <CAEoRBew=EvETjHzcQVbUGKmqxJ5BnghbJ-C=vejjaa0XB4Sn1g@mail.gmail.com>
+Message-ID: <CAEoRBew=EvETjHzcQVbUGKmqxJ5BnghbJ-C=vejjaa0XB4Sn1g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000861b8e059688a0fe"
+Subject: [oss-security] [CVE-2019-10084] privilege escalation by authenticated Apache Impala users
 
---001a114e3d724eacd60564ebf96f
+--000000000000861b8e059688a0fe
 Content-Type: text/plain; charset="UTF-8"
 
-Severity: Important
+CVE-2019-10084: privilege escalation by authenticated Apache Impala users
+
+Severity: High
 
 Vendor: The Apache Software Foundation
 
-Versions Affected: JMeter 2.X, 3.X
+Versions Affected: Impala 2.7.0 to Impala 3.2.0
 
-Description [0]:
+Description: An authenticated user with access to the IDs of active Impala
+queries or sessions can interact with those sessions or queries via a
+specially-constructed request and thereby potentially bypass authorization
+and audit mechanisms.
 
-When using Distributed Test only (RMI based), jmeter uses an unsecured RMI
-connection.
-This could allow an attacker to get Access to JMeterEngine and send
-unauthorized code.
-This only affect tests running in Distributed mode.
+Session and query IDs are unique and random, but have not been documented
+or consistently treated as sensitive secrets. Therefore they may be exposed
+in logs or interfaces. They were also not generated with a
+cryptographically secure random number generator, so are vulnerable to
+random number generator attacks that predict future IDs based on past IDs.
 
-Mitigation:
-  * Users must use last version of Java 8 or Java 9
-  * Users must upgrade to last JMeter 4.0 version and use the default /
-enabled authenticated SSL RMI connection.
+Impala deployments with Apache Sentry or Apache Ranger authorization
+enabled may be vulnerable to privilege escalation if an authenticated
+attacker is able to hijack a session or query from another authenticated
+user with privileges not assigned to the attacker.
 
-Besides, we remind users that in distributed mode, JMeter makes an
-Architectural assumption
-that it is operating on a 'safe' network. i.e. everyone with access to the
-network is considered trusted.
+Impala deployments with audit logging enabled may be vulnerable to
+incorrect audit logging as a user could undertake actions that were logged
+under the name of a different authenticated user.
 
-This typically means a dedicated VPN or similar is being used.
+Constructing an attack requires a high degree of technical sophistication
+and access to the Impala system as an authenticated user.
 
+Mitigation: If an Impala deployment uses Apache Sentry, Apache Ranger or
+audit logging, then users should upgrade to a version of Impala with the
+fix for IMPALA-8605. The Impala 3.3.0 release includes this fix. This
+implements session secrets that eliminate the risk of any attack using this
+mechanism.
 
-Example:
-  * Start JMeter server using either jmeter-server or jmeter -s
-  * If JMeter listens on unsecure rmi connection (ie you can connect to it
-using a JMeter client), you are vulnerable
+In lieu of an upgrade, restricting access to debug pages, administrative
+interfaces and logs that expose session and query IDs will reduce but not
+eliminate the risk of an attack. Restricting access to the Impala
+deployment to trusted users will also reduce the risk of an attack
 
-Credit:
-This issue was reported responsibly to the Apache Tomcat Security Team
-by Brenden Meeder.
-
-- Philippe Mouawad
-
-on behalf of the Apache JMeter PMC
-
-[0] https://bz.apache.org/bugzilla/show_bug.cgi?id=62039
-
---001a114e3d724eacd60564ebf96f--
+--000000000000861b8e059688a0fe--
