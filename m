@@ -1,42 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/27/6
-Message-ID: <20190627170725.GA10540@kroah.com>
-Date: Fri, 28 Jun 2019 01:07:25 +0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/04/3
+Message-ID: <380cf271-ee86-3743-8303-03d6a1df4d37@csail.mit.edu>
+Date: Mon, 4 Nov 2019 15:08:24 -0800
+From: "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Cc: Steven Rostedt <rostedt@...dmis.org>, sashal@...nel.org, amakhalov@...are.com, anishs@...are.com, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>
+Subject: Re: Membership application for linux-distros - VMware
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 27, 2019 at 11:55:16AM -0500, Tyler Hicks wrote:
-> On 2019-06-28 00:42:06, Greg KH wrote:
-> > On Thu, Jun 27, 2019 at 04:03:21PM +0200, Solar Designer wrote:
-> > > Hi Sasha,
-> > > 
-> > > Thank you for posting this application.
-> > > 
-> > > Are you also on security@...?  If so, then on one hand also being on
-> > > linux-distros would probably be of less use to you since I suspect most
-> > > of the issues relevant to Microsoft are in the Linux kernel, but on the
-> > > other hand you could serve as a liaison to that group.
-> > 
-> > Sasha is not on security@k.o, someone else there is _supposed_ to be the
-> > liason to the linux-distros list, but I don't know how well that is
-> > working at the moment as I am not on -distros (nor do I want to be at
-> > this point in time.)
+On 10/30/19 11:46 AM, Solar Designer wrote:
+> On Wed, Oct 30, 2019 at 05:24:23PM +0100, Solar Designer wrote:
+>> Please send me your PGP key off-list and I'll add you to linux-distros.
 > 
-> I don't think it happens much, if ever these days. The only kernel
-> issues that go to linux-distros seem to be ones that are reported up
-> through a distro or where the discoverer makes a point to include both
-> lists.
+> This has been taken care of - VMware Photon OS is now on linux-distros.
+>
+
+Thank you!
+ 
+> Srivatsa, please note that your subscription is only for Photon OS.
+> You're expected not to share the information within VMware beyond the
+> need-to-know for Photon OS fixes.  If an issue comes up that you think
+> is relevant to other VMware products and you'd like to pass the
+> information on, you need the reporter's explicit permission to do so.
 > 
-> It would be good to improve the situation but I don't know if one person
-> could manage it alone.
 
-The number of "real" bugs reported to security@k.o is really low these
-days (max 1 per week, maybe lower, haven't kept track in a long time),
-the load shouldn't be that hard.  And again, there is at least one
-member on that alias that was supposed to be doing this already...
+Understood, thank you!
 
-thanks,
-
-greg k-h
+Regards,
+Srivatsa
+VMware Photon OS
