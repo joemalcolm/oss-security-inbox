@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1794" "Friday" "23" "June" "2017" "22:05:38" "+0200" "Szabolcs Nagy" "nsz@port70.net" "<20170623200538.GS27071@port70.net>" "45" "Re: [oss-security] Re: Qualys Security Advisor -- The Stack Clash" nil nil nil "6" "2017062320:05:38" "[oss-security] Re: Qualys Security Advisor -- The Stack Clash" (number mark "U       nsz@port70.n Jun 23   45/1794  " thread-indent "\"Re: [oss-security] Re: Qualys Security Advisor -- The Stack Clash\"\n") "<1498109986.32057.1.camel@gmail.com>" ("<7dbe76e8-99b8-4f8b-fa8d-2ec4708a85a1@redhat.com>" "<1497898323.1005.1.camel@gmail.com>" "<748a3bed-a04e-a82e-0459-4627af0d6387@redhat.com>" "<1497941077.15414.1.camel@gmail.com>" "<c5d05c8e-ae1e-e570-beb5-1c070b87e1a5@redhat.com>" "<1498109986.32057.1.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["694" "Monday" "4" "November" "2019" "15:08:24" "-0800" "Srivatsa S. Bhat" "srivatsa@csail.mit.edu" "<380cf271-ee86-3743-8303-03d6a1df4d37@csail.mit.edu>" "21" "Re: [oss-security] Membership application for linux-distros - VMware" "^Cc:" nil nil "11" "2019110423:08:24" "[oss-security] Membership application for linux-distros - VMware" (number mark "        srivatsa@csa Nov  4   21/694   " thread-indent "\"Re: [oss-security] Membership application for linux-distros - VMware\"\n") "<20191030184628.GA10699@openwall.com>" ("<4d3c224a-78b2-eae5-0258-c3382d4c3f0f@csail.mit.edu>" "<20191030162423.GA9147@openwall.com>" "<20191030184628.GA10699@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Membership application for linux-distros - VMware" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7855 invoked by uid 550); 23 Jun 2017 20:23:52 -0000
+Received: (qmail 13859 invoked by uid 550); 4 Nov 2019 23:08:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24034 invoked from network); 23 Jun 2017 20:05:50 -0000
-Date: Fri, 23 Jun 2017 22:05:38 +0200
-From: Szabolcs Nagy <nsz@port70.net>
-To: oss-security@lists.openwall.com
-Cc: Jeff Law <law@redhat.com>
-Message-ID: <20170623200538.GS27071@port70.net>
-Mail-Followup-To: oss-security@lists.openwall.com,
-	Jeff Law <law@redhat.com>
-References: <7dbe76e8-99b8-4f8b-fa8d-2ec4708a85a1@redhat.com>
- <1497898323.1005.1.camel@gmail.com>
- <748a3bed-a04e-a82e-0459-4627af0d6387@redhat.com>
- <1497941077.15414.1.camel@gmail.com>
- <c5d05c8e-ae1e-e570-beb5-1c070b87e1a5@redhat.com>
- <1498109986.32057.1.camel@gmail.com>
+Received: (qmail 13826 invoked from network); 4 Nov 2019 23:08:40 -0000
+References: <4d3c224a-78b2-eae5-0258-c3382d4c3f0f@csail.mit.edu>
+ <20191030162423.GA9147@openwall.com> <20191030184628.GA10699@openwall.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=srivatsa@csail.mit.edu; keydata=
+ mQENBF2vf3IBCADZ+UOAN1lbljU692ZGRZ4UtlZXFEM5SS0WM0ZkDb42xmt+laNM/OEFML/l
+ fzvlAB/in8tTXSeaEkHsPmLyCJcvbWbk/TmfmiqpaSgkGF+0gwY2982Sq1iajTTIzfCFzLX6
+ fv2Md8RYOr4kU26s/6sWL/Skfcue2v4R1e/3Qxozq+P4jRFUWOI7rx2e3aImwVpQqcF1bTdX
+ bA1rwxoKBhZKHQ045FyXhjgnFgRiGSQHf+ZOnyJteRq5KZQK/Qe19ZAzfdB5FLs5JO00hu11
+ jeeWVT640i4wEFVFiRPHJROeXbV5V0c+EXCCgUPElAzTXXtyRosL63IbGHrfDQ04/RAxABEB
+ AAG0KVNyaXZhdHNhIFMuIEJoYXQgPHNyaXZhdHNhQGNzYWlsLm1pdC5lZHU+iQFUBBMBCAA+
+ AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAFiEEkmNQ5f4Mz7tVSsyXkHmbPob4kZYFAl2w
+ mzoFCQlnHUgACgkQkHmbPob4kZY6gAgAtT0tlJ4uUxqJsgUEbdyX1HrwmtFWzkYH1gaoSzyi
+ 5tGY80wu9MGzJnxLgtfdpvukrRvLUkdxOFYOXrkdksQ5JKHKBQkDR1VHobJwjh9ild6dswix
+ 3XFVEs+M5DARKcA1uYa8Wmn3VMXd3TabFQtyq6cg4BV4cieUUgLJ5nikFssyAug/xXIrwiCl
+ y1vlJVDHmskzTNOXyq+pCEi5jNYIiUsSTs0hF+6/RhnKSPjMuU+XumFSDt1YxToL/8lXGTh3
+ Kvcum1tCAnDF+nGrDd3YcNgUefRfUvjWA4ldqERcTSIBYNxOOh4gjnRU1vu9w+d1+E6Jvw7P
+ cGo7RPzzQZiFybkBDQRdr39zAQgAz2vQoxZpMNDL2/rfRxJCgQsQna0D164qdbs3NDvwyZh3
+ fqTZnszETeljoMjYRu1VmKcV7jTMJBOlN5cfinvxUPxExMMQk3lgdidnaLMUWY2JPaWLWZfy
+ nUr8KcvAJb11phTcmiedYVeC9wTEaTEjEMHqxcNQezupUIOtaDL4WqKt+nqcuWcgUpLDu/ND
+ yh8oL1EKZh85mzm343mmwKjsYDsBpv4zeXVM6SD0uomnmmi8vNmJkwIvYrJMTmEu+IYq/jo9
+ +d6v7SCbObzV6WeRXzST61jjqMrW+/WACJcJ7cs67FGQRhKJl8gT+ZH4dL3RV3XZQjbq6HZg
+ pa0j3ZjohwARAQABiQE7BBgBCAAmAhsMFiEEkmNQ5f4Mz7tVSsyXkHmbPob4kZYFAl2wmz8F
+ CQlnHUwACgkQkHmbPob4kZbgGQf4vvbxhs9KIVaQTvEPMnfGYztM29Hpk6qqstpGHzVO0fI1
+ 7E2FUpdrK+DL0hHdZGVgLjKft+15bxrxOhc/Yj4i78TPRSKejtzfpbS7R6qlKP70FQKH8fbe
+ fIJG5jkzKH+RLChfgWKi1ZaFA2Xx7ADcU7h1QRkTt6CzxWPGertD7Beay84pw3dV5vaUGK9S
+ uxy4cwI/qB1LSFKOAuptBCJfsM7QC72kVQ2XF37QcSdEAB2KEN6PTixqFq0iJBgqh3trocoJ
+ S4ASUyYdnMNt2Tfn5Mm/X6aLQF6G1hR0m3aM2/apySscAKUlQ9fQsvr0juyNlxiDfkJJm2XS
+ B+CmYiGl
+Message-ID: <380cf271-ee86-3743-8303-03d6a1df4d37@csail.mit.edu>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1498109986.32057.1.camel@gmail.com>
-User-Agent: Mutt/1.6.0 (2016-04-01)
-Subject: Re: [oss-security] Re: Qualys Security Advisor -- The Stack Clash
+In-Reply-To: <20191030184628.GA10699@openwall.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Cc: Steven Rostedt <rostedt@goodmis.org>, sashal@kernel.org,
+ amakhalov@vmware.com, anishs@vmware.com, Sharath George
+ <sharathg@vmware.com>, mijzerman@vmware.com,
+ Srivatsa Bhat <srivatsab@vmware.com>
+Date: Mon, 4 Nov 2019 15:08:24 -0800
+From: "Srivatsa S. Bhat" <srivatsa@csail.mit.edu>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Membership application for linux-distros - VMware
+To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
 
-* Daniel Micay <danielmicay@gmail.com> [2017-06-22 01:39:46 -0400]:
-> On Wed, 2017-06-21 at 11:33 -0600, Jeff Law wrote:
-> > On 06/20/2017 12:44 AM, Daniel Micay wrote:
-> > > I think it's also worth mentioning the segmented stack support in
-> > > GCC
-> > > and LLVM that was added for Go. It's possible to use it for C with
-> > > the
-> > > __morestack call set up to simply abort when stack space is
-> > > exhausted.
-> > > 
-> > > That's what Rust was doing after it dropped segmented stacks, but
-> > > they
-> > > wanted to move to stack probes for efficiency and prematurely
-> > > dropped
-> > > these function prelude checks.
-> > > 
-> > > It's not efficient, but it works, unlike -fstack-check.
-> > > 
-> > > I don't think it makes sense for general purpose distributions to
-> > > adopt
-> > > it but it's an available option for others with more concern about
-> > > this
-> > > issue.
-> > 
-> > Yup.  go's split-stacks are another option.  As you mention, probably
-> > not performant enough for a general purpose distribution, but could be
-> > interesting for more specialized needs.
-> > 
-> > jeff
+On 10/30/19 11:46 AM, Solar Designer wrote:
+> On Wed, Oct 30, 2019 at 05:24:23PM +0100, Solar Designer wrote:
+>> Please send me your PGP key off-list and I'll add you to linux-distros.
 > 
-> It can be used with large fixed size stacks and no actual expansion, but
-> yeah it's expensive to add a check to every non-leaf prelude. It's not
-> as expensive as the SSP check for a function but it needs to cover many.
+> This has been taken care of - VMware Photon OS is now on linux-distros.
+>
+
+Thank you!
+ 
+> Srivatsa, please note that your subscription is only for Photon OS.
+> You're expected not to share the information within VMware beyond the
+> need-to-know for Photon OS fixes.  If an issue comes up that you think
+> is relevant to other VMware products and you'd like to pass the
+> information on, you need the reporter's explicit permission to do so.
 > 
-> Since probes can be so much more efficient, it only makes sense to
-> consider it if getting probes fully working is going to take a long
-> time.
 
-split stack is broken, it cannot be mixed with non-split-stack
-code reliably, the runtime provided by the compiler cannot possibly
-be conforming for thread creation, thread exit, user allocated
-stacks and it can crash randomly.
+Understood, thank you!
 
-but it is not even supported on some targets so i think it's
-not a viable workaround anyway.
+Regards,
+Srivatsa
+VMware Photon OS
