@@ -1,138 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/31/4
-Message-Id: <E1iQ9ao-0004LS-NU@xenbits.xenproject.org>
-Date: Thu, 31 Oct 2019 12:30:22 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 301 v3 (CVE-2019-18423) - add-to-physmap can be abused to DoS Arm hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/04/1
+Message-ID: <CAEoRBew=EvETjHzcQVbUGKmqxJ5BnghbJ-C=vejjaa0XB4Sn1g@mail.gmail.com>
+Date: Mon, 4 Nov 2019 09:26:50 -0800
+From: Tim Armstrong <tarmstrong@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2019-10084] privilege escalation by authenticated Apache Impala users
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2019-10084: privilege escalation by authenticated Apache Impala users
 
-            Xen Security Advisory CVE-2019-18423 / XSA-301
-                               version 3
+Severity: High
 
-             add-to-physmap can be abused to DoS Arm hosts
+Vendor: The Apache Software Foundation
 
-UPDATES IN VERSION 3
-====================
+Versions Affected: Impala 2.7.0 to Impala 3.2.0
 
-Public release.
+Description: An authenticated user with access to the IDs of active Impala
+queries or sessions can interact with those sessions or queries via a
+specially-constructed request and thereby potentially bypass authorization
+and audit mechanisms.
 
-ISSUE DESCRIPTION
-=================
+Session and query IDs are unique and random, but have not been documented
+or consistently treated as sensitive secrets. Therefore they may be exposed
+in logs or interfaces. They were also not generated with a
+cryptographically secure random number generator, so are vulnerable to
+random number generator attacks that predict future IDs based on past IDs.
 
-p2m->max_mapped_gfn is used by the functions
-p2m_resolve_translation_fault() and p2m_get_entry() to sanity check
-guest physical frame.  The rest of the code in the two functions will
-assume that there is a valid root table and check that with BUG_ON().
+Impala deployments with Apache Sentry or Apache Ranger authorization
+enabled may be vulnerable to privilege escalation if an authenticated
+attacker is able to hijack a session or query from another authenticated
+user with privileges not assigned to the attacker.
 
-The function p2m_get_root_pointer() will ignore the unused top bits of
-a guest physical frame.  This means that the function p2m_set_entry()
-will alias the frame.  However, p2m->max_mapped_gfn will be updated
-using the original frame.
+Impala deployments with audit logging enabled may be vulnerable to
+incorrect audit logging as a user could undertake actions that were logged
+under the name of a different authenticated user.
 
-It would be possible to set p2m->max_mapped_gfn high enough to cover a
-frame that would lead p2m_get_root_pointer() to return NULL in
-p2m_get_entry() and p2m_resolve_translation_fault().
+Constructing an attack requires a high degree of technical sophistication
+and access to the Impala system as an authenticated user.
 
-Additionally, the sanity check on p2m->max_mapped_gfn is off-by-one
-allowing "highest mapped + 1" to be considered valid.  However,
-p2m_get_root_pointer() will return NULL.
+Mitigation: If an Impala deployment uses Apache Sentry, Apache Ranger or
+audit logging, then users should upgrade to a version of Impala with the
+fix for IMPALA-8605. The Impala 3.3.0 release includes this fix. This
+implements session secrets that eliminate the risk of any attack using this
+mechanism.
 
-The problem could be triggered with a specially crafted hypercall
-XENMEM_add_to_physmap{, _batch} followed by an access to an address
-(via hypercall or direct access) that passes the sanity check but
-cause p2m_get_root_pointer() to return NULL.
+In lieu of an upgrade, restricting access to debug pages, administrative
+interfaces and logs that expose session and query IDs will reduce but not
+eliminate the risk of an attack. Restricting access to the Impala
+deployment to trusted users will also reduce the risk of an attack
 
-IMPACT
-======
-
-A malicious guest administrator may cause a hypervisor crash,
-resulting in a Denial of Service (DoS).
-
-VULNERABLE SYSTEMS
-==================
-
-Xen version 4.8 and newer are vulnerable.
-
-Only Arm systems are vulnerable.  x86 systems are not affected.
-
-MITIGATION
-==========
-
-There are no mitigations.
-
-CREDITS
-=======
-
-This issue was discovered by Julian Grall of Arm.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa301-master-*.patch  xen-unstable to Xen 4.12
-xsa301-4.11-*.patch    Xen 4.11 to Xen 4.8
-
-$ sha256sum xsa301*
-c3f334d3de1fd7385a5b73edca1f979b6027595d8aa2a3fce451ee5a37d57662  xsa301.meta
-1f6f76e0da4bd8cbce38a127d446593058a76565bade57672d6a00357fdc64fa  xsa301-4.11-1.patch
-b1ea7b323f509a6150983ece24ecd38f3a9ea97a11360d7a36f715ebaf85e8b1  xsa301-4.11-2.patch
-67fffdd5f827f783e8752ca779a3234d30f26df5c42844c5b2b4a34618d7a0c2  xsa301-4.11-3.patch
-3dba13afd3449b85215058c596f6a60a255e5a11c6865cbcaa05e9768f535b46  xsa301-master-1.patch
-dbf952c2333807d5ee0fe4cccb069ddfda87e295c83a43ec46621b486b19f6e8  xsa301-master-2.patch
-ad544e5e2da130540d5475954b1512fc00743773cad382c4c0451fd91536287d  xsa301-master-3.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2601sMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZV3sH/0LnX74pFsicNGw73H2zrLQuvXQolWvThF3sZDKj
-VeeX6WZ3u7n4au3TNytoFcx6IKR5ysqWWL2NpTW2ZXq+5ZZ3TSv39e7mGrUdQ/tC
-YB/bWc8IxIgfwpL10ph12heqcQXUbpppBLIVgklCMUEpNTHWPubJuPEeMp5xPexK
-cmpCuIck7HcyiSpTMAdZ+cj8voV3h3Wmc2pLXPgR3+T56KsuV5IdoIr5I9s4kPAM
-hsh+4Ip/uYa4JUepxap3AD+yqLBDXggGwua50wVEtSPPVR6FEMvDYtuiMUEq+G7d
-3DOKy6ylf9XzMOQWSHEvWOLzu5CSAxwMnVB0KJ8T0bI+HxU=
-=wp/o
------END PGP SIGNATURE-----
-
-Download attachment "xsa301.meta" of type "application/octet-stream" (1950 bytes)
-
-Download attachment "xsa301-4.11-1.patch" of type "application/octet-stream" (3115 bytes)
-
-Download attachment "xsa301-4.11-2.patch" of type "application/octet-stream" (3392 bytes)
-
-Download attachment "xsa301-4.11-3.patch" of type "application/octet-stream" (1770 bytes)
-
-Download attachment "xsa301-master-1.patch" of type "application/octet-stream" (3116 bytes)
-
-Download attachment "xsa301-master-2.patch" of type "application/octet-stream" (3361 bytes)
-
-Download attachment "xsa301-master-3.patch" of type "application/octet-stream" (2436 bytes)
