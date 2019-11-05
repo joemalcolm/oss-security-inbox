@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/23/1
-Message-ID: <CABdJj56vHPvGo=nqZPYb1tPGVa_cSOwgBn6-TFj3FCE6KQXSEw@mail.gmail.com>
-Date: Tue, 22 Oct 2019 23:00:45 +0200
-From: Dominik Stadler <centic@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/05/3
+Message-ID: <CAB8XdGDHWGFR=1E=trh_KqBH+4f08rdHqQdwgOEJX-fdoTzJkA@mail.gmail.com>
+Date: Tue, 5 Nov 2019 15:56:46 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-12415 - XML External Entity (XXE) Processing in Apache POI
+Subject: [CVE-2019-12419] Apache CXF OpenId Connect token service does not properly validate the clientId
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+[CVEID]:CVE-2019-12419
+[PRODUCT]:Apache CXF
+[VERSION]:Apache CXF versions before 3.3.4 and 3.2.11
+[PROBLEMTYPE]:Apache CXF OpenId Connect token service does not properly
+validate the clientId
+[REFERENCES]:
+http://cxf.apache.org/security-advisories.data/CVE-2019-12419.txt.asc
+[DESCRIPTION]:Apache CXF provides all of the components that are required
+to build a fully
+              fledged OpenId Connect service. There is a vulnerability in
+the access token
+              services, where it does not validate that the authenticated
+principal is equal
+              to that of the supplied clientId parameter in the request.
 
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-Apache POI up to version 4.1.0
-
-Description:
-When using the tool XSSFExportToXml to convert user-provided Microsoft
-Excel documents, a specially crafted document can allow an attacker to
-read files from the local filesystem or from internal network resources
-via XML External Entity (XXE) Processing.
-
-Mitigation:
-Apache POI 4.1.0 and before: users who do not use the tool XSSFExportToXml
-are not affected. affected users are advised to update to Apache POI 4.1.1
-which fixes this vulnerability.
-
-Credit:
-This issue was discovered by Artem Smotrakov from SAP
-
-References:
-https://en.wikipedia.org/wiki/XML_external_entity_attack
+              If a malicious client was able to somehow steal an
+authorization code issued
+              to another client, then they could exploit this vulnerability
+to obtain an
+              access token for the other client.
 
