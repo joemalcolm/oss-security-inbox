@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2698" "Tuesday" "21" "September" "2021" "21:32:21" "+0200" "Solar Designer" "solar@openwall.com" nil "58" "Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list" nil nil nil "9" nil nil (number mark "U       solar@openwa Sep 21   58/2698  " thread-indent "\"Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1697" "Tuesday" "5" "November" "2019" "08:07:30" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20191105070729.GA7195@lorien.valinor.li>" "44" "Re: [oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid" nil nil nil "11" "2019110507:07:30" "[oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid" (number mark "U       carnil@debia Nov  5   44/1697  " thread-indent "\"Re: [oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid\"\n") "<ab2c1aae-38d8-c15e-6109-f522f85936d2@linux.com>" ("<ab2c1aae-38d8-c15e-6109-f522f85936d2@linux.com>") nil nil nil nil nil nil nil "Re: [oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1164 invoked by uid 550); 21 Sep 2021 19:32:48 -0000
+Received: (qmail 27782 invoked by uid 550); 5 Nov 2019 07:07:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,75 +12,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32673 invoked from network); 21 Sep 2021 19:32:27 -0000
-Date: Tue, 21 Sep 2021 21:32:21 +0200
-From: Solar Designer <solar@openwall.com>
-To: Oleksandr Tymoshenko <gonzo@bluezbox.com>
-Cc: oss-security@lists.openwall.com, Kees Cook <keescook@chromium.org>
-Message-ID: <20210921193221.GA21098@openwall.com>
-References: <CACGj0Cg_OgsYUAw8R6cbHr+ihPjfrKUJw0RjVewzuWYVi8tXpg@mail.gmail.com> <20210917161848.GB9168@openwall.com> <20210920230413.GA50332@bluezbox.com>
-Mime-Version: 1.0
+Received: (qmail 27756 invoked from network); 5 Nov 2019 07:07:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=A23Ev8r8BQloNEyIlz+LZgsyhDg2lAqWY3zmJGo8esc=;
+        b=LZ+lhZAT4WBakRZr5S+taT5Ra2F7mp4TPFvELdHgorlnm5UVCUForaguCyHoWTO/vl
+         TRThfYA4wrTtRXlSFby1yXygV20qrwjseSWm8xuV3SO7PgMGEE9u06bzkKVaA7As75BC
+         LFL7hkaR6DLvOMECV8kddpxeVkq8hykNaN5wdrKhtZxDDKXi++RPGHpyZH6wAZtFP5JS
+         7E4vxEmjFpUS6gpqstiHvqf/YeNpy8aqXwJuhyxAET7XeVQ7zMv59nafKuHfiZtcT0L1
+         5E4SKSLQcoDm4Y/QuqSc3Wiu4hiMpejL5kmcZesLRrX1H0STuGJgikPsZfAb2h06dDif
+         156g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=A23Ev8r8BQloNEyIlz+LZgsyhDg2lAqWY3zmJGo8esc=;
+        b=gVRZqBY7LDhvDYPD7XQzp+/4sfads0SmWZ0w6orFk0i1d06okI6JZKOb+qSYstmOVf
+         /X3h0gMGRDb3xEaP6C3m1SlAUPJmKPjvHddgAdr5S6C5Vg0Iur1GEMQ8M7lgUzxAx8GA
+         vgYddvHyLcrmUL9W3//ZxAv3YJWmhIrkZDCSnqrDgv2xhkhej/nScdReMD79/y/T6tRS
+         3Lyq4D9Rxn1r2pIDetNrjNTv77o9jrUnOmojftNHLZITSrGLZCRQMe94+wY32D7n4svU
+         JN7LH661QrldnRCbTzY4dwbr2rYm+8WPVukDYV3P/YKCAWGLybW40/UmQLD2sJvHa4mT
+         OcZw==
+X-Gm-Message-State: APjAAAVIRS29gLxOLxjwbjlnREZ15mk0EGUWRgulygQDtipDotkM3mzc
+	zcsLh9BOnLB80j2zKrzk7y5uKsMq8gY=
+X-Google-Smtp-Source: APXvYqz6Y5xa6QjJnAhxzNqTKuehPRBpBbt4z4e5YqTjhwGVpsElqFj+CmYRCiXGjm+ff6TKMS2ftQ==
+X-Received: by 2002:a5d:444b:: with SMTP id x11mr26788160wrr.207.1572937653066;
+        Mon, 04 Nov 2019 23:07:33 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 5 Nov 2019 08:07:30 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20191105070729.GA7195@lorien.valinor.li>
+References: <ab2c1aae-38d8-c15e-6109-f522f85936d2@linux.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210920230413.GA50332@bluezbox.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list
+In-Reply-To: <ab2c1aae-38d8-c15e-6109-f522f85936d2@linux.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] [ Linux kernel ] Exploitable bugs in
+ drivers/media/platform/vivid
 
-On Mon, Sep 20, 2021 at 04:04:13PM -0700, Oleksandr Tymoshenko wrote:
-> Solar Designer (solar@openwall.com) wrote:
-> > You posted this from @google.com, which probably means many subscribers
-> > didn't receive the message because of that domain's strict DMARC policy.
-> > So I fully quote your message below for others to possibly comment.
-> > 
-> > BTW, you will similarly need to be posting from another domain (e.g.,
-> > gmail.com) to the linux-distros list.
->  
-> Sorry, I wasn't aware about the problem with @google.com. Replying
-> from the email address I use for my OSS communications (supposedly
-> has DKIM and SPF configured). If this one is OK, I'll use it instead.
+Hi,
 
-Looks OK to me.  I think @chromium.org would also work.
-
-> I think we can help with the following tasks:
+On Sat, Nov 02, 2019 at 10:27:27PM +0300, Alexander Popov wrote:
+> Hello!
 > 
-> Help ensure that each message posted to oss-security contains the most
-> essential information (e.g., vulnerability detail and/or exploit)
-> directly in the message itself (and in plain text) rather than only by
-> reference to an external resource, and add the missing information
-> (e.g., in your own words, by quoting with proper attribution, and/or
-> by creating and attaching a properly attributed text/plain export of a
-> previously referenced web page) and remind the original sender of this
-> requirement (for further occasions) in a ???reply??? posting when
-> necessary
-
-We've recently listed Oracle Solaris as primary for this one, so COS can
-be the backup.
-
-> Determine if the reported issues are Linux-specific, and if so help
-> ensure that (further) private discussion goes on the linux-distros
-> sub-list only (thus, not spamming and unnecessarily disclosing to the
-> non-Linux distros) 
+> I used the syzkaller fuzzer with custom modifications and found a bunch of
+> 5-year old bugs in the Linux kernel. I managed to exploit one of them for a
+> local privilege escalation.
 > 
-> Promptly review new issue reports for meeting the list's requirements
-> and confirm receipt of the report and, when necessary, inform the
-> reporter of any issues with their report (e.g., obviously not actionable
-> by the distros) and request and/or propose any required yet missing
-> information (most notably, a tentative public disclosure date/time) 
+> These vulnerabilities are caused by wrong mutex locking in the vivid driver of
+> the V4L2 subsystem. Please see the fixing patch that I've just sent to LKML:
+> https://lore.kernel.org/lkml/20191102190327.24903-1-alex.popov@linux.com/
+> 
+> The vivid driver doesn't require any special hardware. It is shipped in Ubuntu,
+> Debian, Arch Linux, SUSE Linux Enterprise and openSUSE.
+> 
+> On Ubuntu the devices created by this driver are available to the normal user,
+> since Ubuntu applies RW ACL when the user is logged in:
+>   a13x@ubuntu_server_1804:~$ getfacl /dev/video0
+>   getfacl: Removing leading '/' from absolute path names
+>   # file: dev/video0
+>   # owner: root
+>   # group: video
+>   user::rw-
+>   user:a13x:rw-
+>   group::rw-
+>   mask::rw-
+>   other::---
+> 
+> (Un)fortunately, I don't know how to autoload the vulnerable driver, which
+> limits the severity of these vulnerabilities. That's why the Linux kernel
+> security team allows me to do the full disclosure.
+> 
+> But there is an interesting aspect -- my PoC exploit bypasses SMEP and SMAP on
+> the fresh Ubuntu Server 18.04. Moreover, it gains the local privilege escalation
+> from the kthread context (where the userspace is not mapped). I'm going to share
+> the details about the exploit techniques later.
+> 
+> For now I would recommend to blacklist the vivid kernel module on your machines.
 
-Both of these already have a primary and a backup, and I see no
-immediate need to reassign them.  We can note your willingness to help
-with them in case they do need to be reassigned later, or/and please
-feel free to volunteer for a task that isn't currently fully taken.
+CVE-2019-18683 was assigned for this issue.
 
-I have no objections to you being merely a backup for "Help ensure that
-each message posted to oss-security contains the most essential
-information", though.
-
-> > > We'll provide relevant GPG keys separately if our membership is accepted.
-
-I think we've reached this point - please e-mail me off-list with what
-address(es) and with what key(s) to subscribe.
-
-Thanks,
-
-Alexander
+Regards,
+Salvatore
