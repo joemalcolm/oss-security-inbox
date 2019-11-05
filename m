@@ -1,25 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/29/2
-Message-ID: <20190429191528.GA10231@eldamar.local>
-Date: Mon, 29 Apr 2019 21:15:28 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/05/5
+Message-ID: <20191105184228.GA27029@openwall.com>
+Date: Tue, 5 Nov 2019 19:42:28 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple issues
+Cc: Joe McManus <joe.mcmanus@...onical.com>, Anthony Liguori <aliguori@...zon.com>
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-Hi Jann,
+Hi Joe, hi Anthony -
 
-On Mon, Apr 29, 2019 at 02:56:06PM -0400, Jann Horn wrote:
-> == missing locking between ELF coredump code and userfaultfd VMA modification ==
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=04f5866e41fb70690e28397487d8bd8eea7d712a
-> https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.114
-> https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.37
-> https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.0.10
-> https://bugs.chromium.org/p/project-zero/issues/detail?id=1790
-> CVE-2019-11599
+I'll over-quote a bit since it's an old thread:
 
-If I'm not mistaken, this was assigned already CVE-2019-3892,
-information from https://bugzilla.redhat.com/show_bug.cgi?id=1696015
+On Mon, Jul 15, 2019 at 09:28:01PM +0200, Solar Designer wrote:
+> On Mon, Jul 15, 2019 at 11:54:23AM -0700, Anthony Liguori wrote:
+> > On Mon, Jul 15, 2019 at 11:47 AM Joe McManus <joe.mcmanus@...onical.com> wrote:
+> > > > On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
+> > > > > Hey All - The Ubuntu Security Team would like to sign up for items 3,4
+> > > > > & 5 from the technical list <
+> > > > > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> > > > > >:
+> > > > >
+> > > > > 3 - Review and/or test the proposed patches and point out potential issues
+> > > > >   with them [...]
+> > > > > 4 - Check if related issues exist in the same piece of software [...]
+> > > > > 5 - Check if related issues exist in implementations of similar
+> > > > >   functionality in other software [...]
+> [...]
+> > > Yes, this will be taken care of by Ubuntu Security Team members who
+> > > are already on the list, however if after some time we need to cycle
+> > > someone in or out I might come asking. I know you don't want to add
+> > > anyone so we will do our best to prevent this from happening.
+> > >
+> > > For 3 we can be either primary or backup, just let me know your
+> > > preference and we'll do the work.
+> > 
+> > I would be happy for y'all to be primary.  We don't ship as many
+> > packages as Ubuntu does so there will be more things that you are
+> > likely to test compared to what we do.
+> 
+> OK, I've just listed Ubuntu as primary for 3, 4, 5.  Amazon is now
+> backup for 3.
+> 
+> Please note that these items include "and inform the list of the work
+> done even if no issues were encountered" (item 3), "and inform the list
+> either way" (items 4, 5), so we'll expect replies to the list as per
+> these items for each and every issue reported to there.
 
-Regards,
-Salvatore
+I am not seeing this "inform the list either way" stuff actually
+happening.  Without it, no other distro has a way to know the work is
+actually being done.  Once I had pointed this need out a while before,
+Amazon briefly started making those mandatory postings for task 3, until
+they were replaced by Ubuntu as primary.  In fact, given the lack of
+such postings by Ubuntu, I would still expect Amazon to take over for
+task 3, which they're the backup for, and it looks like they did that
+exactly once:
+
+As far as I can see, the last time Amazon handled task 3 was on July 25,
+which is 10 days after Ubuntu became primary for that task.  This was
+much appreciated.  Unfortunately, as far as I can see, neither distro
+(visibly) handled these tasks ever since, with one exception:
+
+Ubuntu did point out that a patch didn't have a corresponding testsuite
+change, and thus tests failed, in a posting on October 10.  So hopefully
+they were doing the work, except for the "inform the list either way"
+part - but that's an important part!
+
+It is possible that I missed or don't recall some other occasions, but I
+think I got the overall picture right.
+
+Joe, Anthony - can you please have your distros start handling these
+tasks fully, as described?
+
+Thanks in advance,
+
+Alexander
