@@ -1,48 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/02/1
-Message-ID: <ab2c1aae-38d8-c15e-6109-f522f85936d2@linux.com>
-Date: Sat, 2 Nov 2019 22:27:27 +0300
-From: Alexander Popov <alex.popov@...ux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/05/4
+Message-ID: <20191105180406.GA26719@openwall.com>
+Date: Tue, 5 Nov 2019 19:04:06 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid
+Subject: Re: Membership application for linux-distros - VMware
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+On Mon, Nov 04, 2019 at 03:03:42PM -0800, Srivatsa S. Bhat wrote:
+> I'd like to sign up as primary for Administrative 5: "Determine if the
+> reported issues are Linux-specific... ", and as backup for Technical 4.
+> "Check if related issues exist in the same piece of software...".
 
-I used the syzkaller fuzzer with custom modifications and found a bunch of
-5-year old bugs in the Linux kernel. I managed to exploit one of them for a
-local privilege escalation.
+Great.  VMware Photon OS is now signed up for those.
 
-These vulnerabilities are caused by wrong mutex locking in the vivid driver of
-the V4L2 subsystem. Please see the fixing patch that I've just sent to LKML:
-https://lore.kernel.org/lkml/20191102190327.24903-1-alex.popov@linux.com/
+SUSE is now backup (was primary) for Administrative 5: "Determine if the
+reported issues are Linux-specific ..."
 
-The vivid driver doesn't require any special hardware. It is shipped in Ubuntu,
-Debian, Arch Linux, SUSE Linux Enterprise and openSUSE.
+> (I did consider the other task that you brought up, namely Technical
+> 6, but I think we'd need more experience on the list before we can
+> sign up for that task).
 
-On Ubuntu the devices created by this driver are available to the normal user,
-since Ubuntu applies RW ACL when the user is logged in:
-  a13x@...ntu_server_1804:~$ getfacl /dev/video0
-  getfacl: Removing leading '/' from absolute path names
-  # file: dev/video0
-  # owner: root
-  # group: video
-  user::rw-
-  user:a13x:rw-
-  group::rw-
-  mask::rw-
-  other::---
+I thought so too, which is a reason why I also directed that request to
+other distros reading our discussion.
 
-(Un)fortunately, I don't know how to autoload the vulnerable driver, which
-limits the severity of these vulnerabilities. That's why the Linux kernel
-security team allows me to do the full disclosure.
+> Also, is there a write-up somewhere that defines exactly what primary
+> and backup means in this context?
 
-But there is an interesting aspect -- my PoC exploit bypasses SMEP and SMAP on
-the fresh Ubuntu Server 18.04. Moreover, it gains the local privilege escalation
-from the kthread context (where the userspace is not mapped). I'm going to share
-the details about the exploit techniques later.
+No.
 
-For now I would recommend to blacklist the vivid kernel module on your machines.
+> At the moment, I'm assuming that,
+> for a given task, the primary distro will take up that task for every
+> issue that gets posted onto linux-distros; and in case the primary is
+> unavailable (due to vacation/travel etc), then the backup will step up
+> for that task until the primary gets back. Is that how it works?
 
-Best regards,
+Yes, and besides that I also expect the backup to watch the list for
+related aspects of issues that the primary might have missed or
+misunderstood or mishandled, and chiming in as necessary to correct
+that.  For example, let's take Administrative task 1:
+
+"Promptly review new issue reports for meeting the list's requirements
+and confirm receipt of the report and, when necessary, inform the
+reporter of any issues with their report (e.g., obviously not actionable
+by the distros) and request and/or propose any required yet missing
+information (most notably, a tentative public disclosure date/time) -
+primary: CoreOS, backup: Oracle"
+
+Given this, I expect that if there's no response to the issue reporter
+and the list by CoreOS within a day, Oracle would respond in their place
+even if these distros had not negotiated/announced any vacation/travel
+beforehand.  (We tell reporters that they should expect a response
+within 48 hours, which leaves about one day for the primary to respond
+and another day for the backup to respond in their place if the primary
+did not.)  Similarly, I'd expect Oracle to send a follow-up message to
+the reporter and the list if CoreOS' response is missing required
+information or questions/requests - e.g., the report didn't have a
+tentative public disclosure date/time yet CoreOS didn't request that.
+I'd also expect Oracle to chime in if they find CoreOS' response wrong -
+e.g., if it acknowledged the embargo, whereas Oracle finds the issue
+"obviously not actionable by the distros".
+
+> If
+> so, will we get to know the contact details of other distros so that
+> we can coordinate our schedules?
+
+Yes, but per the above that isn't enough, and it's also less important
+than you might have expected.  For distros with more than one person
+subscribed, my expectation is that they'll almost always be around to
+handle whatever they volunteered for, and the backup's role is primarily
+in making sure that the work is being done correctly all the time.
+
+> On a related note, would it be okay for me to request another member
+> of the Photon OS team (whom I can vouch for), to be added to the
+> linux-distros list, so that we can have at least one person from our
+> team always available to take action for our distro, in response to
+> the issues disclosed on the list?
+
+Yes.
+
 Alexander
