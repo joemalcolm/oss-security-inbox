@@ -1,86 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/12/2
-Message-Id: <A5414228-4516-4048-B84F-92519BB679C3@beckweb.net>
-Date: Thu, 12 Sep 2019 15:50:36 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/05/1
+Message-ID: <20191105070729.GA7195@lorien.valinor.li>
+Date: Tue, 5 Nov 2019 08:07:30 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Hi,
 
-* Aqua Security Serverless Scanner Plugin 1.0.5
-* Beaker builder Plugin 1.10
-* Build Environment Plugin 1.7
-* Dashboard View Plugin 2.12
-* Git client Plugin 2.8.5
-* Script Security Plugin 1.63
+On Sat, Nov 02, 2019 at 10:27:27PM +0300, Alexander Popov wrote:
+> Hello!
+> 
+> I used the syzkaller fuzzer with custom modifications and found a bunch of
+> 5-year old bugs in the Linux kernel. I managed to exploit one of them for a
+> local privilege escalation.
+> 
+> These vulnerabilities are caused by wrong mutex locking in the vivid driver of
+> the V4L2 subsystem. Please see the fixing patch that I've just sent to LKML:
+> https://lore.kernel.org/lkml/20191102190327.24903-1-alex.popov@linux.com/
+> 
+> The vivid driver doesn't require any special hardware. It is shipped in Ubuntu,
+> Debian, Arch Linux, SUSE Linux Enterprise and openSUSE.
+> 
+> On Ubuntu the devices created by this driver are available to the normal user,
+> since Ubuntu applies RW ACL when the user is logged in:
+>   a13x@...ntu_server_1804:~$ getfacl /dev/video0
+>   getfacl: Removing leading '/' from absolute path names
+>   # file: dev/video0
+>   # owner: root
+>   # group: video
+>   user::rw-
+>   user:a13x:rw-
+>   group::rw-
+>   mask::rw-
+>   other::---
+> 
+> (Un)fortunately, I don't know how to autoload the vulnerable driver, which
+> limits the severity of these vulnerabilities. That's why the Linux kernel
+> security team allows me to do the full disclosure.
+> 
+> But there is an interesting aspect -- my PoC exploit bypasses SMEP and SMAP on
+> the fresh Ubuntu Server 18.04. Moreover, it gains the local privilege escalation
+> from the kthread context (where the userspace is not mapped). I'm going to share
+> the details about the exploit techniques later.
+> 
+> For now I would recommend to blacklist the vivid kernel module on your machines.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-09-12/
+CVE-2019-18683 was assigned for this issue.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1534 / CVE-2019-10392
-Git client Plugin accepts user-specified values as argument to an invocation 
-of `git ls-remote` to validate the existence of a Git repository at the 
-specified URL. This was implemented in a way that allowed attackers with
-Job/Configure permission to execute an arbitrary system command on the 
-Jenkins master as the OS user that the Jenkins process is running as.
-
-
-SECURITY-1538 / CVE-2019-10393, CVE-2019-10394, CVE-2019-10399, CVE-2019-10400
-Sandbox protection in Script Security Plugin could be circumvented through 
-any of the following:
-
-- Crafted method names in method call expressions (CVE-2019-10393)
-- Crafted property names in property expressions on the left-hand side of 
-  assignment expressions (CVE-2019-10394)
-- Crafted property names in property expressions in increment and decrement 
-  expressions (CVE-2019-10399)
-- Crafted subexpressions in increment and decrement expressions not 
-  involving actual assignment (CVE-2019-10400)
-
-This allowed attackers able to specify and run sandboxed scripts to execute
-arbitrary code in the context of the Jenkins master JVM.
-
-
-SECURITY-1476 / CVE-2019-10395
-Build Environment Plugin did not escape values of environment variables 
-shown on its views. This resulted in a cross-site scripting vulnerability 
-exploitable by attackers able to control the values of build environment 
-variables, typically users with Job/Configure or Job/Build permission.
-
-
-SECURITY-1489 / CVE-2019-10396
-Dashboard View Plugin did not escape the build description on the Latest 
-Builds View. This resulted in a cross-site scripting vulnerability 
-exploitable by attackers able to control the description of builds shown on 
-that view.
-
-
-SECURITY-1509 / CVE-2019-10397
-Aqua Security Serverless Scanner Plugin stores service passwords in job 
-configurations.
-
-While the password is stored encrypted on disk, it was transmitted in plain 
-text as part of the configuration form. This could result in exposure of the 
-password through browser extensions, cross-site scripting vulnerabilities, 
-and similar situations.
-
-
-SECURITY-1545 / CVE-2019-10398
-Beaker builder Plugin stored the Beaker password unencrypted on the Jenkins 
-master. This password could be viewed by users with access to the master 
-file system.
-
+Regards,
+Salvatore
