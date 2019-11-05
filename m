@@ -1,149 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/4
-Message-ID: <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>
-Date: Mon, 24 Jun 2019 15:01:08 +0200
-From: Dmitry Vyukov <dvyukov@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/05/6
+Message-ID: <20191105224311.GA26059@millbarge>
+Date: Tue, 5 Nov 2019 22:43:11 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, Joe McManus <joe.mcmanus@...onical.com>
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 17, 2019 at 1:32 PM Marcus Meissner <meissner@...e.de> wrote:
->
-> Hi,
->
->
-> On Sat, Jun 15, 2019 at 11:49:03AM -0400, Alex Gaynor wrote:
-> > Hi everyone,
-> >
-> > OSS-Fuzz is Google's project to provide continious large-scale fuzzing.
-> > Since it launched in 2016, it's found just shy of 3000 things it counts as
-> > security bugs [0][1]. I'm not a developer of OSS-Fuzz (at Google), but I've
-> > helped several projects integrate with it.
-> >
-> > You can see that it's had some amazing success across a variety of projects
-> > -- I've written previously to this list about the things I thought made it
-> > particularly effective working with ImageMagick and GraphicsMagick [2].
-> >
-> > Today I'd like to highlight what I see as a tremendous issue: very few of
-> > these security bugs ever has a CVE issued for it. This is probably due to a
-> > few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
-> > a human reporter who is interested in obtaining one for "credit" purposes,
-> > c) the sheer number of bugs that we're talking about.
-> >
-> > CVEs are not important for their own sake. The true value is in all of the
-> > downstream processing that uses them as input: the Linux distributions that
-> > use them to figure out what fixes to backport, the docker security scanners
-> > that look for vulnerable code on the system, the corporate
-> > threat-intelligence feeds, etc.
-> >
-> > A test of a random ImageMagick vulnerability against Ubuntu Xenial shows
-> > that it, indeed, continues to reproduce.
-> >
-> > This is in addition to the >100 security bugs OSS-Fuzz found and publicly
-> > disclosed due to hitting their disclosure deadline, and which still have
-> > not been fixed [3].
-> >
-> > I haven't analyzed any of these vulnerabilities for exploitability, and I
-> > doubt anyone else has either.
-> >
-> > I do not have a solution to this problem. I wanted to raise awareness of
-> > it, in the hope that it would start a discussion which might come to a
-> > solution.
->
-> So as this was not yet discussed, lets have it closer look at the gaps
-> in the workflow.
->
-> (I am not going into the orthogonal approaches, like surface reduction,
-> mitigations, replacement etc.)
->
-> "topic" vs "automation state"
->
->
-> Bugfinding:
->
-> - Is manual to fully automated these days, and improving.
->
->   The fully automated bugfinding is a significant contributor to amount of bugs.
->
-> Bugfixing:
->
-> - Largely manual. Some research in automation by DARPA et.al.
->
->
->   This is a significant gap of the scale issues, automated bugfinding
->   can easily overload opensource projects.
->
->
-> Security IR Tracking:
->
-> CVE Allocation:
->
-> - Mostly manual, some tool help at most.
->
->   Significant gap here (as you wrote).
->
->   This seems to be low hanging fruit... There is nothing stopping to
->
->   - allocate big CVE blocks to "automation sub-CNA"s
->   - have a OSS-Fuzz / Syzkaller / whatever CNA doing automated CVE assignments out of this block
+On Tue, Nov 05, 2019 at 07:42:28PM +0100, Solar Designer wrote:
+> I am not seeing this "inform the list either way" stuff actually
+> happening.  Without it, no other distro has a way to know the work is
 
-Hi,
+I'm sorry. I will endeavour to do better on this in the future.
 
-I see syzkaller come up already. Yes, syzbot (automated continuous
-kernel fuzzing) has the same problem: thousands of crashes, most don't
-have any security assessment (too expensive):
-https://syzkaller.appspot.com/upstream
-Besides the update problem, there is also bug fixing problem: loud
-CVEs attract lots of attention and gets fixed quickly, but require up
-to months of manual labor (per bug). "Just a use-after-free" may not
-get any attention, while being more harmful in the end. Even a WARNING
-(Linux kernel term for a non-fatal assertion) may be a VM info leak in
-the end.
+I'm uneasy reporting "I saw no further instances of this" or "I saw no
+issues with this patch" because I am keenly aware that I cannot be
+confident in my assessments. I'm very accustomed to pointing out problems
+when I see them, so that comes easily.
 
-So what are community thoughts on automatic CVE assignment?
-That would definitely get some attention to these bugs by vendors
-(because that's open CVEs in their products then). And this should be
-implementable because both OSS-Fuzz and syzbot are automated enough
-already. However I afraid that these CVEs may be as automatically
-sorted into a trashcan then :)
+In any event I will do better.
 
+Thanks
 
-
-
-> Rating:
->
-> - largely manual / partially automated, done by NVD and distributions seperately.
->
->   Could be automated by "type" by the fuzzer, similar to above.
->
->
-> Structured Vulnerability information storing:
->
-> - Not really existing right now.
->
-> - On top of CVE:
->   - referencing reproducers
->   - affected versions
->   - ratings
->   - referencing patches
->
->   These could be supplied / attached by automatisms in a automation CNA.
->
->
-> Distribution tracking / update preparation / packaging / QA :
->
-> - done by distributions, largely manual to semi automatic.
->
->   With better structured upstream vulnerability information storage its automation
->   could be improved.
->
->   Some thoughts are going betweenm distributions on sharing information / load, but as this
->   is a competition issue this might be hard.
->
-> So main gaps I personally see:
->
-> - bugfixing automation or help at least
->
-> - (better) structured storage in a global database, either CVE or something entirely new.
->
-> Ciao, Marcus
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
