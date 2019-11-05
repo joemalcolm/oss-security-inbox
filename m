@@ -1,40 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/5
-Message-ID: <20190604101519.cpb7hppii3oa4epw@jumper.schlittermann.de>
-Date: Tue, 4 Jun 2019 12:15:19 +0200
-From: Heiko Schlittermann <hs@...littermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/05/2
+Message-ID: <CAB8XdGA+QOBH2ztTP4T+Nk_YSRO7oJCK1O3UZTGh6K313ma-WA@mail.gmail.com>
+Date: Tue, 5 Nov 2019 15:53:54 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
+Subject: [CVE-2019-12406] Apache CXF does not restrict the number of message attachments
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+[CVEID]:CVE-2019-12406
+[PRODUCT]:Apache CXF
+[VERSION]:Apache CXF versions before 3.3.4 and 3.2.11
+[PROBLEMTYPE]:Denial of Service
+[REFERENCES]:
+http://cxf.apache.org/security-advisories.data/CVE-2019-12406.txt.asc
+[DESCRIPTION]:Apache CXF does not restrict the number of message
+attachments present in a
+              given message. This leaves open the possibility of a denial
+of service type
+              attack, where a malicious user crafts a message containing a
+very large number
+              of message attachments.
 
-our non-public security Git repo is
+              From the 3.3.4 and 3.2.11 releases, a default limit of 50
+message attachments
+              is enforced. This is configurable via the message property
+              "attachment-max-count".
 
-    ssh://git@....exim.org/exim.git
-
-Access is granted to the known and trusted SSH keys we have.
-
-The branch fix-CVE-2019-10149 contains the fix. It is one commit ahead
-of the exim-4_91+fixes branch and we'll eventuelly merge it into the
-+fixes branch.
-
-The relevant commit is d740d2111f189760593a303124ff6b9b1f83453d and is
-signed with my GPG key, the same key that signed this message.
-
-If you need help backporting it to older releases, please do not
-hesitate to contact us.
-
-The planned CRD (coordinated release date) is 2019-06-11 10.00 UTC.
-Please do not publish any package or source until this date.
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
