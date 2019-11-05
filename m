@@ -1,4 +1,9 @@
-Received: (qmail 11838 invoked by uid 550); 2 Nov 2025 17:45:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["837" "Tuesday" "5" "November" "2019" "15:53:54" "+0000" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGA+QOBH2ztTP4T+Nk_YSRO7oJCK1O3UZTGh6K313ma-WA@mail.gmail.com>" "23" "[oss-security] [CVE-2019-12406] Apache CXF does not restrict the number of message attachments" nil nil nil "11" "2019110515:53:54" "[oss-security] [CVE-2019-12406] Apache CXF does not restrict the number of message attachments" (number mark "U       coheigea@apa Nov  5   23/837   " thread-indent "\"[oss-security] [CVE-2019-12406] Apache CXF does not restrict the number of message attachments\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-12406] Apache CXF does not restrict the number of message attachments" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1303 invoked by uid 550); 5 Nov 2019 17:13:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,85 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11814 invoked from network); 2 Nov 2025 17:45:00 -0000
-Date: Sun, 2 Nov 2025 17:44:48 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
-To: oss-security@lists.openwall.com
-Message-ID: <aQeYkP4vLYBFv2QQ@yuggoth.org>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <aP_msOoiyHJ_M4Yx@mertle>
- <20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com>
- <20251028014909.GA6430@openwall.com>
- <76f8e74c-d9cc-4f20-8061-488598f85fe7@protonmail.com>
- <20251101030054.GA3031@openwall.com>
- <875xbtlf4z.fsf@hope.eyrie.org>
- <87qzuh33x1.fsf@gmail.com>
- <20251102012631.GA8285@openwall.com>
+Received: (qmail 28282 invoked from network); 5 Nov 2019 15:54:18 -0000
+X-Gm-Message-State: APjAAAUldgxyupWBz+sYI2f+/5U6SF/5RzPHUxthe8LXpX62GzqTUltX
+	LHthrLF6Teyor14mXLT8tSE0uctSOdlGZTzdZ5o=
+X-Google-Smtp-Source: APXvYqykSM9+IFClJCiPuGM/ujszUpZTw3hFPPZerstA2m5b90f9qpVqCqcRw72yHTnDNqeReDI3FEU0U9n+dyB6Aao=
+X-Received: by 2002:a92:d28d:: with SMTP id p13mr35654063ilp.227.1572969245602;
+ Tue, 05 Nov 2019 07:54:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Pb5KE7VZRXnKTvJB"
-Content-Disposition: inline
-In-Reply-To: <20251102012631.GA8285@openwall.com>
-X-SA-Exim-Connect-IP: 66.70.103.60
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
+From: Colm O hEigeartaigh <coheigea@apache.org>
+Date: Tue, 5 Nov 2019 15:53:54 +0000
+X-Gmail-Original-Message-ID: <CAB8XdGA+QOBH2ztTP4T+Nk_YSRO7oJCK1O3UZTGh6K313ma-WA@mail.gmail.com>
+Message-ID: <CAB8XdGA+QOBH2ztTP4T+Nk_YSRO7oJCK1O3UZTGh6K313ma-WA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000208c4705969b7192"
+Subject: [oss-security] [CVE-2019-12406] Apache CXF does not restrict the number of message attachments
 
---Pb5KE7VZRXnKTvJB
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--000000000000208c4705969b7192
+Content-Type: text/plain; charset="UTF-8"
 
-On 2025-11-02 02:26:31 +0100 (+0100), Solar Designer wrote:
-[...]
->It is interesting that although Red Hat seems to dispute this CVE and=20
->doesn't intend to fix it, they nevertheless give it a non-zero CVSS=20
->score
-[...]
+[CVEID]:CVE-2019-12406
+[PRODUCT]:Apache CXF
+[VERSION]:Apache CXF versions before 3.3.4 and 3.2.11
+[PROBLEMTYPE]:Denial of Service
+[REFERENCES]:
+http://cxf.apache.org/security-advisories.data/CVE-2019-12406.txt.asc
+[DESCRIPTION]:Apache CXF does not restrict the number of message
+attachments present in a
+              given message. This leaves open the possibility of a denial
+of service type
+              attack, where a malicious user crafts a message containing a
+very large number
+              of message attachments.
 
-While I find CVSS fairly useless for projects I work on (for the=20
-same reasons Greg K-H eloquently explained in a recent post about=20
-determining the "severity" of Linux Kernel vulnerabilities), we have=20
-the concept of "vulnerabilities nobody's working on fixing" too.=20
-Off-label or discouraged uses of software, or even seemingly=20
-appropriate but not common uses, may lead to vulnerabilities which=20
-the maintainers have not prioritized finding solutions to in their=20
-limited available time. Maybe it's on the roadmap to solve=20
-eventually, or merely the upshot of ancient design decisions that=20
-can't be revisited due to conflicting backward compatibility=20
-promises.
+              From the 3.3.4 and 3.2.11 releases, a default limit of 50
+message attachments
+              is enforced. This is configurable via the message property
+              "attachment-max-count".
 
-Point is, it's possible to acknowledge something's technically a=20
-vulnerability, while having no plan to solve it in the immediate=20
-future. Does that merit a CVE? I wouldn't personally request one for=20
-it, but if a third party chose to assign one I wouldn't dispute it=20
-either. If people refuse to use software containing "unfixed CVEs"=20
-that's their choice.
---=20
-Jeremy Stanley
-
---Pb5KE7VZRXnKTvJB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmkHmIhfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCkCyA//V3KwPNr+q68tiyDfLuLw8Mc2EIb1OP0tYZ6EwRtqybWvGzC5GYIXhOyc
-r3UU+3D1g9NW6SI0onZM94Yk0cYme4yrMvsZ3c8dMfA2M9q9AcWjS/iHNIB9KyGA
-nkHJY+JgSQAjobzeNGqk1pV+t0a4wGwmOC3fFEkc8RUyAxms+8//vydqIF+QTsWU
-Lf3xhabAAjqeloy+AMREhWVSJMQs+TyVP4NdQRAi4gCEfZO/o7pSToUdwtB0rymL
-3wHe/8Ft5hFte5WYHlK8E8vb5FkvFU6tZrX897xUtNERczTFLReg75tzO6B09Q3+
-LnBLbPjpMiqZAKn1Nv5Iunung8ZZH47RvNm5PdjvqGrYikCL+9FIHUD2Y9Bk1b4y
-DX96pJa2MplB8HjKo7+jLrnhGXhc1KOxi+BGoR6PtOWi9VMs63OnoQPgM9K8bt0D
-XKlH7njcs/5XOgl4UotslSRQuUGsOWQSAGIemh93QkRq2AY/ayOIbQdG+cVMy86z
-CxgyUwq6hZRIFe9j7UhYbZu5x1dgD96ycvJbcQGK0/1gf5Oy/E3uUS9Ix+zfyNA0
-uQe9eLVCVqoQdxUnfAsm08ddxVNfx5ZmTR9Y9wYAIGR/fqo76S35yKL4fIWaBY/t
-TYxK/Gr0d2Q4pAnkYDaLf7L5IH62KZ3B6N5jh8TX+ip2aUe4q2w=
-=7u7g
------END PGP SIGNATURE-----
-
---Pb5KE7VZRXnKTvJB--
+--000000000000208c4705969b7192--
