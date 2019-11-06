@@ -1,57 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/8
-Message-ID: <20190711155623.GA17634@espresso.pseudorandom.co.uk>
-Date: Thu, 11 Jul 2019 16:56:23 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/06/1
+Message-ID: <824640cc-1d9f-3be6-335b-72f4b105cd70@csail.mit.edu>
+Date: Wed, 6 Nov 2019 00:00:44 -0800
+From: "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Cc: Steven Rostedt <rostedt@...dmis.org>, sashal@...nel.org, Alexey Makhalov <amakhalov@...are.com>, Anish Swaminathan <anishs@...are.com>, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>
+Subject: Re: Membership application for linux-distros - VMware
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 11 Jul 2019 at 09:33:26 -0400, Perry E. Metzger wrote:
-> if you logged in as root, you could run GUI applications as root
 
-Yes, that is my understanding. Apps run as uid N trust uid N's Wayland
-compositor, and uid N's Wayland compositor allows connections by apps
-run as uid N and rejects all others. This is approximately the same
-security policy as an Xorg X11 server with "xhost +si:localuser:USERNAME"
-(and nothing else that would allow access, e.g. no xauth(1) tokens).
+Hi Alexander,
 
-Logging in to a typical graphical desktop environment as root is probably
-*also* a bad idea, because a full desktop environment is a huge attack
-surface to be running with a complete set of capabilities; but it does
-avoid some of the problems that come with running individual applications
-as root.
+On 11/5/19 10:04 AM, Solar Designer wrote:
+> On Mon, Nov 04, 2019 at 03:03:42PM -0800, Srivatsa S. Bhat wrote:
+>> I'd like to sign up as primary for Administrative 5: "Determine if the
+>> reported issues are Linux-specific... ", and as backup for Technical 4.
+>> "Check if related issues exist in the same piece of software...".
+> 
+> Great.  VMware Photon OS is now signed up for those.
+> 
 
-Graphical toolkits typically (have to!) trust their X11/Wayland display
-(to not send them forged input events, if nothing else), but an app
-running as uid 0 has no good reason why it should trust an X11 server
-or Wayland compositor running as uid 1000. By sending appropriate input
-events, the X11 server or Wayland compositor can make the app do anything
-for which it has UI. This makes the privilege boundary between uid 1000
-and uid 0, when a user with uid 1000 will escalate privileges to uid 0,
-somewhat illusory.
+Thank you!
 
-If the graphical toolkit or app was not designed to be robust against
-a malicious display server, or if it was designed to be robust against
-a malicious display server but has bugs in the implementation of that
-design, then the user might also be able to subvert the app, escalating
-from limited root privileges (for example a GUI running as root for
-network configuration, which allows network configuration within certain
-parameters) to unlimited root privileges (arbitrary code execution).
+> SUSE is now backup (was primary) for Administrative 5: "Determine if the
+> reported issues are Linux-specific ..."
+> 
+>> (I did consider the other task that you brought up, namely Technical
+>> 6, but I think we'd need more experience on the list before we can
+>> sign up for that task).
+> 
+> I thought so too, which is a reason why I also directed that request to
+> other distros reading our discussion.
+> 
+>> Also, is there a write-up somewhere that defines exactly what primary
+>> and backup means in this context?
+> 
+> No.
+> 
+>> At the moment, I'm assuming that,
+>> for a given task, the primary distro will take up that task for every
+>> issue that gets posted onto linux-distros; and in case the primary is
+>> unavailable (due to vacation/travel etc), then the backup will step up
+>> for that task until the primary gets back. Is that how it works?
+> 
+> Yes, and besides that I also expect the backup to watch the list for
+> related aspects of issues that the primary might have missed or
+> misunderstood or mishandled, and chiming in as necessary to correct
+> that.  For example, let's take Administrative task 1:
+> 
+> "Promptly review new issue reports for meeting the list's requirements
+> and confirm receipt of the report and, when necessary, inform the
+> reporter of any issues with their report (e.g., obviously not actionable
+> by the distros) and request and/or propose any required yet missing
+> information (most notably, a tentative public disclosure date/time) -
+> primary: CoreOS, backup: Oracle"
+> 
+> Given this, I expect that if there's no response to the issue reporter
+> and the list by CoreOS within a day, Oracle would respond in their place
+> even if these distros had not negotiated/announced any vacation/travel
+> beforehand.  (We tell reporters that they should expect a response
+> within 48 hours, which leaves about one day for the primary to respond
+> and another day for the backup to respond in their place if the primary
+> did not.)  Similarly, I'd expect Oracle to send a follow-up message to
+> the reporter and the list if CoreOS' response is missing required
+> information or questions/requests - e.g., the report didn't have a
+> tentative public disclosure date/time yet CoreOS didn't request that.
+> I'd also expect Oracle to chime in if they find CoreOS' response wrong -
+> e.g., if it acknowledged the embargo, whereas Oracle finds the issue
+> "obviously not actionable by the distros".
+> 
 
-Similarly, if we want accessibility features (screen readers, magnifiers,
-on-screen keyboards, alternative input methods, etc.), then graphical
-toolkits have to trust the accessibility provider, but an app running
-as uid 0 doesn't really have any good reason to be trusting accessibility
-technologies running as uid 1000 either.
+Thanks a lot for explaining the roles of primary and backup with such
+detail and clarity!
 
-In X11, there is also the problem that every client (app) can usually spy
-on the input and output of every other client, and fake input into every
-other client, which means compromising any app compromises every app.
-Wayland doesn't generally have that, because only special privileged
-connections are normally allowed to take screenshots, receive input while
-not in focus, or forge input events (but note that these connections
-are privileged within the context of a desktop session, not privileged
-within the context of the overall system).
+>> If
+>> so, will we get to know the contact details of other distros so that
+>> we can coordinate our schedules?
+> 
+> Yes, but per the above that isn't enough, and it's also less important
+> than you might have expected.  For distros with more than one person
+> subscribed, my expectation is that they'll almost always be around to
+> handle whatever they volunteered for, and the backup's role is primarily
+> in making sure that the work is being done correctly all the time.
+> 
 
-    smcv
+That seems fair, thank you!
+
+>> On a related note, would it be okay for me to request another member
+>> of the Photon OS team (whom I can vouch for), to be added to the
+>> linux-distros list, so that we can have at least one person from our
+>> team always available to take action for our distro, in response to
+>> the issues disclosed on the list?
+> 
+> Yes.
+> 
+Great! I'd like to request that Alexey Makhalov (amakhalov@...are.com)
+from the Photon OS team be added to the linux-distros list. I have
+worked with Alexey closely for several years and I'm happy to vouch
+for him.
+
+Thank you!
+
+Regards,
+Srivatsa
+VMware Photon OS
