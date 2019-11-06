@@ -1,70 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/28/1
-Message-ID: <4a7ddc8e-8dd0-8762-2b6e-db45f04ec6e2@open-xchange.com>
-Date: Thu, 28 Mar 2019 13:42:13 +0200
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-7524: Buffer overflow when reading extension header from dovecot index files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/06/3
+Message-ID: <20191106134041.GA29158@openwall.com>
+Date: Wed, 6 Nov 2019 14:40:41 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com, Joe McManus <joe.mcmanus@...onical.com>
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-Dear subscribers,
+On Tue, Nov 05, 2019 at 10:43:11PM +0000, Seth Arnold wrote:
+> I'm uneasy reporting "I saw no further instances of this" or "I saw no
+> issues with this patch" because I am keenly aware that I cannot be
+> confident in my assessments. I'm very accustomed to pointing out problems
+> when I see them, so that comes easily.
 
-we're sharing our latest advisory with you and would like to thank
-everyone who contributed in finding and solving those vulnerabilities.
-Feel free to join our bug bounty programs (open-xchange, dovecot,
-powerdns) at HackerOne. Please find patches for v2.2.36 and v2.3.5 attached,
-or download new version.
+Besides "I saw no issues", etc. please also describe the scope of your
+review - e.g., "I grepped the version X.Y tree for [some pattern] and
+there were only two hits, which I reviewed and they look correct to me"
+or "I've tried applying the patch to version X.Y, building with ASan,
+and running the test suite on Ubuntu 19.10, and all tests passed" or
+even "I skimmed over this lengthy patch in 10 minutes and didn't see
+anything obviously wrong" (not ideal, but also not misleading).  Of
+course, more detail (after a summary like this) would be even better -
+e.g., you could include code snippets for those two grep hits from my
+first example, which might result in others noticing issues in those.
 
-Yours sincerely,
-Aki Tuomi
-Open-Xchange Oy
+For a real-world example, here's that message Anthony sent on July 25,
+which is as desired in that it makes the scope clear:
 
-Product: Dovecot
+"We have packaged the 4.92.1 release and performed some basic testing and
+can confirm it works.  We do not have a reproducer for this issue so I
+cannot confirm if the fix is correct but can confirm that the package is
+stable."
 
-Vendor: OX Software GmbH
- 
-Internal reference: DOV-2964 (Bug ID)
-Vulnerability type: CWE-120
-Vulnerable version: 2.0.14 - 2.3.5
-Vulnerable component: fts, pop3-uidl-plugin
-Report confidence: Confirmed
-Researcher credits: Found in internal testing
-Solution status: Fixed by Vendor
-Fixed version: 2.3.5.1, 2.2.36.3
-Vendor notification: 2019-02-05
-Solution date: 2019-03-21
-Public disclosure: 2019-03-28
-CVE reference: CVE-2019-7524
-CVSS: 3.0/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H/E:P/RL:O/RC:C (8.8)
- 
-Vulnerability Details:
-When reading FTS or POP3-UIDL header from dovecot index, the input
-buffer size is not bound, and data is copied to target structure causing
-stack overflow.
+> In any event I will do better.
 
-Risk:
-This can be used for local root privilege escalation or executing
-arbitrary code in dovecot process context. This requires ability to
-directly modify dovecot indexes.
-Steps to reproduce:
-Produce dovecot.index.log entry that creates an FTS header which has
-more than 12 bytes of data.
-Trigger dovecot indexer-worker or run doveadm index.
-Dovecot will crash.
+Thank you, Seth.  Also, thank you Anthony for ack'ing my reminder (in
+another message).
 
-Mitigations:
-Since 2.3.0 dovecot has been compiled with stack smash protection, ASLR,
-read-only GOT tables and other techniques that make exploiting this bug
-much harder.
-
-Solution:
-Operators should update to the latest Patch Release. The only workaround
-is to disable FTS and pop3-uidl plugin.
-
-Please find attached patches for 2.2.36 and 2.3.5.
-
-Download attachment "dovecot-2.3.5-cve-2019-7524.tgz" of type "application/x-compressed-tar" (988 bytes)
-
-Download attachment "dovecot-2.2.36-cve-2019-7524.tgz" of type "application/x-compressed-tar" (989 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Alexander
