@@ -1,45 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/01/1
-Message-ID: <CAMufup4hyhhpgfsiEcmKY7u_vSueB=1WTK5NCShaep-wXP5pOQ@mail.gmail.com>
-Date: Thu, 31 Jan 2019 21:32:26 +0100
-From: Juan Pablo Santos Rodríguez <juanpablo.santos@...il.com>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2018-20242] Apache JSPWiki Cross-site scripting vulnerability on Apache JSPWiki
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/07/1
+Message-ID: <20191107182804.GE6595@outflux.net>
+Date: Thu, 7 Nov 2019 10:28:04 -0800
+From: Kees Cook <kees@...ntu.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Security fixes from Android 10 release which are relevant outside the Android ecosystem?
 Content-Type: text/plain; charset=utf-8
 
-Hi Henri,
+On Fri, Oct 25, 2019 at 11:23:09PM +0200, Moritz Mühlenhoff wrote:
+> Android advisories used to contain commit references to AOSP change sets, but
+> that's not the case for https://source.android.com/security/bulletin/android-10.
+> 
+> Typically most of these issues are specific to Android, but there are a few which
+> per the CVE description are possibly affecting software packaged/used by Linux
+> distros as well, one example:
 
-the vulnerability announcement can be seen here
-https://lists.apache.org/thread.html/8ee4644432c0a433c5c514a57d940cf6dcb0a0094acd97b36290f0b4@%3Cuser.jspwiki.apache.org%3E
-We've also documented it at
-https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2018-20242
+Normally the advisories should link back to actual details, but I guess
+this doesn't always happen.
 
-Please do let me know if something else is needed.
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-9325:
+> "In libvpx, there is a possible out of bounds read due to a missing bounds check.
+> This could lead to remote information disclosure with no additional execution
+> privileges needed. "
 
+https://chromium-review.googlesource.com/c/webm/libvpx/+/1149604
 
-best regards,
-juan pablo
+> Similar for CVE-2019-9232,
 
-On Thu, Jan 31, 2019 at 9:39 AM Henri Salo <henri@...v.fi> wrote:
+https://chromium-review.googlesource.com/c/webm/libvpx/+/1395793
 
-> On Wed, Jan 30, 2019 at 09:01:43PM +0100, Juan Pablo Santos Rodríguez
-> wrote:
-> > Versions Affected: Apache JSPWiki up to 2.10.5
-> >
-> > Description:
-> > A carefully crafted URL could trigger an XSS vulnerability on Apache
-> > JSPWiki, which could lead to session hijacking.
-> >
-> > Mitigation:
-> > Apache JSPWiki users should upgrade to 2.11.0.M1 or later.
-> >
-> > Credit:
-> > This issue was discovered by Jamie Parfet.
->
-> Do you have any Apache reference URLs for this issue?
->
-> --
-> Henri Salo
->
+> CVE-2019-9278,
 
+https://android.googlesource.com/platform/external/libexif/+/a5e8e5812a11ec9686294de8a5d68aaf2ab72475%5E%21/#F0
+
+> CVE-2019-9371,
+
+https://chromium.googlesource.com/webm/libwebm/+/cb5a9477073cf7ae4a28356d6e3e5638aba78dc9%5E%21/#F0
+https://chromium.googlesource.com/webm/libwebm/+/027a472efe49ff3a24be619442d2150658dbaaa0%5E%21/#F0
+
+> CVE-2019-9433,
+
+https://chromium-review.googlesource.com/c/webm/libvpx/+/1070753
+
+> CVE-2019-9423 (also libexif and opencv)
+
+This one I can't find an external reference for. I've asked for more
+details internally.
+
+> Is there anyone from Android/Google on the list, who can comment on this? Can these
+> references be added again for the benefit of non-Android distros?
+
+Thank you Moritz for pinging me off-list! :)
+
+-- 
+Kees Cook
