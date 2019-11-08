@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1690" "Friday" "9" "February" "2018" "08:47:00" "+0100" "=?UTF-8?B?UGV0ciDFoHBhxI1law==?=" "petr.spacek@nic.cz" "<ad030315-66c0-608e-62fd-622413bf6188@nic.cz>" "43" "[oss-security] Re: bug in DNS resolvers - DNSSEC validation" "^Cc:" nil nil "2" "2018020907:47:00" "[oss-security] Re: bug in DNS resolvers - DNSSEC validation" (number mark "        petr.spacek@ Feb  9   43/1690  " thread-indent "\"[oss-security] Re: bug in DNS resolvers - DNSSEC validation\"\n") "<cig332d11fszn7.fsf@amazon.com>" ("<cig332d11fszn7.fsf@amazon.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1005" "Friday" "8" "November" "2019" "10:03:44" "+0200" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD9si-9cayWBzt+AUi8iyb0hY=8fExf6-mLDr-C+mcqiyg@mail.gmail.com>" "43" "[oss-security] Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|" "^Date:" nil nil "11" "2019110808:03:44" "[oss-security] Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|" (number mark "        gguninski@gm Nov  8   43/1005  " thread-indent "\"[oss-security] Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22489 invoked by uid 550); 9 Feb 2018 08:23:56 -0000
+Received: (qmail 19826 invoked by uid 550); 8 Nov 2019 08:48:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24551 invoked from network); 9 Feb 2018 07:47:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nic.cz; s=default;
-	t=1518162421; bh=+MukL+gPdniwugFImSBgbvxOZ7LYDotFKn5ns7DZTls=;
-	h=To:From:Date;
-	b=v9e9+EI/K3wrgmqWG2v9wd9Umv8pXR/0Wjk0kT4lMG5kYx7btvrQ1D973T3o1+xi8
-	 9xiXHVWUGdJ4Ew8zoI5ZCzZe+dT7e2kcuqhAupbKzItlIHhYFYW8i3j7oyWgr8noeX
-	 z933xa2DOFMg0rRQ9G27cDbgSq9LsJ66yrffQffI=
-References: <cig332d11fszn7.fsf@amazon.com>
-Organization: CZ.NIC
-Message-ID: <ad030315-66c0-608e-62fd-622413bf6188@nic.cz>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+Received: (qmail 7592 invoked from network); 8 Nov 2019 08:04:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=FqvsErNWJ4ntBj1wLojzdXmRZhRiB44Bdh2USJmFb90=;
+        b=HNBD7KFCI1GJAuv9Wjvk4aRWDC+2txQ7ImopbpRgm4FcuxvpUqmcvXJzZ6C1b+Ru/V
+         FDmeGYzdjgDisTa6+myPBOAOea0Au7Ie6wEcX98XsanCBJ7yAvGjPoZJmpuq3Lq/03O8
+         knhDc7sOJKnSPM2CdybF/NUhje2mEGm1e1hhUhbX5nAMdTJ+iA67i2F8zp4ohELDAwGW
+         7Rm3XJoXvG91yPELVSBV2qjIJSNsYiipdkiQsi3W7T5LzffJIuFizo+OBYejTS00Ua+S
+         f1Xu4U03G0h5qP8DCKeNC60rEMvedjs9o1H/K45HYym3AfoJoFL3IGRN/we73QJJ5mdV
+         29rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=FqvsErNWJ4ntBj1wLojzdXmRZhRiB44Bdh2USJmFb90=;
+        b=HPD3pWV44ZruyvnDsWs2MjW3ev5U8woXNu2ms8bgIechKjzd8vPDPFTBfyYudHMP61
+         bNlKjoMYYjIozi+KkqWR6nmyOK53n5OrPnnMZi83RzqzT//1NJLqyGg7J029/8yNRWZV
+         U06bOEshbFlevnZFqV8yMi6Cg71KfUQYNEzb/5EkloDyZe7SyWplKdpppy4nWSCScccW
+         vgBPqcZkHKyYVUeXj/TzM8JJr0EK7XBfx/fepgcj8/RhjPBdZsWC/55BkUrqlWiz0Wu1
+         g09nyN5KteFrgFkAw8R5disQeAoL48P77gxUaoRlZTy+sBFm1RmFXm80Vdr4Ci15GshA
+         x2TA==
+X-Gm-Message-State: APjAAAVkm2/Ji7mLfMcKnL7goTqcnGwq4Vkh7Ou+XASrQBe9FHKao0na
+	Xg5btTuc8zHKCRFJAtwZ4WhIBBjsFcoF3gghNzCP4U4w1vY=
+X-Google-Smtp-Source: APXvYqy2rzwGou56RmS2wJ5tU9uZpN6N+7MD4qFupzoZbuavGk4SUIjV6saciZ+DBOB+V8MXnSTgDX3duksyG8qBUbY=
+X-Received: by 2002:a6b:ce0b:: with SMTP id p11mr8939353iob.72.1573200236438;
+ Fri, 08 Nov 2019 00:03:56 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <cig332d11fszn7.fsf@amazon.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.99.2 at mail
-X-Virus-Status: Clean
-Cc: Jan Pavlinec <jan.pavlinec@nic.cz>,
- Remi Gacogne <remi.gacogne@powerdns.com>, Solar Designer
- <solar@openwall.com>, Kristian Fiskerstrand <k_f@gentoo.org>
-Date: Fri, 9 Feb 2018 08:47:00 +0100
-From: =?UTF-8?B?UGV0ciDFoHBhxI1law==?= <petr.spacek@nic.cz>
+Message-ID: <CAGUWgD9si-9cayWBzt+AUi8iyb0hY=8fExf6-mLDr-C+mcqiyg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Fri, 8 Nov 2019 10:03:44 +0200
+From: Georgi Guninski <gguninski@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: bug in DNS resolvers - DNSSEC validation
-To: Anthony Liguori <aliguori@amazon.com>, oss-security@lists.openwall.com
+Subject: [oss-security] Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
+To: oss-security@lists.openwall.com
 
-Please accept my apology for this omission, the issue were made public
-right after end of embargo but I totally forgot about posting it again here.
+Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
 
-On 9.2.2018 02:46, Anthony Liguori wrote:
-> The following issues were reported on distros@ on Jan 15th and
-> subsequently made public without a post here.  I'm referencing the
-> public announcements I've found with hope that Petr et al can provide
-> more specific information here.
-> 
-> https://nvd.nist.gov/vuln/detail/CVE-2018-1000002?cpeVersion=2.2
-> https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2018-01.html
+There is heated discussion on gcc's bugzilla starting from 2007:
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=30475
+and clang is also affected, depending on optimization flags.
 
-Announcement for Knot Resolver 1.5.2 is here:
-https://lists.nic.cz/pipermail/knot-resolver-users/2018/000000.html
+poc is the program at end.
 
-Nature of the issue is that original DNSSEC specification in dection 5.4
-of [RFC4035] under-specifies the algorithm for checking nonexistence
-proofs.
+gcc with all optimization flags optimizes away |assert(a+100 > a)|
+even if there is no integer overflow, only signed overflow.
 
-While implementing DNSSEC validation into Knot Resolver, we forgot to
-implement additional conditions explained in RFC 6840, so our DNSSEC
-validator could accept an NSEC or NSEC3 RR proofs from an ancestor zone
-as proving the nonexistence of an RR in a child zone.
+clang fires the assertion with -O0, but also optimizes it away
+with -O3
+
+The formal verifier CBMC fires the assertion, which might of
+interest about formally verified programs.
+
+Signed integer arithmetic is commonly used even without integer
+overflows.
+
+Could this compiler issue be security problem?
+
+Any workarounds?
+
+===poc===
+#include <assert.h>
+
+int foo(int a) {
+  assert(a+100 > a);
+  printf("%d %d\n",a+100,a);
+  return a;
+}
+
+int main() {
+  foo(100);
+  foo(0x7fffffff);
+}
+=========
 
 
-Please note that Knot Resolver versions older than latest 1.5.z are
-obsolete and not maintained by CZ.NIC anymore so all users all advised
-to upgrade immediatelly to to latests 1.5 or 2.0 branches.
-
-Version 1.5.z is going to be end-of-life in approximatelly one month so
-direct upgrade to version 2.0 or later is strongly recommended.
-
-Petr Špaček  @  CZ.NIC
-
-
-> The distros@ list has a policy that after the embargo lifts, the report
-> is also made to oss-security to ensure there is a public record of what
-> has been reported.
-> 
-> Regards,
-> 
-> Anthony Liguori
-
+CV:    https://j.ludost.net/resumegg.pdf
+site:  http://www.guninski.com
+blog:  https://j.ludost.net/blog
