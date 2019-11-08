@@ -1,95 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/01/3
-Message-ID: <c03af74b-c5df-bff4-375f-d9caa0cf9894@gmail.com>
-Date: Mon, 1 Jul 2019 09:57:33 +0200
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/5
+Message-ID: <87zhh6a5rk.fsf@canonical.com>
+Date: Fri, 08 Nov 2019 23:23:35 +1030
+From: Alex Murray <alex.murray@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting via HTTPS
+Subject: CVE-2019-18397 - Stack buffer overflow in GNU FriBidi >= 1.0.0
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2019/jul/01/security-releases/
+CVE-2019-18397 - GNU FriBidi stack buffer overflow >= 1.0.0
+-----------------------------------------------------------
 
-In accordance with `our security release policy 
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team is issuing `Django 1.11.22 
-<https://docs.djangoproject.com/en/dev/releases/1.11.22/>`_, `Django 
-2.1.10 <https://docs.djangoproject.com/en/dev/releases/2.1.10/>`_, and 
-`Django 2.2.3 <https://docs.djangoproject.com/en/dev/releases/2.2.3/>`_. 
-These releases addresses the security issues detailed below. We 
-encourage all users of Django to upgrade as soon as possible.
+Overview:
+ A stack buffer overflow in the fribidi_get_par_embedding_levels_ex()
+ function in lib/fribidi-bidi.c of GNU FriBidi 1.0.0 through 1.0.7
+ allows an attacker to cause a denial of service or possibly execute
+ arbitrary code by delivering crafted text content to a user, when this
+ content is then rendered by an application that uses FriBidi for text
+ layout calculations. Examples include any GNOME or GTK+ based
+ application that uses Pango for text rendering, as this internally uses
+ FriBidi for bidirectional text layout. For example, the attacker can
+ construct a crafted text file to be opened in GEdit, a crafted IRC
+ message to be viewed in HexChat or a crafted email to be viewed in
+ Evolution.
 
-Thanks Gavin Wahl for reporting this issue.
+Detailed analysis:
+ The function fribidi_get_par_embedding_levels_ex()
+ in lib/fribidi-bidi.c of GNU FriBidi 1.0.0 through 1.0.7 contains a
+ fixed size buffer base_level_per_iso_level which is used to accumulate
+ the current isolate level while calculating the bi-directional
+ embedding levels of the requested text paragraph.
 
-CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting 
-via HTTPS
-================================================================================
+ ...
+ FriBidiLevel base_level_per_iso_level[FRIBIDI_BIDI_MAX_EXPLICIT_LEVEL];
+ ...
 
-When deployed behind a reverse-proxy connecting to Django via HTTPS, 
-``django.http.HttpRequest.scheme`` would incorrectly detect client 
-requests made via HTTP as using HTTPS. This entails incorrect results 
-for ``is_secure()``, and ``build_absolute_uri()``, and that HTTP 
-requests would not be redirected to HTTPS in accordance with 
-``SECURE_SSL_REDIRECT``.
+ When accumulating into this buffer, the index is incremented without
+ any check for overflow of the buffer length, resulting in a stack
+ buffer overflow when processing more then
+ FRIBIDI_BIDI_MAX_EXPLICIT_LEVEL elements.
 
-``HttpRequest.scheme`` now respects ``SECURE_PROXY_SSL_HEADER``, if it 
-is configured, and the appropriate header is set on the request, for 
-both HTTP and HTTPS requests.
+ ...
+          RL_ISOLATE_LEVEL (pp) = isolate_level++;
+          base_level_per_iso_level[isolate_level] = new_level;
+ ...
 
-If you deploy Django behind a reverse-proxy that forwards HTTP requests, 
-and that connects to Django via HTTPS, be sure to verify that your 
-application
-correctly handles code paths relying on ``scheme``, ``is_secure()``, 
-``build_absolute_uri()``, and ``SECURE_SSL_REDIRECT``.
+ This is fixed by checking the current value of isolate_level against
+ the size of base_level_per_iso_level
+ (ie. FRIBIDI_BIDI_MAX_EXPLICIT_LEVEL) to ensure this is only
+ incremented when it will not subsequently overflow the bounds of the
+ array.
 
-Affected supported versions
-===========================
+Affected Versions:
+ From 1.0.0 to 1.0.7 (no official upstream release has been made
+ containing the fix)
 
-* Django master development branch
-* Django 2.2 before version 2.2.3
-* Django 2.1 before version 2.1.10
-* Django 1.11 before version 1.11.22
+References:
+ https://github.com/fribidi/fribidi/commit/034c6e9a1d296286305f4cfd1e0072b879f52568
 
-Resolution
-==========
+CRD:
+ 2019-11-07 17:00 UTC
 
-Patches to resolve the issue have been applied to Django's master branch 
-and the 2.2, 2.1, and 1.11 release branches. The patches may be obtained 
-from the following changesets:
-
-* On the `master branch 
-<https://github.com/django/django/commit/54d0f5e62f54c29a12dd96f44bacd810cbe03ac8>`__
-* On the `2.2 release branch 
-<https://github.com/django/django/commit/77706a3e4766da5d5fb75c4db22a0a59a28e6cd6>`__
-* On the `2.1 release branch 
-<https://github.com/django/django/commit/1e40f427bb8d0fb37cc9f830096a97c36c97af6f>`__
-* On the `1.11 release branch 
-<https://github.com/django/django/commit/32124fc41e75074141b05f10fc55a4f01ff7f050>`__
-
-The following releases have been issued:
-
-* Django 1.11.22 (`download Django 1.11.22 
-<https://www.djangoproject.com/m/releases/1.11/Django-1.11.22.tar.gz>`_ 
-| `1.11.22 checksums 
-<https://www.djangoproject.com/m/pgp/Django-1.11.22.checksum.txt>`_)
-* Django 2.1.10 (`download Django 2.1.10 
-<https://www.djangoproject.com/m/releases/2.1/Django-2.1.10.tar.gz>`_ | 
-`2.1.10 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.1.10.checksum.txt>`_)
-* Django 2.2.3 (`download Django 2.2.3 
-<https://www.djangoproject.com/m/releases/2.2/Django-2.2.3.tar.gz>`_ | 
-`2.2.3 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.2.3.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 2EF56372BA48CD1B.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance, Django's GitHub repositories, or the django-developers list.
-Please see `our security policies 
-<https://www.djangoproject.com/security/>`_
-for further information.
-
+Credit:
+ Alex Murray of the Ubuntu Security Team
 
