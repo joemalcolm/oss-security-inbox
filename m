@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/9
-Message-ID: <alpine.GSO.2.20.1906250946080.7899@scrappy.simplesystems.org>
-Date: Tue, 25 Jun 2019 09:51:02 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/4
+Message-Id: <5B458214-EF60-45B1-B20C-585B5306D66A@oracle.com>
+Date: Fri, 8 Nov 2019 12:29:50 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: Re: Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 25 Jun 2019, Matthew Fernandez wrote:
 
-> I’m probably telling you things you already know and it sounds like 
-> you don’t consider such issues worth addressing, but I just wanted 
-> to point out that these are not theoretical. These cause real 
-> problems for users and, for open source software, you may not have 
-> full control over what toolchain/flags users build your code with.
 
-I think that almost all bugs are issues worth addressing given 
-sufficent resources available to address them.  The issue discussed is 
-what proportion of bugs discovered via automated testing and claimed 
-to be "security" issues based on computer analysis are exploitable 
-vulnerabilities which deserve a CVE.
+> On 8 Nov 2019, at 12:06, John Haxby <john.haxby@...cle.com> wrote:
+> 
+> In this particular case, the assert() will always trigger if the assert is on "a > INT_MAX-100" because that is well defined.   Does ubsan catch this issue?
 
-A good point has been made that Linux heap memory allocation behavior 
-may be very different than other OSs and that behavior can also be 
-hardware-specific.
+Answering my own question:
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+foo.c:6:2: runtime error: signed integer overflow: 2147483647 + 99 cannot be represented in type 'int'
+a.out: foo.c:6: foo: Assertion `a+100 > a' failed.
+
+jch
+
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
