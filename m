@@ -1,23 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/02/3
-Message-ID: <CAG48ez1N30mTGj575XvEHQqrhOT+gF1yEEGpKAqw2dBMHwMxTA@mail.gmail.com>
-Date: Fri, 1 Feb 2019 23:20:26 +0100
-From: Jann Horn <jannhorn@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/1
+Message-ID: <CAK7Z5T9-mgfJR-Bc=GsBb4MXihZAkARazkkyQXzefqwxVVopTA@mail.gmail.com>
+Date: Thu, 7 Nov 2019 21:34:36 -0800
+From: Micah Kornfield <emkornfield@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: BPF spectre v1 mitigation bypass (CVE-2019-7308, fixed in 4.19.19 and 4.20.6)
+Cc: security@...che.org
+Subject: [CVE-2019-12408][CVE-2019-12410] Uninitialized Memory Vulnerabilities fixed in Apache Arrow 0.15.1
 Content-Type: text/plain; charset=utf-8
 
-I discovered a bypass for the spectre v1 hardening in the eBPF engine
-of the Linux kernel (which is exposed to unprivileged userspace since
-kernel 4.4).
+The Apache Arrow project would like to hereby disclose that our 0.15.1
+release patches two uninitialized memory bugs (CVE-2019-12408 and
+CVE-2019-12410) in the the C++ implementation (which in turn can affect,
+Python, Ruby and R).  In both cases there is a potential vulnerability
+where data in memory can be unintentionally shared if Arrow Arrays are
+transmitted over the wire (for instance with Flight) or persisted in the
+streaming IPC and file formats.  Neither bug affects data persisted to the
+Apache Parquet file format.
 
-This is CVE-2019-7308. The issue has been fixed in 4.19.19 and 4.20.6
-stable so far.
 
-The main fix is
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=979d63d50c0c0f7bc537bf821e056cc9fe5abd38
-, but it depends both on its parent commits and one ancestor that
-fixes a new issue introduced by it.
+The first issue (CVE-2019-12408) affected ArrayBuilder classes in 0.14.0
+and 0.14.1 releases.  In some cases arrays with null values could be built
+using uninitialized memory for their data segment.
 
-Full bug report is at
-<https://bugs.chromium.org/p/project-zero/issues/detail?id=1711>.
+
+The second bug (CVE-2019-12410) affected Apache Arrow versions since at
+least 0.12.0.  The bug left data read from Apache Parquet files with RLE
+null encoded data uninitialized.
+
+
+It is recommended that users upgrade to 0.15.1 as soon as possible and
+audit any data that has been persisted in the Arrow IPC format or the Arrow
+File Format.
+
