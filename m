@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1036" "Wednesday" "8" "June" "2016" "23:24:44" "+0300" "Billy Brumley" "bbrumley@gmail.com" "<CAFeDd5a0aBM-wafxZu7m7NFPcOZyMBV-2ufbiDi_7MLWyqm-Eg@mail.gmail.com>" "25" "Re: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations" "^Date:" nil nil "6" "2016060820:24:44" "[oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations" (number mark "        bbrumley@gma Jun  8   25/1036  " thread-indent "\"Re: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations\"\n") "<7067CF16-30A5-4EE8-B2C0-18262D355B14@schaltsekun.de>" ("<20160608085431.GA4278@openwall.com>" "<CAOTQaXHLe6ST5SOQhH_hig1KD9UyhzMUvr4iXiJz5szm5hsUow@mail.gmail.com>" "<CAFRnB2UaY54U2VdmXR=dRSU7HtjgfjQMgOZ0w55jL4AYTng5oA@mail.gmail.com>" "<CAOTQaXH7_L469A-AWkMUDYe_ByetxuHdWHnhpTaXyGGaAOhcoA@mail.gmail.com>" "<20160608153856.GH3711@suse.de>" "<4CC7C148-7BCC-4D6D-88D0-ED2BADD124BF@schaltsekun.de>" "<7067CF16-30A5-4EE8-B2C0-18262D355B14@schaltsekun.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1179" "Thursday" "7" "November" "2019" "21:34:36" "-0800" "Micah Kornfield" "emkornfield@apache.org" "<CAK7Z5T9-mgfJR-Bc=GsBb4MXihZAkARazkkyQXzefqwxVVopTA@mail.gmail.com>" "28" "[oss-security] [CVE-2019-12408][CVE-2019-12410] Uninitialized Memory Vulnerabilities fixed in Apache Arrow 0.15.1" nil nil nil "11" "2019110805:34:36" "[oss-security] [CVE-2019-12408][CVE-2019-12410] Uninitialized Memory Vulnerabilities fixed in Apache Arrow 0.15.1" (number mark "U       emkornfield@ Nov  7   28/1179  " thread-indent "\"[oss-security] [CVE-2019-12408][CVE-2019-12410] Uninitialized Memory Vulnerabilities fixed in Apache Arrow 0.15.1\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-12408][CVE-2019-12410] Uninitialized Memory Vulnerabilities fixed in Apache Arrow 0.15.1" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7364 invoked by uid 550); 8 Jun 2016 20:24:58 -0000
+Received: (qmail 10120 invoked by uid 550); 8 Nov 2019 06:57:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7342 invoked from network); 8 Jun 2016 20:24:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=EUVadVo/Ugr4D6WAo/kDYX9ZACoipx1rYSQ89rPDYqU=;
-        b=GBbDa1spVI1PxEkkyqWIZF6NM+qdGNwjivqgCJ4O2Agtm6uO7rnN7HdR0kaYIM6zuT
-         amAPrUNs8GSv7TP63AIA6KDBt3LoVxbGg05aRrpr9Mn4THD/zYHyfX+98yza1bnnPsoS
-         zFTYADsI58KmtaULtW0ab8WAcwF4tE/0b9UDrpJMbN8XIksraItsvfwphtroi7sWp43R
-         9GIhoR58QdDHSVyGlYIUZeupjtp2FB+aYLlp8HCn+PZNRHdxctEkxUb1LZYlKC4f9c7Y
-         kCwS4zqtj3+tj0s6NFvsDQEIRbdhFqVztXrezvbm0gYr520dLE9grwX5u7MZLVz3oehx
-         FO+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=EUVadVo/Ugr4D6WAo/kDYX9ZACoipx1rYSQ89rPDYqU=;
-        b=JIYKiOTXbMUzOsah0j76ia5SPDcoE3TKY0AyM3pXTIMZKBhODOIoZevyPa2p2SmDw2
-         hVdJc4ktoD2HaKwMtVSIiDFlC1mqIjE8Ra4bdJKkUx/tarLtaue+lvS+Uo5LAT5HOQfc
-         zxXEk1Wu/mlnkV13zKVqBYEpbAIUmAygvskadAS0GwN9zFRS4ERi214EnjuDE+UiA8Yj
-         wF+IAchPv8FdWbytgkTq9wantk+G20GsoXTRHhAC6oQ1f/fRcQKlkeT1UBqkpMWMZD1L
-         R9MN9dvqDFFgAwjKYpUkRTTRcD4m3V0G5PsY40bXz/jzwKqdeBPbG8GVwaTs1HS+Rww0
-         rbIA==
-X-Gm-Message-State: ALyK8tJcV6oZvozbymdHoFsvCeppxFFYcUqbYXBhNzVmRa5NebmoqacyEDgSdZdh0baCvQ2DdCySMpnGzUvBeg==
-X-Received: by 10.200.55.115 with SMTP id p48mr3595267qtb.15.1465417485481;
- Wed, 08 Jun 2016 13:24:45 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <7067CF16-30A5-4EE8-B2C0-18262D355B14@schaltsekun.de>
-References: <20160608085431.GA4278@openwall.com> <CAOTQaXHLe6ST5SOQhH_hig1KD9UyhzMUvr4iXiJz5szm5hsUow@mail.gmail.com>
- <CAFRnB2UaY54U2VdmXR=dRSU7HtjgfjQMgOZ0w55jL4AYTng5oA@mail.gmail.com>
- <CAOTQaXH7_L469A-AWkMUDYe_ByetxuHdWHnhpTaXyGGaAOhcoA@mail.gmail.com>
- <20160608153856.GH3711@suse.de> <4CC7C148-7BCC-4D6D-88D0-ED2BADD124BF@schaltsekun.de>
- <7067CF16-30A5-4EE8-B2C0-18262D355B14@schaltsekun.de>
-Message-ID: <CAFeDd5a0aBM-wafxZu7m7NFPcOZyMBV-2ufbiDi_7MLWyqm-Eg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 8 Jun 2016 23:24:44 +0300
-From: Billy Brumley <bbrumley@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant
- time codepath for certain operations
+Received: (qmail 25656 invoked from network); 8 Nov 2019 05:35:00 -0000
+X-Gm-Message-State: APjAAAV9N6QWztqfatxLijiOaMMIyjRAObXR7gW/M15OMOssXXevyEAS
+	Z3nPXqqtIpw5bPcsj3+J43Z2KrieFAzTvXEdWco=
+X-Google-Smtp-Source: APXvYqwyQc9qefaASHrLgJHOW6lRzmtqtRw5+jy+W9pqcsfqcuryvYvJ1vW0AbGqg1oim5Ncd9ik6eT6FWx2Iwq4TEk=
+X-Received: by 2002:ac2:549a:: with SMTP id t26mr5021697lfk.25.1573191287227;
+ Thu, 07 Nov 2019 21:34:47 -0800 (PST)
+MIME-Version: 1.0
+From: Micah Kornfield <emkornfield@apache.org>
+Date: Thu, 7 Nov 2019 21:34:36 -0800
+X-Gmail-Original-Message-ID: <CAK7Z5T9-mgfJR-Bc=GsBb4MXihZAkARazkkyQXzefqwxVVopTA@mail.gmail.com>
+Message-ID: <CAK7Z5T9-mgfJR-Bc=GsBb4MXihZAkARazkkyQXzefqwxVVopTA@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Cc: security@apache.org
+Content-Type: multipart/alternative; boundary="000000000000d6ca800596cf2384"
+Subject: [oss-security] [CVE-2019-12408][CVE-2019-12410] Uninitialized Memory Vulnerabilities
+ fixed in Apache Arrow 0.15.1
 
->> Are we sure that a "low" rating is justified?
->> DSA is basically dead, until the constant time switch is flicked. The
->> only countermeasure so far is turning it off.
->
-> Maybe I should be a little more verbose on this:
-> 1) attacker recovers the DSA host key.
-> 2) attacker mitm-attacks client connections to the server and recovers the user's private key by exploiting the vulnerable openssl on the client side
-> 3) ...
->
-> The same principles apply when the computational burden is reversed for client auth, aren't they?
+--000000000000d6ca800596cf2384
+Content-Type: text/plain; charset="UTF-8"
 
-Are you talking about the SSH target?
+The Apache Arrow project would like to hereby disclose that our 0.15.1
+release patches two uninitialized memory bugs (CVE-2019-12408 and
+CVE-2019-12410) in the the C++ implementation (which in turn can affect,
+Python, Ruby and R).  In both cases there is a potential vulnerability
+where data in memory can be unintentionally shared if Arrow Arrays are
+transmitted over the wire (for instance with Flight) or persisted in the
+streaming IPC and file formats.  Neither bug affects data persisted to the
+Apache Parquet file format.
 
-If so, the realistic scenario is a user with legitimate credentials
-logging into a server to steal the DSA host key locally with cache
-timings.
 
-I don't think client-side enters into the equation for this vuln. You
-need an active attacker initiating handshakes. That's my 2c -- we
-didn't consider client-side victim much in this work.
+The first issue (CVE-2019-12408) affected ArrayBuilder classes in 0.14.0
+and 0.14.1 releases.  In some cases arrays with null values could be built
+using uninitialized memory for their data segment.
 
-If it's the TLS target, you need local access or manage to co-locate
-in cloud scenarios. Not as realistic as the SSH case IMO.
 
-BBB
+The second bug (CVE-2019-12410) affected Apache Arrow versions since at
+least 0.12.0.  The bug left data read from Apache Parquet files with RLE
+null encoded data uninitialized.
+
+
+It is recommended that users upgrade to 0.15.1 as soon as possible and
+audit any data that has been persisted in the Arrow IPC format or the Arrow
+File Format.
+
+--000000000000d6ca800596cf2384--
