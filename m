@@ -1,36 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/19/1
-Message-ID: <CAC7nai19LLaw_ZGOQK9XvLOMcMCpxF0ZKRoniRGvU3URTaALWw@mail.gmail.com>
-Date: Thu, 18 Apr 2019 20:40:56 -0400
-From: Havoc Pennington <hp@...elift.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: urllib3: adds system certificates to ssl_context
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/7
+Message-ID: <877e4ai9o5.fsf@hope.eyrie.org>
+Date: Fri, 08 Nov 2019 09:02:02 -0800
+From: Russ Allbery <eagle@...ie.org>
+To: Georgi Guninski <gguninski@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Georgi Guninski <gguninski@...il.com> writes:
 
-This vulnerability "urllib3: adds system certificates to ssl_context"
-has been assigned CVE-2019-11324
+> Any workarounds?
 
-Thank you
-Havoc
+> ===poc===
+> #include <assert.h>
 
-On Wed, Apr 17, 2019 at 2:21 PM Havoc Pennington <hp@...elift.com> wrote:
->
-> A vulnerability has been discovered in the urllib3 Python library.
->
-> When verifying HTTPS connections when an SSLContext is passed to
-> urllib3, system CA certificates will be loaded into the SSLContext
-> by default in addition to any manually-specified CA certificates.
-> This causes TLS handshakes that should fail given only the
-> manually specified certs to succeed based on system CA certs.
->
-> This affects urllib3 1.24.1 and below. The fix has been released
-> in version 1.24.2.
->
-> The vulnerability was reported by Christian Heimes.
->
-> A CVE ID has been requested, will follow up with it when we have it.
->
-> Best
-> Havoc / on behalf of Tidelift security team & urllib3 team
+> int foo(int a) {
+>   assert(a+100 > a);
+>   printf("%d %d\n",a+100,a);
+>   return a;
+> }
+
+> int main() {
+>   foo(100);
+>   foo(0x7fffffff);
+> }
+> =========
+
+As pointed out in the bug, if you want defined behavior from signed
+integer overflow, you can ask for it with -fwrapv:
+
+$ gcc -O3 -fwrapv -o foo foo.c
+$ ./foo
+200 100
+foo: foo.c:5: foo: Assertion `a+100 > a' failed.
+Aborted (core dumped)
+
+The C standard says this shouldn't be the default, but software that cares
+about avoiding undefined behavior should consider adding -fwrapv, or
+carefully writing the check to avoid overflow (something that, sadly, one
+needs to become expert in to use C relatively safely).
+
+Or, of course, use a different language that has more safety checks built
+into the language definition, although that's obviously a much broader
+(and probably off-topic) conversation.
+
+-- 
+Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
