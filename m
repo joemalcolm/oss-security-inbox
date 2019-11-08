@@ -1,71 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/3
-Message-ID: <87768504-5291-4627-6638-8b3073c31501@dovecot.fi>
-Date: Thu, 18 Apr 2019 12:05:51 +0300
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-10691: JSON encoder in Dovecot 2.3 incorrecty assert-crashes when encountering invalid UTF-8 characters.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/8
+Message-ID: <87woca41k8.fsf@mid.deneb.enyo.de>
+Date: Fri, 08 Nov 2019 20:20:55 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: Russ Allbery <eagle@...ie.org>
+Cc: Georgi Guninski <gguninski@...il.com>,  oss-security@...ts.openwall.com
+Subject: Re: Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
 Content-Type: text/plain; charset=utf-8
 
-Dear subscribers,
+* Russ Allbery:
 
-we're sharing our latest advisory with you and would like to thank
-everyone who contributed in finding and solving those vulnerabilities.
-Feel free to join our bug bounty programs (open-xchange, dovecot,
-powerdns) at HackerOne. Please find patch for v2.3.5 attached,
-or download new version.
+> The C standard says this shouldn't be the default, but software that cares
+> about avoiding undefined behavior should consider adding -fwrapv, or
+> carefully writing the check to avoid overflow (something that, sadly, one
+> needs to become expert in to use C relatively safely).
 
-Yours sincerely,
-Aki Tuomi
-Open-Xchange Oy
+The C standard doesn't *require* a particular behavior (for non-atomic
+integers).  Each time this comes up in the committees, more strict
+requirements do not make it into the text.  For example, the recent
+P0907R4 for C++, “Signed Integers are Two’s Complement”
+<http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0907r4.html>
+does not require it, either:
 
-Open-Xchange Security Advisory 2019-04-18
-Product: Dovecot
-Vendor: OX Software GmbH
-
-Internal reference: DOV-3173 (Bug ID)
-Vulnerability type: CWE-176
-Vulnerable version: 2.3.0 - 2.3.5.1
-Vulnerable component: json encoder
-Report confidence: Confirmed
-Researcher credits: cPanel L.L.C.
-Solution status: Fixed by Vendor
-Fixed version: 2.3.5.2
-Vendor notification: 2019-04-02
-Solution date: 2019-04-11
-Public disclosure: 2019-04-18
-CVE reference: CVE-2019-10691
-CVSS: 7.5 (CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
- 
-Vulnerability Details:
-JSON encoder in Dovecot 2.3 incorrecty assert-crashes when encountering
-invalid UTF-8 characters. This can be used to crash dovecot in two ways.
-Attacker can repeatedly crash Dovecot authentication process by logging
-in using invalid UTF-8 sequence in username. This requires that auth
-policy is enabled.
-Crash can also occur if OX push notification driver is enabled and an
-email is delivered with invalid UTF-8 sequence in From or Subject header.
-In 2.2, malformed UTF-8 sequences are forwarded "as-is", and thus do not
-cause problems in Dovecot itself. Target systems should be checked for
-possible problems in dealing with such sequences.
-See https://wiki.dovecot.org/Authentication/Policy for details on auth
-policy support.
-
-Risk:
-Determined attacker can prevent authentication process from staying up
-by keeping on attempting to log in with username containing invalid
-UTF-8 sequence.
-Steps to reproduce:
-Configure dovecot with auth_policy_server_url and auth_policy_hash_nonce
-set.
-Attempt to log in with username containing an invalid UTF-8 sequence
-Observe assert-crash in dovecot logs.
-
-Solution:
-Operators should update to the latest Patch Release or disable auth
-policy support.
-
-
-View attachment "0001-lib-json-Escape-invalid-UTF-8-as-unicode-bytes.patch" of type "text/x-patch" (2509 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+| /Status-quo/ If a signed operation would naturally produce a value
+| that is not within the range of the result type, the behavior is
+| undefined.
