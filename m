@@ -1,41 +1,196 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/16/7
-Message-ID: <62521803-4966-bdc8-733c-2d30e4afd7d7@isc.org>
-Date: Wed, 16 Oct 2019 13:05:58 -0500
-From: ISC Security Officer <security-officer@....org>
-To: oss-security@...ts.openwall.com
-Cc: ISC Security Officer <security-officer@....org>
-Subject: BIND9 CVE-2019-6475 and CVE-2019-6476
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/6
+Message-ID: <e83ca51f-c886-a300-91bf-5e1de09a4f51@igalia.com>
+Date: Fri, 8 Nov 2019 15:31:56 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2019-0006
 Content-Type: text/plain; charset=utf-8
 
-Today (2019-10-16) ISC announced two vulnerabilities in our BIND 9 software.
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2019-0006
+------------------------------------------------------------------------
 
-   CVE-2019-6475, a DNSSEC validation bypass for mirror zones
+Date reported           : November 08, 2019
+Advisory ID             : WSA-2019-0006
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2019-0006.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2019-0006.html
+CVE identifiers         : CVE-2019-8710, CVE-2019-8743, CVE-2019-8764,
+                          CVE-2019-8765, CVE-2019-8766, CVE-2019-8782,
+                          CVE-2019-8783, CVE-2019-8808, CVE-2019-8811,
+                          CVE-2019-8812, CVE-2019-8813, CVE-2019-8814,
+                          CVE-2019-8815, CVE-2019-8816, CVE-2019-8819,
+                          CVE-2019-8820, CVE-2019-8821, CVE-2019-8822,
+                          CVE-2019-8823.
 
-   CVE-2019-6476, a flaw in QNAME minimization that can lead to
-                  an assertion failure.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-These issues affect all prior BIND 9.14 releases and all prior BIND 9.15
-releases.
+CVE-2019-8710
+    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
+    2.26.0.
+    Credit to found by OSS-Fuzz.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-Our full CVE text can be found at:
-   https://kb.isc.org/docs/cve-2019-6475
-   https://kb.isc.org/docs/cve-2019-6476
+CVE-2019-8743
+    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
+    2.26.0.
+    Credit to zhunki from Codesafe Team of Legendsec at Qi'anxin Group.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-New releases of BIND, including security fixes for this vulnerability,
-are available at: www.isc.org/downloads/
+CVE-2019-8764
+    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
+    2.26.0.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A logic issue was
+    addressed with improved state management.
 
-Release notes for the new versions can be obtained using the following
-links:
+CVE-2019-8765
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to Samuel Groß of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-https://downloads.isc.org/isc/bind9/9.15.5/RELEASE-NOTES-bind-9.15.5.html
-https://downloads.isc.org/isc/bind9/9.14.7/RELEASE-NOTES-bind-9.14.7.html
+CVE-2019-8766
+    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
+    2.26.0.
+    Credit to found by OSS-Fuzz.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
--- 
-Brian Conry
-ISC Support
-Acting Security Officer
+CVE-2019-8782
+    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
+    2.26.0.
+    Credit to Cheolung Lee of LINE+ Security Team.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2019-8783
+    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
+    2.26.1.
+    Credit to Cheolung Lee of LINE+ Graylab Security Team.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2019-8808
+    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
+    2.26.0.
+    Credit to found by OSS-Fuzz.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2019-8811
+    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
+    2.26.1.
+    Credit to Soyeon Park of SSLab at Georgia Tech.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2019-8812
+    Versions affected: WebKitGTK before 2.26.2 and WPE WebKit before
+    2.26.2.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2019-8813
+    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
+    2.26.1.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A logic issue was
+    addressed with improved state management.
+
+CVE-2019-8814
+    Versions affected: WebKitGTK before 2.26.2 and WPE WebKit before
+    2.26.2.
+    Credit to Cheolung Lee of LINE+ Security Team.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2019-8815
+    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
+    2.26.0.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2019-8816
+    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
+    2.26.1.
+    Credit to Soyeon Park of SSLab at Georgia Tech.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2019-8819
+    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
+    2.26.1.
+    Credit to Cheolung Lee of LINE+ Security Team.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2019-8820
+    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
+    2.26.1.
+    Credit to Samuel Groß of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2019-8821
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2019-8822
+    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
+    2.24.3.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2019-8823
+    Versions affected: WebKitGTK before 2.26.1 and WPE WebKit before
+    2.26.1.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+November 08, 2019
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
