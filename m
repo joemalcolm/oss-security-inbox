@@ -1,19 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/19/6
-Message-ID: <CAMufup48w0bHkdw05t80d+xP7Z7vHKnEkAJ6uS+8UQbn8=ODew@mail.gmail.com>
-Date: Sun, 19 May 2019 18:06:34 +0200
-From: Juan Pablo Santos Rodríguez <juanpablo.santos@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/2
+Message-ID: <CAGUWgD9si-9cayWBzt+AUi8iyb0hY=8fExf6-mLDr-C+mcqiyg@mail.gmail.com>
+Date: Fri, 8 Nov 2019 10:03:44 +0200
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-10078] Apache JSPWiki Cross-site scripting vulnerability
+Subject: Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2019-10078
-[PRODUCT]:Apache JSPWiki
-[VERSION]:Apache JSPWiki 2.9.0 to 2.11.0.M3
-[PROBLEMTYPE]:Cross-site scripting vulnerability
-[REFERENCES]:https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-10078
-[DESCRIPTION]:A carefully crafted plugin link invocation could trigger an
-XSS vulnerability  on Apache JSPWiki, which could lead to session
-hijacking. Initial reporting indicated ReferredPagesPlugin, but further
-analysis showed that multiple plugins were vulnerable.
+Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
 
+There is heated discussion on gcc's bugzilla starting from 2007:
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=30475
+and clang is also affected, depending on optimization flags.
+
+poc is the program at end.
+
+gcc with all optimization flags optimizes away |assert(a+100 > a)|
+even if there is no integer overflow, only signed overflow.
+
+clang fires the assertion with -O0, but also optimizes it away
+with -O3
+
+The formal verifier CBMC fires the assertion, which might of
+interest about formally verified programs.
+
+Signed integer arithmetic is commonly used even without integer
+overflows.
+
+Could this compiler issue be security problem?
+
+Any workarounds?
+
+===poc===
+#include <assert.h>
+
+int foo(int a) {
+  assert(a+100 > a);
+  printf("%d %d\n",a+100,a);
+  return a;
+}
+
+int main() {
+  foo(100);
+  foo(0x7fffffff);
+}
+=========
+
+
+CV:    https://j.ludost.net/resumegg.pdf
+site:  http://www.guninski.com
+blog:  https://j.ludost.net/blog
