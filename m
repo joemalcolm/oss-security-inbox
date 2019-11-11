@@ -1,95 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/10/3
-Message-ID: <20190410151445.GB5686@w1.fi>
-Date: Wed, 10 Apr 2019 18:14:45 +0300
-From: Jouni Malinen <j@...fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/11/1
+Message-ID: <2eb0be7f-bd31-e304-1787-09e47007d32a@suse.com>
+Date: Mon, 11 Nov 2019 17:49:45 +0100
+From: Wolfgang Frisch <wolfgang.frisch@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: wpa_supplicant/hostapd: EAP-pwd side-channel attack
+Subject: CVE-2019-2201: libjpeg-turbo: code execution
 Content-Type: text/plain; charset=utf-8
 
-Published: April 10, 2019
-Identifiers:
-- CVE-2019-9495 (cache attack against EAP-pwd)
-Latest version available from: https://w1.fi/security/2019-2/
+Hi,
 
-Vulnerability
+there is an integer overflow and subsequent heap corruption in
+libjpeg-turbo 2.0.3 and earlier. While I did not have anything to do
+with the discovery of the issue [1][2], I'd like to raise attention due
+to the high possible impact.
 
-Number of potential side channel attacks were recently discovered in the
-SAE implementations used by both hostapd and wpa_supplicant (see
-security advisory 2019-1 and VU#871675). EAP-pwd uses a similar design
-for deriving PWE from the password and while a specific attack against
-EAP-pwd is not yet known to be tested, there is no reason to believe
-that the EAP-pwd implementation would be immune against the type of
-cache attack that was identified for the SAE implementation. Since the
-EAP-pwd implementation in hostapd (EAP server) and wpa_supplicant (EAP
-peer) does not support MODP groups, the timing attack described against
-SAE is not applicable for the EAP-pwd implementation.
+Steps to reproduce:
+- Create a JPEG image, size 26755 x 26755, RGB with 8 bits per channel.
+- Run gdb tjbench
 
-A novel cache-based attack against SAE handshake would likely be
-applicable against the EAP-pwd implementation. Even though the
-wpa_supplicant/hostapd PWE derivation iteration for EAP-pwd has
-protections against timing attacks, this new cache-based attack might
-enable an attacker to determine which code branch is taken in the
-iteration if the attacker is able to run unprivileged code on the victim
-machine (e.g., an app installed on a smart phone or potentially a
-JavaScript code on a web site loaded by a web browser). This depends on
-the used CPU not providing sufficient protection to prevent unprivileged
-applications from observing memory access patterns through the shared
-cache (which is the most likely case with today's designs).
+>(gdb) run reproducer.jpeg
+>
+> Image size: 26755 x 26755
+> 
+> Program received signal SIGSEGV, Segmentation fault.
+> 0x00007ffff7d44d9d in __memset_avx2_erms () from /lib64/libc.so.6
+> (gdb) bt
+> #0  0x00007ffff7d44d9d in __memset_avx2_erms () from /lib64/libc.so.6
+> #1  0x0000555555558f7a in memset (__len=18446744071562074395, __ch=127, __dest=<optimized out>) at /usr/include/bits/string_fortified.h:71
+> #2  decomp (srcBuf=0x0, jpegBuf=0x7fffffffd8e0, jpegSize=0x7fffffffd8e8, dstBuf=<optimized out>, w=26755, h=26755, subsamp=2, jpegQual=0, 
+>     fileName=0x7fffffffdfaa "CVE-2019-2201-reproducer-SEGFAULT-26755x26755", tilew=26755, tileh=26755) at /usr/src/debug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:174
+> #3  0x0000555555557103 in decompTest (fileName=0x7fffffffdfaa "CVE-2019-2201-reproducer-SEGFAULT-26755x26755") at /usr/src/debug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:712
+> #4  main (argc=<optimized out>, argv=<optimized out>) at /usr/src/debug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:1003
 
-The attacker could use information about the selected branch to learn
-information about the password and combine this information from number
-of handshake instances with an offline dictionary attack. With
-sufficient number of handshakes and sufficiently weak password, this
-might result in full recovery of the used password if that password is
-not strong enough to protect against dictionary attacks.
+We identified that it crashed on writing to a libc.so mapping.
 
-This attack requires the attacker to be able to run a program on the
-target device. This is not commonly the case on an authentication server
-(EAP server), so the most likely target for this would be a client
-device using EAP-pwd.
+The reproducer is also described in our bug report [3].
 
-The commits listed in the end of this advisory change the EAP-pwd
-implementation shared by hostapd and wpa_supplicant to perform the PWE
-derivation loop using operations that use constant time and memory
-access pattern to minimize the externally observable differences from
-operations that depend on the password even for the case where the
-attacker might be able to run unprivileged code on the same device.
+[1] https://source.android.com/security/bulletin/2019-11-01
+[2] https://github.com/libjpeg-turbo/libjpeg-turbo/issues/361
+[3] https://bugzilla.suse.com/show_bug.cgi?id=1156402
 
-
-Vulnerable versions/configurations
-
-All wpa_supplicant and hostapd versions with EAP-pwd support
-(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
-in the runtime configuration).
-
-It should also be noted that older versions of wpa_supplicant/hostapd
-prior to v2.7 did not include additional protection against certain
-timing differences. The definition of the EAP-pwd (RFC 5931) does not
-describe such protection, but the same issue that was addressed in SAE
-earlier can be applicable against EAP-pwd as well and as such, that
-implementation specific extra protection (commit 22ac3dfebf7b, "EAP-pwd:
-Mask timing of PWE derivation") is needed to avoid showing externally
-visible timing differences that could leak information about the
-password. Any uses of older wpa_supplicant/hostapd versions with EAP-pwd
-are recommended to update to v2.7 or newer in addition to the mitigation
-steps listed below for the more recently discovered issue.
-
-
-Possible mitigation steps
-
-- Merge the following commits to wpa_supplicant/hostapd and rebuild:
-
-  OpenSSL: Use constant time operations for private bignums
-  Add helper functions for constant time operations
-  OpenSSL: Use constant time selection for crypto_bignum_legendre()
-  EAP-pwd: Use constant time and memory access for finding the PWE
-
-  These patches are available from https://w1.fi/security/2019-2/
-
-- Update to wpa_supplicant/hostapd v2.8 or newer, once available
-
-- Use strong passwords to prevent dictionary attacks
+Best regards,
+Wolfgang Frisch
 
 -- 
-Jouni Malinen                                            PGP id EFC895FA
+Wolfgang Frisch <wolfgang.frisch@...e.com>
+Security Engineer
+OpenPGP fingerprint: A2E6 B7D4 53E9 544F BC13  D26B D9B3 56BD 4D4A 2D15
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 Nuremberg, Germany
+(HRB 36809, AG Nürnberg)
+Managing Director: Felix Imendörffer
+
+
+
+
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
