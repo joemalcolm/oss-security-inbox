@@ -1,81 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/3
-Message-Id: <E0315DDE-505B-4D2A-8567-9E1BA39ADBBF@oracle.com>
-Date: Fri, 8 Nov 2019 12:06:53 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/12/2
+Message-ID: <ee1c083f-733a-181a-8a64-d5fe4fbe4d76@intel.com>
+Date: Tue, 12 Nov 2019 15:04:34 +0000
+From: Ferruh Yigit <ferruh.yigit@...el.com>
+To: dpdk-announce <announce@...k.org>
+Cc: security@...k.org, security-prerelease@...k.org, oss-security@...ts.openwall.com
+Subject: DPDK security advisory: CVE-2019-14818
 Content-Type: text/plain; charset=utf-8
 
+A vulnerability was fixed in DPDK.
+
+Some downstream stakeholders were warned in advance in order to coordinate the
+release of fixes and reduce the vulnerability window.
+
+Problem:
+A malicious container which has direct access to the vhost-user socket can keep
+sending messages which may cause leaking resources until resulting a DOS.
+
+All users of the vhost library are strongly encouraged to upgrade as soon as
+possible.
+
+CVE-2019-14818
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=363
+Severity: Medium
+CVSS scores: 6.8
 
 
-> On 8 Nov 2019, at 08:03, Georgi Guninski <gguninski@...il.com> wrote:
-> 
-> Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
-> 
-> There is heated discussion on gcc's bugzilla starting from 2007:
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=30475
-> and clang is also affected, depending on optimization flags.
-> 
-> poc is the program at end.
-> 
-> gcc with all optimization flags optimizes away |assert(a+100 > a)|
-> even if there is no integer overflow, only signed overflow.
-> 
-> clang fires the assertion with -O0, but also optimizes it away
-> with -O3
-> 
-> The formal verifier CBMC fires the assertion, which might of
-> interest about formally verified programs.
-> 
-> Signed integer arithmetic is commonly used even without integer
-> overflows.
-> 
-> Could this compiler issue be security problem?
-> 
-> Any workarounds?
+
+Commits:
+main repo
+https://git.dpdk.org/dpdk/commit/?id=612e17cf6d7b
+https://git.dpdk.org/dpdk/commit/?id=bf472259dde6
+
+19.08.1
+https://git.dpdk.org/dpdk-stable/commit/?h=19.08&id=fa674d08985f
+https://git.dpdk.org/dpdk-stable/commit/?h=19.08&id=6547dd563ea9
+
+18.11.4 (LTS)
+https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=70583a6b9b1c
+https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=f8898927bb16
+
+17.11.8 (LTS)
+https://git.dpdk.org/dpdk-stable/commit/?h=17.11&id=3b1b44a1c82a
+https://git.dpdk.org/dpdk-stable/commit/?h=17.11&id=8a8dbd0ec19e
+https://git.dpdk.org/dpdk-stable/commit/?h=17.11&id=1f6147d9a01f
+
+16.11.10 (LTS EOL)
+https://git.dpdk.org/dpdk-stable/commit/?h=16.11&id=5fbb5c2919b6
+https://git.dpdk.org/dpdk-stable/commit/?h=16.11&id=3863340f93b8
+https://git.dpdk.org/dpdk-stable/commit/?h=16.11&id=8790f4c3bcd2
+https://git.dpdk.org/dpdk-stable/commit/?h=16.11&id=1bf11cfb7c7c
 
 
-It's not really a compiler issue: the PoC is dependent on undefined behaviour and the compiler is free to do whatever it wants with undefined behaviour.  Many, many years ago I chatted with my then supervisor about having a compiler do interesting things with undefined behaviour for example, just replace that assert to print this to stdout:
+Stable Releases download links:
+DPDK 19.08.1
+http://fast.dpdk.org/rel/dpdk-19.08.1.tar.xz
 
-	The Tao is forever undefined.
-	Small though it is in the unformed state, it cannot be grasped.
-	If kings and lords could harness it,
-	The ten thousand things would come together
-	And gentle rain fall.
-	Men would need no more instruction and all things would take their course.
-	Once the whole is divided, the parts need names.
-	There are already enough names.
-	One must know when to stop.
-	Knowing when to stop averts trouble.
-	Tao in the world is like a river flowing home to the sea.
+DPDK 18.11.4 (LTS)
+http://fast.dpdk.org/rel/dpdk-18.11.4.tar.xz
 
-Seriously, though, there are a lot of programs out there that *depend* on undefined behaviour being compiled in a particular way.   Sooner or later those programs mysteriously fail and that might lead to a security issue or just inexplicable behaviour.
+DPDK 17.11.8 (LTS)
+http://fast.dpdk.org/rel/dpdk-17.11.8.tar.xz
 
-In this particular case, the assert() will always trigger if the assert is on "a > INT_MAX-100" because that is well defined.   Does ubsan catch this issue?
-
-jch
-
-> 
-> ===poc===
-> #include <assert.h>
-> 
-> int foo(int a) {
->  assert(a+100 > a);
->  printf("%d %d\n",a+100,a);
->  return a;
-> }
-> 
-> int main() {
->  foo(100);
->  foo(0x7fffffff);
-> }
-> =========
-> 
-> 
-> CV:    https://j.ludost.net/resumegg.pdf
-> site:  http://www.guninski.com
-> blog:  https://j.ludost.net/blog
+DPDK 16.11.10 (LTS EOL)
+http://fast.dpdk.org/rel/dpdk-16.11.10.tar.xz
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+-- 
+DPDK Security Team
+http://core.dpdk.org/security/
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
