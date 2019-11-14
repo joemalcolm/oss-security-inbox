@@ -1,28 +1,135 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/4
-Message-ID: <20190213095648.ibfskgddfa4zgdlo@yavin>
-Date: Wed, 13 Feb 2019 20:56:48 +1100
-From: Aleksa Sarai <cyphar@...har.com>
-To: EJ Campbell <ejc3@...izonmedia.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-5736: runc container breakout exploit code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/14/1
+Message-ID: <CADtktAXK6dTwRiUZYo9H3cr-om-r_SRvkc6Tp--_YL5UkOEnQQ@mail.gmail.com>
+Date: Thu, 14 Nov 2019 11:04:53 -0800
+From: Tim Allclair <tallclair@...gle.com>
+To: kubernetes-announce@...glegroups.com,  "Kubernetes developer/contributor discussion" <kubernetes-dev@...glegroups.com>,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss <kubernetes-security-discuss@...glegroups.com>,  oss-security@...ts.openwall.com, kubernetes+announcements@...coursemail.com,  kubernetes-sig-storage@...glegroups.com
+Subject: Security release of kubernetes-csi sidecars - CVE-2019-11255
 Content-Type: text/plain; charset=utf-8
 
-On 2019-02-13, EJ Campbell <ejc3@...izonmedia.com> wrote:
-> While fixing docker / runc is clearly the right fix, would using chattr -i
-> on runc be a quick mitigation for the issue? I believe that will prevent
-> the file from being overwritten by the exploit and Etienne Stalmans
-> verified that it helped:
->  https://twitter.com/_staaldraad/status/1095354945073754112
+Hello Kubernetes Community,
 
-The privileged user in the container could just un-set the immutable
-bit using "/proc/self/fd/..." and then open it for writing. A read-only
-filesystem would work much better.
 
--- 
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+A security issue has been found in the kubernetes-csi external-provisioner
+<https://github.com/kubernetes-csi/external-provisioner>,
+external-snapshotter
+<https://github.com/kubernetes-csi/external-snapshotter>, and
+external-resizer <https://github.com/kubernetes-csi/external-resizer>
+sidecars that impacts most versions of the sidecars bundled in Container
+Storage Interface (CSI) drivers. The vulnerabilities are medium severity
+and can result in unauthorized volume data access or mutation when using
+CSI volume snapshot, cloning or resizing features in Kubernetes. Upgrading
+your CSI drivers to the fixed sidecars is recommended. Details are below
+and at https://issue.k8s.io/85233
+
+
+The following versions of the CSI sidecars have been fixed:
+
+external-provisioner:
+
+   -
+
+   v0.4.3
+   -
+
+   v1.0.2
+   -
+
+   v1.2.2
+   -
+
+   v1.3.1
+   -
+
+   v1.4.0
+
+
+external-snapshotter:
+
+   -
+
+   v0.4.2
+   -
+
+   v1.0.2
+   -
+
+   v1.2.2
+
+
+external-resizer
+
+   -
+
+   v0.3.0
+
+
+No fixes in kubernetes/kubernetes are required.
+
+
+Affected Components and Versions
+
+The following Kubernetes versions are affected with default feature gates:
+
+   -
+
+   v1.16.0+
+
+
+The following Kubernetes versions are affected with non-default alpha
+VolumeSnapshotDataSource,
+ExpandCSIVolumes, and VolumePVCDataSource feature gates enabled:
+
+   -
+
+   v1.12.0+
+
+
+CSI drivers installed with these kubernetes-csi sidecars versions are
+affected:
+
+external-provisioner: v0.4.1-0.4.2, v1.0.0-1.0.1, v1.1.0-1.2.1, v1.3.0
+
+external-snapshotter: v0.4.0-0.4.1, v1.0.0-1.0.1, v1.1.0-v1.2.1
+
+external-resizer: v0.1.0-0.2.0
+
+
+
+How do I mitigate the vulnerability?
+
+
+As a short term mitigation, disable the VolumeSnapshotDataSource,
+ExpandCSIVolumes, and VolumePVCDataSource Kubernetes feature gates in
+kube-apiserver and kube-controller-manager. This will cause new
+PersistentVolumeClaims to be provisioned ignoring the DataSource and
+resizing requests will also be ignored. Note that this will cause new PVCs
+that are intended to be provisioned from a snapshot or clone to instead
+provision a blank disk.
+
+
+Also, to disable taking volume snapshots, either remove the
+external-snapshotter sidecar from any CSI drivers or revoke the CSI
+driver’s RBAC permissions on the snapshot.storage.k8s.io API group.
+
+
+Longer term, upgrade your CSI driver with patched versions of the affected
+sidecars.
+
+
+Acknowledgements
+
+
+Thanks to Xiangqian Yu from Google for discovering this issue.
+
+
+Thanks to Michelle Au, Jan Šafránek, Hemant Kumar, and Xing Yang for
+coordinating the fixes and release.
+
+
+Thank You,
+
+
+Tim Allclair on behalf of the Kubernetes Product Security Committee
+
