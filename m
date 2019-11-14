@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5009" "Tuesday" "4" "October" "2016" "16:46:53" "+0200" "Matthieu Herrb" "matthieu.herrb@laas.fr" "<20161004144653.GB20328@paperthin-usb.laas.fr>" "150" "[oss-security] X.Org security advisory: Protocol handling issues in X Window System client libraries" nil nil nil "10" "2016100414:46:53" "[oss-security] X.Org security advisory: Protocol handling issues in X Window System client libraries" (number mark "U       matthieu.her Oct  4  150/5009  " thread-indent "\"[oss-security] X.Org security advisory: Protocol handling issues in X Window System client libraries\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2819" "Thursday" "14" "November" "2019" "11:04:53" "-0800" "Tim Allclair" "tallclair@google.com" "<CADtktAXK6dTwRiUZYo9H3cr-om-r_SRvkc6Tp--_YL5UkOEnQQ@mail.gmail.com>" "132" "[oss-security] Security release of kubernetes-csi sidecars - CVE-2019-11255" nil nil nil "11" "2019111419:04:53" "[oss-security] Security release of kubernetes-csi sidecars - CVE-2019-11255" (number mark "U       tallclair@go Nov 14  132/2819  " thread-indent "\"[oss-security] Security release of kubernetes-csi sidecars - CVE-2019-11255\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Security release of kubernetes-csi sidecars - CVE-2019-11255" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12108 invoked by uid 550); 4 Oct 2016 15:18:50 -0000
+Received: (qmail 15715 invoked by uid 550); 14 Nov 2019 19:10:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,166 +12,174 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30038 invoked from network); 4 Oct 2016 14:47:07 -0000
-Date: Tue, 4 Oct 2016 16:46:53 +0200
-From: Matthieu Herrb <matthieu.herrb@laas.fr>
-To: oss-security@lists.openwall.com
-Message-ID: <20161004144653.GB20328@paperthin-usb.laas.fr>
+Received: (qmail 13454 invoked from network); 14 Nov 2019 19:05:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=o/VCd3R9hVSHFNGs0kgZCMPg6z8yEjGp1YtiPiAzNqk=;
+        b=ERaCvoEVZwWQdRvS/Ovb2cRVAY/ZcAgdbGuusEuipv+PQIURxIYstCg1d7ITpCj6lI
+         29b9ZDpGre0WKw1FZjr73PCBa7KL9Q7N0w7UFWZwqbkzE25Qh0ChMFvbS+3an/kDezXM
+         K4RbNgY7L6STGbpQzKFXAoZAdwR17YjbEdukuzUcEeQTSrJRRxSDcmolCznHb1xfo/ma
+         TIXN0zENc3VQfF64iUS1oMAXwU+aHfkCzowRxCuDfim9YGMVI8dMGPXsJT3+Kdmd2feH
+         gKaxgTmwRTSOABPIq6qORMau+0CwkXDHa/hB7vTULvapg7h4npzE3dODIAvdD0j1i9pb
+         WhPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=o/VCd3R9hVSHFNGs0kgZCMPg6z8yEjGp1YtiPiAzNqk=;
+        b=qdHdlLANmtf84jf1nhvJ+pRuk6wMOefdR31ydKQF3Mp/XR+GadalILlrxYlJllo9Ej
+         0iCRmz8A8gIhu5PFpyonCl+qM24qUHIeJ1kMlUsM5pOvYgIM/NvaziyJB+wi1h1RquJK
+         /vJ8lix2nnfe3g600znxMwLWEALyEowHqtnSAR2aqjSitJ99wXrFVHqvt82HsTaFafcn
+         B8nUvsYnXza077pao6FsYsZhEb4p0hL+bpkrrkH/nFUMnrq+uQhW4kDPbANrgThivy85
+         ik0tVa1UJgUne8czAWqLrPldeDyV9fNLPNj5d+SakHqAxJ6/MAveGjis7P3EbcHtlZvb
+         zqwg==
+X-Gm-Message-State: APjAAAVlmUeUt0mnVyAZs+7dx+8JLRlmpLYaB4E/F+7CqLdaxCUUJcO5
+	vd12w0RirSn0Y6BN54iuFVamOh3/jfcN4ViHxIze+g==
+X-Google-Smtp-Source: APXvYqzVrGrHLGiwIf7qzGJdh+r74IoJeEP5dkWprwbPkEG7IMXypEOdZNnvoGzPFshMdiQs+Qk4cd33LqsNab2mk9I=
+X-Received: by 2002:a2e:6e0f:: with SMTP id j15mr7637374ljc.43.1573758330003;
+ Thu, 14 Nov 2019 11:05:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="TakKZr9L6Hm6aLOc"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] X.Org security advisory: Protocol handling issues in X Window System
- client libraries
+From: Tim Allclair <tallclair@google.com>
+Date: Thu, 14 Nov 2019 11:04:53 -0800
+Message-ID: <CADtktAXK6dTwRiUZYo9H3cr-om-r_SRvkc6Tp--_YL5UkOEnQQ@mail.gmail.com>
+To: kubernetes-announce@googlegroups.com, 
+	"Kubernetes developer/contributor discussion" <kubernetes-dev@googlegroups.com>, 
+	kubernetes-security-announce@googlegroups.com, 
+	kubernetes-security-discuss <kubernetes-security-discuss@googlegroups.com>, 
+	oss-security@lists.openwall.com, kubernetes+announcements@discoursemail.com, 
+	kubernetes-sig-storage@googlegroups.com
+Content-Type: multipart/alternative; boundary="000000000000396a380597532a4d"
+Subject: [oss-security] Security release of kubernetes-csi sidecars - CVE-2019-11255
 
---TakKZr9L6Hm6aLOc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--000000000000396a380597532a4d
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-X.Org security advisory: October 4, 2016
-
-Protocol handling issues in X Window System client libraries
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Description
-
-Tobias Stoeckmann from the OpenBSD project has discovered a number of
-issues in the way various X client libraries handle the responses they
-receive from servers, and has worked with X.Org's security team to
-analyze, confirm, and fix these issues. These issue come in addition
-to the ones discovered by Ilja van Sprundel in 2013.
-
-Most of these issues stem from the client libraries trusting the
-server to send correct protocol data, and not verifying that the
-values will not overflow or cause other damage. Most of the time X
-clients & servers are run by the same user, with the server more
-privileged than the clients, so this is not a problem, but there are
-scenarios in which a privileged client can be connected to an
-unprivileged server, for instance, connecting a setuid X client (such
-as a screen lock program) to a virtual X server (such as Xvfb or
-Xephyr) which the user has modified to return invalid data,
-potentially allowing the user to escalate their privileges.
-
-The X.Org security team would like to take this opportunity to remind
-X client authors that current best practices suggest separating code
-that requires privileges from the GUI, to reduce the attack surface of
-issues like this.
+Hello Kubernetes Community,
 
 
-Affected libraries and CVE Ids
 
-libX11 - insufficient validation of data from the X server
-	 can cause out of boundary memory read (XGetImage())
-	 or write (XListFonts()).
-	 Affected versions libX11 <=3D 1.6.3
-
-libXfixes - insufficient validation of data from the X server
-	can cause an integer overflow on 32 bit architectures.
-	Affected versions : libXfixes <=3D 5.0.2
-
-libXi - insufficient validation of data from the X server
-	can cause out of boundary memory access or
-	endless loops (Denial of Service).
-	Affected versions libXi <=3D 1.7.6
-
-libXrandr - insufficient validation of data from the X server
-	can cause out of boundary memory writes.
-	Affected versions: libXrandr <=3D 1.5.0
-
-libXrender - insufficient validation of data from the X server
-	can cause out of boundary memory writes.
-	Affected version: libXrender <=3D 0.9.9
-
-XRecord - insufficient validation of data from the X server
-        can cause out of boundary memory access or
-	endless loops (Denial of Service).
-	 Affected version libXtst <=3D 1.2.2
-
-libXv - insufficient validation of data from the X server
-        can cause out of boundary memory and memory corruption.
-	CVE-2016-5407
-	affected versions libXv <=3D 1.0.10
-
-libXvMC - insufficient validation of data from the X server
-	can cause a one byte buffer read underrun.
-	Affected versions: libXvMC <=3D 1.0.9
+A security issue has been found in the kubernetes-csi external-provisioner
+<https://github.com/kubernetes-csi/external-provisioner>,
+external-snapshotter
+<https://github.com/kubernetes-csi/external-snapshotter>, and
+external-resizer <https://github.com/kubernetes-csi/external-resizer>
+sidecars that impacts most versions of the sidecars bundled in Container
+Storage Interface (CSI) drivers. The vulnerabilities are medium severity
+and can result in unauthorized volume data access or mutation when using
+CSI volume snapshot, cloning or resizing features in Kubernetes. Upgrading
+your CSI drivers to the fixed sidecars is recommended. Details are below
+and at https://issue.k8s.io/85233
 
 
-Fixes
+The following versions of the CSI sidecars have been fixed:
 
-Fixes are available in the following git commits.
+external-provisioner:
 
-lib/libX11
-8ea762f Validation of server responses in XGetImage()
-8c29f16 The validation of server responses avoids out of boundary accesses.
+   -
 
-libXfixes
-61c1039 Integer overflow on illegal server response
+   v0.4.3
+   -
 
-libXi
-19a9cd6 Properly validate server responses.
+   v1.0.2
+   -
 
-libXrandr
-a0df3e1 Avoid out of boundary accesses on illegal responses
+   v1.2.2
+   -
 
-libXrender
-9362c7d Validate lengths while parsing server data.
-8fad00b Avoid OOB write in XRenderQueryFilters
+   v1.3.1
+   -
 
-lib/libXtst
-9556ad6 Out of boundary access and endless loop in libXtst
-
-libXv
-87b3c94 Protocol handling issues in libXv
-
-libXvMC
-2cd95e7 Avoid buffer underflow on empty strings.
+   v1.4.0
 
 
-They will also be available in these modules releases from X.Org:
+external-snapshotter:
 
- * libX11 1.6.4
- * libXfixes 5.0.3
- * libXi 1.7.7
- * libXrandr 1.5.1
- * libXrender 0.9.10
- * libXtst 1.2.3
- * libXv 1.0.11
- * libXvMC 1.0.10
+   -
 
-Thanks
+   v0.4.2
+   -
 
-X.Org thanks Tobias Stoeckmann for reporting these issues to our
-security team and assisting them in understanding them and evaluating
-our fixes.
+   v1.0.2
+   -
 
---=20
-Matthieu Herrb
+   v1.2.2
 
---TakKZr9L6Hm6aLOc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+external-resizer
 
-iQIVAwUBV/PA3Whzk+430Sj4AQJLrA//TzLzO1zK/tvQKbQXCpKY3zUA1456PY1A
-aparEICK+pipvYvSOSrE9dyG05nsX9NCIlvaIuMxWnc+bhAoBCZDE8wRV95jsa4E
-JackRZ1A3EdYG5ulvKvFuYd4T10IJz06QshUpv9DuQeNTnFwHXep2ANPr+nFVF7l
-H1qqZRyxwVZkFOBmLdqGigWTs7nd0GbJrBxE5IUYODOhvPxAhZxQNMu8g1vDRKcO
-SppynwzXFY0kHCbemFdJrZBG+UjNkxlZZVBEfTia+MzJjFxL1r0zgL9S/ftfGg2H
-AGHLwK9tnSlhUf9uu2z5ouFKCprSUUTNfiEI67rSZ3sF1czjecEGDuLeq+0Ar/Zo
-AtkU69cIhFi1EloqY15vvgPEqIz4Eg9tTMBvEU/X+nBOJYRZ0Vl+rOxHgHNfSHwl
-CrUm323gZHk/V8eDE3oxwm0m76dOzNyzXn6SaTb9TQjd/VDZHPK0xuee3vvQLnMn
-+5ivwyaxO4yqGNZdMozcw6aBBRPAkqk4QaN7iewpyJaO0BfAynsjNcTg05sJKfsO
-7uo2zoRgv3+03lGFrpXGX3cPtuuONuj0R6/R6HObGj9nIJj5BQf4D306fD7gv/nB
-oPw8RxtS5ThUEKlh0dHHai47L9xYio5HBX32c4cHjzSsEzzs2So0WmXwjqCg62iR
-i2Cw0P3XONk=
-=C5rF
------END PGP SIGNATURE-----
+   -
 
---TakKZr9L6Hm6aLOc--
+   v0.3.0
+
+
+No fixes in kubernetes/kubernetes are required.
+
+
+Affected Components and Versions
+
+The following Kubernetes versions are affected with default feature gates:
+
+   -
+
+   v1.16.0+
+
+
+The following Kubernetes versions are affected with non-default alpha
+VolumeSnapshotDataSource,
+ExpandCSIVolumes, and VolumePVCDataSource feature gates enabled:
+
+   -
+
+   v1.12.0+
+
+
+CSI drivers installed with these kubernetes-csi sidecars versions are
+affected:
+
+external-provisioner: v0.4.1-0.4.2, v1.0.0-1.0.1, v1.1.0-1.2.1, v1.3.0
+
+external-snapshotter: v0.4.0-0.4.1, v1.0.0-1.0.1, v1.1.0-v1.2.1
+
+external-resizer: v0.1.0-0.2.0
+
+
+
+How do I mitigate the vulnerability?
+
+
+As a short term mitigation, disable the VolumeSnapshotDataSource,
+ExpandCSIVolumes, and VolumePVCDataSource Kubernetes feature gates in
+kube-apiserver and kube-controller-manager. This will cause new
+PersistentVolumeClaims to be provisioned ignoring the DataSource and
+resizing requests will also be ignored. Note that this will cause new PVCs
+that are intended to be provisioned from a snapshot or clone to instead
+provision a blank disk.
+
+
+Also, to disable taking volume snapshots, either remove the
+external-snapshotter sidecar from any CSI drivers or revoke the CSI
+driver=E2=80=99s RBAC permissions on the snapshot.storage.k8s.io API group.
+
+
+Longer term, upgrade your CSI driver with patched versions of the affected
+sidecars.
+
+
+Acknowledgements
+
+
+Thanks to Xiangqian Yu from Google for discovering this issue.
+
+
+Thanks to Michelle Au, Jan =C5=A0afr=C3=A1nek, Hemant Kumar, and Xing Yang =
+for
+coordinating the fixes and release.
+
+
+Thank You,
+
+
+Tim Allclair on behalf of the Kubernetes Product Security Committee
+
+--000000000000396a380597532a4d--
