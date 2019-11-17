@@ -1,47 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/1
-Message-ID: <68fd216c-b9d7-ded4-ecb5-a5da62fc01b0@isc.org>
-Date: Wed, 24 Apr 2019 22:55:00 -0800
-From: Michael McNally <mcnally@....org>
-To: oss-security@...ts.openwall.com
-Subject: Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/17/1
+Message-ID: <1E3D402E-6B24-473A-B858-296847B072A4@apache.org>
+Date: Sun, 17 Nov 2019 09:13:53 -0800
+From: Madhan Neethiraj <madhan@...che.org>
+To: <oss-security@...ts.openwall.com>
+CC: "private@...as.apache.org" <private@...as.apache.org>
+Subject: [CVE-2019-10070] Apache Atlas Stored XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Today ISC disclosed two vulnerabilities affecting BIND as well
-as a third vulnerability which affects *only* BIND Supported Preview
-Edition (a special feature-preview version of BIND provided to
-ISC support customers.)
+Hello,
 
-Information about the vulnerabilities can be found in the ISC Knowledge
-Base:
+Please find below details on CVE fixed in Apache Atlas releases 0.8.4 and 1.2.0.
 
-   CVE-2018-5743: Limiting simultaneous TCP clients is ineffective
-   https://kb.isc.org/docs/cve-2018-5743
+-------------------------------------------------------------------------------------------------
+CVE-2019-10070:    Apache Atlas Stored XSS Vulnerability in the search functionality
+Severity:          Critical
+Vendor:            The Apache Software Foundation
+Versions Affected: Apache Atlas versions 0.8.3, 1.1.0
+Users affected:    Users of Apache Atlas UI search functionality
+Description:       Apache Atlas UI was found vulnerable to stored XSS in the search functionality
+Fix detail:        Apache Atlas was updated to sanitize the user input
+Mitigation:        Users should upgrade to 0.8.4 or 1.2.0 or later version of Apache Atlas
+Credit:            Jakub Heba
+-------------------------------------------------------------------------------------------------
 
-   CVE-2019-6467: An error in the nxdomain redirect feature can cause
-   BIND to exit with an INSIST assertion failure in query.c
-   https://kb.isc.org/docs/cve-2019-6467
+Thanks,
+Madhan
 
-   CVE-2019-6468: BIND Supported Preview Edition can exit with an
-   assertion failure if nxdomain-redirect is used
-   https://kb.isc.org/docs/cve-2019-6468
 
-New releases of BIND have been issued to fix the vulnerabilities above.
-They may be downloaded from the ISC website:  https://www.isc.org/downloads
-
-   -  9.11.6-P1
-   -  9.12.4-P1
-   -  9.14.1
-
-With the public disclosure of these vulnerabilities, parties which
-had been given advance notice concerning them are released from
-non-disclosure and packagers and redistributors are encouraged to
-publish updated packages containing fixes.
-
-If you have additional questions, please direct them to
-security-officer@....org
-
-Thank you,
-
-Michael McNally
-ISC Security Officer
