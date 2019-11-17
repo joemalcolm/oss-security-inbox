@@ -1,22 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/29/1
-Message-ID: <133fcd41f0466a9efbfc1c1d5fa6f21f586436b4.camel@electronsweatshop.com>
-Date: Tue, 29 Oct 2019 10:12:35 -0400
-From: Randy Barlow <randy@...ctronsweatshop.com>
-To: oss-security@...ts.openwall.com
-Subject: Bodhi: Script injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/17/2
+Message-ID: <CAGJbjKbpTD1JgrwKo_oNffry77m-XNn1_QGsZvUQWe_nG_3upA@mail.gmail.com>
+Date: Sun, 17 Nov 2019 13:25:00 -0500
+From: Mike Dalessio <mike.dalessio@...il.com>
+To: nokogiri-talk <nokogiri-talk@...glegroups.com>, ruby-talk <ruby-talk@...y-lang.org>,  ruby-security-ann@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Nokogiri security update v1.10.5
 Content-Type: text/plain; charset=utf-8
 
-A script injection vulnerability[0] was recently reported in Bodhi[1],
-and a patch[2] has been merged in response. Users with packager
-privileges were able to create or edit updates that included <script>
-tags.
+Nokogiri v1.10.5 was released on 2019-10-31.
 
-There is not yet a CVE for this issue.
+This is a security release.
+
+Maintainers realized, after the release of v1.10.5, that it addresses CVEs
+in upstream libxslt rated as "Priority: Medium" and "Priority: Low" by
+Canonical, and "NVD Severity: Medium" by Debian. More details are available
+below. More details are available below.
+
+If you're using your distro's system libraries, rather than Nokogiri's
+vendored libraries, there's no security need to upgrade at this time,
+though you may want to check with your distro whether they've patched this
+(Canonical has patched Ubuntu packages). Note that libxslt 1.1.34 addresses
+these vulnerabilities.
+
+Full details about the security update are available in Github Issue #1943 (
+https://github.com/sparklemotion/nokogiri/issues/1943).
+
+Affects: MRI users of Nokogiri's vendored libraries in Nokogiri <= v1.10.4
+
+Advice: Upgrade to Nokogiri v1.10.5 or later
+
+---
+
+## 1.10.5 / 2019-10-31
+
+### Security
+
+[MRI] Vendored libxslt upgraded to v1.1.34 which addresses three CVEs for
+libxslt:
+
+* CVE-2019-13117
+* CVE-2019-13118
+* CVE-2019-18197
+
+More details are available at #1943.
 
 
-[0] https://pagure.io/fedora-infrastructure/issue/8324
-[1] https://github.com/fedora-infra/bodhi
-[2] https://github.com/fedora-infra/bodhi/pull/3657
+### Dependencies
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+* [MRI] vendored libxml2 is updated from 2.9.9 to 2.9.10
+* [MRI] vendored libxslt is updated from 1.1.33 to 1.1.34
+
