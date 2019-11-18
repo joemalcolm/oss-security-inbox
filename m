@@ -1,23 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/25/3
-Message-ID: <1050715419.4548171.1564065254120.JavaMail.zimbra@redhat.com>
-Date: Thu, 25 Jul 2019 10:34:14 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/18/1
+Message-ID: <CAH9eYVoxuzjJRTS9_FBZH2cmkY9Cp2q2rZyUJ-azCsZeqzWj1Q@mail.gmail.com>
+Date: Mon, 18 Nov 2019 15:26:43 -0500
+From: Brian Demers <bdemers@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user
+Subject: [CVE-2019-12422] Apache Shiro weak cookie vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+The Shiro team is pleased to announce the release of Apache Shiro version
+1.4.2.
 
-> Does this always happen in a worker thread? Does this therefore mean
-> that this is not exploitable by a local user even if vm.mmap_min_addr
-> and SMEP/SMAP are disabled, since the user can't mmap zero page in the
-> worker thread context?
+This security release contains 1 fix since the 1.4.1 release and is
+available for Download now [1].
 
-Indeed, it looks like mrvl_setup() is called from hci_power_on workqueue
-only, so the worker thread context. Unfortunately, hci_* code has around
-20 call-sites for hci_uart_set_flow_control() and ->tiocm[gs]et() so I'm
-not sure they 100% cannot be called in the user process context also.
+    CVE-2019-12422:
+    Apache Shiro before 1.4.2, when using the default “remember me”
+configuration,
+    cookies could be susceptible to a padding attack.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | The Core Kernel | Senior Software Engineer
+Release binaries (.jars) are also available through Maven Central and
+source bundles through Apache distribution mirrors.
+
+For more information on Shiro, please read the documentation[2].
+
+-The Apache Shiro Team
+
+[1] http://shiro.apache.org/download.html
+[2] http://shiro.apache.org/documentation.html
+
