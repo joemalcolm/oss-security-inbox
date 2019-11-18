@@ -1,4 +1,9 @@
-Received: (qmail 5383 invoked by uid 550); 17 Jan 2023 19:16:00 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["813" "Monday" "18" "November" "2019" "15:26:43" "-0500" "Brian Demers" "bdemers@apache.org" "<CAH9eYVoxuzjJRTS9_FBZH2cmkY9Cp2q2rZyUJ-azCsZeqzWj1Q@mail.gmail.com>" "27" "[oss-security] [CVE-2019-12422] Apache Shiro weak cookie vulnerability" nil nil nil "11" "2019111820:26:43" "[oss-security] [CVE-2019-12422] Apache Shiro weak cookie vulnerability" (number mark "U       bdemers@apac Nov 18   27/813   " thread-indent "\"[oss-security] [CVE-2019-12422] Apache Shiro weak cookie vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-12422] Apache Shiro weak cookie vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27947 invoked by uid 550); 18 Nov 2019 20:28:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,40 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31891 invoked from network); 17 Jan 2023 19:10:04 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Eric Covener <covener@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <eff1e2ba-5f3c-beb7-9fb3-a94eb11309a6@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 17 Jan 2023 19:09:18 +0000
+Received: (qmail 26621 invoked from network); 18 Nov 2019 20:27:07 -0000
+X-Gm-Message-State: APjAAAWGV/tCrcDROs6oUn1iVoRSjkNY8kWk6vdUgg6G02L3RDEdJecb
+	mfjSkwhFYg0ijClPULzxSwJ9o47O6Tmpt4yRRb0=
+X-Google-Smtp-Source: APXvYqwGNj+tXkFU+nGP/95GXvimiDINW4yMJoRAlofwYCEeFvLSBiLYoN8gl1MjdMITtyNjdrld45ssHElVVk6lOTE=
+X-Received: by 2002:a2e:9a41:: with SMTP id k1mr935096ljj.11.1574108814256;
+ Mon, 18 Nov 2019 12:26:54 -0800 (PST)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-36760: Apache HTTP Server: mod_proxy_ajp Possible request
- smuggling 
+From: Brian Demers <bdemers@apache.org>
+Date: Mon, 18 Nov 2019 15:26:43 -0500
+X-Gmail-Original-Message-ID: <CAH9eYVoxuzjJRTS9_FBZH2cmkY9Cp2q2rZyUJ-azCsZeqzWj1Q@mail.gmail.com>
+Message-ID: <CAH9eYVoxuzjJRTS9_FBZH2cmkY9Cp2q2rZyUJ-azCsZeqzWj1Q@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000b6300f0597a4c4e8"
+Subject: [oss-security] [CVE-2019-12422] Apache Shiro weak cookie vulnerability
 
-Severity: moderate
+--000000000000b6300f0597a4c4e8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Description:
+The Shiro team is pleased to announce the release of Apache Shiro version
+1.4.2.
 
-Inconsistent Interpretation of HTTP Requests ('HTTP Request Smuggling') vul=
-nerability in mod_proxy_ajp of Apache HTTP Server allows an attacker to smu=
-ggle requests to the AJP server it forwards requests to.  This issue affect=
-s Apache HTTP Server Apache HTTP Server 2.4 version 2.4.54 and prior versio=
-ns.
+This security release contains 1 fix since the 1.4.1 release and is
+available for Download now [1].
 
-Credit:
+    CVE-2019-12422:
+    Apache Shiro before 1.4.2, when using the default =E2=80=9Cremember me=
+=E2=80=9D
+configuration,
+    cookies could be susceptible to a padding attack.
 
-ZeddYu_Lu from Qi'anxin Research Institute of Legendsec at Qi'anxin Group (=
-finder)
+Release binaries (.jars) are also available through Maven Central and
+source bundles through Apache distribution mirrors.
 
-References:
+For more information on Shiro, please read the documentation[2].
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2022-36760
+-The Apache Shiro Team
 
-Timeline:
+[1] http://shiro.apache.org/download.html
+[2] http://shiro.apache.org/documentation.html
 
-2022-07-12: Reported to security team
-
+--000000000000b6300f0597a4c4e8--
