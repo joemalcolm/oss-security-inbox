@@ -1,39 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/7
-Message-ID: <1678718219.1177.1567010577565@appsuite-dev.open-xchange.com>
-Date: Wed, 28 Aug 2019 19:42:57 +0300 (EEST)
-From: aki.tuomi@...ecot.fi
-To: Hanno Böck <hanno@...eck.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Critical Dovecot and Pigeonhole vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/8
+Message-ID: <20191119163811.ypfz6o3x5ocstwpe@jwilk.net>
+Date: Tue, 19 Nov 2019 17:38:11 +0100
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Mitigating malicious packages in gnu/linux
 Content-Type: text/plain; charset=utf-8
 
+* Georgi Guninski <gguninski@...il.com>, 2019-11-19, 13:33:
+>already happened in 2003 with the micq package in debian
 
-> On 28/08/2019 19:34 Hanno Böck <hanno@...eck.de> wrote:
-> 
->  
-> On Wed, 28 Aug 2019 19:28:18 +0300 (EEST)
-> aki.tuomi@...ecot.fi wrote:
-> 
-> > I can see 0.5.7.2, we even announced it today.
-> 
-> Ok, sorry.
-> 
-> What confused me: There's a "changes" link right to the Download and
-> that points to a changelog that was last updated in july and didn't
-> mention anything sounding like that bug. It's for 0.5.7, not 0.5.7.2.
-> You should probably fix that link (changing the URL accordingly works):
-> https://raw.githubusercontent.com/dovecot/pigeonhole/0.5.7.2/NEWS
-> 
-> -- 
-> Hanno Böck
-> https://hboeck.de/
-> 
-> mail/jabber: hanno@...eck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+A more recent (2016) Debian case is the WOT Firefox extension:
+https://bugs.debian.org/842939
 
-Seems the other MUA only sent html mail and none of my replies got to the list...
-
-The problem is now fixed and changes should indicate that fix is present.
-
-Aki
+-- 
+Jakub Wilk
