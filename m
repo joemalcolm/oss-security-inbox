@@ -1,33 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/27/2
-Message-ID: <CA+fCnZcH6Q-i89E0oB=KmxXZAvoT5v+uhS9MV=8xR05BVX-+QA@mail.gmail.com>
-Date: Fri, 27 Sep 2019 19:01:48 +0200
-From: Andrey Konovalov <andreyknvl@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/1
+Message-ID: <5ad90ca1-b7e7-8fd3-3f52-b93d87cab627@nlnetlabs.nl>
+Date: Tue, 19 Nov 2019 18:44:29 +0800
+From: Ralph Dolmans <ralph@...etlabs.nl>
 To: oss-security@...ts.openwall.com
-Cc: mathias.payer@...elwelt.net, benquike@...il.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+Subject: CVE-2019-18934 Unbound: Vulnerability in IPSEC module
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 27, 2019 at 6:51 PM Tyler Hicks <tyhicks@...onical.com> wrote:
->
-> On 2019-08-20 20:20:34, Andrey Konovalov wrote:
-> > * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15290
-> >
-> > An issue was discovered in the Linux kernel through 5.2.9. There is a
-> > NULL pointer dereference caused by a malicious USB device in the
-> > ath6kl_usb_alloc_urb_from_pipe function in the
-> > drivers/net/wireless/ath/ath6kl/usb.c driver.
->
-> This seems like it might be a duplicate of CVE-2019-15098. The fix for
-> CVE-2019-15098 was recently merged upstream:
->
->  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=39d170b3cb62ba98567f5c4f40c27b5864b304e5
->
-> If you agree, could you request that MITRE mark CVE-2019-15290 as a
-> duplicate of CVE-2019-15098?
+Hi,
 
-Oh, nice, Mathias and Hui found it as well and fixed it! =)
+Below is a copy of Unbound's CVE description that can be found at
+https://nlnetlabs.nl/downloads/unbound/CVE-2019-18934.txt
 
-Yes, these two CVEs are for the same issue, feel free to mark them as such.
+Regards,
+Ralph
 
-Thanks!
+==
+
+The CVE number for this vulnerability is CVE-2019-18934
+
+== Summary
+Recent versions of Unbound contain a vulnerability that can cause shell
+code execution after receiving a specially crafted answer. This issue
+can only be triggered if unbound was compiled with `--enable-ipsecmod`
+support, and ipsecmod is enabled and used in the configuration.
+
+== Affected products
+Unbound 1.6.4 up to and including 1.9.4.
+
+== Description
+Due to unsanitized characters passed to the ipsecmod-hook shell command,
+it is possible for Unbound to allow shell code execution from a
+specially crafted IPSECKEY answer.
+
+This issue can only be triggered when *all* of the below conditions are met:
+* unbound was compiled with `--enable-ipsecmod` support, and
+* ipsecmod is enabled and used in the configuration (either in the
+  configuration file or using `unbound-control`), and
+* a domain is part of the ipsecmod-whitelist (if ipsecmod-whitelist is
+  used), and
+* unbound receives an A/AAAA query for a domain that has an A/AAAA
+  record(s) *and* an IPSECKEY record(s) available.
+
+The shell code execution can then happen if either the qname or the
+gateway field of the IPSECKEY (when gateway type == 3) contain a
+specially crafted domain name.
+
+== Solution
+Download patched version of Unbound, or apply the patch manually.
+
++ Downloading patched version
+Unbound 1.9.5 is released with the patch
+https://nlnetlabs.nl/downloads/unbound/unbound-1.9.5.tar.gz
+
++ Applying the Patch manually
+For Unbound 1.6.4 up to and including 1.9.4 the patch is:
+https://nlnetlabs.nl/downloads/unbound/patch_cve_2019-18934.diff
+
+Apply the patch on the Unbound source directory with:
+'patch -p1 < patch_cve_2019-18934.diff'
+then run 'make install' to install Unbound.
+
+== Acknowledgments
+We would like to thank X41 D-Sec for notifying us about this
+vulnerability and OSTIF for sponsoring the Unbound security audit.
