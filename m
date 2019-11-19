@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/05/4
-Message-ID: <20190505131823.GE25640@kroah.com>
-Date: Sun, 5 May 2019 15:18:23 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/11
+Message-ID: <CAEhjM2B+ETHZVMTjQfiDXAkFN4TTygM6HzQb7WEpdG5_9O=oOg@mail.gmail.com>
+Date: Tue, 19 Nov 2019 13:41:36 -0500
+From: Nathan Gough <thenatog@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-11683: "GRO packet of death" issue in the Linux kernel
+Subject: [CVE-2019-12421] Apache NiFi 'Log out' button did not completely log user out
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 02, 2019 at 07:14:30PM +0200, Andrey Konovalov wrote:
-> Hi,
-> 
-> syzbot has reported a remotely triggerable memory corruption in the
-> Linux kernel. It's been introduced quite recently in e20cf8d3f1f7
-> ("udp: implement GRO for plain UDP sockets.") and only affects the 5.0
-> (stable) release (so the name is a bit overhyped :).
-> 
-> CVE-2019-11683 description:
-> 
-> udp_gro_receive_segment in net/ipv4/udp_offload.c in the Linux kernel
-> 5.x through 5.0.11 allows remote attackers to cause a denial of
-> service (slab-out-of-bounds memory corruption) or possibly have
-> unspecified other impact via UDP packets with a 0 payload, because of
-> mishandling of padded packets, aka the "GRO packet of death" issue.
-> 
-> Fix (not yet upstream):
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=4dd2b82d5adfbe0b1587ccad7a8f76d826120f37
+[CVEID]:CVE-2019-12421
 
-Now fixed in the 5.0.13 kernel release.
+[PRODUCT]:Apache NiFi
 
-thanks,
+[VERSION]:Apache NiFi 1.0.0 to 1.10.0
 
-greg k-h
+[PROBLEMTYPE]:Authentication
+
+[REFERENCES]:https://nifi.apache.org/security.html#CVE-2019-12421
+
+[DESCRIPTION]:As reported by Abdu Sahin, when using an authentication
+mechanism other than PKI, when the user clicks Log Out in NiFi versions
+1.0.0 to 1.9.2, NiFi invalidates the authentication token on the client
+side but not on the server side. This permits the user's client-side token
+to be used for up to 12 hours after logging out to make API requests to
+NiFi.
+
