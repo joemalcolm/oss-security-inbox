@@ -1,57 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/18/2
-Message-ID: <20190318154723.5tucbpkzibivnczg@yuggoth.org>
-Date: Mon, 18 Mar 2019 15:47:23 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/2
+Message-ID: <CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>
+Date: Tue, 19 Nov 2019 13:33:48 +0200
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2019-001] Unsupported dport option prevents applying security groups in OpenStack Neutron (CVE-2019-9735)
+Subject: Mitigating malicious packages in gnu/linux
 Content-Type: text/plain; charset=utf-8
 
-=========================================================================
-OSSA-2019-001: Unsupported dport option prevents applying security groups
-=========================================================================
+As end user and contributor of gnu/linux, I am concerned about malicious
+packages (either hostile developers or hacked developers or another reason)
+and have two questions:
 
-:Date: March 13, 2019
-:CVE: CVE-2019-9735
+* What do linux vendors to avoid malicious packages?
 
+* As end user what can I do to mitigate malicious packages?
 
-Affects
-~~~~~~~
-- Neutron: <10.0.8, >=11.0.0 <11.0.7, >=12.0.0 <12.0.6, >=13.0.0 <13.0.3
+Some thoughts and rants:
 
+1. This already happened in 2003 with the micq package in debian:  unnoticed
+easter egg causing DOS, see [1].
 
-Description
-~~~~~~~~~~~
-Erik Olof Gunnar Andersson with Blizzard Entertainment reported a
-vulnerability in Neutron's iptables firewall module. By setting a
-destination port in a security group rule along with a protocol which
-doesn't support that option (for example, VRRP), an authenticated user
-may block further application of security group rules for instances
-from any project/tenant on the compute hosts to which it's applied.
-Only deployments using the iptables security group driver are
-affected.
+2. This already happened to Redhat in 2008? see [5], Red Hat OpenSSH Backdoor
+Vulnerability
 
+3. In 2015 Microsoft issued weird update, see [6],[7].
 
-Patches
-~~~~~~~
-- https://review.openstack.org/640791 (Ocata)
-- https://review.openstack.org/640790 (Pike)
-- https://review.openstack.org/640702 (Queens)
-- https://review.openstack.org/640685 (Rocky)
-- https://review.openstack.org/640619 (Stein)
+4. Portable malware in portable languages (Java, Javascript), taking the
+worst from windoze.
 
+5. Google play. Google play has about 2.8M packages [2] for android. Debian
+has about 31K packages [3] XXXold_stat. To our surprise google play is only
+about 90 times bigger than debian per number of packages and the metrics
+is unclear for size of binary packages or lines of code. Google scans for
+malware, not sure how effective is this.Google's permissions of applications
+are mitigating factor.
 
-Credits
-~~~~~~~
-- Erik Olof Gunnar Andersson from Blizzard Entertainment (CVE-2019-9735)
+6. The art of backdooring: sufficiently sophisticated backdoor is
+indistinguishable from secure code, see Obfuscation contest [4].
 
+7. Getting root vs reading $HOME vs euid == DAEMON. Getting root is important,
+but there is more interesting in user's $HOME.
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1818385
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-9735
+[1](https://lists.debian.org/debian-devel/2003/02/msg00771.html)
+[2](https://www.statista.com/statistics/266210/number-of-available-applications-in-the-google-play-store/)
+[3](https://sources.debian.org/stats/)
+[4](https://ioccc.org/)
+[5](https://www.securityfocus.com/bid/30794/info)
+[6](https://j.ludost.net/blog/archives/2015/10/03/cheers_windows_admins_did_the_weird_garbled_windows_7_update_contains_message_to_microsoft/index.html)
+[7](https://j.ludost.net/blog/archives/2015/10/02/cheers_windows_admins_weird_garbled_windows_7_update/index.html)
 
 -- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+CV:    https://j.ludost.net/resumegg.pdf
+site:  http://www.guninski.com
+blog:  https://j.ludost.net/blog
