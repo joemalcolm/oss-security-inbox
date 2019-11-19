@@ -1,51 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/19/2
-Message-ID: <CACmp6kpYXqBsQmqzOVn45q+n2jTtsWFU=ObfgDd4m6y7j5F=0A@mail.gmail.com>
-Date: Wed, 18 Dec 2019 21:21:19 -0600
-From: Matt Sicker <mattsicker@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/4
+Message-ID: <bc1ddbb1-abe3-960e-a5b5-33e3ff6c6875@oracle.com>
+Date: Tue, 19 Nov 2019 14:08:02 +0100
+From: Pavel Heimlich <pavel.heimlich@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-17571] Apache Log4j 1.2 deserialization of untrusted data in SocketServer
+Subject: Re: Mitigating malicious packages in gnu/linux
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-17571: Deserialization of untrusted data in SocketServer
 
-Severity: Critical
-CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H/RL:W
+On 11/19/2019 12:33, Georgi Guninski wrote:
+> As end user and contributor of gnu/linux, I am concerned about malicious
+> packages (either hostile developers or hacked developers or another reason)
+> and have two questions:
+>
+> * What do linux vendors to avoid malicious packages?
+>
+> * As end user what can I do to mitigate malicious packages?
 
-Product:
-Apache Log4j
+You can start with installing only packages that are necessary and 
+nothing more.
 
-Versions Affected:
-Apache Log4j up to and including 1.2.27. Separately fixed by
-CVE-2017-5645 in Log4j 2.8.2.
 
-Problem type:
-CWE-502: Deserialization of Untrusted Data
-
-Description:
-
-Included in Log4j 1.2 is a SocketServer class that is vulnerable to
-deserialization of untrusted data which can be exploited to remotely
-execute arbitrary code when combined with a deserialization gadget
-when listening to untrusted network traffic for log data.
-
-Mitigation:
-
-Apache Log4j 1.2 reached end of life in August 2015. Users should
-upgrade to Log4j 2.x which both addresses that vulnerability as well
-as numerous other issues in the previous versions.
-
-Credit:
-
-This issue was initially discovered in CVE-2017-5645 by Marcio Almeida
-de Macedo of Red Team at Telstra.
-
-Links:
-
-https://logging.apache.org/log4j/1.2/
-https://issues.apache.org/jira/browse/LOG4J2-1863
-
--- 
-Matt Sicker
-Secretary, Apache Software Foundation
-VP Logging Services, ASF
