@@ -1,79 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/6
-Message-ID: <1076442947.215.1556631305811@appsuite-dev-guard.open-xchange.com>
-Date: Tue, 30 Apr 2019 16:35:05 +0300 (EEST)
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>
-Subject: Multiple vulnerabilities in Dovecot 2.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/3
+Message-ID: <20191119121910.g6tc5zwbmbdiuiuh@anathema>
+Date: Tue, 19 Nov 2019 13:19:10 +0100
+From: Morten Linderud <morten@...derud.pw>
+To: oss-security@...ts.openwall.com
+Subject: Re: Mitigating malicious packages in gnu/linux
 Content-Type: text/plain; charset=utf-8
 
-Dear subscribers, we have been made aware of two critical vulnerabilities in Dovecot 2.3. Please find patches attached for 2.3.5.2.
+On Tue, Nov 19, 2019 at 01:33:48PM +0200, Georgi Guninski wrote:
+> As end user and contributor of gnu/linux, I am concerned about malicious
+> packages (either hostile developers or hacked developers or another reason)
+> and have two questions:
+> 
+> * What do linux vendors to avoid malicious packages?
+> 
+> * As end user what can I do to mitigate malicious packages?
 
----
-Aki Tuomi
-Open-Xchange oy
+Yo!
 
-------
+The answer to this is complicated. Different distributions has widely different
+threat models and supply chains for dealing with packages. This can be from the
+perspective of developers uploading pre-built binary packages to a repository,
+then distributed. Another factor is distributions where source packages are
+uploaded to a centralized builder, then distributed.
 
-Open-Xchange Security Advisory 2019-04-30
+You also got source-based distributions, such as Gentoo and probably NixOS,
+where the problem domain is a bit more complicated as the users might be
+building the packages themselves.
 
-Product: Dovecot
-Vendor: OX Software GmbH
+Some attack vector are:
 
-Internal reference: DOV-3212 (Bug ID)
-Vulnerability type: CWE-476
-Vulnerable version: 2.3.0 - 2.3.5.2
-Vulnerable component: submission-login
-Report confidence: Confirmed
-Researcher credits: Marcelo Coelho
-Solution status: Fixed by Vendor
-Fixed version: 2.3.6
-Vendor notificatio: 2019-03-11
-Solution date: 2019-04-23
-Public disclosure: 2019-04-30Q
-CVE reference: CVE-2019-11494
-CVSS: 7.5 (CVSS3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+* A malicious build server
+* Compromised source tarballs
+* Compromised packagers
+* Compromised mirrors/repositories
 
-Vulnerability Details:
-Submission-login crashes with signal 11 due to null pointer access when authentication is aborted by disconnecting. This can lead to denial-of-service attack by persistent attacker(s).
 
-Workaround:
-There is no available workaround for this issue.
+There is not a definitive solution here. But there are multiple efforts and
+research going on. The most important one, in my opinion, is the reproducible
+builds project [1]. We need to ensure we are not inserting random or
+non-deterministic data into our build artifacts. This stretches from upstream
+developers providing tarballs, to pre-compiled sources and packages from
+distributions. There is no distribution today that has full reproducible builds,
+but there are many projects that work towards this and work on reproducible
+builds.
 
-Solution:
-Operators should upgrade to a fixed version.
+Arch Linux has recently been trying to get the core repository 100%
+reproducible, and we have done a lot of effort towards this just the past week
+[2]. I have also written up a blog post describing the effort that has gone into
+this [3].
 
-----
+There are also other efforts, like Benjamin Hof which has done work attempting
+to provide transparency logs for Debian package repositories. This can work as a
+guard detecting compromised signing keys. Either from build servers or packagers [4].
 
-Open-Xchange Security Advisory 2019-04-30
-Product: Dovecot
-Vendor: OX Software GmbH
+The current status quo is a bit grim. You can't protect yourself against
+malicious packages. You need to trust the source and build the packages
+yourself, preferably write your own package files.
 
-Internal reference: DOV-3223 (Bug ID)
-Vulnerability type: CWE-617
-Vulnerable version: 2.3.0 - 2.3.5.2
-Vulnerable component: submission-login
-Report confidence: Confirmed
-Solution status: Fixed by Vendor
-Fixed version: 2.3.6
-Vendor notification: 2019-03-11
-Solution date: 2019-04-23
-Public disclosure: 2019-04-30
-CVE reference: CVE-2019-11499
-CVSS: 7.5 (CVSS3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+As long as we use distributions we are bound to trusting the packagers and
+believe they are doing the right thing. However, reproducible builds will allow
+users to verify the work done by packagers in the future.
 
-Vulnerability Details:
-Submission-login crashes when authentication is started over TLS secured channel and invalid authentication message is sent. This can lead to denial-of-service attack by persistent attacker(s).
 
-Workaround:
-Authentication crash can be avoided if authentication is done without TLS.
+I hope this gives some insight and answers parts of your question :)
 
-Solution:
-Operators should upgrade to a fixed version.
-View attachment "0001-submission-login-Remove-unused-client-pending_startt.patch" of type "text/x-patch" (843 bytes)
 
-View attachment "0002-submission-login-client-authenticate-Fix-crash-occur.patch" of type "text/x-patch" (1391 bytes)
+[1]: https://reproducible-builds.org/
+[2]: https://lists.archlinux.org/pipermail/arch-dev-public/2019-November/029721.html
+[3]: https://linderud.dev/blog/reproducible-arch-linux-packages/
+[4]: https://debconf18.debconf.org/talks/104-software-transparency-package-security-beyond-signatures-and-reproducible-builds/
 
-View attachment "0003-lib-smtp-smtp-server-cmd-auth-Fix-AUTH-response-erro.patch" of type "text/x-patch" (1466 bytes)
+-- 
+Morten Linderud
+PGP: 9C02FF419FECBE16
 
-Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
