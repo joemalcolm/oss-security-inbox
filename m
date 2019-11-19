@@ -1,82 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/16/1
-Message-ID: <CAG8b5tRb__-uRn5B7hqN1q+yt3s7MPeC-GBEzfK3Ua9NkBm1hw@mail.gmail.com>
-Date: Wed, 16 Jan 2019 09:26:24 +0400
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/12
+Message-ID: <CAEhjM2Dr85nH_JNFJQ=f+uS7ptcht+zhKSL0w1gTXa6QvD+mWA@mail.gmail.com>
+Date: Tue, 19 Nov 2019 13:41:36 -0500
+From: Nathan Gough <thenatog@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Heap based buffer overflow in wolfSSL
+Subject: [CVE-2019-10080] Apache NiFi XXE information disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hi List,
+[CVEID]:CVE-2019-10080
 
-## Summary:
-wolfSSL is an C-language-based SSL/TLS library targeted at IoT, embedded,
-and RTOS environments a heap-based-buffer overflow was observed in
-tls_bench.c which is a benchmark tool in wolfSSL.
+[PRODUCT]:Apache NiFi
 
-## ASAN
-==4088==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x619000000480 at pc 0x00000050ff16 bp 0x7fef206fdbf0 sp 0x7fef206fdbe8
-WRITE of size 1 at 0x619000000480 thread T2
-    #0 0x50ff15  (/wolfssl/examples/benchmark/tls_bench+0x50ff15)
-    #1 0x4dfa52  (/wolfssl/examples/benchmark/tls_bench+0x4dfa52)
-    #2 0x7fef243ac6da  (/lib/x86_64-linux-gnu/libpthread.so.0+0x76da)
-    #3 0x7fef23ab188e  (/lib/x86_64-linux-gnu/libc.so.6+0x12188e)
+[VERSION]:Apache NiFi 1.3.0 to 1.9.2
 
-0x619000000480 is located 0 bytes to the right of 1024-byte region
-[0x619000000080,0x619000000480)
-allocated by thread T2 here:
-    #0 0x4d1fa0  (/wolfssl/examples/benchmark/tls_bench+0x4d1fa0)
-    #1 0x50f277  (/wolfssl/examples/benchmark/tls_bench+0x50f277)
-    #2 0x4dfa52  (/wolfssl/examples/benchmark/tls_bench+0x4dfa52)
+[PROBLEMTYPE]:Information Disclosure
 
-Thread T2 created by T0 here:
-    #0 0x435490  (/wolfssl/examples/benchmark/tls_bench+0x435490)
-    #1 0x50cbf5  (/wolfssl/examples/benchmark/tls_bench+0x50cbf5)
-    #2 0x5101d0  (/wolfssl/examples/benchmark/tls_bench+0x5101d0)
-    #3 0x7fef239b1b96  (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
+[REFERENCES]:https://nifi.apache.org/security.html#CVE-2019-10080
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow
-(/wolfssl/examples/benchmark/tls_bench+0x50ff15)
-Shadow bytes around the buggy address:
-  0x0c327fff8040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c327fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c327fff8060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c327fff8070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c327fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c327fff8090:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c327fff80a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c327fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c327fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c327fff80d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c327fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==4088==ABORTING
-
-References:
-https://github.com/wolfSSL/wolfssl
-https://github.com/wolfSSL/wolfssl/issues/2032
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-6439
-
-
-Thank you
-@mishradhiraj_
+[DESCRIPTION]:As reported by RunningSnail, the XMLFileLookupService in NiFi
+versions 1.3.0 to 1.9.2 allowed trusted users to inadvertently configure a
+potentially malicious XML file. The XML file has the ability to make
+external calls to services (via XXE) and reveal information such as the
+versions of Java, Jersey, and Apache that the NiFI instance uses.
 
