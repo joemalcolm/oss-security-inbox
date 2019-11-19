@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["619" "Tuesday" "10" "May" "2016" "15:35:09" "-0400" "Kangjie Lu" "kangjielu@gmail.com" "<CABEk9YzSs+SRPKeL95=Pd7sMZ4Ud+H67UOZMwjjudMs5n0iknw@mail.gmail.com>" "24" "[oss-security] CVE Request: x25: a kernel infoleak in x25_negotiate_facilities()" nil nil nil "5" "2016051019:35:09" "[oss-security] CVE Request: x25: a kernel infoleak in x25_negotiate_facilities()" (number mark "U       kangjielu@gm May 10   24/619   " thread-indent "\"[oss-security] CVE Request: x25: a kernel infoleak in x25_negotiate_facilities()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["711" "Tuesday" "19" "November" "2019" "09:08:32" "-0500" "Stuart D. Gathman" "stuart@gathman.org" "<alpine.LRH.2.21.1911190904540.22622@fairfax.gathman.org>" "19" "Re: [oss-security] Mitigating malicious packages in gnu/linux" nil nil nil "11" "2019111914:08:32" "[oss-security] Mitigating malicious packages in gnu/linux" (number mark "U       stuart@gathm Nov 19   19/711   " thread-indent "\"Re: [oss-security] Mitigating malicious packages in gnu/linux\"\n") "<20191119121910.g6tc5zwbmbdiuiuh@anathema>" ("<CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>" "<20191119121910.g6tc5zwbmbdiuiuh@anathema>") nil nil nil nil nil nil nil "Re: [oss-security] Mitigating malicious packages in gnu/linux" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15677 invoked by uid 550); 10 May 2016 19:35:21 -0000
+Received: (qmail 19754 invoked by uid 550); 19 Nov 2019 15:50:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +12,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15659 invoked from network); 10 May 2016 19:35:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=F/UsH7TzF6QpzAc7KIaDW5hbWb/PeTZ+MIwMQKlYo2I=;
-        b=EzyNfqa9udMLxDhQ/a4qeF+tPKizLWa0e7hkKz85bSPp39fze4Y4Au1LpMb6BWfBBy
-         ucsH6KMXu7dcmWBxGlBXQYIKNT63G8CB7JPNvGSk8V8/FGT/rNKK7tQBS93mEAZPPFHJ
-         +JKjl5QyycojZP18LWn9O+5kLC9WyWvtoe31t1miTermVvtbDq5z7x2WZA6z5nbjQk07
-         aHaXZrZ15iFrjqb4jqn65FFYfdAO/vUPoNg33bQSpZmkHPpjQlobcwruurV8RF03p0vc
-         LaI7wS5m15M7HYU9v3EhDVyg0yWi0EV/+IqxRcvF3yJUX/mBAc5EEqeF6hZI5lmtJyQ/
-         wZ2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=F/UsH7TzF6QpzAc7KIaDW5hbWb/PeTZ+MIwMQKlYo2I=;
-        b=XK7eOFYtZ/Fje5UEUdBjZR78wOX97rX6gGAr9SXjH2c9j6MSImSsD3Xj1GdJLsRN0B
-         Fbrlu4tkr3kmvWJP8oErW/d5cLjiWPVeAzwVFsLRPrk4wPoHPgDL0trrRzWZ4INGHIu9
-         CSoaaJpPcMT07tnTmcxztYKbopxRXvO5rf6NxTIneN1iAZNCVT4De+PC9AAKxU4FQF8z
-         /yokxAh2J24KgwHCLGlNsi7bO4zUIYADl9ugHDAnPIiCp1qbZYoD4Vckq+pSREghaXrv
-         9ykU02faeWx4XqYuhoA+PZEh5yacuPYcSCF9L61l0e8DvFAn7LgkpKFVQk6+PpMH7KsZ
-         AszQ==
-X-Gm-Message-State: AOPr4FVfDMae8oJyfyZc+G5sL+MPNhGgO6NC4w5ZVmafjt4mMXdspAufyHfkMH2JiqVunaBLanCvb1XTkOhjCg==
+Received: (qmail 12134 invoked from network); 19 Nov 2019 14:08:49 -0000
+Authentication-Results: mail.gathman.org; iprev=pass policy.iprev="2001:470:8:809::2" (wiki.gathman.org); auth=pass (CRAM-MD5 sslbits=256) smtp.auth=stuart
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gathman.org; 
+ i=@gathman.org; q=dns/txt; s=default; t=1574172128; 
+ h=date : from : to : subject : in-reply-to : message-id : 
+ references : mime-version : content-type : date : from : 
+ subject; bh=3TzJQNeAzOMs/Ba3sHJNq8iEqkcuxh4PcHIAaZUFqW0=; 
+ b=HpXXYNLSqv3gRyEXec29aHsQcDCtXpJD3S5hAIQOER2XtshfDfzeESLj
+ LjoCdw84He7/KcaLsluuJG5O8b01SfGv0SUVKN680yFFVgnRcfp9jKxvY4
+ IK4hMPZ1K90jd0rAgIJAERLLtmegl1gFV+vfIxksMWKudnPPmSSJ637Ng=
+Date: Tue, 19 Nov 2019 09:08:32 -0500 (EST)
+From: "Stuart D. Gathman" <stuart@gathman.org>
+To: oss-security@lists.openwall.com
+In-Reply-To: <20191119121910.g6tc5zwbmbdiuiuh@anathema>
+Message-ID: <alpine.LRH.2.21.1911190904540.22622@fairfax.gathman.org>
+References: <CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com> <20191119121910.g6tc5zwbmbdiuiuh@anathema>
+User-Agent: Alpine 2.21 (LRH 202 2017-01-01)
 MIME-Version: 1.0
-X-Received: by 10.202.203.139 with SMTP id b133mr19236875oig.166.1462908909139;
- Tue, 10 May 2016 12:35:09 -0700 (PDT)
-Date: Tue, 10 May 2016 15:35:09 -0400
-Message-ID: <CABEk9YzSs+SRPKeL95=Pd7sMZ4Ud+H67UOZMwjjudMs5n0iknw@mail.gmail.com>
-From: Kangjie Lu <kangjielu@gmail.com>
-To: oss-security@lists.openwall.com, Chengyu Song <csong84@gatech.edu>, 
-	Insu Yun <insu@gatech.edu>, Taesoo Kim <taesoo@gatech.edu>
-Content-Type: multipart/alternative; boundary=001a113501f6de3fcc05328205b8
-Subject: [oss-security] CVE Request: x25: a kernel infoleak in x25_negotiate_facilities()
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Subject: Re: [oss-security] Mitigating malicious packages in gnu/linux
 
---001a113501f6de3fcc05328205b8
-Content-Type: text/plain; charset=UTF-8
+On Tue, 19 Nov 2019, Morten Linderud wrote:
 
-Hello,
+> On Tue, Nov 19, 2019 at 01:33:48PM +0200, Georgi Guninski wrote:
+>> * As end user what can I do to mitigate malicious packages?
+>
+> The answer to this is complicated.
+
+... an excellent overview from Morten, recommended reading
 
 
-In function  x25_negotiate_facilities()  of file net/x25/x25_facilities.c,
-the stack object "dte_facilities" is allocated in x25_rx_call_request(),
-which is supposed to be initialized in x25_negotiate_facilities. However,
-5 fields (8 bytes in total) are not initialized. This object is then copied
-to
-userland via copy_to_user, thus an infoleak occurs.
+My tidbit is that when starting with a new package, I run it in a 
+virtual machine until my confidence begins to exceed the annoyance
+of going through a VM (generally a year or so).  A container may be
+sufficient for a non-root application.
 
-Fix info: https://lkml.org/lkml/2016/5/8/59
-Patch applied: https://lkml.org/lkml/2016/5/9/1100
-
-
-Please help assign a CVE to it.
-
-
-Thanks,
-Kangjie Lu
-
---001a113501f6de3fcc05328205b8--
+-- 
+ 	      Stuart D. Gathman <stuart@gathman.org>
+"Confutatis maledictis, flamis acribus addictis" - background song for
+a Microsoft sponsored "Where do you want to go from here?" commercial.
