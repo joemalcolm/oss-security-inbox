@@ -1,35 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/05/6
-Message-ID: <20190805232737.GA11260@oevtugenva.nrevsny.pk>
-Date: Mon, 5 Aug 2019 19:27:37 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Cc: musl@...ts.openwall.com
-Subject: CVE request: musl libc 1.1.23 and earlier x87 float stack imbalance
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/7
+Message-ID: <877e3vrh4v.fsf@gnu.org>
+Date: Tue, 19 Nov 2019 17:00:00 +0100
+From: Ludovic Courtès <ludo@....org>
+To: Tim Kuijsten <info+oss-security@...send.nl>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Mitigating malicious packages in gnu/linux
 Content-Type: text/plain; charset=utf-8
 
-I've discovered a flaw in musl libc's arch-specific math assembly code
-for i386, whereby at least the log1p function and possibly others
-return with more than one item on the x87 stack. This can lead to x87
-stack overflow in the execution of subsequent math code, causing it to
-incorrectly produce a NAN in place of the actual result. If floating
-point results are used in flow control, this can lead to runaway wrong
-code execution. For example, in Python (version 3.6.8 tested), at
-least one code path of the dtoa function becomes an infinite loop
-performing what's effectively an unbounded-length memset when entered
-under such a condition.
+Hi,
 
-This bug is potentially exploitable in software which calls affected
-math functions with inputs under user control. Impact depends on how
-the application handles the ABI-violating x87 state; in Python it
-seems to be limited to producing a crash.
+Tim Kuijsten <info+oss-security@...send.nl> skribis:
 
-The bug is present in all versions after 0.9.12, up through the
-current (1.1.23) release. Only 32-bit x86 systems (aka IA32, musl's
-"i386" arch) are affected. Users of other archs, including x86_64, can
-safely ignore this issue.
+>> There is not a definitive solution here. But there are multiple efforts and
+>> research going on. The most important one, in my opinion, is the reproducible
+>> builds project [1]. We need to ensure we are not inserting random or
+>> non-deterministic data into our build artifacts. This stretches from upstream
+>> developers providing tarballs, to pre-compiled sources and packages from
+>> distributions. There is no distribution today that has full reproducible builds,
+>> but there are many projects that work towards this and work on reproducible
+>> builds.
+>
+> One attack that is not solved by reproducible builds is one on the toolchain.
+> This can be solved with bootstrappable builds[1] which is about minimizing the
+> number of trusted binaries that are needed to produce the toolchain, that
+> produced the toolchain, ... that was used to build your package.
 
-Affected users are advised to apply the following patch:
+Efforts in that area are fruitful and have already led to a smaller set
+of “bootstrap seeds” (binaries from which the rest of the system is
+built from source) for GNU Guix, an important step forward:
 
-https://git.musl-libc.org/cgit/musl/patch/?id=f3ed8bfe8a82af1870ddc8696ed4cc1d5aa6b441
+  https://guix.gnu.org/blog/2019/guix-reduces-bootstrap-seed-by-50/
 
+Thanks to people working on GNU Mes and related projects at
+<https://bootstrappable.org/>, we have good hope to see that set of
+bootstrap seeds further reduced soon.
+
+Reproducible builds and bootstrappable builds enable provenance tracking
+and auditing, which are key to security.
+
+Ludo’.
