@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/25/1
-Message-ID: <CAFcO6XP-YkHxuJWBRYWKYSne+WmvSd8E1t1doo5Xe=Bw+rGvNQ@mail.gmail.com>
-Date: Wed, 25 Sep 2019 18:53:14 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/5
+Message-ID: <alpine.LRH.2.21.1911190904540.22622@fairfax.gathman.org>
+Date: Tue, 19 Nov 2019 09:08:32 -0500 (EST)
+From: "Stuart D. Gathman" <stuart@...hman.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-16714: Linux kernel net/rds: info leak vulnerability in rds6_inc_info_copy
+Subject: Re: Mitigating malicious packages in gnu/linux
 Content-Type: text/plain; charset=utf-8
 
-Hi, there is a info leak vulnerability in rds modules in linux kernel.
+On Tue, 19 Nov 2019, Morten Linderud wrote:
 
-CVE-2019-16714
-================
-description:
+> On Tue, Nov 19, 2019 at 01:33:48PM +0200, Georgi Guninski wrote:
+>> * As end user what can I do to mitigate malicious packages?
+>
+> The answer to this is complicated.
 
-In the Linux kernel before 5.2.14, rds6_inc_info_copy in net/rds/recv.c
-allows attackers to obtain sensitive information from kernel stack memory
-because tos and flags fields are not initialized.
+... an excellent overview from Morten, recommended reading
 
-=================
-some more details in https://nvd.nist.gov/vuln/detail/CVE-2019-16714
 
-Fixed in
-https://github.com/torvalds/linux/commit/7d0a06586b2686ba80c4a2da5f91cb10ffbea736
-================
+My tidbit is that when starting with a new package, I run it in a 
+virtual machine until my confidence begins to exceed the annoyance
+of going through a VM (generally a year or so).  A container may be
+sufficient for a non-root application.
 
-Credit :
-
-This issue was discovered by the ADLab of venustech.
-
+-- 
+ 	      Stuart D. Gathman <stuart@...hman.org>
+"Confutatis maledictis, flamis acribus addictis" - background song for
+a Microsoft sponsored "Where do you want to go from here?" commercial.
