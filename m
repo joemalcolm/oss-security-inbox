@@ -1,24 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/30/5
-Message-ID: <20191030184628.GA10699@openwall.com>
-Date: Wed, 30 Oct 2019 19:46:28 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Steven Rostedt <rostedt@...dmis.org>, sashal@...nel.org, amakhalov@...are.com, anishs@...are.com, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>, "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
-Subject: Re: Membership application for linux-distros - VMware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/20/5
+Message-ID: <f514d433-55bf-3f09-5d52-d4baef37b178@kernel.crashing.org>
+Date: Wed, 20 Nov 2019 12:11:31 -0600
+From: Mark Hatle <mark.hatle@...nel.crashing.org>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: Mitigating malicious packages in gnu/linux
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 30, 2019 at 05:24:23PM +0100, Solar Designer wrote:
-> Please send me your PGP key off-list and I'll add you to linux-distros.
 
-This has been taken care of - VMware Photon OS is now on linux-distros.
 
-Srivatsa, please note that your subscription is only for Photon OS.
-You're expected not to share the information within VMware beyond the
-need-to-know for Photon OS fixes.  If an issue comes up that you think
-is relevant to other VMware products and you'd like to pass the
-information on, you need the reporter's explicit permission to do so.
+On 11/20/19 11:49 AM, Solar Designer wrote:
+> On Wed, Nov 20, 2019 at 09:06:57AM -0800, Russ Allbery wrote:
+>> Solar Designer <solar@...nwall.com> writes:
+>>
+>>> Contrary to traditional best practices, update only what and when needs
+>>> to be updated.  (Of course, you take responsibility to watch for any
+>>> relevant security updates, or accept the risk if you neglect to do that.
+>>> You also miss silent security fixes, but on the other hand you similarly
+>>> miss newly introduced vulnerabilities.)
+>>
+>> I'm very reluctant to give this advice, not because it's wrong, but
+>> because the failure mode is misaligned for most people.
+>>
+>> The average user of a distribution (personal or professional) is at much
+>> greater risk of a compromise due to an unpatched security vulnerability
+>> than due to malicious code introduced in the distribution package update
+>> stream.  Both are *possible*, but one of them is far more common (I would
+>> even say by orders of magnitude).  Determining which updates are security
+>> updates is tedious and requires a lot of discipline; it's something that
+>> humans are generally bad at, and the failure mode is usually to not apply
+>> the update.  Many security updates are not explicitly flagged as such (see
+>> all the recent discussions on this list about CVEs).
+>>
+>> The average user is therefore best served by applying all distribution
+>> updates.  Choosing not to update to reduce your risk of a supply chain
+>> attack is a very advanced technique, and I would tell people to think very
+>> hard about whether they want to sign up for the necessary cognitive load
+>> and disciplined decision-making required to identify relevant security
+>> updates that they need to apply.
+> 
+> I fully agree.
+> 
+> Yet I think it's an option that people with a background and concerns
+> like Georgi's would want to at least consider.  Not typical end-users.
 
-Thanks,
+Agreed.  Security starts with the people doing the initial integration and
+review.  Then every step on the chain builds on this.  So if any place in this
+chain is compromised (before the end user downloads their magic package), then
+they will be affected.
 
-Alexander
+In the past I had been involved with trying to evaluate the security quality of
+packages.  This involved security process information, code contribution review,
+release process, etc.  There is no "one" way to do this that I'm aware of, but I
+think a good analogy from someone in manufacturing.  You either need to treat
+your input as 'raw material' and do your own (quality, including security)
+review or you need to trust your supplier.  Even when you trust your supplier,
+you still need to do (quality) spot checks.
+
+I don't see anything different when working on the provenance of the components
+being used.  Either you trust the upstream enough that all that is needed are
+spot checks, or you don't trust them at all and all new changes must be reviewed.
+
+Then the next step of the chain is your user either has to trust you, or perform
+the same actions.
+
+There are block chain processes for tracing bill of materials which could be
+used for this.  Every step of the acceptance/delivery could be added to a
+registry and tracked.  At the worst of times this could be used to identify
+where the process failure or system compromise was introduced to help avoid it
+-- at best it shows the people down the line what has been done so they can make
+an informed decision if they trust their supplier or not.
+
+(I'm involved with the Yocto Project/OpenEmbedded components.  We treat the
+incoming code as raw materials and attempt to do our own reviews of not only the
+upstream code and the submitted community work.  Not, this is not specific to
+'security', and trusted maintainers get less review then the new guy who hasn't
+contributed before.)
+
+--Mark
+
+> Alexander
+> 
