@@ -1,32 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/20/4
-Message-ID: <CAMufup624wBE-jowWQo9wuTaMT7Hf3QC-VMniFUTJhwM7C4ikQ@mail.gmail.com>
-Date: Fri, 20 Sep 2019 15:32:05 +0200
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/20/2
+Message-ID: <87wobumq8e.fsf@hope.eyrie.org>
+Date: Wed, 20 Nov 2019 09:06:57 -0800
+From: Russ Allbery <eagle@...ie.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-10090] Apache JSPWiki Cross-site scripting vulnerability on plain editor
+Subject: Re: Mitigating malicious packages in gnu/linux
 Content-Type: text/plain; charset=utf-8
 
- Severity
-Medium
+Solar Designer <solar@...nwall.com> writes:
 
-Vendor
-The Apache Software Foundation
+> Contrary to traditional best practices, update only what and when needs
+> to be updated.  (Of course, you take responsibility to watch for any
+> relevant security updates, or accept the risk if you neglect to do that.
+> You also miss silent security fixes, but on the other hand you similarly
+> miss newly introduced vulnerabilities.)
 
-Versions Affected
-Apache JSPWiki up to 2.11.0.M4
+I'm very reluctant to give this advice, not because it's wrong, but
+because the failure mode is misaligned for most people.
 
-Description
-A carefully crafted plugin link invocation could trigger an XSS
-vulnerability on Apache JSPWiki, related to the plain editor, which could
-allow the attacker to execute javascript in the victim's browser and get
-some sensitive information about the victim.
+The average user of a distribution (personal or professional) is at much
+greater risk of a compromise due to an unpatched security vulnerability
+than due to malicious code introduced in the distribution package update
+stream.  Both are *possible*, but one of them is far more common (I would
+even say by orders of magnitude).  Determining which updates are security
+updates is tedious and requires a lot of discipline; it's something that
+humans are generally bad at, and the failure mode is usually to not apply
+the update.  Many security updates are not explicitly flagged as such (see
+all the recent discussions on this list about CVEs).
 
-Mitigation
-Apache JSPWiki users should upgrade to 2.11.0.M5 or later.
+The average user is therefore best served by applying all distribution
+updates.  Choosing not to update to reduce your risk of a supply chain
+attack is a very advanced technique, and I would tell people to think very
+hard about whether they want to sign up for the necessary cognitive load
+and disciplined decision-making required to identify relevant security
+updates that they need to apply.
 
-Credit
-This issue was discovered by Dirk Frederickx, from Apache JSPWiki.
-
-ref: https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-10090
-
+-- 
+Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
