@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/6
-Message-Id: <2XW7E21KHVYC6.30SSXH9R06ZEM@seraph.netsend.nl>
-Date: Tue, 19 Nov 2019 15:37:23 +0100
-From: Tim Kuijsten <info+oss-security@...send.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/20/7
+Message-ID: <20191120194339.hu25lkzlozia2mme@yuggoth.org>
+Date: Wed, 20 Nov 2019 19:43:39 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
 Subject: Re: Mitigating malicious packages in gnu/linux
 Content-Type: text/plain; charset=utf-8
 
-> There is not a definitive solution here. But there are multiple efforts and
-> research going on. The most important one, in my opinion, is the reproducible
-> builds project [1]. We need to ensure we are not inserting random or
-> non-deterministic data into our build artifacts. This stretches from upstream
-> developers providing tarballs, to pre-compiled sources and packages from
-> distributions. There is no distribution today that has full reproducible builds,
-> but there are many projects that work towards this and work on reproducible
-> builds.
+On 2019-11-20 13:28:04 -0600 (-0600), Bob Friesenhahn wrote:
+[...]
+> Modern GNU/Linux systems have far too much executing code to
+> reasonably secure. Paring down the amount of executing code helps
+> quite a lot with improving security.
 
-One attack that is not solved by reproducible builds is one on the toolchain.
-This can be solved with bootstrappable builds[1] which is about minimizing the
-number of trusted binaries that are needed to produce the toolchain, that
-produced the toolchain, ... that was used to build your package.
+In your opinion, how does this compare with proprietary operating
+systems? Do they have more or less code executed than modern
+GNU/Linux systems (or can we even know)? How about the popular BSD
+Unix derivatives? What is your benchmark for the correct amount of
+code to be executed, or is this analysis based on comparison with an
+abstract ideal operating system archetype?
+-- 
+Jeremy Stanley
 
-There was a talk this year called "Bitcoin Build System Security" by Carl Dong
-about this topic[2].
-
-[1] https://bootstrappable.org
-[2] https://www.youtube.com/watch?v=I2iShmUTEl8
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
