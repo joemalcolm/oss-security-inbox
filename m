@@ -1,108 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/08/1
-Message-ID: <1231027090.320367.1570526433648@email.ionos.fr>
-Date: Tue, 8 Oct 2019 11:20:33 +0200 (CEST)
-From: Guillaume Quéré <guillaume@...re.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/20/4
+Message-ID: <CANuUHoGe6x5ntTBMMX0rLDFWbFeMd3FXGKJtrK5NjF=t7QV-0Q@mail.gmail.com>
+Date: Wed, 20 Nov 2019 12:14:50 -0500
+From: Aditya Sirish Arunkumar Yelgundhalli <asy278@....edu>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Centreon-Web and Centreon-VM
+Subject: Re: Mitigating malicious packages in gnu/linux
 Content-Type: text/plain; charset=utf-8
 
-Centreon
-========
-"Centreon is the N°1 Open Source IT Infrastructure Monitoring Solution."
+Hi,
 
-Multiple vulnerabilites were discovered in Centreon-Web in december 2018 and fixed in early 2019 over the course of two minor releases on both branches in versions 2.8.27/2.8.28 and 18.10.4/18.10.5.
+My name is Aditya, and I represent the NYU Secure Systems Lab, where we
+actively research and develop solutions for the kind of problems discussed
+in this thread.
 
-https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-2.8/centreon-2.8.27.html
-https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-2.8/centreon-2.8.28.html
-https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-18.10/centreon-18.10.4.html
-https://documentation.centreon.com/docs/centreon/en/latest/release_notes/centreon-18.10/centreon-18.10.5.html
+In particular, we believe that a combination of The Update Framework (TUF)
+and in-toto will help to address the problem of malicious packages. TUF is
+the technology that ensures that packages have not been tampered between
+the repository and end-users, whereas in-toto is the technology that
+ensures that packages have been built correctly by the CI/CD using source
+code signed by developers, securing the software supply chain end to end. A
+critical property of both technologies is that they are fundamentally
+designed to be resilient against a compromise of some signing keys in the
+system. By combining both TUF and in-toto [X], it is possible for a Linux
+distribution to guarantee that packages have not been tampered with
+anywhere between developers and end-users, despite being built and
+distributed by machines.
 
-Additional vulnerabilities were found in Centreon-VM that have not yet been fixed.
+TUF is the de-facto standard for signing container images, used by Docker,
+IBM, and Microsoft. It is also being used by Google to update everything on
+their next-gen Fuchsia OS. A version of TUF called Uptane has been
+standardized for use by North American ground vehicles [Y]. in-toto is
+being used to verify reproducible builds for Debian packages.
 
+We would be happy to help your community integrate both technologies, if so
+desired. Let us know if you have questions!
 
-High impact
-===========
+Thanks,
 
-CVE-2019-17017: Authenticated RCE in minPlayCommand.php
--------------------------------------------------------
-Details: https://github.com/centreon/centreon/pull/7099
-Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7245)
-Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7232)
+Aditya
 
-CVE-2018-21023: Authenticated RCE in getStats.php
--------------------------------------------------
-Details: https://github.com/centreon/centreon/pull/7083
-Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7271)
-Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7195)
+[X]
+https://www.datadoghq.com/blog/engineering/secure-publication-of-datadog-agent-integrations-with-tuf-and-in-toto/
+[Y]
+https://uptane.github.io/papers/ieee-isto-6100.1.0.0.uptane-standard.html
 
-CVE-2018-21024: Arbitrary File Upload in licenseUpload.php
-----------------------------------------------------------
-Details: https://github.com/centreon/centreon/pull/7085
-Did not affect branch 2.8.x
-Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7171)
+On Wed, Nov 20, 2019 at 7:45 AM Solar Designer <solar@...nwall.com> wrote:
 
-CVE-2018-21021: Authenticated SQL injection in img_gantt.php
-------------------------------------------------------------
-Details: https://github.com/centreon/centreon/pull/7086
-Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7169)
-Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7086)
+> On Tue, Nov 19, 2019 at 01:33:48PM +0200, Georgi Guninski wrote:
+> > As end user and contributor of gnu/linux, I am concerned about malicious
+> > packages (either hostile developers or hacked developers or another
+> reason)
+> > and have two questions:
+> >
+> > * What do linux vendors to avoid malicious packages?
+>
+> Back when Openwall GNU/*/Linux was being actively developed, I used to
+> review each contributor's changes before making them public.  I also
+> (re-)verified authenticity of third-party source tarballs instead of
+> blindly trusting whatever the contributor could have uploaded to us.
+> (I'd do the same now, but without active development there's simply
+> nothing to review lately.)
+>
+> Of course, this approach doesn't scale as-is (with just one person to
+> review and publish everything) to larger distros, but some kind of peer
+> review can and should be present.
+>
+> > * As end user what can I do to mitigate malicious packages?
+>
+> Try to install only what's needed, or not a lot more than what's needed.
+> (Can't be done perfectly with larger distros and their dependency hell.)
+>
+> Contrary to traditional best practices, update only what and when needs
+> to be updated.  (Of course, you take responsibility to watch for any
+> relevant security updates, or accept the risk if you neglect to do that.
+> You also miss silent security fixes, but on the other hand you similarly
+> miss newly introduced vulnerabilities.)
+>
+> Use a long-term support distro, preferably starting half-way into its
+> lifetime when updates are already infrequent.  (Similar risk of missing
+> silent security fixes in new upstream versions, but also avoiding new
+> vulnerabilities.)
+>
+> Setup packet filters with blocking and logging of unexpected outbound
+> packets, including to console so that you'd notice.
+>
+> Setup custom anomaly detection and actually watch it - e.g., for new
+> programs running that haven't ever run before, etc.
+>
+> Use multiple pseudo-user accounts (doesn't protect against issues in
+> packages' pre/post-install scripts, etc.), containers, VMs - but even
+> then you have the risk of getting the same malicious package in multiple
+> VMs, which e.g. on Qubes OS could happen through updating a template VM.
+>
+> Alexander
+>
 
-CVE-2018-21022: Authenticated SQL injection in makeXML_ListServices.php
------------------------------------------------------------------------
-Details: https://github.com/centreon/centreon/pull/7087
-Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7229)
-Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7229)
-
-CVE-2019-17108: Stored XSS in brokerPerformance.php
----------------------------------------------------
-Details: https://github.com/centreon/centreon/pull/7101
-Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7226)
-Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7227)
-
-
-Medium impact
-=============
-CVE-2018-21025: Privilege Escalation in Centreon-VM
----------------------------------------------------
-Details: https://github.com/centreon/centreon/issues/7082
-Not yet fixed.
-While checking if this was still possible in centreon-vm-19.04-2 (it is), I found another similar privesc which didn't exist at the time:
-```
-[root@...treon-central ~]# grep centreon_autodisco /etc/cron.d/centreon-auto-disco
-30 22 * * * root /usr/share/centreon/www/modules/centreon-autodiscovery-server//cron/centreon_autodisco --config='/etc/centreon/conf.pm' --config-extra='/etc/centreon/centreon_autodisco.pm' --severity=error >> /var/log/centreon/centreon_auto_discovery.log 2>&1
-[root@...treon-central ~]# ls -la /usr/share/centreon/www/modules/centreon-autodiscovery-server//cron/centreon_autodisco
--rwxr-xr-x 1 apache apache 4995482 24 avril 13:48 /usr/share/centreon/www/modules/centreon-autodiscovery-server//cron/centreon_autodisco
-```
-
-CVE-2019-17104: Unsecured cookies in Centreon-VM
-------------------------------------------------
-Details: https://github.com/centreon/centreon/issues/7097
-Not yet fixed.
-
-CVE-2019-17106: Display of cleartext external passwords in modules
-------------------------------------------------------------------
-Details: https://github.com/centreon/centreon/issues/7098
-Not yet fixed.
-
-
-Low impact
-==========
-CVE-2018-21020: Type juggling on authentication in centreonAuth.class.php
--------------------------------------------------------------------------
-Details: https://github.com/centreon/centreon/pull/7084
-Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7084)
-Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7219)
-
-CVE-2019-17105: Usage of a predictable generator for a security token in index.php
-----------------------------------------------------------------------------------
-Details: https://github.com/centreon/centreon/pull/7100
-Not fixed in 2.8.x  (https://github.com/centreon/centreon/pull/7224)
-Fixed in 18.10.5    (commit 4faf5919f89bd06a5c25152c39ba3f25a4f16a81)
-
-
-Acknowledgements
-================
-Thanks to Centreon for their quick and enthusiastic response as well as their commitment to patching.
-
-Guillaume Quéré
