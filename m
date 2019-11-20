@@ -1,4 +1,9 @@
-Received: (qmail 17620 invoked by uid 550); 29 Apr 2022 11:31:16 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2040" "Wednesday" "20" "November" "2019" "19:52:11" "+0000" "ISC Security Officer" "security-officer@isc.org" "<4a79bee5-ad58-83bf-8279-26c3f7224ee0@isc.org>" "65" "[oss-security] BIND9 CVE-2019-6477" nil nil nil "11" "2019112019:52:11" "[oss-security] BIND9 CVE-2019-6477" (number mark "U       security-off Nov 20   65/2040  " thread-indent "\"[oss-security] BIND9 CVE-2019-6477\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] BIND9 CVE-2019-6477" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11878 invoked by uid 550); 20 Nov 2019 20:23:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,87 +12,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7391 invoked from network); 28 Apr 2022 23:36:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=hsLXX/rFzML/Jw3kHBF5sjKq4wfJstL6v+jJf9hfykU=;
-        b=hlT1jX1YPIZO3Xt/Ds+Ajqw7STjjn1bX+Xw9+IVCVnFhGzISiOAFd+CsXm1RuAFs71
-         Uq+VhQqmQmy8k5mDrkbL8gdiujvpk1b4bTbuIBFg5bQqPexkMUZJYRLsZldiJbgNQMlB
-         g3BnJ90jIg/3HPCx2zx+1vWWKqRIScyKdONg/129SdMSTJuBEjBX0Xqwh6DPu5EZQaiB
-         QD0OpnxuaX7B4d0rgy86iPp7xUtSmtNPYyRxsHfaAPcd5UYvJ4ZZHhH+IYENrb5XMYQQ
-         6F1Ms8qDJ3NyPYjlHLKoP5Bk7mnsFyqebkIOD/CH9OxlJu6FCxiG6icjuJ3/sscLO0tU
-         V2VQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=hsLXX/rFzML/Jw3kHBF5sjKq4wfJstL6v+jJf9hfykU=;
-        b=2sx+vs8YPRyoogl+TD/sO/79mNGPSC+gKwQONfFGnYNL+4plIKBal0jLptyPp/iMdy
-         NTOthU5o7NSdtlvTbYqoqKgj55KOxLc9Euwe9gEtMUobOTWuNA5GAnS/LUSp0VwXjk4s
-         UvWlce6S/KjzEFX/mxG5sQbLxceRkk57PKuKQuGK+YhxkH9QEVNsNez2sJ0T3VOq+r5F
-         IOS/jK9fKTdNMLJFOmX4euZooODcNSLGGmGbn+6ml0AW/reYIlqXeWXWPWFAbS43/KpK
-         DW0Vus85QI4TUxPpJeddOTbqC6qNtD+5EgTGQm4CC+LQBgPyo73fww5wMBYT3QBQnNJK
-         iwDg==
-X-Gm-Message-State: AOAM530nd+42j+5rxS0mo3rn/C5xmfTJQ+RMU/pceEESQSCwBWCAlrWk
-	70h4EN02sXnGRqYitVAjM3SpRx0GYmY/4KPfXulI35hsDB0=
-X-Google-Smtp-Source: ABdhPJznbz071BVmxsbJKby1vYO/I8DxBVjYTY3lOV8okR0BA9PHpkNq57jBMLRSLied1TIIoBKWqRkoF/2PmjZXmVo=
-X-Received: by 2002:a63:1014:0:b0:399:3710:f204 with SMTP id
- f20-20020a631014000000b003993710f204mr30280653pgl.424.1651188993521; Thu, 28
- Apr 2022 16:36:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <484488E0-D662-4F58-80DB-499DE532FA3B@akamai.com>
- <20220428201003.GA1260523@millbarge> <142a2b8b-f5f5-526e-741f-35337a5a81f2@tao.at>
-In-Reply-To: <142a2b8b-f5f5-526e-741f-35337a5a81f2@tao.at>
-From: Iron-Bound <iron.bound@gmail.com>
-Date: Fri, 29 Apr 2022 01:36:21 +0200
-Message-ID: <CABTdhR-fZD5_vJU4-VyRo3Bz8A-yTZbCPjjUe=4GT6VqM_0VNw@mail.gmail.com>
+Received: (qmail 30634 invoked from network); 20 Nov 2019 19:52:26 -0000
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000006a7ea805ddbf65d9"
-Subject: Re: [oss-security] CVE-2022-21449 and version reporting
+From: ISC Security Officer <security-officer@isc.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=security-officer@isc.org; prefer-encrypt=mutual; keydata=
+ mQENBEsnyOQBCAC+WKYHcaDGD9a2ztwdccmhnzo0YJ9SOPVIonqGxCa6o8TwfipyH9Wh5uFq
+ c6Ne+I0+vWohQtBIeodQHgGGlbjdxMp3QxohvqCmZcoObH7kjI1lpKQ6TMvRvo79pq5WRIuE
+ +Jbm6Rt9Hz3w9APrYzISzeCuHFK7vlZfaLdoI0SxzEuzMmyOvQpa6dgSKQF6G2Nsbz1RYujZ
+ 6fE6GXtc+I9q44yJS4llYpUqYpPh5CsfbDx8HwMWPj9eYOwjf3/vniFeG9tHIB8E+p7UBTG7
+ bTVRlEgmyC1Ry0OPO3UPKjL/Dja8IeeJamT0dlsRCD/O/WTyxQg9EceCgUvOz65puKkrABEB
+ AAG0L0lTQyBTZWN1cml0eSBPZmZpY2VyIDxzZWN1cml0eS1vZmZpY2VyQGlzYy5vcmc+iQEx
+ BBMBAgAbBQJLJ8jkAhsDBgsJCAcKAgQVCggCAh4BAheAAAoJEL2X3GOe6MR7gZYIAI4uSaX7
+ HwU2ywaCO77q5O/Zzzp6M+Oi+z7G00GFpACMSDSjX8kbZoIIW7FXb9US/9XLwqDtjlrGOLbd
+ zcZ/+EMsJM/HpT796YH8Y9gMpsH5SZq5gByeguT6KgjqF2w8yNX7/r0AM3psfVSv9l595CoJ
+ WNbDBHqGpqMi55SqKLCQOJ8noDp4x+JVNcJ1AdK/QVSk+gEhLqrvoYNyG8B/C2LL1fBQC8sF
+ kX/M1mKlkM83GnJlPWCrig69VlR+relppEuZ5G34z93c9NtCqdH6zLzzej2qmwLb/dYJYvhE
+ EMDlgvlSWw6yaJTuuEfuqHonrgOTXgb3Ln8A7XJECuSgWrK5AQ0ESyfI5AEIAKUsrY4AxF87
+ HvBEqhCXIt1o8plzVoIT5kY/p2n48U+oNGl5v4qNiC4SQZIvsA+Fcew8BhAYbNFTOsK/NKVO
+ yiLkLOqQnkuBlESzzvMcl0gSuX1t99V2SJpCKukCa+jkTcjJnURODJn5Wp9GLAWXutxJvJnT
+ t4oxcnAKun6Zt1vyOQs2lI9zXCTi8AdDKTiA/Es66CPVCRcMFUS6l9ArN57gUP0KRj8N0OfO
+ QPdzShnGrSdtM0D2Ei2pmUcgkvSIeNU5HRd2iMpWGO1L8yfGQvp7dzjWbG7i/2RTnZ+KR3a2
+ OMmtXUNuWQF3AfohS0TRTAcAR7IgOLzyy2prT9XKtCcAEQEAAYkBHwQYAQIACQUCSyfI5AIb
+ DAAKCRC9l9xjnujEeze1CAC4A+KZdRi08gBxG4hKuvpL0fHfwnVmrLR39c0mQR9tE+iUcOez
+ qER3z2fn/Zm5nMTZcauzCXMmFXwKWlGufiDrXVqKCyEHkYyBnn3U9ksRigo8eG/X3+G3US9k
+ 0c7FfWaIrOY2IdGWUQic0ENOu/94VAFaleI4BBQvnDIY6hr4Fm14qXgssF7YwcEreoUU+Ayh
+ Yc52tlDssU9DUaX/vn7OD42FIzpUzgUyoZ97UtPX+m9P5YN2Teeq0iVkcxxmT9wuNYCCZb1W
+ 03hvcA8uwvRkNDbdQ//dma2gXdUPoXfBJT4kLo1/KV5GimPHdn0h172E1RKLgKtrJ58TVTJ6 UV1r
+Organization: Internet Systems Consortium
+Message-ID: <4a79bee5-ad58-83bf-8279-26c3f7224ee0@isc.org>
+Date: Wed, 20 Nov 2019 19:52:11 +0000
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.1
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="tS17z1qfWmu69PdcR2SRtv9RLT7u5eWs7"
+Subject: [oss-security] BIND9 CVE-2019-6477
 
---0000000000006a7ea805ddbf65d9
-Content-Type: text/plain; charset="UTF-8"
+--tS17z1qfWmu69PdcR2SRtv9RLT7u5eWs7
+Content-Type: multipart/mixed; boundary="PyUP5nzwCeyzYaEi7Ofxbw45PE8QGBytO";
+ protected-headers="v1"
+From: ISC Security Officer <security-officer@isc.org>
+To: oss-security@lists.openwall.com
+Message-ID: <4a79bee5-ad58-83bf-8279-26c3f7224ee0@isc.org>
+Subject: BIND9 CVE-2019-6477
+
+--PyUP5nzwCeyzYaEi7Ofxbw45PE8QGBytO
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-As for the corp in question, you can expect the legal/PR team is involved
-for any 'perceived' damage.
+Today (2019-11-20) ISC announced a vulnerability in our BIND 9 software.
 
-> Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
-> Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
-> etc for every single vulnerability discovered in newest products?
+   CVE-2019-6477, TCP-pipelined queries can bypass tcp-clients limit
 
-Last time I checked we don't have source to review Microsoft products..
-Would also make the argument that unsupported software having CVE's is an
-extra wedge to force companies to update that old unloved application in
-the corner!
+This issue affects BIND 9.11, BIND 9.14, and BIND 9.15.
 
-On Thu, Apr 28, 2022 at 11:38 PM Sven Schwedas <sven.schwedas@tao.at> wrote:
+Our full CVE text can be found at:
 
->
-> On 28.04.22 22:10, Seth Arnold wrote:
-> > On Thu, Apr 28, 2022 at 02:12:04PM +0000, Seaman, Chad wrote:
-> >> In what universe exactly are versions omitted from vulnerability
-> >> reporting because a vendor =E2=80=9Cno longer supports that version=E2=
-=80=9D=E2=80=A6 this
-> >> non-supported version is still vulnerable?
-> >
-> > A large part of software maintenance is managing technical debt --
-> > and being able to walk away from no-longer-supported products is an
-> > important part of that.
-> >
-> > Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
-> > Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
-> > etc for every single vulnerability discovered in newest products?
->
-> You and Jeremy arguing in bad faith here, OP didn't ask about anything
-> like that.
->
-> The problem at hand is, someone *already did all that work*, and Oracle
-> is *actively intervening* to have it dropped from CVE reports.
->
-> So the question is: Why is vulnerability information that already exists
-> being censored?
->
+    https://kb.isc.org/docs/cve-2019-6477
 
---0000000000006a7ea805ddbf65d9--
+New releases of BIND, including security fixes for this vulnerability,
+are available at:
+
+    https://www.isc.org/download
+
+Release notes for the new versions can be obtained using the following
+links:
+
+
+https://downloads.isc.org/isc/bind9/9.15.6/RELEASE-NOTES-bind-9.15.6.html
+
+https://downloads.isc.org/isc/bind9/9.14.8/RELEASE-NOTES-bind-9.14.8.html
+
+https://downloads.isc.org/isc/bind9/9.11.13/RELEASE-NOTES-bind-9.11.13.html
+
+--=20
+Cathy Almond
+ISC Support
+Acting Security Officer
+
+
+--PyUP5nzwCeyzYaEi7Ofxbw45PE8QGBytO--
+
+--tS17z1qfWmu69PdcR2SRtv9RLT7u5eWs7
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
+
+iQEzBAEBCgAdFiEEempHtfnhIzrSVStcvZfcY57oxHsFAl3VmWsACgkQvZfcY57o
+xHuzUwgAiMH1FxlGK56bGPzHIN2nI1uQox8vNvWQQGViKe6YaChlZ9Yc6xijTs2F
+TKGK3r5euE0rKAa9/30SQNpEPiXQYY5+1e77NWzv91hDDatwP3U3QeToZqi2qeyL
+1L0Bmuzz6/V3e2whBLTo9Aa8huvkJS4az/k5wHx52EMutVVTIB00TMXr2cBFC73Y
+vnR4eij36hkBkyurvN3WEYZRPcq6qjrmSjhzaqtibAw7JKVth0NKnw8w9N6Bsv43
+XmKoWyZ94j6dTSUm9qlYKnwECFXbVh1hM3YQbUyuWEJ8MqNjqUq7fFYqunr+t+16
+G6q+d6mV/SUBkqaIRQAsmTSF1WV6/g==
+=HxkV
+-----END PGP SIGNATURE-----
+
+--tS17z1qfWmu69PdcR2SRtv9RLT7u5eWs7--
