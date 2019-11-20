@@ -1,19 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/05/3
-Message-ID: <CALv8orHJWUHYVmSJ6KYKjhT_09_LFuYFtbdJj1gx87Gm0sp-+A@mail.gmail.com>
-Date: Sun, 5 May 2019 15:37:08 +0530
-From: Pramod Rana <varchashva@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/20/3
+Message-ID: <20191120174915.GA27616@openwall.com>
+Date: Wed, 20 Nov 2019 18:49:15 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Cross Site Scripting | WolfCMS v0.8.3.1 and before
+Subject: Re: Mitigating malicious packages in gnu/linux
 Content-Type: text/plain; charset=utf-8
 
-Description: WolfCMS v0.8.3.1 and before is vulnerable to cross site
-scripting in User Add module for parameter Name.
+On Wed, Nov 20, 2019 at 09:06:57AM -0800, Russ Allbery wrote:
+> Solar Designer <solar@...nwall.com> writes:
+> 
+> > Contrary to traditional best practices, update only what and when needs
+> > to be updated.  (Of course, you take responsibility to watch for any
+> > relevant security updates, or accept the risk if you neglect to do that.
+> > You also miss silent security fixes, but on the other hand you similarly
+> > miss newly introduced vulnerabilities.)
+> 
+> I'm very reluctant to give this advice, not because it's wrong, but
+> because the failure mode is misaligned for most people.
+> 
+> The average user of a distribution (personal or professional) is at much
+> greater risk of a compromise due to an unpatched security vulnerability
+> than due to malicious code introduced in the distribution package update
+> stream.  Both are *possible*, but one of them is far more common (I would
+> even say by orders of magnitude).  Determining which updates are security
+> updates is tedious and requires a lot of discipline; it's something that
+> humans are generally bad at, and the failure mode is usually to not apply
+> the update.  Many security updates are not explicitly flagged as such (see
+> all the recent discussions on this list about CVEs).
+> 
+> The average user is therefore best served by applying all distribution
+> updates.  Choosing not to update to reduce your risk of a supply chain
+> attack is a very advanced technique, and I would tell people to think very
+> hard about whether they want to sign up for the necessary cognitive load
+> and disciplined decision-making required to identify relevant security
+> updates that they need to apply.
 
-Impacted URL is http://[your_webserver_ip]/wolfcms/?/admin/user/add
+I fully agree.
 
-Payload used is "TestXSS><img src=x onmousover=alert(document.cookie)>
+Yet I think it's an option that people with a background and concerns
+like Georgi's would want to at least consider.  Not typical end-users.
 
-Further details: https://github.com/wolfcms/wolfcms/issues/683
-
-Already requested for CVE, yet to receive it.
+Alexander
