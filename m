@@ -1,69 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/22/1
-Message-ID: <20190122155216.4fx6xh3tlohmxe3n@storm.m.i2n>
-Date: Tue, 22 Jan 2019 16:52:16 +0100
-From: Thomas Jarosch <thomas.jarosch@...ra2net.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/20/1
+Message-ID: <20191120124425.GA25554@openwall.com>
+Date: Wed, 20 Nov 2019 13:44:25 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
+Subject: Re: Mitigating malicious packages in gnu/linux
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-You wrote on Thu, Oct 18, 2018 at 01:25:29PM +0000:
-> ‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
-> On Thursday, October 18, 2018 2:32 PM, Tavis Ormandy <taviso@...gle.com> wrote:
+On Tue, Nov 19, 2019 at 01:33:48PM +0200, Georgi Guninski wrote:
+> As end user and contributor of gnu/linux, I am concerned about malicious
+> packages (either hostile developers or hacked developers or another reason)
+> and have two questions:
 > 
-> > On Thu, Oct 18, 2018 at 3:51 AM Jordan Glover <Golden_Miller83@...tonmail.ch> wrote:
-> >
-> >> Do you know if upstream is going to make new release soon or distros should take the
-> >> pain and backport all of those themselves?
-> >
-> > AFAIK upstream only makes quarterly releases, so I think you need to backport.
-> >
-> > Tavis.
-> 
-> In normal, boring times yes but 9.25 was available just 10 days after 9.24 as urgent security
-> release and it seems it was still not enough.
+> * What do linux vendors to avoid malicious packages?
 
-just a quick follow up: ghostscript 9.26 was released on 2018-11-20
-and fixes the issue demonstrated by the exploit posted in:
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1696
+Back when Openwall GNU/*/Linux was being actively developed, I used to
+review each contributor's changes before making them public.  I also
+(re-)verified authenticity of third-party source tarballs instead of
+blindly trusting whatever the contributor could have uploaded to us.
+(I'd do the same now, but without active development there's simply
+nothing to review lately.)
 
-*******************************************
-# gs executeonly-bypass.pdf 
-GPL Ghostscript 9.26 (2018-11-20)
-Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
-This software comes with NO WARRANTY: see the file PUBLIC for details.
-what do we want?
-        deprecate untrusted postscript!
-when do we want it?
-        now!
-Error: /undefined in .policyprocs
-Operand stack:
-   --dict:967/1684(ro)(G)--   SAFER   false   --dict:0/0(L)--   --dict:0/0(L)--  
- --dict:967/1684(ro)(G)--   (ignored)   SAFER   false
-Execution stack:
-   %interp_exit   .runexec2   --nostringval--   --nostringval--   
---nostringval--   2   %stopped_push   --nostringval--   --nostringval--   
---nostringval--   false   1   %stopped_push   2029   1   3   %oparray_pop   2028 
-  1   3   %oparray_pop   2009   1   3   %oparray_pop   1868   1   3   
-%oparray_pop   --nostringval--   %errorexec_pop   .runexec2   --nostringval--   
---nostringval--   --nostringval--   2   %stopped_push   --nostringval--   
---nostringval--
-Dictionary stack:
-   --dict:967/1684(ro)(G)--   --dict:0/20(G)--   --dict:79/200(L)--
-Current allocation mode is local
-Current file position is 575
-GPL Ghostscript 9.26: Unrecoverable error, exit code 1
-*******************************************
+Of course, this approach doesn't scale as-is (with just one person to
+review and publish everything) to larger distros, but some kind of peer
+review can and should be present.
 
-The release timeline of the vendor Artifex is also quite good:
+> * As end user what can I do to mitigate malicious packages?
 
-9.24: 2018-09-03
-9.25: 2018-09-13
-9.26: 2018-11-20
+Try to install only what's needed, or not a lot more than what's needed.
+(Can't be done perfectly with larger distros and their dependency hell.)
 
-Fedora 28 is f.e. still vulnerable though.
+Contrary to traditional best practices, update only what and when needs
+to be updated.  (Of course, you take responsibility to watch for any
+relevant security updates, or accept the risk if you neglect to do that.
+You also miss silent security fixes, but on the other hand you similarly
+miss newly introduced vulnerabilities.)
 
-Best regards,
-Thomas Jarosch
+Use a long-term support distro, preferably starting half-way into its
+lifetime when updates are already infrequent.  (Similar risk of missing
+silent security fixes in new upstream versions, but also avoiding new
+vulnerabilities.)
+
+Setup packet filters with blocking and logging of unexpected outbound
+packets, including to console so that you'd notice.
+
+Setup custom anomaly detection and actually watch it - e.g., for new
+programs running that haven't ever run before, etc.
+
+Use multiple pseudo-user accounts (doesn't protect against issues in
+packages' pre/post-install scripts, etc.), containers, VMs - but even
+then you have the risk of getting the same malicious package in multiple
+VMs, which e.g. on Qubes OS could happen through updating a template VM.
+
+Alexander
