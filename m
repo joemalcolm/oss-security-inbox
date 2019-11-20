@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6679" "Saturday" "26" "December" "2015" "23:34:40" "+0700" "Hans Jerry Illikainen" "hji@dyntopia.com" "<m1a8oxqicf.darpa@darpa.mil>" "210" "[oss-security] libtiff: invalid write (CVE-2015-7554)" nil nil nil "12" "2015122616:34:40" "[oss-security] libtiff: invalid write (CVE-2015-7554)" (number mark "U       hji@dyntopia Dec 26  210/6679  " thread-indent "\"[oss-security] libtiff: invalid write (CVE-2015-7554)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1624" "Wednesday" "20" "November" "2019" "09:06:57" "-0800" "Russ Allbery" "eagle@eyrie.org" "<87wobumq8e.fsf@hope.eyrie.org>" "30" "Re: [oss-security] Mitigating malicious packages in gnu/linux" "^Date:" nil nil "11" "2019112017:06:57" "[oss-security] Mitigating malicious packages in gnu/linux" (number mark "        eagle@eyrie. Nov 20   30/1624  " thread-indent "\"Re: [oss-security] Mitigating malicious packages in gnu/linux\"\n") "<20191120124425.GA25554@openwall.com>" ("<CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>" "<20191120124425.GA25554@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Mitigating malicious packages in gnu/linux" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31833 invoked by uid 550); 26 Dec 2015 16:33:36 -0000
+Received: (qmail 24187 invoked by uid 550); 20 Nov 2019 17:07:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,247 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30653 invoked from network); 26 Dec 2015 16:33:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:subject:date:message-id:mime-version:content-type;
-        bh=mznwQxzYulapaV9gJ46aAueqKSNK+GVwFq9sIoQ4w3o=;
-        b=fWJ25wQHsLVZdoMJwIrQn6VWz5F+GFRCHqenDe4lF8lA2uDsWVb8zUD+2f8v3S1v6v
-         gYjC4IwUA7gYpf5LuLqQu8CrPTZZauChaSI1s4gxEVY5+sIq2O9ByQEmAZrRSvx75aDw
-         VYjkXRemapdtCs30LH/QAJRNpvpOaVtfKsNW3+gQBnM9vs0qV6KmCk+DZokqMAIQeffF
-         KMryzTxaWZUZ+4E+ApT3aUF2JsbpsM2RPdRY+yrSUmOW/Tjk2iYAL8kiod4H4u4KDg+K
-         MORWY5YbiRh8fuksoJ3IicJ4V3DQ+OryTzDrWMGeOefdbAkcjHzreCyftljInNH5ZW9n
-         3u8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-type;
-        bh=mznwQxzYulapaV9gJ46aAueqKSNK+GVwFq9sIoQ4w3o=;
-        b=ZZQY8V1htvwJVET2MfbnagZD5ZTgSXIGBcQWS7USyvRwDiP+0HIFZBVtJ9c319AfBB
-         t2iTAbmPdnlW82kuu25Waktl89OBbiiL1Yv1psYjQN2hEYO3fb6GTn5XB3rVWAb46BxA
-         SwAmO2oCk4kq9X20n11GTH7+YydkRV5P5qSEplKFPm5Q3Ym1nkrnRnNfR9iNq3nZUxD7
-         JndWx/luJgEq9hCvKxt/jRaKYUow5c5f/dvIhQ/0kiJDLHpTfraQwhc9WZU970RyTphP
-         7P8GJST1hWGL88tN6ZliiK+km5wbHfPnzo4QjRUSz2JoqBPppWrwrhSy6fnQWg2GJ2Qz
-         LoIQ==
-X-Gm-Message-State: ALoCoQme5tULOUcYcYH9BvxIlMdRPhg6SH2vx7n4ftylGLKmyu5mboqjGpDxpCKV3Or/SxiBVOJZ40n6Ay2EZwpTkoKT91GwPQ==
-X-Received: by 10.28.93.195 with SMTP id r186mr48344377wmb.37.1451147589368;
-        Sat, 26 Dec 2015 08:33:09 -0800 (PST)
-From: Hans Jerry Illikainen <hji@dyntopia.com>
-To: bugtraq@securityfocus.com, fulldisclosure@seclists.org, oss-security@lists.openwall.com
-Date: Sat, 26 Dec 2015 23:34:40 +0700
-Message-ID: <m1a8oxqicf.darpa@darpa.mil>
+Received: (qmail 24169 invoked from network); 20 Nov 2019 17:07:11 -0000
+In-Reply-To: <20191120124425.GA25554@openwall.com> (Solar Designer's message
+	of "Wed, 20 Nov 2019 13:44:25 +0100")
+Organization: The Eyrie
+References: <CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>
+	<20191120124425.GA25554@openwall.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Message-ID: <87wobumq8e.fsf@hope.eyrie.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-Subject: [oss-security] libtiff: invalid write (CVE-2015-7554)
+Date: Wed, 20 Nov 2019 09:06:57 -0800
+From: Russ Allbery <eagle@eyrie.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Mitigating malicious packages in gnu/linux
+To: oss-security@lists.openwall.com
 
+Solar Designer <solar@openwall.com> writes:
 
-`_TIFFVGetField()' in libtiff-4.0.6 may write field data for certain
-extension tags to invalid or possibly arbitrary memory.
+> Contrary to traditional best practices, update only what and when needs
+> to be updated.  (Of course, you take responsibility to watch for any
+> relevant security updates, or accept the risk if you neglect to do that.
+> You also miss silent security fixes, but on the other hand you similarly
+> miss newly introduced vulnerabilities.)
 
-Each tag has a `field_passcount' variable in their TIFFField struct:
+I'm very reluctant to give this advice, not because it's wrong, but
+because the failure mode is misaligned for most people.
 
-tiff-4.0.6/libtiff/tif_dir.h #276..289:
-,----
-| struct _TIFFField {
-|     uint32 field_tag;                       /* field's tag */
-|     short field_readcount;                  /* read count/TIFF_VARIABLE/TIFF_SPP */
-|     short field_writecount;                 /* write count/TIFF_VARIABLE */
-|     TIFFDataType field_type;                /* type of associated data */
-|     uint32 reserved;                        /* reserved for future extension */
-|     TIFFSetGetFieldType set_field_type;     /* type to be passed to TIFFSetField */
-|     TIFFSetGetFieldType get_field_type;     /* type to be passed to TIFFGetField */
-|     unsigned short field_bit;               /* bit in fieldsset bit vector */
-|     unsigned char field_oktochange;         /* if true, can change while writing */
-|     unsigned char field_passcount;          /* if true, pass dir count on set */
-|     char* field_name;                       /* ASCII name */
-|     TIFFFieldArray* field_subfields;        /* if field points to child ifds, child ifd field definition array */
-| };
-`----
+The average user of a distribution (personal or professional) is at much
+greater risk of a compromise due to an unpatched security vulnerability
+than due to malicious code introduced in the distribution package update
+stream.  Both are *possible*, but one of them is far more common (I would
+even say by orders of magnitude).  Determining which updates are security
+updates is tedious and requires a lot of discipline; it's something that
+humans are generally bad at, and the failure mode is usually to not apply
+the update.  Many security updates are not explicitly flagged as such (see
+all the recent discussions on this list about CVEs).
 
-For example:
-
-tiff-4.0.6/libtiff/tif_fax3.c #1139..1141:
-,----
-| static const TIFFField fax3Fields[] = {
-|     { TIFFTAG_GROUP3OPTIONS, 1, 1, TIFF_LONG, 0, TIFF_SETGET_UINT32, TIFF_SETGET_UINT32, FIELD_OPTIONS, FALSE, FALSE, "Group3Options", NULL },
-| };
-`----
-
-However, `field_passcount' is always assigned TRUE if the tag is
-processed by `_TIFFCreateAnonField()'.  This happens on unsuccessful
-invocations of `TIFFReadDirectoryFindFieldInfo()':
-
-tiff-4.0.6/libtiff/tif_dirread.c #3396..4076:
-,----
-| int
-| TIFFReadDirectory(TIFF* tif)
-| {
-| [...]
-|             TIFFReadDirectoryFindFieldInfo(tif,dp->tdir_tag,&fii);
-|             if (fii == FAILED_FII)
-|             {
-|                 TIFFWarningExt(tif->tif_clientdata, module,
-|                                "Unknown field with tag %d (0x%x) encountered",
-|                                dp->tdir_tag,dp->tdir_tag);
-|                 /* the following knowingly leaks the
-|                    anonymous field structure */
-|                 if (!_TIFFMergeFields(tif,
-|                                       _TIFFCreateAnonField(tif,
-|                                           dp->tdir_tag,
-|                                           (TIFFDataType) dp->tdir_type),
-|                                       1)) {
-| [...]
-| }
-`----
-
-tiff-4.0.6/libtiff/tif_dirinfo.c #627..719:
-,----
-| TIFFField*
-| _TIFFCreateAnonField(TIFF *tif, uint32 tag, TIFFDataType field_type)
-| {
-|     [...]
-|     fld->field_bit = FIELD_CUSTOM;
-|     [...]
-|     fld->field_passcount = TRUE;
-|     [...]
-| }
-`----
-
-If the field for a 1-count extension tag whose `field_passcount' has
-been overridden is later read by `_TIFFVGetField()', this happens:
-
-tiff-4.0.6/libtiff/tif_dir.c #823..1145:
-,----
-| static int
-| _TIFFVGetField(TIFF* tif, uint32 tag, va_list ap)
-| {
-|     [...]
-|     uint32 standard_tag = tag;
-|     [...]
-|     if (fip->field_bit == FIELD_CUSTOM) {
-|         standard_tag = 0;
-|     }
-| 
-|     switch (standard_tag) {
-|         [...]
-|         default:
-|         {
-|             [...]
-|             for (i = 0; i < td->td_customValueCount; i++) {
-|                 [...]
-|                 if (fip->field_passcount) {
-|                     if (fip->field_readcount == TIFF_VARIABLE2)
-|                         *va_arg(ap, uint32*) = (uint32)tv->count;
-|                     else  /* Assume TIFF_VARIABLE */
-|                         *va_arg(ap, uint16*) = (uint16)tv->count;
-|                     *va_arg(ap, void **) = tv->value;
-|                     ret_val = 1;
-|                 }
-|                 [...]
-|             }
-|         }
-|     }
-|     [...]
-| }
-`----
-
-
-With an invocation of `TIFFGetField()' such as:
-
-,----
-| TIFFGetField(tif, TIFFTAG_GROUP3OPTIONS, &dst);
-`----
-
-for a TIFFTAG_GROUP3OPTIONS specified as:
-
-,----
-| 0x24, 0x01, 0x04, 0x00, 0x01, 0x00, 0x00, 0x00, 0x41, 0x41, 0x41, 0x41
-| ^^^^^^^^^^  ^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^
-| tag         type        count                   offset/value
-`----
-
-the count is written to `dst', whereas 0x41414141 is written to
-invalid/arbitrary memory.
-
-
-Using the included tiffsplit utility as an example:
-
-tiff-4.0.6/tools/tiffsplit.c #157..228:
-,----
-| static int
-| tiffcp(TIFF* in, TIFF* out)
-| {
-|     [...]
-|     CopyField(TIFFTAG_YRESOLUTION, floatv);
-|     CopyField(TIFFTAG_GROUP3OPTIONS, longv);
-|     [...]
-| }
-`----
-
-,----
-| $ gdb -q --args tiffsplit tag.tiff
-| Reading symbols from tiffsplit...done.
-| (gdb) r
-| TIFFReadDirectory: Warning, Unknown field with tag 292 (0x124) encountered.
-| 
-| Program received signal SIGSEGV, Segmentation fault.
-| 0xb7f68155 in _TIFFVGetField (tif=0x804d008, tag=292, ap=0xbffff660 "\024\367\377\277\210\366\377\277\200\366\377\277\067\206\004\b0\371\377\267") at tif_dir.c:1056
-| 1056                            *va_arg(ap, void **) = tv->value;
-| (gdb) x/i $eip
-| => 0xb7f68155 <_TIFFVGetField+2229 at tif_dir.c:1056>:	mov    %edx,(%eax)
-| (gdb) x/x $edx
-| 0x804d670:	0x41414141
-| (gdb) x/x $eax
-| 0x41410000:	Cannot access memory at address 0x41410000
-| (gdb)
-`----
-
-
-tag.tiff:
-,----
-| unsigned char tiff[] = {
-|     /* little-endian */
-|     0x49, 0x49,
-| 
-|     /* version */
-|     0x2a, 0x00,
-| 
-|     /* tif->tif_diroff */
-|     0x09, 0x00, 0x00, 0x00,
-|     0x00,
-| 
-|     /* tag count */
-|     0x07, 0x00,
-| 
-|     /* tag    | type      | count                 | offset/value         */
-|     /* TIFFTAG_IMAGEWIDTH */
-|     0x00, 0x01, 0x03, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00,
-|     /* TIFFTAG_IMAGELENGTH */
-|     0x01, 0x01, 0x03, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00,
-|     /* TIFFTAG_BITSPERSAMPLE */
-|     0x02, 0x01, 0x03, 0x00, 0x03, 0x00, 0x00, 0x00, 0x63, 0x00, 0x00, 0x00,
-|     /* TIFFTAG_STRIPOFFSETS */
-|     0x11, 0x01, 0x04, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00,
-|     /* TIFFTAG_STRIPBYTECOUNTS */
-|     0x17, 0x01, 0x03, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00,
-|     /* TIFFTAG_YRESOLUTION */
-|     0x1b, 0x01, 0x04, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x22, 0x00,
-|     /* TIFFTAG_GROUP3OPTIONS */
-|     0x24, 0x01, 0x04, 0x00, 0x01, 0x00, 0x00, 0x00, 0x41, 0x41, 0x41, 0x41,
-| 
-|     /* tif->tif_nextdiroff */
-|     0x00, 0x00, 0x00, 0x00,
-| 
-|     /* bits per sample */
-|     0x08, 0x00,
-|     0x08, 0x00,
-|     0x08, 0x00,
-| };
-`----
-
-
-This issue has been assigned CVE-2015-7554 and it has yet to be fixed.
+The average user is therefore best served by applying all distribution
+updates.  Choosing not to update to reduce your risk of a supply chain
+attack is a very advanced technique, and I would tell people to think very
+hard about whether they want to sign up for the necessary cognitive load
+and disciplined decision-making required to identify relevant security
+updates that they need to apply.
 
 -- 
-Hans Jerry Illikainen
+Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
