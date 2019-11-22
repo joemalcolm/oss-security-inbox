@@ -1,51 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/7
-Message-ID: <20190822165914.GA29435@grsecurity.net>
-Date: Thu, 22 Aug 2019 12:59:14 -0400
-From: Brad Spengler <spender@...ecurity.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/22/1
+Message-ID: <CADt2dQcbonV8WW_ZUfuzVpTir3nSDCdQ+Tf7LVOeGaQsWE=tGQ@mail.gmail.com>
+Date: Fri, 22 Nov 2019 13:38:01 +0800
+From: huangwen <huangwenabc@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+Subject: Linux kernel: three buffer overflow in the marvell wifi driver
 Content-Type: text/plain; charset=utf-8
 
-Sorry, a little too much marketing coming out of this camp these days, and
-this one demands a response.
+Hi,
+There are three buffer overflows in marvell wifi chip driver in Linux
+kernel, allow remote users to cause a denial of service(system crash) or
+possibly execute arbitrary code.
 
-On Thu, Aug 22, 2019 at 09:20:00AM -0700, Greg KH wrote:
-> On Thu, Aug 22, 2019 at 05:16:03PM +0200, Andrey Konovalov wrote:
-> > On a side note, currently there's an issue with many Linux kernel bugs
-> > being fixed, but not backported to distro kernels. Those bugs might
-> > have security implications, but there's no way to know that, unless
-> > someone specifically spends time to assess them in that regard.
-> > Requesting CVEs for those bugs is a way to get the fixes into distro
-> > kernels (even though that doesn't always work promptly [1] :).
-> > 
-> > [1] https://www.openwall.com/lists/oss-security/2018/10/30/2
-> 
-> Note, I am scraping the logs for anything that says it is fixed due do a
-> syzbot find or report and backporting them to the stable kernel
-> branches.  So those distros that do follow the LTS/stable kernel
-> releases do get these fixes.
+Description
+==========
+[1]CVE-2019-14895:Heap Overflow in mwifiex_process_country_ie() function of
+Marvell Wifi Driver in Linux kernel
+The problem is inside mwifiex_process_country_ie() function in
+drivers/net/wireless/marvell/mwifiex/sta_ioctl.c.
+When STA connects to AP, mwifiex_process_country_ie function will be called
+for STA. The function call link is:
+mwifiex_cfg80211_connect()->mwifiex_cfg80211_assoc()->mwifiex_bss_start()->mwifiex_process_country_ie().
+mwifiex_process_country_ie() function parse elements of bss descriptor in
+beacon packet. When processing WLAN_EID_COUNTRY element, there is no upper
+limit check for country_ie_len before calling memcpy,the dst buffer
+domain_info->triplet is a array of length MWIFIEX_MAX_TRIPLET_802_11D(83).
+The remote attacker can build a fake AP sending malicous beacon packet with
+long WLAN_EID_COUNTRY element. When the victim STA connects to fake AP,will
+trigger the heap buffer overflow.
 
-All of the fixes, Greg?  Who backports them?  Would you like to share with
-the list what happens when an upstream fix doesn't apply cleanly to an
-earlier kernel?  What happens when a volunteer doesn't show up to backport
-the fix for you?
+[2]CVE-2019-14896: Heap Overflow in add_ie_rates() function of Marvell Wifi
+Driver in Linux kernel
+The problem is inside add_ie_rates function in
+drivers/net/wireless/marvell/libertas/cfg.c.
+When STA connects to AP, add_ie_rates function will be called for STA.The
+function call link is:
+lbs_cfg_connect()->lbs_associate()->lbs_add_common_rates_tlv()->add_ie_rates().
+The lbs_associate() function parses the elements of cfg80211_bss in beacon
+packet.  The elements in cfg80211_bss  will be copy to cmd->iebuf,
+cmd->iebuf is a array of length 512.When processing WLAN_EID_SUPP_RATES or
+WLAN_EID_EXT_SUPP_RATES element, add_ie_rates() will be called. In
+add_ie_rates() function there is a write statement  in For loop(*tlv++ =
+ie[ap];), the loop count ap_max is len of element  WLAN_EID_SUPP_RATES or
+WLAN_EID_EXT_SUPP_RATES,but it is not checked before the For loop.
+The remote attacker can build a fakeAP sending malicous beacon packet with
+long WLAN_EID_SUPP_RATES and WLAN_EID_EXT_SUPP_RATES elements to make:
+ sum( len(WLAN_EID_SUPP_RATES element) + len(WLAN_EID_EXT_SUPP_RATES
+element) + len(other elements))>512
+When the victim STA connects to fakeAP, will trigger the heap buffer
+overflow.
 
-If security fixes are being tracked as your "everything is fine, nothing to
-see here" reply suggests, we wouldn't be carrying hundreds of security fixes
-your LTS kernels are missing.
+[3]CVE-2019-14897 :Stack Overflow in lbs_ibss_join_existing() function of
+Marvell Wifi Driver in Linux kernel
+The problem is inside add_ie_rates function in
+drivers/net/wireless/marvell/libertas/cfg.c.
+When some STAs work in IBSS mode, they can connect to each other without
+AP. lbs_ibss_join_existing will be called  when STA joins IBSS network. The
+lbs_ibss_join_existing() function parses the elements in cfg80211_bss
+struct. The function ieee80211_bss_get_ie()  is called to get
+WLAN_EID_SUPP_RATES element. There is a write statement  in For
+loop(*rates++ = rate;). But loop count rates_max is not checked before the
+For loop ,the dst buffer rates is  a array of MAX_RATES(14).
+The remote attacker can build a malicous IBSS sending beacon packet with
+long WLAN_EID_SUPP_RATES(len>14). when victim STA connect malicous IBSS,
+will trigger buffer overflow.
 
-You'd also need to explain very easy to find examples like this:
-https://www.spinics.net/lists/stable/msg317698.html
-of random LTS kernels not receiving security fixes.  This particular issue was
-public since April (which is when we backported fixes for it to 4.4/4.14).
-It's now 4 months later and your 4.4 6-year "supported" LTS kernel still
-doesn't contain the fixes.
 
-This list should be for informing people, not for spreading misinformation
-and a sense of security that you must know is false.
+Patch
+==========
+https://patchwork.kernel.org/patch/11256477/
+https://patchwork.kernel.org/patch/11257187/
 
-Thanks,
--Brad
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Credit
+==========
+This issue was discovered by ADLab of Venustech
+
