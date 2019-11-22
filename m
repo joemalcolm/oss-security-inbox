@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2543" "Saturday" "8" "August" "2020" "01:20:29" "+0000" "Seth Arnold" "seth.arnold@canonical.com" "<20200808012029.GD3169683@millbarge>" "75" "Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow" nil nil nil "8" "2020080801:20:29" "[oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow" (number mark "U       seth.arnold@ Aug  8   75/2543  " thread-indent "\"Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow\"\n") "<1596799898.GKATVRZF@httpd.apache.org>" ("<1596799898.GKATVRZF@httpd.apache.org>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2551" "Friday" "22" "November" "2019" "20:51:31" "+0800" "qize wang" "wangqize888888888@gmail.com" "<7FA714F2-4FFA-4781-A2B8-8F18A7EC8015@gmail.com>" "79" "[oss-security] Linux kernel: heap overflow in the marvell wifi driver" "^Cc:" nil nil "11" "2019112212:51:31" "[oss-security] Linux kernel: heap overflow in the marvell wifi driver" (number mark "        wangqize8888 Nov 22   79/2551  " thread-indent "\"[oss-security] Linux kernel: heap overflow in the marvell wifi driver\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: heap overflow in the marvell wifi driver" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20262 invoked by uid 550); 8 Aug 2020 01:20:44 -0000
+Received: (qmail 5376 invoked by uid 550); 22 Nov 2019 14:11:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +11,132 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 12015 invoked from network); 22 Nov 2019 12:51:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :cc:to;
+        bh=3IJvLezvEBwFJV0LFDGnzp+RR3wzFcF96UenOaSkEyo=;
+        b=GhhMSJdqJWJa8JnRf1BrJOKU6OtZ1FbeAlKADRGE2nRgvb+U5jQtq21QKW/l/CoC3J
+         dxuVDzR1rn8HUQSkLQIVA5Sb3l8h7amhztcoeeombb1caIxg8Hss6OHA3jdbE4YMABDA
+         Pkh7B/jmHPxPWAki6tMpa0y+WmKxaM+DFRWTlNF86tNS8zidqwyi2Wxs2t/3X0M+2qov
+         OC3fPCb0O/+p2j8V0NfefXqVXDcKwXlDth2EoXdsYO6JXpe4rZxhE2XDXaaBhDpHk937
+         Tp6LqNzBAYkjwTbzh3NBbTXKlgDjyNmLcQ7P2Mw+nFttHi+b1a/KXxm/+jDvAofZ2eHg
+         AEDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:cc:to;
+        bh=3IJvLezvEBwFJV0LFDGnzp+RR3wzFcF96UenOaSkEyo=;
+        b=EoE6rx/PIbYz9n2KZZEXvHfmi4IMUVChr8J6a/1EZxsNz3j+DJwzARKUB0+JdHpHS1
+         TBN4AKX8o9bTyy0RvoA8oLstRa2HwkptndTft40vo9L3g0HIR7TrmMC1hH41Ek7tZs5/
+         QYTX70tmK24SaPHGXn7QlZws0R2p6T0lOrkQQWmf9JSVGq5vcVZd2tRjCP3TnkkyVcqY
+         SsER9DnqQwWPORqT8Pz8rWnMUSBUpIap4UuKI3quOW43JXtkbSZbdzYZP7xSbl9ozRFM
+         yhPacZzQQa6ypVe7bPrRQwVF+3KC29+RQlEJQQHc2tMRohwXWn79xk9rsfVEokJL1smZ
+         sAQw==
+X-Gm-Message-State: APjAAAXqpatM5jJCT8rr6asejKZ3GJ04DhAGC/3KzGILpAP070RoJEAj
+	NcroSThGJQglGM3DX4MxX99Da5ld8BtBsg==
+X-Google-Smtp-Source: APXvYqwpZmZcgbgMPoOviuLHXX3W5CbsYSdkIRLOZAmuimt7QqBY27NBDY81FbP0lkyJr/miUd9Uzg==
+X-Received: by 2002:a63:1624:: with SMTP id w36mr14682335pgl.404.1574427096504;
+        Fri, 22 Nov 2019 04:51:36 -0800 (PST)
+Content-Type: text/plain;
+	charset=gb2312
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 11.3 \(3445.6.18\))
+Message-Id: <7FA714F2-4FFA-4781-A2B8-8F18A7EC8015@gmail.com>
+X-Mailer: Apple Mail (2.3445.6.18)
+Cc: =?gb2312?B?bGludXgtZGlzdHJvcyChog==?= <linux-distros@vs.openwall.org>,
+ =?gb2312?B?YW1pdGthcndhciChog==?= <amitkarwar@gmail.com>,
+ =?gb2312?B?bmlzaGFudHMgoaI=?= <nishants@marvell.com>,
+ =?gb2312?B?Z2JoYXQgoaI=?= <gbhat@marvell.com>,
+ =?gb2312?B?aHV4aW5taW5nODIwIKGi?= <huxinming820@gmail.com>,
+ =?gb2312?B?a3ZhbG8goaI=?= <kvalo@codeaurora.org>,
+ =?gb2312?B?Z3JlZyChog==?= <greg@kroah.com>,
+ =?gb2312?B?c2VjdXJpdHkgoaI=?= <security@kernel.org>,
+ "dan.carpenter" <dan.carpenter@oracle.com>,
+ Solar Designer <solar@openwall.com>
+Date: Fri, 22 Nov 2019 20:51:31 +0800
+From: qize wang <wangqize888888888@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20241 invoked from network); 8 Aug 2020 01:20:43 -0000
-Date: Sat, 8 Aug 2020 01:20:29 +0000
-From: Seth Arnold <seth.arnold@canonical.com>
-To: Daniel Ruggeri <druggeri@apache.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20200808012029.GD3169683@millbarge>
-Mail-Followup-To: Daniel Ruggeri <druggeri@apache.org>,
-	oss-security@lists.openwall.com
-References: <1596799898.GKATVRZF@httpd.apache.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/unnNtmY43mpUSKx"
-Content-Disposition: inline
-In-Reply-To: <1596799898.GKATVRZF@httpd.apache.org>
-Subject: Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer
- overlow
+Subject: [oss-security] Linux kernel: heap overflow in the marvell wifi driver
+To: oss-security@lists.openwall.com
 
---/unnNtmY43mpUSKx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hi,
+There are some heap overflows in marvell wifi chip driver in Linux
+kernel, allow remote users to cause a denial of service(system crash) or
+possibly execute arbitrary code.
 
-On Fri, Aug 07, 2020 at 06:31:38AM -0500, Daniel Ruggeri wrote:
-> CVE-2020-11984: mod_uwsgi buffer overlow
-> Versions Affected:
-> httpd 2.4.32 to 2.4.44
+Description
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-> Description:
-> Apache HTTP Server 2.4.32 to 2.4.44
-> mod_proxy_uwsgi info disclosure and possible RCE
+some flaws were found in the Linux kernel's Marvell wifi chip driver.=20
+multi heap overflow in mwifiex_process_tdls_action_frame function in=20
+marvell/mwifiex/tdls.c which allows remote attackers to cause a denial=20
+of service(system crash) or execute arbitrary code.
 
-> References:
-> https://httpd.apache.org/security/vulnerabilities_24.html
+the station receive a tdls setup request or respone frame which IE 's=20
+length is larger than the heap buffer assigned (for example : the=20
+EID_SUPP_RATES IE's length > 255) will cause heap overflow=A1=A3
 
-Hello Daniel, all,
 
-I'm confused: this english description of affected versions
-reads like 2.4.44 is affected. However, there is a heading on the
-vulnerabilities_24.html page that says this CVE is fixed in 2.4.44.
+struct mwifiex_tdls_capab {
+	__le16 capab;
+	u8 rates[32];
+	u8 rates_len;
+	u8 qos_info;
+	u8 coex_2040;
+	u16 aid;
+	struct ieee80211_ht_cap ht_capb;
+	struct ieee80211_ht_operation ht_oper;
+	struct ieee_types_extcap extcap;
+	struct ieee_types_generic rsn_ie;
+	struct ieee80211_vht_cap vhtcap;
+	struct ieee80211_vht_operation vhtoper;
+};
 
-Many projects include a "fixed in versions ..." list to indicate when
-something is fixed; I think this is less ambiguous.
+int mwifiex_process_rx_packet -> mwifiex_process_tdls_action_frame
+(struct mwifiex_private *priv,
+				       u8 *buf, int len)
+{
+....=20
+case WLAN_EID_SUPP_RATES:
+			sta_ptr->tdls_cap.rates_len =3D pos[1];   ;attacker can control=20
+			                                        ;EID_SUPP_RATES IE 's length
+			for (i =3D 0; i < pos[1]; i++)
+				sta_ptr->tdls_cap.rates[i] =3D pos[i + 2];
+			break;
+=A1=AD
+case WLAN_EID_EXT_SUPP_RATES:
+			basic =3D sta_ptr->tdls_cap.rates_len;
+			for (i =3D 0; i < pos[1]; i++)						;attacker can control=20
+													;EID_SUPP_RATES IE 's length
+				sta_ptr->tdls_cap.rates[basic + i] =3D pos[i + 2];=20=20=20=20
+			sta_ptr->tdls_cap.rates_len +=3D pos[1];=20=20
+			break;
+=A1=AD
+case WLAN_EID_EXT_CAPABILITY:
+			memcpy((u8 *)&sta_ptr->tdls_cap.extcap, pos,
+			       sizeof(struct ieee_types_header) +
+			       min_t(u8, pos[1], 8));       ;extcap is tlv struct,=20
+			       						;memcpy will cause a fata=20
+			       						;len(p[1]) into extcap
+			break;
+case WLAN_EID_RSN:
+			memcpy((u8 *)&sta_ptr->tdls_cap.rsn_ie, pos,
+			       sizeof(struct ieee_types_header) +
+			       min_t(u8, pos[1], IEEE_MAX_IE_SIZE -
+				     sizeof(struct ieee_types_header)); rsn_ie is tlv struct ,
+											  ;memcpy will cause a fata=20
+											  ;len(p[1]) into rsn_ie
 
-The "affects versions" don't always line up with the heading that claims
-to be fixed, eg CVE-2019-10092 claims to be fixed in 2.4.41, but the
-Affects entry doesn't mention 2.4.40.
+}
 
-The headings are out of order:
+Patch
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+https://patchwork.kernel.org/patch/11257535/
 
-$ curl -sq https://httpd.apache.org/security/vulnerabilities_24.html | grep "Fixed in Apache"
-Fixed in Apache httpd 2.4.44</h1><dl>
-Fixed in Apache httpd 2.4.25</h1><dl>  # 2.4.25 is between 2.4.42 and 2.4.44
-Fixed in Apache httpd 2.4.42</h1><dl>
-Fixed in Apache httpd 2.4.41</h1><dl>
-Fixed in Apache httpd 2.4.39</h1><dl>
-[..]
+Credit
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+This issue was discovered by wangqize(ADLab of VenusTech),huawen(ADLab of V=
+enusTech)
 
-The download site doesn't have a 2.4.40 download:
-https://archive.apache.org/dist/httpd/
-
-But the CHANGES_2.4.41 file shows a 2.4.40 release:
-https://archive.apache.org/dist/httpd/CHANGES_2.4.41
-
-I don't actually care that much about CVE-2019-10092 -- I just tried to
-figure out the status of CVE-2020-11984 by looking at other examples on
-the page and found the page difficult to understand.
-
-And, something is a bit off with the CURRENT-IS-$version markers:
-
-$ curl -sq https://archive.apache.org/dist/httpd/ | grep -c CURRENT
-47
-
-I expected one in each of the 2.0, 2.2, and 2.4 series, or perhaps just
-one for the newest 2.4 release.
-
-Thanks
-
---/unnNtmY43mpUSKx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAl8t/dkACgkQ8yFyWZ2N
-LperUAf/ajBZuyVPsnvLe6VSS+lkw2Nq28TrzEGX4otPBRkBMOqz2oTQjM34323g
-MP9KFQDElw5sHvukD7i0HxlsYyq9WURVYLEKSJY8SYZh93wDMxyF85fHopSEWLHD
-10VshkNy9cU9AoYe5QJBXuVC0WVNAvCYnVWgi0zrx/eL8C4rmC3fsqOtjC43vxnd
-6epB5Pbk20EOXj+u83+DNXM03maMfvsobw5Oa3qNTGHenvllFNhGTNWKfVgdT095
-VxiNQsvUMiG7ScPyCekvZVBD9UMUOS245tFYCdpGyJgkS39VQjiih4775PDisSBQ
-fnSi9uB4+4t+bmZ/3il1KltD6N+sCQ==
-=yqjW
------END PGP SIGNATURE-----
-
---/unnNtmY43mpUSKx--
