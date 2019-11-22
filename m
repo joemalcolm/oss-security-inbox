@@ -1,48 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/11
-Message-ID: <20190711202015.GA24270@espresso.pseudorandom.co.uk>
-Date: Thu, 11 Jul 2019 21:20:15 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/22/2
+Message-Id: <7FA714F2-4FFA-4781-A2B8-8F18A7EC8015@gmail.com>
+Date: Fri, 22 Nov 2019 20:51:31 +0800
+From: qize wang <wangqize888888888@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Privileged File Access from Desktop Applications
+Cc: linux-distros 、 <linux-distros@...openwall.org>, amitkarwar 、 <amitkarwar@...il.com>, nishants 、 <nishants@...vell.com>, gbhat 、 <gbhat@...vell.com>, huxinming820 、 <huxinming820@...il.com>, kvalo 、 <kvalo@...eaurora.org>, greg 、 <greg@...ah.com>, security 、 <security@...nel.org>, "dan.carpenter" <dan.carpenter@...cle.com>, Solar Designer <solar@...nwall.com>
+Subject: Linux kernel: heap overflow in the marvell wifi driver
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 11 Jul 2019 at 11:47:10 -0400, Perry E. Metzger wrote:
-> having to add file i/o subsystems inside of dbus(!) probably does
-> add lots of threats
+Hi,
+There are some heap overflows in marvell wifi chip driver in Linux
+kernel, allow remote users to cause a denial of service(system crash) or
+possibly execute arbitrary code.
 
-I think you might be misunderstanding the scope of D-Bus. D-Bus
-is an IPC mechanism, normally using AF_UNIX sockets; dbus is the
-reference implementation, including a message bus (broker) and a client
-library. System services and their clients can use D-Bus to communicate
-if they have been designed to do so, similar to the way they might use
-ONC RPC (aka SunRPC), CORBA, ZeroMQ, SOAP-over-HTTP, any other
-pre-existing IPC mechanism chosen by their designer, or their own
-unique/ad-hoc IPC mechanism.
+Description
+==========
 
-If someone writes a system service that provides file I/O over D-Bus,
-that does not imply adding code to dbus, in the same way that in the ONC
-RPC ecosystem (NFS etc.) adding a new RPC service didn't involve adding
-code to the portmapper, and in CORBA adding a new RPC service didn't
-involve adding code to the broker. The D-Bus protocol and the dbus
-implementation just carry messages, with some security and functional
-guarantees. Processing those messages (preferably securely, and making
-appropriate use of the guarantees given by the IPC mechanism where they
-are helpful) is a job for higher layers.
+some flaws were found in the Linux kernel's Marvell wifi chip driver. 
+multi heap overflow in mwifiex_process_tdls_action_frame function in 
+marvell/mwifiex/tdls.c which allows remote attackers to cause a denial 
+of service(system crash) or execute arbitrary code.
 
-D-Bus is often used by system services as a reusable protocol over
-AF_UNIX sockets. Unlike protocols designed for network use, the concept
-of identity used in its authentication/authorization handshake is bound to
-Unix uids (and it normally authenticates using Linux SO_PEERCRED or other
-kernels' equivalents, so identity is guaranteed by the kernel). This is
-good if uids are an important part of your security model (conversely, if
-uids aren't the basis for your security model, then D-Bus is a poor fit).
+the station receive a tdls setup request or respone frame which IE 's 
+length is larger than the heap buffer assigned (for example : the 
+EID_SUPP_RATES IE's length > 255) will cause heap overflow。
 
-The security of each system service that happens to use D-Bus should
-be considered on its own merits, the same way that using HTTP does not
-automatically make a higher-layer protocol more or less secure than it
-would otherwise be. Some system services that communicate via D-Bus are
-carefully designed with security in mind, while others are not (and I've
-sent advisories in the past for some in the latter category).
 
-    smcv
+struct mwifiex_tdls_capab {
+	__le16 capab;
+	u8 rates[32];
+	u8 rates_len;
+	u8 qos_info;
+	u8 coex_2040;
+	u16 aid;
+	struct ieee80211_ht_cap ht_capb;
+	struct ieee80211_ht_operation ht_oper;
+	struct ieee_types_extcap extcap;
+	struct ieee_types_generic rsn_ie;
+	struct ieee80211_vht_cap vhtcap;
+	struct ieee80211_vht_operation vhtoper;
+};
+
+int mwifiex_process_rx_packet -> mwifiex_process_tdls_action_frame
+(struct mwifiex_private *priv,
+				       u8 *buf, int len)
+{
+.... 
+case WLAN_EID_SUPP_RATES:
+			sta_ptr->tdls_cap.rates_len = pos[1];   ;attacker can control 
+			                                        ;EID_SUPP_RATES IE 's length
+			for (i = 0; i < pos[1]; i++)
+				sta_ptr->tdls_cap.rates[i] = pos[i + 2];
+			break;
+…
+case WLAN_EID_EXT_SUPP_RATES:
+			basic = sta_ptr->tdls_cap.rates_len;
+			for (i = 0; i < pos[1]; i++)						;attacker can control 
+													;EID_SUPP_RATES IE 's length
+				sta_ptr->tdls_cap.rates[basic + i] = pos[i + 2];    
+			sta_ptr->tdls_cap.rates_len += pos[1];  
+			break;
+…
+case WLAN_EID_EXT_CAPABILITY:
+			memcpy((u8 *)&sta_ptr->tdls_cap.extcap, pos,
+			       sizeof(struct ieee_types_header) +
+			       min_t(u8, pos[1], 8));       ;extcap is tlv struct, 
+			       						;memcpy will cause a fata 
+			       						;len(p[1]) into extcap
+			break;
+case WLAN_EID_RSN:
+			memcpy((u8 *)&sta_ptr->tdls_cap.rsn_ie, pos,
+			       sizeof(struct ieee_types_header) +
+			       min_t(u8, pos[1], IEEE_MAX_IE_SIZE -
+				     sizeof(struct ieee_types_header)); rsn_ie is tlv struct ,
+											  ;memcpy will cause a fata 
+											  ;len(p[1]) into rsn_ie
+
+}
+
+Patch
+==========
+https://patchwork.kernel.org/patch/11257535/
+
+Credit
+==========
+This issue was discovered by wangqize(ADLab of VenusTech),huawen(ADLab of VenusTech)
+
