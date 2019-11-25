@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/16/2
-Message-ID: <alpine.GSO.2.20.1906161200500.1813@freddy.simplesystems.org>
-Date: Sun, 16 Jun 2019 12:08:20 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/25/3
+Message-ID: <alpine.LRH.2.21.1911251159050.29263@fairfax.gathman.org>
+Date: Mon, 25 Nov 2019 12:00:26 -0500 (EST)
+From: "Stuart D. Gathman" <stuart@...hman.org>
+To: Andy Lutomirski <luto@...nel.org>
+cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: Lots of bugs in 32-bit x86 Linux entry code
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 16 Jun 2019, Solar Designer wrote:
->
-> Some people have interpreted this as implying there are ">100 security
-> bugs OSS-Fuzz found and publicly disclosed [...], and which still have
-> not been fixed" specifically in ImageMagick.  However, at the link you
-> referenced there are currently "only" 38 bugs specifically in
-> ImageMagick, with the rest of the >100 being in other projects:
+On Mon, 25 Nov 2019, Andy Lutomirski wrote:
 
-Using the ordinary public access I have, I see that ImageMagick has 
-129 open issues, and 1479 issues in total.  There are surely issues 
-that I can not see yet since they are hidden for up to 90 days.
+> It turns out that there are essentially no upstream development
+> resources dedicated to x86_32 Linux. Perhaps unsurprisingly, it was
+> badly broken.
+> ...
 
-Taking the number 129, that would mean that there is a huge number of 
-issues already fixed (1350) which are gradually making it out to 
-users.  This is too many fixes to deal with via distribution-specific 
-patches.
+This was delightfully well written.  I would send to the list, but
+praise for literary merits on a technical list might be OT.
 
-Using my privileged access for GraphicsMagick, I currently see 343 
-issues in total, with 12 issues remaining to fix.  Some of those 12 
-issues are open to the public for some time now. :-(
-
-Bob
 -- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+ 	      Stuart D. Gathman <stuart@...hman.org>
+"Confutatis maledictis, flammis acribus addictis" - background song for
+a Microsoft sponsored "Where do you want to go from here?" commercial.
