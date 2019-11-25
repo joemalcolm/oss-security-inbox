@@ -1,36 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/02/4
-Message-ID: <1554168687.VKNZOQAY@httpd.apache.org>
-Date: Mon, 01 Apr 2019 20:31:27 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-0215: mod_ssl access control bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/25/2
+Message-ID: <CALCETrW1z0gCLFJz-1Jwj_wcT3+axXkP_wOCxY8JkbSLzV80GA@mail.gmail.com>
+Date: Mon, 25 Nov 2019 08:05:12 -0800
+From: Andy Lutomirski <luto@...nel.org>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Lots of bugs in 32-bit x86 Linux entry code
 Content-Type: text/plain; charset=utf-8
 
+It turns out that there are essentially no upstream development
+resources dedicated to x86_32 Linux. Perhaps unsurprisingly, it was
+badly broken.
 
-CVE-2019-0215: mod_ssl access control bypass
+I’m not even going to try to enumerate individual bugs here. I’m
+guessing that at least all x86_32 kernels that support PTI are
+vulnerable to privilege escalation via a series of ESPFIX bugs, but
+the missing segment override issue could go back years.  Getting a
+nice printout on a double fault instead of a reboot, hang or memory
+corruption is dubious with PTI, and it’s also busted if you have this
+newfangled thing called “SMP” enabled.
 
-Severity: Important
+The relevant tests to run are tools/testing/selftests/x86/sigreturn_32
+(from an updated kernel) and the same test with perf record -e cycles
+-F 10000.
 
-Vendor: The Apache Software Foundation
+The bugs are hopefully mostly fixed in a pull request here:
 
-Versions Affected:
-httpd 2.4.27 to 2.4.38
+https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/commit/?h=x86-urgent-for-linus&id=4a13b0e3e10996b9aa0b45a764ecfe49f6fcd360
 
-Description:
-In Apache HTTP Server 2.4 releases 2.4.37 and 2.4.38, a
-bug in mod_ssl when using per-location client certificate
-verification with TLSv1.3 allowed a client to bypass
-configured access control restrictions.
-               
-Mitigation:
-This issue can be mitigated by disabling the TLSv1.3 protocol for a
-VirtualHost which requires per-location or per-directory client
-certificate authentication.
+I strongly suspect that there is at least one bug left.
 
-Credit:
-The issue was discovered by Michael Kaufmann.
+You can mitigate these issues by upgrading to an x86_64 kernel. You
+can probably get a decent degree of mitigation by setting
+CONFIG_VM86=n and CONFIG_X86_16BIT=n.  (CONFIG_X86_16BIT should be
+fine on a 64-bit kernel. Long live Wine.)
 
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
-
+To those of you who actually support x86_32: please either consider
+stopping supporting it or finding and paying someone to give it
+serious upstream attention.  We need real CI resources and we need
+developers to test things for real, fix what’s broken, and generally
+keep it up to date. And the developers in question should have an
+appropriate degree of nostalgic adoration of segments, gates, and
+other delights from the i386 era.
