@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/05/1
-Message-ID: <CANo=s0aWS_38_o4MU0v=RwH_aAbVzhYtYHiM0yT8dD3M_Sah7w@mail.gmail.com>
-Date: Mon, 5 Aug 2019 15:20:11 +0530
-From: jeny raval <jenyraval@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: New Tool - Phishing Simulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/25/1
+Message-ID: <20191125141615.GA10910@openwall.com>
+Date: Mon, 25 Nov 2019 15:16:15 +0100
+From: Solar Designer <solar@...nwall.com>
+To: qize wang <wangqize888888888@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: heap overflow in the marvell wifi driver
 Content-Type: text/plain; charset=utf-8
 
-Hello Team,
+On Fri, Nov 22, 2019 at 08:51:31PM +0800, qize wang wrote:
+> some flaws were found in the Linux kernel's Marvell wifi chip driver. 
+> multi heap overflow in mwifiex_process_tdls_action_frame function in 
+> marvell/mwifiex/tdls.c which allows remote attackers to cause a denial 
+> of service(system crash) or execute arbitrary code.
+> 
+> the station receive a tdls setup request or respone frame which IE 's 
+> length is larger than the heap buffer assigned (for example : the 
+> EID_SUPP_RATES IE's length > 255) will cause heap overflow??
 
-I have developed this tool "Phishing Simulation", which might be a good fit
-for your arsenal.
+Red Hat has assigned CVE-2019-14901 to this issue.
 
-https://github.com/jenyraval/Phishing-Simulation
-
-I will also be presenting this one at defcon this year. Let me know if any
-more information is needed.
-
-Thanks!
-Jyoti Raval
-
+Alexander
