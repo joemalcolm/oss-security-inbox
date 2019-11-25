@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/28/3
-Message-ID: <20190928103219.GJ16334@jumper.schlittermann.de>
-Date: Sat, 28 Sep 2019 12:32:19 +0200
-From: Heiko Schlittermann <hs@...littermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/25/4
+Message-ID: <20191125175839.GB197885@espresso.pseudorandom.co.uk>
+Date: Mon, 25 Nov 2019 17:58:39 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Exim CVE-2019-16928 RCE using a heap-based buffer overflow
+Subject: Re: Lots of bugs in 32-bit x86 Linux entry code
 Content-Type: text/plain; charset=utf-8
 
-Dominic Taylor <dom@...blepoint.com> (Sa 28 Sep 2019 02:56:11 CEST):
-> Hi Heiko,
-> Good find, but why no embargo?
+On Mon, 25 Nov 2019 at 08:05:12 -0800, Andy Lutomirski wrote:
+> It turns out that there are essentially no upstream development
+> resources dedicated to x86_32 Linux. Perhaps unsurprisingly, it was
+> badly broken.
 
-The issue was reported publicly via our bugtracker. No point in having
-an embargo.
+To clarify, which of these do you mean?
 
-> Presumably because privs are dropped so this is maybe not as bad as previous?
+A. IA-32 (uname -m: i?86) Linux kernels are buggy/vulnerable when running
+   IA-32 (i?86-linux-*) user-space processes (which are the only user-space
+   that these kernels support)
 
-Yes, the privs are dropped in the reported case, but there may be other ways to call the
-vulnerable function.
+B. x86_64 (aka AMD64, uname -m: x86_64) Linux kernels are buggy/vulnerable
+   when running IA-32 (i?86-linux-*) user-space processes, but not when
+   running x86_64 (x86_64-linux-*) user-space processes
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+C. x86_64 (AMD64) Linux kernels are buggy/vulnerable when running x32
+   (x86_64-linux-gnux32) processes
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+D. something else?
+
+If I'm understanding correctly, you are reporting A, and only A?
+
+Thanks,
+    smcv
