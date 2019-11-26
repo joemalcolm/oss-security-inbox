@@ -1,147 +1,144 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/5
-Message-ID: <87lfxr82ls.fsf@concordia.ellerman.id.au>
-Date: Tue, 25 Jun 2019 00:44:31 +1000
-From: Michael Ellerman <mpe@...erman.id.au>
-To: oss-security@...ts.openwall.com
-Cc: linuxppc-dev@...ts.ozlabs.org, linux-kernel@...r.kernel.org, linuxppc-users@...ts.ozlabs.org
-Subject: CVE-2019-12817: Linux kernel: powerpc: Unrelated processes may be able to read/write to each other's virtual memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/26/2
+Message-Id: <E1iZZVo-0005iD-8p@xenbits.xenproject.org>
+Date: Tue, 26 Nov 2019 12:00:08 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 306 v2 - Device quarantine for alternate pci assignment methods
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel for powerpc since 4.17 has a bug where unrelated processes may
-be able to read/write to each other's virtual memory under certain conditions.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This bug only affects machines using 64-bit CPUs with the hash page table MMU,
-see below for more detail on affected CPUs.
+                    Xen Security Advisory XSA-306
+                              version 2
 
-To trigger the bug a process must allocate memory above 512TB. That only happens
-if userspace explicitly requests it with mmap(). That process must then fork(),
-at this point the child incorrectly inherits the "context id" of the parent
-associated with the mapping above 512TB. It may then be possible for the
-parent/child to write to each other's mappings above 512TB, which should not be
-possible, and constitutes memory corruption.
+        Device quarantine for alternate pci assignment methods
 
-If instead the child process exits, all its context ids are freed, including the
-context id that is still in use by the parent for the mapping above 512TB. That
-id can then be reallocated to a third process, that process can then read/write
-to the parent's mapping above 512TB. Additionally if the freed id is used for
-the third process's primary context id, then the parent is able to read/write to
-the third process's mappings *below* 512TB.
+UPDATES IN VERSION 2
+====================
 
-If the parent and child both exit before another process is allocated the freed
-context id, the kernel will notice the double free of the id and print a warning
-such as:
+Public release.
 
-  ida_free called for id=103 which is not allocated.
-  WARNING: CPU: 8 PID: 7293 at lib/idr.c:520 ida_free_rc+0x1b4/0x1d0
+ISSUE DESCRIPTION
+=================
 
-The bug was introduced in commit:
-  f384796c40dc ("powerpc/mm: Add support for handling > 512TB address in SLB miss")
+XSA-302 relies on the use of libxl's "assignable-add" feature to
+prepare devices to be assigned to untrusted guests.
 
-Which was originally merged in v4.17.
+Unfortunately, this is not considered a strictly required step for
+device assignment.  The PCI passthrough documentation on the wiki
+describes alternate ways of preparing devices for assignment, and
+libvirt uses its own ways as well.  Hosts where these "alternate"
+methods are used will still leave the system in a vulnerable state
+after the device comes back from a guest.
 
-Only machines using the hash page table (HPT) MMU are affected, eg. PowerPC 970
-(G5), PA6T, Power5/6/7/8/9. By default Power9 bare metal machines (powernv) use
-the Radix MMU and are not affected, unless the machine has been explicitly
-booted in HPT mode (using disable_radix on the kernel command line). KVM guests
-on Power9 may be affected if the host or guest is configured to use the HPT MMU.
-LPARs under PowerVM on Power9 are affected as they always use the HPT MMU.
-Kernels built with PAGE_SIZE=4K are not affected.
+IMPACT
+======
 
-The upstream fix is here:
+An untrusted domain with access to a physical device can DMA into host
+memory, leading to privilege escalation.
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ca72d88378b2f2444d3ec145dd442d449d3fefbc
+VULNERABLE SYSTEMS
+==================
 
-There's also a kernel selftest to verify the fix:
+Only systems where guests are given direct access to physical devices
+capable of DMA (PCI pass-through) are vulnerable.  Systems which do
+not use PCI pass-through are not vulnerable.
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=16391bfc862342f285195013b73c1394fab28b97
+Only systems which use "alternate" methods to assign devices to pciback
+before assignment are vulnerable.  These methods include:
+ - Assigning devices on the Linux command-line using `xen-pciback.hide`
+ - Assigning devices via xen-pciback module parameters
+ - Assigning devices manually via sysfs
+ - Assigning devices using libvirt
 
-Or a similar standalone version is included below.
+Systems which use `xl pci-assignable-add` or
+libxl_device_pci_assignable_add, or have the assignable state handled
+automatically via setting the `seize` parameter, are not affected.
 
-cheers
+MITIGATION
+==========
+
+For xl and libvirt, before assigning a device to a guest, manually run
+`xl pci-assignable-add`.  This will quarantine the device even if the
+device has already been assigned to pciback by one of the alternate
+methods.  This may also work for other libxl-based toolstacks,
+depending on the particular implementation.
+
+CREDITS
+=======
+
+This issue was discovered by Marek Marczykowski-Górecki of Invisible
+Things Lab.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that this patch will quarantine the device after the domain is
+destroyed by default.  It must be un-quarantined before it can be used
+by domain 0 again.  This can be done by executing `xl
+pci-assignable-remove`.  This will be effective even if the device was
+assigned to pciback with one of the alternate methods.
+
+xsa306.patch           xen-unstable
+xsa306-4.12.patch      Xen 4.12.x
+xsa306-4.11.patch      Xen 4.11.x, Xen 4.10.x
+xsa306-4.9.patch       Xen 4.9.x, Xen 4.8.x
+
+$ sha256sum xsa306*
+07468dcdfbe34b794fd0618bce7d6d1edb6b10b234dccf1e5dd1f1120a0affe7  xsa306.meta
+3534ec46f03bb8dac3011e0e3739fc75400559078e4361bbe5385d97b7892650  xsa306.patch
+426e32bfa7d7787fe6778685e623966f8762857f7920443a0ca73347df9d6624  xsa306-4.9.patch
+b00e58c9f96b0ff654dfd4904c675a54356148af718eb9b2adca0253b900dfc1  xsa306-4.11.patch
+69857d08969903452fbf009905a145e06a5aef9966e969de9fbb22e62c557ffd  xsa306-4.12.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-cat > test.c <<EOF
-#undef NDEBUG
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/mman.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-#ifndef MAP_FIXED_NOREPLACE
-#define MAP_FIXED_NOREPLACE	MAP_FIXED	// "Should be safe" above 512TB
-#endif
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl3dE7EMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZdj0H/1MUzg8URNtE5FsG5Q0OwszcNXSuV1qW9B6mZCRJ
+ffGyGtTmhM2M/KXao9j15Hn83BVxTh5iFVkmZ9LoQSFiwu4L9nhx8KGw+nnspb9G
+v2+NrEbZRpxbloPxDplMfWLx1/GNFCs+wK550LtGC+yzITqMckacD6cTkbEGmIwR
+otLTU3JTlfwMnvhZraDzVrICyX/+vNri9EvHd7Tviz1yXk83QMapgZ+xJCocUY3n
+kA93XN2yG/xFB0jHky75wBT2HFRR1RpmLECSodiOP0ONLPJiRBl3O2ziqb8OtdRD
+mkMvTMWEJawTPiWKc5CS4ieD2YyiUngFC806r2LDpRk6468=
+=gi2B
+-----END PGP SIGNATURE-----
 
-int main(void)
-{
-	int p2c[2], c2p[2], rc, status, c, *p;
-	unsigned long page_size;
-	pid_t pid;
+Download attachment "xsa306.meta" of type "application/octet-stream" (1561 bytes)
 
-	page_size = sysconf(_SC_PAGESIZE);
-	if (page_size != 65536) {
-		printf("Unsupported page size - not affected\n");
-		return 1;
-	}
+Download attachment "xsa306.patch" of type "application/octet-stream" (4180 bytes)
 
-	// Create a mapping at 512TB to allocate an extended_id
-	p = mmap((void *)(512ul << 40), page_size, PROT_READ | PROT_WRITE,
-		MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED_NOREPLACE, -1, 0);
-	if (p == MAP_FAILED) {
-		perror("mmap");
-		printf("Error: couldn't mmap(), confirm kernel has 4TB support\n");
-		return 1;
-	}
+Download attachment "xsa306-4.9.patch" of type "application/octet-stream" (3987 bytes)
 
-	printf("parent writing %p = 1\n", p);
-	*p = 1;
+Download attachment "xsa306-4.11.patch" of type "application/octet-stream" (4080 bytes)
 
-	assert(pipe(p2c) != -1 && pipe(c2p) != -1);
-
-	pid = fork();
-	if (pid == 0) {
-		close(p2c[1]);
-		close(c2p[0]);
-		assert(read(p2c[0], &c, 1) == 1);
-
-		pid = getpid();
-		printf("child writing  %p = %d\n", p, pid);
-		*p = pid;
-
-		assert(write(c2p[1], &c, 1) == 1);
-		assert(read(p2c[0], &c, 1) == 1);
-		exit(0);
-	}
-	close(p2c[0]);
-	close(c2p[1]);
-
-	c = 0;
-	assert(write(p2c[1], &c, 1) == 1);
-	assert(read(c2p[0], &c, 1) == 1);
-
-	// Prevent compiler optimisation
-	asm volatile("" : : : "memory");
-
-	rc = 0;
-	printf("parent reading %p = %d\n", p, *p);
-	if (*p != 1) {
-		printf("Error: BUG! parent saw child's write! *p = %d\n", *p);
-		rc = 1;
-	}
-
-	assert(write(p2c[1], &c, 1) == 1);
-	assert(waitpid(pid, &status, 0) != -1);
-	assert(WIFEXITED(status) && WEXITSTATUS(status) == 0);
-
-	if (rc == 0)
-		printf("success: test completed OK\n");
-
-	return rc;
-}
-EOF
-
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
+Download attachment "xsa306-4.12.patch" of type "application/octet-stream" (4144 bytes)
