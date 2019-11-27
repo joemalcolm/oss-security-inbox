@@ -1,51 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/06/2
-Message-ID: <20190706125627.GA22675@openwall.com>
-Date: Sat, 6 Jul 2019 14:56:27 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/27/1
+Message-ID: <87h82p12eh.fsf@mpe.ellerman.id.au>
+Date: Thu, 28 Nov 2019 07:37:42 +1100
+From: Michael Ellerman <mpe@...erman.id.au>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+Subject: CVE-2019-18660: Linux kernel: powerpc: missing Spectre-RSB mitigation
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 06, 2019 at 03:02:22PM +0300, Georgi Guninski wrote:
-> I am against giving access to microsoft and blogged:
-> 
-> https://j.ludost.net/blog/archives/2019/07/06/on_microsoft_request_to_access_private_linux_bugs/index.html
+The Linux kernel for powerpc fails to activate the mitigation for Spectre-RSB
+(Return Stack Buffer, aka. ret2spec) on context switch, on CPUs prior to Power9
+DD2.3.
 
-Let's keep most essential content of postings directly on the list
-rather than only via reference.  Copy-paste from the above URL:
+This allows a process to poison the RSB (called Link Stack on Power CPUs) and
+possibly misdirect speculative execution of another process. If the victim
+process can be induced to execute a leak gadget then it may be possible to
+extract information from the victim via a side channel.
 
----
-Georgi Guninski's blog
+Mitigation for Spectre-RSB was introduced in commit:
+  ee13cb249fab (“powerpc/64s: Add support for software count cache flush”)
 
-Sat Jul 6 14:56:04 EEST 2019
-On Microsoft request to access private linux bugs
+Which was originally merged in v4.19.
 
-According to theregister [1] m$ wants to access private
-linux bugs. Theregister mentions that in 2001 she called
-linux "cancer". Another example of anti-opensource behavior
-are the Halloween documents [2] from 1998 (some current
-decision makers and journos have not be born then. History
-is written by the winners).
+However that commit incorrectly tied the code to flush the link stack to a
+firmware feature which is only enabled on newer CPUs (P9N DD2.3 or later), when
+it should have been applied to all CPUs that are affected by Spectre v2.
 
-It is well known that microsoft is entirely money driven
-and she will sell Gates' first born and Ballmer might even
-deliver it.
+The fix is to enable the link stack flush on all CPUs that have any mitigation
+of Spectre v2 in userspace enabled.
 
-First, a hostile kernel contributor is danger for the
-future of linux kernel IMHO.
+This issue is assigned CVE-2019-18660.
 
-Unpopular suggestion for microsoft's request for private
-bugs: Find something that requires windows compatibility
-(say Wine, some cloud shit, whatever else). Tell microsoft:
-You want our bugs? We want your bugs. You show first.
+CVSS 3.1 Score: 5.6
+AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:N
 
-[1]:
-https://www.theregister.co.uk/2019/06/27/microsoft_linux_distro_list/
-[2]:
-https://en.wikipedia.org/w/index.php?title=Halloween_documents&oldid=895695365
+This issue was discovered by Anthony Steinhauser of Google's Safeside Project.
 
-Posted by bugs for nothing and chix for free
----
+Additionally we have determined that when returning from a guest, there is the
+possibility that poisoned values on the link stack could be used by function
+returns in the host kernel. To mitigate this we have added a flush of the link
+stack in the guest exit path.
 
-Alexander
+The fix is in mainline as:
+  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=39e72bf96f5847ba87cc5bd7a3ce0fed813dc9ad
+
+And the KVM fix is:
+  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=af2e8c68b9c5403f77096969c516f742f5bb29e0
+
+Both will be released in v5.5-rc1.
+
+There's a test case attached, extracted from Google's safeside project. It can
+be built with:
+  $ g++ -O2 -Wall -std=c++11 -m64 -o ret2spec_recursion_ca ret2spec_recursion_ca.cc
+
+Output on an unpatched system:
+  $ ./ret2spec_recursion_ca
+  Leaking the string: It's a s3kr3t!!!
+  16 bytes successfully leaked
+  FAIL! Was able to leak the secret
+
+vs patched:
+  $ ./ret2spec_recursion_ca
+  Leaking the string: ????????????????
+  0 bytes successfully leaked
+  PASS! Unable to leak the secret
+
+cheers
+
+
+View attachment "ret2spec_recursion_ca.cc" of type "text/plain" (15243 bytes)
