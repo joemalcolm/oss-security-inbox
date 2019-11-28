@@ -1,30 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/05/3
-Message-ID: <CAB8XdGDHWGFR=1E=trh_KqBH+4f08rdHqQdwgOEJX-fdoTzJkA@mail.gmail.com>
-Date: Tue, 5 Nov 2019 15:56:46 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-12419] Apache CXF OpenId Connect token service does not properly validate the clientId
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/28/2
+Message-ID: <CAA7hUgF2iQ+danfsTDqjY2weCXGay71363bbgBWbb_6kyiBNgg@mail.gmail.com>
+Date: Thu, 28 Nov 2019 20:46:55 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: yadd@...ian.org
+Subject: Multiple issues in lemonldap-ng
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2019-12419
-[PRODUCT]:Apache CXF
-[VERSION]:Apache CXF versions before 3.3.4 and 3.2.11
-[PROBLEMTYPE]:Apache CXF OpenId Connect token service does not properly
-validate the clientId
-[REFERENCES]:
-http://cxf.apache.org/security-advisories.data/CVE-2019-12419.txt.asc
-[DESCRIPTION]:Apache CXF provides all of the components that are required
-to build a fully
-              fledged OpenId Connect service. There is a vulnerability in
-the access token
-              services, where it does not validate that the authenticated
-principal is equal
-              to that of the supplied clientId parameter in the request.
+Hi,
 
-              If a malicious client was able to somehow steal an
-authorization code issued
-              to another client, then they could exploit this vulnerability
-to obtain an
-              access token for the other client.
+Looking at lemonldap-ng I noticed that it uses low-level crypto
+primitives, not without some issues.
+Notably:
 
+* it uses AES in CBC mode directly without setting an IV to encrypt
+data that is stored client-side
+* that same data is not signed, only encrypted
+
+Despite my strong recommendation to use a library that abstracts some
+of the fine details, like NaCl, libsodium, etc, upstream has responded
+to the issue by issuing version 2.0.5 with the following changes[1]:
+
+* an IV is set but it might be generated with rand() and time() in
+case of urandom being unavailable or in case the code asks for a "low"
+mode
+* using sha256 as a checksum (literally just sha256 of the data, not
+HMAC-SHA256 despite the code using the name hmac in some places), as
+in: message = ENCRYPT(SHA256(data) || data, key, iv). Upstream calling
+this MtE and using this approach instead of my recommendation of using
+EtM
+
+Some "minor" issues were also fixed, like the use of a prng instead of a csprng.
+
+Tracked with issue #1823 [2], the main issue is still open to possibly
+use an abstraction library in a future version.
+
+I've neglected making a public report of this but I hope that it is
+going to help things move forward.
+
+[1]https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/merge_requests/81/diffs
+[2]https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1823
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org
