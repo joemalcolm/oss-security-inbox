@@ -1,4 +1,9 @@
-Received: (qmail 23806 invoked by uid 550); 31 Oct 2022 17:03:23 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1413" "Thursday" "28" "November" "2019" "20:46:55" "+0100" "Raphael Geissert" "geissert@debian.org" nil "38" nil "^Cc:" nil nil "11" nil nil (number mark "        geissert@deb Nov 28   38/1413  " thread-indent "\"[oss-security] Multiple issues in lemonldap-ng\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple issues in lemonldap-ng" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3143 invoked by uid 550); 28 Nov 2019 19:47:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,59 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12183 invoked from network); 31 Oct 2022 16:53:50 -0000
-Authentication-Results: apache.org; auth=none
-Message-ID: <188aef5b-4005-b370-6237-63f7be533ae1@apache.org>
-Date: Mon, 31 Oct 2022 16:53:36 +0000
+Received: (qmail 3108 invoked from network); 28 Nov 2019 19:47:18 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=cYB6/RQJdmCE0087pOOwJFnkTe9RuzkEPmW/JuO8nMc=;
+        b=rh8RXbKSISAfwdpwNPAHbl+rePgLGb1nvH0/jU/LBJj+lM3xWbaBnGvyLXXe9wJ89k
+         AtfdBJ2xT7EOIxyTwkJ+9XPguZ6N5mMl7yoxbehyB9hvcuIAnBevLIomXEt4xEi0iMr+
+         NrnX086CYiJifloAZ4xRRRI0NqI+MYnoXj0Hie4DpG3fYnrUnsdOZ50gjnEktHDt9ZvN
+         RJv8rVm4OtkEUhxVfjubZwiRTaPFyadl8qQDtyJKTxQyCBFk+1gXBLIJBV9dQtXQrdte
+         kSUQda7pntMAfS2rHV/dsXRlgTJuoPVsAA2U73z7ghbcAzbtvyd8nAU6HmYCjDrrQi2V
+         9Esg==
+X-Gm-Message-State: APjAAAVAGGfSiNZmLnU4Bo+g7KdvCy/tc4JtH6rfInP//ZCiDTKHyTbY
+	g3lwUKcfIXRn6dJxxk5OsDpBY6qdLSHpdEgAmu1TgdCbHYs931sX
+X-Google-Smtp-Source: APXvYqxxcYSXFuIVDgOicZIWDNkOGjUH4qAt8VFLcvHhOeYpQjcLZMlR/pGim0ypQih+kwanoDP5HrDfcaVeFxTb8HM=
+X-Received: by 2002:ab0:2a4f:: with SMTP id p15mr7072548uar.70.1574970426634;
+ Thu, 28 Nov 2019 11:47:06 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-From: Mark Thomas <markt@apache.org>
-To: oss-security@lists.openwall.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2022-42252: Apache Tomcat - Request Smuggling
+Message-ID: <CAA7hUgF2iQ+danfsTDqjY2weCXGay71363bbgBWbb_6kyiBNgg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: yadd@debian.org
+Date: Thu, 28 Nov 2019 20:46:55 +0100
+From: Raphael Geissert <geissert@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Multiple issues in lemonldap-ng
+To: Open Source Security <oss-security@lists.openwall.com>
 
-CVE-2022-42252 Apache Tomcat - Request Smuggling
+Hi,
 
-Severity: Low
+Looking at lemonldap-ng I noticed that it uses low-level crypto
+primitives, not without some issues.
+Notably:
 
-Vendor: The Apache Software Foundation
+* it uses AES in CBC mode directly without setting an IV to encrypt
+data that is stored client-side
+* that same data is not signed, only encrypted
 
-Versions Affected:
-Apache Tomcat 10.1.0-M1 to 10.1.0
-Apache Tomcat 10.0.0-M1 to 10.0.26
-Apache Tomcat 9.0.0-M1 to 9.0.67
-Apache Tomcat 8.5.0 to 8.5.52
+Despite my strong recommendation to use a library that abstracts some
+of the fine details, like NaCl, libsodium, etc, upstream has responded
+to the issue by issuing version 2.0.5 with the following changes[1]:
 
-Description:
-If Tomcat was configured to ignore invalid HTTP headers via setting
-rejectIllegalHeader to false (the default for 8.5.x only), Tomcat did 
-not reject a request containing an invalid Content-Length header making 
-a request smuggling attack  possible if Tomcat was located behind a 
-reverse proxy that also failed to reject the request with the invalid 
-header.
+* an IV is set but it might be generated with rand() and time() in
+case of urandom being unavailable or in case the code asks for a "low"
+mode
+* using sha256 as a checksum (literally just sha256 of the data, not
+HMAC-SHA256 despite the code using the name hmac in some places), as
+in: message = ENCRYPT(SHA256(data) || data, key, iv). Upstream calling
+this MtE and using this approach instead of my recommendation of using
+EtM
 
+Some "minor" issues were also fixed, like the use of a prng instead of a csprng.
 
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Ensure rejectIllegalHeader is set to true
-- Upgrade to Apache Tomcat 10.1.1 or later
-- Upgrade to Apache Tomcat 10.0.27 or later
-- Upgrade to Apache Tomcat 9.0.68 or later
-- Upgrade to Apache Tomcat 8.5.83 or later
+Tracked with issue #1823 [2], the main issue is still open to possibly
+use an abstraction library in a future version.
 
-Credit:
-Thanks to Sam Shahsavar who discovered this issue and reported it to the 
-Apache Tomcat security team.
+I've neglected making a public report of this but I hope that it is
+going to help things move forward.
 
-History:
-2022-10-31 Original advisory
+[1]https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/merge_requests/81/diffs
+[2]https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1823
 
-References:
-[1] https://tomcat.apache.org/security-10.html
-[2] https://tomcat.apache.org/security-9.html
-[3] https://tomcat.apache.org/security-8.html
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org
