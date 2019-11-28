@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/1
-Message-Id: <A4A584CA-BA63-450D-81CB-E9AAA4BB45C1@beckweb.net>
-Date: Tue, 8 Jan 2019 13:46:48 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/28/1
+Message-ID: <CAKP6k2s9g0ALG58ZRsx9AhTppeAL6yJfRDGd7QAvS9SXU3M5LA@mail.gmail.com>
+Date: Wed, 27 Nov 2019 23:05:54 -0800
+From: Jesse <purplecabbage@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Sandbox bypass in multiple Jenkins plugins
+Subject: CVE-2019-0219: Apache Cordova InAppBrowser Privilege Escalation (Android)
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+CVE-2019-0219: Apache Cordova InAppBrowser Privilege Escalation (Android)
+===
 
-* Pipeline: Declarative Plugin 1.3.4.1
-* Pipeline: Groovy Plugin 2.61.1
-* Script Security Plugin 1.50
+Severity: Medium
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-01-08/
+Vendor: The Apache Software Foundation
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Versions Affected: Cordova Android applications using the InAppBrowser
+plugin
+( cordova-plugin-inappbrowser version 3.0.0 and below )
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Description: A website running in the InAppBrowser webview on Android could
+execute
+arbitrary JavaScript in the main application's webview using a specially
+crafted gap-iab: URI.
 
----
+Upgrade path: Developers who are concerned about this issue should install
+version 3.1.0 or higher of cordova-plugin-inappbrowser
 
-SECURITY-1266
-Script Security sandbox protection could be circumvented during the 
-compilation phase by applying AST transforming annotations such as @Grab
-to source code elements.
+Mitigation Steps: Upgrade plugin to 3.1.0 or higher and rebuild
+application, update deployments.
 
-Both the pipeline validation REST APIs and actual script/pipeline 
-execution are affected.
-
-This allowed users with Overall/Read permission, or able to control 
-Jenkinsfile or sandboxed Pipeline shared library contents in SCM, to 
-bypass the sandbox protection and execute arbitrary code on the Jenkins 
-master.
+Credit: Sergey Bobrov (Kaspersky Lab)
 
