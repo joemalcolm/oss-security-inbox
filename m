@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1979" "Saturday" "30" "April" "2016" "21:12:52" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160501011252.5F9896C060D@smtpvmsrv1.mitre.org>" "59" "[oss-security] Re: CVE requests: Multiple Wireshark vulnerabilities" nil nil nil "4" "2016050101:12:52" "[oss-security] Re: CVE requests: Multiple Wireshark vulnerabilities" (number mark "U       cve-assign@m Apr 30   59/1979  " thread-indent "\"[oss-security] Re: CVE requests: Multiple Wireshark vulnerabilities\"\n") "<20160425210010.GA9723@pisco.westfalen.local>" ("<20160425210010.GA9723@pisco.westfalen.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1317" "Monday" "2" "December" "2019" "17:46:38" "+0000" "Leonid Isaev" "leonid.isaev@ifax.com" "<20191202174638.GB28519@orca>" "27" "Re: [oss-security] virtual consoles" "^Date:" nil nil "12" "2019120217:46:38" "[oss-security] virtual consoles" (number mark "        leonid.isaev Dec  2   27/1317  " thread-indent "\"Re: [oss-security] virtual consoles\"\n") "<20191202165638.GA3235@thinkstation>" ("<20191202165638.GA3235@thinkstation>") nil nil nil nil nil nil nil "Re: [oss-security] virtual consoles" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25735 invoked by uid 550); 1 May 2016 01:13:04 -0000
+Received: (qmail 29830 invoked by uid 550); 2 Dec 2019 18:11:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 10097 invoked from network); 2 Dec 2019 17:46:51 -0000
+Message-ID: <20191202174638.GB28519@orca>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20191202165638.GA3235@thinkstation>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191202165638.GA3235@thinkstation>
+User-Agent: Mutt/1.12.2 (2019-09-21)
+Date: Mon, 2 Dec 2019 17:46:38 +0000
+From: Leonid Isaev <leonid.isaev@ifax.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25714 invoked from network); 1 May 2016 01:13:04 -0000
-From: cve-assign@mitre.org
-To: jmm@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@wireshark.org
-In-Reply-To: <20160425210010.GA9723@pisco.westfalen.local>
-Message-Id: <20160501011252.5F9896C060D@smtpvmsrv1.mitre.org>
-Date: Sat, 30 Apr 2016 21:12:52 -0400 (EDT)
-Subject: [oss-security] Re: CVE requests: Multiple Wireshark vulnerabilities
+Subject: Re: [oss-security] virtual consoles
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Dec 02, 2019 at 08:56:38AM -0800, Tavis Ormandy wrote:
+> $ dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1/seat/seat0 org.freedesktop.login1.Seat.SwitchTo uint32:2
+> 
+> (note: object paths may vary by distro, change the 2 to a different
+> number if you're already on VT2, or seat0 if you're on a different seat)
+> 
+> The obvious attack is to switch to a fake screensaver, then switch back
+> after authentication, or make a fake gdm login.
+> 
+> I'm sure this has been documented a million times, and most of us will
+> be familiar with the "Secure Attention Key" idea, but this is slightly
+> different from that attack as it's possible for an entirely remote user
+> (active, physically local users usually have additional privileges, as
+> it's assumed they can tamper with hardware anyway, etc).
+> 
+> Should this have some policykit action requirement, or require physical
+> presence? I don't know the answer.
 
-CVE-2016-4415
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11795
-https://www.wireshark.org/security/wnpa-sec-2016-12.html
-https://code.google.com/p/google-security-research/issues/detail?id=647
+Pls no policykit... This "attack" works only because there is systemd, so that
+is where such calls should be blocked, IMHO.
 
+It turns out, that if as an unprivileged user I do "pkill -9 systemd" (this
+line is infact in my .bash_profile) to eliminate all systemd --user processes,
+this still works, i.e. I am able to send messages to the system bus.
 
-CVE-2016-4416
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11818
-https://www.wireshark.org/security/wnpa-sec-2016-13.html
-
-
-CVE-2016-4417
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11825
-https://www.wireshark.org/security/wnpa-sec-2016-14.html
-
-
-CVE-2016-4418
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12106
-https://www.wireshark.org/security/wnpa-sec-2016-15.html
-
-
-CVE-2016-4419
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12151
-https://www.wireshark.org/security/wnpa-sec-2016-16.html
-
-
-CVE-2016-4420
-https://www.wireshark.org/security/wnpa-sec-2016-17.html
-
-
-CVE-2016-4421
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11822
-https://www.wireshark.org/security/wnpa-sec-2016-18.html
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXJVe4AAoJEHb/MwWLVhi2KGcP/0PM0l3c/X6ouWO/ewltfV1N
-zCm0qLM2cGtbmFx1d/Cb4s5BacBtIj3SgMA6tf3Jz8jCYHW2HgBxaR9c53J0v/nZ
-jj0utLopTF9NIK1g/Z5qKiV65enHciuxOUW6le2SzORKGLAujtjhQK3uFUR/Kn0v
-PUFfx1QrN8axi/sct30a2ToI5BbINsfk0tvtb1CBd/3HI/z21H1KZW1mnJD1XwVX
-OWlcMQSPfHUafpDwr9X4EoMZ4jFRRGfJ09dvbSFGiaL+CbYgNBfAMEaT4fqCQIyr
-1uxI9oIqd+ktJFhXE3J6zkVnUXhw2nDT8OtSP+JyPFzZPorDrzwjPv4sKXnW+QYT
-b68rRumEj+ux3pNbV5sKXnjsJMZmUd1d2Y7qY6N89qaA8LL3s9GfxlywbBmCMsCP
-zJZefnmVioIpe3WYnbPcx+OWzbNflNIWi2/UUDfIlPV2bS+RJpDtR6W81onyeTeB
-pySxM/S2id4bmheneGukFefOyBRXqaT2UNq+cKwClJV3DHyezWjPEyXwuC0XBJzu
-jBNAC5oXgBe4h3BOrx03nL0CguMZicr8EdDDvpJZWREKVb9VbsbXk1CD9/k2/sk0
-P9x6aGvB0moHCklRO1lj0DNr+OaV+DM7p1PM6Bt4iOJHtrjO01fL+ckl3nOgTXKi
-LDtPs2LxK0WKxPMcA6sJ
-=Z9Df
------END PGP SIGNATURE-----
+Thanks,
+L.
