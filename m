@@ -1,84 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/3
-Message-ID: <e2153c6f-a5a1-b8d5-93cb-f0af0c94fb2a@dovecot.fi>
-Date: Wed, 28 Aug 2019 15:06:23 +0300
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Critical Dovecot and Pigeonhole vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/02/4
+Message-ID: <20191202173932.GA3369@thinkstation>
+Date: Mon, 2 Dec 2019 09:39:32 -0800
+From: Tavis Ormandy <taviso@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: virtual consoles
 Content-Type: text/plain; charset=utf-8
 
-Dear subscribers, we have been made aware of critical vulnerability in
-Dovecot and Pigeonhole.
+On Mon, Dec 02, 2019 at 06:28:12PM +0100, Solar Designer wrote:
+> On Mon, Dec 02, 2019 at 08:56:38AM -0800, Tavis Ormandy wrote:
+> > Regardless of your position, this is certainly possible on desktop Linux
+> > too, unprivileged users can start a new X server and switch virtual
+> > console, even over ssh.
+> > 
+> > e.g.
+> > 
+> > $ dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1/seat/seat0 org.freedesktop.login1.Seat.SwitchTo uint32:2
+> > 
+> > (note: object paths may vary by distro, change the 2 to a different
+> > number if you're already on VT2, or seat0 if you're on a different seat)
+> 
+> If this in fact works over SSH and from a user account different than
+> the one logged in on the currently active virtual console, then I'd say
+> it's a vulnerability on its own, regardless of the social engineering
+> aspects you mention.
 
-Please find patches attached for dovecot 2.3.7 and pigeonhole 0.5.7
+Definitely does on Fedora and Ubuntu, an entirely remote unprivileged
+user can use it, even if root is logged in at the virtual console.
 
----
+It's very simple to switch to an X server displaying a fake screensaver
+while the user is sitting there.
 
-Open-Xchange Security Advisory 2019-08-14
- 
-Product: Dovecot
-Vendor: OX Software GmbH
- 
-Internal reference: DOV-3278
-Vulnerability type: Improper input validation (CWE-20)
-Vulnerable version: All versions prior to 2.3.7.2 and 2.2.36.4
-Vulnerable component: IMAP and ManageSieve protocol parsers (before and
-after login)
-Report confidence: Confirmed
-Solution status: Fixed by Vendor
-Fixed version: 2.3.7.2, 2.2.36.4
-Researcher credits: Nick Roessler and Rafi Rubin, University of Pennsylvania
-Vendor notification: 2019-04-13
-Solution date: 2019-06-05
-Public disclosure: 2019-08-28
-CVE reference: CVE-2019-11500
-CVSS: 8.1 (CVSS3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H)
- 
-Vulnerability Details:
+> 
+> Why does this functionality even exist?
+> 
+> > Should this have some policykit action requirement, or require physical
+> > presence? I don't know the answer.
+> 
+> Maybe simply drop the misfeature?
+> 
+> Alexander
 
-IMAP and ManageSieve protocol parsers do not properly handle NUL byte
-when scanning data in quoted strings, leading to out of bounds heap
-memory writes.
+That would make things simpler! I can't think of any reason this would
+ever be useful.
 
-Risk:
+Tavis
 
-This vulnerability allows for out-of-bounds writes to objects stored on
-the heap up to 8096 bytes in pre-login phase, and 65536 bytes post-login
-phase, allowing sufficiently skilled attacker to perform complicated
-attacks that can lead to leaking private information or remote code
-execution. Abuse of this bug is very difficult to observe, as it does
-not necessarily cause a crash. Attempts to abuse this bug are not
-directly evident from logs.
-
-Steps to reproduce:
-
-This bug is best observed using valgrind to see the out of bounds read
-with following snippet:
-
-perl -e 'print "a id (\"foo\" \"".("x"x1021)."\\A\" \"bar\"
-\"\000".("x"x1020)."\\A\")\n"' | nc localhost 143
-
-
-Solution:
-
-Operators should update to the latest Patch Release. There is no
-workaround for the issue.
-
----
-
-Aki Tuomi
-
-Open-Xchange oy
-
-
-
-
-View attachment "0001-lib-imap-Don-t-accept-strings-with-NULs.patch" of type "text/x-patch" (1267 bytes)
-
-View attachment "0001-lib-managesieve-Don-t-accept-strings-with-NULs.patch" of type "text/x-patch" (1205 bytes)
-
-View attachment "0002-lib-imap-Make-sure-str_unescape-won-t-be-writing-pas.patch" of type "text/x-patch" (1206 bytes)
-
-View attachment "0002-lib-managesieve-Make-sure-str_unescape-won-t-be-writ.patch" of type "text/x-patch" (1304 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+-- 
+-------------------------------------
+taviso@....lonestar.org | finger me for my pgp key.
+-------------------------------------------------------
