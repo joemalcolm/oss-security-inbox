@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/12
-Message-ID: <9c8ef246-0e75-793b-6995-51e50a730701@ehuk.net>
-Date: Thu, 22 Aug 2019 19:44:50 +0100
-From: Eddie Chapman <eddie@...k.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/02/3
+Message-ID: <20191202172811.GA7102@openwall.com>
+Date: Mon, 2 Dec 2019 18:28:12 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+Subject: Re: virtual consoles
 Content-Type: text/plain; charset=utf-8
 
-On 22/08/2019 18:57, Perry E. Metzger wrote:
-> Android phones run Linux. People routinely plug those phones in to USB
-> charging stations in airports, on airplanes, at booths in public
-> places, etc.
+On Mon, Dec 02, 2019 at 08:56:38AM -0800, Tavis Ormandy wrote:
+> Regardless of your position, this is certainly possible on desktop Linux
+> too, unprivileged users can start a new X server and switch virtual
+> console, even over ssh.
 > 
-> Perry
+> e.g.
+> 
+> $ dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1/seat/seat0 org.freedesktop.login1.Seat.SwitchTo uint32:2
+> 
+> (note: object paths may vary by distro, change the 2 to a different
+> number if you're already on VT2, or seat0 if you're on a different seat)
 
-I would argue that this kind of behaviour is far too trusting and asking 
-for trouble. Should we request a CVE for foolish user behaviour? Yes, 
-USB was designed to make it easy be able to plug/unplug devices without 
-having to open your device up, but it doesn't mean people should do 
-stupid things with it. Ok there are different levels of risk, you can 
-never be totally sure if any device is safe unless you open it up and 
-start examining. If it is a dumb charger or you know the person who 
-supplies you with a more sophisticated charging device (either a 
-manufacturer you trust you bought it from or a friend you trust obtained 
-the device from a trusted manufacturer) then the risk is lower, but not 
-eliminated completely.
+If this in fact works over SSH and from a user account different than
+the one logged in on the currently active virtual console, then I'd say
+it's a vulnerability on its own, regardless of the social engineering
+aspects you mention.
 
-If I designed a box with PCIe slots on the outside of the case, would 
-you go around plugging in random circuit boards into it if they were 
-available at an airport and provided some useful function? I would not. 
-Whatever interface it is I will only plug it in if I have some 
-reasonable level of confidence about the device. Or maybe people have 
-already started reviewing the kernel code looking for ways in which a 
-malicious PCIe device could own the system.
+Why does this functionality even exist?
+
+> Should this have some policykit action requirement, or require physical
+> presence? I don't know the answer.
+
+Maybe simply drop the misfeature?
+
+Alexander
