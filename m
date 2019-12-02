@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/02/2
-Message-ID: <CAG8b5tQ_R_EVdYBK1WONym2d5TzvSHF7JzHtMN3BW=K4=MZ41A@mail.gmail.com>
-Date: Wed, 2 Jan 2019 11:04:23 +0400
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/02/6
+Message-ID: <20191202175043.GC28519@orca>
+Date: Mon, 2 Dec 2019 17:50:43 +0000
+From: Leonid Isaev <leonid.isaev@...x.com>
 To: oss-security@...ts.openwall.com
-Subject: aria2 leaks passwords for HTTP based authentication
+Subject: Re: virtual consoles
 Content-Type: text/plain; charset=utf-8
 
-Hi List,
+On Mon, Dec 02, 2019 at 06:28:12PM +0100, Solar Designer wrote:
+> On Mon, Dec 02, 2019 at 08:56:38AM -0800, Tavis Ormandy wrote:
+> > Regardless of your position, this is certainly possible on desktop Linux
+> > too, unprivileged users can start a new X server and switch virtual
+> > console, even over ssh.
+> > 
+> > e.g.
+> > 
+> > $ dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1/seat/seat0 org.freedesktop.login1.Seat.SwitchTo uint32:2
+> > 
+> > (note: object paths may vary by distro, change the 2 to a different
+> > number if you're already on VT2, or seat0 if you're on a different seat)
+> 
+> If this in fact works over SSH and from a user account different than
 
+Yes, it does.
 
-aria2 is a lightweight multi-protocol command-line utility which leaks data
-or potential password via `--log=` attribute for HTTP based authentication
-which might allow local attackers to obtain sensitive information. This
-issue is somewhat similar to (2019/01/01/1).
+> Why does this functionality even exist?
 
+Because of the same reason why I have dbus on a Spark compute node: systemd :) 
 
-It was observed that URL's which gets downloaded via `--log=` attribute
-store’s sensitive information.
+> Maybe simply drop the misfeature?
 
-Example: aria2c --log=file https://user:passwd@...mple.com/
+That would break (at least) systemd user sessions I suppose...
 
-
-Later CVE-2019-3500 was assigned to this.
-
-
-
-
-Thank you
-
-@mishradhiraj_
-
+Sincerely,
+L.
