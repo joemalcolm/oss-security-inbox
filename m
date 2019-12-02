@@ -1,88 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/05/3
-Message-ID: <CAAF6GDe681q_7hypyv-b3L0yydQh4USaNyR1hDAzTFMDVUUPog@mail.gmail.com>
-Date: Wed, 4 Dec 2019 22:37:33 -0800
-From: Colm MacCárthaigh <colm@...costs.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/02/5
+Message-ID: <20191202174638.GB28519@orca>
+Date: Mon, 2 Dec 2019 17:46:38 +0000
+From: Leonid Isaev <leonid.isaev@...x.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections.
+Subject: Re: virtual consoles
 Content-Type: text/plain; charset=utf-8
 
-I work on Amazon Linux, which enables reverse path filtering on all
-existing interfaces and is not impacted by this issue, however in examining
-this issue we did notice some additional areas that may be of heightened
-concern to operating systems or VPNs that are impacted.
+On Mon, Dec 02, 2019 at 08:56:38AM -0800, Tavis Ormandy wrote:
+> $ dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1/seat/seat0 org.freedesktop.login1.Seat.SwitchTo uint32:2
+> 
+> (note: object paths may vary by distro, change the 2 to a different
+> number if you're already on VT2, or seat0 if you're on a different seat)
+> 
+> The obvious attack is to switch to a fake screensaver, then switch back
+> after authentication, or make a fake gdm login.
+> 
+> I'm sure this has been documented a million times, and most of us will
+> be familiar with the "Secure Attention Key" idea, but this is slightly
+> different from that attack as it's possible for an entirely remote user
+> (active, physically local users usually have additional privileges, as
+> it's assumed they can tamper with hardware anyway, etc).
+> 
+> Should this have some policykit action requirement, or require physical
+> presence? I don't know the answer.
 
-The report cleverly uses educated guesses about traffic and error messages
-to work its way up to injection of a packet into an open TCP connection.
-TLS on that TCP connection would thwart this attack, but it’s a significant
-combination of tactics with important security consequences.
+Pls no policykit... This "attack" works only because there is systemd, so that
+is where such calls should be blocked, IMHO.
 
-Unfortunately, by combining this issue with DNS spoofing, this issue can be
-improved upon into a more serious threat.
+It turns out, that if as an unprivileged user I do "pkill -9 systemd" (this
+line is infact in my .bash_profile) to eliminate all systemd --user processes,
+this still works, i.e. I am able to send messages to the system bus.
 
-Suppose that “service.company.corp” is a known service running on a
-corporate network, accessed by employees using roaming laptops, phones or
-other mobile devices. When an employee opens their laptop, some software
-may make queries for this DNS name in the background; and it may or may not
-resolve. That depends on whether the company publishes its internal DNS entries
-to a “public” DNS view.  At this point an untrusted network (e.g. an access
-point that has been owned) could trivially poison the response, with a
-high-TTL entry, and control what the name resolves to. If they have the
-name resolve to an IP of their choosing, they can MITM the traffic. Because
-of this risk, it is normal for VPNs to flush the DNS cache when a VPN is
-established (my corporate laptop does this), or for DNS caches to be
-flushed when a system resolver is changed; and the threat is mitigated.
-
-CVE-2019-14899 resurrects this threat. Using the CVE-2019-14899, an
-untrusted network can watch for traffic patterns that correlate to a
-DNS request
-and a DNS reply. These are easy to profile based on size; and the exact
-plaintext even may already be known; either because the query was also made
-before the VPN was established, or because it’s not that hard to learn or
-guess the service naming details of a large corporate network.
-
-When the query and reply is observed, the encrypted packet containing the
-reply can be buffered and effectively “paused” by the untrusted network.
-The untrusted network can then use the UNM-BBG issue to spoof a large
-number of forged DNS replies towards the target for the query. Note that
-due to the UNM-BBG techniques the source IP and dest IP are likely known,
-and that DNS clients – especially stub resolvers – typically use a
-restricted port range. DNS requests and DNS replies have a queryid that
-must match, but this is only 16-bits in size.  The number
-of replies that need to be sent to gain a match are measured as [stub
-resolver source port-range] * 2^16, which is likely in the 100s of
-millions. This would take 10s of seconds to transmit over a 1Gbit LAN.An
-attacker need only succeed once to “own” the DNS response for a period of
-their desire (they can set a high TTL on their spoofed responses).  Wifi
-has much lower PPS (802.11ac is just 75k pps) and would take more
-attempts.  Either way the numbers are well below the safety boundaries of a
-typical security protocol and an attacker may be able to gain control of
-“trusted” network DNS.
-
-Hijacking traffic via DNS is usually much more powerful than payload injection;
-for example an attacker can observe all connections but choose to target
-only connections that do not use TLS. This is more flexible and helps evade
-detection.
-
-Some notes:
-
-- DNS packets are often the “first” traffic in a sequence, and even when the
-size is obfuscated by padding, they can be identified through timing
-analysis alone.
-
-- DNS between stub resolvers and recursive resolvers is not protected by DNSSEC
-and DNSSEC does not thwart this attack.
-
-- Well-configured TLS does prevent poisoned DNS from being used to MITM TLS
-traffic, but there are gaps such as users over-riding warnings, or
-protocols not using TLS.
-
-- Some browsers and applications may keep their own DNS caches; if
-these DNS caches
-are not also flushed when VPNs are established, they are vulnerable to the
-other, older, issue. Although unrelated, this CVE may call attention to
-these issues.
-
--- 
-Colm
-
+Thanks,
+L.
