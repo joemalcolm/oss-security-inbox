@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1643" "Thursday" "20" "April" "2017" "10:01:00" "+0200" "Fabian =?iso-8859-1?Q?Gr=FCnbichler?=" "f.gruenbichler@proxmox.com" "<20170420080100.3pwt7tgz46xya4ym@nora.maurer-it.com>" "36" "[oss-security] CVE-2017-7979: Linux kernel: local DoS via packet action API" nil nil nil "4" "2017042008:01:00" "[oss-security] CVE-2017-7979: Linux kernel: local DoS via packet action API" (number mark "U       f.gruenbichl Apr 20   36/1643  " thread-indent "\"[oss-security] CVE-2017-7979: Linux kernel: local DoS via packet action API\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["889" "Tuesday" "3" "December" "2019" "07:12:05" "-0800" "Tavis Ormandy" "taviso@gmail.com" "<20191203151205.GA5296@thinkstation>" "25" "Re: [oss-security] virtual consoles" "^Date:" nil nil "12" "2019120315:12:05" "[oss-security] virtual consoles" (number mark "        taviso@gmail Dec  3   25/889   " thread-indent "\"Re: [oss-security] virtual consoles\"\n") "<20191203123414.GA37156@espresso.pseudorandom.co.uk>" ("<20191202165638.GA3235@thinkstation>" "<20191203123414.GA37156@espresso.pseudorandom.co.uk>") nil nil nil nil nil nil nil "Re: [oss-security] virtual consoles" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10231 invoked by uid 550); 20 Apr 2017 08:17:04 -0000
+Received: (qmail 28471 invoked by uid 550); 3 Dec 2019 15:15:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1437 invoked from network); 20 Apr 2017 08:01:25 -0000
-Date: Thu, 20 Apr 2017 10:01:00 +0200
-From: Fabian =?iso-8859-1?Q?Gr=FCnbichler?= <f.gruenbichler@proxmox.com>
-To: oss-security@lists.openwall.com
-Cc: Wolfgang Bumiller <w.bumiller@proxmox.com>
-Message-ID: <20170420080100.3pwt7tgz46xya4ym@nora.maurer-it.com>
+Received: (qmail 27860 invoked from network); 3 Dec 2019 15:12:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=gUTKL+g5euA2IC7qoMWXJC7UF5smIpJ1R7rcO0Kc0N0=;
+        b=jJoS3UEourYJYpH7OtCsIqhfGdU96CkLuM0r6KZMmr2BqMkYspPNc3Sm7c5Iuplzsi
+         LyWpfbldlxKmmyXWWyZ6EwYzJ8JGyrPibadMjzxAMP3hBjRRfOSveIKS8K2q2HjqM47C
+         oZiAk28jo4qcKBomcvM7DGT+BMmBnNZa2NxEtz0Zc3meJdmKyhplV43MyLfvAvXm4pTP
+         xiVugv25U+tLFOZBsPkWiYRkLgJnBXHR+p+Dp6EDLUS8DCw6xcLsRysu62sByOw2R3O4
+         ix0e50hQ3i8UuhScofkmfhOEKguamJmhjrN8auUZwnL5a1XKxmKc9ZjdEjLNlZXLuQDP
+         elpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gUTKL+g5euA2IC7qoMWXJC7UF5smIpJ1R7rcO0Kc0N0=;
+        b=lhLBEFfyyUOi8aAD06ukmoemu6AApZEBLix354SODl8sczn1nthv2RNqGgMvEzDIcJ
+         ohyGbs0Bxz2/vUNeD0iyn8a7cvycgpMPATr+AI/YRWIXerE20f76l2XqICIgZrjhroWv
+         sy80lYw/UH0Ev6WzLG6jSvHh3YG4lFX3oS/hDlxslWBUf/sk8akmeGSyArPfjLHysVw6
+         +qUoMRiOtgMAcDyP80PdcWnm/RHBaAEpb2JU1Dhxu1pdo8uE8D9jAZv0yCzgWa+/vGY4
+         ki57E7kai/mA2bNUZl5RRrGrQzNFd2FBEtAzaz9gl5aOSkl+kpoKSBgdWke0zf9BGsq8
+         db0w==
+X-Gm-Message-State: APjAAAWVItdxCVMtvZ2FoJGWlnMhKItM0+Xg8qss1Qx8m+X3x93NYSNX
+	r/Un2PH5j4Hb8pSuGfvv3wSwC54gzfQ=
+X-Google-Smtp-Source: APXvYqxmVLFPWCieh5dp1+QNRJSWF+3MBt6HpDNe5xrXg8uH5RRcgoh2XWILouHsG8GPzrJw1Nm9/Q==
+X-Received: by 2002:a17:90a:19d1:: with SMTP id 17mr6002366pjj.52.1575385927764;
+        Tue, 03 Dec 2019 07:12:07 -0800 (PST)
+Message-ID: <20191203151205.GA5296@thinkstation>
+References: <20191202165638.GA3235@thinkstation>
+ <20191203123414.GA37156@espresso.pseudorandom.co.uk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: [oss-security] CVE-2017-7979: Linux kernel: local DoS via packet action API
+In-Reply-To: <20191203123414.GA37156@espresso.pseudorandom.co.uk>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+Date: Tue, 3 Dec 2019 07:12:05 -0800
+From: Tavis Ormandy <taviso@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] virtual consoles
+To: oss-security@lists.openwall.com
 
-CVE-2017-7979 [1] was assigned to the following issue:
+On Tue, Dec 03, 2019 at 12:34:14PM +0000, Simon McVittie wrote:
+> On Mon, 02 Dec 2019 at 08:56:38 -0800, Tavis Ormandy wrote:
+> > unprivileged users can start a new X server and switch virtual
+> > console, even over ssh.
+> > 
+> > e.g.
+> > 
+> > $ dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1/seat/seat0 org.freedesktop.login1.Seat.SwitchTo uint32:2
+> 
+> If a uid who is not already the owner of the current VT on the seat can
+> do this, then that's probably a bug? If you think so, please report it
+> to the maintainers of logind (which is the component that would have to
+> change to address this).
+> 
 
-The cookie feature in the packet action API implementation in
-net/sched/act_api.c in the Linux kernel 4.11.x through 4.11-rc7
-mishandles the tb nlattr array, which allows local users to cause a
-denial of service (uninitialized memory access and refcount underflow,
-and system hang or crash) or possibly have unspecified other impact via
-"tc filter add" commands in certain contexts.
+I sent a mail to the systemd-security list, maybe they'll agree and just
+change it.
 
-The fix has been sent upstream [2], whether all related issues are fixed by
-the two proposed patches (see whole thread at [3]) is still under
-discussion.
+Tavis.
 
-Not affected:
-- Upstream: stable kernels from kernel.org, such as 4.10.x
 
-Affected:
-- Upstream: all current 4.11 RCs (rc1-rc7) are affected.
-- Ubuntu 17.04: commit 1045ba77a ("net sched actions: Add support for
-  user cookies") which introduced the problematic code was backported to
-  Ubuntu 17.04's "Ubuntu-4.10.0-15.17" kernel, which is affected[4].
-- Proxmox VE 5.0 Beta: the Proxmox VE kernel 4.10.5-1 which was based on
-  Ubuntu-4.10.0-15.17 was affected[5], the subsequently released PVE
-  kernel 4.10.8-1 contains the fix from [2]. The current PVE stable
-  release 4.4 is not affected.
-
-Thanks to Wolfang Bumiller for analysis and proposed fixes.
-Thanks to "Ivensiya" <ivensiya@gmail.com> for the initial bug report[5]
-that lead to the discovery.
-
-1: https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7979
-2: https://marc.info/?l=linux-netdev&m=149200746116365
-3: https://marc.info/?l=linux-netdev&m=149251041420195
-4: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1682368
-5: https://bugzilla.proxmox.com/show_bug.cgi?id=1351
-
+-- 
+-------------------------------------
+taviso@sdf.lonestar.org | finger me for my pgp key.
+-------------------------------------------------------
