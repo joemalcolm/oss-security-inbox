@@ -1,4 +1,9 @@
-Received: (qmail 5273 invoked by uid 550); 29 Oct 2025 20:31:02 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4683" "Tuesday" "3" "December" "2019" "18:00:22" "+0100" "Andrey Konovalov" "andreyknvl@gmail.com" "<CA+fCnZfrU-AtNGCUGou4_8Xms3yDmytut+AqED7Jhygtvq17eQ@mail.gmail.com>" "118" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x3" "^Date:" nil nil "12" "2019120317:00:22" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x3" (number mark "U       andreyknvl@g Dec  3  118/4683  " thread-indent "\"[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x3\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x3" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11803 invoked by uid 550); 3 Dec 2019 17:00:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,71 +11,156 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3261 invoked from network); 29 Oct 2025 19:55:51 -0000
+Received: (qmail 11783 invoked from network); 3 Dec 2019 17:00:45 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761767742; x=1762372542; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8+GmAPxH2KVNl9sGZPJYUYGy3gOo0KML6riQh1k4Abw=;
-        b=igDYJR9yU9B0U8WLkL0ZcrSv2CIJIpx/P+YJE79jXxg09Q7hc3dHTVYwKYomx7Lem0
-         w9K+1vOsLRNM+dtQa7azpv5GCZ0YqYFj7BmYgp4BN0JtmS2UHaPrE0h1CAeC+9TIT6g4
-         88vbzieNfqDnI7kf2CYdwrQWt3+YcCNA6sVWtpolzhzXTiqwgQsFBGoopGFvxRASt87l
-         6Uduo3K/0u17o/ydHkJCRHVvp2QocgIXD4DUE0s/ZTSCTVVtAEO2C/mGYWdvCHVeO57U
-         ql4q+/vQaQxEln75fxqQFdWD6eJESENgAKvD/9XWmGPPUYRBMFc0Z2phXvhwUBJmxQxN
-         AX4w==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=86xjacJwbgmHpkodW0a/2X2AQRmJhWkUO4rNW3N61s4=;
+        b=j0/zLAW60D9wJ6PcOiGyaMTbH0f8OsEishzglO9gmYV0AWnthUNTMAuhQYv0+B9MBV
+         7/UJ/Pq0DXVNITnbPdTU4dlmIygv3z2NdNg6/I3seYJzvU/4uhAVO6qeR0TiApL5duX5
+         udC1zZLJ0m28YLlHF3Af5bJhvzN3cAhPF83HuVu7RDneXmDg2KLGm/HweELd4PfG1wT+
+         b72oGdmxlX+0ctNOsceueP28eyVmIg+N7hdAuPpdw/bFRPINp1Pg6bvZqAi5Hei0IS68
+         DEfKN5yB8xCkYb8S0bjqg01+UdctXhp9/DFDsSY7PlWBLA/49EGyqxa18gR6YodKuAxK
+         T9zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761767742; x=1762372542;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8+GmAPxH2KVNl9sGZPJYUYGy3gOo0KML6riQh1k4Abw=;
-        b=ATpaesIyNGf+po6O/1O2kLBu4NhzrZKUsn0r+NzeqIlJN1cOxnvFWfT/lpstxV0nYo
-         qc3Y643L+n7rSLP8/lDnF7A73rrAumRgVg5B6wWiLGWuP/g9G5GFU7reQ4Y5w15ABIT2
-         eSwR7ZC3XH3eys4h8/XT3tFx1UrAF9DSEnHNTjhpSo/Qk9eXAsqB2z2jM/O2QEC61a12
-         bstXwqbfOjo9R8Hyqmc2sjorWiNuXesTYTl0yAr5wbehrglejBerYXFbC9UjR0F3UgcG
-         t3ySVV17We5MX03MrxYHyUW2PsrabYNeYh7nBv/EXUQk/RfUyzdNGc/CXGeset3uZTrr
-         mIWg==
-X-Gm-Message-State: AOJu0YyMUL+X8EjG+oxBriAHqEcybLOJimqLz4WetGJIsquuAVv7edVq
-	duBTannNOsho59ev16qQte12oSYroyP59XBI/4AaOi5+iX9WwD0PnBeOxJEMfnzDOmw9TtogN36
-	QCUGKQUWKlKSqyRkW0v3DFHV7g9dlOGuqKRZtJO0=
-X-Gm-Gg: ASbGncvQr7xZqlTfz4lCI5vcvzXiJ5Pm2G8xEUuofzH+zsfAZ+rlHZfT4BJ4zxxhEz8
-	gCVd8NxWGQnA2T8fSuOIrk9WeSE+pVud50F/+az4mtOHl03hrqtUhNbnOu37jUDNkB2P8/I2tTL
-	NwjzwGwQQSGFuNOutfZImWb/UKChWWNZ/hgjvPXjnzLY+00I6ZbLpCwIUFAUwJEiZFi1R3NEBUk
-	gPT2OOJC+pPwrHD+3t7MhocBsJi+Tg28HHqub1bVhVrGmZ9WepPmlkz7BHZLN7RtOhgQg==
-X-Google-Smtp-Source: AGHT+IF6TH5JdCHh5KI7QPmhX/l2kVSWsEM3k5wXMhMatyE/TxvjSLj+b9PCE/KLaYo/9TKab2ag+gxrRVGg9P6L/iA=
-X-Received: by 2002:a05:620a:2b4c:b0:867:454c:be7c with SMTP id
- af79cd13be357-8a8e436127emr597878185a.5.1761767741870; Wed, 29 Oct 2025
- 12:55:41 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=86xjacJwbgmHpkodW0a/2X2AQRmJhWkUO4rNW3N61s4=;
+        b=IFzguVos+mJZ7yHKtstEDEMyublLL0W7KerrReREC7pifWdoymYaSR8jf/9VHkjG/M
+         CqJ2DIauRoFFHaigloPewLNfjWdvCmg93inVTTcVtkhMoSbawq1/cmBIaxxjHk58NnE1
+         IBAhao/KnMVy0LsWkv4aERHZXY0iU2jCW04u5QlXNV1iuZ1/uYeCIobdsnigwUVD00aA
+         LXO+mARJ1tt7q5xbBrBJG/3G5PbFPmes2Bl8TIqWbC8fwanXO4Un8oPAKSTiHVFfGHZe
+         dGsycjiXSQ5sXeALoBPDL0UwQ08UTGBGFlf4O8SrbVpqBf9hdaey2sunMHm/L21b3bFC
+         WMUg==
+X-Gm-Message-State: APjAAAXtTkgnwi+lRrXWeqXDHTUyOPDUxh7vJ6IOihQQCP57AEQZ5pte
+	aMMnRK3tEjBnS2VyQSlbY0NYytJKTZXp9X0TnFoAkLWO
+X-Google-Smtp-Source: APXvYqwfSBrbZIvaiieN4hmOPmOZmiqA0DYvmlFmEcvTzVJmbxFvphydd8VtME3njDewCDM2zW9YAkmCobam5EdYOAQ=
+X-Received: by 2002:a19:7401:: with SMTP id v1mr3210863lfe.129.1575392433758;
+ Tue, 03 Dec 2019 09:00:33 -0800 (PST)
 MIME-Version: 1.0
-From: Kaxil Naik <kaxilnaik@gmail.com>
-Date: Wed, 29 Oct 2025 19:55:30 +0000
-X-Gm-Features: AWmQ_bldELrlQZApr_PgRrxuV7-WE8AartWexY64LzaZeJ4AC_n4QK5RPH1PD74
-Message-ID: <CAH5JyZo25yGTn9S2tc7TyXrh9q2Tuph0y2+Dc7FRVZb9Au2QJQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: dev@airflow.apache.org, users@airflow.apache.org
+Message-ID: <CA+fCnZfrU-AtNGCUGou4_8Xms3yDmytut+AqED7Jhygtvq17eQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2025-62402: Apache Airflow: Airflow 3 API: /api/v2/dagReports
- executes DAG Python in API
+Date: Tue, 3 Dec 2019 18:00:22 +0100
+From: Andrey Konovalov <andreyknvl@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x3
+To: oss-security@lists.openwall.com
 
-Severity: moderate
+Hi!
 
-Affected versions:
+More CVEs for bugs in Linux kernel USB drivers that can be triggered
+by an external malicious USB device. Found with syzkaller [1]. This
+time no obvious DoSs (see the discussions here [2, 3]): mostly UAFs,
+some info-leaks. All of these bugs have been fixed upstream (but many
+other syzbot USB bugs are still not fixed [4]).
 
-- Apache Airflow (apache-airflow) >=3.0.0,<3.1.1
+[1] https://github.com/google/syzkaller/blob/master/docs/linux/external_fuzzing_usb.md
 
-Description:
+[2] https://www.openwall.com/lists/oss-security/2019/08/20/2
 
-API users via `/api/v2/dagReports` could perform Dag code execution in
-the context of the api-server if the api-server was deployed in the
-environment where Dag files were available.
+[3] https://www.openwall.com/lists/oss-security/2019/10/25/15
 
-Credit:
+[4] https://syzkaller.appspot.com/upstream?manager=ci2-upstream-usb
 
-kwkr (https://github.com/kwkr) (reporter)
+### CVEs
 
-References:
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19523
 
-https://lists.apache.org/thread/vbzxnxn031wb998hsd7vqnvh4z8nx6rs
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2025-62402
+In the Linux kernel before 5.3.7, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/usb/misc/adutux.c driver, aka CID-44efc269db79.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19524
+
+In the Linux kernel before 5.3.12, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/input/ff-memless.c driver, aka CID-fa3a5a1880c9.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19525
+
+In the Linux kernel before 5.3.6, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/net/ieee802154/atusb.c driver, aka CID-7fd25e6fc035.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19526
+
+In the Linux kernel before 5.3.9, there is a use-after-free bug that
+can be caused by a malicious USB device in the drivers/nfc/pn533/usb.c
+driver, aka CID-6af3aa57a098.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19527
+
+In the Linux kernel before 5.2.10, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/hid/usbhid/hiddev.c driver, aka CID-9c09b214f30e.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19528
+
+In the Linux kernel before 5.3.7, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/usb/misc/iowarrior.c driver, aka CID-edc4746f253d.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19529
+
+In the Linux kernel before 5.3.11, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/net/can/usb/mcba_usb.c driver, aka CID-4d6636498c41.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19530
+
+In the Linux kernel before 5.2.10, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/usb/class/cdc-acm.c driver, aka CID-c52873e5a1ef.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19531
+
+In the Linux kernel before 5.2.9, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/usb/misc/yurex.c driver, aka CID-fc05481b2fca.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19532
+
+In the Linux kernel before 5.3.9, there are multiple out-of-bounds
+write bugs that can be caused by a malicious USB device in the Linux
+kernel HID drivers, aka CID-d9d4b1e46d95. This affects
+drivers/hid/hid-axff.c, drivers/hid/hid-dr.c, drivers/hid/hid-emsff.c,
+drivers/hid/hid-gaff.c, drivers/hid/hid-holtekff.c,
+drivers/hid/hid-lg2ff.c, drivers/hid/hid-lg3ff.c,
+drivers/hid/hid-lg4ff.c, drivers/hid/hid-lgff.c,
+drivers/hid/hid-logitech-hidpp.c, drivers/hid/hid-microsoft.c,
+drivers/hid/hid-sony.c, drivers/hid/hid-tmff.c, and
+drivers/hid/hid-zpff.c.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19533
+
+In the Linux kernel before 5.3.4, there is an info-leak bug that can
+be caused by a malicious USB device in the
+drivers/media/usb/ttusb-dec/ttusb_dec.c driver, aka CID-a10feaf8c464.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19534
+
+In the Linux kernel before 5.3.11, there is an info-leak bug that can
+be caused by a malicious USB device in the
+drivers/net/can/usb/peak_usb/pcan_usb_core.c driver, aka
+CID-f7a1337f0d29.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19535
+
+In the Linux kernel before 5.2.9, there is an info-leak bug that can
+be caused by a malicious USB device in the
+drivers/net/can/usb/peak_usb/pcan_usb_fd.c driver, aka
+CID-30a8beeb3042.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19536
+
+In the Linux kernel before 5.2.9, there is an info-leak bug that can
+be caused by a malicious USB device in the
+drivers/net/can/usb/peak_usb/pcan_usb_pro.c driver, aka
+CID-ead16e53c2f0.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19537
+
+In the Linux kernel before 5.2.10, there is a race condition bug that
+can be caused by a malicious USB device in the USB character device
+driver layer, aka CID-303911cfc5b9. This affects
+drivers/usb/core/file.c.
