@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1467" "Wednesday" "9" "March" "2016" "22:23:16" "-0800" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<56E112D4.1070302@oracle.com>" "32" "Re: [oss-security] RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies" "^Date:" nil nil "3" "2016031006:23:16" "[oss-security] RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "        alan.coopers Mar  9   32/1467  " thread-indent "\"Re: [oss-security] RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<56E0BE38.6030400@igalia.com>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56D9DD1F.1030302@cert.org>" "<6C149CB0AE53E944A358EC6730D07C7442EC599128@TUS1XCHEVSPIN35.SYMC.SYMANTEC.COM>" "<CAFJuDmNWWkHoh5brvTgZNYzNeH3ZbueHDBYC=WG7P1H7fJbKOA@mail.gmail.com>" "<20160305000740.GB1250@sentinelchicken.org>" "<56DC7B1E.4050507@oracle.com>" "<56E0BE38.6030400@igalia.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["716" "Tuesday" "3" "December" "2019" "07:54:54" "+0200" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD97nkCGns=1JSAH+StSYtTaHPoF6bm5n8WXk=dKoFzN_A@mail.gmail.com>" "18" "Re: [oss-security] virtual consoles" "^Date:" nil nil "12" "2019120305:54:54" "[oss-security] virtual consoles" (number mark "        gguninski@gm Dec  3   18/716   " thread-indent "\"Re: [oss-security] virtual consoles\"\n") "<20191202165638.GA3235@thinkstation>" ("<20191202165638.GA3235@thinkstation>") nil nil nil nil nil nil nil "Re: [oss-security] virtual consoles" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32298 invoked by uid 550); 10 Mar 2016 06:23:32 -0000
+Received: (qmail 30431 invoked by uid 550); 3 Dec 2019 10:53:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32280 invoked from network); 10 Mar 2016 06:23:31 -0000
-Message-ID: <56E112D4.1070302@oracle.com>
-User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+Received: (qmail 17832 invoked from network); 3 Dec 2019 05:55:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=C7GEKSPnghugHDXZlyUUSh9MmciwRNtcKTbIX8SiXeM=;
+        b=DDA2zkIRcTxHOlEGKYE8rM4n4/jGsXf6KTcny7sUVlR5hatVhHNsFEWdJuoTLkU7/b
+         iediQqmYuCSKec7pUcgVUJ6jxbcin9oxWIw0p5wbGMQQXIDjkZpaeyxCyF6yEwElOPCq
+         I2pP4KdLvtiFUvBy4/KeKYYy11js2oUi5HUJyiX0nnsj2P/sHuTxGletMl2N5XM4zOef
+         vr2iPQj1wyRnseOTTjX3KRzOZapQjVBE4uSC667rbvy7fv/fBfemKiy5fXWDeHbxPwho
+         KAqBmU3MVreJDOqz30gwInAqKNQCwkpD8nRpXe5EbTkuFr7pFWvN7Cona+btm8QNMa+h
+         Rwxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=C7GEKSPnghugHDXZlyUUSh9MmciwRNtcKTbIX8SiXeM=;
+        b=FbAIFyahSO7tXE8Xxy/CZnp3P6IpopFRk4JWWufcnoiiWXvXW04DBz5+AmYQcpNRwc
+         wTy7HSw1Q4A/gIg5WG9rufXiAIFdPY2cB8aWiyrcacCUrkOkWLtfaGjYQu4ZZsXRkowp
+         9GLn/X1MRUxtJcVxfgelnhscnzkw7293cOHhGGgbSe/fK0uJOBrGVfbiGOFHwCP4G1mC
+         93FriCtSCVTMm3ymG32rvxtTv68l5BpBqjwT/PBtxqq5RY4zvUxUNawRinyJBELaRd1c
+         Lf+f/C51ImVjBoDRgwL4OhlV0m5XMh/liUMKJHeD60R2IJpdJPGVuVL1aRYcc0AMrJA2
+         FFoA==
+X-Gm-Message-State: APjAAAVdNYVEeJfPaWtbIO/JqruyrowHTZ1uE/++8SYJv351SoBhzh7H
+	mo07NhOXjaI0Pp+xF/lfyXoEM1xDjWP8g/tQJuZUD59zT+E=
+X-Google-Smtp-Source: APXvYqz18eZ/cV85xAtdaTAwQWrG3Zk9VFme08hNCdJ6Nc8UnGdyKKIn9ADC3H/p1oQD0ps58IX4HovVx/c2G1+u+ZE=
+X-Received: by 2002:a92:d38e:: with SMTP id o14mr3310481ilo.238.1575352507218;
+ Mon, 02 Dec 2019 21:55:07 -0800 (PST)
 MIME-Version: 1.0
-References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com> <56D9DD1F.1030302@cert.org> <6C149CB0AE53E944A358EC6730D07C7442EC599128@TUS1XCHEVSPIN35.SYMC.SYMANTEC.COM> <CAFJuDmNWWkHoh5brvTgZNYzNeH3ZbueHDBYC=WG7P1H7fJbKOA@mail.gmail.com> <20160305000740.GB1250@sentinelchicken.org> <56DC7B1E.4050507@oracle.com> <56E0BE38.6030400@igalia.com>
-In-Reply-To: <56E0BE38.6030400@igalia.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Source-IP: userv0022.oracle.com [156.151.31.74]
-Date: Wed, 09 Mar 2016 22:23:16 -0800
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
+References: <20191202165638.GA3235@thinkstation>
+In-Reply-To: <20191202165638.GA3235@thinkstation>
+Message-ID: <CAGUWgD97nkCGns=1JSAH+StSYtTaHPoF6bm5n8WXk=dKoFzN_A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Tue, 3 Dec 2019 07:54:54 +0200
+From: Georgi Guninski <gguninski@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] RE: Concerns about CVE coverage shrinking - direct
- impact to researchers/companies
+Subject: Re: [oss-security] virtual consoles
 To: oss-security@lists.openwall.com
 
-On 03/ 9/16 04:22 PM, Carlos Alberto Lopez Perez wrote:
-> On 06/03/16 19:46, Alan Coopersmith wrote:
->> On 03/ 4/16 04:07 PM, Tim wrote:
->>> * No moderation required.  Let the public decide if they believe the
->>>     researcher or vendor.  If a moderator does bother to look over the
->>>     content, they could deduplicate/link issues together and address any
->>>     confusion, but beyond that, it isn't their job to decide what is a
->>>     vulnerability and what isn't.
->>
->> If the site displays *any* user-submitted text, you need at least enough
->> moderation to filter out spammers & trolls.
->>
+On Mon, Dec 2, 2019 at 7:13 PM Tavis Ormandy <taviso@gmail.com> wrote:
 >
-> I don't think you need that level of moderation if you implement basic
-> measures against spammers like requiring the creation of an account with
-> e-mail verification.
+> Hey List, we were discussing simple screen spoofing attacks today, and
+> whether we consider it a vulnerability or just social engineering. For
+> example, this paper on tricks Android malware can use to trick the user
+> into granting permissions to the wrong app.
 >
-> Just look to all the public bugzillas out there that allow commenting
-> (mozilla, webkit, redhat, gnome, etc). I don't think they have a problem
-> with spam. But you have to create an account first to do any comment.
 
-I'm one of the admins of the public bugzilla at bugs.freedesktop.org, and
-I've had to deal with spam there, and I've seen reports of spams in other
-public bugzillas for open source projects.
+Precedence in mobile code:
 
-github requires account creation as well, and I'm sure we've all seen out
-of control comment threads there that had to be locked down to stop abuse.
+1. This exists in Android 9, I had hard time exiting fullscreen
+video player
+2. Mozilla fixed similar bug about 15 years ago.
+3. In 2001 internet exploder was remotely vulnerable and hitting
+control-alt-del was not easy:
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@oracle.com
-	  X.Org Security Response Team - xorg-security@lists.x.org
-
+https://www.dslreports.com/forum/r1651258-Javascript-in-IE-may-spoof-the-whole-screen
+http://www.guninski.com/popspoof.html
