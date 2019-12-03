@@ -1,194 +1,127 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/28/2
-Message-ID: <20190628170812.GG11506@sasha-vm>
-Date: Fri, 28 Jun 2019 13:08:12 -0400
-From: Sasha Levin <sashal@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/03/4
+Message-ID: <CA+fCnZfrU-AtNGCUGou4_8Xms3yDmytut+AqED7Jhygtvq17eQ@mail.gmail.com>
+Date: Tue, 3 Dec 2019 18:00:22 +0100
+From: Andrey Konovalov <andreyknvl@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+Subject: Linux kernel: multiple vulnerabilities in the USB subsystem x3
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 28, 2019 at 02:57:43PM +0200, Solar Designer wrote:
->On Thu, Jun 27, 2019 at 01:05:08PM -0400, Sasha Levin wrote:
->> security@k.o is not a disclosure list, but
->> rather just a way to pull in kernel folks to fix issues. Some (most?) of
->> the kernel bugs that get fixed don't go through that list to begin with.
->
->"Some (most?) of the kernel [security] bugs that get fixed don't go
->through" linux-distros as well.
+Hi!
 
-True, but we care about more than just the kernel side of things.
+More CVEs for bugs in Linux kernel USB drivers that can be triggered
+by an external malicious USB device. Found with syzkaller [1]. This
+time no obvious DoSs (see the discussions here [2, 3]): mostly UAFs,
+some info-leaks. All of these bugs have been fixed upstream (but many
+other syzbot USB bugs are still not fixed [4]).
 
->> The kernel's documentation with regards to security issues and
->> disclosure actually points to linux-distros:
->> https://www.kernel.org/doc/Documentation/admin-guide/security-bugs.rst .
->
->I'm not entirely happy with the wording used there, which currently is:
->
->---
->Fixes for sensitive bugs, such as those that might lead to privilege
->escalations, may need to be coordinated with the private
-><linux-distros@...openwall.org> mailing list so that distribution vendors
->are well prepared to issue a fixed kernel upon public disclosure of the
->upstream fix. Distros will need some time to test the proposed patch and
->will generally request at least a few days of embargo, and vendor update
->publication prefers to happen Tuesday through Thursday. When appropriate,
->the security team can assist with this coordination, or the reporter can
->include linux-distros from the start. In this case, remember to prefix
->the email Subject line with "[vs]" as described in the linux-distros wiki:
-><http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists>
->---
->
->This says that "Distros [...] will generally request at least a few days
->of embargo", but the actual policy of (linux-)distros is that the
->reporter must provide a tentative public disclosure date/time in their
->very first message.
->
->Also, this doesn't say that by disclosing something to (linux-)distros
->the reporter accepts the list's policy, and leaves actually reading that
->wiki page with the policy optional.
->
->I don't readily have suggested edits, but we should address these issues
->somehow.  Please feel free to suggest edits.
+[1] https://github.com/google/syzkaller/blob/master/docs/linux/external_fuzzing_usb.md
 
-Can I suggest that we fork the discussion around security-bugs.rst to
-LKML? I can suggest an initial patch to address your comments here but I
-think that this is better handled on LKML.
+[2] https://www.openwall.com/lists/oss-security/2019/08/20/2
 
->On a related note, this might not be representative, but I ran a Twitter
->poll on days of week for vulnerability disclosures:
->
->https://twitter.com/solardiz/status/923885360001757185
->
->Poll: What days of week work best for you for public disclosure by
->others of vulnerabilities in software you (or your employer, etc.) use?
->
->23% No preference or Other
->33% Mon
->36% Tue, Wed, Thu
-> 8% Fri, Sat, Sun
->
->164 votes
->
->12:13 PM - 27 Oct 2017
->
->As you can see, Mon fared really well - almost same as Tue, Wed, Thu
->combined, meaning that it might be _the_ preferred day of week for
->vulnerability disclosures.  So we probably shouldn't exclude Mondays.
+[3] https://www.openwall.com/lists/oss-security/2019/10/25/15
 
-My concern with Monday is timezones: we should do the math here, but I'd
-like to avoid spilling over to Sunday (or very early Monday for that
-matter) for some timezones.
+[4] https://syzkaller.appspot.com/upstream?manager=ci2-upstream-usb
 
->> To complicate your question further: the Linux usage on our cloud has
->> surpassed Windows, as a by-product of that MSRC has started receiving
->> security reports of issues with Linux code both from users and vendors.
->> It's also the case that issues that are common for Windows and Linux
->> (like those speculative hardware bugs) are shared with us via MSRC as
->> well.
->>
->> If you think that there's value in connecting between these 3
->> entities, I'd be happy to do so (maybe as part of a new task).
->
->I'm not sure.  The microarchitectural "bugs" would have been
->inappropriate to bring to the distros list earlier than in 14 days prior
->to their public disclosures, and I don't know if the public disclosure
->dates on those were specific enough to achieve that.  Maybe you know?
+### CVEs
 
-As far as I understand specific dates for the microarchitectural bugs
-were set pretty late in the process.
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19523
 
-It's not just the microarchitectural bugs I was referring to, we are
-getting security reports from users about security bugs in various
-distros and we end up circling back with relevant distros to patch them
-up. A recent example would be:
-https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1834499 where an
-internal user has reported a kernel memory leak due to a missing patch
-in Ubuntu.
+In the Linux kernel before 5.3.7, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/usb/misc/adutux.c driver, aka CID-44efc269db79.
 
->> >It'd be helpful if you could directly address this part: "including some
->> >that had been handled on (linux-)distros, meaning that membership would
->> >have been relevant to you".  Without such examples yet, we'd have to be
->> >guessing whether the membership would have been relevant to you or not.
->> >
->> >Right now, the statistics at:
->> >
->> >https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
->> >
->> >only go until the end of 2018, so you'd be able to use them for examples
->> >dating back to 2018 and earlier.  We should ask Gentoo to update these
->> >statistics soon, perhaps for period until end of June 2019, which will
->> >be possible soon.
->>
->> Sure! Issues on the stats page that would not have been reported to MSRC
->> but are relevant to us would include:
->>
->> - On the kernel side, issues such as CVE-2017-7533
->>  (https://www.openwall.com/lists/oss-security/2017/08/03/2) would be
->>  relevant for all our offerings.
->>
->> - Core libraries affect us as well, for example CVE-2017-1000408
->>   (https://www.openwall.com/lists/oss-security/2017/12/11/4). This
->>   would affect our Sphere and SaaS offerings, as well as probably make
->>   us run through them through test gauntlet for WSLv2.
->>
->> - Higher level Linux tools, such as the one in CVE-2018-14722
->>   (https://www.openwall.com/lists/oss-security/2018/08/14/7) affect
->>   mostly our IaaS offerings, but I expect that we'd again validate the
->>   rest of our offerings with the fix.
->
->Thanks!  Ideally, you'd also demonstrate that Microsoft fixed those
->issues (where relevant) within days of their public disclosure (so that
->some days of advance notice would have made a difference).  Can you?
->
->Or are you merely pointing out the kind of issues that would have been
->relevant to you and presumably fixed promptly now, but were not relevant
->and thus were not fixed back then?  That's less than ideal if so.
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19524
 
-Microsoft's history with Linux is a rather recent one. I can offer the
-following examples if you're willing to give us a few months off of the
-"1 year" requirement:
+In the Linux kernel before 5.3.12, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/input/ff-memless.c driver, aka CID-fa3a5a1880c9.
 
-CVE-2018-1002105: https://azure.microsoft.com/en-us/updates/aks-clusters-patched-for-kubernetes-vulnerability/
-CVE-2018-5391, CVE-2018-5390: https://azure.microsoft.com/en-us/blog/security-bulletin-for-august-2018/
-CVE-2019-5736: https://azure.microsoft.com/en-us/updates/iot-edge-fix-cve-2019-5736/
-CVE-2019-11477, CVE-2019-11478, CVE-2019-11479: https://azure.microsoft.com/en-us/updates/security-advisory-on-linux-kernel-tcp-vulnerabilities-for-hdinsight-clusters/
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19525
 
->> Sure, we'd love to help with the list's pain points.
->
->Great!
->
->> >The lack of a volunteer distro for Administrative "4. Evaluate relevance
->> >to other parties ..." came up e.g. here:
->> >
->> >"Linux kernel: Bluetooth: two remote infoleaks (CVE-2019-3459,
->> >CVE-2019-3460)"
->> >https://www.openwall.com/lists/oss-security/2019/01/11/2
->>
->> This could be interesting for us. we already work closely with multiple
->> distros as part of our public IaaS offering, as well as my work
->> maintaining the stable tree means I interact often with many subsystem
->> maintainers. We could leverage that for this task.
->>
->> I think that this task would also benefit from collaboration with MSRC,
->> where for example we could verify whether the Bluetooth issue you brought
->> up would affect Windows, and whether issues reported to MSRC also affect
->> Linux.
->
->If Microsoft joins for its Linux offerings (including Linux on top of
->Windows), then checking if the Linux issues also affect Windows (itself)
->would involve sharing beyond the need-to-know condition of
->(linux-)distros list policy, so isn't allowed by default.  It could
->still be done with explicit approval of the reporter, though, and I
->expect most people would give such approval if asked.
+In the Linux kernel before 5.3.6, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/net/ieee802154/atusb.c driver, aka CID-7fd25e6fc035.
 
-I'd love to develop a framework that would allow for sharing of reports
-between linux-distros/security@.../MSRC given the explicit approval of
-the reporter. I think that the current "silo" model is broken.
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19526
 
-Microsoft in general, and MSRC in particular have proved during
-Meltdown/Spectre that they are a trusted entity which can work well with
-the open source community to advance our common goals. 
+In the Linux kernel before 5.3.9, there is a use-after-free bug that
+can be caused by a malicious USB device in the drivers/nfc/pn533/usb.c
+driver, aka CID-6af3aa57a098.
 
---
-Thanks,
-Sasha
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19527
+
+In the Linux kernel before 5.2.10, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/hid/usbhid/hiddev.c driver, aka CID-9c09b214f30e.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19528
+
+In the Linux kernel before 5.3.7, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/usb/misc/iowarrior.c driver, aka CID-edc4746f253d.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19529
+
+In the Linux kernel before 5.3.11, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/net/can/usb/mcba_usb.c driver, aka CID-4d6636498c41.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19530
+
+In the Linux kernel before 5.2.10, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/usb/class/cdc-acm.c driver, aka CID-c52873e5a1ef.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19531
+
+In the Linux kernel before 5.2.9, there is a use-after-free bug that
+can be caused by a malicious USB device in the
+drivers/usb/misc/yurex.c driver, aka CID-fc05481b2fca.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19532
+
+In the Linux kernel before 5.3.9, there are multiple out-of-bounds
+write bugs that can be caused by a malicious USB device in the Linux
+kernel HID drivers, aka CID-d9d4b1e46d95. This affects
+drivers/hid/hid-axff.c, drivers/hid/hid-dr.c, drivers/hid/hid-emsff.c,
+drivers/hid/hid-gaff.c, drivers/hid/hid-holtekff.c,
+drivers/hid/hid-lg2ff.c, drivers/hid/hid-lg3ff.c,
+drivers/hid/hid-lg4ff.c, drivers/hid/hid-lgff.c,
+drivers/hid/hid-logitech-hidpp.c, drivers/hid/hid-microsoft.c,
+drivers/hid/hid-sony.c, drivers/hid/hid-tmff.c, and
+drivers/hid/hid-zpff.c.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19533
+
+In the Linux kernel before 5.3.4, there is an info-leak bug that can
+be caused by a malicious USB device in the
+drivers/media/usb/ttusb-dec/ttusb_dec.c driver, aka CID-a10feaf8c464.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19534
+
+In the Linux kernel before 5.3.11, there is an info-leak bug that can
+be caused by a malicious USB device in the
+drivers/net/can/usb/peak_usb/pcan_usb_core.c driver, aka
+CID-f7a1337f0d29.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19535
+
+In the Linux kernel before 5.2.9, there is an info-leak bug that can
+be caused by a malicious USB device in the
+drivers/net/can/usb/peak_usb/pcan_usb_fd.c driver, aka
+CID-30a8beeb3042.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19536
+
+In the Linux kernel before 5.2.9, there is an info-leak bug that can
+be caused by a malicious USB device in the
+drivers/net/can/usb/peak_usb/pcan_usb_pro.c driver, aka
+CID-ead16e53c2f0.
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19537
+
+In the Linux kernel before 5.2.10, there is a race condition bug that
+can be caused by a malicious USB device in the USB character device
+driver layer, aka CID-303911cfc5b9. This affects
+drivers/usb/core/file.c.
