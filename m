@@ -1,88 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/21/1
-Message-ID: <CAEftUarE+73RVs+D9QhDbFShJqttj0Y48Hg1WQFQevMP66jjKA@mail.gmail.com>
-Date: Thu, 20 Jun 2019 14:38:02 -0600
-From: Joel Smith <joelsmith@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/03/3
+Message-ID: <20191203151205.GA5296@thinkstation>
+Date: Tue, 3 Dec 2019 07:12:05 -0800
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Incomplete fixes for CVE-2019-1002101, kubectl cp potential directory traversal - CVE-2019-11246
+Subject: Re: virtual consoles
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+On Tue, Dec 03, 2019 at 12:34:14PM +0000, Simon McVittie wrote:
+> On Mon, 02 Dec 2019 at 08:56:38 -0800, Tavis Ormandy wrote:
+> > unprivileged users can start a new X server and switch virtual
+> > console, even over ssh.
+> > 
+> > e.g.
+> > 
+> > $ dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1/seat/seat0 org.freedesktop.login1.Seat.SwitchTo uint32:2
+> 
+> If a uid who is not already the owner of the current VT on the seat can
+> do this, then that's probably a bug? If you think so, please report it
+> to the maintainers of logind (which is the component that would have to
+> change to address this).
+> 
+
+I sent a mail to the systemd-security list, maybe they'll agree and just
+change it.
+
+Tavis.
 
 
-
-Another security issue was discovered with the Kubernetes kubectl cp
-command that could enable a directory traversal such that a malicious
-container could replace or create files on a user’s workstation. The
-vulnerability is a client-side defect and requires user interaction to be
-exploited. The issue is High severity and upgrading kubectl to Kubernetes
-1.12.9, 1.13.6, and 1.14.2 or later is encouraged to fix this issue.
-
-
-
-*Am I vulnerable?*
-
-
-
-Run kubectl version --client and if it does not say client version 1.12.9,
-1.13.6, or 1.14.2 or newer, you are running a vulnerable version.
-
-
-
-*How do I upgrade?*
-
-
-
-Follow installation instructions here
-https://kubernetes.io/docs/tasks/tools/install-kubectl/
-
-
-
-Not all instructions will provide up-to-date kubectl versions at the time
-of this announcement. So, always confirm with kubectl version.
-
-
-
-*Vulnerability Details*
-
-
-
-The details for this vulnerability are very similar to CVE-2019-1002101.
-The original fix for that issue was incomplete and a new exploit method was
-discovered.
-
-
-
-The kubectl cp command allows copying files between containers and the user
-machine. To copy files from a container, Kubernetes runs tar inside the
-container to create a tar archive, copies it over the network, and kubectl
-unpacks it on the user’s machine.
-
-
-
-If the tar binary in the container is malicious, it could run any code and
-output unexpected, malicious results. An attacker could use this to write
-files to any path on the user’s machine when kubectl cp is called, limited
-only by the system permissions of the local user.
-
-
-
-See https://github.com/kubernetes/kubernetes/pull/76788 for details.
-
-*Acknowledgements*
-
-
-
-This issue was discovered by Charles Holmes, Atredis Partners as part of
-the CNCF-sponsored Kubernetes Third-party Security Audit. Thanks to Maciej
-Szulik for the fix, to Tim Allclair for the test cases and fix review, and
-to the patch release managers for including the fix in their releases.
-
-
-
-Thanks,
-
-
-
-Joel Smith on behalf of the Kubernetes Product Security Committee
-
+-- 
+-------------------------------------
+taviso@....lonestar.org | finger me for my pgp key.
+-------------------------------------------------------
