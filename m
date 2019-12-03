@@ -1,63 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/08/2
-Message-ID: <23864967-5f4e-f048-7ea7-553f72a2746e@preussker.net>
-Date: Tue, 8 Oct 2019 11:24:09 +0200
-From: Daniel 'f0o' Preussker <daniel@...ussker.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/03/1
+Message-ID: <CAGUWgD97nkCGns=1JSAH+StSYtTaHPoF6bm5n8WXk=dKoFzN_A@mail.gmail.com>
+Date: Tue, 3 Dec 2019 07:54:54 +0200
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2019-005] Octavia Amphora-Agent not requiring Client-Certificate (CVE-2019-17134)
+Subject: Re: virtual consoles
 Content-Type: text/plain; charset=utf-8
 
-=====================================================================
-OSSA-2019-005: Octavia Amphora-Agent not requiring Client-Certificate
-=====================================================================
+On Mon, Dec 2, 2019 at 7:13 PM Tavis Ormandy <taviso@...il.com> wrote:
+>
+> Hey List, we were discussing simple screen spoofing attacks today, and
+> whether we consider it a vulnerability or just social engineering. For
+> example, this paper on tricks Android malware can use to trick the user
+> into granting permissions to the wrong app.
+>
 
-:Date: October 07, 2019
-:CVE: CVE-2019-17134
+Precedence in mobile code:
 
+1. This exists in Android 9, I had hard time exiting fullscreen
+video player
+2. Mozilla fixed similar bug about 15 years ago.
+3. In 2001 internet exploder was remotely vulnerable and hitting
+control-alt-del was not easy:
 
-Affects
-~~~~~~~
-- Octavia: >=0.10.0 <2.1.2, >=3.0.0 <3.2.0, >=4.0.0 <4.1.0
-
-
-Description
-~~~~~~~~~~~
-Daniel Preussker reported a vulnerability in amphora-agent, running
-within Octavia Amphora Instances which allows unauthenticated access
-from the management network. This leads to information disclosure and
-also allows changes to the configuration of the Amphora via simple
-HTTP requests because cmd/agent.py gunicorn cert_reqs option is
-incorrectly set to True instead of ssl.CERT_REQUIRED.
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/686547 (Ocata)
-- https://review.opendev.org/686546 (Pike)
-- https://review.opendev.org/686545 (Queens)
-- https://review.opendev.org/686544 (Rocky)
-- https://review.opendev.org/686543 (Stein)
-- https://review.opendev.org/686541 (Train)
-
-
-Credits
-~~~~~~~
-- Daniel Preussker (CVE-2019-17134)
-
-
-References
-~~~~~~~~~~
-- https://storyboard.openstack.org/#!/story/2006660
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-17134
-
-
-Notes
-~~~~~
-- The stable/ocata and stable/pike branches are under extended maintenance and
-  will receive no new point releases, but patches for them are provided as a
-  courtesy.
-
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+https://www.dslreports.com/forum/r1651258-Javascript-in-IE-may-spoof-the-whole-screen
+http://www.guninski.com/popspoof.html
