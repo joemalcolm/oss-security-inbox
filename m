@@ -1,49 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/02/2
-Message-ID: <644B8CEF-F82D-4FB8-AE63-6F499D63E7B2@redcoded.com>
-Date: Mon, 2 Sep 2019 14:22:17 +0000
-From: "(RS) Tyler Schroder" <redorhcs@...coded.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: MITRE response time
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/04/1
+Message-ID: <CAGSZ4d6cZjj+-xeADxW=VOrzvLFzCGm-ZdqFAhvR2+e-8QSSVg@mail.gmail.com>
+Date: Wed, 4 Dec 2019 06:25:00 +0100
+From: mibo <mibo@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-17554: Olingo: XML External Entity resolution attack
 Content-Type: text/plain; charset=utf-8
 
-Heiko,
+CVE-2019-17554: XML External Entity resolution attack
 
-My usual response time from them is 2-5 business days (sometimes not too much longer if the team is short handed) requesting individual IDs. 
+Severity: Important
+Vendor: The Apache Software Foundation
 
-MITRE is the correct CNA for projects not already listed on that page covered by a different CNA. Make sure to use the web form at CVE.mitre.org
+Versions Affected:
+Olingo 4.0.0 to 4.6.0
+The OData v2 versions of Olingo 2.x are not affected
 
+Description:
+The XML content type entity deserializer is not configured to deny the
+resolution of external entities.
+Request with content type "application/xml", which trigger the
+deserialization of entities, can be used to trigger XXE attacks.
 
-Tyler
-==============
-R. S. Tyler Schroder
-K12 Technician
+Mitigation:
+4.x.x users should upgrade to 4.7.0
 
+Credit:
+This issue was discovered by Archibald Haddock of Compass Security Schweiz AG.
 
-
-(Disclaimer: former intern there but not with the CVE program)
-
-> On Sep 2, 2019, at 10:16 AM, Heiko Schlittermann <hs@...marc.schlittermann.de> wrote:
-> 
-> Hello,
-> 
-> what is your experience with MITRE's response time to an CVE request?
-> 
-> Last thursday I requested a CVE on behalf of a project I'm involved in
-> (and which is not covered by any of the CNAs listed on
-> https://cve.mitre.org/cve/request_id.html.
-> 
-> Where do you request CVEs for projects not listed there?
-> 
->    Best regards from Dresden/Germany
->    Viele Grüße aus Dresden
->    Heiko Schlittermann
-> --
-> SCHLITTERMANN.de ---------------------------- internet & unix support -
-> Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
-> gnupg encrypted messages are welcome --------------- key ID: F69376CE -
-> ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Content of type "text/html" skipped
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (2374 bytes)
+Links:
+https://issues.apache.org/jira/browse/OLINGO-1409
