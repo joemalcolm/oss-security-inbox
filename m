@@ -1,97 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/09/1
-Message-ID: <CA+xoJc+BwZMY2AFo2zDDE1Lpgi+bH07K0qo=vC8SZ5nwLxSZMA@mail.gmail.com>
-Date: Fri, 9 Aug 2019 15:08:02 +0200
-From: Frederic Branczyk <fbranczy@...hat.com>
-To: kubernetes-dev@...glegroups.com,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss@...glegroups.com, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Security release of kube-state-metrics v1.7.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/04/3
+Message-ID: <CAGSZ4d6Zo5jLuPJJ+2XsBX5Ji7kRCxruqxVE8LcqLV=VhQmXiQ@mail.gmail.com>
+Date: Wed, 4 Dec 2019 06:28:45 +0100
+From: mibo <mibo@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-17556: Olingo: Deserialization vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community-
+CVE-2019-17556: Deserialization vulnerability
 
-A security issue was discovered in the v1.7.0 and v1.7.1 versions of
-kube-state-metrics [1]. The issue is of Medium severity level and upgrading
-to the latest release v1.7.2 [2] of kube-state-metrics is highly encouraged
-to fix this issue, as well as deleting the time-series data that could
-potentially disclose secret information.
+Severity: Important
+Vendor: The Apache Software Foundation
 
+Versions Affected:
+Olingo 4.0.0 to 4.6.0
+The OData v2 versions of Olingo 2.x are not affected
 
-*Am I vulnerable?*
-If you are using the kube-state-metrics versions v1.7.0 or v1.7.1, you are
-running a vulnerable version. To find out which version you are running,
-you can verify the image tag of your kube-state-metrics deployment.
+Description:
+The AbstractService class, which is public API, uses ObjectInputStream
+and doesn't check classes being deserialized. If an attacker can feed
+malicious metadata to the class, then it may result in running
+attacker's code in the worse case.
 
-The following commands should give you the deployed image tag. (Please note
-that this may vary depending on which namespace kube-state-metrics is
-deployed in and the deployment name itself):
+Mitigation:
+4.x.x users should upgrade to 4.7.0
 
-```
-kubectl get deployment -n kube-system kube-state-metrics -o yaml | grep
-image:
-```
+Credit:
+This issue was discovered by ﻿Artem Smotrakov of SAP SE.
 
-
-*How do I mitigate the vulnerability?*
-Update the image of kube-state-metrics to `
-quay.io/coreos/kube-state-metrics:v1.7.2`.
-
-If you are unable to upgrade to the latest version of kube-state-metrics,
-you can filter out all of the annotation metrics by passing the following
-flag to `kube-state-metrics`:
-
-```
---metric-blacklist="kube_.*_annotations"
-```
-
-Make sure to delete all the time series data from Prometheus as well, below
-is an example command. (Note that this will only work from Prometheus v2.1
-onward. More details on time series data deletion can be found in the
-Prometheus docs [3])
-
-```
-# This command deletes all of the annotation metrics emitted by
-kube-state-metrics
-curl -X POST -g '
-http://localhost:9090/api/v1/admin/tsdb/delete_series?match[]={__name__=~
-"kube_.+_annotations"}'
-```
-
-This requires the Admin APIs to be enabled. Start Prometheus with the
-`--web.enable-admin-api` flag to do so.
-Please remember that the delete API only marks the time-series data for
-deletion. The actual removal happens during the next compaction process. To
-trigger this, the clean tombstones API can be used:
-
-```
-curl -X POST http://localhost:9090/api/v1/admin/tsdb/clean_tombstones
-```
-
-
-*Vulnerability Details*
-An experimental feature was added to the v1.7.0 release that enabled
-annotations to be exposed as metrics. By default, the kube-state-metrics
-metrics only expose metadata about Secrets. However, a combination of the
-default `kubectl` behavior and this new feature can cause the entire secret
-content to end up in metric labels thus inadvertently exposing the secret
-content in metrics.
-
-We are not aware of other annotations that disclose information in the same
-way, but as a precaution we have reverted the feature and will think more
-thoroughly about the implications should we ever introduce something like
-it again.
-
-This feature has been reverted and released as the v1.7.2 release. If you
-are running the v1.7.0 or v1.7.1 release, please upgrade to the v1.7.2
-release as soon as possible.
-
-Thank you to Moritz S. for reporting this issue! Also thank you to Tariq
-Ibrahim, Frederic Branczyk and Lili Cosic for the coordination in making
-the fix and release.
-
-Thank you for your understanding,
-kube-state-metrics maintainers
-
-[1] https://github.com/kubernetes/kube-state-metrics
-[2] https://github.com/kubernetes/kube-state-metrics/releases/tag/v1.7.2
-[3] https://prometheus.io/docs/prometheus/latest/querying/api/#delete-series
-
+Links:
+https://issues.apache.org/jira/browse/OLINGO-1410
