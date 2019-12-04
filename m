@@ -1,4 +1,9 @@
-Received: (qmail 30173 invoked by uid 550); 31 Jan 2023 17:37:21 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["650" "Wednesday" "4" "December" "2019" "06:25:00" "+0100" "mibo" "mibo@apache.org" "<CAGSZ4d6cZjj+-xeADxW=VOrzvLFzCGm-ZdqFAhvR2+e-8QSSVg@mail.gmail.com>" "23" "[oss-security] CVE-2019-17554: Olingo: XML External Entity resolution attack" nil nil nil "12" "2019120405:25:00" "[oss-security] CVE-2019-17554: Olingo: XML External Entity resolution attack" (number mark "U       mibo@apache. Dec  4   23/650   " thread-indent "\"[oss-security] CVE-2019-17554: Olingo: XML External Entity resolution attack\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-17554: Olingo: XML External Entity resolution attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32588 invoked by uid 550); 4 Dec 2019 10:34:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,33 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31985 invoked from network); 31 Jan 2023 15:13:21 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Eric Covener <covener@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <76996523-6b4d-c462-9ae9-9f3d1bbc8b2e@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 31 Jan 2023 15:13:06 +0000
+Received: (qmail 23915 invoked from network); 4 Dec 2019 05:25:24 -0000
+X-Gm-Message-State: APjAAAWkGS1WAqeSXvM4Ly7SKGgVyyY9bdR5RZ0CWFlC6lKKruFAxDC/
+	672N3fhntGvpRiqCncjHNJ9pOyt5LCeAI0C31Ys=
+X-Google-Smtp-Source: APXvYqwFqbOC9PJAyTPOykRdpe/8fakLe9DxsO1HaArKZytMvv9MpQpdwVT9Mn5CJeAPt8fceWzdnbHowTnm2XINpZ4=
+X-Received: by 2002:a17:906:72c7:: with SMTP id m7mr1140658ejl.232.1575437111106;
+ Tue, 03 Dec 2019 21:25:11 -0800 (PST)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-25147: Apache Portable Runtime (APR): out-of-bounds
- writes in the apr_base64 family of functions 
+From: mibo <mibo@apache.org>
+Date: Wed, 4 Dec 2019 06:25:00 +0100
+X-Gmail-Original-Message-ID: <CAGSZ4d6cZjj+-xeADxW=VOrzvLFzCGm-ZdqFAhvR2+e-8QSSVg@mail.gmail.com>
+Message-ID: <CAGSZ4d6cZjj+-xeADxW=VOrzvLFzCGm-ZdqFAhvR2+e-8QSSVg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2019-17554: Olingo: XML External Entity resolution attack
 
-Severity: moderate
+CVE-2019-17554: XML External Entity resolution attack
+
+Severity: Important
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+Olingo 4.0.0 to 4.6.0
+The OData v2 versions of Olingo 2.x are not affected
 
 Description:
+The XML content type entity deserializer is not configured to deny the
+resolution of external entities.
+Request with content type "application/xml", which trigger the
+deserialization of entities, can be used to trigger XXE attacks.
 
-Integer Overflow or Wraparound vulnerability in apr_base64 functions of Apa=
-che Portable Runtime Utility (APR-util) allows an attacker to write beyond =
-bounds of a buffer.\nThis issue affects Apache Portable Runtime Utility (AP=
-R-util) 1.6.1 and prior versions.
+Mitigation:
+4.x.x users should upgrade to 4.7.0
 
 Credit:
+This issue was discovered by Archibald Haddock of Compass Security Schweiz AG.
 
-Ronald Crane (Zippenhop LLC) (reporter)
-
-References:
-
-https://apr.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2022-25147
-
+Links:
+https://issues.apache.org/jira/browse/OLINGO-1409
