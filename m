@@ -1,26 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/7
-Message-ID: <CABXRUiQ5c+3288-o3jku5knc5Udy1UA-w8Tf9H7cL0LKEfVfBA@mail.gmail.com>
-Date: Thu, 18 Apr 2019 21:31:01 +0800
-From: Fuqian Huang <huangfq.daxian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/04/6
+Message-ID: <20191204220511.GA16998@openwall.com>
+Date: Wed, 4 Dec 2019 23:05:11 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel < 4.14.111 drivers/media/dvb-frontends/cxd2841er.c kernel address dumps to user space
+Subject: Re: Authentication vulnerabilities in OpenBSD
 Content-Type: text/plain; charset=utf-8
 
-In drivers/media/dvb-frontends/cxd2841er.c:3856,
-function cxd2841er_attach will print the address of
-adapter to dmesg, the kernel address is dumpped to
-user space.
+On Wed, Dec 04, 2019 at 08:49:22PM +0000, Qualys Security Advisory wrote:
+> 1. CVE-2019-19521: Authentication bypass
 
-static struct dvb_frontend *cxd2841er_attach(struct cxd2841er_config *cfg,
-                         struct i2c_adapter *i2c,
-                         u8 system)
-{
-    ...
-    priv->i2c = i2c;
-    dev_info(&priv->i2c->dev,
-        "%s(): I2C adapter %p SLVX addr %x SLVT addr %x\n",
-        __func__, priv->i2c,
-        priv->i2c_addr_slvx, priv->i2c_addr_slvt);
-    ...
-}
+> This is the second piece of the puzzle: if an attacker specifies the
+> username "-schallenge" (or "-schallenge:passwd" to force a passwd-style
+> authentication), then the authentication is automatically successful and
+> therefore bypassed.
+
+Wow, this is the new -froot.
+
+> 2. CVE-2019-19520: Local privilege escalation via xlock
+> ==============================================================================
+> 
+> On OpenBSD, /usr/X11R6/bin/xlock is installed by default and is
+> set-group-ID "auth", not set-user-ID; the following check is therefore
+> incomplete and should use issetugid() instead:
+> 
+> ------------------------------------------------------------------------------
+> 101 _X_HIDDEN void *
+> 102 driOpenDriver(const char *driverName)
+> 103 {
+> ...
+> 113    if (geteuid() == getuid()) {
+> 114       /* don't allow setuid apps to use LIBGL_DRIVERS_PATH */
+> 115       libPaths = getenv("LIBGL_DRIVERS_PATH");
+> ------------------------------------------------------------------------------
+> 
+> A local attacker can exploit this vulnerability and dlopen() their own
+> driver to obtain the privileges of the group "auth":
+
+I think this library issue isn't OpenBSD-specific.  A quick Google web
+search for LIBGL_DRIVERS_PATH finds that Mesa appears to have the same
+issue, and it also finds that we should also search for GBM_DRIVERS_PATH
+(apparently, for older Mesa) and maybe EGL_DRIVERS_PATH and EGL_DRIVER,
+and LIBVA_DRIVERS_PATH and LIBVA_DRIVER_NAME.  There are probably more.
+
+Related discussion for X.Org, which ends with Alan Coopersmith saying:
+
+"Yeah, I really would rather not have a setuid-root program dlopen and execute
+code from a user supplied path.  Can we have something in there to prevent
+disasters, such as issetugid() or secure_getenv()?"
+
+[PATCH xserver] Search for DRI drivers at LIBGL_DRIVERS_PATH environment variable.
+https://lists.x.org/archives/xorg-devel/2016-April/049336.html
+
+It sounds like the patch adding the dangerous getenv() didn't get in,
+but I didn't verify that.
+
+Alexander
