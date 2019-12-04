@@ -1,135 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/14/1
-Message-ID: <CADtktAXK6dTwRiUZYo9H3cr-om-r_SRvkc6Tp--_YL5UkOEnQQ@mail.gmail.com>
-Date: Thu, 14 Nov 2019 11:04:53 -0800
-From: Tim Allclair <tallclair@...gle.com>
-To: kubernetes-announce@...glegroups.com,  "Kubernetes developer/contributor discussion" <kubernetes-dev@...glegroups.com>,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss <kubernetes-security-discuss@...glegroups.com>,  oss-security@...ts.openwall.com, kubernetes+announcements@...coursemail.com,  kubernetes-sig-storage@...glegroups.com
-Subject: Security release of kubernetes-csi sidecars - CVE-2019-11255
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/04/4
+Message-ID: <044b3d2b-7c9e-4854-c1c5-870181059873@nic.cz>
+Date: Wed, 4 Dec 2019 17:48:33 +0100
+From: Vladimír Čunát <vladimir.cunat@....cz>
+To: oss-security@...ts.openwall.com, knot-resolver-announce@...ts.nic.cz
+Subject: [CVE-2019-19331] Knot Resolver 4.3.0 security release
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+Hello everyone,
+here are some details on the vulnerability (fix) disclosed today.
+
+Impact
+======
+Some DNS packets might take even a few seconds to process with full CPU utilization, allowing DoS.
+
+Unembargo date
+==============
+Wednesday 4th December 2019, afternoon GMT
+
+Fixes
+=====
+Most of the issue can be mitigated by updating libknot dependency to >= 2.9.1.
+
+Otherwise a complete fix was released in Knot Resolver 4.3.0, which also does not require libknot update.
+The attached patches are applicable to recent releases (when doc diff is stripped).
 
 
+[Affected version (required)]:
+Knot Resolver <= 4.2.2
 
-A security issue has been found in the kubernetes-csi external-provisioner
-<https://github.com/kubernetes-csi/external-provisioner>,
-external-snapshotter
-<https://github.com/kubernetes-csi/external-snapshotter>, and
-external-resizer <https://github.com/kubernetes-csi/external-resizer>
-sidecars that impacts most versions of the sidecars bundled in Container
-Storage Interface (CSI) drivers. The vulnerabilities are medium severity
-and can result in unauthorized volume data access or mutation when using
-CSI volume snapshot, cloning or resizing features in Kubernetes. Upgrading
-your CSI drivers to the fixed sidecars is recommended. Details are below
-and at https://issue.k8s.io/85233
+[Fixed version (optional)]:
+Knot Resolver 4.3.0
 
+[Vulnerability type]:
+CWE-407: Inefficient Algorithmic Complexity
 
-The following versions of the CSI sidecars have been fixed:
+[Impact of exploitation]:
+Denial of service through high CPU utilization.
 
-external-provisioner:
+[Description of vulnerability]:
+DNS replies with very many resource records might be processed very inefficiently, in extreme cases taking even several CPU seconds for each such uncached message.  For example, a few thousand A records can be squashed into one DNS message (limit is 64kB).
 
-   -
-
-   v0.4.3
-   -
-
-   v1.0.2
-   -
-
-   v1.2.2
-   -
-
-   v1.3.1
-   -
-
-   v1.4.0
+To execute an attack it is enough to:
++ own a rogue authoritative server or utilize an existing name with a huge RRset, and
++ trigger DNS query for that name from the resolver to be attacked
 
 
-external-snapshotter:
+Attack Vector (AV): Network
+Attack Complexity (AC): Low
+Privileges Required (PR): None
+User Interaction (UI): None
+Scope (S): Unchanged
+Confidentiality (C): None
+Integrity (I): None
+Availability (A): High
 
-   -
+Technical Details:
+CWE-407
 
-   v0.4.2
-   -
+[Reference URL]:
+https://gitlab.labs.nic.cz/knot/knot-resolver/tags/v4.3.0
 
-   v1.0.2
-   -
-
-   v1.2.2
-
-
-external-resizer
-
-   -
-
-   v0.3.0
+--Vladimir
 
 
-No fixes in kubernetes/kubernetes are required.
+Content of type "text/html" skipped
 
+View attachment "big-rrset.patch" of type "text/plain" (14902 bytes)
 
-Affected Components and Versions
+View attachment "cname-limit.patch" of type "text/x-patch" (3377 bytes)
 
-The following Kubernetes versions are affected with default feature gates:
+View attachment "big-rrset-abort.patch" of type "text/x-patch" (1340 bytes)
 
-   -
-
-   v1.16.0+
-
-
-The following Kubernetes versions are affected with non-default alpha
-VolumeSnapshotDataSource,
-ExpandCSIVolumes, and VolumePVCDataSource feature gates enabled:
-
-   -
-
-   v1.12.0+
-
-
-CSI drivers installed with these kubernetes-csi sidecars versions are
-affected:
-
-external-provisioner: v0.4.1-0.4.2, v1.0.0-1.0.1, v1.1.0-1.2.1, v1.3.0
-
-external-snapshotter: v0.4.0-0.4.1, v1.0.0-1.0.1, v1.1.0-v1.2.1
-
-external-resizer: v0.1.0-0.2.0
-
-
-
-How do I mitigate the vulnerability?
-
-
-As a short term mitigation, disable the VolumeSnapshotDataSource,
-ExpandCSIVolumes, and VolumePVCDataSource Kubernetes feature gates in
-kube-apiserver and kube-controller-manager. This will cause new
-PersistentVolumeClaims to be provisioned ignoring the DataSource and
-resizing requests will also be ignored. Note that this will cause new PVCs
-that are intended to be provisioned from a snapshot or clone to instead
-provision a blank disk.
-
-
-Also, to disable taking volume snapshots, either remove the
-external-snapshotter sidecar from any CSI drivers or revoke the CSI
-driver’s RBAC permissions on the snapshot.storage.k8s.io API group.
-
-
-Longer term, upgrade your CSI driver with patched versions of the affected
-sidecars.
-
-
-Acknowledgements
-
-
-Thanks to Xiangqian Yu from Google for discovering this issue.
-
-
-Thanks to Michelle Au, Jan Šafránek, Hemant Kumar, and Xing Yang for
-coordinating the fixes and release.
-
-
-Thank You,
-
-
-Tim Allclair on behalf of the Kubernetes Product Security Committee
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
