@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/25/5
-Message-ID: <3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>
-Date: Thu, 25 Jul 2019 20:54:55 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/04/2
+Message-ID: <CAGSZ4d6LBTEQyr_qB5xHEkhv83DL42Pysgh6BNBoJSouvshAiw@mail.gmail.com>
+Date: Wed, 4 Dec 2019 06:27:11 +0100
+From: mibo <mibo@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Gentoo Security <security@...too.org>
-Subject: Statistics for distros lists updated for 2019Q2
+Subject: CVE-2019-17555: Olingo: DoS via Retry-After header vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2019-17555: DoS via Retry-After header vulnerability
 
-Apologies for the delay, and a short notice that the statistics for the
-distros list have been updated for the 2nd quarter of 2019 at
-http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+Severity: Important
+Vendor: The Apache Software Foundation
 
--- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+Versions Affected:
+Olingo 4.0.0 to 4.6.0
+The OData v2 versions of Olingo 2.x are not affected
 
+Description:
+The AsyncResponseWrapperImpl class reads the Retry-After header and
+passes it to the Thread.sleep() method without any check. If a
+malicious server returns a huge value in the header, then it can help
+to implement a DoS attack.
 
+Mitigation:
+4.x.x users should upgrade to 4.7.0
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Credit:
+This issue was discovered by ﻿Artem Smotrakov of SAP SE.
+
+Links:
+https://issues.apache.org/jira/browse/OLINGO-1411
