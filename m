@@ -1,34 +1,144 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/10
-Message-Id: <63686C1A-E1C5-4351-948B-EFAE6FBA616A@oracle.com>
-Date: Thu, 22 Aug 2019 19:17:34 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/05/7
+Message-Id: <E1ics0C-00085q-U9@xenbits.xenproject.org>
+Date: Thu, 05 Dec 2019 14:21:08 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 306 v3 (CVE-2019-19579) - Device quarantine for alternate pci assignment methods
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+            Xen Security Advisory CVE-2019-19579 / XSA-306
+                              version 3
+
+        Device quarantine for alternate pci assignment methods
+
+UPDATES IN VERSION 3
+====================
+
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+XSA-302 relies on the use of libxl's "assignable-add" feature to
+prepare devices to be assigned to untrusted guests.
+
+Unfortunately, this is not considered a strictly required step for
+device assignment.  The PCI passthrough documentation on the wiki
+describes alternate ways of preparing devices for assignment, and
+libvirt uses its own ways as well.  Hosts where these "alternate"
+methods are used will still leave the system in a vulnerable state
+after the device comes back from a guest.
+
+IMPACT
+======
+
+An untrusted domain with access to a physical device can DMA into host
+memory, leading to privilege escalation.
+
+VULNERABLE SYSTEMS
+==================
+
+Only systems where guests are given direct access to physical devices
+capable of DMA (PCI pass-through) are vulnerable.  Systems which do
+not use PCI pass-through are not vulnerable.
+
+Only systems which use "alternate" methods to assign devices to pciback
+before assignment are vulnerable.  These methods include:
+ - Assigning devices on the Linux command-line using `xen-pciback.hide`
+ - Assigning devices via xen-pciback module parameters
+ - Assigning devices manually via sysfs
+ - Assigning devices using libvirt
+
+Systems which use `xl pci-assignable-add` or
+libxl_device_pci_assignable_add, or have the assignable state handled
+automatically via setting the `seize` parameter, are not affected.
+
+MITIGATION
+==========
+
+For xl and libvirt, before assigning a device to a guest, manually run
+`xl pci-assignable-add`.  This will quarantine the device even if the
+device has already been assigned to pciback by one of the alternate
+methods.  This may also work for other libxl-based toolstacks,
+depending on the particular implementation.
+
+CREDITS
+=======
+
+This issue was discovered by Marek Marczykowski-Górecki of Invisible
+Things Lab.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that this patch will quarantine the device after the domain is
+destroyed by default.  It must be un-quarantined before it can be used
+by domain 0 again.  This can be done by executing `xl
+pci-assignable-remove`.  This will be effective even if the device was
+assigned to pciback with one of the alternate methods.
+
+xsa306.patch           xen-unstable
+xsa306-4.12.patch      Xen 4.12.x
+xsa306-4.11.patch      Xen 4.11.x, Xen 4.10.x
+xsa306-4.9.patch       Xen 4.9.x, Xen 4.8.x
+
+$ sha256sum xsa306*
+07468dcdfbe34b794fd0618bce7d6d1edb6b10b234dccf1e5dd1f1120a0affe7  xsa306.meta
+3534ec46f03bb8dac3011e0e3739fc75400559078e4361bbe5385d97b7892650  xsa306.patch
+426e32bfa7d7787fe6778685e623966f8762857f7920443a0ca73347df9d6624  xsa306-4.9.patch
+b00e58c9f96b0ff654dfd4904c675a54356148af718eb9b2adca0253b900dfc1  xsa306-4.11.patch
+69857d08969903452fbf009905a145e06a5aef9966e969de9fbb22e62c557ffd  xsa306-4.12.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-> On 22 Aug 2019, at 18:57, Perry E. Metzger <perry@...rmont.com> wrote:
-> 
->> Are these [null pointer deref] even realistic?   If I'm going to leave malicious
->> USB devices in the parking lot for mischief am I going to rely
->> on the unknown victim running a Linux distro with the
->> requisite kernel modules or am I going to just drop a cheap
->> and near-universal USB killer?
-> 
-> Android phones run Linux. People routinely plug those phones in to USB
-> charging stations in airports, on airplanes, at booths in public
-> places, etc.
-> 
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-If I'm going to attack random devices I'm not going to do it with some random driver that may or may not be present on a phone.  And as this is a null pointer reference we're talking about you plug the phone and and it reboots so you won't do that more than once.   That's it, that's the limit of the vulnerability.
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-If I'm going to go to the trouble of emulating a device so I can sneak it into a public charging point I'm not going to do it just to make a phone reboot.  I'm going to pick a UAF vulnerability with an exploit that actually does something useful, something beyond just making the phone reboot.
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl3pEgkMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZawYIAJ1rXxormDa8TB3hgabjaFGEBtEptWEf0eI/zqxJ
+AC0l9TIdXSkcv2ZBFjxx3YDHetC8MjloBZOP84blVWH+Y9voOvDQPf2Q2AHEoHm7
+KwEBFox8eyy0H1mKuhda+QqxO7XEuGUn0a0kxHiO1HMg7xY4FmxYv51E3B17ytAD
+TyDOsJq3MevQg+GNPwranDPS7UtpYKFBqEEf63KsA9bU5OS+BaAijRQ379qwh//8
+bpWoEFBPRWK6Pf46iSlhifnTUDZiAVOSAxolH3b1UZKOWFaVIrLOpY49QLFg5zfC
+yhvCgVumONdyIX+x35kGuIDvYFbrEswFPmrn0pmXtdKyBEI=
+=8lme
+-----END PGP SIGNATURE-----
 
-Either that or I'm going to sneak in a USB killer and destroy the phones.
+Download attachment "xsa306.meta" of type "application/octet-stream" (1561 bytes)
 
-No matter what, emulating a device just to cause a null dereference is not CVE worthy.   If it is, then we need a CVE for power buttons on laptops and phones.
+Download attachment "xsa306.patch" of type "application/octet-stream" (4180 bytes)
 
-jch
+Download attachment "xsa306-4.9.patch" of type "application/octet-stream" (3987 bytes)
 
+Download attachment "xsa306-4.11.patch" of type "application/octet-stream" (4080 bytes)
+
+Download attachment "xsa306-4.12.patch" of type "application/octet-stream" (4144 bytes)
