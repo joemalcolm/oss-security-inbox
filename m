@@ -1,30 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/18/1
-Message-ID: <CAH9eYVoxuzjJRTS9_FBZH2cmkY9Cp2q2rZyUJ-azCsZeqzWj1Q@mail.gmail.com>
-Date: Mon, 18 Nov 2019 15:26:43 -0500
-From: Brian Demers <bdemers@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/05/6
+Message-Id: <4BEB436C-9471-446E-9795-6B3AACEDDAB4@alchemistowl.org>
+Date: Thu, 5 Dec 2019 12:04:45 +0100
+From: Arrigo Triulzi <arrigo@...hemistowl.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-12422] Apache Shiro weak cookie vulnerability
+Subject: Re: Authentication vulnerabilities in OpenBSD
 Content-Type: text/plain; charset=utf-8
 
-The Shiro team is pleased to announce the release of Apache Shiro version
-1.4.2.
+On 5 Dec 2019, at 11:44, Georgi Guninski <gguninski@...il.com> wrote:
+> 
+> On Wed, Dec 4, 2019 at 10:51 PM Qualys Security Advisory <qsa@...lys.com> wrote:
+>> 
+>> 
+>> Qualys Security Advisory
+>> 
+>> Authentication vulnerabilities in OpenBSD
+>> 
+> 
+> openbsd doesn't count these as remote holes in default install, right?
 
-This security release contains 1 fix since the 1.4.1 release and is
-available for Download now [1].
+By default OpenSMTPd listens only on localhost:25 and is not configured to offer SMTP AUTH
 
-    CVE-2019-12422:
-    Apache Shiro before 1.4.2, when using the default “remember me”
-configuration,
-    cookies could be susceptible to a padding attack.
-
-Release binaries (.jars) are also available through Maven Central and
-source bundles through Apache distribution mirrors.
-
-For more information on Shiro, please read the documentation[2].
-
--The Apache Shiro Team
-
-[1] http://shiro.apache.org/download.html
-[2] http://shiro.apache.org/documentation.html
+Arrigo
 
