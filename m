@@ -1,4 +1,9 @@
-Received: (qmail 21988 invoked by uid 550); 13 Sep 2022 15:10:17 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["334" "Thursday" "5" "December" "2019" "12:44:56" "+0200" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD_w0P2mM5Q60S3b5D5djnPsSmwTR6VTtZ1Y3Q7=UhN7Pw@mail.gmail.com>" "12" "Re: [oss-security] Authentication vulnerabilities in OpenBSD" "^Date:" nil nil "12" "2019120510:44:56" "[oss-security] Authentication vulnerabilities in OpenBSD" (number mark "        gguninski@gm Dec  5   12/334   " thread-indent "\"Re: [oss-security] Authentication vulnerabilities in OpenBSD\"\n") "<20191204204020.GB7012@localhost.localdomain>" ("<20191204204020.GB7012@localhost.localdomain>") nil nil nil nil nil nil nil "Re: [oss-security] Authentication vulnerabilities in OpenBSD" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16344 invoked by uid 550); 5 Dec 2019 10:53:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,129 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13782 invoked from network); 13 Sep 2022 14:55:44 -0000
-Date: Tue, 13 Sep 2022 09:55:29 -0500
-From: John Helmert III <ajak@gentoo.org>
-To: oss-security@lists.openwall.com,
-	Carlos Alberto Lopez Perez <clopez@igalia.com>
-Message-ID: <YyCZ4ShI4u9yn5qd@gentoo.org>
-References: <b2f4c0a2-695c-7744-2397-269a1e588c31@igalia.com>
- <YwhTtN8duEhxo1hY@gentoo.org>
- <8812a292-ecd6-5172-a746-4ca192552882@igalia.com>
+Received: (qmail 5944 invoked from network); 5 Dec 2019 10:45:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=D7Y5sy3QpucruZKmM34ufmkVZpQcWcqBhswJBHe0XhU=;
+        b=IZhvw1+srjj9EnpGfwkCtMaUqAa2Dy9Q5MpIwg4/jcv1UPQr6YJXbz0J7fvCPGCF8Y
+         xISzpTkBfGQiH/2JKxInTEv8TXM4PZsEuDit3nKR8GxG/ciQYharaFCMowNUwSR7v6DQ
+         gb6NkDJ4F6h2bgT20GKT+Q0+GqP075SbN23eUnImrioJss3mdbxeFduYZM65REO5szEe
+         UbgMje19W9EVfgifxN5WXS0/sMALMJRd4X6y3yS0F7MM2wzMRJ5HKYJ2v7SOJbTsCIzC
+         tKakvHB+J9L9lxgvqu1PoOh36ETj/oUmlgtQ7hhl1BSYvv/6ft2r7EAinoGYGkzzfzPQ
+         YNsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=D7Y5sy3QpucruZKmM34ufmkVZpQcWcqBhswJBHe0XhU=;
+        b=uhSEbrzeOrJJQ42LM+Oio5ONZlGg65X2G79dtDsazaqU9c0kG/5ecr7rKNl/heihtS
+         7miGgD2gAKjYmhyZq30j4tJfZ681Vnkn4c3SonWgGxPDMCslSnBxEUQOauisMRy2EfDR
+         M6opQRYtx8fxOUw2FYWZ9JEPYFRmUm3joqbtI+cD07BXzcguyxG1FJA0jqVzhoTJYfez
+         yfSnYrqIfeX83la2O6V2sIBdVKZwHJFzBtO1tiAYpTbhG4qTR8ZBvD9fUYC8eQ4mVcyX
+         bKOhEvt3g7WxnjV9kM8XzuEI2a3f29U7fMyQlGlwfBtGQ43YVHGThc+MqOH28mMggn1b
+         oSww==
+X-Gm-Message-State: APjAAAWms0Yg3MXt1lwQ8JpjsBfCbeNA1wvKM7QAgn7R2z7aQHDyiTPy
+	Nag0gVIGpOy04IesmEfKTB7j4X1hoc48kVav3NvfwIjb55U=
+X-Google-Smtp-Source: APXvYqwsG4GjMH18cWIQHqGbiUfeazlX3ODAx2SxNTwcsqSa5e9tPpRz1isnXB/8R8yLW1GvM0b314I+SSbn7N7QiIs=
+X-Received: by 2002:a5d:9eda:: with SMTP id a26mr6024032ioe.238.1575542708298;
+ Thu, 05 Dec 2019 02:45:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/bl5/5lUPNZ9QdK8"
-Content-Disposition: inline
-In-Reply-To: <8812a292-ecd6-5172-a746-4ca192552882@igalia.com>
-Subject: Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory
- WSA-2022-0008
+References: <20191204204020.GB7012@localhost.localdomain>
+In-Reply-To: <20191204204020.GB7012@localhost.localdomain>
+Message-ID: <CAGUWgD_w0P2mM5Q60S3b5D5djnPsSmwTR6VTtZ1Y3Q7=UhN7Pw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Thu, 5 Dec 2019 12:44:56 +0200
+From: Georgi Guninski <gguninski@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Authentication vulnerabilities in OpenBSD
+To: oss-security@lists.openwall.com
 
---/bl5/5lUPNZ9QdK8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, Dec 4, 2019 at 10:51 PM Qualys Security Advisory <qsa@qualys.com> wrote:
+>
+>
+> Qualys Security Advisory
+>
+> Authentication vulnerabilities in OpenBSD
+>
 
-On Mon, Aug 29, 2022 at 01:26:49PM +0200, Carlos Alberto Lopez Perez wrote:
->=20
-> On 26/08/2022 07:01, John Helmert III wrote:
-> > On Thu, Aug 25, 2022 at 11:34:04PM +0200, Carlos Alberto Lopez Perez wr=
-ote:
-> >> ----------------------------------------------------------------------=
---
-> >> WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-00=
-08
-> >> ----------------------------------------------------------------------=
---
-> >>
-> >> Date reported           : August 25, 2022
-> >> Advisory ID             : WSA-2022-0008
-> >> WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0008=
-.html
-> >> WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0008=
-.html
-> >> CVE identifiers         : CVE-2022-32893.
-> >>
-> >> Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-> >>
-> >> CVE-2022-32893
-> >>     Versions affected: WebKitGTK and WPE WebKit before 2.36.7.
-> >>     Credit to an anonymous researcher.
-> >>     Impact: Processing maliciously crafted web content may lead to
-> >>     arbitrary code execution. Apple is aware of a report that this iss=
-ue
-> >>     may have been actively exploited.
-> >=20
-> > According to Apple's security advisories for this (e.g. [1]), this
-> > issue is tracked on the Webkit Bugzilla as 243557 [2] which was opened
-> > on 2022-08-04. A few minutes after that bug was opened, a pull request
-> > on GitHub was linked [3] with a patch which also seems to add unit
-> > tests. So, it appears to me that this issue was public since at least
-> > August 4th, and even more widely publicized with Apple's security
-> > advisories on August 17.
-> >=20
-> > WebKit-2.36.6 was released shortly after the first bug report, on
-> > 2022-08-07, and WebKit-2.36.7 was released yesterday, on 2022-08-25.
-> >=20
-> > With this bug seemingly being publicly known to be an actively
-> > exploited code execution issue, why did it take several weeks and 2
-> > WebKit releases to get this issue fixed and a WSA released?
-> >=20
-> > [1] https://support.apple.com/en-us/HT213412
-> > [2] https://bugs.webkit.org/show_bug.cgi?id=3D243557
-> > [3] https://github.com/WebKit/WebKit/pull/3023
-> >=20
->=20
->=20
-> We (maintainers of Linux WebKit ports) don't have access to the security
-> issues affecting Apple products until those issues are made public by the=
-m.
->=20
-> So, we didn't knew until August 17th of this issue. Also you can see
-> that the bug report itself or the patch doesn't has any indication that
-> it fixes a security-related problem.
+openbsd doesn't count these as remote holes in default install, right?
 
-Apple's released new security advisories yesterday, with 4 WebKit
-security fixes, two of which are code execution issues, but all 4 of
-which have public bugzilla bugs and public patches, since as early as
-late June (https://support.apple.com/en-us/HT213442):
-
-https://bugs.webkit.org/show_bug.cgi?id=3D242278
-https://bugs.webkit.org/show_bug.cgi?id=3D241969
-https://bugs.webkit.org/show_bug.cgi?id=3D242762
-https://bugs.webkit.org/show_bug.cgi?id=3D243236
-
-Is Apple fixing WebKit security issues in public while obfuscating the
-impact? This pattern seems to be potentially putting downstream WebKit
-users at a lot of risk, now that 2 code execution bugs (with patches!)
-are public (and have been for *months*, albeit without knowledge of
-security impact), and users need to wait weeks for remediation.
-
-> Therefore, the time it took us to notice the issue, backport the fix and
-> do a new release was just 7-8 days (from 17th to 24-25th of August).
-> Which, honestely, it is quite good taking into account that: 1)
-> back-porting the fix was not straightforward since it required
-> back-porting also a few previous patches in order to be able to merge it
-> properly and that 2) we are in August and people is usually on holidays.
->=20
-> On the other hand, I don't know if this issue was or is exploited on
-> Linux WebKit users. All I known is that Apple said they are aware of a
-> report that this issue was actively exploited (on Apple/WebKit users).
-> So I assume this can also affect Linux WebKit users. But I don't have a
-> confirmation that this is actually the case, neither I'm aware of any
-> PoC demonstrating the issue.
->=20
-> Regards.
-
---/bl5/5lUPNZ9QdK8
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCYyCZ4QAKCRCgXq2+aa/J
-tabsAQCuuLDK1U2DIuXwPsLyWt0Ypr36Bi00/eTWpcELVTSm6wEAtYVUTQI3osnj
-bg7C0hGgxAZyHYigc10WvVmTSNt9ag0=
-=jnDv
------END PGP SIGNATURE-----
-
---/bl5/5lUPNZ9QdK8--
+Their front page still says:
+Only two remote holes in the default install, in a heck of a long time!
