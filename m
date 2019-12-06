@@ -1,91 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/1
-Message-ID: <CADt2dQe-nHwQSFHtbMzcB2C+XjcRMgkHqikf1tX+QtTEA-j5mQ@mail.gmail.com>
-Date: Wed, 28 Aug 2019 13:50:53 +0800
-From: huangwen <huangwenabc@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/06/2
+Message-ID: <882addbe-cea2-96c3-f59a-b79607884403@valdikss.org.ru>
+Date: Fri, 6 Dec 2019 16:07:21 +0300
+From: ValdikSS <iam@...dikss.org.ru>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: three heap overflow in the marvell wifi driver
+Cc: "William J. Tolley" <william@...akpointingbad.com>, Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
+Subject: Re: [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please also check my article on this topic from 2015
+https://medium.com/@ValdikSS/another-critical-vpn-vulnerability-and-why-port-fail-is-bullshit-352b2ebd22e2
 
-There are three heap-based buffer overflows in marvell wifi chip driver in
-Linux kernel, allow local users to cause a denial
+I used the same technique but with UDP, and it works (at least worked) with Linux, OS X, Windows and Android.
 
-of service(system crash) or possibly execute arbitrary code.The bugs can be
-triggered by sending crafted  packet via netlink.
+I used it with old p2p Skype, which allowed to get users' IP address using special "resolver" software or services,
+by user nick name. After getting IP address, you could send UDP packet to the user from your IP address (without
+spoofing) and receive the reply from Skype user, but with VPN source IP address, which allowed to detect
+whether the exact Skype user is connected to the VPN, and to which one, given that his connection is direct (without NAT).
 
-
-Description
-
-==========
-
-[1]CVE-2019-14814:Heap Overflow in mwifiex_set_uap_rates() function of
-Marvell Wifi Driver in Linux kernel
+This also (still) applies to Bittorrent uTP protocol.
 
 
-The problem is inside mwifiex_set_uap_rates() in
-drivers/net/wireless/marvell/mwifiex/uap_cmd.c.
-There are two memcpy calls in this function to copy WLAN_EID_SUPP_RATES
-element and WLAN_EID_EXT_SUPP_RATES element
-
-without checking length. The dst buffer bss_cfg->rates is a array of length
-MWIFIEX_SUPPORTED_RATES(14). The two elements in
-
-cfg80211_ap_settings are from user space.
-
-
-
-[2]CVE-2019-14815: Heap Overflow in mwifiex_set_wmm_params() function of
-Marvell Wifi Driver in Linux kernel
-
-
-The problem is inside mwifiex_set_wmm_params() in
-drivers/net/wireless/marvell/mwifiex/uap_cmd.c.
-mwifiex_set_wmm_params() calls memcpy to copy WLAN_OUI_MICROSOFT element to
-bss_cfg->wmm_info without checking  length.
-
-bss_cfg->wmm_info is struct mwifiex_types_wmm_info type with fixed len 24.
+On 05.12.2019 05:38, unknown wrote:
+> Posted by William J. Tolley on Dec 04
+> 
+> Hi all,
+> 
+> I am reporting a vulnerability that exists on most Linux distros, and
+> other *nix operating systems which allows a network adjacent attacker
+> to determine if another user is connected to a VPN, the virtual IP
+> address they have been assigned by the VPN server, and whether or not
+> there is an active connection to a given website. Additionally, we are
+> able to determine the exact seq and ack numbers by counting encrypted
+> packets and/or...
+> 
+> 
 
 
 
-[3]CVE-2019-14816:Heap Overflow in mwifiex_update_vs_ie() function of
-Marvell Wifi Driver in Linux kernel
 
-
-
-The problem is inside mwifiex_update_vs_ie() in
-drivers/net/wireless/marvell/mwifiex/ie.c.
-
-mwifiex_set_mgmt_beacon_data_ies()  parses beacon IEs, probe response IEs,
-association response IEs from cfg80211_ap_settings->beacon,
-
-will call mwifiex_update_vs_ie() twice for each IEs if there exists IEs.
-For beacon_ies as example, on the first call, mwifiex_update_vs_ie() alloc
-
-memory ie and then copy WLAN_OUI_MICROSOFT element to ie->ie_buffer,
-ie->ie_buffer
-is a array of length IEEE_MAX_IE_SIZE(256); on the
-
-Second call, mwifiex_update_vs_ie() copy WLAN_OUI_WFA elment to
-previous allocated
-ie->ie_buffer. If sum of  length of the two elements is
-
-greater than IEEE_MAX_IE_SIZE, will cause buffer overflow.
-
-
-
-Patch
-
-=====
-
-https://lore.kernel.org/linux-wireless/20190828020751.13625-1-huangwenabc@gmail.com/
-
-
-
-Credit
-
-==========
-
-This issue was discovered by huangwen of ADLab of Venustech
-
+Download attachment "signature.asc" of type "application/pgp-signature" (869 bytes)
