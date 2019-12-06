@@ -1,145 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/11/4
-Message-Id: <E1if0nu-0001Zr-J5@xenbits.xenproject.org>
-Date: Wed, 11 Dec 2019 12:09:18 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 309 v3 (CVE-2019-19578) - Linear pagetable use / entry miscounts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/06/3
+Message-ID: <194874fc-8b0e-1139-d8f7-08b3bd1a98ad@valdikss.org.ru>
+Date: Fri, 6 Dec 2019 16:14:42 +0300
+From: ValdikSS <iam@...dikss.org.ru>
+To: oss-security@...ts.openwall.com
+Cc: "William J. Tolley" <william@...akpointingbad.com>, Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
+Subject: Re: [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Please also note that my kind of attack could be performed over the Internet, without direct
+connectivity between the attacker and victim, Wi-Fi network or anything.
 
-            Xen Security Advisory CVE-2019-19578 / XSA-309
-                               version 3
-
-                Linear pagetable use / entry miscounts
-
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-Updated metadata to add 4.13, update StableRef's
-
-ISSUE DESCRIPTION
-=================
-
-"Linear pagetables" is a technique which involves either pointing a
-pagetable at itself, or to another pagetable of the same or higher
-level.  Xen has limited support for linear pagetables: A page may
-either point to itself, or point to another pagetable of the same
-level (i.e., L2 to L2, L3 to L3, and so on).
-
-XSA-240 introduced an additional restriction that limited the "depth"
-of such chains by allowing pages to either *point to* other pages of
-the same level, or *be pointed to* by other pages of the same level,
-but not both.  To implement this, we keep track of the number of
-outstanding times a page points to or is pointed to another page
-table, to prevent both from happening at the same time.
-
-Unfortunately, the original commit introducing this reset this count
-when resuming validation of a partially-validated pagetable,
-incorrectly dropping some "linear_pt_entry" counts.
-
-If an attacker could engineer such a situation to occur, they might be
-able to make loops or other arbitrary chains of linear pagetables, as
-described in XSA-240.
-
-IMPACT
-======
-
-A malicious or buggy PV guest may cause the hypervisor to crash,
-resulting in Denial of Service (DoS) affecting the entire host.
-Privilege escalation and information leaks cannot be excluded.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are vulnerable.
-
-Only x86 systems are affected.  Arm systems are not affected.
-
-Only x86 PV guests can leverage the vulnerability.  x86 HVM and PVH
-guests cannot leverage the vulnerability.
-
-Only systems which have enabled linear pagetables are vulnerable.
-Systems which have disabled linear pagetables, either by selecting
-CONFIG_PV_LINEAR_PT=n when building the hypervisor, or adding
-pv-linear-pt=false on the command-line, are not vulnerable.
-
-MITIGATION
-==========
-
-If you don't have any guests which need linear pagetables, you can
-disable the feature by adding pv-linear-pt=false to your Xen
-command-line.  NetBSD is known to use linear pagetables; Linux and
-MiniOS are known not to use linear pagetables.
-
-CREDITS
-=======
-
-This issue was discovered by Manuel Bouyer and diagnosed as a security
-issue by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa309.patch           xen-unstable, Xen 4.13 - Xen 4.8
-
-$ sha256sum xsa309*
-ddd00dfbc85bada4e4cee8a51b989e3138cc47c58992657054246bc95c8ae34d  xsa309.meta
-0e4b75f4416624de698f3ed619c28418917ab0a5c9663c1641804e1d0a0dec1b  xsa309.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Deployment of the `pv-linear-pt=false` mitigation is NOT permitted
-(except where all the affected systems and VMs are administered and
-used only by organisations which are members of the Xen Project
-Security Issues Predisclosure List).  Specifically, deployment on
-public cloud systems is NOT permitted.
-
-This is because someone may notice the feature going away, and armed
-with the knowledge of where the issue is, re-discover it.
-
-Deployment of the mitigation is permitted only AFTER the embargo ends.
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+It has been tested in a real-world Internet environment in 2015, and it worked flawlessly.
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+On 06.12.2019 16:07, ValdikSS wrote:
+> Please also check my article on this topic from 2015
+> https://medium.com/@ValdikSS/another-critical-vpn-vulnerability-and-why-port-fail-is-bullshit-352b2ebd22e2
+> 
+> I used the same technique but with UDP, and it works (at least worked) with Linux, OS X, Windows and Android.
+> 
+> I used it with old p2p Skype, which allowed to get users' IP address using special "resolver" software or services,
+> by user nick name. After getting IP address, you could send UDP packet to the user from your IP address (without
+> spoofing) and receive the reply from Skype user, but with VPN source IP address, which allowed to detect
+> whether the exact Skype user is connected to the VPN, and to which one, given that his connection is direct (without NAT).
+> 
+> This also (still) applies to Bittorrent uTP protocol.
+> 
+> 
+> On 05.12.2019 05:38, unknown wrote:
+>> Posted by William J. Tolley on Dec 04
+>>
+>> Hi all,
+>>
+>> I am reporting a vulnerability that exists on most Linux distros, and
+>> other *nix operating systems which allows a network adjacent attacker
+>> to determine if another user is connected to a VPN, the virtual IP
+>> address they have been assigned by the VPN server, and whether or not
+>> there is an active connection to a given website. Additionally, we are
+>> able to determine the exact seq and ack numbers by counting encrypted
+>> packets and/or...
+>>
+>>
+> 
+> 
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl3w3FwMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZt+QIAL4wU2XUXRQZFk4uS9m4EYV3tlzOidJVcAOvr4pC
-x9O0rCRrUTnXvaqDj/X7fqPC4e/uHy4yPgg2gnRqb4y/jXJexPBkY/fsZJ64JdWJ
-Fo+0a9CK8IrlzhXFcxVff49kUC3Vv/X2FMa5mY07wfg3ww2qyh9rUiKSFEX4B8vV
-6lfMbFZNyOiO2vm1RnQzUCRnUeHnLXmR22BIvwLX6496qoI/ubHDBOK8NX0RU81e
-N1wdKlOlfmX1SuXfYzKPcdulmKLHnxiVgxG5FAsaQ5At3luA0+WEn5scoBXG99uB
-e6EkbmDpLabceQufMPR7Bvad3uVSzg3qLe/NvW4bd4Fvzb0=
-=Td+m
------END PGP SIGNATURE-----
 
-Download attachment "xsa309.meta" of type "application/octet-stream" (2043 bytes)
-
-Download attachment "xsa309.patch" of type "application/octet-stream" (2193 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (869 bytes)
