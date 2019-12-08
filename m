@@ -1,4 +1,9 @@
-Received: (qmail 30384 invoked by uid 550); 18 Oct 2022 17:27:15 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["24693" "Sunday" "8" "December" "2019" "17:46:12" "+0100" "Noel Kuntze" "noel.kuntze+oss-security@thermi.consulting" nil "544" nil "^Date:" nil nil "12" nil nil (number mark "        noel.kuntze+ Dec  8  544/24693 " thread-indent "\"Re: [oss-security] [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections.\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9654 invoked by uid 550); 8 Dec 2019 17:19:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,90 +11,575 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25839 invoked from network); 18 Oct 2022 17:25:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0BUCqvuqhpHUsMIagKk4G+X/m02BHWPl/YY9U8Adk+Q=;
-        b=IkOGRsN5z2j4RkZhP2tjerstH5IivgKx6fVxT0AYaE28GmSNSoPljySPnZmvEL8ZsF
-         Jjf2zlq5KyQur3waODUlx38eogwAvCxI/Oz74d4VXSEIr962h1We4gAf1KjapfZeIbHU
-         4jEYtqBx74ZX+A8SdGxWnlA0UnByEuUvCZMPzCcgJxchsA079K6JkdnrRcpmZjSweTDb
-         knJtvEfl9Qbq5eta0pz1jXCZ0PQMsTpPvvnWbRxKQ2hLRFqZJBv979ZmLBAAy1TBsmEa
-         e1wgoLKVoi2/3e8KHonkXxhUJ4orihGpwWGPcmACqleogqB0Ipcs9r2AA/gUXMDM4aW/
-         1XuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0BUCqvuqhpHUsMIagKk4G+X/m02BHWPl/YY9U8Adk+Q=;
-        b=2ln7/K6qqajBysCQjUgnfCd+JqKH25/1+AY627VEk4RS82I36qxTYHg1MJVr3UcSU6
-         rOSWaac0F0ZCKQRKFuYcV+5sJHMdE2K1bdtDK4hn8jsFUCcC4gFzCY/WXvGAoVb6wqL/
-         40XnxYb6z0g20iWxmdwbnjmj+92KvBbkmG1A6loGlbO1XpM5c08Dq5OkMyNCUTIDvFxo
-         hO6Lz3NOpOsanpos0uIEC4/s3pWlpySwTE+6PccxYI9RlaKjaQko3NPZvViwnMtrYIB/
-         gT7JL7TVeM+xQHWj93oeB1+qkMFibUFRPeZ5D4pTYMGgNQsqF+/E/M5XDn03ezPMk+YG
-         jXZg==
-X-Gm-Message-State: ACrzQf1xIFIizaS1t0gXVkskgl8L+ZWzVjZQ4CFu1EgdesoKgxdI1pBy
-	s7nLfyVDabbvTDG3CgxsnhBESVumtVJev2LS
-X-Google-Smtp-Source: AMsMyM4HsWx04sZQyEat/zRXkPSQq46kFVjFrsTvHEP3AfoPqFC3F3yjL50AJNyVZxgfZdz+cDGcGA==
-X-Received: by 2002:a05:6602:1509:b0:69b:35ba:4720 with SMTP id g9-20020a056602150900b0069b35ba4720mr2176112iow.155.1666113910232;
-        Tue, 18 Oct 2022 10:25:10 -0700 (PDT)
-Date: Tue, 18 Oct 2022 13:25:09 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: oss-security@lists.openwall.com
-Cc: git-security@googlegroups.com, kevinbackhouse@github.com,
-	csnider@mirantis.com
-Message-ID: <Y07hdTCQHoSZjN2Q@nand.local>
+Received: (qmail 30548 invoked from network); 8 Dec 2019 16:46:33 -0000
+X-Virus-Scanned: amavisd-new at thermi.consulting
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=thermi.consulting;
+	s=201909; t=1575823577;
+	bh=f8/DspwMKPVvLsX3v6Oicb10fHFjeRA3bWeXRt47SR0=;
+	h=Subject:To:From:Date:MIME-Version:Content-Type;
+	b=uYIAvbSb9I1vBiWYvV2k3pYJdfL2BTUnI40DMXkZgqwgs3EIRRitJlqO0xXnYeBia
+	 SkRgDPhyShiQ6ph5YGVhl2l93zzJ2oKvBmu/Vlp8I2tywoWg/VX4/3d3HVdkl3V606
+	 Qqt6CwM0pwNG8FNTnR0tWhfuHHT6EqO5z1H3VszHyYc3NPPfkodwXM3qn+8VBQhwCw
+	 Xu5HsNHaLopFPgkleyjNflA6Sfff4MvN58n1pfiWPQSdWi6iBQNSrz434qemcyNxbA
+	 YOgqmpnnICAtp/3dXrKHD/0spfonn2OS+0EsHZIiBAt3yvih6FeBcyjVK8mtOD7o4f
+	 hhRdNjwLw0RNA==
+References: <60b31300f642513c48ae2ee58b4a04e25a188ffe.camel@breakpointingbad.com>
+ <6bfd4935c64c76dcdaa1b7be0c7f4c47ea6104ff.camel@breakpointingbad.com>
+ <1bc268b7-c6c1-a91b-49f8-64392116fe20@thermi.consulting>
+Message-ID: <92d831be-d3e9-14f8-91ac-4bab5deb7881@thermi.consulting>
 MIME-Version: 1.0
+In-Reply-To: <1bc268b7-c6c1-a91b-49f8-64392116fe20@thermi.consulting>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="ZLmZEFm3S0FArbcrvmMlr1bsMTGSNWo5Y"
+Date: Sun, 8 Dec 2019 17:46:12 +0100
+From: Noel Kuntze <noel.kuntze+oss-security@thermi.consulting>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] [CVE-2019-14899] Inferring and hijacking
+ VPN-tunneled TCP connections.
+To: oss-security@lists.openwall.com
+
+--ZLmZEFm3S0FArbcrvmMlr1bsMTGSNWo5Y
+Content-Type: multipart/mixed; boundary="B0Tk19MdB1MMul8KcRbPtG5bU6fIMy0oG";
+ protected-headers="v1"
+From: Noel Kuntze <noel.kuntze+oss-security@thermi.consulting>
+To: oss-security@lists.openwall.com
+Message-ID: <92d831be-d3e9-14f8-91ac-4bab5deb7881@thermi.consulting>
+Subject: Re: [oss-security] [CVE-2019-14899] Inferring and hijacking
+ VPN-tunneled TCP connections.
+References: <60b31300f642513c48ae2ee58b4a04e25a188ffe.camel@breakpointingbad.com>
+ <6bfd4935c64c76dcdaa1b7be0c7f4c47ea6104ff.camel@breakpointingbad.com>
+ <1bc268b7-c6c1-a91b-49f8-64392116fe20@thermi.consulting>
+In-Reply-To: <1bc268b7-c6c1-a91b-49f8-64392116fe20@thermi.consulting>
+
+--B0Tk19MdB1MMul8KcRbPtG5bU6fIMy0oG
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Subject: [oss-security] Git 2.38.1 and others for CVE-2022-39253, and CVE-2022-39260
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
-The Git project released new versions on 2022-10-18, addressing CVEs
-2022-39253, 2022-39260. We highly recommend upgrading to one of the
-fixed versions below:
+Hello List,
 
-  v2.30.6 v2.31.5 v2.32.4 v2.33.5 v2.34.5 v2.35.5 v2.36.3 v2.37.4 v2.38.1
+A correction to this email:
 
-If you are on the unreleased development track, the same fix is
-already included, so you do not have to do anything.
+"The default for rp_filter is strict." was wrong.
+It's disabled by default, unless the distro ships a sysctl.conf file to cha=
+nge it
+or some other mechanism does that.
 
-https://lore.kernel.org/git/xmqq4jw1uku5.fsf@gitster.g/T/#u
 
-The relevant information from the most recent release notes
-pertaining to the above two CVEs are as follows:
+Kind regards
 
-CVE-2022-39253:
-   When relying on the `--local` clone optimization, Git dereferences
-   symbolic links in the source repository before creating hardlinks
-   (or copies) of the dereferenced link in the destination repository.
-   This can lead to surprising behavior where arbitrary files are
-   present in a repository's `$GIT_DIR` when cloning from a malicious
-   repository.
+Noel
 
-   Git will no longer dereference symbolic links via the `--local`
-   clone mechanism, and will instead refuse to clone repositories that
-   have symbolic links present in the `$GIT_DIR/objects` directory.
+Am 05.12.19 um 05:05 schrieb Noel Kuntze:
+> Hello List,
+>
+> Some important comments on the matter and especially in regards to IPsec:
+> * This attack works regardless of if you have a VPN or not. The attacker =
+just needs to be able to
+> =C2=A0 send packets to the other host. It's not systemd specific. It can =
+also occur because the user deliberately
+> =C2=A0 configured the rp_filter that way (that's sometimes the case if PB=
+R (Policy Based Routing) is configured.
+> =C2=A0 The default for rp_filter is strict. For further information on th=
+e matter see ip-sysctl.txt[2]
+> =C2=A0 and RFC 3704 Section 2.4[3]. For now, just create a file /etc/sysc=
+tl.d/51-rpfilter.conf with the content "net.ipv4.conf.all.rp_filter=3D1".
+> * You can solve the problem generally for IPv6 by using the rpfilter ipta=
+bles or nftables module in *mangle PREROUTING[1].
+> =C2=A0 Just globally one rule is needed.
+> * Only route based VPNs are impacted. In comparison, policy based VPNs ar=
+e not impacted (On Linux only implementable using XFRM, which
+> =C2=A0is IPsec on Linux specific) unless the XFRM policy's level is set t=
+o "use" instead of "required" (default))
+> =C2=A0 because any traffic received that matches a policy (IPsec security=
+ policy) and that is not protected is dropped.
+> =C2=A0 An attacker could only inject packets by attacking the connection =
+whenever it is unprotected (e.g. On a commercial VPN provider
+> =C2=A0 setup that would be when the connection "comes" out of the VPN ser=
+ver and goes to the destination on the WAN).
+> =C2=A0 So you're ususally fine. And even when a route based VPN is used, =
+strict rp_filter can still save your bacon.
+> =C2=A0
+> The probing of "virtual" IPv4 addresses can be made more difficult by con=
+figuring the VPN software to bind them to,
+> for example, the loopback interface and setting arp_ignore of any interfa=
+ce facing a possible attacker to 2[2].
+> That would prevent the sending of arp responses to arp requests for virtu=
+al IPs. I am not aware of a
+> similiar setting for IPv6. That might be related to the lack of an rp_fil=
+ter setting for IPv6 on Linux.
+> Probing for addresses by using any protocol other than TCP (because TCP o=
+n Linux is handled in a special way
+> in regards to routing. It sends the responses over the same interface and=
+ MAC addresses as the request was received,
+> AFAIR) would not be possible if the response was to go over the VPN tunne=
+l because the VPN server would most likely
+> drop it as a martian (the destination would probably be a private network=
+ and they're not routable over the Internet.
+> It has to be investigated on a case by case basis).
+>
+> strongSwan by default binds any "virtual" IPs to the interface the route =
+to the other peer goes over. You can change that though.
+> I don't know about libreswan or openswan (shouldn't use the last one anyw=
+ay).
+>
+> > This vulnerability works against OpenVPN, WireGuard, and IKEv2/IPSec,
+> > but has not been thoroughly tested against tor, but we believe it is
+> > not vulnerable since it operates in a SOCKS layer and includes
+> > authentication and encryption that happens in userspace.
+>
+> It doesn't work against TOR because the destination address would be 127.=
+0.0.1 and
+> Linux (don't know about other operating systems) drops packets to that de=
+stination unless the input
+> interface is loopback or route_localnet in sysctl of the input interface =
+is set to 1 (used if services
+> bound to localhost are exposed to the network via DNAT rules).
+>
+> > 3. Encrypted packet size and timing
+>
+> > Since the size and number of packets allows the attacker to bypass the
+> > encryption provided by the VPN service, perhaps some sort of padding
+> > could be added to the encrypted packets to make them the same size.
+> > Also, since the challenge ACK per process limit allows us to determine
+> > if the encrypted packets are challenge ACKs, allowing the host to
+> > respond with equivalent-sized packets after exhausting this limit could
+> > prevent the attacker from making this inference.
+>
+> IPsec supports that. It's called TFC (Traffic Flow Confidentiality). It c=
+an be configured to arbitrary values or to pad up to the MTU of the link.
+> It's disabled by default.
+>
+> Kind regards
+>
+> Noel
+>
+> [1] Would look like that: ip6tables -t mangle -I PREROUTING -m rpfilter -=
+-invert -j DROP
+> [2] https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt
+> [3] https://tools.ietf.org/html/rfc3704#section-2.4
+>
+> Am 05.12.19 um 03:37 schrieb William J. Tolley:
+> > Hi all,
+>
+> > I am reporting a vulnerability that exists on most Linux distros, and
+> > other=C2=A0 *nix operating systems which allows a network adjacent atta=
+cker
+> > to determine if another user is connected to a VPN, the virtual IP
+> > address they have been assigned by the VPN server, and whether or not
+> > there is an active connection to a given website. Additionally, we are
+> > able to determine the exact seq and ack numbers by counting encrypted
+> > packets and/or examining their size. This allows us to inject data into
+> > the TCP stream and hijack connections.
+>
+> > Most of the Linux distributions we tested were vulnerable, especially
+> > Linux distributions that use a version of systemd pulled after November
+> > 28th of last year which turned reverse path filtering off. However, we
+> > recently discovered that the attack also works against IPv6, so turning
+> > reverse path filtering on isn't a reasonable solution, but this was how
+> > we discovered that the attack worked on Linux.
+>
+> > Adding a prerouting rule to drop packets destined for the client's
+> > virtual IP address is effective on some systems, but I have only tested
+> > this on my machines (Manjaro 5.3.12-1, Ubuntu 19.10 5.3.0-23). This
+> > rule was proposed by Jason Donenfeld, and an analagous rule on the
+> > output chain was proposed by Ruoyu "Fish" Wang of ASU. We have some
+> > concerns that inferences can still be made using slightly different
+> > methods, but this suggestion does prevent this particular attack.
+>
+> > There are other potential solutions being considered by the kernel
+> > maintainers, but I can't speak to their current status. I will provide
+> > updates as I receive them.
+>
+> > I have attached the original disclosure I provided to
+> > distros@vs.openwall.org and security@kernel.org below, with at least
+> > one critical correction: I orignally listed CentOS as being vulnerable
+> > to the attack, but this was incorrect, at least regarding IPv4. We
+> > didn't know the attack worked against IPv6 at the time we tested
+> > CentOS, and I haven't been able to test it yet.
+>
+>
+> > William J. Tolley
+> > Beau Kujath
+> > Jedidiah R. Crandall
+>
+> > Breakpointing Bad &
+> > University of New Mexico
+>
+>
+> > *************************************************
+>
+>
+> > **General Disclosure:
+>
+> > We have discovered a vulnerability in Linux, FreeBSD, OpenBSD, MacOS,
+> > iOS, and Android which allows a malicious access point, or an adjacent
+> > user,=C2=A0 to determine if a connected user is using a VPN, make posit=
+ive
+> > inferences about the websites they are visiting, and determine the
+> > correct sequence and acknowledgement numbers in use, allowing the bad
+> > actor to inject data into the TCP stream. This provides everything that
+> > is needed for an attacker to hijack active connections inside the VPN
+> > tunnel.
+>
+> > This vulnerability works against OpenVPN, WireGuard, and IKEv2/IPSec,
+> > but has not been thoroughly tested against tor, but we believe it is
+> > not vulnerable since it operates in a SOCKS layer and includes
+> > authentication and encryption that happens in userspace. It should be
+> > noted, however, that the VPN technology used does not seem to matter
+> > and we are able to make all of our inferences even though the responses
+> > from the victim are encrypted, using the size of the packets and number
+> > of packets sent (in the case of challenge ACKs, for example) to
+> > determine what kind of packets are being sent through the encrypted VPN
+> > tunnel.
+>
+> > We have already reported a related vulnerability to Android earlier
+> > this year related to the issue, which resulted in the assignment of
+> > CVE-2019-9461, however, the CVE strictly applies to the fact that the
+> > Android devices would respond to unsolicited packets sent to the user=
+=E2=80=99s
+> > virtual IP address over the wireless interface, but this does not
+> > address the fundamental issue of the attack and did not result in a
+> > change of the reverse path settings of Android as of the most recent
+> > security update.
+>
+> > This attack did not work against any Linux distribution we tested until
+> > the release of Ubuntu 19.10, and we noticed that the rp_filter settings
+> > were set to =E2=80=9Cloose=E2=80=9D mode. We see that the default setti=
+ngs in
+> > sysctl.d/50-default.conf in the systemd repository were changed from
+> > =E2=80=9Cstrict=E2=80=9D to =E2=80=9Cloose=E2=80=9D mode on November 28=
+, 2018, so distributions using a
+> > version of systemd without modified configurations after this date are
+> > now vulnerable. Most Linux distributions we tested which use other init
+> > systems leave the value as 0, the default for the Linux kernel.
+>
+> > We have described the procedure for reproducing the vulnerability with
+> > Linux and included a section illustrating the differences in
+> > architecture.
+>
+>
+>
+> > There are 3 steps to this attack:
+>
+> > 1. Determining=C2=A0 the=C2=A0 VPN=C2=A0 client=E2=80=99s virtual IP ad=
+dress
+> > 2. Using the virtual IP address to make inferences about active
+> > connections
+> > 3. Using the encrypted replies to unsolicited packets to determine the
+> > sequence and acknowledgment numbers of the active connection to hijack
+> > the TCP session
+>
+>
+>
+> > There are 4 components to the reproduction:
+>
+> > 1. The Victim Device (connected to AP, 192.168.12.x, 10.8.0.8)
+> > 2. AP (controlled by attacker, 192.168.12.1)
+> > 3. VPN Server (not controlled by attacker, 10.8.0.1)
+> > 4. A Web Server (not controlled by the attacker, public IP in a real-
+> > world scenario)
+>
+> > The victim device connects to the access point, which for most of our
+> > testing was a laptop running create_ap. The victim device then
+> > establishes a connection with their VPN provider.
+>
+> > The access point can then determine the virtual IP of the victim by
+> > sending SYN-ACK packets to the victim device across the entire virtual
+> > IP space (the default for OpenVPN is 10.8.0.0/24). When a SYN-ACK is
+> > sent to the correct virtual IP on the victim device, the device
+> > responds with a RST; when the SYN-ACK is sent to the incorrect virtual
+> > IP, nothing is received by the attacker.
+>
+> > To quickly demonstrate this difference, we use the nping commands on
+> > the AP device running create_ap. The source IP is the gateway of our
+> > AP, the destination IP is the virtual IP assigned to the tun interface
+> > by the VPN client, ap0 is the interface create_ap created on the
+> > attacker device, and the destination MAC is the victim=E2=80=99s wirele=
+ss MAC
+> > address.
+>
+> > For example:
+>
+> > The correct address generates a RST from the victim:
+>
+> > nping --tcp --flags SA --source-ip 192.168.12.1 --dest-ip 10.8.0.8 --
+> > rate 3 -c 3 -e ap0 --dest-mac 08:00:27:9c:53:12
+>
+> > The incorrect address does not elicit a response from the victim:
+>
+> > nping --tcp --flags SA --source-ip 192.168.12.1 --dest-ip 10.8.0.9 --
+> > rate 3 -c 3 -e ap0 --dest-mac 08:00:27:9c:53:12
+>
+> > Similarly, to test if there is an active connection for any given
+> > website, such as 64.106.46.56, for example, we send SYN or SYN-ACKs
+> > from 64.106.46.56 on port 80 (or 443) to the virtual IP of the victim
+> > across the entire ephemeral port space of the victim. The correct four-
+> > tuple will elicit no more than 2 challenge ACKs per second from the
+> > victim, whereas the victim will respond to the incorrect four-tuple
+> > with a RST for each packet sent to it.
+>
+> > To quickly test this, we suggest creating a netcat connection on the
+> > victim device, such as this:
+>
+> > Netcat 64.106.46.56 80 -p 40404
+>
+> > The correct four-tuple generates challenge ACKs
+>
+> > nping --tcp --flags SA --source-ip 64.106.46.56 -g 80 --dest-ip
+> > 10.8.0.8 -p 40404 --rate 10 -c 10 -e ap0 --dest-mac 08:00:27:9c:53:12
+>
+> > The incorrect four-tuple generates a single RST for each packet sent:
+>
+> > nping --tcp --flags SA --source-ip 64.106.46.56 -g 80 --dest-ip
+> > 10.8.0.8 -p 40405 --rate 10 -c 10 -e ap0 --dest-mac 08:00:27:9c:53:12
+>
+> > Finally, once the attacker determined that the user has an active TCP
+> > connection to an external server,=C2=A0 we will attempt to infer the ex=
+act
+> > next sequence number and in-window acknowledgment number needed to
+> > inject forged packets into the connection. To find the appropriate
+> > sequence and ACK numbers, we will trigger responses from the client in
+> > the encrypted connection found in part 2. The attacker will continually
+> > spoof reset packets into the inferred connection until it sniffs
+> > challenge ACKs. The attacker can reliably determine if the packets
+> > flowing from the client to the VPN server are challenge ACKs by looking
+> > at the size and timing of the encrypted responses in relation to the
+> > attacker's spoofed packets. The victim=E2=80=99s device will trigger a =
+TCP
+> > challenge ACK on each reset it receives that has an in-window sequence
+> > number for an existing connection. For example, if the client is using
+> > OpenVPN to exchange encrypted packets with the VPN server, then the
+> > client will always respond with an SSL packet of length 79 when a
+> > challenge ACK is triggered.
+>
+> > The attacker must spoof resets to different blocks across the entire
+> > sequence number space until one triggers an encrypted challenge ACK.
+> > The size of the spoof block plays a significant role in how long the
+> > sequence inference takes, but should be conservative as to not skip
+> > over the receive window of the client. In practice, when the attacker
+> > thinks it sniffs an encrypted challenge-ACK, it can verify this is true
+> > by spoofing X packets with the same sequence number. If there were X
+> > encrypted responses with size 79 triggered, then the attacker knows for
+> > certain it is triggering challenge ACKs (at most 2 packets of size 79
+> > per second).
+>
+> > After the attacker has inferred the in-window sequence number for the
+> > client's connection, they can quickly determine the exact sequence
+> > number and in-window ACK needed to inject. First, they spoof empty
+> > push-ACKs with the in-window sequence while guessing in-window ACK
+> > numbers. Once the spoofed packets trigger another challenge-ACK, an in-
+> > window ACK number is found. Finally, the attacker continually spoofs
+> > empty TCP data packets with the in-window ACK and sequence numbers as
+> > it decrements the sequence number after each send. The victim will
+> > respond with another challenge ACK once the attacker spoofs the exact
+> > sequence number minus one. The attacker can now inject arbitrary
+> > payloads into the ongoing encrypted connection using the inferred ACK
+> > and next sequence number.
+>
+> > This can be tested by observing the behavior from this sequence of
+> > commands, continuing with the same four-tuple:
+>
+> > Using the four-tuple from the previous steps, we send RSTs in the
+> > sequence number range in blocks of 50,000 until we trigger a challenge
+> > ACK.
+>
+> > nping --tcp --flags R --source-ip 64.106.46.56 -g 80 --dest-ip 10.8.0.8
+> > -p 40404 --rate 10 -c 10 -e ap0 --dest-mac 08:00:27:9c:53:12 --seq [SEQ
+> > RANGE]
+>
+> > If the packet lands in-window, the victim will respond with at most 2
+> > challenge ACKs per second. These packets are still encrypted and
+> > originate from the virtual interface, unlike with Android, but we can
+> > still determine the contents of these packets by their size. The
+> > encrypted challenge ACK packets are larger than the encrypted RST
+> > packets. You can run tcpdump on the victim machine to accelerate the
+> > testing of his process by viewing the actual sequence and
+> > acknowledgement numbers.
+>
+> > After we have found an in-window sequence number, we locate an in-
+> > window acknowledgement by spoofing empty PSH-ACKs with the in-window
+> > sequence number and guessing the acknowledgement number by dividing the
+> > acknowledgement number space into eight blocks. In most instances,
+> > seven of these blocks will trigger challenge ACKs, but one of them will
+> > not, which allows us to quickly determine which block falls within the
+> > acknowledgement window. We are interested in the block that=C2=A0 does =
+not
+> > respond with a challenge ACK. This behavior can be observed by using an
+> > in-window sequence number and an acknowledgement number in the block
+> > containing the correct acknowledgement number.
+>
+> > nping --tcp --flags PA --source-ip 64.106.46.56 -g 80 --dest-ip
+> > 10.8.0.8 -p 40404 --rate 10 -c 10 -e ap0 --dest-mac 08:00:27:9c:53:12
+> > -seq 12345678 --ack [ACK RANGE]
+>
+> > Finally, using the in-window sequence and acknowledgement numbers, we
+> > spoof empty PSH-ACKs using the same in-windows acknowledgement number
+> > and decrementing the sequence number until we trigger another challenge
+> > ACK. This sequence number is one fewer than the next expected sequence
+> > number. We can then arbitrarily inject data into the active TCP
+> > connection.
+>
+> > Continuing with our toy example:
+>
+> > nping --tcp --flags PA --source-ip 64.106.46.56 -g 80 --dest-ip
+> > 10.8.0.8 -p 40404 --rate 10 -c 10 -e ap0 --dest-mac 08:00:27:9c:53:12
+> > -seq [EXACT] --ack [IN-WINDOW] --data-string =E2=80=9Chello,world.=E2=
+=80=9D
+>
+>
+>
+> > **Operating Systems Affected:
+>
+> > Here is a list of the operating systems we have tested which are
+> > vulnerable to this attack:
+>
+> > Ubuntu 19.10 (systemd)
+> > Fedora (systemd)
+> > Debian 10.2 (systemd)
+> > Arch 2019.05 (systemd)
+> > Manjaro 18.1.1 (systemd)
+>
+> > Devuan (sysV init)
+> > MX Linux 19 (Mepis+antiX)
+> > Void Linux (runit)
+>
+> > Slackware 14.2 (rc.d)
+> > Deepin (rc.d)
+> > FreeBSD (rc.d)
+> > OpenBSD (rc.d)
+>
+> > This list isn=E2=80=99t exhaustive, and we are continuing to test other
+> > distributions, but made usere to cover a variety of init systems to
+> > show this is not limited to systemd.
+>
+>
+>
+> > **Operating System Variations:
+>
+> > The behavior is slightly different on other operating systems. Here is
+> > a summary of the differences:
+>
+> > Android: In the first phase of the attack, Android responds with
+> > unencrypted RSTs to unsolicited SYN-ACKs for the correct port and ICMP
+> > packets for the incorrect one. For the second phase, it will respond
+> > with RSTs on the correct four-tuple.
+>
+> > MacOS/iOS: The first phase of the attack does not work as described
+> > here, but you can use an open port on the Apple machine to determine
+> > the virtual IP address. We use port 5223, which is used for iCloud,
+> > iMessage, FaceTime, Game Center, Photo Stream, and push notifications
+> > etc.
+>
+> > We know the phone will communicate with one of the push notification
+> > servers on port 5223, and have observed that on MacOS, the port used on
+> > the victim device is not the same as the port used to connect to the
+> > VPN server, but is very close (in our testing it has always been within
+> > 10).
+>
+> > nping --tcp --flags SA --source-ip 17.57.144.[84-87] -g 5223 --dest-ip
+> > 10.8.0.8 -p [X] --rate 3 -c 3 -e ap0 --dest-mac 08:00:27:9c:53:12
+>
+> > For iOS devices, it does not follow this convention for choosing the
+> > client=E2=80=99s source port, but always choose a port between ~48000-5=
+0000
+> > (our testing on iOS 13.1 was between 48162-49555).
+>
+> > FreeBSD: The first two phases work essentially the same as Linux,
+> > however, for the last phase, the ACK number is not needed at all, so
+> > that piece of phase three can be skipped.
+>
+> > OpenBSD: OpenBSD responds to spoofed SYN packets to the correct virtual
+> > IP with unencrypted RST packets, and the incorrect virtual IP elicits
+> > unencrypted NTP packets or nothing at all for the first part of the
+> > attack. For the second part, the responses are encrypted, but we can
+> > still determine which packets are challenge ACKs from the packet size,
+> > as with Linux. Connections can be reset by sending a RST with the
+> > correct sequence number.
+>
+>
+>
+> > **Possible Mitigations:
+>
+> > 1. Turning reverse path filtering on
+>
+> > Potential problem: Asynchronous routing not reliable on mobile devices,
+> > etc. Also, it isn=E2=80=99t clear that this is actually a solution sinc=
+e it
+> > appears to work in other OSes with different networking stacks. Also,
+> > even with reverse path filtering on strict mode, the first two parts of
+> > the attack can be completed, allowing the AP to make inferences about
+> > active connections, and we believe it may be possible to carry out the
+> > entire attack, but haven=E2=80=99t accomplished this yet.
+>
+> > 2. Bogon filtering
+>
+> > Potential problem: Local network addresses used for vpns and local
+> > networks, and some nations, including Iran, use the reserved private IP
+> > space as part of the public space.
+>
+> > 3. Encrypted packet size and timing
+>
+> > Since the size and number of packets allows the attacker to bypass the
+> > encryption provided by the VPN service, perhaps some sort of padding
+> > could be added to the encrypted packets to make them the same size.
+> > Also, since the challenge ACK per process limit allows us to determine
+> > if the encrypted packets are challenge ACKs, allowing the host to
+> > respond with equivalent-sized packets after exhausting this limit could
+> > prevent the attacker from making this inference.
+>
+>
+> > We have prepared a paper for publication concerning this
+> > vulnerability and the related implications, but intend to keep it
+> > embargoed until we have found a satisfactory workaround. Then we will
+> > report the vulnerability to oss-security@lists.openwall.com. We are
+> > also reporting this vulnerability to the other services affected, which
+> > also includes: Systemd, Google, Apple, OpenVPN, and WireGuard, in
+> > addition to distros@vs.openwall.org for the operating systems affected.
+>
+> > Thanks,
+>
+> > William J. Tolley
+> > Beau Kujath
+> > Jedidiah R. Crandall
+>
+> > Breakpointing Bad &
+> > University of New Mexico
+>
+>
 
-   Additionally, the value of `protocol.file.allow` is changed to be
-   "user" by default.
+--=20
+Noel Kuntze
+IT security consultant
 
-CVE-2022-39260:
-   An overly-long command string given to `git shell` can result in
-   overflow in `split_cmdline()`, leading to arbitrary heap writes and
-   remote code execution when `git shell` is exposed and the directory
-   `$HOME/git-shell-commands` exists.
+GPG Key ID: 0x0739AD6C
+Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
 
-   `git shell` is taught to refuse interactive commands that are
-   longer than 4MiB in size. `split_cmdline()` is hardened to reject
-   inputs larger than 2GiB.
 
-Credit for finding CVE-2022-39253 goes to Cory Snider of Mirantis. The
-fix was authored by Taylor Blau, with help from Johannes Schindelin.
 
-Credit for finding CVE-2022-39260 goes to Kevin Backhouse of GitHub.
-The fix was authored by Kevin Backhouse, Jeff King, and Taylor Blau.
+--B0Tk19MdB1MMul8KcRbPtG5bU6fIMy0oG--
 
-Thanks,
-Taylor
+--ZLmZEFm3S0FArbcrvmMlr1bsMTGSNWo5Y
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEENSSTvrX3jmMTcq8t9U7kCwc5rWwFAl3tKNQACgkQ9U7kCwc5
+rWwoJQ//dplIn0VRLr8bmsWuVDn4+4G1zqd57NvRgwUDEPgYbaPFjhTKfHlgm9ID
+OVR4HiDamiNN21HryYck6Ys4aftlpKUm1qwxou5AzPKbqTIarvVMj0H9LrKDfgBZ
+RS7seRSA/+BYUVjlac9f30+p7rVEOLLENLyrPYekWCn/65BQyc+zWYfgLsGfvX1L
+H3c5/aiKx4sh+IQ1J8vlzbEIG5FaV5hiMG0JFy3+G1oueJiKVhYR89KrUHst9+KX
+pc3QbSfdGTqcZBqAclP62xPK1f8gSRXgWE3kQan34au+RHBUAMtp8wEGr7npJ5st
+7tnnsTTZUUAjkC0BUBjI3c6afus3tqOo3lIU1V3Lg9svSjj8nE1jPWfCWXJbROgI
+p+IeJ6c9paCn62RPWodkB/x//iNuu8fAcyuMzUo00KNz8gaStjKfHV0R36z0x5Xe
+jPa4jBhQdBr3ONQo2RpuuKlXJjbWca8jF8EpriaZbJa14UaZNfDRPbzZEWRpQb28
+obHoxkq1dxEjmEWOHauhCWBcPJQrF/ADhFct2WGUwy7hKLqcCXFsnyi0wHH+fQ4R
+zc36fXXs0X6Zle8qR3s3FC/jmYV8B+4Ji6XskrioqxvjY3WGG3y5CVTHIviglyqV
+otekMNMNzuVU34zFepi9/4CbhMIAg/3tihncMb1k0muZJlNlcfc=
+=Hgpb
+-----END PGP SIGNATURE-----
+
+--ZLmZEFm3S0FArbcrvmMlr1bsMTGSNWo5Y--
