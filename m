@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["391" "Wednesday" "24" "February" "2016" "09:10:37" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdRX-tyOuVDXfTeFXfen6hq54e_zMVhsd5_TYW1XsHHk+w@mail.gmail.com>" "16" "[oss-security] [Pixman] create_bits(): Cast the result of height * stride to size_t" "^Date:" nil nil "2" "2016022412:10:37" "[oss-security] [Pixman] create_bits(): Cast the result of height * stride to size_t" (number mark "        gustavo.grie Feb 24   16/391   " thread-indent "\"[oss-security] [Pixman] create_bits(): Cast the result of height * stride to size_t\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2384" "Monday" "9" "December" "2019" "15:42:47" "+0100" "Noel Kuntze" "noel.kuntze+oss-security@thermi.consulting" nil "71" nil "^Date:" nil nil "12" nil nil (number mark "        noel.kuntze+ Dec  9   71/2384  " thread-indent "\"Re: [oss-security] Shell wildcards considered dangerous?\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Shell wildcards considered dangerous?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22070 invoked by uid 550); 24 Feb 2016 12:11:43 -0000
+Received: (qmail 13780 invoked by uid 550); 9 Dec 2019 14:48:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,99 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21731 invoked from network); 24 Feb 2016 12:10:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=87MpOF88oj3jcH0GenbOvLQUMNZIWEiFmHgiKv5udpE=;
-        b=0W38xhkZxaj0G8+7fzIBK+ubsZIH3QzRS1CzqdUW5HPLHJHwCALDuX9sqWiX8Vphub
-         LsGHdntOnp/sfRFGoLzbe3qPCK3s2MzuihPAbOiXn+ovtOIt3KMUdwmyrWhwyjI9RR47
-         nUGbiuodz0SJUtbloyEqwvf8iIFTUBa/ggmRDSlNMA79sYrRvNaVVHR+w3swU9EEZU5H
-         oa4l3Bk46USuYi4avTOLUKtFsUaRGGG94pr6QMVwh91CJbGeGaz1TOvuVQ7VEi5mOMLh
-         MdJGJiRZKxgr7vC25t02DO/JP2oLqjQju9gH80z8I0N55+AEfRmcRsJx1F4QR8a8aF2Y
-         IT2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=87MpOF88oj3jcH0GenbOvLQUMNZIWEiFmHgiKv5udpE=;
-        b=UGPJUxJPqXZ1tGBIj/wKoGXaqnOMLIKuxq3stU+b7RsCsj1oYb3Qk5LUd4c85oYeny
-         Odc35NVz8hyGa//HviMdYpTfWm2KK8im4uuVMfJ4UFZDUKzFEPa0cts/ypaQlkAsXwr1
-         6yfMXSRCpHhxrltAKoBjno82EHtT/B5Ue2iw08aGUT6nDah4eKWzsgNAGeFSAi8QbKms
-         YD5stE4/1zLFYITMQrqnOVcVxeTV/dsPkNvKfcOMQIfehr9hYPRH1Dbqa98QD7Hf4xjb
-         yFFvB6TmqU3eSeQpfuyFomfpoWxdIgIOgI3ZeXvdiexGGCpYEjeZuiNFdDNGAZkkOiRO
-         l2fw==
-X-Gm-Message-State: AG10YOTE/UV81X6dN5JxWbPdGcq0j71BW2ltyNPD7akcaIrEKlKwrXAlEfx/NjcUcaj0aUQb5FWdU6Mtoup6Mg==
+Received: (qmail 7299 invoked from network); 9 Dec 2019 14:43:00 -0000
+X-Virus-Scanned: amavisd-new at thermi.consulting
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=thermi.consulting;
+	s=201909; t=1575902568;
+	bh=LfNXzo96YZNT8geY9dfyIPsLcaMuuyMEYMcYNUK9q6o=;
+	h=Subject:To:From:Date:MIME-Version:Content-Type;
+	b=dmWyenHiOhDID++beGJM2JoAcj8LOvIeavs+XLTejhvDyPAg6HZKozEtNtpjhQiYw
+	 WAMuXtIhxfaNlhiQgxBkzQJ33eX3zU9LVxqcP8+zb9MRGEtT1prDUL1rM/qVldmWFz
+	 yzTdOMAlFIEeocmRAQbdTzUnoxA+yzAvYBoli1zUA/P3HAONlxsdR4QYCPcQGxeXYJ
+	 eOaDhjPDxvv/EREAaxVHT+3xNOKYwq51M3kRpMwXC8ZwTrf8RIW/l8rT4aQfOXlUXB
+	 2sEcQ/cqJteyYnPtYHW2Uger4/wmf1sDfq1zyaLrl60nRoL4ccwgdRPTUD0EYWrjhz
+	 1ayxK3c7cj4GQ==
+References: <CAGUWgD-yn2kf3T69ri7ahcCfKm=kiMBnxeb84mnH-qqYWQNUdg@mail.gmail.com>
+Message-ID: <8bd059ae-5faa-46fa-71d0-bb0f61ea8e62@thermi.consulting>
 MIME-Version: 1.0
-X-Received: by 10.25.212.197 with SMTP id l188mr14388247lfg.118.1456315837598;
- Wed, 24 Feb 2016 04:10:37 -0800 (PST)
-Message-ID: <CACn5sdRX-tyOuVDXfTeFXfen6hq54e_zMVhsd5_TYW1XsHHk+w@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a114190402e546e052c82f490
-Date: Wed, 24 Feb 2016 09:10:37 -0300
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
+In-Reply-To: <CAGUWgD-yn2kf3T69ri7ahcCfKm=kiMBnxeb84mnH-qqYWQNUdg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Date: Mon, 9 Dec 2019 15:42:47 +0100
+From: Noel Kuntze <noel.kuntze+oss-security@thermi.consulting>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [Pixman] create_bits(): Cast the result of height * stride to size_t
+Subject: Re: [oss-security] Shell wildcards considered dangerous?
 To: oss-security@lists.openwall.com
 
---001a114190402e546e052c82f490
-Content-Type: text/plain; charset=UTF-8
+Hello,
 
- Hi,
+That is only a problem if the developer(s) foolishly didn't use "--" to terminate the command line options
+or they did, but the argument parser of the called program does not understand that "--" is a command line option terminator.
+See how the man page for GNU optarg (man 3 optarg).
+Quote below:
+[...]
+       By default, getopt() permutes the contents of argv as it scans, so that
+       eventually all the nonoptions are at the end.  Two other modes are also
+       implemented.   If  the first character of optstring is '+' or the envi‐
+       ronment variable POSIXLY_CORRECT is set, then option  processing  stops
+       as soon as a nonoption argument is encountered.  If the first character
+       of optstring is '-', then each nonoption argv-element is handled as  if
+       it were the argument of an option with character code 1.  (This is used
+       by programs that were written to expect options and other argv-elements
+       in any order and that care about the ordering of the two.)  The special
+       argument "--" forces an end of option-scanning regardless of the  scan‐
+       ning mode.
 
-There is an (old) integer overflow in create_bits in the pixman library.
-Patch and details are available here:
+So no, if the developers took care and thought about this beforehand and checked, it's not a problem.
 
-https://web.archive.org/web/20141227044037/http://lists.freedesktop.org/archives/pixman/2014-April/003244.html
+TL;DR: Best practice is to do prog --arg1 --arg2 [...] -- non-opt-args
+Check if prog understands that -- terminates the list of passed options.
 
-Please, assign a CVE to this issue.
+Kind regards
 
-Regards,
-Gustavo.
+Noel
 
---001a114190402e546e052c82f490--
+
+Am 09.12.19 um 14:23 schrieb Georgi Guninski:
+> Remote version of this affects wu-ftpd from 2003:
+> https://www.debian.org/security/2003/dsa-377
+>
+> Summary:  For trusted command PROGRAM, executing
+> PROGRAM *.EXT
+> may lead to arbitrary code execution, e.g. for
+> PROGRAM=EXT=tar
+>
+> The main idea is the wildcard to add program options.
+>
+> Open problem:
+>
+> Are popular programs other than tar vulnerable?
+>
+> Since shell wildcards are unlikely to change, should best practice
+> include not using *.EXT in shell?
+>
+>
+> Example exploit vector: starting program in untrusted
+> directories.
+>
+> Poc:
+> ====
+> $rm -rf /tmp/1 ;mkdir /tmp/1 ; cd /tmp/1 ; tar cf a.tar /etc/issue
+> $ : >  --to-command="yes .tar"
+>
+> #end creating, starts PoC
+> tar xf *.tar
+>
+> #.tar (repeats)
+> ====
+>
+>
+
+-- 
+Noel Kuntze
+IT security consultant
+
+GPG Key ID: 0x0739AD6C
+Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
+
