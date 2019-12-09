@@ -1,66 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/16
-Message-ID: <CABXRUiTuu3diVge+pC=fdG3W+m444FmkeswHOoOS93twyqbbUg@mail.gmail.com>
-Date: Thu, 18 Apr 2019 21:34:15 +0800
-From: Fuqian Huang <huangfq.daxian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/3
+Message-ID: <20191209145802.GI2151@jumper.schlittermann.de>
+Date: Mon, 9 Dec 2019 15:58:02 +0100
+From: Heiko Schlittermann <hs@...littermann.de>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel < 4.14.111 drivers/nfc/nfcmrvl/usb.c kernel address dumps to user space
+Subject: Re: Shell wildcards considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-In drivers/nfc/nfcmrvl/usb.c:164,
-nfcmrvl_tx_complete will dump the address of urb to dmesg,
-which allows local user to read kernel address via dmesg.
+Georgi Guninski <gguninski@...il.com> (Mo 09 Dez 2019 14:23:16 CET):
+> ====
+> $rm -rf /tmp/1 ;mkdir /tmp/1 ; cd /tmp/1 ; tar cf a.tar /etc/issue
+> $ : >  --to-command="yes .tar"
+>
+> #end creating, starts PoC
+> tar xf *.tar
 
-static void nfcmrvl_tx_complete(struct urb *urb)
-{
-    ...
-    nfc_info(priv->dev, "urb %p status %d count %d\n",
-         urb, urb->status, urb->actual_length);
-    ...
-}
+That's not a technical fault. It's a fault on the human side.
 
-In drivers/nfc/nfcmrvl/usb.c:308,
-nfcmrvl_probe will dump the address of inf to dmesg,
-which allows local user to read kernel address via dmesg.
+If you call the above command in a typical Bourne shell, you should be
+prepared to handle the trouble. Smart admins don't do that.
 
-static int nfcmrvl_probe(struct usb_interface *intf,
-             const struct usb_device_id *id)
-{
-    ...
-    nfc_info(&udev->dev, "intf %p id %p\n", intf, id);
-    ...
-}
-
-In drivers/nfc/nfcmrvl/usb.c:368,
-nfcmrvl_disconnect will dump the address of inf to dmesg,
-which allows local user to read kernel address via dmesg.
-
-static void nfcmrvl_disconnect(struct usb_interface *intf)
-{
-    ...
-    nfc_info(&drv_data->udev->dev, "intf %p\n", intf);
-    ...
-}
-
-In drivers/nfc/nfcmrvl/usb.c:375,
-nfcmrvl_suspendwill dump the address of inf to dmesg,
-which allows local user to read kernel address via dmesg.
-
-static int nfcmrvl_suspend(struct usb_interface *intf, pm_message_t message)
-{
-    ...
-    nfc_info(&drv_data->udev->dev, "intf %p\n", intf);
-    ...
-}
+If an application calls the above command via system(), you should
+file a bug against that application. Smart programmers know how to
+avoid the shell for such invocations (or avoid such invocations in the
+first place.)
 
 
-In drivers/nfc/nfcmrvl/usb.c:416,
-nfcmrvl_resume dump the address of inf to dmesg,
-which allows local user to read kernel address via dmesg.
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-static int nfcmrvl_resume(struct usb_interface *intf)
-{
-    ...
-    nfc_info(&drv_data->udev->dev, "intf %p\n", intf);
-    ...
-}
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
