@@ -1,4 +1,9 @@
-Received: (qmail 5261 invoked by uid 550); 4 Oct 2023 13:15:27 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1770" "Monday" "9" "December" "2019" "15:58:02" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" nil "49" nil "^Date:" nil nil "12" nil nil (number mark "        hs@schlitter Dec  9   49/1770  " thread-indent "\"Re: [oss-security] Shell wildcards considered dangerous?\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Shell wildcards considered dangerous?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26307 invoked by uid 550); 9 Dec 2019 15:14:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,108 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32286 invoked from network); 3 Oct 2023 23:04:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696374283; x=1696979083; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FXxIphzn9qLp3GZqLzf9KipWCUnOGqu7MqNxzNVU+rc=;
-        b=lEJoYMnzqSMfZSTyfJuwbM4gC5mX7iqXoP/KzpFsiT8pxPXdXNBahzJSmqFoIpFqTj
-         6Y76Y1Q95EOkd2oU/MjviGj+oZIuoqu5dDS1KTryXbAF8F5mIY8s0yMhPnxN2R+HNA1Q
-         Y6+GRxDQL/u0n/NcFQcc36jV2XxnRzT5uOLXVkLvMlajPVk6NQ+A23GXSlc6fICE9qsb
-         6KEOka7HWIPCUqRbsp7KRBiIziZbR3i4hUKCppTjYzBfOA6XelFaexCOlvvnGHeOqAEb
-         yPK5A7c7JMPa4fFR+UKOKcl9ZELfshCbtxutqP8W6zvj0v6btABSjTxCIKAtfE6+hrnl
-         0lsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696374283; x=1696979083;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FXxIphzn9qLp3GZqLzf9KipWCUnOGqu7MqNxzNVU+rc=;
-        b=L+YrJ0PkLVWAm3uVoJVabQLMiTRfF6zRC3lw7kvkPSJ2mKp0s2sTT0s1/EFqx4hlE/
-         tyjymytWwSEKPieMEKm/5fm8frqI9sduER+N9Wo2wgFZInEGv4rsOGgX2VO/Oc73zOP7
-         ZeJApG1T+mD3ZIok2SIUiS8FNFCdwved3ShIlaqtyOZv5/1OcnnjwahOZLeaEG9aOFlQ
-         +LXN41X9yae3VXJx3X0UiNKd3R05H79JEzb5OQmNxJGRjnpi2uuEfQGb6pGra2rusHar
-         llHecvEnHd1lIp56xMT6xIw4ZT+94Umywwy+PFJF/OnLzNXmyqeCTlOOWBAwxA1i/yK5
-         FtPQ==
-X-Gm-Message-State: AOJu0Yz8yVhOlzPt6pF1ChMoI1oyuvaZ2IvOUU3kxOI7NG+5ywc6U219
-	mk6WR965pRw481AIY81K/vSPvLhCnKv6hZwfSW1olCIM
-X-Google-Smtp-Source: AGHT+IHyubdA7QITFu0Sq0tN2ZrgU7S12OWIr7mRoeg4bk3XLAx1rHSzHQFZK+Wlp8R0wcwz8suMxTgToPPv+FJE3Yk=
-X-Received: by 2002:a0d:f8c6:0:b0:59b:5696:c33 with SMTP id
- i189-20020a0df8c6000000b0059b56960c33mr889533ywf.46.1696374282750; Tue, 03
- Oct 2023 16:04:42 -0700 (PDT)
+Received: (qmail 11360 invoked from network); 9 Dec 2019 14:58:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:Resent-Cc:Resent-To;
+	bh=trdNcaSyH8kBtT7sMbEdfEkswDot4pyhn3blz8B/IBs=; b=nMapfOoRfAJUD2CWeo9JEqtutQ
+	uBL9h0j1Af6ynr62tc1/C7SWAw/Pwqb/CKdawbmL8YoaNtb7DFd3DO1eEklZOIDAq7+RhJlDojh2R
+	FKtOjvzrT5vpQ2jCJf3h/gAjnjvl4J6gLpf3V3UkdemDecMjCWUMVSAfJps/azyIn5ZA=;
+Message-ID: <20191209145802.GI2151@jumper.schlittermann.de>
+References: <CAGUWgD-yn2kf3T69ri7ahcCfKm=kiMBnxeb84mnH-qqYWQNUdg@mail.gmail.com>
 MIME-Version: 1.0
-References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org> <ZROMd1GCpD8uDtbE@itl-email>
- <20231003201212.GA24599@openwall.com> <1786f020-2af8-4adb-bb4c-5dc87c545dcd@citrix.com>
- <20231003214424.prarc3aboi3ar7zk@yuggoth.org> <CADxcaYUe3Mj-VYn7j5T_JoF-vhDeqxJh9CZXm-r+z27zrnjwow@mail.gmail.com>
- <20231003225156.GA26670@openwall.com>
-In-Reply-To: <20231003225156.GA26670@openwall.com>
-From: Jean Luc Picard <atari2600a@gmail.com>
-Date: Tue, 3 Oct 2023 16:04:31 -0700
-Message-ID: <CADxcaYX-XvrKe4R-mSzK2iNVm9F_dRtz1Bf2Zi8jqWbCXGKK9g@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="BOmey7/79ja+7F5w"
+Content-Disposition: inline
+In-Reply-To: <CAGUWgD-yn2kf3T69ri7ahcCfKm=kiMBnxeb84mnH-qqYWQNUdg@mail.gmail.com>
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Mon, 9 Dec 2019 15:58:02 +0100
+From: Heiko Schlittermann <hs@schlittermann.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Shell wildcards considered dangerous?
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000008791a70606d7eaf4"
-Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) -
- x86/AMD: Divide speculative information leak
 
---0000000000008791a70606d7eaf4
-Content-Type: text/plain; charset="UTF-8"
+--BOmey7/79ja+7F5w
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-No intent?  It wouldn't be terribly hard, they could just RNG over the
-register afterwards or run a 1/1 to nullify any data left therein.  The
-latter would require control lines to be in place, the latter would just
-mean extending the microcode instruction.  That said I could understand the
-want to depricate zen1 support entirely, everyone upgraded when they could
-it was super super cheap to do so & there weren't really any enterprise
-users.
+Georgi Guninski <gguninski@gmail.com> (Mo 09 Dez 2019 14:23:16 CET):
+> =3D=3D=3D=3D
+> $rm -rf /tmp/1 ;mkdir /tmp/1 ; cd /tmp/1 ; tar cf a.tar /etc/issue
+> $ : >  --to-command=3D"yes .tar"
+>
+> #end creating, starts PoC
+> tar xf *.tar
 
-On Tue, Oct 3, 2023 at 3:54=E2=80=AFPM Solar Designer <solar@openwall.com> =
-wrote:
+That's not a technical fault. It's a fault on the human side.
 
-> On Tue, Oct 03, 2023 at 03:02:41PM -0700, Jean Luc Picard wrote:
-> > Hi, just dropping in, is this the kind of thing to where the userspace &
-> > kernel layers need mitigation until there's microcode mitigation?
->
-> In general, kind of yes - it could have been that kind of thing.
->
-> More specifically, no - in this case, only kernel and hypervisor
-> and system configuration (disable SMT) mitigations are expected.  No
-> userspace mitigations, other than maybe specific algorithms avoiding
-> integer divide operations based on secrets where they can.  While AMD
-> maybe could fix this in microcode (or maybe not, or maybe with
-> unacceptable performance penalty), they expressed no plans to do so.
->
-> > On Tue, Oct 3, 2023 at 2:46???PM Jeremy Stanley <fungi@yuggoth.org>
-> wrote:
-> > > On 2023-10-03 22:37:08 +0100 (+0100), Andrew Cooper wrote:
-> > > [...]
-> > > > If you have a proposal for how you'd prefer it to be done, I'll see
-> what
-> > > > I can do.  Perhaps BCC oss-security, or just send out a second mail?
-> > >
-> > > When I send advisories, I prepare two basically identical E-mail
-> > > messages: one to the project's announcement list and one to
-> > > oss-security (signing both of them). It seems like this is the most
-> > > common approach to avoiding cross-posting between lists.
->
-> Andrew, sending a second message like Jeremy suggests works best.
-> Bcc currently isn't expected to work at all.  Thank you!
->
-> BTW, in this case I think the problem was actually for Xen's lists more
-> than for oss-security - you included xen-announce among the CC'ed lists,
-> and this means e.g. Demi Marie's reply was attempted to be posted to
-> there, while certainly not being a valid Xen announcement.  However, I
-> guess external messages to the announcement list are very easy to reject
-> on your side.  It's not so easy for us on oss-security because we've
-> setup some senders to bypass moderation, yet those people participate in
-> threads on other lists that might just happen to be CC'ed in here and
-> they might not notice that the rest of the sub-thread is moderated-out.
->
-> I'm not too concerned about this issue with Xen announcements in
-> particular - things have worked pretty well with these so far.
->
-> Alexander
->
+If you call the above command in a typical Bourne shell, you should be
+prepared to handle the trouble. Smart admins don't do that.
 
---0000000000008791a70606d7eaf4--
+If an application calls the above command via system(), you should
+file a bug against that application. Smart programmers know how to
+avoid the shell for such invocations (or avoid such invocations in the
+first place.)
+
+
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+--BOmey7/79ja+7F5w
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAl3uYPkACgkQr0zGdqa2
+wUIgLwf/Z5Jaby/w4jtaEWm9SVaH1/RR2sRHRhupgWgo6GmqSYWQLkD4DZMcWvLi
+/xsfQS5N6kvVqFv+JIUY6uvl3o50aqMy3LoQGP7uyw1sH5MltejIRXkB+t2gAccl
+S1HylFHSFd2CYdJXoOuL89H1XOencUvyx/3zpK5la7V8LL73zeSxlV6vyQrqIYhd
+gMHPWLU2sVqotWB3w/OJSrV07Jxrkvm57ZE31rkP2h6x7HUeF6uRguwTfZuiGY40
+ROYnWQMM4494o2cdB4GJfLWiSa5Npx6BgzGId+sGNFOCdI4DslxY7Y9WaVGbAcTs
+hfIbn7SJwmwrVOiF4H/uybbw0B18yg==
+=qwMi
+-----END PGP SIGNATURE-----
+
+--BOmey7/79ja+7F5w--
