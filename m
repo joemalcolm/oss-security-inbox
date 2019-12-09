@@ -1,46 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/04/1
-Message-ID: <CAP+3qq42G5=pb8CmhTbEhuXpThr7S882-_1pPAPNV0cCc9QW_A@mail.gmail.com>
-Date: Fri, 4 Oct 2019 10:33:25 +0900
-From: Akira Ajisaka <aajisaka@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/2
+Message-ID: <8bd059ae-5faa-46fa-71d0-bb0f61ea8e62@thermi.consulting>
+Date: Mon, 9 Dec 2019 15:42:47 +0100
+From: Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-11768: Apache Hadoop HDFS FSImage Corruption
+Subject: Re: Shell wildcards considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-11768: HDFS FSImage Corruption
+Hello,
+
+That is only a problem if the developer(s) foolishly didn't use "--" to terminate the command line options
+or they did, but the argument parser of the called program does not understand that "--" is a command line option terminator.
+See how the man page for GNU optarg (man 3 optarg).
+Quote below:
+[...]
+       By default, getopt() permutes the contents of argv as it scans, so that
+       eventually all the nonoptions are at the end.  Two other modes are also
+       implemented.   If  the first character of optstring is '+' or the envi‐
+       ronment variable POSIXLY_CORRECT is set, then option  processing  stops
+       as soon as a nonoption argument is encountered.  If the first character
+       of optstring is '-', then each nonoption argv-element is handled as  if
+       it were the argument of an option with character code 1.  (This is used
+       by programs that were written to expect options and other argv-elements
+       in any order and that care about the ordering of the two.)  The special
+       argument "--" forces an end of option-scanning regardless of the  scan‐
+       ning mode.
+
+So no, if the developers took care and thought about this beforehand and checked, it's not a problem.
+
+TL;DR: Best practice is to do prog --arg1 --arg2 [...] -- non-opt-args
+Check if prog understands that -- terminates the list of passed options.
+
+Kind regards
+
+Noel
 
 
-Severity: Critical
+Am 09.12.19 um 14:23 schrieb Georgi Guninski:
+> Remote version of this affects wu-ftpd from 2003:
+> https://www.debian.org/security/2003/dsa-377
+>
+> Summary:  For trusted command PROGRAM, executing
+> PROGRAM *.EXT
+> may lead to arbitrary code execution, e.g. for
+> PROGRAM=EXT=tar
+>
+> The main idea is the wildcard to add program options.
+>
+> Open problem:
+>
+> Are popular programs other than tar vulnerable?
+>
+> Since shell wildcards are unlikely to change, should best practice
+> include not using *.EXT in shell?
+>
+>
+> Example exploit vector: starting program in untrusted
+> directories.
+>
+> Poc:
+> ====
+> $rm -rf /tmp/1 ;mkdir /tmp/1 ; cd /tmp/1 ; tar cf a.tar /etc/issue
+> $ : >  --to-command="yes .tar"
+>
+> #end creating, starts PoC
+> tar xf *.tar
+>
+> #.tar (repeats)
+> ====
+>
+>
 
+-- 
+Noel Kuntze
+IT security consultant
 
-Vendor: The Apache Software Foundation
-
-
-Versions affected:
-
-3.1.0 to 3.1.1, 3.0.0-alpha1 to 3.0.3, 2.9.0 to 2.9.1, 2.0.0-alpha to 2.8.4
-
-
-Description:
-
-There is a mismatch in the size of the fields used to store user/group
-information between memory and disk representation. This causes the
-user/group information to be corrupted across storing in fsimage and
-reading back from fsimage.
-
-
-Mitigation:
-
-Users should upgrade to Apache Hadoop 2.8.5, 2.9.2, 3.1.2 or upper. This
-vulnerability fix contains a fsimage layout change, so once the image is
-saved in the new layout format you cannot go back to a version that doesn’t
-support the newer layout. This means that once 2.7.x users upgraded to the
-fixed version, they cannot downgrade to 2.7.x because there is no fixed
-version in 2.7.x. We suggest downgrade to 2.8.5 or upper version that
-contains the vulnerability fix.
-
-
-Credit:
-
-This issue was discovered by Ekanth Sethuramalingam.
+GPG Key ID: 0x0739AD6C
+Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
 
