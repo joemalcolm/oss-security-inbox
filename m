@@ -1,37 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/12/2
-Message-ID: <4867fdb1-eaba-98c9-661a-9b5cd974d5c1@apache.org>
-Date: Thu, 12 Dec 2019 07:55:32 -0500
-From: "Kevin A. McGrail" <kmcgrail@...che.org>
-To: "kmcgrail@...che.org" <kmcgrail@...che.org>, oss-security@...ts.openwall.com
-Subject: Apache SpamAssassin v3.4.3 released with fix for CVE-2019-12420
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/4
+Message-ID: <20191209151808.GA35251@orca>
+Date: Mon, 9 Dec 2019 15:18:08 +0000
+From: Leonid Isaev <leonid.isaev@...x.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Shell wildcards considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-Apache SpamAssassin 3.4.3 was recently released [1], and fixes an issue
-of security note where a message can be crafted in a way to use
-excessive resources.  Upgrading to SA 3.4.3 as soon as possible is the
-recommended fix but details will not be shared publicly. Thanks to Joran
-Dirk Greef, Ronomon, Cape Town for reporting the issue.
+On Mon, Dec 09, 2019 at 03:42:47PM +0100, Noel Kuntze wrote:
+> That is only a problem if the developer(s) foolishly didn't use "--" to
+> terminate the command line options or they did, but the argument parser of
+> the called program does not understand that "--" is a command line option
+> terminator.
 
-This issue has been assigned CVE id CVE-2019-12420 [2]
+I'm sorry, but this has nothing to do with developers of PROGRAM to use or not
+user "--", but rather with the user not properly sanitizing the input to the
+PROGRAM and not understanding how shell works. Specifically, doing
+PROGRAM *.tar is just asking for trouble for many reasons, not mentioned in the
+original email. See [1] (and in general BashPitfalls) for a proper discussion...
 
-To contact the Apache SpamAssassin security team, please e-mail
-security at spamassassin.apache.org.  For more information about Apache
-SpamAssassin, visit the http://spamassassin.apache.org/ web site.
+HTH,
+L.
 
-Apache SpamAssassin Security Team
-
-[1]:
-https://svn.apache.org/repos/asf/spamassassin/branches/3.4/build/announcements/3.4.3.txt
-
-[2]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2019-12420
+[1] https://mywiki.wooledge.org/BashPitfalls#for_f_in_.24.28ls_.2A.mp3.29
 
 -- 
+Leonid Isaev
+Linux Support Engineer
+iFAX Solutions, Inc.
+www.ifax.com
 
-Kevin A. McGrail
-KMcGrail@...che.org
-
-Member, Apache Software Foundation
-Chair Emeritus Apache SpamAssassin Project
-https://www.linkedin.com/in/kmcgrail - 703.798.0171
-
++1.215.825.8700 ext 8126 (office)
++1.215.825.8767 (fax)
