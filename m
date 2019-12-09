@@ -1,34 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/16/3
-Message-ID: <20190616192914.GA876@openwall.com>
-Date: Sun, 16 Jun 2019 21:29:14 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/8
+Message-ID: <20191209181050.GC35251@orca>
+Date: Mon, 9 Dec 2019 18:10:50 +0000
+From: Leonid Isaev <leonid.isaev@...x.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: Re: Shell wildcards considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jun 16, 2019 at 12:08:20PM -0500, Bob Friesenhahn wrote:
-> On Sun, 16 Jun 2019, Solar Designer wrote:
-> >
-> >Some people have interpreted this as implying there are ">100 security
-> >bugs OSS-Fuzz found and publicly disclosed [...], and which still have
-> >not been fixed" specifically in ImageMagick.  However, at the link you
-> >referenced there are currently "only" 38 bugs specifically in
-> >ImageMagick, with the rest of the >100 being in other projects:
-> 
-> Using the ordinary public access I have, I see that ImageMagick has 
-> 129 open issues, and 1479 issues in total.  There are surely issues 
-> that I can not see yet since they are hidden for up to 90 days.
+On Mon, Dec 09, 2019 at 06:30:22PM +0100, Noel Kuntze wrote:
+> I was referring to my own message, not the original one by Georgi.
 
-I guess this is a distinction between all open deadline-exceeded issues
-(129) and only deemed security ones out of those (38).
+Ah, I'm sorry. I didn't read your email carefully enough.
 
-Removing "Type=Bug-Security status:New", but keeping
-"label:Deadline-exceeded" does show 129 issues for ImageMagick.
-
-Also removing "label:Deadline-exceeded" still results in 129, perhaps
-because I'm not authorized to see other open issues.
-
-I am unfamiliar with OSS-Fuzz.  Please correct me if I got this wrong.
-
-Alexander
+Sorry again,
+L.
