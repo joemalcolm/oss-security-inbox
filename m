@@ -1,34 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/10/1
-Message-ID: <CAECwjAXAK+JLxRLrUfn3c6+BA=d9=0iGGPYPpN8qSt8DYN94iA@mail.gmail.com>
-Date: Mon, 9 Sep 2019 15:04:33 -0700
-From: Tomas Fernandez Lobbe <tflobbe@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/5
+Message-ID: <a12cddb8-7753-5e5f-de0f-8c575c2632d2@thermi.consulting>
+Date: Mon, 9 Dec 2019 16:28:35 +0100
+From: Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2019-12401: XML Bomb in Apache Solr versions prior to 5.0
+Subject: Re: Shell wildcards considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium
+Hello Leonid,
 
-Vendor: The Apache Software Foundation
+The message was about the attack vector on applications that put together argument vectors
+based on user input, not specifically about human use of the shell.
 
-Versions Affected:
-1.3.0 to 1.4.1
-3.1.0 to 3.6.2
-4.0.0 to 4.10.4
+The same problem applies to that though. Users need to use -- to terminate the option list.
 
-Description: Solr versions prior to 5.0.0 are vulnerable to an XML resource
-consumption attack (a.k.a. Lol Bomb) via it’s update handler. By leveraging
-XML DOCTYPE and ENTITY type elements, the attacker can create a pattern
-that will expand when the server parses the XML causing OOMs
+Kind regards
 
-Mitigation:
-* Upgrade to Apache Solr 5.0 or later.
-* Ensure your network settings are configured so that only trusted traffic
-is allowed to post documents to the running Solr instances.
+Noel
 
-Credit: Matei "Mal" Badanoiu
+Am 09.12.19 um 16:18 schrieb Leonid Isaev:
+> On Mon, Dec 09, 2019 at 03:42:47PM +0100, Noel Kuntze wrote:
+>> That is only a problem if the developer(s) foolishly didn't use "--" to
+>> terminate the command line options or they did, but the argument parser of
+>> the called program does not understand that "--" is a command line option
+>> terminator.
+> I'm sorry, but this has nothing to do with developers of PROGRAM to use or not
+> user "--", but rather with the user not properly sanitizing the input to the
+> PROGRAM and not understanding how shell works. Specifically, doing
+> PROGRAM *.tar is just asking for trouble for many reasons, not mentioned in the
+> original email. See [1] (and in general BashPitfalls) for a proper discussion...
+>
+> HTH,
+> L.
+>
+> [1] https://mywiki.wooledge.org/BashPitfalls#for_f_in_.24.28ls_.2A.mp3.29
+>
 
-References:
-[1] https://issues.apache.org/jira/browse/SOLR-13750
-[2] https://wiki.apache.org/solr/SolrSecurity
+-- 
+Noel Kuntze
+IT security consultant
+
+GPG Key ID: 0x0739AD6C
+Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
 
