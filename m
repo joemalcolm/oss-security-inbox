@@ -1,61 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/31/2
-Message-ID: <20190731152622.GA24743@cbuissar-ltop.localdomain>
-Date: Wed, 31 Jul 2019 17:26:22 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/6
+Message-ID: <20191209164635.GB35251@orca>
+Date: Mon, 9 Dec 2019 16:46:35 +0000
+From: Leonid Isaev <leonid.isaev@...x.com>
 To: oss-security@...ts.openwall.com
-Subject: icedtea-web: CVE-2019-10181 CVE-2019-10182 CVE-2019-10185
+Subject: Re: Shell wildcards considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Mon, Dec 09, 2019 at 04:28:35PM +0100, Noel Kuntze wrote:
+> The message was about the attack vector on applications that put together
+> argument vectors based on user input, not specifically about human use of the
+> shell.
 
-The IcedTea-Web project provides a Java web browser plug-in and an
-implementation of Java Web Start, which is based on the Netx project.
+Then, why in "tar xf *.tar" the "*" is expected to mean anything other than
+a literal * (0x2a)? It is because of the shell globbing: "tar xf ./*.tar" will
+work without any "--". For example:
+-----8<-----
+$ echo -E "xxx" > "-b xxx.qwetr"
+$ file *.qwetr
+file: invalid option -- ' '
+file: invalid option -- 'x'
+file: invalid option -- 'x'
+file: invalid option -- 'x'
+file: invalid option -- '.'
+file: invalid option -- 'q'
+file: invalid option -- 'w'
+Usage: file [-bcCdEhikLlNnprsvzZ0] [--apple] [--extension] [--mime-encoding]
+            [--mime-type] [-e <testname>] [-F <separator>]  [-f <namefile>]
+            [-m <magicfiles>] [-P <parameter=value>] <file> ...
+       file -C [-m <magicfiles>]
+       file [--help]
+$
+$ file ./*.qwetr
+./-b xxx.qwetr: ASCII text
+----->8-----
 
-Upstream URL : http://icedtea.classpath.org/wiki/IcedTea-Web
-
-This is to disclose the following 3 vulnerabilities :
-
-CVE-2019-10182 and CVE-2019-10185 are considered High, since they can
-easily be used to take over the client before checking signatures.
-
-All versions of icedtea-web are believed to be vulnerable.
-
-See the following pull request for the proposed fixes :
-https://github.com/AdoptOpenJDK/IcedTea-Web/pull/344
-
-
-* CVE-2019-10182 icedtea-web: path traversal while processing <jar/>
-elements of JNLP files results in arbitrary file overwrite
-
-It was found that icedtea-web did not properly sanitize paths from
-<jar/> elements in JNLP files. An attacker could trick a victim into
-running a specially crafted application and use this flaw to upload
-arbitrary files to arbitrary locations in the context of the user.
-
-
-* CVE-2019-10185 icedtea-web: directory traversal in the nested jar
-auto-extraction leading to arbitrary file overwrite
-
-It was found that icedtea-web was vulnerable to a zip-slip attack during
-auto-extraction of a JAR file. An attacker could use this flaw to write
-files to arbitrary locations. This could also be used to replace the
-main running application and, possibly, break out of the sandbox.
-
-
-* CVE-2019-10181 icedtea-web: unsigned code injection in a signed JAR
-file
-
-It was found that executable code could be injected in a JAR file
-without compromising the signature verification. An attacker could use
-this flaw to inject code in a trusted JAR. The code would be executed
-inside the sandbox.
-
-
-Red Hat would like to thank Imre Rad for reporting all the
-vulnerabilities above.
-
-
-Thanks!
-
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+Sincerely,
+L.
