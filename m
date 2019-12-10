@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/09/5
-Message-ID: <20191009145752.GA32134@crime.home.puiterwijk.org>
-Date: Wed, 9 Oct 2019 16:57:52 +0200
-From: Patrick Uiterwijk <puiterwijk@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/10/2
+Message-ID: <20191210102523.GB4424@fedorawork>
+Date: Tue, 10 Dec 2019 11:25:23 +0100
+From: Riccardo Schirone <rschiron@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Koji CVE-2019-17109: koji hub allows arbitrary upload destinations
+Cc: VMware Security Response Center <security@...are.com>
+Subject: Re: CVE-2019-5544 openslp 1.2.1, 2.0.0 heap overflow vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Description
-===========
+On 12/06, VMware Security Response Center wrote:
+> openslp has a heap overflow vulnerability that when exploited may result
+> in memory corruption and a crash of slpd or in remote code execution.
+> 
+> CVE-2019-5544 has been assigned to this issue.
+> 
+> Below you may find:
+> - a copy of the affected code with comments indicating the problem.
+> - patches for openslp versions 1.2.1 and 2.0.0
 
-The way that the hub code validates upload paths allows for an attacker to choose an arbitrary destination for the uploaded file. 
+Are those fixes commited anywhere? I could not find them on GitHub.
 
+> 
+> VMware would like to thank the 360Vulcan team working with the 2019
+> Tianfu Cup Pwn Contest for reporting this issue to us.
+> 
+> VMware Security Response Center
+> 
+> 
 
-Affected versions
-=================
+Thanks,
+-- 
+Riccardo Schirone
+Red Hat -- Product Security
+Email: rschiron@...hat.com
+PGP-Key ID: CF96E110
 
-All prior versions of Koji are vulnerable.
-
-
-Patched versions
-================
-
-Koji versions 1.14.3, 1.15.3, 1.16.3, 1.17.1, and 1.18.1 are available on the website, and all include patches to solve this problem.
-
-
-Credits
-=======
-
-This issue was discovered by Yu Ming Zhu of Red Hat.
-
-
-References
-=========
-
-https://docs.pagure.org/koji/CVE-2019-17109/
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
