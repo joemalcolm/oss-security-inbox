@@ -1,48 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/23/5
-Message-ID: <CAOAQt7WYP3ZhgHZexBUh_PFpEFyNSz+xJzYLpiNdihQf1weJ+Q@mail.gmail.com>
-Date: Fri, 23 Aug 2019 11:01:42 -0700
-From: David Tomaschik <davidtomaschik@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-10071: Timing Attack in HMAC Verification in Apache Tapestry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/10/3
+Message-ID: <nycvar.YSQ.7.76.1912101658430.54987@xnncv>
+Date: Tue, 10 Dec 2019 17:10:40 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2019-19338 Kernel: KVM: export MSR_IA32_TSX_CTRL to guest - incomplete fix for TAA (CVE-2019-11135)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-10071: Timing Attack in HMAC Verification in Apache Tapestry
+   Hello,
 
-Affected versions:
-- Apache Tapestry 5.3.6 through current releases.
+Transaction Asynchronous Abort (TAA) h/w issue, which affects Intel CPUs, is 
+mitigated in two ways. One is by disabling Transactional Synchronisation 
+Extensions (TSX) feature of the CPU. And second is by clearing the affected 
+Store/Fill/Load port architectural buffers, which may hold sensitive 
+information bits.
 
-Description:
-Apache Tapestry uses HMACs to verify the integrity of objects stored on the
-client side.  This was added to address the Java deserialization
-vulnerability
-disclosed in CVE-2014-1972.  In the fix for the previous vulnerability, the
-HMACs were compared by string comparison, which is known to be vulnerable to
-timing attacks.
+It was found that the current kernel fixes don't completely fix TAA issue for 
+guest VMs. When a guest is running on a host CPU affected by TAA (ie. 
+TAA_NO=0) but not affected by MDS issue (ie MDS_NO=1), to mitigate TAA issue, 
+guest was to clear the affected buffers by using VERW instruction mechanism. 
+But when MDS_NO=1 bit was exported to the guests, it did not quite use the 
+VERW mechanism to clear the affected buffers.
 
-Mitigation:
-No new release of Tapestry has occurred since the issue was reported.
-Affected
-organizations may want to consider locally applying commit
-d3928ad44714b949d247af2652c84dae3c27e1b1.
+This issue affects guests running on Cascade Lake CPUs, which are affected by 
+the TAA (ie. TAA_NO=0) issue, but are not affected by the MDS (ie. MDS_NO=1) 
+issue.
 
-Timeline:
-- 2019-03-12: Issue discovered.
-- 2019-03-13: Issue reported to security@...che.org.
-- 2019-03-29: Pinged thread to ask for update.
-- 2019-04-19: Fix committed.
-- 2019-04-23: Asked about release timeline, response "in the upcoming
-months"
-- 2019-05-28: Pinging again about release.
-- 2019-06-24: Asked again, asked for CVE number assigned.  No update on
-  timeline.
-- 2019-08-22: Disclosure posted.
+It requires that host has 'TSX' enabled.
 
-This vulnerability was discovered by David Tomaschik of the Google Security
-Team.
+Upstream patches:
+-----------------
+   -> https://git.kernel.org/linus/cbbaa2727aa3ae9e0a844803da7cef7fd3b94f2b
+   -> https://git.kernel.org/linus/c11f83e0626bdc2b6c550fc8b9b6eeefbd8cefaa
+   -> https://git.kernel.org/linus/b07a5c53d42a8c87b208614129e947dd2338ff9c
 
--- 
-David Tomaschik
-Security Engineer
-ISA Assessments
+Another option: Export MDS_NO=0 to guests when TSX is enabled
+   -> https://git.kernel.org/linus/e1d38b63acd843cfdd4222bf19a26700fd5c699e
+
+'CVE-2019-19338' is assigned by Red Hat Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
