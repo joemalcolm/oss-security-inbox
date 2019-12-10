@@ -1,68 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/26/5
-Message-ID: <20190726100006.GA19264@openwall.com>
-Date: Fri, 26 Jul 2019 12:00:06 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/10/1
+Message-ID: <97042bbb-bf57-23e8-f1d9-75b95df5b9ff@amazon.com>
+Date: Tue, 10 Dec 2019 11:30:58 +1100
+From: <sandreim@...zon.com>
+To: <oss-security@...ts.openwall.com>
+CC: "Anthony Liguori (aliguori)" <aliguori@...zon.com>
+Subject: CVE-2019-18960: Firecracker v0.18.0 and v0.19.0 vsock buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 22, 2019 at 12:00:13PM +0200, Heiko Schlittermann wrote:
-> *** Note: EMBARGO is still in effect until July 25th, 10:00 UTC. ***
-> *** Distros must not publish any detail nor release updates yet. ***
+We have identified an issue in the Firecracker v0.18.0 and v0.19.0 vsock
+implementation.
 
-Somehow there isn't a proper message from Exim maintainers in here yet,
-but the release is out, so I feel I have to take over and post this for
-them:
+# Issue Description
 
-https://lists.exim.org/lurker/message/20190725.090419.d506f736.en.html
+A logical error in bounds checking performed on vsock virtio descriptors
+can be used by a malicious guest to read from and write to a segment of
+the host-side Firecracker process' heap address space, directly after
+the end of a guest memory region. For reads, the accessible segment's
+size is 64 KiB. For writes, the accessible segment is limited by the
+host Linux kernel to a size defined in /proc/sys/net/core/rmem_max. We
+expect the value of rmem_max to be on the order of a few hundred KiB to
+a few MiB.
 
----
-Author: Jeremy Harris
-Date: 2019-07-25 11:04 +200
-To: exim-announce, exim users
-Subject: [exim] CVE-2019-13917
+# Impact
 
-General release information
-===========================
+This will generally result in a segmentation fault, but remote code
+execution within the Firecracker host-side process context cannot be
+ruled out.
 
-The code fix for this issue has been placed in the project
-public git repository; the project website will be updated
-in due course.
+# Vulnerable Systems
+
+Only Firecracker v0.18.0 and v0.19.0 are affected. Only Firecracker
+microVMs with configured vsock devices are affected, and only if one or
+more vsock devices are in active use by both host and guest.
+
+# Mitigation
+
+Patched binaries for the affected versions have been released as
+Firecracker v0.18.1 [1] and Firecracker v0.19.1 [2].
+If you are using Firecracker v0.18.0 or v0.19.0 , we recommend you apply
+the provided fix. If you are using Firecracker v0.17.0 or below, you do
+not need to take any action.
+In a remote code execution scenario, users running Firecracker in line
+with the recommended Production Host Setup will see the impact limited
+as follows: a malicious microVM guest that would manage to compromise
+the Firecracker VMM process would be restricted to running on the host
+as an unprivileged user, in a chroot and mount namespace isolated from
+the host's filesystem, in a separate pid namespace, in a separate
+network namespace, with system calls limited to Firecracker's seccomp
+whitelist, on a single NUMA node, and on a cgroups-limited number of CPU
+cores.
+
+[1] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.18.1
+[2] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.19.1
+
+Best Regards,
+Andrei on behalf of the Firecracker maintainers team.
 
 
-CVE ID:     CVE-2019-13917
-OVE ID:     OVE-20190718-0006
-Date:       2019-07-18
-Credits:    Jeremy Harris
-Version(s): 4.85 up to and including 4.92
-Issue:      A local or remote attacker can execute programs with root
-            privileges - if you've an unusual configuration. For details
-            see below.
 
 
+Amazon Development Center (Romania) S.R.L. registered office: 27A Sf. Lazar Street, UBC5, floor 2, Iasi, Iasi County, 700045, Romania. Registered in Romania. Registration number J22/2621/2005.
 
-Coordinated Release Date (CRD) for Exim 4.92.1:
-            Thu Jul 25 10:00:00 UTC 2019
-
-
-
-Contact:    security@???
-
-
-
-Details:
-A vulnerability was discovered in the "sort" expansion operator:
-The elements of the list were expanded, giving a possible attack
-if the list included data supplied by an attacker.
-
-If the effective configuration file for exim does not use sort
-then the system is trivially declarable as not being vulnerable.
-Use this command to check: "exim -bP config | grep sort".
-
-- -- 
-Cheers,
-Jeremy
----
-
-Alexander
+Download attachment "pEpkey.asc" of type "application/pgp-keys" (2465 bytes)
