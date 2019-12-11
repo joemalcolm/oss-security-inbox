@@ -1,27 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/31/2
-Message-ID: <20190131083943.lnx3lwhhu3h5suxh@tunkki.bugs.fi>
-Date: Thu, 31 Jan 2019 10:39:43 +0200
-From: Henri Salo <henri@...v.fi>
-To: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2018-20242] Apache JSPWiki Cross-site scripting vulnerability on Apache JSPWiki
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/11/8
+Message-ID: <CAE4Awf8Sifdqyy_oXTBVieKLLQW66UXMvGkE1VZpuUmOA+98qQ@mail.gmail.com>
+Date: Wed, 11 Dec 2019 10:33:45 -0600
+From: Gage Hugo <gagehugo@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2019-006] Keystone: Credentials API allows listing and retrieving of all users credentials (CVE-2019-19687)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 30, 2019 at 09:01:43PM +0100, Juan Pablo Santos Rodríguez wrote:
-> Versions Affected: Apache JSPWiki up to 2.10.5
-> 
-> Description:
-> A carefully crafted URL could trigger an XSS vulnerability on Apache
-> JSPWiki, which could lead to session hijacking.
-> 
-> Mitigation:
-> Apache JSPWiki users should upgrade to 2.11.0.M1 or later.
-> 
-> Credit:
-> This issue was discovered by Jamie Parfet.
+=====================================================================================
+OSSA-2019-006: Credentials API allows listing and retrieving of all users
+credentials
+=====================================================================================
 
-Do you have any Apache reference URLs for this issue?
+:Date: December 09, 2019
+:CVE: CVE-2019-19687
 
--- 
-Henri Salo
+
+Affects
+~~~~~~~
+- Keystone: ==15.0.0, ==16.0.0
+
+
+Description
+~~~~~~~~~~~
+Daniel Preussker reported a vulnerability in Keystone's list
+credentials API. Any user with a role on a project is able to list any
+credentials with the /v3/credentials API when [oslo_policy]
+enforce_scope is false. Users with a role on a project are able to
+view any other users credentials, which could leak sign-on information
+for Time-based One Time Passwords (TOTP) or othewise. Deployments
+running keystone with [oslo_policy] enforce_scope set to false are
+affected. There will be a slight performance impact for the list
+credentials API once this issue is fixed.
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/697731 (Stein)
+- https://review.opendev.org/697611 (Train)
+- https://review.opendev.org/697355 (Ussuri)
+
+
+Credits
+~~~~~~~
+- Daniel Preussker (CVE-2019-19687)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/keystone/+bug/1855080
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19687
+
+Content of type "text/html" skipped
+
+View attachment "signature.asc" of type "text/plain" (833 bytes)
