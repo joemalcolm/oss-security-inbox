@@ -1,63 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/06/6
-Message-ID: <20190806194400.unuo632rnugzzgq7@yuggoth.org>
-Date: Tue, 6 Aug 2019 19:44:00 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2019-003] Nova Server Resource Faults Leak External Exception Details (CVE-2019-14433)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/11/7
+Message-Id: <E1if0o9-0001dU-9U@xenbits.xenproject.org>
+Date: Wed, 11 Dec 2019 12:09:33 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 308 v3 (CVE-2019-19583) - VMX: VMentry failure with debug exceptions and blocked states
 Content-Type: text/plain; charset=utf-8
 
-==========================================================================
-OSSA-2019-003: Nova Server Resource Faults Leak External Exception Details
-==========================================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-:Date: August 06, 2019
-:CVE: CVE-2019-14433
+            Xen Security Advisory CVE-2019-19583 / XSA-308
+                               version 3
 
+     VMX: VMentry failure with debug exceptions and blocked states
 
-Affects
-~~~~~~~
-- Nova: <17.0.12,>=18.0.0<18.2.2,>=19.0.0<19.0.2
+UPDATES IN VERSION 3
+====================
 
+Public release.
 
-Description
-~~~~~~~~~~~
-Donny Davis with Intel reported a vulnerability in Nova Compute
-resource fault handling. If an API request from an authenticated user
-ends in a fault condition due to an external exception, details of the
-underlying environment may be leaked in the response and could include
-sensitive configuration or other data.
+Updated metadata to add 4.13, update StableRef's
 
+ISSUE DESCRIPTION
+=================
 
-Patches
-~~~~~~~
-- https://review.openstack.org/674908 (Ocata)
-- https://review.openstack.org/674877 (Pike)
-- https://review.openstack.org/674859 (Queens)
-- https://review.openstack.org/674848 (Rocky)
-- https://review.openstack.org/674828 (Stein)
-- https://review.openstack.org/674821 (Train)
+Please see XSA-260 for background on the MovSS shadow:
+  http://xenbits.xen.org/xsa/advisory-260.html
 
+Please see XSA-156 for background on the need for #DB interception:
+  http://xenbits.xen.org/xsa/advisory-156.html
 
-Credits
-~~~~~~~
-- Donny Davis from Intel (CVE-2019-14433)
+The VMX VMEntry checks does not like the exact combination of state
+which occurs when #DB in intercepted, Single Stepping is active, and
+blocked by STI/MovSS is active, despite this being a legitimate state to
+be in.  The resulting VMEntry failure is fatal to the guest.
 
+IMPACT
+======
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1837877
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-14433
+HVM/PVH guest userspace code may be able to crash the guest, resulting
+in a guest Denial of Service.
 
+VULNERABLE SYSTEMS
+==================
 
-Notes
-~~~~~
-- The stable/ocata and stable/pike branches are under extended maintenance and
-  will receive no new point releases, but patches for them are provided as a
-  courtesy.
+All versions of Xen are affected.
 
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
+Only systems supporting VMX hardware virtual extensions (Intel, Cyrix or
+Zhaoxin CPUs) are affected. Arm and AMD systems are unaffected.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+Only HVM/PVH guests are affected.  PV guests cannot leverage the
+vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+Running HVM guests on only AMD hardware will also avoid this
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Håkon Alstadheim and diagnosed as a
+security issue by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa308.patch           xen-unstable, Xen 4.13.x .. Xen 4.8.x
+
+$ sha256sum xsa308*
+4aa06d21478d9debb12388ff14d8abc31982e18895db40d0cec78fcc9fe68ef2  xsa308.meta
+7e782b09b16f7534c8db52042f7bb3bd730d108571c8b10af184ae0b02fdae9d  xsa308.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl3w3FsMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZWHwIAIfuiZE/IyxMwTAkZL3EugBnlxxHodoBuj6imn+n
+c9DvMk3TCi3vSgvZQtVpP0eNuuLN5285hVyI95lRE0LTmtRLc7jATktStRTgGkua
+znW8U1sqkVRWJcVuN4uAM2zIY60pMZnFjZxdJW12+wpcA13LInE1cDWnlRv+cdD9
+7DtVkGUWXjfbcm3KXGZw8YpKvTgVp983VpywR/1lzXZ+MexWzKuEco8fZFayw0ne
+3nT/23Y1ofjCflNFjc7HoeJZl+zy493J/rqHS8yYI3d4vTdIfjue3rZ/X6305el9
+zjCG5zXygrWVAoKGWVnPZweX1jw8rd6BlsPTqQb53UH94zc=
+=yTxW
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa308.meta" of type "application/octet-stream" (1941 bytes)
+
+Download attachment "xsa308.patch" of type "application/octet-stream" (3245 bytes)
