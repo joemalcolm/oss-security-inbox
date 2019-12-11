@@ -1,34 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/17
-Message-ID: <alpine.LRH.2.21.1908221621220.24302@fairfax.gathman.org>
-Date: Thu, 22 Aug 2019 16:28:38 -0400 (EDT)
-From: "Stuart D. Gathman" <stuart@...hman.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/11/4
+Message-Id: <E1if0nu-0001Zr-J5@xenbits.xenproject.org>
+Date: Wed, 11 Dec 2019 12:09:18 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 309 v3 (CVE-2019-19578) - Linear pagetable use / entry miscounts
 Content-Type: text/plain; charset=utf-8
 
-Since we're arguing...  What would worry me is an exploit where I allow
-a friend to connect their USB flash drive, it operates normally to all 
-appearances.  Nothing is auto-executed by a stupid OS (like the Iran
-centrifuge worm).  But, the device is able to insert some privileged 
-code through low level protocol bugs - all while operating normally as
-a USB storage device.  It is not obvious how any of the USB bugs just
-reported could be exploited that way - but anytime you have buffer
-overflows and stuff, some evil genius might find a way.  I also worry
-about file system bugs doing something similar on any removeable media,
-or downloaded image.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Thu, 22 Aug 2019, Eddie Chapman wrote:
+            Xen Security Advisory CVE-2019-19578 / XSA-309
+                               version 3
 
-> On 22/08/2019 20:00, Perry E. Metzger wrote:
->> You can argue anything you like. Power charging points have popped up
->> around the world, and you're not in a position to stop
->> them. Furthermore, I'll note that over the air exploitable bugs in
->> things like WiFi stacks and Bluetooth stacks have also appeared over
->> time; perhaps it's foolish to have your phone on at all, and yet
->> people will continue to turn their phones on, and even to use them.
+                Linear pagetable use / entry miscounts
 
--- 
- 	      Stuart D. Gathman <stuart@...hman.org>
-"Confutatis maledictis, flamis acribus addictis" - background song for
-a Microsoft sponsored "Where do you want to go from here?" commercial.
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+Updated metadata to add 4.13, update StableRef's
+
+ISSUE DESCRIPTION
+=================
+
+"Linear pagetables" is a technique which involves either pointing a
+pagetable at itself, or to another pagetable of the same or higher
+level.  Xen has limited support for linear pagetables: A page may
+either point to itself, or point to another pagetable of the same
+level (i.e., L2 to L2, L3 to L3, and so on).
+
+XSA-240 introduced an additional restriction that limited the "depth"
+of such chains by allowing pages to either *point to* other pages of
+the same level, or *be pointed to* by other pages of the same level,
+but not both.  To implement this, we keep track of the number of
+outstanding times a page points to or is pointed to another page
+table, to prevent both from happening at the same time.
+
+Unfortunately, the original commit introducing this reset this count
+when resuming validation of a partially-validated pagetable,
+incorrectly dropping some "linear_pt_entry" counts.
+
+If an attacker could engineer such a situation to occur, they might be
+able to make loops or other arbitrary chains of linear pagetables, as
+described in XSA-240.
+
+IMPACT
+======
+
+A malicious or buggy PV guest may cause the hypervisor to crash,
+resulting in Denial of Service (DoS) affecting the entire host.
+Privilege escalation and information leaks cannot be excluded.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+Only x86 systems are affected.  Arm systems are not affected.
+
+Only x86 PV guests can leverage the vulnerability.  x86 HVM and PVH
+guests cannot leverage the vulnerability.
+
+Only systems which have enabled linear pagetables are vulnerable.
+Systems which have disabled linear pagetables, either by selecting
+CONFIG_PV_LINEAR_PT=n when building the hypervisor, or adding
+pv-linear-pt=false on the command-line, are not vulnerable.
+
+MITIGATION
+==========
+
+If you don't have any guests which need linear pagetables, you can
+disable the feature by adding pv-linear-pt=false to your Xen
+command-line.  NetBSD is known to use linear pagetables; Linux and
+MiniOS are known not to use linear pagetables.
+
+CREDITS
+=======
+
+This issue was discovered by Manuel Bouyer and diagnosed as a security
+issue by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa309.patch           xen-unstable, Xen 4.13 - Xen 4.8
+
+$ sha256sum xsa309*
+ddd00dfbc85bada4e4cee8a51b989e3138cc47c58992657054246bc95c8ae34d  xsa309.meta
+0e4b75f4416624de698f3ed619c28418917ab0a5c9663c1641804e1d0a0dec1b  xsa309.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Deployment of the `pv-linear-pt=false` mitigation is NOT permitted
+(except where all the affected systems and VMs are administered and
+used only by organisations which are members of the Xen Project
+Security Issues Predisclosure List).  Specifically, deployment on
+public cloud systems is NOT permitted.
+
+This is because someone may notice the feature going away, and armed
+with the knowledge of where the issue is, re-discover it.
+
+Deployment of the mitigation is permitted only AFTER the embargo ends.
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl3w3FwMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZt+QIAL4wU2XUXRQZFk4uS9m4EYV3tlzOidJVcAOvr4pC
+x9O0rCRrUTnXvaqDj/X7fqPC4e/uHy4yPgg2gnRqb4y/jXJexPBkY/fsZJ64JdWJ
+Fo+0a9CK8IrlzhXFcxVff49kUC3Vv/X2FMa5mY07wfg3ww2qyh9rUiKSFEX4B8vV
+6lfMbFZNyOiO2vm1RnQzUCRnUeHnLXmR22BIvwLX6496qoI/ubHDBOK8NX0RU81e
+N1wdKlOlfmX1SuXfYzKPcdulmKLHnxiVgxG5FAsaQ5At3luA0+WEn5scoBXG99uB
+e6EkbmDpLabceQufMPR7Bvad3uVSzg3qLe/NvW4bd4Fvzb0=
+=Td+m
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa309.meta" of type "application/octet-stream" (2043 bytes)
+
+Download attachment "xsa309.patch" of type "application/octet-stream" (2193 bytes)
