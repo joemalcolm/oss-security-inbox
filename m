@@ -1,135 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/22/1
-Message-ID: <20190322182843.GA69604@TC-275.local>
-Date: Fri, 22 Mar 2019 11:28:43 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2019-5418] Amendment: Possible Remote Code Execution Exploit in Action View
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/11/2
+Message-ID: <2A58D60A-BDD0-4546-BB2E-A5D53E6CD866@vmware.com>
+Date: Wed, 11 Dec 2019 00:10:31 +0000
+From: VMware Security Response Center <security@...are.com>
+To: Riccardo Schirone <rschiron@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: VMware Security Response Center <security@...are.com>
+Subject: Re: CVE-2019-5544 openslp 1.2.1, 2.0.0 heap overflow vulnerability
 Content-Type: text/plain; charset=utf-8
 
-# [CVE-2019-5418] Amendment: Possible Remote Code Execution Exploit in Action View
 
-This is an amendment to the previously announced CVE-2019-5418.  There
-is a possible file content disclosure vulnerability in Action View.
-This vulnerability can possibly be used to read the Rails secrets file
-and those secrets can be used to escalate to a remote code execution
-exploit. This vulnerability has been assigned the CVE identifier
-CVE-2019-5418.
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     6.0.0.beta3, 5.2.2.1, 5.1.6.2, 5.0.7.2, 4.2.11.1
+﻿> On 12/10/19, 2:25 AM, "Riccardo Schirone" <rschiron@...hat.com> wrote:
 
-Impact
-------
-There is a possible file content disclosure vulnerability in Action View.
-Specially crafted accept headers in combination with calls to `render file:`
-can cause arbitrary files on the target server to be rendered, disclosing the
-file contents.
+    > On 12/06, VMware Security Response Center wrote:
+    >> openslp has a heap overflow vulnerability that when exploited may result
+   > > in memory corruption and a crash of slpd or in remote code execution.
+   > > 
+   > > CVE-2019-5544 has been assigned to this issue.
+   > > 
+   > > Below you may find:
+   > > - a copy of the affected code with comments indicating the problem.
+   > > - patches for openslp versions 1.2.1 and 2.0.0
+    
+    > Are those fixes commited anywhere? I could not find them on GitHub.
 
-This vulnerability can possibly be used to read the Rails secrets file and
-used in combination with other known issues to escalate to a remote code
-execution exploit.
+The patches have been provided to the maintainer of openslp. These are the
+same patches as mentioned in our initial post at
+https://www.openwall.com/lists/oss-security/2019/12/06/1.
 
-The impact is limited to calls to `render` which render file contents without
-a specified accept format.  Impacted code in a controller looks something like
-this:
+The openslp github repository has not yet been updated, see
+https://github.com/openslp-org/openslp.
+    
+    >> 
+    >> VMware would like to thank the 360Vulcan team working with the 2019
+    >> Tianfu Cup Pwn Contest for reporting this issue to us.
+    >> 
+    >> VMware Security Response Center
+    >> 
+    >> 
+    
+    > Thanks,
+    > -- 
+    > Riccardo Schirone
+    > Red Hat -- Product Security
+    > Email: rschiron@...hat.com
+    >PGP-Key ID: CF96E110
 
-```
-class UserController < ApplicationController
-  def index
-    render file: "#{Rails.root}/some/file"
-  end
-end
-```
+Thanks,
+VMware Security Response Center
+    
 
-Rendering templates as opposed to files is not impacted by this vulnerability.
-
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
-
-Releases
---------
-The 6.0.0.beta3, 5.2.2.1, 5.1.6.2, 5.0.7.2, and 4.2.11.1 releases are
-available at the normal locations.
-
-Workarounds
------------
-This vulnerability can be mitigated by specifying a format for file rendering,
-like this:
-
-```
-class UserController < ApplicationController
-  def index
-    render file: "#{Rails.root}/some/file", formats: [:html]
-  end
-end
-```
-
-In summary, impacted calls to `render` look like this:
-
-```
-render file: "#{Rails.root}/some/file"
-```
-
-The vulnerability can be mitigated by changing to this:
-
-```
-render file: "#{Rails.root}/some/file", formats: [:html]
-```
-
-Other calls to `render` are not impacted.
-
-Alternatively, the following monkey patch can be applied in an initializer:
-
-```
-$ cat config/initializers/formats_filter.rb
-# frozen_string_literal: true
-
-ActionDispatch::Request.prepend(Module.new do
-  def formats
-    super().select do |format|
-      format.symbol || format.ref == "*/*"
-    end
-  end
-end)
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 6-0-action-view-file-disclosure.patch - Patch for 6.0 series
-* 5-2-action-view-file-disclosure.patch - Patch for 5.2 series
-* 5-1-action-view-file-disclosure.patch - Patch for 5.1 series
-* 5-0-action-view-file-disclosure.patch - Patch for 5.0 series
-* 4-2-action-view-file-disclosure.patch - Patch for 4.2 series
-
-Please note that only the 5.2.x, 5.1.x, 5.0.x, and 4.2.x series are supported
-at present. Users of earlier unsupported releases are advised to upgrade as
-soon as possible as we cannot guarantee the continued availability of security
-fixes for unsupported releases.
-
-Also note that the patches for this vulnerability are the same as CVE-2019-5419.
-
-Credits
--------
-Thanks to John Hawthorn <john@...thorn.email> of GitHub
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "4-2-action-view-file-disclosure.patch" of type "text/plain" (4299 bytes)
-
-View attachment "5-0-action-view-file-disclosure.patch" of type "text/plain" (3713 bytes)
-
-View attachment "5-1-action-view-file-disclosure.patch" of type "text/plain" (3713 bytes)
-
-View attachment "5-2-action-view-file-disclosure.patch" of type "text/plain" (3713 bytes)
-
-View attachment "6-0-action-view-file-disclosure.patch" of type "text/plain" (3732 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
