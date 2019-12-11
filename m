@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["712" "Friday" "15" "May" "2015" "01:39:27" "+0100" "=?UTF-8?B?UMOhZHJhaWcgQnJhZHk=?=" "P@draigBrady.com" "<5555403F.3060502@draigBrady.com>" "20" "[oss-security] coreutils sort heap overflow" nil nil nil "5" "2015051500:39:27" "[oss-security] coreutils sort heap overflow" (number mark "        P@draigBrady May 15   20/712   " thread-indent "\"[oss-security] coreutils sort heap overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["519" "Wednesday" "11" "December" "2019" "11:54:35" "+0530" "P J P" "ppandit@redhat.com" nil "16" nil "^Date:" nil nil "12" nil nil (number mark "U       ppandit@redh Dec 11   16/519   " thread-indent "\"Re: [oss-security] CVE-2019-19338 Kernel: KVM: export MSR_IA32_TSX_CTRL to guest - incomplete fix for TAA (CVE-2019-11135)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-19338 Kernel: KVM: export MSR_IA32_TSX_CTRL to guest - incomplete fix for TAA (CVE-2019-11135)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9824 invoked by uid 550); 15 May 2015 00:45:16 -0000
+Received: (qmail 10029 invoked by uid 550); 11 Dec 2019 06:25:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5937 invoked from network); 15 May 2015 00:39:41 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApcKAPg/VVVtTLyB/2dsb2JhbABcgw9UXoE7gRVOwzOFLIIJTAEBAQEBAYELQQWEBg8Bbg0CBRYLAgsDAgECAT8ZCAEBiCwBCKE0j1eFap8JBIEhjzuCUoFFBZcIjkaOfSOBRwyCJT0xAYJFAQEB
-Message-ID: <5555403F.3060502@draigBrady.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+Received: (qmail 10011 invoked from network); 11 Dec 2019 06:25:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1576045488;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hAKDZSfIRLu66EnVY1eqnYYREGsxmLEwvGMb2UjEayk=;
+	b=Y7q5SXF5DKTcaEsjKKsidzhSIZ15QBKHDTeDK/rMOzy4qiKuaRmg78KkUFD7UVaB74p3u/
+	MfhHUgkdRem3hbafi3Y4GwctkNxq5vV8+LoJS+sSfV5wCiVwSmefAzbzzRAFK04kpNjxx2
+	6RaHRhFD5tHWH+xLtowNiOggkzHl8aU=
+X-X-Sender: pjp@kaapi
+In-Reply-To: <20191210180921.GA23197@elm>
+Message-ID: <nycvar.YSQ.7.76.1912111153180.175485@xnncv>
+References: <nycvar.YSQ.7.76.1912101658430.54987@xnncv> <20191210180921.GA23197@elm>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Date: Fri, 15 May 2015 01:39:27 +0100
-From: =?UTF-8?B?UMOhZHJhaWcgQnJhZHk=?= <P@draigBrady.com>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-MC-Unique: bucgPhkoNMK0a5tNRM6xIQ-1
+X-Mimecast-Spam-Score: 0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 11 Dec 2019 11:54:35 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] coreutils sort heap overflow
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2019-19338 Kernel: KVM: export MSR_IA32_TSX_CTRL
+ to guest - incomplete fix for TAA (CVE-2019-11135)
+To: oss security list <oss-security@lists.openwall.com>
 
-FYI on distros with the coreutils i18n patch applied
-(Suse/RHEL/Fedora/...) a heap overflow can be triggered in sort(1) as per:
-https://bugzilla.suse.com/show_bug.cgi?id=928749
++-- On Tue, 10 Dec 2019, Tyler Hicks wrote --+
+| > Another option: Export MDS_NO=3D0 to guests when TSX is enabled
+| >   -> https://git.kernel.org/linus/e1d38b63acd843cfdd4222bf19a26700fd5c6=
+99e
+|=20
+| Is the CVE assignment specifically for a distro kernel that didn't
+| include commit e1d38b63acd8 ("kvm/x86: Export MDS_NO=3D0 to guests when
+| TSX is enabled")?
 
-The following should be the simplest way to trigger this on affected distros:
-(note the error is not generated 100% of the time):
+Right, and have TSX enabled by default.
 
-  printf '%s\n' a ɑ | MALLOC_CHECK_=1 LC_ALL=en_US.utf8 sort -f
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-Note in UTF8 only a few chars are converted to longer sequences,
-so the values that can be written are restricted.
-
-There is also a theoretical buffer overflow with data around SIZE_MAX/2.
-
-Both issues are fixed at:
-  https://github.com/pixelb/coreutils/commit/bea5e36c
-The fix is public as the bug is already public.
-
-thanks,
-Pádraig.
