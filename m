@@ -1,40 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/6
-Message-ID: <20190425132314.GD13360@iolanthe>
-Date: Thu, 25 Apr 2019 08:23:14 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: security@...ntu.com, mheon@...hat.com, paul@...l-moore.com
-Subject: Re: CVE Request: golang-seccomp incorrectly handles multiple syscall arguments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/11/3
+Message-Id: <E1if0kQ-0008H0-ON@xenbits.xenproject.org>
+Date: Wed, 11 Dec 2019 12:05:42 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 307 v3 (CVE-2019-19581,CVE-2019-19582) - find_next_bit() issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 24 Apr 2019, Jamie Strandboge wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Wed, 24 Apr 2019, Jamie Strandboge wrote:
-> 
-> > Hi,
-> > 
-> > https://github.com/seccomp/libseccomp-golang/issues/22 describes a bug where
-> > golang-seccomp incorrectly generates BPFs which OR multiple arguments rather
-> > than ANDing them. This bug was fixed here:
-> > 
-> > https://github.com/seccomp/libseccomp-golang/commit/06e7a29f36a34b8cf419aeb87b979ee508e58f9e
-> > 
-> > which is currently only in master and not the most current 0.9.0 release. Since
-> > golang-seccomp is meant to be a golang package to facilitate reducing the
-> > syscall surface for applications and this bug produces incorrect BPF to achieve
-> > that when specifying more that 2 syscall arguments, this probably deserves a
-> > CVE assignment so distributions will see the issue and incorporate the fix into
-> > their stable releases. I've included upstream developers Matthew and Paul in CC
-> > for comment.
-> > 
-> Sorry, I was reminded that CVE requests go to https://cveform.mitre.org/. I did
-> that just now. I can shuffle back and forth information between here and there
-> as needed and will report back the CVE if/when it is assigned.
+    Xen Security Advisory CVE-2019-19581,CVE-2019-19582 / XSA-307
+                              version 3
 
-This is CVE-2017-18367
+                        find_next_bit() issues
 
--- 
-Jamie Strandboge             | http://www.canonical.com
+UPDATES IN VERSION 3
+====================
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Public release.
+
+Updated metadata to add 4.13, update StableRef's
+
+ISSUE DESCRIPTION
+=================
+
+In a number of places bitmaps are being used by the hypervisor to track
+certain state.  Iteration over all bits involves functions which may
+misbehave in certain corner cases:
+- - On 32-bit Arm accesses to bitmaps with bit a count which is a multiple
+  of 32, an out of bounds access may occur.  (CVE-2019-19581)
+- - On x86 accesses to bitmaps with a compile time known size of 64 may
+  incur undefined behavior, which may in particular result in infinite
+  loops. (CVE-2019-19582)
+
+IMPACT
+======
+
+A malicious guest may cause a hypervisor crash or hang, resulting in a
+Denial of Service (DoS).
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+32-bit Arm systems are vulnerable.
+
+x86 systems with 64 or more nodes are vulnerable.  We are unaware of any
+such systems that Xen would run on.
+
+64-bit Arm systems as well as x86 systems with less than 64 nodes are
+not vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation for 32-bit Arm systems.
+
+For x86 systems the issue can be avoided by suppressing the use of NUMA
+information provided by firmware, via the "numa=off" command line
+option.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa307.patch           xen-unstable, Xen 4.13.x ... 4.8.x
+
+$ sha256sum xsa307*
+e589e96a0b3ec66f1d2d6393b82fab13ed18fd9fb112044a12263336b8499c68  xsa307.meta
+7df052768cc05329bc44bf724897227885da8bb2cde9ff01d0ba2a34611bde97  xsa307.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl3w24gMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZxokH/2bGTmGUZP0tyc+oDHjlrr3+FarhoJnRTl4EoqJS
+hzsa5OkcqzcEgrQ+7VL7dLW3AboT2zcx2RQ9HyxCz61BfDY1XF8EDDr6chJiNofN
+J7OGirNzSBHFFQJOc2KFG8al+1F8WzzKP3UMbqNBrqB07/tQc5lttdbA/t5Tnp9c
+xreCAkkBscDk1LFR8HiUA3YeykiHQtF09O+VnxXO2AD/Dpo8e+K6AmJkCZ4+ysNP
+JKMc13vQ3UKjMmYzgbuNCIswNu1Wy3EnNZMf2zvGIhuw6iN6vSJJgoz0OSPUb4yY
+kXEe1dlgseSbMxXEqj4IyZ69pEw6Ijj+H6PybQo/IOie7q0=
+=7XWU
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa307.meta" of type "application/octet-stream" (1779 bytes)
+
+Download attachment "xsa307.patch" of type "application/octet-stream" (4152 bytes)
