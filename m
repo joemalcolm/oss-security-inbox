@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/9
-Message-ID: <alpine.GSO.2.20.1907111050290.8466@scrappy.simplesystems.org>
-Date: Thu, 11 Jul 2019 10:57:15 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-cc: Malte Kraus <malte.kraus@...e.com>
-Subject: Re: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/12/2
+Message-ID: <4867fdb1-eaba-98c9-661a-9b5cd974d5c1@apache.org>
+Date: Thu, 12 Dec 2019 07:55:32 -0500
+From: "Kevin A. McGrail" <kmcgrail@...che.org>
+To: "kmcgrail@...che.org" <kmcgrail@...che.org>, oss-security@...ts.openwall.com
+Subject: Apache SpamAssassin v3.4.3 released with fix for CVE-2019-12420
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 11 Jul 2019, Perry E. Metzger wrote:
->
-> It seems like a bad idea.
->
-> If one wants to have mechanisms by which the operating system can
-> allow unprivileged programs to temporarily assume privileges (which
-> is a frequent idea in security), then they should be carefully
-> designed and part of the OS, rather than creating an ad hoc facility
-> via a subsystem that isn't intended for it. There are good ways to do
-> that, like capabilities.
+Apache SpamAssassin 3.4.3 was recently released [1], and fixes an issue
+of security note where a message can be crafted in a way to use
+excessive resources.  Upgrading to SA 3.4.3 as soon as possible is the
+recommended fix but details will not be shared publicly. Thanks to Joran
+Dirk Greef, Ronomon, Cape Town for reporting the issue.
 
-I agree.  It is rather common that more than one file needs to be 
-modified at one time.  If a more complex mechanism like a sqlite3 
-database needs to be updated, then the implementation of sqlite3 will 
-expect to be able to access files in a normal way and it will expect 
-to be use all the abilities it normally uses.  It is rather common 
-that atomic operations are required, locking is required, the ability 
-to link/rename files is required, and that synchronization of file 
-content and directories is required.
+This issue has been assigned CVE id CVE-2019-12420 [2]
 
-In addition to the security concerns, it is difficult to see how a 
-virtual filesystem intended for use by simplistic GUI file managers 
-will satisfy common administrative requirements.
+To contact the Apache SpamAssassin security team, please e-mail
+security at spamassassin.apache.org.  For more information about Apache
+SpamAssassin, visit the http://spamassassin.apache.org/ web site.
 
-Bob
+Apache SpamAssassin Security Team
+
+[1]:
+https://svn.apache.org/repos/asf/spamassassin/branches/3.4/build/announcements/3.4.3.txt
+
+[2]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2019-12420
+
 -- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+
+Kevin A. McGrail
+KMcGrail@...che.org
+
+Member, Apache Software Foundation
+Chair Emeritus Apache SpamAssassin Project
+https://www.linkedin.com/in/kmcgrail - 703.798.0171
+
