@@ -1,4 +1,9 @@
-Received: (qmail 30222 invoked by uid 550); 20 May 2026 00:01:20 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2197" "Friday" "13" "December" "2019" "12:44:35" "+0200" "Aki Tuomi" "aki.tuomi@dovecot.fi" nil "66" nil "^Date:" nil nil "12" nil nil (number mark "        aki.tuomi@do Dec 13   66/2197  " thread-indent "\"[oss-security] CVE-2019-19722: Critical vulnerability in Dovecot\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-19722: Critical vulnerability in Dovecot" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3345 invoked by uid 550); 13 Dec 2019 10:50:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,114 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 27757 invoked from network); 19 May 2026 23:46:10 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1779234361; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ZBOCj5xYH50+uzbIgYuPt0E4aqXKJgxLOHRI0N+VQ17A1jlRz8QWO5g1yPLfZrWxNu
-         6MtSi9vbXM7uzPHCYyCoqKM4L7Vd1/cVC7rFh9Zq67TeyLCvCBJiSqDEUax6S4O0eyp3
-         OIm0sfopXDcbj0bBcsa4w7RwLxzOQ1MhEne3nwmveZ0ZVA9g7AdfgkKPs3/Nz3Xrq82s
-         4PGWWvhg5imScqwYq0vo85klbV0Hkn61xqQRiDQRKy7K3/tglX47VFrHZHdT51mHHBUA
-         e5RzDE4gKWqE+1iWxSaiYOvdcNUgp0bU3IjW6AMBbBbYwtvgzlbEpLc/w0cQswg0dcMM
-         vN8Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=7JYPogB6e6Mb3rTx0nxgiiq3JFFe/CgSkK2ELDvIJig=;
-        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
-        b=ExeACS1X/H6n39+W3CcvNBqeonCDiTZXXXVpwMkqbzwQIulEaatyCs/GzGt6HPC8zc
-         YKZWubsh2ZZcKg/ol8m6Zw1r9JgJIluUlkaYmZLCPMjdCyD4h8yj2bCd2dt0KILEUSZd
-         ZzoIExYP+JgSjd9W1KQ2Y6jilbbWngX6kx8hHNDI+6ibaZ8gbjCaeIQwbcJgdoIDZT1C
-         bVSG9in3P1fEvmcWIApxDUDTr0sl6sbf6/LVWmg6eXpUPIJwzjGJtZZnIcMopbUS4mUO
-         yzkpBrxNllihWneUD86h0WuWQcni4pNBT2bfQjeRCrmIb8roOKcu9tMUe4cHRCz7JtgU
-         RLpQ==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779234361; x=1779839161; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7JYPogB6e6Mb3rTx0nxgiiq3JFFe/CgSkK2ELDvIJig=;
-        b=OxGLDCucB4lmtauIJHxYBsQCO8ArW8Q0G3++v/xy575hpc4DIhnw6fUyGgiLawwTlU
-         nkVTZsh2yppxH+6mtOKmaQbGDhkDYvpT0Qkoge709GZ1IhLX/e4XbbxHvkwV4iwLrTah
-         3gD4TXgiNhiJg1q4Z/HmGvUCo7BV2KKOCDoQzq4om8r5mI2nBZs5NBH/HGRxdmY8Nbgn
-         OUw5H0nLZMBt3TDAF48AED0bKCDl/o9a0YtSNF5wdccRQbhZzokzK3dvxKxB4vhzbYbJ
-         Ynjdk+vp2DO9ofc0V7Y+jrQSjS6pNlf7ardlyiqPyRM1yGBfaOLrZN8GHGlABBd9brgJ
-         1pHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779234361; x=1779839161;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7JYPogB6e6Mb3rTx0nxgiiq3JFFe/CgSkK2ELDvIJig=;
-        b=GzCuOqLX2rJ3vbYs6OtsM1YY/zZTiAQWIvnjvAFWrJyy17GGUo2LHve2eQqY+Z7KxR
-         ewru3jT3O7poUc4mTpoQhbwkPk02tsVwDeuzLcyBnnHRVrofjFNVbyiAa1Tu+CabFAT/
-         QsYf3ukx0KvpXqPqJX9sxwGufyKmEGe4pde9c8Aio5iIQg2Ce0ps5IqtkMm+2cGhXK+w
-         T54FWy7uJui0wmk9gLYzQqnHI3JX8yVmCNh5bl2m9Cq9PlYYaGCliQ0gpbxHGgc9pxv0
-         31p/BQGv8iYrnh1AJ+b5abK7/z3/rB7Q35MkDT+ZZkkqCgQXzWj9cPBOq2W2ItWQOQPK
-         nlSQ==
-X-Gm-Message-State: AOJu0Yzs6zN4um9vdkv5ddbLPFbUFqwL70JQs0moOpxnBOzotZTgkGHl
-	B9K5SThpg0VqWlJ2hCRpVluuFbIrQcMB/R/ME4VMs34kTXmI0sfhku5cCmkz+Yc0wwjqrBWdSYS
-	i6jplOoVE6MStsCFB+NyiViqcpOZvmL17p5TjN9w=
-X-Gm-Gg: Acq92OGxMutUeu5BzrHtKKsOwhqpymj+/hiMbUjQz3IsiGiUgc+lorymqYASmPVpP6z
-	ShbNiLQx+W+TgzQ45Zc4O9ucIcpRca1Y7554jamivmXpMQdNS5seOJCYN2Py2bVMeCBeFvU3Mbr
-	dq74sCIGw1WlqvdLrp7Fe0xrmj21EC9vlspyC65a5ScXH5pfYd2nctrnV4+JHpmj3bZZRmOPs/M
-	sYoMQ2FIhXWVL8oGIscHFAkey2yj3zj7asgg5iDxjeCf7kNMPQA/Mp8nl/6kG1tWjcXbiZG/ID5
-	6vDSpmHCFY4f/tfcoGAa0nJdeQ==
-X-Received: by 2002:a17:906:6185:b0:bd0:6dbe:22b1 with SMTP id
- a640c23a62f3a-bd5177ec5dfmr1205673766b.12.1779234360827; Tue, 19 May 2026
- 16:46:00 -0700 (PDT)
+Received: (qmail 1404 invoked from network); 13 Dec 2019 10:44:48 -0000
+Autocrypt: addr=aki.tuomi@dovecot.fi; prefer-encrypt=mutual; keydata=
+ xsBNBFb7bukBCACpK7GFwH/gyL0oF8t91WM7S+UjuQ1vOQZg2eoCUHi4ILpm1Kae4UeZLB2X
+ Vbeph+k29BIQbo+Hjv6rq6JzPfKIZCRLLrkMD1MtA0YB7ZYiACywLrATAdAMJ6sRq+DL5Rlr
+ A2CvviTifz6DwEnbqI+ckcKggsY2gywHs5muDw+n5TwLiL0V9IU478vg7OUWzMZ42toTmeTW
+ 2MtsIAE5xbnjZ58LUSZR2CNO8SAtDHYI558ACkS0wHBAoRFNv27IPr3cebiPsIglSEIBr0R1
+ F1Twbgm6mWVBhK+smDgGxmmuAhH6boSaKWoWAq+tNf+6oXnr3/D0IPtR8c/bZobtvWG3ABEB
+ AAHNJ1R1b21pLCBBa2kgPGFraS50dW9taUBvcGVuLXhjaGFuZ2UuY29tPsLAfgQTAQIAKAIb
+ AwUJEswDAAUCW2P/aAYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQGTtjY7NEQgYmMwf9
+ G5U0+vKJB+f3Vl8rjPqlXmUZu4waf6pig5lLCrgu56ZkqEDmjaxmxXAah7JZ6dD/66kzlQzK
+ QPYpLor0KnTZgm8XZr+MtqLK8DMF/4+iljADvkS4nfJuX3LbdafPyuk4x+GIa+6NJ+y34jZ2
+ 84Oesj+FtPOevthR9rDmnc2KQjBD30ceKsadxIKqWPYPqPESQ0PyMu9tOaWNdGntx8LvO3Ll
+ spZ2DzEh5rregFKtO01jR9ai5r3mbUrQqwzWLxJztBYjds8D5VAiCBeivUxetDqhoPr3CyKH
+ Stc5GfgHvazjG34H+CShReqIylfR4mwc654qkmVQfPMMUTaa677n8c7ATQRW+27pAQgAosZd
+ RB8tui65tjna4iYKPHqcNDZUXOUuPLTucYc2tY2v67POGr44gOZNzuQWKyXRSBs+Q2zJHcbc
+ cPe0ZEptkOCOwdhhvBwZLKa6nI9jnJ0K+szT2NbD0YkvaIDALA9pVGMJqa88wvkkocf/I5fk
+ dTk6xuLp8AamRXvcPZuUPo/s2PXQV4u+gtKdX1FmaHiBg1oQhtoDWZO04H74r9fyPPs499ra
+ 9iNckSlZP51OUFBbV/RmbtEC031r4iXUAgiL0nQ1mNpRIW+PU/5beX/4YwYeCpzy7g0XfMaJ
+ oMWDamRdXgzkXK6IJIxwo/89M8qPW+Bkh88yAennI2SsEvniXQARAQABwsBxBBgBAgAbBQJW
+ +27pAhsMBAsJCAcGFQoJCAsCBQkSzAMAAAoJEBk7Y2OzREIGCm8IAIZkj5FClx8EmPy1caC+
+ CNv1mVrC2YhKY9Zh255JUtt+Xp6tshN6IOr+saNkcwgUghxmx6+asZXPDHTqhXoswPi28k1u
+ CY7n4gvh3jlS7a0HeI0sy2RCsrkIaQD2uSt+ju9fpEM2aOXQHGT/x6gZhJ7Uwu+JfDnCB7CB
+ FjVnRaV2/87Y0ZImfhIMPYRzwOyWW6KR+JPIutyZAWo9c7mmjKbySLXhqgZariMJU+RQF5/d
+ aQsiRJKP1IkC/Ncy/iZSnGvPIRZjvQxtrz+4xexZX6NjG7IbKAwmbo1t27cF3hE4HejakF5b
+ LOhznVWubhjXp1J6pL9fymHmG2tZPsgwXcA=
+Message-ID: <54a83e07-ad1e-5375-2bde-bc1c96e35e7a@dovecot.fi>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-From: Jiri Hladky <hladky.jiri@gmail.com>
-Date: Wed, 20 May 2026 01:45:48 +0200
-X-Gm-Features: AVHnY4Imeu6-9HeICp1GtTBpmMBcFCb_du9BGnO6IyTSkh4gaOO3xqsrnhleDX4
-Message-ID: <CALT_uBTUqWwg4uUgPj4Ax3TV1Hhk4qfwvb8RHvti84C6nyCkyQ@mail.gmail.com>
-In-Reply-To: <agxXF1J53iSJIrP6@suse.de>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="MwUonOatVDl1jK1LLEWQxn2nxgIx9tGsq"
+Date: Fri, 13 Dec 2019 12:44:35 +0200
+From: Aki Tuomi <aki.tuomi@dovecot.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2019-19722: Critical vulnerability in Dovecot
+To: oss-security <oss-security@lists.openwall.com>
+
+--MwUonOatVDl1jK1LLEWQxn2nxgIx9tGsq
+Content-Type: multipart/mixed; boundary="EeKnVdh0nWJMWwBGu29ZxeuCvTUNluZko"
+
+--EeKnVdh0nWJMWwBGu29ZxeuCvTUNluZko
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] =?UTF-8?Q?CVE=2D2026=2D41054=3A_haveged_=E2=80=94_privilege_escalation_via?=
-	=?UTF-8?Q?_command_socket?=
+Content-Language: en-US
 
-Hello,
+Open-Xchange Security Advisory 2019-12-13
+=C2=A0
+Product: Dovecot IMAP/POP3 Server
+Vendor: OX Software GmbH
+=C2=A0
+Internal reference: DOV-3719
+Vulnerability type: NULL Pointer Dereference (CWE-476)
+Vulnerable version: 2.3.9
+Vulnerable component: push notification driver
+Report confidence: Confirmed
+Solution status: Fixed by Vendor
+Fixed version: 2.3.9.1
+Researcher credits: Frederik Schwan, Michael Stilkerich
+Vendor notification: 2019-12-10
+Solution date: 2019-12-12
+Public disclosure: 2019-12-13
+CVE reference: CVE-2019-19722
+CVSS: 5.3 (CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L/E:F/RL:O/RC:C)
+=C2=A0
+Vulnerability Details:
+Mail with group address as sender will cause a signal 11 crash in push
+notification drivers. Group address as recipient can cause crash in some
+drivers.
+=C2=A0
+Risk:
+Repeated delivery attempts are made for the problematic mail, causing
+queueing in MTA.
+=C2=A0
+Steps to reproduce:
+1. Configure dovecot with push notifications enabled, such as OX push
+notification driver. This can also be observed with 3rd party plugin XAPS.
+2. Send mail a group address as sender
+=C2=A0
+Solution:
+Operators should update to the latest Patch Release.
 
-A privilege escalation vulnerability was found in haveged, the Linux
-entropy daemon.
 
-CVE: CVE-2026-41054
-Affected versions: All versions with command socket support (1.9.14+)
-Fixed in: 1.9.21
 
-Description:
+--EeKnVdh0nWJMWwBGu29ZxeuCvTUNluZko--
 
-The socket_handler() function in src/havegecmd.c checks the connecting
-peer's uid via SO_PEERCRED and sends a NAK response to non-root
-callers. However, after sending the NAK, execution continued into the
-command switch instead of returning. This allowed unprivileged local
-users to send commands (MAGIC_CHROOT, MAGIC_CLOSE) to the root-running
-daemon via the abstract UNIX socket.
+--MwUonOatVDl1jK1LLEWQxn2nxgIx9tGsq
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Impact:
+-----BEGIN PGP SIGNATURE-----
 
-A local unprivileged user could force the daemon to chroot to an
-attacker-controlled directory or close the daemon's command socket.
+iQEzBAEBCgAdFiEEQtnWz3vebh9IQVAqGTtjY7NEQgYFAl3za5MACgkQGTtjY7NE
+Qgaq9AgAkzKebKrzTvV4ZF16NgFk2QZTg+jnNbA8Xp0zpueUTL1VDLteKubSYemP
+iLeCaUtwIGBQ+mbyTlUWlDK52EjVAx0RZpwohGy1QHJxUyXt7khwvMFUHD67/0ei
+vyKpsCkpr69SlzErSyEv2Wl74zCPpdjK7yu9+ouN9HZ03bTFgx/jArWy/lIBfQ7Q
+/jZ8pBWTomfHsXWlgzA7WBfpunqgy6H7OKYuf+sOgsv0Cu3/EZQvpLSkhZUsQT5z
+QNToUvWAzztEoI40vZA25Ho83Amy38aUR810zYxizq9xZuSW/ckITYU9HIFNvddX
+rN7n7nBaWJjjzJvadfscTVr3KSR3rg==
+=Pbbu
+-----END PGP SIGNATURE-----
 
-Fix:
-
-- Add goto out after the NAK response to properly reject non-root connectio=
-ns
-- Move the credential check before command parsing as defense in depth
-
-Links:
-
-- Release: https://github.com/jirka-h/haveged/releases/tag/v1.9.21
-- Fix commit: https://github.com/jirka-h/haveged/commit/3870de0
-- Hardening commit: https://github.com/jirka-h/haveged/commit/bcd7e52
-- Bug report: https://bugzilla.suse.com/show_bug.cgi?id=3D1264086
-
-Credit:
-Reported by Dirk M=C3=BCller (SUSE).
-
-Thank you,
-Jirka Hladky
+--MwUonOatVDl1jK1LLEWQxn2nxgIx9tGsq--
