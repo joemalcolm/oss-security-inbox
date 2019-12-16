@@ -1,51 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/06/3
-Message-ID: <CAH8yC8=v1ivKBDtO13Qy9vA3xs2kQya1nvOvKfv=wTDHdZAhXw@mail.gmail.com>
-Date: Sun, 6 Jan 2019 10:39:50 -0500
-From: Jeffrey Walton <noloader@...il.com>
-To: Niels Möller <nisse@...ator.liu.se>
-Cc: oss-security@...ts.openwall.com, gmp-bugs@...lib.org
-Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/16/2
+Message-ID: <CALSkbjpG+QgQg4LRS5hMG-oZZ3uxTb4xeg8MCyc0dHED9jRLPg@mail.gmail.com>
+Date: Mon, 16 Dec 2019 14:15:35 +0000
+From: daniel gaspar <danielvazgaspar@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2019-12414] Apache Incubator Superset medata data leak vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jan 6, 2019 at 5:31 AM Niels Möller <nisse@...ator.liu.se> wrote:
->
-> tg@...lib.org (Torbjörn Granlund) writes:
->
-> > Let's move on.  No bug to be found here.
->
-> Just FYI: There was a bug in Nettle's test code, a line
->
->   assert (mpz_invert(key->d, pub->e, phi));
->
-> Obviously not working with -DNDEBUG. Fix in commit
-> https://git.lysator.liu.se/nettle/nettle/commit/73d3c6d5586cc0fd81eab081078144d621de07b4
+Severity: Low
 
-A small suggestion to remove the sharp edge. If using -DNDEBUG is not
-supported, then fail configure when it is present. Something like the
-following in configure.ac should work well:
+Vendor:
+The Apache Software Foundation
 
-    BAD_OPT=`echo $CFLAGS | $EGREP -c '\-DNDEBUG`
-    if test "$BAD_OPT" != "0"; then
-        AC_MSG_ERROR (...)
-    fi
+Product:
+Apache Incubator Superset
 
-And as a safety net, maybe something in the source code like:
+Versions Affected:
+Superset < 0.32
 
-    #if defined(NDEBUG) || defined(_NDEBUG)
-    # error NDEBUG is not supported
-    #endif
+Description:
+A user can view database names that he has no access to on a dropdown list
+in SQLLab
 
-There are two reasons for the suggestion. First, RTFM does not work.
-If it was going to work, then it should have happened in the last 50
-years or so. Gutmann provides the user psychology behind it in his
-Security Engineering book,
-https://www.cs.auckland.ac.nz/~pgut001/pubs/book.pdf .
+Mitigation:
+Superset users with version prior to 0.32 should upgrade to 0.32 or higher
 
-Second, folks who have a Windows programming background use -NDEBUG.
-It is a standard practice and not a one-off problem. The issue should
-surface again for two use cases. First, Windows programmers working on
-Unix and Linux. Second, Windows programmers who are porting projects
-to Windows.
-
-Jeff
