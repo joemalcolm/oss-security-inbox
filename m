@@ -1,51 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/6
-Message-ID: <20190418155926.GB5455@w1.fi>
-Date: Thu, 18 Apr 2019 18:59:26 +0300
-From: Jouni Malinen <j@...fi>
-To: oss-security@...ts.openwall.com
-Subject: wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/16/1
+Message-ID: <nycvar.YSQ.7.76.1912161126040.314293@xnncv>
+Date: Mon, 16 Dec 2019 11:33:02 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2019-19332 Kernel: kvm: OOB memory write via kvm_dev_ioctl_get_cpuid
 Content-Type: text/plain; charset=utf-8
 
-Published: April 18, 2019
-Latest version available from: https://w1.fi/security/2019-5/
+   Hello,
 
-Vulnerability
+An out-of-bounds memory write issue was found in the way Linux kernel's KVM 
+hypervisor handled 'KVM_GET_EMULATED_CPUID' ioctl(2) request to get cpuid 
+features emulated by the KVM hypervisor. A user/process able to access 
+'/dev/kvm' device could use this flaw to crash the system resulting in DoS 
+issue.
 
-EAP-pwd implementation in hostapd (EAP server) and wpa_supplicant (EAP
-peer) was discovered not to validate fragmentation reassembly state
-properly for a case where an unexpected fragment could be received. This
-could result in process termination due to NULL pointer dereference.
+It was found by Syzkaller
+   -> https://lore.kernel.org/kvm/000000000000ea5ec20598d90e50@google.com/
 
-An attacker in radio range of a station device with wpa_supplicant
-network profile enabling use of EAP-pwd could cause the wpa_supplicant
-process to terminate by constructing unexpected sequence of EAP
-messages. An attacker in radio range of an access point that points to
-hostapd as an authentication server with EAP-pwd user enabled in runtime
-configuration (or in non-WLAN uses of EAP authentication as long as the
-attacker can send EAP-pwd messages to the server) could cause the
-hostapd process to terminate by constructing unexpected sequence of EAP
-messages.
+'CVE-2019-19332' was assigned by Red Hat Inc.
 
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-Vulnerable versions/configurations
-
-All hostapd and wpa_supplicant versions with EAP-pwd support
-(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
-in the runtime configuration) are vulnerable against the process
-termination (denial of service) attack.
-
-
-Possible mitigation steps
-
-- Merge the following commits to wpa_supplicant/hostapd and rebuild:
-
-  EAP-pwd peer: Fix reassembly buffer handling
-  EAP-pwd server: Fix reassembly buffer handling
-
-  These patches are available from https://w1.fi/security/2019-5/
-
-- Update to wpa_supplicant/hostapd v2.8 or newer, once available
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
