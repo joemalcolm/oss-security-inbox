@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/23/1
-Message-ID: <CAPNiXbEebqXnrqodz2P6h0=_jFZGHTUXRR2Ps7umzaE=Y6nmFA@mail.gmail.com>
-Date: Sat, 23 Mar 2019 14:58:41 +0100
-From: Alex R <alexr@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/16/3
+Message-ID: <CALSkbjrJaRD51rYCmHr13a8iDepyKKpueJirw0K+tCKwogwyyA@mail.gmail.com>
+Date: Mon, 16 Dec 2019 14:16:30 +0000
+From: daniel gaspar <danielvazgaspar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-0204: Some Mesos components can be overwritten making arbitrary code execution possible.
+Subject: [CVE-2019-12413] Apache Incubator Superset meta data leak vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+Severity: Low
 
 Vendor:
 The Apache Software Foundation
 
+Product:
+Apache Incubator Superset
+
 Versions Affected:
-Apache Mesos 1.4.0 to 1.7.0
-The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
+Superset < 0.31
 
 Description:
-A specifically crafted Docker image running under the root user can
-overwrite the init helper binary of the Mesos container runtime and/or
-the Mesos command executor. A malicious actor can therefore gain
-root-level code execution on the host.
+A user could query database metadata information from a database he has
+no access to, by using a specially crafted complex query.
 
 Mitigation:
-1.4.x users should upgrade to 1.4.3
-1.5.x users should upgrade to 1.5.3
-1.6.x users should upgrade to 1.6.2
-1.7.x users should upgrade to 1.7.2
-1.8-dev users should obtain Mesos 1.8.0 or latest snapshot of 1.8-dev
-
-Credit:
-This issue was discovered by Gilbert Song and Jie Yu based on similar RunC
-vulnerability report, CVE-2019-5736.
-
-Alex on behalf of Mesos PMC
+Superset users with version prior to 0.31 should upgrade to 0.31 or higher
 
