@@ -1,29 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/26/1
-Message-ID: <3ed3a6cd-088e-c164-4b1e-53753d79960b@redhat.com>
-Date: Tue, 26 Nov 2019 08:53:20 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/18/3
+Message-ID: <CAN_LGv17OG6JB-dm+t62WbDJajEAdik+fncnownEvrv+NUSvoQ@mail.gmail.com>
+Date: Thu, 19 Dec 2019 00:33:59 +0500
+From: "Alexander E. Patrakov" <patrakov@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: grub2-set-bootflag utility causes grubenv corruption rendering the system un-bootable
+Subject: Re: [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+On Wed, Dec 18, 2019 at 11:17 PM Aaron Patterson
+<aaron.patterson@...il.com> wrote:
+>
+> There is a possible information leak / session hijacking vulnerability
+> in Rack. This vulnerability has been assigned the CVE identifier
+> CVE-2019-16782.
+>
+> Versions Affected:  All.
+> Not affected:       None.
+> Fixed Versions:     1.6.12, 2.0.8
+>
+> There's a possible information leak / session hijack vulnerability in
+> Rack. Attackers may be able to find and hijack sessions by using timing
+> attacks targeting the session id. Session ids are usually stored and
+> indexed in a database that uses some kind of scheme for speeding up
+> lookups of that session id. By carefully measuring the amount of time it
+> takes to look up a session, an attacker may be able to find a valid
+> session id and hijack the session.
+>
+> The session id itself may be generated randomly, but the way the session
+> is indexed by the backing store does not use a secure comparison.
 
-Tavis Ormandy reported a flaw in grub2-set-bootflag utility of grub2.
+I don't understand why this is reported as something Rack-specific.
 
-grub-set-bootflag is a command line to set bootflags in GRUB's stored
-environment. This is a downstream utility which is shipped with Red Hat
-Enterprise Linux 8 and Fedora. A flaw was found in this application
-which would could allow a local attacker (someone having a local account
-on the system) to cause grub configuration files to be truncated.
-Whenever the machine was rebooted, grub would fail to read the
-configuration files and the system would be rendered unbootable.
+If I read the patch correctly (which is improbable, as I don't know
+Ruby at all), the idea is:
 
-More details and patches available in:
-https://bugzilla.redhat.com/show_bug.cgi?id=1764925
+1. The attacker could send various bogus session ids, starting with
+all possible valid bytes. The database, if it uses a trie (yes,
+strawman example - is it used by any real-world database?) as a data
+structure to speed up looking up sessions, will terminate the
+comparison early on invalid bytes, thus disclosing them.
+2. Given one valid byte of a session id, the attacker tries to extend
+it using the same procedure.
+3. At the end, the attacker will get a full session ID.
 
+The patch works by making the thing stored in the database as a key
+not the session ID in the cookie, but a hash of it. Therefore, step 2
+fails, as it is computationally hard to find something with a given
+prefix.
 
+On the other hand, I don't see how a timing attack would be possible
+on the most common data structures (B-Tree and Hash) used for database
+indexes.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Product Security
-
+Alexander E. Patrakov
