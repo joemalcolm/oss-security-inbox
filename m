@@ -1,36 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/02/6
-Message-ID: <1554168687.YKUIWQPL@httpd.apache.org>
-Date: Mon, 01 Apr 2019 20:31:27 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/18/1
+Message-ID: <3b8c3615-e62f-01e9-bcec-9dc4414dc886@gmail.com>
+Date: Wed, 18 Dec 2019 10:28:40 +0100
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-0220: URL normalization inconsistincies
+Subject: Django: CVE-2019-19844: Potential account hijack via password reset form
 Content-Type: text/plain; charset=utf-8
 
+https://www.djangoproject.com/weblog/2019/dec/18/security-releases/
 
-CVE-2019-0220: URL normalization inconsistincies
+In accordance with `our security release policy 
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team is issuing `Django 3.0.1 
+<https://docs.djangoproject.com/en/dev/releases/3.0.1/>`_, `Django 2.2.9 
+<https://docs.djangoproject.com/en/dev/releases/2.2.9/>`_ and `Django 
+1.11.27 <https://docs.djangoproject.com/en/dev/releases/1.11.27/>`_. 
+These release addresses the security issue detailed below. We encourage 
+all users of Django to upgrade as soon as possible.
 
-Severity: Low
+CVE-2019-19844: Potential account hijack via password reset form
+================================================================
 
-Vendor: The Apache Software Foundation
+By submitting a suitably crafted email address making use of Unicode
+characters, that compared equal to an existing user email when 
+lower-cased for
+comparison, an attacker could be sent a password reset token for the matched
+account.
 
-Versions Affected:
-httpd 2.4.0 to 2.4.39
+In order to avoid this vulnerability, password reset requests now 
+compare the
+submitted email using the stricter, recommended algorithm for 
+case-insensitive
+comparison of two identifiers from `Unicode Technical Report 36, section
+2.11.2(B)(2)`__. Upon a match, the email containing the reset token will be
+sent to the email address on record rather than the submitted address.
 
-Description:
-When the path component of a request URL contains multiple consecutive slashes
-('/'), directives such as LocationMatch and RewriteRule must account for
-duplicates in regular expressions while other aspects of the servers processing
-will implicitly collapse them.
-    
-Mitigation:
-Regular expressions used in directives that match against the path component
-of the request URL can be modified to account for multiple consecutive slashes.
+.. __: https://www.unicode.org/reports/tr36/#Recommendations_General
 
-Credit:
-The issue was discovered by Bernhard Lorenz <bernhard.lorenz@...hastrike.io> 
-of Alpha Strike Labs GmbH".
+Affected supported versions
+===========================
 
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+* Django master branch
+* Django 3.0
+* Django 2.2
+* Django 2.1
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's master branch and
+the 3.0, 2.2, and 1.11 release branches. The patches may be obtained 
+from the following changesets:
+
+* On the `master branch 
+<https://github.com/django/django/commit/5b1fbcef7a8bec991ebe7b2a18b5d5a95d72cb70>`__
+* On the `3.0 release branch 
+<https://github.com/django/django/commit/302a4ff1e8b1c798aab97673909c7a3dfda42c26>`__
+* On the `2.2 release branch 
+<https://github.com/django/django/commit/4d334bea06cac63dc1272abcec545b85136cca0e>`__
+* On the `1.11 release branch 
+<https://github.com/django/django/commit/f4cff43bf921fcea6a29b726eb66767f67753fa2>`__
+
+The following releases have been issued:
+
+* Django 3.0.1 (`download Django 3.0.1 
+<https://www.djangoproject.com/m/releases/3.0/Django-3.0.1.tar.gz>`_ | 
+`3.0.1 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.0.1.checksum.txt>`_)
+* Django 2.2.9 (`download Django 2.2.9 
+<https://www.djangoproject.com/m/releases/2.2/Django-2.2.9.tar.gz>`_ | 
+`2.2.9 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.2.9.checksum.txt>`_)
+* Django 1.11.27 (`download Django 1.11.27 
+<https://www.djangoproject.com/m/releases/1.11/Django-1.11.27.tar.gz>`_ 
+| `1.11.27 checksums 
+<https://www.djangoproject.com/m/pgp/Django-1.11.27.checksum.txt>`_)
+
+The PGP key ID used for these releases is Mariusz Felisiak: 
+2EF56372BA48CD1B.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+
+This issue was known publicly, therefore we fixed the issue as soon as 
+possible without the usual `prenotification process 
+<https://docs.djangoproject.com/en/dev/internals/security/#how-django-discloses-security-issues>`_.
 
