@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/02/1
-Message-ID: <E37AAD4E-43F8-493A-AEEC-9FAE1A3D8E66@me.com>
-Date: Wed, 02 Oct 2019 06:42:19 -0400
-From: Akamai <larry0@...com>
-To: Open Security <oss-security@...ts.openwall.com>
-Subject: Multiple vulnerabilities in Online store system v1.0 Stored XSS and unauthenticated product deletions.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/19/3
+Message-ID: <aef19c3ba928f5246be41adcb2bebb3ad209f511.camel@gathman.org>
+Date: Wed, 18 Dec 2019 23:09:40 -0500
+From: "Stuart D. Gathman" <stuart@...hman.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack
 Content-Type: text/plain; charset=utf-8
 
-Title: Multiple vulnerabilities in Online store system v1.0 Stored XSS and unauthenticated product deletions.
-Author: Larry W. Cashdollar @_larry0
-Date: 2019-09-18
-CVE-IDs: CVE-2019-8288 CVE-2019-8289 CVE-2019-8290 CVE-2019-8291
-Download Site: https://www.abcprintf.com/view_download.php?id=17
-Vendor: adcprintf
-Vendor Notified: 2019-09-18
-Vendor Contact: abcprintf@...il.com
-Advisory: http://www.vapidlabs.com/advisory.php?v=210
-Description: "Online store system" is a drop in customizable electronic store front. It has an administrative interface allowing user and product management. 
-Vulnerability:
-The application contains stored XSS vulnerabilities throughout the form page user_view.php  as none of the variables are sanitized before being presented back to the client. This can be exploited by a new user injecting cookie stealing code into their login information form and waiting for an administrative user to navigate to the users panel. 
+On Thu, 2019-12-19 at 00:33 +0500, Alexander E. Patrakov wrote:
+> 
+> > The session id itself may be generated randomly, but the way the
+> > session is indexed by the backing store does not use a secure
+> > comparison.
+> 
+> I don't understand why this is reported as something Rack-specific.
+> 
+> On the other hand, I don't see how a timing attack would be possible
+> on the most common data structures (B-Tree and Hash) used for
+> database indexes.
 
-CVE-2019-8288 
-159  echo '<td>'.$row['adidas_member_user'].'</td>'; 
-CVE-2019-8289 
-160 echo '<td>'. $row['adidas_member_email'] . '</td>';
- CVE-2019-8290 The registration form requirements for the member email format can be bypassed by posting directly to sent_register.php allowing special characters to be included and an XSS payload to be injected. 
-CVE-2019-8291 The code in delete_file.php doesn't check to see if a user has administrative rights nor does it check for path traversal allowing a '..' to delete arbitrary files owned by the httpd process. 
-CVE-2019-8292 The code in delete_product.php doesn't check to see if a user has administrative rights before allowing them to delete a product from the database.
-Exploit Code:
-1. Set login name or email to "><script>alert(1);</script>
-2. $ curl -s cookie.txt -X POST -d "username=jsmith&password=jsmith123&email=\"><script>alert(1);</script>%40email.com" http://example.com/pso/sent_register.php
-3.  
-4.  
-5. $ curl -s cookie.txt "http://example.com/pso/admin/delete_file.php?id=0&filename=../women.php"
-6.  
-7. $ curl -s cookie.txt http://example.com/pso/admin/product_delete.php?id=4
+My B-tree uses minimum unique key with leading duplicates not stored
+for all but the leaf nodes - so it would also (eventually - there is so
+much noise in the timing measurement) give away the key via timing
+attacks.  
 
-
+I had not thought of that angle, and I hope I remember this the next
+time I am reinventing session ids.  Now I'm also wondering about other
+libraries that manage session ids.  Java servlets in  Apache Tomcat?
 
