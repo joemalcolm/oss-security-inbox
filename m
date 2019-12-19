@@ -1,44 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/22/1
-Message-ID: <531c6c3e-6c18-eb00-0b90-487db8650a2c@isc.org>
-Date: Thu, 21 Feb 2019 17:59:11 -0900
-From: Michael McNally <mcnally@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/19/2
+Message-ID: <CACmp6kpYXqBsQmqzOVn45q+n2jTtsWFU=ObfgDd4m6y7j5F=0A@mail.gmail.com>
+Date: Wed, 18 Dec 2019 21:21:19 -0600
+From: Matt Sicker <mattsicker@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: "security-officer@....org" <security-officer@....org>
-Subject: Multiple BIND CVEs disclosed (CVE-2018-5744, CVE-2018-5745, CVE-2019-6465)
+Subject: [CVE-2019-17571] Apache Log4j 1.2 deserialization of untrusted data in SocketServer
 Content-Type: text/plain; charset=utf-8
 
-Today ISC disclosed three vulnerabilities affecting multiple versions of
-BIND.  Full details on versions affected and more information about the
-vulnerabilities are available via these articles in the ISC Knowledge Base:
+CVE-2019-17571: Deserialization of untrusted data in SocketServer
 
-CVE-2018-5744:
-   A specially crafted packet can cause named to leak memory
-   https://kb.isc.org/docs/cve-2018-5744
+Severity: Critical
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H/RL:W
 
-CVE-2018-5745:
-   An assertion failure can occur if a trust anchor rolls over to
-   an unsupported key algorithm when a server is using managed-keys
-   https://kb.isc.org/docs/cve-2018-5745
+Product:
+Apache Log4j
 
-CVE-2019-6465:
-   Controls for zone transfers may not be properly applied to
-   Dynamically Loadable Zones (DLZs) if the zones are writable.
-   https://kb.isc.org/docs/cve-2019-6465
+Versions Affected:
+Apache Log4j up to and including 1.2.27. Separately fixed by
+CVE-2017-5645 in Log4j 2.8.2.
 
-New software versions are available from the ISC downloads page:
-https://www.isc.org/downloads
+Problem type:
+CWE-502: Deserialization of Untrusted Data
 
-With the public disclosure of these vulnerabilities, parties which
-had been given advance notice concerning them are released from
-non-disclosure and packagers and redistributors are encouraged to
-publish updated packages containing fixes.
+Description:
 
-If you have additional questions, please direct them to
-security-officer@....org
+Included in Log4j 1.2 is a SocketServer class that is vulnerable to
+deserialization of untrusted data which can be exploited to remotely
+execute arbitrary code when combined with a deserialization gadget
+when listening to untrusted network traffic for log data.
 
-Thank you,
+Mitigation:
 
-Michael McNally
-ISC Security Officer
+Apache Log4j 1.2 reached end of life in August 2015. Users should
+upgrade to Log4j 2.x which both addresses that vulnerability as well
+as numerous other issues in the previous versions.
 
+Credit:
+
+This issue was initially discovered in CVE-2017-5645 by Marcio Almeida
+de Macedo of Red Team at Telstra.
+
+Links:
+
+https://logging.apache.org/log4j/1.2/
+https://issues.apache.org/jira/browse/LOG4J2-1863
+
+-- 
+Matt Sicker
+Secretary, Apache Software Foundation
+VP Logging Services, ASF
