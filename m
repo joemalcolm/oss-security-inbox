@@ -1,71 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/30/4
-Message-ID: <20191030162423.GA9147@openwall.com>
-Date: Wed, 30 Oct 2019 17:24:23 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Steven Rostedt <rostedt@...dmis.org>, sashal@...nel.org, amakhalov@...are.com, anishs@...are.com, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>, "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
-Subject: Re: Membership application for linux-distros - VMware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/20/2
+Message-ID: <75b02ec0499444db96581c54a4a178a9@kaspersky.com>
+Date: Fri, 20 Dec 2019 17:11:29 +0000
+From: Pavel Cheremushkin <Pavel.Cheremushkin@...persky.com>
+To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
+Subject: VNC vulnerabilities. TigerVNC security update
 Content-Type: text/plain; charset=utf-8
 
-Hello Srivatsa,
+Hello,
 
-I've reviewed your request and the external resources you referenced,
-and more, and I find the request very reasonable and satisfying our
-stated requirements.  I also gave others on oss-security time to comment
-if they wanted to, and we've only seen comments in favor.
+This is a final report about reviewing open source VNC implementations. This research has been motivated by the fact that some VNC systems are heavily used in ICS.
 
-Please send me your PGP key off-list and I'll add you to linux-distros.
+About a year ago I have already sent an email to this mailing list about TightVNC and LibVNC vulnerabilities: https://www.openwall.com/lists/oss-security/2018/12/10/5
+Later this year I had some time to review more open source implementations of VNC systems (mostly UltraVNC), which are described in this article: https://ics-cert.kaspersky.com/reports/2019/11/22/vnc-vulnerability-research/
 
-Please see below on contributing back:
+Finally, today TigerVNC team managed to fix all issues found within their codebase and published fixes in new release 1.10.1
+https://github.com/TigerVNC/tigervnc/releases/tag/v1.10.1
+https://github.com/TigerVNC/tigervnc/commit/d461f7fdb8b01f655260ea2f495ece700f3c9898
 
-On Wed, Oct 23, 2019 at 12:08:48PM -0700, Srivatsa S. Bhat wrote:
-> We would like to volunteer for the following tasks (but we would love
-> your suggestions on taking up other tasks instead, depending on the
-> current needs of the list).
-> 
-> Technical:
-> 
-> 4. Check if related issues exist in the same piece of software (e.g.,
-> same bug class common across the software, or other kinds of bugs
-> exist in its problematic component), and inform the list either way -
-> primary: Ubuntu, backup: vacant
-> 
-> Administrative:
-> 
-> 5. Determine if the reported issues are Linux-specific, and if so help
-> ensure that (further) private discussion goes on the linux-distros
-> sub-list only (thus, not spamming and unnecessarily disclosing to the
-> non-Linux distros) - primary: SUSE, backup: vacant
+Fix contains patches for several vulnerabilities that have been fixed in master branch only, and 5 vulnerabilities (CVE-2019-15691 -- CVE-2019-15695) that actually got into the previous release. CVE-ids will published shortly. Please update.
 
-This is a good choice, thanks!
+Also, I accidently found another heap buffer overflow in LibVNC (CVE-2019-15690), when I was playing with CodeQL queries. It was missed during previous analysis by me. It later turned out that my fuzzer didn't find it either, because it required at least 256MB to be sent over the network to trigger it :)
 
-I'd like you to pick a primary role for some task.  As an option, we can
-make you primary for "5. Determine if the reported issues are
-Linux-specific ...", moving SUSE to backup.
+Best Regards,
+Pavel Cheremushkin
+Security Researcher| ICS CERT Vulnerability Research Group | Kaspersky Lab
+39A bld.2 Leningradskoye Highway, Moscow 125212, Russia | www.kaspersky.com,www.securelist.com
 
-Please let me know of your final choice, as well as where you'd like to
-be primary and where to join as a backup.
-
-We also need a distro to volunteer for the only currently completely
-unassigned task requiring list membership, Technical 6:
-
-6. Produce and share well-reasoned estimates for the time required to
-handle the issues under embargo (such as to (re)negotiate the public
-disclosure date and/or to choose between the different ways to handle an
-issue)
-
-I mention this not only in response to you, but also in case any other
-distro would take this opportunity to volunteer for this task.  I guess
-that same distro could also be involved in Technical 1 and/or 2 since
-the time estimates and schedules could reasonably come out of such work:
-
-1. Propose (other) ways to fix, work around, or mitigate the reported
-issues - primary: Red Hat, backup: vacant
-
-2. Develop and share fixes, workarounds, or mitigations - primary: Red Hat,
-backup: vacant
-
-Any takers?
-
-Alexander
