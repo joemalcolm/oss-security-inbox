@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2410" "Thursday" "2" "June" "2016" "12:11:23" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160602161123.78CDA6C028A@smtpvmsrv1.mitre.org>" "60" "[oss-security] Re: CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd" "^Cc:" nil nil "6" "2016060216:11:23" "[oss-security] Re: CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd" (number mark "U       cve-assign@m Jun  2   60/2410  " thread-indent "\"[oss-security] Re: CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd\"\n") "<alpine.LFD.2.20.1606021054530.24989@wniryva>" ("<alpine.LFD.2.20.1606021054530.24989@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["568" "Tuesday" "24" "December" "2019" "10:49:49" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "20" nil "^Date:" nil nil "12" nil nil (number mark "        butterflyhua Dec 24   20/568   " thread-indent "\"[oss-security] CVE-2019-19947: Linux kernel can: kvaser_usb: kvaser_usb_leaf: some info-leaks vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-19947: Linux kernel can: kvaser_usb: kvaser_usb_leaf: some info-leaks vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26105 invoked by uid 550); 2 Jun 2016 16:11:36 -0000
+Received: (qmail 20314 invoked by uid 550); 24 Dec 2019 07:27:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26085 invoked from network); 2 Jun 2016 16:11:35 -0000
-In-Reply-To: <alpine.LFD.2.20.1606021054530.24989@wniryva>
-Message-Id: <20160602161123.78CDA6C028A@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
-Date: Thu,  2 Jun 2016 12:11:23 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 32419 invoked from network); 24 Dec 2019 02:50:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=tZVXNnWqF1G2o/M5yQJbMr28/ZdOz6/hKZP68F3QMzc=;
+        b=O8qmzqL7M9nzQioSNmd/dVehvliYnMJSZYSItTdBohQxJE5RAFxEMEoJAoK46lIYxG
+         dkWm9VrfF5Ckm3fTMk9dp8MXxm8IlXkB75he4WkPLzdohDExh3vK/xdqBY1rIrtJe/Jn
+         uVs6lqhFQ8OCxS+rqb920hgGRtD7udZQK6Fcjh4fZnb2zzu171q/AxieZp3unfq+myvG
+         R5Dvl+0GcA8p8LZIvT4Py90fjf7brkEKn7l2s1ZzL4VuxXeqmAewtDPPyOYxFF2gV5lt
+         dFT6/drjC/JHWmTpmFxIgZ9ADX/1QbtJ/Rt8J6g5L+CquQVrxbTVYiLBWuik8X/2nPNM
+         nWPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=tZVXNnWqF1G2o/M5yQJbMr28/ZdOz6/hKZP68F3QMzc=;
+        b=dOk/MSfAH00KHc6hM7qplJBFRsGm4Df3E3o/mNWrXnJjr/pfT1ra6XdA+Aoc3CRzAD
+         5QwNfALkerNcHTYaOVZ33v13Kfg2oOb2JPSibv1hucRIeUmjNJRawkDk6jg1TJhH14rX
+         VdW0f10+6kLw7VRKEwGRJ9hiiELlI7pNJCeqQVihxtcfCC64uANp/Hm0kHV7AuWuKhGQ
+         1PiG29xvn7avh1/WBtJIYeaTn2I4NTQSyj0MW5P5ZznQ6dyp4WbpDuf5rDF4wpWaknrx
+         AvTHNwa9bJuLTM/Gw4NVM3SWpLjQBoCuYD4130LRZRM+Q+uKj3sAOwJNYLqsXtA5nK1j
+         WNSg==
+X-Gm-Message-State: APjAAAW7A7KO486CXdsVUvARuIfDkwaYHdW/YVcUPRPhJRp+4OU/cowI
+	3j51GPr4WaRJKHlbUcoIQJPqCHLNfeGyo2z2l5vLqxLm
+X-Google-Smtp-Source: APXvYqxq1cuM0cfelZtEbloG2WK/zly+9kAsaymdOzweNzM0YlirE8G9HLU8zIwjl28qukI91iS614EGZhRgKk+j8mA=
+X-Received: by 2002:a2e:88c4:: with SMTP id a4mr19096430ljk.174.1577155800627;
+ Mon, 23 Dec 2019 18:50:00 -0800 (PST)
+MIME-Version: 1.0
+Message-ID: <CAFcO6XOkEgLdYkrfaqYanKeZCoBxkLDGmLKOZ158OBS2ZHxE5g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000407f70059a6a33e5"
+Date: Tue, 24 Dec 2019 10:49:49 +0800
+From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd
-To: ppandit@redhat.com
+Subject: [oss-security] CVE-2019-19947: Linux kernel can: kvaser_usb:
+ kvaser_usb_leaf: some info-leaks vulnerabilities
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--000000000000407f70059a6a33e5
+Content-Type: text/plain; charset="UTF-8"
 
-> Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support
-> is vulnerable to an OOB write access issue. The controller uses 16-byte FIFO
-> buffer for command and information transfer. The OOB write occurs while
-> reading from information transfer buffer via non-DMA mode in routine
-> get_cmd().
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1341931
-> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg00150.html
+Hi, there some info-leaks vulnerabilities in Linux kernel USB drivers that
+can be triggered by an external malicious USB device.
 
->> Add check to validate command length against buffer size to avoid any
->> overrun.
+Description:
 
-Use CVE-2016-5238.
+In the Linux kernel through 5.4.6, there are some information leaks of
+uninitialized memory to a USB device in the
+drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c driver.
 
-The scope of this CVE is the missing "dmalen > TI_BUFSZ" check in
-the get_cmd function. The scope of this CVE does not include the
-"At least the following patch is needed to ensure that ti_size always
-matches ti_rptr/ti_wptr" discussion.
+More details in
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19947 .
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/esp.c but
-that may be an expected place for a later update.
+Credit:
 
+This issue was discovered by the ADLab of venustech.
 
->> In theory this shouldn't happen, but I agree that it is better to be
->> defensive.
-
-We typically can still assign a CVE ID with that response. We cannot
-assign a CVE ID with a response of "there is no vulnerability but
-I'm accepting the defense-in-depth code change." Admittedly this is
-sometimes a difficult distinction.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXUFo9AAoJEHb/MwWLVhi2HgcP+wWpJhmbyE55xndbleU5kBUX
-MyF83fzuj/PhM5ShgCI3y+VPQ7GmabZ4ui03qIhQl8NGdO4JW8PD1rRYJJ0gouVW
-UCi6JXQLQt8nlOQ0g4ROKTyONiKt5kc+9y6NoDZO16v7gd8gPFkoF6Z7JGOoizTA
-7Si/nCVB5XPWyRG8eEYNyxEXKxq6bdKvWlSYkwIHNDR9bWjCCy915vg/VyIjG9td
-thbASw7Ocem811eH79h7E5prm1MBb4Dmjlgbw/1TPeAvbVRki+KFqbdG1UVe0nJk
-6DD+TfyNrk4DERuzN97XTaltz7s+lyNWhObLuDHrhmQV8DNYiPz63wP45QVD3vff
-kjw8xnmuGhAyWhBenWBaUJ2HPFTJoXob5+Knvdo6JWH5Y8ES8Ob9gBbaKRnKhs6u
-dM/Kdht9A1DCHG0+QKCYlT8GfERutCPgjejyGxhBauRTnPztxTTr6/3G0BOkU3j9
-s1gUkWjk2SONM2mtnFa0Kd3ZU+qE+9k9EoBf4DZnRY+BnBfd/Nq2j78vTQiIrBOn
-oT42usKfbCKFiixbJKH2pVsreherp+eau4UirjoksIbftCIeCiWA90wfi0Dhoi3P
-ydwB2X0Eh9Jy1IN9Pu/sc5IrA7sMMHTRByomyxYcZmu1oOAoOTH7qmNBYSxrKA1Z
-DB5KI7w/WY+cLrwaUhxv
-=kY8R
------END PGP SIGNATURE-----
+--000000000000407f70059a6a33e5--
