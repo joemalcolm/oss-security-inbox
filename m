@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/18/2
-Message-ID: <2c6d449c-583b-f9c3-d35f-7477baf70cd6@brondsema.net>
-Date: Tue, 18 Jun 2019 10:56:50 -0400
-From: Dave Brondsema <dave@...ndsema.net>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-10085] Apache Allura XSS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/29/1
+Message-ID: <CAO8bUynPUPExH92au4cajrVW3xkHm3AjUnYzuHoS_fApMzc4bg@mail.gmail.com>
+Date: Sun, 29 Dec 2019 18:47:27 +0100
+From: Frank Morgner <frankmorgner@...il.com>
+To: OpenSC Development <opensc-devel@...ts.sourceforge.net>,  opensc-announce@...ts.sourceforge.net
+Cc: oss-security@...ts.openwall.com
+Subject: OpenSC 0.20.0 released
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-10085 Apache Allura XSS vulnerability in ticket user dropdown selector
+Hi all!
 
-Severity: Important
-Versions Affected: 1.10.0 and earlier
+I'm happy to finally announce the new release 0.20.0 of OpenSC. You can
+read a full summary of the changes and get the release binaries on GitHub
+<https://github.com/OpenSC/OpenSC/releases/tag/0.20.0>.
 
-Description:
-A vulnerability exists for stored XSS on the user dropdown selector when
-creating or editing tickets.  The XSS executes when a user engages with that
-dropdown on that page.
+We've extended our continuous testing by fuzzing the code with OSS-Fuzz
+<https://google.github.io/oss-fuzz>. It is running billions of tests each
+weak and has found around 100 unique crashes, most notable the security
+issues tracked as CVE-2019-6502, CVE-2019-15946, CVE-2019-15945,
+CVE-2019-19480, CVE-2019-19481 and CVE-2019-19479. Getting our hands on all
+the problems reported by the fuzzing was very challenging. Special thanks
+to Jakub Jelen, who spend many hours on analyzing and fixing many of the
+issues.
 
-Mitigation:
-Users of Allura should upgrade to Allura 1.11.0 immediately.
+Regards,
+Frank Morgner.
 
-Credit:
-This issue was discovered by Bob "Wombat" Hogg
