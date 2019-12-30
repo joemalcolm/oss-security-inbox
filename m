@@ -1,97 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/20/4
-Message-ID: <CANuUHoGe6x5ntTBMMX0rLDFWbFeMd3FXGKJtrK5NjF=t7QV-0Q@mail.gmail.com>
-Date: Wed, 20 Nov 2019 12:14:50 -0500
-From: Aditya Sirish Arunkumar Yelgundhalli <asy278@....edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/30/1
+Message-ID: <CACOzrT0QVJ4W+12XJemBttKNetG4qH+1aUyj51iSC4epw8vKyA@mail.gmail.com>
+Date: Mon, 30 Dec 2019 08:11:44 -0500
+From: Erik Hatcher <erik.hatcher@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Mitigating malicious packages in gnu/linux
+Subject: [CVE-2019-17558] Apache Solr RCE through VelocityResponseWriter
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+[CVE-2019-17558] Apache Solr RCE through VelocityResponseWriter
 
-My name is Aditya, and I represent the NYU Secure Systems Lab, where we
-actively research and develop solutions for the kind of problems discussed
-in this thread.
+Severity: High
 
-In particular, we believe that a combination of The Update Framework (TUF)
-and in-toto will help to address the problem of malicious packages. TUF is
-the technology that ensures that packages have not been tampered between
-the repository and end-users, whereas in-toto is the technology that
-ensures that packages have been built correctly by the CI/CD using source
-code signed by developers, securing the software supply chain end to end. A
-critical property of both technologies is that they are fundamentally
-designed to be resilient against a compromise of some signing keys in the
-system. By combining both TUF and in-toto [X], it is possible for a Linux
-distribution to guarantee that packages have not been tampered with
-anywhere between developers and end-users, despite being built and
-distributed by machines.
+Vendor: The Apache Software Foundation
 
-TUF is the de-facto standard for signing container images, used by Docker,
-IBM, and Microsoft. It is also being used by Google to update everything on
-their next-gen Fuchsia OS. A version of TUF called Uptane has been
-standardized for use by North American ground vehicles [Y]. in-toto is
-being used to verify reproducible builds for Debian packages.
+Versions Affected: 5.0.0 to 8.3.1
 
-We would be happy to help your community integrate both technologies, if so
-desired. Let us know if you have questions!
+Description:
 
-Thanks,
+The affected versions are vulnerable to a Remote Code Execution through the
+VelocityResponseWriter.  A Velocity template can be provided through
+Velocity (.vm) templates in a configset `velocity/` directory or as a
+parameter.  A user defined configset could contain renderable, potentially
+malicious, templates. Parameter provided templates are disabled by default,
+but can be enabled by setting `params.resource.loader.enabled` by defining
+a response writer with that setting set to `true`.  Defining a response
+writer requires configuration API access.
 
-Aditya
+Solr 8.4 removed the params resource loader entirely, and only enables the
+configset-provided template rendering when the configset is `trusted` (has
+been uploaded by an authenticated user).
 
-[X]
-https://www.datadoghq.com/blog/engineering/secure-publication-of-datadog-agent-integrations-with-tuf-and-in-toto/
-[Y]
-https://uptane.github.io/papers/ieee-isto-6100.1.0.0.uptane-standard.html
+Mitigation: Ensure your network settings are configured so that only
+trusted traffic
 
-On Wed, Nov 20, 2019 at 7:45 AM Solar Designer <solar@...nwall.com> wrote:
+communicates with Solr, especially to the configuration APIs.
 
-> On Tue, Nov 19, 2019 at 01:33:48PM +0200, Georgi Guninski wrote:
-> > As end user and contributor of gnu/linux, I am concerned about malicious
-> > packages (either hostile developers or hacked developers or another
-> reason)
-> > and have two questions:
-> >
-> > * What do linux vendors to avoid malicious packages?
->
-> Back when Openwall GNU/*/Linux was being actively developed, I used to
-> review each contributor's changes before making them public.  I also
-> (re-)verified authenticity of third-party source tarballs instead of
-> blindly trusting whatever the contributor could have uploaded to us.
-> (I'd do the same now, but without active development there's simply
-> nothing to review lately.)
->
-> Of course, this approach doesn't scale as-is (with just one person to
-> review and publish everything) to larger distros, but some kind of peer
-> review can and should be present.
->
-> > * As end user what can I do to mitigate malicious packages?
->
-> Try to install only what's needed, or not a lot more than what's needed.
-> (Can't be done perfectly with larger distros and their dependency hell.)
->
-> Contrary to traditional best practices, update only what and when needs
-> to be updated.  (Of course, you take responsibility to watch for any
-> relevant security updates, or accept the risk if you neglect to do that.
-> You also miss silent security fixes, but on the other hand you similarly
-> miss newly introduced vulnerabilities.)
->
-> Use a long-term support distro, preferably starting half-way into its
-> lifetime when updates are already infrequent.  (Similar risk of missing
-> silent security fixes in new upstream versions, but also avoiding new
-> vulnerabilities.)
->
-> Setup packet filters with blocking and logging of unexpected outbound
-> packets, including to console so that you'd notice.
->
-> Setup custom anomaly detection and actually watch it - e.g., for new
-> programs running that haven't ever run before, etc.
->
-> Use multiple pseudo-user accounts (doesn't protect against issues in
-> packages' pre/post-install scripts, etc.), containers, VMs - but even
-> then you have the risk of getting the same malicious package in multiple
-> VMs, which e.g. on Qubes OS could happen through updating a template VM.
->
-> Alexander
->
+Credits: Github user `s00py`
+
+References:
+
+  * https://cwiki.apache.org/confluence/display/solr/SolrSecurity
+
+  * https://issues.apache.org/jira/browse/SOLR-13971
+
+  * https://issues.apache.org/jira/browse/SOLR-14025
 
