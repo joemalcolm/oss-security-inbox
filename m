@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/01/3
-Message-ID: <nycvar.YSQ.7.77.849.2006011752180.62159@xnncv>
-Date: Mon, 1 Jun 2020 17:54:06 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Alexander Bulekov <alxndr@...edu>
-Subject: CVE-2020-13659 QEMU: exec: address_space_map returns NULL without setting length to zero may lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/08/2
+Message-ID: <CAGSZ4d4B8qc1ppMhJefgatohZGUi4AriEPtSijBHUO3u2daKNg@mail.gmail.com>
+Date: Wed, 8 Jan 2020 06:49:31 +0100
+From: mibo <mibo@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2020-1925: Possible SSRF in AsyncResponseWrapperImpl
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+CVE-2020-1925: Possible SSRF in AsyncResponseWrapperImpl
 
-A NULL pointer dereference issue was found in the MegaRAID SAS 8708EM2 
-emulator of the QEMU. This issue occurs because the address_space_map() API 
-while mapping physical memory into host's virtual address space may return 
-NULL, without setting the length parameter to zero(0). A guest user/process 
-may use this flaw to crash the QEMU process on the host resulting in DoS 
-scenario.
+Severity: Important
+Vendor: The Apache Software Foundation
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-05/msg07313.html
+Versions Affected:
+Olingo 4.0.0 to 4.7.0
+The OData v2 versions of Olingo 2.x are not affected
 
-Reference:
-----------
-   -> https://bugs.launchpad.net/qemu/+bug/1878259
+Description:
+The AsyncRequestWrapperImpl class reads a URL from the Location
+header, and then sends a GET or DELETE request to this URL. It may
+allow to implement a SSRF attack. If an attacker tricks a client to
+connect to a malicious server, the server can make the client call any
+URL including internal resources which are not directly accessible by
+the attacker.
 
+Mitigation:
+4.x.x users should upgrade to 4.7.1
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+Credit:
+This issue was discovered by Artem Smotrakov of SAP SE.
 
+Links:
+https://issues.apache.org/jira/browse/OLINGO-1416
