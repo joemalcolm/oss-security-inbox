@@ -1,65 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/02/2
-Message-ID: <20200202151030.GO23230@ZenIV.linux.org.uk>
-Date: Sun, 2 Feb 2020 15:10:30 +0000
-From: Al Viro <viro@...iv.linux.org.uk>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Salvatore Mesoraca <s.mesoraca16@...il.com>, Kees Cook <keescook@...omium.org>, Linus Torvalds <torvalds@...ux-foundation.org>, Dan Carpenter <dan.carpenter@...cle.com>, Andrew Morton <akpm@...ux-foundation.org>
-Subject: Re: Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/08/1
+Message-ID: <alpine.DEB.2.20.2001080744190.29816@tvnag.unkk.fr>
+Date: Wed, 8 Jan 2020 07:46:22 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: SMB access smuggling via FILE URL on Windows (CVE-2019-15601)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 02, 2020 at 01:22:11PM +0100, Solar Designer wrote:
+SMB access smuggling via FILE URL on Windows
+============================================
 
-> If I understand correctly (but I'm not confident!), this time it's just
-> a crash.  I am not going to request another CVE ID because the security
-> impact is unclear to me (perhaps an Oops with some resources held?)
+Project curl Security Advisory, January 8th 2020 -
+[Permalink](https://curl.haxx.se/docs/CVE-2019-15601.html)
 
-Well, it won't be dereferencing anything freed - if we are in RCU mode,
-we have observed (with sufficient barriers) an earlier value of ->d_inode
-of the same dentry after rcu_read_lock(), and freeing of inodes that
-ever had been anyone's ->d_inode is guaranteed to be RCU-delayed.  So
-we can see NULL there, but any non-NULL will be a yet-to-be-freed
-struct inode.
+VULNERABILITY
+-------------
 
-IOW, we can hit NULL pointer derefs there (with small offsets) and the
-values we try to fetch are not pointers themselves.  We can't hit
-iomem or anything of that sort; if the attacker has managed to mmap
-something at virtual address 0, they can get garbage into dir_uid and
-dir_mode, but that'll only get may_create_in_sticky() produce a wrong
-value and since they'd been able to rmdir the parent, they controlled
-what may_create_in_sticky() would've produced anyway.
+libcurl can be told to load a file from a `FILE://` URL. It will then load the
+file from the path specified in the URL from the local file system.
 
-As for the resources held...  Not in open(2) case (we are not holding
-any locks at that point); some driver calling filp_open() with some
-locks held is theoretically possible, but I doubt that it's a viable
-attack.  And if attacker can play silly buggers with e.g. directory
-a driver loads firmware from, we have a much worse problem.  Triggering
-that in coredump... not sure; you'll probably get some stuck threads,
-can't tell for certain how much would be possible to get pinned down
-that way.
+If you craft the given path so that it starts with two slashes (or
+backslashes) followed by a host name, Windows systems will automatically treat
+that as a request to access the host name using SMB instead of reading a local
+file with that name. This is not expected nor documented libcurl behavior.
 
-> The kernel uses many complicated conventions these days (for performance
-> reasons), up to the point where it's difficult even for the most active
-> upstream developers to make bug-free changes and to review proposed
-> changes.  A lot of context needs to be considered and a lot of potential
-> pitfalls kept in mind.
+Applications allowing users to provide URLs or parts of URLs could be
+vulnerable to this flaw. Both the curl tool and library.
 
-do_last()/lookup_open()/atomic_open() is the single worst place in fs/namei.c
-in terms of complexity, and one of the worst places anywhere in VFS.  It
-needs to be cleaned up; FWIW, the tentative cleanups I have in the local
-tree (hadn't published that branch yet) get it somewhat saner.  Incidentally,
-do_last() in there did get those fetches right.  Not a deliberate fix -
-it's just that 'dir' got buried in open_last_lookups(), so there was no
-temptation to try and use that pathway to the fields we want to read.
+Example URL exploiting this: `file://localhost//hostname/home/secret.txt`.
 
-Still not the final variant - I want to take may_open()/vfs_open()/ima_file_check()
-out of scope of mnt_want_write()/mnt_drop_write() pair, provided that I can
-prove correctness of such massage; got sidetracked by other stuff last
-few days...
- 
-> Thanks to @grsecurity for at-mentioning me on the tweet pointing to the
-> above commit.  I was otherwise out of the loop this time.  That's fine,
-> but since I did bring the previous set of issues in here, I felt I also
-> needed to post this follow-up.
+We are not aware of any exploit of this flaw.
 
-My apologies; should've Cc'd you on that one.
+INFO
+----
+
+This bug only exists when libcurl runs on a Microsoft Windows operating
+system.
+
+This bug exists in the first code import we have, from 1999.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2019-15601 to this issue.
+
+CWE-20: Improper Input Validation
+
+Severity: 3.0 (Low)
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: all versions to and including 7.67.0
+- Not affected versions: libcurl >= 7.68.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2019-15601](https://github.com/curl/curl/commit/1b71bc532bde8621fd3260843f8197182a467ff2)
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.68.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - do not use `FILE://` URLs
+
+TIMELINE
+--------
+
+The issue was reported to the curl project on October 31, 2019. The initial
+fix was done, verified and communicated with the reporter on November 7, 2019.
+
+This advisory was posted on January 8th 2020.
+
+CREDITS
+-------
+
+Reported by Fernando Muñoz. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se | Get the best commercial curl support there is - from me
+                   | Private help, bug fixes, support, ports, new features
+                   | https://www.wolfssl.com/contact/
