@@ -1,86 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/06/5
-Message-ID: <20200206172457.5b138fd5@milkyway.galaxy>
-Date: Thu, 6 Feb 2020 17:24:57 +0100
-From: Amadeusz Sławiński <amade@...blr.net>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: GNU screen "out of bounds access when setting w_xtermosc after OSC 49"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/12/1
+Message-ID: <20200112174726.GA8750@openwall.com>
+Date: Sun, 12 Jan 2020 18:47:26 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Kees Cook <kees@...ntu.com>
+Cc: oss-security@...ts.openwall.com, Jorge Lucangeli Obes <jorgelo@...gle.com>
+Subject: Re: linux-distros membership adjustment/vouching
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
+On Fri, Jan 10, 2020 at 12:52:41PM -0800, Kees Cook wrote:
+> I've been a member of linux-distros for a long while, and my hat has
+> slowly changed over that time. I'm subscribed there (and here) as
+> kees@...ntu.com.  When I my responsibilities shifted from the Ubuntu
+> Security Team to the Chrome OS Security Team, I just kept the email
+> address (since it's a community address and I'm still part of the Ubuntu
+> community).
 > 
-> The fix commit is:
+> However, as my responsibilities have shifted, I'm much less involved
+> with the Chrome OS Security Team, and it was recently pointed out that
+> no one else from the Chrome OS Security Team is (to our knowledge)
+> a member right now.
 > 
-> ---
-> commit 68386dfb1fa33471372a8cd2e74686758a2f527b
-> Author: Amadeusz Slawinski <amade@...blr.net>
-> Date:   Thu Jan 30 17:56:27 2020 +0100
+> So, attempting to solve things in a backwards order, I'd like to first
+> vouch for a Chrome OS Security Team member who is already on oss-security,
+> with the goal of having them added to the linux-distros list:
 > 
->     Fix out of bounds access when setting w_xtermosc after OSC 49
->     
->     echo -e "\e]49\e;                                    \n\ec"
->     crashes screen.
->     
->     This happens because 49 is divided by 10 and used as table index
->     resulting in access to w_xtermosc[4], which is out of bounds with table
->     itself being size 4. Increase size of table by 1 to 5, which is enough
->     for all current uses.
->     
->     As this overwrites memory based on user input it is potential security
->     issue.
->     
->     Reported-by: pippin@...p.org
->     Signed-off-by: Amadeusz Slawinski <amade@...blr.net>
-> ---
-> 
-> This is followed by another related commit:
-> 
-> ---
-> commit 0dd53533e20d2948351a99ec5336fbc9b82b226a
-> Author: Amadeusz Slawinski <amade@...blr.net>
-> Date:   Wed Feb 5 21:05:28 2020 +0100
-> 
->     Increase permitted length of OSC
->     
->     hyperlink feature used by some terminals requires lots of characters
->     https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#length-limits
->     mentions around 2083 characters, set it to a bit more.
->     
->     Bug: 57718
->     
->     Signed-off-by: Amadeusz Slawinski <amade@...blr.net>
-> ---
-> 
-> Combined, these two commits change:
-> 
->   char   w_xtermosc[4][MAXSTR]; /* special xterm/rxvt escapes */
-> 
-> (where MAXSTR is 768) to:
-> 
->   char   w_xtermosc[5][2560];   /* special xterm/rxvt escapes */
-> 
+>     Jorge Lucangeli Obes <jorgelo@...gle.com>
 
-The report which resulted in second commit just happened to be reported
-at similar time and is not related to the issue at hand apart from same
-location in source code.
+Given the above, I'd be happy to subscribe Jorge for Chrome OS.  I just
+need Jorge's PGP key.  I also suggest using an e-mail address not on
+Google's MX'es, because those reject messages sent from domains with
+strict DMARC policy (most notably, when another Googler posts).
 
-> These are as seen on the screen-v4 branch.  On that branch, and thus in
-> all screen releases so far, the bug appears to be exposed only when
-> building with the "--enable-rxvt_osc" option.  Builds and packages made
-> without that option appear to be safe.  Amadeusz, can you confirm this?
+Normally such subscription changes for an already subscribed distro are
+handled off-list.  However, what you bring up below deserves being
+discussed on oss-security:
 
-Yes builds without this option should be safe, however do note that
-as far as I know most distributions do enable it (I checked Debian,
-Arch Linux, Fedora and Gentoo).
+> Then I'd like to figure out what to do with my own membership. I'm
+> still associated with Ubuntu, Chrome OS, and Android but I don't have
+> "official" responsibilities as a representative of their respective
+> security teams. I am, however, an upstream Linux kernel security contact
+> (but that doesn't qualify as a "Unix-like operating system distro", from
+> item "1" in the membership criteria[1]). I am still involved in fixing,
+> notifying, negotiating, delegating, etc, in these various distros. Should
+> I stay on linux-distros? I would prefer to (it makes that work simpler),
+> but since there isn't any "criteria for continuing membership" on the
+> Wiki, I'm not entirely sure what the right course of action should be.
 
-> 
-> On master branch, the functionality is always enabled (and the option is
-> dropped), thus (not too ancient) builds from that branch are vulnerable
-> (until the above fixes, which were also made to that branch).
+I think it'd be most consistent with our criteria so far if (at least)
+one of those distros' security teams does state that you'd represent
+them.  Without that, you staying on linux-distros would be weird and
+inconsistent with requirements we set for others.
 
-Yes, however do note that all v4 releases are done from screen-v4 branch.
+> (And if I stay, perhaps it would be more accurate to use kees@...nel.org?)
 
-Amadeusz
+It'd be up to you to choose an e-mail address that's convenient for
+you.  Messages are encrypted anyway, so this choice sort of does not
+matter for security.  In practice, though, it does matter a little bit:
+if you choose an e-mail address in a specific distro's domain name, then
+if you ever leave their team and they disable that e-mail account you
+wouldn't be getting the messages anymore (and they wouldn't be able to
+read messages intended for you as well, due to the encryption to your
+key), even if they forget to promptly ask for your address to be removed
+from the list.  Despite of this minor security advantage, I don't insist
+on use of such e-mail addresses so far, as I realize it's often far more
+convenient to use an external e-mail address.
 
+As to kernel.org, it isn't particularly relevant here since the Linux
+kernel is not a Linux distro.  It's just an address you can use, just
+like any other address.
+
+Alexander
