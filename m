@@ -1,34 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/17/5
-Message-ID: <20201117170655.GA26512@redhat.com>
-Date: Tue, 17 Nov 2020 17:06:55 +0000
-From: Joe Orton <jorton@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/14/1
+Message-ID: <CALYgK0H9P-omi=V29--MQH5obuH8xGw4r0otPzsras-c+fmQaw@mail.gmail.com>
+Date: Mon, 13 Jan 2020 14:08:01 -0600
+From: Randall Hauch <rhauch@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-12412: libapreq2 null pointer dereference
+Subject: CVE-2019-12399: Apache Kafka Connect REST API may expose plaintext secrets in tasks endpoint
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-12412: libapreq2 null pointer dereference
+CVE-2019-12399: Apache Kafka Connect REST API exposes plaintext secrets in
+tasks endpoint
 
-Severity: important
+Severity: Medium
 
 Vendor: The Apache Software Foundation
 
 Versions Affected:
-libapreq2 2.07 to 2.13
+
+Apache Kafka 2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.2.0, 2.2.1, 2.3.0
 
 Description:
-In libapreq2 versions 2.07 through 2.13 inclusive, a flaw in the 
-multipart parser can deference a null pointer leading to a process 
-crash.  A remote attacker could send a request causing a process crash 
-which could lead to a denial of service attack.
+
+When Connect workers in Apache Kafka 2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.2.0,
+2.2.1, or 2.3.0 are configured with one or more config providers, and a
+connector is created/updated on that Connect cluster to use an externalized
+secret variable in a substring of a connector configuration property value
+(the externalized secret variable is not the whole configuration property
+value), then any client can issue a request to the same Connect cluster to
+obtain the connector's task configurations and the response will contain
+the plaintext secret rather than the externalized secrets variable.
+
 
 Mitigation:
-disable the libapreq2 multipart parser
 
-Credit:
-Thanks to Max Kellerman and Salvatore Bonaccorso for finding and
-reporting this issue.
+Apache Kafka Connect users should upgrade to one of the following versions
+where this vulnerability has been fixed:
+- 2.0.2 or higher
+- 2.1.2 or higher
+- 2.2.2 or higher
+- 2.3.1 or higher
 
-References:
-https://bugs.debian.org/939937
+Acknowledgements:
+
+This issue was first reported by Oleksandr Diachenko.
+
+
+Regards,
+
+Randall
 
