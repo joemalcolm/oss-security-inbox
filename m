@@ -1,26 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/12/1
-Message-ID: <394728b8-b300-9b22-4a74-bff02f447ca8@orlitzky.com>
-Date: Wed, 11 Nov 2020 20:37:05 -0500
-From: Michael Orlitzky <michael@...itzky.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Dash executes code when noexec ("-n") is specified
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/14/3
+Message-Id: <E1irN46-0005Hs-GO@xenbits.xenproject.org>
+Date: Tue, 14 Jan 2020 14:21:06 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 312 v1 - arm: a CPU may speculate past the ERET instruction
 Content-Type: text/plain; charset=utf-8
 
-On 11/11/20 9:12 AM, Michael Orlitzky wrote:
-> On 11/11/20 4:40 AM, Jakub Wilk wrote:
->> * Eric Pruitt <eric.pruitt@...il.com>, 2020-11-10, 20:48:
->>>      $ dash -n -c 'echo this should not be executed'
->>>      this should not be executed
->>
->> This was reported in 2017:
->> https://bugs.debian.org/858288
->>
-> 
-> I forwarded this to Herbert, who maintains Dash and supplied the patch
-> on the Debian bug.
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-And if I was literate, I might have seen this the first time around:
+                    Xen Security Advisory XSA-312
 
-https://git.kernel.org/pub/scm/utils/dash/dash.git/commit/?id=29d6f2148f10213de4e904d515e792d2cf8c968e
+          arm: a CPU may speculate past the ERET instruction
+
+ISSUE DESCRIPTION
+=================
+
+Some CPUs can speculate past an ERET instruction and potentially perform
+speculative accesses to memory before processing the exception return.
+Since the register state is often controlled by lower privilege level
+(i.e guest kernel/userspace) at the point of the ERET, this could
+potentially be used as part of a side-channel attack.
+
+IMPACT
+======
+
+An attacker, which could include a malicious untrusted user process on
+a trusted guest, or an untrusted guest, may be able to use it as part of
+side-channel attack to read host memory.
+
+VULNERABLE SYSTEMS
+==================
+
+System running all version of Xen are affected.
+
+Whether an individual Arm-based CPU is vulnerable depends on its
+speculation properties.  Consult your CPU vendor.
+
+x86 systems are not vulnerable.
+
+MITIGATION
+==========
+
+There is no mitigation available.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This was reported publicly, as affecting other Open Source projects,
+before the Xen Project Security Team was made aware.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa312.patch           xen-unstable, Xen 4.13 - 4.12
+xsa312-4.11.patch      Xen 4.11 - 4.10
+xsa312-4.9.patch       Xen 4.9
+
+$ sha256sum xsa312*
+112c9d77f964174db5709c758626a2bd5fec9bfdacc89fbc96f1ddd44aca6bbf  xsa312.meta
+9b2078d448e4815c9ddc6554bf869d64412dc787b1b94830a24e47df6a9f30e7  xsa312.patch
+29b95d6ea0295e124c3cfd5b1611ae341bb195d1c441ee69976e2f74cde652a8  xsa312-4.9.patch
+8d64b3039c570f4b5c82abbbcf2714ec3b60db55fe3e1b3bb838df7dfaf627e9  xsa312-4.11.patch
+$
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl4dzjAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZOx4H/2nt+377yBhbqNqUO2nCbqUWBkCB/OHQQ3uyjytp
+PEDW9epevCJHOvQ3w24gh9SplWupHvrzS2PbqCWwEMPZXfkYB6Ye2kr7hbJHMOxB
+bP6qm71plWG/RGmKSTVeVbOqAtiwdXkIvE8PIETGSuQ3Ip8exIkWvXnkY3v7KQne
+WIg+vcadAqvv9oZj8UAv+V6oihUr1MyOMaddsW0QczF1yhs7EErpSBrLT1G2+nm/
+MxY8nE40rAzZBs+G1puODC8uK/LSmGlvms+200FOPHnyyIKmznmAtGLE7pziPj7F
+Qdy4GOWLAE1oQcrglmdk6SOCK7CRJSSZ0RminYNNPSX6EqM=
+=FnmX
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa312.meta" of type "application/octet-stream" (1566 bytes)
+
+Download attachment "xsa312.patch" of type "application/octet-stream" (2797 bytes)
+
+Download attachment "xsa312-4.9.patch" of type "application/octet-stream" (2748 bytes)
+
+Download attachment "xsa312-4.11.patch" of type "application/octet-stream" (2859 bytes)
