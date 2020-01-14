@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/24/1
-Message-ID: <CAKx+4-rQYK+Tkzszw6S736L7PVH0nudX5Sd5Pu_V--qmaRWxEg@mail.gmail.com>
-Date: Mon, 24 Aug 2020 15:05:28 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-20794 kernel: task processes not being properly ended could lead to resource exhaustion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/14/2
+Message-ID: <DCAAED18-E405-402F-B422-171BE104BC23@getmailspring.com>
+Date: Tue, 14 Jan 2020 11:30:00 +0000
+From: Ash Berlin-Taylor <ash@...che.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "users@...flow.apache.org" <users@...flow.apache.org>,  "dev@...flow.apache.org" <dev@...flow.apache.org>
+Cc: yvreddy <yvreddyln@...il.com>, Apache Security Team <security@...che.org>
+Subject: [CVE-2019-12398] Apache Airflow Stored XSS vulnerability in classic UI
 Content-Type: text/plain; charset=utf-8
 
-Hello Team,
+Versions Affected:
+<= 1.10.4.
 
-Red Hat has identified a vulnerability with the following details.
+Description:
+In Apache Airflow before 1.10.5 when running with the "classic" UI, a malicious admin user could edit the state of objects in the Airflow metadata database to execute arbitrary javascript on certain page views. The new "RBAC" UI is unaffected.
 
-A flaw was found when a user with PID namespace mounting a FUSE filesystem,
-If the userspace component is terminated (pid 1), this results into a
-denial of service (DoS) problem. This internally makes the fuse requests go
-into Uninterruptible state until the system is rebooted.
+Credit:
+This issue was discovered by "Venkat"/yvreddy
 
+(Sorry for the delay in reporting this in a timely manner. It was fixed in 1.10.5 which was released 2019-09-04)
+Thanks,
+Ash,
+on behalf of Apache Airflow PMC
 
-'CVE-2019-20794' was assigned via MITRE.
-
-Reference:
-
-https://github.com/sargun/fuse-example
-
-
-Thank you
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
-
-secalert@...hat.com for urgent response
 
