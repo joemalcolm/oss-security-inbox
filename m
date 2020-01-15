@@ -1,52 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/13/6
-Message-ID: <20201013171034.GA68820@nxnw.org>
-Date: Tue, 13 Oct 2020 10:10:34 -0700
-From: Steve Beattie <steve.beattie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/15/1
+Message-Id: <CECBBC6C-2C36-45A1-8560-9726EA991FC6@beckweb.net>
+Date: Wed, 15 Jan 2020 16:09:07 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-16120 - incorrect unprivileged overlayfs permission checking
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-CVE-2020-16120 - incorrect unprivileged overlayfs permission checking
+The following releases contain fixes for security vulnerabilities:
 
-Giuseppe Scrivano discovered that overlayfs did not properly perform
-permission checking when copying up files in an overlayfs, and can be
-exploited from within a user namespace, if, for example, unprivileged
-user namespaces are allowed.
+* Amazon EC2 Plugin 1.48
+* Health Advisor by CloudBees Plugin 3.0.1
+* Redgate SQL Change Automation Plugin 2.0.5
+* Robot Framework Plugin 2.0.1
 
-An attacker can abuse this to get read access to files on the system
-that they would not normally be permitted to access.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-This likely only has an impact on Ubuntu kernels, where unprivileged
-user namespaces are enabled by default.
+* Gitlab Hook Plugin
+* Sounds Plugin
 
-The following upstream commits address the issue:
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2020-01-15/
 
-  48bd024b8a40d73ad6b086de2615738da0c7004f ("ovl: switch to mounter creds in readdir")
-  56230d956739b9cb1cbde439d76227d77979a04d ("ovl: verify permissions in ovl_path_open()")
-  05acefb4872dae89e772729efb194af754c877e8 ("ovl: check permission to open real file")
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-The following commits also may be desired or necessary:
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-  130fdbc3d1f9966dd4230709c30f3768bccd3065 ("ovl: pass correct flags for opening real directory")
-  292f902a40c11f043a5ca1305a114da0e523eaa3 ("ovl: call secutiry hook in ovl_real_ioctl()")
+---
 
-Mitigation on systems where unprivileged user namespaces are enabled
-but not needed is to set the kernel.unprivileged_userns_clone sysctl
-to 0. e.g.:
+SECURITY-1004 / CVE-2020-2090 (CSRF) & CVE-2020-2091 (missing permission check)
+Amazon EC2 Plugin 1.47 and earlier does not perform permission checks in
+methods performing form validation. This allows users with Overall/Read
+access to Jenkins to connect to an attacker-specified URL within the AWS
+region using attacker-specified credentials IDs obtained through another
+method.
 
-  $ sudo sysctl kernel.unprivileged_userns_clone=0
+NOTE: This vulnerability might also allow attackers to capture credentials
+stored in Jenkins. We have not been able to confirm that this is possible.
 
-and across reboots by adding a file in /etc/sysctl.d/ that contains:
+Additionally, these form validation methods do not require POST requests,
+resulting in a CSRF vulnerability.
 
-  kernel.unprivileged_userns_clone=0
 
-Thanks.
+SECURITY-1698 / CVE-2020-2092
+Robot Framework Plugin 2.0.0 and earlier does not configure the XML parser
+to prevent XML external entity (XXE) attacks.
 
--- 
-Steve Beattie
-<sbeattie@...ntu.com>
+This allows a user able to control the input files for the 'Publish Robot
+Framework' post-build step to have Jenkins parse a crafted file that uses
+external entities for extraction of secrets from the Jenkins master,
+server-side request forgery, or denial-of-service attacks.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+
+SECURITY-1708 / CVE-2020-2093 (CSRF) & CVE-2020-2094 (missing permission check)
+Health Advisor by CloudBees Plugin 3.0 and earlier does not perform
+permission checks in methods performing form validation. This allows users
+with Overall/Read access to send an email with fixed content to an
+attacker-specified recipient.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1696 / CVE-2020-2095
+Redgate SQL Change Automation Plugin 2.0.4 and earlier stores a NuGet API
+key unencrypted in job `config.xml` files as part of its configuration.
+This credential could be viewed by users with Extended Read permission or
+access to the master file system.
+
+This is due to an incomplete fix of
+link:/security/advisory/2019-12-17/#SECURITY-1598[SECURITY-1598].
+
+
+SECURITY-1683 / CVE-2020-2096
+Gitlab Hook Plugin 1.4.2 and earlier does not escape project names in the
+`build_now` endpoint. This results in a reflected cross-site scripting
+vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-814 / CVE-2020-2097 (permission check) & CVE-2020-2098 (CSRF)
+Sounds Plugin 0.5 and earlier does not perform permission checks in URLs
+performing form validation. This allows attackers with Overall/Read access
+to execute arbitrary OS commands as the OS user account running Jenkins.
+
+Additionally, these form validation URLs do not require POST requests,
+resulting in a CSRF vulnerability.
+
+As of publication of this advisory, there is no fix.
+
