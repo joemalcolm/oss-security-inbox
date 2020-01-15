@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/12/2
-Message-ID: <CAB8XdGAuC-vNnmnx+=gHe7=s-w2R3113+=qfAWS+UBOrM5Fz_w@mail.gmail.com>
-Date: Thu, 12 Nov 2020 12:37:40 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/15/2
+Message-ID: <CAE7Uba-_3at3DD=nyQydDbArg7Bjdz_9uUn-izyW0m41BKEvig@mail.gmail.com>
+Date: Wed, 15 Jan 2020 17:30:50 +0100
+From: Ismaël Mejía <iemejia@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-13954: Apache CXF Reflected XSS in the services listing page via the styleSheetPath
+Subject: [CVE-2020-1929] Apache Beam MongoDB IO connector disables certificate trust verification
 Content-Type: text/plain; charset=utf-8
 
+CVE-2020-1929 Apache Beam MongoDB IO connector disables certificate trust
+verification
+
+Severity: Major
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+Apache Beam 2.10.0 to 2.16.0
+
 Description:
+The Apache Beam MongoDB connector in versions 2.10.0 to 2.16.0 has an
+option to
+disable SSL trust verification. However this configuration is not respected
+and
+the certificate verification disables trust verification in every case. This
+exclusion also gets registered globally which disables trust checking for
+any
+code running in the same JVM.
 
-By default, Apache CXF creates a /services page containing a listing of the
-available endpoint names and addresses. This webpage is vulnerable to a
-reflected Cross-Site Scripting (XSS) attack via the styleSheetPath, which
-allows a malicious actor to inject javascript into the web page.
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Upgrade to Apache Beam 2.17.0 or later
 
-This vulnerability affects all versions of Apache CXF prior to 3.4.1 and
-3.3.8.
-
-Please note that this is a separate issue to CVE-2019-17573.
-
-Workaround:
-
-Users of Apache CXF should update to either 3.3.8 or 3.4.1. Alternatively,
-it is possible to disable the service listing altogether by setting the
-"hide-service-list-page" servlet parameter to "true".
-
-Credit:
-
-Thanks to Ryan Lambeth for reporting this issue.
-
-References: http://cxf.apache.org/security-advisories.html
+Acknowledgements:
+This issue was reported (and fixed) by Colm Ó hÉigeartaigh.
 
