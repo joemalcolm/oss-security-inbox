@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1842" "Friday" "29" "January" "2016" "16:47:07" "+0100" "enki" "enki@fsck.pl" "<1528e110c5f.11ff2dddc43704.3865822946264713459@fsck.pl>" "48" "Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" "^Cc:" nil nil "1" "2016012915:47:07" "[oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" (number mark "        enki@fsck.pl Jan 29   48/1842  " thread-indent "\"Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes\"\n") "<CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>" ("<2413003.GtkKFizscD@chimera>" "<CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>" "<CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1642" "Thursday" "16" "January" "2020" "14:05:19" "+0000" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGDKLrUT5+TUT5c6Bsk2zr3ODLO1yYENMLGY5ctkgw_zPQ@mail.gmail.com>" "50" "[oss-security] [CVE-2019-12423] Apache CXF OpenId Connect JWK Keys service returns private/secret credentials if configured with a jwk keystore" nil nil nil "1" "2020011614:05:19" "[oss-security] [CVE-2019-12423] Apache CXF OpenId Connect JWK Keys service returns private/secret credentials if configured with a jwk keystore" (number mark "U       coheigea@apa Jan 16   50/1642  " thread-indent "\"[oss-security] [CVE-2019-12423] Apache CXF OpenId Connect JWK Keys service returns private/secret credentials if configured with a jwk keystore\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-12423] Apache CXF OpenId Connect JWK Keys service returns private/secret credentials if configured with a jwk keystore" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11600 invoked by uid 550); 29 Jan 2016 15:49:55 -0000
+Received: (qmail 11529 invoked by uid 550); 16 Jan 2020 14:17:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9775 invoked from network); 29 Jan 2016 15:47:33 -0000
-Message-ID: <1528e110c5f.11ff2dddc43704.3865822946264713459@fsck.pl>
-In-Reply-To: <CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>
-References: <2413003.GtkKFizscD@chimera> <CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com> <CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Priority: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
-X-Zoho-Virus-Status: 1
-Cc:  <oss-security@lists.openwall.com>,  <pool@lists.ntp.org>, 
-	 <linuxbrad@gmail.com>,  <team@security.debian.org>, 
-	"secalert" <secalert@redhat.com>
-Date: Fri, 29 Jan 2016 16:47:07 +0100
-From: enki <enki@fsck.pl>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6
- pools for scanning purposes
-To:  <oss-security@lists.openwall.com>
+Received: (qmail 7719 invoked from network); 16 Jan 2020 14:05:42 -0000
+X-Gm-Message-State: APjAAAWVuEXOK1maqG0J6tcdsl5CByC9C6LRJHXKMjhjYBOu9hMCkzll
+	I4DD0VfB5ysWrRvrgOa2TdVZb3U3AOG7QwAeXd4=
+X-Google-Smtp-Source: APXvYqw571ikBCwkPBdTdhdp2K2mJxlJeo8I1NvUurAC+AFt8uYRVG47h80p7b2vcMJJW/fFnHmdnFONMZ+mxy4QX/s=
+X-Received: by 2002:a6b:6c0f:: with SMTP id a15mr27642463ioh.13.1579183529866;
+ Thu, 16 Jan 2020 06:05:29 -0800 (PST)
+MIME-Version: 1.0
+From: Colm O hEigeartaigh <coheigea@apache.org>
+Date: Thu, 16 Jan 2020 14:05:19 +0000
+X-Gmail-Original-Message-ID: <CAB8XdGDKLrUT5+TUT5c6Bsk2zr3ODLO1yYENMLGY5ctkgw_zPQ@mail.gmail.com>
+Message-ID: <CAB8XdGDKLrUT5+TUT5c6Bsk2zr3ODLO1yYENMLGY5ctkgw_zPQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000555b62059c425135"
+Subject: [oss-security] [CVE-2019-12423] Apache CXF OpenId Connect JWK Keys service returns
+ private/secret credentials if configured with a jwk keystore
 
----- W=C5=82. Pt, 29 sty 2016 15:21:01 +0100 Hazel  napisa=C5=82(a) ----=20
->On 27 January 2016 at 14:43, Kurt Seifried <kseifried@redhat.com> wrote:=20
->> On Wed, Jan 27, 2016 at 4:24 AM, Luca BRUNO <lucab@debian.org> wrote:=20
->> > For oss-sec crowd: is there anything we can do to improve the situatio=
-n=20
->> > and avoid=20
->> > similar cases in the future? Should crowd-sourced and fundamental serv=
-ices=20
->> > like this=20
->> > be encouraged to move to a stronger WoT?=20
->>=20
->> [...]=20
->>=20
->> Sadly we can't really rely on the IoT device makers to fix this, they ha=
-ve=20
->> basically 0 incentive to prevent scanners from hitting their products=20
->> (they're already sold, to late for the customer to make an informed=20
->> decision).=20
->=20
->I hope you'll forgive me making a modest proposal here, but it seems=20
->to me that there might be an opportunity here for Linux distributions=20
->that are upstream of IoT vendors to modify their default configuration=20
->to address this.=20
->=20
->My somewhat off-the-cuff suggestion would be to...=20
->=20
->1. Add an *additional, secondary* IPv6 address to external interfaces that=
- is:=20
->-> a. generated in accordance with the IPv6 Privacy Extensions (i.e. RFC 4=
-941)=20
->-> b. firewalled by default against all traffic except NTP in either direc=
-tion=20
->=20
->2. Configure the NTP *client* to use this secondary address as the=20
->source for outgoing NTP traffic, instead of the default address?=20
->=20
->...thereby avoiding revealing the primary address of the host to=20
->would-be scanners?=20
->=20
+--000000000000555b62059c425135
+Content-Type: text/plain; charset="UTF-8"
 
-I'd go even further and use the IPv6 privacy-enhanced address for all outgo=
-ing connections, not only NTP. It's only a matter of time before someone se=
-ts up a debian mirror for example that logs source addresses and launches s=
-cans against them.
+CVE-2019-12423: Apache CXF OpenId Connect JWK Keys service returns
+private/secret credentials if configured with a jwk keystore
 
---=20
-enki@fsck.pl
+Severity: Moderate
 
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+
+This vulnerability affects all versions of Apache CXF prior to 3.3.5 and
+3.2.12.
+
+Description:
+
+Apache CXF ships with a OpenId Connect JWK Keys service, which allows a
+client
+to obtain the public keys in JWK format, which can then be used to verify
+the
+signature of tokens issued by the service.
+
+Typically, the service obtains the public key from a local keystore
+(JKS/PKCS12) by specifing the path of the keystore and the alias of the
+keystore entry. This case is not vulnerable.
+
+However it is also possible to obtain the keys from a JWK keystore file, by
+setting the configuration parameter "rs.security.keystore.type" to "jwk".
+For
+this case all keys are returned in this file "as is", including all private
+key and secret key credentials.
+
+This is an obvious security risk if the user has configured the signature
+keystore file with private or secret key credentials.
+
+- From CXF 3.3.5 and 3.2.12, it is mandatory to specify an alias
+corresponding
+to the id of the key in the JWK file, and only this key is returned. In
+addition, any private key information is omitted by default. "oct" keys,
+which
+contain secret keys, are not returned at all.
+
+Mitigation:
+
+Users of Apache CXF that user the OpenId Connect JWK keys service as part of
+their OpenId Connect service should update to either the 3.3.5 or 3.2.12
+releases.
+
+--000000000000555b62059c425135--
