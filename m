@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/06/2
-Message-ID: <nycvar.YSQ.7.76.2002061829020.84833@xnncv>
-Date: Thu, 6 Feb 2020 18:33:10 +0530 (IST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/16/2
+Message-ID: <nycvar.YSQ.7.76.2001161441560.169985@xnncv>
+Date: Thu, 16 Jan 2020 14:48:39 +0530 (IST)
 From: P J P <ppandit@...hat.com>
 To: oss security list <oss-security@...ts.openwall.com>
-cc: Laszlo Ersek <lersek@...hat.com>
-Subject: CVE-2020-8608 QEMU: Slirp: potential OOB access due to unsafe snprintf() usages
+cc: Vishnu Dev <vishnudevtj@...il.com>
+Subject: CVE-2020-7039 QEMU: slirp: OOB buffer access while emulating tcp protocols in tcp_emu()
 Content-Type: text/plain; charset=utf-8
 
    Hello,
 
-A out-of-bounds heap buffer access issue was found in the SLiRP networking 
+A heap buffer overflow issue(s) were found in the SLiRP networking 
 implementation of the QEMU emulator. It occurs in tcp_emu() routine while 
-emulating IRC and other protocols due to unsafe usage of snprintf(3) function.
+emulating IRC and other protocols.
 
 A user/process could use this flaw to crash the Qemu process on the host 
 resulting in DoS or potentially execute arbitrary code with privileges of the 
-QEMU process on the host.
+QEMU process.
 
-Upstream patch:
----------------
-   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/68ccb8021a838066f0951d4b2817eb6b6f10a843
-   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/68ccb8021a838066f0951d4b2817eb6b6f10a843
-   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/30648c03b27fb8d9611b723184216cd3174b6775
+Upstream patch(es):
+-------------------
+   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/2655fffed7a9e765bcb4701dd876e9dab975f289
+   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/ce131029d6d4a405cb7d3ac6716d03e58fb4a5d9
+   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/82ebe9c370a0e2970fb5695aa19aa5214a6a1c80
 
-This issue was reported by Laszlo Ersek(CC'd) and CVE assigned via -> 
-https://cveform.mitre.org/
+Heap overflow in emulating IRC commands (EMU_IRC) was found and reported by 
+Vishnu Dev (CC'd).
+
+'CVE-2020-7039' was assigned via -> https://cveform.mitre.org/
 
 Thank you.
 --
