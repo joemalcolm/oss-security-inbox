@@ -1,28 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/03/1
-Message-ID: <CAHmME9pxJZ8wYk0YEj0-78GOqwWgdZ8crvNE4usX7N-3KvGebw@mail.gmail.com>
-Date: Mon, 3 Aug 2020 16:41:37 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: security@...ntu.com, oss-security <oss-security@...ts.openwall.com>
-Subject: ansi escape sequence injection into ubuntu's add-apt-repository
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/16/3
+Message-ID: <CAB8XdGDKLrUT5+TUT5c6Bsk2zr3ODLO1yYENMLGY5ctkgw_zPQ@mail.gmail.com>
+Date: Thu, 16 Jan 2020 14:05:19 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2019-12423] Apache CXF OpenId Connect JWK Keys service returns private/secret credentials if configured with a jwk keystore
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2019-12423: Apache CXF OpenId Connect JWK Keys service returns
+private/secret credentials if configured with a jwk keystore
 
-I've found a rather low grade concern: I'm able to inject ANSI escape
-sequences into PPA descriptions on Launchpad, and then have them
-rendered by add-apt-repository *before* the user consents to actually
-adding that repository. There might be some sort of trust barrier
-issue with that. This could be used to clear the screen and imitate a
-fresh bash prompt, upload files, dump the current screen to a file, or
-other classic shenanigans, well chronicled in the archives of oss-sec.
+Severity: Moderate
 
-PoC time -- I'm using this "feature" for good at the moment to
-announce the deprecation in bold text of a PPA that I maintain:
-https://data.zx2c4.com/add-apt-repository-ansi-injection.png
+Vendor: The Apache Software Foundation
 
-The proper fix to this is likely to do sanitization on the
-add-apt-repository side.
+Versions Affected:
 
-Regards,
-Jason
+This vulnerability affects all versions of Apache CXF prior to 3.3.5 and
+3.2.12.
+
+Description:
+
+Apache CXF ships with a OpenId Connect JWK Keys service, which allows a
+client
+to obtain the public keys in JWK format, which can then be used to verify
+the
+signature of tokens issued by the service.
+
+Typically, the service obtains the public key from a local keystore
+(JKS/PKCS12) by specifing the path of the keystore and the alias of the
+keystore entry. This case is not vulnerable.
+
+However it is also possible to obtain the keys from a JWK keystore file, by
+setting the configuration parameter "rs.security.keystore.type" to "jwk".
+For
+this case all keys are returned in this file "as is", including all private
+key and secret key credentials.
+
+This is an obvious security risk if the user has configured the signature
+keystore file with private or secret key credentials.
+
+- From CXF 3.3.5 and 3.2.12, it is mandatory to specify an alias
+corresponding
+to the id of the key in the JWK file, and only this key is returned. In
+addition, any private key information is omitted by default. "oct" keys,
+which
+contain secret keys, are not returned at all.
+
+Mitigation:
+
+Users of Apache CXF that user the OpenId Connect JWK keys service as part of
+their OpenId Connect service should update to either the 3.3.5 or 3.2.12
+releases.
+
