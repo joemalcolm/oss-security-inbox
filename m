@@ -1,4 +1,9 @@
-Received: (qmail 18369 invoked by uid 550); 15 Jul 2025 20:40:23 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2915" "Thursday" "16" "January" "2020" "08:59:51" "+0000" "cert.cc@orange.com" "cert.cc@orange.com" "<27352_1579165193_5E202609_27352_311_28_c5afd0f2-094a-4138-8175-775ad698ec78@OPEXCNORM4F.corporate.adroot.infra.ftgroup>" "82" "[oss-security] [CVE-2019-17570] xmlrpc-common untrusted deserialization" nil nil nil "1" "2020011608:59:51" "[oss-security] [CVE-2019-17570] xmlrpc-common untrusted deserialization" (number mark "U       cert.cc@oran Jan 16   82/2915  " thread-indent "\"[oss-security] [CVE-2019-17570] xmlrpc-common untrusted deserialization\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-17570] xmlrpc-common untrusted deserialization" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11959 invoked by uid 550); 16 Jan 2020 09:06:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,109 +12,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18312 invoked from network); 15 Jul 2025 20:40:23 -0000
-Date: Tue, 15 Jul 2025 22:40:12 +0200
-From: Christian Brabandt <cb@256bit.org>
-To: oss-security@lists.openwall.com,
-	Yee Cheng Chin <ychin.macvim@gmail.com>,
-	"T.J. Townsend" <tj@mrsk.me>, Ken Takata <ktakata65536@gmail.com>,
-	Jiaqi Zhou <zeertzjq@outlook.com>,
-	Dominique Pelle <dominique.pelle@gmail.com>, mattn.jp@gmail.com,
-	sthen@openbsd.org, adamw@freebsd.org,
-	James McCoy <jamessan@jamessan.com>,
-	Yegappan Lakshmanan <yegappanl@gmail.com>,
-	Doug Kearns <dougkearns@gmail.com>, glepnir <glephunter@gmail.com>,
-	Hirohito Higashi <h.east.727@gmail.com>
-Message-ID: <aHa8rOZSxkihIukN@256bit.org>
+Received: (qmail 7821 invoked from network); 16 Jan 2020 09:00:04 -0000
+From: <cert.cc@orange.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: [CVE-2019-17570] xmlrpc-common untrusted deserialization
+Thread-Index: AdXMSZMAVefUsl+2T7u9Xg52tlppTg==
+Date: Thu, 16 Jan 2020 08:59:51 +0000
+Message-ID: <27352_1579165193_5E202609_27352_311_28_c5afd0f2-094a-4138-8175-775ad698ec78@OPEXCNORM4F.corporate.adroot.infra.ftgroup>
+Accept-Language: en-GB, fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.114.50.247]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security]: path traversal issue with zip.vim and special
- crafted zip archives in Vim < v9.1.1551
+Subject: [oss-security] [CVE-2019-17570] xmlrpc-common untrusted deserialization
 
-path traversal issue with zip.vim and special crafted zip archives in Vim < v9.1.1551
-=====================================================================================
-Date: 15.07.2025
-Severity: Low
-CVE: CVE-2025-53906
-CWE: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') (CWE-22)
+Description
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Java untrusted deserialization in faultCause when processing an XMLRPC resp=
+onse. XMLRPC clients are thus targeted by this vulnerability, and rogue XML=
+RPC servers may gain arbitrary code execution on the XMLRPC client.
 
-### Summary
-A path traversal issue in Vim’s zip.vim plugin can allow overwriting of
-arbitrary files when opening specially crafted zip archives.
+The vulnerability lays in the org.apache.xmlrpc.parser.XmlRpcResponseParser=
+:addResult(Object) method.
 
-### Description
-Vim includes the zip.vim plugin, which enables viewing and editing of files
-within zip archives.
+This vulnerability is different from CVE-2016-5003, which uses ex:serializa=
+ble type to perform deserialization. This new vulnerability only affects XM=
+LRPC clients, which will receive response, possible faults. It is exploitab=
+le in default configuration.
 
-An attacker can create a zip archive that contains member files with relative
-paths (e.g., ../../somefile). If such an archive is opened in Vim, and the user
-saves one of these malicious files, Vim may overwrite files outside the
-intended working directory.
+Exploitation technique
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+REMOTE, NONE AUTHENTICATION REQUIRED.
 
-Exploitation requires several conditions:
-- The user opens a specially crafted archive in Vim.
-- The user selects and attempts to edit one of the files within the archive.
-- Vim writes the file back to disk using :w!.
+REMINDER: This vulnerability is on client-side.
 
-Only after all these steps are performed would Vim overwrite an existing file
-on disk.
+CVSSv3 base score : 9.8
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 
-**Note**:
-- Vim does display the full path to be written, so a careful user may notice
-  suspicious behavior.
-- Standard zip utility typically do not extract such paths and will warn or
-  skip them. This issue only affects Vim's internal handling, not the zip tool
-  itself.
+Impact(s)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+An attacker may execute arbitrary code by using a gadget chain.
 
+Affected versions
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Detected on XMLRPC-common-Central-3.1.3 but applies to versions (non-exhaus=
+tive list):
+*         Redhat GA 3.1.3-redhat-5
+*         Redhat GA 3.1.3-redhat-2
+*         Redhat EA 3.1.3-redhat-1
+*         Central 3.1.3
+*         Central 3.1.2
+*         Central 3.1.1
+*         Central 3.1
 
-### Proof of Concept
-As a Proof of Concept, the following code crafts a malicious archive:
-```python
-import zipfile
-import os
-zip_path='evil.zip'
-fname='file'
-arcname='/etc/ax-pwn'
-arcname='../../../../etc/ax-pwn'
-with open(fname, 'w') as f:
-	f.write(f"pwned\n")
-with zipfile.ZipFile(zip_path, 'w') as zipf:
-	zipf.write(fname, arcname)
-print(f"Created {zip_path}" )
-```
-If the file contained in the evil.zip archive is edited through vim, typing
-':w' to save it will create /etc/ax-pwn on the host filesystem (provided that
-the user has sufficient permissions to write into the /etc directory.
+NOTE: Central 3.0.x are not vulnerable
 
-### Impact
-Impact is **low** because this exploit requires direct user interaction:
+CVE Id
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+CVE-2019-17570
 
-However successfully exploitation can lead to overwriting sensitive files or
-placing executable code in privileged locations, depending on the permissions
-of the process editing the archive.
+Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D
+2019-11-19: Apache informed via email
+2019-11-19: Apache XML-RPC is no longer actively maintained
+2019-11-21: Red Hat informed via email
+2019-11-22: Vulnerability reaffected to Apache project
+2020-01-06: Distro OSS security informed via email
+2020-01-16: Vulnerability published to OSS security mailing list
 
-The victim must edit such a file using Vim which will reveal the filename
-and the file content, a careful user may suspect some strange things going on.
-Successful exploitation could results in the ability to execute
-arbitrary commands on the underlying operating system.
-
-The Vim project would like to thank @ax for reporting this issue.
-
-The issue has been fixed as of Vim patch v9.1.1551
-
-[Commit](https://github.com/vim/vim/commit/586294a04179d855c3d1d4ee5ea83931963680b8)
-[Github Advisory](https://github.com/vim/vim/security/advisories/GHSA-r2fw-9cw4-mj86)
+Credits
+=3D=3D=3D=3D=3D=3D=3D=3D
+Guillaume TEISSIER (Orange)
+Orange group
 
 
-Liebe Grüße
-Christian
--- 
-Wir suchen die Wahrheit, finden wollen wir sie aber nur dort, wo es
-uns beliebt.
-		-- Marie von Ebner-Eschenbach
+___________________________________________________________________________=
+______________________________________________
+
+Ce message et ses pieces jointes peuvent contenir des informations confiden=
+tielles ou privilegiees et ne doivent donc
+pas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu=
+ ce message par erreur, veuillez le signaler
+a l'expediteur et le detruire ainsi que les pieces jointes. Les messages el=
+ectroniques etant susceptibles d'alteration,
+Orange decline toute responsabilite si ce message a ete altere, deforme ou =
+falsifie. Merci.
+
+This message and its attachments may contain confidential or privileged inf=
+ormation that may be protected by law;
+they should not be distributed, used or copied without authorisation.
+If you have received this email in error, please notify the sender and dele=
+te this message and its attachments.
+As emails may be altered, Orange is not liable for messages that have been =
+modified, changed or falsified.
+Thank you.
+
