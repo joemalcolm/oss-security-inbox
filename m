@@ -1,59 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/22/1
-Message-ID: <5c47d85c-2648-d0ed-714f-f4e0b2e497ed@vanrees.org>
-Date: Tue, 21 Jan 2020 23:49:31 +0100
-From: Maurits van Rees <maurits@...rees.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/17/4
+Message-Id: <0D9C0CEE-95B6-4017-B15B-85A47CA67701@oracle.com>
+Date: Fri, 17 Jan 2020 14:50:33 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Plone security hotfix 20200121
+Subject: Re: Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume
 Content-Type: text/plain; charset=utf-8
 
-A Plone security hotfix was released today.
 
-CVE numbers: not yet issued. We will request them shortly from mitre.org.
 
-Versions Affected: All supported Plone versions (4.3.15 and any earlier
-4.x version, 5.2.1 and any earlier 5.x version). Previous versions could
-be affected but have not been tested.
+> On 17 Jan 2020, at 08:10, Sven Schwedas <sven.schwedas@....at> wrote:
+> 
+> On 17.01.20 05:21, Jeffrey Walton wrote:
+>> I agree with Lennart Poettering. This seems CVE worthy given RDRAND is
+>> often used to get the kernel generator (and other userland generators)
+>> in good working order.
+> 
+> From my understanding it's harmless as far as linux's kernel generator
+> is concerned, as it's just xor'd to other entropy sources?
+> 
+> CVEs should only be needed on a case-by-case basis for userland
+> generators that aren't properly engineered.
 
-Versions Not Affected: None.
+Actually, the kernel does use rdrand directly for cases where a strong CPRNG not required.  Whether some of those cases result in an exploitable bug I wouldn't like to say.
 
-Nature of vulnerability:
+jch
 
-The patch addresses several security issues:
-
-- Privilege escalation when plone.restapi is installed. Reported and
-fixed by Lukas Graf and Niklaus Johner.
-- An open redirection on the login form and possibly other places where
-redirects are done.
-- The isURLInPortal check that is done to avoid linking to an external
-site could be tricked into accepting malicious links. Reported by
-Damiano Esposito.
-- Password strength checks were not always checked. Reported by Ben Kummer.
-- You might be able to PUT (overwrite) some content without needing
-write permission.
-   This seems hard to do in practice. This fix is only needed when you
-use plone.app.contenttypes. Reported and fixed by Alessandro Pisa.
-- SQL quoting in DTML or in connection objects was insufficient, leading
-to possible SQL injections. This is a problem in Zope. If you use Zope
-without Plone, this hotfix should work for you too. Reported and fixed
-by Michael Brunnbauer and Michael Howitz.
-- Cross Site Scripting (XSS) in the title field on plone 5.0 and higher.
-Reported by Marcos Valle.
-
-Version support: The hotfix is officially supported by the Plone
-security team on the following versions of Plone in accordance with the
-Plone version support policy: 4.3.19, and 5.0.10, 5.1.6, 5.2.1. It was
-also tested on Plone 4.2.7. It is recommended also for Plone 4.0 and
-4.1, but this has not been tested.
-
-The fixes included here will be incorporated into subsequent releases of
-Plone, so Plone 4.3.20, 5.1.7, 5.2.2 and greater should not require this
-hotfix.
-
-The above is a copy from the release notes.
-Full details: https://plone.org/security/hotfix/20200121
-
--- 
-Maurits van Rees https://maurits.vanrees.org/
-Member of Plone Security Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
