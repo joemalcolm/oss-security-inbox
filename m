@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1619" "Wednesday" "5" "September" "2018" "11:02:48" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>" "56" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "9" "2018090518:02:48" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        taviso@googl Sep  5   56/1619  " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>" ("<CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>" "<alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>" "<5b7dd771.1c69fb81.a6d8.6521@mx.google.com>" "<alpine.GSO.2.20.1808230753470.3841@freddy.simplesystems.org>" "<5b7eb7b2.1c69fb81.6b98e.519f@mx.google.com>" "<alpine.GSO.2.20.1808230958120.3639@scrappy.simplesystems.org>" "<CAJ_zFk+yb9zEXSqs2fdANvKkipg2yQAU89xKr1HMv-EJG2-vxg@mail.gmail.com>" "<20180828092517.eteuy4vzcpdpr62p@suse.de>" "<CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>" "<CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>" "<20180903105747.dihmczuqhl4kcnx5@suse.de>" "<CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>" "<CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>" "<F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>" "<CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["729" "Thursday" "16" "January" "2020" "23:21:52" "-0500" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8n6X75L0dC_50wjc+Cq-Cubj568g=NXon19s_-Kxgz+2w@mail.gmail.com>" "26" "[oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume" "^Date:" nil nil "1" "2020011704:21:52" "[oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume" (number mark "        noloader@gma Jan 16   26/729   " thread-indent "\"[oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7605 invoked by uid 550); 5 Sep 2018 18:03:14 -0000
+Received: (qmail 26438 invoked by uid 550); 17 Jan 2020 04:22:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7581 invoked from network); 5 Sep 2018 18:03:13 -0000
+Received: (qmail 26394 invoked from network); 17 Jan 2020 04:22:15 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=8kL3FaDzn/38Iv20DKwvxrF6yvtkJY1rvAOt3mcop20=;
-        b=tK9RfRQxSTqzjzOiA6yB7RGPUElpx6bdEX7WIceDNbqdOYiT3hP35S5/aKNIuQG5Yb
-         6JSR1AdZOfn2uNk/2206pau5nACCxI3tfx/lif8Dgk3oOIpuWz5oFqBTI+5+2h1tI2CQ
-         U6/YeGmatA+Xt4XmzhGVHshubDzxuRNzgCuyzOrNc9XCoZv2C4Ne43hpdpHFSpr1qGxN
-         u501bHiu5Rn8pKrfD9pj+nRR7BuNJRazKjP1Gvh6wIykmZQ8C8ynRcUO2V4A1IX0STXd
-         i3W0Siex2bvQxlmJx9AkGQM0hSysDp+pn6G5mrHlkLlRLmQk0n39cugMg5m45XXy+bC8
-         QpEw==
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=i28eBhmqwnBHnIhJJJSmUVh8NySdpswLxMsdxjRflPM=;
+        b=UENRHMn++HJDnuo9qnjfgh6Mt3Qh0pSli+eWcnsTy9SsC7769YoaG45oJXP9SGOQdG
+         nsbet7/dfbS1hb/glE+QbyOv+tA7MC2iUVJuq2bT+ivaSo44S5OOfVDZ55EZCXoAEEfh
+         AF8+hD4z4qtkDdJlXUEq6yKPfAcNMEdx3/PGsvl+rWI4XctTjvlClHqB5mC4dSmVK3S8
+         Tqv8H4UbQ9/fGBwynDZxCH6XUkqvrDoQDPhu40oge2oUcu01kl0Ce4cnpQIt4Wri4VWa
+         M3kLVV7gu/ky1TA0ohhyw4VMbz1R6N5DhPLcaFTlP6ooCt9/NW4bvmQkG/kITEDbDvU+
+         Hlug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=8kL3FaDzn/38Iv20DKwvxrF6yvtkJY1rvAOt3mcop20=;
-        b=dbu4CjKABYsKwGv9eiFf4ahYN7IAH1QwicXb8y284iQ31XXJrKN6lpLGnof9bSmSch
-         +4zmmG2TztVX3gW+ng/kKmEz4hNtBOOo/2gXHYKgKVYm8mgqWJgKUJEC3WbPFy3M4Upd
-         BwBwmyTwg+twC2lcVjLSheJn5Nvfykh0w7oodqAEBOL+jlHprfCn+9AWeImRZyGBIH28
-         whZgTsTXW00WsdwY24NMgxe/FWyf978FIU+X9BBfyfq7BLHAGKIFJuaUdx7A9J6u4YEA
-         yFEFvXjN5Cvdbf8K870szCHNhlCK+zHQCthRU9QF7yGcK67/2ZdfWM3fb9q1ZwldrpUw
-         NtTw==
-X-Gm-Message-State: APzg51DLOVN4uCz4sYdSx+FGE/oJJMM5TJv4DyzqBTG8CuAJ3VapWIcP
-	lG5VTcZqk7usILmHXHLbbVGvnSmLUrtJKcIy44pPYLLzGNI=
-X-Google-Smtp-Source: ANB0VdZxDGv74ZF+zx6R0zrAmj/yICLmI9sGwfwDH77IqD65BOXIc4U9HVAXs7UYwMddqKX6DZmr8pJMWEJz0KcIngQ=
-X-Received: by 2002:ac8:2ad8:: with SMTP id c24-v6mr35293862qta.117.1536170580335;
- Wed, 05 Sep 2018 11:03:00 -0700 (PDT)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=i28eBhmqwnBHnIhJJJSmUVh8NySdpswLxMsdxjRflPM=;
+        b=EDBCL+quBenDuTx4vikva40fpsO9hRrr9eILWFineN52OhXkB6/iP0jU+oal8oWAn5
+         aVBBOSzF5zdfZVbTu+8o4pliUOVSIEyGDtjklc33cwylyLvIpZ/DnvhhRzkxlvvZ+7p8
+         sl8u6gOgGkWW4X0XcH0HDpIdvaxneC4VXzJYrQVwg0zTkmjIjWMRGn3qH8TVY7kaZyMT
+         9FKRp/6g82lj3RVsk7vCTNdZ6ZO5PRIWZ6SyWvadlYi09dGh2jL8csyYjEPmq4WwPSrC
+         W3fVmjBkLHpk4vrcMIvAU1AW2dhnms7GQWRvUn8OjHd6HSUz5yFHomlnrvWR8yazt57U
+         JUng==
+X-Gm-Message-State: APjAAAUaNP5bIbIfYUea3Ulj6LrBjFOYXQteQPk3QWINd/0zoJltyfOF
+	ArpJ2W4qx1XjkFimnwj0CqSjjmH6BMTZjBBvNy9uNoJBbR0=
+X-Google-Smtp-Source: APXvYqzBu1qZpnT1OlITSBEPjdb4khtagp8BsPpWJc0f71QsF1bu28HCFDRQUU9kedRnt6I8Bex/g9kGrC09CdiRa3A=
+X-Received: by 2002:a02:c951:: with SMTP id u17mr32848530jao.27.1579234923098;
+ Thu, 16 Jan 2020 20:22:03 -0800 (PST)
 MIME-Version: 1.0
-References: <CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>
- <alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>
- <5b7dd771.1c69fb81.a6d8.6521@mx.google.com> <alpine.GSO.2.20.1808230753470.3841@freddy.simplesystems.org>
- <5b7eb7b2.1c69fb81.6b98e.519f@mx.google.com> <alpine.GSO.2.20.1808230958120.3639@scrappy.simplesystems.org>
- <CAJ_zFk+yb9zEXSqs2fdANvKkipg2yQAU89xKr1HMv-EJG2-vxg@mail.gmail.com>
- <20180828092517.eteuy4vzcpdpr62p@suse.de> <CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>
- <CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>
- <20180903105747.dihmczuqhl4kcnx5@suse.de> <CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>
- <CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>
- <F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com> <CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>
-In-Reply-To: <CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>
-Message-ID: <CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000c1f3ae05752395a7"
-Date: Wed, 5 Sep 2018 11:02:48 -0700
-From: Tavis Ormandy <taviso@google.com>
+Message-ID: <CAH8yC8n6X75L0dC_50wjc+Cq-Cubj568g=NXon19s_-Kxgz+2w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Thu, 16 Jan 2020 23:21:52 -0500
+From: Jeffrey Walton <noloader@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS
- coders in policy.xml by default?
+Subject: [oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume
 To: oss-security@lists.openwall.com
 
---000000000000c1f3ae05752395a7
-Content-Type: text/plain; charset="UTF-8"
+This just made my radar. It appears some AMD cpus with RDRAND fail to
+produce random numbers after a suspend/resume. It looks like it was
+first reported in 2014 or so.
 
-Quick update, this
-<http://git.ghostscript.com/?p=ghostpdl.git&a=commitdiff&h=5812b1b78fc4>
-commit fixes that problem, but I noticed that fix is incomplete and can be
-bypassed, so filed another bug for that (the new bug is 699718).
+Kernel bug:
 
-$ ./gs -dSAFER bug699718.txt
-GPL Ghostscript GIT PRERELEASE 9.25 (2018-09-03)
-Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
-This software comes with NO WARRANTY: see the file PUBLIC for details.
-uid=1000(taviso) gid=1000(primarygroup)
+    * https://bugzilla.kernel.org/show_bug.cgi?id=85911
 
+Systemd bug:
 
-I would like to re-emphasize that while Ghostscript is very capable and
-mature software, I consider the -dSAFER sandbox to be a fragile security
-boundary and that we should consider deprecating (or minimizing the use of)
-untrusted postscript.
+    * https://github.com/systemd/systemd/issues/11810
 
-Tavis.
+Fedora bug:
 
+    * https://bugzilla.redhat.com/show_bug.cgi?id=1150286
 
-On Tue, Sep 4, 2018 at 1:08 PM Tavis Ormandy <taviso@google.com> wrote:
+AMD patch:
 
->
->
-> On Tue, Sep 4, 2018 at 1:03 PM Brandon Perry <bperry.volatile@gmail.com>
-> wrote:
->
->>
->>
->> > On Sep 4, 2018, at 2:59 PM, Tavis Ormandy <taviso@google.com> wrote:
->> >
->> > OK, well, the fixes missed 9.24 so vendors will have to either ship
->> patches
->> > once they land or wait for 9.25.
->> >
->> > $ ./gs -v
->> > GPL Ghostscript 9.24 (2018-09-03)
->> > Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
->> > $ ./gs -q -dSAFER -sDEVICE=ppmraw -f testcase.ps
->> > uid=1000(taviso) gid=1000(taviso)
->> >
->> > Let me know if anyone wants that testcase.
->>
->> Hey Tavis, could I have a copy of the test case please? Thanks so much.
->>
->
-> Sure, here it is.
->
-> Thanks, Tavis.
->
->
+    * https://lore.kernel.org/patchwork/patch/1115413/
 
---000000000000c1f3ae05752395a7--
+I agree with Lennart Poettering. This seems CVE worthy given RDRAND is
+often used to get the kernel generator (and other userland generators)
+in good working order.
+
+(Thanks to https://www.phoronix.com/scan.php?page=news_item&px=AMD-CPUs-RdRand-Suspend
+for the article and links).
