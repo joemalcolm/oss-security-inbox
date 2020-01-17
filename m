@@ -1,75 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/12/1
-Message-ID: <20200112174726.GA8750@openwall.com>
-Date: Sun, 12 Jan 2020 18:47:26 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Kees Cook <kees@...ntu.com>
-Cc: oss-security@...ts.openwall.com, Jorge Lucangeli Obes <jorgelo@...gle.com>
-Subject: Re: linux-distros membership adjustment/vouching
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/17/2
+Message-ID: <nycvar.YSQ.7.76.2001171230050.223874@xnncv>
+Date: Fri, 17 Jan 2020 12:33:51 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2020-7211 QEMU: Slirp: potential directory traversal using relative paths via tftp server on Windows host
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-On Fri, Jan 10, 2020 at 12:52:41PM -0800, Kees Cook wrote:
-> I've been a member of linux-distros for a long while, and my hat has
-> slowly changed over that time. I'm subscribed there (and here) as
-> kees@...ntu.com.  When I my responsibilities shifted from the Ubuntu
-> Security Team to the Chrome OS Security Team, I just kept the email
-> address (since it's a community address and I'm still part of the Ubuntu
-> community).
-> 
-> However, as my responsibilities have shifted, I'm much less involved
-> with the Chrome OS Security Team, and it was recently pointed out that
-> no one else from the Chrome OS Security Team is (to our knowledge)
-> a member right now.
-> 
-> So, attempting to solve things in a backwards order, I'd like to first
-> vouch for a Chrome OS Security Team member who is already on oss-security,
-> with the goal of having them added to the linux-distros list:
-> 
->     Jorge Lucangeli Obes <jorgelo@...gle.com>
+A potential directory traversal issue was found in the tftp server of the 
+SLiRP user-mode networking implementation used by QEMU. It could occur on 
+Windows host, as it allows to use both forward ('/') and backward slash('\') 
+tokens as separators in a file path.
 
-Given the above, I'd be happy to subscribe Jorge for Chrome OS.  I just
-need Jorge's PGP key.  I also suggest using an e-mail address not on
-Google's MX'es, because those reject messages sent from domains with
-strict DMARC policy (most notably, when another Googler posts).
+A user able to access the tftp server could use this flaw to access undue 
+files by using relative paths.
 
-Normally such subscription changes for an already subscribed distro are
-handled off-list.  However, what you bring up below deserves being
-discussed on oss-security:
+Upstream patch:
+---------------
+   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/14ec36e107a8c9af7d0a80c3571fe39b291ff1d4
 
-> Then I'd like to figure out what to do with my own membership. I'm
-> still associated with Ubuntu, Chrome OS, and Android but I don't have
-> "official" responsibilities as a representative of their respective
-> security teams. I am, however, an upstream Linux kernel security contact
-> (but that doesn't qualify as a "Unix-like operating system distro", from
-> item "1" in the membership criteria[1]). I am still involved in fixing,
-> notifying, negotiating, delegating, etc, in these various distros. Should
-> I stay on linux-distros? I would prefer to (it makes that work simpler),
-> but since there isn't any "criteria for continuing membership" on the
-> Wiki, I'm not entirely sure what the right course of action should be.
+'CVE-2020-7211' assigned via -> https://cveform.mitre.org/
 
-I think it'd be most consistent with our criteria so far if (at least)
-one of those distros' security teams does state that you'd represent
-them.  Without that, you staying on linux-distros would be weird and
-inconsistent with requirements we set for others.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-> (And if I stay, perhaps it would be more accurate to use kees@...nel.org?)
-
-It'd be up to you to choose an e-mail address that's convenient for
-you.  Messages are encrypted anyway, so this choice sort of does not
-matter for security.  In practice, though, it does matter a little bit:
-if you choose an e-mail address in a specific distro's domain name, then
-if you ever leave their team and they disable that e-mail account you
-wouldn't be getting the messages anymore (and they wouldn't be able to
-read messages intended for you as well, due to the encryption to your
-key), even if they forget to promptly ask for your address to be removed
-from the list.  Despite of this minor security advantage, I don't insist
-on use of such e-mail addresses so far, as I realize it's often far more
-convenient to use an external e-mail address.
-
-As to kernel.org, it isn't particularly relevant here since the Linux
-kernel is not a Linux distro.  It's just an address you can use, just
-like any other address.
-
-Alexander
