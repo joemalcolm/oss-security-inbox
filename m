@@ -1,63 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/05/4
-Message-ID: <24EFFFB0-DD97-49EF-8C01-E70EC2C93CF7@me.com>
-Date: Wed, 05 Feb 2020 11:31:55 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Security <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2019-18901: mariadb: possible symlink attack for the mysql user in the SUSE specific mysql-systemd-helper script
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/17/1
+Message-ID: <CAH8yC8n6X75L0dC_50wjc+Cq-Cubj568g=NXon19s_-Kxgz+2w@mail.gmail.com>
+Date: Thu, 16 Jan 2020 23:21:52 -0500
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume
 Content-Type: text/plain; charset=utf-8
 
-Hello Matthias,
+This just made my radar. It appears some AMD cpus with RDRAND fail to
+produce random numbers after a suspend/resume. It looks like it was
+first reported in 2014 or so.
 
-That chmod 640 might be interesting if applied to /etc/shadow.  It could allow some users to read the password hashes.
+Kernel bug:
 
-﻿On 2/5/20, 7:46 AM, "Matthias Gerstner" <mgerstner@...e.de> wrote:
+    * https://bugzilla.kernel.org/show_bug.cgi?id=85911
 
-    Hello list,
-    
-    in the course of a review of the mariadb packaging in the SUSE Linux
-    distribution I discovered that a SUSE specific helper script
-    "mysql-systemd-helper" unsafely operates with root privileges in
-    the /var/lib/mysql directory [1].
-    
-    During initial package installation and during upgrade scenarios the
-    file /var/lib/mysql/mysql_upgrade_info is created/overwritten and
-    modified using the following shell commands:
-    
-    ```
-    echo -n "$MYSQLVER" > "$datadir"/mysql_upgrade_info
-    chmod 640 "$datadir/mysql_upgrade_info"
-    ```
-    
-    Since the unprivileged mysql user owns the parent directory it can
-    remove this file and replace it with a symlink to write/overwrite in
-    privileged file systems locations. This could mostly be used for
-    denial-of-service purposes, a full privilege escalation should not be
-    easily achieved by this vulnerability, since the file content cannot be
-    controlled by a potential attacker.
-    
-    Future SUSE mariadb packages will keep this file in a safe location in
-    /var/lib/misc. Older, still supported packages will be fixed soon.
-    
-    Cheers
-    
-    Matthias
-    
-    References
-    ----------
-    
-    [1]: https://bugzilla.suse.com/show_bug.cgi?id=1160895
-    
-    -- 
-    Matthias Gerstner <matthias.gerstner@...e.de>
-    Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-    https://www.suse.com/security
-    Phone: +49 911 740 53 290
-    GPG Key ID: 0x14C405C971923553
-    
-    SUSE Software Solutions Germany GmbH
-    HRB 36809, AG Nürnberg
-    Geschäftsführer: Felix Imendörffer
-    
+Systemd bug:
 
+    * https://github.com/systemd/systemd/issues/11810
 
+Fedora bug:
+
+    * https://bugzilla.redhat.com/show_bug.cgi?id=1150286
+
+AMD patch:
+
+    * https://lore.kernel.org/patchwork/patch/1115413/
+
+I agree with Lennart Poettering. This seems CVE worthy given RDRAND is
+often used to get the kernel generator (and other userland generators)
+in good working order.
+
+(Thanks to https://www.phoronix.com/scan.php?page=news_item&px=AMD-CPUs-RdRand-Suspend
+for the article and links).
