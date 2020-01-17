@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3376" "Tuesday" "9" "May" "2017" "08:19:51" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<844121.337493078-sendEmail@localhost>" "75" "[oss-security] lrzip: NULL pointer dereference in bufRead::get (libzpaq.h)" nil nil nil "5" "2017050908:19:51" "[oss-security] lrzip: NULL pointer dereference in bufRead::get (libzpaq.h)" (number mark "U       ago@gentoo.o May  9   75/3376  " thread-indent "\"[oss-security] lrzip: NULL pointer dereference in bufRead::get (libzpaq.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["702" "Friday" "17" "January" "2020" "12:33:51" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.2001171230050.223874@xnncv>" "23" "[oss-security] CVE-2020-7211 QEMU: Slirp: potential directory traversal using relative paths via tftp server on Windows host" nil nil nil "1" "2020011707:03:51" "[oss-security] CVE-2020-7211 QEMU: Slirp: potential directory traversal using relative paths via tftp server on Windows host" (number mark "U       ppandit@redh Jan 17   23/702   " thread-indent "\"[oss-security] CVE-2020-7211 QEMU: Slirp: potential directory traversal using relative paths via tftp server on Windows host\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-7211 QEMU: Slirp: potential directory traversal using relative paths via tftp server on Windows host" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32154 invoked by uid 550); 9 May 2017 08:20:11 -0000
+Received: (qmail 24215 invoked by uid 550); 17 Jan 2020 07:04:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32106 invoked from network); 9 May 2017 08:20:09 -0000
-Message-ID: <844121.337493078-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Tue, 9 May 2017 08:19:51 +0000
+Received: (qmail 24197 invoked from network); 17 Jan 2020 07:04:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1579244641;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Zp1Q/5kbuVGcQMieikOHRaeUduC2imGparqIzU6numA=;
+	b=Iduo2fpNEcBuEPswKavg3Q/iL7ZHeD5hE+fGdnhSuTlSY2eE9/gDHuUHyAgq0fGeQ3ZdWE
+	bM3I5hODybYpyp6iOvoddacjtT5ZiRZH1yDdeZVWI4acuz2fkllQH8CQ0RJnp2X0LxsZgS
+	a9PMbKzffITB/YJiOf3pwjJ1rS6XX4s=
+Date: Fri, 17 Jan 2020 12:33:51 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+Message-ID: <nycvar.YSQ.7.76.2001171230050.223874@xnncv>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-60923.7405742569"
-Subject: [oss-security] lrzip: NULL pointer dereference in bufRead::get (libzpaq.h)
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-MC-Unique: C4BenVnyObC9KubhB8sWdw-1
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE-2020-7211 QEMU: Slirp: potential directory traversal using
+ relative paths via tftp server on Windows host
 
-------MIME delimiter for sendEmail-60923.7405742569
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+   Hello,
 
-Description:
-lrzip is a compression utility that excels at compressing large files.
+A potential directory traversal issue was found in the tftp server of the=20
+SLiRP user-mode networking implementation used by QEMU. It could occur on=20
+Windows host, as it allows to use both forward ('/') and backward slash('\'=
+)=20
+tokens as separators in a file path.
 
-The complete ASan output of the issue:
+A user able to access the tftp server could use this flaw to access undue=20
+files by using relative paths.
 
-# lrzip -t $FILE
-==24966==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000005e7caa bp 0x7f7c755a58d0 sp 0x7f7c755a5870 T2)    
-==24966==The signal is caused by a READ memory access. 
-==24966==Hint: address points to the zero page.   
-    #0 0x5e7ca9 in bufRead::get() /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.h:485:24 
-    #1 0x5856f1 in libzpaq::Decompresser::findBlock(double*) /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.cpp:1236:21 
-    #2 0x55f79a in libzpaq::decompress(libzpaq::Reader*, libzpaq::Writer*) /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.cpp:1363:12  
-    #3 0x55f4e2 in zpaq_decompress /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.h:538:2 
-    #4 0x54b3a4 in zpaq_decompress_buf /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:453:2 
-    #5 0x54b3a4 in ucompthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1534
-    #6 0x7f81b7a434a3 in start_thread /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_create.c:333
-    #7 0x7f81b6d6e66c in clone /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/misc/../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Upstream patch:
+---------------
+   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/14ec36e107a8c9af=
+7d0a80c3571fe39b291ff1d4
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.h:485:24 in bufRead::get()
-Thread T2 created by T0 here:
-    #0 0x42d49d in pthread_create /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:245
-    #1 0x53e70f in create_pthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:133:6
-    #2 0x53e70f in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1673
-    #3 0x53e70f in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
-    #4 0x531075 in unzip_literal /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:162:16
-    #5 0x531075 in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:320
-    #6 0x531075 in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
-    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
-    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
-    #9 0x7f81b6ca778f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+'CVE-2020-7211' assigned via -> https://cveform.mitre.org/
 
-==24966==ABORTING
-
-Affected version:
-0.631
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8847
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00229-lrzip-nullptr-bufRead-get
-
-Timeline:
-2017-03-24: bug discovered and reported to upstream
-2017-05-07: blog post about the issue
-2017-05-08: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/07/lrzip-null-pointer-dereference-in-bufreadget-libzpaq-h/
-
+Thank you.
 --
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-60923.7405742569--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
