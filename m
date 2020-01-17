@@ -1,27 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/12/3
-Message-ID: <34ddbebf-ee5e-a8de-918b-bc9878352e84@orlitzky.com>
-Date: Fri, 12 Jun 2020 08:16:23 -0400
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/17/3
+Message-ID: <3a7ec6d5-2959-3daa-a540-ac6389dc15f0@tao.at>
+Date: Fri, 17 Jan 2020 09:10:07 +0100
+From: Sven Schwedas <sven.schwedas@....at>
 To: oss-security@...ts.openwall.com
-Subject: Re: icinga2: CVE-2020-14004: prepare-dirs script allows for symlink attack in the icinga user context
+Subject: Re: Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume
 Content-Type: text/plain; charset=utf-8
 
-On 2020-06-12 05:54, Matthias Gerstner wrote:
-> Hello list,
-> 
-> during the review of directories with special permissions in openSUSE
-> distributions I noticed an icinga user privilege escalation issue in the
-> icinga2 monitoring software [1].
+On 17.01.20 05:21, Jeffrey Walton wrote:
+> I agree with Lennart Poettering. This seems CVE worthy given RDRAND is
+> often used to get the kernel generator (and other userland generators)
+> in good working order.
 
-face -> palm
+>From my understanding it's harmless as far as linux's kernel generator
+is concerned, as it's just xor'd to other entropy sources?
 
-https://github.com/Icinga/icinga2/issues/5793
-
-
-> But it could still turn out to be subject to
-> race conditions on older or alternative `chown` implementations. It
-> would also be problematic if the Linux kernel hardlink protection is
-> turned off for some reason.
-
-Hardlink protection is off by default in the vanilla kernel.
+CVEs should only be needed on a case-by-case basis for userland
+generators that aren't properly engineered.
