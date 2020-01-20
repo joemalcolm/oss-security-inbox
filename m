@@ -1,61 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/21/7
-Message-ID: <20200421184747.GA93069@espresso.pseudorandom.co.uk>
-Date: Tue, 21 Apr 2020 19:47:47 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: "info@...nvakil.com" <info@...nvakil.com>
-Subject: Re: Pacman package manager - taking untrusted input
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/20/1
+Message-ID: <20200120111729.7fe9d09b@yaydoe>
+Date: Mon, 20 Jan 2020 11:17:29 +0100
+From: Peter Kjellström <cap@....liu.se>
+To: Jeffrey Walton <noloader@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 21 Apr 2020 at 21:51:56 +0430, Amin Vakil wrote:
-> On 4/21/20 8:57 PM, jellicent@...tonmail.com wrote:
-> > The code supports database signatures, so the real issue is the distro
-> > infrastructure.
+On Thu, 16 Jan 2020 23:21:52 -0500
+Jeffrey Walton <noloader@...il.com> wrote:
 
-I interpret this as: pacman can accept either signed or unsigned
-databases, but the various distros that use pacman (such as Arch Linux)
-currently only publish unsigned databases in practice. Is that correct?
+> This just made my radar. It appears some AMD cpus with RDRAND fail to
+> produce random numbers after a suspend/resume. It looks like it was
+> first reported in 2014 or so.
 
-Can pacman be configured to *only* accept signed databases, so that a
-mirror containing an unverifiable database (unsigned, signed with a key
-that is not explicitly trusted, or with an invalid signature) is treated
-as an error? If it cannot, then there's an obvious downgrade attack:
-a malicious mirror could substitute an unsigned database and the pacman
-client would happily use that.
+Note that there are, afaict, two distict AMD RDRAND issues discussed
+here. The original 2014 suspend/resume one and the more recent, "ryzen
+3000 just returnx 0xffffffff". The latter is probably the reason for
+the renewed focus on this...
 
-On Tue, 21 Apr 2020 at 17:41:42 +0000, jellicent@...tonmail.com wrote:
-> An attacker need only find a bug in how Pacman does
-> parsing/reading of the database file to potentially get code execution
-> on the box as root.
-
-My understanding is that this is a risk, and at least arguably a design
-flaw, but not generally considered to be a vulnerability (CVE IDs,
-etc.) unless/until an unfixed parser bug with the necessary severity
-is found.
-
-Of course, that doesn't mean it wouldn't be a good idea to authenticate
-the database before parsing it: that would mitigate a lot of potential
-vulnerabilities.
-
-Something that might be considered to be a vulnerability already (or not,
-depending on the pacman and distro maintainers' threat models) is that
-an attacker could substitute a database that lists obsolete packages
-with known vulnerabilities. Those packages will presumably be validly
-signed by distro developers (because at one time they were considered
-to be the best version available). Presumably pacman won't normally
-downgrade from the version it has installed to a strictly older version
-from a mirror, but if a user installs a new (not currently installed)
-package using that mirror/database, they'll unknowingly be installing
-an older package that has known vulnerabilities.
-
-That form of attack is difficult to address in general, because it needs
-a revocation or expiry mechanism. apt-based distros are starting to
-address equivalent issues by setting a Valid-Until field on their archive
-metadata, so that clients will warn their user if presented with outdated
-archive metadata (the equivalent of pacman's database) - although this is
-somewhat awkward to deploy, because it requires a signing key to be
-made available on a regular basis, which conflicts with the idea that
-high-value signing keys should be kept offline when not in use.
-
-    smcv
+/Peter 
