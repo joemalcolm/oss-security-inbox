@@ -1,35 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/04/3
-Message-ID: <20200204130919.GD11664@f195.suse.de>
-Date: Tue, 4 Feb 2020 14:09:19 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/20/6
+Message-ID: <20200120145148.GG10486@f195.suse.de>
+Date: Mon, 20 Jan 2020 15:51:48 +0100
 From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-7221: mariadb: possible local mysql to root user exploit in mysql_install_db script setting permissions of /usr/lib64/mysql/plugin/auth_pam_tool_dir/auth_pam_tool
+Subject: CVE-2019-18932: sarg: insecure usage of /tmp/sarg allows privilege escalation / DoS attack vector
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-On Tue, Feb 04, 2020 at 01:27:11PM +0100, Solar Designer wrote:
-> > I personally suggest the following directory mode instead:
-> > 
-> > root:mysql  0750 /usr/lib/mysql/plugin/auth_pam_tool_dir
-> 
-> Why not simply
-> 
-> root:mysql 04710 /usr/lib/mysql/plugin/auth_pam_tool
-> 
-> without the directory?  I see only one reason: it's a bigger change
-> relative to the current implementation, which is more work now, but
-> perhaps this cleanup is worth it longer-term.
+sarg [1] is a tool that generates HTML reports from Squid web proxy
+logfiles. Typically these reports are generated automatically via cron
+jobs on a regular basis (e.g. through entries in
+/etc/cron.{daily,weekly,monthly}).
 
-yes, exactly. I don't want to diverge too much from what upstream does
-at the moment.
+In the course of a code review [2] of sarg it turned out that it uses a
+fixed path in /tmp/sarg by default to store files (log.c:571). sarg
+employs a couple of system calls to check for an already existing
+/tmp/sarg directory and tries to reuse it by deleting its contents
+(log.c:588). The system calls used for this logic are subject to race
+conditions. Since sarg runs as 'root' this behaviour allows
+unprivileged local users to prepare symlink attacks.
 
-When this doesn't matter then your suggestion is the better one and
-would be the cleaner approach for upstream to follow.
+By winning a race condition an attacker will be able to let new files be
+created or existing files be overwritten in privileged locations. This
+presents a denial-of-service attack vector and possibly also a privilege
+escalation in some circumstances. Since the content of the files that
+are created cannot be controlled by the attacker (as far I can tell)
+there is no easy full privilege escalation to root possible.
 
-Cheers
+A mitigation for this weakness can be to pass the '-w' switch to
+invocations of /usr/bin/sarg which allows to explicitly specify a
+safe temporary directory to use. Also in the openSUSE packaging the cron
+jobs for sarg don't invoke sarg if not explicitly enabled in
+/etc/sysconfig/sarg. On Debian 9, however, for example, the cron jobs
+seem to run unconditionally after installing sarg.
+
+To make sarg safe, the file handlings parts will need to be completely
+revised. An improvement could also be not to run sarg as 'root' user at
+all but instead share the 'squid' user account, if possible. The
+upstream maintainer communicated to me that this should be possible
+without loss of functionality.
+
+The attached suggested patch adjust the sarg-reports wrapper script to
+pass a safe and unpredictable temporary directory name to sarg to
+prevent the security issues described, at least when called from the
+cron job context.
+
+I've informed the upstream maintainer about this issue on 2019-11-13 and
+discussed various aspects of a suitable security fix with him. No
+agreement on a suitable publication date for this finding or a final
+patch could be achieved and I did not hear back for around a month by
+now.
+
+Best Regards
 
 Matthias
+
+[1]: https://sourceforge.net/projects/sarg/
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=1150554
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
+
+View attachment "sarg-reports-pass-safe-tmpdir.diff" of type "text/plain" (1818 bytes)
 
 Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
