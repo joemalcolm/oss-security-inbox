@@ -1,160 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/24/1
-Message-ID: <alpine.DEB.2.20.2006240841110.4820@tvnag.unkk.fr>
-Date: Wed, 24 Jun 2020 08:43:30 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: Partial password leak over DNS on HTTP redirect
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/20/3
+Message-ID: <20200120134055.GC10486@f195.suse.de>
+Date: Mon, 20 Jan 2020 14:40:55 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock
 Content-Type: text/plain; charset=utf-8
 
-Partial password leak over DNS on HTTP redirect
-===============================================
+Hi,
 
-Project curl Security Advisory, June 24th 2020 -
-[Permalink](https://curl.haxx.se/docs/CVE-2020-8169.html)
+storeBackup [1] is a tool for performing disk-to-disk backups.
+In the course of a code review [2] for this package as it is included in
+openSUSE I found that the program, which typically runs as the root
+user, uses a fixed default path /tmp/storeBackup.lock to protect
+parallel instances of storeBackup against each other.
 
-VULNERABILITY
--------------
+This opens up a DoS attack vector for unprivileged local users.
+If an unprivileged user simply does this:
+  
+$ echo 1 >/tmp/storeBackup.lock
+  
+then possibly configured system backups won't be executed, because
+storeBackup assumes that an instance is already running. In this
+situation the program will not wait for the "other instance" to finish
+but simply exit immediately, doing nothing.
+  
+Furthermore there's a race condition involved allowing a symlink attack.
+storeBackup first performs a stat() then an lstat() on
+/tmp/storeBackup.lock and only then opens it for creation. Thus if
+storeBackup runs as root and an unprivileged attacker wins this race
+condition then files can be created or overwritten. This way a system
+can be broken, or if additional conditions are met it might even allow
+to escalate privileges in some way.
 
-libcurl can be tricked to prepend a part of the password to the host name
-before it resolves it, potentially leaking the partial password over the
-network and to the DNS server(s).
+As a workaround users can pass an explicit --lockFile, -L parameter to
+storeBackup to specify a safe lockfile location not accessible to
+unprivileged users.
 
-libcurl can be given a username and password for HTTP authentication when
-requesting an HTTP resource - used for HTTP Authentication such as Basic,
-Digest, NTLM and similar. The credentials are set, either together with
-`CURLOPT_USERPWD` or separately with `CURLOPT_USERNAME` and
-`CURLOPT_PASSWORD`. Important detail: these strings are given to libcurl as
-plain C strings and they are not supposed to be URL encoded.
+There is currently no isolated patch available from upstream to deal
+with this problem. A new version 3.5.1 containing a fix is expected to
+be released (via savannah.gnu.org) in the course of next week. Attached
+is a patch authored by the openSUSE storeBackup package maintainer Jan
+Ritzerfeld that addresses the symlink attack vector by changing the way
+the lockfile is opened in the Perl code.
 
-In addition, libcurl also allows the credentials to be set in the URL, using
-the standard RFC 3986 format: `http://user:password@...t/path`. In this case,
-the name and password are URL encoded as that's how they appear in URLs.
+Cheers
 
-If the options are set, they override the credentials set in the URL.
+Matthias
 
-Internally, this is handled by storing the credentials in the "URL object" so
-that there is only a single set of credentials stored associated with this
-single URL.
-
-When libcurl handles a relative redirect (as opposed to an absolute URL
-redirect) for an HTTP transfer, the server is only sending a new path to the
-client and that path is applied on to the existing URL. That "applying" of the
-relative path on top of an absolute URL is done by libcurl first generating a
-full absolute URL out of all the components it has, then it applies the
-redirect and finally it deconstructs the URL again into its separate
-components.
-
-This security vulnerability originates in the fact that curl did not correctly
-URL encode the credential data when set using one of the `curl_easy_setopt`
-options described above. This made curl generate a badly formatted full URL
-when it would do a redirect and the final re-parsing of the URL would then go
-bad and wrongly consider a part of the password field to belong to the host
-name.
-
-The wrong host name would then be used in a name resolve lookup, potentially
-leaking the host name + partial password in clear text over the network (if
-plain DNS was used) and in particular to the used DNS server(s).
-
-The password leak is triggered if an at sign (`@`) is used in the password
-field, like this: `passw@...23`. If we also consider a user `dan`, curl would
-generate a full URL like:
-
-  `https://dan:passw@...23@...mple.com/path`
-
-... while a correct one should have been:
-
-  `https://dan:passw%40rd123@...mple.com/path`
-
-... when parsing the wrongly generated URL, libcurl would end up with user
-name `dan` and password `passw` talking to the host `rd123@...mple.com`. That
-bad host name would then be passed on to the name resolver function in use
-(and for all typical cases return a "cannot resolve host name" error).
-
-There's no hint in the name resolve as to how large portion of the password
-that is actually prepended to the host name (ie an observer won't know how
-much data there was on the left side of the `@`), but it can of course be a
-significant enough clue for an attacker to figure out the rest.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-Requirements to trigger this flaw.
-
-  1. a password set with a `@` in it
-  2. an HTTP transfer
-  3. a *relative* redirect that curl follows (`CURLOPT_FOLLOWLOCATION` enabled)
-
-This bug was brought in commit
-[46e164069d](https://github.com/curl/curl/commit/46e164069d), first shipped in
-curl 7.62.0.
-
-This flaw can happen to users of the curl tool as well as for applications
-using libcurl.
-
-This bug was reported and inadvertently fixed and pushed to the public source
-respository before anyone realized its security impact.
-
-The effects of this flaw is somewhat reduced if DNS-over-HTTPS is used, since
-then at least the name won't be observable on the network by a passive
-by-stander but only by the DoH server.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2020-8169 to this issue.
-
-CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
-
-Severity: 5.5 (Medium)
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.62.0 to and including 7.70.0
-- Not affected versions: libcurl < 7.62.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2020-8169](https://github.com/curl/curl/commit/600a8cded447cd)
-
-RECOMMENDATIONS
---------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.71.0
-
-  B - Apply the patch on your libcurl version and rebuild
-
-  C - Disable `CURLOPT_FOLLOWLOCATION` or redirects to HTTP(S).
-
-TIMELINE
---------
-
-This issue was first reported to the curl project on May 14, 2020. The initial
-fix was done, verified and pushed to git on the same day. (As a regular
-non-security related fix.)
-
-On May 15, 2020, the bug was reported again but then with the security impact
-highlighted.
-
-This advisory was posted on June 24th 2020.
-
-CREDITS
--------
-
-The security issue was reported by Marek Szlagor. The initial bug report was
-done by Gregory Jefferis and Jeroen Ooms. Patched by Daniel Stenberg.
-
-Thanks a lot!
+[1]: http://storebackup.org
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=1156767
 
 -- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
 
-  / daniel.haxx.se | Commercial curl support up to 24x7 is available!
-                   | Private help, bug fixes, support, ports, new features
-                   | https://www.wolfssl.com/contact/
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
+
+View attachment "fix-tmp-lock-file-race-condition.patch" of type "text/x-diff" (708 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
