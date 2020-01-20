@@ -1,121 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/3
-Message-ID: <ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>
-Date: Thu, 23 Apr 2020 15:10:55 +0300
-From: PromiseLabs Pentest Research <pentest@...miselabs.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/20/5
+Message-ID: <20200120145027.GF10486@f195.suse.de>
+Date: Mon, 20 Jan 2020 15:50:28 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: spoofing of local email sender via a homoglyph attack
+Subject: CVE-2019-18899: apt-cacher-ng: openSUSE packaging for apt-cacher-ng runs the daemon as root instead of as an unprivileged user
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-The provided versions seem to be wrong on this request, sorry for this.
+apt-cacher-ng is a caching proxy for downloading packages from
+Debian-style software repositories [1]. In the course of a code review
+of apt-cacher-ng I noticed a mismatch between upstream configuration and
+the configuration used in the openSUSE packaging.
 
-The exact version is from the postfix-2.10.1-7.el7.x86_64 package, thus
-the version stated in the CVE should be 2.10.1.
+While the upstream configuration expects the daemon to run as the
+apt-cacher-ng unprivileged user, the openSUSE packaging ships a
+diverging systemd service unit configuration, causing the apt-cacher-ng
+daemon to be running as the root user. Apart from a generally increased
+attack surface by not lowering privileges this causes the following
+security issue:
 
----
-PLPR:
-Plamen Dimitrov
-Penetration Tester, CEH & OSCP certified
+Although the openSUSE packaging for apt-cacher-ng doesn't employ the
+unprivileged apt-cacher-ng user, it still creates it in the system. The
+directory /run/apt-cacher-ng is created for the apt-cacher-ng user via
+a systemd-tmpfiles configuration file from the upstream sources. This
+results in the apt-cacher-ng daemon running as root, which handles files
+in /run/apt-cacher-ng which is owned by the apt-cacher-ng user. The
+daemon correctly assumes that this directory is safe to handle without
+precautions, but this assumption is broken by the bad packaging.
 
-Promise Solutions LTD
-Penetration Testing and Managed Security services
+Therefore a compromised apt-cacher-ng user account can perform symlink
+attacks in /run/apt-cacher-ng to cause writes to privileged file system
+locations by root, once the apt-cacher-ng service is (re)started.
+Furthermore the socket path /run/apt-cacher-ng/socket can be replaced by
+an attacker owned socket, thereby allowing him to hijack privileged
+client connections to apt-cacher-ng. Additional unexplored security
+issues could be possible.
 
-https://www.promisedev.com
-https://www.promiselabs.net
-+359 883 22 05 12
+An update for the broken packaging will be supplied for openSUSE Leap
+15.1. Furthermore, since there is no active maintainer for the package
+in openSUSE, the apt-cacher-ng package is removed from the
+openSUSE:Factory project and thus from the openSUSE Tumbleweed rolling
+release distribution in the future.
 
-On 2020-04-22 18:20, cve-request@...re.org wrote: 
+[1]: https://wiki.debian.org/AptCacherNg
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> The CVE ID is below. As far as we know, 3.3.0-1 is not a commonly
-> used version. Please see the "[Reference]" section below.
-> 
->> [Suggested description]
->> A certain Postfix 3.3.0-1 package could allow an attacker to send
->> an email from an arbitrary-looking sender via a homoglyph attack,
->> as demonstrated by the similarity of \xce\xbf to the 'o' character.
->> 
->> ------------------------------------------
->> 
->> [Additional Information]
->> Postfix allows an email from unsanitized input, pretending to be from
->> an existing user on the mail system, which may look exactly the same.
->> For example, it is possible sending an email using the hex character
->> \xce\ xbf, which looks exactly like the letter 'o'. In case the user
->> john.doe exists on the mail server, postfix would not allow to send an
->> email from this email account unless an unauthorized attempt is made.
->> However, in case we substitute the letter 'o' with the hex character
->> \xce\xbf, it will look exactly like it's being sent from john.doe,
->> although john.doe (j<\xce\xbf)hn.doe) is actually different from
->> the other.
->> 
->> ------------------------------------------
->> 
->> [Vulnerability Type]
->> Incorrect Access Control
->> 
->> ------------------------------------------
->> 
->> [Vendor of Product]
->> postfix
->> 
->> ------------------------------------------
->> 
->> [Affected Product Code Base]
->> postfix 3.3.0-1 - 3.3.0-1
->> 
->> ------------------------------------------
->> 
->> [Affected Component]
->> postfix mail server
->> 
->> ------------------------------------------
->> 
->> [Attack Type]
->> Remote
->> 
->> ------------------------------------------
->> 
->> [Discoverer]
->> d7x, Promise Solutions LTD / www.promiselabs.net [1]
->> 
->> ------------------------------------------
->> 
->> [Reference]
->> https://www.promiselabs.net
->> https://repology.org/project/postfix/versions
->> http://www.postfix.org/announcements.html
-> 
-> Use CVE-2020-12063.
-> 
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
-> http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
-> 
-> iQIcBAEBCAAGBQJeoGCRAAoJEPNX0OmQPkAIyDAQAI56GXHXS1AJQVx2nBBJosam
-> 6d/mtkM+LozhzpBVydzed58z8P/Q/qGWXzdT0mmIvq+X2WQp7pvCrUH7l9wkniH+
-> 0FD0c+LO2T/oU7a6sqZ7EHC0V3GPKu/F1W+reNB9V0v8LyAfHLE50AdvHZZjGIHc
-> lUvw/hqt+7NqpR2HFyjyA3sb1K8ZiqBcmxwV9ecECUx/smXFpjtdV9hTz7A9mgj8
-> ggkSjrkMQBsYqiU2OvPEfn4aKskavqTYLqVMxztieICoDPvNAGj+lnZIz4o6WIig
-> d2lqtZ+/8fPVUaYGCikacMNAE4BGs61BQT7tuYdbMt8+wWnB+IU84hBC7Lb7OE8L
-> 7O59MmmIF/C/jaaSmwy+FlSk+ZE95Q+SV7CHoYMLeongByo5drvqVuK79t5KVGDO
-> L6m85ta3Jh/zzQ6srg6REgPuM1Q2cFwu7FmWg4vAEamCwHnjv6D6xRBRO4lBm9V1
-> Upek80hF+BI/JwvKlpng1pzKrClqvzGdeZA4kw5MLoiEN19cf2W85nO0L+cpoLbQ
-> ixz/TarYDG9QQ89U3aJcrLDMH6hGsPKmTvD8dy5sVh+J3qK/zvj/eR98xy5jbKAn
-> pt57X5qFkfu+Sf9yrC3RFBiNTJ/UB4vb0/25g8M4e+vUMb/kkNxbVVNoAg56Wl1M
-> NLgC/CCd32QpiUFehvF2
-> =T4/w
-> -----END PGP SIGNATURE-----
- 
+Cheers
 
-Links:
-------
-[1] http://www.promiselabs.net
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
