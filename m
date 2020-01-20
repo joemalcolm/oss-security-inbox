@@ -1,90 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/06/2
-Message-ID: <CA+-XxSFDRagnDGM=kdJJnBzemiiw6XSz2RgZZV3_=K=Fa9C1Yg@mail.gmail.com>
-Date: Tue, 5 May 2020 12:36:48 -0700
-From: Igor Seletskiy <i@...udlinux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/20/4
+Message-ID: <20200120143608.GE10486@f195.suse.de>
+Date: Mon, 20 Jan 2020 15:36:08 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
+Subject: CVE-2020-5202: apt-cacher-ng: a local unprivileged user can impersonate the apt-cacher-ng daemon, possible credentials leak
 Content-Type: text/plain; charset=utf-8
 
-Ok with CloudLinux to start acting as primary asap.
+Hi,
 
+apt-cacher-ng is a caching proxy for downloading packages from
+Debian-style software repositories [1]. In the course of a code review
+of apt-cacher-ng I noticed a possible credentials leak when
+"AdminAuth" is enabled in /etc/apt-cacher-ng/security.conf.
 
-Regards,
-Igor Seletskiy |  CEO
-CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
-<https://www.cloudlinux.com/kernelcare>   |   Imunify360
-<http://imunify360.com/>
+The apt-cacher-ng daemon listens on TCP port 3142 on all network
+interfaces but also creates a UNIX domain socket in
+/run/apt-cacher-ng/socket. The cron job script
+/etc/cron.daily/apt-cacher-ng runs the following command:
 
-Get 24/7 free, exceptionally good support at cloudlinux.zendesk.com
-Follow us on twitter for technical updates: @CloudLinuxOS
-<https://twitter.com/cloudlinuxos>
+/usr/lib/apt-cacher-ng/acngtool maint -c /etc/apt-cacher-ng SocketPath=/var/run/apt-cacher-ng/socket
 
+SocketPath is explicitly specified on the command line, trying to force
+a connection to the daemon via the socket path. However, `acngtool` does
+not act accordingly. Instead, when using the default configuration, it
+connects to localhost:3142. This stems from the source file
+source/acngtool.cc:503 (based on apt-cacher-ng 3.1 that I have looked
+into), where the following is found:
 
-On Tue, May 5, 2020 at 12:25 PM Solar Designer <solar@...nwall.com> wrote:
+```
+	auto nips = Tokenize(cfg::bindaddr, SPACECHARS, hostips, true);
+	if (!nips)
+		hostips.emplace_back("localhost");
+```
 
-> Hi,
->
-> Thank you Benjamin, Igor, John for agreeing on this between yourselves
-> and for all of your contributions to running these lists smoothly.
->
-> On Tue, Mar 03, 2020 at 12:07:29AM -0500, Benjamin Gilbert wrote:
-> > Red Hat recently announced [1] that CoreOS Container Linux will reach
-> > end-of-life on May 26.  The Container Linux team will be leaving the
-> > distros lists on that date,
->
-> I assume you'll remind me about that on that date.
->
-> > and will need to hand off our maintenance
-> > responsibilities to other distros.  We're currently handling [2]:
-> >
-> > Administrative-1: Promptly review new issue reports for meeting the
-> > list's requirements and confirm receipt of the report and, when
-> > necessary, inform the reporter of any issues with their report (e.g.,
-> > obviously not actionable by the distros) and request and/or propose
-> > any required yet missing information (most notably, a tentative public
-> > disclosure date/time) - primary: CoreOS, backup: Oracle
-> >
-> > Administrative-2: If the proposed public disclosure date is not within
-> > list policy, insist on getting this corrected and propose a suitable
-> > earlier date - primary: CoreOS, backup: CloudLinux
-> >
-> > Administrative-6: If multiple issues are reported at once, see if any
-> > of them can reasonably be made public sooner than the rest, and if so
-> > help untangle them and stay on top of their disclosure process -
-> > primary: CoreOS, backup: CloudLinux
-> >
-> >
-> > Oracle isn't signed up for any other tasks, so it seems natural for
-> > them to move up to primary on #1.  In addition to being backup on #2
-> > and #6, CloudLinux is primary on Administrative-3 (evaluate if the
-> > issue is already public).  In my experience it makes sense to handle
-> > #1 and #2 together, so: Oracle, would you be willing to take primary
-> > on #1 and #2, and CloudLinux, what would you think of moving up to
-> > primary on #6?
->
-> I've just edited the wiki accordingly.
->
-> > It'd also be good to get volunteers for the backup slots.  Any takers?
->
-> I second this request.
->
-> > We plan to continue executing our current responsibilities until May
-> > 26, but if other distros want to take over our roles sooner for ease
-> > of bookkeeping, we're open to that.
->
-> I suggest that Oracle and CloudLinux already start to act as primary for
-> their respective tasks, and CoreOS as backup until you leave on May 26.
->
-> > Best,
-> > --Benjamin Gilbert
-> >
-> > [1]: https://coreos.com/os/eol/
-> > [2]:
-> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->
-> Thanks again,
->
-> Alexander
->
+Since port 3142 is not a privileged network port, any local user may
+bind to this port. Should the actual apt-cacher-ng daemon not (yet) be
+running, a local unprivileged user can impersonate the daemon, and the
+cron.daily/apt-cacher-ng script will sooner or later pass the AdminAuth
+credentials to it. This is the proof of concept I tested on Debian 9:
 
+```
+# make sure AdminAuth is enabled
+root # grep AdminAuth /etc/apt-cacher-ng/security.conf 
+AdminAuth: mooma:moopa
+
+# simulate the apt-cacher-ng daemon not running
+root # systemctl stop apt-cacher-ng
+
+# in a second shell run netcat as a regular user on port 3142
+user $ nc -l -p 3142
+
+# simulate the cron job being executed
+root # /etc/cron.daily/apt-cacher-ng
+
+# now you should see the following output in the netcat shell 
+GET /acng-report.html?doExpire=Start%2bExpiration&abortOnErrors=aOe HTTP/1.1
+User-Agent: Debian Apt-Cacher-NG/2
+Host: localhost
+Authorization: Basic bW9vbWE6bW9vcGE=
+Cache-Control: no-store,no-cache,max-age=0
+Accept: application/octet-stream
+Accept-Encoding: identity
+Connection: close
+```
+
+# base64 decoding the auth data, the local unprivileged user obtained
+# the authentication data for apt-cacher-ng
+user $ echo 'bW9vbWE6bW9vcGE=' | base64 -d
+mooma:moopa
+```
+
+The issue is more severe in the openSUSE packaging where the
+apt-cacher-ng daemon is not started by default, but only by explicit
+Administrator configuration, which results in the attack surface being
+exposed by default. But also when apt-cacher-ng crashes or can be
+crashed by a local attacker, the information leak could be achieved.
+
+Debian Upstream has already published an update with a suitable bugfix
+for Debian sid [2]. I've informed the upstream author on 2019-11-26
+about this issue, the Debian security team was involved, patches
+reviewed and agreed upon.
+
+[1]: https://wiki.debian.org/AptCacherNg
+[2]: https://security-tracker.debian.org/tracker/CVE-2020-5202
+
+Cheers
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
