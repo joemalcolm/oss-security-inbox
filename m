@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1286" "Thursday" "17" "November" "2016" "19:15:16" "+0000" "John Haxby" "john.haxby@oracle.com" "<8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>" "27" "Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" "^Date:" nil nil "11" "2016111719:15:16" "[oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" (number mark "        john.haxby@o Nov 17   27/1286  " thread-indent "\"Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell\"\n") "<20161117175017.GM5329@io.lakedaemon.net>" ("<88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>" "<20161116155529.GJ5329@io.lakedaemon.net>" "<c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>" "<20161117163922.GL5329@io.lakedaemon.net>" "<6bb2134c-5df5-7728-bec7-6d6a80e71476@oracle.com>" "<20161117175017.GM5329@io.lakedaemon.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2072" "Tuesday" "21" "January" "2020" "23:49:31" "+0100" "Maurits van Rees" "maurits@vanrees.org" "<5c47d85c-2648-d0ed-714f-f4e0b2e497ed@vanrees.org>" "50" "[oss-security] Plone security hotfix 20200121" nil nil nil "1" "2020012122:49:31" "[oss-security] Plone security hotfix 20200121" (number mark "U       maurits@vanr Jan 21   50/2072  " thread-indent "\"[oss-security] Plone security hotfix 20200121\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Plone security hotfix 20200121" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11272 invoked by uid 550); 17 Nov 2016 19:15:32 -0000
+Received: (qmail 14248 invoked by uid 550); 22 Jan 2020 05:27:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10230 invoked from network); 17 Nov 2016 19:15:32 -0000
-References: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
- <20161116155529.GJ5329@io.lakedaemon.net>
- <c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>
- <20161117163922.GL5329@io.lakedaemon.net>
- <6bb2134c-5df5-7728-bec7-6d6a80e71476@oracle.com>
- <20161117175017.GM5329@io.lakedaemon.net>
-Message-ID: <8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
-MIME-Version: 1.0
-In-Reply-To: <20161117175017.GM5329@io.lakedaemon.net>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Source-IP: aserv0022.oracle.com [141.146.126.234]
-Date: Thu, 17 Nov 2016 19:15:16 +0000
-From: John Haxby <john.haxby@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell
+Received: (qmail 21628 invoked from network); 21 Jan 2020 22:49:43 -0000
+X-Virus-Scanned: Debian amavisd-new at mail
 To: oss-security@lists.openwall.com
+From: Maurits van Rees <maurits@vanrees.org>
+Message-ID: <5c47d85c-2648-d0ed-714f-f4e0b2e497ed@vanrees.org>
+Date: Tue, 21 Jan 2020 23:49:31 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Subject: [oss-security] Plone security hotfix 20200121
 
-On 17/11/16 17:50, Jason Cooper wrote:
-> Hi John,
-> 
-> On Thu, Nov 17, 2016 at 04:56:06PM +0000, John Haxby wrote:
->> > On 17/11/16 16:39, Jason Cooper wrote:
->>> > > However, the golden rule still applies.  Physical access trumps all
->>> > > defensive measures.  The absolute best you can do is detect that
->>> > > physical access occurred.  From there, you're hoping there are no
->>> > > hardware implants or other devices outside the scope of software
->>> > > security.
->> > 
->> > I agree.  However, it ought be to be harder than leaning on the enter
->> > key to break into a system.  You lock your doors even though it doesn't
->> > stop a determined burglar?
-> Yes, as I said before, non-deterministic failure modes are bad.  This
-> CVE is a bug in the initrd script and needs to be fixed.  What I
-> disagree with, and still do, is the "sky is falling!" nature of the
-> alert.
+A Plone security hotfix was released today.
 
-Yup.  I agree there, but that's down to the publicity its received.  We
-can't do much but grin and bear that.   Red Hat have given this a CVSS2
-score of 7.2 which reflects the _potential_ severity but marked it as
-"moderate" which reflects the actual effect.   It's most serious for
-people like me who have an encrypted root but no grub password (and no
-rd.shell=0) but, no, the sky is not falling.
+CVE numbers: not yet issued. We will request them shortly from mitre.org.
 
-jch
+Versions Affected: All supported Plone versions (4.3.15 and any earlier
+4.x version, 5.2.1 and any earlier 5.x version). Previous versions could
+be affected but have not been tested.
+
+Versions Not Affected: None.
+
+Nature of vulnerability:
+
+The patch addresses several security issues:
+
+- Privilege escalation when plone.restapi is installed. Reported and
+fixed by Lukas Graf and Niklaus Johner.
+- An open redirection on the login form and possibly other places where
+redirects are done.
+- The isURLInPortal check that is done to avoid linking to an external
+site could be tricked into accepting malicious links. Reported by
+Damiano Esposito.
+- Password strength checks were not always checked. Reported by Ben Kummer.
+- You might be able to PUT (overwrite) some content without needing
+write permission.
+   This seems hard to do in practice. This fix is only needed when you
+use plone.app.contenttypes. Reported and fixed by Alessandro Pisa.
+- SQL quoting in DTML or in connection objects was insufficient, leading
+to possible SQL injections. This is a problem in Zope. If you use Zope
+without Plone, this hotfix should work for you too. Reported and fixed
+by Michael Brunnbauer and Michael Howitz.
+- Cross Site Scripting (XSS) in the title field on plone 5.0 and higher.
+Reported by Marcos Valle.
+
+Version support: The hotfix is officially supported by the Plone
+security team on the following versions of Plone in accordance with the
+Plone version support policy: 4.3.19, and 5.0.10, 5.1.6, 5.2.1. It was
+also tested on Plone 4.2.7. It is recommended also for Plone 4.0 and
+4.1, but this has not been tested.
+
+The fixes included here will be incorporated into subsequent releases of
+Plone, so Plone 4.3.20, 5.1.7, 5.2.2 and greater should not require this
+hotfix.
+
+The above is a copy from the release notes.
+Full details: https://plone.org/security/hotfix/20200121
+
+-- 
+Maurits van Rees https://maurits.vanrees.org/
+Member of Plone Security Team
+
