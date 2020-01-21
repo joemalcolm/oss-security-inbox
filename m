@@ -1,31 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/18/3
-Message-ID: <CAC1dCwX+=L_m_da_kANnvcO1HyvsPdy5E4XhiXc2t0WqWwVSbw@mail.gmail.com>
-Date: Wed, 18 Mar 2020 12:01:41 -0400
-From: Tim Allison <tallison@...che.org>
-To: user@...a.apache.org, "<dev@...a.apache.org>" <dev@...a.apache.org>,  Apache Security Team <security@...che.org>, announce@...che.org, oss-security@...ts.openwall.com
-Subject: [CVE-2020-1950] Excessive memory usage (DoS) vulnerability in Apache Tika's PSDParser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/22/1
+Message-ID: <5c47d85c-2648-d0ed-714f-f4e0b2e497ed@vanrees.org>
+Date: Tue, 21 Jan 2020 23:49:31 +0100
+From: Maurits van Rees <maurits@...rees.org>
+To: oss-security@...ts.openwall.com
+Subject: Plone security hotfix 20200121
 Content-Type: text/plain; charset=utf-8
 
-Title: [CVE-2020-1950] Excessive memory usage (DoS) vulnerability in Apache
-Tika's PSDParser
+A Plone security hotfix was released today.
 
-Severity: Medium
+CVE numbers: not yet issued. We will request them shortly from mitre.org.
 
-Vendor: The Apache Software Foundation
+Versions Affected: All supported Plone versions (4.3.15 and any earlier
+4.x version, 5.2.1 and any earlier 5.x version). Previous versions could
+be affected but have not been tested.
 
-Versions Affected: Apache Tika  1.0 to 1.23
+Versions Not Affected: None.
 
-Description:
-A carefully crafted or corrupt PSD file can cause excessive memory usage in
-Apache
-Tika's PSDParser in versions 1.0-1.23.
+Nature of vulnerability:
 
+The patch addresses several security issues:
 
-Mitigation:
-Apache Tika users should upgrade to 1.24 or later.
+- Privilege escalation when plone.restapi is installed. Reported and
+fixed by Lukas Graf and Niklaus Johner.
+- An open redirection on the login form and possibly other places where
+redirects are done.
+- The isURLInPortal check that is done to avoid linking to an external
+site could be tricked into accepting malicious links. Reported by
+Damiano Esposito.
+- Password strength checks were not always checked. Reported by Ben Kummer.
+- You might be able to PUT (overwrite) some content without needing
+write permission.
+   This seems hard to do in practice. This fix is only needed when you
+use plone.app.contenttypes. Reported and fixed by Alessandro Pisa.
+- SQL quoting in DTML or in connection objects was insufficient, leading
+to possible SQL injections. This is a problem in Zope. If you use Zope
+without Plone, this hotfix should work for you too. Reported and fixed
+by Michael Brunnbauer and Michael Howitz.
+- Cross Site Scripting (XSS) in the title field on plone 5.0 and higher.
+Reported by Marcos Valle.
 
+Version support: The hotfix is officially supported by the Plone
+security team on the following versions of Plone in accordance with the
+Plone version support policy: 4.3.19, and 5.0.10, 5.1.6, 5.2.1. It was
+also tested on Plone 4.2.7. It is recommended also for Plone 4.0 and
+4.1, but this has not been tested.
 
-Credit:
-This issue was discovered by Pierre Ernst at Elastic.
+The fixes included here will be incorporated into subsequent releases of
+Plone, so Plone 4.3.20, 5.1.7, 5.2.2 and greater should not require this
+hotfix.
+
+The above is a copy from the release notes.
+Full details: https://plone.org/security/hotfix/20200121
+
+-- 
+Maurits van Rees https://maurits.vanrees.org/
+Member of Plone Security Team
 
