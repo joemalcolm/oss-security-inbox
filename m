@@ -1,68 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/17/2
-Message-ID: <20200817091244.GA26618@redhat.com>
-Date: Mon, 17 Aug 2020 10:12:44 +0100
-From: Joe Orton <jorton@...che.org>
-To: Solar Designer <solar@...nwall.com>
-Cc: Daniel Ruggeri <druggeri@...che.org>, oss-security@...ts.openwall.com, HTTPD Security <security@...pd.apache.org>
-Subject: Re: CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/21/2
+Message-ID: <CACqxkWLqdgyMNidzGuffrrudaFYu+ip34V0iLgerSOS=QETniA@mail.gmail.com>
+Date: Tue, 21 Jan 2020 17:36:25 +0000
+From: Nick Boyce <nick.boyce@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: matthias.gerstner@...e.de
+Subject: Re: CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock
 Content-Type: text/plain; charset=utf-8
 
-The only point where we deliberately obscure anything is by avoiding 
-disclosure in commits prior to release.  This follows the standard ASF 
-security policy https://www.apache.org/security/committers.html - see 
-step 12.  (I also find this very distateful, to the point where it puts 
-me off spending time on security@...pd stuff)
+On Mon, 20 Jan 2020 at 13:42, Matthias Gerstner <mgerstner@...e.de> wrote:
 
-That we don't reference specific revisions in the public data once 
-disclosed with a release is really only habit, we have never done it 
-before but there is no reason why we can't.  We do sometimes go back and 
-modify the revision commit messages to reference the CVE names, but it 
-requires somebody spending the time to do it.
+> storeBackup [1] is a tool for performing disk-to-disk backups.
+[...]
+> [1]: http://storebackup.org
 
-On Sat, Aug 08, 2020 at 03:21:35PM +0200, Solar Designer wrote:
-> On Sat, Aug 08, 2020 at 07:02:21AM -0500, Daniel Ruggeri wrote:
-> > As you can
-> > imagine, with such a strong downstream community from our releases, we
-> > try to be careful so as to not place too much information in the
-> > descriptions to make it trivial to exploit vulnerabilities before those
-> > downstream packagers can incorporate fixes.
-> 
-> No, I couldn't have imagined that a well-established Open Source project
-> like Apache httpd would still use this flawed practice of 20+ years ago.
-> 
-> The current practice is to include all information that is helpful to
-> address the issue, including by downstream packagers, who in many cases
-> will need to do backports rather than merely update to a new release.
-> 
-> By deliberately withholding information as a standard practice, you hurt
-> not only those who would exploit the vulnerabilities, but also (and even
-> more certainly) those who would fix them.
-> 
-> It'd have to be some rare special case with specific reasoning to decide
-> on temporarily withholding anything from an otherwise public disclosure,
-> and then you'd need to have a specific plan on disclosing the rest on a
-> specific date (ideally pre-announced).  For example, this can be done to
-> separate the disclosure of full vulnerability and fix detail (sufficient
-> for backports) vs. publication of an exploit by a week, like e.g. Qualys
-> has done on some recent occasions where exploitation was not trivial.
-> If you're not planning on publishing exploitation techniques, there's
-> usually nothing you can reasonably withhold from the initial disclosure.
-> 
-> If you do want to reduce the window of exposure, there are ways to give
-> your downstream packagers a few days (and ideally no more than that) to
-> incorporate the fixes privately before you disclose the issues publicly.
-> We host the distros list for this, and you may also contact some of your
-> other downstreams separately.  I am not saying you should be doing that,
-> but rather I am saying that if you're not doing it (which is fine), then
-> you shouldn't try to make your public disclosures cryptic as a way to
-> compensate for that.  I think it doesn't have a net positive effect.
-> 
-> So my suggestion is that for most issues you just disclose everything
-> publicly right away, and for occasional highest-severity issues you
-> notify some of your downstreams in private first (unfortunately, no way
-> to notify all without making the issue public) and give them just a
-> little time before you disclose everything publicly.
-> 
-> Alexander
-> 
+Er ... when I looked just now, the page at that URL began :
+
+> How to Create Cryptocurrency – Simple Strategy
+
+and continued:
+
+> Everyone is aware of the bitcoin which is the cryptocurrency
+> trending in the world of IT
+
+In "the world of IT" we are instantly wondering who exactly has
+written this webpage about a backup utility ....   Should we tell the
+site owner his site may have been stolen ?
+
+Matthias ?
+
+Cheers,
+Nick
