@@ -1,157 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/4
-Message-ID: <5a3464785c26496ea796470a1a0d82d1@tencent.com>
-Date: Mon, 12 Oct 2020 15:53:06 +0000
-From: kiyin(尹亮) <kiyin@...cent.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Anthony Liguori <aliguori@...zon.com>, Solar Designer <solar@...nwall.com>
-Subject: Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/21/1
+Message-ID: <478aa5ed-1bec-c12b-e7d5-1bfd3e5d096a@orlitzky.com>
+Date: Tue, 21 Jan 2020 13:17:11 -0500
+From: Michael Orlitzky <michael@...itzky.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-20384: Portage insecure temporary location
 Content-Type: text/plain; charset=utf-8
 
-There are four security bugs in Broadcom SPU driver. The patch was public in https://www.spinics.net/lists/linux-crypto/msg50839.html. CVE ID request is in progress.
-
-Here is the patch detail:
-
-
-
-The setkey function for GCM/CCM algorithms didn't verify the key
-
-length before copying the key and subtracting the salt length.
-
-
-
-This patch delays the copying of the key til after the verification
-
-has been done.  It also adds checks on the key length to ensure
-
-that it's at least as long as the salt.
-
-
-
-Fixes: 9d12ba86f818 ("crypto: brcm - Add Broadcom SPU driver")
-
-Cc: <stable@...xxxxxxxxxxxx>
-
-Reported-by: kiyin(尹亮) <kiyin@...xxxxxxxx>
-
-Signed-off-by: Herbert Xu <herbert@...xxxxxxxxxxxxxxxx>
-
-
-
-diff --git a/drivers/crypto/bcm/cipher.c b/drivers/crypto/bcm/cipher.c
-
-index 5d38b87b9d77..50d169e61b41 100644
-
---- a/drivers/crypto/bcm/cipher.c
-
-+++ b/drivers/crypto/bcm/cipher.c
-
-@@ -2867,7 +2867,6 @@ static int aead_gcm_ccm_setkey(struct crypto_aead *cipher,
-
-
-
-        ctx->enckeylen = keylen;
-
-        ctx->authkeylen = 0;
-
--       memcpy(ctx->enckey, key, ctx->enckeylen);
-
-
-
-        switch (ctx->enckeylen) {
-
-        case AES_KEYSIZE_128:
-
-@@ -2883,6 +2882,8 @@ static int aead_gcm_ccm_setkey(struct crypto_aead *cipher,
-
-               goto badkey;
-
-        }
-
-
-
-+       memcpy(ctx->enckey, key, ctx->enckeylen);
-
-+
-
-        flow_log("  enckeylen:%u authkeylen:%u\n", ctx->enckeylen,
-
-                ctx->authkeylen);
-
-        flow_dump("  enc: ", ctx->enckey, ctx->enckeylen);
-
-@@ -2937,6 +2938,10 @@ static int aead_gcm_esp_setkey(struct crypto_aead *cipher,
-
-        struct iproc_ctx_s *ctx = crypto_aead_ctx(cipher);
-
-
-
-        flow_log("%s\n", __func__);
-
-+
-
-+       if (keylen < GCM_ESP_SALT_SIZE)
-
-+               return -EINVAL;
-
-+
-
-        ctx->salt_len = GCM_ESP_SALT_SIZE;
-
-        ctx->salt_offset = GCM_ESP_SALT_OFFSET;
-
-        memcpy(ctx->salt, key + keylen - GCM_ESP_SALT_SIZE, GCM_ESP_SALT_SIZE);
-
-@@ -2965,6 +2970,10 @@ static int rfc4543_gcm_esp_setkey(struct crypto_aead *cipher,
-
-        struct iproc_ctx_s *ctx = crypto_aead_ctx(cipher);
-
-
-
-        flow_log("%s\n", __func__);
-
-+
-
-+       if (keylen < GCM_ESP_SALT_SIZE)
-
-+              return -EINVAL;
-
-+
-
-        ctx->salt_len = GCM_ESP_SALT_SIZE;
-
-        ctx->salt_offset = GCM_ESP_SALT_OFFSET;
-
-        memcpy(ctx->salt, key + keylen - GCM_ESP_SALT_SIZE, GCM_ESP_SALT_SIZE);
-
-@@ -2994,6 +3003,10 @@ static int aead_ccm_esp_setkey(struct crypto_aead *cipher,
-
-        struct iproc_ctx_s *ctx = crypto_aead_ctx(cipher);
-
-
-
-        flow_log("%s\n", __func__);
-
-+
-
-+       if (keylen < CCM_ESP_SALT_SIZE)
-
-+              return -EINVAL;
-
-+
-
-        ctx->salt_len = CCM_ESP_SALT_SIZE;
-
-        ctx->salt_offset = CCM_ESP_SALT_OFFSET;
-
-        memcpy(ctx->salt, key + keylen - CCM_ESP_SALT_SIZE, CCM_ESP_SALT_SIZE);
-
---
-
-Email: Herbert Xu <herbert@...xxxxxxxxxxxxxxxx>
-
-Home Page: http://gondor.apana.org.au/~herbert/
-
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
-
-
+Product: Gentoo portage package manager
+Versions-affected: 2.3.84 and earlier (all versions)
+Author: Michael Orlitzky
+Bug-report: https://bugs.gentoo.org/692492
+
+== Summary ==
+
+The Gentoo portage package manager builds packages in a temporary
+location. By default, that temporary location is accessible to
+unprivileged users even though the build essentially takes place as
+root. In some common situations (during reinstalls, for example), this
+leaves the source tree momentarily writable by an existing system user
+who can exploit the situation to gain root.
+
+== Details ==
+
+Portage is the default package manager on Gentoo Linux, a source-based
+distribution. To install a package, portage runs through a series of
+configuration, compilation, and installation phases consisting of bash
+script. These all run with root privileges in a temporary subdirectory
+of the location specified by the PORTAGE_TMPDIR variable. The install
+phase performs a "mock" installation, in a self-contained directory,
+that can be tweaked before proceeding to the next step. When the build
+and mock-install are complete, the final result is merged onto the live
+filesystem, again using root privileges.
+
+Gentoo developers and portage itself take some care to ensure that
+nothing objectionable reaches the live filesystem. Subdirectories of
+PORTAGE_TMPDIR, on the other hand, are the wild wild west. Much of
+PORTAGE_TMPDIR is world-traversable, and that lack of access control
+turns out to be exploitable by users who are granted ephemeral write
+access to the source tree of a package being installed. If an
+unprivileged user can write to the mock-installation image of a package,
+then in essence he can write to the live filesystem as well because
+everything in the mock image is merged onto the live filesystem eventually.
+
+It is the nature of package maintenance that illicit things must take
+during the build and installation phases. For example, many upstream
+build systems set incorrect permissions on the files they produce, and
+those permissions must be corrected before the files are merged onto the
+system. But before problems are fixed in the mock-install, they exist in
+the mock-install. And many of them allow an unprivileged user to modify
+the source tree.
+
+== Exploitation ==
+
+The nagioscore package is available in Gentoo as
+net-analyzer/nagios-core. By default its build system gives ownership of
+/usr/lib64/nagios/plugins to the nagios user, but this gets corrected to
+root:root to avoid surprises. The two lines that accomplish that in the
+net-analyzer/nagios-core ebuild are,
+
+  emake DESTDIR="${D}" install-basic
+  fowners root:root /usr/lib64/nagios/plugins
+
+The $D variable refers to the mock-installation path under
+PORTAGE_TMPDIR, and fowners implicitly acts there. But between the call
+to emake and the call to fowners, the plugin directory in the mock
+installation image is writable by the nagios user. Below we demonstrate
+how "nagios" can abuse this to install a malicious plugin.
+
+1. First, add a sleep call to the ebuild to make it easier to exploit
+interactively:
+
+     emake DESTDIR="${D}" install-basic
+     echo "I'm vulnerable, is it nap time?"
+     sleep 15
+     fowners root:root /usr/lib64/nagios/plugins
+
+2. Install acct-user/nagios once, so that the unprivileged nagios is
+created on the system (in real life, this happens automatically):
+
+    root # emerge -1 acct-user/nagios
+
+3. Initiate an install of net-analyzer/nagios-core:
+
+    root # emerge net-analyzer/nagios-core
+
+4. When the ebuild reaches the sleep call that we added, the plugin
+directory in the mock-install image is writable by the nagios user.
+Commandeer the nagios user with "su", and place a malicious plugin there:
+
+     root # su -s /bin/sh nagios
+     nagios $ touch
+/var/tmp/portage/net-analyzer/nagios-core-*/image/usr/lib64/nagios/plugins/exploit.txt
+
+5. Wait for the sleep() to pass, and watch the exploit be installed to
+the live system:
+
+     >>> /usr/lib64/nagios/cgi-bin/tac.cgi
+     >>> /usr/lib64/nagios/cgi-bin/extinfo.cgi
+     >>> /usr/lib64/nagios/cgi-bin/config.cgi
+     --- /usr/lib64/nagios/plugins/
+     >>> /usr/lib64/nagios/plugins/exploit.txt
