@@ -1,33 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/27/4
-Message-ID: <CALSkbjp0m=BbSAVFpiJEHG7=neMvK4sAt7BHndpt-qctDcj9jw@mail.gmail.com>
-Date: Mon, 27 Jan 2020 20:36:19 +0000
-From: daniel gaspar <danielvazgaspar@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/22/2
+Message-ID: <20200122084245.GA10489@f195.suse.de>
+Date: Wed, 22 Jan 2020 09:42:45 +0100
+From: Matthias Gerstner <matthias.gerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-1932] Apache Incubator Superset user data leak vulnerability
+Subject: Re: CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium
+Hi Nick,
 
-Vendor:
-The Apache Software Foundation
+> > storeBackup [1] is a tool for performing disk-to-disk backups.
+> [...]
+> > [1]: http://storebackup.org
+> 
+> Er ... when I looked just now, the page at that URL began :
+> 
+> > How to Create Cryptocurrency – Simple Strategy
+> 
+> and continued:
+> 
+> > Everyone is aware of the bitcoin which is the cryptocurrency
+> > trending in the world of IT
+> 
+> In "the world of IT" we are instantly wondering who exactly has
+> written this webpage about a backup utility ....   Should we tell the
+> site owner his site may have been stolen ?
 
-Product:
-Apache Incubator Superset
+Hmm I never bothered to look deeper into the website but now that you're
+pointing to it, it looks strange. I can give the upstream author a hint,
+to check up on his website.
 
-Versions Affected:
-0.34.0
-0.34.1
-0.35.0
-0.35.1
+This storeBackup project is near-dead anyways, sadly. There seem to be
+some die hard fans out there that use it, but the author only manages to
+send out one email roughly every week. There seems to be no code
+repository for it so we're getting tarballs - not even patches.
 
-Description:
-Authenticated Apache Superset users are able to retrieve to retrieve
-other users' information,
-including hashed passwords, by accessing an unused and undocumented API
-endpoint on Apache Superset.
+Thank you for the hint. If I get any more information about the
+situation of the website I will get back to you.
 
-Mitigation:
-Superset users with the mentioned affected versions should upgrade to
-0.35.2 or higher
+Cheers
 
+Matthias
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
