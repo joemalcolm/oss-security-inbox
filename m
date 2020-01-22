@@ -1,4 +1,9 @@
-Received: (qmail 3546 invoked by uid 550); 13 Feb 2026 19:15:29 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1716" "Wednesday" "22" "January" "2020" "14:07:09" "+0100" "Matthias Gerstner" "matthias.gerstner@suse.de" "<20200122130709.GA23176@f195.suse.de>" "47" "Re: [oss-security] CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock" nil nil nil "1" "2020012213:07:09" "[oss-security] CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock" (number mark "U       matthias.ger Jan 22   47/1716  " thread-indent "\"Re: [oss-security] CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock\"\n") "<20200122084245.GA10489@f195.suse.de>" ("<20200120134055.GC10486@f195.suse.de>" "<CACqxkWLqdgyMNidzGuffrrudaFYu+ip34V0iLgerSOS=QETniA@mail.gmail.com>" "<20200122084245.GA10489@f195.suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20275 invoked by uid 550); 22 Jan 2020 13:23:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,87 +12,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3508 invoked from network); 13 Feb 2026 19:15:29 -0000
-Date: Fri, 13 Feb 2026 20:13:53 +0100
-From: Christian Brabandt <cb@256bit.org>
+Received: (qmail 14305 invoked from network); 22 Jan 2020 13:07:20 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Wed, 22 Jan 2020 14:07:09 +0100
+From: Matthias Gerstner <matthias.gerstner@suse.de>
 To: oss-security@lists.openwall.com
-Message-ID: <aY938TY131se7mSQ@256bit.org>
+Message-ID: <20200122130709.GA23176@f195.suse.de>
+References: <20200120134055.GC10486@f195.suse.de>
+ <CACqxkWLqdgyMNidzGuffrrudaFYu+ip34V0iLgerSOS=QETniA@mail.gmail.com>
+ <20200122084245.GA10489@f195.suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="BOKacYhQ+x31HxR3"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] NetBeans specialKeys Stack Buffer Overflow with Vim
- <9.1.2148
+In-Reply-To: <20200122084245.GA10489@f195.suse.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] CVE-2020-7040: storeBackup: denial of service and
+ symlink attack vector via fixed lockfile path /tmp/storeBackup.lock
 
-NetBeans specialKeys Stack Buffer Overflow with Vim <9.1.2148
-=============================================================
-Date: 13.02.2026
-Severity: Medium
-CVE: CVE-2026-26269
-CWE: Stack-based Buffer Overflow (CWE-121)
+--BOKacYhQ+x31HxR3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-### Summary
-A stack buffer overflow vulnerability exists in Vim's NetBeans integration
-when processing the `specialKeys` command, affecting Vim builds that enable
-and use the NetBeans feature.
+Hello,
 
-Stack buffer overflow exists in `special_keys()` (in `src/netbeans.c`).
-The `while (*tok)` loop writes two bytes per iteration into a 64-byte stack
-buffer (keybuf) with no bounds check. A malicious NetBeans server can overflow
-keybuf with a single specialKeys command.
+> > Should we tell the site owner his site may have been stolen ?
+>=20
+> Hmm I never bothered to look deeper into the website but now that you're
+> pointing to it, it looks strange. I can give the upstream author a hint,
+> to check up on his website.
 
-### Description
-The vulnerability is located in the `special_keys()` function in
-`src/netbeans.c`.
+I have heard back from the author and he told me that storebackup.org
+never was owned by him, but created by some user of storeBackup, and by
+now is completely unrelated to the software. He wants to remove any
+reference to the URL from his documentation.
 
-Vim allocates a fixed-size stack buffer of 64 bytes (`KEYBUFLEN`) and
-writes attacker-controlled characters into it without performing any
-bounds checking.
+The official upstream website is on GNU Savannah [1].
 
-The vulnerable code path is triggered when:
-1. Vim is started with NetBeans integration enabled (e.g. `-nb` option)
-2. Vim connects to a NetBeans server
-3. The server sends a crafted `specialKeys` command containing a long
-   token string
-4. The unchecked writes overflow the stack buffer
+[1]: https://savannah.nongnu.org/projects/storebackup
 
-This issue was confirmed using AddressSanitizer.
+Cheers
 
-### Impact
-This is a Stack-based Buffer Overflow (CWE-121). By sending a crafted
-specialKeys command, a malicious or compromised NetBeans server can overwrite
-the stack, leading to:
+Matthias
 
-- Denial of Service: Immediate crashing of the Vim process.
-- Arbitrary Code Execution: Potential hijacking of the control flow by
-  overwriting the return address on the stack.
+--BOKacYhQ+x31HxR3
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Attack Vector: While the NetBeans interface is legacy, it communicates over
-unencrypted TCP. An attacker could perform a Man-in-the-Middle (MITM) attack to
-inject the malicious payload into an existing NetBeans session.
+-----BEGIN PGP SIGNATURE-----
 
-The vulnerability requires user interaction to connect to a NetBeans server.
-The severity is rated **medium** due to potential for code execution.
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl4oSP0ACgkQFMQFyXGS
+NVPHNw/9FFPEqK/y+rjr3jQ01gj4yvUCARHfNIHrKL/zIMkSkHOwPg3qDdjW50/1
+E6u1Pt/302crtzr35q/mz4nAVRRPJl7Rx5orBwaLGvuj60/ZxTJMLGrwH7+tEDPp
+Vn1NnwY4Ap1bRRlR1gxhIF4oGHfZrih3ZFILxYwvPlfMVUtZHTej8tOmzHtlCOoF
+cdK/rmfWLOPJy47BALfzO+bcYnuUCEFxJXJTVkNZFpoH5OICfVGQEU3Z+2ehmOqv
+ltz5STNTWgFZc2Z6QQhLH4S44vg63xgywLW/9GUHb96dBo2IwVnrU32QsH5coy6n
+FcCD4wP3D+4663saG4fryhXrAlo/LZdVYZpPLV++o2OqKQk3Fc6XPySa7Fh0gM9N
+MFegBb8kPrjX3vhVFgIE0qjq3lZtagyuJDy9fDVZtcaXS4HoMq9QtyDkjAia5/EU
+KOJCa5ExjStjXtArxlBeh0uhrnqKTAgxZF7W2cZIeXi91yFc0qZelgTx+g+Vxig+
+59GzCS9L9Ne+BN+ljFAIUbYzfLHjL3TN8VwCptDqXHLnqHdR4sVoEbpBogX1MwD9
+ADoV4wlLOg3MhfxHR2po6HeAyl+EBGNHY/1rdQcvZwapozpOI6STbXmW4YngPRLc
+t1t1ks5hRCcrSB0S3xoE0AAFMg2EXbRYcdeQslQuJ+sNdCp39YU=
+=GpI2
+-----END PGP SIGNATURE-----
 
-### Acknowledgements
-The Vim project would like to thank Haein Lee (github handle @haaeein)
-for reporting this issue and providing detailed proof-of-concept code
-demonstrating the vulnerability.
-
-### References
-The issue has been fixed as of Vim patch [v9.1.2148](https://github.com/vim/vim/releases/tag/v9.1.2148).
-
-[Commit](https://github.com/vim/vim/commit/c5f312aad8e4179e437f81ad39a860cd0ef11970)
-[Github Advisory](https://github.com/vim/vim/security/advisories/GHSA-9w5c-hwr9-hc68)
-
-
-Thanks,
-Christian
--- 
-Wenn Männer sich mit ihrem Kopf beschäftigen, nennt man das 'denken'.
-Wenn Frauen das gleiche tun, heißt das 'frisieren'.
-		-- Anna Magnani
+--BOKacYhQ+x31HxR3--
