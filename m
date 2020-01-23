@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/09/5
-Message-ID: <837a9c7055b76fa0887a07a13f7ae077c8c39387.camel@apache.org>
-Date: Wed, 09 Dec 2020 08:08:48 -0800
-From: Brennan Ashton <btashton@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/23/1
+Message-ID: <CACqxkW+KKgmqZmEeardoPrSQGDccoRnQiCvg-T2qYuqTKgSXAA@mail.gmail.com>
+Date: Thu, 23 Jan 2020 15:17:27 +0000
+From: Nick Boyce <nick.boyce@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-17529: Apache NuttX (incubating) Out of Bound Write from invalid fragmentation offset value specified in the IP header
+Cc: matthias.gerstner@...e.de
+Subject: Re: CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock
 Content-Type: text/plain; charset=utf-8
 
-Description:
-Out-of-bounds Write vulnerability in TCP Stack of Apache Software
-Foundation Apache NuttX (incubating) allows attacker to corrupt memory
-by supplying and invalid fragmentation offset value specified in the IP
-header.  This is only impacts builds with both CONFIG_EXPERIMENTAL and
-CONFIG_NET_TCP_REASSEMBLY build flags enabled.
+On Wed, 22 Jan 2020 at 13:24, Matthias Gerstner
+<matthias.gerstner@...e.de> wrote:
+>
+> > > Should we tell the site owner his site may have been stolen ?
+> >
+> > Hmm I never bothered to look deeper into the website but now that you're
+> > pointing to it, it looks strange. I can give the upstream author a hint,
+[...]
+> I have heard back from the author and he told me that storebackup.org
+> never was owned by him, but created by some user of storeBackup
+[...]
+> The official upstream website is on GNU Savannah [1].
+> [1]: https://savannah.nongnu.org/projects/storebackup
 
-This issue affects:
-Apache Software Foundation Apache NuttX (incubating) versions prior to
-9.1.1 AND 10.0.0.
+Thanks Matthias for the clarification.
 
-This issue is also known as AMNESIA:33 CVE-2020-17438
-
-Credit:
-Apache NuttX would like to thank Forescout for reporting the issue
-
-Thanks you,
-Brennan Ashton
-
+Nick
