@@ -1,165 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/07/3
-Message-ID: <CAE4Awf-WydLwF1KQVEi0TLbNXRCGB2cvCfESq0wigQr2ASOg+w@mail.gmail.com>
-Date: Thu, 7 May 2020 16:01:01 -0500
-From: Gage Hugo <gagehugo@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OSSA-2020-005] Keystone: OAuth1 request token authorize silently ignores roles parameter (CVE PENDING)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/23/2
+Message-ID: <6ef94eee-2737-c771-50da-0f2d02d1fc86@igalia.com>
+Date: Thu, 23 Jan 2020 18:27:10 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0001
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0001
+------------------------------------------------------------------------
 
-==============================================================================
-OSSA-2020-005: OAuth1 request token authorize silently ignores roles
-parameter
-==============================================================================
+Date reported           : January 23, 2020
+Advisory ID             : WSA-2020-0001
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0001.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0001.html
+CVE identifiers         : CVE-2019-8835, CVE-2019-8844, CVE-2019-8846.
 
-:Date: May 06, 2020
-:CVE: CVE-2020-12690
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
+CVE-2019-8835
+    Versions affected: WebKitGTK before 2.26.3 and WPE WebKit before
+    2.26.3.
+    Credit to Anonymous working with Trend Micro's Zero Day Initiative,
+    Mike Zhang of Pangu Team.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-Affects
-~~~~~~~
-- - Keystone: <15.0.1, ==16.0.0
+CVE-2019-8844
+    Versions affected: WebKitGTK before 2.26.3 and WPE WebKit before
+    2.26.3.
+    Credit to William Bowling (@wcbowling).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-
-Description
-~~~~~~~~~~~
-kay reported a vulnerability in Keystone's OAuth1 Token API. The list
-of roles provided for an OAuth1 access token are ignored, so when an
-OAuth1 access token is used to request a keystone token, the keystone
-token will contain every role assignment the creator had for the
-project instead of the provided subset of roles. This results in the
-provided keystone token having more role assignments than the creator
-intended, possibly giving unintended escalated access.
-
-
-Errata
-~~~~~~
-CVE-2020-12690 was assigned after the original publication date.
-
-
-Patches
-~~~~~~~
-- - https://review.opendev.org/725894 (Rocky)
-- - https://review.opendev.org/725892 (Stein)
-- - https://review.opendev.org/725890 (Train)
-- - https://review.opendev.org/725887 (Ussuri)
-- - https://review.opendev.org/725885 (Victoria)
+CVE-2019-8846
+    Versions affected: WebKitGTK before 2.26.3 and WPE WebKit before
+    2.26.3.
+    Credit to Marcin Towalski of Cisco Talos.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
 
 
-Credits
-~~~~~~~
-- - kay (CVE-2020-12690)
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+January 23, 2020
 
 
-References
-~~~~~~~~~~
-- - https://launchpad.net/bugs/1873290
-- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-12690
 
-
-Notes
-~~~~~
-- - The stable/rocky branch is under extended maintenance and will receive
-no new
-  point releases, but a patch for it is provided as a courtesy.
-
-
-OSSA History
-~~~~~~~~~~~~
-- - 2020-05-07 - Errata 1
-- - 2020-05-06 - Original Version
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl60dYoACgkQ56j9K3b+
-vRG6Tg//ZV/05IJTRghymKImfgWiT4G49Z2gZ5TgxbMqLmJ1+w5YthbaDNSrlmyO
-zmXBG5xLDuXhG6aD9IeKBjmVMgJhr2oef0bqV73vuwmTaUPW60A7cpx5en7frEbT
-UBgaG49+9BxtJsTJyI2oDpzAj9Z42u/gZPzfM3wbaCjbvAHJP7t2aqQL51iwCbhM
-IJSJUYprfrPf/YbeG6k1uWuNIT7iZs1TgqyLQfoYzbNX1sIP3rJie3XC7ZOOt+De
-FJ+AxLy9cRihG1p3kVS6SUQmSyIyluUyP6FhxBOyL36ZXCwEZABVjHXbK2QK4F2A
-Tgfz8R8moJ/J4ReWw2z226czaCWKg3ApjGdjEqBhakBrGP/aTualMlDFRSHxkI/9
-oAUucNKGS64XgUmGPwQhVm4oCNrs+9YpGdH63S14N9os64BHB/D4hGMzHwrE4Fxk
-ejuIzrYAHqsnKIgNDhAl2gZJgT6j924MJfR/ImkdLp31S5qh49NrCbA5cmgLY9Ke
-XzNrnLhKcqSN+z1YwVidUWF8B7HEliPQBHgVwf4bpWl+jKgjr5wfWKYW5f9civtu
-1tWjbgdjYqce/gataAjIOw41IIFrSGWyZfHc2wQnkBwR3xhz2NPbxPCniHZg5kAT
-h/pAiVk6InwpTnTfor8OoHFPiD7MTg34EJmEkGqmCPPOIpm/BSk=
-=3dVo
------END PGP SIGNATURE-----
-
-On Wed, May 6, 2020 at 2:54 PM Gage Hugo <gagehugo@...il.com> wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA512
->
->
-> ==============================================================================
-> OSSA-2020-005: OAuth1 request token authorize silently ignores roles
-> parameter
->
-> ==============================================================================
->
-> :Date: May 06, 2020
-> :CVE: Pending
->
->
-> Affects
-> ~~~~~~~
-> - - Keystone: <15.0.1, ==16.0.0
->
->
-> Description
-> ~~~~~~~~~~~
-> kay reported a vulnerability in Keystone's OAuth1 Token API. The list
-> of roles provided for an OAuth1 access token are ignored, so when an
-> OAuth1 access token is used to request a keystone token, the keystone
-> token will contain every role assignment the creator had for the
-> project instead of the provided subset of roles. This results in the
-> provided keystone token having more role assignments than the creator
-> intended, possibly giving unintended escalated access.
->
->
-> Patches
-> ~~~~~~~
-> - - https://review.opendev.org/725894 (Rocky)
-> - - https://review.opendev.org/725892 (Stein)
-> - - https://review.opendev.org/725890 (Train)
-> - - https://review.opendev.org/725887 (Ussuri)
-> - - https://review.opendev.org/725885 (Victoria)
->
->
-> Credits
-> ~~~~~~~
-> - - kay (CVE Pending)
->
->
-> References
-> ~~~~~~~~~~
-> - - https://launchpad.net/bugs/1873290
-> - - http://cve.mitre.org/cgi-bin/cvename.cgi?name=Pending
->
->
-> Notes
-> ~~~~~
-> - - The stable/rocky branch is under extended maintenance and will receive
-> no new
->   point releases, but a patch for it is provided as a courtesy.
-> -----BEGIN PGP SIGNATURE-----
->
-> iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl6zFWsACgkQ56j9K3b+
-> vRFDnhAArgXdQUnCyckPQciBvxMxQvqhCEhzGH0aQNAmMLaImYUwFhFVVO0DlcNb
-> kt/ynLQLdyi3YnCz1x4VhUXaCh4Rhi9pYkU4LKa/tvJj6anrCSLHmuDD52idkZeB
-> sFslgkh/BGfdM4HcuPLhs4SSaZpI53ASitiOhyjBIN/DmpLUbZgmJ1iz3FfQ3cTB
-> wtjYI4jGCCMq+4POSozWMzeYdL3JzR264jBCRrCw1ErIPjpF4KSOFaH5vqakBnzw
-> Ot7KR7s7FmIwU7LhCuvjgLW3rxwE1g5bz+Qd/97rC1bTx/iPHklQjMP5SoGwmjta
-> Kx1prUaQqFys5Bw93e0cj1Fwn0zNHUjqLs4LZscNbyGRyAZCPREeg2quwBxVUNk9
-> D6jxW3J2LYIu+ictVV5fnBQd4/+NtxM8ofLDM03QZouUpkNfCHAmW81BYqd2+Pii
-> VbJi5Litz+DHLrAyh0O4zD/PBc5+5zxB2EXEDVEJitqaxQWfogJwJzGe89ULom0I
-> VXMuYOvqaLV9f2JIG6SEBiKrfaUhSgoHTrmznt82KOlsOBMamQUaj5iTqDoDzPD2
-> LVB2WLABj1cFZsnTFAec1qKwEPXuT0p3Dsb7eyvwsq5aJYS5I2bjK6Q1WcCcqzJF
-> 1b+v0iqW0Qu+Hk4fwvcrqqQMDZ7Q982tT+B7sU8xV4jYBtFLseQ=
-> =iEFE
-> -----END PGP SIGNATURE-----
->
-
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
