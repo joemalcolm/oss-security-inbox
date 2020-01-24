@@ -1,4 +1,9 @@
-Received: (qmail 18118 invoked by uid 550); 29 May 2026 19:56:18 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3446" "Friday" "24" "January" "2020" "16:00:39" "+0000" "cert.cc@orange.com" "cert.cc@orange.com" "<10824_1579881642_5E2B14AA_10824_454_1_7f5a48b4-7fcd-421a-9ba3-66e24cd1efea@OPEXCNORM3C.corporate.adroot.infra.ftgroup>" "97" "[oss-security] RE: [CVE-2019-17570] xmlrpc-common untrusted deserialization" nil nil nil "1" "2020012416:00:39" "[oss-security] RE: [CVE-2019-17570] xmlrpc-common untrusted deserialization" (number mark "U       cert.cc@oran Jan 24   97/3446  " thread-indent "\"[oss-security] RE: [CVE-2019-17570] xmlrpc-common untrusted deserialization\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] RE: [CVE-2019-17570] xmlrpc-common untrusted deserialization" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25706 invoked by uid 550); 24 Jan 2020 16:47:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,109 +12,118 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5681 invoked from network); 29 May 2026 19:16:28 -0000
-Date: Fri, 29 May 2026 21:16:18 +0200
-From: Christian Brabandt <cblists@256bit.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ahnmAr9bSJY5May/@256bit.org>
+Received: (qmail 1677 invoked from network); 24 Jan 2020 16:00:53 -0000
+From: <cert.cc@orange.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+CC: ZZZ CERT CC <cert.cc@orange.com>
+Thread-Topic: [CVE-2019-17570] xmlrpc-common untrusted deserialization
+Thread-Index: AdXMSZMAVefUsl+2T7u9Xg52tlppTgGU9Ldw
+Date: Fri, 24 Jan 2020 16:00:39 +0000
+Message-ID: <10824_1579881642_5E2B14AA_10824_454_1_7f5a48b4-7fcd-421a-9ba3-66e24cd1efea@OPEXCNORM3C.corporate.adroot.infra.ftgroup>
+Accept-Language: en-GB, fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.114.50.247]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cblists@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] Arbitrary Code Execution via Python Omni-Completion
- in Vim < 9.2.561
+Subject: [oss-security] RE: [CVE-2019-17570] xmlrpc-common untrusted deserialization
 
-Arbitrary Code Execution via Python Omni-Completion in Vim < 9.2.561
-====================================================================
-Date: 29.05.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Improper Control of Generation of Code (CWE-94),
-     Inclusion of Functionality from Untrusted Control Sphere (CWE-829)
+Hello,
 
-## Summary
-The Python omni-completion script in `python3complete.vim` for Vim with the
-`+python3` interpreter enabled (and the legacy `pythoncomplete.vim` for builds
-with the `+python` interpreter) executes the `import` and `from` statements
-found in the current buffer through Python's import machinery.  Because the
-buffer's working directory is on `sys.path`, opening a hostile `.py` file
-with a sibling Python package and invoking omni-completion runs that
-package's top-level code as the editing user.
-
-## Description
-`runtime/ftplugin/python.vim` installs `omnifunc=python3complete#Complete`
-on every Python buffer when Vim has `+python3` (or `+python`).
-When the user invokes omni-completion with `CTRL-X CTRL-O` in insert mode, the
-completer parses the buffer with an embedded Python tokenizer, regenerates a
-Python source string from the parsed scope, and passes it to `exec(src,
-self.compldict)` to populate the completion dictionary.
-
-The regenerated source re-emits every top-level `import X` and
-`from X import Y` statement that the parser harvested from the buffer.
-Additionally, the completer extends `sys.path` with `['.', '..']` so
-that sibling modules in the buffer's working directory are importable.
-The combined effect: invoking omni-completion on a `.py` file runs
-Python's import machinery on attacker-supplied module names with the
-attacker's working directory on the search path.
-
-A crafted `.py` file containing `import evil_pkg` and a sibling
-`evil_pkg/__init__.py` in the same directory will execute the
-`__init__.py` code when the victim opens the file and presses
-`CTRL-X CTRL-O`.
-
-## Impact
-Arbitrary local code execution as the user running Vim, with the user's
-full credential set (SSH keys, cloud credentials, etc.), file-system
-access, and network egress.  Realistic delivery vectors include:
-
-- reviewing a third-party Python contribution by checking out a fork
-  branch and opening any `.py` file in it,
-- auditing an extracted source tarball, malware sample, or repository
-  whose layout the attacker controls,
-- opening a `.py` file from any downloaded archive where the extracted
-  layout places a hostile package next to the file being inspected.
-
-Exploitation requires:
-
-- Vim built with `+python3` (or `+python3/dyn` with a working Python 3
-  runtime)
-- Filetype plugins enabled (`filetype plugin on`, the default in
-  `runtime/defaults.vim` and most distribution `vimrc`s).
-- The victim opens the hostile `.py` file from the attacker-controlled
-  working directory and invokes omni-completion.
-
-The severity is rated Medium because the user must manually invoke omni-
-completion after opening the file; the bug does not fire on file-open alone.
-
-## Mitigation
-As of Vim patch v9.2.0561 the omni-completer no longer executes
-`import` or `from` statements harvested from the buffer by default.
-Users who require completion of imported module members (for example
-`os.<C-X><C-O>` offering `getcwd`, `path`, etc.) can opt back in with: >
-
-    let g:pythoncomplete_allow_import = 1
-
-Setting this variable re-enables the import-execution behavior and
-should only be used when editing code from trusted sources.  When the
-variable is unset or `0`, in-buffer symbols (classes, functions,
-variables defined in the file) still complete normally; only completion
-of names that would require executing imports is unavailable.
-
-## Acknowledgements
-The Vim project would like to thank github user tonghuaroot for
-reporting, analyzing the issue, providing a proof of concept
-and suggesting a fix.
-
-## References
-The issue has been fixed as of Vim patch [v9.2.0561](https://github.com/vim/vim/releases/tag/v9.2.0561).
-- [Commit](https://github.com/vim/vim/commit/4b850457e12e1a678dd209f2868154f7553cbf8d)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-52mc-rq6p-rc7c)
+A PoC is now available for this vulnerability.
+For more information, see https://github.com/orangecertcc/xmlrpc-common-des=
+erialization
 
 
-Best,
-Christian
--- 
-There's so much to say but your eyes keep interrupting me.
+Regards,
+
+-----Message d'origine-----
+De=A0: ZZZ CERT CC=20
+Envoy=E9=A0: jeudi 16 janvier 2020 10:00
+=C0=A0: 'oss-security@lists.openwall.com'
+Objet=A0: [CVE-2019-17570] xmlrpc-common untrusted deserialization
+
+Description=20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+Java untrusted deserialization in faultCause when processing an XMLRPC resp=
+onse. XMLRPC clients are thus targeted by this vulnerability, and rogue XML=
+RPC servers may gain arbitrary code execution on the XMLRPC client.=20
+=20=20
+The vulnerability lays in the org.apache.xmlrpc.parser.XmlRpcResponseParser=
+:addResult(Object) method.=20
+=20=20
+This vulnerability is different from CVE-2016-5003, which uses ex:serializa=
+ble type to perform deserialization. This new vulnerability only affects XM=
+LRPC clients, which will receive response, possible faults. It is exploitab=
+le in default configuration.
+=20=20
+Exploitation technique=20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+REMOTE, NONE AUTHENTICATION REQUIRED.
+
+REMINDER: This vulnerability is on client-side.
+=20=20
+CVSSv3 base score : 9.8=20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H=20
+=20=20
+Impact(s)=20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+An attacker may execute arbitrary code by using a gadget chain.=20
+=20=20=20
+Affected versions=20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+Detected on XMLRPC-common-Central-3.1.3 but applies to versions (non-exhaus=
+tive list):=20
+=B7         Redhat GA 3.1.3-redhat-5=20
+=B7         Redhat GA 3.1.3-redhat-2=20
+=B7         Redhat EA 3.1.3-redhat-1=20
+=B7         Central 3.1.3=20
+=B7         Central 3.1.2=20
+=B7         Central 3.1.1=20
+=B7         Central 3.1=20
+=20=20
+NOTE: Central 3.0.x are not vulnerable=20
+=20=20
+CVE Id=20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+CVE-2019-17570
+=20=20
+Timeline=20
+=3D=3D=3D=3D=3D=3D=3D=3D=20
+2019-11-19: Apache informed via email=20
+2019-11-19: Apache XML-RPC is no longer actively maintained
+2019-11-21: Red Hat informed via email=20
+2019-11-22: Vulnerability reaffected to Apache project
+2020-01-06: Distro OSS security informed via email
+2020-01-16: Vulnerability published to OSS security mailing list
+=20=20
+Credits=20
+=3D=3D=3D=3D=3D=3D=3D=3D=20
+Guillaume TEISSIER (Orange)=20
+Orange group
+
+
+___________________________________________________________________________=
+______________________________________________
+
+Ce message et ses pieces jointes peuvent contenir des informations confiden=
+tielles ou privilegiees et ne doivent donc
+pas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu=
+ ce message par erreur, veuillez le signaler
+a l'expediteur et le detruire ainsi que les pieces jointes. Les messages el=
+ectroniques etant susceptibles d'alteration,
+Orange decline toute responsabilite si ce message a ete altere, deforme ou =
+falsifie. Merci.
+
+This message and its attachments may contain confidential or privileged inf=
+ormation that may be protected by law;
+they should not be distributed, used or copied without authorisation.
+If you have received this email in error, please notify the sender and dele=
+te this message and its attachments.
+As emails may be altered, Orange is not liable for messages that have been =
+modified, changed or falsified.
+Thank you.
+
