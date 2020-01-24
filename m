@@ -1,41 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/23/1
-Message-ID: <20200323100605.27fd2c46@computer>
-Date: Mon, 23 Mar 2020 10:06:05 +0100
-From: Hanno Böck <hanno@...eck.de>
-To:  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Serendipity XSS via update notification (minor, exploitable by s9y developers)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/24/1
+Message-ID: <6a5b1823-285d-3e6c-0d69-84ebb35e3297@vanrees.org>
+Date: Fri, 24 Jan 2020 16:21:00 +0100
+From: Maurits van Rees <maurits@...rees.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Plone security hotfix 20200121
 Content-Type: text/plain; charset=utf-8
 
-I reported an XSS in Serendipity that is now fixed in version 2.3.3. It
-is only exploitable by either the developers of serendipity or someone
-compromising Github, so I consider this very minor.
+We have received CVE numbers from mitre.org. Thanks. See inline below.
 
-My bug report to s9y [1]:
+On 21/01/2020 23:49, Maurits van Rees wrote:
+> A Plone security hotfix was released today.
+>
+> CVE numbers: not yet issued. We will request them shortly from mitre.org.
+>
+> Versions Affected: All supported Plone versions (4.3.15 and any earlier
+> 4.x version, 5.2.1 and any earlier 5.x version). Previous versions could
+> be affected but have not been tested.
+>
+> Versions Not Affected: None.
+>
+> Nature of vulnerability:
+>
+> The patch addresses several security issues:
+>
+> - Privilege escalation when plone.restapi is installed. Reported and
+> fixed by Lukas Graf and Niklaus Johner.
+CVE-2020-7938
+> - An open redirection on the login form and possibly other places where
+> redirects are done. The isURLInPortal check that is done to avoid linking to an externalsite could be tricked into accepting malicious links. Reported by Damiano Esposito.
+CVE-2020-7936
+> - Password strength checks were not always checked. Reported by Ben Kummer.
+CVE-2020-7940
+> - You might be able to PUT (overwrite) some content without needing
+> write permission.
+>    This seems hard to do in practice. This fix is only needed when you
+> use plone.app.contenttypes. Reported and fixed by Alessandro Pisa.
+CVE-2020-7941
+> - SQL quoting in DTML or in connection objects was insufficient, leading
+> to possible SQL injections. This is a problem in Zope. If you use Zope
+> without Plone, this hotfix should work for you too. Reported and fixed
+> by Michael Brunnbauer and Michael Howitz.
+CVE-2020-7939
+> - Cross Site Scripting (XSS) in the title field on plone 5.0 and higher.
+> Reported by Marcos Valle.
+CVE-2020-7937
 
-The version number shown in the update notification window is not
-escaped. This means it can contain javascript payload and thus allow
-XSS.
-
-The version information is fetched from a Github URL, which means this
-is an XSS vulnerability that can only be exploited by the serendipity
-developers or github itself. So this makes it rather low severity.
-
-Still I'd consider safety against the developers or potentially
-compromised developer accounts desirable where possible, and this seems
-easy to fix.
-
-PoC: Change the $updateURL variable in
-include/functions_installer.inc.php in the function
-serendipity_getCurrentVersion to one you control and add something like:
-
-stable:9.<img src=x onerror=alert(1)><x
-beta:9.<img src=x onerror=alert(2)><x
-
-(s9y adds a </span> somewhere at the end for reasons I don't
-understand, by adding the bogus <x I avoid that disturbing my payload.)
-
-[1] https://github.com/s9y/Serendipity/issues/674
 -- 
-Hanno Böck
-https://hboeck.de/
+Maurits van Rees https://maurits.vanrees.org/
+
