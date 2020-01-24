@@ -1,84 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/07/3
-Message-ID: <1GaG2-aqK--4nCAdHTeFIx-6-pQJJNysDvCH9qNTD-4VgG4VDIx0IjXoSQZn14MTl-S7Hw3nxjfqSPwewhsZ1znP-AyHZi2vW1pkWoL0KOw=@protonmail.com>
-Date: Wed, 07 Oct 2020 10:32:05 +0000
-From: caveman رجل الكهف <toraboracaveman@...tonmail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/24/2
+Message-ID: <10824_1579881642_5E2B14AA_10824_454_1_7f5a48b4-7fcd-421a-9ba3-66e24cd1efea@OPEXCNORM3C.corporate.adroot.infra.ftgroup>
+Date: Fri, 24 Jan 2020 16:00:39 +0000
+From: <cert.cc@...nge.com>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections.
+CC: ZZZ CERT CC <cert.cc@...nge.com>
+Subject: RE: [CVE-2019-17570] xmlrpc-common untrusted deserialization
 Content-Type: text/plain; charset=utf-8
 
-hi.  following this:
+Hello,
 
-    https://seclists.org/oss-sec/2019/q4/122
+A PoC is now available for this vulnerability.
+For more information, see https://github.com/orangecertcc/xmlrpc-common-deserialization
 
-i think using rp filtering won't be a neat
-solution as it is technically incorrect in my
-view.  my reason is as follows:
 
-    - rp filtering assumes that my path to reach
-      others is also the path that others would
-      use to reach me.
+Regards,
 
-that assumption is either false, or
-unsubstantiated.  hence, either way, there is no
-reason to assume that it is true (occam's razor).
+-----Message d'origine-----
+De : ZZZ CERT CC 
+Envoyé : jeudi 16 janvier 2020 10:00
+À : 'oss-security@...ts.openwall.com'
+Objet : [CVE-2019-17570] xmlrpc-common untrusted deserialization
 
-even if it is usually true, there is no reason why
-this is always true, and there are cases where
-this can be false.
+Description 
+=========== 
+Java untrusted deserialization in faultCause when processing an XMLRPC response. XMLRPC clients are thus targeted by this vulnerability, and rogue XMLRPC servers may gain arbitrary code execution on the XMLRPC client. 
+  
+The vulnerability lays in the org.apache.xmlrpc.parser.XmlRpcResponseParser:addResult(Object) method. 
+  
+This vulnerability is different from CVE-2016-5003, which uses ex:serializable type to perform deserialization. This new vulnerability only affects XMLRPC clients, which will receive response, possible faults. It is exploitable in default configuration.
+  
+Exploitation technique 
+====================== 
+REMOTE, NONE AUTHENTICATION REQUIRED.
 
-in fact, cases exist where this is not true.  e.g.
-a linux box in a LAN with 2 gateways can itself
-choose a different default gateway than the one
-the network uses to send it packets.
+REMINDER: This vulnerability is on client-side.
+  
+CVSSv3 base score : 9.8 
+================= 
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H 
+  
+Impact(s) 
+========= 
+An attacker may execute arbitrary code by using a gadget chain. 
+   
+Affected versions 
+================= 
+Detected on XMLRPC-common-Central-3.1.3 but applies to versions (non-exhaustive list): 
+·         Redhat GA 3.1.3-redhat-5 
+·         Redhat GA 3.1.3-redhat-2 
+·         Redhat EA 3.1.3-redhat-1 
+·         Central 3.1.3 
+·         Central 3.1.2 
+·         Central 3.1.1 
+·         Central 3.1 
+  
+NOTE: Central 3.0.x are not vulnerable 
+  
+CVE Id 
+========== 
+CVE-2019-17570
+  
+Timeline 
+======== 
+2019-11-19: Apache informed via email 
+2019-11-19: Apache XML-RPC is no longer actively maintained
+2019-11-21: Red Hat informed via email 
+2019-11-22: Vulnerability reaffected to Apache project
+2020-01-06: Distro OSS security informed via email
+2020-01-16: Vulnerability published to OSS security mailing list
+  
+Credits 
+======== 
+Guillaume TEISSIER (Orange) 
+Orange group
 
-therefore i think using rp filtering is a dirty
-hack that is going to create another problem.
 
-in my view, the real problem is that while vpns
-are offering a kind of partitioning over the wire,
-such partitioning is lost when it comes to
-in-kernel connection states.
+_________________________________________________________________________________________________________________________
 
-therefore, i suggest the real fix is to export
-vpn's partitioning into the connection states
-table by using some in-kernel tags, as follows:
+Ce message et ses pieces jointes peuvent contenir des informations confidentielles ou privilegiees et ne doivent donc
+pas etre diffuses, exploites ou copies sans autorisation. Si vous avez recu ce message par erreur, veuillez le signaler
+a l'expediteur et le detruire ainsi que les pieces jointes. Les messages electroniques etant susceptibles d'alteration,
+Orange decline toute responsabilite si ce message a ete altere, deforme ou falsifie. Merci.
 
-    - packets entering a linux box from any
-      interface, will inherit such specified tags
-      from the connection.
-
-    - the connection states table will have an
-      extra "tag" column that will store such
-      tag.
-
-    - connection states are invisible from each
-      other if they do not have the same tag.
-
-    - for backwards compatibility, all interfaces
-      will use "default" tag.  so, by default,
-      everything feels normal.
-
-    - for wireguard, it may use the added API to
-      set a different tag for its packets, such as
-      "wireguard".  the user could also manually
-      set other tags by `wg set states-tag newtag`
-      if they want to have different states
-      partitions across different wireguard
-      tunnels.
-
-this way, in the same way that the vpn paritions
-packets on the wire, connection states with
-different tags will remain invisible from each
-other.
-
-in a sense similar to how VLAN IDs create the
-effect of separate physical switches using the
-same physical switch.  not an accurate analogy,
-but i thought it may help.  VLANs also communicate
-their IDs over trunk links (so the analogy is not
-too bad i guess).
-
-regards,
-cm
+This message and its attachments may contain confidential or privileged information that may be protected by law;
+they should not be distributed, used or copied without authorisation.
+If you have received this email in error, please notify the sender and delete this message and its attachments.
+As emails may be altered, Orange is not liable for messages that have been modified, changed or falsified.
+Thank you.
 
