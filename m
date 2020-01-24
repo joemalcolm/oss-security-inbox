@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["555" "Thursday" "21" "June" "2018" "08:11:42" "-0700" "Gordon Tetlow" "gordon@tetlows.org" "<CAKghNw0_qr10=pAkKbn1hhnVxiPuHGEo2rBscNqnh59E9qXzcw@mail.gmail.com>" "20" "Re: [oss-security] Intel hyper-threading security issues" "^Date:" nil nil "6" "2018062115:11:42" "[oss-security] Intel hyper-threading security issues" (number mark "        gordon@tetlo Jun 21   20/555   " thread-indent "\"Re: [oss-security] Intel hyper-threading security issues\"\n") "<20180621115856.5py2a5skjiogfgrc@sivokote.iziade.m$>" ("<CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>" "<20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>" "<20180621115856.5py2a5skjiogfgrc@sivokote.iziade.m$>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1722" "Friday" "24" "January" "2020" "16:21:00" "+0100" "Maurits van Rees" "maurits@vanrees.org" "<6a5b1823-285d-3e6c-0d69-84ebb35e3297@vanrees.org>" "42" "Re: [oss-security] Plone security hotfix 20200121" nil nil nil "1" "2020012415:21:00" "[oss-security] Plone security hotfix 20200121" (number mark "U       maurits@vanr Jan 24   42/1722  " thread-indent "\"Re: [oss-security] Plone security hotfix 20200121\"\n") "<5c47d85c-2648-d0ed-714f-f4e0b2e497ed@vanrees.org>" ("<5c47d85c-2648-d0ed-714f-f4e0b2e497ed@vanrees.org>") nil nil nil nil nil nil nil "Re: [oss-security] Plone security hotfix 20200121" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17854 invoked by uid 550); 21 Jun 2018 15:31:58 -0000
+Received: (qmail 15604 invoked by uid 550); 24 Jan 2020 16:46:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 6039 invoked from network); 21 Jun 2018 15:11:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tetlows.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=fRKHHOqUh50+8/WhIJQfl21jJqoSuIc5KZBoGCuEVJs=;
-        b=Ee1Zb2Jw2UWdPQAW3X7Mc/bG+DnXnAkOlJjfAhA7SurLPAVvscWAgJDUkdQPu8/dYh
-         JxoDnf3jIDH/zUv1sKorA4WfW4qMOIh3PcfeGivlKZJv9KzUKssNbtXDu6jmG3MBuzQO
-         2ZqW1QEmKUQyHLHrE2rDbR0oeJzKFspUn8Hps=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=fRKHHOqUh50+8/WhIJQfl21jJqoSuIc5KZBoGCuEVJs=;
-        b=mdXDaGv9/zG65apP8Cr8pTVaZQLyVl6hUKxCnMHBxjrGf2OKo/Nm0A6KEjpUblOxKe
-         bbZkv/o968KjU0kzNzRwuTCpX3C9HwPgOJCMwKT+JXEX0Lq0ozncKxlRpK/Kh3vjoNQB
-         jLKCWEA1gZ22lUUUDGLl78pqTBY5+fY0tgsK0RBdM+88yQzZ743ppF6Xtl/OLzSe/n9p
-         rQLQjmY3wI4T/Ii9y7mRe70kGfYKHs3q2JKyscfi+BuEzvfiwV97LO6YD77f/FRwi5nS
-         Tf/0OiBfbzjkAipu4jTm2acTfJXGhpdOOrn2zeZJMp5iPdY9uqDPxDnLXcv8Ia/5a2hX
-         /xlA==
-X-Gm-Message-State: APt69E2R+JfkJa2i7/6fMgsduO9lBNJue6H/Pc95b5tbgiKoa0wmy0n1
-	xBs+ap+bujputicnGiTFKfx2zGc22KoxvxaxlM54fcO4Lg==
-X-Google-Smtp-Source: ADUXVKI1/n3/evKv6aftLbUN/tE76nzz63C49rg93Q6oJfnSpS0yCsfQ30otOwGRGh7GFkQfH9fnzjsiLj8DNfVVfsY=
-X-Received: by 2002:ab0:13c8:: with SMTP id n8-v6mr16452935uae.140.1529593903236;
- Thu, 21 Jun 2018 08:11:43 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20180621115856.5py2a5skjiogfgrc@sivokote.iziade.m$>
-References: <CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>
- <20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$> <20180621115856.5py2a5skjiogfgrc@sivokote.iziade.m$>
-Message-ID: <CAKghNw0_qr10=pAkKbn1hhnVxiPuHGEo2rBscNqnh59E9qXzcw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Thu, 21 Jun 2018 08:11:42 -0700
-From: Gordon Tetlow <gordon@tetlows.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Intel hyper-threading security issues
+Received: (qmail 18242 invoked from network); 24 Jan 2020 15:21:12 -0000
+X-Virus-Scanned: Debian amavisd-new at mail
 To: oss-security@lists.openwall.com
+References: <5c47d85c-2648-d0ed-714f-f4e0b2e497ed@vanrees.org>
+From: Maurits van Rees <maurits@vanrees.org>
+Message-ID: <6a5b1823-285d-3e6c-0d69-84ebb35e3297@vanrees.org>
+Date: Fri, 24 Jan 2020 16:21:00 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.1
+MIME-Version: 1.0
+In-Reply-To: <5c47d85c-2648-d0ed-714f-f4e0b2e497ed@vanrees.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Subject: Re: [oss-security] Plone security hotfix 20200121
 
-On Thu, Jun 21, 2018 at 4:58 AM, Georgi Guninski <guninski@guninski.com> wrote:
-> On Thu, Jun 21, 2018 at 07:56:42AM +0300, Georgi Guninski wrote:
->> V.   Solution
->>
->> Disable Hyper-Threading Technology on processors that support it.
->>
+We have received CVE numbers from mitre.org. Thanks. See inline below.
+
+On 21/01/2020 23:49, Maurits van Rees wrote:
+> A Plone security hotfix was released today.
 >
-> Is Freebsd safe from this or requires patch?
+> CVE numbers: not yet issued. We will request them shortly from mitre.org.
+>
+> Versions Affected: All supported Plone versions (4.3.15 and any earlier
+> 4.x version, 5.2.1 and any earlier 5.x version). Previous versions could
+> be affected but have not been tested.
+>
+> Versions Not Affected: None.
+>
+> Nature of vulnerability:
+>
+> The patch addresses several security issues:
+>
+> - Privilege escalation when plone.restapi is installed. Reported and
+> fixed by Lukas Graf and Niklaus Johner.
+CVE-2020-7938
+> - An open redirection on the login form and possibly other places where
+> redirects are done. The isURLInPortal check that is done to avoid linking to an externalsite could be tricked into accepting malicious links. Reported by Damiano Esposito.
+CVE-2020-7936
+> - Password strength checks were not always checked. Reported by Ben Kummer.
+CVE-2020-7940
+> - You might be able to PUT (overwrite) some content without needing
+> write permission.
+>    This seems hard to do in practice. This fix is only needed when you
+> use plone.app.contenttypes. Reported and fixed by Alessandro Pisa.
+CVE-2020-7941
+> - SQL quoting in DTML or in connection objects was insufficient, leading
+> to possible SQL injections. This is a problem in Zope. If you use Zope
+> without Plone, this hotfix should work for you too. Reported and fixed
+> by Michael Brunnbauer and Michael Howitz.
+CVE-2020-7939
+> - Cross Site Scripting (XSS) in the title field on plone 5.0 and higher.
+> Reported by Marcos Valle.
+CVE-2020-7937
 
-FreeBSD allows disabling of HT processors if the user decides to do so.
+-- 
+Maurits van Rees https://maurits.vanrees.org/
 
-Add to /boot/loader.conf:
-machdep.hyperthreading_allowed=0
-
-And reboot the host.
-
-Please note this isn't an endorsement of disabling HT, just an
-explanation of how to do so on FreeBSD.
-
-Gordon
