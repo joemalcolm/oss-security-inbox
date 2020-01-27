@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/10/1
-Message-Id: <91D3B5A6-C405-4FF3-BE8D-042122A1780B@nanthrax.net>
-Date: Thu, 10 Sep 2020 07:27:04 +0200
-From: Jean-Baptiste Onofre <jb@...thrax.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/27/4
+Message-ID: <CALSkbjp0m=BbSAVFpiJEHG7=neMvK4sAt7BHndpt-qctDcj9jw@mail.gmail.com>
+Date: Mon, 27 Jan 2020 20:36:19 +0000
+From: daniel gaspar <danielvazgaspar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-13920] ActiveMQ JMX vulenarable to MITM attack
+Subject: [CVE-2020-1932] Apache Incubator Superset user data leak vulnerability
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-13920: Apache ActiveMQ JMX is vulnerable to a MITM attack
+Severity: Medium
 
-Severity: Moderate
+Vendor:
+The Apache Software Foundation
 
-Vendor: The Apache Software Foundation
+Product:
+Apache Incubator Superset
 
-Affected Version: Apache ActiveMQ version prior to 5.15.12
+Versions Affected:
+0.34.0
+0.34.1
+0.35.0
+0.35.1
 
-Vulnerability details:
-Apache ActiveMQ uses LocateRegistry.createRegistry() to create the JMX RMI
-registry and binds the server to the "jmxrmi" entry. It is possible
-to connect to the registry without authentication and call the rebind
-method to rebind jmxrmi to something else. If an attacker creates another
-server to proxy the original, and bound that, he effectively becomes a 
-man in the middle and is able to intercept the credentials when an user
-connects.
+Description:
+Authenticated Apache Superset users are able to retrieve to retrieve
+other users' information,
+including hashed passwords, by accessing an unused and undocumented API
+endpoint on Apache Superset.
 
 Mitigation:
-Upgrade to Apache ActiveMQ 5.15.12
-
-Credit: Jonathan Gallimore & Colm O hEigeartaigh
-
+Superset users with the mentioned affected versions should upgrade to
+0.35.2 or higher
 
