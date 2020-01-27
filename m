@@ -1,43 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/16/1
-Message-ID: <9o47rr38-30r2-8r7-8rp8-6p7634sss92@redhat.com>
-Date: Wed, 16 Dec 2020 20:38:25 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: QEMU Developers <qemu-devel@...gnu.org>
-cc: oss security list <oss-security@...ts.openwall.com>,  Daniel Berrange <berrange@...hat.com>,  Michael Tsirkin <mtsirkin@...hat.com>, Petr Matousek <pmatouse@...hat.com>,  Stefano Stabellini <sstabellini@...nel.org>,  Michael Roth <michael.roth@....com>
-Subject: [ANNOUNCE] qemu-security mailing list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/27/3
+Message-ID: <CAEhjM2ByDcfuf-mGxZBjjqqD+brvH6sFHTEt--MMsqB3W8iUOQ@mail.gmail.com>
+Date: Mon, 27 Jan 2020 12:08:03 -0500
+From: Nathan Gough <thenatog@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-1933] Apache NiFi XSS Attack
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+[CVEID]:CVE-2020-1933
 
-* QEMU project has set-up a dedicated mailing list to receive and triage all
-   its security issues.
+[PRODUCT]:Apache NiFi
 
-   Please see:
-     -> https://www.qemu.org/contribute/security-process/
-     -> https://lists.nongnu.org/mailman/listinfo/qemu-security
+[VERSION]:Apache NiFi 1.0.0 to 1.10.0
 
-* If you are a security researcher OR think you've found a potential security
-   issue in QEMU, please kindly follow the new process to report your issues.
+[PROBLEMTYPE]:XSS Attack
 
-* This is a moderated mailing list. It is meant for systematic handling of
-   QEMU security issues and coordinate their public disclosure.
+[REFERENCES]:https://nifi.apache.org/security.html#CVE-2020-1933
 
-* Membership of this list is limited to people involved in the analysis and
-   triage of QEMU security issues.
-
-* To report QEMU security issues you need/should not subscribe to this list.
-
-* We'd like to invite representatives of security teams who are downstream
-   consumers of QEMU to contact the list, if they wish to participate in the
-   triage process.
-
-* All members will be required to agree and adhere to the embargo rules and
-   restrictions.
-
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+[DESCRIPTION]:As reported by Jakub Palaczynski (ING Tech Poland), malicious
+scripts could be injected to the UI through action by an unaware
+authenticated user in Firefox. Did not appear to occur in other browsers.
 
