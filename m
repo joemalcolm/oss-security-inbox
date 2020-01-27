@@ -1,55 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/16/2
-Message-ID: <20200416040257.GA10545@blackberry>
-Date: Thu, 16 Apr 2020 14:02:57 +1000
-From: Paul Mackerras <paulus@...abs.org>
-To: Michal Suchánek <msuchanek@...e.de>
-Cc: Andrew Donnellan <ajd@...ux.ibm.com>, oss-security@...ts.openwall.com, linuxppc-dev <linuxppc-dev@...ts.ozlabs.org>
-Subject: Re: CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/27/1
+Message-ID: <20200127094358.GA11637@f195.suse.de>
+Date: Mon, 27 Jan 2020 10:43:58 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2019-18932: sarg: insecure usage of /tmp/sarg allows privilege escalation / DoS attack vector
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 15, 2020 at 04:03:29PM +0200, Michal Suchánek wrote:
-> On Wed, Apr 15, 2020 at 10:52:53PM +1000, Andrew Donnellan wrote:
-> > The Linux kernel for powerpc from v4.10 to v5.1 has a bug where the
-> > Authority Mask Register (AMR), Authority Mask Override Register (AMOR) and
-> > User Authority Mask Override Register (UAMOR) are not correctly saved and
-> > restored when the CPU is going into/coming out of idle state.
-> > 
-> > On POWER9 CPUs, this means that a CPU may return from idle with the AMR
-> > value of another thread on the same core.
-> > 
-> > This allows a trivial Denial of Service attack against KVM hosts, by booting
-> > a guest kernel which makes use of the AMR, such as a v5.2 or later kernel
-> > with Kernel Userspace Access Prevention (KUAP) enabled.
-> > 
-> > The guest kernel will set the AMR to prevent userspace access, then the
-> > thread will go idle. At a later point, the hardware thread that the guest
-> > was using may come out of idle and start executing in the host, without
-> > restoring the host AMR value. The host kernel can get caught in a page fault
-> > loop, as the AMR is unexpectedly causing memory accesses to fail in the
-> > host, and the host is eventually rendered unusable.
-> 
-> Hello,
-> 
-> shouldn't the kernel restore the host registers when leaving the guest?
+> I've informed the upstream maintainer about this issue on 2019-11-13 and
+> discussed various aspects of a suitable security fix with him. No
+> agreement on a suitable publication date for this finding or a final
+> patch could be achieved and I did not hear back for around a month by
+> now.
 
-It does.  That's not the bug.
+I've been informed by a third party that an upstream release sarg-2.4.0
+[1] containing a fix [2] is now available.
 
-> I recall some code exists for handling the *AM*R when leaving guest. Can
-> the KVM guest enter idle without exiting to host?
+[1]: https://sourceforge.net/projects/sarg/files/sarg/sarg-2.4.0/
+[2]: https://sourceforge.net/p/sarg/code/ci/8ec6d20be8c0da3c885aba78e63251f2e5080748
 
-No, we currently never execute the "stop" instruction in guest context.
-
-The bug occurs when a thread that is in the host goes idle and
-executes the stop instruction to go to a power-saving state, while
-another thread is executing inside a guest.  Hardware loses the first
-thread's AMR while it is stopped, and as it happens, it is possible
-for the first thread to wake up with the contents of its AMR equal to
-the other thread's AMR.  This can happen even if the first thread has
-never executed in the guest.
-
-The kernel needs to save and restore AMR (among other registers)
-across the stop instruction because of this hardware behaviour.
-We missed the AMR initially, which is what led to this vulnerability.
-
-Paul.
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
