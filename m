@@ -1,32 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/04/1
-Message-ID: <nycvar.YSQ.7.77.849.2006041027040.62159@xnncv>
-Date: Thu, 4 Jun 2020 10:30:41 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Ren Ding <rding@...ech.edu>, Hanqing Zhao <hanqing@...ech.edu>,  Yi Ren <c4tren@...il.com>
-Subject: CVE-2020-13791 QEMU: ati-vga: OOB access while reading PCI configuration may lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/28/1
+Message-ID:  <MWHPR02MB22389492555FC92CF8BE4E5CB40A0@MWHPR02MB2238.namprd02.prod.outlook.com>
+Date: Tue, 28 Jan 2020 14:26:26 +0000
+From: Angela Schreiber <anchela@...be.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "'private@...krabbit.apache.org'" <private@...krabbit.apache.org>, "security@...che.org" <security@...che.org>
+Subject: CVE-2020-1940: Apache Jackrabbit Oak sensitive information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+CVE-2020-1940:
+Apache Jackrabbit Oak sensitive information disclosure vulnerability
 
-An out-of-bounds access issue was found in the ati-vga emulator of the QEMU. 
-It could occur while reading PCI configuration bytes via ati_mm_read routine, 
-if the address sent by a guest is towards an end of the PCI configuration 
-space. A guest user/process may use this flaw to crash the QEMU process 
-resulting in DoS scenario.
+Vendor:
+The Apache Software Foundation
 
-Upstream patch
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg00831.html
+Versions Affected:
+Apache Jackrabbit Oak (org.apache.jackrabbit.oak-core) 1.2.0 to 1.22.0
 
-This issue was reported by Ren Ding and Hanqing Zhao of SSLab Georgia Tech and 
-Yi Ren(CC'd)
+Description:
+The optional initial password change and password expiration features [1] are prone to a
+sensitive information disclosure vulnerability. The code mandates the changed password to
+be passed as an additional attribute to the credentials object but does not remove it upon
+processing during the first phase of the authentication. In combination with additional,
+independent authentication mechanisms, this may lead to the new password being disclosed.
 
-'CVE-2020-13791' requeted via -> https://cveform.mitre.org/
+Mitigation:
+1.12.0 - 1.22.0 should be upgraded to 1.24.0
+1.10.x should be upgraded to 1.10.8
+For older maintained and affected branches (1.2.x, 1.4.x, 1.6.x, 1.8.x) please find patches attached.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+Credits:
+The issue was reported by Andrew Khoury and Russ Wright of Adobe.
 
+References:
+[1] http://jackrabbit.apache.org/oak/docs/security/user/expiry.html
+
+
+Content of type "text/html" skipped
+
+Download attachment "UserAuthentication_1_2.patch" of type "application/octet-stream" (6368 bytes)
+
+Download attachment "UserAuthentication_1_4.patch" of type "application/octet-stream" (8297 bytes)
+
+Download attachment "UserAuthentication_1_6.patch" of type "application/octet-stream" (8297 bytes)
+
+Download attachment "UserAuthentication_1-8.patch" of type "application/octet-stream" (8628 bytes)
