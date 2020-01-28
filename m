@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1086" "Friday" "24" "April" "2015" "23:04:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150425030412.346A8332121@smtpvbsrv1.mitre.org>" "25" "[oss-security] Re: CVE Request: vBulletin 5 - Private Messages Input Validation Failure" nil nil nil "4" "2015042503:04:12" "[oss-security] Re: CVE Request: vBulletin 5 - Private Messages Input Validation Failure" (number mark "        cve-assign@m Apr 24   25/1086  " thread-indent "\"[oss-security] Re: CVE Request: vBulletin 5 - Private Messages Input Validation Failure\"\n") "<553AAAE8.7030909@rack911labs.com>" ("<553AAAE8.7030909@rack911labs.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5915" "Tuesday" "28" "January" "2020" "22:48:10" "+0100" "Solar Designer" "solar@openwall.com" "<20200128214809.GA27151@openwall.com>" "116" "[oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)" "^Cc:" nil nil "1" "2020012821:48:10" "[oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)" (number mark "        solar@openwa Jan 28  116/5915  " thread-indent "\"[oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16250 invoked by uid 550); 25 Apr 2015 03:04:24 -0000
+Received: (qmail 3796 invoked by uid 550); 28 Jan 2020 21:48:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,137 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16232 invoked from network); 25 Apr 2015 03:04:24 -0000
-In-Reply-To: <553AAAE8.7030909@rack911labs.com>
-Message-Id: <20150425030412.346A8332121@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 24 Apr 2015 23:04:12 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 3674 invoked from network); 28 Jan 2020 21:48:21 -0000
+Message-ID: <20200128214809.GA27151@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Cc: Al Viro <viro@zeniv.linux.org.uk>,
+	Salvatore Mesoraca <s.mesoraca16@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Date: Tue, 28 Jan 2020 22:48:10 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: vBulletin 5 - Private Messages Input Validation Failure
-To: pat@rack911labs.com
+Subject: [oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> http://www.vbulletin.com/forum/forum/vbulletin-announcements/vbulletin-announcements_aa/4319488-security-patch-released-for-vbulletin-5-1-4-5-1-6-and-vbulletin-cloud
+First, to avoid such questions or potential duplicate CVE ID assignment:
 
-We don't think vBulletin is open source. MITRE can provide a CVE ID
-for the issue. However, unless we're missing something, we won't be
-sending anything further about vBulletin to the oss-security list.
+I intend to request a CVE ID and post it as a follow-up to this thread.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+[ I use square braces in the message below to describe issues that are
+related to the bug mentioned in the Subject, yet are distinct from it. ]
 
-iQEcBAEBAgAGBQJVOwOPAAoJEKllVAevmvms8IMIAK62Te3or4nGzS2FHHG88PkT
-Gv+3JGVkK6D87PC2zMd3cw8om4jvJhaaMySTT+cKhTmehI89GjlDOt+Hia8IJLGB
-O+1KduvHTDqr1lFziBwBzlouwg4v42kjenYt/+hBGW3sqiwtxQeuf8TdaHJyvz2y
-mCUDPBnnWSoS8LDtgZo4ZCnebx96Y3VYRQV727cRPQNKRol4mswZ1zIk/GJpckFV
-r1pVrIPuRb7RLxTOeFmg8bGCGFfSe1UEzuOk87mMBcVeP3PVLYLgX/kOHdPCLHKw
-3VNRpXcSodhlBzRTlAmtQ3nxKgF/cPF2N51AVkv/LNPiT1zzFe9vDV5QVh/y59Y=
-=E6Pq
------END PGP SIGNATURE-----
+Al Viro found and analyzed the security impact of and fixed a bug in
+Linux 4.19+ where open(2)'s eventual call to may_create_in_sticky() was
+"done when we already have dropped the reference to dir" and thus with
+dir (a "struct dentry" pointer) being potentially stale and potentially
+pointing to reused memory.  This (presumably) can happen e.g. in the
+unusual case that the file being opened gets moved to a different
+directory and its old parent directory gets removed concurrently with
+the open(2) call being still in progress.  (I am not aware of attempts
+to trigger this problematic behavior.  If anyone tries and has either
+kind of results, please post a follow-up to this thread.)
+
+may_create_in_sticky() performs reads via the dir pointer and returns
+either 0 or -EACCES.  Thus, the potential impact is either a kernel Oops
+or a 1-bit oracle infoleak.  It feels like a useful infoleak wouldn't be
+easy to trigger, but then many bugs that could have seemed unexploitable
+at first were proven otherwise.
+
+Since the reads via dir are of dir->d_inode, which is then dereferenced
+and further reads are performed, I wonder if behavior (hopefully just
+DoS) worse than Oops is also possible when dir->d_inode hits a device's
+MMIO range.  This feels almost unrealistic, but who knows.
+
+may_create_in_sticky() only reaches any of those reads when the
+protected_fifos and/or protected_regular sysctl's are set to non-zero,
+or (something I just discovered when writing this message) when the file
+is neither a FIFO nor a regular file.
+
+[ In fact, looks like the "protection" unintentionally applies to such
+files (and is always enabled for them), and I guess this remained
+unnoticed because such files are rare in world-writable sticky
+directories, and in the case of Unix domain sockets they're normally
+connect()'ed to rather than open()'ed.  Also, there's a check for the
+file to be opened not being a directory before the call to
+may_create_in_sticky() is made. ]
+
+Al also pointed out that the two sysctl's are enabled by default with
+systemd 241 and later.
+
+With the new finding above, the bug might be triggerable by a user
+(e.g., by creating and trying to open() a Unix domain socket maybe?) on
+all systems with Linux 4.19+, until Al's recent fix - not just on those
+that enabled the sysctl's.  Nasty.
+
+The bug was introduced with commit 30aba6656f61 and first included in
+Linux 4.19.  Al fixed it with commit d0cb50185ae9 two days ago, and the
+fix is already in Linux 5.5 and Greg KH is getting it into stable.
+
+[ Another issue Al pointed out is that these sysctl's are ineffective on
+filesystems that use ->atomic_open() in the kernel, such as (but not
+only) networked filesystems.  That's a different code path, bypassing
+the check.  We need to document this limitation at the very least. ]
+
+Al also shared the story of this bug's discovery during untangling of
+control flow in do_last() and refactoring the code, which appeared to be
+so complicated that merely reading the code hadn't resulted in the
+discovery.
+
+I wonder if a fuzzer is able to trigger bugs like this, or if a fuzzer
+should be taught to test for such bugs - e.g., explicitly try moving
+files being accessed and removing their former parent directories -
+this might be too specialized, but on the other hand it wouldn't be
+limited to open(2).
+
+I also think we might want to annotate dereferences of pointers to
+objects that require pinning, so that a debugging build of the kernel
+could check for and complain when the accessed object is not pinned.
+This would work (at least) when the memory is not yet reused, which
+means in the majority of cases - and precisely in those that would go
+unnoticed without such checking.  I think this change would involve a
+lot of source code edits (nasty!), but is otherwise non-invasive - in
+fact, non-debugging builds could produce the same binaries that they
+produce now.  In other words, making this change is complicated, but not
+complex, and the resulting source code should be neither (I imagine it
+can be just uses of a macro in place of explicit pointer dereferences).
+
+My sentiment and other thoughts regarding bug(s) introduced with commit
+30aba6656f61 are as follows:
+
+This makes me sad and sorry.  I had introduced the "protected FIFOs"
+feature in -ow patches for Linux 2.0 over 20 years ago.  (Obviously, the
+implementation was different.)  When hardening changes started getting
+merged into upstream Linux kernel in the last few years, I mentioned
+that one and also that regular files could be used for similar attacks
+and that maybe we could afford to restrict them too:
+
+https://www.openwall.com/lists/kernel-hardening/2017/06/24/4
+
+However, I had mostly moved on (hadn't been seriously working on kernel
+hardening for years), so I didn't accept working on getting these
+changes upstream myself (if upstream were interested in these changes in
+the late 1990s, I probably would).  So another contributor worked on the
+new changes and getting them accepted.  I provided some advice, but
+(now) evidently didn't review the changes in context and to a sufficient
+extent (and accordingly am on Suggested-by, but not Reviewed-by).  With
+code tangled like that a mere code review might not have helped, but
+there's a chance it might have.
+
+So we got a userspace hardening feature into the kernel, which we now
+know also introduced a security vulnerability into the kernel.  Ouch.
+
+I am not complaining and not blaming anyone.  Rather, I accept that I
+share responsibility for the bug(s).
+
+I also greatly appreciate Al's cleaning up this mess, and am sorry we
+had created more work for him.
+
+Alexander
