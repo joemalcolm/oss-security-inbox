@@ -1,31 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/17/1
-Message-ID: <nycvar.YSQ.7.78.906.2009171539530.10832@xnncv>
-Date: Thu, 17 Sep 2020 15:43:46 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2020-25625 QEMU: usb: hcd-ohci: infinite loop issue while processing transfer descriptors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/29/1
+Message-Id: <E012A6FB-C892-4272-BF4E-3300727D2F4F@beckweb.net>
+Date: Wed, 29 Jan 2020 16:10:08 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-An infinite loop issue was found in the USB OHCI controller emulator of QEMU. 
-It could occur while servicing OHCI isochronous transfer descriptors (TD) in 
-ohci_service_iso_td routine, as it retires a TD if it has passed its time 
-frame. While doing so it does not check if the TD was already processed ones 
-and holds an error code in TD_CC. It may happen if the TD list has a loop.
+The following releases contain fixes for security vulnerabilities:
 
-A guest user/process may use this flaw to consume cpu cycles on the host 
-resulting in a DoS scenario.
+* Jenkins 2.219
+* Jenkins LTS 2.204.2
+* Code Coverage API Plugin 1.1.3
+* Fortify Plugin 19.2.30
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg05905.html
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-'CVE-2020-25625' assigned via https://cveform.mitre.org/
+* WebSphere Deployer Plugin
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2020-01-29/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1682 / CVE-2020-2099
+Jenkins 2.213 and earlier, LTS 2.204.1 and earlier includes support for the
+Inbound TCP Agent Protocol/3 for communication between master and agents.
+While this protocol has been deprecated in 2018 and was recently removed
+from Jenkins in 2.214, it could still easily be enabled in Jenkins LTS
+2.204.1, 2.213, and older.
+
+This protocol incorrectly reuses encryption parameters which allow an
+unauthenticated remote attacker to determine the connection secret. This
+secret can then be used to connect attacker-controlled Jenkins agents to
+the Jenkins master.
+
+
+SECURITY-1641 / CVE-2020-2100
+Jenkins 2.218 and earlier, LTS 2.204.1 and earlier supports two network
+discovery services (UDP multicast/broadcast and DNS multicast) by default.
+
+The UDP multicast/broadcast service can be used in an amplification
+reflection attack, as very few bytes sent to the respective endpoint result
+in much larger responses: A single byte request to this service would
+respond with more than 100 bytes of Jenkins metadata which could be used in
+a DDoS attack on a Jenkins master. Within the same network, spoofed UDP
+packets could also be sent to make two Jenkins masters go into an infinite
+loop of replies to one another, thus causing a denial of service.
+
+
+SECURITY-1659 / CVE-2020-2101
+Jenkins 2.218 and earlier, LTS 2.204.1 and earlier does not use a
+constant-time comparison validating the connection secret when an inbound
+TCP agent connection is initiated. This could potentially allow attackers
+to use statistical methods to obtain the connection secret.
+
+
+SECURITY-1660 / CVE-2020-2102
+Jenkins 2.218 and earlier, LTS 2.204.1 and earlier does not use a
+constant-time comparison when checking whether two HMACs are equal. This
+could potentially allow attackers to use statistical methods to obtain a
+valid HMAC for an attacker-controlled input value.
+
+
+SECURITY-1695 / CVE-2020-2103
+Jenkins shows various technical details about the current user on the
+`/whoAmI` page. In a previous fix, the `Cookie` header value containing the
+HTTP session ID was redacted. However, user metadata shown on this page
+could also include the HTTP session ID in Jenkins 2.218 and earlier, LTS
+2.204.1 and earlier.
+
+This allows attackers able to exploit a cross-site scripting vulnerability
+to obtain the HTTP session ID value from this page.
+
+
+SECURITY-1650 / CVE-2020-2104
+Jenkins includes a feature that shows a JVM memory usage chart for the
+Jenkins master.
+
+Access to the chart in Jenkins 2.218 and earlier, LTS 2.204.1 and earlier
+requires no permissions beyond the general Overall/Read, allowing users who
+are not administrators to view JVM memory usage data.
+
+
+SECURITY-1704 / CVE-2020-2105
+Jenkins 2.218 and earlier, LTS 2.204.1 and earlier does not serve the
+`X-Frame-Options: deny` HTTP header on REST API responses to protect
+against clickjacking attacks. An attacker could exploit this by routing the
+victim through a specially crafted web page that embeds a REST API endpoint
+in an iframe and tricking the user into performing an action which would
+allow for the attacker to learn the content of that REST API endpoint.
+
+
+SECURITY-1680 / CVE-2020-2106
+Code Coverage API Plugin 1.1.2 and earlier does not escape the filename of
+the coverage report used in its view.
+
+This results in a stored cross-site scripting vulnerability that can be
+exploited by users able to change the job configuration.
+
+
+SECURITY-1565 / CVE-2020-2107
+Fortify Plugin 19.1.29 and earlier stored its proxy server password
+unencrypted in job `config.xml` files. This password could be read by users
+with the Extended Read permission.
+
+
+SECURITY-1719 / CVE-2020-2108
+WebSphere Deployer Plugin 1.6.1 and earlier does not configure the XML
+parser to prevent XML external entity (XXE) attacks. This could be
+exploited by a user with Job/Configure permissions to upload a specially
+crafted war file containing a `WEB-INF/ibm-web-ext.xml` which is parsed by
+the plugin.
+
+As of publication of this advisory, there is no fix.
 
