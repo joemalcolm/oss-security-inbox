@@ -1,45 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/25/2
-Message-ID: <20200825153621.GI30064@timmy>
-Date: Tue, 25 Aug 2020 17:36:21 +0200
-From: Matthieu Herrb <matthieu@...rb.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/30/4
+Message-Id: <7151FEEF-4905-4333-8F4A-8B46AEC36E07@oracle.com>
+Date: Thu, 30 Jan 2020 18:00:03 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: X.Org libX11 security advisory: August 25, 2020
+Subject: CVE-2019-3016: information leak within a KVM guest
 Content-Type: text/plain; charset=utf-8
 
+The problem is missing TLB flushes which potentially allows a process in a KVM guest to access memory locations within that guest that it should not have access to.
 
-Double free in libX11 locale handling code
-==========================================
+The problem is limited to host kernels 4.10 onwards with guest kernels running 4.16 onwards and PV TLB exposed to the guests.  Additionally, the problem mainly affects AMD processors but we cannot rule out Intel CPUs.
 
-CVE-2020-14363
+From the patch cover note:
 
-There is an integer overflow and a double free vulnerability in the way
-LibX11 handles locales. The integer overflow is a necessary precursor to
-the double free.
+> The KVM hypervisor may provide a guest with ability to defer remote TLB
+> flush when the remote VCPU is not running. When this feature is used,
+> the TLB flush will happen only when the remote VPCU is scheduled to run
+> again. This will avoid unnecessary (and expensive) IPIs.
+> 
+> Under certain circumstances, when a guest initiates such deferred action,
+> the hypervisor may miss the request. It is also possible that the guest
+> may mistakenly assume that it has already marked remote VCPU as needing a
+> flush when in fact that request had already been processed by the hypervisor.
+> In both cases this will result in an invalid translation being present in a
+> vCPU, potentially allowing accesses to memory locations in that guest's
+> address space that should not be accessible.
+> 
+> Note that only intra-guest memory is vulnerable.
+> 
+> The attached patches address both of these problems:
+> 1. The first patch makes sure the hypervisor doesn't accidentally clear
+> guest's remote flush request
+> 2. The rest of the patches prevent the race between hypervisor
+> acknowledging a remote flush request and guest issuing a new one.
 
-Patches
--------
 
-A Patch for this issue has been committed to the libX11 git repository.
-libX11 1.6.12 will be released shortly and will include this patch.
+Part of the attached patches were discovered independently[1] and made public on 2019-01-16 although it was our considered opinion that the security implications of this were not at all obvious so we kept the embargo.
 
-https://gitlab.freedesktop.org/xorg/lib/libx11
+The original patches posted to linux-distros broke ARM so I'm attaching the v2 patches.  These will be heading to the mainline kernel shortly.
+
+jch
 
 
-commit acdaaadcb3d85c61fd43669fc5dddf0f8c3f911d (HEAD -> master)
+[1] https://lore.kernel.org/kvm/20200116001635.174948-1-jmattson@google.com
 
-    Fix an integer overflow in init_om()
-    
-    CVE-2020-14363
-    
-    This can lead to a double free later, as reported by Jayden Rivers.
-    
 
-Thanks
-------
 
-X.Org thanks Jayden Rivers for reporting this issue to our security
-team and assisting them in understanding them and providing fixes.
+Download attachment "CVE-2019-3016.v2.tgz" of type "application/octet-stream" (5853 bytes)
 
--- 
-Matthieu Herrb
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
