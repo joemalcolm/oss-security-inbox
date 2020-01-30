@@ -1,25 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/15/1
-Message-ID: <a3e663a9-a920-a9e3-43fd-e22ccc2c8452@electronsweatshop.com>
-Date: Tue, 14 Jul 2020 18:25:08 -0400
-From: Randy Barlow <randy@...ctronsweatshop.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/30/2
+Message-ID: <5c8272db-083f-299a-80f2-ec0edbda98d0@apache.org>
+Date: Thu, 30 Jan 2020 00:07:26 -0500
+From: "Kevin A. McGrail" <kmcgrail@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Flatcar membership on the linux-distros list
+Subject: [CVE-2020-1931] Apache SpamAssassin Nefarious rule configuration (.cf) files can be configured to run system commands with warnings.
 Content-Type: text/plain; charset=utf-8
 
-On 7/14/20 2:20 PM, Vincent Batts wrote:
->> Have someone already on the private list, or at least someone else who
-> has been active on oss-security for years but is not affiliated with your
-> distro nor your organization, vouch for at least one of the people
-> requesting membership on behalf of your distro (then that one vouched-for
-> person will be able to vouch for others on your team, in case you'd like
-> multiple people subscribed)
-> 
-> Pat Volkerding can vouch for me (CC’ed), and maybe others, but I asked
-> volkerdi first:-)
+Apache SpamAssassin 3.4.4 was recently released [1], and fixes an issue
+of security note where nefarious rule configuration (.cf) files can be
+configured to run system commands similar to CVE-2018-11805.  This issue
+is less stealthy and attempts to exploit the issue will throw warnings. 
+Thanks to Damian Lukowski at credativ for reporting the issue
+ethically.  With this bug unpatched, exploits can be injected in a
+number of scenarios though doing so remotely is difficult.  In addition
+to upgrading to SA 3.4.4, we again recommend that users should only use
+update channels or 3rd party .cf files from trusted places.
 
-I worked with Vincent when we both worked at Red Hat (we no longer work 
-together), and I can vouch for him personally as I've known him a number 
-of years. However, in full disclosure, I am not on the private list, 
-have only posted on this list a few times (mostly to report some minor 
-issues I found), and have no knowledge of Flatcar Linux.
+This issue has been assigned CVE id CVE-2020-1931 [2]
+
+To contact the Apache SpamAssassin security team, please e-mail
+security at spamassassin.apache.org.  For more information about Apache
+SpamAssassin, visit the http://spamassassin.apache.org/ web site.
+
+Apache SpamAssassin Security Team
+
+[1]:
+https://svn.apache.org/repos/asf/spamassassin/branches/3.4/build/announcements/3.4.4.txt
+
+[2]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2020-1931
+
+
+-- 
+Kevin A. McGrail
+KMcGrail@...che.org
+
+Member, Apache Software Foundation
+Chair Emeritus Apache SpamAssassin Project
+https://www.linkedin.com/in/kmcgrail - 703.798.0171
+
