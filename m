@@ -1,67 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/13
-Message-ID: <20200423181234.GA23035@openwall.com>
-Date: Thu, 23 Apr 2020 20:12:34 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/30/5
+Message-ID: <20200130181637.GC29347@mbp>
+Date: Thu, 30 Jan 2020 18:16:37 +0000
+From: Catalin Marinas <catalin.marinas@....com>
 To: oss-security@...ts.openwall.com
-Cc: Wietse Venema <wietse@...cupine.org>
-Subject: Re: spoofing of local email sender via a homoglyph attack
+Subject: Linux kernel: arm64/KVM debug registers vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 23, 2020 at 07:03:14PM +0300, PromiseLabs Pentest Research wrote:
-> I am not sure that the "from" header applies to user probing, as the 
+Hi,
 
-You mean the MAIL FROM aka envelope-from.
+A bug has been fixed in the arm64 KVM port (commit id
+4942dc6638b07b5326b6d2faa142635c559e7cd5 "KVM: arm64: Write
+arch.mdcr_el2 changes since last vcpu_load on VHE") which would allow a
+guest to access the debug/PMU registers used by the host without being
+trapped. This can only happen during the vCPU start until the first
+preemption. Systems with an ARMv8.1 or later CPU are affected (with the
+Virtualisation Host Extensions).
 
-> actual mail server configuration on which I'm testing would accept any 
-> user as a sender:
-> 
-> # nc -v *** OMITTED *** 25
-> Connection to *** OMITTED *** 25 port [tcp/smtp] succeeded!
-> 220 *** OMITTED *** ESMTP Postfix
-> mail from: userdoesnotexists@...get.com
-> 250 2.1.0 Ok
-> rcpt to: test@...get.com
-> 550 5.1.1 <test@...get.com>: Recipient address rejected: User unknown in 
-> local recipient table
-> rcpt to: j??hn.doe@...get.com
-> 550 5.1.1 <j??hn.doe@...get.com>: Recipient address rejected: User 
-> unknown in local recipient table
-> rcpt to: existing.user@...get.com
-> 250 2.1.5 Ok
-> 
-> However, a non-existing user would not be accepted in the "rcpt-to" 
-> header, so this is another possible vector. This was discovered while 
-> doing a black box test on one of our clients, and it should be noted 
-> that the VRFY command has been enabled on the server, hence there was no 
-> reason to look for another way. However I'm unaware whether disabling 
-> VRFY would alter this behaviour. As you can see, the reported issue 
-> itself is may be actually due to the possibility of relaying a local 
-> email from a non-existing user.
-> 
-> Having said this, if not then I assume then you are correct, in case we 
-> take the "to" header into consideration in relation to user probing, 
-> unless I'm missing your logic.
+The implications are that a guest, for a brief period, may be able to
+read event counters belonging to the host or potentially trigger
+perf-related IRQs in the host.
 
-I actually meant probing via the "Sender address rejected: not logged
-in" messages, which while delivered in response to a RCPT TO depend on
-the MAIL FROM address.  However, as Wietse tells us this merely probes
-the smtpd_sender_login_maps table, so is very limited and
-configuration-specific.  Besides, as Wietse and you correctly remind us,
-the possibility to probe for valid addresses via RCPT TO is in practice
-unavoidable on modern Internet.  So the point of blocking probing of
-which sender addresses can vs. can not (do not need to) authenticate is
-moot given that in typical setups those addresses are also potential
-recipient addresses and thus could also be probed via RCPT TO.
+A more detailed description of the fix from the commit log [1]:
 
-What you reported originally, where you bypass something that just
-happens that way in some configurations and wasn't meant to provide any
-security against sender address spoofing, looks like even less of an
-issue to me.
+    KVM: arm64: Write arch.mdcr_el2 changes since last vcpu_load on VHE
 
-Does anyone see any reasonable action on these (non-)issues?  If not, I
-think the CVE should be rejected.  It's a case of "works as intended."
+    On VHE systems arch.mdcr_el2 is written to mdcr_el2 at vcpu_load time to
+    set options for self-hosted debug and the performance monitors
+    extension.
 
-> >>>>> Use CVE-2020-12063.
+    Unfortunately the value of arch.mdcr_el2 is not calculated until
+    kvm_arm_setup_debug() in the run loop after the vcpu has been loaded.
+    This means that the initial brief iterations of the run loop use a zero
+    value of mdcr_el2 - until the vcpu is preempted. This also results in a
+    delay between changes to vcpu->guest_debug taking effect.
 
-Alexander
+    Fix this by writing to mdcr_el2 in kvm_arm_setup_debug() on VHE systems
+    when a change to arch.mdcr_el2 has been detected.
+
+No CVE ID has been assigned to this bug.
+
+-- 
+Catalin
+
+[1] https://git.kernel.org/linus/4942dc6638b07b5326b6d2faa142635c559e7cd5
