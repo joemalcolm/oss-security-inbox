@@ -1,120 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/6
-Message-ID: <e5512902-f52d-61e0-bd4e-8d73ce5ea9ad@archlinux.org>
-Date: Mon, 5 Oct 2020 19:30:22 -0400
-From: Eli Schwartz <eschwartz@...hlinux.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/30/1
+Message-ID: <4121113.n0WVUT9hOZ@tjmaciei-mobl1>
+Date: Wed, 29 Jan 2020 17:17:49 -0800
+From: Thiago Macieira <thiago.macieira@...el.com>
+To: <oss-security@...ts.openwall.com>
+Subject: New Qt vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 10/5/20 8:02 AM, Georgi Guninski wrote:
-> Disclaimer: I am not watching the security theatre closely,
-> so this is likely trivial.
-> 
-> Are there major security changes needed if
-> gnu/linux dominates the desktop and/or mobile phone
-> markets?
-> 
-> Remarks:
-> 1. there was android malware on google play
+The Qt security team was made aware of two issues affecting the currently-
+released versions of Qt that could lead to loading of untrusted plugins, which 
+can execute code immediately upon loading. We have assigned two IDs for them. 
+The patches fixing those issues are linked to below.
 
-There was malware everywhere, no software source AFAIK has ever been
-fully immune. Some are rarer than others.
+Issue 1) CVE-2020-0569
+Score: 7.3 (High) - CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H/E:F/RL:O/RC:C
+* Vendor: Qt Project
+* Product: Qt
+* Versions affected: 5.0.0 to 5.13.2
+* Versions fixed: 5.14.0 (already released), 5.12.7, 5.9.10 (future)
+* Issue: local attack, loading and execution of untrusted code
+* Scope: class QPluginLoader (qtbase/src/corelib/plugin/qpluginloader.cpp)
+* Description:
+QPluginLoader in Qt versions 5.0.0 through 5.13.2 would search for certain 
+plugins first on the current working directory of the application, which 
+allows an attacker that can place files in the file system and influence the 
+working directory of Qt-based applications to load and execute malicious code. 
+This issue was verified on macOS and Linux and probably affects all other Unix 
+operating systems. This issue does not affect Windows.
 
-Linux desktop distributions have one advantage in that they are
-*curated* by a small handful of trusted individuals, who collect popular
-programs, vet them, and provide trusted binaries. We know exactly what
-source code goes into distro packages, we can audit this source code and
-check PGP signatures from upstream authors, and due to
-https://reproducible-builds.org/ we can double-check the supply chain
-and verify the maintainer didn't go rogue and fiddle with the source
-code before releasing packages, or their compiler wasn't backdoored.
+Patches:
+- 5.6.0 through 5.13.2: https://code.qt.io/cgit/qt/qtbase.git/commit/?
+id=bf131e8d2181b3404f5293546ed390999f760404
+- 5.0.0 through 5.5.1: https://code.qt.io/cgit/qt/qtbase.git/commit/?
+id=5c4234ed958130d655df8197129806f687d4df0d
 
-Your chances of installing outright malware are pretty low on GNU/Linux
-desktop systems, or on mobile if those desktop systems spread to the
-mobile market. Assuming you stick with official, vetted software
-sources. Once you start downloading random github binaries, or
-snaps/flatpaks, or `npm install theworld`, you've devolved to the level
-of smartphone appstores where it is mostly just automated analysis of
-millions of user submissions, and malware can easily slip by.
+Issue 2) CVE-2020-0570
+Score: 7.3 (High) - CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H/E:F/RL:O/RC:C
+* Vendor: Qt Project
+* Product: Qt
+* Versions affected: 5.12.0 through 5.14.0
+* Versions fixed: 5.14.1 (released), 5.12.7, 5.9.10 (future)
+* Issue: local attack, loading and execution of untrusted code
+* Scope: class QLibrary (qtbase/src/corelib/plugin)
+* Reference: https://bugreports.qt.io/browse/QTBUG-81272
+* Description:
+QLibrary in Qt versions 5.12.0 through 5.14.0, on certain x86 machines, would 
+search for certain libraries and plugins relative to current working directory 
+of the application, which allows an attacker that can place files in the file 
+system and influence the working directory of Qt-based applications to load 
+and execute malicious code. This issue was verified on Linux and probably 
+affects all Unix operating systems, other than macOS (Darwin). This issue does 
+not affect Windows.
 
-Even on desktop systems with vetted supply chains, you have more to
-worry about than merely malware. Any software that random users can
-interact with e.g. over the network can have vulnerabilities, which is
-arguably what most of the interesting security issues are about. No
-vetting can save you from that. On the other hand, avoiding GNU/Linux
-won't save you from that either -- all software suffers from this,
-Windows has *many* problems with this too. So I don't believe there are
-going to be any major changes here. Locking down systems vulnerable to
-external input that triggers bugs, finding those bugs and fixing them,
-preventing them from causing too much damage, is and has been a problem
-on every OS.
-
-> 2. ad-free and free as in beer android games are hard to find for us
-
-I'm not sure what this has to do with security???
-
-> 3. we are pissed off by browsers accessing the microphone
-> or camera (seen in the wild)
-
-Nominally speaking, on smartphones this should be stopped by permission
-models, unless of course people impatiently click to permit everything.
-
-Desktop browsers have their own permission dialogs for this.
-
-Generic desktop programs designed for accessing your camera still kind
-of assume the only permission they need is the trust you provide by
-installing and running the program. Vetted linux distro repositories
-make it unlikely these programs are intentionally spying on you,
-especially when you choose when to start them.
-
-> 4. reading $HOME might reveal more interesting stuff than
-> root reading /etc/ (on debian 10 /home/loser is 755 and the
-> default umask is 0022)
-
-And reading C:\Users might reveal more interesting stuff than
-HKEY_LOCAL_MACHINE; individual android app settings or your downloads
-folder might reveal more interesting stuff than defeating Samsung Knox.
-
-This has always been the case, and always will be. It's still
-advantageous to prevent compromising the entire OS, because that
-prevents malware from hiding its activities, installing more malware
-that persists across reboots, or spreading its reach to other programs.
-
-But, of course you need to protect yourself from malware running as the
-local user too. Vet the sources of your software, or let a distro team
-do the vetting for you, and most issues will be completely avoided.
-Don't visit shady sites in your browser, use tools like
-https://noscript.net/ to prevent completely untrusted and usually
-suspicious executable code running in your browser (otherwise known as
-javascript). These are things you could do on any OS.
-
-...
-
-There are explorations in sandboxing and confining expected-trusted
-programs to prevent vulnerabilities from being usable by attackers, and
-this may take the form of seccomp, bubblewrap, etc.
-
-flatpak tries to provide a GUI appstore for popular applications in
-sandboxes, with permission models for allowing resources into the
-sandbox, e.g XDG Desktop Portal to broker access to files from the host
-system through a trusted agent.
-
-Though my understanding is in order to be (conveniently?) usable,
-programs end up in practice needing to be granted access to the entire
-host filesystem and therefore aren't really isolated after all. Not
-entirely dissimilar to the situation on smartphones ;) where every
-application's manifest tries to grab every permission it can, and
-declares most of them as so vital the program won't even run without
-those permissions.
-
-Apparently both giving power to the user *and* preventing software from
-running rogue, is indeed hard.
+Patch: https://code.qt.io/cgit/qt/qtbase.git/commit/?
+id=e6f1fde24f77f63fb16b2df239f82a89d2bf05dd
 
 -- 
-Eli Schwartz
-Arch Linux Bug Wrangler and Trusted User
+Thiago Macieira - thiago.macieira (AT) intel.com
+  Software Architect - Intel System Software Products
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1602 bytes)
