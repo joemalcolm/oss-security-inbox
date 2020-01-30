@@ -1,46 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/14/2
-Message-ID: <20201114115850.GB5193@suse.de>
-Date: Sat, 14 Nov 2020 12:58:50 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/30/3
+Message-ID: <d5a7615a-706f-0d44-a2c4-8d648be9a3ea@apache.org>
+Date: Thu, 30 Jan 2020 00:18:13 -0500
+From: "Kevin A. McGrail" <kmcgrail@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
+Subject: [CVE-2020-1930] Apache SpamAssassin Nefarious rule configuration (.cf) files can be configured to run system commands
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Apache SpamAssassin 3.4.4 was recently released [1], and fixes an issue
+of security note where nefarious rule configuration (.cf) files can be
+configured to run system commands similar to CVE-2018-11805.  With this
+bug unpatched, exploits can be injected in a number of scenarios
+including the same privileges as spamd is run which may be elevated
+though doing so remotely is difficult.  In addition to upgrading to SA
+3.4.4, we again recommend that users should only use update channels or
+3rd party .cf files from trusted places.  If you cannot upgrade, do not
+use 3rd party rulesets, do not use sa-compile and do not run spamd as an
+account with elevated privileges.
 
-On Fri, Nov 13, 2020 at 01:33:31PM +0100, Hanno Böck wrote:
-> 3 years ago I reported a heap overflow vulnerability in raptor, an RDF
-> parsing library:
-> https://www.openwall.com/lists/oss-security/2017/06/07/1
-> 
-> raptor has not created a new release since 2014.
-> 
-> The most prominent user seems to be libreoffice. This is triggerable
-> from within an ODT file. Back then I reported this to libreoffice as
-> well and they patched it in their builds. However on linux systems
-> libreoffice package usually use the system-provided libraptor, so if
-> that's not patched it is vulnerable.
-> 
-> This was unpatched for a long time in many linux distros, in some it
-> still is. Debian+Ubuntu have released updates in the past few days.
-> 
-> It may be interesting to discuss how this happened. From my side I feel
-> I did what I should do - I reported it to the project and later
-> disclosed it publicly on oss-security. Apparently it seems there is no
-> reliable process to make sure publicly reported vulns eventually get
-> patched in distros if there is no active upstream.
-> Maybe noteworthy is that this didn't get a CVE in 2017. It seems many
-> distros rely on CVEs to get a process of backporting fixes rolling.
-> Given the fluctuating reliability of CVE assignments not sure this is
-> wise. I have now requested a CVE (CVE-2017-18926).
+This issue has been assigned CVE id CVE-2020-1930 [2]
 
-I think the only thing you can do additional is to request a CVE.
+To contact the Apache SpamAssassin security team, please e-mail
+security at spamassassin.apache.org.  For more information about Apache
+SpamAssassin, visit the http://spamassassin.apache.org/ web site.
 
-All tracking by everyone is using CVEs, this is the core identifier
-of the software security world.
+Apache SpamAssassin Security Team
 
-We distributors fill in as CVE requesters, but as you noticed, we 
-occasionaly miss entries.
+[1]:
+https://svn.apache.org/repos/asf/spamassassin/branches/3.4/build/announcements/3.4.4.txt
 
-Ciao, Marcus
+[2]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2020-1930
+
+-- 
+
+Kevin A. McGrail
+KMcGrail@...che.org
+
+Member, Apache Software Foundation
+Chair Emeritus Apache SpamAssassin Project
+https://www.linkedin.com/in/kmcgrail - 703.798.0171
+
