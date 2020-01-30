@@ -1,41 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/15/3
-Message-ID: <4a73fa85204d307c3dedb81a34e019e83a2c417e.camel@amazon.com>
-Date: Fri, 15 May 2020 12:54:12 +0000
-From: "Singh, Balbir" <sblbir@...zon.com>
-To: "ppandit@...hat.com" <ppandit@...hat.com>
-CC: "matthew.sheets@...ms.com" <matthew.sheets@...ms.com>, "code@...icks.com" <code@...icks.com>, "Mendoza-jonas, Samuel" <samjonas@...zon.com>, "pabeni@...hat.com" <pabeni@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re:  [test case][kunit] CVE-2020-10711 Kernel netLabel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/30/6
+Message-ID: <aff309c0b243705e@sudo.ws>
+Date: Thu, 30 Jan 2020 11:23:28 -0700
+From: "Todd C. Miller" <Todd.Miller@...o.ws>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2020-05-15 at 11:27 +0530, P J P wrote:
-> 
->   Hello Balbir,
-> 
-> +-- On Fri, 15 May 2020, Singh, Balbir wrote --+
-> > I've spent some time writing a kunit test case for CVE-2020-10711 using the
-> > KUNIT framework. I am attaching the patch below for reference. The patch is
-> > against the latest linux-next. The details are in the test case, there
-> > are some TODOs:
-> > 
-> > 1. Add test cases for the ipv6 variant
-> > 2. Add a test case for cipso_v4_parsetag_rpm variant
-> > 
-> > Please feel to suggest improvements or better ways to test this, this is
-> > a rough patch, but I still wanted to share it and see if it helps others/
-> > get comments on the approach to testing it.
-> 
-> Thank you so much for working on this. At first glance it looks okay, you need
-> to send this to an upstream -netdev list for better reviews/inputs.
-> 
->   -> http://vger.kernel.org/vger-lists.html#netdev
->
+[CVE-2019-18634 was made public unexpectedly early yesterday which
+ is why there was no advance notice for the distros list.]
 
-Thanks Prasad!
+Summary:
 
-I was reaching out the security list to check if the patches were correct
-from a security verification view point. I will get feedback from netdev 
-as well in a while
+Sudo's "pwfeedback" option can be used to provide visual feedback
+when the user is inputting their password.  For each key press, an
+asterisk is printed.  This option was added in response to user
+confusion over how the standard "Password:" prompt disables the
+echoing of key presses.  While "pwfeedback" is not enabled by default
+in the upstream version of sudo, some systems, such as Linux Mint
+and Elementary OS, do enable it in their default sudoers files.
 
-Balbir Singh.
+Due to a bug, when the "pwfeedback" option is enabled in the sudoers
+file, a user may be able to trigger a stack-based buffer overflow.
+This bug can be triggered even by users not listed in the sudoers
+file.  There is _no_ impact unless "pwfeedback" has been enabled.
 
+Sudo versions affected:
+
+Sudo versions 1.7.1 to 1.8.30 inclusive are affected but only if
+the "pwfeedback" option is enabled in sudoers.
+
+A user with sudo privileges can check whether "pwfeedback" is enabled
+by running:
+
+    $ sudo -l
+
+If "pwfeedback" is listed in the "Matching Defaults entries" output,
+the sudoers configuration is affected.  In the following example,
+the sudoers configuration is vulnerable:
+
+    $ sudo -l
+    Matching Defaults entries for millert on linux-build:
+	insults, pwfeedback, mail_badpass, mailerpath=/usr/sbin/sendmail
+
+    User millert may run the following commands on linux-build:
+	(ALL : ALL) ALL
+
+CVE ID:
+
+This vulnerability has been assigned CVE-2019-18634 in the Common
+Vulnerabilities and Exposures database.
+
+Details:
+
+Exploiting the bug does not require sudo permissions, merely that
+pwfeedback be enabled.  The bug can be reproduced by passing a large
+input to sudo via a pipe when it prompts for a password.  For
+example:
+
+    $ perl -e 'print(("A" x 100 . "\x{00}") x 50)' | sudo -S id
+    Password: Segmentation fault
+
+There are two flaws that contribute to this vulnerability:
+
+    1.	The "pwfeedback" option is not ignored, as it should be,
+	when reading from something other than a terminal device.
+        Due to the lack of a terminal, the saved version of the
+        line erase character remains at its initialized value of 0.
+
+    2.	The code that erases the line of asterisks does not
+        properly reset the buffer position if there is a write
+        error, but it does reset the remaining buffer length.
+	As a result, the getln() function can write past the
+	end of the buffer.
+
+On systems with unidirectional pipes, an attempt to write to the
+read end of the pipe will result in a write error.  Because the
+remaining buffer length is not reset correctly on write error when
+the line is erased, a buffer on the stack can be overflowed.
+
+Impact:
+
+There is no impact unless "pwfeedback" has been enabled in the
+sudoers file.
+
+If "pwfeedback" is enabled in sudoers, the stack overflow may allow
+unprivileged users to escalate to the root account.  Because the
+attacker has complete control of the data used to overflow the
+buffer, there is a high likelihood of exploitability.
+
+Workaround:
+
+If the sudoers file has "pwfeedback" enabled, disabling it by
+pre-pending an exclamation point is sufficient to prevent exploitation
+of the bug.  For example, change:
+
+    Defaults pwfeedback
+
+To:
+
+    Defaults !pwfeedback
+
+After disabling "pwfeedback" in sudoers using the visudo command,
+the example "sudo -l" output becomes:
+
+    $ sudo -l
+    Matching Defaults entries for millert on linux-build:
+	insults, mail_badpass, mailerpath=/usr/sbin/sendmail
+
+    User millert may run the following commands on linux-build:
+	(ALL : ALL) ALL
+
+Fix:
+
+The bug is fixed in sudo 1.8.31.
+
+The following commit fixes CVE-2019-18634:
+https://github.com/sudo-project/sudo/commit/fa8ffeb17523494f0e8bb49a25e53635f4509078
+
+Credit:
+
+Joe Vennix from Apple Information Security found and analyzed the bug.
