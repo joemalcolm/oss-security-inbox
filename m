@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["858" "Tuesday" "25" "August" "2020" "17:36:21" "+0200" "Matthieu Herrb" "matthieu@herrb.eu" "<20200825153621.GI30064@timmy>" "36" "[oss-security] X.Org libX11 security advisory: August 25, 2020" nil nil nil "8" "2020082515:36:21" "[oss-security] X.Org libX11 security advisory: August 25, 2020" (number mark "U       matthieu@her Aug 25   36/858   " thread-indent "\"[oss-security] X.Org libX11 security advisory: August 25, 2020\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] X.Org libX11 security advisory: August 25, 2020" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2495" "Wednesday" "29" "January" "2020" "17:17:49" "-0800" "Thiago Macieira" "thiago.macieira@intel.com" "<4121113.n0WVUT9hOZ@tjmaciei-mobl1>" "54" "[oss-security] New Qt vulnerabilities" nil nil nil "1" "2020013001:17:49" "[oss-security] New Qt vulnerabilities" (number mark "U       thiago.macie Jan 29   54/2495  " thread-indent "\"[oss-security] New Qt vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] New Qt vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24490 invoked by uid 550); 25 Aug 2020 15:53:44 -0000
+Received: (qmail 26329 invoked by uid 550); 30 Jan 2020 08:09:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +12,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18029 invoked from network); 25 Aug 2020 15:36:35 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=herrb.eu; h=date:from:to
-	:subject:message-id:mime-version:content-type; s=20180121; bh=Os
-	3PSzzmtx0PYSgi4LduO9ER6Oc=; b=jx3qC+WO3KdsfQnDhCdZwaID2EPB1wkVFJ
-	YI8c45p9KbZVVLEgPYhoKj/yPgK6aEjAg3Cum7cMsBnzgzCYhtblnPBrOn4bMnNF
-	+LGn5X8LNyLpIT28kezAXzTW7u0Gmpv1GkzzTs5+5Z+XtdTEZtFRQkYjWlHfzcc5
-	nE4DgAsd8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=herrb.eu; h=date:from:to
-	:subject:message-id:mime-version:content-type; q=dns; s=20180121; b=
-	zSf0KNQeCwq0dyOFqmZztjuDPU/EAy7XlytgGbWuAlRCJu4ZLWDA3nWVru8R6UTV
-	CwXyUYPWbgwOHJtNh+fEJI6ueq9Ex3TPU/LJ4wUsWvAjrGMJPnEJz/eoSN5LqDAW
-	BYuM+YIu8qpCKXprlRz7z0WM0zLFDCQqX/XO4mMY16I=
-Date: Tue, 25 Aug 2020 17:36:21 +0200
-From: Matthieu Herrb <matthieu@herrb.eu>
-To: oss-security@lists.openwall.com
-Message-ID: <20200825153621.GI30064@timmy>
+Received: (qmail 8062 invoked from network); 30 Jan 2020 01:18:03 -0000
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,380,1574150400"; 
+   d="scan'208";a="376912693"
+From: Thiago Macieira <thiago.macieira@intel.com>
+To: <oss-security@lists.openwall.com>
+Date: Wed, 29 Jan 2020 17:17:49 -0800
+Message-ID: <4121113.n0WVUT9hOZ@tjmaciei-mobl1>
+Organization: Intel Corporation
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Subject: [oss-security] X.Org libX11 security advisory: August 25, 2020
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Originating-IP: [10.251.28.103]
+Subject: [oss-security] New Qt vulnerabilities
 
+The Qt security team was made aware of two issues affecting the currently-
+released versions of Qt that could lead to loading of untrusted plugins, which 
+can execute code immediately upon loading. We have assigned two IDs for them. 
+The patches fixing those issues are linked to below.
 
-Double free in libX11 locale handling code
-==========================================
+Issue 1) CVE-2020-0569
+Score: 7.3 (High) - CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H/E:F/RL:O/RC:C
+* Vendor: Qt Project
+* Product: Qt
+* Versions affected: 5.0.0 to 5.13.2
+* Versions fixed: 5.14.0 (already released), 5.12.7, 5.9.10 (future)
+* Issue: local attack, loading and execution of untrusted code
+* Scope: class QPluginLoader (qtbase/src/corelib/plugin/qpluginloader.cpp)
+* Description:
+QPluginLoader in Qt versions 5.0.0 through 5.13.2 would search for certain 
+plugins first on the current working directory of the application, which 
+allows an attacker that can place files in the file system and influence the 
+working directory of Qt-based applications to load and execute malicious code. 
+This issue was verified on macOS and Linux and probably affects all other Unix 
+operating systems. This issue does not affect Windows.
 
-CVE-2020-14363
+Patches:
+- 5.6.0 through 5.13.2: https://code.qt.io/cgit/qt/qtbase.git/commit/?
+id=bf131e8d2181b3404f5293546ed390999f760404
+- 5.0.0 through 5.5.1: https://code.qt.io/cgit/qt/qtbase.git/commit/?
+id=5c4234ed958130d655df8197129806f687d4df0d
 
-There is an integer overflow and a double free vulnerability in the way
-LibX11 handles locales. The integer overflow is a necessary precursor to
-the double free.
+Issue 2) CVE-2020-0570
+Score: 7.3 (High) - CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H/E:F/RL:O/RC:C
+* Vendor: Qt Project
+* Product: Qt
+* Versions affected: 5.12.0 through 5.14.0
+* Versions fixed: 5.14.1 (released), 5.12.7, 5.9.10 (future)
+* Issue: local attack, loading and execution of untrusted code
+* Scope: class QLibrary (qtbase/src/corelib/plugin)
+* Reference: https://bugreports.qt.io/browse/QTBUG-81272
+* Description:
+QLibrary in Qt versions 5.12.0 through 5.14.0, on certain x86 machines, would 
+search for certain libraries and plugins relative to current working directory 
+of the application, which allows an attacker that can place files in the file 
+system and influence the working directory of Qt-based applications to load 
+and execute malicious code. This issue was verified on Linux and probably 
+affects all Unix operating systems, other than macOS (Darwin). This issue does 
+not affect Windows.
 
-Patches
--------
-
-A Patch for this issue has been committed to the libX11 git repository.
-libX11 1.6.12 will be released shortly and will include this patch.
-
-https://gitlab.freedesktop.org/xorg/lib/libx11
-
-
-commit acdaaadcb3d85c61fd43669fc5dddf0f8c3f911d (HEAD -> master)
-
-    Fix an integer overflow in init_om()
-    
-    CVE-2020-14363
-    
-    This can lead to a double free later, as reported by Jayden Rivers.
-    
-
-Thanks
-------
-
-X.Org thanks Jayden Rivers for reporting this issue to our security
-team and assisting them in understanding them and providing fixes.
+Patch: https://code.qt.io/cgit/qt/qtbase.git/commit/?
+id=e6f1fde24f77f63fb16b2df239f82a89d2bf05dd
 
 -- 
-Matthieu Herrb
+Thiago Macieira - thiago.macieira (AT) intel.com
+  Software Architect - Intel System Software Products
+
+
+
