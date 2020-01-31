@@ -1,50 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/03/1
-Message-ID: <0a64f380-fa28-2b60-5710-cd3d556949ca@windriver.com>
-Date: Fri, 3 Jul 2020 10:06:55 +0800
-From: Zhang Xiao <xiao.zhang@...driver.com>
-To: oss-security@...ts.openwall.com, Daniel Stenberg <daniel@...x.se>, Francis Perron <francisp@...gle.com>
-Cc: xiao.zhang@...driver.com, Solar Designer <solar@...nwall.com>
-Subject: Re: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/31/1
+Message-ID: <aff313846ed736fa@sudo.ws>
+Date: Fri, 31 Jan 2020 06:48:21 -0700
+From: "Todd C. Miller" <Todd.Miller@...o.ws>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled
 Content-Type: text/plain; charset=utf-8
 
-I haven't remind MITRE before. While they have an interface to make it:
+On Thu, 30 Jan 2020 11:23:28 -0700, "Todd C. Miller" wrote:
 
-https://cve.mitre.org/about/contactus.html
-
-See the forth topic called "*To notify us about a vulnerability
-publication*". I just remind them about CVE-2020-8169 and  CVE-2020-8177
-with it. Hope it works. :-)
-
-
-I will check the status of them on CVE/NVD website these days.
-
-
-Thanks
-
-Xiao
-
-
-在 2020/7/2 下午7:34, Daniel Stenberg 写道:
-> On Thu, 2 Jul 2020, Francis Perron wrote:
+> Sudo versions affected:
 >
->>  this delay may be possible due to many things, but the simplest
->> possibility that comes to mind is that Daniel (here cc'd) from H1 has
->> only gotten a reservation of CVE number, and he and MITRE have not
->> triggered the submission yet.
->
-> In the curl project we (nowadays) request and get CVE IDs from
-> Hackerone, and we've subsequently told them to publish these two
-> recent curl related CVE IDs when we made them public to the world - I
-> suspect this is just them being a little slow. We don't have any
-> direct contact with MITRE.
->
-> All details regarding the two recent curl flaws are here:
->
->  https://curl.haxx.se/docs/CVE-2020-8169.html
->  https://curl.haxx.se/docs/CVE-2020-8177.html
->
+> Sudo versions 1.7.1 to 1.8.30 inclusive are affected but only if
+> the "pwfeedback" option is enabled in sudoers.
 
-Content of type "text/html" skipped
+It turns out a change in EOF handling introduced in sudo 1.8.26
+prevents exploitation of the bug.  The EOF character is also
+initialized to 0 and sudo 1.8.26 checks for EOF before it checks
+for the kill character.
 
-Download attachment "pEpkey.asc" of type "application/pgp-keys" (2461 bytes)
+This means that the bug actually affects sudo versions 1.7.1 to
+1.8.25p1 inclusive.
+
+Sorry for the oversight.  I've updated the affected versions in
+https://www.sudo.ws/alerts/pwfeedback.html
+
+ - todd
