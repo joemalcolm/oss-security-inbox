@@ -1,4 +1,9 @@
-Received: (qmail 29829 invoked by uid 550); 16 Sep 2022 20:01:56 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1062" "Saturday" "1" "February" "2020" "01:17:26" "+0530" "Hardik Vyas" "hvyas@redhat.com" "<CAOo2v=A-zfgSrFy73_XMGxV4FbV_fv3Ptj_JdWa3W6U=iowWsA@mail.gmail.com>" "36" "[oss-security] CVE-2020-1700 ceph: connection leak in the RGW Beast front-end permits a DoS against the RGW server" "^Date:" nil nil "2" "2020013119:47:26" "[oss-security] CVE-2020-1700 ceph: connection leak in the RGW Beast front-end permits a DoS against the RGW server" (number mark "        hvyas@redhat Feb  1   36/1062  " thread-indent "\"[oss-security] CVE-2020-1700 ceph: connection leak in the RGW Beast front-end permits a DoS against the RGW server\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-1700 ceph: connection leak in the RGW Beast front-end permits a DoS against the RGW server" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26392 invoked by uid 550); 31 Jan 2020 23:08:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,115 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17473 invoked from network); 16 Sep 2022 19:41:58 -0000
+Received: (qmail 24481 invoked from network); 31 Jan 2020 19:47:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1580500063;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=jIgplJu5lqYPXKkdVcnQZArMteVGRWCRxfCOPDYSfHA=;
+	b=Wlkmew2X60NRdLx3sheXe1bZoXdUYq2RHM8abKGlTFmYk6cvDNKb0PCA+7z48xCBbiej8H
+	7Erec4Nolgclp4ssoQt6zJDMG2BKrS1LVvruanZn3rNhwUA5Ba4SxT4q6FAz4S8gISALeG
+	PCdnFaSajcNPMYAZ/xrIMMDd8X0L+es=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=npHgSiHkTcNWlvjjzqrMIPy6ruBvWRR8EnjVdmKSxuo=;
-        b=MW6psxE6I1O0KsqAH7NVc7rydy7HBWvoPIvdsBFOhKAbns8OIzjR2XSiZ+pQCoYQwg
-         vJUMqgb+qoR8Im7YXmCvK7gaPR9/mmt0emN6jtYI87WcoE+ovkroL0Id2xdDVTZ3U2RI
-         woGh2KwOvdn1/aP2vP+NfRGjFxp5+kbSFZ28kXBX1v4hEh5kSJr70Y+wCFf1gttLu0g4
-         XLPugtXH+5vvu4xftCan1c37K5m0oA921rLahbjGoR8qaHIAPWMGo514f84lXpBMz8Ac
-         B/icv6qsn706JQTTAlod1Z5n/yhKv4ypUZr4dcLidWyjyvo4Sruc+DgXLGgR7+9XxWAh
-         lYSw==
-X-Gm-Message-State: ACrzQf21Z2fpUxuxbrj8ctPJOJkr6GTHhH848ed1Yq6WmFpeMxrlmoGn
-	PgOLSGuDl9rNiBmcCtCAYUy5d6XZqt8=
-X-Google-Smtp-Source: AMsMyM7+4vQfBD/m7eIeCby8PydgnfnB8EsD4EGcJCMDlcz0a2XDcfQq+3MJ6sTt6bFU2bMjOOZxVw==
-X-Received: by 2002:a05:651c:2212:b0:26c:2baf:652e with SMTP id y18-20020a05651c221200b0026c2baf652emr2028371ljq.84.1663357305895;
-        Fri, 16 Sep 2022 12:41:45 -0700 (PDT)
-X-Received: by 2002:a05:6512:12d5:b0:49b:f391:9614 with SMTP id
- p21-20020a05651212d500b0049bf3919614mr2056221lfg.464.1663357304852; Fri, 16
- Sep 2022 12:41:44 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=nWIbKyrEs5aK7DG4FI0BNzwkE7n/zm2uW1rKeuGFxRo=;
+        b=QVHx/NR9s/zygU3vw78oX88zz1zRxfvo/5444DSfDaYwfgNvr/iUXquBlO0bjBIi5+
+         mmlGR5/KZ0YB3c0SacFFIDW5qF1gywVwRG/Dp1YwktXUTBFjqR4knkweg73KuIFzhs17
+         Jaa84AP0FWOsbdpIBbet00jzlofak85LR0xS3Z09h9j9aywSGD7W+OgKVGuNt2jtl24R
+         Lrxn9e+lwUkgJcKaRZE/jcEIoIA7j0rY7xb7Znf9vaUaPLt/I2Yw19Ntf77x8p0SDXVr
+         HMWUuZHh6oZ5RV5mEFge/w89X/Ay39SPgDcRiLysns7/ryvVl6cFAFTTDI4yNRGDZ447
+         29Lw==
+X-Gm-Message-State: APjAAAUdaALz4Lc+DT6F9xL5zD/2xeayTxwxTK9wviMm7/fK83vmexPQ
+	TeAhNgnWT91hku9V5MQWe2YoXlty/lcN2phk4oChVTv8kybD22dCP0YV4blJUyS1oFPcAsExCUr
+	BbsBTk21OE+pvu2h/LCBBSJChV0DavrV5gondswT5FE+r
+X-Received: by 2002:ae9:c205:: with SMTP id j5mr11834399qkg.58.1580500058148;
+        Fri, 31 Jan 2020 11:47:38 -0800 (PST)
+X-Google-Smtp-Source: APXvYqzlTsHifPtiPbS2d+axSlwQubmS3mereYIWKfokkcKOgIJf8IlHaKKLx6rQmJmWjUJwy4Q7O7a0epUBo5hVZZw=
+X-Received: by 2002:ae9:c205:: with SMTP id j5mr11834370qkg.58.1580500057740;
+ Fri, 31 Jan 2020 11:47:37 -0800 (PST)
 MIME-Version: 1.0
-From: Monis Khan <i@monis.app>
-Date: Fri, 16 Sep 2022 15:41:32 -0400
-X-Gmail-Original-Message-ID: <CALrOjABKUtfOem9bF=La6qnf3GFkEKTngeb95MWRDYSGNYfHCA@mail.gmail.com>
-Message-ID: <CALrOjABKUtfOem9bF=La6qnf3GFkEKTngeb95MWRDYSGNYfHCA@mail.gmail.com>
+Message-ID: <CAOo2v=A-zfgSrFy73_XMGxV4FbV_fv3Ptj_JdWa3W6U=iowWsA@mail.gmail.com>
+X-MC-Unique: ryarjj2YNg22v65W9kZtZQ-1
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="000000000000826e0b059d74d885"
+Date: Sat, 1 Feb 2020 01:17:26 +0530
+From: Hardik Vyas <hvyas@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2020-1700 ceph: connection leak in the RGW Beast front-end
+ permits a DoS against the RGW server
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000004a581905e8d08da3"
-Subject: [oss-security] [kubernetes] CVE-2022-3172: Aggregated API server can cause clients
- to be redirected (SSRF)
 
---0000000000004a581905e8d08da3
+--000000000000826e0b059d74d885
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello Kubernetes Community,
+Hello,
 
-A security issue was discovered in kube-apiserver that allows an aggregated
-API server to redirect client traffic to any URL. This could lead to the
-client performing unexpected actions as well as forwarding the client's API
-server credentials to third parties.
+A flaw was found in the way the Ceph RGW Beast front-end handles unexpected
+disconnects.
+An authenticated attacker can abuse this flaw by making multiple disconnect
+attempts resulting
+in a permanent leak of a socket connection by radosgw. This flaw could lead
+to a denial of service
+condition by pile up of CLOSE_WAIT sockets, eventually leading to the
+exhaustion of available
+resources, preventing legitimate users from connecting to the system.
 
-This issue has been rated *medium* (
-https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:H/PR:H/UI:R/S:C/C:L/I:L/A:L)
-(5.1), and assigned *CVE-2022-3172*
-Am I vulnerable?
+This flaw affects Nautilus based versions. If Beast front end is in use,
+switch to CivetWeb to mitigate
+the issue. Red Hat has assigned CVE-2020-1700 and rated as Moderate impact
+flaw.
 
-All Kubernetes clusters with the following versions that are running
-aggregated API servers are impacted. To identify if you have aggregated API
-servers configured, run the following command:
+PR: https://github.com/ceph/ceph/pull/33017
+Patch:
+https://github.com/ceph/ceph/commit/ff72c50a2c43c57aead933eb4903ad1ca6d1748a
 
-kubectl get apiservices.apiregistration.k8s.io -o=jsonpath='{range
-.items[?(@.spec.service)]}{.metadata.name}{"\n"}{end}'
+Credit: Or Friedmann(Red Hat)
 
-Affected Versions
+Regards,
+--=20
 
-   - kube-apiserver v1.25.0
-   - kube-apiserver v1.24.0 - v1.24.4
-   - kube-apiserver v1.23.0 - v1.23.10
-   - kube-apiserver v1.22.0 - v1.22.13
-   - kube-apiserver <= v1.21.14
+Hardik Vyas / Red Hat Product Security
 
-How do I mitigate this vulnerability?
+BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
 
-Aside from upgrading, no direct mitigation is available.
+--000000000000826e0b059d74d885--
 
-Aggregated API servers are a trusted part of the Kubernetes control plane,
-and configuring them is a privileged administrative operation. Ensure that
-only trusted cluster administrators are allowed to create or modify
-APIService configuration, and follow security best practices with any
-aggregated API servers that may be in use.
-Fixed Versions
-
-   - kube-apiserver v1.25.1
-   - kube-apiserver v1.24.5
-   - kube-apiserver v1.23.11
-   - kube-apiserver v1.22.14
-
-*Fix impact:* The fix blocks all 3XX responses from aggregated API servers
-by default. This may disrupt an aggregated API server that relies on
-redirects as part of its normal function. If all current and future
-aggregated API servers are considered trustworthy and redirect
-functionality is required, set the
---aggregator-reject-forwarding-redirect Kubernetes
-API server flag to false to restore the previous behavior.
-
-To upgrade, refer to the documentation:
-https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade
-Detection
-
-Kubernetes audit log events indicate the HTTP status code sent to the
-client via the responseStatus.code field. This can be used to detect if an
-aggregated API server is redirecting clients.
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-Additional Details
-
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/112513
-Acknowledgements
-
-This vulnerability was reported by Nicolas Joly & Weinong Wang @weinong
-from Microsoft.
-
-The issue was fixed and coordinated by Di Jin @jindijamie @enj @liggitt
-@lavalamp @deads2k and @puerco.
-
-Thank You,
-
-Mo Khan on behalf of the Kubernetes Security Response Committee
-
---0000000000004a581905e8d08da3--
