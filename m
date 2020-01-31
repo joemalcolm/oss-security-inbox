@@ -1,234 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/27/1
-Message-ID: <4c04f877-a0e6-c536-7e2a-588728a0f63b@gmail.com>
-Date: Thu, 27 Feb 2020 08:15:35 -0800
-From: Jonathan Brossard <endrazine@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/31/2
+Message-ID: <CAOo2v=A-zfgSrFy73_XMGxV4FbV_fv3Ptj_JdWa3W6U=iowWsA@mail.gmail.com>
+Date: Sat, 1 Feb 2020 01:17:26 +0530
+From: Hardik Vyas <hvyas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Hostapd fails at seeding PRNGS, leading to insufficient entropy (CVE-2016-10743 and CVE-2019-10064)
+Subject: CVE-2020-1700 ceph: connection leak in the RGW Beast front-end permits a DoS against the RGW server
 Content-Type: text/plain; charset=utf-8
 
-----------------------------------------------------------------------
-*               Hostapd fails at seeding PRNGS,                      *
-*               leading to insufficient entropy                      *
-----------------------------------------------------------------------
+Hello,
 
+A flaw was found in the way the Ceph RGW Beast front-end handles unexpected
+disconnects.
+An authenticated attacker can abuse this flaw by making multiple disconnect
+attempts resulting
+in a permanent leak of a socket connection by radosgw. This flaw could lead
+to a denial of service
+condition by pile up of CLOSE_WAIT sockets, eventually leading to the
+exhaustion of available
+resources, preventing legitimate users from connecting to the system.
 
---[ Vulnerabilities Summary:
+This flaw affects Nautilus based versions. If Beast front end is in use,
+switch to CivetWeb to mitigate
+the issue. Red Hat has assigned CVE-2020-1700 and rated as Moderate impact
+flaw.
 
-Date Published: 27/02/2020
-CVE Names: CVE-2016-10743 and CVE-2019-10064.
-Title: Hostapd fails at seeding PRNGs
-Class: CWE-331: Insufficient Entropy
-Remotely Exploitable: Yes
-Locally Exploitable: No
-Impact: Remote network access, remote Denial of Service
-Advisory URL: https://moabi.com/advisories/CVE-2019-10064.html
+PR: https://github.com/ceph/ceph/pull/33017
+Patch:
+https://github.com/ceph/ceph/commit/ff72c50a2c43c57aead933eb4903ad1ca6d1748a
 
+Credit: Or Friedmann(Red Hat)
 
---[ Synopsis:
+Regards,
+-- 
 
-Hostapd (host access point daemon) is a user space daemon software
-enabling a network
-interface card to act as an access point and authentication server. It
-is powering
-billions of IoT devices.
+Hardik Vyas / Red Hat Product Security
 
-It has been discovered that hostapd before version 2.6 wasn't seeding
-PRNGs at all.
-This vulnerability has been fixed silently around 2016, but never
-attributed a CVE
-number, leading to many distributions and IoT devices still shipping
-this version of
-the software. This vulnerability has been given id CVE-2016-10743.
-In some configurations, when WPS is enabled and a /dev/urandom device
-isn't available,
-this leads to WPS PINS being predictable, allowing remote network access
-from an attacker.
+BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
 
-In addition, it has been discovered that the Extensible Authentication
-Protocol (EAP) mode,
-which offers a protection against flooding attacks, also uses
-predictable PRNGs. This
-vulnerability has been assigned id CVE-2019-10064.
-
---[ Details:
-
-* details for CVE-2016-10743:
-
-CVE-2016-10743 has been silently patched with commit:
-98a516eae8260e6fd5c48ddecf8d006285da7389 on http://w1.fi/hostap.git on
-Tue Feb 9 14:47:47 2016 +0000 by Nick Lowe <nick.lowe@...atech.com>
-
-https://wiki.sei.cmu.edu/confluence/display/c/MSC32-C.+Properly+seed+pseudorandom+number+generators
-
-https://github.com/jmalinen/hostap/blob/a06b1070d8902460a9c61a3e13af577327fce6b3/src/utils/os_win32.c
-unsigned long os_random(void)
-
- {
-
-  return rand();
-
- }
-
-
-https://github.com/jmalinen/hostap/blob/a06b1070d8902460a9c61a3e13af577327fce6b3/src/utils/os_internal.c
-
-unsigned long os_random(void)
-
- {
-
-  return random();
-
- }
-
-
-https://github.com/jmalinen/hostap/blob/a06b1070d8902460a9c61a3e13af577327fce6b3/src/utils/os_unix.c
-
-unsigned long os_random(void)
-
- {
-
-  return random();
-
- }
-
-
-In all cases, os_random() is not seeded, and therefor entirely
-predictable and repeatable.
-
-This is exploitable via the WPS PIN generation, as detailed here:
-
-https://github.com/jmalinen/hostap/blob/a06b1070d8902460a9c61a3e13af577327fce6b3/src/wps/wps_common.c
-
-/**
-
-  * wps_generate_pin - Generate a random PIN
-
-  * Returns: Eight digit PIN (i.e., including the checksum digit)
-
-  */
-
- unsigned int wps_generate_pin(void)
-
- {
-
-  unsigned int val;
-
-
-
-  /* Generate seven random digits for the PIN */
-
-  if (random_get_bytes((unsigned char *) &val, sizeof(val)) < 0) {
-
-   struct os_time now;
-
-   os_get_time(&now);
-
-   val = os_random() ^ now.sec ^ now.usec;
-
-  }
-
-  val %= 10000000;
-
-
-
-  /* Append checksum digit */
-
-  return val * 10 + wps_pin_checksum(val);
-
- }
-
-
-
-* details for CVE-2019-10064:
-
-The EAP mode features a flood prevention technique, which is defeated
-due to lack of proper seeding of PRNGs:
-
-https://github.com/jmalinen/hostap/blob/a06b1070d8902460a9c61a3e13af577327fce6b3/src/eap_server/eap_server_pwd.c
-
-
-
- static void eap_pwd_build_id_req(struct eap_sm *sm, struct eap_pwd_data
-*data,
-
-      u8 id)
-
- {
-
-  wpa_printf(MSG_DEBUG, "EAP-pwd: ID/Request");
-
-  /*
-
-   * if we're fragmenting then we already have an id request, just return
-
-   */
-
-  if (data->out_frag_pos)
-
-   return;
-
-
-
-  data->outbuf = wpabuf_alloc(sizeof(struct eap_pwd_id) +
-
-         data->id_server_len);
-
-  if (data->outbuf == NULL) {
-
-   eap_pwd_state(data, FAILURE);
-
-   return;
-
-  }
-
-
-
-  /* an lfsr is good enough to generate unpredictable tokens */
-
-  data->token = os_random();
-
-  wpabuf_put_be16(data->outbuf, data->group_num);
-
-  wpabuf_put_u8(data->outbuf, EAP_PWD_DEFAULT_RAND_FUNC);
-
-  (etc.)
-
---[ Suggested patch:
-
-It is recommended to seed PRNGs by reading /dev/urandom, for instance
-using the routine below:
-
-/**
-* Get a random seed
-*/
-int getseed(void) {
-        int fd;
-        int r, n;
-
-	fd = open("/dev/urandom", O_RDONLY);
-        if (fd < 0) {
-                perror("open");
-                exit(0);
-        }
-        n = read(fd, &r, sizeof(r));
-	if(n != sizeof(r)){
-                perror("read");
-                exit(0);
-	}
-        close(fd);
-        return(r);
-}
-
---[ Disclosure timeline:
-
-26/03/2019: Vulnerabilities discovered.
-26/03/2019: Reported vulnerabilities to MITRE.
-26/03/2019: Vulnerabilities assigned ids CVE-2016-10743 and CVE-2019-10064.
-11/02/2020: Reported vulnerabilities to software author directly.
-27/02/2020: Public disclosure.
-
---[ Credits:
-
-This vulnerability was discovered by Nicolas Massaviol and Jonathan
-Brossard from Moabi.com
