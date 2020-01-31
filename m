@@ -1,17 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/19/2
-Message-ID: <DM5PR0102MB347783E567BB3BD5C77AFE50805D0@DM5PR0102MB3477.prod.exchangelabs.com>
-Date: Wed, 19 Aug 2020 15:42:33 +0000
-From: "zdi-disclosures@...ndmicro.com" <zdi-disclosures@...ndmicro.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Linux Kernel 5.7.9 DRM  Double Free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/31/3
+Message-ID: <d6e0d9ec-8bc5-9034-b387-7e66f71fa0de@census-labs.com>
+Date: Fri, 31 Jan 2020 23:17:29 +0200
+From: Dimitrios Glynos <dimitris@...sus-labs.com>
+To: oss-security@...ts.openwall.com
+Subject: multiple NULL pointer dereference vulnerabilities in newlib
 Content-Type: text/plain; charset=utf-8
 
-The specific flaw exists within DRM memory management. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to escalate privileges and execute code in the context of the kernel.
+Hello all,
 
-This has been already addressed in the upstream commit 5de5b6ecf97a021f29403aa272cb4e03318ef586
-TREND MICRO EMAIL NOTICE
+newlib versions prior to 3.3.0 (and derivatives like newlib-nano,
+picolibc, related ARM toolchains) are vulnerable to a number
+of NULL pointer dereference vulnerabilities.
 
-The information contained in this email and any attachments is confidential and may be subject to copyright or other intellectual property protection. If you are not the intended recipient, you are not authorized to use or disclose this information, and we request that you notify us by reply mail or telephone and delete the original message from your mail system.
+The following CVEs were assigned by RedHat for these issues:
 
-For details about what personal information we collect and why, please see our Privacy Notice on our website at: Read privacy policy<http://www.trendmicro.com/privacy>
+CVE-2019-14871, CVE-2019-14872, CVE-2019-14873, CVE-2019-14874,
+CVE-2019-14875, CVE-2019-14876, CVE-2019-14877, CVE-2019-14878
+
+More details about the issues are available here:
+
+https://census-labs.com/news/2020/01/31/multiple-null-pointer-dereference-vulnerabilities-in-newlib/
+
+It is advised to update newlib installations to version 3.3.0
+and make sure to build with the newlib-reent-check-verify
+'configure' option enabled, to correctly address these
+issues.
+
+Kind Regards,
+
+Dimitris
