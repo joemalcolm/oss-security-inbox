@@ -1,83 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/11/1
-Message-ID: <20200511102135.GA12619@f195.suse.de>
-Date: Mon, 11 May 2020 12:21:35 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/02/1
+Message-ID: <20200202122211.GA10285@openwall.com>
+Date: Sun, 2 Feb 2020 13:22:11 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: oddjob: mkhomedir: CVE-2020-10737: race condition when copying skeleton tree
+Cc: Al Viro <viro@...iv.linux.org.uk>, Salvatore Mesoraca <s.mesoraca16@...il.com>, Kees Cook <keescook@...omium.org>, Linus Torvalds <torvalds@...ux-foundation.org>, Dan Carpenter <dan.carpenter@...cle.com>, Andrew Morton <akpm@...ux-foundation.org>
+Subject: Re: Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Wed, Jan 29, 2020 at 12:50:22AM +0100, Solar Designer wrote:
+> On Tue, Jan 28, 2020 at 10:48:10PM +0100, Solar Designer wrote:
+> > I intend to request a CVE ID and post it as a follow-up to this thread.
+> 
+> "Use CVE-2020-8428."
+> 
+> > Al Viro found and analyzed the security impact of and fixed a bug in
+> > Linux 4.19+ where open(2)'s eventual call to may_create_in_sticky() was
+> > "done when we already have dropped the reference to dir" and thus with
+> > dir (a "struct dentry" pointer) being potentially stale and potentially
+> > pointing to reused memory.
+> 
+> > The bug was introduced with commit 30aba6656f61 and first included in
+> > Linux 4.19.  Al fixed it with commit d0cb50185ae9 two days ago, and the
+> > fix is already in Linux 5.5 and Greg KH is getting it into stable.
 
-during a review [1] of oddjob [2] for inclusion in openSUSE Tumbleweed
-I found a security issue in an accompanying utility called "mkhomedir".
+Turns out the fix in d0cb50185ae9 introduced a regression, now found
+with syzkaller and fixed:
 
-Oddjob is a kind of D-Bus meta service to simplify the implementation of
-specific D-Bus services. It allows to use simple command line utilities
-to supply a D-Bus interface while all the D-Bus implementation details
-are kept within the oddjob daemon and its configuration files.
+https://syzkaller.appspot.com/bug?extid=190005201ced78a74ad6
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6404674acd596de41fd3ad5f267b4525494a891a
 
-A simple implementation of such a utility is shipped as part of oddjob
-and is called "mkhomedir". It allows to create a user's home directory
-if it doesn't exist yet. This logic can either be triggered via D-Bus or
-via a simple pam_oddjob_mkhomedir PAM module. The D-Bus interface is by
-default only accessible to the root user. If the PAM module is
-configured then the logic can also be triggered by regular users
-logging in, if they don't have an existing home directory yet.
+If I understand correctly (but I'm not confident!), this time it's just
+a crash.  I am not going to request another CVE ID because the security
+impact is unclear to me (perhaps an Oops with some resources held?)
 
-This "mkhomedir" utility contains a race condition. The problem is found
-in the copying of /etc/skel to a newly created home directory. The home
-directory itself is created as a first step and ownership of it is
-passed to the respective user. In a second step the skel directory is
-recursively copied into the new home directory.
+My sentiment this time:
 
-If the target user has the ability to run code during this operation
-then he can setup a symlink attack. The following symlink, for example:
+While embarrassing, it's good to know that this sort of bug (unlike the
+previous one) is promptly detected by a fuzzer, and thus has a short
+lifetime.  While ideally there would be no bugs in the first place,
+realistically I wish more bugs would be discovered and fixed so quickly.
 
-```
-user $ ln -s /etc /home/user/bin
-```
+The kernel uses many complicated conventions these days (for performance
+reasons), up to the point where it's difficult even for the most active
+upstream developers to make bug-free changes and to review proposed
+changes.  A lot of context needs to be considered and a lot of potential
+pitfalls kept in mind.
 
-when created at the right time will cause the mkhomedir service to give
-ownership of the /etc directory to the unpriviliged user, should
-/etc/skel/bin exist. The reason is found in the call to `chown()` in
-`oddjob_selinux_mkdir()` called in mkhomedir.c:157.
+Thanks to @grsecurity for at-mentioning me on the tweet pointing to the
+above commit.  I was otherwise out of the loop this time.  That's fine,
+but since I did bring the previous set of issues in here, I felt I also
+needed to post this follow-up.
 
-A potential attacker could try and login in parallel e.g. via SSH to win
-this race condition. The probability to actually exploit this is low,
-however, because once the home directory is created, there is no way to
-repeat the attack. Chances could be higher in specialized setups where
-new users without home directories can be repeatedly created without
-special authentication requirements.
-
-There can also be other symlink attack vectors when more deeply nested
-/etc/skel directory structures are involved.
-
-I reported this privately to upstream on 2020-04-24. The issue was
-handled by the Red Hat Security team. They assigned CVE-2020-10737
-for this issue. The upstream fix [3] for the issue is based on a
-suggested patch that I included in my initial report to upstream. A
-new minor release 0.34.5 has been created by upstream that includes this
-fix. Coordinated disclosure of the issue took place around 2020-05-08.
-
-[1]: https://bugzilla.suse.com/show_bug.cgi?id=1170459
-[2]: https://pagure.io/oddjob
-[3]: https://pagure.io/oddjob/c/10b8aaa1564b723a005b53acc069df71313f4cac?branch=master
-
-Best regards
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Alexander
