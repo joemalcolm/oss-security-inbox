@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8949" "Tuesday" "27" "February" "2018" "12:00:11" "+0000" "Xen.org security team" "security@xen.org" "<E1eqdvX-0006o2-1W@xenbits.xenproject.org>" "207" "[oss-security] Xen Security Advisory 256 - x86 PVH guest without LAPIC may DoS the host" nil nil nil "2" "2018022712:00:11" "[oss-security] Xen Security Advisory 256 - x86 PVH guest without LAPIC may DoS the host" (number mark "U       security@xen Feb 27  207/8949  " thread-indent "\"[oss-security] Xen Security Advisory 256 - x86 PVH guest without LAPIC may DoS the host\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2157" "Sunday" "2" "February" "2020" "13:22:11" "+0100" "Solar Designer" "solar@openwall.com" "<20200202122211.GA10285@openwall.com>" "45" "Re: [oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)" "^Cc:" nil nil "2" "2020020212:22:11" "[oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)" (number mark "        solar@openwa Feb  2   45/2157  " thread-indent "\"Re: [oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)\"\n") "<20200128235022.GA30755@openwall.com>" ("<20200128214809.GA27151@openwall.com>" "<20200128235022.GA30755@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22439 invoked by uid 550); 27 Feb 2018 12:00:32 -0000
+Received: (qmail 24199 invoked by uid 550); 2 Feb 2020 12:22:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,225 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22312 invoked from network); 27 Feb 2018 12:00:30 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1eqdvX-0006o2-1W@xenbits.xenproject.org>
-Date: Tue, 27 Feb 2018 12:00:11 +0000
-Subject: [oss-security] Xen Security Advisory 256 - x86 PVH guest without LAPIC may DoS
- the host
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Received: (qmail 24081 invoked from network); 2 Feb 2020 12:22:20 -0000
+Message-ID: <20200202122211.GA10285@openwall.com>
+References: <20200128214809.GA27151@openwall.com> <20200128235022.GA30755@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20200128235022.GA30755@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Cc: Al Viro <viro@zeniv.linux.org.uk>,
+	Salvatore Mesoraca <s.mesoraca16@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Date: Sun, 2 Feb 2020 13:22:11 +0100
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Jan 29, 2020 at 12:50:22AM +0100, Solar Designer wrote:
+> On Tue, Jan 28, 2020 at 10:48:10PM +0100, Solar Designer wrote:
+> > I intend to request a CVE ID and post it as a follow-up to this thread.
+> 
+> "Use CVE-2020-8428."
+> 
+> > Al Viro found and analyzed the security impact of and fixed a bug in
+> > Linux 4.19+ where open(2)'s eventual call to may_create_in_sticky() was
+> > "done when we already have dropped the reference to dir" and thus with
+> > dir (a "struct dentry" pointer) being potentially stale and potentially
+> > pointing to reused memory.
+> 
+> > The bug was introduced with commit 30aba6656f61 and first included in
+> > Linux 4.19.  Al fixed it with commit d0cb50185ae9 two days ago, and the
+> > fix is already in Linux 5.5 and Greg KH is getting it into stable.
 
-                    Xen Security Advisory XSA-256
-                              version 2
+Turns out the fix in d0cb50185ae9 introduced a regression, now found
+with syzkaller and fixed:
 
-             x86 PVH guest without LAPIC may DoS the host
+https://syzkaller.appspot.com/bug?extid=190005201ced78a74ad6
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6404674acd596de41fd3ad5f267b4525494a891a
 
-UPDATES IN VERSION 2
-====================
+If I understand correctly (but I'm not confident!), this time it's just
+a crash.  I am not going to request another CVE ID because the security
+impact is unclear to me (perhaps an Oops with some resources held?)
 
-Public release.
+My sentiment this time:
 
-ISSUE DESCRIPTION
-=================
+While embarrassing, it's good to know that this sort of bug (unlike the
+previous one) is promptly detected by a fuzzer, and thus has a short
+lifetime.  While ideally there would be no bugs in the first place,
+realistically I wish more bugs would be discovered and fixed so quickly.
 
-So far, x86 PVH guests can be configured with or without Local APICs.
-Configurations with Local APICs are identical to x86 HVM guests, and
-will use as much hardware acceleration support as possible.
-Configurations without Local APICs try to turn off all hardware
-acceleration, and disable all software emulation.
+The kernel uses many complicated conventions these days (for performance
+reasons), up to the point where it's difficult even for the most active
+upstream developers to make bug-free changes and to review proposed
+changes.  A lot of context needs to be considered and a lot of potential
+pitfalls kept in mind.
 
-Multiple paths in Xen assume the presence of a Local APIC without
-sufficient checks, and can fall over a NULL pointer.  On Intel hardware,
-the logic to turn off hardware acceleration is incomplete and leaves the
-guest with full control of the real Task Priority Register.
+Thanks to @grsecurity for at-mentioning me on the tweet pointing to the
+above commit.  I was otherwise out of the loop this time.  That's fine,
+but since I did bring the previous set of issues in here, I felt I also
+needed to post this follow-up.
 
-IMPACT
-======
-
-A malicious or buggy guest may cause a hypervisor crash, resulting in
-a Denial of Service (DoS) affecting the entire host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen version 4.8 and onwards are vulnerable.
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-Only x86 PVH guests can exploit the vulnerability.  x86 PV and HVM
-guests cannot exploit the vulnerability.
-
-MITIGATION
-==========
-
-Running only PV or HVM guests avoids the vulnerability.
-
-Running all PVH guests with "apic=1" in the guest configuration file
-(or equivalent thereof) also avoids the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Ian Jackson of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa256.patch           xen-unstable, Xen 4.10.x, Xen 4.9.x
-xsa256-4.8.patch       Xen 4.8.x
-
-$ sha256sum xsa256*
-3e45cc3f2ea516e7470083592041e238c0dfe32324790b2fba0e47c9efe38865  xsa256.patch
-c029fcb67ff7c3c9a2adcb8e6f5e245a0d347acc8a9b3530591a639cbf321349  xsa256-4.8.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJalUe0AAoJEIP+FMlX6CvZsmIH/3B9QnpiL1+NRkGIE62xljEG
-NfV/vL6gE2ytNMs8PRdhycovQum7qj+l9S53EswiwgiaUFw9VW5Jq9pg1UQlAQ/q
-7aIIke33TgkVKwZnb+7ercGfLNWsJAIldGc5emc9lBSBkPOUhFtxmTytdudB6dy1
-VMI+MVM1f4xgxEizNN7QstmlaMB34m0WH0nEdoCR8evXlAcmcBi+HwYDouUNnR5x
-21DkEBxyslvheX6SI8sbocfrZpT/K2b8B3zdLmd3nO3TF5ypC1daowIk0vl8o4Yj
-TSx4nsBlJ4V0G0gYa1UDBktUfDbVrpoEcdGb5zO3RhoMhcagzWVD6P6F25aYbiU=
-=PLNS
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa256.patch"
-Content-Disposition: attachment; filename="xsa256.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L2h2bTogRGlzYWxsb3cgdGhlIGNyZWF0aW9uIG9m
-IEhWTSBkb21haW5zIHdpdGhvdXQgTG9jYWwgQVBJQyBlbXVsYXRpb24KClRo
-ZXJlIGFyZSBtdWx0aXBsZSBwcm9ibGVtcywgbm90IG5lY2Vzc2VyaWx5IGxp
-bWl0ZWQgdG86CgogKiBHdWVzdHMgd2hpY2ggY29uZmlndXJlIGV2ZW50IGNo
-YW5uZWxzIHZpYSBodm1vcF9zZXRfZXZ0Y2huX3VwY2FsbF92ZWN0b3IoKSwK
-ICAgb3Igd2hpY2ggaGl0ICVjcjggZW11bGF0aW9uIHdpbGwgY2F1c2UgWGVu
-IHRvIGZhbGwgb3ZlciBhIE5VTEwgdmxhcGljLT5yZWdzCiAgIHBvaW50ZXIu
-CgogKiBPbiBJbnRlbCBoYXJkd2FyZSwgZGlzYWJsaW5nIHRoZSBUUFJfU0hB
-RE9XIGV4ZWN1dGlvbiBjb250cm9sIHdpdGhvdXQKICAgcmVlbmFibGluZyBD
-Ujhfe0xPQUQsU1RPUkV9IGludGVyY2VwdGlvbiBtZWFucyB0aGF0IHRoZSBn
-dWVzdHMgJWNyOAogICBhY2Nlc3NlcyBpbnRlcmFjdCB3aXRoIHRoZSByZWFs
-IFRQUi4gIEFtb25nc3Qgb3RoZXIgdGhpbmdzLCBzZXR0aW5nIHRoZQogICBy
-ZWFsIFRQUiB0byAweGYgYmxvY2tzIGV2ZW4gSVBJcyBmcm9tIGludGVycnVw
-dGluZyB0aGlzIENQVS4KCiAqIE9uIGhhcmR3YXJlIHdoaWNoIHNldHMgdXAg
-dGhlIHVzZSBvZiBJbnRlcnJ1cHQgUG9zdGluZywgaW5jbHVkaW5nCiAgIElP
-TU1VLVBvc3RpbmcsIGd1ZXN0cyBydW4gd2l0aG91dCB0aGUgYXBwcm9wcmlh
-dGUgbm9uLXJvb3QgY29uZmlndXJhdGlvbiwKICAgd2hpY2ggYXQgYSBtaW5p
-bXVtIHdpbGwgcmVzdWx0IGluIGRyb3BwZWQgaW50ZXJydXB0cy4KCldoZXRo
-ZXIgbm8tTEFQSUMgbW9kZSBpcyBvZiBhbnkgdXNlIGF0IGFsbCByZW1haW5z
-IHRvIGJlIHNlZW4uCgpUaGlzIGlzIFhTQS0yNTYuCgpSZXBvcnRlZC1ieTog
-SWFuIEphY2tzb24gPGlhbi5qYWNrc29uQGV1LmNpdHJpeC5jb20+ClJldmll
-d2VkLWJ5OiBSb2dlciBQYXUgTW9ubsOpIDxyb2dlci5wYXVAY2l0cml4LmNv
-bT4KU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3Bl
-cjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1
-bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYvZG9t
-YWluLmMgYi94ZW4vYXJjaC94ODYvZG9tYWluLmMKaW5kZXggZjkzMzI3Yi4u
-ZjY1ZmMxMiAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L2RvbWFpbi5jCisr
-KyBiL3hlbi9hcmNoL3g4Ni9kb21haW4uYwpAQCAtNDEzLDcgKzQxMyw3IEBA
-IHN0YXRpYyBib29sIGVtdWxhdGlvbl9mbGFnc19vayhjb25zdCBzdHJ1Y3Qg
-ZG9tYWluICpkLCB1aW50MzJfdCBlbWZsYWdzKQogICAgICAgICBpZiAoIGlz
-X2hhcmR3YXJlX2RvbWFpbihkKSAmJgogICAgICAgICAgICAgIGVtZmxhZ3Mg
-IT0gKFhFTl9YODZfRU1VX0xBUElDfFhFTl9YODZfRU1VX0lPQVBJQykgKQog
-ICAgICAgICAgICAgcmV0dXJuIGZhbHNlOwotICAgICAgICBpZiAoICFpc19o
-YXJkd2FyZV9kb21haW4oZCkgJiYgZW1mbGFncyAmJgorICAgICAgICBpZiAo
-ICFpc19oYXJkd2FyZV9kb21haW4oZCkgJiYKICAgICAgICAgICAgICBlbWZs
-YWdzICE9IFhFTl9YODZfRU1VX0FMTCAmJiBlbWZsYWdzICE9IFhFTl9YODZf
-RU1VX0xBUElDICkKICAgICAgICAgICAgIHJldHVybiBmYWxzZTsKICAgICB9
-Cg==
-
---=separator
-Content-Type: application/octet-stream; name="xsa256-4.8.patch"
-Content-Disposition: attachment; filename="xsa256-4.8.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L2h2bTogRGlzYWxsb3cgdGhlIGNyZWF0aW9uIG9m
-IEhWTSBkb21haW5zIHdpdGhvdXQgTG9jYWwgQVBJQyBlbXVsYXRpb24KClRo
-ZXJlIGFyZSBtdWx0aXBsZSBwcm9ibGVtcywgbm90IG5lY2Vzc2VyaWx5IGxp
-bWl0ZWQgdG86CgogKiBHdWVzdHMgd2hpY2ggY29uZmlndXJlIGV2ZW50IGNo
-YW5uZWxzIHZpYSBodm1vcF9zZXRfZXZ0Y2huX3VwY2FsbF92ZWN0b3IoKSwK
-ICAgb3Igd2hpY2ggaGl0ICVjcjggZW11bGF0aW9uIHdpbGwgY2F1c2UgWGVu
-IHRvIGZhbGwgb3ZlciBhIE5VTEwgdmxhcGljLT5yZWdzCiAgIHBvaW50ZXIu
-CgogKiBPbiBJbnRlbCBoYXJkd2FyZSwgZGlzYWJsaW5nIHRoZSBUUFJfU0hB
-RE9XIGV4ZWN1dGlvbiBjb250cm9sIHdpdGhvdXQKICAgcmVlbmFibGluZyBD
-Ujhfe0xPQUQsU1RPUkV9IGludGVyY2VwdGlvbiBtZWFucyB0aGF0IHRoZSBn
-dWVzdHMgJWNyOAogICBhY2Nlc3NlcyBpbnRlcmFjdCB3aXRoIHRoZSByZWFs
-IFRQUi4gIEFtb25nc3Qgb3RoZXIgdGhpbmdzLCBzZXR0aW5nIHRoZQogICBy
-ZWFsIFRQUiB0byAweGYgYmxvY2tzIGV2ZW4gSVBJcyBmcm9tIGludGVycnVw
-dGluZyB0aGlzIENQVS4KCiAqIE9uIGhhcmR3YXJlIHdoaWNoIHNldHMgdXAg
-dGhlIHVzZSBvZiBJbnRlcnJ1cHQgUG9zdGluZywgaW5jbHVkaW5nCiAgIElP
-TU1VLVBvc3RpbmcsIGd1ZXN0cyBydW4gd2l0aG91dCB0aGUgYXBwcm9wcmlh
-dGUgbm9uLXJvb3QgY29uZmlndXJhdGlvbiwKICAgd2hpY2ggYXQgYSBtaW5p
-bXVtIHdpbGwgcmVzdWx0IGluIGRyb3BwZWQgaW50ZXJydXB0cy4KCldoZXRo
-ZXIgbm8tTEFQSUMgbW9kZSBpcyBvZiBhbnkgdXNlIGF0IGFsbCByZW1haW5z
-IHRvIGJlIHNlZW4uCgpUaGlzIGlzIFhTQS0yNTYuCgpSZXBvcnRlZC1ieTog
-SWFuIEphY2tzb24gPGlhbi5qYWNrc29uQGV1LmNpdHJpeC5jb20+ClJldmll
-d2VkLWJ5OiBSb2dlciBQYXUgTW9ubsOpIDxyb2dlci5wYXVAY2l0cml4LmNv
-bT4KU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3Bl
-cjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1
-bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYvZG9t
-YWluLmMgYi94ZW4vYXJjaC94ODYvZG9tYWluLmMKaW5kZXggODgxNzI2My4u
-OTFiOWFiNyAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L2RvbWFpbi5jCisr
-KyBiL3hlbi9hcmNoL3g4Ni9kb21haW4uYwpAQCAtNTU3LDExICs1NTcsOSBA
-QCBpbnQgYXJjaF9kb21haW5fY3JlYXRlKHN0cnVjdCBkb21haW4gKmQsIHVu
-c2lnbmVkIGludCBkb21jcl9mbGFncywKICAgICAgICAgICAgIHJldHVybiAt
-RUlOVkFMOwogICAgICAgICB9CiAKLSAgICAgICAgLyogUFZIdjIgZ3Vlc3Rz
-IGNhbiByZXF1ZXN0IGVtdWxhdGVkIEFQSUMuICovCi0gICAgICAgIGlmICgg
-ZW1mbGFncyAmJgotICAgICAgICAgICAgKGlzX2h2bV9kb21haW4oZCkgPyAo
-KGVtZmxhZ3MgIT0gWEVOX1g4Nl9FTVVfQUxMKSAmJgotICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgKGVtZmxhZ3MgIT0gWEVOX1g4Nl9FTVVf
-TEFQSUMpKSA6Ci0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIChl
-bWZsYWdzICE9IFhFTl9YODZfRU1VX1BJVCkpICkKKyAgICAgICAgaWYgKCBp
-c19odm1fZG9tYWluKGQpID8gKChlbWZsYWdzICE9IFhFTl9YODZfRU1VX0FM
-TCkgJiYKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIChlbWZs
-YWdzICE9IFhFTl9YODZfRU1VX0xBUElDKSkKKyAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIDogKGVtZmxhZ3MgJiYgZW1mbGFncyAhPSBYRU5fWDg2
-X0VNVV9QSVQpICkKICAgICAgICAgewogICAgICAgICAgICAgcHJpbnRrKFhF
-TkxPR19HX0VSUiAiZCVkOiBYZW4gZG9lcyBub3QgYWxsb3cgJXMgZG9tYWlu
-IGNyZWF0aW9uICIKICAgICAgICAgICAgICAgICAgICAid2l0aCB0aGUgY3Vy
-cmVudCBzZWxlY3Rpb24gb2YgZW11bGF0b3JzOiAlI3hcbiIsCg==
-
---=separator--
+Alexander
