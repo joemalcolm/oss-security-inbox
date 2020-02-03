@@ -1,32 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/04/1
-Message-ID: <72f1c624-3e5a-d318-aba9-c11c8d173491@gmail.com>
-Date: Wed, 4 Mar 2020 10:43:59 +0100
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/03/1
+Message-Id: <4A2798F3-D0B2-456D-8DDB-F79C7354C348@gmail.com>
+Date: Mon, 3 Feb 2020 10:56:32 +0100
+From: Carlton Gibson <carlton.gibson@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2020-9402: Potential SQL injection via tolerance parameter in GIS functions and aggregates on Oracle
+Subject: Django 3.0.3, 2.2.10 and 1.11.28: CVE-2020-7471: Potential SQL injection via ``StringAgg(delimiter)``
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2020/mar/04/security-releases/
+https://www.djangoproject.com/weblog/2020/feb/03/security-releases/ <https://www.djangoproject.com/weblog/2020/feb/03/security-releases/>
 
-In accordance with `our security release policy 
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team is issuing `Django 3.0.4 
-<https://docs.djangoproject.com/en/dev/releases/3.0.4/>`_, `Django 
-2.2.11 <https://docs.djangoproject.com/en/dev/releases/2.2.11/>`_ and 
-`Django 1.11.29 
-<https://docs.djangoproject.com/en/dev/releases/1.11.29/>`_. These 
-releases address the security issue detailed below. We encourage all 
-users of Django to upgrade as soon as possible.
-
-CVE-2020-9402: Potential SQL injection via ``tolerance`` parameter in 
-GIS functions and aggregates on Oracle
-============================================================================================================
-
-GIS functions and aggregates on Oracle were subject to SQL injection,
-using a suitably crafted ``tolerance``.
-
-Thank you to Norbert Szetei for the report.
+In accordance with `our security release policy <https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django team is issuing `Django 3.0.3 <https://docs.djangoproject.com/en/dev/releases/3.0.3/>`_, `Django 2.2.10 <https://docs.djangoproject.com/en/dev/releases/2.2.10/>`_ and `Django 1.11.28 <https://docs.djangoproject.com/en/dev/releases/1.11.28/>`_. These releases address the security issue detailed below. We encourage all users of Django to upgrade as soon as possible.
 
 Affected supported versions
 ===========================
@@ -36,39 +19,32 @@ Affected supported versions
 * Django 2.2
 * Django 1.11
 
+CVE-2020-7471: Potential SQL injection via ``StringAgg(delimiter)``
+===================================================================
+
+``django.contrib.postgres.aggregates.StringAgg`` aggregation function was
+subject to SQL injection, using a suitably crafted ``delimiter``.
+
+Thank you to Simon Charette for the report and patch. 
+
 Resolution
 ==========
 
 Patches to resolve the issue have been applied to Django's master branch and
-the 3.0, 2.2, and 1.11 release branches. The patches may be obtained 
-from the following changesets:
+the 3.0, 2.2, and 1.11 release branches. The patches may be obtained from the following changesets:
 
-* On the `master branch 
-<https://github.com/django/django/commit/6695d29b1c1ce979725816295a26ecc64ae0e927>`__
-* On the `3.0 release branch 
-<https://github.com/django/django/commit/26a5cf834526e291db00385dd33d319b8271fc4c>`__
-* On the `2.2 release branch 
-<https://github.com/django/django/commit/fe886a3b58a93cfbe8864b485f93cb6d426cd1f2>`__
-* On the `1.11 release branch 
-<https://github.com/django/django/commit/02d97f3c9a88adc890047996e5606180bd1c6166>`__
+* On the `master branch <https://github.com/django/django/commit/eb31d845323618d688ad429479c6dda973056136>`__
+* On the `3.0 release branch <https://github.com/django/django/commit/505826b469b16ab36693360da9e11fd13213421b>`__
+* On the `2.2 release branch <https://github.com/django/django/commit/c67a368c16e4680b324b4f385398d638db4d8147>`__
+* On the `1.11 release branch <https://github.com/django/django/commit/001b0634cd309e372edb6d7d95d083d02b8e37bd>`__
 
 The following releases have been issued:
 
-* Django 3.0.4 (`download Django 3.0.4 
-<https://www.djangoproject.com/m/releases/3.0/Django-3.0.4.tar.gz>`_ | 
-`3.0.4 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.0.4.checksum.txt>`_)
-* Django 2.2.11 (`download Django 2.2.11 
-<https://www.djangoproject.com/m/releases/2.2/Django-2.2.11.tar.gz>`_ | 
-`2.2.11 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.2.11.checksum.txt>`_)
-* Django 1.11.29 (`download Django 1.11.29 
-<https://www.djangoproject.com/m/releases/1.11/Django-1.11.29.tar.gz>`_ 
-| `1.11.29 checksums 
-<https://www.djangoproject.com/m/pgp/Django-1.11.29.checksum.txt>`_)
+* Django 3.0.3 (`download Django 3.0.3 <https://www.djangoproject.com/m/releases/3.0/Django-3.0.3.tar.gz>`_ | `3.0.3 checksums <https://www.djangoproject.com/m/pgp/Django-3.0.3.checksum.txt>`_)
+* Django 2.2.10 (`download Django 2.2.10 <https://www.djangoproject.com/m/releases/2.2/Django-2.2.10.tar.gz>`_ | `2.2.10 checksums <https://www.djangoproject.com/m/pgp/Django-2.2.10.checksum.txt>`_)
+* Django 1.11.28 (`download Django 1.11.28 <https://www.djangoproject.com/m/releases/1.11/Django-1.11.28.tar.gz>`_ | `1.11.28 checksums <https://www.djangoproject.com/m/pgp/Django-1.11.28.checksum.txt>`_)
 
-The PGP key ID used for these releases is Mariusz Felisiak: 
-2EF56372BA48CD1B.
+The PGP key ID used for these releases is Carlton Gibson: E17DF5C82B4F9D00.
 
 General notes regarding security reporting
 ==========================================
@@ -78,4 +54,3 @@ private email to ``security@...ngoproject.com``, and not via Django's
 Trac instance or the django-developers list. Please see `our security
 policies <https://www.djangoproject.com/security/>`_ for further
 information.
-
