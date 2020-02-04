@@ -1,40 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/25/3
-Message-ID: <9bc2be74-b98d-87ef-f96c-427c53c3db55@thermi.consulting>
-Date: Fri, 25 Dec 2020 12:30:40 +0100
-From: Noel Kuntze <noel.kuntze@...rmi.consulting>
-To: oss-security@...ts.openwall.com, Jeffrey Walton <noloader@...il.com>
-Subject: Re: More CVE request experience (Fwd: Automatic reply: [EXT] Need a CVE for Crypto++)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/04/3
+Message-ID: <20200204130919.GD11664@f195.suse.de>
+Date: Tue, 4 Feb 2020 14:09:19 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2020-7221: mariadb: possible local mysql to root user exploit in mysql_install_db script setting permissions of /usr/lib64/mysql/plugin/auth_pam_tool_dir/auth_pam_tool
 Content-Type: text/plain; charset=utf-8
 
-Hello Jeffrey,
+Hi,
 
-The form worked fine just now. What is the issue with it?
+On Tue, Feb 04, 2020 at 01:27:11PM +0100, Solar Designer wrote:
+> > I personally suggest the following directory mode instead:
+> > 
+> > root:mysql  0750 /usr/lib/mysql/plugin/auth_pam_tool_dir
+> 
+> Why not simply
+> 
+> root:mysql 04710 /usr/lib/mysql/plugin/auth_pam_tool
+> 
+> without the directory?  I see only one reason: it's a bigger change
+> relative to the current implementation, which is more work now, but
+> perhaps this cleanup is worth it longer-term.
 
-Kind regards
+yes, exactly. I don't want to diverge too much from what upstream does
+at the moment.
 
-Noel
+When this doesn't matter then your suggestion is the better one and
+would be the cleaner approach for upstream to follow.
 
-Am 25.12.20 um 03:13 schrieb Jeffrey Walton:
-> The form at https://cveform.mitre.org/ is broken. Emailing
-> cve@...re.org for a CVE assignment after the failed web submission
-> results in this.
->
-> I hope people do not see the drop in CVE submissions as an improvement
-> in software quality.
->
-> ---------- Forwarded message ---------
-> From: Common Vulnerabilities & Exposures <cve@...re.org>
-> Date: Thu, Dec 24, 2020 at 9:08 PM
-> Subject: Automatic reply: [EXT] Need a CVE for Crypto++
-> To: Walton, Jeffrey <noloader@...il.com>
->
-> This email address is not monitored.
->
-> To contact the CVE Program, use https://cveform.mitre.org and choose
-> “Other” from the dropdown menu.
+Cheers
 
+Matthias
 
-
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
