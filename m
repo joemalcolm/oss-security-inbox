@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["500" "Thursday" "18" "January" "2018" "18:02:02" "+0100" "Ludovic =?utf-8?B?Q291cnTDqHM=?=" "ludo@gnu.org" "<87shb36qyd.fsf@gnu.org>" "12" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Cc:" nil nil "1" "2018011817:02:02" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        ludo@gnu.org Jan 18   12/500   " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["884" "Tuesday" "4" "February" "2020" "13:27:11" "+0100" "Solar Designer" "solar@openwall.com" "<20200204122711.GA16946@openwall.com>" "24" "Re: [oss-security] CVE-2020-7221: mariadb: possible local mysql to root user exploit in mysql_install_db script setting permissions of /usr/lib64/mysql/plugin/auth_pam_tool_dir/auth_pam_tool" "^Date:" nil nil "2" "2020020412:27:11" "[oss-security] CVE-2020-7221: mariadb: possible local mysql to root user exploit in mysql_install_db script setting permissions of /usr/lib64/mysql/plugin/auth_pam_tool_dir/auth_pam_tool" (number mark "        solar@openwa Feb  4   24/884   " thread-indent "\"Re: [oss-security] CVE-2020-7221: mariadb: possible local mysql to root user exploit in mysql_install_db script setting permissions of /usr/lib64/mysql/plugin/auth_pam_tool_dir/auth_pam_tool\"\n") "<20200204102604.GB11664@f195.suse.de>" ("<20200204102604.GB11664@f195.suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-7221: mariadb: possible local mysql to root user exploit in mysql_install_db script setting permissions of /usr/lib64/mysql/plugin/auth_pam_tool_dir/auth_pam_tool" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21600 invoked by uid 550); 18 Jan 2018 17:09:00 -0000
+Received: (qmail 17542 invoked by uid 550); 4 Feb 2020 12:30:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 2026 invoked from network); 18 Jan 2018 17:02:14 -0000
-X-Virus-Scanned: Debian amavisd-new at aquilenet.fr
-References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
-X-URL: http://www.fdn.fr/~lcourtes/
-X-Revolutionary-Date: 29 =?utf-8?Q?Niv=C3=B4se?= an 226 de la =?utf-8?Q?R?=
- =?utf-8?Q?=C3=A9volution?=
-X-PGP-Key-ID: 0x090B11993D9AEBB5
-X-PGP-Key: http://www.fdn.fr/~lcourtes/ludovic.asc
-X-PGP-Fingerprint: 3CE4 6455 8A84 FDC6 9DB4  0CFB 090B 1199 3D9A EBB5
-X-OS: x86_64-pc-linux-gnu
-In-Reply-To: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com> (Florian
-	Weimer's message of "Thu, 18 Jan 2018 17:10:05 +0100")
-Message-ID: <87shb36qyd.fsf@gnu.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Cc: oss-security@lists.openwall.com
-Date: Thu, 18 Jan 2018 18:02:02 +0100
-From: ludo@gnu.org (Ludovic =?utf-8?Q?Court=C3=A8s?=)
+Received: (qmail 15750 invoked from network); 4 Feb 2020 12:27:23 -0000
+Message-ID: <20200204122711.GA16946@openwall.com>
+References: <20200204102604.GB11664@f195.suse.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200204102604.GB11664@f195.suse.de>
+User-Agent: Mutt/1.4.2.3i
+Date: Tue, 4 Feb 2020 13:27:11 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
-To: Florian Weimer <fweimer@redhat.com>
+Subject: Re: [oss-security] CVE-2020-7221: mariadb: possible local mysql to root user exploit in mysql_install_db script setting permissions of /usr/lib64/mysql/plugin/auth_pam_tool_dir/auth_pam_tool
+To: oss-security@lists.openwall.com
 
-Florian Weimer <fweimer@redhat.com> skribis:
+On Tue, Feb 04, 2020 at 11:26:04AM +0100, Matthias Gerstner wrote:
+> For Deb/RPM packaging MariaDB continues to suggest to use the following
+> dir and file modes [2], [3]:
+> 
+> mysql:root  0700 /usr/lib/mysql/plugin/auth_pam_tool_dir
+>  root:root 04755 /usr/lib/mysql/plugin/auth_pam_tool_dir/auth_pam_tool
+> 
+> I personally suggest the following directory mode instead:
+> 
+> root:mysql  0750 /usr/lib/mysql/plugin/auth_pam_tool_dir
 
-> Subject says it all: What do you do if you receive a vulnerability
-> report, and the reporter requests an embargo at some time in the
-> future because that's when their paper/conference presentation/patent
-> submission is scheduled?
+Why not simply
 
-Perhaps you could publicly state upfront that your project will not
-accept deadlines put forth by the people who report vulnerabilities
-(other than making sure to coordinate with the relevant parties)?
+root:mysql 04710 /usr/lib/mysql/plugin/auth_pam_tool
 
-Ludo=E2=80=99.
+without the directory?  I see only one reason: it's a bigger change
+relative to the current implementation, which is more work now, but
+perhaps this cleanup is worth it longer-term.
+
+The approach with a directory (or several) is sometimes useful to limit
+access to a file yet avoid use of ACLs, but the case above looks simple
+enough not to require this complication.
+ 
+Alexander
