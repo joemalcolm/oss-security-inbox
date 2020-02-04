@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/15/6
-Message-ID: <20200415193143.GB39059@syl.local>
-Date: Wed, 15 Apr 2020 13:31:43 -0600
-From: Taylor Blau <ttaylorr@...hub.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-5260: Git: malicious URLs may cause Git to present stored credentials to the wrong server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/04/2
+Message-ID: <20200204122711.GA16946@openwall.com>
+Date: Tue, 4 Feb 2020 13:27:11 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2020-7221: mariadb: possible local mysql to root user exploit in mysql_install_db script setting permissions of /usr/lib64/mysql/plugin/auth_pam_tool_dir/auth_pam_tool
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Tue, Feb 04, 2020 at 11:26:04AM +0100, Matthias Gerstner wrote:
+> For Deb/RPM packaging MariaDB continues to suggest to use the following
+> dir and file modes [2], [3]:
+> 
+> mysql:root  0700 /usr/lib/mysql/plugin/auth_pam_tool_dir
+>  root:root 04755 /usr/lib/mysql/plugin/auth_pam_tool_dir/auth_pam_tool
+> 
+> I personally suggest the following directory mode instead:
+> 
+> root:mysql  0750 /usr/lib/mysql/plugin/auth_pam_tool_dir
 
-On Wed, Apr 15, 2020 at 08:59:44PM +0200, Solar Designer wrote:
-> Hi,
->
-> Taylor Blau brought this to the distros list a week ago (thanks!), but
-> unfortunately failed to follow the distros list policy (despite of being
-> specifically informed of that requirement by distros list members,
-> twice) to post the information to oss-security on the public disclosure
-> date/time.  So as list admin, after a delay of more than a day, I am
-> taking over and do this (being unhappy that I have to do it for others).
+Why not simply
 
-My sincerest apologies for not sending this to oss-security in the
-appropriate time. We (the git-security) list had discussed that I would
-do so, and clearly it had slipped my mind.
+root:mysql 04710 /usr/lib/mysql/plugin/auth_pam_tool
 
-The remainder of Alexander's guidance is correct from our perspective.
-I'll make sure to avoid this mishap in the future by remembering to
-email this list more promptly. Thanks, and sorry again.
+without the directory?  I see only one reason: it's a bigger change
+relative to the current implementation, which is more work now, but
+perhaps this cleanup is worth it longer-term.
 
-> Quoting Taylor's original notification to distros:
->
-> [snip]
-
-Thanks,
-Taylor
+The approach with a directory (or several) is sometimes useful to limit
+access to a file yet avoid use of ACLs, but the case above looks simple
+enough not to require this complication.
+ 
+Alexander
