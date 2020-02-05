@@ -1,33 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/10/2
-Message-ID: <512b0d2f-1b50-743b-9cff-efc0cff4b9e9@linux.ibm.com>
-Date: Thu, 10 Dec 2020 23:47:30 +1100
-From: Andrew Donnellan <ajd@...ux.ibm.com>
-To: oss-security@...ts.openwall.com, linuxppc-dev <linuxppc-dev@...ts.ozlabs.org>
-Cc: Tyrel Datwyler <tyreld@...ux.ibm.com>
-Subject: Re: Linux kernel: powerpc: RTAS calls can be used to compromise kernel integrity
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/05/4
+Message-ID: <24EFFFB0-DD97-49EF-8C01-E70EC2C93CF7@me.com>
+Date: Wed, 05 Feb 2020 11:31:55 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Security <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2019-18901: mariadb: possible symlink attack for the mysql user in the SUSE specific mysql-systemd-helper script
 Content-Type: text/plain; charset=utf-8
 
-On 24/11/20 1:41 am, Andrew Donnellan wrote:
-> On 9/10/20 12:20 pm, Andrew Donnellan wrote:
->> The Linux kernel for powerpc has an issue with the Run-Time 
->> Abstraction Services (RTAS) interface, allowing root (or CAP_SYS_ADMIN 
->> users) in a VM to overwrite some parts of memory, including kernel 
->> memory.
->>
->> This issue impacts guests running on top of PowerVM or KVM hypervisors 
->> (pseries platform), and does *not* impact bare-metal machines (powernv 
->> platform).
-> CVE-2020-27777 has been assigned.
+Hello Matthias,
 
-A minor regression has been identified, affecting the ibm,open-errinjct 
-RTAS call.
+That chmod 640 might be interesting if applied to /etc/shadow.  It could allow some users to read the password hashes.
 
-A patch is available at 
-https://patchwork.ozlabs.org/project/linuxppc-dev/patch/20201208195434.8289-1-tyreld@linux.ibm.com/
+﻿On 2/5/20, 7:46 AM, "Matthias Gerstner" <mgerstner@...e.de> wrote:
 
-Thanks to Tyrel Datwyler for identifying and fixing this issue.
+    Hello list,
+    
+    in the course of a review of the mariadb packaging in the SUSE Linux
+    distribution I discovered that a SUSE specific helper script
+    "mysql-systemd-helper" unsafely operates with root privileges in
+    the /var/lib/mysql directory [1].
+    
+    During initial package installation and during upgrade scenarios the
+    file /var/lib/mysql/mysql_upgrade_info is created/overwritten and
+    modified using the following shell commands:
+    
+    ```
+    echo -n "$MYSQLVER" > "$datadir"/mysql_upgrade_info
+    chmod 640 "$datadir/mysql_upgrade_info"
+    ```
+    
+    Since the unprivileged mysql user owns the parent directory it can
+    remove this file and replace it with a symlink to write/overwrite in
+    privileged file systems locations. This could mostly be used for
+    denial-of-service purposes, a full privilege escalation should not be
+    easily achieved by this vulnerability, since the file content cannot be
+    controlled by a potential attacker.
+    
+    Future SUSE mariadb packages will keep this file in a safe location in
+    /var/lib/misc. Older, still supported packages will be fixed soon.
+    
+    Cheers
+    
+    Matthias
+    
+    References
+    ----------
+    
+    [1]: https://bugzilla.suse.com/show_bug.cgi?id=1160895
+    
+    -- 
+    Matthias Gerstner <matthias.gerstner@...e.de>
+    Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+    https://www.suse.com/security
+    Phone: +49 911 740 53 290
+    GPG Key ID: 0x14C405C971923553
+    
+    SUSE Software Solutions Germany GmbH
+    HRB 36809, AG Nürnberg
+    Geschäftsführer: Felix Imendörffer
+    
 
--- 
-Andrew Donnellan              OzLabs, ADL Canberra
-ajd@...ux.ibm.com             IBM Australia Limited
+
