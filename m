@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10266" "Tuesday" "22" "September" "2020" "13:37:18" "+0000" "Xen.org security team" "security@xen.org" nil "229" nil nil nil nil "9" nil nil (number mark "U       security@xen Sep 22  229/10266 " thread-indent "\"[oss-security] Xen Security Advisory 340 v3 (CVE-2020-25603) - Missing memory barriers when accessing/allocating an event channel\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 340 v3 (CVE-2020-25603) - Missing memory barriers when accessing/allocating an event channel" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2505" "Wednesday" "5" "February" "2020" "13:45:21" "+0100" "Matthias Gerstner" "mgerstner@suse.de" nil "72" nil "^Date:" nil nil "2" nil nil (number mark "        mgerstner@su Feb  5   72/2505  " thread-indent "\"[oss-security] CVE-2019-18901: mariadb: possible symlink attack for the mysql user in the SUSE specific mysql-systemd-helper script\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-18901: mariadb: possible symlink attack for the mysql user in the SUSE specific mysql-systemd-helper script" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10081 invoked by uid 550); 22 Sep 2020 13:37:43 -0000
+Received: (qmail 13850 invoked by uid 550); 5 Feb 2020 12:45:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,253 +11,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9872 invoked from network); 22 Sep 2020 13:37:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=P9III5Ux8cBix1wVhd0lKbgBUp5J/+qWRAlqvlc02KY=; b=7LIeJZJF+SZ6Vy2H5SIuPPRyuy
-	uPP23GEDZCR3nvAE1lh0RqPNq3QsXAI+dbU/KaxRJTpwwYnVjVxtddeRDcFsNah8wrssl+OeKgXxK
-	6U0OKYLU6P6aFsynnyZV7Be+rZ6tcW2h4HjkEbP4ruDyM81CFadvv9yR5o84W94EKSOU=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 13832 invoked from network); 5 Feb 2020 12:45:49 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20200205124521.GA16369@f195.suse.de>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1kKiTu-0002Mo-6u@xenbits.xenproject.org>
-Date: Tue, 22 Sep 2020 13:37:18 +0000
-Subject: [oss-security] Xen Security Advisory 340 v3 (CVE-2020-25603) - Missing memory
- barriers when accessing/allocating an event channel
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="pf9I7BMVVzbSWLtt"
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Wed, 5 Feb 2020 13:45:21 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2019-18901: mariadb: possible symlink attack for the mysql user
+ in the SUSE specific mysql-systemd-helper script
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--pf9I7BMVVzbSWLtt
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-            Xen Security Advisory CVE-2020-25603 / XSA-340
-                               version 3
+Hello list,
 
-  Missing memory barriers when accessing/allocating an event channel
+in the course of a review of the mariadb packaging in the SUSE Linux
+distribution I discovered that a SUSE specific helper script
+"mysql-systemd-helper" unsafely operates with root privileges in
+the /var/lib/mysql directory [1].
 
-UPDATES IN VERSION 3
-====================
+During initial package installation and during upgrade scenarios the
+file /var/lib/mysql/mysql_upgrade_info is created/overwritten and
+modified using the following shell commands:
 
-Public release.
+```
+echo -n "$MYSQLVER" > "$datadir"/mysql_upgrade_info
+chmod 640 "$datadir/mysql_upgrade_info"
+```
 
-ISSUE DESCRIPTION
-=================
+Since the unprivileged mysql user owns the parent directory it can
+remove this file and replace it with a symlink to write/overwrite in
+privileged file systems locations. This could mostly be used for
+denial-of-service purposes, a full privilege escalation should not be
+easily achieved by this vulnerability, since the file content cannot be
+controlled by a potential attacker.
 
-Event channels control structures can be accessed lockless as long as the port
-is considered to be valid. Such sequence is missing appropriate memory barrier
-(e.g smp_*mb()) to prevent both the compiler and CPU to re-order access.
+Future SUSE mariadb packages will keep this file in a safe location in
+/var/lib/misc. Older, still supported packages will be fixed soon.
 
-IMPACT
-======
+Cheers
 
-A malicious guest may be able to cause a hypervisor crash resulting in a
-Denial of Service (DoS). Information leak and privilege escalation cannot be
-excluded.
+Matthias
 
-VULNERABLE SYSTEMS
-==================
+References
+----------
 
-Systems running all versions of Xen are affected.  Whether a system is
-vulnerable will depend on the CPU and compiler used to build Xen.
+[1]: https://bugzilla.suse.com/show_bug.cgi?id=3D1160895
 
-For all the systems, the presence and the scope of the vulnerability
-depends on the precise re-ordering performed by the compiler used to
-build Xen.
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
 
-We have not been able to survey compilers; consequently we cannot say
-which compiler(s) might produce vulnerable code (with which code generation
-options).  GCC documentation clearly suggests that re-ordering is possible.
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
 
-Arm systems will also be vulnerable if the CPU is able to re-order memory
-access.  Please consult your CPU vendor.
+--pf9I7BMVVzbSWLtt
+Content-Type: application/pgp-signature; name="signature.asc"
 
-x86 systems are only vulnerable if a compiler performs re-ordering.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa340.patch           Xen 4.10 - xen-unstable
-
-$ sha256sum xsa340*
-72b75011b99e914ddb479082f88329063dcd1f55cc931059d950ecda276ee944  xsa340.meta
-2bb088fcc1f8f79bf5ddb7b4e101cb1db76a343d2fb1cdafb7cd54612e4009da  xsa340.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/ecMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZaBsH/RbQVpTAfl0zd7RyKXO34WZnWsYfwC+l8erEtf51
-rmETfcqQP5rjNZZKEIDWcoYbJQU1DdC5tfVarUEYbGzCxPyBXlckcNKWmIVpkWnC
-i+/XBALNjErN3AoJJOc8Tb3nfOZJlRrh3PXaqFo+xOqBn2vijgQJCXlpr1yRLDov
-CatUy5DWmzVWVgByrkHs9Y+hsK7hb+DzxFvNiZUE7kv8a+R3F3smNgXDe/N7AasL
-ZCJNVpfJGjqpk+EnffaTti9gd2aPxxzzmsWAoiW0C/6s/eJckhj/LxF7ZG5WbuVT
-inhxm6zkQwBwvSTM7GLZpOuPXPegI8/RX+fO6lqsD0bcuQo=
-=J1Xd
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl46uOEACgkQFMQFyXGS
+NVNePBAAh4MPGcKeYKznG/bgkZ3Rw8D+b70kaJ6pVDoUnBo3D1yrg5lxu4B0quKm
+oAp0jWyyE+mSl0ww/YntCq7jeVDqOVfr3hn7aNgBJBQLTX5Zrv9hVWmHKPyA/ePr
+oCaHueOL/9wNB6k1iVdexjzcboulLZfRkDheUbTTCoVWBrARJ5b1RM34zs/EIyZx
+PE2bxubqFNOvWkuEBD4IQguzkInGXYfyoHMslB2NoMSkfQ+++zGqospJ5c0wHlVq
+JLP0Y+hw44R/bzBT+xOG+HOHlhpsslIh/RkB63R023YZd2vZEBL2pMaR7hlHHyNH
+DX0/dyZget9piwChX3A5zuzofq6Wfdl6x9TplG+va5+yJ0Lj11BHqcHDBlK4erXX
+nv5KOFlRMlNE/o/p2xPT4Ow/ThPu0QTVIHWN55Fe7U/2RBXnVr+HHtpb4iUJV09z
+d4/3Lch2208TfdHWQpet8/Y5vC6/zWpv2ATkqNii/5bqSjSRoEIH5SY6LA3y+675
+8ujAgQVBilfChjuFdKpD2eL/1ZqZaNkdiFhPeA0MpSv07ekMXuGhfJRUc6TSIVO2
+0wcv/lGjUErLFtHG4JassGbQYwscbNoFNgEcoe0K4iD5V11MzLRExO3/pePg3+Hr
+A4MvCvw/7Do80i5zNLjkrjJi2nNxQt5ps0wy6N21EOJYU6+dEFI=
+=LtuU
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa340.meta"
-Content-Disposition: attachment; filename="xsa340.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAzNDAsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIs
-CiAgICAiNC4xMSIsCiAgICAiNC4xMCIKICBdLAogICJUcmVlcyI6IFsKICAg
-ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAg
-ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
-YWJsZVJlZiI6ICI5M2JlOTQzZTdkNzU5MDE1YmQ1ZGI0MWE0OGY2ZGNlNThl
-NTgwZDVhIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
-MzYsCiAgICAgICAgICAgIDMzNywKICAgICAgICAgICAgMzM4LAogICAgICAg
-ICAgICAzMzkKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsK
-ICAgICAgICAgICAgInhzYTM0MC5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
-ICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC4xMSI6IHsKICAgICAgIlJlY2lw
-ZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYi
-OiAiZGRhYWNjYmJhYjZiMTliZjIxZWQyYzA5N2YzMDU1YTNjMjU0NGM4ZCIs
-CiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMzMzLAogICAg
-ICAgICAgICAzMzYsCiAgICAgICAgICAgIDMzNywKICAgICAgICAgICAgMzM4
-LAogICAgICAgICAgICAzMzkKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0
-Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM0MC5wYXRjaCIKICAgICAgICAg
-IF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC4xMiI6IHsKICAg
-ICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJT
-dGFibGVSZWYiOiAiMTMzNmNhMTc3NDI0NzFmYzRhNTk4NzlhZTJmNjM3YTU5
-NTMwYTkzMyIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAg
-MzMzLAogICAgICAgICAgICAzMzQsCiAgICAgICAgICAgIDMzNiwKICAgICAg
-ICAgICAgMzM3LAogICAgICAgICAgICAzMzgsCiAgICAgICAgICAgIDMzOQog
-ICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAg
-ICAieHNhMzQwLnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAg
-fQogICAgfSwKICAgICI0LjEzIjogewogICAgICAiUmVjaXBlcyI6IHsKICAg
-ICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI5YjM2N2Iy
-YjBiNzE0ZjNmZmI2OWVkNmJlMGExMThlOGQzZWFjMDdmIiwKICAgICAgICAg
-ICJQcmVyZXFzIjogWwogICAgICAgICAgICAzMzMsCiAgICAgICAgICAgIDMz
-NCwKICAgICAgICAgICAgMzM2LAogICAgICAgICAgICAzMzcsCiAgICAgICAg
-ICAgIDMzOCwKICAgICAgICAgICAgMzM5CiAgICAgICAgICBdLAogICAgICAg
-ICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EzNDAucGF0Y2giCiAg
-ICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTQi
-OiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAg
-ICAgICAiU3RhYmxlUmVmIjogImMzYTBmYzIyYWY5MGVmMjhlNjhiMTE2YzZh
-NDlkOWNlYzU3ZjcxY2YiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAg
-ICAgICAgIDMzMywKICAgICAgICAgICAgMzM0LAogICAgICAgICAgICAzMzYs
-CiAgICAgICAgICAgIDMzNywKICAgICAgICAgICAgMzM4LAogICAgICAgICAg
-ICAzMzkKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAg
-ICAgICAgICAgInhzYTM0MC5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9
-CiAgICAgIH0KICAgIH0sCiAgICAibWFzdGVyIjogewogICAgICAiUmVjaXBl
-cyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6
-ICJiMTE5MTAwODJkOTBiYjE1OTdmNjY3OTUyNGViNzI2YTMzMzA2NjcyIiwK
-ICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAzMzMsCiAgICAg
-ICAgICAgIDMzNCwKICAgICAgICAgICAgMzM2LAogICAgICAgICAgICAzMzcs
-CiAgICAgICAgICAgIDMzOCwKICAgICAgICAgICAgMzM5CiAgICAgICAgICBd
-LAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EzNDAu
-cGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9CiAg
-fQp9
-
---=separator
-Content-Type: application/octet-stream; name="xsa340.patch"
-Content-Disposition: attachment; filename="xsa340.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSnVsaWVuIEdyYWxsIDxqZ3JhbGxAYW1hem9uLmNvbT4KU3ViamVj
-dDogeGVuL2V2dGNobjogQWRkIG1pc3NpbmcgYmFycmllcnMgd2hlbiBhY2Nl
-c3NpbmcvYWxsb2NhdGluZyBhbiBldmVudCBjaGFubmVsCgpXaGlsZSB0aGUg
-YWxsb2NhdGlvbiBvZiBhIGJ1Y2tldCBpcyBhbHdheXMgcGVyZm9ybWVkIHdp
-dGggdGhlIHBlci1kb21haW4KbG9jaywgdGhlIGJ1Y2tldCBtYXkgYmUgYWNj
-ZXNzZWQgd2l0aG91dCB0aGUgbG9jayB0YWtlbiAoZm9yIGluc3RhbmNlLCBz
-ZWUKZXZ0Y2huX3NlbmQoKSkuCgpJbnN0ZWFkIHN1Y2ggc2l0ZXMgcmVsaWVz
-IG9uIHBvcnRfaXNfdmFsaWQoKSB0byByZXR1cm4gYSBub24temVybyB2YWx1
-ZQp3aGVuIHRoZSBwb3J0IGhhcyBhIHN0cnVjdCBldnRjaG4gYXNzb2NpYXRl
-ZCB0byBpdC4gVGhlIGZ1bmN0aW9uIHdpbGwKbW9zdGx5IGNoZWNrIHdoZXRo
-ZXIgdGhlIHBvcnQgaXMgbGVzcyB0aGFuIGQtPnZhbGlkX2V2dGNobnMgYXMg
-YWxsIHRoZQpidWNrZXRzL2V2ZW50IGNoYW5uZWxzIHNob3VsZCBiZSBhbGxv
-Y2F0ZWQgdXAgdG8gdGhhdCBwb2ludC4KClVuZm9ydHVuYXRlbHkgYSBjb21w
-aWxlciBpcyBmcmVlIHRvIHJlLW9yZGVyIHRoZSBhc3NpZ25tZW50IGluCmV2
-dGNobl9hbGxvY2F0ZV9wb3J0KCkgc28gaXQgd291bGQgYmUgcG9zc2libGUg
-dG8gaGF2ZSBkLT52YWxpZF9ldnRjaG5zCnVwZGF0ZWQgYmVmb3JlIHRoZSBu
-ZXcgYnVja2V0IGhhcyBmaW5pc2ggdG8gYWxsb2NhdGUuCgpBZGRpdGlvbmFs
-bHkgb24gQXJtLCBldmVuIGlmIHRoaXMgd2FzIGNvbXBpbGVkICJjb3JyZWN0
-bHkiLCB0aGUKcHJvY2Vzc29yIGNhbiBzdGlsbCByZS1vcmRlciB0aGUgbWVt
-b3J5IGFjY2Vzcy4KCkFkZCBhIHdyaXRlIG1lbW9yeSBiYXJyaWVyIGluIHRo
-ZSBhbGxvY2F0aW9uIHNpZGUgYW5kIGEgcmVhZCBtZW1vcnkKYmFycmllciB3
-aGVuIHRoZSBwb3J0IGlzIHZhbGlkIHRvIHByZXZlbnQgYW55IHJlLW9yZGVy
-aW5nIGlzc3VlLgoKVGhpcyBpcyBYU0EtMzQwLgoKUmVwb3J0ZWQtYnk6IEp1
-bGllbiBHcmFsbCA8amdyYWxsQGFtYXpvbi5jb20+ClNpZ25lZC1vZmYtYnk6
-IEp1bGllbiBHcmFsbCA8amdyYWxsQGFtYXpvbi5jb20+ClJldmlld2VkLWJ5
-OiBTdGVmYW5vIFN0YWJlbGxpbmkgPHNzdGFiZWxsaW5pQGtlcm5lbC5vcmc+
-CgotLS0gYS94ZW4vY29tbW9uL2V2ZW50X2NoYW5uZWwuYworKysgYi94ZW4v
-Y29tbW9uL2V2ZW50X2NoYW5uZWwuYwpAQCAtMTc4LDYgKzE3OCwxMyBAQCBp
-bnQgZXZ0Y2huX2FsbG9jYXRlX3BvcnQoc3RydWN0IGRvbWFpbiAqCiAgICAg
-ICAgICAgICByZXR1cm4gLUVOT01FTTsKICAgICAgICAgYnVja2V0X2Zyb21f
-cG9ydChkLCBwb3J0KSA9IGNobjsKCisgICAgICAgIC8qCisgICAgICAgICAq
-IGQtPnZhbGlkX2V2dGNobnMgaXMgdXNlZCB0byBjaGVjayB3aGV0aGVyIHRo
-ZSBidWNrZXQgY2FuIGJlCisgICAgICAgICAqIGFjY2Vzc2VkIHdpdGhvdXQg
-dGhlIHBlci1kb21haW4gbG9jay4gVGhlcmVmb3JlLAorICAgICAgICAgKiBk
-LT52YWxpZF9ldnRjaG5zIHNob3VsZCBiZSBzZWVuICphZnRlciogdGhlIG5l
-dyBidWNrZXQgaGFzCisgICAgICAgICAqIGJlZW4gc2V0dXAuCisgICAgICAg
-ICAqLworICAgICAgICBzbXBfd21iKCk7CiAgICAgICAgIHdyaXRlX2F0b21p
-YygmZC0+dmFsaWRfZXZ0Y2hucywgZC0+dmFsaWRfZXZ0Y2hucyArIEVWVENI
-TlNfUEVSX0JVQ0tFVCk7CiAgICAgfQoKLS0tIGEveGVuL2luY2x1ZGUveGVu
-L2V2ZW50LmgKKysrIGIveGVuL2luY2x1ZGUveGVuL2V2ZW50LmgKQEAgLTEw
-Nyw3ICsxMDcsMTcgQEAgdm9pZCBub3RpZnlfdmlhX3hlbl9ldmVudF9jaGFu
-bmVsKHN0cnVjdAoKIHN0YXRpYyBpbmxpbmUgYm9vbF90IHBvcnRfaXNfdmFs
-aWQoc3RydWN0IGRvbWFpbiAqZCwgdW5zaWduZWQgaW50IHApCiB7Ci0gICAg
-cmV0dXJuIHAgPCByZWFkX2F0b21pYygmZC0+dmFsaWRfZXZ0Y2hucyk7Cisg
-ICAgaWYgKCBwID49IHJlYWRfYXRvbWljKCZkLT52YWxpZF9ldnRjaG5zKSAp
-CisgICAgICAgIHJldHVybiBmYWxzZTsKKworICAgIC8qCisgICAgICogVGhl
-IGNhbGxlciB3aWxsIHVzdWFsbHkgYWNjZXNzIHRoZSBldmVudCBjaGFubmVs
-IGFmdGVyd2FyZHMgYW5kCisgICAgICogbWF5IGJlIGRvbmUgd2l0aG91dCB0
-YWtpbmcgdGhlIHBlci1kb21haW4gbG9jay4gVGhlIGJhcnJpZXIgaXMKKyAg
-ICAgKiBnb2luZyBpbiBwYWlyIHRoZSBzbXBfd21iKCkgYmFycmllciBpbiBl
-dnRjaG5fYWxsb2NhdGVfcG9ydCgpLgorICAgICAqLworICAgIHNtcF9ybWIo
-KTsKKworICAgIHJldHVybiB0cnVlOwogfQoKIHN0YXRpYyBpbmxpbmUgc3Ry
-dWN0IGV2dGNobiAqZXZ0Y2huX2Zyb21fcG9ydChzdHJ1Y3QgZG9tYWluICpk
-LCB1bnNpZ25lZCBpbnQgcCkK
-
---=separator--
+--pf9I7BMVVzbSWLtt--
