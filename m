@@ -1,37 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/3
-Message-ID: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
-Date: Sat, 8 Aug 2020 10:49:14 +0200
-From: Richard Hartmann <richih.mailinglist@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/05/3
+Message-ID: <20200205124521.GA16369@f195.suse.de>
+Date: Wed, 5 Feb 2020 13:45:21 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: prometheus-team@...glegroups.com,  Prometheus Developers <prometheus-developers@...glegroups.com>
-Subject: Voiding CVE-2020-16248
+Subject: CVE-2019-18901: mariadb: possible symlink attack for the mysql user in the SUSE specific mysql-systemd-helper script
 Content-Type: text/plain; charset=utf-8
 
-Dear all,
+Hello list,
 
-the Prometheus project[1] has received a public "vulnerability"
-report[2] against what the reporter called SSRF, but what is the core
-functionality of blackbox_exporter[3]: The ability to trigger network
-probes over the network to monitor a target's availability. The
-reporter stated that CVE-2020-16248 has been assigned. From context,
-it seems to be a paid assessment of our software for an unnamed client
-which increases motivation to get "results", in particular CVEs for
-"zero days" - which are then promptly reported publicly with an
-embargoed CVE.
+in the course of a review of the mariadb packaging in the SUSE Linux
+distribution I discovered that a SUSE specific helper script
+"mysql-systemd-helper" unsafely operates with root privileges in
+the /var/lib/mysql directory [1].
 
-The reporter has not replied to our statement that this behaviour is
-core functionality. I could not find out which organization has
-reserved CVE-2020-16248 so I decided to send email to this list to
-inform the organization, enabling them to update their records.
+During initial package installation and during upgrade scenarios the
+file /var/lib/mysql/mysql_upgrade_info is created/overwritten and
+modified using the following shell commands:
 
-Sorry for using this list for that purpose, I could not find a less
-wrong place to inform the (hopefully) interested parties.
+```
+echo -n "$MYSQLVER" > "$datadir"/mysql_upgrade_info
+chmod 640 "$datadir/mysql_upgrade_info"
+```
 
+Since the unprivileged mysql user owns the parent directory it can
+remove this file and replace it with a symlink to write/overwrite in
+privileged file systems locations. This could mostly be used for
+denial-of-service purposes, a full privilege escalation should not be
+easily achieved by this vulnerability, since the file content cannot be
+controlled by a potential attacker.
 
-Best,
-Richard
+Future SUSE mariadb packages will keep this file in a safe location in
+/var/lib/misc. Older, still supported packages will be fixed soon.
 
-[1] https://prometheus.io/
-[2] https://github.com/prometheus/blackbox_exporter/issues/669
-[3] https://github.com/prometheus/blackbox_exporter
+Cheers
+
+Matthias
+
+References
+----------
+
+[1]: https://bugzilla.suse.com/show_bug.cgi?id=1160895
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
