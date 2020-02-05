@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/17/1
-Message-Id: <D2B3C916-4B3F-4971-A6CE-979187CB00EA@beckweb.net>
-Date: Mon, 17 Aug 2020 16:09:12 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/05/1
+Message-ID: <20200205095955.GI121861@fedorawork>
+Date: Wed, 5 Feb 2020 10:59:55 +0100
+From: Riccardo Schirone <rschiron@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Vulnerability in Jenkins
+Subject: CVE-2020-1712 systemd: use-after-free when asynchronous polkit queries are performed
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Hello,
 
-The following releases contain fixes for security vulnerabilities:
+A heap use-after-free vulnerability was found in systemd, when asynchronous
+Polkit queries are performed while handling Dbus messages. A local unprivileged
+attacker can abuse this flaw to crash systemd services or potentially execute
+code and elevate their privileges, by sending specially crafted Dbus messages.
 
-* Jenkins 2.243
-* Jenkins LTS 2.235.5
+CVE-2020-1712 has been assigned to this issue.
 
+This flaw happens due to the way bus_verify_polkit_async() works. Some DBus
+interfaces use a cache to store objects for a short period and they clear it as
+soon as the bus is again in the idle state. However, if a DBus method uses
+bus_verify_polkit_async(), the method may have to wait a while until the polkit
+action is resolved and when that happens the method handler is called again,
+with the userdata previously allocated. If the polkit request takes too long,
+the clearing of the cache would free the stored objects before the method is
+called the second time, causing the use-after-free vulnerability.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2020-08-17/?
+The issue was reported by Tavis Ormandy, Google Project Zero.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Upstream fix is included in v245-rc1:
+https://github.com/systemd/systemd/commit/ea0d0ede03c6f18dbc5036c5e9cccf97e415ccc2
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+Thanks,
+-- 
+Riccardo Schirone
+Red Hat -- Product Security
+Email: rschiron@...hat.com
+PGP-Key ID: CF96E110
 
----
-
-SECURITY-1983 / CVE-2019-17638
-Jenkins bundles Winstone-Jetty, a wrapper around Jetty, to act as HTTP and
-servlet server when started using `java -jar jenkins.war`. This is how
-Jenkins is run when using any of the installers or packages, but not when
-run using servlet containers such as Tomcat.
-
-Jenkins 2.224 through 2.242 and LTS 2.222.1 through 2.235.4 bundles Jetty
-9.4.27 with the security vulnerability CVE-2019-17638. This vulnerability
-may allow unauthenticated attackers to obtain HTTP response headers that
-may include sensitive data intended for another user.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
