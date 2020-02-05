@@ -1,45 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/17/1
-Message-ID: <a642507a-b5d4-3108-6505-75beb1795b66@isc.org>
-Date: Wed, 17 Jun 2020 11:17:17 -0800
-From: Michael McNally <mcnally@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/05/5
+Message-ID: <aff3405caaf3e70f@sudo.ws>
+Date: Wed, 05 Feb 2020 11:22:45 -0700
+From: "Todd C. Miller" <Todd.Miller@...o.ws>
 To: oss-security@...ts.openwall.com
-Subject: ISC announces two medium-severity vulnerabilities, CVE-2020-8618 and CVE-2020-8619
+Subject: Re: CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled
 Content-Type: text/plain; charset=utf-8
 
-ISC has posted the announcement below to our public "bind-announce" list, completing
-the disclosure of two medium-severity vulnerabilities, CVE-2020-8618 and CVE-2020-8619.
+On Wed, 05 Feb 2020 22:34:53 +1100, William Bowling wrote:
 
-Package maintainers and distributors who have been holding updated packages in
-anticipation of our disclosure are free to proceed now that this information has
-been made public.
+> When using a pty, sudo_term_eof and sudo_term_kill are initialized to 0x4
+> and 0x15 allowing the overflow to be reached, making 1.8.26-1.8.30 also
+> vulnerable:
 
-Thank you to all those who received the information in advance for your cooperation
-with our embargo period.
+Thanks for sharing the pty exploitation method.  I've updated the
+details in https://www.sudo.ws/alerts/pwfeedback.html to make it
+clear that the bug is not specific to piped input.
 
-Michael McNally
-ISC Security Officer
-
------
-
-ISC's June maintenance releases of BIND are available and can be downloaded
-from the ISC software download page, https://www.isc.org/download
-
-A summary of changes in the new releases can be found in their release notes:
-
-current supported stable branches:
-
-  9.11.20 - https://downloads.isc.org/isc/bind9/9.11.20/RELEASE-NOTES-bind-9.11.20.html
-  9.16.4  - https://downloads.isc.org/isc/bind9/9.16.4/RELEASE-NOTES-bind-9.16.4.html
-
-experimental development branch:
-
-  9.17.2  - https://downloads.isc.org/isc/bind9/9.17.2/RELEASE-NOTES-bind-9.17.2.html
-
-In addition to minor bug fixes and feature improvements, these particular
-maintenance releases of BIND also contain fixes for two medium-severity
-vulnerabilities, CVE-2020-8618 and CVE-2020-8619, about which more information
-is available in these Security Advisories:
-
-  https://kb.isc.org/docs/cve-2020-8618
-  https://kb.isc.org/docs/cve-2020-8619
+ - todd
