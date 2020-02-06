@@ -1,107 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/06/2
-Message-ID: <cc307ff9-e850-1d33-9fdb-fc34739dd2c0@treenet.co.nz>
-Date: Mon, 7 Sep 2020 07:54:00 +1200
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/06/1
+Message-ID: <20200206102507.GA11632@f195.suse.de>
+Date: Thu, 6 Feb 2020 11:25:07 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
+Subject: Re: CVE-2019-18901: mariadb: possible symlink attack for the mysql user in the SUSE specific mysql-systemd-helper script
 Content-Type: text/plain; charset=utf-8
 
-On 6/09/20 7:48 pm, Pramod Rana wrote:
-> Appreciate your comments.
-> 
-> My two cents - Patch everything is far from reality to most (read all)
-> organizations and I would argue that it's not a solution per se. To me it
-> looks like buying every type of vehicle for commuting in every city of the
-> world but we don't do that, rather we decide what will work best depending
-> on factors like traffic, distance, roads, weather etc.
-> 
+Hello Larry,
 
-My experience with corporate systems is more like they hire a vehicle on
-lease. Insisting that it be the oldest most run-down and error-prone
-model the lease company has to offer. Then complaining about downtime
-costs of fixing problems when things to wrong.
+On Wed, Feb 05, 2020 at 11:31:55AM -0500, Larry W. Cashdollar wrote:
+> That chmod 640 might be interesting if applied to /etc/shadow.
+> It > could allow some users to read the password hashes.
 
-As a software maintainer myself I have actually had a corporate client
-try to get me to backport several *thousand* patches. The plan being to
-port every single bug fix and feature change from version N to version N-2.
- Installing the new version with a patch changing the version number to
-N-2 would have been identical binary result.
+true. Generally it allows to grant groups read permissions on files. I'm
+not aware of an instance where this directly allows the mysql user to
+escalate privileges. But it could work when combined with further
+weaknesses in the system that allow to compromise further user/group
+accounts.
 
+Cheers
 
-> I believe prioritization is an integral part of everything we do and it
-> works as reasoning to what we do (or don't).
-> 
-
-Imagine that your network is facing a highly organized prepared attacker
-who has done their research and knows your network structure. How fast
-can you apply every patch and security update you put off for later?
-
-
-The point of the counter argument is that *not* doing anything is bad.
-Possibly really, really bad. So don't bother wasting time on figuring
-out priority/severity per-patch. Just work through the list of things
-needing patching each day as fast stability testing allows.
-
- Don't forget to report to appropriate management any resourcing lack or
-process limitations that prevent each days patching list being finished
-completely/easily. Those limitations are likely the worst security
-problems you have - they are forcing security holes to remain open.
-
-When the systemic limits are gone you should only need to prioritize
-*which* things to patch based on each ones importance to your
-organization. Not any rating associated to the flaw itself.
-
-AYJ
-
-
-> On Sat, Sep 5, 2020 at 3:17 PM Perry E. Metzger wrote:
-> 
->> [Perhaps somewhat off topic, but the original announcement felt a bit
->> tangental as well.]
->>
->> On Thu, 3 Sep 2020 20:13:34 +0530 Pramod Rana <varchashva@...il.com>
->> wrote:
->>> It is no secret that today we have more vulnerabilities than we can
->>> assess and remediate, timely and comprehensively. Risk
->>> prioritization is a key component for any vulnerability management
->>> program.
->>
->> I'm not sure I agree with this premise.
->>
->> 1. It is entirely feasible to keep even a very large organization
->> comprehensively patched. There are organizations that do that.
->> 2. It is not feasible to calculate a probability of exploitation of a
->> given vulnerability, and it is not feasible to determine how bad the
->> damage from exploitation will be. This is a classic example of "tail
->> risk" where probability distributions are simply not calculable by
->> normal methods.
->>
->> I keep hearing people in the security industry speak about scientific
->> risk assessment as though it were possible. I don't think it's
->> possible, and it seems cheaper to simply patch than to do some sort
->> of scientific assessment and prioritization of patches.
->>
->> My gut reaction is that the growth of this idea is attributable
->> to the large number of large, well-funded organizations that are
->> none the less not capable of properly maintaining their own
->> infrastructure and thus not capable of patching in a timely manner.
->> (I have consulted to many such organizations.)
->>
->> The notion that some sort of "risk analytics" could therefore justify
->> failing to patch quickly and give a rationale for maintaining an
->> incapable systems management team is thus attractive. However, the
->> real solution is simply to patch; a capable systems management team is
->> better than the illusion of a risk calculation system, and provides
->> far more benefits than simply maintaining infrastructure in a fully
->> patched state.
->>
->> Perry
->> --
->> Perry E. Metzger                perry@...rmont.com
->>
-> 
-
-
+Matthias
 
 Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
