@@ -1,4 +1,9 @@
-Received: (qmail 9656 invoked by uid 550); 6 Sep 2023 09:58:57 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3491" "Thursday" "6" "February" "2020" "15:04:18" "+0100" "Solar Designer" "solar@openwall.com" nil "110" nil "^Cc:" nil nil "2" nil nil (number mark "        solar@openwa Feb  6  110/3491  " thread-indent "\"[oss-security] GNU screen \"out of bounds access when setting w_xtermosc after OSC 49\"\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] GNU screen \"out of bounds access when setting w_xtermosc after OSC 49\"" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 24386 invoked by uid 550); 6 Feb 2020 14:04:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,36 +11,126 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 24300 invoked from network); 6 Feb 2020 14:04:25 -0000
+Message-ID: <20200206140418.GA26959@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Cc: Amadeusz Slawinski <amade@asmblr.net>
+Date: Thu, 6 Feb 2020 15:04:18 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9517 invoked from network); 6 Sep 2023 09:46:24 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Daniel Gaspar <dpgaspar@apache.org>
+Subject: [oss-security] GNU screen "out of bounds access when setting w_xtermosc after OSC 49"
 To: oss-security@lists.openwall.com
-Message-ID: <563ebe58-26b5-e04e-9fe3-5a7156682610@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 06 Sep 2023 09:46:10 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-32672: Apache Superset: SQL parser edge case bypasses
- data access authorization 
 
-Affected versions:
+Hi,
 
-- Apache Superset through 2.1.0
+GNU screen 4.8.0 was released yesterday with a documented security fix
+in it:
 
-Description:
+https://lists.gnu.org/archive/html/screen-devel/2020-02/msg00007.html
 
-An Incorrect authorisation check in SQLLab in Apache Superset versions up t=
-o and including 2.1.0. This vulnerability allows an authenticated user to q=
-uery tables that they do not have proper access to within Superset. The vul=
-nerability can be exploited by leveraging a SQL parsing vulnerability.
+---
+From: 	Amadeusz Slawinski
+Subject: 	[screen-devel] GNU Screen v.4.8.0
+Date: 	Wed, 5 Feb 2020 21:45:35 +0100
 
-Credit:
+Hello everyone,
+ 
+I'm announcing availability of GNU Screen v.4.8.0
 
-Arnaud Pascal @ Vaadata (finder)
+Screen is a full-screen window manager that multiplexes a physical
+terminal between several processes, typically interactive shells. 
 
-References:
+This release
+  * Improves startup time by only polling for already open files to
+    close
+  * Fixes:
+       - Fix for segfault if termcap doesn't have Km entry
+       - Make screen exit code be 0 when checking --version
+       - Fix potential memory corruption when using OSC 49
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-32672
+As last fix, fixes potential memory overwrite of quite big size (~768
+bytes), and even though I'm not sure about potential exploitability of
+that issue, I highly recommend everyone to upgrade as soon as possible.
+This issue is present at least since v.4.2.0 (haven't checked earlier).
+Thanks to pippin who brought this to my attention.
 
+For full list of changes see
+https://git.savannah.gnu.org/cgit/screen.git/log/?h=v.4.8.0
+
+For more information about GNU screen visit:
+https://savannah.gnu.org/projects/screen/
+
+Release is available for download at:
+https://ftp.gnu.org/gnu/screen/
+or your closest mirror (may have some delay)
+https://ftpmirror.gnu.org/screen/
+
+Please report any bugs or regressions.
+
+Cheers!
+Amadeusz on behalf of GNU Screen Team
+---
+
+The fix commit is:
+
+---
+commit 68386dfb1fa33471372a8cd2e74686758a2f527b
+Author: Amadeusz Slawinski <amade@asmblr.net>
+Date:   Thu Jan 30 17:56:27 2020 +0100
+
+    Fix out of bounds access when setting w_xtermosc after OSC 49
+    
+    echo -e "\e]49\e;                                    \n\ec"
+    crashes screen.
+    
+    This happens because 49 is divided by 10 and used as table index
+    resulting in access to w_xtermosc[4], which is out of bounds with table
+    itself being size 4. Increase size of table by 1 to 5, which is enough
+    for all current uses.
+    
+    As this overwrites memory based on user input it is potential security
+    issue.
+    
+    Reported-by: pippin@gimp.org
+    Signed-off-by: Amadeusz Slawinski <amade@asmblr.net>
+---
+
+This is followed by another related commit:
+
+---
+commit 0dd53533e20d2948351a99ec5336fbc9b82b226a
+Author: Amadeusz Slawinski <amade@asmblr.net>
+Date:   Wed Feb 5 21:05:28 2020 +0100
+
+    Increase permitted length of OSC
+    
+    hyperlink feature used by some terminals requires lots of characters
+    https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#length-limits
+    mentions around 2083 characters, set it to a bit more.
+    
+    Bug: 57718
+    
+    Signed-off-by: Amadeusz Slawinski <amade@asmblr.net>
+---
+
+Combined, these two commits change:
+
+  char   w_xtermosc[4][MAXSTR]; /* special xterm/rxvt escapes */
+
+(where MAXSTR is 768) to:
+
+  char   w_xtermosc[5][2560];   /* special xterm/rxvt escapes */
+
+These are as seen on the screen-v4 branch.  On that branch, and thus in
+all screen releases so far, the bug appears to be exposed only when
+building with the "--enable-rxvt_osc" option.  Builds and packages made
+without that option appear to be safe.  Amadeusz, can you confirm this?
+
+On master branch, the functionality is always enabled (and the option is
+dropped), thus (not too ancient) builds from that branch are vulnerable
+(until the above fixes, which were also made to that branch).
+
+Alexander
