@@ -1,41 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/23/1
-Message-ID: <87o8johko9.fsf@dja-thinkpad.axtens.net>
-Date: Mon, 23 Nov 2020 13:27:34 +1100
-From: Daniel Axtens <dja@...ens.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/06/3
+Message-ID: <20200206140418.GA26959@openwall.com>
+Date: Thu, 6 Feb 2020 15:04:18 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cmr@...ormatik.wtf, ruscur@...sell.cc, npiggin@...il.com, mpe@...erman.id.au, spoorts2@...ibm.com
-Subject: Re: CVE-2020-4788: Speculation on incompletely validated data on IBM Power9
+Cc: Amadeusz Slawinski <amade@...blr.net>
+Subject: GNU screen "out of bounds access when setting w_xtermosc after OSC 49"
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-> This issue can be mitigated by flushing the L1 cache between privilege
-> boundaries of concern.
+GNU screen 4.8.0 was released yesterday with a documented security fix
+in it:
 
-There's been interest in the performance impact of doing this sort of
-flush. The impact depends on the workload, on how often the kernel is
-entered and for what, and on the particular flush mechanism supported by
-the machine.
+https://lists.gnu.org/archive/html/screen-devel/2020-02/msg00007.html
 
-To take an unscientific example, I tested compiling a kernel. I dropped
-caches, did 1 build to warm the cache, and then 5 timed builds. The
-machine uses the mttrig flush.
+---
+From: 	Amadeusz Slawinski
+Subject: 	[screen-devel] GNU Screen v.4.8.0
+Date: 	Wed, 5 Feb 2020 21:45:35 +0100
 
-Wall clock time:
-neither flush: avg 98.796s (min 98.329s - max 99.229s) -- 100%
-entry flush:   avg 99.061s (min 98.935s - max 99.188s) -- 100.27%
-both flushes:  avg 99.158s (min 98.303s - max 99.683s) -- 100.37%
+Hello everyone,
+ 
+I'm announcing availability of GNU Screen v.4.8.0
 
-As you can see, the performance impact for this test was less than 0.4%
-on this machine.
+Screen is a full-screen window manager that multiplexes a physical
+terminal between several processes, typically interactive shells. 
 
-I want to be clear that this isn't an official claim of performance
-under any particular configuration or workload. Your results may vary.
+This release
+  * Improves startup time by only polling for already open files to
+    close
+  * Fixes:
+       - Fix for segfault if termcap doesn't have Km entry
+       - Make screen exit code be 0 when checking --version
+       - Fix potential memory corruption when using OSC 49
 
-As always, systems running in trusted environments can be booted with
-mitigations=off or the firmware 'risk level' adjusted to disable a range
-of speculative execution mitigations, including these.
+As last fix, fixes potential memory overwrite of quite big size (~768
+bytes), and even though I'm not sure about potential exploitability of
+that issue, I highly recommend everyone to upgrade as soon as possible.
+This issue is present at least since v.4.2.0 (haven't checked earlier).
+Thanks to pippin who brought this to my attention.
 
-Kind regards,
-Daniel
+For full list of changes see
+https://git.savannah.gnu.org/cgit/screen.git/log/?h=v.4.8.0
+
+For more information about GNU screen visit:
+https://savannah.gnu.org/projects/screen/
+
+Release is available for download at:
+https://ftp.gnu.org/gnu/screen/
+or your closest mirror (may have some delay)
+https://ftpmirror.gnu.org/screen/
+
+Please report any bugs or regressions.
+
+Cheers!
+Amadeusz on behalf of GNU Screen Team
+---
+
+The fix commit is:
+
+---
+commit 68386dfb1fa33471372a8cd2e74686758a2f527b
+Author: Amadeusz Slawinski <amade@...blr.net>
+Date:   Thu Jan 30 17:56:27 2020 +0100
+
+    Fix out of bounds access when setting w_xtermosc after OSC 49
+    
+    echo -e "\e]49\e;                                    \n\ec"
+    crashes screen.
+    
+    This happens because 49 is divided by 10 and used as table index
+    resulting in access to w_xtermosc[4], which is out of bounds with table
+    itself being size 4. Increase size of table by 1 to 5, which is enough
+    for all current uses.
+    
+    As this overwrites memory based on user input it is potential security
+    issue.
+    
+    Reported-by: pippin@...p.org
+    Signed-off-by: Amadeusz Slawinski <amade@...blr.net>
+---
+
+This is followed by another related commit:
+
+---
+commit 0dd53533e20d2948351a99ec5336fbc9b82b226a
+Author: Amadeusz Slawinski <amade@...blr.net>
+Date:   Wed Feb 5 21:05:28 2020 +0100
+
+    Increase permitted length of OSC
+    
+    hyperlink feature used by some terminals requires lots of characters
+    https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#length-limits
+    mentions around 2083 characters, set it to a bit more.
+    
+    Bug: 57718
+    
+    Signed-off-by: Amadeusz Slawinski <amade@...blr.net>
+---
+
+Combined, these two commits change:
+
+  char   w_xtermosc[4][MAXSTR]; /* special xterm/rxvt escapes */
+
+(where MAXSTR is 768) to:
+
+  char   w_xtermosc[5][2560];   /* special xterm/rxvt escapes */
+
+These are as seen on the screen-v4 branch.  On that branch, and thus in
+all screen releases so far, the bug appears to be exposed only when
+building with the "--enable-rxvt_osc" option.  Builds and packages made
+without that option appear to be safe.  Amadeusz, can you confirm this?
+
+On master branch, the functionality is always enabled (and the option is
+dropped), thus (not too ancient) builds from that branch are vulnerable
+(until the above fixes, which were also made to that branch).
+
+Alexander
