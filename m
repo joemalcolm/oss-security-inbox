@@ -1,126 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/28/2
-Message-ID: <20200128214809.GA27151@openwall.com>
-Date: Tue, 28 Jan 2020 22:48:10 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Al Viro <viro@...iv.linux.org.uk>, Salvatore Mesoraca <s.mesoraca16@...il.com>, Kees Cook <keescook@...omium.org>, Linus Torvalds <torvalds@...ux-foundation.org>, Dan Carpenter <dan.carpenter@...cle.com>, Andrew Morton <akpm@...ux-foundation.org>
-Subject: Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/06/5
+Message-ID: <20200206172457.5b138fd5@milkyway.galaxy>
+Date: Thu, 6 Feb 2020 17:24:57 +0100
+From: Amadeusz Sławiński <amade@...blr.net>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: GNU screen "out of bounds access when setting w_xtermosc after OSC 49"
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-First, to avoid such questions or potential duplicate CVE ID assignment:
+> 
+> The fix commit is:
+> 
+> ---
+> commit 68386dfb1fa33471372a8cd2e74686758a2f527b
+> Author: Amadeusz Slawinski <amade@...blr.net>
+> Date:   Thu Jan 30 17:56:27 2020 +0100
+> 
+>     Fix out of bounds access when setting w_xtermosc after OSC 49
+>     
+>     echo -e "\e]49\e;                                    \n\ec"
+>     crashes screen.
+>     
+>     This happens because 49 is divided by 10 and used as table index
+>     resulting in access to w_xtermosc[4], which is out of bounds with table
+>     itself being size 4. Increase size of table by 1 to 5, which is enough
+>     for all current uses.
+>     
+>     As this overwrites memory based on user input it is potential security
+>     issue.
+>     
+>     Reported-by: pippin@...p.org
+>     Signed-off-by: Amadeusz Slawinski <amade@...blr.net>
+> ---
+> 
+> This is followed by another related commit:
+> 
+> ---
+> commit 0dd53533e20d2948351a99ec5336fbc9b82b226a
+> Author: Amadeusz Slawinski <amade@...blr.net>
+> Date:   Wed Feb 5 21:05:28 2020 +0100
+> 
+>     Increase permitted length of OSC
+>     
+>     hyperlink feature used by some terminals requires lots of characters
+>     https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#length-limits
+>     mentions around 2083 characters, set it to a bit more.
+>     
+>     Bug: 57718
+>     
+>     Signed-off-by: Amadeusz Slawinski <amade@...blr.net>
+> ---
+> 
+> Combined, these two commits change:
+> 
+>   char   w_xtermosc[4][MAXSTR]; /* special xterm/rxvt escapes */
+> 
+> (where MAXSTR is 768) to:
+> 
+>   char   w_xtermosc[5][2560];   /* special xterm/rxvt escapes */
+> 
 
-I intend to request a CVE ID and post it as a follow-up to this thread.
+The report which resulted in second commit just happened to be reported
+at similar time and is not related to the issue at hand apart from same
+location in source code.
 
-[ I use square braces in the message below to describe issues that are
-related to the bug mentioned in the Subject, yet are distinct from it. ]
+> These are as seen on the screen-v4 branch.  On that branch, and thus in
+> all screen releases so far, the bug appears to be exposed only when
+> building with the "--enable-rxvt_osc" option.  Builds and packages made
+> without that option appear to be safe.  Amadeusz, can you confirm this?
 
-Al Viro found and analyzed the security impact of and fixed a bug in
-Linux 4.19+ where open(2)'s eventual call to may_create_in_sticky() was
-"done when we already have dropped the reference to dir" and thus with
-dir (a "struct dentry" pointer) being potentially stale and potentially
-pointing to reused memory.  This (presumably) can happen e.g. in the
-unusual case that the file being opened gets moved to a different
-directory and its old parent directory gets removed concurrently with
-the open(2) call being still in progress.  (I am not aware of attempts
-to trigger this problematic behavior.  If anyone tries and has either
-kind of results, please post a follow-up to this thread.)
+Yes builds without this option should be safe, however do note that
+as far as I know most distributions do enable it (I checked Debian,
+Arch Linux, Fedora and Gentoo).
 
-may_create_in_sticky() performs reads via the dir pointer and returns
-either 0 or -EACCES.  Thus, the potential impact is either a kernel Oops
-or a 1-bit oracle infoleak.  It feels like a useful infoleak wouldn't be
-easy to trigger, but then many bugs that could have seemed unexploitable
-at first were proven otherwise.
+> 
+> On master branch, the functionality is always enabled (and the option is
+> dropped), thus (not too ancient) builds from that branch are vulnerable
+> (until the above fixes, which were also made to that branch).
 
-Since the reads via dir are of dir->d_inode, which is then dereferenced
-and further reads are performed, I wonder if behavior (hopefully just
-DoS) worse than Oops is also possible when dir->d_inode hits a device's
-MMIO range.  This feels almost unrealistic, but who knows.
+Yes, however do note that all v4 releases are done from screen-v4 branch.
 
-may_create_in_sticky() only reaches any of those reads when the
-protected_fifos and/or protected_regular sysctl's are set to non-zero,
-or (something I just discovered when writing this message) when the file
-is neither a FIFO nor a regular file.
+Amadeusz
 
-[ In fact, looks like the "protection" unintentionally applies to such
-files (and is always enabled for them), and I guess this remained
-unnoticed because such files are rare in world-writable sticky
-directories, and in the case of Unix domain sockets they're normally
-connect()'ed to rather than open()'ed.  Also, there's a check for the
-file to be opened not being a directory before the call to
-may_create_in_sticky() is made. ]
-
-Al also pointed out that the two sysctl's are enabled by default with
-systemd 241 and later.
-
-With the new finding above, the bug might be triggerable by a user
-(e.g., by creating and trying to open() a Unix domain socket maybe?) on
-all systems with Linux 4.19+, until Al's recent fix - not just on those
-that enabled the sysctl's.  Nasty.
-
-The bug was introduced with commit 30aba6656f61 and first included in
-Linux 4.19.  Al fixed it with commit d0cb50185ae9 two days ago, and the
-fix is already in Linux 5.5 and Greg KH is getting it into stable.
-
-[ Another issue Al pointed out is that these sysctl's are ineffective on
-filesystems that use ->atomic_open() in the kernel, such as (but not
-only) networked filesystems.  That's a different code path, bypassing
-the check.  We need to document this limitation at the very least. ]
-
-Al also shared the story of this bug's discovery during untangling of
-control flow in do_last() and refactoring the code, which appeared to be
-so complicated that merely reading the code hadn't resulted in the
-discovery.
-
-I wonder if a fuzzer is able to trigger bugs like this, or if a fuzzer
-should be taught to test for such bugs - e.g., explicitly try moving
-files being accessed and removing their former parent directories -
-this might be too specialized, but on the other hand it wouldn't be
-limited to open(2).
-
-I also think we might want to annotate dereferences of pointers to
-objects that require pinning, so that a debugging build of the kernel
-could check for and complain when the accessed object is not pinned.
-This would work (at least) when the memory is not yet reused, which
-means in the majority of cases - and precisely in those that would go
-unnoticed without such checking.  I think this change would involve a
-lot of source code edits (nasty!), but is otherwise non-invasive - in
-fact, non-debugging builds could produce the same binaries that they
-produce now.  In other words, making this change is complicated, but not
-complex, and the resulting source code should be neither (I imagine it
-can be just uses of a macro in place of explicit pointer dereferences).
-
-My sentiment and other thoughts regarding bug(s) introduced with commit
-30aba6656f61 are as follows:
-
-This makes me sad and sorry.  I had introduced the "protected FIFOs"
-feature in -ow patches for Linux 2.0 over 20 years ago.  (Obviously, the
-implementation was different.)  When hardening changes started getting
-merged into upstream Linux kernel in the last few years, I mentioned
-that one and also that regular files could be used for similar attacks
-and that maybe we could afford to restrict them too:
-
-https://www.openwall.com/lists/kernel-hardening/2017/06/24/4
-
-However, I had mostly moved on (hadn't been seriously working on kernel
-hardening for years), so I didn't accept working on getting these
-changes upstream myself (if upstream were interested in these changes in
-the late 1990s, I probably would).  So another contributor worked on the
-new changes and getting them accepted.  I provided some advice, but
-(now) evidently didn't review the changes in context and to a sufficient
-extent (and accordingly am on Suggested-by, but not Reviewed-by).  With
-code tangled like that a mere code review might not have helped, but
-there's a chance it might have.
-
-So we got a userspace hardening feature into the kernel, which we now
-know also introduced a security vulnerability into the kernel.  Ouch.
-
-I am not complaining and not blaming anyone.  Rather, I accept that I
-share responsibility for the bug(s).
-
-I also greatly appreciate Al's cleaning up this mess, and am sorry we
-had created more work for him.
-
-Alexander
