@@ -1,91 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/5
-Message-ID: <20200423133148.GA19214@openwall.com>
-Date: Thu, 23 Apr 2020 15:31:48 +0200
-From: Solar Designer <solar@...nwall.com>
-To: PromiseLabs Pentest Research <pentest@...miselabs.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: spoofing of local email sender via a homoglyph attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/06/2
+Message-ID: <nycvar.YSQ.7.76.2002061829020.84833@xnncv>
+Date: Thu, 6 Feb 2020 18:33:10 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Laszlo Ersek <lersek@...hat.com>
+Subject: CVE-2020-8608 QEMU: Slirp: potential OOB access due to unsafe snprintf() usages
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-As list moderator, I took the liberty of changing the Subject of this
-posting to include the (claimed) vulnerability type, and not to single
-out the possibly irrelevant choice of software/version.  The original
-message Subject was:
+A out-of-bounds heap buffer access issue was found in the SLiRP networking 
+implementation of the QEMU emulator. It occurs in tcp_emu() routine while 
+emulating IRC and other protocols due to unsafe usage of snprintf(3) function.
 
-Subject: Fwd: Re: [scr882459] postfix 2.10.1 (other versions may be affected)
+A user/process could use this flaw to crash the Qemu process on the host 
+resulting in DoS or potentially execute arbitrary code with privileges of the 
+QEMU process on the host.
 
-To make having this in here reasonable, I think we should first consider
-discussing the general (non-)issue and only then specific software.
+Upstream patch:
+---------------
+   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/68ccb8021a838066f0951d4b2817eb6b6f10a843
+   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/68ccb8021a838066f0951d4b2817eb6b6f10a843
+   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/30648c03b27fb8d9611b723184216cd3174b6775
 
-Speaking mostly in general, not focusing on Postfix:
+This issue was reported by Laszlo Ersek(CC'd) and CVE assigned via -> 
+https://cveform.mitre.org/
 
-On Thu, Apr 23, 2020 at 03:10:55PM +0300, PromiseLabs Pentest Research wrote:
-> >> Postfix allows an email from unsanitized input, pretending to be from
-> >> an existing user on the mail system, which may look exactly the same.
-> >> For example, it is possible sending an email using the hex character
-> >> \xce\ xbf, which looks exactly like the letter 'o'. In case the user
-> >> john.doe exists on the mail server, postfix would not allow to send an
-> >> email from this email account unless an unauthorized attempt is made.
-> >> However, in case we substitute the letter 'o' with the hex character
-> >> \xce\xbf, it will look exactly like it's being sent from john.doe,
-> >> although john.doe (j<\xce\xbf)hn.doe) is actually different from
-> >> the other.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-How exactly would a mail server block a message from an existing
-username (even without the homoglyph attack for now), and under what
-scenario - message being submitted locally or via SMTP?
-
-For locally submitted messages, depending on mail server architecture,
-it may be technically possible to infer the real sender (e.g., which
-user invoked an SGID program to submit the message to the queue, or
-which user connected to a Unix domain socket).  However, if so the mail
-server would reasonably not merely block sending mail from other
-existing local usernames (and allow mail from non-existent local-looking
-usernames) but would rather insist on the message having the one correct
-username specified as its sender (retrieving the username by UID and
-either substituting it or comparing exact strings, so a homoglyph attack
-is irrelevant).
-
-For messages received via SMTP, the exact sender can generally not be
-determined, but a message appearing to come from a locally hosted domain
-name may be accepted or rejected or inbetween depending on anti-spam
-settings and such (which may also provide limited anti-spoofing).  I'd
-expect such configuration to be per-domain (applying regardless of
-whether the claimed sender's name exists locally or not), not per-user.
-While use cases can exist where it'd make sense to reject only messages
-from usernames that exist locally, that feels like a special case, and I
-doubt is a default configuration - or is it a default somewhere?  Even
-if it is, is it an expected security feature (rather than a best-effort
-anti-spam filter, perhaps one of many)?  That's highly doubtful.
-
-Finally, are we talking about envelope-from, header From, header Sender,
-or/and something else?
-
-With these questions, I am trying to show that PromiseLabs' report
-leaves so much unspecified that claiming a specific attack is premature.
-Let alone request (and even successfully obtain) a CVE ID.
-
-> > Use CVE-2020-12063.
-
-So now we have a CVE ID specifically against Postfix while the issue is
-probably generic (or possibly a non-issue, depending on how you look at
-it) and if there's anything specific to Postfix here then it's possibly
-Postfix actually trying to prevent spoofing (or just spam) in some
-cases, but not doing so perfectly.  Should either of these cases really
-result in a CVE ID against Postfix?
-
-Also, is the issue (if one exists) potentially fixable?  Probably not
-directly - that is, there's probably no reliable way to prevent just the
-homoglyph attacks.  Instead, either whatever check possibly exists can
-be removed or relaxed (also accept messages appearing from usernames
-that do exist locally) for the sake of consistency, or the check can be
-changed to be per-domain.  Either way, it'd not care about the usernames
-anymore (assuming it currently somehow does).
-
-I suggest that PromiseLabs research and describe the issue for real,
-which in my opinion they did not yet.
-
-Alexander
