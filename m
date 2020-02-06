@@ -1,64 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/16/4
-Message-Id: <D2F192EF-F7B6-4FF4-8FC5-8EDD4DFC83F0@beckweb.net>
-Date: Thu, 16 Apr 2020 15:28:36 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/06/4
+Message-ID: <CAEvdU_13o38HpfCWUE1hLt-k=fotsULFr-AGHq8CT0+FCMrzoA@mail.gmail.com>
+Date: Thu, 6 Feb 2020 15:25:27 +0100
+From: Jacopo Cappellato <jacopoc@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: [SECURITY] CVE-2019-12426 information disclosure vulnerability in Apache OFBiz
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Severity:
+Minor
 
-The following releases contain fixes for security vulnerabilities:
+Vendor:
+The Apache Software Foundation
 
-* AWS SAM Plugin 1.2.3
-* Copr Plugin 0.6.1
-* Parasoft Findings Plugin 10.4.4
-* Yaml Axis Plugin 0.2.1
+Versions Affected:
+Apache OFBiz 16.11.01 to 16.11.06
 
+Description:
+an unauthenticated user could get access to information of some backend
+screens by invoking setSessionLocale.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-04-16/
+Mitigation:
+Upgrade to 16.11.07
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Credit:
+This issue was discovered by ﻿Dennis Balkir <dennis.balkir@...mify.de>.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1556 / CVE-2020-2177
-Copr Plugin 0.3 and earlier stores credentials unencrypted in job
-`config.xml` files as part of its configuration. These credentials can be
-viewed by users with Extended Read permission or access to the master file
-system.
-
-
-SECURITY-1753 / CVE-2020-2178
-Parasoft Findings Plugin 10.4.3 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks. This allows a user
-able to control the input files for the Parasoft Findings parser to have
-Jenkins parse a crafted file that uses external entities for extraction of
-secrets from the Jenkins master or server-side request forgery.
-
-
-SECURITY-1825 / CVE-2020-2179
-Yaml Axis Plugin 0.2.0 and earlier does not configure its YAML parser to
-prevent the instantiation of arbitrary types. This results in a remote code
-execution (RCE) vulnerability exploitable by users able to configure a
-multi-configuration (Matrix) job, or control the contents of a previously
-configured job's SCM repository.
-
-
-SECURITY-1736 / CVE-2020-2180
-AWS SAM Plugin 1.2.2 and earlier does not configure its YAML parser to
-prevent the instantiation of arbitrary types. This results in a remote code
-execution (RCE) vulnerability exploitable by users able to configure a job
-or control the contents of a previously configured "AWS SAM deploy
-application" build step's YAML SAM template file (`template.yaml` or
-equivalent) file.
+References:
+http://ofbiz.apache.org/security.html
 
