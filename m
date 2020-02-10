@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3063" "Thursday" "18" "August" "2016" "16:57:24" "+0200" "Greg KH" "greg@kroah.com" "<20160818145724.GA32181@kroah.com>" "74" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" "^Cc:" nil nil "8" "2016081814:57:24" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" (number mark "        greg@kroah.c Aug 18   74/3063  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices\"\n") "<20160818143957.GI2701@suse.de>" ("<20160818142216.GH2701@suse.de>" "<20160818143014.GA27854@kroah.com>" "<20160818143957.GI2701@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1819" "Monday" "10" "February" "2020" "13:49:30" "-0800" "Andy LoPresto" "alopresto@apache.org" nil "43" nil "^Date:" nil nil "2" nil nil (number mark "        alopresto@ap Feb 10   43/1819  " thread-indent "\"[oss-security] CVE-2020-1942: Apache NiFi 0.0.1 to 1.11.0 information disclosure in logs\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-1942: Apache NiFi 0.0.1 to 1.11.0 information disclosure in logs" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20306 invoked by uid 550); 18 Aug 2016 14:57:26 -0000
+Received: (qmail 13868 invoked by uid 550); 10 Feb 2020 22:15:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,104 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20288 invoked from network); 18 Aug 2016 14:57:25 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=vkLB/NdnCOVVEmWlShLHLhogDbw=; b=qdyp4
-	Ypm1FFGlo4Dca/Aj7aPEHljWRmlK5hvwxbvXSNCoys+QNFk8Bq7PJEYBts+BLSIu
-	HB82PwfpH9ZgK7ELGcLpPk7LnjAViofMwbEByd0Bz6z1SU6KH7Y66WXd6h9HkWxq
-	HDtlygHDidQPFGXurEuWsQoPq0Nw2hjUZLyxnw=
-X-Sasl-enc: SmhbXIZ78GRfNYd/nSaF3BsLCbpSi4Me7BqOSPZIGMrp 1471532233
-Message-ID: <20160818145724.GA32181@kroah.com>
-References: <20160818142216.GH2701@suse.de>
- <20160818143014.GA27854@kroah.com>
- <20160818143957.GI2701@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160818143957.GI2701@suse.de>
-User-Agent: Mutt/1.6.2 (2016-07-01)
-Cc: OSS Security List <oss-security@lists.openwall.com>,
-	cve-assign@mitre.org, security@kernel.org
-Date: Thu, 18 Aug 2016 16:57:24 +0200
-From: Greg KH <greg@kroah.com>
+Received: (qmail 32412 invoked from network); 10 Feb 2020 21:49:44 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:mime-version:subject:message-id:date:to;
+        bh=4nXXwMCj1jhi/5+6AgDge5jPYM1NZQWyBB+sS+Trqso=;
+        b=DAgFKA88KdEdPEz9hkbO0+9SX6BNgG2Kb3Oaq6Om53naAzy1nsCrNfLFsuurCPfyWM
+         bVOOUYtbciEsOCFqiSSTUdU4zu5EaMZ6QvoyuSJifsjMB/fNIK18Wkms++tfE+F1jBha
+         8Z9r8goBvKbeEk0WvlUoZsI15hgcfY2q3AkGtsyje6D/N5q3RXwgfA56p+HQ3IGIe4TB
+         3nhX6G81Fgr1Us3rh3AXGcQyL6TxaDEcZCag3VB47pYxgtHXoFQVB5u+n3wz6S/c9qQ6
+         +u5u4WGGafjEIX1eGwWpDsd93OULq3WKjFfcdObLODp5KRaHxHsOpu8yqGCAmYDHE4ax
+         tVVA==
+X-Gm-Message-State: APjAAAWKPO8b1ibAoV8xD1RtdaZfuoWXZhzyRj4h+3bKG2aSi0VPy8vf
+	MHQSB1ElQy4jsKrT7CZHocdxs+ca
+X-Google-Smtp-Source: APXvYqykOdzko1WHGNJFu1/QhG54vCZQohaLM4UgfH4nZ0EfW1TuaeOjyHc5neuaTYjqmurhjeOhQA==
+X-Received: by 2002:a17:902:161:: with SMTP id 88mr2913565plb.129.1581371371744;
+        Mon, 10 Feb 2020 13:49:31 -0800 (PST)
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_42DC1E86-174C-4CF1-97F4-99203FBCF0CC"
+Mime-Version: 1.0 (Mac OS X Mail 12.2 \(3445.102.3\))
+Message-Id: <CE6967F1-2CD4-4A6E-89CF-75B2FE817EAE@apache.org>
+X-Mailer: Apple Mail (2.3445.102.3)
+Date: Mon, 10 Feb 2020 13:49:30 -0800
+From: Andy LoPresto <alopresto@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in
- malicious USB devices
-To: Marcus Meissner <meissner@suse.de>
+Subject: [oss-security] CVE-2020-1942: Apache NiFi 0.0.1 to 1.11.0 information disclosure in logs
+To: oss-security@lists.openwall.com
 
-On Thu, Aug 18, 2016 at 04:39:57PM +0200, Marcus Meissner wrote:
-> On Thu, Aug 18, 2016 at 04:30:14PM +0200, Greg KH wrote:
-> > On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
-> > > Hi,
-> > > 
-> > > I think this does not have a CVE yet, please assign.
-> > > 
-> > > https://www.spinics.net/lists/linux-usb/msg144177.html
-> > > 
-> > > Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
-> > > Platforms:        Ubuntu
-> > > Versions:         Linux Kernel 4.4.0-22-generic
-> > 
-> > Huh?  It's much more pervasive than just that single platform or single
-> > version.
-> 
-> That was the quote from the original e-mail. I read further on it affects
-> more kernel versions.
->  
-> > > CVSS Score:       4.7
-> > > CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
-> > > Filed Defects:    
-> > > Related Defects:  
-> > > CWE Tags:         
-> > > Cycle:            
-> > > Found by:         Jake Lamberson
-> > > 
-> > > 
-> > > Linux Kernel panics when using an OHCI controller if a USB device reports being 
-> > > a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
-> > > controller driver fails to reserve bandwidth for the device, causing the 
-> > > keyboard handler to fail when attaching to the HID. Later, when the device is 
-> > > removed, the system crashes due to a null pointer dereference in a linked list 
-> > > of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP 
-> > > software. Given an appropriately configured Facedancer and UMAP setup, the crash 
-> > > can be re-created with: 
-> > > sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
-> > > 
-> > > Note: OHCI is a USB 1.1 controller standard that can be included with devices
-> > > that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
-> > > all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
-> > > this particular bug.
-> > > 
-> > > -----------------
-> > > 
-> > > The proposed fixing patch is here:
-> > > https://www.spinics.net/lists/linux-usb/msg144269.html
-> > > 
-> > > 
-> > > It has not yet been committed to the USB tree or to Linus Tree as far as I see.
-> > 
-> > Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe in
-> > the usb tree and in linux-next and will be sent to Linus tomorrow.
-> 
-> Ah sorry, only looked briefly.
+--Apple-Mail=_42DC1E86-174C-4CF1-97F4-99203FBCF0CC
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-This was also asked about 2 hours ago on the linux-usb mailing list, why
-all of the sudden interest in something that we had been discussing for
-weeks now in public?
+The https://nifi.apache.org/security.html <https://nifi.apache.org/security=
+.html> page has been updated with 1 vulnerability discovered in previous Ni=
+Fi versions which has been resolved in release 1.11.1. The severity of this=
+ issue was determined to be =E2=80=98important'. Questions about this vulne=
+rability can be directed to security@nifi.apache.org <mailto:security@nifi.=
+apache.org>.
 
-> > And are we really assigning CVE numbers for when you use an active
-> > "hardware test probe"?  If so, how many are people going to be assigning
-> > for these same problems on other operating systems?  :)
-> 
-> I think attaching malicious USB devices and crashing the kernel should
-> probably get CVE ids, or do you think it should not?
+CVE-2020-1942: Apache NiFi information disclosure in logs
 
-I don't know, that's why I'm asking, it requires "physical presence"
-which is much different from most threat models that people work to
-protect against.
+Severity: Important
 
-thanks,
+Versions Affected: Apache NiFi 0.0.1 - 1.11.0
 
-rgeg k-h
+Description: The flow fingerprint factory generated flow fingerprints which=
+ included sensitive property descriptor values. In the event a node attempt=
+ed to join a cluster and the cluster flow was not inheritable, the flow fin=
+gerprint of both the cluster and local flow was printed, potentially contai=
+ning sensitive values in plaintext.
+
+Mitigation: Implemented Argon2 secure hashing to provide a deterministic lo=
+ggable value which does not reveal the sensitive value. Users running any p=
+revious NiFi release should upgrade to the latest release.
+
+Released: February 4, 2020
+
+If you identify new security issues within the NiFi 1.11.1 release, please =
+forward your report to security@nifi.apache.org <mailto:security@nifi.apach=
+e.org> and do not disclose the issue publicly. The security vulnerability r=
+eporting and disclosure process can be found here: https://www.apache.org/s=
+ecurity/committers.html <https://www.apache.org/security/committers.html>.
+
+Andy LoPresto
+alopresto@apache.org
+alopresto.apache@gmail.com
+PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
+
+
+--Apple-Mail=_42DC1E86-174C-4CF1-97F4-99203FBCF0CC--
