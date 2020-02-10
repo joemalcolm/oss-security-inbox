@@ -1,64 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/9
-Message-ID: <20200720183532.GA11008@openwall.com>
-Date: Mon, 20 Jul 2020 20:35:32 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/10/1
+Message-Id: <CE6967F1-2CD4-4A6E-89CF-75B2FE817EAE@apache.org>
+Date: Mon, 10 Feb 2020 13:49:30 -0800
+From: Andy LoPresto <alopresto@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: volkerdi@...ckware.com
-Subject: Re: Flatcar membership on the linux-distros list
+Subject: CVE-2020-1942: Apache NiFi 0.0.1 to 1.11.0 information disclosure in logs
 Content-Type: text/plain; charset=utf-8
 
-Hi Vincent,
+The https://nifi.apache.org/security.html <https://nifi.apache.org/security.html> page has been updated with 1 vulnerability discovered in previous NiFi versions which has been resolved in release 1.11.1. The severity of this issue was determined to be ‘important'. Questions about this vulnerability can be directed to security@...i.apache.org <mailto:security@...i.apache.org>.
 
-I intentionally didn't hurry to comment on this, hoping that others
-would comment first.  I would still appreciate more comments by others.
+CVE-2020-1942: Apache NiFi information disclosure in logs
 
-On Tue, Jul 14, 2020 at 02:20:07PM -0400, Vincent Batts wrote:
-> Using the
-> https://oss-security.openwall.org/wiki/mailing-lists/distros#membership-criteria
-> I???m outlining why Flatcar Container Linux ought to be on the linux-distros
-> list.
+Severity: Important
 
-Thanks.  Much of this looks convincing to me, but here are some comments:
+Versions Affected: Apache NiFi 0.0.1 - 1.11.0
 
-> We have already been a participant on oss-security for some time and are
-> active in a number of communities. Glad to participate.
+Description: The flow fingerprint factory generated flow fingerprints which included sensitive property descriptor values. In the event a node attempted to join a cluster and the cluster flow was not inheritable, the flow fingerprint of both the cluster and local flow was printed, potentially containing sensitive values in plaintext.
 
-Vincent, as far as I could find, you personally have subscribed to
-oss-security 2 months ago, and I couldn't find anyone else from Flatcar
-Linux subscribed.  (Maybe people are with personal addresses that I
-didn't associate with Flatcar Linux.)
+Mitigation: Implemented Argon2 secure hashing to provide a deterministic loggable value which does not reveal the sensitive value. Users running any previous NiFi release should upgrade to the latest release.
 
-I also found only this one posting to Openwall lists by you:
+Released: February 4, 2020
 
-https://www.openwall.com/lists/kernel-hardening/2017/02/03/38
+If you identify new security issues within the NiFi 1.11.1 release, please forward your report to security@...i.apache.org <mailto:security@...i.apache.org> and do not disclose the issue publicly. The security vulnerability reporting and disclosure process can be found here: https://www.apache.org/security/committers.html <https://www.apache.org/security/committers.html>.
 
-This is good, but it's not a lot.
+Andy LoPresto
+alopresto@...che.org
+alopresto.apache@...il.com
+PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
 
-What I see on the Flatcar Linux website is more convincing, but maybe
-you can point us at specific examples of community participation by you
-personally and/or by others at Flatcar Linux?
 
-> > Be able and willing to contribute back (see above), preferably in
-> specific ways announced in advance (so that you're responsible for a
-> specific area and so that we know what to expect from which member), and
-> demonstrate actual contributions once you've been a member for a while
-> 
-> There are a number of the items we will do through the course of normal
-> process (review, test, validate, monitor for issues going public). As for
-> owning or being a backup, I expect that would be a consideration after
-> being a member for a period.
-
-As I recall other applications to join the linux-distros list since we
-introduced this contribute-back requirement, distros volunteered for
-some tasks right away, not "after being a member for a period."  What
-you say makes sense, but would be a deviation from the practice so far.
-I'd appreciate not needing to make an exception for you.
-
-> Pat Volkerding can vouch for me (CC???ed), and maybe others, but I asked
-> volkerdi first :-)
-
-We haven't yet heard from Pat Volkerding.  Given your LinkedIn profile,
-I guess someone from Red Hat could vouch for you as well.
-
-Alexander
