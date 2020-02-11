@@ -1,38 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/01/4
-Message-ID: <1585745652.JFUZVINU@httpd.apache.org>
-Date: Wed, 01 Apr 2020 07:54:12 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/11/2
+Message-ID: <20200211213431.GA26083@grsecurity.net>
+Date: Tue, 11 Feb 2020 16:34:31 -0500
+From: Brad Spengler <spender@...ecurity.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect
+Subject: Re: Potential regression and/or incomplete fix for CVE-2017-12762
 Content-Type: text/plain; charset=utf-8
 
+Hi Ibrahim,
 
-CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect
+> I think it is incomplete and can lead to reading out of bound since it does
+> *not* check if the src buffer (p) in this case has 10 bytes at least. The
+> fix assumes p has 10 bytes and copies that into newname. The fix
+> uses strscpy (
+> https://github.com/torvalds/linux/blob/cc12071ff39060fc2e47c58b43e249fe0d0061ee/lib/string.c#L180)
+> which
+> based on its code it starts copying from count and decrements to zero.
 
-Severity: Low
+This isn't correct.  There is a 'count' variable that decrements to zero, yes,
+but that's not what is used to index the strings.  'res' is used for that, and
+it increments from zero as you'd expect.
 
-Vendor: The Apache Software Foundation
+Regarding OOB, there is the read-by-word trickery, but it's safe and won't
+trip up KASAN for the max 7 bytes it can end up reading past bounds, and won't
+in any instance cross a page boundary.
 
-Versions Affected:
-httpd 2.4.0 to 2.4.39
+Since 'param' is guaranteed to be NUL-terminated from the fix (the isdn_common.c
+change), so is 'p', so the strscpy is fine here, especially since the later
+use of the buffer (coming from the netdev netname) uses strlen as the length
+for the buffer copy to userland here:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/isdn/i4l/isdn_common.c?id=9f5af546e6acc30f075828cb58c7f09665033967#n1385
+So strscpy_pad() wasn't necessary in this instance, despite it often being
+needed for kernel work (and the better defensive choice, unless performance
+is critical and you can guarantee the remaining part of the buffer never gets
+copied to userland or used in any way).
 
-Description:
-Apache HTTP Server 2.4.0 to 2.4.41
-Redirects configured with mod_rewrite that were intended to be self-referential
-might be fooled by encoded newlines and redirect instead to an an unexpected
-URL within the request URL.
+> ## Regression
+> I looked quickly into latest version for the kernel v3.16.81 and it seems
+> that the patch was probably reverted as the code matches exactly to the
+> vulnerable version to the CVE (
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/isdn/i4l/isdn_net.c?id=v3.16.81#n2646
+> )
+> Not sure if the fix was reworked but wanted to surface that issue as well
 
-Note: This is the same defect as CVE-2019-10098. The fix for CVE-2019-10098 was
-ineffective.
+This wasn't due to a revert, the fix was just never backported to 3.16. 
+Happens all the time.  There's never a guarantee that just because a 
+security fix is backported to some newer kernel version that it'll be 
+backported to all affected versions.  If the patch doesn't apply cleanly 
+and no one fixes it up, it just never gets fixed.
 
-Mitigation:
-Anchor captures used as back-references, prefix self-referential redirects with
-/ or scheme, host, and port.
+For this instance, you can confirm it by looking at the git log for that tree:
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log/drivers/isdn/i4l/isdn_net.c?h=linux-3.16.y
 
-Credit:
-The issue was discovered by Fabrice Perez
+The 3.16 kernel has a different maintainer than others listed on kernel.org:
+https://www.kernel.org/category/releases.html
+so there may be different critera for what's selected for backporting there.
 
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+Thanks,
+-Brad
 
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
