@@ -1,44 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/30/1
-Message-ID: <CALJHwhTWAWPjfWD1nLho+zxXneEt_CCbYFROJY=trcDvqsA7uw@mail.gmail.com>
-Date: Wed, 30 Sep 2020 10:35:56 +1000
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/11/1
+Message-ID: <CAJvHH_QwWT5HBMXEH8hVgXxm8xCYzhJfRTWAijAr0LLWQn4gdg@mail.gmail.com>
+Date: Tue, 11 Feb 2020 19:27:18 +0000
+From: Ibrahim el-sayed <i.elsayed92@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs.
+Subject: Potential regression and/or incomplete fix for CVE-2017-12762
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+Hello,
+I stumbled upon CVE-2017-12762 which has a CVSS score of 10 and I think the
+patch is incomplete and it might have regressed in the stable version. I am
+probably wrong hence this email to see if anyone familiar with this CVE and
+the fix and tell me if I am wrong.
 
-A flaw was found in the Linux kernels implementation of biovec usage.  A
-zero-length biovec request issued to the block subsystem could cause the
-kernel to enter an infinite loop causing a denial of service. An attacker
-with a local account can issue requests to a block device can cause a
-denial of service.
+## Incomplete patch
+The patch can be found in
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9f5af546e6acc30f075828cb58c7f09665033967
 
-This has been assigned CVE-2020-25641,
 
-According to the fix commits "Introduced in":
-# git tag --contains 1bdc76aea115 | head -n 1
-v4.10
+This is the vulnerable piece of code
+```
+char *
+isdn_net_newslave(char *parm)
+{
+    char *p = strchr(parm, ',');
+    isdn_net_dev *n;
+    char newname[10];
 
-Fixed by:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7e24969022cbd61ddc586f14824fc205661bb124
+    if (p) {
+        /* Slave-Name MUST not be empty or overflow 'newname' */
+        *if (strscpy(newname, p + 1, sizeof(newname)) <= 0)*
+            return NULL;
+        *p = 0;
+        /* Master must already exist */
+        if (!(n = isdn_net_findif(parm)))
+            return NULL;
+        /* Master must be a real interface, not a slave */
+        if (n->local->master)
+            return NULL;
+        /* Master must not be started yet */
+        if (isdn_net_device_started(n))
+            return NULL;
+        return (isdn_net_new(newname, n->dev));
+    }
+    return NULL;
+}
+```
 
-Thank you.
+I think it is incomplete and can lead to reading out of bound since it does
+*not* check if the src buffer (p) in this case has 10 bytes at least. The
+fix assumes p has 10 bytes and copies that into newname. The fix
+uses strscpy (
+https://github.com/torvalds/linux/blob/cc12071ff39060fc2e47c58b43e249fe0d0061ee/lib/string.c#L180)
+which
+based on its code it starts copying from count and decrements to zero.
+which in this case if param is a string similar to "aa,", then p will point
+to the last byte of the string, strscpy will copy from p+1+sizeof(newname)
+= p+1+10 -[to]-> p+1 which would allow reading 10 bytes after the buffer p
 
--- 
 
-Wade Mealing
+I do not know if param can end with "," or if there is any validation
+checks that it does not end with "," hence this might not be a bug but only
+bad practice.
 
-Product Security - Kernel, RHCE
 
-Red Hat
+## Regression
+I looked quickly into latest version for the kernel v3.16.81 and it seems
+that the patch was probably reverted as the code matches exactly to the
+vulnerable version to the CVE (
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/isdn/i4l/isdn_net.c?id=v3.16.81#n2646
+)
+Not sure if the fix was reworked but wanted to surface that issue as well
 
-<https://www.redhat.com>
 
-wmealing@...hat.com
-<https://red.ht/sig>
-TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
 
-secalert@...hat.com for urgent response
+Ibrahim
 
