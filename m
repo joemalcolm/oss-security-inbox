@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/21/2
-Message-ID: <CACqxkWLqdgyMNidzGuffrrudaFYu+ip34V0iLgerSOS=QETniA@mail.gmail.com>
-Date: Tue, 21 Jan 2020 17:36:25 +0000
-From: Nick Boyce <nick.boyce@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: matthias.gerstner@...e.de
-Subject: Re: CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/12/1
+Message-ID: <c4d5a641-e25e-d39a-5911-c70eed7ac229@dovecot.fi>
+Date: Wed, 12 Feb 2020 14:05:02 +0200
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
+To: oss-security <oss-security@...ts.openwall.com>, full-disclosure <full-disclosure@...ts.openwall.com>
+Subject: CVE-2020-7046: Dovecot: Truncated UTF-8 can be used to DoS submission-login and lmtp processes
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 20 Jan 2020 at 13:42, Matthias Gerstner <mgerstner@...e.de> wrote:
+Open-Xchange Security Advisory 2020-02-12
 
-> storeBackup [1] is a tool for performing disk-to-disk backups.
-[...]
-> [1]: http://storebackup.org
+Affected product: Dovecot Core
+Internal reference: DOV-3744 (JIRA ID)
+Vulnerability type: Improper Input Validation (CWE-30)
+Vulnerable version: 2.3.9
+Vulnerable component: submission-login, lmtp
+Fixed version: 2.3.9.3
+Report confidence: Confirmed
+Solution status: Fixed
+Researcher credits: Open-Xchange oy
+Vendor notification: 2020-01-14
+CVE reference: CVE-2020-7046
+CVSS: 7.5 (CVSS3.1:AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
 
-Er ... when I looked just now, the page at that URL began :
+Vulnerability Details:
 
-> How to Create Cryptocurrency – Simple Strategy
+lib-smtp doesn't handle truncated command parameters properly, resulting
+in infinite loop taking 100% CPU for the process. This happens for LMTP
+(where it doesn't matter so much) and also for submission-login where
+unauthenticated users can trigger it.
 
-and continued:
+Risk:
 
-> Everyone is aware of the bitcoin which is the cryptocurrency
-> trending in the world of IT
+Attacker can cause submission-login and lmtp processes to be exhausted,
+leading into denial of service and CPU resource exhaustion.
 
-In "the world of IT" we are instantly wondering who exactly has
-written this webpage about a backup utility ....   Should we tell the
-site owner his site may have been stolen ?
+Solution:
 
-Matthias ?
+Upgrade to 2.3.9.3.
 
-Cheers,
-Nick
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
