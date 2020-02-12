@@ -1,4 +1,9 @@
-Received: (qmail 1779 invoked by uid 550); 24 Jun 2023 12:32:33 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1948" "Wednesday" "12" "February" "2020" "14:05:02" "+0200" "Aki Tuomi" "aki.tuomi@dovecot.fi" nil "61" nil "^Date:" nil nil "2" nil nil (number mark "        aki.tuomi@do Feb 12   61/1948  " thread-indent "\"[oss-security] CVE-2020-7046: Dovecot: Truncated UTF-8 can be used to DoS submission-login and lmtp processes\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-7046: Dovecot: Truncated UTF-8 can be used to DoS submission-login and lmtp processes" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15523 invoked by uid 550); 12 Feb 2020 13:46:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,97 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9585 invoked from network); 24 Jun 2023 11:23:34 -0000
-Date: Sat, 24 Jun 2023 11:23:18 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1687605802; x=1687865002;
-	bh=LtLgC3yFyZOxy6nHJkh/4rN7+69VknMOnJlipDplMgU=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=DY/Q16LgMJXrKJWFHFkWLkYFflBRPIX116Oxx1bzd5PJfmrLEKrLJtbQurdLYHsXM
-	 V0RNofMAj26FkplEVG5J7bGWxAZA4uPcYMQEXQJg6i10Cr2M7mpa2DlfVSvxfzxT2a
-	 dgJJxgqS2FFoT5jwK+wBkPSzN6lzBeu69ne7QUlaIDvRB+FEfn4jW6uJVlV9Nr6fZD
-	 VmrkD2oWqY+158yO4HV4oZ/ivuggn4Fvvx1RonqK0HJFWN8gbHYSqnpT0JmRez7XsX
-	 lPHAiPHFllgHv5zKh1RgX9CL6LKL8TAOMsqi6jXBNSqV0J2WywtI8j1mbIzfmR4q8U
-	 xfQf7RnFWSHlQ==
-To: oss-security@lists.openwall.com
-From: cbf0001@proton.me
-Message-ID: <L14GKS6NenAaizYfAL1_wfSb0GYF9nnxQCUc5bB29pkHaIKrtWCn4qtCAXr8sxuo1GOtG2yiH2zsHOV7iSizWFi8yaEt6O0mGfTh02j2xU4=@proton.me>
-In-Reply-To: <B8655473-CC69-403E-BB35-5F233EF95D1A@dwheeler.com>
-References: <CAGUWgD83Q_Sce+Zcwni33yjcx9bzFv=XUhKPJK1_v226Odj1ZA@mail.gmail.com> <20230623102833.GA6568@openwall.com> <B8655473-CC69-403E-BB35-5F233EF95D1A@dwheeler.com>
-Feedback-ID: 63079058:user:proton
+Received: (qmail 20328 invoked from network); 12 Feb 2020 12:05:15 -0000
+Autocrypt: addr=aki.tuomi@dovecot.fi; prefer-encrypt=mutual; keydata=
+ xsBNBFb7bukBCACpK7GFwH/gyL0oF8t91WM7S+UjuQ1vOQZg2eoCUHi4ILpm1Kae4UeZLB2X
+ Vbeph+k29BIQbo+Hjv6rq6JzPfKIZCRLLrkMD1MtA0YB7ZYiACywLrATAdAMJ6sRq+DL5Rlr
+ A2CvviTifz6DwEnbqI+ckcKggsY2gywHs5muDw+n5TwLiL0V9IU478vg7OUWzMZ42toTmeTW
+ 2MtsIAE5xbnjZ58LUSZR2CNO8SAtDHYI558ACkS0wHBAoRFNv27IPr3cebiPsIglSEIBr0R1
+ F1Twbgm6mWVBhK+smDgGxmmuAhH6boSaKWoWAq+tNf+6oXnr3/D0IPtR8c/bZobtvWG3ABEB
+ AAHNJ1R1b21pLCBBa2kgPGFraS50dW9taUBvcGVuLXhjaGFuZ2UuY29tPsLAfgQTAQIAKAIb
+ AwUJEswDAAUCW2P/aAYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQGTtjY7NEQgYmMwf9
+ G5U0+vKJB+f3Vl8rjPqlXmUZu4waf6pig5lLCrgu56ZkqEDmjaxmxXAah7JZ6dD/66kzlQzK
+ QPYpLor0KnTZgm8XZr+MtqLK8DMF/4+iljADvkS4nfJuX3LbdafPyuk4x+GIa+6NJ+y34jZ2
+ 84Oesj+FtPOevthR9rDmnc2KQjBD30ceKsadxIKqWPYPqPESQ0PyMu9tOaWNdGntx8LvO3Ll
+ spZ2DzEh5rregFKtO01jR9ai5r3mbUrQqwzWLxJztBYjds8D5VAiCBeivUxetDqhoPr3CyKH
+ Stc5GfgHvazjG34H+CShReqIylfR4mwc654qkmVQfPMMUTaa677n8c7ATQRW+27pAQgAosZd
+ RB8tui65tjna4iYKPHqcNDZUXOUuPLTucYc2tY2v67POGr44gOZNzuQWKyXRSBs+Q2zJHcbc
+ cPe0ZEptkOCOwdhhvBwZLKa6nI9jnJ0K+szT2NbD0YkvaIDALA9pVGMJqa88wvkkocf/I5fk
+ dTk6xuLp8AamRXvcPZuUPo/s2PXQV4u+gtKdX1FmaHiBg1oQhtoDWZO04H74r9fyPPs499ra
+ 9iNckSlZP51OUFBbV/RmbtEC031r4iXUAgiL0nQ1mNpRIW+PU/5beX/4YwYeCpzy7g0XfMaJ
+ oMWDamRdXgzkXK6IJIxwo/89M8qPW+Bkh88yAennI2SsEvniXQARAQABwsBxBBgBAgAbBQJW
+ +27pAhsMBAsJCAcGFQoJCAsCBQkSzAMAAAoJEBk7Y2OzREIGCm8IAIZkj5FClx8EmPy1caC+
+ CNv1mVrC2YhKY9Zh255JUtt+Xp6tshN6IOr+saNkcwgUghxmx6+asZXPDHTqhXoswPi28k1u
+ CY7n4gvh3jlS7a0HeI0sy2RCsrkIaQD2uSt+ju9fpEM2aOXQHGT/x6gZhJ7Uwu+JfDnCB7CB
+ FjVnRaV2/87Y0ZImfhIMPYRzwOyWW6KR+JPIutyZAWo9c7mmjKbySLXhqgZariMJU+RQF5/d
+ aQsiRJKP1IkC/Ncy/iZSnGvPIRZjvQxtrz+4xexZX6NjG7IbKAwmbo1t27cF3hE4HejakF5b
+ LOhznVWubhjXp1J6pL9fymHmG2tZPsgwXcA=
+Message-ID: <c4d5a641-e25e-d39a-5911-c70eed7ac229@dovecot.fi>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_0vdaS6r0r9JmT59bkGTWr6pqFgyhiSjiP1tHKxY"
-Subject: Re: [oss-security] Opinion: Governments don't want IT security, they want to have cyber weapons
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="yus3qCe6W3VDomZS8KvJ6MHru2Zzkyzbt"
+Date: Wed, 12 Feb 2020 14:05:02 +0200
+From: Aki Tuomi <aki.tuomi@dovecot.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2020-7046: Dovecot: Truncated UTF-8 can be used to DoS submission-login
+ and lmtp processes
+To: oss-security <oss-security@lists.openwall.com>,
+ full-disclosure <full-disclosure@lists.openwall.com>
 
---b1_0vdaS6r0r9JmT59bkGTWr6pqFgyhiSjiP1tHKxY
+--yus3qCe6W3VDomZS8KvJ6MHru2Zzkyzbt
+Content-Type: multipart/mixed; boundary="z9Ftrc4jeIqo5Yhb2EWGMeyOwNoB32Wvn"
+
+--z9Ftrc4jeIqo5Yhb2EWGMeyOwNoB32Wvn
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
-SSBhZ3JlZSB3aXRoIFNvbGFyIGFuZCBEYXZpZCwgcGxlYXNlIHN0b3AgbG93
-ZXJpbmcgdGhlIGJhciB3aXRoIGNvbnRlbnQgdGhhdCBpcyBub3QgcmVsZXZh
-bnQgdG8gdGhlIGRpc3RybyBzdWJzY3JpYmVycy4KCldhcm0gcmVnYXJkcywK
-Q2JmIFByaW1tbwoKT24gRnJpLCBKdW4gMjMsIDIwMjMgYXQgMjE6MzcsIERh
-dmlkIEEuIFdoZWVsZXIgPFtkd2hlZWxlckBkd2hlZWxlci5jb21dKG1haWx0
-bzpPbiBGcmksIEp1biAyMywgMjAyMyBhdCAyMTozNywgRGF2aWQgQS4gV2hl
-ZWxlciA8PGEgaHJlZj0pPiB3cm90ZToKCj4+IE9uIEp1biAyMywgMjAyMywg
-YXQgNjoyOCBBTSwgU29sYXIgRGVzaWduZXIgPHNvbGFyQG9wZW53YWxsLmNv
-bT4gd3JvdGU6Cj4+IEkgYWN0dWFsbHkgdGhpbmsgd2Ugc2hvdWxkIGJlIHJl
-amVjdGluZyBwb3N0aW5ncyBsaWtlIHRoaXMuIEkgYWNjZXB0ZWQKPj4gdGhp
-cyBvbmUgYXMgYW4gZXhhbXBsZS4gQnkgInBvc3RpbmdzIGxpa2UgdGhpcyIg
-SSBtZWFuIHJhbnRzIHdpdGhvdXQKPj4gcHJvcG9zZWQgc29sdXRpb25zLCBu
-b3QgaGVscGZ1bCBmb3IgdGhpcyBjb21tdW5pdHkgKGFuZCB3aGVyZSByZXBs
-aWVzCj4+IGFyZSB1bmxpa2VseSB0byBiZSBoZWxwZnVsIGVpdGhlciksIGFu
-ZC9vciBsYWNraW5nIGZvY3VzIG9uIE9wZW4gU291cmNlLgo+PiBJIHRoaW5r
-IGluIHRoaXMgY2FzZSBpdCdzIGFsbCAzIG9mIHRoZXNlLgo+Cj4gSSBhZ3Jl
-ZSB3aXRoIHlvdS4gSSdkIHByZWZlciBpZiB0aGlzIChhbmQgQUxMIG1haWxp
-bmcgbGlzdHMpIHRyaWVkIHRvIHN0YXkgb24tdG9waWMuIEN1cnJlbnRseSB0
-aGF0J3MKPiAiRGlzY3Vzc2lvbiBvZiBzZWN1cml0eSBmbGF3cywgY29uY2Vw
-dHMsIGFuZCBwcmFjdGljZXMgaW4gdGhlIE9wZW4gU291cmNlIGNvbW11bml0
-eSIuCj4KPj4gSSB0aGluayB0aGUgcmVjZW50IHRocmVhZAo+PiAiVGhlIEFJ
-IGNoYXRncHQgd3JpdGVzIGluc2VjdXJlIGNvZGUiIHdhcyBvZiBzaW1pbGFy
-bHkgcXVlc3Rpb25hYmxlCj4+IHZhbHVlIGZvciB0aGlzIGxpc3QncyBzdWJz
-Y3JpYmVycy4KPgo+IEkgdGhpbmsgdGhlICpmaXJzdCogcG9zdCB0aGF0ICJB
-SSBzeXN0ZW1zIChpbmNsdWRpbmcgTExNcykKPiBvZnRlbiBnZW5lcmF0ZSBp
-bnNlY3VyZSBjb2RlIiB3YXMgcGxhdXNpYmx5IG9uLXRvcGljLgo+IE5vdyB0
-aGF0IGl0J3MgaGFwcGVuZWQsIHdlIGRvbid0IG5lZWQgYW55IG1vcmUgc3Vj
-aCBwb3N0cy4KPgo+IElmIHNvbWVvbmUgaGFzIGEgc29sdXRpb24sIHdpdGgg
-ZXZpZGVuY2UgdGhhdCBpdCAqd29ya3MqIGFuZCBjYW4gYmUgdXNlZCBpbiBP
-U1MsCj4gdGhhdCB3b3VsZCBiZSByZWxldmFudCAoYW5kIHBvc3NpYmx5IGlu
-dGVyZXN0aW5nKS4KPgo+IFJlZ2FyZGluZyB5b3VyIGNvbW1lbnQ6Cj4KPj4g
-SSB0aGluayBtb3N0IGdvdmVybm1lbnRzIGRvIHdhbnQgSVQgc2VjdXJpdHku
-IFNvbWUgYWxzbyB3YW50ICJjeWJlcgo+PiB3ZWFwb25zIiwgd2hpY2ggaXMg
-cGFydGlhbGx5IGNvbnRyYWRpY3RvcnksIGJ1dCB0aGF0J3MgaG93IGl0IGlz
-Ogo+PiBodHRwczovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9OT0JVUwo+Cj4g
-U2luY2Ugd2UncmUgb24gdGhpcyB0b3BpYywgbXkgdW5kZXJzdGFuZGluZyBv
-ZiBVUyBwb2xpY3kgKGF0IGxlYXN0IGF0IG9uZSB0aW1lKSB3YXMgdGhhdAo+
-IGl0J3MgY29uc2lkZXJlZCBhIHRyYWRlLW9mZiwgc28gd2hhdCB3aWxsIGJl
-IGRvbmUgaXMgZGVjaWRlZCBvbiBhIGNhc2UtYnktY2FzZSBiYXNpcyBieSB0
-aGUgIlZFUCBwcm9jZXNzIjoKPiAiVGhlIFZ1bG5lcmFiaWxpdGllcyBFcXVp
-dGllcyBQcm9jZXNzIChWRVApIGJhbGFuY2VzIHdoZXRoZXIgdG8gZGlzc2Vt
-aW5hdGUgdnVsbmVyYWJpbGl0eSBpbmZvcm1hdGlvbiB0byB0aGUgdmVuZG9y
-L3N1cHBsaWVyIGluIHRoZSBleHBlY3RhdGlvbiB0aGF0IGl0IHdpbGwgYmUg
-cGF0Y2hlZCwgb3IgdG8gdGVtcG9yYXJpbHkgcmVzdHJpY3QgdGhlIGtub3ds
-ZWRnZSBvZiB0aGUgdnVsbmVyYWJpbGl0eSB0byB0aGUgVVNHLCBhbmQgcG90
-ZW50aWFsbHkgb3RoZXIgcGFydG5lcnMsIHNvIHRoYXQgaXQgY2FuIGJlIHVz
-ZWQgZm9yIG5hdGlvbmFsIHNlY3VyaXR5IGFuZCBsYXcgZW5mb3JjZW1lbnQg
-cHVycG9zZXMsIHN1Y2ggYXMgaW50ZWxsaWdlbmNlIGNvbGxlY3Rpb24sIG1p
-bGl0YXJ5IG9wZXJhdGlvbnMsIGFuZC9vciBjb3VudGVyaW50ZWxsaWdlbmNl
-LiIKPiBodHRwczovL3RydW1wd2hpdGVob3VzZS5hcmNoaXZlcy5nb3Yvc2l0
-ZXMvd2hpdGVob3VzZS5nb3YvZmlsZXMvaW1hZ2VzL0V4dGVybmFsJTIwLSUy
-MFVuY2xhc3NpZmllZCUyMFZFUCUyMENoYXJ0ZXIlMjBGSU5BTC5QREYKPiBU
-aGF0J3MgYSBsaXR0bGUgb2xkLCBhbmQgSSBkb24ndCBrbm93IGlmIHRoZSBw
-b2xpY3kgaGFzIGJlZW4gY2hhbmdlZCwgYnV0IHRoYXQncyBhbiBvZmZpY2lh
-bCBwYWdlIGZyb20gdGhlIFVTIGFyY2hpdmVzLgo+Cj4gSSBoYXZlIG9waW5p
-b25zIGFib3V0IHRoaXMgcG9saWN5LCBnZW5lcmFsbHkgbmVnYXRpdmUsIGJ1
-dCBJIHRoaW5rIHRoYXQgZGlzY3Vzc2lvbiBpcyBvdXRzaWRlIHRoZSBzY29w
-ZSBvZiB0aGlzIG1haWxpbmcgbGlzdCBzbyBJJ2wgc3RvcCB0aGVyZS4KPgo+
-IFNvIGhhdmluZyBkaXNjdXNzZWQgdGhpcywgSSBsb29rIGZvcndhcmQgdG8g
-bW9yZSBtZXNzYWdlcyBmb2N1c2VkIG9uIHRoZSB0b3BpY3Mgb2YgdGhpcyBt
-YWlsaW5nIGxpc3QgOi0pLgo+Cj4gLS0tIERhdmlkIEEuIFdoZWVsZXI=
+Open-Xchange Security Advisory 2020-02-12
 
---b1_0vdaS6r0r9JmT59bkGTWr6pqFgyhiSjiP1tHKxY--
+Affected product: Dovecot Core
+Internal reference: DOV-3744 (JIRA ID)
+Vulnerability type: Improper Input Validation (CWE-30)
+Vulnerable version: 2.3.9
+Vulnerable component: submission-login, lmtp
+Fixed version: 2.3.9.3
+Report confidence: Confirmed
+Solution status: Fixed
+Researcher credits: Open-Xchange oy
+Vendor notification: 2020-01-14
+CVE reference: CVE-2020-7046
+CVSS: 7.5 (CVSS3.1:AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
 
+Vulnerability Details:
+
+lib-smtp doesn't handle truncated command parameters properly, resulting
+in infinite loop taking 100% CPU for the process. This happens for LMTP
+(where it doesn't matter so much) and also for submission-login where
+unauthenticated users can trigger it.
+
+Risk:
+
+Attacker can cause submission-login and lmtp processes to be exhausted,
+leading into denial of service and CPU resource exhaustion.
+
+Solution:
+
+Upgrade to 2.3.9.3.
+
+
+
+--z9Ftrc4jeIqo5Yhb2EWGMeyOwNoB32Wvn--
+
+--yus3qCe6W3VDomZS8KvJ6MHru2Zzkyzbt
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEQtnWz3vebh9IQVAqGTtjY7NEQgYFAl5D6e4ACgkQGTtjY7NE
+QgZn8gf/eqLgNAfoQGZenuQo+Z0bgu6a7uP70FzQs4JyVjRV7y/7qNR4lBjVgkcs
+vQtjP2PnDK7DTQ5TBLcVg0BqXQZtjzJF52MYXLmJW7G9YZMZeY3Chee73F4RycHp
+L4vDsZmF43Ps715ej6bHq1H/9CX5pD2qwLr8/6nRXAAcZpABHbdDlF4v+AtGZh3v
+g1qI9Rq32PpoTkC58yIXQi8bJrpCbWNrkJlMDBeD0VRiBO6+KxwifQ5MI3cQ+p2F
+ZiXvqIja8hBQRkZYV19lEU5mdTLgVKni7sIQGnv/nF/LcypFh70gGPRSlaQ3tFbF
+WrGCHIp58RZKxD0waA+PJlGDCh772A==
+=oA3J
+-----END PGP SIGNATURE-----
+
+--yus3qCe6W3VDomZS8KvJ6MHru2Zzkyzbt--
