@@ -1,29 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/4
-Message-ID: <20200720145721.GA105966@fullerene.field.pennock-tech.net>
-Date: Mon, 20 Jul 2020 10:57:21 -0400
-From: Phil Pennock <oss-security-phil@...dhuis.org>
-To: oss-security@...ts.openwall.com
-Cc: Jeffrey Walton <noloader@...il.com>
-Subject: Re: Perl 5.32.0 mishandling of rpath and runpath tokens
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/12/2
+Message-ID: <df88d6a7-2a82-7fce-9701-1336d104048a@dovecot.fi>
+Date: Wed, 12 Feb 2020 14:05:37 +0200
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
+To: oss-security <oss-security@...ts.openwall.com>, full-disclosure <full-disclosure@...ts.openwall.com>
+Subject: CVE-2020-7957: Dovecot: Specially crafted mail can crash snippet generation
 Content-Type: text/plain; charset=utf-8
 
-On 2020-07-20 at 04:33 -0400, Jeffrey Walton wrote:
-> On Mon, Jul 20, 2020 at 4:21 AM Jeffrey Walton <noloader@...il.com> wrote:
-> >     -Wl,-R,$ORIGIN/../lib -Wl,-R,$HOME/tmp/ok2delete/lib
-> 
-> My bad... It does not matter how this $ORIGIN token is quoted. Perl
-> always expands it.
+Open-Xchange Security Advisory 2020-02-12
 
-I've encountered this in build systems before, where the quoting is
-inconsistent and apparently can result in different levels of dequoting
-for a target depending upon how it was reached.
+Affected product: Dovecot Core
+Internal reference: DOV-3743 (JIRA ID)
+Vulnerability type: Improper Input Validation (CWE-30)
+Vulnerable version: 2.3.9
+Vulnerable component: lmtp, imap
+Fixed version: 2.3.9.3
+Report confidence: Confirmed
+Solution status: Fixed
+Researcher credits: Open-Xchange oy
+Vendor notification: 2020-01-14
+CVE reference: CVE-2020-7957
+CVSS: 3.1 (CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:N/A:L)
 
-What I've used for building those has been to specify %ORIGIN instead of
-$ORIGIN and then binary-edit the resulting binary to switch that % back
-to a $.  All quoting issues disappear and all binary offsets are stable.
-Just make sure the binary-edit step is before any binary signing. :)
+Vulnerability Details:
 
-At some point, it's also worth considering static linking.
+Snippet generation crashes if:
 
--Phil
+     message is large enough that message-parser returns multiple body
+blocks
+    The first block(s) don't contain the full snippet (e.g. full of
+whitespace)
+    input ends with '>'
+
+Risk:
+
+Sending specially crafted email can cause mailbox to have permanently
+unaccessible mail, or the mail can be stuck in delivery.
+
+Solution:
+
+Upgrade to 2.3.9.3
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
