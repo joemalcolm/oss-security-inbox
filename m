@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["905" "Friday" "27" "March" "2015" "13:11:41" "+0100" "Hector Marco" "hecmargi@upv.es" "<551548FD.8030700@upv.es>" "32" "[oss-security] CVE-Request: AMD Bulldozer Linux ASLR weakness: Reducing entropy by 87.5%." nil nil nil "3" "2015032712:11:41" "[oss-security] CVE-Request: AMD Bulldozer Linux ASLR weakness: Reducing entropy by 87.5%." (number mark "        hecmargi@upv Mar 27   32/905   " thread-indent "\"[oss-security] CVE-Request: AMD Bulldozer Linux ASLR weakness: Reducing entropy by 87.5%.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9582" "Wednesday" "12" "February" "2020" "15:30:36" "+0100" "Daniel Beck" "ml@beckweb.net" nil "250" nil "^Date:" nil nil "2" nil nil (number mark "        ml@beckweb.n Feb 12  250/9582  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7586 invoked by uid 550); 27 Mar 2015 12:12:02 -0000
+Received: (qmail 5596 invoked by uid 550); 12 Feb 2020 14:30:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,268 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7522 invoked from network); 27 Mar 2015 12:11:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=upv.es; s=default;
-	t=1427458304; bh=fXHVA36L4Co7jj8cByHoIB1kzJ7MdxQlEhqHXJiJLCM=;
-	h=Date:From:To:CC:Subject;
-	b=kFI4mrjYxJ9EnIYzbP88FusOtXse4B3+iXHUtBfp5Jmh+l1DwYbFeLO7vMzSKPuLP
-	 +1NPbjA7LKwRBl0hA+ao8XZg5RcHHIpkD+qLFnvijNqp5rcPcxyLvLAaLwJUl4l6o/
-	 Jmi2VAoaB9WMnIRLRETbe9nNePMpRte1yyFYaW9zZTt2NeVXR9Evd4X5nlAdN3wkrM
-	 2wmiJRir1Z0+RCeSxfRy815YWayZjj/+MNM6Rurfm1c1jbSwpw+BbRmcUuhpPv/KuZ
-	 Q07xCN4eTTZ7pkVECs1CK22zOGeVYc3rj6qR6jacmPiMXwKa3h3EmUL7kILRyFZly8
-	 4KucTjmxIwFxg==
-Message-ID: <551548FD.8030700@upv.es>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-CC: oss-security@lists.openwall.com, Ismael Ripoll <iripoll@disca.upv.es>
-Date: Fri, 27 Mar 2015 13:11:41 +0100
-From: Hector Marco <hecmargi@upv.es>
+Received: (qmail 5578 invoked from network); 12 Feb 2020 14:30:48 -0000
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Message-Id: <B194CD16-B946-4561-A0D5-F9C5A8EA3FC5@beckweb.net>
+X-Mailer: Apple Mail (2.3445.104.11)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1581517847;42a8499a;
+X-HE-SMSGID: 1j1t2C-0002rC-KA
+Date: Wed, 12 Feb 2020 15:30:36 +0100
+From: Daniel Beck <ml@beckweb.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-Request: AMD Bulldozer Linux ASLR weakness: Reducing entropy
- by 87.5%.
-To: Assign a CVE Identifier <cve-assign@mitre.org>
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+To: oss-security@lists.openwall.com
 
-Hi,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-A bug in Linux ASLR implementation which affects some AMD processors has been 
-found. The issue affects to all Linux process even if they are not using shared 
-libraries (statically compiled). Grsecurity/PaX is also affected.
+The following releases contain fixes for security vulnerabilities:
 
-The total entropy for the VVAR/VDSO, mmapped files and libraries of a processes 
-are reduced by eight. The number of possible locations where the mapped areas 
-can be placed are reduced by 87.5%.
+* Azure AD Plugin 1.2.0
+* Brakeman Plugin 0.13
+* FitNesse Plugin 1.31
+* Git Parameter Plugin 0.9.12
+* Google Kubernetes Engine Plugin 0.8.1
+* NUnit Plugin 0.26
+* Pipeline GitHub Notify Step Plugin 1.0.5
+* Pipeline: Groovy Plugin 2.79
+* RadarGun Plugin 1.8
+* S3 publisher Plugin 0.11.5
+* Script Security Plugin 1.70
+* Subversion Plugin 2.13.1
 
-On 32-bit systems, for example, the entropy for libraries is reduced from 28 to 
-25, which means that libraries only have 32 different places where they can be 
-loaded.
+Additionally, we announce unresolved security issues in the following
+plugins:
+
+* Applatix Plugin
+* BMC Release Package and Deployment Plugin
+* Debian Package Builder Plugin
+* DigitalOcean Plugin
+* Dynamic Extended Choice Parameter Plugin
+* Eagle Tester Plugin
+* ECX Copy Data Management Plugin
+* Harvest SCM Plugin
+* Parasoft Environment Manager Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2020-02-12/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1710 / CVE-2020-2109
+Sandbox protection in Pipeline: Groovy Plugin 2.78 and earlier can be
+circumvented through default parameter expressions in CPS-transformed
+methods.
+
+This allows attackers able to specify and run sandboxed Pipelines to
+execute arbitrary code in the context of the Jenkins master JVM.
 
 
-Details at:
-http://hmarco.org/bugs/AMD-Bulldozer-linux-ASLR-weakness-reducing-mmaped-files-by-eight.html
+SECURITY-1713 / CVE-2020-2110
+Sandbox protection in Script Security Plugin 1.69 and earlier can be
+circumvented during the script compilation phase by applying AST
+transforming annotations such as `@Grab` to imports or by using them inside
+of other annotations. This affects both script execution (typically invoked
+from other plugins like Pipeline) as well as HTTP endpoints providing
+sandboxed script validation.
+
+Users with Overall/Read permission can exploit this to bypass sandbox
+protection and execute arbitrary code on the Jenkins master.
+
+This issue is due to an incomplete fix of SECURITY-1266.
 
 
-Link patch submission:
-https://lkml.org/lkml/2015/3/27/252
+SECURITY-1725 / CVE-2020-2111
+Subversion Plugin 2.13.0 and earlier does not escape the error message for
+the Project Repository Base URL field form validation. This results in a
+stored cross-site scripting vulnerability exploitable by users able to
+specify such base URLs, for example users able to configure Multibranch
+Pipelines.
 
 
-Could you please assign a CVE-ID for this?
+SECURITY-1709 / CVE-2020-2112 (parameter name) & CVE-2020-2113 (default val=
+ue)
+Git Parameter Plugin 0.9.11 and earlier does not correctly escape the
+parameter name or default value. This results in a stored cross-site
+scripting vulnerability exploitable by users with Job/Configure permission.
 
 
+SECURITY-1684 / CVE-2020-2114
+S3 publisher Plugin stores a secret key in its global configuration.
 
-Hector Marco.
-http://hmarco.org
+While the credential is stored encrypted on disk, it is transmitted in
+plain text as part of the configuration form by S3 publisher Plugin 0.11.4
+and earlier. This can result in exposure of the credential through browser
+extensions, cross-site scripting vulnerabilities, and similar situations.
 
-Cyber-security researcher at
-http://cybersecurity.upv.es/
+
+SECURITY-1752 / CVE-2020-2115
+NUnit Plugin 0.25 and earlier does not configure the XML parser to prevent
+XML external entity (XXE) attacks.
+
+This allows a user able to control the input files for its post-build step
+to have Jenkins parse a crafted file that uses external entities for
+extraction of secrets from the Jenkins master, server-side request forgery,
+or denial-of-service attacks.
+
+
+SECURITY-812 (1) / CVE-2020-2116 (CSRF) & CVE-2020-2117 (missing permission=
+ check)
+Pipeline GitHub Notify Step Plugin 1.0.4 and earlier does not perform
+permission checks on a method implementing form validation. This allows
+users with Overall/Read access to Jenkins to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, the form validation method does not require POST requests,
+resulting in a CSRF vulnerability.
+
+
+SECURITY-812 (2) / CVE-2020-2118
+Pipeline GitHub Notify Step Plugin 1.0.4 and earlier provides a list of
+applicable credential IDs to allow users configuring the plugin to select
+the one to use.
+
+This functionality does not correctly check permissions, allowing any user
+with Overall/Read permission to get a list of valid credentials IDs. Those
+can be used as part of an attack to capture the credentials using another
+vulnerability.
+
+
+SECURITY-1717 / CVE-2020-2119
+Azure AD Plugin stores a client secret in its global configuration.
+
+While the credential is stored encrypted on disk, it is transmitted in
+plain text as part of the configuration form by Azure AD Plugin 1.1.2 and
+earlier. This can result in exposure of the credential through browser
+extensions, cross-site scripting vulnerabilities, and similar situations.
+
+
+SECURITY-1751 / CVE-2020-2120
+FitNesse Plugin 1.30 and earlier does not configure the XML parser to
+prevent XML external entity (XXE) attacks.
+
+This allows a user able to control the input files for its post-build step
+to have Jenkins parse a crafted file that uses external entities for
+extraction of secrets from the Jenkins master, server-side request forgery,
+or denial-of-service attacks.
+
+
+SECURITY-1731 / CVE-2020-2121
+Google Kubernetes Engine Plugin 0.8.0 and earlier does not configure its
+YAML parser to prevent the instantiation of arbitrary types. This results
+in a remote code execution vulnerability exploitable by users able to
+provide YAML input files to Google Kubernetes Engine Plugin's build step.
+
+
+SECURITY-1644 / CVE-2020-2122
+Brakeman Plugin 0.12 and earlier did not escape values received from parsed
+JSON files when rendering them, resulting in a stored cross-site scripting
+vulnerability.
+
+This vulnerability can be exploited by users able to control the Brakeman
+post-build step input data.
+
+
+SECURITY-1733 / CVE-2020-2123
+RadarGun Plugin 1.7 and earlier does not configure its YAML parser to
+prevent the instantiation of arbitrary types. This results in a remote code
+execution vulnerability exploitable by users able to configure RadarGun
+Plugin's build step.
+
+
+SECURITY-1560 / CVE-2020-2124
+Dynamic Extended Choice Parameter Plugin 1.0.1 and earlier stores a
+Subversion password unencrypted in job `config.xml` files as part of its
+configuration. This credential can be viewed by users with Extended Read
+permission or access to the master file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1558 / CVE-2020-2125
+Debian Package Builder Plugin 1.6.11 and earlier stores a GPG passphrase
+unencrypted in its global configuration file
+`ru.yandex.jenkins.plugins.debuilder.DebianPackageBuilder.xml` on the
+Jenkins master. This credential can be viewed by users with access to the
+master file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1559 / CVE-2020-2126
+DigitalOcean Plugin 1.1 and earlier stores a token unencrypted in the
+global `config.xml` files as part of its configuration. This credential can
+be viewed by users with access to the master file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1547 / CVE-2020-2127
+BMC Release Package and Deployment Plugin 1.1 and earlier stores the RPD
+user token unencrypted in its global configuration file
+`com.bmc.rpd.jenkins.plugin.bmcrpd.configuration.RPDPluginConfiguration.xml`
+on the Jenkins master. This credential can be viewed by users with access
+to the master file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1549 / CVE-2020-2128
+ECX Copy Data Management Plugin 1.9 and earlier stores a service password
+unencrypted in job `config.xml` files as part of its configuration. This
+credential can be viewed by users with Extended Read permission or access
+to the master file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1552 / CVE-2020-2129
+Eagle Tester Plugin 1.0.9 and earlier stores a password unencrypted in its
+global configuration file
+`com.bmc.rpd.jenkins.plugin.bmcrpd.configuration.RPDPluginConfiguration.xml`
+on the Jenkins master. This credential can be viewed by users with access
+to the master file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1553 / CVE-2020-2130 (global configuration) & CVE-2020-2131 (job c=
+onfiguration)
+Harvest SCM Plugin 0.5.1 and earlier stores SCM passwords unencrypted in
+its global configuration file `hudson.plugins.harvest.HarvestSCM.xml` and
+in job `config.xml` files on the Jenkins master. These credentials can be
+viewed by users with Extended Read permission (job `config.xml` only) or
+access to the master file system (both).
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1562 / CVE-2020-2132
+Parasoft Environment Manager Plugin 2.14 and earlier stores a repository
+password unencrypted in job `config.xml` files as part of its
+configuration. This credential can be viewed by users with Extended Read
+permission or access to the master file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1540 / CVE-2020-2133
+Applatix Plugin 1.1 and earlier stores the Applatix password unencrypted in
+job `config.xml` files as part of its configuration. This credential can be
+viewed by users with Extended Read permission or access to the master file
+system.
+
+As of publication of this advisory, there is no fix.
+
