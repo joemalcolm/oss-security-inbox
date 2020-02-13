@@ -1,33 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/26/1
-Message-ID: <CAE_88GaByiC_nus8mGsCmEGKd3+j4JYRiJagC0VR9VBP6mju_A@mail.gmail.com>
-Date: Sat, 26 Sep 2020 16:44:15 -0300
-From: "Thiago H. de Paula Figueiredo" <thiagohp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/14/2
+Message-ID: <CAKLkiYfrmPFHgMgO7g1Ez770=AYpyO4xucMVz7svw7mzqhpK3w@mail.gmail.com>
+Date: Fri, 14 Feb 2020 00:11:00 +0100
+From: security minded <osssecur1tym1nded@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-13953] Apache Tapestry WEB-INF file download vulnerability
+Subject: CVE for program distributing vulnerable components ?
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-13953: Apache Tapestry: URL manipulation allows Java webapp files
-inside WEB-INF to be listed and downloaded.
+Hello,
 
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-Tapestry 5.4.0 to 5.5.0
-
-Description:
-Crafting specific URLs, an attacker can download files inside the WEB-INF
-folder.
-
-Mitigation:
-Upgrade to Apache Tapestry 5.6.0 or later.
-Credit:
-This issue was discovered by Thomas Moore.
-
-References:
-https://tapestry.apache.org/security.html
-
--- 
-Thiago
+I've identified a program whose installer contains components with known
+CVEs. Should one or several CVE be asked for the installer itself ?
 
