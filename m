@@ -1,114 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/06/3
-Message-ID: <20200306134635.GB11468@f195.suse.de>
-Date: Fri, 6 Mar 2020 14:46:35 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/14/4
+Message-ID: <CAJvHH_RWLt8Y4aB6fwLtHymsjp8yrbwEdJ20+jZjNYYKmt=aag@mail.gmail.com>
+Date: Fri, 14 Feb 2020 10:47:16 +0000
+From: Ibrahim el-sayed <i.elsayed92@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-10174: timeshift: arbitrary local code execution due to unsafe usage of temporary directory in /tmp/timeshift
+Subject: Re: Potential regression and/or incomplete fix for CVE-2017-12762
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+Hi Brad,
+Thank you very much for your reply. This actually clarifies everything :)
 
-in the course of a security review [1] for the Timeshift backup program
-[2] I discovered a local root exploit vulnerability [3] in Timeshift.
+Ibrahim
 
-== Analysis
+On Tue, Feb 11, 2020 at 9:37 PM Brad Spengler <spender@...ecurity.net>
+wrote:
 
-The problem is found in the source file TeeJee.Process.vala [3]. There
-in `init_tmp()` a temporary directory for use by the Timeshift program
-is setup. The TEMP_DIR path variable is setup like this:
+> Hi Ibrahim,
+>
+> > I think it is incomplete and can lead to reading out of bound since it
+> does
+> > *not* check if the src buffer (p) in this case has 10 bytes at least. The
+> > fix assumes p has 10 bytes and copies that into newname. The fix
+> > uses strscpy (
+> >
+> https://github.com/torvalds/linux/blob/cc12071ff39060fc2e47c58b43e249fe0d0061ee/lib/string.c#L180
+> )
+> > which
+> > based on its code it starts copying from count and decrements to zero.
+>
+> This isn't correct.  There is a 'count' variable that decrements to zero,
+> yes,
+> but that's not what is used to index the strings.  'res' is used for that,
+> and
+> it increments from zero as you'd expect.
+>
+> Regarding OOB, there is the read-by-word trickery, but it's safe and won't
+> trip up KASAN for the max 7 bytes it can end up reading past bounds, and
+> won't
+> in any instance cross a page boundary.
+>
+> Since 'param' is guaranteed to be NUL-terminated from the fix (the
+> isdn_common.c
+> change), so is 'p', so the strscpy is fine here, especially since the later
+> use of the buffer (coming from the netdev netname) uses strlen as the
+> length
+> for the buffer copy to userland here:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/isdn/i4l/isdn_common.c?id=9f5af546e6acc30f075828cb58c7f09665033967#n1385
+> So strscpy_pad() wasn't necessary in this instance, despite it often being
+> needed for kernel work (and the better defensive choice, unless performance
+> is critical and you can guarantee the remaining part of the buffer never
+> gets
+> copied to userland or used in any way).
+>
+> > ## Regression
+> > I looked quickly into latest version for the kernel v3.16.81 and it seems
+> > that the patch was probably reverted as the code matches exactly to the
+> > vulnerable version to the CVE (
+> >
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/isdn/i4l/isdn_net.c?id=v3.16.81#n2646
+> > )
+> > Not sure if the fix was reworked but wanted to surface that issue as well
+>
+> This wasn't due to a revert, the fix was just never backported to 3.16.
+> Happens all the time.  There's never a guarantee that just because a
+> security fix is backported to some newer kernel version that it'll be
+> backported to all affected versions.  If the patch doesn't apply cleanly
+> and no one fixes it up, it just never gets fixed.
+>
+> For this instance, you can confirm it by looking at the git log for that
+> tree:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log/drivers/isdn/i4l/isdn_net.c?h=linux-3.16.y
+>
+> The 3.16 kernel has a different maintainer than others listed on
+> kernel.org:
+> https://www.kernel.org/category/releases.html
+> so there may be different critera for what's selected for backporting
+> there.
+>
+> Thanks,
+> -Brad
+>
 
-```
-TEMP_DIR = Environment.get_tmp_dir() + "/" + subdir_name + "/" + random_string();
-```
-
-This results in a path like /tmp/timeshift/wytOlUJg, for example. Only
-the last part of the path is unpredictable, the /tmp/timeshift
-directory, however, is constant and fully predictable. Timeshift does
-not perform any checks regarding the trustworthyness of a pre-existing
-/tmp/timeshift directory, or whether it might be a symlink. A typical
-no-op run of timeshift causes the following (filtered) system call
-sequence:
-
-```
-lstat("/tmp/timeshift/L00qsHH5", 0x7fffb14adfd0) = -1 ENOENT (No such file or directory)
-mkdir("/tmp/timeshift/L00qsHH5", 0777) = 0
-lstat("/tmp/timeshift/L00qsHH5/15833214581345651125.sh", 0x7fffb14adf10) = -1 ENOENT (No such file or directory)
-openat(AT_FDCWD, "/tmp/timeshift/L00qsHH5/15833214581345651125.sh", O_WRONLY|O_CREAT|O_EXCL, 0666) = 7
-execve("/usr/bin/chmod", ["chmod", "u+x", "/tmp/timeshift/L00qsHH5/15833214"...], 0x7fffb14ae3f0 /* 63 vars */
-stat("/tmp/timeshift/L00qsHH5/15833214581345651125.sh", {st_mode=S_IFREG|0644, st_size=102, ...}) = 0
-fchmodat(AT_FDCWD, "/tmp/timeshift/L00qsHH5/15833214581345651125.sh", 0744) = 0
-chdir("/tmp/timeshift/L00qsHH5") = 0
-execve("/tmp/timeshift/L00qsHH5/15833214581345651125.sh", ["/tmp/timeshift/L00qsHH5/15833214"...], 0x55f02814cfe0 /* 63 vars */
-```
-
-The `execve()` at the end is the result of the line
-`exec_script_sync("echo 'ok'",out std_out,out std_err, true)` which is
-also part of the `init_tmp()` function.
-
-An unprivileged local attacker can pre-create the `/tmp/timeshift`
-directory and wait for a Timeshift process running as root to create the
-unpredictable sub-directory like /tmp/timeshift/L00qsHH5 and the shell
-script like 15833214581345651125.sh in there. Then the attacker only
-needs to replace this directory and script by his own ones in time,
-resulting in arbitrary code execution as root.
-
-A more simple proof of concept to show the problem is what happens when
-a symlink is placed in /tmp/timeshift:
-
-```
-user$ ln -s /root /tmp/timeshift
-```
-
-This will cause timeshift to create temporary data in /root instead of
-in /tmp.
-
-For fixing this issue I suggest to remove the predictable prefix (in
-this case "timeshift") from the TEMP_DIR path. Also the unpredictable
-temporary directory created by timeshift should not be world readable
-i.e. it should get mode 0750 to prevent that other users in the system
-might obtain sensitive temporary data from the timeshift execution.
-Currently these directories are created with mode 0755 by timeshift (or
-more precisely, the mode is only modified by the calling user's umask,
-which is 0022 by default).
-
-== Bugfix and Affectedness
-
-The issue seems to have been present at least since the commit 9538300e
-[6] which first went into the v17.2 version tag.
-
-The upstream author fixed the issue according to my recommendations in
-commit 335b3d5398079278b8f7094c77bfd148b315b462 [4] which is also part
-of a new release v20.03 [5].
-
-== Timeline
-
-I reported this privately to the upstream author on 2020-03-04 and he
-publically fixed the issue on the following day already.
-
-== References
-
-[1]: https://bugzilla.suse.com/show_bug.cgi?id=1165436
-[2]: https://github.com/teejee2008/timeshift
-[3]: https://bugzilla.suse.com/show_bug.cgi?id=1165802
-[4]: https://github.com/teejee2008/timeshift/commit/335b3d5398079278b8f7094c77bfd148b315b462
-[5]: https://github.com/teejee2008/timeshift/releases/tag/v20.03
-[6]: https://github.com/teejee2008/timeshift/commit/9538300e
-
-Best Regards
-
-Matthias
 
 -- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
+Regards
+Ibrahim M. El-Sayed
+Security Engineer
+Website: https://www.ibrahim-elsayed.com
+@ibrahim_mosaad
 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
