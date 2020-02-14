@@ -1,45 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/17/2
-Message-ID: <20201117103521.3m5bpqtcbpeuirpg@anathema>
-Date: Tue, 17 Nov 2020 11:35:21 +0100
-From: Morten Linderud <foxboron@...hlinux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/14/3
+Message-ID: <20200214095455.GA579322@espresso.pseudorandom.co.uk>
+Date: Fri, 14 Feb 2020 09:54:55 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: "David A. Wheeler" <dwheeler@...eeler.com>
-Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
+Subject: Re: CVE for program distributing vulnerable components ?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 16, 2020 at 08:06:15PM +0100, Marius Bakke wrote:
-> I tried following the CVE assignment RSS feed initially, but it was not
-> suitable for human consumption.
-> 
-> How do other distros keep up with new CVE assignments?
+On Fri, 14 Feb 2020 at 00:11:00 +0100, security minded wrote:
+> I've identified a program whose installer contains components with known
+> CVEs. Should one or several CVE be asked for the installer itself ?
 
-Depends. Commercial distributions like Ubuntu, SUSE or RedHat keeps up mostly(?)
-fine by throwing money on the problem. The story is very different on volunteer
-distributions.
+The CVE IDs for the individual vulnerable components are enough to
+describe the vulnerability. You don't need new CVE IDs to describe the
+fact that the installer installs vulnerable components.
 
-Arch Linux is unable to keep up.
+Linux distribution packages are like installers, if you think about
+it - and when a security vulnerability like CVE-2018-16428 is reported
+in an upstream project like GLib, the same CVE ID is used to represent
+the vulnerability in unfixed versions of the upstream project, unfixed
+Debian packages, unfixed Fedora packages and so on. We say something like
+"Debian 9's glib2.0 package is vulnerable to CVE-2018-16428". Otherwise
+we'd need many more CVE IDs than we do now.
 
-Consuming the CVE feeds in any structured way takes quite a bit of effort, and
-then you need the manpower to wade through the assignments. Even if you did
-manage to do all this, there might not be a clear reference of the fix in
-question. For all you know the assigned CVE is only for the vulnerability and
-there is no fix written yet. You simply do not know.
-
-For Arch Linux it's a manpower problem handling the CVEs and writing advisories
-for the published packages, along with things sometimes not being very easy to
-fix for package maintainers. It is very much a best effort basis.
-
-Severe issues gets handled in a timely fashion, but it always depends on the
-time available of the volunteers.
-
-I think a lot can be solved with information sharing and better tooling. There
-was an attempt to have an shared IRC channel for distribution security teams,
-and I think initiatives like the OpenSSF vulnerability disclosure WG are
-important for this.
-
-https://github.com/ossf/wg-vulnerability-disclosures
-
--- 
-Morten Linderud
-PGP: 9C02FF419FECBE16
+    smcv
