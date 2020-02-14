@@ -1,74 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/13/3
-Message-ID: <fd935b51-2dc8-f38b-64e8-7dd0b9733f3a@open-xchange.com>
-Date: Tue, 13 Oct 2020 13:13:59 +0200
-From: Otto Moerbeek <otto.moerbeek@...n-xchange.com>
-To: oss-security@...ts.openwall.com
-Subject: PowerDNS Recursor 4.3.5, 4.2.5. and 4.1.18 released fixing a cache pollution issue (CVE-2020-25829)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/14/6
+Message-ID: <4bf21a19-3427-d699-0bdf-0de8bf647959@igalia.com>
+Date: Fri, 14 Feb 2020 14:57:58 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0002
 Content-Type: text/plain; charset=utf-8
 
-Hello!,
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0002
+------------------------------------------------------------------------
 
-Today we are releasing PowerDNS Recursor 4.3.5, 4.2.5. and 4.1.18,
-containing a security fix for CVE-2020-25829[1]:
+Date reported           : February 14, 2020
+Advisory ID             : WSA-2020-0002
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0002.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0002.html
+CVE identifiers         : CVE-2020-3862, CVE-2020-3864, CVE-2020-3865,
+                          CVE-2020-3867, CVE-2020-3868.
 
-An issue has been found in PowerDNS Recursor where a remote attacker
-can cause the cached records for a given name to be updated to the
-Bogus DNSSEC validation state, instead of their actual DNSSEC Secure
-state, via a DNS ANY query. This results in a denial of service for
-installations that always validate (dnssec=validate) and for clients
-requesting validation when on-demand validation is enabled
-(dnssec=process). The severity is high for these cases.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-As usual, there were also other smaller enhancements and
-bugfixes. Please refer to the 4.3.5 changelog[2], 4.2.5 changelog[3]
-and 4.1.18 changelog[4] for details.
+CVE-2020-3862
+    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
+    2.26.4.
+    Credit to Srikanth Gatta of Google Chrome.
+    Impact: A malicious website may be able to cause a denial of
+    service. Description: A denial of service issue was addressed with
+    improved memory handling.
 
-The 4.3.5 tarball[5] (signature[6]), 4.2.5 tarball[7] (signature[8])
-and 4.1.18 tarball[9] (signature[10]) are available at our download
-site[11] and packages for CentOS 6, 7 and 8, Debian Stretch and
-Buster, Ubuntu Xenial and Bionic are available from our
-repository[12].
+CVE-2020-3864
+    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
+    2.26.4.
+    Credit to Ryan Pickren (ryanpickren.com).
+    Impact: A DOM object context may not have had a unique security
+    origin. Description: A logic issue was addressed with improved
+    validation.
 
-4.0 and older releases are EOL, refer to the documentation[13] for details
-about our release cycles.
+CVE-2020-3865
+    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
+    2.26.4.
+    Credit to Ryan Pickren (ryanpickren.com).
+    Impact: A top-level DOM object context may have incorrectly been
+    considered secure. Description: A logic issue was addressed with
+    improved validation.
 
-Please send us all feedback and issues you might have via the mailing
-list[14], or in case of a bug, via GitHub[15].
+CVE-2020-3867
+    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
+    2.26.4.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A logic issue was
+    addressed with improved state management.
 
-Regards,
-
- -Otto and the PowerDNS Team
- 
-[1] https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2020-07.html
-[2] https://doc.powerdns.com/recursor/changelog/4.3.html#change-4.3.5
-[3] https://doc.powerdns.com/recursor/changelog/4.2.html#change-4.2.5
-[4] https://doc.powerdns.com/recursor/changelog/4.1.html#change-4.1.18
-[5] https://downloads.powerdns.com/releases/pdns-recursor-4.3.5.tar.bz2
-[6] https://downloads.powerdns.com/releases/pdns-recursor-4.3.5.tar.bz2.sig
-[7] https://downloads.powerdns.com/releases/pdns-recursor-4.2.5.tar.bz2
-[8] https://downloads.powerdns.com/releases/pdns-recursor-4.2.5.tar.bz2.sig
-[9] https://downloads.powerdns.com/releases/pdns-recursor-4.1.18.tar.bz2
-[10] https://downloads.powerdns.com/releases/pdns-recursor-4.1.18.tar.bz2.sig
-[11] https://downloads.powerdns.com/releases/
-[12] https://repo.powerdns.com/
-[13] https://docs.powerdns.com/recursor/appendices/EOL.html
-[14] https://mailman.powerdns.com/mailman/listinfo/pdns-users
-[15] https://github.com/PowerDNS/pdns/issues/new/choose
-
--- 
-kind regards,
-Otto Moerbeek
-Senior PowerDNS Developer
-
-Email: otto.moerbeek@...n-xchange.com
+CVE-2020-3868
+    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
+    2.26.4.
+    Credit to Marcin Towalski of Cisco Talos.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
 
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+February 14, 2020
 
 
 
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
