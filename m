@@ -1,4 +1,9 @@
-Received: (qmail 21650 invoked by uid 550); 16 Mar 2026 13:27:26 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2999" "Wednesday" "19" "February" "2020" "09:03:04" "+0100" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" nil "73" nil "^Date:" nil nil "2" nil nil (number mark "        hanno@hboeck Feb 19   73/2999  " thread-indent "\"[oss-security] Wordpress themegrill-demo-importer: database reset/auth bypass, incomplete fix due to CSRF\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Wordpress themegrill-demo-importer: database reset/auth bypass, incomplete fix due to CSRF" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 14261 invoked by uid 550); 19 Feb 2020 08:03:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,97 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19658 invoked from network); 16 Mar 2026 07:06:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=michaeldaumconsulting.com; s=default; t=1773644779;
-	bh=RMIfVCz1YV9ByxB0XmoDiTCVPYtv8x8PEVMte7m/Lxk=;
-	h=From:To:Reply-To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X02FjFT9hJ8uTgr/RQRdxigx2Q4X08mTeFEYJ+BsuYYwlenEhDLAvnho+fGn0Tzc5
-	 b6e8MylpJkrdcMnqdDpBESOMbTTMZjuSsjL4LGDlzjBfIT5c/g/Jb+PBnHHqcTP1+1
-	 OQeoqilDeUVGCDY37JEsF4u2jhEUYr8ODYfo9jR95q0q5/u7swWysS9UizdlTYFQ0X
-	 x7k6ua9ND4j89gVsqhqMLdgEaT8Olqx5yiWzuHj+79d8F3IMUU8OYQqCUJe9pnObwF
-	 ocWKsI9jDer2eoNGP4tCV5JBA4N39c4FRt3/kdT51G+/SxF5ESFBN1Fk+2ab3BCk6N
-	 zmgst0mHUm+cg==
-From: Michael Daum <foswiki@michaeldaumconsulting.com>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com
-Date: Mon, 16 Mar 2026 08:06:17 +0100
-Message-ID: <2951224.mvXUDI8C0e@intra>
-Organization: Foswiki Association e.V.
-In-Reply-To: <20260316022732.GA13154@openwall.com>
-References: <1952112.tdWV9SEqCh@intra> <20260316022732.GA13154@openwall.com>
+Received: (qmail 14229 invoked from network); 19 Feb 2020 08:03:17 -0000
+Message-ID: <20200219090304.675dab3d@computer>
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart12983937.O9o76ZdvQC";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
-Subject:
- Re: [oss-security] =?UTF-8?B?Rm9zd2nCrWtpIDIuMS4xMSBpcyByZcKtbGVhc2VkLA==?=
- fixes CVE-2026-2861
-
---nextPart12983937.O9o76ZdvQC
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Michael Daum <foswiki@michaeldaumconsulting.com>
-To: Solar Designer <solar@openwall.com>
-Reply-To: foswiki@michaeldaumconsulting.com
-Cc: oss-security@lists.openwall.com
-Date: Mon, 16 Mar 2026 08:06:17 +0100
-Message-ID: <2951224.mvXUDI8C0e@intra>
-Organization: Foswiki Association e.V.
-In-Reply-To: <20260316022732.GA13154@openwall.com>
-MIME-Version: 1.0
+Date: Wed, 19 Feb 2020 09:03:04 +0100
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Wordpress themegrill-demo-importer: database reset/auth bypass,
+ incomplete fix due to CSRF
+To: oss-security@lists.openwall.com
 
-Hi Alexander,
+A severe vulnerability in a wordpress plugin called ThemeGrill Demo
+Importer was discovered by the company WebARX:
+https://www.webarxsecurity.com/critical-issue-in-themegrill-demo-importer/
 
-thanks for the clarification. I'll do better next time.
+The vulnerability is as follows:
+The plugin adds a hook to wordpress that can be reached with the
+ajax-interface (admin-ajax.php) and that has a functionality to reset
+the wordpress database which will be triggered if the GET variable
+do_reset_wordpress is set.
 
-Regards,
-Michael.
+The problem: This had no authentication whatsoever.
 
-On Montag, 16. M=C3=A4rz 2026 03:27:32 Mitteleurop=C3=A4ische Normalzeit So=
-lar Designer wrote:
-> Hello Michael,
->=20
-> Thank you for bringing this to oss-security.
+PoC:
+curl https://example.org/wp-admin/admin-ajax.php?do_reset_wordpress01
+--data 'action=3Dheartbeat' -i
 
-> We require actual detail in here, not just "read more at", and the above
-> web pages don't tell much about the CVE.  There's some actual detail in:
->=20
-> https://foswiki.org/Support/SecurityAlertCVE20262861
->=20
-> which I'll partially quote below:
-> Alexander
-=20
+This can obviously delete all existing posts and other data. If there
+exists a user called "admin" (i.e. the name of the user is admin, not
+just a user with an admin role) then after triggering that function the
+attacking user will be logged in as the admin, so in that case he can
+use that to e.g. install a plugin and gain code execution. For further
+details read the WebARX post.
 
+This is already being actively exploitet, I observed several vulnerable
+installations that were empty yesterday (i.e. only showing the standard
+"Hello World" post of a new wordpress installation).
+
+Incomplete Fix / CSRF
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+As a fix for this the developers of the plugin added a check if one is
+logged in as a user with sufficient permission in version 1.6.2.
+This is not a full fix, because there is no protection from Cross Site
+Request Forgery. This means the functionality can no longer be
+triggered by an unauthenticated user, but one can lure the admin of an
+affected site to a site triggering a POST request executing that
+function.
+
+PoC code:
+<form id=3D"f1"
+action=3D"https://example.org/wp-admin/admin-ajax.php?do_reset_wordpress=3D=
+1"
+method=3D"POST"> <input type=3Dhidden name=3Daction value=3D"heartbeat">
+</form>=20=20
+<script>
+document.getElementById("f1").submit();
+</script>
+
+I had reported this to the developers of the plugin on Monday, but
+given that this is almost entirely obvious looking at the fix I was
+likely not the only one who has noticed. WebARX also told me they
+noticed this and had already told Themegrill about it.
+
+There's now an update 1.6.3 that adds a nonce check. I have
+not reviewed that change in detail. Patches:
+https://github.com/themegrill/themegrill-demo-importer/commit/b350a29628fb4=
+0522468a576e98e45abbc4de0c7
+https://github.com/themegrill/themegrill-demo-importer/commit/564d8496d1f0d=
+10f6aab4798eeec7ddefc81bdd2
+
+=46rom the functionality this plugin provides I believe it's only useful
+during development and testing of themes. Therefore even if the
+vulnerability is now hopefully fixed it is probably a good idea to
+remove it from production installations when it's no longer needed.
+
+Summary on affected versions:
+1.3.4 to 1.6.1: vulnerable to original/severe variant
+1.6.2: Insufficient fix, attack with CSRF possible
+1.6.3: hopefully fixed
 
 --=20
--- Board Member Foswiki Association e.V.
--- https://foswiki.org/Main/MichaelDaum=
-
---nextPart12983937.O9o76ZdvQC
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEjYRAvABp44mJBpbU8S8OKsbC7M8FAmm3q+kACgkQ8S8OKsbC
-7M+pfxAAtdlW5J53fb8GCAIx2AuYk87IfKej0cKxj9gIWnHugOOXwUI3o0b3aK4y
-0MmBgZwpBHf3v3qTDVFkJWnU2FIbBQN/QUBuYG7tqcU1+2RhzmGViB1o+4Daegk5
-0tCk6PDJTy3vtUPdxICPeO5qz+NyYDk6CIdSks0DdmFjyR2zh70LzUQARsgMLQNi
-du61Rmo8x1or/Cmns6iVkd7jhNCrASQsD2lU6M7N0VdNpT9oy2ULeSV27+A1bpFr
-H/OW3SsblM2YuuqXBSd8qBR0ImH2Rdm1U62cdp5dAwhyshQjjbOuC1/nTferc8aG
-xBEKBVGYl/JwkHu1DTzWMWiizAKtVtted92dYb/G9RzX9bxQx+pEfhetMh3/KE0H
-eruytFRsSthQZwDqLyYDkkNvccu8JoJ0GXd1+EMhTnFnyywQiRAAxTCgkQIB8v/+
-zpXNSoybJuUFdxFpMF7pilSDtRTgMB+ifTUNSo82jh8KXmv43oagfJ4K6G7C9rfj
-bK7oAOAmpQZiel84nhDfC3uaRmBlMk72oHbotkHRSvxHvUAWPosnMQG0tRkarCcz
-VyQI+uHZdx8ysCCeFi4i7zhRZ5wnz8A7tqZ3cDyfTrVCGDzfvSTH0ARAcGH7Lx2W
-9Z5o89lSk12LN30xPiNUuwdmXEYy90dzaGpBh9b2n85wMRrOjKk=
-=0gca
------END PGP SIGNATURE-----
-
---nextPart12983937.O9o76ZdvQC--
-
-
-
+Hanno B=C3=B6ck
+https://hboeck.de/
