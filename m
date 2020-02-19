@@ -1,88 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/23/5
-Message-ID: <20200723184514.GA22802@openwall.com>
-Date: Thu, 23 Jul 2020 20:45:14 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/19/1
+Message-ID: <20200219090304.675dab3d@computer>
+Date: Wed, 19 Feb 2020 09:03:04 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Alban Crequy (Kinvolk)" <alban@...volk.io>, volkerdi@...ckware.com
-Subject: Re: Flatcar membership on the linux-distros list
+Subject: Wordpress themegrill-demo-importer: database reset/auth bypass, incomplete fix due to CSRF
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 23, 2020 at 02:06:14PM -0400, Vincent Batts wrote:
-> On Mon, Jul 20, 2020 at 2:36 PM Solar Designer <solar@...nwall.com> wrote:
-> > Vincent, as far as I could find, you personally have subscribed to
-> > oss-security 2 months ago, and I couldn't find anyone else from Flatcar
-> > Linux subscribed.  (Maybe people are with personal addresses that I
-> > didn't associate with Flatcar Linux.)
-> 
-> For sure.
-> While I personally have been near the core of a couple of distributions, I
-> never was involved in the contributing-side with oss-security or vendor-sec.
-> 2 months ago I joined the Kinvolk team, and now squarely involved in this
-> aspect.
-> As for security disclosure overlap, there will now be a decent overlap with
-> an operating system component being containers. As I facilitate and lead
-> the Open Containers Initiative (OCI) security list, which hosts code like
-> runc, specifications and API definitions for container registries.
-> https://github.com/opencontainers/.github/blob/master/SECURITY.md
+A severe vulnerability in a wordpress plugin called ThemeGrill Demo
+Importer was discovered by the company WebARX:
+https://www.webarxsecurity.com/critical-issue-in-themegrill-demo-importer/
 
-Quite some overlap with (linux-)distros in the approach you use to
-pre-public-disclosure handling of security issues, indeed.  One notable
-difference is you don't appear to have a maximum embargo time.
+The vulnerability is as follows:
+The plugin adds a hook to wordpress that can be reached with the
+ajax-interface (admin-ajax.php) and that has a functionality to reset
+the wordpress database which will be triggered if the GET variable
+do_reset_wordpress is set.
 
-> Alban Crequy (CC'ed) who is on the team has had interactions (which
-> pre-date flatcar):
-> https://seclists.org/oss-sec/2015/q2/722
-> https://seclists.org/oss-sec/2014/q3/4
+The problem: This had no authentication whatsoever.
 
-Oh, as I understand from your e-mail signature, Alban is one of your
-company's directors.  If so, I do find it convincing for Flatcar Linux's
-membership that one of your directors has personally contributed to
-security vulnerability discovery and handling.
+PoC:
+curl https://example.org/wp-admin/admin-ajax.php?do_reset_wordpress01
+--data 'action=heartbeat' -i
 
-> Otherwise, the majority of contributions are involved in the respective
-> upstreams of the projects.
+This can obviously delete all existing posts and other data. If there
+exists a user called "admin" (i.e. the name of the user is admin, not
+just a user with an admin role) then after triggering that function the
+attacking user will be logged in as the admin, so in that case he can
+use that to e.g. install a plugin and gain code execution. For further
+details read the WebARX post.
 
-Such contributions are relevant, too.
+This is already being actively exploitet, I observed several vulnerable
+installations that were empty yesterday (i.e. only showing the standard
+"Hello World" post of a new wordpress installation).
 
-> > As I recall other applications to join the linux-distros list since we
-> > introduced this contribute-back requirement, distros volunteered for
-> > some tasks right away, not "after being a member for a period."  What
-> > you say makes sense, but would be a deviation from the practice so far.
-> > I'd appreciate not needing to make an exception for you.
-> 
-> Yeah, no worries! We can begin immediately with:
-> * Check if related issues exist in implementations of similar functionality
-> in other software
+Incomplete Fix / CSRF
+=====================
 
-Great.  Ubuntu already signed up as primary for this task, so Flatcar
-can be backup.
+As a fix for this the developers of the plugin added a check if one is
+logged in as a user with sufficient permission in version 1.6.2.
+This is not a full fix, because there is no protection from Cross Site
+Request Forgery. This means the functionality can no longer be
+triggered by an unauthenticated user, but one can lure the admin of an
+affected site to a site triggering a POST request executing that
+function.
 
-> * Promptly review new issue reports for meeting the list's requirements and
-> confirm receipt of the report and, when necessary, inform the reporter of
-> any issues with their report
+PoC code:
+<form id="f1"
+action="https://example.org/wp-admin/admin-ajax.php?do_reset_wordpress=1"
+method="POST"> <input type=hidden name=action value="heartbeat">
+</form>  
+<script>
+document.getElementById("f1").submit();
+</script>
 
-This one already has both a primary and a backup.  So unless you choose
-another second task for you (that doesn't already have two distros
-signed up for it), you'll initially be just a backup for "Check if
-related issues exist in ... other software", which is fine.
+I had reported this to the developers of the plugin on Monday, but
+given that this is almost entirely obvious looking at the fix I was
+likely not the only one who has noticed. WebARX also told me they
+noticed this and had already told Themegrill about it.
 
-> The number of packages in distro is drastically reduced, and we'll be on
-> this.
+There's now an update 1.6.3 that adds a nonce check. I have
+not reviewed that change in detail. Patches:
+https://github.com/themegrill/themegrill-demo-importer/commit/b350a29628fb40522468a576e98e45abbc4de0c7
+https://github.com/themegrill/themegrill-demo-importer/commit/564d8496d1f0d10f6aab4798eeec7ddefc81bdd2
 
-I don't understand this comment and its relevance, but nevermind.
+From the functionality this plugin provides I believe it's only useful
+during development and testing of themes. Therefore even if the
+vulnerability is now hopefully fixed it is probably a good idea to
+remove it from production installations when it's no longer needed.
 
-> > > Pat Volkerding can vouch for me (CC???ed), and maybe others, but I asked
-> > > volkerdi first :-)
-> >
-> > We haven't yet heard from Pat Volkerding.  Given your LinkedIn profile,
-> > I guess someone from Red Hat could vouch for you as well.
-> 
-> Pat operates at his time. :-)
-> I was not heavily involved on this team at RH, but am asking there and a
-> few others as well.
+Summary on affected versions:
+1.3.4 to 1.6.1: vulnerable to original/severe variant
+1.6.2: Insufficient fix, attack with CSRF possible
+1.6.3: hopefully fixed
 
-OK.  It looks like we'll add Flatcar as soon as an existing member
-vouches for you.
-
-Alexander
+-- 
+Hanno Böck
+https://hboeck.de/
