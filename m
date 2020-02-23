@@ -1,62 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/11/1
-Message-ID: <1236f86f-9196-c26f-ef8e-df9a82e7ef63@oracle.com>
-Date: Tue, 10 Nov 2020 19:09:28 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, "Demi M. Obenour" <demiobenour@...il.com>, "Vladimir D. Seleznev" <vseleznv@...linux.org>
-Cc: "X.Org Security Team" <xorg-security@...ts.x.org>
-Subject: Re: The importance of mutual authentication: Local Privilege Escalation in X11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/23/1
+Message-ID: <CANUbERwKhzhZnUWrxqBB6tjYqz0yAWTrRbH9j+WhFc9wGwtsMQ@mail.gmail.com>
+Date: Sun, 23 Feb 2020 15:00:27 +0800
+From: George Ni <nic@...che.org>
+To: user <user@...in.apache.org>, dev <dev@...in.apache.org>, announce@...che.org,  Jonathan Leitschuh <jonathan.leitschuh@...il.com>, Apache Security Team <security@...che.org>,  oss-security@...ts.openwall.com
+Subject: [CVE-2020-1937] Apache Kylin SQL injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 11/10/20 11:12 AM, Demi M. Obenour wrote:
-> On 11/10/20 1:43 PM, Vladimir D. Seleznev wrote:
->>>> This contravenes the ability to run X11 client from another user. The
->>>> idea is that X11 server allows any clients with right credentials
->>>> regardless of theirs processes UID or GID to connect to the server.
->>> Indeed it does, and I mention cryptographic authentication mechanisms
->>> below.  Instead of /tmp, /run/X11 would work just as well.  It is
->>> the mutual authentication that matters.
->> Do I understand you correctly: you propose to forbid running X11 clients
->> which processes belong to another users? In that case it is a bad idea:
->> I would like to run untrusted clients with special UIDs. Or if I
->> understand you wrongly, please explain how client of other user can
->> connect to the socket placed in /run/user/$UID with these strict access
->> permissions 0700?
-> 
-> If you aren’t using the X Security Extension or the X Access
-> Control Extension, then X clients aren’t effectively isolated from
-> each other.  Therefore, connecting untrusted X clients to the desktop
-> session is a bad idea.
+Severity: Important
 
-If they are truly untrusted, that is true, but that's rarely the case
-in practice, even if they have a different UID.  In most cases, the
-process that should be least trusted is the web browser running code
-from so many untrusted sites under your own UID, but that's not something
-we can fix at the X11 level.  In practice, no one really uses those extensions
-as they have no need to isolate their clients from one another - the primary
-real users I've seen are in multi-level desktop environments for maintaining
-different data classification levels (Confidential, Restricted, Top Secret,
-etc) and those are mostly migrating to separate VM's these days as most of
-the multi-level desktop vendors exited the market as it was too small to be
-profitable.
+Vendor:
+The Apache Software Foundation
 
-The biggest reason we don't have a fix after months of discussion is that
-this isn't a simple implementation flaw like a buffer or integer overflow
-for which the fix is obvious - this is outside the bounds of the security
-model envisioned by the original designers of X11, and requires redesigning
-our connection process for a different security model, and not everyone
-agrees on what the correct security model is here.  If we start checking
-UID's, how do we specify which UID's are allowed - an environment variable,
-a config file, some other mechanism?  Do we store the actual uid value or
-a user name that may depend on LDAP or NIS lookup?  What UID's do we accept
-by default?
+Versions Affected:
+Kylin 2.3.0 to 2.3.2
+Kylin 2.4.0 to 2.4.1
+Kylin 2.5.0 to 2.5.2
+Kylin 2.6.0 to 2.6.4
+Kylin 3.0.0-alpha, Kylin 3.0.0-alpha2, Kylin 3.0.0-beta, Kylin 3.0.0
 
-I'm hopeful we can make more progress now that this is something that can
-be publicly discussed and worked out, instead of restricting it to the
-small number of core developers on the security list.
+Description:
+Kylin has some restful apis which will concatenate SQLs with the user input
+string, a user is likely to be able to run malicious database queries.
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	  X.Org Security Response Team - xorg-security@...ts.x.org
+Mitigation:
+Users should upgrade to 3.0.1 or 2.6.5
 
-(As always, the above opinions are mine, and may not match my employer's.)
+Credit:
+This issue was discovered by ﻿Jonathan Leitschuh
+
+References:
+https://kylin.apache.org/docs/security.html
+
+
+---------------------
+
+Best regards,
+
+
+
+Ni Chunen / George
+
