@@ -1,60 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/10/2
-Message-ID: <20201110164347.GA2236829@portlab>
-Date: Tue, 10 Nov 2020 19:43:47 +0300
-From: "Vladimir D. Seleznev" <vseleznv@...msu.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/24/3
+Message-ID: <1309bdbba176b41aebdbeacf5a402fd9180f05c4.camel@k4vqc.com>
+Date: Mon, 24 Feb 2020 11:06:38 -0500
+From: Jim Popovitch <jim@...qc.com>
 To: oss-security@...ts.openwall.com
-Cc: "Demi M. Obenour" <demiobenour@...il.com>
-Subject: Re: The importance of mutual authentication: Local Privilege Escalation in X11
+Subject: Re: mailman 2.x: XSS via file attachments in list archives
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 09, 2020 at 11:00:50AM -0500, Demi M. Obenour wrote:
-> [...skip...]
-> ### Placing the X socket in a secure directory
-> 
-> X11 is usually used with AF_UNIX sockets.  In this case, performing
-> the attack requires that either the directory containing the X socket
-> be writable by an attacker, or that the abstract namespace is in use.
-> If neither condition is met, the attack is thwarted.  In this case, the
-> server is implicitly authenticated by being able to write to a location
-> on the file system.  On systems other than macOS, placing the X socket
-> in a non-default directory requires changes to X.  On Linux, this also
-> requires that abstract sockets be disabled in the X client libraries.
-> 
-> A user’s home directory is a safe location on virtually all systems.
-> /run/user/$UID is a good choice when it is secure and available,
-> such as on systemd-based Linux distributions.  /tmp/.X11-unix can
-> be made safer by ensuring that it is created before any untrusted
-> code runs and ensuring that untrusted code cannot write to it.
-> For example, it could be owned by root and have 0755 permissions.
-> For this to be effective, untrusted code must not be allowed to start
-> if creating /tmp/.X11-unix fails; this can be enforced by dropping
-> into single-user mode in this case.  Furthermore, if the standard
-> location for lock files (/tmp/.X*-lock) is used, there is still a
-> potential denial of service, as anyone can create a lock file and
-> prevent the legitimate server from starting.
+On Mon, 2020-02-24 at 15:34 +0100, Hanno Böck wrote:
+> This change is in mailman 2.1.30rc1, but not in any stable release of
+> mailman.
 
-This contravenes the ability to run X11 client from another user. The
-idea is that X11 server allows any clients with right credentials
-regardless of theirs processes UID or GID to connect to the server.
+Just for some added info, Mailman v2.1.30 is almost released, the holdup
+is with some language translations.  Mailman v2.1.30 will be the last of
+the Mailman v2 releases as primary development and effort has long
+shifted to Mailman v3. Further, the Mailman v2 branch is tied to Python
+v2, which is now EOL by the fine Python folk.
 
-> I recommend using /run/user/$UID when it exists, is owned by the user,
-> and has 0700 permissions.  Otherwise, a user’s home directory (or
-> subfolder thereof) is an acceptable fallback.  I do not recommend
-> continuing to use /tmp/.X11-unix, due to the risks outlined above.
-> 
-> ### Explicit checking of peer credentials
-> 
-> When `AF_UNIX` sockets are used (the most common case), the
-> client can check the server’s credentials using `SO_PEERCRED`,
-> `SCM_CREDENTIALS`, or another platform-specific mechanism.  The X.org
-> server already has the code to check a peer’s credentials, and can
-> be configured to use this instead of `~/.Xauthority`.  The set of
-> trusted user IDs is system-dependent.  Generally, it should include
-> the superuser and the UID of the X client, but on some systems (such
-> as OpenBSD), the X server runs as a dedicated non-privileged user,
-> which may also need to be included in the trusted UID list.
+Once Mailman v2.1.30 is release, I'm sure the various distributions will
+pull the commit and merge the particulars into their release branches,
+and that will surely include this XSS fix. 
 
--- 
-   WBR,
-   Vladimir D. Seleznev
+I'm not a formal Mailman Developer, but as a contributor and member of
+the general Mailman Community I say Thank You to Hanno for identifying
+and reporting  this vulnerability.
+
+-Jim P.
+
