@@ -1,22 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/23/6
-Message-ID: <ec15f352a25a3322ca1feb435266b53b1901d340.camel@redhat.com>
-Date: Thu, 23 Jul 2020 13:44:46 -0600
-From: Jeff Law <law@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/24/6
+Message-ID: <CAN_LGv3fr1pk3Xwp39Qv4mFv6b2xNw+pfo6Ban993FCQZoqfAA@mail.gmail.com>
+Date: Tue, 25 Feb 2020 00:54:50 +0500
+From: "Alexander E. Patrakov" <patrakov@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Alban Crequy (Kinvolk)" <alban@...volk.io>, volkerdi@...ckware.com
-Subject: Re: Flatcar membership on the linux-distros list
+Subject: Re: LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2020-07-23 at 20:45 +0200, Solar Designer wrote:
-> 
-> > Pat operates at his time. :-)
-> > I was not heavily involved on this team at RH, but am asking there and a
-> > few others as well.
-> 
-> OK.  It looks like we'll add Flatcar as soon as an existing member
-> vouches for you.
-In what way do you need someone to vouch for Vincent?  
+On Mon, Feb 24, 2020 at 10:55 PM Qualys Security Advisory
+<qsa@...lys.com> wrote:
+>
+>
+> Qualys Security Advisory
+>
+> LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
+>
+>
+> ==============================================================================
+> Contents
+> ==============================================================================
+>
+> Summary
+> Analysis
+> ...
+> Acknowledgments
+>
+>
+> ==============================================================================
+> Summary
+> ==============================================================================
+>
+> We discovered a vulnerability in OpenSMTPD, OpenBSD's mail server. This
+> vulnerability, an out-of-bounds read introduced in December 2015 (commit
+> 80c6a60c, "when peer outputs a multi-line response ..."), is exploitable
+> remotely and leads to the execution of arbitrary shell commands: either
+> as root, after May 2018 (commit a8e22235, "switch smtpd to new
+> grammar"); or as any non-root user, before May 2018.
+>
+> Because this vulnerability resides in OpenSMTPD's client-side code
+> (which delivers mail to remote SMTP servers), we must consider two
+> different scenarios:
+>
+> - Client-side exploitation: This vulnerability is remotely exploitable
+>   in OpenSMTPD's (and hence OpenBSD's) default configuration. Although
+>   OpenSMTPD listens on localhost only, by default, it does accept mail
+>   from local users and delivers it to remote servers. If such a remote
+>   server is controlled by an attacker (either because it is malicious or
+>   compromised, or because of a man-in-the-middle, DNS, or BGP attack --
+>   SMTP is not TLS-encrypted by default), then the attacker can execute
+>   arbitrary shell commands on the vulnerable OpenSMTPD installation.
+>
+> - Server-side exploitation: First, the attacker must connect to the
+>   OpenSMTPD server (which accepts external mail) and send a mail that
+>   creates a bounce. Next, when OpenSMTPD connects back to their mail
+>   server to deliver this bounce, the attacker can exploit OpenSMTPD's
+>   client-side vulnerability. Last, for their shell commands to be
+>   executed, the attacker must (to the best of our knowledge) crash
+>   OpenSMTPD and wait until it is restarted (either manually by an
+>   administrator, or automatically by a system update or reboot).
+>
+> We developed a simple exploit for this vulnerability and successfully
+> tested it against OpenBSD 6.6 (the current release), OpenBSD 5.9 (the
+> first vulnerable release), Debian 10 (stable), Debian 11 (testing), and
+> Fedora 31. At OpenBSD's request, and to give OpenSMTPD's users a chance
+> to patch their systems, we are withholding the exploitation details and
+> code until Wednesday, February 26, 2020.
+>
+> Last-minute note: we tested our exploit against the recent changes in
+> OpenSMTPD 6.6.3p1, and our results are: if the "mbox" method is used for
+> local delivery (the default in OpenBSD -current), then arbitrary command
+> execution as root is still possible; otherwise (if the "maildir" method
+> is used, for example), arbitrary command execution as any non-root user
+> is possible.
 
-Jeff
+I would like a bit of clarification. We use OpenSMTPD as a dumb thing
+that only relays mail to a central server and never delivers it
+locally. The remote server is under our control.
 
+=============
+table credentials { smarthost.example.com=myuser:mypassword }
+
+listen on 127.0.0.1
+
+# No local mailboxes
+action to_postfix relay host
+smtp+tls://smarthost.example.com@...rthost.example.com auth
+<credentials> helo myhostname.example.com
+match from local for any action to_postfix
+=============
+
+Is the hole exploitable in this configuration?
+
+-- 
+Alexander E. Patrakov
