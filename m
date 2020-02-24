@@ -1,40 +1,151 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/24/1
-Message-ID: <CAC1dCwUOZpgORGC2uT4PvZ81yv7HNyFggp9NLtNUyB-uX=ThLA@mail.gmail.com>
-Date: Fri, 24 Apr 2020 12:19:48 -0400
-From: Tim Allison <tallison@...che.org>
-To: announce@...che.org, "<dev@...a.apache.org>" <dev@...a.apache.org>, user@...a.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [CVE-2020-9489] Denial of Service (DOS) Vulnerabilities in Some of Apache Tika's Parsers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/24/5
+Message-ID: <20200224184538.GF17396@localhost.localdomain>
+Date: Mon, 24 Feb 2020 10:45:38 -0800
+From: Qualys Security Advisory <qsa@...lys.com>
+To: oss-security@...ts.openwall.com
+Subject: LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium
 
-Vendor: The Apache Software Foundation
+Qualys Security Advisory
 
-Versions Affected: Apache Tika 1.24
-
-Description:
-A carefully crafted or corrupt file may trigger a System.exit in Tika's
-OneNote Parser. Crafted or corrupted files can also cause out of memory
-errors and/or infinite loops in Tika's ICNSParser, MP3Parser, MP4Parser,
-SAS7BDATParser, OneNoteParser and ImageParser.
+LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
 
 
-Mitigation:
-Apache Tika users should upgrade to 1.24.1 or later. The vulnerabilities in
-the MP4Parser were partially fixed by upgrading the
-com.googlecode:isoparser:1.1.22 dependency to
-org.tallison:isoparser:1.9.41.2.
+==============================================================================
+Contents
+==============================================================================
 
-For unrelated security reasons, we upgraded org.apache.cxf to 3.3.6 as part
-of the 1.24.1 release.
-
-We also upgraded openjson to 1.0.10, org.ow2.asm to 8.0.1, zstd-jni to
-1.4.4-9, bouncycastle to 1.65, commons-lang3 to 3.10, lucene to 8.5.0 and
-mockito to 3.3.3 as part of the 1.24.1 release.
+Summary
+Analysis
+...
+Acknowledgments
 
 
-Credit:
-These vulnerabilities were discovered by Tim Allison on the Apache Tika
-team.
+==============================================================================
+Summary
+==============================================================================
 
+We discovered a vulnerability in OpenSMTPD, OpenBSD's mail server. This
+vulnerability, an out-of-bounds read introduced in December 2015 (commit
+80c6a60c, "when peer outputs a multi-line response ..."), is exploitable
+remotely and leads to the execution of arbitrary shell commands: either
+as root, after May 2018 (commit a8e22235, "switch smtpd to new
+grammar"); or as any non-root user, before May 2018.
+
+Because this vulnerability resides in OpenSMTPD's client-side code
+(which delivers mail to remote SMTP servers), we must consider two
+different scenarios:
+
+- Client-side exploitation: This vulnerability is remotely exploitable
+  in OpenSMTPD's (and hence OpenBSD's) default configuration. Although
+  OpenSMTPD listens on localhost only, by default, it does accept mail
+  from local users and delivers it to remote servers. If such a remote
+  server is controlled by an attacker (either because it is malicious or
+  compromised, or because of a man-in-the-middle, DNS, or BGP attack --
+  SMTP is not TLS-encrypted by default), then the attacker can execute
+  arbitrary shell commands on the vulnerable OpenSMTPD installation.
+
+- Server-side exploitation: First, the attacker must connect to the
+  OpenSMTPD server (which accepts external mail) and send a mail that
+  creates a bounce. Next, when OpenSMTPD connects back to their mail
+  server to deliver this bounce, the attacker can exploit OpenSMTPD's
+  client-side vulnerability. Last, for their shell commands to be
+  executed, the attacker must (to the best of our knowledge) crash
+  OpenSMTPD and wait until it is restarted (either manually by an
+  administrator, or automatically by a system update or reboot).
+
+We developed a simple exploit for this vulnerability and successfully
+tested it against OpenBSD 6.6 (the current release), OpenBSD 5.9 (the
+first vulnerable release), Debian 10 (stable), Debian 11 (testing), and
+Fedora 31. At OpenBSD's request, and to give OpenSMTPD's users a chance
+to patch their systems, we are withholding the exploitation details and
+code until Wednesday, February 26, 2020.
+
+Last-minute note: we tested our exploit against the recent changes in
+OpenSMTPD 6.6.3p1, and our results are: if the "mbox" method is used for
+local delivery (the default in OpenBSD -current), then arbitrary command
+execution as root is still possible; otherwise (if the "maildir" method
+is used, for example), arbitrary command execution as any non-root user
+is possible.
+
+
+==============================================================================
+Analysis
+==============================================================================
+
+SMTP clients connect to SMTP servers and send commands such as EHLO,
+MAIL FROM, and RCPT TO. SMTP servers respond with either single-line or
+multiple-line replies:
+
+- the first lines begin with a three-digit code and a hyphen ('-'),
+  followed by an optional text (for example, "250-ENHANCEDSTATUSCODES");
+
+- the last line begins with the same three-digit code, followed by an
+  optional space (' ') and text (for example, "250 HELP").
+
+In OpenSMTPD's client-side code, these multiline replies are parsed by
+the mta_io() function:
+
+------------------------------------------------------------------------------
+1098 static void
+1099 mta_io(struct io *io, int evt, void *arg)
+1100 {
+....
+1133         case IO_DATAIN:
+1134             nextline:
+1135                 line = io_getline(s->io, &len);
+....
+1146                 if ((error = parse_smtp_response(line, len, &msg, &cont))) {
+------------------------------------------------------------------------------
+
+- the first lines (when line[3] == '-') are concatenated into a 2KB
+  replybuf:
+
+------------------------------------------------------------------------------
+1177                 if (cont) {
+1178                         if (s->replybuf[0] == '\0')
+1179                                 (void)strlcat(s->replybuf, line, sizeof s->replybuf);
+1180                         else {
+1181                                 line = line + 4;
+....
+1187                                         (void)strlcat(s->replybuf, line, sizeof s->replybuf);
+1188                         }
+1189                         goto nextline;
+1190                 }
+------------------------------------------------------------------------------
+
+- the last line (when line[3] != '-') is also concatenated into
+  replybuf:
+
+------------------------------------------------------------------------------
+1195                 if (s->replybuf[0] != '\0') {
+1196                         p = line + 4;
+....
+1201                         if (strlcat(s->replybuf, p, sizeof s->replybuf) >= sizeof s->replybuf)
+------------------------------------------------------------------------------
+
+Unfortunately, if the last line's three-digit code is not followed by
+the optional space and text, then p (at line 1196) points to the first
+character *after* the line's '\0' terminator (which replaced the line's
+'\n' terminator in iobuf_getline()), and this out-of-bounds string is
+concatenated into replybuf (at line 1201).
+
+...
+
+
+==============================================================================
+Acknowledgments
+==============================================================================
+
+We thank OpenBSD's developers for their quick response and patches. We
+also thank Gilles for his hard work and beautiful code.
+
+
+
+[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
+
+
+
+This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
