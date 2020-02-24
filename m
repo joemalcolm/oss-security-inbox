@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2916" "Wednesday" "16" "August" "2017" "13:43:59" "+0000" "Wen Bin Kong" "kongwenbin@live.com" "<KL1PR0201MB211979C0EF10B9A12D9B7D6BB7820@KL1PR0201MB2119.apcprd02.prod.outlook.com>" "63" "[oss-security] CVE-2017-12882, CVE-2017-12881: Stored XSS and CSRF on Spring Batch Admin before 1.3.0" nil nil nil "8" "2017081613:43:59" "[oss-security] CVE-2017-12882, CVE-2017-12881: Stored XSS and CSRF on Spring Batch Admin before 1.3.0" (number mark "U       kongwenbin@l Aug 16   63/2916  " thread-indent "\"[oss-security] CVE-2017-12882, CVE-2017-12881: Stored XSS and CSRF on Spring Batch Admin before 1.3.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3670" "Tuesday" "25" "February" "2020" "00:54:50" "+0500" "Alexander E. Patrakov" "patrakov@gmail.com" nil "86" nil "^Date:" nil nil "2" nil nil (number mark "        patrakov@gma Feb 25   86/3670  " thread-indent "\"Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11707 invoked by uid 550); 16 Aug 2017 14:14:41 -0000
+Received: (qmail 30211 invoked by uid 550); 24 Feb 2020 19:55:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,109 +11,127 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15531 invoked from network); 16 Aug 2017 13:44:12 -0000
-From: Wen Bin Kong <kongwenbin@live.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [oss-security] CVE-2017-12882, CVE-2017-12881: Stored XSS and
- CSRF on Spring Batch Admin before 1.3.0
-Thread-Index: AdMWlSUrzzSH+081QEaOpqkLWgfoWw==
-Date: Wed, 16 Aug 2017 13:43:59 +0000
-Message-ID: <KL1PR0201MB211979C0EF10B9A12D9B7D6BB7820@KL1PR0201MB2119.apcprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: lists.openwall.com; dkim=none (message not signed)
- header.d=none;lists.openwall.com; dmarc=none action=none
- header.from=live.com;
-x-incomingtopheadermarker: OriginalChecksum:3953038F493B3843E01A1D3F8C5EB4D2B19DBC799A3734D0578BB99785A118E4;UpperCasedChecksum:1FA7A8405E2A77AEEED32A123DA1C5CC6D3D63AC6F1287D4A7169CBB35BBDC42;SizeAsReceived:7213;Count:43
-x-tmn: [HQ0HF9foaN9UCPEi82d+1AgFfYHHjnaW]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;PU1APC01HT070;7:n78MOuzFywNAx1KuHF4h4UXXN4KbUuD0q4LfCuwyGT77aoYGjdcW1oF+bD+fFm1Cm1FVL4+2qf/Mmk9ho0JYAUpQF6yhW5IYYct7RvNkX+dS57y5DSsW7tLf1cMkYfR8QqoCNEzkrVWUcgaIY9FohwcKuB/dPFGSmgPUe0F0l48QpwJpvbdBuST8qpH/TPWgynIX1EqcdagmjgOE05FG6Td2vcf/rwzeXDMZ5aqxpjmnrjfoMcOjBaRJ38xgdPGol1Rg84OVmQTvi2R9lgdducP2+H4e8Pcw0LDuPw0ZqIRbWDFC4MC7QmXAdZw9ebdtraWYfZUWf/pBML+/jIsr0aHI7LOeXev0i97QzFIZFPLphmGy0QcwqL9FseCO8Qgipc/o16RM2q3K7+Dh306ioyVdxyvCUUlqUHYBtB/zQs1DHeZlfogBkuECi+KD2Ls1VUoKJCs6Q+bji2DzDHdXszXqLsDGK5E3FYnHX8HZSnjRW+nZYq2UExqY8hQEJl0ibIZrR+H6NIAm/pX16rUrL2AMkIinkKJyDMQo9H4pkAI4h77JHjdutyPL9myGGZCq6jBUxjgUhgNw5uXvSXnhXIcL9eLolAIr1401XgLdW//faZvP4b/L3zkPp6uXbWGmG9wK1qk745/X6GUu6gaSqQmdeD/xdhIOJwXIqcdsh8Zr9hKT+10sZtEs5ElJAZGkKIj7WqyM+aehPig4Pj9QSkLy3yFfEAk0BJ8OuTgS2z+b9d4bL1uuECW+7XxyB/MHK+0FD3Sq0on1EQwR001ExA==
-x-incomingheadercount: 43
-x-eopattributedmessage: 0
-x-forefront-antispam-report: EFV:NLI;SFV:NSPM;SFS:(7070007)(98901004);DIR:OUT;SFP:1901;SCL:1;SRVR:PU1APC01HT070;H:KL1PR0201MB2119.apcprd02.prod.outlook.com;FPR:;SPF:None;LANG:en;
-x-ms-office365-filtering-correlation-id: 37060261-7db2-41e9-2cd1-08d4e4acd935
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(300000500095)(300135000095)(300000501095)(300135300095)(22001)(300000502095)(300135100095)(300000503095)(300135400095)(201702061074)(5061506573)(5061507331)(1603103135)(2017031320274)(2017031324274)(2017031323274)(2017031322377)(1603101448)(1601125374)(1701031045)(300000504095)(300135200095)(300000505095)(300135600095)(300000506095)(300135500095);SRVR:PU1APC01HT070;
-x-ms-traffictypediagnostic: PU1APC01HT070:
-x-exchange-antispam-report-test: UriScan:(278428928389397)(788757137089);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(444000031);SRVR:PU1APC01HT070;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:PU1APC01HT070;
-x-forefront-prvs: 0401647B7F
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 30189 invoked from network); 24 Feb 2020 19:55:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=QVk+cTilGRsQt4fW6qRnUZDQXmg2M8hLXJzC01QZTJw=;
+        b=hG5eXKV/Kptka0ZgFkK70+Vo3qKBXsxwqY/jYeSXbzqXwcUK77+ck0F7CjRma/kx+s
+         HQpW7wG2f61Tla+w3KrM/s1BT1/Tx7nB8X79If9d1QgRWEiZt1dMaxOmHntfgEY4kSo6
+         QQ2bABiVYxnyZo7IPLEn1N+dQbKOBKOBhaCq7qxkKcI8fiU3gt3DOddiYzSPSObFfHuF
+         awraA4rIJGWTYBRjyUrUc8B71bt1G9fZCSS9F+khMA/WY0xOt/F8y++A8KSx9ULeu58u
+         FwFBclq2LmJY7i3bl6vLbG04GgbqmiWP9ppzNalUM3BqrT99d7YT1decz1AfFfYrkIiU
+         31oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=QVk+cTilGRsQt4fW6qRnUZDQXmg2M8hLXJzC01QZTJw=;
+        b=Hu39lWm23+cRo2rgtGlCZf2ZJXN+vs8MVFv6Ru62AXNHWm8u/F3lcjLn6xXkMkAFCV
+         uoXZb8i8ZxadybA+XOoe5D5yhAqUkFb9mE6Np10CINXw68jxaYsbRncsRzqR4YxnGUad
+         ofvtt8m0z6JmQWZpV/SgrDjzhK6612o3UY8hy+J8D9YeEyRPw9jpBzF5qGFwL8LiB+W2
+         UhqvNFyjoePwuR9UC+YGiWzf96ZGnzM0ra5X9utrHTTpX7p/efCtYqB8Lyi3Oc7A5Hb4
+         5HAiQ68/XXyp5Xb3ddYpe1rSAqappmiErhqVsDlt+tT+0zuZG3xScJ9kzVwmx39xaxWg
+         N+og==
+X-Gm-Message-State: APjAAAUCh9vAruamyfo9ohPXK62c6CYrdZp5VY3t6t5OXel3IdV7WGnk
+	DuDYyiTZnG96xkvSKeqHgILO7gRoCn3cho+BbyC94hvD4Eo=
+X-Google-Smtp-Source: APXvYqy06P4FmY8fq7Sby+qUdojN40hRRBsEacRjEr+XpdeVp7tAiifUhpOk7VsjEIT5/QekbqF1TpQ3bJRIm8d40BQ=
+X-Received: by 2002:a05:620a:135c:: with SMTP id c28mr26220542qkl.19.1582574101638;
+ Mon, 24 Feb 2020 11:55:01 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: live.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Aug 2017 13:43:59.4949
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Internet
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PU1APC01HT070
-Subject: [oss-security] CVE-2017-12882, CVE-2017-12881: Stored XSS and CSRF on
- Spring Batch Admin before 1.3.0
+References: <20200224184538.GF17396@localhost.localdomain>
+In-Reply-To: <20200224184538.GF17396@localhost.localdomain>
+Message-ID: <CAN_LGv3fr1pk3Xwp39Qv4mFv6b2xNw+pfo6Ban993FCQZoqfAA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Tue, 25 Feb 2020 00:54:50 +0500
+From: "Alexander E. Patrakov" <patrakov@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
+To: oss-security@lists.openwall.com
 
-Hi,
+On Mon, Feb 24, 2020 at 10:55 PM Qualys Security Advisory
+<qsa@qualys.com> wrote:
+>
+>
+> Qualys Security Advisory
+>
+> LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
+>
+>
+> ==============================================================================
+> Contents
+> ==============================================================================
+>
+> Summary
+> Analysis
+> ...
+> Acknowledgments
+>
+>
+> ==============================================================================
+> Summary
+> ==============================================================================
+>
+> We discovered a vulnerability in OpenSMTPD, OpenBSD's mail server. This
+> vulnerability, an out-of-bounds read introduced in December 2015 (commit
+> 80c6a60c, "when peer outputs a multi-line response ..."), is exploitable
+> remotely and leads to the execution of arbitrary shell commands: either
+> as root, after May 2018 (commit a8e22235, "switch smtpd to new
+> grammar"); or as any non-root user, before May 2018.
+>
+> Because this vulnerability resides in OpenSMTPD's client-side code
+> (which delivers mail to remote SMTP servers), we must consider two
+> different scenarios:
+>
+> - Client-side exploitation: This vulnerability is remotely exploitable
+>   in OpenSMTPD's (and hence OpenBSD's) default configuration. Although
+>   OpenSMTPD listens on localhost only, by default, it does accept mail
+>   from local users and delivers it to remote servers. If such a remote
+>   server is controlled by an attacker (either because it is malicious or
+>   compromised, or because of a man-in-the-middle, DNS, or BGP attack --
+>   SMTP is not TLS-encrypted by default), then the attacker can execute
+>   arbitrary shell commands on the vulnerable OpenSMTPD installation.
+>
+> - Server-side exploitation: First, the attacker must connect to the
+>   OpenSMTPD server (which accepts external mail) and send a mail that
+>   creates a bounce. Next, when OpenSMTPD connects back to their mail
+>   server to deliver this bounce, the attacker can exploit OpenSMTPD's
+>   client-side vulnerability. Last, for their shell commands to be
+>   executed, the attacker must (to the best of our knowledge) crash
+>   OpenSMTPD and wait until it is restarted (either manually by an
+>   administrator, or automatically by a system update or reboot).
+>
+> We developed a simple exploit for this vulnerability and successfully
+> tested it against OpenBSD 6.6 (the current release), OpenBSD 5.9 (the
+> first vulnerable release), Debian 10 (stable), Debian 11 (testing), and
+> Fedora 31. At OpenBSD's request, and to give OpenSMTPD's users a chance
+> to patch their systems, we are withholding the exploitation details and
+> code until Wednesday, February 26, 2020.
+>
+> Last-minute note: we tested our exploit against the recent changes in
+> OpenSMTPD 6.6.3p1, and our results are: if the "mbox" method is used for
+> local delivery (the default in OpenBSD -current), then arbitrary command
+> execution as root is still possible; otherwise (if the "maildir" method
+> is used, for example), arbitrary command execution as any non-root user
+> is possible.
 
-I found the following vulnerabilities on Spring Batch Admin, below are the =
-CVE ID for reference:
+I would like a bit of clarification. We use OpenSMTPD as a dumb thing
+that only relays mail to a central server and never delivers it
+locally. The remote server is under our control.
 
-* CVE-2017-12881 - Cross-site request forgery (CSRF) vulnerability in the S=
-pring Batch Admin before 1.3.0 allows remote attackers to hijack the authen=
-tication of unspecified victims and submit arbitrary requests, such as expl=
-oiting the file upload vulnerability
+=============
+table credentials { smarthost.example.com=myuser:mypassword }
 
-* CVE-2017-12882 - Stored Cross-site scripting (XSS) vulnerability in Sprin=
-g Batch Admin before 1.3.0 allows remote authenticated users to inject arbi=
-trary JavaScript or HTML via the file upload functionality
+listen on 127.0.0.1
 
---------------------------------
-Application Description
---------------------------------
-Spring Batch Admin provides a web-based user interface that features an adm=
-in console for Spring Batch applications and systems. It is an open-source =
-project from Spring.=20
+# No local mailboxes
+action to_postfix relay host
+smtp+tls://smarthost.example.com@smarthost.example.com auth
+<credentials> helo myhostname.example.com
+match from local for any action to_postfix
+=============
 
---------------------------------
-Vulnerable Payload
---------------------------------
-/files?path=3D<script>alert(42)</script>
+Is the hole exploitable in this configuration?
 
---------------------------------
-Mitigation / Recommendation
---------------------------------
-Understand that no patches will be published as product is going to EOL soo=
-n. The recommendation given by the vendor is to move off Spring Batch Admin=
- onto Spring Cloud Data Flow going forward. I (discoverer) seconded the rec=
-ommendation as it will no longer be supported, but if your organisation sti=
-ll require to use this application internally for some reason and does not =
-want to deploy another product to replace it, you can consider entirely rem=
-oving the file.php page if your team does not require to use it to upload n=
-ew configurations often. Or implement a fix to sanitise the user controlled=
- 'path' parameter value on the file.php page.=20
-
---------------------------------
-Discovery Timeline (key events)
---------------------------------
-March 2017 - initial report submitted to Spring team
-May 2017 - Spring team shared that the stored xss issue might be fixed indi=
-rectly when fixing another issue on directory traversal, thus pending a ful=
-l audit to confirm this. The CSRF issue is confirmed but it is low risk so =
-they are still determining if they are going to fix it.=20
-June 2017 - Spring team shared that the open source support policy for Spri=
-ng Batch Admin states that Spring supports minor versions for 12 months and=
- major version for 3 years. The last minor release of Spring Batch Admin (1=
-.3.0) was in 2014 with one patch release since. As a result, the team is re=
-luctant to commit to something as intensive as a full audit for this applic=
-ation.
-July 2017 - Spring team shared that they do not plan to verify or fix the r=
-eported issues because they were planning to announce End-Of-Life (EOL) for=
- this project soon. Also, they shared that "It is our recommendation to mov=
-e off of Spring Batch Admin onto Spring Cloud Data Flow going forward".
-
-Thank you.
-
-Best regards,
-Wen Bin
-
+-- 
+Alexander E. Patrakov
