@@ -1,19 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/22/1
-Message-ID: <CAH9eYVoNqkBHGKfcsaZ1OGN+1DHiFwOr=MGtYn8ZTzGcVtsjyw@mail.gmail.com>
-Date: Mon, 22 Jun 2020 10:55:28 -0400
-From: Brian Demers <bdemers@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/24/1
+Message-ID: <CAKG8Do7hTrBroswvkqKsMQ66a4+vk2jO4Wb=4TzAvXR2WgGqKQ@mail.gmail.com>
+Date: Mon, 24 Feb 2020 14:27:00 +0100
+From: Cedric Buissart <cbuissar@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-11989] Apache Shiro authentication bypass vulnerability
+Subject: Re: Re: GNU screen "out of bounds access when setting w_xtermosc after OSC 49"
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2020-11989
-[PRODUCT]:Apache Shiro
-[VERSION]:Apache Shiro 1.5.2 - 1.5.3
-[PROBLEMTYPE]:Authentication Bypass by Primary Weakness
-[REFERENCES]:
-https://lists.apache.org/thread.html/r72815a124a119c450b86189767d06848e0d380b1795c6c511d54a675%40%3Cuser.shiro.apache.org%3E
-[DESCRIPTION]:Apache Shiro before 1.5.3, when using Apache Shiro with
-Spring dynamic controllers, a specially crafted request may cause
-              an authentication bypass.
+Hi all,
+
+On Thu, Feb 6, 2020 at 5:55 PM Amadeusz Sławiński <amade@...blr.net> wrote:
+>
+> Hi,
+>
+> >
+> > The fix commit is:
+> >
+> > ---
+> > commit 68386dfb1fa33471372a8cd2e74686758a2f527b
+> > Author: Amadeusz Slawinski <amade@...blr.net>
+> > Date:   Thu Jan 30 17:56:27 2020 +0100
+> >
+> >     Fix out of bounds access when setting w_xtermosc after OSC 49
+> >
+> >     echo -e "\e]49\e;                                    \n\ec"
+> >     crashes screen.
+> >
+> >     This happens because 49 is divided by 10 and used as table index
+> >     resulting in access to w_xtermosc[4], which is out of bounds with table
+> >     itself being size 4. Increase size of table by 1 to 5, which is enough
+> >     for all current uses.
+> >
+> >     As this overwrites memory based on user input it is potential security
+> >     issue.
+> >
+> >     Reported-by: pippin@...p.org
+> >     Signed-off-by: Amadeusz Slawinski <amade@...blr.net>
+> > ---
+> >
+> > This is followed by another related commit:
+> >
+> > ---
+> > commit 0dd53533e20d2948351a99ec5336fbc9b82b226a
+> > Author: Amadeusz Slawinski <amade@...blr.net>
+> > Date:   Wed Feb 5 21:05:28 2020 +0100
+> >
+> >     Increase permitted length of OSC
+> >
+> >     hyperlink feature used by some terminals requires lots of characters
+> >     https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#length-limits
+> >     mentions around 2083 characters, set it to a bit more.
+> >
+> >     Bug: 57718
+> >
+> >     Signed-off-by: Amadeusz Slawinski <amade@...blr.net>
+> > ---
+> >
+> > Combined, these two commits change:
+> >
+> >   char   w_xtermosc[4][MAXSTR]; /* special xterm/rxvt escapes */
+> >
+> > (where MAXSTR is 768) to:
+> >
+> >   char   w_xtermosc[5][2560];   /* special xterm/rxvt escapes */
+> >
+>
+> The report which resulted in second commit just happened to be reported
+> at similar time and is not related to the issue at hand apart from same
+> location in source code.
+>
+> > These are as seen on the screen-v4 branch.  On that branch, and thus in
+> > all screen releases so far, the bug appears to be exposed only when
+> > building with the "--enable-rxvt_osc" option.  Builds and packages made
+> > without that option appear to be safe.  Amadeusz, can you confirm this?
+>
+> Yes builds without this option should be safe, however do note that
+> as far as I know most distributions do enable it (I checked Debian,
+> Arch Linux, Fedora and Gentoo).
+>
+> >
+> > On master branch, the functionality is always enabled (and the option is
+> > dropped), thus (not too ancient) builds from that branch are vulnerable
+> > (until the above fixes, which were also made to that branch).
+>
+> Yes, however do note that all v4 releases are done from screen-v4 branch.
+Has a CVE been requested already ?
+I do not see one on cve.mitre.org
+>
+> Amadeusz
+>
+
+
+-- 
+Cedric Buissart,
+Product Security
 
