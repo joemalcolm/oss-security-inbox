@@ -1,60 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/7
-Message-ID: <20201012194139.GA30753@openwall.com>
-Date: Mon, 12 Oct 2020 21:41:39 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/25/7
+Message-ID: <20200225191538.54fc0d2e@milkyway.galaxy>
+Date: Tue, 25 Feb 2020 19:15:38 +0100
+From: Amadeusz Sławiński <amade@...blr.net>
+To: Salvatore Bonaccorso <carnil@...ian.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: GNU screen "out of bounds access when setting w_xtermosc after OSC 49"
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, 25 Feb 2020 14:05:33 +0100
+Salvatore Bonaccorso <carnil@...ian.org> wrote:
 
-A problem with Georgi's message that started this thread, besides its
-overall tone, is that it singled out Debian.  In my experience, most
-Unix-like distributions use insecure defaults like this.
-
-On Thu, Oct 08, 2020 at 08:07:10AM +1100, Brian May wrote:
-> Jeremy Stanley <fungi@...goth.org> writes:
+> Hi
 > 
-> > As a long-time Debian user myself, I agree that this default is
-> > showing its age, and can represent a risk for operators who overlook
-> > it.
+> On Thu, Feb 06, 2020 at 03:04:18PM +0100, Solar Designer wrote:
+> > Hi,
+> > 
+> > GNU screen 4.8.0 was released yesterday with a documented security fix
+> > in it:
+> > 
+> > https://lists.gnu.org/archive/html/screen-devel/2020-02/msg00007.html
+> > 
+> > ---
+> > From: 	Amadeusz Slawinski
+> > Subject: 	[screen-devel] GNU Screen v.4.8.0
+> > Date: 	Wed, 5 Feb 2020 21:45:35 +0100
+> > 
+> > Hello everyone,
+> >  
+> > I'm announcing availability of GNU Screen v.4.8.0
+> > 
+> > Screen is a full-screen window manager that multiplexes a physical
+> > terminal between several processes, typically interactive shells. 
+> > 
+> > This release
+> >   * Improves startup time by only polling for already open files to
+> >     close
+> >   * Fixes:
+> >        - Fix for segfault if termcap doesn't have Km entry
+> >        - Make screen exit code be 0 when checking --version
+> >        - Fix potential memory corruption when using OSC 49
+> > 
+> > As last fix, fixes potential memory overwrite of quite big size (~768
+> > bytes), and even though I'm not sure about potential exploitability of
+> > that issue, I highly recommend everyone to upgrade as soon as possible.
+> > This issue is present at least since v.4.2.0 (haven't checked earlier).
+> > Thanks to pippin who brought this to my attention.  
 > 
-> Yes, I agree the default should be changed.
+> Regarding the affected versions,
+> https://bugzilla.redhat.com/show_bug.cgi?id=1801405#c6 points out that
+> the issue is caused by the upsteram commit
+> https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v4&id=c5db181b6e017cfccb8d7842ce140e59294d9f62
+> which would be only in v4.7.0.
+> 
+> Is this correct?
+> 
 
-I also think the defaults should be changed, and not only on Debian.
+Right, that seems correct.
+There is also another fix that should've been made:
+https://git.savannah.gnu.org/cgit/screen.git/commit/?id=b14e76eb5d6be889d58e37e420384e59a74eddd6
+Will try to release 4.8.1 with it soon.
 
-Special cases like serving web pages do not justify insecure default
-home directory permissions - rather, they're reasons to provide extra
-setup instructions in web server packages, etc.
-
-> Just note that there is a reasonable amount of software install
-> instructions that assume umask is 022 and will install software with
-> unusable permissions if it is not.
-
-This is indeed a problem.  When building software manually (not
-packaged) and wanting to install it on a system globally (e.g., in
-/usr/local), a workaround is to use "(umask 022; make install)" - that
-is, temporarily relax the umask to 022 just for that one command by
-running it in a subshell.
-
-RPM typically invokes "umask 022" for all(?) package build scripts,
-including the %install section, which lets it build proper packages even
-when run on a system with umask 077 even when the packaged software's
-install scripts assume umask 022.
-
-I think package install scripts should learn not to assume umask, or at
-least not when installing software globally.  When installing to a
-subdirectory of the user's home directory, it makes sense to honor the
-user's umask, but those cases probably can't be recognized reliably.
-
-It's a pity that software will just assume it's to be installed globally
-(or with equivalent permissions), but the current reality is no better
-where things break arbitrarily (e.g., some files mode 644, some 600)
-when installing unprepared software with umask 077.
-
-I think distros have to take the first step and change the default umask
-to 077.  Until enough distros do, software maintainers won't have the
-incentive to support that or won't even know about the problem.
-
-Alexander
+Amadeusz
