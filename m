@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8068" "Friday" "5" "March" "2021" "17:07:49" "+0000" "Xen.org security team" "security@xen.org" nil "180" "[oss-security] Xen Security Advisory 367 v2 (CVE-2021-28038) - Linux: netback fails to honor grant mapping errors" nil nil nil "3" nil nil (number mark "U       security@xen Mar  5  180/8068  " thread-indent "\"[oss-security] Xen Security Advisory 367 v2 (CVE-2021-28038) - Linux: netback fails to honor grant mapping errors\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 367 v2 (CVE-2021-28038) - Linux: netback fails to honor grant mapping errors" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1547" "Tuesday" "25" "February" "2020" "14:05:33" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" nil "46" nil "^Cc:" nil nil "2" nil nil (number mark "        carnil@debia Feb 25   46/1547  " thread-indent "\"Re: [oss-security] GNU screen \"out of bounds access when setting w_xtermosc after OSC 49\"\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] GNU screen \"out of bounds access when setting w_xtermosc after OSC 49\"" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5812 invoked by uid 550); 5 Mar 2021 17:08:09 -0000
+Received: (qmail 16013 invoked by uid 550); 25 Feb 2020 13:05:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,204 +11,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5794 invoked from network); 5 Mar 2021 17:08:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=CL5PKWaZCv3kmSVfNkNFDGXqsmxIRvBTHwUcV6+gMtE=; b=HgZjDX/XM1XUUawK5lHjJsmDSz
-	v4206n3lSNN0bumuAijuvL0OTaJSPMWrHu5aPBpz0lak7irCUqNBN0hIwpGTlwQqRvnwJSBuvRnM6
-	YQ7J09RJlEJBTqE0D9c6ZAKU+UHCjmNyoI8ZCASL69VFe2n0hBUZ/nbG9V0rm7IWoZss=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 15992 invoked from network); 25 Feb 2020 13:05:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=i4qZjoGZro++kTA0/mSZIuN4qoae7w2uYRzZe0ruxBQ=;
+        b=LpULzC1IGH8IrpuDSrIR0vH8OywI8WD9FpFtF9t3fqjbImeXVx3Vi5pvnfx5F4/FzA
+         bznwjRoJBV9q76H7rgmrsjP38GOxtgUQidxD/erJTCMbr7tgZJukEcAIx2HJjgbXXC8v
+         tZt5UGO8QCMVwDC0S/EwSNfFE7d5D/JqsVY25zad/rGFJ9X9nRdx9m1A9DspvnS82ZAD
+         tv9AW41EdqtfDh8NVfz+wd4ndsWJLHrlizRbtU7HzX13SuXKVGJWVfhQQoHvtqbA/Sdv
+         ndXh/uqPDqmqPPyBM75KHQrDCd4Ad3gIRtMV91GWLs0lQzX5jdpkjNMrwaknxnM4GdS/
+         f/Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=i4qZjoGZro++kTA0/mSZIuN4qoae7w2uYRzZe0ruxBQ=;
+        b=NQOHR0GC7HJtGZaIPe2Gs1T7fCJhn6xocO8UytjhXHlmBFwlVfaVg/bTgYjxWZogwg
+         F7gIAaOmXswgOTybkCTJwegJl0h34fIoRe7PX0ZDTd5bd8VkvsETLpUzRGiRhAnnPP5B
+         fqfnzvL2dDKUonuAqLLZhXMODai5VsIIzcBvPT2HKbAax6OxpPAF47BLZZmsEWQx2EDP
+         zLGgaQJqr9B6wA/Q99Xcvjak7I2ZaLLuz3qtjUBdeTEC1tWU549qEzyt9MWrtw1gWGOA
+         AdW096j5VThcCJOk5gm1N9R1cF/Rygd29oRr+4MKizxktNW7vsscx+TGAyMc1wCsNaWr
+         gJLQ==
+X-Gm-Message-State: APjAAAUwWZa3+o79hXKTqyQLyfWulIb7AHxLAbi49cRImtb2SKRvhpEQ
+	n8KeBO/1TIfseCFyAiPsPOVU6p4IbnE=
+X-Google-Smtp-Source: APXvYqyxzkw3vrgPYpWF904m5U63iT6562gGIXEg0ZNIrmwd0A+51Y9pPGYxk2u1HLrQYtNcIkB72w==
+X-Received: by 2002:adf:ca07:: with SMTP id o7mr71469905wrh.49.1582635935517;
+        Tue, 25 Feb 2020 05:05:35 -0800 (PST)
+Message-ID: <20200225130532.GA4071@lorien.valinor.li>
+References: <20200206140418.GA26959@openwall.com>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1lIDvZ-0006Cd-QZ@xenbits.xenproject.org>
-Date: Fri, 05 Mar 2021 17:07:49 +0000
-Subject: [oss-security] Xen Security Advisory 367 v2 (CVE-2021-28038) - Linux: netback
- fails to honor grant mapping errors
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20200206140418.GA26959@openwall.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: Amadeusz Slawinski <amade@asmblr.net>
+Date: Tue, 25 Feb 2020 14:05:33 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] GNU screen "out of bounds access when setting
+ w_xtermosc after OSC 49"
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-            Xen Security Advisory CVE-2021-28038 / XSA-367
-                              version 2
+On Thu, Feb 06, 2020 at 03:04:18PM +0100, Solar Designer wrote:
+> Hi,
+> 
+> GNU screen 4.8.0 was released yesterday with a documented security fix
+> in it:
+> 
+> https://lists.gnu.org/archive/html/screen-devel/2020-02/msg00007.html
+> 
+> ---
+> From: 	Amadeusz Slawinski
+> Subject: 	[screen-devel] GNU Screen v.4.8.0
+> Date: 	Wed, 5 Feb 2020 21:45:35 +0100
+> 
+> Hello everyone,
+>  
+> I'm announcing availability of GNU Screen v.4.8.0
+> 
+> Screen is a full-screen window manager that multiplexes a physical
+> terminal between several processes, typically interactive shells. 
+> 
+> This release
+>   * Improves startup time by only polling for already open files to
+>     close
+>   * Fixes:
+>        - Fix for segfault if termcap doesn't have Km entry
+>        - Make screen exit code be 0 when checking --version
+>        - Fix potential memory corruption when using OSC 49
+> 
+> As last fix, fixes potential memory overwrite of quite big size (~768
+> bytes), and even though I'm not sure about potential exploitability of
+> that issue, I highly recommend everyone to upgrade as soon as possible.
+> This issue is present at least since v.4.2.0 (haven't checked earlier).
+> Thanks to pippin who brought this to my attention.
 
-          Linux: netback fails to honor grant mapping errors
+Regarding the affected versions,
+https://bugzilla.redhat.com/show_bug.cgi?id=1801405#c6 points out that
+the issue is caused by the upsteram commit
+https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v4&id=c5db181b6e017cfccb8d7842ce140e59294d9f62
+which would be only in v4.7.0.
 
-UPDATES IN VERSION 2
-====================
+Is this correct?
 
-CVE assigned.
-
-ISSUE DESCRIPTION
-=================
-
-XSA-362 tried to address issues here, but in the case of the netback
-driver the changes were insufficient: It left the relevant function
-invocation with, effectively, no error handling at all.  As a result,
-memory allocation failures there could still lead to frontend-induced
-crashes of the backend.
-
-IMPACT
-======
-
-A malicious or buggy networking frontend driver may be able to crash
-the corresponding backend driver, potentially affecting the entire
-domain running the backend driver.  In a typical (non-disaggregated)
-system that is a host-wide denial of service (DoS).
-
-VULNERABLE SYSTEMS
-==================
-
-Linux versions from at least 2.6.39 onwards are vulnerable, when run in
-PV mode.  Earlier versions differ significantly in behavior and may
-therefore instead surface other issues under the same conditions.  Linux
-run in HVM / PVH modes is not vulnerable.
-
-MITIGATION
-==========
-
-For Linux, running the backends in HVM or PVH domains will avoid the
-vulnerability.  For example, by running the dom0 in PVH mode.
-
-In all other cases there is no known mitigation.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa367-linux.patch           Linux 5.12-rc
-
-$ sha256sum xsa367*
-b0244bfddee91cd7986172893e70664b74e698c5d44f25865870f179f80f9a92  xsa367-linux.patch
-$
-
-CREDITS
-=======
-
-This issue was reported by Intel's kernel test robot and recognized as a
-security issue by Jan Beulich of SUSE.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was reported publicly, before the XSA could be issued.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmBCZVEMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZfqAH/i7ypTUP90UIxeyMB9XmNRiqD+LaTSBExt8xTowd
-zbsWrxFYnZRPSLqs/dVHlDQfF65eD40Agh/Hxp5f0hGHjv8x1kepvpo2di1ovA2h
-C8/WpOK2nFq77/GTG2mAsJA3ltDF0WJsr5oqaBNVf/lwQSmiescTWtI6+LDFmmpd
-q1EyKPUClKZW3PoZkCVmiWDtqhVJc3LaJJcy4x/Zd4EgV+uGi2wsYsiQzObrwPss
-2D5laUr8RJcSTE7+bXlMA8KnzrOZ6UqK1YIPSGIYBOJnhizGf9CBZCxcNTONWQFC
-zh1d9GAv93fugE37xRHE7PRjgl/RVO5rn0k5EQw5GTa676A=
-=GKdV
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa367-linux.patch"
-Content-Disposition: attachment; filename="xsa367-linux.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiBYZW4vZ250dGFiOiBoYW5kbGUgcDJtIHVwZGF0ZSBlcnJvcnMgb24gYSBw
-ZXItc2xvdCBiYXNpcwoKQmFpbGluZyBpbW1lZGlhdGVseSBmcm9tIHNldF9m
-b3JlaWduX3AybV9tYXBwaW5nKCkgdXBvbiBhIHAybSB1cGRhdGluZwplcnJv
-ciBsZWF2ZXMgdGhlIGZ1bGwgYmF0Y2ggaW4gYW4gYW1iaWd1b3VzIHN0YXRl
-IGFzIGZhciBhcyB0aGUgY2FsbGVyCmlzIGNvbmNlcm5lZC4gSW5zdGVhZCBm
-bGFncyByZXNwZWN0aXZlIHNsb3RzIGFzIGJhZCwgdW5tYXBwaW5nIHdoYXQK
-d2FzIG1hcHBlZCB0aGVyZSByaWdodCBhd2F5LgoKSFlQRVJWSVNPUl9ncmFu
-dF90YWJsZV9vcCgpJ3MgcmV0dXJuIHZhbHVlIGFuZCB0aGUgaW5kaXZpZHVh
-bCB1bm1hcApzbG90cycgc3RhdHVzIGZpZWxkcyBnZXQgdXNlZCBvbmx5IGZv
-ciBhIG9uZS10aW1lIC0gdGhlcmUncyBub3QgbXVjaCB3ZQpjYW4gZG8gaW4g
-Y2FzZSBvZiBhIGZhaWx1cmUuCgpOb3RlIHRoYXQgdGhlcmUncyBubyBHTlRT
-VF9lbm9tZW0gb3IgYWxpa2UsIHNvIEdOVFNUX2dlbmVyYWxfZXJyb3IgZ2V0
-cwp1c2VkLgoKVGhlIG1hcCBvcHMnIGhhbmRsZSBmaWVsZHMgZ2V0IG92ZXJ3
-cml0dGVuIGp1c3QgdG8gYmUgb24gdGhlIHNhZmUgc2lkZS4KClRoaXMgaXMg
-WFNBLTM2Ny4KClNpZ25lZC1vZmYtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGlj
-aEBzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IEp1ZXJnZW4gR3Jvc3MgPGpncm9z
-c0BzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IFdlaSBMaXUgPHdlaS5saXVAa2Vy
-bmVsLm9yZz4KLS0tCnYyOiBMb2cgbWVzc2FnZS4gSW52YWxpZGF0ZSBtYXAg
-b3BzJyBoYW5kbGVzLgoKLS0tIGEvYXJjaC9hcm0veGVuL3AybS5jCisrKyBi
-L2FyY2gvYXJtL3hlbi9wMm0uYwpAQCAtOTMsMTIgKzkzLDM5IEBAIGludCBz
-ZXRfZm9yZWlnbl9wMm1fbWFwcGluZyhzdHJ1Y3QgZ250dGEKIAlpbnQgaTsK
-IAogCWZvciAoaSA9IDA7IGkgPCBjb3VudDsgaSsrKSB7CisJCXN0cnVjdCBn
-bnR0YWJfdW5tYXBfZ3JhbnRfcmVmIHVubWFwOworCQlpbnQgcmM7CisKIAkJ
-aWYgKG1hcF9vcHNbaV0uc3RhdHVzKQogCQkJY29udGludWU7Ci0JCWlmICh1
-bmxpa2VseSghc2V0X3BoeXNfdG9fbWFjaGluZShtYXBfb3BzW2ldLmhvc3Rf
-YWRkciA+PiBYRU5fUEFHRV9TSElGVCwKLQkJCQkgICAgbWFwX29wc1tpXS5k
-ZXZfYnVzX2FkZHIgPj4gWEVOX1BBR0VfU0hJRlQpKSkgewotCQkJcmV0dXJu
-IC1FTk9NRU07Ci0JCX0KKwkJaWYgKGxpa2VseShzZXRfcGh5c190b19tYWNo
-aW5lKG1hcF9vcHNbaV0uaG9zdF9hZGRyID4+IFhFTl9QQUdFX1NISUZULAor
-CQkJCSAgICBtYXBfb3BzW2ldLmRldl9idXNfYWRkciA+PiBYRU5fUEFHRV9T
-SElGVCkpKQorCQkJY29udGludWU7CisKKwkJLyoKKwkJICogU2lnbmFsIGFu
-IGVycm9yIGZvciB0aGlzIHNsb3QuIFRoaXMgaW4gdHVybiByZXF1aXJlcwor
-CQkgKiBpbW1lZGlhdGUgdW5tYXBwaW5nLgorCQkgKi8KKwkJbWFwX29wc1tp
-XS5zdGF0dXMgPSBHTlRTVF9nZW5lcmFsX2Vycm9yOworCQl1bm1hcC5ob3N0
-X2FkZHIgPSBtYXBfb3BzW2ldLmhvc3RfYWRkciwKKwkJdW5tYXAuaGFuZGxl
-ID0gbWFwX29wc1tpXS5oYW5kbGU7CisJCW1hcF9vcHNbaV0uaGFuZGxlID0g
-fjA7CisJCWlmIChtYXBfb3BzW2ldLmZsYWdzICYgR05UTUFQX2RldmljZV9t
-YXApCisJCQl1bm1hcC5kZXZfYnVzX2FkZHIgPSBtYXBfb3BzW2ldLmRldl9i
-dXNfYWRkcjsKKwkJZWxzZQorCQkJdW5tYXAuZGV2X2J1c19hZGRyID0gMDsK
-KworCQkvKgorCQkgKiBQcmUtcG9wdWxhdGUgdGhlIHN0YXR1cyBmaWVsZCwg
-dG8gYmUgcmVjb2duaXphYmxlIGluCisJCSAqIHRoZSBsb2cgbWVzc2FnZSBi
-ZWxvdy4KKwkJICovCisJCXVubWFwLnN0YXR1cyA9IDE7CisKKwkJcmMgPSBI
-WVBFUlZJU09SX2dyYW50X3RhYmxlX29wKEdOVFRBQk9QX3VubWFwX2dyYW50
-X3JlZiwKKwkJCQkJICAgICAgICZ1bm1hcCwgMSk7CisJCWlmIChyYyB8fCB1
-bm1hcC5zdGF0dXMgIT0gR05UU1Rfb2theSkKKwkJCXByX2Vycl9vbmNlKCJn
-bnR0YWIgdW5tYXAgZmFpbGVkOiByYz0lZCBzdD0lZFxuIiwKKwkJCQkgICAg
-cmMsIHVubWFwLnN0YXR1cyk7CiAJfQogCiAJcmV0dXJuIDA7Ci0tLSBhL2Fy
-Y2gveDg2L3hlbi9wMm0uYworKysgYi9hcmNoL3g4Ni94ZW4vcDJtLmMKQEAg
-LTcxMCw2ICs3MTAsOCBAQCBpbnQgc2V0X2ZvcmVpZ25fcDJtX21hcHBpbmco
-c3RydWN0IGdudHRhCiAKIAlmb3IgKGkgPSAwOyBpIDwgY291bnQ7IGkrKykg
-ewogCQl1bnNpZ25lZCBsb25nIG1mbiwgcGZuOworCQlzdHJ1Y3QgZ250dGFi
-X3VubWFwX2dyYW50X3JlZiB1bm1hcFsyXTsKKwkJaW50IHJjOwogCiAJCS8q
-IERvIG5vdCBhZGQgdG8gb3ZlcnJpZGUgaWYgdGhlIG1hcCBmYWlsZWQuICov
-CiAJCWlmIChtYXBfb3BzW2ldLnN0YXR1cyAhPSBHTlRTVF9va2F5IHx8CkBA
-IC03MjcsMTAgKzcyOSw0NiBAQCBpbnQgc2V0X2ZvcmVpZ25fcDJtX21hcHBp
-bmcoc3RydWN0IGdudHRhCiAKIAkJV0FSTihwZm5fdG9fbWZuKHBmbikgIT0g
-SU5WQUxJRF9QMk1fRU5UUlksICJwYWdlIG11c3QgYmUgYmFsbG9vbmVkIik7
-CiAKLQkJaWYgKHVubGlrZWx5KCFzZXRfcGh5c190b19tYWNoaW5lKHBmbiwg
-Rk9SRUlHTl9GUkFNRShtZm4pKSkpIHsKLQkJCXJldCA9IC1FTk9NRU07Ci0J
-CQlnb3RvIG91dDsKKwkJaWYgKGxpa2VseShzZXRfcGh5c190b19tYWNoaW5l
-KHBmbiwgRk9SRUlHTl9GUkFNRShtZm4pKSkpCisJCQljb250aW51ZTsKKwor
-CQkvKgorCQkgKiBTaWduYWwgYW4gZXJyb3IgZm9yIHRoaXMgc2xvdC4gVGhp
-cyBpbiB0dXJuIHJlcXVpcmVzCisJCSAqIGltbWVkaWF0ZSB1bm1hcHBpbmcu
-CisJCSAqLworCQltYXBfb3BzW2ldLnN0YXR1cyA9IEdOVFNUX2dlbmVyYWxf
-ZXJyb3I7CisJCXVubWFwWzBdLmhvc3RfYWRkciA9IG1hcF9vcHNbaV0uaG9z
-dF9hZGRyLAorCQl1bm1hcFswXS5oYW5kbGUgPSBtYXBfb3BzW2ldLmhhbmRs
-ZTsKKwkJbWFwX29wc1tpXS5oYW5kbGUgPSB+MDsKKwkJaWYgKG1hcF9vcHNb
-aV0uZmxhZ3MgJiBHTlRNQVBfZGV2aWNlX21hcCkKKwkJCXVubWFwWzBdLmRl
-dl9idXNfYWRkciA9IG1hcF9vcHNbaV0uZGV2X2J1c19hZGRyOworCQllbHNl
-CisJCQl1bm1hcFswXS5kZXZfYnVzX2FkZHIgPSAwOworCisJCWlmIChrbWFw
-X29wcykgeworCQkJa21hcF9vcHNbaV0uc3RhdHVzID0gR05UU1RfZ2VuZXJh
-bF9lcnJvcjsKKwkJCXVubWFwWzFdLmhvc3RfYWRkciA9IGttYXBfb3BzW2ld
-Lmhvc3RfYWRkciwKKwkJCXVubWFwWzFdLmhhbmRsZSA9IGttYXBfb3BzW2ld
-LmhhbmRsZTsKKwkJCWttYXBfb3BzW2ldLmhhbmRsZSA9IH4wOworCQkJaWYg
-KGttYXBfb3BzW2ldLmZsYWdzICYgR05UTUFQX2RldmljZV9tYXApCisJCQkJ
-dW5tYXBbMV0uZGV2X2J1c19hZGRyID0ga21hcF9vcHNbaV0uZGV2X2J1c19h
-ZGRyOworCQkJZWxzZQorCQkJCXVubWFwWzFdLmRldl9idXNfYWRkciA9IDA7
-CiAJCX0KKworCQkvKgorCQkgKiBQcmUtcG9wdWxhdGUgYm90aCBzdGF0dXMg
-ZmllbGRzLCB0byBiZSByZWNvZ25pemFibGUgaW4KKwkJICogdGhlIGxvZyBt
-ZXNzYWdlIGJlbG93LgorCQkgKi8KKwkJdW5tYXBbMF0uc3RhdHVzID0gMTsK
-KwkJdW5tYXBbMV0uc3RhdHVzID0gMTsKKworCQlyYyA9IEhZUEVSVklTT1Jf
-Z3JhbnRfdGFibGVfb3AoR05UVEFCT1BfdW5tYXBfZ3JhbnRfcmVmLAorCQkJ
-CQkgICAgICAgdW5tYXAsIDEgKyAhIWttYXBfb3BzKTsKKwkJaWYgKHJjIHx8
-IHVubWFwWzBdLnN0YXR1cyAhPSBHTlRTVF9va2F5IHx8CisJCSAgICB1bm1h
-cFsxXS5zdGF0dXMgIT0gR05UU1Rfb2theSkKKwkJCXByX2Vycl9vbmNlKCJn
-bnR0YWIgdW5tYXAgZmFpbGVkOiByYz0lZCBzdDA9JWQgc3QxPSVkXG4iLAor
-CQkJCSAgICByYywgdW5tYXBbMF0uc3RhdHVzLCB1bm1hcFsxXS5zdGF0dXMp
-OwogCX0KIAogb3V0Ogo=
-
---=separator--
+Regards,
+Salvatore
