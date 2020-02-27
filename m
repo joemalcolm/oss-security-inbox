@@ -1,41 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/15/1
-Message-ID: <CABEwPvGwaijionFNmS7vMCTFkQ20Mp+KTBCp3wr+A02EFjyUrQ@mail.gmail.com>
-Date: Fri, 14 Aug 2020 17:14:08 -0400
-From: David Smiley <dsmiley@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/27/2
+Message-ID: <CANe27jJkn2X0s0EL7QQL6xE5B=wEYJ=4aX0w5A-C-y+Fd_s+ow@mail.gmail.com>
+Date: Thu, 27 Feb 2020 23:38:34 +0200
+From: Jouni Malinen <jkmalinen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-13941] Apache Solr information disclosure vulnerability
+Subject: Re: Hostapd fails at seeding PRNGS, leading to insufficient entropy (CVE-2016-10743 and CVE-2019-10064)
 Content-Type: text/plain; charset=utf-8
 
-Reported in SOLR-14515 (private) and fixed in SOLR-14561 (public), released
-in Solr version 8.6.0.
-The Replication handler (
-https://lucene.apache.org/solr/guide/8_6/index-replication.html#http-api-commands-for-the-replicationhandler)
-allows commands backup, restore and deleteBackup. Each of these take a
-location parameter, which was not validated, i.e you could read/write to
-any location the solr user can access.
+On Thu, Feb 27, 2020 at 6:24 PM Jonathan Brossard <endrazine@...il.com>
+wrote:
 
-On a windows system SMB paths such as \\10.0.0.99\share\folder may also be
-used, leading to:
-* The possibility of restoring another SolrCore from a server on the
-network (or mounted remote file system) may lead to:
-** Exposing search index data that the attacker should otherwise not have
-access to
-** Replacing the index data entirely by loading it from a remote file
-system that the attacker controls
+> ----------------------------------------------------------------------
+> *               Hostapd fails at seeding PRNGS,                      *
+> *               leading to insufficient entropy                      *
+> ----------------------------------------------------------------------
 
-* Launching SMB attacks which may result in:
-** The exfiltration of sensitive data such as OS user hashes (NTLM/LM
-hashes),
-** In case of misconfigured systems, SMB Relay Attacks which can lead to
-user impersonation on SMB Shares or, in a worse-case scenario, Remote Code
-Execution
 
-The solution implemented to address these issues was to:
-* Restrict the location parameter to trusted paths
-* Prevent remote connection when using Windows UNC Paths
+It should be noted that this is referring to an old release from 2016 and
+pointing to a repository that is an ancient snapshot of the actual project
+development repository, i.e., not discussing what is in the real
+development tree or recent releases.
 
-~ David Smiley
-Apache Lucene/Solr Search Developer
-http://www.linkedin.com/in/davidwsmiley
+--[ Vulnerabilities Summary:
+>
+> Date Published: 27/02/2020
+> CVE Names: CVE-2016-10743 and CVE-2019-10064.
+> Title: Hostapd fails at seeding PRNGs
+> Class: CWE-331: Insufficient Entropy
+> Remotely Exploitable: Yes
+> Locally Exploitable: No
+> Impact: Remote network access, remote Denial of Service
+> Advisory URL: https://moabi.com/advisories/CVE-2019-10064.html
+
+
+IMHO, those claims for impact are highly questionable.
+
+It has been discovered that hostapd before version 2.6 wasn't seeding
+> PRNGs at all.
+> This vulnerability has been fixed silently around 2016, but never
+> attributed a CVE
+> number, leading to many distributions and IoT devices still shipping
+> this version of
+> the software. This vulnerability has been given id CVE-2016-10743.
+> In some configurations, when WPS is enabled and a /dev/urandom device
+> isn't available,
+> this leads to WPS PINS being predictable, allowing remote network access
+> from an attacker.
+>
+
+This is very unlikely to be hit in any realistic system using WPS. hostapd
+used /dev/urandom to generate the WPS PIN if explicitly requested by upper
+layer management software to enable a random PIN. The insecure random() use
+would be reachable only if the device did not have a working /dev/urandom.
+Furthermore, use of a random WPS AP PIN is not common deployment model (PIN
+value from an upper layer software or manufacturing time configuration was
+used more commonly).
+
+Claiming this to result in remote network access is going pretty far. And
+that change of removing the fallback mechanism for the broken /dev/urandom
+case is a reasonable improvement in being more defensive in security
+related functionality, but claiming this to be a silent fix for a
+vulnerability is not accurate.
+
+
+> In addition, it has been discovered that the Extensible Authentication
+> Protocol (EAP) mode,
+> which offers a protection against flooding attacks, also uses
+> predictable PRNGs. This
+> vulnerability has been assigned id CVE-2019-10064.
+>
+
+This is referring to the EAP-pwd server functionality in hostapd. The
+particular value in question is the anti-clogging token value which is
+defined in RFC 5931 as "MUST be unpredictable and SHOULD NOT be from a
+source of random entropy" and the author of that implementation (and the
+protocol designer) was explicitly documenting the used LFSR to be
+sufficient for the particular use. That said, all recent releases of
+hostapd are using /dev/urandom -based values for this as well.
+
+- Jouni
 
