@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1132" "Thursday" "22" "September" "2016" "11:37:40" "+0800" "=?UTF-8?B?546L55WF?=" "fyth.cnss@gmail.com" "<CAFkM3a+tCC+PgnDtQ8HEvz3CNp_7C4Tmr8NxomgpznGpBKnkUw@mail.gmail.com>" "40" "[oss-security] CVE Request: XSS Vulnerability in Exponent CMS 2.3.9" nil nil nil "9" "2016092203:37:40" "[oss-security] CVE Request: XSS Vulnerability in Exponent CMS 2.3.9" (number mark "U       fyth.cnss@gm Sep 22   40/1132  " thread-indent "\"[oss-security] CVE Request: XSS Vulnerability in Exponent CMS 2.3.9\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["626" "Sunday" "1" "March" "2020" "11:07:35" "+0100" "Florian Weimer" "fweimer@redhat.com" "<87ftesqtg8.fsf@oldenburg2.str.redhat.com>" "21" "Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)" "^Cc:" nil nil "3" "2020030110:07:35" "[oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)" (number mark "        fweimer@redh Mar  1   21/626   " thread-indent "\"Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)\"\n") "<CAN_LGv2vhWw6hPL+71GHbRMF8HC8K+0yMjocjXu46pET8zYzNg@mail.gmail.com>" ("<20200224184538.GF17396@localhost.localdomain>" "<20200226202819.GA1051@localhost.localdomain>" "<CAN_LGv2vhWw6hPL+71GHbRMF8HC8K+0yMjocjXu46pET8zYzNg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30552 invoked by uid 550); 22 Sep 2016 03:41:39 -0000
+Received: (qmail 11999 invoked by uid 550); 1 Mar 2020 10:07:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29980 invoked from network); 22 Sep 2016 03:37:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=qeRfN+a2M0Kcyj2/opiwgXbncu7HAJumpZLgVX0phi8=;
-        b=ICK83E7xiK+P8WS+Hb/cTelVKS5GtY/dYmtuRegWbWapN27uC38PAd4zwUgh0PNCab
-         Oi/IKRJ2An2cqNknAU/XGAbOmTR39BFJtwrK+zsxoars62LBXB5LeKf+oiicDFfVRNsC
-         +UN/7KbeFSBjpGDeEbMNWT6/FeNiC6CS0HnDby2OjI1L7EIOGl2kFdLQ33bPCUcH2Td2
-         VGmXixMalIDnzhY9h+g1JYR5aZKhJkNpBGi/7AbzS1PZ/cGqrEa7fiOBTcYHxhm1WGJ/
-         orZJ3h5RuBwBfz3rQoWa9Ikpg2fCBKMpASOx3gfp/hVstulnrJjPEZTXPELlZ+so5C5j
-         YBEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=qeRfN+a2M0Kcyj2/opiwgXbncu7HAJumpZLgVX0phi8=;
-        b=jKZU5sMFqc7kOZTJO0IpNRxg8rRCIMz3ivf6T7xTAefkmQ/vSWVL724sBgvK7j2UlC
-         KEYZUNqnM1dCwxGR9lLuZZ5Uj/2U12cgAkUWKGf89SikrpgG0ZeegcIaWYf4ZsnNsBHL
-         4xy4uO/UAaNDjGOmdXS0pMttm2gRCE5YhZsljx1mJVAyLDMbj4WyyZf8eRFtgpJcPpkD
-         Kk+8HybTCtbG57CSwAl2cVavLl3aqc+uNoXtkN/iYz1UecQ5dwaa7M1SnV0mLrGb7hdM
-         GZRjQrNMxRHOQi+dIYDcKZOk7z9gqcZnMJ4keMQ3bEuCCbmv6kRlFxGX3/dTQDvynE1v
-         1ncA==
-X-Gm-Message-State: AE9vXwN2T/rpF7UxZY2U8TUqBZ2VfAtXNjDdz/eD1mTwQq2Jab3K/7x+fWAVwEfdmpAZZFEAdLq++UPzc9mx0A==
-X-Received: by 10.194.143.104 with SMTP id sd8mr34798293wjb.161.1474515461371;
- Wed, 21 Sep 2016 20:37:41 -0700 (PDT)
+Received: (qmail 11981 invoked from network); 1 Mar 2020 10:07:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1583057266;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qjbW9FsYha9AOvSU2jRoTnZitNJByl0E/Txx/mdejiY=;
+	b=LCBV8ehz2nDI3/wYXQr6NKhGfd50hnBLDELSECt8OhuqQlfb+Tv8WYT/ihrfwR0jUZLm47
+	zcYpL5uuBFLl8B9/59IvY7slqqQZSnwY+FMg9u79rz7CqfXqXZ/y2oDOe5FDbM8+cqDp2K
+	gzI3s0As6begx9JJLq0L9pjB7K3b5Rc=
+X-MC-Unique: 6kODtUM6OZSAsjCnOkyRmA-1
+References: <20200224184538.GF17396@localhost.localdomain>
+	<20200226202819.GA1051@localhost.localdomain>
+	<CAN_LGv2vhWw6hPL+71GHbRMF8HC8K+0yMjocjXu46pET8zYzNg@mail.gmail.com>
+In-Reply-To: <CAN_LGv2vhWw6hPL+71GHbRMF8HC8K+0yMjocjXu46pET8zYzNg@mail.gmail.com>
+	(Alexander E. Patrakov's message of "Sun, 1 Mar 2020 07:47:15 +0500")
+Message-ID: <87ftesqtg8.fsf@oldenburg2.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From: =?UTF-8?B?546L55WF?= <fyth.cnss@gmail.com>
-Date: Thu, 22 Sep 2016 11:37:40 +0800
-Message-ID: <CAFkM3a+tCC+PgnDtQ8HEvz3CNp_7C4Tmr8NxomgpznGpBKnkUw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=089e0122f3584a7ca9053d1062d6
-Subject: [oss-security] CVE Request: XSS Vulnerability in Exponent CMS 2.3.9
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+Cc: oss-security@lists.openwall.com
+Date: Sun, 01 Mar 2020 11:07:35 +0100
+From: Florian Weimer <fweimer@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
+To: "Alexander E. Patrakov" <patrakov@gmail.com>
 
---089e0122f3584a7ca9053d1062d6
-Content-Type: text/plain; charset=UTF-8
+* Alexander E. Patrakov:
 
-Hi, I reported a Cross Site Scripting vulnerability to the
-ExponentCMS team on a few days ago:
-vulnerability:
+> Just in case, I would like to complain here that my Fedora 31 systems
+> have not received an update.
+>
+> There is indeed something in testing, but it is (mistakenly?) marked
+> as a bugfix release and not as a security update:
+>
+> https://bodhi.fedoraproject.org/updates/?packages=3Dopensmtpd
 
+I have edited the update and flagged it as security.
 
-/framework/modules/file/connector/uploader.php
+However, without feedback from community testing (karma), this update
+cannot be pushed at this time.
 
-line 85-86:
-```
+The package also failed to build on Fedora 32 and 33/rawhide due to C
+conformance issues, so there are no updates available there.
 
-$funcNum = $_GET['CKEditorFuncNum'] ;
-echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(".$funcNum.",
-'".$url."', '".$message."');</script>";
+Thanks,
+Florian
 
-```
-
-"$_GET['CKEditorFuncNum']"  was printed out without any sanitization.
-
-
-PoC:http://exponentcms.org/framework/modules/file/connector/uploader.php?CKEditorFuncNum=[removed]<svg/onload=alert(1)>
-
-
-And Now, this vulnerability have been
-fixed.https://exponentcms.lighthouseapp.com/projects/61783/changesets/3f06b07755f35b96eff05ed3e3e1df2b907cade1
-
-https://github.com/exponentcms/exponent-cms/commit/3f06b07755f35b96eff05ed3e3e1df2b907cade1
-
-
-This issue was reported by Wang Chang of silence.com.cn Inc. and I would like
-to request a CVE for this issue (if not done so).
-
-Thank you.
----------------------------------http://www.silence.com.cn
-wangchang#silence.com.cn
-PKAV Team
-
---089e0122f3584a7ca9053d1062d6--
