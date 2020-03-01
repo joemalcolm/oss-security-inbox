@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4356" "Thursday" "7" "November" "2019" "20:01:20" "+0100" "Solar Designer" "solar@openwall.com" "<20191107190120.GA2838@openwall.com>" "86" "Re: [oss-security] independent volunteers on distros list" "^Date:" nil nil "11" "2019110719:01:20" "[oss-security] independent volunteers on distros list" (number mark "        solar@openwa Nov  7   86/4356  " thread-indent "\"Re: [oss-security] independent volunteers on distros list\"\n") "<20170525193744.GA18620@openwall.com>" ("<20170525193744.GA18620@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] independent volunteers on distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3514" "Sunday" "1" "March" "2020" "07:47:15" "+0500" "Alexander E. Patrakov" "patrakov@gmail.com" "<CAN_LGv2vhWw6hPL+71GHbRMF8HC8K+0yMjocjXu46pET8zYzNg@mail.gmail.com>" "78" "Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)" "^Date:" nil nil "3" "2020030102:47:15" "[oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)" (number mark "        patrakov@gma Mar  1   78/3514  " thread-indent "\"Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)\"\n") "<20200226202819.GA1051@localhost.localdomain>" ("<20200224184538.GF17396@localhost.localdomain>" "<20200226202819.GA1051@localhost.localdomain>") nil nil nil nil nil nil nil "Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16367 invoked by uid 550); 7 Nov 2019 19:06:07 -0000
+Received: (qmail 23974 invoked by uid 550); 1 Mar 2020 02:47:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +11,119 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15817 invoked from network); 7 Nov 2019 19:03:03 -0000
-Message-ID: <20191107190120.GA2838@openwall.com>
-References: <20170525193744.GA18620@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170525193744.GA18620@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 7 Nov 2019 20:01:20 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 23956 invoked from network); 1 Mar 2020 02:47:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=64BKELz3UUSEHZPgHT983crs8E4uXWtkQ8oPaWRBsq0=;
+        b=pb+OefCIiGSJw38P1jGhIQkk+Xf2iKLIYPwjIN8Kwek1Hy+4+1stuNP1mwlGr1gVju
+         fxjn4zhX2TBxYV7qzGPCJXqfjRAlt9h+QrTVakjCYoFckA0ThgpGxpey2Z0VEiUTjjm3
+         QSKc4DL+ofVuynyyElXm6NOmUCV6fAJdwkm54akQ6Le0TuttpTsJatMb1H+LpRcQdrBf
+         N4MViRpAlQw04DfYARQMCrKRGE9VoYcjvGFZ8p9kZyW1K7hXULZEQToe+OgKE9ywrPa0
+         Ph9t/MV/eI8oo4lCu9fY+veAr6rlB5/Eq/1BYat2hKkWBlHMCOTnRyAXofearBuHavHt
+         L7Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=64BKELz3UUSEHZPgHT983crs8E4uXWtkQ8oPaWRBsq0=;
+        b=AU0hebAW6VTOs5MQsJfKnzz6yMEFGJpLKxs9pin3e5kBx4zbcaFS2JgQuhcCtyYLi3
+         mjCKcRY8gRRgmoywP4lEFRGwPlxw0lVi4MVvQYcGIgRF1ed5/XAIFkwQ/oOsIOWSy36B
+         G+piA6lcKpOrh2F1DSMW0asYXc54xq1ZaeJPytGZWVIgFND5IIdkGNmOZXHYGmJS9XE1
+         9kZG2iawhCG5kUn+XV20hzKpIWSsJ4kKnp7JwxxZYHfVZNLxNliN5xVhroIjI2y1/Ul/
+         jmheCI4mCgoXlELIMk84A9RqmoAJW8aDrcJY1LW8+LV3+qOuc8lBYZ4BdE84CjbKipj8
+         NuLw==
+X-Gm-Message-State: APjAAAX0aGdadRYGxI6Hzc12Dap/GgFHK4pesIfbzBK0LLmiP9yUhHR1
+	p/AS7SS8y+/JrmaeJO51aWgEooesa4z7wep8jVXML3am3w4=
+X-Google-Smtp-Source: APXvYqygbgSZbv9nV1ohwqL3Jvw1nWfc47+kj4XyxYqspCp2lBqP+2WYFt0jFKw4L5ckDxJwpir0y8Lcsp5dUIEWGRg=
+X-Received: by 2002:a05:620a:15f4:: with SMTP id p20mr10530380qkm.272.1583030846643;
+ Sat, 29 Feb 2020 18:47:26 -0800 (PST)
+MIME-Version: 1.0
+References: <20200224184538.GF17396@localhost.localdomain> <20200226202819.GA1051@localhost.localdomain>
+In-Reply-To: <20200226202819.GA1051@localhost.localdomain>
+Message-ID: <CAN_LGv2vhWw6hPL+71GHbRMF8HC8K+0yMjocjXu46pET8zYzNg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Sun, 1 Mar 2020 07:47:15 +0500
+From: "Alexander E. Patrakov" <patrakov@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] independent volunteers on distros list
+Subject: Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
 To: oss-security@lists.openwall.com
 
-Hi,
+On Thu, Feb 27, 2020 at 12:38 AM Qualys Security Advisory
+<qsa@qualys.com> wrote:
+>
+>
+> Qualys Security Advisory
+>
+> LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
+>
+>
+> ==============================================================================
+> Contents
+> ==============================================================================
+>
+> Summary
+> Analysis
+> Client-side exploitation (new grammar)
+> Server-side exploitation (new grammar)
+> Old-grammar exploitation
+> Acknowledgments
+>
+>
+> ==============================================================================
+> Summary
+> ==============================================================================
+>
+> We discovered a vulnerability in OpenSMTPD, OpenBSD's mail server. This
+> vulnerability, an out-of-bounds read introduced in December 2015 (commit
+> 80c6a60c, "when peer outputs a multi-line response ..."), is exploitable
+> remotely and leads to the execution of arbitrary shell commands: either
+> as root, after May 2018 (commit a8e22235, "switch smtpd to new
+> grammar"); or as any non-root user, before May 2018.
+>
+> Because this vulnerability resides in OpenSMTPD's client-side code
+> (which delivers mail to remote SMTP servers), we must consider two
+> different scenarios:
+>
+> - Client-side exploitation: This vulnerability is remotely exploitable
+>   in OpenSMTPD's (and hence OpenBSD's) default configuration. Although
+>   OpenSMTPD listens on localhost only, by default, it does accept mail
+>   from local users and delivers it to remote servers. If such a remote
+>   server is controlled by an attacker (either because it is malicious or
+>   compromised, or because of a man-in-the-middle, DNS, or BGP attack --
+>   SMTP is not TLS-encrypted by default), then the attacker can execute
+>   arbitrary shell commands on the vulnerable OpenSMTPD installation.
+>
+> - Server-side exploitation: First, the attacker must connect to the
+>   OpenSMTPD server (which accepts external mail) and send a mail that
+>   creates a bounce. Next, when OpenSMTPD connects back to their mail
+>   server to deliver this bounce, the attacker can exploit OpenSMTPD's
+>   client-side vulnerability. Last, for their shell commands to be
+>   executed, the attacker must (to the best of our knowledge) crash
+>   OpenSMTPD and wait until it is restarted (either manually by an
+>   administrator, or automatically by a system update or reboot).
+>
+> We developed a simple exploit for this vulnerability and successfully
+> tested it against OpenBSD 6.6 (the current release), OpenBSD 5.9 (the
+> first vulnerable release), Debian 10 (stable), Debian 11 (testing), and
+> Fedora 31. At OpenBSD's request, and to give OpenSMTPD's users a chance
+> to patch their systems, we are withholding the exploitation details and
+> code until Wednesday, February 26, 2020.
+>
+> Last-minute note: we tested our exploit against the recent changes in
+> OpenSMTPD 6.6.3p1, and our results are: if the "mbox" method is used for
+> local delivery (the default in OpenBSD -current), then arbitrary command
+> execution as root is still possible; otherwise (if the "maildir" method
+> is used, for example), arbitrary command execution as any non-root user
+> is possible.
 
-We had independent volunteers subscribed to (linux-)distros since 2017,
-as per the announcement over-quoted below.  Initially this was just
-Tavis Ormandy.  Later it was also Jason A. Donenfeld.
+Just in case, I would like to complain here that my Fedora 31 systems
+have not received an update.
 
-I appreciate their help.  However, things have changed since 2017 -
-we've since introduced specific tasks that specific distros handle,
-whereas Tavis and Jason have been inactive as volunteers on the list
-lately.  This is understandable as they have a lot of work to do on
-other projects.
+There is indeed something in testing, but it is (mistakenly?) marked
+as a bugfix release and not as a security update:
 
-Thus, as I first communicated to them in private e-mail, I've just
-unsubscribed Tavis and Jason, and updated the wiki accordingly (that we
-no longer have independent volunteers on the list).
+https://bodhi.fedoraproject.org/updates/?packages=opensmtpd
 
-Thank you, Tavis and Jason, for your help.
-
-Alexander
-
-On Thu, May 25, 2017 at 09:37:44PM +0200, Solar Designer wrote:
-> Hi,
-> 
-> On the old vendor-sec list (1998(?) - 2011), there were not only distro
-> vendors, but also individual volunteers (in fact, I was originally
-> invited in that capacity, prior to Openwall having a Linux distro) and
-> some major upstream projects (X.Org, Samba).  When vendor-sec ceased to
-> exist, I setup the (linux-)distros list(s), intentionally calling them
-> such to more clearly draw the line on who's to be accepted and to avoid
-> slippery slope.
-> 
-> While I'm still of the opinion that non-distro upstream projects should
-> not be on those lists (instead, they are being CC'ed when needed), nor
-> subject matter experts with certain domain-specific knowledge (ditto),
-> I'd like to change my mind regarding the non-distro volunteers (aka
-> security researchers) with broad expertise and a track record of
-> evaluating vulnerabilities and fixes and finding more issues in those.
-> I am referring e.g. to the aftermath of Shellshock public disclosure.
-> Rather than have this happen post-disclosure, we can take the slightly
-> higher risk of leaks (from having just a few more people subscribed, and
-> perhaps people who are better equipped to deal with confidential
-> information than most distros' representatives are) and have better
-> understanding and fixes pre-disclosure.
-> 
-> I am convinced there are ways to avoid the slippery slope should the
-> issue arise.  There are few people out there who are at the same time
-> capable (broad expertise and a track record of finding more issues in
-> the fixes), willing, and available to volunteer, and who someone already
-> subscribed would vouch for and no one would object against.  Perhaps
-> fewer such people than we have distros.  For now these are the criteria,
-> but if necessary there are other potential policies we could introduce.
-> 
-> Unlike people subscribed for distros (whose primary reason to be
-> subscribed is that they make use of the info to prepare fixes for their
-> distro), the non-distro volunteers must be active and helpful in
-> discussions as a condition for their continued subscription.  (Indeed,
-> being active and helpful is encouraged for the distro subscribers as
-> well, but it isn't a strict requirement as long as the distro is making
-> good use of the info to prepare fixes.)
-> 
-> The volunteer subscriptions will be of them as individuals, unrelated
-> to their employment (if any), and they would be expected not to share
-> the information with their employer(s), nor with anyone else, unless
-> explicitly permitted.  The employer(s)' vulnerability disclosure
-> policies, if any, would not apply.  If this is inconsistent with a
-> given researcher's employment, that researcher should not accept to be
-> subscribed.
-> 
-> Specifically, at this time I am going to subscribe Tavis Ormandy, who
-> happens to have been on vendor-sec.  I've already discussed this with
-> him, and he agreed.
-> 
-> I first brought this to distros list itself yesterday (after some
-> private discussions with some individual distros, both recently and way
-> earlier), and received no objections.  Some of the subscribed distros'
-> representatives spoke in favor of this change (some on the list, some
-> privately to me) and some also made comments (in particular, that we
-> should emphasize that "the volunteer subscriptions will be of them as
-> individuals, unrelated to their employment ...", which I did above).
-> 
-> I'd appreciate any further comments that the broader community might
-> have, but for now it's a decision made and I'll proceed.
-> 
-> Thanks,
-> 
-> Alexander
+-- 
+Alexander E. Patrakov
