@@ -1,19 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/17/3
-Message-ID: <3a7ec6d5-2959-3daa-a540-ac6389dc15f0@tao.at>
-Date: Fri, 17 Jan 2020 09:10:07 +0100
-From: Sven Schwedas <sven.schwedas@....at>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/01/1
+Message-ID: <CAN_LGv2vhWw6hPL+71GHbRMF8HC8K+0yMjocjXu46pET8zYzNg@mail.gmail.com>
+Date: Sun, 1 Mar 2020 07:47:15 +0500
+From: "Alexander E. Patrakov" <patrakov@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume
+Subject: Re: LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
 Content-Type: text/plain; charset=utf-8
 
-On 17.01.20 05:21, Jeffrey Walton wrote:
-> I agree with Lennart Poettering. This seems CVE worthy given RDRAND is
-> often used to get the kernel generator (and other userland generators)
-> in good working order.
+On Thu, Feb 27, 2020 at 12:38 AM Qualys Security Advisory
+<qsa@...lys.com> wrote:
+>
+>
+> Qualys Security Advisory
+>
+> LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
+>
+>
+> ==============================================================================
+> Contents
+> ==============================================================================
+>
+> Summary
+> Analysis
+> Client-side exploitation (new grammar)
+> Server-side exploitation (new grammar)
+> Old-grammar exploitation
+> Acknowledgments
+>
+>
+> ==============================================================================
+> Summary
+> ==============================================================================
+>
+> We discovered a vulnerability in OpenSMTPD, OpenBSD's mail server. This
+> vulnerability, an out-of-bounds read introduced in December 2015 (commit
+> 80c6a60c, "when peer outputs a multi-line response ..."), is exploitable
+> remotely and leads to the execution of arbitrary shell commands: either
+> as root, after May 2018 (commit a8e22235, "switch smtpd to new
+> grammar"); or as any non-root user, before May 2018.
+>
+> Because this vulnerability resides in OpenSMTPD's client-side code
+> (which delivers mail to remote SMTP servers), we must consider two
+> different scenarios:
+>
+> - Client-side exploitation: This vulnerability is remotely exploitable
+>   in OpenSMTPD's (and hence OpenBSD's) default configuration. Although
+>   OpenSMTPD listens on localhost only, by default, it does accept mail
+>   from local users and delivers it to remote servers. If such a remote
+>   server is controlled by an attacker (either because it is malicious or
+>   compromised, or because of a man-in-the-middle, DNS, or BGP attack --
+>   SMTP is not TLS-encrypted by default), then the attacker can execute
+>   arbitrary shell commands on the vulnerable OpenSMTPD installation.
+>
+> - Server-side exploitation: First, the attacker must connect to the
+>   OpenSMTPD server (which accepts external mail) and send a mail that
+>   creates a bounce. Next, when OpenSMTPD connects back to their mail
+>   server to deliver this bounce, the attacker can exploit OpenSMTPD's
+>   client-side vulnerability. Last, for their shell commands to be
+>   executed, the attacker must (to the best of our knowledge) crash
+>   OpenSMTPD and wait until it is restarted (either manually by an
+>   administrator, or automatically by a system update or reboot).
+>
+> We developed a simple exploit for this vulnerability and successfully
+> tested it against OpenBSD 6.6 (the current release), OpenBSD 5.9 (the
+> first vulnerable release), Debian 10 (stable), Debian 11 (testing), and
+> Fedora 31. At OpenBSD's request, and to give OpenSMTPD's users a chance
+> to patch their systems, we are withholding the exploitation details and
+> code until Wednesday, February 26, 2020.
+>
+> Last-minute note: we tested our exploit against the recent changes in
+> OpenSMTPD 6.6.3p1, and our results are: if the "mbox" method is used for
+> local delivery (the default in OpenBSD -current), then arbitrary command
+> execution as root is still possible; otherwise (if the "maildir" method
+> is used, for example), arbitrary command execution as any non-root user
+> is possible.
 
->From my understanding it's harmless as far as linux's kernel generator
-is concerned, as it's just xor'd to other entropy sources?
+Just in case, I would like to complain here that my Fedora 31 systems
+have not received an update.
 
-CVEs should only be needed on a case-by-case basis for userland
-generators that aren't properly engineered.
+There is indeed something in testing, but it is (mistakenly?) marked
+as a bugfix release and not as a security update:
+
+https://bodhi.fedoraproject.org/updates/?packages=opensmtpd
+
+-- 
+Alexander E. Patrakov
