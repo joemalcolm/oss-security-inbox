@@ -1,40 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/24/3
-Message-ID: <20200424190016.GA2393887@eldamar.local>
-Date: Fri, 24 Apr 2020 21:00:16 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/03/1
+Message-ID: <CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>
+Date: Tue, 3 Mar 2020 00:07:29 -0500
+From: Benjamin Gilbert <benjamin.gilbert@...eos.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: mailman 2.x: XSS via file attachments in list archives
+Subject: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-On Thu, Apr 23, 2020 at 04:41:43PM +0200, Stefan Cornelius wrote:
-> On Mon, 24 Feb 2020 11:06:38 -0500
-> Jim Popovitch <jim@...qc.com> wrote:
-> 
-> > On Mon, 2020-02-24 at 15:34 +0100, Hanno Böck wrote:
-> > > This change is in mailman 2.1.30rc1, but not in any stable release
-> > > of mailman.  
-> > 
-> > Just for some added info, Mailman v2.1.30 is almost released, the
-> > holdup is with some language translations.  Mailman v2.1.30 will be
-> > the last of the Mailman v2 releases as primary development and effort
-> > has long shifted to Mailman v3. Further, the Mailman v2 branch is
-> > tied to Python v2, which is now EOL by the fine Python folk.
-> > 
-> > Once Mailman v2.1.30 is release, I'm sure the various distributions
-> > will pull the commit and merge the particulars into their release
-> > branches, and that will surely include this XSS fix. 
-> 
-> Hi,
-> 
-> It seems like this does not have a CVE? Is there a reason for this, or
-> did this just slip through the cracks/was never really requested?
+Red Hat recently announced [1] that CoreOS Container Linux will reach
+end-of-life on May 26.  The Container Linux team will be leaving the
+distros lists on that date, and will need to hand off our maintenance
+responsibilities to other distros.  We're currently handling [2]:
 
-This appears to have happened now,
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-12137 was
-assigned.
+Administrative-1: Promptly review new issue reports for meeting the
+list's requirements and confirm receipt of the report and, when
+necessary, inform the reporter of any issues with their report (e.g.,
+obviously not actionable by the distros) and request and/or propose
+any required yet missing information (most notably, a tentative public
+disclosure date/time) - primary: CoreOS, backup: Oracle
 
-Regards,
-Salvatore
+Administrative-2: If the proposed public disclosure date is not within
+list policy, insist on getting this corrected and propose a suitable
+earlier date - primary: CoreOS, backup: CloudLinux
+
+Administrative-6: If multiple issues are reported at once, see if any
+of them can reasonably be made public sooner than the rest, and if so
+help untangle them and stay on top of their disclosure process -
+primary: CoreOS, backup: CloudLinux
+
+
+Oracle isn't signed up for any other tasks, so it seems natural for
+them to move up to primary on #1.  In addition to being backup on #2
+and #6, CloudLinux is primary on Administrative-3 (evaluate if the
+issue is already public).  In my experience it makes sense to handle
+#1 and #2 together, so: Oracle, would you be willing to take primary
+on #1 and #2, and CloudLinux, what would you think of moving up to
+primary on #6?
+
+It'd also be good to get volunteers for the backup slots.  Any takers?
+
+We plan to continue executing our current responsibilities until May
+26, but if other distros want to take over our roles sooner for ease
+of bookkeeping, we're open to that.
+
+Best,
+--Benjamin Gilbert
+
+[1]: https://coreos.com/os/eol/
+[2]: https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
