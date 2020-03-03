@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1655" "Tuesday" "14" "July" "2015" "12:53:58" "+0200" "Martin Carpenter" "mcarpenter@free.fr" "<1436871238.28364.89.camel@juliet.mcarpenter.org>" "56" "[oss-security] CVE request: ansible zone/chroot/jail escape" nil nil nil "7" "2015071410:53:58" "[oss-security] CVE request: ansible zone/chroot/jail escape" (number mark "        mcarpenter@f Jul 14   56/1655  " thread-indent "\"[oss-security] CVE request: ansible zone/chroot/jail escape\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1932" "Tuesday" "3" "March" "2020" "00:07:29" "-0500" "Benjamin Gilbert" "benjamin.gilbert@coreos.com" "<CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>" "43" "[oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" "^Date:" nil nil "3" "2020030305:07:29" "[oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" (number mark "        benjamin.gil Mar  3   43/1932  " thread-indent "\"[oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22170 invoked by uid 550); 14 Jul 2015 10:54:12 -0000
+Received: (qmail 11624 invoked by uid 550); 3 Mar 2020 11:42:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22151 invoked from network); 14 Jul 2015 10:54:11 -0000
-Authentication-Results: sfrmc.priv.atos.fr; dkim=none (no signature);
-	dkim-adsp=none (no policy) header.from=mcarpenter@free.fr
-X-SFR-UUID: 20150714105359666.A2C117000096@msfrf2219.sfr.fr
-Message-ID: <1436871238.28364.89.camel@juliet.mcarpenter.org>
-X-Mailer: Evolution 3.10.4-0ubuntu2
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: cve-assign@mitre.org
-Date: Tue, 14 Jul 2015 12:53:58 +0200
-From: Martin Carpenter <mcarpenter@free.fr>
+Received: (qmail 24333 invoked from network); 3 Mar 2020 05:07:52 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=WSxi6OjHXU/cw+SMTmVIqDGgd8M22yN5aFOpSqy897Y=;
+        b=WZ3Bxl53RrpAvoKowO6WLQukFHFWXeuCT55USgI0+uguBinFkA1jeTTeXsNnCjgZ73
+         /giU+3Ns4E4+3Or1QaMwpfaa3QdgN+O8qBwOv9rg9zZulInPFmtCShABbBh9Q9kC/pEo
+         uXCsGvKl2M9UqGtwXYuwKtReeo5VVT6T++nSKncq7yaWr7hl2/dVVAESHoqNgap5j0vH
+         EzM2I5PgluQwNkh1+WUXCmJOAQBap4SSzGDoXT6Tz7l809F8SPsgGoarSGaqXuaeK0PG
+         NCvkdp/vlOkXuaxk8CGoa4Z+Dwx1tK1qgOBeyHPv2Kh6OWlfhFHSZ/Rr8ZY7XzwVfhqD
+         ceTg==
+X-Gm-Message-State: ANhLgQ1GPQtc+H5ZgQ7nwvDwhjKtSdtA1vaTGXyNfOHE6gt94INUa/Z/
+	2PBqBDqVuBq4wX6OcgnYlAqaVCHjeW/NqSSpC9l1ufpy/Lc=
+X-Google-Smtp-Source: ADFU+vtl7x4TMsEElrqA48zdqkew75uA/fYm+30iP5bFDAat+wma0CCd0Z33g6EQ5JgOplpE7pZNL9AFmi96pmiD6Mo=
+X-Received: by 2002:a5d:658c:: with SMTP id q12mr3458937wru.57.1583212060888;
+ Mon, 02 Mar 2020 21:07:40 -0800 (PST)
+MIME-Version: 1.0
+Message-ID: <CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Tue, 3 Mar 2020 00:07:29 -0500
+From: Benjamin Gilbert <benjamin.gilbert@coreos.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: ansible zone/chroot/jail escape
+Subject: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
 To: oss-security@lists.openwall.com
 
-Hi,
+Hi all,
 
-I recently found a symlink attack that enables a malicious
-zone/chroot/jail managed by ansible to escape into the managing host.
-This was fixed in ansible 1.9.2 (commit list below, see
-https://github.com/ansible/ansible).
+Red Hat recently announced [1] that CoreOS Container Linux will reach
+end-of-life on May 26.  The Container Linux team will be leaving the
+distros lists on that date, and will need to hand off our maintenance
+responsibilities to other distros.  We're currently handling [2]:
 
-I am not an ansible committer but Toshio requested I follow up. I
-understand that a request was made by Toshio to CVE-assign on 1st July
-but no response was received. The commits are already public and it has
-been announced on ansible's security page:
-http://www.ansible.com/security.
+Administrative-1: Promptly review new issue reports for meeting the
+list's requirements and confirm receipt of the report and, when
+necessary, inform the reporter of any issues with their report (e.g.,
+obviously not actionable by the distros) and request and/or propose
+any required yet missing information (most notably, a tentative public
+disclosure date/time) - primary: CoreOS, backup: Oracle
 
-Could a CVE please be assigned to this issue?
+Administrative-2: If the proposed public disclosure date is not within
+list policy, insist on getting this corrected and propose a suitable
+earlier date - primary: CoreOS, backup: CloudLinux
 
-
-Thanks,
-
-Martin.
-
-
-commit 548a7288a90c49e9b50ccf197da307eae525b899
-Author: Toshio Kuratomi <toshio@fedoraproject.org>
-Date:   Wed Jun 24 01:00:22 2015 -0700
-
-    Use BUFSIZE when putting file as well as fetching file.
-
-commit 270be6a6f5852c5563976f060c80eff64decc89c
-Author: Toshio Kuratomi <toshio@fedoraproject.org>
-Date:   Tue Jun 23 22:27:45 2015 -0700
-
-    Fix exec_command to not use a shell
-
-commit 952166f48eb0f5797b75b160fd156bbe1e8fc647
-Author: Toshio Kuratomi <toshio@fedoraproject.org>
-Date:   Mon Jun 22 20:07:29 2015 -0700
-
-    Fix problem with chroot connection plugins and symlinks from within
-the chroot.
-
-commit 0777d025051bf5cf3092aa79a9e6b67cec7064dd
-Author: Toshio Kuratomi <toshio@fedoraproject.org>
-Date:   Fri Jun 19 11:09:48 2015 -0700
-
-    Fix problem with jail and zone connection plugins and symlinks from
-within the jail/zone.
-
-commit ca2f2c4ebd7b5e097eab0a710f79c1f63badf95b
-Author: Toshio Kuratomi <toshio@fedoraproject.org>
-Date:   Fri Jun 19 09:41:48 2015 -0700
-
-    Fix problem with jail and zone connection plugins and symlinks from
-within the jail/zone.
+Administrative-6: If multiple issues are reported at once, see if any
+of them can reasonably be made public sooner than the rest, and if so
+help untangle them and stay on top of their disclosure process -
+primary: CoreOS, backup: CloudLinux
 
 
+Oracle isn't signed up for any other tasks, so it seems natural for
+them to move up to primary on #1.  In addition to being backup on #2
+and #6, CloudLinux is primary on Administrative-3 (evaluate if the
+issue is already public).  In my experience it makes sense to handle
+#1 and #2 together, so: Oracle, would you be willing to take primary
+on #1 and #2, and CloudLinux, what would you think of moving up to
+primary on #6?
 
+It'd also be good to get volunteers for the backup slots.  Any takers?
+
+We plan to continue executing our current responsibilities until May
+26, but if other distros want to take over our roles sooner for ease
+of bookkeeping, we're open to that.
+
+Best,
+--Benjamin Gilbert
+
+[1]: https://coreos.com/os/eol/
+[2]: https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
