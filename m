@@ -1,38 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/22/2
-Message-ID: <CAEccTyzGvMVto7NL0+aCXKPQG57b0fZVeA03ioGCqtUKFKrjCQ@mail.gmail.com>
-Date: Mon, 22 Jun 2020 16:50:17 -0500
-From: Sean Owen <srowen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/04/3
+Message-Id: <3553F8C1-C0B0-457D-84EA-4E04B4CC8EF1@oracle.com>
+Date: Wed, 4 Mar 2020 18:52:11 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-9480: Apache Spark RCE vulnerability in auth-enabled standalone master
+Subject: Re: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
-
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-Apache Spark 2.4.5 and earlier
-
-Description:
-In Apache Spark 2.4.5 and earlier, a standalone resource manager's master may
-be configured to require authentication (spark.authenticate) via a
-shared secret. When enabled, however, a specially-crafted RPC to the
-master can succeed in starting an application's resources on the Spark
-cluster, even without the shared key. This can be leveraged to execute
-shell commands on the host machine.
-
-This does not affect Spark clusters using other resource managers
-(YARN, Mesos, etc).
 
 
-Mitigation:
-Users should update to Spark 2.4.6 or 3.0.0.
-Where possible, network access to the cluster machines should be
-restricted to trusted hosts only.
+> On 3 Mar 2020, at 05:07, Benjamin Gilbert <benjamin.gilbert@...eos.com> wrote:
+> 
+> Hi all,
+> 
+> Red Hat recently announced [1] that CoreOS Container Linux will reach
+> end-of-life on May 26.  The Container Linux team will be leaving the
+> distros lists on that date, and will need to hand off our maintenance
+> responsibilities to other distros.  We're currently handling [2]:
+> 
+> Administrative-1: Promptly review new issue reports for meeting the
+> list's requirements and confirm receipt of the report and, when
+> necessary, inform the reporter of any issues with their report (e.g.,
+> obviously not actionable by the distros) and request and/or propose
+> any required yet missing information (most notably, a tentative public
+> disclosure date/time) - primary: CoreOS, backup: Oracle
+> 
+> Administrative-2: If the proposed public disclosure date is not within
+> list policy, insist on getting this corrected and propose a suitable
+> earlier date - primary: CoreOS, backup: CloudLinux
+> 
+> Administrative-6: If multiple issues are reported at once, see if any
+> of them can reasonably be made public sooner than the rest, and if so
+> help untangle them and stay on top of their disclosure process -
+> primary: CoreOS, backup: CloudLinux
+> 
+> 
+> Oracle isn't signed up for any other tasks, so it seems natural for
+> them to move up to primary on #1.  In addition to being backup on #2
+> and #6, CloudLinux is primary on Administrative-3 (evaluate if the
+> issue is already public).  In my experience it makes sense to handle
+> #1 and #2 together, so: Oracle, would you be willing to take primary
+> on #1 and #2, and CloudLinux, what would you think of moving up to
+> primary on #6?
 
-Credit:
-Ayoub Elaassal
 
-References:
-https://spark.apache.org/security.html
+We, Oracle, happy to pick up primary for #1 and #2.
+
+Benjamin has done a sterling job with these -- always been prompt and clear -- we all owe him a debt of thanks.
+
+jch
+
+> 
+> It'd also be good to get volunteers for the backup slots.  Any takers?
+> 
+> We plan to continue executing our current responsibilities until May
+> 26, but if other distros want to take over our roles sooner for ease
+> of bookkeeping, we're open to that.
+> 
+> Best,
+> --Benjamin Gilbert
+> 
+> [1]: https://coreos.com/os/eol/
+> [2]: https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+
