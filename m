@@ -1,256 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/12/3
-Message-Id: <B194CD16-B946-4561-A0D5-F9C5A8EA3FC5@beckweb.net>
-Date: Wed, 12 Feb 2020 15:30:36 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/04/2
+Message-ID: <CA+-XxSFy2dV24pSUDTcWX3-yoEipaqH+8GbGWEqCE_GyUCi=RA@mail.gmail.com>
+Date: Wed, 4 Mar 2020 06:55:28 -0800
+From: Igor Seletskiy <i@...udlinux.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Azure AD Plugin 1.2.0
-* Brakeman Plugin 0.13
-* FitNesse Plugin 1.31
-* Git Parameter Plugin 0.9.12
-* Google Kubernetes Engine Plugin 0.8.1
-* NUnit Plugin 0.26
-* Pipeline GitHub Notify Step Plugin 1.0.5
-* Pipeline: Groovy Plugin 2.79
-* RadarGun Plugin 1.8
-* S3 publisher Plugin 0.11.5
-* Script Security Plugin 1.70
-* Subversion Plugin 2.13.1
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Applatix Plugin
-* BMC Release Package and Deployment Plugin
-* Debian Package Builder Plugin
-* DigitalOcean Plugin
-* Dynamic Extended Choice Parameter Plugin
-* Eagle Tester Plugin
-* ECX Copy Data Management Plugin
-* Harvest SCM Plugin
-* Parasoft Environment Manager Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-02-12/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1710 / CVE-2020-2109
-Sandbox protection in Pipeline: Groovy Plugin 2.78 and earlier can be
-circumvented through default parameter expressions in CPS-transformed
-methods.
-
-This allows attackers able to specify and run sandboxed Pipelines to
-execute arbitrary code in the context of the Jenkins master JVM.
-
-
-SECURITY-1713 / CVE-2020-2110
-Sandbox protection in Script Security Plugin 1.69 and earlier can be
-circumvented during the script compilation phase by applying AST
-transforming annotations such as `@...b` to imports or by using them inside
-of other annotations. This affects both script execution (typically invoked
-from other plugins like Pipeline) as well as HTTP endpoints providing
-sandboxed script validation.
-
-Users with Overall/Read permission can exploit this to bypass sandbox
-protection and execute arbitrary code on the Jenkins master.
-
-This issue is due to an incomplete fix of SECURITY-1266.
-
-
-SECURITY-1725 / CVE-2020-2111
-Subversion Plugin 2.13.0 and earlier does not escape the error message for
-the Project Repository Base URL field form validation. This results in a
-stored cross-site scripting vulnerability exploitable by users able to
-specify such base URLs, for example users able to configure Multibranch
-Pipelines.
-
-
-SECURITY-1709 / CVE-2020-2112 (parameter name) & CVE-2020-2113 (default value)
-Git Parameter Plugin 0.9.11 and earlier does not correctly escape the
-parameter name or default value. This results in a stored cross-site
-scripting vulnerability exploitable by users with Job/Configure permission.
-
-
-SECURITY-1684 / CVE-2020-2114
-S3 publisher Plugin stores a secret key in its global configuration.
-
-While the credential is stored encrypted on disk, it is transmitted in
-plain text as part of the configuration form by S3 publisher Plugin 0.11.4
-and earlier. This can result in exposure of the credential through browser
-extensions, cross-site scripting vulnerabilities, and similar situations.
-
-
-SECURITY-1752 / CVE-2020-2115
-NUnit Plugin 0.25 and earlier does not configure the XML parser to prevent
-XML external entity (XXE) attacks.
-
-This allows a user able to control the input files for its post-build step
-to have Jenkins parse a crafted file that uses external entities for
-extraction of secrets from the Jenkins master, server-side request forgery,
-or denial-of-service attacks.
-
-
-SECURITY-812 (1) / CVE-2020-2116 (CSRF) & CVE-2020-2117 (missing permission check)
-Pipeline GitHub Notify Step Plugin 1.0.4 and earlier does not perform
-permission checks on a method implementing form validation. This allows
-users with Overall/Read access to Jenkins to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, the form validation method does not require POST requests,
-resulting in a CSRF vulnerability.
-
-
-SECURITY-812 (2) / CVE-2020-2118
-Pipeline GitHub Notify Step Plugin 1.0.4 and earlier provides a list of
-applicable credential IDs to allow users configuring the plugin to select
-the one to use.
-
-This functionality does not correctly check permissions, allowing any user
-with Overall/Read permission to get a list of valid credentials IDs. Those
-can be used as part of an attack to capture the credentials using another
-vulnerability.
-
-
-SECURITY-1717 / CVE-2020-2119
-Azure AD Plugin stores a client secret in its global configuration.
-
-While the credential is stored encrypted on disk, it is transmitted in
-plain text as part of the configuration form by Azure AD Plugin 1.1.2 and
-earlier. This can result in exposure of the credential through browser
-extensions, cross-site scripting vulnerabilities, and similar situations.
-
-
-SECURITY-1751 / CVE-2020-2120
-FitNesse Plugin 1.30 and earlier does not configure the XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows a user able to control the input files for its post-build step
-to have Jenkins parse a crafted file that uses external entities for
-extraction of secrets from the Jenkins master, server-side request forgery,
-or denial-of-service attacks.
-
-
-SECURITY-1731 / CVE-2020-2121
-Google Kubernetes Engine Plugin 0.8.0 and earlier does not configure its
-YAML parser to prevent the instantiation of arbitrary types. This results
-in a remote code execution vulnerability exploitable by users able to
-provide YAML input files to Google Kubernetes Engine Plugin's build step.
-
-
-SECURITY-1644 / CVE-2020-2122
-Brakeman Plugin 0.12 and earlier did not escape values received from parsed
-JSON files when rendering them, resulting in a stored cross-site scripting
-vulnerability.
-
-This vulnerability can be exploited by users able to control the Brakeman
-post-build step input data.
-
-
-SECURITY-1733 / CVE-2020-2123
-RadarGun Plugin 1.7 and earlier does not configure its YAML parser to
-prevent the instantiation of arbitrary types. This results in a remote code
-execution vulnerability exploitable by users able to configure RadarGun
-Plugin's build step.
-
-
-SECURITY-1560 / CVE-2020-2124
-Dynamic Extended Choice Parameter Plugin 1.0.1 and earlier stores a
-Subversion password unencrypted in job `config.xml` files as part of its
-configuration. This credential can be viewed by users with Extended Read
-permission or access to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1558 / CVE-2020-2125
-Debian Package Builder Plugin 1.6.11 and earlier stores a GPG passphrase
-unencrypted in its global configuration file
-`ru.yandex.jenkins.plugins.debuilder.DebianPackageBuilder.xml` on the
-Jenkins master. This credential can be viewed by users with access to the
-master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1559 / CVE-2020-2126
-DigitalOcean Plugin 1.1 and earlier stores a token unencrypted in the
-global `config.xml` files as part of its configuration. This credential can
-be viewed by users with access to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1547 / CVE-2020-2127
-BMC Release Package and Deployment Plugin 1.1 and earlier stores the RPD
-user token unencrypted in its global configuration file
-`com.bmc.rpd.jenkins.plugin.bmcrpd.configuration.RPDPluginConfiguration.xml`
-on the Jenkins master. This credential can be viewed by users with access
-to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1549 / CVE-2020-2128
-ECX Copy Data Management Plugin 1.9 and earlier stores a service password
-unencrypted in job `config.xml` files as part of its configuration. This
-credential can be viewed by users with Extended Read permission or access
-to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1552 / CVE-2020-2129
-Eagle Tester Plugin 1.0.9 and earlier stores a password unencrypted in its
-global configuration file
-`com.bmc.rpd.jenkins.plugin.bmcrpd.configuration.RPDPluginConfiguration.xml`
-on the Jenkins master. This credential can be viewed by users with access
-to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1553 / CVE-2020-2130 (global configuration) & CVE-2020-2131 (job configuration)
-Harvest SCM Plugin 0.5.1 and earlier stores SCM passwords unencrypted in
-its global configuration file `hudson.plugins.harvest.HarvestSCM.xml` and
-in job `config.xml` files on the Jenkins master. These credentials can be
-viewed by users with Extended Read permission (job `config.xml` only) or
-access to the master file system (both).
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1562 / CVE-2020-2132
-Parasoft Environment Manager Plugin 2.14 and earlier stores a repository
-password unencrypted in job `config.xml` files as part of its
-configuration. This credential can be viewed by users with Extended Read
-permission or access to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1540 / CVE-2020-2133
-Applatix Plugin 1.1 and earlier stores the Applatix password unencrypted in
-job `config.xml` files as part of its configuration. This credential can be
-viewed by users with Extended Read permission or access to the master file
-system.
-
-As of publication of this advisory, there is no fix.
+CloudLinux is OK with this plan.
+
+Regards,
+Igor Seletskiy |  CEO
+CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
+<https://www.cloudlinux.com/kernelcare>   |   Imunify360
+<http://imunify360.com/>
+
+Get 24/7 free, exceptionally good support at cloudlinux.zendesk.com
+Follow us on twitter for technical updates: @CloudLinuxOS
+<https://twitter.com/cloudlinuxos>
+
+
+On Tue, Mar 3, 2020 at 3:42 AM Benjamin Gilbert <benjamin.gilbert@...eos.com>
+wrote:
+
+> Hi all,
+>
+> Red Hat recently announced [1] that CoreOS Container Linux will reach
+> end-of-life on May 26.  The Container Linux team will be leaving the
+> distros lists on that date, and will need to hand off our maintenance
+> responsibilities to other distros.  We're currently handling [2]:
+>
+> Administrative-1: Promptly review new issue reports for meeting the
+> list's requirements and confirm receipt of the report and, when
+> necessary, inform the reporter of any issues with their report (e.g.,
+> obviously not actionable by the distros) and request and/or propose
+> any required yet missing information (most notably, a tentative public
+> disclosure date/time) - primary: CoreOS, backup: Oracle
+>
+> Administrative-2: If the proposed public disclosure date is not within
+> list policy, insist on getting this corrected and propose a suitable
+> earlier date - primary: CoreOS, backup: CloudLinux
+>
+> Administrative-6: If multiple issues are reported at once, see if any
+> of them can reasonably be made public sooner than the rest, and if so
+> help untangle them and stay on top of their disclosure process -
+> primary: CoreOS, backup: CloudLinux
+>
+>
+> Oracle isn't signed up for any other tasks, so it seems natural for
+> them to move up to primary on #1.  In addition to being backup on #2
+> and #6, CloudLinux is primary on Administrative-3 (evaluate if the
+> issue is already public).  In my experience it makes sense to handle
+> #1 and #2 together, so: Oracle, would you be willing to take primary
+> on #1 and #2, and CloudLinux, what would you think of moving up to
+> primary on #6?
+>
+> It'd also be good to get volunteers for the backup slots.  Any takers?
+>
+> We plan to continue executing our current responsibilities until May
+> 26, but if other distros want to take over our roles sooner for ease
+> of bookkeeping, we're open to that.
+>
+> Best,
+> --Benjamin Gilbert
+>
+> [1]: https://coreos.com/os/eol/
+> [2]:
+> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+>
 
