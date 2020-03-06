@@ -1,250 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/27/1
-Message-ID: <9739d4a6516e888a@openbsd.org>
-Date: Wed, 27 May 2020 00:12:59 -0600 (MDT)
-From: Damien Miller <djm@...nbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/06/3
+Message-ID: <20200306134635.GB11468@f195.suse.de>
+Date: Fri, 6 Mar 2020 14:46:35 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Announce: OpenSSH 8.3 released
+Subject: CVE-2020-10174: timeshift: arbitrary local code execution due to unsafe usage of temporary directory in /tmp/timeshift
 Content-Type: text/plain; charset=utf-8
 
-OpenSSH 8.3 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
+Hello list,
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+in the course of a security review [1] for the Timeshift backup program
+[2] I discovered a local root exploit vulnerability [3] in Timeshift.
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
+== Analysis
 
-Future deprecation notice
-=========================
+The problem is found in the source file TeeJee.Process.vala [3]. There
+in `init_tmp()` a temporary directory for use by the Timeshift program
+is setup. The TEMP_DIR path variable is setup like this:
 
-It is now possible[1] to perform chosen-prefix attacks against the
-SHA-1 algorithm for less than USD$50K. For this reason, we will be
-disabling the "ssh-rsa" public key signature algorithm by default in a
-near-future release.
+```
+TEMP_DIR = Environment.get_tmp_dir() + "/" + subdir_name + "/" + random_string();
+```
 
-This algorithm is unfortunately still used widely despite the
-existence of better alternatives, being the only remaining public key
-signature algorithm specified by the original SSH RFCs.
+This results in a path like /tmp/timeshift/wytOlUJg, for example. Only
+the last part of the path is unpredictable, the /tmp/timeshift
+directory, however, is constant and fully predictable. Timeshift does
+not perform any checks regarding the trustworthyness of a pre-existing
+/tmp/timeshift directory, or whether it might be a symlink. A typical
+no-op run of timeshift causes the following (filtered) system call
+sequence:
 
-The better alternatives include:
+```
+lstat("/tmp/timeshift/L00qsHH5", 0x7fffb14adfd0) = -1 ENOENT (No such file or directory)
+mkdir("/tmp/timeshift/L00qsHH5", 0777) = 0
+lstat("/tmp/timeshift/L00qsHH5/15833214581345651125.sh", 0x7fffb14adf10) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/tmp/timeshift/L00qsHH5/15833214581345651125.sh", O_WRONLY|O_CREAT|O_EXCL, 0666) = 7
+execve("/usr/bin/chmod", ["chmod", "u+x", "/tmp/timeshift/L00qsHH5/15833214"...], 0x7fffb14ae3f0 /* 63 vars */
+stat("/tmp/timeshift/L00qsHH5/15833214581345651125.sh", {st_mode=S_IFREG|0644, st_size=102, ...}) = 0
+fchmodat(AT_FDCWD, "/tmp/timeshift/L00qsHH5/15833214581345651125.sh", 0744) = 0
+chdir("/tmp/timeshift/L00qsHH5") = 0
+execve("/tmp/timeshift/L00qsHH5/15833214581345651125.sh", ["/tmp/timeshift/L00qsHH5/15833214"...], 0x55f02814cfe0 /* 63 vars */
+```
 
- * The RFC8332 RSA SHA-2 signature algorithms rsa-sha2-256/512. These
-   algorithms have the advantage of using the same key type as
-   "ssh-rsa" but use the safe SHA-2 hash algorithms. These have been
-   supported since OpenSSH 7.2 and are already used by default if the
-   client and server support them.
+The `execve()` at the end is the result of the line
+`exec_script_sync("echo 'ok'",out std_out,out std_err, true)` which is
+also part of the `init_tmp()` function.
 
- * The ssh-ed25519 signature algorithm. It has been supported in
-   OpenSSH since release 6.5.
+An unprivileged local attacker can pre-create the `/tmp/timeshift`
+directory and wait for a Timeshift process running as root to create the
+unpredictable sub-directory like /tmp/timeshift/L00qsHH5 and the shell
+script like 15833214581345651125.sh in there. Then the attacker only
+needs to replace this directory and script by his own ones in time,
+resulting in arbitrary code execution as root.
 
- * The RFC5656 ECDSA algorithms: ecdsa-sha2-nistp256/384/521. These
-   have been supported by OpenSSH since release 5.7.
+A more simple proof of concept to show the problem is what happens when
+a symlink is placed in /tmp/timeshift:
 
-To check whether a server is using the weak ssh-rsa public key
-algorithm, for host authentication, try to connect to it after
-removing the ssh-rsa algorithm from ssh(1)'s allowed list:
+```
+user$ ln -s /root /tmp/timeshift
+```
 
-    ssh -oHostKeyAlgorithms=-ssh-rsa user@...t
+This will cause timeshift to create temporary data in /root instead of
+in /tmp.
 
-If the host key verification fails and no other supported host key
-types are available, the server software on that host should be
-upgraded.
+For fixing this issue I suggest to remove the predictable prefix (in
+this case "timeshift") from the TEMP_DIR path. Also the unpredictable
+temporary directory created by timeshift should not be world readable
+i.e. it should get mode 0750 to prevent that other users in the system
+might obtain sensitive temporary data from the timeshift execution.
+Currently these directories are created with mode 0755 by timeshift (or
+more precisely, the mode is only modified by the calling user's umask,
+which is 0022 by default).
 
-A future release of OpenSSH will enable UpdateHostKeys by default
-to allow the client to automatically migrate to better algorithms.
-Users may consider enabling this option manually. Vendors of devices
-that implement the SSH protocol should ensure that they support the
-new signature algorithms for RSA keys.
+== Bugfix and Affectedness
 
-[1] "SHA-1 is a Shambles: First Chosen-Prefix Collision on SHA-1 and
-    Application to the PGP Web of Trust" Leurent, G and Peyrin, T
-    (2020) https://eprint.iacr.org/2020/014.pdf
+The issue seems to have been present at least since the commit 9538300e
+[6] which first went into the v17.2 version tag.
 
-Security
-========
+The upstream author fixed the issue according to my recommendations in
+commit 335b3d5398079278b8f7094c77bfd148b315b462 [4] which is also part
+of a new release v20.03 [5].
 
- * scp(1): when receiving files, scp(1) could be become desynchronised
-   if a utimes(2) system call failed. This could allow file contents
-   to be interpreted as file metadata and thereby permit an adversary
-   to craft a file system that, when copied with scp(1) in a
-   configuration that caused utimes(2) to fail (e.g. under a SELinux
-   policy or syscall sandbox), transferred different file names and
-   contents to the actual file system layout.
+== Timeline
 
-   Exploitation of this is not likely as utimes(2) does not fail under
-   normal circumstances. Successful exploitation is not silent - the
-   output of scp(1) would show transfer errors followed by the actual
-   file(s) that were received.
+I reported this privately to the upstream author on 2020-03-04 and he
+publically fixed the issue on the following day already.
 
-   Finally, filenames returned from the peer are (since openssh-8.0)
-   matched against the user's requested destination, thereby
-   disallowing a successful exploit from writing files outside the
-   user's selected target glob (or directory, in the case of a
-   recursive transfer). This ensures that this attack can achieve no
-   more than a hostile peer is already able to achieve within the scp
-   protocol.
+== References
 
-Potentially-incompatible changes
-================================
+[1]: https://bugzilla.suse.com/show_bug.cgi?id=1165436
+[2]: https://github.com/teejee2008/timeshift
+[3]: https://bugzilla.suse.com/show_bug.cgi?id=1165802
+[4]: https://github.com/teejee2008/timeshift/commit/335b3d5398079278b8f7094c77bfd148b315b462
+[5]: https://github.com/teejee2008/timeshift/releases/tag/v20.03
+[6]: https://github.com/teejee2008/timeshift/commit/9538300e
 
-This release includes a number of changes that may affect existing
-configurations:
+Best Regards
 
- * sftp(1): reject an argument of "-1" in the same way as ssh(1) and
-   scp(1) do instead of accepting and silently ignoring it.
+Matthias
 
-Changes since OpenSSH 8.2
-=========================
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
 
-The focus of this release is bug fixing.
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
 
-New Features
-------------
 
- * sshd(8): make IgnoreRhosts a tri-state option: "yes" to ignore
-   rhosts/shosts, "no" allow rhosts/shosts or (new) "shosts-only"
-   to allow .shosts files but not .rhosts.
-
- * sshd(8): allow the IgnoreRhosts directive to appear anywhere in a
-   sshd_config, not just before any Match blocks; bz3148
-
- * ssh(1): add %TOKEN percent expansion for the LocalFoward and
-   RemoteForward keywords when used for Unix domain socket forwarding.
-   bz#3014
-
- * all: allow loading public keys from the unencrypted envelope of a
-   private key file if no corresponding public key file is present.
-    
- * ssh(1), sshd(8): prefer to use chacha20 from libcrypto where
-   possible instead of the (slower) portable C implementation included
-   in OpenSSH.
-
- * ssh-keygen(1): add ability to dump the contents of a binary key
-   revocation list via "ssh-keygen -lQf /path" bz#3132
-
-Bugfixes
---------
-
- * ssh(1): fix IdentitiesOnly=yes to also apply to keys loaded from
-   a PKCS11Provider; bz#3141
-
- * ssh-keygen(1): avoid NULL dereference when trying to convert an
-   invalid RFC4716 private key.
-
- * scp(1): when performing remote-to-remote copies using "scp -3",
-   start the second ssh(1) channel with BatchMode=yes enabled to
-   avoid confusing and non-deterministic ordering of prompts.
-
- * ssh(1), ssh-keygen(1): when signing a challenge using a FIDO token,
-   perform hashing of the message to be signed in the middleware layer
-   rather than in OpenSSH code. This permits the use of security key
-   middlewares that perform the hashing implicitly, such as Windows
-   Hello.
-
- * ssh(1): fix incorrect error message for "too many known hosts
-   files." bz#3149
-
- * ssh(1): make failures when establishing "Tunnel" forwarding
-   terminate the connection when ExitOnForwardFailure is enabled;
-   bz#3116
-
- * ssh-keygen(1): fix printing of fingerprints on private keys and add
-   a regression test for same.
-
- * sshd(8): document order of checking AuthorizedKeysFile (first) and
-   AuthorizedKeysCommand (subsequently, if the file doesn't match);
-   bz#3134
-
- * sshd(8): document that /etc/hosts.equiv and /etc/shosts.equiv are
-   not considered for HostbasedAuthentication when the target user is
-   root; bz#3148
- 
- * ssh(1), ssh-keygen(1): fix NULL dereference in private certificate
-   key parsing (oss-fuzz #20074).
-
- * ssh(1), sshd(8): more consistency between sets of %TOKENS are
-   accepted in various configuration options.
-
- * ssh(1), ssh-keygen(1): improve error messages for some common
-   PKCS#11 C_Login failure cases; bz#3130
-
- * ssh(1), sshd(8): make error messages for problems during SSH banner
-   exchange consistent with other SSH transport-layer error messages
-   and ensure they include the relevant IP addresses bz#3129
-
- * various: fix a number of spelling errors in comments and debug/error
-   messages
-
- * ssh-keygen(1), ssh-add(1): when downloading FIDO2 resident keys
-   from a token, don't prompt for a PIN until the token has told us
-   that it needs one. Avoids double-prompting on devices that
-   implement on-device authentication.
-
- * sshd(8), ssh-keygen(1): no-touch-required FIDO certificate option
-   should be an extension, not a critical option.
-    
- * ssh(1), ssh-keygen(1), ssh-add(1): offer a better error message
-   when trying to use a FIDO key function and SecurityKeyProvider is
-   empty.
-
- * ssh-add(1), ssh-agent(8): ensure that a key lifetime fits within
-   the values allowed by the wire format (u32). Prevents integer
-   wraparound of the timeout values. bz#3119
-
- * ssh(1): detect and prevent trivial configuration loops when using
-    ProxyJump. bz#3057.
-    
-Portability
------------
-
- * Detect systems where signals flagged with SA_RESTART will interrupt
-   select(2). POSIX permits implementations to choose whether
-   select(2) will return when interrupted with a SA_RESTART-flagged
-   signal, but OpenSSH requires interrupting behaviour.
-
- * Several compilation fixes for HP/UX and AIX.
-
- * On platforms that do not support setting process-wide routing
-   domains (all excepting OpenBSD at present), fail to accept a
-   configuration attempts to set one at process start time rather than
-   fatally erroring at run time. bz#3126
-
- * Improve detection of egrep (used in regression tests) on platforms
-   that offer a poor default one (e.g. Solaris).
-
- * A number of shell portability fixes for the regression tests.
-
- * Fix theoretical infinite loop in the glob(3) replacement
-   implementation.
-
- * Fix seccomp sandbox compilation problems for some Linux
-   configurations bz#3085
-
- * Improved detection of libfido2 and some compilation fixes for some
-   configurations when --with-security-key-builtin is selected.
-
-Checksums:
-==========
-
- - SHA1 (openssh-8.3.tar.gz) = 46c63b7ddbe46a0666222f7988c993866c31fcca
- - SHA256 (openssh-8.3.tar.gz) = M6CnZ+duGs4bzDio8hQNLwyLQChV+3wkUEO8HWLV35c=
-
- - SHA1 (/openssh-8.3p1.tar.gz) = 04c7adb9986f16746588db8988b910530c589819
- - SHA256 (openssh-8.3p1.tar.gz) = 8r774Ecv5+t10jNA6xdTHLazqsJAdeIGa0H4FOEjh7I=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available as RELEASE_KEY.asc from
-the mirror sites.
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@...nssh.com
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
