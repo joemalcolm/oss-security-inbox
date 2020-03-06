@@ -1,144 +1,162 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/26/1
-Message-Id: <E1kiKNx-0000Us-Ep@xenbits.xenproject.org>
-Date: Thu, 26 Nov 2020 16:44:45 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 351 v2 (CVE-2020-28368) - Information leak via power sidechannel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/06/1
+Message-ID: <f844fc65-2488-a416-a4eb-349866dca104@isc.org>
+Date: Thu, 5 Mar 2020 16:39:44 -0900
+From: ISC Security Officer <security-officer@....org>
+To: oss-security@...ts.openwall.com
+Cc: "security-officer@....org" <security-officer@....org>
+Subject: BIND Operational Notification: An error in handling TCP client quota limits can exhaust TCP connections in BIND 9.16.0
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2020-28368 / XSA-351
-                              version 2
+To the packagers and redistributors of BIND 9:
 
-                 Information leak via power sidechannel
+ISC has been informed of a significant defect in BIND 9.16.0, the
+recently-issued first release in the BIND 9.16 branch.
 
-UPDATES IN VERSION 2
-====================
+Once the quota level has been reached, a bug in TCP client quota
+enforcement can lead to servers improperly refusing additional TCP
+connections even after the number of current TCP clients drops back
+below the quota level.
 
-CVE assigned.
+The defect only affects BIND 9.16.0 and a few of the final releases
+in the BIND 9.15 development branch (9.15.6 through 9.15.8) and
+does not interfere with UDP queries -- a server which hits this
+bug will stop accepting new TCP connections but will continue
+processing UDP traffic.  Because the majority of query traffic
+is not affected we have assessed the severity level of this bug
+as not high enough to require a CVE identifier assignment and a
+special security software release -- but still significant enough
+that operators ought to be informed about it, therefore we are
+issuing the BIND Operational Notification that follows.
 
-ISSUE DESCRIPTION
-=================
+If you have any further questions after reading the Operational
+Notification below, please contact security-officer@....org and
+we will attempt to answer them.
 
-Researchers have demonstrated using software power/energy monitoring
-interfaces to create covert channels, and infer the operations/data used
-by other contexts within the system.
+Once again, BIND 9.16.0 is the only stable production release
+version that is affected; a few versions of the 9.15 unstable
+development were affected as well (see below for exact details.)
 
-Access to these interfaces should be restricted to privileged software,
-but it was found that Xen doesn't restrict access suitably, and the
-interfaces are accessible to all guests.
+Michael McNally
+ISC Security Officer
 
-For more information, see:
-  https://platypusattack.com
-  https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00389.html
 
-IMPACT
-======
+- ---------------------------------------------------------------------
 
-An unprivileged guest administrator can sample platform power/energy
-data.  This may be used to infer the operations/data used by other
-contexts within the system.
+Posting date:       05 March 2020
+Program Impacted:   BIND
+Versions affected:  9.16.0. Also versions 9.15.6 -> 9.15.8 of the
+                    9.15 development branch.
 
-The research demonstrates using this sidechannel to leak the AES keys
-used elsewhere in the system.
+Description:
 
-VULNERABLE SYSTEMS
-==================
+   One part of the development work done in the BIND 9.15 branch
+   was to modernize BIND's networking framework to use libuv, a
+   multi-platform C library that provides support for asynchronous
+   I/O based on event loops.
 
-Power/energy monitoring interfaces are platform and architecture
-specific.  Consult your hardware vendor to ascertain what power feedback
-interfaces are available.
+   Unfortunately, during this work we introduced a problem in
+   enforcing TCP client quota limits. A discrepancy in our quota
+   code can result in a situation where the count is not properly
+   decremented in some cases.
 
-For ARM systems, all versions of Xen are vulnerable.  The fix restricts
-access to the AMU (Activity Monitors Unit) interface, introduced in
-Armv8.4.
+Impact:
 
-For x86 systems, Xen 4.14 and earlier are vulnerable - master is not
-vulnerable, as these issues have been addressed in a more general
-fashion.
+   Under some circumstances, especially if a server is accepting
+   TCP connections from clients on multiple interfaces, once the
+   quota has been reached the server may stop accepting new TCP
+   connections even after the number of active TCP connections has
+   fallen back below the quota limit.
 
-The x86 fixes restrict access to:
- * Intel RAPL interface, introduced in SandyBridge CPUs.
- * Intel platform energy interface.
- * Intel perf_ctl interface, introduced in Pentium 4 CPUs and also
-   implemented by other vendors.
- * AMD RAPL interface, introduced in Ryzen/EPYC CPUs.
- * AMD compute unit energy interface, present in Fam15/16 CPUs.
+   Servers which encounter this defect will continue accepting and
+   processing UDP queries (which represent the majority of query
+   traffic on most servers) but can lose the ability to accept new
+   TCP connections until the server is restarted.
 
-MITIGATION
-==========
+Workarounds:
 
-There are no mitigations available.
+   To avoid reaching this condition accidentally the operator of
+   an affected server can provision the tcp-clients limit high
+   enough so that it is not expected to be encountered in normal
+   operation. However a malicious party could still succeed in
+   triggering it deliberately.
 
-RESOLUTION
-==========
+Solution:
 
-Applying the appropriate attached patch resolves this issue.
+   Since the workaround listed above is not effective against
+   deliberate exploitation ISC recommends that operators running
+   an affected release of BIND either:
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+   -  Download a patch diff (from https://downloads.isc.org/isc/bind9/9.16.0/patches);,
+      apply it to the 9.16.0 source code using the patch utility,
+      and recompile to include the behavior fix which will be included
+      in the next release of the 9.16 branch to prevent this defect,
 
-xsa351-arm.patch             Xen unstable - 4.10.x [ARM]
-xsa351-x86-4.14-?.patch      Xen 4.14.x            [x86]
-xsa351-x86-4.13-?.patch      Xen 4.13.x            [x86]
-xsa351-x86-4.12-?.patch      Xen 4.12.x            [x86]
-xsa351-x86-4.11-?.patch      Xen 4.11.x - 4.10.x   [x86]
+   -or-
 
-$ sha256sum xsa351*
-cad287981a870f13484834fa2364ffee68178517e906f55d2889304a4a9eae06  xsa351.meta
-70ebd0e93af240af2680374dcfd8ff4a5dd3eefccf670f1cb9b546d763d6a554  xsa351-arm.patch
-49b52a1366912a29e184e3014a9f1f579e8a0dd8a36f01d38d995d2c8ed81928  xsa351-arm-4.11.patch
-2e7b7c2b98625d70c8b10047a9f668372f3ccede167344dedb712312606acbca  xsa351-x86-4.11-1.patch
-ab9e2cb7d5e3e0c3a916f006c697495f4f01146e09df60ece59ce0a8f7aa5ed0  xsa351-x86-4.11-2.patch
-bb68f6e6905bc1566156cafab058cbaf02a17c197385c33a83b7f73885913c1c  xsa351-x86-4.12-1.patch
-53f464269f59498f8a9a614f10a47cfb1d81c666f0d684346e28005015de962c  xsa351-x86-4.12-2.patch
-67a29d66230faafd9a8047ac80ec18130b5659e80a38c3a412cb2be6d3288a8f  xsa351-x86-4.13-1.patch
-f7d8717dec33ee7484b36490402d113f1e7e168e7541bcf193fef620df299f08  xsa351-x86-4.13-2.patch
-7d4fbe11a766226d7f1b93c5bf34664d8855deee09d1feebc76f11e49f2aa9c9  xsa351-x86-4.14-1.patch
-41df825deafe3ef28e8594ec956033689af69f84a4a6dd92f97d1071e925203d  xsa351-x86-4.14-2.patch
-$
+   -  Revert to a stable production release of BIND from a branch
+      before the libuv networking restructuring introduced in 9.15/9.16.
+      At the present time our supported release branches are 9.11
+      (most recent release: 9.11.16) and 9.14 (most recent release: 9.14.11).
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
+Acknowledgements:
 
-Despite an attempt to organise predisclosure, the discoverers ultimately
-did not authorise a predisclosure.
+   ISC would like to thank Jay Ford of the University of Iowa for
+   reporting this issue.
+
+Do you still have questions? Questions regarding this advisory
+should go to security-officer@....org. To report a new issue, please
+encrypt your message using security-officer@....org's PGP key which
+can be found here: https://www.isc.org/pgpkey/. If you are unable
+to use encrypted email, you may also report new issues at:
+https://www.isc.org/reportbug/.
+
+Note:
+
+   ISC patches only currently supported versions. When possible we
+   indicate EOL versions affected. (For current information on which
+   versions are actively supported, please see
+   https://www.isc.org/download/);.
+
+ISC Security Vulnerability Disclosure Policy:
+
+   Details of our current security advisory policy and practice can
+   be found here: ISC Software Defect and Security Vulnerability
+   Disclosure Policy.
+
+This Knowledgebase article:
+
+https://kb.isc.org/docs/operational-notification-an-error-in-handling-tcp-client-quota-lim
+its-can-exhaust-tcp-connections-in-bind-9160
+
+is the complete and official operational notification document.
+
+Legal Disclaimer:
+
+   Internet Systems Consortium (ISC) is providing this notice on
+   an "AS IS" basis. No warranty or guarantee of any kind is expressed
+   in this notice and none should be implied. ISC expressly excludes
+   and disclaims any warranties regarding this notice or materials
+   referred to in this notice, including, without limitation, any
+   implied warranty of merchantability, fitness for a particular
+   purpose, absence of hidden defects, or of non-infringement. Your
+   use or reliance on this notice or materials referred to in this
+   notice is at your own risk. ISC may change this notice at any
+   time. A stand-alone copy or paraphrase of the text of this
+   document that omits the document URL is an uncontrolled copy.
+   Uncontrolled copies may lack important information, be out of
+   date, or contain factual errors.
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+/22UMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZt0IH/1P4OlmyExkX0u1mVXcG3o85esBYDAD6RKDhRCr5
-IjbitMUItESGYyz/Z6BEmuUIiJ1gfNx7xs4I3b4i8UUBYdBvvsdjeL3WK75Ym3nW
-Jh63AQzbDeNjkEnK4UnF6+V/9BJJUYB4avH6m82LU8+9Gp8S9CGH4y73gpiTGhcK
-VHPhdPOSc+ZDJ/OEQUR/3uMci9nuQ+qw9PClGybj3j4iru3PWfPRCSsdy2sAZO0T
-KwS+PvDgFKWqKiIAL6Ahfb0VnREP8zqpIxSq2cN8+SuVQym+H6zKh2exvYtEjq/j
-pWNzHublyLZoSBLvfguIeNKj4x2va9dF7/jJAnLfNVrvJCI=
-=QgHs
+iQEzBAEBCAAdFiEEempHtfnhIzrSVStcvZfcY57oxHsFAl5hqdoACgkQvZfcY57o
+xHtbXAf+OCvbM9tbXpmg6awukrth/22E64gp2lgc9mXI0Y4lJ9Nh93/DX+brHr2N
+K9lIG+LOA5C+P164B3vTBgnNX+32jr6UYIfdPE+gzEp9gyI+Wzwv39yBXcIVvxdv
+pt4Py7WoxOsAfsgLxTVu8Nz+6ul+RlWOr7il1oET4SqJTZ17oxeb6hElZSXo9oLY
+7u9HuQ8rCZWkAaxNmYYRi+yZfPiwiM1pEdeiur0MR2rF2XuI/84pM/Wl8jCyCxLP
+BodUfwg+Yjb8drucsFFN+70yazdBKAW88aaNyHvw1V+w15/6bEmnRt9LTIVdTqtK
+lO/lkhrjS9YtNWFaFdQD2Iu/Xz9YEQ==
+=rxet
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa351.meta" of type "application/octet-stream" (1772 bytes)
-
-Download attachment "xsa351-arm.patch" of type "application/octet-stream" (2418 bytes)
-
-Download attachment "xsa351-arm-4.11.patch" of type "application/octet-stream" (2714 bytes)
-
-Download attachment "xsa351-x86-4.11-1.patch" of type "application/octet-stream" (6244 bytes)
-
-Download attachment "xsa351-x86-4.11-2.patch" of type "application/octet-stream" (4448 bytes)
-
-Download attachment "xsa351-x86-4.12-1.patch" of type "application/octet-stream" (5992 bytes)
-
-Download attachment "xsa351-x86-4.12-2.patch" of type "application/octet-stream" (4682 bytes)
-
-Download attachment "xsa351-x86-4.13-1.patch" of type "application/octet-stream" (5988 bytes)
-
-Download attachment "xsa351-x86-4.13-2.patch" of type "application/octet-stream" (4800 bytes)
-
-Download attachment "xsa351-x86-4.14-1.patch" of type "application/octet-stream" (6075 bytes)
-
-Download attachment "xsa351-x86-4.14-2.patch" of type "application/octet-stream" (5173 bytes)
