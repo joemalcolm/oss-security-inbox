@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/14/1
-Message-ID: <20201014084428.GB10073@f195.suse.de>
-Date: Wed, 14 Oct 2020 10:44:28 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: kdeconnect: CVE-2020-26164: multiple security issues in kdeconnectd network daemon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/06/2
+Message-ID: <CAEvdU_3tU3NncO5CQ80BAo1LuyVBibaYMUmmhJY+gCrvDStxhQ@mail.gmail.com>
+Date: Fri, 6 Mar 2020 10:08:05 +0100
+From: Jacopo Cappellato <jacopoc@...che.org>
+To: announce@...che.org, "user@...iz.apache.org ML" <user@...iz.apache.org>,  Dev list <dev@...iz.apache.org>, oss-security@...ts.openwall.com
+Cc: security@...iz.apache.org, timon.funck@...s.de, disclosure@...s.de
+Subject: [CVE-2020-1943] Apache OFBiz XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 13, 2020 at 03:28:19PM +0200, Solar Designer wrote:
-> Will kdeconnectd no longer be active by default in openSUSE?  I hope so.
+Severity:
+Important
 
-This is our aim as security team. We are currently still discussing with
-the community how to achieve a good solution that removes the attack
-surface by default but enables interested users to easily access the
-application.
+Vendor:
+The Apache Software Foundation
 
-> Merely fixing the known issues doesn't address the fact that this poses
-> unjustified risk for most people.
+Versions Affected:
+OFBiz 16.11.01 to 16.11.07
 
-Well put. Exactly my thinking.
+Description:
+Data sent with "contentId" to "/control/stream" is not sanitized, allowing
+XSS attacks.
 
-Cheers
+Mitigation:
+Upgrade to 17.12.01 or manually apply the commits at OFBIZ-10753
+----
 
-Matthias
+Credit:
+Timon Funck <timon.funck@...s.de>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
+
