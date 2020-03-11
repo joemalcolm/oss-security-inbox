@@ -1,37 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/19/3
-Message-ID: <20201019175022.phn5sbd2ms7ocq5l@moyka>
-Date: Mon, 19 Oct 2020 10:50:22 -0700
-From: Ian Zimmerman <itz@...y.loosely.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/11/1
+Message-ID: <CAMNRR76nvdbR33WNWP-Rag0V7pFs-WFCLWv+=saSX0AsqgPC7w@mail.gmail.com>
+Date: Wed, 11 Mar 2020 12:32:54 +0800
+From: Chen QingYang <chenqingyang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+Subject: [CVE-2020-1947] Apache ShardingSphere(incubator) deserialization vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 2020-10-19 13:22, Solar Designer wrote:
+CVE-2020-1947: Apache ShardingSphere(incubator) deserialization
+vulnerability
 
-> Yes, the most difficult part with securing a desktop system is to keep
-> it conveniently usable.  I think it is possible to isolate the desktop
-> environment from user programs without inconveniencing the user.  As
-> to isolation between the user's programs, yes, that becomes visible to
-> the user and would require some training on how to explicitly transfer
-> data between the programs when needed.  Perhaps there are ways to make
-> this intuitive, e.g. drag-and-drop.
+Severity: low
 
-I sure hope that doesn't become the _only_ way, or I'll have some dark
-thoughts about the person who proposed it ;-) In any case I'll probably
-be dead by the time any of this is implemented, so maybe he has no
-worries.
+Vendor:
+The Apache Software Foundation
 
-I transfer between XA_PRIMARY and XA_SECONDARY using the Emacs
-*scratch* buffer as a way station. The only way I'm even physically able
-to drag is using pointer keys, ie. keypad Insert followed by keypad arrow
-keys followed by keypad Delete. And no I don't fit any of the predefined
-"disabled" pigeonholes so various accessibility kits do nothing for me.
+Versions Affected:
+ShardingSphere 4.0.0-RC3, 4.0.0
 
-XWindow and desktops based on it have many flaws including security
-ones, but it is flexible enough to be usable by "different" folks like
-me. Which of the modern replacements can say that, or even has
-actionable plans to address that?
+Description:
+Apache ShardingSphere's web console uses the SnakeYAML library for parsing
+YAML inputs to load datasource configuration. SnakeYAML allows to unmarshal
+data to a Java type By using the YAML tag. Unmarshalling untrusted data can
+lead to security flaws of RCE.
 
--- 
-Ian
+Mitigation:
+4.0.0-RC3 and 4.0.0 users should upgrade to 4.0.1
+
+Example:
+An attacker can use untrusted data to fill in the DataSource Config after
+login the sharding-ui.
+
+Credit:
+This issue was discovered by WuXiong of QI`ANXIN YUNYING Labs.
+
+References:
+https://shardingsphere.apache.org/community/en/security/
+
+
+Chen QingYang
+Apache ShardingSphere
+
