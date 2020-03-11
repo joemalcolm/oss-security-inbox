@@ -1,39 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/19/3
-Message-ID: <20200819155516.GA3690413@kroah.com>
-Date: Wed, 19 Aug 2020 17:55:16 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/12/1
+Message-ID: <CAKSuTPZu47DqKNfdDViR5p8miHdXa7B99Nz-q_=B5nQqgmbWNg@mail.gmail.com>
+Date: Wed, 11 Mar 2020 14:38:14 -0700
+From: Goutham Pacha Ravi <gouthampravi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel 5.7.9 DRM  Double Free
+Subject: [OSSA-2020-002] Manila: Unprivileged users can retrieve, use and manipulate share networks (CVE-2020-9543)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 19, 2020 at 03:42:33PM +0000, zdi-disclosures@...ndmicro.com wrote:
-> The specific flaw exists within DRM memory management. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to escalate privileges and execute code in the context of the kernel.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Note, this "vulnerability" was only accessible by root, so there's not
-all that many privileges that could really be escalated there.  Don't
-know why the original poster did not say that here, as they acknowledged
-it in the "bug report" they sent many of us.
+=================================================================================
+OSSA-2020-002: Unprivileged users can retrieve, use and manipulate
+share networks
+=================================================================================
 
-> 
-> This has been already addressed in the upstream commit 5de5b6ecf97a021f29403aa272cb4e03318ef586
+:Date: March 10, 2020
+:CVE: CVE-2020-9543
 
-It was already "addressed" before this problem was pointed out to
-anyone, so this was not fixed in relation to this being reported.
 
-Also, the fix is now in the 4.19.140, 5.4.59, 5.7.16, 5.8.2 kernel
-releases for those that care.
+Affects
+~~~~~~~
+- - Manila: <7.4.1, >=8.0.0 <8.1.1, >=9.0.0 <9.1.1
 
-And finally, it was pointed out that any kernel running with the
-CONFIG_SLAB_FREELIST_HARDENED=y option would not have any problems with
-this issue before it was fixed.
 
-> TREND MICRO EMAIL NOTICE
-> 
-> The information contained in this email and any attachments is confidential and may be subject to copyright or other intellectual property protection. If you are not the intended recipient, you are not authorized to use or disclose this information, and we request that you notify us by reply mail or telephone and delete the original message from your mail system.
+Description
+~~~~~~~~~~~
+Tobias Rydberg from City Network Hosting AB reported a vulnerability
+with the manila's share network APIs. An attacker can retrieve and
+manipulate share networks that do not belong to them if they possess
+the share network ID. By exploiting this vulnerability, they can view
+and manipulate share network subnets and use the share network to
+create resources such as shares and share groups.
 
-Very odd email footer for a public mailing list :)
 
-thanks,
+Patches
+~~~~~~~
+- - https://review.opendev.org/712167 (Pike)
+- - https://review.opendev.org/712166 (Queens)
+- - https://review.opendev.org/712165 (Rocky)
+- - https://review.opendev.org/712164 (Stein)
+- - https://review.opendev.org/712163 (Train)
+- - https://review.opendev.org/712158 (Ussuri)
 
-greg k-h
+
+Credits
+~~~~~~~
+- - Tobias Rydberg from City Network Hosting AB (CVE-2020-9543)
+
+
+References
+~~~~~~~~~~
+- - https://launchpad.net/bugs/1861485
+- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-9543
+
+
+Notes
+~~~~~
+- - The stable/queens and stable/pike branches are under extended
+maintenance and
+  will receive no new point releases, but patches for them are provided as a
+  courtesy.
+
+- --
+Goutham Pacha Ravi
+PTL, OpenStack Manila
+-----BEGIN PGP SIGNATURE-----
+
+wsFcBAEBCAAGBQJeaVorAAoJEDEySBmyuw9icCYP/jQPltyI04Vr3JMxCVRW
+lkedSvBUrWZSqfk/EXXoFDu7jbEC7v59ewPriXA0YQ3hTJoJxCGDK1mYiIyr
+yoJzNb/Lz8QPsNIMfg0JGxS6Jnz0lRztJJo0zOyAgtVUkJiLGQumYAb3Y9CO
+LYRWIYezcwhFLsH3l1pLq0M2ideXVIHT+9mTGWkHCT16+lGFArYUZK0qvi3U
+Z7cWNeGeU4m6+HR9A30nP304aV14K2/55ELtbvDEYWNM92xdrMPOPfuFrLat
+kVeXNq2QYGP1EuBAHREysKURJHAUPn8pttS+feLzze/MZ50JxoRWi1WcwHsK
+R8w0OjuMceN8WXGSV2Ng4fsCfGimx81ySqjdETZY2ckLxmRxNK3UDh+HLUQh
+XaG2PVD2ZMm7WgDiopdo3QcjpV28XdGjMBCTU2wKFJeePc8ugMAuJ4Dkscxn
+sIp9xZWtpkD5HcV6eSoYG/LvugdGMtn961Fn6I1UkGtjdc1TsjZRU/+wc8pN
+PVJQ3Ws24RCyH4VTHWbruIPHIRWC6HisOgRub3wMdwhaMEpicFuel1TR5qMz
+O8E3eGcN5IWIR0oykG35+YoV+EDTFy9ZeWJeui+KZZfcG5Kfssno0sX2E6dL
+RlJPnDHNWwzT8kr6eCF/wbSiK8dAy2PDwtVqZXKMiNWJMoAWJUnVJ02Ebf/O
+cmWK
+=fVID
+-----END PGP SIGNATURE-----
