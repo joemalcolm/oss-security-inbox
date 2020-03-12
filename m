@@ -1,46 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/16/1
-Message-ID: <CALPTtNU++hGZ4KO85Sz0qjmofe-BTspsh+rJvbMeiWHeVhTNpg@mail.gmail.com>
-Date: Mon, 15 Jun 2020 17:09:51 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/12/2
+Message-ID: <20200312101743.GA24784@f195.suse.de>
+Date: Thu, 12 Mar 2020 11:17:43 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: lockdown bypass on ubuntu 18.04's 4.15 kernel for loading unsigned modules
+Subject: roccat-tools: unsafe multi user scenario involving group-writeable /var/lib/roccat directory
 Content-Type: text/plain; charset=utf-8
 
-Please use
-https://cveform.mitre.org/ to request a CVE directly from MITRE. That’s
-your quickest and best way. :-)
+Hello list,
 
-~reed
+roccat-tools [1] is a set of programs that deals with Roccat input
+devices (mostly gaming mice) on Linux. These input devices support
+hardware macros i.e. they also register as keyboard input devices in the
+system and can send pre-configured key sequences upon clicking a mouse
+button.
 
-On Mon, Jun 15, 2020 at 4:02 PM Jason A. Donenfeld <Jason@...c4.com> wrote:
+I recently reviewed this package for openSUSE, because it uses a
+setgid-directory in /var/lib/roccat as per recommendation of upstream.
+It has the following ownership and mode:
 
-> Hi Mitre,
->
-> People are requesting a CVE to track this and are poking me to poke
-> you to assign one.
->
-> Jason
->
-> On Sun, Jun 14, 2020 at 12:30 AM Jason A. Donenfeld <Jason@...c4.com>
-> wrote:
-> >
-> > Hey folks,
-> >
-> > I noticed that Ubuntu 18.04's 4.15 kernels forgot to protect
-> > efivar_ssdt with lockdown, making that a vector for disabling lockdown
-> > on an efi secure boot machine. I wrote a little PoC exploit to
-> > demonstrate these types of ACPI shenanigans:
-> >
-> >
-> https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language.sh
-> >
-> > The comment on the top has description of exploit strategy and such. I
-> > haven't yet looked into other kernels and distros that might be
-> > affected, though afaict, Canonical's kernel seems to deviate a lot
-> > from upstream.
-> >
-> > Jason
->
+drwxrws--- 7 root roccat /var/lib/roccat/
 
+roccat-tools want to support a multi-user scenario here. If multiple
+users on the same machine are using these roccat devices then they need
+to share the profile data, since the profile data must match what is
+configured on hardware level. Otherwise different users would be
+overwriting each others settings.
+
+Each user that wants to configure a Roccat device needs to become a
+member of the roccat group. udev rules are also shipped with
+roccat-tools that grant members of the roccat group write access to the
+event and hidraw devices related to the Roccat device.
+
+The problem with the multi user scenario and the directory
+/var/lib/roccat is that the involved tools don't protect against
+potentially malicious members of the roccat group. There is no
+protection against symlink attacks. Each member of the roccat group can
+manipulate existing profiles in /var/lib/roccat. These profiles are not
+in a text format but consist of binary blobs representing raw C data
+structures. Therefore manipulating these binary blobs might also allow
+to trigger program corruption or otherwise manipulate program execution
+of other users.
+
+I contacted the upstream author about these concerns [2] and his view on
+this matter is that the input devices with hardware macros are unsafe by
+design. The hardware macros can trigger arbitrary input sequences and
+everybody with physical access to the input device or device driver
+level access to the input device can manipulate the macros and cause
+arbitrary code execution for other users in the system.
+
+I can understand this reasoning to some point but consider the unsafe
+handling of data in /var/lib/roccat an issue in its own right. Since
+this is a disputed finding I did not request to assign a CVE to this
+issue at the moment.
+
+For the openSUSE packaging of roccat-tools we decided to keep things as
+they are based on the assumption that a multi user scenario for this
+package will be a very rare practice.
+
+[1]: https://sourceforge.net/projects/roccat/files/roccat-tools
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=1165566
+
+Cheers
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
