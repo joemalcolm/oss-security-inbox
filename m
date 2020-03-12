@@ -1,72 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/11/3
-Message-ID: <20201111044821.GA15234@sinister.lan.codevat.com>
-Date: Tue, 10 Nov 2020 20:48:21 -0800
-From: Eric Pruitt <eric.pruitt@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Dash executes code when noexec ("-n") is specified
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/12/3
+Message-ID: <9d9dcfba-7dae-4d99-e036-86a1ad7ed4cb@igalia.com>
+Date: Thu, 12 Mar 2020 18:52:34 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0003
 Content-Type: text/plain; charset=utf-8
 
-I emailed security@...ian.org a couple of weeks ago about an issue with
-Dash executing code when I wouldn't expect it to based on its
-documentation and the POSIX spec, but I didn't get a response, so I'm
-posting the message here in hopes of getting another opinion:
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0003
+------------------------------------------------------------------------
 
-Most UNIX shells support "-n" / noexec which should syntax check scripts
-without executing them, but Dash will execute code anyway in some
-contexts:
+Date reported           : March 12, 2020
+Advisory ID             : WSA-2020-0003
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0003.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0003.html
+CVE identifiers         : CVE-2020-10018.
 
-    $ dash -n -c 'echo this should not be executed'
-    this should not be executed
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Interestingly, it does not execute code that gets piped in:
+CVE-2020-10018
+    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
+    2.28.0.
+    Credit to Sudhakar Verma, Ashfaq Ansari & Siddhant Badhe - Project
+    Srishti of CloudFuzz.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue
+    (use-after-free) was addressed with improved memory handling.
 
-    $ echo 'echo this should not be executed' | dash -n
-    $
 
-In discussing "set -n" / noexec, POSIX 2018
-(https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#set)
-states "The shell shall read commands but does not execute them; this
-can be used to check for shell script syntax errors. An interactive
-shell may ignore this option," and I did not find anything in the Dash
-manual that would suggest this is intentional:
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
-    $ man dash | fgrep -C2 noexec
-               -f noglob        Disable pathname expansion.
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-               -n noexec        If not interactive, read commands but do
-                                not execute them.  This is useful for
-                                checking the syntax of shell scripts.
+The WebKitGTK and WPE WebKit team,
+March 12, 2020
 
-Maybe this is an issue with how Dash determines whether its being
-executed interactively, but even if I try redirecting file descriptors
-so none of them point to a TTY, the code still gets run:
 
-    $ ls -l
-    total 0
-    $ dash -n -c 'touch script_was_executed' < /dev/null >/dev/null 2>&1
-    $ ls -l
-    total 0
-    -rw------- 1 ericpruitt ericpruitt 0 Oct 28 17:22 script_was_executed
-    $
 
-None of the other shells I tested exhibit this:
-
-    $ ksh -n -c 'echo this should not be executed'
-    $ mksh -n -c 'echo this should not be executed'
-    $ zsh -n -c 'echo this should not be executed'
-    $ bash -n -c 'echo this should not be executed'
-    $
-
-This has the potential to be a security hazard because programs could
-unintentionally execute arbitrary code. I discovered this while helping
-someone with a test framework in which I suggested implementing shell
-script syntax checking as part of validating some configuration files
-that contain short Bash and Dash scripts (e.g. Cron jobs). Had this
-issue not been discovered, it's possible the build system would've
-inadvertently executed code I only wanted to syntax check.
-
-Can you confirm whether or not this behavior is expected?
-
-Thanks,
-Eric
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
