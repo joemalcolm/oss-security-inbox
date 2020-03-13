@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["546" "Wednesday" "22" "August" "2018" "20:33:37" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkL5wLrabBXB6JSUhxwG6UVmYrCYOJYhw1rBeC=3dAdF=g@mail.gmail.com>" "17" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "8" "2018082303:33:37" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        taviso@googl Aug 22   17/546   " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>" ("<CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>" "<CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>" "<alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>" "<CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>" "<CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>" "<CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>" "<alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["890" "Friday" "13" "March" "2020" "09:27:29" "-0400" "Marc Deslauriers" "marc.deslauriers@canonical.com" "<db191909-53dd-786f-9b28-200e058917f8@canonical.com>" "20" "Re: [oss-security] Bluez <5.53 DoS/privilege escalation" "^Date:" nil nil "3" "2020031313:27:29" "[oss-security] Bluez <5.53 DoS/privilege escalation" (number mark "        marc.deslaur Mar 13   20/890   " thread-indent "\"Re: [oss-security] Bluez <5.53 DoS/privilege escalation\"\n") "<CACdnJutPzcRCBu53nE9NOYE3gq5w1mTsmWzwHNzEyHmmXJZrAg@mail.gmail.com>" ("<CACdnJutPzcRCBu53nE9NOYE3gq5w1mTsmWzwHNzEyHmmXJZrAg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Bluez <5.53 DoS/privilege escalation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11746 invoked by uid 550); 23 Aug 2018 03:34:00 -0000
+Received: (qmail 17744 invoked by uid 550); 13 Mar 2020 13:27:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11723 invoked from network); 23 Aug 2018 03:33:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=T3FwpHav2fqz7eVxujilZASBeEDkitj7KPnUHqLUfmI=;
-        b=MnZkuzPhUfsSsJpTDf99CQXnQ0ASWBA3v06EbgeQO2Bbu3Eu0tiTQesN9Q3BWV7biI
-         JIGEmyjLAOBmvXnU/TW1gVd6glOxxtfEkmkAvJFRGdLH9D4MjiACganQXAxgBlfMUPMZ
-         rsR49Qe23MOmuXP9+he0bkfcl81ybRbaj4wRrc1EliWpa5j8qjTPy4SteXQ9KlokdBuY
-         5LbG1y8gIMGu2cmVKXHt85WOQy+AZztyUZ18zZn08TLMHKiSD+6kIqiSgTwN63j04bxq
-         Wav9879R/1CHmWKAG4NqUNw94GxcOvAg/p859qXAedYC8jzuwHf8+166xgUjK2+C0oAY
-         hUyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=T3FwpHav2fqz7eVxujilZASBeEDkitj7KPnUHqLUfmI=;
-        b=a0oMFn1hPRrYOiQN5SfndSgi+TvCEqsF6C3lkKproo7QXvM4wvlB3THY+2T1f+1fIw
-         P+VpLQtnnWRpt3Jx4GtxA+NbyJEEVMK6mxmxUAfc65oegdatpPP5UmFQ+0LJWOa7/Pzl
-         idlL+UncEvu/f5dduOdH6VBsuR4q+sVpn40hvebUG61VsRUy4UUD9+az7a92JqmmYQ+2
-         Qkn4yNvxgkO6GXOpEkPkGMiBP5vPHsqLMTZaSFdkO4qulBPRJefipA/44GCFBzssmMxk
-         gwF8VHpPu7tY2S2WZNP7zF9jBsVivM/Hnk1RKcv1pGFsOAG9g3Tki1ae1SwaM7adC3lr
-         DOcg==
-X-Gm-Message-State: AOUpUlGAn+gH0WiLyee1QB6KDlsQSI9+jR1IvObEiSSdTi1zRZQ7Kh7u
-	KrBSfuYc0ayBwLAvrhptjEV+5QhG3YPHmx5n3aafnzC8
-X-Google-Smtp-Source: AA+uWPyTkz6RkHf6ahIVF2eJsguBlvZ4WqO5uak2CMKvHlzmqCNOsowlJuoy/hkQWnv+1M7ph5jfrnBLYIAdW25H+ws=
-X-Received: by 2002:a37:8742:: with SMTP id j63-v6mr53411112qkd.353.1534995227256;
- Wed, 22 Aug 2018 20:33:47 -0700 (PDT)
+Received: (qmail 17723 invoked from network); 13 Mar 2020 13:27:42 -0000
+References: <CACdnJutPzcRCBu53nE9NOYE3gq5w1mTsmWzwHNzEyHmmXJZrAg@mail.gmail.com>
+Autocrypt: addr=marc.deslauriers@canonical.com; prefer-encrypt=mutual;
+ keydata=
+ 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
+ 6fA5+UTqDZmm6A==
+Message-ID: <db191909-53dd-786f-9b28-200e058917f8@canonical.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-References: <CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>
- <CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>
- <alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>
- <CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>
- <CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>
- <CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com> <alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>
-In-Reply-To: <alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>
-Message-ID: <CAJ_zFkL5wLrabBXB6JSUhxwG6UVmYrCYOJYhw1rBeC=3dAdF=g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000004154dc057411ed59"
-Date: Wed, 22 Aug 2018 20:33:37 -0700
-From: Tavis Ormandy <taviso@google.com>
+In-Reply-To: <CACdnJutPzcRCBu53nE9NOYE3gq5w1mTsmWzwHNzEyHmmXJZrAg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-CA
+Content-Transfer-Encoding: 7bit
+Date: Fri, 13 Mar 2020 09:27:29 -0400
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS
- coders in policy.xml by default?
+Subject: Re: [oss-security] Bluez <5.53 DoS/privilege escalation
 To: oss-security@lists.openwall.com
 
---0000000000004154dc057411ed59
-Content-Type: text/plain; charset="UTF-8"
+On 2020-03-12 6:55 p.m., Matthew Garrett wrote:
+> https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00352.html
+> describes a vulnerability in versions below 5.53 of the Bluez
+> Bluetooth stack. Intel do not appear to have disclosed this issue to
+> distributions in advance, and have not yet made a release that
+> includes the fixes. https://patchwork.kernel.org/patch/11428317/ and
+> https://patchwork.kernel.org/patch/11428319/ should apply to older
+> versions.
+> 
 
-On Wed, Aug 22, 2018 at 2:17 PM Bob Friesenhahn <
-bfriesen@simple.dallas.tx.us> wrote:
+I looks like the patches went into the tree after 5.53, so I'm not sure 5.53 is
+actually fixed.
 
-> The CERT advisory at https://www.kb.cert.org/vuls/id/332928 provides a
-> policy.xml example which does not appear to block PS2 and PS3, which
-> are also entry points for reading Postscript.
->
->
-I think (luckily) there's no magic that will invoke those, but I think
-you're right, for completeness they should be disabled by default as well.
+Does anyone know if there were any other changes in 5.53 that would mitigate the
+issue?
 
-Tavis.
+https://git.kernel.org/pub/scm/bluetooth/bluez.git/commit/?id=8cdbd3b09f29da29374e2f83369df24228da0ad1
+https://git.kernel.org/pub/scm/bluetooth/bluez.git/commit/?id=3cccdbab2324086588df4ccf5f892fb3ce1f1787
 
---0000000000004154dc057411ed59--
+Marc.
