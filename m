@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/08/4
-Message-ID: <20200508162248.GA789721@ryzen.bugs.fi>
-Date: Fri, 8 May 2020 19:22:48 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/13/1
+Message-ID: <2ea60db6-f798-f9c6-90c6-93b011257ff7@apache.org>
+Date: Fri, 13 Mar 2020 07:33:45 +0100
+From: Oliver Heger <oheger@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Incentives for pre-release reporting
+Subject: [CVE-2020-1953] Uncontrolled class instantiation when loading YAML files in Apache Commons Configuration
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+CVE-2020-1953: Uncontrolled class instantiation when loading YAML files
+in Apache Commons Configuration
 
-On Fri, May 08, 2020 at 06:16:09PM +0200, Florian Weimer wrote:
-> My recollection (which could be wrong) suggests that vulnerabilities in
-> unreleased, not really shipping versions do not usually receive CVE IDs.
+Severity: Moderate
 
-At least the process to get CVE is faster nowadays, but you should think if CVE
-consumers (persons patching systems, software users etc) find those CVEs
-useful. In many cases they won't if there is no released package and if people
-are not commonly using the latest version from Git.
+Vendor:
+The Apache Software Foundation
 
-> If they waited until after the release, they'd get one, so that is creating
-> the wrong incentive. How do projects handle this?
+Versions Affected:
+2.2 to 2.6
 
-One method is to have a page where you list people and details. Something like:
-https://www.mongodb.com/security and some vendors send small payments
-(sometimes using bug bounty platforms) or cheap items.
+Description:
+Apache Commons Configuration uses a third-party library to parse YAML
+files which by default allows the instantiation of classes if the YAML
+includes special statements. If a YAML file is from an untrusted source,
+it can therefore load and execute code out of the control of the host
+application.
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
+Mitigation:
+Users should upgrade to to 2.7, which prevents class instantiation by
+the YAML processor.
 
-iQIzBAEBCgAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAl61h1UACgkQJ633pE6q
-dXR7wRAApYSSGspFQi2REuw3SFw1G0Lxoi1wDzY6CsL5jTKST96rF7vPMJNHuIgk
-abWxoY2s4ChxPnnroM1cUT6LTaUu1ZbSR6Q4V5mgmwpFfRAlQ/QvRWVxlvhIk50L
-Ysuk4aBmNuAzlptBEgm6D4swd/V2kKHk3ewWQGj6GV2k7sYBwo4PT4Nl2viiODsN
-Px5i0e/0qnu8naM3GclGzRwGXhQcLx2jPp4dZIL3NmpJsSyaNye5+q7C/K3Wh3fS
-eVq73N4QzA/DwKGZWSdJxcBRBqsiP6xY5nkOW7Oe0wRDOW+JerUnzjqLp+xt6ggG
-xwgB1qEnprf+d4eLBkvdg43VhrBaD9vTBl3mTTvXiFieNebA6rUUXd7wthFOd5t7
-BK5VGbR4u/X27QWH/XXszO692cqF99sGq6ny8qQdqrfc94o2E2r/qqocU0++tYsF
-leHH1WKxfHs+eMQhg6JP/tSh2Ci3Oh8cztaC8K8aAweXqj80+UJ9b6ujKl2f97nj
-yRYo6s+vPvkNTUy1P+v0zj9LKr7cX0fuF3Z6EN+FYe3e0AEG4TFMSRBWdEKYS5Xa
-efPR9LkLWS97EzPdErf7fUQBJoiv8xB03R1Y+g0Otm2nMH8oMIERBW8Q4gTCRlCB
-QZ/3hJtGKkZBz/MIKlMyrKQjOFyl89RFtcE9ABIMzYFlyQxfs24=
-=3AYf
------END PGP SIGNATURE-----
+Credit:
+This issue was discovered by Daniel Kalinowski of ISEC.pl Research Team
+
+Oliver Heger
+on behalf of the Apache Commons PMC
+
