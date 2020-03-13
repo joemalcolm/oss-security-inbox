@@ -1,122 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/1
-Message-Id: <E1kKiTq-0002Gr-8r@xenbits.xenproject.org>
-Date: Tue, 22 Sep 2020 13:37:14 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 333 v3 (CVE-2020-25602) - x86 pv: Crash when handling guest access to MSR_MISC_ENABLE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/13/2
+Message-ID: <db191909-53dd-786f-9b28-200e058917f8@canonical.com>
+Date: Fri, 13 Mar 2020 09:27:29 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Bluez <5.53 DoS/privilege escalation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 2020-03-12 6:55 p.m., Matthew Garrett wrote:
+> https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00352.html
+> describes a vulnerability in versions below 5.53 of the Bluez
+> Bluetooth stack. Intel do not appear to have disclosed this issue to
+> distributions in advance, and have not yet made a release that
+> includes the fixes. https://patchwork.kernel.org/patch/11428317/ and
+> https://patchwork.kernel.org/patch/11428319/ should apply to older
+> versions.
+> 
 
-            Xen Security Advisory CVE-2020-25602 / XSA-333
-                               version 3
+I looks like the patches went into the tree after 5.53, so I'm not sure 5.53 is
+actually fixed.
 
-      x86 pv: Crash when handling guest access to MSR_MISC_ENABLE
+Does anyone know if there were any other changes in 5.53 that would mitigate the
+issue?
 
-UPDATES IN VERSION 3
-====================
+https://git.kernel.org/pub/scm/bluetooth/bluez.git/commit/?id=8cdbd3b09f29da29374e2f83369df24228da0ad1
+https://git.kernel.org/pub/scm/bluetooth/bluez.git/commit/?id=3cccdbab2324086588df4ccf5f892fb3ce1f1787
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When a guest accesses certain Model Specific Registers, Xen first reads
-the value from hardware to use as the basis for auditing the guest
-access.
-
-For the MISC_ENABLE MSR, which is an Intel specific MSR, this MSR read
-is performed without error handling for a #GP fault, which is the
-consequence of trying to read this MSR on non-Intel hardware.
-
-IMPACT
-======
-
-A buggy or malicious PV guest administrator can crash Xen, resulting in
-a host Denial of Service.
-
-VULNERABLE SYSTEMS
-==================
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-Only Xen versions 4.11 and onwards are vulnerable.  4.10 and earlier are
-not vulnerable.
-
-Only x86 systems which do not implement the MISC_ENABLE MSR (0x1a0) are
-vulnerable.  AMD and Hygon systems do not implement this MSR and are
-vulnerable.  Intel systems do implement this MSR and are not vulnerable.
-Other manufacturers have not been checked.
-
-Only x86 PV guests can exploit the vulnerability.  x86 HVM/PVH guests
-cannot exploit the vulnerability.
-
-MITIGATION
-==========
-
-Running only HVM/PVH guests avoids the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa333.patch           Xen 4.11 - xen-unstable
-
-$ sha256sum xsa333*
-3f3d974ede9fe80f4eb63640dce058cf9e2073cd79e4c085c944f3ca5e454e26  xsa333.meta
-8edec914fbdf036fba8cb54a75d3a9b025fac936e0af35512954a2dc2b12a26f  xsa333.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/eUMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZu5EH/RAaLJocX5UJfEZ4QT2osvnc1aaZjBXNz4JN1HDj
-46pGxBOv1kEDxBu/lqbbXEY2aLeBLder2nj0OHCYgDkPCh4fqaciBqCEO97COqzo
-dFvN17dZ0pjyBUoSXs8mVPWjMblBjf6/Mt+/gh8speJQ32V3lHz6xYc9Nu0CVoL5
-+RiaRVPGYOVndF5A0XK6UIiiMAOcVgPHpg485QFT2EIVPlKVu/jDrrsYep/9OrmP
-bamEjKcYoFBBsMlpUNAtUK0QZGnSAe2vVtbUNeHgY5T5BDuJzLZXdMDGmBDXK2vV
-0PNMOoIeFev6Pq7yuvvTqI0PKEBmO825hkbZ5sEva/7pZ60=
-=zf3E
------END PGP SIGNATURE-----
-
-Download attachment "xsa333.meta" of type "application/octet-stream" (1301 bytes)
-
-Download attachment "xsa333.patch" of type "application/octet-stream" (1296 bytes)
+Marc.
