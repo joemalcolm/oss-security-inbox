@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["635" "Tuesday" "5" "January" "2016" "11:13:46" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20160105101345.GA13653@lorien.valinor.li>" "22" "[oss-security] CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files" nil nil nil "1" "2016010510:13:46" "[oss-security] CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files" (number mark "U       carnil@debia Jan  5   22/635   " thread-indent "\"[oss-security] CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["837" "Friday" "13" "March" "2020" "17:28:26" "-0700" "Anthony Baker" "abaker@apache.org" "<CAEwge-G24JXjkEEayqufi=zon-mo5usfiS3H8MYvtpg8=g0HuA@mail.gmail.com>" "27" "[oss-security] [CVE-2019-10091] Apache Geode SSL endpoint verification vulnerability" nil nil nil "3" "2020031400:28:26" "[oss-security] [CVE-2019-10091] Apache Geode SSL endpoint verification vulnerability" (number mark "U       abaker@apach Mar 13   27/837   " thread-indent "\"[oss-security] [CVE-2019-10091] Apache Geode SSL endpoint verification vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-10091] Apache Geode SSL endpoint verification vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7919 invoked by uid 550); 5 Jan 2016 10:14:00 -0000
+Received: (qmail 26124 invoked by uid 550); 14 Mar 2020 11:01:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7901 invoked from network); 5 Jan 2016 10:13:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=8vrnwOijvk5/f1NlkWj6Rsy5VKsWeQYoNhWLtzgfC9k=;
-        b=rioB7hzJ7bfYhpUn9M0gXo8n2MTtZaC4YoY3cLARiQINgNK5b2zjoTLraIP8v6oKc/
-         8h20yOn45K3rfOkpTG7WF+3XNFUGHFW/iFx3ghMHY7isBROamUtPgB7TzYWY+N3qJRDK
-         O69IdTIK1irCqYSaCs6dPX3u81q38760LP3/u0FTmqTWrfIfNzQbo883Cb40KlhLPEsb
-         yPIg3IoMGSgxm3HkyMiBpGXpep4JLkstHJALMoLdO6d/vO/q0rPYdy6oDgolp6f4oi+V
-         cBP9IQt7bp3qC/DQgLrq+k/RZ15lGXSjnrGH1JUje4/8LXTBbRqJwCdVO7old/UCBw33
-         xlxQ==
-X-Received: by 10.194.20.5 with SMTP id j5mr39781975wje.71.1451988828253;
-        Tue, 05 Jan 2016 02:13:48 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Tue, 5 Jan 2016 11:13:46 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20160105101345.GA13653@lorien.valinor.li>
+Received: (qmail 7222 invoked from network); 14 Mar 2020 00:28:50 -0000
+X-Gm-Message-State: ANhLgQ3AkwMXCC6VzCUWmimOVC929przgbosXtmooEkz35oy+oMYdFmZ
+	BjjUAdMXllxqx3BcD4BF1I5ZChnPDdEsYjT02ELd1OJGgY0FkByh1TJVRnRRtPyQQzskup+TiwV
+	kod0tFThIMEXYb8Xpen/WVl0oTFB07XrjEjZ1UEp+u7F437cY0Zzdfd/yo2Vg7oO2VWDBnw==
+X-Received: by 2002:a17:906:8291:: with SMTP id h17mr14170591ejx.350.1584145717207;
+        Fri, 13 Mar 2020 17:28:37 -0700 (PDT)
+X-Google-Smtp-Source: ADFU+vsieVOGyiHcm5MFLR//hxWL8Zk/H2B1ZtRnSxiaXbSl5Q7tLnAmr9gfI0BT0O34BuEF5VxHUd1vHUhvQGx5gGI=
+X-Received: by 2002:a17:906:8291:: with SMTP id h17mr14170580ejx.350.1584145717017;
+ Fri, 13 Mar 2020 17:28:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] CVE Request: netfilter-persistent: (local) information leak due to
- world-readable rules files
+From: Anthony Baker <abaker@apache.org>
+Date: Fri, 13 Mar 2020 17:28:26 -0700
+X-Gmail-Original-Message-ID: <CAEwge-G24JXjkEEayqufi=zon-mo5usfiS3H8MYvtpg8=g0HuA@mail.gmail.com>
+Message-ID: <CAEwge-G24JXjkEEayqufi=zon-mo5usfiS3H8MYvtpg8=g0HuA@mail.gmail.com>
+To: announce@apache.org, user@geode.apache.org, geode <dev@geode.apache.org>, 
+	asf-security <security@apache.org>, oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [CVE-2019-10091] Apache Geode SSL endpoint verification vulnerability
 
-Hi,
+CVE-2019-10091 Apache Geode SSL endpoint verification vulnerability
 
-iptables-persistent (in Debian) is a loader for netfilter configuration
-using a plugin-based architecture.
+Severity: Medium
 
-iptables-persistent is vulnerable to a (local) information leak due to
-world-readable rules files. It was reported in Debian in
+Vendor: The Apache Software Foundation
 
-https://bugs.debian.org/764645
+Versions Affected:
+Apache Geode 1.9.0
 
-And fixed via
+Description:
+When TLS is enabled with ssl-endpoint-identification-enabled set to
+true, Apache Geode fails to perform hostname verification of the
+entries in the certificate SAN during the SSL handshake.  This could
+compromise intra-cluster communication using a man-in-the-middle
+attack.
 
-https://anonscm.debian.org/cgit/collab-maint/iptables-persistent.git/commit/?id=37905034f07e94c4298a1762b39b7bbd4063c0df
+Mitigation:
+Users of the affected versions should upgrade to Apache Geode 1.9.1,
+1.10.0, or later.
 
-Could you assign a CVE for this issue?
+Credit:
+This issue was reported responsibly to the Apache Geode Security Team
+by Sai Boorlagadda from Pivotal.
 
-p.s.: There is a fork of iptables-persistent. But I have not checked
-if the fork https://github.com/zertrin/iptables-persistent is as well
-affected by this issue).
-
-Regards,
-Salvatore
+References:
+[1] https://issues.apache.org/jira/browse/GEODE-7018
+[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
