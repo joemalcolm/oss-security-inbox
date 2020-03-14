@@ -1,34 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/21/2
-Message-ID: <CAKx+4-oiN_VbfmnYv=T27zbH0gp3NVcVQeQDixUwiPR_yyB6BA@mail.gmail.com>
-Date: Tue, 21 Apr 2020 17:18:53 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-10690 kernel: use-after-free in cdev_put() when a PTP device is removed while it's chardev is open
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/14/1
+Message-ID: <CAEwge-G24JXjkEEayqufi=zon-mo5usfiS3H8MYvtpg8=g0HuA@mail.gmail.com>
+Date: Fri, 13 Mar 2020 17:28:26 -0700
+From: Anthony Baker <abaker@...che.org>
+To: announce@...che.org, user@...de.apache.org, geode <dev@...de.apache.org>,  asf-security <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [CVE-2019-10091] Apache Geode SSL endpoint verification vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Team,
+CVE-2019-10091 Apache Geode SSL endpoint verification vulnerability
 
-Red Hats kernel has a flaw in Precision Time Protocol (PTP), which can
-cause a kernel panic with 'general protection fault' with below details.
+Severity: Medium
 
-A use-after-free flaw was found in Linux Kernels implementation of __fput.
-When a (high privileged) process allocates a ptp device file (like
-/dev/ptpX) and voluntarily goes to sleep. During this time if the
-underlying device is removed (potential privilege escalation) by the user
-with administrator privilege, it can cause a denial of service (DoS)
-problem as the process wakes up to terminate and clean all attached files.
-The system crashes due to the cdev structure being invalid (as already
-freed) which is pointed to by the inode.
+Vendor: The Apache Software Foundation
 
-'CVE-2020-10690' was assigned by Red Hat Inc.
+Versions Affected:
+Apache Geode 1.9.0
 
-Upstream fix:
-https://lore.kernel.org/linux-fsdevel/20191125125342.6189-1-vdronov@redhat.com/T/#u
+Description:
+When TLS is enabled with ssl-endpoint-identification-enabled set to
+true, Apache Geode fails to perform hostname verification of the
+entries in the certificate SAN during the SSL handshake.  This could
+compromise intra-cluster communication using a man-in-the-middle
+attack.
 
+Mitigation:
+Users of the affected versions should upgrade to Apache Geode 1.9.1,
+1.10.0, or later.
 
-Thank You
-..
-Rohit Keshri / Red Hat Product Security Team
-01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+Credit:
+This issue was reported responsibly to the Apache Geode Security Team
+by Sai Boorlagadda from Pivotal.
 
+References:
+[1] https://issues.apache.org/jira/browse/GEODE-7018
+[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
