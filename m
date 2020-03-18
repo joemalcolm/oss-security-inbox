@@ -1,46 +1,207 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/23/3
-Message-ID: <20200723115645.GA20752@openwall.com>
-Date: Thu, 23 Jul 2020 13:56:45 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/18/5
+Message-ID: <AM0PR08MB529780C88B4862081EB674ABC9F70@AM0PR08MB5297.eurprd08.prod.outlook.com>
+Date: Wed, 18 Mar 2020 18:19:25 +0000
+From: "Janushkevich, Dmitry" <dmitry.janushkevich@...ecure.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: U-Boot verified boot improper signature verification
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 23, 2020 at 01:51:17PM +0530, Mohammad Tausif Siddiqui wrote:
-> I think the ball is on the CNA: Hackerone side to get it published to
-> MITRE, so that they can show it up on their page.
-> 
-> CNAs are provided with weekly reports by the root CNA: MITRE, which lists
-> Reserved But Public "RBP" CVEs owned by that CNA, irrespective of whether
-> the CVE was assigned on distros list or elsewhere. That closes the reminder
-> loop.
-> 
-> There's no pull request for CVE-2020-8177 at
-> https://github.com/CVEProject/cvelist/pulls
-> We cannot determine if they used the alternative, web form:
-> https://cveform.mitre.org/
-> 
-> You may want to reach Hackerone from the CNA contacts
-> <https://cve.mitre.org/cve/request_id.html#cna_participants>, for this
-> exception of delay.
+Hello list,
 
-Most of the above is once again too specific to the given CVE ID,
-whereas we need a general understanding of whether the task Xiao
-proposes and volunteers for is worthwhile or not.  I'd appreciate a
-direct answer to that.
+Here is an advisory regarding a recently discovered and patched issue in U-Boot.
+Permalink:
 
-Do I interpret this paragraph correctly as implying the answer is no? -
+https://labs.f-secure.com/advisories/das-u-boot-verified-boot-bypass/
 
-> CNAs are provided with weekly reports by the root CNA: MITRE, which lists
-> Reserved But Public "RBP" CVEs owned by that CNA, irrespective of whether
-> the CVE was assigned on distros list or elsewhere. That closes the reminder
-> loop.
+(Das) U-Boot typically is employed as a second-stage boot loader responsible for
+loading the Linux operating system's kernel and related images and passing
+control further to the OS. The bootloader is also responsible to verify
+integrity and authenticity of the loaded images to ensure only authentic
+software is allowed to run. U-Boot's verified boot feature [1,2] is used to
+achieve this. This method only applies to the flattened image tree (FIT) image
+format.
 
-In other words, CNAs receive their reminders from MITRE weekly, so
-there's no need for anyone else reminding them, correct?  However, can
-it happen that MITRE wouldn't recognize a CVE ID as "Reserved But
-Public", continuing to treat it as merely reserved, in which case there
-would be no reminder to correct that?  Could Xiao help with this?
+The FIT image is based on previously developed device tree format used in both
+U-Boot and the Linux kernel to store and pass configuration information. An
+example image tree source (the text format used to generate FIT images) from
+the documentation is reproduced below to illustrate the concept:
 
-Alexander
+```
+/ {
+	images {
+		kernel-1 {
+			data = <data for kernel1>
+			hash-1 {
+				algo = "sha1";
+				value = <...kernel hash 1...>
+			};
+		};
+		kernel-2 {
+			data = <data for kernel2>
+			hash-1 {
+				algo = "sha1";
+				value = <...kernel hash 2...>
+			};
+		};
+		fdt-1 {
+			data = <data for fdt1>;
+			hash-1 {
+				algo = "sha1";
+				value = <...fdt hash 1...>
+			};
+		};
+		fdt-2 {
+			data = <data for fdt2>;
+			hash-1 {
+				algo = "sha1";
+				value = <...fdt hash 2...>
+			};
+		};
+	};
+	configurations {
+		default = "conf-1";
+		conf-1 {
+			kernel = "kernel-1";
+			fdt = "fdt-1";
+			signature-1 {
+				algo = "sha1,rsa2048";
+				value = <...conf 1 signature...>;
+			};
+		};
+		conf-2 {
+			kernel = "kernel-2";
+			fdt = "fdt-2";
+			signature-1 {
+				algo = "sha1,rsa2048";
+				value = <...conf 1 signature...>;
+			};
+		};
+	};
+};
+```
+
+This image tree source describes two kernels with two flattened device tree
+blobs (FDTs) as well as two configurations denoting which images are to be
+used together. The complete configuration may also include other images e.g.
+RAM disks. Hash values for individual images are computed during image build.
+
+When an image is signed using the mkimage tool provided with U-Boot, the image
+is modified by adding several properties to corresponding signature nodes,
+specifically `hashed-strings`, `hashed-nodes`, `timestamp`, `signer-version`,
+`signer-name`, and `value`. The `value` property holds the actual signature,
+while the `hashed-strings` and `hashed-nodes` properties represent the elements
+that were used to compute the signed hash value. For example:
+
+```
+conf@1 {
+  description = [REMOVED];
+  kernel = "kernel@1";
+  fdt = "fdt@1";
+  ramdisk = "ramdisk@1";
+  signature@1 {
+    hashed-strings = [00 00 00 00 00 00 00 8e];
+    hashed-nodes = "/", "/configurations/conf@1", "/images/fdt@1", "/images/fdt@...ash@1", "/images/kernel@1", "/images/kernel@...ash@1", "/images/ramdisk@1", "/images/ramdisk@...ash@1";
+    timestamp = [5d cb 49 dc];
+    signer-version = "2019.07";
+    signer-name = "mkimage";
+    value = [03 d9 d7 e8 5a cf ..];
+    algo = "sha256,rsa4096";
+    key-name-hint = [REMOVED];
+    sign-images = "fdt", "kernel", "ramdisk";
+  };
+};
+```
+
+The string block data starting from offset 0 to offset 0x8E was included in the
+hash computation along with enumarated tree nodes, which produces the given RSA
+signature.
+
+It was found that U-Boot does not verify the contents of `hashed-nodes`
+correlate with the sub-images required to be loaded by the configuration,
+specified e.g. in the `kernel`, `fdt`, and `ramdisk` configuration properties.
+This allows to craft another configuration with the same signature node but
+referencing a different sub-image(s):
+
+```
+conf@2 {
+  description = "Super 1337 Configuration";
+  kernel = "kernel@2";
+  fdt = "fdt@1";
+  ramdisk = "ramdisk@1";
+  signature@1 {
+    hashed-strings = [00 00 00 00 00 00 00 8e];
+    hashed-nodes = "/", "/configurations/conf@1", "/images/fdt@1", "/images/fdt@...ash@1", "/images/kernel@1", "/images/kernel@...ash@1", "/images/ramdisk@1", "/images/ramdisk@...ash@1";
+    timestamp = [5d cb 49 dc];
+    signer-version = "2019.07";
+    signer-name = "mkimage";
+    value = [03 d9 d7 e8 5a cf ..];
+    algo = "sha256,rsa4096";
+    key-name-hint = [REMOVED];
+    sign-images = "fdt", "kernel", "ramdisk";
+  };
+};
+```
+
+As by design [3] only certain parts of the FIT image are hashed, it is possible
+to insert arbitrary FIT nodes after configurations have been signed without
+invalidating any signatures, adding both arbitrary configurations as well as
+arbitrary sub-images. Note that this fact is explicitly documented. It is also
+possible to change the default property of the configurations node to suggest
+the crafted configuration to be chosen.
+
+Impact
+------
+
+An attacker having a properly signed FIT image is able to craft arbitrary FIT
+images that would pass signature validation, resulting in booting and
+execution of untrusted code.
+
+The exploitation relies on the fact that the crafted configuration will be
+chosen to be booted. This may occur, for example, when the attacker is able to
+modify the `default` property of the `configurations` node and the setup does
+not explicitly choose to boot a specific configuration. Consequently, one way of
+mitigating the issue is to explicitly specify the configuration name as part of
+the `bootm` command arguments, for example: `bootm ${loadaddr}#conf@1 - ${fdtaddr}`
+
+Affected versions
+-----------------
+
+U-Boot versions 2018.03 and 2020.01 were verified to be affected. Versions
+prior to 2018.03 may be affected as well.
+
+Solution
+--------
+
+Apply patches or update to a fixed version when available.
+
+Preliminary patches have been posted to the mailing list [4] for review.
+
+CVE assignment
+--------------
+
+CVE-2020-10648 should be used to track this issue.
+
+Credit
+------
+
+Dmitry Janushkevich (@infosecdj) of the Hardware Security team, F-Secure
+
+Timeline
+--------
+
+2020-01-22: Discovery of the issue.
+2020-01-24: Details sent to maintainers Tom Rini and Simon Glass.
+2020-02-26: Patches provided for review by Simon Glass.
+2020-03-11: Release date agreed to be March 18.
+2020-03-17: CVE assignment.
+2020-03-18: Public release.
+
+References
+----------
+
+[1] https://github.com/u-boot/u-boot/blob/master/doc/uImage.FIT/verified-boot.txt
+[2] https://github.com/u-boot/u-boot/blob/master/doc/uImage.FIT/signature.txt
+[3] See documentation for the fdt_find_regions() function in include/linux/libfdt.h
+[4] https://lists.denx.de/pipermail/u-boot/2020-March/403409.html
+
