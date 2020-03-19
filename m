@@ -1,4 +1,9 @@
-Received: (qmail 18234 invoked by uid 550); 18 Aug 2025 02:28:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8170" "Thursday" "19" "March" "2020" "09:58:40" "-0700" "Aaron Patterson" "tenderlove@ruby-lang.org" "<20200319165840.GA16288@tc-lan-adapter.local>" "256" "[oss-security] [CVE-2020-5267] Possible XSS vulnerability in ActionView" nil nil nil "3" "2020031916:58:40" "[oss-security] [CVE-2020-5267] Possible XSS vulnerability in ActionView" (number mark "U       tenderlove@r Mar 19  256/8170  " thread-indent "\"[oss-security] [CVE-2020-5267] Possible XSS vulnerability in ActionView\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-5267] Possible XSS vulnerability in ActionView" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29833 invoked by uid 550); 19 Mar 2020 16:58:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,117 +12,300 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 16157 invoked from network); 18 Aug 2025 02:27:53 -0000
-Date: Mon, 18 Aug 2025 04:27:17 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Qualys Security Advisory <qsa@qualys.com>,
-	Marco Benatto <mbenatto@redhat.com>
-Message-ID: <20250818022717.GA25008@openwall.com>
-References: <20250529171556.GA9260@localhost.localdomain> <20250603040528.GA12667@openwall.com> <CAOGQQ29wZe_Z8J5go4JZyM=Xc6ku-ton7xc6iqpwYaTUQ=VCmw@mail.gmail.com> <20250605041645.GA27217@openwall.com>
-Mime-Version: 1.0
+Received: (qmail 29813 invoked from network); 19 Mar 2020 16:58:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tenderlovemaking-com.20150623.gappssmtp.com; s=20150623;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=0kisjREFT/IbaApNgX31/eCrNx4EeGGOv6nny7lDcSA=;
+        b=KRm0rZrEy+UdQYgqaDLo07sYtkqNTp9dbHWj5VFWOGIgIByofmj+g0sFRE1c1hOSAB
+         yMH2cFUMDZtl3M3JbMrrTX3PfQBUmHw785LsUw4sseJVyyH3ye3Z6Cb/X3/AnKWral8b
+         cjhNwGPB2qx1Q04vafdfbsoV0GeFUWUPinO/IzhuQXaxx32GvjRLE/oTeGuwhyc/8hgf
+         /PT7IRp5bz5BEbl7launMS0+ovbKta6dFUkzt9CfSIvaGINN5WlV3jRVNtPg6NoMpYdx
+         U1eGD3CvK9Q4Aoz8gyd2vnsbbWRrAyceAutAUEIuXFARHpqdxZMEl+7wWQPxksAUZQBy
+         XLWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=0kisjREFT/IbaApNgX31/eCrNx4EeGGOv6nny7lDcSA=;
+        b=E/J1oMBgrBkUUXP2loh57uIu9zYRO/U5L4WmNJIs3VtIIJDWkftz0K2sO8dhg3G8jh
+         Cf8xSvvSeQ6pELH+KA7+1cWTvTVwohZUxt+ac11nQ5B9xIDcCheUh+0JKPtAKygilHcV
+         liTu1hzofCgC7+H4fGb2BJN4D0kW9z0kI5HVJP+rZkgrIj8kh1RNWVlC37CwLy1CIMCo
+         wNP6ACDkAENJaxsgXqFfkd7c3Bgv/ABNvx0pWem4sssXgxRN0F/0ix6ReyIekIdOwtN3
+         1xC2rkPkjEsmaQfexHXUrlUDhch11Chsr+FuvB8knZDopzpCeuSUx4dvC4xDU2w86eXQ
+         YrTg==
+X-Gm-Message-State: ANhLgQ3fFa3zQRqPuc8vsibCaNSbiX52U62eFOK+YCLKrHDaWlnfElwF
+	BWw1ogFndF2MHujlWrgR0zd2CA==
+X-Google-Smtp-Source: ADFU+vtvIfDEn6NM4ZiyfZ+nvGek4tiJhNN5b/0mUagq0JMdsQ5iUXeZL4fPEWdNJtFuRImISqzKVw==
+X-Received: by 2002:a62:a119:: with SMTP id b25mr4959741pff.158.1584637123509;
+        Thu, 19 Mar 2020 09:58:43 -0700 (PDT)
+Sender: Aaron Patterson <aaron@tenderlovemaking.com>
+Date: Thu, 19 Mar 2020 09:58:40 -0700
+From: Aaron Patterson <tenderlove@ruby-lang.org>
+To: security@suse.de, rubyonrails-security@googlegroups.com,
+	oss-security@lists.openwall.com, ruby-security-ann@googlegroups.com
+Message-ID: <20200319165840.GA16288@tc-lan-adapter.local>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="xgyAXRrhYN0wYx8y"
+Content-Disposition: inline
+User-Agent: Mutt/1.12.2 (2019-09-21)
+Subject: [oss-security] [CVE-2020-5267] Possible XSS vulnerability in ActionView
+
+--xgyAXRrhYN0wYx8y
+Content-Type: multipart/mixed; boundary="7AUc2qLy4jB3hD7Z"
+Content-Disposition: inline
+
+
+--7AUc2qLy4jB3hD7Z
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250605041645.GA27217@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Local information disclosure in apport and systemd-coredump
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+There is a possible XSS vulnerability in ActionView's JavaScript literal
+escape helpers.  Views that use the `j` or `escape_javascript` methods
+may be susceptible to XSS attacks.
 
-There are a couple of recent blog posts on this issue:
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     6.0.2.2, 5.2.4.2
 
-Oracle, August 4, 2025:
-https://blogs.oracle.com/linux/post/analysis-of-cve-2025-4598
+### Impact
 
-CIQ, August 15, 2025:
-https://ciq.com/blog/the-real-danger-of-systemd-coredump-cve-2025-4598/
+There is a possible XSS vulnerability in the `j` and `escape_javascript`
+methods in ActionView.  These methods are used for escaping JavaScript stri=
+ng
+literals.  Impacted code will look something like this:
 
-The Oracle blog post describes the vulnerability and illustrates it with
-some diagrams.  The CIQ one (which I wrote) demonstrates the severity
-through direct exploitation (two asciinema recordings with explanation).
+```erb
+<script>let a =3D `<%=3D j unknown_input %>`</script>
+```
 
-On Thu, Jun 05, 2025 at 06:16:45AM +0200, Solar Designer wrote:
-> I see https://access.redhat.com/security/cve/CVE-2025-4598 now correctly
-> states NetworkManager is "Not affected" (could as well omit it?), but
-> incorrectly states that RHEL9's systemd is also "Not affected" (whereas
-> I've just confirmed that it is indeed affected).
+or
 
-This has since been corrected to say, among other things, that systemd
-in RHEL 9 and 10 is "Affected".
+```erb
+<script>let a =3D `<%=3D escape_javascript unknown_input %>`</script>
+```
 
-> Also, as it relates to severity scores for this issue, I think your CVSS
-> vector/score of 4.7 is reasonable - maybe only Attack Complexity should
-> be reduced to Low, but other than that can't argue with CVSS even if the
-> numeric score ends up lower than it is for less important issues.
+### Releases
 
-Or maybe we can argue with this CVSS vector/score a bit.  Red Hat's is:
+The 6.0.2.2 and 5.2.4.2 releases are available at the normal locations.
 
-CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N score 4.7
+### Workarounds
 
-but could it reasonably by up to:
+For those that can't upgrade, the following monkey patch may be used:
 
-CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N score 7.1
+```ruby
+ActionView::Helpers::JavaScriptHelper::JS_ESCAPE_MAP.merge!(
+  {
+    "`" =3D> "\\`",
+    "$" =3D> "\\$"
+  }
+)
 
-The changes are:
+module ActionView::Helpers::JavaScriptHelper
+  alias :old_ej :escape_javascript
+  alias :old_j :j
 
-Access Complexity from High to Low because once the exploit is written
-and tuned a bit, it just works reliably and quickly across a wide
-variety of systems.  There's nothing complex in running it and getting
-password hashes spewed on the terminal within seconds.
+  def escape_javascript(javascript)
+    javascript =3D javascript.to_s
+    if javascript.empty?
+      result =3D ""
+    else
+      result =3D javascript.gsub(/(\\|<\/|\r\n|\342\200\250|\342\200\251|[\=
+n\r"']|[`]|[$])/u, JS_ESCAPE_MAP)
+    end
+    javascript.html_safe? ? result.html_safe : result
+  end
 
-Privileges Required from Low to None because ability to run the exploit
-locally may be already implied by Access Vector being Local, and no
-other privileges are required on a default RHEL 9 install.  However, I
-am not sure about this one as it'd also need to be consistent with how
-other issues are scored by the same party, and PR:L appears typical.
+  alias :j :escape_javascript
+end
+```
 
-Scope from Unchanged to Changed because while the vulnerability is in
-systemd, its exploitation exposes other programs' data.
+### Patches
 
-What would be correct for Privileges Required and Scope per FIRST?  Any
-expert opinions?
+To aid users who aren't able to upgrade immediately we have provided patche=
+s for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
 
-Anyway, at CIQ we're now using an internal override of the scoring for
-this issue to CVSS 7.1 + Important + exploit available (for EL 9 only).
-Just so that it comes up high enough on our priority lists for getting
-it fixed in 9.x LTS, etc.  Red Hat may want to do similar if the low
-scoring is what prevented proper prioritization of fixing this so far.
+* 5-2-js-helper-xss.patch - Patch for 5.2 series
+* 6-0-js-helper-xss.patch - Patch for 6.0 series
 
-> However, I think the threat impact of Moderate should be increased to
-> Important.  Your current justification is:
-> 
-> > This flaw was rated as having a severity of Moderate due to the
-> > complexity to exploit this flaw. The attacker needs to setup a way to
-> > win the race condition and have an unprivileged local account to
-> > successfully exploit this vulnerability.
-> 
-> However, due to Vegard Nossum's newgrp ns_last_pid trick the race is
-> quick to win.  Moreover, the below attack on daemons is even easier:
-> 
-> On Thu, May 29, 2025 at 05:17:08PM +0000, Qualys Security Advisory wrote:
-> > Last-minute update: while working on these vulnerabilities, we
-> > eventually realized that systemd-coredump does not specify %d (the
-> > kernel's per-process "dumpable" flag) in /proc/sys/kernel/core_pattern;
-> > consequently a local attacker can crash (with kill(SIGSEGV) for example)
-> > root daemons that fork() and setuid() to the attacker's uid, gain read
-> > access to the resulting core dumps, and therefore to the root daemons'
-> > memory. For example, we wrote a trivial proof of concept that dumps the
-> > memory of OpenSSH's sshd-session, systemd's sd-pam, and the cron daemon,
-> > and obtained secret information such as half of sshd's private ed25519
-> > host key, password hashes from /etc/shadow, other users' crontabs, ASLR
-> > addresses, stack canaries. This second attack (against root daemons) is
-> > powerful, different from the first attack (against SUID programs), and
-> > can certainly be further improved; and other secrets can certainly be
-> > obtained from other daemons, but this is left as an exercise for the
-> > interested reader.
-> 
-> These easier attacks may also be why you'd lower CVSS Attack Complexity.
-> 
-> This issue is something that will in fact be used as a step in local
-> privilege escalation attacks in the wild, except maybe on systems with
-> known lower-hanging fruit.
+Please note that only the 5.2 and 6.0 series are supported at present. Users
+of earlier unsupported releases are advised to upgrade as soon as possible =
+as we
+cannot guarantee the continued availability of security fixes for unsupport=
+ed
+releases.
 
-So far I'm aware of interest by pentesters.
+### Credits
 
-Alexander
+Thanks to Jesse Campos from Chef Secure
+
+--=20
+Aaron Patterson
+http://tenderlovemaking.com/
+
+--7AUc2qLy4jB3hD7Z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="5-2-js-helper-xss.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom b5aeef5703dab7da9ebb47cc20e4c8b64f7f5866 Mon Sep 17 00:00:00 2001
+From: Aaron Patterson <aaron.patterson@gmail.com>
+Date: Thu, 12 Mar 2020 10:25:48 -0700
+Subject: [PATCH] Fix possible XSS vector in JS escape helper
+
+This commit escapes dollar signs and backticks to prevent JS XSS issues
+when using the `j` or `javascript_escape` helper
+
+CVE-2020-5267
+---
+ actionview/lib/action_view/helpers/javascript_helper.rb | 6 ++++--
+ actionview/test/template/javascript_helper_test.rb      | 8 ++++++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/actionview/lib/action_view/helpers/javascript_helper.rb b/acti=
+onview/lib/action_view/helpers/javascript_helper.rb
+index acc50f8a62..5d966ba3aa 100644
+--- a/actionview/lib/action_view/helpers/javascript_helper.rb
++++ b/actionview/lib/action_view/helpers/javascript_helper.rb
+@@ -12,7 +12,9 @@ module JavaScriptHelper
+         "\n"    =3D> '\n',
+         "\r"    =3D> '\n',
+         '"'     =3D> '\\"',
+-        "'"     =3D> "\\'"
++        "'"     =3D> "\\'",
++        "`"     =3D> "\\`",
++        "$"     =3D> "\\$"
+       }
+=20
+       JS_ESCAPE_MAP["\342\200\250".dup.force_encoding(Encoding::UTF_8).enc=
+ode!] =3D "&#x2028;"
+@@ -26,7 +28,7 @@ module JavaScriptHelper
+       #   $('some_element').replaceWith('<%=3D j render 'some/element_temp=
+late' %>');
+       def escape_javascript(javascript)
+         if javascript
+-          result =3D javascript.gsub(/(\\|<\/|\r\n|\342\200\250|\342\200\2=
+51|[\n\r"'])/u) { |match| JS_ESCAPE_MAP[match] }
++          result =3D javascript.gsub(/(\\|<\/|\r\n|\342\200\250|\342\200\2=
+51|[\n\r"']|[`]|[$])/u) { |match| JS_ESCAPE_MAP[match] }
+           javascript.html_safe? ? result.html_safe : result
+         else
+           ""
+diff --git a/actionview/test/template/javascript_helper_test.rb b/actionvie=
+w/test/template/javascript_helper_test.rb
+index a72bc6c2fe..de24245e51 100644
+--- a/actionview/test/template/javascript_helper_test.rb
++++ b/actionview/test/template/javascript_helper_test.rb
+@@ -32,6 +32,14 @@ def test_escape_javascript
+     assert_equal %(dont <\\/close> tags), j(%(dont </close> tags))
+   end
+=20
++  def test_escape_backtick
++    assert_equal "\\`", escape_javascript("`")
++  end
++
++  def test_escape_dollar_sign
++    assert_equal "\\$", escape_javascript("$")
++  end
++
+   def test_escape_javascript_with_safebuffer
+     given =3D %('quoted' "double-quoted" new-line:\n </closed>)
+     expect =3D %(\\'quoted\\' \\"double-quoted\\" new-line:\\n <\\/closed>)
+--=20
+2.21.0
+
+
+--7AUc2qLy4jB3hD7Z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="6-0-js-helper-xss.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom 1251d8817264744163fb12a3dba05ce61be5371b Mon Sep 17 00:00:00 2001
+From: Aaron Patterson <aaron.patterson@gmail.com>
+Date: Thu, 12 Mar 2020 10:25:48 -0700
+Subject: [PATCH] Fix possible XSS vector in JS escape helper
+
+This commit escapes dollar signs and backticks to prevent JS XSS issues
+when using the `j` or `javascript_escape` helper
+
+CVE-2020-5267
+---
+ actionview/lib/action_view/helpers/javascript_helper.rb | 6 ++++--
+ actionview/test/template/javascript_helper_test.rb      | 8 ++++++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/actionview/lib/action_view/helpers/javascript_helper.rb b/acti=
+onview/lib/action_view/helpers/javascript_helper.rb
+index b680cb1bd3..b04b1cb43e 100644
+--- a/actionview/lib/action_view/helpers/javascript_helper.rb
++++ b/actionview/lib/action_view/helpers/javascript_helper.rb
+@@ -12,7 +12,9 @@ module JavaScriptHelper
+         "\n"    =3D> '\n',
+         "\r"    =3D> '\n',
+         '"'     =3D> '\\"',
+-        "'"     =3D> "\\'"
++        "'"     =3D> "\\'",
++        "`"     =3D> "\\`",
++        "$"     =3D> "\\$"
+       }
+=20
+       JS_ESCAPE_MAP[(+"\342\200\250").force_encoding(Encoding::UTF_8).enco=
+de!] =3D "&#x2028;"
+@@ -29,7 +31,7 @@ def escape_javascript(javascript)
+         if javascript.empty?
+           result =3D ""
+         else
+-          result =3D javascript.gsub(/(\\|<\/|\r\n|\342\200\250|\342\200\2=
+51|[\n\r"'])/u) { |match| JS_ESCAPE_MAP[match] }
++          result =3D javascript.gsub(/(\\|<\/|\r\n|\342\200\250|\342\200\2=
+51|[\n\r"']|[`]|[$])/u) { |match| JS_ESCAPE_MAP[match] }
+         end
+         javascript.html_safe? ? result.html_safe : result
+       end
+diff --git a/actionview/test/template/javascript_helper_test.rb b/actionvie=
+w/test/template/javascript_helper_test.rb
+index f974e5ae0c..4b7284d15b 100644
+--- a/actionview/test/template/javascript_helper_test.rb
++++ b/actionview/test/template/javascript_helper_test.rb
+@@ -36,6 +36,14 @@ def test_escape_javascript
+     assert_equal %(dont <\\/close> tags), j(%(dont </close> tags))
+   end
+=20
++  def test_escape_backtick
++    assert_equal "\\`", escape_javascript("`")
++  end
++
++  def test_escape_dollar_sign
++    assert_equal "\\$", escape_javascript("$")
++  end
++
+   def test_escape_javascript_with_safebuffer
+     given =3D %('quoted' "double-quoted" new-line:\n </closed>)
+     expect =3D %(\\'quoted\\' \\"double-quoted\\" new-line:\\n <\\/closed>)
+--=20
+2.21.0
+
+
+--7AUc2qLy4jB3hD7Z--
+
+--xgyAXRrhYN0wYx8y
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEETOkbdaeYKOhrGqi7lTFwvLT/r8YFAl5zpL8ACgkQlTFwvLT/
+r8aMKQf/eMjeFCub3ZZ7Kjr3JUFrjAjHqnnSTMYk4FNmHEVrUVNMpf4MDfGcrN9q
+v2/wlCmRM297dCrURWXfKUpZ+DN6HV+VrHN4sAeW7DJnXRJ7abF2FAYR/2nVwCgc
+p1/YEM6V1x7z5aXi/MWw14EfXCSVvsGwVR6t/02op78gSAuM/qmNfVmjJf1nTBlY
+MBVme9CXd/FVZYwon/BI9iL0yxa8cYfMZNNXwEgrXSXj+9Xu5xYARhtd3l1iYBuX
++cLn8wYI5CM1y4rAxjN8kx3boZto7WP+SY1y/JtGvpUpVXuSMDflCOndn+UAwoTl
+HYn/VM6bqvJluqSuT+K6mbxrGsWVkQ==
+=tXI0
+-----END PGP SIGNATURE-----
+
+--xgyAXRrhYN0wYx8y--
