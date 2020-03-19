@@ -1,132 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/9
-Message-Id: <E1kp9JX-00076t-Hu@xenbits.xenproject.org>
-Date: Tue, 15 Dec 2020 12:20:23 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 350 v4 (CVE-2020-29569) - Use after free triggered by block frontend in Linux blkback
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/19/1
+Message-ID: <20200319165840.GA16288@tc-lan-adapter.local>
+Date: Thu, 19 Mar 2020 09:58:40 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2020-5267] Possible XSS vulnerability in ActionView
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+There is a possible XSS vulnerability in ActionView's JavaScript literal
+escape helpers.  Views that use the `j` or `escape_javascript` methods
+may be susceptible to XSS attacks.
 
-            Xen Security Advisory CVE-2020-29569 / XSA-350
-                               version 4
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     6.0.2.2, 5.2.4.2
 
-      Use after free triggered by block frontend in Linux blkback
+### Impact
 
-UPDATES IN VERSION 4
-====================
+There is a possible XSS vulnerability in the `j` and `escape_javascript`
+methods in ActionView.  These methods are used for escaping JavaScript string
+literals.  Impacted code will look something like this:
 
-Public release.
+```erb
+<script>let a = `<%= j unknown_input %>`</script>
+```
 
-ISSUE DESCRIPTION
-=================
+or
 
-The Linux kernel PV block backend expects the kernel thread handler
-to reset ring->xenblkd to NULL when stopped. However, the handler may
-not have time to run if the frontend quickly toggle between the states
-connect and disconnect.
+```erb
+<script>let a = `<%= escape_javascript unknown_input %>`</script>
+```
 
-As a consequence, the block backend may re-use a pointer after it was
-freed.
+### Releases
 
-IMPACT
-======
+The 6.0.2.2 and 5.2.4.2 releases are available at the normal locations.
 
-A misbehaving guest can trigger a dom0 crash by continuously
-connecting / disconnecting a block frontend. Privileged escalation and
-information leak cannot be ruled out.
+### Workarounds
 
-VULNERABLE SYSTEMS
-==================
+For those that can't upgrade, the following monkey patch may be used:
 
-Systems using Linux blkback are vulnerable.  This includes most
-systems with a Linux dom0, or Linux driver domains.
+```ruby
+ActionView::Helpers::JavaScriptHelper::JS_ESCAPE_MAP.merge!(
+  {
+    "`" => "\\`",
+    "$" => "\\$"
+  }
+)
 
-Linux versions containing a24fa22ce22a ("xen/blkback: don't use
-xen_blkif_get() in xen-blkback kthread"), or its backports, are
-vulnerable.  This includes all current linux-stable branches back to
-at least linux-stable/linux-4.4.y.
+module ActionView::Helpers::JavaScriptHelper
+  alias :old_ej :escape_javascript
+  alias :old_j :j
 
-When the Xen PV block backend is provided by userspace (eg qemu), that
-backend is not vulnerable.  So configurations where the xl.cfg domain
-configuration file specifies all disks with backendtype="qdisk" are
-not vulnerable.
+  def escape_javascript(javascript)
+    javascript = javascript.to_s
+    if javascript.empty?
+      result = ""
+    else
+      result = javascript.gsub(/(\\|<\/|\r\n|\342\200\250|\342\200\251|[\n\r"']|[`]|[$])/u, JS_ESCAPE_MAP)
+    end
+    javascript.html_safe? ? result.html_safe : result
+  end
 
-The Linux blkback only supports raw format images, so when all disks
-have a format than format="raw", the system is not vulnerable.
+  alias :j :escape_javascript
+end
+```
 
-MITIGATION
-==========
+### Patches
 
-Switching the disk backend to qemu with backendtype="qdisk" will avoid
-the vulnerability.  This mitigation is not always available, depending
-on the other aspects of the configuration.
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
 
-CREDITS
-=======
+* 5-2-js-helper-xss.patch - Patch for 5.2 series
+* 6-0-js-helper-xss.patch - Patch for 6.0 series
 
-This issue was discovered by Olivier Benjamin and Pawel Wieczorkiewicz of
-Amazon.
+Please note that only the 5.2 and 6.0 series are supported at present. Users
+of earlier unsupported releases are advised to upgrade as soon as possible as we
+cannot guarantee the continued availability of security fixes for unsupported
+releases.
 
-RESOLUTION
-==========
+### Credits
 
-Applying the appropriate attached patch resolves this issue.
+Thanks to Jesse Campos from Chef Secure
 
-xsa350-linux.patch     Linux
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
 
-$ sha256sum xsa350*
-46e8141bcfd21629043df0af4d237d6c264b27c1137fc84d4a1127ace30926c4  xsa350-linux.patch
-$
+View attachment "5-2-js-helper-xss.patch" of type "text/plain" (2461 bytes)
 
-DEPLOYMENT DURING EMBARGO
-=========================
+View attachment "6-0-js-helper-xss.patch" of type "text/plain" (2383 bytes)
 
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-
-Deployment of the mitigation to change the block backend is NOT
-permitted (except where all the affected systems and VMs are
-administered and used only by organisations which are members of the
-Xen Project Security Issues Predisclosure List).  Specifically,
-deployment on public cloud systems is NOT permitted.
-
-This is because this is a guest-visible change, which will indicate
-that it is the block backend which has a vulnerability.
-
-Deployment is permitted only AFTER the embargo ends.
-
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQE/BAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/Yqd8MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZRusH9RGJFExFzCDQ/y99mvchhcIXGf4g0V373W9YrPAF
-zUIiKBGEWuE07tY9YVKV5ocNnPQNdGwsnKJXPsFJAjW4DTDyL00e0yFUNQ7c1kTl
-vdRgh0D5VtzIcaiqIC/4GjRzuBTQ3d9gTSOzJGhBS0yoIsZTSr5KyJBAiw1Slz7Y
-IHmLZawGdQrDF6YpGLEXPRM7TxNNLn0wPqpPTxC+qMnTThdLuogf4HWLae7xHqX+
-Q8b6KYxnkouq5sOddESglf+Gh+j9JHoLCIRm3XA4LrtGtQoUrvdqeS8rklRPH7Xk
-yGP99M+J++KMx02ZJJUNrJmtSExDl35liz84qRiRfcKpxQ==
-=qnB/
------END PGP SIGNATURE-----
-
-Download attachment "xsa350-linux.patch" of type "application/octet-stream" (1878 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
