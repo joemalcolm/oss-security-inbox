@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["928" "Sunday" "9" "August" "2020" "10:26:44" "+0200" "Richard Hartmann" "richih.mailinglist@gmail.com" "<CAD77+gST6rs=eL5BehV_ffVHo0d6FezKM2Wx61Qy+G4Bg6eE2g@mail.gmail.com>" "34" "Re: [oss-security] Voiding CVE-2020-16248" "^Cc:" nil nil "8" "2020080908:26:44" "[oss-security] Voiding CVE-2020-16248" (number mark "        richih.maili Aug  9   34/928   " thread-indent "\"Re: [oss-security] Voiding CVE-2020-16248\"\n") "<2173625e-ade0-c8ce-173e-a50464faa12b@beuc.net>" ("<CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>" "<2173625e-ade0-c8ce-173e-a50464faa12b@beuc.net>") nil nil nil nil nil nil nil "Re: [oss-security] Voiding CVE-2020-16248" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1200" "Monday" "23" "March" "2020" "10:06:05" "+0100" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" "<20200323100605.27fd2c46@computer>" "32" "[oss-security] Serendipity XSS via update notification (minor, exploitable by s9y developers)" nil nil nil "3" "2020032309:06:05" "[oss-security] Serendipity XSS via update notification (minor, exploitable by s9y developers)" (number mark "U       hanno@hboeck Mar 23   32/1200  " thread-indent "\"[oss-security] Serendipity XSS via update notification (minor, exploitable by s9y developers)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Serendipity XSS via update notification (minor, exploitable by s9y developers)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27969 invoked by uid 550); 9 Aug 2020 11:06:58 -0000
+Received: (qmail 13384 invoked by uid 550); 23 Mar 2020 09:06:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1439 invoked from network); 9 Aug 2020 08:27:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9ww+dE0fkFCDEtx4GkZUOrzSTvlqioyJkyB7pEZnflk=;
-        b=HMbFoGoUifUTBBypic+s7ftHMgsMmjR+Rr3u6A31jihsglTnm0+ySMhAeWFQu1EuOP
-         7S1iXVaW19Iy6+V3VIUQE8Xdk3Fu8mH02d8OqF6Au3zZ9itTfM7Xes5VDjocpeiq+mPR
-         VdhJbD2X+gYvMGx9LBItKZiap/8X0ehRA8YaK29KgMzkLEsC23KEVXnSOzNPbTvB0lXv
-         BuR6+Dbhi99VBg4shZhVLALnBQanGTXJO3Y16QxzLcSyji8RNvxDxWAwwYyg7zKYV/vD
-         GT1IVExXH6gyqr3CLtkzgTRWPDZVE5ce9SF3Sv8WAyB3HU9iU9gzXPa4YnYLPAj4kYY6
-         9jAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9ww+dE0fkFCDEtx4GkZUOrzSTvlqioyJkyB7pEZnflk=;
-        b=JsKvD6NCdYwf2fFw5rY4pKr/jU+CoOyztNVofUO5Bn68h33nb0GZBwPv52l8lZxsp5
-         4tVhFYNj8d3FCxaq4p+uBfaDy69SkP1JKyGYogpj8ABMzL7x6hVS/R6kUCFAHqlxDsYK
-         uFJwdxg/vKsr9SyAabzsPt1ITgVMfiyzHg5vYgxHcrfXoEFsfL7/yGS0qa/evUDvB+6j
-         EH5wBy2nn6Mbhfgd7NRTVO3ltIud2Tn5twYU5jK1x5WMmprh0P5loSCT5HVHrsxO89g8
-         mU1RkCqjhkLZto5d9lL4S7n6wSj8cT39SFGXmFictdqN2i32z5pzq98gHurGw+KRqL/+
-         ieIA==
-X-Gm-Message-State: AOAM533bbBHhcHDEWn6eDF7X860I5laBp9HkXkRdOAnix0OXKCdDc+jA
-	pWjOvWNcfGaflMl6Vm3qU3vXntq2zFNjRDGYCWI=
-X-Google-Smtp-Source: ABdhPJzjSw7tlmwIOh1PVWNUcsY5saoQNdBAhCWh5svyC9rIDvUbLP76NanqqQ99mNHpOe5wcbP7i0Ns9AJ1QYQO1eo=
-X-Received: by 2002:a17:907:2067:: with SMTP id qp7mr16438071ejb.378.1596961616024;
- Sun, 09 Aug 2020 01:26:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
- <2173625e-ade0-c8ce-173e-a50464faa12b@beuc.net>
-In-Reply-To: <2173625e-ade0-c8ce-173e-a50464faa12b@beuc.net>
-Message-ID: <CAD77+gST6rs=eL5BehV_ffVHo0d6FezKM2Wx61Qy+G4Bg6eE2g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: oss-security@lists.openwall.com, prometheus-team@googlegroups.com, 
-	Prometheus Developers <prometheus-developers@googlegroups.com>
-Date: Sun, 9 Aug 2020 10:26:44 +0200
-From: Richard Hartmann <richih.mailinglist@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Voiding CVE-2020-16248
-To: Sylvain Beucler <beuc@beuc.net>
+Received: (qmail 13354 invoked from network); 23 Mar 2020 09:06:17 -0000
+Date: Mon, 23 Mar 2020 10:06:05 +0100
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+To: 
+  "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <20200323100605.27fd2c46@computer>
+X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Serendipity XSS via update notification (minor, exploitable by s9y
+ developers)
 
-Thanks, Sylvain & Florian.
+I reported an XSS in Serendipity that is now fixed in version 2.3.3. It
+is only exploitable by either the developers of serendipity or someone
+compromising Github, so I consider this very minor.
 
-I wasn't aware that MITRE offered this option. I didn't want to send
-email to them as I could no be certain if they own the CVE and as
-putting random support burden on a closed list is worse than putting
-it onto an open list IMO.
+My bug report to s9y [1]:
 
-Will do.
+The version number shown in the update notification window is not
+escaped. This means it can contain javascript payload and thus allow
+XSS.
 
-On Sat, Aug 8, 2020 at 12:41 PM Sylvain Beucler <beuc@beuc.net> wrote:
->
-> Hi,
->
-> On 08/08/2020 10:49, Richard Hartmann wrote:
-> > I could not find out which organization has
-> > reserved CVE-2020-16248 so I decided to send email to this list to
-> > inform the organization, enabling them to update their records.
->
-> I would suggest reaching MITRE:
-> https://cve.mitre.org/cve/update_cve_entries.html
-> - "Request an update to an exiting CVE entry"
-> - Type: "Rejection"
->
-> They'll either do the update or point you to the assigning CNA.
->
-> Most likely they'll mark the issue as "DISPUTED" within a few business days.
->
-> Cheers!
-> Sylvain
+The version information is fetched from a Github URL, which means this
+is an XSS vulnerability that can only be exploited by the serendipity
+developers or github itself. So this makes it rather low severity.
 
+Still I'd consider safety against the developers or potentially
+compromised developer accounts desirable where possible, and this seems
+easy to fix.
 
+PoC: Change the $updateURL variable in
+include/functions_installer.inc.php in the function
+serendipity_getCurrentVersion to one you control and add something like:
 
--- 
-Richard
+stable:9.<img src=3Dx onerror=3Dalert(1)><x
+beta:9.<img src=3Dx onerror=3Dalert(2)><x
+
+(s9y adds a </span> somewhere at the end for reasons I don't
+understand, by adding the bogus <x I avoid that disturbing my payload.)
+
+[1] https://github.com/s9y/Serendipity/issues/674
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
