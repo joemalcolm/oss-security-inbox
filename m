@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1532" "Tuesday" "24" "May" "2016" "14:17:48" "+0200" "Dejan Bosanac" "dejan@nighttale.net" "<CAGeh-pFfPXUX8XpUAJt5n6=qvoAr82ubN97BxE4a44o79tCudg@mail.gmail.com>" "59" "[oss-security] Re: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities" nil nil nil "5" "2016052412:17:48" "[oss-security] Re: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities" (number mark "U       dejan@nightt May 24   59/1532  " thread-indent "\"[oss-security] Re: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2670" "Monday" "23" "March" "2020" "11:37:19" "-0700" "Tim Allclair" "tallclair@google.com" "<CADtktAU1jq56ag08PGjW4YiABqsNi6ptkb8E4c2iR7P4jFNhew@mail.gmail.com>" "71" "[oss-security] CVE-2020-8551, CVE-2020-8552: Kubernetes: Denial of service" nil nil nil "3" "2020032318:37:19" "[oss-security] CVE-2020-8551, CVE-2020-8552: Kubernetes: Denial of service" (number mark "U       tallclair@go Mar 23   71/2670  " thread-indent "\"[oss-security] CVE-2020-8551, CVE-2020-8552: Kubernetes: Denial of service\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-8551, CVE-2020-8552: Kubernetes: Denial of service" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31932 invoked by uid 550); 24 May 2016 12:18:00 -0000
+Received: (qmail 22094 invoked by uid 550); 23 Mar 2020 18:49:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,100 +12,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31914 invoked from network); 24 May 2016 12:18:00 -0000
+Received: (qmail 16120 invoked from network); 23 Mar 2020 18:38:08 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:cc;
-        bh=5EYYrwPBLBWSQgtIfkmd4cpCVpJpbA3JNt6urRuQTvU=;
-        b=Ay9L6bgPnRRcXe0ABFZv41JW06Z5e6Ml0ZrC7rMhLXD1q2Vh0CjaOeen72X0RRTPbA
-         1tENEFbpuK4weTXuOJAcjysvp+K//87Spn/eK6V8mkZ8/8GXXaxMbnlaI353u8NJc0ME
-         9fxWQbSkKEnL98zjOQPoCrGB5jmVY6qOk6TaUTGqnd1oX69PMLrUtNMxIivaVH7sWVhp
-         T7o4LoELwAodOZSX8HzmXcNOBDSm8VTEkJ5G0rZfXn9N716B+9RzklJb/puNGrN7HzPX
-         9QUJACRnA8ev9GDl+s7xD93MP9aKwGb4WlRt/mu8/y43lPngKftNd9nSzCZGJglM/yvp
-         as1g==
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=u0kMpKmlQuI1NlyL+dWtvrpwlpBWLm5NqF/GTCwad6c=;
+        b=p2tHzgnXjvNiQzc88dqSYudUFMIr+EYXzxkEW99swRlSoCXqpqR8zl8LfRDMO+sK64
+         Ow0Uqdt5RLlRGG/d0rCjuZ4bIl/xzsIDy34OGbBJJ0QH5KR5MeWOkkbMK+4ZwiQRzDu8
+         ovLxYB51L/IqRO/RXEME+clRRhADx6Y4eLSPg48tTt46aNYvofn3sNlj+PlhN1CYMrNB
+         8c/D2nGSujvF72mRmZvEFcZRJdinMlsmOp2iwqrJMVuLMGaySmyF0q4oHPXPAFpLUcVX
+         AIyr9MxepWpIHQECyDvNoNVVJUuucMW1l4qw8+9U13ruS+HfMKbHOx76GnlmXFmzaBWX
+         X7vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
-         :to:cc;
-        bh=5EYYrwPBLBWSQgtIfkmd4cpCVpJpbA3JNt6urRuQTvU=;
-        b=K4+b8XFwxhEaKYQEzq4oBhkhKT2VfpdoOoqic2/dfHoSqoYEsYKfFJ5UBoWQPBDzA1
-         JlYpEL4lb6evnaqXGsoT+i1YMCs4RVu84UUyaJ7dT94bcdoSQpwuTkZOz8XptH5mTvS8
-         Yqwukeer3hmFqUEZpRi8WW+G2MT4cUI1sOCh93ZuobrXCY0LQ4k1s/bUFC1kwtp7Ygq0
-         /E3fI28r8lSOW6+coY+CeYMlGFXm8mEuYOPU08qTRYzRf98/TUEEs2JzDCkpC6uk0YU1
-         mdbFlj8pn5+DbLMlmi56orPl8glBKML1k2vSxpj28thYBTqS9P/N5kpO0vGa/JimpvXH
-         Xrqw==
-X-Gm-Message-State: ALyK8tKZfCi1R6kDwHBkh50k4fW0eUadvwgBmT6Us17Q13kbSIHceWL87c8VC4lvrRB50Xv2LCTFrM+T0fMnrw==
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=u0kMpKmlQuI1NlyL+dWtvrpwlpBWLm5NqF/GTCwad6c=;
+        b=RDRzjkDZYairFXAT41nw2PtCngHfTvb0+nb1hPWR/GRSpf/8ymTzwYXky7FG4wJd+i
+         eKCT+yApM2q6C7wWcISjuc1fqI5348aJ3kH3PqdXK7fMnB69M52T/L8brlV1q04ftJXw
+         xZsGiItLbTzqvewu/FLjfo+z7CfaQejVlcA8CgohpaCrZoKwXYsvE1JwCGv9fQAT8yGl
+         x7bHEBwhmFUU2uuYK5U5z2S2W45CXpBqL3iCIKj22oI+05NumU+TJq97Igzda+nmoziN
+         LMlwHS5Vi4Fzu8WGNjhhR8gfCC0Mthm3LcU6nX0SP8nSF5i+Q45esYDdhS8bKjOWyzMP
+         5N1g==
+X-Gm-Message-State: ANhLgQ3pjKOthitmsYy5Q5ly4dZ5GZuBUSPIirQa18XpEVSCutHcNDzR
+	sQFdyBGukNp3p1PJbvs41Yh5A1Cy1Kc1NtiVBbA+DQ==
+X-Google-Smtp-Source: ADFU+vtkOSpKk7ryu/6RPh7pmJXaD0/Bxv5v8RR0wdKkkjV+RsFP6qYgr+tOM3+x59ZGYfvZc3CJCzRjpHjVTKxrQtI=
+X-Received: by 2002:a05:651c:2c7:: with SMTP id f7mr3299003ljo.152.1584988676706;
+ Mon, 23 Mar 2020 11:37:56 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.176.64.198 with SMTP id i64mr2249888uad.121.1464092268402;
- Tue, 24 May 2016 05:17:48 -0700 (PDT)
-Sender: chubrilo@gmail.com
-Date: Tue, 24 May 2016 14:17:48 +0200
-X-Google-Sender-Auth: EHkhz2Krr9nhLNP7SZAAMS8NuqA
-Message-ID: <CAGeh-pFfPXUX8XpUAJt5n6=qvoAr82ubN97BxE4a44o79tCudg@mail.gmail.com>
-From: Dejan Bosanac <dejan@nighttale.net>
-To: "users@activemq.apache.org" <users@activemq.apache.org>
-Cc: "dev@activemq.apache.org" <dev@activemq.apache.org>, 
-	Apache Security Response Team <security@apache.org>, bugtraq@securityfocus.com, 
-	oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=94eb2c047c5893a2570533958b9f
-Subject: [oss-security] Re: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities
+From: Tim Allclair <tallclair@google.com>
+Date: Mon, 23 Mar 2020 11:37:19 -0700
+Message-ID: <CADtktAU1jq56ag08PGjW4YiABqsNi6ptkb8E4c2iR7P4jFNhew@mail.gmail.com>
+To: kubernetes-announce@googlegroups.com, 
+	"Kubernetes developer/contributor discussion" <kubernetes-dev@googlegroups.com>, 
+	kubernetes-security-announce@googlegroups.com, 
+	kubernetes-security-discuss <kubernetes-security-discuss@googlegroups.com>, 
+	oss-security@lists.openwall.com, kubernetes+announcements@discoursemail.com
+Content-Type: multipart/alternative; boundary="0000000000000cd9d305a189efbb"
+Subject: [oss-security] CVE-2020-8551, CVE-2020-8552: Kubernetes: Denial of service
 
---94eb2c047c5893a2570533958b9f
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+--0000000000000cd9d305a189efbb
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Tim,
+Hello Kubernetes Community,
 
-it=E2=80=99s an omission. The feature will be completely removed with 5.14.=
-0 and
-it=E2=80=99s been disabled by default since 5.12.0, so 5.13.x broker that h=
-aven=E2=80=99t
-this feature turn on explicitly are not vulnerable.
+Two security issues were discovered in Kubernetes that could lead to a
+recoverable denial of service.
 
-I=E2=80=99ll fix the announcement now to say 5.13.x so it=E2=80=99s future =
-proof in case of
-new 5.13 branch releases
+*CVE-2020-8551* affects the kubelet, and has been rated *Medium *(
+CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
+<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L>
+).
 
-Regards
---
-Dejan Bosanac
-about.me/dejanb
+*CVE-2020-8552* affects the API server, and has also been rated *Medium* (
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
+<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L>
+).
+<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#am-i-vulnerable>Am
+I vulnerable?
+If an attacker can make an authorized resource request to an unpatched API
+server (see below), then you may be vulnerable to CVE-2020-8552. If an
+attacker can make an authorized request to an unpatched kubelet, then you
+may be vulnerable to CVE-2020-8551.
+<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#affected-versions>Affected
+Versions
+CVE-2020-8551 affects:
 
-On Tue, May 24, 2016 at 2:09 PM, Tim Bain <tbain@alumni.duke.edu> wrote:
+   - kubelet v1.17.0 - v1.17.2
+   - kubelet v1.16.0 - v1.16.6
+   - kubelet v1.15.0 - v1.15.10\
+   - *kubelets prior to v1.15.0 are unaffected*
 
-> Does the range of versions specified mean that the issue is already
-> addressed in 5.13.3, or was its omission from the range an oversight?
->
-> Tim
-> On May 24, 2016 2:41 AM, "Dejan Bosanac" <dejan@nighttale.net> wrote:
->
-> > There's a security vulnerability reported against Apache
-> > ActiveMQ 5.13.2 and older versions.
-> >
-> > Please check the following document and see if you=E2=80=99re affected =
-by the
-> > issue.
-> >
-> >
-> >
-> http://activemq.apache.org/security-advisories.data/CVE-2016-3088-announc=
-ement.txt
-> >
-> > Vulnerability is similar to the one reported in CVE-2015-1830 (
-> >
-> >
-> http://activemq.apache.org/security-advisories.data/CVE-2015-1830-announc=
-ement.txt
-> > ).
-> > The fileserver web application will be removed in 5.14.0 release and
-> users
-> > are advised not to use it and disable it in older versions.
-> >
-> > Regards
-> > --
-> > Dejan Bosanac
-> > about.me/dejanb
-> >
->
+CVE-2020-8552 affects:
 
---94eb2c047c5893a2570533958b9f--
+   - kube-apiserver v1.17.0 - v1.17.2
+   - kube-apiserver v1.16.0 - v1.16.6
+   - kube-apiserver < v1.15.10
+
+<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#how-do-i-mitigate-this-vulnerability>How
+do I mitigate this vulnerability?
+
+Prior to upgrading, these vulnerabilities can be mitigated by:
+
+   - Preventing unauthenticated or unauthorized access to the affected
+   components
+   - The apiserver and kubelet should auto restart in the event of an OOM
+   error
+
+<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#fixed-versions>Fixed
+Versions
+Both vulnerabilities are patched in kubernetes versions
+
+   - v1.17.3
+   - v1.16.7
+   - v1.15.10
+
+To upgrade, refer to the documentation:
+https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
+<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#addiitonal-details>Additional
+Details
+
+See the GitHub issues for more details:
+
+CVE-2020-8551: https://github.com/kubernetes/kubernetes/issues/89377
+CVE-2020-8552: https://github.com/kubernetes/kubernetes/issues/89378
+
+Thank You,
+
+Tim Allclair on behalf of the Kubernetes Product Security Committee
+
+--0000000000000cd9d305a189efbb--
