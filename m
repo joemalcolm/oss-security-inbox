@@ -1,85 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/09/1
-Message-ID: <09cb1e1e-c71b-83a3-4c04-4e47e7c85342@linux.ibm.com>
-Date: Fri, 9 Oct 2020 12:20:38 +1100
-From: Andrew Donnellan <ajd@...ux.ibm.com>
-To: oss-security@...ts.openwall.com, linuxppc-dev <linuxppc-dev@...ts.ozlabs.org>
-Subject: Linux kernel: powerpc: RTAS calls can be used to compromise kernel integrity
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/23/3
+Message-ID: <CADtktAU1jq56ag08PGjW4YiABqsNi6ptkb8E4c2iR7P4jFNhew@mail.gmail.com>
+Date: Mon, 23 Mar 2020 11:37:19 -0700
+From: Tim Allclair <tallclair@...gle.com>
+To: kubernetes-announce@...glegroups.com,  "Kubernetes developer/contributor discussion" <kubernetes-dev@...glegroups.com>,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss <kubernetes-security-discuss@...glegroups.com>,  oss-security@...ts.openwall.com, kubernetes+announcements@...coursemail.com
+Subject: CVE-2020-8551, CVE-2020-8552: Kubernetes: Denial of service
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel for powerpc has an issue with the Run-Time Abstraction 
-Services (RTAS) interface, allowing root (or CAP_SYS_ADMIN users) in a 
-VM to overwrite some parts of memory, including kernel memory.
+Hello Kubernetes Community,
 
-This issue impacts guests running on top of PowerVM or KVM hypervisors 
-(pseries platform), and does *not* impact bare-metal machines (powernv 
-platform).
+Two security issues were discovered in Kubernetes that could lead to a
+recoverable denial of service.
 
-Description
-===========
+*CVE-2020-8551* affects the kubelet, and has been rated *Medium *(
+CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
+<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L>
+).
 
-The RTAS interface, defined in the Power Architecture Platform 
-Reference, provides various platform hardware services to operating 
-systems running on PAPR platforms (e.g. the "pseries" platform in Linux, 
-running in a LPAR/VM on PowerVM or KVM).
+*CVE-2020-8552* affects the API server, and has also been rated *Medium* (
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
+<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L>
+).
+<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#am-i-vulnerable>Am
+I vulnerable?
+If an attacker can make an authorized resource request to an unpatched API
+server (see below), then you may be vulnerable to CVE-2020-8552. If an
+attacker can make an authorized request to an unpatched kubelet, then you
+may be vulnerable to CVE-2020-8551.
+<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#affected-versions>Affected
+Versions
+CVE-2020-8551 affects:
 
-Some userspace daemons require access to certain RTAS calls for system 
-maintenance and monitoring purposes.
+   - kubelet v1.17.0 - v1.17.2
+   - kubelet v1.16.0 - v1.16.6
+   - kubelet v1.15.0 - v1.15.10\
+   - *kubelets prior to v1.15.0 are unaffected*
 
-The kernel exposes a syscall, sys_rtas, that allows root (or any user 
-with CAP_SYS_ADMIN) to make arbitrary RTAS calls. For the RTAS calls 
-which require a work area, it allocates a buffer (the "RMO buffer") and 
-exposes the physical address in /proc so that the userspace tool can 
-pass addresses within that buffer as an argument to the RTAS call.
+CVE-2020-8552 affects:
 
-The syscall doesn't check that the work area arguments to RTAS calls are 
-within the RMO buffer, which makes it trivial to read and write to any 
-guest physical address within the LPAR's Real Memory Area, including 
-overwriting the guest kernel's text.
+   - kube-apiserver v1.17.0 - v1.17.2
+   - kube-apiserver v1.16.0 - v1.16.6
+   - kube-apiserver < v1.15.10
 
-At the time the RTAS syscall interface was first developed, it was 
-generally assumed that root had unlimited ability to modify system 
-state, so this would not have been considered an integrity violation. 
-However, with the advent of Secure Boot, Lockdown etc, root should not 
-be able to arbitrarily modify the kernel text or read arbitrary kernel data.
+<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#how-do-i-mitigate-this-vulnerability>How
+do I mitigate this vulnerability?
 
-Therefore, while this issue impacts all kernels since the RTAS interface 
-was first implemented, we are only considering it a vulnerability for 
-upstream kernels from 5.3 onwards, which is when the Lockdown LSM was 
-merged. Lockdown was widely included in pre-5.3 distribution kernels, so 
-distribution vendors should consider whether they need to backport the 
-patch to their pre-5.3 distro trees.
+Prior to upgrading, these vulnerabilities can be mitigated by:
 
-(A CVE for this issue is pending; we requested one some time ago but it 
-has not yet been assigned.)
+   - Preventing unauthenticated or unauthorized access to the affected
+   components
+   - The apiserver and kubelet should auto restart in the event of an OOM
+   error
 
-Fixes
-=====
+<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#fixed-versions>Fixed
+Versions
+Both vulnerabilities are patched in kubernetes versions
 
-A patch is currently in powerpc-next[0] and is expected to be included 
-in mainline kernel 5.10. The patch has not yet been backported to 
-upstream stable trees.
+   - v1.17.3
+   - v1.16.7
+   - v1.15.10
 
-The approach taken by the patch is to maintain the existing RTAS 
-interface, but restrict requests to the list of RTAS calls actually used 
-by the librtas userspace library, and restrict work area pointer 
-arguments to the region within the RMO buffer.
+To upgrade, refer to the documentation:
+https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
+<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#addiitonal-details>Additional
+Details
 
-All RTAS-using applications that we are aware of are system 
-management/monitoring tools, maintained by IBM, that use the librtas 
-library. We don't anticipate there being any real world legitimate 
-applications that require an RTAS call that isn't in the librtas list, 
-however if such an application exists, the filtering can be disabled by 
-a Kconfig option specified during kernel build.
+See the GitHub issues for more details:
 
-Credit
-======
+CVE-2020-8551: https://github.com/kubernetes/kubernetes/issues/89377
+CVE-2020-8552: https://github.com/kubernetes/kubernetes/issues/89378
 
-Thanks to Daniel Axtens (IBM) for initial discovery of this issue.
+Thank You,
 
-[0] 
-https://git.kernel.org/pub/scm/linux/kernel/git/powerpc/linux.git/commit/?h=next&id=bd59380c5ba4147dcbaad3e582b55ccfd120b764
+Tim Allclair on behalf of the Kubernetes Product Security Committee
 
--- 
-Andrew Donnellan              OzLabs, ADL Canberra
-ajd@...ux.ibm.com             IBM Australia Limited
