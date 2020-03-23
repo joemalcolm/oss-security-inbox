@@ -1,41 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/16/1
-Message-ID: <CAFkuAo1KHC_=9a5CepfMVooTOzfqFg0MODus-PR5QzyzBxOp=g@mail.gmail.com>
-Date: Wed, 15 Apr 2020 22:59:22 -0500
-From: Josh Fischer <josh@...hfischer.io>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-1964: Apache Heron (incubating) information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/23/1
+Message-ID: <20200323100605.27fd2c46@computer>
+Date: Mon, 23 Mar 2020 10:06:05 +0100
+From: Hanno Böck <hanno@...eck.de>
+To:  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Serendipity XSS via update notification (minor, exploitable by s9y developers)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-1964: Apache Heron (incubating) information disclosure
-vulnerability
+I reported an XSS in Serendipity that is now fixed in version 2.3.3. It
+is only exploitable by either the developers of serendipity or someone
+compromising Github, so I consider this very minor.
 
-Severity: Important
+My bug report to s9y [1]:
 
-Vendor:
-The Apache Software Foundation
+The version number shown in the update notification window is not
+escaped. This means it can contain javascript payload and thus allow
+XSS.
 
-Versions Affected:
-0.20.2-incubating
-0.20.1-incubating
-v-0.20.0-incubating
+The version information is fetched from a Github URL, which means this
+is an XSS vulnerability that can only be exploited by the serendipity
+developers or github itself. So this makes it rather low severity.
 
-Description:
-In versions 0.20.2-incubating and before in Apache Heron does not
-configure its YAML parser to prevent the instantiation of arbitrary
-types, resulting in remote code execution vulnerabilities (CWE-502:
-Deserialization of Untrusted Data).
+Still I'd consider safety against the developers or potentially
+compromised developer accounts desirable where possible, and this seems
+easy to fix.
 
-Mitigation:
-0.20.2-incubating and previous users should build from the current HEAD of
-master.
-A vote has been started for a new release 0.20.3-incubating which will
-include the fix.
+PoC: Change the $updateURL variable in
+include/functions_installer.inc.php in the function
+serendipity_getCurrentVersion to one you control and add something like:
 
-Credit:
-This vulnerability was discovered by Frederic Vleminckx
+stable:9.<img src=x onerror=alert(1)><x
+beta:9.<img src=x onerror=alert(2)><x
 
-Regards,
+(s9y adds a </span> somewhere at the end for reasons I don't
+understand, by adding the bogus <x I avoid that disturbing my payload.)
 
-The Apache Heron (Incubating) Team
-
+[1] https://github.com/s9y/Serendipity/issues/674
+-- 
+Hanno Böck
+https://hboeck.de/
