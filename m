@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/22/2
-Message-ID: <CALx_OUDHZ3d9few45oqj9WTw4vEj47LF-AiJBX3GnCVHYjyAyw@mail.gmail.com>
-Date: Fri, 22 May 2020 05:54:43 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Short notes on qmail security guarantee
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/25/1
+Message-ID: <CAHbpyFYWV3mM9GHwpmKhVB-aMhXKa2w4HBRwSER6sqGHuYP2ag@mail.gmail.com>
+Date: Tue, 24 Mar 2020 23:21:38 -0400
+From: Daniel Klco <dklco@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-1949: Apache Sling CMS Reflected XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
->> djb's main argument is that nobody gives a lot of memory
->> to qmail-smtpd (and as djb might missed to all other
->> qmail- components).
->
-> The Qualys advisory quotes DJB saying "I run each qmail service under
-> softlimit -m12345678", so apparently he did not miss that for his own
-> use.  The issue is what recommendation was (not) provided publicly.
+Severity: Medium
 
-I think that's an extremely charitable way of looking at it; it's
-perfectly OK to develop software where the security properties of the
-code hinge on some non-standard constraints, but then it's
-affirmatively on the developer to confirm at runtime that these
-constraints are in place. I.e., setrlimit() or test and abort...
+Vendor:
+The Apache Software Foundation
 
-Otherwise, you really don't get to blame others, whether there is a
-cautionary footnote on page 15 of the README or not.
+Versions Affected:
+Sling CMS 0.14.0 and previous releases
 
-/mz
+Description:
+Scripts in Sling CMS do not property escape the Sling Selector from URLs
+when generating navigational elements for the administrative consoles and
+are vulnerable to reflected XSS attacks.
+
+Mitigation:
+All users should upgrade to 0.16.0
+
+Credit:
+This issue was discovered by Guillaume GRABÉ Pentester from Orange
+Cyberdefense France
+
+References:
+https://sling.apache.org/project-information/security.html
+
