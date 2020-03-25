@@ -1,37 +1,146 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/11/2
-Message-ID: <24290.31117.921352.498399@chiark.greenend.org.uk>
-Date: Thu, 11 Jun 2020 19:35:57 +0100
-From: Ian Jackson <ijackson@...ark.greenend.org.uk>
-To: oss-security@...ts.openwall.com 
-Subject: adns (dns resolver library) multiple vulns
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/25/2
+Message-Id: <579B47F2-8375-43AB-A0C2-A0382BCE48B8@beckweb.net>
+Date: Wed, 25 Mar 2020 16:58:05 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi.  I'm the upstream maintainer for adns.  There were outstanding
-security problems which I have sat on for far too long, but I have now
-finally dealt with them properly.  My apologies.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-The fixes have incorporated in adns 1.5.2 and 1.6.0.  See the release
-announcement here:
-  https://www.chiark.greenend.org.uk/pipermail/adns-announce/2020/000004.html
+The following releases contain fixes for security vulnerabilities:
 
-If you prefer to apply specific patches, the relevant commits are
-in my git repository:
-  https://www.chiark.greenend.org.uk/ucgi/~ianmdlvl/git/adns.git/
-  https://www.chiark.greenend.org.uk/ucgi/~ianmdlvl/githttp/adns.git
-in this commit range
-  2f6e879e0fca1715d5c5946bcedb4f821ce64d77..bb4e05849170034447d60a6f7cb71d5f255b0ecc
-(which you will find is covered by the signed tag adns-1.5.2).
+* Jenkins 2.228
+* Jenkins LTS 2.204.6 and 2.222.1
+* Artifactory Plugin 3.6.0 and 3.6.1
+* Azure Container Service Plugin 1.0.2
+* OpenShift Pipeline Plugin 1.0.57
+* Pipeline: AWS Steps Plugin 1.41
+* Queue cleanup Plugin 1.4
+* RapidDeploy Plugin 4.2.1
 
-The most serious problems are remote code execution, within the
-adns-using application, exploitable by the local recursive resolver.
 
-Thanks for your attention.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2020-03-25/
 
-Ian.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
--- 
-Ian Jackson <ijackson@...ark.greenend.org.uk>   These opinions are my own.  
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Pronouns: they/he.  If I emailed you from @fyvzl.net or @evade.org.uk,
-that is a private address which bypasses my fierce spamfilter.
+---
+
+SECURITY-1774 / CVE-2020-2160
+An extension point in Jenkins allows selectively disabling cross-site
+request forgery (CSRF) protection for specific URLs.
+
+Implementations of that extension point received a different representation
+of the URL path than the Stapler web framework uses to dispatch requests in
+Jenkins 2.227 and earlier, LTS 2.204.5 and earlier. This discrepancy
+allowed attackers to craft URLs that would bypass the CSRF protection of
+any target URL.
+
+
+SECURITY-1781 / CVE-2020-2161
+Users with Agent/Configure permissions can define labels for nodes. These
+labels can be referenced in job configurations to restrict where a job can
+be run.
+
+In Jenkins 2.227 and earlier, LTS 2.204.5 and earlier, the form validation
+for label expressions in job configuration forms did not properly escape
+label names, resulting in a stored cross-site scripting (XSS) vulnerability
+exploitable by users able to define node labels.
+
+
+SECURITY-1793 / CVE-2020-2162
+Jenkins 2.227 and earlier, LTS 2.204.5 and earlier served files uploaded as
+file parameters to a build without specifying appropriate
+`Content-Security-Policy` HTTP headers. This resulted in a stored
+cross-site scripting (XSS) vulnerability exploitable by users with
+permissions to build a job with file parameters.
+
+
+SECURITY-1796 / CVE-2020-2163
+Jenkins 2.227 and earlier, LTS 2.204.5 and earlier processed HTML embedded
+in list view column headers. This resulted in a stored cross-site scripting
+(XSS) vulnerability exploitable by users able to control the content of
+column headers.
+
+The following plugins are known to allow users to define column headers:
+
+* Warnings NG
+* Maven Info
+* Link Column
+
+Further plugins may also allow users to define column headers.
+
+
+SECURITY-1542 (1) / CVE-2020-2164
+Artifactory Plugin 3.5.0 and earlier stores its Artifactory server password
+in plain text in the global configuration file
+`org.jfrog.hudson.ArtifactoryBuilder.xml`. This password can be viewed by
+users with access to the Jenkins master file system.
+
+
+SECURITY-1542 (2) / CVE-2020-2165
+Artifactory Plugin stores Artifactory server passwords in its global
+configuration file `org.jfrog.hudson.ArtifactoryBuilder.xml` on the Jenkins
+master as part of its configuration.
+
+While the password is stored encrypted on disk since Artifactory Plugin
+3.6.0, it is transmitted in plain text as part of the configuration form by
+Artifactory Plugin 3.6.0 and earlier. This can result in exposure of the
+password through browser extensions, cross-site scripting vulnerabilities,
+and similar situations.
+
+
+SECURITY-1741 / CVE-2020-2166
+Pipeline: AWS Steps Plugin 1.40 and earlier does not configure its YAML
+parser to prevent the instantiation of arbitrary types. This results in a
+remote code execution (RCE) vulnerability exploitable by users able to
+provide YAML input files to Pipeline: AWS Steps Plugin's build steps.
+
+
+SECURITY-1739 / CVE-2020-2167
+OpenShift Pipeline Plugin 1.0.56 and earlier does not configure its YAML
+parser to prevent the instantiation of arbitrary types. This results in a
+remote code execution (RCE) vulnerability exploitable by users able to
+provide YAML input files to OpenShift Pipeline Plugin's build step.
+
+
+SECURITY-1732 / CVE-2020-2168
+Azure Container Service Plugin 1.0.1 and earlier does not configure its
+YAML parser to prevent the instantiation of arbitrary types. This results
+in a remote code execution (RCE) vulnerability exploitable by users able to
+provide YAML input files to Azure Container Service Plugin's build step.
+
+
+SECURITY-1724 / CVE-2020-2169
+A form validation HTTP endpoint in Queue cleanup Plugin 1.3 and earlier
+does not escape a query parameter displayed in an error message. This
+results in a reflected cross-site scripting vulnerability (XSS).
+
+
+SECURITY-1676 / CVE-2020-2170
+RapidDeploy Plugin 4.2 and earlier does not escape package names in its
+displayed table of packages obtained from a remote server. This results in
+a stored cross-site scripting (XSS) vulnerability exploitable by users able
+to configure jobs.
+
+
+SECURITY-1677 / CVE-2020-2171
+RapidDeploy Plugin 4.2 and earlier does not configure its XML parser to
+prevent XML external entity (XXE) attacks.
+
+This allows a user able to control the input files for the 'RapidDeploy
+deployment package build' build or post-build step to have Jenkins parse a
+crafted file that uses external entities for extraction of secrets from the
+Jenkins master, server-side request forgery, or denial-of-service attacks.
+
+
+
