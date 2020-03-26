@@ -1,71 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/05/1
-Message-ID: <20200505192458.GA8312@openwall.com>
-Date: Tue, 5 May 2020 21:24:58 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/26/1
+Message-ID: <CAG8b5tTgXgApNVG+rFNmsyFg9F0AVPtcJj=SqZpBrfw1os+wdQ@mail.gmail.com>
+Date: Fri, 27 Mar 2020 01:10:36 +0400
+From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
+Subject: Stealing Videos from VLC-iOS (IDOR)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Summary: VLC for iOS was vulnerable to an unauthenticated insecure direct
+object reference (IDOR) which could allow a local attacker to steal media
+from the storage by just navigating to the source URL/IP. This was possible
+by abusing a functionality in the iOS application for VLC, which allows a
+user to share files with others over WiFi. This can be simply done by
+enabling "Network > Sharing via WiFi" and the web-server for this
+functionality works on port 80(http) protocol.
 
-Thank you Benjamin, Igor, John for agreeing on this between yourselves
-and for all of your contributions to running these lists smoothly.
+Attack Vector: Let's assume a scenario where Bob & Alice are sharing a
+video over the WiFi using vlc-iOS, Eve could perform this attack by
+crawling the source IP address of Bob which would list the URL's of the
+videos shared between Bob & Alice. Having said that, navigating to those
+URL's Eve could simply steal the video without Bob's knowledge which
+successfully leads to unauthenticated IDOR. Such things can be crawled via
+burpsuite or you can use python scrapy to extract the URL's from the host
+and download the videos.
 
-On Tue, Mar 03, 2020 at 12:07:29AM -0500, Benjamin Gilbert wrote:
-> Red Hat recently announced [1] that CoreOS Container Linux will reach
-> end-of-life on May 26.  The Container Linux team will be leaving the
-> distros lists on that date,
+Mitigation from VLC Security team: They implemented a user-friendly
+authentication mechanism on VLC iOS web server for WiFi Sharing. Passcode
+authentication is enabled when VLC's passcode setting is enabled and the
+user uses the passcode that he set in VLC's settings to log into Wifi
+Sharing. This was reported on 2nd Jan 2019 and patched on 10th Feb 2020
+whereas fixed version was publicly released in March 2020. Post mitigation
+VLC published an advisory for this which you can view here[1].
 
-I assume you'll remind me about that on that date.
+References
+[1]: https://code.videolan.org/videolan/vlc-ios/blob/master/Docs/NEWS#L3
+Blog URL: https://www.inputzero.io/2020/03/idor-in-vlc-ios.html
 
-> and will need to hand off our maintenance
-> responsibilities to other distros.  We're currently handling [2]:
-> 
-> Administrative-1: Promptly review new issue reports for meeting the
-> list's requirements and confirm receipt of the report and, when
-> necessary, inform the reporter of any issues with their report (e.g.,
-> obviously not actionable by the distros) and request and/or propose
-> any required yet missing information (most notably, a tentative public
-> disclosure date/time) - primary: CoreOS, backup: Oracle
-> 
-> Administrative-2: If the proposed public disclosure date is not within
-> list policy, insist on getting this corrected and propose a suitable
-> earlier date - primary: CoreOS, backup: CloudLinux
-> 
-> Administrative-6: If multiple issues are reported at once, see if any
-> of them can reasonably be made public sooner than the rest, and if so
-> help untangle them and stay on top of their disclosure process -
-> primary: CoreOS, backup: CloudLinux
-> 
-> 
-> Oracle isn't signed up for any other tasks, so it seems natural for
-> them to move up to primary on #1.  In addition to being backup on #2
-> and #6, CloudLinux is primary on Administrative-3 (evaluate if the
-> issue is already public).  In my experience it makes sense to handle
-> #1 and #2 together, so: Oracle, would you be willing to take primary
-> on #1 and #2, and CloudLinux, what would you think of moving up to
-> primary on #6?
-
-I've just edited the wiki accordingly.
-
-> It'd also be good to get volunteers for the backup slots.  Any takers?
-
-I second this request.
-
-> We plan to continue executing our current responsibilities until May
-> 26, but if other distros want to take over our roles sooner for ease
-> of bookkeeping, we're open to that.
-
-I suggest that Oracle and CloudLinux already start to act as primary for
-their respective tasks, and CoreOS as backup until you leave on May 26.
-
-> Best,
-> --Benjamin Gilbert
-> 
-> [1]: https://coreos.com/os/eol/
-> [2]: https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-
-Thanks again,
-
-Alexander
