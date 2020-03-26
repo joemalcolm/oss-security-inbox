@@ -1,4 +1,9 @@
-Received: (qmail 17413 invoked by uid 550); 8 Aug 2024 12:53:32 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1762" "Friday" "27" "March" "2020" "01:10:36" "+0400" "Dhiraj Mishra" "mishra.dhiraj95@gmail.com" "<CAG8b5tTgXgApNVG+rFNmsyFg9F0AVPtcJj=SqZpBrfw1os+wdQ@mail.gmail.com>" "33" "[oss-security] Stealing Videos from VLC-iOS (IDOR)" nil nil nil "3" "2020032621:10:36" "[oss-security] Stealing Videos from VLC-iOS (IDOR)" (number mark "U       mishra.dhira Mar 27   33/1762  " thread-indent "\"[oss-security] Stealing Videos from VLC-iOS (IDOR)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Stealing Videos from VLC-iOS (IDOR)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28487 invoked by uid 550); 26 Mar 2020 21:52:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,69 +12,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32624 invoked from network); 7 Aug 2024 22:58:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=grisby.org;
-	s=20180401; h=MIME-Version:Content-Transfer-Encoding:Content-Type:References:
-	In-Reply-To:Date:To:From:Subject:Message-ID:Sender:Reply-To:Cc:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=PY72Ph6vOJbSm0HP0kACMeNBt/9rY8ECyUGFETAWAj4=; b=Dd5CuZmHL+643kvoxnHNxySjaL
-	Yxkq2gvudhKGVGM4u8I8+i24qB8hZD7pM/uv0YShip0MepVxkdhj0SFeRZrEX7zBqB+6MdDY0uOa+
-	5Y3LkY3ndQEilqI8MaHbJd8FJYocGgFLGKDrQqOh7wGTKJqnJiISTpuYG51rqFBLj0c66hqx3fnX7
-	9oF7yiYj1UfgxJJ+SZSt/zQLsnFbnLdcFSNtoX7YmX4vcTe0BJbeR54VG0a+VoW3g1jELVqs30LgC
-	4v+bMJWkrkjm0XXrcVsGxhMjhmH6vScz0la1zfI2WV7OvmvZ4TeU6I1vvSI0FvzHc+luhMzXdDETr
-	x+8GCJeQ==;
-Message-ID: <ff992a659e09160cb6609c611245fb480a5004ab.camel@grisby.org>
-From: Duncan Grisby <duncan@grisby.org>
-To: oss-security@lists.openwall.com
-Date: Wed, 07 Aug 2024 23:58:40 +0100
-In-Reply-To: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
-References: 
-	<CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
+Received: (qmail 23885 invoked from network); 26 Mar 2020 21:11:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=lza7wCA9xFOpoZKvJqP2uG/kPNiqpsSGqwGw83pyvlQ=;
+        b=bH9FSJ2orUUpMpd640jMIbxFqIZA/M8vDgqEQBkXz9EZIztmR6TLwOjnwrQaMzhktH
+         UIJO4uGL/7K8ZAQG6UnnC8+ZfdnOCuCnL3nqT/2RuHUe83q+59LIHRUzmZ1sG8X9ataD
+         yyuX8qq12A1GHew4/e34yTNzuUvw+cnEqT4ArCSYzetAVY7XL+8WUiuICX+QgXeCdvYT
+         OHZL+8WDCStC6gA0ewvOu6tGgje8zdSVDuQfSYOwlmpi7LzHTp7vZyhKJy09bEsXlvx8
+         OdSqSPPp8xHq7M4UWqjxNXbcQdXUqJmjDbJYhBwqgumtudwtK0XHTFuXooqTLrjUo2RM
+         cQxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=lza7wCA9xFOpoZKvJqP2uG/kPNiqpsSGqwGw83pyvlQ=;
+        b=RvEcGLlCoBkjNimnR3lcT8uXK3b3cTThcyq0AxZSJoF+DZwv77TXRHMLSj/YAD3Xqj
+         xk1NC5obkJJKvplO1Id5AvNJsC/WEJ5k4vWFtEHMW4q72j7gw6JMNhplznLo2Tj2SHSz
+         HxnuZt+uG0s0ikp+lwjyj0i4Yw9GfY9Agv7wbJFlyMoqL6LjfnhSdu4IHkzElPiUq4BM
+         Y2EORokfDAw1SP134AO1tNXdQtTPwuCUz3LUOtZnlVd4+zPPWnQPL6W+iQU7Zt/mR3Qo
+         jCcp+jS6LzeThKMbzPSEetuTu/7z1RroXTP9EbGLIqvZIa9ybk2UsmXgFqPSUYKii1Sk
+         Jzzw==
+X-Gm-Message-State: ANhLgQ1iWPlDty3VYPaW+rDk/OJuKafqt1wEWM1ib7659kc73Hh5pymo
+	ygYluGuPrlPRsvn1LaCGz1bYBX6ZndU+8llt0/hXZXnyHG74Sw==
+X-Google-Smtp-Source: ADFU+vsZlQSJ2vp6hxfPswGsdS/ld+AwJ6sRqDSM/DsWjnQKzLEWbDLxXES9VB+IKunNL8sGBWS4Hkdr64I7AEs8FFM=
+X-Received: by 2002:a9d:5c82:: with SMTP id a2mr3882894oti.22.1585257047388;
+ Thu, 26 Mar 2020 14:10:47 -0700 (PDT)
 MIME-Version: 1.0
-Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
- 1.0/1.1
+From: Dhiraj Mishra <mishra.dhiraj95@gmail.com>
+Date: Fri, 27 Mar 2020 01:10:36 +0400
+Message-ID: <CAG8b5tTgXgApNVG+rFNmsyFg9F0AVPtcJj=SqZpBrfw1os+wdQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000002ff88205a1c86ba3"
+Subject: [oss-security] Stealing Videos from VLC-iOS (IDOR)
 
-On Tue, 2024-08-06 at 05:02 -0400, Neil Horman wrote:
+--0000000000002ff88205a1c86ba3
+Content-Type: text/plain; charset="UTF-8"
 
+Summary: VLC for iOS was vulnerable to an unauthenticated insecure direct
+object reference (IDOR) which could allow a local attacker to steal media
+from the storage by just navigating to the source URL/IP. This was possible
+by abusing a functionality in the iOS application for VLC, which allows a
+user to share files with others over WiFi. This can be simply done by
+enabling "Network > Sharing via WiFi" and the web-server for this
+functionality works on port 80(http) protocol.
 
-> The current proposal under consideration is to explicitly disable TLS
-> 1.0/1.1 at build time, in our 4.0 release (tentatively scheduled to
-> release in the next 12-18 months), with an eye to completely remove
-> the impacted code in a future major release.=C2=A0 The default
-> configuration could be overridden to re-enable TLS 1.0/1.1 at build
-> time.
->=20
-> Questions to the community are:
->=20
-> 1) Are distributions/users comfortable with this approach in the time
-> frame proposed?
+Attack Vector: Let's assume a scenario where Bob & Alice are sharing a
+video over the WiFi using vlc-iOS, Eve could perform this attack by
+crawling the source IP address of Bob which would list the URL's of the
+videos shared between Bob & Alice. Having said that, navigating to those
+URL's Eve could simply steal the video without Bob's knowledge which
+successfully leads to unauthenticated IDOR. Such things can be crawled via
+burpsuite or you can use python scrapy to extract the URL's from the host
+and download the videos.
 
-I lead a quite unusual application (BMC Discovery), which is an IT
-discovery tool. Its purpose is to connect to everything it can in an IT
-environment and interrogate it, to find out what it is, and what it is
-doing.
+Mitigation from VLC Security team: They implemented a user-friendly
+authentication mechanism on VLC iOS web server for WiFi Sharing. Passcode
+authentication is enabled when VLC's passcode setting is enabled and the
+user uses the passcode that he set in VLC's settings to log into Wifi
+Sharing. This was reported on 2nd Jan 2019 and patched on 10th Feb 2020
+whereas fixed version was publicly released in March 2020. Post mitigation
+VLC published an advisory for this which you can view here[1].
 
-We would all agree that everything ought to be using modern TLS
-versions and encryption algorithms, but the reality is that we
-encounter many ancient systems that are using old protocols. It is
-important to us that we can connect to things even if they are now
-considered insecure, not least because that way we can report that they
-_are_ old and insecure.
+References
+[1]: https://code.videolan.org/videolan/vlc-ios/blob/master/Docs/NEWS#L3
+Blog URL: https://www.inputzero.io/2020/03/idor-in-vlc-ios.html
 
-Obviously this is quite an unusual use of OpenSSL, but I think it is a
-good use case for retaining these old algorithms for as long as
-possible, even if they are disabled by default. If new OpenSSL versions
-drop support for older protocols, we will have to start using multiple
-versions, so we can use old OpenSSL versions for old discovery targets.
-
-Regards,
-
-Duncan Grisby.
-
---=20
-Duncan Grisby <duncan@grisby.org>
+--0000000000002ff88205a1c86ba3--
