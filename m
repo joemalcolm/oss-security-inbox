@@ -1,65 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/04/3
-Message-Id: <3553F8C1-C0B0-457D-84EA-4E04B4CC8EF1@oracle.com>
-Date: Wed, 4 Mar 2020 18:52:11 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/30/1
+Message-ID: <24afb6093cb0de9e0f652ed5252e6aa97f34fd30.camel@doppel-helix.eu>
+Date: Sun, 29 Mar 2020 22:52:38 +0200
+From: Matthias Bläsing <mblaesing@...pel-helix.eu>
+To: dev@...beans.apache.org, announce@...beans.apache.org, security@...che.org,  oss-security@...ts.openwall.com
+Subject: [CVE-2019-17560] "Apache NetBeans" autoupdate cert validation
 Content-Type: text/plain; charset=utf-8
 
+CVE-ID
+------
+CVE-2019-17560
 
+Summary
+-------
+The "Apache NetBeans" autoupdate system does not validate SSL 
+certificates and hostnames for https based downloads.
 
-> On 3 Mar 2020, at 05:07, Benjamin Gilbert <benjamin.gilbert@...eos.com> wrote:
-> 
-> Hi all,
-> 
-> Red Hat recently announced [1] that CoreOS Container Linux will reach
-> end-of-life on May 26.  The Container Linux team will be leaving the
-> distros lists on that date, and will need to hand off our maintenance
-> responsibilities to other distros.  We're currently handling [2]:
-> 
-> Administrative-1: Promptly review new issue reports for meeting the
-> list's requirements and confirm receipt of the report and, when
-> necessary, inform the reporter of any issues with their report (e.g.,
-> obviously not actionable by the distros) and request and/or propose
-> any required yet missing information (most notably, a tentative public
-> disclosure date/time) - primary: CoreOS, backup: Oracle
-> 
-> Administrative-2: If the proposed public disclosure date is not within
-> list policy, insist on getting this corrected and propose a suitable
-> earlier date - primary: CoreOS, backup: CloudLinux
-> 
-> Administrative-6: If multiple issues are reported at once, see if any
-> of them can reasonably be made public sooner than the rest, and if so
-> help untangle them and stay on top of their disclosure process -
-> primary: CoreOS, backup: CloudLinux
-> 
-> 
-> Oracle isn't signed up for any other tasks, so it seems natural for
-> them to move up to primary on #1.  In addition to being backup on #2
-> and #6, CloudLinux is primary on Administrative-3 (evaluate if the
-> issue is already public).  In my experience it makes sense to handle
-> #1 and #2 together, so: Oracle, would you be willing to take primary
-> on #1 and #2, and CloudLinux, what would you think of moving up to
-> primary on #6?
+Versions Affected: 
+------------------
+- All Apache NetBeans versions up to and including 11.2
+- NetBeans releases before the Apache transition started may be
+  also affected
 
+Description:
+------------
+The "Apache NetBeans" autoupdate system does not validate SSL 
+certificates and hostnames for https based downloads. This allows
+an attacker to intercept downloads of autoupdates and modify the
+download, potentially injecting malicious code.
 
-We, Oracle, happy to pick up primary for #1 and #2.
+Mitigation:
+-----------
+- Disable autoupdates
+- Manually download plugins to installed with a web browser
+- Update to NetBeans 11.3 by downloading the release, verifying the
+  signature and manually installing it
 
-Benjamin has done a sterling job with these -- always been prompt and clear -- we all owe him a debt of thanks.
+Credit:
+-------
+The investigation was triggered by a proof-of-concept submitted by
+Emilian Bold
 
-jch
-
-> 
-> It'd also be good to get volunteers for the backup slots.  Any takers?
-> 
-> We plan to continue executing our current responsibilities until May
-> 26, but if other distros want to take over our roles sooner for ease
-> of bookkeeping, we're open to that.
-> 
-> Best,
-> --Benjamin Gilbert
-> 
-> [1]: https://coreos.com/os/eol/
-> [2]: https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
