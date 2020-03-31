@@ -1,58 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/15/1
-Message-Id: <2ff92392-30ec-d5c4-84c9-e6ba24f6b154@linux.ibm.com>
-Date: Wed, 15 Apr 2020 22:52:53 +1000
-From: Andrew Donnellan <ajd@...ux.ibm.com>
-To: oss-security@...ts.openwall.com, linuxppc-dev <linuxppc-dev@...ts.ozlabs.org>
-Subject: CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/01/3
+Message-ID: <CABdrxGDFrs7pUS5DNae80GQds8vc3qAavJrTkH-fVEmxXvfMtg@mail.gmail.com>
+Date: Tue, 31 Mar 2020 16:07:32 -0700
+From: CJ Cullen <cjcullen@...gle.com>
+To: kubernetes-announce@...glegroups.com,  kubernetes-dev <kubernetes-dev@...glegroups.com>,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss@...glegroups.com, oss-security@...ts.openwall.com,  kubernetes+announcements@...coursemail.com
+Subject: CVE-2019-11254: Kubernetes: denial of service vulnerability from malicious YAML payloads
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel for powerpc from v4.10 to v5.1 has a bug where the 
-Authority Mask Register (AMR), Authority Mask Override Register (AMOR) 
-and User Authority Mask Override Register (UAMOR) are not correctly 
-saved and restored when the CPU is going into/coming out of idle state.
+Hello Kubernetes Community,
 
-On POWER9 CPUs, this means that a CPU may return from idle with the AMR 
-value of another thread on the same core.
 
-This allows a trivial Denial of Service attack against KVM hosts, by 
-booting a guest kernel which makes use of the AMR, such as a v5.2 or 
-later kernel with Kernel Userspace Access Prevention (KUAP) enabled.
 
-The guest kernel will set the AMR to prevent userspace access, then the 
-thread will go idle. At a later point, the hardware thread that the 
-guest was using may come out of idle and start executing in the host, 
-without restoring the host AMR value. The host kernel can get caught in 
-a page fault loop, as the AMR is unexpectedly causing memory accesses to 
-fail in the host, and the host is eventually rendered unusable.
+A denial of service vulnerability in the Kubernetes API Server was
+discovered and assigned CVE-2019-11254. This vulnerability has been given
+an initial severity of Medium (CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H)
+<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H>.
+Details are below and at https://issue.k8s.io/89535
 
-The fix is to correctly save and restore the AMR in the idle state 
-handling code.
 
-The bug does not affect POWER8 or earlier Power CPUs.
 
-CVE-2020-11669 has been assigned.
+The following versions including the fix have been released:
 
-The bug has already been fixed upstream in kernels v5.2 onwards, by [0].
+   -
 
-Fixes have been submitted for inclusion in upstream stable kernel trees 
-for v4.19[1] and v4.14[2].
+   v1.15.10 <https://github.com/kubernetes/kubernetes/releases/tag/v1.15.10>
+   -
 
-The bug is already fixed in Red Hat Enterprise Linux 8 kernels from 
-4.18.0-147 onwards - see RHSA-2019:3517[3].
+   v1.16.7 <https://github.com/kubernetes/kubernetes/releases/tag/v1.16.7>
+   -
 
-Thanks to David Gibson of Red Hat for the initial bug report.
+   v1.17.3 <https://github.com/kubernetes/kubernetes/releases/tag/v1.17.3>
 
-[0] 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=53a712bae5dd919521a58d7bad773b949358add0
 
-[1] https://lists.ozlabs.org/pipermail/linuxppc-dev/2020-April/208661.html
 
-[2] https://lists.ozlabs.org/pipermail/linuxppc-dev/2020-April/208660.html
+Details
 
-[3] https://access.redhat.com/errata/RHSA-2019:3517
+CVE-2019-11254 is a denial of service vulnerability in the kube-apiserver,
+allowing authorized users sending malicious YAML payloads to cause
+kube-apiserver to consume excessive CPU cycles while parsing YAML.
 
--- 
-Andrew Donnellan              OzLabs, ADL Canberra
-ajd@...ux.ibm.com             IBM Australia Limited
+
+
+The issue was discovered
+<https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=18496> via the fuzz
+test kubernetes/kubernetes#83750
+<https://github.com/kubernetes/kubernetes/pull/83750>.
+
+
+
+Affected components:
+
+Kubernetes API server
+
+
+
+Affected versions:
+
+   -
+
+   <= v1.15.9
+   -
+
+   v1.16.0-v1.16.6
+   -
+
+   v1.17.0-v1.17.2
+
+How do I mitigate this vulnerability?
+
+Prior to upgrading, these vulnerabilities can be mitigated by preventing
+unauthenticated or unauthorized access to kube-apiserver.
+
+
+
+Acknowledgements
+
+
+
+Thanks to Mark Wolters from Google for writing the fuzz tests
+<http://kubernetes/kubernetes#83750>, and to oss-fuzz
+<https://github.com/google/oss-fuzz> for the support.
+
+
+
+Thanks to Mike Danese from Google for reporting this issue
+<https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=18496>.
+
+
+
+- CJ Cullen on behalf of the Kubernetes Product Security Team
 
