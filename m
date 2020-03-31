@@ -1,43 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/1
-Message-ID: <20201208073801.GA26544@suse.de>
-Date: Tue, 8 Dec 2020 08:38:01 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: John Haxby <john.haxby@...cle.com>
-Subject: Re: Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/31/2
+Message-ID: <87mu7x8avo.fsf@hope.eyrie.org>
+Date: Mon, 30 Mar 2020 20:24:27 -0700
+From: Russ Allbery <eagle@...ie.org>
+To: kerberos@....edu
+Cc: oss-security@...ts.openwall.com
+Subject: Re: pam-krb5 security advisory (4.9 and earlier)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Russ Allbery <eagle@...ie.org> writes:
 
-CVE-2020-27830 was assigned on linux-distros by Redhat.
+> Public announcement: 2009-03-30
 
-(It might be good to keep discussions on oss-security after publication to avoid parallel threads.)
+Mutter.  Obviously, this should be 2020-03-20.
 
-Ciao, Marcus
-
-On Mon, Dec 07, 2020 at 07:02:02PM +0800, - Nop wrote:
-> Hi,
-> 
-> yes, we asked for a CVE in the original email sent to
-> linux-distros@...openwall.org.
-> 
-> Thanks,
-> Bodong Zhao
-> 
-> On Mon, Dec 7, 2020 at 6:23 PM John Haxby <john.haxby@...cle.com> wrote:
-> 
-> >
-> >
-> > > On 7 Dec 2020, at 02:20, Shisong Qin <qinshisong1205@...il.com> wrote:
-> > >
-> > > Recently we found another NULL-ptr deref BUG in spk_ttyio.c in the latest
-> > > Linux kernel(5.9.11 is the latest at that now). In the
-> > > spk_ttyio_receive_buf2() function, it would dereference spk_ttyio_synth
-> > > without checking whether it is NULL or not, and may lead to a NULL-ptr
-> > > deref crash.
-> >
-> > Did you ask for a CVE for bug?
-> >
-> > jch
-> >
+-- 
+Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
