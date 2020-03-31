@@ -1,14 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/14/2
-Message-ID: <CAKLkiYfrmPFHgMgO7g1Ez770=AYpyO4xucMVz7svw7mzqhpK3w@mail.gmail.com>
-Date: Fri, 14 Feb 2020 00:11:00 +0100
-From: security minded <osssecur1tym1nded@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE for program distributing vulnerable components ?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/31/3
+Message-ID: <87imil8au6.fsf@hope.eyrie.org>
+Date: Mon, 30 Mar 2020 20:25:21 -0700
+From: Russ Allbery <eagle@...ie.org>
+To: kerberos@....edu
+Cc: oss-security@...ts.openwall.com
+Subject: Re: pam-krb5 security advisory (4.9 and earlier)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Russ Allbery <eagle@...ie.org> writes:
+> Russ Allbery <eagle@...ie.org> writes:
 
-I've identified a program whose installer contains components with known
-CVEs. Should one or several CVE be asked for the installer itself ?
+>> Public announcement: 2009-03-30
 
+> Mutter.  Obviously, this should be 2020-03-20.
+
+Or even 2020-03-30, a mistake that I have made every time I have written
+that date.
+
+-- 
+Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
