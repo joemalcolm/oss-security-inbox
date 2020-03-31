@@ -1,4 +1,9 @@
-Received: (qmail 18160 invoked by uid 550); 12 Apr 2023 12:25:14 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["462" "Tuesday" "31" "March" "2020" "16:10:40" "-0700" "Jason Bishop" "jason.bishop@gmail.com" "<CAJBS9=Dy9kpqHYJrh3xc_Gx5QvdpA1c2wMmF+Z1PXRSpb30Wtw@mail.gmail.com>" "16" "Re: [oss-security] pam-krb5 security advisory (4.9 and earlier)" nil nil nil "3" "2020033123:10:40" "[oss-security] pam-krb5 security advisory (4.9 and earlier)" (number mark "U       jason.bishop Mar 31   16/462   " thread-indent "\"Re: [oss-security] pam-krb5 security advisory (4.9 and earlier)\"\n") "<87imil8au6.fsf@hope.eyrie.org>" ("<87wo718b0x.fsf@hope.eyrie.org>" "<87mu7x8avo.fsf@hope.eyrie.org>" "<87imil8au6.fsf@hope.eyrie.org>") nil nil nil nil nil nil nil "Re: [oss-security] pam-krb5 security advisory (4.9 and earlier)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28131 invoked by uid 550); 1 Apr 2020 11:02:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,54 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1791 invoked from network); 12 Apr 2023 11:07:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:Content-Transfer-Encoding:Content-Type
-	:In-Reply-To:From:References:To:Subject:MIME-Version:Date:Message-ID:Reply-To
-	:Cc:Content-ID:Content-Description;
-	bh=xcOkrXBYyPRHjd7kOoJet+EgDysMZsn+QGaim+lfd5k=; b=YU1jaHXRyb1rZARa5by/Ojg8Yu
-	8J4Kk0yVMqZswm8KxSvu2ieDWkfUpcKEuymqyE91JuQdXbQeA13ibdh4E4D7Xtl5GAXN/FoI4jQjG
-	dVK5+Po4M8ZAw43XFzSZxHI3Zep/uOdfF0fQQvTMLMqQzyHijBqYqgfjaow9dbpwvUIdI8KHt2HLn
-	APuKAKeksYcEkMxo/9dVG1Cx7gMPks0gw6T9HXAaqRxcSkxqviQwlTsDutSaffZjxjIFIe2tv7S05
-	lP+WckvoMhkCrCZ++LShjzPG/Ts2sro+GN/WrqZgW8Yh+uWDUw6rMzzio2D4+IlhoRcehW8+o6uXb
-	4wMEb4FQ==;
-Message-ID: <71ec9890-2982-8113-4d13-f7907b3180f8@debian.org>
-Date: Wed, 12 Apr 2023 12:07:02 +0100
+Received: (qmail 25801 invoked from network); 31 Mar 2020 23:11:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BjZX4OIpF/YAnIc1SqRHlbMMdjcVf70Xt5qJZqyS3yA=;
+        b=SnShx3ys4OtaIyZV4I5dM+z1y3nK2OkyDRebNVafSqTY4Lj5jmsC8LDwopDjfT/lVr
+         aiIaaAeY1il9zPU/4OCI904fENS6mf3wNcbi7kLN2AiO9Tg50LdvblxHCczOEkCImXnY
+         TtcNT8PRcklODnmZ0iL1+2KpTzSC37ft+jry5PR5bbbdM4wdQ1rNpu0gNoTtj1dZZj9O
+         +RpdW6AaQtPzPZ9CdxU/Nv9JUOEycpEUjb474SG9HZZnEAcsXNIPk4tlZ328Skf2VkZN
+         08XSssdWoazReQzdpS/zUKOuv+eDAGbzC3rFBPi0DSq8HUc1mM4payq/dMB54ykvcYa0
+         ExrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BjZX4OIpF/YAnIc1SqRHlbMMdjcVf70Xt5qJZqyS3yA=;
+        b=PfW6u7cwhY9Xr9YHEKQbBgrqfl9JLuCGDmrP/HCCba7Nli0QTejVJpWtmmTlRTEiim
+         YqtCXMXMDTIa60Xu0uXxofMXVYIzQDYfKNnRS2g4JAlmuR2UEsAlF7azAby3LwWKh+4m
+         FOv440W/hzUAajxrH+uUApDp2hmI+VKU9YkzRc/XpXonnlwT8Qv3Cp4/PLK4X+iLdbhs
+         BGmtDT9Ffp1RT745JFl7zuf9XiAr3l1/5GWDz4Yl2fiiH8xCYmb7es+B8lhpsw/SDmIb
+         xYkjLB7BLyFtKTnGO+gtRzVEHF/TidNAXTROUACapsrQiTtUWr1nl+/gIpOItRDGMO8o
+         E+dg==
+X-Gm-Message-State: AGi0PubbenqeuEecd58c177pWeZpLZiTsMMzdzlxYOdTzKe5jhhBM3np
+	V1iApPv4jRGf8B4BKloHhA0lIp3rIAsiNh7RIotAE6Bp
+X-Google-Smtp-Source: APiQypK5kIFSPO/GrEodaD+mgWMb9E874K23E0+a/dJq7AeaX7qInNSUw9yVTUG+U7hvVZ7eoew8syzKFSp72QJg+d0=
+X-Received: by 2002:a2e:9c8:: with SMTP id 191mr11123870ljj.259.1585696254065;
+ Tue, 31 Mar 2020 16:10:54 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Content-Language: en-US
+References: <87wo718b0x.fsf@hope.eyrie.org> <87mu7x8avo.fsf@hope.eyrie.org> <87imil8au6.fsf@hope.eyrie.org>
+In-Reply-To: <87imil8au6.fsf@hope.eyrie.org>
+From: Jason Bishop <jason.bishop@gmail.com>
+Date: Tue, 31 Mar 2020 16:10:40 -0700
+Message-ID: <CAJBS9=Dy9kpqHYJrh3xc_Gx5QvdpA1c2wMmF+Z1PXRSpb30Wtw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-References: <ec07456b-6a04-60a3-35e5-c266b6348530@geeklan.co.uk>
-From: Matthew Vernon <matthew@debian.org>
-In-Reply-To: <ec07456b-6a04-60a3-35e5-c266b6348530@geeklan.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Debian-User: matthew
-Subject: Re: [oss-security] CVE-2017-11164 - stack exhaustion in PCRE
+Cc: kerberos@mit.edu
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] pam-krb5 security advisory (4.9 and earlier)
 
-On 11/04/2023 12:22, Sevan Janiyan wrote:
+well.. it was a single byte overwrite.
 
-> "PCRE1 has become totally obsolete and is no longer maintained. The
-> final release was 8.45 (June 2021)"
-> 
-> So just a heads up if you're still linking against PCRE 8.x but software
-> in question supports PCRE2, perhaps it's time to switch and default to
-> PCRE2.
-
-I've been trying to push towards getting old-PCRE out of Debian; you can 
-track the outstanding bugs online[0], and there's similar for Ubuntu[1].
-
-Once the next Debian release "bookworm" is out, I'm hoping to be able to 
-make the outstanding bugs release critical, moving towards not shipping 
-the older pcre (called pcre3 in Debian for Historical Reasons) in the 
-next release...
-
-Regards,
-
-Matthew
-[PCRE maintainer for Debian]
-
-[0] 
-https://udd.debian.org/bugs/?release=any&merged=ign&fnewerval=7&flastmodval=7&fusertag=only&fusertagtag=obsolete-pcre3&fusertaguser=matthew-pcredep%40debian.org&allbugs=1&sortby=id&sorto=asc&format=html#results
-[1] https://bugs.launchpad.net/ubuntu/+source/pcre3/+bug/1792544
+On Mon, Mar 30, 2020 at 8:26 PM Russ Allbery <eagle@eyrie.org> wrote:
+>
+> Russ Allbery <eagle@eyrie.org> writes:
+> > Russ Allbery <eagle@eyrie.org> writes:
+>
+> >> Public announcement: 2009-03-30
+>
+> > Mutter.  Obviously, this should be 2020-03-20.
+>
+> Or even 2020-03-30, a mistake that I have made every time I have written
+> that date.
+>
+> --
+> Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
