@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/09/1
-Message-ID: <nycvar.YSQ.7.77.849.2006091051520.30592@xnncv>
-Date: Tue, 9 Jun 2020 10:58:08 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Eric Blake <eblake@...hat.com>, Xueqiang Wei <xuwei@...hat.com>
-Subject: CVE-2020-10761 QEMU: nbd: reachable assertion failure innbd_negotiate_send_rep_verr via remote client
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/01/1
+Message-ID: <CAJBS9=Dy9kpqHYJrh3xc_Gx5QvdpA1c2wMmF+Z1PXRSpb30Wtw@mail.gmail.com>
+Date: Tue, 31 Mar 2020 16:10:40 -0700
+From: Jason Bishop <jason.bishop@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: kerberos@....edu
+Subject: Re: pam-krb5 security advisory (4.9 and earlier)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+well.. it was a single byte overwrite.
 
-Quick Emulator(Qemu) built with the Network Block Device(NBD) Server support 
-is vulnerable to a crash via assertion failure. It could occur when a 
-nbd-client sends a spec-compliant request that is near the boundary of the 
-maximum permitted length. A remote user/process could use this flaw to crash 
-the qemu-nbd server resulting in DoS.
-
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg02031.html
-
-Issue introduced since QEMU v4.2
-   -> https://git.qemu.org/?p=qemu.git;a=commit;h=93676c88d7a5cd5971de94f9091eff8e9773b1af
-     server:
-     - Adjust things to allow full 4k name limit rather than previous 256 byte
-       limit
-
-     - It allowed nbd-client to send longer (>256 bytes) export names
-
-This issue was reported by Eric Blake and Xueqiang Wei of Red Hat Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-
+On Mon, Mar 30, 2020 at 8:26 PM Russ Allbery <eagle@...ie.org> wrote:
+>
+> Russ Allbery <eagle@...ie.org> writes:
+> > Russ Allbery <eagle@...ie.org> writes:
+>
+> >> Public announcement: 2009-03-30
+>
+> > Mutter.  Obviously, this should be 2020-03-20.
+>
+> Or even 2020-03-30, a mistake that I have made every time I have written
+> that date.
+>
+> --
+> Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
