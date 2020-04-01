@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/30/5
-Message-ID: <CAHC9VhQmqNyptkb+H4XrF7ShPDed+vsMamDdA66=u59oGjzasg@mail.gmail.com>
-Date: Thu, 30 Apr 2020 16:46:30 -0400
-From: Paul Moore <paul@...l-moore.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/01/5
+Message-ID: <1585745652.NZ0EOPOJ@httpd.apache.org>
+Date: Wed, 01 Apr 2020 07:54:12 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Stephen Smalley <stephen.smalley.work@...il.com>
-Subject: Linux kernel SELinux/netlink missing access check
+Subject: CVE-2020-1934: mod_proxy_ftp use of uninitialized value
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
 
-On Friday, April 24th Dmitry Vyukov reported a difference in netlink
-message handling between SELinux enabled and disabled kernels (archive
-link below).  While discussing the issue it became apparent that
-SELinux was not properly handling the case where multiple netlink
-messages were placed in the sk_buff that is passed to the netlink_send
-LSM hook (the SELinux implementation is in selinux_netlink_send()).
+CVE-2020-1934: mod_proxy_ftp use of uninitialized value
 
-A patch has been posted to the SELinux mailing list (archive link
-below) and will be sent to Linus shortly for inclusion in an upcoming
-Linux v5.7-rcX release.
+Severity: low
 
-* SELinux mailing list discussion
-- https://lore.kernel.org/selinux/CACT4Y+YTi4JCFRqOB9rgA22S+6xxTo87X41hj6Tdfro8K3ef7g@mail.gmail.com
+Vendor: The Apache Software Foundation
 
-* Patch which addresses the problem
-- https://lore.kernel.org/selinux/158827786575.204093.6741581954492272816.stgit@chester
+Versions Affected:
+httpd 2.4.0-2.4.41
 
--- 
-paul moore
-www.paul-moore.com
+Description:
+Apache HTTP Server 2.4.0 to 2.4.41
+mod_proxy_ftp may use uninitialized memory when proxying to a malicious
+FTP server.
+    
+Mitigation:
+Don't proxy to untrusted FTP servers prior to applying the fix.
+
+Credit:
+The issue was discovered by Chamal De Silva <chamal.desilva@...il.com>
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
+
