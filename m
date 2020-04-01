@@ -1,84 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/09/2
-Message-ID: <CAFRnB2VYNrfRJKUv3TApDidJNgBQwOGS=M2Yt1+Y87ajuQ6zKA@mail.gmail.com>
-Date: Tue, 8 Sep 2020 21:03:52 -0400
-From: Alex Gaynor <alex.gaynor@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/01/2
+Message-ID: <CAB8XdGDCati--2zruoauZNU0Lta66Y3VmYX6EzGyznvRu0irhg@mail.gmail.com>
+Date: Wed, 1 Apr 2020 10:57:20 +0100
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
+Subject: CVE-2020-1954: Apache CXF JMX Integration is vulnerable to a MITM attack
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 8, 2020 at 8:56 PM Jeffrey Walton <noloader@...il.com> wrote:
+CVE-2020-1954: Apache CXF JMX Integration is vulnerable to a MITM attack
 
-> On Mon, Sep 7, 2020 at 10:42 PM Kurt H Maier <khm@...ops.net> wrote:
-> >
-> > On Mon, Sep 07, 2020 at 09:11:00PM -0400, Jeffrey Walton wrote:
-> > > Every US Federal agency I have worked with patches. The Social
-> > > Security Administration does it within 30 days, and the Treasury
-> > > Department does it in a matter of days. SSA is one of the largest
-> > > networks in the world with over 100,000 hosts. Treasury had over
-> > > 40,000 hosts.
-> >
-> > I've worked with US Federal agencies that did not patch.  I was able to
-> > change some minds, and it was productive work of which I'm proud.  My
-> > success rate is significantly below 100%, although my current employer
-> > is largely sympathetic to this effort.
->
-> I'd be interested to know which agencies don't have a comprehensive
-> patch policy in place. And how they passed their SP800-53A audits.
-> SI-2, Flaw Remediation, is part of all baselines.
->
->
-Oh they have a policy. It says that systems will be patched in a timely
-manner. And then the kind accountants who perform the audits say, "Great
-policy, this is fully compliant, have an ATO and a gold star". And then
-random things all over the place are not patched at all because federal IT
-departments have astonishly poor automation practices, extremely limited
-reuse of systems across distinct projects (contracts) within the agency and
-there is nothing approaching a comprehensive way for a federal agency to
-answer "did we deploy the updated struts for all of our stuff".
+Severity: Moderate
 
-Alex
+Vendor: The Apache Software Foundation
 
+Versions Affected:
 
-> > I would love to patch every computer with the latest available software,
-> > but there remains a gulf between 100k data-entry terminals and computers
-> > that must interact with the physical world.
->
-> > Machines that are hooked up
-> > to scientific or manufacturing equipment can be extremely difficult to
-> > patch without breaking things and no amount of haughty lecturing seems
-> > to fix the problem, despite same being readily available from multiple
-> > sources as far back as I can remember.
->
-> I usually encounter this as a one-off problem (and not a farm of
-> specialized machines). In my experience, there will be 500
-> workstations and servers that can be updated, and one machine that
-> cannot. The one machine is the damn fax server with some custom board.
->
-> > > Microsoft did a study years ago and found most hosts that are
-> > > compromised failed to install vendor patches.
-> >
-> > "Software vendor finds that everything would improve if everyone
-> > listened to software vendors" fails by a considerable distance to meet
-> > with my interest.
->
-> :)
->
-> But it's hard to debunk facts like a new server will experience a
-> break-in attempt within 3 minutes of being hung off the internet. It's
-> a very repeatable experiment. And all the evidence is in the log
-> files. (I think I have half of China and Europe banned through
-> iptables).
->
-> > "Software vendor stops breaking the driver ABI on
-> > supported operating systems" would get a lot farther.  Suggesting this
-> > generally results in an earth-shattering avalanche of excuses about how
-> > hard programming is.
->
-> Jeff
->
+This vulnerability affects all versions of Apache CXF prior to 3.3.6 and
+3.2.13.
 
+Description:
 
--- 
-All that is necessary for evil to succeed is for good people to do nothing.
+Apache CXF has the ability to integrate with JMX by registering an
+InstrumentationManager extension with the CXF bus. If the
+"createMBServerConnectorFactory" property of the default
+InstrumentationManagerImpl is not disabled, then it is vulnerable to a
+man-in-the-middle (MITM) style attack.
+
+An attacker on the same host can connect to the registry and rebind the
+entry
+to another server, thus acting as a proxy to the original. They are then
+able
+to gain access to all of the information that is sent and received over JMX.
+
+Mitigation:
+
+Users of Apache CXF that use the InstrumentationManagerImpl should update to
+either 3.3.6 or 3.2.13. Alternatively, set the
+createMBServerConnectorFactory
+property to false and use the default JVM JMX remote capabilities instead.
+From
+CXF 3.4.0, the createMBServerConnectorFactory property will be removed
+altogether.
+
+Credit:
+
+Jonathan Gallimore, Tomitribe and Colm O hEigeartaigh, Talend.
+
+Reference:
+http://cxf.apache.org/security-advisories.data/CVE-2020-1954.txt.asc?version=1&modificationDate=1585730169000&api=v2
 
