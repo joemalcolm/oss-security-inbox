@@ -1,49 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/1
-Message-ID: <CAH8yC8m+ZK9AZcYZ0vrSgSTjGsi1F5=hEX9phvSSxhuMbRDEFg@mail.gmail.com>
-Date: Mon, 20 Jul 2020 04:21:51 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/01/7
+Message-ID: <CAH8yC8=P-5i_0WT-AWSJ65JeY1C3BrB7p9e+4SCtH938H5ZqVA@mail.gmail.com>
+Date: Wed, 1 Apr 2020 19:42:38 -0400
 From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Perl 5.32.0 mishandling of rpath and runpath tokens
+Subject: Deficient engineering processes
 Content-Type: text/plain; charset=utf-8
 
 Hi Everyone,
 
-Perl mishandles rpath tokens $ORIGIN, $LIB and $PLATFORM. Also see
-https://man7.org/linux/man-pages/man8/ld.so.8.html.
+Forgive my ignorance. I'm wondering how to handle deficient
+engineering processes, and I hope folks can share their thoughts.
 
-Building on Linux or Solaris with LDFLAGS that includes a rpath or runpath:
+As I understand development lifecycles, there are 5 steps. The class I
+took in college taught them as SADIE: Survey, Analysis, Design,
+Implementation and Evaluation. I find a lot of projects have
+deficiencies in Implementation and Evaluation.
 
-    -Wl,-R,$ORIGIN/../lib -Wl,-R,$HOME/tmp/ok2delete/lib
+Implementation is what most people think of with software. It is the
+actual code. Implementation problems are usually handled through a bug
+tracker. Implementation problems are usually instance problems. They
+are an instance of a bigger class of problems the project may be
+vulnerable to.
 
-results in a rpath or runpath similar to below (Solaris is shown):
+Evaluation is usually not handled. Evaluation is the feedback cycle,
+and it is where postmortem analysis are supposed to be performed. The
+postmortem analysis should reveal why an instance problem occurred.
+Results from the analysis create changes, which are then fed back into
+the the process and the cycle repeats.
 
-    # From $HOME/perl-5.32.0 directory
-    $ elfdump libperl.so | grep PATH
-    [10]  RUNPATH         0xaf4d
-/../lib:/export/home/jwalton/tmp/ok2delete/lib
-    [11]  RPATH           0xaf4d
-/../lib:/export/home/jwalton/tmp/ok2delete/lib
+For example, suppose a bug is reported for an undefined behavior
+sanitizer finding. The developer may (or may not) fix the finding. At
+the Evaluation phase, the postmortem should reveal why the bug
+surfaced and why the project did not detect the defect. The postmortem
+usually reveals a defective engineering process. For example, the
+Continuous Integration pipeline may not include a job to build with
+sanitizers.
 
-Now the interesting thing here is, $ORIGIN was expanded to nothing and
-/../lib is just /lib. And Solaris /lib directory contains old
-libraries, like zLib 1.2.8 and Bzip 1.0.6. zLib 1.2.8 and Bzip 1.0.6
-have CVEs against them. So rather than use the new zLib and Bzip in
-$HOME/tmp/ok2delete/lib, Perl uses the old ones with CVEs in /lib.
+My question is, how to convince someone that following standard
+project management procedures is a good thing? How do we get them
+onboard with improving their engineering processes? Especially the
+evaluation phase, and leveraging a continuous integration pipeline to
+detect errors before they are released to users?
 
-Perl stated they won't fix the problem. Also see
-https://github.com/Perl/perl5/issues/17534.
+I know the GNU Coding Standards does not help here. It lacks the
+treatment of lifecycles and evaluation/feedback phase. It also lacks a
+recommendation for a continuous integration pipeline so many GNU
+projects do not use one. GNU Coding Standards also recommends "worse
+practices", like encouraging memory leaks which breaks testing. (The
+memory leaks are some of the worse advice I have seen in print.
+Attempts to get it corrected have fallen on deaf ears).
 
-The best workarounds I have found is to run patchelf (Linux) or
-editelf (Solaris) on all programs and libraries after 'make' and
-before 'make check', and after 'make check' and before 'make install'.
-The procedure has to happen twice because Perl rebuilds some things
-after 'make', including some shared objects built during 'make check'.
-
-The problem with the workaround is, patchelf and editelf has limited
-availability. patchelf is buggy [1,2] and editelf is only available on
-Solaris 11 [3].
-
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=1497012
-[2] https://bugs.launchpad.net/ubuntu/+source/patchelf/+bug/1888175
-[3] https://blogs.oracle.com/solaris/avoiding-ldlibrarypath%3a-the-options-v2
+Thanks in advance.
