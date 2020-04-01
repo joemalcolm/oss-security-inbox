@@ -1,118 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/12
-Message-Id: <E1kp9JY-00077n-Gf@xenbits.xenproject.org>
-Date: Tue, 15 Dec 2020 12:20:24 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 352 v3 (CVE-2020-29486) - oxenstored: node ownership can be changed by unprivileged clients
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/01/6
+Message-ID: <CAHKghTNBe6x=Hn=pf2pVxqovHCfa=_d6EFQKMGmb__X5fsn_kg@mail.gmail.com>
+Date: Wed, 1 Apr 2020 12:19:01 -0700
+From: Jonathan Wei <jonwei@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-1958]: Apache Druid LDAP injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: High
 
-            Xen Security Advisory CVE-2020-29486 / XSA-352
-                               version 3
+Vendor:
+The Apache Software Foundation
 
-   oxenstored: node ownership can be changed by unprivileged clients
+Versions Affected:
+Druid 0.17.0
 
-UPDATES IN VERSION 3
-====================
+Description:
+When LDAP authentication is enabled:
+- Callers of Druid APIs with a valid set of LDAP credentials can bypass the
+`credentialsValidator.userSearch` filter barrier that determines if a valid
+LDAP user is allowed to authenticate with Druid. They are still subject to
+role-based authorization checks, if configured.
+- Callers of Druid APIs can retrieve any LDAP attribute values of users
+that exist on the LDAP server, so long as that information is visible to
+the Druid server. This information disclosure does not require the caller
+itself to be a valid LDAP user.
 
-Public release.
+Mitigation:
+- Users of Druid 0.17.0 that use LDAP authentication should upgrade to
+Druid 0.17.1.
 
-ISSUE DESCRIPTION
-=================
+Credit:
+This issue was discovered by Grzegorz Goławski.
 
-Nodes in xenstore have an ownership.  In oxenstored, a owner could
-give a node away.  But node ownership has quota implications.
-
-Any guest can run another guest out of quota, or create an unbounded
-number of nodes owned by dom0, thus running xenstored out of memory
-
-IMPACT
-======
-
-A malicious guest administrator can cause denial of service, against a
-specific guest or against the whole host.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems using oxenstored are vulnerable.  Building and using
-oxenstored is the default in the upstream Xen distribution, if the
-Ocaml compiler is available.
-
-Systems using C xenstored are not vulnerable.
-
-MITIGATION
-==========
-
-There are no mitigations.
-
-Changing to use of C xenstored would avoid this vulnerability.  However,
-given the other vulnerabilities in both versions of xenstored being
-reported at this time, changing xenstored implementation is not a
-recommended approach to mitigation of individual issues.
-
-CREDITS
-=======
-
-This issue was discovered by Edwin Török of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa352.patch           xen-unstable - 4.10
-
-$ sha256sum xsa352*
-a3b2b2bd4c6b49c472df23f88fb9a5e204d2ba3cd0c3901f8ed057566ef98c85  xsa352.meta
-6f9798e20282d4e06f0a8a1abd0d147649e20b33c21559d5a1ea0b1a73a2a4e4  xsa352.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/Yqd8MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ/JgH/Rb3BDBjWi+fTDsPMr21yDsrCWGzpyBabflpglQt
-b3rTDEx7YlNCkb32xYvZLR9mGAGg8X01zIQVKOQ10Hnib6Vx4TvcdwPqSYGMn3U6
-4g3TmWpZJZNfCIbdznXGhOmTLZzVEGDZu1+S+mE3aAdtDGEE98p9P/J43dEt/kWX
-R/DcMrCe9LOHKi+MCxZqAFlbZ79QJls6G/sH6VWSUp/Bq8hCtsd/C0Jk3LIBZgnW
-V3SUYLhR7Tp7Pkda4m4lVLlvCo+9jlVwevs/MmvyFulxUrDN1/9LrHpZyJ7ZMBwt
-2N7zpJpdrY5JiEH6d4fuVUsH78+9+zVxs5PFDXUc7ud2QyA=
-=ofMB
------END PGP SIGNATURE-----
-
-Download attachment "xsa352.meta" of type "application/octet-stream" (2316 bytes)
-
-Download attachment "xsa352.patch" of type "application/octet-stream" (1838 bytes)
