@@ -1,77 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/01/2
-Message-Id: <7A34391F-1B0F-4CB0-ACAA-C41E0229C638@gmail.com>
-Date: Tue, 1 Sep 2020 11:23:07 +0200
-From: Carlton Gibson <carlton.gibson@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/02/5
+Message-Id: <EFD7F82B-BA85-43E6-BF5D-60A2EC54560E@unsafeword.org>
+Date: Thu, 2 Apr 2020 11:19:11 -0700
+From: Reed Black <reed@...afeword.org>
 To: oss-security@...ts.openwall.com
-Subject: Django Security Releases for CVE-2020-24583 & CVE-2020-24584: permissions on intermediate-level directories on Python 3.7+
+Cc: Reed Black <reed@...afeword.org>
+Subject: Re: Deficient engineering processes
 Content-Type: text/plain; charset=utf-8
 
-In accordance with `our security release policy <https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django team is issuing
-`Django 3.1.1 <https://docs.djangoproject.com/en/dev/releases/3.1.1/>`_,
-`Django 3.0.10 <https://docs.djangoproject.com/en/dev/releases/3.0.10/>`_ and
-`Django 2.2.16 <https://docs.djangoproject.com/en/dev/releases/2.2.16/>`_.
-These releases address the security issue detailed below. We encourage all users of Django to upgrade as soon as possible.
 
-CVE-2020-24583: Incorrect permissions on intermediate-level directories on Python 3.7+
-======================================================================================
 
-On Python 3.7+, ``FILE_UPLOAD_DIRECTORY_PERMISSIONS`` mode was not
-applied to intermediate-level directories created in the process of uploading
-files and to intermediate-level collected static directories when using the
-``collectstatic`` management command.
+> On Apr 1, 2020, at 4:42 PM, Jeffrey Walton <noloader@...il.com> wrote:
+> 
+> [...]
+> 
+> My question is, how to convince someone that following standard
+> project management procedures is a good thing? How do we get them
+> onboard with improving their engineering processes? Especially the
+> evaluation phase, and leveraging a continuous integration pipeline to
+> detect errors before they are released to users?
 
-You should review and manually fix permissions on existing intermediate-level
-directories.
+The answer will vary depending on the context - business vs hobbyist open source project, etc.
 
-CVE-2020-24584: Permission escalation in intermediate-level directories of the file system cache on Python 3.7+
-===============================================================================================================
 
-On Python 3.7+, the intermediate-level directories of the file system cache had
-the system's standard umask rather than ``0o077`` (no group or others
-permissions).
+In business, one of the most common failings of a security program is in not making security defects visible at the executive level. Exec teams understand the liability of accruing security debt. Or if they don't, you need to demonstrate the business case by showing what happened to other companies where security failed.
 
-Affected supported versions
-===========================
+You want to keep it high level. Make sure the exec team has a nice simple graph that shows any negative trends in open security issues over time. Personally, I like to make sure they see that once a quarter, the managerial teams see it at least monthly, and the engineering team sees the chart and a list of top or aging issues every week or two.
 
-* Django master branch
-* Django 3.1
-* Django 3.0
-* Django 2.2
+Once the exec team is on board and asking questions when things trend in the wrong direction, security issues become a liability for the managerial team, and therefore for the developers. As a liability, there should also be supporting resources approved from the exec team on down. If the security team is approachable and capable of providing guidance, the managerial and developer teams will begin asking for help in keeping the issue count low. This beats the security team having to fight for opportunities to insert itself.
 
-Resolution
-==========
+Likewise, where you see risky development practices, you want to document these risks and make sure they are part of a risk assessment which the exec team sees once or twice each year. If you can articulate how deficient development practices create a business risk then again, the exec team should help create a demand for your assistance.
 
-Patches to resolve the issue have been applied to Django's master branch and
-the 3.1, 3.0, and 2.2 release branches. The patches may be obtained from the following changesets:
+Outside of a business environment, the project leader will have to stand in for the exec team for any large open source project, whether it's a single leader or a small board. In order to avoid heroics and having to keep your fingers in everything, support needs to come from the top down.
 
-CVE-2020-24583:
 
-* On the `master branch <https://github.com/django/django/commit/8d7271578d7b153435b40fe40236ebec43cbf1b9>`__
-* On the `3.1 release branch <https://github.com/django/django/commit/934430d22aa5d90c2ba33495ff69a6a1d997d584>`__
-* On the `3.0 release branch <https://github.com/django/django/commit/08892bffd275c79ee1f8f67639eb170aaaf1181e>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/375657a71c889c588f723469bd868bd1d40c369f>`__
+Another common failing is in not creating a culture of security awareness. You probably read a fair bit of security news. Look for other projects which failed in a way which you could see your own project having failed. Drop links in chat or email and point to how a control your team has enacted would have prevented the incident. Or when you think it wouldn't have been prevented, ask "Is there anything we're doing that would have saved us from the same fate?" Anything that drags security away from the abstract and toward real world examples will help teams begin to understand the importance of good security practices. Ideally you create an appetite for correct solutions.
 
-CVE-2020-24584:
-
-* On the `master branch <https://github.com/django/django/commit/1853724acaf17ed7414d54c7d2b5563a25025a71>`__
-* On the `3.1 release branch <https://github.com/django/django/commit/2b099caa5923afa8cfb5f1e8c0d56b6e0e81915b>`__
-* On the `3.0 release branch <https://github.com/django/django/commit/cdb367c92a0ba72ddc0cbd13ff42b0e6df709554>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/a3aebfdc8153dc230686b6d2454ccd32ed4c9e6f>`__
-
-The following releases have been issued:
-
-* Django 3.1.1 (`download Django 3.1.1 <https://www.djangoproject.com/m/releases/3.1/Django-3.1.1.tar.gz>`_ | `3.1.1 checksums <https://www.djangoproject.com/m/pgp/Django-3.1.1.checksum.txt>`_)
-* Django 3.0.10 (`download Django 3.0.10 <https://www.djangoproject.com/m/releases/3.0/Django-3.0.10.tar.gz>`_ | `3.0.10 checksums <https://www.djangoproject.com/m/pgp/Django-3.0.10.checksum.txt>`_)
-* Django 2.2.16 (`download Django 2.2.16 <https://www.djangoproject.com/m/releases/2.2/Django-2.2.16.tar.gz>`_ | `2.2.16 checksums <https://www.djangoproject.com/m/pgp/Django-2.2.16.checksum.txt>`_)
-
-The PGP key ID used for these releases is Carlton Gibson: E17DF5C82B4F9D00.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
