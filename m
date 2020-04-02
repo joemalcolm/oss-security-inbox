@@ -1,37 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/13
-Message-ID: <871ribhxyi.fsf@canidae.wired.pri>
-Date: Wed, 07 Oct 2020 08:00:05 +1100
-From: Brian May <brian@...uxpenguins.xyz>
-To: oss-security@...ts.openwall.com
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/02/3
+Message-ID: <20200402024611.GA251781@millbarge>
+Date: Thu, 2 Apr 2020 02:46:11 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Jeffrey Walton <noloader@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Deficient engineering processes
 Content-Type: text/plain; charset=utf-8
 
-Greg KH <greg@...ah.com> writes:
+On Wed, Apr 01, 2020 at 07:42:38PM -0400, Jeffrey Walton wrote:
+> My question is, how to convince someone that following standard
+> project management procedures is a good thing? How do we get them
 
->> https://www.theregister.com/2015/06/17/debian_chromium_hubbub/
->> Chrome, Debian Linux, and the secret binary blob download riddle
->> Browser snuck proprietary voice-snoop code into distro
->
-> I don't understand the question here, that was something over 5 years
-> ago.  How is that relevant for "mobile devices" that run Linux today?
+I've heard variations on the phrase "we don't have time to fix these bugs
+before release" or "this new feature is our top priority" from dozens of
+projects over the years.
 
-That link looks like a once of issue that Debian had with the
-distribution of Chromium. Which was probably fixed years ago.
+The impression is that fixing bugs won't win new customers, or finding
+bugs proactively means you might spend time fixing bugs your users might
+not encounter in practice (thus that time is wasted).
 
-More generally, in a typical Android install, there is closed source
-software - drivers, firmware, Google APIs, Google Play. Before you even
-get to installing closed source apps from Google Play.
+But we have all seen software that's too buggy to be enjoyable, or even so
+buggy it is not fit for use. We've all got horror stories of a known, but
+ignored, bug, that cost thousands or millions of dollars. (I imagine a
+handful of people even know of billion-dollar errors. The usual example is
+https://en.wikipedia.org/wiki/Tony_Hoare#Apologies_and_retractions
+but this is probably far from the only case.)
 
-These are a concern from a security point of view because you have to
-trust the device manufacturer / Google with the security aspects of such
-code, and there is no possibility of somebody else auditing the code
-because the source code is not available.
+The costs of unknown or unfixed bugs is largely hidden from view, until
+the cost is large and impossible to ignore.
 
-Android devices typically require a forked version of the Linux kernel.
-I believe they are slowly moving to reduce the changes required by
-merging them mainline, but not sure how that is progressing right now.
-Otherwise, I imagine this might have security concerns too.
--- 
-Brian May <brian@...uxpenguins.xyz>
-https://linuxpenguins.xyz/brian/
+We all also have examples of bugs that we're very glad to have caught
+before release: the bugs that would have cost thousands, or millions, of
+dollars to repair after release, if it's possible at all. These are much
+less known.
+
+Perhaps we need to talk more about our successes, too? Not just the cases
+where we went wrong, but also the cases where we went right, and thus
+saved a fortune?
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
