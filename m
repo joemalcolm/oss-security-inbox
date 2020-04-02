@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5542" "Monday" "19" "September" "2016" "18:02:40" "-0400" "Mike Santillana" "michael.santillana@wework.com" "<CAARAU449Y-_3UVN4URvLmNAWuXmm43TeMo_UyTMpE862Zv_3ng@mail.gmail.com>" "169" "Re: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode" nil nil nil "9" "2016091922:02:40" "[oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode" (number mark "U       michael.sant Sep 19  169/5542  " thread-indent "\"Re: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode\"\n") "<CALPTtNWcndGBwL-pf0BF_XuSA6UCQajhe6-mgj=G5xa3iK1EEA@mail.gmail.com>" ("<CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>" "<CALPTtNWcndGBwL-pf0BF_XuSA6UCQajhe6-mgj=G5xa3iK1EEA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["398" "Wednesday" "1" "April" "2020" "20:07:20" "-0400" "Michael Orlitzky" "michael@orlitzky.com" nil "9" nil "^Date:" nil nil "4" nil nil (number mark "        michael@orli Apr  1    9/398   " thread-indent "\"Re: [oss-security] Deficient engineering processes\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Deficient engineering processes" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26578 invoked by uid 550); 19 Sep 2016 22:06:59 -0000
+Received: (qmail 32252 invoked by uid 550); 2 Apr 2020 00:07:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,212 +11,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22121 invoked from network); 19 Sep 2016 22:02:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=wework-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=59o3rUfaZU1Z5QD++SzqfNkcEels0G+ZnxkPO/QbIKs=;
-        b=xSu6+ryTGJac0jDfbijtrREpdRcqnxqABT/C68P6R65JxGkano3K7YKfS6KLpmisZm
-         ZDDwL+epuEib8O9LP89bVhUppazf264+kP1Cih5Oq+Ntarw6MxQjoLPVW8P0jpjEC4KU
-         EKzldWKjm0fnhDfk/jax9hSDjSE6RWBXtZvCx2m55HsBMqtTGiDYDewHazthLBlZIhXo
-         6x1iDzL97sczkKBhbRnOWqvXuz5Geoq6DqksAkvkS1XB5YvPtvD6+Km+5Us0jstysnQ7
-         ZM394LWYB9eRaDYItHtJoqaeqkxIYg6xQyOulUJDZTFe3nHO8+AxXvdwB+wn7T65l5QI
-         zkVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=59o3rUfaZU1Z5QD++SzqfNkcEels0G+ZnxkPO/QbIKs=;
-        b=cOsxPPXXX2QpmdtYryimzuuc/5q2kDD5nlThsHnaurzERXvRq2PeFBApF7N2RjPPtE
-         WczrU/7TnbVGlpuFxYq1fMtkvPpeWlxCOHBe0URVjg9K1jRPk1fRmxONsACAZ5WSUd9S
-         5nouGcKWP8bZXEHJwhRfzkhBkAdM3pQX1AlM2hrbPumXFSaunshmp4rbADT9XJVD5jth
-         H/xYbfLy61ZKn1haH2VB83PQ2z9tWhD/NOb27OB/J0O2liDepGbwzG2AjJkbLY6Ky+7W
-         32j+KwU1MRTLllCDA4Tgh5+do9giGrfU5NBzNuwiCOdRVUdOgzA8dXsURXSaC5c2GJ/R
-         a7Xg==
-X-Gm-Message-State: AE9vXwMH+5AdVWSxLHQdDgSx5bmjQCrgod9y0PbJ66w1NR/K+tBMQG5hD34L0OxtvC/dAkWmY+9yORPfqIOsC4TL
-X-Received: by 10.194.61.72 with SMTP id n8mr24879084wjr.74.1474322561504;
- Mon, 19 Sep 2016 15:02:41 -0700 (PDT)
+Received: (qmail 32234 invoked from network); 2 Apr 2020 00:07:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1585786041; bh=erwZQu86Vz65M9syI1p6i0V3GOIY2YHJJ7SjRl8BJNM=;
+	h=Subject:To:References:From:Date:In-Reply-To;
+	b=R3slYKqk0AsGiayqQw5Wfe4Ll/Mt6qOYrZn5mEDbbTYWDXbigKhV17f63inFcxQs/
+	 DrdD6I/88b4LmZaN52uuqrCRxxPGWbG2AmHLeQzhDR6G3Ui63CTPa3AqpJrATg84r2
+	 3Ko+TjSVgjSyk9RFNN5YeaxedxDQJLV08H4ZZqHs=
+References: <CAH8yC8=P-5i_0WT-AWSJ65JeY1C3BrB7p9e+4SCtH938H5ZqVA@mail.gmail.com>
+Autocrypt: addr=michael@orlitzky.com; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <96e956ea-1afd-6cd1-de63-814d502d8806@orlitzky.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <CALPTtNWcndGBwL-pf0BF_XuSA6UCQajhe6-mgj=G5xa3iK1EEA@mail.gmail.com>
-References: <CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>
- <CALPTtNWcndGBwL-pf0BF_XuSA6UCQajhe6-mgj=G5xa3iK1EEA@mail.gmail.com>
-From: Mike Santillana <michael.santillana@wework.com>
-Date: Mon, 19 Sep 2016 18:02:40 -0400
-Message-ID: <CAARAU449Y-_3UVN4URvLmNAWuXmm43TeMo_UyTMpE862Zv_3ng@mail.gmail.com>
-To: Reed Loden <reed@reedloden.com>
-Cc: oss-security@lists.openwall.com, "'Apple' via" <infosec@wework.com>
-Content-Type: multipart/alternative; boundary=047d7b66f343902f34053ce378ac
-Subject: Re: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in
- GCM Mode
+In-Reply-To: <CAH8yC8=P-5i_0WT-AWSJ65JeY1C3BrB7p9e+4SCtH938H5ZqVA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Date: Wed, 1 Apr 2020 20:07:20 -0400
+From: Michael Orlitzky <michael@orlitzky.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Deficient engineering processes
+To: oss-security@lists.openwall.com
 
---047d7b66f343902f34053ce378ac
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On 4/1/20 7:42 PM, Jeffrey Walton wrote:
+> 
+> My question is, how to convince someone that following standard
+> project management procedures is a good thing? How do we get them
+> onboard with improving their engineering processes? Especially the
+> evaluation phase, and leveraging a continuous integration pipeline to
+> detect errors before they are released to users?
 
-Hi Reed,
-
-Yes this has been submitted via HackerOne as well.
-
-Thanks
-
-
-*WeWork | Mike Santillana*
-Security Engineer
-845-709-5655
-www.wework.com
-
-Create Your Life's Work
-
-On Mon, Sep 19, 2016 at 4:55 PM, 'Reed Loden' via Information Security <
-infosec@wework.com> wrote:
-
-> Was Ruby actually notified of this outside of the GitHub issue? Not sure
-> they are monitoring that repository for security issues, so could have be=
-en
-> missed.
->
-> https://www.ruby-lang.org/en/security/ defines their security reporting
-> processes.
->
-> ~reed
->
-> On Mon, Sep 19, 2016 at 12:20 PM, Mike Santillana <
-> michael.santillana@wework.com> wrote:
->
->> Product: Ruby's OpenSSL Library
->> Version: Tested on 2.3.1 (latest)
->> Bug: IV Reuse
->> Impact: Depends on the usage of the library
->>
->> Hello,
->>
->> An IV reuse bug was discovered in Ruby's OpenSSL library when using
->> aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
->> setting the key, the cipher will default to using a static IV. This
->> creates
->> a static nonce and since aes-gcm is a stream cipher, this can lead to
->> known
->> cryptographic issues.
->>
->> The documentation does not appear to specify the order of operations when
->> setting the key and IV [1]. As an example, see the following insecure co=
-de
->> snippet below:
->>
->> Vulnerable Code:
->>
->> def encrypt(plaintext)
->>     cipher =3D OpenSSL::Cipher.new('aes-256-gcm')
->>     iv =3D cipher.random_iv # Notice here the IV is set before the key
->>     cipher.key =3D '11111111111111111111111111111111'
->>     cipher.auth_data =3D ""
->>     ciphertext =3D cipher.update(plaintext) + cipher.final
->>     tag =3D cipher.auth_tag
->>
->>     puts "[+] Encrypting: #{plaintext}"
->>     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
->> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
->> end
->>
->> A developer that uses the code above may incorrectly assume that their
->> code
->> is secure from the pitfalls associated with IV reuse in aes-*-gcm, since
->> the =E2=80=98cipher.random_iv=E2=80=99 method is used. According to the =
-documentation,
->> this
->> should generate a random IV each time the encryption method is called.
->>
->> When the code above is run with the same key and same plaintext message,
->> the following results are obtained:
->>
->> Output:
->> # Run 1
->> ./gcm_encrypt.rb 'This is some secret message.'
->> [+] Encrypting: This is some secret message.
->> [+] CipherMessage (IV | Tag | Ciphertext): e32594080cca2b37f7d7e968 |
->> 8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
->> 800a5bb48fb1c4ad0b7bdf6054
->>
->> # Run 2
->> ./gcm_encrypt.rb 'This is some secret message.'
->> [+] Encrypting: This is some secret message.
->> [+] CipherMessage (IV | Tag | Ciphertext): 431d70714f5e5f876d1c7830 |
->> 8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
->> 800a5bb48fb1c4ad0b7bdf6054
->>
->> Notice that in the output above a unique IV is returned for both runs, b=
-ut
->> with the same ciphertext. This proves that even though the random_iv
->> method
->> is called, the code is defaulting to a static IV. If an attacker can
->> retrieve multiple ciphertext messages, it is possible to decrypt the
->> ciphertexts by applying the same attack one would use in a two-time pad
->> (XOR ciphertexts and crib drag).
->>
->> Next review the following code snippet and output, which depicts a secure
->> implementation of the code:
->>
->> Valid Code:
->>
->> def encrypt(plaintext)
->>     cipher =3D OpenSSL::Cipher.new('aes-256-gcm')
->>     cipher.key =3D '11111111111111111111111111111111'
->>     iv =3D cipher.random_iv # Notice here the IV is set after the key
->>     cipher.auth_data =3D ""
->>     ciphertext =3D cipher.update(plaintext) + cipher.final
->>     tag =3D cipher.auth_tag
->>
->>     puts "[+] Encrypting: #{plaintext}"
->>     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
->> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
->> end
->>
->> Output:
->> # Run 1
->> ./gcm_encrypt.rb 'This is some secret message.'
->> [+] Encrypting: This is some secret message.
->> [+] CipherMessage (IV | Tag | Ciphertext): 8beb4aa05533e90f4f4eddd3 |
->> ea1b015958a9b8bd2aafa61887309caf | 19574a9c9869b92140a57a5fd43a14
->> 9a5eaa7e5beefdff5d56cc4136
->>
->> # Run 2
->> ./gcm_encrypt.rb 'This is some secret message.'
->> [+] Encrypting: This is some secret message.
->> [+] CipherMessage (IV | Tag | Ciphertext): 87361b3f1e32291602ac7b40 |
->> bce7093daa10cc9d2fad0f2b91e077f2 | 47f9a5ba55631204233ace70f169e6
->> 65846e877dca11a6e13a659540
->>
->> Notice that this time both the IV and ciphertexts are both different for
->> the same plaintext. This is the intended result a developer would expect
->> to
->> happen when using this library.
->>
->> It should be noted that when I went to Ruby's github page to report this
->> bug, I noticed a developer also independently encountered this weird
->> phenomenon [2]. Since it has already been brought up to the Ruby team, I
->> have not created a new ticket.
->>
->> References:
->>  [1]
->> https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/OpenSS
->> L/Cipher.html#class-OpenSSL::Cipher-label-Authenticated+
->> Encryption+and+Associated+Data+-28AEAD-29
->>  [2] https://github.com/ruby/openssl/issues/49
->>
->> I'd like to to request a CVE ID for this issue.
->>
->> Thanks
->>
->> *WeWork | Mike Santillana*
->> Security Engineer
->> 845-709-5655
->> www.wework.com
->>
->> Create Your Life's Work
->>
->
->
-
---047d7b66f343902f34053ce378ac--
+Penalize them for failure.
