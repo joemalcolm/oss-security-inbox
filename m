@@ -1,24 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/01/2
-Message-ID: <20200601120032.GB8989@openwall.com>
-Date: Mon, 1 Jun 2020 14:00:32 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Exploitability of the integer overflows in djbdns 1.05?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/02/4
+Message-ID: <CAA24+d7yK7cEB3P-sQTEAvE30D3ULoraorxZJHACDaH+SbhL_A@mail.gmail.com>
+Date: Thu, 2 Apr 2020 15:39:33 +1100
+From: Ulisses Albuquerque <ulisses.montenegro@...il.com>
+To: oss-security@...ts.openwall.com, Jeffrey Walton <noloader@...il.com>
+Subject: Re: Deficient engineering processes
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 01, 2020 at 09:24:21AM +0300, Georgi Guninski wrote:
-> Exploitability of the integer overflows in djbdns 1.05?
-> 
-> TLDR: Are the integer overflows in djbdns 1.05 exploitable?
+In my experience, specific advice and recommendations trump generic advice
+every single time. If your teams are failing to meet quality standards,
+identify those individually, document what failed and how it could be
+addressed, and *only then* show how a more structured approach would solve
+the issues. This can also be an interesting exercise for you, as going
+through specific problems and correlating those to the proposed
+"engineering best practices" might make you realise that those would not
+actually solve the problems.
 
-https://en.wikipedia.org/wiki/Betteridge%27s_law_of_headlines
+More than anything, though, be empathetic. Approach teams with a "can you
+talk me through your process" rather than with a "you are doing it wrong"
+angle. People are far more likely to accept input when you hear them first,
+and they might even be upfront about known shortcomings of their current
+approach.
 
-"Betteridge's law of headlines is an adage that states: "Any headline
-that ends in a question mark can be answered by the word no"."
+Regards
 
-I'm sure you didn't mean it that way, but the truth in my joke is that
-we should actually research the question and provide an informed answer.
-Will you, please?  Thanks!
+On Thu, 2 Apr 2020 at 13:47, Seth Arnold <seth.arnold@...onical.com> wrote:
 
-Alexander
+> On Wed, Apr 01, 2020 at 07:42:38PM -0400, Jeffrey Walton wrote:
+> > My question is, how to convince someone that following standard
+> > project management procedures is a good thing? How do we get them
+>
+> I've heard variations on the phrase "we don't have time to fix these bugs
+> before release" or "this new feature is our top priority" from dozens of
+> projects over the years.
+>
+> The impression is that fixing bugs won't win new customers, or finding
+> bugs proactively means you might spend time fixing bugs your users might
+> not encounter in practice (thus that time is wasted).
+>
+> But we have all seen software that's too buggy to be enjoyable, or even so
+> buggy it is not fit for use. We've all got horror stories of a known, but
+> ignored, bug, that cost thousands or millions of dollars. (I imagine a
+> handful of people even know of billion-dollar errors. The usual example is
+> https://en.wikipedia.org/wiki/Tony_Hoare#Apologies_and_retractions
+> but this is probably far from the only case.)
+>
+> The costs of unknown or unfixed bugs is largely hidden from view, until
+> the cost is large and impossible to ignore.
+>
+> We all also have examples of bugs that we're very glad to have caught
+> before release: the bugs that would have cost thousands, or millions, of
+> dollars to repair after release, if it's possible at all. These are much
+> less known.
+>
+> Perhaps we need to talk more about our successes, too? Not just the cases
+> where we went wrong, but also the cases where we went right, and thus
+> saved a fortune?
+>
+> Thanks
+>
+
+
+-- 
+“If debugging is the process of removing software bugs, then programming
+must be the process of putting them in.” - *Edsger Dijkstra*
+
