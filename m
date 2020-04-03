@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7851" "Sunday" "31" "July" "2016" "13:34:02" "+0200" "=?UTF-8?B?16TXkNeZINek15k=?=" "phi.reporter@walla.co.il" "<~001579DDE384E5CD7001385@walla.co.il>" "133" "[oss-security] badUSB exploit - affects all Linux distros" "^Date:" nil nil "7" "2016073111:34:02" "[oss-security] badUSB exploit - affects all Linux distros" (number mark "        phi.reporter Jul 31  133/7851  " thread-indent "\"[oss-security] badUSB exploit - affects all Linux distros\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1102" "Friday" "3" "April" "2020" "16:20:11" "-0500" "Daniel Ruggeri" "druggeri@apache.org" nil "39" nil "^Date:" nil nil "4" nil nil (number mark "        druggeri@apa Apr  3   39/1102  " thread-indent "\"Re: [oss-security] CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5989 invoked by uid 550); 31 Jul 2016 12:10:06 -0000
+Received: (qmail 22055 invoked by uid 550); 4 Apr 2020 08:42:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,147 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26398 invoked from network); 31 Jul 2016 11:34:15 -0000
-X-Authentication-Warning: mail-api78.walla.co.il: informix set sender to phi.reporter@walla.co.il using -f
-Message-Id: <~001579DDE384E5CD7001385@walla.co.il>
+Received: (qmail 1388 invoked from network); 3 Apr 2020 21:20:32 -0000
+User-Agent: K-9 Mail for Android
+In-Reply-To: <dabe5b5f-2534-2c3c-a1c9-37bee5469ac1@oracle.com>
+References: <1585745652.JFUZVINU@httpd.apache.org> <dabe5b5f-2534-2c3c-a1c9-37bee5469ac1@oracle.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-DPGdphg/K7cVUd3LFFaJ"
-Date: Sun, 31 Jul 2016 13:34:02 +0200
-From: =?UTF-8?b?16TXkNeZINek15k=?= <phi.reporter@walla.co.il>
+Content-Type: multipart/alternative; boundary="----9CM17RNKFYSGMYA1THPQU8C71ESAD8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <ED45BA51-791D-4EBC-BE72-24E5A6E1A41D@apache.org>
+X-ACL-Warn: X-The email account used to send this email was: druggeri@primary.net
+Date: Fri, 03 Apr 2020 16:20:11 -0500
+From: Daniel Ruggeri <druggeri@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] badUSB exploit - affects all Linux distros
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect
+To: Alan Coopersmith <alan.coopersmith@oracle.com>,oss-security@lists.openwall.com
 
---=-DPGdphg/K7cVUd3LFFaJ
-Content-Type: text/plain; name=message.txt
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=message.txt
+------9CM17RNKFYSGMYA1THPQU8C71ESAD8
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-VGl0bGU6IGJhZFVTQiBleHBsb2l0IC0gYWZmZWN0cyBhbGwgTGludXggZGlz
-dHJvcwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0KCkRlYXIgb3NzLXNlY3VyaXR5IG1haWwgbGlz
-dCBtZW1iZXJzLAoKUGxlYXNlLCBJIHVyZ2UgeW91IHRvIGZpeCB0aGUga25v
-d24gYmFkVVNCIHNlY3VyaXR5IGV4cGxvaXQgdGhhdCBleGlzdHMgaW4gYW55
-IExpbnV4IGRpc3Ryby4KClRoZXJlIGlzIGF2YWlsYWJsZSAodG8gdGhlIGdl
-bmVyYWwgcHVibGljKSBhIHJlbGF0aXZlbHkgY2hlYXAgcHJvZHVjdCB3aGlj
-aCBkb2VzIHRoZSAicnViYmVyZHVja3kiIGF0dGFjaywgaXQgdXNlcyB0aGUg
-YmFkVVNCIGV4cGxvaXQuClNlZSB0aGUgbGluayAoZm91bmQgaXQgYnkgc2Vh
-cmNoaW5nICJydWJiZXJkdWNreSIgaW4gZ29vZ2xlIC0gY2xpY2tlZCBmaXJz
-dCByZXN1bHQpOgpodHRwOi8vaGFrc2hvcC5teXNob3BpZnkuY29tL3Byb2R1
-Y3RzL3VzYi1ydWJiZXItZHVja3ktZGVsdXhlClRoYXQgaXMgKmNyb3NzLXBs
-YXRmb3JtKiBkdWUgdG8gVVNCJ3MgbmF0dXJlIC0gaXQgYWZmZWN0cyBBTEwg
-TGludXggZGlzdHJvcy4KClRoZXJlZm9yZSBJIHN1c3BlY3QgdGhhdCBMaW51
-eCBmYWlscyB0byBwcm90ZWN0IGFnYWluc3QgdGhhdCwKYmVjYXVzZSB0aGF0
-IHRoZSAicnViYmVyZHVja3kiIGF0dGFjayBjYW4gInR5cGUiIHRoZSBmb2xs
-b3dpbmcgY29tbWFuZHM6CgogICAgMS4gQ29weS1wYXN0ZSBhIGJhc2ggc2Ny
-aXB0CiAgICAyLiBjaG1vZCBpdCBzbyB0aGF0IGl0IHdpbGwgZXhlY3V0ZSAo
-dW5kZXIgbm9ybWFsIHVzZXIgLSBOT1Qgcm9vdCkKICAgIDMuIG1hbHdhcmUg
-aXMgYWN0aXZlLi4uIAoKTm90ZSB0aGF0IGJ5IGRlZmF1bHQgLSBMaW51eCdz
-IGZpcmV3YWxsIGlzIGRpc2FibGVkLCB0aGVyZWZvcmUgYWxsb3dpbmcgYW4g
-ZWFzeSBhY2Nlc3MgdG8gdGhlIGF0dGFja2VyIHZpYSBpbnRlcm5ldC4KCklu
-IGFkZGl0aW9uLCBpdCBpcyBwb3NzaWJsZSB0byBwcm9ncmFtIGEgVVNCIGZs
-YXNoIGRyaXZlIHRvIGJlaGF2ZSBsaWtlIGEga2V5Ym9hcmQsIGJlY2F1c2Ug
-dGhhdCB0aGUgZWxlY3RyaWNhbCBmdW5jdGlvbmFsaXR5IGlzIGF2YWlsYWJs
-ZSAoeW91IG9ubHkgbmVlZCBhIGRpZmZlcmVudCBkcml2ZXIpLgpUaGVyZWZv
-cmUgdGhlIHVzZXIgd291bGQgdGhpbmsgdGhhdCBoZSBjb25uZWN0IGEgVVNC
-IGZsYXNoIGRyaXZlLCBidXQgYWN0dWFsbHkgaGUgY29ubmVjdHMgYSBVU0Ig
-a2V5Ym9hcmQuCgotLS0tLS0tLS0tLS0tLS0tLQoKTXkgc29sdXRpb24gdG8g
-dGhpcyBleHBsb2l0OgoKT24gdGhlIGNvbm5lY3Rpb24gb2YgYSBkZXZpY2Ug
-dGhhdCBoYXMgYSBkaXJlY3QgcGh5c2ljYWwgYWNjZXNzLCB0aGUgT1Mgc2hv
-dWxkIHBlcm1pdCB0aGUgZGV2aWNlIHRvIHBlcmZvcm0gYWN0aW9ucyBiYXNl
-ZCBvbiB3aGF0IHRoZSB1c2VycyBhbGxvd3MgaXQgdG8gZG8uCkRvZXMgdGhl
-IHVzZXIgYWxsb3cgYSBVU0IgZmxhc2ggZHJpdmUgdG8gYWN0IGxpa2UgYSBV
-U0Iga2V5Ym9hcmQ/IFByb2JhYmx5IG5vdCEKQWxzbywgaWYgZnJvbSBhIHNp
-bmdsZSBVU0IgcG9ydCAtIHRoZSBPUyBkZXRlY3QgYSBVU0IgZmxhc2ggZHJp
-dmUgQU5EIGEgVVNCIGtleWJvYXJkIC0gdGhpcyBraW5kIG9mIGV2ZW50IHNo
-b3VsZCBsaWdodCBhIHJlZCBhbGVydCAoISkuCgpUaHVzLCB1cG9uIGNvbm5l
-Y3Rpb24gb2YgdGhlIFVTQiBzdGljaywgdGhlIE9TIHNob3VsZCBhc2sgdGhl
-IHVzZXI6CkRvIHlvdSBhbGxvdyB0aGUgVVNCIHN0aWNrIHRvIGFjdCBhczoK
-KDEpIC4uCigyKSAuLgooMykgLi4KCldoaWxlIHRoZSBvcHRpb25zICgxKSB0
-byAoMykgYXJlIHRoZSBkZXZpY2VzIHRoYXQgdGhlIFVTQiBzdGljayBwcmVz
-ZW50cyBpdHNlbGYgdG8gdGhlIFBDLgoKQnkgZGVmYXVsdDogCkxpbnV4IHNo
-b3VsZCBhbGxvdyB0aGF0IG9ubHkgYSBzaW5nbGUga2V5Ym9hcmQgaXMgdXNl
-ZCBhdCBhIHNpbmdsZSB0aW1lICh3aGljaCBpcyB0aGUga2V5Ym9hcmQgdGhh
-dCB3YXMgY29ubmVjdGVkIGZpcnN0KS4gVGhpcyBiZWhhdmlvciBtYXkgYmUg
-bW9kaWZpZWQgdmlhIHRoZSBVU0IgcGVybWlzc2lvbnMgc3lzdGVtICh3aGlj
-aCBzaG91bGQgYmUgd3JpdHRlbikuCgotLS0tLS0tLS0tLS0tLS0tLQoKVGhl
-IGZvbGxvd2luZyBhcmUgcXVvdGVzIG9mIHF1ZXN0aW9ucyB3aGljaCBJIHdh
-cyBhc2tlZCByZWdhcmRpbmcgdGhpcyBleHBsb2l0IGFuZCBteSBzb2x1dGlv
-biB0byBpdC4KTXkgYW5zd2VycyB0byB0aGVzZSBxdWVzdGlvbnMgYXBwZWFy
-IGltbWVkaWF0ZWx5IGFmdGVyIHRoZSBxdW90ZXMuCgoiLSBIb3cgd291bGQg
-YSB1c2VyIGludGVyYWN0IHdoZW4gcGx1Z2dpbmcgaW4gdGhlIGZpcnN0IGtl
-eWJvYXJkIG9yIG1vdXNlPyIKVGhlIGZpcnN0IGtleWJvYXJkIGFuZCBtb3Vz
-ZSBhcmUgbm9ybWFsbHkgY29ubmVjdGVkIHdoZW4gcG93ZXJpbmcgb24gdGhl
-IFBDLgpUaGUgYmVoYXZpb3VyIHNob3VsZCBiZSBsaWtlIHRvZGF5IC0gbm8g
-cmVzdHJpY3Rpb25zIGZvciB0aGUgZmlyc3Qga2V5Ym9hcmQgYW5kIG1vdXNl
-LgooTm9ybWFsbHkgdGhlIFVTQiBmbGFzaCBkcml2ZSBpcyBjb25uZWN0ZWQg
-b25seSAqYWZ0ZXIqIHRoYXQgdGhlIG5vcm1hbCBrZXlib2FyZCAmIG1vdXNl
-IGFyZSBhbHJlYWR5IGNvbm5lY3RlZC4pCgoiLSBXaGF0IGlmIHRoZSBtYWxp
-Y2lvdXMgZGV2aWNlIHdhcyBmaXJzdCBvbmx5IGJlY2F1c2UgaXQgd2FzICdl
-YXJsaWVyJyBpbiB0aGUgVVNCIG5ldHdvcms/IgpJZiBieSAiZWFybGllciBp
-biB0aGUgVVNCIG5ldHdvcmsiIHlvdSBtZWFuIDoKICogImNvbm5lY3RlZCBi
-ZWZvcmUgdGhlIGtleWJvYXJkIGFuZCBtb3VzZSIgdGhlbiBmb3Igbm93IHRo
-ZXJlIGlzIG5vdCBtdWNoIEkgY2FuIHRoaW5rIG9mLiBCdXQgbm9ybWFsbHkg
-dGhhdCBkb2VzIG5vdCBoYXBwZW4sIGFuZCAqc29tZSogcHJvdGVjdGlvbiBp
-cyBiZXR0ZXIgdGhhbiBub25lLgogKiAiY29ubmVjdGVkIGluIHBhcmFsbGVs
-IChzYW1lIHRpbWUpIHRvIGtleWJvYXJkICYgbW91c2UiIHRoZW4gYWxlcnQg
-dGhlIHVzZXIgdGhhdCBoZSBuZWVkcyB0byByZW1vdmUgb25lIG9mIHRoZW0g
-aW4gb3JkZXIgdG8gcHJvY2VlZC4KCiItIEhvdyB3b3VsZCB0aGUgc3lzdGVt
-IHRlbGwgYSBrZXlib2FyZC13aXRoLWh1YiB0aGF0IGEgdXNlciBpbnRlbmRl
-ZCB0byBidXkgZnJvbSBhIGtleWJvYXJkLXdpdGgtaHViIHRoYXQgYSB1c2Vy
-IGRpZG4ndCBpbnRlbmQgdG8gYnV5PyIKSHVicyBhcmVuJ3QgdGhlIG5vcm0u
-CkluIGNhc2UgdGhhdCBzb21lb25lIGhhcyBhIGh1YiAoZG91YnRmdWwuLikg
-dGhlbiBoZSBjYW4gYWx3YXlzIGRpc2FibGUgdGhlIHNlY3VyaXR5IGJlaGF2
-aW91ci4gSSBzaW5jZXJlbHkgYmVsaWV2ZSB0aGF0IG1vc3Qgb2YgdGhlIHBl
-b3BsZSB3b3VsZCBwcmVmZXIgdG8gaGF2ZSBtb3JlIHByb3RlY3Rpb24gYW5k
-IGxpdHRsZSBkaXNjb21mb3J0IHRoYW4gaGF2aW5nIHRoaXMgaHVnZSBleHBs
-b2l0LgoKIi0gV2hhdCB3b3VsZCB0aGUgaW50ZXJhY3Rpb24gbG9vayBsaWtl
-IG9uIGEgY29tcHV0ZXIgd2l0aCBubyBkaXNwbGF5cz8gV2l0aCBhIGRvemVu
-IGRpc3BsYXlzPyBXaXRoIGEgZG96ZW4gc2VhdHM/IgpXaXRoIG5vIGRpc3Bs
-YXlzOiBEb2VzIGl0IGNvbm5lY3QgdmlhIHNzaD8gSWYgc28sIHRoZW4gaGUg
-Y291bGQgc2VlIHRoZSBtZXNzYWdlLiBJZiBub3QgdGhlbiBhIHNvdW5kL2Jl
-ZXAgd291bGQgYmUgYWN0aXZhdGVkLiBJZiBoYXZpbmcgbm8gc3BlYWtlcnMg
-dGhlbiB0aGUgdXNlciBzaG91bGQgdW5kZXJzdGFuZCB0aGF0IHNvbWV0aGlu
-ZyBpcyB3cm9uZy4uLiBCdXQgSSB0aGluayB0aGF0IHRoaXMgaXMgcmFyZWx5
-IGhhcHBlbiwgdGhlcmVmb3JlIGlmIGl0IGRvZXMgaGFwcGVuIC0gdGhlbiBp
-dCBpcyBwcm9iYWJseSg/PykgdGhlIFVTQiBleHBsb2l0LgpXaXRoIGRvemVu
-IG9mIGRpc3BsYXlzOiBTaW1wbHkgZGlzcGxheSBhbiBhbGVydCB3aW5kb3cg
-b2Ygc29tZSBzb3J0IG9uIG9uZSBvZiB0aGUgZGVza3RvcCAoaXMgdGhpcyBy
-ZWFsbHkgYSBwcm9ibGVtPyBIb3cgZG9lcyBMaW51eCBtYW5hZ2VzIHRvIGRp
-c3BsYXkgZXJyb3JzIHdpdGggZG96ZW4gb2YgZGlzcGxheXMgaW4gb3RoZXIg
-c2NlbmFyaW9zPykuCldpdGggYSBkb3plbiBzZWF0czogV2hhdCBkbyB5b3Ug
-bWVhbiBieSAic2VhdHMiID8KClVTQiBpcyB2ZXJ5IGZsZXhpYmxlIGluZGVl
-ZCwgYnV0IG1vc3QgcGVvcGxlIHdvdWxkIHByZWZlciB0byBrbm93IHRoYXQg
-dGhlaXIgc3lzdGVtIGlzIHNlY3VyZSB0aGFuIHNwZW5kaW5nIGZldyBtaW51
-dGVzIChvciBoYWxmIGFuIGhvdXIgaW4gd29yc3QgY2FzZSkgaW4gdW5kZXJz
-dGFuZGluZyB0aGUgKHJhcmUpIHByb2JsZW0gYW5kIGZpeGluZyBpdC4KCi0t
-LS0tLS0tLS0tLS0tLS0tCgpJIG9wZW5lZCBhIGJ1ZyByZXBvcnQgYXQgbGF1
-bmNocGFkIGZvciBVYnVudHU6Cmh0dHBzOi8vYnVncy5sYXVuY2hwYWQubmV0
-L3VidW50dS8rYnVnLzEzOTM2MTIKKFJlYWQgbXkgcG9zdDogImpvaG5tbmUg
-KHBoaS1yZXBvcnRlcikgd3JvdGUgb24gMjAxNi0wNi0yNzogIikKCkl0IGlz
-IHJlY29tbWVuZGVkIHRvIHJlYWQgdGhlIGR1cGxpY2F0ZSBidWcgcmVwb3J0
-IHRoYXQgSSBvcGVuZWQgYXQgdGhlIGZvbGxvd2luZyBVUkw6Cmh0dHBzOi8v
-YnVncy5sYXVuY2hwYWQubmV0L3VidW50dS8rYnVnLzE1OTA5OTAKKERpc2N1
-c3NlZCB3aXRoICJTZXRoIEFybm9sZCAoc2V0aC1hcm5vbGQpIikKCkFsc28s
-IHNvcnJ5IC0gSSBhbSBOT1QgYW4gZXhwZXJ0IGluIFVidW50dSwgbmVpdGhl
-ciBpbiBMaW51eCwgdGhlcmVmb3JlIEkgY2FuJ3Qgc3VnZ2VzdCBob3cgdG8g
-aW1wbGVtZW50IHRoZSBiZWhhdmlvciB0aGF0IEkgb2ZmZXJlZC4KClRoZXJl
-IGlzIGEgY29tbW9uIHNjZW5hcmlvIGZvciBMaW51eCwgaW4gd2hpY2g6CiAg
-MS4gQSBrZXlib2FyZCBhbmQgYSBzY3JlZW4gaXMgYWxyZWFkeSBhdmFpbGFi
-bGUuCiAgICAgSWYgdGhlIHNjcmVlbiBpc24ndCBhdmFpbGFibGUsIHRoZW4g
-dGhlIHVzZXIgaXMgYWJsZSB0byBjb25uZWN0IHZpYSBuZXR3b3JrLgogIDIu
-IEFub3RoZXIgVVNCIHN0aWNrIGlzIGNvbm5lY3RlZCB0byB0aGUgUEMuCiAg
-ICAgSWYgdGhlIFVTQiBiZWhhdmVzIGxpa2UgYSBrZXlib2FyZCwgYW4gaW50
-ZXJhY3RpdmUgcHJvZ3JhbSAoZWl0aGVyIEdVSSBvciBjb21tYW5kLWxpbmUp
-IGNvdWxkIGluaXRpYXRlIC0gYWxlcnRpbmcgdGhlIHVzZXIgb24gdGhlIHBy
-b2JsZW0gYW5kIHN1Z2dlc3RpbmcgdG8gYmxvY2sgaXQuCiAgICAgClRoaXMg
-aXMgdGhlIG1vc3QgY29tbW9uIGFuZCBiYXNpYyBzZXR1cCBmb3IgdGhpcyBl
-eHBsb2l0IHRvIGJlIGV2ZXIgdXNlZC4KCkJ5IGRlZmF1bHQgeW91ICh0aGUg
-ZGV2ZWxvcGVycykgbWF5IGRpc2FibGUgdGhpcyBzZWN1cml0eSBwYXRjaCwg
-YnV0IHRoZSB1c2VyIHNob3VsZCBiZSBhYmxlIHRvIGNob29zZSB3aGV0aGVy
-IGhlIHdhbnRzIHRvIGVuYWJsZSBpdCAoSSdtIHN1cmUgdGhhdCBtb3N0IHBl
-b3BsZSB3b3VsZCBlbmFibGUgaXQuLikuCgpQbGVhc2UgcmVwbHkgdG8gbXkg
-RU1haWwsIHNvIHRoYXQgSSdsbCBrbm93IHRoYXQgeW91IHJlY2VpdmVkIGl0
-LgoKVGhhbmsgeW91LgoKQmVzdCByZWdhcmRzLgoK
+Hi, Alan;
+   Yes, you are correct. This was a typo that somehow crept into the notifi=
+cation only. The CVE database and our vulnerability documentation page is a=
+ccurate.
+https://httpd.apache.org/security/vulnerabilities_24.html
 
---=-DPGdphg/K7cVUd3LFFaJ--
+Thanks for confirming.
+--=20
+Daniel Ruggeri
+Director, VP Fundraising, member, httpd PMC
+The Apache Software Foundation
+
+On April 3, 2020 10:19:06 AM CDT, Alan Coopersmith <alan.coopersmith@oracle=
+.com> wrote:
+>On 4/1/20 5:54 AM, Daniel Ruggeri wrote:
+>> CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect
+>>=20
+>> Severity: Low
+>>=20
+>> Vendor: The Apache Software Foundation
+>>=20
+>> Versions Affected:
+>> httpd 2.4.0 to 2.4.39
+>>=20
+>> Description:
+>> Apache HTTP Server 2.4.0 to 2.4.41
+>
+>Should the versions affected have been to .41 as well then?
+>
+>--=20
+>	-Alan Coopersmith-               alan.coopersmith@oracle.com
+>	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+
+------9CM17RNKFYSGMYA1THPQU8C71ESAD8--
