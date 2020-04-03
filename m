@@ -1,134 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/8
-Message-Id: <E1kKiTu-0002Nl-RM@xenbits.xenproject.org>
-Date: Tue, 22 Sep 2020 13:37:18 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 342 v3 (CVE-2020-25600) - out of bounds event channels available to 32-bit x86 domains
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/03/1
+Message-ID: <dabe5b5f-2534-2c3c-a1c9-37bee5469ac1@oracle.com>
+Date: Fri, 3 Apr 2020 15:19:06 +0000 (UTC)
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Daniel Ruggeri <druggeri@...che.org>
+Subject: Re: CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 4/1/20 5:54 AM, Daniel Ruggeri wrote:
+> CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect
+> 
+> Severity: Low
+> 
+> Vendor: The Apache Software Foundation
+> 
+> Versions Affected:
+> httpd 2.4.0 to 2.4.39
+> 
+> Description:
+> Apache HTTP Server 2.4.0 to 2.4.41
 
-            Xen Security Advisory CVE-2020-25600 / XSA-342
-                               version 3
+Should the versions affected have been to .41 as well then?
 
-      out of bounds event channels available to 32-bit x86 domains
-
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The so called 2-level event channel model imposes different limits on
-the number of usable event channels for 32-bit x86 domains vs 64-bit
-or Arm (either bitness) ones.  32-bit x86 domains can use only 1023
-channels, due to limited space in their shared (between guest and Xen)
-information structure, whereas all other domains can use up to 4095 in
-this model.  The recording of the respective limit during domain
-initialization, however, has occurred at a time where domains are still
-deemed to be 64-bit ones, prior to actually honoring respective domain
-properties.  At the point domains get recognized as 32-bit ones, the
-limit didn't get updated accordingly.
-
-Due to this misbehavior in Xen, 32-bit domains (including Domain 0)
-servicing other domains may observe event channel allocations to succeed
-when they should really fail.  Subsequent use of such event channels
-would then possibly lead to corruption of other parts of the shared
-info structure.
-
-IMPACT
-======
-
-An unprivileged guest may cause another domain, in particular Domain 0,
-to misbehave.  This may lead to a Denial of Service (DoS) for the entire
-system.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from 4.4 onwards are vulnerable.  Xen versions 4.3 and
-earlier are not vulnerable.
-
-Only x86 32-bit domains servicing other domains are vulnerable.
-
-Arm systems as well as x86 64-bit domains are not vulnerable.
-
-MITIGATION
-==========
-
-There is no known workaround for x86 32-bit Domain 0.
-
-The problem can be avoided by reducing the number of event channels
-available to 32-bit x86 guests to no more than 1023.  For example,
-setting "max_event_channels=1023" in the xl domain configuration, or
-deleting any existing setting (since 1023 is the default for xl/libxl).
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa342.patch           Xen 4.14 - xen-unstable
-xsa342-4.13.patch      Xen 4.10 - 4.13
-
-$ sha256sum xsa342*
-8e85719f2783d5d0fc3da7a6aefb6c83717c7aa195d027b6aa52ff3a31c489aa  xsa342.meta
-060caee3fb5971fca0f2fbdef622c52d9bc6e0ed9efad33de5b6b504651c2112  xsa342.patch
-ef34839148d33b8d9cb03d56ffafdcdcbe9641a737211a50343d019132b169dd  xsa342-4.13.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/ecMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ+RAIAKhulm14Ze1LmVTCGKcTJ525DARSmzGdki4iX3ow
-qvQkV1B8TacFnuzZp1VfRnm5vRGBY/uXaFORw21Z/rWSRQ3xjgcazTsG0jhNQ8QG
-onH1JaxE26BfYu12oTSEKyTWWu1XSdrFTxWp07p79+qHvKGY6GtGRWGhkI6YNgkD
-X2TwRtt6GF6wRTq3PCc+7CGnn5jp7FRyJpI/2uiNZC6cL6lGUYNl9wgujSnefqQO
-1sAZSc3DmvIuvFl4XWUeU7mH/6xL93sDN4vIrVllvcI9nEswqFwju6+SP76Pnkoh
-KBSYNk79QNlbBdXJwNmYxqp4sYpH/JYEm6+u2Zw1hxCMgM4=
-=EebG
------END PGP SIGNATURE-----
-
-Download attachment "xsa342.meta" of type "application/octet-stream" (2285 bytes)
-
-Download attachment "xsa342.patch" of type "application/octet-stream" (5749 bytes)
-
-Download attachment "xsa342-4.13.patch" of type "application/octet-stream" (5422 bytes)
+-- 
+	-Alan Coopersmith-               alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
