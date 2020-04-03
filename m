@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["340" "Friday" "20" "October" "2017" "14:52:21" "+0200" "Ludovic =?utf-8?B?Q291cnTDqHM=?=" "ludo@gnu.org" "<87po9iugl6.fsf@gnu.org>" "15" "Re: [oss-security] [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder" nil nil nil "10" "2017102012:52:21" "[oss-security] [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder" (number mark "U       ludo@gnu.org Oct 20   15/340   " thread-indent "\"Re: [oss-security] [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder\"\n") "<A962A2D04FAB5C4499FEFD15B642FA0A35DF0CA5@EX02.corp.qihoo.net>" ("<A962A2D04FAB5C4499FEFD15B642FA0A35DF0CA5@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["469" "Friday" "3" "April" "2020" "15:19:06" "+0000" "Alan Coopersmith" "alan.coopersmith@oracle.com" nil "18" nil "^Date:" nil nil "4" nil nil (number mark "        alan.coopers Apr  3   18/469   " thread-indent "\"Re: [oss-security] CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23666 invoked by uid 550); 20 Oct 2017 13:16:22 -0000
+Received: (qmail 14010 invoked by uid 550); 3 Apr 2020 15:19:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32688 invoked from network); 20 Oct 2017 12:52:34 -0000
-X-Virus-Scanned: Debian amavisd-new at aquilenet.fr
-From: ludo@gnu.org (Ludovic =?utf-8?Q?Court=C3=A8s?=)
-To: =?utf-8?B?6L+e5LiA5rGJ?= <lianyihan@360.cn>
-Cc: "oss-security\@lists.openwall.com" <oss-security@lists.openwall.com>
-References: <A962A2D04FAB5C4499FEFD15B642FA0A35DF0CA5@EX02.corp.qihoo.net>
-X-URL: http://www.fdn.fr/~lcourtes/
-X-Revolutionary-Date: 29 =?utf-8?Q?Vend=C3=A9miaire?= an 226 de la
- =?utf-8?Q?R=C3=A9volution?=
-X-PGP-Key-ID: 0x090B11993D9AEBB5
-X-PGP-Key: http://www.fdn.fr/~lcourtes/ludovic.asc
-X-PGP-Fingerprint: 3CE4 6455 8A84 FDC6 9DB4  0CFB 090B 1199 3D9A EBB5
-X-OS: x86_64-pc-linux-gnu
-Date: Fri, 20 Oct 2017 14:52:21 +0200
-In-Reply-To: <A962A2D04FAB5C4499FEFD15B642FA0A35DF0CA5@EX02.corp.qihoo.net>
- ("
-	\=\?utf-8\?B\?6L+e5LiA5rGJIidz\?\= message of "Fri, 20 Oct 2017 09:10:45 +0000")
-Message-ID: <87po9iugl6.fsf@gnu.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
+Received: (qmail 13992 invoked from network); 3 Apr 2020 15:19:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=mime-version :
+ message-id : date : from : to : subject : references : in-reply-to :
+ content-type : content-transfer-encoding; s=corp-2020-01-29;
+ bh=8lVsTGjC56lM89fxiXtFe4PoduiGOqYTES+Y7yul/8U=;
+ b=miYEJES+8BT6/QqA+fPwi1Wj8Lsa9ENBI+2ABt/hVJYWAtIb/p+gbfTc65AvORLPlrH1
+ x0igEwAWExd8OCC+9uFtWdpQzMtWU/NxxkVJt9x3Xd9yLIaQ75iZzFp0EcMhSJISftZ1
+ SNrWc5bxMmMlk/kG5t+Z7bFtcUXsnrIgK67iW7O57wddmo0v6JYG/JZPAvkB0HtzYnaL
+ +efI+Ffso9seddEqc+GeynKIWRLyBopKpXkqndr3FyPwXj7co513rXz2AYEwyWmT8qAG
+ HCyHm8xqx78f/0W622AC7E0PgCyyfWFu3xrgnzWBFotB9pInPVPs4htx0hOlGAM2PlNf HQ== 
+USER-AGENT: Mozilla/5.0 (X11; SunOS i86pc; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
+Content-Language: en-US
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder
+Message-ID: <dabe5b5f-2534-2c3c-a1c9-37bee5469ac1@oracle.com>
+References: <1585745652.JFUZVINU@httpd.apache.org>
+In-Reply-To: <1585745652.JFUZVINU@httpd.apache.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9579 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 adultscore=0 mlxscore=0
+ malwarescore=0 phishscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2004030134
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9579 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 adultscore=0
+ clxscore=1034 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ suspectscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2004030134
+Date: Fri, 3 Apr 2020 15:19:06 +0000 (UTC)
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2020-1927: mod_rewrite configurations
+ vulnerable to open redirect
+To: oss-security@lists.openwall.com, Daniel Ruggeri <druggeri@apache.org>
 
-Hi,
+On 4/1/20 5:54 AM, Daniel Ruggeri wrote:
+> CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect
+> 
+> Severity: Low
+> 
+> Vendor: The Apache Software Foundation
+> 
+> Versions Affected:
+> httpd 2.4.0 to 2.4.39
+> 
+> Description:
+> Apache HTTP Server 2.4.0 to 2.4.41
 
-=E8=BF=9E=E4=B8=80=E6=B1=89 <lianyihan@360.cn> skribis:
+Should the versions affected have been to .41 as well then?
 
-> FFmpeg trigger double-free when it parsing an craft AVI file to MKV file =
-using ffvhuff decoder.
-
-[...]
-
-> This was fixed with the following commit:
-> https://www.ffmpeg.org/download.html#releases
-
-Looks like this is not the URL you intended to share, is it?
-
-Ludo=E2=80=99.
+-- 
+	-Alan Coopersmith-               alan.coopersmith@oracle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
