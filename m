@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2242" "Thursday" "29" "October" "2015" "20:26:28" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151030002628.DBC7F3AE002@smtpvbsrv1.mitre.org>" "54" "[oss-security] Re: Two out of bounds reads in Zstandard / zstd" nil nil nil "10" "2015103000:26:28" "[oss-security] Re: Two out of bounds reads in Zstandard / zstd" (number mark "        cve-assign@m Oct 29   54/2242  " thread-indent "\"[oss-security] Re: Two out of bounds reads in Zstandard / zstd\"\n") "<20151024175410.42963a35@pc1>" ("<20151024175410.42963a35@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["784" "Monday" "6" "April" "2020" "15:50:51" "+0530" "P J P" "ppandit@redhat.com" nil "25" nil nil nil nil "4" nil nil (number mark "U       ppandit@redh Apr  6   25/784   " thread-indent "\"[oss-security] CVE-2020-11102 QEMU: tulip: OOB access in tulip_copy_tx_buffers\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-11102 QEMU: tulip: OOB access in tulip_copy_tx_buffers" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27739 invoked by uid 550); 30 Oct 2015 00:26:45 -0000
+Received: (qmail 5341 invoked by uid 550); 6 Apr 2020 10:21:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27683 invoked from network); 30 Oct 2015 00:26:40 -0000
-In-Reply-To: <20151024175410.42963a35@pc1>
-Message-Id: <20151030002628.DBC7F3AE002@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 29 Oct 2015 20:26:28 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Two out of bounds reads in Zstandard / zstd
-To: hanno@hboeck.de
+Received: (qmail 5317 invoked from network); 6 Apr 2020 10:21:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1586168464;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=k3OHJUazQOluhbVYh6KMBWpieSpP4dKQhgCiEx8cCuc=;
+	b=hccRW2EA+r7P3p02zTXa8XpC6cWbtzITW2Sx1qmEL6QWq3A/firmu2edMnrk82oFXZ2Xzz
+	CisARCFXX+6g72ccD/WWi/1oLIY5bUxUgl+0ffZdbHzsIO3Y/Sbd9sKSQZtG2CJSq8ajiu
+	jR/V4DOFYrNC9tI1dyLFkUaYlkJl/tM=
+X-MC-Unique: 0-X1wPfrPcGe_Vwgv2gm-w-1
+Date: Mon, 6 Apr 2020 15:50:51 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+cc: pangpei.lq@antfin.com, ziming zhang <ezrakiez@gmail.com>
+Message-ID: <nycvar.YSQ.7.76.2004061547140.69262@xnncv>
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE-2020-11102 QEMU: tulip: OOB access in tulip_copy_tx_buffers
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> https://blog.fuzzing-project.org/26-Two-out-of-bounds-reads-in-Zstandard-zstd.html
+An out-of-bounds access issue was found in the Tulip NIC emulator built int=
+o=20
+QEMU. It could occur while copying network data to/from its tx/rx frame=20
+buffers, as it does not check frame size against the data length.
 
-Although this research is enormously helpful to Zstandard development
-(e.g., see the
-https://github.com/Cyan4973/zstd/issues/49#issuecomment-150550342
-comment), we feel that it may be outside the scope of CVE because
-Zstandard cannot yet be considered a "product."
+A remote user/process could use this flaw to crash the QEMU process resulti=
+ng=20
+in Dos OR potentially execute arbitrary code with the privileges of the QEM=
+U=20
+process on the host.
 
-> https://github.com/Cyan4973/zstd/blob/master/README.md
+Upstream patch:
+   -> https://git.qemu.org/?p=3Dqemu.git;a=3Dcommit;h=3D8ffb7265af64ec81748=
+335ec8f20e7ab542c3850
 
-> Zstd has not yet reached "stable" status. Specifically, it doesn't
-> guarantee yet that its current compressed format will remain stable
-> and supported in future versions. ... "Stable Format" is projected
-> sometimes early 2016
+This issue was reported by Ziming Zhang and Li Qiang (Ant Financial).=20
+CVE-2020-11102 requested via -> https://cveform.mitre.org/
 
-> you can now safely test zstd
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-
-> http://fastcompression.blogspot.com/2015/01/zstd-stronger-compression-algorithm.html?showComment=1423604634493#c3703448798429358177
-
-> this format is not yet considered stable.
-> The objective is to make it stable by year end.
-> When it will be, the library number will become 1.0.
-
-Also, we think that Zstandard is, for example, not shipped in any
-well-known Linux distribution. When a piece of code is offered
-primarily for testing, discoveries of exploitable problems often have
-low interest among CVE consumers.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWMrghAAoJEL54rhJi8gl5jG8QAKCtCDxmIg6rOIa0STH/Oub5
-+WyiNy2Zb5Soo7H1BqfNYlKQw/zqzqWuRwirh2B6smE8UlC4aRhLZOZ0tMcjejc+
-xYcb5LAHu/TAutHGBRijc/Y5Uq/0MHTNGpinoeKePhnVimoEiWA80ogg01EbGKKz
-Opdth3qkIuxGno3eVPfu6aqiGxNSH9eLbP+x9EHKKAUOXni2+MxyzDr4wMfCclow
-9MRGGza0wmdKU+WDFZVjTehUX73Y84iE4FXROomujTJpmcK2dE28Oxojv5wMqQQ6
-++z/EjRnr5AJNwD7NPUxO1EItLl2LRHrtFkQSz4XMZ9qE2VVuuL/0BOKPZyAvGrj
-LKRdOi5yz7tOJvGTqDY4YhoY71qPn0N9OHPEjTzlWcSl4AH3VC+FiDUGaf2hlvqP
-pZv0OIUxVKAtVXtpYTzH+HFmT7Ipt/hoouQ/uZ8WWQYDNDU2Xt5xvV77kL5RfXI2
-7suqCVm7gahbsSeUu6ar3a+OGUeDRAkdgkGqio4Vvq8bGv/nmPdvJ09Ic/HiDfKB
-qB326B44jSWJHT3WSqZHMhe7z2qB4E8Ig4koImTJIqAjZ6FpIMdNoeTZoYHPYZWi
-pJL6XMmDZh9nbdGoFjWEmd9aRlNeXa2xJe3voKH4apP2KJoEZvvGwesfreM9824q
-9GG9dNISuT0LZvDknrYN
-=o5EY
------END PGP SIGNATURE-----
