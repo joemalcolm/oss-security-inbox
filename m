@@ -1,33 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/01/5
-Message-ID: <1585745652.NZ0EOPOJ@httpd.apache.org>
-Date: Wed, 01 Apr 2020 07:54:12 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/06/2
+Message-ID: <20200406160112.GA863041@nxnw.org>
+Date: Mon, 6 Apr 2020 09:01:12 -0700
+From: Steve Beattie <steve.beattie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-1934: mod_proxy_ftp use of uninitialized value
+Subject: CVE-2020-8834: Linux kernel Power8 conflicting use of HSTATE_HOST_R1 vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-CVE-2020-1934: mod_proxy_ftp use of uninitialized value
+KVM in the Linux kernel on Power8 processors has a conflicting
+use of HSTATE_HOST_R1 to store r1 state in kvmppc_hv_entry plus in
+kvmppc_{save,restore}_tm, leading to a stack corruption. Because
+of this, an attacker with the ability run code in kernel space of a
+guest VM can cause the host kernel to panic.
 
-Severity: low
+There were two commits that, according to the reporter, introduced the
+vulnerability:
 
-Vendor: The Apache Software Foundation
+  f024ee098476 ("KVM: PPC: Book3S HV: Pull out TM state save/restore
+  		into separate procedures")
+  87a11bb6a7f7 ("KVM: PPC: Book3S HV: Work around XER[SO] bug in fake
+  		suspend mode")
 
-Versions Affected:
-httpd 2.4.0-2.4.41
+The former landed in 4.8, the latter in 4.17. This was fixed without
+realizing the impact in 4.18 with the following three commits, though
+it's believed the first is the only strictly necessary commit:
 
-Description:
-Apache HTTP Server 2.4.0 to 2.4.41
-mod_proxy_ftp may use uninitialized memory when proxying to a malicious
-FTP server.
-    
-Mitigation:
-Don't proxy to untrusted FTP servers prior to applying the fix.
+  6f597c6b63b6 ("KVM: PPC: Book3S PR: Add guest MSR parameter for
+  		kvmppc_save_tm()/kvmppc_restore_tm()")
+  7b0e827c6970 ("KVM: PPC: Book3S HV: Factor fake-suspend handling out
+  		of kvmppc_save/restore_tm")
+  009c872a8bc4 ("KVM: PPC: Book3S PR: Move kvmppc_save_tm/kvmppc_restore_tm
+  		to separate file")
 
-Credit:
-The issue was discovered by Chamal De Silva <chamal.desilva@...il.com>
+Thus, the only upstream kernel affected is the 4.17 kernel -- Ubuntu's
+4.15 kernels are affected because we backported 87a11bb6a7f7 to our 4.15
+kernels. It does not appear to have been cherrypicked to any of the
+upstream stable kernels.
 
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+Discovered by Gustavo Romero and Paul Mackerras.
+Ref: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1867717
+CVE: CVE-2020-8834
 
+-- 
+Steve Beattie
+<sbeattie@...ntu.com>
+http://NxNW.org/~steve/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
