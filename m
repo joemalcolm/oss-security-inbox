@@ -1,52 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/05/1
-Message-ID: <20200905054704.1d90da6a@jabberwock.cb.piermont.com>
-Date: Sat, 5 Sep 2020 05:47:04 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Pramod Rana <varchashva@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/06/1
+Message-ID: <nycvar.YSQ.7.76.2004061547140.69262@xnncv>
+Date: Mon, 6 Apr 2020 15:50:51 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: pangpei.lq@...fin.com, ziming zhang <ezrakiez@...il.com>
+Subject: CVE-2020-11102 QEMU: tulip: OOB access in tulip_copy_tx_buffers
 Content-Type: text/plain; charset=utf-8
 
-[Perhaps somewhat off topic, but the original announcement felt a bit
-tangental as well.]
+   Hello,
 
-On Thu, 3 Sep 2020 20:13:34 +0530 Pramod Rana <varchashva@...il.com>
-wrote:
-> It is no secret that today we have more vulnerabilities than we can
-> assess and remediate, timely and comprehensively. Risk
-> prioritization is a key component for any vulnerability management
-> program.
+An out-of-bounds access issue was found in the Tulip NIC emulator built into 
+QEMU. It could occur while copying network data to/from its tx/rx frame 
+buffers, as it does not check frame size against the data length.
 
-I'm not sure I agree with this premise.
+A remote user/process could use this flaw to crash the QEMU process resulting 
+in Dos OR potentially execute arbitrary code with the privileges of the QEMU 
+process on the host.
 
-1. It is entirely feasible to keep even a very large organization
-comprehensively patched. There are organizations that do that.
-2. It is not feasible to calculate a probability of exploitation of a
-given vulnerability, and it is not feasible to determine how bad the
-damage from exploitation will be. This is a classic example of "tail
-risk" where probability distributions are simply not calculable by
-normal methods.
+Upstream patch:
+   -> https://git.qemu.org/?p=qemu.git;a=commit;h=8ffb7265af64ec81748335ec8f20e7ab542c3850
 
-I keep hearing people in the security industry speak about scientific
-risk assessment as though it were possible. I don't think it's
-possible, and it seems cheaper to simply patch than to do some sort
-of scientific assessment and prioritization of patches.
+This issue was reported by Ziming Zhang and Li Qiang (Ant Financial). 
+CVE-2020-11102 requested via -> https://cveform.mitre.org/
 
-My gut reaction is that the growth of this idea is attributable
-to the large number of large, well-funded organizations that are
-none the less not capable of properly maintaining their own
-infrastructure and thus not capable of patching in a timely manner.
-(I have consulted to many such organizations.)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-The notion that some sort of "risk analytics" could therefore justify
-failing to patch quickly and give a rationale for maintaining an
-incapable systems management team is thus attractive. However, the
-real solution is simply to patch; a capable systems management team is
-better than the illusion of a risk calculation system, and provides
-far more benefits than simply maintaining infrastructure in a fully
-patched state.
-
-Perry
--- 
-Perry E. Metzger		perry@...rmont.com
