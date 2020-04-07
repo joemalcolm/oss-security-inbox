@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1117" "Tuesday" "21" "April" "2015" "13:35:13" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.11.1504211330230.30344@wniryva>" "32" "Re: [oss-security] Re: CVE request Qemu: malicious PRDT flow from guest to host" nil nil nil "4" "2015042108:05:13" "[oss-security] Re: CVE request Qemu: malicious PRDT flow from guest to host" (number mark "        ppandit@redh Apr 21   32/1117  " thread-indent "\"Re: [oss-security] Re: CVE request Qemu: malicious PRDT flow from guest to host\"\n") "<20150420163026.CEFA96C0043@smtpvmsrv1.mitre.org>" ("<20150420163026.CEFA96C0043@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2322" "Tuesday" "7" "April" "2020" "14:19:48" "+0200" "Daniel Beck" "ml@beckweb.net" nil "66" nil nil nil nil "4" nil nil (number mark "U       ml@beckweb.n Apr  7   66/2322  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26215 invoked by uid 550); 21 Apr 2015 08:05:33 -0000
+Received: (qmail 22182 invoked by uid 550); 7 Apr 2020 12:20:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26188 invoked from network); 21 Apr 2015 08:05:32 -0000
-X-X-Sender: pjp@javelin
-In-Reply-To: <20150420163026.CEFA96C0043@smtpvmsrv1.mitre.org>
-Message-ID: <alpine.LFD.2.11.1504211330230.30344@wniryva>
-References: <20150420163026.CEFA96C0043@smtpvmsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-cc: cve-assign@mitre.org
-Date: Tue, 21 Apr 2015 13:35:13 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE request Qemu: malicious PRDT flow from
- guest to host
-To: oss security list <oss-security@lists.openwall.com>
+Received: (qmail 22161 invoked from network); 7 Apr 2020 12:20:00 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.14\))
+Message-Id: <998BFA97-3645-4239-9DB9-99919CB5606D@beckweb.net>
+Date: Tue, 7 Apr 2020 14:19:48 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.104.14)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1586262000;0464c89d;
+X-HE-SMSGID: 1jLnCm-00038y-HF
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-   Hello,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-+-- On Mon, 20 Apr 2015, cve-assign@mitre.org wrote --+
-| are, that would be helpful. First, we think you mean that there is a
-| security impact (not necessarily the same security impact) in both the
-| BMDMA case and the AHCI case: is that correct?
+The following releases contain fixes for security vulnerabilities:
 
-  Yes, that's correct.
+* AWSEB Deployment Plugin 0.3.20
+* Code Coverage API Plugin 1.1.5
+* FitNesse Plugin 1.33
+* Gatling Plugin 1.3.0
+* useMango Runner Plugin 1.5
 
-| Possibility 1:
-| 
-|   1A: one CVE ID for the use of "return s->io_buffer_size != 0" - this
-|       made it impossible for other parts of the code to distinguish
-|       between the "0 bytes" case and the "0 complete sectors" case,
-|       and caused both impacts: "leaked memory for short PRDTs" and
-|       "infinite loops and resource usage"
-| 
-|   1B: one CVE ID for lack of the 2 GiB limit checking
-| 
-| Possibility 2:
-| 
-|   One CVE ID only for item 1A above. 1B has no security impact (e.g.,
-|   because it only allows the guest to conduct a DoS attack against
-|   itself with a large transfer attempt, or for some other reason)
 
-  IMO, possibility #2 is apt. It covers both the issues affecting BMDMA & 
-AHCI.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2020-04-07/
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1699 / CVE-2020-2172
+Code Coverage API Plugin 1.1.4 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks. This allows a user
+able to control the input files for the "Publish Coverage Report"
+post-build step to have Jenkins parse a crafted file that uses external
+entities for extraction of secrets from the Jenkins master or server-side
+request forgery.
+
+
+SECURITY-1633 / CVE-2020-2173
+Gatling Plugin 1.2.7 and earlier serves Gatling reports in a manner that
+bypasses the `Content-Security-Policy` protection introduced in Jenkins
+1.641 and 1.625.3. This results in a cross-site scripting (XSS)
+vulnerability exploitable by users able to change report content.
+
+
+SECURITY-1769 / CVE-2020-2174
+AWSEB Deployment Plugin 0.3.19 and earlier does not escape various values
+printed as part of form validation output.
+
+This results in a reflected cross-site scripting (XSS) vulnerability.
+
+
+SECURITY-1801 / CVE-2020-2175
+FitNesse Plugin 1.31 and earlier does not correctly escape report contents
+before showing them on the Jenkins UI.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by users able to control the XML input files processed by the
+plugin.
+
+
+SECURITY-1780 / CVE-2020-2176
+Multiple form validation endpoints in useMango Runner Plugin 1.4 and
+earlier do not escape values received from the useMango service.
+
+This results in a cross-site scripting (XSS) vulnerability exploitable by
+users able to control the values returned from the useMango service.
+
+
+
