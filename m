@@ -1,46 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/20/1
-Message-ID: <20200420194712.GA51427@syl.local>
-Date: Mon, 20 Apr 2020 13:47:12 -0600
-From: Taylor Blau <ttaylorr@...hub.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/07/2
+Message-ID: <CAOo2v=CeSZ3h9ui1Fr=nfZqFOM1h7zdZQfhwFr58DAqzQQ=WhA@mail.gmail.com>
+Date: Tue, 7 Apr 2020 12:04:59 +0530
+From: Hardik Vyas <hvyas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-11008: Git: Malicious URLs can still cause Git to send a stored credential to the wrong server
+Subject: CVE-2020-1759 ceph: secure mode of msgr2 breaks both confidentiality and integrity aspects for long-lived sessions
 Content-Type: text/plain; charset=utf-8
 
-Team,
+Hello,
 
-Today, the Git project released v2.26.2 (and corresponding point
-releases as far back as the v2.17.x track) to address the following
-issue:
+A nonce reuse vulnerability was discovered in the secure mode of the
+messenger v2 protocol, which can allow an
+attacker to forge auth tags and potentially manipulate the data by
+leveraging the reuse of a nonce in a session.
+Messages encrypted using a reused nonce value are susceptible to serious
+confidentiality and integrity attacks.
 
-  * CVE-2020-11008:
-    With a crafted URL that contains a newline or empty host, or lacks a
-    scheme, the credential helper machinery can be fooled into providing
-    credential information that is not appropriate for the protocol in
-    use and host being contacted.
+This flaw was introduced in commit fe387e02b11d ("msg/async, v2: drop
+depedency on uint128_t. Clean up onwire
+crypto.") and affects all the ceph versions from v14.1.1. Red Hat has
+assigned CVE-2020-1759 for this issue.
 
-    Unlike the vulnerability CVE-2020-5260 fixed in v2.17.4, the
-    credentials are not for a host of the attacker's choosing; instead,
-    they are for some unspecified host (based on how the configured
-    credential helper handles an absent "host" parameter).
+Upstream Patches:
 
-    The attack has been made impossible by refusing to work with
-    under-specified credential patterns.
-
-The distros list has been notified of this release in advance of its
-disclosure. This notification serves the same purpose for the
-oss-security list, too.
-
-Full details are available at the following link:
-
-  https://github.com/git/git/security/advisories/GHSA-hjc9-x69f-jqj7
-
-Per the list guidelines, I am attaching a plaintext representation of
-the above so as to include all essential materials within the mail
-itself.
+https://github.com/ceph/ceph-ci/commit/84d2e215969cde830b086d11544aeb3666614211
+https://github.com/ceph/ceph-ci/commit/659ec7dc6e30fe961832f813da007f49e603a33d
 
 
-Thanks,
-Taylor
+Credit: Ilya Dryomov (Red Hat)
 
-View attachment "cve-2020-11008.txt" of type "text/plain" (3020 bytes)
+
+PS: The patches are currently available from ceph.git clone(ceph-ci) and
+will be pushed to active releases soon.
+
+Regards,
+-- 
+
+Hardik Vyas / Red Hat Product Security
+
+BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
+
