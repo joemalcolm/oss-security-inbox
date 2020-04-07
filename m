@@ -1,52 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/10/4
-Message-ID: <20200910145248.GB79015@eldamar.local>
-Date: Thu, 10 Sep 2020 16:52:48 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Andy Lutomirski <luto@...nel.org>
-Cc: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Linux kernel vsyscall page refcounting error
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/07/1
+Message-ID: <CAOo2v=Df__0oyoGc+m5HUH-hcdcZOMwACVawe99X2M2jmVj0vQ@mail.gmail.com>
+Date: Tue, 7 Apr 2020 11:59:24 +0530
+From: Hardik Vyas <hvyas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-1760 ceph: header-splitting in RGW GetObject has a possible XSS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 08, 2020 at 08:33:00AM -0700, Andy Lutomirski wrote:
-> Linux 5.7 and 5.8 have a bug in the reference counting of the struct
-> page that backs the vsyscall page.  The result is a refcount
-> underflow.  This can be triggered by any 64-bit process that is
-> permitted to use ptrace() or process_vm_readv().  A creative attacker
-> can probably achieve kernel code escalation by using this bug.
-> 
-> You can prevent the issue from triggering by booting with
-> vsyscall=xonly or vsyscall=none.  You can also effectively hotpatch a
-> kernel with suitable hardening options by running the updated test
-> case noted below -- the test case will underflow the refcount past
-> zero, preventing further use of the page.  (A real attacker would
-> carefully underflow it exactly to zero but not past.)  Or you can fix
-> your kernel.
-> 
-> (No one should be using vsyscall=emulate any more unless they have a
-> very specific use case that requires it.  vsyscall=xonly is better in
-> almost all cases.  For some reason, Fedora still seems to be using
-> emulate mode, though.)
-> 
-> Fixed by:
-> 
-> commit 9fa2dd946743ae6f30dc4830da19147bf100a7f2
-> Author: Dave Hansen <dave.hansen@...ux.intel.com>
-> Date:   Thu Sep 3 13:40:28 2020 -0700
-> 
->     mm: fix pin vs. gup mismatch with gate pages
-> 
-> and tested a little better by:
-> 
-> commit 8891adc61dce2a8a41fc0c23262b681c3ec4b73a
-> Author: Andy Lutomirski <luto@...nel.org>
-> Date:   Thu Sep 3 13:40:30 2020 -0700
-> 
->     selftests/x86/test_vsyscall: Improve the process_vm_readv() test
+Hello,
 
-CVE-2020-25221 has been assigned by MITRE for this issue (note one
-cannot request anymore CVEs through that list but one can use
-https://cveform.mitre.org/)
+A flaw was found in the Ceph Object Gateway, where it supports
+unauthenticated requests sent by an anonymous
+user in Amazon S3. This flaw could lead to potential XSS attacks due to the
+lack of proper neutralization of
+untrusted input. If the attacker knows the path to a publicly readable
+object on any RGW cluster and the object
+is at least large enough to cover the attack body then it's possible to run
+an XSS on any object.
+
+This flaw was introduced with commit
+f4a0b2d9260a4523745875e3977a8a1ef9dc5e2e(Oct 9, 2012) and affects
+all the way up to master. Red Hat has assigned CVE-2020-1760 for this issue.
+
+Upstream Patches:
+
+https://github.com/ceph/ceph-ci/commit/8aa1f77363ec32bdc57744a143035033291ab5e1
+https://github.com/ceph/ceph-ci/commit/18eb4d918b27d362312c29a3bbd57a421897c0a5
+https://github.com/ceph/ceph-ci/commit/1bf14094fec34770d2cc74317f4238ccb2dfef98
+
+Credit:
+
+- Initial report to DigitalOcean by William Bowling twitter handle
+@wcbowling
+- Further evaluation and extension to Robin H. Johnson @robbat2,
+rjohnson@...italocean.com
+
+PS: The patches are currently available from ceph.git clone(ceph-ci) and
+will be pushed to active releases soon.
 
 Regards,
-Salvatore
+-- 
+
+Hardik Vyas / Red Hat Product Security
+
+BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
+
