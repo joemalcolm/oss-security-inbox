@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["966" "Wednesday" "19" "August" "2020" "15:42:33" "+0000" "zdi-disclosures@trendmicro.com" "zdi-disclosures@trendmicro.com" "<DM5PR0102MB347783E567BB3BD5C77AFE50805D0@DM5PR0102MB3477.prod.exchangelabs.com>" "18" "[oss-security] Linux Kernel 5.7.9 DRM  Double Free" nil nil nil "8" "2020081915:42:33" "[oss-security] Linux Kernel 5.7.9 DRM Double Free" (number mark "U       zdi-disclosu Aug 19   18/966   " thread-indent "\"[oss-security] Linux Kernel 5.7.9 DRM Double Free\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux Kernel 5.7.9 DRM Double Free" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4562" "Thursday" "9" "April" "2020" "08:06:07" "+1000" "Brian May" "brian@linuxpenguins.xyz" "<87h7xt3a5s.fsf@silverfish.pri>" "104" "Re: [oss-security] [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack" "^Date:" nil nil "4" "2020040822:06:07" "[oss-security] [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack" (number mark "U       brian@linuxp Apr  9  104/4562  " thread-indent "\"Re: [oss-security] [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack\"\n") "<CAN_LGv17OG6JB-dm+t62WbDJajEAdik+fncnownEvrv+NUSvoQ@mail.gmail.com>" ("<20191218181602.GA62521@tc-lan-adapter.local>" "<CAN_LGv17OG6JB-dm+t62WbDJajEAdik+fncnownEvrv+NUSvoQ@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14094 invoked by uid 550); 19 Aug 2020 15:46:02 -0000
+Received: (qmail 29949 invoked by uid 550); 8 Apr 2020 22:06:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +11,136 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11630 invoked from network); 19 Aug 2020 15:42:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=trendmicro.com;
-	s=tmoutbound; t=1597851755;
-	bh=m62d+Yee/yADgZmCzNDv+ZDrgJaR4pVGE7myG7rz8XU=; h=From:To:Date;
-	b=fdGjD/GHJpbiU539xmOjh3la5GYJZovj4cqR/i+1ivhmq+Jej3wdA4h4NizincnSp
-	 iZk2a/mt6eETeH2BCGCn8P+sxakyeSKTcL4EZXefdDen4zmBM32zcBEK87ZrJtbVHG
-	 aZurfKsW/8MPx037L/aPLYDAmahSBEw0TesbqeF0=
-From: "zdi-disclosures@trendmicro.com" <zdi-disclosures@trendmicro.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: Linux Kernel 5.7.9 DRM  Double Free
-Thread-Index: AdZ1fNrDZL72iDGdR0yWz3+DYuE4CA==
-Date: Wed, 19 Aug 2020 15:42:33 +0000
-Message-ID: <DM5PR0102MB347783E567BB3BD5C77AFE50805D0@DM5PR0102MB3477.prod.exchangelabs.com>
-Accept-Language: en-US, es-ES
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: lists.openwall.com; dkim=none (message not signed)
- header.d=none;lists.openwall.com; dmarc=none action=none
- header.from=trendmicro.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 108aeb80-f594-4fbd-e944-08d844567d7a
-x-ms-traffictypediagnostic: DM5PR0101MB2905:
-x-microsoft-antispam-prvs: <DM5PR0101MB2905010E591489AF43A7284C805D0@DM5PR0101MB2905.prod.exchangelabs.com>
-x-ms-oob-tlc-oobclassifiers: OLM:1775;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 9Zub/TeYp4EZTBADttgUTp1EukcxtO7kY4tDCW2a7XBBOrR9rCssen+9HLE9XXyJxHRMvvS/+Hqs+UUTU0AmjKl3cVLE8DSJRgQFHOsNy6Nn+7joVGxXhsw0gulpbUQEBMIxWj+47sl9SH/DqSts0xrlo1If/XkQ+Ay6+6FM0w9lBSb/LBYr5Hxr3TQVKQfh7z3nwIvJj7EfMafLpixnHx/Plih1itlq7UqJwzgga/0CidvvGwWJllpRTdn8El5DCIX/61KpWBF2mq1Fiu1mAAWRqhbG1UKlLFvoaofeBEqjkUFt7tpm/4b3jFBOAHryoAX/L7OcQpc6cc8aEjbtXw==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM5PR0102MB3477.prod.exchangelabs.com;PTR:;CAT:NONE;SFTY:;SFS:(396003)(346002)(136003)(39860400002)(366004)(376002)(86362001)(316002)(33656002)(64756008)(71200400001)(66946007)(9686003)(66476007)(66556008)(66446008)(76116006)(55016002)(2906002)(5660300002)(4744005)(478600001)(186003)(26005)(52536014)(6916009)(8936002)(6506007)(7696005)(8676002);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata: Qb24+6355+WGUg9F1Rwd50Ed82DvZhQLmm+TjYVqo/aoW9R8Jcl0TbA+pnSWdEwhNGXHX5MmImqdq8ukGdRU2RNj+dHWS3m4jEMJ903JBfQGUL+FmADwBTfIFjYWtcSFJ8u9iKiCczYOX3gAinzw6lYBQMudbvMoPajDPzHBVwE9FAn4ND9bxKuOH8jtR6PoP5WmnXqiUhuTs7T03+gwsz933zLwVYU1YEqni31zB4UAI3YJQyzWH2kkM/qi+LbpYf+UVrntXz2AFcHLimnM2xq40Y7tfryNI/4BLrq5A/dbkYZaye4kDLLIr6jTW+CZMr7DEN+jj3i8OruRfQWTElE4x15aU7Mytxir9ap5+AIIjzTIRdRhoP7Twqlta4prQ0rwHKu7B95QjwSSiGoW1L/XOn8vJqV+/P/YQN6HEyOTomMooxtBjb437ZhsQl8sOby0La6buzTWkCLmmD4aE79PN19Qx20Niz2KOI4KxQMuF8TmSLcabbkPFlcas0YqplJxodCXSABZUTX3ngeAppc3zAI+DG8Gp432fgr2MGRJmtFOViJ/NR+dFBpKczOK5QeGLCTNQOiVjl8vVdU3CyXPO7L8s5PUx2uqriL2o5haxSgBRLAjhXcj4ai+nePBM+BDVGcYAljIWBP0FKIAXg==
-x-ms-exchange-transport-forked: True
-arc-seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=G7m1YjOiTt/b7rdUURzuFGMIVPgyoxrscHiL51ve37ZEb5nER3YbjgYZ4kIWMt5WIWBH7V0Ito7DmdWfgMPrjHniuE9dLaXWWe93jueYnlGWABT/mwhazWarSHXZSVOraA3WO0vjL+hD56IQDMCDv+Y6Eza6ZHSitaut6BB2qxF1dE2ByfWRS3kmGEHND1H6UEctnIJZtNrRTyu6qJ2FM86KQqT7S/4CRKWhwTX6M1Kia1U/7OFlCv4Ad7PYgYiBviE3tHhxh2qzthSeGGUofWmnRhV+0KZ7ttdzbpgpCW2Ix89Enr7fBKFg++86GlqGqN82cOoeH1BEyk3s1nGx4Q==
-arc-message-signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=agopke/a6uAXaNa1wauZBzuRhvLw+UFShrYehg5wPjA=;
- b=Nim61GaNJystWK5SXmzUU5uDjp1ihzMfFEI2ZKTS6FtIVkpvDdE16EXNG0tTfgFhQXXWGkOCz6TvYImaf3bpwDvxjWE+nP/xsa7lwK28aLWu6520IcEYCLEMFKKo99/QOMIQX656ZQR+0hUdCS0G7my1B1TE9zW5MhIXTM+Z5gnZq4bV3BngJjrTRnnsqyLzJwMo26vCxo7Zdq/xRAiKDnebbRLVFtx6Kj4xIpEyTlBNQl8+Z7+kSXUU6TnmmcRuJ1McYf8QArFGQNfPVHeB+F22VEht1iljw2PkQuBlxbTdwzvVARZgpCEArJhQnmyuo0LjD9QDxd90Wsiyg3mNqg==
-arc-authentication-results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=trendmicro.com; dmarc=pass action=none
- header.from=trendmicro.com; dkim=pass header.d=trendmicro.com; arc=none
-dkim-signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trendmicro.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=agopke/a6uAXaNa1wauZBzuRhvLw+UFShrYehg5wPjA=;
- b=g+1H7aB6HDOrIFmnodYdpGUdEyAXYgfiJsmWufLXF/TJr5nRU82XLSgdemPJ8n2YDk7rlpafLDXB2tbpbx6Cx2YKrWu9A4zvIIFoRWs20qf0+WiRsSvlh0tnToX3B+y3PGVHyU+Xd+/rCd3y8e4gZEQUw94l0diVwWKqQn62UtnNQYt+PdPGP/Tc9VgNRqhh14EjuyDKFiy8g3yJ5Vep76/x7rPkFWjiQ8bHBE6K5Z5yMUP9qzOO9UwStMuMTk3Sim9O1Z5ASp54EmYxSY5+TkjCsLQYQTm6Eaex/V+F6Qvgr9FHqVeFgmhkdiI/iiQkt1J79ERDHYBs3gm15Qv5KA==
-x-ms-exchange-crosstenant-authas: Internal
-x-ms-exchange-crosstenant-authsource: DM5PR0102MB3477.prod.exchangelabs.com
-x-ms-exchange-crosstenant-network-message-id: 108aeb80-f594-4fbd-e944-08d844567d7a
-x-ms-exchange-crosstenant-originalarrivaltime: 19 Aug 2020 15:42:33.4269 (UTC)
-x-ms-exchange-crosstenant-fromentityheader: Hosted
-x-ms-exchange-crosstenant-id: 3e04753a-ae5b-42d4-a86d-d6f05460f9e4
-x-ms-exchange-crosstenant-mailboxtype: HOSTED
-x-ms-exchange-crosstenant-userprincipalname: 65sYMUbB/imqeAMOm34bXOT+ctVFTxyHAqDK3yLNARD1a9pPLYv16kLagp8IDNVq1RxF1PxV90tyCsljK6OwEAx36K8OuN7dluGsO2/u2xhNod/hHMSV3pSaU9DaCJrO
-x-ms-exchange-transport-crosstenantheadersstamped: DM5PR0101MB2905
-x-originatororg: trendmicro.com
-x-tm-as-product-ver: SMEX-14.0.0.1158-8.6.1012-25612.005
-x-tm-as-result: No-10--4.420800-8.000000
-x-tmase-matchedrid: kXJQp6nA7i82eFTDBkQyStEoDizWRITmm7AhLBEE9f4INpIFnbd6mgKJ
-	H9OQtm+kwA8lldf0dcB+PrYsvYXblY0i53q6VQVjalRqQPhHMT4BDya2JbH/+hLf1vz7ecPHPIZ
-	LMgHLOyy5XqtMTiVGzH6XAAEtFJ98OwTo9ZXISSyJDLgwb/1K2WmRqNBHmBvelpyqxIUg/ZSfYw
-	IIcLjjbX61ueKOgp8N0C1sQRfQzEGMl2kGKWjzWXEqm8QYBtMOO/2Ll4ZQEcM2z5IxCBYEs5cbG
-	+Au4mqaWJ3szMnQ3pv6XHIvu50AYwx82fSnUNKEGFOYjiwqNgkBFswAVsg5NoIldcxHW0M1VLAQ
-	JazMlt1+kwDwi6SkuO79Y5DoqfJDy5shLJ8SS9M=
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--4.420800-8.000000
-x-tmase-version: SMEX-14.0.0.1158-8.6.1012-25612.005
-x-tm-snts-smtp: B53E2178DC4816BC53C6005035B5A65B7EF6C55908915A4BD6CD37F22B2450B32000:8
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 29931 invoked from network); 8 Apr 2020 22:06:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
+	content-type:content-type:mime-version:message-id:date:date
+	:references:in-reply-to:subject:subject:from:from:received
+	:received:received:received; s=dkim20160331; t=1586383580; x=
+	1588197981; bh=pQT7G/zs4c3+1Isp40Qno9ffcPBynG30MGD4nqGB/6o=; b=b
+	F88g7M/txVropkoCOMp20pT4O3lbe710jpl08mP5TNHCJR8xlpUmeZ52/Zm3dpOk
+	bElk9fgIaSyhOvKKeBiD/6qZJt5hUEgVhkxVHicoJtjv6ETdvWJ7oSeOQH8jKpCG
+	n3YsYTI3q67dYQ6/+3AFeRp2wVXVc4p30jeQYZGaC/lrRDX0YA+KLIXvR7zPyjvH
+	bj8rqImXFKHm7+ncmjCHu3ieR+RNModTioafPZTiNQa2Fg9/48yHGObYKGRCmP4p
+	aKwcjVyyZUKrU+ipNjabe66/u4hCzWNi5mzvFvFtdEjMzB4L2ix+RI8MvI/8Tybk
+	g1IyxS+dVQuDRjjYzRHaMtLemLUApyvBMrQxZzsx1VO76P38Ov7rTxaD+dkiwdMD
+	XjkiAs04QZ5nnb7XHmBaDNCSmJ1JJ4SztmyYzuFqPkH2VQ/p1tFS44wKvns+WUuj
+	SBo95jrZmfVjrQ1liVmr/HWv5BOCCGaIqfBT/YYAJ5VJSKJHLmwLWPHnrPNP0mFC
+	guTyOWTAsZtMQcfFhtttXSb8Lzkl5pMer1qja7dszCP58F0yqjImx+wLhS9I1ZMk
+	Nyyy29KLAuyekZcpyfWom+h8cM6JSQk2nZKrkMyz3iSxHE4iNOF9RBzAgoGWGFaf
+	PfvJu6zM1CDe3+sXoKHx/cEWyOCjqRjg0ctNgH4NDg=
+X-Virus-Scanned: amavisd-new at mykolab.com
+In-Reply-To: <CAN_LGv17OG6JB-dm+t62WbDJajEAdik+fncnownEvrv+NUSvoQ@mail.gmail.com>
+References: <20191218181602.GA62521@tc-lan-adapter.local> <CAN_LGv17OG6JB-dm+t62WbDJajEAdik+fncnownEvrv+NUSvoQ@mail.gmail.com>
+Message-ID: <87h7xt3a5s.fsf@silverfish.pri>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-Subject: [oss-security] Linux Kernel 5.7.9 DRM  Double Free
+Content-Type: text/plain
+Date: Thu, 09 Apr 2020 08:06:07 +1000
+From: Brian May <brian@linuxpenguins.xyz>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack
+To: oss-security@lists.openwall.com
 
-The specific flaw exists within DRM memory management. The issue results fr=
-om the lack of validating the existence of an object prior to performing op=
-erations on the object. An attacker can leverage this vulnerability to esca=
-late privileges and execute code in the context of the kernel.
+"Alexander E. Patrakov" <patrakov@gmail.com> writes:
 
-This has been already addressed in the upstream commit 5de5b6ecf97a021f2940=
-3aa272cb4e03318ef586
-TREND MICRO EMAIL NOTICE
+> I don't understand why this is reported as something Rack-specific.
 
-The information contained in this email and any attachments is confidential=
- and may be subject to copyright or other intellectual property protection.=
- If you are not the intended recipient, you are not authorized to use or di=
-sclose this information, and we request that you notify us by reply mail or=
- telephone and delete the original message from your mail system.
+For reference, I noticed that Django does by default store sessions in
+an index based database - such as mysql or postgresql. So I opened up a
+bug report there: https://code.djangoproject.com/ticket/31412
 
-For details about what personal information we collect and why, please see =
-our Privacy Notice on our website at: Read privacy policy<http://www.trendm=
-icro.com/privacy>
+I also believe ruby on rails is not vulnerable, at least if you
+applications recommended best best practise.
+http://blog.remarkablelabs.com/2012/12/activerecord-sessionstore-gem-extraction-rails-4-countdown-to-2013
+
+> If I read the patch correctly (which is improbable, as I don't know
+> Ruby at all), the idea is:
+>
+> 1. The attacker could send various bogus session ids, starting with
+> all possible valid bytes. The database, if it uses a trie (yes,
+> strawman example - is it used by any real-world database?) as a data
+> structure to speed up looking up sessions, will terminate the
+> comparison early on invalid bytes, thus disclosing them.
+> 2. Given one valid byte of a session id, the attacker tries to extend
+> it using the same procedure.
+> 3. At the end, the attacker will get a full session ID.
+>
+> The patch works by making the thing stored in the database as a key
+> not the session ID in the cookie, but a hash of it. Therefore, step 2
+> fails, as it is computationally hard to find something with a given
+> prefix.
+>
+> On the other hand, I don't see how a timing attack would be possible
+> on the most common data structures (B-Tree and Hash) used for database
+> indexes.
+
+I have been looking at this in detail, and getting somewhat confused.
+Especially after looking at the solution for this problem. This means I
+am not confident in applying the upstream solution to older
+distributions. It seems more invasive then required plus it breaks
+existing code. Breaking code is never a good option for a security
+update for an old distribution. Nor am I confident in creating a patch
+of my own.
+
+
+Applications appear to have a choice of 3 back ends to store session
+information:
+
+1. cookie based - stores data in a browser cookie.
+2. pool based - stores data in a in memory hash.
+3. memcache
+
+As far as I can tell, neither 1 or 2 would be vulnerable. They don't use
+a database that uses an index. In fact, I am not even sure 3 falls into
+this category.
+
+But the upstream patch only seems to update the pool backend:
+https://github.com/rack/rack/commit/7fecaee81f59926b6e1913511c90650e76673b38
+
+OK, the memcache was split up into another Gem, Dalli:
+https://github.com/rack/rack/commit/54600771e3c9628c873fb1140b800ebb52f18e70#diff-ec7f0fcff10d701615d85df33fbbd545
+
+But I don't see any security advisory against Dalli - did I miss
+something?
+https://github.com/petergoldstein/dalli
+
+
+The patches for the older versions also patch the cookie based backend
+too. The patches seem to be far my invasive then they need to be.
+
+
+The way the patches were done seems to puzzle me. I would have thought
+we just simple change to the database operations to use hash(sid) as the
+primary key instead of sid. This is an internal value only and does not
+need to be made accessible to the application. As such no API change
+required.
+
+However, instead we have introduced the terms "public_id" and
+"private_id" - which have nothing to do with public key cryptography.
+Instead private_id is the hash(public_id). Both need to be kept secret.
+Due to this change, we have introduced an API change that makes no sense
+to me.
+
+Furthermore there is justification for this design that also doesn't
+make a lot of sense, e.g.
+https://github.com/rack/rack/issues/1432#issuecomment-571688819
+
+"The private id could be leaked" - huh? If the public id is leaked it is
+just as bad. In fact the private id is generated by hashing the public
+id. In fact if the private id was leaked - if it weren't for the legacy
+lookup, I am not sure there is anything you could do with it. You can't
+reverse the hash and regenerate the public id.
+
+"If you're storing the id, which do you want? (Probably not the public
+id as you need to look the session up by the private id)" - why would
+you want to lookup the session by the private id? Isn't this the job of
+the session library?
+
+
+There is also the aspect that the patch goes to lengths to preserve
+existing sessions. But this doesn't make sense with the pool backend,
+because sessions will get erased when the application in restarted for
+the security update anyway. I am not convinced preserving existing
+sessions should be a requirement.
+-- 
+Brian May <brian@linuxpenguins.xyz>
+https://linuxpenguins.xyz/brian/
