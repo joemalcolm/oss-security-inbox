@@ -1,31 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/15/4
-Message-ID: <nycvar.YSQ.7.76.2004152346280.69262@xnncv>
-Date: Wed, 15 Apr 2020 23:50:51 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2020-10942 Kernel: vhost-net: stack overflow in get_raw_socket while checking sk_family field
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/09/2
+Message-ID: <alpine.LRH.2.21.2004082122240.17854@mail.gathman.org>
+Date: Wed, 8 Apr 2020 21:26:07 -0400 (EDT)
+From: Stuart D Gathman <stuart@...hman.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Thu, 9 Apr 2020, Brian May wrote:
 
-A stack buffer overflow issue was found in the get_raw_socket() routine of the 
-Host kernel accelerator for virtio net (vhost-net) driver. It could occur 
-while doing an ioctl(VHOST_NET_SET_BACKEND) call and retrieving socket name in 
-a kernel stack variable via get_raw_socket(). A user able to perform ioctl(2) 
-calls on the '/dev/vhost-net' device may use this flaw to crash the kernel 
-resulting in DoS issue.
+>> 1. The attacker could send various bogus session ids, starting with
+>> all possible valid bytes. The database, if it uses a trie (yes,
+>> strawman example - is it used by any real-world database?) as a data
+>> structure to speed up looking up sessions, will terminate the
+>> comparison early on invalid bytes, thus disclosing them.
 
-Upstream patch:
-   -> https://git.kernel.org/linus/42d84c8490f9f0931786f1623191fcab397c3d64
-
-Reference:
-   -> https://lkml.org/lkml/2020/2/15/125
-
-CVE-2020-10942 assigned via -> https://cveform.mitre.org/
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+Not real-world as the number of installations is maybe 6 now, but
+the one I wrote removes leading duplicates from index records (replacing
+with a dup count).  I believe that timing the lookups could disclose
+bytes as described.  It's super efficient, though.  :-)
 
