@@ -1,4 +1,9 @@
-Received: (qmail 9386 invoked by uid 550); 19 Apr 2024 15:45:09 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["429" "Thursday" "9" "April" "2020" "14:57:58" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<9255c8f6-1d98-fd80-b6b1-bb53d8ca8dd6@redhat.com>" "16" "[oss-security] libssh - CVE-2020-1730" "^Date:" nil nil "4" "2020040909:27:58" "[oss-security] libssh - CVE-2020-1730" (number mark "U       huzaifas@red Apr  9   16/429   " thread-indent "\"[oss-security] libssh - CVE-2020-1730\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] libssh - CVE-2020-1730" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20002 invoked by uid 550); 9 Apr 2020 09:28:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,157 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19984 invoked from network); 9 Apr 2020 09:28:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1586424487;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:autocrypt:autocrypt;
+	bh=Cv8Iw/8pGXCrCmGjjrTO+bNcf0i9XFWu3oY+m4Ek/uU=;
+	b=BzGnIMTzfmKoftuwmSogMovnKd0Scghg3iGKdYfXyS6yqqRdv2ic8/2GpgJ9xgcMIbxUNy
+	Y/lAywkCuwjA3ZnON6UCAhji1+Roj5oz9lfFBTmHH7WmPIOYq5ExdsefPW1dOLxafbJoqg
+	XbuqY5szHbEOkjbDWP8y/1CYujzdjt8=
+X-MC-Unique: SZhO497hNTK8DzZ_w69qqQ-1
+Autocrypt: addr=huzaifas@redhat.com; keydata=
+ mQGiBETun5sRBACOCWbRM5KLDngL46w371lRBMCCmBRpzQHXuxllk1dbku3GYQu5ApCYVvck
+ 45GWqFAYqWVjXGjEOnATxg693FI3Mw8tv8E9JED1OMbyaI4bhUxP1H7Ia89BOEFHjHKR7VPY
+ S9tSwvTr2AkjK1j+CrMcWmV2rL4KooRk/ykB/4joJwCgnoMEbrNCrnSIiZNGxS7Okxgknb8D
+ /AxkMwysc39T68fp0AOAr4wNrwWzgBPqjyF0As5n9ewZie9Z+uqqGCnjn9XgMmMNkL1DsXXs
+ 4dJXaFrAdlcArtWaiQX/d2nZaZj8kw9D7ADudBTA0YzAnVQGk4wf2zL9WT/YwYhV3Sb1TERa
+ H6g4gg8b+KwsbmhJSrqsg06mWR3eA/9j86ollyU31Fq/qIjsbHR+tSManlv57wGiH9luburk
+ bUSFgLo9t2h6bHZ4sTQyt6aJcxXzon2IuiTYVpDrnoAfYfvFvzSae0BPG7nP8moAL7X1nnW0
+ xP8+ZATAqwds75yAQMpGRXuOntFl5ZL1xmzzeDS5aUfMg3gC9M0jIWK3zbQsSHV6YWlmYSBT
+ LiBTaWRocHVyd2FsYSA8aHV6YWlmYXNAcmVkaGF0LmNvbT6IXgQTEQIAHgUCRO6fmwIbAwYL
+ CQgHAwIDFQIDAxYCAQIeAQIXgAAKCRDMcNzy2lva5e+DAJ4hG6WLhJfmJ27UOKZLPRi3gVNx
+ owCeP5f7Cp5aU4DXyK3X81poNLIW2i25AQ0ERO6fnRAEALle4LaG+djyt8slfQbwAPf06dgz
+ bC6o1TcPg/ZRSE8TSE6d1fRkLSLJJZSW9gGpl5fphNYUSzarFKP4xLRol/fZCY4tupcAv+Vm
+ jfzaLqdIiy+G6ei1UpQTP6uRHxLdtXmMmg6kWds0ZavEU2+y18HzAczCCPBQN30dd/1/5jUn
+ AAMFBACOEdEjzZIQmK6ciB6TymIcD8nf6Jn0zz6+DjxrtdEnP7V/zyZgv/tD1GdneOBaGJTL
+ FTqT5vNSsmMTtQ03tjg/e4+P1MX8YcbhObj186Js47moYoeWgfAGZlFd6mNl/aSITVSHsooF
+ zVi9Xs6zKZNWsY2LcENMnE/xM7Qdpi5ChIhJBBgRAgAJBQJE7p+dAhsMAAoJEMxw3PLaW9rl
+ XKEAnjySXTUlGFzWQ9BiLx5Fo91JziLYAJ4lQdBofA+Gf1Vewb/61ilmdq4Qqg==
+Message-ID: <9255c8f6-1d98-fd80-b6b1-bb53d8ca8dd6@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Thu, 9 Apr 2020 14:57:58 +0530
+From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7618 invoked from network); 19 Apr 2024 15:44:42 -0000
-Date: Fri, 19 Apr 2024 17:44:35 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: [oss-security] libssh - CVE-2020-1730
 To: oss-security@lists.openwall.com
-Message-ID: <20240419154435.GA7046@openwall.com>
-References: <20240414190855.GA12716@openwall.com> <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux: Disabling network namespaces
 
-On Wed, Apr 17, 2024 at 09:52:10AM -0300, Georgia Garcia wrote:
-> I just wanted to add that in the Ubuntu Noble Numbat release we are
-> using AppArmor to restrict unprivileged user namespaces.
+Hi All,
 
-For those who like me are confused by release names, this is 24.04 LTS.
+A vulnerability was found in libssh through version 0.8.0, where a
+malicious client or server could crash the counterpart implemented with
+libssh AES-CTR ciphers are used and don't get fully initialized. It will
+crash when it tries to cleanup the AES-CTR ciphers when closing the
+connection.
 
-> Applications that don't have an AppArmor profile will use a default
-> profile which denies the use of capabilities within the user namespace.
+Reference:
+https://www.libssh.org/security/advisories/CVE-2020-1730.txt
 
-In other words, there's now precedent of allowing namespace creation
-while disallowing use of capabilities in the namespace.  I started
-thinking of doing the same, but in a lightweight distro-neutral way, by
-introducing a new sysctl.
 
-Possible logic could be to set the maximum namespace nesting depth where
-capabilities (or maybe specifically CAP_NET_ADMIN) still work.  We could
-have this apply to unprivileged user namespaces only or to all.  I guess
-systemd's PrivateNetwork services generally don't configure networking
-(they just give up network access), so would continue to work even with
-capabilities disallowed?
 
-A max depth setting of 1 could allow network configuration in top-level
-containers if needed, while reducing the kernel's attack surface exposed
-to further sandboxed programs, nested containers, and unintended
-namespaces created by exploits running as a user inside a top-level
-container.  My thinking is that if someone uses containers with custom
-network configuration, they probably mostly care about attacks by
-container users (and nested containers, if any) rather than by host
-users.  They could also care about attacks by top-level container root,
-but there's little we can do here while allowing container root to
-configure networking.
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security
 
-Does this sound like it has a chance of getting accepted upstream?
-
-Meanwhile, this looks implementable via security_capable() LSM hook, and
-I am thinking of experimenting with it in LKRG:
-
-https://github.com/lkrg-org/lkrg/issues/331
-
-Limiting this new logic only to unprivileged user namespaces feels
-tricky or hackish as there doesn't appear to be an existing struct field
-to indicate parent's capabilities at namespace creation time.  There is
-parent_could_setfcap, which we maybe could abuse.  Any better ideas?
-
-Detailed discussion of implementation wouldn't belong on oss-security.
-We'll need to move to kernel-hardening or linux-hardening for that.  But
-initial feedback on the idea is fine to have in here, especially from
-perspective of required functionality.
-
-> Applications that need to use capabilities will have to be confined by
-> a profile. Since we understand that creating an AppArmor profile might
-> not be a trivial task for large programs, we introduced the
-> "unconfined" flag which makes the profile act as if it were unconfined
-> from the perspective of AppArmor, allowing all operations.
-
-Thank you, this is helpful.
-
-> There are more details here:
-> https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890#unprivileged-user-namespace-restrictions-13
-
-Looks like the direct link to this section of the release notes has
-since changed, now it is:
-
-https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890/1#unprivileged-user-namespace-restrictions-14
-
-I'll quote this section's content below, for archival:
-
----
-Unprivileged user namespace restrictions
-
-In combination with the apparmor package, the Ubuntu kernel now
-restricts the use of unprivileged user namespaces. This affects all
-programs on the system that are unprivileged and unconfined. A default
-AppArmor profile is provided that allows the use of user namespaces for
-unprivileged and unconfined applications but will deny the subsequent
-use of any capabilities within the user namespace. A common use-case for
-unprivileged user namespaces is applications that construct their own
-sandboxes or work with styles of container workloads. As such, AppArmor
-profiles that allow the use of unprivileged user namespaces are also
-provided for common applications and frameworks that come from the
-Ubuntu archive, as well as popular third party applications like Google
-Chrome, Discord and others. This is a subsequent step towards trying to
-mitigate the larger attack surface presented by unprivileged user
-namespaces (the first being the introduction of this feature in Ubuntu
-23.10 where it was not enabled by default).
-
-Whilst significant effort has been expended to try and identify all
-applications that may require such profiles, it is expected that there
-may be cases where additional profiles are required.
-
-In this case, there are several options if you run into problems:
-
-- Confine your applications with an AppArmor profile. Because this can
-be potentially onerous, a new unconfined profile mode/flag has been
-added to AppArmor. This designates the profile to essentially act like
-the unconfined mode for AppArmor where an application is not restricted,
-and it allows additional permissions to be added, such as the userns,
-permission. Such profile for, e.g. Google Chrome, would look like the
-following, and it would be located within the /etc/apparmor.d/chrome
-file:
-
-abi <abi/4.0>,
-
-include <tunables/global>
-
-/opt/google/chrome/chrome flags=(unconfined) {
-  userns,
-
-  # Site-specific additions and overrides. See local/README for details.
-  include if exists <local/chrome>
-}
-
-Alternatively, a complete AppArmor profile for the application can be
-created (see the AppArmor 1 documentation).
-
-- Launch your application in a way that doesn't use unprivileged user
-namespaces, e.g. google-chrome-stable --no-sandbox. However, since this
-disables the use of an internal security feature within the application,
-this is not recommended. Instead, use the unconfined profile mode
-described above instead.
-
-- Disable this restriction on the entire system for one boot by
-executing echo 0 | sudo tee
-/proc/sys/kernel/apparmor_restrict_unprivileged_userns. This setting is
-lost on reboot. This similar to the previous behaviour, but it does not
-mitigate against kernel exploits that abuse the unprivileged user
-namespaces feature.
-
-- Disable this restriction using a persistent setting by adding a new
-file (/etc/sysctl.d/60-apparmor-namespace.conf) with the following
-contents:
-
-kernel.apparmor_restrict_unprivileged_userns=0
-
-Reboot. This is similar to the previous behaviour, but it does not
-mitigate against kernel exploits that abuse the unprivileged user
-namespaces feature.
----
-
-Alexander
