@@ -1,112 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/24/2
-Message-ID: <alpine.DEB.2.20.2006240842180.4820@tvnag.unkk.fr>
-Date: Wed, 24 Jun 2020 08:43:34 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: overwrite local file with -J
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/14/3
+Message-Id: <E1jOKFE-00074e-81@xenbits.xenproject.org>
+Date: Tue, 14 Apr 2020 12:00:48 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 316 v3 (CVE-2020-11743) - Bad error path in GNTTABOP_map_grant
 Content-Type: text/plain; charset=utf-8
 
-curl overwrite local file with -J
-=================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Project curl Security Advisory, June 24th 2020 -
-[Permalink](https://curl.haxx.se/docs/CVE-2020-8177.html)
+            Xen Security Advisory CVE-2020-11743 / XSA-316
+                               version 3
 
-VULNERABILITY
--------------
+                 Bad error path in GNTTABOP_map_grant
 
-curl can be tricked my a malicious server to overwrite a local file when using
-`-J` (`--remote-header-name`) and `-i` (`--head`) in the same command line.
+UPDATES IN VERSION 3
+====================
 
-The command line tool offers the `-J` option that saves a remote file using
-the file name present in the `Content-Disposition:` response header. curl then
-refuses to overwrite an existing local file using the same name, if one
-already exists in the current directory.
+Public release.
 
-The `-J` flag is designed to save a response body, and so it doesn't work
-together with `-i` and there's logic that forbids it. However, the check is
-flawed and doesn't properly check for when the options are used in the
-reversed order: first using `-J` and then `-i` were mistakenly accepted.
+ISSUE DESCRIPTION
+=================
 
-The result of this mistake was that incoming HTTP headers could overwrite a
-local file if one existed, as the check to avoid the local file was done first
-when body data was received, and due to the mistake mentioned above, it could
-already have received and saved headers by that time.
+Grant table operations are expected to return 0 for success, and a
+negative number for errors.  Some misplaced brackets cause one error
+path to return 1 instead of a negative value.
 
-The saved file would only get response headers added to it, as it would abort
-the saving when the first body byte arrives. A malicious server could however
-still be made to send back virtually anything as headers and curl would save
-them like this, until the first CRLF-CRLF sequence appears.
+The grant table code in Linux treats this condition as success, and
+proceeds with incorrectly initialised state.
 
-(Also note that `-J` needs to be used in combination with `-O` to have any
-effect.)
+IMPACT
+======
 
-We are not aware of any exploit of this flaw.
+A buggy or malicious guest can construct its grant table in such a way
+that, when a backend domain tries to map a grant, it hits the incorrect
+error path.
 
-INFO
-----
+This will crash a Linux based dom0 or backend domain.
 
-Users should be aware and *never* run curl with the `-J` option in their
-`$HOME` or other sensitive directories, independently of this flaw. Using curl
-that way allows curl to create any file name it likes (i.e. what the remote
-server suggests) and it can confuse or trick users if allowed to save files
-that can mistakenly be assumed to be "locally made" or part of the system
-rather than provided by a potentially malicious remote party.
+VULNERABLE SYSTEMS
+==================
 
-This bug was brought in commit
-[80675818e0417b](https://github.com/curl/curl/commit/80675818e0417b) when `-J`
-was introduced to curl, first shipped in curl 7.20.0.
+Systems running any version of Xen with the XSA-295 fixes are
+vulnerable.  Systems which have not yet taken the XSA-295 fixes are not
+vulnerable.
 
-This flaw can happen to users of the curl tool but **not** for applications
-using libcurl.
+Systems running a Linux based dom0 or driver domain are vulnerable.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2020-8177 to this issue.
+Systems running a FreeBSD or NetBSD based dom0 or driver domain are not
+impacted, as they both treat any nonzero value as a failure.
 
-CWE-641: Improper Restriction of Names for Files and Other Resources
+The vulnerability of other systems will depend on how they behave when
+getting an unexpected positive number from the GNTTABOP_map_grant
+hypercall.
 
-Severity: 4.7 (Medium)
+MITIGATION
+==========
 
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.20.0 to and including 7.70.0
-- Not affected versions: curl < 7.20.0 and curl >= 7.71.0
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2020-8177](https://github.com/curl/curl/commit/8236aba58542c5f.patch)
-
-RECOMMENDATIONS
---------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.71.0
-
-  B - Apply the patch on your curl version and rebuild
-
-  C - Do not use `-J` (in a directory with pre-existing files)
-
-TIMELINE
---------
-
-This issue was first reported to the curl project on May 30, 2020.
-
-This advisory was posted on June 24th 2020.
+Applying the Linux patches alone is sufficient to mitigate the issue.
+This might be a preferred route for downstreams who support livepatching
+Linux but not Xen.
 
 CREDITS
--------
+=======
 
-This issue was reported by sn on hackerone. Patched by Daniel Stenberg.
+This issue was discovered by Ross Lagerwall of Citrix.
 
-Thanks a lot!
+RESOLUTION
+==========
 
--- 
+Applying the appropriate Xen patch will resolve this issue.
 
-  / daniel.haxx.se | Commercial curl support up to 24x7 is available!
-                   | Private help, bug fixes, support, ports, new features
-                   | https://www.wolfssl.com/contact/
+Additionally, a Linux patch is provided to make Linux's behaviour more
+robust to unexpected values.
+
+We recommend taking both patches if at all possible.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa316/xsa316-xen.patch       Xen 4.9 - xen-unstable
+xsa316/xsa316-linux.patch     Linux
+
+$ sha256sum xsa316*/*
+7dcd02e8cc0434046747d572bc6c77cd3a2e4041eefd2fa703f4130e998b58dd  xsa316/xsa316-linux.patch
+4007578e30730861750d8808c0b63f2e03bbb05df909d71de19201084816a8b9  xsa316/xsa316-xen.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl6Vpd0MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZjOgH/1xKsvqDnR04knl9OWvgL690gqxZpwliRRDwwkWh
+1kOHJq2jsvm5bq38fYY9WpvmtvHW/RoM53Kacyz1Rl0y9VvK6hDU7P5np4WkMueX
+iEJOcIbQau1Pg8/zD8hYkqNNGTCjb79ZhggTih1HxpeZJTa7TJv9bNsZpCQkw+P/
+EBXpfsqoPqAMN1qt5PclCT5zlasyBUVjW6+lF3tF6q77knQoWNpKbIOSqL2/V2/p
+vUMP/qyUikWW8JLH8N48jpRmFzjxwoDI4/3E1sbSv2VxlX1FksbZxan1cwcjoSG6
+004GYSxqOjP4oPEAOrC6sXxc6DKoLLa8SVzYNhkg3XoScY0=
+=qCJA
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa316/xsa316-linux.patch" of type "application/octet-stream" (1455 bytes)
+
+Download attachment "xsa316/xsa316-xen.patch" of type "application/octet-stream" (1168 bytes)
