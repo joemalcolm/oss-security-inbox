@@ -1,156 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/01/5
-Message-ID: <aae7a5e4-4240-5ce2-7f4d-5b2cbf754803@redhat.com>
-Date: Mon, 1 Jun 2020 10:06:58 -0600
-From: Joel Smith <joelsmith@...hat.com>
-To: kubernetes-security-announce@...glegroups.com, kubernetes-announce@...glegroups.com, kubernetes-dev@...glegroups.com, kubernetes-security-discuss@...glegroups.com, oss-security@...ts.openwall.com, kubernetes+announcements@...coursemail.com
-Subject: Kubernetes: IPv4 only clusters susceptible to MitM attacks via IPv6 rogue router advertisements
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/14/4
+Message-Id: <E1jOKFH-00075Y-Iw@xenbits.xenproject.org>
+Date: Tue, 14 Apr 2020 12:00:51 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 318 v3 (CVE-2020-11742) - Bad continuation handling in GNTTABOP_copy
 Content-Type: text/plain; charset=utf-8
 
-Hi Kubernetes Community,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A container networking vulnerability has been disclosed.
+            Xen Security Advisory CVE-2020-11742 / XSA-318
+                               version 3
 
+              Bad continuation handling in GNTTABOP_copy
 
-        Issue details:
+UPDATES IN VERSION 3
+====================
 
-A cluster configured to use an affected container networking
-implementation is susceptible to man-in-the-middle (MitM) attacks. By
-sending “rogue” router advertisements, a malicious container can
-reconfigure the host to redirect part or all of the IPv6 traffic of the
-host to the attacker-controlled container. Even if there was no IPv6
-traffic before, if the DNS returns A (IPv4) and AAAA (IPv6) records,
-many HTTP libraries will try to connect via IPv6 first then fallback to
-IPv4, giving an opportunity to the attacker to respond.
+Public release.
 
-This vulnerability has been given a severity of Medium with a score of
-6.0
-https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:L/I:L/A:L
+ISSUE DESCRIPTION
+=================
 
+Grant table operations are expected to return 0 for success, and a
+negative number for errors.  The fix for CVE-2017-12135 / XSA-226
+introduced a path through grant copy handling where success may be
+returned to the caller without any action taken.
 
-        Affected components and versions:
+In particular the status fields of individual operations are left
+uninitialised, and may result in errant behaviour in the caller of
+GNTTABOP_copy.
 
-Kubernetes itself is not vulnerable. A Kubernetes cluster using an
-affected networking implementation is vulnerable.
+IMPACT
+======
 
-Binary releases of the kubelet installed from upstream Kubernetes
-Community repositories hosted at https://packages.cloud.google.com/ may
-have also installed the kubernetes-cni package containing the
-containernetworking CNI plugins, which are affected by CVE-2020-10749.
+A buggy or malicious guest can construct its grant table in such a way
+that, when a backend domain tries to copy a grant, it hits the incorrect
+exit path.
 
-The following official kubelet package versions have an affected
-kubernetes-cni package as a dependency:
+This returns success to the caller without doing anything, which may
+cause in crashes or other incorrect behaviour.
 
-  * kubelet v1.18.0-v1.18.3
-  * kubelet v1.17.0-v1.17.6
-  * kubelet < v1.16.11
+VULNERABLE SYSTEMS
+==================
 
-A cluster having an affected kubernetes-cni package installed is only
-affected if configured to use it.
+Systems running any version of Xen are vulnerable.
 
+MITIGATION
+==========
 
-        Fixed versions:
+Only guests with access to transitive grants can exploit the
+vulnerability.  In particular, this means that:
 
-The following packages will bundle fixed versions of the
-containernetworking CNI plugins that were formerly installed via the
-kubernetes-cni package.
+ * ARM systems which have taken the XSA-268 fix are not vulnerable, as
+   Grant Table v2 was disabled for other security reasons.
 
-  * kubelet v1.18.4
-  * kubelet v1.17.7
-  * kubelet v1.16.11
+ * All systems with the XSA-226 fixes, and booted with
+   `gnttab=max-ver:1` or `gnttab=no-transitive` are not vulnerable.
 
-Because these versions are not yet available, cluster administrators
-using packages from the Kubernetes repositories may choose to manually
-upgrade CNI plugins by retrieving the relevant arch tarball from the
-containernetworking/plugins v0.8.6 release
-<https://github.com/containernetworking/plugins/releases/tag/v0.8.6>.
-The patch versions are expected to be released on June 17th
-<https://github.com/kubernetes/sig-release/blob/master/releases/patch-releases.md#timelines>,
-subject to change.
+CREDITS
+=======
 
+This issue was discovered by Pawel Wieczorkiewicz of Amazon and Jürgen
+Groß of SUSE.
 
-        Third-party components and versions:
+RESOLUTION
+==========
 
-Many container networking implementations are affected, including:
+Applying the attached patch resolves this issue.
 
-  * CNI Plugins maintained by the containernetworking team
-    <https://github.com/containernetworking/plugins>, prior to version
-    0.8.6 (CVE-2020-10749)
-  * Calico and Calico Enterprise (CVE-2020-13597)  Please refer to the
-    Tigera Advisory TTA-2020-001 at
-    https://www.projectcalico.org/security-bulletins/ for details
-  * Docker versions prior to 19.03.11 (see
-    https://github.com/docker/docker-ce/releases/v19.03.11) (CVE-2020-13401)
-  * Weave Net, prior to version 2.6.3
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-It is believed that the following are not affected:
+xsa318.patch       Xen 4.9 - xen-unstable
 
-  * Cilium
-  * Juniper Contrail Networking
-  * OpenShift SDN
-  * OVN-Kubernetes
-  * Tungsten Fabric
+$ sha256sum xsa318*
+4618c2609ab08178977c2b2a3d13f380ccfddd0168caca5ced708dd76a8e547c  xsa318.patch
+$
 
-Information about the vulnerability status of any plugins or
-implementations not listed above is currently unavailable. Please
-contact the provider directly with questions about their implementation.
+NOTE CONCERNING SHORT EMBARGO
+=============================
 
+This issue was discovered in response to the XSA-316 predisclosure.
 
-        Affected configurations:
+DEPLOYMENT DURING EMBARGO
+=========================
 
-Clusters using an affected networking implementation and allowing
-workloads to run with CAP_NET_RAW privileges. The default Kubernetes
-security context runs workloads with a capabilities bounding set that
-includes CAP_NET_RAW.
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
 
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
-        Vulnerability impact:
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
-A user able to create containers with CAP_NET_RAW privileges on an
-affected cluster can intercept traffic from other containers on the host
-or from the host itself.
+However, deployment of the mitigations is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
 
+This is because it is a guest visible change which will draw attention
+to the issue.
+-----BEGIN PGP SIGNATURE-----
 
-        Mitigations:
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl6Vpd4MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZbC8IAIkpehqymi1+zrWN1OHdvIYIMv2TCzSSx3UtsoMk
+J67FpgDzX8ZLfiE0x5FELs3KUdILOe5IkEmM2ssrvQRoIp+X3U4Ybm6eoIB+BzjD
+bmJReqNYVY6dlJuAhO2i6L125uBITWdntlK/ZOOQAOd77hR2KueuGELV7KUoPbQa
+SAiQ8jsCjqWCacYll6oq1c7jRlc1+RD/5JjkGveHlLmLOnIiS96PkDzqskM8Aniz
+TLZ4WmIpfixDAHn3OYyHGoUyhNW3qlps3evDyj3Wela62LFsymDSHkcV8XFBLTGT
+pueuSELzne5m85moAB2UqKVhHDV+PRCV7bLHYm/s7yeIHSg=
+=hix9
+-----END PGP SIGNATURE-----
 
-  * Setting the host default to reject router advertisements should
-    prevent attacks from succeeding, but may break legitimate traffic,
-    depending upon the networking implementation and the network where
-    the cluster is running. To change this setting, set the sysctl
-    net.ipv6.conf.all.accept_ra to 0.
-  * Using TLS with proper certificate validation
-  * Disallowing CAP_NET_RAW for untrusted workloads or users. For
-    example, a Pod Security Policy with a RequiredDropCapabilities that
-    includes NET_RAW will prevent this attack for controlled workloads.
-
-
-        Detection:
-
-  * The IPv6 routing table on nodes will show any attacker-created
-    entries. For example, a host with IPv6 disabled might show no
-    default route when running ip -6 route but the same host with an
-    attack in progress might show an updated default route or a route to
-    the target address(es). Any IPv6 route with a destination interface
-    of a host-side container network interface should be investigated.
-  * The host-side of a container network interface may show additional
-    configured IPv6 addresses after receiving a rogue RA packet. For
-    example, given a host-side interface of cbr0 which might normally
-    have no IPv6 address, a dynamic-configured address on the interface
-    may signal an attack in progress. Use this command to view interface
-    addresses: ip a show dynamic cbr0
-
-
-        Acknowledgements:
-
-Thanks to Etienne Champetier for disclosing this vulnerability.
-
-
-        Additional Details:
-
-See the GitHub issue at
-https://github.com/kubernetes/kubernetes/issues/91507 for more information.
-
-Thank you,
-Joel Smith, on behalf of the Kubernetes Product Security Committee
-
-
+Download attachment "xsa318.patch" of type "application/octet-stream" (1500 bytes)
