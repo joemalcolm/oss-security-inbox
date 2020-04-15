@@ -1,39 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/28/3
-Message-ID: <20200728185914.GE4053562@gmail.com>
-Date: Tue, 28 Jul 2020 11:59:14 -0700
-From: Eric Biggers <ebiggers@...nel.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2020-14331] Linux Kernel: buffer over write in vgacon_scrollback_update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/15/2
+Message-ID: <20200415140329.GC25468@kitsune.suse.cz>
+Date: Wed, 15 Apr 2020 16:03:29 +0200
+From: Michal Suchánek <msuchanek@...e.de>
+To: Andrew Donnellan <ajd@...ux.ibm.com>
+Cc: oss-security@...ts.openwall.com, linuxppc-dev <linuxppc-dev@...ts.ozlabs.org>
+Subject: Re: CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 28, 2020 at 11:16:55AM +0800, 张云海 wrote:
-> There is a buffer over write in drivers/video/console/vgacon.c in
-> vgacon_scrollback_update.
+On Wed, Apr 15, 2020 at 10:52:53PM +1000, Andrew Donnellan wrote:
+> The Linux kernel for powerpc from v4.10 to v5.1 has a bug where the
+> Authority Mask Register (AMR), Authority Mask Override Register (AMOR) and
+> User Authority Mask Override Register (UAMOR) are not correctly saved and
+> restored when the CPU is going into/coming out of idle state.
 > 
-> The issue is reported by Yunhai Zhang / NSFOCUS Security Team
-> <zhangyunhai@...ocus.com>, CVE-2020-14331 assigned via Red Hat.
+> On POWER9 CPUs, this means that a CPU may return from idle with the AMR
+> value of another thread on the same core.
 > 
-> # Affected Versions
-> The issue is found and tested on 5.7.0-rc6.
-> The issue is introduced in commit:
-> 15bdab959c9bb909c0317480dd9b35748a8f7887 ([PATCH] vgacon: Add support
-> for soft scrollback)
-> According to code review, all versions older than
-> 92ed301919932f777713b9172e525674157e983d (v5.8-rc7) are affected.
+> This allows a trivial Denial of Service attack against KVM hosts, by booting
+> a guest kernel which makes use of the AMR, such as a v5.2 or later kernel
+> with Kernel Userspace Access Prevention (KUAP) enabled.
+> 
+> The guest kernel will set the AMR to prevent userspace access, then the
+> thread will go idle. At a later point, the hardware thread that the guest
+> was using may come out of idle and start executing in the host, without
+> restoring the host AMR value. The host kernel can get caught in a page fault
+> loop, as the AMR is unexpectedly causing memory accesses to fail in the
+> host, and the host is eventually rendered unusable.
 
-Thanks for the writeup.  Note that there are many open syzbot reports in the
-fbdev, vt, and vgacon kernel subsystems.  These subsystems aren't actively
-maintained (receiving drive-by fixes only), and the kernel developers recommend
-to not enable these subsystems if you care about security
-(https://lkml.kernel.org/lkml/CAKMK7uF5zZH3CaHueWsLR96-AzT==wP8=MpymTqx-T+SRsXWHA@mail.gmail.com/).
+Hello,
 
-This particular bug, for example, appears to have been already found by someone
-running syzkaller and publicly reported over 2 years ago, with a C reproducer:
-(https://lkml.kernel.org/lkml/CAEAjamsJnG-=TSOwgRbbb3B9Z-PA63oWmNPoKYWQ=Z=+X49akg@mail.gmail.com/).
-No one did anything.
+shouldn't the kernel restore the host registers when leaving the guest?
 
-I suggest that people relying on the security of these kernel subsystems
-contribute resources to fixing the many known fuzzing bugs in them.
+I recall some code exists for handling the *AM*R when leaving guest. Can
+the KVM guest enter idle without exiting to host?
 
-- Eric
+Thanks
+
+Michal
