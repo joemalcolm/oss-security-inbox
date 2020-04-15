@@ -1,4 +1,9 @@
-Received: (qmail 23911 invoked by uid 550); 21 May 2026 18:06:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1345" "Wednesday" "15" "April" "2020" "16:03:29" "+0200" "Michal =?iso-8859-1?Q?Such=E1ne?==?iso-8859-1?Q?k?=" "msuchanek@suse.de" "<20200415140329.GC25468@kitsune.suse.cz>" "30" "[oss-security] Re: CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts" nil nil nil "4" "2020041514:03:29" "[oss-security] Re: CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts" (number mark "U       msuchanek@su Apr 15   30/1345  " thread-indent "\"[oss-security] Re: CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts\"\n") "<2ff92392-30ec-d5c4-84c9-e6ba24f6b154@linux.ibm.com>" ("<2ff92392-30ec-d5c4-84c9-e6ba24f6b154@linux.ibm.com>") nil nil nil nil nil nil nil "[oss-security] Re: CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1493 invoked by uid 550); 15 Apr 2020 14:21:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,82 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23593 invoked from network); 21 May 2026 18:06:46 -0000
-Date: Thu, 21 May 2026 20:06:41 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Hyunwoo Kim <imv4bel@gmail.com>,
-	Sultan Alsawaf <sultan@kerneltoast.com>
-Message-ID: <20260521180641.GA29282@openwall.com>
-References: <agXllSDnfFBIo7xh@eldamar.lan> <ag8-rm91DYcl7uxz@v4bel>
-Mime-Version: 1.0
+Received: (qmail 28222 invoked from network); 15 Apr 2020 14:03:43 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Wed, 15 Apr 2020 16:03:29 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Andrew Donnellan <ajd@linux.ibm.com>
+Cc: oss-security@lists.openwall.com,
+	linuxppc-dev <linuxppc-dev@lists.ozlabs.org>
+Message-ID: <20200415140329.GC25468@kitsune.suse.cz>
+References: <2ff92392-30ec-d5c4-84c9-e6ba24f6b154@linux.ibm.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ag8-rm91DYcl7uxz@v4bel>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux =?utf-8?Q?kernel?=
-	=?utf-8?Q?=3A_Dirty_Frag_variants_=E2=80=94?= fix merged into netdev
+In-Reply-To: <2ff92392-30ec-d5c4-84c9-e6ba24f6b154@linux.ibm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: [oss-security] Re: CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can
+ cause DoS on POWER9 KVM hosts
 
-Hi,
-
-On Fri, May 22, 2026 at 02:19:42AM +0900, Hyunwoo Kim wrote:
-> With the help of several maintainers and developers, a v5 patch
-> resolving the "publicly disclosed" Dirty Frag variants other than the
-> CVE-2026-46300 (fragnesia) variant has been merged into netdev:
-> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=48f6a5356a33dd78e7144ae1faef95ffc990aae0
+On Wed, Apr 15, 2020 at 10:52:53PM +1000, Andrew Donnellan wrote:
+> The Linux kernel for powerpc from v4.10 to v5.1 has a bug where the
+> Authority Mask Register (AMR), Authority Mask Override Register (AMOR) and
+> User Authority Mask Override Register (UAMOR) are not correctly saved and
+> restored when the CPU is going into/coming out of idle state.
 > 
-> Separately, the patch resolving CVE-2026-46300 alone has been split
-> into its own patch:
-> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=f84eca5817390257cef78013d0112481c503b4a3
-
-Thank you very much Hyunwoo Kim for staying on top of this and focusing
-on fixing the issues.  Such a contrast from what some others are doing.
-
-> This 48f6a5356a33 patch addresses four "publicly disclosed" variants:
+> On POWER9 CPUs, this means that a CPU may return from idle with the AMR
+> value of another thread on the same core.
 > 
-> 1. https://lore.kernel.org/all/agRhFtawP06hWyRa@v4bel/  (2026-05-13)
-> 2. https://lore.kernel.org/all/agSx78pXBFCdn08p@v4bel/  (2026-05-13)
-> 3. https://lore.kernel.org/all/agVpIsaSherjHTYg@sultan-box/  (2026-05-14)
-
-Variant 3 above was found (and exploit generated) by Sultan Alsawaf, my
-colleague at CIQ, with use of "Claude Opus 4.6 (1M context)" with "hands
-tied since we didn't yet have the cybersecurity bypass." (the quotes are
-in Sultan's words)
-
-> 4. https://github.com/v12-security/pocs/tree/main/fragnesia-5db89c99566fc  (2026-05-15)
+> This allows a trivial Denial of Service attack against KVM hosts, by booting
+> a guest kernel which makes use of the AMR, such as a v5.2 or later kernel
+> with Kernel Userspace Access Prevention (KUAP) enabled.
 > 
-> Note that the fourth PoC was confirmed to be blocked as well by the v3
-> fix (skb_gro_receive) [1] that resolves the third PoC,
+> The guest kernel will set the AMR to prevent userspace access, then the
+> thread will go idle. At a later point, the hardware thread that the guest
+> was using may come out of idle and start executing in the host, without
+> restoring the host AMR value. The host kernel can get caught in a page fault
+> loop, as the AMR is unexpectedly causing memory accesses to fail in the
+> host, and the host is eventually rendered unusable.
 
-This matches Sultan's analysis.  It may be that the rediscovery by V12
-was based on Sultan's public posting on the issue (including exploit).
-I called them out on this in their Twitter thread and got no reply.
+Hello,
 
-> and the v4 [2] and v5 [3] changes address potential issues.
-> 
-> As long as the in-place path in esp remains, further variants of this
-> kind are expected to be found in the esp module. As mentioned
-> previously, I recommend keeping the mitigation in place for the time
-> being.
+shouldn't the kernel restore the host registers when leaving the guest?
 
-As a maybe better mitigation, can we somehow make in-place / zero-copy
-runtime configurable, and not only for esp?
+I recall some code exists for handling the *AM*R when leaving guest. Can
+the KVM guest enter idle without exiting to host?
 
-> This patch has been verified against various selftests and stress
-> tests without issues, but it would be appreciated if distro
-> maintainers could additionally test whether this patch introduces any
-> regressions.
-> 
-> 
-> Best regards,
-> Hyunwoo Kim
-> 
-> 
-> [1]: https://lore.kernel.org/all/agW4vC0r8QOUKtRT@v4bel/
-> [2]: https://lore.kernel.org/all/aga1VyHpHaUhnGZa@v4bel/
-> [3]: https://lore.kernel.org/all/ageeJfJHwgzmKXbh@v4bel/
+Thanks
 
-Thanks again,
-
-Alexander
+Michal
