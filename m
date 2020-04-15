@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/13/5
-Message-ID: <20201013132819.GA31582@openwall.com>
-Date: Tue, 13 Oct 2020 15:28:19 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: kdeconnect: CVE-2020-26164: multiple security issues in kdeconnectd network daemon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/15/6
+Message-ID: <20200415193143.GB39059@syl.local>
+Date: Wed, 15 Apr 2020 13:31:43 -0600
+From: Taylor Blau <ttaylorr@...hub.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2020-5260: Git: malicious URLs may cause Git to present stored credentials to the wrong server
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 13, 2020 at 02:29:12PM +0200, Matthias Gerstner wrote:
-> The SUSE security team noticed that a new network service service
-> `kdeconnectd` was active by default  in openSUSE Leap 15.2 listening on TCP
-> and UDP port 1716. `kdeconnectd` is started automatically in the context of
-> any KDE session and runs with the privileges of the logged in user.
-> 
-> 
-> `kdeconnectd` talks to an Android smartphone app. The use cases are, among
-> others:
-> 
-> 
-> - sharing the PC clipboard with the smartphone
-> - controlling the PC from the smartphone (running commands, controlling input)
-> 
-> 
-> I conducted an in-depth source code review [...]
+Hi all,
 
-Thank you for your work on this, and for publishing so much detail!
+On Wed, Apr 15, 2020 at 08:59:44PM +0200, Solar Designer wrote:
+> Hi,
+>
+> Taylor Blau brought this to the distros list a week ago (thanks!), but
+> unfortunately failed to follow the distros list policy (despite of being
+> specifically informed of that requirement by distros list members,
+> twice) to post the information to oss-security on the public disclosure
+> date/time.  So as list admin, after a delay of more than a day, I am
+> taking over and do this (being unhappy that I have to do it for others).
 
-Will kdeconnectd no longer be active by default in openSUSE?  I hope so.
-Merely fixing the known issues doesn't address the fact that this poses
-unjustified risk for most people.
+My sincerest apologies for not sending this to oss-security in the
+appropriate time. We (the git-security) list had discussed that I would
+do so, and clearly it had slipped my mind.
 
-Alexander
+The remainder of Alexander's guidance is correct from our perspective.
+I'll make sure to avoid this mishap in the future by remembering to
+email this list more promptly. Thanks, and sorry again.
+
+> Quoting Taylor's original notification to distros:
+>
+> [snip]
+
+Thanks,
+Taylor
