@@ -1,207 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/18/5
-Message-ID: <AM0PR08MB529780C88B4862081EB674ABC9F70@AM0PR08MB5297.eurprd08.prod.outlook.com>
-Date: Wed, 18 Mar 2020 18:19:25 +0000
-From: "Janushkevich, Dmitry" <dmitry.janushkevich@...ecure.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: U-Boot verified boot improper signature verification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/15/1
+Message-Id: <2ff92392-30ec-d5c4-84c9-e6ba24f6b154@linux.ibm.com>
+Date: Wed, 15 Apr 2020 22:52:53 +1000
+From: Andrew Donnellan <ajd@...ux.ibm.com>
+To: oss-security@...ts.openwall.com, linuxppc-dev <linuxppc-dev@...ts.ozlabs.org>
+Subject: CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+The Linux kernel for powerpc from v4.10 to v5.1 has a bug where the 
+Authority Mask Register (AMR), Authority Mask Override Register (AMOR) 
+and User Authority Mask Override Register (UAMOR) are not correctly 
+saved and restored when the CPU is going into/coming out of idle state.
 
-Here is an advisory regarding a recently discovered and patched issue in U-Boot.
-Permalink:
+On POWER9 CPUs, this means that a CPU may return from idle with the AMR 
+value of another thread on the same core.
 
-https://labs.f-secure.com/advisories/das-u-boot-verified-boot-bypass/
+This allows a trivial Denial of Service attack against KVM hosts, by 
+booting a guest kernel which makes use of the AMR, such as a v5.2 or 
+later kernel with Kernel Userspace Access Prevention (KUAP) enabled.
 
-(Das) U-Boot typically is employed as a second-stage boot loader responsible for
-loading the Linux operating system's kernel and related images and passing
-control further to the OS. The bootloader is also responsible to verify
-integrity and authenticity of the loaded images to ensure only authentic
-software is allowed to run. U-Boot's verified boot feature [1,2] is used to
-achieve this. This method only applies to the flattened image tree (FIT) image
-format.
+The guest kernel will set the AMR to prevent userspace access, then the 
+thread will go idle. At a later point, the hardware thread that the 
+guest was using may come out of idle and start executing in the host, 
+without restoring the host AMR value. The host kernel can get caught in 
+a page fault loop, as the AMR is unexpectedly causing memory accesses to 
+fail in the host, and the host is eventually rendered unusable.
 
-The FIT image is based on previously developed device tree format used in both
-U-Boot and the Linux kernel to store and pass configuration information. An
-example image tree source (the text format used to generate FIT images) from
-the documentation is reproduced below to illustrate the concept:
+The fix is to correctly save and restore the AMR in the idle state 
+handling code.
 
-```
-/ {
-	images {
-		kernel-1 {
-			data = <data for kernel1>
-			hash-1 {
-				algo = "sha1";
-				value = <...kernel hash 1...>
-			};
-		};
-		kernel-2 {
-			data = <data for kernel2>
-			hash-1 {
-				algo = "sha1";
-				value = <...kernel hash 2...>
-			};
-		};
-		fdt-1 {
-			data = <data for fdt1>;
-			hash-1 {
-				algo = "sha1";
-				value = <...fdt hash 1...>
-			};
-		};
-		fdt-2 {
-			data = <data for fdt2>;
-			hash-1 {
-				algo = "sha1";
-				value = <...fdt hash 2...>
-			};
-		};
-	};
-	configurations {
-		default = "conf-1";
-		conf-1 {
-			kernel = "kernel-1";
-			fdt = "fdt-1";
-			signature-1 {
-				algo = "sha1,rsa2048";
-				value = <...conf 1 signature...>;
-			};
-		};
-		conf-2 {
-			kernel = "kernel-2";
-			fdt = "fdt-2";
-			signature-1 {
-				algo = "sha1,rsa2048";
-				value = <...conf 1 signature...>;
-			};
-		};
-	};
-};
-```
+The bug does not affect POWER8 or earlier Power CPUs.
 
-This image tree source describes two kernels with two flattened device tree
-blobs (FDTs) as well as two configurations denoting which images are to be
-used together. The complete configuration may also include other images e.g.
-RAM disks. Hash values for individual images are computed during image build.
+CVE-2020-11669 has been assigned.
 
-When an image is signed using the mkimage tool provided with U-Boot, the image
-is modified by adding several properties to corresponding signature nodes,
-specifically `hashed-strings`, `hashed-nodes`, `timestamp`, `signer-version`,
-`signer-name`, and `value`. The `value` property holds the actual signature,
-while the `hashed-strings` and `hashed-nodes` properties represent the elements
-that were used to compute the signed hash value. For example:
+The bug has already been fixed upstream in kernels v5.2 onwards, by [0].
 
-```
-conf@1 {
-  description = [REMOVED];
-  kernel = "kernel@1";
-  fdt = "fdt@1";
-  ramdisk = "ramdisk@1";
-  signature@1 {
-    hashed-strings = [00 00 00 00 00 00 00 8e];
-    hashed-nodes = "/", "/configurations/conf@1", "/images/fdt@1", "/images/fdt@...ash@1", "/images/kernel@1", "/images/kernel@...ash@1", "/images/ramdisk@1", "/images/ramdisk@...ash@1";
-    timestamp = [5d cb 49 dc];
-    signer-version = "2019.07";
-    signer-name = "mkimage";
-    value = [03 d9 d7 e8 5a cf ..];
-    algo = "sha256,rsa4096";
-    key-name-hint = [REMOVED];
-    sign-images = "fdt", "kernel", "ramdisk";
-  };
-};
-```
+Fixes have been submitted for inclusion in upstream stable kernel trees 
+for v4.19[1] and v4.14[2].
 
-The string block data starting from offset 0 to offset 0x8E was included in the
-hash computation along with enumarated tree nodes, which produces the given RSA
-signature.
+The bug is already fixed in Red Hat Enterprise Linux 8 kernels from 
+4.18.0-147 onwards - see RHSA-2019:3517[3].
 
-It was found that U-Boot does not verify the contents of `hashed-nodes`
-correlate with the sub-images required to be loaded by the configuration,
-specified e.g. in the `kernel`, `fdt`, and `ramdisk` configuration properties.
-This allows to craft another configuration with the same signature node but
-referencing a different sub-image(s):
+Thanks to David Gibson of Red Hat for the initial bug report.
 
-```
-conf@2 {
-  description = "Super 1337 Configuration";
-  kernel = "kernel@2";
-  fdt = "fdt@1";
-  ramdisk = "ramdisk@1";
-  signature@1 {
-    hashed-strings = [00 00 00 00 00 00 00 8e];
-    hashed-nodes = "/", "/configurations/conf@1", "/images/fdt@1", "/images/fdt@...ash@1", "/images/kernel@1", "/images/kernel@...ash@1", "/images/ramdisk@1", "/images/ramdisk@...ash@1";
-    timestamp = [5d cb 49 dc];
-    signer-version = "2019.07";
-    signer-name = "mkimage";
-    value = [03 d9 d7 e8 5a cf ..];
-    algo = "sha256,rsa4096";
-    key-name-hint = [REMOVED];
-    sign-images = "fdt", "kernel", "ramdisk";
-  };
-};
-```
+[0] 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=53a712bae5dd919521a58d7bad773b949358add0
 
-As by design [3] only certain parts of the FIT image are hashed, it is possible
-to insert arbitrary FIT nodes after configurations have been signed without
-invalidating any signatures, adding both arbitrary configurations as well as
-arbitrary sub-images. Note that this fact is explicitly documented. It is also
-possible to change the default property of the configurations node to suggest
-the crafted configuration to be chosen.
+[1] https://lists.ozlabs.org/pipermail/linuxppc-dev/2020-April/208661.html
 
-Impact
-------
+[2] https://lists.ozlabs.org/pipermail/linuxppc-dev/2020-April/208660.html
 
-An attacker having a properly signed FIT image is able to craft arbitrary FIT
-images that would pass signature validation, resulting in booting and
-execution of untrusted code.
+[3] https://access.redhat.com/errata/RHSA-2019:3517
 
-The exploitation relies on the fact that the crafted configuration will be
-chosen to be booted. This may occur, for example, when the attacker is able to
-modify the `default` property of the `configurations` node and the setup does
-not explicitly choose to boot a specific configuration. Consequently, one way of
-mitigating the issue is to explicitly specify the configuration name as part of
-the `bootm` command arguments, for example: `bootm ${loadaddr}#conf@1 - ${fdtaddr}`
-
-Affected versions
------------------
-
-U-Boot versions 2018.03 and 2020.01 were verified to be affected. Versions
-prior to 2018.03 may be affected as well.
-
-Solution
---------
-
-Apply patches or update to a fixed version when available.
-
-Preliminary patches have been posted to the mailing list [4] for review.
-
-CVE assignment
---------------
-
-CVE-2020-10648 should be used to track this issue.
-
-Credit
-------
-
-Dmitry Janushkevich (@infosecdj) of the Hardware Security team, F-Secure
-
-Timeline
---------
-
-2020-01-22: Discovery of the issue.
-2020-01-24: Details sent to maintainers Tom Rini and Simon Glass.
-2020-02-26: Patches provided for review by Simon Glass.
-2020-03-11: Release date agreed to be March 18.
-2020-03-17: CVE assignment.
-2020-03-18: Public release.
-
-References
-----------
-
-[1] https://github.com/u-boot/u-boot/blob/master/doc/uImage.FIT/verified-boot.txt
-[2] https://github.com/u-boot/u-boot/blob/master/doc/uImage.FIT/signature.txt
-[3] See documentation for the fdt_find_regions() function in include/linux/libfdt.h
-[4] https://lists.denx.de/pipermail/u-boot/2020-March/403409.html
+-- 
+Andrew Donnellan              OzLabs, ADL Canberra
+ajd@...ux.ibm.com             IBM Australia Limited
 
