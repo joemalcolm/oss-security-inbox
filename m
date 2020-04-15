@@ -1,113 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/09/2
-Message-ID: <alpine.DEB.2.20.2012080925290.16776@tvnag.unkk.fr>
-Date: Wed, 9 Dec 2020 07:53:32 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] libcurl: FTP wildcard stack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/15/3
+Message-ID: <1CB288AE-6F16-46CD-9E4A-B0CAA8EEA58D@mediaservice.net>
+Date: Wed, 15 Apr 2020 14:42:34 +0000
+From: Marco Ivaldi <marco.ivaldi@...iaservice.net>
+To: "Fulldisclosure@...lists.org" <Fulldisclosure@...lists.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2020-2771, CVE-2020-2851, CVE-2020-2944 - Multiple vulnerabilities in Oracle Solaris
 Content-Type: text/plain; charset=utf-8
 
-FTP wildcard stack overflow
-===========================
+Hello,
 
-Project curl Security Advisory, December 9th 2020 -
-[Permalink](https://curl.se/docs/CVE-2020-8285.html)
+Please find attached 3 recent advisories for the following vulnerabilities, fixed in Oracle's Critical Patch Update (CPU) of April 2020:
 
-VULNERABILITY
--------------
+CVE-2020-2771. A difficult to exploit heap-based buffer overflow in setuid root whodo and w binaries distributed with Solaris allows local users to corrupt memory and potentially execute arbitrary code in order to escalate privileges.
 
-libcurl offers a wildcard matching functionality, which allows a callback (set
-with `CURLOPT_CHUNK_BGN_FUNCTION`) to return information back to libcurl on
-how to handle a specific entry in a directory when libcurl iterates over a
-list of all available entries.
+CVE-2020-2851. A difficult to exploit stack-based buffer overflow in the _DtCreateDtDirs() function in the Common Desktop Environment version distributed with Oracle Solaris 10 1/13 (Update 11) and earlier may allow local users to corrupt memory and potentially execute arbitrary code in order to escalate privileges via a long X11 display name. The vulnerable function is located in the libDtSvc library and can be reached by executing the setuid program dtsession.
 
-When this callback returns `CURL_CHUNK_BGN_FUNC_SKIP`, to tell libcurl to not
-deal with that file, the internal function in libcurl then calls itself
-recursively to handle the next directory entry.
+CVE-2020-2944. A buffer overflow in the _SanityCheck() function in the Common Desktop Environment version distributed with Oracle Solaris 10 1/13 (Update 11) and earlier allows local users to gain root privileges via a long calendar name or calendar owner passed to sdtcm_convert in a malicious calendar file.
 
-If there's a sufficient amount of file entries and if the callback returns
-"skip" enough number of times, libcurl runs out of stack space. The exact
-amount will of course vary with platforms, compilers and other environmental
-factors.
+For further details and some background information, please refer to:
+https://techblog.mediaservice.net/2020/04/cve-2020-2944-local-privilege-escalation-via-cde-sdtcm_convert/
+https://github.com/0xdea/exploits/blob/master/solaris/raptor_sdtcm_conv.c 
+https://0xdeadbeef.info/ 
 
-The content of the remote directory is not kept on the stack, so it seems hard
-for the attacker to control exactly what data that overwrites the stack -
-however it remains a Denial-Of-Service vector as a malicious user who controls
-a server that a libcurl-using application works with under these premises can
-trigger a crash.
-
-(There is also a few other ways the function can be made to call itself and
-trigger this problem.)
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This issue was unfortunately reported publicly in the curl GitHub issue
-tracker as [issue 6255](https://github.com/curl/curl/issues/6255).
-
-This flaw has existed in curl since commit
-[0825cd80a](https://github.com/curl/curl/commit/0825cd80a) in curl 7.21.0.
-
-This functionality is not used by the curl tool so it is not affected.
-Further: it is not a very widely used feature.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2020-8285 to this issue.
-
-CWE-674: Uncontrolled Recursion
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.21.0 to and including 7.73.0
-- Not affected versions: libcurl < 7.21.0 and libcurl >= 7.74.0
-
-Also note that libcurl is used by many applications, and not always
-advertised as such.
-
-THE SOLUTION
-------------
-
-The internal function is rewritten to instead and more appropriately use an
-ordinary loop instead of the recursive approach. This way, the stack use will
-remain the same no matter how many files that are skipped.
-
-A [fix for CVE-2020-8285](https://github.com/curl/curl/commit/69a358f2186e04)
-
-RECOMMENDATIONS
---------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.74.0
-
-  B - Disable FTP wildcard use (`CURLOPT_WILDCARDMATCH`)
-
-  C - Make sure your `CURLOPT_CHUNK_BGN_FUNCTION` callback doesn't do multiple skips.
-
-TIMELINE
---------
-
-This issue was first reported to the curl project on November 27, 2020.
-
-This advisory was posted on December 9th 2020.
-
-CREDITS
--------
-
-This issue was initially reported by xnynx on GitHub. Daniel took it to the
-security team immediately. Patch by Daniel Stenberg.
-
-Thanks a lot!
+PS. It looks like Bugtraq is not accepting posts anymore: it finally happened, the end of an era...
 
 -- 
+Marco Ivaldi, Offensive Security Manager
+CISSP, OSCP, QSA, ASV, OPSA, OPST, OWSE, LA27001, PRINCE2F
+@Mediaservice.net S.r.l. con Socio Unico
+https://www.mediaservice.net/
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://www.wolfssl.com/contact/
+
+View attachment "2020-05-cde-sdtcm_convert.txt" of type "text/plain" (3762 bytes)
+
+View attachment "2020-06-cde-libDtSvc.txt" of type "text/plain" (6462 bytes)
+
+View attachment "2020-07-solaris-whodo-w.txt" of type "text/plain" (8786 bytes)
