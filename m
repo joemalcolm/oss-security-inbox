@@ -1,4 +1,9 @@
-Received: (qmail 5277 invoked by uid 550); 8 Sep 2023 11:09:39 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1998" "Wednesday" "15" "April" "2020" "22:52:53" "+1000" "Andrew Donnellan" "ajd@linux.ibm.com" "<2ff92392-30ec-d5c4-84c9-e6ba24f6b154@linux.ibm.com>" "49" "[oss-security] CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts" nil nil nil "4" "2020041512:52:53" "[oss-security] CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts" (number mark "U       ajd@linux.ib Apr 15   49/1998  " thread-indent "\"[oss-security] CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1139 invoked by uid 550); 15 Apr 2020 14:21:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,121 +12,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1406 invoked from network); 8 Sep 2023 11:05:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1694171102; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type; bh=6GpA28DqSduFG55csLW0JiGgIR+4lBB03qfE2X97fvw=;
-	b=X4lTxiGREDiKZRVRyKVdy8tmoTjLI/848yO1l7U77EvdNYE+AMTmkEyQ0qxjJSh7Z/rVU/
-	YPmczEMcancCDjrGdpJsBJ8Txkabi+BaaRjX6hZTGwEe7Q+ErdRJ3asE0vDmqPQ2U/5oTC
-	A7gc3AmaRY0y2eFjgEQQKNW5puqLQWPfeNCifK30l+IHlX1v6GTr4VxrkyCt5v7gGuEsN2
-	7dehW9lvYjctg7WsAFJYBpnV6v7aqmWjFIBulQzDUK4YqqGukiPCF6oNmCIriHcvQJUaV4
-	3aAw10eyXVTv459knCnAjL5MILTlbhSX/TlkY+ZtGXHO3Rm09QIFtZT0czgJ0A==
-Date: Fri, 8 Sep 2023 11:05:02 +0000
-From: Tomas Mraz <tomas@openssl.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZPr/3h1O1g0iHyIq@openssl.org>
+Received: (qmail 5991 invoked from network); 15 Apr 2020 12:53:13 -0000
+From: Andrew Donnellan <ajd@linux.ibm.com>
+To: oss-security@lists.openwall.com,
+        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>
+Date: Wed, 15 Apr 2020 22:52:53 +1000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] OpenSSL Security Advisory
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+x-cbid: 20041512-0008-0000-0000-0000037122CF
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 20041512-0009-0000-0000-00004A92D6B4
+Message-Id: <2ff92392-30ec-d5c4-84c9-e6ba24f6b154@linux.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.676
+ definitions=2020-04-15_03:2020-04-14,2020-04-15 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1034
+ priorityscore=1501 impostorscore=0 mlxscore=0 malwarescore=0
+ suspectscore=0 lowpriorityscore=0 phishscore=0 spamscore=0 mlxlogscore=999
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2004150091
+Subject: [oss-security] CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause
+ DoS on POWER9 KVM hosts
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+The Linux kernel for powerpc from v4.10 to v5.1 has a bug where the 
+Authority Mask Register (AMR), Authority Mask Override Register (AMOR) 
+and User Authority Mask Override Register (UAMOR) are not correctly 
+saved and restored when the CPU is going into/coming out of idle state.
 
-OpenSSL Security Advisory [8th September 2023]
-==============================================
+On POWER9 CPUs, this means that a CPU may return from idle with the AMR 
+value of another thread on the same core.
 
-POLY1305 MAC implementation corrupts XMM registers on Windows (CVE-2023-4807)
-=============================================================================
+This allows a trivial Denial of Service attack against KVM hosts, by 
+booting a guest kernel which makes use of the AMR, such as a v5.2 or 
+later kernel with Kernel Userspace Access Prevention (KUAP) enabled.
 
-Severity: Low
+The guest kernel will set the AMR to prevent userspace access, then the 
+thread will go idle. At a later point, the hardware thread that the 
+guest was using may come out of idle and start executing in the host, 
+without restoring the host AMR value. The host kernel can get caught in 
+a page fault loop, as the AMR is unexpectedly causing memory accesses to 
+fail in the host, and the host is eventually rendered unusable.
 
-Issue summary: The POLY1305 MAC (message authentication code) implementation
-contains a bug that might corrupt the internal state of applications on the
-Windows 64 platform when running on newer X86_64 processors supporting the
-AVX512-IFMA instructions.
+The fix is to correctly save and restore the AMR in the idle state 
+handling code.
 
-Impact summary: If in an application that uses the OpenSSL library an attacker
-can influence whether the POLY1305 MAC algorithm is used, the application
-state might be corrupted with various application dependent consequences.
+The bug does not affect POWER8 or earlier Power CPUs.
 
-The POLY1305 MAC (message authentication code) implementation in OpenSSL does
-not save the contents of non-volatile XMM registers on Windows 64 platform
-when calculating the MAC of data larger than 64 bytes. Before returning to
-the caller all the XMM registers are set to zero rather than restoring their
-previous content. The vulnerable code is used only on newer x86_64 processors
-supporting the AVX512-IFMA instructions.
+CVE-2020-11669 has been assigned.
 
-The consequences of this kind of internal application state corruption can
-be various - from no consequences, if the calling application does not
-depend on the contents of non-volatile XMM registers at all, to the worst
-consequences, where the attacker could get complete control of the application
-process. However given the contents of the registers are just zeroized so
-the attacker cannot put arbitrary values inside, the most likely consequence,
-if any, would be an incorrect result of some application dependent
-calculations or a crash leading to a denial of service.
+The bug has already been fixed upstream in kernels v5.2 onwards, by [0].
 
-The POLY1305 MAC algorithm is most frequently used as part of the
-CHACHA20-POLY1305 AEAD (authenticated encryption with associated data)
-algorithm. The most common usage of this AEAD cipher is with TLS protocol
-versions 1.2 and 1.3 and a malicious client can influence whether this AEAD
-cipher is used by the server. This implies that server applications using
-OpenSSL can be potentially impacted. However we are currently not aware of
-any concrete application that would be affected by this issue therefore we
-consider this a Low severity security issue.
+Fixes have been submitted for inclusion in upstream stable kernel trees 
+for v4.19[1] and v4.14[2].
 
-As a workaround the AVX512-IFMA instructions support can be disabled at
-runtime by setting the environment variable OPENSSL_ia32cap:
+The bug is already fixed in Red Hat Enterprise Linux 8 kernels from 
+4.18.0-147 onwards - see RHSA-2019:3517[3].
 
-   OPENSSL_ia32cap=:~0x200000
+Thanks to David Gibson of Red Hat for the initial bug report.
 
-OpenSSL versions 1.1.1 to 1.1.1v, 3.0.0 to 3.0.10, and 3.1.0 to 3.1.2 are
-vulnerable to this issue. The FIPS provider is not affected because the
-POLY1305 MAC algorithm is not FIPS approved and the FIPS provider does not
-implement it.
+[0] 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=53a712bae5dd919521a58d7bad773b949358add0
 
-OpenSSL version 1.0.2 is not affected by this issue.
+[1] https://lists.ozlabs.org/pipermail/linuxppc-dev/2020-April/208661.html
 
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit 4bfac447 (for 3.1),
-commit 6754de4a (for 3.0), and commit a632d534 (for 1.1.1) in the OpenSSL git
-repository.
+[2] https://lists.ozlabs.org/pipermail/linuxppc-dev/2020-April/208660.html
 
-This issue was reported publicly on GitHub on 23rd July 2023 by Zach Wilson
-(Nvidia) and subsequently to the OpenSSL security team on 28th August 2023
-by Bernd Edlinger. The fix disabling the vulnerable codepath was developed
-by Bernd Edlinger.
+[3] https://access.redhat.com/errata/RHSA-2019:3517
 
-General Advisory Notes
-======================
+-- 
+Andrew Donnellan              OzLabs, ADL Canberra
+ajd@linux.ibm.com             IBM Australia Limited
 
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20230908.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
-
-OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
-fixes for 1.1.1 will only be available to premium support customers. 
------BEGIN PGP SIGNATURE-----
-
-iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmT6/5ESHHRvbWFzQG9w
-ZW5zc2wub3JnAAoJEFJ0ZqIcp55tLK8P/joFSPF9oBeoMBcSZJ5eG26WNoqvj2hh
-kYggHZL++wzFpBDgRwjyQW7Pm6BsythIYwId+6+QPJNCxf7juWv7vWuO42KbMqXh
-KnDk4NmFOKv6aF4TahfytgLzljVMwwRs9k+kmFfTNOq66NNiJBKFcIzTp7UlOkUD
-SOwify1Yq/du6jYyXX0tD+l6IfIEBlPPx+o5L8PG5+G+yR8bvHnlu1MrM3jYlil7
-7AQjqk+115Y6cJpER9FHW5oLApK2yn3mSlQ+0Cn9LjqCaYGAlJTHe1wP9OMmV+nk
-fhH5S714WvMgYxfbNgAsvfLBuahJkCyZ7ddaRF/OZtU5Kk72aK+mFVqxf7hgHHd6
-0W7xMIdZzhyfytQMKq3IK8bhc1T83nk83FxdDodx0XARNNoMAiYFbnQtuCtZzIM8
-WVXh9Yad37Nxg27rmjYdzezyeGTGT2dlwKMhNqHlp/rf9A67sC+Lrt9UJL7nAyJo
-zmmNjrZQuc+WGpQvKjHxirGuRzqLxPxQNQinXK4X23QsdbiFoMB/INd+7GqKfuOE
-2kdGH3hBpSoP9MrI9LHqq1G9fNnp/NOgUuwbxFXapDoNZMbOoDftpjZwCyRKqbf5
-PQSDny0hDER43/MNZOnmRlnFJHMjLKxi28BqwZpt6ZmdQM8FpZkNsMWnPic1J0tK
-V+IiOjmRLVcj
-=2sPx
------END PGP SIGNATURE-----
