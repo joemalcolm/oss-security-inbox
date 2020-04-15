@@ -1,94 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/01/4
-Message-ID: <CADtktAVv41WK8p_caEiJt9VUn5oqYvy8V8nkD4CckB5OG0g0xA@mail.gmail.com>
-Date: Mon, 1 Jun 2020 09:04:49 -0700
-From: Tim Allclair <tallclair@...gle.com>
-To: kubernetes-announce@...glegroups.com,  "Kubernetes developer/contributor discussion" <kubernetes-dev@...glegroups.com>,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss <kubernetes-security-discuss@...glegroups.com>,  oss-security@...ts.openwall.com, kubernetes+announcements@...coursemail.com
-Subject: CVE-2020-8555: Kubernetes: Half-Blind SSRF in kube-controller-manager
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/15/4
+Message-ID: <nycvar.YSQ.7.76.2004152346280.69262@xnncv>
+Date: Wed, 15 Apr 2020 23:50:51 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2020-10942 Kernel: vhost-net: stack overflow in get_raw_socket while checking sk_family field
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+   Hello,
 
-There exists a Server Side Request Forgery (SSRF) vulnerability in
-kube-controller-manager that allows certain authorized users to leak up to
-500 bytes of arbitrary information from unprotected endpoints within the
-master's host network (such as link-local or loopback services).
+A stack buffer overflow issue was found in the get_raw_socket() routine of the 
+Host kernel accelerator for virtio net (vhost-net) driver. It could occur 
+while doing an ioctl(VHOST_NET_SET_BACKEND) call and retrieving socket name in 
+a kernel stack variable via get_raw_socket(). A user able to perform ioctl(2) 
+calls on the '/dev/vhost-net' device may use this flaw to crash the kernel 
+resulting in DoS issue.
 
-This issue has been rated medium (
-CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:N
-<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:N>),
-and assigned CVE-2020-8555.
-Am I vulnerable?
+Upstream patch:
+   -> https://git.kernel.org/linus/42d84c8490f9f0931786f1623191fcab397c3d64
 
-You may be vulnerable if:
+Reference:
+   -> https://lkml.org/lkml/2020/2/15/125
 
-   -
+CVE-2020-10942 assigned via -> https://cveform.mitre.org/
 
-   You are running a vulnerable version (see below);
-   -
-
-   There are unprotected endpoints normally only visible from the
-   Kubernetes master (including link-local metadata endpoints, unauthenticated
-   services listening on localhost, or other services in the master's private
-   network); and
-   -
-
-   Untrusted users can create pods with an affected volume type or modify
-   storage classes.
-
-Affected Versions
-
-   -
-
-   kube-controller-manager v1.18.0
-   -
-
-   kube-controller-manager v1.17.0 - v1.17.4
-   -
-
-   kube-controller-manager v1.16.0 - v1.16.8
-   -
-
-   kube-controller-manager < v1.15.11
-
-The affected volume types are: GlusterFS, Quobyte, StorageFS, ScaleIO
-How do I mitigate this vulnerability?
-
-Prior to upgrading, this vulnerability can be mitigated by adding endpoint
-protections on the master or restricting usage of the vulnerable volume
-types (for example by constraining usage with a PodSecurityPolicy
-<https://kubernetes.io/docs/concepts/policy/pod-security-policy/#volumes-and-file-systems>
-or third-party admission controller such as Gatekeeper
-<https://github.com/open-policy-agent/gatekeeper>) and restricting
-StorageClass write permissions through RBAC.
-Fixed Versions
-
-The information leak was patched in the following versions:
-
-   -
-
-   kube-controller-manager v1.18.1+
-   -
-
-   kube-controller-manager v1.17.5+
-   -
-
-   kube-controller-manager v1.16.9+
-   -
-
-   kube-controller-manager v1.15.12+
-
-To upgrade, refer to the documentation:
-https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
-
-Further work to protect against SSRF is underway and will be included in an
-upcoming patch release (details to follow).
-Additional Details
-
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/91542
-
-Thank You,
-
-Tim Allclair on behalf of the Kubernetes Product Security Committee
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
