@@ -1,39 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/07/4
-Message-ID: <CAKzgDd0PnhRjveFpeyrZ3gsNZsUtw8RfpBEuW=x4d63oXXLUog@mail.gmail.com>
-Date: Mon, 7 Dec 2020 21:18:01 +0800
-From: YuanSheng Wang <membphis@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2020-13945: Apache APISIX's Admin API default access token vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/16/2
+Message-ID: <20200416040257.GA10545@blackberry>
+Date: Thu, 16 Apr 2020 14:02:57 +1000
+From: Paul Mackerras <paulus@...abs.org>
+To: Michal Suchánek <msuchanek@...e.de>
+Cc: Andrew Donnellan <ajd@...ux.ibm.com>, oss-security@...ts.openwall.com, linuxppc-dev <linuxppc-dev@...ts.ozlabs.org>
+Subject: Re: CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-13945: Apache APISIX's Admin API default access token vulnerability
+On Wed, Apr 15, 2020 at 04:03:29PM +0200, Michal Suchánek wrote:
+> On Wed, Apr 15, 2020 at 10:52:53PM +1000, Andrew Donnellan wrote:
+> > The Linux kernel for powerpc from v4.10 to v5.1 has a bug where the
+> > Authority Mask Register (AMR), Authority Mask Override Register (AMOR) and
+> > User Authority Mask Override Register (UAMOR) are not correctly saved and
+> > restored when the CPU is going into/coming out of idle state.
+> > 
+> > On POWER9 CPUs, this means that a CPU may return from idle with the AMR
+> > value of another thread on the same core.
+> > 
+> > This allows a trivial Denial of Service attack against KVM hosts, by booting
+> > a guest kernel which makes use of the AMR, such as a v5.2 or later kernel
+> > with Kernel Userspace Access Prevention (KUAP) enabled.
+> > 
+> > The guest kernel will set the AMR to prevent userspace access, then the
+> > thread will go idle. At a later point, the hardware thread that the guest
+> > was using may come out of idle and start executing in the host, without
+> > restoring the host AMR value. The host kernel can get caught in a page fault
+> > loop, as the AMR is unexpectedly causing memory accesses to fail in the
+> > host, and the host is eventually rendered unusable.
+> 
+> Hello,
+> 
+> shouldn't the kernel restore the host registers when leaving the guest?
 
-Severity: low
+It does.  That's not the bug.
 
-Vendor:
-The Apache Software Foundation
+> I recall some code exists for handling the *AM*R when leaving guest. Can
+> the KVM guest enter idle without exiting to host?
 
-Versions Affected:
-APISIX 1.2, 1.3, 1.4, 1.5.
+No, we currently never execute the "stop" instruction in guest context.
 
-Description:
-The user enabled the Admin API and deleted the Admin API access IP
-restriction rules.
-Eventually, the default token is allowed to access APISIX management data.
+The bug occurs when a thread that is in the host goes idle and
+executes the stop instruction to go to a power-saving state, while
+another thread is executing inside a guest.  Hardware loses the first
+thread's AMR while it is stopped, and as it happens, it is possible
+for the first thread to wake up with the contents of its AMR equal to
+the other thread's AMR.  This can happen even if the first thread has
+never executed in the guest.
 
-Mitigation:
-APISIX 1.2 ~ 1.5 upgrade to 2.0
+The kernel needs to save and restore AMR (among other registers)
+across the stop instruction because of this hardware behaviour.
+We missed the AMR initially, which is what led to this vulnerability.
 
-Or users can apply this patch:
-https://github.com/apache/apisix/pull/2244
-
-Credit:
-This issue was discovered by "国家信息安全漏洞共享平台".
-
--- 
-
-*MembPhis*
-My GitHub: https://github.com/membphis
-Apache APISIX: https://github.com/apache/apisix
-
+Paul.
