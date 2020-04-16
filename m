@@ -1,30 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/19/5
-Message-ID: <20200819171111.GA3705068@kroah.com>
-Date: Wed, 19 Aug 2020 19:11:11 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel 5.7.9 DRM  Double Free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/16/3
+Message-ID: <fd936e74-01a4-b9df-1b50-733293493ec9@igalia.com>
+Date: Thu, 16 Apr 2020 14:10:59 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0004
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 19, 2020 at 06:57:22PM +0200, Greg KH wrote:
-> On Wed, Aug 19, 2020 at 05:55:16PM +0200, Greg KH wrote:
-> > On Wed, Aug 19, 2020 at 03:42:33PM +0000, zdi-disclosures@...ndmicro.com wrote:
-> > > The specific flaw exists within DRM memory management. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to escalate privileges and execute code in the context of the kernel.
-> > 
-> > Note, this "vulnerability" was only accessible by root, so there's not
-> > all that many privileges that could really be escalated there.  Don't
-> > know why the original poster did not say that here, as they acknowledged
-> > it in the "bug report" they sent many of us.
-> 
-> And to be specific, as I was asked, this was only an issue in the
-> nouveau drm driver, not in the DRM "core" at all.  So only that one
-> driver was affected.
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0004
+------------------------------------------------------------------------
 
-And to be more specific, as someone else reminded me, you had to enable
-fault injection to be able to trip this up as well, something that only
-root could do.
+Date reported           : April 16, 2020
+Advisory ID             : WSA-2020-0004
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0004.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0004.html
+CVE identifiers         : CVE-2020-11793.
 
-thanks,
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-greg k-h
+CVE-2020-11793
+    Versions affected: WebKitGTK before 2.28.1 and WPE WebKit before
+    2.28.1.
+    Credit to Cim Stordal of Cognite.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or application crash (denial of service).
+    Description: A memory corruption issue (use-after-free) was
+    addressed with improved memory handling.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+April 16, 2020
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
