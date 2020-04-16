@@ -1,28 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/31/1
-Message-ID: <CAAafH9QFUn9+sqmWs_i6XsBJdw+kPau5WePkUa_5tLfA908k-g@mail.gmail.com>
-Date: Mon, 31 Aug 2020 17:03:52 -0500
-From: Brandon Williams <brandonwilliams@...che.org>
-To: cassandra <user@...sandra.apache.org>, dev@...sandra.apache.org
-Cc: Jeremiah Jordan <jeremiah@...astax.com>, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: CVE-2016-3427 Apache Cassandra Unspecified vulnerability related to JMX
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/16/4
+Message-Id: <D2F192EF-F7B6-4FF4-8FC5-8EDD4DFC83F0@beckweb.net>
+Date: Thu, 16 Apr 2020 15:28:36 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Versions Affected:
-All versions prior to: 2.1.22, 2.2.18, 3.0.22, 3.11.8 and 4.0-beta2
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Description:
-Unspecified vulnerability in Oracle Java SE 6u113, 7u99, and 8u77;
-Java SE Embedded 8u77; and JRockit R28.3.9 allows remote attackers to
-affect confidentiality, integrity, and availability via vectors
-related to JMX.   By default Cassandra only binds JMX locally.
+The following releases contain fixes for security vulnerabilities:
 
-Mitigation:
-2.1.x users should upgrade to 2.1.22
-2.2.x users should upgrade to 2.2.18
-3.0.x users should upgrade to 3.0.22
-3.11.x users should upgrade to 3.11.8
-4.0-beta1 users should upgrade to 4.0-beta2
+* AWS SAM Plugin 1.2.3
+* Copr Plugin 0.6.1
+* Parasoft Findings Plugin 10.4.4
+* Yaml Axis Plugin 0.2.1
 
-Alternatively, users can upgrade their JVM to versions after those in
-the description.
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2020-04-16/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1556 / CVE-2020-2177
+Copr Plugin 0.3 and earlier stores credentials unencrypted in job
+`config.xml` files as part of its configuration. These credentials can be
+viewed by users with Extended Read permission or access to the master file
+system.
+
+
+SECURITY-1753 / CVE-2020-2178
+Parasoft Findings Plugin 10.4.3 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks. This allows a user
+able to control the input files for the Parasoft Findings parser to have
+Jenkins parse a crafted file that uses external entities for extraction of
+secrets from the Jenkins master or server-side request forgery.
+
+
+SECURITY-1825 / CVE-2020-2179
+Yaml Axis Plugin 0.2.0 and earlier does not configure its YAML parser to
+prevent the instantiation of arbitrary types. This results in a remote code
+execution (RCE) vulnerability exploitable by users able to configure a
+multi-configuration (Matrix) job, or control the contents of a previously
+configured job's SCM repository.
+
+
+SECURITY-1736 / CVE-2020-2180
+AWS SAM Plugin 1.2.2 and earlier does not configure its YAML parser to
+prevent the instantiation of arbitrary types. This results in a remote code
+execution (RCE) vulnerability exploitable by users able to configure a job
+or control the contents of a previously configured "AWS SAM deploy
+application" build step's YAML SAM template file (`template.yaml` or
+equivalent) file.
+
