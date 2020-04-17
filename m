@@ -1,72 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/19/4
-Message-ID: <20201019202139.GA30622@espresso.pseudorandom.co.uk>
-Date: Mon, 19 Oct 2020 21:21:39 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/17/4
+Message-ID: <7526463.NqbLCg6IT0@x2>
+Date: Fri, 17 Apr 2020 09:24:42 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+Cc: 陈伟宸(田各) <splendidsky.cwc@...baba-inc.com>
+Subject: Re: CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 19 Oct 2020 at 13:22:49 +0200, Solar Designer wrote:
-> So let's accept that the user account running the desktop environment is
-> root-equivalent security-wise (is only different from root for safety,
-> not security) as long as it's ever used to reach root.
+On Friday, April 17, 2020 12:40:10 AM EDT 陈伟宸(田各) wrote:
+> "A race condition was found in the Linux kernel audit subsystem. When the
+> system is configured to panic on events being dropped, an attacker who is
+> able to trigger an audit event that starts while auditd is in the process
+> of starting may be able to cause the system to panic by exploiting a race
+> condition in audit event handling. This creates a denial of service by
+> causing a panic."
 
-If you want to isolate apps from each other, then I think there are
-really two sets of security boundaries:
+While this is theoretically possible, starting the audit daemon requires 
+privileges. As root, you can do many worse things. Or just call panic 
+yourself. In practice, there isn't really a problem because the audit daemon 
+starts, registers the pid, then the rules get loaded. So, I'd say yes there 
+is a race that should get fixed. But you're shooting yourself in the foot for 
+looping on restarting the audit daemon as root.
 
-* The system: Between user A, user B and root
-  - root and root-equivalent users are in the TCB for this set of
-    security contexts
-  - some system services like polkit and dbus-daemon --system are typically
-    also in the TCB
+Also, there is a configuration option, --backlog_wait_time, which also has 
+something to do with whether or not panic will get called.
 
-* Per-user: Between user A's app 1, user A's app 2, and user A's desktop
-  - user A's desktop is in the TCB for this set of security contexts
-  - user A's desktop includes their window manager/compositor,
-    dbus-daemon --session, PulseAudio or PipeWire, etc.
+-Steve
 
-and it's possible for a program to be in the TCB for neither of those,
-for both of those, or for just the per-user boundary (meaning the desktop
-environment of an unprivileged user).
+> https://bugzilla.redhat.com/show_bug.cgi?id=1822593
+> 
+> Env:
+>     Red Hat Enterprise Linux Server release 7.7 (Maipo)
+>     3.10.0-1062.12.1.el7.x86_64
+> 
+> Details:
+> Function audit_log_end and audit_panic may have race conditions when auditd
+> is restarting because audit_pid can be NULL in audit_log_end and then
+> become not NULL in audit_panic, which may allow attackers to trigger
+> kernel panic. Here is panic call stack:
+> 
+> 
+> void audit_log_end(struct audit_buffer *ab)
+> {
+>     if (!ab)
+>         return;
+>     if (!audit_rate_check()) {
+>         audit_log_lost("rate limit exceeded");
+>     } else {
+>         struct nlmsghdr *nlh = nlmsg_hdr(ab->skb);
+>         nlh->nlmsg_len = ab->skb->len - NLMSG_HDRLEN;
+> 
+>         if (audit_pid) {
+>             skb_queue_tail(&audit_skb_queue, ab->skb);
+>             wake_up_interruptible(&kauditd_wait);
+>         } else {
+>             audit_printk_skb(ab->skb); // <- audit_pid == NULL when auditd
+> is killed }
+>         ab->skb = NULL;
+>     }
+>     audit_buffer_free(ab);
+> }
+> -> audit_printk_skb -> audit_log_lost ->
+> void audit_panic(const char *message)
+> {
+>     switch (audit_failure)
+>     {
+>     case AUDIT_FAIL_SILENT:
+>         break;
+>     case AUDIT_FAIL_PRINTK:
+>         if (printk_ratelimit())
+>             printk(KERN_ERR "audit: %s\n", message);
+>         break;
+>     case AUDIT_FAIL_PANIC:
+>         /* test audit_pid since printk is always losey, why bother? */
+>         if (audit_pid) // <- audit_pid not NULL because auditd is
+> restarting panic("audit: %s\n", message);
+>         break;
+>     }
+> }
+> 
+> How to reproduce：
+> 1. set audit-failure to AUDIT_FAIL_PANIC(2) and add a random audit rule
+> like: [root@...t ~]# cat /etc/audit/rules.d/audit.rules
+> -D
+> -b 8192
+> -f 2
+> -w /etc/hosts -p rwa -k hosts
+> 2. keep killing auditd and then starting auditd, for example:
+> while true; do ps aux | grep "/sbin/auditd" | grep -v "grep" | awk '{print
+> $2}' | xargs kill; service auditd start; systemctl reset-failed
+> auditd.service; done 3. log in a low privilege user and keep reading
+> /etc/hosts, for example: while true; do cat /etc/hosts > /dev/null; done
+> 4. kernel panic will happen within several minutes
+> 
+> Thanks.
 
-The Apertis automotive OS is an example of a similar model in a non-desktop
-context, heavily based on how these things work in "freedesktop" OSs.
-https://www.apertis.org/designs/security/#security-boundaries-and-threat-model
 
-> Yes, the most difficult part with securing a desktop system is to keep
-> it conveniently usable.  I think it is possible to isolate the desktop
-> environment from user programs without inconveniencing the user.  As to
-> isolation between the user's programs, yes, that becomes visible to the
-> user and would require some training on how to explicitly transfer data
-> between the programs when needed.
 
-Flatpak does this by having each Flatpak app in a (separate) sandbox.
-Communication between apps goes through components in what you might call
-the desktop TCB (trusted by this user, but not necessarily by the sysadmin),
-such as the Wayland compositor, dbus-daemon --session, and
-xdg-desktop-portal.
 
-There are various tricks for making crossing the sandbox boundary automatic
-while preserving user control. For example, if you do File->Open... in a
-Flatpak app, the Open dialog that pops up is part of the trusted desktop
-session, not part of the app itself (so it can see all your files). On
-choosing a file to open, that file - but none of other files that you
-declined to open - appears in the sandbox (on a FUSE filesystem).
-
-I think Snap uses xdg-desktop-portal in a similar way. Qubes would not
-be able to use it unmodified, because its isolation between contexts is
-"heavier" (virtualization rather than containers), but it could certainly
-use similar concepts.
-
-> "Containerizing" things (at best) protects the outside from what's
-> contained, not vice versa.
-
-Right. In an OS that makes heavy use of Flatpak, like Endless, basically
-all the user-facing apps are in Flatpak sandboxes (containers). Anything
-that is not sandboxed (like desktop configuration), or is in a sandbox
-that cannot provide a meaningful security boundary because that would
-defeat the purpose of the program (like file managers, development tools
-and sysadmin tools), is effectively part of the TCB of the desktop.
-
-    smcv
