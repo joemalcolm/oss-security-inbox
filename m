@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4813" "Thursday" "29" "June" "2017" "11:43:13" "+0200" "Thomas Deutschmann" "whissi@gentoo.org" "<07546f89-f5f8-7ff0-a370-138cc43393ca@gentoo.org>" "142" "Re: [oss-security] CVE request: sthttpd remote heap buffer overflow" "^Date:" nil nil "6" "2017062909:43:13" "[oss-security] CVE request: sthttpd remote heap buffer overflow" (number mark "        whissi@gento Jun 29  142/4813  " thread-indent "\"Re: [oss-security] CVE request: sthttpd remote heap buffer overflow\"\n") "<06780369-357d-1413-cec6-f8befecd2566@redhat.com>" ("<CAF1AS2h9QxW2Gj67_Oo6HYgWrLR9zsv9meT2CVSaf6dqQq-VfA@mail.gmail.com>" "<06780369-357d-1413-cec6-f8befecd2566@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3353" "Friday" "17" "April" "2020" "09:24:42" "-0400" "Steve Grubb" "sgrubb@redhat.com" "<7526463.NqbLCg6IT0@x2>" "98" "Re: [oss-security] CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic" nil nil nil "4" "2020041713:24:42" "[oss-security] CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic" (number mark "U       sgrubb@redha Apr 17   98/3353  " thread-indent "\"Re: [oss-security] CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic\"\n") "<43b894ae-c437-4d49-bb57-6fa33535fb4e.splendidsky.cwc@alibaba-inc.com>" ("<43b894ae-c437-4d49-bb57-6fa33535fb4e.splendidsky.cwc@alibaba-inc.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5396 invoked by uid 550); 29 Jun 2017 10:10:35 -0000
+Received: (qmail 1077 invoked by uid 550); 17 Apr 2020 13:24:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,162 +11,130 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14144 invoked from network); 29 Jun 2017 09:43:43 -0000
-References: <CAF1AS2h9QxW2Gj67_Oo6HYgWrLR9zsv9meT2CVSaf6dqQq-VfA@mail.gmail.com>
- <06780369-357d-1413-cec6-f8befecd2566@redhat.com>
-Message-ID: <07546f89-f5f8-7ff0-a370-138cc43393ca@gentoo.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:21.0) Gecko/20100101
- Thunderbird/52.2.0
-MIME-Version: 1.0
-In-Reply-To: <06780369-357d-1413-cec6-f8befecd2566@redhat.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="kjOpH3c89rxbuqgho51v7npiRSpO8NJ23"
-Date: Thu, 29 Jun 2017 11:43:13 +0200
-From: Thomas Deutschmann <whissi@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request: sthttpd remote heap buffer overflow
+Received: (qmail 1057 invoked from network); 17 Apr 2020 13:24:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1587129887;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=C/sxWhEhw5E+3a/wFJv5rhk4wwljDaAKdRFcuyPu1FQ=;
+	b=UlVHwo80uj7pZE4/QJ4C/+b8LeO3HcLNy8+0tyJB2b9R3h10bYMYxYjo70SXkkjlhVl9b/
+	r4I8e9fTXOeCihgsR6i0o0kN0lnP3C1LVwTSySxqMsSpnRhvf8fQsZaPoSN1g04JLBUQvT
+	EZd4/9ea5kMZHfKqjrkj2++/AIscdFc=
+X-MC-Unique: SZvYQLMeNYGOtPr9N8jtNA-1
+From: Steve Grubb <sgrubb@redhat.com>
 To: oss-security@lists.openwall.com
-
---kjOpH3c89rxbuqgho51v7npiRSpO8NJ23
-Content-Type: multipart/mixed; boundary="vgv6gMto60gUtV9CwgbKGxaiND4ponuvo";
- protected-headers="v1"
-From: Thomas Deutschmann <whissi@gentoo.org>
-To: oss-security@lists.openwall.com
-Message-ID: <07546f89-f5f8-7ff0-a370-138cc43393ca@gentoo.org>
-Subject: Re: [oss-security] CVE request: sthttpd remote heap buffer overflow
-References: <CAF1AS2h9QxW2Gj67_Oo6HYgWrLR9zsv9meT2CVSaf6dqQq-VfA@mail.gmail.com>
- <06780369-357d-1413-cec6-f8befecd2566@redhat.com>
-In-Reply-To: <06780369-357d-1413-cec6-f8befecd2566@redhat.com>
-
---vgv6gMto60gUtV9CwgbKGxaiND4ponuvo
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Cc: =?utf-8?B?6ZmI5Lyf5a64KOeUsOWQhCk=?= <splendidsky.cwc@alibaba-inc.com>
+Date: Fri, 17 Apr 2020 09:24:42 -0400
+Message-ID: <7526463.NqbLCg6IT0@x2>
+Organization: Red Hat
+In-Reply-To: <43b894ae-c437-4d49-bb57-6fa33535fb4e.splendidsky.cwc@alibaba-inc.com>
+References: <43b894ae-c437-4d49-bb57-6fa33535fb4e.splendidsky.cwc@alibaba-inc.com>
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic
 
-Hi,
+On Friday, April 17, 2020 12:40:10 AM EDT =E9=99=88=E4=BC=9F=E5=AE=B8(=E7=
+=94=B0=E5=90=84) wrote:
+> "A race condition was found in the Linux kernel audit subsystem. When the
+> system is configured to panic on events being dropped, an attacker who is
+> able to trigger an audit event that starts while auditd is in the process
+> of starting may be able to cause the system to panic by exploiting a race
+> condition in audit event handling. This creates a denial of service by
+> causing a panic."
 
-I requested a CVE from MITRE and got CVE-2017-10671 for this
-vulnerability:
+While this is theoretically possible, starting the audit daemon requires=20
+privileges. As root, you can do many worse things. Or just call panic=20
+yourself. In practice, there isn't really a problem because the audit daemo=
+n=20
+starts, registers the pid, then the rules get loaded. So, I'd say yes there=
+=20
+is a race that should get fixed. But you're shooting yourself in the foot f=
+or=20
+looping on restarting the audit daemon as root.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
+Also, there is a configuration option, --backlog_wait_time, which also has=
+=20
+something to do with whether or not panic will get called.
+
+-Steve
+
+> https://bugzilla.redhat.com/show_bug.cgi?id=3D1822593
 >=20
->> [Vulnerability Type]
->> Heap-based Buffer Overflow in the de_dotdot function in libhttpd.c in st=
-httpd before 2.27.1
->> allows remote attackers to cause a denial of service (daemon crash) or p=
-ossibly have unspecified other impact via a crafted filename.
->>=20
->> ------------------------------------------
->>=20
->> [Vulnerability Type]
->> Buffer Overflow
->>=20
->> ------------------------------------------
->>=20
->> [Affected Product Code Base]
->> sthttpd - <2.27.1
->>=20
->> ------------------------------------------
->>=20
->> [Affected Component]
->> de_dotdot function
->>=20
->> ------------------------------------------
->>=20
->> [Attack Type]
->> Remote
->>=20
->> ------------------------------------------
->>=20
->> [CVE Impact Other]
->> I have no information about the impact. Would be nice if you could check=
- on your own.
->>=20
->> ------------------------------------------
->>=20
->> [Attack Vectors]
->> A remote attacker could trigger the flaw in sthttpd's request parsing co=
-de via a specially crafted request.
->>=20
->> ------------------------------------------
->>=20
->> [Reference]
->> http://www.openwall.com/lists/oss-security/2017/06/15/9
->> https://github.com/blueness/sthttpd/releases/tag/v2.27.1
->> https://github.com/blueness/sthttpd/commit/c0dc63a49d8605649f1d8e4a96c9b=
-468b0bff660
->>=20
->> ------------------------------------------
->>=20
->> [Has vendor confirmed or acknowledged the vulnerability?]
->> true
->>=20
->> ------------------------------------------
->>=20
->> [Discoverer]
->> Alexandre Rebert from ForAllSecure
+> Env:
+>     Red Hat Enterprise Linux Server release 7.7 (Maipo)
+>     3.10.0-1062.12.1.el7.x86_64
 >=20
-> Use CVE-2017-10671.
+> Details:
+> Function audit_log_end and audit_panic may have race conditions when audi=
+td
+> is restarting because audit_pid can be NULL in audit_log_end and then
+> become not NULL in audit_panic, which may allow attackers to trigger
+> kernel panic. Here is panic call stack:
 >=20
 >=20
-> - --=20
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
+> void audit_log_end(struct audit_buffer *ab)
+> {
+>     if (!ab)
+>         return;
+>     if (!audit_rate_check()) {
+>         audit_log_lost("rate limit exceeded");
+>     } else {
+>         struct nlmsghdr *nlh =3D nlmsg_hdr(ab->skb);
+>         nlh->nlmsg_len =3D ab->skb->len - NLMSG_HDRLEN;
 >=20
-> iQIcBAEBCAAGBQJZVGIGAAoJEHb/MwWLVhi2PPAP/RRQ9jGYVCEvLryJtICH/vvj
-> ZjS17vckkYVbSOMoTNQR9WihtsQCzkQZ+LL2Qnio45+NORCGn6nLMAi24SotXlrs
-> HI16p2h3+fZ3H/JCgT46fUDUHetq30Fy6NhwSKxCwtYEKiNvw4yT0QIPK9bmzf/p
-> nTKHDQCMqYp82tFBgReZPRivQcd/+Zbi6CWsS0oNzIsADjZZx1RdaHBJoOZIFcKv
-> bBopi0KDIPNgn3VsZwANz0Ex/ju3TfJVb8A9jpNyKlYaKwsou/TAw1g2l90KZxzW
-> Som1pG8s/I+MynJhHDNpJm59S6nFWAzZh++lySiEWIepiEsWhEzBpJBBkSAp3wum
-> TPhQNJ9BJdiS54rNqKMTGx7WxEvEcklsGQG87bfmUdyNRHYl/lElRYPNelciTnyU
-> 38B7E1FwcF793Z5JJfwge1ayo7ShaCaUGx082nU9XVuSFfpG0vrcelOhFAZ0cxyW
-> 9+DbSW/01FWWL35pEN0LJ5m5GeOpNa+hjn9VS/qbOiHk9n/PszbL00lS+Q+LKqTj
-> J3rOoTkM69d1stlcO8/ehwyr/xo6n6u8v8BmV6So1VWgefk/cI98aoOQvEIDpwQt
-> iALKi/+UinhQhG0vCtkKHXsFYXIOv7zk03EfKT37Bh13DuBBJDgIt9nMesVxpsRE
-> SmLuxFujGHPobnwbNGqJ
-> =3DCKLn
-> -----END PGP SIGNATURE-----
+>         if (audit_pid) {
+>             skb_queue_tail(&audit_skb_queue, ab->skb);
+>             wake_up_interruptible(&kauditd_wait);
+>         } else {
+>             audit_printk_skb(ab->skb); // <- audit_pid =3D=3D NULL when a=
+uditd
+> is killed }
+>         ab->skb =3D NULL;
+>     }
+>     audit_buffer_free(ab);
+> }
+> -> audit_printk_skb -> audit_log_lost ->
+> void audit_panic(const char *message)
+> {
+>     switch (audit_failure)
+>     {
+>     case AUDIT_FAIL_SILENT:
+>         break;
+>     case AUDIT_FAIL_PRINTK:
+>         if (printk_ratelimit())
+>             printk(KERN_ERR "audit: %s\n", message);
+>         break;
+>     case AUDIT_FAIL_PANIC:
+>         /* test audit_pid since printk is always losey, why bother? */
+>         if (audit_pid) // <- audit_pid not NULL because auditd is
+> restarting panic("audit: %s\n", message);
+>         break;
+>     }
+> }
+>=20
+> How to reproduce=EF=BC=9A
+> 1. set audit-failure to AUDIT_FAIL_PANIC(2) and add a random audit rule
+> like: [root@test ~]# cat /etc/audit/rules.d/audit.rules
+> -D
+> -b 8192
+> -f 2
+> -w /etc/hosts -p rwa -k hosts
+> 2. keep killing auditd and then starting auditd, for example:
+> while true; do ps aux | grep "/sbin/auditd" | grep -v "grep" | awk '{print
+> $2}' | xargs kill; service auditd start; systemctl reset-failed
+> auditd.service; done 3. log in a low privilege user and keep reading
+> /etc/hosts, for example: while true; do cat /etc/hosts > /dev/null; done
+> 4. kernel panic will happen within several minutes
+>=20
+> Thanks.
 
 
---=20
-Regards,
-Thomas Deutschmann / Gentoo Security Team
-C4DD 695F A713 8F24 2AA1  5638 5849 7EE5 1D5D 74A5
 
 
-
---vgv6gMto60gUtV9CwgbKGxaiND4ponuvo--
-
---kjOpH3c89rxbuqgho51v7npiRSpO8NJ23
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0
-
-iQJ8BAEBCgBmBQJZVMu8XxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQzM0M1ODQ4MkM0MDIyOTJEMkUzQzVDMDY5
-NzA5RjkwQzNDOTZGRkM4AAoJEJcJ+Qw8lv/IzHcP/0X9+GgVuuG2xEBkbB78NLtB
-pp0H6729FYm5Yth2Vfqg/6kb6zhwQVAVdB5wjLfEcsnLCq3+kRKk/eVAbFWmEhux
-SQWtJnKN5zGH7eJ3WibiXt2RSVFWa8kLc8RTcW4ByphylZ82rztQR6K6XnHWWpJF
-kuuKlsfs9JbWJ4nWmS3QKwfW4PaAEtj3DZXnxapwBAj9zIVFCb2AOWc2mBVqlGEQ
-LITYYwEPtr+t44cD7yICjFyx9qRVVlAKduwHriJ/j05OtsPTuODrB8tESPz77Miv
-pTS9HLtNIERmIDF01K1vPCGTw0IqdQDUdZxmkC2Buaq00sV4yD0grVnsqTwCGMtz
-ga1jH8+PM2KN9eZfOVRc3E2G8zOsrPsI47l6XWtu98SitwBYLCq1M11eGuzFTHAD
-QtRp8rB4/djak9WBn+NxN/kBJhGJYkUJIGtMxD4TboCPQ0JTgoLkJ4o9LRl0fpUb
-83h/gBqtLkpa1R6sr1UfCEMqSMZFSsVQ3nxFNCIT0mM2sxRcy7s7kTaljgqNiCmE
-rCycjkR45hx8WwwqtBa7KlqpTNOXgTEzVGtJ89+0fjGGNa9EtR7EJStpUWB6aSmq
-VBulgT7foQZuergu9hWB7IQ82fqsNmLwBHQk0CAWLNyCRoG2ubvn5YkPkMgjjebH
-dlJCtVvCCHCIfjlmhU2D
-=Uchw
------END PGP SIGNATURE-----
-
---kjOpH3c89rxbuqgho51v7npiRSpO8NJ23--
