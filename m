@@ -1,50 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/6
-Message-ID: <CAECwjAVeHJV6_L+S-eTkw66RS+vMGngU0ztVgmee6zfJbT7ETQ@mail.gmail.com>
-Date: Mon, 12 Oct 2020 11:39:50 -0700
-From: Tomas Fernandez Lobbe <tflobbe@...che.org>
-To: oss-security@...ts.openwall.com
-Cc: private@...ene.apache.org
-Subject: [CVE-2020-13957] The checks added to unauthenticated configset uploads in Apache Solr can be circumvented
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/17/1
+Message-ID: <43b894ae-c437-4d49-bb57-6fa33535fb4e.splendidsky.cwc@alibaba-inc.com>
+Date: Fri, 17 Apr 2020 12:40:10 +0800
+From: "陈伟宸(田各)" <splendidsky.cwc@...baba-inc.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
 
-Vendor: The Apache Software Foundation
+"A race condition was found in the Linux kernel audit subsystem. When the system is configured to panic on events being dropped, an attacker who is able to trigger an audit event that starts while auditd is in the process of starting may be able to cause the system to panic by exploiting a race condition in audit event handling. This creates a denial of service by causing a panic."
 
-Versions Affected:
-6.6.0 to 6.6.5
-7.0.0 to 7.7.3
-8.0.0 to 8.6.2
+https://bugzilla.redhat.com/show_bug.cgi?id=1822593
 
-Description:
-Solr prevents some features considered dangerous (which could be used for
-remote code execution) to be configured in a ConfigSet that's uploaded via
-API without authentication/authorization. The checks in place to prevent
-such features can be circumvented by using a combination of UPLOAD/CREATE
-actions.
+Env:
+    Red Hat Enterprise Linux Server release 7.7 (Maipo)
+    3.10.0-1062.12.1.el7.x86_64
 
-Mitigation:
-Any of the following are enough to prevent this vulnerability:
-* Disable UPLOAD command in ConfigSets API if not used by setting the
-system property: "configset.upload.enabled" to "false" [1]
-* Use Authentication/Authorization and make sure unknown requests aren't
-allowed [2]
-* Upgrade to Solr 8.6.3 or greater.
-* If upgrading is not an option, consider applying the patch in SOLR-14663
-([3])
-* No Solr API, including the Admin UI, is designed to be exposed to
-non-trusted parties. Tune your firewall so that only trusted computers and
-people are allowed access
+Details:
+Function audit_log_end and audit_panic may have race conditions when auditd is restarting because audit_pid can be NULL in audit_log_end and then become not NULL in audit_panic, which may allow attackers to trigger kernel panic. Here is panic call stack:
 
-Credit:
-Tomás Fernández Löbbe, András Salamon
 
-References:
-[1] https://lucene.apache.org/solr/guide/8_6/configsets-api.html
-[2]
-https://lucene.apache.org/solr/guide/8_6/authentication-and-authorization-plugins.html
-[3] https://issues.apache.org/jira/browse/SOLR-14663
-[4] https://issues.apache.org/jira/browse/SOLR-14925
-[5] https://wiki.apache.org/solr/SolrSecurity
+void audit_log_end(struct audit_buffer *ab)
+{
+    if (!ab)
+        return;
+    if (!audit_rate_check()) {
+        audit_log_lost("rate limit exceeded");
+    } else {
+        struct nlmsghdr *nlh = nlmsg_hdr(ab->skb);
+        nlh->nlmsg_len = ab->skb->len - NLMSG_HDRLEN;
 
+        if (audit_pid) {
+            skb_queue_tail(&audit_skb_queue, ab->skb);
+            wake_up_interruptible(&kauditd_wait);
+        } else {
+            audit_printk_skb(ab->skb); // <- audit_pid == NULL when auditd is killed
+        }
+        ab->skb = NULL;
+    }
+    audit_buffer_free(ab);
+}
+-> audit_printk_skb -> audit_log_lost ->
+void audit_panic(const char *message)
+{
+    switch (audit_failure)
+    {
+    case AUDIT_FAIL_SILENT:
+        break;
+    case AUDIT_FAIL_PRINTK:
+        if (printk_ratelimit())
+            printk(KERN_ERR "audit: %s\n", message);
+        break;
+    case AUDIT_FAIL_PANIC:
+        /* test audit_pid since printk is always losey, why bother? */
+        if (audit_pid) // <- audit_pid not NULL because auditd is restarting
+            panic("audit: %s\n", message);
+        break;
+    }
+}
+
+How to reproduce：
+1. set audit-failure to AUDIT_FAIL_PANIC(2) and add a random audit rule like:
+[root@...t ~]# cat /etc/audit/rules.d/audit.rules
+-D
+-b 8192
+-f 2
+-w /etc/hosts -p rwa -k hosts
+2. keep killing auditd and then starting auditd, for example:
+while true; do ps aux | grep "/sbin/auditd" | grep -v "grep" | awk '{print $2}' | xargs kill; service auditd start; systemctl reset-failed auditd.service; done
+3. log in a low privilege user and keep reading /etc/hosts, for example:
+while true; do cat /etc/hosts > /dev/null; done
+4. kernel panic will happen within several minutes
+
+Thanks.
+
+
+Content of type "text/html" skipped
+
+Download attachment "temp4cj.png" of type "application/octet-stream" (143344 bytes)
