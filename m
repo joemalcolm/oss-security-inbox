@@ -1,47 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/30/1
-Message-ID: <20200430112143.GS6639@suse.com>
-Date: Thu, 30 Apr 2020 13:21:43 +0200
-From: Johannes Segitz <jsegitz@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Check your pre/post install scripts in rpm/deb/... packages for security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/17/3
+Message-ID: <b79b57ed-1d59-419a-911e-8b3b482cecf4.splendidsky.cwc@alibaba-inc.com>
+Date: Fri, 17 Apr 2020 17:20:21 +0800
+From: "陈伟宸(田各)" <splendidsky.cwc@...baba-inc.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: 回复：CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-rpm packages can have %post/%pre ... scripts to run code at various points
-during the installation of a package. Debian packages have a similar mechanism
-with preinst, postinst, ... Probably all packaging formats provide something
-like this.
+Hey, it's public now. Please visit: https://bugzilla.redhat.com/show_bug.cgi?id=1822593
 
-The SUSE security team got a hint about an unfortunate construct in a %post
-script in one of our packages. We found several issues and decided to have a
-look at our other packages. That resulted in 13 CVEs and 18 non-CVE issues
-(mostly hardening). Most of these issues result from root operating in user
-controlled directories. A lot of packages use these scripts to fix up
-permission problems and introduce problems like
-$ chown $unpriv_user:$unpriv_group /foo/bar/attackercontrolled/file
-which can be easily exploited into LPE. Sometimes the attacker needs to win a
-race, which is (apart from the fact that you need to wait until the package is
-updated) easily won since shell scripts are slow.
+I'm not sure whether it exists on the mainline kernel. Maybe I'll do some research sometime.
 
-We now monitor all changes to these scripts to prevent further issues from
-sneaking into the distribution and recommend that other distributions check
-their existing packages and create processes to monitor changes to these
-scripts. It's way too easy to shoot yourself in the foot and a lot of packagers
-are not aware of the dangers.
+Thanks.
+------------------------------------------------------------------
+发件人：Greg KH <greg@...ah.com>
+发送时间：2020年4月17日(星期五) 16:55
+收件人：oss-security <oss-security@...ts.openwall.com>
+主　题：Re: [oss-security] CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic
 
-In the long term we want to try if something like
-https://github.com/google/path-auditor
-can be used to automatically find these issues in our build systems. If you
-have measures in place to check for problems like these we would be interested
-to hear about them.
+On Fri, Apr 17, 2020 at 12:40:10PM +0800, 陈伟宸(田各) wrote:
+> 
+> "A race condition was found in the Linux kernel audit subsystem. When the system is configured to panic on events being dropped, an attacker who is able to trigger an audit event that starts while auditd is in the process of starting may be able to cause the system to panic by exploiting a race condition in audit event handling. This creates a denial of service by causing a panic."
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1822593
 
-Johannes
--- 
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Software Solutions Germany GmbH, Maxfeldstr. 5, 90409 Nuernberg
-Geschäftsführer: Felix Imendörffer (HRB 36809, AG Nürnberg)
+That bug link seems to be restricted at the moment :(
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+> Env:
+>     Red Hat Enterprise Linux Server release 7.7 (Maipo)
+>     3.10.0-1062.12.1.el7.x86_64
+
+Any hint on if this is still an issue on the "mainline" kernel.org
+releases or not given that 3.10 is a bit old?
+
+thanks,
+
+greg k-h
