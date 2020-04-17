@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4136" "Wednesday" "11" "July" "2018" "17:34:31" "+0200" "Florian Bruhin" "me@the-compiler.org" "<20180711153431.so6swm2x6bv7xogr@hooch.localdomain>" "118" "[oss-security] CVE-2018-10895: Remote code execution due to CSRF in qutebrowser" nil nil nil "7" "2018071115:34:31" "[oss-security] CVE-2018-10895: Remote code execution due to CSRF in qutebrowser" (number mark "U       me@the-compi Jul 11  118/4136  " thread-indent "\"[oss-security] CVE-2018-10895: Remote code execution due to CSRF in qutebrowser\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["802" "Friday" "17" "April" "2020" "10:33:59" "+0200" "Greg KH" "greg@kroah.com" "<20200417083359.GA141762@kroah.com>" "18" "Re: [oss-security] CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic" nil nil nil "4" "2020041708:33:59" "[oss-security] CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic" (number mark "U       greg@kroah.c Apr 17   18/802   " thread-indent "\"Re: [oss-security] CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic\"\n") "<43b894ae-c437-4d49-bb57-6fa33535fb4e.splendidsky.cwc@alibaba-inc.com>" ("<6b92dc6f-8d68-4b09-9c35-e75fa4effd37.>" "<43b894ae-c437-4d49-bb57-6fa33535fb4e.splendidsky.cwc@alibaba-inc.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26279 invoked by uid 550); 11 Jul 2018 15:40:59 -0000
+Received: (qmail 3915 invoked by uid 550); 17 Apr 2020 08:34:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,133 +12,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22003 invoked from network); 11 Jul 2018 15:34:46 -0000
-Date: Wed, 11 Jul 2018 17:34:31 +0200
-From: Florian Bruhin <me@the-compiler.org>
+Received: (qmail 3894 invoked from network); 17 Apr 2020 08:34:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:content-transfer-encoding:in-reply-to; s=fm3; bh=1
+	5/QqsqjKp596MH8CkQa4l0pPL3aQtV5IVL4s+n3rsQ=; b=TIrN9Cxr0wQDGI7rr
+	ySOHTZU0MPjUM0Cx4ihCgiwOqMJpAWLdjq4Bb0NtLEMbJs7TDoifhALkZ19hAoLf
+	ufwsfBNfjy9AxHNmIdnaa/+zaRii5RVGzg5bnik4nx0BvE/o08hY08y7XDYn5mDc
+	pRZ6FivtDOLr7glIZmOBDnTOvsvXQ+LD/QwAZzevAxVGfBjhdTgTR+77PUsG8TYV
+	83JF45Gn2CBB/FF3gTUPHwBCcVjibjOipJWozVDGTDUzRAUavDm7OXCoRh3lq3TR
+	mKJyDTit71GKC4Nrwty0nfoc+Mcw2THp/W70B6AAVbrhG9SmxDcS7qZlV+cxmCix
+	a3ZGw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; bh=15/QqsqjKp596MH8CkQa4l0pPL3aQtV5IVL4s+n3r
+	sQ=; b=mIYdIansh9r7nhjsLDltqbnJoAAWwTKAIk323vgbBhAYafOM4SwXUqvv7
+	eljlbysYIU7K9YDMGzBO+v4pBN/bhMdXVS3T3bi4fBRn73Ax6VcRLdof6R/RgtYn
+	+Dr5oV4638L8wfv3qsnlY7RiE3sh31E7o0gJFh8CIyb3HgS7Z3I1ZOG5ZV1OiKaa
+	TD8TzA7eN+e/IGRzrROQWn3v6dAPUGkGPocY/N4XNh/5cqgPCkeoHElLpa8yUutS
+	+zz1yGfYW5smFoENQfBDftisWZU9qe9SgDiQx0vEqP9XFvn9B1ilUAqmR2RwcqgN
+	xmobfJwQwoIJDecNeQie148STQxjg==
+X-ME-Sender: <xms:-GmZXuydFYkhFvHCuc7dG6NF3uc2MPBOs6iqLiQoaLhojj_vT6eaXQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrfeejgddtgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtugfgjgesthekre
+    dttddtjeenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
+    necuffhomhgrihhnpehrvgguhhgrthdrtghomhdpkhgvrhhnvghlrdhorhhgnecukfhppe
+    ekfedrkeeirdekledruddtjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:-GmZXhOV8is_s4jdiZxxywo_H-6djD5UoPe2luqspsLlHiweR1m9lQ>
+    <xmx:-GmZXleng1FLh0mL3dtYePQtIURfiC5waYGh3kQ71SNpLm5xckfKeg>
+    <xmx:-GmZXo74smiP6LXV45A12OEsSFKIUO62xws9MS6a1d_ssorUivfIaA>
+    <xmx:-WmZXiv_xCR3_qu1BZicxo1HUeqMZ5bcaBTDdoZEAQbovpQ-uclbAQ>
+Date: Fri, 17 Apr 2020 10:33:59 +0200
+From: Greg KH <greg@kroah.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20180711153431.so6swm2x6bv7xogr@hooch.localdomain>
+Message-ID: <20200417083359.GA141762@kroah.com>
+References: <6b92dc6f-8d68-4b09-9c35-e75fa4effd37.>
+ <43b894ae-c437-4d49-bb57-6fa33535fb4e.splendidsky.cwc@alibaba-inc.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="lhpynxw5gqqnh57e"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: NeoMutt/20180622
-Subject: [oss-security] CVE-2018-10895: Remote code execution due to CSRF in qutebrowser
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <43b894ae-c437-4d49-bb57-6fa33535fb4e.splendidsky.cwc@alibaba-inc.com>
+Subject: Re: [oss-security] CVE-2020-10708 kernel: race condition in
+ kernel/audit.c may allow low privilege users trigger kernel panic
 
---lhpynxw5gqqnh57e
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, Apr 17, 2020 at 12:40:10PM +0800, 陈伟宸(田各) wrote:
+> 
+> "A race condition was found in the Linux kernel audit subsystem. When the system is configured to panic on events being dropped, an attacker who is able to trigger an audit event that starts while auditd is in the process of starting may be able to cause the system to panic by exploiting a race condition in audit event handling. This creates a denial of service by causing a panic."
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1822593
 
-Description
------------
+That bug link seems to be restricted at the moment :(
 
-Due to a CSRF vulnerability affecting the `qute://settings` page, it was
-possible for websites to modify qutebrowser settings. Via settings like
-`editor.command`, this possibly allowed websites to execute arbitrary code.
+> Env:
+>     Red Hat Enterprise Linux Server release 7.7 (Maipo)
+>     3.10.0-1062.12.1.el7.x86_64
 
-This issue has been assigned CVE-2018-10895:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-10895
+Any hint on if this is still an issue on the "mainline" kernel.org
+releases or not given that 3.10 is a bit old?
 
-Affected versions
------------------
+thanks,
 
-The issue was introduced in v1.0.0, as part of commit ffc29ee.
-https://github.com/qutebrowser/qutebrowser/commit/ffc29ee
-
-It was fixed in the v1.4.1 release, in commit 43e58ac.
-https://github.com/qutebrowser/qutebrowser/commit/43e58ac865ff862c2008c510f=
-c5f7627e10b4660
-
-All releases between v1.0.0 and v1.4.0 (inclusive) are affected.
-Backported patches are available, but no additional releases are planned:
-
-v1.1.x: https://github.com/qutebrowser/qutebrowser/commit/ff686ff7f395d83e5=
-ac48507ecfae0b0e97a61ef
-v1.2.x: https://github.com/qutebrowser/qutebrowser/commit/c3361c31b370140f3=
-23e481dd455450b1e74c099
-v1.3.x: https://github.com/qutebrowser/qutebrowser/commit/c2ff32d92ba9bf40f=
-f53498ee04a4124d4993c85
-v1.4.x: https://github.com/qutebrowser/qutebrowser/commit/22148ce488da52e8a=
-0e01ed937c0cfdb24d34775
-master: https://github.com/qutebrowser/qutebrowser/commit/43e58ac865ff862c2=
-008c510fc5f7627e10b4660
-
-(add .patch to the URL to get patches)
-
-Timeline
---------
-
-2018-07-09: I was made aware of the original issue privately (initially
-believed by the reporter to only be a DoS issue), developed a fix and conta=
-cted
-the distros Openwall mailinglist to organize a disclosure date to give
-distributions time to coordinate releasing of a fix.
-
-2018-07-10: Slightly updated patch sent to the distros mailinglist.
-
-2018-07-11: Public disclosure.
-
-Mitigation
-----------
-
-Please upgrade to v1.4.1 or apply the patches above.
-
-Note that disabling loading of `autoconfig.yml` is not a suitable remedy, s=
-ince
-settings are still applied until the next restart.
-
-As a workaround, it's possible to patch out the vulnerable code via a
-`config.py` file:
-
-    from qutebrowser.browser import qutescheme
-    qutescheme._qute_settings_set =3D lambda url: ('text/html', '')
-
-While there is no known exploit for this in the wild, users are advised to
-check their `autoconfig.yml` file (located in the config folder shown in
-`:version`) for any unwanted modifications.
-
-Credits
--------
-
-Thanks to:
-
-- toofar for reporting the initial issue.
-- Allan Sandfeld Jensen (carewolf) and J=FCri Valdmann (juvaldma) of The Qt
-  Company for their assistance with triaging and fixing the issue.
-- toofar and Jay Kamat (jgkamat) for reviewing the patch.
-- Morten Linderud (Foxboron) for suggestions on how to disclose this
-  properly.
-
-Links
------
-
-- https://github.com/qutebrowser/qutebrowser/issues/4060
-- https://lists.schokokeks.org/pipermail/qutebrowser-announce/2018-July/000=
-048.html
-
---=20
-https://www.qutebrowser.org | me@the-compiler.org (Mail/XMPP)
-   GPG: 916E B0C8 FD55 A072 | https://the-compiler.org/pubkey.asc
-         I love long mails! | https://email.is-not-s.ms/
-
---lhpynxw5gqqnh57e
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE4E5WAAJAG47w528KkW6wyP1VoHIFAltGI4cACgkQkW6wyP1V
-oHIDwhAArQokCfXInkcYab58PK8pTGE73k+peivdlPStRgfzTeqvRCzvK0JACvGp
-o94ZGEWDVcA2uWmNGyudtWHjxrF1D0Ert1F14Ucy1Wp7kAaj2KDz4x1Ge36GWkCQ
-1HzlaiIxaPvZLZ9nvKqsecA9K9nrO/9IRmSQVRYT5SHSBmGaL9nYDaTvc3PLmRlv
-O+kU4mjWVXlqWnqr7sDLjTX7wrZmYzUQCFsrNzO6f9cMaJ7z9gPQIgb0F/zdDQMy
-AomGz9xUXOfY6nvyyEQ7Jhz6niolytwhztqT73qYjt3cfSEDAIKd1htlPmBG53Bb
-GOCSnbiq8y7joSxYCXnlJSXknunjSG3BPIeqpXS28nR/TpG80jtgO5fAl7KqIhzu
-kjW+wog/EtVCqo66MPM+hekq06nCy7DLGV3KO1oqDxHzFHyvcNfCcVNY+NhD05R+
-K67ngcS52VX3Ne5q/FIEU18qPsyhkrl/Bpj1c1ARNz81GnGYvAWreY8LK1O0+qL4
-Crfmfi0wpOy2GSeNwpY9jxwkGrUBB1c5yfUCtQiQnUSJzEY0brvNw4nqgV3Sxd7c
-Ps2aazXkERhvChmbOJQhqxKKtBHRt6Zn0+m7vWa5kLxgTN7ImwwMOl95aY9cktCE
-/tA9lXBlqJvD3vaE1RQwFJJfvkfH2IfsIuIBlvdK+ZJ9izH9/kQ=
-=9P2u
------END PGP SIGNATURE-----
-
---lhpynxw5gqqnh57e--
+greg k-h
