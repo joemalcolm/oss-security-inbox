@@ -1,84 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/12/1
-Message-ID: <CAKSuTPZu47DqKNfdDViR5p8miHdXa7B99Nz-q_=B5nQqgmbWNg@mail.gmail.com>
-Date: Wed, 11 Mar 2020 14:38:14 -0700
-From: Goutham Pacha Ravi <gouthampravi@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2020-002] Manila: Unprivileged users can retrieve, use and manipulate share networks (CVE-2020-9543)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/19/2
+Message-ID: <20200419190928.GA145297@ryzen.bugs.fi>
+Date: Sun, 19 Apr 2020 22:09:28 +0300
+From: Henri Salo <henri@...v.fi>
+To: Agostino Sarubbo <ago@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: re2c: heap overflow in Scanner::fill (scanner.cc)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA512
 
-=================================================================================
-OSSA-2020-002: Unprivileged users can retrieve, use and manipulate
-share networks
-=================================================================================
+On Sun, Apr 19, 2020 at 04:59:48PM +0200, Agostino Sarubbo wrote:
+> Affected version:
+> 1.3
+>
+> Fixed version:
+> Will be 2.0
+>
+> Commit fix:
+> https://github.com/skvadrik/re2c/commit/
+> c4603ba5ce229db83a2a4fb93e6d4b4e3ec3776a
+>
+> Credit:
+> This bug was discovered by Agostino Sarubbo.
+>
+> CVE:
+> I don’t care anymore about a CVE. If you will obtain one about this issue, 
+> feel free to reach me. I will update this as well.
+>
+> Note:
+> This bug was found with American Fuzzy Lop.
+> This bug was identified with bare metal servers donated by Packet. This work 
+> is also supported by the Core Infrastructure Initiative.
+>
+> Permalink:
+> http://blogs.gentoo.org/ago/2020/04/19/re2c-heap-overflow-in-scannerfill-scanner-cc/
 
-:Date: March 10, 2020
-:CVE: CVE-2020-9543
+Good job again ago! I created CVE request for you. I don't think that you
+should stop fuzzing as mentioned in blog. Instead you should pick responsive
+and important targets (e.g. re2c) and add a donation button to your web page,
+thanks :)
 
-
-Affects
-~~~~~~~
-- - Manila: <7.4.1, >=8.0.0 <8.1.1, >=9.0.0 <9.1.1
-
-
-Description
-~~~~~~~~~~~
-Tobias Rydberg from City Network Hosting AB reported a vulnerability
-with the manila's share network APIs. An attacker can retrieve and
-manipulate share networks that do not belong to them if they possess
-the share network ID. By exploiting this vulnerability, they can view
-and manipulate share network subnets and use the share network to
-create resources such as shares and share groups.
-
-
-Patches
-~~~~~~~
-- - https://review.opendev.org/712167 (Pike)
-- - https://review.opendev.org/712166 (Queens)
-- - https://review.opendev.org/712165 (Rocky)
-- - https://review.opendev.org/712164 (Stein)
-- - https://review.opendev.org/712163 (Train)
-- - https://review.opendev.org/712158 (Ussuri)
-
-
-Credits
-~~~~~~~
-- - Tobias Rydberg from City Network Hosting AB (CVE-2020-9543)
-
-
-References
-~~~~~~~~~~
-- - https://launchpad.net/bugs/1861485
-- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-9543
-
-
-Notes
-~~~~~
-- - The stable/queens and stable/pike branches are under extended
-maintenance and
-  will receive no new point releases, but patches for them are provided as a
-  courtesy.
-
-- --
-Goutham Pacha Ravi
-PTL, OpenStack Manila
+- -- 
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
 
-wsFcBAEBCAAGBQJeaVorAAoJEDEySBmyuw9icCYP/jQPltyI04Vr3JMxCVRW
-lkedSvBUrWZSqfk/EXXoFDu7jbEC7v59ewPriXA0YQ3hTJoJxCGDK1mYiIyr
-yoJzNb/Lz8QPsNIMfg0JGxS6Jnz0lRztJJo0zOyAgtVUkJiLGQumYAb3Y9CO
-LYRWIYezcwhFLsH3l1pLq0M2ideXVIHT+9mTGWkHCT16+lGFArYUZK0qvi3U
-Z7cWNeGeU4m6+HR9A30nP304aV14K2/55ELtbvDEYWNM92xdrMPOPfuFrLat
-kVeXNq2QYGP1EuBAHREysKURJHAUPn8pttS+feLzze/MZ50JxoRWi1WcwHsK
-R8w0OjuMceN8WXGSV2Ng4fsCfGimx81ySqjdETZY2ckLxmRxNK3UDh+HLUQh
-XaG2PVD2ZMm7WgDiopdo3QcjpV28XdGjMBCTU2wKFJeePc8ugMAuJ4Dkscxn
-sIp9xZWtpkD5HcV6eSoYG/LvugdGMtn961Fn6I1UkGtjdc1TsjZRU/+wc8pN
-PVJQ3Ws24RCyH4VTHWbruIPHIRWC6HisOgRub3wMdwhaMEpicFuel1TR5qMz
-O8E3eGcN5IWIR0oykG35+YoV+EDTFy9ZeWJeui+KZZfcG5Kfssno0sX2E6dL
-RlJPnDHNWwzT8kr6eCF/wbSiK8dAy2PDwtVqZXKMiNWJMoAWJUnVJ02Ebf/O
-cmWK
-=fVID
+iQIzBAEBCgAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAl6coeUACgkQJ633pE6q
+dXR+Sg//T9YuxN+Ef49RaPpChhWuZqsS6/gTimhdr6A5Obncl7LHqYj/IViHX23W
+Ck+/wpLTNVt3vZGKB5607XkwoeJkfHgtKxdWcIMNSBevDpvKX4fJd01csD8FTqGR
+6tmTmS6EgFRRevfGTut2mmwMkQDOTZ9EbedcxqanmCVZ6IDUVSlvdRrwtFXPcgHG
+qTafrAyaYNbrbJLHPlnliTY+k7HdXPsT8j2Oe97+u/as3E8+B21xssUkerVRwQ6S
+MPey0/7bMh7IV4x+u5NFbIwl7W6OlksDcemR41ZSiwlyd7SfMcU9kBHHdC1LVYgh
+pyeWGys4CUjj/b7fYf5lJEYLdsGTEcYgtWpLisE2rd+2vyMkzx/NWYDgqHsMzK90
+zHyNYVLq/qowu8h5V+tRW/VhgYl9m/U1zxFllhVYVOEu87+fdk0FfhT2AFq5HtX8
+7+l3EnInfu4TUAMATerInYR6wsjOOj7vjNjbYbpStRC8IZavsGMlwneaNr1QkQtf
+5gu+85yU8VmwYUrYftaGdsvbjUR6xz+LNkiF2Y72r0/kKDi29/oi3gekYYumcBB3
+zaRXGsoliVV7eTeFF7N/HGeGheIkHaCGo1yB+GQ2BZt/723EBg10WRpZYbCaweQQ
+LuTyN2OBwdCDyPF+T+E1oOF6CtkkHa6cYcdG9s6NZ7Ij9v2ky2w=
+=N3U9
 -----END PGP SIGNATURE-----
