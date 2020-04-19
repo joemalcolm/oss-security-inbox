@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1210" "Wednesday" "14" "December" "2016" "14:36:15" "+0000" "Sevan Janiyan" "venture37@geeklan.co.uk" "<bbba28f0-baf1-6eb5-3269-db3dc9c2b8ec@geeklan.co.uk>" "26" "Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre" "^Date:" nil nil "12" "2016121414:36:15" "[oss-security] why many CVEs are ** RESERVED ** on Mitre" (number mark "        venture37@ge Dec 14   26/1210  " thread-indent "\"Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre\"\n") "<CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>" ("<4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>" "<CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3318" "Sunday" "19" "April" "2020" "16:59:48" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1842330.usQuhbGJ8B@spectre>" "86" "[oss-security] re2c: heap overflow in Scanner::fill (scanner.cc)" nil nil nil "4" "2020041914:59:48" "[oss-security] re2c: heap overflow in Scanner::fill (scanner.cc)" (number mark "U       ago@gentoo.o Apr 19   86/3318  " thread-indent "\"[oss-security] re2c: heap overflow in Scanner::fill (scanner.cc)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] re2c: heap overflow in Scanner::fill (scanner.cc)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27889 invoked by uid 550); 14 Dec 2016 14:41:32 -0000
+Received: (qmail 28515 invoked by uid 550); 19 Apr 2020 15:00:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24156 invoked from network); 14 Dec 2016 14:36:25 -0000
-References: <4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>
- <CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>
-Message-ID: <bbba28f0-baf1-6eb5-3269-db3dc9c2b8ec@geeklan.co.uk>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.5.1
-MIME-Version: 1.0
-In-Reply-To: <CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Wed, 14 Dec 2016 14:36:15 +0000
-From: Sevan Janiyan <venture37@geeklan.co.uk>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre
+Received: (qmail 28494 invoked from network); 19 Apr 2020 15:00:07 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
+Date: Sun, 19 Apr 2020 16:59:48 +0200
+Message-ID: <1842330.usQuhbGJ8B@spectre>
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] re2c: heap overflow in Scanner::fill (scanner.cc)
 
-Hello,
+Description:
+re2c is a tool for generating C-based recognizers from regular expressions.
 
-On 14/12/2016 14:24, Kurt Seifried wrote:
-> ** RESERVED ** This candidate has been reserved by an organization
-> or individual that will use it when announcing a new security problem.
-> When the candidate has been publicized, the details for this
-> candidate will be provided.
-> 
-> This means that the entry number has been reserved by Mitre for an issue or
-> a CNA has reserved the number. So in the case where a CNA requests a block
-> of CVE numbers in advance (e.g. Red Hat currently requests CVEs in blocks
-> of 500), the CVE number will be marked as reserved even though the CVE
-> itself may not be assigned by the CNA for some time. Until the CVE is
-> assigned AND Mitre is made aware of it (e.g. the embargo passes and the
-> issue is made public), AND Mitre has researched the issue and written a
-> description of it, entries will show up as "** RESERVED **".
+There is an heap overflow reproducible with a crafted file.
 
-This creates a situation where the Mitre site dose not provide any
-information despite, marking the CVE as reserved despite an official
-advisory for effected software referencing the CVE.
+~ $ re2c -o /tmp/out $FILE
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=3D=3D43995=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address=20
+0x629000004212 at pc 0x00000049937f bp 0x7ffc0521bc00 sp 0x7ffc0521b3c8
+WRITE of size 18 at 0x629000004212 thread T0
+    #0 0x49937e in __asan_memset /var/tmp/portage/sys-libs/compiler-rt-
+sanitizers-9.0.0/work/compiler-rt-9.0.0.src/lib/asan/
+asan_interceptors_memintrinsics.cc:26:3
+    #1 0x67a291 in re2c::Scanner::fill(unsigned long) /var/tmp/portage/dev-
+util/re2c-1.3/work/re2c-1.3/src/parse/scanner.cc:167:9
+    #2 0x682a51 in re2c::Scanner::echo(re2c::Output&) /var/tmp/portage/dev-
+util/re2c-1.3/work/re2c-1.3/src/parse/lex.cc:94:33
+    #3 0x61d5f4 in re2c::compile(re2c::Scanner&, re2c::Output&, re2c::Opt&)=
+ /
+var/tmp/portage/dev-util/re2c-1.3/work/re2c-1.3/src/compile.cc:148:41
+    #4 0x4cc668 in main /var/tmp/portage/dev-util/re2c-1.3/work/re2c-1.3/sr=
+c/
+main.cc:33:5
+    #5 0x7f26392c9dca in __libc_start_main /var/tmp/portage/sys-libs/
+glibc-2.29-r2/work/glibc-2.29/csu/../csu/libc-start.c:308:16
+    #6 0x421d39  (/usr/bin/re2c+0x421d39)
 
-Somewhat frustrating when performing vulnerability management as the
-mitre URL is self documenting but useless to reference as a source.
+0x629000004212 is located 0 bytes to the right of 16402-byte region=20
+[0x629000000200,0x629000004212)
+allocated by thread T0 here:
+    #0 0x4c949d in operator new[](unsigned long) /var/tmp/portage/sys-libs/
+compiler-rt-sanitizers-9.0.0/work/compiler-rt-9.0.0.src/lib/asan/
+asan_new_delete.cc:102:3
+    #1 0x67a0f2 in re2c::Scanner::fill(unsigned long) /var/tmp/portage/dev-
+util/re2c-1.3/work/re2c-1.3/src/parse/scanner.cc:154:22
+    #2 0x682a51 in re2c::Scanner::echo(re2c::Output&) /var/tmp/portage/dev-
+util/re2c-1.3/work/re2c-1.3/src/parse/lex.cc:94:33
+    #3 0x61d5f4 in re2c::compile(re2c::Scanner&, re2c::Output&, re2c::Opt&)=
+ /
+var/tmp/portage/dev-util/re2c-1.3/work/re2c-1.3/src/compile.cc:148:41
+    #4 0x4cc668 in main /var/tmp/portage/dev-util/re2c-1.3/work/re2c-1.3/sr=
+c/
+main.cc:33:5
+    #5 0x7f26392c9dca in __libc_start_main /var/tmp/portage/sys-libs/
+glibc-2.29-r2/work/glibc-2.29/csu/../csu/libc-start.c:308:16
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-libs/
+compiler-rt-sanitizers-9.0.0/work/compiler-rt-9.0.0.src/lib/asan/
+asan_interceptors_memintrinsics.cc:26:3 in __asan_memset
+
+Affected version:
+1.3
+
+Fixed version:
+Will be 2.0
+
+Commit fix:
+https://github.com/skvadrik/re2c/commit/
+c4603ba5ce229db83a2a4fb93e6d4b4e3ec3776a
+
+Credit:
+This bug was discovered by Agostino Sarubbo.
+
+CVE:
+I don=E2=80=99t care anymore about a CVE. If you will obtain one about this=
+ issue,=20
+feel free to reach me. I will update this as well.
+
+Timeline:
+2020-04-17: bug discovered and reported to upstream
+2020-04-17: upstream fixed the issue
+2020-04-19: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This wor=
+k=20
+is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+http://blogs.gentoo.org/ago/2020/04/19/re2c-heap-overflow-in-scannerfill-sc=
+anner-cc/
 
 
-Sevan
