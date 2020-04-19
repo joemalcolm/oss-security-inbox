@@ -1,38 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/24/2
-Message-ID: <CAA8xKjWRu+545AZ-098+kh5P0Ynb1qN=BxBRc2iBRG0MU4REOg@mail.gmail.com>
-Date: Fri, 24 Apr 2020 16:43:45 +0200
-From: Mauro Matteo Cascella <mcascell@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/19/1
+Message-ID: <1842330.usQuhbGJ8B@spectre>
+Date: Sun, 19 Apr 2020 16:59:48 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: ziming zhang <ezrakiez@...il.com>
-Subject: CVE-2020-11869 qemu: integer overflow in ati_2d_blt() in hw/display/ati-2d.c could lead to DoS
+Subject: re2c: heap overflow in Scanner::fill (scanner.cc)
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Description:
+re2c is a tool for generating C-based recognizers from regular expressions.
 
-An integer overflow flaw was found in QEMU in the way it implemented the
-ATI VGA
-emulation. This flaw occurs in the ati_2d_blt() routine while handling MMIO
-write
-operations through ati_mm_write() callback. A malicious guest could abuse
-this
-flaw to crash the QEMU process, resulting in a denial of service.
+There is an heap overflow reproducible with a crafted file.
 
-Upstream patch:
-   ->
-https://git.qemu.org/?p=qemu.git;a=commit;h=ac2071c3791b67fc7af78b8ceb320c01ca1b5df7
+~ $ re2c -o /tmp/out $FILE
+=================================================================
+==43995==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x629000004212 at pc 0x00000049937f bp 0x7ffc0521bc00 sp 0x7ffc0521b3c8
+WRITE of size 18 at 0x629000004212 thread T0
+    #0 0x49937e in __asan_memset /var/tmp/portage/sys-libs/compiler-rt-
+sanitizers-9.0.0/work/compiler-rt-9.0.0.src/lib/asan/
+asan_interceptors_memintrinsics.cc:26:3
+    #1 0x67a291 in re2c::Scanner::fill(unsigned long) /var/tmp/portage/dev-
+util/re2c-1.3/work/re2c-1.3/src/parse/scanner.cc:167:9
+    #2 0x682a51 in re2c::Scanner::echo(re2c::Output&) /var/tmp/portage/dev-
+util/re2c-1.3/work/re2c-1.3/src/parse/lex.cc:94:33
+    #3 0x61d5f4 in re2c::compile(re2c::Scanner&, re2c::Output&, re2c::Opt&) /
+var/tmp/portage/dev-util/re2c-1.3/work/re2c-1.3/src/compile.cc:148:41
+    #4 0x4cc668 in main /var/tmp/portage/dev-util/re2c-1.3/work/re2c-1.3/src/
+main.cc:33:5
+    #5 0x7f26392c9dca in __libc_start_main /var/tmp/portage/sys-libs/
+glibc-2.29-r2/work/glibc-2.29/csu/../csu/libc-start.c:308:16
+    #6 0x421d39  (/usr/bin/re2c+0x421d39)
 
-This issue was reported by Ziming Zhang.
-CVE-2020-11869 requested via -> https://cveform.mitre.org/
+0x629000004212 is located 0 bytes to the right of 16402-byte region 
+[0x629000000200,0x629000004212)
+allocated by thread T0 here:
+    #0 0x4c949d in operator new[](unsigned long) /var/tmp/portage/sys-libs/
+compiler-rt-sanitizers-9.0.0/work/compiler-rt-9.0.0.src/lib/asan/
+asan_new_delete.cc:102:3
+    #1 0x67a0f2 in re2c::Scanner::fill(unsigned long) /var/tmp/portage/dev-
+util/re2c-1.3/work/re2c-1.3/src/parse/scanner.cc:154:22
+    #2 0x682a51 in re2c::Scanner::echo(re2c::Output&) /var/tmp/portage/dev-
+util/re2c-1.3/work/re2c-1.3/src/parse/lex.cc:94:33
+    #3 0x61d5f4 in re2c::compile(re2c::Scanner&, re2c::Output&, re2c::Opt&) /
+var/tmp/portage/dev-util/re2c-1.3/work/re2c-1.3/src/compile.cc:148:41
+    #4 0x4cc668 in main /var/tmp/portage/dev-util/re2c-1.3/work/re2c-1.3/src/
+main.cc:33:5
+    #5 0x7f26392c9dca in __libc_start_main /var/tmp/portage/sys-libs/
+glibc-2.29-r2/work/glibc-2.29/csu/../csu/libc-start.c:308:16
 
-Thank you,
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-libs/
+compiler-rt-sanitizers-9.0.0/work/compiler-rt-9.0.0.src/lib/asan/
+asan_interceptors_memintrinsics.cc:26:3 in __asan_memset
 
--- 
+Affected version:
+1.3
 
-Mauro Matteo Cascella
+Fixed version:
+Will be 2.0
 
-Product Security Engineer
+Commit fix:
+https://github.com/skvadrik/re2c/commit/
+c4603ba5ce229db83a2a4fb93e6d4b4e3ec3776a
 
-Red Hat <https://www.redhat.com/>
-<https://www.redhat.com/>
+Credit:
+This bug was discovered by Agostino Sarubbo.
+
+CVE:
+I don’t care anymore about a CVE. If you will obtain one about this issue, 
+feel free to reach me. I will update this as well.
+
+Timeline:
+2020-04-17: bug discovered and reported to upstream
+2020-04-17: upstream fixed the issue
+2020-04-19: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work 
+is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+http://blogs.gentoo.org/ago/2020/04/19/re2c-heap-overflow-in-scannerfill-scanner-cc/
+
 
