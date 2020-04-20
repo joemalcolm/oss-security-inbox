@@ -1,165 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/18/2
-Message-ID: <690ff1fc-7bef-63ff-8004-a45c873a24ea@securityvulns.ru>
-Date: Wed, 18 Mar 2020 17:43:58 +0300
-From: Vladimir Dubrovin <vlad@...urityvulns.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/20/1
+Message-ID: <20200420194712.GA51427@syl.local>
+Date: Mon, 20 Apr 2020 13:47:12 -0600
+From: Taylor Blau <ttaylorr@...hub.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Insecure implementation of OpenResty ngx.req.set_uri + memory content leak in nginx.
+Subject: CVE-2020-11008: Git: Malicious URLs can still cause Git to send a stored credential to the wrong server
 Content-Type: text/plain; charset=utf-8
 
+Team,
 
-I've updated advisory at
-https://hackerone.com/reports/513236
-to reflect the fact some nginx configurations without openresty may be
-vulnerable to directory traversal, as demonstrated with configuration
-example (but mistakenely attributed to openresty).
+Today, the Git project released v2.26.2 (and corresponding point
+releases as far back as the v2.17.x track) to address the following
+issue:
 
-18.03.2020 16:10, Vladimir Dubrovin пишет:
-> OpenResty is LUA engine for nginx reverse proxy.
->
-> Affected versions: tested on nginx-1.17.5 and openresty-1.15.8.2 on
-> ubuntu 18.04
->
-> Two independent problems were identified in OpenResty and nginx,
-> potentially leading to different security vulnerabilities: Header
-> injection/CRLF injection, directory traversal/local file read,
-> restrictions bypass, memory content disclosure in some nginx + openresty
-> configurations:
->
-> 1. There is a bug in nginx "rewrite" implementation. It can disclose the
-> fragment of the process memory with 301/302 HTTP reply if rewrite string
-> contains ASCII 0 character. Within nginx itself rewrite string is a
-> static configuration option, and is not supposed to be manipulated
-> externally.
->
-> 2. OpenResty implements ngx.req.set_uri() via raw rewrite in nginx
-> without any additional filtering or normalization. If used with
-> untrusted input it can lead to CRLF/header injection, directory
-> traversal/local file read, restrictions bypass. Due to (1) it can also
-> lead to memory content disclosure.
->
->
-> Fix:
-> ==============
->
-> As of now, there is no fix for ngx.req.set_uri(), this function must be considered as potentially unsafe.
->
-> Recommendations:
-> ==============
->
-> Avoid usage of ngx.req.set_uri() with untrusted input or implement strict input filtering.
->
->
-> Timeline:
->
-> ==============
->
-> 21.03.2019 - Memory content leak reported to Mail.Ru team via H1 by @maxarr in https://hackerone.com/reports/513236
-> 22.03.2019 - Memory content leak is mitigated on Mail.Ru side
-> 05.11.2019 - Problem additionally researched by Denis 'KPEBETKA' Denisov and Nikolay Ermishkin of Mail.Ru Security Team, root cause tracked to nginx+openresty.
-> 07.11.2019 - Reported to nginx team
-> 08.11.2019 - Acknowledged by nginx team
-> 13.12.2019 - nginx team reported back the issue is not tracked as a security bug in nginx, secure rewrite will not be provided by nginx API
-> 16.12.2019 - memory leak bug fixed in nginx master branch
-> https://hg.nginx.org/nginx/rev/02a539522be4
-> https://github.com/nginx/nginx/commit/a5895eb502747f396d3901a948834cd87d5fb0c3#diff-75916b11f3e6d45e713a6aa9c97cf315
-> 17.12.2019 - reported to OpenResty team
-> 17.12.2019 - acknowledged by OpenResty team
-> 18.03.2020 - disclosed
->
->
-> Details:
->
-> ==============
->
-> This configuration demonstrates memory content leak in nginx:
->
-> Vulnerable config (^@ is a null byte)
->
-> location ~ /memleak {
->     rewrite ^.*$ "^@...fasdfasdfasdfasdfasdfasdfasdfasdfasdfasdasdf";
-> }
->
-> location / {
->     root html;
->     index index.html index.htm;
-> }
->
-> curl localhost:8337/memleak -vv
-> ...
-> Location: http://localhost:8337/WjWj
-> ...
->
-> WjWj – is a random peace of memory, usual includes parts of other requests
->
-> vulnerable code:
->
-> https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L77
->
-> last = ngx_http_map_uri_to_path(r, &path, &root, 0);
->
-> Doesn't handle location with null byte properly
->
-> https://github.com/nginx/nginx/blob/5a2ce3f4ee55eb8903aa9481deaaf402d5a2e805/src/http/ngx_http_core_module.c#L1846
->
-> last = ngx_cpystrn(last, r->uri.data + alias, r->uri.len - alias + 1);
->
-> Writes only null byte to last, not the whole r->uri.data
->
-> https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L161
->
-> if (!clcf->alias && clcf->root_lengths == NULL && r->args.len == 0) {
->
-> It's important to get into this conditional branch to get memory leak
->
-> https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L188
->
-> r->headers_out.location->value.len = len;
->
-> location length more than was really written, location ends with random
-> piece of memory (usually includes part of other HTTP requests).
->
-> Example of configuration vulnerable to  memory leak with
-> https://github.com/openresty/lua-nginx-module:
->
-> location ~ /memleak {
->     rewrite_by_lua_block {
->         ngx.req.read_body();
->         local args, err = ngx.req.get_post_args();
->         ngx.req.set_uri( args["url"], true );
->     }
-> }
->
-> location / {
->     root html;
->     index index.html index.htm;
-> }
->
-> curl localhost:8337 -d "url=%00asdfasdfasdfasdfasdfasdfasdfasdf" -vv
-> ...
-> Location: http://localhost:8337/WjWj
-> ...
->
-> Example of configuration vulnerable to directory traversal with
-> https://github.com/openresty/lua-nginx-module
->
-> location ~ /rewrite {
->     rewrite ^.*$ $arg_x;
-> }
->
-> location / {
->     root html;
->     index index.html index.htm;
-> }
->
-> curl localhost:8337/rewrite?x=/../../../../../../../etc/passwd
-> root:x:0:0:root:/root:/bin/bash
-> daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
-> bin:x:2:2:bin:/bin:/usr/sbin/nologin
-> ...
->
->
-> -- Vladimir Dubrovin
->
->
+  * CVE-2020-11008:
+    With a crafted URL that contains a newline or empty host, or lacks a
+    scheme, the credential helper machinery can be fooled into providing
+    credential information that is not appropriate for the protocol in
+    use and host being contacted.
 
+    Unlike the vulnerability CVE-2020-5260 fixed in v2.17.4, the
+    credentials are not for a host of the attacker's choosing; instead,
+    they are for some unspecified host (based on how the configured
+    credential helper handles an absent "host" parameter).
+
+    The attack has been made impossible by refusing to work with
+    under-specified credential patterns.
+
+The distros list has been notified of this release in advance of its
+disclosure. This notification serves the same purpose for the
+oss-security list, too.
+
+Full details are available at the following link:
+
+  https://github.com/git/git/security/advisories/GHSA-hjc9-x69f-jqj7
+
+Per the list guidelines, I am attaching a plaintext representation of
+the above so as to include all essential materials within the mail
+itself.
+
+
+Thanks,
+Taylor
+
+View attachment "cve-2020-11008.txt" of type "text/plain" (3020 bytes)
