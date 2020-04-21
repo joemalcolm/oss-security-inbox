@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3021" "Wednesday" "19" "July" "2017" "23:43:59" "+0200" "Andreas Stieger" "astieger@suse.com" "<1c012c33-5b6e-0b1d-f12e-1efdeb2bab4a@suse.com>" "80" "Re: [oss-security] Devil's Ivy (CVE-2017-9765) in gSOAP 2.7 up to 2.8.47" "^Date:" nil nil "7" "2017071921:43:59" "[oss-security] Devil's Ivy (CVE-2017-9765) in gSOAP 2.7 up to 2.8.47" (number mark "        astieger@sus Jul 19   80/3021  " thread-indent "\"Re: [oss-security] Devil's Ivy (CVE-2017-9765) in gSOAP 2.7 up to 2.8.47\"\n") "<6dd6b52f-c4cb-4dcf-118e-f5f9510a2d84@oracle.com>" ("<6dd6b52f-c4cb-4dcf-118e-f5f9510a2d84@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1107" "Tuesday" "21" "April" "2020" "17:18:53" "+0530" "Rohit Keshri" "rkeshri@redhat.com" "<CAKx+4-oiN_VbfmnYv=T27zbH0gp3NVcVQeQDixUwiPR_yyB6BA@mail.gmail.com>" "32" "[oss-security] CVE-2020-10690 kernel: use-after-free in cdev_put() when a PTP device is removed while it's chardev is open" nil nil nil "4" "2020042111:48:53" "[oss-security] CVE-2020-10690 kernel: use-after-free in cdev_put() when a PTP device is removed while it's chardev is open" (number mark "U       rkeshri@redh Apr 21   32/1107  " thread-indent "\"[oss-security] CVE-2020-10690 kernel: use-after-free in cdev_put() when a PTP device is removed while it's chardev is open\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-10690 kernel: use-after-free in cdev_put() when a PTP device is removed while it's chardev is open" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15973 invoked by uid 550); 19 Jul 2017 21:44:26 -0000
+Received: (qmail 23638 invoked by uid 550); 21 Apr 2020 12:34:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15955 invoked from network); 19 Jul 2017 21:44:26 -0000
-References: <6dd6b52f-c4cb-4dcf-118e-f5f9510a2d84@oracle.com>
-Organization: SUSE Linux GmbH
-Message-ID: <1c012c33-5b6e-0b1d-f12e-1efdeb2bab4a@suse.com>
-MIME-Version: 1.0
-In-Reply-To: <6dd6b52f-c4cb-4dcf-118e-f5f9510a2d84@oracle.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="01ctAtg1WT7BUa3l1f5jLWXMmHe7I3ffx"
-Date: Wed, 19 Jul 2017 23:43:59 +0200
-From: Andreas Stieger <astieger@suse.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Devil's Ivy (CVE-2017-9765) in gSOAP 2.7 up to
- 2.8.47
+Received: (qmail 16335 invoked from network); 21 Apr 2020 11:49:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1587469750;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=u7OdkjfHn5Z3RbChcfoI9KXfUs0AOSjUsxI9WyZjIR8=;
+	b=NaRaqWZLFIy4lWixQuWao4RB9Ia0cQENWPC/1kGq94i9zzNSwvrgkEgurMagzRzzNOQlij
+	zns+F3kgpwwvtLjkfuLKIEB+LjLXWhDP3GKqUDGPrwt3hVP9WFT2jmktYX6R8+RVMnBqZt
+	7pDJ6L3oQdbRqKCn9hfo+/zBa/XvfTM=
+X-MC-Unique: _RO4AAlnMB-fAu-byQOGFQ-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=R5evIe56oZd+RKFUSyPCr62dlPYk8dXqBpqTHvH0Yws=;
+        b=V4+ogh1jTQlCu08HH+WcBtK3M4stdObFm90qpWD9tAabGOlwAF1Oc3BE6/y2yim+5M
+         HqAC3hSWbEIgQZJLfyqGd2NnlFRMNGy/VRbNKhfyxOjuPUZUJa+a1TAYBdza/Ji+mt0W
+         3WMyXVAagUviF5Oq0izqfPfzWuvGRTavKthZnkJOXuqnYZRR1wXEdjDd0jtAAK2qvker
+         3n7P4adKTvcataoxCP8m2xYge5ME7sissHIhFQiO4bbkKIQ3HYV9Lytx4xOp8kXoZmOU
+         X0AjN8HGZyvUK4KQGfB6qolYPETcbORdrxiEQLKa+CSX79ZuM1J1NEc50HYEUqOsfy0x
+         7N7g==
+X-Gm-Message-State: AGi0PuaTqGieCy/M4Zj0yEaZWERuTIqhgLAiRkbno7g8+byaPciQoRaQ
+	QWEXenAYZawqynyJapcxaMmdKnHEHJicZ1n6qSh9CrjbAwbnJwqtfyO3Kpxggo44aedTS2BTjEu
+	N5FouDnV/ibTxk8o2uQ9Guk0kh0PoIl5vBXmZdRQ7CkKq
+X-Received: by 2002:a9f:22e5:: with SMTP id 92mr11275219uan.114.1587469744914;
+        Tue, 21 Apr 2020 04:49:04 -0700 (PDT)
+X-Google-Smtp-Source: APiQypJjnNOEAa6KPP9J0f1KSISKLF777YR22IiZE8hXkHmS3uO8mZ4FO0VfMW0hbyQewSzjLIkdhRtp1G5F6/0beFM=
+X-Received: by 2002:a9f:22e5:: with SMTP id 92mr11275207uan.114.1587469744546;
+ Tue, 21 Apr 2020 04:49:04 -0700 (PDT)
+MIME-Version: 1.0
+From: Rohit Keshri <rkeshri@redhat.com>
+Date: Tue, 21 Apr 2020 17:18:53 +0530
+Message-ID: <CAKx+4-oiN_VbfmnYv=T27zbH0gp3NVcVQeQDixUwiPR_yyB6BA@mail.gmail.com>
 To: oss-security@lists.openwall.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="000000000000373e1905a3cb9ae3"
+Subject: [oss-security] CVE-2020-10690 kernel: use-after-free in cdev_put()
+ when a PTP device is removed while it's chardev is open
 
---01ctAtg1WT7BUa3l1f5jLWXMmHe7I3ffx
-Content-Type: multipart/mixed; boundary="aU4uE52ff2WRGas57cL24XAe53qPvM4wE";
- protected-headers="v1"
-From: Andreas Stieger <astieger@suse.com>
-To: oss-security@lists.openwall.com
-Message-ID: <1c012c33-5b6e-0b1d-f12e-1efdeb2bab4a@suse.com>
-Subject: Re: [oss-security] Devil's Ivy (CVE-2017-9765) in gSOAP 2.7 up to
- 2.8.47
-References: <6dd6b52f-c4cb-4dcf-118e-f5f9510a2d84@oracle.com>
-In-Reply-To: <6dd6b52f-c4cb-4dcf-118e-f5f9510a2d84@oracle.com>
-
---aU4uE52ff2WRGas57cL24XAe53qPvM4wE
-Content-Type: text/plain; charset=utf-8
+--000000000000373e1905a3cb9ae3
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
 
-Hello,
+Hello Team,
 
-On 07/19/2017 10:44 PM, Alan Coopersmith wrote:
-> I noticed some press coverage of this but haven't seen mail here yet:
->
-> http://blog.senr.io/blog/devils-ivy-flaw-in-widely-used-third-party-code-=
-impacts-millions
->
-> https://www.genivia.com/advisory.html#Security_advisory:_CVE-2017-9765_bu=
-g_in_certain_versions_of_gSOAP_2.7_up_to_2.8.47_(June_21,_2017)
->
-> https://www.genivia.com/changelog.html#Version_2.8.48_upd_(06/21/2017)
->
-> "a potential vulnerability to a large and specific XML message over
-> 2GB in size
->  (greater than 2147483711 bytes to trigger the software bug). A buffer
-> overflow
->  can cause an open unsecured server to crash or malfunction after 2GB is
->  received."
->
-> Unfortunately, the subversion repo on sourceforge for gSOAP only has
-> full releases, not individual changes, in each commit, so the fix
-> appears to be somewhere mixed in [r119] on
-> https://sourceforge.net/p/gsoap2/code/commit_browser
-> making it a challenge for distros who want to patch instead of upgrade.
->
+Red Hats kernel has a flaw in Precision Time Protocol (PTP), which can
+cause a kernel panic with 'general protection fault' with below details.
 
-Or just ask them, see https://bugzilla.suse.com/show_bug.cgi?id=3D1049348
+A use-after-free flaw was found in Linux Kernels implementation of __fput.
+When a (high privileged) process allocates a ptp device file (like
+/dev/ptpX) and voluntarily goes to sleep. During this time if the
+underlying device is removed (potential privilege escalation) by the user
+with administrator privilege, it can cause a denial of service (DoS)
+problem as the process wakes up to terminate and clean all attached files.
+The system crashes due to the cdev structure being invalid (as already
+freed) which is pointed to by the inode.
 
-Andreas
+'CVE-2020-10690' was assigned by Red Hat Inc.
 
---=20
-Andreas Stieger <astieger@suse.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG N=C3=BCrnberg)
+Upstream fix:
+https://lore.kernel.org/linux-fsdevel/20191125125342.6189-1-vdronov@redhat.=
+com/T/#u
 
 
+Thank You
+..
+Rohit Keshri / Red Hat Product Security Team
+01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
 
---aU4uE52ff2WRGas57cL24XAe53qPvM4wE--
+--000000000000373e1905a3cb9ae3--
 
---01ctAtg1WT7BUa3l1f5jLWXMmHe7I3ffx
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEELRFTXKGyY4WwZ7oiLNapVeFZRUYFAllv0q0ACgkQLNapVeFZ
-RUY+ag//WtiYVAnxcTZK28hn+dAff5raufV028JFjr3UQcpH+K7J7PXWIl5Dhz4T
-kSSy2e2N2E9+2FIrF7FDLKWH7WNBSrTzhzmcxTiOsAAcA30+to5rMHgDwEOWQtQo
-XDqUp+4ozeFO3D/8hgwy2qU4dV0xZ9dp0jFwFAbD8dwpB5C6I+9kJyJWKCt6hFk5
-GZWtguegyKYf/ZTFqiR930eKF+T/CNifz4A7WhxzfBrfHhhlFBBmePdTtivYVHhR
-vvRfwlomuhuzuytfjcPJqUHWOej3Zdd5OmvQhhzLw1dSOiNtPZRndnQWkYHPfxgd
-3ML+Y9A4RkiwSUsTeQzaLxvsILNAVfOqfvr8gYET2OyVXOIzoy+BQzLKtLkOKFlm
-NXoUu4UgguwPP0qDeSktfPjbxheC1jzQn95RIFGBNP6yenFzOal6ij0O1SBqD9jg
-EJJNC6L9DP3RDSBqAG/Umx4hiLvpZbW2HianvYwmIfbYmuJtQWxrTn2tB0gJHdaR
-0tfZva3CJEb2H2iHrU03ek/z48o4qaNH4Fnb/4IlHEg1zwP01pUlWg5VWCWxigJ3
-67sCI9S8I24NTyriv/Qml8QWU8At9NBgYADUewo7wBeQxpI5QwIE9g1LjyMxxtDn
-CZErp+iN59x/y7zfvLvxYN42ecYweIeLz9YQw+ZQFe0exUGnr4s=
-=1UHl
------END PGP SIGNATURE-----
-
---01ctAtg1WT7BUa3l1f5jLWXMmHe7I3ffx--
