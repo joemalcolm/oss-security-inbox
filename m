@@ -1,28 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/10/2
-Message-ID: <20200610114427.GA1895802@kroah.com>
-Date: Wed, 10 Jun 2020 13:44:27 +0200
-From: Greg KH <gregkh@...uxfoundation.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/21/9
+Message-ID: <20200421191544.2w3zzmpwxl5tq5qg@anathema>
+Date: Tue, 21 Apr 2020 21:15:44 +0200
+From: Morten Linderud <foxboron@...hlinux.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768
+Cc: "info@...nvakil.com" <info@...nvakil.com>
+Subject: Re: Pacman package manager - taking untrusted input
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 10, 2020 at 09:21:03PM +1000, Wade Mealing wrote:
-> A number of flaws were discussed in the registers article this morning
-> ( https://www.theregister.com/2020/06/09/linux_kernel_bugs_spectre )
-> which have been submitted for inclusion upstream already.
+On Tue, Apr 21, 2020 at 07:47:47PM +0100, Simon McVittie wrote:
+> On Tue, 21 Apr 2020 at 21:51:56 +0430, Amin Vakil wrote:
+> > On 4/21/20 8:57 PM, jellicent@...tonmail.com wrote:
+> > > The code supports database signatures, so the real issue is the distro
+> > > infrastructure.
 > 
-> Listed below are the CVE's that Red Hat has assigned.  As far as I can
-> tell there are no existing  CVE assignments for these flaws. I have
-> not done adequate investigation to correctly identify affected
-> versions of the kernel, however this is a flaw in the fix for
-> CVE-2018-3639, affected systems would likely be affected by the flaws
-> listed below if they required the fix.
+> I interpret this as: pacman can accept either signed or unsigned
+> databases, but the various distros that use pacman (such as Arch Linux)
+> currently only publish unsigned databases in practice. Is that correct?
+> 
+> Can pacman be configured to *only* accept signed databases, so that a
+> mirror containing an unverifiable database (unsigned, signed with a key
+> that is not explicitly trusted, or with an invalid signature) is treated
+> as an error? If it cannot, then there's an obvious downgrade attack:
+> a malicious mirror could substitute an unsigned database and the pacman
+> client would happily use that.
 
-Did you ask the authors of the patches?  I think they might have already
-assigned CVEs from Google's pool, based on previous interactions with
-those developers...
+Pacman can enforce database signatures, it is described in the man page:
 
-thanks,
+https://www.archlinux.org/pacman/pacman.conf.5.html#SC
 
-greg k-h
+The defaults in Arch Linux is currently that package signatures are required,
+and database signatures optional. Installing files locally with `-U` is
+optional.
+
+SigLevel    = Required DatabaseOptional
+LocalFileSigLevel = Optional
+
+The upstream pacman project distributes with signing optional.
+
+> On Tue, 21 Apr 2020 at 17:41:42 +0000, jellicent@...tonmail.com wrote:
+> > An attacker need only find a bug in how Pacman does
+> > parsing/reading of the database file to potentially get code execution
+> > on the box as root.
+> 
+> My understanding is that this is a risk, and at least arguably a design
+> flaw, but not generally considered to be a vulnerability (CVE IDs,
+> etc.) unless/until an unfixed parser bug with the necessary severity
+> is found.
+> 
+> Of course, that doesn't mean it wouldn't be a good idea to authenticate
+> the database before parsing it: that would mitigate a lot of potential
+> vulnerabilities.
+> 
+> Something that might be considered to be a vulnerability already (or not,
+> depending on the pacman and distro maintainers' threat models) is that
+> an attacker could substitute a database that lists obsolete packages
+> with known vulnerabilities. Those packages will presumably be validly
+> signed by distro developers (because at one time they were considered
+> to be the best version available). Presumably pacman won't normally
+> downgrade from the version it has installed to a strictly older version
+> from a mirror, but if a user installs a new (not currently installed)
+> package using that mirror/database, they'll unknowingly be installing
+> an older package that has known vulnerabilities.
+
+Pacman wouldn't downgrade any packages in this case without the user explicitly
+asking pacman to do so. Pacman would also issue warning that locally installed
+packages are newer then the downgraded ones.
+
+Unless a parsing bug is found the worst case scenario is holding back security
+updates for some amount of time until the user notices.
+
+ 
+> That form of attack is difficult to address in general, because it needs
+> a revocation or expiry mechanism. apt-based distros are starting to
+> address equivalent issues by setting a Valid-Until field on their archive
+> metadata, so that clients will warn their user if presented with outdated
+> archive metadata (the equivalent of pacman's database) - although this is
+> somewhat awkward to deploy, because it requires a signing key to be
+> made available on a regular basis, which conflicts with the idea that
+> high-value signing keys should be kept offline when not in use.
+
+Timestamped databases is also a feature Allan McRae has been working on lately.
+
+https://git.archlinux.org/users/allan/pacman.git/log/?h=timestamp
+
+However, as noted, it would still require an online signing key to sign it. This
+is argueably one of the larger problems with the Arch Linux package
+infrastructure currently as all packager keys are distributed. We haven't come
+up with reasonable solution yet as one would need to properly secure said key.
+
+
+And at a closing note, there hasn't been any issues with the parsing code to the
+database. However the one the original author probably thinks of is the CVE from
+2016 where there was a bug in the gnupg packet parsing code in relation to GnuPG
+signatures.
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5434
+
+-- 
+Morten Linderud
+PGP: 9C02FF419FECBE16
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
