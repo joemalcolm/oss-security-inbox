@@ -1,51 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/10/3
-Message-ID: <d4b7741b-24aa-c4ca-adb7-71db69dc27ce@gmail.com>
-Date: Tue, 10 Nov 2020 12:51:27 -0500
-From: "Demi M. Obenour" <demiobenour@...il.com>
-To: "Vladimir D. Seleznev" <vseleznv@...msu.ru>, oss-security@...ts.openwall.com
-Subject: Re: The importance of mutual authentication: Local Privilege Escalation in X11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/21/6
+Message-ID: <RrVCUf0UYM4S99v51o8A6lAatx04FP2OR23b5CU8yUASHP5KYo_uzDUGevjvZdhYY8QxFFH190BQOw-r2TG7neN7NOkiAyixvsVOzwCpcs8=@protonmail.com>
+Date: Tue, 21 Apr 2020 17:41:42 +0000
+From: "jellicent@...tonmail.com" <jellicent@...tonmail.com>
+To: "info@...nvakil.com" <info@...nvakil.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Pacman package manager - taking untrusted input
 Content-Type: text/plain; charset=utf-8
 
-On 11/10/20 11:43 AM, Vladimir D. Seleznev wrote:
-> On Mon, Nov 09, 2020 at 11:00:50AM -0500, Demi M. Obenour wrote:
->> [...skip...]
->> ### Placing the X socket in a secure directory
->>
->> X11 is usually used with AF_UNIX sockets.  In this case, performing
->> the attack requires that either the directory containing the X socket
->> be writable by an attacker, or that the abstract namespace is in use.
->> If neither condition is met, the attack is thwarted.  In this case, the
->> server is implicitly authenticated by being able to write to a location
->> on the file system.  On systems other than macOS, placing the X socket
->> in a non-default directory requires changes to X.  On Linux, this also
->> requires that abstract sockets be disabled in the X client libraries.
->>
->> A user’s home directory is a safe location on virtually all systems.
->> /run/user/$UID is a good choice when it is secure and available,
->> such as on systemd-based Linux distributions.  /tmp/.X11-unix can
->> be made safer by ensuring that it is created before any untrusted
->> code runs and ensuring that untrusted code cannot write to it.
->> For example, it could be owned by root and have 0755 permissions.
->> For this to be effective, untrusted code must not be allowed to start
->> if creating /tmp/.X11-unix fails; this can be enforced by dropping
->> into single-user mode in this case.  Furthermore, if the standard
->> location for lock files (/tmp/.X*-lock) is used, there is still a
->> potential denial of service, as anyone can create a lock file and
->> prevent the legitimate server from starting.
-> 
-> This contravenes the ability to run X11 client from another user. The
-> idea is that X11 server allows any clients with right credentials
-> regardless of theirs processes UID or GID to connect to the server.
+On Tuesday, April 21, 2020 5:21 PM, Amin Vakil <info@...nvakil.com> wrote:
+> Although this is something that can be fixed, it's not a critical
+> security issue at all, in all scenarios that has been written if
+> database is compromised, the best (worst) thing that malicious actor can
+> do is stopping user from installing packages, because he can't create a
+> verified gpg signed package which is mandatory for pacman to allow
+> installation of the package.
 
-Indeed it does, and I mention cryptographic authentication mechanisms
-below.  Instead of /tmp, /run/X11 would work just as well.  It is
-the mutual authentication that matters.
-
-Sincerely,
-
-Demi
-
-Download attachment "OpenPGP_0xB288B55FFF9C22C1.asc" of type "application/pgp-keys" (3987 bytes)
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (834 bytes)
+This is incorrect. An attacker need only find a bug in how Pacman does
+parsing/reading of the database file to potentially get code execution
+on the box as root. See Pacman's CVE history for at least one example
+of this. The problem happens before any package signatures come into
+play.
