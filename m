@@ -1,79 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/14/6
-Message-ID: <4bf21a19-3427-d699-0bdf-0de8bf647959@igalia.com>
-Date: Fri, 14 Feb 2020 14:57:58 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0002
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/21/8
+Message-ID: <6e208a52-10a1-3559-cf2e-44bca791941b@vdwaa.nl>
+Date: Tue, 21 Apr 2020 21:15:10 +0200
+From: Jelle van der Waa <jelle@...aa.nl>
+To: oss-security@...ts.openwall.com
+Subject: Re: Pacman package manager - taking untrusted input
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0002
-------------------------------------------------------------------------
+On 21/04/2020 20:47, Simon McVittie wrote:
+> On Tue, 21 Apr 2020 at 21:51:56 +0430, Amin Vakil wrote:
+>> On 4/21/20 8:57 PM, jellicent@...tonmail.com wrote:
+>>> The code supports database signatures, so the real issue is the distro
+>>> infrastructure.
+> 
+> I interpret this as: pacman can accept either signed or unsigned
+> databases, but the various distros that use pacman (such as Arch Linux)
+> currently only publish unsigned databases in practice. Is that correct?
 
-Date reported           : February 14, 2020
-Advisory ID             : WSA-2020-0002
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0002.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0002.html
-CVE identifiers         : CVE-2020-3862, CVE-2020-3864, CVE-2020-3865,
-                          CVE-2020-3867, CVE-2020-3868.
+This is correct for Arch Linux and this is also something the Arch Linux
+team wants to work on and is held up by figuring out a 'sane' way to
+sign a pacman database using gpg without compromising the signing key.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+> Can pacman be configured to *only* accept signed databases, so that a
+> mirror containing an unverifiable database (unsigned, signed with a key
+> that is not explicitly trusted, or with an invalid signature) is treated
+> as an error? If it cannot, then there's an obvious downgrade attack:
+> a malicious mirror could substitute an unsigned database and the pacman
+> client would happily use that.
 
-CVE-2020-3862
-    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
-    2.26.4.
-    Credit to Srikanth Gatta of Google Chrome.
-    Impact: A malicious website may be able to cause a denial of
-    service. Description: A denial of service issue was addressed with
-    improved memory handling.
+It can using SigLevel = Required in pacman.conf, as can be found in the
+man page http://jlk.fjfi.cvut.cz/arch/manpages/man/pacman.conf.5
 
-CVE-2020-3864
-    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
-    2.26.4.
-    Credit to Ryan Pickren (ryanpickren.com).
-    Impact: A DOM object context may not have had a unique security
-    origin. Description: A logic issue was addressed with improved
-    validation.
+There is however another scenario which could be used even if the
+database was signed.
 
-CVE-2020-3865
-    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
-    2.26.4.
-    Credit to Ryan Pickren (ryanpickren.com).
-    Impact: A top-level DOM object context may have incorrectly been
-    considered secure. Description: A logic issue was addressed with
-    improved validation.
+1. Wait till a package has a critical security issue (RCE in nginx for
+example)
+2. As malicious mirror withhold updates, ie. no longer sync the
+repository with upstream
+3. Since the mirror is not updated the user will stay on the vulnerable
+version
 
-CVE-2020-3867
-    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
-    2.26.4.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    universal cross site scripting. Description: A logic issue was
-    addressed with improved state management.
+As a sidenote this can be circumvented by the administrator wondering
+why there are no updates (pretty rare for Arch :-) ) or running
+arch-audit which checks if the system has any vulnerable packages
+installed which hopefully gives away that the mirror is out of date and
+should be reported and changed.
 
-CVE-2020-3868
-    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
-    2.26.4.
-    Credit to Marcin Towalski of Cisco Talos.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Note that we do remove mirrors which do not keep up from our mirrorlist,
+but changing mirror is still a manual task.
+
+> On Tue, 21 Apr 2020 at 17:41:42 +0000, jellicent@...tonmail.com wrote:
+>> An attacker need only find a bug in how Pacman does
+>> parsing/reading of the database file to potentially get code execution
+>> on the box as root.
+> 
+> My understanding is that this is a risk, and at least arguably a design
+> flaw, but not generally considered to be a vulnerability (CVE IDs,
+> etc.) unless/until an unfixed parser bug with the necessary severity
+> is found.
+> 
+> Of course, that doesn't mean it wouldn't be a good idea to authenticate
+> the database before parsing it: that would mitigate a lot of potential
+> vulnerabilities.
+> 
+> Something that might be considered to be a vulnerability already (or not,
+> depending on the pacman and distro maintainers' threat models) is that
+> an attacker could substitute a database that lists obsolete packages
+> with known vulnerabilities. Those packages will presumably be validly
+> signed by distro developers (because at one time they were considered
+> to be the best version available). Presumably pacman won't normally
+> downgrade from the version it has installed to a strictly older version
+> from a mirror, but if a user installs a new (not currently installed)
+> package using that mirror/database, they'll unknowingly be installing
+> an older package that has known vulnerabilities.
+> 
+> That form of attack is difficult to address in general, because it needs
+> a revocation or expiry mechanism. apt-based distros are starting to
+> address equivalent issues by setting a Valid-Until field on their archive
+> metadata, so that clients will warn their user if presented with outdated
+> archive metadata (the equivalent of pacman's database) - although this is
+> somewhat awkward to deploy, because it requires a signing key to be
+> made available on a regular basis, which conflicts with the idea that
+> high-value signing keys should be kept offline when not in use.
+
+A pacman developer has proposed a patchset to implement an expiry for
+repo database.
+
+https://lists.archlinux.org/pipermail/pacman-dev/2019-December/023909.html
+
+P.S. for reporting security issues regarding Arch Linux's infra,
+packages and package manager security@...hlinux.org is preferred to be
+used :)
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-February 14, 2020
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
