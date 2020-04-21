@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6511" "Saturday" "30" "September" "2017" "17:01:32" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<13746.9387586577-sendEmail@localhost>" "118" "[oss-security] binutils: heap-based buffer overflow in read_1_byte (dwarf2.c)" nil nil nil "9" "2017093017:01:32" "[oss-security] binutils: heap-based buffer overflow in read_1_byte (dwarf2.c)" (number mark "U       ago@gentoo.o Sep 30  118/6511  " thread-indent "\"[oss-security] binutils: heap-based buffer overflow in read_1_byte (dwarf2.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5513" "Tuesday" "21" "April" "2020" "21:15:44" "+0200" "Morten Linderud" "foxboron@archlinux.org" "<20200421191544.2w3zzmpwxl5tq5qg@anathema>" "130" "Re: [oss-security] Pacman package manager - taking untrusted input" nil nil nil "4" "2020042119:15:44" "[oss-security] Pacman package manager - taking untrusted input" (number mark "U       foxboron@arc Apr 21  130/5513  " thread-indent "\"Re: [oss-security] Pacman package manager - taking untrusted input\"\n") "<20200421184747.GA93069@espresso.pseudorandom.co.uk>" ("<RrVCUf0UYM4S99v51o8A6lAatx04FP2OR23b5CU8yUASHP5KYo_uzDUGevjvZdhYY8QxFFH190BQOw-r2TG7neN7NOkiAyixvsVOzwCpcs8=@protonmail.com>" "<5b8fe86a-56e8-715a-1f0d-a4961e516fc2@aminvakil.com>" "<20200421184747.GA93069@espresso.pseudorandom.co.uk>") nil nil nil nil nil nil nil "Re: [oss-security] Pacman package manager - taking untrusted input" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24532 invoked by uid 550); 30 Sep 2017 17:01:51 -0000
+Received: (qmail 18005 invoked by uid 550); 21 Apr 2020 19:33:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,130 +12,150 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24437 invoked from network); 30 Sep 2017 17:01:49 -0000
-Message-ID: <13746.9387586577-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Sat, 30 Sep 2017 17:01:32 +0000
+Received: (qmail 32309 invoked from network); 21 Apr 2020 19:15:58 -0000
+Authentication-Results: linderud.pw; dkim=none; dkim-atps=neutral
+Date: Tue, 21 Apr 2020 21:15:44 +0200
+From: Morten Linderud <foxboron@archlinux.org>
+To: oss-security@lists.openwall.com
+Cc: "info@aminvakil.com" <info@aminvakil.com>
+Message-ID: <20200421191544.2w3zzmpwxl5tq5qg@anathema>
+References: <RrVCUf0UYM4S99v51o8A6lAatx04FP2OR23b5CU8yUASHP5KYo_uzDUGevjvZdhYY8QxFFH190BQOw-r2TG7neN7NOkiAyixvsVOzwCpcs8=@protonmail.com>
+ <5b8fe86a-56e8-715a-1f0d-a4961e516fc2@aminvakil.com>
+ <20200421184747.GA93069@espresso.pseudorandom.co.uk>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-675343.350348161"
-Subject: [oss-security] binutils: heap-based buffer overflow in read_1_byte (dwarf2.c)
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="3j3a4p3c5ngbgltu"
+Content-Disposition: inline
+In-Reply-To: <20200421184747.GA93069@espresso.pseudorandom.co.uk>
+Subject: Re: [oss-security] Pacman package manager - taking untrusted input
 
-------MIME delimiter for sendEmail-675343.350348161
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--3j3a4p3c5ngbgltu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-binutils is a set of tools necessary to build programs.
+On Tue, Apr 21, 2020 at 07:47:47PM +0100, Simon McVittie wrote:
+> On Tue, 21 Apr 2020 at 21:51:56 +0430, Amin Vakil wrote:
+> > On 4/21/20 8:57 PM, jellicent@protonmail.com wrote:
+> > > The code supports database signatures, so the real issue is the distro
+> > > infrastructure.
+>=20
+> I interpret this as: pacman can accept either signed or unsigned
+> databases, but the various distros that use pacman (such as Arch Linux)
+> currently only publish unsigned databases in practice. Is that correct?
+>=20
+> Can pacman be configured to *only* accept signed databases, so that a
+> mirror containing an unverifiable database (unsigned, signed with a key
+> that is not explicitly trusted, or with an invalid signature) is treated
+> as an error? If it cannot, then there's an obvious downgrade attack:
+> a malicious mirror could substitute an unsigned database and the pacman
+> client would happily use that.
 
-The complete ASan output of the issue:
+Pacman can enforce database signatures, it is described in the man page:
 
-# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==3235==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x613000000512 at pc 0x7f7c93ae3c88 bp 0x7ffe38d7a970 sp 0x7ffe38d7a968
-READ of size 1 at 0x613000000512 thread T0
-    #0 0x7f7c93ae3c87 in read_1_byte /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:616:10
-    #1 0x7f7c93ae3c87 in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2311
-    #2 0x7f7c93aee92b in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3608:26
-    #3 0x7f7c93aee92b in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3643
-    #4 0x7f7c93aeb94f in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4755:11
-    #5 0x7f7c93a2920b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8694:10
-    #6 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
-    #7 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
-    #8 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
-    #9 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #10 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #11 0x7f7c9296e680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #12 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)
+https://www.archlinux.org/pacman/pacman.conf.5.html#SC
 
-0x613000000512 is located 0 bytes to the right of 338-byte region [0x6130000003c0,0x613000000512)
-allocated by thread T0 here:
-    #0 0x4d8e08 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_malloc_linux.cc:67
-    #1 0x7f7c9393a37c in bfd_malloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:193:9
-    #2 0x7f7c9392fb2f in bfd_get_full_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/compress.c:248:21
-    #3 0x7f7c939696d3 in bfd_simple_get_relocated_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/simple.c:193:12
-    #4 0x7f7c93ade26e in read_section /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:556:8
-    #5 0x7f7c93adef3c in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2047:9
-    #6 0x7f7c93aee92b in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3608:26
-    #7 0x7f7c93aee92b in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3643
-    #8 0x7f7c93aeb94f in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4755:11
-    #9 0x7f7c93a2920b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8694:10
-    #10 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
-    #11 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
-    #12 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
-    #13 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #14 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #15 0x7f7c9296e680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+The defaults in Arch Linux is currently that package signatures are require=
+d,
+and database signatures optional. Installing files locally with `-U` is
+optional.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:616:10 in read_1_byte
-Shadow bytes around the buggy address:
-  0x0c267fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c267fff8060: 00 00 00 00 00 00 00 00 00 00 00 04 fa fa fa fa
-  0x0c267fff8070: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c267fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c267fff8090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c267fff80a0: 00 00[02]fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c267fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c267fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c267fff80d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c267fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c267fff80f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==3235==ABORTING
+SigLevel    =3D Required DatabaseOptional
+LocalFileSigLevel =3D Optional
 
-Affected version:
-2.29.51.20170921 and maybe past releases
+The upstream pacman project distributes with signing optional.
 
-Fixed version:
-N/A
+> On Tue, 21 Apr 2020 at 17:41:42 +0000, jellicent@protonmail.com wrote:
+> > An attacker need only find a bug in how Pacman does
+> > parsing/reading of the database file to potentially get code execution
+> > on the box as root.
+>=20
+> My understanding is that this is a risk, and at least arguably a design
+> flaw, but not generally considered to be a vulnerability (CVE IDs,
+> etc.) unless/until an unfixed parser bug with the necessary severity
+> is found.
+>=20
+> Of course, that doesn't mean it wouldn't be a good idea to authenticate
+> the database before parsing it: that would mitigate a lot of potential
+> vulnerabilities.
+>=20
+> Something that might be considered to be a vulnerability already (or not,
+> depending on the pacman and distro maintainers' threat models) is that
+> an attacker could substitute a database that lists obsolete packages
+> with known vulnerabilities. Those packages will presumably be validly
+> signed by distro developers (because at one time they were considered
+> to be the best version available). Presumably pacman won't normally
+> downgrade from the version it has installed to a strictly older version
+> from a mirror, but if a user installs a new (not currently installed)
+> package using that mirror/database, they'll unknowingly be installing
+> an older package that has known vulnerabilities.
 
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=515f23e63c0074ab531bc954f84ca40c6281a724
+Pacman wouldn't downgrade any packages in this case without the user explic=
+itly
+asking pacman to do so. Pacman would also issue warning that locally instal=
+led
+packages are newer then the downgraded ones.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Unless a parsing bug is found the worst case scenario is holding back secur=
+ity
+updates for some amount of time until the user notices.
 
-CVE:
-CVE-2017-14939
+=20
+> That form of attack is difficult to address in general, because it needs
+> a revocation or expiry mechanism. apt-based distros are starting to
+> address equivalent issues by setting a Valid-Until field on their archive
+> metadata, so that clients will warn their user if presented with outdated
+> archive metadata (the equivalent of pacman's database) - although this is
+> somewhat awkward to deploy, because it requires a signing key to be
+> made available on a regular basis, which conflicts with the idea that
+> high-value signing keys should be kept offline when not in use.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00370-binutils-heapoverflow-read_1_byte
+Timestamped databases is also a feature Allan McRae has been working on lat=
+ely.
 
-Timeline:
-2017-09-21: bug discovered and reported to upstream
-2017-09-24: upstream released a patch
-2017-09-26: blog post about the issue
-2017-09-29: CVE assigned
+https://git.archlinux.org/users/allan/pacman.git/log/?h=3Dtimestamp
 
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/26/binutils-heap-based-buffer-overflow-in-read_1_byte-dwarf2-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+However, as noted, it would still require an online signing key to sign it.=
+ This
+is argueably one of the larger problems with the Arch Linux package
+infrastructure currently as all packager keys are distributed. We haven't c=
+ome
+up with reasonable solution yet as one would need to properly secure said k=
+ey.
 
 
-------MIME delimiter for sendEmail-675343.350348161--
+And at a closing note, there hasn't been any issues with the parsing code t=
+o the
+database. However the one the original author probably thinks of is the CVE=
+ from
+2016 where there was a bug in the gnupg packet parsing code in relation to =
+GnuPG
+signatures.
 
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2016-5434
+
+--=20
+Morten Linderud
+PGP: 9C02FF419FECBE16
+
+--3j3a4p3c5ngbgltu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEktnGzemaICTWkKdu50JoO6CMsv8FAl6fRl8ACgkQ50JoO6CM
+sv8XlBAA05SpNrWlJadx7dYqrrxfBVGQY6GzlJKfYEijjcmR6WhKIdjlZfWPvH4T
+aekORgN0PPnkEJei8hbKc9JijCGAmHt2PnNyGsRxCDPUOOVDlY9Xh46MjITH+3jO
+UqFz1JLOl1xm9KMdplFT1ScjLEI6nPt+JL9ASiWKX4guSNSxmLUwnh/5OxxiM33y
+TLyO15tmKIIT45+4fZVDEz9NnXIp+VqV5km3inyKYGPi0N/vf9oPKSWgTn4SJRlf
+qZceMKoYWKKlLoSY0C5l+F7AkaxJDWdqFASLvdV4Y9WqyBaSD5c0AhB+1tghsXzN
+DE5vYMEuCmRR6WxIkIgy2Dk0sRVnU6IzX4LIAaZn2MsQvcSyNjbbG+1yKBe/CsgP
+0YNU8WNC/zr2kqSBynNjSAf68sM9Xl0O7v0AmgmbJMyXsg6oeW7jv5Fv/ofpcvuh
+/SuT/TQj62vqofkJTiqBDRwkd5Yl00Y6Rr6Ek2Ii03oi0WL0dJqWapqFxwoPXZmF
+9hyYrgiN2xL9PHIeVEqh27iITn/5Dfctrtf18KKgGpaNQIdF9M7rOgV3vI8oE9lT
+Qa/IUPN9mpxKjv6Q2vgk0Q9DbnjYwouKonPndyXIL+0jyG6lYsE6gQ3dA/jmTvC1
+IVOWNQ7sSyiaIM+urm0lec8bkhfsEz53qRauAlRexgwpbR+MQAU=
+=0LHs
+-----END PGP SIGNATURE-----
+
+--3j3a4p3c5ngbgltu--
