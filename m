@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1329" "Monday" "16" "April" "2018" "10:15:00" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20180416081500.4dnup7bk3g6vkkaa@jwilk.net>" "37" "Re: [oss-security] Re: Terminal Control Chars" nil nil nil "4" "2018041608:15:00" "[oss-security] Re: Terminal Control Chars" (number mark "U       jwilk@jwilk. Apr 16   37/1329  " thread-indent "\"Re: [oss-security] Re: Terminal Control Chars\"\n") "<E1f6jcD-0002pc-T3@rmmprod07.runbox>" ("<20180412180720.qmtilbpi27kxa3dm@matica.foolinux.mooo.com>" "<E1f6jcD-0002pc-T3@rmmprod07.runbox>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["747" "Tuesday" "21" "April" "2020" "17:41:42" "+0000" "jellicent@protonmail.com" "jellicent@protonmail.com" "<RrVCUf0UYM4S99v51o8A6lAatx04FP2OR23b5CU8yUASHP5KYo_uzDUGevjvZdhYY8QxFFH190BQOw-r2TG7neN7NOkiAyixvsVOzwCpcs8=@protonmail.com>" "13" "Re: [oss-security] Pacman package manager - taking untrusted input" nil nil nil "4" "2020042117:41:42" "[oss-security] Pacman package manager - taking untrusted input" (number mark "U       jellicent@pr Apr 21   13/747   " thread-indent "\"Re: [oss-security] Pacman package manager - taking untrusted input\"\n") "<5b8fe86a-56e8-715a-1f0d-a4961e516fc2@aminvakil.com>" ("<HVOfwapPoUpExeEC6pUVJFD81vMaCFIGaNo0Uodnx5Sk40Z5SD2JmPGp-IWcmnvIX1Qswb0Kif33n0bqakSLFndsMqYgjY4lTVIRwN_MSfw=@protonmail.com>" "<5b8fe86a-56e8-715a-1f0d-a4961e516fc2@aminvakil.com>") nil nil nil nil nil nil nil "Re: [oss-security] Pacman package manager - taking untrusted input" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7233 invoked by uid 550); 16 Apr 2018 08:15:17 -0000
+Received: (qmail 19529 invoked by uid 550); 21 Apr 2020 17:43:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +12,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7208 invoked from network); 16 Apr 2018 08:15:16 -0000
-Date: Mon, 16 Apr 2018 10:15:00 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20180416081500.4dnup7bk3g6vkkaa@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20180412180720.qmtilbpi27kxa3dm@matica.foolinux.mooo.com>
- <E1f6jcD-0002pc-T3@rmmprod07.runbox>
+Received: (qmail 17782 invoked from network); 21 Apr 2020 17:41:58 -0000
+Date: Tue, 21 Apr 2020 17:41:42 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail; t=1587490906;
+	bh=KWh5dZPrVZkAyra28p9cBKyQBkLNvd9kHQolqpOca4E=;
+	h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+	b=Zy7xl+hc0XIMfT/EEuYv1JJ5u8I/Z3DAWYi/033rtEMkNwTHfneHifRVuoR3rJ4Ff
+	 3LXmylnMH92r5BJRLW6am0HvC1AQVnJHtzddO775RWRGqBe/dvfp8X9k2Nm7Ulc1jR
+	 XSFOydfXBO7plZdHCQnZ7oJUX/SfCyS4SSVpioyU=
+To: "info@aminvakil.com" <info@aminvakil.com>
+From: "jellicent@protonmail.com" <jellicent@protonmail.com>
+Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <RrVCUf0UYM4S99v51o8A6lAatx04FP2OR23b5CU8yUASHP5KYo_uzDUGevjvZdhYY8QxFFH190BQOw-r2TG7neN7NOkiAyixvsVOzwCpcs8=@protonmail.com>
+In-Reply-To: <5b8fe86a-56e8-715a-1f0d-a4961e516fc2@aminvakil.com>
+References: <HVOfwapPoUpExeEC6pUVJFD81vMaCFIGaNo0Uodnx5Sk40Z5SD2JmPGp-IWcmnvIX1Qswb0Kif33n0bqakSLFndsMqYgjY4lTVIRwN_MSfw=@protonmail.com>
+ <5b8fe86a-56e8-715a-1f0d-a4961e516fc2@aminvakil.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <E1f6jcD-0002pc-T3@rmmprod07.runbox>
-User-Agent: NeoMutt/20180323
-X-Ovh-Tracer-Id: 6595521654383761318
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtgedrieejgddufedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
-Subject: Re: [oss-security] Re: Terminal Control Chars
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Pacman package manager - taking untrusted input
 
-* David A. Wheeler <dwheeler@dwheeler.com>, 2018-04-12, 17:18:
->Russ Allbery:
->>I think a useful definition of "control character" in this context 
->>(and I realize this doesn't exactly match the ASCII definition) is a 
->>character that results in an action other than insertion being 
->>taken... CR and LF would not be control characters in that definition, 
->>since they insert a newline and don't cause an action. Similarly, TAB 
->>wouldn't be a control character in that definition.
->
->As you noted, that definition doesn't match the ASCII definition, but I 
->also think it's misleading.  If someone pastes a CR/LF into a shell 
->prompt, it certainly *DOES* cause an action,
+On Tuesday, April 21, 2020 5:21 PM, Amin Vakil <info@aminvakil.com> wrote:
+> Although this is something that can be fixed, it's not a critical
+> security issue at all, in all scenarios that has been written if
+> database is compromised, the best (worst) thing that malicious actor can
+> do is stopping user from installing packages, because he can't create a
+> verified gpg signed package which is mandatory for pacman to allow
+> installation of the package.
 
-Similarly, tab is an "active" character in most shells.
-
-In the worst case (the victim uses bash with bash-completion installed, 
-and the attacker has write access to the victim's filesystem), pasting 
-tab can be as bad as pasting LF.
-
-Here's a proof of concept:
-
-   $ printf 'x := $(shell (echo; cowsay pwned)>/dev/tty)' > moo
-   $ make -f moo <tab>
-    _______
-   < pwned >
-    -------
-           \   ^__^
-            \  (oo)\_______
-               (__)\       )\/\
-                   ||----w |
-                   ||     ||
-
-Credit for discovering this goes to Dan Rosenberg:
-https://twitter.com/djrbliss/status/699363006946344963
-
--- 
-Jakub Wilk
+This is incorrect. An attacker need only find a bug in how Pacman does
+parsing/reading of the database file to potentially get code execution
+on the box as root. See Pacman's CVE history for at least one example
+of this. The problem happens before any package signatures come into
+play.
