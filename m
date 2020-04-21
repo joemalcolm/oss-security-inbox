@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/03/1
-Message-ID: <dabe5b5f-2534-2c3c-a1c9-37bee5469ac1@oracle.com>
-Date: Fri, 3 Apr 2020 15:19:06 +0000 (UTC)
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Daniel Ruggeri <druggeri@...che.org>
-Subject: Re: CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/21/1
+Message-ID: <20200421072905.GA210610@ryzen.bugs.fi>
+Date: Tue, 21 Apr 2020 10:29:05 +0300
+From: Henri Salo <henri@...v.fi>
+To: Agostino Sarubbo <ago@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: re2c: heap overflow in Scanner::fill (scanner.cc)
 Content-Type: text/plain; charset=utf-8
 
-On 4/1/20 5:54 AM, Daniel Ruggeri wrote:
-> CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect
-> 
-> Severity: Low
-> 
-> Vendor: The Apache Software Foundation
-> 
-> Versions Affected:
-> httpd 2.4.0 to 2.4.39
-> 
-> Description:
-> Apache HTTP Server 2.4.0 to 2.4.41
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Should the versions affected have been to .41 as well then?
+On Sun, Apr 19, 2020 at 04:59:48PM +0200, Agostino Sarubbo wrote:
+> http://blogs.gentoo.org/ago/2020/04/19/re2c-heap-overflow-in-scannerfill-scanner-cc/
 
--- 
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+Use CVE-2020-11958.
+
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAl6eoL8ACgkQJ633pE6q
+dXQjNxAArR8FasEqoCZe3REbzgztybaAqsagPsZ8hFGJMOM3Lfug5D8VeMVKGPO/
+yI5ADpOjEZyJsRhM/E7vxyd7inLq5IJuUSvux36SNzCAW3i0gFJqHjHEkX0Z63rO
+4hL81wZ+jc0K61C2s583vyfZSuuJksb1rtn8rTNbyfDVWETnXGC3YVTgu+AvKZqH
+a3y/OF4jyhw9ho0bf/onRTmk3/0tPEJxs7x5ZfwE7TSTJLaNJEcKt1CPIs8fo0KC
+QMGsUURJxuaMKJCU7owESzojlEZn3XEjingC5E5MOpQmeTocYH5JSB0q4vJk2UTp
+jolwX8eR9O5GbDob8xbtqMVc7JEwsnelxd8ChPRBrmulgjdW77yDu70GBL9weHdv
++a3NcqwJ7LGOVwQyE/tYkh7OYV7PSMCPsb0Qs0Dwdrd8yrVybTq8sh1AsjvaYrgy
+J6Xg2vNX9VOlRjhEER0Saf2ChoaAZEDuhClRJKdcFOCHptc2bB1tIACEGdSvG+5R
+CD0FyOZb/bpQGd0NwtAPajdZs7aXw2aaFIo0f91r55e7tk7bBZ2jYvXcMVQp3DXF
+FwvPit1JqLHgECPxT2aAtSWXwDv57pZjbh1OB0vFz+x0O3BNkGYGZbBLqTwcEPQC
+VpTH6uKcOIAG7JyN2cdAH+7cDjlxrdeDO82VmAZLLLW1iFGaL9I=
+=/3xD
+-----END PGP SIGNATURE-----
