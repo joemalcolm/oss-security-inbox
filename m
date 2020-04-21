@@ -1,40 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/5
-Message-Id: <206DB19C-0117-4F4B-AFF7-212E40CB8C75@oracle.com>
-Date: Mon, 15 Jun 2020 17:22:27 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com, "Jason A. Donenfeld" <Jason@...c4.com>
-Cc: linux-security-module@...r.kernel.org, linux-acpi@...r.kernel.org, Matthew Garrett <mjg59@...f.ucam.org>, kernel-hardening@...ts.openwall.com, Ubuntu Kernel Team <kernel-team@...ts.ubuntu.com>
-Subject: Re: lockdown bypass on mainline kernel for loading unsigned modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/21/7
+Message-ID: <20200421184747.GA93069@espresso.pseudorandom.co.uk>
+Date: Tue, 21 Apr 2020 19:47:47 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: "info@...nvakil.com" <info@...nvakil.com>
+Subject: Re: Pacman package manager - taking untrusted input
 Content-Type: text/plain; charset=utf-8
 
-Hi Jason,
+On Tue, 21 Apr 2020 at 21:51:56 +0430, Amin Vakil wrote:
+> On 4/21/20 8:57 PM, jellicent@...tonmail.com wrote:
+> > The code supports database signatures, so the real issue is the distro
+> > infrastructure.
 
+I interpret this as: pacman can accept either signed or unsigned
+databases, but the various distros that use pacman (such as Arch Linux)
+currently only publish unsigned databases in practice. Is that correct?
 
-> On 15 Jun 2020, at 11:26, Jason A. Donenfeld <Jason@...c4.com> wrote:
-> 
-> Hi everyone,
-> 
-> Yesterday, I found a lockdown bypass in Ubuntu 18.04's kernel using
-> ACPI table tricks via the efi ssdt variable [1]. Today I found another
-> one that's a bit easier to exploit and appears to be unpatched on
-> mainline, using acpi_configfs to inject an ACPI table. The tricks are
-> basically the same as the first one, but this one appears to be
-> unpatched, at least on my test machine. Explanation is in the header
-> of the PoC:
-> 
-> https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
-> 
-> I need to get some sleep, but if nobody posts a patch in the
-> meanwhile, I'll try to post a fix tomorrow.
-> 
-> Jason
-> 
-> [1] https://www.openwall.com/lists/oss-security/2020/06/14/1
+Can pacman be configured to *only* accept signed databases, so that a
+mirror containing an unverifiable database (unsigned, signed with a key
+that is not explicitly trusted, or with an invalid signature) is treated
+as an error? If it cannot, then there's an obvious downgrade attack:
+a malicious mirror could substitute an unsigned database and the pacman
+client would happily use that.
 
+On Tue, 21 Apr 2020 at 17:41:42 +0000, jellicent@...tonmail.com wrote:
+> An attacker need only find a bug in how Pacman does
+> parsing/reading of the database file to potentially get code execution
+> on the box as root.
 
-This looks CVE-worthy.   Are you going to ask for a CVE for it?
+My understanding is that this is a risk, and at least arguably a design
+flaw, but not generally considered to be a vulnerability (CVE IDs,
+etc.) unless/until an unfixed parser bug with the necessary severity
+is found.
 
-jch
+Of course, that doesn't mean it wouldn't be a good idea to authenticate
+the database before parsing it: that would mitigate a lot of potential
+vulnerabilities.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+Something that might be considered to be a vulnerability already (or not,
+depending on the pacman and distro maintainers' threat models) is that
+an attacker could substitute a database that lists obsolete packages
+with known vulnerabilities. Those packages will presumably be validly
+signed by distro developers (because at one time they were considered
+to be the best version available). Presumably pacman won't normally
+downgrade from the version it has installed to a strictly older version
+from a mirror, but if a user installs a new (not currently installed)
+package using that mirror/database, they'll unknowingly be installing
+an older package that has known vulnerabilities.
+
+That form of attack is difficult to address in general, because it needs
+a revocation or expiry mechanism. apt-based distros are starting to
+address equivalent issues by setting a Valid-Until field on their archive
+metadata, so that clients will warn their user if presented with outdated
+archive metadata (the equivalent of pacman's database) - although this is
+somewhat awkward to deploy, because it requires a signing key to be
+made available on a regular basis, which conflicts with the idea that
+high-value signing keys should be kept offline when not in use.
+
+    smcv
