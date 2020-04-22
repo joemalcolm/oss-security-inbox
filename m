@@ -1,125 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/24/1
-Message-Id: <E1khX2v-0002f4-3b@xenbits.xenproject.org>
-Date: Tue, 24 Nov 2020 12:03:45 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 355 v2 - stack corruption from XSA-346 change
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/22/2
+Message-ID: <CABU6YOY2Ttdr9eS2j_bBbwE1Tt8uvVxHfSojXY496Wtg5vJX-Q@mail.gmail.com>
+Date: Wed, 22 Apr 2020 08:12:59 +0100
+From: Mark J Cox <mark@...nssl.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-1967] OpenSSL 1.1.1d+ Segmentation fault in SSL_check_chain
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-                    Xen Security Advisory XSA-355
-                              version 2
+OpenSSL Security Advisory [21 April 2020]
+=========================================
 
-                 stack corruption from XSA-346 change
+Segmentation fault in SSL_check_chain (CVE-2020-1967)
+=====================================================
 
-UPDATES IN VERSION 2
-====================
+Severity: High
 
-Added metadata file.
+Server or client applications that call the SSL_check_chain() function during or
+after a TLS 1.3 handshake may crash due to a NULL pointer dereference as a
+result of incorrect handling of the "signature_algorithms_cert" TLS extension.
+The crash occurs if an invalid or unrecognised signature algorithm is received
+from the peer. This could be exploited by a malicious peer in a Denial of
+Service attack.
 
-Public release.
+OpenSSL version 1.1.1d, 1.1.1e, and 1.1.1f are affected by this issue.  This
+issue did not affect OpenSSL versions prior to 1.1.1d.
 
-ISSUE DESCRIPTION
-=================
+Affected OpenSSL 1.1.1 users should upgrade to 1.1.1g
 
-One of the two changes for XSA-346 introduced an on-stack array.  The
-check for guarding against overrunning this array was off by one,
-allowing for corruption of the first stack slot immediately following
-this array.
+This issue was found by Bernd Edlinger and reported to OpenSSL on 7th April
+2020. It was found using the new static analysis pass being implemented in GCC,
+- -fanalyzer. Additional analysis was performed by Matt Caswell and Benjamin
+Kaduk.
 
-IMPACT
-======
+Note
+=====
 
-A malicious or buggy HVM or PVH guest can cause Xen to crash, resulting
-in a Denial of Service (DoS) to the entire host.  Privilege escalation
-as well as information leaks cannot be excluded.
+This issue did not affect OpenSSL 1.0.2 however these versions are out of
+support and no longer receiving public updates. Extended support is available
+for premium support customers: https://www.openssl.org/support/contracts.html
 
-VULNERABLE SYSTEMS
-==================
+This issue did not affect OpenSSL 1.1.0 however these versions are out of
+support and no longer receiving updates.
 
-All Xen versions which have the patches for XSA-346 applied are
-vulnerable.
+Users of these versions should upgrade to OpenSSL 1.1.1.
 
-Only x86 HVM and PVH guests can leverage the vulnerability.  Arm guests
-and x86 PV guests cannot leverage the vulnerability.
-
-Only x86 HVM and PVH guests which have physical devices passed through
-to them can leverage the vulnerability.
-
-MITIGATION
+References
 ==========
 
-Not passing through physical devices to untrusted guests will avoid
-the vulnerability.
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20200421.txt
 
-CREDITS
-=======
+Note: the online version of the advisory may be updated with additional details
+over time.
 
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa355.patch           xen-unstable - Xen 4.10.x
-
-$ sha256sum xsa355*
-a93bfc376897e7cffd095d395f1a66476adb9503d7d80a59b7861e64c2675323  xsa355.meta
-dae633c11cf2eff3e304737265e18ab09213e8e4640458080a944ae7a40819a4  xsa355.patch
-$
-
-NOTE CONCERNING SHORT EMBARGO
-=============================
-
-This issue is likely to be re-discovered as the changes for XSA-346
-are deployed more widely, since the issue is also triggerable without
-any malice or bugginess.
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+89pEMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZRHQH/1D8CfjZWYgLcdYOg6sDO6BIK8IsnAiOoe2C8b9i
-M8QPFzHlUx09FI5CHVb0Va/pFliR1OS2tmmIU30DL9nmiDLcaP2uvpgJAYo5GwL5
-Rzccjo4qbXwfSRQvHmLzbr+XN8sHDxbekpFd8T5WvuarUgxOaPCLTfSG0nag/t52
-OVNIdDcP5lSt/Z88lYW75j4gBAsXUZDEXgn81JpeHj9js8YLFC3WFcwh58Jjd+hw
-5DH955jNAKD8TRSy6uffDpvN1m9wm2vDGeXSUcJyswlV8Nqi6YRW4XO4Q6Cfj+CG
-LVBS/T977JZGJjRvTw4j0H+xAXiLFwQ1I/6v6fSZzxDMt9k=
-=+4M1
+iQEzBAEBCAAdFiEEhlersmDwVrHlGQg52cTSbQ5gRJEFAl6e8uwACgkQ2cTSbQ5g
+RJHHRgf+J8iVBuK6EoOvf9xm9geiDgYVFse9ckMXH92gdGbwsW4uhTNk9fCyNC+t
+vsf6YGT6nKJarB5+N+LC4QB7VLo/DjlYcN9zP3mubV0eEyKHSoW6tDOWPpJ0gsbt
+2Z9iTA4GnofvhBcWLiPGgv4IUHknsOaPkRmEppSF0fDTSKuYOerfNRh9jTKHulis
+Ph6dCOXE3kb5HfMwVj3UN2sP92XTig4FzpIQaZ1/2jKZaRXtzJD7pvu1fDCTkUGl
+aeta5jHNypYyRKJLuJ1+1DiBtbWTFAWMUCHlkg/kgdU4hIl/lo3vgAyFs/9mQxZQ
+vj2rIjoJHRj0EXqXhHoABqBHedilJQ==
+=AXyP
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa355.meta" of type "application/octet-stream" (1542 bytes)
-
-Download attachment "xsa355.patch" of type "application/octet-stream" (821 bytes)
