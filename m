@@ -1,106 +1,169 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/25/1
-Message-ID: <CAKG8Do5sO4b9qVzU=zTFF52fDRNNvtoCknnNoPBmd1VRGgnfvA@mail.gmail.com>
-Date: Tue, 25 Feb 2020 08:12:26 +0100
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/2
+Message-ID: <87b08d63-4fb4-e18f-b922-324568dc0c75@treenet.co.nz>
+Date: Thu, 23 Apr 2020 21:02:53 +1200
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: GNU screen "out of bounds access when setting w_xtermosc after OSC 49"
+Subject: [ADVISORY] SQUID-2020:4 Multiple issues in HTTP Digest authentication
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 24, 2020 at 2:27 PM Cedric Buissart <cbuissar@...hat.com> wrote:
->
-> Hi all,
->
-> On Thu, Feb 6, 2020 at 5:55 PM Amadeusz Sławiński <amade@...blr.net> wrote:
-> >
-> > Hi,
-> >
-> > >
-> > > The fix commit is:
-> > >
-> > > ---
-> > > commit 68386dfb1fa33471372a8cd2e74686758a2f527b
-> > > Author: Amadeusz Slawinski <amade@...blr.net>
-> > > Date:   Thu Jan 30 17:56:27 2020 +0100
-> > >
-> > >     Fix out of bounds access when setting w_xtermosc after OSC 49
-> > >
-> > >     echo -e "\e]49\e;                                    \n\ec"
-> > >     crashes screen.
-> > >
-> > >     This happens because 49 is divided by 10 and used as table index
-> > >     resulting in access to w_xtermosc[4], which is out of bounds with table
-> > >     itself being size 4. Increase size of table by 1 to 5, which is enough
-> > >     for all current uses.
-> > >
-> > >     As this overwrites memory based on user input it is potential security
-> > >     issue.
-> > >
-> > >     Reported-by: pippin@...p.org
-> > >     Signed-off-by: Amadeusz Slawinski <amade@...blr.net>
-> > > ---
-> > >
-> > > This is followed by another related commit:
-> > >
-> > > ---
-> > > commit 0dd53533e20d2948351a99ec5336fbc9b82b226a
-> > > Author: Amadeusz Slawinski <amade@...blr.net>
-> > > Date:   Wed Feb 5 21:05:28 2020 +0100
-> > >
-> > >     Increase permitted length of OSC
-> > >
-> > >     hyperlink feature used by some terminals requires lots of characters
-> > >     https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#length-limits
-> > >     mentions around 2083 characters, set it to a bit more.
-> > >
-> > >     Bug: 57718
-> > >
-> > >     Signed-off-by: Amadeusz Slawinski <amade@...blr.net>
-> > > ---
-> > >
-> > > Combined, these two commits change:
-> > >
-> > >   char   w_xtermosc[4][MAXSTR]; /* special xterm/rxvt escapes */
-> > >
-> > > (where MAXSTR is 768) to:
-> > >
-> > >   char   w_xtermosc[5][2560];   /* special xterm/rxvt escapes */
-> > >
-> >
-> > The report which resulted in second commit just happened to be reported
-> > at similar time and is not related to the issue at hand apart from same
-> > location in source code.
-> >
-> > > These are as seen on the screen-v4 branch.  On that branch, and thus in
-> > > all screen releases so far, the bug appears to be exposed only when
-> > > building with the "--enable-rxvt_osc" option.  Builds and packages made
-> > > without that option appear to be safe.  Amadeusz, can you confirm this?
-> >
-> > Yes builds without this option should be safe, however do note that
-> > as far as I know most distributions do enable it (I checked Debian,
-> > Arch Linux, Fedora and Gentoo).
-> >
-> > >
-> > > On master branch, the functionality is always enabled (and the option is
-> > > dropped), thus (not too ancient) builds from that branch are vulnerable
-> > > (until the above fixes, which were also made to that branch).
-> >
-> > Yes, however do note that all v4 releases are done from screen-v4 branch.
-> Has a CVE been requested already ?
-> I do not see one on cve.mitre.org
-CVE-2020-9366 was assigned to this flaw via mitre.org
-> >
-> > Amadeusz
-> >
->
->
-> --
-> Cedric Buissart,
-> Product Security
+__________________________________________________________________
+
+    Squid Proxy Cache Security Update Advisory SQUID-2020:4
+__________________________________________________________________
+
+Advisory ID:        SQUID-2020:4
+Date:               April 23, 2020
+Summary:            Multiple issues
+                    in HTTP Digest authentication.
+Affected versions:  Squid 2.x -> 2.7.STABLE9
+                    Squid 3.x -> 3.5.28
+                    Squid 4.x -> 4.10
+                    Squid 5.x -> 5.0.1
+Fixed in version:   Squid 4.11 and 5.0.2
+__________________________________________________________________
+
+    http://www.squid-cache.org/Advisories/SQUID-2020_4.txt
+    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-11945
+__________________________________________________________________
+
+Problem Description:
+
+ Due to an integer overflow bug Squid is vulnerable to credential
+ replay and remote code execution attacks against HTTP Digest
+ Authentication tokens.
+
+__________________________________________________________________
+
+Severity:
+
+ When memory pooling is used this problem allows a remote client
+ to replay a sniffed Digest Authentication nonce to gain access
+ to resources that are otherwise forbidden.
+
+ When memory pooling is disabled this problem allows a remote
+ client to perform remote code execution through the free'd nonce
+ credentials.
+
+__________________________________________________________________
+
+Updated Packages:
+
+ This bug is fixed by Squid versions 4.11 and 5.0.2.
+
+ In addition, patches addressing this problem for the stable
+ releases can be found in our patch archives:
+
+Squid 4:
+ <http://www.squid-cache.org/Versions/v4/changesets/squid-4-eeebf0f37a72a2de08348e85ae34b02c34e9a811.patch>
+
+ If you are using a prepackaged version of Squid then please refer
+ to the package vendor for availability information on updated
+ packages.
+
+__________________________________________________________________
+
+Determining if your version is vulnerable:
+
+ All Squid-2.x up to and including 2.4.STABLE7 are not vulnerable.
+
+ All Squid-2.5 up to and including 2.7.STABLE9 are vulnerable.
+
+ All Squid-2.x up to and including 2.7.STABLE9 configured with
+ "auth_param digest" are vulnerable.
+
+ All Squid-2.x up to and including 2.7.STABLE9 configured without
+ "auth_param digest" are not vulnerable.
+
+ All Squid-3.x up to and including 3.5.28 built with
+ --disable-auth are not vulnerable.
+
+ All Squid-3.2 up to and including 3.5.28 built with
+ --disable-auth-digest are not vulnerable.
+
+ All Squid-3.x up to and including 3.5.28 configured with
+ "auth_param digest" are vulnerable.
+
+ All Squid-3.x up to and including 3.5.28 configured without
+ "auth_param digest" are not vulnerable.
+
+ All Squid-4.x up to and including 4.10 built with
+ --disable-auth are not vulnerable.
+
+ All Squid-4.x up to and including 4.10 built with
+ --disable-auth-digest are not vulnerable.
+
+ All Squid-4.x up to and including 4.10 configured with
+ "auth_param digest" are vulnerable.
+
+ All Squid-4.x up to and including 4.10 configured without
+ "auth_param digest" are not vulnerable.
+
+ Squid-5.0.1 built with --disable-auth-digest is not vulnerable.
+
+ Squid-5.0.1 configured with "auth_param digest" are vulnerable.
+
+ Squid-5.0.1 configured without "auth_param digest" are not
+ vulnerable.
+
+__________________________________________________________________
+
+Workaround:
+
+Either,
+
+ Remove all "auth_param digest" lines from squid.conf
+
+Or,
+
+ Build Squid with --disable-auth-digest
+
+Or,
+
+ Build Squid with --disable-auth
+
+__________________________________________________________________
+
+Contact details for the Squid project:
+
+ For installation / upgrade support on binary packaged versions
+ of Squid: Your first point of contact should be your binary
+ package vendor.
+
+ If your install and build Squid from the original Squid sources
+ then the squid-users@...ts.squid-cache.org mailing list is your
+ primary support point. For subscription details see
+ <http://www.squid-cache.org/Support/mailing-lists.html>.
+
+ For reporting of non-security bugs in the latest STABLE release
+ the squid bugzilla database should be used
+ <http://bugs.squid-cache.org/>.
+
+ For reporting of security sensitive bugs send an email to the
+ squid-bugs@...ts.squid-cache.org mailing list. It's a closed
+ list (though anyone can post) and security related bug reports
+ are treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+Credits:
+
+ This vulnerability was discovered by Clément Berthaux and
+ Florian Guilbert of Synacktiv.
+
+ Fixed by Maxime Desbrus of Synacktiv.
+
+__________________________________________________________________
+
+Revision history:
+
+ 2019-11-20 13:39:07 UTC Initial Report
+ 2020-04-02 11:16:45 UTC Patches Released
+ 2020-04-20 20:08:14 UTC CVE Assignment
+ 2020-04-23 08:00:00 UTC Advisory Released
+__________________________________________________________________
+END
 
 
 
---
-Cedric Buissart,
-Product Security
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
