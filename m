@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/02/2
-Message-ID: <20201102173429.GA1527710@fullerene.field.pennock-tech.net>
-Date: Mon, 2 Nov 2020 12:34:29 -0500
-From: Phil Pennock <oss-security-phil@...dhuis.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/11
+Message-ID: <326221db60085d047ec552343f0f3a5e0e14ae7e.camel@gathman.org>
+Date: Thu, 23 Apr 2020 12:33:34 -0400
+From: "Stuart D. Gathman" <stuart@...hman.org>
 To: oss-security@...ts.openwall.com
-Cc: Phil Pennock <pdp@...adia.com>
-Subject: [CVE-2020-26521][CVE-2020-26892] NATS JWT vulnerabilities
+Subject: Re: spoofing of local email sender via a homoglyph attack
 Content-Type: text/plain; charset=utf-8
 
-Folks,
+On Thu, 2020-04-23 at 17:32 +0300, PromiseLabs Pentest Research wrote:
+> 
+> is that it could be used to advance a social-engineer attack into 
+> tricking the recipients believing that they are getting an email from
+> a 
+> high-level position at the company.
+> 
+> It's related to the from header.
 
-The NATS project has a new advisories website:
-  <https://advisories.nats.io/>
+This is not really job of postfix to block.  It is trivial to block
+internationalized local mail in a milter (note: I maintain pymilter) -
+or just refuse to create non-ascii mailboxes.  
 
-We also have two new CVEs; both relate to our JWT handling and both
-affect the NATS server:
+You don't even need utf-
+8 for this attack - the infamous Arial font makes homoglyphs like lBM
+(which looks exactly like IBM in Arial) possible, and email localpart
+is case sensitive.  So I also recommend forcing all local mailboxes to
+be all lower case.  (Some businesses force to all upper case instead.) 
 
-* CVE-2020-26521
-  + Nil deref in JWT library, causing Go panic
-  + NATS server upgrade required to avoid Denial-of-Service
-  + 2020-11-02
-* CVE-2020-26892
-  + Incorrect credential expiration handling via JWT library
-  + API fixes needed by library users
-  + NATS server upgrade required for expiration to work
-  + 2020-11-02
 
-The text of our advisories should be attached.
+If anything, this is a security bug in the *font* (which the term
+homoglyph implies), and the CVE should specify the problematic font or
+fonts.
 
-We have just released NATS server 2.1.9 which includes the fixes for
-both these issues.
-
-Regards,
--Phil Pennock
-
-View attachment "CVE-2020-26521.txt" of type "text/plain" (1525 bytes)
-
-View attachment "CVE-2020-26892.txt" of type "text/plain" (1633 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
