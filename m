@@ -1,33 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/06/2
-Message-ID: <CAEvdU_3tU3NncO5CQ80BAo1LuyVBibaYMUmmhJY+gCrvDStxhQ@mail.gmail.com>
-Date: Fri, 6 Mar 2020 10:08:05 +0100
-From: Jacopo Cappellato <jacopoc@...che.org>
-To: announce@...che.org, "user@...iz.apache.org ML" <user@...iz.apache.org>,  Dev list <dev@...iz.apache.org>, oss-security@...ts.openwall.com
-Cc: security@...iz.apache.org, timon.funck@...s.de, disclosure@...s.de
-Subject: [CVE-2020-1943] Apache OFBiz XSS Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/13
+Message-ID: <20200423181234.GA23035@openwall.com>
+Date: Thu, 23 Apr 2020 20:12:34 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Wietse Venema <wietse@...cupine.org>
+Subject: Re: spoofing of local email sender via a homoglyph attack
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-Important
+On Thu, Apr 23, 2020 at 07:03:14PM +0300, PromiseLabs Pentest Research wrote:
+> I am not sure that the "from" header applies to user probing, as the 
 
-Vendor:
-The Apache Software Foundation
+You mean the MAIL FROM aka envelope-from.
 
-Versions Affected:
-OFBiz 16.11.01 to 16.11.07
+> actual mail server configuration on which I'm testing would accept any 
+> user as a sender:
+> 
+> # nc -v *** OMITTED *** 25
+> Connection to *** OMITTED *** 25 port [tcp/smtp] succeeded!
+> 220 *** OMITTED *** ESMTP Postfix
+> mail from: userdoesnotexists@...get.com
+> 250 2.1.0 Ok
+> rcpt to: test@...get.com
+> 550 5.1.1 <test@...get.com>: Recipient address rejected: User unknown in 
+> local recipient table
+> rcpt to: j??hn.doe@...get.com
+> 550 5.1.1 <j??hn.doe@...get.com>: Recipient address rejected: User 
+> unknown in local recipient table
+> rcpt to: existing.user@...get.com
+> 250 2.1.5 Ok
+> 
+> However, a non-existing user would not be accepted in the "rcpt-to" 
+> header, so this is another possible vector. This was discovered while 
+> doing a black box test on one of our clients, and it should be noted 
+> that the VRFY command has been enabled on the server, hence there was no 
+> reason to look for another way. However I'm unaware whether disabling 
+> VRFY would alter this behaviour. As you can see, the reported issue 
+> itself is may be actually due to the possibility of relaying a local 
+> email from a non-existing user.
+> 
+> Having said this, if not then I assume then you are correct, in case we 
+> take the "to" header into consideration in relation to user probing, 
+> unless I'm missing your logic.
 
-Description:
-Data sent with "contentId" to "/control/stream" is not sanitized, allowing
-XSS attacks.
+I actually meant probing via the "Sender address rejected: not logged
+in" messages, which while delivered in response to a RCPT TO depend on
+the MAIL FROM address.  However, as Wietse tells us this merely probes
+the smtpd_sender_login_maps table, so is very limited and
+configuration-specific.  Besides, as Wietse and you correctly remind us,
+the possibility to probe for valid addresses via RCPT TO is in practice
+unavoidable on modern Internet.  So the point of blocking probing of
+which sender addresses can vs. can not (do not need to) authenticate is
+moot given that in typical setups those addresses are also potential
+recipient addresses and thus could also be probed via RCPT TO.
 
-Mitigation:
-Upgrade to 17.12.01 or manually apply the commits at OFBIZ-10753
-----
+What you reported originally, where you bypass something that just
+happens that way in some configurations and wasn't meant to provide any
+security against sender address spoofing, looks like even less of an
+issue to me.
 
-Credit:
-Timon Funck <timon.funck@...s.de>
+Does anyone see any reasonable action on these (non-)issues?  If not, I
+think the CVE should be rejected.  It's a case of "works as intended."
 
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
+> >>>>> Use CVE-2020-12063.
 
+Alexander
