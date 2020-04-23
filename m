@@ -1,25 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/07/2
-Message-Id: <76041A8A-5899-4BC6-AEDE-58C591807AFB@oracle.com>
-Date: Mon, 7 Dec 2020 10:23:45 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/4
+Message-Id: <CDC3220B-901E-4A8C-B297-C39451934DE0@jasper.la>
+Date: Thu, 23 Apr 2020 15:28:48 +0200
+From: Jasper Lievisse Adriaanse <j@...per.la>
 To: oss-security@...ts.openwall.com
-Cc: nopitydays@...il.com
-Subject: Re: Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2
+Subject: Exuberant Ctags and x2vpn format string vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
+I noticed two format string vulnerabilities in Exuberant Ctags and x2vpn, both of these were fixed back in 2009 and 2012 however they don't appear to have been picked up widely.
+(Note this concerns Excuberant Ctags and not Universalt Ctags which is a continuation for the former.)
 
-> On 7 Dec 2020, at 02:20, Shisong Qin <qinshisong1205@...il.com> wrote:
-> 
-> Recently we found another NULL-ptr deref BUG in spk_ttyio.c in the latest
-> Linux kernel(5.9.11 is the latest at that now). In the
-> spk_ttyio_receive_buf2() function, it would dereference spk_ttyio_synth
-> without checking whether it is NULL or not, and may lead to a NULL-ptr
-> deref crash.
+For example the issue in ctags was fixed in 2009 by the original author in the upstream subversion repository, but a proper release was never made after the affected 5.8 version was released.
+Some distributions (most notably Debian, Centos 8) have switched to distributing a version based on an svn checkout, whereas others (OpenBSD, FreeBSD, pkgsrc, CentOS < 8, Homebrew, etc) were still using the actual 5.8 release.
 
-Did you ask for a CVE for bug?
+For ctags it can be triggered by specifying an existent but unreadable regex file with the following proof-of-concept:
 
-jch
+$ touch "%p %p"; chmod 000 "%p %p"; ectags --regex-c="@%p %p"
+ectags: Warning: 0x0 0x189fa32db1da : Permission denied
+ectags: No files specified. Try "ectags --help".
+$
 
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+Or a simple crasher:
+
+$ touch %n; chmod 000 %n; ectags --regex-c=@%n
+ectags: Warning: zsh: segmentation fault (core dumped)  ectags --regex-c=@%n
+$
+
+and for x2vpn it relies on overwriting argv[0]:
+
+tau:2011 ctags % ARGV0="%08x %08x" x2vnc localhost:0
+00000010 1e950c0a: ConnectToTcpAddr: connect: Connection refused
+%08x %08x: unable to connect to VNC server
+tau:2012 ctags %
+
+I described some more details in https://blog.jasper.la/poking-old-format-string-bugs.html
+
+I'm posting to this list to make sure other vendors are aware of these issues in ctags and x2vnc because eventhough there were fixed in 2009/2012, many vendors are still shipping the vulnerable code.
+If CVEs were to be allocated from the 2009 and 2012 ranges for ctags and x2vnc respectively to make tracking these issues easier, that wouldn't hurt I guess.
+
+Cheers,
+Jasper
