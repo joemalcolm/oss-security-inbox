@@ -1,57 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/20/1
-Message-ID: <20200620104701.2a373053@computer>
-Date: Sat, 20 Jun 2020 10:47:01 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Squirrelmail: Use of unserialize() on user data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/8
+Message-ID: <20200423151430.GA21258@openwall.com>
+Date: Thu, 23 Apr 2020 17:14:30 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: PromiseLabs Pentest Research <pentest@...miselabs.net>, Wietse Venema <wietse@...cupine.org>
+Subject: Re: spoofing of local email sender via a homoglyph attack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Apr 23, 2020 at 05:32:15PM +0300, PromiseLabs Pentest Research wrote:
+> To follow up on your questions:
 
-The PHP-based webmail tool Squirrelmail uses unserialize() for
-untrusted data.
+Thanks!  Now this is specific.
 
-unserialize() is generally not considered safe for this, PHP does not
-treat memory safety issues in unserialize as security bugs since a
-while and there are other attacks.
+> The current configuration actually blocks any non-authorized requests as 
+> explained in the description. The use-case of this (from my perspective) 
+> is that it could be used to advance a social-engineer attack into 
+> tricking the recipients believing that they are getting an email from a 
+> high-level position at the company.
+> 
+> It's related to the from header.
+> 
+> Issuing a regular unauthenticated request, trying to send an email from 
+> john.doe, which is a high-level user at the company:
+> $ nc -v *** OMITTED *** 25
+> Connection to *** OMITTED *** 25 port [tcp/smtp] succeeded!
+> 220 *** OMITTED *** ESMTP Postfix
+> mail from: john.doe@...ver.com
+> 250 2.1.0 Ok
+> rcpt to: existing.user@...ver.com
+> 553 5.7.1 <john.doe@...ver.com>: Sender address rejected: not logged in
+> 
+> As you can see, the mail server rejects the request as the existing user 
+> hasn't authenticated himself.
 
-In compose.php [1] you can see that squirrelmail uses unserialize on
-$mailtodata, which directly comes from a GET variable.
+My guess is this works when the server is configured to support SMTP
+AUTH for potentially relaying mail from local users to other servers,
+but as you show under that configuration the authentication requirement
+applies even for messages intended for local users.  That's curious.
 
-This data usually comes from the mailto.php script which opens a mail
-compose interface with a passed mail address.
+I don't know whether that behavior is documented and expected, and
+whether it is considered a security feature or not.  I hope Wietse can
+weigh in on this.
 
-I've written a patch to convert this to json_encode/json_decode [2].
+> However, issuing a request using a homoglyph character:
+> $ echo -ne "j\xce\xbfhn.doe@...ver.com" | xclip -selection clipboard
+> $ nc -v *** OMITTED ***  25
+> Connection to *** OMITTED ***  25 port [tcp/smtp] succeeded!
+> 220 *** OMITTED ***  ESMTP Postfix
+> mail from: j??hn.doe@...ver.com
+> 250 2.1.0 Ok
+> rcpt to: existing.user@...ver.com
+> 250 2.1.5 Ok
+> data
+> 354 End data with <CR><LF>.<CR><LF>
+> 
+> The victim would get an email thinking it's from the actual john.doe 
+> user.
 
-Unfortunately this is not the only place using unserialize on untrusted
-data, later in the same file you can see that $attachments is also
-parsed with unserialize, which comes from POST data, thus also
-user-controlled. Trying to patch this with a similar strategy broke the
-attachment functionality. If someone else wants to give it a try happy
-to accept patches. (I'm collecting squirrelmail patches that avoid
-warnings, add compatibility to latest PHP versions and fix security
-issues here [3]. For reasons unclear to me the squirrelmail developers
-only irregularly answer when I send patches and seem to ignore some of
-these issues. While they haven't made a release in a long time, they
-still sometimes fix security issues in their svn repo.)
+OK.  To me, the real unexpected issue here is not the possibility to
+spoof (in fact, it's unexpected to me that it wasn't possible in your
+first example), but rather the possibility to probe for valid usernames.
+That other aspect is more likely CVE-worthy, in my opinion.  There's
+precedent that such easy probing for usernames shouldn't work, and is
+getting CVEs against services where it does work.
 
-It is unclear to me how big of a risk these issues are. There are some
-attack strategies on unserialize that involve constructors of objects
-[4], but the squirrelmail code doesn't have many objects, so it is
-unclear if this is a feasible attack strategy.
+There's probably room for hardening here where in cases when SMTP AUTH
+is enforced for local users, mail from other local-looking addresses yet
+with non-existent usernames be rejected in exactly the same way (and
+with the same timings - tricky!) as mail from existing local usernames
+when SMTP AUTH is not attempted (like in your example).  There should
+also be no visible (and ideally no measurable) difference for existing
+and non-existent usernames when SMTP AUTH is attempted but fails.
 
-I had reported the unserialize security issue to Squirrelmail on May
-23rd. Unfortunately I haven't received a reply.
+Alternatively, mail to local users could be accepted consistently
+regardless of whether the claimed sender username exists locally or not,
+thus without requiring authentication.  However, this would leave
+unfixed the username probing possibility on attempting to relay mail to
+external servers, where bypassing authentication is certainly not an
+option.  So overall that isn't a valid fix for the username probing.
 
+I assume the tests above are with postfix-2.10.1-7.el7.x86_64 as you had
+mentioned previously, and behavior could very well vary between builds.
 
+> Whether this is applicable for assigning a CVE it's up to you decide, 
 
-[1]
-https://svn.code.sf.net/p/squirrelmail/code/branches/SM-1_4-STABLE/squirrelmail/src/compose.php
-[2]
-https://github.com/hannob/squirrelpatches/blob/main/patches/squirrelmail-security-mailto-avoid-unserialize.diff
-[3] https://github.com/hannob/squirrelpatches
-[4] https://blog.ripstech.com/2018/php-object-injection/
--- 
-Hanno Böck
-https://hboeck.de/
+No, technically it's up to MITRE, and they've already assigned one - but
+I complain that they did so without sufficient detail on the issue.
+
+> the only actual risk here discovered so far is a social-engineering 
+> attack.
+
+And username probing.
+
+> >>> Use CVE-2020-12063.
+
+Alexander
