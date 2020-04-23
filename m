@@ -1,45 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/13/1
-Message-ID: <87wnzu91yr.fsf@hope.eyrie.org>
-Date: Mon, 12 Oct 2020 21:36:28 -0700
-From: Russ Allbery <eagle@...ie.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/15
+Message-Id: <E9ED0420-574C-4912-A130-6753D5AFE82C@oracle.com>
+Date: Thu, 23 Apr 2020 21:21:35 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
+Cc: Wietse Venema <wietse@...cupine.org>
+Subject: Re: spoofing of local email sender via a homoglyph attack
 Content-Type: text/plain; charset=utf-8
 
-Brian May <brian@...uxpenguins.xyz> writes:
-> Jeffrey Walton <noloader@...il.com> writes:
 
->> [...] like making /home/loser/www available to other users.
 
-> Does anybody even do this anymore?
+> On 23 Apr 2020, at 19:12, Solar Designer <solar@...nwall.com> wrote:
+> 
+> 
+> Does anyone see any reasonable action on these (non-)issues?  If not, I
+> think the CVE should be rejected.  It's a case of "works as intended."
 
-Yes, I'm still seeing this pattern in the academic world.  In general,
-shared file systems and an expectation of a generous umask are still very
-common in the academic and scientific world, where people routinely work
-collaboratively on large data sets and share snippets of code and data
-frequently.
 
-> Once upon a time, a shared Unix system account come with an implied web
-> account which you could use to publish files and create your own
-> website. But I cannot personally think of any examples where this still
-> happens. websystems and shell accounts are generally stored on distinct
-> and independent systems.
+Yep.  I agree.   I don't see this as an issue at all -- it's the way SMTP works, basically.
 
-I personally still maintain my web pages this way, although I'm not a good
-example, of course, and it's on my list to change.  :)  But I have also
-still seen this pattern in scientific work.  There's built-in support in
-Apache still.
+jch
 
-> Plus even if I was going to implement such a system today, I might
-> seriously consider using - say "/web/loser" instead. Although this might
-> have implications if quotas are important. Or maybe something that bind
-> mounts /home/loser/www to /web/loser, that way the web software doesn't
-> need access to /home/loser.
+> 
+>>>>>>> Use CVE-2020-12063.
+> 
+> Alexander
 
-Yes, indeed.  It's certainly not an argument against changing the
-defaults; a small amount of additional user work to actively choose to
-share something is a better default approach.
-
--- 
-Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
