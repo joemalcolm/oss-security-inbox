@@ -1,53 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/06/1
-Message-ID: <CALJHwhRpmRTpqWe74KBk1QBQ7b8tuHXuOJAu2UHtq6foYRj7Zg@mail.gmail.com>
-Date: Wed, 6 May 2020 15:12:12 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-10732 kernel: uninitialized kernel data leak in userspace coredumps
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/5
+Message-ID: <20200423133148.GA19214@openwall.com>
+Date: Thu, 23 Apr 2020 15:31:48 +0200
+From: Solar Designer <solar@...nwall.com>
+To: PromiseLabs Pentest Research <pentest@...miselabs.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: spoofing of local email sender via a homoglyph attack
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+Hi,
 
-A potential info leak of kernel private memory to userspace was found in
-the kernel's implementation of core dumping userspace processes.  An area
-of memory was allocated from free memory without being correctly
-initialized, this memory contents could contain kernel private information
-from previous executions and leak it to kernel space for any (probably
-local) user that is able to read the core dump.
+As list moderator, I took the liberty of changing the Subject of this
+posting to include the (claimed) vulnerability type, and not to single
+out the possibly irrelevant choice of software/version.  The original
+message Subject was:
 
-This seems like it would allow leaking of possible registers that are not
-stored/initialized in the core dump itself.  The amount leaked will depend
-on the register state at the time of the crash, it could also leak nothing.
+Subject: Fwd: Re: [scr882459] postfix 2.10.1 (other versions may be affected)
 
-This was introduced in 4206d3aa1978e44f58bfa4e1c9d8d35cbf19c187
+To make having this in here reasonable, I think we should first consider
+discussing the general (non-)issue and only then specific software.
 
-Possible mitigation would be to disable core dumps system-wide by setting:
+Speaking mostly in general, not focusing on Postfix:
 
-* hard core 0
+On Thu, Apr 23, 2020 at 03:10:55PM +0300, PromiseLabs Pentest Research wrote:
+> >> Postfix allows an email from unsanitized input, pretending to be from
+> >> an existing user on the mail system, which may look exactly the same.
+> >> For example, it is possible sending an email using the hex character
+> >> \xce\ xbf, which looks exactly like the letter 'o'. In case the user
+> >> john.doe exists on the mail server, postfix would not allow to send an
+> >> email from this email account unless an unauthorized attempt is made.
+> >> However, in case we substitute the letter 'o' with the hex character
+> >> \xce\xbf, it will look exactly like it's being sent from john.doe,
+> >> although john.doe (j<\xce\xbf)hn.doe) is actually different from
+> >> the other.
 
-In the  /etc/security/limits.conf file and restarting
-applications/services/processes which users may have access to or simply
-reboot the system.  This disables core dumps which may not be a suitable
-workaround in your environment.
+How exactly would a mail server block a message from an existing
+username (even without the homoglyph attack for now), and under what
+scenario - message being submitted locally or via SMTP?
 
-Relevant links:
--------------------
+For locally submitted messages, depending on mail server architecture,
+it may be technically possible to infer the real sender (e.g., which
+user invoked an SGID program to submit the message to the queue, or
+which user connected to a Unix domain socket).  However, if so the mail
+server would reasonably not merely block sending mail from other
+existing local usernames (and allow mail from non-existent local-looking
+usernames) but would rather insist on the message having the one correct
+username specified as its sender (retrieving the username by UID and
+either substituting it or comparing exact strings, so a homoglyph attack
+is irrelevant).
 
-Not upstream but a patch:
-https://github.com/ruscur/linux/commit/a95cdec9fa0c08e6eeb410d461c03af8fd1fef0a
+For messages received via SMTP, the exact sender can generally not be
+determined, but a message appearing to come from a locally hosted domain
+name may be accepted or rejected or inbetween depending on anti-spam
+settings and such (which may also provide limited anti-spoofing).  I'd
+expect such configuration to be per-domain (applying regardless of
+whether the claimed sender's name exists locally or not), not per-user.
+While use cases can exist where it'd make sense to reject only messages
+from usernames that exist locally, that feels like a special case, and I
+doubt is a default configuration - or is it a default somewhere?  Even
+if it is, is it an expected security feature (rather than a best-effort
+anti-spam filter, perhaps one of many)?  That's highly doubtful.
 
-Where I found out about it:
-https://twitter.com/grsecurity/status/1252558055629299712
+Finally, are we talking about envelope-from, header From, header Sender,
+or/and something else?
 
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1831399
+With these questions, I am trying to show that PromiseLabs' report
+leaves so much unspecified that claiming a specific attack is premature.
+Let alone request (and even successfully obtain) a CVE ID.
 
-Thank you.
+> > Use CVE-2020-12063.
 
-Wade Mealing
+So now we have a CVE ID specifically against Postfix while the issue is
+probably generic (or possibly a non-issue, depending on how you look at
+it) and if there's anything specific to Postfix here then it's possibly
+Postfix actually trying to prevent spoofing (or just spam) in some
+cases, but not doing so perfectly.  Should either of these cases really
+result in a CVE ID against Postfix?
 
-Product Security - Kernel
-Red Hat
-wmealing@...hat.com
+Also, is the issue (if one exists) potentially fixable?  Probably not
+directly - that is, there's probably no reliable way to prevent just the
+homoglyph attacks.  Instead, either whatever check possibly exists can
+be removed or relaxed (also accept messages appearing from usernames
+that do exist locally) for the sake of consistency, or the check can be
+changed to be per-domain.  Either way, it'd not care about the usernames
+anymore (assuming it currently somehow does).
 
+I suggest that PromiseLabs research and describe the issue for real,
+which in my opinion they did not yet.
+
+Alexander
