@@ -1,4 +1,9 @@
-Received: (qmail 2001 invoked by uid 550); 4 Oct 2023 15:14:28 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["940" "Thursday" "23" "April" "2020" "12:33:34" "-0400" "Stuart D. Gathman" "stuart@gathman.org" "<326221db60085d047ec552343f0f3a5e0e14ae7e.camel@gathman.org>" "24" "Re: [oss-security] spoofing of local email sender via a homoglyph attack" "^Date:" nil nil "4" "2020042316:33:34" "[oss-security] spoofing of local email sender via a homoglyph attack" (number mark "        stuart@gathm Apr 23   24/940   " thread-indent "\"Re: [oss-security] spoofing of local email sender via a homoglyph attack\"\n") "<2236ad47936a87f144248f9ab6c7340f@promiselabs.net>" ("<20200422152047.3196780D981@smtprhmv1.mitre.org>" "<2843537f5deb3a7987c8485bcc56a260@promiselabs.net>" "<ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>" "<20200423133148.GA19214@openwall.com>" "<2236ad47936a87f144248f9ab6c7340f@promiselabs.net>") nil nil nil nil nil nil nil "Re: [oss-security] spoofing of local email sender via a homoglyph attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7365 invoked by uid 550); 23 Apr 2020 16:52:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,159 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16144 invoked from network); 23 Apr 2020 16:33:47 -0000
+Authentication-Results: mail.gathman.org; iprev=pass policy.iprev="2001:470:8:809::38" (melissa.gathman.org); auth=pass (PLAIN sslbits=256) smtp.auth=stuart
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gathman.org; 
+ i=@gathman.org; q=dns/txt; s=default; t=1587659559; 
+ h=message-id : subject : from : to : date : in-reply-to : 
+ references : content-type : mime-version : 
+ content-transfer-encoding : subject : from : date; 
+ bh=pGHrDoXvrtitKHKBRv4312mFFY1ppY0WAfNpOb64h9c=; 
+ b=VLZUF3n8ng9MmLlVjWjaQMsCuL/B0yMDcQ+b+TfW3/aNh1r26wlcjKqP
+ 3WEiUp5NJJWK51ZOH1swSz6g3ut29jwTe8vmo6opUY+FII1a7hge1Hmj7H
+ aac6EoqNAUuGKD6ioKEnziQy3L7bHz4+Dka9Hgt7jECPXFIZaW0rV9XcM=
+Message-ID: <326221db60085d047ec552343f0f3a5e0e14ae7e.camel@gathman.org>
+In-Reply-To: <2236ad47936a87f144248f9ab6c7340f@promiselabs.net>
+References: <20200422152047.3196780D981@smtprhmv1.mitre.org>
+	 <2843537f5deb3a7987c8485bcc56a260@promiselabs.net>
+	 <ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>
+	 <20200423133148.GA19214@openwall.com>
+	 <2236ad47936a87f144248f9ab6c7340f@promiselabs.net>
+Organization: Gathman Family
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Date: Thu, 23 Apr 2020 12:33:34 -0400
+From: "Stuart D. Gathman" <stuart@gathman.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1836 invoked from network); 4 Oct 2023 15:14:13 -0000
-Date: Wed, 4 Oct 2023 17:13:57 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] spoofing of local email sender via a homoglyph
+ attack
 To: oss-security@lists.openwall.com
-Cc: Daniel Kiper <daniel.kiper@oracle.com>,
-	Maxim Suhanov <dfirblog@gmail.com>
-Message-ID: <20231004151357.GA29150@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] CVE-2023-4692, CVE-2023-4693: grub2: OOB write, read via specially crafted NTFS filesystem
 
-Hi,
+On Thu, 2020-04-23 at 17:32 +0300, PromiseLabs Pentest Research wrote:
+> 
+> is that it could be used to advance a social-engineer attack into 
+> tricking the recipients believing that they are getting an email from
+> a 
+> high-level position at the company.
+> 
+> It's related to the from header.
 
-A couple of issues in GRUB relevant to setups with Secure Boot got fixed:
+This is not really job of postfix to block.  It is trivial to block
+internationalized local mail in a milter (note: I maintain pymilter) -
+or just refuse to create non-ascii mailboxes.  
 
-https://lore.kernel.org/all/ZRxK8s4nQV2jBq%2F9@tomti.i.net-space.pl/
+You don't even need utf-
+8 for this attack - the infamous Arial font makes homoglyphs like lBM
+(which looks exactly like IBM in Arial) possible, and email localpart
+is case sensitive.  So I also recommend forcing all local mailboxes to
+be all lower case.  (Some businesses force to all upper case instead.) 
 
-Daniel, I'd appreciate it if you post things like this to oss-security
-going forward.  Thank you!
 
-> Date: Tue, 3 Oct 2023 19:10:10 +0200
-> From: Daniel Kiper <daniel.kiper@oracle.com>
-> To: grub-devel@gnu.org
-> Cc: dfirblog@gmail.com
-> Subject: [SECURITY PATCH 0/6] GRUB2 NTFS driver vulnerabilities - 2023/10/03
-> 
-> Hi all,
-> 
-> This patch set contains a bundle of fixes for various security flaws discovered
-> in the GRUB2 NTFS driver code recently. The most severe ones, i.e. potentially
-> exploitable, have CVEs assigned and are listed at the end of this email.
-> 
-> Details of exactly what needs updating will be provided by the respective
-> distros and vendors when updates become available.
-> 
-> Full mitigation against all CVEs will require updated shim with latest SBAT
-> (Secure Boot Advanced Targeting) [1] data provided by distros and vendors.
-> This time UEFI revocation list (dbx) will not be used and revocation of broken
-> artifacts will be done with SBAT only. For information on how to apply the
-> latest SBAT revocations, please see mokutil(1). Vendor shims may explicitly
-> permit known older boot artifacts to boot.
-> 
-> Updated GRUB2, shim and other boot artifacts from all the affected vendors will
-> be made available when the embargo lifts or some time thereafter.
-> 
-> I am posting all the GRUB2 upstream patches which fix all security bugs found
-> and reported up until now. Major Linux distros carry or will carry soon one
-> form or another of these patches. Now all the GRUB2 upstream patches are in
-> the GRUB2 git repository [2] too.
-> 
-> I would like to thank Maxim Suhanov for responsible disclosure and preparation
-> of patches required to fully fix all known issues.
-> 
-> Daniel
-> 
-> [1] https://github.com/rhboot/shim/blob/main/SBAT.md
-> 
-> [2] https://git.savannah.gnu.org/gitweb/?p=grub.git
->     https://git.savannah.gnu.org/git/grub.git
-> 
-> *******************************************************************************
-> 
-> CVE-2023-4692 grub2: OOB write when parsing the $ATTRIBUTE_LIST attribute for the $MFT file
-> 5.3/AV:L/AC:H/PR:H/UI:N/S:C/C:N/I:H/A:N
-> 
-> There is an out-of-bounds write in grub-core/fs/ntfs.c. An attacker may
-> leverage this vulnerability by presenting a specially crafted NTFS filesystem
-> image leading to GRUB's heap metadata corruption. Additionally, in some
-> circumstances, the attack may also corrupt the UEFI firmware heap metadata.
-> As a result arbitrary code execution and secure boot protection bypass may
-> be achieved.
-> 
-> Reported-by: Maxim Suhanov
-> 
-> *******************************************************************************
-> 
-> CVE-2023-4693 grub2: OOB read when reading data from the resident $DATA attribute
-> 5.3/AV:P/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N
-> 
-> There is an out-of-bounds read at grub-core/fs/ntfs.c. A physically present
-> attacker may leverage that by presenting a specially crafted NTFS file system
-> image to read arbitrary memory locations. A successful attack may allow
-> sensitive data cached in memory or EFI variables values to be leaked presenting
-> a high confidentiality risk.
-> 
-> Reported-by: Maxim Suhanov
-> 
-> *******************************************************************************
-> 
->  grub-core/fs/ntfs.c | 121 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----------------
->  1 file changed, 105 insertions(+), 16 deletions(-)
-> 
-> Maxim Suhanov (6):
->       fs/ntfs: Fix an OOB write when parsing the $ATTRIBUTE_LIST attribute for the $MFT file
->       fs/ntfs: Fix an OOB read when reading data from the resident $DATA attribute
->       fs/ntfs: Fix an OOB read when parsing directory entries from resident and non-resident index attributes
->       fs/ntfs: Fix an OOB read when parsing bitmaps for index attributes
->       fs/ntfs: Fix an OOB read when parsing a volume label
->       fs/ntfs: Make code more readable
+If anything, this is a security bug in the *font* (which the term
+homoglyph implies), and the CVE should specify the problematic font or
+fonts.
 
-The two issues are described in more detail in the individual commits:
-
-> Subject: [SECURITY PATCH 1/6] fs/ntfs: Fix an OOB write when parsing the $ATTRIBUTE_LIST attribute for the $MFT file
-> Date: Tue,  3 Oct 2023 19:12:23 +0200
-> 
-> From: Maxim Suhanov <dfirblog@gmail.com>
-> 
-> When parsing an extremely fragmented $MFT file, i.e., the file described
-> using the $ATTRIBUTE_LIST attribute, current NTFS code will reuse a buffer
-> containing bytes read from the underlying drive to store sector numbers,
-> which are consumed later to read data from these sectors into another buffer.
-> 
-> These sectors numbers, two 32-bit integers, are always stored at predefined
-> offsets, 0x10 and 0x14, relative to first byte of the selected entry within
-> the $ATTRIBUTE_LIST attribute. Usually, this won't cause any problem.
-> 
-> However, when parsing a specially-crafted file system image, this may cause
-> the NTFS code to write these integers beyond the buffer boundary, likely
-> causing the GRUB memory allocator to misbehave or fail. These integers contain
-> values which are controlled by on-disk structures of the NTFS file system.
-> 
-> Such modification and resulting misbehavior may touch a memory range not
-> assigned to the GRUB and owned by firmware or another EFI application/driver.
-> 
-> This fix introduces checks to ensure that these sector numbers are never
-> written beyond the boundary.
-> 
-> Fixes: CVE-2023-4692
-
-> Subject: [SECURITY PATCH 2/6] fs/ntfs: Fix an OOB read when reading data from the resident $DATA attribute
-> Date: Tue,  3 Oct 2023 19:12:24 +0200
-> 
-> From: Maxim Suhanov <dfirblog@gmail.com>
-> 
-> When reading a file containing resident data, i.e., the file data is stored in
-> the $DATA attribute within the NTFS file record, not in external clusters,
-> there are no checks that this resident data actually fits the corresponding
-> file record segment.
-> 
-> When parsing a specially-crafted file system image, the current NTFS code will
-> read the file data from an arbitrary, attacker-chosen memory offset and of
-> arbitrary, attacker-chosen length.
-> 
-> This allows an attacker to display arbitrary chunks of memory, which could
-> contain sensitive information like password hashes or even plain-text,
-> obfuscated passwords from BS EFI variables.
-> 
-> This fix implements a check to ensure that resident data is read from the
-> corresponding file record segment only.
-> 
-> Fixes: CVE-2023-4693
-
-Alexander
