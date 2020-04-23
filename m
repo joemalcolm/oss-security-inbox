@@ -1,41 +1,165 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/30/2
-Message-ID: <5c8272db-083f-299a-80f2-ec0edbda98d0@apache.org>
-Date: Thu, 30 Jan 2020 00:07:26 -0500
-From: "Kevin A. McGrail" <kmcgrail@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/6
+Message-ID: <2236ad47936a87f144248f9ab6c7340f@promiselabs.net>
+Date: Thu, 23 Apr 2020 17:32:15 +0300
+From: PromiseLabs Pentest Research <pentest@...miselabs.net>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-1931] Apache SpamAssassin Nefarious rule configuration (.cf) files can be configured to run system commands with warnings.
+Subject: Re: spoofing of local email sender via a homoglyph attack
 Content-Type: text/plain; charset=utf-8
 
-Apache SpamAssassin 3.4.4 was recently released [1], and fixes an issue
-of security note where nefarious rule configuration (.cf) files can be
-configured to run system commands similar to CVE-2018-11805.  This issue
-is less stealthy and attempts to exploit the issue will throw warnings. 
-Thanks to Damian Lukowski at credativ for reporting the issue
-ethically.  With this bug unpatched, exploits can be injected in a
-number of scenarios though doing so remotely is difficult.  In addition
-to upgrading to SA 3.4.4, we again recommend that users should only use
-update channels or 3rd party .cf files from trusted places.
+Hi,
 
-This issue has been assigned CVE id CVE-2020-1931 [2]
+To follow up on your questions:
 
-To contact the Apache SpamAssassin security team, please e-mail
-security at spamassassin.apache.org.  For more information about Apache
-SpamAssassin, visit the http://spamassassin.apache.org/ web site.
+1) How exactly would a mail server block a message from an existing
+username (even without the homoglyph attack for now), and under what
+scenario - message being submitted locally or via SMTP?
 
-Apache SpamAssassin Security Team
+The current configuration actually blocks any non-authorized requests as 
+explained in the description. The use-case of this (from my perspective) 
+is that it could be used to advance a social-engineer attack into 
+tricking the recipients believing that they are getting an email from a 
+high-level position at the company.
 
-[1]:
-https://svn.apache.org/repos/asf/spamassassin/branches/3.4/build/announcements/3.4.4.txt
+It's related to the from header.
 
-[2]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2020-1931
+Issuing a regular unauthenticated request, trying to send an email from 
+john.doe, which is a high-level user at the company:
+$ nc -v *** OMITTED *** 25
+Connection to *** OMITTED *** 25 port [tcp/smtp] succeeded!
+220 *** OMITTED *** ESMTP Postfix
+mail from: john.doe@...ver.com
+250 2.1.0 Ok
+rcpt to: existing.user@...ver.com
+553 5.7.1 <john.doe@...ver.com>: Sender address rejected: not logged in
+
+As you can see, the mail server rejects the request as the existing user 
+hasn't authenticated himself.
 
 
--- 
-Kevin A. McGrail
-KMcGrail@...che.org
+However, issuing a request using a homoglyph character:
+$ echo -ne "j\xce\xbfhn.doe@...ver.com" | xclip -selection clipboard
+$ nc -v *** OMITTED ***  25
+Connection to *** OMITTED ***  25 port [tcp/smtp] succeeded!
+220 *** OMITTED ***  ESMTP Postfix
+mail from: jοhn.doe@...ver.com
+250 2.1.0 Ok
+rcpt to: existing.user@...ver.com
+250 2.1.5 Ok
+data
+354 End data with <CR><LF>.<CR><LF>
 
-Member, Apache Software Foundation
-Chair Emeritus Apache SpamAssassin Project
-https://www.linkedin.com/in/kmcgrail - 703.798.0171
+The victim would get an email thinking it's from the actual john.doe 
+user.
 
+Whether this is applicable for assigning a CVE it's up to you decide, 
+the only actual risk here discovered so far is a social-engineering 
+attack.
+
+
+---
+PLPR:
+Plamen Dimitrov
+Penetration Tester, CEH & OSCP certified
+
+Promise Solutions LTD
+Penetration Testing and Managed Security services
+
+https://www.promisedev.com
+https://www.promiselabs.net
++359 883 22 05 12
+
+On 2020-04-23 16:31, Solar Designer wrote:
+> Hi,
+> 
+> As list moderator, I took the liberty of changing the Subject of this
+> posting to include the (claimed) vulnerability type, and not to single
+> out the possibly irrelevant choice of software/version.  The original
+> message Subject was:
+> 
+> Subject: Fwd: Re: [scr882459] postfix 2.10.1 (other versions may be 
+> affected)
+> 
+> To make having this in here reasonable, I think we should first 
+> consider
+> discussing the general (non-)issue and only then specific software.
+> 
+> Speaking mostly in general, not focusing on Postfix:
+> 
+> On Thu, Apr 23, 2020 at 03:10:55PM +0300, PromiseLabs Pentest Research 
+> wrote:
+>> >> Postfix allows an email from unsanitized input, pretending to be from
+>> >> an existing user on the mail system, which may look exactly the same.
+>> >> For example, it is possible sending an email using the hex character
+>> >> \xce\ xbf, which looks exactly like the letter 'o'. In case the user
+>> >> john.doe exists on the mail server, postfix would not allow to send an
+>> >> email from this email account unless an unauthorized attempt is made.
+>> >> However, in case we substitute the letter 'o' with the hex character
+>> >> \xce\xbf, it will look exactly like it's being sent from john.doe,
+>> >> although john.doe (j<\xce\xbf)hn.doe) is actually different from
+>> >> the other.
+> 
+> How exactly would a mail server block a message from an existing
+> username (even without the homoglyph attack for now), and under what
+> scenario - message being submitted locally or via SMTP?
+> 
+> For locally submitted messages, depending on mail server architecture,
+> it may be technically possible to infer the real sender (e.g., which
+> user invoked an SGID program to submit the message to the queue, or
+> which user connected to a Unix domain socket).  However, if so the mail
+> server would reasonably not merely block sending mail from other
+> existing local usernames (and allow mail from non-existent 
+> local-looking
+> usernames) but would rather insist on the message having the one 
+> correct
+> username specified as its sender (retrieving the username by UID and
+> either substituting it or comparing exact strings, so a homoglyph 
+> attack
+> is irrelevant).
+> 
+> For messages received via SMTP, the exact sender can generally not be
+> determined, but a message appearing to come from a locally hosted 
+> domain
+> name may be accepted or rejected or inbetween depending on anti-spam
+> settings and such (which may also provide limited anti-spoofing).  I'd
+> expect such configuration to be per-domain (applying regardless of
+> whether the claimed sender's name exists locally or not), not per-user.
+> While use cases can exist where it'd make sense to reject only messages
+> from usernames that exist locally, that feels like a special case, and 
+> I
+> doubt is a default configuration - or is it a default somewhere?  Even
+> if it is, is it an expected security feature (rather than a best-effort
+> anti-spam filter, perhaps one of many)?  That's highly doubtful.
+> 
+> Finally, are we talking about envelope-from, header From, header 
+> Sender,
+> or/and something else?
+> 
+> With these questions, I am trying to show that PromiseLabs' report
+> leaves so much unspecified that claiming a specific attack is 
+> premature.
+> Let alone request (and even successfully obtain) a CVE ID.
+> 
+>> > Use CVE-2020-12063.
+> 
+> So now we have a CVE ID specifically against Postfix while the issue is
+> probably generic (or possibly a non-issue, depending on how you look at
+> it) and if there's anything specific to Postfix here then it's possibly
+> Postfix actually trying to prevent spoofing (or just spam) in some
+> cases, but not doing so perfectly.  Should either of these cases really
+> result in a CVE ID against Postfix?
+> 
+> Also, is the issue (if one exists) potentially fixable?  Probably not
+> directly - that is, there's probably no reliable way to prevent just 
+> the
+> homoglyph attacks.  Instead, either whatever check possibly exists can
+> be removed or relaxed (also accept messages appearing from usernames
+> that do exist locally) for the sake of consistency, or the check can be
+> changed to be per-domain.  Either way, it'd not care about the 
+> usernames
+> anymore (assuming it currently somehow does).
+> 
+> I suggest that PromiseLabs research and describe the issue for real,
+> which in my opinion they did not yet.
+> 
+> Alexander
