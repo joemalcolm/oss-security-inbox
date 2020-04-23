@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2434" "Wednesday" "26" "October" "2016" "10:46:40" "+0100" "Simon McVittie" "smcv@debian.org" "<20161026094640.rv26wlnarguz5lyv@perpetual.pseudorandom.co.uk>" "43" "Re: [oss-security] Re: jasper: memory allocation failure in jas_malloc (jas_malloc.c)" nil nil nil "10" "2016102609:46:40" "[oss-security] Re: jasper: memory allocation failure in jas_malloc (jas_malloc.c)" (number mark "U       smcv@debian. Oct 26   43/2434  " thread-indent "\"Re: [oss-security] Re: jasper: memory allocation failure in jas_malloc (jas_malloc.c)\"\n") "<8284992.IKFRmaKcSl@blackgate>" ("<2510502.0NpgWQPfkR@blackgate>" "<20161023010359.42F65336005@smtpvbsrv1.mitre.org>" "<CAJ_zFkJFCUiOb+S46jM87qundu4rYO1QhxQ85KJHb_zKVOggzQ@mail.gmail.com>" "<8284992.IKFRmaKcSl@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2071" "Thursday" "23" "April" "2020" "19:10:32" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20200423191032.zjab7ydsiw6ibotf@yuggoth.org>" "48" "Re: [oss-security] spoofing of local email sender via a homoglyph attack" "^Date:" nil nil "4" "2020042319:10:32" "[oss-security] spoofing of local email sender via a homoglyph attack" (number mark "        fungi@yuggot Apr 23   48/2071  " thread-indent "\"Re: [oss-security] spoofing of local email sender via a homoglyph attack\"\n") "<20200423181234.GA23035@openwall.com>" ("<20200422152047.3196780D981@smtprhmv1.mitre.org>" "<2843537f5deb3a7987c8485bcc56a260@promiselabs.net>" "<ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>" "<20200423133148.GA19214@openwall.com>" "<2236ad47936a87f144248f9ab6c7340f@promiselabs.net>" "<20200423151430.GA21258@openwall.com>" "<8c73ccfed18df9cf7c01e9be05710a5e@promiselabs.net>" "<20200423181234.GA23035@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] spoofing of local email sender via a homoglyph attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23723 invoked by uid 550); 26 Oct 2016 09:46:53 -0000
+Received: (qmail 3332 invoked by uid 550); 23 Apr 2020 19:10:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23699 invoked from network); 26 Oct 2016 09:46:52 -0000
-Date: Wed, 26 Oct 2016 10:46:40 +0100
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20161026094640.rv26wlnarguz5lyv@perpetual.pseudorandom.co.uk>
-References: <2510502.0NpgWQPfkR@blackgate>
- <20161023010359.42F65336005@smtpvbsrv1.mitre.org>
- <CAJ_zFkJFCUiOb+S46jM87qundu4rYO1QhxQ85KJHb_zKVOggzQ@mail.gmail.com>
- <8284992.IKFRmaKcSl@blackgate>
+Received: (qmail 3310 invoked from network); 23 Apr 2020 19:10:46 -0000
+Message-ID: <20200423191032.zjab7ydsiw6ibotf@yuggoth.org>
+References: <20200422152047.3196780D981@smtprhmv1.mitre.org>
+ <2843537f5deb3a7987c8485bcc56a260@promiselabs.net>
+ <ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>
+ <20200423133148.GA19214@openwall.com>
+ <2236ad47936a87f144248f9ab6c7340f@promiselabs.net>
+ <20200423151430.GA21258@openwall.com>
+ <8c73ccfed18df9cf7c01e9be05710a5e@promiselabs.net>
+ <20200423181234.GA23035@openwall.com>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="n34ue5ssh4spubpx"
+Content-Disposition: inline
+In-Reply-To: <20200423181234.GA23035@openwall.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Date: Thu, 23 Apr 2020 19:10:32 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] spoofing of local email sender via a homoglyph
+ attack
+To: oss-security@lists.openwall.com
+
+--n34ue5ssh4spubpx
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8284992.IKFRmaKcSl@blackgate>
-User-Agent: NeoMutt/20161014 (1.7.1)
-Subject: Re: [oss-security] Re: jasper: memory allocation failure in
- jas_malloc (jas_malloc.c)
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 26 Oct 2016 at 10:08:56 +0200, Agostino Sarubbo wrote:
-> more or less I agree with you, but since time ago I saw that similar bugs 
-> reveiced a CVE, I thought that these type of bugs could interest the community 
-> and them I'm sharing them.
-> If I'm not mistaken, CWE-789 covers these type of bugs.
+On 2020-04-23 20:12:34 +0200 (+0200), Solar Designer wrote:
+[...]
+> What you reported originally, where you bypass something that just
+> happens that way in some configurations and wasn't meant to
+> provide any security against sender address spoofing, looks like
+> even less of an issue to me.
+[...]
 
-It depends on the purpose of your software, and how it runs (for example
-a one-shot command-line tool vs. a long-running daemon). If a
-command-line tool for converting JPEG2000 to JPEG (or whatever) exits
-unexpectedly due to a failed attempt to allocate multiple gigabytes
-of memory, that isn't really any worse than exiting unsuccessfully
-because an arbitrary limit on image size was exceeded: the user isn't
-getting their desired JPEG either way.
+Indeed, if the local attacker is already capable of opening a socket
+to the MTA, then it seems like it would be even easier instead to
+just open an outbound socket to the target's MTA directly from that
+server and bypass the restrictions applied by the local relaying MTA
+entirely (unless the local MTA process has privileged access to
+something like a DKIM key or durable TLS client key which the
+attacker can't access due to filesystem ACLs). Then they wouldn't
+need to lean on lack of homoglyph differentiation at the recipient's
+end at all.
+--=20
+Jeremy Stanley
 
-Conversely, if a daemon that accepts uploaded JPEG2000 images and
-converts them to JPEG exits unexpectedly due to a failed attempt to
-allocate multiple gigabytes of memory, then that's denying service to
-the service's other users as well, which is an instance CWE-789.
+--n34ue5ssh4spubpx
+Content-Type: application/pgp-signature; name="signature.asc"
 
-For a general-purpose library like jasper, which could be used in
-either of those contexts, I suspect the best you can do is to make sure
-conversion gracefully fails with an appropriate error report (error code
-or exception or whatever you use) if memory can't be allocated or if
-a library-user-specified limit is exceeded - then the library user can
-handle that however they want to, for example by exiting (appropriate
-for a command-line tool) or by reporting an error but continuing to
-accept new requests (appropriate for a daemon).
+-----BEGIN PGP SIGNATURE-----
 
-Denial-of-service is basically a failure of the "availability" security
-property: the actions of a malicious user make the service unavailable to
-its non-malicious users. However, imposing arbitrary limits can also be
-argued to be a failure of availability: if you put a limit of, say, 100M
-on the uncompressed size of images you are willing to work with, then
-that's denying service to non-malicious users whose images happen to
-need 102M. Choosing where to draw the line is a trade-off rather than an
-absolute, and library code rarely has enough information or configurability
-to make an informed decision about the right place for that trade-off.
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAl6h6CJfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCk9Rw/9EarP1oGF1hIc6GRz+AefvK65T9eJzoDqF+rEO+8njBJokXqTVvpMgguT
+1UkZ3WOo/kux8VpAIZVsVglsTKONAXwSlN3JBBnyoF2UJayR8TPqFW4Bs8X6Tudi
+MycCwQHZ0Oco7k+19gLzvhvAo2Ijf5D7WszlZWyh7ikdgFbbr7JkqlUPxk9qd0za
+nSTnopHpQ+xemZLtoqCJBX7JIZny+kSOW9hHF3G/bj0dCxcRdQ2MF2PpweGrGE57
+tTnoiqO+cNUjDbhzXejWLuApBNiqBSQEMW1SQb8e4Cg4MIDdfy5+3Ub9QIQPyogV
+PH+mfR7lAi+Mv4nXL6HkPjFzX3jaBI6QUgpNGy16eXvEFWoxLkDuLrOAL58gwDj5
+uP2C12lgDxvK/bptbLUHT/Nw50yudqQsN1PovcuqzIC6uLn8AaLgr3fsjXx+kewW
+Hi1wIimIjl/mwSUA7ux7w73UNmPxGt3W8hjIw9XfYEbkylB9cm9kZCjpzJpG0Izt
+gRaLRvwQ2YBrl02bRu/uV69mfPWb8KC7IRq6JcFRWsgVd1z1JGLpyWR8k0obbKVq
+T7CScZ5Mb3PMNXNVm4YNRgtT5Fb5l5bkYbS/KElF+xmtsnAAPZluZyC7eaEbhfFp
+O9TbECehZ31kCmkojoOQCxdhWDmrpq+epMRyg/ZNOUZhPGdQfSk=
+=g2AQ
+-----END PGP SIGNATURE-----
 
-(I recognise the hypocrisy in saying this as a maintainer of D-Bus,
-whose messages have a completely arbitrary size limit chosen to make
-it obvious that 32-bit arithmetic on message sizes never overflows :-)
-
-    S
+--n34ue5ssh4spubpx--
