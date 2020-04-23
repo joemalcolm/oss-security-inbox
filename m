@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/04/1
-Message-ID: <nycvar.YSQ.7.76.2005041135590.1083026@xnncv>
-Date: Mon, 4 May 2020 11:40:42 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: yavrahami@...oaltonetworks.com
-Subject: CVE-2020-10717 QEMU: virtiofsd: guest may open maximum file descriptor to cause DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/9
+Message-ID: <20200423155806.GA6911@kiel.esmtp.org>
+Date: Thu, 23 Apr 2020 17:58:06 +0200
+From: Claus Assmann <ml+oss@...tp.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: spoofing of local email sender via a homoglyph attack
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Thu, Apr 23, 2020, PromiseLabs Pentest Research wrote:
 
-A potential DoS issue was found in the virtio-fs shared file system daemon 
-(virtiofsd) implementation of the QEMU. Virtiofsd is meant to share a host 
-file system directory with a guest via virtio-fs device. The said DoS may 
-occur on the host, if the guest was to open the maximum number of file 
-descriptors under the shared directory. A guest user/process may use this flaw 
-to cause DoS issue on the host.
+> It's related to the from header.
 
-Upstream patch(es):
--------------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-05/msg00143.html
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-05/msg00141.html
+> 220 *** OMITTED *** ESMTP Postfix
+> mail from: john.doe@...ver.com
+> 250 2.1.0 Ok
 
-This issue was reported by Yuval Avrahami of Palo Alto Networks.
+1. The correct syntax is
+MAIL From:<john.doe@...ver.com>
+See RFC 5321 et.al: no spaces, and <> around the address.
 
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+2. That's the envelope sender, not "the from header"
+You can probably use
+From: john.doe@...ver.com
+in the header even without authentication (I haven't tried it; I
+do not have postfix installed).
 
