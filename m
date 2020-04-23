@@ -1,39 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/04/1
-Message-ID: <ED45BA51-791D-4EBC-BE72-24E5A6E1A41D@apache.org>
-Date: Fri, 03 Apr 2020 16:20:11 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: Alan Coopersmith <alan.coopersmith@...cle.com>,oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/3
+Message-ID: <ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>
+Date: Thu, 23 Apr 2020 15:10:55 +0300
+From: PromiseLabs Pentest Research <pentest@...miselabs.net>
+To: oss-security@...ts.openwall.com
+Subject: spoofing of local email sender via a homoglyph attack
 Content-Type: text/plain; charset=utf-8
 
-Hi, Alan;
-   Yes, you are correct. This was a typo that somehow crept into the notification only. The CVE database and our vulnerability documentation page is accurate.
-https://httpd.apache.org/security/vulnerabilities_24.html
+Hi,
 
-Thanks for confirming.
--- 
-Daniel Ruggeri
-Director, VP Fundraising, member, httpd PMC
-The Apache Software Foundation
+The provided versions seem to be wrong on this request, sorry for this.
 
-On April 3, 2020 10:19:06 AM CDT, Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
->On 4/1/20 5:54 AM, Daniel Ruggeri wrote:
->> CVE-2020-1927: mod_rewrite configurations vulnerable to open redirect
->> 
->> Severity: Low
->> 
->> Vendor: The Apache Software Foundation
->> 
->> Versions Affected:
->> httpd 2.4.0 to 2.4.39
->> 
->> Description:
->> Apache HTTP Server 2.4.0 to 2.4.41
->
->Should the versions affected have been to .41 as well then?
->
->-- 
->	-Alan Coopersmith-               alan.coopersmith@...cle.com
->	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+The exact version is from the postfix-2.10.1-7.el7.x86_64 package, thus
+the version stated in the CVE should be 2.10.1.
 
+---
+PLPR:
+Plamen Dimitrov
+Penetration Tester, CEH & OSCP certified
+
+Promise Solutions LTD
+Penetration Testing and Managed Security services
+
+https://www.promisedev.com
+https://www.promiselabs.net
++359 883 22 05 12
+
+On 2020-04-22 18:20, cve-request@...re.org wrote: 
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> The CVE ID is below. As far as we know, 3.3.0-1 is not a commonly
+> used version. Please see the "[Reference]" section below.
+> 
+>> [Suggested description]
+>> A certain Postfix 3.3.0-1 package could allow an attacker to send
+>> an email from an arbitrary-looking sender via a homoglyph attack,
+>> as demonstrated by the similarity of \xce\xbf to the 'o' character.
+>> 
+>> ------------------------------------------
+>> 
+>> [Additional Information]
+>> Postfix allows an email from unsanitized input, pretending to be from
+>> an existing user on the mail system, which may look exactly the same.
+>> For example, it is possible sending an email using the hex character
+>> \xce\ xbf, which looks exactly like the letter 'o'. In case the user
+>> john.doe exists on the mail server, postfix would not allow to send an
+>> email from this email account unless an unauthorized attempt is made.
+>> However, in case we substitute the letter 'o' with the hex character
+>> \xce\xbf, it will look exactly like it's being sent from john.doe,
+>> although john.doe (j<\xce\xbf)hn.doe) is actually different from
+>> the other.
+>> 
+>> ------------------------------------------
+>> 
+>> [Vulnerability Type]
+>> Incorrect Access Control
+>> 
+>> ------------------------------------------
+>> 
+>> [Vendor of Product]
+>> postfix
+>> 
+>> ------------------------------------------
+>> 
+>> [Affected Product Code Base]
+>> postfix 3.3.0-1 - 3.3.0-1
+>> 
+>> ------------------------------------------
+>> 
+>> [Affected Component]
+>> postfix mail server
+>> 
+>> ------------------------------------------
+>> 
+>> [Attack Type]
+>> Remote
+>> 
+>> ------------------------------------------
+>> 
+>> [Discoverer]
+>> d7x, Promise Solutions LTD / www.promiselabs.net [1]
+>> 
+>> ------------------------------------------
+>> 
+>> [Reference]
+>> https://www.promiselabs.net
+>> https://repology.org/project/postfix/versions
+>> http://www.postfix.org/announcements.html
+> 
+> Use CVE-2020-12063.
+> 
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+> http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+> 
+> iQIcBAEBCAAGBQJeoGCRAAoJEPNX0OmQPkAIyDAQAI56GXHXS1AJQVx2nBBJosam
+> 6d/mtkM+LozhzpBVydzed58z8P/Q/qGWXzdT0mmIvq+X2WQp7pvCrUH7l9wkniH+
+> 0FD0c+LO2T/oU7a6sqZ7EHC0V3GPKu/F1W+reNB9V0v8LyAfHLE50AdvHZZjGIHc
+> lUvw/hqt+7NqpR2HFyjyA3sb1K8ZiqBcmxwV9ecECUx/smXFpjtdV9hTz7A9mgj8
+> ggkSjrkMQBsYqiU2OvPEfn4aKskavqTYLqVMxztieICoDPvNAGj+lnZIz4o6WIig
+> d2lqtZ+/8fPVUaYGCikacMNAE4BGs61BQT7tuYdbMt8+wWnB+IU84hBC7Lb7OE8L
+> 7O59MmmIF/C/jaaSmwy+FlSk+ZE95Q+SV7CHoYMLeongByo5drvqVuK79t5KVGDO
+> L6m85ta3Jh/zzQ6srg6REgPuM1Q2cFwu7FmWg4vAEamCwHnjv6D6xRBRO4lBm9V1
+> Upek80hF+BI/JwvKlpng1pzKrClqvzGdeZA4kw5MLoiEN19cf2W85nO0L+cpoLbQ
+> ixz/TarYDG9QQ89U3aJcrLDMH6hGsPKmTvD8dy5sVh+J3qK/zvj/eR98xy5jbKAn
+> pt57X5qFkfu+Sf9yrC3RFBiNTJ/UB4vb0/25g8M4e+vUMb/kkNxbVVNoAg56Wl1M
+> NLgC/CCd32QpiUFehvF2
+> =T4/w
+> -----END PGP SIGNATURE-----
+ 
+
+Links:
+------
+[1] http://www.promiselabs.net
