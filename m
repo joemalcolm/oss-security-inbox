@@ -1,84 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/06/5
-Message-ID: <CAE4Awf_qX8osK8cvGF=+1Lozp9+TR442K7KDSATX_zJE2EW9Gg@mail.gmail.com>
-Date: Wed, 6 May 2020 14:49:25 -0500
-From: Gage Hugo <gagehugo@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/14
+Message-ID: <20200423191032.zjab7ydsiw6ibotf@yuggoth.org>
+Date: Thu, 23 Apr 2020 19:10:32 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2020-004] Keystone: Keystone credential endpoints allow owner modification and are not protected from a scoped context (CVE PENDING)
+Subject: Re: spoofing of local email sender via a homoglyph attack
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On 2020-04-23 20:12:34 +0200 (+0200), Solar Designer wrote:
+[...]
+> What you reported originally, where you bypass something that just
+> happens that way in some configurations and wasn't meant to
+> provide any security against sender address spoofing, looks like
+> even less of an issue to me.
+[...]
 
-=================================================================================================================
-OSSA-2020-004: Keystone credential endpoints allow owner modification and
-are not protected from a scoped context
-=================================================================================================================
+Indeed, if the local attacker is already capable of opening a socket
+to the MTA, then it seems like it would be even easier instead to
+just open an outbound socket to the target's MTA directly from that
+server and bypass the restrictions applied by the local relaying MTA
+entirely (unless the local MTA process has privileged access to
+something like a DKIM key or durable TLS client key which the
+attacker can't access due to filesystem ACLs). Then they wouldn't
+need to lean on lack of homoglyph differentiation at the recipient's
+end at all.
+-- 
+Jeremy Stanley
 
-:Date: May 06, 2020
-:CVE: Pending
-
-
-Affects
-~~~~~~~
-- - Keystone: <15.0.1, ==16.0.0
-
-
-Description
-~~~~~~~~~~~
-kay reported two vulnerabilities in keystone's EC2 credentials API.
-Any authenticated user could create an EC2 credential for themselves
-for a project that they have a specified role on, then perform an
-update to the credential user and project, allowing them to masquerade
-as another user. (CVE #1 PENDING) Any authenticated user within a
-limited scope (trust/oauth/application credential) can create an EC2
-credential with an escalated permission, such as obtaining admin while
-the user is on a limited viewer role. (CVE #2 PENDING) Both of these
-vulnerabilities potentially allow a malicious user to act as admin on
-a project that another user has the admin role on, which can
-effectively grant the malicious user global admin privileges.
-
-
-Patches
-~~~~~~~
-- - https://review.opendev.org/725895 (Rocky)
-- - https://review.opendev.org/725893 (Stein)
-- - https://review.opendev.org/725891 (Train)
-- - https://review.opendev.org/725888 (Ussuri)
-- - https://review.opendev.org/725886 (Victoria)
-
-
-Credits
-~~~~~~~
-- - kay (CVE Pending)
-
-
-References
-~~~~~~~~~~
-- - https://launchpad.net/bugs/1872733
-- - https://launchpad.net/bugs/1872735
-- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=Pending
-
-
-Notes
-~~~~~
-- - The stable/rocky branch is under extended maintenance and will receive
-no new
-  point releases, but a patch for it is provided as a courtesy.
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl6zE70ACgkQ56j9K3b+
-vREQsBAAnHZLyrbjSwu7/CEdDVfb0sQZfDvyuXMttzouXQ6ZwEgLFKzc/aFWMjru
-loyst9jAx2pJzvxDfMYO11oU0M5tYFCFxhKsVvu+3ggbcNHeov1s25bPkxE7A2j7
-IYJj9b+bbieYVj1ru3FJjDl3iTae4K73DeHNBCdxTSeahJZdya7hiboA1VJFt4p7
-fNqU3+szsYt/vwspPBi7x+xnZszIMaUw8tVgxzB4KVD6YXbDR9Mp7itH77kGdn8l
-e3OpnURvfaIkPbK6fqE6jjwjQEL/6+Ahffaf4KqvsdjbAcdQRpK0UQrBX+n6DIWd
-TRwV/W7bEy64HrC16W78fcBlegRmEUUM4xNmdll3lwUS5KqfEeM3vXU4Ksfe9tQ2
-8fDU1hDALcC55+2CMMrdFfmX/MBSTz0HVmP4snaGuoXBL/iQz22OmekFKC1tmXxb
-+vAtOUBsdzphRZn9KWvPIHOFGeuepWb9W0eN594JT2pdHfniLj6EaPrBaN63l7M/
-pu0DTPygN5IdUXv6v/vquQZp50CaN59okmXDNiFkBeHsfaAqhdyjJjRaYvyU62OA
-apjVam8/f2HM0RC0vvpIqv0z0kU55NPCo61dlMZPg6U9JiQd2PzBqvEtDF1lyByF
-vz5e+r9fmtRcgCJIYr0Z7VlOlSMONpITN03oICaexieDTEXDXHc=
-=lSDG
------END PGP SIGNATURE-----
-
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
