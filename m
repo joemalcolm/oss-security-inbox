@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/08/4
-Message-ID: <957319a25dba4efdb7523141231a6f35385ca72d.camel@apache.org>
-Date: Thu, 08 Oct 2020 12:56:47 +0200
-From: Oleg Kalnichevski <olegk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/24/2
+Message-ID: <CAA8xKjWRu+545AZ-098+kh5P0Ynb1qN=BxBRc2iBRG0MU4REOg@mail.gmail.com>
+Date: Fri, 24 Apr 2020 16:43:45 +0200
+From: Mauro Matteo Cascella <mcascell@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-13956] Apache HttpClient incorrect handling of malformed URI authority component
+Cc: ziming zhang <ezrakiez@...il.com>
+Subject: CVE-2020-11869 qemu: integer overflow in ati_2d_blt() in hw/display/ati-2d.c could lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-13956: Apache HttpClient incorrect handling of malformed
-authority component in request URIs
+Hello all,
 
-Severity: Medium
+An integer overflow flaw was found in QEMU in the way it implemented the
+ATI VGA
+emulation. This flaw occurs in the ati_2d_blt() routine while handling MMIO
+write
+operations through ati_mm_write() callback. A malicious guest could abuse
+this
+flaw to crash the QEMU process, resulting in a denial of service.
 
-Vendor:
-The Apache Software Foundation
+Upstream patch:
+   ->
+https://git.qemu.org/?p=qemu.git;a=commit;h=ac2071c3791b67fc7af78b8ceb320c01ca1b5df7
 
-Versions Affected:
-Apache HttpClient 4.5.12 and prior 
-Apache HttpClient 5.0.2 and prior
+This issue was reported by Ziming Zhang.
+CVE-2020-11869 requested via -> https://cveform.mitre.org/
 
-Description:
+Thank you,
 
-Apache HttpClient versions prior to version 4.5.13 and 5.0.3 can
-misinterpret malformed authority component in request URIs passed to
-the library as java.net.URI object and pick the wrong target host for
-request execution.  
+-- 
 
-Mitigation:
+Mauro Matteo Cascella
 
-As of release 4.5.13 and 5.0.3 HttpClient will reject URIs with
-ambiguous malformed authority component as invalid. Users of HttpClient
-are advised to upgrade to version 4.5.13 or 5.0.3 and sanitize request
-URIs when using java.net.URI as input.
+Product Security Engineer
 
-Credit:
-This issue was discovered and reported by Priyank Nigam
+Red Hat <https://www.redhat.com/>
+<https://www.redhat.com/>
 
