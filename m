@@ -1,76 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/23/3
-Message-ID: <CADtktAU1jq56ag08PGjW4YiABqsNi6ptkb8E4c2iR7P4jFNhew@mail.gmail.com>
-Date: Mon, 23 Mar 2020 11:37:19 -0700
-From: Tim Allclair <tallclair@...gle.com>
-To: kubernetes-announce@...glegroups.com,  "Kubernetes developer/contributor discussion" <kubernetes-dev@...glegroups.com>,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss <kubernetes-security-discuss@...glegroups.com>,  oss-security@...ts.openwall.com, kubernetes+announcements@...coursemail.com
-Subject: CVE-2020-8551, CVE-2020-8552: Kubernetes: Denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/24/1
+Message-ID: <CAC1dCwUOZpgORGC2uT4PvZ81yv7HNyFggp9NLtNUyB-uX=ThLA@mail.gmail.com>
+Date: Fri, 24 Apr 2020 12:19:48 -0400
+From: Tim Allison <tallison@...che.org>
+To: announce@...che.org, "<dev@...a.apache.org>" <dev@...a.apache.org>, user@...a.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [CVE-2020-9489] Denial of Service (DOS) Vulnerabilities in Some of Apache Tika's Parsers
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+Severity: Medium
 
-Two security issues were discovered in Kubernetes that could lead to a
-recoverable denial of service.
+Vendor: The Apache Software Foundation
 
-*CVE-2020-8551* affects the kubelet, and has been rated *Medium *(
-CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
-<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L>
-).
+Versions Affected: Apache Tika 1.24
 
-*CVE-2020-8552* affects the API server, and has also been rated *Medium* (
-CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
-<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L>
-).
-<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#am-i-vulnerable>Am
-I vulnerable?
-If an attacker can make an authorized resource request to an unpatched API
-server (see below), then you may be vulnerable to CVE-2020-8552. If an
-attacker can make an authorized request to an unpatched kubelet, then you
-may be vulnerable to CVE-2020-8551.
-<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#affected-versions>Affected
-Versions
-CVE-2020-8551 affects:
+Description:
+A carefully crafted or corrupt file may trigger a System.exit in Tika's
+OneNote Parser. Crafted or corrupted files can also cause out of memory
+errors and/or infinite loops in Tika's ICNSParser, MP3Parser, MP4Parser,
+SAS7BDATParser, OneNoteParser and ImageParser.
 
-   - kubelet v1.17.0 - v1.17.2
-   - kubelet v1.16.0 - v1.16.6
-   - kubelet v1.15.0 - v1.15.10\
-   - *kubelets prior to v1.15.0 are unaffected*
 
-CVE-2020-8552 affects:
+Mitigation:
+Apache Tika users should upgrade to 1.24.1 or later. The vulnerabilities in
+the MP4Parser were partially fixed by upgrading the
+com.googlecode:isoparser:1.1.22 dependency to
+org.tallison:isoparser:1.9.41.2.
 
-   - kube-apiserver v1.17.0 - v1.17.2
-   - kube-apiserver v1.16.0 - v1.16.6
-   - kube-apiserver < v1.15.10
+For unrelated security reasons, we upgraded org.apache.cxf to 3.3.6 as part
+of the 1.24.1 release.
 
-<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#how-do-i-mitigate-this-vulnerability>How
-do I mitigate this vulnerability?
+We also upgraded openjson to 1.0.10, org.ow2.asm to 8.0.1, zstd-jni to
+1.4.4-9, bouncycastle to 1.65, commons-lang3 to 3.10, lucene to 8.5.0 and
+mockito to 3.3.3 as part of the 1.24.1 release.
 
-Prior to upgrading, these vulnerabilities can be mitigated by:
 
-   - Preventing unauthenticated or unauthorized access to the affected
-   components
-   - The apiserver and kubelet should auto restart in the event of an OOM
-   error
-
-<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#fixed-versions>Fixed
-Versions
-Both vulnerabilities are patched in kubernetes versions
-
-   - v1.17.3
-   - v1.16.7
-   - v1.15.10
-
-To upgrade, refer to the documentation:
-https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
-<https://github.com/kubernetes/security/blob/master/comms-temlpates/vulnerability-announcement-email.md#addiitonal-details>Additional
-Details
-
-See the GitHub issues for more details:
-
-CVE-2020-8551: https://github.com/kubernetes/kubernetes/issues/89377
-CVE-2020-8552: https://github.com/kubernetes/kubernetes/issues/89378
-
-Thank You,
-
-Tim Allclair on behalf of the Kubernetes Product Security Committee
+Credit:
+These vulnerabilities were discovered by Tim Allison on the Apache Tika
+team.
 
