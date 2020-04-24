@@ -1,98 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/04/2
-Message-ID: <CAFzhf4qP-kM7S7AciJgv_j90bDN6J2nunEerPW3aDAN3OxCbzw@mail.gmail.com>
-Date: Mon, 4 May 2020 00:24:19 +0100
-From: Piotr Krysiuk <piotras@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/24/3
+Message-ID: <20200424190016.GA2393887@eldamar.local>
+Date: Fri, 24 Apr 2020 21:00:16 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-12114] Linux kernel denial of service by corrupting mountpoint reference counter
+Subject: Re: mailman 2.x: XSS via file attachments in list archives
 Content-Type: text/plain; charset=utf-8
 
-A race condition in fs/namespace.c in the Linux kernel allows unprivileged
-local users to cause a denial of service by corrupting mountpoint reference
-counter
+Hi,
 
-# Affected Versions
+On Thu, Apr 23, 2020 at 04:41:43PM +0200, Stefan Cornelius wrote:
+> On Mon, 24 Feb 2020 11:06:38 -0500
+> Jim Popovitch <jim@...qc.com> wrote:
+> 
+> > On Mon, 2020-02-24 at 15:34 +0100, Hanno Böck wrote:
+> > > This change is in mailman 2.1.30rc1, but not in any stable release
+> > > of mailman.  
+> > 
+> > Just for some added info, Mailman v2.1.30 is almost released, the
+> > holdup is with some language translations.  Mailman v2.1.30 will be
+> > the last of the Mailman v2 releases as primary development and effort
+> > has long shifted to Mailman v3. Further, the Mailman v2 branch is
+> > tied to Python v2, which is now EOL by the fine Python folk.
+> > 
+> > Once Mailman v2.1.30 is release, I'm sure the various distributions
+> > will pull the commit and merge the particulars into their release
+> > branches, and that will surely include this XSS fix. 
+> 
+> Hi,
+> 
+> It seems like this does not have a CVE? Is there a reason for this, or
+> did this just slip through the cracks/was never really requested?
 
-The denial of service has been reproduced against the following Linux
-kernel releases from kernel.org:
-* 4.19.118 (longterm release)
-* 4.14.177 (longterm release)
-* 4.9.220 (longterm release)
-* 4.4.220 (longterm release)
+This appears to have happened now,
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-12137 was
+assigned.
 
-The denial of service has also been reproduced against the following
-distribution kernel versions provided by current Ubuntu LTS releases:
-* 5.0.0-1034-gcp (distribution kernel provided by package
-"linux-image-5.0.0-1034-gcp" from Ubuntu 18.04.4 LTS)
-* 4.15.0-1061-gcp (current distribution kernel provided by package
-"linux-image-4.15.0-1061-gcp" from Ubuntu 16.04.6 LTS with all updates
-installed)
-
-Linux kernel releases 5.3 and newer from kernel.org are not affected.
-
-# Root Cause
-
-Unprivileged local user can cause kernel panic by triggering destruction of
-a mountpoint that is still in use.
-
-This is possible by exploiting a race condition to corrupt mountpoint
-reference counter when simultaneously executing put_mountpoint() and
-pivot_root():
-* one thread increments m_count member of struct mountpoint
-  [under namespace_sem, but not holding mount_lock]
-    pivot_root()
-* another thread simultaneously decrements the same m_count
-  [under mount_lock, but not holding namespace_sem]
-    put_mountpoint()
-      unhash_mnt()
-        umount_mnt()
-          mntput_no_expire()
-
-# Bug Fix
-
-To fix this race condition, grab mount_lock before updating m_count in
-pivot_root().
-This requires swapping two lines in fs/namespace.c:
-```
-@@ -3142,8 +3142,8 @@ SYSCALL_DEFINE2(pivot_root, const char __user *,
-new_root,
-  /* make certain new is below the root */
-  if (!is_path_reachable(new_mnt, new.dentry, &root))
-  goto out4;
-- root_mp->m_count++; /* pin it so it won't go away */
-  lock_mount_hash();
-+ root_mp->m_count++; /* pin it so it won't go away */
-  detach_mnt(new_mnt, &parent_path);
-  detach_mnt(root_mnt, &root_parent);
-  if (root_mnt->mnt.mnt_flags & MNT_LOCKED) {
-```
-
-The above fix has been merged into all relevant longterm branches by
-upstream Linux kernel.
-
-The following Linux kernel releases from kernel.org incorporate the fix:
-* 4.19.119 (longterm release), see commit
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=v4.19.119&id=f511dc75d22e0c000fc70b54f670c2c17f5fba9a
-* 4.14.178 (current longterm release), see commit
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=v4.14.178&id=e21c8c03af20932c15d8b1d3bb9cbad9607a6eab
-* 4.9.221 (current longterm release), see commit
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=v4.9.221&id=91e997939dda1a866f23ddfb043dcd4a3ff57524
-* 4.4.221 (current longterm release), see commit
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=v4.4.221&id=83354adbd7a967230bd23a547c5b695567ddba2c
-
-# Proof Of Concept
-
-I developed a PoC that allows unprivileged local users to reliably trigger
-kernel panic inside VM instances on Compute Engine of Google Cloud Platform.
-
-The PoC has been shared privately with <security@...nel.org> and via a
-private bug report with Ubuntu.
-
-# Discoverer
-
-Piotr Krysiuk <piotras@...il.com>
-
-# References
-
-CVE-2020-12114 (reserved via https://cveform.mitre.org/)
-
+Regards,
+Salvatore
