@@ -1,29 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/1
-Message-ID: <5643462.lOV4Wx5bFT@x2>
-Date: Mon, 05 Oct 2020 22:36:14 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/25/1
+Message-ID: <CACmp6kpW7T64bucUe4oi50j=L-qQp9fEWG8iPGzOoZLmJeptQQ@mail.gmail.com>
+Date: Sat, 25 Apr 2020 11:44:29 -0500
+From: Matt Sicker <mattsicker@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+Subject: [CVE-2020-9488] Improper validation of certificate with host mismatch in Apache Log4j SMTP appender
 Content-Type: text/plain; charset=utf-8
 
-On Monday, October 5, 2020 4:48:20 PM EDT Solar Designer wrote:
-> On the desktop, major Linux distributions (and by the way *BSDs and
-> Solaris are not very different in this respect, I think) when used as
-> single-user desktop systems lack security isolation between applications
-> of the user.  (And also between the user and root, due to the typical
-> recommended use of sudo from the user account.)
+Summary: Improper validation of certificate with host mismatch in
+Log4j2 SMTP appender. This could allow an SMTPS connection to be
+intercepted by a man-in-the-middle attack which could leak any log
+messages sent through that appender.
 
-I will skip the whole discussion on access control. However to prove security 
-requires going through a Common Criteria certification. The biggest issue is 
-that the desktoptop uses dbus instantiation which does not have the auid of 
-the requesting process. Meaning audit cannot work.
+Mitigation: Users should upgrade to Apache Log4j 2.13.2 which fixed
+this issue in LOG4J2-2819 by making SSL settings configurable for
+SMTPS mail sessions. As a workaround for previous releases, users can
+set the `mail.smtp.ssl.checkserveridentity` system property to `true`
+to enable SMTPS hostname verification for all SMTPS mail sessions.
 
-The fix was kdus. That was rejected. But the issue remains. There cannot be a 
-secure desktop without auditing. And no one is really pushing for a desktop 
-certification, therefore no one is pushing to fix audit desktop problems.
+https://issues.apache.org/jira/browse/LOG4J2-2819
 
--Steve
+CVE Details:
+CWE: 297
+CVSS: 3.7 (Low) CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affects: Apache Log4j <= 2.13.1
+Fixed: Log4j 2.13.2
+Reported by: Peter Stöckli <peter.stockli@...habot.com>
 
 
+-- 
+Matt Sicker
+Secretary, Apache Software Foundation
+VP Logging Services, ASF
