@@ -1,33 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/30/5
-Message-ID: <CAOo2v=CLkuWf46je09e_h_5NkFS8hihdsBdarZgC1bXV3AB0PA@mail.gmail.com>
-Date: Wed, 30 Sep 2020 20:40:59 +0530
-From: Hardik Vyas <hvyas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-10763 heketi: gluster-block volume password details available in logs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/27/3
+Message-ID: <4c8e7b25-c496-fa56-3a73-4424ad0d4e0f@igalia.com>
+Date: Mon, 27 Apr 2020 19:12:24 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0005
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0005
+------------------------------------------------------------------------
 
-An information-disclosure flaw was found in the way Heketi logs sensitive
-information.
-This flaw allows an attacker with local access to the Heketi server, to
-read potentially
-sensitive information, such as gluster-block passwords.
+Date reported           : April 27, 2020
+Advisory ID             : WSA-2020-0005
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0005.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0005.html
+CVE identifiers         : CVE-2020-3885, CVE-2020-3894, CVE-2020-3895,
+                          CVE-2020-3897, CVE-2020-3899, CVE-2020-3900,
+                          CVE-2020-3901, CVE-2020-3902.
 
-CVE-2020-10763 has been assigned for this flaw.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Upstream PR: https://github.com/heketi/heketi/pull/1790
-Release: https://github.com/heketi/heketi/releases/tag/v10.1.0
+CVE-2020-3885
+    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
+    2.28.0.
+    Credit to Ryan Pickren (ryanpickren.com).
+    Impact: A file URL may be incorrectly processed. Description: A
+    logic issue was addressed with improved restrictions.
 
-Credit: Prasanna Kumar Kalever (Red Hat)
+CVE-2020-3894
+    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
+    2.28.0.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: An application may be able to read restricted memory.
+    Description: A race condition was addressed with additional
+    validation.
 
-Thanks,
--- 
+CVE-2020-3895
+    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
+    2.28.0.
+    Credit to grigoritchy.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved memory handling.
 
-Hardik Vyas / Red Hat Product Security
+CVE-2020-3897
+    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
+    2.28.0.
+    Credit to Brendan Draper (@6r3nd4n) working with Trend Micro’s Zero
+    Day Initiative.
+    Impact: A remote attacker may be able to cause arbitrary code
+    execution. Description: A type confusion issue was addressed with
+    improved memory handling.
 
-BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
-secalert@...hat.com for urgent response
-<https://www.redhat.com>
+CVE-2020-3899
+    Versions affected: WebKitGTK before 2.28.2 and WPE WebKit before
+    2.28.2.
+    Credit to OSS-Fuzz.
+    Impact: A remote attacker may be able to cause arbitrary code
+    execution. Description: A memory consumption issue was addressed
+    with improved memory handling.
 
+CVE-2020-3900
+    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
+    2.28.0.
+    Credit to Dongzhuo Zhao working with ADLab of Venustech.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved memory handling.
+
+CVE-2020-3901
+    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
+    2.28.0.
+    Credit to Benjamin Randazzo (@____benjamin).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A type confusion issue was
+    addressed with improved memory handling.
+
+CVE-2020-3902
+    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
+    2.28.0.
+    Credit to Yiğit Can YILMAZ (@yilmazcanyigit).
+    Impact: Processing maliciously crafted web content may lead to a
+    cross site scripting attack. Description: An input validation issue
+    was addressed with improved input validation.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+April 27, 2020
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
