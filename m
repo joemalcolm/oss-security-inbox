@@ -1,64 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/17/3
-Message-ID: <CABBoStiTED9CRxFBD=Y521XyD=O5EU6Bh6gv1GohAsR2idhqyg@mail.gmail.com>
-Date: Tue, 17 Nov 2020 09:10:00 -0500
-From: Ana McTaggart <amctagga@...hat.com>
-To: Ilya Dryomov <idryomov@...hat.com>, oss-security@...ts.openwall.com
-Subject: CVE-2020-25677 ceph: CEPHX_V2 replay attack protection lost
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/27/4
+Message-ID: <CAEhjM2Bg=HG5+qfTL8T9nEOkezHgtPzEipCqfLXOVG-ostLNNA@mail.gmail.com>
+Date: Mon, 27 Apr 2020 15:41:01 -0400
+From: Nathan Gough <thenatog@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-9482] Apache NiFi Registry user log out issue
 Content-Type: text/plain; charset=utf-8
 
-Dear all,
-cephx authentication protocol does not verify ceph clients correctly, and
-is vulnerable to replay attacks in nautilus and later. An attacker with
-access to the Ceph cluster network can use this vulnerability to
-authenticate with ceph service, via a packet sniffer. This allows them to
-perform actions allowed by the ceph service. This is a reintroduction of
-CVE-2018-1128[1], affecting msgr2 protocol. msgr 2 protocol is used for all
-communication except for older clients that do not support msgr2 protocol.
-msgr1 protocol is not affected.
+[CVEID]:CVE-2020-9482
 
-This was introduced in commit to msgr2 321548010578 ("mon/MonClient: skip
-CEPHX_V2 challenge if client doesn't support it") , due to commit
-c58c5754dfd2 ("msg/async/ProtocolV1: use AuthServer and AuthClient") . This
-results in nautilus and ceph being affected because commit c58c5754dfd2
-wasn't backported to nautilus, and although msgr1 isn't affected in
-nautilus, msgr 2 is the default. This made it so authorizer challenges
-could be skipped for peers which did not support CEPHX_V2, unfortunately
-making it so authorizer challenges are skipped for all peers in both msgr 1
-and msgr2 cases, disabling the protection that was put in place in commit
-f80b848d3f83 ("auth/cephx: add authorizer challenge", CVE-2018-1128).
+[PRODUCT]:Apache NiFi Registry
 
-Proposed Patch:
-See attached.
+[VERSION]:Apache NiFi Registry 0.1.0 to 0.5.0
 
-We have assigned it a CVE of CVE-2020-25677 at Red Hat.
+[PROBLEMTYPE]:Authentication
 
-Credits to Ilya Dryomov
+[REFERENCES]:https://nifi.apache.org/registry-security.html#CVE-2020-9482
 
-[1]https://www.cvedetails.com/cve/CVE-2018-1128/
+[DESCRIPTION]:If NiFi Registry uses an authentication mechanism other than
+PKI, when the user clicks Log Out, NiFi Registry invalidates the
+authentication token on the client side but not on the server side. This
+permits the user's client-side token to be used for up to 12 hours after
+logging out to make API requests to NiFi Registry.
 
-Ana McTaggart
-
-Red Hat Product Security
-
-Red Hat Remote <https://www.redhat.com>
-
-
-secalert@...hat.com for urgent response
-
-
-amct@...hat.com
-
-
-M: 7742790791     IM: amctagga
-
-
-Pronouns:They/Them/Theirs
-
-Content of type "text/html" skipped
-
-Download attachment "0003-mon-MonClient-bring-back-CEPHX_V2-authorizer-challen.patch" of type "application/x-patch" (3959 bytes)
-
-Download attachment "0001-msg-async-ProtocolV1-resurrect-include-MGR-as-servic.patch" of type "application/x-patch" (1505 bytes)
-
-Download attachment "0002-msg-async-ProtocolV1-resurrect-implement-cephx_-requ.patch" of type "application/x-patch" (2918 bytes)
