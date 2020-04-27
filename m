@@ -1,55 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/02/1
-Message-ID: <20200202122211.GA10285@openwall.com>
-Date: Sun, 2 Feb 2020 13:22:11 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Al Viro <viro@...iv.linux.org.uk>, Salvatore Mesoraca <s.mesoraca16@...il.com>, Kees Cook <keescook@...omium.org>, Linus Torvalds <torvalds@...ux-foundation.org>, Dan Carpenter <dan.carpenter@...cle.com>, Andrew Morton <akpm@...ux-foundation.org>
-Subject: Re: Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/27/1
+Message-ID: <495649d.8617.171b9681ae6.Coremail.liudw@apache.org>
+Date: Mon, 27 Apr 2020 10:12:19 +0800 (GMT+08:00)
+From: "Dawei Liu" <liudw@...che.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [CVE-2020-1952] Apache IoTDB (incubating)   Remote Code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 29, 2020 at 12:50:22AM +0100, Solar Designer wrote:
-> On Tue, Jan 28, 2020 at 10:48:10PM +0100, Solar Designer wrote:
-> > I intend to request a CVE ID and post it as a follow-up to this thread.
-> 
-> "Use CVE-2020-8428."
-> 
-> > Al Viro found and analyzed the security impact of and fixed a bug in
-> > Linux 4.19+ where open(2)'s eventual call to may_create_in_sticky() was
-> > "done when we already have dropped the reference to dir" and thus with
-> > dir (a "struct dentry" pointer) being potentially stale and potentially
-> > pointing to reused memory.
-> 
-> > The bug was introduced with commit 30aba6656f61 and first included in
-> > Linux 4.19.  Al fixed it with commit d0cb50185ae9 two days ago, and the
-> > fix is already in Linux 5.5 and Greg KH is getting it into stable.
+Severity: Important
 
-Turns out the fix in d0cb50185ae9 introduced a regression, now found
-with syzkaller and fixed:
 
-https://syzkaller.appspot.com/bug?extid=190005201ced78a74ad6
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6404674acd596de41fd3ad5f267b4525494a891a
+Vendor: The Apache Software Foundation
 
-If I understand correctly (but I'm not confident!), this time it's just
-a crash.  I am not going to request another CVE ID because the security
-impact is unclear to me (perhaps an Oops with some resources held?)
 
-My sentiment this time:
+Versions Affected:
+IoTDB  0.9.0 to 0.9.1
+IoTDB 0.8.0 to 0.8.2
 
-While embarrassing, it's good to know that this sort of bug (unlike the
-previous one) is promptly detected by a fuzzer, and thus has a short
-lifetime.  While ideally there would be no bugs in the first place,
-realistically I wish more bugs would be discovered and fixed so quickly.
 
-The kernel uses many complicated conventions these days (for performance
-reasons), up to the point where it's difficult even for the most active
-upstream developers to make bug-free changes and to review proposed
-changes.  A lot of context needs to be considered and a lot of potential
-pitfalls kept in mind.
+Description:
+When starting IoTDB, the JMX port 31999 is exposed with no certification.
+Then, clients could execute code remotely. 
 
-Thanks to @grsecurity for at-mentioning me on the tweet pointing to the
-above commit.  I was otherwise out of the loop this time.  That's fine,
-but since I did bring the previous set of issues in here, I felt I also
-needed to post this follow-up.
 
-Alexander
+Mitigation: 0.8.x, 0.9.0, and 0.9.1 users should upgrade to 0.9.2.
+
+
+Example: An Attacker can execute code remotely in the IoTDB server through JMX port.
+
+
+Credit:  This issue was discovered by Wu﻿Xiong of QI’ANXIN YunYing Lab.
+
+
+Regards,
+The Apache IoTDB team
