@@ -1,42 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/30/4
-Message-ID: <ea291a31-a9cc-88ed-67ad-8466b1024175@les7arts.com>
-Date: Thu, 30 Apr 2020 15:56:06 +0200
-From: Jacques Le Roux <jacques.le.roux@...7arts.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/27/2
+Message-ID: <2033222.irdbgypaU6@spectre>
+Date: Mon, 27 Apr 2020 13:07:00 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-0235 ] Apache OFBiz multiple CSRF vulnerabilities
+Subject: re2c: infinite loop
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-Important
+Hello all,
 
-Vendor:
-The Apache Software Foundation
+re2c is affected by an infinite loop.
 
-Versions Affected:
-OFBiz 17.12.01
+It was initially discovered by Sergei Trofimovich (slyfox) and reported by me 
+privately to upstream.
+The upstream reference is at: https://github.com/skvadrik/re2c/issues/219
+There is no CVE assigned.
 
-Description:
-Apache OFBiz is vulnerable to CSRF attacks
+Here is the additional upstream comment:
 
-Mitigation:
-Upgrade to 17.12.03 or manually apply the commits at OFBIZ-11470
-----
+I fixed enough recursive functions to make the ASAN-instrumented re2c
+pass on this file (but that doesn't fully fix #219, as some other
+recursive functions still need rewriting, work in progress).
+This is the list of fixes:
+fd634998f813340768c333cdad638498602856e5 Rewrite recursion into iteration 
+(Tarjan's SCC algorithm and YYFILL states).
+637d4e468835690eac102aba83535dfd26afbbdb Rewrite recursion into iteration 
+(paths for -Wundefined-control-flow).
+e3e43bcbb746dd6692f2d60ed1fa2e26c8cbe987 Rewrite recursion into iteration 
+(skeleton max path length computation).
+f39b522cd40d04e80b77db926ce2d7d766954852 Rewrite recursion into iteration 
+(insertion of negative tags in RE).
+They will appear in the next release, re2c-2.0.
 
-Credit:
-Initially known by the OFBiz security team (OFBIZ-10427),
-also reported later by
-Man Yue Mo via RT <security-reports@...mle.com>
-Shuibo Ye <shuiboye@...il.com>
-Vikash Patnaik <vikash.patnaik@...look.com>
-Sonali Agrahari <sonaliagrahari8@...il.com>
-Girish Vasmatkar <girish.vasmatkar@...waxsystems.com>
-Dinesh Kumar Mohanty <kiitkp03@...il.com>
-Jason Nordenstam <j.nordenstam@...ensive-security.com>
-Pradeep Jairamani <pradeepjairamani22@...il.com>
-Faiz Zaidi <faizzaidi17@...il.com>
 
-References:
-https://ofbiz.apache.org/security.html
+Agostino
 
 
