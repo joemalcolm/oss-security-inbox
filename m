@@ -1,124 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/14/4
-Message-Id: <E1jOKFH-00075Y-Iw@xenbits.xenproject.org>
-Date: Tue, 14 Apr 2020 12:00:51 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 318 v3 (CVE-2020-11742) - Bad continuation handling in GNTTABOP_copy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/30/1
+Message-ID: <20200430112143.GS6639@suse.com>
+Date: Thu, 30 Apr 2020 13:21:43 +0200
+From: Johannes Segitz <jsegitz@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Check your pre/post install scripts in rpm/deb/... packages for security issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-            Xen Security Advisory CVE-2020-11742 / XSA-318
-                               version 3
+rpm packages can have %post/%pre ... scripts to run code at various points
+during the installation of a package. Debian packages have a similar mechanism
+with preinst, postinst, ... Probably all packaging formats provide something
+like this.
 
-              Bad continuation handling in GNTTABOP_copy
+The SUSE security team got a hint about an unfortunate construct in a %post
+script in one of our packages. We found several issues and decided to have a
+look at our other packages. That resulted in 13 CVEs and 18 non-CVE issues
+(mostly hardening). Most of these issues result from root operating in user
+controlled directories. A lot of packages use these scripts to fix up
+permission problems and introduce problems like
+$ chown $unpriv_user:$unpriv_group /foo/bar/attackercontrolled/file
+which can be easily exploited into LPE. Sometimes the attacker needs to win a
+race, which is (apart from the fact that you need to wait until the package is
+updated) easily won since shell scripts are slow.
 
-UPDATES IN VERSION 3
-====================
+We now monitor all changes to these scripts to prevent further issues from
+sneaking into the distribution and recommend that other distributions check
+their existing packages and create processes to monitor changes to these
+scripts. It's way too easy to shoot yourself in the foot and a lot of packagers
+are not aware of the dangers.
 
-Public release.
+In the long term we want to try if something like
+https://github.com/google/path-auditor
+can be used to automatically find these issues in our build systems. If you
+have measures in place to check for problems like these we would be interested
+to hear about them.
 
-ISSUE DESCRIPTION
-=================
+Johannes
+-- 
+GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Software Solutions Germany GmbH, Maxfeldstr. 5, 90409 Nuernberg
+Geschäftsführer: Felix Imendörffer (HRB 36809, AG Nürnberg)
 
-Grant table operations are expected to return 0 for success, and a
-negative number for errors.  The fix for CVE-2017-12135 / XSA-226
-introduced a path through grant copy handling where success may be
-returned to the caller without any action taken.
-
-In particular the status fields of individual operations are left
-uninitialised, and may result in errant behaviour in the caller of
-GNTTABOP_copy.
-
-IMPACT
-======
-
-A buggy or malicious guest can construct its grant table in such a way
-that, when a backend domain tries to copy a grant, it hits the incorrect
-exit path.
-
-This returns success to the caller without doing anything, which may
-cause in crashes or other incorrect behaviour.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running any version of Xen are vulnerable.
-
-MITIGATION
-==========
-
-Only guests with access to transitive grants can exploit the
-vulnerability.  In particular, this means that:
-
- * ARM systems which have taken the XSA-268 fix are not vulnerable, as
-   Grant Table v2 was disabled for other security reasons.
-
- * All systems with the XSA-226 fixes, and booted with
-   `gnttab=max-ver:1` or `gnttab=no-transitive` are not vulnerable.
-
-CREDITS
-=======
-
-This issue was discovered by Pawel Wieczorkiewicz of Amazon and Jürgen
-Groß of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa318.patch       Xen 4.9 - xen-unstable
-
-$ sha256sum xsa318*
-4618c2609ab08178977c2b2a3d13f380ccfddd0168caca5ced708dd76a8e547c  xsa318.patch
-$
-
-NOTE CONCERNING SHORT EMBARGO
-=============================
-
-This issue was discovered in response to the XSA-316 predisclosure.
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-However, deployment of the mitigations is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because it is a guest visible change which will draw attention
-to the issue.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl6Vpd4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZbC8IAIkpehqymi1+zrWN1OHdvIYIMv2TCzSSx3UtsoMk
-J67FpgDzX8ZLfiE0x5FELs3KUdILOe5IkEmM2ssrvQRoIp+X3U4Ybm6eoIB+BzjD
-bmJReqNYVY6dlJuAhO2i6L125uBITWdntlK/ZOOQAOd77hR2KueuGELV7KUoPbQa
-SAiQ8jsCjqWCacYll6oq1c7jRlc1+RD/5JjkGveHlLmLOnIiS96PkDzqskM8Aniz
-TLZ4WmIpfixDAHn3OYyHGoUyhNW3qlps3evDyj3Wela62LFsymDSHkcV8XFBLTGT
-pueuSELzne5m85moAB2UqKVhHDV+PRCV7bLHYm/s7yeIHSg=
-=hix9
------END PGP SIGNATURE-----
-
-Download attachment "xsa318.patch" of type "application/octet-stream" (1500 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
