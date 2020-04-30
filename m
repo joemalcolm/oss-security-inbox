@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1320" "Monday" "6" "April" "2015" "15:25:51" "+0200" "Gsunde Orangen" "gsunde.orangen@gmail.com" "<5522895F.7000209@gmail.com>" "36" "Re: [oss-security] Advisory: CVE-2014-9708: Appweb Web Server" nil nil nil "4" "2015040613:25:51" "[oss-security] Advisory: CVE-2014-9708: Appweb Web Server" (number mark "        gsunde.orang Apr  6   36/1320  " thread-indent "\"Re: [oss-security] Advisory: CVE-2014-9708: Appweb Web Server\"\n") "<CAD3CancpLUSbzSyPWH7M8oHUbph1LoN5HXsuAZcxty34ygQkiA@mail.gmail.com>" ("<CAD3CancpLUSbzSyPWH7M8oHUbph1LoN5HXsuAZcxty34ygQkiA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2970" "Thursday" "30" "April" "2020" "13:21:43" "+0200" "Johannes Segitz" "jsegitz@suse.de" "<20200430112143.GS6639@suse.com>" "69" "[oss-security] Check your pre/post install scripts in rpm/deb/... packages for security issues" nil nil nil "4" "2020043011:21:43" "[oss-security] Check your pre/post install scripts in rpm/deb/... packages for security issues" (number mark "U       jsegitz@suse Apr 30   69/2970  " thread-indent "\"[oss-security] Check your pre/post install scripts in rpm/deb/... packages for security issues\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Check your pre/post install scripts in rpm/deb/... packages for security issues" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9809 invoked by uid 550); 6 Apr 2015 13:22:22 -0000
+Received: (qmail 3398 invoked by uid 550); 30 Apr 2020 11:35:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9790 invoked from network); 6 Apr 2015 13:22:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=1XHQEQ0h8g69eUg0x2d1ZFCXP6MrebGP0R0632cgCds=;
-        b=LlGK2kryuWcQC0BkGJa0QNHRfpI5yv+1PlmdY+l/yVAwW405jr43SEJC3agJUWI7ay
-         CkT2TN+aL0so56jgpJLGaY9RcRsxQEhooNZckkAeh3pPS0NxbEjo/6KmTSamhTZ84Mr9
-         AUhO0nqfy/qITFGFU76IYalPlBpu+l1IGIAsJ3ra9iBz9dPeBDhw8rzQ3DAwkem0gmVX
-         7FwCxKAqsMOUSzwb4d2KFf1NzFfpgRUY+9rTEt/4Ju6i6r/P4EaVSSNvBe6q+g9lVyYY
-         Dy5+de6hVQj0zeDaiq7yeisWnJvK8IEVE2jNLS2o+pKIkUhfUzCU9WBnf7JirQ4hux+L
-         uK1A==
-X-Received: by 10.180.98.67 with SMTP id eg3mr59251822wib.11.1428326530425;
-        Mon, 06 Apr 2015 06:22:10 -0700 (PDT)
-Message-ID: <5522895F.7000209@gmail.com>
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-MIME-Version: 1.0
-References: <CAD3CancpLUSbzSyPWH7M8oHUbph1LoN5HXsuAZcxty34ygQkiA@mail.gmail.com>
-In-Reply-To: <CAD3CancpLUSbzSyPWH7M8oHUbph1LoN5HXsuAZcxty34ygQkiA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Date: Mon, 06 Apr 2015 15:25:51 +0200
-From: Gsunde Orangen <gsunde.orangen@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Advisory: CVE-2014-9708: Appweb Web Server
-To: oss-security@lists.openwall.com, fulldisclosure@seclists.org, 
- bugtraq@securityfocus.com
+Received: (qmail 20309 invoked from network); 30 Apr 2020 11:21:56 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Thu, 30 Apr 2020 13:21:43 +0200
+From: Johannes Segitz <jsegitz@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20200430112143.GS6639@suse.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="mW/Yq1p9Hn2AHmV6"
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: [oss-security] Check your pre/post install scripts in rpm/deb/... packages for
+ security issues
 
-Thanks, Matthew, for having spotted this.
-As only current versions of Appweb (4 & 5) have been addressed so far,
-but legacy versions (see http://embedthis.com/appweb/download.html) were
-not mentioned yet in https://github.com/embedthis/appweb/issues/413 :
+--mW/Yq1p9Hn2AHmV6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-- Appweb V3: vulnerable, too
--- Source code audit on Appweb 3.4.2:
-The vulnerable code is not in the parseRange() function in
-paks/http/httpLib.c, but similarly in http/request.c
--- Verified as vulnerable using a device with Appweb 3.4.1
+Hi,
 
-- Appweb V2: not vulnerable
--- Source code audit on Appweb 2.4.4:
-V2 was writtein in C++ (not C), the Range parser is in request.cpp and
-handles invalid ranges correctly
--- Verified as not vulnerable using a device with Appweb 2.3.1
+rpm packages can have %post/%pre ... scripts to run code at various points
+during the installation of a package. Debian packages have a similar mechan=
+ism
+with preinst, postinst, ... Probably all packaging formats provide something
+like this.
 
-Gsunde
+The SUSE security team got a hint about an unfortunate construct in a %post
+script in one of our packages. We found several issues and decided to have a
+look at our other packages. That resulted in 13 CVEs and 18 non-CVE issues
+(mostly hardening). Most of these issues result from root operating in user
+controlled directories. A lot of packages use these scripts to fix up
+permission problems and introduce problems like
+$ chown $unpriv_user:$unpriv_group /foo/bar/attackercontrolled/file
+which can be easily exploited into LPE. Sometimes the attacker needs to win=
+ a
+race, which is (apart from the fact that you need to wait until the package=
+ is
+updated) easily won since shell scripts are slow.
 
+We now monitor all changes to these scripts to prevent further issues from
+sneaking into the distribution and recommend that other distributions check
+their existing packages and create processes to monitor changes to these
+scripts. It's way too easy to shoot yourself in the foot and a lot of packa=
+gers
+are not aware of the dangers.
 
-On 2015-03-28, 03:40 Matthew Daley wrote:
-> Affected software: Appweb Web Server
-> CVE ID: CVE-2014-9708
-> 
-> Description: An HTTP request with a Range header of the form "Range:
-> x=," (ie. with an empty range value) will cause a null pointer
-> dereference, leading to a remotely-triggerable DoS.
-> 
-> Fixed versions: 4.6.6, 5.2.1
-> Bug entry: https://github.com/embedthis/appweb/issues/413
-> Fix: https://github.com/embedthis/appweb/commit/7e6a925f5e86a19a7934a94bbd6959101d0b84eb#diff-7ca4d62c70220e0e226e7beac90c95d9L17348
-> Reported by: Matthew Daley
-> 
-> - Matthew Daley
-> 
+In the long term we want to try if something like
+https://github.com/google/path-auditor
+can be used to automatically find these issues in our build systems. If you
+have measures in place to check for problems like these we would be interes=
+ted
+to hear about them.
 
+Johannes
+--=20
+GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Software Solutions Germany GmbH, Maxfeldstr. 5, 90409 Nuernberg
+Gesch=E4ftsf=FChrer: Felix Imend=F6rffer (HRB 36809, AG N=FCrnberg)
+
+--mW/Yq1p9Hn2AHmV6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEJQ9D9ffObx6cWU+VvCfdnSzE/WYFAl6qtMcACgkQvCfdnSzE
+/WYVPg/+IwyOhqlni9182oASjgkuPJ1GjBqJXDIpu22C/7r5Xy7TCIUbeDW/J7sX
+GzryYpThm1Y9oQohRc5bKntNk1IKzrLaFjaDpJHHz3Cd7yhXuPUmfSdLeZCjl0dX
+XktvaM79ll16i9F1bgei6nTIdFnkqlC8VVe5shBbw1Td/+8TzQFhqE+Y+ZVsRqT9
+lltR4KcMq3U14YjhpVRm7cmPbVOJdCXchMTS8nOiX3MIm5UCBaNcI5C/FJb0PImv
+LHY0/awWruQ08MYPAv3SPXhvg5JFnBozt3hFiKeIwDCUF0bCCKBKg45ynBLPuk4g
+usy7OBXwgahcoaWfulR1w0h4VWKU1l48BebLFAgon7Be8MjqJrKlQgAmaJY7fjcR
+QVqTbsscV/QdD1ib2xXzBEfdYrrCGFn8m1Gigk6WPVunUITXXz0jtuIR9ncI//v+
+NrovdFU5CJGeNPl3lxQDq4QpIuyInm70hYhX5x0R8FjGPtsJvGJoKIEUi75STBO6
+qUHWdr2TM2w3khMAREPjHiYgq6Qvm96vnHX6uaCyi1HCzekxaW/dI6/zIypXLNzz
+NCmohhgKPlmHY5j/W+0YZOzW81kya2s6dPq24pufZ4/lFpnCjhXEH3F6tzR5CeyB
+J3RshJOt8yvGCD2+PqNZ2819z0rzuriSnuUIgP7CvKj36FyFnhE=
+=Fa0V
+-----END PGP SIGNATURE-----
+
+--mW/Yq1p9Hn2AHmV6--
