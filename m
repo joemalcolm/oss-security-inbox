@@ -1,31 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/10/1
-Message-Id: <CE6967F1-2CD4-4A6E-89CF-75B2FE817EAE@apache.org>
-Date: Mon, 10 Feb 2020 13:49:30 -0800
-From: Andy LoPresto <alopresto@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/30/4
+Message-ID: <ea291a31-a9cc-88ed-67ad-8466b1024175@les7arts.com>
+Date: Thu, 30 Apr 2020 15:56:06 +0200
+From: Jacques Le Roux <jacques.le.roux@...7arts.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-1942: Apache NiFi 0.0.1 to 1.11.0 information disclosure in logs
+Subject: [CVE-2019-0235 ] Apache OFBiz multiple CSRF vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-The https://nifi.apache.org/security.html <https://nifi.apache.org/security.html> page has been updated with 1 vulnerability discovered in previous NiFi versions which has been resolved in release 1.11.1. The severity of this issue was determined to be ‘important'. Questions about this vulnerability can be directed to security@...i.apache.org <mailto:security@...i.apache.org>.
+Severity:
+Important
 
-CVE-2020-1942: Apache NiFi information disclosure in logs
+Vendor:
+The Apache Software Foundation
 
-Severity: Important
+Versions Affected:
+OFBiz 17.12.01
 
-Versions Affected: Apache NiFi 0.0.1 - 1.11.0
+Description:
+Apache OFBiz is vulnerable to CSRF attacks
 
-Description: The flow fingerprint factory generated flow fingerprints which included sensitive property descriptor values. In the event a node attempted to join a cluster and the cluster flow was not inheritable, the flow fingerprint of both the cluster and local flow was printed, potentially containing sensitive values in plaintext.
+Mitigation:
+Upgrade to 17.12.03 or manually apply the commits at OFBIZ-11470
+----
 
-Mitigation: Implemented Argon2 secure hashing to provide a deterministic loggable value which does not reveal the sensitive value. Users running any previous NiFi release should upgrade to the latest release.
+Credit:
+Initially known by the OFBiz security team (OFBIZ-10427),
+also reported later by
+Man Yue Mo via RT <security-reports@...mle.com>
+Shuibo Ye <shuiboye@...il.com>
+Vikash Patnaik <vikash.patnaik@...look.com>
+Sonali Agrahari <sonaliagrahari8@...il.com>
+Girish Vasmatkar <girish.vasmatkar@...waxsystems.com>
+Dinesh Kumar Mohanty <kiitkp03@...il.com>
+Jason Nordenstam <j.nordenstam@...ensive-security.com>
+Pradeep Jairamani <pradeepjairamani22@...il.com>
+Faiz Zaidi <faizzaidi17@...il.com>
 
-Released: February 4, 2020
-
-If you identify new security issues within the NiFi 1.11.1 release, please forward your report to security@...i.apache.org <mailto:security@...i.apache.org> and do not disclose the issue publicly. The security vulnerability reporting and disclosure process can be found here: https://www.apache.org/security/committers.html <https://www.apache.org/security/committers.html>.
-
-Andy LoPresto
-alopresto@...che.org
-alopresto.apache@...il.com
-PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
+References:
+https://ofbiz.apache.org/security.html
 
 
