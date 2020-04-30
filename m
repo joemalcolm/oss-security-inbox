@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/01/2
-Message-ID: <37sqsnq6-99n6-o8np-sp65-q9po9s494510@redhat.com>
-Date: Tue, 1 Dec 2020 14:55:22 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Cheol-woo Myung <330cjfdn@...il.com>
-Subject: CVE-2020-28916 QEMU: e1000e: infinite loop scenario in case of null packet descriptor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/30/3
+Message-ID: <982f7f89-a030-65bc-f230-2c298f6ad946@orlitzky.com>
+Date: Thu, 30 Apr 2020 08:35:28 -0400
+From: Michael Orlitzky <michael@...itzky.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Check your pre/post install scripts in rpm/deb/... packages for security issues
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On 4/30/20 7:21 AM, Johannes Segitz wrote:
+> 
+> In the long term we want to try if something like
+> https://github.com/google/path-auditor
+> can be used to automatically find these issues in our build systems. If you
+> have measures in place to check for problems like these we would be interested
+> to hear about them.
 
-An infinite loop issue was found in the e1000e device emulator in QEMU. The 
-issue could occur while receiving packets via e1000e_write_packet_to_guest() 
-routine, if the receive(RX) descriptor has NULL buffer address. A privileged 
-guest user may use this flaw to induce a DoS scenario on the host.
+We have (had?) the same problem in Gentoo,
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-11/msg03185.html
+http://michael.orlitzky.com/articles/end_root_chowning_now_%28make_pkg_postinst_great_again%29.xhtml
 
-This issue was reported by Cheol-woo Myung.
+The "solution" is basically To Not Do That. While some uses of
+chown/chmod/setfacl in post-install scripts are safe, we are fortunate
+that almost all of them are also mistakes. (A rare exception is if you
+need to fix some bad permissions set by an older version of the same
+package). Thus a `git grep chown` shows you a list of things that should
+probably be fixed, for one reason or another.
 
-CVE-2020-28916 assigned via -> https://cveform.mitre.org/
+Everyone else is on systemd now, but we still have this problem in our
+init scripts and our fake tmpfiles.d implementation as well:
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+  * https://github.com/OpenRC/openrc/issues/201
+  * https://github.com/OpenRC/opentmpfiles/issues/3
+  * https://github.com/OpenRC/opentmpfiles/issues/4
 
+The root of the problem (ha ha) is that you shouldn't be doing things as
+root, especially in an automated fashion, on stuff you don't control.
+
+The Right Way To Do It is to create the top-most user-controlled
+directory as root, and give ownership of it to the unprivileged user.
+That's safe, since by my definition of "top-most" everything above it is
+writable only by root. After that, all remaining steps should be done
+*as the unprivileged user*, after dropping permissions.
+
+There are two missing tools here:
+
+  1. A portable tool to create directories with a given owner (like
+     "install"), but that ensures the entire path up from the root of
+     the filesystem to that directory is safe to operate in.
+
+  2. A portable tool to drop privileges.
+
+If those existed, we could ban chown, chmod, and friends from our
+packages and our init systems, forcing developers to use the safe
+alternatives.
