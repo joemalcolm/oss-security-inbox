@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["640" "Thursday" "7" "December" "2017" "14:37:20" "-0800" "Blibbet" "blibbet@gmail.com" "<3f23b122-8f97-417b-e1ca-4f859bee3196@gmail.com>" "15" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017120722:37:20" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        blibbet@gmai Dec  7   15/640   " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<20171207211559.fhrmtg7wul36znzp@scully.more-magic.net>" ("<20171207210134.GA7079@openwall.com>" "<20171207211559.fhrmtg7wul36znzp@scully.more-magic.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["949" "Thursday" "30" "April" "2020" "15:56:06" "+0200" "Jacques Le Roux" "jacques.le.roux@les7arts.com" "<ea291a31-a9cc-88ed-67ad-8466b1024175@les7arts.com>" "38" "[oss-security] [CVE-2019-0235 ] Apache OFBiz multiple CSRF vulnerabilities" nil nil nil "4" "2020043013:56:06" "[oss-security] [CVE-2019-0235 ] Apache OFBiz multiple CSRF vulnerabilities" (number mark "U       jacques.le.r Apr 30   38/949   " thread-indent "\"[oss-security] [CVE-2019-0235 ] Apache OFBiz multiple CSRF vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-0235 ] Apache OFBiz multiple CSRF vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9552 invoked by uid 550); 7 Dec 2017 22:41:44 -0000
+Received: (qmail 29722 invoked by uid 550); 30 Apr 2020 14:28:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7445 invoked from network); 7 Dec 2017 22:37:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=yl2UrOxmUQTUdc5Q6O77FJOPqR68pG9vTfY3LPc0z8E=;
-        b=uBFDjBTtqMVB4aaOAZGusv8bkMTIjOOPJpCFFFqIGRSaBNvmeNSlBdA8qUIz0YVAY8
-         8cl/sPvrjIz9hZ6Dy7cLYuY5gWetWRPdwwi3tyDTHxvTjScbcHor//xfDGQ1hg1pQDKC
-         pkNUphzI3zx2lY/UOyIFGcKt1WWerP0F6cQvg86jfkcj9eByjpcr4oVh3vXpM48AmHo2
-         ro1Mu9+QgyMpPnQsNKHA+tsFoFbSroWmD9D0IXAiknJOYQOhcV/5OSRx8S9Nf0KZZqL3
-         pgh/nVnbxQd9xN3hdzi5vvg84kh3UrBcIhWP9Za3FhQe7Sj49qESp3n27gSks2CjgiX2
-         U/GA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=yl2UrOxmUQTUdc5Q6O77FJOPqR68pG9vTfY3LPc0z8E=;
-        b=LBOrOXzW3O7x3lXOg0Z92wveQJi222h//qilbwWNIrZMzEJMK7B8Lv4OruFLqHRf6d
-         dVX3AOxWn4QLK3OGHv++gWVfXuyUNoyl0T7m/nPiXzn4znaWAMX4O7D3Kdplp7ecWzIO
-         IdQgp5Xn08bPENmnMuzg8wFhhy+1TFVIZ1HBVrEqUdnQ8LhZRd5fF1FN8mloDPeI8s09
-         IDtZsq/8uOT5rg38i2zKEBIAdk9bI0qNxFYnIeaY7DFAdSLY+YLt4DNAcfIu5a3glvV7
-         STwxaF2mtcKhAzLEMVaZ6hgMVZAuPLpvcsilYZgEliIYFI5uGPg+Zz+vw6j1OsWVLNrH
-         BtIw==
-X-Gm-Message-State: AKGB3mIjYOztM6fZNzLFJCtJyBFAdfFJD2rBwLlp/BehWayACi/05CQ7
-	O0dceOfi8PjhrAJvcZgMheXA8Q==
-X-Google-Smtp-Source: AGs4zMYjnLMCYBx/RCZTwW8/RpVJUikR4mREYpCdEGTX1Zf4QVTt/KN4y1c0bw3Q7BKHaQ8BCjsfjQ==
-X-Received: by 10.101.78.205 with SMTP id w13mr699419pgq.202.1512686241835;
-        Thu, 07 Dec 2017 14:37:21 -0800 (PST)
-References: <20171207210134.GA7079@openwall.com>
- <20171207211559.fhrmtg7wul36znzp@scully.more-magic.net>
-X-Priority: 4 (Low)
-Message-ID: <3f23b122-8f97-417b-e1ca-4f859bee3196@gmail.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <20171207211559.fhrmtg7wul36znzp@scully.more-magic.net>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-Date: Thu, 7 Dec 2017 14:37:20 -0800
-From: Blibbet <blibbet@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
+Received: (qmail 31837 invoked from network); 30 Apr 2020 13:58:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=les7arts.com;
+	s=nfrance; t=1588254962;
+	bh=DiDeji6DS5Ve5pHAsTuUqhnTpVAhDqVmvTlHdW/eoCc=;
+	h=To:From:Subject:Date;
+	z=To:=20oss-security@lists.openwall.com|From:=20Jacques=20Le=20Roux
+	 =20<jacques.le.roux@les7arts.com>|Subject:=20[CVE-2019-0235=20]=20
+	 Apache=20OFBiz=20multiple=20CSRF=20vulnerabilities|Date:=20Thu,=20
+	 30=20Apr=202020=2015:56:06=20+0200;
+	b=RmTcM/0j/oXhLpaBvx6Z3Al+jzj2FnJFLoZNGgloDgqs7VzIjyFKPwwWVIvlCLuH5
+	 Spde+iIdWg/kLQwZstoutlQHU79Zbr19qS4QhqO5e+L9wKar8nocEnUJy+9xjWdZmC
+	 6YuGjwum1GkqOAJ6Tfiyo0K7iJqQxjYehx3Pxp2o=
 To: oss-security@lists.openwall.com
+From: Jacques Le Roux <jacques.le.roux@les7arts.com>
+Organization: Les Arts Informatiques
+Message-ID: <ea291a31-a9cc-88ed-67ad-8466b1024175@les7arts.com>
+Date: Thu, 30 Apr 2020 15:56:06 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="------------F545C392E678C162885F3487"
+Content-Language: en-GB
+Subject: [oss-security] [CVE-2019-0235 ] Apache OFBiz multiple CSRF vulnerabilities
 
-On 12/07/2017 01:15 PM, Peter Bex wrote:
-> ible alternatives, I happened to remember that
-> years ago, NetBSD was working on their own BSD-licensed PGP
-> implementation as a GSoC project, but it never really went anywhere.
-> Looks like that finally exists
+--------------F545C392E678C162885F3487
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-http://www.netpgp.com/
-https://blog.netbsd.org/tnf/entry/netpgp
-https://en.wikipedia.org/wiki/Netpgp
+Severity:
+Important
 
-NetPGP has been working since around a decade. It's main dependency is
-libOpenSSL. It is stable, not active. It has MANY fewer features than GPG.
+Vendor:
+The Apache Software Foundation
 
-(I'm in the process of porting it to UEFI, as there is a stable
-libOpenSSL package there now, and easier to port to UEFI than GPG...)
+Versions Affected:
+OFBiz 17.12.01
+
+Description:
+Apache OFBiz is vulnerable to CSRF attacks
+
+Mitigation:
+Upgrade to 17.12.03 or manually apply the commits at OFBIZ-11470
+----
+
+Credit:
+Initially known by the OFBiz security team (OFBIZ-10427),
+also reported later by
+Man Yue Mo via RT <security-reports@semmle.com>
+Shuibo Ye <shuiboye@gmail.com>
+Vikash Patnaik <vikash.patnaik@outlook.com>
+Sonali Agrahari <sonaliagrahari8@gmail.com>
+Girish Vasmatkar <girish.vasmatkar@hotwaxsystems.com>
+Dinesh Kumar Mohanty <kiitkp03@gmail.com>
+Jason Nordenstam <j.nordenstam@offensive-security.com>
+Pradeep Jairamani <pradeepjairamani22@gmail.com>
+Faiz Zaidi <faizzaidi17@gmail.com>
+
+References:
+https://ofbiz.apache.org/security.html
+
+
+--------------F545C392E678C162885F3487--
