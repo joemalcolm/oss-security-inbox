@@ -1,17 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/02/3
-Message-ID: <a998fd0a-c755-4500-7d53-718132abf24e@apache.org>
-Date: Sat, 2 May 2020 14:32:34 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/02/1
+Message-ID: <3d207449-3d64-7a06-be08-b388de39f606@apache.org>
+Date: Sat, 2 May 2020 14:27:25 +0200
 From: Francesco Chicchiriccò <ilgrosso@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-1961] Apache Syncope: Server-Side Template Injection on mail templates
+Subject: [CVE-2019-17557] Enduser UI XSS
 Content-Type: text/plain; charset=utf-8
 
 Description:
-Vulnerability to Server-Side Template Injection on Mail templates enabling attackers to inject arbitrary JEXL expressions, leading to Remote
-Code Execution (RCE) was discovered.
+It was found that the EndUser UI login page reflects the successMessage parameters.
+By this mean, a user accessing the Enduser UI could execute javascript code from URL query string.
 
-Severity: Important
+Severity: Medium
 
 Vendor: The Apache Software Foundation
 
@@ -24,7 +24,7 @@ Solution:
 2.1.X users: upgrade to 2.1.6
 
 Credit:
-This issue was discovered by GitHub Security Labs team member Alvaro Muñoz - https://github.com/pwntester.
+This issue was independently discovered by CNCERT songmingxuan and GitHub Security Lab team member Alvaro Muñoz - https://github.com/pwntester
 
 References:
 https://syncope.apache.org/security
