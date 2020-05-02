@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2103" "Friday" "16" "February" "2018" "18:42:59" "+0100" "chbi@chbi.eu" "chbi@chbi.eu" "<57f3ff1c-b639-0691-3452-c4c0871523a1@chbi.eu>" "60" "Re: [oss-security] XSS vulnerability in Tiki < 18" nil nil nil "2" "2018021617:42:59" "[oss-security] XSS vulnerability in Tiki < 18" (number mark "U       chbi@chbi.eu Feb 16   60/2103  " thread-indent "\"Re: [oss-security] XSS vulnerability in Tiki < 18\"\n") "<c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>" ("<c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["564" "Saturday" "2" "May" "2020" "14:32:34" "+0200" "=?UTF-8?B?RnJhbmNlc2NvIENoaWNjaGlyaWNjw7I=?=" "ilgrosso@apache.org" "<a998fd0a-c755-4500-7d53-718132abf24e@apache.org>" "24" "[oss-security] [CVE-2020-1961] Apache Syncope: Server-Side Template Injection on mail templates" nil nil nil "5" "2020050212:32:34" "[oss-security] [CVE-2020-1961] Apache Syncope: Server-Side Template Injection on mail templates" (number mark "U       ilgrosso@apa May  2   24/564   " thread-indent "\"[oss-security] [CVE-2020-1961] Apache Syncope: Server-Side Template Injection on mail templates\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-1961] Apache Syncope: Server-Side Template Injection on mail templates" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16014 invoked by uid 550); 16 Feb 2018 17:43:22 -0000
+Received: (qmail 9272 invoked by uid 550); 2 May 2020 12:38:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15985 invoked from network); 16 Feb 2018 17:43:21 -0000
+Received: (qmail 5416 invoked from network); 2 May 2020 12:32:49 -0000
+From: =?UTF-8?Q?Francesco_Chicchiricc=c3=b2?= <ilgrosso@apache.org>
 To: oss-security@lists.openwall.com
-References: <c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>
-From: chbi@chbi.eu
-Message-ID: <57f3ff1c-b639-0691-3452-c4c0871523a1@chbi.eu>
-Date: Fri, 16 Feb 2018 18:42:59 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+Autocrypt: addr=ilgrosso@apache.org; prefer-encrypt=mutual; keydata=
+ xsBNBE9EncsBCAC02uAixULU/lI6u7y2a4hPLZ+J9eb1ZNVrg4iockEktP39C8zsve4rxltc
+ 9SnT5wa2XwVTwiSl8HjxFGmc/CyMP4l+JLYLqAxvN25BXzoC7pvIpH5VcXMnTKP2bqIcIQ3H
+ bR2gLxjxlEzRBgmzsnrtNWhlCi4DNuUcarMrzaWbQkW5DiieW/V7BNEKw7L/WESXWbXTC9zj
+ vyf9JQ/Ql3ys7n7y+/C7nnnnRys9kJahJkYbiLasJTxRMm/ENjzwamE1s2khxNDhYXmeXyUf
+ PYDv46rVP39TNNbecG9EuHbZZ1pRRSkGZJZnpWBu0O6VWOfn0aF2rR5mfbGHsQA8CQWlABEB
+ AAHNOEZyYW5jZXNjbyBDaGljY2hpcmljY8OyIChpbGdyb3NzbykgPGlsZ3Jvc3NvQGFwYWNo
+ ZS5vcmc+wsB4BBMBAgAiBQJPRJ3LAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRBr
+ QxPtJz3yh5j3B/46VEpC62uq3wiwDaUYI2fl6DYjlAuSGbI9Q7Avxpz+yDieaPE7Q3C19Xx+
+ wTFrHyPOswbltmT5KDNqEpe5C9IpqoSyu7UIkqHtlXTxhsu+rFWpfABnI4sfQ0ui1VOLN3JB
+ xG7G8PHCmIdYThSCRoM14u4KSU1ytd3SFtOpNLVU5TVBGm+aJWOu++XPSICn97101ndn8AJm
+ JDTlHQwqMzpQTejLQnv020SouLq5cB2O6HSuSmSDpctFCdYkYLzHA6p3WzKgVXt9c3CV7Zhf
+ w/XufaqXQQIkr1VLN/l13PlbPPnLluzPO+agDuCsJReFzF2JwxJYBLUIu0T8A+yrfTIzzsBN
+ BE9EncsBCADQrFXb7lIhSSaTIkNnE987DGgLn9QRUEvSa+132lWcZYx+knLehdH0++F/cqUc
+ 2KT17anzbOidGo0rvxwj5s42NV3lOUWIFBM7pUCwN2ef2CM3TVwA+/WrKGRFq/+cwAhSfDoc
+ jtN4+vYd4NbIgzSA7ZuoaT4vKRpBex0fAN2J8tLOzXSbXdsoWRj4pVBnJ0N6WHRlaqLQnQ7o
+ F1E6ZrNREMWasjxRuZ38mlpfbArnqw+lAbHL6T/BsKXOEjASe5iOPN9r95HW6dH1vmef1mOk
+ /Pu6wr+eIcqwPIBUQRvHw5UnOrMugUf1ohgnx2NvggLOSlvgGBnZo47MphpOd5DVABEBAAHC
+ wF8EGAECAAkFAk9EncsCGwwACgkQa0MT7Sc98oeFHggAro4b3tGyKCV7tMz8q9drqigl/6n+
+ /2riaumndUcPFZOsewDmg/75jszjc6hoe7wreBkJi0u8kvm6F0RpIlGk5WpCa7bljEc6Erm9
+ GLON/DoYn1MSpdMZdwucairqvMK1YWg/7wI/xjgq6br5FBoLegVE8bd3Iy4SVWKUIRURBF7q
+ Ft3rVRUJdcmqHvCWpxDJ1VKPRDHf5szVkWXFJI0xiU6KuICWidZ9Hg3WXUsm3SePD7FtokiK
+ 0Y9SBzHpd9EZe8KRIHekl5gVS2Xe83GC5GvPHEXE0usYUNRDArOXqIkGUCWHZ7gzueMBcWqW
+ x+uxeS7bQfZZO/7ew7lIDf4gYA==
+Message-ID: <a998fd0a-c755-4500-7d53-718132abf24e@apache.org>
+Date: Sat, 2 May 2020 14:32:34 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="1uINEXLGj8SmOSU9zES5skujNsicbpay0"
-Subject: Re: [oss-security] XSS vulnerability in Tiki < 18
-
---1uINEXLGj8SmOSU9zES5skujNsicbpay0
-Content-Type: multipart/mixed; boundary="JUV40GYdw8o1Al5qVSb0y0WjPd9O7P81c";
- protected-headers="v1"
-From: chbi@chbi.eu
-To: oss-security@lists.openwall.com
-Message-ID: <57f3ff1c-b639-0691-3452-c4c0871523a1@chbi.eu>
-Subject: Re: [oss-security] XSS vulnerability in Tiki < 18
-References: <c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>
-In-Reply-To: <c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>
-
---JUV40GYdw8o1Al5qVSb0y0WjPd9O7P81c
 Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [CVE-2020-1961] Apache Syncope: Server-Side Template Injection on mail templates
+
+Description:
+Vulnerability to Server-Side Template Injection on Mail templates enabling attackers to inject arbitrary JEXL expressions, leading to Remote
+Code Execution (RCE) was discovered.
+
+Severity: Important
+
+Vendor: The Apache Software Foundation
+
+Affects:
+2.0.X releases prior to 2.0.15
+2.1.X releases prior to 2.1.6
+
+Solution:
+2.0.X users: upgrade to 2.0.15
+2.1.X users: upgrade to 2.1.6
+
+Credit:
+This issue was discovered by GitHub Security Labs team member Alvaro Muñoz - https://github.com/pwntester.
+
+References:
+https://syncope.apache.org/security
 
 
-> A XSS vulnerability via SVG image allows an authenticated user to gain
-> administrator privileges if an administrator opens a wiki page with a
-> malicious SVG image, related to filegallib.php.
->=20
->=20
-> Fix:
-> https://sourceforge.net/p/tikiwiki/code/65327
 
-
-CVE-2018-7188 has been assigned.
-
---=20
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
---JUV40GYdw8o1Al5qVSb0y0WjPd9O7P81c--
-
---1uINEXLGj8SmOSU9zES5skujNsicbpay0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlqHGCMACgkQunuT+ZA3
-rn6aAxAAgBGdhW9FT2V/RLovWhg1yBrz6HP6nuMob3knL77vPxFgkKcapZt06/R4
-b9XOQDNv8rCP7V6vXMRbq7GR2/NDtbOVsClKlHd+h4PmxNtUqapGE5y/GIywrbJM
-04wcjrSmX6wW723wA7OCViBH666mIVM5tKqREZM3gsCd52ncEIzFINtYPBzrXOft
-9q+VKvYOulBvOnRQHkQLb7SNPJmAo4/quzywwwJ/PPSdbftULf04z38LvrfzcJl2
-bj5tg4ALgfSUOioNli+P8FVk0kf4i1ilZPS+ak1ghELvO7slQfTa6sRwzErEvUY/
-lXNExqpjxJITzrlh1U7oSyd1KCrCqmkaRa+t2H76rVu8c8+QHC47ckIxa8tbmZdO
-Jr9KMyC9K4n9FUNM07WqmnzZaH54ngkqo5maGeJVH7DUg/pt2nfaSF+QrL7k9Rd8
-rJfiGiswSAcx5J+DcvOV6fnTleGkQS0Hs1zqV2AFwnQ8+H2IYEH4cfXKfyI481As
-QN0bVUEk6f8bXv9Arg7iGTgKQI8O/tAfWNmWhz1LSbw+xeEOWaR+gTrt/KjlA7xe
-JLA4BT/DDG+akKhcjiioJ2s0kBegKrfNE5+ZzRDLq8/+Szq7RkTZzvuqY6tCrsAg
-ssHyCBenMv6yKuNDm2fKdXPB4x9ZUov2Op1RsoJmfOebHA08NU8=
-=nMCW
------END PGP SIGNATURE-----
-
---1uINEXLGj8SmOSU9zES5skujNsicbpay0--
