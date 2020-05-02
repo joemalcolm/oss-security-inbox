@@ -1,4 +1,9 @@
-Received: (qmail 28477 invoked by uid 550); 2 Nov 2022 17:17:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["860" "Saturday" "2" "May" "2020" "14:30:27" "+0200" "=?UTF-8?B?RnJhbmNlc2NvIENoaWNjaGlyaWNjw7I=?=" "ilgrosso@apache.org" "<2df8d282-af76-f504-2dea-89e86f846706@apache.org>" "24" "[oss-security] [CVE-2020-1959] Apache Syncope: Multiple Remote Code Execution Vulnerabilities" nil nil nil "5" "2020050212:30:27" "[oss-security] [CVE-2020-1959] Apache Syncope: Multiple Remote Code Execution Vulnerabilities" (number mark "U       ilgrosso@apa May  2   24/860   " thread-indent "\"[oss-security] [CVE-2020-1959] Apache Syncope: Multiple Remote Code Execution Vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-1959] Apache Syncope: Multiple Remote Code Execution Vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7940 invoked by uid 550); 2 May 2020 12:38:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29773 invoked from network); 2 Nov 2022 16:32:55 -0000
-X-Injected-Via-Gmane: http://gmane.org/
+Received: (qmail 28415 invoked from network); 2 May 2020 12:30:41 -0000
+From: =?UTF-8?Q?Francesco_Chicchiricc=c3=b2?= <ilgrosso@apache.org>
 To: oss-security@lists.openwall.com
-From: Tavis Ormandy <taviso@gmail.com>
-Date: Wed, 2 Nov 2022 16:32:36 -0000 (UTC)
-Message-ID: <tju633$t4h$1@ciao.gmane.io>
-References: <20221101170833.GA10470@openwall.com>
- <Y2FhxvA/2e7xFUiF@itl-email>
- <alpine.BSF.2.21.9999.2211020631160.34372@aneurin.horsfall.org>
- <CAPWQ=1TzQ_e2yHZMXx6Tm4UJG3owZypShvm+VDoxEMcDSDxX+A@mail.gmail.com>
- <CAH8yC8mzcw-C257znYHH+qSyXoFVJWaAD=3dbvH3ZxymUtZU0A@mail.gmail.com>
- <tjtkiu$jeu$1@ciao.gmane.io>
- <CAFRnB2Wyc9uLMz8O-YLQ3JZ1-fUYWr+NpFecYyFYdA1YyB+sfA@mail.gmail.com>
-User-Agent: slrn/pre1.0.4-5 (Linux)
-Subject: [oss-security] Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow
- (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow
- (CVE-2022-3786)
+Autocrypt: addr=ilgrosso@apache.org; prefer-encrypt=mutual; keydata=
+ xsBNBE9EncsBCAC02uAixULU/lI6u7y2a4hPLZ+J9eb1ZNVrg4iockEktP39C8zsve4rxltc
+ 9SnT5wa2XwVTwiSl8HjxFGmc/CyMP4l+JLYLqAxvN25BXzoC7pvIpH5VcXMnTKP2bqIcIQ3H
+ bR2gLxjxlEzRBgmzsnrtNWhlCi4DNuUcarMrzaWbQkW5DiieW/V7BNEKw7L/WESXWbXTC9zj
+ vyf9JQ/Ql3ys7n7y+/C7nnnnRys9kJahJkYbiLasJTxRMm/ENjzwamE1s2khxNDhYXmeXyUf
+ PYDv46rVP39TNNbecG9EuHbZZ1pRRSkGZJZnpWBu0O6VWOfn0aF2rR5mfbGHsQA8CQWlABEB
+ AAHNOEZyYW5jZXNjbyBDaGljY2hpcmljY8OyIChpbGdyb3NzbykgPGlsZ3Jvc3NvQGFwYWNo
+ ZS5vcmc+wsB4BBMBAgAiBQJPRJ3LAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRBr
+ QxPtJz3yh5j3B/46VEpC62uq3wiwDaUYI2fl6DYjlAuSGbI9Q7Avxpz+yDieaPE7Q3C19Xx+
+ wTFrHyPOswbltmT5KDNqEpe5C9IpqoSyu7UIkqHtlXTxhsu+rFWpfABnI4sfQ0ui1VOLN3JB
+ xG7G8PHCmIdYThSCRoM14u4KSU1ytd3SFtOpNLVU5TVBGm+aJWOu++XPSICn97101ndn8AJm
+ JDTlHQwqMzpQTejLQnv020SouLq5cB2O6HSuSmSDpctFCdYkYLzHA6p3WzKgVXt9c3CV7Zhf
+ w/XufaqXQQIkr1VLN/l13PlbPPnLluzPO+agDuCsJReFzF2JwxJYBLUIu0T8A+yrfTIzzsBN
+ BE9EncsBCADQrFXb7lIhSSaTIkNnE987DGgLn9QRUEvSa+132lWcZYx+knLehdH0++F/cqUc
+ 2KT17anzbOidGo0rvxwj5s42NV3lOUWIFBM7pUCwN2ef2CM3TVwA+/WrKGRFq/+cwAhSfDoc
+ jtN4+vYd4NbIgzSA7ZuoaT4vKRpBex0fAN2J8tLOzXSbXdsoWRj4pVBnJ0N6WHRlaqLQnQ7o
+ F1E6ZrNREMWasjxRuZ38mlpfbArnqw+lAbHL6T/BsKXOEjASe5iOPN9r95HW6dH1vmef1mOk
+ /Pu6wr+eIcqwPIBUQRvHw5UnOrMugUf1ohgnx2NvggLOSlvgGBnZo47MphpOd5DVABEBAAHC
+ wF8EGAECAAkFAk9EncsCGwwACgkQa0MT7Sc98oeFHggAro4b3tGyKCV7tMz8q9drqigl/6n+
+ /2riaumndUcPFZOsewDmg/75jszjc6hoe7wreBkJi0u8kvm6F0RpIlGk5WpCa7bljEc6Erm9
+ GLON/DoYn1MSpdMZdwucairqvMK1YWg/7wI/xjgq6br5FBoLegVE8bd3Iy4SVWKUIRURBF7q
+ Ft3rVRUJdcmqHvCWpxDJ1VKPRDHf5szVkWXFJI0xiU6KuICWidZ9Hg3WXUsm3SePD7FtokiK
+ 0Y9SBzHpd9EZe8KRIHekl5gVS2Xe83GC5GvPHEXE0usYUNRDArOXqIkGUCWHZ7gzueMBcWqW
+ x+uxeS7bQfZZO/7ew7lIDf4gYA==
+Message-ID: <2df8d282-af76-f504-2dea-89e86f846706@apache.org>
+Date: Sat, 2 May 2020 14:30:27 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Subject: [oss-security] [CVE-2020-1959] Apache Syncope: Multiple Remote Code Execution Vulnerabilities
 
-On 2022-11-02, Alex Gaynor wrote:
-> In Rust, assuming you wrote normal safe Rust[0], and you had code that
-> overran a buffer on the stack, you'd get a panic() -- which is roughly
-> an abort (there's even a mode where it literally is an abort. By
-> default it unwinds and runs destructors and such). As a general rule,
-> bounds check issues aren't caught at compile time (in contrast with
-> temporal safety, which mostly is enforced at compile time.)
->
+Description:
+A Server-Side Template Injection was identified in Syncope enabling attackers to inject arbitrary Java EL expressions, leading to an
+unauthenticated Remote Code Execution (RCE) vulnerability.
+Apache Syncope uses Java Bean Validation (JSR 380) custom constraint validators. When building custom constraint violation error messages, they
+support different types of interpolation, including Java EL expressions.
+Therefore, if an attacker can inject arbitrary data in the error message template being passed, they will be able to run arbitrary Java code.
 
-Got it - thanks! It seems like in the specific case of non-exploitable
-overflows, rust wouldn't have made too much difference (abort() vs
-panic())... although obviously that doesn't mean other issues wouldn't
-have been mitigated.
+Severity: Important
 
-Tavis.
+Vendor: The Apache Software Foundation
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@sdf.org
-_\_V _( ) _( )  @taviso
+Affects:
+2.1.X releases prior to 2.1.6
+
+Solution:
+Upgrade to 2.1.6
+
+Credit:
+This issue was discovered by GitHub Security Labs team member Alvaro Muñoz - https//github.com/pwntester.
+
+References:
+https://syncope.apache.org/security
+
 
