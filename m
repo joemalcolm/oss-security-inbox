@@ -1,38 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/19/1
-Message-ID: <2640261.krIbtSRUe9@golgafrichnam>
-Date: Fri, 19 Jun 2020 20:31:22 +0200
-From: Martin <martin_s@...che.org>
-To: users@...hiva.apache.org, announce@...che.org, dev@...hiva.apache.org
-Cc: users@...en.apache.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [SECURITY] CVE-2020-9495: Apache Archiva login service is vulnerable to LDAP injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/02/3
+Message-ID: <a998fd0a-c755-4500-7d53-718132abf24e@apache.org>
+Date: Sat, 2 May 2020 14:32:34 +0200
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-1961] Apache Syncope: Server-Side Template Injection on mail templates
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-9495: Apache Archiva login service is vulnerable to LDAP injection
+Description:
+Vulnerability to Server-Side Template Injection on Mail templates enabling attackers to inject arbitrary JEXL expressions, leading to Remote
+Code Execution (RCE) was discovered.
 
-Severity: Medium
+Severity: Important
 
-Vendor:
-The Apache Software Foundation
+Vendor: The Apache Software Foundation
 
-Versions Affected:
+Affects:
+2.0.X releases prior to 2.0.15
+2.1.X releases prior to 2.1.6
 
-    Apache Archiva all versions before 2.2.5
+Solution:
+2.0.X users: upgrade to 2.0.15
+2.1.X users: upgrade to 2.1.6
 
-By providing special values to the archiva login form a attacker is able to retrieve user attribute data from the connected LDAP server. 
-With certain characters it is possible to modify the LDAP filter used to query the users on the connected LDAP server. 
-By measuring the response time, arbitrary attribute data can be retrieved from LDAP user objects.
-
-Mitigation:
-
-    Upgrade to Apache Archiva 2.2.5 or higher
+Credit:
+This issue was discovered by GitHub Security Labs team member Alvaro Muñoz - https://github.com/pwntester.
 
 References:
-http://archiva.apache.org/security.html#CVE-2020-9495
-
-The newest Archiva version can be downloaded from:
-http://archiva.apache.org/download.cgi
-
+https://syncope.apache.org/security
 
 
 
