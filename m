@@ -1,105 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/23/1
-Message-Id: <72558D3A-640E-4561-862F-91453510916E@beckweb.net>
-Date: Wed, 23 Sep 2020 14:57:59 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/04/2
+Message-ID: <CAFzhf4qP-kM7S7AciJgv_j90bDN6J2nunEerPW3aDAN3OxCbzw@mail.gmail.com>
+Date: Mon, 4 May 2020 00:24:19 +0100
+From: Piotr Krysiuk <piotras@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: [CVE-2020-12114] Linux kernel denial of service by corrupting mountpoint reference counter
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+A race condition in fs/namespace.c in the Linux kernel allows unprivileged
+local users to cause a denial of service by corrupting mountpoint reference
+counter
 
-The following releases contain fixes for security vulnerabilities:
+# Affected Versions
 
-* Implied Labels Plugin 0.7
-* Liquibase Runner Plugin 1.4.8
-* Lockable Resources Plugin 2.9
-* Script Security Plugin 1.75
-* Warnings Plugin 5.0.2
+The denial of service has been reproduced against the following Linux
+kernel releases from kernel.org:
+* 4.19.118 (longterm release)
+* 4.14.177 (longterm release)
+* 4.9.220 (longterm release)
+* 4.4.220 (longterm release)
 
+The denial of service has also been reproduced against the following
+distribution kernel versions provided by current Ubuntu LTS releases:
+* 5.0.0-1034-gcp (distribution kernel provided by package
+"linux-image-5.0.0-1034-gcp" from Ubuntu 18.04.4 LTS)
+* 4.15.0-1061-gcp (current distribution kernel provided by package
+"linux-image-4.15.0-1061-gcp" from Ubuntu 16.04.6 LTS with all updates
+installed)
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2020-09-23/
+Linux kernel releases 5.3 and newer from kernel.org are not affected.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+# Root Cause
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+Unprivileged local user can cause kernel panic by triggering destruction of
+a mountpoint that is still in use.
 
----
+This is possible by exploiting a race condition to corrupt mountpoint
+reference counter when simultaneously executing put_mountpoint() and
+pivot_root():
+* one thread increments m_count member of struct mountpoint
+  [under namespace_sem, but not holding mount_lock]
+    pivot_root()
+* another thread simultaneously decrements the same m_count
+  [under mount_lock, but not holding namespace_sem]
+    put_mountpoint()
+      unhash_mnt()
+        umount_mnt()
+          mntput_no_expire()
 
-SECURITY-2020 / CVE-2020-2279
-Script Security Plugin provides a sandbox feature that allows low
-privileged users to define scripts, including Pipelines, that are generally
-safe to execute. Calls to code defined inside a sandboxed script are
-intercepted, and various allowlists are checked to determine whether the
-call is to be allowed.
+# Bug Fix
 
-In Script Security Plugin 1.74 and earlier, any calls from outside a
-sandboxed script to code defined inside a sandboxed script were always
-allowed. As sandboxed scripts can communicate their results through script
-return values and similar mechanisms, this could result in code defined
-inside of a sandboxed script to be called without sandbox protection.
+To fix this race condition, grab mount_lock before updating m_count in
+pivot_root().
+This requires swapping two lines in fs/namespace.c:
+```
+@@ -3142,8 +3142,8 @@ SYSCALL_DEFINE2(pivot_root, const char __user *,
+new_root,
+  /* make certain new is below the root */
+  if (!is_path_reachable(new_mnt, new.dentry, &root))
+  goto out4;
+- root_mp->m_count++; /* pin it so it won't go away */
+  lock_mount_hash();
++ root_mp->m_count++; /* pin it so it won't go away */
+  detach_mnt(new_mnt, &parent_path);
+  detach_mnt(root_mnt, &root_parent);
+  if (root_mnt->mnt.mnt_flags & MNT_LOCKED) {
+```
 
-This vulnerability allows attackers with permission to define and run
-sandboxed scripts, including Pipelines, to bypass the sandbox protection
-and execute arbitrary code in the context of the Jenkins controller JVM.
+The above fix has been merged into all relevant longterm branches by
+upstream Linux kernel.
 
+The following Linux kernel releases from kernel.org incorporate the fix:
+* 4.19.119 (longterm release), see commit
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=v4.19.119&id=f511dc75d22e0c000fc70b54f670c2c17f5fba9a
+* 4.14.178 (current longterm release), see commit
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=v4.14.178&id=e21c8c03af20932c15d8b1d3bb9cbad9607a6eab
+* 4.9.221 (current longterm release), see commit
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=v4.9.221&id=91e997939dda1a866f23ddfb043dcd4a3ff57524
+* 4.4.221 (current longterm release), see commit
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=v4.4.221&id=83354adbd7a967230bd23a547c5b695567ddba2c
 
-SECURITY-2042 / CVE-2020-2280
-Warnings Plugin 5.0.1 and earlier does not require POST requests for a form
-validation method intended for testing custom warnings parsers, resulting
-in a cross-site request forgery (CSRF) vulnerability.
+# Proof Of Concept
 
-This vulnerability allows attackers to execute arbitrary code.
+I developed a PoC that allows unprivileged local users to reliably trigger
+kernel panic inside VM instances on Compute Engine of Google Cloud Platform.
 
+The PoC has been shared privately with <security@...nel.org> and via a
+private bug report with Ubuntu.
 
-SECURITY-1958 / CVE-2020-2281
-Lockable Resources Plugin 2.8 and earlier does not require POST requests
-for several HTTP endpoints, resulting in a cross-site request forgery
-(CSRF) vulnerability.
+# Discoverer
 
-This vulnerability allows attackers to reserve, unreserve, unlock, and
-reset resources.
+Piotr Krysiuk <piotras@...il.com>
 
+# References
 
-SECURITY-2004 / CVE-2020-2282
-Implied Labels Plugin 0.6 and earlier does not perform a permission check
-in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to configure the plugin.
-
-
-SECURITY-1885 / CVE-2020-2283
-Liquibase Runner Plugin 1.4.5 and earlier does not escape changeset
-contents when showing them on the build page.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to provide Liquibase changesets evaluated by
-the plugin.
-
-
-SECURITY-1887 / CVE-2020-2284
-Liquibase Runner Plugin 1.4.5 and earlier does not configure its XML parser
-to prevent XML external entity (XXE) attacks.
-
-This allows attackers able to provide Liquibase changesets evaluated by the
-plugin to have Jenkins parse a crafted XML file that uses external entities
-for extraction of secrets from the Jenkins controller or server-side
-request forgery.
-
-
-SECURITY-2030 / CVE-2020-2285
-Liquibase Runner Plugin 1.4.7 and earlier does not perform a permission
-check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
+CVE-2020-12114 (reserved via https://cveform.mitre.org/)
 
