@@ -1,34 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/5
-Message-ID: <9608d09.8975.1721205e1d0.Coremail.dinglei@apache.org>
-Date: Thu, 14 May 2020 15:11:14 +0800 (GMT+08:00)
-From: ShannonDing <dinglei@...che.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: "private@...ketmq.apache.org" <private@...ketmq.apache.org>
-Subject: [SECURITY][CVE-2019-17572] Apache RocketMQ directory traversal vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/05/1
+Message-ID: <20200505192458.GA8312@openwall.com>
+Date: Tue, 5 May 2020 21:24:58 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
 Content-Type: text/plain; charset=utf-8
 
-Hi, 
-An directory traversal vulnerability[1] was discovered in the version RocketMQ 4.6.0 and it affect all
-versions earlier. And it was fixed[2] in the version 4.6.1 and later according to the CVE-2019-17572.
-Here is the detail of the vulnerability below:
+Hi,
 
+Thank you Benjamin, Igor, John for agreeing on this between yourselves
+and for all of your contributions to running these lists smoothly.
 
-[CVEID]:CVE-2019-17572
-[PRODUCT]:Apache RocketMQ
-[VERSIONS]:Apache RocketMQ 4.2.0 to 4.6.0
-[PROBLEMTYPE]: Directory traversal vulnerability
-[REFERENCES]:https://lists.apache.org/thread.html/fdea1c5407da47a17d5522fa149a097cacded1916c1c1534d46edc6d%40%3Cprivate.rocketmq.apache.org%3E
-[DESCRIPTION]:When the automatic topic creation in the broker is turned on by default, an evil topic like “../../../../topic2020” is sent from rocketmq-client to the broker,  a topic folder will be created in the parent directory in brokers, which leads to a directory traversal vulnerability.
-[MITIGATION]: Users of the affected versions should apply one of the following:
-mitigations:
-- Upgrade to Apache RocketMQ 4.6.1or later
+On Tue, Mar 03, 2020 at 12:07:29AM -0500, Benjamin Gilbert wrote:
+> Red Hat recently announced [1] that CoreOS Container Linux will reach
+> end-of-life on May 26.  The Container Linux team will be leaving the
+> distros lists on that date,
 
+I assume you'll remind me about that on that date.
 
-[1]https://github.com/apache/rocketmq/issues/1637
-[2]https://lists.apache.org/thread.html/rce631288364c30332ad2ca3f3b72cae19f34ced3ba9bb0d58ebea1ff%40%3Cprivate.rocketmq.apache.org%3E
+> and will need to hand off our maintenance
+> responsibilities to other distros.  We're currently handling [2]:
+> 
+> Administrative-1: Promptly review new issue reports for meeting the
+> list's requirements and confirm receipt of the report and, when
+> necessary, inform the reporter of any issues with their report (e.g.,
+> obviously not actionable by the distros) and request and/or propose
+> any required yet missing information (most notably, a tentative public
+> disclosure date/time) - primary: CoreOS, backup: Oracle
+> 
+> Administrative-2: If the proposed public disclosure date is not within
+> list policy, insist on getting this corrected and propose a suitable
+> earlier date - primary: CoreOS, backup: CloudLinux
+> 
+> Administrative-6: If multiple issues are reported at once, see if any
+> of them can reasonably be made public sooner than the rest, and if so
+> help untangle them and stay on top of their disclosure process -
+> primary: CoreOS, backup: CloudLinux
+> 
+> 
+> Oracle isn't signed up for any other tasks, so it seems natural for
+> them to move up to primary on #1.  In addition to being backup on #2
+> and #6, CloudLinux is primary on Administrative-3 (evaluate if the
+> issue is already public).  In my experience it makes sense to handle
+> #1 and #2 together, so: Oracle, would you be willing to take primary
+> on #1 and #2, and CloudLinux, what would you think of moving up to
+> primary on #6?
 
+I've just edited the wiki accordingly.
 
+> It'd also be good to get volunteers for the backup slots.  Any takers?
 
+I second this request.
 
+> We plan to continue executing our current responsibilities until May
+> 26, but if other distros want to take over our roles sooner for ease
+> of bookkeeping, we're open to that.
 
+I suggest that Oracle and CloudLinux already start to act as primary for
+their respective tasks, and CoreOS as backup until you leave on May 26.
+
+> Best,
+> --Benjamin Gilbert
+> 
+> [1]: https://coreos.com/os/eol/
+> [2]: https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+
+Thanks again,
+
+Alexander
