@@ -1,42 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/07/2
-Message-ID: <CAOo2v=CeSZ3h9ui1Fr=nfZqFOM1h7zdZQfhwFr58DAqzQQ=WhA@mail.gmail.com>
-Date: Tue, 7 Apr 2020 12:04:59 +0530
-From: Hardik Vyas <hvyas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/06/3
+Message-Id: <2EAAFD2D-2302-40AF-84DB-5DA8E46A40B2@beckweb.net>
+Date: Wed, 6 May 2020 14:32:27 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-1759 ceph: secure mode of msgr2 breaks both confidentiality and integrity aspects for long-lived sessions
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-A nonce reuse vulnerability was discovered in the secure mode of the
-messenger v2 protocol, which can allow an
-attacker to forge auth tags and potentially manipulate the data by
-leveraging the reuse of a nonce in a session.
-Messages encrypted using a reused nonce value are susceptible to serious
-confidentiality and integrity attacks.
+The following releases contain fixes for security vulnerabilities:
 
-This flaw was introduced in commit fe387e02b11d ("msg/async, v2: drop
-depedency on uint128_t. Clean up onwire
-crypto.") and affects all the ceph versions from v14.1.1. Red Hat has
-assigned CVE-2020-1759 for this issue.
-
-Upstream Patches:
-
-https://github.com/ceph/ceph-ci/commit/84d2e215969cde830b086d11544aeb3666614211
-https://github.com/ceph/ceph-ci/commit/659ec7dc6e30fe961832f813da007f49e603a33d
+* Amazon EC2 Plugin 1.50.2
+* Copy Artifact Plugin 1.44
+* Credentials Binding Plugin 1.23
+* CVS Plugin 2.16
+* SCM Filter Jervis Plugin 0.3
 
 
-Credit: Ilya Dryomov (Red Hat)
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2020-05-06/?
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1374 / CVE-2020-2181
+Credentials Binding Plugin 1.22 and earlier does not mask (i.e., replace
+with asterisks) secrets in the build log when the build contains no build
+steps.
 
 
-PS: The patches are currently available from ceph.git clone(ceph-ci) and
-will be pushed to active releases soon.
+SECURITY-1835 / CVE-2020-2182
+Credentials Binding Plugin allows specifying passwords and other secrets as
+environment variables, and will hide them from console output in builds. As
+a side effect of the fix for SECURITY-698, `$` characters in secrets are
+escaped to `$$`. This will then be expanded to `$` again once the secret is
+passed to (post) build steps.
 
-Regards,
--- 
+Credentials Binding Plugin 1.22 and earlier does not mask the escaped form
+of the secret (containing `$$`). This occurs for example in the "Execute
+Maven top-level targets" build step included in Jenkins.
 
-Hardik Vyas / Red Hat Product Security
 
-BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
+SECURITY-988 / CVE-2020-2183
+Copy Artifact Plugin 1.43.1 and earlier performs improper permission checks
+when determining whether a build can copy artifacts from another project
+build. This allows attackers, usually with Job/Configure permission, to
+configure jobs to copy artifacts from jobs they have no permission to
+access.
+
+
+SECURITY-1094 / CVE-2020-2184
+CVS Plugin 2.15 and earlier does not require POST requests in several HTTP
+endpoints, resulting in cross-site request forgery (CSRF) vulnerabilities.
+This allows attackers to create and manipulate tags, and to connect to an
+attacker-specified URL.
+
+
+SECURITY-381 / CVE-2020-2185
+Amazon EC2 Plugin 1.50.1 and earlier does not use SSH host key validation
+when connecting to agents. This lack of validation could be abused using a
+man-in-the-middle attack to intercept these connections to build agents.
+
+
+SECURITY-1408 / CVE-2020-2186
+Amazon EC2 Plugin 1.50.1 and earlier does not require POST requests in
+several HTTP endpoints, resulting in cross-site request forgery (CSRF)
+vulnerabilities. This allows an attacker to provision instances with an
+attacker-specified template ID.
+
+
+SECURITY-1528 / CVE-2020-2187
+Amazon EC2 Plugin connects to Windows agents via HTTPS.
+
+Amazon EC2 Plugin 1.50.1 and earlier unconditionally accepts self-signed
+HTTPS certificates and does not perform hostname validation when connecting
+to Windows agents. This lack of validation could be abused using a
+man-in-the-middle attack to intercept these connections to build agents.
+
+
+SECURITY-1844 / CVE-2020-2188
+Amazon EC2 Plugin provides a list of applicable credentials IDs to allow
+users configuring the plugin to select the one to use.
+
+This functionality does not correctly check permissions in Amazon EC2
+Plugin 1.50.1 and earlier, allowing any user with Overall/Read permission
+to get a list of valid credentials IDs. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-1826 / CVE-2020-2189
+SCM Filter Jervis Plugin 0.2.1 and earlier does not configure its YAML
+parser to prevent the instantiation of arbitrary types. This results in a
+remote code execution (RCE) vulnerability exploitable by users able to
+configure jobs with the filter, or control the contents of a previously
+configured job's SCM repository.
 
