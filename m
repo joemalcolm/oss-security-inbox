@@ -1,40 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/20/1
-Message-ID: <CALwJ=Mwm84qq+99OYYsQTEhKs1O2kFC4NxpbsrGgfgoHK3t4_w@mail.gmail.com>
-Date: Thu, 20 Aug 2020 11:15:41 -0400
-From: Richard Hipp <drh@...ite.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/06/1
+Message-ID: <CALJHwhRpmRTpqWe74KBk1QBQ7b8tuHXuOJAu2UHtq6foYRj7Zg@mail.gmail.com>
+Date: Wed, 6 May 2020 15:12:12 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Fossil-SCM patch fixes RCE in all historic versions
+Subject: CVE-2020-10732 kernel: uninitialized kernel data leak in userspace coredumps
 Content-Type: text/plain; charset=utf-8
 
-Researcher Max Justicz discovered a potential RCE and other
-vulnerabilities in the Fossil distributed version control system.
-(https://fossil-scm.org/)  Patches to address these issues are now
-available for download.  Package maintainers who bundle Fossil are
-encouraged to update their packages without unnecessary delay.
+Gday,
 
-All vulnerabilities require a pre-existing trust relationship between
-the victim and the attacker.  In other words, the attacker must be
-either a site administrator, or someone with check-in privileges on
-the project.  There are no known vulnerabilities to servers from web
-users entering tickets or forum messages or wiki or doing other
-on-line operations.  The attacks require the ability to push, at
-least, and the most serious RCE problem requires the ability to
-configure a server in malicious ways.  If you are unable to upgrade to
-one of the patched versions of Fossil, then you are encouraged at
-least to know well the people from whom you clone or pull.
+A potential info leak of kernel private memory to userspace was found in
+the kernel's implementation of core dumping userspace processes.  An area
+of memory was allocated from free memory without being correctly
+initialized, this memory contents could contain kernel private information
+from previous executions and leak it to kernel space for any (probably
+local) user that is able to read the core dump.
 
-Precompiled binaries and source tarballs for the patched versions of
-Fossil are available on the Fossil download page
-(http://fossil-scm.org/fossil/uv/download.html).  However, the dozens
-of check-ins that went into generating these patches, and the tickets
-that describe the specifics of the vulnerabilities, will be embargoed
-for a few days.
+This seems like it would allow leaking of possible registers that are not
+stored/initialized in the core dump itself.  The amount leaked will depend
+on the register state at the time of the crash, it could also leak nothing.
 
-See the thread on the Fossil Forum
-(https://fossil-scm.org/forum/info/a05ae3ce7760daf6) for follow up
-information or to communicate directly with the Fossil developers.
+This was introduced in 4206d3aa1978e44f58bfa4e1c9d8d35cbf19c187
 
--- 
-D. Richard Hipp
-drh@...ite.org
+Possible mitigation would be to disable core dumps system-wide by setting:
+
+* hard core 0
+
+In the  /etc/security/limits.conf file and restarting
+applications/services/processes which users may have access to or simply
+reboot the system.  This disables core dumps which may not be a suitable
+workaround in your environment.
+
+Relevant links:
+-------------------
+
+Not upstream but a patch:
+https://github.com/ruscur/linux/commit/a95cdec9fa0c08e6eeb410d461c03af8fd1fef0a
+
+Where I found out about it:
+https://twitter.com/grsecurity/status/1252558055629299712
+
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1831399
+
+Thank you.
+
+Wade Mealing
+
+Product Security - Kernel
+Red Hat
+wmealing@...hat.com
+
