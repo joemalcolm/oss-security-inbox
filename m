@@ -1,103 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/20/4
-Message-ID: <20200120143608.GE10486@f195.suse.de>
-Date: Mon, 20 Jan 2020 15:36:08 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/06/5
+Message-ID: <CAE4Awf_qX8osK8cvGF=+1Lozp9+TR442K7KDSATX_zJE2EW9Gg@mail.gmail.com>
+Date: Wed, 6 May 2020 14:49:25 -0500
+From: Gage Hugo <gagehugo@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-5202: apt-cacher-ng: a local unprivileged user can impersonate the apt-cacher-ng daemon, possible credentials leak
+Subject: [OSSA-2020-004] Keystone: Keystone credential endpoints allow owner modification and are not protected from a scoped context (CVE PENDING)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-apt-cacher-ng is a caching proxy for downloading packages from
-Debian-style software repositories [1]. In the course of a code review
-of apt-cacher-ng I noticed a possible credentials leak when
-"AdminAuth" is enabled in /etc/apt-cacher-ng/security.conf.
+=================================================================================================================
+OSSA-2020-004: Keystone credential endpoints allow owner modification and
+are not protected from a scoped context
+=================================================================================================================
 
-The apt-cacher-ng daemon listens on TCP port 3142 on all network
-interfaces but also creates a UNIX domain socket in
-/run/apt-cacher-ng/socket. The cron job script
-/etc/cron.daily/apt-cacher-ng runs the following command:
+:Date: May 06, 2020
+:CVE: Pending
 
-/usr/lib/apt-cacher-ng/acngtool maint -c /etc/apt-cacher-ng SocketPath=/var/run/apt-cacher-ng/socket
 
-SocketPath is explicitly specified on the command line, trying to force
-a connection to the daemon via the socket path. However, `acngtool` does
-not act accordingly. Instead, when using the default configuration, it
-connects to localhost:3142. This stems from the source file
-source/acngtool.cc:503 (based on apt-cacher-ng 3.1 that I have looked
-into), where the following is found:
+Affects
+~~~~~~~
+- - Keystone: <15.0.1, ==16.0.0
 
-```
-	auto nips = Tokenize(cfg::bindaddr, SPACECHARS, hostips, true);
-	if (!nips)
-		hostips.emplace_back("localhost");
-```
 
-Since port 3142 is not a privileged network port, any local user may
-bind to this port. Should the actual apt-cacher-ng daemon not (yet) be
-running, a local unprivileged user can impersonate the daemon, and the
-cron.daily/apt-cacher-ng script will sooner or later pass the AdminAuth
-credentials to it. This is the proof of concept I tested on Debian 9:
+Description
+~~~~~~~~~~~
+kay reported two vulnerabilities in keystone's EC2 credentials API.
+Any authenticated user could create an EC2 credential for themselves
+for a project that they have a specified role on, then perform an
+update to the credential user and project, allowing them to masquerade
+as another user. (CVE #1 PENDING) Any authenticated user within a
+limited scope (trust/oauth/application credential) can create an EC2
+credential with an escalated permission, such as obtaining admin while
+the user is on a limited viewer role. (CVE #2 PENDING) Both of these
+vulnerabilities potentially allow a malicious user to act as admin on
+a project that another user has the admin role on, which can
+effectively grant the malicious user global admin privileges.
 
-```
-# make sure AdminAuth is enabled
-root # grep AdminAuth /etc/apt-cacher-ng/security.conf 
-AdminAuth: mooma:moopa
 
-# simulate the apt-cacher-ng daemon not running
-root # systemctl stop apt-cacher-ng
+Patches
+~~~~~~~
+- - https://review.opendev.org/725895 (Rocky)
+- - https://review.opendev.org/725893 (Stein)
+- - https://review.opendev.org/725891 (Train)
+- - https://review.opendev.org/725888 (Ussuri)
+- - https://review.opendev.org/725886 (Victoria)
 
-# in a second shell run netcat as a regular user on port 3142
-user $ nc -l -p 3142
 
-# simulate the cron job being executed
-root # /etc/cron.daily/apt-cacher-ng
+Credits
+~~~~~~~
+- - kay (CVE Pending)
 
-# now you should see the following output in the netcat shell 
-GET /acng-report.html?doExpire=Start%2bExpiration&abortOnErrors=aOe HTTP/1.1
-User-Agent: Debian Apt-Cacher-NG/2
-Host: localhost
-Authorization: Basic bW9vbWE6bW9vcGE=
-Cache-Control: no-store,no-cache,max-age=0
-Accept: application/octet-stream
-Accept-Encoding: identity
-Connection: close
-```
 
-# base64 decoding the auth data, the local unprivileged user obtained
-# the authentication data for apt-cacher-ng
-user $ echo 'bW9vbWE6bW9vcGE=' | base64 -d
-mooma:moopa
-```
+References
+~~~~~~~~~~
+- - https://launchpad.net/bugs/1872733
+- - https://launchpad.net/bugs/1872735
+- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=Pending
 
-The issue is more severe in the openSUSE packaging where the
-apt-cacher-ng daemon is not started by default, but only by explicit
-Administrator configuration, which results in the attack surface being
-exposed by default. But also when apt-cacher-ng crashes or can be
-crashed by a local attacker, the information leak could be achieved.
 
-Debian Upstream has already published an update with a suitable bugfix
-for Debian sid [2]. I've informed the upstream author on 2019-11-26
-about this issue, the Debian security team was involved, patches
-reviewed and agreed upon.
+Notes
+~~~~~
+- - The stable/rocky branch is under extended maintenance and will receive
+no new
+  point releases, but a patch for it is provided as a courtesy.
+-----BEGIN PGP SIGNATURE-----
 
-[1]: https://wiki.debian.org/AptCacherNg
-[2]: https://security-tracker.debian.org/tracker/CVE-2020-5202
+iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl6zE70ACgkQ56j9K3b+
+vREQsBAAnHZLyrbjSwu7/CEdDVfb0sQZfDvyuXMttzouXQ6ZwEgLFKzc/aFWMjru
+loyst9jAx2pJzvxDfMYO11oU0M5tYFCFxhKsVvu+3ggbcNHeov1s25bPkxE7A2j7
+IYJj9b+bbieYVj1ru3FJjDl3iTae4K73DeHNBCdxTSeahJZdya7hiboA1VJFt4p7
+fNqU3+szsYt/vwspPBi7x+xnZszIMaUw8tVgxzB4KVD6YXbDR9Mp7itH77kGdn8l
+e3OpnURvfaIkPbK6fqE6jjwjQEL/6+Ahffaf4KqvsdjbAcdQRpK0UQrBX+n6DIWd
+TRwV/W7bEy64HrC16W78fcBlegRmEUUM4xNmdll3lwUS5KqfEeM3vXU4Ksfe9tQ2
+8fDU1hDALcC55+2CMMrdFfmX/MBSTz0HVmP4snaGuoXBL/iQz22OmekFKC1tmXxb
++vAtOUBsdzphRZn9KWvPIHOFGeuepWb9W0eN594JT2pdHfniLj6EaPrBaN63l7M/
+pu0DTPygN5IdUXv6v/vquQZp50CaN59okmXDNiFkBeHsfaAqhdyjJjRaYvyU62OA
+apjVam8/f2HM0RC0vvpIqv0z0kU55NPCo61dlMZPg6U9JiQd2PzBqvEtDF1lyByF
+vz5e+r9fmtRcgCJIYr0Z7VlOlSMONpITN03oICaexieDTEXDXHc=
+=lSDG
+-----END PGP SIGNATURE-----
 
-Cheers
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
