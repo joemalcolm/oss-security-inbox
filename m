@@ -1,36 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/18/1
-Message-ID: <CALJHwhRQAcpZS_gOF0c80OHx+hj-nknXbkaspyc1=J4VjkRRDQ@mail.gmail.com>
-Date: Thu, 18 Jun 2020 11:19:35 +1000
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/06/6
+Message-ID: <CAE4Awf-A6xTc41ycXKMv_635EzuqJ22ft=-_EvZh4kYo=VL5Zw@mail.gmail.com>
+Date: Wed, 6 May 2020 14:54:11 -0500
+From: Gage Hugo <gagehugo@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-10781 kernel: zram sysfs resource consumption
+Subject: [OSSA-2020-005] Keystone: OAuth1 request token authorize silently ignores roles parameter (CVE PENDING)
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-A user with a local account and the ability to read the
-/sys/class/zram-control/hot_add file which on each read will create a
-zram device node in the /dev/ directory.  This allocates kernel memory
-and is not allocated to a user.
+==============================================================================
+OSSA-2020-005: OAuth1 request token authorize silently ignores roles
+parameter
+==============================================================================
 
-Continually reading this file may consume a large amount of system
-memory and cause the system OOM killer to activate, terminating
-userspace processes possibly making the system inoperable.
+:Date: May 06, 2020
+:CVE: Pending
 
-Acknowledgement:
-Luca Bruno of Red Hat
 
-Upstream discussion and patch
-https://lore.kernel.org/linux-block/20200617103412.GA2027053@kroah.com/
+Affects
+~~~~~~~
+- - Keystone: <15.0.1, ==16.0.0
 
-Red Hat bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1847832
 
-Thanks,
+Description
+~~~~~~~~~~~
+kay reported a vulnerability in Keystone's OAuth1 Token API. The list
+of roles provided for an OAuth1 access token are ignored, so when an
+OAuth1 access token is used to request a keystone token, the keystone
+token will contain every role assignment the creator had for the
+project instead of the provided subset of roles. This results in the
+provided keystone token having more role assignments than the creator
+intended, possibly giving unintended escalated access.
 
-Wade Mealing
 
-Product Security - Kernel
-Red Hat
+Patches
+~~~~~~~
+- - https://review.opendev.org/725894 (Rocky)
+- - https://review.opendev.org/725892 (Stein)
+- - https://review.opendev.org/725890 (Train)
+- - https://review.opendev.org/725887 (Ussuri)
+- - https://review.opendev.org/725885 (Victoria)
+
+
+Credits
+~~~~~~~
+- - kay (CVE Pending)
+
+
+References
+~~~~~~~~~~
+- - https://launchpad.net/bugs/1873290
+- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=Pending
+
+
+Notes
+~~~~~
+- - The stable/rocky branch is under extended maintenance and will receive
+no new
+  point releases, but a patch for it is provided as a courtesy.
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl6zFWsACgkQ56j9K3b+
+vRFDnhAArgXdQUnCyckPQciBvxMxQvqhCEhzGH0aQNAmMLaImYUwFhFVVO0DlcNb
+kt/ynLQLdyi3YnCz1x4VhUXaCh4Rhi9pYkU4LKa/tvJj6anrCSLHmuDD52idkZeB
+sFslgkh/BGfdM4HcuPLhs4SSaZpI53ASitiOhyjBIN/DmpLUbZgmJ1iz3FfQ3cTB
+wtjYI4jGCCMq+4POSozWMzeYdL3JzR264jBCRrCw1ErIPjpF4KSOFaH5vqakBnzw
+Ot7KR7s7FmIwU7LhCuvjgLW3rxwE1g5bz+Qd/97rC1bTx/iPHklQjMP5SoGwmjta
+Kx1prUaQqFys5Bw93e0cj1Fwn0zNHUjqLs4LZscNbyGRyAZCPREeg2quwBxVUNk9
+D6jxW3J2LYIu+ictVV5fnBQd4/+NtxM8ofLDM03QZouUpkNfCHAmW81BYqd2+Pii
+VbJi5Litz+DHLrAyh0O4zD/PBc5+5zxB2EXEDVEJitqaxQWfogJwJzGe89ULom0I
+VXMuYOvqaLV9f2JIG6SEBiKrfaUhSgoHTrmznt82KOlsOBMamQUaj5iTqDoDzPD2
+LVB2WLABj1cFZsnTFAec1qKwEPXuT0p3Dsb7eyvwsq5aJYS5I2bjK6Q1WcCcqzJF
+1b+v0iqW0Qu+Hk4fwvcrqqQMDZ7Q982tT+B7sU8xV4jYBtFLseQ=
+=iEFE
+-----END PGP SIGNATURE-----
 
