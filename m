@@ -1,47 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/4
-Message-ID: <054d4faf-ea1d-5354-e33b-8d0b1fe6976b@isc.org>
-Date: Tue, 19 May 2020 01:16:04 -0800
-From: ISC Security Officer <security-officer@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/06/4
+Message-ID: <CAE4Awf9+28ooqR9jH5m=NkARWYazK0Utb8=NzqQzOhC5-1MjpQ@mail.gmail.com>
+Date: Wed, 6 May 2020 14:44:27 -0500
+From: Gage Hugo <gagehugo@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "security-officer@....org" <security-officer@....org>
-Subject: Two vulnerabilities disclosed in BIND (CVE-2020-8616 and CVE-2020-8617)
+Subject: [OSSA-2020-003] Keystone: Keystone does not check signature TTL of the EC2 credential auth method (CVE PENDING)
 Content-Type: text/plain; charset=utf-8
 
-On May 19, 2020, Internet Systems Consortium have disclosed two
-vulnerabilities in our BIND 9 software:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-   CVE-2020-8616: BIND does not sufficiently limit the number
-   of fetches performed when processing referrals
-   https://kb.isc.org/docs/cve-2020-8616
+======================================================================================
+OSSA-2020-003: Keystone does not check signature TTL of the EC2 credential
+auth method
+======================================================================================
 
-   CVE-2020-8617: A logic error in code which checks TSIG
-   validity can be used to trigger an assertion failure in tsig.c
-   https://kb.isc.org/docs/cve-2020-8617
+:Date: May 06, 2020
+:CVE: Pending
 
-With the public announcement of these vulnerabilities, the embargo
-period is ended and any updated software packages that have been
-prepared may be released.
 
-ISC's own releases containing fixes are:
+Affects
+~~~~~~~
+- - Keystone: <15.0.1, ==16.0.0
 
-   -  BIND 9.11.19
-   -  BIND 9.14.12
-   -  BIND 9.16.3
 
-each of which can be downloaded via the ISC downloads page,
-https://www.isc.org/downloads
+Description
+~~~~~~~~~~~
+kay reported a vulnerability with keystone's EC2 API. Keystone doesn't
+have a signature TTL check for AWS signature V4 and an attacker can
+sniff the auth header, then use it to reissue an openstack token an
+unlimited number of times.
 
-For package maintainers who want *only* the fixes for the
-CVE vulnerabilities, patch diffs are available for each branch
-in the "patches" subdirectory of the branch's May 2020
-maintenance release, e.g.:
 
-  9.11 branch:  https://downloads.isc.org/isc/bind9/9.11.19/patches
-  9.14 branch:  https://downloads.isc.org/isc/bind9/9.14.12/patches
-  9.16 branch:  https://downloads.isc.org/isc/bind9/9.16.3/patches
+Patches
+~~~~~~~
+- - https://review.opendev.org/725385 (Rocky)
+- - https://review.opendev.org/725069 (Stein)
+- - https://review.opendev.org/724954 (Train)
+- - https://review.opendev.org/724746 (Ussuri)
+- - https://review.opendev.org/724124 (Victoria)
 
-Sincerely,
 
-Michael McNally
-ISC Security Officer
+Credits
+~~~~~~~
+- - kay (CVE Pending)
+
+
+References
+~~~~~~~~~~
+- - https://launchpad.net/bugs/1872737
+- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=Pending
+
+
+Notes
+~~~~~
+- - The stable/rocky branch is under extended maintenance and will receive
+no new
+  point releases, but a patch for it is provided as a courtesy.
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl6zEjwACgkQ56j9K3b+
+vRFejhAAvzq3MBwKGXIKsJxQmwVS0RxVFifTAfnKIjBGskG3knWkQHopY0IcmwoZ
+3Kv2AnRgFVBuQpZ0t9Y3S3U7KRI63FT+kzA3gy9sB+h7rdqzquxejXvljRMGJlex
+WRCOQwRP4prFpzpUqzBg9/bIAyWpkrjJIvz7iJ9U3z6MbrZIjV+YEZ3JIRQTdMUj
+MajgwJ4EDynkh8trm63n7Gyuvq8ukj1FCrG1APWJi96HhwNz6XwiqXIWci4CTaEW
+sY9v8luETMCyv+nY2pt9IF8wXOaJKJXPTilf6sisjN2zDq+UWgsxEC0sp3h09tnZ
+m6cy3OvUQeDmdJVQ/VNsfUTeRYRvYri2u44FaOUBjsNxeZca1U4MCVkAiN9BBzkg
+k1Xb8zgGoXaytT/lzzyr67h6ZghKm6cnSUktWnX56847byOMPi/g9q1cu0edUwwC
+7SDaQ08JbsEstiXtPVBhatTLxbjlNy5eql6NaZmFQatYJAQKZsasvwV4YBv290mu
+OsVHUEqjmYk4b4CZNPQC2681CDtAQpiLuasYiLnxC6I+zBTwfP+6tzP0xVHW4woi
+4Jhl/watZMudrtMS3YoOmwZ4iFNJRzQcDWmiAr0CZiC0NGamLjvHWHRslnvmhy92
+kSGWLilaMD5vBODXVY82lQHrbl96dPRbpe8/z29sALsEs6aNFYk=
+=qyBV
+-----END PGP SIGNATURE-----
+
