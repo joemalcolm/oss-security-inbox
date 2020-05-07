@@ -1,40 +1,159 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/10/5
-Message-ID: <20200610175544.GA201093@google.com>
-Date: Wed, 10 Jun 2020 19:55:44 +0200
-From: Monsieur Francis Perron <francisp@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/07/1
+Message-ID: <CAE4Awf-414JWXMCg4MFUKYKzzZpA4OoGkBYVP-0P=ekzDiButg@mail.gmail.com>
+Date: Thu, 7 May 2020 15:59:49 -0500
+From: Gage Hugo <gagehugo@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768
+Subject: Re: [OSSA-2020-003] Keystone: Keystone does not check signature TTL of the EC2 credential auth method (CVE PENDING)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 10, 2020 at 01:44:27PM +0200, Greg KH wrote:
-> On Wed, Jun 10, 2020 at 09:21:03PM +1000, Wade Mealing wrote:
-> > A number of flaws were discussed in the registers article this morning
-> > ( https://www.theregister.com/2020/06/09/linux_kernel_bugs_spectre )
-> > which have been submitted for inclusion upstream already.
-> > 
-> > Listed below are the CVE's that Red Hat has assigned.  As far as I can
-> > tell there are no existing  CVE assignments for these flaws. I have
-> > not done adequate investigation to correctly identify affected
-> > versions of the kernel, however this is a flaw in the fix for
-> > CVE-2018-3639, affected systems would likely be affected by the flaws
-> > listed below if they required the fix.
-> 
-> Did you ask the authors of the patches?  I think they might have already
-> assigned CVEs from Google's pool, based on previous interactions with
-> those developers...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-We (Google) did not assign CVEs to this work Anthony did.
+======================================================================================
+OSSA-2020-003: Keystone does not check signature TTL of the EC2 credential
+auth method
+======================================================================================
+
+:Date: May 06, 2020
+:CVE: CVE-2020-12692
 
 
-Wade -
-  Did you already request MITRE to look into it? If not, let me know and
-we can see to it with the kernel folks. You are correct that fixing an
-incomplete fix is within the scope of getting new numbers.
+Affects
+~~~~~~~
+- - Keystone: <15.0.1, ==16.0.0
 
 
-Thank you,
+Description
+~~~~~~~~~~~
+kay reported a vulnerability with keystone's EC2 API. Keystone doesn't
+have a signature TTL check for AWS signature V4 and an attacker can
+sniff the auth header, then use it to reissue an openstack token an
+unlimited number of times.
 
--- 
-Francis Perron
-  Vulnerability Coordination @ Google inc.
+
+Errata
+~~~~~~
+CVE-2020-12692 was assigned after the original publication date.
+
+
+Patches
+~~~~~~~
+- - https://review.opendev.org/725385 (Rocky)
+- - https://review.opendev.org/725069 (Stein)
+- - https://review.opendev.org/724954 (Train)
+- - https://review.opendev.org/724746 (Ussuri)
+- - https://review.opendev.org/724124 (Victoria)
+
+
+Credits
+~~~~~~~
+- - kay (CVE-2020-12692)
+
+
+References
+~~~~~~~~~~
+- - https://launchpad.net/bugs/1872737
+- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-12692
+
+
+Notes
+~~~~~
+- - The stable/rocky branch is under extended maintenance and will receive
+no new
+  point releases, but a patch for it is provided as a courtesy.
+
+
+OSSA History
+~~~~~~~~~~~~
+- - 2020-05-07 - Errata 1
+- - 2020-05-06 - Original Version
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl60dXoACgkQ56j9K3b+
+vREOnxAAtrb94nekVD1bjsjmp2bJsJoN4alwIySMJzDAXp9aU2j23jS3pEixLuBN
+lkK6AA7BwKY5HgNtEeWrau+Ri+GOyYlhRMXZy+z+JC6+9qYxdFwcatL6yLYwkrOF
+pMREuwbENZMBgl3HgIotJU/RqilZXf+7OLCO9ZaciaYvXkM3e5TswxYme9S+9r57
+OQ6veWVEfTTadTK+wp9tZ4RzPcgKAwiCEX2w1uYBCAMrh+GAWFBEiD4J7IEOvs2u
+TgnI/znFnQSb1f2CIYENGRevBFRvtILfovMI71rgwgNrof15Z6G6U3PW+yLPFaWg
+rqQd3wEmmUPNF/RQdOIngktTXEkQI1DsUkCg/75EZlDVBayUP1qyP1nlK/uAwRoX
+w0p6cPS/rREiOuCfCUKJ6tGg8e4/5o55cwbX/Bv/4KQxqCpD5W7XB1y81A0xnwsz
+btBZkio3KZZltCST+dNrmLIm3ZxdGQoC+wA+BweaAiMZf2HP8sSOxegDOGhWvBPm
+p23fH1kToH6vnGdGnp5SAIEcFg8Cu8LFVovZFHvfaN84XkRyX3Yqc+n88IauF0re
+pFf1iegTAArgminNCuTKKswLNgLr5J6SkKH/LTb3/hKgduRabRzKcBreP371fuvP
+K5/QCmXEyOT8HbQstWaEXmy9FvDh35lvmXtaKWBhB0LR8kWAY8s=
+=fTyp
+-----END PGP SIGNATURE-----
+
+On Wed, May 6, 2020 at 2:44 PM Gage Hugo <gagehugo@...il.com> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA512
+>
+>
+> ======================================================================================
+> OSSA-2020-003: Keystone does not check signature TTL of the EC2 credential
+> auth method
+>
+> ======================================================================================
+>
+> :Date: May 06, 2020
+> :CVE: Pending
+>
+>
+> Affects
+> ~~~~~~~
+> - - Keystone: <15.0.1, ==16.0.0
+>
+>
+> Description
+> ~~~~~~~~~~~
+> kay reported a vulnerability with keystone's EC2 API. Keystone doesn't
+> have a signature TTL check for AWS signature V4 and an attacker can
+> sniff the auth header, then use it to reissue an openstack token an
+> unlimited number of times.
+>
+>
+> Patches
+> ~~~~~~~
+> - - https://review.opendev.org/725385 (Rocky)
+> - - https://review.opendev.org/725069 (Stein)
+> - - https://review.opendev.org/724954 (Train)
+> - - https://review.opendev.org/724746 (Ussuri)
+> - - https://review.opendev.org/724124 (Victoria)
+>
+>
+> Credits
+> ~~~~~~~
+> - - kay (CVE Pending)
+>
+>
+> References
+> ~~~~~~~~~~
+> - - https://launchpad.net/bugs/1872737
+> - - http://cve.mitre.org/cgi-bin/cvename.cgi?name=Pending
+>
+>
+> Notes
+> ~~~~~
+> - - The stable/rocky branch is under extended maintenance and will receive
+> no new
+>   point releases, but a patch for it is provided as a courtesy.
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl6zEjwACgkQ56j9K3b+
+> vRFejhAAvzq3MBwKGXIKsJxQmwVS0RxVFifTAfnKIjBGskG3knWkQHopY0IcmwoZ
+> 3Kv2AnRgFVBuQpZ0t9Y3S3U7KRI63FT+kzA3gy9sB+h7rdqzquxejXvljRMGJlex
+> WRCOQwRP4prFpzpUqzBg9/bIAyWpkrjJIvz7iJ9U3z6MbrZIjV+YEZ3JIRQTdMUj
+> MajgwJ4EDynkh8trm63n7Gyuvq8ukj1FCrG1APWJi96HhwNz6XwiqXIWci4CTaEW
+> sY9v8luETMCyv+nY2pt9IF8wXOaJKJXPTilf6sisjN2zDq+UWgsxEC0sp3h09tnZ
+> m6cy3OvUQeDmdJVQ/VNsfUTeRYRvYri2u44FaOUBjsNxeZca1U4MCVkAiN9BBzkg
+> k1Xb8zgGoXaytT/lzzyr67h6ZghKm6cnSUktWnX56847byOMPi/g9q1cu0edUwwC
+> 7SDaQ08JbsEstiXtPVBhatTLxbjlNy5eql6NaZmFQatYJAQKZsasvwV4YBv290mu
+> OsVHUEqjmYk4b4CZNPQC2681CDtAQpiLuasYiLnxC6I+zBTwfP+6tzP0xVHW4woi
+> 4Jhl/watZMudrtMS3YoOmwZ4iFNJRzQcDWmiAr0CZiC0NGamLjvHWHRslnvmhy92
+> kSGWLilaMD5vBODXVY82lQHrbl96dPRbpe8/z29sALsEs6aNFYk=
+> =qyBV
+> -----END PGP SIGNATURE-----
+>
+
