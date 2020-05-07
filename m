@@ -1,49 +1,178 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/12
-Message-ID: <20201006151706.GB45857@espresso.pseudorandom.co.uk>
-Date: Tue, 6 Oct 2020 16:17:06 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/07/2
+Message-ID: <CAE4Awf9hGeTGw-k1k2EJDwXffXU-Q4Auddtvz8L+9c=zJLU1Lg@mail.gmail.com>
+Date: Thu, 7 May 2020 16:00:25 -0500
+From: Gage Hugo <gagehugo@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+Subject: Re: [OSSA-2020-004] Keystone: Keystone credential endpoints allow owner modification and are not protected from a scoped context (CVE PENDING)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 05 Oct 2020 at 22:36:14 -0400, Steve Grubb wrote:
-> I will skip the whole discussion on access control. However to prove security 
-> requires going through a Common Criteria certification. The biggest issue is 
-> that the desktoptop uses dbus instantiation which does not have the auid of 
-> the requesting process. Meaning audit cannot work.
-> 
-> The fix was kdus. That was rejected. But the issue remains. There cannot be a 
-> secure desktop without auditing.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-That depends on your threat model. If the attack you are defending against
-is local user Alice being attacked by malicious privileged local user Bob,
-then, yes, knowing which processes belong to Bob is necessary.
+=================================================================================================================
+OSSA-2020-004: Keystone credential endpoints allow owner modification and
+are not protected from a scoped context
+=================================================================================================================
 
-However, if the attack you are defending against is Alice's email client
-being attacked by a malicious or compromised game that is also running
-as Alice, then auids (and uids in general) are not interesting. This is
-the security boundary that Flatpak, Snap, Firejail are trying to put up.
+:Date: May 06, 2020
+:CVE: CVE-2020-12689,
+      CVE-2020-12691
 
-With dbus maintainer hat on, if there are facts that I can know about
-the (AF_UNIX socket belonging to the) requesting process in a way that
-does not involve race conditions, I'm happy to review patches to plumb
-them through D-Bus and make them available to other processes. This
-would have to look a lot like the recent addition of SO_PEERGROUPS
-(D-Bus representation: UnixGroupIDs) and less recently, SO_PEERSEC
-(LinuxSecurityLabel), so the prerequisite is the Linux kernel adding new
-SO_PEERTHING options that give the necessary information (or a *BSD, etc.
-kernel providing an analogous interface).
 
-If audit is important to you, a new SO_PEERAUDIT that looks like
-SO_PEERCRED but carries a struct { session ID, loginuid } would make sense?
+Affects
+~~~~~~~
+- - Keystone: <15.0.1, ==16.0.0
 
-As far as I'm aware, reading /proc is not suitable for this purpose,
-because the dbus-daemon retrieving this information for a particular pid
-can race with the process exiting and its pid being reused. If there was
-a SO_PEERPIDFD that provided race-free access to a pidfd for the initiator
-of the connection, that would maybe work? (As long as there's no mechanism
-by which a process can exec a setuid or otherwise privileged binary that
-can reset its audit session ID and/or loginuid.)
 
-    smcv
+Description
+~~~~~~~~~~~
+kay reported two vulnerabilities in keystone's EC2 credentials API.
+Any authenticated user could create an EC2 credential for themselves
+for a project that they have a specified role on, then perform an
+update to the credential user and project, allowing them to masquerade
+as another user. (CVE-2020-12691) Any authenticated user within a
+limited scope (trust/oauth/application credential) can create an EC2
+credential with an escalated permission, such as obtaining admin while
+the user is on a limited viewer role. (CVE-2020-12689) Both of these
+vulnerabilities potentially allow a malicious user to act as admin on
+a project that another user has the admin role on, which can
+effectively grant the malicious user global admin privileges.
+
+
+Errata
+~~~~~~
+CVE-2020-12689 and CVE-2020-12691 were assigned after the original
+publication date.
+
+
+Patches
+~~~~~~~
+- - https://review.opendev.org/725895 (Rocky)
+- - https://review.opendev.org/725893 (Stein)
+- - https://review.opendev.org/725891 (Train)
+- - https://review.opendev.org/725888 (Ussuri)
+- - https://review.opendev.org/725886 (Victoria)
+
+
+Credits
+~~~~~~~
+- - kay (CVE-2020-12689, CVE-2020-12691)
+
+
+References
+~~~~~~~~~~
+- - https://launchpad.net/bugs/1872733
+- - https://launchpad.net/bugs/1872735
+- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-12689
+- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-12691
+
+
+Notes
+~~~~~
+- - The stable/rocky branch is under extended maintenance and will receive
+no new
+  point releases, but a patch for it is provided as a courtesy.
+
+
+OSSA History
+~~~~~~~~~~~~
+- - 2020-05-07 - Errata 1
+- - 2020-05-06 - Original Version
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl60dYUACgkQ56j9K3b+
+vRESOw//YJGlVKCPz7HkUtmyu6RWnpGzSPMoWhzP0HyLLpStMlrFXUKNZsgfXAw3
+90vFD6zWSSWn2abJxlyW4JFDtOALKdGEZ0Ml68WSREDdupyOyd+G/ucT01Y95wB2
+6nHkoHVvKbhPAI1OeV2haNGp02UUROSLGBT/FtvFnnCAcfAiUfI7+kBbLQgeG50q
+/MNQlfaWi0uBxCt/HZg0YqZ3QXIE/LuS2MgFkaQ2+Yr4r9V1M58Wi2pYA1Dkhz6e
+J7q/2hDJ1Nn7P4LHUuZEXupR3Ztjrnh5uIO8yr2jSK/r4DawCmRMqT24r7ebS5ZA
+/p+JhvV0+StujicmhfPSyY3A24kNHRQCSCOlFn0xF8aN+/VEFT82SOIf+NVuutZb
+04wzrp4D3KIrSoulIbXVebAX+lj21qvlaYGwPAkmT8/p7kmj8mGWMlWhqBrCBJIC
+OiGd9pUe2GQcRSvBPj2Bex4WZCedvehSkPAiWh1MXFmUAUb2T7iNXNP7BlMd7LZA
+gdM4gW6HeFUEysj0vQfSCF+Mu+cB1PAjKZgqgHX7twgu+sOzlCKDlFkQuuzbma3M
+abGlfPwVl1v7X/xZ0U7xAwViFCAI+gpqA+Yi1hmMirxzyotUWn/J17AtvhOk3Hms
+mwUZiGr41oJhGhX3uSB2Jn0TulA+qhapncuMxG5qDk9Y/ijcpmQ=
+=ddr5
+-----END PGP SIGNATURE-----
+
+On Wed, May 6, 2020 at 2:49 PM Gage Hugo <gagehugo@...il.com> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA512
+>
+>
+> =================================================================================================================
+> OSSA-2020-004: Keystone credential endpoints allow owner modification and
+> are not protected from a scoped context
+>
+> =================================================================================================================
+>
+> :Date: May 06, 2020
+> :CVE: Pending
+>
+>
+> Affects
+> ~~~~~~~
+> - - Keystone: <15.0.1, ==16.0.0
+>
+>
+> Description
+> ~~~~~~~~~~~
+> kay reported two vulnerabilities in keystone's EC2 credentials API.
+> Any authenticated user could create an EC2 credential for themselves
+> for a project that they have a specified role on, then perform an
+> update to the credential user and project, allowing them to masquerade
+> as another user. (CVE #1 PENDING) Any authenticated user within a
+> limited scope (trust/oauth/application credential) can create an EC2
+> credential with an escalated permission, such as obtaining admin while
+> the user is on a limited viewer role. (CVE #2 PENDING) Both of these
+> vulnerabilities potentially allow a malicious user to act as admin on
+> a project that another user has the admin role on, which can
+> effectively grant the malicious user global admin privileges.
+>
+>
+> Patches
+> ~~~~~~~
+> - - https://review.opendev.org/725895 (Rocky)
+> - - https://review.opendev.org/725893 (Stein)
+> - - https://review.opendev.org/725891 (Train)
+> - - https://review.opendev.org/725888 (Ussuri)
+> - - https://review.opendev.org/725886 (Victoria)
+>
+>
+> Credits
+> ~~~~~~~
+> - - kay (CVE Pending)
+>
+>
+> References
+> ~~~~~~~~~~
+> - - https://launchpad.net/bugs/1872733
+> - - https://launchpad.net/bugs/1872735
+> - - http://cve.mitre.org/cgi-bin/cvename.cgi?name=Pending
+>
+>
+> Notes
+> ~~~~~
+> - - The stable/rocky branch is under extended maintenance and will receive
+> no new
+>   point releases, but a patch for it is provided as a courtesy.
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl6zE70ACgkQ56j9K3b+
+> vREQsBAAnHZLyrbjSwu7/CEdDVfb0sQZfDvyuXMttzouXQ6ZwEgLFKzc/aFWMjru
+> loyst9jAx2pJzvxDfMYO11oU0M5tYFCFxhKsVvu+3ggbcNHeov1s25bPkxE7A2j7
+> IYJj9b+bbieYVj1ru3FJjDl3iTae4K73DeHNBCdxTSeahJZdya7hiboA1VJFt4p7
+> fNqU3+szsYt/vwspPBi7x+xnZszIMaUw8tVgxzB4KVD6YXbDR9Mp7itH77kGdn8l
+> e3OpnURvfaIkPbK6fqE6jjwjQEL/6+Ahffaf4KqvsdjbAcdQRpK0UQrBX+n6DIWd
+> TRwV/W7bEy64HrC16W78fcBlegRmEUUM4xNmdll3lwUS5KqfEeM3vXU4Ksfe9tQ2
+> 8fDU1hDALcC55+2CMMrdFfmX/MBSTz0HVmP4snaGuoXBL/iQz22OmekFKC1tmXxb
+> +vAtOUBsdzphRZn9KWvPIHOFGeuepWb9W0eN594JT2pdHfniLj6EaPrBaN63l7M/
+> pu0DTPygN5IdUXv6v/vquQZp50CaN59okmXDNiFkBeHsfaAqhdyjJjRaYvyU62OA
+> apjVam8/f2HM0RC0vvpIqv0z0kU55NPCo61dlMZPg6U9JiQd2PzBqvEtDF1lyByF
+> vz5e+r9fmtRcgCJIYr0Z7VlOlSMONpITN03oICaexieDTEXDXHc=
+> =lSDG
+> -----END PGP SIGNATURE-----
+>
+
