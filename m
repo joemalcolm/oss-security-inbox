@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/23/1
-Message-ID: <CAKx+4-qHV2QzfTZKLt23E2jgnLvnncdAVUmqqdRKZhJFLV3tMA@mail.gmail.com>
-Date: Tue, 23 Jun 2020 16:52:12 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/08/1
+Message-ID: <20200507230420.GA2011454@trogon.sfo.coreos.systems>
+Date: Thu, 7 May 2020 19:04:20 -0400
+From: Benjamin Gilbert <benjamin.gilbert@...eos.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-10769 kernel: Buffer over-read in crypto_authenc_extractkeys() when a payload longer than 4 bytes is not aligned.
+Subject: Re: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
 Content-Type: text/plain; charset=utf-8
 
-Hello Team,
+On Tue, May 05, 2020 at 09:24:58PM +0200, Solar Designer wrote:
+> On Tue, Mar 03, 2020 at 12:07:29AM -0500, Benjamin Gilbert wrote:
+> > Red Hat recently announced [1] that CoreOS Container Linux will reach
+> > end-of-life on May 26.  The Container Linux team will be leaving the
+> > distros lists on that date,
+> 
+> I assume you'll remind me about that on that date.
+> 
+> > We plan to continue executing our current responsibilities until May
+> > 26, but if other distros want to take over our roles sooner for ease
+> > of bookkeeping, we're open to that.
+> 
+> I suggest that Oracle and CloudLinux already start to act as primary for
+> their respective tasks, and CoreOS as backup until you leave on May 26.
 
-Red Hats kernel has a flaw in Authenticated Encryption with Associated Data
-(AEAD), a form of encryption technique which
-simultaneously assures the confidentiality and authenticity of data with
-below details.
+That all sounds good to us.
 
-A buffer over-read flaw was found in crypto_authenc_extractkeys in
-crypto/authenc.c  in  the IPsec Cryptographic  algorithm’s
-module, authenc. When a payload is longer than 4 bytes, and is not
-following 4-byte alignment boundary guidelines, it causes
-a buffer over-read threat, leading to a system crash. This flaw allows a
-local attacker with  user  privileges  to  cause a  denial
-of service.
-
-'CVE-2020-10769' was assigned by Red Hat Inc.
-
-Upstream fix:
-https://lkml.org/lkml/2019/1/21/675
-
-Thank you
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
-
+--Benjamin Gilbert
