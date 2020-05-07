@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["18175" "Sunday" "3" "June" "2018" "20:44:50" "+0200" "oststrom \\(public\\)" "pub@oststrom.com" "<000101d3fb6a$f4ffb420$deff1c60$@oststrom.com>" "611" "[oss-security] CVE-2018-10058 and CVE-2018-10057 - cgminer <=4.10.0 and bfgminer <=5.5.0 remote management api post-auth buffer overflow and path traversal" "^Date:" nil nil "6" "2018060318:44:50" "[oss-security] CVE-2018-10058 and CVE-2018-10057 - cgminer <=4.10.0 and bfgminer <=5.5.0 remote management api post-auth buffer overflow and path traversal" (number mark "        pub@oststrom Jun  3  611/18175 " thread-indent "\"[oss-security] CVE-2018-10058 and CVE-2018-10057 - cgminer <=4.10.0 and bfgminer <=5.5.0 remote management api post-auth buffer overflow and path traversal\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4610" "Thursday" "7" "May" "2020" "15:59:49" "-0500" "Gage Hugo" "gagehugo@gmail.com" "<CAE4Awf-414JWXMCg4MFUKYKzzZpA4OoGkBYVP-0P=ekzDiButg@mail.gmail.com>" "154" "[oss-security] Re: [OSSA-2020-003] Keystone: Keystone does not check signature TTL of the EC2 credential auth method (CVE PENDING)" nil nil nil "5" "2020050720:59:49" "[oss-security] Re: [OSSA-2020-003] Keystone: Keystone does not check signature TTL of the EC2 credential auth method (CVE PENDING)" (number mark "U       gagehugo@gma May  7  154/4610  " thread-indent "\"[oss-security] Re: [OSSA-2020-003] Keystone: Keystone does not check signature TTL of the EC2 credential auth method (CVE PENDING)\"\n") "<CAE4Awf9+28ooqR9jH5m=NkARWYazK0Utb8=NzqQzOhC5-1MjpQ@mail.gmail.com>" ("<CAE4Awf9+28ooqR9jH5m=NkARWYazK0Utb8=NzqQzOhC5-1MjpQ@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: [OSSA-2020-003] Keystone: Keystone does not check signature TTL of the EC2 credential auth method (CVE PENDING)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3467 invoked by uid 550); 3 Jun 2018 18:54:21 -0000
+Received: (qmail 1380 invoked by uid 550); 7 May 2020 21:17:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,634 +11,196 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26464 invoked from network); 3 Jun 2018 18:45:02 -0000
-Message-ID: <000101d3fb6a$f4ffb420$deff1c60$@oststrom.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AdP7ai1X+S3R1JBhSGCwAGKQiQq5rA==
-Content-Language: en-us
-X-SA-Do-Not-Run: Yes
-X-AV-Do-Run: Yes
-X-SA-Exim-Connect-IP: 212.95.5.204
-X-SA-Exim-Mail-From: pub@oststrom.com
-X-SA-Exim-Scanned: No (on mx25lb.world4you.com); SAEximRunCond expanded to false
-Date: Sun, 3 Jun 2018 20:44:50 +0200
-From: "oststrom \(public\)" <pub@oststrom.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2018-10058 and CVE-2018-10057 - cgminer <=4.10.0 and bfgminer <=5.5.0 remote management api post-auth buffer overflow and path traversal
-To: <oss-security@lists.openwall.com>
+Received: (qmail 24258 invoked from network); 7 May 2020 21:00:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=2HxqtIaqoYtuyhltxkKKmh3RuUMTMW7oQIu2XWjLFxI=;
+        b=TDuYXbGVxjnUCD1gYYu7luwPmL89BjrcKOxuh4cQXv4d6/+dmmMH/zrYBjJuYBo4+h
+         Acg8vzEJTv3m5r882n45B7YYMiVxTAU6v/DWNDpgA9fA68sFBrGqt8M4OQkURygiEewW
+         HViDNkKcbG0yel5xRNspBo3lKamRFsnmJxuQjWCSkaRwyXSH5WwCp9eUFmrowjVBSGT7
+         IkeVBjLy3I6BMrtAE66gt/WL0apeoZEl/vzFfLvbL9mw1JEYk9EZmn37dtnxhb3e55Xv
+         2l8pUdTsk5I9C92Gvymb7RAFGCHRlHt1k+dp0N5SEua1n8PTKh2HyNUNhEwbFisUlhnv
+         1z8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=2HxqtIaqoYtuyhltxkKKmh3RuUMTMW7oQIu2XWjLFxI=;
+        b=Ie/PKmyp6fFCN1AFyxZfJeaMGWH2PEJnfGoLDG1J8gOwNti292Oa/lS4/clpOp4D7M
+         1K+0il1L89bWub4pAVfIjpt0qV9oQOXiUtsP75EWOB5oP37zCk4SbsPRYEc1S8Y5duPQ
+         VSXyEjJVhmE6gDZlAmkVpMVOgccFo+cUvK0Y211PuRs0UgOuBN3ebRkI0M5MEuVBRlRl
+         cWr6PLjZTtDuWhjLUG45cYD1HVObGnIDHiibLNVtpCaBVcCeP97iO/Fo12f+z9nCzmKS
+         kZdEZNlUPGKCTkjl2KLef3JDva02j7MJbJwetZ/AAzvx/HJgTzUW0eKszat2RXGrOaef
+         qYNQ==
+X-Gm-Message-State: AGi0PubuHt590RtRr9lnXoH2BC976oKgi9CSBbe5aVF9pbOJqTV4m3G6
+	bvdUNdfRQ4VNMj639ssfnXMO7GElaDiCBDpQZ19XqkOukFE=
+X-Google-Smtp-Source: APiQypLHGinbH9QAI6cA7GQmx3vBxrb8SsnaIrHHycGm7LeJoKTTKy39NzkLejt6ORDiWEZSyiRO5YhqhQpg9LSL+0c=
+X-Received: by 2002:a25:ca8b:: with SMTP id a133mr26234863ybg.367.1588885201015;
+ Thu, 07 May 2020 14:00:01 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAE4Awf9+28ooqR9jH5m=NkARWYazK0Utb8=NzqQzOhC5-1MjpQ@mail.gmail.com>
+In-Reply-To: <CAE4Awf9+28ooqR9jH5m=NkARWYazK0Utb8=NzqQzOhC5-1MjpQ@mail.gmail.com>
+From: Gage Hugo <gagehugo@gmail.com>
+Date: Thu, 7 May 2020 15:59:49 -0500
+Message-ID: <CAE4Awf-414JWXMCg4MFUKYKzzZpA4OoGkBYVP-0P=ekzDiButg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000fed7c805a5152903"
+Subject: [oss-security] Re: [OSSA-2020-003] Keystone: Keystone does not check signature TTL
+ of the EC2 credential auth method (CVE PENDING)
 
-VuNote
-===================
+--000000000000fed7c805a5152903
+Content-Type: text/plain; charset="UTF-8"
 
-Author:       <github.com/tintinweb>
-Ref:
-https://github.com/tintinweb/pub/tree/master/pocs/cve-2018-10057
- 
-https://github.com/tintinweb/pub/tree/master/pocs/cve-2018-10058
-Version:      0.1
-Date:         Feb 25th, 2018
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Tag:          cgminer bfgminer bitcoin miner authenticated buffer overflow
-and path traversal
+======================================================================================
+OSSA-2020-003: Keystone does not check signature TTL of the EC2 credential
+auth method
+======================================================================================
 
-Overview
---------
-
-Name:         cgminer
-Vendor:       ck kolivas
-References:   * https://github.com/ckolivas/cgminer
-              * https://bitcointalk.org/index.php?topic=28402.0
-
-Version:        4.10.0 [1]
-Latest Version: 4.10.0 [1]
-Other Versions: <= 4.10.0
-Platform(s):    windows, linux
-Technology:     C/C++
-
-Vuln Classes:   CWE-121: Stack-based Buffer Overflow
-                CWE-22: Improper Limitation of a Pathname to a Restricted
-Directory ('Path Traversal')
-Origin:         remote
-Min. Privs.:    authenticated
-
-Source:         open-source
-
-CVE:	        CVE-2018-10057 - arbitrary file write
-                CVE-2018-10058 - buffer overflow
-
-Description
----------
-
-quote website [1][2]
-
-    This is a multi-threaded multi-pool FPGA and ASIC miner for bitcoin.
+:Date: May 06, 2020
+:CVE: CVE-2020-12692
 
 
-Overview
---------
-
-Name:         bfgminer
-Vendor:       luke-jr
-References:   * https://github.com/luke-jr/bfgminer/releases
-              * http://bfgminer.org/
-              * https://bitcointalk.org/?topic=877081
-
-Version:        5.5.0 [3]
-Latest Version: 5.5.0 [3]
-Other Versions: <= 5.5.0
-Platform(s):    windows, linux
-Technology:     C/C++
-
-Vuln Classes:   CWE-121: Stack-based Buffer Overflow
-                CWE-22: Improper Limitation of a Pathname to a Restricted
-Directory ('Path Traversal')
-Origin:         remote
-Min. Privs.:    authenticated
-
-Source:         open-source
-
-CVE:	        CVE-2018-10057 - arbitrary file write
-                CVE-2018-10058 - buffer overflow
+Affects
+~~~~~~~
+- - Keystone: <15.0.1, ==16.0.0
 
 
 Description
----------
+~~~~~~~~~~~
+kay reported a vulnerability with keystone's EC2 API. Keystone doesn't
+have a signature TTL check for AWS signature V4 and an attacker can
+sniff the auth header, then use it to reissue an openstack token an
+unlimited number of times.
 
-quote website [3][4][5]
 
-    What is BFGMiner?
+Errata
+~~~~~~
+CVE-2020-12692 was assigned after the original publication date.
 
-    BFGMiner is a modular ASIC/FPGA miner written in C, featuring dynamic
-clocking, monitoring, and remote interface capabilities.
 
+Patches
+~~~~~~~
+- - https://review.opendev.org/725385 (Rocky)
+- - https://review.opendev.org/725069 (Stein)
+- - https://review.opendev.org/724954 (Train)
+- - https://review.opendev.org/724746 (Ussuri)
+- - https://review.opendev.org/724124 (Victoria)
 
 
-Summary
--------
+Credits
+~~~~~~~
+- - kay (CVE-2020-12692)
 
-cgminer and bfgminer both share a good portion of their code basis therefore
-they are both affected by the
-vulnerabilities described in this note. both applications provide remote
-management functionality via an api interface.
-This interface takes either custom plaintext or json encoded commands.
-Available API commands are defined in `api.c`.
-The set of available commands varies depending on the enabled features
-(opencl, fpga, cpumining). An api request can
-carry multiple commands if the commands are tagged as `joinable` (see
-`api.c`). While the API does not feature an
-authentication system, there is a `readonly` and `write` mode. Commands can
-either be accessible in `readonly` or also
-in `write` mode. Read/Write access can be granted via the commandline
-setting an IP-/Subnet-based ACL
-(`Interpret [W:]IP[/Prefix][,[R|W:]IP2[/Prefix2][,...]] --api-allow
-option`). In the context of this vulnerability note
-an `authenticated` vector refers to a vulnerability existing in the handling
-of write-mode commands. On the other hand
-unauthenticated vulnerabilities can be performed without having to match the
-IP-/Subnet-ACL first.
 
-* VU #1 - (CVE-2018-10058) Authenticated Stack buffer overflow (sprintf):
-addpool, save, failover-only, poolquota
-* VU #2 - (CVE-2018-10057) Authenticated path traversal (fopen): save
-* VU #3 - Unauthenticated Information Disclosure: banner / various commands
-leaking details
-* VU #4 - Missing Transport Security: no tls / trivial to mitm / eavesdrop
-
-
-see PoC ref github.
-
-Details
--------
-
-// Note: annotations are prefixed with //#!
-
-Service Discovery:
-* shodan: `description=cgminer` or [6]
-* banner: `STATUS=E,When=1518898313,Code=14,Msg=Invalid
-command,Description=cgminer 4.9.0|\x00`
-
-#### VU #1 - (CVE-2018-10058) Authenticated Stack buffer overflow: addpool,
-save, failover-only, poolquota
-
-The root cause for the buffer overflow are missing bounds checks and
-unlimited format descriptors used with `sprintf`
-that lead to straight forward `sprintf` buffer overwrite vulnerabilities.
-Misuse pattern `sprintf(dst[size], "%s", param[can be > size])`.
-To exploit this an attacker must be able to provide string params to
-`sprintf` that are close or larger the destination
-buffer size. The way `escape_string` works makes it easier for attackers to
-generate large strings that are being passed
-to `sprintf` as the method does not limit the output size and may extend up
-to double the size of the input string
-(characters escaped one-by-one).
-
-
-Request Handler: `api(int api_thr_id){}`
-
-* The request recv buffer size is `buf[TMPBUFSIZ=8192]`.
-* `recv()` reads at most `TMPBUFSIZ-1` bytes from the socket. This means we
-can push at max 8191 bytes to the api handler (this includes json
-encoding/plaintext cmd overhead)
-* For plaintext commands we can push up to `TMPBUFSIZ-1-len(cmd+SEPARATOR)`
-bytes as param (recv_buffer_size - command and separator overhead)
-
-
-```c
-void api(int api_thr_id)
-{
-    ...
-    char buf[TMPBUFSIZ];            //#! fixed buffer 8192b
-    ...
-    while (!bye) {
-        ...
-        addrok = check_connect((struct sockaddr_storage *)&cli,
-&connectaddr, &group);      //#! check API access ok
-        applog(LOG_DEBUG, "API: connection from %s - %s",
-                    connectaddr, addrok ? "Accepted" : "Ignored");
-
-        if (addrok) {   //#! ACL - access allowed
-            n = recv(c, &buf[0], TMPBUFSIZ-1, 0);           //#! read up to
-8192-1 bytes
-
-            ...
-                if (*buf != ISJSON) {                       //#! plaintext
-cmd decoder
-                    isjson = false;
-
-                    param = strchr(buf, SEPARATOR);         //#! param can
-hold up to TMPBUFSIZ-1-sizeof(SEPARATOR) bytes
-                    if (param != NULL)
-                        *(param++) = '\0';
-
-                    cmd = buf;
-                }
-                else {                                      //#! json cmd
-decoder
-                    ...
-                    cmd = (char *)json_string_value(json_val);
-                    ...
-                    if (json_is_string(json_val))
-                            param = (char *)json_string_value(json_val);
-//#! param can hold up to TMPBUFSIZE-1-sizeof(json overhead including
-cmdstruct)
-            ...
-
-                        for (i = 0; cmds[i].name != NULL; i++) {
-                            ...
-                                if (ISPRIVGROUP(group) ||
-strstr(COMMANDS(group), cmdbuf))
-                                    (cmds[i].func)(io_data, c, param,
-isjson, group);           //#! call api command handler
-                                else {
-                                    message(io_data, MSG_ACCDENY, 0,
-cmds[i].name, isjson);
-                                    applog(LOG_DEBUG, "API: access denied to
-'%s' for '%s' command", connectaddr, cmds[i].name);
-                                }
-...
-```
-
-String escaping: (backslash escaping) `=` (non-json), `"` (json), `\` (both)
-will be prefixed with `\`
-
-* stage 1 - scans string for to-be escaped characters and counts them.
-* stage 2 - allocates a new buffer for the extended size due to added `\`
-for escaping.
-* stage 3 - scans string copying byte-by-byte to new buffer adding `\` when
-encountering `=,",\`.
-* Note: If the input string contains a to-be-escaped character the output
-string will be larger than the input.
-* Note: This means if the input string only consists of e.g. `=` the output
-string will be twice the size `\=`.
-
-Furthermore this means that in worst case an input string of 8k may generate
-an output string of 16k.
-
-```c
-static char *escape_string(char *str, bool isjson)
-{
-    char *buf, *ptr;
-    int count;
-
-    count = 0;
-    for (ptr = str; *ptr; ptr++) {
-        switch (*ptr) {
-            case ',':
-            case '|':
-            case '=':                //#! count to-be-escaped char
-                if (!isjson)
-                    count++;
-                break;
-            case '"':
-                if (isjson)
-                    count++;
-                break;
-            case '\\':
-                count++;
-                break;
-        }
-    }
-
-    if (count == 0)
-        return str;
-
-    buf = cgmalloc(strlen(str) + count + 1);         //#! malloc new buffer
-to fit escaped string
-
-    ptr = buf;
-    while (*str)
-        switch (*str) {
-            case ',':
-            case '|':
-            case '=':                               //#! copy string; insert
-escape chars when needed.
-                if (!isjson)
-                    *(ptr++) = '\\';
-                *(ptr++) = *(str++);
-                break;
-            case '"':
-                if (isjson)
-                    *(ptr++) = '\\';
-                *(ptr++) = *(str++);
-                break;
-            case '\\':
-                *(ptr++) = '\\';
-                *(ptr++) = *(str++);
-                break;
-            default:
-                *(ptr++) = *(str++);
-                break;
-        }
-
-    *ptr = '\0';
-
-    return buf;
-}
-```
-
-
-* Buffer overwrite for param to command: `addpool`
-
-```c
-...
-{ SEVERITY_ERR,   MSG_INVPDP,	PARAM_STR,	"Invalid addpool details
-'%s'" },
-...
-
-static void addpool(struct io_data *io_data, __maybe_unused SOCKETTYPE c,
-char *param, bool isjson, __maybe_unused char group)
-{
-    ...
-
-    if (!pooldetails(param, &url, &user, &pass)) {
-        ptr = escape_string(param, isjson);              //#! VU #1 -
-escape_string may return > 8192 bytes if it contains to be escaped chars
-        message(io_data, MSG_INVPDP, 0, ptr, isjson);    //#! VU #1 - may
-overwrite internal buf[TMPBUFSIZ=8192] if ptr>(8192 - len(hardcoded err
-msg))
-        if (ptr != param)                                //#! MSG_INVPDP -
-see def above - is a FMT using unbound %s that may cause a buffer overwrite
-if the param is > sprintf destination buffer size
-            free(ptr);
-        ptr = NULL;
-        return;
-    }
-
-    ...
-
-    ptr = escape_string(url, isjson);                            //#! VU #1
-- escape_string may return > 8192 bytes if it contains to be escaped chars
-    message(io_data, MSG_ADDPOOL, pool->pool_no, ptr, isjson);   //#! VU #1
-- may overwrite internal buf[TMPBUFSIZ=8192] if ptr>(8192 - len(hardcoded
-err msg))
-    if (ptr != url)
-        free(ptr);
-    ptr = NULL;
-}
-```
-
-
-Where `message()` is defined as follows:
-
-
-```c
-static void message(struct io_data *io_data, int messageid, int paramid,
-char *param2, bool isjson)
-{
-    struct api_data *root = NULL;
-    char buf[TMPBUFSIZ];                //#! fixed size stack buffer 8192
-bytes!
-    char severity[2];
-
-    ...
-
-    for (i = 0; codes[i].severity != SEVERITY_FAIL; i++) {      //#! get
-message FMT from codes (vulnerable if contains unbound %s in fmt)
-        if (codes[i].code == messageid) {
-            ...
-
-            switch(codes[i].params) {
-                ...
-                case PARAM_STR:
-                    sprintf(buf, codes[i].description, param2);
-//#! sprintf buffer overwrite; param2 can be > sizeof(buf)
-                    break;
-                ...
-```
-
-* Buffer overwrite for param to command: `dosave`
-
-```c
-void dosave(struct io_data *io_data, __maybe_unused SOCKETTYPE c, char
-*param, bool isjson, __maybe_unused char group)
-{
-    char filename[PATH_MAX];
-    FILE *fcfg;
-    char *ptr;
-
-    if (param == NULL || *param == '\0') {
-        default_save_file(filename);
-        param = filename;
-    }
-
-    fcfg = fopen(param, "w");
-    if (!fcfg) {
-        ptr = escape_string(param, isjson);  //#! VU #1 - escape_string may
-return > 8192 bytes if it contains to be escaped chars
-        message(io_data, MSG_BADFN, 0, ptr, isjson);  //#! VU#1 - may
-overwrite internal buf[TMPBUFSIZ=8192] if ptr>(8192 - len(hardcoded err
-msg))
-        if (ptr != param)
-            free(ptr);
-        ptr = NULL;
-        return;
-    }
-
-    write_config(fcfg);
-    fclose(fcfg);
-
-    ptr = escape_string(param, isjson);		//#! VU #1 - same here; see
-description above (case with valid filename)
-    message(io_data, MSG_SAVED, 0, ptr, isjson);
-    if (ptr != param)
-        free(ptr);
-    ptr = NULL;
-}
-```
-
-
-* Buffer overwrite for param to command: `failover-only`:
-
-The param to `failover-only` is directly passed to `message()` with message
-fmt `"Deprecated config option '%s'"` which
-is then passed to `sprintf(buf[TMPFBUFSIZ=8192], "Deprecated config option
-'%s'", param[can_be_>TMPBUFSIZ])`. `param` can
-be close to 8191 bytes (minus command encoding overhead ~15bytes). The
-message template `MSG_DEPRECATED` is already 27 bytes
-without `%s` being filled in. An attacker providing at least > 8191-27 bytes
-as param to this command will therefore make
-`sprintf` write past the stack buffer `buf[TMPBUFSIZ=8192]` in `message()`.
-
-```c
-...
- { SEVERITY_ERR,   MSG_DEPRECATED, PARAM_STR,	"Deprecated config option
-'%s'" },    //#! VU #1 - sprintf fmt with unbound param %s. can be any
-length
-...
-
-static void failoveronly(struct io_data *io_data, __maybe_unused SOCKETTYPE
-c, char *param, bool isjson, __maybe_unused char group)
-{
-    message(io_data, MSG_DEPRECATED, 0, param, isjson);     //#! VU #1 -
-param can be > TMPBUFSIZE (hardcoded stack buffer for sprint destination in
-message())
-}
-```
-
-
-* Buffer overwrite for param to command: `poolquota`
-
-```c
-...
- { SEVERITY_ERR,   MSG_CONVAL,	PARAM_STR,	"Missing config value N for
-'%s,N'" },     //#! VU #1 - sprintf fmt with unbound param %s. can be any
-length
-...
-
-static void poolquota(struct io_data *io_data, __maybe_unused SOCKETTYPE c,
-char *param, bool isjson, __maybe_unused char group)
-{
-    ...
-
-    comma = strchr(param, ',');
-    if (!comma) {
-        message(io_data, MSG_CONVAL, 0, param, isjson);     //#! VU #1 -
-sprintf buffer overwrite similar to other commands
-        return;
-    }
-
-    ...
-}
-```
-
-#### VU #2 - (CVE-2018-10057) Authenticated path traversal: save
-
-When calling api command `save` the `parameter` is passed to `dosave(.., ..,
-param, ...)` which calls `fopen(param)` on
-the unsanitized/unvalidated user provided parameter. This allows for
-absolute and relative path traversal allowing to
-save the current configuration (json) to any location provided with the
-request parameter (user provided).
-
-```c
-void dosave(struct io_data *io_data, __maybe_unused SOCKETTYPE c, char
-*param, bool isjson, __maybe_unused char group)
-{
-    char filename[PATH_MAX];
-    FILE *fcfg;
-    char *ptr;
-
-    if (param == NULL || *param == '\0') {
-        default_save_file(filename);
-        param = filename;
-    }
-
-    fcfg = fopen(param, "w");				 //#! VU #2 - param
-not filtered; abs path traversal
-    if (!fcfg) {
-        ptr = escape_string(param, isjson);
-        message(io_data, MSG_BADFN, 0, ptr, isjson);
-        if (ptr != param)
-            free(ptr);
-        ptr = NULL;
-        return;
-    }
-
-    write_config(fcfg);
-    fclose(fcfg);
-
-    ptr = escape_string(param, isjson);		//#! VU #2 - same here; see
-description above (case with valid filename)
-    message(io_data, MSG_SAVED, 0, ptr, isjson);
-    if (ptr != param)
-        free(ptr);
-    ptr = NULL;
-}
-```
-
-#### VU #3 - Unauthenticated Information Disclosure: banner / various
-commands leaking details
-
-As seen on shodan and similar search engines cgminer/bfgminer trivially
-leaks valuable information in its server banner
-*invalid command* as well as a series of other commands available in
-*readonly* mode.
-
-Note: use `poc.py <target>` to enumerate available commands for readonly
-mode.
-
-```STATUS=E,When=1518898313,Code=14,Msg=Invalid command,Description=cgminer
-4.9.0|\x00```
-
-
-#### VU #4 - Misc
-
-The API interface (custom tcp socket comm) does not provide any transport
-security.
-
-
-See PoC ref github.
-
-
-Proof of Concept
-----------------
-
-Prerequisites:
-* compatible AMD/NVidia hardware
-* an isolated target machine to verify the vulnerability
-
-
-Usage: poc.py
-
-```
-      example: poc.py [options] <target> [<target>, ...]
-
-      options:
-               --no-capabilities    ...   do not check for supported
-commands [default:False]
-               --havoc              ...   probe all commands for buffer
-overflow
-               --vector=<vector>    ...   <see vectors> - launch specific
-attack vector
-
-      vector   ...  crash_addpool   ...   crash addpool command
-                    crash_failover  ...   crash failover-only command
-                    crash_poolquota ...   crash poolquota command
-                    crash_save      ...   crash save command
-                    traverse_save   ...   path traversal in save command
-
-      target   ... <IP, FQDN:port>
-
-               #> poc.py 1.1.1.1:4028
-               #> poc.py 1.2.3.4:4028
-               #> poc.py --vector=crash_addpool 1.1.1.1:4028
-               #> poc.py --havoc 1.1.1.1:4028
-
-
-      To reproduce launch cgminer in this mode:
-      #> ./cgminer -D --url ltc-eu.give-me-coins.com:3334 --api-listen -T -u
-a -p a --api-allow 0/0
-```
-
-// -- %< -- output omitted -- see
-https://github.com/tintinweb/pub/tree/master/pocs/cve-2018-10058 for
-examples/details
+References
+~~~~~~~~~~
+- - https://launchpad.net/bugs/1872737
+- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-12692
 
 
 Notes
------
+~~~~~
+- - The stable/rocky branch is under extended maintenance and will receive
+no new
+  point releases, but a patch for it is provided as a courtesy.
 
-* Timeline
 
-02/25/2018 - vendor contact: report sent to cgminer / bfgminer
-02/26/2018 - vendor response (cgminer):
-    ACK'd that the informtion was received.
-  vendor response (bfgminer):
-    VU #1: Minor since it only applies to trusted connections. Will plan to
-fix in the next release (do you have a patch already?).
-    VU #2: Intended behaviour, not a bug.
-    VU #3: Not a vulnerability. All information "leaked" is non-sensitive.
-    VU #4: I do not consider this to be a vulnerability. The interface is
-only intended for use on trusted networks.
-03/05/2018 - request for update on patch timeline (cgminer and bfgminer)
-  vendor response (cgminer)
-    no update yet
-  vendor response (bfgminer)
-    - no response -
-06/03/2018 - public disclosure
+OSSA History
+~~~~~~~~~~~~
+- - 2020-05-07 - Errata 1
+- - 2020-05-06 - Original Version
+-----BEGIN PGP SIGNATURE-----
 
-* Vendor Changelog
+iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl60dXoACgkQ56j9K3b+
+vREOnxAAtrb94nekVD1bjsjmp2bJsJoN4alwIySMJzDAXp9aU2j23jS3pEixLuBN
+lkK6AA7BwKY5HgNtEeWrau+Ri+GOyYlhRMXZy+z+JC6+9qYxdFwcatL6yLYwkrOF
+pMREuwbENZMBgl3HgIotJU/RqilZXf+7OLCO9ZaciaYvXkM3e5TswxYme9S+9r57
+OQ6veWVEfTTadTK+wp9tZ4RzPcgKAwiCEX2w1uYBCAMrh+GAWFBEiD4J7IEOvs2u
+TgnI/znFnQSb1f2CIYENGRevBFRvtILfovMI71rgwgNrof15Z6G6U3PW+yLPFaWg
+rqQd3wEmmUPNF/RQdOIngktTXEkQI1DsUkCg/75EZlDVBayUP1qyP1nlK/uAwRoX
+w0p6cPS/rREiOuCfCUKJ6tGg8e4/5o55cwbX/Bv/4KQxqCpD5W7XB1y81A0xnwsz
+btBZkio3KZZltCST+dNrmLIm3ZxdGQoC+wA+BweaAiMZf2HP8sSOxegDOGhWvBPm
+p23fH1kToH6vnGdGnp5SAIEcFg8Cu8LFVovZFHvfaN84XkRyX3Yqc+n88IauF0re
+pFf1iegTAArgminNCuTKKswLNgLr5J6SkKH/LTb3/hKgduRabRzKcBreP371fuvP
+K5/QCmXEyOT8HbQstWaEXmy9FvDh35lvmXtaKWBhB0LR8kWAY8s=
+=fTyp
+-----END PGP SIGNATURE-----
 
-06/03/2018 - *still not fixed* and no signs of this ever being tackled
-therefore public disclosure
+On Wed, May 6, 2020 at 2:44 PM Gage Hugo <gagehugo@gmail.com> wrote:
 
-References
-----------
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA512
+>
+>
+> ======================================================================================
+> OSSA-2020-003: Keystone does not check signature TTL of the EC2 credential
+> auth method
+>
+> ======================================================================================
+>
+> :Date: May 06, 2020
+> :CVE: Pending
+>
+>
+> Affects
+> ~~~~~~~
+> - - Keystone: <15.0.1, ==16.0.0
+>
+>
+> Description
+> ~~~~~~~~~~~
+> kay reported a vulnerability with keystone's EC2 API. Keystone doesn't
+> have a signature TTL check for AWS signature V4 and an attacker can
+> sniff the auth header, then use it to reissue an openstack token an
+> unlimited number of times.
+>
+>
+> Patches
+> ~~~~~~~
+> - - https://review.opendev.org/725385 (Rocky)
+> - - https://review.opendev.org/725069 (Stein)
+> - - https://review.opendev.org/724954 (Train)
+> - - https://review.opendev.org/724746 (Ussuri)
+> - - https://review.opendev.org/724124 (Victoria)
+>
+>
+> Credits
+> ~~~~~~~
+> - - kay (CVE Pending)
+>
+>
+> References
+> ~~~~~~~~~~
+> - - https://launchpad.net/bugs/1872737
+> - - http://cve.mitre.org/cgi-bin/cvename.cgi?name=Pending
+>
+>
+> Notes
+> ~~~~~
+> - - The stable/rocky branch is under extended maintenance and will receive
+> no new
+>   point releases, but a patch for it is provided as a courtesy.
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl6zEjwACgkQ56j9K3b+
+> vRFejhAAvzq3MBwKGXIKsJxQmwVS0RxVFifTAfnKIjBGskG3knWkQHopY0IcmwoZ
+> 3Kv2AnRgFVBuQpZ0t9Y3S3U7KRI63FT+kzA3gy9sB+h7rdqzquxejXvljRMGJlex
+> WRCOQwRP4prFpzpUqzBg9/bIAyWpkrjJIvz7iJ9U3z6MbrZIjV+YEZ3JIRQTdMUj
+> MajgwJ4EDynkh8trm63n7Gyuvq8ukj1FCrG1APWJi96HhwNz6XwiqXIWci4CTaEW
+> sY9v8luETMCyv+nY2pt9IF8wXOaJKJXPTilf6sisjN2zDq+UWgsxEC0sp3h09tnZ
+> m6cy3OvUQeDmdJVQ/VNsfUTeRYRvYri2u44FaOUBjsNxeZca1U4MCVkAiN9BBzkg
+> k1Xb8zgGoXaytT/lzzyr67h6ZghKm6cnSUktWnX56847byOMPi/g9q1cu0edUwwC
+> 7SDaQ08JbsEstiXtPVBhatTLxbjlNy5eql6NaZmFQatYJAQKZsasvwV4YBv290mu
+> OsVHUEqjmYk4b4CZNPQC2681CDtAQpiLuasYiLnxC6I+zBTwfP+6tzP0xVHW4woi
+> 4Jhl/watZMudrtMS3YoOmwZ4iFNJRzQcDWmiAr0CZiC0NGamLjvHWHRslnvmhy92
+> kSGWLilaMD5vBODXVY82lQHrbl96dPRbpe8/z29sALsEs6aNFYk=
+> =qyBV
+> -----END PGP SIGNATURE-----
+>
 
-[1] https://github.com/ckolivas/cgminer/releases
-[2] https://bitcointalk.org/index.php?topic=28402.0
-[3] https://github.com/luke-jr/bfgminer
-[4] http://bfgminer.org/
-[5] https://bitcointalk.org/?topic=877081
-[6]
-https://www.shodan.io/search?query=Msg%3DInvalid+command%2CDescription%3D
-
-Contact
--------
-
-https://github.com/tintinweb
-
+--000000000000fed7c805a5152903--
