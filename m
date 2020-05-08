@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/23/7
-Message-ID: <20200723220124.GA23394@openwall.com>
-Date: Fri, 24 Jul 2020 00:01:24 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/08/3
+Message-ID: <875zd6o112.fsf@oldenburg2.str.redhat.com>
+Date: Fri, 08 May 2020 18:16:09 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Alban Crequy (Kinvolk)" <alban@...volk.io>, volkerdi@...ckware.com
-Subject: Re: Flatcar membership on the linux-distros list
+Subject: Incentives for pre-release reporting
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 23, 2020 at 01:44:46PM -0600, Jeff Law wrote:
-> On Thu, 2020-07-23 at 20:45 +0200, Solar Designer wrote:
-> > OK.  It looks like we'll add Flatcar as soon as an existing member
-> > vouches for you.
+My recollection (which could be wrong) suggests that vulnerabilities in
+unreleased, not really shipping versions do not usually receive CVE IDs.
 
-> In what way do you need someone to vouch for Vincent?
+This has the problem that we cannot reward researchers with a CVE ID
+assignment if they report issues in features under development.  If they
+waited until after the release, they'd get one, so that is creating the
+wrong incentive.
 
-This requirement is currently loosely specified as:
+Am I wrong about the CVE program requirements here?  How do projects
+handle this?
 
-"Have someone already on the private list, or at least someone else who
-has been active on oss-security for years but is not affiliated with
-your distro nor your organization, vouch for at least one of the people
-requesting membership on behalf of your distro (then that one
-vouched-for person will be able to vouch for others on your team, in
-case you'd like multiple people subscribed)"
+Thanks,
+Florian
 
-So someone who's on (linux-)distros "or at least someone else who has
-been active on oss-security for years but is not affiliated" should
-state in here that they vouch for Vincent.  They may optionally make
-this more specific (yet convincing) if they like, but that isn't
-required.
-
-Alexander
