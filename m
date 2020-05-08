@@ -1,294 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/09/1
-Message-Id: <BAE159E3-C466-4DE9-8EF9-74857AA52ACB@beckweb.net>
-Date: Mon, 9 Mar 2020 15:49:32 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/08/4
+Message-ID: <20200508162248.GA789721@ryzen.bugs.fi>
+Date: Fri, 8 May 2020 19:22:48 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: Incentives for pre-release reporting
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Audit Trail Plugin 3.3
-* Cobertura Plugin 1.16
-* Git Plugin 4.2.1
-* Logstash Plugin 2.3.2
-* Mac Plugin 1.2.0
-* P4 Plugin 1.10.11
-* Rundeck Plugin 3.6.7
-* Script Security Plugin 1.71
-* Timestamper Plugin 1.11.2
-* Zephyr Enterprise Test Management Plugin 1.10
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Backlog Plugin
-* CryptoMove Plugin
-* DeployHub Plugin
-* Literate Plugin
-* OpenShift Deployer Plugin
-* Quality Gates Plugin
-* Repository Connector Plugin
-* Skytap Cloud CI Plugin
-* Sonar Quality Gates Plugin
-* Subversion Release Manager Plugin
-* Zephyr for JIRA Test Management Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-03-09/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1754 / CVE-2020-2134 (constructors) & CVE-2020-2135 (GroovyInterceptable)
-Sandbox protection in Script Security Plugin 1.70 and earlier can be
-circumvented through:
-
-* Crafted constructor calls and bodies
-* Crafted method calls on objects that implement `GroovyInterceptable`
-
-This allows attackers able to specify and run sandboxed scripts to execute
-arbitrary code in the context of the Jenkins master JVM.
-
-
-SECURITY-1723 / CVE-2020-2136
-Git Plugin 4.2.0 and earlier does not escape the error message for the
-repository URL for Microsoft TFS field form validation.
-
-This results in a stored cross-site scripting vulnerability that can be
-exploited by users with Job/Configure permission.
-
-
-SECURITY-1784 / CVE-2020-2137
-Timestamper Plugin 1.11.1 and earlier does not escape or sanitize the HTML
-formatting used to display the timestamps in console output for builds.
-
-This results in a stored cross-site scripting vulnerability that can be
-exploited by users with Overall/Administer permission.
-
-
-SECURITY-1700 / CVE-2020-2138
-Cobertura Plugin 1.15 and earlier does not configure its XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows a user able to control the input files for the 'Publish
-Cobertura Coverage Report' post-build step to have Jenkins parse a crafted
-file that uses external entities for extraction of secrets from the Jenkins
-master or server-side request forgery.
-
-
-SECURITY-1668 / CVE-2020-2139
-Cobertura Plugin 1.15 and earlier does not validate file paths from the XML
-file it parses.
-
-This allows attackers able to control the coverage report content to
-overwrite any file on the Jenkins master file system.
-
-
-SECURITY-1722 / CVE-2020-2140
-Audit Trail Plugin 3.2 and earlier does not escape the error message for
-the URL Patterns field form validation.
-
-This results in a reflected cross-site scripting vulnerability that can
-also be exploited similar to a stored cross-site scripting vulnerability by
-users with Overall/Administer permission.
-
-
-SECURITY-1765 / CVE-2020-2141 (CSRF) & CVE-2020-2142 (missing permission check)
-P4 Plugin 1.10.10 and earlier does not perform permission checks in several
-HTTP endpoints. This allows users with Overall/Read access to trigger
-builds or add labels in the Perforce repository.
-
-Additionally, these endpoints do not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-1516 / CVE-2020-2143
-Logstash Plugin stores credentials in its global configuration file
-`jenkins.plugins.logstash.LogstashConfiguration.xml` on the Jenkins master
-as part of its configuration.
-
-While the credentials are stored encrypted on disk, they are transmitted in
-plain text as part of the configuration form by Logstash Plugin 2.3.1 and
-earlier. This can result in exposure of the credential through browser
-extensions, cross-site scripting vulnerabilities, and similar situations.
-
-
-SECURITY-1702 / CVE-2020-2144
-Rundeck Plugin 3.6.6 and earlier does not configure its XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows a user with Overall/Read access to have Jenkins parse a crafted
-HTTP request with XML data that uses external entities for extraction of
-secrets from the Jenkins master or server-side request forgery.
-
-
-SECURITY-1596 / CVE-2020-2145
-Zephyr Enterprise Test Management Plugin 1.9.1 and earlier stores its
-Zephyr password in plain text in the global configuration file
-`com.thed.zephyr.jenkins.reporter.ZeeReporter.xml`. This password can be
-viewed by users with access to the Jenkins master file system.
-
-
-SECURITY-1692 / CVE-2020-2146
-Mac Plugin 1.1.0 and earlier does not use SSH host key validation when
-connecting to Mac Cloud host launched by the plugin. This lack of
-validation could be abused using a man-in-the-middle attack to intercept
-these connections to build agents.
-
-
-SECURITY-1761 / CVE-2020-2147 (CSRF) & CVE-2020-2148 (missing permission check)
-Mac Plugin 1.1.0 and earlier does not perform permission checks on a method
-implementing form validation. This allows users with Overall/Read access to
-Jenkins to connect to an attacker-specified SSH host using
-attacker-specified credentials IDs obtained through another method,
-capturing credentials stored in Jenkins.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-1520 / CVE-2020-2149
-Repository Connector Plugin stores credentials in its global configuration
-file
-`org.jvnet.hudson.plugins.repositoryconnector.RepositoryConfiguration.xml`
-on the Jenkins master as part of its configuration.
-
-While the credentials are stored encrypted on disk, they are transmitted in
-plain text as part of the configuration form by Repository Connector Plugin
-1.2.6 and earlier. This can result in exposure of the credential through
-browser extensions, cross-site scripting vulnerabilities, and similar
-situations.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1523 / CVE-2020-2150
-Sonar Quality Gates Plugin stores credentials in its global configuration
-file `org.quality.gates.jenkins.plugin.GlobalConfig.xml` on the Jenkins
-master as part of its configuration.
-
-While the credentials are stored encrypted on disk, they are transmitted in
-plain text as part of the configuration form by Sonar Quality Gates Plugin
-1.3.1 and earlier. This can result in exposure of the credential through
-browser extensions, cross-site scripting vulnerabilities, and similar
-situations.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1519 / CVE-2020-2151
-Quality Gates Plugin stores credentials in its global configuration file
-`quality.gates.jenkins.plugin.GlobalConfig.xml` on the Jenkins master as
-part of its configuration.
-
-While the credentials are stored encrypted on disk, they are transmitted in
-plain text as part of the configuration form by Quality Gates Plugin 2.5
-and earlier. This can result in exposure of the credential through browser
-extensions, cross-site scripting vulnerabilities, and similar situations.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1727 / CVE-2020-2152
-Subversion Release Manager Plugin 1.2 and earlier does not escape the error
-message for the Repository URL field form validation.
-
-This results in a reflected cross-site scripting vulnerability that can
-also be exploited similar to a stored cross-site scripting vulnerability by
-users with Job/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1510 / CVE-2020-2153
-Backlog Plugin stores credentials in job `config.xml` files as part of its
-configuration.
-
-While the credentials are stored encrypted on disk, they are transmitted in
-plain text as part of the configuration form by Backlog Plugin 2.4 and
-earlier. These credentials could be viewed by users with Extended Read
-permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1550 / CVE-2020-2154
-Zephyr for JIRA Test Management Plugin 1.5 and earlier stores Jira
-credentials unencrypted in its global configuration file
-`com.thed.zephyr.jenkins.reporter.ZfjReporter.xml` on the Jenkins master.
-These credentials can be viewed by users with access to the master file
-system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1518 / CVE-2020-2155
-OpenShift Deployer Plugin stores credentials in its global configuration
-file `org.jenkinsci.plugins.openshift.DeployApplication.xml` on the Jenkins
-master as part of its configuration.
-
-While the credentials are stored encrypted on disk, they are transmitted in
-plain text as part of the configuration form by OpenShift Deployer Plugin
-1.2.0 and earlier. This can result in exposure of the credential through
-browser extensions, cross-site scripting vulnerabilities, and similar
-situations.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1511 / CVE-2020-2156
-DeployHub Plugin stores credentials in job `config.xml` files as part of
-its configuration.
-
-While the credentials are stored encrypted on disk, they are transmitted in
-plain text as part of the configuration form by DeployHub Plugin 8.0.14 and
-earlier. These credentials could be viewed by users with Extended Read
-permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1522 / CVE-2020-2157
-Skytap Cloud CI Plugin stores credentials in job `config.xml` files as part
-of its configuration.
-
-While the credentials are stored encrypted on disk, they are transmitted in
-plain text as part of the configuration form by Skytap Cloud CI Plugin 2.07
-and earlier. These credentials could be viewed by users with Extended Read
-permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1750 / CVE-2020-2158
-Literate Plugin 1.0 and earlier does not configure its YAML parser to
-prevent the instantiation of arbitrary types. This results in a remote code
-execution vulnerability exploitable by users able to provide YAML input
-files to Literate Plugin's build step.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1635 / CVE-2020-2159
-CryptoMove Plugin 0.1.33 and earlier allows the configuration of an OS
-command to execute as part of its build step configuration.
-
-This command will be executed on the Jenkins master as the OS user account
-running Jenkins, allowing user with Job/Configure permission to execute an
-arbitrary OS command on the Jenkins master.
-
-As of publication of this advisory, there is no fix.
-
-
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+On Fri, May 08, 2020 at 06:16:09PM +0200, Florian Weimer wrote:
+> My recollection (which could be wrong) suggests that vulnerabilities in
+> unreleased, not really shipping versions do not usually receive CVE IDs.
+
+At least the process to get CVE is faster nowadays, but you should think if CVE
+consumers (persons patching systems, software users etc) find those CVEs
+useful. In many cases they won't if there is no released package and if people
+are not commonly using the latest version from Git.
+
+> If they waited until after the release, they'd get one, so that is creating
+> the wrong incentive. How do projects handle this?
+
+One method is to have a page where you list people and details. Something like:
+https://www.mongodb.com/security and some vendors send small payments
+(sometimes using bug bounty platforms) or cheap items.
+
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAl61h1UACgkQJ633pE6q
+dXR7wRAApYSSGspFQi2REuw3SFw1G0Lxoi1wDzY6CsL5jTKST96rF7vPMJNHuIgk
+abWxoY2s4ChxPnnroM1cUT6LTaUu1ZbSR6Q4V5mgmwpFfRAlQ/QvRWVxlvhIk50L
+Ysuk4aBmNuAzlptBEgm6D4swd/V2kKHk3ewWQGj6GV2k7sYBwo4PT4Nl2viiODsN
+Px5i0e/0qnu8naM3GclGzRwGXhQcLx2jPp4dZIL3NmpJsSyaNye5+q7C/K3Wh3fS
+eVq73N4QzA/DwKGZWSdJxcBRBqsiP6xY5nkOW7Oe0wRDOW+JerUnzjqLp+xt6ggG
+xwgB1qEnprf+d4eLBkvdg43VhrBaD9vTBl3mTTvXiFieNebA6rUUXd7wthFOd5t7
+BK5VGbR4u/X27QWH/XXszO692cqF99sGq6ny8qQdqrfc94o2E2r/qqocU0++tYsF
+leHH1WKxfHs+eMQhg6JP/tSh2Ci3Oh8cztaC8K8aAweXqj80+UJ9b6ujKl2f97nj
+yRYo6s+vPvkNTUy1P+v0zj9LKr7cX0fuF3Z6EN+FYe3e0AEG4TFMSRBWdEKYS5Xa
+efPR9LkLWS97EzPdErf7fUQBJoiv8xB03R1Y+g0Otm2nMH8oMIERBW8Q4gTCRlCB
+QZ/3hJtGKkZBz/MIKlMyrKQjOFyl89RFtcE9ABIMzYFlyQxfs24=
+=3AYf
+-----END PGP SIGNATURE-----
