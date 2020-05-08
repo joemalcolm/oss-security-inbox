@@ -1,22 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/25/2
-Message-ID: <3369833.R56niFO833@spectre>
-Date: Thu, 25 Jun 2020 13:19:16 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/08/2
+Message-ID: <CAPmGPbh1WL1HejDqCMCQnqTrn1fnENs=XSXc4+HbN+tzYyYz6Q@mail.gmail.com>
+Date: Fri, 8 May 2020 18:38:08 +0800
+From: qing xu <m1s5p6688@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: security@....org, Jan Kundrát <jkt@....org>
-Subject: Re: Requesting a CVE id for Trojitá, an e-mail client: Improper Certificate Validation
+Subject: Linux kernel: two buffer overflow in the marvell wifi driver
 Content-Type: text/plain; charset=utf-8
 
-On giovedì 25 giugno 2020 12:05:03 CEST Jan Kundrát wrote:
-> Hi folks, I would appreciate a Cc on responses as I'm not subscribed to
-> this list. I would like to request a CVE for the following vulnerability:
+Hi,
+There are two buffer overflows in marvell wifi chip driver in Linux kernel
+which cause a denial of service(system crash) or possibly execute arbitrary
+code.
 
-Hello Jan,
+Description
+==========
+[1]CVE-2020-12653：The mwifiex_cmd_append_vsie_tlv() in
+drivers/net/wireless/marvell/mwifiex/scan.c calls memcpy() without checking
+the destination size may trigger a buffer overflower, which a local user
+could use to cause denial of service or the execution of arbitrary code.
 
-see https://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests
+[2]CVE-2020-12654：mwifiex_ret_wmm_get_status() in
+drivers/net/wireless/marvell/mwifiex/wmm.c calls memcpy() without checking
+the destination size.Since the source is given from remote AP which
+contains illegal wmm elements , this may trigger a heap buffer overflow.
 
-Agostino
+Patch
+==========
+https://patchwork.kernel.org/patch/11315255/
+https://patchwork.kernel.org/patch/11315253/
 
-
+Credit
+==========
+This issue was discovered by ADLab of Venustech
 
