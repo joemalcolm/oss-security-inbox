@@ -1,4 +1,9 @@
-Received: (qmail 27802 invoked by uid 550); 13 Apr 2026 14:02:39 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1735" "Friday" "8" "May" "2020" "19:22:48" "+0300" "Henri Salo" "henri@nerv.fi" "<20200508162248.GA789721@ryzen.bugs.fi>" "37" "Re: [oss-security] Incentives for pre-release reporting" "^Date:" nil nil "5" "2020050816:22:48" "[oss-security] Incentives for pre-release reporting" (number mark "        henri@nerv.f May  8   37/1735  " thread-indent "\"Re: [oss-security] Incentives for pre-release reporting\"\n") "<875zd6o112.fsf@oldenburg2.str.redhat.com>" ("<875zd6o112.fsf@oldenburg2.str.redhat.com>") nil nil nil nil nil nil nil "Re: [oss-security] Incentives for pre-release reporting" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1864 invoked by uid 550); 8 May 2020 16:23:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,80 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 29959 invoked from network); 13 Apr 2026 07:00:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1776063627;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=LNIgz6YikiZBQGFxNd686+k4UaJUH6zmy/7ONstiQXg=;
-	b=HFn4wvE+7iiz5nkvnlFzMKqtIYB7YqtkOxeKOv1lwcI5ww1WvUP9vCXCgv/qZ2DatvVORy
-	yeXFF0Cy4VYtWXyU6oXDO3p7qhf+FLPH7GgJSa8oJxyz6irFwv36WVXcMgO/9sq5hjGIoH
-	v39vRmA/04bo3KJEh7okqzdtjFLWZMF0srJGK4z8U2a/zhf+oe/5Lxpg8UwStAnRzRkkM0
-	iFTAcrUB0Jm7hQINsD88fmKeVFQMGfjEDMhMWTfIhcwFFbVaoiBBqL/t4KuJPodgwCR8k6
-	osbKXE8vtX4fe9v1mx/tH3di3yPNz9JhcJ1fAqOH1GP2z1iWjVkhPbA5+qPASA==
-Message-ID: <cb29954e-6432-4cbb-8851-45a8c14d4263@cpansec.org>
-Date: Mon, 13 Apr 2026 08:00:24 +0100
+Received: (qmail 1793 invoked from network); 8 May 2020 16:23:04 -0000
+X-Virus-Scanned: Debian amavisd-new at nerv.fi
+Message-ID: <20200508162248.GA789721@ryzen.bugs.fi>
+References: <875zd6o112.fsf@oldenburg2.str.redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-Score: 0
-X-GND-Cause: dmFkZTFxP9rEqaswTGWNBdkjI/MsVWr4JmGPzd3vpk3yh5AgOFN6JaI9wAocBTVX7R7jG7I9ZE9uydkoAwWRTii7yea8mYa85Dxe+TL3RVngoKG00gqcyzTuVB1Af/xvIxUB34PgMiS7C2wn/YC0CMfMkHgeC1+JAPpPn02Qix4NgBBBrJ8W0Q29Taffkg0FwB+AwXnZn7EsBsRLoyqrmEPZt2BGxwraaPOnlZ4RtJcWQ71+tjb3hzf2Wz+Q/wjTJyD1SKdtbdmaie3lvLmofL1MZRM3QfqA2LKheLwB3sglRl2wWfwlEFeMrLk+ikHN28K4DayZjudu4I8lZIRUdfgBMLvaAmGXypn2aAeGLzLJvFnTdyGiZVStMSyqoIA3jew6h5n3n94F6ShDLh0NZpiII3BzNmfUKFOKGHBfuzeSFHFsTeg1SYzX12OK5cl2Ng707rppEtpqC1/HEM8B6zcYVuB/W68BOaBwy1M68Ky9fewL00pO/N5cgO2YNvC7+hoAsYAdrGg1JAVrESGtEWYoZmNa1HEjWkPE58s5j2wMAwGxOEiOHD140LOaSsrTJsY2oSLLbEmNToEwHjp8bvfeBiU9s2FQoloxK2oyi+XXkQdzN5fdsBvKhQXN12yGNBjtCwLpK3j0RoDyZXiLeIaBoh/wLexMOjC8xhOUAGEAbqNbng
-X-GND-State: clean
-Subject: [oss-security] CVE-2026-5085: Solstice::Session versions through 1440 for Perl
- generates session ids insecurely
+Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
+In-Reply-To: <875zd6o112.fsf@oldenburg2.str.redhat.com>
+Date: Fri, 8 May 2020 19:22:48 +0300
+From: Henri Salo <henri@nerv.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Incentives for pre-release reporting
+To: oss-security@lists.openwall.com
 
-========================================================================
-CVE-2026-5085                                        CPAN Security Group
-========================================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-         CVE ID:  CVE-2026-5085
-   Distribution:  Solstice
-       Versions:  through 1440
+On Fri, May 08, 2020 at 06:16:09PM +0200, Florian Weimer wrote:
+> My recollection (which could be wrong) suggests that vulnerabilities in
+> unreleased, not really shipping versions do not usually receive CVE IDs.
 
-       MetaCPAN:  https://metacpan.org/dist/Solstice
+At least the process to get CVE is faster nowadays, but you should think if CVE
+consumers (persons patching systems, software users etc) find those CVEs
+useful. In many cases they won't if there is no released package and if people
+are not commonly using the latest version from Git.
 
+> If they waited until after the release, they'd get one, so that is creating
+> the wrong incentive. How do projects handle this?
 
-Solstice::Session versions through 1440 for Perl generates session ids
-insecurely
+One method is to have a page where you list people and details. Something like:
+https://www.mongodb.com/security and some vendors send small payments
+(sometimes using bug bounty platforms) or cheap items.
 
-Description
------------
-Solstice::Session versions through 1440 for Perl generates session ids
-insecurely.
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
 
-The _generateSessionID method returns an MD5 digest seeded by the epoch
-time, a random hash reference, a call to the built-in rand() function
-and the process id.
-
-The same method is used in the _generateID method in
-Solstice::Subsession, which is part of the same distribution.
-
-The epoch time may be guessed, if it is not leaked in the HTTP Date
-header. Stringified hash refences will contain predictable content. The
-built-in rand() function is seeded by 16-bits and is unsuitable for
-security purposes. The process id comes from a small set of numbers.
-
-Predictable session ids could allow an attacker to gain access to
-systems.
-
-Problem types
--------------
-- CWE-340 Generation of Predictable Numbers or Identifiers
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-
-References
-----------
-https://metacpan.org/dist/Solstice/source/lib/Solstice/Session.pm#L481
-https://metacpan.org/dist/Solstice/source/lib/Solstice/Subsession.pm#L105
-https://security.metacpan.org/docs/guides/random-data-for-security.html
-
-
-
+iQIzBAEBCgAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAl61h1UACgkQJ633pE6q
+dXR7wRAApYSSGspFQi2REuw3SFw1G0Lxoi1wDzY6CsL5jTKST96rF7vPMJNHuIgk
+abWxoY2s4ChxPnnroM1cUT6LTaUu1ZbSR6Q4V5mgmwpFfRAlQ/QvRWVxlvhIk50L
+Ysuk4aBmNuAzlptBEgm6D4swd/V2kKHk3ewWQGj6GV2k7sYBwo4PT4Nl2viiODsN
+Px5i0e/0qnu8naM3GclGzRwGXhQcLx2jPp4dZIL3NmpJsSyaNye5+q7C/K3Wh3fS
+eVq73N4QzA/DwKGZWSdJxcBRBqsiP6xY5nkOW7Oe0wRDOW+JerUnzjqLp+xt6ggG
+xwgB1qEnprf+d4eLBkvdg43VhrBaD9vTBl3mTTvXiFieNebA6rUUXd7wthFOd5t7
+BK5VGbR4u/X27QWH/XXszO692cqF99sGq6ny8qQdqrfc94o2E2r/qqocU0++tYsF
+leHH1WKxfHs+eMQhg6JP/tSh2Ci3Oh8cztaC8K8aAweXqj80+UJ9b6ujKl2f97nj
+yRYo6s+vPvkNTUy1P+v0zj9LKr7cX0fuF3Z6EN+FYe3e0AEG4TFMSRBWdEKYS5Xa
+efPR9LkLWS97EzPdErf7fUQBJoiv8xB03R1Y+g0Otm2nMH8oMIERBW8Q4gTCRlCB
+QZ/3hJtGKkZBz/MIKlMyrKQjOFyl89RFtcE9ABIMzYFlyQxfs24=
+=3AYf
+-----END PGP SIGNATURE-----
