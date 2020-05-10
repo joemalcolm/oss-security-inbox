@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/04/2
-Message-ID: <20200204122711.GA16946@openwall.com>
-Date: Tue, 4 Feb 2020 13:27:11 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/10/1
+Message-ID: <CACmp6kpAsk8fefZNCLNFSinfSC9Xyyr_wVkc01omALUMJhbE+A@mail.gmail.com>
+Date: Sun, 10 May 2020 13:21:33 -0500
+From: Matt Sicker <mattsicker@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-7221: mariadb: possible local mysql to root user exploit in mysql_install_db script setting permissions of /usr/lib64/mysql/plugin/auth_pam_tool_dir/auth_pam_tool
+Subject: [CVE-2018-1285] XXE vulnerability in Apache log4net
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 04, 2020 at 11:26:04AM +0100, Matthias Gerstner wrote:
-> For Deb/RPM packaging MariaDB continues to suggest to use the following
-> dir and file modes [2], [3]:
-> 
-> mysql:root  0700 /usr/lib/mysql/plugin/auth_pam_tool_dir
->  root:root 04755 /usr/lib/mysql/plugin/auth_pam_tool_dir/auth_pam_tool
-> 
-> I personally suggest the following directory mode instead:
-> 
-> root:mysql  0750 /usr/lib/mysql/plugin/auth_pam_tool_dir
+Summary: Apache log4net does not disable XML external entities when
+parsing log4net configuration files. This could allow for XXE-based
+attacks in applications that accept arbitrary configuration files from
+users. [1]
 
-Why not simply
+Affected: log4net up to 2.0.8
 
-root:mysql 04710 /usr/lib/mysql/plugin/auth_pam_tool
+Mitigation: as there are no further releases of log4net beyond 2.0.8,
+and the Logging Services PMC has voted [2] to mark the project
+dormant, users should not allow arbitrary configuration files to be
+specified from untrusted sources. While this is arguably a
+vulnerability, misuse of any framework allowing untrusted input to
+configure things is always a bad idea.
 
-without the directory?  I see only one reason: it's a bigger change
-relative to the current implementation, which is more work now, but
-perhaps this cleanup is worth it longer-term.
+[1]: https://issues.apache.org/jira/browse/LOG4NET-575
+[2]: https://lists.apache.org/thread.html/r6691036b0f85419e8bc97f6f522b8c353dd250b0a329164167b021a6%40%3Cdev.logging.apache.org%3E
 
-The approach with a directory (or several) is sometimes useful to limit
-access to a file yet avoid use of ACLs, but the case above looks simple
-enough not to require this complication.
- 
-Alexander
+-- 
+Matt Sicker
+Secretary, Apache Software Foundation
+VP Logging Services, ASF
