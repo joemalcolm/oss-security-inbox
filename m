@@ -1,29 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/17/4
-Message-Id: <0D9C0CEE-95B6-4017-B15B-85A47CA67701@oracle.com>
-Date: Fri, 17 Jan 2020 14:50:33 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/11/1
+Message-ID: <20200511102135.GA12619@f195.suse.de>
+Date: Mon, 11 May 2020 12:21:35 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume
+Subject: oddjob: mkhomedir: CVE-2020-10737: race condition when copying skeleton tree
 Content-Type: text/plain; charset=utf-8
 
+Hello,
+
+during a review [1] of oddjob [2] for inclusion in openSUSE Tumbleweed
+I found a security issue in an accompanying utility called "mkhomedir".
+
+Oddjob is a kind of D-Bus meta service to simplify the implementation of
+specific D-Bus services. It allows to use simple command line utilities
+to supply a D-Bus interface while all the D-Bus implementation details
+are kept within the oddjob daemon and its configuration files.
+
+A simple implementation of such a utility is shipped as part of oddjob
+and is called "mkhomedir". It allows to create a user's home directory
+if it doesn't exist yet. This logic can either be triggered via D-Bus or
+via a simple pam_oddjob_mkhomedir PAM module. The D-Bus interface is by
+default only accessible to the root user. If the PAM module is
+configured then the logic can also be triggered by regular users
+logging in, if they don't have an existing home directory yet.
+
+This "mkhomedir" utility contains a race condition. The problem is found
+in the copying of /etc/skel to a newly created home directory. The home
+directory itself is created as a first step and ownership of it is
+passed to the respective user. In a second step the skel directory is
+recursively copied into the new home directory.
+
+If the target user has the ability to run code during this operation
+then he can setup a symlink attack. The following symlink, for example:
+
+```
+user $ ln -s /etc /home/user/bin
+```
+
+when created at the right time will cause the mkhomedir service to give
+ownership of the /etc directory to the unpriviliged user, should
+/etc/skel/bin exist. The reason is found in the call to `chown()` in
+`oddjob_selinux_mkdir()` called in mkhomedir.c:157.
+
+A potential attacker could try and login in parallel e.g. via SSH to win
+this race condition. The probability to actually exploit this is low,
+however, because once the home directory is created, there is no way to
+repeat the attack. Chances could be higher in specialized setups where
+new users without home directories can be repeatedly created without
+special authentication requirements.
+
+There can also be other symlink attack vectors when more deeply nested
+/etc/skel directory structures are involved.
+
+I reported this privately to upstream on 2020-04-24. The issue was
+handled by the Red Hat Security team. They assigned CVE-2020-10737
+for this issue. The upstream fix [3] for the issue is based on a
+suggested patch that I included in my initial report to upstream. A
+new minor release 0.34.5 has been created by upstream that includes this
+fix. Coordinated disclosure of the issue took place around 2020-05-08.
+
+[1]: https://bugzilla.suse.com/show_bug.cgi?id=1170459
+[2]: https://pagure.io/oddjob
+[3]: https://pagure.io/oddjob/c/10b8aaa1564b723a005b53acc069df71313f4cac?branch=master
+
+Best regards
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
 
 
-> On 17 Jan 2020, at 08:10, Sven Schwedas <sven.schwedas@....at> wrote:
-> 
-> On 17.01.20 05:21, Jeffrey Walton wrote:
->> I agree with Lennart Poettering. This seems CVE worthy given RDRAND is
->> often used to get the kernel generator (and other userland generators)
->> in good working order.
-> 
-> From my understanding it's harmless as far as linux's kernel generator
-> is concerned, as it's just xor'd to other entropy sources?
-> 
-> CVEs should only be needed on a case-by-case basis for userland
-> generators that aren't properly engineered.
-
-Actually, the kernel does use rdrand directly for cases where a strong CPRNG not required.  Whether some of those cases result in an exploitable bug I wouldn't like to say.
-
-jch
-
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
