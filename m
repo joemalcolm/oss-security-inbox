@@ -1,38 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/26/1
-Message-ID: <CAG8b5tTgXgApNVG+rFNmsyFg9F0AVPtcJj=SqZpBrfw1os+wdQ@mail.gmail.com>
-Date: Fri, 27 Mar 2020 01:10:36 +0400
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/12/1
+Message-ID: <77e0eda865a892045c325dea268c0fa92995343e.camel@apache.org>
+Date: Mon, 11 May 2020 14:28:56 -0700
+From: Brennan Ashton <btashton@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Stealing Videos from VLC-iOS (IDOR)
+Subject: [CVE-2020-1939] Apache NuttX optional/example ftpd program NULL pointer bug
 Content-Type: text/plain; charset=utf-8
 
-Summary: VLC for iOS was vulnerable to an unauthenticated insecure direct
-object reference (IDOR) which could allow a local attacker to steal media
-from the storage by just navigating to the source URL/IP. This was possible
-by abusing a functionality in the iOS application for VLC, which allows a
-user to share files with others over WiFi. This can be simply done by
-enabling "Network > Sharing via WiFi" and the web-server for this
-functionality works on port 80(http) protocol.
+CVE-2020-1939: Apache NuttX optional/example ftpd program NULL pointer
+bug
 
-Attack Vector: Let's assume a scenario where Bob & Alice are sharing a
-video over the WiFi using vlc-iOS, Eve could perform this attack by
-crawling the source IP address of Bob which would list the URL's of the
-videos shared between Bob & Alice. Having said that, navigating to those
-URL's Eve could simply steal the video without Bob's knowledge which
-successfully leads to unauthenticated IDOR. Such things can be crawled via
-burpsuite or you can use python scrapy to extract the URL's from the host
-and download the videos.
+Severity: Important
 
-Mitigation from VLC Security team: They implemented a user-friendly
-authentication mechanism on VLC iOS web server for WiFi Sharing. Passcode
-authentication is enabled when VLC's passcode setting is enabled and the
-user uses the passcode that he set in VLC's settings to log into Wifi
-Sharing. This was reported on 2nd Jan 2019 and patched on 10th Feb 2020
-whereas fixed version was publicly released in March 2020. Post mitigation
-VLC published an advisory for this which you can view here[1].
+Vendor:
+Apache NuttX (Incubating)
 
-References
-[1]: https://code.videolan.org/videolan/vlc-ios/blob/master/Docs/NEWS#L3
-Blog URL: https://www.inputzero.io/2020/03/idor-in-vlc-ios.html
+Versions Affected:
+6.15 to 8.2 (all pre-date NuttX joining the Apache.org Incubator)
+
+Description:
+The Apache NuttX (Incubating) project provides an optional separate
+"apps" repository which contains various optional components and
+example programs. One of these, ftpd, had a NULL pointer dereference
+bug. The NuttX RTOS itself is not affected. Users of the optional apps
+repository are affected only if they have enabled ftpd.
+
+Mitigation:
+Users of affected versions should upgrade to 9.0.0 or apply the
+following patch:
+https://patch-diff.githubusercontent.com/raw/apache/incubator-nuttx-apps/pull/10.patch
+
+Credit:
+This issue was discovered by Jakub Botwicz of Samsung R&D Poland.
+
+References:
+https://bitbucket.org/nuttx/apps-old/issues/15/null-dereference-in-ftp-size-command
+https://github.com/apache/incubator-nuttx-apps/pull/10
+
+Regards,
+Brennan Ashton
 
