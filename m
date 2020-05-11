@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2356" "Monday" "22" "August" "2016" "02:51:07" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160822065107.12D721BE0E5@smtpvbsrv1.mitre.org>" "55" "[oss-security] Re: Path traversal vulnerability in WordPress Core Ajax handlers" nil nil nil "8" "2016082206:51:07" "[oss-security] Re: Path traversal vulnerability in WordPress Core Ajax handlers" (number mark "U       cve-assign@m Aug 22   55/2356  " thread-indent "\"[oss-security] Re: Path traversal vulnerability in WordPress Core Ajax handlers\"\n") "<cc5ec17a-0cae-f262-b865-243d67045ef9@securify.nl>" ("<cc5ec17a-0cae-f262-b865-243d67045ef9@securify.nl>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["994" "Monday" "11" "May" "2020" "14:28:56" "-0700" "Brennan Ashton" "btashton@apache.org" "<77e0eda865a892045c325dea268c0fa92995343e.camel@apache.org>" "33" "[oss-security] [CVE-2020-1939] Apache NuttX optional/example ftpd program NULL pointer bug" nil nil nil "5" "2020051121:28:56" "[oss-security] [CVE-2020-1939] Apache NuttX optional/example ftpd program NULL pointer bug" (number mark "U       btashton@apa May 11   33/994   " thread-indent "\"[oss-security] [CVE-2020-1939] Apache NuttX optional/example ftpd program NULL pointer bug\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-1939] Apache NuttX optional/example ftpd program NULL pointer bug" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26275 invoked by uid 550); 22 Aug 2016 06:51:19 -0000
+Received: (qmail 9578 invoked by uid 550); 12 May 2020 05:22:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,67 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26254 invoked from network); 22 Aug 2016 06:51:19 -0000
-From: cve-assign@mitre.org
+Received: (qmail 12194 invoked from network); 11 May 2020 21:29:15 -0000
+Message-ID: <77e0eda865a892045c325dea268c0fa92995343e.camel@apache.org>
+From: Brennan Ashton <btashton@apache.org>
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-In-Reply-To: <cc5ec17a-0cae-f262-b865-243d67045ef9@securify.nl>
-Message-Id: <20160822065107.12D721BE0E5@smtpvbsrv1.mitre.org>
-Date: Mon, 22 Aug 2016 02:51:07 -0400 (EDT)
-Subject: [oss-security] Re: Path traversal vulnerability in WordPress Core Ajax handlers
+Date: Mon, 11 May 2020 14:28:56 -0700
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [CVE-2020-1939] Apache NuttX optional/example ftpd program NULL
+ pointer bug
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2020-1939: Apache NuttX optional/example ftpd program NULL pointer
+bug
 
-> https://sumofpwn.nl/advisory/2016/path_traversal_vulnerability_in_wordpress_core_ajax_handlers.html
-> https://core.trac.wordpress.org/ticket/37490
+Severity: Important
 
-> A path traversal vulnerability was found in the Core Ajax handlers of
-> the WordPress Admin API. This issue can (potentially) be used by an
-> authenticated user (Subscriber) to create a denial of service condition
-> of an affected WordPress site.
-> 
-> OVE-20160712-0036
+Vendor:
+Apache NuttX (Incubating)
 
->> allows for a denial of service condition as the logged in attacker can
->> use this flaw to read up to 8 KB of data from /dev/random. Doing this
->> repeatedly will deplete the entropy pool, which causes /dev/random to
->> block; blocking the PHP scripts. Using a very simple script, it is
->> possible for an authenticated user (Subscriber) to bring down a
->> WordPress site. It is also possible to trigger this issue via
->> Cross-Site Request Forgery as the nonce check is done too late in this
->> case.
+Versions Affected:
+6.15 to 8.2 (all pre-date NuttX joining the Apache.org Incubator)
 
->> wp-admin/admin-ajax.php
+Description:
+The Apache NuttX (Incubating) project provides an optional separate
+"apps" repository which contains various optional components and
+example programs. One of these, ftpd, had a NULL pointer dereference
+bug. The NuttX RTOS itself is not affected. Users of the optional apps
+repository are affected only if they have enabled ftpd.
 
->> plugin=../../../../../../../../../../dev/random&action=update-plugin
+Mitigation:
+Users of affected versions should upgrade to 9.0.0 or apply the
+following patch:
+https://patch-diff.githubusercontent.com/raw/apache/incubator-nuttx-apps/pull/10.patch
 
->> WordPress version 4.6 mitigates this vulnerability by moving the CSRF
->> check to the top of the affected method(s).
+Credit:
+This issue was discovered by Jakub Botwicz of Samsung R&D Poland.
 
-Use CVE-2016-6896 for the directory traversal vulnerability, and
-CVE-2016-6897 for the CSRF. (These two vulnerabilities have different
-affected versions.)
+References:
+https://bitbucket.org/nuttx/apps-old/issues/15/null-dereference-in-ftp-size-command
+https://github.com/apache/incubator-nuttx-apps/pull/10
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Regards,
+Brennan Ashton
 
-iQIcBAEBCAAGBQJXuqCFAAoJEHb/MwWLVhi2OjkP/0xA4Oj1fAED71fR5c2zMtg4
-fFuRRrbSltEIpWbLFi4vg7VAkOhYOqH6LbDPtehXDrZxJ5AFX7ifYyjprvxSLYvn
-STcG7ve521b+tPy+0GzdlrHpGRbk81Ekh57Gny9rXEym0msdWJD/zaDV0poJbdEV
-E76DEZuZ4eq1XoBQ6FsTvRFinsA7tCB5LjmCa+lZuG9xf4AYFDlMAUJu7I+/uxGO
-Ep/CUqYwASjZ50IYBwhbk138PbjEw1iZmcYytlkifACRk9GNmkb2ctt4QKoCIWml
-HPY6BnB26CKDGk490MPjLg6+jkAA1v+bTBru5dSMoLw3icAWfHefW/P5yH0S/HoX
-eU/RIaaxovd4fkKfzz8lBhWkARGPZrPUGyOIpvaLLgMPLF10xcBraJ32ygrPNndy
-ph418Yr4ZCraR9Tdg/EBZlS6Dlhztr16I+Z1FzXIyVemkxafYNAqhqJXUYgx9TFw
-IgS7Isk4+2XJQU0u76lIEFGBHsHV2j9tif6lu1ZsrZDKG2OhI09+KHW1wp8gTQKG
-QxlbBcl/sD4NBLm58vwdvLm9lMCxc6vv9jdK5hhfz4ATWHSsjTi1O6DC787qCfqW
-pnOjNghR3stX7DxzDQmMVFB30OaGMHQ5PGVk5CgK4SmBJuwtxYOBFK919f4KPmz6
-8ZrtIoD+v972q+r5kaMU
-=WwXr
------END PGP SIGNATURE-----
