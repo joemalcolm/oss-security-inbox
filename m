@@ -1,146 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/25/2
-Message-Id: <579B47F2-8375-43AB-A0C2-A0382BCE48B8@beckweb.net>
-Date: Wed, 25 Mar 2020 16:58:05 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/12/2
+Message-ID: <nycvar.YSQ.7.76.2005121738440.1451610@xnncv>
+Date: Tue, 12 May 2020 17:46:44 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Paolo Abeni <pabeni@...hat.com>, matthew.sheets@...ms.com,  Tyler Hicks <code@...icks.com>
+Subject: CVE-2020-10711 Kernel: NetLabel: null pointer dereference while receiving CIPSO packet with null category
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+   Hello,
 
-The following releases contain fixes for security vulnerabilities:
+NULL pointer dereference(s) issue(s) was found in the Linux kernel's SELinux 
+subsystem. It occurs while importing the Commercial IP Security Option (CIPSO) 
+protocol's category bitmap into SELinux's extensible bitmap via 
+'ebitmap_netlbl_import' routine. While parsing the CIPSO restricted bitmap tag 
+in 'cipso_v4_parsetag_rbm' routine, it sets the security attribute to indicate 
+that category bitmap is present, even if it has not been allocated. This leads 
+to the said NULL pointer dereference issue while importing the same category 
+bitmap into SELinux. A remote network user could use this flaw to crash the 
+system kernel resulting in DoS scenario.
 
-* Jenkins 2.228
-* Jenkins LTS 2.204.6 and 2.222.1
-* Artifactory Plugin 3.6.0 and 3.6.1
-* Azure Container Service Plugin 1.0.2
-* OpenShift Pipeline Plugin 1.0.57
-* Pipeline: AWS Steps Plugin 1.41
-* Queue cleanup Plugin 1.4
-* RapidDeploy Plugin 4.2.1
+This issue was introduced by upstream commit:
+   -> https://git.kernel.org/linus/4b8feff251da3d7058b5779e21b33a85c686b974
+      netlabel: fix the horribly broken catmap functions
 
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-03-25/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1774 / CVE-2020-2160
-An extension point in Jenkins allows selectively disabling cross-site
-request forgery (CSRF) protection for specific URLs.
-
-Implementations of that extension point received a different representation
-of the URL path than the Stapler web framework uses to dispatch requests in
-Jenkins 2.227 and earlier, LTS 2.204.5 and earlier. This discrepancy
-allowed attackers to craft URLs that would bypass the CSRF protection of
-any target URL.
+* This issue was reported by Matthew Sheets (CC'd).
+* Please see a proposed fix patch attached herein.
 
 
-SECURITY-1781 / CVE-2020-2161
-Users with Agent/Configure permissions can define labels for nodes. These
-labels can be referenced in job configurations to restrict where a job can
-be run.
-
-In Jenkins 2.227 and earlier, LTS 2.204.5 and earlier, the form validation
-for label expressions in job configuration forms did not properly escape
-label names, resulting in a stored cross-site scripting (XSS) vulnerability
-exploitable by users able to define node labels.
-
-
-SECURITY-1793 / CVE-2020-2162
-Jenkins 2.227 and earlier, LTS 2.204.5 and earlier served files uploaded as
-file parameters to a build without specifying appropriate
-`Content-Security-Policy` HTTP headers. This resulted in a stored
-cross-site scripting (XSS) vulnerability exploitable by users with
-permissions to build a job with file parameters.
-
-
-SECURITY-1796 / CVE-2020-2163
-Jenkins 2.227 and earlier, LTS 2.204.5 and earlier processed HTML embedded
-in list view column headers. This resulted in a stored cross-site scripting
-(XSS) vulnerability exploitable by users able to control the content of
-column headers.
-
-The following plugins are known to allow users to define column headers:
-
-* Warnings NG
-* Maven Info
-* Link Column
-
-Further plugins may also allow users to define column headers.
-
-
-SECURITY-1542 (1) / CVE-2020-2164
-Artifactory Plugin 3.5.0 and earlier stores its Artifactory server password
-in plain text in the global configuration file
-`org.jfrog.hudson.ArtifactoryBuilder.xml`. This password can be viewed by
-users with access to the Jenkins master file system.
-
-
-SECURITY-1542 (2) / CVE-2020-2165
-Artifactory Plugin stores Artifactory server passwords in its global
-configuration file `org.jfrog.hudson.ArtifactoryBuilder.xml` on the Jenkins
-master as part of its configuration.
-
-While the password is stored encrypted on disk since Artifactory Plugin
-3.6.0, it is transmitted in plain text as part of the configuration form by
-Artifactory Plugin 3.6.0 and earlier. This can result in exposure of the
-password through browser extensions, cross-site scripting vulnerabilities,
-and similar situations.
-
-
-SECURITY-1741 / CVE-2020-2166
-Pipeline: AWS Steps Plugin 1.40 and earlier does not configure its YAML
-parser to prevent the instantiation of arbitrary types. This results in a
-remote code execution (RCE) vulnerability exploitable by users able to
-provide YAML input files to Pipeline: AWS Steps Plugin's build steps.
-
-
-SECURITY-1739 / CVE-2020-2167
-OpenShift Pipeline Plugin 1.0.56 and earlier does not configure its YAML
-parser to prevent the instantiation of arbitrary types. This results in a
-remote code execution (RCE) vulnerability exploitable by users able to
-provide YAML input files to OpenShift Pipeline Plugin's build step.
-
-
-SECURITY-1732 / CVE-2020-2168
-Azure Container Service Plugin 1.0.1 and earlier does not configure its
-YAML parser to prevent the instantiation of arbitrary types. This results
-in a remote code execution (RCE) vulnerability exploitable by users able to
-provide YAML input files to Azure Container Service Plugin's build step.
-
-
-SECURITY-1724 / CVE-2020-2169
-A form validation HTTP endpoint in Queue cleanup Plugin 1.3 and earlier
-does not escape a query parameter displayed in an error message. This
-results in a reflected cross-site scripting vulnerability (XSS).
-
-
-SECURITY-1676 / CVE-2020-2170
-RapidDeploy Plugin 4.2 and earlier does not escape package names in its
-displayed table of packages obtained from a remote server. This results in
-a stored cross-site scripting (XSS) vulnerability exploitable by users able
-to configure jobs.
-
-
-SECURITY-1677 / CVE-2020-2171
-RapidDeploy Plugin 4.2 and earlier does not configure its XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows a user able to control the input files for the 'RapidDeploy
-deployment package build' build or post-build step to have Jenkins parse a
-crafted file that uses external entities for extraction of secrets from the
-Jenkins master, server-side request forgery, or denial-of-service attacks.
-
-
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+View attachment "linux-netlabel-cope-with-null-catmap.patch" of type "text/plain" (3004 bytes)
