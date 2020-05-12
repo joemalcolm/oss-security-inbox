@@ -1,125 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/25/4
-Message-ID: <20200625190621.GA1791617@millbarge>
-Date: Thu, 25 Jun 2020 19:06:21 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: [cve-request@...re.org: Re: [scr916814] net-snmp - Perhaps only unreleased development versions; fix appears to be in v5.8.1.pre1]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/12/3
+Message-ID: <nycvar.YSQ.7.76.2005121907180.1451610@xnncv>
+Date: Tue, 12 May 2020 19:08:17 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Paolo Abeni <pabeni@...hat.com>, matthew.sheets@...ms.com,  Tyler Hicks <code@...icks.com>
+Subject: Re: CVE-2020-10711 Kernel: NetLabel: null pointer dereference while receiving CIPSO packet with null category
 Content-Type: text/plain; charset=utf-8
 
-Hello, I'd lke to share a cve assigned to net-snmp for an issue that may
-not have affected any released versions of net-snmp but affected various
-distro versions of net-snmp.
++-- On Tue, 12 May 2020, P J P wrote --+
+| NULL pointer dereference(s) issue(s) was found in the Linux kernel's SELinux 
+| subsystem. It occurs while importing the Commercial IP Security Option 
+| (CIPSO) protocol's category bitmap into SELinux's extensible bitmap via 
+| 'ebitmap_netlbl_import' routine. While parsing the CIPSO restricted bitmap 
+| tag in 'cipso_v4_parsetag_rbm' routine, it sets the security attribute to 
+| indicate that category bitmap is present, even if it has not been allocated. 
+| This leads to the said NULL pointer dereference issue while importing the 
+| same category bitmap into SELinux. A remote network user could use this flaw 
+| to crash the system kernel resulting in DoS scenario.
+|
+| This issue was introduced by upstream commit:
+|   -> https://git.kernel.org/linus/4b8feff251da3d7058b5779e21b33a85c686b974
+|      netlabel: fix the horribly broken catmap functions
 
-Thanks
+Upstream patch:
+  -> https://lore.kernel.org/netdev/07d99ae197bfdb2964931201db67b6cd0b38db5b.1589276729.git.pabeni@redhat.com/T/#u
 
------ Forwarded message from cve-request@...re.org -----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-Date: Thu, 25 Jun 2020 05:15:14 -0400 (EDT)
-From: cve-request@...re.org
-To: security@...ntu.com
-Cc: cve-request@...re.org
-Subject: Re: [scr916814] net-snmp - Perhaps only unreleased development versions; fix appears to be in v5.8.1.pre1
-Message-Id: <20200625091514.8124480B76E@...prhmv1.mitre.org>
-X-MailControl-ReportSpam: https://www.mailcontrol.com/sr/VfMHRVT2LfHGX2PQPOmvUkjDae7bB5IgIMT0o87Yr8XX7dUK1PjRtmIgzLM3PrMtWFfXRAbpUYiTKOxjbsImtQ==
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> [Suggested description]
-> net-snmp before 5.8.1.pre1 has a double free in usm_free_usmStateReference in snmplib/snmpusm.c 
-> via an SNMPv3
-> GetBulk request. NOTE: this affects net-snmp packages shipped to end users by multiple Linux distributions,
-> but might not affect an upstream release.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> If I've followed the breadcrumbs correctly, this was introduced via
-> https://github.com/net-snmp/net-snmp/commit/adc9b71aba9168ec64149345ea37a1acc11875c6
-> which was apparently incorporated into Debian, Ubuntu, Red Hat
-> packages, even if not included in upstream releases.
-> 
-> A double free was discovered in usm_free_usmStateReference() in unreleased development versions of net-snmp.
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> double-free
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> net-snmp
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> net-snmp - Perhaps only unreleased development versions; fix appears to be in v5.8.1.pre1
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> usm_free_usmStateReference()
-> usm_rgenerate_out_msg()
-> free_agent_snmp_session()
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Remote
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> An authorized remote user can trigger this via a command given at https://sourceforge.net/p/net-snmp/bugs/2923/#6789:
-> snmpbulkget  -v3 -Cn1 -Cr1472  -lauthPriv -u testuser -a SHA -A testsha1234 -x AES -X testaes1234 localhost    1.3.6.1.2.1.1.5 1.3.6.1.2.1.1.7
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://bugs.launchpad.net/ubuntu/+source/net-snmp/+bug/1877027
-> https://bugzilla.redhat.com/show_bug.cgi?id=1663027
-> https://sourceforge.net/p/net-snmp/bugs/2923/
-> https://github.com/net-snmp/net-snmp/commit/5f881d3bf24599b90d67a45cae7a3eb099cd71c9
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
-
-Use CVE-2019-20892.
-
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJe9Gq+AAoJEPNX0OmQPkAIQqEP/3t3ZrdDKKQSY/OLz27sFHNm
-LqpQIlV5ukyfM8vCF8vp5a2yN2rJSrwmMUuDHppqAdyW/n4js5mXcsVbHsphMvoU
-srqbuL1DmTW8J3MD4edVBRHi3Ag42Xnacz44w9n5DofWjJDj5j7AY5kUUiqtzzrd
-VPjNaA398/4NoMPZj07Cqa/uN5uNJc6AJnwzxRFfae0HD75qOiCwvlnLxNfX+rDn
-/jyziyPTZNAQObqhXr1VDVKbDsTA53Znf7C/Joj8QyYlDHL4FFJrP8jwjzzVCRWA
-1jUcVpKcRSryuclG84JmWyY0qIj5IlqPqBs1Y2lp74DtBlO+GjI7ZLZYlAAGTIDq
-cMq/PNO2teHsWaZNFPa3hR/ezR71ihahke/2Dj93A+Z7ytST3f0edhgtPTietWAf
-ytrStPbppBg8bztWBvrsQEWj0o8kVUZXvLM9Gen5agOBhXHR+QM9i1tH8Vot+V3K
-M9QyW79n8pUq7cWBaVQMyMzrwnsDgk85WhQR13eVBLzNjPLatAjBxDlJszSaO4UR
-VHus9O/4a9Qa0eW1+V2KAtOgUr8aLnUxKPDMNYIXk2BqemznVBpjvdUwRhdH9yo3
-2l2rEyxvSLUOYGbOqwPXot0Sm2CNQN6l4ISjvDgXHqXdYzHeeV2RaMkOjtARblLT
-BFmzz9v4hNYJxdJgfYZU
-=O66Z
------END PGP SIGNATURE-----
-
-
------ End forwarded message -----
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
