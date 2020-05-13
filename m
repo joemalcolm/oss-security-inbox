@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2441" "Tuesday" "27" "October" "2015" "14:31:39" "+0530" "Dis close" "disclose@cybersecurityworks.com" "<CAMWaY3P5rS0PP=b1Wvqgh7=U-uKSnXiRu30FN6GY=4VWLmF4nQ@mail.gmail.com>" "70" "[oss-security] CVE Request: Malicious File Upload in NextGEN Gallery by Photocrati Version 2.1.10" nil nil nil "10" "2015102709:01:39" "[oss-security] CVE Request: Malicious File Upload in NextGEN Gallery by Photocrati Version 2.1.10" (number mark "U       disclose@cyb Oct 27   70/2441  " thread-indent "\"[oss-security] CVE Request: Malicious File Upload in NextGEN Gallery by Photocrati Version 2.1.10\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1801" "Wednesday" "13" "May" "2020" "20:08:48" "+0200" "Chesnay Schepler" "chesnay@apache.org" "<319958e3-7813-1a39-d1d1-dad2fa885011@apache.org>" "53" "[oss-security] [CVE-2020-1960] Apache Flink JMX information disclosure vulnerability" nil nil nil "5" "2020051318:08:48" "[oss-security] [CVE-2020-1960] Apache Flink JMX information disclosure vulnerability" (number mark "U       chesnay@apac May 13   53/1801  " thread-indent "\"[oss-security] [CVE-2020-1960] Apache Flink JMX information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-1960] Apache Flink JMX information disclosure vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7769 invoked by uid 550); 27 Oct 2015 09:25:30 -0000
+Received: (qmail 30441 invoked by uid 550); 13 May 2020 18:15:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,108 +12,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21506 invoked from network); 27 Oct 2015 09:01:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cybersecurityworks_com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=rXPrdssDptl4HGyD+ehT4nFqqUVNfw/ZBbuR5oqTEgI=;
-        b=t9e0SVe33XVDHsW0jA1KgVxVZ495blPxqm+BH3rIkyyMPQXIPu5wpX3cMAMRLuoVxq
-         05QNUDjS3SE+7jwt61QPjdc5pO7qYIdxiBusgXgWz4Hp/elvRyNiGkH6VfFQC4fAvE/T
-         p2I+hxN3cgWh38L/FZhrpU8ydUn1L70xgz9RnitRJxV3iUxcu1jpjHnFZjKyGS/fhNDT
-         zjWXs0yhaDSbDauxOIQl55XDwhpv7fDWtwKrPNJTpqMmu3wNwAGc/rx4HbDLFgPFgukH
-         dcRPYEYhSXbc8I/TnDyeip/553phm14nRuoTBQJEnMOoL93ZmdU6Am3W3Kr73tIN2fL0
-         N/PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=rXPrdssDptl4HGyD+ehT4nFqqUVNfw/ZBbuR5oqTEgI=;
-        b=jW2W5DGIvZXUFN0t9/YhWK/LU6ZsOxJxVPhllTEqrBVYgDTE1+GPlvkSZ7uzYNxzvS
-         d7E5DPv/p7TxQ0D8W2NpEiXyRjbN1RBrESa7RMm5iEwrTyTlYTspDwJw5YljvC0w5I08
-         GjpkpXMLH11kbycjbb+0z3fghaiuhh0tPq5adhEW4UjQf3R2lB+BMrMQILEA4itIp+jI
-         rcnfHYLmYmrpQ+6x7zmgPUj9AsvuajrR/8M1q+5gRS7DZtTfKa3E2fNvgql3qeqbO5Kc
-         lbVeigzb3mAACnmX9AF66QzM06ClYznhY2l7IubGZAhFCq2NBEk6/gOKhtr53vepnEMR
-         oSWw==
-X-Gm-Message-State: ALoCoQlpylerTjomocbh0va3QaAo7HZQF5RhNttjdp11nHhqqM+a9jve08N1kDlxmwaHnPlddIqF
+Received: (qmail 26311 invoked from network); 13 May 2020 18:09:02 -0000
+From: Chesnay Schepler <chesnay@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <319958e3-7813-1a39-d1d1-dad2fa885011@apache.org>
+Date: Wed, 13 May 2020 20:08:48 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-X-Received: by 10.50.20.74 with SMTP id l10mr24202286ige.2.1445936499324; Tue,
- 27 Oct 2015 02:01:39 -0700 (PDT)
-Date: Tue, 27 Oct 2015 14:31:39 +0530
-Message-ID: <CAMWaY3P5rS0PP=b1Wvqgh7=U-uKSnXiRu30FN6GY=4VWLmF4nQ@mail.gmail.com>
-From: Dis close <disclose@cybersecurityworks.com>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=047d7bd7527069254a05231253c6
-Subject: [oss-security] CVE Request: Malicious File Upload in NextGEN Gallery by Photocrati
- Version 2.1.10
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [CVE-2020-1960] Apache Flink JMX information disclosure vulnerability
 
---047d7bd7527069254a05231253c6
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+CVE-2020-1960: Apache Flink JMX information disclosure vulnerability
 
-Hi,
+Severity: Medium
+(CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:L/A:H)
 
-Details
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-# Title : Malicious File Upload in NextGEN Gallery by Photocrati Version
-2.1.10
-# Affected Product  : NextGEN Gallery by Photocrati Version 2.1.10
-# Vendor Homepage: https://wordpress.org/plugins/nextgen-gallery/download/
-# Vulnerability Type :  Malicious File upload
-# Risk :  High
-# POC URL             :
-https://github.com/cybersecurityworks/Disclosed/issues/6
-# Video URL  :  https://www.youtube.com/watch?v=3DhMMG42HsgUA&feature=3Dyou=
-tu.be
-# Status : Fixed
+Vendor:
+The Apache Software Foundation
 
-Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Even though credentials are required to upload file into the server. any
-new combined vulnerability can allow an attacker to Upload shell into the
-server which gives entire root access of the server.
+Versions Affected:
+Flink 1.1.0 to 1.1.5
+Flink 1.2.0 to 1.2.1
+Flink 1.3.0 to 1.3.3
+Flink 1.4.0 to 1.4.2
+Flink 1.5.0 to 1.5.6
+Flink 1.6.0 to 1.6.4
+Flink 1.7.0 to 1.7.2
+Flink 1.8.0 to 1.8.3
+Flink 1.9.0 to 1.9.2
+Flink 1.10.0
 
-Technical Details
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Description:
+When running a process with an enabled JMXReporter, with a port 
+configured via metrics.reporter.<reporter_name>.port, an attacker with 
+local access to the machine and JMX port can execute a man-in-the-middle 
+attack using a specially crafted request to rebind the JMXRMI registry 
+to one under the attacker's control. This compromises any connection 
+established to the process via JMX, allowing extraction of credentials 
+and any other transferred data.
 
-   1. Logon into any wordpress application (localhost or public host)
-   2. Move on to Next Gen Gallery plugin file upload option available on
-   products.
-   3. Upload JPG file to the server through file upload option.
-   4. Modify the file variable contains JPG extension to PHP. Also, edit
-   and add shell content to the name variable body containing JPG
-   information/content.
+Mitigation:
+All users should either
+- remove the port parameter from the reporter configuration,
+- upgrade to 1.9.3 or 1.10.1,
+- obtain the source for their release from the Flink website or git and 
+apply the patch corresponding to their version from the list below:
 
-Advisory Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-2015-09-04 =E2=80=93 Discovered in NextGen Gallery 2.1.10 version.
-2015-09-04 =E2=80=93 Reported to plugins@wordpress.org
-2015-09-04 =E2=80=93 Vendor responded in the same.
-2015-09-09 =E2=80=93 Fixed in NextGen Gallery 2.1.15 version.
+1.1: a61b5d2b362d11e7b9deeb2334d275325574bd7b
+1.2: d2a051267ffbeef5c1fd981860fb7032d9ac8a60
+1.3: 4f06bb75cd726096af43587ca4fb182b2e4bae2e
+1.4: 12787eceb49c566b28aa876fc2892d21a0ec3d79
+1.5: f9b4e0dea71abbcd6463c757577c70c45b3e6bbf
+1.6: b8647b1ca019003ae939b7494bba4e54de167b6f
+1.7: 5e0b7970a9aea74aba4ebffaa75c37e960799b93
+1.8: 0e8e8062bcc159e9ed2a0d4a0a61db4efcb01f2f
+1.9: 58b58f4b16a2e25c95b465377d43a51ad8ef3f6a
+1.10: 804ae70024bf8be7c0c7093d02addb080c318662
 
-Fix
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-https://www.owasp.org/index.php/Unrestricted_File_Upload
+Credit:
+The issue was discovered in Flink by Jonathan Gallimore, Tomitribe and 
+Colm O hEigeartaigh, Talend.
+The underlying vulnerability pattern was discovered by An Trinh and 
+published at Blackhat.
 
-Credits & Authors
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-sathish@cybersecurityworks.com from cybersecurityworks Pvt Ltd
-
-About Cybersecurityworks
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Cybersecurity Works is basically an auditing company passionate working on
-findings & reporting security flaws & vulnerabilities on web application
-and network. As professionals, we handle each client differently based on
-their unique requirements. Visit our website
-http://www.cybersecurityworks.com/ for more information.
-
-Please assign CVE as appropriate. Thanks for your valuable time & effort
-taken.
-
---
-
-Cheers !!!
-
-Team CSW
-
---047d7bd7527069254a05231253c6--
