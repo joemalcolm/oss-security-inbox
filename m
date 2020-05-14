@@ -1,30 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/02/1
-Message-ID: <nycvar.YSQ.7.77.849.2007021123400.6260@xnncv>
-Date: Thu, 2 Jul 2020 11:28:46 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Lei Sun <slei.casper@...il.com>
-Subject: CVE-2020-15469 QEMU: MMIO ops null pointer dereference may lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/9
+Message-ID: <514030572.108990.1589466334162@mail.yahoo.com>
+Date: Thu, 14 May 2020 14:25:34 +0000 (UTC)
+From: Andrea Cosentino <ancosen1985@...oo.com>
+To: "dev@...el.apache.org" <dev@...el.apache.org>,  "users@...el.apache.org" <users@...el.apache.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  Apache Security Team <security@...che.org>,  "Colm O. HEigeartaigh" <coheigea@...che.org>
+Subject: [SECURITY] New security advisory CVE-2020-11973 released for Apache Camel
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+A new security advisory has been released for Apache Camel, that is fixed in
+the recent 2.25.1 and 3.2.0 releases.
 
-A NULL pointer dereference issue was found in various system emulators of 
-QEMU. It could occur while performing MMIO r/w operations, in case the 
-respective handler function is not defined. A privileged guest user able to 
-invoke MMIO operation may use this flaw to crash the QEMU process on the host 
-resulting in DoS scenario.
+CVE-2020-11973: Apache Camel Netty enables Java deserialization by default
 
-Upstream patch(es):
--------------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg09961.html
+Severity: MEDIUM
 
-This issue was reported by Lei Sun(CC'd); CVE-2020-15469 assigned via
--> https://cveform.mitre.org/.
+Vendor: The Apache Software Foundation
 
-Thank you.
+Versions Affected: Camel 2.25.0, Camel 3.0.0 to 3.1.0. The unsupported Camel 2.x (2.24 and earlier) versions may be also affected.
+
+Description: Apache Camel Netty enables Java deserialization by default
+
+Mitigation: 2.x users should upgrade to 2.25.1, 3.x users should upgrade to 3.2.0 The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-14447 refers to the various commits that resovoled the issue, and have more details.
+
+Credit: This issue was discovered by Colm O. HEigeartaigh <coheigea at apache dot org> from Apache Software Foundation
+
+On behalf of the Apache Camel PMC
+
 --
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-
+Andrea Cosentino 
+----------------------------------
+Apache Camel PMC Chair
+Apache Karaf Committer
+Apache Servicemix PMC Member
+Email: ancosen1985@...oo.com
+Twitter: @oscerd2
+Github: oscerd
