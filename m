@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/04/2
-Message-ID: <nycvar.YSQ.7.77.849.2006041119320.62159@xnncv>
-Date: Thu, 4 Jun 2020 11:21:42 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Ren Ding <rding@...ech.edu>, Hanqing Zhao <hanqing@...ech.edu>,  Yi Ren <c4tren@...il.com>
-Subject: CVE-2020-13800 QEMU: ati-vga: infinite recursion in ati_mm_read/write calls may lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/5
+Message-ID: <9608d09.8975.1721205e1d0.Coremail.dinglei@apache.org>
+Date: Thu, 14 May 2020 15:11:14 +0800 (GMT+08:00)
+From: ShannonDing <dinglei@...che.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: "private@...ketmq.apache.org" <private@...ketmq.apache.org>
+Subject: [SECURITY][CVE-2019-17572] Apache RocketMQ directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi, 
+An directory traversal vulnerability[1] was discovered in the version RocketMQ 4.6.0 and it affect all
+versions earlier. And it was fixed[2] in the version 4.6.1 and later according to the CVE-2019-17572.
+Here is the detail of the vulnerability below:
 
-An infinite recursion issue was found in the ati-vga emulator of the QEMU. It 
-could occur in ati_mm_read/write routines while accessing VGA registers, for 
-certain values of the 'mm_index' variable. A guest user/process may use this 
-flaw to crash the QEMU process resulting in DoS scenario.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg00833.html
+[CVEID]:CVE-2019-17572
+[PRODUCT]:Apache RocketMQ
+[VERSIONS]:Apache RocketMQ 4.2.0 to 4.6.0
+[PROBLEMTYPE]: Directory traversal vulnerability
+[REFERENCES]:https://lists.apache.org/thread.html/fdea1c5407da47a17d5522fa149a097cacded1916c1c1534d46edc6d%40%3Cprivate.rocketmq.apache.org%3E
+[DESCRIPTION]:When the automatic topic creation in the broker is turned on by default, an evil topic like “../../../../topic2020” is sent from rocketmq-client to the broker,  a topic folder will be created in the parent directory in brokers, which leads to a directory traversal vulnerability.
+[MITIGATION]: Users of the affected versions should apply one of the following:
+mitigations:
+- Upgrade to Apache RocketMQ 4.6.1or later
 
-This issue was reported by Ren Ding and Hanqing Zhao of SSLab Georgia Tech and 
-Yi Ren(CC'd)
 
-'CVE-2020-13800' requeted via -> https://cveform.mitre.org/
+[1]https://github.com/apache/rocketmq/issues/1637
+[2]https://lists.apache.org/thread.html/rce631288364c30332ad2ca3f3b72cae19f34ced3ba9bb0d58ebea1ff%40%3Cprivate.rocketmq.apache.org%3E
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+
+
+
 
