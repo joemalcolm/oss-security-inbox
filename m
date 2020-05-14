@@ -1,39 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/21/3
-Message-ID: <HVOfwapPoUpExeEC6pUVJFD81vMaCFIGaNo0Uodnx5Sk40Z5SD2JmPGp-IWcmnvIX1Qswb0Kif33n0bqakSLFndsMqYgjY4lTVIRwN_MSfw=@protonmail.com>
-Date: Tue, 21 Apr 2020 16:27:08 +0000
-From: "jellicent@...tonmail.com" <jellicent@...tonmail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Pacman package manager - taking untrusted input
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/4
+Message-ID: <2104879.iZASKD2KPV@spectre>
+Date: Thu, 14 May 2020 11:17:24 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: re2c: infinite loop
 Content-Type: text/plain; charset=utf-8
 
-The Pacman package manager, used by Arch Linux and its 10+ derivatives,
-introduces a critical security flaw in its current state.
+On lunedì 27 aprile 2020 13:07:00 CEST Agostino Sarubbo wrote:
+> Hello all,
+> 
+> re2c is affected by an infinite loop.
+> 
+> It was initially discovered by Sergei Trofimovich (slyfox) and reported by
+> me privately to upstream.
+> The upstream reference is at: https://github.com/skvadrik/re2c/issues/219
+> There is no CVE assigned.
 
-When downloading a package, Pacman checks two files: the database file
-and the package itself. According to their wiki[1], the package files
-are PGP-signed by the developers. The database, however, is not signed.
-This means that Pacman, running as root, is both downloading and parsing
-untrusted input from the Internet. Should there be any relevant bug in
-Pacman, this would lead to root code execution on every Arch/Arch-based
-machine using the package repositories.
+This is CVE-2018-21232
 
-Some scenarios in which this could happen:
+Agostino
 
-* One or more of the mirrors (not run by Arch devs) is compromised and
-   the malicious database file is picked up by a small set of users or
-   project committers
 
-* The main fan-out server (rsync.archlinux.org) is compromised and the
-   malicious database file is propagated to all mirrors worldwide
-
-* A new mirror, run by a malicious actor, is submitted for approval to
-   be included in the official mirror list
-
-* A man-in-the-middle attack is launched on any number of plain HTTP
-   mirrors, replacing the database file with a malicious one in transit
-
-The code supports database signatures, so the real issue is the distro
-infrastructure.
-
-[1] https://wiki.archlinux.org/index.php/Pacman/Package_signing
