@@ -1,44 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/25/1
-Message-ID: <20200825133847.GA1566487@eldamar.local>
-Date: Tue, 25 Aug 2020 15:38:47 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/11
+Message-ID: <CAED0SFy7R3OZXiyJ4TQn63qw_F931Ro5HEZEkDDPJZfWhos7=g@mail.gmail.com>
+Date: Thu, 14 May 2020 15:14:51 -0300
+From: Matheus Bratfisch <matheusbrat@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fossil-SCM patch fixes RCE in all historic versions
+Subject: Python Beaker - Deserialization of Untrasted Data which can lead to Arbitrary code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello all,
 
-On Thu, Aug 20, 2020 at 11:15:41AM -0400, Richard Hipp wrote:
-> Researcher Max Justicz discovered a potential RCE and other
-> vulnerabilities in the Fossil distributed version control system.
-> (https://fossil-scm.org/)  Patches to address these issues are now
-> available for download.  Package maintainers who bundle Fossil are
-> encouraged to update their packages without unnecessary delay.
-> 
-> All vulnerabilities require a pre-existing trust relationship between
-> the victim and the attacker.  In other words, the attacker must be
-> either a site administrator, or someone with check-in privileges on
-> the project.  There are no known vulnerabilities to servers from web
-> users entering tickets or forum messages or wiki or doing other
-> on-line operations.  The attacks require the ability to push, at
-> least, and the most serious RCE problem requires the ability to
-> configure a server in malicious ways.  If you are unable to upgrade to
-> one of the patched versions of Fossil, then you are encouraged at
-> least to know well the people from whom you clone or pull.
-> 
-> Precompiled binaries and source tarballs for the patched versions of
-> Fossil are available on the Fossil download page
-> (http://fossil-scm.org/fossil/uv/download.html).  However, the dozens
-> of check-ins that went into generating these patches, and the tickets
-> that describe the specifics of the vulnerabilities, will be embargoed
-> for a few days.
-> 
-> See the thread on the Fossil Forum
-> (https://fossil-scm.org/forum/info/a05ae3ce7760daf6) for follow up
-> information or to communicate directly with the Fossil developers.
+python beaker is affected by Deserialization of untrusted data (CWE-502)
+which could lead to Arbitrary code execution.
 
-FWIW, the RCE issue has been assigned CVE-2020-24614 by MITRE.
+I believe it was initially pointed out the flaw on Session here:
+https://github.com/bbangert/beaker/issues/35
 
-Regards,
-Salvatore
+Some improvements were made by adding a secret/HMAC but the Cache layer
+still has the same flaw. I reported the flaw on cache level here:
+https://github.com/bbangert/beaker/issues/191
+I created a POC but didn't publish it on the ticket.
+
+There is no CVE assigned to this.
+
+This package exists on Fedora and Debian at least.
+
+Should I take any extra action?
+
+Best regards,
+--
+Matheus (X-warrior) Bratfisch.
+http://matbra.com
+
