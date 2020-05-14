@@ -1,4 +1,9 @@
-Received: (qmail 9720 invoked by uid 550); 30 May 2022 14:07:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1749" "Thursday" "14" "May" "2020" "15:11:14" "+0800" "ShannonDing" "dinglei@apache.org" "<9608d09.8975.1721205e1d0.Coremail.dinglei@apache.org>" "33" "[oss-security] [SECURITY][CVE-2019-17572] Apache RocketMQ directory traversal vulnerability" nil nil nil "5" "2020051407:11:14" "[oss-security] [SECURITY][CVE-2019-17572] Apache RocketMQ directory traversal vulnerability" (number mark "U       dinglei@apac May 14   33/1749  " thread-indent "\"[oss-security] [SECURITY][CVE-2019-17572] Apache RocketMQ directory traversal vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY][CVE-2019-17572] Apache RocketMQ directory traversal vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 14073 invoked by uid 550); 14 May 2020 09:57:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,120 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9680 invoked from network); 30 May 2022 14:07:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:From:
-	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=t/Pq7d9CPPA0Rxr7VKvxLRlUDYxqNThVWf7nxv3BK2A=; b=A8vJPjR0eBvl4r5PYHD25KI6UB
-	83caVbbNhubLR3wujbAfOtjm6r4+wtYpXd5p4amZqvvPv/cPv81QiUfef/TWJATRKG89SWRwOhb+7
-	mAD1MZ3D/UCJS5QVhgSeMZ9djNGs27uS8TP8s//BAJ3ObqXK+1dm/kj0T/ZgGiup01cmgaiHsW3Mn
-	L4qxuFdsvkNnkFQVIaGKb67u/Xarcd30h4g7YXGcN0UtL1fY+jJuP2M/EaVeQRIaTlZNLJWT7G1EA
-	QCg8gpL/vr5xLD8GFVddcWIQFjOToHiFpimX2veIesNSRR4+GtbKRBVSam9IS1uEv5dNFGYuuDieQ
-	EZKNnfUg==;
-Message-ID: <d2901153-d74f-d45b-23c8-eb5b1160dac3@igalia.com>
-Date: Mon, 30 May 2022 15:06:36 +0100
+Received: (qmail 1741 invoked from network); 14 May 2020 07:11:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=BiLUY
+	0vi1HTeAaslNU2+HbMt0UYwN9gyb8XM7nZgMzs=; b=ZIa8w8WaGMb74l8ADELCZ
+	cYn10ktox/PtXuXpT1CTofdk4T42OWZHEmXvg44+Jp10/fmor2uwPDkBdWIdLAJ6
+	u+sbn8vSKqZvfHpM5rQ7/niEUoPBr/CkPQybjEvOzhbCQAneIYP48zFXZmr9nENc
+	ij+cz13ZG4x5F6AJdu9Bf8=
+X-Originating-IP: [42.120.72.92]
+Date: Thu, 14 May 2020 15:11:14 +0800 (GMT+08:00)
+From: ShannonDing <dinglei@apache.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Cc: "private@rocketmq.apache.org" <private@rocketmq.apache.org>
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20180820(5a019900) Copyright (c) 2002-2020 www.mailtech.cn 163com
+Sender: libya_003@163.com
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_103756_174013430.1589440274895"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Content-Language: en-GB
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Organization: Igalia S.L.
-Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
- security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Message-ID: <9608d09.8975.1721205e1d0.Coremail.dinglei@apache.org>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: D8GowAA3PIwS77xeWIchAA--.3174W
+X-CM-SenderInfo: 5ole5tjbqqjqqrwthudrp/1tbiOQwkKVXlspcyOAABsm
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Subject: [oss-security] [SECURITY][CVE-2019-17572] Apache RocketMQ directory traversal
+ vulnerability
+
+------=_Part_103756_174013430.1589440274895
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0005
+Content-Transfer-Encoding: base64
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0005
-------------------------------------------------------------------------
+SGksIApBbiBkaXJlY3RvcnkgdHJhdmVyc2FsIHZ1bG5lcmFiaWxpdHlbMV0g
+d2FzIGRpc2NvdmVyZWQgaW4gdGhlIHZlcnNpb24gUm9ja2V0TVEgNC42LjAg
+YW5kIGl0IGFmZmVjdCBhbGwKdmVyc2lvbnMgZWFybGllci4gQW5kIGl0IHdh
+cyBmaXhlZFsyXSBpbiB0aGUgdmVyc2lvbiA0LjYuMSBhbmQgbGF0ZXIgYWNj
+b3JkaW5nIHRvIHRoZSBDVkUtMjAxOS0xNzU3Mi4KSGVyZSBpcyB0aGUgZGV0
+YWlsIG9mIHRoZSB2dWxuZXJhYmlsaXR5IGJlbG93OgoKCltDVkVJRF06Q1ZF
+LTIwMTktMTc1NzIKW1BST0RVQ1RdOkFwYWNoZSBSb2NrZXRNUQpbVkVSU0lP
+TlNdOkFwYWNoZSBSb2NrZXRNUSA0LjIuMCB0byA0LjYuMApbUFJPQkxFTVRZ
+UEVdOiBEaXJlY3RvcnkgdHJhdmVyc2FsIHZ1bG5lcmFiaWxpdHkKW1JFRkVS
+RU5DRVNdOmh0dHBzOi8vbGlzdHMuYXBhY2hlLm9yZy90aHJlYWQuaHRtbC9m
+ZGVhMWM1NDA3ZGE0N2ExN2Q1NTIyZmExNDlhMDk3Y2FjZGVkMTkxNmMxYzE1
+MzRkNDZlZGM2ZCU0MCUzQ3ByaXZhdGUucm9ja2V0bXEuYXBhY2hlLm9yZyUz
+RQpbREVTQ1JJUFRJT05dOldoZW4gdGhlIGF1dG9tYXRpYyB0b3BpYyBjcmVh
+dGlvbiBpbiB0aGUgYnJva2VyIGlzIHR1cm5lZCBvbiBieSBkZWZhdWx0LCBh
+biBldmlsIHRvcGljIGxpa2Ug4oCcLi4vLi4vLi4vLi4vdG9waWMyMDIw4oCd
+IGlzIHNlbnQgZnJvbSByb2NrZXRtcS1jbGllbnQgdG8gdGhlIGJyb2tlciwg
+IGEgdG9waWMgZm9sZGVyIHdpbGwgYmUgY3JlYXRlZCBpbiB0aGUgcGFyZW50
+IGRpcmVjdG9yeSBpbiBicm9rZXJzLCB3aGljaCBsZWFkcyB0byBhIGRpcmVj
+dG9yeSB0cmF2ZXJzYWwgdnVsbmVyYWJpbGl0eS4KW01JVElHQVRJT05dOiBV
+c2VycyBvZiB0aGUgYWZmZWN0ZWQgdmVyc2lvbnMgc2hvdWxkIGFwcGx5IG9u
+ZSBvZiB0aGUgZm9sbG93aW5nOgptaXRpZ2F0aW9uczoKLSBVcGdyYWRlIHRv
+IEFwYWNoZSBSb2NrZXRNUSA0LjYuMW9yIGxhdGVyCgoKWzFdaHR0cHM6Ly9n
+aXRodWIuY29tL2FwYWNoZS9yb2NrZXRtcS9pc3N1ZXMvMTYzNwpbMl1odHRw
+czovL2xpc3RzLmFwYWNoZS5vcmcvdGhyZWFkLmh0bWwvcmNlNjMxMjg4MzY0
+YzMwMzMyYWQyY2EzZjNiNzJjYWUxOWYzNGNlZDNiYTliYjBkNThlYmVhMWZm
+JTQwJTNDcHJpdmF0ZS5yb2NrZXRtcS5hcGFjaGUub3JnJTNFCgoKCgoK
 
-Date reported           : May 30, 2022
-Advisory ID             : WSA-2022-0005
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0005.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0005.html
-CVE identifiers         : CVE-2022-26700, CVE-2022-26709,
-                          CVE-2022-26717, CVE-2022-26716,
-                          CVE-2022-26719, CVE-2022-30293,
-                          CVE-2022-30294.
+------=_Part_103756_174013430.1589440274895--
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-
-CVE-2022-26700
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
-    Credit to ryuzaki.
-    Impact: Processing maliciously crafted web content may lead to code
-    execution. Description: A memory corruption issue was addressed with
-    improved state management.
-
-CVE-2022-26709
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
-    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
-    lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A use after free issue was
-    addressed with improved memory management.
-
-CVE-2022-26717
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
-    Credit to Jeonghoon Shin of Theori.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A use after free issue was
-    addressed with improved memory management.
-
-CVE-2022-26716
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
-    Credit to SorryMybad (@S0rryMybad) of Kunlun Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved state management.
-
-CVE-2022-26719
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
-    Credit to Dongzhuo Zhao working with ADLab of Venustech.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved state management.
-
-CVE-2022-30293
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.1.
-    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
-    lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution or to a denial of service (application
-    crash). Description: A memory corruption issue that could cause a
-    heap use after free or a heap buffer overflow in
-    WebCore::TextureMapperLayer::setContentsLayer was addressed with
-    improved state management.
-
-CVE-2022-30294
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.1.
-    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
-    lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution or to a denial of service (application
-    crash). Description: A memory corruption issue that could cause a
-    heap use after free or a heap buffer overflow in
-    WebCore::TextureMapperLayer::setContentsLayer was addressed with
-    improved state management. This is the same issue than
-    CVE-2022-30293.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-May 30, 2022
