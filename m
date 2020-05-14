@@ -1,24 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/4
-Message-ID: <2104879.iZASKD2KPV@spectre>
-Date: Thu, 14 May 2020 11:17:24 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/2
+Message-ID: <20200514091149.4e807efa@computer>
+Date: Thu, 14 May 2020 09:11:49 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: re2c: infinite loop
+Subject: Hypermail XSS via attachment
 Content-Type: text/plain; charset=utf-8
 
-On lunedì 27 aprile 2020 13:07:00 CEST Agostino Sarubbo wrote:
-> Hello all,
-> 
-> re2c is affected by an infinite loop.
-> 
-> It was initially discovered by Sergei Trofimovich (slyfox) and reported by
-> me privately to upstream.
-> The upstream reference is at: https://github.com/skvadrik/re2c/issues/219
-> There is no CVE assigned.
+"Hypermail is a free (GPL) program to convert email from Unix mbox
+format to html" [1]
+It is commonly used to create mailing list archives.
 
-This is CVE-2018-21232
+Hypermail contains no validation or sanitation of mail attachments and
+provides them as simple files. This means it's trivially vulnerable to
+Cross Site Scripting (XSS).
 
-Agostino
+One can simply attach a file to a mail with either no or an .html
+extension and it can contain javascript/XSS payloads (e.g.
+"<html><script>alert(document.domain)</script>").
+
+The developer of Hypermail informed me that he is no longer interested
+in Hypermail, thus there will probably be no fix.
+
+This means using hypermail for public mailing list archives is
+inherently risky if one runs anything else on the same host that may be
+prone to XSS attacks (which is usually everything that includes any
+form of authentication).
 
 
+[1] http://www.hypermail-project.org/
+
+-- 
+Hanno Böck
+https://hboeck.de/
