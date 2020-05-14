@@ -1,66 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/09/2
-Message-ID: <CAD77+gT2fd=vCsL=xtF=QF3OOkmExVR05+zPs9_L_8GLzDACkQ@mail.gmail.com>
-Date: Tue, 9 Jun 2020 12:08:24 +0200
-From: Richard Hartmann <richih.mailinglist@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/3
+Message-ID: <20200514102117.78d600ac@computer>
+Date: Thu, 14 May 2020 10:21:17 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Grafana 6.7.4 and 7.0.2 released with fix for CVE-2020-13379
+Subject: XSS in BigBlueButton < 2.2.6
 Content-Type: text/plain; charset=utf-8
 
-Thank you to Mark Cooper from Red Hat, BCC'ed, for pointing out that
-the same issue could be abused for DOS via SegFault.
+BigBlueButton was vulnerable to Cross Site Scripting in the
+Presentation upload.
 
-We are updating our blog post and will update the CVE as well.
+When one uploads a presentation that is an HTML payload, but named as
+an image (e.g. "foo.png") and allows download the download would be
+served with an HTML mime type and executed in the browser.
 
+Proof of concept:
+* create file named foo.png with content:
+<html><script>alert(document.domain)</script>
+* Upload as presentation, allow download.
+* Click on download.
 
-Best,
-Richard
-
-On Wed, Jun 3, 2020 at 3:34 PM Richard Hartmann
-<richih.mailinglist@...il.com> wrote:
->
-> Dear all,
->
-> today we are releasing Grafana 6.7.4 and 7.0.2. These patch releases
-> include an important security fix for an issue that affects all
-> Grafana versions from 3.0.1 to 7.0.1.
->
-> Incorrect access control vulnerability (CVE-2020-13379)
-> We received a security report to security@...fana.com on May 14, 2020,
-> about a vulnerability in Grafana regarding the avatar feature. It was
-> later identified as affecting Grafana versions from 3.0.1 to 7.0.1.
-> CVE-2020-13379 has been assigned to this vulnerability.
->
-> This vulnerability allows any unauthenticated user/client to make
-> Grafana send HTTP requests to any URL and return its result to the
-> user/client. This can be used to gain information about the network
-> that Grafana is running on.
->
-> If for some reason you cannot upgrade, the impact can be mitigated by
-> blocking access to the avatar feature by blocking the /avatar/* URL
-> via a web application firewall, load balancer, reverse proxy, or
-> similar. It can also be mitigated by restricting access to Grafana.
->
-> Affected versions
-> Grafana releases 3.0.1 through 7.0.1
->
-> Patched versions
-> 7.x and 6.7.x
->
-> Solutions and mitigations
-> Download and install the appropriate patch for your version of Grafana.
->
-> Grafana Cloud instances have already been patched, and Grafana
-> Enterprise customers were provided with updated binaries, under
-> embargo, on May 27.
->
-> Further information can be found at
-> https://grafana.com/blog/2020/06/03/grafana-6.7.4-and-7.0.2-released-with-important-security-fix/
->
->
-> Richard
+I reported this to the BigBlueButton developers, but was informed that
+at this point it was already fixed. It was previously reported here [1].
 
 
+[1] https://github.com/bigbluebutton/bigbluebutton/pull/9102
 
 -- 
-Richard
+Hanno Böck
+https://hboeck.de/
