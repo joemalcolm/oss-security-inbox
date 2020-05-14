@@ -1,77 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/03/1
-Message-Id: <D559987D-2E70-4F87-827D-3191B3823FA8@gmail.com>
-Date: Wed, 3 Jun 2020 11:46:19 +0200
-From: Carlton Gibson <carlton.gibson@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Django security releases issued: 3.0.7, and 2.2.13 for CVE-2020-13254 & CVE-2020-13596.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/8
+Message-ID: <1595268569.108006.1589466246962@mail.yahoo.com>
+Date: Thu, 14 May 2020 14:24:06 +0000 (UTC)
+From: Andrea Cosentino <ancosen1985@...oo.com>
+To: "dev@...el.apache.org" <dev@...el.apache.org>,  "users@...el.apache.org" <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "Colm O. HEigeartaigh" <coheigea@...che.org>
+Subject: [SECURITY] New security advisory CVE-2020-11972 released for Apache Camel
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2020/jun/03/security-releases/ <https://www.djangoproject.com/weblog/2020/jun/03/security-releases/>
+A new security advisory has been released for Apache Camel, that is fixed in
+the recent 2.25.1 and 3.2.0 releases.
 
-In accordance with `our security release policy <https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django team is issuing `Django 3.0.7 <https://docs.djangoproject.com/en/dev/releases/3.0.7/>`_ and `Django 2.2.13 <https://docs.djangoproject.com/en/dev/releases/2.2.13/>`_. These releases address the security issue detailed below. We encourage all users of Django to upgrade as soon as possible.
+CVE-2020-11972: Apache Camel RabbitMQ enables Java deserialization by default
 
-CVE-2020-13254: Potential data leakage via malformed memcached keys
-===================================================================
+Severity: MEDIUM
 
-In cases where a memcached backend does not perform key validation, passing
-malformed cache keys could result in a key collision, and potential data
-leakage. In order to avoid this vulnerability, key validation is added to the
-memcached cache backends.
+Vendor: The Apache Software Foundation
 
-Thank you to Dan Palmer for the report and patch.
+Versions Affected: Camel 2.25.0, Camel 3.0.0 to 3.1.0. The unsupported Camel 2.x (2.24 and earlier) versions may be also affected.
 
-CVE-2020-13596: Possible XSS via admin ``ForeignKeyRawIdWidget``
-================================================================
+Description: Apache Camel RabbitMQ enables Java deserialization by default
 
-Query parameters for the admin ``ForeignKeyRawIdWidget`` were not properly URL
-encoded, posing an XSS attack vector. ``ForeignKeyRawIdWidget`` now
-ensures query parameters are correctly URL encoded.
+Mitigation: 2.x users should upgrade to 2.25.1, 3.x users should upgrade to 3.2.0 The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-14711 refers to the various commits that resovoled the issue, and have more details.
 
-Thank you to Jon Dufresne for the report and patch.
+On behalf of the Apache Camel PMC
 
-Affected supported versions
-===========================
-
-* Django master branch
-* Django 3.1 (currently at alpha status)
-* Django 3.0
-* Django 2.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's master branch and
-the 3.1, 3.0, and 2.2 release branches. The patches may be obtained from the following changesets:
-
-CVE-2020-13254:
-
-* On the `master branch <https://github.com/django/django/commit/2c82414914ae6476be5a166be9ff49c24d0d9069>`__
-* On the `3.1 release branch <https://github.com/django/django/commit/580bd64c0482ae9b7c05715390e25f4405a12719>`__
-* On the `3.0 release branch <https://github.com/django/django/commit/84b2da5552e100ae3294f564f6c862fef8d0e693>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/07e59caa02831c4569bbebb9eb773bdd9cb4b206>`__
-
-CVE-2020-13596:
-
-* On the `master branch <https://github.com/django/django/commit/2dd4d110c159d0c81dff42eaead2c378a0998735>`__
-* On the `3.1 release branch <https://github.com/django/django/commit/49d7cc19e33a104bb23f7ae1dbb1240b4f6c40f9>`__
-* On the `3.0 release branch <https://github.com/django/django/commit/1f2dd37f6fcefdd10ed44cb233b2e62b520afb38>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/6d61860b22875f358fac83d903dc629897934815>`__
-
-The following releases have been issued:
-
-* Django 3.0.7 (`download Django 3.0.7 <https://www.djangoproject.com/m/releases/3.0/Django-3.0.7.tar.gz>`_ | `3.0.7 checksums <https://www.djangoproject.com/m/pgp/Django-3.0.7.checksum.txt>`_)
-* Django 2.2.13 (`download Django 2.2.13 <https://www.djangoproject.com/m/releases/2.2/Django-2.2.13.tar.gz>`_ | `2.2.13 checksums <https://www.djangoproject.com/m/pgp/Django-2.2.13.checksum.txt>`_)
-
-The PGP key ID used for these releases is Carlton Gibson: E17DF5C82B4F9D00.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
-
+--
+Andrea Cosentino 
+----------------------------------
+Apache Camel PMC Chair
+Apache Karaf Committer
+Apache Servicemix PMC Member
+Email: ancosen1985@...oo.com
+Twitter: @oscerd2
+Github: oscerd
