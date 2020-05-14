@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2730" "Friday" "23" "September" "2016" "01:08:17" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<cb66c7f5-a882-5553-8657-a0bafdf14b2a@redhat.com>" "86" "[oss-security] [OSSA 2016-011] Nova may fail to delete images in resize state regression (CVE-2016-7498)" nil nil nil "9" "2016092301:08:17" "[oss-security] [OSSA 2016-011] Nova may fail to delete images in resize state regression (CVE-2016-7498)" (number mark "U       tdecacqu@red Sep 23   86/2730  " thread-indent "\"[oss-security] [OSSA 2016-011] Nova may fail to delete images in resize state regression (CVE-2016-7498)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1109" "Thursday" "14" "May" "2020" "14:21:56" "+0200" "Daan Hoogland" "dahn@apache.org" "<a73ad353-2640-99a5-90cf-5964b260458d@onecht.net>" "32" "[oss-security] CVE-2019-17562 buffer overflow in baremetal plugin." nil nil nil "5" "2020051412:21:56" "[oss-security] CVE-2019-17562 buffer overflow in baremetal plugin." (number mark "U       dahn@apache. May 14   32/1109  " thread-indent "\"[oss-security] CVE-2019-17562 buffer overflow in baremetal plugin.\"\n") "<CAGQtxvaSgP6qxe-WacYgXCSh5bmqd_yPwSyY=4T+=z0xMXW+bQ@mail.gmail.com>" ("<CACRF0GaAzo8pGRgM-qx+AWEtXS_ZTHDF7B5cx3S6StxydmZaxQ@mail.gmail.com>" "<CAGQtxvZ1UYH9dHxj2Urty83VJ2AKbEs6dQrFbryr9R+LF6D9=A@mail.gmail.com>" "<CAGQtxvZeDWF9QxCDdNYqVeCNsLnPcTjVsttypg4+Ls-7KGvohg@mail.gmail.com>" "<CACRF0GbZcAsw_vUbHWRnhDP5ZijiYmeBWVW_MxEiFne1fk7vzQ@mail.gmail.com>" "<CAGQtxvaD1ZMJaBiEmWKrbnv+XWGa7NXu-EtxVL2yxQuAQct8GQ@mail.gmail.com>" "<CAFBzuDP7ZOkHwn9_fQTq8nMBQ549KvP9WU7agqrw6Qm9Y3H02g@mail.gmail.com>" "<CAGQtxvbQsSrZAAeQ5UL1EmyZEoLYydcgTUSqZdEg_Bros2q+=g@mail.gmail.com>" "<CAFBzuDP9uuSoE=K+WRRVp+19dkv9Lo-SATT75avQxrZr-+9DRA@mail.gmail.com>" "<CAGQtxvauKS_oz1H2cUmDv-vJtxurfLgwdoObWvLD+OFbMVv_gg@mail.gmail.com>" "<CAFBzuDN9YCr83Anwy+-SUJJ3cEvwmGGxPJUsuPQwXy9ZoJu9Hw@mail.gmail.com>" "<CAGQtxvbdjEA+TNJoueVym1nUUum_5SELxuvsXtC6v4sits4yUA@mail.gmail.com>" "<CAGQtxvaSgP6qxe-WacYgXCSh5bmqd_yPwSyY=4T+=z0xMXW+bQ@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] CVE-2019-17562 buffer overflow in baremetal plugin." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 2025 invoked by uid 550); 23 Sep 2016 01:08:08 -0000
+Received: (qmail 11479 invoked by uid 550); 14 May 2020 12:28:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,105 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 2007 invoked from network); 23 Sep 2016 01:08:07 -0000
+Received: (qmail 5712 invoked from network); 14 May 2020 12:22:09 -0000
+From: Daan Hoogland <dahn@apache.org>
 To: oss-security@lists.openwall.com
-From: Tristan Cacqueray <tdecacqu@redhat.com>
-Message-ID: <cb66c7f5-a882-5553-8657-a0bafdf14b2a@redhat.com>
-Date: Fri, 23 Sep 2016 01:08:17 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+References: <CACRF0GaAzo8pGRgM-qx+AWEtXS_ZTHDF7B5cx3S6StxydmZaxQ@mail.gmail.com>
+ <CAGQtxvZ1UYH9dHxj2Urty83VJ2AKbEs6dQrFbryr9R+LF6D9=A@mail.gmail.com>
+ <CAGQtxvZeDWF9QxCDdNYqVeCNsLnPcTjVsttypg4+Ls-7KGvohg@mail.gmail.com>
+ <CACRF0GbZcAsw_vUbHWRnhDP5ZijiYmeBWVW_MxEiFne1fk7vzQ@mail.gmail.com>
+ <CAGQtxvaD1ZMJaBiEmWKrbnv+XWGa7NXu-EtxVL2yxQuAQct8GQ@mail.gmail.com>
+ <CAFBzuDP7ZOkHwn9_fQTq8nMBQ549KvP9WU7agqrw6Qm9Y3H02g@mail.gmail.com>
+ <CAGQtxvbQsSrZAAeQ5UL1EmyZEoLYydcgTUSqZdEg_Bros2q+=g@mail.gmail.com>
+ <CAFBzuDP9uuSoE=K+WRRVp+19dkv9Lo-SATT75avQxrZr-+9DRA@mail.gmail.com>
+ <CAGQtxvauKS_oz1H2cUmDv-vJtxurfLgwdoObWvLD+OFbMVv_gg@mail.gmail.com>
+ <CAFBzuDN9YCr83Anwy+-SUJJ3cEvwmGGxPJUsuPQwXy9ZoJu9Hw@mail.gmail.com>
+ <CAGQtxvbdjEA+TNJoueVym1nUUum_5SELxuvsXtC6v4sits4yUA@mail.gmail.com>
+ <CAGQtxvaSgP6qxe-WacYgXCSh5bmqd_yPwSyY=4T+=z0xMXW+bQ@mail.gmail.com>
+Message-ID: <a73ad353-2640-99a5-90cf-5964b260458d@onecht.net>
+Date: Thu, 14 May 2020 14:21:56 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="6N2pN2f5uMJScRo8aeNop7jIp2NhvnfSE"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Fri, 23 Sep 2016 01:07:55 +0000 (UTC)
-Subject: [oss-security] [OSSA 2016-011] Nova may fail to delete images in resize state
- regression (CVE-2016-7498)
+In-Reply-To: <CAGQtxvaSgP6qxe-WacYgXCSh5bmqd_yPwSyY=4T+=z0xMXW+bQ@mail.gmail.com>
+Content-Type: multipart/alternative;
+ boundary="------------43C53ADE7DF0A6F28745143F"
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfJTrtkbJ98gro27NJ2LRfjeP74AmuXNOLfL3jbZ/B4sYCxC10X93Osjev9/Itlqj7AJ8H8LieojKE9yMp7bYW/Y37e1G58RzG6DsWnKCK4nLSaq0hjOL
+ Biy7RQlx6RC8yzjjfqH9YfDK5zcNjXdJX7ykbbzz7JcYUQG2Oq6yuiWZzq7e6501C4HAAuoWNgy/MQ==
+Subject: [oss-security] CVE-2019-17562 buffer overflow in baremetal plugin.
 
---6N2pN2f5uMJScRo8aeNop7jIp2NhvnfSE
-Content-Type: multipart/mixed; boundary="Tw5RpG0nveQbAJS40qbBWpMjSSW8uLfWj"
-From: Tristan Cacqueray <tdecacqu@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <cb66c7f5-a882-5553-8657-a0bafdf14b2a@redhat.com>
-Subject: [OSSA 2016-011] Nova may fail to delete images in resize state
- regression (CVE-2016-7498)
+--------------43C53ADE7DF0A6F28745143F
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
---Tw5RpG0nveQbAJS40qbBWpMjSSW8uLfWj
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+LS, please take note of the following;
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2016-011: Nova may fail to delete images in resize state regression
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-:Date: September 21, 2016
-:CVE: CVE-2016-7498
+[CVEID]:CVE-2019-17562
+[PRODUCT]:Apache  CloudStack
+[VERSION]:Apache  CloudStack all versions up to 4.13.0.0
+[PROBLEMTYPE]:buffer overflow  exploit
+[DESCRIPTION]:A buffer overflow vulnerability has been found in the baremetal component of Apache CloudStack. This applies to all versions prior to 4.13.1.
 
 
-Affects
-~~~~~~~
-- Nova: =3D=3D13.0.0
+The vulnerability is due to the lack of validation of the mac parameter 
+in baremetal virtual router.
+If you insert an arbitrary shell command into the mac parameter, 
+v-router will process the command.
+*For example*:
+    - Normal     : http://{GW}:10086/baremetal/provisiondone/{mac}
+    - Abnormal : http://{GW}:10086/baremetal/provisiondone/#';whoami;#
+
+Mitigation of this issue is an upgrade to Apache CloudStack 4.13.1.0 or 
+beyond.
+
+The Apache CloudStack security team would like to acknowledge and say 
+thanks to libi2181 <libi2181@gmail.com> for reporting this issue.
 
 
-Description
-~~~~~~~~~~~
-Rajesh Tailor from Red Hat reported a vulnerability in Nova. If an
-authenticated user deletes an instance while it is in resize state, it
-will cause the original instance to not be deleted from the compute
-node it was running on. An attacker can use this to launch a denial of
-service attack. All Nova setups are affected.
+-- 
+Daan
 
-
-Patches
-~~~~~~~
-- https://review.openstack.org/327398 (Mitaka)
-- https://review.openstack.org/326262 (Newton)
-
-
-Credits
-~~~~~~~
-- Rajesh Tailor from Red Hat (CVE-2016-7498)
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1589821
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2016-7498
-
-
-Notes
-~~~~~
-- This bug is similar to OSSA-2015-017 (CVE-2015-3280) and was
-  re-introduced in the first release of Mitaka version of Nova and it
-  was re-fixed in nova-13.1.0.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
---Tw5RpG0nveQbAJS40qbBWpMjSSW8uLfWj--
-
---6N2pN2f5uMJScRo8aeNop7jIp2NhvnfSE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBCAAGBQJX5ICBAAoJECK5oFySXMXYLEgH/RO5sF0Tune3oL7unAYW+pTc
-ZDHIPcsLWiBiS8fxeZngl9dPY9xcMGNMdK3G7wnVfOpm/eTUvwlm9FgLBRTs6FX4
-vag2KmxJCyWOavX5zh7h9tYryTugRWNAPFyjknlJ7gbE71i4s46bTlvZAL0w+gQ5
-pEM/AUpKC2wLlpkydDV6VbnmxXZBUG5awI9qJ/BtGuuhzF9bVtb4I6ZxeNbuG4Bs
-FrSQrg8IX2fCGYxUTGhdR8oZlf3nnHfi1tLYwxxdOrQC63HBGljsPpjqOpAZtb6/
-fZag0ypXaqVwIlvD8lSRyIAOMX8I6U4mCbfKHJazOYZhB9EN1wTm6gB8f3gn9JI=
-=sb9a
------END PGP SIGNATURE-----
-
---6N2pN2f5uMJScRo8aeNop7jIp2NhvnfSE--
+--------------43C53ADE7DF0A6F28745143F--
