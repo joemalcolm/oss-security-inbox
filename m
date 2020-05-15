@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1667" "Friday" "15" "April" "2016" "15:56:45" "-0400" "Randy Barlow" "rbarlow@redhat.com" "<1850328.TsBv7S8R4o@ohm.usersys.redhat.com>" "42" "[oss-security] CVE request - Pulp < 2.3.0 shipped the same authentication CA key/cert to all users" nil nil nil "4" "2016041519:56:45" "[oss-security] CVE request - Pulp < 2.3.0 shipped the same authentication CA key/cert to all users" (number mark "U       rbarlow@redh Apr 15   42/1667  " thread-indent "\"[oss-security] CVE request - Pulp < 2.3.0 shipped the same authentication CA key/cert to all users\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6068" "Friday" "15" "May" "2020" "04:48:08" "+0000" "Singh, Balbir" "sblbir@amazon.com" "<640d9869f8e7ea0aedaca2e29ecc3efeb7dfc940.camel@amazon.com>" "100" "[oss-security] [test case][kunit] CVE-2020-10711 Kernel netLabel" nil nil nil "5" "2020051504:48:08" "[oss-security] [test case][kunit] CVE-2020-10711 Kernel netLabel" (number mark "U       sblbir@amazo May 15  100/6068  " thread-indent "\"[oss-security] [test case][kunit] CVE-2020-10711 Kernel netLabel\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [test case][kunit] CVE-2020-10711 Kernel netLabel" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13934 invoked by uid 550); 15 Apr 2016 19:57:05 -0000
+Received: (qmail 9416 invoked by uid 550); 15 May 2020 09:25:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,141 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13907 invoked from network); 15 Apr 2016 19:57:04 -0000
-From: Randy Barlow <rbarlow@redhat.com>
-To: OSS Security <oss-security@lists.openwall.com>
-Cc: cve-assign@mitre.org
-Date: Fri, 15 Apr 2016 15:56:45 -0400
-Message-ID: <1850328.TsBv7S8R4o@ohm.usersys.redhat.com>
-User-Agent: KMail/5.1.3 (Linux/4.5.0-302.fc24.x86_64; KDE/5.21.0; x86_64; ; )
+Received: (qmail 17552 invoked from network); 15 May 2020 04:48:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1589518126; x=1621054126;
+  h=from:to:cc:subject:date:message-id:content-id:
+   content-transfer-encoding:mime-version;
+  bh=+1/POJ8hplmy1Ck38WCMlCQwa3XlmS7qW6NVJqAxgBI=;
+  b=WuYD7e33DapOnrXAUKYniE2RW4xShr12p7ZkvY+X1FsAh1DFSNjg3EUD
+   mEgIePe3bC2sDIfr68P88G6f50JThMF19uYdCuoIGW28LCjugBVxsafTP
+   WWQL0Hq4M8bxk48xtp5EOYTXULLoQzCApxOOVWQeLYRM/qf2jw/uDitwJ
+   A=;
+IronPort-SDR: ZHYQpmcwwN1KYEnNWDo8ZREcucyhgf7DzP3ndaOE6Rub0/lc+KKq8QpY0l3BmypDF8/QSQSHlh
+ hKJ76HbqteFg==
+X-IronPort-AV: E=Sophos;i="5.73,394,1583193600"; 
+   d="scan'208";a="30511559"
+From: "Singh, Balbir" <sblbir@amazon.com>
+To: "ppandit@redhat.com" <ppandit@redhat.com>,
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+CC: "matthew.sheets@gd-ms.com" <matthew.sheets@gd-ms.com>, "code@tyhicks.com"
+	<code@tyhicks.com>, "Mendoza-jonas, Samuel" <samjonas@amazon.com>,
+	"pabeni@redhat.com" <pabeni@redhat.com>
+Thread-Topic: [test case][kunit] CVE-2020-10711 Kernel netLabel
+Thread-Index: AQHWKnQHKEACZsRB9U29wz6BDgaKzw==
+Date: Fri, 15 May 2020 04:48:08 +0000
+Message-ID: <640d9869f8e7ea0aedaca2e29ecc3efeb7dfc940.camel@amazon.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.43.160.26]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <AC61E8A236CA4A4D994BB9EF9A8A3ABE@amazon.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart1937929.ozCV6FegGN"; micalg="pgp-sha256"; protocol="application/pgp-signature"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Fri, 15 Apr 2016 19:56:52 +0000 (UTC)
-Subject: [oss-security] CVE request - Pulp < 2.3.0 shipped the same authentication CA key/cert to all users
+Subject: [oss-security] [test case][kunit] CVE-2020-10711 Kernel netLabel
 
---nextPart1937929.ozCV6FegGN
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-
-Hello!
-
-It was raised to my attention that a security issues that was resolved in 
-Pulp 3 years ago should have had a CVE assigned to it:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1003326
-
-To summarize, all Pulp users used the same internal CA key and cert for 
-versions of Pulp < 2.3.0. This CA is used to generate a client certificate 
-during the /login API call, and is trusted by httpd to authenticate users.
-
-Though the issue is now long resolved, we would like a CVE number 
-assigned to it for reference. Thanks!
---nextPart1937929.ozCV6FegGN
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAABCAAGBQJXEUd9AAoJEIyFaKUJtmpikGwP/1b9d8v6lIrYaqimuPdEjPdp
-s95c3ogo8UpcfbQIqmEqtJgFbIkMxyHEBQgCrpERn9apPLIHFAjODWBI7hErq4mS
-zpyJ7Xi6P33x7qRVNLWsCzP9Cv88tE2PDaYibco0hhu94Ga40yQzC6FCImIW3HJg
-fG6/uN/OrAGzeq5GH1bb8FtbF/17bnVt1A2gXCH0pDrYT6nPwxz2/m6myLeOlDac
-Ej+peFevrwzD0RbieNoD2TFA3vKbPXvPbqyuRENd9gJDGvQlWJOpUWgun7QESfMn
-tQyHUW75cA2JxAwntSVrIwCllVk+bcDNj6TRDVwpa0rQ5BBvP2TycZVsGMByml83
-x2WUgb8P4n6zCbMtmR87IBrGdM2Hxfu2Ht1wXdfJw+TUd2eCqSXE6WSkX2Oxg4YR
-+0mUNEWM8yNqwzRpbVRpdzYMvqC5W9NjmeUg6bdbUV90IvhgFO6EbXqoHdXmZYUW
-FHodS2zH5cWa3LKnM+VK1sA2yGGvO5Du+IsCZsGXCd6QkxG3lnq17cWvMkSxX2oO
-iZwqysVs9CnwRoZiFwr3YoDyVj8nsUTFOvmAt//5ATeJOVZ8YAihkgMlEOtcIqF4
-aVABw4t+X8tU9SAGzZ3pxXYm2wJkFUp+Ci5KcsfOXeLjhxQCj7VbINZPheZ5hl95
-u4MI0tptqMPNkQ+Avjsm
-=/ORI
------END PGP SIGNATURE-----
-
---nextPart1937929.ozCV6FegGN--
-
+SSd2ZSBzcGVudCBzb21lIHRpbWUgd3JpdGluZyBhIGt1bml0IHRlc3QgY2Fz
+ZSBmb3IgQ1ZFLTIwMjAtMTA3MTEgdXNpbmcgdGhlDQpLVU5JVCBmcmFtZXdv
+cmsuIEkgYW0gYXR0YWNoaW5nIHRoZSBwYXRjaCBiZWxvdyBmb3IgcmVmZXJl
+bmNlLiBUaGUgcGF0Y2ggaXMNCmFnYWluc3QgdGhlIGxhdGVzdCBsaW51eC1u
+ZXh0LiBUaGUgZGV0YWlscyBhcmUgaW4gdGhlIHRlc3QgY2FzZSwgdGhlcmUN
+CmFyZSBzb21lIFRPRE9zOg0KDQoxLiBBZGQgdGVzdCBjYXNlcyBmb3IgdGhl
+IGlwdjYgdmFyaWFudA0KMi4gQWRkIGEgdGVzdCBjYXNlIGZvciBjaXBzb192
+NF9wYXJzZXRhZ19ycG0gdmFyaWFudA0KDQpQbGVhc2UgZmVlbCB0byBzdWdn
+ZXN0IGltcHJvdmVtZW50cyBvciBiZXR0ZXIgd2F5cyB0byB0ZXN0IHRoaXMs
+IHRoaXMgaXMNCmEgcm91Z2ggcGF0Y2gsIGJ1dCBJIHN0aWxsIHdhbnRlZCB0
+byBzaGFyZSBpdCBhbmQgc2VlIGlmIGl0IGhlbHBzIG90aGVycy8NCmdldCBj
+b21tZW50cyBvbiB0aGUgYXBwcm9hY2ggdG8gdGVzdGluZyBpdC4NCg0KUmVn
+YXJkcywNCkJhbGJpciBTaW5naA0KDQo4PC0tLS0tLS0tLS0tLS0tLS0tDQoN
+CkZyb20gZDY4MDFjNzBmOTA5NTExMzg4MTUxMGFiYWRiYmQ2Yjg4Y2NjN2M1
+NyBNb24gU2VwIDE3IDAwOjAwOjAwIDIwMDENCkZyb206IEJhbGJpciBTaW5n
+aCA8c2JsYmlyQGFtYXpvbi5jb20+DQpEYXRlOiBGcmksIDE1IE1heSAyMDIw
+IDE0OjA4OjUwICsxMDAwDQpTdWJqZWN0OiBbUEFUQ0hdIGt1bml0OiBCYXNp
+YyBmcmFtZXdvcmsgZm9yIG5ldGxhYmVsDQoNClRoaXMgaXMgYSBiYXNpYyB0
+ZXN0IGZvciBDVkUtMjAyMC0xMDcxMSwgaXQncyBpbnRydXNpdmUNCmFuZCBo
+YWNreSwgaW4gdGhlIHNlbnNlIHRoYXQgZnVuY3Rpb25zIGFyZSBjYWxsZWQg
+d2l0aA0KYXNzdW1wdGlvbnMgYW5kIHRoZSBkYXRhIHBhc3NlZCB0byBjaXBz
+b192NF9nZXRhdHRyKCkNCndhcyBjb29rZWQgdXAgdG8gaGl0IHRoZSBlcnJv
+ciBjb25kaXRpb24uDQoNClRoZSB0ZXN0IGNhc2VzIHRlc3QgdGhlIGZvbGxv
+d2luZyBzY2VuYXJpb3M6DQoNCjEuIGNpcHNvX3BhcnNldGFnX3JuZygpIHdp
+dGggY2F0X2hpZ2ggYW5kIGNhdF9sb3cgdGhhdCBjYXVzZXMNCnRoZSB0ZXN0
+IHRvIGZhaWwgd2l0aG91dCB0aGUgZml4IGFuZCBwYXNzIHdpdGggdGhlIGZp
+eA0KMi4gTlVMTCBQVFIgdGVzdCBmb3IgdGhlIG5ldF9jYXRtYXBfbG9uZygp
+IGlzc3VlDQoNCltzYmxiaXIgLSB3cm90ZSB0aGUgdGVzdCBjYXNlc10NClNp
+Z25lZC1vZmYtYnk6IFNhbXVlbCBNZW5kb3phLUpvbmFzIDxzYW1qb25hc0Bh
+bWF6b24uY29tPg0KU2lnbmVkLW9mZi1ieTogQmFsYmlyIFNpbmdoIDxzYmxi
+aXJAYW1hem9uLmNvbT4NCi0tLQ0KIG5ldC9uZXRsYWJlbC9LY29uZmlnICAg
+ICAgICAgIHwgIDQgKysNCiBuZXQvbmV0bGFiZWwvTWFrZWZpbGUgICAgICAg
+ICB8ICAyICsNCiBuZXQvbmV0bGFiZWwvbmV0bGFiZWxfa3VuaXQuYyB8IDcw
+ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrDQogMyBmaWxl
+cyBjaGFuZ2VkLCA3NiBpbnNlcnRpb25zKCspDQogY3JlYXRlIG1vZGUgMTAw
+NjQ0IG5ldC9uZXRsYWJlbC9uZXRsYWJlbF9rdW5pdC5jDQoNCmRpZmYgLS1n
+aXQgYS9uZXQvbmV0bGFiZWwvS2NvbmZpZyBiL25ldC9uZXRsYWJlbC9LY29u
+ZmlnDQppbmRleCAwN2IwM2MzMDZmMjguLjY0MWNkNmI0ZTQyZiAxMDA2NDQN
+Ci0tLSBhL25ldC9uZXRsYWJlbC9LY29uZmlnDQorKysgYi9uZXQvbmV0bGFi
+ZWwvS2NvbmZpZw0KQEAgLTE3LDMgKzE3LDcgQEAgY29uZmlnIE5FVExBQkVM
+DQogCSAgICogaHR0cHM6Ly9naXRodWIuY29tL25ldGxhYmVsL25ldGxhYmVs
+X3Rvb2xzDQogDQogCSAgSWYgeW91IGFyZSB1bnN1cmUsIHNheSBOLg0KKw0K
+K2NvbmZpZyBORVRMQUJFTF9LVU5JVA0KKwlib29sICJLdW5pdCB0ZXN0cyBm
+b3IgTmV0TGFiZWwiDQorCWRlcGVuZHMgb24gTkVUTEFCRUwgJiYgS1VOSVQN
+CmRpZmYgLS1naXQgYS9uZXQvbmV0bGFiZWwvTWFrZWZpbGUgYi9uZXQvbmV0
+bGFiZWwvTWFrZWZpbGUNCmluZGV4IDVhNDYzODFhNjRlNy4uOTNmMjI5Yzk4
+N2IwIDEwMDY0NA0KLS0tIGEvbmV0L25ldGxhYmVsL01ha2VmaWxlDQorKysg
+Yi9uZXQvbmV0bGFiZWwvTWFrZWZpbGUNCkBAIC0xNCwzICsxNCw1IEBAIG9i
+ai15CSs9IG5ldGxhYmVsX21nbXQubw0KIG9iai15CSs9IG5ldGxhYmVsX3Vu
+bGFiZWxlZC5vDQogb2JqLXkJKz0gbmV0bGFiZWxfY2lwc29fdjQubw0KIG9i
+ai0kKHN1YnN0IG0seSwkKENPTkZJR19JUFY2KSkgKz0gbmV0bGFiZWxfY2Fs
+aXBzby5vDQorDQorb2JqLSQoQ09ORklHX05FVExBQkVMX0tVTklUKSArPSBu
+ZXRsYWJlbF9rdW5pdC5vDQpkaWZmIC0tZ2l0IGEvbmV0L25ldGxhYmVsL25l
+dGxhYmVsX2t1bml0LmMgYi9uZXQvbmV0bGFiZWwvbmV0bGFiZWxfa3VuaXQu
+Yw0KbmV3IGZpbGUgbW9kZSAxMDA2NDQNCmluZGV4IDAwMDAwMDAwMDAwMC4u
+N2IyMjUyMjliZjlkDQotLS0gL2Rldi9udWxsDQorKysgYi9uZXQvbmV0bGFi
+ZWwvbmV0bGFiZWxfa3VuaXQuYw0KQEAgLTAsMCArMSw3MCBAQA0KKyNpbmNs
+dWRlIDxrdW5pdC90ZXN0Lmg+DQorI2luY2x1ZGUgPG5ldC9uZXRsYWJlbC5o
+Pg0KKyNpbmNsdWRlICJuZXRsYWJlbF9tZ210LmgiDQorI2luY2x1ZGUgPG5l
+dC9jaXBzb19pcHY0Lmg+DQorDQorc3RhdGljIHZvaWQgbmV0bGFiZWxfY2lw
+c29fcm5nX3Rlc3Qoc3RydWN0IGt1bml0ICp0ZXN0KQ0KK3sNCisJc3RydWN0
+IG5ldGxibF9sc21fc2VjYXR0ciBzZWNhdHRyOw0KKwlzdHJ1Y3QgY2lwc29f
+djRfZG9pICpkb2lfZGVmID0gTlVMTDsNCisJc3RydWN0IG5ldGxibF9hdWRp
+dCBhdWRpdF9pbmZvOw0KKwlpbnQgaTsNCisJdW5zaWduZWQgY2hhciBjaXBz
+b1tdID0gezB4MCwgMTYsIDB4MCwgMHgwLCAweDAsIDB4MSwgMHg1LCAweDgs
+IDB4MCwgMHgwLCAweDAsIDB4MSwgMHgwLCAweDJ9Ow0KKwlpbnQgcmV0Ow0K
+Kw0KKwltZW1zZXQoJnNlY2F0dHIsIDAsIHNpemVvZihzZWNhdHRyKSk7DQor
+CWRvaV9kZWYgPSBrbWFsbG9jKHNpemVvZigqZG9pX2RlZiksIEdGUF9LRVJO
+RUwpOw0KKwlkb2lfZGVmLT50eXBlID0gQ0lQU09fVjRfTUFQX1BBU1M7DQor
+DQorCWRvaV9kZWYtPmRvaSA9IDE7IC8qIFRhZyAqLw0KKwlkb2lfZGVmLT50
+YWdzWzBdID0gNTsgLyogUmFuZ2UgKi8NCisNCisJZm9yIChpID0gMTsgaSA8
+IENJUFNPX1Y0X1RBR19NQVhDTlQ7IGkrKykNCisJCWRvaV9kZWYtPnRhZ3Nb
+aV0gPSBDSVBTT19WNF9UQUdfSU5WQUxJRDsNCisNCisJcmV0ID0gY2lwc29f
+djRfZG9pX2FkZChkb2lfZGVmLCAmYXVkaXRfaW5mbyk7DQorCWlmIChyZXQg
+PCAwKSB7DQorCQljaXBzb192NF9kb2lfZnJlZShkb2lfZGVmKTsNCisJCXBy
+X3dhcm4oIkZhaWxlZCB0byBhZGQgZG9pICVkXG4iLCByZXQpOw0KKwkJS1VO
+SVRfRkFJTCh0ZXN0LCAiRmFpbGVkIHRvIHNldHVwIGRvaV9kZWYgJWRcbiIs
+IHJldCk7DQorCQlyZXR1cm47DQorCX0NCisNCisJYXRvbWljX2luYygmbmV0
+bGFiZWxfbWdtdF9wcm90b2NvdW50KTsNCisNCisJc2VjYXR0ci5hdHRyLm1s
+cy5jYXQgPSBOVUxMOw0KKwlyZXQgPSBjaXBzb192NF9nZXRhdHRyKGNpcHNv
+LCAmc2VjYXR0cik7DQorCWlmIChyZXQgPCAwKSB7DQorCQlLVU5JVF9GQUlM
+KHRlc3QsICJnZXRhdHRyIGZhaWxlZCAlZFxuIiwgcmV0KTsNCisJCWdvdG8g
+ZG9uZTsNCisJfQ0KKw0KKwlLVU5JVF9FWFBFQ1RfVFJVRSh0ZXN0LCAhKHNl
+Y2F0dHIuZmxhZ3MgJiBORVRMQkxfU0VDQVRUUl9NTFNfQ0FUKSk7DQorZG9u
+ZToNCisJY2lwc29fdjRfZG9pX3JlbW92ZShkb2lfZGVmLT5kb2ksICZhdWRp
+dF9pbmZvKTsNCit9DQorDQorDQorLyoNCisgKiBXQVJOSU5HOiBUaGlzIHdp
+bGwgY2F1c2UgYSBOVUxMIFBUUiBkZXJlZg0KKyAqIGlmIGNhbGxlZCB3aXRo
+b3V0IHRoZSBmaXgNCisgKi8NCitzdGF0aWMgdm9pZCBuZXRsYWJlbF9iaXRt
+YXBfdGVzdF9jYXNlKHN0cnVjdCBrdW5pdCAqdGVzdCkNCit7DQorCXUzMiBv
+ZmZzZXQgPSAwOw0KKwluZXRsYmxfY2F0bWFwX2dldGxvbmcoTlVMTCwgJm9m
+ZnNldCwgTlVMTCk7DQorCUtVTklUX0VYUEVDVF9UUlVFKHRlc3QsIChvZmZz
+ZXQgPT0gKHUzMiktMSkpOw0KK30NCisNCitzdGF0aWMgc3RydWN0IGt1bml0
+X2Nhc2UgbmV0bGFiZWxfdGVzdF9jYXNlc1tdID0gew0KKwlLVU5JVF9DQVNF
+KG5ldGxhYmVsX2NpcHNvX3JuZ190ZXN0KSwNCisJS1VOSVRfQ0FTRShuZXRs
+YWJlbF9iaXRtYXBfdGVzdF9jYXNlKSwNCisJe30NCit9Ow0KKw0KK3N0YXRp
+YyBzdHJ1Y3Qga3VuaXRfc3VpdGUgbmV0bGFiZWxfdGVzdF9zdWl0ZSA9IHsN
+CisgICAgICAgLm5hbWUgPSAibmV0bGFiZWwtdGVzdHMiLA0KKyAgICAgICAu
+dGVzdF9jYXNlcyA9IG5ldGxhYmVsX3Rlc3RfY2FzZXMsDQorfTsNCisNCitr
+dW5pdF90ZXN0X3N1aXRlKG5ldGxhYmVsX3Rlc3Rfc3VpdGUpOw0KLS0gDQoy
+LjE3LjENCg0KDQoNCg0KDQoNCg==
