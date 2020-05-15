@@ -1,123 +1,159 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/09/1
-Message-ID: <alpine.DEB.2.20.2012080923130.16776@tvnag.unkk.fr>
-Date: Wed, 9 Dec 2020 07:53:28 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: trusting FTP PASV responses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/15/2
+Message-ID: <640d9869f8e7ea0aedaca2e29ecc3efeb7dfc940.camel@amazon.com>
+Date: Fri, 15 May 2020 04:48:08 +0000
+From: "Singh, Balbir" <sblbir@...zon.com>
+To: "ppandit@...hat.com" <ppandit@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "matthew.sheets@...ms.com" <matthew.sheets@...ms.com>, "code@...icks.com" <code@...icks.com>, "Mendoza-jonas, Samuel" <samjonas@...zon.com>, "pabeni@...hat.com" <pabeni@...hat.com>
+Subject: [test case][kunit] CVE-2020-10711 Kernel netLabel
 Content-Type: text/plain; charset=utf-8
 
-trusting FTP PASV responses
-===========================
+I've spent some time writing a kunit test case for CVE-2020-10711 using the
+KUNIT framework. I am attaching the patch below for reference. The patch is
+against the latest linux-next. The details are in the test case, there
+are some TODOs:
 
-Project curl Security Advisory, December 9th 2020 -
-[Permalink](https://curl.se/docs/CVE-2020-8284.html)
+1. Add test cases for the ipv6 variant
+2. Add a test case for cipso_v4_parsetag_rpm variant
 
-VULNERABILITY
--------------
+Please feel to suggest improvements or better ways to test this, this is
+a rough patch, but I still wanted to share it and see if it helps others/
+get comments on the approach to testing it.
 
-When curl performs a passive FTP transfer, it first tries the `EPSV` command
-and if that is not supported, it falls back to using `PASV`.  Passive mode is
-what curl uses by default.
+Regards,
+Balbir Singh
 
-A server response to a `PASV` command includes the (IPv4) address and port
-number for the client to connect back to in order to perform the actual data
-transfer.
+8<-----------------
 
-This is how the FTP protocol is designed to work.
+From d6801c70f9095113881510abadbbd6b88ccc7c57 Mon Sep 17 00:00:00 2001
+From: Balbir Singh <sblbir@...zon.com>
+Date: Fri, 15 May 2020 14:08:50 +1000
+Subject: [PATCH] kunit: Basic framework for netlabel
 
-A malicious server can use the `PASV` response to trick curl into connecting
-back to a given IP address and port, and this way potentially make curl
-extract information about services that are otherwise private and not
-disclosed, for example doing port scanning and service banner extractions.
+This is a basic test for CVE-2020-10711, it's intrusive
+and hacky, in the sense that functions are called with
+assumptions and the data passed to cipso_v4_getattr()
+was cooked up to hit the error condition.
 
-If curl operates on a URL provided by a user (which by all means is an unwise
-setup), a user can exploit that and pass in a URL to a malicious FTP server
-instance without needing any server breach to perform the attack.
+The test cases test the following scenarios:
 
-We are not aware of any exploit of this flaw.
+1. cipso_parsetag_rng() with cat_high and cat_low that causes
+the test to fail without the fix and pass with the fix
+2. NULL PTR test for the net_catmap_long() issue
 
-INFO
-----
+[sblbir - wrote the test cases]
+Signed-off-by: Samuel Mendoza-Jonas <samjonas@...zon.com>
+Signed-off-by: Balbir Singh <sblbir@...zon.com>
+---
+ net/netlabel/Kconfig          |  4 ++
+ net/netlabel/Makefile         |  2 +
+ net/netlabel/netlabel_kunit.c | 70 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 76 insertions(+)
+ create mode 100644 net/netlabel/netlabel_kunit.c
 
-This issue has existed in curl for as long as FTP has been supported, since
-day 1.
-
-The flaw only exists for IPv4 since `PASV` doesn't work for IPv6 and curl will
-prefer `EPSV`. The passive mode setup for FTP is used for both uploads and
-downloads.
-
-curl can be built without FTP support and applications can explicitly disable
-FTP for single transfers.
-
-curl users could already mitigate this flaw with `CURLOPT_FTP_SKIP_PASV_IP`
-and `--ftp-skip-pasv-ip`.
-
-Other FTP clients have in the past also had this flaw and have fixed it at
-different points in time. Firefox fixed it in 2007: CVE-2007-1562.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2020-8284 to this issue.
-
-CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 4.0 to and including 7.73.0
-- Not affected versions: curl >= 7.74.0
-
-Also note that (lib)curl is used by many applications, and not always
-advertised as such.
-
-THE SOLUTION
-------------
-
-The IP address part of the response is now ignored by default, by making
-`CURLOPT_FTP_SKIP_PASV_IP` default to `1L` instead of previously being `0L`.
-
-This has the minor drawback that a small fraction of use cases might break,
-when a server truly needs the client to connect back to a different IP address
-than what the control connection uses and for those `CURLOPT_FTP_SKIP_PASV_IP`
-can be set to `0L`.
-
-The same goes for the command line tool, which then might need
-`--no-ftp-skip-pasv-ip` set to prevent curl from ignoring the address in the
-server response.
-
-A [fix for CVE-2020-8284](https://github.com/curl/curl/commit/ec9cc725d598ac)
-
-RECOMMENDATIONS
---------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.74.0
-
-  B - Set `CURLOPT_FTP_SKIP_PASV_IP` to `1L` or use `--ftp-skip-pasv-ip`
-
-  C - Disable FTP availability for your transfers
-
-TIMELINE
---------
-
-This issue was first reported to the curl project on November 21, 2020.
-
-This advisory was posted on December 9th 2020.
-
-CREDITS
--------
-
-This issue was reported by Varnavas Papaioannou. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
+diff --git a/net/netlabel/Kconfig b/net/netlabel/Kconfig
+index 07b03c306f28..641cd6b4e42f 100644
+--- a/net/netlabel/Kconfig
++++ b/net/netlabel/Kconfig
+@@ -17,3 +17,7 @@ config NETLABEL
+ 	   * https://github.com/netlabel/netlabel_tools
+ 
+ 	  If you are unsure, say N.
++
++config NETLABEL_KUNIT
++	bool "Kunit tests for NetLabel"
++	depends on NETLABEL && KUNIT
+diff --git a/net/netlabel/Makefile b/net/netlabel/Makefile
+index 5a46381a64e7..93f229c987b0 100644
+--- a/net/netlabel/Makefile
++++ b/net/netlabel/Makefile
+@@ -14,3 +14,5 @@ obj-y	+= netlabel_mgmt.o
+ obj-y	+= netlabel_unlabeled.o
+ obj-y	+= netlabel_cipso_v4.o
+ obj-$(subst m,y,$(CONFIG_IPV6)) += netlabel_calipso.o
++
++obj-$(CONFIG_NETLABEL_KUNIT) += netlabel_kunit.o
+diff --git a/net/netlabel/netlabel_kunit.c b/net/netlabel/netlabel_kunit.c
+new file mode 100644
+index 000000000000..7b225229bf9d
+--- /dev/null
++++ b/net/netlabel/netlabel_kunit.c
+@@ -0,0 +1,70 @@
++#include <kunit/test.h>
++#include <net/netlabel.h>
++#include "netlabel_mgmt.h"
++#include <net/cipso_ipv4.h>
++
++static void netlabel_cipso_rng_test(struct kunit *test)
++{
++	struct netlbl_lsm_secattr secattr;
++	struct cipso_v4_doi *doi_def = NULL;
++	struct netlbl_audit audit_info;
++	int i;
++	unsigned char cipso[] = {0x0, 16, 0x0, 0x0, 0x0, 0x1, 0x5, 0x8, 0x0, 0x0, 0x0, 0x1, 0x0, 0x2};
++	int ret;
++
++	memset(&secattr, 0, sizeof(secattr));
++	doi_def = kmalloc(sizeof(*doi_def), GFP_KERNEL);
++	doi_def->type = CIPSO_V4_MAP_PASS;
++
++	doi_def->doi = 1; /* Tag */
++	doi_def->tags[0] = 5; /* Range */
++
++	for (i = 1; i < CIPSO_V4_TAG_MAXCNT; i++)
++		doi_def->tags[i] = CIPSO_V4_TAG_INVALID;
++
++	ret = cipso_v4_doi_add(doi_def, &audit_info);
++	if (ret < 0) {
++		cipso_v4_doi_free(doi_def);
++		pr_warn("Failed to add doi %d\n", ret);
++		KUNIT_FAIL(test, "Failed to setup doi_def %d\n", ret);
++		return;
++	}
++
++	atomic_inc(&netlabel_mgmt_protocount);
++
++	secattr.attr.mls.cat = NULL;
++	ret = cipso_v4_getattr(cipso, &secattr);
++	if (ret < 0) {
++		KUNIT_FAIL(test, "getattr failed %d\n", ret);
++		goto done;
++	}
++
++	KUNIT_EXPECT_TRUE(test, !(secattr.flags & NETLBL_SECATTR_MLS_CAT));
++done:
++	cipso_v4_doi_remove(doi_def->doi, &audit_info);
++}
++
++
++/*
++ * WARNING: This will cause a NULL PTR deref
++ * if called without the fix
++ */
++static void netlabel_bitmap_test_case(struct kunit *test)
++{
++	u32 offset = 0;
++	netlbl_catmap_getlong(NULL, &offset, NULL);
++	KUNIT_EXPECT_TRUE(test, (offset == (u32)-1));
++}
++
++static struct kunit_case netlabel_test_cases[] = {
++	KUNIT_CASE(netlabel_cipso_rng_test),
++	KUNIT_CASE(netlabel_bitmap_test_case),
++	{}
++};
++
++static struct kunit_suite netlabel_test_suite = {
++       .name = "netlabel-tests",
++       .test_cases = netlabel_test_cases,
++};
++
++kunit_test_suite(netlabel_test_suite);
 -- 
+2.17.1
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://www.wolfssl.com/contact/
+
+
+
+
+
