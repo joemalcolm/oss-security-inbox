@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/27/1
-Message-ID: <60o7969p-qnp-s3s1-spn2-1s4p509qp1@redhat.com>
-Date: Fri, 27 Nov 2020 18:38:05 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Qiuhao.Li@...look.com
-Subject: CVE-2020-29129 CVE-2020-29130 QEMU: slirp: out-of-bounds access while processing ARP/NCSI packets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/15/3
+Message-ID: <4a73fa85204d307c3dedb81a34e019e83a2c417e.camel@amazon.com>
+Date: Fri, 15 May 2020 12:54:12 +0000
+From: "Singh, Balbir" <sblbir@...zon.com>
+To: "ppandit@...hat.com" <ppandit@...hat.com>
+CC: "matthew.sheets@...ms.com" <matthew.sheets@...ms.com>, "code@...icks.com" <code@...icks.com>, "Mendoza-jonas, Samuel" <samjonas@...zon.com>, "pabeni@...hat.com" <pabeni@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re:  [test case][kunit] CVE-2020-10711 Kernel netLabel
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Fri, 2020-05-15 at 11:27 +0530, P J P wrote:
+> 
+>   Hello Balbir,
+> 
+> +-- On Fri, 15 May 2020, Singh, Balbir wrote --+
+> > I've spent some time writing a kunit test case for CVE-2020-10711 using the
+> > KUNIT framework. I am attaching the patch below for reference. The patch is
+> > against the latest linux-next. The details are in the test case, there
+> > are some TODOs:
+> > 
+> > 1. Add test cases for the ipv6 variant
+> > 2. Add a test case for cipso_v4_parsetag_rpm variant
+> > 
+> > Please feel to suggest improvements or better ways to test this, this is
+> > a rough patch, but I still wanted to share it and see if it helps others/
+> > get comments on the approach to testing it.
+> 
+> Thank you so much for working on this. At first glance it looks okay, you need
+> to send this to an upstream -netdev list for better reviews/inputs.
+> 
+>   -> http://vger.kernel.org/vger-lists.html#netdev
+>
 
-An out-of-bounds access issue was found in the SLiRP user networking 
-implementation of QEMU. It could occur while processing ARP/NCSI packets, if 
-the packet length was shorter than required to accommodate respective protocol 
-headers and payload. A privileged guest user may use this flaw to potentially 
-leak host information bytes.
+Thanks Prasad!
 
-Upstream patch:
----------------
-   -> https://lists.freedesktop.org/archives/slirp/2020-November/000115.html
+I was reaching out the security list to check if the patches were correct
+from a security verification view point. I will get feedback from netdev 
+as well in a while
 
-* This issue was reported by Qiuhao Li (cc'd).
-
-* CVE-2020-29129 CVE-2020-29130 assigned via -> https://cveform.mitre.org/
-
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+Balbir Singh.
 
