@@ -1,54 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/11
-Message-ID: <9b808b6d273b88bb2db281f8bea6b6920369242f.camel@powerdns.com>
-Date: Tue, 22 Sep 2020 22:34:23 +0200
-From: Peter van Dijk <peter.van.dijk@...erdns.com>
-To: oss-security@...ts.openwall.com
-Subject: [Fwd: [Pdns-announce] security advisories for Authoritative 4.3.1, 4.2.3, 4.1.14]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/18/1
+Message-ID: <1552538431.97.1589803413519@appsuite-dev-guard.open-xchange.com>
+Date: Mon, 18 May 2020 15:03:33 +0300 (EEST)
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>
+Subject: Multiple vulnerabilities in Dovecot IMAP server
 Content-Type: text/plain; charset=utf-8
 
--------- Forwarded Message --------
-From: Peter van Dijk via Pdns-announce <
-pdns-announce@...lman.powerdns.com>
-Reply-To: Peter van Dijk <peter.van.dijk@...erdns.com>
-To: pdns-announce@...lman.powerdns.com, pdns-dev@...lman.powerdns.com, 
-pdns-users@...lman.powerdns.com
-Subject: [Pdns-announce] security advisories for Authoritative 4.3.1, 
-4.2.3, 4.1.14
-Date: Tue, 22 Sep 2020 21:48:04 +0200
+Dear subscribers,
 
-Hello,
+we are sending notifications for three vulnerabilities,
 
-Today we have released PowerDNS Authoritative Server versions 4.3.1, 4.2.3 and 4.1.14, containing a fix for PowerDNS Security Advisory 2020-05 [1].
+ - CVE-2020-10957
+ - CVE-2020-10958
+ - CVE-2020-10967
 
-Additionally, we are publishing PowerDNS Security Advisory 2020-06 [2] today (‘Various issues have been found in our GSS-TSIG support, where an unauthorized attacker could cause crashes, possibly leak uninitialised memory, and possibly execute arbitrary code.’). Our GSS-TSIG support was never shipped in any packages by us or, to our knowledge, any other distributions. The GSS-TSIG code will be gone in version 4.4.0. We’ve chosen to leave the code intact for older versions, so that users that do rely on it today can keep doing so, keeping in mind the risks detailed in Advisory 2020-06.
+Please find them below
 
-Regarding 2020-05: An issue has been found in PowerDNS Authoritative Server where an authorized user with the ability to insert crafted records into a zone might be able to leak the content of uninitialized memory. Such a user could be a customer inserting data via a control panel, or somebody with access to the REST API. Crafted records cannot be inserted via AXFR. This issue is resolved in the versions mentioned above. (4.1.14 changelog [3], 4.2.3 changelog [4])
+---
+Aki Tuomi
+Open-Xchange Oy
 
-Version 4.3.2 also contains various other bug fixes and improvements, please see the changelog [5] for all details.
+------------------
 
-Tarballs and signatures are available at https://downloads.powerdns.com/releases/
+Open-Xchange Security Advisory 2020-05-18
 
-Packages for various Linux distributions are available from our repository at https://repo.powerdns.com/
+Product: Dovecot
+Vendor: OX Software GmbH
 
-4.0 and older releases are EOL, refer to the documentation for details about our release cycles.
+Internal reference: DOV-3784
+Vulnerability type: NULL pointer dereference (CWE-476)
+Vulnerable version: 2.3.0 - 2.3.10
+Vulnerable component: submission, lmtp
+Report confidence: Confirmed
+Solution status: Fixed by Vendor
+Fixed version: 2.3.10.1
+Researcher credits: Philippe Antoine (Catena Cyber)
+Vendor notification: 2020-03-24
+Solution date: 2020-04-02
+Public disclosure: 2020-05-18
+CVE reference: CVE-2020-10957
+CVSS: 7.5  (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
 
-Please send us all feedback and issues you might have via the mailing list or our IRC channel, or in case of a bug, via GitHub.
+Vulnerability Details:
+	Sending malformed NOOP command causes crash in submission, submission-login or
+	lmtp service.
 
-1: https://docs.powerdns.com/authoritative/security-advisories/powerdns-advisory-2020-05.html
-2: https://docs.powerdns.com/authoritative/security-advisories/powerdns-advisory-2020-06.html
-3: https://doc.powerdns.com/authoritative/changelog/4.1.html#change-4.1.14
-4: https://doc.powerdns.com/authoritative/changelog/4.2.html#change-4.2.3
-5: https://doc.powerdns.com/authoritative/changelog/4.2.html#change-4.3.1
+Risk:
+	Remote attacker can keep submission-login service down, causing denial of
+	service attack. For lmtp the risk is neglible, as lmtp is usually behind a
+	trusted MTA.
 
-Kind regards,
--- 
-Peter van Dijk
-PowerDNS.COM BV - https://www.powerdns.com/
-_______________________________________________
-Pdns-announce mailing list
-Pdns-announce@...lman.powerdns.com
-https://mailman.powerdns.com/mailman/listinfo/pdns-announce
+Steps to reproduce:
+	Send ``NOOP EE"FY`` to submission port, or similarly malformed command.
 
+Solution:
+	Upgrade to fixed version.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (915 bytes)
+------------------
+
+Open-Xchange Security Advisory 2020-05-18
+
+Product: Dovecot IMAP server
+Vendor: OX Software GmbH
+
+Internal reference: DOV-3875
+Vulnerability type: Improper handling of input data (CWE-20)
+Vulnerable version: 2.3.0 - 2.3.10
+Vulnerable component: submission, lmtp
+Report confidence: Confirmed
+Solution status: Fixed by Vendor
+Fixed version: 2.3.10.1
+Researcher credits: Philippe Antoine (Catena Cyber)
+Vendor notification: 2020-03-23
+Solution date: 2020-04-02
+Public disclosure: 2020-05-18
+CVE reference: CVE-2020-10958
+CVSS: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)
+
+Vulnerability Details:
+
+	Sending command followed by sufficient number of newlines triggers a
+	use-after-free bug that might crash submission-login, submission or
+	lmtp service.
+
+Risk:
+
+	Remote attacker can keep submission-login service down, causing denial
+	of service attack. For lmtp the risk is neglible, as lmtp is usually
+	behind a trusted MTA.
+
+Steps to reproduce:
+
+	This can be currently reproduced with ASAN or Valgrind. Reliable way to
+	crash has not yet been discovered.
+
+Solution:
+
+	Upgrade to fixed version.
+
+------------------
+
+Open-Xchange Security Advisory 2020-05-18
+
+Product: Dovecot
+Vendor: OX Software GmbH
+
+Internal reference: DOV-1745
+Vulnerability type: Improper input validation (CWE-20)
+Vulnerable version: 2.3.0 - 2.3.10
+Vulnerable component: submission, lmtp
+Report confidence: Confirmed
+Solution status: Fixed by Vendor
+Fixed version: 2.3.10.1
+Researcher credits: mailbox.org
+Vendor notification: 2020-03-20
+Solution date: 2020-04-02
+Public disclosure: 2020-05-18
+CVE reference: CVE-2020-10967
+CVSS: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)
+
+Vulnerability Details:
+	Sending mail with empty quoted localpart causes submission or lmtp component
+	to crash.
+
+Risk:
+	Malicious actor can cause denial of service to mail delivery by repeatedly
+	sending mails with bad sender or recipient address.
+
+Steps to reproduce:
+	Send mail with envelope sender or recipient as ``<""@example.org>``.
+
+Workaround:
+	For submission there is no workaround, but triggering the bug requires valid
+	credentials.
+	For lmtp, one can implement sufficient filtering on MTA level to prevent mails
+	with such addresses from ending up in LMTP delivery.
+
+Solution:
+	Upgrade to fixed version.
+
+------------------
+
+Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
