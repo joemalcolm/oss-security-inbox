@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5944" "Friday" "22" "April" "2016" "00:41:15" "+0700" "Hans Jerry Illikainen" "hji@dyntopia.com" "<m1eg9yx3k4.darpa@darpa.mil>" "243" "[oss-security] CVE-2016-3074: libgd: signedness vulnerability" nil nil nil "4" "2016042117:41:15" "[oss-security] CVE-2016-3074: libgd: signedness vulnerability" (number mark "U       hji@dyntopia Apr 22  243/5944  " thread-indent "\"[oss-security] CVE-2016-3074: libgd: signedness vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4304" "Monday" "18" "May" "2020" "15:03:33" "+0300" "Aki Tuomi" "aki.tuomi@dovecot.fi" "<1552538431.97.1589803413519@appsuite-dev-guard.open-xchange.com>" "157" "[oss-security] Multiple vulnerabilities in Dovecot IMAP server" "^Date:" nil nil "5" "2020051812:03:33" "[oss-security] Multiple vulnerabilities in Dovecot IMAP server" (number mark "U       aki.tuomi@do May 18  157/4304  " thread-indent "\"[oss-security] Multiple vulnerabilities in Dovecot IMAP server\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Dovecot IMAP server" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28103 invoked by uid 550); 21 Apr 2016 17:40:59 -0000
+Received: (qmail 18090 invoked by uid 550); 18 May 2020 12:50:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,279 +11,198 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28085 invoked from network); 21 Apr 2016 17:40:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:subject:date:message-id:mime-version;
-        bh=yqBHFxF+jTL6yjxgfwBSdv3pKUrOd5QMFFL4LGAyzos=;
-        b=fh9/U0arBSAqubgTTGfOAdWtESCB4SktmAV4W7/nAYdIuJnUTS4mIuc26rnqOZzyB8
-         i0tyNLx9kZ7RmaC6ACK9EuD3zZcX8AWa2iQW34d7hbR8CBSeelVzy99d/b3KURQl48+D
-         jrtrNhMJ1ejfPQ91UVZbm9C04KohfiOYEor3tjfHyF0qRGOKcVuEu0RIx1bp3qx4NlUg
-         iilyPhwvkdjBF2mbvGr9PlfYyyLiPgaMZIr9lm2C2aN8VArTD1ZpIiuw3B9vV5fkSCBG
-         8OnzmpuVuUi4vhJ3Ezr29/dJz/6Kdbp8YXBRAKb61bPv/3aICbqcJB8gw4exUzEUNs6y
-         EEpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version;
-        bh=yqBHFxF+jTL6yjxgfwBSdv3pKUrOd5QMFFL4LGAyzos=;
-        b=OnodHg3eaWL/qvaEdGBI1ZWltSH5N99/V5Rd+Rshy2bbMdNwBHVVZrS7NQ3oEDs4lM
-         qclHClaZiIXUly7QgEpPAraxh0TCi5Lxo0Fp/Ds5pmNe5/tU3b0q1ogdZlkWuwkxqXUn
-         i1wHsgJt25/xJcYg1Bre192YkUtDb/68BI7326CnJFjGyfEvtNwrwesvIrpzFsgV5Q2V
-         xgXHzh9LV98hynsu58KhcCM8Mvb9os9QtONGG87svJcJIgUNFCIlzTwDfAhN2rM7fmSF
-         K/T/YdewgkrXCVbGWWupToQ4tHxAub+dc4zCoAzHckkXRU61+ddIAOpkfdLSU94c4+yl
-         3D5A==
-X-Gm-Message-State: AOPr4FXTGm7Z0VRFsGcGeqZ0aaBBIMcWpk3g7YNvzAr+zt47vm4WdUsI6lpl+vtDclQx3Q==
-X-Received: by 10.28.55.139 with SMTP id e133mr16565742wma.98.1461260447697;
-        Thu, 21 Apr 2016 10:40:47 -0700 (PDT)
-From: Hans Jerry Illikainen <hji@dyntopia.com>
-To: bugtraq@securityfocus.com, fulldisclosure@seclists.org, oss-security@lists.openwall.com
-Date: Fri, 22 Apr 2016 00:41:15 +0700
-Message-ID: <m1eg9yx3k4.darpa@darpa.mil>
+Received: (qmail 19594 invoked from network); 18 May 2020 12:03:45 -0000
+Message-ID: <1552538431.97.1589803413519@appsuite-dev-guard.open-xchange.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] CVE-2016-3074: libgd: signedness vulnerability
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; 
+	boundary="----=_Part_96_1856029690.1589803413518"
+X-Priority: 3
+Importance: Normal
+X-Mailer: Open-Xchange Mailer v7.10.4-Rev0
+X-Originating-Client: open-xchange-appsuite
+Autocrypt: addr=aki.tuomi@open-xchange.com; prefer-encrypt=mutual; keydata=
+ mQENBFb7bukBCACpK7GFwH/gyL0oF8t91WM7S+UjuQ1vOQZg2eoCUHi4ILpm1Kae4UeZLB2XVbeph+k
+ 29BIQbo+Hjv6rq6JzPfKIZCRLLrkMD1MtA0YB7ZYiACywLrATAdAMJ6sRq+DL5RlrA2CvviTifz6DwE
+ nbqI+ckcKggsY2gywHs5muDw+n5TwLiL0V9IU478vg7OUWzMZ42toTmeTW2MtsIAE5xbnjZ58LUSZR2
+ CNO8SAtDHYI558ACkS0wHBAoRFNv27IPr3cebiPsIglSEIBr0R1F1Twbgm6mWVBhK+smDgGxmmuAhH6
+ boSaKWoWAq+tNf+6oXnr3/D0IPtR8c/bZobtvWG3ABEBAAG0J1R1b21pLCBBa2kgPGFraS50dW9taUB
+ vcGVuLXhjaGFuZ2UuY29tPokBPgQTAQIAKAIbAwUJEswDAAUCW2P/aAYLCQgHAwIGFQgCCQoLBBYCAw
+ ECHgECF4AACgkQGTtjY7NEQgYmMwf9G5U0+vKJB+f3Vl8rjPqlXmUZu4waf6pig5lLCrgu56ZkqEDmj
+ axmxXAah7JZ6dD/66kzlQzKQPYpLor0KnTZgm8XZr+MtqLK8DMF/4+iljADvkS4nfJuX3LbdafPyuk4
+ x+GIa+6NJ+y34jZ284Oesj+FtPOevthR9rDmnc2KQjBD30ceKsadxIKqWPYPqPESQ0PyMu9tOaWNdGn
+ tx8LvO3LlspZ2DzEh5rregFKtO01jR9ai5r3mbUrQqwzWLxJztBYjds8D5VAiCBeivUxetDqhoPr3Cy
+ KHStc5GfgHvazjG34H+CShReqIylfR4mwc654qkmVQfPMMUTaa677n8bkBDQRW+27pAQgAosZdRB8tu
+ i65tjna4iYKPHqcNDZUXOUuPLTucYc2tY2v67POGr44gOZNzuQWKyXRSBs+Q2zJHcbccPe0ZEptkOCO
+ wdhhvBwZLKa6nI9jnJ0K+szT2NbD0YkvaIDALA9pVGMJqa88wvkkocf/I5fkdTk6xuLp8AamRXvcPZu
+ UPo/s2PXQV4u+gtKdX1FmaHiBg1oQhtoDWZO04H74r9fyPPs499ra9iNckSlZP51OUFBbV/RmbtEC03
+ 1r4iXUAgiL0nQ1mNpRIW+PU/5beX/4YwYeCpzy7g0XfMaJoMWDamRdXgzkXK6IJIxwo/89M8qPW+Bkh
+ 88yAennI2SsEvniXQARAQABiQExBBgBAgAbBQJW+27pAhsMBAsJCAcGFQoJCAsCBQkSzAMAAAoJEBk7
+ Y2OzREIGCm8IAIZkj5FClx8EmPy1caC+CNv1mVrC2YhKY9Zh255JUtt+Xp6tshN6IOr+saNkcwgUghx
+ mx6+asZXPDHTqhXoswPi28k1uCY7n4gvh3jlS7a0HeI0sy2RCsrkIaQD2uSt+ju9fpEM2aOXQHGT/x6
+ gZhJ7Uwu+JfDnCB7CBFjVnRaV2/87Y0ZImfhIMPYRzwOyWW6KR+JPIutyZAWo9c7mmjKbySLXhqgZar
+ iMJU+RQF5/daQsiRJKP1IkC/Ncy/iZSnGvPIRZjvQxtrz+4xexZX6NjG7IbKAwmbo1t27cF3hE4Heja
+ kF5bLOhznVWubhjXp1J6pL9fymHmG2tZPsgwXcA=
+Date: Mon, 18 May 2020 15:03:33 +0300 (EEST)
+From: Aki Tuomi <aki.tuomi@dovecot.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Multiple vulnerabilities in Dovecot IMAP server
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+	"fulldisclosure@seclists.org" <fulldisclosure@seclists.org>
 
-Overview
-========
+------=_Part_96_1856029690.1589803413518
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-libgd [1] is an open-source image library.  It is perhaps primarily used
-by the PHP project.  It has been bundled with the default installation
-of PHP since version 4.3 [2].
+Dear subscribers,
 
-A signedness vulnerability (CVE-2016-3074) exist in libgd 2.1.1 which
-may result in a heap overflow when processing compressed gd2 data.
+we are sending notifications for three vulnerabilities,
 
+ - CVE-2020-10957
+ - CVE-2020-10958
+ - CVE-2020-10967
 
-Details
-=======
+Please find them below
 
-4 bytes representing the chunk index size is stored in a signed integer,
-chunkIdx[i].size, by `gdGetInt()' during the parsing of GD2 headers:
+---
+Aki Tuomi
+Open-Xchange Oy
 
-libgd-2.1.1/src/gd_gd2.c:
-,----
-|  53 typedef struct {
-|  54     int offset;
-|  55     int size;
-|  56 }
-|  57 t_chunk_info;
-`----
+------------------
 
-libgd-2.1.1/src/gd_gd2.c:
-,----
-|  65 static int
-|  66 _gd2GetHeader (gdIOCtxPtr in, int *sx, int *sy,
-|  67                int *cs, int *vers, int *fmt, int *ncx, int *ncy,
-|  68                t_chunk_info ** chunkIdx)
-|  69 {
-| ...
-|  73     t_chunk_info *cidx;
-| ...
-| 155     if (gd2_compressed (*fmt)) {
-| ...
-| 163         for (i = 0; i < nc; i++) {
-| ...
-| 167             if (gdGetInt (&cidx[i].size, in) != 1) {
-| 168                 goto fail2;
-| 169             };
-| 170         };
-| 171         *chunkIdx = cidx;
-| 172     };
-| ...
-| 181 }
-`----
+Open-Xchange Security Advisory 2020-05-18
 
-`gdImageCreateFromGd2Ctx()' and `gdImageCreateFromGd2PartCtx()' then
-allocates memory for the compressed data based on the value of the
-largest chunk size:
+Product: Dovecot
+Vendor: OX Software GmbH
 
-libgd-2.1.1/src/gd_gd2.c:
-,----
-| 371|637     if (gd2_compressed (fmt)) {
-| 372|638         /* Find the maximum compressed chunk size. */
-| 373|639         compMax = 0;
-| 374|640         for (i = 0; (i < nc); i++) {
-| 375|641             if (chunkIdx[i].size > compMax) {
-| 376|642                 compMax = chunkIdx[i].size;
-| 377|643             };
-| 378|644         };
-| 379|645         compMax++;
-| ...|...
-| 387|656         compBuf = gdCalloc (compMax, 1);
-| ...|...
-| 393|661     };
-`----
+Internal reference: DOV-3784
+Vulnerability type: NULL pointer dereference (CWE-476)
+Vulnerable version: 2.3.0 - 2.3.10
+Vulnerable component: submission, lmtp
+Report confidence: Confirmed
+Solution status: Fixed by Vendor
+Fixed version: 2.3.10.1
+Researcher credits: Philippe Antoine (Catena Cyber)
+Vendor notification: 2020-03-24
+Solution date: 2020-04-02
+Public disclosure: 2020-05-18
+CVE reference: CVE-2020-10957
+CVSS: 7.5  (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
 
-A size of <= 0 results in `compMax' retaining its initial value during
-the loop, followed by it being incremented to 1.  Since `compMax' is
-used as the nmemb for `gdCalloc()', this leads to a 1*1 byte allocation
-for `compBuf'.
+Vulnerability Details:
+	Sending malformed NOOP command causes crash in submission, submission-login or
+	lmtp service.
 
-This is followed by compressed data being read to `compBuf' based on the
-current (potentially negative) chunk size:
+Risk:
+	Remote attacker can keep submission-login service down, causing denial of
+	service attack. For lmtp the risk is neglible, as lmtp is usually behind a
+	trusted MTA.
 
-libgd-2.1.1/src/gd_gd2.c:
-,----
-| 339 BGD_DECLARE(gdImagePtr) gdImageCreateFromGd2Ctx (gdIOCtxPtr in)
-| 340 {
-| ...
-| 413         if (gd2_compressed (fmt)) {
-| 414
-| 415             chunkLen = chunkMax;
-| 416
-| 417             if (!_gd2ReadChunk (chunkIdx[chunkNum].offset,
-| 418                                 compBuf,
-| 419                                 chunkIdx[chunkNum].size,
-| 420                                 (char *) chunkBuf, &chunkLen, in)) {
-| 421                 GD2_DBG (printf ("Error reading comproessed chunk\n"));
-| 422                 goto fail;
-| 423             };
-| 424
-| 425             chunkPos = 0;
-| 426         };
-| ...
-| 501 }
-`----
+Steps to reproduce:
+	Send ``NOOP EE"FY`` to submission port, or similarly malformed command.
 
+Solution:
+	Upgrade to fixed version.
 
-libgd-2.1.1/src/gd_gd2.c:
-,----
-| 585 BGD_DECLARE(gdImagePtr) gdImageCreateFromGd2PartCtx (gdIOCtx * in, int srcx, int srcy, int w, int h)
-| 586 {
-| ...
-| 713         if (!gd2_compressed (fmt)) {
-| ...
-| 731         } else {
-| 732             chunkNum = cx + cy * ncx;
-| 733
-| 734             chunkLen = chunkMax;
-| 735             if (!_gd2ReadChunk (chunkIdx[chunkNum].offset,
-| 736                                 compBuf,
-| 737                                 chunkIdx[chunkNum].size,
-| 738                                 (char *) chunkBuf, &chunkLen, in)) {
-| 739                 printf ("Error reading comproessed chunk\n");
-| 740                 goto fail2;
-| 741             };
-| ...
-| 746         };
-| ...
-| 815 }
-`----
+------------------
 
-The size is subsequently interpreted as a size_t by `fread()' or
-`memcpy()', depending on how the image is read:
+Open-Xchange Security Advisory 2020-05-18
 
-libgd-2.1.1/src/gd_gd2.c:
-,----
-| 221 static int
-| 222 _gd2ReadChunk (int offset, char *compBuf, int compSize, char *chunkBuf,
-| 223            uLongf * chunkLen, gdIOCtx * in)
-| 224 {
-| ...
-| 236     if (gdGetBuf (compBuf, compSize, in) != compSize) {
-| 237         return FALSE;
-| 238     };
-| ...
-| 251 }
-`----
+Product: Dovecot IMAP server
+Vendor: OX Software GmbH
 
-libgd-2.1.1/src/gd_io.c:
-,----
-| 211 int gdGetBuf(void *buf, int size, gdIOCtx *ctx)
-| 212 {
-| 213     return (ctx->getBuf)(ctx, buf, size);
-| 214 }
-`----
+Internal reference: DOV-3875
+Vulnerability type: Improper handling of input data (CWE-20)
+Vulnerable version: 2.3.0 - 2.3.10
+Vulnerable component: submission, lmtp
+Report confidence: Confirmed
+Solution status: Fixed by Vendor
+Fixed version: 2.3.10.1
+Researcher credits: Philippe Antoine (Catena Cyber)
+Vendor notification: 2020-03-23
+Solution date: 2020-04-02
+Public disclosure: 2020-05-18
+CVE reference: CVE-2020-10958
+CVSS: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)
 
+Vulnerability Details:
 
-For file contexts:
+	Sending command followed by sufficient number of newlines triggers a
+	use-after-free bug that might crash submission-login, submission or
+	lmtp service.
 
-libgd-2.1.1/src/gd_io_file.c:
-,----
-|  52 BGD_DECLARE(gdIOCtx *) gdNewFileCtx(FILE *f)
-|  53 {
-| ...
-|  67     ctx->ctx.getBuf = fileGetbuf;
-| ...
-|  76 }
-| ...
-|  92 static int fileGetbuf(gdIOCtx *ctx, void *buf, int size)
-|  93 {
-|  94     fileIOCtx *fctx;
-|  95     fctx = (fileIOCtx *)ctx;
-|  96
-|  97     return (fread(buf, 1, size, fctx->f));
-|  98 }
-`----
+Risk:
 
+	Remote attacker can keep submission-login service down, causing denial
+	of service attack. For lmtp the risk is neglible, as lmtp is usually
+	behind a trusted MTA.
 
-And for dynamic contexts:
+Steps to reproduce:
 
-libgd-2.1.1/src/gd_io_dp.c:
-,----
-|  74 BGD_DECLARE(gdIOCtx *) gdNewDynamicCtxEx(int initialSize, void *data, int freeOKFlag)
-|  75 {
-| ...
-|  95     ctx->ctx.getBuf = dynamicGetbuf;
-| ...
-| 104 }
-| ...
-| 256 static int dynamicGetbuf(gdIOCtxPtr ctx, void *buf, int len)
-| 257 {
-| ...
-| 280     memcpy(buf, (void *) ((char *)dp->data + dp->pos), rlen);
-| ...
-| 284 }
-`----
+	This can be currently reproduced with ASAN or Valgrind. Reliable way to
+	crash has not yet been discovered.
 
+Solution:
 
-PoC
-===
+	Upgrade to fixed version.
 
-Against Ubuntu 15.10 amd64 running nginx with php5-fpm and php5-gd [3]:
+------------------
 
-,----
-| $ python exploit.py --bind-port 5555 http://1.2.3.4/upload.php
-| [*] this may take a while
-| [*] offset 912 of 10000...
-| [+] connected to 1.2.3.4:5555
-| id
-| uid=33(www-data) gid=33(www-data) groups=33(www-data)
-| 
-| uname -a
-| Linux wily64 4.2.0-35-generic #40-Ubuntu SMP Tue Mar 15 22:15:45 UTC
-| 2016 x86_64 x86_64 x86_64 GNU/Linux
-| 
-| dpkg -l|grep -E "php5-(fpm|gd)"
-| ii  php5-fpm       5.6.11+dfsg-1ubuntu3.1 ...
-| ii  php5-gd        5.6.11+dfsg-1ubuntu3.1 ...
-| 
-| cat upload.php
-| <?php
-|     imagecreatefromgd2($_FILES["file"]["tmp_name"]);
-| ?>
-`----
+Open-Xchange Security Advisory 2020-05-18
 
+Product: Dovecot
+Vendor: OX Software GmbH
 
-Solution
-========
+Internal reference: DOV-1745
+Vulnerability type: Improper input validation (CWE-20)
+Vulnerable version: 2.3.0 - 2.3.10
+Vulnerable component: submission, lmtp
+Report confidence: Confirmed
+Solution status: Fixed by Vendor
+Fixed version: 2.3.10.1
+Researcher credits: mailbox.org
+Vendor notification: 2020-03-20
+Solution date: 2020-04-02
+Public disclosure: 2020-05-18
+CVE reference: CVE-2020-10967
+CVSS: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)
 
-This bug has been fixed in git HEAD [4].
+Vulnerability Details:
+	Sending mail with empty quoted localpart causes submission or lmtp component
+	to crash.
 
+Risk:
+	Malicious actor can cause denial of service to mail delivery by repeatedly
+	sending mails with bad sender or recipient address.
 
+Steps to reproduce:
+	Send mail with envelope sender or recipient as ``<""@example.org>``.
 
-Footnotes
-_________
+Workaround:
+	For submission there is no workaround, but triggering the bug requires valid
+	credentials.
+	For lmtp, one can implement sufficient filtering on MTA level to prevent mails
+	with such addresses from ending up in LMTP delivery.
 
-[1] [http://libgd.org/]
+Solution:
+	Upgrade to fixed version.
 
-[2] [https://en.wikipedia.org/wiki/Libgd]
+------------------
 
-[3] [https://github.com/dyntopia/exploits/tree/master/CVE-2016-3074]
+------=_Part_96_1856029690.1589803413518
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=signature.asc
 
-[4] [https://github.com/libgd/libgd/commit/2bb97f407c1145c850416a3bfbcc8cf124e68a19]
+-----BEGIN PGP SIGNATURE-----
+Version: BCPG v1.62
 
+iQEcBAABCgAGBQJewnmVAAoJEBk7Y2OzREIGdvMH/3e08xam6YrPOJ/mpMZ68hnw
+jUQLjs9Il17TC32u+aEhywXK0mzJqBqqQcBIRJmhqJESsdwrX/ME+IMXD2MfxlvQ
+SqZNIJ4pLbdMaFAAsl8ZYg62kzs3USeobzkIgajG4em2JaGq/iiXNcwLm0M4xF91
+Sgwfn09uX3VEFvHBPW5QrrG9ejV5A4F+1TUZqiDod012bo84fenw6k4vaf83zg1j
+P8eDZUKhiR0wtmybgoimaWrTgPAZSWLika7pj/6Eu9AiCmZnAKALZ9JFQqRdW5/W
+HBU8on0oGppPvsDUfgm7oZCoNJ+7OdtlqPB/l6leju5YNSxY1LEfnK7OqG+Dv/o=
+=AToH
+-----END PGP SIGNATURE-----
 
--- 
-Hans Jerry Illikainen
+------=_Part_96_1856029690.1589803413518--
