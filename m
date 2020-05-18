@@ -1,67 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/13/2
-Message-Id: <0B12AA49-1E09-4C8F-BDF4-F83DF85F9432@dwheeler.com>
-Date: Fri, 13 Nov 2020 15:46:01 -0500
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/18/2
+Message-ID: <aeb18210-13f9-7aae-bf42-9cd5f7d03ffb@intel.com>
+Date: Mon, 18 May 2020 15:49:58 +0100
+From: Ferruh Yigit <ferruh.yigit@...el.com>
+To: dpdk-announce <announce@...k.org>
+Cc: security@...k.org, security-prerelease@...k.org, oss-security@...ts.openwall.com, dpdk-dev <dev@...k.org>
+Subject: DPDK security advisory for multiple vhost related issues
 Content-Type: text/plain; charset=utf-8
 
+A set of vulnerabilities fixed in DPDK:
+- CVE-2020-10722
+- CVE-2020-10723
+- CVE-2020-10724
+- CVE-2020-10725
+- CVE-2020-10726
 
-> On Nov 13, 2020, at 7:33 AM, Hanno Böck <hanno@...eck.de> wrote:
-> 
-> 3 years ago I reported a heap overflow vulnerability in raptor, an RDF
-> parsing library:
-> https://www.openwall.com/lists/oss-security/2017/06/07/1
-> 
-> raptor has not created a new release since 2014.
-> 
-> The most prominent user seems to be libreoffice. This is triggerable
-> from within an ODT file. Back then I reported this to libreoffice as
-> well and they patched it in their builds. However on linux systems
-> libreoffice package usually use the system-provided libraptor, so if
-> that's not patched it is vulnerable.
-> 
-> This was unpatched for a long time in many linux distros, in some it
-> still is. Debian+Ubuntu have released updates in the past few days.
-> 
-> It may be interesting to discuss how this happened. From my side I feel
-> I did what I should do - I reported it to the project and later
-> disclosed it publicly on oss-security. Apparently it seems there is no
-> reliable process to make sure publicly reported vulns eventually get
-> patched in distros if there is no active upstream.
-> Maybe noteworthy is that this didn't get a CVE in 2017. It seems many
-> distros rely on CVEs to get a process of backporting fixes rolling.
-> Given the fluctuating reliability of CVE assignments not sure this is
-> wise. I have now requested a CVE (CVE-2017-18926).
+Some downstream stakeholders were warned in advance in order to coordinate the
+release of fixes and reduce the vulnerability window.
 
-I don’t know what you mean by “fluctuating reliability”.
-I think the #1 reason a vulnerability doesn’t have a CVE assignment
-is that no one has reported the vulnerability to a CVE Numbering Authority (CNA).
-If that’s the “reliability” problem, it’s hard to blame CNAs for that.
+Problem:
+A malicious guess/container can cause resource leak resulting a
+Denial-of-Service, or memory corruption and crash, or information leak in
+vhost-user backend application.
 
-There *is* a process to alert all affected parties; it’s called CVE assignment.
-In the case of an unmaintained package that’s in use it’s *especially* important to
-have a CVE assigned; the project itself might never release a fix or alert, so we
-*need* an external system like CVEs to track those vulnerabilities.
-As you noted, backports are often triggered by CVE assignments.
-That’s not a problem, that’s a fact that is getting ignored.
-“The standard process to trigger backports (namely CVE assignment) was not used and
-now I’m unhappy that backports didn’t occur” sounds almost tautological.
+All users of the vhost library are strongly encouraged to upgrade as soon as
+possible.
 
-As you well know, CVEs aren’t perfect. Far from it (let me help you make that list).
-CVE assignments sometimes backlog, but I think since 2017 is enough time :-).
-The CVE process does struggle with projects that update relatively rapidly
-(hi Linux kernel!), but that’s not the issue in this case. But while CVEs have their
-shortcomings, they would trivially have solved this if the process had been actually used.
+Thanks to the reporters, all credit goes to them:
+Ilja Van Sprundel <ivansprundel@...ctive.com>
+Marvin Liu <yong.liu@...el.com>
+Xiaolong Ye <xiaolong.ye@...el.com>
 
-I think that in addition, any project that patches an external dependency
-(like LibreOffice) should also add to their automated test suite a test that verifies that the
-fix is actually correctly applied.  Many system packaging systems have a way
-to run a test suite as part of the packaging. The packagers should call test suites if they’re
-present, and packagers should provide test suites. That would have prevented this kind
-of problem (and many others) in a general way. The reproducer .odt file you
-just posted would probably be perfect for this.
 
---- David A. Wheeler
+Stable Releases download links:
+DPDK 20.02.1
+http://fast.dpdk.org/rel/dpdk-20.02.1.tar.xz
 
+DPDK 18.11.8 (LTS)
+http://fast.dpdk.org/rel/dpdk-18.11.8.tar.xz
+
+DPDK 19.11.2 (LTS)
+http://fast.dpdk.org/rel/dpdk-19.11.2.tar.xz
+
+
+
+Details:
+
+CVE-2020-10722
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=267
+Severity: 5.1 (Medium)
+CVSS scores: CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:H
+Summary: DPDK librte_vhost: Interger overflow in vhost_user_set_log_base()
+Reporter: Ilja Van Sprundel <ivansprundel@...ctive.com>
+
+
+CVE-2020-10723
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=268
+Severity: 5.1 (Medium)
+CVSS scores: CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:H
+Summary: DPDK librte_vhost: Integer truncation in
+         vhost_user_check_and_alloc_queue_pair()
+Reporter: Ilja Van Sprundel <ivansprundel@...ctive.com>
+
+
+CVE-2020-10724
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=269
+Severity: 5.1 (Medium)
+CVSS scores: CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:H
+Summary: DPDK librte_vhost: Missing inputs validation in Vhost-crypto
+Reporter: Ilja Van Sprundel <ivansprundel@...ctive.com>
+
+
+CVE-2020-10725
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=270
+Severity: 7.7 (High)
+CVSS scores: CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H
+Summary: DPDK librte_vhost: Malicious guest could cause segfault by sending
+         invalid Virtio descriptor
+Reporter: Marvin Liu <yong.liu@...el.com>
+
+
+CVE-2020-10726
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=271
+Severity: 6.0 (Medium)
+CVSS scores: CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:C/C:N/I:N/A:H
+Summary: DPDK librte_vhost: VHOST_USER_GET_INFLIGHT_FD message flooding to
+         result in a DOS
+Reporter: Marvin Liu <yong.liu@...el.com> & Xiaolong Ye <xiaolong.ye@...el.com>
+
+
+Commits:
+main repo
+https://git.dpdk.org/dpdk/commit/?id=3ae4beb079ce
+https://git.dpdk.org/dpdk/commit/?id=c78d94189dce
+https://git.dpdk.org/dpdk/commit/?id=acd4c92fa693
+https://git.dpdk.org/dpdk/commit/?id=97ecc1c85c95
+https://git.dpdk.org/dpdk/commit/?id=549de54c4f9f
+https://git.dpdk.org/dpdk/commit/?id=e7debf602633
+
+DPDK 20.02.1
+https://git.dpdk.org/dpdk-stable/commit/?h=20.02&id=0545a19f5b99
+https://git.dpdk.org/dpdk-stable/commit/?h=20.02&id=dca5d97491b4
+https://git.dpdk.org/dpdk-stable/commit/?h=20.02&id=64a4d90c673e
+https://git.dpdk.org/dpdk-stable/commit/?h=20.02&id=47791d99afe4
+https://git.dpdk.org/dpdk-stable/commit/?h=20.02&id=74b0c5db0f1e
+https://git.dpdk.org/dpdk-stable/commit/?h=20.02&id=a827e27d81cc
+
+DPDK 18.11.8 (LTS)
+https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=338f5eae5de73
+https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=d87b67f57ef93
+https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=5e4bc0f0e1e48
+
+DPDK 19.11.2 (LTS)
+https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=2cf9c470ebff
+https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=8e9652b0b616
+https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=963b6eea05f3
+https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=cd0ea71bb6a7
+https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=95e1f29c2677
+https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=c9c630a117cf
+
+
+-- 
+DPDK Security Team
+http://core.dpdk.org/security/
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
