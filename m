@@ -1,90 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/12
-Message-Id: <497NVB50jKzJrNv@spike.porcupine.org>
-Date: Thu, 23 Apr 2020 12:46:10 -0400 (EDT)
-From: Wietse Venema <wietse@...cupine.org>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com,  PromiseLabs Pentest Research <pentest@...miselabs.net>,  Wietse Venema <wietse@...cupine.org>
-Subject: Re: spoofing of local email sender via a homoglyph attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/3
+Message-ID: <d1ab860e-7dda-f02e-483f-27444b31b9ba@open-xchange.com>
+Date: Tue, 19 May 2020 11:00:44 +0200
+From: Otto Moerbeek <otto.moerbeek@...n-xchange.com>
+To: oss-security@...ts.openwall.com
+Subject: PowerDNS Recursor 4.3.1, 4.2.2. and 4.1.16 released fixing multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer:
-> On Thu, Apr 23, 2020 at 05:32:15PM +0300, PromiseLabs Pentest Research wrote:
-> > To follow up on your questions:
-> 
-> Thanks!  Now this is specific.
-> 
-> > The current configuration actually blocks any non-authorized requests as 
-> > explained in the description. The use-case of this (from my perspective) 
-> > is that it could be used to advance a social-engineer attack into 
-> > tricking the recipients believing that they are getting an email from a 
-> > high-level position at the company.
-> > 
-> > It's related to the from header.
-> > 
-> > Issuing a regular unauthenticated request, trying to send an email from 
-> > john.doe, which is a high-level user at the company:
-> > $ nc -v *** OMITTED *** 25
-> > Connection to *** OMITTED *** 25 port [tcp/smtp] succeeded!
-> > 220 *** OMITTED *** ESMTP Postfix
-> > mail from: john.doe@...ver.com
-> > 250 2.1.0 Ok
-> > rcpt to: existing.user@...ver.com
-> > 553 5.7.1 <john.doe@...ver.com>: Sender address rejected: not logged in
-> > 
-> > As you can see, the mail server rejects the request as the existing user 
-> > hasn't authenticated himself.
+Hello!,
 
-There is only one place on Postfix that says "Sender address
-rejected: not logged in". See code at end; it has not changed
-in a decade.
+Today we are releasing PowerDNS Recursor 4.3.1, 4.2.2. and 4.1.16,
+containing security fixes for three CVEs:
 
-Yoour Postfix SMTP server has been configured to require that an
-SMTP client can send mail with envelope sender john.doe@...ver.com
-ONLY if the client is logged in as the 'owner' of that address.
+- CVE-2020-10995[1]
+- CVE-2020-12244[2]
+- CVE-2020-10030[3]
 
-/etc/postfix/main.cf:
-    smtpd_sender_login_maps = hash:/etc/postfix/sender_login
+The issues are:
 
-/etc/postfix/sender_login:
-    # sender address    authorized logins
-    john.doe@...ver.com sasluser1, sasluser2, ...
+CVE-2020-10995: An issue in the DNS protocol has been found that allows
+malicious parties to use recursive DNS services to attack third party
+authoritative name servers. Severity is medium. We would like to thank
+Lior Shafir, Yehuda Afek and Anat Bremler-Barr for finding and
+subsequently reporting this issue!
 
-Sending email with a different envelope sender address, not in the
-above table, would not be blocked by the smtpd_sender_login_maps
-feature (but might still be blocked for other reasons).
+CVE-2020-12244: Records in the answer section of a NXDOMAIN response
+lacking an SOA were not properly validated. Severity is medium. We would
+like to thank Matt Nordhoff for finding and subsequently reporting this
+issue!
 
-So your concern has nothing to do with whether the addess
-john.doe@...ver.com is a valid email address. Instead you're
-probing the smtpd_sender_login_maps table.
+CVE-2020-10030: An attacker with enough privileges to change the
+hostname might be able to disclose uninitialized memory. This issue also
+affects the Authoritative Server and dnsdist; since the attack requires
+very high privileges and the issue does not affect Linux, we will not be
+releasing new versions for those just for this issue. Severity is low.
 
-Additionally, Postfix will reply with 5.1.1 User unknown if a local
-recipient address is known to not exist. This is because the
-alternative would be to accept all such email and silently discard
-it, which violates RFCs, violates legislation in some countries
-where rejecting email is allowed but accept+discard is not, and
-which would saturate everyone's network with a continuous flood of
-bogus email.
+As usual, there were also other smaller enhancements and bugfixes.
+Please refer to the 4.3.1 changelog[4], 4.2.2 changelog[5] and 4.1.16
+changelog[6] for details.
 
-	Wietse
+The 4.3.1 tarball[7] (signature[8]), 4.2.2 tarball[9] (signature[10])
+and 4.1.16 tarball[11] (signature[12]) are available at our download
+site[13] and packages for CentOS 6, 7 and 8, Debian Stretch and Buster,
+Ubuntu Xenial and Bionic are available from our repository[14]
 
-static int reject_unauth_sender_login_mismatch(SMTPD_STATE *state, const char *sender)
-{
-    const RESOLVE_REPLY *reply;
+Note that the 4.1 packages will be published later today.
 
-    /*
-     * Reject if the client is not logged in and the sender address has an
-     * owner.
-     */
-    if (smtpd_sender_login_maps && !state->sasl_username) {
-        reply = smtpd_resolve_addr(state->recipient, sender);
-        if (reply->flags & RESOLVE_FLAG_FAIL)
-            reject_dict_retry(state, sender);
-        if (check_mail_addr_find(state, sender, smtpd_sender_login_maps,
-                                 STR(reply->recipient), (char **) 0) != 0)
-            return (smtpd_check_reject(state, MAIL_ERROR_POLICY, 553, "5.7.1",
-                   "<%s>: Sender address rejected: not logged in", sender));
-    }
-    return (SMTPD_CHECK_DUNNO);
-}
+4.0 and older releases are EOL, refer to the documentation[15] for
+details about our release cycles.
 
+Please send us all feedback and issues you might have via the mailing
+list[16], or in case of a bug, via GitHub[17].
+
+
+[1]
+https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2020-01.html
+[2]
+https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2020-02.html
+[3]
+https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2020-03.html
+[4] https://doc.powerdns.com/recursor/changelog/4.3.html#change-4.3.1
+[5] https://doc.powerdns.com/recursor/changelog/4.2.html#change-4.2.2
+[6] https://doc.powerdns.com/recursor/changelog/4.1.html#change-4.1.16
+[7] https://downloads.powerdns.com/releases/pdns-recursor-4.3.1.tar.bz2
+[8] https://downloads.powerdns.com/releases/pdns-recursor-4.3.1.tar.bz2.sig
+[9] https://downloads.powerdns.com/releases/pdns-recursor-4.2.2.tar.bz2
+[10] https://downloads.powerdns.com/releases/pdns-recursor-4.2.2.tar.bz2.sig
+[11] https://downloads.powerdns.com/releases/pdns-recursor-4.1.16.tar.bz2
+[12]
+https://downloads.powerdns.com/releases/pdns-recursor-4.1.16.tar.bz2.sig
+[13] https://downloads.powerdns.com/releases
+[14] https://repo.powerdns.com/
+[15] https://docs.powerdns.com/recursor/appendices/EOL.html
+[16] https://mailman.powerdns.com/mailman/listinfo/pdns-users
+[17] https://github.com/PowerDNS/pdns/issues/new/choose
+
+-- 
+kind regards,
+Otto Moerbeek
+Senior PowerDNS Developer
+
+Email: otto.moerbeek@...n-xchange.com
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
