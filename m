@@ -1,30 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/19/7
-Message-ID: <20201119185104.GD7401@pisco.westfalen.local>
-Date: Thu, 19 Nov 2020 19:51:04 +0100
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/2
+Message-ID: <07abfd99-f183-0dff-6de3-7f3f3ffd0c60@nic.cz>
+Date: Tue, 19 May 2020 12:40:00 +0200
+From: Petr Špaček <petr.spacek@....cz>
 To: oss-security@...ts.openwall.com
-Subject: Re: libass ass_outline.c signed integer overflow
+Subject: [CVE-2020-12667] Knot Resolver 5.1.1 NXNSAttack mitigation
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 19, 2020 at 11:54:07AM -0500, David A. Wheeler wrote:
-> >> In `ass_outline_construct`'s call to `outline_stroke` a signed integer
-> >> overflow happens *(undefined behaviour)*. On my machine signed overflow
-> >> happens to wrap around to a negative value, thus failing the assert.
-> >> https://github.com/libass/libass/issues/431
-> >> 
-> >> https://github.com/libass/libass/pull/432
-> > 
-> > I have followed the links above, and this seems to be an example of a
-> > situation where the CVE process has failed. It is still not fixed in
-> > Debian, possibly for that reason. I'll report a Debian bug today.
-> 
-> I read through the issue discussion. As best as I can tell, no one filed for a CVE, so there was no CVE.
-> Did I misunderstand something?
-> 
-> If my understanding is correct, that is *NOT* a failure of the CVE process.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Yes, everything worked as designed here. This is CVE-2020-26682
+Hello,
 
-Cheers,
-        Moritz
+Knot Resolver versions before 5.1.1 allows traffic amplification via
+a crafted DNS answer from an attacker-controlled server, aka an "NXNSAttack" issue.
+
+Minimal patch is attached but we generally do not recommend backporting.
+
+Knot Resolver version 5.1.1 includes mitigation and is available from
+https://www.knot-resolver.cz/download/
+
+Longer description:
+DNS protocol vulnerability NXNSAttack, combined with Insufficient
+Control of Network Message Volume in iterator component of CZ.NIC Knot
+Resolver version 5.1.0 or older allows remote attacker to amplify
+network traffic towards victim's DNS servers via sending DNS query a
+vulnerable resolver and sending specially crafted answer from
+authoritative server under attacker's control.
+
+This is DNS protocol vulnerability affecting basically all DNS
+recursive resolvers. Other vendors requested separate CVE IDs for
+mitigation in their products.
+
+Further details:
+https://en.blog.nic.cz/2020/05/19/nxnsattack-upgrade-resolvers-to-stop-new-kind-of-random-subdomain-attack/
+
+Research paper:
+Paper describing the attack by Lior Shafir, Yehuda Afek, Anat
+Bremler-Barr is available from http://nxnsattack.com/
+
+- -- 
+Petr Špaček  @  CZ.NIC
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEvibrucvgWbORDKNbzo3WoaUKIeQFAl7Dt3gACgkQzo3WoaUK
+IeQJRg/9H8H19V7ond79EwN1rElEy+Hf1mp1IOqRZfDs23q0eIjfAi1epDRRBSVl
+wVp/OdQhE/qIcla/mNO1BvTAh9OwGk3QwMpoi6GuIIiSLcs/YRk8T3O3LTn0+sF1
+7DUZc70HGICxdQmoja17Clv3mNz5GWkjuGJXyEuNZwVQa3A5hJrkfGz7vuTHXNmp
+h0CG9LIhvyuaP6SOxcE3Zl4iNDqnMgdCv1047ijVgUgkrA2Of0vOkDCHCV9Ee1mF
+4TMuhpMREyWqtaoDF7I3ush0MabkD2sixgTZQ0So7xhtPm33/d+z5iYYak65qtny
+qT9zeLp8HzBW35TnG3eDUbuaEOtw/dmWX3LGJXvjxv2pWxiYlAWchT6vWqqrLC5a
+4YJ06T4Yy3e4dsVkOi+ozV4MrRCWZQ/lj6rKRWvnbE9zkSSUsp7FXbpPlYpwHoIs
+VEqkzhxtwceH0y3WlmdRgM/SrSUFe31CHJrA/W7mdkkNOQi0vM/Dxr0YmGnZJQHK
+kfKkRklsk3at09h2tT/oK51mvyUQycV/dWlgBLkkN4u/PPe5rH5Sw308x74h/G4b
+sBJ7W61yXeV1BvyNsiGyUMNAQOwZ8hGXnQlrgW7K4RGsi0b8KxuwmQ/nRWdFf/Gn
+WXV6GdvF1S2IbHbqClZPKi3gt8exXd37K3YeIpPRX44gt82Rq8s=
+=J8cL
+-----END PGP SIGNATURE-----
+
+View attachment "CVE-2020-12667.patch" of type "text/x-patch" (4400 bytes)
+
+Download attachment "CVE-2020-12667.patch.sig" of type "application/octet-stream" (566 bytes)
