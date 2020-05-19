@@ -1,78 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/11/1
-Message-ID: <CAJvHH_QwWT5HBMXEH8hVgXxm8xCYzhJfRTWAijAr0LLWQn4gdg@mail.gmail.com>
-Date: Tue, 11 Feb 2020 19:27:18 +0000
-From: Ibrahim el-sayed <i.elsayed92@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/4
+Message-ID: <054d4faf-ea1d-5354-e33b-8d0b1fe6976b@isc.org>
+Date: Tue, 19 May 2020 01:16:04 -0800
+From: ISC Security Officer <security-officer@....org>
 To: oss-security@...ts.openwall.com
-Subject: Potential regression and/or incomplete fix for CVE-2017-12762
+Cc: "security-officer@....org" <security-officer@....org>
+Subject: Two vulnerabilities disclosed in BIND (CVE-2020-8616 and CVE-2020-8617)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-I stumbled upon CVE-2017-12762 which has a CVSS score of 10 and I think the
-patch is incomplete and it might have regressed in the stable version. I am
-probably wrong hence this email to see if anyone familiar with this CVE and
-the fix and tell me if I am wrong.
+On May 19, 2020, Internet Systems Consortium have disclosed two
+vulnerabilities in our BIND 9 software:
 
-## Incomplete patch
-The patch can be found in
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9f5af546e6acc30f075828cb58c7f09665033967
+   CVE-2020-8616: BIND does not sufficiently limit the number
+   of fetches performed when processing referrals
+   https://kb.isc.org/docs/cve-2020-8616
 
+   CVE-2020-8617: A logic error in code which checks TSIG
+   validity can be used to trigger an assertion failure in tsig.c
+   https://kb.isc.org/docs/cve-2020-8617
 
-This is the vulnerable piece of code
-```
-char *
-isdn_net_newslave(char *parm)
-{
-    char *p = strchr(parm, ',');
-    isdn_net_dev *n;
-    char newname[10];
+With the public announcement of these vulnerabilities, the embargo
+period is ended and any updated software packages that have been
+prepared may be released.
 
-    if (p) {
-        /* Slave-Name MUST not be empty or overflow 'newname' */
-        *if (strscpy(newname, p + 1, sizeof(newname)) <= 0)*
-            return NULL;
-        *p = 0;
-        /* Master must already exist */
-        if (!(n = isdn_net_findif(parm)))
-            return NULL;
-        /* Master must be a real interface, not a slave */
-        if (n->local->master)
-            return NULL;
-        /* Master must not be started yet */
-        if (isdn_net_device_started(n))
-            return NULL;
-        return (isdn_net_new(newname, n->dev));
-    }
-    return NULL;
-}
-```
+ISC's own releases containing fixes are:
 
-I think it is incomplete and can lead to reading out of bound since it does
-*not* check if the src buffer (p) in this case has 10 bytes at least. The
-fix assumes p has 10 bytes and copies that into newname. The fix
-uses strscpy (
-https://github.com/torvalds/linux/blob/cc12071ff39060fc2e47c58b43e249fe0d0061ee/lib/string.c#L180)
-which
-based on its code it starts copying from count and decrements to zero.
-which in this case if param is a string similar to "aa,", then p will point
-to the last byte of the string, strscpy will copy from p+1+sizeof(newname)
-= p+1+10 -[to]-> p+1 which would allow reading 10 bytes after the buffer p
+   -  BIND 9.11.19
+   -  BIND 9.14.12
+   -  BIND 9.16.3
 
+each of which can be downloaded via the ISC downloads page,
+https://www.isc.org/downloads
 
-I do not know if param can end with "," or if there is any validation
-checks that it does not end with "," hence this might not be a bug but only
-bad practice.
+For package maintainers who want *only* the fixes for the
+CVE vulnerabilities, patch diffs are available for each branch
+in the "patches" subdirectory of the branch's May 2020
+maintenance release, e.g.:
 
+  9.11 branch:  https://downloads.isc.org/isc/bind9/9.11.19/patches
+  9.14 branch:  https://downloads.isc.org/isc/bind9/9.14.12/patches
+  9.16 branch:  https://downloads.isc.org/isc/bind9/9.16.3/patches
 
-## Regression
-I looked quickly into latest version for the kernel v3.16.81 and it seems
-that the patch was probably reverted as the code matches exactly to the
-vulnerable version to the CVE (
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/isdn/i4l/isdn_net.c?id=v3.16.81#n2646
-)
-Not sure if the fix was reworked but wanted to surface that issue as well
+Sincerely,
 
-
-
-Ibrahim
-
+Michael McNally
+ISC Security Officer
