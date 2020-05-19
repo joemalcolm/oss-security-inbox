@@ -1,23 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/20/1
-Message-ID: <20200120111729.7fe9d09b@yaydoe>
-Date: Mon, 20 Jan 2020 11:17:29 +0100
-From: Peter Kjellström <cap@....liu.se>
-To: Jeffrey Walton <noloader@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/9
+Message-ID: <20200519172525.GF22032@localhost.localdomain>
+Date: Tue, 19 May 2020 10:25:25 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
+To: oss-security@...ts.openwall.com
+Subject: qmail: short/int vs. gid_t
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 16 Jan 2020 23:21:52 -0500
-Jeffrey Walton <noloader@...il.com> wrote:
+Hi all,
 
-> This just made my radar. It appears some AMD cpus with RDRAND fail to
-> produce random numbers after a suspend/resume. It looks like it was
-> first reported in 2014 or so.
+While discussing the qmail vulnerabilities on distros@...nwall, we also
+discussed the following issue (which exists in qmail and in related
+software such as checkpassword):
 
-Note that there are, afaict, two distict AMD RDRAND issues discussed
-here. The original 2014 suspend/resume one and the more recent, "ryzen
-3000 just returnx 0xffffffff". The latter is probably the reason for
-the renewed focus on this...
+On Thu, May 07, 2020 at 05:39:18PM +0200, Solar Designer wrote:
+> BTW, how about this piece in qmail 1.03? -
+>
+> /* XXX: there are more portability problems here waiting to leap out at me */
+>
+> int prot_gid(gid) int gid;
+> {
+> #ifdef HASSHORTSETGROUPS
+>   short x[2];
+>   x[0] = gid; x[1] = 73; /* catch errors */
+>   if (setgroups(1,x) == -1) return -1;
+> #else
+>   if (setgroups(1,&gid) == -1) return -1;
+> #endif
+>   return setgid(gid); /* _should_ be redundant, but on some systems it isn't */
+> }
+>
+> As you can see, this tries to workaround ancient systems where the size
+> of groups array elements might not be reliably known.  However, notice
+> that none of the compile-time options uses gid_t.  If the size of gid_t
+> doesn't match either "short" or "int" (whichever is chosen at compile
+> time above), this might set a wrong supplementary group, especially on
+> big-endian architectures.
+>
+> The workaround with setting two groups array elements is rather common -
+> I used that one myself - but it's only safe on modern systems when used
+> along with gid_t (so the extra element is guaranteed to be ignored when
+> the workaround is unneeded).
+>
+> You might want to check how this function changed(?) in currently
+> maintained qmail forks, and suggest they use gid_t if not already.
+>
+> I guess original qmail didn't use gid_t so that it'd build on systems
+> that don't define this type.  Supporting those systems should be
+> unneeded now.
 
-/Peter 
+The developers of notqmail have been working on a fix for this issue:
+
+    https://github.com/notqmail/notqmail/pull/72
+
+Thank you very much!
+
+With best regards,
+
+--
+the Qualys Security Advisory team
+
+
+[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
+
+
+
+This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
