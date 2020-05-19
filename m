@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3755" "Wednesday" "4" "May" "2016" "20:28:03" "+0300" "Solar Designer" "solar@openwall.com" "<20160504172803.GA19393@openwall.com>" "79" "Re: [oss-security] broken RSA keys" "^Date:" nil nil "5" "2016050417:28:03" "[oss-security] broken RSA keys" (number mark "        solar@openwa May  4   79/3755  " thread-indent "\"Re: [oss-security] broken RSA keys\"\n") "<20160504124248.GA15148@openwall.com>" ("<20160504124248.GA15148@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4128" "Tuesday" "19" "May" "2020" "11:00:44" "+0200" "Otto Moerbeek" "otto.moerbeek@open-xchange.com" "<d1ab860e-7dda-f02e-483f-27444b31b9ba@open-xchange.com>" "109" "[oss-security] PowerDNS Recursor 4.3.1, 4.2.2. and 4.1.16 released fixing multiple vulnerabilities" nil nil nil "5" "2020051909:00:44" "[oss-security] PowerDNS Recursor 4.3.1, 4.2.2. and 4.1.16 released fixing multiple vulnerabilities" (number mark "U       otto.moerbee May 19  109/4128  " thread-indent "\"[oss-security] PowerDNS Recursor 4.3.1, 4.2.2. and 4.1.16 released fixing multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] PowerDNS Recursor 4.3.1, 4.2.2. and 4.1.16 released fixing multiple vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5951 invoked by uid 550); 4 May 2016 17:28:12 -0000
+Received: (qmail 1394 invoked by uid 550); 19 May 2020 10:49:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +11,137 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5903 invoked from network); 4 May 2016 17:28:09 -0000
-Message-ID: <20160504172803.GA19393@openwall.com>
-References: <20160504124248.GA15148@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160504124248.GA15148@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Wed, 4 May 2016 20:28:03 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] broken RSA keys
+Received: (qmail 32254 invoked from network); 19 May 2020 09:00:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=open-xchange.com;
+	s=201705; t=1589878846;
+	bh=B/d8HyK5byii2T7XKeGgIeMN6tLAhACwpXzdOfgKasE=;
+	h=From:Subject:To:Date:From;
+	b=8/0pYHkTuoo47zPlQBzOIqnz2YdYrKIDyIox0tk0AyiVQS6qEv3Hdwv5oWSVM+Lkr
+	 x0a17hvWHZrbdg+ePdcaXEQzYM411bcY6T1XsdOA90xA17MfC7ejdJxlBlSh/1Imri
+	 nUOzOPVOIu/TsKTDLZfI13FBeP44Xn/oEWi3Ver5axR5SYkd8KrabSSDBEeEPwGaKE
+	 ML4dbobIJRHjQHpH7nejsWMC0vTT51aLejgUGbF2YQ+Q7yhr6LYEbeseDLaXPYh/MV
+	 /eTNbk5Dpk2Q/k/TpqzyJC3IgPBmTuk625oxQb3BTo7R+NWoNW+7C2BKF6VtBFgsUo
+	 0TxAjrp4Z2QmQ==
+From: Otto Moerbeek <otto.moerbeek@open-xchange.com>
 To: oss-security@lists.openwall.com
+Message-ID: <d1ab860e-7dda-f02e-483f-27444b31b9ba@open-xchange.com>
+Date: Tue, 19 May 2020 11:00:44 +0200
+User-Agent: Mozilla/5.0 (X11; OpenBSD amd64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="mw8RY0q8JhVeG2WvBggyQo0BammYd58oS"
+Subject: [oss-security] PowerDNS Recursor 4.3.1, 4.2.2. and 4.1.16 released fixing multiple
+ vulnerabilities
 
-On Wed, May 04, 2016 at 03:42:48PM +0300, Solar Designer wrote:
-> Additionally, both Phuctor's list and Hanno Bock's list of GCDs include
-> many small factors that also exhibit 32-bit value duplication.  To me,
-> this speaks in favor of there being a bignum library bug like this.
-> A bug that not only duplicates the least significant 32 bits onto the
-> next 32 bits, but also keeps the rest of the limbs at all-zeroes.  There
-> are even weirder examples, though - e.g., one of Phuctor's factors is
-> 0x115CFF61CFECFF61BE9, where we see three 32-bit limbs satisfying:
-> 
-> limb[1] = limb[0] + limb[2]
-> 
-> and also limb[2] is small and thus likely didn't come from a CSPRNG, but
-> possibly from uninitialized memory.
+--mw8RY0q8JhVeG2WvBggyQo0BammYd58oS
+Content-Type: multipart/mixed; boundary="GBTVwepmulwhIkRXfAffJQRW7LXS9aEIp"
 
-While the 32-bit duplication of e is probably for real (or those keys
-wouldn't validate... do they?), similar observations for factors are
-probably a red herring: an artifact of the process used by these
-factoring projects rather than part of how the keys were generated.
+--GBTVwepmulwhIkRXfAffJQRW7LXS9aEIp
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: quoted-printable
 
-Specifically, the above 3-limb example came from this key:
+Hello!,
 
-http://phuctor.nosuchlabs.com/gpgkey/63016E43A530350EC983F09A74C50EC8E87FEB92F3DEAC355BE2E64CA7985921
+Today we are releasing PowerDNS Recursor 4.3.1, 4.2.2. and 4.1.16,
+containing security fixes for three CVEs:
 
-Its listed factors for:
+- CVE-2020-10995[1]
+- CVE-2020-12244[2]
+- CVE-2020-10030[3]
 
-30994406304224333705089301021808817053265691600565745779461319192700482173499346901463373323760837101094422297015585914901975150808157025848055524050099664666818474403138047948921297911809676315880151194417982271740532112280276561406067150580272837889469704078603620474607973901168413284328036775114860003006242978036093114581459742298368645557721283839266550975745706234722636520751279031095530989644784794578820133689102573944830983932022310476740027696204630693285065012124122533231053902876463977914183401001126261496277170510153621628673978038897817661593063222593495679683291096299835912556781797309445223969995
+The issues are:
 
-are:
+CVE-2020-10995: An issue in the DNS protocol has been found that allows
+malicious parties to use recursive DNS services to attack third party
+authoritative name servers. Severity is medium. We would like to thank
+Lior Shafir, Yehuda Afek and Anat Bremler-Barr for finding and
+subsequently reporting this issue!
 
-15010910703015
-5124733305108403985385
-149784613473514443594783892995
+CVE-2020-12244: Records in the answer section of a NXDOMAIN response
+lacking an SOA were not properly validated. Severity is medium. We would
+like to thank Matt Nordhoff for finding and subsequently reporting this
+issue!
 
-However, this modulus is also divisible by 3, 5, and thus by 15, etc.
-So what we're seeing in databases like this are just some larger
-non-prime factors that combine the smaller factors in specific ways.
-I understand that's not how they were figured out (rather, they're
-shared factors with other keys), but that's what they happen to be
-composed of.  Moreover, the larger ones of the factors above are
-divisible by the smaller ones of them:
+CVE-2020-10030: An attacker with enough privileges to change the
+hostname might be able to disclose uninitialized memory. This issue also
+affects the Authoritative Server and dnsdist; since the attack requires
+very high privileges and the issue does not affect Linux, we will not be
+releasing new versions for those just for this issue. Severity is low.
 
-5124733305108403985385 / 15010910703015 = 341400559
-149784613473514443594783892995 / 5124733305108403985385 = 29227787
+As usual, there were also other smaller enhancements and bugfixes.
+Please refer to the 4.3.1 changelog[4], 4.2.2 changelog[5] and 4.1.16
+changelog[6] for details.
 
-So these are pretty much arbitrary, process-dependent combinations of
-smaller factors, and thus their bit patterns, etc. don't tell us much or
-anything about the nature of bugs in key generation, if there were any.
-(I say "if there were any" since the keys could as well have been
-mangled later.)
+The 4.3.1 tarball[7] (signature[8]), 4.2.2 tarball[9] (signature[10])
+and 4.1.16 tarball[11] (signature[12]) are available at our download
+site[13] and packages for CentOS 6, 7 and 8, Debian Stretch and Buster,
+Ubuntu Xenial and Bionic are available from our repository[14]
 
-BTW, had I not realized the above, I would now come up with an even more
-complex conspiracy theory about 149784613473514443594783892995, which is
-0x1E3FAEDA6A4F093A7C0F5A603, so:
+Note that the 4.1 packages will be published later today.
 
-limb[0] = 0xC0F5A603
-limb[1] = 0xA4F093A7
-limb[2] = 0xE3FAEDA6
-limb[3] = 1
+4.0 and older releases are EOL, refer to the documentation[15] for
+details about our release cycles.
 
-which satisfies:
+Please send us all feedback and issues you might have via the mailing
+list[16], or in case of a bug, via GitHub[17].
 
-limb[1] = limb[0] + limb[2] + 2
 
-No idea why it's "+ 2" here, unlike in the smaller factor's example, but
-like I say this is just a conspiracy theory, and I think the simple
-explanation is it's an artifact of the process rather than any inherent
-property of the keys.
+[1]
+https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-20=
+20-01.html
+[2]
+https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-20=
+20-02.html
+[3]
+https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-20=
+20-03.html
+[4] https://doc.powerdns.com/recursor/changelog/4.3.html#change-4.3.1
+[5] https://doc.powerdns.com/recursor/changelog/4.2.html#change-4.2.2
+[6] https://doc.powerdns.com/recursor/changelog/4.1.html#change-4.1.16
+[7] https://downloads.powerdns.com/releases/pdns-recursor-4.3.1.tar.bz2
+[8] https://downloads.powerdns.com/releases/pdns-recursor-4.3.1.tar.bz2.sig
+[9] https://downloads.powerdns.com/releases/pdns-recursor-4.2.2.tar.bz2
+[10] https://downloads.powerdns.com/releases/pdns-recursor-4.2.2.tar.bz2.sig
+[11] https://downloads.powerdns.com/releases/pdns-recursor-4.1.16.tar.bz2
+[12]
+https://downloads.powerdns.com/releases/pdns-recursor-4.1.16.tar.bz2.sig
+[13] https://downloads.powerdns.com/releases
+[14] https://repo.powerdns.com/
+[15] https://docs.powerdns.com/recursor/appendices/EOL.html
+[16] https://mailman.powerdns.com/mailman/listinfo/pdns-users
+[17] https://github.com/PowerDNS/pdns/issues/new/choose
 
-Thus, I think it makes sense to focus on searching for bugs producing
-the 32-bit duplicated e's, after all.  And it also makes sense to
-validate those keys - not merely rely on data already in these factoring
-projects' databases.
+--=20
+kind regards,
+Otto Moerbeek
+Senior PowerDNS Developer
 
-Could it be that all of the broken e keys were generated by OpenSSL from
-year 2000 or earlier?  Embedded copies in proprietary PGP implementations
-that have since been rebuilt for 64-bit?  Doesn't sound very realistic,
-but who knows.
+Email: otto.moerbeek@open-xchange.com
 
-Alexander
+
+
+
+--GBTVwepmulwhIkRXfAffJQRW7LXS9aEIp--
+
+--mw8RY0q8JhVeG2WvBggyQo0BammYd58oS
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEmQw9Dqx8J13GsYQ26sq5Cxlj7CsFAl7DoDwACgkQ6sq5Cxlj
+7CsfXQf/TZ9q279bYe/jzkAK7EtYbfVxVC1+rUldCwllmtA7X7RdI++Ygdq5D4w/
+oqTlZwzZPQmYR9ssJgUL4TotJJNo6dJj6+yGOBTPRjm/xLXSYqAm9t6WQpnGUdGk
+lLWiWxFlJ21R7pi/souw4hzqtPK7J7mGkXWTi5Po8XMvDyQcSG9eCu0sQzO3pz3O
+6eSR2mm3LjOsXEWuyYd+cpKFjtcPfkvRvTjq73KBOdIDWgbsAcj3HE9T/tS6kDKX
+Us0YR9PMVAcie9/NmIqB/x1wuN6JAxtbyL9duETjxDgnCwWx5OI4lJI4fJefhmhA
+uMazNTw9ZLjLU8rY597FQ6ZvIktVSg==
+=KFCR
+-----END PGP SIGNATURE-----
+
+--mw8RY0q8JhVeG2WvBggyQo0BammYd58oS--
