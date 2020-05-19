@@ -1,37 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/14/2
-Message-ID: <CANfpUcud+xBT1jg3k7t-XGzuQxKumZHBf+SMGNakd9Rwnh0gew@mail.gmail.com>
-Date: Tue, 14 Jul 2020 11:41:29 +0800
-From: ShaoFeng Shi <shaofengshi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/1
+Message-ID: <CAOo2v=DTvPoytxQ8QiEQuYvw2A+Us0ZVRmkuGr4zgQNMHAf=7Q@mail.gmail.com>
+Date: Tue, 19 May 2020 08:29:05 +0530
+From: Hardik Vyas <hvyas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY][CVE-2020-13926] Apache Kylin SQL injection vulnerability
+Subject: CVE-2020-10736 ceph: authorization bypass in monitor and manager daemons
 Content-Type: text/plain; charset=utf-8
 
-Versions Affected: 2.0.0, 2.1.0, 2.2.0, 2.3.0, 2.3.1, 2.3.2, 2.4.0, 2.4.1,
-2.5.0, 2.5.1, 2.5.2, 2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6,
-3.0.0-alpha, 3.0.0-alpha2, 3.0.0-beta, 3.0.0, 3.0.1 3.0.2
+Hello,
 
-Description:
+An authorization bypass vulnerability was found in Ceph versions 15.2.0 and
+later, where the ceph-mon and ceph-mgr daemons do not properly restrict
+access, resulting in gaining access to unauthorized resources. This flaw
+allows an authenticated client to modify the configuration and possibly
+conduct further attacks.
 
-Kylin concatenates and executes some Hive SQL statements in Hive CLI or
-beeline when building new segments; some parts of the SQL are from system
-configurations, while the configuration can be overwritten by certain rest
-API, which makes SQL injection attack is possible.
+In ceph-mon daemon, the "kludge" for older clients in handle_command()
+allows any authenticated client access to the three whitelisted commands.
+An attacker with "mon r" caps can exploit this, e.g. to change
+configuration parameters using injectargs. For ceph-mgr daemon, in
+handle_command(MCommand), messages are queued to adminsocket without access
+checks if fsid is present. This can be exploited by an attacker without
+manager caps to run any MCommand including "config set".
 
-Mitigation:
-Users of all previous versions after 2.0 should upgrade to 3.1.0.
+CVE-2020-10736 has been assigned for this flaw. Octopus v15.2.2 release
+announcement : https://ceph.io/releases/v15-2-2-octopus-released/
 
-Credit:
-We would like to thank Rupeng Wang from Kyligence for reporting and fix
-this issue.
+Upstream patches:
 
-Best regards,
+[master]
+https://github.com/ceph/ceph/commit/c7e7009a690621aacd4ac2c70c6469f25d692868
+[v15.2.2]
+https://github.com/ceph/ceph/commit/f2cf2ce1bd9a86462510a7a12afa4e528b615df2
 
-Shaofeng Shi 史少锋
-Apache Kylin PMC
-Email: shaofengshi@...che.org
+Credit: Olle Segerdahl
 
-Apache Kylin FAQ: https://kylin.apache.org/docs/gettingstarted/faq.html
-Join Kylin user mail group: user-subscribe@...in.apache.org
-Join Kylin dev mail group: dev-subscribe@...in.apache.org
+Regards,
+-- 
+
+Hardik Vyas / Red Hat Product Security
+
+BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
 
