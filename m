@@ -1,89 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/31/1
-Message-ID: <87wo718b0x.fsf@hope.eyrie.org>
-Date: Mon, 30 Mar 2020 20:21:18 -0700
-From: Russ Allbery <eagle@...ie.org>
-To: kerberos@....edu, oss-security@...ts.openwall.com
-Subject: pam-krb5 security advisory (4.9 and earlier)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/7
+Message-Id: <FC2E54FA-15CB-4732-9E1B-FB35F7A01EEB@apache.org>
+Date: Tue, 19 May 2020 16:05:37 +0200
+From: Jan Lehnardt <jan@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-1955] Apache CouchDB Remote Privilege Escalation
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability type:  Buffer overflow
-Versions affected:   All versions prior to 4.8
-Versions fixed:      4.9 and later
-Discovered:          2020-03-02
-Public announcement: 2009-03-30
-CVE ID:              CVE-2020-10595
+Description
+===========
 
-During a refactor of my pam-krb5 Kerberos PAM module, I discovered a
-single byte buffer overflow that had been there since either the first
-version of the module or very early in its development.  During prompting
-initiated by the Kerberos library, an attacker who enters a response
-exactly as long as the length of the buffer provided by the underlying
-Kerberos library will cause pam-krb5 to write a single nul byte past the
-end of that buffer.
+CouchDB version 3.0.0 shipped with a new configuration setting that
+governs access control to the entire database server called
+`require_valid_user_except_for_up`. It was meant as an extension to the
+long-standing setting `require_valid_user`, which in turn requires that
+any and all requests to CouchDB will have to be made with valid
+credentials, effectively forbidding any anonymous requests.
 
-The effect of this buffer overflow will depend on the buffer allocation
-strategy of the underlying Kerberos library, but could result in heap
-corruption or a single-byte overwrite of another stack variable, with
-unknown consequences.  Conceivably, remote code execution could be
-possible, although I believe it would be difficult to achieve.
+The new `require_valid_user_except_for_up` is an off-by-default setting
+that was meant to allow requiring valid credentials for all endpoints
+except for the `/_up` endpoint.
 
-Under normal usage of this PAM module, it never does prompting initiated
-by the Kerberos library, and thus most configurations will not be readily
-vulnerable to this bug.  Kerberos-library-initiated prompting generally
-only happens with the no_prompt PAM configuration option, PKINIT, or other
-non-password preauth mechanisms.
+However, the implementation of this made an error that lead to not
+enforcing credentials on any endpoint, when enabled.
 
-I do not believe this vulnerability is publicly known, and am not aware of
-any exploits in the wild.
+CouchDB versions 3.0.1[1] and 3.1.0[2] fix this issue.
 
-This problem has been fixed in pam-krb5 4.9, available from:
+Mitigation
+==========
 
-  https://www.eyrie.org/~eagle/software/pam-krb5/
+Users who have not enabled `require_valid_user_except_for_up` are not
+affected.
 
-pam-krb5 was released as the libpam-krb5 and libpam-heimdal packages with
-Debian 4.0 (etch) and later.  These vulnerabilities will be fixed in the
-4.7-4+deb9u1 version of the libpam-krb5 Debian package for Debian 9.0
-(stretch) and the 4.8-2+deb10u1 version for Debian 10.0 (buster).  They
-have also been fixed in the 4.9-1 package for Debian unstable (sid).
+Users who have it enabled can either disable it again, or upgrade to
+CouchDB versions 3.0.1[1] and 3.1.0[2].
 
-For others who use this module, here is a patch that should apply to
-versions prior to 4.9.  (pam-krb5 4.9 restructures this code.)
+[1]: https://docs.couchdb.org/en/stable/whatsnew/3.0.html#version-3-0-1
+[2]: https://docs.couchdb.org/en/stable/whatsnew/3.1.html#version-3-1-0
 
-diff --git a/prompting.c b/prompting.c
-index e985d95..d81054f 100644
---- a/prompting.c
-+++ b/prompting.c
-@@ -314,26 +314,27 @@ pamk5_prompter_krb5(krb5_context context UNUSED, void *data, const char *name,
-     /*
-      * Reuse pam_prompts as a starting index and copy the data into the reply
-      * area of the krb5_prompt structs.
-      */
-     pam_prompts = 0;
-     if (name != NULL && !args->silent)
-         pam_prompts++;
-     if (banner != NULL && !args->silent)
-         pam_prompts++;
-     for (i = 0; i < num_prompts; i++, pam_prompts++) {
--        size_t len;
-+        size_t len, allowed;
- 
-         if (resp[pam_prompts].resp == NULL)
-             goto cleanup;
-         len = strlen(resp[pam_prompts].resp);
--        if (len > prompts[i].reply->length)
-+        allowed = prompts[i].reply->length;
-+        if (allowed == 0 || len > allowed - 1)
-             goto cleanup;
- 
-         /*
-          * The trailing nul is not included in length, but other applications
-          * expect it to be there.  Therefore, we copy one more byte than the
-          * actual length of the password, but set length to just the length of
-          * the password.
-          */
-         memcpy(prompts[i].reply->data, resp[pam_prompts].resp, len + 1);
-         prompts[i].reply->length = (unsigned int) len;
+On behalf of the CouchDB Security team,
+Jan LehnardT
+—
 
--- 
-Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
+
