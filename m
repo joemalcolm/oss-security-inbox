@@ -1,4 +1,9 @@
-Received: (qmail 15919 invoked by uid 550); 5 Nov 2025 15:02:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["916" "Wednesday" "20" "May" "2020" "12:49:32" "+0800" "George Ni" "nic@apache.org" "<CANUbERzvv4k6ac92XyZbVHOBt-ASHDAPgMC8xxFAo1jfNPQ2EA@mail.gmail.com>" "43" "[oss-security] [CVE-2020-1956] Apache Kylin command injection vulnerability" nil nil nil "5" "2020052004:49:32" "[oss-security] [CVE-2020-1956] Apache Kylin command injection vulnerability" (number mark "U       nic@apache.o May 20   43/916   " thread-indent "\"[oss-security] [CVE-2020-1956] Apache Kylin command injection vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-1956] Apache Kylin command injection vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 16116 invoked by uid 550); 20 May 2020 05:34:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,61 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7794 invoked from network); 5 Nov 2025 09:22:58 -0000
-From: "Olle E. Johansson" <oej@edvina.net>
-Content-Type: text/plain;
-	charset=utf-8
+Received: (qmail 18249 invoked from network); 20 May 2020 04:49:56 -0000
+X-Gm-Message-State: AOAM532kcmtPO3NwO3elCk1pRqwqp5JVRae+NItMupD+3qgQrlOJ48MN
+	S5I2BtLEoWhGELtk11rCGkUjYix5KwpO16WLpuY=
+X-Google-Smtp-Source: ABdhPJwljtwAZnWJJm7zjLe835h77YqciOCi2EM43yCR+CeJ1vA2YYEr45Z2Eygc1oOBxDos4rG69oWUhKqxvFmDrZ0=
+X-Received: by 2002:a05:620a:a83:: with SMTP id v3mr2886952qkg.456.1589950183967;
+ Tue, 19 May 2020 21:49:43 -0700 (PDT)
+MIME-Version: 1.0
+From: George Ni <nic@apache.org>
+Date: Wed, 20 May 2020 12:49:32 +0800
+X-Gmail-Original-Message-ID: <CANUbERzvv4k6ac92XyZbVHOBt-ASHDAPgMC8xxFAo1jfNPQ2EA@mail.gmail.com>
+Message-ID: <CANUbERzvv4k6ac92XyZbVHOBt-ASHDAPgMC8xxFAo1jfNPQ2EA@mail.gmail.com>
+To: user <user@kylin.apache.org>, dev <dev@kylin.apache.org>, announce@apache.org, 
+	Johannes Dahse <jdahse@ripstech.com>, Apache Security Team <security@apache.org>, 
+	oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000ed117905a60d1f2d"
+Subject: [oss-security] [CVE-2020-1956] Apache Kylin command injection vulnerability
+
+--000000000000ed117905a60d1f2d
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Date: Wed, 5 Nov 2025 10:22:38 +0100
-References: <CAHjsZGZvy3zeN3st9-Ya4Hxu+29My68sXc9WJnZw_Pd2c_AF6Q@mail.gmail.com>
- <2025110538-probation-thickness-0517@gregkh>
-To: oss-security@lists.openwall.com
-In-Reply-To: <2025110538-probation-thickness-0517@gregkh>
-Message-Id: <5F9CEC1C-62DC-4BF1-96DC-22F62F2935F9@edvina.net>
-X-Mailer: Apple Mail (2.3826.700.81)
-Subject: Re: [oss-security] Becoming a CVE Naming Authority for your project
+
+Severity: Important
+
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+Kylin 2.3.0 to 2.3.2
+Kylin 2.4.0 to 2.4.1
+Kylin 2.5.0 to 2.5.2
+Kylin 2.6.0 to 2.6.5
+Kylin 3.0.0-alpha, Kylin 3.0.0-alpha2, Kylin 3.0.0-beta, Kylin 3.0.0, Kylin
+3.0.1
+
+Description:
+Kylin has some restful apis which will concatenate os command with the user
+input string, a user is likely to be able to execute any os command without
+any protection or validation.
+
+Mitigation:
+Users should upgrade to 3.0.2 or 2.6.6 or set
+kylin.tool.auto-migrate-cube.enabled to false to disable command execution.
+
+Credit:
+This issue was discovered by =EF=BB=BFJohannes Dahse.
+
+References:
+https://kylin.apache.org/docs/security.html
+
+--=20
+
+---------------------
+
+Best regards,
 
 
 
-> On 5 Nov 2025, at 00:23, Greg KH <greg@kroah.com> wrote:
->=20
-> On Tue, Nov 04, 2025 at 08:47:35AM -0300, Rodrigo Freire wrote:
->> Open Source Project Maintainers,
->>=20
->> Managing security vulnerabilities is currently a significant pain,
->> especially with the recent increase in dubious CVE reports due to AI
->> assistants. The discussion around questionable CVEs reported against
->> projects like dnsmasq, curl highlights a growing concern within the
->> open source community.
->>=20
->> One effective way to combat the influx of bogus CVEs and ensure
->> accurate vulnerability reporting is for open source projects to become
->> their own CVE Numbering Authority (CNA). As a CNA, your project gains
->> control over the CVE assignment process.
->>=20
->> Taking ownership of your project's as a CNA ensures that you are in
->> control of the CVE assignment. There will be some requirements to it,
->> sure thing. Check
->> https://openssf.org/blog/2023/11/27/openssf-introduces-guide-to-becoming=
--a-cve-numbering-authority-as-an-open-source-project/
->=20
-> I totally agree that all "major" open source projects should become a
-> CNA, and strongly recommend taking back control over stuff like this.
->=20
-> But, for "smaller" open source projects, it would be _great_ if a root
-> CNA could become the default for all of open source so that we don't
-> have the problem where any CNA can assign CVEs against any random
-> software without any repercussions.
+Ni Chunen / George
 
-I would be happy if we could assign or =E2=80=9Cscope=E2=80=9D to a CNA tha=
-t would help us,
-but also protect our scope without having to become a CNA with all that
-comes with being one. In that case, we have to be in control over our scope
-if we want to move it to another CNA or at some point have the resources
-needed to register as a CNA ourselves. I am not sure how scope =E2=80=9Cown=
-ership=E2=80=9D
-works in the CVE program today.
-
-/O=
+--000000000000ed117905a60d1f2d--
