@@ -1,35 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/2
-Message-ID: <20200514091149.4e807efa@computer>
-Date: Thu, 14 May 2020 09:11:49 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/20/4
+Message-ID: <33dd7a06-a3b6-90dc-35dd-7d58b57611d8@apache.org>
+Date: Wed, 20 May 2020 16:22:21 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Hypermail XSS via attachment
+Subject: CVE-2020-9484 Apache Tomcat Remote Code Execution via session persistence
 Content-Type: text/plain; charset=utf-8
 
-"Hypermail is a free (GPL) program to convert email from Unix mbox
-format to html" [1]
-It is commonly used to create mailing list archives.
+CVE-2020-9484 Apache Tomcat Remote Code Execution via session persistence
 
-Hypermail contains no validation or sanitation of mail attachments and
-provides them as simple files. This means it's trivially vulnerable to
-Cross Site Scripting (XSS).
+Severity: High
 
-One can simply attach a file to a mail with either no or an .html
-extension and it can contain javascript/XSS payloads (e.g.
-"<html><script>alert(document.domain)</script>").
+Vendor: The Apache Software Foundation
 
-The developer of Hypermail informed me that he is no longer interested
-in Hypermail, thus there will probably be no fix.
+Versions Affected:
+Apache Tomcat 10.0.0-M1 to 10.0.0-M4
+Apache Tomcat 9.0.0.M1 to 9.0.34
+Apache Tomcat 8.5.0 to 8.5.54
+Apache Tomcat 7.0.0 to 7.0.103
 
-This means using hypermail for public mailing list archives is
-inherently risky if one runs anything else on the same host that may be
-prone to XSS attacks (which is usually everything that includes any
-form of authentication).
+Description:
+If:
+a) an attacker is able to control the contents and name of a file on the
+   server; and
+b) the server is configured to use the PersistenceManager with a
+   FileStore; and
+c) the PersistenceManager is configured with
+   sessionAttributeValueClassNameFilter="null" (the default unless a
+   SecurityManager is used) or a sufficiently lax filter to allow the
+   attacker provided object to be deserialized; and
+d) the attacker knows the relative file path from the storage location
+   used by FileStore to the file the attacker has control over;
+then, using a specifically crafted request, the attacker will be able to
+trigger remote code execution via deserialization of the file under
+their control. Note that all of conditions a) to d) must be true for the
+attack to succeed.
 
+Mitigation:
+- Upgrade to Apache Tomcat 10.0.0-M5 or later
+- Upgrade to Apache Tomcat 9.0.35 or later
+- Upgrade to Apache Tomcat 8.5.55 or later
+- Upgrade to Apache Tomcat 7.0.104 or later
+Alternatively, users may configure the PersistenceManager with an
+appropriate value for sessionAttributeValueClassNameFilter to ensure
+that only application provided attributes are serialized and deserialized.
 
-[1] http://www.hypermail-project.org/
+Credit:
+This issue was discovered and reported responsibly to the Apache Tomcat
+Security Team by report by jarvis threedr3am of pdd security research
 
--- 
-Hanno Böck
-https://hboeck.de/
+References:
+[1] http://tomcat.apache.org/security-10.html
+[2] http://tomcat.apache.org/security-9.html
+[3] http://tomcat.apache.org/security-8.html
+[4] http://tomcat.apache.org/security-7.html
