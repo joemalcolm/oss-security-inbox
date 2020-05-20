@@ -1,31 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/17/1
-Message-ID: <CACYv8z24DeHGiULFr16tRxLqoXu9Nrbb4fEE08egsqjc2F6dEg@mail.gmail.com>
-Date: Thu, 17 Dec 2020 17:45:12 +0800
-From: Guangning E <guangning@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-17520 Apache Pulsar Manager Information Disclosure (bypass admin interceptor)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/20/1
+Message-ID: <CANUbERzvv4k6ac92XyZbVHOBt-ASHDAPgMC8xxFAo1jfNPQ2EA@mail.gmail.com>
+Date: Wed, 20 May 2020 12:49:32 +0800
+From: George Ni <nic@...che.org>
+To: user <user@...in.apache.org>, dev <dev@...in.apache.org>, announce@...che.org,  Johannes Dahse <jdahse@...stech.com>, Apache Security Team <security@...che.org>,  oss-security@...ts.openwall.com
+Subject: [CVE-2020-1956] Apache Kylin command injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-17520 Apache Pulsar Manager Information Disclosure
+Severity: Important
 
-Severity: High
-
-Vendor: The Apache Software Foundation
+Vendor:
+The Apache Software Foundation
 
 Versions Affected:
-Apache Pulsar Manager 0.1.0
+Kylin 2.3.0 to 2.3.2
+Kylin 2.4.0 to 2.4.1
+Kylin 2.5.0 to 2.5.2
+Kylin 2.6.0 to 2.6.5
+Kylin 3.0.0-alpha, Kylin 3.0.0-alpha2, Kylin 3.0.0-beta, Kylin 3.0.0, Kylin
+3.0.1
 
-Description
-In Pulsar manager 0.1.0 version, malicious users will be able to bypass
-pulsar-manager's admin, permission verification mechanism by constructing
-special URLs, thereby accessing any HTTP API
+Description:
+Kylin has some restful apis which will concatenate os command with the user
+input string, a user is likely to be able to execute any os command without
+any protection or validation.
 
 Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Upgrade to Pulsar Manager 0.2.0 or later
+Users should upgrade to 3.0.2 or 2.6.6 or set
+kylin.tool.auto-migrate-cube.enabled to false to disable command execution.
 
 Credit:
-This issue was identified by the threedr3am.
+This issue was discovered by ﻿Johannes Dahse.
+
+References:
+https://kylin.apache.org/docs/security.html
+
+-- 
+
+---------------------
+
+Best regards,
+
+
+
+Ni Chunen / George
 
