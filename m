@@ -1,42 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/20/2
-Message-ID: <3801c44c-e32a-1607-4764-1be5effec959@isc.org>
-Date: Thu, 20 Aug 2020 11:10:07 -0800
-From: Michael McNally <mcnally@....org>
-To: oss-security@...ts.openwall.com, "security-officer@....org" <security-officer@....org>
-Subject: Five vulnerabilities disclosed in BIND (CVE-2020-8620, CVE-2020-8621, CVE-2020-8622, CVE-2020-8623, and CVE-2020-8624)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/21/1
+Message-ID: <CAGUWgD8s3DtM6sG9Pj478H06G_evwPsF49pK5Cig0VUHY_mrQg@mail.gmail.com>
+Date: Thu, 21 May 2020 12:56:23 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Short notes on qmail security guarantee
 Content-Type: text/plain; charset=utf-8
 
-On August 20, 2020, we (Internet Systems Consortium) have disclosed five
-vulnerabilities in our BIND 9 software:
+ From my blog:
+https://j.ludost.net/blog/archives/2020/05/21/short_notes_on_qmail_security_guarantee/index.html
 
-   CVE-2020-8620: A specially crafted large TCP payload can trigger
-   an assertion failure in tcpdns.c
-   https://kb.isc.org/docs/cve-2020-8620
+Short notes on qmail security guarantee
 
-   CVE-2020-8621: Attempting QNAME minimization after forwarding can
-   lead to an assertion failure in resolver.c
-   https://kb.isc.org/docs/cve-2020-8621
+Disclaimer: written in hurry, could be wrong.
 
-   CVE-2020-8622: A truncated TSIG response can lead to an assertion failure
-   https://kb.isc.org/docs/cve-2020-8622
+djb offers monetary bounty for verifiable qmail exploit,
+called "qmail security guarantee" [1].
 
-   CVE-2020-8623: A flaw in native PKCS#11 code can lead to a remotely
-   triggerable assertion failure in pk11.c
-   https://kb.isc.org/docs/cve-2020-8623
+He hasn't awarded the bounty yet, despite several
+vulnerabilities found by us in 2005 [2] and in 2020 [3]
+Qualys discovered that at least one of the vulnerabilities
+works in default qmail install.
 
-   CVE-2020-8624: update-policy rules of type "subdomain" are enforced incorrectly
-   https://kb.isc.org/docs/cve-2020-8624
+Both of these vulnerabilities require more that 4GB memory.
 
-New versions of BIND are available from https://www.isc.org/downloads
+djb's main argument is that nobody gives a lot of memory
+to qmail-smtpd (and as djb might missed to all other
+qmail- components).
 
-Operators and package maintainers who prefer to apply patches selectively can
-find individual vulnerability-specific patches in the "patches" subdirectory
-of the release directory for our two stable release branches (9.11 and 9.16)
+We believe that the claim of memory limit is wrong for
+the following reasons:
 
-  https://downloads.isc.org/isc/bind9/9.11.22/patches
-  https://downloads.isc.org/isc/bind9/9.16.6/patches
+1. qmail's install documentation doesn't mention memory limits
+2. Qualys claims that their exploit works on the default
+install of all packages they have seen (and all package maintainers
+have missed memory limits).
+3. djb shouldn't assume that 4-8GB will be enough for the
+normal functioning of qmail. In theory libc might require
+more RAM in the future. Currently mobile phones have
+32+GB RAM and there is clear trend in grow of RAM.
+4. By common sense, distributing software with known vulnerabilities
+is bad practice.
+5. AFAIK djb teaches students about coding and security and he
+better lead by example of good coding.
 
-With the public announcement of these vulnerabilities, the embargo
-period is ended and any updated software packages that have been
-prepared may be released.
+[1] https://cr.yp.to/qmail/guarantee.html
+[2] http://www.guninski.com/where_do_you_want_billg_to_go_today_4.html
+[3] https://www.openwall.com/lists/oss-security/2020/05/19/8
