@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["374" "Monday" "23" "March" "2015" "18:25:35" "+0100" "Petr Matousek" "pmatouse@redhat.com" "<20150323172534.GH15316@dhcp-25-225.brq.redhat.com>" "11" "[oss-security] CVE Request: Linux kernel: sys_sendto/sys_recvfrom does not validate the user provided ubuf pointer" nil nil nil "3" "2015032317:25:35" "[oss-security] CVE Request: Linux kernel: sys_sendto/sys_recvfrom does not validate the user provided ubuf pointer" (number mark "        pmatouse@red Mar 23   11/374   " thread-indent "\"[oss-security] CVE Request: Linux kernel: sys_sendto/sys_recvfrom does not validate the user provided ubuf pointer\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1011" "Friday" "22" "May" "2020" "19:01:10" "+0200" "Arrigo Triulzi" "arrigo@alchemistowl.org" "<6EA79945-4BDE-4B71-B3A5-07E1B50A056E@alchemistowl.org>" "26" "Re: [oss-security] Short notes on qmail security guarantee" "^Date:" nil nil "5" "2020052217:01:10" "[oss-security] Short notes on qmail security guarantee" (number mark "        arrigo@alche May 22   26/1011  " thread-indent "\"Re: [oss-security] Short notes on qmail security guarantee\"\n") "<CAGUWgD-+TDkZqLsFsS_kjxn7iMK6ELERGQfKPNF1qMMArhmzcg@mail.gmail.com>" ("<CAGUWgD8s3DtM6sG9Pj478H06G_evwPsF49pK5Cig0VUHY_mrQg@mail.gmail.com>" "<20200522121750.GA24868@openwall.com>" "<CAGUWgD-+TDkZqLsFsS_kjxn7iMK6ELERGQfKPNF1qMMArhmzcg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Short notes on qmail security guarantee" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23820 invoked by uid 550); 23 Mar 2015 17:25:51 -0000
+Received: (qmail 19713 invoked by uid 550); 22 May 2020 17:08:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,29 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23800 invoked from network); 23 Mar 2015 17:25:51 -0000
-Message-ID: <20150323172534.GH15316@dhcp-25-225.brq.redhat.com>
-Mail-Followup-To: oss-security@lists.openwall.com,
-	CVE-assign <cve-assign@mitre.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Date: Mon, 23 Mar 2015 18:25:35 +0100
-From: Petr Matousek <pmatouse@redhat.com>
+Received: (qmail 15633 invoked from network); 22 May 2020 17:01:31 -0000
+X-Virus-Scanned: amavisd-new at bagheera.alchemistowl.org
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.14\))
+References: <CAGUWgD8s3DtM6sG9Pj478H06G_evwPsF49pK5Cig0VUHY_mrQg@mail.gmail.com>
+ <20200522121750.GA24868@openwall.com>
+ <CAGUWgD-+TDkZqLsFsS_kjxn7iMK6ELERGQfKPNF1qMMArhmzcg@mail.gmail.com>
+In-Reply-To: <CAGUWgD-+TDkZqLsFsS_kjxn7iMK6ELERGQfKPNF1qMMArhmzcg@mail.gmail.com>
+Message-Id: <6EA79945-4BDE-4B71-B3A5-07E1B50A056E@alchemistowl.org>
+X-Mailer: Apple Mail (2.3445.104.14)
+Date: Fri, 22 May 2020 19:01:10 +0200
+From: Arrigo Triulzi <arrigo@alchemistowl.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: Linux kernel: sys_sendto/sys_recvfrom does not validate
- the user provided ubuf pointer
-To: oss-security@lists.openwall.com, CVE-assign <cve-assign@mitre.org>
+Subject: Re: [oss-security] Short notes on qmail security guarantee
+To: oss-security@lists.openwall.com
 
-References:
-https://twitter.com/grsecurity/status/579050211605102592
-https://twitter.com/grsecurity/status/579075689439059968
+On 22 May 2020, at 17:45, Georgi Guninski <gguninski@gmail.com> wrote:
+> I am not professional admin, but does postfix require limits?
+> Do many widely used daemons need limits?
 
-Upstream patch:
-http://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=4de930efc23b92ddf88ce91c405ee645fe6e27ea
+Well, normally these limits are enforced at the OS level. Depending on your=
+ OS of choice there are different ways in which this is done. On BSD-derive=
+d systems it is most often in /etc/login.conf via login classes, e.g.:
 
-Thanks,
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+daemon:\
+        :ignorenologin:\
+        :datasize=3Dinfinity:\
+        :maxproc=3Dinfinity:\
+        :openfiles-max=3D2048:\
+        :openfiles-cur=3D1024:\
+        :stacksize-cur=3D8M:\
+        :localcipher=3Dblowfish,a:\
+        :tc=3Ddefault:
+
+whereby the user under which Postfix runs would be assigned to the daemon c=
+lass (or, of course, a class which you define with suitable restrictions) a=
+nd have the limits above (=E2=80=9Ctc=3Ddefault=E2=80=9D means =E2=80=9Cinh=
+erit what is not explicitly defined above from the =E2=80=9Cdefault=E2=80=
+=9D class, rest is self-evident, I hope).
+
+Arrigo
+
