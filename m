@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/15/3
-Message-ID: <27251059-4261-01a9-e26c-488701ddffe6@les7arts.com>
-Date: Wed, 15 Jul 2020 14:52:11 +0200
-From: Jacques Le Roux <jacques.le.roux@...7arts.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/22/3
+Message-ID: <CAGUWgD-+TDkZqLsFsS_kjxn7iMK6ELERGQfKPNF1qMMArhmzcg@mail.gmail.com>
+Date: Fri, 22 May 2020 18:45:00 +0300
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-9496] Apache OFBiz XML-RPC requests vulnerable without authentication
+Subject: Re: Short notes on qmail security guarantee
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-Important
+Hi,
 
-Vendor:
-The Apache Software Foundation
+Thanks for the info.
 
-Versions Affected:
-OFBiz 17.12.03
+I am not professional admin, but does postfix require limits?
 
-Description:
-Apache OFBiz XML-RPC request are  vulnerable to unsafe deserialization and Cross-Site Scripting issues.
+Do many widely used daemons need limits?
 
-Mitigation:
-Upgrade to 17.12.04 or manually apply the commit at OFBIZ-11716
-----
+AFAIK most RFCs try to avoid DoS attacks, not sure.
 
-Credit:
-Alvaro Munoz from  GitHub Security Lab team <pwntester@...hub.com>
+You are right about the DoS impact, but I conjecture
+that if you DoS vanilla qmail long enough it will crash from
+memory corruption, lol.
 
-References:
-https://ofbiz.apache.org/security.html
-
+Re mobile phone RAM: Looks like I was wrong, Samsung
+currently sells phones with only 12GB RAM.
