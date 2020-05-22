@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/11/4
-Message-ID: <CAH5JyZrudDjNOeLXhj1eGbaDLrVFt3ffzQiNJPqYBTP0+bJXrg@mail.gmail.com>
-Date: Fri, 11 Dec 2020 15:51:52 +0000
-From: Kaxil Naik <kaxilnaik@...che.org>
-To: oss-security@...ts.openwall.com
-Cc: users@...flow.apache.org
-Subject: CVE-2020-17513: Apache Airflow Server-Side Request Forgery (SSRF) in Charts & Query View
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/22/5
+Message-ID: <20200522135550.36ba17a4@jabberwock.cb.piermont.com>
+Date: Fri, 22 May 2020 13:55:50 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Georgi Guninski <gguninski@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Short notes on qmail security guarantee
 Content-Type: text/plain; charset=utf-8
 
-Versions Affected: < 1.10.13
+On Fri, 22 May 2020 18:45:00 +0300 Georgi Guninski
+<gguninski@...il.com> wrote:
+> Hi,
+> 
+> Thanks for the info.
+> 
+> I am not professional admin, but does postfix require limits?
 
-Description:
-The Charts and Query View of the old (Flask-admin based) UI were vulnerable
-for SSRF attack.
+Postfix doesn't require them for remote exploitation security. The
+master.cf and main.cf files, which ship with Postfix, do specify some
+limits for performance tuning and to avoid denial of service.
 
-Thanks,
-Kaxil,
-on behalf of Apache Airflow PMC
+> Do many widely used daemons need limits?
 
+Not of the sort qmail apparently demands, no.
+
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
