@@ -1,111 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/9
-Message-ID: <eb6a0eab-af5e-7fea-3183-9e3308b1e3db@apache.org>
-Date: Sat, 8 Aug 2020 07:21:35 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/22/6
+Message-ID: <CAH8yC8k1=bzu9N3-x8NXLesjbb07tYpkwWgx0Bkoo=d44N2Nhg@mail.gmail.com>
+Date: Fri, 22 May 2020 18:00:12 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow
+Subject: Re: Short notes on qmail security guarantee
 Content-Type: text/plain; charset=utf-8
 
+On Fri, May 22, 2020 at 8:19 AM Solar Designer <solar@...nwall.com> wrote:
+> ...
+> Writing code that avoids artificial limits yet is safe, is hard.  One
+> way to do it is to avoid artificial limits throughout the code, but then
+> impose them at a higher level, where they can be adjusted easily.  One
+> such higher level is the operating system, but that makes the program's
+> security dependent on its environment in this extra way (beyond many
+> others) and with greater risk impact (worse than DoS).  Arguably, this
+> makes the program unnecessarily fragile.  Another higher level would be
+> within the program, like we see in Qualys' patch for qmail now.  This
+> reduces the dependency of the program's security on its environment.
 
-On 8/7/2020 8:20 PM, Seth Arnold wrote:
-> On Fri, Aug 07, 2020 at 06:31:38AM -0500, Daniel Ruggeri wrote:
->> CVE-2020-11984: mod_uwsgi buffer overlow
->> Versions Affected:
->> httpd 2.4.32 to 2.4.44
->> Description:
->> Apache HTTP Server 2.4.32 to 2.4.44
->> mod_proxy_uwsgi info disclosure and possible RCE
->> References:
->> https://httpd.apache.org/security/vulnerabilities_24.html
-> Hello Daniel, all,
->
-> I'm confused: this english description of affected versions
-> reads like 2.4.44 is affected. However, there is a heading on the
-> vulnerabilities_24.html page that says this CVE is fixed in 2.4.44.
-Hi, Seth;
+I don't use Qmail so I don't really have a dog in this fight, but ...
+I'm not sure its a good idea to depend on another layer for security
+properties, especially when a control is readily available. (re: the
+first part of the paragraph).
 
-   You're correct. That was an error on our part. We try to double check
-this data (since sometimes we burn a release number as we test the
-candidate) and things can get out of sync. I have it in my personal TODO
-list to add some tooling around automating this particular part of the
-release management process.
+Qmail should not depend on the operating system for security when it
+is readily available to Qmail. In my mind's model, Qmail can remediate
+this at the application level and has no need to turn to the operating
+system at the platform level.
 
-I've fixed this in a recent patch and the the site should now show the
-correct data - many thanks for the correction
+To drive the point home, consider an application that uses Apple iOS
+4-digit PIN rather then a more proper authentication system that
+requires sufficiently sized passcodes or phrases. Here, the
+application's security depends on the operating system's security. ANd
+many folks would not consider a 4 character PIN code sufficient for
+authentication.
 
->
-> Many projects include a "fixed in versions ..." list to indicate when
-> something is fixed; I think this is less ambiguous.
->
-> The "affects versions" don't always line up with the heading that claims
-> to be fixed, eg CVE-2019-10092 claims to be fixed in 2.4.41, but the
-> Affects entry doesn't mention 2.4.40.
+As another example, consider an application that depends upon
+infrastructure for security instead of application security. Most
+people would agree it would be a bad idea to forgo IPsec, VPN or TLS
+because the infrastructure should be secure.
 
-Right - sometimes this will happen when we don't release a version. This
-particular example is because 2.4.40 was not released (see below for a
-bit more info).
+Another way I view it as a vulnerability in Qmail is, Qmail is
+trusting the user for its security in a default state. Here, Qmail
+trusts the user will set an appropriate limit on 32-bit platforms.
+Trust is something you turn to when you don't have a security control
+to place. But in this case there is a control to place - a sane
+default limit inside Qmail.
 
-
->
-> The headings are out of order:
->
-> $ curl -sq https://httpd.apache.org/security/vulnerabilities_24.html | grep "Fixed in Apache"
-> Fixed in Apache httpd 2.4.44</h1><dl>
-> Fixed in Apache httpd 2.4.25</h1><dl>  # 2.4.25 is between 2.4.42 and 2.4.44
-> Fixed in Apache httpd 2.4.42</h1><dl>
-> Fixed in Apache httpd 2.4.41</h1><dl>
-> Fixed in Apache httpd 2.4.39</h1><dl>
-> [..]
-
-No problem - I thought about this as I was putting together the
-announcement but didn't adjust it at the time. I've fixed this as well
-
-
-> The download site doesn't have a 2.4.40 download:
-> https://archive.apache.org/dist/httpd/
->
-> But the CHANGES_2.4.41 file shows a 2.4.40 release:
-> https://archive.apache.org/dist/httpd/CHANGES_2.4.41
-
-Correct - 2.4.40 was not released. We made a number of changes leading
-up to it, but ultimately found an issue in the release candidate that we
-fixed between then and a release that we were comfortable with.
-
-If you're interested, you can see a bit more history (and even what's
-coming in future release) by taking a look at this file:
-http://svn.apache.org/repos/asf/httpd/httpd/branches/2.4.x/STATUS
-
-We always note when we tag a release and then the final release date for
-every version. You can find similar files for the old 2.2, 2.0, and 1.3
-branches too.
-
->
-> I don't actually care that much about CVE-2019-10092 -- I just tried to
-> figure out the status of CVE-2020-11984 by looking at other examples on
-> the page and found the page difficult to understand.
->
-> And, something is a bit off with the CURRENT-IS-$version markers:
->
-> $ curl -sq https://archive.apache.org/dist/httpd/ | grep -c CURRENT
-> 47
-I can see how that appears odd. This URL is our archive distribution
-point, so anything we release to the formal distribution point will be
-added here automatically to preserve history. It's best to use the
-current distribution point:
-https://dist.apache.org/repos/dist/release/httpd/
-
-We always maintain the zero-length CURRNT-IS-foo file here and remove
-non-current releases.
-
-
->
-> I expected one in each of the 2.0, 2.2, and 2.4 series, or perhaps just
-> one for the newest 2.4 release.
->
-> Thanks
-
-
-Thanks for taking the time to provide feedback! Have a great weekend
-
-
+Jeff
