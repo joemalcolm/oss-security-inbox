@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["261" "Wednesday" "25" "May" "2016" "08:13:36" "+0000" "Stefan Horlacher" "stefan.horlacher@arcus-security.ch" "<a33d4a482f974e8c91f260f173ca9d35@exchange.arcus-security.ch>" "11" "[oss-security] CVE-Request: TYPO3 Extbase Missing Access Check" nil nil nil "5" "2016052508:13:36" "[oss-security] CVE-Request: TYPO3 Extbase Missing Access Check" (number mark "U       stefan.horla May 25   11/261   " thread-indent "\"[oss-security] CVE-Request: TYPO3 Extbase Missing Access Check\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["697" "Wednesday" "27" "May" "2020" "12:55:43" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.77.849.2005271253030.62159@xnncv>" "20" "[oss-security] CVE-2020-13253 QEMU: sd: OOB access could crash the guest resulting in DoS" nil nil nil "5" "2020052707:25:43" "[oss-security] CVE-2020-13253 QEMU: sd: OOB access could crash the guest resulting in DoS" (number mark "U       ppandit@redh May 27   20/697   " thread-indent "\"[oss-security] CVE-2020-13253 QEMU: sd: OOB access could crash the guest resulting in DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-13253 QEMU: sd: OOB access could crash the guest resulting in DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9311 invoked by uid 550); 25 May 2016 08:31:23 -0000
+Received: (qmail 16020 invoked by uid 550); 27 May 2020 07:26:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,24 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32442 invoked from network); 25 May 2016 08:19:09 -0000
-From: Stefan Horlacher <stefan.horlacher@arcus-security.ch>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Wed, 25 May 2016 08:13:36 +0000
-Message-ID: <a33d4a482f974e8c91f260f173ca9d35@exchange.arcus-security.ch>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 16002 invoked from network); 27 May 2020 07:26:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1590564355;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=k+i6a5Tpz5MY1bazV4A0MijxSF0yK8p13MjTMZusYTw=;
+	b=Oo778/DE5RVnrER0MTfP9SA/h5igtlu4Sq6cynYXTGpy3UPmXIbnSmWn9orLQ80GuQ5eqv
+	Suza97++lxXgo+KkaAPnt1xWIN7fDbJXaq/dzFlhyvY426Xb3rvXPIKpFxXxN5S+QbzLXT
+	AHnsHu2lGz4koFNE9jkuhB+E6lPrsr4=
+X-MC-Unique: pF8ns833MImRI64mjYiHIA-1
+Date: Wed, 27 May 2020 12:55:43 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+cc: Alexander Bulekov <alxndr@bu.edu>
+Message-ID: <nycvar.YSQ.7.77.849.2005271253030.62159@xnncv>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-Request: TYPO3 Extbase Missing Access Check
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] CVE-2020-13253 QEMU: sd: OOB access could crash the guest resulting
+ in DoS
 
-Hi
+   Hello,
 
-A critical security vulnerability has been discovered in the TYPO3 Core. It=
- has been fixed yesterday:
-https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-s=
-a-2016-013/
+An out-of-bounds read access issue was found in the SD Memory Card emulator of 
+the QEMU. It occurs while performing block write commands via sdhci_write(), 
+if a guest user has sent 'address' which is OOB of 's->wp_groups'. A guest 
+user/process may use this flaw to crash the QEMU process resulting in DoS.
 
-Could you please assign a CVE for this issue?
+Upstream bug/thread:
+   -> https://bugs.launchpad.net/qemu/+bug/1880822
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-05/msg05877.html
 
-Regards,
-Stefan
+This issue was reported by Alexander Bulekov(CC'd). 'CVE-2020-13253' requested 
+via -> https://cveform.mitre.org/
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+
