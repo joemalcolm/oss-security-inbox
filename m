@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2123" "Friday" "2" "March" "2018" "04:58:50" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>" "64" "Re: [oss-security] memcached UDP amplification attacks" "^Date:" nil nil "3" "2018030211:58:50" "[oss-security] memcached UDP amplification attacks" (number mark "        kseifried@re Mar  2   64/2123  " thread-indent "\"Re: [oss-security] memcached UDP amplification attacks\"\n") "<20180302124428.440b9c3b@pc1>" ("<20180302124428.440b9c3b@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["914" "Wednesday" "27" "May" "2020" "09:44:50" "+0200" "Ondrej Mosnacek" "omosnace@redhat.com" "<CAFqZXNvNR3FWeNz5eTPmG0HbB8dZF6_xQcOeUNowo-a+93QwdA@mail.gmail.com>" "30" "[oss-security] CVE-2020-10751 - Linux kernel: SELinux netlink permission check bypass" nil nil nil "5" "2020052707:44:50" "[oss-security] CVE-2020-10751 - Linux kernel: SELinux netlink permission check bypass" (number mark "U       omosnace@red May 27   30/914   " thread-indent "\"[oss-security] CVE-2020-10751 - Linux kernel: SELinux netlink permission check bypass\"\n") "<CAFqZXNsufm1HkGKSxONW9875aOUr5NeKT+Ny-8RaNx87gRJKAw@mail.gmail.com>" ("<CAFqZXNsufm1HkGKSxONW9875aOUr5NeKT+Ny-8RaNx87gRJKAw@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] CVE-2020-10751 - Linux kernel: SELinux netlink permission check bypass" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19982 invoked by uid 550); 2 Mar 2018 11:59:04 -0000
+Received: (qmail 16114 invoked by uid 550); 27 May 2020 09:59:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,95 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19958 invoked from network); 2 Mar 2018 11:59:03 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 7758 invoked from network); 27 May 2020 07:45:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1590565507;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=yYwzgEWnFtDrsmVmSzhWE9Fi9hZ1HD+v+6eaFSV1a80=;
+	b=VRj83FWduXSmkiqrjRUgdjB2ASfkZ3ZY8NxTQYUNoesWvhZzBspvFpGtBRDzYqaFujyAJJ
+	69F4hso/RUMiFKS/ulshYF0TnltHi/VcmcumYcuYuNYTnGCQY+26/uKIDaqEOAipXH2q9b
+	J2d810gTsAj7HN4L6SkmPHwAGEMtIrI=
+X-MC-Unique: Kda0iLs9MX-zpsa0PEulhA-1
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=dsFAEdsVo27RlKnfJys2E72WPXaK7bz7FenrSFrjYIc=;
-        b=qIRTLLLsLWoeZ4oK7vNW6kBv4XE9TbTaILmMc4nmsHy0thcxf8EOKSzZtUMeQf6I5C
-         xJXLsC+oESkE/Ph6qd7Zg0GkdZkTydp+A+9rqRhwmuBp2LsAbMB0eQ63YTN+WhzmR6Dq
-         UkYdwOMyPOe4/TkXlJq/EElo57zxLzUri41LrqbNEnJharew1zF4rxtgYO4sT13YgDz+
-         wP7T6m7oF0j6eDHRNPO1U6ytYfCRCGWBdvR1F9ZoDo8bmQYCUX04rOTk3htaZq7BR65q
-         b49rmipPRrtbX5yV+guF1qJCFEHQAj6L8hWiTOG5MIXH4iqFgkOACkoGAa1h88fuYujd
-         Wy4Q==
-X-Gm-Message-State: AElRT7GlrMkaCGgUCaUQzs20ntIcbDeTK4Die5oiI+EtVtSnm68xcw0S
-	+gsokfebPEOqaBvjsSw7t5A3WOWn3taksxXldNQvfeFW
-X-Google-Smtp-Source: AG47ELsOqddThcrri4gS1kZHnnGXwWEYUc9X7UptDhEqSwBth37s6Nw1ugqHwYlv6XQ5XuPXmhUK4Bi0pzR0qSoE1pc=
-X-Received: by 10.202.43.8 with SMTP id i8mr3239796oik.343.1519991931208; Fri,
- 02 Mar 2018 03:58:51 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yYwzgEWnFtDrsmVmSzhWE9Fi9hZ1HD+v+6eaFSV1a80=;
+        b=Cv6AX8rC7lPWZLuQWK0GdYSb5tnpaoQCiC+wG2pIP62JMSGi3F0FNj4jfHCwclEqN7
+         9Ie0Q1MjMiTAObMMNnhtku95WRmXJfsagB8AbW6w//2v6cOZQC8acgFVPSGWgYgoTRbm
+         aAgLFnJULmu3uveAmvARor9w09vyHaM28ULyqjxeWJe1buDI0g98BCq20W5Bh0yCKoxK
+         pg6NEL2BjgYNh0Ue2JjS4susICoSuZibMTPnDxA5bpllT7YXg5jLuMiMvVDBssVr4MU3
+         p/wdtFUPIC15Q/5P6DXtwfhAR/y1BrwAEU2uVaWhFKAe4D+fHccBhHmV4XBuCrosEg56
+         dKuw==
+X-Gm-Message-State: AOAM533ZWx5M1/+hqGhQBoxpeeZqXXEfktlYk3+UVswyOp9tVir1ZuSk
+	bfZpoGcW0mWIUBLrVpAM7e4YzvCvNOEhIvHMgb05OVAQrbNqFLOlx/ybL3Q30f8+zyZUS5jFYy7
+	mVPWjkX0kD+iOebWP/9wdua9zebeI0HwuRYb8JQXq5XRC
+X-Received: by 2002:aca:230e:: with SMTP id e14mr1838820oie.127.1590565501408;
+        Wed, 27 May 2020 00:45:01 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzrB+1TyNsxMOszftQ1ex2VT/dDB8T2ZZ1Dt8XPwOWMb4tdBzcqWqw97CSOapqN2WTuAIwEq7Kh0d+0/Kgj7Mw=
+X-Received: by 2002:aca:230e:: with SMTP id e14mr1838807oie.127.1590565501161;
+ Wed, 27 May 2020 00:45:01 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180302124428.440b9c3b@pc1>
-References: <20180302124428.440b9c3b@pc1>
-Message-ID: <CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="f4f5e808cbc81f25b305666cb350"
-Date: Fri, 2 Mar 2018 04:58:50 -0700
-From: Kurt Seifried <kseifried@redhat.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] memcached UDP amplification attacks
-To: oss-security <oss-security@lists.openwall.com>
-
---f4f5e808cbc81f25b305666cb350
+References: <CAFqZXNsufm1HkGKSxONW9875aOUr5NeKT+Ny-8RaNx87gRJKAw@mail.gmail.com>
+In-Reply-To: <CAFqZXNsufm1HkGKSxONW9875aOUr5NeKT+Ny-8RaNx87gRJKAw@mail.gmail.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
+Date: Wed, 27 May 2020 09:44:50 +0200
+Message-ID: <CAFqZXNvNR3FWeNz5eTPmG0HbB8dZF6_xQcOeUNowo-a+93QwdA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: Paul Moore <paul@paul-moore.com>, Stephen Smalley <stephen.smalley.work@gmail.com>, 
+	Jeff Vander Stoep <jeffv@google.com>, Wade Mealing <wmealing@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE-2020-10751 - Linux kernel: SELinux netlink permission check bypass
 
-On Fri, Mar 2, 2018 at 4:44 AM, Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
+(Resending with correct ML address...)
 
-> Hi,
->
-> In the past days there have been reports about some DDoS attacks
-> abusing the memcached UDP protocol:
-> https://blog.cloudflare.com/memcrashed-major-amplification-attacks-from-
-> port-11211/
-> https://www.wired.com/story/github-ddos-memcached/
->
->
-> The issue: memcached has an UDP protocol that allows getting a much
-> larger reply than the query sent, thus allowing amplification attacks
-> with forged sender IPs.
->
->
-> Upstream memcached reacted by disabling the UDP-based protocol by
-> default:
-> https://github.com/memcached/memcached/wiki/ReleaseNotes156
-> This is good, however one could argue that they should also default to
-> localhost only.
->
->
-> Most distros I checked right now default to enabling UDP, but
-> restricting connections to 127.0.0.1. While this is not directly
-> vulnerable it's only a minor change away from being so. The memcached
-> announcement sounds like the UDP protocol is rarely used and should be
-> considered deprecated and replaced by the TCP-based one.
->
-> I recommend all distributions consider changing their defaults to
-> disabling the UDP-based memcached protocol by default.
->
->
-I think in general ALL network applications that support UDP need to think
-about hardening their default configurations due to the potential for
-amplification attacks.
+Hello,
 
-While it is not yet CVE worthy I can see the bar moving (much like it has
-for default passwords, and crypto) in the near future as this is clearly
-becoming a problem. Please note that this problem is already covered by
-CWE-406 (to some degree) which makes the case for CVE assignment stronger.
+This flaw has already been announced and described here:
+https://www.openwall.com/lists/oss-security/2020/04/30/5
 
+This is just a note to let you know that it has been assigned a
+CVE-2020-10751 upon request from Red Hat.
 
-> --
-> Hanno B=C3=B6ck
-> https://hboeck.de/
->
-> mail/jabber: hanno@hboeck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
->
+The flaw is fixed by the following upstream commit:
 
+commit fb73974172ffaaf57a7c42f35424d9aece1a5af6
+Author: Paul Moore <paul@paul-moore.com>
+Date:   Tue Apr 28 09:59:02 2020 -0400
 
+   selinux: properly handle multiple messages in selinux_netlink_send()
 
---=20
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fb73974172ffaaf57a7c42f35424d9aece1a5af6
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+The flaw dates back at least to Linux-2.6.12-rc2, so likely all
+versions of Linux currently in use are affected.
 
---f4f5e808cbc81f25b305666cb350--
+RH tracker: https://bugzilla.redhat.com/show_bug.cgi?id=1839634
+
+-- 
+Ondrej Mosnacek
+Software Engineer, Platform Security - SELinux kernel,
+Red Hat, Inc.
+
