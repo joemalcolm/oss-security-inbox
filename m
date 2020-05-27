@@ -1,69 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/30/8
-Message-ID: <CAMe9rOqnPJMC+d9cRTc-zHaj7Pp5JvW-Zfqxhy3M3P6zG_CE0A@mail.gmail.com>
-Date: Thu, 30 Jul 2020 10:14:10 -0700
-From: "H.J. Lu" <hjl.tools@...il.com>
-To: Florian Weimer <fweimer@...hat.com>
-Cc: Jann Horn <jannh@...gle.com>, oss-security@...ts.openwall.com,  x86-64-abi <x86-64-abi@...glegroups.com>,  Kernel Hardening <kernel-hardening@...ts.openwall.com>, Szabolcs Nagy <szabolcs.nagy@....com>
-Subject: Re: Alternative CET ABI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/27/4
+Message-ID: <20200527180652.GA3675595@trogon.sfo.coreos.systems>
+Date: Wed, 27 May 2020 14:06:52 -0400
+From: Benjamin Gilbert <benjamin.gilbert@...eos.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 30, 2020 at 9:54 AM Florian Weimer <fweimer@...hat.com> wrote:
->
-> * Jann Horn:
->
-> > On Thu, Jul 30, 2020 at 6:02 PM Florian Weimer <fweimer@...hat.com> wrote:
-> >> Functions no longer start with the ENDBR64 prefix.  Instead, the link
-> >> editor produces a PLT entry with an ENDBR64 prefix if it detects any
-> >> address-significant relocation for it.  The PLT entry performs a NOTRACK
-> >> jump to the target address.  This assumes that the target address is
-> >> subject to RELRO, of course, so that redirection is not possible.
-> >> Without address-significant relocations, the link editor produces a PLT
-> >> entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
-> >> perhaps no PLT entry at all.
-> >
-> > How would this interact with function pointer comparisons? As in, if
-> > library A exports a function func1 without referencing it, and
-> > libraries B and C both take references to func1, would they end up
-> > with different function pointers (pointing to their respective PLT
-> > entries)?
->
-> Same as today.  ELF already deals with this by picking one canonical
-> function address per process.
->
-> Some targets already need PLTs for inter-DSO calls, so the problem is
-> not new.  It happens even on x86 because the main program can refer to
-> its PLT stubs without run-time relocations, so those determine the
-> canonical address of those functions, and not the actual implementation
-> in a shared object.
->
-> > Would this mean that the behavior of a program that compares
-> > function pointers obtained through different shared libraries might
-> > change?
->
-> Hopefully not, because that would break things quite horribly (as it's
-> sometimes possible to observe if the RTLD_DEEPBIND flag is used).
->
-> Both the canonicalization and the fact in order to observe the function
-> pointer, you need to take its address should take care of this.
->
-> > I guess you could maybe canonicalize function pointers somehow, but
-> > that'd probably at least break dlclose(), right?
->
-> Ahh, dlclose.  I think in this case, my idea to generate a PLT stub
-> locally in the address-generating DSO will not work because the
-> canonical address must survive dlclose if it refers to another DSO.
-> There are two ways to deal with this: do not unload the PLT stub until
-> the target DSO is also unloaded (but make sure that the DSO can be
-> reloaded at a different address; probably not worth the complexity),
-> or use the dlsym hack I sketched for regular symbol binding as well.
-> Even more room for experiments, I guess.
->
-> Thanks,
-> Florian
+On Thu, May 07, 2020 at 07:04:20PM -0400, Benjamin Gilbert wrote:
+> On Tue, May 05, 2020 at 09:24:58PM +0200, Solar Designer wrote:
+> > On Tue, Mar 03, 2020 at 12:07:29AM -0500, Benjamin Gilbert wrote:
+> > > Red Hat recently announced [1] that CoreOS Container Linux will reach
+> > > end-of-life on May 26.  The Container Linux team will be leaving the
+> > > distros lists on that date,
+> > 
+> > I assume you'll remind me about that on that date.
+> > 
+> > > We plan to continue executing our current responsibilities until May
+> > > 26, but if other distros want to take over our roles sooner for ease
+> > > of bookkeeping, we're open to that.
+> > 
+> > I suggest that Oracle and CloudLinux already start to act as primary for
+> > their respective tasks, and CoreOS as backup until you leave on May 26.
+> 
+> That all sounds good to us.
 
-FWIW, we can introduce a different CET PLT as long as it is compatible
-with the past, current and future binaries.
+CoreOS has now unsubscribed from distros/linux-distros.  Thanks, all.
 
--- 
-H.J.
+--Benjamin Gilbert
