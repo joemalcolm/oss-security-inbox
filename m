@@ -1,86 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/13/2
-Message-ID: <841f6eac-05fd-49b3-a03b-3d291e62bee7@archlinux.org>
-Date: Mon, 12 Oct 2020 16:13:05 -0400
-From: Eli Schwartz <eschwartz@...hlinux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/27/5
+Message-ID: <CAHp2X_SKNRYB8PdBHr8Zrcs76MQ+0RCgOLg7r9vDb9JgYvjWSQ@mail.gmail.com>
+Date: Wed, 27 May 2020 15:03:05 -0400
+From: Vincent Batts <vbatts@...volk.io>
 To: oss-security@...ts.openwall.com
-Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
+Subject: Re: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
 Content-Type: text/plain; charset=utf-8
 
-On 10/12/20 3:41 PM, Solar Designer wrote:
-> Hi,
-> 
-> A problem with Georgi's message that started this thread, besides its
-> overall tone, is that it singled out Debian.  In my experience, most
-> Unix-like distributions use insecure defaults like this.
-> 
-> On Thu, Oct 08, 2020 at 08:07:10AM +1100, Brian May wrote:
->> Jeremy Stanley <fungi@...goth.org> writes:
->>
->>> As a long-time Debian user myself, I agree that this default is
->>> showing its age, and can represent a risk for operators who overlook
->>> it.
->>
->> Yes, I agree the default should be changed.
-> 
-> I also think the defaults should be changed, and not only on Debian.
-> 
-> Special cases like serving web pages do not justify insecure default
-> home directory permissions - rather, they're reasons to provide extra
-> setup instructions in web server packages, etc.
+Thanks bgilbert for your efforts.
 
-https://wiki.archlinux.org/index.php/Access_Control_Lists#Granting_execution_permissions_for_private_files_to_a_web_server
+This has been a recent task of mine, as I'm new to the Flatcar Container
+Linux team. I'm readying the request for inclusion on the
+distros/linux-distro list.
 
-This seems like a fairly solvable problem.
+vb
 
-By default, Arch Linux's login.defs umask is 077, so home directories
-created by useradd cannot be read at all by other users. (It is then
-overridden by /etc/profile to 022.)
+On Wed, May 27, 2020 at 2:55 PM Benjamin Gilbert <
+benjamin.gilbert@...eos.com> wrote:
 
->> Just note that there is a reasonable amount of software install
->> instructions that assume umask is 022 and will install software with
->> unusable permissions if it is not.
-> 
-> This is indeed a problem.  When building software manually (not
-> packaged) and wanting to install it on a system globally (e.g., in
-> /usr/local), a workaround is to use "(umask 022; make install)" - that
-> is, temporarily relax the umask to 022 just for that one command by
-> running it in a subshell.
-> 
-> RPM typically invokes "umask 022" for all(?) package build scripts,
-> including the %install section, which lets it build proper packages even
-> when run on a system with umask 077 even when the packaged software's
-> install scripts assume umask 022.
-> 
-> I think package install scripts should learn not to assume umask, or at
-> least not when installing software globally.  When installing to a
-> subdirectory of the user's home directory, it makes sense to honor the
-> user's umask, but those cases probably can't be recognized reliably.
-> 
-> It's a pity that software will just assume it's to be installed globally
-> (or with equivalent permissions), but the current reality is no better
-> where things break arbitrarily (e.g., some files mode 644, some 600)
-> when installing unprepared software with umask 077.
-
-It depends how the software is installed, surely? Some things use
-mkdir/cp, some use install (which defaults to 755).
-
-Some build systems, like meson, have a core setting for the installation
-umask, ignoring the process umask in favor of 022 by default or whatever
-configuration option was passed.
-
-> I think distros have to take the first step and change the default umask
-> to 077.  Until enough distros do, software maintainers won't have the
-> incentive to support that or won't even know about the problem.
-> 
-> Alexander
-> 
+> On Thu, May 07, 2020 at 07:04:20PM -0400, Benjamin Gilbert wrote:
+> > On Tue, May 05, 2020 at 09:24:58PM +0200, Solar Designer wrote:
+> > > On Tue, Mar 03, 2020 at 12:07:29AM -0500, Benjamin Gilbert wrote:
+> > > > Red Hat recently announced [1] that CoreOS Container Linux will reach
+> > > > end-of-life on May 26.  The Container Linux team will be leaving the
+> > > > distros lists on that date,
+> > >
+> > > I assume you'll remind me about that on that date.
+> > >
+> > > > We plan to continue executing our current responsibilities until May
+> > > > 26, but if other distros want to take over our roles sooner for ease
+> > > > of bookkeeping, we're open to that.
+> > >
+> > > I suggest that Oracle and CloudLinux already start to act as primary
+> for
+> > > their respective tasks, and CoreOS as backup until you leave on May 26.
+> >
+> > That all sounds good to us.
+>
+> CoreOS has now unsubscribed from distros/linux-distros.  Thanks, all.
+>
+> --Benjamin Gilbert
+>
 
 
 -- 
-Eli Schwartz
-Arch Linux Bug Wrangler and Trusted User
+
+Vincent Batts
+
+CTO
 
 
+---
+Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
+Geschäftsführer/Directors: Alban Crequy, Chris Kühl, Iago López Galeiras
+Registergericht/Court of registration: Amtsgericht Charlottenburg
+Registernummer/Registration number: HRB 171414 B
+Ust-ID-Nummer/VAT ID number: DE302207000
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1602 bytes)
