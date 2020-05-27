@@ -1,64 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/25/7
-Message-ID: <20200225191538.54fc0d2e@milkyway.galaxy>
-Date: Tue, 25 Feb 2020 19:15:38 +0100
-From: Amadeusz Sławiński <amade@...blr.net>
-To: Salvatore Bonaccorso <carnil@...ian.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: GNU screen "out of bounds access when setting w_xtermosc after OSC 49"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/27/3
+Message-ID: <CAFqZXNvNR3FWeNz5eTPmG0HbB8dZF6_xQcOeUNowo-a+93QwdA@mail.gmail.com>
+Date: Wed, 27 May 2020 09:44:50 +0200
+From: Ondrej Mosnacek <omosnace@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Paul Moore <paul@...l-moore.com>, Stephen Smalley <stephen.smalley.work@...il.com>,  Jeff Vander Stoep <jeffv@...gle.com>, Wade Mealing <wmealing@...hat.com>
+Subject: CVE-2020-10751 - Linux kernel: SELinux netlink permission check bypass
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 25 Feb 2020 14:05:33 +0100
-Salvatore Bonaccorso <carnil@...ian.org> wrote:
+(Resending with correct ML address...)
 
-> Hi
-> 
-> On Thu, Feb 06, 2020 at 03:04:18PM +0100, Solar Designer wrote:
-> > Hi,
-> > 
-> > GNU screen 4.8.0 was released yesterday with a documented security fix
-> > in it:
-> > 
-> > https://lists.gnu.org/archive/html/screen-devel/2020-02/msg00007.html
-> > 
-> > ---
-> > From: 	Amadeusz Slawinski
-> > Subject: 	[screen-devel] GNU Screen v.4.8.0
-> > Date: 	Wed, 5 Feb 2020 21:45:35 +0100
-> > 
-> > Hello everyone,
-> >  
-> > I'm announcing availability of GNU Screen v.4.8.0
-> > 
-> > Screen is a full-screen window manager that multiplexes a physical
-> > terminal between several processes, typically interactive shells. 
-> > 
-> > This release
-> >   * Improves startup time by only polling for already open files to
-> >     close
-> >   * Fixes:
-> >        - Fix for segfault if termcap doesn't have Km entry
-> >        - Make screen exit code be 0 when checking --version
-> >        - Fix potential memory corruption when using OSC 49
-> > 
-> > As last fix, fixes potential memory overwrite of quite big size (~768
-> > bytes), and even though I'm not sure about potential exploitability of
-> > that issue, I highly recommend everyone to upgrade as soon as possible.
-> > This issue is present at least since v.4.2.0 (haven't checked earlier).
-> > Thanks to pippin who brought this to my attention.  
-> 
-> Regarding the affected versions,
-> https://bugzilla.redhat.com/show_bug.cgi?id=1801405#c6 points out that
-> the issue is caused by the upsteram commit
-> https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v4&id=c5db181b6e017cfccb8d7842ce140e59294d9f62
-> which would be only in v4.7.0.
-> 
-> Is this correct?
-> 
+Hello,
 
-Right, that seems correct.
-There is also another fix that should've been made:
-https://git.savannah.gnu.org/cgit/screen.git/commit/?id=b14e76eb5d6be889d58e37e420384e59a74eddd6
-Will try to release 4.8.1 with it soon.
+This flaw has already been announced and described here:
+https://www.openwall.com/lists/oss-security/2020/04/30/5
 
-Amadeusz
+This is just a note to let you know that it has been assigned a
+CVE-2020-10751 upon request from Red Hat.
+
+The flaw is fixed by the following upstream commit:
+
+commit fb73974172ffaaf57a7c42f35424d9aece1a5af6
+Author: Paul Moore <paul@...l-moore.com>
+Date:   Tue Apr 28 09:59:02 2020 -0400
+
+   selinux: properly handle multiple messages in selinux_netlink_send()
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fb73974172ffaaf57a7c42f35424d9aece1a5af6
+
+The flaw dates back at least to Linux-2.6.12-rc2, so likely all
+versions of Linux currently in use are affected.
+
+RH tracker: https://bugzilla.redhat.com/show_bug.cgi?id=1839634
+
+-- 
+Ondrej Mosnacek
+Software Engineer, Platform Security - SELinux kernel,
+Red Hat, Inc.
+
