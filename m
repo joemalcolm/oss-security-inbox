@@ -1,4 +1,9 @@
-Received: (qmail 32006 invoked by uid 550); 18 Aug 2025 01:45:12 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["926" "Wednesday" "27" "May" "2020" "14:06:52" "-0400" "Benjamin Gilbert" "benjamin.gilbert@coreos.com" "<20200527180652.GA3675595@trogon.sfo.coreos.systems>" "21" "Re: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" nil nil nil "5" "2020052718:06:52" "[oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" (number mark "U       benjamin.gil May 27   21/926   " thread-indent "\"Re: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities\"\n") "<20200507230420.GA2011454@trogon.sfo.coreos.systems>" ("<CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>" "<20200505192458.GA8312@openwall.com>" "<20200507230420.GA2011454@trogon.sfo.coreos.systems>") nil nil nil nil nil nil nil "Re: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20244 invoked by uid 550); 27 May 2020 18:54:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,96 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 31982 invoked from network); 18 Aug 2025 01:45:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=dwheeler.com; s=selector2; h=To:References:Message-Id:
-	Content-Transfer-Encoding:Cc:Date:In-Reply-To:From:Subject:Mime-Version:
-	Content-Type; bh=6Ebp0NSEpurgdZ/ywLh2P/89Dip5gnxY9DP6gr6vjpM=; b=lvinTn0ry0aq
-	HYQ3RrTgOjn49il/ZmzLc/FOQ1CH9rPnP92ak2Cql4q+CNBqBWX6ubnzMTZ+5oxnZiFCj1Gfr3Ptb
-	xRAcGQeibg0YMsulALsuMm6G/tyiWCgqKe82eJy3IGbhsTjl0IoCEjb7iESDLzG7tS1t6B2Q+oZRR
-	Mk0z6NBrfp3ZMeqZQZfQ1EBApL5vCR3N0msMkL3deFBqh/f14vNRnXVq3cTWsok8D3+6p8aGgZXN7
-	KC3d48pAbJ/RoxcUUVexJlAdXHz16MTBgFq4+1DrXdPMr402I0Bz798TQxe0CftpbeiT6KVYFoozo
-	13qHsAQS+D5GTbRZ1u1INg==;
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6.1.21\))
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-In-Reply-To: <20250817140937.GA16226@unix-ag.uni-kl.de>
-Date: Sun, 17 Aug 2025 21:44:29 -0400
-Cc: Vincent Lefevre <vincent@vinc17.net>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B13F08EE-9A89-4D37-AD66-0772C042781D@dwheeler.com>
-References: <20250813203857.GA11693@unix-ag.uni-kl.de>
- <87a53zyugg.fsf@gmail.com> <20250817010958.GA607521@qaa.vinc17.org>
- <20250817140937.GA16226@unix-ag.uni-kl.de>
+Received: (qmail 17473 invoked from network); 27 May 2020 18:07:07 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+zsUPf+jI8A7ye6edBdj/T11i5XJPB/V73P/Wh6CY8U=;
+        b=ucH4cmo1wQBBDAb8g2u7q7g0f7uevuvmLCPvGURMUoFSVedFIchwVAH9RkNEd637qL
+         CalWjxpK+VZteQ1FJWW7mclCq/0uq+ZlgD7YCfzymMSHSX9T78fEboLMWPKd78NCT8+7
+         I2+WVhW0my7E3SdGjlF7DFHoXLfOqcSboZGg9AKxPG8A+mmDOcXaWBJ4NV5NWzYnZSZQ
+         kz8TORteFYhIlREWHmCSNQJRCnXmY7CZrHAKjNo3nM/K+xv1narA65jWbmvtzz1JSKDb
+         svagMlv9BeMohtNVxPh7pqOXsEMP9h4nggs6Rsq9k5DPv0LsTJXyPz7E1DY13eKEYZJK
+         fwoA==
+X-Gm-Message-State: AOAM533fEVBkZWfGG2zvwbLI4TJY0DJHGFFHv9UNGxtBLc9SvkZgjEDW
+	VgtAbnP1VGWTi+2mF0hidTsssPXRh5M=
+X-Google-Smtp-Source: ABdhPJw3JJtzVEsU7MXSGiLkY8C+cN3lvpHPJrLMM2m35CNn5FUlT0+4FHa0FbcLnmK1YBz0nl51QA==
+X-Received: by 2002:a05:620a:a8a:: with SMTP id v10mr5240889qkg.488.1590602815095;
+        Wed, 27 May 2020 11:06:55 -0700 (PDT)
+Date: Wed, 27 May 2020 14:06:52 -0400
+From: Benjamin Gilbert <benjamin.gilbert@coreos.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3731.700.6.1.21)
-Subject: Re: [oss-security] xterm terminal crash due to malicious character
- sequences in file name
+Message-ID: <20200527180652.GA3675595@trogon.sfo.coreos.systems>
+References: <CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>
+ <20200505192458.GA8312@openwall.com>
+ <20200507230420.GA2011454@trogon.sfo.coreos.systems>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200507230420.GA2011454@trogon.sfo.coreos.systems>
+Subject: Re: [oss-security] CoreOS leaving distros/linux-distros on May 26,
+ handing off responsibilities
 
+On Thu, May 07, 2020 at 07:04:20PM -0400, Benjamin Gilbert wrote:
+> On Tue, May 05, 2020 at 09:24:58PM +0200, Solar Designer wrote:
+> > On Tue, Mar 03, 2020 at 12:07:29AM -0500, Benjamin Gilbert wrote:
+> > > Red Hat recently announced [1] that CoreOS Container Linux will reach
+> > > end-of-life on May 26.  The Container Linux team will be leaving the
+> > > distros lists on that date,
+> > 
+> > I assume you'll remind me about that on that date.
+> > 
+> > > We plan to continue executing our current responsibilities until May
+> > > 26, but if other distros want to take over our roles sooner for ease
+> > > of bookkeeping, we're open to that.
+> > 
+> > I suggest that Oracle and CloudLinux already start to act as primary for
+> > their respective tasks, and CoreOS as backup until you leave on May 26.
+> 
+> That all sounds good to us.
 
->>>> On Wed, Aug 13, 2025 at 07:00:58PM +0200, Vincent Lefevre wrote:
->>>>>=20
->>>>> The following makes the xterm terminal crash
->>>>>=20
->>>>>  touch "$(printf "file\e[H\e[c\n\b")"
->>>>>  gunzip file*
->>>>>=20
->>>>> due to malicious character sequences in the file name and a bug
->>>>> in xterm. Same issue with bunzip2 instead of gunzip.
->>>>=20
->>>> I do not expect this to only happen with gunzip and bzip2.
->>>> Does this happen with any program that prints the filename without
->>>> any escaping, e.g., "echo file*", and most programs that print
->>>> the provided filename
-...
+CoreOS has now unsubscribed from distros/linux-distros.  Thanks, all.
 
-On Aug 17, 2025, at 10:09 AM, Erik Auerswald <auerswal@unix-ag.uni-kl.de> w=
-rote:
-> I'd expect most programs to not change the filename printed in their
-> output.  POSIX does not even expect "ls" to sanitize its output without
-> "-q", but it does allow it[0].  Two more example programs that do not
-> sanitize filenames in their output would be "file", at least version
-> "5.41", and "dash", at least the version[1] included in Ubuntu GNU/Linux
-> 22.04.5 LTS.  I'd expect that you can find many more examples.  Getting
-> every program changed to follow your expectation seems like a Sisyphean
-> task to me.
->=20
-> Please note that I am not opposed to adding that feature to every
-> existing and future program, it just seems foolish to rely on it, at
-> least currently.
-
-I agree. It'd be *much* more secure
-if the operating simply prevented the creation of filenames
-with certain names, e.g,. containing control characters and leading dashes.
-I wrote an essay here specifically about this:
-https://dwheeler.com/essays/fixing-unix-linux-filenames.html
-See section 1.3, "Oh, and don=E2=80=99t display filenames. Filenames could =
-contain
-control characters that control the terminal (and X-windows), causing nasty=
-=20
-side-effects on display. Displaying filenames can even cause a security vul=
-nerability =E2=80=94
-and who expects printing a filename to be a vulnerability?!?"
-It's not a new problem, I knew about this in the 1980s and I'm sure others =
-did too.
-
-I proposed forbidding such characters to POSIX. They *did* add a few mechan=
-isms to POSIX
-to make it somewhat easier to handle filenames with control characters
-(e.g., find -print0 and xargs -0). However, although they do not *require*
-that operating systems allow these filenames, they are not forbidden either.
-
-I have a draft Linux Security Module (LSM) that lets you determine
-what kind of filenames are allowed to be created. By default it would requi=
-re
-non-control-chars, no leading '-', no trailing ' ', and UTF-8 encoding,
-but it would let you configure further. I intend to go back to that
-to finish it off & propose it. My original proposal merely prevented creati=
-on;
-it would be possible to hide them entirely, but that comes with its own iss=
-ues.
-
---- David A. Wheeler
-
+--Benjamin Gilbert
