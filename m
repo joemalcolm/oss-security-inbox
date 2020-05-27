@@ -1,58 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/19/2
-Message-ID: <20200219171416.vofjngtntxvlocx2@yuggoth.org>
-Date: Wed, 19 Feb 2020 17:14:16 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2020-001] Nova can leak consoleauth token into log files (CVE-2015-9543)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/27/2
+Message-ID: <nycvar.YSQ.7.77.849.2005271253030.62159@xnncv>
+Date: Wed, 27 May 2020 12:55:43 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Alexander Bulekov <alxndr@...edu>
+Subject: CVE-2020-13253 QEMU: sd: OOB access could crash the guest resulting in DoS
 Content-Type: text/plain; charset=utf-8
 
-=============================================================
-OSSA-2020-001: Nova can leak consoleauth token into log files
-=============================================================
+   Hello,
 
-:Date: February 19, 2020
-:CVE: CVE-2015-9543
+An out-of-bounds read access issue was found in the SD Memory Card emulator of 
+the QEMU. It occurs while performing block write commands via sdhci_write(), 
+if a guest user has sent 'address' which is OOB of 's->wp_groups'. A guest 
+user/process may use this flaw to crash the QEMU process resulting in DoS.
 
+Upstream bug/thread:
+   -> https://bugs.launchpad.net/qemu/+bug/1880822
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-05/msg05877.html
 
-Affects
-~~~~~~~
-- Nova: <18.2.4,>=19.0.0<19.1.0,>=20.0.0<20.1.0
-
-
-Description
-~~~~~~~~~~~
-Paul Carlton from HP reported a vulnerability in Nova. An attacker
-with read access to the serviceâ€™s logs may obtain tokens used for
-console access. All Nova setups using novncproxy are affected.
+This issue was reported by Alexander Bulekov(CC'd). 'CVE-2020-13253' requested 
+via -> https://cveform.mitre.org/
 
 
-Patches
-~~~~~~~
-- https://review.opendev.org/707845 (Queens)
-- https://review.opendev.org/704255 (Rocky)
-- https://review.opendev.org/702181 (Stein)
-- https://review.opendev.org/696685 (Train)
-- https://review.opendev.org/220622 (Ussuri)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-
-Credits
-~~~~~~~
-- Paul Carlton from HP (CVE-2015-9543)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1492140
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-9543
-
-
-Notes
-~~~~~
-- The stable/queens branch is under extended maintenance and will receive no
-  new point releases, but a patch for it is provided as a courtesy.
-
--- 
-Jeremy Stanley, on behalf of OpenStack Vulnerability Management
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
