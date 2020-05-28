@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/01/6
-Message-ID: <CAHKghTNBe6x=Hn=pf2pVxqovHCfa=_d6EFQKMGmb__X5fsn_kg@mail.gmail.com>
-Date: Wed, 1 Apr 2020 12:19:01 -0700
-From: Jonathan Wei <jonwei@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-1958]: Apache Druid LDAP injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/28/2
+Message-ID: <nycvar.YSQ.7.77.849.2005281113450.62159@xnncv>
+Date: Thu, 28 May 2020 11:16:50 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: "Ding, Ren" <rding@...ech.edu>, "Zhao, Hanqing" <hanqing@...ech.edu>,  Alexander Bulekov <alxndr@...edu>
+Subject: CVE-2020-13362 QEMU: megasas: OOB read access due to invalid index leads to DoS
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
+   Hello,
 
-Vendor:
-The Apache Software Foundation
+An OOB read access issue was found in the MegaRAID SAS 8708EM2 emulator of the 
+QEMU. It occurs in 'megasas_lookup_frame' routine when 's->reply_queue_head' 
+is set to a malicious value. A guest user/process may use this flaw to crash 
+the QEMU process on the host resulting in DoS scenario.
 
-Versions Affected:
-Druid 0.17.0
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-05/msg03463.html
 
-Description:
-When LDAP authentication is enabled:
-- Callers of Druid APIs with a valid set of LDAP credentials can bypass the
-`credentialsValidator.userSearch` filter barrier that determines if a valid
-LDAP user is allowed to authenticate with Druid. They are still subject to
-role-based authorization checks, if configured.
-- Callers of Druid APIs can retrieve any LDAP attribute values of users
-that exist on the LDAP server, so long as that information is visible to
-the Druid server. This information disclosure does not require the caller
-itself to be a valid LDAP user.
+This issue was reported by Ren Ding & Hanqing Zhao of SSLab Georgia Tech and 
+also by Alexander Bulekov. CVE-2020-13362 requested via -> 
+https://cveform.mitre.org/
 
-Mitigation:
-- Users of Druid 0.17.0 that use LDAP authentication should upgrade to
-Druid 0.17.1.
-
-Credit:
-This issue was discovered by Grzegorz Goławski.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
