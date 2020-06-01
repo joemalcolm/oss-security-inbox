@@ -1,52 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/15/5
-Message-ID: <20200415185944.GA18943@openwall.com>
-Date: Wed, 15 Apr 2020 20:59:44 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-5260: Git: malicious URLs may cause Git to present stored credentials to the wrong server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/01/3
+Message-ID: <nycvar.YSQ.7.77.849.2006011752180.62159@xnncv>
+Date: Mon, 1 Jun 2020 17:54:06 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Alexander Bulekov <alxndr@...edu>
+Subject: CVE-2020-13659 QEMU: exec: address_space_map returns NULL without setting length to zero may lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-Taylor Blau brought this to the distros list a week ago (thanks!), but
-unfortunately failed to follow the distros list policy (despite of being
-specifically informed of that requirement by distros list members,
-twice) to post the information to oss-security on the public disclosure
-date/time.  So as list admin, after a delay of more than a day, I am
-taking over and do this (being unhappy that I have to do it for others).
+A NULL pointer dereference issue was found in the MegaRAID SAS 8708EM2 
+emulator of the QEMU. This issue occurs because the address_space_map() API 
+while mapping physical memory into host's virtual address space may return 
+NULL, without setting the length parameter to zero(0). A guest user/process 
+may use this flaw to crash the QEMU process on the host resulting in DoS 
+scenario.
 
-Quoting Taylor's original notification to distros:
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-05/msg07313.html
 
----
-The addressed issue is:
+Reference:
+----------
+   -> https://bugs.launchpad.net/qemu/+bug/1878259
 
- * CVE-2020-5260:
-   With a crafted URL that contains a newline in it, the credential
-   helper machinery can be fooled to give credential information for a
-   wrong host.  The attack has been made impossible by forbidding a
-   newline character in any value passed via the credential protocol.
 
-Credit for finding the vulnerability goes to Felix Wilhelm of Google
-Project Zero.
----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-I've attached Taylor's original message (sans its large attachment) to
-this posting.
-
-Git security releases were made and a security advisory published
-yesterday:
-
-https://github.com/git/git/security/advisories/GHSA-qm7j-c969-7j4q
-
-I've also attached a text export from the above URL to this posting.
-
-(We also have a policy in here that most essential content must be
-included in the posting itself rather than only linked to, so that the
-posting remains valuable even when the external resources are gone.)
-
-Alexander
-
-View attachment "distros-ttaylorr-20200407.txt" of type "text/plain" (1487 bytes)
-
-View attachment "GHSA-qm7j-c969-7j4q.txt" of type "text/plain" (3119 bytes)
