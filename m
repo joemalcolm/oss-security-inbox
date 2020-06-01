@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/03/2
-Message-ID: <4so0n6n6-14p0-3r18-2p12-ors0683rono7@redhat.com>
-Date: Tue, 3 Nov 2020 17:27:46 +0530 (IST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/01/6
+Message-ID: <nycvar.YSQ.7.77.849.2006012347080.62159@xnncv>
+Date: Mon, 1 Jun 2020 23:53:01 +0530 (IST)
 From: P J P <ppandit@...hat.com>
 To: oss security list <oss-security@...ts.openwall.com>
-cc: Gaoning Pan <pgn@....edu.cn>
-Subject: CVE-2020-27616 QEMU: ati-vga: potential crash via invalid x y parameter values
+cc: "Ding, Ren" <rding@...ech.edu>, "Zhao, Hanqing" <hanqing@...ech.edu>,  anatoly.trosinenko@...il.com, Alexander Bulekov <alxndr@...edu>
+Subject: CVE-2020-13754 QEMU: msix: OOB access during mmio operations may lead to DoS
 Content-Type: text/plain; charset=utf-8
 
    Hello,
 
-An out-of-bounds access issue was found in the ati-vga emulator of the QEMU. 
-It could occur when the source and destination x,y display parameters in 
-ati_2d_blt() have invalid values. A guest user/process may use this flaw to 
-crash the QEMU process resulting in DoS scenario.
+An OOB access issue was found in the Message Signalled Interrupt (MSI-X) 
+device support of QEMU. It could occur while performing MSI-X mmio operations 
+when a guest sent address goes beyond the mmio region. A guest user/process 
+may use this flaw to crash the QEMU process resulting in DoS scenario.
 
-Upstream patch:
+Proposed patch:
 ---------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-10/msg06080.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg00004.html
 
-This issue is reported by Gaoning Pan of Zhejiang University.
-
-'CVE-2020-27616' assigned via -> https://cveform.mitre.org/
+This issue was reported by Ren Ding & Hanqing Zhao of SSLab Georgia Tech. And 
+also independently reported by Alexander Bulekov , Anatoly Trosinenko(CC'd). 
+'CVE-2020-13754' requested via -> http://cveform.mitre.org/
 
 Thank you.
 --
