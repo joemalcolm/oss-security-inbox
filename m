@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1411" "Thursday" "4" "June" "2015" "13:25:19" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.11.1506041320520.16237@wniryva>" "34" "Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" nil nil nil "6" "2015060407:55:19" "[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" (number mark "        ppandit@redh Jun  4   34/1411  " thread-indent "\"Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic\"\n") "<874mmo54ll.fsf@x220.int.ebiederm.org>" ("<20150603175834.4FC0D6C004F@smtpvmsrv1.mitre.org>" "<alpine.LFD.2.11.1506041216340.16237@wniryva>" "<874mmo54ll.fsf@x220.int.ebiederm.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["751" "Monday" "1" "June" "2020" "23:53:01" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.77.849.2006012347080.62159@xnncv>" "20" "[oss-security] CVE-2020-13754 QEMU: msix: OOB access during mmio operations may lead to DoS" nil nil nil "6" "2020060118:23:01" "[oss-security] CVE-2020-13754 QEMU: msix: OOB access during mmio operations may lead to DoS" (number mark "U       ppandit@redh Jun  1   20/751   " thread-indent "\"[oss-security] CVE-2020-13754 QEMU: msix: OOB access during mmio operations may lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-13754 QEMU: msix: OOB access during mmio operations may lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25712 invoked by uid 550); 4 Jun 2015 07:55:38 -0000
+Received: (qmail 3991 invoked by uid 550); 1 Jun 2020 18:24:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25694 invoked from network); 4 Jun 2015 07:55:37 -0000
-X-X-Sender: pjp@javelin
-In-Reply-To: <874mmo54ll.fsf@x220.int.ebiederm.org>
-Message-ID: <alpine.LFD.2.11.1506041320520.16237@wniryva>
-References: <20150603175834.4FC0D6C004F@smtpvmsrv1.mitre.org> <alpine.LFD.2.11.1506041216340.16237@wniryva> <874mmo54ll.fsf@x220.int.ebiederm.org>
-MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-cc: cve-assign@mitre.org, "Eric W. Biederman" <ebiederm@xmission.com>
-Date: Thu, 4 Jun 2015 13:25:19 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces
- panic
+Received: (qmail 3968 invoked from network); 1 Jun 2020 18:24:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1591035869;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=ODzem5HgVNlmfmq9FIAg20tQYQCYvXpXqJD96sbvyqw=;
+	b=QQA5XCJAjFI1OnzJZBBtcHyAmLbHYzqwNvMmEfqPHoitZxz71sC9E48lg3Rg/hP7x+qVvP
+	aPgibbHwqaWJOLoYOPiFDYa7iECcl9ztmGHmNmpPoNQAIt/0PuhkV+IgmKtA0SXe22I37o
+	DA16KcVKjg6tC1P1yJji4Jz6a9QoSKo=
+X-MC-Unique: -Y4d2EwvMn-gyfXBkzhtSw-1
+Date: Mon, 1 Jun 2020 23:53:01 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
 To: oss security list <oss-security@lists.openwall.com>
+cc: "Ding, Ren" <rding@gatech.edu>, "Zhao, Hanqing" <hanqing@gatech.edu>, 
+    anatoly.trosinenko@gmail.com, Alexander Bulekov <alxndr@bu.edu>
+Message-ID: <nycvar.YSQ.7.77.849.2006012347080.62159@xnncv>
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] CVE-2020-13754 QEMU: msix: OOB access during mmio operations may
+ lead to DoS
 
-   Hello Eric,
+   Hello,
 
-+-- On Thu, 4 Jun 2015, Eric W. Biederman wrote --+
-| The core issue is that a unprivileged user could call umount(MNT_DETACH)
-| and in the right circumstances gain access to every file on essentially
-| any filesystem in the mount namespace.
-... 
-| The bug fix modifies umount(MNT_DETACH) to keeps mounts covered
-| even after the actual umount.  That changes makes it unsafe for
-| copy_tree to run on an unmounted mount tree because one of it's
-| assumptions is violated.  Which assumption I do not remember at this
-| late hour.  But I think it was something bad enough to cause a crash.
-| I can not recall all of the details when reading through the code
-| at this late hour.
-| 
-| Previously copy_tree on an unmounted tree would just return a single
-| struct mount as all of the connections would have been cleanly removed.
-| 
-| So I believe cd4a40174b71acd021877341684d8bb1dc8ea4ae prevents a
-| difficult to trigger crash if you have
-| e0c9c0afd2fc958ffa34b697972721d81df8a56f applied.
-| 
-| e0c9c0afd2fc958ffa34b697972721d81df8a56f mnt: Update detach_mounts to leave mounts connected
-| is the real bug fix that fixes a fairly scary issue.
-| 
-| I hope that helps.
+An OOB access issue was found in the Message Signalled Interrupt (MSI-X) 
+device support of QEMU. It could occur while performing MSI-X mmio operations 
+when a guest sent address goes beyond the mmio region. A guest user/process 
+may use this flaw to crash the QEMU process resulting in DoS scenario.
 
-  Yes, it does. Thank you so much for throwing light on the real issue and 
-its corresponding fix. I appreciate it.
+Proposed patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg00004.html
+
+This issue was reported by Ren Ding & Hanqing Zhao of SSLab Georgia Tech. And 
+also independently reported by Alexander Bulekov , Anatoly Trosinenko(CC'd). 
+'CVE-2020-13754' requested via -> http://cveform.mitre.org/
 
 Thank you.
 --
 Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+
