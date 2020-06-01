@@ -1,45 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/30/2
-Message-ID: <0ab0448134c222126b15f32246bc73d308836933.camel@doppel-helix.eu>
-Date: Sun, 29 Mar 2020 22:56:10 +0200
-From: Matthias Bläsing <mblaesing@...pel-helix.eu>
-To: dev@...beans.apache.org, oss-security@...ts.openwall.com,  security@...che.org
-Subject: [CVE-2019-17561] "Apache NetBeans" autoupdate system does not fully validate code signatures.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/01/4
+Message-ID: <CADtktAVv41WK8p_caEiJt9VUn5oqYvy8V8nkD4CckB5OG0g0xA@mail.gmail.com>
+Date: Mon, 1 Jun 2020 09:04:49 -0700
+From: Tim Allclair <tallclair@...gle.com>
+To: kubernetes-announce@...glegroups.com,  "Kubernetes developer/contributor discussion" <kubernetes-dev@...glegroups.com>,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss <kubernetes-security-discuss@...glegroups.com>,  oss-security@...ts.openwall.com, kubernetes+announcements@...coursemail.com
+Subject: CVE-2020-8555: Kubernetes: Half-Blind SSRF in kube-controller-manager
 Content-Type: text/plain; charset=utf-8
 
-CVE-ID
-------
-CVE-2019-17561
+Hello Kubernetes Community,
 
-Summary
--------
-The "Apache NetBeans" autoupdate system does not fully validate
-code signatures.
+There exists a Server Side Request Forgery (SSRF) vulnerability in
+kube-controller-manager that allows certain authorized users to leak up to
+500 bytes of arbitrary information from unprotected endpoints within the
+master's host network (such as link-local or loopback services).
 
-Versions Affected: 
-------------------
-- All Apache NetBeans versions up to and including 11.2
-- NetBeans releases before the Apache transition started may be
-  also affected
+This issue has been rated medium (
+CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:N
+<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:N>),
+and assigned CVE-2020-8555.
+Am I vulnerable?
 
-Description:
-------------
-The "Apache NetBeans" autoupdate system does not fully validate
-code signatures. An attacker could modify the downloaded nbm and
-include additional code.
+You may be vulnerable if:
 
-Mitigation:
------------
-- Disable autoupdates
-- Install only plugins from trusted sources and validate the
-  downloads by checking signatures and/or comparing checksums
-  from trusted sources
-- Update to NetBeans 11.3 by downloading the release, verifying the
-  signature and manually installing it
+   -
 
-Credit:
--------
-The investigation was triggered by a proof-of-concept submitted by
-Emilian Bold
+   You are running a vulnerable version (see below);
+   -
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+   There are unprotected endpoints normally only visible from the
+   Kubernetes master (including link-local metadata endpoints, unauthenticated
+   services listening on localhost, or other services in the master's private
+   network); and
+   -
+
+   Untrusted users can create pods with an affected volume type or modify
+   storage classes.
+
+Affected Versions
+
+   -
+
+   kube-controller-manager v1.18.0
+   -
+
+   kube-controller-manager v1.17.0 - v1.17.4
+   -
+
+   kube-controller-manager v1.16.0 - v1.16.8
+   -
+
+   kube-controller-manager < v1.15.11
+
+The affected volume types are: GlusterFS, Quobyte, StorageFS, ScaleIO
+How do I mitigate this vulnerability?
+
+Prior to upgrading, this vulnerability can be mitigated by adding endpoint
+protections on the master or restricting usage of the vulnerable volume
+types (for example by constraining usage with a PodSecurityPolicy
+<https://kubernetes.io/docs/concepts/policy/pod-security-policy/#volumes-and-file-systems>
+or third-party admission controller such as Gatekeeper
+<https://github.com/open-policy-agent/gatekeeper>) and restricting
+StorageClass write permissions through RBAC.
+Fixed Versions
+
+The information leak was patched in the following versions:
+
+   -
+
+   kube-controller-manager v1.18.1+
+   -
+
+   kube-controller-manager v1.17.5+
+   -
+
+   kube-controller-manager v1.16.9+
+   -
+
+   kube-controller-manager v1.15.12+
+
+To upgrade, refer to the documentation:
+https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
+
+Further work to protect against SSRF is underway and will be included in an
+upcoming patch release (details to follow).
+Additional Details
+
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/91542
+
+Thank You,
+
+Tim Allclair on behalf of the Kubernetes Product Security Committee
+
