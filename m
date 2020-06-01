@@ -1,36 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/15/2
-Message-ID: <CAE7Uba-_3at3DD=nyQydDbArg7Bjdz_9uUn-izyW0m41BKEvig@mail.gmail.com>
-Date: Wed, 15 Jan 2020 17:30:50 +0100
-From: Ismaël Mejía <iemejia@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/01/1
+Message-ID: <CAGUWgD_mFUvmCC0f-p7XE8V6N_YVTpaC0S07SWvk=uFoCn3ADw@mail.gmail.com>
+Date: Mon, 1 Jun 2020 09:24:21 +0300
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-1929] Apache Beam MongoDB IO connector disables certificate trust verification
+Subject: Exploitability of the integer overflows in djbdns 1.05?
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-1929 Apache Beam MongoDB IO connector disables certificate trust
-verification
+ From my blog:
+https://j.ludost.net/blog/archives/2020/06/01/exploitability_of_the_integer_overflows_in_djbdns_1_05/index.html
 
-Severity: Major
-Vendor: The Apache Software Foundation
+Exploitability of the integer overflows in djbdns 1.05?
 
-Versions Affected:
-Apache Beam 2.10.0 to 2.16.0
+TLDR: Are the integer overflows in djbdns 1.05 exploitable?
 
-Description:
-The Apache Beam MongoDB connector in versions 2.10.0 to 2.16.0 has an
-option to
-disable SSL trust verification. However this configuration is not respected
-and
-the certificate verification disables trust verification in every case. This
-exclusion also gets registered globally which disables trust checking for
-any
-code running in the same JVM.
+Background: there are integer overflows and memory corruption
+in the library functions of qmail 1.03.
+For reference see [1] [2].
 
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Upgrade to Apache Beam 2.17.0 or later
+Some of the qmail vulnerabilities (integer overflows and negative index???)
+are present in djbdns 1.05.
 
-Acknowledgements:
-This issue was reported (and fixed) by Colm Ó hÉigeartaigh.
+For example in alloc.c of djbdns:
+====
+/*@...l@...*@out@...har *alloc(n)
+unsigned int n;
+{
+  char *x;
+  n = ALIGNMENT + n - (n & (ALIGNMENT - 1)); /* XXX: could overflow */
+=====
 
+This clearly overflows for n= -1 for example.
+
+It is natural to write an integer overflow, but
+documenting easy to fix security bug is beyond
+our understanding.
+
+Reachability of the bugs is not clear and might require
+gigabytes of memory to hit the problems by encoding
+integer in unary.
+
+In addition djbns limits the memory usage by |softlimit|,
+but we are not sure the limits are on all vulnerable
+programs. An island of tractability could be |alloc(atoi())|
+or |alloc(size * count)|
+
+Is djbdns exploitable by any of the qmail bugs?
+
+[1] http://www.guninski.com/where_do_you_want_billg_to_go_today_4.html
+[2] https://www.openwall.com/lists/oss-security/2020/05/19/8
