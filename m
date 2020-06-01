@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/31/1
-Message-ID: <aff313846ed736fa@sudo.ws>
-Date: Fri, 31 Jan 2020 06:48:21 -0700
-From: "Todd C. Miller" <Todd.Miller@...o.ws>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/01/2
+Message-ID: <20200601120032.GB8989@openwall.com>
+Date: Mon, 1 Jun 2020 14:00:32 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled
+Subject: Re: Exploitability of the integer overflows in djbdns 1.05?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 30 Jan 2020 11:23:28 -0700, "Todd C. Miller" wrote:
+On Mon, Jun 01, 2020 at 09:24:21AM +0300, Georgi Guninski wrote:
+> Exploitability of the integer overflows in djbdns 1.05?
+> 
+> TLDR: Are the integer overflows in djbdns 1.05 exploitable?
 
-> Sudo versions affected:
->
-> Sudo versions 1.7.1 to 1.8.30 inclusive are affected but only if
-> the "pwfeedback" option is enabled in sudoers.
+https://en.wikipedia.org/wiki/Betteridge%27s_law_of_headlines
 
-It turns out a change in EOF handling introduced in sudo 1.8.26
-prevents exploitation of the bug.  The EOF character is also
-initialized to 0 and sudo 1.8.26 checks for EOF before it checks
-for the kill character.
+"Betteridge's law of headlines is an adage that states: "Any headline
+that ends in a question mark can be answered by the word no"."
 
-This means that the bug actually affects sudo versions 1.7.1 to
-1.8.25p1 inclusive.
+I'm sure you didn't mean it that way, but the truth in my joke is that
+we should actually research the question and provide an informed answer.
+Will you, please?  Thanks!
 
-Sorry for the oversight.  I've updated the affected versions in
-https://www.sudo.ws/alerts/pwfeedback.html
-
- - todd
+Alexander
