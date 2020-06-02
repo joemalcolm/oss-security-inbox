@@ -1,25 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/24/4
-Message-ID: <CAO8bUymajJNtxsHG8RT7iyjFjBHVQFLm4DXqoX=XLpURas-RLg@mail.gmail.com>
-Date: Tue, 24 Nov 2020 17:42:07 +0100
-From: Frank Morgner <frankmorgner@...il.com>
-To: OpenSC Development <opensc-devel@...ts.sourceforge.net>,  opensc-announce@...ts.sourceforge.net
-Cc: oss-security@...ts.openwall.com
-Subject: OpenSC 0.21.0 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/02/1
+Message-ID: <CAGUWgD8K_FigSbcnHbFBcj3bv0KT_Ft9eFu9Q1BwvzBSVg3rhA@mail.gmail.com>
+Date: Tue, 2 Jun 2020 09:56:41 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: Exploitability of the integer overflows in djbdns 1.05?
 Content-Type: text/plain; charset=utf-8
 
-Hi all!
+On Mon, Jun 1, 2020 at 3:02 PM Solar Designer <solar@...nwall.com> wrote:
+>
+> On Mon, Jun 01, 2020 at 09:24:21AM +0300, Georgi Guninski wrote:
+> > Exploitability of the integer overflows in djbdns 1.05?
+> >
+> > TLDR: Are the integer overflows in djbdns 1.05 exploitable?
+>
+> https://en.wikipedia.org/wiki/Betteridge%27s_law_of_headlines
+>
+> "Betteridge's law of headlines is an adage that states: "Any headline
+> that ends in a question mark can be answered by the word no"."
+>
+> I'm sure you didn't mean it that way, but the truth in my joke is that
+> we should actually research the question and provide an informed answer.
+> Will you, please?  Thanks!
+>
+> Alexander
 
-I'm happy to finally announce the new release 0.21.0 of OpenSC
-<https://github.com/OpenSC/OpenSC/releases/tag/0.21.0>. You can read a full
-summary of the changes and get the release binaries on GitHub. We recommend
-upgrading your installation, most notably for fixing CVE-2020-26570,
-CVE-2020-26571 and CVE-2020-26572.
+Not sure if this is a joke:
 
-We've not only focused on fixing many bugs with different cards and
-environments from a variety of vendors. This release also adds support for
-two new types of tokens, Gemalto IDPrime and Polish eID card (e-dowód, eDO).
-
-Regards,
-Frank Morgner.
-
+Q: Why security people answer question with question?
+A: Why not?
