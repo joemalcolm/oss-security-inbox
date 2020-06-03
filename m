@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2588" "Tuesday" "4" "August" "2015" "14:42:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150804184256.C8CD472E04C@smtpvbsrv1.mitre.org>" "88" "[oss-security] Re: CVE request: WordPress 4.2.3 and earlier multiple vulnerabilities" nil nil nil "8" "2015080418:42:56" "[oss-security] Re: CVE request: WordPress 4.2.3 and earlier multiple vulnerabilities" (number mark "        cve-assign@m Aug  4   88/2588  " thread-indent "\"[oss-security] Re: CVE request: WordPress 4.2.3 and earlier multiple vulnerabilities\"\n") "<20150804123051.GA27639@lakka.kapsi.fi>" ("<20150804123051.GA27639@lakka.kapsi.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4845" "Wednesday" "3" "June" "2020" "14:33:18" "+0200" "Daniel Beck" "ml@beckweb.net" "<BC62CA7E-C08B-4762-AD58-5E0751CC4334@beckweb.net>" "132" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "6" "2020060312:33:18" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Jun  3  132/4845  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9986 invoked by uid 550); 4 Aug 2015 18:43:11 -0000
+Received: (qmail 13595 invoked by uid 550); 3 Jun 2020 12:33:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,101 +11,150 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9962 invoked from network); 4 Aug 2015 18:43:10 -0000
-In-Reply-To: <20150804123051.GA27639@lakka.kapsi.fi>
-Message-Id: <20150804184256.C8CD472E04C@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue,  4 Aug 2015 14:42:56 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: WordPress 4.2.3 and earlier multiple vulnerabilities
-To: henri@nerv.fi
+Received: (qmail 13571 invoked from network); 3 Jun 2020 12:33:30 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.14\))
+Message-Id: <BC62CA7E-C08B-4762-AD58-5E0751CC4334@beckweb.net>
+Date: Wed, 3 Jun 2020 14:33:18 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.104.14)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1591187610;fe0d2a73;
+X-HE-SMSGID: 1jgSa6-0008JD-Mq
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-> Can I get CVE for WordPress 4.2.3 and earlier multiple vulnerabilities
+The following releases contain fixes for security vulnerabilities:
 
-> https://codex.wordpress.org/Version_4.2.4 says:
-> 
-> "WordPress 4.2.4 fixes three cross-site scripting vulnerabilities and a
-> potential SQL injection that could be used to compromise a site
-> (CVE-2015-2213)."
+* Compact Columns Plugin 1.12
+* ECharts API Plugin 4.7.0-4
+* Script Security Plugin 1.73
+* Self-Organizing Swarm Plug-in Modules Plugin 3.21
 
-The correct parsing of that sentence is like:
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-  WordPress 4.2.4 fixes three cross-site scripting vulnerabilities and
-  [a potential SQL injection that could be used to compromise a site
-  (CVE-2015-2213)]
+* Play Framework Plugin
+* Project Inheritance Plugin
+* Selenium Plugin
+* Subversion Partial Release Manager Plugin
 
-not like:
-  
-  [WordPress 4.2.4 fixes three cross-site scripting vulnerabilities and
-  a potential SQL injection that could be used to compromise a site]
-  (CVE-2015-2213)
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2020-06-03/
 
-See below for the set of 6 CVE IDs that correspond to the currently
-available information.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-> https://core.trac.wordpress.org/changeset/33555
-> https://core.trac.wordpress.org/changeset/33556
-> "Comments: IDs are integers"
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Use CVE-2015-2213 only for this SQL injection issue.
+---
 
+SECURITY-1866 / CVE-2020-2190
+Script Security Plugin 1.72 and earlier does not correctly escape pending
+or approved classpath entries on the In-process Script Approval page.
 
-> https://core.trac.wordpress.org/changeset/33535
-> https://core.trac.wordpress.org/changeset/33536
-> "Customizer: Use hash_equals() for widgets" aka "a fix for a
-> potential timing side-channel attack"
-
-Use CVE-2015-5730.
-
-
-> https://core.trac.wordpress.org/changeset/33542
-> https://core.trac.wordpress.org/changeset/33543
-> "Heartbeat: Ensure post locks are released" aka "prevents an attacker
-> from locking a post from being edited"
-
-Use CVE-2015-5731.
-
-
-
-> cross-site scripting vulnerabilities
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by users able to configure sandboxed scripts.
 
 
+SECURITY-1200 / CVE-2020-2191 (permission checks) & CVE-2020-2192 (CSRF)
+Self-Organizing Swarm Plug-in Modules Plugin adds API endpoints to add or
+remove agent labels. In Self-Organizing Swarm Plug-in Modules Plugin 3.20
+and earlier these only require a global Swarm secret to use, and no regular
+permission check is performed. This allows users with Agent/Create
+permission to add or remove labels of any agent.
 
-> https://core.trac.wordpress.org/changeset/33529
-> "Nav menus: Consistent titles in widgets"
-
-Use CVE-2015-5732.
-
-
-> https://core.trac.wordpress.org/changeset/33540
-> https://core.trac.wordpress.org/changeset/33541
-> "Nav menus: Adjust redundant titles in accessibility helpers"
-
-Use CVE-2015-5733.
+Additionally, these API endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
 
 
-> https://core.trac.wordpress.org/changeset/33549
-> "Themes: Fix some broken links in the legacy theme preview."
+SECURITY-1841 / CVE-2020-2193
+ECharts API Plugin 4.7.0-3 and earlier does not escape the parser
+identifier when rendering charts.
 
-Use CVE-2015-5734.
+This results in a stored cross-site scripting (XSS) vulnerability that can
+be exploited by users with Job/Configure permission.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQEcBAEBCAAGBQJVwQcxAAoJEKllVAevmvmsQg8H/3xFZy/FzLYeOJh9oQS0NmYc
-gjVMTeiG5eWf+rlw2hHu/caJLNC0lQGJOdhp5IjKmt0YmNA6Uai5WVkK9NtfJQEu
-9WdPEWQXiHxf2qenhYZOOUedWDwxxx2B2X6NRbAMsfa61yYS0iyU8/CCXKEb28sn
-pHMfAO+a7ejhbXE589mrRTBckmKmVWkpNjE/dzKP1CBxroj3AXBfyhzIzSkZ8FRw
-cfAYY9AfKDYZpxY0BGPF/TuxFq06ptxp+oHcTj6bEAj0F1CmgcprKf44v232X0mR
-+aLhA6W2dBfMzY2k9MwNhpQznldai0lto/XEjiAA67JqduWoZP87b44Jr7wNKpE=
-=MlpN
------END PGP SIGNATURE-----
+SECURITY-1842 / CVE-2020-2194
+ECharts API Plugin 4.7.0-3 and earlier does not escape the display name of
+the builds in the trend chart.
+
+This results in a stored cross-site scripting (XSS) vulnerability that can
+be exploited by users with Run/Update permission.
+
+
+SECURITY-1837 / CVE-2020-2195
+Compact Columns Plugin 1.11 and earlier displays the unprocessed job
+description in tooltips.
+
+This results in a stored cross-site scripting vulnerability that can be
+exploited by users with Job/Configure permission.
+
+
+SECURITY-1766 / CVE-2020-2196
+Selenium Plugin 3.141.59 and earlier has no CSRF protection for its HTTP
+endpoints.
+
+This allows attackers to perform the following actions:
+
+* Restart the Selenium Grid hub.
+* Delete or replace the plugin configuration.
+* Start, stop, or restart Selenium configurations on specific nodes.
+
+Through carefully chosen configuration parameters, these actions can result
+in OS command injection on the Jenkins master.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1582 / CVE-2020-2197 (permission check) & CVE-2020-2198 (unredacte=
+d encrypted secrets)
+Jenkins limits access to job configuration XML data (`config.xml`) to users
+with Job/ExtendedRead permission, typically implied by Job/Configure
+permission. Project Inheritance Plugin has several job inspection features,
+including the API URL `/job/.../getConfigAsXML` for its Inheritance Project
+job type that does something similar.
+
+Project Inheritance Plugin 19.08.02 and earlier does not check permissions
+for this new endpoint, granting access to job configuration XML data to
+every user with Job/Read permission.
+
+Additionally, the encrypted values of secrets stored in the job
+configuration are not redacted, as they would be by the `config.xml` API
+for users without Job/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1726 / CVE-2020-2199
+Subversion Partial Release Manager Plugin 1.0.1 and earlier does not escape
+the error message for the repository URL field form validation.
+
+This results in a reflected cross-site scripting (XSS) vulnerability that
+can also be exploited similar to a stored cross-site scripting
+vulnerability by users with Job/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1879 / CVE-2020-2200
+A form validation endpoint in Play Framework Plugin executes the `play`
+command to validate a given input file.
+
+Play Framework Plugin 1.0.2 and earlier lets users specify the path to the
+`play` command on the Jenkins master. This results in an OS command
+injection vulnerability exploitable by users able to store such a file on
+the Jenkins master (e.g. through archiving artifacts).
+
+As of publication of this advisory, there is no fix.
+
+
