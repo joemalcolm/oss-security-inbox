@@ -1,18 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/20/8
-Message-Id: <20201020.203638.1561056568598070988.wl@gnu.org>
-Date: Tue, 20 Oct 2020 20:36:38 +0200 (CEST)
-From: Werner LEMBERG <wl@....org>
-To: alan.coopersmith@...cle.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-15999 fixed in FreeType 2.10.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/03/5
+Message-ID: <CAGUWgD_FATArUVJB=_Exdw0Fs8MQZc2kcZubTUpfbf0_xM=Tag@mail.gmail.com>
+Date: Wed, 3 Jun 2020 19:49:00 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Exploitability of the integer overflows in djbdns 1.05?
 Content-Type: text/plain; charset=utf-8
 
+Some potential bugs in djbdns 1.05, I didn't test them
+on hardware.
 
-> But distros should be warned that 2.10.3 and later may break the
-> build of ghostscript, [...]
+in cdb_make.c:
+cdb_make_finish:
 
-Done, both on the mailing lists and freetype.org.
+    93      memsize = 1;
+    94      for (i = 0;i < 256;++i) {
+    95        u = c->count[i] * 2;
+    96        if (u > memsize)
+    97          memsize = u;
+    98      }
+    99
+   100      memsize += c->numentries; /* no overflow possible up to now */
+   101      u = (uint32) 0 - (uint32) 1;
+   102      u /= sizeof(struct cdb_hp);
+   103      if (memsize > u) { errno = error_nomem; return -1; }
+   104
+   105      c->split = (struct cdb_hp *) alloc(memsize * sizeof(struct cdb_hp));
+   106      if (!c->split) return -1;
+   107
+   108      c->hash = c->split + c->numentries;
+   109
+   110      u = 0;
+   111      for (i = 0;i < 256;++i) {
+   112        u += c->count[i]; /* bounded by numentries, so no overflow */
+   113        c->start[i] = u;
+   114      }
 
+Issue 1:  On line 105 alloc(-SMALL) overflows alloc() despite the check for
+overflow (this might be mitigated by memory limits), e.g.
+(memsize= (unsigned int) -1 )/sizeof(struct cdb_hp)).
 
-    Werner
+In query.c:
+
+Issue 2:  There are several usages:
+   uint16_unpack_big(header + 8,&datalen);
+   pos += datalen;
+
+There appears no check if datalen doesn't overflow the buffer,
+leading past the end.
