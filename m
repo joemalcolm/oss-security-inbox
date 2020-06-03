@@ -1,71 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/04/2
-Message-ID: <CA+-XxSFy2dV24pSUDTcWX3-yoEipaqH+8GbGWEqCE_GyUCi=RA@mail.gmail.com>
-Date: Wed, 4 Mar 2020 06:55:28 -0800
-From: Igor Seletskiy <i@...udlinux.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/03/6
+Message-ID: <nycvar.YSQ.7.77.849.2006040049200.62159@xnncv>
+Date: Thu, 4 Jun 2020 00:51:24 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2020-13765 QEMU: loader: OOB access while loading registered ROM may lead to code execution
 Content-Type: text/plain; charset=utf-8
 
-CloudLinux is OK with this plan.
+   Hello,
 
-Regards,
-Igor Seletskiy |  CEO
-CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
-<https://www.cloudlinux.com/kernelcare>   |   Imunify360
-<http://imunify360.com/>
+An out-of-bound write access flaw was found in the way QEMU loads ROM contents 
+at boot time. This flaw occurs in the rom_copy() routine while loading the 
+contents of a 32-bit -kernel image into memory. Running an untrusted -kernel 
+image may load contents at arbitrary memory locations, potentially leading to 
+code execution with the privileges of the QEMU process.
 
-Get 24/7 free, exceptionally good support at cloudlinux.zendesk.com
-Follow us on twitter for technical updates: @CloudLinuxOS
-<https://twitter.com/cloudlinuxos>
+Upstream patch:
+---------------
+   -> https://git.qemu.org/?p=qemu.git;a=commitdiff;h=e423455c4f23a1a828901c78fe6d03b7dde79319
 
+Reference:
+----------
+   -> https://bugs.launchpad.net/qemu/+bug/1844635
 
-On Tue, Mar 3, 2020 at 3:42 AM Benjamin Gilbert <benjamin.gilbert@...eos.com>
-wrote:
+'CVE-2020-13765' requested via -> https://cveform.mitre.org/
 
-> Hi all,
->
-> Red Hat recently announced [1] that CoreOS Container Linux will reach
-> end-of-life on May 26.  The Container Linux team will be leaving the
-> distros lists on that date, and will need to hand off our maintenance
-> responsibilities to other distros.  We're currently handling [2]:
->
-> Administrative-1: Promptly review new issue reports for meeting the
-> list's requirements and confirm receipt of the report and, when
-> necessary, inform the reporter of any issues with their report (e.g.,
-> obviously not actionable by the distros) and request and/or propose
-> any required yet missing information (most notably, a tentative public
-> disclosure date/time) - primary: CoreOS, backup: Oracle
->
-> Administrative-2: If the proposed public disclosure date is not within
-> list policy, insist on getting this corrected and propose a suitable
-> earlier date - primary: CoreOS, backup: CloudLinux
->
-> Administrative-6: If multiple issues are reported at once, see if any
-> of them can reasonably be made public sooner than the rest, and if so
-> help untangle them and stay on top of their disclosure process -
-> primary: CoreOS, backup: CloudLinux
->
->
-> Oracle isn't signed up for any other tasks, so it seems natural for
-> them to move up to primary on #1.  In addition to being backup on #2
-> and #6, CloudLinux is primary on Administrative-3 (evaluate if the
-> issue is already public).  In my experience it makes sense to handle
-> #1 and #2 together, so: Oracle, would you be willing to take primary
-> on #1 and #2, and CloudLinux, what would you think of moving up to
-> primary on #6?
->
-> It'd also be good to get volunteers for the backup slots.  Any takers?
->
-> We plan to continue executing our current responsibilities until May
-> 26, but if other distros want to take over our roles sooner for ease
-> of bookkeeping, we're open to that.
->
-> Best,
-> --Benjamin Gilbert
->
-> [1]: https://coreos.com/os/eol/
-> [2]:
-> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
