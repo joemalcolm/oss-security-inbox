@@ -1,31 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/01/2
-Message-ID: <87ftesqtg8.fsf@oldenburg2.str.redhat.com>
-Date: Sun, 01 Mar 2020 11:07:35 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: "Alexander E. Patrakov" <patrakov@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/03/4
+Message-ID: <CAD77+gTN-F3e_KYuUtkWF6xQFQ0=tW3UCvc7PdM+Ap0YgokSSw@mail.gmail.com>
+Date: Wed, 3 Jun 2020 15:34:26 +0200
+From: Richard Hartmann <richih.mailinglist@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Grafana 6.7.4 and 7.0.2 released with fix for CVE-2020-13379
 Content-Type: text/plain; charset=utf-8
 
-* Alexander E. Patrakov:
+Dear all,
 
-> Just in case, I would like to complain here that my Fedora 31 systems
-> have not received an update.
->
-> There is indeed something in testing, but it is (mistakenly?) marked
-> as a bugfix release and not as a security update:
->
-> https://bodhi.fedoraproject.org/updates/?packages=opensmtpd
+today we are releasing Grafana 6.7.4 and 7.0.2. These patch releases
+include an important security fix for an issue that affects all
+Grafana versions from 3.0.1 to 7.0.1.
 
-I have edited the update and flagged it as security.
+Incorrect access control vulnerability (CVE-2020-13379)
+We received a security report to security@...fana.com on May 14, 2020,
+about a vulnerability in Grafana regarding the avatar feature. It was
+later identified as affecting Grafana versions from 3.0.1 to 7.0.1.
+CVE-2020-13379 has been assigned to this vulnerability.
 
-However, without feedback from community testing (karma), this update
-cannot be pushed at this time.
+This vulnerability allows any unauthenticated user/client to make
+Grafana send HTTP requests to any URL and return its result to the
+user/client. This can be used to gain information about the network
+that Grafana is running on.
 
-The package also failed to build on Fedora 32 and 33/rawhide due to C
-conformance issues, so there are no updates available there.
+If for some reason you cannot upgrade, the impact can be mitigated by
+blocking access to the avatar feature by blocking the /avatar/* URL
+via a web application firewall, load balancer, reverse proxy, or
+similar. It can also be mitigated by restricting access to Grafana.
 
-Thanks,
-Florian
+Affected versions
+Grafana releases 3.0.1 through 7.0.1
 
+Patched versions
+7.x and 6.7.x
+
+Solutions and mitigations
+Download and install the appropriate patch for your version of Grafana.
+
+Grafana Cloud instances have already been patched, and Grafana
+Enterprise customers were provided with updated binaries, under
+embargo, on May 27.
+
+Further information can be found at
+https://grafana.com/blog/2020/06/03/grafana-6.7.4-and-7.0.2-released-with-important-security-fix/
+
+
+Richard
