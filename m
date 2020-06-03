@@ -1,58 +1,140 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/23/2
-Message-ID: <20200623160634.GA150582@gmail.com>
-Date: Tue, 23 Jun 2020 09:06:34 -0700
-From: Eric Biggers <ebiggers@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/03/3
+Message-Id: <BC62CA7E-C08B-4762-AD58-5E0751CC4334@beckweb.net>
+Date: Wed, 3 Jun 2020 14:33:18 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-10769 kernel: Buffer over-read in crypto_authenc_extractkeys() when a payload longer than 4 bytes is not aligned.
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 23, 2020 at 04:52:12PM +0530, Rohit Keshri wrote:
-> Hello Team,
-> 
-> Red Hats kernel has a flaw in Authenticated Encryption with Associated Data
-> (AEAD), a form of encryption technique which
-> simultaneously assures the confidentiality and authenticity of data with
-> below details.
-> 
-> A buffer over-read flaw was found in crypto_authenc_extractkeys in
-> crypto/authenc.c  in  the IPsec Cryptographic  algorithm’s
-> module, authenc. When a payload is longer than 4 bytes, and is not
-> following 4-byte alignment boundary guidelines, it causes
-> a buffer over-read threat, leading to a system crash. This flaw allows a
-> local attacker with  user  privileges  to  cause a  denial
-> of service.
-> 
-> 'CVE-2020-10769' was assigned by Red Hat Inc.
-> 
-> Upstream fix:
-> https://lkml.org/lkml/2019/1/21/675
-> 
-> Thank you
-> ..
-> Rohit Keshri / Red Hat Product Security Team
-> PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Note that the Linux kernel community maintains LTS (Long Term Support) kernels
-which already have most bug fixes backported -- including hundreds of bug fixes
-that, like this one, were not assigned CVEs.  This bug was already fixed in the
-Linux LTS kernels 17 months ago:
+The following releases contain fixes for security vulnerabilities:
 
-Linux v4.4.172: 2019-01-26 (https://lkml.kernel.org/lkml/20190126092938.GA23417@kroah.com/)
-Linux v4.9.152: 2019-01-23 (https://lkml.kernel.org/lkml/20190123140846.GA27512@kroah.com/)
-Linux v4.14.95: 2019-01-23 (https://lkml.kernel.org/lkml/20190123140915.GA27656@kroah.com/)
-Linux v4.19.17: 2019-01-23 (https://lkml.kernel.org/lkml/20190123140935.GA27716@kroah.com/)
+* Compact Columns Plugin 1.12
+* ECharts API Plugin 4.7.0-4
+* Script Security Plugin 1.73
+* Self-Organizing Swarm Plug-in Modules Plugin 3.21
 
-Linux distributors can significantly reduce their vulnerability to known bugs by
-periodically merging in the appropriate LTS kernel branch.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-Also, a regression test for this bug was added to LTP (Linux Test Project)
-14 months ago: https://github.com/linux-test-project/ltp/commit/5d30802778fe3a21
-Based on what I've seen when adding regression tests to LTP before, it's likely
-that this bug was finally found and fixed in this particular downstream kernel
-only because the LTP test was failing.  However, note that most Linux kernel
-bugs are fixed without a regression test being added to LTP, which means that
-cherry-picking kernel patches to fix LTP failures is much less effective than
-merging in all LTS kernel fixes.
+* Play Framework Plugin
+* Project Inheritance Plugin
+* Selenium Plugin
+* Subversion Partial Release Manager Plugin
 
-- Eric
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2020-06-03/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1866 / CVE-2020-2190
+Script Security Plugin 1.72 and earlier does not correctly escape pending
+or approved classpath entries on the In-process Script Approval page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by users able to configure sandboxed scripts.
+
+
+SECURITY-1200 / CVE-2020-2191 (permission checks) & CVE-2020-2192 (CSRF)
+Self-Organizing Swarm Plug-in Modules Plugin adds API endpoints to add or
+remove agent labels. In Self-Organizing Swarm Plug-in Modules Plugin 3.20
+and earlier these only require a global Swarm secret to use, and no regular
+permission check is performed. This allows users with Agent/Create
+permission to add or remove labels of any agent.
+
+Additionally, these API endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-1841 / CVE-2020-2193
+ECharts API Plugin 4.7.0-3 and earlier does not escape the parser
+identifier when rendering charts.
+
+This results in a stored cross-site scripting (XSS) vulnerability that can
+be exploited by users with Job/Configure permission.
+
+
+SECURITY-1842 / CVE-2020-2194
+ECharts API Plugin 4.7.0-3 and earlier does not escape the display name of
+the builds in the trend chart.
+
+This results in a stored cross-site scripting (XSS) vulnerability that can
+be exploited by users with Run/Update permission.
+
+
+SECURITY-1837 / CVE-2020-2195
+Compact Columns Plugin 1.11 and earlier displays the unprocessed job
+description in tooltips.
+
+This results in a stored cross-site scripting vulnerability that can be
+exploited by users with Job/Configure permission.
+
+
+SECURITY-1766 / CVE-2020-2196
+Selenium Plugin 3.141.59 and earlier has no CSRF protection for its HTTP
+endpoints.
+
+This allows attackers to perform the following actions:
+
+* Restart the Selenium Grid hub.
+* Delete or replace the plugin configuration.
+* Start, stop, or restart Selenium configurations on specific nodes.
+
+Through carefully chosen configuration parameters, these actions can result
+in OS command injection on the Jenkins master.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1582 / CVE-2020-2197 (permission check) & CVE-2020-2198 (unredacted encrypted secrets)
+Jenkins limits access to job configuration XML data (`config.xml`) to users
+with Job/ExtendedRead permission, typically implied by Job/Configure
+permission. Project Inheritance Plugin has several job inspection features,
+including the API URL `/job/.../getConfigAsXML` for its Inheritance Project
+job type that does something similar.
+
+Project Inheritance Plugin 19.08.02 and earlier does not check permissions
+for this new endpoint, granting access to job configuration XML data to
+every user with Job/Read permission.
+
+Additionally, the encrypted values of secrets stored in the job
+configuration are not redacted, as they would be by the `config.xml` API
+for users without Job/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1726 / CVE-2020-2199
+Subversion Partial Release Manager Plugin 1.0.1 and earlier does not escape
+the error message for the repository URL field form validation.
+
+This results in a reflected cross-site scripting (XSS) vulnerability that
+can also be exploited similar to a stored cross-site scripting
+vulnerability by users with Job/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1879 / CVE-2020-2200
+A form validation endpoint in Play Framework Plugin executes the `play`
+command to validate a given input file.
+
+Play Framework Plugin 1.0.2 and earlier lets users specify the path to the
+`play` command on the Jenkins master. This results in an OS command
+injection vulnerability exploitable by users able to store such a file on
+the Jenkins master (e.g. through archiving artifacts).
+
+As of publication of this advisory, there is no fix.
+
+
