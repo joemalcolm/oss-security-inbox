@@ -1,53 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/16/5
-Message-ID: <20201016170329.GB84510@raider.home>
-Date: Fri, 16 Oct 2020 19:03:29 +0200
-From: Pierre Riteau <pierre@...ckhpc.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/04/5
+Message-ID: <20200604122811.GA31148@f195.suse.de>
+Date: Thu, 4 Jun 2020 14:28:11 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2020-007] Blazar: Remote code execution in blazar-dashboard (CVE-2020-26943)
+Subject: linux-pam: pam_setquota.so vulnerability facilitated through fusermount setuid-root program
 Content-Type: text/plain; charset=utf-8
 
-========================================================
-OSSA-2020-007: Remote code execution in blazar-dashboard
-========================================================
+During a review of newly added PAM modules in the linux-pam project [1]
+I found a vulnerability [2] in the pam_setquota.so module.
 
-:Date: October 12, 2020
-:CVE: CVE-2020-26943
+Vulnerability Description
+=========================
 
+The pam_setquota module iterates over all mounted file systems using
+`setmntent()` and `getmntent()`. It tries to find the longest match of a
+file system mounted on /home/$USER or above (except when the explicit
+fs=/some/path parameter is passed to the pam module).
 
-Affects
-~~~~~~~
-- Blazar-dashboard: <1.3.1, ==2.0.0, ==3.0.0
+The home directory /home/$USER is owned by the unprivileged user,
+however. There exist tools like `fusermount` from libfuse which is by
+default installed setuid-root for everybody. `fusermount` allows
+unprivileged users to mount a FUSE file system using an arbitrary
+source device name.
 
+Thus given the following precondition:
 
-Description
-~~~~~~~~~~~
-Lukas Euler (Positive Security) reported a vulnerability in
-blazar-dashboard. A user allowed to access the Blazar dashboard in
-Horizon may trigger code execution on the Horizon host as the user the
-Horizon service runs under. This may result in Horizon host
-unauthorized access and further compromise of the Horizon service. All
-setups using the Horizon dashboard with the blazar-dashboard plugin
-are affected.
+1) there is only the root file system (/) or a file system is mounted on
+   /home, but not on /home/$USER.
 
+a non-privileged attacker can achieve the following:
 
-Patches
-~~~~~~~
-- https://review.opendev.org/755814 (Stein)
-- https://review.opendev.org/755813 (Train)
-- https://review.opendev.org/755812 (Ussuri)
-- https://review.opendev.org/756064 (Victoria)
-- https://review.opendev.org/755810 (Wallaby)
+2) the attacker mounts a fake FUSE file system over its own home directory:
 
+  ```
+  user $ export _FUSE_COMMFD=0
+  user $ fusermount $HOME -ononempty,fsname=/dev/sda1
+  ```
 
-Credits
-~~~~~~~
-- Lukas Euler from Positive Security (CVE-2020-26943)
+  This will result in a mount entry in /proc/mounts looking like this:
 
+  ```
+  /dev/sda1 on /home/user type fuse (rw,nosuid,nodev,relatime,user_id=1000,group_id=100)
+  ```
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1895688
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-26943
+3) when the attacker now logs in with pam_setquota configured then
+   pam_setquota will identify /dev/sda1 as the file system to apply the
+   user's quota on.
+
+As a result an unprivileged user has full control over onto which block
+device the quota is applied.
+
+Consequences Regarding `fusermount`
+===================================
+
+It seems that developers find it suprising that regular user accounts
+can specify arbitrary source device names in mount entries. It would be
+desirable to apply restrictions on the source device string in the
+`fusermount` setuid-root tool. It will probably be difficult to
+implement this in a backward-compatible and safe way, however.
+
+Bugfix
+======
+
+This issue is fixed via upstream commit
+27ded8954a1235bb65ffc9c730ae5a50b1dfed61 [3].
+
+Vulnerability Reporting
+=======================
+
+This finding was reported privately to upstream. Since the
+pam_setquota.so PAM module was never part of an official release no
+embargo was setup.  For this reason I also did not request a CVE for the
+issue.
+
+[1]: https://github.com/linux-pam/linux-pam.git
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=1171721
+[3]: https://github.com/linux-pam/linux-pam/commit/27ded8954a1235bb65ffc9c730ae5a50b1dfed61
+
+Cheers
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
+
 
 Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
