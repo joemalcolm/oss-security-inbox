@@ -1,40 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/10/7
-Message-ID: <fd19615e-b049-ee54-9d34-3c89bda717b4@gmail.com>
-Date: Tue, 10 Nov 2020 14:12:49 -0500
-From: "Demi M. Obenour" <demiobenour@...il.com>
-To: "Vladimir D. Seleznev" <vseleznv@...linux.org>, oss-security@...ts.openwall.com
-Subject: Re: The importance of mutual authentication: Local Privilege Escalation in X11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/04/2
+Message-ID: <nycvar.YSQ.7.77.849.2006041119320.62159@xnncv>
+Date: Thu, 4 Jun 2020 11:21:42 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Ren Ding <rding@...ech.edu>, Hanqing Zhao <hanqing@...ech.edu>,  Yi Ren <c4tren@...il.com>
+Subject: CVE-2020-13800 QEMU: ati-vga: infinite recursion in ati_mm_read/write calls may lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-On 11/10/20 1:43 PM, Vladimir D. Seleznev wrote:
->>> This contravenes the ability to run X11 client from another user. The
->>> idea is that X11 server allows any clients with right credentials
->>> regardless of theirs processes UID or GID to connect to the server.
->> Indeed it does, and I mention cryptographic authentication mechanisms
->> below.  Instead of /tmp, /run/X11 would work just as well.  It is
->> the mutual authentication that matters.
-> Do I understand you correctly: you propose to forbid running X11 clients
-> which processes belong to another users? In that case it is a bad idea:
-> I would like to run untrusted clients with special UIDs. Or if I
-> understand you wrongly, please explain how client of other user can
-> connect to the socket placed in /run/user/$UID with these strict access
-> permissions 0700?
+   Hello,
 
-If you aren’t using the X Security Extension or the X Access
-Control Extension, then X clients aren’t effectively isolated from
-each other.  Therefore, connecting untrusted X clients to the desktop
-session is a bad idea.
+An infinite recursion issue was found in the ati-vga emulator of the QEMU. It 
+could occur in ati_mm_read/write routines while accessing VGA registers, for 
+certain values of the 'mm_index' variable. A guest user/process may use this 
+flaw to crash the QEMU process resulting in DoS scenario.
 
-Under my proposal, you would still be able to run an X server with
-cryptographic authentication, but it would be more secure than it
-is today.  Depending on the display manager, you might need to run
-your own X server.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg00833.html
 
-Sincerely,
+This issue was reported by Ren Ding and Hanqing Zhao of SSLab Georgia Tech and 
+Yi Ren(CC'd)
 
-Demi
+'CVE-2020-13800' requeted via -> https://cveform.mitre.org/
 
-Download attachment "OpenPGP_0xB288B55FFF9C22C1.asc" of type "application/pgp-keys" (3987 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (834 bytes)
