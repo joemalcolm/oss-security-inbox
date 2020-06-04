@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/04/4
-Message-ID: <CAC5HUDz6+v0Tou3Fg=_5Q4ru9Vg7TA2x+SxtFAGfYBc3CighHA@mail.gmail.com>
-Date: Wed, 4 Nov 2020 14:48:46 +0530
-From: Mohammad Tausif Siddiqui <msiddiqu@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Anthony Liguori <aliguori@...zon.com>, Solar Designer <solar@...nwall.com>
-Subject: Re: Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/04/1
+Message-ID: <nycvar.YSQ.7.77.849.2006041027040.62159@xnncv>
+Date: Thu, 4 Jun 2020 10:30:41 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Ren Ding <rding@...ech.edu>, Hanqing Zhao <hanqing@...ech.edu>,  Yi Ren <c4tren@...il.com>
+Subject: CVE-2020-13791 QEMU: ati-vga: OOB access while reading PCI configuration may lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 12, 2020 at 10:10 PM kiyin(尹亮) <kiyin@...cent.com> wrote:
+   Hello,
 
-> There are four security bugs in Broadcom SPU driver. The patch was public
-> in https://www.spinics.net/lists/linux-crypto/msg50839.html. CVE ID
-> request is in progress.
->
+An out-of-bounds access issue was found in the ati-vga emulator of the QEMU. 
+It could occur while reading PCI configuration bytes via ati_mm_read routine, 
+if the address sent by a guest is towards an end of the PCI configuration 
+space. A guest user/process may use this flaw to crash the QEMU process 
+resulting in DoS scenario.
 
-Hi Kiyin, do you have an update to the CVE assignment from Mitre here?
--- 
+Upstream patch
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg00831.html
 
-TAUSIF SIDDIQUI RED HAT PRODUCT SECURITY
+This issue was reported by Ren Ding and Hanqing Zhao of SSLab Georgia Tech and 
+Yi Ren(CC'd)
 
-0EE1 F6BF 8991 9A65 0A79 A0A7 5849 60EC 88B8 2C71
+'CVE-2020-13791' requeted via -> https://cveform.mitre.org/
 
-secalert@...hat.com <https://access.redhat.com/security/team/contact> for
-urgent response.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
