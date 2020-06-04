@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["641" "Monday" "12" "December" "2016" "13:47:56" "-0500" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8n1PaaH0Pby5NGSsXZ41g8=y_1Y_QeKTFcGyAKOh=CumQ@mail.gmail.com>" "15" "[oss-security] CVE Request: Potential DoS in Crypto++ ASN.1 parser" nil nil nil "12" "2016121218:47:56" "[oss-security] CVE Request: Potential DoS in Crypto++ ASN.1 parser" (number mark "U       noloader@gma Dec 12   15/641   " thread-indent "\"[oss-security] CVE Request: Potential DoS in Crypto++ ASN.1 parser\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["680" "Thursday" "4" "June" "2020" "11:21:42" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.77.849.2006041119320.62159@xnncv>" "21" "[oss-security] CVE-2020-13800 QEMU: ati-vga: infinite recursion in ati_mm_read/write calls may lead to DoS" nil nil nil "6" "2020060405:51:42" "[oss-security] CVE-2020-13800 QEMU: ati-vga: infinite recursion in ati_mm_read/write calls may lead to DoS" (number mark "U       ppandit@redh Jun  4   21/680   " thread-indent "\"[oss-security] CVE-2020-13800 QEMU: ati-vga: infinite recursion in ati_mm_read/write calls may lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-13800 QEMU: ati-vga: infinite recursion in ati_mm_read/write calls may lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7855 invoked by uid 550); 12 Dec 2016 18:49:02 -0000
+Received: (qmail 10155 invoked by uid 550); 4 Jun 2020 05:52:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7522 invoked from network); 12 Dec 2016 18:48:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=RFfDye87V8RkM2ZHAWZ1dK6JQima+rzzbkJ/OTotWP8=;
-        b=CU8FD1dffNW50Hk+L1RmR/s0NfF3zwn6wqRbXrouhirmJJYttFjjeduYGxE3ZrEWEU
-         H6kpLIiPttxGq6OaSmB6x2rtWtwrAaISH1t0JleYc7eS14HN41Wpe2vIMY41E0pl/O++
-         j4jTjUpkrJV++cDywYPwJFA+6BcfLi3RbCVtmeelz+s+PmYhjHidnSsQn5ED9/tvsqla
-         0M+uLtTf7D7M4OAFcIDn+I5vaYirO+rbzM45RWHgAtSLGenpWwNCipW9Mg6NFyt3OAND
-         toCiHMOMfMZhuZO+D63iWgDOZt+g593noBNEGVL3hXJbiAoFf0IHGU/HqZfUI5pKxJ+a
-         GwMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=RFfDye87V8RkM2ZHAWZ1dK6JQima+rzzbkJ/OTotWP8=;
-        b=HqGPA4dP32gZtEMUhGUG6OkLoN4sPwB+5POBib5Ts4GW/GuUPPNBUVu6njYLchs8K6
-         yLYDbeNwkyzXPrYjBt9mHyETvUNesJ725XnO4moBORgCKaYU82KwQvVP8EipdQYcLDP0
-         jnHlbV2ozbG62mDTYkiRbqVtSz+kHfRf4wVJOPgDpftaWlbxmvYoQIJtU9omkKZBeMym
-         pFf56OgznigvK/qyQWDAQVC5Jl2v2C2ueIk8cyXqRVVpMUscwUTFZat0pTD4JrHPbGpn
-         8HB4u6ZnchuoO0nnnCSybnOTMGX8U+7YH+QJnddgvjp1vb3w6OcN98mJ4HcvRcZt8d1x
-         +ijg==
-X-Gm-Message-State: AKaTC01Wa4xa7KLiy7lzT0dG8Km8GyqMtFWrkQBfEpsfqwyGXX6saUMHcPFe7mKH2N9vgunBoyEw7VPKY2vnPA==
-X-Received: by 10.107.201.86 with SMTP id z83mr42667144iof.156.1481568476574;
- Mon, 12 Dec 2016 10:47:56 -0800 (PST)
+Received: (qmail 10137 invoked from network); 4 Jun 2020 05:52:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1591249918;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=HkZPjtaVD0pLTnoBgv3ibJ80bov2OB08dbEgbxo0rRE=;
+	b=iPAGbR46RsKyPG3x/XbNVfKj3//KC2vyqICht6+qkDwJT4bW4w1KBqQqBE8BGkdKK7D0gX
+	LiUVCH6o0kt/RzXMfqF/FgGKh+TSNsDRmhHqNNbcTX3/V7akL4kH3+8gUD0Uqx032hXv5o
+	tQ/8XsbHCmQumqw5PWLp2FP2UN0X49w=
+X-MC-Unique: RE6oL0OgOOKheBUs8FiJLw-1
+Date: Thu, 4 Jun 2020 11:21:42 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+cc: Ren Ding <rding@gatech.edu>, Hanqing Zhao <hanqing@gatech.edu>, 
+    Yi Ren <c4tren@gmail.com>
+Message-ID: <nycvar.YSQ.7.77.849.2006041119320.62159@xnncv>
 MIME-Version: 1.0
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Mon, 12 Dec 2016 13:47:56 -0500
-Message-ID: <CAH8yC8n1PaaH0Pby5NGSsXZ41g8=y_1Y_QeKTFcGyAKOh=CumQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: Gergely Nagy <ngg@tresorit.com>, =?UTF-8?Q?Tam=C3=A1s_Koczka?= <koczka@tresorit.com>, 
-	=?UTF-8?B?SmVhbi1QaWVycmUgTcO8bmNo?= <jean-pierre.muench@web.de>, 
-	Uri Blumenthal <mouse008@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] CVE Request: Potential DoS in Crypto++ ASN.1 parser
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] CVE-2020-13800 QEMU: ati-vga: infinite recursion in ati_mm_read/write
+ calls may lead to DoS
 
-Gergely Nagy and Tam=C3=A1s Koczka of Tresorit report a potential DoS in
-the Crypto++ ASN.1 parser. A copy of their email with the report can
-be found at https://groups.google.com/d/msg/cryptopp-users/fEQ8jWg_K8g/qOLH=
-GIDICwAJ.
+   Hello,
 
-When Crypto++ library parses an ASN.1 data value, the library
-allocates for the content octets based on the length octets. Later, if
-there's too few or too little content octets, the library throws a
-BERDecodeErr exception. The memory for the content octets will be
-zeroized (even if unused), which could take a long time on a large
-allocation.
+An infinite recursion issue was found in the ati-vga emulator of the QEMU. It 
+could occur in ati_mm_read/write routines while accessing VGA registers, for 
+certain values of the 'mm_index' variable. A guest user/process may use this 
+flaw to crash the QEMU process resulting in DoS scenario.
 
-Please assign a CVE for the potential issue.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg00833.html
 
-Thanks in advance.
+This issue was reported by Ren Ding and Hanqing Zhao of SSLab Georgia Tech and 
+Yi Ren(CC'd)
+
+'CVE-2020-13800' requeted via -> https://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+
