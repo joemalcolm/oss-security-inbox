@@ -1,44 +1,187 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/13/1
-Message-ID: <1597307893318.52919@amazon.com>
-Date: Thu, 13 Aug 2020 08:38:15 +0000
-From: "Iorga, Serban" <seriorga@...zon.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2020-16843: Firecracker v0.20.0, v0.21.0 and v0.21.1 network stack can freeze under heavy ingress traffic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/04/4
+Message-Id: <1D1C8F3C-62C9-4415-A828-76ED276FB7AF@SJTU.EDU.CN>
+Date: Thu, 4 Jun 2020 19:01:12 +0800
+From: Fan Yang <fan_yang@...U.EDU.CN>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-10757 Linux kernel: mremap hugepage mmaped DAX nvdimm may cause corrupted page table
 Content-Type: text/plain; charset=utf-8
 
-We have identified an issue in the Firecracker v0.20.0, v0.21.0 and v0.21.1 virtio-net emulation.
+Hi all,
 
-# Issue Description
+NOTE: this bug have been assigned CVE id CVE-2020-10757.  Its impact dates
+back to the commit 5c7fb56e5e3f ("mm, dax: dax-pmd vs thp-pmd vs
+hugetlbfs-pmd”), at kernel version v4.5.  And it can be fixed by the patch
+here (https://lkml.org/lkml/2020/6/4/314).
 
-Under heavy network ingress traffic, when the host TAP interface's receive queue is not drained and the guest virtio-net device's receive queue is full, the microVM network interface ingress can freeze. There is no possibility to recover from this state, resulting in a denial of service on the microVM when it is configured with a single network interface, and causing an availability problem for the microVM network interface on which the issue is triggered.
+Description
+===========
 
-This issue is difficult to reproduce with TCP traffic. The TCP congestion algorithm makes it harder to fill both the TAP interface and virtio receive queues.
+I observed this bug when mremap a mmaped DAX nvdimm to a mmaped anonymous
+memory region.  The mremap system call returns successfully but when access
+the region afterwards, the program get killed due to corrupted page table:
 
-# Impact
+try_mremap: Corrupted page table at address 7facc4fd1000
+PGD 800000015beee067 P4D 800000015beee067 PUD 40695a067 PMD 1614ec067 PTE 6969696969696969
+Bad pagetable: 000f [#3] SMP PTI
+CPU: 6 PID: 11264 Comm: try_mremap Tainted: G    B D W         5.6.6-300.fc32.x86_64 #1
+Hardware name: System manufacturer System Product Name/PRIME Z270M-PLUS, BIOS 0601 01/13/2017
+RIP: 0033:0x4012fc
+Code: 00 00 e8 87 fd ff ff 48 89 45 e8 48 8b 45 e8 48 3b 45 f8 74 11 bf 3a 20 40 00 e8 8f fd ff ff b8 ff ff ff ff eb 0c 48 8b 45 f8 <c6> 00 aa b8 00 00 00 00 c9 c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f
+RSP: 002b:00007ffde40d8d00 EFLAGS: 00010246
+RAX: 00007facc4fd1000 RBX: 0000000000000000 RCX: 00007facc4f0255e
+RDX: 0000000000001000 RSI: 0000000000001000 RDI: 00007facc4a00000
+RBP: 00007ffde40d8d30 R08: 00007facc4fd1000 R09: 0000000000000000
+R10: 0000000000000003 R11: 0000000000000202 R12: 00000000004010a0
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+...
+BUG: Bad page map in process try_mremap  pte:6969696969696969 pmd:1614ec067
+addr:00007facc4fd1000 vm_flags:288000fb anon_vma:0000000000000000 mapping:ffff9badd87a28a0 index:0
+file:try_mremap fault:ext4_dax_fault mmap:ext4_file_mmap readpage:0x0
+CPU: 6 PID: 11264 Comm: try_mremap Tainted: G    B D W         5.6.6-300.fc32.x86_64 #1
+Hardware name: System manufacturer System Product Name/PRIME Z270M-PLUS, BIOS 0601 01/13/2017
+Call Trace:
+dump_stack+0x64/0x88
+print_bad_pte.cold+0x95/0xbf
+vm_normal_page+0xbe/0xd0
+unmap_page_range+0x68b/0xeb0
+unmap_vmas+0x6a/0xd0
+exit_mmap+0x97/0x170
+mmput+0x61/0x140
+do_exit+0x2f3/0xae0
+rewind_stack_do_exit+0x17/0x20
 
-When this issue is triggered, the guest kernel network interface will no longer receive packets.
+Note that the weird 0x69 in the pte value is the ascii of "i" which I had
+written to the memory.  This bug is due to in move_page_tables:mm/mremap.c,
+the condition to handle a huge pmd is as follows:
 
-# Vulnerable Systems
+		if (is_swap_pmd(*old_pmd) || pmd_trans_huge(*old_pmd)) {
 
-Firecracker releases v0.20.0, v0.21.0 and v0.21.1 are affected.
+However, the DAX file is mapped as huge page but it is not transparent huge
+page.  So the huge pmd is not split, the physical page the pmd points to is
+treated as a page table (but actually it is a 2M data page).  Then
+move_ptes uses the value of the "pte" to update the pte where the page
+remap to, and the mremap system call returns successfully.  Afterwards, the
+access to the new address incurs corrupted page table.
 
-# Mitigation
+Re-produce Instructions
+=======================
 
-Patched binaries mitigating this issue have been released as Firecracker v0.20.1[1] and Firecracker v0.21.2[2].
-If you are using Firecracker v0.20.0, v0.21.0 or v0.21.1, we recommend you apply the provided fix. If you are using Firecracker v0.19.1 or below, you do not need to take any action.
+1. one need to have a machine with Intel Optane DC Persistent Memory
+(https://www.intel.com/content/www/us/en/architecture-and-technology/optane-dc-persistent-memory.html),
+or run a VM with a virtualized NVDIMM
+(https://software.intel.com/content/www/us/en/develop/articles/how-to-emulate-persistent-memory-on-an-intel-architecture-server.html).
 
-[1] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.20.1
-[2] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.21.2
+2. mount a DAX file system (e.g., I use ext4).
 
-Best Regards,
-Serban Iorga on behalf of the Firecracker maintainers team.
+3. Write a userspace program to mremap a DAX mmaped file to a mmaped
+  anonymous memory region.
 
-Amazon Development Center (Romania) S.R.L. registered office: 27A Sf. Lazar Street, UBC5, floor 2, Iasi, Iasi County, 700045, Romania. Registered in Romania. Registration number J22/2621/2005.
+Here is the code I use:
 
+#define _GNU_SOURCE
+#include <sys/mman.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <errno.h>
 
+#define PROT			PROT_READ|PROT_WRITE
 
+#define REGION_PM_TMP_PATH	"/mnt/pmem0/try_mremap"
 
+#define REGION_MEM_SIZE 4096*4
+#define REGION_PM_SIZE	4096*512
+#define REMAP_MEM_OFF   0
+#define REMAP_PM_OFF    0
+#define REMAP_SIZE      4096
 
-Amazon Development Center (Romania) S.R.L. registered office: 27A Sf. Lazar Street, UBC5, floor 2, Iasi, Iasi County, 700045, Romania. Registered in Romania. Registration number J22/2621/2005.
+char * map_tmp_pm_region(void)
+{
+	int fd;
+
+	fd = open(REGION_PM_TMP_PATH, O_RDWR|O_CREAT, 0644);
+	if (fd < 0) {
+		perror(REGION_PM_TMP_PATH);
+		exit(-1);
+	}
+
+	if (ftruncate(fd, REGION_PM_SIZE)) {
+		perror("ftruncate");
+		exit(-1);
+	}
+
+	return mmap(NULL, REGION_PM_SIZE, PROT, MAP_SHARED_VALIDATE|MAP_SYNC,
+		    fd, 0);
+}
+
+int main(int argc, char **argv)
+{
+	char *regm, *regp, *remap;
+	int ret;
+
+	regm = mmap(NULL, REGION_MEM_SIZE, PROT, MAP_PRIVATE|MAP_ANONYMOUS,
+		    -1, 0);
+	if (regm == MAP_FAILED) {
+		perror("regm");
+		return -1;
+	}
+
+	regp = map_tmp_pm_region();
+	if (regp == MAP_FAILED) {
+		perror("regp");
+		return -1;
+	}
+
+	memset(regm, 'a', REGION_MEM_SIZE);
+	memset(regp, 'i', REGION_PM_SIZE);
+
+	remap = mremap(regp + REMAP_PM_OFF, REMAP_SIZE, REMAP_SIZE,
+		       MREMAP_MAYMOVE|MREMAP_FIXED, regm + REMAP_MEM_OFF);
+	if (remap != regm + REMAP_MEM_OFF) {
+		perror("mremap");
+		return -1;
+	}
+
+	*regm = 0xAA;		/* write anything to the address */
+	return 0;
+}
+
+The Patch
+=========
+
+arch/x86/include/asm/pgtable.h | 1 +
+mm/mremap.c                    | 2 +-
+2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/x86/include/asm/pgtable.h b/arch/x86/include/asm/pgtable.h
+index 4d02e64af1b3..19cdeebfbde6 100644
+--- a/arch/x86/include/asm/pgtable.h
++++ b/arch/x86/include/asm/pgtable.h
+@@ -257,6 +257,7 @@ static inline int pmd_large(pmd_t pte)
+}
+
+#ifdef CONFIG_TRANSPARENT_HUGEPAGE
++/* NOTE: when predicate huge page, consider also pmd_devmap, or use pmd_large */
+static inline int pmd_trans_huge(pmd_t pmd)
+{
+	return (pmd_val(pmd) & (_PAGE_PSE|_PAGE_DEVMAP)) == _PAGE_PSE;
+diff --git a/mm/mremap.c b/mm/mremap.c
+index 6aa6ea605068..57b1f999f789 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -266,7 +266,7 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
+		new_pmd = alloc_new_pmd(vma->vm_mm, vma, new_addr);
+		if (!new_pmd)
+			break;
+-		if (is_swap_pmd(*old_pmd) || pmd_trans_huge(*old_pmd)) {
++		if (is_swap_pmd(*old_pmd) || pmd_trans_huge(*old_pmd) || pmd_devmap(*old_pmd)) {
+			if (extent == HPAGE_PMD_SIZE) {
+				bool moved;
+				/* See comment in move_ptes() */
+-- 
+2.25.4
+
 
