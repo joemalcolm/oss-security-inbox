@@ -1,38 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/02/5
-Message-Id: <EFD7F82B-BA85-43E6-BF5D-60A2EC54560E@unsafeword.org>
-Date: Thu, 2 Apr 2020 11:19:11 -0700
-From: Reed Black <reed@...afeword.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/04/3
+Message-ID: <20200604105637.GA275582@espresso.pseudorandom.co.uk>
+Date: Thu, 4 Jun 2020 11:56:37 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Reed Black <reed@...afeword.org>
-Subject: Re: Deficient engineering processes
+Subject: CVE-2020-12049: dbus: denial of service via file descriptor leak
 Content-Type: text/plain; charset=utf-8
 
+References: CVE-2020-12049, GHSL-2020-057, dbus#294.
 
+dbus is the reference implementation of D-Bus, a user-space IPC mechanism
+originating from freedesktop.org and commonly used on Linux and other
+Unix systems.
 
-> On Apr 1, 2020, at 4:42 PM, Jeffrey Walton <noloader@...il.com> wrote:
-> 
-> [...]
-> 
-> My question is, how to convince someone that following standard
-> project management procedures is a good thing? How do we get them
-> onboard with improving their engineering processes? Especially the
-> evaluation phase, and leveraging a continuous integration pipeline to
-> detect errors before they are released to users?
+Kevin Backhouse of the GitHub Security Lab discovered a denial of service
+vulnerability[0] in dbus >= 1.3.0. An unprivileged local attacker can cause
+the system dbus-daemon (dbus-daemon --system) to leak file descriptors
+(fds) by sending messages with a number of fds that exceeds the allowed
+number, resulting in truncation. The attacker's connection is (correctly)
+disconnected, but the fds that were attached to the truncated message
+are (incorrectly) not closed. By repeating this process, the attacker
+can make the dbus-daemon reach its RLIMIT_NOFILE limit. When this limit
+is reached, new connections will fail, and existing connections will be
+unable to send messages with fds attached, causing denial of service.
 
-The answer will vary depending on the context - business vs hobbyist open source project, etc.
+The same attack is also possible in the uncommon situation where processes
+of different privilege levels communicate directly using a private D-Bus
+socket (DBusServer) without going via a dbus-daemon.
 
+In the development branch, this has been fixed[1] in version 1.13.16.
+Older releases are vulnerable, except where noted below.
 
-In business, one of the most common failings of a security program is in not making security defects visible at the executive level. Exec teams understand the liability of accruing security debt. Or if they don't, you need to demonstrate the business case by showing what happened to other companies where security failed.
+In the stable branch 1.12.x, this has been fixed in version 1.12.18.
+This is the recommended version of dbus for production use and for
+long-term-stable operating systems.
 
-You want to keep it high level. Make sure the exec team has a nice simple graph that shows any negative trends in open security issues over time. Personally, I like to make sure they see that once a quarter, the managerial teams see it at least monthly, and the engineering team sees the chart and a list of top or aging issues every week or two.
+In the old stable branch 1.10.x, this has been fixed in version 1.10.30.
+This branch is maintained for the benefit of older long-term-stable
+operating systems such as Debian 9, and will reach end-of-life soon[2].
 
-Once the exec team is on board and asking questions when things trend in the wrong direction, security issues become a liability for the managerial team, and therefore for the developers. As a liability, there should also be supporting resources approved from the exec team on down. If the security team is approachable and capable of providing guidance, the managerial and developer teams will begin asking for help in keeping the issue count low. This beats the security team having to fight for opportunities to insert itself.
+Older stable branches such as 1.8.x have reached end-of-life and will
+not receive upstream releases to fix this. Upgrading is recommended.
+However, the patch used in supported versions[1] is believed to be
+suitable for third-party backports to older releases.
 
-Likewise, where you see risky development practices, you want to document these risks and make sure they are part of a risk assessment which the exec team sees once or twice each year. If you can articulate how deficient development practices create a business risk then again, the exec team should help create a demand for your assistance.
+We have received a report[3] that in at least OmniOS (a
+Solaris/OpenSolaris/illumos derivative), the solution that was committed
+causes a regression due to differences in the behaviour of SCM_RIGHTS
+between Linux and OmniOS. This is under investigation. On non-Linux
+operating systems such as BSD and Solaris, before deploying a fixed
+version, package maintainers should try running the 'test-fdpass'
+test case to confirm whether their OS kernel has the Linux-like or
+OmniOS-like behaviour. This test-case requires building dbus with the
+--enable-modular-tests configure option, with GLib development files
+available; GLib is only used for the automated tests, and is not a
+dependency of the parts of dbus used in production.
 
-Outside of a business environment, the project leader will have to stand in for the exec team for any large open source project, whether it's a single leader or a small board. In order to avoid heroics and having to keep your fingers in everything, support needs to come from the top down.
+[0] https://gitlab.freedesktop.org/dbus/dbus/-/issues/294
+[1] https://gitlab.freedesktop.org/dbus/dbus/-/commit/872b085f12f56da25a2dbd9bd0b2dff31d5aea63
+[2] https://lists.freedesktop.org/archives/dbus/2020-June/017873.html
+[3] https://gitlab.freedesktop.org/dbus/dbus/-/issues/304
 
-
-Another common failing is in not creating a culture of security awareness. You probably read a fair bit of security news. Look for other projects which failed in a way which you could see your own project having failed. Drop links in chat or email and point to how a control your team has enacted would have prevented the incident. Or when you think it wouldn't have been prevented, ask "Is there anything we're doing that would have saved us from the same fate?" Anything that drags security away from the abstract and toward real world examples will help teams begin to understand the importance of good security practices. Ideally you create an appetite for correct solutions.
-
+-- 
+Simon McVittie, Collabora Ltd. / Debian
+dbus security contact:
+https://gitlab.freedesktop.org/dbus/dbus/-/blob/master/CONTRIBUTING.md#reporting-security-vulnerabilities
