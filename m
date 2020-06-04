@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3776" "Wednesday" "18" "March" "2015" "09:40:53" "+0100" "Christian Rebischke" "chris.rebischke@gmail.com" "<20150318084053.GA2859@trudy>" "106" "Re: [oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases" nil nil nil "3" "2015031808:40:53" "[oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases" (number mark "        chris.rebisc Mar 18  106/3776  " thread-indent "\"Re: [oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases\"\n") "<20150318081747.GA18610@openwall.com>" ("<20150317000005.GA3041@openwall.com>" "<20150318081747.GA18610@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4095" "Thursday" "4" "June" "2020" "14:28:11" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20200604122811.GA31148@f195.suse.de>" "116" "[oss-security] linux-pam: pam_setquota.so vulnerability facilitated through fusermount setuid-root program" nil nil nil "6" "2020060412:28:11" "[oss-security] linux-pam: pam_setquota.so vulnerability facilitated through fusermount setuid-root program" (number mark "U       mgerstner@su Jun  4  116/4095  " thread-indent "\"[oss-security] linux-pam: pam_setquota.so vulnerability facilitated through fusermount setuid-root program\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] linux-pam: pam_setquota.so vulnerability facilitated through fusermount setuid-root program" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23717 invoked by uid 550); 18 Mar 2015 09:55:49 -0000
+Received: (qmail 11906 invoked by uid 550); 4 Jun 2020 12:28:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,140 +11,133 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11986 invoked from network); 18 Mar 2015 08:41:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:date:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=dTSqdmxw2bXDilg7ZWD8TB4nZ+JWXULnaZjrozCZl3E=;
-        b=RF4LvaFExAnoEPR4iezJDBu6h1I/aAkOMNvjYHYYSQM9HP5qyKROck6JBxInZcZun2
-         ihDueSL30ANmPdNieSQM9t+VzJDu1aXC4zKm1N2o+gO06HpIKFNicNDn9aahR2JZ6oml
-         NqPFS30ZojF034fr8lTgMXrHaEUdvr4kWFUJg1mUWSiNrjdiOdRTUypvtrEkD7q5vmvw
-         F1+l+o8dZUEvvYvt/4pYqFRFusTZfKBAmrUMsQ8kkBg8wI8rYv0zbPpqHLHCbITxls6r
-         I7SQ46Jn426R6xfdfHbCP2B5LbkyGtsnMftt3hlT+nEPVVF7RsF/ZoTUBdQE1G6fCRAS
-         AIJg==
-X-Received: by 10.180.8.10 with SMTP id n10mr4591560wia.79.1426668058049;
-        Wed, 18 Mar 2015 01:40:58 -0700 (PDT)
-X-Google-Original-From: Christian Rebischke <Chris.Rebischke@gmail.com>
-Message-ID: <20150318084053.GA2859@trudy>
-References: <20150317000005.GA3041@openwall.com>
- <20150318081747.GA18610@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 11887 invoked from network); 4 Jun 2020 12:28:23 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Thu, 4 Jun 2020 14:28:11 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20200604122811.GA31148@f195.suse.de>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="EeQfGwPcQSOJBaQU"
+	protocol="application/pgp-signature"; boundary="HlL+5n6rz5pIUxbD"
 Content-Disposition: inline
-In-Reply-To: <20150318081747.GA18610@openwall.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Date: Wed, 18 Mar 2015 09:40:53 +0100
-From: Christian Rebischke <chris.rebischke@gmail.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL
- releases
-To: oss-security@lists.openwall.com
+Subject: [oss-security] linux-pam: pam_setquota.so vulnerability facilitated through
+ fusermount setuid-root program
 
---EeQfGwPcQSOJBaQU
-Content-Type: text/plain; charset=us-ascii
+--HlL+5n6rz5pIUxbD
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hello,
-I should mention that I forgot to include one CVE in my tweet: CVE-2015-029=
-1.
-I am not sure if this CVE has high severity or is low, but should be accord=
-ing
-to openssl bug guideline 'high'. Seems so that this CVE is a Dos vulnerabil=
-ity:
+During a review of newly added PAM modules in the linux-pam project [1]
+I found a vulnerability [2] in the pam_setquota.so module.
 
-https://twitter.com/ramosbugs/status/577935589397278720
+Vulnerability Description
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-@Sh1bumi @ArneBab @hynek I have working exploit for upcoming CVE-2015-0291 =
-1.0.2
-server DoS. As far as I know not active in wild.
+The pam_setquota module iterates over all mounted file systems using
+`setmntent()` and `getmntent()`. It tries to find the longest match of a
+file system mounted on /home/$USER or above (except when the explicit
+fs=3D/some/path parameter is passed to the pam module).
 
-@ramosbugs alias <David Ramos> is the bug reporter of CVE-2015-0291.
+The home directory /home/$USER is owned by the unprivileged user,
+however. There exist tools like `fusermount` from libfuse which is by
+default installed setuid-root for everybody. `fusermount` allows
+unprivileged users to mount a FUSE file system using an arbitrary
+source device name.
 
-So, as far I know, there are 4 openssl CVEs:
+Thus given the following precondition:
 
-CVE-2015-0209, CVE-2015-0285, CVE-2015-0288 and CVE-2015-0291
+1) there is only the root file system (/) or a file system is mounted on
+   /home, but not on /home/$USER.
 
-Are these all CVEs or are there any other currently reserved high rated CVE=
-s?
+a non-privileged attacker can achieve the following:
 
-best regards,
+2) the attacker mounts a fake FUSE file system over its own home directory:
 
---------------------------------------------------------------
-Christian Rebischke
+  ```
+  user $ export _FUSE_COMMFD=3D0
+  user $ fusermount $HOME -ononempty,fsname=3D/dev/sda1
+  ```
 
-Website    : www.nullday.de
-Twitter    : @sh1bumi
-Jabber     : shibumi@jabber.ccc.de
-PGP        : 0x8D8172C8
-Fingerprint: A224 6F57 FD0A AC81 3971 EEBE 5EDA 916B 3A2A 7C49
---------------------------------------------------------------
+  This will result in a mount entry in /proc/mounts looking like this:
 
-On Wed, Mar 18, 2015 at 11:17:47AM +0300, Solar Designer wrote:
-> Mark -
->=20
-> It was suggested to me off-list that it'd be helpful to publicly specify
-> not only the date, but also the time (and timezone) of the forthcoming
-> OpenSSL releases.  Can you?
->=20
-> All -
->=20
-> On Tue, Mar 17, 2015 at 03:00:05AM +0300, Solar Designer wrote:
-> > I think the limited public info on this should be in here ASAP, hence
-> > the forward.
->=20
-> References to commits for CVE-2015-0209, CVE-2015-0285, CVE-2015-0288:
->=20
-> https://twitter.com/Sh1bumi/status/577904223444168704
->=20
-> Mark's reply:
->=20
-> <@iamamoose> @Sh1bumi those are all "low severity" classification, previo=
-usly committed issues, which will be included in roll up on Thursday too.
->=20
-> <@iamamoose> @Sp1l As per the security policy, low severity issues (and s=
-ome moderates) get fixed in public as and when -- those issues are known pu=
-blic
-> <@iamamoose> @Sp1l CVE-2015-0285 is https://git.openssl.org/gitweb/?p=3Do=
-penssl.git;a=3Dcommit;h=3De1b568dd2462f7cacf98f3d117936c34e2849a6b CVE-2015=
--0288 https://git.openssl.org/gitweb/?p=3Dopenssl.git;a=3Dcommit;h=3D28a00b=
-cd8e318da18031b2ac8778c64147cd54f9
->=20
-> On vendor notifications so far:
->=20
-> <iamamoose> Per https://www.openssl.org/about/secpolicy.html we've provid=
-ed details of the #openssl vulns to distros@ vendors on request, also now t=
-o LibreSSL.
-> <@iamamoose> @iamamoose we've also provided details today to Apple and IB=
-M who are not currently distros@ members #openssl
->=20
-> BTW, OpenSSL Security Policy at
-> https://www.openssl.org/about/secpolicy.html specifies what kind of
-> issues the three severity classifications may correspond to.
->=20
-> Alexander
+  ```
+  /dev/sda1 on /home/user type fuse (rw,nosuid,nodev,relatime,user_id=3D100=
+0,group_id=3D100)
+  ```
 
---EeQfGwPcQSOJBaQU
-Content-Type: application/pgp-signature
+3) when the attacker now logs in with pam_setquota configured then
+   pam_setquota will identify /dev/sda1 as the file system to apply the
+   user's quota on.
+
+As a result an unprivileged user has full control over onto which block
+device the quota is applied.
+
+Consequences Regarding `fusermount`
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+It seems that developers find it suprising that regular user accounts
+can specify arbitrary source device names in mount entries. It would be
+desirable to apply restrictions on the source device string in the
+`fusermount` setuid-root tool. It will probably be difficult to
+implement this in a backward-compatible and safe way, however.
+
+Bugfix
+=3D=3D=3D=3D=3D=3D
+
+This issue is fixed via upstream commit
+27ded8954a1235bb65ffc9c730ae5a50b1dfed61 [3].
+
+Vulnerability Reporting
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+This finding was reported privately to upstream. Since the
+pam_setquota.so PAM module was never part of an official release no
+embargo was setup.  For this reason I also did not request a CVE for the
+issue.
+
+[1]: https://github.com/linux-pam/linux-pam.git
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=3D1171721
+[3]: https://github.com/linux-pam/linux-pam/commit/27ded8954a1235bb65ffc9c7=
+30ae5a50b1dfed61
+
+Cheers
+
+Matthias
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
+
+
+--HlL+5n6rz5pIUxbD
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQIcBAEBCAAGBQJVCToUAAoJEF7akWs6KnxJJgcQAI4eRItmvbVLh4GJtuMhcFkZ
-UOcOS/IGz1OiGm08tyA0FqQvnQ0voSdRzDDyAYjOy+QTDwMvdKGaVR0ifUMWCHl8
-RnKCrwUZg0sbSFnq7ON4kII0VZ4de3CxmNFtLgXT0In8mDjy3KV56WD+yiO1H5dt
-Bia8xkZKwC1zf0/r1nhC0Dv+8XP/VHPEsRCG0fsBJqU34WShulH0PN3TeqnbdA1k
-ox9j0cgdH6U7ffpbKXY4rWEgegdV0vvahuHkKpH6P4sxXKvBiX7Xwom5TCncc216
-8ukxmqX6I2cku0npkYfEVEIdcuZM0/t/uxxlEBGGnaDHqFRrlER8GFU6q1Zqel3+
-GjzWHJwy8/nYAckV+JdLVpITyr+d8KxnoLQA7oDPqLnxLOYssUSHGZKkrSP57ZUk
-LlgscEsqImefRuSb9nksEkB1uiRXCAPQE4+oAC4QIcCFQ+HQKFon9tbd1G+B7CK8
-yMFpt4F1cWV+sxLYdBxWSxFL72wTPjygsud8nk/a1w/EwXbq1DNf2ozuXm4qmcHy
-HhTtIv9Sw1pHqhn3/lsmz3F+zZFywkeXyoPxituZWgJ45oCSt/X5nGHmHXlzQ7Ge
-1sTIkWWi0WErZml8lRsQofmCaN6j6RRfNe6IDrJPuYl4DbinfzLh0KveqSxFCP2N
-GQG6bYcFVSoSRkYdfQk5
-=5qgZ
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl7Y6NcACgkQFMQFyXGS
+NVPsWhAAlCR6S57459RVC7YD1qwyGPaHu4ZqUgFqHWcs++xyGbzbGJJgQGCG/am3
+ImmiqydDJvgfyoaiZu8mzkA4N644n19pkP98RQxKuxVFgj0BM4lr5Hnd1BJuHg8k
+x58IArYxKqfC2OUWJ1GWlZBZ2KtfoTXVuRkSYKk+b99lZdia1apg73ScRgWOlF/d
+8hlFHFpvyXo8vIM1Kzfug9ILnaWiHBSVHKda442lKSYDAmteF+LQ+TfjNewv73up
+iO41Eqs3DSKob/J+o8U6PUq58oy948phMABhwK7jaeK6MvUA3hVBHw48bYYe9dGV
+PELhenGaKP/bhBmCIpzxx2k3IH4ExNX83F9Q3CEZ0G70//3d30GJs9s+hhB83X+c
+V9RIWgPlb9hSmEW1jzTBMZlSTxXB8KTiGCLm65cz3Wo4hMhA3L8Mo3WbZQI5JTtL
+3uMrkVrsF1NCPwEtzlG6v7krA90GeA1+AuyVLsjROZsUYg9Ag73tR8s4xRD23ilM
+HEvRRBm5Z01H4I+fCDcUYhRa6c9K/toQOIV4dYi4UDmkYJEnN/Bs90hj5Ks1oTZF
+AqQAM6IpxJdl36gIb8obpp70gYpXHpOjZuNYdxT5ps4b12IQVknZZONfJlKSOLJ9
+dIdLZlmM3hotT202gse54YPNwslsXDH0zG95Ik/kjFhju6Jz6cg=
+=WdKA
 -----END PGP SIGNATURE-----
 
---EeQfGwPcQSOJBaQU--
+--HlL+5n6rz5pIUxbD--
