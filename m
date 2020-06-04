@@ -1,4 +1,9 @@
-Received: (qmail 27982 invoked by uid 550); 11 Apr 2024 13:44:03 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["718" "Thursday" "4" "June" "2020" "10:30:41" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.77.849.2006041027040.62159@xnncv>" "22" "[oss-security] CVE-2020-13791 QEMU: ati-vga: OOB access while reading PCI configuration may lead to DoS" nil nil nil "6" "2020060405:00:41" "[oss-security] CVE-2020-13791 QEMU: ati-vga: OOB access while reading PCI configuration may lead to DoS" (number mark "U       ppandit@redh Jun  4   22/718   " thread-indent "\"[oss-security] CVE-2020-13791 QEMU: ati-vga: OOB access while reading PCI configuration may lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-13791 QEMU: ati-vga: OOB access while reading PCI configuration may lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3478 invoked by uid 550); 4 Jun 2020 05:01:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,112 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9898 invoked from network); 11 Apr 2024 09:13:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spwhitton.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1712826811; x=
-	1712913211; bh=VDKnq8MjRVb7zLD443A4e44f+y7SURRffKzqtMhsqc0=; b=c
-	G3gpshEqLfSgb78pU7qETTbGeXIs6nI1aF6xv80NztVjLc3uoDY30dJuVDYj/eay
-	vXEfOdAtXn9C+Xl5uirJ0uwRK5BQrqUAD1ERy3Oi3TSUvXeDt+xojL+NkMjpnQpi
-	E8GIQ1oSPAKZiN85pqFqtKhWN5hKp4T/rNxcxgXzfCR2ftXqYS3kP3LV6xRTG531
-	G657RJNd+A6h3ZMqVhHQf+FoomKjnzv2L+QWnG/c4jM1fxK7TIhWo246rhm0PHbl
-	X90Pp139815jvh6sLKoRqOCcvktY8BlGkE4YL29/jupXmr0ukO3kgHrhw+3Kmrka
-	f6RS8kEJX1mYRv+/FpXkQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712826811; x=1712913211; bh=VDKnq8MjRVb7zLD443A4e44f+y7S
-	URRffKzqtMhsqc0=; b=MsXW0fzbG6AwqAoMFYxnu9uQV61LX7HzUI69aIe24zDQ
-	sjZXRwVtCNen09+OThP8wqjUaB1OTxV74lTONCETmcPjQyfnbLpbjkvktR8B8Y3g
-	439QgQclssqDrdqh8Pj9E4Mg0xldhTi93WiUaRX/MjXRGiH5etDW1xoiRmqFDb74
-	r803DwzeGf8oTnZugs8KRCmebCYaoVg5Jwk6iZnE6eH64ezRFHxU2CYU7AczHe56
-	894LBTVoekLCZ5RcoXeECcMEO2ffs4WhBfTu0SIv7T2BVamt6FG90mHkAs4EkkNo
-	8jLel04A2RYyhWeBW4Wkb7q/+JJOvEjzk+NEbH7lLg==
-X-ME-Sender: <xms:u6kXZjCFpMQe-8I0AvgeefoWMDKIaFltoNaHc4LP7gLOs7PKZXbyMw>
-    <xme:u6kXZpjx6zkIxkX198J4KwynxApf2M0xVNjI7M_Ki58CrFUrtRvZU7JGvVrn5HGBZ
-    DitN5tHrtnjWMsi-A>
-X-ME-Received: <xmr:u6kXZunFBCQGMgDmD-e8hZpVZuJHpyrAOBUTdZSGZ56yGHIPaQytbpkqmkYOAGz40Mqfsuf843MIow>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehkedgudefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehgtd
-    dtredtredtnecuhfhrohhmpefuvggrnhcuhghhihhtthhonhcuoehsphifhhhithhtohhn
-    sehsphifhhhithhtohhnrdhnrghmvgeqnecuggftrfgrthhtvghrnhepveefheelfffgtd
-    evgfefuedthfdvgeehgeeihedutdejkedtffdtieeuieeujeelnecuffhomhgrihhnpehg
-    nhhurdhorhhgpdhmihhtrhgvrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepshhpfihhihhtthhonhesshhpfihhihhtthhonhdrnhgr
-    mhgv
-X-ME-Proxy: <xmx:u6kXZlwGh2VQgwFV8PvPK6cs6MlE34QXaGjgOp7pZeSHlwm8pUTBSQ>
-    <xmx:u6kXZoQhSGucMwJGKR0s4lmvFWqj6nzpKdyecrrg5Ng0Q0t6qPuxMw>
-    <xmx:u6kXZoZ5aVopjbqCc_GkTLpkrhAeyiBjQDn64H-vvh0w-LVEJpPqUQ>
-    <xmx:u6kXZpSzPPBJ_HhJrIN9H_7vwWiQTHM2HLxtipUqv17vlx_1gdvI1g>
-    <xmx:u6kXZuOgseDitOI3lGhLvoZIMlXo88RoYOWCU45MZVr7DFvJQV5nJrPJ>
-Feedback-ID: i23c04076:Fastmail
-From: Sean Whitton <spwhitton@spwhitton.name>
-To: Salvatore Bonaccorso <carnil@debian.org>
-Cc: oss-security@lists.openwall.com,  emacs@packages.debian.org,
-  emacs-devel@gnu.org
-In-Reply-To: <Zhafa3wcZONJX-_k@eldamar.lan> (Salvatore Bonaccorso's message of
-	"Wed, 10 Apr 2024 16:17:15 +0200")
-References: <874jccjpvy.fsf@melete.silentflame.com> <87y19nu22i.fsf@localhost>
-	<87bk6he8h4.fsf_-_@melete.silentflame.com> <87o7ahe85l.fsf@localhost>
-	<Zhafa3wcZONJX-_k@eldamar.lan>
-Date: Thu, 11 Apr 2024 17:13:26 +0800
-Message-ID: <87y19kcle1.fsf@melete.silentflame.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: (qmail 3460 invoked from network); 4 Jun 2020 05:01:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1591246851;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=3RxUHw0YD/y+eTnL06i7RnHyg/o8nfYqoHl3N/y+wUg=;
+	b=NJCvQ4PRsfJgUxqB4Tk1mwEgFbS37dzjKSvnB6etnzwuC8t+Eb5pJxQm2vXp+siviAWejH
+	CbYq84LMfAODcmte2GZrWn016ux0VR3q/BAA14Sh10oujOFkZq35pvVdQvmiR17ArDNyuk
+	jIiFW9xCIC4zWniN1JpI3Bl8O9Th7Ag=
+X-MC-Unique: AxSN1OaVPpuj2S5rl_WhFA-1
+Date: Thu, 4 Jun 2020 10:30:41 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+cc: Ren Ding <rding@gatech.edu>, Hanqing Zhao <hanqing@gatech.edu>, 
+    Yi Ren <c4tren@gmail.com>
+Message-ID: <nycvar.YSQ.7.77.849.2006041027040.62159@xnncv>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [oss-security] Re: Is CVE-2024-30203 bogus? (Emacs)
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] CVE-2020-13791 QEMU: ati-vga: OOB access while reading PCI configuration
+ may lead to DoS
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+   Hello,
 
-Hello,
+An out-of-bounds access issue was found in the ati-vga emulator of the QEMU. 
+It could occur while reading PCI configuration bytes via ati_mm_read routine, 
+if the address sent by a guest is towards an end of the PCI configuration 
+space. A guest user/process may use this flaw to crash the QEMU process 
+resulting in DoS scenario.
 
-On Wed 10 Apr 2024 at 04:17pm +02, Salvatore Bonaccorso wrote:
+Upstream patch
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg00831.html
 
-> Note that the CVE assignment (by MITRE as assigning CNA) for
-> CVE-2024-30203 is explicitly as follows:
->
->> In Emacs before 29.3, Gnus treats inline MIME contents as trusted.
->
-> associated with:
->
-> https://git.savannah.gnu.org/cgit/emacs.git/commit/?h=3Demacs-29&id=3D937=
-b9042ad7426acdcca33e3d931d8f495bdd804
+This issue was reported by Ren Ding and Hanqing Zhao of SSLab Georgia Tech and 
+Yi Ren(CC'd)
 
-This commit doesn't fix anything at all, just fyi.
+'CVE-2020-13791' requeted via -> https://cveform.mitre.org/
 
-> If you think the CVE assignment is not valid, then you might ask for a
-> REJECT on https://cveform.mitre.org/ .
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-Okay, I'll do that, thanks.
-
---=20
-Sean Whitton
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJNBAEBCgA3FiEEm5FwB64DDjbk/CSLaVt65L8GYkAFAmYXqbYZHHNwd2hpdHRv
-bkBzcHdoaXR0b24ubmFtZQAKCRBpW3rkvwZiQAlBEAC8DAT6MA2SN9FbTFWhtKZq
-im0N65ds0UX35A6kGFDH3DAb+DMGKwrp/cB393MppOpFDknZ0Wwv9CdCDuOsFGuY
-U4rcgDSPJBBDNkJf+UO0neo9wCNicQDWIx/8hYwqAg2U/cYjx49fnm5ITWfHTEUB
-ZPT4dk1RIOdmiz7fhxigCDP86f6KLDXijAn66w6BUYv7Mn7CzYg2FB1XeEKkXpJj
-IXSHi8mqnMxLaVB3igMws+G9yoIDdKuHay4gFFxp7uI1sgXbjtCYHRFV9ZHA5y25
-+xoAzPjjxkqtF2PiwDKQLZhg4Ef3ACWb2ZMaB4kPmXzfMoNm4ZQ45kIEwzbL3VAs
-PLmx52WiUPisvwouOnGOVHzRCqvElhKvPOq6q6uCoqhDe1qhGh6K6kzimhz3PY0q
-xIfLqIWfdNJhH/o6krg+V3pMxqD/i0BUHlejrR9fyMjdDFK0MTLM5E7j1W8RewQb
-CFmIqU7SfdTrJmS7seysCs+Qex2AH/D0kxfDgWYqbDUAZT0YGUmsDH+ssIXa5dqj
-rEE7ksrz+4fviNZQKs6zbQACSJYxSMatYtwAuKQ0OnDjWGtAVUCkabMCapP/Thpu
-FFsXnLtQ12b1/MdwLeG2dEOTrSSWV3hxk8IPL+9sRd629JBP4MaYttMB9Fy8kF4V
-7+4XPBdvZRX8hSBHBd2cqw==
-=/D6w
------END PGP SIGNATURE-----
---=-=-=--
