@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4871" "Wednesday" "2" "June" "2021" "11:34:09" "+0200" "Carlton Gibson" "carlton.gibson@gmail.com" nil "113" "[oss-security] Django security releases 3.2.4, 3.1.12, and 2.2.24 for CVE-2021-33203 and CVE-2021-33571" nil nil nil "6" nil nil (number mark "U       carlton.gibs Jun  2  113/4871  " thread-indent "\"[oss-security] Django security releases 3.2.4, 3.1.12, and 2.2.24 for CVE-2021-33203 and CVE-2021-33571\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Django security releases 3.2.4, 3.1.12, and 2.2.24 for CVE-2021-33203 and CVE-2021-33571" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6043" "Thursday" "4" "June" "2020" "19:01:12" "+0800" "Fan Yang" "fan_yang@SJTU.EDU.CN" "<1D1C8F3C-62C9-4415-A828-76ED276FB7AF@SJTU.EDU.CN>" "192" "[oss-security] CVE-2020-10757 Linux kernel: mremap hugepage mmaped DAX nvdimm may cause corrupted page table" nil nil nil "6" "2020060411:01:12" "[oss-security] CVE-2020-10757 Linux kernel: mremap hugepage mmaped DAX nvdimm may cause corrupted page table" (number mark "U       fan_yang@SJT Jun  4  192/6043  " thread-indent "\"[oss-security] CVE-2020-10757 Linux kernel: mremap hugepage mmaped DAX nvdimm may cause corrupted page table\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-10757 Linux kernel: mremap hugepage mmaped DAX nvdimm may cause corrupted page table" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19587 invoked by uid 550); 2 Jun 2021 09:38:33 -0000
+Received: (qmail 22508 invoked by uid 550); 4 Jun 2020 11:17:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,156 +12,209 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17851 invoked from network); 2 Jun 2021 09:34:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=1T2AsND7xRwgFFx7plz20eRsIrp8PDTZ22Hmxrp8jUo=;
-        b=fYJFBEZuj3JEVzmamR3lBK6xBWHMsTTcLDsdcy0kmr5R/z1J9gGJ7rhY5RQTi7qpPj
-         fuU8xyiL3u/7d5hUdjGOopkh9ZlZuj1Z+wWhV275reciehpYzO0J0enS+8JYcl+gL5Gz
-         eEJmEr0EqzghQ4qD5INWbqJkWAEFKH/q+h7vtZs8VqxiQB3GzdwCdrJGDKrhLAEzaEve
-         1UiuwX6RexeZAomy6HZApDlUh4eB/lOIbwM5mZ5JJrsu3hZLdJGAmfStRqxCSzRSmmZx
-         c71GE9q0uZs0PoXseVeZYrYzAW7IjsImpiP9KZOryq7PTDaIxvbWFL1x087+iOrfyv11
-         MkMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=1T2AsND7xRwgFFx7plz20eRsIrp8PDTZ22Hmxrp8jUo=;
-        b=KN34Oesjq70ie+CpmICBA6A+HUZgPV2kYlBuBXhAuG8skCk54mXB8+tCsRPaou99io
-         81p9XBdNRffhN0qW2sDLckClsTqI9qHC8A8Y2tkNIbKitbwXLzzdINvig+tlQC4OB8/N
-         2AoetB78SZjPcT1oXQd8Lq1pwnQgdTpNEvlqKklgpaFe39kdewRhHXKHL3CXMyh0V1t9
-         C4yNE4np3oT0b1hJk8TEK4GEv7Lwv5tOty7+yqqsJVIvk+80DcZuYXL+9w5jmOaiZ1YH
-         P0C6/BDtZkCZdikDlWM7DKkNtrbMTkZlHrw+iHjIf4RiNxSKf/BpFmGronnbFdJ2PcHp
-         pygA==
-X-Gm-Message-State: AOAM531TYgW+ScvxyF+yBE3pfshIbC/ENbUJoE9Zx6mpZw4+m+Qyje5e
-	SN0E2qwT18VrzG4+GO7Fm6AMdFD0LfFhVA==
-X-Google-Smtp-Source: ABdhPJyGqoDUstOXCEABJW09SrpWSN+8MbywrYcKoAZV2Vlq8e/tt1jCH9tYsAuOKqF9rW0TWZTgGg==
-X-Received: by 2002:a5d:4bd2:: with SMTP id l18mr32090394wrt.197.1622626450785;
-        Wed, 02 Jun 2021 02:34:10 -0700 (PDT)
-From: Carlton Gibson <carlton.gibson@gmail.com>
+Received: (qmail 13601 invoked from network); 4 Jun 2020 11:01:26 -0000
+X-Virus-Scanned: amavisd-new at proxy01.sjtu.edu.cn
+From: Fan Yang <fan_yang@SJTU.EDU.CN>
 Content-Type: text/plain;
-	charset=us-ascii
+	charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.11\))
-Message-Id: <4BDB3183-6E14-41DC-AE08-D67E551EF3B7@gmail.com>
-Date: Wed, 2 Jun 2021 11:34:09 +0200
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Message-Id: <1D1C8F3C-62C9-4415-A828-76ED276FB7AF@SJTU.EDU.CN>
+Date: Thu, 4 Jun 2020 19:01:12 +0800
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3654.100.0.2.11)
-Subject: [oss-security] Django security releases 3.2.4, 3.1.12, and 2.2.24 for CVE-2021-33203
- and CVE-2021-33571
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
+Subject: [oss-security] CVE-2020-10757 Linux kernel: mremap hugepage mmaped DAX nvdimm may
+ cause corrupted page table
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django t=
-eam
-is issuing
-`Django 3.2.4 <https://docs.djangoproject.com/en/dev/releases/3.2.4/>`_,
-`Django 3.1.12 <https://docs.djangoproject.com/en/dev/releases/3.1.12/>`_, =
-and
-`Django 2.2.24 <https://docs.djangoproject.com/en/dev/releases/2.2.24/>`_.
-These release addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+Hi all,
 
-CVE-2021-33203: Potential directory traversal via ``admindocs``
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+NOTE: this bug have been assigned CVE id CVE-2020-10757.  Its impact dates
+back to the commit 5c7fb56e5e3f ("mm, dax: dax-pmd vs thp-pmd vs
+hugetlbfs-pmd=E2=80=9D), at kernel version v4.5.  And it can be fixed by th=
+e patch
+here (https://lkml.org/lkml/2020/6/4/314).
 
-Staff members could use the ``admindocs``
-``TemplateDetailView`` view to check the existence of arbitrary files.
-Additionally, if (and only if) the default admindocs templates have been
-customized by the developers to also expose the file contents, then not only
-the existence but also the file contents would have been exposed.
+Description
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-As a mitigation, path sanitation is now applied and only files within the
-template root directories can be loaded.
+I observed this bug when mremap a mmaped DAX nvdimm to a mmaped anonymous
+memory region.  The mremap system call returns successfully but when access
+the region afterwards, the program get killed due to corrupted page table:
 
-This issue has low severity, according to the Django security policy.
+try_mremap: Corrupted page table at address 7facc4fd1000
+PGD 800000015beee067 P4D 800000015beee067 PUD 40695a067 PMD 1614ec067 PTE 6=
+969696969696969
+Bad pagetable: 000f [#3] SMP PTI
+CPU: 6 PID: 11264 Comm: try_mremap Tainted: G    B D W         5.6.6-300.fc=
+32.x86_64 #1
+Hardware name: System manufacturer System Product Name/PRIME Z270M-PLUS, BI=
+OS 0601 01/13/2017
+RIP: 0033:0x4012fc
+Code: 00 00 e8 87 fd ff ff 48 89 45 e8 48 8b 45 e8 48 3b 45 f8 74 11 bf 3a =
+20 40 00 e8 8f fd ff ff b8 ff ff ff ff eb 0c 48 8b 45 f8 <c6> 00 aa b8 00 0=
+0 00 00 c9 c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f
+RSP: 002b:00007ffde40d8d00 EFLAGS: 00010246
+RAX: 00007facc4fd1000 RBX: 0000000000000000 RCX: 00007facc4f0255e
+RDX: 0000000000001000 RSI: 0000000000001000 RDI: 00007facc4a00000
+RBP: 00007ffde40d8d30 R08: 00007facc4fd1000 R09: 0000000000000000
+R10: 0000000000000003 R11: 0000000000000202 R12: 00000000004010a0
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+...
+BUG: Bad page map in process try_mremap  pte:6969696969696969 pmd:1614ec067
+addr:00007facc4fd1000 vm_flags:288000fb anon_vma:0000000000000000 mapping:f=
+fff9badd87a28a0 index:0
+file:try_mremap fault:ext4_dax_fault mmap:ext4_file_mmap readpage:0x0
+CPU: 6 PID: 11264 Comm: try_mremap Tainted: G    B D W         5.6.6-300.fc=
+32.x86_64 #1
+Hardware name: System manufacturer System Product Name/PRIME Z270M-PLUS, BI=
+OS 0601 01/13/2017
+Call Trace:
+dump_stack+0x64/0x88
+print_bad_pte.cold+0x95/0xbf
+vm_normal_page+0xbe/0xd0
+unmap_page_range+0x68b/0xeb0
+unmap_vmas+0x6a/0xd0
+exit_mmap+0x97/0x170
+mmput+0x61/0x140
+do_exit+0x2f3/0xae0
+rewind_stack_do_exit+0x17/0x20
 
-Thanks to Rasmus Lerchedahl Petersen and Rasmus Wriedt Larsen from the Code=
-QL Python team for the report.
+Note that the weird 0x69 in the pte value is the ascii of "i" which I had
+written to the memory.  This bug is due to in move_page_tables:mm/mremap.c,
+the condition to handle a huge pmd is as follows:
 
-CVE-2021-33571: Possible indeterminate SSRF, RFI, and LFI attacks since val=
-idators accepted leading zeros in IPv4 addresses
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+		if (is_swap_pmd(*old_pmd) || pmd_trans_huge(*old_pmd)) {
+
+However, the DAX file is mapped as huge page but it is not transparent huge
+page.  So the huge pmd is not split, the physical page the pmd points to is
+treated as a page table (but actually it is a 2M data page).  Then
+move_ptes uses the value of the "pte" to update the pte where the page
+remap to, and the mremap system call returns successfully.  Afterwards, the
+access to the new address incurs corrupted page table.
+
+Re-produce Instructions
 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-``URLValidator``, ``validate_ipv4_address()``, and ``validate_ipv46_address=
-()``
-didn't prohibit leading zeros in octal literals. If you used such values you
-could suffer from indeterminate SSRF, RFI, and LFI attacks.
+1. one need to have a machine with Intel Optane DC Persistent Memory
+(https://www.intel.com/content/www/us/en/architecture-and-technology/optane=
+-dc-persistent-memory.html),
+or run a VM with a virtualized NVDIMM
+(https://software.intel.com/content/www/us/en/develop/articles/how-to-emula=
+te-persistent-memory-on-an-intel-architecture-server.html).
 
-``validate_ipv4_address()`` and ``validate_ipv46_address()`` validators wer=
-e not
-affected on Python 3.9.5+.
+2. mount a DAX file system (e.g., I use ext4).
 
-This issue has medium severity, according to the Django security policy.
+3. Write a userspace program to mremap a DAX mmaped file to a mmaped
+  anonymous memory region.
 
-Affected supported versions
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
+Here is the code I use:
 
-* Django main branch
-* Django 3.2
-* Django 3.1
-* Django 2.2
+#define _GNU_SOURCE
+#include <sys/mman.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <errno.h>
 
-Resolution
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+#define PROT			PROT_READ|PROT_WRITE
 
-Patches to resolve the issue have been applied to Django's main branch and =
-to
-the 3.2, 3.1, and 2.2 release branches. The patches may be obtained from the
-following changesets.
+#define REGION_PM_TMP_PATH	"/mnt/pmem0/try_mremap"
 
-CVE-2021-33203:
+#define REGION_MEM_SIZE 4096*4
+#define REGION_PM_SIZE	4096*512
+#define REMAP_MEM_OFF   0
+#define REMAP_PM_OFF    0
+#define REMAP_SIZE      4096
 
-* On the `main branch <https://github.com/django/django/commit/46572de2e92f=
-deaf047f80c44d52269e54ad68db>`__
-* On the `3.2 release branch <https://github.com/django/django/commit/dfaba=
-12cda060b8b292ae1d271b44bf810b1c5b9>`__
-* On the `3.1 release branch <https://github.com/django/django/commit/20c67=
-a0693c4ede2b09af02574823485e82e4c8f>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/053cc=
-9534d174dc89daba36724ed2dcb36755b90>`__
+char * map_tmp_pm_region(void)
+{
+	int fd;
 
-CVE-2021-33571:
+	fd =3D open(REGION_PM_TMP_PATH, O_RDWR|O_CREAT, 0644);
+	if (fd < 0) {
+		perror(REGION_PM_TMP_PATH);
+		exit(-1);
+	}
 
-* On the `main branch <https://github.com/django/django/commit/e1d787f1b36d=
-13b95187f8f425425ae1b98da188>`__
-* On the `3.2 release branch <https://github.com/django/django/commit/9f75e=
-2e562fa0c0482f3dde6fc7399a9070b4a3d>`__
-* On the `3.1 release branch <https://github.com/django/django/commit/203d4=
-ab9ebcd72fc4d6eb7398e66ed9e474e118e>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/f27c3=
-8ab5d90f68c9dd60cabef248a570c0be8fc>`__
+	if (ftruncate(fd, REGION_PM_SIZE)) {
+		perror("ftruncate");
+		exit(-1);
+	}
 
-The following releases have been issued:
+	return mmap(NULL, REGION_PM_SIZE, PROT, MAP_SHARED_VALIDATE|MAP_SYNC,
+		    fd, 0);
+}
 
-* Django 3.2.4 (`download Django 3.2.4 <https://www.djangoproject.com/m/rel=
-eases/3.2/Django-3.2.4.tar.gz>`_ | `3.2.4 checksums <https://www.djangoproj=
-ect.com/m/pgp/Django-3.2.4.checksum.txt>`_)
-* Django 3.1.12 (`download Django 3.1.12 <https://www.djangoproject.com/m/r=
-eleases/3.1/Django-3.1.12.tar.gz>`_ | `3.1.12 checksums <https://www.django=
-project.com/m/pgp/Django-3.1.12.checksum.txt>`_)
-* Django 2.2.24 (`download Django 2.2.24 <https://www.djangoproject.com/m/r=
-eleases/2.2/Django-2.2.24.tar.gz>`_ | `2.2.24 checksums <https://www.django=
-project.com/m/pgp/Django-2.2.24.checksum.txt>`_)
+int main(int argc, char **argv)
+{
+	char *regm, *regp, *remap;
+	int ret;
 
-The PGP key ID used for these releases is Carlton Gibson: `E17DF5C82B4F9D00
-<https://github.com/carltongibson.gpg>`_.
+	regm =3D mmap(NULL, REGION_MEM_SIZE, PROT, MAP_PRIVATE|MAP_ANONYMOUS,
+		    -1, 0);
+	if (regm =3D=3D MAP_FAILED) {
+		perror("regm");
+		return -1;
+	}
 
-General notes regarding security reporting
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+	regp =3D map_tmp_pm_region();
+	if (regp =3D=3D MAP_FAILED) {
+		perror("regp");
+		return -1;
+	}
 
-As always, we ask that potential security issues be reported via
-private email to ``security@djangoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-=20=
+	memset(regm, 'a', REGION_MEM_SIZE);
+	memset(regp, 'i', REGION_PM_SIZE);
+
+	remap =3D mremap(regp + REMAP_PM_OFF, REMAP_SIZE, REMAP_SIZE,
+		       MREMAP_MAYMOVE|MREMAP_FIXED, regm + REMAP_MEM_OFF);
+	if (remap !=3D regm + REMAP_MEM_OFF) {
+		perror("mremap");
+		return -1;
+	}
+
+	*regm =3D 0xAA;		/* write anything to the address */
+	return 0;
+}
+
+The Patch
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+arch/x86/include/asm/pgtable.h | 1 +
+mm/mremap.c                    | 2 +-
+2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/x86/include/asm/pgtable.h b/arch/x86/include/asm/pgtable.h
+index 4d02e64af1b3..19cdeebfbde6 100644
+--- a/arch/x86/include/asm/pgtable.h
++++ b/arch/x86/include/asm/pgtable.h
+@@ -257,6 +257,7 @@ static inline int pmd_large(pmd_t pte)
+}
+
+#ifdef CONFIG_TRANSPARENT_HUGEPAGE
++/* NOTE: when predicate huge page, consider also pmd_devmap, or use pmd_la=
+rge */
+static inline int pmd_trans_huge(pmd_t pmd)
+{
+	return (pmd_val(pmd) & (_PAGE_PSE|_PAGE_DEVMAP)) =3D=3D _PAGE_PSE;
+diff --git a/mm/mremap.c b/mm/mremap.c
+index 6aa6ea605068..57b1f999f789 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -266,7 +266,7 @@ unsigned long move_page_tables(struct vm_area_struct *v=
+ma,
+		new_pmd =3D alloc_new_pmd(vma->vm_mm, vma, new_addr);
+		if (!new_pmd)
+			break;
+-		if (is_swap_pmd(*old_pmd) || pmd_trans_huge(*old_pmd)) {
++		if (is_swap_pmd(*old_pmd) || pmd_trans_huge(*old_pmd) || pmd_devmap(*old=
+_pmd)) {
+			if (extent =3D=3D HPAGE_PMD_SIZE) {
+				bool moved;
+				/* See comment in move_ptes() */
+--=20
+2.25.4
+
+
