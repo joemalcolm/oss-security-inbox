@@ -1,32 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/6
-Message-ID: <nycvar.YSQ.7.77.849.2005191700340.62159@xnncv>
-Date: Tue, 19 May 2020 17:04:57 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2020-12888 Kernel: vfio: access to disabled MMIO space of some devices may lead to DoS scenario
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/05/1
+Message-ID: <CACR6SAWNFaOtF9CqkHF+G5_ep1cTExtA70J61EmU-zAhH2X_FA@mail.gmail.com>
+Date: Fri, 5 Jun 2020 10:37:20 +0200
+From: Serge Huber <shuber@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY][ANNOUNCEMENT] Fix for CVE-2020-11975 in Apache Unomi 1.5.1
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-A flaw was found in the Linux kernel, where it allows userspace processes, for 
-example, a guest VM, to directly access h/w devices via its VFIO driver 
-modules. The VFIO modules allow users to enable or disable access to the 
-devices' MMIO memory address spaces. If a user attempts to access (read/write) 
-the devices' MMIO address space when it is disabled, some h/w devices issue an 
-interrupt to the CPU to indicate a fatal error condition, crashing the system. 
-This flaw allows a guest user or process to crash the host system resulting in 
-a denial of service.
+CVE-2020-11975: Remote Code Execution in Apache Unomi
 
-Upstream patch:
----------------
-   -> https://lore.kernel.org/kvm/158871570274.15589.10563806532874116326.stgit@gimli.home/
-   -> https://lore.kernel.org/kvm/158871401328.15589.17598154478222071285.stgit@gimli.home/
+Severity: Critical
 
-'CVE-2020-12888' requested via https://cveform.mitre.org/
+Vendor: The Apache Software Foundation
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+Versions Affected:
+
+This vulnerability affects all versions of Apache Unomi prior to 1.5.1
+
+Description:
+
+Apache Unomi allows conditions to use OGNL scripting which offers the
+possibility
+to call static Java classes from the JDK that could execute code with the
+permission level of the running Java process.
+
+This has been fixed in revision:
+
+https://git-wip-us.apache.org/repos/asf?p=unomi.git;h=789ae8e820c507866b9c91590feebffa4e996f5e
+
+Migration:
+
+Apache Unomi users should upgrade to 1.5.1 or later.
+
+Credit: This issue was reported by Yiming Xiang of NSFOCUS.
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEFt9+Vnc4Fy+UXwQCfBnR+70asd8FAl7XwXcACgkQfBnR+70a
+sd9XYRAAjHv3p4IZd/Uy+JRS3+i2fgYEDJGVjLpewDeoLp1pCRc8hUTTeKQXgq+E
+j3YOAbji9rV0fFYyOCQzmMraIDoHzQFt49Oit2gglXnB9fSer5Rk9lOQf1DgaTJz
+Op1Hf/pTwMrrhUQqe4vNRg9NRp7DYyZkObpeXbZaLRarv/NuYsDEXl9A6xDyRabe
+5wLGLep85+OalIhAUAXlI6uLqfzfDbU2jlJgcSpvCstOj9vDpkB+jpZOxi7GsN+X
+An69bWE+otpE9KlIlhu9GD/lRzzNY8r9DkZXE5Mp24smNm8UYr8GutnYEmAQO09u
+Mc9H/hRcnTfiJUeG+pXSNQSRJ+FfgK5Lvp9P4cppo481AGwCTLP01uJu8nsJb/46
+AlDF4xA+d7D8TlbN6NXm4FUrP1/QhKyvPHfvGjrPjEs0TbirMU9ypwsO4ESh0O8B
+6CVDxSKqmBfWjwQ4AYo+Izddsuf9ABSscNRJmfNxMBQZ0MXvGULcboXipVASWjBF
+HS936RtYJY04SQ0aJuTpuN2c8J6S/P+OGzry2ETWuaE5e3nQXWsUry98GQ/qFrK9
+3Jm1QZiP9dv8epZ6my0k+845+F2W1P8vkzy2QpGbnYsjcf3/f5T6U+Nz/k0skMHZ
+iFNa6aoDShfbziW3pYqLiAwJ+zEQFvU0B9nSXIeiwZwg9ZqWCxk=
+=AjB8
+-----END PGP SIGNATURE-----
 
