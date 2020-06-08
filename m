@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["890" "Wednesday" "28" "October" "2015" "11:42:18" "+0100" "Sebastian Krahmer" "krahmer@suse.com" "<20151028104218.GA14987@suse.de>" "32" "[oss-security] csd-datetime forgets to authorize users" nil nil nil "10" "2015102810:42:18" "[oss-security] csd-datetime forgets to authorize users" (number mark "U       krahmer@suse Oct 28   32/890   " thread-indent "\"[oss-security] csd-datetime forgets to authorize users\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["818" "Monday" "8" "June" "2020" "08:59:02" "+0000" "Gollub, Daniel" "daniel.gollub@intl.att.com" "<e1102843b0b747b280263742cc635391@intl.att.com>" "24" "[oss-security] CVE-2020-13881: pam_tacplus 1.3.8 through 1.5.1, the TACACS+ shared secret gets logged via syslog if configured with debug parameter" nil nil nil "6" "2020060808:59:02" "[oss-security] CVE-2020-13881: pam_tacplus 1.3.8 through 1.5.1, the TACACS+ shared secret gets logged via syslog if configured with debug parameter" (number mark "U       daniel.gollu Jun  8   24/818   " thread-indent "\"[oss-security] CVE-2020-13881: pam_tacplus 1.3.8 through 1.5.1, the TACACS+ shared secret gets logged via syslog if configured with debug parameter\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-13881: pam_tacplus 1.3.8 through 1.5.1, the TACACS+ shared secret gets logged via syslog if configured with debug parameter" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30523 invoked by uid 550); 28 Oct 2015 10:42:36 -0000
+Received: (qmail 16124 invoked by uid 550); 8 Jun 2020 11:29:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30470 invoked from network); 28 Oct 2015 10:42:30 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20151028104218.GA14987@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
- =?utf-8?Q?=F6rffer?= =?utf-8?Q?=2C?= Jane Smithard, Graham Norton, HRB 21284
- (AG Nuernberg)
-User-Agent: Outlook
-Cc: clement.lefebvre@linuxmint.com
-Date: Wed, 28 Oct 2015 11:42:18 +0100
-From: Sebastian Krahmer <krahmer@suse.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] csd-datetime forgets to authorize users
-To: oss-security@lists.openwall.com
+Received: (qmail 24125 invoked from network); 8 Jun 2020 08:59:22 -0000
+From: "Gollub, Daniel" <daniel.gollub@intl.att.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2020-13881: pam_tacplus 1.3.8 through 1.5.1, the TACACS+
+ shared secret gets logged via syslog if configured with debug parameter
+Thread-Index: AQHWPW9MBYeD4IHSokiKXtI5WD5QIg==
+Date: Mon, 8 Jun 2020 08:59:02 +0000
+Message-ID: <e1102843b0b747b280263742cc635391@intl.att.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [135.76.168.250]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216,18.0.687
+ definitions=2020-06-08_04:2020-06-08,2020-06-08 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_policy_notspam policy=outbound_policy score=0 bulkscore=0
+ mlxlogscore=259 clxscore=1034 mlxscore=0 spamscore=0 lowpriorityscore=0
+ cotscore=-2147483648 priorityscore=1501 impostorscore=0 adultscore=0
+ malwarescore=0 phishscore=0 suspectscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2004280000
+ definitions=main-2006080069
+Subject: [oss-security] CVE-2020-13881: pam_tacplus 1.3.8 through 1.5.1, the TACACS+ shared
+ secret gets logged via syslog if configured with debug parameter
+
+References: CVE-2020-13881, pam_tacplus#149
+
+TACACS+ shared secret gets logged (syslog) by the PAM tacplus [1], if the
+PAM module is configured with the debug parameter. The secrets get logged
+at DEBUG loglevel.
+
+pam_tacplus 1.5.3 avoids the logging of the secret, via upstream commit
+4a9852c31c2fd0c0e72fbb689a586aabcfb11cb0 [2].
+
+The original README of pam_tacplus held a configuration example with the
+debug parameter set, which might have resulted in some setups, which are
+running in debug-mode, based on the example configuration.
+
+This issue got reported  by Adarsh Pandey from Arista Networks [3].
+
+[1] https://github.com/kravietz/pam_tacplus/
+[2] https://github.com/kravietz/pam_tacplus/commit/4a9852c31c2fd0c0e72fbb68=
+9a586aabcfb11cb0
+[3] https://github.com/kravietz/pam_tacplus/issues/149
 
 
-Hi
+Thanks
 
-The csd-datetime-setting SetDate DBUS function apparently forgets
-to check the polkit authorization for the caller. Unlike SetTime.
-At least I couldnt find any restriction that its not callable by
-users.
-
-Bug and patch proposal is here:
-
-https://bugzilla.suse.com/show_bug.cgi?id=951830
-
-
-I am not big fan of calling binaries from inside DBUS functions, but
-seems to be state of the art in desktop programming and doesnt
-look exploitable. Yet, w/o authorization you may run into vulnerabilities
-like the sudo time-ticket stuff.
-
-csd seems to be fork of gnome-settings-daemon but to my knowledge
-they dont offer a set_date(), at least in the version I looked at.
-So this issue seems to be introduced by csd itself.
-
-If upstream (cc) confirms, can someone please assign a CVE?
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@suse.com - SuSE Security Team
-
+Daniel
