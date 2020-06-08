@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["695" "Tuesday" "21" "July" "2020" "17:23:52" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.78.906.2007211710040.4380@xnncv>" "23" "[oss-security] CVE-2020-15859 QEMU: net: e1000e: use-after-free while sending packets" "^cc:" nil nil "7" "2020072111:53:52" "[oss-security] CVE-2020-15859 QEMU: net: e1000e: use-after-free while sending packets" (number mark "U       ppandit@redh Jul 21   23/695   " thread-indent "\"[oss-security] CVE-2020-15859 QEMU: net: e1000e: use-after-free while sending packets\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-15859 QEMU: net: e1000e: use-after-free while sending packets" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3102" "Monday" "8" "June" "2020" "18:18:01" "+0300" "Jouni Malinen" "j@w1.fi" "<20200608151801.GA5463@w1.fi>" "70" "[oss-security] hostapd: UPnP SUBSCRIBE misbehavior in hostapd WPS AP" nil nil nil "6" "2020060815:18:01" "[oss-security] hostapd: UPnP SUBSCRIBE misbehavior in hostapd WPS AP" (number mark "U       j@w1.fi      Jun  8   70/3102  " thread-indent "\"[oss-security] hostapd: UPnP SUBSCRIBE misbehavior in hostapd WPS AP\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] hostapd: UPnP SUBSCRIBE misbehavior in hostapd WPS AP" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3752 invoked by uid 550); 21 Jul 2020 11:54:15 -0000
+Received: (qmail 20318 invoked by uid 550); 8 Jun 2020 15:19:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3731 invoked from network); 21 Jul 2020 11:54:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1595332443;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=WyoaxqOomReAYS254QAv0qMMQkUUfCwHQjVHMsrTnU8=;
-	b=DN4RTCnHmJ8MZ2qZF1hEbFvqRATH4h2Jfh+vpcd1s2M1wGlcwplMtRBTw9hF70K2OUt1qx
-	E9gvVX8oKSYU2y1jIQ3tzh5ujwTJ2xL08M91IT3BX/lY+fO+Zn6XObF8oUxuayfDcyY6Jp
-	0GWX6hQ48czh36Uq+hBRnAyVgZ8qrGc=
-X-MC-Unique: R22MOd7TPSCGvkeokJbWnA-1
-X-X-Sender: pjp@kaapi
-Message-ID: <nycvar.YSQ.7.78.906.2007211710040.4380@xnncv>
-MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-cc: alxndr@bu.edu
-Date: Tue, 21 Jul 2020 17:23:52 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2020-15859 QEMU: net: e1000e: use-after-free while sending
- packets
-To: oss security list <oss-security@lists.openwall.com>
+Received: (qmail 20287 invoked from network); 8 Jun 2020 15:19:49 -0000
+X-Virus-Scanned: Debian amavisd-new at w1.fi
+Date: Mon, 8 Jun 2020 18:18:01 +0300
+From: Jouni Malinen <j@w1.fi>
+To: oss-security@lists.openwall.com
+Message-ID: <20200608151801.GA5463@w1.fi>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] hostapd: UPnP SUBSCRIBE misbehavior in hostapd WPS AP
 
-   Hello,
+Published: June 8, 2020
+Identifiers:
+- VU#339275 and CVE-2020-12695 (applying for the callback URL in other
+  network case, but not the other items discussed in this advisory)
+Latest version available from: https://w1.fi/security/2020-1/
 
-A use-after-free issue was found in the INTEL 82574 NIC (e1000e) emulator of 
-the QEMU. It could occur while sending packets if the guest user set the 
-packet data address to e1000e's MMIO address. A guest user/process could use 
-this flaw to crash the QEMU process on the host resulting in DoS scenario.
+Vulnerability
 
-Upstream patch:
-----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-07/msg05895.html
+General security vulnerability in the way the callback URLs in the UPnP
+SUBSCRIBE command are used were reported (VU#339275, CVE-2020-12695).
+Some of the described issues may be applicable to the use of UPnP in WPS
+AP mode functionality for supporting external registrars.
 
-Reference:
-----------
-   -> https://bugs.launchpad.net/qemu/+bug/1886362
+Such issues could allow a device connected to the local network (i.e., a
+device that has been authorized to transmit packets in the network in
+which the AP is located) could trigger the AP to initiate a HTTP
+(TCP/IP) connection to an arbitrary URL, including connections to
+servers in external networks. This could have a security implication if
+traffic from the local network to external destinations have different
+rules (e.g., firewall and packet inspection) for different local hosts
+and the AP having access to external hosts while the attacker controlled
+local device not having such access. Such deployment cases may not be
+common for networks where WPS would be enabled, but it is not possible
+to completely rule out the applicability to cases where hostapd is used
+to control a WPS enabled AP.
 
-This issue was reported by Alexander Bulekov. CVE-2020-15859 assigned via 
-Mitre.
+In addition to the more generic issues with the UPnP protocol, couple of
+implementation specific issues in hostapd were discovered while
+reviewing this area of the WPS implementation. These issues could allow
+local devices (i.e., devices that have been authorized to transmit
+packets in the network in which the AP is located) to trigger
+misbehavior in hostapd and cause the process to either get terminated or
+to start using more CPU resources by using a specially constructed
+SUBSCRIBE command.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+All these issues require the attacker to be able to discover the UPnP
+service provided by hostapd and to open a TCP connection toward the IP
+address of the AP. The former requires access to the local network to be
+able to receive broadcast packets and the latter requires access to
+initiate TCP/IP connection to the IP address used by the AP. In most
+common AP deployment cases, both of these operations are available only
+from the local network.
 
+
+Vulnerable versions/configurations
+
+All hostapd versions with WPS AP support with UPnP enabled in the build
+parameters (CONFIG_WPS_UPNP=y) and in the runtime configuration
+(upnp_iface).
+
+
+Possible mitigation steps
+
+- Disable WPS UPnP support in the hostapd runtime configuration by
+  removing the upnp_iface parameter.
+
+- Merge the following commits to hostapd and rebuild:
+
+  For CVE-2020-12695:
+  WPS UPnP: Do not allow event subscriptions with URLs to other networks
+  For the other issues:
+  WPS UPnP: Fix event message generation using a long URL path
+  WPS UPnP: Handle HTTP initiation failures for events more properly
+
+  These patches are available from https://w1.fi/security/2020-1/
+
+- Update to hostapd v2.10 or newer, once available
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
