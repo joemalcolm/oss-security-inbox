@@ -1,32 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/03/6
-Message-ID: <nycvar.YSQ.7.77.849.2006040049200.62159@xnncv>
-Date: Thu, 4 Jun 2020 00:51:24 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2020-13765 QEMU: loader: OOB access while loading registered ROM may lead to code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/09/2
+Message-ID: <CAD77+gT2fd=vCsL=xtF=QF3OOkmExVR05+zPs9_L_8GLzDACkQ@mail.gmail.com>
+Date: Tue, 9 Jun 2020 12:08:24 +0200
+From: Richard Hartmann <richih.mailinglist@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Grafana 6.7.4 and 7.0.2 released with fix for CVE-2020-13379
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Thank you to Mark Cooper from Red Hat, BCC'ed, for pointing out that
+the same issue could be abused for DOS via SegFault.
 
-An out-of-bound write access flaw was found in the way QEMU loads ROM contents 
-at boot time. This flaw occurs in the rom_copy() routine while loading the 
-contents of a 32-bit -kernel image into memory. Running an untrusted -kernel 
-image may load contents at arbitrary memory locations, potentially leading to 
-code execution with the privileges of the QEMU process.
+We are updating our blog post and will update the CVE as well.
 
-Upstream patch:
----------------
-   -> https://git.qemu.org/?p=qemu.git;a=commitdiff;h=e423455c4f23a1a828901c78fe6d03b7dde79319
 
-Reference:
-----------
-   -> https://bugs.launchpad.net/qemu/+bug/1844635
+Best,
+Richard
 
-'CVE-2020-13765' requested via -> https://cveform.mitre.org/
+On Wed, Jun 3, 2020 at 3:34 PM Richard Hartmann
+<richih.mailinglist@...il.com> wrote:
+>
+> Dear all,
+>
+> today we are releasing Grafana 6.7.4 and 7.0.2. These patch releases
+> include an important security fix for an issue that affects all
+> Grafana versions from 3.0.1 to 7.0.1.
+>
+> Incorrect access control vulnerability (CVE-2020-13379)
+> We received a security report to security@...fana.com on May 14, 2020,
+> about a vulnerability in Grafana regarding the avatar feature. It was
+> later identified as affecting Grafana versions from 3.0.1 to 7.0.1.
+> CVE-2020-13379 has been assigned to this vulnerability.
+>
+> This vulnerability allows any unauthenticated user/client to make
+> Grafana send HTTP requests to any URL and return its result to the
+> user/client. This can be used to gain information about the network
+> that Grafana is running on.
+>
+> If for some reason you cannot upgrade, the impact can be mitigated by
+> blocking access to the avatar feature by blocking the /avatar/* URL
+> via a web application firewall, load balancer, reverse proxy, or
+> similar. It can also be mitigated by restricting access to Grafana.
+>
+> Affected versions
+> Grafana releases 3.0.1 through 7.0.1
+>
+> Patched versions
+> 7.x and 6.7.x
+>
+> Solutions and mitigations
+> Download and install the appropriate patch for your version of Grafana.
+>
+> Grafana Cloud instances have already been patched, and Grafana
+> Enterprise customers were provided with updated binaries, under
+> embargo, on May 27.
+>
+> Further information can be found at
+> https://grafana.com/blog/2020/06/03/grafana-6.7.4-and-7.0.2-released-with-important-security-fix/
+>
+>
+> Richard
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
+
+-- 
+Richard
