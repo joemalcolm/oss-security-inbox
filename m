@@ -1,22 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/05/3
-Message-ID: <CANh7qnQU4caCP7xQ2pGLo7b6rCrhkMPtdaw0rZgNygfK2001ag@mail.gmail.com>
-Date: Wed, 5 Aug 2020 20:59:26 +0800
-From: Sheng Wu <wusheng@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-13921] Apache SkyWalking SQL injection vulnerability after H2/MySQL/TiDB storage option activated.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/09/1
+Message-ID: <nycvar.YSQ.7.77.849.2006091051520.30592@xnncv>
+Date: Tue, 9 Jun 2020 10:58:08 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Eric Blake <eblake@...hat.com>, Xueqiang Wei <xuwei@...hat.com>
+Subject: CVE-2020-10761 QEMU: nbd: reachable assertion failure innbd_negotiate_send_rep_verr via remote client
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2020-13921
-[PRODUCT]:Apache SkyWalking
-[VERSION]:Apache SkyWalking 6.5.0, 6.6.0, 7.0.0, 8.0.0, 8.0.1
-[PROBLEMTYPE]:SQL Injection
-[REFERENCES]:https://github.com/apache/skywalking/pull/4970
-[DESCRIPTION]:**Resolved** Only when using H2/MySQL/TiDB as Apache
-SkyWalking storage,  there is a SQL injection vulnerability in the wildcard
-query cases.
-[ASSIGNINGCNA]: Apache Software Foundation
+   Hello,
 
-Sheng Wu 吴晟
-Twitter, wusheng1108
+Quick Emulator(Qemu) built with the Network Block Device(NBD) Server support 
+is vulnerable to a crash via assertion failure. It could occur when a 
+nbd-client sends a spec-compliant request that is near the boundary of the 
+maximum permitted length. A remote user/process could use this flaw to crash 
+the qemu-nbd server resulting in DoS.
+
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg02031.html
+
+Issue introduced since QEMU v4.2
+   -> https://git.qemu.org/?p=qemu.git;a=commit;h=93676c88d7a5cd5971de94f9091eff8e9773b1af
+     server:
+     - Adjust things to allow full 4k name limit rather than previous 256 byte
+       limit
+
+     - It allowed nbd-client to send longer (>256 bytes) export names
+
+This issue was reported by Eric Blake and Xueqiang Wei of Red Hat Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
