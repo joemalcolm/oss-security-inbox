@@ -1,32 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/4
-Message-ID: <87eekt9l5k.fsf@gnu.org>
-Date: Mon, 16 Nov 2020 20:06:15 +0100
-From: Marius Bakke <marius@....org>
-To: "David A. Wheeler" <dwheeler@...eeler.com>, oss-security@...ts.openwall.com
-Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/10/1
+Message-ID: <CALJHwhSuSiuK+gU07w1-MNoB1sW0XQwfpYCOzcXhky5K5Ynj9w@mail.gmail.com>
+Date: Wed, 10 Jun 2020 21:21:03 +1000
+From: Wade Mealing <wmealing@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768
 Content-Type: text/plain; charset=utf-8
 
-"David A. Wheeler" <dwheeler@...eeler.com> writes:
+A number of flaws were discussed in the registers article this morning
+( https://www.theregister.com/2020/06/09/linux_kernel_bugs_spectre )
+which have been submitted for inclusion upstream already.
 
-> If you think that CVE assignment is still of “fluctuating reliability” I’d like to hear that argument
-> and get it fixed. It’s normally better to fix the standard process for doing something than
-> to create yet another process that runs in parallel. I’ve seen no recent evidence of this reliability issue.
+Listed below are the CVE's that Red Hat has assigned.  As far as I can
+tell there are no existing  CVE assignments for these flaws. I have
+not done adequate investigation to correctly identify affected
+versions of the kernel, however this is a flaw in the fix for
+CVE-2018-3639, affected systems would likely be affected by the flaws
+listed below if they required the fix.
 
-Speaking as a co-maintainer of an understaffed GNU/Linux distribution
-who fixed this back in 2017[0], I preferred the "old days" when free
-software security problems were almost always discussed on this list.
+CVE-2020-10766
+- Rogue cross-process SSBD shutdown. Linux scheduler logical bug
+allows an attacker to turn off the SSBD protection.
+https://lkml.org/lkml/2020/6/9/181
 
-While there's no questioning the utility of CVEs in general (Guix can
-check the CVE list for any given package with 'guix lint -c cve PKG'),
-there are still unresolved CPE mappings, and I don't know how to get
-informed of new problems without checking specific (or all) packages.
+CVE-2020-10767
+- Indirect Branch Prediction Barrier is force-disabled when STIBP is
+unavailable or enhanced IBRS is available.
+https://lkml.org/lkml/2020/6/9/183
 
-I tried following the CVE assignment RSS feed initially, but it was not
-suitable for human consumption.
+CVE-2020-10768
+-  Indirect branch speculation can be enabled after it was
+force-disabled by the PR_SPEC_FORCE_DISABLE prctl command.
+https://lkml.org/lkml/2020/6/9/184
 
-How do other distros keep up with new CVE assignments?
+The Red Hat Bugzillas for these flaws are
 
-[0] https://git.savannah.gnu.org/cgit/guix.git/commit/?id=099c9fdae623e06e4fded8b0d4e55d9d5b56715b
+http://bugzilla.redhat.com/CVE-2020-10766
+http://bugzilla.redhat.com/CVE-2020-10767
+http://bugzilla.redhat.com/CVE-2020-10768
 
-Download attachment "signature.asc" of type "application/pgp-signature" (508 bytes)
+These  bugzillas are a work in progress and will be updated as I get
+more time to correctly input adequate information.
+
+Thank you.
+
+-- 
+Wade Mealing
+
+Product Security - Kernel
+
+Red Hat
+
+wmealing@...hat.com
+
+TRIED. TESTED. TRUSTED.
+
