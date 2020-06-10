@@ -1,37 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/11/1
-Message-ID: <CAKx+4-qZiFB+5NPZCJyTPUY=VkJjmei1J1E+rovApaqQ5+3yqg@mail.gmail.com>
-Date: Fri, 11 Dec 2020 11:21:40 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/10/5
+Message-ID: <20200610175544.GA201093@google.com>
+Date: Wed, 10 Jun 2020 19:55:44 +0200
+From: Monsieur Francis Perron <francisp@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-27825 kernel: use-after-free in the ftrace ring buffer resizing logic due to a race condition
+Subject: Re: kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768
 Content-Type: text/plain; charset=utf-8
 
-Hello Team,
+On Wed, Jun 10, 2020 at 01:44:27PM +0200, Greg KH wrote:
+> On Wed, Jun 10, 2020 at 09:21:03PM +1000, Wade Mealing wrote:
+> > A number of flaws were discussed in the registers article this morning
+> > ( https://www.theregister.com/2020/06/09/linux_kernel_bugs_spectre )
+> > which have been submitted for inclusion upstream already.
+> > 
+> > Listed below are the CVE's that Red Hat has assigned.  As far as I can
+> > tell there are no existing  CVE assignments for these flaws. I have
+> > not done adequate investigation to correctly identify affected
+> > versions of the kernel, however this is a flaw in the fix for
+> > CVE-2018-3639, affected systems would likely be affected by the flaws
+> > listed below if they required the fix.
+> 
+> Did you ask the authors of the patches?  I think they might have already
+> assigned CVEs from Google's pool, based on previous interactions with
+> those developers...
 
-Red Hat has identified a vulnerability with the following details.
-
-A use-after-free flaw was found in kernel/trace/ring_buffer.c in Linux
-kernel. There was a race problem in trace_open and resize of cpu buffer
-running parallely on different cpus, may cause a denial of service problem
-(DOS). This flaw could even allow a local attacker with special user
- privilege to a kernel information leak threat.
+We (Google) did not assign CVEs to this work Anthony did.
 
 
-'CVE-2020-27825'  was assigned by Red Hat.
+Wade -
+  Did you already request MITRE to look into it? If not, let me know and
+we can see to it with the kernel folks. You are correct that fixing an
+incomplete fix is within the scope of getting new numbers.
 
-Acknowledgements: Adam 'pi3' Zabrocki
 
-Thank you Adam for bringing this to our attention, and your hard work.
+Thank you,
 
-
-Reference:
-https://github.com/torvalds/linux/commit/bbeb97464eefc65f506084fd9f18f21653e01137#diff-446a57a3a8781d7d3fb410eb7162dd2002dd363bf1ea936c4fd10397660033e0
-
-Thank You. Regards
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
-
-secalert@...hat.com for urgent response
-
+-- 
+Francis Perron
+  Vulnerability Coordination @ Google inc.
