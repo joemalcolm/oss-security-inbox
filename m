@@ -1,67 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/06/1
-Message-ID: <CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>
-Date: Sun, 6 Sep 2020 13:18:34 +0530
-From: Pramod Rana <varchashva@...il.com>
-To: "Perry E. Metzger" <perry@...rmont.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/10/4
+Message-ID: <20200610153645.GB2107284@kroah.com>
+Date: Wed, 10 Jun 2020 17:36:45 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768
 Content-Type: text/plain; charset=utf-8
 
-Appreciate your comments.
+On Thu, Jun 11, 2020 at 01:14:03AM +1000, Wade Mealing wrote:
+> > Did you ask the authors of the patches?  I think they might have already
+> > assigned CVEs from Google's pool, based on previous interactions with
+> > those developers...
+> 
+> I am in discussions with Anthony Steinhauser from Google, Anthony
+> stated there were no CVE's assigned.  This message was mainly for the
+> other CNA's  ( https://cve.mitre.org/cve/request_id.html ) who may be
+> able to assign CVE's.
 
-My two cents - Patch everything is far from reality to most (read all)
-organizations and I would argue that it's not a solution per se. To me it
-looks like buying every type of vehicle for commuting in every city of the
-world but we don't do that, rather we decide what will work best depending
-on factors like traffic, distance, roads, weather etc.
+Is oss-security the place to sync up on those things?  I thought you all
+had your own list to sync on those things, as that must happen often.
 
-I believe prioritization is an integral part of everything we do and it
-works as reasoning to what we do (or don't).
+> If the kernel was a CVE Numbering Authority, they could assign their
+> own ( https://cve.mitre.org/cve/cna.html#become_a_cna ) and this whole
+> problem would not exist.  I'm not on the security@...nel.org mailing
+> list (even after asking), so I can't really say what goes on behind
+> those closed doors, I would think it falls under their interests.
 
-On Sat, Sep 5, 2020 at 3:17 PM Perry E. Metzger <perry@...rmont.com> wrote:
+The kernel does NOT want to become a CVE Numbering Authority, and our
+documentation explicitly states that if you want a CVE for a kernel
+issue, you can just go ask MITRE or someone else for it:
+	https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
 
-> [Perhaps somewhat off topic, but the original announcement felt a bit
-> tangental as well.]
->
-> On Thu, 3 Sep 2020 20:13:34 +0530 Pramod Rana <varchashva@...il.com>
-> wrote:
-> > It is no secret that today we have more vulnerabilities than we can
-> > assess and remediate, timely and comprehensively. Risk
-> > prioritization is a key component for any vulnerability management
-> > program.
->
-> I'm not sure I agree with this premise.
->
-> 1. It is entirely feasible to keep even a very large organization
-> comprehensively patched. There are organizations that do that.
-> 2. It is not feasible to calculate a probability of exploitation of a
-> given vulnerability, and it is not feasible to determine how bad the
-> damage from exploitation will be. This is a classic example of "tail
-> risk" where probability distributions are simply not calculable by
-> normal methods.
->
-> I keep hearing people in the security industry speak about scientific
-> risk assessment as though it were possible. I don't think it's
-> possible, and it seems cheaper to simply patch than to do some sort
-> of scientific assessment and prioritization of patches.
->
-> My gut reaction is that the growth of this idea is attributable
-> to the large number of large, well-funded organizations that are
-> none the less not capable of properly maintaining their own
-> infrastructure and thus not capable of patching in a timely manner.
-> (I have consulted to many such organizations.)
->
-> The notion that some sort of "risk analytics" could therefore justify
-> failing to patch quickly and give a rationale for maintaining an
-> incapable systems management team is thus attractive. However, the
-> real solution is simply to patch; a capable systems management team is
-> better than the illusion of a risk calculation system, and provides
-> far more benefits than simply maintaining infrastructure in a fully
-> patched state.
->
-> Perry
-> --
-> Perry E. Metzger                perry@...rmont.com
->
+There's loads of reasons why CVEs don't really work for the kernel at
+all, as has been discussed many times here on this list, and in other
+places, and even with MITRE themselves (and they agree with me).
 
+I don't think we want to rehash that again here :)
+
+thanks,
+
+greg k-h
