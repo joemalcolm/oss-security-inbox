@@ -1,57 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/5
-Message-ID: <CAMssQwbxY-LY1FmuZUeLEp2etkj6poQc+MVzL-ah=XoF2vptSg@mail.gmail.com>
-Date: Sat, 8 Aug 2020 11:16:50 +0100
-From: Bartłomiej Płotka <bwplotka@...il.com>
-To: Richard Hartmann <richih.mailinglist@...il.com>
-Cc: oss-security@...ts.openwall.com,  PrometheusMonitoring <prometheus-team@...glegroups.com>,  Prometheus Developers <prometheus-developers@...glegroups.com>
-Subject: Re: [prometheus-team] Voiding CVE-2020-16248
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/10/2
+Message-ID: <20200610114427.GA1895802@kroah.com>
+Date: Wed, 10 Jun 2020 13:44:27 +0200
+From: Greg KH <gregkh@...uxfoundation.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768
 Content-Type: text/plain; charset=utf-8
 
-Thanks for this work Richi, this is quite... interesting that someone might
-mark core functionality as CVE.
+On Wed, Jun 10, 2020 at 09:21:03PM +1000, Wade Mealing wrote:
+> A number of flaws were discussed in the registers article this morning
+> ( https://www.theregister.com/2020/06/09/linux_kernel_bugs_spectre )
+> which have been submitted for inclusion upstream already.
+> 
+> Listed below are the CVE's that Red Hat has assigned.  As far as I can
+> tell there are no existing  CVE assignments for these flaws. I have
+> not done adequate investigation to correctly identify affected
+> versions of the kernel, however this is a flaw in the fix for
+> CVE-2018-3639, affected systems would likely be affected by the flaws
+> listed below if they required the fix.
 
-Kind Regards,
-Bartek
+Did you ask the authors of the patches?  I think they might have already
+assigned CVEs from Google's pool, based on previous interactions with
+those developers...
 
-On Sat, 8 Aug 2020 at 09:49, Richard Hartmann <richih.mailinglist@...il.com>
-wrote:
+thanks,
 
-> Dear all,
->
-> the Prometheus project[1] has received a public "vulnerability"
-> report[2] against what the reporter called SSRF, but what is the core
-> functionality of blackbox_exporter[3]: The ability to trigger network
-> probes over the network to monitor a target's availability. The
-> reporter stated that CVE-2020-16248 has been assigned. From context,
-> it seems to be a paid assessment of our software for an unnamed client
-> which increases motivation to get "results", in particular CVEs for
-> "zero days" - which are then promptly reported publicly with an
-> embargoed CVE.
->
-> The reporter has not replied to our statement that this behaviour is
-> core functionality. I could not find out which organization has
-> reserved CVE-2020-16248 so I decided to send email to this list to
-> inform the organization, enabling them to update their records.
->
-> Sorry for using this list for that purpose, I could not find a less
-> wrong place to inform the (hopefully) interested parties.
->
->
-> Best,
-> Richard
->
-> [1] https://prometheus.io/
-> [2] https://github.com/prometheus/blackbox_exporter/issues/669
-> [3] https://github.com/prometheus/blackbox_exporter
->
-> --
-> You received this message because you are subscribed to the Google Groups
-> "Prometheus Team" group.
-> To unsubscribe from this group and stop receiving emails from it, send an
-> email to prometheus-team+unsubscribe@...glegroups.com.
-> To view this discussion on the web visit
-> https://groups.google.com/d/msgid/prometheus-team/CAD77%2BgR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8%2B8_%2Bdbw%40mail.gmail.com
-> .
->
-
+greg k-h
