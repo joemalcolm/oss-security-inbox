@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1418" "Sunday" "19" "April" "2015" "12:35:19" "-0400" "Paul Tagliamonte" "paultag@gmail.com" "<20150419163519.GA16209@leliel.pault.ag>" "45" "[oss-security] Remote file inclusion in django-markupfield" nil nil nil "4" "2015041916:35:19" "[oss-security] Remote file inclusion in django-markupfield" (number mark "        paultag@gmai Apr 19   45/1418  " thread-indent "\"[oss-security] Remote file inclusion in django-markupfield\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1518" "Wednesday" "10" "June" "2020" "17:36:45" "+0200" "Greg KH" "greg@kroah.com" "<20200610153645.GB2107284@kroah.com>" "33" "Re: [oss-security] kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768" "^Date:" nil nil "6" "2020061015:36:45" "[oss-security] kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768" (number mark "        greg@kroah.c Jun 10   33/1518  " thread-indent "\"Re: [oss-security] kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768\"\n") "<CALJHwhQ8BM=WpLme2x4oKUy2+u7Q_DBeHjP2Ot6GFvvGmdr1ZQ@mail.gmail.com>" ("<CALJHwhSuSiuK+gU07w1-MNoB1sW0XQwfpYCOzcXhky5K5Ynj9w@mail.gmail.com>" "<20200610114427.GA1895802@kroah.com>" "<CALJHwhQ8BM=WpLme2x4oKUy2+u7Q_DBeHjP2Ot6GFvvGmdr1ZQ@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3604 invoked by uid 550); 19 Apr 2015 16:35:40 -0000
+Received: (qmail 30614 invoked by uid 550); 10 Jun 2020 15:37:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3209 invoked from network); 19 Apr 2015 16:34:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=4k1Ezrdqo24o6BnLTNTpn/zRnf0HAErP4UEz3vS+TM0=;
-        b=M+r0Mgm3oxbVbK35jiQltOskeD0PTAHS7dJonzicBgfBtSBIbpVoVW7PZlnneEx47F
-         IRfhfFoSar2s6zvxeU3//EEpfNiOBZsl8mP/C39ntPb9NmDFKYz8qyC2Yahe9vDCQGty
-         nAvI6amYWVvL4/7xhS69OVpd8mpfrjdbFoWmmFmCzH01a5nrTnCb2l8j0aMHluDJKVqc
-         5CGahesRPOl5gVerx+ks19+PmSHydjRKMIdaz5DVsBmXhedLDwtK5m/0nkx1Gs5vYD8+
-         vDhg8scmAhuhRCfpLLgOpUX5xLBTtzCH4WERBPjDn055rVHfuuXIj8rNi9VoJSFTzqic
-         Qddg==
-X-Received: by 10.140.108.201 with SMTP id j67mr13099013qgf.79.1429461243621;
-        Sun, 19 Apr 2015 09:34:03 -0700 (PDT)
-Message-ID: <20150419163519.GA16209@leliel.pault.ag>
+Received: (qmail 30593 invoked from network); 10 Jun 2020 15:37:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm1; bh=vboOW25xeTNbHN2XCkJrlC1px9/
+	YGTWB+HluX7Cr1j0=; b=I/CKI0YKLcpp15sQBneeG0FzQX92i6XnU5G9o2xmkcM
+	8iBN3BB7YxWZ2Y/sgU44DAkO21mVlKdaJ1TOiCpbZVGEvEbPyjAGBEgT9GXEMd1N
+	BWPWIzOpMJcQInxo0eUAtI6kn7W3wEMmMuxoqzyaf4KAqvJq9frrPuCkunsUO19e
+	Uq1BhUN68lOLeykWri5RzI8S1QOp9ujYQ1x00/s18jYpsNOz+qGvefuOq/81K0Xm
+	Te7AHyuVMB9Th3ynAdrsUDZQfxQw1iCKY5jp3Elwq5ItBfitJAAZIZPrb7O84yKu
+	RFMkdX4op9zYIjEDXnCrLjYurhlUS3PxSpaSmfvP0yA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=vboOW2
+	5xeTNbHN2XCkJrlC1px9/YGTWB+HluX7Cr1j0=; b=spbBJLbOFhxeFpuS1QyyDm
+	C3XVCj2n5RK6wRuwwN1eX6n51u0zIP1T21gSNTGMN3dsV5Xh5VKh4vmVbl3pigp1
+	JBhy/12zR48xgS9vumL6lKiR332BEc8u5qHjnlJncz0O+5ZiY+SQgmQ5ISSD6a9J
+	CAcAQRbpEfvTvxpjsP+jcjQhpSMu9j/M+DkSw0qwSSP7cJSnlwUfgVqIPNQZZQWv
+	gsfjzVVG/Fc/fhks576W8jMdLY2TzZu34ujj6cSAtw8O91giYvbSHhXZiOIbZ2P9
+	2pioVHKJ0imhXqaZvWLyWejUqdoTiesmyIIdsJ0nvvNSRimV6gDECjoT4NkmWOFg
+	==
+X-ME-Sender: <xms:E_7gXpyh-g_DUbLKiUnP4lIlBCrz6YBa-EJ5WkB94f-aI-7V-wmtJw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudehiedgleefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
+    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
+    necuggftrfgrthhtvghrnheptedtgefffeeuteehteevuefhgfefjeeiffeiudduveevtd
+    ehtdetveejveeiheffnecuffhomhgrihhnpehmihhtrhgvrdhorhhgpdhkvghrnhgvlhdr
+    ohhrghenucfkphepkeefrdekiedrkeelrddutdejnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhm
+X-ME-Proxy: <xmx:E_7gXpQTr4aWCxOmk0akGL5zNwlYxFlR4YiBVMD1Zzh561KITGXlFA>
+    <xmx:E_7gXjWm8v_GtW_ZxaRWL5hp9VuSiW6J2XC-NLC6_pCPjRaTRVx41w>
+    <xmx:E_7gXrjOY28F77UwDXC3Oj_8WOZiRksPCdKMxXKUABYu7-_lHGDVnA>
+    <xmx:E_7gXvysI4oLyxopY9O16OsjQlWKZ6yJp40kks7ssZTlyo4brzRIiw>
+Message-ID: <20200610153645.GB2107284@kroah.com>
+References: <CALJHwhSuSiuK+gU07w1-MNoB1sW0XQwfpYCOzcXhky5K5Ynj9w@mail.gmail.com>
+ <20200610114427.GA1895802@kroah.com>
+ <CALJHwhQ8BM=WpLme2x4oKUy2+u7Q_DBeHjP2Ot6GFvvGmdr1ZQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jI8keyz6grp/JLjh"
-Content-Disposition: inline
-X-NSA-PRISM-US-Citizen: Yes
-X-Hack-The-Planet: Yes
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: security@debian.org
-Date: Sun, 19 Apr 2015 12:35:19 -0400
-From: Paul Tagliamonte <paultag@gmail.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Remote file inclusion in django-markupfield
-To: oss-security@lists.openwall.com
-
---jI8keyz6grp/JLjh
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CALJHwhQ8BM=WpLme2x4oKUy2+u7Q_DBeHjP2Ot6GFvvGmdr1ZQ@mail.gmail.com>
+Date: Wed, 10 Jun 2020 17:36:45 +0200
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] kernel: Multiple SSBD related flaws
+ CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768
+To: oss-security@lists.openwall.com
 
-Hey folks,
+On Thu, Jun 11, 2020 at 01:14:03AM +1000, Wade Mealing wrote:
+> > Did you ask the authors of the patches?  I think they might have already
+> > assigned CVEs from Google's pool, based on previous interactions with
+> > those developers...
+> 
+> I am in discussions with Anthony Steinhauser from Google, Anthony
+> stated there were no CVE's assigned.  This message was mainly for the
+> other CNA's  ( https://cve.mitre.org/cve/request_id.html ) who may be
+> able to assign CVE's.
 
-An arbitrary file inclusion bug was discovered in django-markupfield.
+Is oss-security the place to sync up on those things?  I thought you all
+had your own list to sync on those things, as that must happen often.
 
-A CVE was issued from Debian, CVE-2015-0846, but the commit is public in
-the upstream repo, so this mail is to avoid deduplication of this issue.
+> If the kernel was a CVE Numbering Authority, they could assign their
+> own ( https://cve.mitre.org/cve/cna.html#become_a_cna ) and this whole
+> problem would not exist.  I'm not on the security@kernel.org mailing
+> list (even after asking), so I can't really say what goes on behind
+> those closed doors, I would think it falls under their interests.
 
-Sorry about this mishandling,
+The kernel does NOT want to become a CVE Numbering Authority, and our
+documentation explicitly states that if you want a CVE for a kernel
+issue, you can just go ask MITRE or someone else for it:
+	https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
 
-Thanks,
-  Paul
+There's loads of reasons why CVEs don't really work for the kernel at
+all, as has been discussed many times here on this list, and in other
+places, and even with MITRE themselves (and they agree with me).
 
---=20
-#define sizeof(x) rand()
-</paul>
-:wq
+I don't think we want to rehash that again here :)
 
---jI8keyz6grp/JLjh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+thanks,
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJVM9lHAAoJEHtYWzCAfCqHbfoQAJfmpObaBQ1mVCMILkNXvYYU
-2p408NX7NulHIiEqrIwMc2VR2jlfcHQRsJIE7OeQ8WPVAnWfp8W7jXEDW5tbcxwN
-cRkkC76nSrjCcg1qDq+q+OglXh9eL7m9YR87H2OsdvE8VeutLr/QN9ct/RgplfO5
-3uxxJZmAmtZPgl2GEzAfo6os84K+KYPGR7hWOKy8thj5inaMVCTUS022c8APq8IF
-2qJ/HNCk7mhQ29PeUJN4M6KcFsWNGPsIl5+IoXEFVw6vLZdfYC9UiK5w8aST14R9
-1CpbVMLFDffrrLDjjGXwa9O3mVyqhoDpyiHJOGFiJ5d3GlAwwLC6Kaq5nfsoy0MS
-TwHmBwBG8u0EFlE/N+Z0+6BaoIC4UmAmJgxF1tMDaicGo0BQnw6HE38bADo2oc+7
-ssmoqt9c5f1BSZ7iebCRJzzL2V/nGOpCmbixU0Z8c4EDNjdVbAvTkIdxoo2Hq26V
-up2hL97VfgfoGRMdE/PF+IUqZI1jmZceTVKIwOt8icijkSExlY9vX04Lo/VxgCjE
-ECmMOSmCo08GAhMLyKC59EATxpkRVcK3xDIM7dkpxtb9bwceuKSaN4JQGu8TeOwZ
-gk65HyQjeYvXBcuGrSO8JwRcRkBv05nSmIt35juEQHspw5VyfK9j6IDGAW99H0wa
-2lEbCs07SGkHlJZ6a6vZ
-=W4lt
------END PGP SIGNATURE-----
-
---jI8keyz6grp/JLjh--
+greg k-h
