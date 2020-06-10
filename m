@@ -1,79 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/08/2
-Message-ID: <20200608151801.GA5463@w1.fi>
-Date: Mon, 8 Jun 2020 18:18:01 +0300
-From: Jouni Malinen <j@...fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/10/3
+Message-ID: <CALJHwhQ8BM=WpLme2x4oKUy2+u7Q_DBeHjP2Ot6GFvvGmdr1ZQ@mail.gmail.com>
+Date: Thu, 11 Jun 2020 01:14:03 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: hostapd: UPnP SUBSCRIBE misbehavior in hostapd WPS AP
+Subject: Re: kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768
 Content-Type: text/plain; charset=utf-8
 
-Published: June 8, 2020
-Identifiers:
-- VU#339275 and CVE-2020-12695 (applying for the callback URL in other
-  network case, but not the other items discussed in this advisory)
-Latest version available from: https://w1.fi/security/2020-1/
+> Did you ask the authors of the patches?  I think they might have already
+> assigned CVEs from Google's pool, based on previous interactions with
+> those developers...
 
-Vulnerability
+I am in discussions with Anthony Steinhauser from Google, Anthony
+stated there were no CVE's assigned.  This message was mainly for the
+other CNA's  ( https://cve.mitre.org/cve/request_id.html ) who may be
+able to assign CVE's.
 
-General security vulnerability in the way the callback URLs in the UPnP
-SUBSCRIBE command are used were reported (VU#339275, CVE-2020-12695).
-Some of the described issues may be applicable to the use of UPnP in WPS
-AP mode functionality for supporting external registrars.
+If the kernel was a CVE Numbering Authority, they could assign their
+own ( https://cve.mitre.org/cve/cna.html#become_a_cna ) and this whole
+problem would not exist.  I'm not on the security@...nel.org mailing
+list (even after asking), so I can't really say what goes on behind
+those closed doors, I would think it falls under their interests.
 
-Such issues could allow a device connected to the local network (i.e., a
-device that has been authorized to transmit packets in the network in
-which the AP is located) could trigger the AP to initiate a HTTP
-(TCP/IP) connection to an arbitrary URL, including connections to
-servers in external networks. This could have a security implication if
-traffic from the local network to external destinations have different
-rules (e.g., firewall and packet inspection) for different local hosts
-and the AP having access to external hosts while the attacker controlled
-local device not having such access. Such deployment cases may not be
-common for networks where WPS would be enabled, but it is not possible
-to completely rule out the applicability to cases where hostapd is used
-to control a WPS enabled AP.
+> thanks,
 
-In addition to the more generic issues with the UPnP protocol, couple of
-implementation specific issues in hostapd were discovered while
-reviewing this area of the WPS implementation. These issues could allow
-local devices (i.e., devices that have been authorized to transmit
-packets in the network in which the AP is located) to trigger
-misbehavior in hostapd and cause the process to either get terminated or
-to start using more CPU resources by using a specially constructed
-SUBSCRIBE command.
+No problem.
 
-All these issues require the attacker to be able to discover the UPnP
-service provided by hostapd and to open a TCP connection toward the IP
-address of the AP. The former requires access to the local network to be
-able to receive broadcast packets and the latter requires access to
-initiate TCP/IP connection to the IP address used by the AP. In most
-common AP deployment cases, both of these operations are available only
-from the local network.
+Wade Mealing
 
+Product Security - Kernel, RHCE
 
-Vulnerable versions/configurations
+Red Hat
 
-All hostapd versions with WPS AP support with UPnP enabled in the build
-parameters (CONFIG_WPS_UPNP=y) and in the runtime configuration
-(upnp_iface).
+wmealing@...hat.com
 
+TRIED. TESTED. TRUSTED.
 
-Possible mitigation steps
-
-- Disable WPS UPnP support in the hostapd runtime configuration by
-  removing the upnp_iface parameter.
-
-- Merge the following commits to hostapd and rebuild:
-
-  For CVE-2020-12695:
-  WPS UPnP: Do not allow event subscriptions with URLs to other networks
-  For the other issues:
-  WPS UPnP: Fix event message generation using a long URL path
-  WPS UPnP: Handle HTTP initiation failures for events more properly
-
-  These patches are available from https://w1.fi/security/2020-1/
-
-- Update to hostapd v2.10 or newer, once available
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
