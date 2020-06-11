@@ -1,81 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/13/1
-Message-ID: <20201113133331.48185f9f@computer>
-Date: Fri, 13 Nov 2020 13:33:31 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Buffer Overflow in raptor widely unfixed in Linux distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/11/2
+Message-ID: <24290.31117.921352.498399@chiark.greenend.org.uk>
+Date: Thu, 11 Jun 2020 19:35:57 +0100
+From: Ian Jackson <ijackson@...ark.greenend.org.uk>
+To: oss-security@...ts.openwall.com 
+Subject: adns (dns resolver library) multiple vulns
 Content-Type: text/plain; charset=utf-8
 
-3 years ago I reported a heap overflow vulnerability in raptor, an RDF
-parsing library:
-https://www.openwall.com/lists/oss-security/2017/06/07/1
+Hi.  I'm the upstream maintainer for adns.  There were outstanding
+security problems which I have sat on for far too long, but I have now
+finally dealt with them properly.  My apologies.
 
-raptor has not created a new release since 2014.
+The fixes have incorporated in adns 1.5.2 and 1.6.0.  See the release
+announcement here:
+  https://www.chiark.greenend.org.uk/pipermail/adns-announce/2020/000004.html
 
-The most prominent user seems to be libreoffice. This is triggerable
-from within an ODT file. Back then I reported this to libreoffice as
-well and they patched it in their builds. However on linux systems
-libreoffice package usually use the system-provided libraptor, so if
-that's not patched it is vulnerable.
+If you prefer to apply specific patches, the relevant commits are
+in my git repository:
+  https://www.chiark.greenend.org.uk/ucgi/~ianmdlvl/git/adns.git/
+  https://www.chiark.greenend.org.uk/ucgi/~ianmdlvl/githttp/adns.git
+in this commit range
+  2f6e879e0fca1715d5c5946bcedb4f821ce64d77..bb4e05849170034447d60a6f7cb71d5f255b0ecc
+(which you will find is covered by the signed tag adns-1.5.2).
 
-This was unpatched for a long time in many linux distros, in some it
-still is. Debian+Ubuntu have released updates in the past few days.
+The most serious problems are remote code execution, within the
+adns-using application, exploitable by the local recursive resolver.
 
-It may be interesting to discuss how this happened. From my side I feel
-I did what I should do - I reported it to the project and later
-disclosed it publicly on oss-security. Apparently it seems there is no
-reliable process to make sure publicly reported vulns eventually get
-patched in distros if there is no active upstream.
-Maybe noteworthy is that this didn't get a CVE in 2017. It seems many
-distros rely on CVEs to get a process of backporting fixes rolling.
-Given the fluctuating reliability of CVE assignments not sure this is
-wise. I have now requested a CVE (CVE-2017-18926).
+Thanks for your attention.
 
-
-Here is a minimal reproducer embedded in an ODT file:
-UEsDBBQAAgAIAIqMZlHHyBrQfgAAAKUAAAAMABwAbWFuaWZlc3QucmRmVVQJAAOEe6VfEXylX3V4
-CwABBOgDAAAE6AMAAE3NQQ7CIBCF4as0uKYoriC0q8YDGC9A6qhNWpjMYKC3tzSauP3zvTxH94e9
-DpemLHNgC6UTr5TRKpVzbqH4BWdoIz1V4IP4qm1TWfqxfN7FyRijjlppLTcheQ3JF1l3vas3A/BI
-E6Ypht5BsdjUip4YbitCJ8RfJuD4pnGvH1BLAwQKAAAAAABhX2ZRAAAAAAAAAAAAAAAACQAcAE1F
-VEEtSU5GL1VUCQADdSylXxF8pV91eAsAAQToAwAABOgDAABQSwMEFAACAAgAC41mUbMm7RFxAAAA
-9AAAABUAHABNRVRBLUlORi9tYW5pZmVzdC54bWxVVAkAA3V8pV9hfKVfdXgLAAEE6AMAAAToAwAA
-jY/BCoQwDER/Zel1aXsX3X8JNsVAmgYbF/179eB62Iu34THMY/oCQhmbdVf49D+UidGj2Ly9brYw
-ewWbBhfdjQsmAm+b4uBAlWkEoyrxKylUaNRCVZRUx6Ucg8FwNRefqy4W5pQfWI/Wey18GuL/wR1Q
-SwECHgMUAAIACACKjGZRx8ga0H4AAAClAAAADAAYAAAAAAABAAAApIEAAAAAbWFuaWZlc3QucmRm
-VVQFAAOEe6VfdXgLAAEE6AMAAAToAwAAUEsBAh4DCgAAAAAAYV9mUQAAAAAAAAAAAAAAAAkAGAAA
-AAAAAAAQAO1BxAAAAE1FVEEtSU5GL1VUBQADdSylX3V4CwABBOgDAAAE6AMAAFBLAQIeAxQAAgAI
-AAuNZlGzJu0RcQAAAPQAAAAVABgAAAAAAAEAAACkgQcBAABNRVRBLUlORi9tYW5pZmVzdC54bWxV
-VAUAA3V8pV91eAsAAQToAwAABOgDAABQSwUGAAAAAAMAAwD8AAAAxwEAAAAA
-
-I get an
-malloc(): invalid size (unsorted)
-message, which I believe indicates this successfully triggers a heap
-corruption.
-
-
-FWIW I recently tried to fuzz raptor again with the fix applied. I
-quickly found another OOB issue
-https://bugs.librdf.org/mantis/view.php?id=650
-
-From the bug report:
-
-A malformed input file can lead to a segfault due to an out of bounds
-array access in raptor_xml_writer_start_element_common.
-
-Bug happens in line 230 of raptor_xml_writer.c (current git):
-https://github.com/dajobe/raptor/blob/master/src/raptor_xml_writer.c#L230
-
-From looking at that code it seems to me it always expects
-nspace_declarations_count to be lower than element->attribute_count,
-however this input seems to create a different situation. I made an
-attempt at a patch that throws an error in this situation (but please
-review it, I am not familiar with what this code does and should do -
-though the patch doesn't seem to introduce test failures).
-
-(proposed patch, example file and stacktrace can be found attached to
-the bugreport)
+Ian.
 
 -- 
-Hanno Böck
-https://hboeck.de/
+Ian Jackson <ijackson@...ark.greenend.org.uk>   These opinions are my own.  
+
+Pronouns: they/he.  If I emailed you from @fyvzl.net or @evade.org.uk,
+that is a private address which bypasses my fierce spamfilter.
