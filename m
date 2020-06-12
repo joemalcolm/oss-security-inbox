@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5292" "Thursday" "18" "February" "2016" "14:39:47" "+0100" "Balint Reczey" "balint@balintreczey.hu" "<56C5C9A3.6090800@balintreczey.hu>" "124" "Re: [oss-security] Address Sanitizer local root" nil nil nil "2" "2016021813:39:47" "[oss-security] Address Sanitizer local root" (number mark "U       balint@balin Feb 18  124/5292  " thread-indent "\"Re: [oss-security] Address Sanitizer local root\"\n") "<20160218110831.17429da5@pc1>" ("<20160217221921.GB24130@port70.net>" "<20160218110831.17429da5@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["588" "Friday" "12" "June" "2020" "08:16:23" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<34ddbebf-ee5e-a8de-918b-bc9878352e84@orlitzky.com>" "18" "Re: [oss-security] icinga2: CVE-2020-14004: prepare-dirs script allows for symlink attack in the icinga user context" "^Date:" nil nil "6" "2020061212:16:23" "[oss-security] icinga2: CVE-2020-14004: prepare-dirs script allows for symlink attack in the icinga user context" (number mark "U       michael@orli Jun 12   18/588   " thread-indent "\"Re: [oss-security] icinga2: CVE-2020-14004: prepare-dirs script allows for symlink attack in the icinga user context\"\n") "<20200612095428.GD12592@f195.suse.de>" ("<20200612095428.GD12592@f195.suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] icinga2: CVE-2020-14004: prepare-dirs script allows for symlink attack in the icinga user context" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11341 invoked by uid 550); 18 Feb 2016 13:55:18 -0000
+Received: (qmail 14334 invoked by uid 550); 12 Jun 2020 12:16:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,169 +11,118 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28147 invoked from network); 18 Feb 2016 13:40:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:subject:to:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to;
-        bh=GHgHkgdZy/5w9TtRM9FxRGFGJ+8V2rHpvxZ75B9dK0o=;
-        b=cEeEhbQ3LqCAzUhRbt6lzRKlWgsWGVn84sXvGYZ5TaJeEGGTmnKhRIg+C9cwj9V2ML
-         yIvzxQrwa5WkimbOCLpENKQD8xfwhpLRhEtOy89rdcXUNBuUUXttktJoPZptvcC7I1ws
-         hThyKJLMbjd5/BlmIsLXisxCSh6Wc3uWG5XCUAXyzfb3IlyyynSEnUgUQTKHJy3E56Rp
-         v0/DXMGbjw7+NfcQXbrJK7TxeJPscZko8ZLfVTHFVgEzeiZK04+RSpmPYBYoQum8iVIP
-         ncDUPPXiixxQvqBcGMkyL0vFiwAHjkgdw7hRxVIaZWDVS7qTGCj7iI3xpsqo/05QrnVh
-         g0zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to;
-        bh=GHgHkgdZy/5w9TtRM9FxRGFGJ+8V2rHpvxZ75B9dK0o=;
-        b=EiNv6N05TIFWGKHPjPfuhlqsThpGiI6dbLFbKm+gTvjVSFUhUPY3qu5p0XCK+iDJsr
-         AheI3QCsg7L7XhTGDZH/Oq/NxCkkCAzbDqek8wbL3tDvz3rVhp3Z607emdG0ltON4YIB
-         WK4xvUrNrvUnZ848Sp+W2m5b1BqrLuDXy4wdR4ugGlBYOszx06dz8O2xHNIJA5x2IlpS
-         LVG8DYlGS6RflAO+rmzkrwD+smQglgKWaBnibPuFQJIbmyAEl3BL6vDZSmn/bRX3jHTH
-         qNAKBa0zFjLQgE9byrcF1BVezuptkhcVtH7BsSJgn9WHvi7rnhjqzfQwzy+UG6GgfwZH
-         rdUA==
-X-Gm-Message-State: AG10YOQnbuaEtS6zYy9DG5b+sTxWU551/biCyfZetmlPEJOGGQBumwcyMkvPWw6KKdB2Tw==
-X-Received: by 10.28.96.85 with SMTP id u82mr3328001wmb.81.1455802801121;
-        Thu, 18 Feb 2016 05:40:01 -0800 (PST)
-Sender: =?UTF-8?B?UsOpY3pleSBCw6FsaW50?= <rbalint@gmail.com>
-To: oss-security@lists.openwall.com
-References: <20160217221921.GB24130@port70.net> <20160218110831.17429da5@pc1>
-From: Balint Reczey <balint@balintreczey.hu>
-Message-ID: <56C5C9A3.6090800@balintreczey.hu>
-Date: Thu, 18 Feb 2016 14:39:47 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.5.0
+Received: (qmail 14313 invoked from network); 12 Jun 2020 12:16:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1591964188; bh=RK+meubiVh7lOUsNxAexPKKs9fVJMSg8jgYh9QJ51AE=;
+	h=Subject:To:References:From:Date:In-Reply-To;
+	b=B3eIAZAKmbJKw26rveS4ERBDhC/KnRuR2iiCLD7mlEpWEk277I2LUrr2kWhBTntUt
+	 T7tKV2Who2F8CxxO5QDGT4q8FM+acexNWHYZmez+McFkOObHyP2yww/rDalY+Xpy2/
+	 s916h+nQeuI+Q8zw1+y15iQHpWkXNKPzstNhW2e8=
+References: <20200612095428.GD12592@f195.suse.de>
+Autocrypt: addr=michael@orlitzky.com; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <34ddbebf-ee5e-a8de-918b-bc9878352e84@orlitzky.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <20160218110831.17429da5@pc1>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="0FQtvamoN32praTi2KvnGEAnNIsKvbV9o"
-Subject: Re: [oss-security] Address Sanitizer local root
-
---0FQtvamoN32praTi2KvnGEAnNIsKvbV9o
+In-Reply-To: <20200612095428.GD12592@f195.suse.de>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Date: Fri, 12 Jun 2020 08:16:23 -0400
+From: Michael Orlitzky <michael@orlitzky.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] icinga2: CVE-2020-14004: prepare-dirs script
+ allows for symlink attack in the icinga user context
+To: oss-security@lists.openwall.com
 
-Hi,
+On 2020-06-12 05:54, Matthias Gerstner wrote:
+> Hello list,
+> 
+> during the review of directories with special permissions in openSUSE
+> distributions I noticed an icinga user privilege escalation issue in the
+> icinga2 monitoring software [1].
 
-On 02/18/2016 11:08 AM, Hanno B=C3=B6ck wrote:
-> Hi,
->=20
-> Thanks a lot for your analysis.
-I would like to thank you for your analysis, too.
+face -> palm
 
->=20
-> On Wed, 17 Feb 2016 23:19:21 +0100
-> Szabolcs Nagy <nsz@port70.net> wrote:
->=20
->> https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-w=
-ith-Address-Sanitizer.html
->> (the later was presented at FOSDEM 2016:
->> https://fosdem.org/2016/schedule/event/csafecode/ )
->>
->> While these are interesting projects, ASan should not be
->> used for hardening in production systems in its current form,
->> so at least the language ("hardening", "protection", "safe")
->> should be fixed.
->=20
-> Given that this is my work (I did the asanized Gentoo and the FOSDEM
-> talk) I think I should answer.
-I'm the other guy, working on the special Debian port:
-http://balintreczey.hu/blog/progress-report-on-hardened1-linux-amd64-a-pote=
-ntial-debian-port-with-pie-asan-ubsan-and-more/
-
->=20
-> I hope I have made it clear that whether using asan for production
-> purposes makes any sense was an open question to me. I have placed
-> warnings that this is experimental and I didn't recommend any production
-> use right now.
->=20
-> I was aware about the performance and memory costs of asan, and I was
-> aware that there are risks involved, but it appeared to me that
-> balancing issues out it would still be a security win and might
-> therefore be an option for some highly security sensitive environments.
-> Your mail makes it clear to me that I was in error and at least in its
-> current form asan is probably not suitable for secure use at all.
-> I will add a note to my blogpost and the Gentoo wiki with a link to
-> your mail to make this clear.
-I was in a situation similar to Hanno's and I added notes about the
-potential risks and limitations linking to this thread.
-
->=20
->=20
-> Appart from that I wonder whether this should have any consequences for
-> asan and which ones. Would it be desirable to:
-> a) Try to fix security issues like the one you presented with suid
-> binaries? (not sure what the best fix would be, maybe detect suid
-> binaries and drop privileges back to user [not sure if that's even
-> possible]).
-> b) Leave issues unfixed and declare that asan is just not good for
-> production use. In this case I agree that the asan documentation should
-> probably include some more obvious warnings / explanations of the
-> risks involved.
-> c) Some other variant, like splitting asan into two different variants.
-> One could imagine having a new cflag that would enable asan, but
-> disable some of the ASAN_OPTIONS things like logging (however thinking
-> about this I don't like it - if I imagine running asan on some kind of
-> server I would want to be able to log issues).
->=20
-ASAN and UBSAN were excellent for finding and fixing bugs in the
-Debian toolchain and now I'm thinking about splitting the effort
-into a QA focused version with ASAN and full UBSAN to find as many
-bugs as possible and a hardening-focused one with trap-only UBSAN,
-PIE, and other security-related features which are safe to use on
-production systems but speed-wise are still tolerable.
-The hardening-focused one should be able to run on
-Grsecurity-enabled kernel.
-
-I would also be interested in experimenting with a hardening-focused
-version based on musl if it integrates ASAN features to libc.
-Creating such new ports became much easier thanks to the fixes to
-Debian's tools.
-
-The hardened1-linux-amd64 port is not officially accepted to Debian
-and the exact features it would provide can be changed. Ideally
-it would ship a libc with an ABI enforcing safety measures (making
-it ABI-incompatible with standard libc) and compiler defaults to
-help writing secure programs. At the moment don't see such a libc
-variant but musl + ASAN parts could be a good candidate or
-SoftBoundCETS was also suggested to be used. I would like choose
-a technology which runs on all CPU architectures, but if it can
-be sped up by for example intel's MPX then it is a plus.
-
-Comments are welcome!
-
-Cheers,
-Balint
+https://github.com/Icinga/icinga2/issues/5793
 
 
-[1] https://lists.debian.org/debian-devel/2014/04/msg00400.html
+> But it could still turn out to be subject to
+> race conditions on older or alternative `chown` implementations. It
+> would also be problematic if the Linux kernel hardlink protection is
+> turned off for some reason.
 
-
---0FQtvamoN32praTi2KvnGEAnNIsKvbV9o
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJWxcmsAAoJEPZk0la0aRp9Ub4P/0RV4dE5ak39+9RoPFgiwfyx
-Xthsas58/INvysW0Wl7ZwBqOB3ROsTzC+aN5Bv7S+qkECijqhzlDEf6HsyKn5gy+
-P3TRsJwPDerRm+oXLTPdQShRCF95V3FgK5E4PlD7kZVItCoY5heuEW0NRAqUD4RH
-kC54WC4NLpPijQ1jH84uLkU/Gux+JhZxGFhgP6kBL6M+hrhREDnAQLuw8KtqI8Ha
-lxaG/njU9T7EdIAINBeLp4uYrVutfCDS/sgl3TkAOOapyOuaeTd9IE86oXoyV+0D
-RRgvElo8Wd5/Zgs9vtbP35trVE92pynWdRUr1v8jBZtzxS8qDHNt21EOk8pt/emW
-Jlg7T2ab1lNr8LynxMQe8leOWM5+B49o0A5Yp7M5fa76m5xfiivR1hH4cVLG9fbC
-TKWTVBOAedd9ghvhPWalJA+ad/yj3HNtJraJ0K6HFfObtKaWLDTpyg/AesAnNmKB
-1rDAiLXuAUyThftGozJAhS4gVHdY0ETZzcIkd0CO5RtjNSpKV3UGNSPO+dGJaY8b
-xYrVJU4b2UuxRhUu02yQKx5V8WUHQ40RDnEtSKwU0zKCQFTrAenxUejmX3TBVlC4
-vranYrywXWHrHAde7QQRIAI+QfzvXvAboD/b9KUVemrlqj4xJgFWVjEYlIA2Nedp
-eW4vVYtuoOfrEjT/Okqb
-=WsB7
------END PGP SIGNATURE-----
-
---0FQtvamoN32praTi2KvnGEAnNIsKvbV9o--
+Hardlink protection is off by default in the vanilla kernel.
