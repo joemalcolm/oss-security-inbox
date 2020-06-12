@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/06/1
-Message-ID: <nycvar.YSQ.7.76.2004061547140.69262@xnncv>
-Date: Mon, 6 Apr 2020 15:50:51 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: pangpei.lq@...fin.com, ziming zhang <ezrakiez@...il.com>
-Subject: CVE-2020-11102 QEMU: tulip: OOB access in tulip_copy_tx_buffers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/12/3
+Message-ID: <34ddbebf-ee5e-a8de-918b-bc9878352e84@orlitzky.com>
+Date: Fri, 12 Jun 2020 08:16:23 -0400
+From: Michael Orlitzky <michael@...itzky.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: icinga2: CVE-2020-14004: prepare-dirs script allows for symlink attack in the icinga user context
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On 2020-06-12 05:54, Matthias Gerstner wrote:
+> Hello list,
+> 
+> during the review of directories with special permissions in openSUSE
+> distributions I noticed an icinga user privilege escalation issue in the
+> icinga2 monitoring software [1].
 
-An out-of-bounds access issue was found in the Tulip NIC emulator built into 
-QEMU. It could occur while copying network data to/from its tx/rx frame 
-buffers, as it does not check frame size against the data length.
+face -> palm
 
-A remote user/process could use this flaw to crash the QEMU process resulting 
-in Dos OR potentially execute arbitrary code with the privileges of the QEMU 
-process on the host.
+https://github.com/Icinga/icinga2/issues/5793
 
-Upstream patch:
-   -> https://git.qemu.org/?p=qemu.git;a=commit;h=8ffb7265af64ec81748335ec8f20e7ab542c3850
 
-This issue was reported by Ziming Zhang and Li Qiang (Ant Financial). 
-CVE-2020-11102 requested via -> https://cveform.mitre.org/
+> But it could still turn out to be subject to
+> race conditions on older or alternative `chown` implementations. It
+> would also be problematic if the Linux kernel hardlink protection is
+> turned off for some reason.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-
+Hardlink protection is off by default in the vanilla kernel.
