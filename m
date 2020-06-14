@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["790" "Thursday" "9" "August" "2018" "16:27:38" "+0100" "Simon McVittie" "smcv@debian.org" "<20180809152738.GA19476@espresso.pseudorandom.co.uk>" "15" "Re: [oss-security] Re: Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem" "^Date:" nil nil "8" "2018080915:27:38" "[oss-security] Re: Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem" (number mark "        smcv@debian. Aug  9   15/790   " thread-indent "\"Re: [oss-security] Re: Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem\"\n") "<CA+fCnZfFwCd3icBUzH__C7XaCV-We8AaXzGw12zZ-OsuFckGWA@mail.gmail.com>" ("<CA+fCnZcE=6dyUeU9CazgUR_yHTerNYXiK0gQNzjFSwjG=G-1uQ@mail.gmail.com>" "<CA+fCnZfFwCd3icBUzH__C7XaCV-We8AaXzGw12zZ-OsuFckGWA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["562" "Sunday" "14" "June" "2020" "00:30:54" "-0600" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9qSmHj6qjj2jvjNTwRoB3KUtf-3kPgh2fk9aDeAHJo8Ng@mail.gmail.com>" "15" "[oss-security] lockdown bypass on ubuntu 18.04's 4.15 kernel for loading unsigned modules" "^Date:" nil nil "6" "2020061406:30:54" "[oss-security] lockdown bypass on ubuntu 18.04's 4.15 kernel for loading unsigned modules" (number mark "        Jason@zx2c4. Jun 14   15/562   " thread-indent "\"[oss-security] lockdown bypass on ubuntu 18.04's 4.15 kernel for loading unsigned modules\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] lockdown bypass on ubuntu 18.04's 4.15 kernel for loading unsigned modules" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13743 invoked by uid 550); 9 Aug 2018 15:27:58 -0000
+Received: (qmail 1757 invoked by uid 550); 14 Jun 2020 06:31:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,34 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13721 invoked from network); 9 Aug 2018 15:27:57 -0000
-Message-ID: <20180809152738.GA19476@espresso.pseudorandom.co.uk>
-References: <CA+fCnZcE=6dyUeU9CazgUR_yHTerNYXiK0gQNzjFSwjG=G-1uQ@mail.gmail.com>
- <CA+fCnZfFwCd3icBUzH__C7XaCV-We8AaXzGw12zZ-OsuFckGWA@mail.gmail.com>
+Received: (qmail 1725 invoked from network); 14 Jun 2020 06:31:19 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:from:date:message-id:subject:to:content-type; s=mail; bh=epE6tt
+	0BAxrDEDukv/0hymXvFp4=; b=vivx5cZHTkeJmwT+xEdew+KjBSdQESUHXNcRbg
+	0RntOuQrgQwUJWGVipCuGOTet0ntvWRehGINyIu6bzq7VRDVytaHKom+MzQJTpyz
+	RRu2QAOVfQRyFb+yoaUQoQe0vi950bKeQNZyv57Np7tmuiqzrj0p2y7EYL2njsSc
+	LAtXrgZP0UuIftuuCCP//5iuNIge71j4wDdwWeUzeRYEpxVW98tTojwM5uHLICl7
+	ZzU5gjVOKKOhmDHiCr6Pgw/zQ0yn6GjaGejxZQVOQYpQgadIzmTg0xciBPPXeJ6x
+	IO4V+QFW20U6Oed/aEBnf6+E+vxfN3E4S/2rGKUoba4I4/Rw==
+X-Gm-Message-State: AOAM530hP1bHtEXlMGPCPdagpPs9bCumNeuAR7Q78rcxi75eIYWSc9j5
+	pUjOAyNP05nTEvVw14vxk1AIKN22OkOAgqRbV1c=
+X-Google-Smtp-Source: ABdhPJx0cZ3OoeYvzVjuKOYmmRRC6RWnl6/mMWc0870lzOgqlVzZFFTBqIHfnic6MLCfkt8ZyaYg7waRfMsgl4rUDK4=
+X-Received: by 2002:a05:6638:1405:: with SMTP id k5mr15175578jad.108.1592116265694;
+ Sat, 13 Jun 2020 23:31:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+fCnZfFwCd3icBUzH__C7XaCV-We8AaXzGw12zZ-OsuFckGWA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Thu, 9 Aug 2018 16:27:38 +0100
-From: Simon McVittie <smcv@debian.org>
+X-Gmail-Original-Message-ID: <CAHmME9qSmHj6qjj2jvjNTwRoB3KUtf-3kPgh2fk9aDeAHJo8Ng@mail.gmail.com>
+Message-ID: <CAHmME9qSmHj6qjj2jvjNTwRoB3KUtf-3kPgh2fk9aDeAHJo8Ng@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Sun, 14 Jun 2020 00:30:54 -0600
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Linux kernel: CVE-2017-18344: arbitrary-read
- vulnerability in the timer subsystem
-To: oss-security@lists.openwall.com
+Subject: [oss-security] lockdown bypass on ubuntu 18.04's 4.15 kernel for loading unsigned modules
+To: oss-security <oss-security@lists.openwall.com>, 
+	Ubuntu Kernel Team <kernel-team@lists.ubuntu.com>
 
-On Thu, 09 Aug 2018 at 16:21:03 +0200, Andrey Konovalov wrote:
-> See the comment in the exploit source code for a
-> usage example that shows how to read /etc/shadow on Ubuntu xenial
-> 4.13.0-38-generic
+Hey folks,
 
-Note that because of the way Debian and Ubuntu kernels are packaged, this
-is an "ABI version" describing a class of kernels with compatible module
-ABIs, not a specific version number. The version number for Ubuntu kernels
-looks like 4.13.0-38.43~16.04.1 or similar. If you are illustrating
-how to reproduce an exploit against a specific binary kernel, you'll
-probably want to quote both the package name and the version number: for
-example https://packages.ubuntu.com/xenial/linux-image-4.13.0-38-generic
-currently lists "linux-image-4.13.0-38-generic (4.13.0-38.43~16.04.1)".
+I noticed that Ubuntu 18.04's 4.15 kernels forgot to protect
+efivar_ssdt with lockdown, making that a vector for disabling lockdown
+on an efi secure boot machine. I wrote a little PoC exploit to
+demonstrate these types of ACPI shenanigans:
 
-    smcv
+https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language.sh
+
+The comment on the top has description of exploit strategy and such. I
+haven't yet looked into other kernels and distros that might be
+affected, though afaict, Canonical's kernel seems to deviate a lot
+from upstream.
+
+Jason
