@@ -1,53 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/13/1
-Message-ID: <87zhabu6x3.fsf@v45346.1blu.de>
-Date: Wed, 13 May 2020 18:38:16 +0200
-From: Stefan Bodewig <bodewig@...che.org>
-To: dev@....apache.org, user@....apache.org, announce@...che.org, Mike Salvatore <mike.salvatore@...onical.com>, security@...che.org, oss-security@...ts.openwall.com
-Subject: [CVE-2020-1945] Apache Ant insecure temporary file vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/5
+Message-Id: <206DB19C-0117-4F4B-AFF7-212E40CB8C75@oracle.com>
+Date: Mon, 15 Jun 2020 17:22:27 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com, "Jason A. Donenfeld" <Jason@...c4.com>
+Cc: linux-security-module@...r.kernel.org, linux-acpi@...r.kernel.org, Matthew Garrett <mjg59@...f.ucam.org>, kernel-hardening@...ts.openwall.com, Ubuntu Kernel Team <kernel-team@...ts.ubuntu.com>
+Subject: Re: lockdown bypass on mainline kernel for loading unsigned modules
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Jason,
 
-CVE-2020-1945: Apache Ant insecure temporary file vulnerability
 
-Severity: Medium
+> On 15 Jun 2020, at 11:26, Jason A. Donenfeld <Jason@...c4.com> wrote:
+> 
+> Hi everyone,
+> 
+> Yesterday, I found a lockdown bypass in Ubuntu 18.04's kernel using
+> ACPI table tricks via the efi ssdt variable [1]. Today I found another
+> one that's a bit easier to exploit and appears to be unpatched on
+> mainline, using acpi_configfs to inject an ACPI table. The tricks are
+> basically the same as the first one, but this one appears to be
+> unpatched, at least on my test machine. Explanation is in the header
+> of the PoC:
+> 
+> https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
+> 
+> I need to get some sleep, but if nobody posts a patch in the
+> meanwhile, I'll try to post a fix tomorrow.
+> 
+> Jason
+> 
+> [1] https://www.openwall.com/lists/oss-security/2020/06/14/1
 
-Vendor:
-The Apache Software Foundation
 
-Versions Affected:
-Apache Ant 1.1 to 1.9.14 and 1.10.0 to 1.10.7
+This looks CVE-worthy.   Are you going to ask for a CVE for it?
 
-Description:
+jch
 
-Apache Ant uses the default temporary directory identified by the Java
-system property java.io.tmpdir for several tasks and may thus leak
-sensitive information. The fixcrlf and replaceregexp tasks also copy
-files from the temporary directory back into the build tree allowing an
-attacker to inject modified source files into the build process.
-
-Mitigation:
-
-Ant users of versions 1.1 to 1.9.14 and 1.10.0 to 1.10.7 should set the
-java.io.tmpdir system property to point to a directory only readable and
-writable by the current user prior to running Ant.
-
-Users of versions 1.9.15 and 1.10.8 can use the Ant property ant.tmpfile
-instead. Users of Ant 1.10.8 can rely on Ant protecting the temporary
-files if the underlying filesystem allows it, but we still recommend
-using a private temporary directory instead.
-
-Credit:
-This issue was discovered by Mike Salvatore of the Ubuntu Security Team.
-
-References:
-https://ant.apache.org/security.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAl68InYACgkQohFa4V9ri3JMuwCeJCxfVbb0FX7oVgzUpskGH28u
-ZIYAoLDKeuyh585wmuiCySIj5EW4hYch
-=KIJP
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
