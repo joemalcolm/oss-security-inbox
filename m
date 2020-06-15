@@ -1,22 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/23/2
-Message-ID: <a2fd9901-d8fc-3ba7-4422-2616bbf23220@linux.ibm.com>
-Date: Tue, 24 Nov 2020 01:41:13 +1100
-From: Andrew Donnellan <ajd@...ux.ibm.com>
-To: oss-security@...ts.openwall.com, linuxppc-dev <linuxppc-dev@...ts.ozlabs.org>
-Subject: Re: Linux kernel: powerpc: RTAS calls can be used to compromise kernel integrity
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/7
+Message-ID: <CAHmME9oR=X2OayrySfVaA-1uxHGAu0ix2caf9jAvNg72V0mbyg@mail.gmail.com>
+Date: Mon, 15 Jun 2020 11:28:57 -0600
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: Jann Horn <jannh@...gle.com>
+Cc: John Haxby <john.haxby@...cle.com>, oss-security@...ts.openwall.com,  linux-security-module <linux-security-module@...r.kernel.org>, linux-acpi@...r.kernel.org,  Matthew Garrett <mjg59@...f.ucam.org>,  Kernel Hardening <kernel-hardening@...ts.openwall.com>,  Ubuntu Kernel Team <kernel-team@...ts.ubuntu.com>
+Subject: Re: lockdown bypass on mainline kernel for loading unsigned modules
 Content-Type: text/plain; charset=utf-8
 
-On 9/10/20 12:20 pm, Andrew Donnellan wrote:
-> The Linux kernel for powerpc has an issue with the Run-Time Abstraction 
-> Services (RTAS) interface, allowing root (or CAP_SYS_ADMIN users) in a 
-> VM to overwrite some parts of memory, including kernel memory.
-> 
-> This issue impacts guests running on top of PowerVM or KVM hypervisors 
-> (pseries platform), and does *not* impact bare-metal machines (powernv 
-> platform).
-CVE-2020-27777 has been assigned.
+On 6/15/20, Jann Horn <jannh@...gle.com> wrote:
+> On Mon, Jun 15, 2020 at 6:24 PM John Haxby <john.haxby@...cle.com> wrote:
+>> > On 15 Jun 2020, at 11:26, Jason A. Donenfeld <Jason@...c4.com> wrote:
+>> > Yesterday, I found a lockdown bypass in Ubuntu 18.04's kernel using
+>> > ACPI table tricks via the efi ssdt variable [1]. Today I found another
+>> > one that's a bit easier to exploit and appears to be unpatched on
+>> > mainline, using acpi_configfs to inject an ACPI table. The tricks are
+>> > basically the same as the first one, but this one appears to be
+>> > unpatched, at least on my test machine. Explanation is in the header
+>> > of the PoC:
+>> >
+>> > https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
+>> >
+>> > I need to get some sleep, but if nobody posts a patch in the
+>> > meanwhile, I'll try to post a fix tomorrow.
+>> >
+>> > Jason
+>> >
+>> > [1] https://www.openwall.com/lists/oss-security/2020/06/14/1
+>>
+>>
+>> This looks CVE-worthy.   Are you going to ask for a CVE for it?
+>
+> Does it really make sense to dole out CVEs for individual lockdown
+> bypasses when various areas of the kernel (such as filesystems and
+> BPF) don't see root->kernel privilege escalation issues as a problem?
+> It's not like applying the fix for this one issue is going to make
+> systems meaningfully safer.
+>
 
--- 
-Andrew Donnellan              OzLabs, ADL Canberra
-ajd@...ux.ibm.com             IBM Australia Limited
+Indeed, I'm more or less of the same mind: lockdown is kind of a
+best-effort thing at the moment, and it'd be crazy to rely on it,
+considering various bypasses and differing attitudes on the security
+model from different subsystems. This acpi bypass is a bug, maybe, but
+it doesn't feel like a "real" security bug, because I'm not sure why
+this would be a feature somebody would want to lean on at this point
+in time. I wrote a PoC for this one rather than others because it
+seemed fun and technically interesting to poke around with acpi in
+this way, not because it's particularly rare or something.
