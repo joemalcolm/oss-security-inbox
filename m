@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/08/3
-Message-ID: <875zd6o112.fsf@oldenburg2.str.redhat.com>
-Date: Fri, 08 May 2020 18:16:09 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/4
+Message-ID: <CAGRgoZiPvmkmdrS1JjMCK-qPiJ+zATuv19jTTjz=orE_z-pYBg@mail.gmail.com>
+Date: Mon, 15 Jun 2020 13:45:21 +0100
+From: Jonathan Gallimore <jgallimore@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Incentives for pre-release reporting
+Subject: CVE-2020-11969 Apache TomEE - useJMX attribute on ActiveMQ resource adapter URI causes authenticated JMX port to be open
 Content-Type: text/plain; charset=utf-8
 
-My recollection (which could be wrong) suggests that vulnerabilities in
-unreleased, not really shipping versions do not usually receive CVE IDs.
+CVE-2020-11969: Apache TomEE - useJMX attribute on ActiveMQ resource
+adapter URI causes authenticated JMX port to be open
 
-This has the problem that we cannot reward researchers with a CVE ID
-assignment if they report issues in features under development.  If they
-waited until after the release, they'd get one, so that is creating the
-wrong incentive.
+Severity: High
 
-Am I wrong about the CVE program requirements here?  How do projects
-handle this?
+Vendor: The Apache Software Foundation
 
-Thanks,
-Florian
+Versions Affected:
+Apache TomEE 8.0.0-M1 - 8.0.1
+Apache TomEE 7.1.0 - 7.1.2
+Apache TomEE 7.0.0-M1 - 7.0.7
+Apache TomEE 1.0.0 - 1.7.5
+
+Description:
+If Apache TomEE is configured to use the embedded ActiveMQ broker, and the
+broker URI includes the useJMX=true parameter, a JMX port is opened on TCP
+port 1099, which does not include authentication.
+
+Mitigation:
+- Upgrade to TomEE 7.0.8 or later
+- Upgrade to TomEE 7.1.3 or later
+- Upgrade to TomEE 8.0.2 or later
+
+Alternatively, users may wish to remove the useJMX option from the URI (the
+default is false).
+
+- The Apache TomEE team.
 
