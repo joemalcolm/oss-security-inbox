@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2336" "Tuesday" "8" "September" "2015" "23:42:49" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<55EF7279.7010206@redhat.com>" "78" "[oss-security] [OSSA 2015-018] Neutron firewall rules bypass through port update (CVE-2015-5240)" nil nil nil "9" "2015090823:42:49" "[oss-security] [OSSA 2015-018] Neutron firewall rules bypass through port update (CVE-2015-5240)" (number mark "        tdecacqu@red Sep  8   78/2336  " thread-indent "\"[oss-security] [OSSA 2015-018] Neutron firewall rules bypass through port update (CVE-2015-5240)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1945" "Monday" "15" "June" "2020" "11:28:57" "-0600" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9oR=X2OayrySfVaA-1uxHGAu0ix2caf9jAvNg72V0mbyg@mail.gmail.com>" "39" "Re: [oss-security] lockdown bypass on mainline kernel for loading unsigned modules" "^Cc:" nil nil "6" "2020061517:28:57" "[oss-security] lockdown bypass on mainline kernel for loading unsigned modules" (number mark "        Jason@zx2c4. Jun 15   39/1945  " thread-indent "\"Re: [oss-security] lockdown bypass on mainline kernel for loading unsigned modules\"\n") "<CAG48ez3fQbBLUBUkSaF-0b_DhL8M_1JU4DKkjTYXGB_6G1RgiA@mail.gmail.com>" ("<CAHmME9rmAznrAmEQTOaLeMM82iMFTfCNfpxDGXw4CJjuVEF_gQ@mail.gmail.com>" "<206DB19C-0117-4F4B-AFF7-212E40CB8C75@oracle.com>" "<CAG48ez3fQbBLUBUkSaF-0b_DhL8M_1JU4DKkjTYXGB_6G1RgiA@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] lockdown bypass on mainline kernel for loading unsigned modules" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31881 invoked by uid 550); 8 Sep 2015 23:42:53 -0000
+Received: (qmail 7901 invoked by uid 550); 15 Jun 2020 17:29:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31863 invoked from network); 8 Sep 2015 23:42:52 -0000
-X-Enigmail-Draft-Status: N1110
-Message-ID: <55EF7279.7010206@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
+Received: (qmail 7866 invoked from network); 15 Jun 2020 17:29:12 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:in-reply-to:references:from:date:message-id:subject:to:cc
+	:content-type; s=mail; bh=m3AkrHNEP3fRbfUKcEmklayjG/Y=; b=Vnq6wL
+	H/GlVughWBz9MLzBZDqFOiVvq2odnVCIbltAHG4OcPm6lhEaWSbaSpOAsRDBUegE
+	u4n8TSF+EVf4oL2tJBhzCgEGDf2ucmy8SFWoZr+IgFgRssQOA676SDON+KhSRcaH
+	ER9uKsvFET2KNE0JPtUDKaXA522KHU1wOPszZI0fGnn8BpO4K6LM0emM3o6Svvux
+	1aK7vssIcYM6LXiZoLWfTWRiZ+aTwB5CTnAZRMPEQWZej12knFGOV5w2+gfunJAj
+	UEnGhaV0TlmQ+iId591+3P5pWi7UjC7WbXe+WiLSg5IaWQR6ls22oibMsADEYKgW
+	A/5WpHmLFRsUCo1Q==
+X-Gm-Message-State: AOAM530itGyQUfRnMOpcEG71X+1IQcMugFokNmqXN/ENwMCpjROdSl7N
+	NjLdioZa53oBCuxxxsWRZwUb2vnSCRAy0g3pel0=
+X-Google-Smtp-Source: ABdhPJxbrQ3bGRl0GkiYs6/6hV26W43YxBqSNtYmC1faaRba+IWxUls2u4WXMRsQ/6ex5PHS+Qi1f/omynEyBDBFhSs=
+X-Received: by 2002:a05:6e02:605:: with SMTP id t5mr28160520ils.231.1592242138131;
+ Mon, 15 Jun 2020 10:28:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="Th2wpVeJUMlpph3QI9tiAPTbEuvhhoBT2"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Date: Tue, 8 Sep 2015 23:42:49 +0000
-From: Tristan Cacqueray <tdecacqu@redhat.com>
+In-Reply-To: <CAG48ez3fQbBLUBUkSaF-0b_DhL8M_1JU4DKkjTYXGB_6G1RgiA@mail.gmail.com>
+References: <CAHmME9rmAznrAmEQTOaLeMM82iMFTfCNfpxDGXw4CJjuVEF_gQ@mail.gmail.com>
+ <206DB19C-0117-4F4B-AFF7-212E40CB8C75@oracle.com> <CAG48ez3fQbBLUBUkSaF-0b_DhL8M_1JU4DKkjTYXGB_6G1RgiA@mail.gmail.com>
+X-Gmail-Original-Message-ID: <CAHmME9oR=X2OayrySfVaA-1uxHGAu0ix2caf9jAvNg72V0mbyg@mail.gmail.com>
+Message-ID: <CAHmME9oR=X2OayrySfVaA-1uxHGAu0ix2caf9jAvNg72V0mbyg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: John Haxby <john.haxby@oracle.com>, oss-security@lists.openwall.com, 
+	linux-security-module <linux-security-module@vger.kernel.org>, linux-acpi@vger.kernel.org, 
+	Matthew Garrett <mjg59@srcf.ucam.org>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, 
+	Ubuntu Kernel Team <kernel-team@lists.ubuntu.com>
+Date: Mon, 15 Jun 2020 11:28:57 -0600
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [OSSA 2015-018] Neutron firewall rules bypass through port update
- (CVE-2015-5240)
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] lockdown bypass on mainline kernel for loading
+ unsigned modules
+To: Jann Horn <jannh@google.com>
 
---Th2wpVeJUMlpph3QI9tiAPTbEuvhhoBT2
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On 6/15/20, Jann Horn <jannh@google.com> wrote:
+> On Mon, Jun 15, 2020 at 6:24 PM John Haxby <john.haxby@oracle.com> wrote:
+>> > On 15 Jun 2020, at 11:26, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>> > Yesterday, I found a lockdown bypass in Ubuntu 18.04's kernel using
+>> > ACPI table tricks via the efi ssdt variable [1]. Today I found another
+>> > one that's a bit easier to exploit and appears to be unpatched on
+>> > mainline, using acpi_configfs to inject an ACPI table. The tricks are
+>> > basically the same as the first one, but this one appears to be
+>> > unpatched, at least on my test machine. Explanation is in the header
+>> > of the PoC:
+>> >
+>> > https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
+>> >
+>> > I need to get some sleep, but if nobody posts a patch in the
+>> > meanwhile, I'll try to post a fix tomorrow.
+>> >
+>> > Jason
+>> >
+>> > [1] https://www.openwall.com/lists/oss-security/2020/06/14/1
+>>
+>>
+>> This looks CVE-worthy.   Are you going to ask for a CVE for it?
+>
+> Does it really make sense to dole out CVEs for individual lockdown
+> bypasses when various areas of the kernel (such as filesystems and
+> BPF) don't see root->kernel privilege escalation issues as a problem?
+> It's not like applying the fix for this one issue is going to make
+> systems meaningfully safer.
+>
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2015-018: Neutron firewall rules bypass through port update
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-:Date: September 08, 2015
-:CVE: CVE-2015-5240
-
-
-Affects
-~~~~~~~
-- Neutron: versions through 2014.2.3 and
-           2015.1 versions through 2015.1.1
-
-
-Description
-~~~~~~~~~~~
-Kevin Benton from Mirantis reported a vulnerability in Neutron. By
-changing the device owner of an instance's port right after it is
-created, an authenticated user may prevent application of firewall
-rules and so avoid IP anti-spoofing controls. All Neutron setups using
-the ML2 plugin or a plugin that relies on the security groups AMQP API
-are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/221345 (Juno)
-- https://review.openstack.org/221344 (Kilo)
-- https://review.openstack.org/221342 (Liberty)
-
-
-Credits
-~~~~~~~
-- Kevin Benton from Mirantis (CVE-2015-5240)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1489111
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-5240
-
-
-Notes
-~~~~~
-- This fix will be included in future 2014.2.4 (juno) and
-  2015.1.2 (kilo) releases.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
---Th2wpVeJUMlpph3QI9tiAPTbEuvhhoBT2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBAgAGBQJV73J6AAoJECK5oFySXMXYFJkH/0Nt7slgQPblhgJR0C8uqpce
-OJLcHV2frjgVzpBNnuNBEq9xCN47fcTwrQWJIEvbdfa9UmeADyQTtcxyZDDieEOn
-up/tHwU+OfV+T1cGdkC5gMUJhBKjljpt+h6zekqhZASXAIv3rcdUX+pkhL+2J6KC
-QfUgVOCSqje3FXlwaEKsbhcu0D0SasPCdZM+TvzS3KHGrUrLkREStFOfOwoXpOfZ
-K19c0ETPQLwlo1LLlsQsEkQ5z7CLAK5QH0ucanSWcJZIuVxIfqmsOr3SM845B92u
-U2aj3c3DuVVVtsyAwC7hgA7Aj2+F2DoD0LFpu8j8hRlpIUgt/haCMRGzrZanpbw=
-=FpVo
------END PGP SIGNATURE-----
-
---Th2wpVeJUMlpph3QI9tiAPTbEuvhhoBT2--
+Indeed, I'm more or less of the same mind: lockdown is kind of a
+best-effort thing at the moment, and it'd be crazy to rely on it,
+considering various bypasses and differing attitudes on the security
+model from different subsystems. This acpi bypass is a bug, maybe, but
+it doesn't feel like a "real" security bug, because I'm not sure why
+this would be a feature somebody would want to lean on at this point
+in time. I wrote a PoC for this one rather than others because it
+seemed fun and technically interesting to poke around with acpi in
+this way, not because it's particularly rare or something.
