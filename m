@@ -1,26 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/06/2
-Message-ID: <253s3sor-948r-40o-1qsq-4939s8494460@redhat.com>
-Date: Fri, 6 Nov 2020 16:23:52 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-cc: tausif <msiddiqu@...hat.com>, Anthony Liguori <aliguori@...zon.com>,  Solar Designer <solar@...nwall.com>
-Subject: RE: Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey(Internet mail)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/2
+Message-ID: <001301d642f3$32a10d70$97e32850$@gmail.com>
+Date: Mon, 15 Jun 2020 09:58:53 +0100
+From: "Simon Steiner" <simonsteiner1984@...il.com>
+To: <oss-security@...ts.openwall.com>
+Subject: [CVE-2019-17566] Apache XML Graphics Batik SSRF vulnerability
 Content-Type: text/plain; charset=utf-8
 
-+-- On Wed, 4 Nov 2020, kiyin(������) wrote --+
-| I submitted the request in 2020/10/09. except for an auto replay email "CVE 
-| Request 971543 for CVE ID Request(Internet mail)",
+CVE-2019-17566:
+        Apache XML Graphics Batik SSRF vulnerability
 
-* You can also reply to the above "CVE Request ..." email to check.
+Severity:
+        Medium
 
-| I got no response until now. I wonder whether they ignore personal request.
+Vendor:
+        The Apache Software Foundation
 
-* Maybe subsequent email went to spam folder? They don't generally ignore 
-  requests.
+Versions Affected:
+        Batik 1.12 and earlier
+
+Description:
+        The Apache Batik library is vulnerable to SSRF via "xlink:href"
+attributes that allow an
+attacker to cause the underlying server to make arbitrary GET requests.
+
+Mitigation:
+        Users should upgrade to Batik 1.13 or later and pass
+-blockExternalResources on the command line
+
+Credit:
+        This issue was independently reported by Sean Melia
+
+References:
+        http://xmlgraphics.apache.org/security.html
+
+The Apache XML Graphics team.
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
