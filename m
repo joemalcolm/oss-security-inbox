@@ -1,37 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/16/5
-Message-ID: <nycvar.YSQ.7.78.906.2009162354330.10832@xnncv>
-Date: Wed, 16 Sep 2020 23:57:52 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: bugs-syssec@....de
-Subject: CVE-2020-25084 QEMU: usb: use-after-free issue while setting up packet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/10
+Message-ID: <CAHmME9o3YX12Ek0L1GgSXj9QfnNmeO8zKDdnvk2b86c2ZW9cLw@mail.gmail.com>
+Date: Mon, 15 Jun 2020 17:03:12 -0600
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: cve-assign@...re.org
+Subject: Re: lockdown bypass on mainline kernel for loading unsigned modules
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi Mitre,
 
-An use-after-free issue was found in USB(xHCI/eHCI) controller emulators of 
-QEMU. It occurs while setting up USB packet, as usb_packet_map() routine may 
-return an error, which was not checked. A guest user/process may use this flaw 
-to crash the QEMU process resulting in DoS scenario.
+People are requesting a CVE to track this and are poking me to poke
+you to assign one. Note that this would be for a *different* CVE than
+the one I requested for the Ubuntu vulnerability a minute ago. This
+vulnerability here affects a different set of kernels and uses a
+different vector.
 
-Upstream patches:
------------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-08/msg08050.html
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-08/msg08043.html
+Jason
 
-References:
------------
-   -> https://ruhr-uni-bochum.sciebo.de/s/NNWP2GfwzYKeKwE?path=%2Fxhci_uaf_2
-
-* This issue was reported by Sergej Schumilo, Cornelius Aschermann, Simon
-   Wrner of Ruhr-University Bochum.
-
-* 'CVE-2020-25084' assigned via https://cveform.mitre.org
-
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-
+On Mon, Jun 15, 2020 at 4:26 AM Jason A. Donenfeld <Jason@...c4.com> wrote:
+>
+> Hi everyone,
+>
+> Yesterday, I found a lockdown bypass in Ubuntu 18.04's kernel using
+> ACPI table tricks via the efi ssdt variable [1]. Today I found another
+> one that's a bit easier to exploit and appears to be unpatched on
+> mainline, using acpi_configfs to inject an ACPI table. The tricks are
+> basically the same as the first one, but this one appears to be
+> unpatched, at least on my test machine. Explanation is in the header
+> of the PoC:
+>
+> https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
+>
+> I need to get some sleep, but if nobody posts a patch in the
+> meanwhile, I'll try to post a fix tomorrow.
+>
+> Jason
+>
+> [1] https://www.openwall.com/lists/oss-security/2020/06/14/1
