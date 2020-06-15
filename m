@@ -1,66 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/1
-Message-ID: <20200808012029.GD3169683@millbarge>
-Date: Sat, 8 Aug 2020 01:20:29 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Daniel Ruggeri <druggeri@...che.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/9
+Message-ID: <CAHmME9q76P+sjuNXhGXQwLThJ=k2O04BC=P0Vsz+9XGvbeB4Rg@mail.gmail.com>
+Date: Mon, 15 Jun 2020 17:02:05 -0600
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: Re: lockdown bypass on ubuntu 18.04's 4.15 kernel for loading unsigned modules
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 07, 2020 at 06:31:38AM -0500, Daniel Ruggeri wrote:
-> CVE-2020-11984: mod_uwsgi buffer overlow
-> Versions Affected:
-> httpd 2.4.32 to 2.4.44
+Hi Mitre,
 
-> Description:
-> Apache HTTP Server 2.4.32 to 2.4.44
-> mod_proxy_uwsgi info disclosure and possible RCE
+People are requesting a CVE to track this and are poking me to poke
+you to assign one.
 
-> References:
-> https://httpd.apache.org/security/vulnerabilities_24.html
+Jason
 
-Hello Daniel, all,
-
-I'm confused: this english description of affected versions
-reads like 2.4.44 is affected. However, there is a heading on the
-vulnerabilities_24.html page that says this CVE is fixed in 2.4.44.
-
-Many projects include a "fixed in versions ..." list to indicate when
-something is fixed; I think this is less ambiguous.
-
-The "affects versions" don't always line up with the heading that claims
-to be fixed, eg CVE-2019-10092 claims to be fixed in 2.4.41, but the
-Affects entry doesn't mention 2.4.40.
-
-The headings are out of order:
-
-$ curl -sq https://httpd.apache.org/security/vulnerabilities_24.html | grep "Fixed in Apache"
-Fixed in Apache httpd 2.4.44</h1><dl>
-Fixed in Apache httpd 2.4.25</h1><dl>  # 2.4.25 is between 2.4.42 and 2.4.44
-Fixed in Apache httpd 2.4.42</h1><dl>
-Fixed in Apache httpd 2.4.41</h1><dl>
-Fixed in Apache httpd 2.4.39</h1><dl>
-[..]
-
-The download site doesn't have a 2.4.40 download:
-https://archive.apache.org/dist/httpd/
-
-But the CHANGES_2.4.41 file shows a 2.4.40 release:
-https://archive.apache.org/dist/httpd/CHANGES_2.4.41
-
-I don't actually care that much about CVE-2019-10092 -- I just tried to
-figure out the status of CVE-2020-11984 by looking at other examples on
-the page and found the page difficult to understand.
-
-And, something is a bit off with the CURRENT-IS-$version markers:
-
-$ curl -sq https://archive.apache.org/dist/httpd/ | grep -c CURRENT
-47
-
-I expected one in each of the 2.0, 2.2, and 2.4 series, or perhaps just
-one for the newest 2.4 release.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+On Sun, Jun 14, 2020 at 12:30 AM Jason A. Donenfeld <Jason@...c4.com> wrote:
+>
+> Hey folks,
+>
+> I noticed that Ubuntu 18.04's 4.15 kernels forgot to protect
+> efivar_ssdt with lockdown, making that a vector for disabling lockdown
+> on an efi secure boot machine. I wrote a little PoC exploit to
+> demonstrate these types of ACPI shenanigans:
+>
+> https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language.sh
+>
+> The comment on the top has description of exploit strategy and such. I
+> haven't yet looked into other kernels and distros that might be
+> affected, though afaict, Canonical's kernel seems to deviate a lot
+> from upstream.
+>
+> Jason
