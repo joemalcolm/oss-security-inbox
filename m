@@ -1,43 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/23/1
-Message-ID: <20201223175828.48163487@fabiankeil.de>
-Date: Wed, 23 Dec 2020 17:58:28 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request experience (was: Multiple memory leaks fixed in Privoxy 3.0.29 stable)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/3
+Message-ID: <CAHmME9rmAznrAmEQTOaLeMM82iMFTfCNfpxDGXw4CJjuVEF_gQ@mail.gmail.com>
+Date: Mon, 15 Jun 2020 04:26:37 -0600
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: linux-security-module@...r.kernel.org, linux-acpi@...r.kernel.org,  Matthew Garrett <mjg59@...f.ucam.org>, kernel-hardening@...ts.openwall.com,  Ubuntu Kernel Team <kernel-team@...ts.ubuntu.com>
+Subject: lockdown bypass on mainline kernel for loading unsigned modules
 Content-Type: text/plain; charset=utf-8
 
-Fabian Keil <freebsd-listen@...iankeil.de> wrote on 2020-11-29:
+Hi everyone,
 
->                Announcing Privoxy 3.0.29 stable
-[...]
-> - Security/Reliability:
->   - Fixed memory leaks when a response is buffered and the buffer
->     limit is reached or Privoxy is running out of memory.
->     Commits bbd53f1010b and 4490d451f9b. OVE-20201118-0001.
+Yesterday, I found a lockdown bypass in Ubuntu 18.04's kernel using
+ACPI table tricks via the efi ssdt variable [1]. Today I found another
+one that's a bit easier to exploit and appears to be unpatched on
+mainline, using acpi_configfs to inject an ACPI table. The tricks are
+basically the same as the first one, but this one appears to be
+unpatched, at least on my test machine. Explanation is in the header
+of the PoC:
 
-I tried to get a CVE for OVE-20201118-0001 by using the
-"new" form at https://cveform.mitre.org/ on 2020-11-18 but
-was told by MITRE that "the reported vulnerabilities would
-fall in the scope of Red Hat for assignment" and that their
-mail should be forwarded to secalert@...hat.com.
+https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
 
-I did that on 2020-11-18 using the OpenPGP key recommended at:
-https://access.redhat.com/security/team/contact
+I need to get some sleep, but if nobody posts a patch in the
+meanwhile, I'll try to post a fix tomorrow.
 
-On 2020-11-23 I received a response from Red Hat claiming
-that my e-mail had "no body".
+Jason
 
-The same day I replied with an unencrypted mail explaining
-that the previous mail was OpenPGP-encrypted and asked whether
-that was still supported.
-
-As a result I was informed that "INC1525130" "has been resolved".
-
-As of today I still haven't received a CVE and thus did
-not bother to request CVEs for the other issues fixed in
-Privoxy 3.0.29 ...
-
-Fabian
-
-Content of type "application/pgp-signature" skipped
+[1] https://www.openwall.com/lists/oss-security/2020/06/14/1
