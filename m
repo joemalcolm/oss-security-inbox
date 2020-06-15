@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/10
-Message-ID: <CAHmME9o3YX12Ek0L1GgSXj9QfnNmeO8zKDdnvk2b86c2ZW9cLw@mail.gmail.com>
-Date: Mon, 15 Jun 2020 17:03:12 -0600
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: cve-assign@...re.org
-Subject: Re: lockdown bypass on mainline kernel for loading unsigned modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/8
+Message-ID: <nycvar.YSQ.7.77.849.2006152326260.24307@xnncv>
+Date: Mon, 15 Jun 2020 23:27:50 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2020-13754 QEMU: msix: OOB access during mmio operations may lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi Mitre,
++-- On Mon, 1 Jun 2020, P J P wrote --+
+| An OOB access issue was found in the Message Signalled Interrupt (MSI-X) 
+| device support of QEMU. It could occur while performing MSI-X mmio 
+| operations when a guest sent address goes beyond the mmio region. A guest 
+| user/process may use this flaw to crash the QEMU process resulting in DoS 
+| scenario.
 
-People are requesting a CVE to track this and are poking me to poke
-you to assign one. Note that this would be for a *different* CVE than
-the one I requested for the Ubuntu vulnerability a minute ago. This
-vulnerability here affects a different set of kernels and uses a
-different vector.
+Revised upstream patch:
+  -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg03732.html
 
-Jason
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-On Mon, Jun 15, 2020 at 4:26 AM Jason A. Donenfeld <Jason@...c4.com> wrote:
->
-> Hi everyone,
->
-> Yesterday, I found a lockdown bypass in Ubuntu 18.04's kernel using
-> ACPI table tricks via the efi ssdt variable [1]. Today I found another
-> one that's a bit easier to exploit and appears to be unpatched on
-> mainline, using acpi_configfs to inject an ACPI table. The tricks are
-> basically the same as the first one, but this one appears to be
-> unpatched, at least on my test machine. Explanation is in the header
-> of the PoC:
->
-> https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
->
-> I need to get some sleep, but if nobody posts a patch in the
-> meanwhile, I'll try to post a fix tomorrow.
->
-> Jason
->
-> [1] https://www.openwall.com/lists/oss-security/2020/06/14/1
