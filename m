@@ -1,33 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/21/3
-Message-ID: <nycvar.YSQ.7.78.906.2007211710040.4380@xnncv>
-Date: Tue, 21 Jul 2020 17:23:52 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: alxndr@...edu
-Subject: CVE-2020-15859 QEMU: net: e1000e: use-after-free while sending packets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/16/1
+Message-ID: <CALPTtNU++hGZ4KO85Sz0qjmofe-BTspsh+rJvbMeiWHeVhTNpg@mail.gmail.com>
+Date: Mon, 15 Jun 2020 17:09:51 -0700
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: lockdown bypass on ubuntu 18.04's 4.15 kernel for loading unsigned modules
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Please use
+https://cveform.mitre.org/ to request a CVE directly from MITRE. That’s
+your quickest and best way. :-)
 
-A use-after-free issue was found in the INTEL 82574 NIC (e1000e) emulator of 
-the QEMU. It could occur while sending packets if the guest user set the 
-packet data address to e1000e's MMIO address. A guest user/process could use 
-this flaw to crash the QEMU process on the host resulting in DoS scenario.
+~reed
 
-Upstream patch:
-----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-07/msg05895.html
+On Mon, Jun 15, 2020 at 4:02 PM Jason A. Donenfeld <Jason@...c4.com> wrote:
 
-Reference:
-----------
-   -> https://bugs.launchpad.net/qemu/+bug/1886362
-
-This issue was reported by Alexander Bulekov. CVE-2020-15859 assigned via 
-Mitre.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+> Hi Mitre,
+>
+> People are requesting a CVE to track this and are poking me to poke
+> you to assign one.
+>
+> Jason
+>
+> On Sun, Jun 14, 2020 at 12:30 AM Jason A. Donenfeld <Jason@...c4.com>
+> wrote:
+> >
+> > Hey folks,
+> >
+> > I noticed that Ubuntu 18.04's 4.15 kernels forgot to protect
+> > efivar_ssdt with lockdown, making that a vector for disabling lockdown
+> > on an efi secure boot machine. I wrote a little PoC exploit to
+> > demonstrate these types of ACPI shenanigans:
+> >
+> >
+> https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language.sh
+> >
+> > The comment on the top has description of exploit strategy and such. I
+> > haven't yet looked into other kernels and distros that might be
+> > affected, though afaict, Canonical's kernel seems to deviate a lot
+> > from upstream.
+> >
+> > Jason
+>
 
