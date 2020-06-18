@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1441" "Sunday" "24" "May" "2015" "07:20:32" "+0200" "0pc0deFR" "0pc0defr@gmail.com" "<CAN6thH4u+tRjwgKw0EAo6GnbctqTojku69M6c0=EvURf8Vxspw@mail.gmail.com>" "47" "[oss-security] CVE Request for WP Fastest Cache plugin" nil nil nil "5" "2015052405:20:32" "[oss-security] CVE Request for WP Fastest Cache plugin" (number mark "        0pc0defr@gma May 24   47/1441  " thread-indent "\"[oss-security] CVE Request for WP Fastest Cache plugin\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["700" "Thursday" "18" "June" "2020" "11:19:35" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhRQAcpZS_gOF0c80OHx+hj-nknXbkaspyc1=J4VjkRRDQ@mail.gmail.com>" "27" "[oss-security] CVE-2020-10781 kernel: zram sysfs resource consumption" "^Date:" nil nil "6" "2020061801:19:35" "[oss-security] CVE-2020-10781 kernel: zram sysfs resource consumption" (number mark "U       wmealing@red Jun 18   27/700   " thread-indent "\"[oss-security] CVE-2020-10781 kernel: zram sysfs resource consumption\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-10781 kernel: zram sysfs resource consumption" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3451 invoked by uid 550); 24 May 2015 05:47:12 -0000
+Received: (qmail 24046 invoked by uid 550); 18 Jun 2020 01:20:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24373 invoked from network); 24 May 2015 05:20:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=hKbzgtN7lLZZXBBWG8p2xBx/gGwrrIfXLIF88k2f8yA=;
-        b=eNqCxZKQz40O3/Z+qJzSXA/Dh4uFtnhb8Ucmaj50Zi4qMynfXdZesxwzBqRgJn7gca
-         /RdvGGR/K+KijLYBFwMaTLYwFMZM6v6FY3YxPxfbNWPfO2Snx7HAb+JC5d1H/YpqvYl6
-         kYjFqpyn9nuDgdUKAWPKRCkcNsCkInA384Gd+dpgJBXO1QUrkuoqIYL42EGSpu6F1JdW
-         B+rdvqeJHndqBrrajTVSrWDwAAMz+TnR8e0q06NYXleNsQTKYs1V4edN/xsjGfNluqL5
-         NOWbPmA2dSfHNF9Elr1u1gxQziu4ZdhqtFLi64+JSGNDZaw6/JxhWUtLTJTzbJIWzpEt
-         vJbw==
+Received: (qmail 24022 invoked from network); 18 Jun 2020 01:20:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1592443190;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=25A9TTesabjBFXcHEiJbAD7mYLZcDhJnRV4Z2tkInx8=;
+	b=gti+DsUwaTkC1ehgIe/Dsgc259Ro2SJX5diyZbc4+2fRtytXUmrEX7iPrxY34pARunG6Ml
+	HQLDZBFTOmkMt2lZlT/8zxuFqJ6/Ez5n6wVN3xH/Yds/KM8d/2QUm4ynlKz51qsSlurv/j
+	9rLcgyrxd837lpV4OPKR13TiDueZxC8=
+X-MC-Unique: eGkOejMlPiOEqwutyQgTbw-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=25A9TTesabjBFXcHEiJbAD7mYLZcDhJnRV4Z2tkInx8=;
+        b=CvtmIUTzAwzMgGn4uaqdovvymaBXnstQMPzHVzhrlb1MXgHIuWfgU1Cfo8WyW0hxZx
+         etoXdMR+bzPj7YLLJafl2S3NCAyoKRLc5xaKmxWGQ3wpEojnLZt36obIp3PmWfagqrrH
+         l/iUesN8notbsx4TMIlKAi7FM2/N/h0SfIB2ThjSsGqOAsqsrzRIBnWSi58gbNryhKTa
+         +ZJNBuj/1/orKfoMs93BcQWvDst92eR/7bu3efWOmQc7lBTsQjBBdiIvE13Z2jsIhvpY
+         ljffxT5lziuenOdiccoSPM/1cko2c/aw7eKo+eVaJYQTF29ZFkpYNgvkdhZ2LrAVh0uO
+         +cMg==
+X-Gm-Message-State: AOAM532gPHR/JeXNIpqR2+PsT8eUxTae+a1Rd0b6Aku+meT6yyQqGBTY
+	P6G8L4xJ4OlFZhrHRGCpSzW7J8Bpy9r7+HCFYpKTK8cMxKYq6ZZ76WY4+XWb6+m7xgj8IIV5ZJK
+	Nyj33vhaOHaD6xmiGfQpAqoeKZsJzmGAi5LmMJkyQmpr0
+X-Received: by 2002:adf:f84d:: with SMTP id d13mr1799339wrq.99.1592443186926;
+        Wed, 17 Jun 2020 18:19:46 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJw+i7D0G3pQ/8IOx/HaVCUCw44JHZySt80HHzj+FGT4u3Hyn+1WuI8OKTFJAVs5llNdAfLRY70YoBbnPEccVTw=
+X-Received: by 2002:adf:f84d:: with SMTP id d13mr1799330wrq.99.1592443186725;
+ Wed, 17 Jun 2020 18:19:46 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.152.234.42 with SMTP id ub10mr12795789lac.60.1432444832247;
- Sat, 23 May 2015 22:20:32 -0700 (PDT)
-Message-ID: <CAN6thH4u+tRjwgKw0EAo6GnbctqTojku69M6c0=EvURf8Vxspw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113438a062f5720516cd0da7
-Cc: cve-assign@mitre.org
-Date: Sun, 24 May 2015 07:20:32 +0200
-From: 0pc0deFR <0pc0defr@gmail.com>
+Message-ID: <CALJHwhRQAcpZS_gOF0c80OHx+hj-nknXbkaspyc1=J4VjkRRDQ@mail.gmail.com>
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=wmealing@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Date: Thu, 18 Jun 2020 11:19:35 +1000
+From: Wade Mealing <wmealing@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request for WP Fastest Cache plugin
-To: OSS Securty <oss-security@lists.openwall.com>
+Subject: [oss-security] CVE-2020-10781 kernel: zram sysfs resource consumption
+To: oss-security@lists.openwall.com
 
---001a113438a062f5720516cd0da7
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Gday,
 
-CSRF vulnerability was found in WP Fastest Cache 0.8.3.4 plugin.
+A user with a local account and the ability to read the
+/sys/class/zram-control/hot_add file which on each read will create a
+zram device node in the /dev/ directory.  This allocates kernel memory
+and is not allocated to a user.
 
-The vuln is found in admin.php:
-        public function optionsPageRequest(){
-            if(!empty($_POST)){
-                if(isset($_POST["wpFastestCachePage"])){
+Continually reading this file may consume a large amount of system
+memory and cause the system OOM killer to activate, terminating
+userspace processes possibly making the system inoperable.
 
-if(preg_match("/admin\.php\?page=3DWpFastestCacheOptions/",
-$_SERVER["REQUEST_URI"])){
-                        if($_POST["wpFastestCachePage"] =3D=3D "options"){
-                            $this->saveOption();
-                        }else if($_POST["wpFastestCachePage"] =3D=3D
-"deleteCache"){
-                            $this->deleteCache();
-                        }else if($_POST["wpFastestCachePage"] =3D=3D
-"deleteCssAndJsCache"){
-                            $this->deleteCssAndJsCache();
-                        }else if($_POST["wpFastestCachePage"] =3D=3D
-"cacheTimeout"){
-                            $this->addCacheTimeout();
-                        }
-                    }else{
-                        die("Forbidden");
-                    }
-                }
-            }
-        }
+Acknowledgement:
+Luca Bruno of Red Hat
 
-The vuln is patched in 0.8.3.5 version.
+Upstream discussion and patch
+https://lore.kernel.org/linux-block/20200617103412.GA2027053@kroah.com/
 
---
-Cordialement,
+Red Hat bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1847832
 
-K=E9vin FALCOZ alias 0pc0deFR - Consultant Expert WordPress -
-http://wordpress-expertise.fr
+Thanks,
 
---
-Regards,
+Wade Mealing
 
-K=E9vin FALCOZ aka 0pc0deFR - WordPress Expert Consultant -
-http://wordpress-expertise.fr
+Product Security - Kernel
+Red Hat
 
---001a113438a062f5720516cd0da7--
