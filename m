@@ -1,43 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/6
-Message-ID: <X8/iqSaDQqige53U@gmail.com>
-Date: Tue, 8 Dec 2020 12:31:37 -0800
-From: Eric Biggers <ebiggers@...nel.org>
-To: yersinia <yersinia.spiros@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/19/1
+Message-ID: <2640261.krIbtSRUe9@golgafrichnam>
+Date: Fri, 19 Jun 2020 20:31:22 +0200
+From: Martin <martin_s@...che.org>
+To: users@...hiva.apache.org, announce@...che.org, dev@...hiva.apache.org
+Cc: users@...en.apache.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [SECURITY] CVE-2020-9495: Apache Archiva login service is vulnerable to LDAP injection
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 08, 2020 at 08:01:14PM +0100, yersinia wrote:
-> At this link, multiple security bugs of various kinds are highlighted in
-> very widespread basic cryptographic applications, which have then been
-> corrected. I haven't done a deep analysis on all of them but I haven't
-> found any associated CVEs of some of them. Do I have to assume that they
-> weren't all that important or that the process of reporting them was
-> missing? Thanks
-> 
-> https://github.com/guidovranken/cryptofuzz
+CVE-2020-9495: Apache Archiva login service is vulnerable to LDAP injection
 
-Fuzzing can easily find large numbers of bugs, and it's usually unclear what the
-security impact of them is.  So if people want CVEs, someone has to actually put
-the effort into analyzing each bug and (if applicable) filing for a CVE.
-Presumably just no one has done that for the above bugs.
+Severity: Medium
 
-Something similar happened when I added fuzz tests to the Linux kernel's crypto
-API last year.  In less than a year they had resulted in over 100 bug fixes.
-Most didn't *seem* too concerning, e.g. most were bugs in crypto drivers that
-seemed to be rarely used, or crypto algorithms that seemed to be rarely used, or
-edge cases in the crypto API that seemed to be rarely or never encountered.
+Vendor:
+The Apache Software Foundation
 
-The bugs in userspace libraries found by cryptofuzz look somewhat similar.  They
-include some of the same kinds of bugs, like mishandling zero-length inputs,
-mishandling data passed in specific chunk sizes, or bugs in weird algorithms.
+Versions Affected:
 
-However, in both cases it isn't possible to be certain of the impact and
-applicability for a CVE of each bug without analyzing each bug in detail, which
-would be very time-consuming, and in general it's no one's job to do that.
+    Apache Archiva all versions before 2.2.5
 
-Likewise, syzkaller has found thousands of Linux kernel bugs and most haven't
-had CVEs filed.
+By providing special values to the archiva login form a attacker is able to retrieve user attribute data from the connected LDAP server. 
+With certain characters it is possible to modify the LDAP filter used to query the users on the connected LDAP server. 
+By measuring the response time, arbitrary attribute data can be retrieved from LDAP user objects.
 
-- Eric
+Mitigation:
+
+    Upgrade to Apache Archiva 2.2.5 or higher
+
+References:
+http://archiva.apache.org/security.html#CVE-2020-9495
+
+The newest Archiva version can be downloaded from:
+http://archiva.apache.org/download.cgi
+
+
+
+
