@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2050" "Thursday" "9" "February" "2017" "08:07:49" "-0800" "Steven R. Loomis" "srl@icu-project.org" "<f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>" "50" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" "^Date:" nil nil "2" "2017020916:07:49" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        srl@icu-proj Feb  9   50/2050  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<20170209145409.GE2569@scully.more-magic.net>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>" "<20170209142600.GJ12842@openstack.org>" "<20170209145409.GE2569@scully.more-magic.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2058" "Saturday" "20" "June" "2020" "10:47:01" "+0200" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" "<20200620104701.2a373053@computer>" "50" "[oss-security] Squirrelmail: Use of unserialize() on user data" "^Date:" nil nil "6" "2020062008:47:01" "[oss-security] Squirrelmail: Use of unserialize() on user data" (number mark "        hanno@hboeck Jun 20   50/2058  " thread-indent "\"[oss-security] Squirrelmail: Use of unserialize() on user data\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Squirrelmail: Use of unserialize() on user data" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19566 invoked by uid 550); 9 Feb 2017 17:35:01 -0000
+Received: (qmail 32419 invoked by uid 550); 20 Jun 2020 08:47:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15475 invoked from network); 9 Feb 2017 16:09:22 -0000
-x-originating-ip: 208.109.101.195
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
- <20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>
- <20170209142600.GJ12842@openstack.org>
- <20170209145409.GE2569@scully.more-magic.net>
-Message-ID: <f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:45.0)
- Gecko/20100101 Thunderbird/45.7.0
+Received: (qmail 32389 invoked from network); 20 Jun 2020 08:47:13 -0000
+Message-ID: <20200620104701.2a373053@computer>
+X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <20170209145409.GE2569@scully.more-magic.net>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="t77IUQX78rbNDRt8V4aTX5AGeQ3moGcT3"
-X-CMAE-Envelope: MS4wfCH3toI+vIvvO/NGWIqwiPEVnjuBh73oWS7NdCVJRDV1Kkt4g25weFteF7dtG8/D7xwuRMGlEpWAZ+faEfP/4XbwrHeTSOnATMMaz2VnkjhZ1lnZ3459
- 3SWrrtlxs30K1V0zWpIDN2Md9YEBnINJwNt5qcL3l6GMRx2uwFP0ebhjr3Q+saUYYpLSe/Tk0Jyp1hG/wnW7alIhwi4eafPIuNU=
-Date: Thu, 9 Feb 2017 08:07:49 -0800
-From: "Steven R. Loomis" <srl@icu-project.org>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
-To: oss-security@lists.openwall.com
-
---t77IUQX78rbNDRt8V4aTX5AGeQ3moGcT3
-Content-Type: multipart/mixed; boundary="19awqkkwi1HNmhE2lDxR2i1bofwX47npI";
- protected-headers="v1"
-From: "Steven R. Loomis" <srl@icu-project.org>
-To: oss-security@lists.openwall.com
-Message-ID: <f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
- <20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>
- <20170209142600.GJ12842@openstack.org>
- <20170209145409.GE2569@scully.more-magic.net>
-In-Reply-To: <20170209145409.GE2569@scully.more-magic.net>
-
---19awqkkwi1HNmhE2lDxR2i1bofwX47npI
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+Date: Sat, 20 Jun 2020 10:47:01 +0200
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Squirrelmail: Use of unserialize() on user data
+To: oss-security <oss-security@lists.openwall.com>
 
-On 2/9/17 6:54 AM, Peter Bex wrote:
-> In an ideal world, free software project leaders should be
-> able to request a CVE ID _before_ announcing a vulnerability to their
-> user base.  If there were some way to register people as project leaders,
-> the "proof" should not be necessary, they should be able to request a
-> CVE ID with authority.
-Peter,
- I actually wondered about this very thing, if it was possible to
-request an ID before the details were fully available. From your note,
-it sounds like this is not the case currently.
+Hi,
 
-Steven
+The PHP-based webmail tool Squirrelmail uses unserialize() for
+untrusted data.
+
+unserialize() is generally not considered safe for this, PHP does not
+treat memory safety issues in unserialize as security bugs since a
+while and there are other attacks.
+
+In compose.php [1] you can see that squirrelmail uses unserialize on
+$mailtodata, which directly comes from a GET variable.
+
+This data usually comes from the mailto.php script which opens a mail
+compose interface with a passed mail address.
+
+I've written a patch to convert this to json_encode/json_decode [2].
+
+Unfortunately this is not the only place using unserialize on untrusted
+data, later in the same file you can see that $attachments is also
+parsed with unserialize, which comes from POST data, thus also
+user-controlled. Trying to patch this with a similar strategy broke the
+attachment functionality. If someone else wants to give it a try happy
+to accept patches. (I'm collecting squirrelmail patches that avoid
+warnings, add compatibility to latest PHP versions and fix security
+issues here [3]. For reasons unclear to me the squirrelmail developers
+only irregularly answer when I send patches and seem to ignore some of
+these issues. While they haven't made a release in a long time, they
+still sometimes fix security issues in their svn repo.)
+
+It is unclear to me how big of a risk these issues are. There are some
+attack strategies on unserialize that involve constructors of objects
+[4], but the squirrelmail code doesn't have many objects, so it is
+unclear if this is a feasible attack strategy.
+
+I had reported the unserialize security issue to Squirrelmail on May
+23rd. Unfortunately I haven't received a reply.
 
 
---19awqkkwi1HNmhE2lDxR2i1bofwX47npI--
 
---t77IUQX78rbNDRt8V4aTX5AGeQ3moGcT3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEcBAEBCAAGBQJYnJPbAAoJEKyl2+H9j6vx048IAMZW7+2lBvBNkxMogfPLddJB
-CK0RQyDBJ5WJgp32hFLH2WLdmTsGUDkhq+4O5fWVvS7CGRZDtx2sc9o846p1IpCr
-5mx++sqwSYqo1qKtJEcdhdXou/G4pOIta2ONoSLNJGuPpvI1OvAt2F8gnEewuEP2
-QCK7e3ZJHdsbTqGrnDvRiqccg3qRlC7JePKIddNZE1SicYRWCkrY0qFBVMURRBIH
-+91slQcjJjLCcq0Dh9ssZSc8NXGuakTxTosfy/FbETtY7T7ULEfzaRUJIm66wY+8
-uXvz2+leniqchtGGPs9P2aLQZnERToDN+SbEovEtxtzs3cav5Ks4MPIxLo2ATzA=
-=KUgA
------END PGP SIGNATURE-----
-
---t77IUQX78rbNDRt8V4aTX5AGeQ3moGcT3--
+[1]
+https://svn.code.sf.net/p/squirrelmail/code/branches/SM-1_4-STABLE/squirrel=
+mail/src/compose.php
+[2]
+https://github.com/hannob/squirrelpatches/blob/main/patches/squirrelmail-se=
+curity-mailto-avoid-unserialize.diff
+[3] https://github.com/hannob/squirrelpatches
+[4] https://blog.ripstech.com/2018/php-object-injection/
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
