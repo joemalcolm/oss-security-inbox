@@ -1,62 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/14/2
-Message-ID: <oxqCR3d1ydEMwuGW3PBgnpgk9XUJjoqNeS5JCk7dcaEaQGJyq7TxVPJk2fWAgk9Bjd4MfdLDr_CHRPBTeJv9kRZPOV4X2b0HAALr17Vy5Wo=@protonmail.ch>
-Date: Wed, 14 Oct 2020 13:14:31 +0000
-From: Jordan Glover <Golden_Miller83@...tonmail.ch>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: "sbeattie@...ntu.com" <sbeattie@...ntu.com>
-Subject: Re: CVE-2020-16120 - incorrect unprivileged overlayfs permission checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/22/2
+Message-ID: <CAEccTyzGvMVto7NL0+aCXKPQG57b0fZVeA03ioGCqtUKFKrjCQ@mail.gmail.com>
+Date: Mon, 22 Jun 2020 16:50:17 -0500
+From: Sean Owen <srowen@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-9480: Apache Spark RCE vulnerability in auth-enabled standalone master
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday, October 13, 2020 5:10 PM, Steve Beattie <steve.beattie@...onical.com> wrote:
+Severity: Important
 
-> Hello,
->
-> CVE-2020-16120 - incorrect unprivileged overlayfs permission checking
->
-> Giuseppe Scrivano discovered that overlayfs did not properly perform
-> permission checking when copying up files in an overlayfs, and can be
-> exploited from within a user namespace, if, for example, unprivileged
-> user namespaces are allowed.
->
-> An attacker can abuse this to get read access to files on the system
-> that they would not normally be permitted to access.
->
-> This likely only has an impact on Ubuntu kernels, where unprivileged
-> user namespaces are enabled by default.
+Vendor: The Apache Software Foundation
 
-AFAIK unpriv user ns are enabled by default on vast majority of distros nowadays with debian (rhel?) being an exception (although this is going to change at some point[1]). I think what makes ubuntu different is unpriv overlayfs which doesn't exist upstream thus in most other distros.
+Versions Affected:
+Apache Spark 2.4.5 and earlier
 
-[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=898446
+Description:
+In Apache Spark 2.4.5 and earlier, a standalone resource manager's master may
+be configured to require authentication (spark.authenticate) via a
+shared secret. When enabled, however, a specially-crafted RPC to the
+master can succeed in starting an application's resources on the Spark
+cluster, even without the shared key. This can be leveraged to execute
+shell commands on the host machine.
 
->
-> The following upstream commits address the issue:
->
-> 48bd024b8a40d73ad6b086de2615738da0c7004f ("ovl: switch to mounter creds in readdir")
-> 56230d956739b9cb1cbde439d76227d77979a04d ("ovl: verify permissions in ovl_path_open()")
-> 05acefb4872dae89e772729efb194af754c877e8 ("ovl: check permission to open real file")
->
-> The following commits also may be desired or necessary:
->
-> 130fdbc3d1f9966dd4230709c30f3768bccd3065 ("ovl: pass correct flags for opening real directory")
-> 292f902a40c11f043a5ca1305a114da0e523eaa3 ("ovl: call secutiry hook in ovl_real_ioctl()")
->
-> Mitigation on systems where unprivileged user namespaces are enabled
-> but not needed is to set the kernel.unprivileged_userns_clone sysctl
-> to 0. e.g.:
->
-> $ sudo sysctl kernel.unprivileged_userns_clone=0
->
-> and across reboots by adding a file in /etc/sysctl.d/ that contains:
->
-> kernel.unprivileged_userns_clone=0
+This does not affect Spark clusters using other resource managers
+(YARN, Mesos, etc).
 
-This will only work with out-of-tree patch included in distro kernel.
 
->
-> Thanks.
->
->
->
-> Steve Beattie
-> sbeattie@...ntu.com
+Mitigation:
+Users should update to Spark 2.4.6 or 3.0.0.
+Where possible, network access to the cluster machines should be
+restricted to trusted hosts only.
+
+Credit:
+Ayoub Elaassal
+
+References:
+https://spark.apache.org/security.html
