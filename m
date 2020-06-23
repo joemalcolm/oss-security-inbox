@@ -1,10 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/04/1
-Message-ID: <CAGUWgD8=KG1TQcEVFy6kPiq17T=1-Xv138ZYAg-eo+B1RmqhQw@mail.gmail.com>
-Date: Sun, 4 Oct 2020 11:18:53 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/23/1
+Message-ID: <CAKx+4-qHV2QzfTZKLt23E2jgnLvnncdAVUmqqdRKZhJFLV3tMA@mail.gmail.com>
+Date: Tue, 23 Jun 2020 16:52:12 +0530
+From: Rohit Keshri <rkeshri@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: the Bugtraq list archives before 2000
+Subject: CVE-2020-10769 kernel: Buffer over-read in crypto_authenc_extractkeys() when a payload longer than 4 bytes is not aligned.
 Content-Type: text/plain; charset=utf-8
 
-hi, We are looking for the Bugtraq list archives before 2000.
+Hello Team,
+
+Red Hats kernel has a flaw in Authenticated Encryption with Associated Data
+(AEAD), a form of encryption technique which
+simultaneously assures the confidentiality and authenticity of data with
+below details.
+
+A buffer over-read flaw was found in crypto_authenc_extractkeys in
+crypto/authenc.c  in  the IPsec Cryptographic  algorithm’s
+module, authenc. When a payload is longer than 4 bytes, and is not
+following 4-byte alignment boundary guidelines, it causes
+a buffer over-read threat, leading to a system crash. This flaw allows a
+local attacker with  user  privileges  to  cause a  denial
+of service.
+
+'CVE-2020-10769' was assigned by Red Hat Inc.
+
+Upstream fix:
+https://lkml.org/lkml/2019/1/21/675
+
+Thank you
+..
+Rohit Keshri / Red Hat Product Security Team
+PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+
