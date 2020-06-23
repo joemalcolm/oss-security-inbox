@@ -1,73 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/2
-Message-ID: <20201012123020.GA26643@openwall.com>
-Date: Mon, 12 Oct 2020 14:30:20 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/23/2
+Message-ID: <20200623160634.GA150582@gmail.com>
+Date: Tue, 23 Jun 2020 09:06:34 -0700
+From: Eric Biggers <ebiggers@...nel.org>
 To: oss-security@...ts.openwall.com
-Subject: Gentoo's "contributing back" linux-distros tasks
+Subject: Re: CVE-2020-10769 kernel: Buffer over-read in crypto_authenc_extractkeys() when a payload longer than 4 bytes is not aligned.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Jun 23, 2020 at 04:52:12PM +0530, Rohit Keshri wrote:
+> Hello Team,
+> 
+> Red Hats kernel has a flaw in Authenticated Encryption with Associated Data
+> (AEAD), a form of encryption technique which
+> simultaneously assures the confidentiality and authenticity of data with
+> below details.
+> 
+> A buffer over-read flaw was found in crypto_authenc_extractkeys in
+> crypto/authenc.c  in  the IPsec Cryptographic  algorithm’s
+> module, authenc. When a payload is longer than 4 bytes, and is not
+> following 4-byte alignment boundary guidelines, it causes
+> a buffer over-read threat, leading to a system crash. This flaw allows a
+> local attacker with  user  privileges  to  cause a  denial
+> of service.
+> 
+> 'CVE-2020-10769' was assigned by Red Hat Inc.
+> 
+> Upstream fix:
+> https://lkml.org/lkml/2019/1/21/675
+> 
+> Thank you
+> ..
+> Rohit Keshri / Red Hat Product Security Team
+> PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
 
-Gentoo signed up for these "contributing back" tasks for linux-distros:
+Note that the Linux kernel community maintains LTS (Long Term Support) kernels
+which already have most bug fixes backported -- including hundreds of bug fixes
+that, like this one, were not assigned CVEs.  This bug was already fixed in the
+Linux LTS kernels 17 months ago:
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+Linux v4.4.172: 2019-01-26 (https://lkml.kernel.org/lkml/20190126092938.GA23417@kroah.com/)
+Linux v4.9.152: 2019-01-23 (https://lkml.kernel.org/lkml/20190123140846.GA27512@kroah.com/)
+Linux v4.14.95: 2019-01-23 (https://lkml.kernel.org/lkml/20190123140915.GA27656@kroah.com/)
+Linux v4.19.17: 2019-01-23 (https://lkml.kernel.org/lkml/20190123140935.GA27716@kroah.com/)
 
-9. Stay on top of issues to ensure progress is being made, remind others
-when there's no apparent progress, as well as when the public disclosure
-date for an issue is approaching and when it's finally reached (unless
-the reporter beats you to it by making their mandatory posting to
-oss-security first) - primary: Gentoo, backup: Amazon
+Linux distributors can significantly reduce their vulnerability to known bugs by
+periodically merging in the appropriate LTS kernel branch.
 
-11. Make sure the mandatory oss-security posting is made promptly and is
-sufficiently detailed, and remind the reporter if not - primary: Gentoo,
-backup: Amazon
+Also, a regression test for this bug was added to LTP (Linux Test Project)
+14 months ago: https://github.com/linux-test-project/ltp/commit/5d30802778fe3a21
+Based on what I've seen when adding regression tests to LTP before, it's likely
+that this bug was finally found and fixed in this particular downstream kernel
+only because the LTP test was failing.  However, note that most Linux kernel
+bugs are fixed without a regression test being added to LTP, which means that
+cherry-picking kernel patches to fix LTP failures is much less effective than
+merging in all LTS kernel fixes.
 
-12. If exploit(s) were shared on the list, make sure that either they're
-included in the oss-security posting along with the issue detail or the
-posting includes an announcement of planned later posting of the
-exploits (with the delay being within list policy), and in the latter
-case also make sure that the later posting is in fact made as planned,
-and remind the reporter if not - primary: Gentoo, backup: Amazon
-
-13. Keep track of per-report and per-issue handling and disclosure
-timelines (at least times of notification of the private list and of
-actual public disclosure), at regular intervals produce and share
-statistics (most notably, the average embargo duration) as well as the
-raw data (except on issues that are still under embargo) by posting to
-oss-security - primary: Gentoo, backup: Amazon
-
-and we saw some contributions from Gentoo on these, most notable being
-their work on the statistics (task 13 above):
-
-https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
-
-Unfortunately, the last update of these statistics ("Last modified:
-2019/10/15 01:52 by kristianf") is also when the contributions ceased.
-
-Some others have been taking care of tasks 9, 11, 12 (in particular,
-Anthony Liguori of Amazon has been helping, but on various occasions
-also many others from other distros), but not yet of task 13.
-
-I understand that Gentoo is a community project run by volunteers, and I
-am not complaining.  Rather, I think we need to discuss with Gentoo in
-here and reassign to other distros whatever responsibilities Gentoo no
-longer has resources for.  We should ideally keep at least one task
-Gentoo's responsibility (and Gentoo should have specific people assigned
-to that task), at least to be consistent with our current requirements
-for new distros joining (linux-)distros.
-
-To Gentoo: which of these tasks, or other "contributing back" tasks, are
-you (still) willing to handle, and who on your team would handle them?
-
-To others on linux-distros: which of the above tasks do you volunteer to
-become primary for?
-
-To Amazon: do you want to remain backup for task 13, or do you not have
-the resources to handle it?
-
-If Gentoo already has some work-in-progress on task 13 for October 2019
-and on, yet we reassign this task to another distro, then that data and
-instructions should probably be transferred to the other distro.
-
-Alexander
+- Eric
