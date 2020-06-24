@@ -1,39 +1,160 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/5
-Message-ID: <CAH8yC8mT3QMRFLm0qf6z96nezwj41k_zJ3Vkft0bZdLUXxCXpw@mail.gmail.com>
-Date: Mon, 20 Jul 2020 11:39:09 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Perl 5.32.0 mishandling of rpath and runpath tokens
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/24/1
+Message-ID: <alpine.DEB.2.20.2006240841110.4820@tvnag.unkk.fr>
+Date: Wed, 24 Jun 2020 08:43:30 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: Partial password leak over DNS on HTTP redirect
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 20, 2020 at 10:57 AM Phil Pennock
-<oss-security-phil@...dhuis.org> wrote:
->
-> On 2020-07-20 at 04:33 -0400, Jeffrey Walton wrote:
-> > On Mon, Jul 20, 2020 at 4:21 AM Jeffrey Walton <noloader@...il.com> wrote:
-> > >     -Wl,-R,$ORIGIN/../lib -Wl,-R,$HOME/tmp/ok2delete/lib
-> >
-> > My bad... It does not matter how this $ORIGIN token is quoted. Perl
-> > always expands it.
->
-> I've encountered this in build systems before, where the quoting is
-> inconsistent and apparently can result in different levels of dequoting
-> for a target depending upon how it was reached.
->
-> What I've used for building those has been to specify %ORIGIN instead of
-> $ORIGIN and then binary-edit the resulting binary to switch that % back
-> to a $.  All quoting issues disappear and all binary offsets are stable.
-> Just make sure the binary-edit step is before any binary signing. :)
->
-> At some point, it's also worth considering static linking.
+Partial password leak over DNS on HTTP redirect
+===============================================
 
-Yeah, I was doing the alternate character for a while. Then Perl came
-along and I could not figure out all the places it needed to be
-changed. They spray the rpath in more places than just Makefiles, and
-they build Makefiles on the fly. I found it's not a simple task to sed
-the alternate character back out after, say, configure.
+Project curl Security Advisory, June 24th 2020 -
+[Permalink](https://curl.haxx.se/docs/CVE-2020-8169.html)
 
-Related, see https://sourceware.org/pipermail/binutils/2019-June/107108.html.
+VULNERABILITY
+-------------
 
-Jeff
+libcurl can be tricked to prepend a part of the password to the host name
+before it resolves it, potentially leaking the partial password over the
+network and to the DNS server(s).
+
+libcurl can be given a username and password for HTTP authentication when
+requesting an HTTP resource - used for HTTP Authentication such as Basic,
+Digest, NTLM and similar. The credentials are set, either together with
+`CURLOPT_USERPWD` or separately with `CURLOPT_USERNAME` and
+`CURLOPT_PASSWORD`. Important detail: these strings are given to libcurl as
+plain C strings and they are not supposed to be URL encoded.
+
+In addition, libcurl also allows the credentials to be set in the URL, using
+the standard RFC 3986 format: `http://user:password@...t/path`. In this case,
+the name and password are URL encoded as that's how they appear in URLs.
+
+If the options are set, they override the credentials set in the URL.
+
+Internally, this is handled by storing the credentials in the "URL object" so
+that there is only a single set of credentials stored associated with this
+single URL.
+
+When libcurl handles a relative redirect (as opposed to an absolute URL
+redirect) for an HTTP transfer, the server is only sending a new path to the
+client and that path is applied on to the existing URL. That "applying" of the
+relative path on top of an absolute URL is done by libcurl first generating a
+full absolute URL out of all the components it has, then it applies the
+redirect and finally it deconstructs the URL again into its separate
+components.
+
+This security vulnerability originates in the fact that curl did not correctly
+URL encode the credential data when set using one of the `curl_easy_setopt`
+options described above. This made curl generate a badly formatted full URL
+when it would do a redirect and the final re-parsing of the URL would then go
+bad and wrongly consider a part of the password field to belong to the host
+name.
+
+The wrong host name would then be used in a name resolve lookup, potentially
+leaking the host name + partial password in clear text over the network (if
+plain DNS was used) and in particular to the used DNS server(s).
+
+The password leak is triggered if an at sign (`@`) is used in the password
+field, like this: `passw@...23`. If we also consider a user `dan`, curl would
+generate a full URL like:
+
+  `https://dan:passw@...23@...mple.com/path`
+
+... while a correct one should have been:
+
+  `https://dan:passw%40rd123@...mple.com/path`
+
+... when parsing the wrongly generated URL, libcurl would end up with user
+name `dan` and password `passw` talking to the host `rd123@...mple.com`. That
+bad host name would then be passed on to the name resolver function in use
+(and for all typical cases return a "cannot resolve host name" error).
+
+There's no hint in the name resolve as to how large portion of the password
+that is actually prepended to the host name (ie an observer won't know how
+much data there was on the left side of the `@`), but it can of course be a
+significant enough clue for an attacker to figure out the rest.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+Requirements to trigger this flaw.
+
+  1. a password set with a `@` in it
+  2. an HTTP transfer
+  3. a *relative* redirect that curl follows (`CURLOPT_FOLLOWLOCATION` enabled)
+
+This bug was brought in commit
+[46e164069d](https://github.com/curl/curl/commit/46e164069d), first shipped in
+curl 7.62.0.
+
+This flaw can happen to users of the curl tool as well as for applications
+using libcurl.
+
+This bug was reported and inadvertently fixed and pushed to the public source
+respository before anyone realized its security impact.
+
+The effects of this flaw is somewhat reduced if DNS-over-HTTPS is used, since
+then at least the name won't be observable on the network by a passive
+by-stander but only by the DoH server.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2020-8169 to this issue.
+
+CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
+
+Severity: 5.5 (Medium)
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.62.0 to and including 7.70.0
+- Not affected versions: libcurl < 7.62.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2020-8169](https://github.com/curl/curl/commit/600a8cded447cd)
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.71.0
+
+  B - Apply the patch on your libcurl version and rebuild
+
+  C - Disable `CURLOPT_FOLLOWLOCATION` or redirects to HTTP(S).
+
+TIMELINE
+--------
+
+This issue was first reported to the curl project on May 14, 2020. The initial
+fix was done, verified and pushed to git on the same day. (As a regular
+non-security related fix.)
+
+On May 15, 2020, the bug was reported again but then with the security impact
+highlighted.
+
+This advisory was posted on June 24th 2020.
+
+CREDITS
+-------
+
+The security issue was reported by Marek Szlagor. The initial bug report was
+done by Gregory Jefferis and Jeroen Ooms. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se | Commercial curl support up to 24x7 is available!
+                   | Private help, bug fixes, support, ports, new features
+                   | https://www.wolfssl.com/contact/
