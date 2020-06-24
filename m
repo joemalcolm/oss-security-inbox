@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1408" "Friday" "14" "April" "2017" "12:37:50" "+0200" "Pali =?utf-8?B?Um9ow6Fy?=" "pali.rohar@gmail.com" "<201704141237.50508@pali>" "43" "[oss-security] Re: CVE-2017-3305 - The Riddle vulnerability in MySQL client (public disclosure)" "^Date:" nil nil "4" "2017041410:37:50" "[oss-security] Re: CVE-2017-3305 - The Riddle vulnerability in MySQL client (public disclosure)" (number mark "        pali.rohar@g Apr 14   43/1408  " thread-indent "\"[oss-security] Re: CVE-2017-3305 - The Riddle vulnerability in MySQL client (public disclosure)\"\n") "<201703171154.35368@pali>" ("<201703171154.35368@pali>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5573" "Wednesday" "24" "June" "2020" "08:43:30" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.2006240841110.4820@tvnag.unkk.fr>" "151" "[oss-security] [SECURITY ADVISORY] curl: Partial password leak over DNS on HTTP redirect" nil nil nil "6" "2020062406:43:30" "[oss-security] [SECURITY ADVISORY] curl: Partial password leak over DNS on HTTP redirect" (number mark "U       daniel@haxx. Jun 24  151/5573  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: Partial password leak over DNS on HTTP redirect\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: Partial password leak over DNS on HTTP redirect" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10053 invoked by uid 550); 14 Apr 2017 11:05:16 -0000
+Received: (qmail 28422 invoked by uid 550); 24 Jun 2020 06:43:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +11,172 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24194 invoked from network); 14 Apr 2017 10:38:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version
-         :content-transfer-encoding:message-id;
-        bh=tE6inOGQeOSJ4kIuRCVoKCHRAtT3SVyOsmGwqPt5Ud8=;
-        b=EXchoTq+E0fKgrLwv4blzR4LhdLcOLqnNVY0YeqZ8c+zL5PwjaQACeJmMzEv+BqrHp
-         wmiYIlO3nKht092502AhxhKI5oNWl6zMZBeexmHyDeEwcNc7JZg2pIqFWHwbWRYMdLqm
-         zoWxN57iCs7PoqBy29t+q0V4NsKcVEHfuDQjtkkF+mYpeIOsSCeO08Cqizyx7QXyAuxX
-         1Kw1NxbTHnuAuLGo98ZnXZ0SSrgEQd7qyNyQfJYgIx4iH9H36EwDsU1eC5hvuY7T1Hww
-         aUQYfdOTrsJ0PBc0Vi+g6PJ0nAqY45Uu2KIC4FwvTN3nNhDw6pxoB6OjBD/lktIrOuUf
-         KpNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:user-agent:references
-         :in-reply-to:mime-version:content-transfer-encoding:message-id;
-        bh=tE6inOGQeOSJ4kIuRCVoKCHRAtT3SVyOsmGwqPt5Ud8=;
-        b=UiF2lHMP1agJ4oyZmfiA2ZGn0E5WrLp4+QKieAThivXpoJXWOEdY8bp/ipFjlW/K05
-         4jWpoY5CipUJ785moBv6ZrTaP5JI2iCqxoFisMGpymQdpttAG+hvlCwkxHykl1GK6VoQ
-         A4MfzvFw3hbya89su0fNhYzugU0jHEEV9zn7ngnWZuvMmHjw7pMr53N7EkuFUTcyoWgk
-         I19CMf3wzCEP8u6DmsOz3GBM4w/rRkxenlYVSc/P2u1oL0g4RNDWXUJ1fus75Yn17u7B
-         I4GUG8Z/+FgiPxXJkLDvmhBJddSCnZj9DgOWGZaQiwR+In2PWrBrCN7/+EmCc6On/ImY
-         +MgA==
-X-Gm-Message-State: AN3rC/4/+NmV5bCEde7EkZjvNviYF/HXuHfqaUi0JkC9Ahw9E6g7C+rc
-	VuuUsZ781a6+SStG
-X-Received: by 10.223.130.212 with SMTP id 78mr6658449wrc.106.1492166272013;
-        Fri, 14 Apr 2017 03:37:52 -0700 (PDT)
-User-Agent: KMail/1.13.7 (Linux/3.13.0-116-generic; KDE/4.14.2; x86_64; ; )
-References: <201703171154.35368@pali>
-In-Reply-To: <201703171154.35368@pali>
-MIME-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1647193.5Em89zKT4m";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Message-Id: <201704141237.50508@pali>
-Date: Fri, 14 Apr 2017 12:37:50 +0200
-From: Pali =?utf-8?q?Roh=C3=A1r?= <pali.rohar@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE-2017-3305 - The Riddle vulnerability in MySQL client (public disclosure)
-To: oss-security@lists.openwall.com
+Received: (qmail 28386 invoked from network); 24 Jun 2020 06:43:43 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 24 Jun 2020 08:43:30 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.2006240841110.4820@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: Partial password leak over DNS on HTTP
+ redirect
 
---nextPart1647193.5Em89zKT4m
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Partial password leak over DNS on HTTP redirect
+===============================================
 
-On Friday 17 March 2017 11:54:35 Pali Roh=C3=A1r wrote:
-> Hi!
->=20
-> There is a new vulnerability in MySQL client versions 5.5 and 5.6
-> which is related to SSL/TLS encryption and to older BACKRONYM
-> vulnerability.
->=20
-> As it is common, new vulnerability should have a name, logo and
-> website. So enjoy the *Riddle* at http://riddle.link/
->=20
-> Affected are only Oracle's MySQL clients in all versions 5.5 and 5.6
-> when SSL/TLS encryption is used. Verification of encryption
-> parameters and existence of SSL/TLS layer by MySQL client is done
-> *after* client successfully finish authentication.
->=20
-> For more details including mitigation, look at Technical section on
-> vulnerability website: http://riddle.link/
+Project curl Security Advisory, June 24th 2020 -
+[Permalink](https://curl.haxx.se/docs/CVE-2020-8169.html)
 
-Just to note that also last version 6.0.2 of MySQL Connector/C 6.0=20
-series (which is still supported) is affected by this vulnerability.
+VULNERABILITY
+-------------
 
---=20
-Pali Roh=C3=A1r
-pali.rohar@gmail.com
+libcurl can be tricked to prepend a part of the password to the host name
+before it resolves it, potentially leaking the partial password over the
+network and to the DNS server(s).
 
---nextPart1647193.5Em89zKT4m
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+libcurl can be given a username and password for HTTP authentication when
+requesting an HTTP resource - used for HTTP Authentication such as Basic,
+Digest, NTLM and similar. The credentials are set, either together with
+`CURLOPT_USERPWD` or separately with `CURLOPT_USERNAME` and
+`CURLOPT_PASSWORD`. Important detail: these strings are given to libcurl as
+plain C strings and they are not supposed to be URL encoded.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+In addition, libcurl also allows the credentials to be set in the URL, using
+the standard RFC 3986 format: `http://user:password@host/path`. In this case,
+the name and password are URL encoded as that's how they appear in URLs.
 
-iEYEABECAAYFAljwpn4ACgkQi/DJPQPkQ1KiPwCgxbe3gxUgnhe3n/SRHatZCFTQ
-D3gAn2SHz2mwUk7P5hB9/32I3KtvayUm
-=CdaD
------END PGP SIGNATURE-----
+If the options are set, they override the credentials set in the URL.
 
---nextPart1647193.5Em89zKT4m--
+Internally, this is handled by storing the credentials in the "URL object" so
+that there is only a single set of credentials stored associated with this
+single URL.
+
+When libcurl handles a relative redirect (as opposed to an absolute URL
+redirect) for an HTTP transfer, the server is only sending a new path to the
+client and that path is applied on to the existing URL. That "applying" of the
+relative path on top of an absolute URL is done by libcurl first generating a
+full absolute URL out of all the components it has, then it applies the
+redirect and finally it deconstructs the URL again into its separate
+components.
+
+This security vulnerability originates in the fact that curl did not correctly
+URL encode the credential data when set using one of the `curl_easy_setopt`
+options described above. This made curl generate a badly formatted full URL
+when it would do a redirect and the final re-parsing of the URL would then go
+bad and wrongly consider a part of the password field to belong to the host
+name.
+
+The wrong host name would then be used in a name resolve lookup, potentially
+leaking the host name + partial password in clear text over the network (if
+plain DNS was used) and in particular to the used DNS server(s).
+
+The password leak is triggered if an at sign (`@`) is used in the password
+field, like this: `passw@rd123`. If we also consider a user `dan`, curl would
+generate a full URL like:
+
+  `https://dan:passw@rd123@example.com/path`
+
+... while a correct one should have been:
+
+  `https://dan:passw%40rd123@example.com/path`
+
+... when parsing the wrongly generated URL, libcurl would end up with user
+name `dan` and password `passw` talking to the host `rd123@example.com`. That
+bad host name would then be passed on to the name resolver function in use
+(and for all typical cases return a "cannot resolve host name" error).
+
+There's no hint in the name resolve as to how large portion of the password
+that is actually prepended to the host name (ie an observer won't know how
+much data there was on the left side of the `@`), but it can of course be a
+significant enough clue for an attacker to figure out the rest.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+Requirements to trigger this flaw.
+
+  1. a password set with a `@` in it
+  2. an HTTP transfer
+  3. a *relative* redirect that curl follows (`CURLOPT_FOLLOWLOCATION` enabled)
+
+This bug was brought in commit
+[46e164069d](https://github.com/curl/curl/commit/46e164069d), first shipped in
+curl 7.62.0.
+
+This flaw can happen to users of the curl tool as well as for applications
+using libcurl.
+
+This bug was reported and inadvertently fixed and pushed to the public source
+respository before anyone realized its security impact.
+
+The effects of this flaw is somewhat reduced if DNS-over-HTTPS is used, since
+then at least the name won't be observable on the network by a passive
+by-stander but only by the DoH server.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2020-8169 to this issue.
+
+CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
+
+Severity: 5.5 (Medium)
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.62.0 to and including 7.70.0
+- Not affected versions: libcurl < 7.62.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2020-8169](https://github.com/curl/curl/commit/600a8cded447cd)
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.71.0
+
+  B - Apply the patch on your libcurl version and rebuild
+
+  C - Disable `CURLOPT_FOLLOWLOCATION` or redirects to HTTP(S).
+
+TIMELINE
+--------
+
+This issue was first reported to the curl project on May 14, 2020. The initial
+fix was done, verified and pushed to git on the same day. (As a regular
+non-security related fix.)
+
+On May 15, 2020, the bug was reported again but then with the security impact
+highlighted.
+
+This advisory was posted on June 24th 2020.
+
+CREDITS
+-------
+
+The security issue was reported by Marek Szlagor. The initial bug report was
+done by Gregory Jefferis and Jeroen Ooms. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se | Commercial curl support up to 24x7 is available!
+                   | Private help, bug fixes, support, ports, new features
+                   | https://www.wolfssl.com/contact/
