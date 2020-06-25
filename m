@@ -1,46 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/30/2
-Message-ID: <20200930063254.GB1474755@kroah.com>
-Date: Wed, 30 Sep 2020 08:32:54 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/25/6
+Message-ID: <64b43a38-c0c8-9d45-596d-2d89c55aee56@apache.org>
+Date: Thu, 25 Jun 2020 22:58:40 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs.
+Subject: CVE-2020-11996 Apache Tomcat HTTP/2 Denial of Service
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 30, 2020 at 10:35:56AM +1000, Wade Mealing wrote:
-> Gday,
-> 
-> A flaw was found in the Linux kernels implementation of biovec usage.  A
-> zero-length biovec request issued to the block subsystem could cause the
-> kernel to enter an infinite loop causing a denial of service. An attacker
-> with a local account can issue requests to a block device can cause a
-> denial of service.
-> 
-> This has been assigned CVE-2020-25641,
-> 
-> According to the fix commits "Introduced in":
-> # git tag --contains 1bdc76aea115 | head -n 1
-> v4.10
+CVE-2020-11996 Apache Tomcat HTTP/2 Denial of Service
 
-That's odd, and not the best way to do this, the commit really showed up
-in 4.8-rc1:
-	$ git describe --contains 1bdc76aea115
-	v4.8-rc1~162^2~21
+Severity: Important
 
-You forgot to sort by "version", which is what you need to do if you
-want to try to look at tags, but then it's still a bit off:
-	$ git tag --contains 1bdc76aea115 | sort -V | head -n 10
-	v4.8
-	v4.8-rc1
-	v4.8-rc2
-	v4.8-rc3
-	v4.8-rc4
-	v4.8-rc5
-	v4.8-rc6
-	v4.8-rc7
-	v4.8-rc8
-	v4.9
+Vendor: The Apache Software Foundation
 
-hope this helps,
+Versions Affected:
+Apache Tomcat 10.0.0-M1 to 10.0.0-M5
+Apache Tomcat 9.0.0.M1 to 9.0.35
+Apache Tomcat 8.5.0 to 8.5.55
 
-greg k-h
+Description:
+A specially crafted sequence of HTTP/2 requests could trigger high CPU
+usage for several seconds. If a sufficient number of such requests were
+made on concurrent HTTP/2 connections, the server could become unresponsive.
+
+Mitigation:
+- Upgrade to Apache Tomcat 10.0.0-M6 or later
+- Upgrade to Apache Tomcat 9.0.36 or later
+- Upgrade to Apache Tomcat 8.5.56 or later
+
+Credit:
+This issue was reported publicly via the Apache Tomcat Users mailing
+list without reference to the potential for DoS. The DoS risks were
+identified by the Apache Tomcat Security Team.
+
+References:
+[1] http://tomcat.apache.org/security-10.html
+[2] http://tomcat.apache.org/security-9.html
+[3] http://tomcat.apache.org/security-8.html
