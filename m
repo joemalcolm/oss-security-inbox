@@ -1,138 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/24/2
-Message-Id: <E1kABQO-0005O2-Dh@xenbits.xenproject.org>
-Date: Mon, 24 Aug 2020 12:18:08 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 335 v2 (CVE-2020-14364) - QEMU: usb: out-of-bounds r/w access issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/25/1
+Message-ID: <96bf2c19-1a4d-494a-a643-a7501a22fc67@kde.org>
+Date: Thu, 25 Jun 2020 12:05:03 +0200
+From: Jan Kundrát <jkt@....org>
+To: <oss-security@...ts.openwall.com>
+Cc: <security@....org>
+Subject: Requesting a CVE id for Trojitá, an e-mail client: Improper Certificate Validation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi folks, I would appreciate a Cc on responses as I'm not subscribed to 
+this list. I would like to request a CVE for the following vulnerability:
 
-            Xen Security Advisory CVE-2020-14364 / XSA-335
-                               version 2
+Summary
+-------
 
-               QEMU: usb: out-of-bounds r/w access issue
+Damian Poddebniak discovered a TLS verification failure (CWE-295) in 
+Trojitá [1], a fast Qt IMAP e-mail client. When sending e-mails over SMTP, 
+all TLS errors were ignored.
 
-UPDATES IN VERSION 2
-====================
+Background
+----------
 
-Don't break the DSO by eliding the SoB on the patch.
+Trojita first gained support for SMTP submission in patch 0083eea5ed [2]. 
+Since that commit (May 2009), there's been a FIXME comment in the code that 
+SSL errors should be handled properly. Unfortunately, this issue kept 
+falling through the cracks and we never re-enabled TLS validation as the 
+SMTP backend matured. As a result, outgoing SMTP connections were 
+suspectible to a MITM attack, with authentication details including 
+passwords and the message content potentially available to attackers.
 
-Update Vulnerable Systems section.
+IMAP connections are not suspectible to this bug.
 
-Public release.
+Affected versions
+-----------------
 
-ISSUE DESCRIPTION
-=================
+All versions of Trojita up to and including v0.7 are affected. The fix [3] 
+will be included in version v0.8 which will be released once the CVE gets 
+assigned.
 
-An out-of-bounds read/write access issue was found in the USB emulator
-of the QEMU. It occurs while processing USB packets from a guest, when
-'USBDevice->setup_len' exceeds the USBDevice->data_buf[4096], in
-do_token_{in,out} routines.
+Acknowledgement
+---------------
 
-IMPACT
-======
+Thanks to Damian Poddebniak for reporting [4] this bug.
 
-A guest user may use this flaw to crash the QEMU process resulting in
-DoS OR potentially execute arbitrary code with the privileges of the
-QEMU process on the host.
+[1] http://trojita.flaska.net/
+[2] https://invent.kde.org/pim/trojita/-/commit/0083eea5ed
+[3] https://gerrit.vesnicky.cesnet.cz/r/1035
+[4] https://bugs.kde.org/show_bug.cgi?id=423453
 
-VULNERABLE SYSTEMS
-==================
+With kind regards,
+Jan
 
-All versions of Qemu shipped with in-support versions of Xen are
-vulnerable.  This includes both qemu-traditional and qemu-xen.
-
-The vulnerability can only be exploited when Qemu is used as a device
-model.  This configuration is only used by default for x86 HVM guests.
-x86 PV, PVH and ARM guest do not use a device model by default.
-
-Guests configured to use a Qemu stubdomain contain the code execution
-within the stubdomain, and are therefore not considered vulnerable.
-
-MITIGATION
-==========
-
-No mitigation is available.
-
-CREDITS
-=======
-
-This issue was discovered by Xiao Wei of Qihoo 360 Inc.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa335-qemu.patch    QEMU
-xsa335-trad.patch    Xen unstable (SUPPORT.md update only)
-
-$ sha256sum xsa335*
-3af5f30c4fd21e3679fb749659f9e59d0ff335d092254352e128e7fee3340c41  xsa335-qemu.patch
-2ed7b8bac4c473c6f89173a73485904be16785eb29ee18e189717d201381f27f  xsa335-trad.patch
-$
-
-"QEMU XEN TRADITIONAL"
-======================
-
-This version of qemu is provided by the Xen Project for use as a
-device model stub domain.  In that configuration, there is not a
-security problem and no action is needed.
-
-But in other configurations, this version of qemu is lacking many
-security fixes.  It is beyond the capacity of the Xen Project Security
-Team to address these.  There is therefore no code resolution to
-XSA-335 for users of qemu-xen-traditional who are not using device
-model stub domains.
-
-The patch xsa335-trad.patch included in this advisory is merely an
-update for Xen's SUPPORT.md to document this situation.
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9Dr+0MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ274H/3FIK/DecsmdqVFs9UjqCi+RABmz6dFsgUxQYH9c
-ysZvN7R/BTR1m425+7tlPK1oglkFkHt6C9snc3+kTh/Bl5ktXakgVacoR6yeTh88
-1yJQC3JmG9OaXGS4AR9hmE+Wg0XTlrmvzPMFxtWv055kpPVEG6FWhnhV8d0FavoI
-RWnlelNSkXgai5zWlAqhF8jzR4EeEmOp4f/BtQX/cjZAodXZSYMvLW1zy3vx4Wik
-ZpL4qkJLE9GHOYZF9Ng8zwWx7c1CIi76zwdUvUgPu6IjTBIpo0LPZxlkbF+CqYcp
-rVFaAy7j7+xMOOJntlN2a/NAxD4zs+sCLF1legrfi+9uMH4=
-=bMZs
------END PGP SIGNATURE-----
-
-Download attachment "xsa335-qemu.patch" of type "application/octet-stream" (3042 bytes)
-
-Download attachment "xsa335-trad.patch" of type "application/octet-stream" (1647 bytes)
+-- 
+Trojitá, a fast Qt IMAP e-mail client -- http://trojita.flaska.net/
