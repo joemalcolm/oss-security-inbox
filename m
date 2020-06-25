@@ -1,91 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/31/1
-Message-ID: <20200731140335.GC69757@zuma.herrb.net>
-Date: Fri, 31 Jul 2020 16:03:35 +0200
-From: Matthieu Herrb <matthieu@...rb.eu>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: X.Org security advisory: July 31, 2020: libX11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/25/3
+Message-ID: <20200625112156.GN7041@suse.com>
+Date: Thu, 25 Jun 2020 13:21:56 +0200
+From: Johannes Segitz <jsegitz@...e.de>
+To: Jan Kundrát <jkt@....org>
+Cc: oss-security@...ts.openwall.com, security@....org
+Subject: Re: Requesting a CVE id for Trojitá, an e-mail client: Improper Certificate Validation
 Content-Type: text/plain; charset=utf-8
 
------ Forwarded message from Matthieu Herrb <matthieu@...rb.eu> -----
+On Thu, Jun 25, 2020 at 12:05:03PM +0200, Jan Kundrát wrote:
+> Hi folks, I would appreciate a Cc on responses as I'm not subscribed to this
+> list. I would like to request a CVE for the following vulnerability:
 
-Date: Fri, 31 Jul 2020 15:37:55 +0200
-From: Matthieu Herrb <matthieu@...rb.eu>
-To: xorg-announce@...ts.x.org
-Cc: xorg-devel@...ts.x.org
-Subject: X.Org security advisory: July 31, 2020: libX11
+The process changed, you need to request one at
+https://cveform.mitre.org/
 
-X.Org security advisory: July 31, 2020
-
-Heap corruption in the X input method client in libX11
-======================================================
-
-CVE-2020-14344
-
-The X Input Method (XIM) client implementation in libX11 has some
-integer overflows and signed/unsigned comparison issues that can lead
-to heap corruption when handling malformed messages from an input
-method.
-
-Patches
-=======
-
-Patches for these issues have been commited to the libX11 git repository.
-libX11 1.6.10 will be released shortly and will include those patches.
-
-https://gitlab.freedesktop.org/xorg/lib/libx11
-
-commit 1703b9f3435079d3c6021e1ee2ec34fd4978103d (HEAD -> master)
-
-    Change the data_len parameter of _XimAttributeToValue() to CARD16
-    
-    It's coming from a length in the protocol (unsigned) and passed
-    to functions that expect unsigned int parameters (_XCopyToArg()
-    and memcpy()).
-    
-commit 1a566c9e00e5f35c1f9e7f3d741a02e5170852b2
-
-    Zero out buffers in functions
-    
-    It looks like uninitialized stack or heap memory can leak
-    out via padding bytes.
-    
-
-commit 2fcfcc49f3b1be854bb9085993a01d17c62acf60
-
-    Fix more unchecked lengths
-    
-commit 388b303c62aa35a245f1704211a023440ad2c488
-
-    fix integer overflows in _XimAttributeToValue()
-    
-
-commit 0e6561efcfaa0ae7b5c74eac7e064b76d687544e
-
-    Fix signed length values in _XimGetAttributeID()
-    
-    The lengths are unsigned according to the specification. Passing
-    negative values can lead to data corruption.
-    
-Thanks
-======
-
-X.Org thanks Todd Carson for reporting these issues to our security
-team and assisting them in understanding them and providing fixes.
-
-
+Johannes
 -- 
-Matthieu Herrb
+GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Software Solutions Germany GmbH, Maxfeldstr. 5, 90409 Nuernberg
+Geschäftsführer: Felix Imendörffer (HRB 36809, AG Nürnberg)
 
-
-
-_______________________________________________
-xorg-announce mailing list
-xorg-announce@...ts.x.org
-https://lists.x.org/mailman/listinfo/xorg-announce
-
-
------ End forwarded message -----
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (794 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
