@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6398" "Wednesday" "3" "January" "2018" "22:30:00" "+0000" "Xen.org security team" "security@xen.org" "<E1eWrXs-0007D0-Bg@xenbits.xenproject.org>" "160" "[oss-security] Xen Security Advisory 254 - Information leak via side effects of speculative execution" nil nil nil "1" "2018010322:30:00" "[oss-security] Xen Security Advisory 254 - Information leak via side effects of speculative execution" (number mark "U       security@xen Jan  3  160/6398  " thread-indent "\"[oss-security] Xen Security Advisory 254 - Information leak via side effects of speculative execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4807" "Thursday" "25" "June" "2020" "19:06:21" "+0000" "Seth Arnold" "seth.arnold@canonical.com" "<20200625190621.GA1791617@millbarge>" "146" "[oss-security] [cve-request@mitre.org: Re: [scr916814] net-snmp - Perhaps only unreleased development versions; fix appears to be in v5.8.1.pre1]" nil nil nil "6" "2020062519:06:21" "[oss-security] [cve-request@mitre.org: Re: [scr916814] net-snmp - Perhaps only unreleased development versions; fix appears to be in v5.8.1.pre1]" (number mark "U       seth.arnold@ Jun 25  146/4807  " thread-indent "\"[oss-security] [cve-request@mitre.org: Re: [scr916814] net-snmp - Perhaps only unreleased development versions; fix appears to be in v5.8.1.pre1]\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [cve-request@mitre.org: Re: [scr916814] net-snmp - Perhaps only unreleased development versions; fix appears to be in v5.8.1.pre1]" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15453 invoked by uid 550); 3 Jan 2018 22:30:24 -0000
+Received: (qmail 15606 invoked by uid 550); 25 Jun 2020 19:06:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,177 +12,162 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15404 invoked from network); 3 Jan 2018 22:30:23 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 15588 invoked from network); 25 Jun 2020 19:06:34 -0000
+Date: Thu, 25 Jun 2020 19:06:21 +0000
+From: Seth Arnold <seth.arnold@canonical.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20200625190621.GA1791617@millbarge>
+Mail-Followup-To: oss-security@lists.openwall.com
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1eWrXs-0007D0-Bg@xenbits.xenproject.org>
-Date: Wed, 03 Jan 2018 22:30:00 +0000
-Subject: [oss-security] Xen Security Advisory 254 - Information leak via side effects of
- speculative execution
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="vkogqOf2sHV7VnPd"
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [cve-request@mitre.org: Re: [scr916814] net-snmp - Perhaps only
+ unreleased development versions; fix appears to be in v5.8.1.pre1]
+
+--vkogqOf2sHV7VnPd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hello, I'd lke to share a cve assigned to net-snmp for an issue that may
+not have affected any released versions of net-snmp but affected various
+distro versions of net-snmp.
+
+Thanks
+
+----- Forwarded message from cve-request@mitre.org -----
+
+Date: Thu, 25 Jun 2020 05:15:14 -0400 (EDT)
+From: cve-request@mitre.org
+To: security@ubuntu.com
+Cc: cve-request@mitre.org
+Subject: Re: [scr916814] net-snmp - Perhaps only unreleased development ver=
+sions; fix appears to be in v5.8.1.pre1
+Message-Id: <20200625091514.8124480B76E@smtprhmv1.mitre.org>
+X-MailControl-ReportSpam: https://www.mailcontrol.com/sr/VfMHRVT2LfHGX2PQPO=
+mvUkjDae7bB5IgIMT0o87Yr8XX7dUK1PjRtmIgzLM3PrMtWFfXRAbpUYiTKOxjbsImtQ=3D=3D
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-                    Xen Security Advisory XSA-254
+> [Suggested description]
+> net-snmp before 5.8.1.pre1 has a double free in usm_free_usmStateReferenc=
+e in snmplib/snmpusm.c=20
+> via an SNMPv3
+> GetBulk request. NOTE: this affects net-snmp packages shipped to end user=
+s by multiple Linux distributions,
+> but might not affect an upstream release.
+>=20
+> ------------------------------------------
+>=20
+> [Additional Information]
+> If I've followed the breadcrumbs correctly, this was introduced via
+> https://github.com/net-snmp/net-snmp/commit/adc9b71aba9168ec64149345ea37a=
+1acc11875c6
+> which was apparently incorporated into Debian, Ubuntu, Red Hat
+> packages, even if not included in upstream releases.
+>=20
+> A double free was discovered in usm_free_usmStateReference() in unrelease=
+d development versions of net-snmp.
+>=20
+> ------------------------------------------
+>=20
+> [VulnerabilityType Other]
+> double-free
+>=20
+> ------------------------------------------
+>=20
+> [Vendor of Product]
+> net-snmp
+>=20
+> ------------------------------------------
+>=20
+> [Affected Product Code Base]
+> net-snmp - Perhaps only unreleased development versions; fix appears to b=
+e in v5.8.1.pre1
+>=20
+> ------------------------------------------
+>=20
+> [Affected Component]
+> usm_free_usmStateReference()
+> usm_rgenerate_out_msg()
+> free_agent_snmp_session()
+>=20
+> ------------------------------------------
+>=20
+> [Attack Type]
+> Remote
+>=20
+> ------------------------------------------
+>=20
+> [Impact Denial of Service]
+> true
+>=20
+> ------------------------------------------
+>=20
+> [Attack Vectors]
+> An authorized remote user can trigger this via a command given at https:/=
+/sourceforge.net/p/net-snmp/bugs/2923/#6789:
+> snmpbulkget  -v3 -Cn1 -Cr1472  -lauthPriv -u testuser -a SHA -A testsha12=
+34 -x AES -X testaes1234 localhost    1.3.6.1.2.1.1.5 1.3.6.1.2.1.1.7
+>=20
+> ------------------------------------------
+>=20
+> [Reference]
+> https://bugs.launchpad.net/ubuntu/+source/net-snmp/+bug/1877027
+> https://bugzilla.redhat.com/show_bug.cgi?id=3D1663027
+> https://sourceforge.net/p/net-snmp/bugs/2923/
+> https://github.com/net-snmp/net-snmp/commit/5f881d3bf24599b90d67a45cae7a3=
+eb099cd71c9
+>=20
+> ------------------------------------------
+>=20
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
 
-        Information leak via side effects of speculative execution
+Use CVE-2019-20892.
 
-ISSUE DESCRIPTION
-=================
 
-Processors give the illusion of a sequence of instructions executed
-one-by-one.  However, in order to most efficiently use cpu resources,
-modern superscalar processors actually begin executing many
-instructions in parallel.  In cases where instructions depend on the
-result of previous instructions or checks which have not yet
-completed, execution happens based on guesses about what the outcome
-will be.  If the guess is correct, execution has been sped up.  If the
-guess is incorrect, partially-executed instructions are cancelled and
-architectural state changes (to registers, memory, and so on)
-reverted; but the whole process is no slower than if no guess had been
-made at all.  This is sometimes called "speculative execution".
-
-Unfortunately, although architectural state is rolled back, there are
-other side effects, such as changes to TLB or cache state, which are
-not rolled back.  These side effects can subsequently be detected by
-an attacker to determine information about what happened during the
-speculative execution phase.  If an attacker can cause speculative
-execution to access sensitive memory areas, they may be able to infer
-what that sensitive memory contained.
-
-Furthermore, these guesses can often be 'poisoned', such that attacker
-can cause logic to reliably 'guess' the way the attacker chooses.
-This advisory discusses three ways to cause speculative execution to
-access sensitive memory areas (named here according to the
-discoverer's naming scheme):
-
-SP1, "Bounds-check bypass": Poison the branch predictor, such that
-operating system or hypervisor code is speculatively executed past
-boundary and security checks.  This would allow an attacker to, for
-instance, cause speculative code in the normal hypercall / emulation
-path to execute with wild array indexes.
-
-SP2, "Branch Target Injection": Poison the branch predictor.
-Well-abstracted code often involves calling function pointers via
-indirect branches; reading these function pointers may involve a
-(slow) memory access, so the CPU attempts to guess where indirect
-branches will lead.  Poisoning this enables an attacker to
-speculatively branch to any code that exists in the hypervisor.
-
-SP3, "Rogue Data Load": On some processors, certain pagetable
-permission checks only happen when the instruction is retired;
-effectively meaning that speculative execution is not subject to
-pagetable permission checks.  On such processors, an attacker can
-speculatively execute arbitrary code in userspace with, effectively,
-the highest privilege level.
-
-More information is available here:
-  https://meltdownattack.com/
-  https://spectreattack.com/
-
-Additional Xen-specific background:
-
-64-bit Xen hypervisors on systems with less than 5TiB of RAM map all
-of physical RAM, so code speculatively executed in a hypervisor
-context can read all of system RAM.
-
-When running PV guests, the guest and the hypervisor share the address
-space; guest kernels run in a lower privilege level, and Xen runs in
-the highest privilege level.  (HVM and PVH guests run in a separate
-address space to the hypervisor.)  However, only 64-bit PV guests can
-generate addresses large enough to point to hypervisor memory.
-
-IMPACT
-======
-
-Xen guests may be able to infer the contents of arbitrary host memory,
-including memory assigned to other guests.
-
-An attacker's choice of code to speculatively execute (and thus the
-ease of extracting useful information) goes up with the numbers.  For
-SP1, or SP2 on systems where SMEP (supervisor mode execute protection)
-is enabled: an attacker is limited to windows of code after bound
-checks of user-supplied indexes.  For SP2 without SMEP, or SP3, an
-attacker can write arbitrary code to speculatively execute.
-
-NOTE ON TIMING
-==============
-
-This vulnerability was originally scheduled to be made public on 9
-January.  It was accelerated at the request of the discloser due to
-one of the issues being made public.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-For SP1 and SP2, both Intel and AMD are vulnerable.
-
-For SP3, only Intel processors are vulnerable. Furthermore, only
-64-bit PV guests can exploit SP3 against Xen.  PVH and 32-bit PV
-guests cannot exploit SP3.
-
-We believe that ARM is affected, but unfortunately due to the
-accelerated schedule, we haven't been able to get concrete input from
-ARM.  We are asking ARM and will publish more information when it is
-available.
-
-MITIGATION
-==========
-
-There is no mitigation for SP1 and SP2.
-
-SP3 can be mitigated by running guests in HVM or PVH mode.
-
-For guests with legacy PV kernels which cannot be run in HVM mode, we
-have developed a "shim" hypervisor that allows PV guests to run in PVH
-mode.  Unfortunately, due to the accelerated schedule, this is not yet
-ready to release.  We expect to have it ready for 4.10, as well as PVH
-backports to 4.9 and 4.8, available over the next few days.
-
-RESOLUTION
-==========
-
-There is no available resolution for SP1 or SP3.
-
-We are working on patches which mitigate SP2 but these are not
-currently available.  Given that the vulnerabilities are now public,
-these will be developed and published in public, initially via
-xen-devel.
-
-When we have useful information we will send an update.
-
-NOTE ON LACK OF EMBARGO
-=======================
-
-The timetable and process were set by the discloser.
-
-After the intensive initial response period for these vulnerabilities
-is over, we will prepare and publish a full timeline, as we have done
-in a handful of other cases of significant public interest where we
-saw opportunities for process improvement.
+- --=20
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCAAGBQJaTVlQAAoJEIP+FMlX6CvZRIkH/3LGBnVPE6/4eBYwUTAZZ1bC
-+PLMLiUpSZuSwxbKrt80Tuu8hXBWPvf9bTL5gwEg0IGbypLmehoRc1Xj1Ra+9U2h
-PVcmyoP2rcgENSqGKqv8CKHI0xt1QqXK0hF2L7q370+3crgNAx79T+nJf11SAsnA
-m3MUvi7eDm1BUf4sIYlePkVcSbxcyjcejGKr/aAwo4Ku3aInO0lgapb8kjYiMKME
-wgQ9oOVLuSvkTwcOCTnJaMF3FkpFATq6VpmtbRDNkeSd8yrF3d9C/GAoPwoMt6oY
-zLNBs77T5LfrQtLJ62aOeXmPcu3vZOZlTH89+1IBLef4Gs5eqD5rTfKcTc8AaPE=
-=70SF
+iQIcBAEBCAAGBQJe9Gq+AAoJEPNX0OmQPkAIQqEP/3t3ZrdDKKQSY/OLz27sFHNm
+LqpQIlV5ukyfM8vCF8vp5a2yN2rJSrwmMUuDHppqAdyW/n4js5mXcsVbHsphMvoU
+srqbuL1DmTW8J3MD4edVBRHi3Ag42Xnacz44w9n5DofWjJDj5j7AY5kUUiqtzzrd
+VPjNaA398/4NoMPZj07Cqa/uN5uNJc6AJnwzxRFfae0HD75qOiCwvlnLxNfX+rDn
+/jyziyPTZNAQObqhXr1VDVKbDsTA53Znf7C/Joj8QyYlDHL4FFJrP8jwjzzVCRWA
+1jUcVpKcRSryuclG84JmWyY0qIj5IlqPqBs1Y2lp74DtBlO+GjI7ZLZYlAAGTIDq
+cMq/PNO2teHsWaZNFPa3hR/ezR71ihahke/2Dj93A+Z7ytST3f0edhgtPTietWAf
+ytrStPbppBg8bztWBvrsQEWj0o8kVUZXvLM9Gen5agOBhXHR+QM9i1tH8Vot+V3K
+M9QyW79n8pUq7cWBaVQMyMzrwnsDgk85WhQR13eVBLzNjPLatAjBxDlJszSaO4UR
+VHus9O/4a9Qa0eW1+V2KAtOgUr8aLnUxKPDMNYIXk2BqemznVBpjvdUwRhdH9yo3
+2l2rEyxvSLUOYGbOqwPXot0Sm2CNQN6l4ISjvDgXHqXdYzHeeV2RaMkOjtARblLT
+BFmzz9v4hNYJxdJgfYZU
+=3DO66Z
 -----END PGP SIGNATURE-----
 
---=separator--
+
+----- End forwarded message -----
+
+--vkogqOf2sHV7VnPd
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAl709akACgkQ8yFyWZ2N
+LpdnUgf/Z8/3WwLBa4Q5vbvFxVdRTXlLG5pFD5KbgdCMnxAmThFz9ce83Gw1poK+
+ID63nCO1j8sXm3XCApnaGjmm6Fo9UNuHGD8gPfdjJFT0k5vPlsl5VjP9jIRRM8BM
+ccdidSwQSrsiZw3M5/6DiL6lgQ+DFP7enVKQ7KdFlr+asZibWSGDNAP6ndGuQTJl
+RaQ7Y6Z9YHYLKueLvcoYdIjXwTZb7EmM9OAYqv6pT4xd0L7ajLaEP77ccuNuVaik
+I2CO9r2/JoAHuBG49sxUBFTLyD3T0Fx8jp9jQl1jkccaWapi+nc3ajXZZrbIhUjx
+L5H5QbMkpQqISiT5TyWVcsklQVMnTw==
+=Q/qv
+-----END PGP SIGNATURE-----
+
+--vkogqOf2sHV7VnPd--
