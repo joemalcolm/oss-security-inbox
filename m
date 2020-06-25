@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2273" "Tuesday" "6" "August" "2019" "10:53:41" "+0200" "Hanno =?iso-8859-1?Q?B=F6c?==?iso-8859-1?Q?k?=" "hanno@hboeck.de" "<20190806105341.71a55acf@computer>" "61" "[oss-security] clamav: denial of service through \"better zip bomb\"" nil nil nil "8" "2019080608:53:41" "[oss-security] clamav: denial of service through \"better zip bomb\"" (number mark "U       hanno@hboeck Aug  6   61/2273  " thread-indent "\"[oss-security] clamav: denial of service through \"better zip bomb\"\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] clamav: denial of service through \"better zip bomb\"" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1530" "Thursday" "25" "June" "2020" "12:05:03" "+0200" "=?iso-8859-1?Q?Jan_Kundr=E1t?=" "jkt@kde.org" "<96bf2c19-1a4d-494a-a643-a7501a22fc67@kde.org>" "48" "[oss-security] Requesting a CVE id for =?iso-8859-1?Q?Trojit=E1,_an_e-mail_client:_Improper_Certificate_Validati?==?iso-8859-1?Q?on?=" "^Cc:" nil nil "6" "2020062510:05:03" "[oss-security] Requesting a CVE id for =?iso-8859-1?Q?Trojit=E1,?= =?iso-8859-1?Q?an?= =?iso-8859-1?Q?e-mail?= =?iso-8859-1?Q?client:?= =?iso-8859-1?Q?Improper?= =?iso-8859-1?Q?Certificate?= =?iso-8859-1?Q?Validati?==?iso-8859-1?Q?on?=" (number mark "        jkt@kde.org  Jun 25   48/1530  " thread-indent "\"[oss-security] Requesting a CVE id for =?iso-8859-1?Q?Trojit=E1,?= =?iso-8859-1?Q?an?= =?iso-8859-1?Q?e-mail?= =?iso-8859-1?Q?client:?= =?iso-8859-1?Q?Improper?= =?iso-8859-1?Q?Certificate?= =?iso-8859-1?Q?Validati?==?iso-8859-1?Q?on?=\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Requesting a CVE id for =?iso-8859-1?Q?Trojit=E1,?= =?iso-8859-1?Q?an?= =?iso-8859-1?Q?e-mail?= =?iso-8859-1?Q?client:?= =?iso-8859-1?Q?Improper?= =?iso-8859-1?Q?Certificate?= =?iso-8859-1?Q?Validati?==?iso-8859-1?Q?on?=" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27826 invoked by uid 550); 6 Aug 2019 08:53:55 -0000
+Received: (qmail 1154 invoked by uid 550); 25 Jun 2020 11:05:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27794 invoked from network); 6 Aug 2019 08:53:54 -0000
-Date: Tue, 6 Aug 2019 10:53:41 +0200
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20190806105341.71a55acf@computer>
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+Received: (qmail 7684 invoked from network); 25 Jun 2020 10:05:16 -0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Message-ID: <96bf2c19-1a4d-494a-a643-a7501a22fc67@kde.org>
+Organization: KDE
+User-Agent: Trojita/v0.7-412-g2869c385e; Qt/5.13.0; xcb; Linux; Gentoo Base System release 2.4.1
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] clamav: denial of service through "better zip bomb"
+Cc: <security@kde.org>
+Date: Thu, 25 Jun 2020 12:05:03 +0200
+From: =?iso-8859-1?Q?Jan_Kundr=E1t?= <jkt@kde.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Requesting a CVE id for =?iso-8859-1?Q?Trojit=E1,_an_e-mail_client:_Improper_Certificate_Validati?=
+ =?iso-8859-1?Q?on?=
+To: <oss-security@lists.openwall.com>
 
-Hi,
+Hi folks, I would appreciate a Cc on responses as I'm not subscribed to=20
+this list. I would like to request a CVE for the following vulnerability:
 
-Recently David Fifield presented a new variant of a ZIP bomb where by
-using overlapping segments he was able to achieve very high compression
-ratios (42kb->5GB, 10MB->281TB).
+Summary
+-------
 
-Passing the example files to clamav causes extreme CPU spikes and
-extremely long scanning times. In a setup with clamd (a daemon-ized
-version of clamav) this is particularly nasty, as even interrupting the
-scanning process doesn't stop the CPU spikes in the daemon and the
-daemon cannot be killed gracefully.
+Damian Poddebniak discovered a TLS verification failure (CWE-295) in=20
+Trojit=C3=A1 [1], a fast Qt IMAP e-mail client. When sending e-mails over S=
+MTP,=20
+all TLS errors were ignored.
 
-clamav is often used to automatically scan incoming mails on
-mailservers, in this case this is can be effective way to make a server
-unusable.
+Background
+----------
 
-The upstream bug report is here [2]. Clamav made a new release 0.101.3
-[3] with a mitigation.
+Trojita first gained support for SMTP submission in patch 0083eea5ed [2].=20
+Since that commit (May 2009), there's been a FIXME comment in the code that=
+=20
+SSL errors should be handled properly. Unfortunately, this issue kept=20
+falling through the cracks and we never re-enabled TLS validation as the=20
+SMTP backend matured. As a result, outgoing SMTP connections were=20
+suspectible to a MITM attack, with authentication details including=20
+passwords and the message content potentially available to attackers.
 
-However David Fifield commented in the bug report [4] that the fix is
-incomplete, by using some slight variations of his methods he could
-bypass the fix.
+IMAP connections are not suspectible to this bug.
 
-Mitigation
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Affected versions
+-----------------
 
-This can be mitigated by disabling scanning of compressed archives. In
-the case of clamd there's a setting "ScanArchive" in clamd.conf [5].
+All versions of Trojita up to and including v0.7 are affected. The fix [3]=
+=20
+will be included in version v0.8 which will be released once the CVE gets=20
+assigned.
 
-Downside: Obviously that means compressed files won't be scanned.
+Acknowledgement
+---------------
 
-misc
-=3D=3D=3D=3D
+Thanks to Damian Poddebniak for reporting [4] this bug.
 
-Firefox sometimes showed Safebrowsing warnings for the "better zip
-bomb" web page by David Fifield. Not sure how it ended up in the safe
-browsing list, though I believe it's bad practice to mark legit
-security research as "malicious" by blacklists.
+[1] http://trojita.flaska.net/
+[2] https://invent.kde.org/pim/trojita/-/commit/0083eea5ed
+[3] https://gerrit.vesnicky.cesnet.cz/r/1035
+[4] https://bugs.kde.org/show_bug.cgi?id=3D423453
 
-A similar DoS is happening in Chrome when downloading the sample ZIP
-bombs. This has already been mentioned in public comments, e.g. here
-[6]. I had reported this to Chrome, it was marked as a duplicate of a
-non-public bug.
+With kind regards,
+Jan
 
-It's likely that there are more applications affected.
-I recommend that people try to test other applications that might
-unpack ZIP files in an automated setting with these sample files.
-
-[1] https://www.bamsoftware.com/hacks/zipbomb/
-[2] https://bugzilla.clamav.net/show_bug.cgi?id=3D12356
-[3]
-https://blog.clamav.net/2019/08/clamav-01013-security-patch-release-and.html
-[4] https://bugzilla.clamav.net/show_bug.cgi?id=3D12356#c6
-[5] https://linux.die.net/man/5/clamd.conf
-[6] https://news.ycombinator.com/item?id=3D20352537
 --=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Trojit=C3=A1, a fast Qt IMAP e-mail client -- http://trojita.flaska.net/
