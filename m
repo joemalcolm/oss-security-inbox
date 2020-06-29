@@ -1,172 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/20/6
-Message-Id: <E1kUqJu-00024u-DS@xenbits.xenproject.org>
-Date: Tue, 20 Oct 2020 12:00:50 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 347 v2 - unsafe AMD IOMMU page table updates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/30/1
+Message-ID: <20200629210508.GB3565@localhost.localdomain>
+Date: Mon, 29 Jun 2020 17:05:08 -0400
+From: Dennis Goodlett <dennis@...ricanelabs.com>
+To: oss-security@...ts.openwall.com
+Subject: default behavior in unzip more dangerous then -^
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I want to bring attention to default behavior of unzip on Linux. I
+consider its current behavior unexpected and potentially dangerous.
 
-                    Xen Security Advisory XSA-347
-                              version 2
+# Unzip without -^ argument
+By default unzip removes special characters from file names. This can
+result in files being renamed or overwritten. In some circumstances this could
+result in remote code execution.
 
-                  unsafe AMD IOMMU page table updates
+Consider the case of a LAMP server that prevents users from uploading
+files with a ".php" extension. If the system administrator restores or
+refreshes the directory with unzip, he needs to use the "-^" flag to
+keep from creating a ".php" file. See the following example:
 
-UPDATES IN VERSION 2
-====================
+```
+$ ls uploads/ |grep "php" 		#### no php files in uploads
+$ zip ./z.zip ./uploads/*
+  adding: uploads/index.^[p^[h^[p (stored 0%)
+$ unzip z.zip
+Archive:  z.zip
+ extracting: uploads/index.php
+$ ls uploads/ |grep "php" 		#### unzip created index.php
+index.php
+```
 
-Public release.
+Another example shows that files can be overwritten. While this example uses
+"-f", the results would be the same without "-f" due to the order of the files.
 
-ISSUE DESCRIPTION
-=================
+```
+$ cat uploads/old_file
+OLD
+$ zip z.zip uploads/*
+adding: uploads/old_file (stored 0%)
+adding: uploads/old_file^[ (stored 0%)
+$ unzip -fo z.zip
+Archive:  z.zip
+extracting: uploads/old_file
+$ cat uploads/old_file
+NEW INJECTED
+```
 
-AMD IOMMU page table entries are updated in a step by step manner,
-without regard to them being potentially in use by the IOMMU.  Therefore
-it was possible that the IOMMU would read and then use a half-updated
-entry.  Furthermore, updates to Device Table entries lacked suitable
-ordering enforcement for certain steps involved in these updates.
+# My Opinion
+I consider the file name "/e\x1btc/\x1bshadow" dangerous because some program
+might mishandle the name and overwrite "/etc/shadow". The unzip utility agrees
+so the default behavior will change "/e\x1btc/\x1bshadow" into "/etc/shadow".
 
-In both case the specific outcome heavily depends on how exactly the
-compiler translated the affected pieces of code.
+# Potential Changes/fixes
+Personally, I would prefer unzip to act like 7z and just extract the given name
+without changes. Just updating unzip this way could cause problems for some
+people that rely on the sanitization behavior.
 
-IMPACT
-======
+A better solution would be to skip the extraction of files that have special
+characters in their name. This is the current philosophy when encountering
+directory traversal.
 
-A malicious guest might be able to cause data corruption and data
-leaks.  Host or guest Denial of Service (DoS), and privilege
-escalation, cannot be ruled out.
+# Thank You
+Thanks to Seth Arnold from Ubuntu's security team for pointing out the
+"-^" argument to me.
 
-VULNERABLE SYSTEMS
-==================
+-- 
+Dennis Goodlett
+Hurricane Labs
+Cell: (216) 218-1372
+GIT: https://github.com/swoops
+http://hurricanelabs.com (@hurricanelabs)
+EOF
 
-All Xen versions are potentially vulnerable.
+-- 
 
-Only x86 systems with AMD, Hygon, or compatible IOMMU hardware are
-vulnerable.  Arm systems as well as x86 systems with VT-d hardware or
-without any IOMMUs in use are not vulnerable.
 
-Only x86 guests which have physical devices passed through to them can
-leverage the vulnerability.
 
-MITIGATION
-==========
+This email and any files transmitted with it are confidential and 
+intended solely for the use of the individual or entity to whom they are 
+addressed. If you have received this email in error please notify the 
+system manager. This message contains confidential information and is 
+intended only for the individual named. If you are not the named addressee 
+you should not disseminate, distribute or copy this e-mail. Please notify 
+the sender immediately by e-mail if you have received this e-mail by 
+mistake and delete this e-mail from your system. If you are not the 
+intended recipient you are notified that disclosing, copying, distributing 
+or taking any action in reliance on the contents of this information is 
+strictly prohibited.
 
-Not passing through physical devices to untrusted guests will avoid
-the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Paul Durrant of Amazon and Jan Beulich of
-SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate set of attached patches resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa347/xsa347-?.patch           xen-unstable
-xsa347/xsa347-4.14-?.patch      Xen 4.14
-xsa347/xsa347-4.13-?.patch      Xen 4.13
-xsa347/xsa347-4.12-?.patch      Xen 4.12
-xsa347/xsa347-4.11-?.patch      Xen 4.10 - 4.11
-
-$ sha256sum xsa347* xsa347*/*
-f16e1a348b0e45601c96b2bd08afc4202bbccc92c8af8344b3c8286ca819acef  xsa347.meta
-82e14d0507ec94f8cfac2b4d5d1b60681b925218ab927332bee338e6b6c679c9  xsa347/xsa347-1.patch
-1bc6018c3685727ba4035bf0b5cea95940a1b9c4746fa9bddfd41507482d68a1  xsa347/xsa347-2.patch
-f1bd8eba268300f564837ac37fe43b774ace885c9cbf8fcacae457128730bc80  xsa347/xsa347-3.patch
-5aec8f3b15aa799e1ff7ec0dfe53523cb91aa5fd88033f7f034cb74ebaa6abe4  xsa347/xsa347-4.11-1.patch
-4ab3a6fa181ce486b4c9943f6629b7c1a4337c7ccb92701ae6e40108533778ca  xsa347/xsa347-4.11-2.patch
-fec82340dc65fc1001358de51d0639b2b401818fa1e831f8715cb1780b17dc7b  xsa347/xsa347-4.12-1.patch
-be89e976fe03464ce3a73b162c07927128f41a8a03466e903ebfa4ea0dc46116  xsa347/xsa347-4.12-2.patch
-5dc0abf73d1a9d21f2b57e6c57ee5c15cc3febbb783123c0946f3e5778671929  xsa347/xsa347-4.13-1.patch
-6d2b6ea7a373fb1c4cce63db349bbafa8603b5e7c6b74fc6d029954075f2268d  xsa347/xsa347-4.13-2.patch
-4e154bfca5101569c8260e307eb6439783bc99547b7dfb5aba2bafebbde46190  xsa347/xsa347-4.13-3.patch
-6a70c2afba0d3ad73b12743a6808ba8002e9ee573d7c460397355e40de3b553f  xsa347/xsa347-4.14-1.patch
-1bc6018c3685727ba4035bf0b5cea95940a1b9c4746fa9bddfd41507482d68a1  xsa347/xsa347-4.14-2.patch
-f1bd8eba268300f564837ac37fe43b774ace885c9cbf8fcacae457128730bc80  xsa347/xsa347-4.14-3.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-HOWEVER, deployment of the mitigation is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because removal of pass-through devices or their replacement by
-emulated devices is a guest visible configuration change, which may lead
-to re-discovery of the issue.
-
-Deployment of this mitigation is permitted only AFTER the embargo ends.
-
-AND: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+Ozq4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ49QH/jCHl5dId4Bj/FSfDEK1iTTpTMTIwIIv5PGaSBh1
-F/VoQiS+e5hAlbucK8M362GJlHO3p4wHPgyZLNY82BZrPuzeL/GAV8p4qqrfsJjS
-uk6UZQyyIAKH8NcbICzm06WrOQ2ayfGJvJtmyfkwqDcT+VSJ/ohmcBw9WQABACSS
-+Wr2LRZAzucpY23z/sWMOYx312sRx8EvzAeA4qP0g1jAc54cNbCVuDV2iqcFot4F
-vd+/vfkh7HuIvLk7gQ8KbKjXyGqR7Wt78EEDNTpSxvXuGUTFc+jCnA0429Se1NGw
-cLgeaTr29RtDIlFtxqS0DR3Pu4HYL535Dkn/w8dfmL7mPjU=
-=rjzR
------END PGP SIGNATURE-----
-
-Download attachment "xsa347.meta" of type "application/octet-stream" (1987 bytes)
-
-Download attachment "xsa347/xsa347-1.patch" of type "application/octet-stream" (4405 bytes)
-
-Download attachment "xsa347/xsa347-2.patch" of type "application/octet-stream" (2195 bytes)
-
-Download attachment "xsa347/xsa347-3.patch" of type "application/octet-stream" (2201 bytes)
-
-Download attachment "xsa347/xsa347-4.11-1.patch" of type "application/octet-stream" (1808 bytes)
-
-Download attachment "xsa347/xsa347-4.11-2.patch" of type "application/octet-stream" (3458 bytes)
-
-Download attachment "xsa347/xsa347-4.12-1.patch" of type "application/octet-stream" (1857 bytes)
-
-Download attachment "xsa347/xsa347-4.12-2.patch" of type "application/octet-stream" (3521 bytes)
-
-Download attachment "xsa347/xsa347-4.13-1.patch" of type "application/octet-stream" (4998 bytes)
-
-Download attachment "xsa347/xsa347-4.13-2.patch" of type "application/octet-stream" (2195 bytes)
-
-Download attachment "xsa347/xsa347-4.13-3.patch" of type "application/octet-stream" (2201 bytes)
-
-Download attachment "xsa347/xsa347-4.14-1.patch" of type "application/octet-stream" (4990 bytes)
-
-Download attachment "xsa347/xsa347-4.14-2.patch" of type "application/octet-stream" (2195 bytes)
-
-Download attachment "xsa347/xsa347-4.14-3.patch" of type "application/octet-stream" (2201 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
