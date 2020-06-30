@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/21/4
-Message-ID: <20200421165227.exhxkcqe4nhzzkes@LykOS.localdomain>
-Date: Tue, 21 Apr 2020 12:52:28 -0400
-From: Santiago Torres <torresariass@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/30/3
+Message-ID: <20200630145459.1d12bb01@lenovo>
+Date: Tue, 30 Jun 2020 14:54:59 +0200
+From: Stefan Cornelius <scorneli@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Pacman package manager - taking untrusted input
+Subject: Re: libvncserver: old websocket decoding patch
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 21, 2020 at 04:27:08PM +0000, jellicent@...tonmail.com wrote:
-> The Pacman package manager, used by Arch Linux and its 10+ derivatives,
-> introduces a critical security flaw in its current state.
-> ... The database, however, is not signed.
+On Tue, 30 Jun 2020 10:50:09 +0200
+Stefan Cornelius <scorneli@...hat.com> wrote:
 
-Or
- 
-> The code supports database signatures, so the real issue is the distro
-> infrastructure.
+> Hi,
+> 
+> Upstream libvncserver fixed a websocket decoding issue >3years ago in
+> https://github.com/LibVNC/libvncserver/commit/aac95a9dcf4bbba87b76c72706c3221a842ca433
+> 
+> AFAICT, this never got a CVE and wasn't backported by some
+> distributions.
+> 
+> Thanks and kind regards,
+> 
+> [I sent a heads-up about this to distros last Friday, 'embargo' ran
+> out on Monday 20:00 UTC]
 
-Pick one please.
+Please use CVE-2017-18922
 
-> [1] https://wiki.archlinux.org/index.php/Pacman/Package_signing
+-- 
+Stefan Cornelius / Red Hat Product Security
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
