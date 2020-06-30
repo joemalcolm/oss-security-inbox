@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["305" "Tuesday" "25" "January" "2022" "19:39:34" "+0800" "Zhang Yonglun" "zhangyonglun@apache.org" nil "16" "[oss-security] CVE-2022-23945: Apache ShenYu missing authentication allows gateway registration" nil nil nil "1" nil nil (number mark "U       zhangyonglun Jan 25   16/305   " thread-indent "\"[oss-security] CVE-2022-23945: Apache ShenYu missing authentication allows gateway registration\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2022-23945: Apache ShenYu missing authentication allows gateway registration" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["540" "Tuesday" "30" "June" "2020" "14:54:59" "+0200" "Stefan Cornelius" "scorneli@redhat.com" "<20200630145459.1d12bb01@lenovo>" "21" "Re: [oss-security] libvncserver: old websocket decoding patch" nil nil nil "6" "2020063012:54:59" "[oss-security] libvncserver: old websocket decoding patch" (number mark "U       scorneli@red Jun 30   21/540   " thread-indent "\"Re: [oss-security] libvncserver: old websocket decoding patch\"\n") "<20200630105009.46d2de6d@lenovo>" ("<20200630105009.46d2de6d@lenovo>") nil nil nil nil nil nil nil "Re: [oss-security] libvncserver: old websocket decoding patch" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3414 invoked by uid 550); 25 Jan 2022 14:55:57 -0000
+Received: (qmail 30659 invoked by uid 550); 30 Jun 2020 12:55:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,34 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20376 invoked from network); 25 Jan 2022 11:39:59 -0000
-X-Gm-Message-State: AOAM533yhPqn6epvVzFH4R59rHE499ZIgm7QMWJQq37UXVC7hHvthRTp
-	N6oBbwCAieEcyIC+rNZ4jvWj67UHpG1YfCQ8s5I=
-X-Google-Smtp-Source: ABdhPJwx+X/FQYsN3Kidc1NFO4qV8qx+mD2pI0A7wrXGgt8FH4QXMU8YS5je0x/oDv4BSTPJOAUQBgRSh1r0NjTV6lc=
-X-Received: by 2002:a05:6512:207:: with SMTP id a7mr13953555lfo.208.1643110786113;
- Tue, 25 Jan 2022 03:39:46 -0800 (PST)
+Received: (qmail 30641 invoked from network); 30 Jun 2020 12:55:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1593521708;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oiojF3aEAk+WIQ4q4+Bkpkzk3pZ7t3oX+vQCQc8At44=;
+	b=HX0n3WpQ+34qQyE304V1IB9cNVxSFHSCZB/nkPimHFus6Y6jlGLEJw+TpETnAlqKrTIfAN
+	6D5HJQlGVYMDNjqKb5nupT/+jw6TQ3rDWoA3KhDOXfFYYVGhikYNPy2GCUsSNo0u2H5SVy
+	tVLBpbAOrhjBzuVJMtTJODBJLZKdIc0=
+X-MC-Unique: KRX20CgpPLW3RpED_vn66A-1
+Date: Tue, 30 Jun 2020 14:54:59 +0200
+From: Stefan Cornelius <scorneli@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20200630145459.1d12bb01@lenovo>
+In-Reply-To: <20200630105009.46d2de6d@lenovo>
+References: <20200630105009.46d2de6d@lenovo>
 MIME-Version: 1.0
-From: Zhang Yonglun <zhangyonglun@apache.org>
-Date: Tue, 25 Jan 2022 19:39:34 +0800
-X-Gmail-Original-Message-ID: <CA+ZBtZ5CrKObuaQGjg9T8x9zTVVhonYPOFCGuxWgcxhnqKdebw@mail.gmail.com>
-Message-ID: <CA+ZBtZ5CrKObuaQGjg9T8x9zTVVhonYPOFCGuxWgcxhnqKdebw@mail.gmail.com>
-To: oss-security@lists.openwall.com, dev@shenyu.apache.org
-Content-Type: multipart/alternative; boundary="000000000000bba4f405d6668ac5"
-Subject: [oss-security] CVE-2022-23945: Apache ShenYu missing authentication allows gateway registration
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=scorneli@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] libvncserver: old websocket decoding patch
 
---000000000000bba4f405d6668ac5
-Content-Type: text/plain; charset="UTF-8"
+On Tue, 30 Jun 2020 10:50:09 +0200
+Stefan Cornelius <scorneli@redhat.com> wrote:
 
-Description:
+> Hi,
+> 
+> Upstream libvncserver fixed a websocket decoding issue >3years ago in
+> https://github.com/LibVNC/libvncserver/commit/aac95a9dcf4bbba87b76c72706c3221a842ca433
+> 
+> AFAICT, this never got a CVE and wasn't backported by some
+> distributions.
+> 
+> Thanks and kind regards,
+> 
+> [I sent a heads-up about this to distros last Friday, 'embargo' ran
+> out on Monday 20:00 UTC]
 
-Missing  authentication on ShenYu Admin when register by HTTP. This
-issue affected Apache ShenYu 2.4.0 and 2.4.1.
+Please use CVE-2017-18922
 
+-- 
+Stefan Cornelius / Red Hat Product Security
 
---
-
-Zhang Yonglun
-Apache ShenYu (Incubating)
-Apache ShardingSphere
-
---000000000000bba4f405d6668ac5--
