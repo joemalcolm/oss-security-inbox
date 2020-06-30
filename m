@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5601" "Monday" "4" "October" "2021" "14:31:52" "+1300" "Amos Jeffries" "squid3@treenet.co.nz" nil "166" "[oss-security] CVE-2021-28116 / ZDI-CAN-11610 / SQUID-2020:12 Out-Of-Bounds memory access in WCCPv2" nil nil nil "10" nil nil (number mark "U       squid3@treen Oct  4  166/5601  " thread-indent "\"[oss-security] CVE-2021-28116 / ZDI-CAN-11610 / SQUID-2020:12 Out-Of-Bounds memory access in WCCPv2\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-28116 / ZDI-CAN-11610 / SQUID-2020:12 Out-Of-Bounds memory access in WCCPv2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["406" "Tuesday" "30" "June" "2020" "10:50:09" "+0200" "Stefan Cornelius" "scorneli@redhat.com" "<20200630105009.46d2de6d@lenovo>" "15" "[oss-security] libvncserver: old websocket decoding patch" nil nil nil "6" "2020063008:50:09" "[oss-security] libvncserver: old websocket decoding patch" (number mark "U       scorneli@red Jun 30   15/406   " thread-indent "\"[oss-security] libvncserver: old websocket decoding patch\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] libvncserver: old websocket decoding patch" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24220 invoked by uid 550); 4 Oct 2021 05:46:53 -0000
+Received: (qmail 31954 invoked by uid 550); 30 Jun 2020 08:50:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,183 +12,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11860 invoked from network); 4 Oct 2021 01:37:19 -0000
+Received: (qmail 31936 invoked from network); 30 Jun 2020 08:50:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1593507025;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=4EaQkbeuGNtSY6Ltgb0ZN8bg8LnYeXSjgipG7yyLfH8=;
+	b=Ec3qqtURV94/LDBXx8nU8A5ZmZNxpzCr7dZI4NeAltsZlkKr6L5cLyRXwEm1zTF+nR6/1/
+	1LLMOb4z5umj9g2vN7TPlx7rQRw9ERskSyA5qsU+Xf0q/ClSb8XGKMRkU+FsFWnXX5apcb
+	H6n5Pj6Wbd/L6pLKOAOfRrsChNRs9D0=
+X-MC-Unique: x7nImAFIOPKJZUAx0oRuJw-1
+Date: Tue, 30 Jun 2020 10:50:09 +0200
+From: Stefan Cornelius <scorneli@redhat.com>
 To: oss-security@lists.openwall.com
-From: Amos Jeffries <squid3@treenet.co.nz>
-Message-ID: <60f2cec9-f775-81b1-4efc-708babceaa18@treenet.co.nz>
-Date: Mon, 4 Oct 2021 14:31:52 +1300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+Message-ID: <20200630105009.46d2de6d@lenovo>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=scorneli@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2021-28116 / ZDI-CAN-11610 / SQUID-2020:12 Out-Of-Bounds memory
- access in WCCPv2
+Subject: [oss-security] libvncserver: old websocket decoding patch
 
-__________________________________________________________________
+Hi,
 
-### Squid Proxy Cache Security Update Advisory SQUID-2020:12
-__________________________________________________________________
+Upstream libvncserver fixed a websocket decoding issue >3years ago in
+https://github.com/LibVNC/libvncserver/commit/aac95a9dcf4bbba87b76c72706c3221a842ca433
 
-Advisory ID:       | SQUID-2020:12
-Date:              | Oct 03, 2021
-Summary:           | Out-Of-Bounds memory access in WCCPv2
-Affected versions: | Squid 2.6 -> 2.7.STABLE9
-                    | Squid 3.x -> 3.5.28
-                    | Squid 4.x -> 4.16
-                    | Squid 5.x -> 5.1
-Fixed in version:  | Squid 4.17 and 5.2
-__________________________________________________________________
+AFAICT, this never got a CVE and wasn't backported by some
+distributions.
 
-   <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-28116>
-   <https://www.zerodayinitiative.com/advisories/ZDI-CAN-11610>
-__________________________________________________________________
+Thanks and kind regards,
 
-### Problem Description:
+[I sent a heads-up about this to distros last Friday, 'embargo' ran out
+on Monday 20:00 UTC]
+-- 
+Stefan Cornelius / Red Hat Product Security
 
-  Due to an out of bounds memory access Squid is vulnerable to an
-  information leak vulnerability when processing WCCPv2 messages.
-
-__________________________________________________________________
-
-### Severity:
-
-  This problem allows a WCCPv2 sender to corrupt Squids list of
-  known WCCP routers and divert client traffic to attacker
-   controlled routers.
-
-  This attack is limited to Squid proxy with WCCPv2 enabled and
-  IP spoofing of a router IP address configured as trusted in
-  squid.conf.
-
-CVSS Score of 7.7
-<https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:N/E:X/RL:O/RC:C/CR:H/IR:H/AR:X/MAV:N/MAC:H/MPR:N/MUI:X/MS:U/MC:H/MI:H/MA:X&version=3.1>
-
-__________________________________________________________________
-
-### Updated Packages:
-
-#### This bug is fixed by Squid versions 4.17 and 5.2.
-
-  In addition, patches addressing this problem for the stable
-  releases can be found in our patch archives:
-
-#### Squid 4:
-  <http://www.squid-cache.org/Versions/v4/changesets/SQUID-2020_12.patch>
-
-#### Squid 5:
- 
-<http://www.squid-cache.org/Versions/v5/changesets/squid-5-7a73a54cefff6bb83c03de219a73276e42d183d0.patch>
-
-  If you are using a prepackaged version of Squid then please
-  refer to the package vendor for availability information on
-  updated packages.
-
-__________________________________________________________________
-
-### Determining if your version is vulnerable:
-
-  All Squid built with --disable-wccpv2 are not vulnerable.
-
-  All Squid-3.x up to and including 3.5.28 built with
-  --enable-wccpv2 and configured with wccp2_router in squid.conf
-  are vulnerable.
-
-  All Squid-3.x up to and including 3.5.28 built without
-  --disable-wccpv2 and configured with wccp2_router in squid.conf
-  are vulnerable.
-
-  All Squid-4.x up to and including 4.16 built with
-  --enable-wccpv2 and configured with wccp2_router in squid.conf
-  are vulnerable.
-
-  All Squid-4.x up to and including 4.16 built without
-  --disable-wccpv2 and configured with wccp2_router in squid.conf
-  are vulnerable.
-
-  All Squid-5.x up to and including 5.1 built with
-  --enable-wccpv2 and configured with wccp2_router in squid.conf
-  are vulnerable.
-
-  All Squid-5.x up to and including 5.1 built without
-  --disable-wccpv2 and configured with wccp2_router in squid.conf
-  are vulnerable.
-
-__________________________________________________________________
-
-### Workaround:
-
-Either,
-
-The following network security Best Practices will greatly
-restrict the ability of any attacker utilizing this
-vulnerability. They can be considered workarounds for this
-issue:
-
-  * Use Private IP address for control communications (eg WCCPv2)
-    with routers.
-
-  * Firewall restriction of UDP traffic on port 2048 and any
-    other UDP ports used for WCCP(v2) control messages to only
-    permit known devices to communicate with WCCP(v2).
-
-    Note that ports used by clients and diverted by WCCP (eg 80
-    or 443) are not relevant.
-
-  * Ensure the network implements BCP 38 spoofing protection.
-    Include protection against LAN traffic spoofing as much as
-    possible.
-    See also <http://www.bcp38.info> and 
-<https://tools.ietf.org/html/bcp38>.
-
-Or,
-
-  Build Squid with --disable-wccpv2
-
-Or,
-
-  Remove all lines for wccp2_* directives from squid.conf.
-  The default configuration is not to enable WCCPv2.
-
-__________________________________________________________________
-
-### Contact details for the Squid project:
-
-  For installation / upgrade support on binary packaged versions
-  of Squid: Your first point of contact should be your binary
-  package vendor.
-
-  If you install and build Squid from the original Squid sources
-  then the <squid-users@lists.squid-cache.org> mailing list is
-  your primary support point. For subscription details see
-  <http://www.squid-cache.org/Support/mailing-lists.html>.
-
-  For reporting of non-security bugs in the latest STABLE release
-  the squid bugzilla database should be used
-  <http://bugs.squid-cache.org/>.
-
-  For reporting of security sensitive bugs send an email to the
-  <squid-bugs@lists.squid-cache.org> mailing list. It's a closed
-  list (though anyone can post) and security related bug reports
-  are treated in confidence until the impact has been established.
-
-__________________________________________________________________
-
-### Credits:
-
-  This vulnerability was discovered by Lyu working with Trend
-  Micro Zero Day Initiative.
-
-  Fixed by Amos Jeffries of Treehouse Networks Ltd.
-
-__________________________________________________________________
-
-### Revision history:
-
-  2020-08-17 10:43:36 UTC Initial Report
-  2021-02-09 00:00:00 UTC Advisory Release by ZDI
-  2021-10-03 00:00:00 UTC Packages Released
-
-__________________________________________________________________
-END
