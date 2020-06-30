@@ -1,35 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/8
-Message-ID: <1595268569.108006.1589466246962@mail.yahoo.com>
-Date: Thu, 14 May 2020 14:24:06 +0000 (UTC)
-From: Andrea Cosentino <ancosen1985@...oo.com>
-To: "dev@...el.apache.org" <dev@...el.apache.org>,  "users@...el.apache.org" <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "Colm O. HEigeartaigh" <coheigea@...che.org>
-Subject: [SECURITY] New security advisory CVE-2020-11972 released for Apache Camel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/30/2
+Message-ID: <20200630105009.46d2de6d@lenovo>
+Date: Tue, 30 Jun 2020 10:50:09 +0200
+From: Stefan Cornelius <scorneli@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: libvncserver: old websocket decoding patch
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache Camel, that is fixed in
-the recent 2.25.1 and 3.2.0 releases.
+Hi,
 
-CVE-2020-11972: Apache Camel RabbitMQ enables Java deserialization by default
+Upstream libvncserver fixed a websocket decoding issue >3years ago in
+https://github.com/LibVNC/libvncserver/commit/aac95a9dcf4bbba87b76c72706c3221a842ca433
 
-Severity: MEDIUM
+AFAICT, this never got a CVE and wasn't backported by some
+distributions.
 
-Vendor: The Apache Software Foundation
+Thanks and kind regards,
 
-Versions Affected: Camel 2.25.0, Camel 3.0.0 to 3.1.0. The unsupported Camel 2.x (2.24 and earlier) versions may be also affected.
+[I sent a heads-up about this to distros last Friday, 'embargo' ran out
+on Monday 20:00 UTC]
+-- 
+Stefan Cornelius / Red Hat Product Security
 
-Description: Apache Camel RabbitMQ enables Java deserialization by default
-
-Mitigation: 2.x users should upgrade to 2.25.1, 3.x users should upgrade to 3.2.0 The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-14711 refers to the various commits that resovoled the issue, and have more details.
-
-On behalf of the Apache Camel PMC
-
---
-Andrea Cosentino 
-----------------------------------
-Apache Camel PMC Chair
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@...oo.com
-Twitter: @oscerd2
-Github: oscerd
