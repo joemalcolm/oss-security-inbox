@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1590" "Friday" "20" "January" "2017" "13:41:52" "+1100" "Harshula" "harshula@redhat.com" "<1484880112.11949.24.camel@redhat.com>" "44" "[oss-security] CVE REQUEST: linux kernel: process with pgid zero able to crash kernel" "^Cc:" nil nil "1" "2017012002:41:52" "[oss-security] CVE REQUEST: linux kernel: process with pgid zero able to crash kernel" (number mark "        harshula@red Jan 20   44/1590  " thread-indent "\"[oss-security] CVE REQUEST: linux kernel: process with pgid zero able to crash kernel\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3839" "Wednesday" "1" "July" "2020" "14:10:33" "+0200" "Otto Moerbeek" "otto.moerbeek@open-xchange.com" "<c8f3b8a3-fc11-9526-8db8-fbda8674b4d1@open-xchange.com>" "99" "[oss-security] PowerDNS Recursor 4.3.2, 4.2.3. and 4.1.17 released fixing CVE-2020-14196: Access restriction,bypass" nil nil nil "7" "2020070112:10:33" "[oss-security] PowerDNS Recursor 4.3.2, 4.2.3. and 4.1.17 released fixing CVE-2020-14196: Access restriction,bypass" (number mark "U       otto.moerbee Jul  1   99/3839  " thread-indent "\"[oss-security] PowerDNS Recursor 4.3.2, 4.2.3. and 4.1.17 released fixing CVE-2020-14196: Access restriction,bypass\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] PowerDNS Recursor 4.3.2, 4.2.3. and 4.1.17 released fixing CVE-2020-14196: Access restriction,bypass" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3651 invoked by uid 550); 20 Jan 2017 03:15:47 -0000
+Received: (qmail 5163 invoked by uid 550); 1 Jul 2020 13:02:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,144 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19819 invoked from network); 20 Jan 2017 02:42:10 -0000
-Message-ID: <1484880112.11949.24.camel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Fri, 20 Jan 2017 02:42:00 +0000 (UTC)
-Cc: Jesse Hertz <Jesse.Hertz@nccgroup.trust>,
-        Wade Mealing
- <wmealing@redhat.com>
-Date: Fri, 20 Jan 2017 13:41:52 +1100
-From: Harshula <harshula@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE REQUEST: linux kernel: process with pgid zero able to crash
- kernel
+Received: (qmail 18187 invoked from network); 1 Jul 2020 12:10:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=open-xchange.com;
+	s=201705; t=1593605435;
+	bh=zvK8/TNXG2pfX27+Td5IJMIq7G0bClJVxP67ivPRh6A=;
+	h=From:Subject:To:Date:From;
+	b=4fi9Ipyln3W8FBgSKrd64Z/vgv3qgBSjIDK1ClpoPS+JXcekIvgsGY9o4noTevZtN
+	 ykLU+9kr05lsIkIIIO5JddOe3dWD7ldGbNKNplJj7a6TIfcl5DMs98rYpKWmewTVJs
+	 mpBUSrrrfkhzBrSyzuKsWeByhj6ecC293YE61arpk/INaqn+hKOHSNv1OrPHWDoowi
+	 blCplyLgLoNbcbWiyl2HK7rGLdCRw6sP6PUvKlnJjMSOB2XbnPVipuzqSwZwfEOOsi
+	 WBDB1GhB/SfGEzjvc8U48Mk6Wd2m93UAMgO6TXNYO39hY3GJdEiGsOHxGzvSw/qr2r
+	 pGEYNx7Wn9Ang==
+From: Otto Moerbeek <otto.moerbeek@open-xchange.com>
 To: oss-security@lists.openwall.com
+Autocrypt: addr=otto.moerbeek@open-xchange.com; keydata=
+ mQENBFwsoP8BCACU+waQJk8NT0hkuTQwVEJjHiLHsHIPlj1w487uzBVnZ3jaacd1iPz6v5OT
+ DVcT6qaQ2f6NQosNpuLKzJr4lZTxRC2dIho+R7OjWKQ4vZ/XYbjRH/52+nT39VHEF6yTYj/r
+ VDZvAsuu8+sTJ4hkiGkqQv43OfDtbMCR3LdkwPNfgZ5KCmdFrmcOg3kovaUbffBhe8mFwZDV
+ ws7XnZJntvrhYi0zRH3MYmLnd1WBBiVWcvqZDQsP8FwssFtmcjPgANpHBC/Q78eaji3XhcL4
+ JGcpzok7nV6nbjkYq/kgkxlYviyRdIW/Xm8tZWyFDjOktKFBQv4+S02j1D5Hqb8YUc8lABEB
+ AAG5AQ0EXCyg/wEIAL6BHbRVWSVy0JNTKQCuUGl/F3oseEclbUvWgiYGaS6NQ1mPSSJJYNg+
+ R0Of1+nO2JktSozT5gq9pAfAGpgQPJOZW/vOTo8bWJh6K5xVZni5Jcl//LAMfDBUFyno1Eb6
+ t++jL60HGgWIEWDKSb8WevWX76ml4Y++xkG3geF5NHNgxHhdNpDsk2uHCnKSJgzfJLqK2E7H
+ KVjEpFTg2ke5FOW/86N0rpUsguLRQOJnZJtb0C1xBdf6nULks6HicRGxueax2XNl5viIK7wi
+ fPUyw8aitfzTorllZkF5YZAwFi/ljsim7mHDPVPdSUKbPG19vFVlBbR8ANUfl869NMmpg5cA
+ EQEAAYkBOgQYAQIAJAUCXCyg/wIbDAQLCQgHBhUKCQgLAgUWAgMBAAKeAQUJEswDAAAKCRDq
+ yrkLGWPsKzeYCACSPnYV5477A5/czhjBk1TDPjBiwhgRP5X+PW/NkdMAck1zrD5PGsX3puYA
+ gTMpn07QLfDdhDLc09+Khdp8gPp2SShgpS2H5d0G+SWHobpfSSoMg2ijC2tmtji7ZCMYWLyU
+ QR7SiqhGcgR+0BqrYBqiyPkGynr8i7PEdvMNgj+9hJYb+LKB6Ox+f/Qxc+Y5mR3ug5/XO4+F
+ KnTAi24UFRLM3dStMzr4PvYJtWfj8l9rK8yV2nJv2EvEktS5RjKiYKb3od4wmf4o9O+xT9zW
+ MJjIEK8Vuv1BAFHqN6caHBW9UjSdQKecLLvR0L/+aLITi+jLoIjdvkwY75bu/xqx8MKD
+Message-ID: <c8f3b8a3-fc11-9526-8db8-fbda8674b4d1@open-xchange.com>
+Date: Wed, 1 Jul 2020 14:10:33 +0200
+User-Agent: Mozilla/5.0 (X11; OpenBSD amd64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="a32FV77AXTxfk5DYBz1tNDW6M9wL8qVN5"
+Subject: [oss-security] PowerDNS Recursor 4.3.2, 4.2.3. and 4.1.17 released fixing
+ CVE-2020-14196: Access restriction,bypass
 
-Hi Folks,
+--a32FV77AXTxfk5DYBz1tNDW6M9wL8qVN5
+Content-Type: multipart/mixed; boundary="hpPy7pCRF5eoprHtnNWxx0nkZplJunchd"
 
-Red Hat Product Security has been notified of a kernel vulnerability
-that a local attacker can exploit to crash/panic the kernel and cause a
-denial of service.
+--hpPy7pCRF5eoprHtnNWxx0nkZplJunchd
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-This was reported to Red Hat by Jesse Hertz (CC'd) (reproducer:
-rt411016):
+Hello!,
 
-"A process that is in the same process group as the ``init'' process
-(group id zero) can crash the Linux 2 kernel with several system calls
-by passing in a process ID or process group ID of zero. The value zero
-is a special value that indicates the current process ID or process
-group. However, in this case it is also the process group ID of the
-process."
+Today we are releasing PowerDNS Recursor 4.3.2, 4.2.3. and 4.1.17,
+containing a security fix for CVE-2020-14196: Access restriction
+bypass[0].
 
-I've been testing whether RHEL is vulnerable and found the following:
+An issue has been found in PowerDNS Recursor where the ACL applied to
+the internal web server via `webserver-allow-from` is not properly
+enforced, allowing a remote attacker to send HTTP queries to the
+internal web server, bypassing the restriction.
 
-* Upstream/mainline is not vulnerable
-* RHEL 7 is not vulnerable
-* RHEL 6 is vulnerable
-* RHEL 5 is partially vulnerable
+Note that the web server is not enabled by default. Only installations
+using a non-default value for `webserver` and `webserver-address` are
+affected.
 
-A very specific set of circumstances are required in order for the
-vulnerability to be exploited. The default configuration of RHEL 5 and
-RHEL 6 are not exploitable.
+Workarounds are: disable the webserver or set a password or an API
+key. Additionally, restrict the binding address using the
+`webserver-address` setting to local addresses only and/or use a
+firewall to disallow web requests from untrusted sources reaching the
+webserver listening address.
 
-The risk is that a non-root user can trigger a kernel crash on a
-modified RHEL 6 system where the kernel runs a process that can be
-exploited. Perhaps on an embedded device.
+As usual, there were also other smaller enhancements and bugfixes. In
+particular, the 4.3.2 release contains fixes that allow long CNAME
+chains to resolve properly, where previously they could fail if qname
+minimization is enabled.  Please refer to the 4.3.2 changelog[1],
+4.2.3 changelog[2] and 4.1.17 changelog[3] for details.
 
-Thanks,
-Harshula
+The 4.3.2 tarball[4] (signature[5]), 4.2.3 tarball[6] (signature[7])
+and 4.1.17 tarball[8] (signature[9]) are available from our download
+site[10] and packages for CentOS 6, 7 and 8, Debian Stretch and
+Buster, Ubuntu Xenial and Bionic are available from our
+repository[11].
 
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1358840
+4.0 and older releases are EOL, refer to the documentation[12] for
+details about our release cycles.
 
-Patches:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/
-?id=f106eee10038c2ee5b6056aaf3f6d5229be6dcdd
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/
-?id=f20011457f41c11edb5ea5038ad0c8ea9f392023
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/
-?id=fa2755e20ab0c7215d99c2dc7c262e98a09b01df
+Please send us all feedback and issues you might have via the mailing
+list[13], or in case of a bug, via GitHub[14].
+
+[0] https://docs.powerdns.com/recursor/security-advisories/powerdns-advisor=
+y-2020-04.html
+[1] https://doc.powerdns.com/recursor/changelog/4.3.html#change-4.3.2
+[2] https://doc.powerdns.com/recursor/changelog/4.2.html#change-4.2.3
+[3] https://doc.powerdns.com/recursor/changelog/4.1.html#change-4.1.17
+[4] https://downloads.powerdns.com/releases/pdns-recursor-4.3.2.tar.bz2
+[5] https://downloads.powerdns.com/releases/pdns-recursor-4.3.2.tar.bz2.sig
+[6] https://downloads.powerdns.com/releases/pdns-recursor-4.2.3.tar.bz2
+[7] https://downloads.powerdns.com/releases/pdns-recursor-4.2.3.tar.bz2.sig
+[8] https://downloads.powerdns.com/releases/pdns-recursor-4.1.17.tar.bz2
+[9] https://downloads.powerdns.com/releases/pdns-recursor-4.1.17.tar.bz2.sig
+[10] https://downloads.powerdns.com/releases/
+[11] https://repo.powerdns.com/
+[12] https://docs.powerdns.com/recursor/appendices/EOL.html
+[13] https://mailman.powerdns.com/mailman/listinfo/pdns-users
+[14] https://github.com/PowerDNS/pdns/issues/new/choose
+
+Regards,=20
+
+  Otto and the PowerDNS team
+
+--=20
+Otto Moerbeek
+Senior PowerDNS Developer
+
+Email: otto.moerbeek@open-xchange.com
+
+
+
+
+
+
+--hpPy7pCRF5eoprHtnNWxx0nkZplJunchd--
+
+--a32FV77AXTxfk5DYBz1tNDW6M9wL8qVN5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEmQw9Dqx8J13GsYQ26sq5Cxlj7CsFAl78fTkACgkQ6sq5Cxlj
+7CtIhQf6AryELV4564t2rwG4GCL7ku9jr1w9e8FSgleSYYjEoT0ZNjFOdRzhVijT
+zHQarCMRyVqvDWTNmfrT5CyR+2CqomS9Z4r56KyGP03M+k63T5OGJQtzNTqCiK2y
+O6bK1K/exfdNuhrM4hJEN4E21VuxdXvdzsXJwX0wC4eAT6//OnH00ognljjKLjLb
+EFiOzT5yj0cKX9tegoBQroK33QmCo6/thYh1hNw4IxgP+Sgkj4FDFb9GhtvGTebI
+eqfV3tTbGa2cWD26HmlVIL0AO+jKc8QNwHDpNpBzaVZkmUlISb49KkdUyTo/ls/X
+TDcoI4hMMcfwldXCsfNmkYICCsVvSg==
+=Z5qc
+-----END PGP SIGNATURE-----
+
+--a32FV77AXTxfk5DYBz1tNDW6M9wL8qVN5--
