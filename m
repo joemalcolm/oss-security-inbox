@@ -1,119 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/15
-Message-Id: <E1kp9Jb-0007Au-Bq@xenbits.xenproject.org>
-Date: Tue, 15 Dec 2020 12:20:27 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 356 v3 (CVE-2020-29567) - infinite loop when cleaning up IRQ vectors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/01/1
+Message-ID: <c8f3b8a3-fc11-9526-8db8-fbda8674b4d1@open-xchange.com>
+Date: Wed, 1 Jul 2020 14:10:33 +0200
+From: Otto Moerbeek <otto.moerbeek@...n-xchange.com>
+To: oss-security@...ts.openwall.com
+Subject: PowerDNS Recursor 4.3.2, 4.2.3. and 4.1.17 released fixing CVE-2020-14196: Access restriction,bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello!,
 
-            Xen Security Advisory CVE-2020-29567 / XSA-356
-                               version 3
+Today we are releasing PowerDNS Recursor 4.3.2, 4.2.3. and 4.1.17,
+containing a security fix for CVE-2020-14196: Access restriction
+bypass[0].
 
-              infinite loop when cleaning up IRQ vectors
+An issue has been found in PowerDNS Recursor where the ACL applied to
+the internal web server via `webserver-allow-from` is not properly
+enforced, allowing a remote attacker to send HTTP queries to the
+internal web server, bypassing the restriction.
 
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When moving IRQs between CPUs to distribute the load of IRQ handling,
-IRQ vectors are dynamically allocated and de-allocated on the relevant
-CPUs.  De-allocation has to happen when certain constraints are met.
-If these conditions are not met when first checked, the checking CPU
-may send an interrupt to itself, in the expectation that this IRQ will
-be delivered only after the condition preventing the cleanup has
-cleared.  For two specific IRQ vectors this expectation was violated,
-resulting in a continuous stream of self-interrupts, which renders the
-CPU effectively unusable.
-
-IMPACT
-======
-
-A domain with a passed through PCI device can cause lockup of a
-physical CPU, resulting in a Denial of Service (DoS) to the entire
-host.
-
-VULNERABLE SYSTEMS
-==================
-
-Only Xen 4.14 is affected.  Xen versions 4.13 and older are not
+Note that the web server is not enabled by default. Only installations
+using a non-default value for `webserver` and `webserver-address` are
 affected.
 
-Only x86 systems are vulnerable.  Arm systems are not vulnerable.
+Workarounds are: disable the webserver or set a password or an API
+key. Additionally, restrict the binding address using the
+`webserver-address` setting to local addresses only and/or use a
+firewall to disallow web requests from untrusted sources reaching the
+webserver listening address.
 
-Only guests with physical PCI devices passed through to them can exploit
-the vulnerability.
+As usual, there were also other smaller enhancements and bugfixes. In
+particular, the 4.3.2 release contains fixes that allow long CNAME
+chains to resolve properly, where previously they could fail if qname
+minimization is enabled.  Please refer to the 4.3.2 changelog[1],
+4.2.3 changelog[2] and 4.1.17 changelog[3] for details.
 
-MITIGATION
-==========
+The 4.3.2 tarball[4] (signature[5]), 4.2.3 tarball[6] (signature[7])
+and 4.1.17 tarball[8] (signature[9]) are available from our download
+site[10] and packages for CentOS 6, 7 and 8, Debian Stretch and
+Buster, Ubuntu Xenial and Bionic are available from our
+repository[11].
 
-There is no known mitigation.
+4.0 and older releases are EOL, refer to the documentation[12] for
+details about our release cycles.
 
-CREDITS
-=======
+Please send us all feedback and issues you might have via the mailing
+list[13], or in case of a bug, via GitHub[14].
 
-This issue was discovered by Roger Pau Monné of Citrix.
+[0] https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2020-04.html
+[1] https://doc.powerdns.com/recursor/changelog/4.3.html#change-4.3.2
+[2] https://doc.powerdns.com/recursor/changelog/4.2.html#change-4.2.3
+[3] https://doc.powerdns.com/recursor/changelog/4.1.html#change-4.1.17
+[4] https://downloads.powerdns.com/releases/pdns-recursor-4.3.2.tar.bz2
+[5] https://downloads.powerdns.com/releases/pdns-recursor-4.3.2.tar.bz2.sig
+[6] https://downloads.powerdns.com/releases/pdns-recursor-4.2.3.tar.bz2
+[7] https://downloads.powerdns.com/releases/pdns-recursor-4.2.3.tar.bz2.sig
+[8] https://downloads.powerdns.com/releases/pdns-recursor-4.1.17.tar.bz2
+[9] https://downloads.powerdns.com/releases/pdns-recursor-4.1.17.tar.bz2.sig
+[10] https://downloads.powerdns.com/releases/
+[11] https://repo.powerdns.com/
+[12] https://docs.powerdns.com/recursor/appendices/EOL.html
+[13] https://mailman.powerdns.com/mailman/listinfo/pdns-users
+[14] https://github.com/PowerDNS/pdns/issues/new/choose
 
-RESOLUTION
-==========
+Regards, 
 
-Applying the attached patch resolves this issue.
+  Otto and the PowerDNS team
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+-- 
+Otto Moerbeek
+Senior PowerDNS Developer
 
-xsa356.patch           xen-unstable - Xen 4.14.x
+Email: otto.moerbeek@...n-xchange.com
 
-$ sha256sum xsa356*
-77316e3b86e2482ee9741db7484d323a399028762af1c88734f8c83e78069fb3  xsa356.meta
-21c217e41549bf74d5fcc26f1d23b6d902c5c72de5e2c8490842aea9f999b036  xsa356.patch
-$
 
-DEPLOYMENT DURING EMBARGO
-=========================
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/YqeAMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZv4cIAIdqAn7O/TicwVod/L1Lktuk94g73LQlhRxMFnQ2
-CoFrIBJtvyFq0m0OqRcVav3hb8wa7EdbmbJXgvoC4emKUcIcUkMA/dyvUi9SKdGP
-5iQDL0Vsasq7rQN5vjuUA6KIDp4qyT87mxNLUwMzwrXDORFHT9YZO/SZLY37WU7S
-UX0qaDh9FpwtdB4nDULqNimAZcy1yonXkD8bb6jDmHIeTx33cfe4BNvYqApwTPD8
-fxctAlsYHLuwfnEBdQ+cadfcjF/PqkRcsGtMk6hGRn2hEscEfHWMH9I/R9lZvyj5
-CjfFKzb2WpDu3KUuJJJBTavkZ97Bs+flVNGLrQ/AgKoitQs=
-=vDoA
------END PGP SIGNATURE-----
-
-Download attachment "xsa356.meta" of type "application/octet-stream" (904 bytes)
-
-Download attachment "xsa356.patch" of type "application/octet-stream" (2499 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
