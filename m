@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/20/4
-Message-ID: <20201119234717.GA18029@oevtugenva.nrevsny.pk>
-Date: Thu, 19 Nov 2020 18:47:22 -0500
-From: Rich Felker <dalias@...c.org>
-To: musl@...ts.openwall.com, oss-security@...ts.openwall.com
-Subject: CVE-2020-28928: musl libc: wcsnrtombs destination buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/02/3
+Message-ID: <CALKeL-NrWzYLfautHShBxs3xsnxq5oO5fUhC1VAoDaX8rSBTbg@mail.gmail.com>
+Date: Wed, 1 Jul 2020 20:15:07 -0700
+From: Mike Jumper <mjumper@...che.org>
+To: announce@...che.org, announce@...camole.apache.org,  dev@...camole.apache.org, user@...camole.apache.org
+Cc: security@...camole.apache.org, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2020-9498: Apache Guacamole: Dangling pointer in RDP static virtual channel handling
 Content-Type: text/plain; charset=utf-8
 
-The wcsnrtombs function in all musl libc versions up through 1.2.1 has
-been found to have multiple bugs in handling of destination buffer
-size when limiting the input character count, which can lead to
-infinite loop with no forward progress (no overflow) or writing past
-the end of the destination buffera.
+CVE-2020-9498: Dangling pointer in RDP static virtual channel handling
 
-This function is not used internally in musl and is not widely used,
-but does appear in some applications. The non-input-limiting form
-wcsrtombs is not affected.
+Versions affected:
+Apache Guacamole 1.1.0 and earlier
 
-All users of musl 1.2.1 and prior versions should apply the attached
-patch, which replaces the overly complex and erroneous implementation.
-The upcoming 1.2.2 release will adopt this new implementation.
+Description:
+Apache Guacamole 1.1.0 and older may mishandle pointers involved in
+processing data received via RDP static virtual channels. If a user
+connects to a malicious or compromised RDP server, a series of
+specially-crafted PDUs could result in memory corruption, possibly
+allowing arbitrary code to be executed with the privileges of the
+running guacd process.
 
-View attachment "wcsnrtombs-cve-2020-28928.diff" of type "text/plain" (1373 bytes)
+Mitigation:
+Users of versions of Apache Guacamole 1.1.0 and older that provide
+access to untrusted RDP servers should upgrade to 1.2.0.
+
+Credit:
+We would like to thank Eyal Itkin (Check Point Research) for reporting
+this issue.
