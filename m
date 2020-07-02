@@ -1,64 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/02/2
-Message-ID: <87a73uek1o.fsf@hope.eyrie.org>
-Date: Wed, 01 Apr 2020 18:46:43 -0700
-From: Russ Allbery <eagle@...ie.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Deficient engineering processes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/02/2
+Message-ID: <CALKeL-PCDy9Y1bd1Nuj196_giWr4fSYyvrk74jfoLxpSysJf=A@mail.gmail.com>
+Date: Wed, 1 Jul 2020 20:14:11 -0700
+From: Mike Jumper <mjumper@...che.org>
+To: announce@...che.org, announce@...camole.apache.org,  dev@...camole.apache.org, user@...camole.apache.org
+Cc: security@...camole.apache.org, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2020-9497: Apache Guacamole: Improper input validation of RDP static virtual channels
 Content-Type: text/plain; charset=utf-8
 
-Jeffrey Walton <noloader@...il.com> writes:
+CVE-2020-9497: Improper input validation of RDP static virtual channels
 
-> My question is, how to convince someone that following standard project
-> management procedures is a good thing? How do we get them onboard with
-> improving their engineering processes? Especially the evaluation phase,
-> and leveraging a continuous integration pipeline to detect errors before
-> they are released to users?
+Versions affected:
+Apache Guacamole 1.1.0 and earlier
 
-I would start by mentally dividing this into two cases: People who
-consider security a top priority but don't know how to think about it
-systematically, and people who don't currently have security as a focus.
+Description:
+Apache Guacamole 1.1.0 and older do not properly validate data
+received from RDP servers via static virtual channels. If a user
+connects to a malicious or compromised RDP server, specially-crafted
+PDUs could result in disclosure of information within the memory of
+the guacd process handling the connection.
 
-The first group is the easy one, relatively speaking.  There will be
-disagreements about what are valid root causes (for instance, is it
-correct to identify the choice of programming language as a root cause for
-classes of vulnerabilities?), but even with those disagreements, there are
-a wealth of tools available for essentially any language, and showing
-people how to apply them better if they're already interested in
-preventing security problems is straightforward, if sometimes
-labor-intensive if the code base isn't very testable.
+Mitigation:
+Users of versions of Apache Guacamole 1.1.0 and older that provide
+access to untrusted RDP servers should upgrade to 1.2.0.
 
-The harder problem is when security isn't a top priority.  I don't think
-you'll find many people who won't at least give lip service to security,
-but that doesn't mean they're willing to invest in process to improve
-security.  This is particularly true in the broader world of small open
-source projects without corporate sponsors.  The maintainer may have only
-a couple of hours a month to work on their project.  If they spend that
-time improving engineering process, that may be all of their available
-time for six months, and in the interim no other improvements to the
-software happen.
-
-Worse, improved process usually means increased fixed overhead costs.  A
-CI pipeline will catch a lot of bugs and thus accelerate development in
-some ways, but it will also break randomly and generate new problems that
-have to be fixed (problems that are often much less fun than problems in
-the main code).  I personally spend substantial amounts of time fixing or
-working around bugs in the CI pipeline for my personal projects.  That
-cuts into that couple of hours a month, possibly reducing it to zero.
-
-In other words, I would argue that security for most open source projects
-(by number, at least) is a resource problem, not a persuasion problem.
-Their authors are not investing in engineering process improvement in
-large part because they don't have time to both do that and to do the work
-on their project that they find fun and that inspired them to release it
-as open source in the first place.
-
-That implies that the solution to look for isn't a winning persuasive
-argument, but instead is a way to get the developer more resources, either
-by somehow getting them more time to work on their project or by making
-the cost of better engineering process substantially smaller than it is
-now.  GitHub's automated pull requests for dependencies with security
-vulnerabilities is a good example of the latter.
-
--- 
-Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
+Credit:
+We would like to thank the GitHub Security Lab and Eyal Itkin (Check
+Point Research) for reporting this issue.
