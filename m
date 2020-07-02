@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/27/4
-Message-ID: <20200527180652.GA3675595@trogon.sfo.coreos.systems>
-Date: Wed, 27 May 2020 14:06:52 -0400
-From: Benjamin Gilbert <benjamin.gilbert@...eos.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/02/6
+Message-ID: <alpine.DEB.2.20.2007021325170.16951@tvnag.unkk.fr>
+Date: Thu, 2 Jul 2020 13:34:03 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: Francis Perron <francisp@...gle.com>
+cc: oss-security@...ts.openwall.com, xiao.zhang@...driver.com, Solar Designer <solar@...nwall.com>
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 07, 2020 at 07:04:20PM -0400, Benjamin Gilbert wrote:
-> On Tue, May 05, 2020 at 09:24:58PM +0200, Solar Designer wrote:
-> > On Tue, Mar 03, 2020 at 12:07:29AM -0500, Benjamin Gilbert wrote:
-> > > Red Hat recently announced [1] that CoreOS Container Linux will reach
-> > > end-of-life on May 26.  The Container Linux team will be leaving the
-> > > distros lists on that date,
-> > 
-> > I assume you'll remind me about that on that date.
-> > 
-> > > We plan to continue executing our current responsibilities until May
-> > > 26, but if other distros want to take over our roles sooner for ease
-> > > of bookkeeping, we're open to that.
-> > 
-> > I suggest that Oracle and CloudLinux already start to act as primary for
-> > their respective tasks, and CoreOS as backup until you leave on May 26.
-> 
-> That all sounds good to us.
+On Thu, 2 Jul 2020, Francis Perron wrote:
 
-CoreOS has now unsubscribed from distros/linux-distros.  Thanks, all.
+>  this delay may be possible due to many things, but the simplest possibility 
+> that comes to mind is that Daniel (here cc'd) from H1 has only gotten a 
+> reservation of CVE number, and he and MITRE have not triggered the 
+> submission yet.
 
---Benjamin Gilbert
+In the curl project we (nowadays) request and get CVE IDs from Hackerone, and 
+we've subsequently told them to publish these two recent curl related CVE IDs 
+when we made them public to the world - I suspect this is just them being a 
+little slow. We don't have any direct contact with MITRE.
+
+All details regarding the two recent curl flaws are here:
+
+  https://curl.haxx.se/docs/CVE-2020-8169.html
+  https://curl.haxx.se/docs/CVE-2020-8177.html
+
+-- 
+
+  / daniel.haxx.se
