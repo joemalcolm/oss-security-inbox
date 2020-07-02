@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3880" "Monday" "11" "December" "2017" "13:34:31" "+0100" "Remi Gacogne" "remi.gacogne@powerdns.com" "<d664369b-77c6-b0e3-7d40-5d8ef912ee3d@powerdns.com>" "100" "[oss-security] PowerDNS Security Advisory 2017-08" nil nil nil "12" "2017121112:34:31" "[oss-security] PowerDNS Security Advisory 2017-08" (number mark "U       remi.gacogne Dec 11  100/3880  " thread-indent "\"[oss-security] PowerDNS Security Advisory 2017-08\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["672" "Thursday" "2" "July" "2020" "11:28:46" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.77.849.2007021123400.6260@xnncv>" "20" "[oss-security] CVE-2020-15469 QEMU: MMIO ops null pointer dereference may lead to DoS" nil nil nil "7" "2020070205:58:46" "[oss-security] CVE-2020-15469 QEMU: MMIO ops null pointer dereference may lead to DoS" (number mark "U       ppandit@redh Jul  2   20/672   " thread-indent "\"[oss-security] CVE-2020-15469 QEMU: MMIO ops null pointer dereference may lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-15469 QEMU: MMIO ops null pointer dereference may lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29910 invoked by uid 550); 11 Dec 2017 12:34:44 -0000
+Received: (qmail 1711 invoked by uid 550); 2 Jul 2020 05:59:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,114 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29876 invoked from network); 11 Dec 2017 12:34:44 -0000
-To: oss-security@lists.openwall.com
-From: Remi Gacogne <remi.gacogne@powerdns.com>
-Message-ID: <d664369b-77c6-b0e3-7d40-5d8ef912ee3d@powerdns.com>
-Date: Mon, 11 Dec 2017 13:34:31 +0100
+Received: (qmail 1686 invoked from network); 2 Jul 2020 05:59:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1593669536;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=Md4V/68vnTzk+DNdqv7Hqk83+fjjBVNF7t3ORxYcyiM=;
+	b=W8aVlcL+65oFeQt6kON5B+cJ+9AdWHLiICtd4r4hIXfE0eh9mnnehRJpi489kW0Ql56Hto
+	eUfgoMv/qbYT5EBvNuAl1wm882dSiQhH3BTcwEHUZHePw3Grdxe0H6n+BuWib9i84C6CT1
+	IOjr0eF12CHhFno1CAH23gBQHGFJKnc=
+X-MC-Unique: k3xHii38Mpa7ghd0X9T_cg-1
+Date: Thu, 2 Jul 2020 11:28:46 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+cc: Lei Sun <slei.casper@gmail.com>
+Message-ID: <nycvar.YSQ.7.77.849.2007021123400.6260@xnncv>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="N8wuXIBR0lhen2AEXU7DEE7XsdVm8QgJT"
-Subject: [oss-security] PowerDNS Security Advisory 2017-08
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ppandit@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] CVE-2020-15469 QEMU: MMIO ops null pointer dereference may lead to
+ DoS
 
---N8wuXIBR0lhen2AEXU7DEE7XsdVm8QgJT
-Content-Type: multipart/mixed; boundary="d6bMwWdqX7rWV7F90kgsTACX83WMPvDdc";
- protected-headers="v1"
-From: Remi Gacogne <remi.gacogne@powerdns.com>
-To: oss-security@lists.openwall.com
-Message-ID: <d664369b-77c6-b0e3-7d40-5d8ef912ee3d@powerdns.com>
-Subject: PowerDNS Security Advisory 2017-08
+   Hello,
 
---d6bMwWdqX7rWV7F90kgsTACX83WMPvDdc
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: quoted-printable
+A NULL pointer dereference issue was found in various system emulators of 
+QEMU. It could occur while performing MMIO r/w operations, in case the 
+respective handler function is not defined. A privileged guest user able to 
+invoke MMIO operation may use this flaw to crash the QEMU process on the host 
+resulting in DoS scenario.
 
-Hello everybody,
+Upstream patch(es):
+-------------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg09961.html
 
-We just released PowerDNS Recursor 4.0.8, fixing a security issue
-(CVE-2017-15120) affecting PowerDNS Recursor from 4.0.0 up to and
-including 4.0.7. PowerDNS Recursor 3.7.4 and 4.1.0 are not affected. The
-full security advisory can be found below and at
-https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisor=
-y-2017-08.html
+This issue was reported by Lei Sun(CC'd); CVE-2020-15469 assigned via
+-> https://cveform.mitre.org/.
 
-The issue is a parsing error while handling authoritative answers
-containing a CNAME of a different class than IN, leading to a recursor
-crash via a NULL-pointer dereference. We don't believe this crash to be
-exploitable, but it results in an unauthenticated remote denial of
-service which can be mitigated by running the recursor inside a
-supervisor like supervisord or systemd so it can be automatically restarted.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-We also provide a minimal patch for the 4.0.7 release at
-https://downloads.powerdns.com/patches/2017-08/
-
-Please feel free to contact me directly if you have any question.
-
-Best regards,
-
-
-Remi and the PowerDNS team
-
-PowerDNS Security Advisory 2017-08: Crafted CNAME answer can cause a
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-denial of service
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
--  CVE: CVE-2017-15120
--  Date: December 11th 2017
--  Credit: Toshifumi Sakaguchi
--  Affects: PowerDNS Recursor from 4.0.0 up to and including 4.0.7
--  Not affected: PowerDNS Recursor 3.7.4, 4.0.8, 4.1.0
--  Severity: High
--  Impact:  Denial of service
--  Exploit: This problem can be triggered by an authoritative server
-   sending a crafted CNAME answer with a class other than IN to the
-Recursor.
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
--  Workaround: run the process inside a supervisor like supervisord or
-systemd
-
-An issue has been found in the parsing of authoritative answers in
-PowerDNS Recursor, leading to a NULL pointer dereference when parsing a
-specially crafted answer containing a CNAME of a different class than IN.
-This issue has been assigned CVE-2017-15120.
-
-When the PowerDNS Recursor is run inside a supervisor like supervisord
-or systemd, it will be automatically restarted, limiting the impact to
-somewhat degraded service.
-
-PowerDNS Recursor from 4.0.0 up to and including 4.0.7 are affected.
-
-For those unable to upgrade to a new version, a minimal patch is
-`available <https://downloads.powerdns.com/patches/2017-08>`__
-
-We would like to thank Toshifumi Sakaguchi for finding and subsequently
-reporting this issue.
-
-
-
---d6bMwWdqX7rWV7F90kgsTACX83WMPvDdc--
-
---N8wuXIBR0lhen2AEXU7DEE7XsdVm8QgJT
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEE1jAMq8v0abvjkuUDogjtT4r1hEYFAloue1cACgkQogjtT4r1
-hEZvfwf/YP3x1lZvBvPwDcJPAXY4OItbGxiokP0u/X5cdr2+LfvrpfztMiXcaFKJ
-lKy+MHkNXI3HeL/N4SNMfS2bMQhKRi1A+aNB0QaE57qOE04ZvJ18Jk3opsTP8eQr
-THyufm56H89T9bXHtzSn0cRpm8eTBLni3rvaPcSyMY5SJbggOwkCBjAhemVvTkNR
-EVg/IwPMKGi/COJQ8ibcjPLDhUeaZ7Oqlywi6YiISD7yb4VTInkdU9mVzB3EpDZt
-mey/pPTARpZZMaQKtVrbVvnjqaAeusqjNWNqc6vIYQWVm+R53e0yjXSVoKqcTr3C
-z0/VxNSiM2WH4cOk9PHABaq4vemx/g==
-=Wj//
------END PGP SIGNATURE-----
-
---N8wuXIBR0lhen2AEXU7DEE7XsdVm8QgJT--
