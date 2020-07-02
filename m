@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2069" "Saturday" "25" "June" "2016" "05:45:38" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160625094538.ADFB7332009@smtpvbsrv1.mitre.org>" "51" "[oss-security] Re: Fwd: out-of-bounds read in MagickCore/property.c:1396 could lead to memory leak/ Integer overflow read to RCE - ImageMagick" nil nil nil "6" "2016062509:45:38" "[oss-security] Re: Fwd: out-of-bounds read in MagickCore/property.c:1396 could lead to memory leak/ Integer overflow read to RCE - ImageMagick" (number mark "U       cve-assign@m Jun 25   51/2069  " thread-indent "\"[oss-security] Re: Fwd: out-of-bounds read in MagickCore/property.c:1396 could lead to memory leak/ Integer overflow read to RCE - ImageMagick\"\n") "<B08B9FA8-E745-4327-B7D5-7A67648D3F58@gmail.com>" ("<B08B9FA8-E745-4327-B7D5-7A67648D3F58@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2369" "Thursday" "2" "July" "2020" "12:20:44" "+0200" "Francis Perron" "francisp@google.com" "<CAKgU3W_1sg2DLq3_H2hs6QTb0sK=7by7f8bbkhdjZia6zStoQQ@mail.gmail.com>" "63" "Re: [oss-security] Contributing Back" "^Cc:" nil nil "7" "2020070210:20:44" "[oss-security] Contributing Back" (number mark "        francisp@goo Jul  2   63/2369  " thread-indent "\"Re: [oss-security] Contributing Back\"\n") "<ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>" ("<ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>") nil nil nil nil nil nil nil "Re: [oss-security] Contributing Back" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19836 invoked by uid 550); 25 Jun 2016 09:45:51 -0000
+Received: (qmail 18289 invoked by uid 550); 2 Jul 2020 10:24:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17535 invoked from network); 2 Jul 2020 10:21:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Z1KocJcR7411Ef+3y3aBuBVYwh4TSfJQoOEW1buQQY0=;
+        b=aU51fTvbSvBnrbcg6vcasB/1q09EE8BYkGed+lmkOkiCgc5pPyZCwExjuHtGASa7IY
+         iiaDK/R1t76ISJpOzqAFs8o3gK3YCT7ByOqRl3ycEuEL4Dtx9JRp0U8ESvBFCyQy+U/T
+         A8upy4Gv8XvjnUQURWU2WW2992dDTiT83YcJuOj7yrzgEVefVczYYEGO1v5pHUXZgE7W
+         xcbE2ZQzM7Ago9JsKY1qJ1HDJWx/PFzaqX9+UaPA/Ha8QjufYnhgNoKZDeQa7nMfMqqg
+         oX7nZwsGBDv/OgnUKCTBJF4ebu/n+Y8ywzd6s5GQ/R1ofPg2ZJA5aDuqqIkeP9NoP0aB
+         TOqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Z1KocJcR7411Ef+3y3aBuBVYwh4TSfJQoOEW1buQQY0=;
+        b=jABI5M6r83/OsGp2+wwqzyWEGC3sk4K7k88RNJ1tLNxDcdBtZRnLsg0qUjp0L8DTuk
+         Fh13TU/4TgrEQytfCEfmiijLId6QUUUTK6EiPtlD5SnP4OT2HrjEJogkT9gdYXFaqkDl
+         yyKEY2whm2GkaxuBeDRj0bs9QhxbfApFmQSgqz+qzCXBM31xj4nzvzG5EWS2KonFAzqq
+         oEtccc+BbgHwRVuZoPmQdSjVlb5E3/ryVXgIr40qoel6lW476ojvLB3Xr3QJJQuu8lka
+         q8dn0TjyQQEidteJ2yjrRKN9ag5pA875hpsfD2VCJKomVkZ5TFXuRrdpY3UxxRTHKf7u
+         LQ6Q==
+X-Gm-Message-State: AOAM5323CN15I3TPiq+NUkqLOYogChSINeFu5/oJGdqGaeoH2aJvMXg8
+	EkqCpcl7Y+CDcXdY+y7rq1ysH2mrDRFi/uqY+oRl3vkFf4g=
+X-Google-Smtp-Source: ABdhPJzXkX0hMIWOn/WcmVjyolNYFk9YYRSgRkeuiTVGGfDbEgeW9Bq906Kq+SGYOOUQ7c3nlD5uns14YWmnEsd2Zc0=
+X-Received: by 2002:a17:907:4420:: with SMTP id om24mr17420420ejb.10.1593685286040;
+ Thu, 02 Jul 2020 03:21:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>
+In-Reply-To: <ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>
+Message-ID: <CAKgU3W_1sg2DLq3_H2hs6QTb0sK=7by7f8bbkhdjZia6zStoQQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000005c293d05a972c5b5"
+Cc: xiao.zhang@windriver.com, Solar Designer <solar@openwall.com>, daniel@haxx.se
+Date: Thu, 2 Jul 2020 12:20:44 +0200
+From: Francis Perron <francisp@google.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19815 invoked from network); 25 Jun 2016 09:45:50 -0000
-From: cve-assign@mitre.org
-To: i.elsayed92@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <B08B9FA8-E745-4327-B7D5-7A67648D3F58@gmail.com>
-Message-Id: <20160625094538.ADFB7332009@smtpvbsrv1.mitre.org>
-Date: Sat, 25 Jun 2016 05:45:38 -0400 (EDT)
-Subject: [oss-security] Re: Fwd: out-of-bounds read in MagickCore/property.c:1396 could lead to memory leak/ Integer overflow read to RCE - ImageMagick
+Subject: Re: [oss-security] Contributing Back
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--0000000000005c293d05a972c5b5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> two bugs to ImageMagick
-> 
-> https://github.com/ImageMagick/ImageMagick/commit/d8ab7f046587f2e9f734b687ba7e6e10147c294b
+Xiao -
+  this delay may be possible due to many things, but the simplest
+possibility that comes to mind is that Daniel (here cc'd) from H1 has only
+gotten a reservation of CVE number, and he and MITRE have not triggered the
+submission yet.
 
-> an integer overflow that might lead to remote code execution.
-> 
-> https://github.com/ImageMagick/ImageMagick/blob/master/MagickCore/profile.c#L2025
-> 
-> An integer overflow occurs in this comparison because number_bytes is a
-> very large number like (0xFFFFFFFFFFFFFF87) and when we add offset to
-> it which we control we can overflow and the result is < length so we
-> pass this if condition.
-
-Use CVE-2016-5841.
+The classic turnaround with MITRE submissions (via the webform) is less
+than 48h from my experience, so when we're seeing weeks of delays, it
+typically means MITRE has not been told to publish it yet.
 
 
-> MagickCore/property.c:1401 format=(size_t) ReadPropertyUnsignedShort(endian,q+2);
-> MagickCore/property.c:1404 components=(ssize_t) ReadPropertySignedLong(endian,q+4);
-> MagickCore/property.c:1382 number_entries=(size_t) ReadPropertyUnsignedShort(endian,directory);
-> MagickCore/property.c:1396 q=(unsigned char *) (directory+(12*entry)+2);
-> 
-> we can partially control q which can be used later to read arbitrary
-> data from the process of ImageMagick.
+Hope that helps,
 
-Use CVE-2016-5842.
+On Thu, Jul 2, 2020 at 12:07 PM Zhang Xiao <xiao.zhang@windriver.com> wrote:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> Hi All,
+>
+> I am an engineer of WindRiver. Thanks for Alexander's remind about the di=
+stribution and we would like to "backup" the first item of the administrati=
+ve list:https://oss-security.openwall.org/wiki/mailing-lists/distros#contri=
+buting-back
+>
+> 1. Promptly review new issue reports for meeting the list's requirements =
+and confirm receipt of the report and, when necessary, inform the reporter =
+of any issues with their report (e.g., obviously not actionable by the dist=
+ros) and request and/or propose any required yet missing information (most =
+notably, a tentative public disclosure date/time) *- primary: Oracle, backu=
+p: vacant
+> *
+> Please let me know how we get started helping out.
+>
+> And, I have another point want to discuss. As we know, sometimes, the CVE=
+ and NVD website don't upgrade their web page timely. For example:
+>
+> the security maillist had an encrypted mail called "curl: overwrite local=
+ file with -J" in 20200617. It was a "pre-notification about a security adv=
+isory about to ship next week in sync with our next curl release", for CVE-=
+2020-8177. On curl's git tree, that very bug did been fixed and released in=
+ 20200621:https://github.com/curl/curl/commit/8236aba5854
+>
+> But, till now, both cve.mitre.org and nvd.nist.gov still mark this CVE as=
+ "RESERVED":https://nvd.nist.gov/vuln/detail/CVE-2020-8177https://cve.mitre=
+.org/cgi-bin/cvename.cgi?name=3DCVE-2020-8177
+>
+> So I wonder if that is also an contribution to remind them, if so, any ad=
+vises to make it? And If it ca be defined as an contribution, we can take i=
+t. :-)
+>
+>
+> Thanks
+> Xiao
+>
+>
 
-iQIcBAEBCAAGBQJXblIFAAoJEHb/MwWLVhi21FkP/14gsNPlpEBDcB2cDTXpbiS4
-EAtByZpxwno+HY0u4DzSWDDlZbhvOofI6fEXGk6gzP0ykI6EUXMv0Ji5SBUcFZWD
-N86nrfJF7in5DSbUq2So1d2Iyn/nBi8NU0eOyX5hf5Ec2yMTuDdL+IJVJNRNC7EJ
-AkPfNsZcb5zAb6MqM23m9MZeKbg3ohrm0KxC8eeW5wnfpH03pYCHI9AJcuvRx0EX
-kCilDdlXkKBov75dTK0X9FMW2fFqggIoWIcPqB5P37goi0oEgIEdbowoHA8qZeBX
-LzKLdxVFn2DDQgMOCdgvVE08XoblpQZz/QfJY4joopzzP/4C1+ol8O4DJu12CnO4
-ZrkekMyVbmMMvniRcYAzAKelccK3l8HHbyMx/o4Wqc4H52e1cnBwbqApxiyUpAJ7
-PJORtlwtn8n12J0zgZDRFQRr9rpIvvdgGaggwhGckTaL+bad1etd2//2DC+2MSyQ
-IDegwMBQ0UWBvcj94yMSP07umbBLmNppZKV6X5Zpjic7/UAHbg2erDiKx1nAsoz+
-AWEm8PuETTDEKpEfwjgP7d32zMei8PMdx+toOSjcJG1EHh/l8u+dJeLfUB3m2/gT
-fOzCRa+g0ds93GYaXIjV97wQOcvtNI/d4kmIk94eRVfq0KaViFqWKEUTHQw7VBtL
-Anv/k4HPoJ5rjKGTt7g0
-=EYAb
------END PGP SIGNATURE-----
+--=20
+Francis Perron
+  Vulnerability Coordination @ Google inc.
+
+--0000000000005c293d05a972c5b5--
