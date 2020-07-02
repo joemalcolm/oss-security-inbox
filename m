@@ -1,43 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/09/3
-Message-ID: <-VsV_YGp-SKxR0Avc5nmv7S3e27DoHRHH1qczuALNMdZiIl_jakV8kvlugzgfmjbaYvq_GAMhX8EtW5cRtDI1Xj9Ni-usWd_Me04BYM4caU=@virtadpt.net>
-Date: Wed, 09 Sep 2020 14:49:42 +0000
-From: "The Doctor [412/724/301/703/415/510]" <drwho@...tadpt.net>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/02/5
+Message-ID: <CAKgU3W_1sg2DLq3_H2hs6QTb0sK=7by7f8bbkhdjZia6zStoQQ@mail.gmail.com>
+Date: Thu, 2 Jul 2020 12:20:44 +0200
+From: Francis Perron <francisp@...gle.com>
+To: oss-security@...ts.openwall.com
+Cc: xiao.zhang@...driver.com, Solar Designer <solar@...nwall.com>, daniel@...x.se
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
+Xiao -
+  this delay may be possible due to many things, but the simplest
+possibility that comes to mind is that Daniel (here cc'd) from H1 has only
+gotten a reservation of CVE number, and he and MITRE have not triggered the
+submission yet.
 
-‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
-On Tuesday, September 8, 2020 6:03 PM, Alex Gaynor <alex.gaynor@...il.com> wrote:
+The classic turnaround with MITRE submissions (via the webform) is less
+than 48h from my experience, so when we're seeing weeks of delays, it
+typically means MITRE has not been told to publish it yet.
 
-> Oh they have a policy. It says that systems will be patched in a timely
-> manner. And then the kind accountants who perform the audits say, "Great
-> policy, this is fully compliant, have an ATO and a gold star". And then
 
-I wish I could not confirm this.  In the assignments I was given, this was the rule
-and not the exception.
+Hope that helps,
 
-> random things all over the place are not patched at all because federal IT
-> departments have astonishly poor automation practices, extremely limited
+On Thu, Jul 2, 2020 at 12:07 PM Zhang Xiao <xiao.zhang@...driver.com> wrote:
 
-A lot of that seems to boil down to "You want to run this random piece of software
-to automate the job we're paying you to do?  Forget it."  There is also the odd
-"We won't run any software that doesn't have <some number of expensive independent
-code audits and certifications> and what you want to do doesn't have those (even
-though you claim they do, we think you're lying)."
+> Hi All,
+>
+> I am an engineer of WindRiver. Thanks for Alexander's remind about the distribution and we would like to "backup" the first item of the administrative list:https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+>
+> 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date/time) *- primary: Oracle, backup: vacant
+> *
+> Please let me know how we get started helping out.
+>
+> And, I have another point want to discuss. As we know, sometimes, the CVE and NVD website don't upgrade their web page timely. For example:
+>
+> the security maillist had an encrypted mail called "curl: overwrite local file with -J" in 20200617. It was a "pre-notification about a security advisory about to ship next week in sync with our next curl release", for CVE-2020-8177. On curl's git tree, that very bug did been fixed and released in 20200621:https://github.com/curl/curl/commit/8236aba5854
+>
+> But, till now, both cve.mitre.org and nvd.nist.gov still mark this CVE as "RESERVED":https://nvd.nist.gov/vuln/detail/CVE-2020-8177https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177
+>
+> So I wonder if that is also an contribution to remind them, if so, any advises to make it? And If it ca be defined as an contribution, we can take it. :-)
+>
+>
+> Thanks
+> Xiao
+>
+>
 
-> reuse of systems across distinct projects (contracts) within the agency and
-
-Secure data erasure and platform disposal practices have something to do with this.
-
-> there is nothing approaching a comprehensive way for a federal agency to
-> answer "did we deploy the updated struts for all of our stuff".
-
-With a side order of "the contractors we hired for this stuff should be on top of it,"
-even when they're not the prime on the contract anymore.
-
-The Doctor [412/724/301/703/415/510]
-WWW: https://drwho.virtadpt.net/
-The old world is dying, and the new world struggles to be born. Now is the time of monsters.
+-- 
+Francis Perron
+  Vulnerability Coordination @ Google inc.
 
