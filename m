@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/31/3
-Message-ID: <d6e0d9ec-8bc5-9034-b387-7e66f71fa0de@census-labs.com>
-Date: Fri, 31 Jan 2020 23:17:29 +0200
-From: Dimitrios Glynos <dimitris@...sus-labs.com>
-To: oss-security@...ts.openwall.com
-Subject: multiple NULL pointer dereference vulnerabilities in newlib
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/02/1
+Message-ID: <nycvar.YSQ.7.77.849.2007021123400.6260@xnncv>
+Date: Thu, 2 Jul 2020 11:28:46 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Lei Sun <slei.casper@...il.com>
+Subject: CVE-2020-15469 QEMU: MMIO ops null pointer dereference may lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+   Hello,
 
-newlib versions prior to 3.3.0 (and derivatives like newlib-nano,
-picolibc, related ARM toolchains) are vulnerable to a number
-of NULL pointer dereference vulnerabilities.
+A NULL pointer dereference issue was found in various system emulators of 
+QEMU. It could occur while performing MMIO r/w operations, in case the 
+respective handler function is not defined. A privileged guest user able to 
+invoke MMIO operation may use this flaw to crash the QEMU process on the host 
+resulting in DoS scenario.
 
-The following CVEs were assigned by RedHat for these issues:
+Upstream patch(es):
+-------------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg09961.html
 
-CVE-2019-14871, CVE-2019-14872, CVE-2019-14873, CVE-2019-14874,
-CVE-2019-14875, CVE-2019-14876, CVE-2019-14877, CVE-2019-14878
+This issue was reported by Lei Sun(CC'd); CVE-2020-15469 assigned via
+-> https://cveform.mitre.org/.
 
-More details about the issues are available here:
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-https://census-labs.com/news/2020/01/31/multiple-null-pointer-dereference-vulnerabilities-in-newlib/
-
-It is advised to update newlib installations to version 3.3.0
-and make sure to build with the newlib-reent-check-verify
-'configure' option enabled, to correctly address these
-issues.
-
-Kind Regards,
-
-Dimitris
