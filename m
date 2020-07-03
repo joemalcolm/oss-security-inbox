@@ -1,101 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/17/4
-Message-ID: <7526463.NqbLCg6IT0@x2>
-Date: Fri, 17 Apr 2020 09:24:42 -0400
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: 陈伟宸(田各) <splendidsky.cwc@...baba-inc.com>
-Subject: Re: CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/03/1
+Message-ID: <0a64f380-fa28-2b60-5710-cd3d556949ca@windriver.com>
+Date: Fri, 3 Jul 2020 10:06:55 +0800
+From: Zhang Xiao <xiao.zhang@...driver.com>
+To: oss-security@...ts.openwall.com, Daniel Stenberg <daniel@...x.se>, Francis Perron <francisp@...gle.com>
+Cc: xiao.zhang@...driver.com, Solar Designer <solar@...nwall.com>
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-On Friday, April 17, 2020 12:40:10 AM EDT 陈伟宸(田各) wrote:
-> "A race condition was found in the Linux kernel audit subsystem. When the
-> system is configured to panic on events being dropped, an attacker who is
-> able to trigger an audit event that starts while auditd is in the process
-> of starting may be able to cause the system to panic by exploiting a race
-> condition in audit event handling. This creates a denial of service by
-> causing a panic."
+I haven't remind MITRE before. While they have an interface to make it:
 
-While this is theoretically possible, starting the audit daemon requires 
-privileges. As root, you can do many worse things. Or just call panic 
-yourself. In practice, there isn't really a problem because the audit daemon 
-starts, registers the pid, then the rules get loaded. So, I'd say yes there 
-is a race that should get fixed. But you're shooting yourself in the foot for 
-looping on restarting the audit daemon as root.
+https://cve.mitre.org/about/contactus.html
 
-Also, there is a configuration option, --backlog_wait_time, which also has 
-something to do with whether or not panic will get called.
-
--Steve
-
-> https://bugzilla.redhat.com/show_bug.cgi?id=1822593
-> 
-> Env:
->     Red Hat Enterprise Linux Server release 7.7 (Maipo)
->     3.10.0-1062.12.1.el7.x86_64
-> 
-> Details:
-> Function audit_log_end and audit_panic may have race conditions when auditd
-> is restarting because audit_pid can be NULL in audit_log_end and then
-> become not NULL in audit_panic, which may allow attackers to trigger
-> kernel panic. Here is panic call stack:
-> 
-> 
-> void audit_log_end(struct audit_buffer *ab)
-> {
->     if (!ab)
->         return;
->     if (!audit_rate_check()) {
->         audit_log_lost("rate limit exceeded");
->     } else {
->         struct nlmsghdr *nlh = nlmsg_hdr(ab->skb);
->         nlh->nlmsg_len = ab->skb->len - NLMSG_HDRLEN;
-> 
->         if (audit_pid) {
->             skb_queue_tail(&audit_skb_queue, ab->skb);
->             wake_up_interruptible(&kauditd_wait);
->         } else {
->             audit_printk_skb(ab->skb); // <- audit_pid == NULL when auditd
-> is killed }
->         ab->skb = NULL;
->     }
->     audit_buffer_free(ab);
-> }
-> -> audit_printk_skb -> audit_log_lost ->
-> void audit_panic(const char *message)
-> {
->     switch (audit_failure)
->     {
->     case AUDIT_FAIL_SILENT:
->         break;
->     case AUDIT_FAIL_PRINTK:
->         if (printk_ratelimit())
->             printk(KERN_ERR "audit: %s\n", message);
->         break;
->     case AUDIT_FAIL_PANIC:
->         /* test audit_pid since printk is always losey, why bother? */
->         if (audit_pid) // <- audit_pid not NULL because auditd is
-> restarting panic("audit: %s\n", message);
->         break;
->     }
-> }
-> 
-> How to reproduce：
-> 1. set audit-failure to AUDIT_FAIL_PANIC(2) and add a random audit rule
-> like: [root@...t ~]# cat /etc/audit/rules.d/audit.rules
-> -D
-> -b 8192
-> -f 2
-> -w /etc/hosts -p rwa -k hosts
-> 2. keep killing auditd and then starting auditd, for example:
-> while true; do ps aux | grep "/sbin/auditd" | grep -v "grep" | awk '{print
-> $2}' | xargs kill; service auditd start; systemctl reset-failed
-> auditd.service; done 3. log in a low privilege user and keep reading
-> /etc/hosts, for example: while true; do cat /etc/hosts > /dev/null; done
-> 4. kernel panic will happen within several minutes
-> 
-> Thanks.
+See the forth topic called "*To notify us about a vulnerability
+publication*". I just remind them about CVE-2020-8169 and  CVE-2020-8177
+with it. Hope it works. :-)
 
 
+I will check the status of them on CVE/NVD website these days.
 
 
+Thanks
+
+Xiao
+
+
+在 2020/7/2 下午7:34, Daniel Stenberg 写道:
+> On Thu, 2 Jul 2020, Francis Perron wrote:
+>
+>>  this delay may be possible due to many things, but the simplest
+>> possibility that comes to mind is that Daniel (here cc'd) from H1 has
+>> only gotten a reservation of CVE number, and he and MITRE have not
+>> triggered the submission yet.
+>
+> In the curl project we (nowadays) request and get CVE IDs from
+> Hackerone, and we've subsequently told them to publish these two
+> recent curl related CVE IDs when we made them public to the world - I
+> suspect this is just them being a little slow. We don't have any
+> direct contact with MITRE.
+>
+> All details regarding the two recent curl flaws are here:
+>
+>  https://curl.haxx.se/docs/CVE-2020-8169.html
+>  https://curl.haxx.se/docs/CVE-2020-8177.html
+>
+
+Content of type "text/html" skipped
+
+Download attachment "pEpkey.asc" of type "application/pgp-keys" (2461 bytes)
