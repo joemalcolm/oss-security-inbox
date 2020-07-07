@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9696" "Tuesday" "19" "January" "2021" "16:34:15" "+0000" "Xen.org security team" "security@xen.org" "<E1l1txP-0002qH-QD@xenbits.xenproject.org>" "217" "[oss-security] Xen Security Advisory 331 v3 (CVE-2020-27675) - Race condition in Linux event handler may crash dom0" nil nil nil "1" "2021011916:34:15" "[oss-security] Xen Security Advisory 331 v3 (CVE-2020-27675) - Race condition in Linux event handler may crash dom0" (number mark "U       security@xen Jan 19  217/9696  " thread-indent "\"[oss-security] Xen Security Advisory 331 v3 (CVE-2020-27675) - Race condition in Linux event handler may crash dom0\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 331 v3 (CVE-2020-27675) - Race condition in Linux event handler may crash dom0" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9462" "Tuesday" "7" "July" "2020" "12:18:33" "+0000" "Xen.org security team" "security@xen.org" "<E1jsmYT-0000Wl-Q7@xenbits.xenproject.org>" "225" "[oss-security] Xen Security Advisory 317 v3 (CVE-2020-15566) - Incorrect error handling in event channel port allocation" nil nil nil "7" "2020070712:18:33" "[oss-security] Xen Security Advisory 317 v3 (CVE-2020-15566) - Incorrect error handling in event channel port allocation" (number mark "U       security@xen Jul  7  225/9462  " thread-indent "\"[oss-security] Xen Security Advisory 317 v3 (CVE-2020-15566) - Incorrect error handling in event channel port allocation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 317 v3 (CVE-2020-15566) - Incorrect error handling in event channel port allocation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14130 invoked by uid 550); 19 Jan 2021 16:34:38 -0000
+Received: (qmail 15709 invoked by uid 550); 7 Jul 2020 12:18:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,13 +12,16 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14103 invoked from network); 19 Jan 2021 16:34:38 -0000
+Received: (qmail 15685 invoked from network); 7 Jul 2020 12:18:52 -0000
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
 	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=HL4VajAJjVw3zYhcVuYs/UPndroEHcxEbZZt++R2HcQ=; b=6HMDSUJRdgE7kT76d9MxC4/lZv
-	yYtzfeWUwTuY2o0Ekp6AmBQT043a5b7MXu1MGZQ/H+eTEQ9CY4f5/AjKYBJhS9SaROV5j1M+tFrBw
-	kn5+wGMt8H+pdPxXJrs8lki/BD6d5oVB9QwUGTR/B8TZRH8GznwvyxKWNV+vngZ5w0FQ=;
+	Content-Transfer-Encoding:Content-Type:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=mFmAfu+l9Qnx7Y9fQVSM/XKGmQ57MHrxuyQCgm25OCQ=; b=qFrRGnrO5DPb5kurUU6le/eUUD
+	CRXilbVw+GyIW2LF4yoHF83eJv2Lo6OS1FSAteKRby6ngUBfP4WTQTQXEktq/crTkHrQadF43OC/W
+	jnoB7/SzpRDfk438u0t5y97zmw9NIc8cVs3vSjL3cKLFhTa2gwzhQ1Z/cOKGfBuF064Q=;
 Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
 Content-Transfer-Encoding: binary
 MIME-Version: 1.0
@@ -27,10 +30,10 @@ To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
  xen-users@lists.xen.org, oss-security@lists.openwall.com
 From: Xen.org security team <security@xen.org>
 CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1l1txP-0002qH-QD@xenbits.xenproject.org>
-Date: Tue, 19 Jan 2021 16:34:15 +0000
-Subject: [oss-security] Xen Security Advisory 331 v3 (CVE-2020-27675) - Race condition in
- Linux event handler may crash dom0
+Message-Id: <E1jsmYT-0000Wl-Q7@xenbits.xenproject.org>
+Date: Tue, 07 Jul 2020 12:18:33 +0000
+Subject: [oss-security] Xen Security Advisory 317 v3 (CVE-2020-15566) - Incorrect error
+ handling in event channel port allocation
 
 --=separator
 Content-Type: text/plain; charset="utf-8"
@@ -40,81 +43,120 @@ Content-Transfer-Encoding: 7bit
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2020-27675 / XSA-331
-                              version 3
+            Xen Security Advisory CVE-2020-15566 / XSA-317
+                               version 3
 
-         Race condition in Linux event handler may crash dom0
+       Incorrect error handling in event channel port allocation
 
 UPDATES IN VERSION 3
 ====================
 
-CVE assigned.
+Public release.
 
 ISSUE DESCRIPTION
 =================
 
-The Linux kernel event channel handling code doesn't defend the
-handling of an event against the same event channel being removed in
-parallel.
+The allocation of an event channel port may fail for multiple reasons:
+    1) Port is already in use
+    2) The memory allocation failed
+    3) The port we try to allocate is higher than what is supported by
+       the ABI (e.g 2L or FIFO) used by the guest or the limit set by an
+       administrator ('max_event_channels' in xl cfg).
 
-This can result in accesses to already freed memory areas or NULL
-pointer dereferences in the event handling code, leading to
-misbehaviour of the system or even crashes.
+Due to the missing error checks, only 1) will be considered as an error.  All
+the other cases will provide a "valid" port and will result to a crash when
+trying to access the event channel.
 
 IMPACT
 ======
 
-A misbehaving guest can trigger a dom0 crash by sending events for a
-paravirtualized device while simultaneously reconfiguring it.
+When the administrator configured a guest to allow more than 1023
+event channels, that guest may be able to crash the host.
+
+When Xen is out-of-memory, allocation of new event channels will
+result in crashing the host rather than reporting an error.
 
 VULNERABLE SYSTEMS
 ==================
 
-All systems with a Linux dom0 are vulnerable.
+Xen versions 4.10 and later are affected.  (The special Xen 4.8
+"Comet" branch for XSA-254 contains changes similar to those which led
+to this vulnerability; so it is likely to be affected, but - like
+mainline Xen 4.8 - that branch is longer security-supported.)
 
-All Linux kernel versions are vulnerable.
+Older Xen versions are unaffected.
+
+All architectures are affected.
+
+The default configuration, when guests are created with xl/libxl, is
+not vulnerable, because of the default event channel limit (see
+Mitigation, below).
 
 MITIGATION
 ==========
 
-There is no known mitigation.
+The problem can be avoided by reducing the number of event channels
+available to the guest no more than 1023.  For example, setting
+"max_event_channels=1023" in the xl domain configuration, or deleting
+any existing setting (since 1023 is the default for xl/libxl).
+
+For ARM systems, any limit no more than 4095 is safe.
+
+For 64-bit x86 PV guests, any limit no more than 4095 is likewise safe
+if the host configuration prevents the guest administrator from
+substituting and running a 32-bit kernel (and thereby putting the
+guest into 32-bit PV mode).
 
 CREDITS
 =======
 
-This issue was discovered by Jinoh Kang of Theori.
+This issue was discovered by Amazon.
 
 RESOLUTION
 ==========
 
-Applying the appropriate attached patch resolves this issue.
+Applying the attached patch resolves this issue.
 
 Note that patches for released versions are generally prepared to
 apply to the stable branches, and may not apply cleanly to the most
 recent release tarball.  Downstreams are encouraged to update to the
 tip of the stable branch before applying these patches.
 
-xsa331-linux.patch     Linux
+xsa317.patch           Xen 4.10 - xen-unstable
 
-$ sha256sum xsa331*
-8583392c0c573f7baa85e41c9afbdf74dcb04aea1be992d78991f0787230a193  xsa331-linux.patch
+$ sha256sum xsa317*
+11e77dd8644cee40cee609d02e27d70655f3999005cae8c24fb2801980ebb4f2  xsa317.meta
+17908035e2da07f6070fa8de345db68c96ed9bd78f8b114e43ba0194c1be3f15  xsa317.patch
 $
 
 DEPLOYMENT DURING EMBARGO
 =========================
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+Deployment of the *patch* described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
 
 But: Distribution of updated software is prohibited (except to other
 members of the predisclosure list).
 
+
+And: deployment of the event channel limit reduction mitigation is NOT
+permitted (except where all the affected systems and VMs are
+administered and used only by organisations which are members of the
+Xen Project Security Issues Predisclosure List).  Specifically,
+deployment on public cloud systems is NOT permitted.
+
+This is because such a change can be visible to the guest, so it would
+leak the preconditions for the vulnerability and maybe lead to
+rediscovery.
+
+Deployment of this, or similar mitigations, is permitted only AFTER
+the embargo ends.
+
+
 Predisclosure list members who wish to deploy significantly different
 patches and/or mitigations, please contact the Xen Project Security
 Team.
-
 
 (Note: this during-embargo deployment notice is retained in
 post-embargo publicly released Xen Project advisories, even though it
@@ -126,126 +168,95 @@ consult the Xen Project community's agreed Security Policy:
   http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAHB6QMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZDpEH/1DgvbcVJRbGyzc8TA80oAT+zeVQpTaZkgGthQV/
-PvJQH/sMi5mrgQ7pkTVu08wY4/BWTzz+0bceD/+PqMoXBYn+56y3oavVUdAsrK6P
-Bjucd+TI0kOrRx/82FlVtjir8xPZuiBi1xHxb4mQRc70BqJfI9GETOnFsGYhFpcX
-woDuHAfum3+6fUFyRPhyu7MoWChfyOQxu6IxU22rpelT1wAOPsIi15fX0Xbz3nJi
-7bIbc3Hv9EAv114RsDZbNhz8ymzj5BL/gXWQO13187NGVhDlKdi91zdDQqbKTKTW
-4Hvl/6zARGLEPxh6oQbQhxhnMHD5+BVPvacarjNjtHdkJTk=
-=pzTm
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8EZ/gMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZQUwIAK8W8bZ0xml2bzAu4vsXi8QqhDX4VrpkgADYZS+M
+BD8hpllQ+O/CiM5ZMECj7zaWYTt7+VrGrqK4jtf2REBs/sOWcO+k7KdEury4XCKf
+jIG4CzCBHC46RVEKftiqQNTX2ebVBDwoj+1fGeIvm7OhcZ7f6KdhYPHvE2bU8D45
+ghr2jw33HZHoG7IsPQvJn8u6wqd6l+7h0BxhgzO5U8pI+w3ZXRM4XAno+ERzs8LO
+N5ffv8UeaMIpkHoYEdsKOK/ItjhoCASoWTFvbE90u7f2WbimFnBG3oCPEVPt89kv
+Y/o0+0jBk+WjXbPChMmMu5WuQuKVFDelMXLLE6mjfhGAvnI=
+=vEgE
 -----END PGP SIGNATURE-----
 
 --=separator
-Content-Type: application/octet-stream; name="xsa331-linux.patch"
-Content-Disposition: attachment; filename="xsa331-linux.patch"
+Content-Type: application/octet-stream; name="xsa317.meta"
+Content-Disposition: attachment; filename="xsa317.meta"
 Content-Transfer-Encoding: base64
 
-RnJvbSBhNWFiMWQ3OGJlZmViNTNjM2I2MzI3MjFhYTViN2I0YjVlYzliNjQ4
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IE1vbiwgNyBTZXAgMjAyMCAxNTo0
-NzoyNyArMDIwMApTdWJqZWN0OiBbUEFUQ0hdIHhlbi9ldmVudHM6IGF2b2lk
-IHJlbW92aW5nIGFuIGV2ZW50IGNoYW5uZWwgd2hpbGUKIGhhbmRsaW5nIGl0
-CgpUb2RheSBpdCBjYW4gaGFwcGVuIHRoYXQgYW4gZXZlbnQgY2hhbm5lbCBp
-cyBiZWluZyByZW1vdmVkIGZyb20gdGhlCnN5c3RlbSB3aGlsZSB0aGUgZXZl
-bnQgaGFuZGxpbmcgbG9vcCBpcyBhY3RpdmUuIFRoaXMgY2FuIGxlYWQgdG8g
-YQpyYWNlIHJlc3VsdGluZyBpbiBjcmFzaGVzIG9yIFdBUk4oKSBzcGxhdHMg
-d2hlbiB0cnlpbmcgdG8gYWNjZXNzIHRoZQppcnFfaW5mbyBzdHJ1Y3R1cmUg
-cmVsYXRlZCB0byB0aGUgZXZlbnQgY2hhbm5lbC4KCkZpeCB0aGlzIHByb2Js
-ZW0gYnkgdXNpbmcgYSByd2xvY2sgdGFrZW4gYXMgcmVhZGVyIGluIHRoZSBl
-dmVudApoYW5kbGluZyBsb29wIGFuZCBhcyB3cml0ZXIgd2hlbiBkZWFsbG9j
-YXRpbmcgdGhlIGlycV9pbmZvIHN0cnVjdHVyZS4KCkFzIHRoZSBvYnNlcnZl
-ZCBwcm9ibGVtIHdhcyBhIE5VTEwgZGVyZWZlcmVuY2UgaW4gZXZ0Y2huX2Zy
-b21faXJxKCkKbWFrZSB0aGlzIGZ1bmN0aW9uIG1vcmUgcm9idXN0IGFnYWlu
-c3QgcmFjZXMgYnkgdGVzdGluZyB0aGUgaXJxX2luZm8KcG9pbnRlciB0byBi
-ZSBub3QgTlVMTCBiZWZvcmUgZGVyZWZlcmVuY2luZyBpdC4KCkFuZCBmaW5h
-bGx5IG1ha2UgYWxsIGFjY2Vzc2VzIHRvIGV2dGNobl90b19pcnFbcm93XVtj
-b2xdIGF0b21pYyBvbmVzCmluIG9yZGVyIHRvIGF2b2lkIHNlZWluZyBwYXJ0
-aWFsIHVwZGF0ZXMgb2YgYW4gYXJyYXkgZWxlbWVudCBpbiBpcnEKaGFuZGxp
-bmcuIE5vdGUgdGhhdCBpcnEgaGFuZGxpbmcgY2FuIGJlIGVudGVyZWQgb25s
-eSBmb3IgZXZlbnQgY2hhbm5lbHMKd2hpY2ggaGF2ZSBiZWVuIHZhbGlkIGJl
-Zm9yZSwgc28gYW55IG5vdCBwb3B1bGF0ZWQgcm93IGlzbid0IGEgcHJvYmxl
-bQppbiB0aGlzIHJlZ2FyZCwgYXMgcm93cyBhcmUgb25seSBldmVyIGFkZGVk
-IGFuZCBuZXZlciByZW1vdmVkLgoKVGhpcyBpcyBYU0EtMzMxLgoKQ2M6IHN0
-YWJsZUB2Z2VyLmtlcm5lbC5vcmcKUmVwb3J0ZWQtYnk6IEppbm9oIEthbmcg
-PGx1a2UxMzM3QHRoZW9yaS5pbz4KU2lnbmVkLW9mZi1ieTogSnVlcmdlbiBH
-cm9zcyA8amdyb3NzQHN1c2UuY29tPgpSZXZpZXdlZC1ieTogU3RlZmFubyBT
-dGFiZWxsaW5pIDxzc3RhYmVsbGluaUBrZXJuZWwub3JnPgpSZXZpZXdlZC1i
-eTogV2VpIExpdSA8d2xAeGVuLm9yZz4KLS0tCiBkcml2ZXJzL3hlbi9ldmVu
-dHMvZXZlbnRzX2Jhc2UuYyB8IDQxICsrKysrKysrKysrKysrKysrKysrKysr
-KysrKystLS0tCiAxIGZpbGUgY2hhbmdlZCwgMzYgaW5zZXJ0aW9ucygrKSwg
-NSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL3hlbi9ldmVu
-dHMvZXZlbnRzX2Jhc2UuYyBiL2RyaXZlcnMveGVuL2V2ZW50cy9ldmVudHNf
-YmFzZS5jCmluZGV4IDZmMDJjMThmYTY1Yy4uNDA3NzQxZWNlMDg0IDEwMDY0
-NAotLS0gYS9kcml2ZXJzL3hlbi9ldmVudHMvZXZlbnRzX2Jhc2UuYworKysg
-Yi9kcml2ZXJzL3hlbi9ldmVudHMvZXZlbnRzX2Jhc2UuYwpAQCAtMzMsNiAr
-MzMsNyBAQAogI2luY2x1ZGUgPGxpbnV4L3NsYWIuaD4KICNpbmNsdWRlIDxs
-aW51eC9pcnFuci5oPgogI2luY2x1ZGUgPGxpbnV4L3BjaS5oPgorI2luY2x1
-ZGUgPGxpbnV4L3NwaW5sb2NrLmg+CiAKICNpZmRlZiBDT05GSUdfWDg2CiAj
-aW5jbHVkZSA8YXNtL2Rlc2MuaD4KQEAgLTcxLDYgKzcyLDIzIEBAIGNvbnN0
-IHN0cnVjdCBldnRjaG5fb3BzICpldnRjaG5fb3BzOwogICovCiBzdGF0aWMg
-REVGSU5FX01VVEVYKGlycV9tYXBwaW5nX3VwZGF0ZV9sb2NrKTsKIAorLyoK
-KyAqIExvY2sgcHJvdGVjdGluZyBldmVudCBoYW5kbGluZyBsb29wIGFnYWlu
-c3QgcmVtb3ZpbmcgZXZlbnQgY2hhbm5lbHMuCisgKiBBZGRpbmcgb2YgZXZl
-bnQgY2hhbm5lbHMgaXMgbm8gaXNzdWUgYXMgdGhlIGFzc29jaWF0ZWQgSVJR
-IGJlY29tZXMgYWN0aXZlCisgKiBvbmx5IGFmdGVyIGV2ZXJ5dGhpbmcgaXMg
-c2V0dXAgKGJlZm9yZSByZXF1ZXN0X1t0aHJlYWRlZF9daXJxKCkgdGhlIGhh
-bmRsZXIKKyAqIGNhbid0IGJlIGVudGVyZWQgZm9yIGFuIGV2ZW50LCBhcyB0
-aGUgZXZlbnQgY2hhbm5lbCB3aWxsIGJlIHVubWFza2VkIG9ubHkKKyAqIHRo
-ZW4pLgorICovCitzdGF0aWMgREVGSU5FX1JXTE9DSyhldnRjaG5fcndsb2Nr
-KTsKKworLyoKKyAqIExvY2sgaGllcmFyY2h5OgorICoKKyAqIGlycV9tYXBw
-aW5nX3VwZGF0ZV9sb2NrCisgKiAgIGV2dGNobl9yd2xvY2sKKyAqICAgICBJ
-UlEtZGVzYyBsb2NrCisgKi8KKwogc3RhdGljIExJU1RfSEVBRCh4ZW5faXJx
-X2xpc3RfaGVhZCk7CiAKIC8qIElSUSA8LT4gVklSUSBtYXBwaW5nLiAqLwpA
-QCAtMTA1LDcgKzEyMyw3IEBAIHN0YXRpYyB2b2lkIGNsZWFyX2V2dGNobl90
-b19pcnFfcm93KHVuc2lnbmVkIHJvdykKIAl1bnNpZ25lZCBjb2w7CiAKIAlm
-b3IgKGNvbCA9IDA7IGNvbCA8IEVWVENITl9QRVJfUk9XOyBjb2wrKykKLQkJ
-ZXZ0Y2huX3RvX2lycVtyb3ddW2NvbF0gPSAtMTsKKwkJV1JJVEVfT05DRShl
-dnRjaG5fdG9faXJxW3Jvd11bY29sXSwgLTEpOwogfQogCiBzdGF0aWMgdm9p
-ZCBjbGVhcl9ldnRjaG5fdG9faXJxX2FsbCh2b2lkKQpAQCAtMTQyLDcgKzE2
-MCw3IEBAIHN0YXRpYyBpbnQgc2V0X2V2dGNobl90b19pcnEoZXZ0Y2huX3Bv
-cnRfdCBldnRjaG4sIHVuc2lnbmVkIGludCBpcnEpCiAJCWNsZWFyX2V2dGNo
-bl90b19pcnFfcm93KHJvdyk7CiAJfQogCi0JZXZ0Y2huX3RvX2lycVtyb3dd
-W2NvbF0gPSBpcnE7CisJV1JJVEVfT05DRShldnRjaG5fdG9faXJxW3Jvd11b
-Y29sXSwgaXJxKTsKIAlyZXR1cm4gMDsKIH0KIApAQCAtMTUyLDcgKzE3MCw3
-IEBAIGludCBnZXRfZXZ0Y2huX3RvX2lycShldnRjaG5fcG9ydF90IGV2dGNo
-bikKIAkJcmV0dXJuIC0xOwogCWlmIChldnRjaG5fdG9faXJxW0VWVENITl9S
-T1coZXZ0Y2huKV0gPT0gTlVMTCkKIAkJcmV0dXJuIC0xOwotCXJldHVybiBl
-dnRjaG5fdG9faXJxW0VWVENITl9ST1coZXZ0Y2huKV1bRVZUQ0hOX0NPTChl
-dnRjaG4pXTsKKwlyZXR1cm4gUkVBRF9PTkNFKGV2dGNobl90b19pcnFbRVZU
-Q0hOX1JPVyhldnRjaG4pXVtFVlRDSE5fQ09MKGV2dGNobildKTsKIH0KIAog
-LyogR2V0IGluZm8gZm9yIElSUSAqLwpAQCAtMjYxLDEwICsyNzksMTQgQEAg
-c3RhdGljIHZvaWQgeGVuX2lycV9pbmZvX2NsZWFudXAoc3RydWN0IGlycV9p
-bmZvICppbmZvKQogICovCiBldnRjaG5fcG9ydF90IGV2dGNobl9mcm9tX2ly
-cSh1bnNpZ25lZCBpcnEpCiB7Ci0JaWYgKFdBUk4oaXJxID49IG5yX2lycXMs
-ICJJbnZhbGlkIGlycSAlZCFcbiIsIGlycSkpCisJY29uc3Qgc3RydWN0IGly
-cV9pbmZvICppbmZvID0gTlVMTDsKKworCWlmIChsaWtlbHkoaXJxIDwgbnJf
-aXJxcykpCisJCWluZm8gPSBpbmZvX2Zvcl9pcnEoaXJxKTsKKwlpZiAoIWlu
-Zm8pCiAJCXJldHVybiAwOwogCi0JcmV0dXJuIGluZm9fZm9yX2lycShpcnEp
-LT5ldnRjaG47CisJcmV0dXJuIGluZm8tPmV2dGNobjsKIH0KIAogdW5zaWdu
-ZWQgaW50IGlycV9mcm9tX2V2dGNobihldnRjaG5fcG9ydF90IGV2dGNobikK
-QEAgLTQ0MCwxNiArNDYyLDIxIEBAIHN0YXRpYyBpbnQgX19tdXN0X2NoZWNr
-IHhlbl9hbGxvY2F0ZV9pcnFfZ3NpKHVuc2lnbmVkIGdzaSkKIHN0YXRpYyB2
-b2lkIHhlbl9mcmVlX2lycSh1bnNpZ25lZCBpcnEpCiB7CiAJc3RydWN0IGly
-cV9pbmZvICppbmZvID0gaW5mb19mb3JfaXJxKGlycSk7CisJdW5zaWduZWQg
-bG9uZyBmbGFnczsKIAogCWlmIChXQVJOX09OKCFpbmZvKSkKIAkJcmV0dXJu
-OwogCisJd3JpdGVfbG9ja19pcnFzYXZlKCZldnRjaG5fcndsb2NrLCBmbGFn
-cyk7CisKIAlsaXN0X2RlbCgmaW5mby0+bGlzdCk7CiAKIAlzZXRfaW5mb19m
-b3JfaXJxKGlycSwgTlVMTCk7CiAKIAlXQVJOX09OKGluZm8tPnJlZmNudCA+
-IDApOwogCisJd3JpdGVfdW5sb2NrX2lycXJlc3RvcmUoJmV2dGNobl9yd2xv
-Y2ssIGZsYWdzKTsKKwogCWtmcmVlKGluZm8pOwogCiAJLyogTGVnYWN5IElS
-USBkZXNjcmlwdG9ycyBhcmUgbWFuYWdlZCBieSB0aGUgYXJjaC4gKi8KQEAg
-LTEyMzMsNiArMTI2MCw4IEBAIHN0YXRpYyB2b2lkIF9feGVuX2V2dGNobl9k
-b191cGNhbGwodm9pZCkKIAlzdHJ1Y3QgdmNwdV9pbmZvICp2Y3B1X2luZm8g
-PSBfX3RoaXNfY3B1X3JlYWQoeGVuX3ZjcHUpOwogCWludCBjcHUgPSBzbXBf
-cHJvY2Vzc29yX2lkKCk7CiAKKwlyZWFkX2xvY2soJmV2dGNobl9yd2xvY2sp
-OworCiAJZG8gewogCQl2Y3B1X2luZm8tPmV2dGNobl91cGNhbGxfcGVuZGlu
-ZyA9IDA7CiAKQEAgLTEyNDMsNiArMTI3Miw4IEBAIHN0YXRpYyB2b2lkIF9f
-eGVuX2V2dGNobl9kb191cGNhbGwodm9pZCkKIAkJdmlydF9ybWIoKTsgLyog
-SHlwZXJ2aXNvciBjYW4gc2V0IHVwY2FsbCBwZW5kaW5nLiAqLwogCiAJfSB3
-aGlsZSAodmNwdV9pbmZvLT5ldnRjaG5fdXBjYWxsX3BlbmRpbmcpOworCisJ
-cmVhZF91bmxvY2soJmV2dGNobl9yd2xvY2spOwogfQogCiB2b2lkIHhlbl9l
-dnRjaG5fZG9fdXBjYWxsKHN0cnVjdCBwdF9yZWdzICpyZWdzKQotLSAKMi4y
-Ni4yCgo=
+ewogICJYU0EiOiAzMTcsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIsCiAgICAiNC4xMSIs
+CiAgICAiNC4xMCIKICBdLAogICJUcmVlcyI6IFsKICAgICJ4ZW4iCiAgXSwK
+ICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAgICAiUmVjaXBlcyI6
+IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJm
+ZDZlNDllY2FlMDM4NDA2MTBmZGM2YTQxNmE2Mzg1OTBjMGI2NTM1IiwKICAg
+ICAgICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFtd
+CiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTEiOiB7CiAgICAg
+ICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3Rh
+YmxlUmVmIjogIjJiNzc3Mjk4ODhmYjg1MWFiOTZlN2Y3N2JjODU0MTIyNjI2
+YjQ4NjEiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAgICAgICJQ
+YXRjaGVzIjogW10KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC4x
+MiI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAg
+ICAgICAgICJTdGFibGVSZWYiOiAiMDUwZmU0OGRjOTgxZTA0ODhkZTFmNmM2
+YzA3ZDgxMTBmM2I3NTIzYiIsCiAgICAgICAgICAiUHJlcmVxcyI6IFtdLAog
+ICAgICAgICAgIlBhdGNoZXMiOiBbXQogICAgICAgIH0KICAgICAgfQogICAg
+fSwKICAgICI0LjEzIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
+eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI5ZjdlOGJhYzRjYTI3
+OWIzYmZjY2I1ZjM3MzBmYjJlNTM5OGM5NWFiIiwKICAgICAgICAgICJQcmVy
+ZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFtdCiAgICAgICAgfQog
+ICAgICB9CiAgICB9LAogICAgIjQuOSI6IHsKICAgICAgIlJlY2lwZXMiOiB7
+CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiNmU0
+NzdjMmVhNGQ1YzI2YTdhN2IyZjg1MDE2NmFhNzllZGM1MjI1YyIsCiAgICAg
+ICAgICAiUHJlcmVxcyI6IFtdLAogICAgICAgICAgIlBhdGNoZXMiOiBbXQog
+ICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICJtYXN0ZXIiOiB7CiAgICAg
+ICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3Rh
+YmxlUmVmIjogImU0ZDIyMDcxNjViMzc5ZWMxM2M4YjUxMjkzNmY2Mzk4MmFm
+NjJkMTMiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAgICAgICJQ
+YXRjaGVzIjogW10KICAgICAgICB9CiAgICAgIH0KICAgIH0KICB9Cn0K
+
+--=separator
+Content-Type: application/octet-stream; name="xsa317.patch"
+Content-Disposition: attachment; filename="xsa317.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBhZWI0NmU5MmY5MTVmMTlhNjFkNWE4YTFmNGI2OTY3OTNmNjRlNmZi
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWxpZW4gR3JhbGwg
+PGpncmFsbEBhbWF6b24uY29tPgpEYXRlOiBUaHUsIDE5IE1hciAyMDIwIDEz
+OjE3OjMxICswMDAwClN1YmplY3Q6IFtQQVRDSF0geGVuL2NvbW1vbjogZXZl
+bnRfY2hhbm5lbDogRG9uJ3QgaWdub3JlIGVycm9yIGluCiBnZXRfZnJlZV9w
+b3J0KCkKCkN1cnJlbnRseSwgZ2V0X2ZyZWVfcG9ydCgpIGlzIGFzc3VtaW5n
+IHRoYXQgdGhlIHBvcnQgaGFzIGJlZW4gYWxsb2NhdGVkCndoZW4gZXZ0Y2hu
+X2FsbG9jYXRlX3BvcnQoKSBpcyBub3QgcmV0dXJuIC1FQlVTWS4KCkhvd2V2
+ZXIsIHRoZSBmdW5jdGlvbiBtYXkgcmV0dXJuIGFuIGVycm9yIHdoZW46CiAg
+ICAtIFdlIGV4aGF1c3RlZCBhbGwgdGhlIGV2ZW50IGNoYW5uZWxzLiBUaGlz
+IGNhbiBoYXBwZW4gaWYgdGhlIGxpbWl0CiAgICBjb25maWd1cmVkIGJ5IHRo
+ZSBhZG1pbmlzdHJhdG9yIGZvciB0aGUgZ3Vlc3QgKCdtYXhfZXZlbnRfY2hh
+bm5lbHMnCiAgICBpbiB4bCBjZmcpIGlzIGhpZ2hlciB0aGFuIHRoZSBBQkkg
+dXNlZCBieSB0aGUgZ3Vlc3QuIEZvciBpbnN0YW5jZSwKICAgIGlmIHRoZSBn
+dWVzdCBpcyB1c2luZyAyTCwgdGhlIGxpbWl0IHNob3VsZCBub3QgYmUgaGln
+aGVyIHRoYW4gNDA5NS4KICAgIC0gV2UgY2Fubm90IGFsbG9jYXRlIG1lbW9y
+eSAoZS5nIFhlbiBoYXMgbm90IG1vcmUgbWVtb3J5KS4KClVzZXJzIG9mIGdl
+dF9mcmVlX3BvcnQoKSAoc3VjaCBhcyBFVlRDSE5PUF9hbGxvY191bmJvdW5k
+KSB3aWxsIHZhbGlkbHkKYXNzdW1pbmcgdGhlIHBvcnQgd2FzIHZhbGlkIGFu
+ZCB3aWxsIG5leHQgY2FsbCBldnRjaG5fZnJvbV9wb3J0KCkuIFRoaXMKd2ls
+bCByZXN1bHQgdG8gYSBjcmFzaCBhcyB0aGUgbWVtb3J5IGJhY2tpbmcgdGhl
+IGV2ZW50IGNoYW5uZWwgc3RydWN0dXJlCmlzIG5vdCBwcmVzZW50LgoKRml4
+ZXM6IDM2OGFlOWEwNWZlICgieGVuL3B2c2hpbTogZm9yd2FyZCBldnRjaG4g
+b3BzIGJldHdlZW4gTDAgWGVuIGFuZCBMMiBEb21VIikKU2lnbmVkLW9mZi1i
+eTogSnVsaWVuIEdyYWxsIDxqZ3JhbGxAYW1hem9uLmNvbT4KUmV2aWV3ZWQt
+Ynk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KLS0tCiB4ZW4v
+Y29tbW9uL2V2ZW50X2NoYW5uZWwuYyB8IDggKysrKy0tLS0KIDEgZmlsZSBj
+aGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0pCgpkaWZm
+IC0tZ2l0IGEveGVuL2NvbW1vbi9ldmVudF9jaGFubmVsLmMgYi94ZW4vY29t
+bW9uL2V2ZW50X2NoYW5uZWwuYwppbmRleCBlODZlMmJmYWIwLi5hOGQxODJi
+NTg0IDEwMDY0NAotLS0gYS94ZW4vY29tbW9uL2V2ZW50X2NoYW5uZWwuYwor
+KysgYi94ZW4vY29tbW9uL2V2ZW50X2NoYW5uZWwuYwpAQCAtMTk1LDEwICsx
+OTUsMTAgQEAgc3RhdGljIGludCBnZXRfZnJlZV9wb3J0KHN0cnVjdCBkb21h
+aW4gKmQpCiAgICAgewogICAgICAgICBpbnQgcmMgPSBldnRjaG5fYWxsb2Nh
+dGVfcG9ydChkLCBwb3J0KTsKIAotICAgICAgICBpZiAoIHJjID09IC1FQlVT
+WSApCi0gICAgICAgICAgICBjb250aW51ZTsKLQotICAgICAgICByZXR1cm4g
+cG9ydDsKKyAgICAgICAgaWYgKCByYyA9PSAwICkKKyAgICAgICAgICAgIHJl
+dHVybiBwb3J0OworICAgICAgICBlbHNlIGlmICggcmMgIT0gLUVCVVNZICkK
+KyAgICAgICAgICAgIHJldHVybiByYzsKICAgICB9CiAKICAgICByZXR1cm4g
+LUVOT1NQQzsKLS0gCjIuMTcuMQoK
 
 --=separator--
