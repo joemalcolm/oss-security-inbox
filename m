@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1944" "Monday" "19" "April" "2021" "15:19:58" "+0800" "- Nop" "nopitydays@gmail.com" nil "63" "[oss-security] Re: Linux Kernel: out of bounds array access in dm-ioctl.c" nil nil nil "4" nil nil (number mark "U       nopitydays@g Apr 19   63/1944  " thread-indent "\"[oss-security] Re: Linux Kernel: out of bounds array access in dm-ioctl.c\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Linux Kernel: out of bounds array access in dm-ioctl.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8121" "Tuesday" "7" "July" "2020" "12:18:37" "+0000" "Xen.org security team" "security@xen.org" "<E1jsmYX-0000Xl-BV@xenbits.xenproject.org>" "195" "[oss-security] Xen Security Advisory 319 v3 (CVE-2020-15563) - inverted code paths in x86 dirty VRAM tracking" nil nil nil "7" "2020070712:18:37" "[oss-security] Xen Security Advisory 319 v3 (CVE-2020-15563) - inverted code paths in x86 dirty VRAM tracking" (number mark "U       security@xen Jul  7  195/8121  " thread-indent "\"[oss-security] Xen Security Advisory 319 v3 (CVE-2020-15563) - inverted code paths in x86 dirty VRAM tracking\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 319 v3 (CVE-2020-15563) - inverted code paths in x86 dirty VRAM tracking" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30197 invoked by uid 550); 19 Apr 2021 07:25:10 -0000
+Received: (qmail 15925 invoked by uid 550); 7 Jul 2020 12:18:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,103 +12,221 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28046 invoked from network); 19 Apr 2021 07:20:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=G3ijUYaa91xZ3Oy2ePzU0mjN8cYOj10v89qdOn1T9g4=;
-        b=DUynH4AF0PSv6WkYlrEYEgMaPtpZCr9EiqA3Kn1+79mdGirKtgK15efqAeecpkJeIW
-         wDbFDS9446mQ5uJwbFpZjTXd6W1DWCRk2uTYOc+rz0ce5u5BJgti/tqg2q9qrmWenuZK
-         vg8NuGvnYEYIYhtfaIB9oVRUVsrLRt5xp7/z5HjViwCGNYsdC6DwzOLrRTwmorNi2iP3
-         F+IZWGMBxJpwSjsCoWJ/TLoGaICleSAZwrfkMhs1ouryIGogbFF114SlybjYvF0Z/POM
-         wgPawXOtU94f4K60dtVrDys6ENDhFDwbM3lZEse5mpR7LbERvuLz0TlNIFr9c5qZ++G+
-         D0Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=G3ijUYaa91xZ3Oy2ePzU0mjN8cYOj10v89qdOn1T9g4=;
-        b=nJeBUCXDGLXQDnVlDiwvYI+TzFDyCOWvTIids3jEn8Ty8IZL9CDTgQW2PnUgOx4eNT
-         I5cVGyJts98Xoryqg9UDsQFEA1kdTaODW2nty8tc49I056lDjwfZ1Jmgkqs5Iyw3bCli
-         N7LJ0zgADz5w7RyD0ZTaGT+AarRUf/QgTx48JXUHdHq5XaxORJK23mav4v48QQX5dkqp
-         OHVui3E4HgO66Pahm4TIInGUlH716ji42/uchvnwJscjeMMhhngiDDYcEgveF0eKpi4G
-         7Q/2IBOXITcUKG9srpaUThfF5b1XNypVogQnF+HneVNm2w7yhoO97Wa/EXTdav8BbcFl
-         iBjg==
-X-Gm-Message-State: AOAM533i5IFGBgc4KkL2iWCPpHFSBuyE3SPDYjWahOSPBaU8rgj7BuuH
-	5jzykAJR/H7VCDuifF9bP/R+GMa5+3nsvyMPK8DTUqueCsZpwCNZ
-X-Google-Smtp-Source: ABdhPJyubWimW+ZJwpZSf+XIxoeBn69zphdlR+jxq1j6yJopWHAfcPLcXw2nYrbuRteP5dxTxciFbuuAk4Z3+NehcBk=
-X-Received: by 2002:a1c:7402:: with SMTP id p2mr18454951wmc.88.1618816809904;
- Mon, 19 Apr 2021 00:20:09 -0700 (PDT)
+Received: (qmail 15848 invoked from network); 7 Jul 2020 12:18:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=pka224yeKHvOnBWMQf/upTLDc1Wie4UNUJLCWEs/KC4=; b=HQHGlhpB4pJrFNJPJts4F2QL3R
+	BQ8USz9N48wvmAx4C9Hsi8zpMVPfGYxWgbuTHqr25bH3KPLI9XeapPHLF+eP1JJPUrwYLtnhlOtCs
+	CS7wTaNjlsJK/5yRIieZVFv3NcoeRZ8I/aREgxO68K+iVFFpoOs0R5EKNcaapHhbYUw0=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-References: <CA+-U7QC-zxn_XYLJifSm=cDmsW0_Rs+juQuoCUTw1+TQmdfpGg@mail.gmail.com>
-In-Reply-To: <CA+-U7QC-zxn_XYLJifSm=cDmsW0_Rs+juQuoCUTw1+TQmdfpGg@mail.gmail.com>
-From: - Nop <nopitydays@gmail.com>
-Date: Mon, 19 Apr 2021 15:19:58 +0800
-Message-ID: <CA+-U7QBGWLJkSvg+7g8K-Aj02Svp9e6HhSRbXYPVBp8gZUBQVA@mail.gmail.com>
-To: oss-security@lists.openwall.com, John Haxby <john.haxby@oracle.com>
-Content-Type: multipart/alternative; boundary="000000000000e92c7105c04e2822"
-Subject: [oss-security] Re: Linux Kernel: out of bounds array access in dm-ioctl.c
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1jsmYX-0000Xl-BV@xenbits.xenproject.org>
+Date: Tue, 07 Jul 2020 12:18:37 +0000
+Subject: [oss-security] Xen Security Advisory 319 v3 (CVE-2020-15563) - inverted code
+ paths in x86 dirty VRAM tracking
 
---000000000000e92c7105c04e2822
-Content-Type: text/plain; charset="UTF-8"
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-sorry for the late reply.
+            Xen Security Advisory CVE-2020-15563 / XSA-319
+                               version 3
 
-> DM_LIST_DEVICES_CMD, and in fact, any function called from ctl_ioctl is limited to users with CAP_SYS_ADMIN.  Without that root-equivalent privilege I don't see any way to exploit this bug. Did you find a way to exploit it as an unprivileged user?
+            inverted code paths in x86 dirty VRAM tracking
 
-Yes, this IOCTL does need CAP_SYS_ADMIN capability which is very close
-to the real root user.
+UPDATES IN VERSION 3
+====================
 
-The only possible exploitable scenario that I can imagine is, a user
-with CAP_SYS_ADMIN cap in a container attacks the shared kernel to
-break through the seccomp limitation.
+Public release.
 
-However, it is quite rare.
+ISSUE DESCRIPTION
+=================
+
+An inverted conditional in x86 HVM guests' dirty video RAM tracking
+code allows such guests to make Xen de-reference a pointer guaranteed
+to point at unmapped space.
+
+IMPACT
+======
+
+A malicious or buggy HVM guest may cause the hypervisor to crash,
+resulting in Denial of Service (DoS) affecting the entire host.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions from 4.8 onwards are affected.  Xen versions 4.7 and
+earlier are not affected.
+
+Only x86 systems are affected.  Arm systems are not affected.
+
+Only x86 HVM guests using shadow paging can leverage the vulnerability.
+In addition there needs to be an entity actively monitoring a guest's
+video frame buffer (typically for display purposes) in order for such a
+guest to be able to leverage the vulnerability.  x86 PV guests as well
+as x86 HVM guest using hardware assisted paging (HAP) cannot leverage
+the vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid the vulnerability.
+
+For HVM guest explicitly configured to use shadow paging (e.g. via the
+`hap=0' xl domain configuration file parameter), changing to HAP (e.g.
+by setting `hap=1') will avoid exposing the vulnerability to those
+guests.  HAP is the default (in upstream Xen), where the hardware
+supports it; so this mitigation is only applicable if HAP has been
+disabled by configuration.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa319.patch           xen-unstable, 4.13 - 4.9
+
+$ sha256sum xsa319*
+1fe0dc2e274776b8e1275f85129280f280f94ca4eabe6a8166113283dad93ed8  xsa319.meta
+c145f394f8ac7d8838c376a97e1850c4125c12e478fc66ebe025ae397b27e6ea  xsa319.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patch described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+HOWEVER deployment of the "use HAP mode" mitigation described above is
+NOT permitted (except where all the affected systems and VMs are
+administered and used only by organisations which are members of the Xen
+Project Security Issues Predisclosure List).  Specifically, deployment
+on public cloud systems is NOT permitted.
+
+This is because in that case the configuration change can be observed
+by guests, which could lead to the rediscovery of the vulnerability.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-Thanks,
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-Bodong
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8EZ/sMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ75YH/jX/sAs0icOgBtHkwVZHg318OBExxt9x+ehk/pxb
+i+1ZlS/IrJ8eJdHJYq8HYvAlxmtmFP1I0t+C9vmwbP4QMcR++RmKgdJI4+/sqCsB
+AMEnK+cVJSbHxD7y7eW2CPuU3h0cKx0H24JgtzA2ONse7dVz7RN+oa97D5IKryTL
+cBW8WroMn2InbKMCUy/5zj89NLAlbSuWSVZzQidDwzTITukzhZZ7Xw0+Q2yh1nkK
+S4kcmz7Bzzd5Mc1gFr1Eh1FxfmVVl5RxwDE//3a5VbmfPVo/f0kMOIWjXVd1R1dj
+x78SPrPojOAZbb8+f1LYqHmqzCgzvpa4EFbsOnsB7CBmP2Q=
+=bDFh
+-----END PGP SIGNATURE-----
 
-On Sun, Mar 28, 2021 at 11:47 AM - Nop <nopitydays@gmail.com> wrote:
+--=separator
+Content-Type: application/octet-stream; name="xsa319.meta"
+Content-Disposition: attachment; filename="xsa319.meta"
+Content-Transfer-Encoding: base64
 
-> Hi,
->
-> We found an out of bounds array accessing bug in drivers/md/dm-ioctl.c,
-> and reproduced it in the latest kernel (v5.11.10).
->
-> The root cause of this BUG is :
->
-> The field "data_size" in function ctl_ioctl is fully controlled by users
-> and this argument controls the size of kvmalloc in function copy_params.
->
-> When the data_size is in a range of [0x131,0x138], the allocated memory
-> which is pointed by the variable "param" used in ioctl
-> "DM_LIST_DEVICES_CMD" is too small, causing an oob bug at line "nl->dev =
-> 0; /* Flags no data */" (
-> https://github.com/torvalds/linux/blob/0d02ec6b3136c73c09e7859f0d0e4e2c4c07b49b/drivers/md/dm-ioctl.c#L538
-> )
->
-> Attachments are the poc, kernel config and Kernel report.
->
-> The patch:
->
-> https://github.com/torvalds/linux/commit/4edbe1d7bcffcd6269f3b5eb63f710393ff2ec7a
->      * Grab our output buffer.
->      */
->      nl = orig_nl = get_result_buffer(param, param_size, &len);
-> -    if (len < needed) {
-> +    if (len < needed || len < sizeof(nl->dev)) {
->          param->flags |= DM_BUFFER_FULL_FLAG;
->          goto out;
->      }
->
-> Regards,
-> Bodong Zhao of NISL lab, Tsinghua University
->
->
+ewogICJYU0EiOiAzMTksCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIsCiAgICAiNC4xMSIs
+CiAgICAiNC4xMCIsCiAgICAiNC45IgogIF0sCiAgIlRyZWVzIjogWwogICAg
+InhlbiIKICBdLAogICJSZWNpcGVzIjogewogICAgIjQuMTAiOiB7CiAgICAg
+ICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3Rh
+YmxlUmVmIjogImZkNmU0OWVjYWUwMzg0MDYxMGZkYzZhNDE2YTYzODU5MGMw
+YjY1MzUiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDMx
+NwogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAg
+ICAgICAieHNhMzE5LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAg
+ICAgfQogICAgfSwKICAgICI0LjExIjogewogICAgICAiUmVjaXBlcyI6IHsK
+ICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICIyYjc3
+NzI5ODg4ZmI4NTFhYjk2ZTdmNzdiYzg1NDEyMjYyNmI0ODYxIiwKICAgICAg
+ICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAzMTcKICAgICAgICAgIF0s
+CiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTMxOS5w
+YXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAg
+ICAiNC4xMiI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6
+IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiMDUwZmU0OGRjOTgxZTA0ODhk
+ZTFmNmM2YzA3ZDgxMTBmM2I3NTIzYiIsCiAgICAgICAgICAiUHJlcmVxcyI6
+IFsKICAgICAgICAgICAgMzE3CiAgICAgICAgICBdLAogICAgICAgICAgIlBh
+dGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EzMTkucGF0Y2giCiAgICAgICAg
+ICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTMiOiB7CiAg
+ICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAi
+U3RhYmxlUmVmIjogIjlmN2U4YmFjNGNhMjc5YjNiZmNjYjVmMzczMGZiMmU1
+Mzk4Yzk1YWIiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAg
+IDMxNwogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAg
+ICAgICAgICAieHNhMzE5LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0K
+ICAgICAgfQogICAgfSwKICAgICI0LjkiOiB7CiAgICAgICJSZWNpcGVzIjog
+ewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjZl
+NDc3YzJlYTRkNWMyNmE3YTdiMmY4NTAxNjZhYTc5ZWRjNTIyNWMiLAogICAg
+ICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAgICAgICJQYXRjaGVzIjogWwog
+ICAgICAgICAgICAieHNhMzE5LnBhdGNoIgogICAgICAgICAgXQogICAgICAg
+IH0KICAgICAgfQogICAgfSwKICAgICJtYXN0ZXIiOiB7CiAgICAgICJSZWNp
+cGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVm
+IjogImU0ZDIyMDcxNjViMzc5ZWMxM2M4YjUxMjkzNmY2Mzk4MmFmNjJkMTMi
+LAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDMxNwogICAg
+ICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAi
+eHNhMzE5LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQog
+ICAgfQogIH0KfQ==
 
---000000000000e92c7105c04e2822--
+--=separator
+Content-Type: application/octet-stream; name="xsa319.patch"
+Content-Disposition: attachment; filename="xsa319.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODYvc2hhZG93OiBjb3JyZWN0IGFuIGludmVydGVkIGNvbmRpdGlvbmFs
+IGluIGRpcnR5IFZSQU0gdHJhY2tpbmcKClRoaXMgb3JpZ2luYWxseSB3YXMg
+Im1mbl94KG1mbikgPT0gSU5WQUxJRF9NRk4iLiBNYWtlIGl0IGxpa2UgdGhp
+cwphZ2FpbiwgdGFraW5nIHRoZSBvcHBvcnR1bml0eSB0byBhbHNvIGRyb3Ag
+dGhlIHVubmVjZXNzYXJ5IG5lYXJieQpicmFjZXMuCgpUaGlzIGlzIFhTQS0z
+MTkuCgpGaXhlczogMjQ2YTVhMzM3N2MyICgieGVuOiBVc2UgYSB0eXBlc2Fm
+ZSB0byBkZWZpbmUgSU5WQUxJRF9NRk4iKQpTaWduZWQtb2ZmLWJ5OiBKYW4g
+QmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBBbmRy
+ZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgoKLS0tIGEv
+eGVuL2FyY2gveDg2L21tL3NoYWRvdy9jb21tb24uYworKysgYi94ZW4vYXJj
+aC94ODYvbW0vc2hhZG93L2NvbW1vbi5jCkBAIC0zMjUyLDEwICszMjUyLDgg
+QEAgaW50IHNoYWRvd190cmFja19kaXJ0eV92cmFtKHN0cnVjdCBkb21haQog
+ICAgICAgICAgICAgaW50IGRpcnR5ID0gMDsKICAgICAgICAgICAgIHBhZGRy
+X3Qgc2wxbWEgPSBkaXJ0eV92cmFtLT5zbDFtYVtpXTsKIAotICAgICAgICAg
+ICAgaWYgKCAhbWZuX2VxKG1mbiwgSU5WQUxJRF9NRk4pICkKLSAgICAgICAg
+ICAgIHsKKyAgICAgICAgICAgIGlmICggbWZuX2VxKG1mbiwgSU5WQUxJRF9N
+Rk4pICkKICAgICAgICAgICAgICAgICBkaXJ0eSA9IDE7Ci0gICAgICAgICAg
+ICB9CiAgICAgICAgICAgICBlbHNlCiAgICAgICAgICAgICB7CiAgICAgICAg
+ICAgICAgICAgcGFnZSA9IG1mbl90b19wYWdlKG1mbik7Cg==
+
+--=separator--
