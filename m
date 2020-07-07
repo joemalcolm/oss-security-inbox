@@ -1,37 +1,151 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/24/3
-Message-ID: <nycvar.YSQ.7.78.906.2008241819340.306228@xnncv>
-Date: Mon, 24 Aug 2020 18:22:05 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Gerd Hoffmann <kraxel@...hat.com>, yanyu.zhang@...itin.com,  ziming zhang <ezrakiez@...il.com>, Xiao Wei <xiaowei-c@....com>
-Subject: CVE-2020-14364 QEMU: usb: out-of-bounds r/w access issue while processing usb packets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/07/2
+Message-Id: <E1jsmYT-0000Wl-Q7@xenbits.xenproject.org>
+Date: Tue, 07 Jul 2020 12:18:33 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 317 v3 (CVE-2020-15566) - Incorrect error handling in event channel port allocation
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-An out-of-bounds read/write access issue was found in the USB emulator of the 
-QEMU. It occurs while processing USB packets from a guest, when 
-'USBDevice->setup_len' exceeds the USBDevice->data_buf[4096], in 
-do_token_{in,out} routines.
+            Xen Security Advisory CVE-2020-15566 / XSA-317
+                               version 3
 
-A guest user may use this flaw to crash the QEMU process resulting in DoS OR 
-potentially execute arbitrary code with the privileges of the QEMU process on 
-the host.
+       Incorrect error handling in event channel port allocation
 
-* Attached herein is an upstream patch from Gerd Hoffmann(CC'd) to fix this
-   issue.
+UPDATES IN VERSION 3
+====================
 
-* 'CVE-2020-14364' is assigned to this issue by Red Hat Inc.
+Public release.
 
-* This issue was independently reported by Ziming Zhang, Gonglei Arei and
-   Yanyu Zhang(CC'd).
+ISSUE DESCRIPTION
+=================
 
-   Gonglei and Yanyu mentioned that the issue was found by Xiao Wei(CC'd).
+The allocation of an event channel port may fail for multiple reasons:
+    1) Port is already in use
+    2) The memory allocation failed
+    3) The port we try to allocate is higher than what is supported by
+       the ABI (e.g 2L or FIFO) used by the guest or the limit set by an
+       administrator ('max_event_channels' in xl cfg).
+
+Due to the missing error checks, only 1) will be considered as an error.  All
+the other cases will provide a "valid" port and will result to a crash when
+trying to access the event channel.
+
+IMPACT
+======
+
+When the administrator configured a guest to allow more than 1023
+event channels, that guest may be able to crash the host.
+
+When Xen is out-of-memory, allocation of new event channels will
+result in crashing the host rather than reporting an error.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.10 and later are affected.  (The special Xen 4.8
+"Comet" branch for XSA-254 contains changes similar to those which led
+to this vulnerability; so it is likely to be affected, but - like
+mainline Xen 4.8 - that branch is longer security-supported.)
+
+Older Xen versions are unaffected.
+
+All architectures are affected.
+
+The default configuration, when guests are created with xl/libxl, is
+not vulnerable, because of the default event channel limit (see
+Mitigation, below).
+
+MITIGATION
+==========
+
+The problem can be avoided by reducing the number of event channels
+available to the guest no more than 1023.  For example, setting
+"max_event_channels=1023" in the xl domain configuration, or deleting
+any existing setting (since 1023 is the default for xl/libxl).
+
+For ARM systems, any limit no more than 4095 is safe.
+
+For 64-bit x86 PV guests, any limit no more than 4095 is likewise safe
+if the host configuration prevents the guest administrator from
+substituting and running a 32-bit kernel (and thereby putting the
+guest into 32-bit PV mode).
+
+CREDITS
+=======
+
+This issue was discovered by Amazon.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa317.patch           Xen 4.10 - xen-unstable
+
+$ sha256sum xsa317*
+11e77dd8644cee40cee609d02e27d70655f3999005cae8c24fb2801980ebb4f2  xsa317.meta
+17908035e2da07f6070fa8de345db68c96ed9bd78f8b114e43ba0194c1be3f15  xsa317.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the *patch* described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-View attachment "0001-usb-fix-setup-len-init.patch" of type "text/plain" (3127 bytes)
+And: deployment of the event channel limit reduction mitigation is NOT
+permitted (except where all the affected systems and VMs are
+administered and used only by organisations which are members of the
+Xen Project Security Issues Predisclosure List).  Specifically,
+deployment on public cloud systems is NOT permitted.
+
+This is because such a change can be visible to the guest, so it would
+leak the preconditions for the vulnerability and maybe lead to
+rediscovery.
+
+Deployment of this, or similar mitigations, is permitted only AFTER
+the embargo ends.
+
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8EZ/gMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZQUwIAK8W8bZ0xml2bzAu4vsXi8QqhDX4VrpkgADYZS+M
+BD8hpllQ+O/CiM5ZMECj7zaWYTt7+VrGrqK4jtf2REBs/sOWcO+k7KdEury4XCKf
+jIG4CzCBHC46RVEKftiqQNTX2ebVBDwoj+1fGeIvm7OhcZ7f6KdhYPHvE2bU8D45
+ghr2jw33HZHoG7IsPQvJn8u6wqd6l+7h0BxhgzO5U8pI+w3ZXRM4XAno+ERzs8LO
+N5ffv8UeaMIpkHoYEdsKOK/ItjhoCASoWTFvbE90u7f2WbimFnBG3oCPEVPt89kv
+Y/o0+0jBk+WjXbPChMmMu5WuQuKVFDelMXLLE6mjfhGAvnI=
+=vEgE
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa317.meta" of type "application/octet-stream" (1302 bytes)
+
+Download attachment "xsa317.patch" of type "application/octet-stream" (1776 bytes)
