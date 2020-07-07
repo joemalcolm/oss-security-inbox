@@ -1,104 +1,180 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/27/3
-Message-ID: <4c8e7b25-c496-fa56-3a73-4424ad0d4e0f@igalia.com>
-Date: Mon, 27 Apr 2020 19:12:24 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/07/6
+Message-Id: <E1jsmdp-0004Ry-Rv@xenbits.xenproject.org>
+Date: Tue, 07 Jul 2020 12:24:05 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 328 v3 (CVE-2020-15567) - non-atomic modification of live EPT PTE
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0005
-------------------------------------------------------------------------
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Date reported           : April 27, 2020
-Advisory ID             : WSA-2020-0005
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0005.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0005.html
-CVE identifiers         : CVE-2020-3885, CVE-2020-3894, CVE-2020-3895,
-                          CVE-2020-3897, CVE-2020-3899, CVE-2020-3900,
-                          CVE-2020-3901, CVE-2020-3902.
+            Xen Security Advisory CVE-2020-15567 / XSA-328
+                               version 3
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+                non-atomic modification of live EPT PTE
 
-CVE-2020-3885
-    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
-    2.28.0.
-    Credit to Ryan Pickren (ryanpickren.com).
-    Impact: A file URL may be incorrectly processed. Description: A
-    logic issue was addressed with improved restrictions.
+UPDATES IN VERSION 3
+====================
 
-CVE-2020-3894
-    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
-    2.28.0.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: An application may be able to read restricted memory.
-    Description: A race condition was addressed with additional
-    validation.
+Public release.
 
-CVE-2020-3895
-    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
-    2.28.0.
-    Credit to grigoritchy.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved memory handling.
+ISSUE DESCRIPTION
+=================
 
-CVE-2020-3897
-    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
-    2.28.0.
-    Credit to Brendan Draper (@6r3nd4n) working with Trend Micro’s Zero
-    Day Initiative.
-    Impact: A remote attacker may be able to cause arbitrary code
-    execution. Description: A type confusion issue was addressed with
-    improved memory handling.
+When mapping guest EPT (nested paging) tables, Xen would in some
+circumstances use a series of non-atomic bitfield writes.
 
-CVE-2020-3899
-    Versions affected: WebKitGTK before 2.28.2 and WPE WebKit before
-    2.28.2.
-    Credit to OSS-Fuzz.
-    Impact: A remote attacker may be able to cause arbitrary code
-    execution. Description: A memory consumption issue was addressed
-    with improved memory handling.
+Depending on the compiler version and optimisation flags, Xen might
+expose a dangerous partially-written PTE to the hardware, which an
+attacker might be able to race to exploit.
 
-CVE-2020-3900
-    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
-    2.28.0.
-    Credit to Dongzhuo Zhao working with ADLab of Venustech.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved memory handling.
+IMPACT
+======
 
-CVE-2020-3901
-    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
-    2.28.0.
-    Credit to Benjamin Randazzo (@____benjamin).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A type confusion issue was
-    addressed with improved memory handling.
+A guest administrator or perhaps even unprivileged guest user might
+be able to cause denial of service, data corruption, or privilege
+escalation.
 
-CVE-2020-3902
-    Versions affected: WebKitGTK before 2.28.0 and WPE WebKit before
-    2.28.0.
-    Credit to Yiğit Can YILMAZ (@yilmazcanyigit).
-    Impact: Processing maliciously crafted web content may lead to a
-    cross site scripting attack. Description: An input validation issue
-    was addressed with improved input validation.
+VULNERABLE SYSTEMS
+==================
 
+Only systems using Intel CPUs are vulnerable.  Sytems using AMD CPUs,
+and Arm systems, are not vulnerable.
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+Only systems using nested paging ("hap", aka nested paging, aka in
+this case Intel EPT) are vulnerable.
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+Only HVM and PVH guests can exploit the vulnerability.
 
-The WebKitGTK and WPE WebKit team,
-April 27, 2020
+The presence and scope of the vulnerability depends on the precise
+optimisations performed by the compiler used to build Xen.  If the
+compiler generates (a) a single 64-bit write, or (b) a series of
+read-modify-write operations which are in the same order as the source
+code, the hypervisor is not vulnerable.
 
+For example, in one test build with gcc 8.3 with normal settings, the
+compiler generated multiple (unlocked) read-modify-write operations in
+source code order, which did *not* constitute a vulnerability.
 
+We have not been able to survey compilers; consequently we cannot say
+which compiler(s) might produce vulnerable code (with which code
+generation options).  The code clearly violates the C rules.  So we
+have chosen to issue this advisory.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+Switching to shadow paging (e.g. using the "hap=0" xl domain domain
+configuration file parameter) will avoid exposing the vulnerability to
+those guests.
+
+Manual inspection of the generated assembly code might allow a
+suitably qualified person to say that a particular build is not
+vulnerable.
+
+There is no less broad mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+For patch 1:
+Reviewed-by: Roger Pau Monné <roger.pau@...rix.com>
+
+For patch 2:
+From: Roger Pau Monné <roger.pau@...rix.com>
+Reported-by: Jan Beulich <jbeulich@...e.com>
+Signed-off-by: Roger Pau Monné <roger.pau@...rix.com>
+
+RESOLUTION
+==========
+
+Applying the appropriate pair of attached patches resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa328/xsa328-?.patch        xen-unstable
+xsa328/xsa328-4.13-?.patch   Xen 4.13.x
+xsa328/xsa328-4.12-?.patch   Xen 4.12.x
+xsa328/xsa328-4.11-?.patch   Xen 4.11.x, Xen 4.10.x
+xsa328/xsa328-4.9-?.patch    Xen 4.9.x
+
+$ sha256sum xsa328* xsa328*/*
+61ceb3d039c3ebb06f480a17593b367b01e7c1e5cc3669d77caecb704fbc7071  xsa328.meta
+cae53f7e6c46fe245790036279bc50eaa10e4271790e871ad8a7d446629b2e12  xsa328/xsa328-1.patch
+d61354a992869451cd7a3c92254672b5e253d1a994135cf9b4a5c784be0a07ef  xsa328/xsa328-2.patch
+018412fba6f153c1d6b03fc2fa6f3ac381060efe6a8651404462028d24c830a8  xsa328/xsa328-4.9-1.patch
+f3deb26e0ce27c385ab16065a0ba67b86a228afd949c0a6a78b9d48366fc2554  xsa328/xsa328-4.9-2.patch
+a600ecef784485e8608cd4549f756ffa24705747a4d876147f9ba64fff118580  xsa328/xsa328-4.11-1.patch
+f3deb26e0ce27c385ab16065a0ba67b86a228afd949c0a6a78b9d48366fc2554  xsa328/xsa328-4.11-2.patch
+d608921359e561f9c594c9f8f7ee02432518a229ecea638d472ab91227d705ec  xsa328/xsa328-4.12-1.patch
+a51162c019e7e6ed394faa7d40c932456059b7b76a784dc7886dd0a47c43da0b  xsa328/xsa328-4.12-2.patch
+51a41fae885aed40839887da473e0c8ab4c4d897a121f5fac2cc3c6c0188d6d2  xsa328/xsa328-4.13-1.patch
+a51162c019e7e6ed394faa7d40c932456059b7b76a784dc7886dd0a47c43da0b  xsa328/xsa328-4.13-2.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8EaAIMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZi0YH/Aqd/aStpQKD3gTEuif3YBwL9YRf9q8ZxSQqgrG/
+du4lABcOE87kRqaAnsVRNe3sQ1sL995O1oiRbcQPcnKqr5q34IPqMghYGJZgpupE
+qfreaA6b4Uv7XFEM8Z7NTN17t9dx9Y8aLIoD8dETbFaidtKwjBsQ8fkX7tFSmXH9
+YQ0he7B8Is0pGmH6EM5mM6TxqCHz2mtWDdVL4jFuLVqrt10TnNH6S4OHJkEkJcYP
+rcSgqOkM7q7tBP3yDWPvlcSGgk+cijEI3AmKREMuISEmimrBpGzrosBpdh8zqbYU
+MPmRwbn+luyEEOn2Y8j81EfgJR+LR1Itct1E8CU0vS2v0Gw=
+=b0L/
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa328.meta" of type "application/octet-stream" (2111 bytes)
+
+Download attachment "xsa328/xsa328-1.patch" of type "application/octet-stream" (4321 bytes)
+
+Download attachment "xsa328/xsa328-2.patch" of type "application/octet-stream" (1886 bytes)
+
+Download attachment "xsa328/xsa328-4.9-1.patch" of type "application/octet-stream" (3959 bytes)
+
+Download attachment "xsa328/xsa328-4.9-2.patch" of type "application/octet-stream" (1616 bytes)
+
+Download attachment "xsa328/xsa328-4.11-1.patch" of type "application/octet-stream" (3903 bytes)
+
+Download attachment "xsa328/xsa328-4.11-2.patch" of type "application/octet-stream" (1616 bytes)
+
+Download attachment "xsa328/xsa328-4.12-1.patch" of type "application/octet-stream" (3903 bytes)
+
+Download attachment "xsa328/xsa328-4.12-2.patch" of type "application/octet-stream" (1621 bytes)
+
+Download attachment "xsa328/xsa328-4.13-1.patch" of type "application/octet-stream" (3917 bytes)
+
+Download attachment "xsa328/xsa328-4.13-2.patch" of type "application/octet-stream" (1621 bytes)
