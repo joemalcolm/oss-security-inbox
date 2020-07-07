@@ -1,50 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/1
-Message-ID: <366300f0-53e7-dd61-0a89-740ecc402a37@catalyst.net.nz>
-Date: Tue, 15 Dec 2020 13:41:14 +1300
-From: Douglas Bagnall <douglas.bagnall@...alyst.net.nz>
-To: oss-security@...ts.openwall.com
-Subject: Re: Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/07/5
+Message-Id: <E1jsmde-00040K-Bc@xenbits.xenproject.org>
+Date: Tue, 07 Jul 2020 12:23:54 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 327 v3 (CVE-2020-15564) - Missing alignment check in VCPUOP_register_vcpu_info
 Content-Type: text/plain; charset=utf-8
 
-> On Tue, Dec 08, 2020 at 05:18:04PM -0500, Robert Watson wrote:
->> Question from a retired programmer but security novice... Since fuzzing is
->> used to find bugs in other programs, doesn't it need to be held to a bit
->> higher standard in order to maintain credibility?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-As a developer, I find running fuzzers to be interesting and useful. I
-don't just mean that it is nice to have confidence in the software or to
-avoid embarrassment and disclosure chores. What I like is that fuzzers
-sometimes throw up really intriguing puzzles, and that writing them to
-thoroughly and efficiently exercise the attack surface is an interesting
-problem in itself.
+            Xen Security Advisory CVE-2020-15564 / XSA-327
+                               version 3
 
-The first of those points is putting a positive spin on Seth Arnold's
+         Missing alignment check in VCPUOP_register_vcpu_info
 
-> The most difficult part of working with fuzzers, in my opinion, is that
-> it can take a long time to figure out the cause of a crash or sanitizer
-> alert. Often finding the causes, or to propose a fix, takes longer than
-> finding issues.
+UPDATES IN VERSION 3
+====================
 
-It is not bad (and hopefully not so hard) for programmers maintaining a
-piece of code to be forced to understand it.  And after each curly fuzz
-problems you might look to see if the same pattern occurs in unfuzzed code.
+Public release.
 
-The second point relates to knowing the structure of your program and
-where the bodies lie. If you have a huge wrinkly attack surface (in my
-case, Samba) you can't just fuzz the whole thing, you need to package up
-the each parser or interacting subset into its own executable. As a
-developer, you have a huge advantage over others in knowing how to do
-this. Also, you know which bits you distrust most, and which bugs will
-have the most impact. Just as with other tests, projects should provide
-their own fuzz targets.
+ISSUE DESCRIPTION
+=================
 
-Seth Arnold wrote:
-> I have seen maintainers not interested
-> in taking fixes that are "only visible with ubsan", for example, but
->> this attitude is thankfully rare.
+The hypercall VCPUOP_register_vcpu_info is used by a guest to register
+a shared region with the hypervisor. The region will be mapped into Xen address
+space so it can be directly accessed.
 
-In my experience, UBSan-only fuzz bugs are mostly false-ish positives, but
-OF COURSE we still fix them in the manner we fix annoying compiler warnings.
+On Arm, the region is accessed with instructions which require a specific
+alignment. Unfortunately, there is no check that the address provided by
+the guest will be correctly aligned.
 
-Douglas
+As a result, a malicious guest could cause a hypervisor crash by passing
+a misaligned address.
+
+IMPACT
+======
+
+A malicious guest administrator may cause a hypervisor crash, resulting in a
+Denial of Service (DoS).
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are vulnerable.
+
+Only Arm systems are vulnerable.  x86 systems are not affected.
+
+MITIGATION
+==========
+
+There is no mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of Amazon.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa327.patch           Xen 4.9 - xen-unstable
+
+$ sha256sum xsa327*
+f046eefcc1368708bd1fafc88e063d3dbc5c4cdb593d68b3b04917c6cdb7bcb5  xsa327.meta
+1d057695d5b74ce2857204103e943caeaf773bc4fb9d91ea78016e01a9147ed7  xsa327.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patch and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8EaVAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZcqIIAKpb992pMq1jFStIGPhk6HsaIhxVEGep67eJHq9d
+TMaFiyBix125djY0zV8KaznmZmRpM2pNKVsIkGe1XHgtEMcWgMAYARejJLRC4UnW
+xHhpunI7rJMQc1vL5ZGxAFbVYF6U/PX0rwESwQb2/Rt0eLBTAmH4m25TQiSEnrkM
+3C4Dbk3puCbaeB7VGiyccK07hh6qQhEO8s1FhZTNVTaqqcNWZYqy/SbmRYHiT/in
+2dK6XOiBgRhHnjsDDoXj5abSMb00KnJ9PkWu8RC2b7+BVZJUii1557T8zpDo9Fyl
+CJ3YXrekd+gQSFxgwCts00BbLr2NUf3uqEtpY1EEV7UKmvQ=
+=fPiG
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa327.meta" of type "application/octet-stream" (1991 bytes)
+
+Download attachment "xsa327.patch" of type "application/octet-stream" (2064 bytes)
