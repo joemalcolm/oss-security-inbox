@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1639" "Tuesday" "22" "September" "2015" "20:00:26" "+0200" "VeraCrypt Team" "veracrypt@idrix.fr" "<5601973A.5080009@idrix.fr>" "48" "[oss-security] CVE Request - TrueCrypt 7.1a and VeraCrypt 1.14 Local Elevation of Privilege" nil nil nil "9" "2015092218:00:26" "[oss-security] CVE Request - TrueCrypt 7.1a and VeraCrypt 1.14 Local Elevation of Privilege" (number mark "        veracrypt@id Sep 22   48/1639  " thread-indent "\"[oss-security] CVE Request - TrueCrypt 7.1a and VeraCrypt 1.14 Local Elevation of Privilege\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["13062" "Wednesday" "8" "July" "2020" "10:00:00" "-0600" "Joel Smith" "joelsmith@redhat.com" "<CAEftUapuB4c4Le_iJm-w3R9kceNuaE2uALmXE=sWABNZcKFC2Q@mail.gmail.com>" "317" "[oss-security] [Security Advisory] CVE-2020-8558: Kubernetes: Node setting allows for neighboring hosts to bypass localhost boundary" nil nil nil "7" "2020070816:00:00" "[oss-security] [Security Advisory] CVE-2020-8558: Kubernetes: Node setting allows for neighboring hosts to bypass localhost boundary" (number mark "U       joelsmith@re Jul  8  317/13062 " thread-indent "\"[oss-security] [Security Advisory] CVE-2020-8558: Kubernetes: Node setting allows for neighboring hosts to bypass localhost boundary\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [Security Advisory] CVE-2020-8558: Kubernetes: Node setting allows for neighboring hosts to bypass localhost boundary" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1653 invoked by uid 550); 22 Sep 2015 18:01:41 -0000
+Received: (qmail 25793 invoked by uid 550); 8 Jul 2020 16:19:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,362 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32551 invoked from network); 22 Sep 2015 18:00:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=idrix.fr; s=mail;
-	t=1442944832; bh=L9QdB+AdVXusKsV0qVdTTGbwh9cBHPqNJsIQ8TH2oYs=;
-	h=To:From:Subject:Date:From;
-	b=f8QlZc20rjSWypKL31TRQPf5d6kfaJgtslBpjktBVERnioIZdUadIehb5cc74Hk+r
-	 yJkJ2qVZOU6BfUVn9fL2ocZNiYob3/LwNlIzwS9RmA7uf1y0Z70qCGwsO4nf+WLsOQ
-	 KK5GgavieqZlfGdL06EuArLKH5OIR+glGUPq6vjA=
-X-Virus-Scanned: Debian amavisd-new at ext.idrix.fr
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=idrix.fr; s=mail;
-	t=1442944831; bh=L9QdB+AdVXusKsV0qVdTTGbwh9cBHPqNJsIQ8TH2oYs=;
-	h=To:From:Subject:Date:From;
-	b=tm+nfR/ofv72pwjz8Hcaq8WOvsaN9QayGbRfKnLeFTixFRITE7+ANfwheLBhZwZnT
-	 KBTfUJCIR+goxdCm+prFfjjyGOZydWgqOzcEVRq8sjiNZypkycbfRzzJTmDkgaVqmB
-	 0qUxJNfdDNRv1WTExaxQ4CYz5qrVgi5YetGzofkU=
-Organization: IDRIX
-Message-ID: <5601973A.5080009@idrix.fr>
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Date: Tue, 22 Sep 2015 20:00:26 +0200
-From: VeraCrypt Team <veracrypt@idrix.fr>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request - TrueCrypt 7.1a and VeraCrypt 1.14 Local Elevation of
- Privilege
+Received: (qmail 18217 invoked from network); 8 Jul 2020 16:02:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1594224121;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=Y1UKXduAk+sQjcgIK8xCM2nlmfvjbHV9hkJoaHA/EkQ=;
+	b=NVNLOXv5HV2hPOTuQ5kwY981iUst0hfb7r5o0kVYpNZLew4jt8Fd2KOn/7vFMkCPidbriY
+	Gbnmu0pbptfrzP3XrZ/bh978YFTeSYAGwNIrxIXdNck0HRR3xH/Vor7O9G7mRmHpWOA/Z1
+	UxeIGE1fy2AzKrCWHTO8Qns7M3/NaMw=
+X-MC-Unique: EDolw6qBOJm4jyVT-Euz6Q-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=rj/KlE+PBrsO97wq4596YvcKIbPyJoaFeG+CUO8dEdI=;
+        b=LOWXZnU+R0szeQKySrUSTyo9/TVyYb4b+GT3pjJrIxZKhrSA11sZIIg8SBelkAWxCm
+         OmedJ7rCWuKf+f+1+3KPt0lQ0I+y81f2a6LYYsH+r/0r+uaKaE6BQhuQUydH14i5aiSE
+         IjIkMIQV/M83FYuHN4w9gqI2QrVewUhOwQv9lwjKQ7AFXyapjyY5ne/+L+bWA8AvHHFW
+         iyYCtEXQIa9VJAMbEjaY0wCCt5aesZpddX+e7MDwbTGB4zJNUJx2eXZ1suJjQCRlDrkg
+         K1ivgvfZFu3RlomKQLQ4IazbVIDHYcpMYndRK0vFB4w3L6NqE8qbCDzI/Y51qJnc49bp
+         WRkQ==
+X-Gm-Message-State: AOAM531VRKtkpGX7EJW05UPYNIeS1SrAI2VvbNcwBrCiPgaLbh4TrxSq
+	JfxfceQgD2A/pXBlEMbP/JsQeSepbQN+r/UMaUxb3iee7ch5+vxa2GiFQhHd6AKrunHi43Mt5Z3
+	aYS/u7aipmCmhvMyphHvO9KGdnXUL//D3ZtV/7CX3f6TA
+X-Received: by 2002:a05:6a00:78a:: with SMTP id g10mr36996873pfu.0.1594224114537;
+        Wed, 08 Jul 2020 09:01:54 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwSPUTwMGk2ZKO3acLN+2FYqLN4J43bMh4mo5GWb/RuwS3Qubhc+S7oHpj6BHXO2nVkT+cjaDSaJNaJloJXZKQ=
+X-Received: by 2002:a05:6a00:78a:: with SMTP id g10mr36996778pfu.0.1594224113268;
+ Wed, 08 Jul 2020 09:01:53 -0700 (PDT)
+MIME-Version: 1.0
+From: Joel Smith <joelsmith@redhat.com>
+Date: Wed, 8 Jul 2020 10:00:00 -0600
+Message-ID: <CAEftUapuB4c4Le_iJm-w3R9kceNuaE2uALmXE=sWABNZcKFC2Q@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=joesmith@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="000000000000f6d62405a9f03937"
+Subject: [oss-security] [Security Advisory] CVE-2020-8558: Kubernetes: Node setting allows
+ for neighboring hosts to bypass localhost boundary
 
+--000000000000f6d62405a9f03937
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
- 
-Hi,
+Hello Open Source Community,
 
-I would like to request two CVE identifiers for the two security issues
-described below affecting TrueCrypt 7.1a (latest version) and its fork
-VeraCrypt 1.14 (latest version) running on all versions of Windows.
+A security issue was discovered in kube-proxy which allows adjacent hosts
+(hosts running in the same LAN or layer 2 domain) to reach TCP and UDP
+services on the node(s) which are bound to 127.0.0.1. For example, if a
+cluster administrator runs a TCP service that listens on 127.0.0.1:1234,
+because of this bug, that service would be potentially reachable by other
+hosts on the same LAN as the node, or by containers running on the same
+node as the service. If the example service on port 1234 required no
+additional authentication (because it assumed that only other localhost
+processes could reach it), then it could be vulnerable to attacks that make
+use of this bug.
 
-These issues were reported by James Forshaw (Google).
+The Kubernetes API Server's default insecure port setting causes the API
+server to listen on 127.0.0.1:8080 where it will accept requests without
+authentication. Many Kubernetes installers explicitly disable the API
+Server's insecure port, but in clusters where it is not disabled, an
+attacker with access to another system on the same LAN or with control of a
+container running on the master may be able to reach the API server and
+execute arbitrary API requests on the cluster. This port is deprecated, and
+will be removed in Kubernetes v1.20.
 
-Issue 1: Local Elevation of Privilege on Windows by abusing
-              drive letter handling.
+This issue has been rated medium (*CVSS
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>:3.1/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>AV
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>A
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>AC
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>L
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>PR
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>UI
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>S
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>U
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>C
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>L
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>I
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>L
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>A
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:L/I:L/A:N>*),
+and assigned CVE-2020-8558.
 
-Issue 2: Local Elevation of Privilege on Windows caused by incorrect
-              Impersonation Token Handling.
+In clusters where the API Server insecure port is not disabled, this issue
+has been rated high (*CVSS
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>:3.1/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>AV
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>A
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>AC
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>L
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>PR
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>UI
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>S
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>U
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>C
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>H
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>I
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>H
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>/
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>A
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>:
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>H
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U=
+/C:H/I:H/A:H>*
+).
+*Am I vulnerable?*
 
-Issue 1 is critical.
+You may be vulnerable if:
 
-A fix has already been developed. Version 1.15 of VeraCrypt will be
-released soon to address those issues.
+   -
 
-For your information, I have sent a similar CVE request to mitre.org.
+   You are running a vulnerable version (see below)
+   -
 
-Regards,
-- -- 
-Mounir IDRASSI
-https://veracrypt.codeplex.com
-https://www.idrix.fr
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
- 
-iQIcBAEBCgAGBQJWAZc3AAoJEOtVnHxU3dOT9FAQAJF5RtEuWnMVp8qLVKZewJuH
-su6zPOuErxyJRKPTcnt2drT4/merlDN7OHYmoCB8d4KShEECM8plb71Zv6tsft28
-B8Oi8BUvJxzSeFj+n5rPYTRSidtPeJr3S110gCkTS4mPcOLsqVzDSMurzye0C1QP
-U6wxIRQEps+678B9inXANKMrHnE2MBCbjEz+YXHpX9Wn4uFxJFjXGhSG5ixCXwFh
-yGCA9tshoCDL2WGdG7uCKRiathWZvLk25tJxH+WnSs/wVcrjBJJEww5yUcVYN+tP
-1w1wUg8RK56Ostk5MUCOcjVozKfFnhEdpKSjnfzUiOOq1bQKOhkERUM4KovMQinY
-mj6+bgZq2pASqZhiqZjzPOFkz1eIZevcS5onmGV9StSIpnUfeVLpj2gFM0B9dS/1
-jjoQeJN6UA3ImFDNlqNcHUxGVrL6PQES+3md8o+EmnsoDluJqqSn+4j/Ik08xKnG
-rtHV19GdXo8mXui4uzBSPVlfCSHdXSVMhglJx/ItltWLuj+IuH5qizbCV/h4UJ/+
-ryDvK3ZjfLejVTP4AufrVF8iXmizabYLfZs8/gUdXYphbV+S2Br/HOUnj6bbOZpP
-Oo1suGw1YiQHgP3OShb2+rvLwBUYgE9f3aLpx1/xqHrGuHhB719waQAjUvYF6SZw
-Wtx6mytjT3HfWvHoORjd
-=hbTv
------END PGP SIGNATURE-----
+   Your cluster nodes run in an environment where untrusted hosts share the
+   same layer 2 domain (i.e. same LAN) as nodes
+   -
+
+   Your cluster allows untrusted pods to run containers with CAP_NET_RAW
+   (the Kubernetes default is to allow this capability).
+   -
+
+   Your nodes (or hostnetwork pods) run any localhost-only services which
+   do not require any further authentication. To list services that are
+   potentially affected, run the following commands on nodes:
+   -
+
+      lsof +c 15 -P -n -i4TCP@127.0.0.1 -sTCP:LISTEN
+      -
+
+      lsof +c 15 -P -n -i4UDP@127.0.0.1
+
+On a master node, an lsof entry like this indicates that the API server may
+be listening with an insecure port:
+
+COMMAND        PID USER FD TYPE DEVICE SIZE/OFF NODE NAME
+
+kube-apiserver 123 root 7u IPv4  26799      0t0  TCP 127.0.0.1:8080 (LISTEN)
+*Affected Versions*
+
+   -
+
+   kube-proxy v1.18.0-1.18.3
+   -
+
+   kube-proxy v1.17.0-1.17.6
+   -
+
+   kube-proxy <1.16.10
+
+*How do I mitigate this vulnerability?*
+
+Prior to upgrading, this vulnerability can be mitigated by manually adding
+an iptables rule on nodes. This rule will reject traffic to 127.0.0.1 which
+does not originate on the node.
+
+iptables -I INPUT --dst 127.0.0.0/8 ! --src 127.0.0.0/8 \
+
+-m conntrack ! --ctstate RELATED,ESTABLISHED,DNAT -j DROP
+
+Additionally, if your cluster does not already have the API Server insecure
+port disabled, we strongly suggest that you disable it. Add the following
+flag to your kubernetes API server command line: --insecure-port=3D0
+*Detection*
+
+Packets on the wire with an IPv4 destination in the range 127.0.0.0/8 and a
+layer-2 destination MAC address of a node may indicate that an attack is
+targeting this vulnerability.
+*Fixed Versions*
+
+   -
+
+   kube-proxy v1.19.0+ (not yet released)
+   -
+
+   kube-proxy v1.18.4+
+   -
+
+   kube-proxy v1.17.7+
+   -
+
+   kube-proxy v1.16.11+
+
+To upgrade, refer to the documentation: *https
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>://
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>kubernetes
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>.
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>io
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>/
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>docs
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>/
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>tasks
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>/
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>administer
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>-
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>cluster
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>/
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>cluster
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>-
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>management
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>/#
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>upgrading
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>-
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>a
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>-
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>cluster
+<https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#up=
+grading-a-cluster>*
+*Additional Details*
+
+See the GitHub issue for more details: *https
+<https://github.com/kubernetes/kubernetes/issues/92315>://
+<https://github.com/kubernetes/kubernetes/issues/92315>github
+<https://github.com/kubernetes/kubernetes/issues/92315>.
+<https://github.com/kubernetes/kubernetes/issues/92315>com
+<https://github.com/kubernetes/kubernetes/issues/92315>/
+<https://github.com/kubernetes/kubernetes/issues/92315>kubernetes
+<https://github.com/kubernetes/kubernetes/issues/92315>/
+<https://github.com/kubernetes/kubernetes/issues/92315>kubernetes
+<https://github.com/kubernetes/kubernetes/issues/92315>/
+<https://github.com/kubernetes/kubernetes/issues/92315>issues
+<https://github.com/kubernetes/kubernetes/issues/92315>/92315
+<https://github.com/kubernetes/kubernetes/issues/92315>*
+*Acknowledgements*
+
+This vulnerability was reported by J=C3=A1nos K=C3=B6v=C3=A9r, Ericsson wit=
+h additional
+impacts reported by Rory McCune, NCC Group and Yuval Avrahami and Ariel
+Zelivansky, Palo Alto Networks.
+
+Thank You,
+
+Joel Smith on behalf of the Kubernetes Product Security Committee
+
+--000000000000f6d62405a9f03937--
 
