@@ -1,151 +1,176 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/24/5
-Message-ID: <20200224184538.GF17396@localhost.localdomain>
-Date: Mon, 24 Feb 2020 10:45:38 -0800
-From: Qualys Security Advisory <qsa@...lys.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/09/2
+Message-ID: <2be24ee1-1cd3-fa93-6baa-7fb1e25b9388@x41-dsec.de>
+Date: Thu, 9 Jul 2020 18:41:37 +0200
+From: X41 D-Sec GmbH Advisories <advisories@...-dsec.de>
 To: oss-security@...ts.openwall.com
-Subject: LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
+Subject: X41 D-Sec GmbH Security Advisory X41-2020-006: Memory Corruption Vulnerability in bspatch
 Content-Type: text/plain; charset=utf-8
 
-
-Qualys Security Advisory
-
-LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
 
-==============================================================================
-Contents
-==============================================================================
+X41 D-SEC GmbH Security Advisory: X41-2020-006
 
-Summary
+Advisory X41-2020-006: Memory Corruption Vulnerability in bspatch
+=================================================================
+Severity Rating: High
+Confirmed Affected Versions: Colin Percival's bsdiff 4.3
+Confirmed Patched Versions: FreeBSD's bsdiff
+(https://svnweb.freebsd.org/base/head/usr.bin/bsdiff/bspatch/bspatch.c)
+Vendor: Colin Percival
+Vendor URL: https://www.daemonology.net/bsdiff/
+Vendor Reference: None
+Vector: Patch file
+Credit: X41 D-SEC GmbH, Luis Merino
+Status: Public
+CVE: CVE-2020-14315
+CWE: 119
+CVSS Score: N/A
+CVSS Vector: N/A
+Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2020-006-bspatch/
+
+Summary and Impact
+==================
+A memory corruption vulnerability is present in bspatch as shipped in
+Colin Percival’s bsdiff tools version 4.3. Insufficient checks when
+handling external inputs allows an attacker to bypass the sanity
+checks in place and write out of a dynamically allocated buffer
+boundaries.
+
+Even though the patching procedure is usually combined with integrity
+and authenticity checks, an attacker that is able to deliver a
+malicious patch can cause heap corruption in the process running
+bspatch code, when the authenticity checks happen after applying the
+patches. Depending on their ability to control and shape the heap
+state before and during the processing of a malicious patch file,
+remote code execution may be achieved. This has already been
+demonstrated
+(https://gist.github.com/anonymous/e48209b03f1dd9625a992717e7b89c4f#file-freebsd-txt-L1192)
+as a proof-of-concept exploit in 2016 by an anonymous author against
+the FreeBSD bspatch implementation on 32bit architectures.
+
+This issue was initially reported for bspatch in bsdiff “as used in
+Apple OS X before 10.11.6 and other products” with CVE-2014-9862 by an
+anonymous researcher and was partially addressed by several projects,
+including Android
+(https://android.googlesource.com/platform/external/bsdiff/+/4d054795b673855e3a7556c6f2f7ab99ca509998%5E%21/#F0),
+ChromiumOS
+(https://bugs.chromium.org/p/chromium/issue/detail?id=372525) and
+FreeBSD
+(https://www.freebsd.org/security/advisories/FreeBSD-SA-16:25.bspatch.asc)
+during 2016. This initial batch of fixes prevented the attack via
+negative control values.
+
+Nevertheless, huge control values that would integer overflow the
+sanity checks and allow an attacker writing out of bounds were not
+fixed. A subsequent patch was released by FreeBSD
+(https://www.freebsd.org/security/advisories/FreeBSD-SA-16:29.bspatch.asc)
+addressing the remaining issues together with additional hardening.
+Unfortunately, most of bspatch copies didn’t port this fix.
+
+It is worth mentioning that bsdiff 4.3, as hosted at Colin Percival’s
+bsdiff website https://www.daemonology.net/bsdiff/, still ships a copy
+of bspatch.c vulnerable to these issues via both negative and huge
+control values. All the Linux distributions we have checked shipping
+bsdiff are building from this sources, with some of them applying the
+partial fix initially released.
+
+Product Description
+===================
+bsdiff and bspatch are tools for building and applying patches to
+binary files. They provide an efficient way to apply binary patches
+for applications update mechanisms.
+
 Analysis
-...
-Acknowledgments
+========
+Insufficient checks when calculating the buffer offset and size of
+write operations allows writing out of a heap allocated buffer boundaries.
 
+- -
+-
+------------------8<---------------------------------------------------------
+    while(newpos<newsize) {
+        /* Read control data /
+        for(i=0;i<=2;i++) {
+            lenread = BZ2bzRead(&cbz2err, cpfbz2, buf, 8);
+            if ((lenread < 8) || ((cbz2err != BZOK) &&
+                (cbz2err != BZSTREAMEND)))
+                errx(1, "Corrupt patch\n");
+            ctrl[i]=offtin(buf);
+        };
+        / Sanity-check */
+        if(newpos+ctrl[0]>newsize)
+            errx(1,"Corrupt patch\n");
+    /* Read diff string */
+    lenread = BZ2_bzRead(&dbz2err, dpfbz2, new + newpos, ctrl[0]);
+- -
+-
+------------------8<---------------------------------------------------------
 
-==============================================================================
-Summary
-==============================================================================
+When ctrl[0] takes either negative values or big enough values to
+overflow newpos+ctrl[0], the sanity check in place will pass allowing
+operations that write out of buffer new boundaries via BZ2_bzRead().
+It is worth mentioning that BZ2_bzRead() will truncate ctrl[0] from
+64-bit off_t to 32-bit int.
 
-We discovered a vulnerability in OpenSMTPD, OpenBSD's mail server. This
-vulnerability, an out-of-bounds read introduced in December 2015 (commit
-80c6a60c, "when peer outputs a multi-line response ..."), is exploitable
-remotely and leads to the execution of arbitrary shell commands: either
-as root, after May 2018 (commit a8e22235, "switch smtpd to new
-grammar"); or as any non-root user, before May 2018.
+It is expected that an attacker that is able to deliver an specially
+crafted patch file can gain remote code execution capabilities when
+certain conditions for exploitation are met.
 
-Because this vulnerability resides in OpenSMTPD's client-side code
-(which delivers mail to remote SMTP servers), we must consider two
-different scenarios:
+Proof of Concept
+================
+A crashing reproducer can be downloaded from
+https://github.com/x41sec/advisories/blob/master/X41-2020-006/x41-2020-006-bspatch-poc.patch
 
-- Client-side exploitation: This vulnerability is remotely exploitable
-  in OpenSMTPD's (and hence OpenBSD's) default configuration. Although
-  OpenSMTPD listens on localhost only, by default, it does accept mail
-  from local users and delivers it to remote servers. If such a remote
-  server is controlled by an attacker (either because it is malicious or
-  compromised, or because of a man-in-the-middle, DNS, or BGP attack --
-  SMTP is not TLS-encrypted by default), then the attacker can execute
-  arbitrary shell commands on the vulnerable OpenSMTPD installation.
+Fix
+===
+Please, refer to the FreeBSD advisories
+https://www.freebsd.org/security/advisories/FreeBSD-SA-16:25.bspatch.asc
+and
+https://www.freebsd.org/security/advisories/FreeBSD-SA-16:29.bspatch.asc
+for fixes.
 
-- Server-side exploitation: First, the attacker must connect to the
-  OpenSMTPD server (which accepts external mail) and send a mail that
-  creates a bounce. Next, when OpenSMTPD connects back to their mail
-  server to deliver this bounce, the attacker can exploit OpenSMTPD's
-  client-side vulnerability. Last, for their shell commands to be
-  executed, the attacker must (to the best of our knowledge) crash
-  OpenSMTPD and wait until it is restarted (either manually by an
-  administrator, or automatically by a system update or reboot).
+Workarounds
+===========
+As a workaround, only patches passing integrity and authenticity
+checks should be applied.
 
-We developed a simple exploit for this vulnerability and successfully
-tested it against OpenBSD 6.6 (the current release), OpenBSD 5.9 (the
-first vulnerable release), Debian 10 (stable), Debian 11 (testing), and
-Fedora 31. At OpenBSD's request, and to give OpenSMTPD's users a chance
-to patch their systems, we are withholding the exploitation details and
-code until Wednesday, February 26, 2020.
+Timeline
+========
+2016-07-21 CVE-2014-9862 published
+2016-07-25 Partial fix for FreeBSD published at FreeBSD-SA-16:25.bspatch
+2016-10-10 Complete fix for FreeBSD published at FreeBSD-SA-16:29.bspatch
+2020-07-02 X41 Discovers the vulnerability was not or incorrectly
+fixed upstream and in prominent forks of the code
+2020-07-06 Colin Percival and distros@ notified
+2020-07-09 Public disclosure
 
-Last-minute note: we tested our exploit against the recent changes in
-OpenSMTPD 6.6.3p1, and our results are: if the "mbox" method is used for
-local delivery (the default in OpenBSD -current), then arbitrary command
-execution as root is still possible; otherwise (if the "maildir" method
-is used, for example), arbitrary command execution as any non-root user
-is possible.
+About X41 D-SEC GmbH
+====================
+X41 is an expert provider for application security services.
+Having extensive industry experience and expertise in the area of
+information security, a strong core security team of world class
+security experts enables X41 to perform premium security services.
+Fields of expertise in the area of application security are security
+centered code reviews, binary reverse engineering and vulnerability
+discovery.
+Custom research and IT security consulting and support services are core
+competencies of X41.
+-----BEGIN PGP SIGNATURE-----
 
-
-==============================================================================
-Analysis
-==============================================================================
-
-SMTP clients connect to SMTP servers and send commands such as EHLO,
-MAIL FROM, and RCPT TO. SMTP servers respond with either single-line or
-multiple-line replies:
-
-- the first lines begin with a three-digit code and a hyphen ('-'),
-  followed by an optional text (for example, "250-ENHANCEDSTATUSCODES");
-
-- the last line begins with the same three-digit code, followed by an
-  optional space (' ') and text (for example, "250 HELP").
-
-In OpenSMTPD's client-side code, these multiline replies are parsed by
-the mta_io() function:
-
-------------------------------------------------------------------------------
-1098 static void
-1099 mta_io(struct io *io, int evt, void *arg)
-1100 {
-....
-1133         case IO_DATAIN:
-1134             nextline:
-1135                 line = io_getline(s->io, &len);
-....
-1146                 if ((error = parse_smtp_response(line, len, &msg, &cont))) {
-------------------------------------------------------------------------------
-
-- the first lines (when line[3] == '-') are concatenated into a 2KB
-  replybuf:
-
-------------------------------------------------------------------------------
-1177                 if (cont) {
-1178                         if (s->replybuf[0] == '\0')
-1179                                 (void)strlcat(s->replybuf, line, sizeof s->replybuf);
-1180                         else {
-1181                                 line = line + 4;
-....
-1187                                         (void)strlcat(s->replybuf, line, sizeof s->replybuf);
-1188                         }
-1189                         goto nextline;
-1190                 }
-------------------------------------------------------------------------------
-
-- the last line (when line[3] != '-') is also concatenated into
-  replybuf:
-
-------------------------------------------------------------------------------
-1195                 if (s->replybuf[0] != '\0') {
-1196                         p = line + 4;
-....
-1201                         if (strlcat(s->replybuf, p, sizeof s->replybuf) >= sizeof s->replybuf)
-------------------------------------------------------------------------------
-
-Unfortunately, if the last line's three-digit code is not followed by
-the optional space and text, then p (at line 1196) points to the first
-character *after* the line's '\0' terminator (which replaced the line's
-'\n' terminator in iobuf_getline()), and this out-of-bounds string is
-concatenated into replybuf (at line 1201).
-
-...
-
-
-==============================================================================
-Acknowledgments
-==============================================================================
-
-We thank OpenBSD's developers for their quick response and patches. We
-also thank Gilles for his hard work and beautiful code.
-
-
-
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
-
-
-
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
+iQIzBAEBCgAdFiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAl8HSK8ACgkQo5Klpg50
+CxDvNA/+JFdRiLyytXYfVgrOmRxvJQNk7TnQuoi5nggta7vqMMSLhs1bc+j9+qBo
+JJKA69pmK1TRH6zItUT1IYy+oPrwGZqmwCJqErquLwvnlFml4bqq/7NR+LKmSSzy
+2Ye0o2YM9+ID6mhiQI8IhciR27BNr/sH6TtazUokUe6ThE6vs2ApmUX+FhDyhAzb
+LsxekS5o0yk/6mD8NBpiiEpD4SNgFza5DpFuwU7WESOUG/+7R7eIWYb8NReHjwg3
+Hu8IobpsIR/UIgHD8ne/LpEsoW0oNQMLvSbcbniP5eVeXxOGv83deiTQIAYw1Y7L
+PUqIRLIpaMuOVxdrLmI92wci7Uf4UPs20DZCE3XlxLpdAe+5WYFWs2KRwdZZ5Ifr
+TrLWVyP2z+aq87gXVpCYvLGdP0SifDWHJ4NAG8C46Yeyhnhbceh7fiDb5Eg9yNdA
+Scl/UAWZMKqFijwCSTaMNFRlJeAJdjKXMrWaeoZ1rMoKxy9PMi1lZjyXvOJp21NG
+tbjixWGtmMS6sQjiLtsSOk96FFUjnet6dohOUzc96r7jXk1f4KkwQPW6ihZyNbLQ
+vA3voB7o7MBOqV5eeCW0ADordDP6W8ffUwnG4CSn0j3zgZ8ArsaqaX6BOss9/2q8
+g1jnpwv2tkGyt7Bytco4b37Bop72xhXrGqwiuQn848BTQXUsatc=
+=PbNZ
+-----END PGP SIGNATURE-----
