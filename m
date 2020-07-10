@@ -1,51 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/10/5
-Message-ID: <20200810222935.GA3601880@millbarge>
-Date: Mon, 10 Aug 2020 22:29:35 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/10/1
+Message-ID: <b4f1aa2a-e7bf-4a5b-e6fd-df43bb52a1e3@igalia.com>
+Date: Fri, 10 Jul 2020 13:25:18 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0006
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Aug 08, 2020 at 07:21:35AM -0500, Daniel Ruggeri wrote:
->    You're correct. That was an error on our part. We try to double check
-> this data (since sometimes we burn a release number as we test the
-> candidate) and things can get out of sync. I have it in my personal TODO
-> list to add some tooling around automating this particular part of the
-> release management process.
-> 
-> I've fixed this in a recent patch and the the site should now show the
-> correct data - many thanks for the correction
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0006
+------------------------------------------------------------------------
 
-Hello Daniel, thanks for the fixes, this is a lot more clear to me now.
+Date reported           : July 10, 2020
+Advisory ID             : WSA-2020-0006
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0006.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0006.html
+CVE identifiers         : CVE-2020-9802, CVE-2020-9803, CVE-2020-9805,
+                          CVE-2020-9806, CVE-2020-9807, CVE-2020-9843,
+                          CVE-2020-9850, CVE-2020-13753.
 
-Quite a lot of my confusion came from not knowing that some releases were
-versioned but not released -- suddenly quite a lot more makes sense.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-> > The headings are out of order:
+CVE-2020-9802
+    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
+    Credit to Samuel Groß of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A logic issue was addressed
+    with improved restrictions.
 
-> No problem - I thought about this as I was putting together the
-> announcement but didn't adjust it at the time. I've fixed this as well
+CVE-2020-9803
+    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
+    Credit to Wen Xu of SSLab at Georgia Tech.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved validation.
 
-Thanks -- I know how it goes, there's always something somewhere that
-needs to fixed.
+CVE-2020-9805
+    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A logic issue was
+    addressed with improved restrictions.
 
-> > And, something is a bit off with the CURRENT-IS-$version markers:
-> >
-> > $ curl -sq https://archive.apache.org/dist/httpd/ | grep -c CURRENT
-> > 47
-> I can see how that appears odd. This URL is our archive distribution
-> point, so anything we release to the formal distribution point will be
-> added here automatically to preserve history. It's best to use the
-> current distribution point:
-> https://dist.apache.org/repos/dist/release/httpd/
+CVE-2020-9806
+    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
+    Credit to Wen Xu of SSLab at Georgia Tech.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved state management.
 
-Aha! And this explains the duplicates. It's nice to know it's intentional.
+CVE-2020-9807
+    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
+    Credit to Wen Xu of SSLab at Georgia Tech.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved state management.
 
-> Thanks for taking the time to provide feedback! Have a great weekend
+CVE-2020-9843
+    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
+    Credit to Ryan Pickren (ryanpickren.com).
+    Impact: Processing maliciously crafted web content may lead to a
+    cross site scripting attack. Description: An input validation issue
+    was addressed with improved input validation.
 
-Thanks for the quick fixes :)
+CVE-2020-9850
+    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
+    Credit to @jinmo123, @setuid0x0_, and @insu_yun_en of @SSLab_Gatech
+    working with Trend Micro’s Zero Day Initiative.
+    Impact: A remote attacker may be able to cause arbitrary code
+    execution. Description: A logic issue was addressed with improved
+    restrictions.
+
+CVE-2020-13753
+    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
+    Credit to Milan Crha at Red Hat.
+    The bubblewrap sandbox of WebKitGTK and WPE WebKit, prior to 2.28.3,
+    failed to properly block access to CLONE_NEWUSER and the TIOCSTI
+    ioctl. CLONE_NEWUSER could potentially be used to confuse xdg-
+    desktop-portal, which allows access outside the sandbox. TIOCSTI can
+    be used to directly execute commands outside the sandbox by writing
+    to the controlling terminal's input buffer, similar to
+    CVE-2017-5226.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+July 10, 2020
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
