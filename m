@@ -1,44 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/30/1
-Message-ID: <24afb6093cb0de9e0f652ed5252e6aa97f34fd30.camel@doppel-helix.eu>
-Date: Sun, 29 Mar 2020 22:52:38 +0200
-From: Matthias Bläsing <mblaesing@...pel-helix.eu>
-To: dev@...beans.apache.org, announce@...beans.apache.org, security@...che.org,  oss-security@...ts.openwall.com
-Subject: [CVE-2019-17560] "Apache NetBeans" autoupdate cert validation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/11/1
+Message-ID: <20200711175842.GA8907@openwall.com>
+Date: Sat, 11 Jul 2020 19:58:42 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-CVE-ID
-------
-CVE-2019-17560
+Hi Xiao,
 
-Summary
--------
-The "Apache NetBeans" autoupdate system does not validate SSL 
-certificates and hostnames for https based downloads.
+On Thu, Jul 02, 2020 at 05:33:20PM +0800, Zhang Xiao wrote:
+> I am an engineer of WindRiver. Thanks for Alexander's remind about the distribution and we would like to "backup" the first item of the administrative list:
+> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> 
+> 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date/time) /- primary: Oracle, backup: vacant /
+> Please let me know how we get started helping out.
 
-Versions Affected: 
-------------------
-- All Apache NetBeans versions up to and including 11.2
-- NetBeans releases before the Apache transition started may be
-  also affected
+I've just added Wind River as backup for this role.  Please watch for
+issues on which Oracle (and others) haven't provided an initial response
+to the reporter or where such response is incomplete (per the above),
+and provide your own response (CC'ing the list) whenever that happens.
 
-Description:
-------------
-The "Apache NetBeans" autoupdate system does not validate SSL 
-certificates and hostnames for https based downloads. This allows
-an attacker to intercept downloads of autoupdates and modify the
-download, potentially injecting malicious code.
+> And, I have another point want to discuss. As we know, sometimes, the CVE and NVD website don't upgrade their web page timely. For example:
+> 
+> the security maillist had an encrypted mail called "curl: overwrite local file with -J" in 20200617. It was a "pre-notification about a security advisory about to ship next week in sync with our next curl release", for CVE-2020-8177. On curl's git tree, that very bug did been fixed and released in 20200621:
+> https://github.com/curl/curl/commit/8236aba5854
+> 
+> But, till now, both cve.mitre.org and nvd.nist.gov still mark this CVE as "RESERVED":
+> https://nvd.nist.gov/vuln/detail/CVE-2020-8177
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177
+> 
+> So I wonder if that is also an contribution to remind them, if so, any advises to make it? And If it ca be defined as an contribution, we can take it. :-)
 
-Mitigation:
------------
-- Disable autoupdates
-- Manually download plugins to installed with a web browser
-- Update to NetBeans 11.3 by downloading the release, verifying the
-  signature and manually installing it
+We've received some responses in this thread regarding the specific
+example above, but I'd like more general responses please.  Is there a
+general task Wind River can reasonably help with for getting CVE details
+published for issues that pass the distros and/or oss-security lists,
+and how exactly could they help with that?
 
-Credit:
--------
-The investigation was triggered by a proof-of-concept submitted by
-Emilian Bold
+Thanks,
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Alexander
