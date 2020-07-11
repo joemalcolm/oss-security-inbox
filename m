@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["824" "Friday" "8" "October" "2021" "23:59:03" "+0200" "Yann Ylavic" "ylavic.dev@gmail.com" nil "23" "Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)" nil nil nil "10" nil nil (number mark "U       ylavic.dev@g Oct  8   23/824   " thread-indent "\"Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2254" "Saturday" "11" "July" "2020" "19:58:42" "+0200" "Solar Designer" "solar@openwall.com" "<20200711175842.GA8907@openwall.com>" "34" "Re: [oss-security] Contributing Back" nil nil nil "7" "2020071117:58:42" "[oss-security] Contributing Back" (number mark "U       solar@openwa Jul 11   34/2254  " thread-indent "\"Re: [oss-security] Contributing Back\"\n") "<ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>" ("<ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>") nil nil nil nil nil nil nil "Re: [oss-security] Contributing Back" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24329 invoked by uid 550); 8 Oct 2021 22:08:22 -0000
+Received: (qmail 20123 invoked by uid 550); 11 Jul 2020 17:59:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,67 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18403 invoked from network); 8 Oct 2021 21:59:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=J9GLY8KQ9s4w8UtweTutckRvNRWe0QM9IiqIh+fobbA=;
-        b=L9Qu8oeZC+lbAUwdjFdSWRradWn2GKdJG9j8ZABtNyh3TaviOsqd7I0Ph6Em2OKEvW
-         xrkpj6VE/2nFzA6kmdxEH3MCWDaBn/l0svFSzpyTYQOZ0WZnJc3eA9Z5WrG42MBILeIw
-         vk4GynIWijq89YbzGb7UnIjHJKQe/YnqQ04L/l74BgYKg5+z7nvJ6MdUwE8bpX27JCzp
-         deI4W9eLqjkvltG2gM3jV+u7y3n0dVIkluGTwWIlAgwnSwTqh+/ScotcXXypHDAiPjHJ
-         s95Pn9CQPP25CLUBP575zAr89TtROjn9jEwtNe8p6dfkWQ9NSRcQy94GHNAxU0hf17rK
-         BfaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=J9GLY8KQ9s4w8UtweTutckRvNRWe0QM9IiqIh+fobbA=;
-        b=EeEVD7b671Fqp3ZI1OD62QQwR6mY72ehHSZRm8AZqzMLoh/mlcpWdCSxDnmnRZyXyp
-         qJ31Wlx/cG7wIV0Guzpf5mw2BZtTbC1pjGXRu8ltvipiJ80tnRV9Pj3oCN640OEuz+61
-         EDviHT2jmdAZjfiNx1sMbMHQTmO74hcNpdoNtwWA8yBIQpM9H9tXP92z6jAR1OQa6JO1
-         LL8d2xJakIcNA25O1TxVcSH6lDU8hioIRzUhB9DcHC/KgP3O5reWYXGwIHrGcSc4Xqln
-         hEKJbfBcuo5JokYohNTbGGc4lKr5p8lXIVLsXGntuHNnXg7E/OwnjWUYVV4dGm3I6fcm
-         kTNg==
-X-Gm-Message-State: AOAM53394f2Rw+8IY8spmjWugtrdOwBIG6V4vtw3PyBE1mCg8Wuxtbll
-	CCg3ui4RLtqGtxXk9AdBGjf/U+4XeXwcbF4BAfskNse3
-X-Google-Smtp-Source: ABdhPJzKG00cxfy7DaXN+BD8PdYXjEDK01DEE+CSoqR9obHQM3UrqnWhqKdxGyjz7BEwgQs8hTDP6cbrfhgLP+7QcpY=
-X-Received: by 2002:a17:906:7632:: with SMTP id c18mr7642363ejn.317.1633730354423;
- Fri, 08 Oct 2021 14:59:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <a2cd6ccf-b381-5513-3c7c-598a6da8c9c9@apache.org>
- <0d7be57c-87ae-c4aa-7207-2337c1a51c6d@rs-labs.com> <CAKQ1sVMn=09uimvWxVZrrVRGSDk5HLCB0TQViFJp1WFNG7jvWg@mail.gmail.com>
- <20211008210821.GA2660@openwall.com> <CAKQ1sVOHOU+iVCkeK1AqFDWhHq4uM8p9Hrx+XTen=fsJ=VxQyA@mail.gmail.com>
- <20211008214414.GA3004@openwall.com>
-In-Reply-To: <20211008214414.GA3004@openwall.com>
-From: Yann Ylavic <ylavic.dev@gmail.com>
-Date: Fri, 8 Oct 2021 23:59:03 +0200
-Message-ID: <CAKQ1sVP9YFXTvqqfHDSpGDv=552iL48xdDtQyqV7-MAVg4jWCA@mail.gmail.com>
+Received: (qmail 19922 invoked from network); 11 Jul 2020 17:58:47 -0000
+Date: Sat, 11 Jul 2020 19:58:42 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code
- Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
+Message-ID: <20200711175842.GA8907@openwall.com>
+References: <ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Contributing Back
 
-On Fri, Oct 8, 2021 at 11:46 PM Solar Designer <solar@openwall.com> wrote:
->
-> On Fri, Oct 08, 2021 at 11:27:37PM +0200, Yann Ylavic wrote:
-> > For completeness I'll add this tweet/blog from Stefan (OP) about the
-> > vulnerability and the fixes in httpd:
-> > https://twitter.com/icing/status/1446504661448593408
->
-> Thanks, but you just did that again...  For completeness, let's have the
-> actual content on the list, not only links to content.
->
-> That tweet above refers to "Apache httpd 2.4.50 post mortem" at:
->
-> https://github.com/icing/blog/blob/main/httpd-2.4.50.md
->
-> I'm attaching the httpd-2.4.50.md file above to this message.
->
-> This way, historians will be able to make full sense of the thread in
-> here even after Twitter and GitHub are gone. ;-)
+Hi Xiao,
 
-Noted, thanks for correcting me (again).
+On Thu, Jul 02, 2020 at 05:33:20PM +0800, Zhang Xiao wrote:
+> I am an engineer of WindRiver. Thanks for Alexander's remind about the distribution and we would like to "backup" the first item of the administrative list:
+> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> 
+> 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date/time) /- primary: Oracle, backup: vacant /
+> Please let me know how we get started helping out.
 
-Regards;
-Yann.
+I've just added Wind River as backup for this role.  Please watch for
+issues on which Oracle (and others) haven't provided an initial response
+to the reporter or where such response is incomplete (per the above),
+and provide your own response (CC'ing the list) whenever that happens.
+
+> And, I have another point want to discuss. As we know, sometimes, the CVE and NVD website don't upgrade their web page timely. For example:
+> 
+> the security maillist had an encrypted mail called "curl: overwrite local file with -J" in 20200617. It was a "pre-notification about a security advisory about to ship next week in sync with our next curl release", for CVE-2020-8177. On curl's git tree, that very bug did been fixed and released in 20200621:
+> https://github.com/curl/curl/commit/8236aba5854
+> 
+> But, till now, both cve.mitre.org and nvd.nist.gov still mark this CVE as "RESERVED":
+> https://nvd.nist.gov/vuln/detail/CVE-2020-8177
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177
+> 
+> So I wonder if that is also an contribution to remind them, if so, any advises to make it? And If it ca be defined as an contribution, we can take it. :-)
+
+We've received some responses in this thread regarding the specific
+example above, but I'd like more general responses please.  Is there a
+general task Wind River can reasonably help with for getting CVE details
+published for issues that pass the distros and/or oss-security lists,
+and how exactly could they help with that?
+
+Thanks,
+
+Alexander
