@@ -1,38 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/27/2
-Message-ID: <2033222.irdbgypaU6@spectre>
-Date: Mon, 27 Apr 2020 13:07:00 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: re2c: infinite loop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/13/1
+Message-ID: <3f3d2ab5-259b-ab88-c7e4-7cc0efce3e7c@windriver.com>
+Date: Mon, 13 Jul 2020 15:37:03 +0800
+From: Zhang Xiao <xiao.zhang@...driver.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Cc: xiao.zhang@...driver.com
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Hi Alexander,
 
-re2c is affected by an infinite loop.
+在 2020/7/12 上午1:58, Solar Designer 写道:
+> Hi Xiao,
+>
+> On Thu, Jul 02, 2020 at 05:33:20PM +0800, Zhang Xiao wrote:
+>> I am an engineer of WindRiver. Thanks for Alexander's remind about the distribution and we would like to "backup" the first item of the administrative list:
+>> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+>>
+>> 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date/time) /- primary: Oracle, backup: vacant /
+>> Please let me know how we get started helping out.
+> I've just added Wind River as backup for this role.  Please watch for
+> issues on which Oracle (and others) haven't provided an initial response
+> to the reporter or where such response is incomplete (per the above),
+> and provide your own response (CC'ing the list) whenever that happens.
+Thank you, we will make it.
+>> And, I have another point want to discuss. As we know, sometimes, the CVE and NVD website don't upgrade their web page timely. For example:
+>>
+>> the security maillist had an encrypted mail called "curl: overwrite local file with -J" in 20200617. It was a "pre-notification about a security advisory about to ship next week in sync with our next curl release", for CVE-2020-8177. On curl's git tree, that very bug did been fixed and released in 20200621:
+>> https://github.com/curl/curl/commit/8236aba5854
+>>
+>> But, till now, both cve.mitre.org and nvd.nist.gov still mark this CVE as "RESERVED":
+>> https://nvd.nist.gov/vuln/detail/CVE-2020-8177
+>> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177
+>>
+>> So I wonder if that is also an contribution to remind them, if so, any advises to make it? And If it ca be defined as an contribution, we can take it. :-)
+> We've received some responses in this thread regarding the specific
+> example above, but I'd like more general responses please.  Is there a
+> general task Wind River can reasonably help with for getting CVE details
+> published for issues that pass the distros and/or oss-security lists,
+> and how exactly could they help with that?
 
-It was initially discovered by Sergei Trofimovich (slyfox) and reported by me 
-privately to upstream.
-The upstream reference is at: https://github.com/skvadrik/re2c/issues/219
-There is no CVE assigned.
-
-Here is the additional upstream comment:
-
-I fixed enough recursive functions to make the ASAN-instrumented re2c
-pass on this file (but that doesn't fully fix #219, as some other
-recursive functions still need rewriting, work in progress).
-This is the list of fixes:
-fd634998f813340768c333cdad638498602856e5 Rewrite recursion into iteration 
-(Tarjan's SCC algorithm and YYFILL states).
-637d4e468835690eac102aba83535dfd26afbbdb Rewrite recursion into iteration 
-(paths for -Wundefined-control-flow).
-e3e43bcbb746dd6692f2d60ed1fa2e26c8cbe987 Rewrite recursion into iteration 
-(skeleton max path length computation).
-f39b522cd40d04e80b77db926ce2d7d766954852 Rewrite recursion into iteration 
-(insertion of negative tags in RE).
-They will appear in the next release, re2c-2.0.
+Actually, we are glad to make it for some customers are also pay
+attention on these official web pages. We suppose it will be easy to
+make it through the "notify a vulnerability publication
+<https://cveform.mitre.org/>". But after I submitted the request I just
+get a reply as "This CVE ID has been reserved by the CNA Hackerone and
+we are currently waiting on them to submit the details." Seems only "the
+CNA Hackerone" can make it. I have no idea on how to notify the "the CNA
+Hackerone " to push it. :-(  Anyway, if possible we are glad to make it.
 
 
-Agostino
+Thanks
+
+Xiao
 
 
+> Thanks,
+>
+> Alexander
+
+Content of type "text/html" skipped
+
+Download attachment "pEpkey.asc" of type "application/pgp-keys" (2461 bytes)
