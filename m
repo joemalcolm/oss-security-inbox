@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5147" "Friday" "29" "January" "2021" "22:15:45" "+0000" "Roman Fiedler" "roman.fiedler@unparalleled.eu" "<9159-1611958545.228355@RO_f.XC4o.3wJr>" "168" "[oss-security] sudo: Ineffective NO_ROOT_MAILER and Baron Samedit" nil nil nil "1" "2021012922:15:45" "[oss-security] sudo: Ineffective NO_ROOT_MAILER and Baron Samedit" (number mark "U       roman.fiedle Jan 29  168/5147  " thread-indent "\"[oss-security] sudo: Ineffective NO_ROOT_MAILER and Baron Samedit\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] sudo: Ineffective NO_ROOT_MAILER and Baron Samedit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3923" "Tuesday" "14" "July" "2020" "14:20:07" "-0400" "Vincent Batts" "vbatts@kinvolk.io" "<CAHp2X_Q=2=8qauHjTQRqUOdfUxW5s7pypwLYBwpNQ5yFyE4p+w@mail.gmail.com>" "107" "[oss-security] Flatcar membership on the linux-distros list" "^Date:" nil nil "7" "2020071418:20:07" "[oss-security] Flatcar membership on the linux-distros list" (number mark "        vbatts@kinvo Jul 14  107/3923  " thread-indent "\"[oss-security] Flatcar membership on the linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Flatcar membership on the linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15686 invoked by uid 550); 30 Jan 2021 08:26:53 -0000
+Received: (qmail 15758 invoked by uid 550); 14 Jul 2020 18:27:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,182 +11,142 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11916 invoked from network); 29 Jan 2021 22:16:54 -0000
-From: Roman Fiedler <roman.fiedler@unparalleled.eu>
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 13717 invoked from network); 14 Jul 2020 18:20:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kinvolk.io; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=TLi1GCHTXJYo563k6SuQdv3aTF8teVN40gCYCu0+e5o=;
+        b=e+C/k42WknGSvhE5BwWidTZvNIeHHTGmTj/54K+qBzXxQ48R781Bwv9ADiQn3PKlfl
+         HR1Yjcdap8J9xM4Joxp3/RvbKtnvb/9HWV27GhBKe1xRuOL/AtMuoBGZ8/55J6ljffdX
+         m6q0dQPhqqdG39nLJw+w6CpToJy/GRTYIu5Ds=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=TLi1GCHTXJYo563k6SuQdv3aTF8teVN40gCYCu0+e5o=;
+        b=At6Vzg/lRxCKF52HvSGuqBkyQw+Pk8mvwmIvTdkyWG9NnEWcu2uPfFauIzTSRYvUlE
+         a8ihAqj6Uy5pSLknAMefyQtiEkRyhzKcAK07tPT4G9GWf2xF9mVNFSOpignTMwBFKQ+m
+         vM7I5fpCryKKSn0J9rF6EvUqv4bPY6Y84VJ/y93pxDyNcPl7kgxM+E+qdulAPzbGigT0
+         BBT7yhtQasnpGLnpsiyLREKTXdsVscl3KKRfawpw00BjSnZKAvSteFdIlbr3bXi31yt/
+         CGiH0fHr+gXmVGnOz2Jqd1mPq/USiiVkX5XsVijGM/0Y7DhQgBTWxLCD9vqc9XknzPQE
+         WVeg==
+X-Gm-Message-State: AOAM532FKDZqXU6tWu6Xuvp+Swo/pjOW2PSJ8tZ7Z3VsZy6vxLgulLK7
+	1zccIa4FEUH9dv4S+6MhW2My2cGWzasZ9CM8G0imWoaBx/8e8Q==
+X-Google-Smtp-Source: ABdhPJzHlwg6rTtcD6WMZIt4jFFIBcd2OJpbRgjNk8tb/73QOATmK61SOQPlHbCgaKafC12ITrlitMg9BqFD0KeMZ94=
+X-Received: by 2002:a05:6402:174e:: with SMTP id v14mr5841221edx.153.1594750818683;
+ Tue, 14 Jul 2020 11:20:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Message-ID: <CAHp2X_Q=2=8qauHjTQRqUOdfUxW5s7pypwLYBwpNQ5yFyE4p+w@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000000da16605aa6adc18"
+Date: Tue, 14 Jul 2020 14:20:07 -0400
+From: Vincent Batts <vbatts@kinvolk.io>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Flatcar membership on the linux-distros list
+To: oss-security@lists.openwall.com, volkerdi@slackware.com
+
+--0000000000000da16605aa6adc18
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 29 Jan 2021 22:15:45 +0000
-Message-ID: <9159-1611958545.228355@RO_f.XC4o.3wJr>
-Subject: [oss-security] sudo: Ineffective NO_ROOT_MAILER and Baron Samedit
 
-Hello list,
+Hey there,
 
-While reproducing the exploitation of "Baron Samedit" another
-minor issue in Sudo was discovered. It affects Sudo 1.9.4
-and newer and renders the "NO_ROOT_MAILER" hardening option
-useless. While this bug by itself is not known to be exploitable
-on its own, combining it with the "Baron Samedit" heap overflow
-eases exploitation of the later tremendously.
+Using the
+https://oss-security.openwall.org/wiki/mailing-lists/distros#membership-cri=
+teria
+I=E2=80=99m outlining why Flatcar Container Linux ought to be on the linux-=
+distros
+list.
 
-Further analysis of the issue in cooperation with Qualys showed,
-that therefore on newer systems Qualys complex end timeconsuming
-exploitation methods can be avoided, thus allowing trivial, reliable
-privilege escalation. The loss of the feature allows to overwrite
-the default mailer binary name "/usr/sbin/sendmail" on the heap
-with a user controlled string. The rogue mailer is then invoked
-with full privileges due to "NO_ROOT_MAILER" failing.
+> Be an actively maintained Unix-like operating system distro with
+substantial use of Open Source components
 
-Luckily Debian stable, Ubuntu LTS,... are not vulnerable due
-to older Sudo version, but e.g. Debian Bullseye (Sudo 1.9.5p1-1)
-was affected.
+Flatcar has been building releases for 2+ years, when it was
+friendly-forked from CoreOS Container Linux (which is now EOL=E2=80=99d).
 
+> Have a userbase not limited to your own organization
 
+Those pulling updated builds from our servers are in the 10=E2=80=99s of th=
+ousands
+(much beyond our organization).
 
-Meanwhile Todd C. Miller has confirmed the bug/vulnerability and
-provided a patch:
+> Have a publicly verifiable track record, dating back at least 1 year and
+continuing to present day, of fixing security issues (including some that
+had been handled on (linux-)distros, meaning that membership would have
+been relevant to you) and releasing the fixes within 10 days (and
+preferably much less than that) of the issues being made public (if it
+takes you ages to fix an issue, your users wouldn't substantially benefit
+from the additional time, often around 7 days and sometimes up to 14 days,
+that list membership could give you)
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-... The bug was
-introduced in sudo 1.9.4 as part of the logging refactor.  The
-following diff fixes the problem.
+https://www.flatcar-linux.org/releases/
 
-I've committed this as https://www.sudo.ws/repos/sudo/rev/e0d4f196ba02
+Lists releases and issues addressed. Including issues like CVE-2020-0543
+being addressed within days of other distros publicly exposing their patch
+for this embargoed issue.
 
- - todd
+> Not be (only) downstream or a rebuild of another distro (or else we need
+convincing additional justification of how the list membership would enable
+you to release fixes sooner, presumably not relying on the upstream distro
+having released their fixes first?)
 
-diff -r cd1c7615e861 plugins/sudoers/logging.c
---- a/plugins/sudoers/logging.c	Tue Dec 08 12:35:21 2020 -0700
-+++ b/plugins/sudoers/logging.c	Fri Jan 29 05:30:31 2021 -0700
-@@ -786,11 +786,6 @@ void
- init_eventlog_config(void)
- {
-     int logtype =3D 0;
--#ifdef NO_ROOT_MAILER
--    uid_t mailuid =3D user_uid;
--#else
--    uid_t mailuid =3D ROOT_UID;
--#endif
-     debug_decl(init_eventlog_config, SUDOERS_DEBUG_LOGGING);
-=20
-     if (def_syslog)
-@@ -805,7 +800,7 @@ init_eventlog_config(void)
-     eventlog_set_syslog_alertpri(def_syslog_badpri);
-     eventlog_set_syslog_maxlen(def_syslog_maxlen);
-     eventlog_set_file_maxlen(def_loglinelen);
--    eventlog_set_mailuid(mailuid);
-+    eventlog_set_mailuid(ROOT_UID);
-     eventlog_set_omit_hostname(!def_log_host);
-     eventlog_set_logpath(def_logfile);
-     eventlog_set_time_fmt(def_log_year ? "%h %e %T %Y" : "%h %e %T");
-diff -r cd1c7615e861 plugins/sudoers/policy.c
---- a/plugins/sudoers/policy.c	Tue Dec 08 12:35:21 2020 -0700
-+++ b/plugins/sudoers/policy.c	Fri Jan 29 05:30:31 2021 -0700
-@@ -518,6 +518,10 @@ sudoers_policy_deserialize_info(void *v)
-     /* Some systems support fexecve() which we use for digest matches. */
-     cmnd_fd =3D -1;
-=20
-+#ifdef NO_ROOT_MAILER
-+    eventlog_set_mailuid(user_uid);
-+#endif
-+
-     /* Dump settings and user info (XXX - plugin args) */
-     for (cur =3D info->settings; *cur !=3D NULL; cur++)
- 	sudo_debug_printf(SUDO_DEBUG_INFO, "settings: %s", *cur);
+Flatcar had been downstream of CoreOS Container Linux, but now is only
+downstream to aspects of Gentoo and ChromeOS, though manages its own
+components, build metadata, build infrastructure and update servers.
 
+> Be a participant and preferably an active contributor in relevant public
+communities (most notably, if you're not watching for issues being made
+public on oss-security, which are a superset of those that had been handled
+on (linux-)distros, then there's no valid reason for you to be on
+(linux-)distros)
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+We have already been a participant on oss-security for some time and are
+active in a number of communities. Glad to participate.
 
+> Accept the list policy (see above)
 
+We accept.
 
-Without the patch "sudoers_init" in "plugins/sudoers/sudoers.c"
-calls "init_eventlog_config" (via "init_defaults") and
-"sudoers_policy_deserialize_info" in the wrong order regarding
-the uid:
+> Be able and willing to contribute back (see above), preferably in
+specific ways announced in advance (so that you're responsible for a
+specific area and so that we know what to expect from which member), and
+demonstrate actual contributions once you've been a member for a while
 
-    154 int
-    155 sudoers_init(void *info, char * const envp[])
-    156 {
-...
-    174     /* Setup defaults data structures. */
-    175     if (!init_defaults()) {
-    176         sudo_warnx("%s", U_("unable to initialize sudoers default v=
-alues        "));
-    177         debug_return_int(-1);
-    178     }
-    179
-    180     /* Parse info from front-end. */
-    181     sudo_mode =3D sudoers_policy_deserialize_info(info);
+There are a number of the items we will do through the course of normal
+process (review, test, validate, monitor for issues going public). As for
+owning or being a backup, I expect that would be a consideration after
+being a member for a period.
+
+> Be able and willing to handle PGP-encrypted e-mail
+
+Yes
+
+> Have someone already on the private list, or at least someone else who
+has been active on oss-security for years but is not affiliated with your
+distro nor your organization, vouch for at least one of the people
+requesting membership on behalf of your distro (then that one vouched-for
+person will be able to vouch for others on your team, in case you'd like
+multiple people subscribed)
+
+Pat Volkerding can vouch for me (CC=E2=80=99ed), and maybe others, but I as=
+ked
+volkerdi first :-)
 
 
-Therefore "init_eventlog_config" in "plugins/sudoers/logging.c"
-copies the "user_uid" from uninitialized memory (0 =3D=3D root):
-
-    785 void
-    786 init_eventlog_config(void)
-    787 {
-    788     int logtype =3D 0;
-    789 #ifdef NO_ROOT_MAILER
-    790     uid_t mailuid =3D user_uid;
-    791 #else
-    792     uid_t mailuid =3D ROOT_UID;
-    793 #endif
-    794     debug_decl(init_eventlog_config, SUDOERS_DEBUG_LOGGING);
-...
-    808     eventlog_set_mailuid(mailuid);
+vb
 
 
-Only afterwards the "user_uid" is set in "sudoers_policy_deserialize_info"
-in "plugins/sudoers/policy.c" but the new value cannot reach
-"eventlog_set_mailuid" any more:
+--=20
+
+Vincent Batts
+
+CTO
 
 
-     88 int
-     89 sudoers_policy_deserialize_info(void *v)
-     90 {
-...
-    360     user_uid =3D (gid_t)-1;
-...
-    369         if (MATCHES(*cur, "uid=3D")) {
-    370             p =3D *cur + sizeof("uid=3D") - 1;
-    371             user_uid =3D (uid_t) sudo_strtoid(p, &errstr);
+---
+Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
+Gesch=C3=A4ftsf=C3=BChrer/Directors: Alban Crequy, Chris K=C3=BChl, Iago L=
+=C3=B3pez Galeiras
+Registergericht/Court of registration: Amtsgericht Charlottenburg
+Registernummer/Registration number: HRB 171414 B
+Ust-ID-Nummer/VAT ID number: DE302207000
 
-
-
-The easiest way to see if a sudo-version is affected is to replace
-"/usr/sbin/sendmail" with
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-#!/bin/sh
-cat /proc/self/status >> /root/sendmail.log
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-and run suduedit as a test user, failing the password prompt:
-
-/usr/bin/sudoedit -S  X < /dev/null
-
-
-The log then will be created and contains:
-
-...
-Uid:    0 0    0  0
-Gid:    100    100 100 100
-...
-
-
-Thanks to Qualys Security Advisory team supporting the analysis
-of the issue and Todd C. Miller for quickly providing a fix!
-
-
-Kind regards,
-Roman
-
-| |  DI Roman Fiedler
-| /  roman.fiedler at unparalleled.eu  +43 677 63 29 28 29
-/ |  Unparalleled IT Services e.U.     FN: 516074h           VAT: ATU750505=
-24
-| |  https://unparalleled.eu/          Felix-Dahn-Platz 4, 8010 Graz, Austr=
-ia
-
+--0000000000000da16605aa6adc18--
