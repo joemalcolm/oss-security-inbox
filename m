@@ -1,50 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/14/1
-Message-ID: <CALYgK0H9P-omi=V29--MQH5obuH8xGw4r0otPzsras-c+fmQaw@mail.gmail.com>
-Date: Mon, 13 Jan 2020 14:08:01 -0600
-From: Randall Hauch <rhauch@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/14/4
+Message-ID: <218e1c3b-d8bc-9c70-88b8-cea51e64e217@apache.org>
+Date: Tue, 14 Jul 2020 13:24:45 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-12399: Apache Kafka Connect REST API may expose plaintext secrets in tasks endpoint
+Subject: [SECURITY] CVE-2020-13934 Apache Tomcat HTTP/2 Denial of Service
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-12399: Apache Kafka Connect REST API exposes plaintext secrets in
-tasks endpoint
+CVE-2020-13934 Apache Tomcat HTTP/2 Denial of Service
 
-Severity: Medium
+Severity: Moderate
 
 Vendor: The Apache Software Foundation
 
 Versions Affected:
-
-Apache Kafka 2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.2.0, 2.2.1, 2.3.0
+Apache Tomcat 10.0.0-M1 to 10.0.0-M6
+Apache Tomcat 9.0.0.M5 to 9.0.36
+Apache Tomcat 8.5.1 to 8.5.56
 
 Description:
-
-When Connect workers in Apache Kafka 2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.2.0,
-2.2.1, or 2.3.0 are configured with one or more config providers, and a
-connector is created/updated on that Connect cluster to use an externalized
-secret variable in a substring of a connector configuration property value
-(the externalized secret variable is not the whole configuration property
-value), then any client can issue a request to the same Connect cluster to
-obtain the connector's task configurations and the response will contain
-the plaintext secret rather than the externalized secrets variable.
-
+An h2c direct connection did not release the HTTP/1.1 processor after
+the upgrade to HTTP/2. If a sufficient number of such requests were
+made, an OutOfMemoryException could occur leading to a denial of service.
 
 Mitigation:
+- Upgrade to Apache Tomcat 10.0.0-M7 or later
+- Upgrade to Apache Tomcat 9.0.37 or later
+- Upgrade to Apache Tomcat 8.5.57 or later
 
-Apache Kafka Connect users should upgrade to one of the following versions
-where this vulnerability has been fixed:
-- 2.0.2 or higher
-- 2.1.2 or higher
-- 2.2.2 or higher
-- 2.3.1 or higher
+Credit:
+This issue was reported publicly via the Apache Tomcat Users mailing
+list without reference to the potential for DoS. The DoS risks were
+identified by the Apache Tomcat Security Team.
 
-Acknowledgements:
-
-This issue was first reported by Oleksandr Diachenko.
-
-
-Regards,
-
-Randall
-
+References:
+[1] http://tomcat.apache.org/security-10.html
+[2] http://tomcat.apache.org/security-9.html
+[3] http://tomcat.apache.org/security-8.html
