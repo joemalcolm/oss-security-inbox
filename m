@@ -1,65 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/30/5
-Message-ID: <CAFcO6XMCxbHjiHFWUoFW5jcwfOrgz3atyW_MfHaQ4Akv6XF4jw@mail.gmail.com>
-Date: Tue, 1 Dec 2020 01:50:50 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-27815 Linux kernel: jfs: array-index-out-of-bounds in dbAdjTree
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/14/5
+Message-ID: <CAHp2X_Q=2=8qauHjTQRqUOdfUxW5s7pypwLYBwpNQ5yFyE4p+w@mail.gmail.com>
+Date: Tue, 14 Jul 2020 14:20:07 -0400
+From: Vincent Batts <vbatts@...volk.io>
+To: oss-security@...ts.openwall.com, volkerdi@...ckware.com
+Subject: Flatcar membership on the linux-distros list
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hey there,
 
-I report an array-index-out-of-bounds bugs in fs/jfs/jfs_dmap.c in
-dbAdjTree and reproduce it in Linux kernel 5.9.6 version.
+Using the
+https://oss-security.openwall.org/wiki/mailing-lists/distros#membership-criteria
+I’m outlining why Flatcar Container Linux ought to be on the linux-distros
+list.
 
-Description:
+> Be an actively maintained Unix-like operating system distro with
+substantial use of Open Source components
 
-In the Linux kernel through 5.9.6, there is a
-array-index-out-of-bounds in fs/jfs/jfs_dmap.c in dbAdjTree and it may
-cause out of bounds read and Denial of Service.
+Flatcar has been building releases for 2+ years, when it was
+friendly-forked from CoreOS Container Linux (which is now EOL’d).
 
-Root Cause:
+> Have a userbase not limited to your own organization
 
-the dmtree_t is that
- typedef union dmtree {
- struct dmaptree t1;
- struct dmapctl t2;
-} dmtree_t;
+Those pulling updated builds from our servers are in the 10’s of thousands
+(much beyond our organization).
 
- the dmaptree is that
-  struct dmaptree {
-  __le32 nleafs; /* 4: number of tree leafs */
-  __le32 l2nleafs; /* 4: l2 number of tree leafs */
-  __le32 leafidx; /* 4: index of first tree leaf */
-  __le32 height; /* 4: height of the tree */
-  s8 budmin; /* 1: min l2 tree leaf value to combine */
-  s8 stree[TREESIZE]; /* TREESIZE: tree */
-  u8 pad[2]; /* 2: pad to word boundary */
- };the TREESIZE is totally 341.
+> Have a publicly verifiable track record, dating back at least 1 year and
+continuing to present day, of fixing security issues (including some that
+had been handled on (linux-)distros, meaning that membership would have
+been relevant to you) and releasing the fixes within 10 days (and
+preferably much less than that) of the issues being made public (if it
+takes you ages to fix an issue, your users wouldn't substantially benefit
+from the additional time, often around 7 days and sometimes up to 14 days,
+that list membership could give you)
 
-the dmapctl is that:
-struct dmapctl {
-__le32 nleafs; /* 4: number of tree leafs */
-__le32 l2nleafs; /* 4: l2 number of tree leafs */
-__le32 leafidx; /* 4: index of the first tree leaf */
-__le32 height; /* 4: height of tree */
-s8 budmin; /* 1: minimum l2 tree leaf value */
-s8 stree[CTLTREESIZE]; /* CTLTREESIZE: dmapctl tree */
-u8 pad[2714]; /* 2714: pad to 4096 */
-}; /* - 4096 - */
-the CTLTREESIZE is totally 1365.
-The dmt_stree was used in dbAdjTree. Since dmt_stree can refer to the
-stree in both structures dmaptree and dmapctl. the stree size is not
-consistent, may it cause index out of range.
+https://www.flatcar-linux.org/releases/
 
-CVE assigned :
-CVE-2020-27815
+Lists releases and issues addressed. Including issues like CVE-2020-0543
+being addressed within days of other distros publicly exposing their patch
+for this embargoed issue.
 
-Patch:
-It's in linux-next now, not available in upstream.
+> Not be (only) downstream or a rebuild of another distro (or else we need
+convincing additional justification of how the list membership would enable
+you to release fixes sooner, presumably not relying on the upstream distro
+having released their fixes first?)
 
-Credit:
-This issue was discovered by the ADLab of venustech.
+Flatcar had been downstream of CoreOS Container Linux, but now is only
+downstream to aspects of Gentoo and ChromeOS, though manages its own
+components, build metadata, build infrastructure and update servers.
 
-Regards.
- butt3rflyh4ck.
+> Be a participant and preferably an active contributor in relevant public
+communities (most notably, if you're not watching for issues being made
+public on oss-security, which are a superset of those that had been handled
+on (linux-)distros, then there's no valid reason for you to be on
+(linux-)distros)
+
+We have already been a participant on oss-security for some time and are
+active in a number of communities. Glad to participate.
+
+> Accept the list policy (see above)
+
+We accept.
+
+> Be able and willing to contribute back (see above), preferably in
+specific ways announced in advance (so that you're responsible for a
+specific area and so that we know what to expect from which member), and
+demonstrate actual contributions once you've been a member for a while
+
+There are a number of the items we will do through the course of normal
+process (review, test, validate, monitor for issues going public). As for
+owning or being a backup, I expect that would be a consideration after
+being a member for a period.
+
+> Be able and willing to handle PGP-encrypted e-mail
+
+Yes
+
+> Have someone already on the private list, or at least someone else who
+has been active on oss-security for years but is not affiliated with your
+distro nor your organization, vouch for at least one of the people
+requesting membership on behalf of your distro (then that one vouched-for
+person will be able to vouch for others on your team, in case you'd like
+multiple people subscribed)
+
+Pat Volkerding can vouch for me (CC’ed), and maybe others, but I asked
+volkerdi first :-)
+
+
+vb
+
+
+-- 
+
+Vincent Batts
+
+CTO
+
+
+---
+Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
+Geschäftsführer/Directors: Alban Crequy, Chris Kühl, Iago López Galeiras
+Registergericht/Court of registration: Amtsgericht Charlottenburg
+Registernummer/Registration number: HRB 171414 B
+Ust-ID-Nummer/VAT ID number: DE302207000
+
