@@ -1,63 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/17/2
-Message-ID: <a06dc6d7-b8b3-9abc-9c71-33dfdd9e459a@catalyst.net.nz>
-Date: Thu, 17 Sep 2020 10:43:53 +1200
-From: Douglas Bagnall <douglas.bagnall@...alyst.net.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/15/1
+Message-ID: <a3e663a9-a920-a9e3-43fd-e22ccc2c8452@electronsweatshop.com>
+Date: Tue, 14 Jul 2020 18:25:08 -0400
+From: Randy Barlow <randy@...ctronsweatshop.com>
 To: oss-security@...ts.openwall.com
-Subject: Samba and CVE-2020-1472 ("Zerologon")
+Subject: Re: Flatcar membership on the linux-distros list
 Content-Type: text/plain; charset=utf-8
 
-In August, Microsoft patched CVE-2020-1472, which gives administrator
-access to an unauthenticated user on a Domain Controller.  Microsoft gave
-it a CVSS score of 10.
+On 7/14/20 2:20 PM, Vincent Batts wrote:
+>> Have someone already on the private list, or at least someone else who
+> has been active on oss-security for years but is not affiliated with your
+> distro nor your organization, vouch for at least one of the people
+> requesting membership on behalf of your distro (then that one vouched-for
+> person will be able to vouch for others on your team, in case you'd like
+> multiple people subscribed)
+> 
+> Pat Volkerding can vouch for me (CC’ed), and maybe others, but I asked
+> volkerdi first:-)
 
-https://portal.msrc.microsoft.com/en-us/security-guidance/advisory/CVE-2020-1472#ID0EUGAC
-
-The Samba security team was not contacted before the announcement, which
-is very sparse on detail, and was unable to learn much through an
-established (and generally quite useful) channel for discussing Microsoft
-protocols:
-
-https://lists.samba.org/archive/cifs-protocol/2020-August/003520.html
-https://lists.samba.org/archive/cifs-protocol/2020-August/003521.html	
-
-On September 14, Secura, who found the vulnerability, released a blog
-post, a whitepaper, and an exploit:
-
-https://www.secura.com/blog/zero-logon
-
-The bug is in the Netlogon *protocol*, not an implementation flaw, so any
-implementation that correctly follows the protocol will be vulnerable.
-Samba is vulnerable.
-
-HOWEVER, since Samba 4.8 (2018-03), by default Samba will insist on a
-secure netlogon channel
-
-https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#SERVERSCHANNEL
-
-The default of "server schannel = yes" gives the same protection as
-Microsoft's "FullSecureChannelProtection=1" registry key (which is the
-CVE-2020-1472 fix). I believe this mitigation was introduced in light of
-an increased awareness of protocol level bugs following BadLock, and
-particular credit should go to Stefan Metzmacher for [sort of] fixing this
-bug two years before its discovery.
-
-That is not the end of the story, though. Many distros have very old
-versions of Samba, and many people set "server schannel = auto", because
-who doesn't like auto, or because a third party thing requires it.
-
-Patches allowing more fine-grained schannel policy for these third-party
-cases are being worked on right now.
-
-
-Distros: use supported versions of Samba!
-
-People stuck with old versions of a Samba Domain Controller: set "server
-schannel = yes" in your smb.conf, now. For you, this is a low effort
-potentially catastrophic 0-day.
-
-Follow https://bugzilla.samba.org/show_bug.cgi?id=14497
-
-regards,
-Douglas Bagnall
-
+I worked with Vincent when we both worked at Red Hat (we no longer work 
+together), and I can vouch for him personally as I've known him a number 
+of years. However, in full disclosure, I am not on the private list, 
+have only posted on this list a few times (mostly to report some minor 
+issues I found), and have no knowledge of Flatcar Linux.
