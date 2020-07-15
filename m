@@ -1,64 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/13/1
-Message-ID: <3f3d2ab5-259b-ab88-c7e4-7cc0efce3e7c@windriver.com>
-Date: Mon, 13 Jul 2020 15:37:03 +0800
-From: Zhang Xiao <xiao.zhang@...driver.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Cc: xiao.zhang@...driver.com
-Subject: Re: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/15/4
+Message-ID: <cc7f0236-155c-4724-c0df-784b57dc34e3@redhat.com>
+Date: Wed, 15 Jul 2020 09:04:24 -0600
+From: Joel Smith <joelsmith@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-8557: Kubernetes: Node disk DOS by writing to container /etc/hosts
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+Hello Open Source Community,
 
-在 2020/7/12 上午1:58, Solar Designer 写道:
-> Hi Xiao,
->
-> On Thu, Jul 02, 2020 at 05:33:20PM +0800, Zhang Xiao wrote:
->> I am an engineer of WindRiver. Thanks for Alexander's remind about the distribution and we would like to "backup" the first item of the administrative list:
->> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->>
->> 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date/time) /- primary: Oracle, backup: vacant /
->> Please let me know how we get started helping out.
-> I've just added Wind River as backup for this role.  Please watch for
-> issues on which Oracle (and others) haven't provided an initial response
-> to the reporter or where such response is incomplete (per the above),
-> and provide your own response (CC'ing the list) whenever that happens.
-Thank you, we will make it.
->> And, I have another point want to discuss. As we know, sometimes, the CVE and NVD website don't upgrade their web page timely. For example:
->>
->> the security maillist had an encrypted mail called "curl: overwrite local file with -J" in 20200617. It was a "pre-notification about a security advisory about to ship next week in sync with our next curl release", for CVE-2020-8177. On curl's git tree, that very bug did been fixed and released in 20200621:
->> https://github.com/curl/curl/commit/8236aba5854
->>
->> But, till now, both cve.mitre.org and nvd.nist.gov still mark this CVE as "RESERVED":
->> https://nvd.nist.gov/vuln/detail/CVE-2020-8177
->> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177
->>
->> So I wonder if that is also an contribution to remind them, if so, any advises to make it? And If it ca be defined as an contribution, we can take it. :-)
-> We've received some responses in this thread regarding the specific
-> example above, but I'd like more general responses please.  Is there a
-> general task Wind River can reasonably help with for getting CVE details
-> published for issues that pass the distros and/or oss-security lists,
-> and how exactly could they help with that?
+A security issue was discovered in kubelet that could result in the
+Denial of Service of a node if a pod can write to its own /etc/hostsfile.
 
-Actually, we are glad to make it for some customers are also pay
-attention on these official web pages. We suppose it will be easy to
-make it through the "notify a vulnerability publication
-<https://cveform.mitre.org/>". But after I submitted the request I just
-get a reply as "This CVE ID has been reserved by the CNA Hackerone and
-we are currently waiting on them to submit the details." Seems only "the
-CNA Hackerone" can make it. I have no idea on how to notify the "the CNA
-Hackerone " to push it. :-(  Anyway, if possible we are glad to make it.
+This issue has been rated Medium (5.5,
+_CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H/CR:H/IR:H/AR:M_
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H/CR:H/IR:H/AR:M>),
+and assigned CVE-2020-8557.
+
+The /etc/hostsfile mounted in a pod by kubelet is not included by the
+kubelet eviction manager when calculating ephemeral storage usage by a
+pod. If a pod writes a large amount of data to the /etc/hostsfile, it
+could fill the storage space of the node and cause the node to fail.
 
 
-Thanks
+      *Am I vulnerable?*
 
-Xiao
+Any clusters allowing pods with sufficient privileges to write to their
+own /etc/hostsfiles are affected. This includes containers running with
+CAP_DAC_OVERRIDEin their capabilities bounding set (true by default) and
+either UID 0 (root) or a security context with allowPrivilegeEscalation:
+true(true by default).
 
 
-> Thanks,
->
-> Alexander
+        *Affected Versions*
 
-Content of type "text/html" skipped
+  *
 
-Download attachment "pEpkey.asc" of type "application/pgp-keys" (2461 bytes)
+    kubelet v1.18.0-1.18.5
+
+  *
+
+    kubelet v1.17.0-1.17.8
+
+  *
+
+    kubelet < v1.16.13
+
+
+      *How do I mitigate this vulnerability?*
+
+PodSecurityPolicies or other admission webhooks could be employed to
+force containers to drop CAP_DAC_OVERRIDEor disallow running as root or
+with privilege escalation, but these measures may break existing
+workloads that rely upon these privileges to function properly.
+
+
+      *Fixed Versions*
+
+  *
+
+    kubelet v1.19.0
+
+  *
+
+    kubelet v1.18.6
+
+  *
+
+    kubelet v1.17.9
+
+  *
+
+    kubelet v1.16.13
+
+To upgrade, refer to the documentation:
+_https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster_
+
+
+      *Detection*
+
+Large pod etc-hostsfiles may indicate that a pod is attempting to
+perform a Denial of Service attack using this bug. A command such as
+
+find /var/lib/kubelet/pods/*/etc-hosts -size +1M
+
+run on a node can be used to find abnormally large pod etc-hostsfiles.
+
+
+      *Additional Details*
+
+See the GitHub issue for more details:
+_https://github.com/kubernetes/kubernetes/issues/93032_
+
+
+*Acknowledgements*
+
+This vulnerability was reported by Kebe Liu of DaoCloud
+
+
+Thank you,
+
+Joel Smith on behalf of the Kubernetes Product Security Committee
+
+
+
