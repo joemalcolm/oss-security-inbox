@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2239" "Sunday" "11" "October" "2015" "14:06:25" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151011180625.CA832332326@smtpvbsrv1.mitre.org>" "60" "[oss-security] Re: Heap overflow and DoS in unzip 6.0" nil nil nil "10" "2015101118:06:25" "[oss-security] Re: Heap overflow and DoS in unzip 6.0" (number mark "U       cve-assign@m Oct 11   60/2239  " thread-indent "\"[oss-security] Re: Heap overflow and DoS in unzip 6.0\"\n") "<CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>" ("<CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4030" "Wednesday" "15" "July" "2020" "17:52:43" "+0200" "Wadeck Follonier" "wfollonier@cloudbees.com" "<CAAWM14cNTy-LSFk6iHYXCQE+pXG8VjQdZw9byBeTk21nCrPFyA@mail.gmail.com>" "102" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil "7" "2020071515:52:43" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" (number mark "U       wfollonier@c Jul 15  102/4030  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20315 invoked by uid 550); 11 Oct 2015 18:07:25 -0000
+Received: (qmail 3135 invoked by uid 550); 15 Jul 2020 16:38:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,72 +12,136 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20032 invoked from network); 11 Oct 2015 18:06:37 -0000
-From: cve-assign@mitre.org
-To: gustavo.grieco@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>
-Message-Id: <20151011180625.CA832332326@smtpvbsrv1.mitre.org>
-Date: Sun, 11 Oct 2015 14:06:25 -0400 (EDT)
-Subject: [oss-security] Re: Heap overflow and DoS in unzip 6.0
+Received: (qmail 16128 invoked from network); 15 Jul 2020 15:53:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cloudbees.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=yEzKBi9Eyh3Vh6UOMzNgCnmO0OkAvPeuCeMmOSbYKn8=;
+        b=cCPimaxkaP7W+DqCvEdzInximVm23haZT+CNdTXCwHgvPeWfWQmteaBYcKpAXc09T1
+         Bn3w/HlWkhdcVarpqR/EnNPeCuYHLs3G4hbXwesBHw6tafNZYVB46X7pwOVmK7i/03ui
+         0Zi5OKsJh6+NmFkH8AXTQLWq4WhXKSSS605YQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=yEzKBi9Eyh3Vh6UOMzNgCnmO0OkAvPeuCeMmOSbYKn8=;
+        b=OCm96ZTk9Ljz1GIuFPoy7DPK0ZMevv7XSxzrD95+rC8oI4Rrw2qUIuKwq3P9syjGRU
+         uA6Vc5qkqYjzZ1C8erxDwDYcK0lNeQdzVfNqlA7BoN3ftkk7YkKIl/++6pa9Rh9t3rvK
+         Z/sKW8yBDpTulZYOivfY8VGU3t24TtuBJHSmrvbDoPA8TLtB3oIvuytnw9gge/yXKj0f
+         ESVSeAowdCoqoRvmgrLaKJ3QMcUkucozGT6Qnlbn++SRhgHectzJ/GGkH9Y4o4HD9RiK
+         6iAv1Pe/n8HQIEBxr0jRXfHM9quYPWmY5ePIoiYRv+PYikgA/xgkHEK0DcaJf9nWL5zI
+         hz7g==
+X-Gm-Message-State: AOAM530Lf6txo9MyNAiYVlIvOE04slnEcl3OJdQguwwV1kDCdT5uyKSx
+	fXyyir1DtQUH0MyqBtX24vgovGY/uF3hM546P93ksybkWrwCNA==
+X-Google-Smtp-Source: ABdhPJzIvYKquU8uuKhd1Ht9DNql27r+Fv07AOGKOGDqYWU3a04X79gMUs92LZesIHhy8X2me6EmARY157WU6ihs1hc=
+X-Received: by 2002:a92:8915:: with SMTP id n21mr169107ild.166.1594828400711;
+ Wed, 15 Jul 2020 08:53:20 -0700 (PDT)
+MIME-Version: 1.0
+From: Wadeck Follonier <wfollonier@cloudbees.com>
+Date: Wed, 15 Jul 2020 17:52:43 +0200
+Message-ID: <CAAWM14cNTy-LSFk6iHYXCQE+pXG8VjQdZw9byBeTk21nCrPFyA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000004d70f605aa7cec1f"
+Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--0000000000004d70f605aa7cec1f
+Content-Type: text/plain; charset="UTF-8"
 
-> Two issues were found in unzip 6.0:
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Please see our comments about multi-session use cases in the
-http://www.openwall.com/lists/oss-security/2014/11/04/7 post.
-Demonstrating that a crash occurs, or that the flow of execution never
-halts, after entering command-line arguments is not necessarily
-sufficient for obtaining a CVE ID.
+The following releases contain fixes for security vulnerabilities:
 
-We found this:
-
-  http://info-zip.org/FAQ.html#threads
-  Can I use the Windows DLLs in a multithreaded application?
-
-  The UnZip DLL is believed to be thread-safe.
-
-which suggests that programs exist that are unzipping files for
-multiple clients within the same run of the program. (Thread safety is
-not a critical factor; what is important is that an attacker can cause
-a denial of service to another person who presented their own ZIP
-archive independently.)
-
-> * A heap overflow triggered by unzipping a file with password (e.g unzip -p
-> -P x sigsegv.zip)
-
-> AddressSanitizer: heap-buffer-overflow on address 0xb5202104 at pc 0x80500c0 bp 0xbfffedb8 sp 0xbfffedac
-> READ of size 1
-
-Use CVE-2015-7696 for this buffer over-read issue.
+* Jenkins 2.245
+* Jenkins LTS 2.235.2
+* Deployer Framework Plugin 1.3
+* Gitlab Authentication Plugin 1.6
+* Matrix Authorization Strategy Plugin 2.6.2
+* Matrix Project Plugin 1.17
 
 
-> * A denegation of service with a file that never finishes unzipping (e.g.
-> unzip sigxcpu.zip).
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2020-07-15/
 
-Use CVE-2015-7697.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-iQIcBAEBCAAGBQJWGqPmAAoJEL54rhJi8gl5F8cQAK4S8UrCsSEmBZ4US/VOIjey
-2bsqclpJQE6jR1OKWm6cmxoUcqTsW7ihsFhTrjGtNklrTtW6S67NJydu4ZeHfr9H
-ddMbI8/SfQbYNFXY8ARZ5TOiTW137nM90CBtqOcSMhVuwFB+5OSq8+p8XrqmXXKV
-tgNiuXs4Btw70N8frhfgR2GguLgQbLiOJrNlp6sfgak/biesE/VPeZlRE1rCq0mo
-i2HsQBG6s0nt6VChXh5DeM+THbwHVw/cJpNYvzwH4DQezzli33AjPdX4fZw8Q12g
-weLfWaXZmMRT4orWyKzOc1FqoSJmaZczuaE3siBmqRTt41Ky8/T39KoQAeTgkV/s
-Lim1YOtZoji7AQ0FodLJUFSPF3OeoEbhgEPp6SdYf1BO28golZ4oxlaTR1QjsfkH
-ZpC1foqzYw6q/6aFv8x5O4XkUrkrNR1gLKzWm+LU7/kdSXVUXo+5i1oVKS4fy/g6
-xfKXw+mwaDBjHhxVFSiJ1bW3LGU3+2XXrsWc1MfOc3D84QBYtXYq7+fdXvD2Ryp0
-c5YTXrBo4GNswske/jS7jJQvOvWQYsDfnUsBP+tA3La8fJ7lF0XHZRxmPjQT0ZF/
-vAl0sz99QRN3F5NSIH+ZfdJSBqoNf8ncOGLWOfeYhjyXMM5ACu4rB24u59sgOLPq
-YrCeryQMr84yk0h09TzT
-=fh+S
------END PGP SIGNATURE-----
+---
+
+SECURITY-1868 / CVE-2020-2220
+Jenkins 2.244 and earlier, LTS 2.235.1 and earlier does not escape the
+agent name on build time trend pages. This results in a stored cross-site
+scripting (XSS) vulnerability exploitable by users with Agent/Configure
+permission.
+
+
+SECURITY-1901 / CVE-2020-2221
+Jenkins 2.244 and earlier, LTS 2.235.1 and earlier does not escape the
+upstream job's display name shown as part of a build cause. This results in
+a stored cross-site scripting (XSS) vulnerability exploitable by users with
+Job/Configure permission.
+
+
+SECURITY-1902 / CVE-2020-2222
+Jenkins 2.244 and earlier, LTS 2.235.1 and earlier does not escape the job
+name in the 'Keep this build forever' badge tooltip. This results in a
+stored cross-site scripting (XSS) vulnerability exploitable by users able
+to configure job names.
+
+As job names do not generally support the character set needed for XSS,
+this is believed to be difficult to exploit in common configurations.
+
+
+SECURITY-1945 / CVE-2020-2223
+Jenkins 2.244 and earlier, LTS 2.235.1 and earlier does not escape the
+`href` attribute of links to downstream jobs displayed in the build console
+page. This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by users with Job/Configure permission.
+
+
+SECURITY-1924 / CVE-2020-2224
+Matrix Project Plugin 1.16 and earlier does not escape node names shown in
+tooltips on the overview page of builds with a single axis. This results in
+a stored cross-site scripting (XSS) vulnerability exploitable by users with
+Agent/Configure permission.
+
+
+SECURITY-1925 / CVE-2020-2225
+Matrix Project Plugin 1.16 and earlier does not escape the axis names shown
+in tooltips on the overview page of builds with multiple axes. This results
+in a stored cross-site scripting (XSS) vulnerability exploitable by users
+with Job/Configure permission.
+
+
+SECURITY-1909 / CVE-2020-2226
+Matrix Authorization Strategy Plugin 2.6.1 and earlier does not escape user
+names shown in the permission table. This results in a stored cross-site
+scripting (XSS) vulnerability. When using project-based matrix
+authorization, this vulnerability can be exploited by a user with
+Job/Configure or Agent/Configure permission, otherwise by users with
+Overall/Administer permission.
+
+
+SECURITY-1915 / CVE-2020-2227
+Deployer Framework Plugin is a framework plugin allowing other plugins to
+provide a way to deploy artifacts. Deployer Framework Plugin 1.2 and
+earlier does not escape the URL displayed in the build home page. This
+results in a stored cross-site scripting (XSS) vulnerability exploitable by
+users able to provide the location.
+
+The exploitability of this vulnerability depends on the specific
+implementation using Deployer Framework Plugin. The Jenkins security team
+is not aware of any exploitable implementation.
+
+
+SECURITY-1792 / CVE-2020-2228
+Gitlab Authentication Plugin 1.5 and earlier does not differentiate between
+user names and hierarchical group names when performing authorization. This
+allows an attacker with permissions to create groups in GitLab to gain the
+privileges granted to another user or group.
+
+--0000000000004d70f605aa7cec1f--
