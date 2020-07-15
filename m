@@ -1,66 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/07/2
-Message-ID: <CAGUWgD_b4T=YXkvqKj9NUwqoDZpDW7nYXzmC0b_WqB5jtd+xOg@mail.gmail.com>
-Date: Wed, 7 Oct 2020 13:30:37 +0300
-From: Georgi Guninski <gguninski@...il.com>
-To: Greg KH <greg@...ah.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/15/3
+Message-ID: <27251059-4261-01a9-e26c-488701ddffe6@les7arts.com>
+Date: Wed, 15 Jul 2020 14:52:11 +0200
+From: Jacques Le Roux <jacques.le.roux@...7arts.com>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-9496] Apache OFBiz XML-RPC requests vulnerable without authentication
 Content-Type: text/plain; charset=utf-8
 
-Hi Greg,
+Severity:
+Important
 
-You win the pedantic argument, I was wrong.
-Let me try another one: AINGL!
+Vendor:
+The Apache Software Foundation
 
-As for the old link about google, I meant that google's
-products and services contain a lot of spyware, spying on
-top of the virgin untainted? GPLed Linux kernel.
+Versions Affected:
+OFBiz 17.12.03
 
-There was semi-joke: You and google better watch on google maps
-where you got drunk instead of you and google watch it on your
-camera.
+Description:
+Apache OFBiz XML-RPC request are  vulnerable to unsafe deserialization and Cross-Site Scripting issues.
 
-On Tue, Oct 6, 2020 at 11:37 AM Greg KH <greg@...ah.com> wrote:
->
-> On Tue, Oct 06, 2020 at 11:29:34AM +0300, Georgi Guninski wrote:
-> > On Mon, Oct 5, 2020 at 3:44 PM Greg KH <greg@...ah.com> wrote:
-> > >
-> >
-> > >
-> > > "if"?  You do know the market share of Linux-based mobile phones, right?
-> > > Last I looked, it made the Linux server market quantity a rounding error :)
-> > >
-> >
-> > AINL!
-> >
-> > Android Is Not Linux!
->
-> <pedantic>
->
-> Linux is a kernel.  And also commonly used as a name to describe a
-> system running that kernel, to make it easier for people to talk about,
-> and discuss overall.
->
-> Android runs on, and requires at this point in time, the Linux kernel,
-> so one can say that Android is a successful implementation of Linux on
-> mobile devices.  It's also widely successful, so much so that it dwarfs
-> any other installed Linux system out there by orders of magnitude.  So
-> why ignore it as a valid Linux system?
->
-> The fact that I can run a userspace based on a "traditional" Linux
-> system (like Debian), on an Android device, with no file conflicts, is a
-> great engineering success, don't you think?
->
-> </pedantic>
->
-> > https://www.theregister.com/2015/06/17/debian_chromium_hubbub/
-> > Chrome, Debian Linux, and the secret binary blob download riddle
-> > Browser snuck proprietary voice-snoop code into distro
->
-> I don't understand the question here, that was something over 5 years
-> ago.  How is that relevant for "mobile devices" that run Linux today?
->
-> thanks,
->
-> greg k-h
+Mitigation:
+Upgrade to 17.12.04 or manually apply the commit at OFBIZ-11716
+----
+
+Credit:
+Alvaro Munoz from  GitHub Security Lab team <pwntester@...hub.com>
+
+References:
+https://ofbiz.apache.org/security.html
+
