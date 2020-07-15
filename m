@@ -1,43 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/23/1
-Message-ID: <CANUbERwKhzhZnUWrxqBB6tjYqz0yAWTrRbH9j+WhFc9wGwtsMQ@mail.gmail.com>
-Date: Sun, 23 Feb 2020 15:00:27 +0800
-From: George Ni <nic@...che.org>
-To: user <user@...in.apache.org>, dev <dev@...in.apache.org>, announce@...che.org,  Jonathan Leitschuh <jonathan.leitschuh@...il.com>, Apache Security Team <security@...che.org>,  oss-security@...ts.openwall.com
-Subject: [CVE-2020-1937] Apache Kylin SQL injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/15/6
+Message-ID: <CADtktAXJZ3ib+Z-a7gj8gLNq0=h0261azz0JtX7uVHDWRa4U4Q@mail.gmail.com>
+Date: Wed, 15 Jul 2020 09:09:07 -0700
+From: Tim Allclair <tallclair@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Kubernetes: CVE-2020-8559: Privilege escalation from compromised node to cluster
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+A security issue was discovered in the kube-apiserver that could enable a
+privilege escalation from a compromised node.
 
-Vendor:
-The Apache Software Foundation
+This issue has been rated Medium (
+CVSS:3.1/AV:N/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H>),
+and assigned CVE-2020-8559.
 
-Versions Affected:
-Kylin 2.3.0 to 2.3.2
-Kylin 2.4.0 to 2.4.1
-Kylin 2.5.0 to 2.5.2
-Kylin 2.6.0 to 2.6.4
-Kylin 3.0.0-alpha, Kylin 3.0.0-alpha2, Kylin 3.0.0-beta, Kylin 3.0.0
+If an attacker is able to intercept certain requests to the Kubelet, they
+can send a redirect response that may be followed by a client using the
+credentials from the original request. This can lead to compromise of other
+nodes.
 
-Description:
-Kylin has some restful apis which will concatenate SQLs with the user input
-string, a user is likely to be able to run malicious database queries.
+If multiple clusters share the same certificate authority trusted by the
+client, and the same authentication credentials, this vulnerability may
+allow an attacker to redirect the client to another cluster. In this
+configuration, this vulnerability should be considered High severity.
+Am I vulnerable?
 
-Mitigation:
-Users should upgrade to 3.0.1 or 2.6.5
+You are only affected by this vulnerability if you treat the node as a
+security boundary, or if clusters share certificate authorities and
+authentication credentials.
 
-Credit:
-This issue was discovered by ﻿Jonathan Leitschuh
+Note that this vulnerability requires an attacker to first compromise a
+node through separate means.
+Affected Versions
 
-References:
-https://kylin.apache.org/docs/security.html
+   -
 
+   kube-apiserver v1.18.0-1.18.5
+   -
 
----------------------
+   kube-apiserver v1.17.0-1.17.8
+   -
 
-Best regards,
+   kube-apiserver v1.16.0-1.16.12
+   -
 
+   all kube-apiserver versions prior to v1.16.0
 
+How do I mitigate this vulnerability?
 
-Ni Chunen / George
+To mitigate this vulnerability you must upgrade the kube-apiserver to a
+patched version.
+Fixed Versions
+
+   -
+
+   kube-apiserver v1.18.6
+   -
+
+   kube-apiserver v1.17.9
+   -
+
+   kube-apiserver v1.16.13
+
+Fix impact: Proxied backends (such as an extension API server) that respond
+to upgrade requests with a non-101 response code may be broken by this
+patch.
+
+To upgrade, refer to the documentation:
+https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
+Detection
+
+Upgrade requests should never respond with a redirect. If any of the
+following requests have a response code in the 300-399 range, it may be
+evidence of exploitation. This information can be found in the Kubernetes
+audit logs.
+
+   -
+
+   pods/exec
+   -
+
+   pods/attach
+   -
+
+   pods/portforward
+   -
+
+   any resource: proxy
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Details
+
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/92914
+Acknowledgements
+
+This vulnerability was reported by Wouter ter Maat of Offensi, via the
+Kubernetes bug bounty.
+
+Thank You,
+
+Tim Allclair on behalf of the Kubernetes Product Security Committee
 
