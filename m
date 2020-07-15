@@ -1,64 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/2
-Message-ID: <07abfd99-f183-0dff-6de3-7f3f3ffd0c60@nic.cz>
-Date: Tue, 19 May 2020 12:40:00 +0200
-From: Petr Špaček <petr.spacek@....cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/15/5
+Message-ID: <CAAWM14cNTy-LSFk6iHYXCQE+pXG8VjQdZw9byBeTk21nCrPFyA@mail.gmail.com>
+Date: Wed, 15 Jul 2020 17:52:43 +0200
+From: Wadeck Follonier <wfollonier@...udbees.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-12667] Knot Resolver 5.1.1 NXNSAttack mitigation
+Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Hello,
+The following releases contain fixes for security vulnerabilities:
 
-Knot Resolver versions before 5.1.1 allows traffic amplification via
-a crafted DNS answer from an attacker-controlled server, aka an "NXNSAttack" issue.
+* Jenkins 2.245
+* Jenkins LTS 2.235.2
+* Deployer Framework Plugin 1.3
+* Gitlab Authentication Plugin 1.6
+* Matrix Authorization Strategy Plugin 2.6.2
+* Matrix Project Plugin 1.17
 
-Minimal patch is attached but we generally do not recommend backporting.
 
-Knot Resolver version 5.1.1 includes mitigation and is available from
-https://www.knot-resolver.cz/download/
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2020-07-15/
 
-Longer description:
-DNS protocol vulnerability NXNSAttack, combined with Insufficient
-Control of Network Message Volume in iterator component of CZ.NIC Knot
-Resolver version 5.1.0 or older allows remote attacker to amplify
-network traffic towards victim's DNS servers via sending DNS query a
-vulnerable resolver and sending specially crafted answer from
-authoritative server under attacker's control.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-This is DNS protocol vulnerability affecting basically all DNS
-recursive resolvers. Other vendors requested separate CVE IDs for
-mitigation in their products.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Further details:
-https://en.blog.nic.cz/2020/05/19/nxnsattack-upgrade-resolvers-to-stop-new-kind-of-random-subdomain-attack/
+---
 
-Research paper:
-Paper describing the attack by Lior Shafir, Yehuda Afek, Anat
-Bremler-Barr is available from http://nxnsattack.com/
+SECURITY-1868 / CVE-2020-2220
+Jenkins 2.244 and earlier, LTS 2.235.1 and earlier does not escape the
+agent name on build time trend pages. This results in a stored cross-site
+scripting (XSS) vulnerability exploitable by users with Agent/Configure
+permission.
 
-- -- 
-Petr Špaček  @  CZ.NIC
 
------BEGIN PGP SIGNATURE-----
+SECURITY-1901 / CVE-2020-2221
+Jenkins 2.244 and earlier, LTS 2.235.1 and earlier does not escape the
+upstream job's display name shown as part of a build cause. This results in
+a stored cross-site scripting (XSS) vulnerability exploitable by users with
+Job/Configure permission.
 
-iQIzBAEBCgAdFiEEvibrucvgWbORDKNbzo3WoaUKIeQFAl7Dt3gACgkQzo3WoaUK
-IeQJRg/9H8H19V7ond79EwN1rElEy+Hf1mp1IOqRZfDs23q0eIjfAi1epDRRBSVl
-wVp/OdQhE/qIcla/mNO1BvTAh9OwGk3QwMpoi6GuIIiSLcs/YRk8T3O3LTn0+sF1
-7DUZc70HGICxdQmoja17Clv3mNz5GWkjuGJXyEuNZwVQa3A5hJrkfGz7vuTHXNmp
-h0CG9LIhvyuaP6SOxcE3Zl4iNDqnMgdCv1047ijVgUgkrA2Of0vOkDCHCV9Ee1mF
-4TMuhpMREyWqtaoDF7I3ush0MabkD2sixgTZQ0So7xhtPm33/d+z5iYYak65qtny
-qT9zeLp8HzBW35TnG3eDUbuaEOtw/dmWX3LGJXvjxv2pWxiYlAWchT6vWqqrLC5a
-4YJ06T4Yy3e4dsVkOi+ozV4MrRCWZQ/lj6rKRWvnbE9zkSSUsp7FXbpPlYpwHoIs
-VEqkzhxtwceH0y3WlmdRgM/SrSUFe31CHJrA/W7mdkkNOQi0vM/Dxr0YmGnZJQHK
-kfKkRklsk3at09h2tT/oK51mvyUQycV/dWlgBLkkN4u/PPe5rH5Sw308x74h/G4b
-sBJ7W61yXeV1BvyNsiGyUMNAQOwZ8hGXnQlrgW7K4RGsi0b8KxuwmQ/nRWdFf/Gn
-WXV6GdvF1S2IbHbqClZPKi3gt8exXd37K3YeIpPRX44gt82Rq8s=
-=J8cL
------END PGP SIGNATURE-----
 
-View attachment "CVE-2020-12667.patch" of type "text/x-patch" (4400 bytes)
+SECURITY-1902 / CVE-2020-2222
+Jenkins 2.244 and earlier, LTS 2.235.1 and earlier does not escape the job
+name in the 'Keep this build forever' badge tooltip. This results in a
+stored cross-site scripting (XSS) vulnerability exploitable by users able
+to configure job names.
 
-Download attachment "CVE-2020-12667.patch.sig" of type "application/octet-stream" (566 bytes)
+As job names do not generally support the character set needed for XSS,
+this is believed to be difficult to exploit in common configurations.
+
+
+SECURITY-1945 / CVE-2020-2223
+Jenkins 2.244 and earlier, LTS 2.235.1 and earlier does not escape the
+`href` attribute of links to downstream jobs displayed in the build console
+page. This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by users with Job/Configure permission.
+
+
+SECURITY-1924 / CVE-2020-2224
+Matrix Project Plugin 1.16 and earlier does not escape node names shown in
+tooltips on the overview page of builds with a single axis. This results in
+a stored cross-site scripting (XSS) vulnerability exploitable by users with
+Agent/Configure permission.
+
+
+SECURITY-1925 / CVE-2020-2225
+Matrix Project Plugin 1.16 and earlier does not escape the axis names shown
+in tooltips on the overview page of builds with multiple axes. This results
+in a stored cross-site scripting (XSS) vulnerability exploitable by users
+with Job/Configure permission.
+
+
+SECURITY-1909 / CVE-2020-2226
+Matrix Authorization Strategy Plugin 2.6.1 and earlier does not escape user
+names shown in the permission table. This results in a stored cross-site
+scripting (XSS) vulnerability. When using project-based matrix
+authorization, this vulnerability can be exploited by a user with
+Job/Configure or Agent/Configure permission, otherwise by users with
+Overall/Administer permission.
+
+
+SECURITY-1915 / CVE-2020-2227
+Deployer Framework Plugin is a framework plugin allowing other plugins to
+provide a way to deploy artifacts. Deployer Framework Plugin 1.2 and
+earlier does not escape the URL displayed in the build home page. This
+results in a stored cross-site scripting (XSS) vulnerability exploitable by
+users able to provide the location.
+
+The exploitability of this vulnerability depends on the specific
+implementation using Deployer Framework Plugin. The Jenkins security team
+is not aware of any exploitable implementation.
+
+
+SECURITY-1792 / CVE-2020-2228
+Gitlab Authentication Plugin 1.5 and earlier does not differentiate between
+user names and hierarchical group names when performing authorization. This
+allows an attacker with permissions to create groups in GitLab to gain the
+privileges granted to another user or group.
+
