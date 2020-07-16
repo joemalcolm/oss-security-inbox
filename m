@@ -1,66 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/2
-Message-ID: <CAE4Awf8zd+J4vhSv=cypMur2F24PxFnfsLZJsjZUzaHviQRTjA@mail.gmail.com>
-Date: Mon, 7 Dec 2020 16:43:33 -0600
-From: Gage Hugo <gagehugo@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2020-008] horizon: Open redirect in workflow forms (CVE-2020-29565)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/16/1
+Message-Id: <E1jw3ms-0006i6-Se@xenbits.xenproject.org>
+Date: Thu, 16 Jul 2020 13:18:58 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 329 v2 - Linux ioperm bitmap context switching issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA256
 
-==============================================
-OSSA-2020-008: Open redirect in workflow forms
-==============================================
+                    Xen Security Advisory XSA-329
+                              version 2
 
-:Date: December 03, 2020
-:CVE: CVE-2020-29565
+             Linux ioperm bitmap context switching issues
+
+UPDATES IN VERSION 2
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Linux 5.5 overhauled the internal state handling for the iopl() and ioperm()
+system calls.  Unfortunately, one aspect on context switch wasn't wired up
+correctly for the Xen PVOps case.
+
+IMPACT
+======
+
+IO port permissions don't get rescinded when context switching to an
+unprivileged task.  Therefore, all userspace can use the IO ports granted to
+the most recently scheduled task with IO port permissions.
+
+VULNERABLE SYSTEMS
+==================
+
+Only x86 guests are vulnerable.
+
+All versions of Linux from 5.5 are potentially vulnerable.
+
+Linux is only vulnerable when running as x86 PV guest.  Linux is not
+vulnerable when running as an x86 HVM/PVH guests.
+
+The vulnerability can only be exploited in domains which have been granted
+access to IO ports by Xen.  This is typically only the hardware domain, and
+guests configured with PCI Passthrough.
+
+MITIGATION
+==========
+
+Running only HVM/PVH guests avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andy Lutomirski.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa329.patch           Linux 5.5 and later
+
+$ sha256sum xsa329*
+cdb5ac9bfd21192b5965e8ec0a1c4fcf12d0a94a962a8158cd27810e6aa362f0  xsa329.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-Affects
-~~~~~~~
-- - Horizon:  <15.3.2, >=16.0.0 <16.2.1, >=17.0.0 <18.3.3, >=18.4.0 <18.6.0
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-
-Description
-~~~~~~~~~~~
-Pritam Singh (Red Hat) reported a vulnerability in Horizon's workflow
-forms. Previously there was a lack of validation on the "next"
-parameter, which would allow someone to supply a malicious URL in
-Horizon that can cause an automatic redirect to the provided malicious
-URL.
-
-
-Patches
-~~~~~~~
-- - https://review.opendev.org/758843 (Stein)
-- - https://review.opendev.org/758841 (Train)
-
-
-Credits
-~~~~~~~
-- - Pritam Singh from Red Hat (CVE-2020-29565)
-
-
-References
-~~~~~~~~~~
-- - https://launchpad.net/bugs/1865026
-- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-29565
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl/OrjwACgkQ56j9K3b+
-vRG/Gg//Tyj5La8eFwIrwhpDbV/tKNFS+t3NzuhJzLS24WNS9cLf5yDronRdBPdT
-Ow2OegTZ7K5GyoRARpycTjtE66RIizX9I8Kx27FXPc83hLYYOs/MButYpqcp0swM
-687RXZGFcZ5HZtPuRuTcclEcyhzvcUX7HXmznOCmVOHchr+RXzmp6cXC7tyCuNkV
-cGuuMtptDfkFmn2MpGmiTWEiMusMRbV5HqeyY39jg5dwph0kbMCcuzkX6c2WHubE
-T+rjVKbmqHr+v7og6mkZoK+pVk6Ulta/lGsYh/0NlszdQw3poN4FIt//TIwJZVwx
-WSlbMt6IwBW5XiPXvjpX9Awis6CT0jxlIV5XBq+klr3Jo+YnDsChElIPQs3CRKoM
-vqXVextHCk3LK1Evs3FkBns2Taro4tWOlkGYKR6INT4F1TJKNIzIUiF08673uF3B
-8zXDfnVEb7tEMqwu6OdVnfQQ4SRu7uyrN1sHhtwIyfK10AAI7gfJL/wbItJy21Om
-SQahTfDnikEY5gYYU+NH0LBMXkE0I/T+uvPh4LgP7wUxCMR9uI8+iA0711Gp/aPD
-WUdm3pUfIJYE7Gq6sT7BJQftHyMPcxOBj+MIrmFDFOxyPV70Mub+f34zxdu3Qoda
-tZNpy/BGL19VqrlRa9R8H65tzzNy7k5GqkaUYEF5/LegfUgZOTo=
-=jr+k
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8QU6EMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ/sEIAMiCOnz119KTlRU50HTwa4pvIgLphf9htTbPzHXS
+iEb8yINqMxmep8NRcAzwFREQP+Z4Tue1upt31Vx0RPkFZpUklLuuBSXsV0JA7+UM
+LSGyWhkzDdnfj6iPUHycGmFzRTzkbB7qfcMj7khCvuYtSNbTUdOgUq04ngZksrSJ
+UMhfgUNKXawULKvVe7572L/AQTmMXK8eaolb+eWtf1U2pFkZQR8GWoLmiFbKLks2
+X2tRUF4U4cHEBzxXRzYrD1ArWLajqK6hQmauwgkCCSowvCHoD1dTv55GlrlEo4od
+MSB6YOVLl7HJuUw1GmwlKjA8XqStHq1Fi0urvlKCfHfK2Wk=
+=MP+m
 -----END PGP SIGNATURE-----
 
+Download attachment "xsa329.patch" of type "application/octet-stream" (5266 bytes)
