@@ -1,53 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/11/2
-Message-Id: <A3E2C6BA-99BC-4A5F-B341-D5DB69CF04BF@apache.org>
-Date: Tue, 10 Nov 2020 15:36:50 -0800
-From: Dave Fisher <wave@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/17/1
+Message-ID: <CAA8xKjVib9UERsMrAy3nNdVssNxLciXTmmhmXqq1gvhO16URew@mail.gmail.com>
+Date: Fri, 17 Jul 2020 09:54:21 +0200
+From: Mauro Matteo Cascella <mcascell@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents
+Cc: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org,  xen-users@...ts.xen.org,  "Xen.org security team" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 329 v2 - Linux ioperm bitmap context switching issues
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-13958 Unrestricted actions leads to arbitrary code execution in crafted documents
+Hello,
 
-Fixed in Apache OpenOffice 4.1.8
+Will a CVE be assigned to this flaw?
 
-Description
+Thanks,
 
-A vulnerability in Apache OpenOffice scripting events allows an attacker to construct 
-documents containing hyperlinks pointing to an executable on the target users file system.
-These hyperlinks can be triggered unconditionally. In fixed versions no internal protocol 
-may be called from the document event handler and other hyperlinks require a control-click.
+On Thu, Jul 16, 2020 at 3:21 PM Xen.org security team <security@....org>
+wrote:
 
-Severity: Low
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>                     Xen Security Advisory XSA-329
+>                               version 2
+>
+>              Linux ioperm bitmap context switching issues
+>
+> UPDATES IN VERSION 2
+> ====================
+>
+> Public release.
+>
+> ISSUE DESCRIPTION
+> =================
+>
+> Linux 5.5 overhauled the internal state handling for the iopl() and
+> ioperm()
+> system calls.  Unfortunately, one aspect on context switch wasn't wired up
+> correctly for the Xen PVOps case.
+>
+> IMPACT
+> ======
+>
+> IO port permissions don't get rescinded when context switching to an
+> unprivileged task.  Therefore, all userspace can use the IO ports granted
+> to
+> the most recently scheduled task with IO port permissions.
+>
+> VULNERABLE SYSTEMS
+> ==================
+>
+> Only x86 guests are vulnerable.
+>
+> All versions of Linux from 5.5 are potentially vulnerable.
+>
+> Linux is only vulnerable when running as x86 PV guest.  Linux is not
+> vulnerable when running as an x86 HVM/PVH guests.
+>
+> The vulnerability can only be exploited in domains which have been granted
+> access to IO ports by Xen.  This is typically only the hardware domain, and
+> guests configured with PCI Passthrough.
+>
+> MITIGATION
+> ==========
+>
+> Running only HVM/PVH guests avoids the vulnerability.
+>
+> CREDITS
+> =======
+>
+> This issue was discovered by Andy Lutomirski.
+>
+> RESOLUTION
+> ==========
+>
+> Applying the appropriate attached patch resolves this issue.
+>
+> xsa329.patch           Linux 5.5 and later
+>
+> $ sha256sum xsa329*
+> cdb5ac9bfd21192b5965e8ec0a1c4fcf12d0a94a962a8158cd27810e6aa362f0
+> xsa329.patch
+> $
+>
+> DEPLOYMENT DURING EMBARGO
+> =========================
+>
+> Deployment of the patches and/or mitigations described above (or
+> others which are substantially similar) is permitted during the
+> embargo, even on public-facing systems with untrusted guest users and
+> administrators.
+>
+> But: Distribution of updated software is prohibited (except to other
+> members of the predisclosure list).
+>
+> Predisclosure list members who wish to deploy significantly different
+> patches and/or mitigations, please contact the Xen Project Security
+> Team.
+>
+>
+> (Note: this during-embargo deployment notice is retained in
+> post-embargo publicly released Xen Project advisories, even though it
+> is then no longer applicable.  This is to enable the community to have
+> oversight of the Xen Project Security Team's decisionmaking.)
+>
+> For more information about permissible uses of embargoed information,
+> consult the Xen Project community's agreed Security Policy:
+>   http://www.xenproject.org/security-policy.html
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8QU6EMHHBncEB4ZW4u
+> b3JnAAoJEIP+FMlX6CvZ/sEIAMiCOnz119KTlRU50HTwa4pvIgLphf9htTbPzHXS
+> iEb8yINqMxmep8NRcAzwFREQP+Z4Tue1upt31Vx0RPkFZpUklLuuBSXsV0JA7+UM
+> LSGyWhkzDdnfj6iPUHycGmFzRTzkbB7qfcMj7khCvuYtSNbTUdOgUq04ngZksrSJ
+> UMhfgUNKXawULKvVe7572L/AQTmMXK8eaolb+eWtf1U2pFkZQR8GWoLmiFbKLks2
+> X2tRUF4U4cHEBzxXRzYrD1ArWLajqK6hQmauwgkCCSowvCHoD1dTv55GlrlEo4od
+> MSB6YOVLl7HJuUw1GmwlKjA8XqStHq1Fi0urvlKCfHfK2Wk=
+> =MP+m
+> -----END PGP SIGNATURE-----
+>
 
-There are no known exploits of this vulnerability.
-A proof-of-concept demonstration exists.
 
-Vendor: The Apache Software Foundation
-
-Versions Affected
-
-Apache OpenOffice 4.0.0, 4.0.1, 4.1.0, 4.1.1, 4.1.2, 4.1.3, 4.1.4, 4.1.5, 4.1.6, and 4.1.7
-OpenOffice.org versions may also be affected.
-
-Mitigation
-
-Install Apache OpenOffice 4.1.8 for the latest maintenance and cumulative security fixes.
-Use the Apache OpenOffice download page (https://www.openoffice.org/download/).
-
-Acknowledgments
-
-The Apache OpenOffice Security Team would like to thank Imre Rad for discovering and
-reporting this attack vector.
-
-Further Information
-
-For additional information and assistance, consult the Apache OpenOffice Community Forums
-(https://forum.openoffice.org) or make requests to the users@...noffice.apache.org
-(mailto:users@...noffice.apache.org) public mailing list.
-
-The latest information on Apache OpenOffice security bulletins can be found at the
-Bulletin Archive page (https://www.openoffice.org/security/bulletin.html).
-> 
-
+-- 
+Mauro Matteo Cascella, Red Hat Product Security
+6F78 E20B 5935 928C F0A8  1A9D 4E55 23B8 BB34 10B0
 
