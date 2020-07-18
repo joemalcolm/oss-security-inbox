@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/09/1
-Message-ID: <CAD77+gST6rs=eL5BehV_ffVHo0d6FezKM2Wx61Qy+G4Bg6eE2g@mail.gmail.com>
-Date: Sun, 9 Aug 2020 10:26:44 +0200
-From: Richard Hartmann <richih.mailinglist@...il.com>
-To: Sylvain Beucler <beuc@...c.net>
-Cc: oss-security@...ts.openwall.com, prometheus-team@...glegroups.com,  Prometheus Developers <prometheus-developers@...glegroups.com>
-Subject: Re: Voiding CVE-2020-16248
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/19/1
+Message-ID: <MCZ-_KW--3-2@keemail.me>
+Date: Sun, 19 Jul 2020 00:24:26 +0200 (CEST)
+From: ali.of.south@...mail.me
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-21036: Sails.js before v1.0.0-46 DoS
 Content-Type: text/plain; charset=utf-8
 
-Thanks, Sylvain & Florian.
+Hello,
 
-I wasn't aware that MITRE offered this option. I didn't want to send
-email to them as I could no be certain if they own the CVE and as
-putting random support burden on a closed list is worse than putting
-it onto an open list IMO.
+Sails.js (https://sailsjs.com/) <https://sailsjs.com/> before v1.0.0-46 allows attackers to cause a denial of service with a single request because there is no error handler in sails-hook-sockets to handle an empty pathname in a WebSocket request.
+[Affected Product Code Base]
+Sails.js - < v1.0.0-46
+sails-hook-sockets - < 1.5.5
 
-Will do.
+[Attack Vectors]
+To exploit vulnerability, attacker should make a request with malformed URL to the socket.
 
-On Sat, Aug 8, 2020 at 12:41 PM Sylvain Beucler <beuc@...c.net> wrote:
->
-> Hi,
->
-> On 08/08/2020 10:49, Richard Hartmann wrote:
-> > I could not find out which organization has
-> > reserved CVE-2020-16248 so I decided to send email to this list to
-> > inform the organization, enabling them to update their records.
->
-> I would suggest reaching MITRE:
-> https://cve.mitre.org/cve/update_cve_entries.html
-> - "Request an update to an exiting CVE entry"
-> - Type: "Rejection"
->
-> They'll either do the update or point you to the assigning CNA.
->
-> Most likely they'll mark the issue as "DISPUTED" within a few business days.
->
-> Cheers!
-> Sylvain
+[Reproducing]
+1. generate a default sails app.
+2. sails lift
+3. open app in the browser.
+4. open the browser console.
+5. execute this code: io.socket.get('?').
 
+[Reference]
+- https://github.com/balderdashy/sails-hook-sockets/commit/ff02114eaec090ee51db48435cc32d451662606e
+- https://github.com/balderdashy/sails-hook-sockets/commit/0533a4864b1920fd8fbb5287bc0889193c5faf44
+- https://github.com/balderdashy/sails/blob/56f8276f6501a144a03d1f0f28df4ccdb4ad82e2/CHANGELOG.md
 
+Thanks,
+Ali Norouzi
 
--- 
-Richard
