@@ -1,62 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/03/1
-Message-ID: <CAFcO6XPbh8JSYktdb4HstBunmsUfj-28hAT=qhU+AC0Z7UxBog@mail.gmail.com>
-Date: Thu, 3 Dec 2020 10:41:11 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/2
+Message-ID: <CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com>
+Date: Mon, 20 Jul 2020 04:33:11 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1
+Subject: Re: Perl 5.32.0 mishandling of rpath and runpath tokens
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-this was assigned CVE-2020-27786 via Red Hat.
+On Mon, Jul 20, 2020 at 4:21 AM Jeffrey Walton <noloader@...il.com> wrote:
+> ...
+> Building on Linux or Solaris with LDFLAGS that includes a rpath or runpath:
+>
+>     -Wl,-R,$ORIGIN/../lib -Wl,-R,$HOME/tmp/ok2delete/lib
 
+My bad... It does not matter how this $ORIGIN token is quoted. Perl
+always expands it.
 
-Regards.
- butt3rflyh4ck.
+My preferred quoting is a single quote: '$ORIGIN/../lib'. But an
+escaped quote does not work either: "\$ORIGIN/../lib".
 
- butt3rflyh4ck.
-
-
-
-
-On Tue, Dec 1, 2020 at 1:51 PM butt3rflyh4ck <butterflyhuangxx@...il.com> wrote:
->
-> Hi,
-> I reported a use-after-free bug in snd_rawmidi_kernel_write1 in sound/core/rawmidi.c months ago. And I reproduced it in the latest version linux-5.7.0 at that time.
->
-> Description:
->
-> It was found that the raw midi kernel driver does not protect
-> against concurrent access which leads to a use-after-free in snd_rawmidi_kernel_read1() and snd_rawmidi_kernel_write1() in rawmidi.c file.
-> A malicious local attacker could possibly use this for privilege escalation.
->
-> Root Cause:
->
-> The rawmidi core allows user to resize the runtime buffer via ioctl,
-> and this may lead to UAF when performed during concurrent reads or writes: the read/write functions unlock the runtime lock temporarily during copying form/to user-space,
-> and that's the race window.
->
-> Patch for this issue:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c1f6e3c818dd734c30f6a7eeebf232ba2cf3181d
->
-> CVE assigned:
->
-> not assigned.
->
-> Timeline:
->
-> *2020/5/7  - Vulnerability reported to security@...nel.org.
-> *2020/5/7  - Vulnerability confirmed and patched.
-> *2020/5/18 - Request a CVE ID via https://cveform.mitre.org/
-> *2020/11/18 - CVE Request responded but not assigned.
-> *2020/11/18 - Reported to Red Hat.
-> *2020/12/1 - Opened on oss -security@...ts.openwall.com
->
-> Credit:
->
-> This issue was discovered by the ADLab of venustech.
->
->
-> Regards.
->  butt3rflyh4ck.
+Jeff
