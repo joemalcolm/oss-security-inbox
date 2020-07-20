@@ -1,73 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/29/1
-Message-ID: <20201129165312.64bd840f@fabiankeil.de>
-Date: Sun, 29 Nov 2020 16:53:12 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/5
+Message-ID: <CAH8yC8mT3QMRFLm0qf6z96nezwj41k_zJ3Vkft0bZdLUXxCXpw@mail.gmail.com>
+Date: Mon, 20 Jul 2020 11:39:09 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple memory leaks fixed in Privoxy 3.0.29 stable
+Subject: Re: Perl 5.32.0 mishandling of rpath and runpath tokens
 Content-Type: text/plain; charset=utf-8
 
-               Announcing Privoxy 3.0.29 stable
---------------------------------------------------------------------
+On Mon, Jul 20, 2020 at 10:57 AM Phil Pennock
+<oss-security-phil@...dhuis.org> wrote:
+>
+> On 2020-07-20 at 04:33 -0400, Jeffrey Walton wrote:
+> > On Mon, Jul 20, 2020 at 4:21 AM Jeffrey Walton <noloader@...il.com> wrote:
+> > >     -Wl,-R,$ORIGIN/../lib -Wl,-R,$HOME/tmp/ok2delete/lib
+> >
+> > My bad... It does not matter how this $ORIGIN token is quoted. Perl
+> > always expands it.
+>
+> I've encountered this in build systems before, where the quoting is
+> inconsistent and apparently can result in different levels of dequoting
+> for a target depending upon how it was reached.
+>
+> What I've used for building those has been to specify %ORIGIN instead of
+> $ORIGIN and then binary-edit the resulting binary to switch that % back
+> to a $.  All quoting issues disappear and all binary offsets are stable.
+> Just make sure the binary-edit step is before any binary signing. :)
+>
+> At some point, it's also worth considering static linking.
 
-Privoxy 3.0.29 stable fixes a couple of memory leaks and introduces
-https inspection which allows to filter encrypted requests and
-responses.
+Yeah, I was doing the alternate character for a while. Then Perl came
+along and I could not figure out all the places it needed to be
+changed. They spray the rpath in more places than just Makefiles, and
+they build Makefiles on the fly. I found it's not a simple task to sed
+the alternate character back out after, say, configure.
 
---------------------------------------------------------------------
-ChangeLog for Privoxy 3.0.29
---------------------------------------------------------------------
+Related, see https://sourceware.org/pipermail/binutils/2019-June/107108.html.
 
-- Security/Reliability:
-  - Fixed memory leaks when a response is buffered and the buffer
-    limit is reached or Privoxy is running out of memory.
-    Commits bbd53f1010b and 4490d451f9b. OVE-20201118-0001.
-    Sponsored by: Robert Klemme
-  - Fixed a memory leak in the show-status CGI handler when
-    no action files are configured. Commit c62254a686.
-    OVE-20201118-0002.
-    Sponsored by: Robert Klemme
-  - Fixed a memory leak in the show-status CGI handler when
-    no filter files are configured. Commit 1b1370f7a8a.
-    OVE-20201118-0003.
-    Sponsored by: Robert Klemme
-  - Fixes a memory leak when client tags are active.
-    Commit 245e1cf32. OVE-20201118-0004.
-    Sponsored by: Robert Klemme
-  - Fixed a memory leak if multiple filters are executed
-    and the last one is skipped due to a pcre error.
-    Commit 5cfb7bc8fe. OVE-20201118-0005.
-  - Prevent an unlikely dereference of a NULL-pointer that
-    could result in a crash if accept-intercepted-requests
-    was enabled, Privoxy failed to get the request destination
-    from the Host header and a memory allocation failed.
-    Commit 7530132349. CID 267165. OVE-20201118-0006.
-  - Fixed memory leaks in the client-tags CGI handler when
-    client tags are configured and memory allocations fail.
-    Commit cf5640eb2a. CID 267168. OVE-20201118-0007.
-  - Fixed memory leaks in the show-status CGI handler when memory
-    allocations fail. Commit 064eac5fd0 and commit fdee85c0bf3.
-    CID 305233. OVE-20201118-0008.
-
-- General improvements:
-[...]
-
------------------------------------------------------------------
-About Privoxy:
------------------------------------------------------------------
-
-Privoxy is a non-caching web proxy with advanced filtering capabilities for
-enhancing privacy, modifying web page data and HTTP headers, controlling
-access, and removing ads and other obnoxious Internet junk. Privoxy has a
-flexible configuration and can be customized to suit individual needs and
-tastes. It has application for both stand-alone systems and multi-user
-networks.
-
-Privoxy is Free Software and licensed under the GNU GPLv2.
-
-[...]
-
-Home Page: 
-   https://www.privoxy.org/
-
-Content of type "application/pgp-signature" skipped
+Jeff
