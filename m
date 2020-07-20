@@ -1,30 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/02/6
-Message-ID: <alpine.DEB.2.20.2007021325170.16951@tvnag.unkk.fr>
-Date: Thu, 2 Jul 2020 13:34:03 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: Francis Perron <francisp@...gle.com>
-cc: oss-security@...ts.openwall.com, xiao.zhang@...driver.com, Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/10
+Message-ID: <20200720184054.GA11135@openwall.com>
+Date: Mon, 20 Jul 2020 20:40:54 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
 Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2 Jul 2020, Francis Perron wrote:
+On Mon, Jul 13, 2020 at 03:37:03PM +0800, Zhang Xiao wrote:
+> ??? 2020/7/12 ??????1:58, Solar Designer ??????:
+> > On Thu, Jul 02, 2020 at 05:33:20PM +0800, Zhang Xiao wrote:
+> >> And, I have another point want to discuss. As we know, sometimes, the CVE and NVD website don't upgrade their web page timely. For example:
+> >>
+> >> the security maillist had an encrypted mail called "curl: overwrite local file with -J" in 20200617. It was a "pre-notification about a security advisory about to ship next week in sync with our next curl release", for CVE-2020-8177. On curl's git tree, that very bug did been fixed and released in 20200621:
+> >> https://github.com/curl/curl/commit/8236aba5854
+> >>
+> >> But, till now, both cve.mitre.org and nvd.nist.gov still mark this CVE as "RESERVED":
+> >> https://nvd.nist.gov/vuln/detail/CVE-2020-8177
+> >> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177
+> >>
+> >> So I wonder if that is also an contribution to remind them, if so, any advises to make it? And If it ca be defined as an contribution, we can take it. :-)
+> > We've received some responses in this thread regarding the specific
+> > example above, but I'd like more general responses please.  Is there a
+> > general task Wind River can reasonably help with for getting CVE details
+> > published for issues that pass the distros and/or oss-security lists,
+> > and how exactly could they help with that?
+> 
+> Actually, we are glad to make it for some customers are also pay
+> attention on these official web pages. We suppose it will be easy to
+> make it through the "notify a vulnerability publication
+> <https://cveform.mitre.org/>". But after I submitted the request I just
+> get a reply as "This CVE ID has been reserved by the CNA Hackerone and
+> we are currently waiting on them to submit the details." Seems only "the
+> CNA Hackerone" can make it. I have no idea on how to notify the "the CNA
+> Hackerone " to push it. :-(  Anyway, if possible we are glad to make it.
 
->  this delay may be possible due to many things, but the simplest possibility 
-> that comes to mind is that Daniel (here cc'd) from H1 has only gotten a 
-> reservation of CVE number, and he and MITRE have not triggered the 
-> submission yet.
+Once again, I think CVE-2020-8177 is more of an exception than the rule.
+I would be more interested in comments by "CVE experts" on whether the
+task Xiao proposes and volunteers for is in general worthwhile or not,
+and why.  Would similar "notify a vulnerability publication" reminders
+be desirable for issues that got the CVE IDs from one of the CNAs on the
+distros list?
 
-In the curl project we (nowadays) request and get CVE IDs from Hackerone, and 
-we've subsequently told them to publish these two recent curl related CVE IDs 
-when we made them public to the world - I suspect this is just them being a 
-little slow. We don't have any direct contact with MITRE.
+Thanks,
 
-All details regarding the two recent curl flaws are here:
-
-  https://curl.haxx.se/docs/CVE-2020-8169.html
-  https://curl.haxx.se/docs/CVE-2020-8177.html
-
--- 
-
-  / daniel.haxx.se
+Alexander
