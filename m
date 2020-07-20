@@ -1,32 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/02/1
-Message-ID: <CAGUWgD8K_FigSbcnHbFBcj3bv0KT_Ft9eFu9Q1BwvzBSVg3rhA@mail.gmail.com>
-Date: Tue, 2 Jun 2020 09:56:41 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/9
+Message-ID: <20200720183532.GA11008@openwall.com>
+Date: Mon, 20 Jul 2020 20:35:32 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: Exploitability of the integer overflows in djbdns 1.05?
+Cc: volkerdi@...ckware.com
+Subject: Re: Flatcar membership on the linux-distros list
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 1, 2020 at 3:02 PM Solar Designer <solar@...nwall.com> wrote:
->
-> On Mon, Jun 01, 2020 at 09:24:21AM +0300, Georgi Guninski wrote:
-> > Exploitability of the integer overflows in djbdns 1.05?
-> >
-> > TLDR: Are the integer overflows in djbdns 1.05 exploitable?
->
-> https://en.wikipedia.org/wiki/Betteridge%27s_law_of_headlines
->
-> "Betteridge's law of headlines is an adage that states: "Any headline
-> that ends in a question mark can be answered by the word no"."
->
-> I'm sure you didn't mean it that way, but the truth in my joke is that
-> we should actually research the question and provide an informed answer.
-> Will you, please?  Thanks!
->
-> Alexander
+Hi Vincent,
 
-Not sure if this is a joke:
+I intentionally didn't hurry to comment on this, hoping that others
+would comment first.  I would still appreciate more comments by others.
 
-Q: Why security people answer question with question?
-A: Why not?
+On Tue, Jul 14, 2020 at 02:20:07PM -0400, Vincent Batts wrote:
+> Using the
+> https://oss-security.openwall.org/wiki/mailing-lists/distros#membership-criteria
+> I???m outlining why Flatcar Container Linux ought to be on the linux-distros
+> list.
+
+Thanks.  Much of this looks convincing to me, but here are some comments:
+
+> We have already been a participant on oss-security for some time and are
+> active in a number of communities. Glad to participate.
+
+Vincent, as far as I could find, you personally have subscribed to
+oss-security 2 months ago, and I couldn't find anyone else from Flatcar
+Linux subscribed.  (Maybe people are with personal addresses that I
+didn't associate with Flatcar Linux.)
+
+I also found only this one posting to Openwall lists by you:
+
+https://www.openwall.com/lists/kernel-hardening/2017/02/03/38
+
+This is good, but it's not a lot.
+
+What I see on the Flatcar Linux website is more convincing, but maybe
+you can point us at specific examples of community participation by you
+personally and/or by others at Flatcar Linux?
+
+> > Be able and willing to contribute back (see above), preferably in
+> specific ways announced in advance (so that you're responsible for a
+> specific area and so that we know what to expect from which member), and
+> demonstrate actual contributions once you've been a member for a while
+> 
+> There are a number of the items we will do through the course of normal
+> process (review, test, validate, monitor for issues going public). As for
+> owning or being a backup, I expect that would be a consideration after
+> being a member for a period.
+
+As I recall other applications to join the linux-distros list since we
+introduced this contribute-back requirement, distros volunteered for
+some tasks right away, not "after being a member for a period."  What
+you say makes sense, but would be a deviation from the practice so far.
+I'd appreciate not needing to make an exception for you.
+
+> Pat Volkerding can vouch for me (CC???ed), and maybe others, but I asked
+> volkerdi first :-)
+
+We haven't yet heard from Pat Volkerding.  Given your LinkedIn profile,
+I guess someone from Red Hat could vouch for you as well.
+
+Alexander
