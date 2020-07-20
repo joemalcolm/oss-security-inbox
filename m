@@ -1,62 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/04/2
-Message-ID: <20201104103613.GB10006@f195.suse.de>
-Date: Wed, 4 Nov 2020 11:36:13 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/6
+Message-ID: <20200720163233.GA3712@suse.de>
+Date: Mon, 20 Jul 2020 18:32:34 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: sddm: CVE-2020-28049: local privilege escalation due to race condition in creation of the Xauthority file
+Cc: cve-assign@...re.org
+Subject: Re: Re: lockdown bypass on ubuntu 18.04's 4.15 kernel for loading unsigned modules
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+Hi,
 
-a local privilege escalation has been discovered in the sddm display
-manager [1].
+This has gotten assigned CVE-2019-20908.
 
-sddm passes the -auth and -displayfd command line arguments when
-starting the Xserver. It then waits for the display number to be
-received from the Xserver via the `displayfd`, before the Xauthority
-file specified via the `-auth` parameter is actually written. This
-results in a race condition, creating a time window in which no valid
-Xauthority file is existing while the Xserver is already running.
+Ciao, Marcus
 
-The X.Org server, when encountering a non-existing, empty or
-corrupt/incomplete Xauthority file, will grant any connecting client
-access to the Xorg display [2]. A local unprivileged attacker can thus
-create an unauthorized connection to the Xserver and grab e.g. keyboard
-input events from other legitimate users accessing the Xserver.
-
-A simple reproducer works like this:
-
-```
-# run this from an unpriliged account before sddm is started to exploit
-# the race condition and kill the X server
-inotifywait /tmp/.X11-unix; while ! xkill; do :; done
-```
-
-The security issue was discovered by our SUSE sddm package maintainer
-Fabian Vogt. The issue is included in sddm since version 0.12.0 and
-was recently fixed in a new upstream release 0.19.0. The upstream commit
-fixing this issue is found in [3]. The SUSE bugzilla bug tracking this
-issue is found in [4].
-
-[1]: https://github.com/sddm/sddm
-[2]: https://github.com/freedesktop/xorg-xserver/blob/96d19e898acb56d8fc6e6febbc6498f67cdd66a0/os/auth.c#L190
-[3]: https://github.com/sddm/sddm/commit/be202f533ab98a684c6a007e8d5b4357846bc222
-[4]: https://bugzilla.suse.com/show_bug.cgi?id=1177201
-
-Cheers
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+On Mon, Jun 15, 2020 at 05:09:51PM -0700, Reed Loden wrote:
+> Please use
+> https://cveform.mitre.org/ to request a CVE directly from MITRE. That’s
+> your quickest and best way. :-)
+> 
+> ~reed
+> 
+> On Mon, Jun 15, 2020 at 4:02 PM Jason A. Donenfeld <Jason@...c4.com> wrote:
+> 
+> > Hi Mitre,
+> >
+> > People are requesting a CVE to track this and are poking me to poke
+> > you to assign one.
+> >
+> > Jason
+> >
+> > On Sun, Jun 14, 2020 at 12:30 AM Jason A. Donenfeld <Jason@...c4.com>
+> > wrote:
+> > >
+> > > Hey folks,
+> > >
+> > > I noticed that Ubuntu 18.04's 4.15 kernels forgot to protect
+> > > efivar_ssdt with lockdown, making that a vector for disabling lockdown
+> > > on an efi secure boot machine. I wrote a little PoC exploit to
+> > > demonstrate these types of ACPI shenanigans:
+> > >
+> > >
+> > https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language.sh
+> > >
+> > > The comment on the top has description of exploit strategy and such. I
+> > > haven't yet looked into other kernels and distros that might be
+> > > affected, though afaict, Canonical's kernel seems to deviate a lot
+> > > from upstream.
+> > >
+> > > Jason
