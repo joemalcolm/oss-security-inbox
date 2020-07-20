@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3461" "Tuesday" "27" "October" "2015" "15:13:51" "+0530" "Dis close" "disclose@cybersecurityworks.com" "<CAMWaY3MRZRanbO8a_=i4uerEEEspryKnQDC9qiSus+2VMtgWrA@mail.gmail.com>" "95" "[oss-security] CVE Request: Cross Site Scripting (XSS) & Cross Site Request Forgery (CSRF) in Crony Cronjob Manager Version 0.4.4" nil nil nil "10" "2015102709:43:51" "[oss-security] CVE Request: Cross Site Scripting (XSS) & Cross Site Request Forgery (CSRF) in Crony Cronjob Manager Version 0.4.4" (number mark "U       disclose@cyb Oct 27   95/3461  " thread-indent "\"[oss-security] CVE Request: Cross Site Scripting (XSS) & Cross Site Request Forgery (CSRF) in Crony Cronjob Manager Version 0.4.4\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["435" "Monday" "20" "July" "2020" "04:33:11" "-0400" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com>" "13" "[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens" "^Date:" nil nil "7" "2020072008:33:11" "[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens" (number mark "        noloader@gma Jul 20   13/435   " thread-indent "\"[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens\"\n") "<CAH8yC8m+ZK9AZcYZ0vrSgSTjGsi1F5=hEX9phvSSxhuMbRDEFg@mail.gmail.com>" ("<CAH8yC8m+ZK9AZcYZ0vrSgSTjGsi1F5=hEX9phvSSxhuMbRDEFg@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5558 invoked by uid 550); 27 Oct 2015 12:27:30 -0000
+Received: (qmail 20215 invoked by uid 550); 20 Jul 2020 08:33:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,134 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30395 invoked from network); 27 Oct 2015 09:44:02 -0000
+Received: (qmail 20184 invoked from network); 20 Jul 2020 08:33:48 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cybersecurityworks_com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=rnrtn9L6FP1ivRlMg3aU9XZ/lJYTU++ZkLiB60eBMoo=;
-        b=UXy0S9NettQW4OZ6Kf57tJS/y4m0l0yxGGUpO/mASk2rQohWbmzpFJ+xdDmW1RO/9o
-         AlX/NtQ0M2xXGYn++sGpO9XWewW3tb4NfwCtcU/lMx+QUj925CgkRr0+X50xVCqTa+hP
-         ydPhp5jCwgRZrsZiSqF3TL/kJ45zA0X+OzhTbScaHPZXxt7wBUlTp2YW3k5pPcFdQaZU
-         G4eJMsVOKIH1Antg02DzEMGLz2J+Gjb0BBE9CTJLvtBNBR5XrvI7yg5fYbCgw+qLLBKC
-         oZtBTgf0AzIfd3OH9+I4SEal/mPMycrUKh0zgqg/oNJ7uvdXwRgBg6NlJNnwxPoU0gc6
-         pX5Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to;
+        bh=obZS7UiaTqF+en9QRodwNAd3fp/30aL0ujpIRoTGaIQ=;
+        b=ZCqmQJlfqbtEdoSNfKuCIUaC/jfR9K75ZMkaYpTUqAk0foDEQP9BdfhgULjADFgULX
+         YeIL3LA4gCYRe5LWLeaEIjd55D/rnpBUYWutHUUz9oPNd5K3zcvb79U0pRZOu+A6U18A
+         kiIIp8IyhxYxouTgvJEoC7FKceQJkP6OQRBvNwCfPH3n1jbthAQOZiGfYIti0SDaVqV9
+         ww0gDbfucSI+8Dy3qi9+WGh05WtWt9OaV56Awtc6fCU8LrM56dXs+a8wq8+y1NH8br+0
+         0CyyLHFDlnKwmnt9MmISPG/ZpygBRy0XyBIIgkgxItIQfmGJgnCl9VBvhpxNNexWYVxJ
+         LvEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=rnrtn9L6FP1ivRlMg3aU9XZ/lJYTU++ZkLiB60eBMoo=;
-        b=RMFiV+USnGkXggVZw88D/UgwrAuEOr7vVGxGoYsQkbA/IIiT8iqxOx01HAn2vViTJQ
-         S7tw8g3ICOK46IQs+1/E1ofs1nvTVhE0GBBUOsr81ovxjpePm9v6LLF+d7PbF9xHUHVA
-         Kz+O9muRRX7/HyyD5m7kw+88LLkXjXLi3n23lX4w0bncJMprGMvxAfEQq2xGyyjU0yEe
-         tzDXOWFOUikTapH5OU1y/EuBicNnyquq6gLJMwdnii5qpe5mDuDYxprQoGOxqmFoUSZW
-         oXQhxP5o/21VHwvwOicq6mhfSk4DRIe35f5dClxlvXkqRqdVqznqqXU0vQBhsEMD52Hx
-         a+XA==
-X-Gm-Message-State: ALoCoQmSBdTPxR72DJP5ANWP4gu+Q7WVUsumDDImPKdvonlTwlZ6IQe8uxraVrsCkjCm0xMMcGmI
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to;
+        bh=obZS7UiaTqF+en9QRodwNAd3fp/30aL0ujpIRoTGaIQ=;
+        b=btfYQhfT0a6EKtCo00qJRLoEf5JZ+VColI3mDnE/uchehItFgPbjkhxlNlgFk1SbcQ
+         FTXXbWop+/787831IUyUf2Qnqh/XJmI3lEVYv0JOEnpcSTXtY1VmVku32p8ROihimQN5
+         jiREO5uPr3UzSApLhKhxbpf9TM1oywJvu2ocYND9wU8kTMdtI1aLdaqkkntp+zcbB3Fx
+         /J4eor39oIoTv5tPFFjIsZLMtkoMLd8Ant7OhbX188f5/o3Xw2NzNzdeC0KPLWFLwZjQ
+         7vACWarfckQMRLbHKJmoB7zS3VI5hwy2aBtbCPA/2aXosXGUqC8FeZaAx5jRYqSqgfmq
+         aa5A==
+X-Gm-Message-State: AOAM5318crBKBRTHQ5AuxF00c1YEvtfoIa1zhg4CPxhjBrrB7xsp0TIP
+	zVvR5Vw26xkdMEHJcXiiRkeL4gWSwM9XgXl2JyaygZDX
+X-Google-Smtp-Source: ABdhPJw9wYTnhSuOpiiWOOyhdFYSOVSGkHeu4Jekv1TLT76CA4IPvhc8KEQvONdevn/TnspZE3EmM60feq4P3oh5nhM=
+X-Received: by 2002:a02:c785:: with SMTP id n5mr25182236jao.75.1595234016199;
+ Mon, 20 Jul 2020 01:33:36 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.107.169.97 with SMTP id s94mr29688849ioe.189.1445939031109;
- Tue, 27 Oct 2015 02:43:51 -0700 (PDT)
-Date: Tue, 27 Oct 2015 15:13:51 +0530
-Message-ID: <CAMWaY3MRZRanbO8a_=i4uerEEEspryKnQDC9qiSus+2VMtgWrA@mail.gmail.com>
-From: Dis close <disclose@cybersecurityworks.com>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1142e0c65120c8052312ea5a
-Subject: [oss-security] CVE Request: Cross Site Scripting (XSS) & Cross Site Request Forgery
- (CSRF) in Crony Cronjob Manager Version 0.4.4
+References: <CAH8yC8m+ZK9AZcYZ0vrSgSTjGsi1F5=hEX9phvSSxhuMbRDEFg@mail.gmail.com>
+In-Reply-To: <CAH8yC8m+ZK9AZcYZ0vrSgSTjGsi1F5=hEX9phvSSxhuMbRDEFg@mail.gmail.com>
+Message-ID: <CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Mon, 20 Jul 2020 04:33:11 -0400
+From: Jeffrey Walton <noloader@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens
+To: oss-security@lists.openwall.com
 
---001a1142e0c65120c8052312ea5a
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, Jul 20, 2020 at 4:21 AM Jeffrey Walton <noloader@gmail.com> wrote:
+> ...
+> Building on Linux or Solaris with LDFLAGS that includes a rpath or runpath:
+>
+>     -Wl,-R,$ORIGIN/../lib -Wl,-R,$HOME/tmp/ok2delete/lib
 
-Hi,
+My bad... It does not matter how this $ORIGIN token is quoted. Perl
+always expands it.
 
-Details
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-# Title : Cross Site Scripting (XSS) & Cross Site Request Forgery (CSRF) in
-Crony Cronjob Manager Version 0.4.4
-# Affected Product :  Crony Cronjob Manager Wordpress plugin Version 0.4.4
-# Vendor Homepage : https://wordpress.org/plugins/crony/developers/
-# Vulnerability Type :  Cross Site Scripting (XSS) & Cross Site Request
-Forgery (CSRF)
-# Risk :  High
-# POC URL               :
-https://github.com/cybersecurityworks/Disclosed/issues/9
-# Video URL : https://www.youtube.com/watch?v=3DMY5l91pX-tY
-# Status : Fixed
+My preferred quoting is a single quote: '$ORIGIN/../lib'. But an
+escaped quote does not work either: "\$ORIGIN/../lib".
 
-Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-By exploiting a Cross-site scripting vulnerability along with Cross Site
-Request forgery will gives an easy access to an attacker for hijacking a
-logged in user=E2=80=99s session by stealing cookies. This means that the m=
-alicious
-hacker can change the logged in user=E2=80=99s password and invalidate the =
-session
-of the victim while the hacker maintains access.
-
-Technical Details
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-   1. Logon into any wordpress application (attacker)
-   2. Click to =E2=80=9CAdd new cronjob=E2=80=9D in Crony Cronjob Manager V=
-ersion 0.4.4
-   Plugin and capture the request in intercepting proxy.
-   3. Now, Generate a CSRF Request with attacker logged in account.
-   4. Modify the request with the code you required to get executed in
-   victim=E2=80=99s browser.
-   5. Enter the value for the name variable with *=E2=80=9CXSS&CSRF=E2=80=
-=9D *and add any
-   scripts, malicious code or payload.
-   6. Here, its *<script>alert(=E2=80=98Vulnerable2CSRF&XSS=E2=80=99)</scri=
-pt> *which an
-   attacker wants to get executed in victim=E2=80=99s browser and sends the=
- link to
-   victim.
-   7. Now, once the victim opens the link in the user logged in browser.
-   Then, immediately the added XSS payload will be executed whenever we rev=
-iew
-   it.
-
-
-Advisory Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-2015-08-28 =E2=80=93 Discovered in Crony Cronjob Manager Version 0.4.4.
-2015-08-28 =E2=80=93 Reported to plugins@wordpress.org & lol@scottkclark.com
-2015-08-28 =E2=80=93 lol@scottkclark.com replied, "I'll check it out, thank=
-s for
-the heads up."
-2015-08-28 =E2=80=93 Requested for Advance CVE
-2015-09-08 =E2=80=93 Another response from developer, "I'll be back into th=
-ings
-tomorrow morning, will let you know once it's up."
-2015-09-27 =E2=80=93 Issues fixed in version 0.4.6, developer responded.
-
-Fix
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
-https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-
-Credits & Authors
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-sathish@cybersecurityworks.com from cybersecurityworks Pvt Ltd
-
-About Cybersecurityworks
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Cybersecurity Works is basically an auditing company passionate working on
-findings & reporting security flaws & vulnerabilities on web application
-and network. As professionals, we handle each client differently based on
-their unique requirements. Visit our website
-http://www.cybersecurityworks.com/ for more information.
-
-Please assign CVE as appropriate. Thanks for your valuable time & effort
-taken.
-
---
-
-Cheers !!!
-
-Team CSW
-
---001a1142e0c65120c8052312ea5a--
+Jeff
