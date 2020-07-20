@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["900" "Monday" "29" "October" "2018" "08:35:17" "+0900" "=?UTF-8?B?6Z2i5ZKM5q+F?=" "ka-omo@sios.com" "<CAEKGoSFCgf+FYfsegq2Z3TDQMT3TgG94Ma_ARL99co8Gx0O0yA@mail.gmail.com>" "40" "Re: [oss-security] Squid Proxy multiple vulnerabilities" "^Cc:" nil nil "10" "2018102823:35:17" "[oss-security] Squid Proxy multiple vulnerabilities" (number mark "        ka-omo@sios. Oct 29   40/900   " thread-indent "\"Re: [oss-security] Squid Proxy multiple vulnerabilities\"\n") "<20181028182153.156c7434@computer>" ("<ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>" "<20181028182153.156c7434@computer>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["828" "Monday" "20" "July" "2020" "10:57:21" "-0400" "Phil Pennock" "oss-security-phil@spodhuis.org" "<20200720145721.GA105966@fullerene.field.pennock-tech.net>" "19" "[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens" "^Cc:" nil nil "7" "2020072014:57:21" "[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens" (number mark "        oss-security Jul 20   19/828   " thread-indent "\"[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens\"\n") "<CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com>" ("<CAH8yC8m+ZK9AZcYZ0vrSgSTjGsi1F5=hEX9phvSSxhuMbRDEFg@mail.gmail.com>" "<CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23773 invoked by uid 550); 29 Oct 2018 09:43:23 -0000
+Received: (qmail 24070 invoked by uid 550); 20 Jul 2020 15:12:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9290 invoked from network); 28 Oct 2018 23:35:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sios-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Vr5w9WU5dLqAs6AlmAZktfbcF6+GtXa/QzYNQy5vey0=;
-        b=QlOvHZ80XCywyJA1zsbGkx7FqLDaSjIuwROTyTAXGOLifcw0XpWz+O+mM4jS5vTNzZ
-         8nPs5FPsWpsYjUx8XbFtodd8ZnRxhl9AT0LE/5HHdztx4JCUj6Hu5ZZZfb5RU0RUFmY/
-         /q+JhBCgX1H10WoPzx/sskz7eoTsgIYgrQjlJLTlbuS8OkIfA3Y39tu6XnqyxLkL6zmg
-         UWQMAzNfNLpSvvA/DhfMuUsPWsBkxSuYWDOYrtJf2PGA+83WvbeqINxFYCVEmzyMUAxZ
-         Zm5wKG3i1WsEUqnz6jn1liYmNLNN3WkccFUltn78NC1twCVjLhRpshuKTk2YiF8Z/nGv
-         XjGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Vr5w9WU5dLqAs6AlmAZktfbcF6+GtXa/QzYNQy5vey0=;
-        b=lqzr7nVIMCIyd+9q6vuycN398nxJxGODVRPT/qZTHXKauKBXJdkBK2h/0u9IpJccag
-         LOJbDMTvi33DRSArI9B8qpew21nEdh+uxLi/Gm7IJdLHTQ+ELl0W0RdhPkHTEHLRpFLS
-         utPkX7K+kO6fQ5AAAy3C2CqxLLqso0GyGq0t7Tw15AOR7xE7n9dOeQQBgw4GigvtcYWz
-         JL199jjRRafNP7k/9q4+fIwsbg9EOQbRgYn0yrebr7BMycrAYN8j7acfHcUadds9b2An
-         Unxlx5UULc659zNVaYAgEp0y0KC6t+nI51B7Z+C4SnKbZ0S1YT/SSnTcGNwUH8s9mNfG
-         dauQ==
-X-Gm-Message-State: AGRZ1gKuR7Ow1Tkt3evWGUiOx7WvPR50/5EZIx5n4V/aylXD99jj1d3b
-	mDDfbYjMLJ4F2UqWwKEPbNzEzwQAjdaI6bZXAOq0Jd6bTzM=
-X-Google-Smtp-Source: AJdET5c8oH/6IYZy1GV7TSIWngNu/Ee1JsfqGAHsFQEmGnhQO99R7/L8wS3juGTumoUcYxRDuaHfxonCPwi6h4PhUFM=
-X-Received: by 2002:a24:c445:: with SMTP id v66-v6mr8651099itf.21.1540769729888;
- Sun, 28 Oct 2018 16:35:29 -0700 (PDT)
+Received: (qmail 20154 invoked from network); 20 Jul 2020 14:57:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=spodhuis.org; s=d202005; h=In-Reply-To:Content-Type:MIME-Version:References
+	:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding
+	:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=SfpWKD2a6LdAE3bDsMOuLewgpHJmQTb14rJh+v4CFA8=; b=Z64Jlb4Df/32PH/NCnkJJxqOPr
+	jttdxsKGYU2NTNfh2TyI3Kz8sKlznijAMh0h2olj3CVL3ztHfXcW9T5qnqJTQ6Wi3Kk3euXpApiNN
+	a/0gDWjfRLzygKfBLYwcYt6GRu2VyOLdpuoemP6riGgGBqmy3JC99euwy4dl+S4pvdz36OJuQB7rb
+	jrK5UyUBvEyBfU8qPTF0mzIf7jHwnAGxeTXocAbuGkftwex+Xd/zb95uz/8JsAeRF+CoEJ/IuwT8y
+	nbc0MOSdURk5lR3VKbF4HUARyfsIJNUlXAZaIu5PXMbWX1bAAZA9kQZzLFFgvwMHtevqqdC0LIvhP
+	WHzZjvlw==;
+DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=spodhuis.org; s=d202005e2; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	 bh=SfpWKD2a6LdAE3bDsMOuLewgpHJmQTb14rJh+v4CFA8=; b=TZDRfOC+kKNsXt3e2GFuS6Jym
+	SoO00Bbi9E4N801iwr5507FhRVIFmR/svPu+dHt/AiJhhWhYhC53q2/PXY+AQ==;
+Message-ID: <20200720145721.GA105966@fullerene.field.pennock-tech.net>
+References: <CAH8yC8m+ZK9AZcYZ0vrSgSTjGsi1F5=hEX9phvSSxhuMbRDEFg@mail.gmail.com>
+ <CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com>
 MIME-Version: 1.0
-References: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz> <20181028182153.156c7434@computer>
-In-Reply-To: <20181028182153.156c7434@computer>
-Message-ID: <CAEKGoSFCgf+FYfsegq2Z3TDQMT3TgG94Ma_ARL99co8Gx0O0yA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Cc: squid3@treenet.co.nz
-Date: Mon, 29 Oct 2018 08:35:17 +0900
-From: =?UTF-8?B?6Z2i5ZKM5q+F?= <ka-omo@sios.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com>
+OpenPGP: url=https://www.security.spodhuis.org/PGP/keys/keys-2013rsa-2020cv25519.asc
+Cc: Jeffrey Walton <noloader@gmail.com>
+Date: Mon, 20 Jul 2020 10:57:21 -0400
+From: Phil Pennock <oss-security-phil@spodhuis.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Squid Proxy multiple vulnerabilities
+Subject: [oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens
 To: oss-security@lists.openwall.com
 
-Hi,
+On 2020-07-20 at 04:33 -0400, Jeffrey Walton wrote:
+> On Mon, Jul 20, 2020 at 4:21 AM Jeffrey Walton <noloader@gmail.com> wrote:
+> >     -Wl,-R,$ORIGIN/../lib -Wl,-R,$HOME/tmp/ok2delete/lib
+> 
+> My bad... It does not matter how this $ORIGIN token is quoted. Perl
+> always expands it.
 
-It looks like links are working fine now.
+I've encountered this in build systems before, where the quoting is
+inconsistent and apparently can result in different levels of dequoting
+for a target depending upon how it was reached.
 
-http://www.squid-cache.org/Advisories/SQUID-2018_4.txt
-http://www.squid-cache.org/Advisories/SQUID-2018_5.txt
+What I've used for building those has been to specify %ORIGIN instead of
+$ORIGIN and then binary-edit the resulting binary to switch that % back
+to a $.  All quoting issues disappear and all binary offsets are stable.
+Just make sure the binary-edit step is before any binary signing. :)
 
-OMO
-2018=E5=B9=B410=E6=9C=8829=E6=97=A5(=E6=9C=88) 2:22 Hanno B=C3=B6ck <hanno@=
-hboeck.de>:
->
-> On Mon, 29 Oct 2018 05:13:40 +1300
-> Amos Jeffries <squid3@treenet.co.nz> wrote:
->
-> > <http://www.squid-cache.org/Advisories/SQUID-2018_4.txt>
->
-> That gives a 404.
->
-> Also there's another yet unfixed vulnerability: The webpage and the
-> downloads are not using HTTPS, which makes them vulnerable to
-> man-in-the-middle attacks ;-)
->
-> --
-> Hanno B=C3=B6ck
-> https://hboeck.de/
->
-> mail/jabber: hanno@hboeck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+At some point, it's also worth considering static linking.
 
-
-
---=20
-Kazuki Omo: ka-omo@sios.com
-
-OSS&Security Evangelist
-Senior Architect
-Vice President & Deputy Group Manager
-Research and Development Dept. 2
-CISSP #366942
-Tel: +819026581386
+-Phil
