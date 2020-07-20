@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/25/3
-Message-ID: <d22f908e-2c27-4067-cdef-a009ddebf344@oracle.com>
-Date: Mon, 24 Feb 2020 14:41:35 -0500
-From: Boris Ostrovsky <boris.ostrovsky@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/8
+Message-ID: <CAH+vQmMmWe_ghWoob-aKYkBXW5Nfaw30FFfsMBGMT-p4L1-Uqg@mail.gmail.com>
+Date: Mon, 20 Jul 2020 17:17:16 +0100
+From: Gary Tully <gtully@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-2732: Nested VMX vulnerability
+Subject: CVE-2020-13932 Apache ActiveMQ Artemis - Remote XSS in Web console Diagram Plugin
 Content-Type: text/plain; charset=utf-8
 
-Under certain circumstances, an L2 guest may trick the L0 hypervisor into accessing sensitive L1 resources that are supposed to be inaccessible to the L2 guest
-according to L1 hypervisor configuration.
+[CVEID]:CVE-2017-5648
 
-Only Intel processors are affected.
+Apache ActiveMQ Artemis - Remote XSS in Web console Diagram Plugin
 
-Patches are attached. From cover letter:
+Severity: Medium
 
-  vmx_check_intercept is not yet fully implemented by KVM on Intel processors,
-  causing e.g. the I/O or MSR interception bitmaps not to be checked.
-  In general we can just disallow instruction emulation on behalf of L1,
-  but this series also implements I/O port checks.
+Vendor: The Apache Software Foundation
 
+Affected Version: Apache ActiveMQ Artemis 2.5.0 to 2.13.0
 
-Thanks.
--boris
+Vulnerability details:
+A specifically crafted MQTT packet which has an XSS payload as
+client-id or topic name can exploit this vulnerability. The XSS
+payload is being injected into the admin console's browser. The XSS
+payload is triggered in the diagram plugin; queue node and the info
+section.
 
+Mitigation:
+Upgrade to Apache ActiveMQ Artemis 2.14.0
 
-Download attachment "CVE-2020-2732.tgz" of type "application/x-compressed-tar" (2744 bytes)
+Credit: This issue was discovered by Arun Magesh from Payatu Software Labs
+
+see:
+https://activemq.apache.org/security-advisories.data/CVE-2020-13932-announcement.txt
+
