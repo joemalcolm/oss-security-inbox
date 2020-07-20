@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["348" "Friday" "17" "November" "2017" "22:19:22" "+0100" "Jakub Wilk" "jwilk@jwilk.net" "<20171117211922.ljzilxin2rkvpqnf@jwilk.net>" "18" "Re: [oss-security] phusion passenger CVE-2017-1000384" nil nil nil "11" "2017111721:19:22" "[oss-security] phusion passenger CVE-2017-1000384" (number mark "U       jwilk@jwilk. Nov 17   18/348   " thread-indent "\"Re: [oss-security] phusion passenger CVE-2017-1000384\"\n") "<ffe4aba0-426e-89c0-4760-1d4b315a88a1@cpanel.net>" ("<CANO=Ty13_HbxhMT8BnqYVfU6=g4GP+oJnyCv11ucUG_q8Kbqqg@mail.gmail.com>" "<ffe4aba0-426e-89c0-4760-1d4b315a88a1@cpanel.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["833" "Monday" "20" "July" "2020" "17:17:16" "+0100" "Gary Tully" "gtully@apache.org" "<CAH+vQmMmWe_ghWoob-aKYkBXW5Nfaw30FFfsMBGMT-p4L1-Uqg@mail.gmail.com>" "29" "[oss-security] CVE-2020-13932 Apache ActiveMQ Artemis - Remote XSS in Web console Diagram Plugin" nil nil nil "7" "2020072016:17:16" "[oss-security] CVE-2020-13932 Apache ActiveMQ Artemis - Remote XSS in Web console Diagram Plugin" (number mark "U       gtully@apach Jul 20   29/833   " thread-indent "\"[oss-security] CVE-2020-13932 Apache ActiveMQ Artemis - Remote XSS in Web console Diagram Plugin\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-13932 Apache ActiveMQ Artemis - Remote XSS in Web console Diagram Plugin" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24500 invoked by uid 550); 17 Nov 2017 21:19:39 -0000
+Received: (qmail 9706 invoked by uid 550); 20 Jul 2020 16:45:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24476 invoked from network); 17 Nov 2017 21:19:39 -0000
-Date: Fri, 17 Nov 2017 22:19:22 +0100
-From: Jakub Wilk <jwilk@jwilk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20171117211922.ljzilxin2rkvpqnf@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CANO=Ty13_HbxhMT8BnqYVfU6=g4GP+oJnyCv11ucUG_q8Kbqqg@mail.gmail.com>
- <ffe4aba0-426e-89c0-4760-1d4b315a88a1@cpanel.net>
+Received: (qmail 7604 invoked from network); 20 Jul 2020 16:17:39 -0000
+X-Gm-Message-State: AOAM533NTf0g3jKTPAnpqJSkqB1/X6ceJ2LUKTqmJGrRFqq7zwAyz7+S
+	72n3No/whZP3iyJY40kuXtdkSVBlD1Z5i1ibmpk=
+X-Google-Smtp-Source: ABdhPJzG8R49itc+kCYnZ7K+T4bcfxaTbroP8BT0dEBKUqpzRcMOP5E2gUWlGMidTMvVYw46jgrWCOlsze7tWHN1oAI=
+X-Received: by 2002:a02:7108:: with SMTP id n8mr26022467jac.35.1595261847066;
+ Mon, 20 Jul 2020 09:17:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <ffe4aba0-426e-89c0-4760-1d4b315a88a1@cpanel.net>
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-Ovh-Tracer-Id: 5935462836241815462
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedttddrjeejgdduheduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
-Subject: Re: [oss-security] phusion passenger CVE-2017-1000384
+From: Gary Tully <gtully@apache.org>
+Date: Mon, 20 Jul 2020 17:17:16 +0100
+X-Gmail-Original-Message-ID: <CAH+vQmMmWe_ghWoob-aKYkBXW5Nfaw30FFfsMBGMT-p4L1-Uqg@mail.gmail.com>
+Message-ID: <CAH+vQmMmWe_ghWoob-aKYkBXW5Nfaw30FFfsMBGMT-p4L1-Uqg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000b7dd2f05aae1d7a9"
+Subject: [oss-security] CVE-2020-13932 Apache ActiveMQ Artemis - Remote XSS in Web console
+ Diagram Plugin
 
-* John Lightsey <jd@cpanel.net>, 2017-11-17, 14:58:
->https://github.com/phusion/passenger/commit/4043718264095cde6623c2cbe8c644541036d7bf
+--000000000000b7dd2f05aae1d7a9
+Content-Type: text/plain; charset="UTF-8"
 
-This adds:
+[CVEID]:CVE-2017-5648
 
-   #ifdef false
-   ...
-   #endif
+Apache ActiveMQ Artemis - Remote XSS in Web console Diagram Plugin
 
-But false _is_ a defined macro in this file, so this doesn't disable the 
-code inside. I guess they meant to write:
+Severity: Medium
 
-   #if false
-   ...
-   #endif
+Vendor: The Apache Software Foundation
 
--- 
-Jakub Wilk
+Affected Version: Apache ActiveMQ Artemis 2.5.0 to 2.13.0
+
+Vulnerability details:
+A specifically crafted MQTT packet which has an XSS payload as
+client-id or topic name can exploit this vulnerability. The XSS
+payload is being injected into the admin console's browser. The XSS
+payload is triggered in the diagram plugin; queue node and the info
+section.
+
+Mitigation:
+Upgrade to Apache ActiveMQ Artemis 2.14.0
+
+Credit: This issue was discovered by Arun Magesh from Payatu Software Labs
+
+see:
+https://activemq.apache.org/security-advisories.data/CVE-2020-13932-announcement.txt
+
+--000000000000b7dd2f05aae1d7a9--
