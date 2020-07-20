@@ -1,109 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/21/2
-Message-Id: <E1jxq1y-0007MA-2r@xenbits.xenproject.org>
-Date: Tue, 21 Jul 2020 11:01:54 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 329 v3 (CVE-2020-15852) - Linux ioperm bitmap context switching issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/1
+Message-ID: <CAH8yC8m+ZK9AZcYZ0vrSgSTjGsi1F5=hEX9phvSSxhuMbRDEFg@mail.gmail.com>
+Date: Mon, 20 Jul 2020 04:21:51 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Perl 5.32.0 mishandling of rpath and runpath tokens
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Everyone,
 
-            Xen Security Advisory CVE-2020-15852 / XSA-329
-                              version 3
+Perl mishandles rpath tokens $ORIGIN, $LIB and $PLATFORM. Also see
+https://man7.org/linux/man-pages/man8/ld.so.8.html.
 
-             Linux ioperm bitmap context switching issues
+Building on Linux or Solaris with LDFLAGS that includes a rpath or runpath:
 
-UPDATES IN VERSION 3
-====================
+    -Wl,-R,$ORIGIN/../lib -Wl,-R,$HOME/tmp/ok2delete/lib
 
-CVE assigned.
+results in a rpath or runpath similar to below (Solaris is shown):
 
-ISSUE DESCRIPTION
-=================
+    # From $HOME/perl-5.32.0 directory
+    $ elfdump libperl.so | grep PATH
+    [10]  RUNPATH         0xaf4d
+/../lib:/export/home/jwalton/tmp/ok2delete/lib
+    [11]  RPATH           0xaf4d
+/../lib:/export/home/jwalton/tmp/ok2delete/lib
 
-Linux 5.5 overhauled the internal state handling for the iopl() and ioperm()
-system calls.  Unfortunately, one aspect on context switch wasn't wired up
-correctly for the Xen PVOps case.
+Now the interesting thing here is, $ORIGIN was expanded to nothing and
+/../lib is just /lib. And Solaris /lib directory contains old
+libraries, like zLib 1.2.8 and Bzip 1.0.6. zLib 1.2.8 and Bzip 1.0.6
+have CVEs against them. So rather than use the new zLib and Bzip in
+$HOME/tmp/ok2delete/lib, Perl uses the old ones with CVEs in /lib.
 
-IMPACT
-======
+Perl stated they won't fix the problem. Also see
+https://github.com/Perl/perl5/issues/17534.
 
-IO port permissions don't get rescinded when context switching to an
-unprivileged task.  Therefore, all userspace can use the IO ports granted to
-the most recently scheduled task with IO port permissions.
+The best workarounds I have found is to run patchelf (Linux) or
+editelf (Solaris) on all programs and libraries after 'make' and
+before 'make check', and after 'make check' and before 'make install'.
+The procedure has to happen twice because Perl rebuilds some things
+after 'make', including some shared objects built during 'make check'.
 
-VULNERABLE SYSTEMS
-==================
+The problem with the workaround is, patchelf and editelf has limited
+availability. patchelf is buggy [1,2] and editelf is only available on
+Solaris 11 [3].
 
-Only x86 guests are vulnerable.
-
-All versions of Linux from 5.5 are potentially vulnerable.
-
-Linux is only vulnerable when running as x86 PV guest.  Linux is not
-vulnerable when running as an x86 HVM/PVH guests.
-
-The vulnerability can only be exploited in domains which have been granted
-access to IO ports by Xen.  This is typically only the hardware domain, and
-guests configured with PCI Passthrough.
-
-MITIGATION
-==========
-
-Running only HVM/PVH guests avoids the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Andy Lutomirski.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa329.patch           Linux 5.5 and later
-
-$ sha256sum xsa329*
-cdb5ac9bfd21192b5965e8ec0a1c4fcf12d0a94a962a8158cd27810e6aa362f0  xsa329.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8WytoMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ4wsH/0/2AMv2kb/Q6rfwlNLSrnDbK2b6bb/QUE+0GcHO
-vrJ7Su53xrt7mllk/P4jYmtXfyUeJzfsahdb5GQVh4GBxOA3YGgS5T4pdpnwNoFi
-NFZV35qOT0muwpjE/zoefKsESuvqWjd28Vssm4HrllJ4YqcGik9clo6Y5qWMFcFH
-rlgchZinl5RtqAzMnuOdirWir7Xika6KdkXWi56CjKZBB5ozoqfH5JKi/XbWbwrz
-ZoFHXwKRuckuQSxUlvdpmI7MZDyggii3OhdvA6fIMDWq58EjSVVatrvDxYsGRL8x
-4PXmFPBp+871GjLQuQZ294fZH3DaZLWSrzvmwC8uZJr5uds=
-=Wdnv
------END PGP SIGNATURE-----
-
-Download attachment "xsa329.patch" of type "application/octet-stream" (5266 bytes)
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=1497012
+[2] https://bugs.launchpad.net/ubuntu/+source/patchelf/+bug/1888175
+[3] https://blogs.oracle.com/solaris/avoiding-ldlibrarypath%3a-the-options-v2
