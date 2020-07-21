@@ -1,63 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/09/1
-Message-ID: <CAH8yC8n5AkLT-90ZDTyGSp4Y4FXc59254aiTuYEFutMpiuRmsA@mail.gmail.com>
-Date: Tue, 8 Sep 2020 20:54:57 -0400
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/21/1
+Message-Id: <202007210812.06L8Ci5i010126@room101.nl.oracle.com>
+Date: Tue, 21 Jul 2020 10:12:44 +0200
+From: Casper.Dik@...cle.COM
 To: oss-security@...ts.openwall.com
-Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
+Subject: Re: Perl 5.32.0 mishandling of rpath and runpath tokens 
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 7, 2020 at 10:42 PM Kurt H Maier <khm@...ops.net> wrote:
+
+>Hi Everyone,
 >
-> On Mon, Sep 07, 2020 at 09:11:00PM -0400, Jeffrey Walton wrote:
-> > Every US Federal agency I have worked with patches. The Social
-> > Security Administration does it within 30 days, and the Treasury
-> > Department does it in a matter of days. SSA is one of the largest
-> > networks in the world with over 100,000 hosts. Treasury had over
-> > 40,000 hosts.
+>Perl mishandles rpath tokens $ORIGIN, $LIB and $PLATFORM. Also see
+>https://man7.org/linux/man-pages/man8/ld.so.8.html.
 >
-> I've worked with US Federal agencies that did not patch.  I was able to
-> change some minds, and it was productive work of which I'm proud.  My
-> success rate is significantly below 100%, although my current employer
-> is largely sympathetic to this effort.
-
-I'd be interested to know which agencies don't have a comprehensive
-patch policy in place. And how they passed their SP800-53A audits.
-SI-2, Flaw Remediation, is part of all baselines.
-
-> I would love to patch every computer with the latest available software,
-> but there remains a gulf between 100k data-entry terminals and computers
-> that must interact with the physical world.
-
-> Machines that are hooked up
-> to scientific or manufacturing equipment can be extremely difficult to
-> patch without breaking things and no amount of haughty lecturing seems
-> to fix the problem, despite same being readily available from multiple
-> sources as far back as I can remember.
-
-I usually encounter this as a one-off problem (and not a farm of
-specialized machines). In my experience, there will be 500
-workstations and servers that can be updated, and one machine that
-cannot. The one machine is the damn fax server with some custom board.
-
-> > Microsoft did a study years ago and found most hosts that are
-> > compromised failed to install vendor patches.
+>Building on Linux or Solaris with LDFLAGS that includes a rpath or runpath:
 >
-> "Software vendor finds that everything would improve if everyone
-> listened to software vendors" fails by a considerable distance to meet
-> with my interest.
+>    -Wl,-R,$ORIGIN/../lib -Wl,-R,$HOME/tmp/ok2delete/lib
+>
+>results in a rpath or runpath similar to below (Solaris is shown):
+>
+>    # From $HOME/perl-5.32.0 directory
+>    $ elfdump libperl.so | grep PATH
+>    [10]  RUNPATH         0xaf4d
+>/../lib:/export/home/jwalton/tmp/ok2delete/lib
+>    [11]  RPATH           0xaf4d
+>/../lib:/export/home/jwalton/tmp/ok2delete/lib
+>
+>Now the interesting thing here is, $ORIGIN was expanded to nothing and
+>/../lib is just /lib. And Solaris /lib directory contains old
+>libraries, like zLib 1.2.8 and Bzip 1.0.6. zLib 1.2.8 and Bzip 1.0.6
+>have CVEs against them. So rather than use the new zLib and Bzip in
+>$HOME/tmp/ok2delete/lib, Perl uses the old ones with CVEs in /lib.
 
-:)
+The current version shipped with Solaris are zlib 1.2.11  and bzip2 1.0.8.
 
-But it's hard to debunk facts like a new server will experience a
-break-in attempt within 3 minutes of being hung off the internet. It's
-a very repeatable experiment. And all the evidence is in the log
-files. (I think I have half of China and Europe banned through
-iptables).
 
-> "Software vendor stops breaking the driver ABI on
-> supported operating systems" would get a lot farther.  Suggesting this
-> generally results in an earth-shattering avalanche of excuses about how
-> hard programming is.
+>Perl stated they won't fix the problem. Also see
+>https://github.com/Perl/perl5/issues/17534.
+>
+>The best workarounds I have found is to run patchelf (Linux) or
+>editelf (Solaris) on all programs and libraries after 'make' and
+>before 'make check', and after 'make check' and before 'make install'.
+>The procedure has to happen twice because Perl rebuilds some things
+>after 'make', including some shared objects built during 'make check'.
 
-Jeff
+There is another possible solution on Solaris by setting the following 
+variables in the environment:
+
+	LD_UNSET="-R/../lib"    (drops -R/../lib; multiple options can be
+				 given)
+
+	LD_OPTIONS='-R$ORIGIN/../lib' (multiple options possible here too)
+
+/tmp$  cc foo.c -o foo -R/fuz -R/bar -R/blah
+/tmp$ dump -Lv foo | grep RPATH
+[5]     RPATH           /fuz:/bar:/blah
+/tmp$  LD_OPTIONS=-R/foo/bar LD_UNSET="-R/fuz -R/bar"  cc foo.c -o foo -R/fuz -R/bar -R/blah
+ld: warning: unsetting option '-R/fuz': LD_UNSET directed
+ld: warning: unsetting option '-R/bar': LD_UNSET directed
+/tmp$ dump -Lv foo | grep RPATH                                                 [5]     RPATH           /foo/bar:/blah
+
+Casper
+
