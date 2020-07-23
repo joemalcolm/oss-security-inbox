@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/4
-Message-ID: <CA+-U7QAbjc5H+0TD_ZAOgod57N9XU8YRoAB=kxJKE1GLr3F5HA@mail.gmail.com>
-Date: Tue, 8 Dec 2020 15:30:30 +0800
-From: - Nop <nopitydays@...il.com>
-To: John Haxby <john.haxby@...cle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/23/7
+Message-ID: <20200723220124.GA23394@openwall.com>
+Date: Fri, 24 Jul 2020 00:01:24 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: "Alban Crequy (Kinvolk)" <alban@...volk.io>, volkerdi@...ckware.com
+Subject: Re: Flatcar membership on the linux-distros list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Jul 23, 2020 at 01:44:46PM -0600, Jeff Law wrote:
+> On Thu, 2020-07-23 at 20:45 +0200, Solar Designer wrote:
+> > OK.  It looks like we'll add Flatcar as soon as an existing member
+> > vouches for you.
 
-CVE-2020-27830 has been assigned to this issue.
+> In what way do you need someone to vouch for Vincent?
 
-Regards,
-Bodong
+This requirement is currently loosely specified as:
 
-On Mon, Dec 7, 2020 at 6:23 PM John Haxby <john.haxby@...cle.com> wrote:
+"Have someone already on the private list, or at least someone else who
+has been active on oss-security for years but is not affiliated with
+your distro nor your organization, vouch for at least one of the people
+requesting membership on behalf of your distro (then that one
+vouched-for person will be able to vouch for others on your team, in
+case you'd like multiple people subscribed)"
 
->
->
-> > On 7 Dec 2020, at 02:20, Shisong Qin <qinshisong1205@...il.com> wrote:
-> >
-> > Recently we found another NULL-ptr deref BUG in spk_ttyio.c in the latest
-> > Linux kernel(5.9.11 is the latest at that now). In the
-> > spk_ttyio_receive_buf2() function, it would dereference spk_ttyio_synth
-> > without checking whether it is NULL or not, and may lead to a NULL-ptr
-> > deref crash.
->
-> Did you ask for a CVE for bug?
->
-> jch
->
+So someone who's on (linux-)distros "or at least someone else who has
+been active on oss-security for years but is not affiliated" should
+state in here that they vouch for Vincent.  They may optionally make
+this more specific (yet convincing) if they like, but that isn't
+required.
 
+Alexander
