@@ -1,85 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/30/4
-Message-ID: <87k0ylgff0.fsf@oldenburg2.str.redhat.com>
-Date: Thu, 30 Jul 2020 18:01:55 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, x86-64-abi@...glegroups.com, kernel-hardening@...ts.openwall.com
-Cc: Szabolcs Nagy <szabolcs.nagy@....com>
-Subject: Alternative CET ABI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/23/8
+Message-ID: <218e3919b8d7666c70e024d08acf668f855c314c.camel@redhat.com>
+Date: Thu, 23 Jul 2020 16:19:03 -0600
+From: Jeff Law <law@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Alban Crequy (Kinvolk)" <alban@...volk.io>, volkerdi@...ckware.com
+Subject: Re: Flatcar membership on the linux-distros list
 Content-Type: text/plain; charset=utf-8
 
-CET (and Arm BTI) restrict targets for indirect jumps and calls to
-landing pads which start with specially-formatted NOP instruction
-dedicated to this purpose (endrb64 in the x86-64 case).
+On Fri, 2020-07-24 at 00:01 +0200, Solar Designer wrote:
+> On Thu, Jul 23, 2020 at 01:44:46PM -0600, Jeff Law wrote:
+> > On Thu, 2020-07-23 at 20:45 +0200, Solar Designer wrote:
+> > > OK.  It looks like we'll add Flatcar as soon as an existing member
+> > > vouches for you.
+> > In what way do you need someone to vouch for Vincent?
+> 
+> This requirement is currently loosely specified as:
+> 
+> "Have someone already on the private list, or at least someone else who
+> has been active on oss-security for years but is not affiliated with
+> your distro nor your organization, vouch for at least one of the people
+> requesting membership on behalf of your distro (then that one
+> vouched-for person will be able to vouch for others on your team, in
+> case you'd like multiple people subscribed)"
+> 
+> So someone who's on (linux-)distros "or at least someone else who has
+> been active on oss-security for years but is not affiliated" should
+> state in here that they vouch for Vincent.  They may optionally make
+> this more specific (yet convincing) if they like, but that isn't
+> required.
+So I'm no longer affiliated with Vincent since he's left Red Hat and I'm not
+affiliated with flatcar at all.  We loosely worked together at Red Hat and I'll
+certainly vouch for Vincent.
 
-The traditional way of implementing ELF on top of this is to have every
-global function start with that NOP, and also use these NOPs in PLT
-stubs in the main program (which may provide the canonical address of
-functions, i.e. there address may be taken).
+I'm not sure how long I've been on oss-security, but I was the primary designer
+and implementor of the stack-clash mitigations for GCC and consultant for the
+LLVM stack-clash mitigations, as well as Red Hat's lead on the compiler side of
+spectre mitigations.
 
-The downside of this approach is that all functions in the process
-become available for execution, whether they are used in the original
-program or not.  (In principle, control flow integrity provides
-reasonably efficient ways to counteract that, by keeping track of symbol
-resolution and verifying flags at the start of critical functions, but
-we do not have automated support for that today, and there are some open
-issues about complex call graphs.)
-
-CET has a NOTRACK prefix for indirect jumps/and calls.  It asserts that
-the jump target address is trusted and disables the control flow
-integrity check.  It is expected to be used with jump tables and the
-like, in conjunction with RELRO (so that the address has been loaded
-from read-only memory).
-
-I think this also provides support for a completely different ABI, where
-global functions are not automatically addressable.  It depends on
-BIND_NOW and RELRO, for a read-only GOT.
-
-First of all, it needs new relocation types that tell the static link
-editor which symbol references are address-significant.  Generally,
-function addresses which end up in RELRO data only are not
-address-significant if they are used immediately in call instructions
-(without indirection of any form through writable memory).  This means
-that direct calls do not have address significance.  For vtables, it
-depends on how they are used; their function addresses probably need to
-be treated conservatively as address-significant (because the vtable
-pointer is in writable memory; at least for C++ vtables, the address of
-a virtual member function is not significant).
-
-Functions no longer start with the ENDBR64 prefix.  Instead, the link
-editor produces a PLT entry with an ENDBR64 prefix if it detects any
-address-significant relocation for it.  The PLT entry performs a NOTRACK
-jump to the target address.  This assumes that the target address is
-subject to RELRO, of course, so that redirection is not possible.
-Without address-significant relocations, the link editor produces a PLT
-entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
-perhaps no PLT entry at all.
-
-The net effect is that only functions which have their address taken in
-the original program can be called through indirect function calls.  For
-example, this means that the system function in libc is usually dormant,
-and cannot be reached, even if an attacker can cause the process to call
-arbitrary functions with an arbitrary string argument.  The reason is
-that the system function lacks the ENDBR64 prefix, and all PLT entries
-calling it also lack it.
-
-dlopen'ing a shared object which has a address-significant relocation
-against a function is not a problem under this model.  Either there
-already was an address-significant relocation before, then the function
-already has a canonical address, and that can be used.  Or there was
-not, then the just-loaded PLT entry (which as an ENDBR64 prefix)
-provides the canonical address function.
-
-To support dlsym, each global function definition would have a separate
-ENDBR64-enabled PLT/GOT slot for that, with the GOT slot only filled in
-at the time of the dlsym call (with mprotect calls around that, with
-some hand-waving required these can never fail).  This is probably the
-most awkward part about all this.  Alternatively, these stubs could also
-be generated at run time, from a pre-computed code page.
-
-Obviously, it is too late for that now for x86-64, but maybe someone
-else gets a chance to try this.
-
-Thanks,
-Florian
+Hope that helps,
+Jeff
 
