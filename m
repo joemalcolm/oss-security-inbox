@@ -1,59 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/30/1
-Message-ID: <20201130090941.GA11303@f195.suse.de>
-Date: Mon, 30 Nov 2020 10:09:41 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: kdeconnect: CVE-2020-26164: multiple security issues in kdeconnectd network daemon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/23/4
+Message-ID: <CAHp2X_S_3DC00CE8Yt_RkY+dhYH-BJX2sj9EzP_ip9Sp2T+DJQ@mail.gmail.com>
+Date: Thu, 23 Jul 2020 14:06:14 -0400
+From: Vincent Batts <vbatts@...volk.io>
+To: oss-security@...ts.openwall.com,  "Alban Crequy (Kinvolk)" <alban@...volk.io>
+Cc: volkerdi@...ckware.com
+Subject: Re: Flatcar membership on the linux-distros list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Jul 20, 2020 at 2:36 PM Solar Designer <solar@...nwall.com> wrote:
 
-On Tue, Oct 13, 2020 at 02:29:12PM +0200, Matthias Gerstner wrote:
-> following is a security review report concerning kdeconnect [1].
+> Hi Vincent,
+>
+> I intentionally didn't hurry to comment on this, hoping that others
+> would comment first.  I would still appreciate more comments by others.
+>
+> On Tue, Jul 14, 2020 at 02:20:07PM -0400, Vincent Batts wrote:
+> > Using the
+> >
+> https://oss-security.openwall.org/wiki/mailing-lists/distros#membership-criteria
+> > I???m outlining why Flatcar Container Linux ought to be on the
+> linux-distros
+> > list.
+>
+> Thanks.  Much of this looks convincing to me, but here are some comments:
+>
 
-this is an amendment to my original report. Upstream wanted to keep this
-private until they had something to address it. Originally I raised the
-following additional concern:
+👍
 
-    ## General Observations and Recommendations
-      
-    ### Pairing Procedure
-    
-    The pairing procedure currently seems lacking. The GUI component only presents
-    the friendly 'deviceName' to identify peer devices, which is completely under
-    attacker control. Furthermore the 'deviceName' is transmitted in cleartext in
-    UDP broadcast messages for all other nodes in the network segment to see.
-    Therefore malicious devices can attempt to confuse users by requesting a
-    pairing under the same 'deviceName' to gain access to a system.
-    
-    I strongly suggest to introduce a secure procedure here, like displaying the
-    certificate fingerprint to the user.
 
-Upstream addresses this now [1]. A sha256 fingerprint of the
-concatenated public keys of the two involved certificates is displayed.
-I'm not completely happy with the chosen solution, because in the
-initial popup only a prefix of 8 hex digits of the fingerprint is
-displayed. The full fingerprint is only reachable via an additional
-"view key" button. There are no additional instructions for the end user
-and no explanation about the severity of trusting a device. At least in
-theory it is now possible to do a proper peer device verification.
+> > We have already been a participant on oss-security for some time and are
+> > active in a number of communities. Glad to participate.
+>
+> Vincent, as far as I could find, you personally have subscribed to
+> oss-security 2 months ago, and I couldn't find anyone else from Flatcar
+> Linux subscribed.  (Maybe people are with personal addresses that I
+> didn't associate with Flatcar Linux.)
+>
 
-Other discussed approaches to make the verification more user friendly
-and/or more secure would have been:
+For sure.
+While I personally have been near the core of a couple of distributions, I
+never was involved in the contributing-side with oss-security or vendor-sec.
+2 months ago I joined the Kinvolk team, and now squarely involved in this
+aspect.
+As for security disclosure overlap, there will now be a decent overlap with
+an operating system component being containers. As I facilitate and lead
+the Open Containers Initiative (OCI) security list, which hosts code like
+runc, specifications and API definitions for container registries.
+https://github.com/opencontainers/.github/blob/master/SECURITY.md
 
-- displaying a randomart image in the fashion of ssh-keygen.
-- scanning a QR code displayed on the PC end using the kdeconnect
-  Android app.
-- requiring the user to enter (at least part of) the fingerprint on the
-  PC end to force proper user interaction. Since the pairing procedure
-  should not occur very often and given the importance of verifying
-  device identity this would have been justified.
 
-[1]: https://github.com/KDE/kdeconnect-kde/commit/e7518493df7398f27f7dffbfc3f79750bc1fda50
+> I also found only this one posting to Openwall lists by you:
+>
+> https://www.openwall.com/lists/kernel-hardening/2017/02/03/38
+>
+> This is good, but it's not a lot.
+>
+> What I see on the Flatcar Linux website is more convincing, but maybe
+> you can point us at specific examples of community participation by you
+> personally and/or by others at Flatcar Linux?
+>
 
-Cheers
+Alban Crequy (CC'ed) who is on the team has had interactions (which
+pre-date flatcar):
+https://seclists.org/oss-sec/2015/q2/722
+https://seclists.org/oss-sec/2014/q3/4
 
-Matthias
+Otherwise, the majority of contributions are involved in the respective
+upstreams of the projects.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+
+> > > Be able and willing to contribute back (see above), preferably in
+> > specific ways announced in advance (so that you're responsible for a
+> > specific area and so that we know what to expect from which member), and
+> > demonstrate actual contributions once you've been a member for a while
+> >
+> > There are a number of the items we will do through the course of normal
+> > process (review, test, validate, monitor for issues going public). As for
+> > owning or being a backup, I expect that would be a consideration after
+> > being a member for a period.
+>
+> As I recall other applications to join the linux-distros list since we
+> introduced this contribute-back requirement, distros volunteered for
+> some tasks right away, not "after being a member for a period."  What
+> you say makes sense, but would be a deviation from the practice so far.
+> I'd appreciate not needing to make an exception for you.
+>
+
+Yeah, no worries! We can begin immediately with:
+* Check if related issues exist in implementations of similar functionality
+in other software
+* Promptly review new issue reports for meeting the list's requirements and
+confirm receipt of the report and, when necessary, inform the reporter of
+any issues with their report
+
+The number of packages in distro is drastically reduced, and we'll be on
+this.
+
+
+> > Pat Volkerding can vouch for me (CC???ed), and maybe others, but I asked
+> > volkerdi first :-)
+>
+> We haven't yet heard from Pat Volkerding.  Given your LinkedIn profile,
+> I guess someone from Red Hat could vouch for you as well.
+>
+
+Pat operates at his time. :-)
+I was not heavily involved on this team at RH, but am asking there and a
+few others as well.
+
+
+> Alexander
+>
+
+
+-- 
+
+Vincent Batts
+
+CTO
+
+
+---
+Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
+Geschäftsführer/Directors: Alban Crequy, Chris Kühl, Iago López Galeiras
+Registergericht/Court of registration: Amtsgericht Charlottenburg
+Registernummer/Registration number: HRB 171414 B
+Ust-ID-Nummer/VAT ID number: DE302207000
+
