@@ -1,31 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/9
-Message-ID: <CAH8yC8kJ1VST96SB9=v2DC4djfa-NfTBN1dL29ZuOFbVGzOF2w@mail.gmail.com>
-Date: Mon, 12 Oct 2020 16:51:11 -0400
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/23/3
+Message-ID: <20200723115645.GA20752@openwall.com>
+Date: Thu, 23 Jul 2020 13:56:45 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 12, 2020 at 4:32 PM Kurt H Maier <khm@...ops.net> wrote:
->
-> On Mon, Oct 12, 2020 at 09:41:39PM +0200, Solar Designer wrote:
-> > I also think the defaults should be changed, and not only on Debian.
->
-> This is just kicking the can down the road.  X years ago people
-> complained about oppressive defaults.  X years from now these defaults
-> will also be insufficient.   We could save a lot of treadmill labor
-> dollars by just admitting that global filesystem namespaces are a
-> mistake, but the sunk cost fallacy is preventing this.  It's the same
-> story as SETUID all over again.
+On Thu, Jul 23, 2020 at 01:51:17PM +0530, Mohammad Tausif Siddiqui wrote:
+> I think the ball is on the CNA: Hackerone side to get it published to
+> MITRE, so that they can show it up on their page.
+> 
+> CNAs are provided with weekly reports by the root CNA: MITRE, which lists
+> Reserved But Public "RBP" CVEs owned by that CNA, irrespective of whether
+> the CVE was assigned on distros list or elsewhere. That closes the reminder
+> loop.
+> 
+> There's no pull request for CVE-2020-8177 at
+> https://github.com/CVEProject/cvelist/pulls
+> We cannot determine if they used the alternative, web form:
+> https://cveform.mitre.org/
+> 
+> You may want to reach Hackerone from the CNA contacts
+> <https://cve.mitre.org/cve/request_id.html#cna_participants>, for this
+> exception of delay.
 
-Maybe it's time to take a more defensive posture and guide a user
-through the setup if they wish. Nowadays you've got those
-systemd-triggered first-time logon GUI wizards that could include a
-step to setup file sharing, like making /home/loser/www available to
-other users.
+Most of the above is once again too specific to the given CVE ID,
+whereas we need a general understanding of whether the task Xiao
+proposes and volunteers for is worthwhile or not.  I'd appreciate a
+direct answer to that.
 
-The defensive posture should keep security conscious folks happy, and
-the setup wizard will keep promiscuous users happy.
+Do I interpret this paragraph correctly as implying the answer is no? -
 
-Jeff
+> CNAs are provided with weekly reports by the root CNA: MITRE, which lists
+> Reserved But Public "RBP" CVEs owned by that CNA, irrespective of whether
+> the CVE was assigned on distros list or elsewhere. That closes the reminder
+> loop.
+
+In other words, CNAs receive their reminders from MITRE weekly, so
+there's no need for anyone else reminding them, correct?  However, can
+it happen that MITRE wouldn't recognize a CVE ID as "Reserved But
+Public", continuing to treat it as merely reserved, in which case there
+would be no reminder to correct that?  Could Xiao help with this?
+
+Alexander
