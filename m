@@ -1,101 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/10/1
-Message-ID: <b4f1aa2a-e7bf-4a5b-e6fd-df43bb52a1e3@igalia.com>
-Date: Fri, 10 Jul 2020 13:25:18 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0006
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/23/5
+Message-ID: <20200723184514.GA22802@openwall.com>
+Date: Thu, 23 Jul 2020 20:45:14 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: "Alban Crequy (Kinvolk)" <alban@...volk.io>, volkerdi@...ckware.com
+Subject: Re: Flatcar membership on the linux-distros list
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0006
-------------------------------------------------------------------------
+On Thu, Jul 23, 2020 at 02:06:14PM -0400, Vincent Batts wrote:
+> On Mon, Jul 20, 2020 at 2:36 PM Solar Designer <solar@...nwall.com> wrote:
+> > Vincent, as far as I could find, you personally have subscribed to
+> > oss-security 2 months ago, and I couldn't find anyone else from Flatcar
+> > Linux subscribed.  (Maybe people are with personal addresses that I
+> > didn't associate with Flatcar Linux.)
+> 
+> For sure.
+> While I personally have been near the core of a couple of distributions, I
+> never was involved in the contributing-side with oss-security or vendor-sec.
+> 2 months ago I joined the Kinvolk team, and now squarely involved in this
+> aspect.
+> As for security disclosure overlap, there will now be a decent overlap with
+> an operating system component being containers. As I facilitate and lead
+> the Open Containers Initiative (OCI) security list, which hosts code like
+> runc, specifications and API definitions for container registries.
+> https://github.com/opencontainers/.github/blob/master/SECURITY.md
 
-Date reported           : July 10, 2020
-Advisory ID             : WSA-2020-0006
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0006.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0006.html
-CVE identifiers         : CVE-2020-9802, CVE-2020-9803, CVE-2020-9805,
-                          CVE-2020-9806, CVE-2020-9807, CVE-2020-9843,
-                          CVE-2020-9850, CVE-2020-13753.
+Quite some overlap with (linux-)distros in the approach you use to
+pre-public-disclosure handling of security issues, indeed.  One notable
+difference is you don't appear to have a maximum embargo time.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+> Alban Crequy (CC'ed) who is on the team has had interactions (which
+> pre-date flatcar):
+> https://seclists.org/oss-sec/2015/q2/722
+> https://seclists.org/oss-sec/2014/q3/4
 
-CVE-2020-9802
-    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
-    Credit to Samuel Groß of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A logic issue was addressed
-    with improved restrictions.
+Oh, as I understand from your e-mail signature, Alban is one of your
+company's directors.  If so, I do find it convincing for Flatcar Linux's
+membership that one of your directors has personally contributed to
+security vulnerability discovery and handling.
 
-CVE-2020-9803
-    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
-    Credit to Wen Xu of SSLab at Georgia Tech.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved validation.
+> Otherwise, the majority of contributions are involved in the respective
+> upstreams of the projects.
 
-CVE-2020-9805
-    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    universal cross site scripting. Description: A logic issue was
-    addressed with improved restrictions.
+Such contributions are relevant, too.
 
-CVE-2020-9806
-    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
-    Credit to Wen Xu of SSLab at Georgia Tech.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved state management.
+> > As I recall other applications to join the linux-distros list since we
+> > introduced this contribute-back requirement, distros volunteered for
+> > some tasks right away, not "after being a member for a period."  What
+> > you say makes sense, but would be a deviation from the practice so far.
+> > I'd appreciate not needing to make an exception for you.
+> 
+> Yeah, no worries! We can begin immediately with:
+> * Check if related issues exist in implementations of similar functionality
+> in other software
 
-CVE-2020-9807
-    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
-    Credit to Wen Xu of SSLab at Georgia Tech.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved state management.
+Great.  Ubuntu already signed up as primary for this task, so Flatcar
+can be backup.
 
-CVE-2020-9843
-    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
-    Credit to Ryan Pickren (ryanpickren.com).
-    Impact: Processing maliciously crafted web content may lead to a
-    cross site scripting attack. Description: An input validation issue
-    was addressed with improved input validation.
+> * Promptly review new issue reports for meeting the list's requirements and
+> confirm receipt of the report and, when necessary, inform the reporter of
+> any issues with their report
 
-CVE-2020-9850
-    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
-    Credit to @jinmo123, @setuid0x0_, and @insu_yun_en of @SSLab_Gatech
-    working with Trend Micro’s Zero Day Initiative.
-    Impact: A remote attacker may be able to cause arbitrary code
-    execution. Description: A logic issue was addressed with improved
-    restrictions.
+This one already has both a primary and a backup.  So unless you choose
+another second task for you (that doesn't already have two distros
+signed up for it), you'll initially be just a backup for "Check if
+related issues exist in ... other software", which is fine.
 
-CVE-2020-13753
-    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3
-    Credit to Milan Crha at Red Hat.
-    The bubblewrap sandbox of WebKitGTK and WPE WebKit, prior to 2.28.3,
-    failed to properly block access to CLONE_NEWUSER and the TIOCSTI
-    ioctl. CLONE_NEWUSER could potentially be used to confuse xdg-
-    desktop-portal, which allows access outside the sandbox. TIOCSTI can
-    be used to directly execute commands outside the sandbox by writing
-    to the controlling terminal's input buffer, similar to
-    CVE-2017-5226.
+> The number of packages in distro is drastically reduced, and we'll be on
+> this.
 
+I don't understand this comment and its relevance, but nevermind.
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+> > > Pat Volkerding can vouch for me (CC???ed), and maybe others, but I asked
+> > > volkerdi first :-)
+> >
+> > We haven't yet heard from Pat Volkerding.  Given your LinkedIn profile,
+> > I guess someone from Red Hat could vouch for you as well.
+> 
+> Pat operates at his time. :-)
+> I was not heavily involved on this team at RH, but am asking there and a
+> few others as well.
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+OK.  It looks like we'll add Flatcar as soon as an existing member
+vouches for you.
 
-The WebKitGTK and WPE WebKit team,
-July 10, 2020
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+Alexander
