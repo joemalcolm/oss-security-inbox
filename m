@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2614" "Wednesday" "17" "June" "2015" "07:44:11" "-0700" "Tristan Cacqueray" "tdecacqu@redhat.com" "<558187BB.2010107@redhat.com>" "91" "[oss-security] [OSSA 2015-011.1] Cinder host file disclosure through qcow2 backing file (CVE-2015-1851) ERRATA 1" nil nil nil "6" "2015061714:44:11" "[oss-security] [OSSA 2015-011.1] Cinder host file disclosure through qcow2 backing file (CVE-2015-1851) ERRATA 1" (number mark "        tdecacqu@red Jun 17   91/2614  " thread-indent "\"[oss-security] [OSSA 2015-011.1] Cinder host file disclosure through qcow2 backing file (CVE-2015-1851) ERRATA 1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1558" "Thursday" "23" "July" "2020" "16:19:03" "-0600" "Jeff Law" "law@redhat.com" nil "33" nil "^Cc:" nil nil "7" nil nil (number mark "        law@redhat.c Jul 23   33/1558  " thread-indent "\"Re: [oss-security] Flatcar membership on the linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Flatcar membership on the linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21895 invoked by uid 550); 17 Jun 2015 14:44:01 -0000
+Received: (qmail 29942 invoked by uid 550); 23 Jul 2020 22:19:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,109 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21866 invoked from network); 17 Jun 2015 14:44:00 -0000
-Message-ID: <558187BB.2010107@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+Received: (qmail 29924 invoked from network); 23 Jul 2020 22:19:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1595542747;
+	h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=A0s8SJiNNaQrGWnwyYCIh8X3zXggqZGgWGDdwEnflL4=;
+	b=aqmBjiJvAIH1xMSCPRezJkCV5rVRkPKmyBlVv4QzC1q9yDfZsIbbA3Gdi6gxref2PJZLJH
+	ZB7LHikCvfd33OlyMSRgAiL2nmHC2SeZk9CrftxrQnfFPwZ62kbYz9h8d7hoN0t3NJ3lqV
+	G9kUXZq0E0Z9EanLiqgSXnZOiO2xs5o=
+X-MC-Unique: U5jDcKLyM-i6mVvRjKihlg-1
+Message-ID: <218e3919b8d7666c70e024d08acf668f855c314c.camel@redhat.com>
+In-Reply-To: <20200723220124.GA23394@openwall.com>
+References: 
+	<CAHp2X_Q=2=8qauHjTQRqUOdfUxW5s7pypwLYBwpNQ5yFyE4p+w@mail.gmail.com>
+	 <20200720183532.GA11008@openwall.com>
+	 <CAHp2X_S_3DC00CE8Yt_RkY+dhYH-BJX2sj9EzP_ip9Sp2T+DJQ@mail.gmail.com>
+	 <20200723184514.GA22802@openwall.com>
+	 <ec15f352a25a3322ca1feb435266b53b1901d340.camel@redhat.com>
+	 <20200723220124.GA23394@openwall.com>
+Organization: Red Hat
+User-Agent: Evolution 3.36.3 (3.36.3-1.fc32)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="LBKvMViCCl5mBJCfA6r4BdAc12AGE0wmx"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Date: Wed, 17 Jun 2015 07:44:11 -0700
-From: Tristan Cacqueray <tdecacqu@redhat.com>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: "Alban Crequy (Kinvolk)" <alban@kinvolk.io>, volkerdi@slackware.com
+Date: Thu, 23 Jul 2020 16:19:03 -0600
+From: Jeff Law <law@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [OSSA 2015-011.1] Cinder host file disclosure through qcow2 backing
- file (CVE-2015-1851) ERRATA 1
+Subject: Re: [oss-security] Flatcar membership on the linux-distros list
 To: oss-security@lists.openwall.com
 
---LBKvMViCCl5mBJCfA6r4BdAc12AGE0wmx
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On Fri, 2020-07-24 at 00:01 +0200, Solar Designer wrote:
+> On Thu, Jul 23, 2020 at 01:44:46PM -0600, Jeff Law wrote:
+> > On Thu, 2020-07-23 at 20:45 +0200, Solar Designer wrote:
+> > > OK.  It looks like we'll add Flatcar as soon as an existing member
+> > > vouches for you.
+> > In what way do you need someone to vouch for Vincent?
+> 
+> This requirement is currently loosely specified as:
+> 
+> "Have someone already on the private list, or at least someone else who
+> has been active on oss-security for years but is not affiliated with
+> your distro nor your organization, vouch for at least one of the people
+> requesting membership on behalf of your distro (then that one
+> vouched-for person will be able to vouch for others on your team, in
+> case you'd like multiple people subscribed)"
+> 
+> So someone who's on (linux-)distros "or at least someone else who has
+> been active on oss-security for years but is not affiliated" should
+> state in here that they vouch for Vincent.  They may optionally make
+> this more specific (yet convincing) if they like, but that isn't
+> required.
+So I'm no longer affiliated with Vincent since he's left Red Hat and I'm not
+affiliated with flatcar at all.  We loosely worked together at Red Hat and I'll
+certainly vouch for Vincent.
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2015-011.1: Cinder host file disclosure through qcow2 backing file
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+I'm not sure how long I've been on oss-security, but I was the primary designer
+and implementor of the stack-clash mitigations for GCC and consultant for the
+LLVM stack-clash mitigations, as well as Red Hat's lead on the compiler side of
+spectre mitigations.
 
-:Date: June 16, 2015
-:CVE: CVE-2015-1851
+Hope that helps,
+Jeff
 
-
-Affects
-~~~~~~~
-- Cinder: versions through 2014.1.4,
-          and 2014.2 versions through 2014.2.3,
-          and version 2015.1.0
-
-
-Description
-~~~~~~~~~~~
-Bastian Blank from credativ reported a vulnerability in Cinder. By
-overwriting an image with a malicious qcow2 header, an authenticated
-user may mislead Cinder upload-to-image action, resulting in
-disclosure of any file from the Cinder server. All Cinder setups are
-affected.
-
-
-Errata
-~~~~~~
-CVE-2015-1850 has been assigned to a similar issue in Nova, the
-correct CVE number for Cinder is CVE-2015-1851.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/191871 (Icehouse)
-- https://review.openstack.org/191865 (Juno)
-- https://review.openstack.org/191786 (Kilo)
-- https://review.openstack.org/191785 (Liberty)
-
-
-Credits
-~~~~~~~
-- Bastian Blank from Credativ (CVE-2015-1851)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1415087
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-1851
-
-
-Notes
-~~~~~
-- This fix will be included in future 2014.1.5 (icehouse), 2014.2.4
-  (juno) and 2015.1.1 (kilo) releases.
-
-
-OSSA History
-~~~~~~~~~~~~
-- 2015-06-17 - Errata 1
-- 2015-06-16 - Original Version
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
---LBKvMViCCl5mBJCfA6r4BdAc12AGE0wmx
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBAgAGBQJVgYe8AAoJECK5oFySXMXYyRwIAIk09bWsv4m/C71lyrHRcSkg
-uZxyCRbXzy9Q5/gbw2Zdsedomqmah/zH9dFth1V31wb7tKw1Q+asyoUaglpg7xEO
-Ua39uNlkUyzzKFUKsW7LFy4Xh/JSI87MyVPiCACfSW+VxxPdK4Mod4CMLqbMb35Z
-i9fQyhgVWWZz2kNOtYhI3YQK12a5cCjpPY6+6+bU3uVOp7qKCswUjK1Hyxq4ODv/
-zRIiNne/CxK1m3xEkbqghVTaRfLM3WFd/mzoYtpAyMkJZS8h8JG42hA+R9g4EiCq
-/SdcEni98KNKbhjR/UBYsmfszDh4vLBPOSeYHGNe4yWbUPwHEjeuyGSoy0Lz3tw=
-=AdQK
------END PGP SIGNATURE-----
-
---LBKvMViCCl5mBJCfA6r4BdAc12AGE0wmx--
