@@ -1,4 +1,9 @@
-Received: (qmail 30246 invoked by uid 550); 11 Apr 2024 18:35:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["492" "Friday" "24" "July" "2020" "09:18:13" "+0200" "Greg KH" "greg@kroah.com" nil "13" nil "^Cc:" nil nil "7" nil nil (number mark "        greg@kroah.c Jul 24   13/492   " thread-indent "\"Re: [oss-security] Flatcar membership on the linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Flatcar membership on the linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 6014 invoked by uid 550); 24 Jul 2020 07:18:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,82 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19559 invoked from network); 11 Apr 2024 18:31:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1712860305;
-	bh=Zk6ut21mnKAFLwo/WiWATs2dP2jwliV/O9CeCArGc7Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Zbipt+/lihXBF1urbyyNiDZUVuDvSQ+jevMGiiC+I4OwqiDmS9SmGIKq7HLAHpTn4
-	 FovF3xphVnuPJAWDOQIELW6Lq7TV5/PUayr8JR96bActLTyAQy8Eeg+K1/Bfr0JPpB
-	 ig7ziNpzCPe3re21wI5oUpuDxSJE2+DaZPKUJw3vd02VN9Ay4C5wrFGDyDsfO3ROd/
-	 0s7tz5cyAMD9gtfLLW2a6nB/aumZjSxeZ2Mpr/p8V4SnYSUm642LMeusqIZn/QO/bP
-	 VVcQqg9/LSVpHjlYFNh/uObMG0Mb9p69XHyjzqZdnWPn/H41GZ2m7XVNfPKA16AErk
-	 fXU8mCyFYE1dw==
-Date: Thu, 11 Apr 2024 20:31:42 +0200
-From: "Yann E. MORIN" <yann.morin.1998@free.fr>
-To: Ben Hutchings <ben.hutchings@mind.be>
-Cc: buildroot@buildroot.org, oss-security@lists.openwall.com
-Message-ID: <ZhgsjkTpLfChnX_U@landeda>
-References: <20240411152016.1185109-1-ben.hutchings@mind.be>
+Received: (qmail 5993 invoked from network); 24 Jul 2020 07:18:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm1; bh=CrZvR6fqf/rstbtss8isb7UKRei
+	lsmx1+71Za1HSwN0=; b=U+l0zlc+5rM/uFiCIRwRNpIE6otNpFwd38xNImu+bvO
+	buJlWkWgFMFnSHc70GC3/bzzHlkntMUpuIj4QF5MG/upy2mngAaO6VvbRmOrvEgx
+	ByTyAflbSjbaiTQmY55Taxt2waBuN0QjDWpji6xJxN39BRGzOqA+D3U9TCvBIGMq
+	sK3PA+7M9QGqvyGM9cI5LLdkscysj1dER0KXf2VgRgIlOEtedvLSJlnhchbD0fOB
+	HDW/92z0cD9oOEXVHscBSyy0P/TArfgwgkTAuOPAaklEy4UHyUN7ow3zPSThRyQc
+	KqBDtg2gGoJ72lFVO4kkX7HqGC05L4l2YraOf+hNHZA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=CrZvR6
+	fqf/rstbtss8isb7UKReilsmx1+71Za1HSwN0=; b=WsTAWuGiRb+r4q7GG7dmm3
+	CrFJ/k86p0yL6hUkGNTJeneL3ip446cbEzpY151ZGcv4uSr4trZv7sYWENAW6efI
+	ZoOFAUZo9SCO8SgJIB0o6eXisDA5Vm8uHO2BiackcJgPe4zzJFBRnJ89JGBqweCe
+	igHaSRTml81jR9Yd4N/vzN3uG+Tk28lm7h2OxIIXAx59pegTGRpAlxlB4Qt3Zum1
+	VN7em+G1bfM7SMa7s3DoVjshEkknKrweUfYT7lwko4ZXfJWWiJRP0Z2nsnUTqwcP
+	zLlDmg7fn99BooqHjLBpK/may4nX6hYKHIq6fTCyYfbNUAHWr94TlbPHHC5yaGqQ
+	==
+X-ME-Sender: <xms:M4saX0_DC-9vNWdA-upF5_QXT6tY7PoSqUjvwSfnkuAI_WP9yk19ww>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrhedvgdduudegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefirhgvghcu
+    mffjuceoghhrvghgsehkrhhorghhrdgtohhmqeenucggtffrrghtthgvrhhnpeevueehje
+    fgfffgiedvudekvdektdelleelgefhleejieeugeegveeuuddukedvteenucfkphepkeef
+    rdekiedrkeelrddutdejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhm
+X-ME-Proxy: <xmx:M4saX8s-RTB1Iy-XY7G_3EehyxsVlR3-ex-e5HHrG-yRUzkfdRpl0g>
+    <xmx:M4saX6B2aqiJDrwnZnJagZXwyoifaGumvGYACNekD--yXLcf61GOVg>
+    <xmx:M4saX0euS7yQ222RVES0fLIIk4N_78x3ILCvWlCHdwaGiiuWoRSq-Q>
+    <xmx:NIsaXwZgCNO6yitZu8e9Z_y5zJbeoLOPKQmWv-oeGzneaBa7s9GNMw>
+Message-ID: <20200724071813.GC3948185@kroah.com>
+References: <CAHp2X_Q=2=8qauHjTQRqUOdfUxW5s7pypwLYBwpNQ5yFyE4p+w@mail.gmail.com>
+ <20200720183532.GA11008@openwall.com>
+ <CAHp2X_S_3DC00CE8Yt_RkY+dhYH-BJX2sj9EzP_ip9Sp2T+DJQ@mail.gmail.com>
+ <20200723184514.GA22802@openwall.com>
+ <ec15f352a25a3322ca1feb435266b53b1901d340.camel@redhat.com>
+ <20200723220124.GA23394@openwall.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240411152016.1185109-1-ben.hutchings@mind.be>
-Subject: [oss-security] Re: [Buildroot] [PATCH] package/skeleton-init-sysv: Set sticky bit
- on /dev/shm
+In-Reply-To: <20200723220124.GA23394@openwall.com>
+Cc: "Alban Crequy (Kinvolk)" <alban@kinvolk.io>, volkerdi@slackware.com
+Date: Fri, 24 Jul 2020 09:18:13 +0200
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Flatcar membership on the linux-distros list
+To: oss-security@lists.openwall.com
 
-Ben, All,
+On Fri, Jul 24, 2020 at 12:01:24AM +0200, Solar Designer wrote:
+> So someone who's on (linux-)distros "or at least someone else who has
+> been active on oss-security for years but is not affiliated" should
+> state in here that they vouch for Vincent.  They may optionally make
+> this more specific (yet convincing) if they like, but that isn't
+> required.
 
-On 2024-04-11 17:20 +0200, Ben Hutchings via buildroot spake thusly:
-> /dev/shm is a world-writable directory, like /tmp, and should also
-> have the sticky bit set.  Without this, any user can delete and
-> replace another user's files in /dev/shm.
+I think I meet this requirement, and have known Vincent for a number of
+years and would be glad to "vouch" for him.
 
-Indeed, good catch!
+thanks,
 
-> This bug has been present since /dev/shm was added to the skeleton
-> /etc/fstab, but appears to have been fixed for systems using systemd
-> by commit 76fc9275f14e "system: separate sysv and systemd parts of the
-> skeleton" which went into Buildroot 2017.08.
-> 
-> Signed-off-by: Ben Hutchings <ben.hutchings@mind.be>
-> Fixes: 22fde22e35f98f7830c2f8955465532328348cd1
-
-Applied to master, thanks.
-
-Regards,
-Yann E. MORIN.
-
-> ---
->  package/skeleton-init-sysv/skeleton/etc/fstab | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/package/skeleton-init-sysv/skeleton/etc/fstab b/package/skeleton-init-sysv/skeleton/etc/fstab
-> index 169054b74f..06c20fe9d5 100644
-> --- a/package/skeleton-init-sysv/skeleton/etc/fstab
-> +++ b/package/skeleton-init-sysv/skeleton/etc/fstab
-> @@ -2,7 +2,7 @@
->  /dev/root	/		ext2	rw,noauto	0	1
->  proc		/proc		proc	defaults	0	0
->  devpts		/dev/pts	devpts	defaults,gid=5,mode=620,ptmxmode=0666	0	0
-> -tmpfs		/dev/shm	tmpfs	mode=0777	0	0
-> +tmpfs		/dev/shm	tmpfs	mode=1777	0	0
->  tmpfs		/tmp		tmpfs	mode=1777	0	0
->  tmpfs		/run		tmpfs	mode=0755,nosuid,nodev	0	0
->  sysfs		/sys		sysfs	defaults	0	0
-> -- 
-> 2.39.2
-> 
-> _______________________________________________
-> buildroot mailing list
-> buildroot@buildroot.org
-> https://lists.buildroot.org/mailman/listinfo/buildroot
-
--- 
-.-----------------.--------------------.------------------.--------------------.
-|  Yann E. MORIN  | Real-Time Embedded | /"\ ASCII RIBBON | Erics' conspiracy: |
-| +33 662 376 056 | Software  Designer | \ / CAMPAIGN     |  ___               |
-| +33 561 099 427 `------------.-------:  X  AGAINST      |  \e/  There is no  |
-| http://ymorin.is-a-geek.org/ | _/*\_ | / \ HTML MAIL    |   v   conspiracy.  |
-'------------------------------^-------^------------------^--------------------'
+greg k-h
