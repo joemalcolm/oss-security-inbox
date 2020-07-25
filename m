@@ -1,67 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/04/3
-Message-ID: <20200604105637.GA275582@espresso.pseudorandom.co.uk>
-Date: Thu, 4 Jun 2020 11:56:37 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/25/1
+Message-ID: <20200725113654.GA2141@openwall.com>
+Date: Sat, 25 Jul 2020 13:36:54 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-12049: dbus: denial of service via file descriptor leak
+Subject: Re: Flatcar membership on the linux-distros list
 Content-Type: text/plain; charset=utf-8
 
-References: CVE-2020-12049, GHSL-2020-057, dbus#294.
+On Fri, Jul 24, 2020 at 09:18:13AM +0200, Greg KH wrote:
+> On Fri, Jul 24, 2020 at 12:01:24AM +0200, Solar Designer wrote:
+> > So someone who's on (linux-)distros "or at least someone else who has
+> > been active on oss-security for years but is not affiliated" should
+> > state in here that they vouch for Vincent.  They may optionally make
+> > this more specific (yet convincing) if they like, but that isn't
+> > required.
+> 
+> I think I meet this requirement, and have known Vincent for a number of
+> years and would be glad to "vouch" for him.
 
-dbus is the reference implementation of D-Bus, a user-space IPC mechanism
-originating from freedesktop.org and commonly used on Linux and other
-Unix systems.
+Thank you Randy, Jeff, Greg for supporting Vincent's request.  I've just
+subscribed Vincent to linux-distros for Flatcar Container Linux.
 
-Kevin Backhouse of the GitHub Security Lab discovered a denial of service
-vulnerability[0] in dbus >= 1.3.0. An unprivileged local attacker can cause
-the system dbus-daemon (dbus-daemon --system) to leak file descriptors
-(fds) by sending messages with a number of fds that exceeds the allowed
-number, resulting in truncation. The attacker's connection is (correctly)
-disconnected, but the fds that were attached to the truncated message
-are (incorrectly) not closed. By repeating this process, the attacker
-can make the dbus-daemon reach its RLIMIT_NOFILE limit. When this limit
-is reached, new connections will fail, and existing connections will be
-unable to send messages with fds attached, causing denial of service.
-
-The same attack is also possible in the uncommon situation where processes
-of different privilege levels communicate directly using a private D-Bus
-socket (DBusServer) without going via a dbus-daemon.
-
-In the development branch, this has been fixed[1] in version 1.13.16.
-Older releases are vulnerable, except where noted below.
-
-In the stable branch 1.12.x, this has been fixed in version 1.12.18.
-This is the recommended version of dbus for production use and for
-long-term-stable operating systems.
-
-In the old stable branch 1.10.x, this has been fixed in version 1.10.30.
-This branch is maintained for the benefit of older long-term-stable
-operating systems such as Debian 9, and will reach end-of-life soon[2].
-
-Older stable branches such as 1.8.x have reached end-of-life and will
-not receive upstream releases to fix this. Upgrading is recommended.
-However, the patch used in supported versions[1] is believed to be
-suitable for third-party backports to older releases.
-
-We have received a report[3] that in at least OmniOS (a
-Solaris/OpenSolaris/illumos derivative), the solution that was committed
-causes a regression due to differences in the behaviour of SCM_RIGHTS
-between Linux and OmniOS. This is under investigation. On non-Linux
-operating systems such as BSD and Solaris, before deploying a fixed
-version, package maintainers should try running the 'test-fdpass'
-test case to confirm whether their OS kernel has the Linux-like or
-OmniOS-like behaviour. This test-case requires building dbus with the
---enable-modular-tests configure option, with GLib development files
-available; GLib is only used for the automated tests, and is not a
-dependency of the parts of dbus used in production.
-
-[0] https://gitlab.freedesktop.org/dbus/dbus/-/issues/294
-[1] https://gitlab.freedesktop.org/dbus/dbus/-/commit/872b085f12f56da25a2dbd9bd0b2dff31d5aea63
-[2] https://lists.freedesktop.org/archives/dbus/2020-June/017873.html
-[3] https://gitlab.freedesktop.org/dbus/dbus/-/issues/304
-
--- 
-Simon McVittie, Collabora Ltd. / Debian
-dbus security contact:
-https://gitlab.freedesktop.org/dbus/dbus/-/blob/master/CONTRIBUTING.md#reporting-security-vulnerabilities
+Alexander
