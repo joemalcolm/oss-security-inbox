@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/8
-Message-ID: <20201208223558.GF3381169@millbarge>
-Date: Tue, 8 Dec 2020 22:35:58 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Robert Watson <robertcwatson1@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/28/3
+Message-ID: <20200728185914.GE4053562@gmail.com>
+Date: Tue, 28 Jul 2020 11:59:14 -0700
+From: Eric Biggers <ebiggers@...nel.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: [CVE-2020-14331] Linux Kernel: buffer over write in vgacon_scrollback_update
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 08, 2020 at 05:18:04PM -0500, Robert Watson wrote:
-> Question from a retired programmer but security novice... Since fuzzing is
-> used to find bugs in other programs, doesn't it need to be held to a bit
-> higher standard in order to maintain credibility?
+On Tue, Jul 28, 2020 at 11:16:55AM +0800, 张云海 wrote:
+> There is a buffer over write in drivers/video/console/vgacon.c in
+> vgacon_scrollback_update.
+> 
+> The issue is reported by Yunhai Zhang / NSFOCUS Security Team
+> <zhangyunhai@...ocus.com>, CVE-2020-14331 assigned via Red Hat.
+> 
+> # Affected Versions
+> The issue is found and tested on 5.7.0-rc6.
+> The issue is introduced in commit:
+> 15bdab959c9bb909c0317480dd9b35748a8f7887 ([PATCH] vgacon: Add support
+> for soft scrollback)
+> According to code review, all versions older than
+> 92ed301919932f777713b9172e525674157e983d (v5.8-rc7) are affected.
 
-The output from fuzzers is a large body of inputs (or programs, in the
-case of syzkaller) that directly demonstrate the problem in the program
-being fuzzed.
+Thanks for the writeup.  Note that there are many open syzbot reports in the
+fbdev, vt, and vgacon kernel subsystems.  These subsystems aren't actively
+maintained (receiving drive-by fixes only), and the kernel developers recommend
+to not enable these subsystems if you care about security
+(https://lkml.kernel.org/lkml/CAKMK7uF5zZH3CaHueWsLR96-AzT==wP8=MpymTqx-T+SRsXWHA@mail.gmail.com/).
 
-The generated inputs can be used separately from the fuzzing framework.
-Many are only useful when combined with sanitizers, or debug builds,
-or similar efforts to turn errors into something visible (corrupting
-the stack may not be visible directly, for example). It's unfortunate
-that this step is required, and I have seen maintainers not interested
-in taking fixes that are "only visible with ubsan", for example, but
-this attitude is thankfully rare.
+This particular bug, for example, appears to have been already found by someone
+running syzkaller and publicly reported over 2 years ago, with a C reproducer:
+(https://lkml.kernel.org/lkml/CAEAjamsJnG-=TSOwgRbbb3B9Z-PA63oWmNPoKYWQ=Z=+X49akg@mail.gmail.com/).
+No one did anything.
 
-Developers can keep these example inputs for their test suites, CI /
-CD systems, etc, and make sure that their programs don't fail on these
-inputs in the future, too.
+I suggest that people relying on the security of these kernel subsystems
+contribute resources to fixing the many known fuzzing bugs in them.
 
-This does put a lot of trust into the sanitizers but compilers tend to
-have pretty good test suites. Afterall, they, too, are fuzzed, and
-automated tooling like csmith, creduce, delta, cvise, and probably more,
-can help find minimal test cases.
-
-The most difficult part of working with fuzzers, in my opinion, is that
-it can take a long time to figure out the cause of a crash or sanitizer
-alert. Often finding the causes, or to propose a fix, takes longer than
-finding issues.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+- Eric
