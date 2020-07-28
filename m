@@ -1,91 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/14/4
-Message-ID: <CAKYuF5RQZeCwKHYZmEZd2Hj43e9DOcJx7yCHy530bcn3o22REw@mail.gmail.com>
-Date: Tue, 14 Jan 2020 10:16:45 -0500
-From: Jorge Lucangeli Obes <jorgelo@...gle.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: Kees Cook <kees@...ntu.com>, oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership adjustment/vouching
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/28/1
+Message-ID: <c7838a1a-1894-4679-06fb-23006f526bdc@windriver.com>
+Date: Tue, 28 Jul 2020 10:46:22 +0800
+From: Zhang Xiao <xiao.zhang@...driver.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Cc: xiao.zhang@...driver.com
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jan 12, 2020 at 12:47 PM Solar Designer <solar@...nwall.com> wrote:
->
-> Hi,
->
-> On Fri, Jan 10, 2020 at 12:52:41PM -0800, Kees Cook wrote:
-> > I've been a member of linux-distros for a long while, and my hat has
-> > slowly changed over that time. I'm subscribed there (and here) as
-> > kees@...ntu.com.  When I my responsibilities shifted from the Ubuntu
-> > Security Team to the Chrome OS Security Team, I just kept the email
-> > address (since it's a community address and I'm still part of the Ubuntu
-> > community).
-> >
-> > However, as my responsibilities have shifted, I'm much less involved
-> > with the Chrome OS Security Team, and it was recently pointed out that
-> > no one else from the Chrome OS Security Team is (to our knowledge)
-> > a member right now.
-> >
-> > So, attempting to solve things in a backwards order, I'd like to first
-> > vouch for a Chrome OS Security Team member who is already on oss-security,
-> > with the goal of having them added to the linux-distros list:
-> >
-> >     Jorge Lucangeli Obes <jorgelo@...gle.com>
->
-> Given the above, I'd be happy to subscribe Jorge for Chrome OS.  I just
-> need Jorge's PGP key.  I also suggest using an e-mail address not on
-> Google's MX'es, because those reject messages sent from domains with
-> strict DMARC policy (most notably, when another Googler posts).
->
 
-Thanks all. I'm actually on oss-security with my chromium.org account
-(jorgelo@...omium.org), let me figure out (before EoW for sure) what
-email will be best suited for this and send the associated PGP key.
+在 2020/7/23 下午7:56, Solar Designer 写道:
+> On Thu, Jul 23, 2020 at 01:51:17PM +0530, Mohammad Tausif Siddiqui wrote:
+>> I think the ball is on the CNA: Hackerone side to get it published to
+>> MITRE, so that they can show it up on their page.
+>>
+>> CNAs are provided with weekly reports by the root CNA: MITRE, which lists
+>> Reserved But Public "RBP" CVEs owned by that CNA, irrespective of whether
+>> the CVE was assigned on distros list or elsewhere. That closes the reminder
+>> loop.
+>>
+>> There's no pull request for CVE-2020-8177 at
+>> https://github.com/CVEProject/cvelist/pulls
+>> We cannot determine if they used the alternative, web form:
+>> https://cveform.mitre.org/
+>>
+>> You may want to reach Hackerone from the CNA contacts
+>> <https://cve.mitre.org/cve/request_id.html#cna_participants>, for this
+>> exception of delay.
+> Most of the above is once again too specific to the given CVE ID,
+> whereas we need a general understanding of whether the task Xiao
+> proposes and volunteers for is worthwhile or not.  I'd appreciate a
+> direct answer to that.
+>
+> Do I interpret this paragraph correctly as implying the answer is no? -
+>
+>> CNAs are provided with weekly reports by the root CNA: MITRE, which lists
+>> Reserved But Public "RBP" CVEs owned by that CNA, irrespective of whether
+>> the CVE was assigned on distros list or elsewhere. That closes the reminder
+>> loop.
+> In other words, CNAs receive their reminders from MITRE weekly, so
+> there's no need for anyone else reminding them, correct?  However, can
+> it happen that MITRE wouldn't recognize a CVE ID as "Reserved But
+> Public", continuing to treat it as merely reserved, in which case there
+> would be no reminder to correct that?  Could Xiao help with this?
 
-> Normally such subscription changes for an already subscribed distro are
-> handled off-list.  However, what you bring up below deserves being
-> discussed on oss-security:
->
-> > Then I'd like to figure out what to do with my own membership. I'm
-> > still associated with Ubuntu, Chrome OS, and Android but I don't have
-> > "official" responsibilities as a representative of their respective
-> > security teams. I am, however, an upstream Linux kernel security contact
-> > (but that doesn't qualify as a "Unix-like operating system distro", from
-> > item "1" in the membership criteria[1]). I am still involved in fixing,
-> > notifying, negotiating, delegating, etc, in these various distros. Should
-> > I stay on linux-distros? I would prefer to (it makes that work simpler),
-> > but since there isn't any "criteria for continuing membership" on the
-> > Wiki, I'm not entirely sure what the right course of action should be.
->
-> I think it'd be most consistent with our criteria so far if (at least)
-> one of those distros' security teams does state that you'd represent
-> them.  Without that, you staying on linux-distros would be weird and
-> inconsistent with requirements we set for others.
->
+Till now both CVE-2020-8177 and CVE-2020-8169 are still "reserved". I
+believe it is valuable to remind them and I am glad to do it, but I just
+realize I don't know how to make it.
 
-Despite Kees' evolving responsibilities, I still consider (and trust)
-Kees to represent Chrome OS security. Moreover, organizationally Kees
-belongs to the same team as myself and the other Chrome OS security
-folks at Google, so I see no conflicts or contradictions here.
+I tried two methods but none of them works. Anyone can give me any
+advises to make it?
 
-> > (And if I stay, perhaps it would be more accurate to use kees@...nel.org?)
->
-> It'd be up to you to choose an e-mail address that's convenient for
-> you.  Messages are encrypted anyway, so this choice sort of does not
-> matter for security.  In practice, though, it does matter a little bit:
-> if you choose an e-mail address in a specific distro's domain name, then
-> if you ever leave their team and they disable that e-mail account you
-> wouldn't be getting the messages anymore (and they wouldn't be able to
-> read messages intended for you as well, due to the encryption to your
-> key), even if they forget to promptly ask for your address to be removed
-> from the list.  Despite of this minor security advantage, I don't insist
-> on use of such e-mail addresses so far, as I realize it's often far more
-> convenient to use an external e-mail address.
->
-> As to kernel.org, it isn't particularly relevant here since the Linux
-> kernel is not a Linux distro.  It's just an address you can use, just
-> like any other address.
->
+
+Thanks
+
+Xiao
+
+
 > Alexander
 
-Thanks,
-Jorge
+Download attachment "pEpkey.asc" of type "application/pgp-keys" (2461 bytes)
