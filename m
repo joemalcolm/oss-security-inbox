@@ -1,4 +1,9 @@
-Received: (qmail 24515 invoked by uid 550); 4 May 2026 16:08:07 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2831" "Wednesday" "29" "July" "2020" "14:58:39" "+0200" "Solar Designer" "solar@openwall.com" nil "59" nil "^Cc:" nil nil "7" nil nil (number mark "        solar@openwa Jul 29   59/2831  " thread-indent "\"Re: [oss-security] [CVE-2020-14331] Linux Kernel: buffer over write in vgacon_scrollback_update\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2020-14331] Linux Kernel: buffer over write in vgacon_scrollback_update" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7991 invoked by uid 550); 29 Jul 2020 12:59:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,92 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7770 invoked from network); 29 Jul 2020 12:58:45 -0000
+Message-ID: <20200729125839.GA14359@openwall.com>
+References: <c5e79bc3-3ca4-2e01-c7f0-2561ec7db4b2@nsfocus.com> <20200728185914.GE4053562@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200728185914.GE4053562@gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Cc: Yunhai Zhang <zhangyunhai@nsfocus.com>, Jiri Slaby <jslaby@suse.cz>
+Date: Wed, 29 Jul 2020 14:58:39 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30459 invoked from network); 4 May 2026 11:28:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=terraraq.uk
-	; s=20170701; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:Cc:From:
-	References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID
-	:Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:
-	Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe
-	:List-Post:List-Owner:List-Archive;
-	bh=tBmdN9nM21XdooaZ8gmyno2rI6P2c/1yIGXhBwGy2lk=; b=usNRXy+vgoHovG6qyJdJDjXbUY
-	oEEM1VQARXzOrXsvohB8WMCyMAfY/ySvxPI4hH/XV2EfXl9jBuf0fmTAiVbFyeBJfmZVwoVyuhuFQ
-	znL/DXZIov7YwgreDmzPU9uNw/VLnPdjIc1WX5M8gZ7ZsFvSeSuM7FkQgIzKk7Hlgz6VmLtdKtQRG
-	uGBu7U6SKP9KJRoLIxueYo3JU/w5t6i589mx8bffBDuE9UbgzmUr0zgP2unhaRgSwJcCxdH8VsAhb
-	jVsDmXZAbb5zBOTFFAsWPu1mPP9KFTI4mJqnf4ZgLvfXJbXMS+EkfRv4Zdf43VK1iM4ZjoMbTqaop
-	U0cCisKg==;
-Message-ID: <f0be2b33-4f27-489f-85d2-1dfe9826e022@terraraq.uk>
-Date: Mon, 4 May 2026 12:28:42 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
+Subject: Re: [oss-security] [CVE-2020-14331] Linux Kernel: buffer over write in vgacon_scrollback_update
 To: oss-security@lists.openwall.com
-References: <afJorKIje4O6dXbH@netmeister.org>
- <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net> <87se8dgicq.fsf@gentoo.org>
- <afL-QhLfEKqHZqka@eldamar.lan> <20260430071917.GB54208@sol>
- <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
- <cfe5a1f5-f7fe-44a5-8af9-8e4c8d68b3d7@terraraq.uk>
- <3a52a111-e961-4ac6-830c-31465a7d14de@gmail.com>
-From: Richard Kettlewell <rjk@terraraq.uk>
-Cc: demiobenour@gmail.com
-In-Reply-To: <3a52a111-e961-4ac6-830c-31465a7d14de@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Score: -2.9 (--)
-X-Spam-Report: Spam detection software, running on the system "mantic.terraraq.uk",
- has NOT identified this incoming email as spam.  The original
- message has been attached to this so you can view it or label
- similar future email.  If you have any questions, see
- postmaster@terraraq.uk for details.
- 
- Content analysis details:   (-2.9 points, 5.0 required)
- 
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
- -1.9 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-                             [score: 0.0000]
-Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
- scalation
 
-On 02/05/2026 23:32, Demi Marie Obenour wrote:
-> On 5/2/26 15:13, Richard Kettlewell wrote:
->> On 01/05/2026 16:30, Demi Marie Obenour wrote:
->>> On 4/30/26 03:19, Eric Biggers wrote:
->>>> But I also hope this finally provides some more impetus for AF_ALG to be
->>>> deprecated and removed.  It's a massive, largely pointless attack
->>>> surface which has been causing problems, including regular CVEs, ever
->>>> since it was added to the kernel in 2010.  And of course it's gotten
->>>> even worse lately, with LLMs now being able to find the bugs.
->>>>
->>>> Userspace crypto libraries exist.  There's no need to escalate to kernel
->>>> mode just to do some math.
->>>
->>> The only reason I can think of to keep it is for embedded systems
->>> with weak CPUs and crypto accelerators that are actually worth using.
->>> However, those seem to be very rare outside of things like routers,
->>> which run specialized distros like OpenWRT.  Even when the accelerator
->>> exists and is worth using, AF_ALG is certainly not an efficient way
->>> to access it.
->>
->> I have that use case, although fortunately it's in a context where
->> splice() is disabled. But the requirement is for access to the SoC's
->> accelerator - the interface doesn't need to be via AF_ALG in particular,
->> it doesn't have to offer software crypto (and it might be better if it
->> didn't), and it needn't be independent of the specific hardware
->> (although in the bigger picture it'd be a shame if it wasn't).
+On Tue, Jul 28, 2020 at 11:59:14AM -0700, Eric Biggers wrote:
+> On Tue, Jul 28, 2020 at 11:16:55AM +0800, ????????? wrote:
+> > There is a buffer over write in drivers/video/console/vgacon.c in
+> > vgacon_scrollback_update.
+> > 
+> > The issue is reported by Yunhai Zhang / NSFOCUS Security Team
+> > <zhangyunhai@nsfocus.com>, CVE-2020-14331 assigned via Red Hat.
+> > 
+> > # Affected Versions
+> > The issue is found and tested on 5.7.0-rc6.
+> > The issue is introduced in commit:
+> > 15bdab959c9bb909c0317480dd9b35748a8f7887 ([PATCH] vgacon: Add support
+> > for soft scrollback)
+
+That was in 2006.
+
+> > According to code review, all versions older than
+> > 92ed301919932f777713b9172e525674157e983d (v5.8-rc7) are affected.
 > 
-> Can you provide benchmarks showing that the accelerator is faster
-> than the CPU on realistic workloads?
+> Thanks for the writeup.  Note that there are many open syzbot reports in the
+> fbdev, vt, and vgacon kernel subsystems.  These subsystems aren't actively
+> maintained (receiving drive-by fixes only), and the kernel developers recommend
+> to not enable these subsystems if you care about security
+> (https://lkml.kernel.org/lkml/CAKMK7uF5zZH3CaHueWsLR96-AzT==wP8=MpymTqx-T+SRsXWHA@mail.gmail.com/).
+> 
+> This particular bug, for example, appears to have been already found by someone
+> running syzkaller and publicly reported over 2 years ago, with a C reproducer:
+> (https://lkml.kernel.org/lkml/CAEAjamsJnG-=TSOwgRbbb3B9Z-PA63oWmNPoKYWQ=Z=+X49akg@mail.gmail.com/).
+> No one did anything.
+> 
+> I suggest that people relying on the security of these kernel subsystems
+> contribute resources to fixing the many known fuzzing bugs in them.
 
-The consistent improvements in latency and throughput started around the 
-2Kbyte block size (10-20%) and improved as blocks grew, with around 50% 
-latency reduction and 150% throughput increase at 250Kbyte blocks (which 
-is close to our message size limit).
+Wow.  I suppose the biggest risk here is services that just happen to
+run on the console (or able to access it if they re-open /dev/tty) as a
+result of normal system startup.  Since an ioctl() is required at least
+to trigger CVE-2020-14331, at least this one is limited to attacks by
+someone who already got code execution within one of such services, but
+I suppose it could in some cases be used to gain ring 0 access from a
+non-root pseudo-user that the service (or even merely its privsep child)
+might run as.  If any other related issues are triggerable purely by
+terminal escapes codes, it's much worse - could even allow for remote
+attacks without a prior compromise of any service.
 
-Obviously this reflects the hardware we are using (which has no AES 
-support in the application cores), outcomes may differ on other targets.
+Do others see this same threat model or something different?  I think
+non-root users with intentional console access mounting attacks is less
+of a concern.
 
-ttfn/rjk
+Meanwhile, Jiri Slaby brought the discussion around fixing vgacon
+properly to LKML:
 
+https://lists.openwall.net/linux-kernel/2020/07/29/234
+
+The patch posted in this very first LKML message (with the added check
+before the loop) is already known to be insufficient - see the
+follow-ups.  The patch posted by Yunhai Zhang here on oss-security
+(with the added check in the loop) is still considered sufficient.
+
+Alexander
