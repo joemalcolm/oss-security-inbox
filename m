@@ -1,55 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/16/3
-Message-ID: <CAB8XdGDKLrUT5+TUT5c6Bsk2zr3ODLO1yYENMLGY5ctkgw_zPQ@mail.gmail.com>
-Date: Thu, 16 Jan 2020 14:05:19 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-12423] Apache CXF OpenId Connect JWK Keys service returns private/secret credentials if configured with a jwk keystore
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/30/8
+Message-ID: <CAMe9rOqnPJMC+d9cRTc-zHaj7Pp5JvW-Zfqxhy3M3P6zG_CE0A@mail.gmail.com>
+Date: Thu, 30 Jul 2020 10:14:10 -0700
+From: "H.J. Lu" <hjl.tools@...il.com>
+To: Florian Weimer <fweimer@...hat.com>
+Cc: Jann Horn <jannh@...gle.com>, oss-security@...ts.openwall.com,  x86-64-abi <x86-64-abi@...glegroups.com>,  Kernel Hardening <kernel-hardening@...ts.openwall.com>, Szabolcs Nagy <szabolcs.nagy@....com>
+Subject: Re: Alternative CET ABI
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-12423: Apache CXF OpenId Connect JWK Keys service returns
-private/secret credentials if configured with a jwk keystore
+On Thu, Jul 30, 2020 at 9:54 AM Florian Weimer <fweimer@...hat.com> wrote:
+>
+> * Jann Horn:
+>
+> > On Thu, Jul 30, 2020 at 6:02 PM Florian Weimer <fweimer@...hat.com> wrote:
+> >> Functions no longer start with the ENDBR64 prefix.  Instead, the link
+> >> editor produces a PLT entry with an ENDBR64 prefix if it detects any
+> >> address-significant relocation for it.  The PLT entry performs a NOTRACK
+> >> jump to the target address.  This assumes that the target address is
+> >> subject to RELRO, of course, so that redirection is not possible.
+> >> Without address-significant relocations, the link editor produces a PLT
+> >> entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
+> >> perhaps no PLT entry at all.
+> >
+> > How would this interact with function pointer comparisons? As in, if
+> > library A exports a function func1 without referencing it, and
+> > libraries B and C both take references to func1, would they end up
+> > with different function pointers (pointing to their respective PLT
+> > entries)?
+>
+> Same as today.  ELF already deals with this by picking one canonical
+> function address per process.
+>
+> Some targets already need PLTs for inter-DSO calls, so the problem is
+> not new.  It happens even on x86 because the main program can refer to
+> its PLT stubs without run-time relocations, so those determine the
+> canonical address of those functions, and not the actual implementation
+> in a shared object.
+>
+> > Would this mean that the behavior of a program that compares
+> > function pointers obtained through different shared libraries might
+> > change?
+>
+> Hopefully not, because that would break things quite horribly (as it's
+> sometimes possible to observe if the RTLD_DEEPBIND flag is used).
+>
+> Both the canonicalization and the fact in order to observe the function
+> pointer, you need to take its address should take care of this.
+>
+> > I guess you could maybe canonicalize function pointers somehow, but
+> > that'd probably at least break dlclose(), right?
+>
+> Ahh, dlclose.  I think in this case, my idea to generate a PLT stub
+> locally in the address-generating DSO will not work because the
+> canonical address must survive dlclose if it refers to another DSO.
+> There are two ways to deal with this: do not unload the PLT stub until
+> the target DSO is also unloaded (but make sure that the DSO can be
+> reloaded at a different address; probably not worth the complexity),
+> or use the dlsym hack I sketched for regular symbol binding as well.
+> Even more room for experiments, I guess.
+>
+> Thanks,
+> Florian
 
-Severity: Moderate
+FWIW, we can introduce a different CET PLT as long as it is compatible
+with the past, current and future binaries.
 
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-
-This vulnerability affects all versions of Apache CXF prior to 3.3.5 and
-3.2.12.
-
-Description:
-
-Apache CXF ships with a OpenId Connect JWK Keys service, which allows a
-client
-to obtain the public keys in JWK format, which can then be used to verify
-the
-signature of tokens issued by the service.
-
-Typically, the service obtains the public key from a local keystore
-(JKS/PKCS12) by specifing the path of the keystore and the alias of the
-keystore entry. This case is not vulnerable.
-
-However it is also possible to obtain the keys from a JWK keystore file, by
-setting the configuration parameter "rs.security.keystore.type" to "jwk".
-For
-this case all keys are returned in this file "as is", including all private
-key and secret key credentials.
-
-This is an obvious security risk if the user has configured the signature
-keystore file with private or secret key credentials.
-
-- From CXF 3.3.5 and 3.2.12, it is mandatory to specify an alias
-corresponding
-to the id of the key in the JWK file, and only this key is returned. In
-addition, any private key information is omitted by default. "oct" keys,
-which
-contain secret keys, are not returned at all.
-
-Mitigation:
-
-Users of Apache CXF that user the OpenId Connect JWK keys service as part of
-their OpenId Connect service should update to either the 3.3.5 or 3.2.12
-releases.
-
+-- 
+H.J.
