@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/02/4
-Message-ID: <ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>
-Date: Thu, 2 Jul 2020 17:33:20 +0800
-From: Zhang Xiao <xiao.zhang@...driver.com>
-To: oss-security@...ts.openwall.com
-Cc: xiao.zhang@...driver.com, Solar Designer <solar@...nwall.com>
-Subject: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/30/5
+Message-ID: <CAG48ez3OF7DPupKv9mBBKmg-9hDVhVe83KrJ4Jk=CL0nOc7=Jg@mail.gmail.com>
+Date: Thu, 30 Jul 2020 18:41:40 +0200
+From: Jann Horn <jannh@...gle.com>
+To: Florian Weimer <fweimer@...hat.com>
+Cc: oss-security@...ts.openwall.com, x86-64-abi@...glegroups.com,  Kernel Hardening <kernel-hardening@...ts.openwall.com>, Szabolcs Nagy <szabolcs.nagy@....com>
+Subject: Re: Alternative CET ABI
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+On Thu, Jul 30, 2020 at 6:02 PM Florian Weimer <fweimer@...hat.com> wrote:
+> Functions no longer start with the ENDBR64 prefix.  Instead, the link
+> editor produces a PLT entry with an ENDBR64 prefix if it detects any
+> address-significant relocation for it.  The PLT entry performs a NOTRACK
+> jump to the target address.  This assumes that the target address is
+> subject to RELRO, of course, so that redirection is not possible.
+> Without address-significant relocations, the link editor produces a PLT
+> entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
+> perhaps no PLT entry at all.
 
-I am an engineer of WindRiver. Thanks for Alexander's remind about the distribution and we would like to "backup" the first item of the administrative list:
-https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+How would this interact with function pointer comparisons? As in, if
+library A exports a function func1 without referencing it, and
+libraries B and C both take references to func1, would they end up
+with different function pointers (pointing to their respective PLT
+entries)? Would this mean that the behavior of a program that compares
+function pointers obtained through different shared libraries might
+change?
 
-1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date/time) /- primary: Oracle, backup: vacant /
-Please let me know how we get started helping out.
-
-And, I have another point want to discuss. As we know, sometimes, the CVE and NVD website don't upgrade their web page timely. For example:
-
-the security maillist had an encrypted mail called "curl: overwrite local file with -J" in 20200617. It was a "pre-notification about a security advisory about to ship next week in sync with our next curl release", for CVE-2020-8177. On curl's git tree, that very bug did been fixed and released in 20200621:
-https://github.com/curl/curl/commit/8236aba5854
-
-But, till now, both cve.mitre.org and nvd.nist.gov still mark this CVE as "RESERVED":
-https://nvd.nist.gov/vuln/detail/CVE-2020-8177
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177
-
-So I wonder if that is also an contribution to remind them, if so, any advises to make it? And If it ca be defined as an contribution, we can take it. :-)
-
-
-Thanks
-Xiao
-
-
-Content of type "text/html" skipped
-
-Download attachment "pEpkey.asc" of type "application/pgp-keys" (2461 bytes)
+I guess you could maybe canonicalize function pointers somehow, but
+that'd probably at least break dlclose(), right?
