@@ -1,60 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/10
-Message-ID: <958786245.110814.1589466390992@mail.yahoo.com>
-Date: Thu, 14 May 2020 14:26:30 +0000 (UTC)
-From: Andrea Cosentino <ancosen1985@...oo.com>
-To: "dev@...el.apache.org" <dev@...el.apache.org>,  "users@...el.apache.org" <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "Colm O. HEigeartaigh" <coheigea@...che.org>
-Subject: Re: [SECURITY] New security advisory CVE-2020-11972 released for Apache Camel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/30/7
+Message-ID: <20200730164713.GF24636@arm.com>
+Date: Thu, 30 Jul 2020 17:47:14 +0100
+From: Szabolcs Nagy <szabolcs.nagy@....com>
+To: Jann Horn <jannh@...gle.com>
+Cc: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com, x86-64-abi@...glegroups.com, Kernel Hardening <kernel-hardening@...ts.openwall.com>
+Subject: Re: Alternative CET ABI
 Content-Type: text/plain; charset=utf-8
 
-Let me add the credit too
+The 07/30/2020 18:41, Jann Horn wrote:
+> On Thu, Jul 30, 2020 at 6:02 PM Florian Weimer <fweimer@...hat.com> wrote:
+> > Functions no longer start with the ENDBR64 prefix.  Instead, the link
+> > editor produces a PLT entry with an ENDBR64 prefix if it detects any
+> > address-significant relocation for it.  The PLT entry performs a NOTRACK
+> > jump to the target address.  This assumes that the target address is
+> > subject to RELRO, of course, so that redirection is not possible.
+> > Without address-significant relocations, the link editor produces a PLT
+> > entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
+> > perhaps no PLT entry at all.
+>
+> How would this interact with function pointer comparisons? As in, if
+> library A exports a function func1 without referencing it, and
+> libraries B and C both take references to func1, would they end up
+> with different function pointers (pointing to their respective PLT
+> entries)? Would this mean that the behavior of a program that compares
 
-Credit: This issue was discovered by Colm O. HEigeartaigh <coheigea at apache dot org> from Apache Software Foundation
+ld.so only needs to generate one plt entry
+for a function in a process and that entry
+can provided the canonical address that is
+loaded from some got entry when the address
+is used, so there is double indirection, but
+it works.
 
---
-Andrea Cosentino 
-----------------------------------
-Apache Camel PMC Chair
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@...oo.com
-Twitter: @oscerd2
-Github: oscerd
-
-
-
-
-
-
-On Thursday, May 14, 2020, 04:24:12 PM GMT+2, Andrea Cosentino <ancosen1985@...oo.com.invalid> wrote: 
-
-
-
-
-
-A new security advisory has been released for Apache Camel, that is fixed in
-the recent 2.25.1 and 3.2.0 releases.
-
-CVE-2020-11972: Apache Camel RabbitMQ enables Java deserialization by default
-
-Severity: MEDIUM
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: Camel 2.25.0, Camel 3.0.0 to 3.1.0. The unsupported Camel 2.x (2.24 and earlier) versions may be also affected.
-
-Description: Apache Camel RabbitMQ enables Java deserialization by default
-
-Mitigation: 2.x users should upgrade to 2.25.1, 3.x users should upgrade to 3.2.0 The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-14711 refers to the various commits that resovoled the issue, and have more details.
-
-On behalf of the Apache Camel PMC
-
---
-Andrea Cosentino 
-----------------------------------
-Apache Camel PMC Chair
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@...oo.com
-Twitter: @oscerd2
-Github: oscerd
+> function pointers obtained through different shared libraries might
+> change?
+>
+> I guess you could maybe canonicalize function pointers somehow, but
+> that'd probably at least break dlclose(), right?
+IMPORTANT NOTICE: The contents of this email and any attachments are confidential and may also be privileged. If you are not the intended recipient, please notify the sender immediately and do not disclose the contents to any other person, use it for any purpose, or store or copy the information in any medium. Thank you.
