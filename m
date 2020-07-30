@@ -1,22 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/09/2
-Message-ID: <alpine.LRH.2.21.2004082122240.17854@mail.gathman.org>
-Date: Wed, 8 Apr 2020 21:26:07 -0400 (EDT)
-From: Stuart D Gathman <stuart@...hman.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/30/2
+Message-ID: <20200730114841.GA513718@zx2c4.com>
+Date: Thu, 30 Jul 2020 13:48:41 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack
+Subject: UEFI SecureBoot bypass fixes rolled out to kernels below radar
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 9 Apr 2020, Brian May wrote:
+Hi,
 
->> 1. The attacker could send various bogus session ids, starting with
->> all possible valid bytes. The database, if it uses a trie (yes,
->> strawman example - is it used by any real-world database?) as a data
->> structure to speed up looking up sessions, will terminate the
->> comparison early on invalid bytes, thus disclosing them.
+I thought I should mention that yesterday's UEFI SecureBoot bypass
+headlines neglected to mention the bugs I found over a month ago (with
+the exception of Debian's announcement, which got some details wrong
+initially but those have since been rectified).
 
-Not real-world as the number of installations is maybe 6 now, but
-the one I wrote removes leading duplicates from index records (replacing
-with a dup count).  I believe that timing the lookups could disclose
-bytes as described.  It's super efficient, though.  :-)
+It appears that Linux vendors are now releasing fixes for:
+
+- CVE-2019-20908
+  https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language.sh
+  https://www.openwall.com/lists/oss-security/2020/06/14/1
+  https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-20908
+
+- CVE-2020-15780
+  https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
+  https://www.openwall.com/lists/oss-security/2020/06/15/3
+  https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15780
+
+In the Red Hat Enterprise Linux 8 kernel sources, diffing yesterday's
+release with the one from a few weeks prior, we see a patch for both of
+these, which I've put at the bottom of this email.
+
+It seems like mention of these was left out from the advisories that
+were making news yesterday from Microsoft/Red Hat/etc, presumably
+because there's no shiny logo and press release route with these
+exploits, but rather just shoddy exploits and posted them here,
+alongside patches on LKML.
+
+But anyway, PSA: if you're scrambling to get your systems updated for
+this, be sure to update your kernel in addition to GRUB2. This is more
+than just a bootloader situation. And I'm sure we'll have plenty more
+SecureBoot bypasses coming up too.
+
+Jason
+
+
+RHEL8 patch, which shipped yesterday:
+
+diff -ru linux-4.18.0-193.13.2.el8_2/drivers/acpi/acpi_configfs.c linux-4.18.0-193.14.3.el8_2/drivers/acpi/acpi_configfs.c
+--- linux-4.18.0-193.13.2.el8_2/drivers/acpi/acpi_configfs.c	2020-07-14 00:38:37.000000000 +0200
++++ linux-4.18.0-193.14.3.el8_2/drivers/acpi/acpi_configfs.c	2020-07-20 16:02:22.000000000 +0200
+@@ -14,6 +14,7 @@
+ #include <linux/module.h>
+ #include <linux/configfs.h>
+ #include <linux/acpi.h>
++#include <linux/kernel.h>
+
+ #include "acpica/accommon.h"
+ #include "acpica/actables.h"
+@@ -31,7 +32,10 @@
+ {
+ 	const struct acpi_table_header *header = data;
+ 	struct acpi_table *table;
+-	int ret;
++	int ret = kernel_is_locked_down("Modifying ACPI tables");
++
++	if (ret)
++		return ret;
+
+ 	table = container_of(cfg, struct acpi_table, cfg);
+
+diff -ru linux-4.18.0-193.13.2.el8_2/drivers/firmware/efi/efi.c linux-4.18.0-193.14.3.el8_2/drivers/firmware/efi/efi.c
+--- linux-4.18.0-193.13.2.el8_2/drivers/firmware/efi/efi.c	2020-07-14 00:38:37.000000000 +0200
++++ linux-4.18.0-193.14.3.el8_2/drivers/firmware/efi/efi.c	2020-07-20 16:02:22.000000000 +0200
+@@ -31,6 +31,7 @@
+ #include <linux/acpi.h>
+ #include <linux/ucs2_string.h>
+ #include <linux/memblock.h>
++#include <linux/kernel.h>
+
+ #include <asm/early_ioremap.h>
+
+@@ -245,6 +246,11 @@
+ static char efivar_ssdt[EFIVAR_SSDT_NAME_MAX] __initdata;
+ static int __init efivar_ssdt_setup(char *str)
+ {
++	int ret = kernel_is_locked_down("Modifying ACPI tables");
++
++	if (ret)
++		return ret;
++
+ 	if (strlen(str) < sizeof(efivar_ssdt))
+ 		memcpy(efivar_ssdt, str, strlen(str));
+ 	else
+
 
