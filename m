@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1627" "Thursday" "3" "September" "2020" "20:13:34" "+0530" "Pramod Rana" "varchashva@gmail.com" "<CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>" "43" "[oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" "^Date:" nil nil "9" "2020090314:43:34" "[oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" (number mark "        varchashva@g Sep  3   43/1627  " thread-indent "\"[oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1142" "Thursday" "30" "July" "2020" "18:41:40" "+0200" "Jann Horn" "jannh@google.com" nil "20" nil "^Cc:" nil nil "7" nil nil (number mark "        jannh@google Jul 30   20/1142  " thread-indent "\"[oss-security] Re: Alternative CET ABI\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Alternative CET ABI" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3756 invoked by uid 550); 3 Sep 2020 14:48:37 -0000
+Received: (qmail 17816 invoked by uid 550); 30 Jul 2020 16:42:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1809 invoked from network); 3 Sep 2020 14:43:59 -0000
+Received: (qmail 15971 invoked from network); 30 Jul 2020 16:42:18 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=IqqeKqeFxmWBr9D17/8nErSKAi3Ng1dhXc95zQ9jzOU=;
-        b=TqzcaW/+WwUFAYeN+3Jq/Aqvc2Jm32GY59a1dErZqqc93s9oiYFXdVpZkZ6e5orMnK
-         XitOK6FKmeHG5ZN/k+KuA/RvPPqtu6Avobdf/DsIHZxqNT9BmUGxfnBi8h3Op9xgUUy0
-         xNfN03g44n5PnlEXtXQJCXLiifanITCeHNlLof78Kr1AJgOsy3PUIvu1ph3PhMJWbGVe
-         Z5C9MULKqkKYRIz2CbOVOEN21ObsBhN/r343LgxaU0iUU10aF90Su1T8A0GV3UgiyLTe
-         rmTO1vFqLH49WYvfBEDFrBfEpGPLErg8MwcgzVRrGUVFO9DidN0xjE9x3xtAl2zUaNBL
-         fDfA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uOgsUbAvtb07X2t6oCOXPaH/oAL+aoYjRmE457oKQVE=;
+        b=F/akzAAcghFkbb5rg2I+dUhbCLh5STTtsK7MimVF+Ch5DDzPABUu5CF+W+vBRvRLgS
+         ePuaSTbpwmciMZQHJEU47jnoOqSdnhckGm4nG13TjSQSQjX0gY0WbwBWahgzeVMpj/IM
+         b0eabTrV3OuLVQ/76ZO1iZziutwAD9nfjMcMldjskzEHHzFiVgTj1JGpoevduOyAc5JB
+         s9COTq/fxE+6qX0URVjIKtPxK+4JiFAGf5uCYqW8cFD/oi0MCSAC77+Kz7D4av0mRq1R
+         NjsxdcZHq3+X0fOJebWbt6A/XJZjnsbGjQ24sx5XtlhOAo0L5E3/MGOYiA2xOMKua07A
+         C9/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=IqqeKqeFxmWBr9D17/8nErSKAi3Ng1dhXc95zQ9jzOU=;
-        b=iK9w+YMQMIF9AVHriVaRrrEkJ8Q4maHdECIynK4YZVTBFSUADRjoUc21Mlu1usf/tm
-         pZ44YbEskqw6sOYjg4FK3ayaslR5Y368nAk+jWRthG/GkDxHmqc9/fAqwEAaUz7LgZH6
-         rzS1U54kMAoMfa06BgK4lAmKzyLYuzkq2ls4sfph9bavpFv38kLuoqgUn0wLmaztadcp
-         NAJgA4zKU8ROgeDpIavRTdQQ97HvGEEjwRGiQuMIVFrvKXTnfZ+v8RQrSF8oA73GbWdD
-         aqhRfDc4I9Q6peWV1O+BtNDEnw7o9NgEqfB7MQxSNxEeQbFjeN1Eb29YydbDrOQmS3Vm
-         zmiA==
-X-Gm-Message-State: AOAM533tYHrXmZaH8BMmwMyJXynIC6E4u2e30dz42Mu8pUtz3fwVxhsa
-	XeY4llpAjJgebeDRFQcli3aaKWiZfZqITCdMYaOpcSMxJA==
-X-Google-Smtp-Source: ABdhPJyrSr+SBQcaQAiESgWnqeH4WcFWp7MvF2ZVrAba263COm44J7xLsky0VbsLWYCRt7P5D/PyKR/TDYO1yk45NLg=
-X-Received: by 2002:a63:2d83:: with SMTP id t125mr3227414pgt.441.1599144225265;
- Thu, 03 Sep 2020 07:43:45 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uOgsUbAvtb07X2t6oCOXPaH/oAL+aoYjRmE457oKQVE=;
+        b=T9yqlTBjRKfGiKcHOaAE0VyAadSBEwPrd+p1KLUa69/nUAmgxsJDObxhrbWsfZ0bgu
+         EH+q71azrKKtoJ/uXR6rk18ykSUm14qo36Uz8PLc7tgM5dPXR2e+A5/VNNA5FskfkXQn
+         dq6qsHbBW9rsIR0MRW/Sa98sp2mXrq5UAGLd42Q1DQzp8aKlm8t9OJ5IsVGJbC3aUNmv
+         2HQAytSkWFJKSPzLwlmOyGxIVcJA9m1vnHYqOHVxBho5LYTaP+eBufaN3yWFmm2eop+K
+         ByuvAVi/yXYmD/PGUWEnuiGGXFb1ajvlTm05veEAE6l5SyZMNyBkeG3e8VG6ZvUtuh7N
+         Lsgg==
+X-Gm-Message-State: AOAM530/ErzPd+JbeQCp6dxebXUvWi7eivwZ0GqHu49salSfR9bBdQzw
+	+plc7u4U/1sxf2M2iknndoTqX6LUAASa3qvutEr0iw==
+X-Google-Smtp-Source: ABdhPJwqLir8etUYa8a7uyi48sMcY0xMDD9OCpUUEIzG6Kyrg5O2YRcXX3ofIoRkrkqEUCyjzA8TyGUPErzO0SL5fIc=
+X-Received: by 2002:a2e:9251:: with SMTP id v17mr66150ljg.138.1596127327122;
+ Thu, 30 Jul 2020 09:42:07 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000007ddb7b05ae69c7dd"
-Date: Thu, 3 Sep 2020 20:13:34 +0530
-From: Pramod Rana <varchashva@gmail.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework
-To: oss-security@lists.openwall.com
-
---0000000000007ddb7b05ae69c7dd
+References: <87k0ylgff0.fsf@oldenburg2.str.redhat.com>
+In-Reply-To: <87k0ylgff0.fsf@oldenburg2.str.redhat.com>
+Message-ID: <CAG48ez3OF7DPupKv9mBBKmg-9hDVhVe83KrJ4Jk=CL0nOc7=Jg@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Cc: oss-security@lists.openwall.com, x86-64-abi@googlegroups.com, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, Szabolcs Nagy <szabolcs.nagy@arm.com>
+Date: Thu, 30 Jul 2020 18:41:40 +0200
+From: Jann Horn <jannh@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Alternative CET ABI
+To: Florian Weimer <fweimer@redhat.com>
 
-It is no secret that today we have more vulnerabilities than we can assess
-and remediate, timely and comprehensively. Risk prioritization is a key
-component for any vulnerability management program. Implementing a good
-risk prioritization framework is easier said than done because of the
-variable nature of risk.
+On Thu, Jul 30, 2020 at 6:02 PM Florian Weimer <fweimer@redhat.com> wrote:
+> Functions no longer start with the ENDBR64 prefix.  Instead, the link
+> editor produces a PLT entry with an ENDBR64 prefix if it detects any
+> address-significant relocation for it.  The PLT entry performs a NOTRACK
+> jump to the target address.  This assumes that the target address is
+> subject to RELRO, of course, so that redirection is not possible.
+> Without address-significant relocations, the link editor produces a PLT
+> entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
+> perhaps no PLT entry at all.
 
-I am glad to introduce vPrioritizer, a small step towards effective risk
-prioritization. vPrioritizer enables us to understand the contextualized
-risk (vPRisk) on asset-vulnerability relationship level across the
-organization, for teams to make more informed decision about what
-(vulnerability/ties) they should remediate (or can afford not to) and on
-which (asset/s).
+How would this interact with function pointer comparisons? As in, if
+library A exports a function func1 without referencing it, and
+libraries B and C both take references to func1, would they end up
+with different function pointers (pointing to their respective PLT
+entries)? Would this mean that the behavior of a program that compares
+function pointers obtained through different shared libraries might
+change?
 
-
-To overcome above challenges, vPrioritizer is designed with primary
-objectives as below:
-
-   -
-
-   *Centralized* - must serve as single-pane-of-glass for vulnerability
-   management
-   -
-
-   *Automated* - any and every task which can be automated, must be
-   automated
-   -
-
-   *Community Analytics *- utilization of community analytics to mature the
-   prioritization algorithm over the period of time
-
-
-
-
-*References: 1. GitHub: https://github.com/varchashva/vPrioritizer
-<https://github.com/varchashva/vPrioritizer> 2. For more details:
-https://medium.com/@rana.miet/learn-to-say-no-to-almost-every-vulnerability-intro-to-vprioritizer-9b2aa15369a1
-<https://medium.com/@rana.miet/learn-to-say-no-to-almost-every-vulnerability-intro-to-vprioritizer-9b2aa15369a1>3.
-Demo: https://youtu.be/P9IDpfJDoxI <https://youtu.be/P9IDpfJDoxI>*
-
---0000000000007ddb7b05ae69c7dd--
+I guess you could maybe canonicalize function pointers somehow, but
+that'd probably at least break dlclose(), right?
