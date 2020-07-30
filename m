@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7730" "Saturday" "27" "January" "2018" "12:03:25" "+0000" "halfdog" "me@halfdog.net" "<2003-1517054605.235676@1C3y.fVz9.71eN>" "180" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018012712:03:25" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        me@halfdog.n Jan 27  180/7730  " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" "<20180124030215.ugiofq23lmyurwsa@dojo.mi.org>" "<BSTa0xkd6PUstoK62HXIf9i3UbZq_tCsSclHxAN7KTx3C1KFs-sF5C7ob4tsKCoYkw9Tb-axNViD4GKkd-VvX8g163zTLOvsngO4-M3jlus=@itk.swiss>" "<20180126171624.GA9007@openwall.com>" "<BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3101" "Thursday" "30" "July" "2020" "13:48:41" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" nil "87" nil "^Date:" nil nil "7" nil nil (number mark "        Jason@zx2c4. Jul 30   87/3101  " thread-indent "\"[oss-security] UEFI SecureBoot bypass fixes rolled out to kernels below radar\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] UEFI SecureBoot bypass fixes rolled out to kernels below radar" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29746 invoked by uid 550); 27 Jan 2018 12:10:07 -0000
+Received: (qmail 28411 invoked by uid 550); 30 Jul 2020 11:48:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,197 +11,109 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29728 invoked from network); 27 Jan 2018 12:10:06 -0000
-In-reply-to: <BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>
-References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com> <20180124030215.ugiofq23lmyurwsa@dojo.mi.org> <BSTa0xkd6PUstoK62HXIf9i3UbZq_tCsSclHxAN7KTx3C1KFs-sF5C7ob4tsKCoYkw9Tb-axNViD4GKkd-VvX8g163zTLOvsngO4-M3jlus=@itk.swiss>,<20180126171624.GA9007@openwall.com> <BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>
-Comments: In-reply-to Mikhail Utin <mikhailutin@hotmail.com>
-   message dated "Fri, 26 Jan 2018 17:48:14 +0000."
+Received: (qmail 28379 invoked from network); 30 Jul 2020 11:48:57 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:from:to
+	:subject:message-id:mime-version:content-type; s=mail; bh=M0+7uV
+	fv4tn0UKV0N9hNFhvS7t8=; b=e8GG1Kb3rfktzE5mFsivfJ40QF35wvCW5Zn1at
+	jsxRCTKi4B6a17KEsgD5YdDdE0GQjhI47KPEL6nun6nacuSHU9Xv4+OBqEQS7RmD
+	oPf6gTCt67zjIOcGPsuz9423rXD2cBL4xbjJW79MPxz7QwpO0h31Dkfc22CO5JfE
+	jKGIbvg6Tlfze64W1Hk7RdsAKhFpI0y/fo/eidXbUl4SDFohvk1mogOWQrUjY/iZ
+	FyPjRsHd8m2TwJ9MSn7dbBv1pywXMh2MMKBsuC2PE1fmKDQuRGKHWgDg6hJbmNb6
+	f0S7zJv9WTMZfnrZ0NVvoqQsPW+R4D5s+araFrhpfIOrFJTA==
+Message-ID: <20200730114841.GA513718@zx2c4.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="----- =_aaaaaaaaaa0"
-Message-ID: <2003-1517054605.235676@1C3y.fVz9.71eN>
-Date: Sat, 27 Jan 2018 12:03:25 +0000
-From: halfdog <me@halfdog.net>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Date: Thu, 30 Jul 2020 13:48:41 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
+Subject: [oss-security] UEFI SecureBoot bypass fixes rolled out to kernels below radar
 To: oss-security@lists.openwall.com
 
-------- =_aaaaaaaaaa0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Mikhail Utin wrote:
-> I 100% agree with Solar's response. We should not limit our
-> freedom to choose how we will handle our intellectual property.
+I thought I should mention that yesterday's UEFI SecureBoot bypass
+headlines neglected to mention the bugs I found over a month ago (with
+the exception of Debian's announcement, which got some details wrong
+initially but those have since been rectified).
 
-We should not limit our "effective freedom", that is limit the
-number of options we could direct our results or activities. As
-reality is a strange thing, our "effective freedom" in the long
-run can be reduced greatly by using "real freedom" at the beginning.
+It appears that Linux vendors are now releasing fixes for:
 
-OS example: take your "real freedom" to strace SUID-binaries and
-you lose the "effective freedom", what you could do with that
-binary if it would have kept its SUID properties.
+- CVE-2019-20908
+  https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language.sh
+  https://www.openwall.com/lists/oss-security/2020/06/14/1
+  https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-20908
 
-Disclosure example: If you take your "real freedom" to publish
-as you want, you will limit the "effective freedom" to evolve
-your ideas in a cooperative, stimulating environment, getting
-information earlier or unfiltered, get your results and solutions
-into the community faster and at a higher quality, ...
+- CVE-2020-15780
+  https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
+  https://www.openwall.com/lists/oss-security/2020/06/15/3
+  https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15780
 
+In the Red Hat Enterprise Linux 8 kernel sources, diffing yesterday's
+release with the one from a few weeks prior, we see a patch for both of
+these, which I've put at the bottom of this email.
 
+It seems like mention of these was left out from the advisories that
+were making news yesterday from Microsoft/Red Hat/etc, presumably
+because there's no shiny logo and press release route with these
+exploits, but rather just shoddy exploits and posted them here,
+alongside patches on LKML.
 
-Therefore rules describing how we limit or extend our own freedom
-seem to make sense to me. As pointed out, writing them under the
-term "ethics" might not be the right approach as it requires some
-wider concept of good and bad. But from my point of view, something
-else might make sense: defining a "code of conduct"
+But anyway, PSA: if you're scrambling to get your systems updated for
+this, be sure to update your kernel in addition to GRUB2. This is more
+than just a bootloader situation. And I'm sure we'll have plenty more
+SecureBoot bypasses coming up too.
 
-This code does not attempt to make a distinction if something
-is universially good or bad, it just declares how things are.
-I have the impression, that defining such codes in a somehow
-standardised way (boilerplate approach) for both sides, reporters
-and projects/vendors, may ease the collaboration and thus give
-both parties more "effective freedom".
-
-I took my "real freedom" to disgrace myself and attached an attempt
-to write a personal "code of conduct", see below. As there is
-no applicable international legal framework or en gros accepted
-certifications or standards, that is suitable to build trust in
-the person or organization behind such plain-text CoC-documents,
-trust should be generated by the community.
-
-Maybe heavyweight reputation management might be an overkill,
-but some involved parties may want a technical scheme to manage
-trust. Maybe something like signing code of conducts of other
-parties could be used for that, although I did not really develop
-that idea further, how that could be done technically. I usually
-assume, that standardizing a procedure is the real work, the tools
-to assist it are easy to find or create, as soon as a majority
-of parties are commited to move in the same direction. See the
-last paragraph of the attachment, for some kind of proposal.
-
-> That is how I read the original statements below.
->
-> Not to cause more discussion, but here is the example of how
-> "universal ethics" work:
->
-> https://www.theregister.co.uk/2018/01/25/intel_spectre_disclosed_flaws_no=
-vember/
-
-Spectre is a nice example, also from another perspective. Did someone
-compare e.g. the current wiki pages on Spectre/Meltdown with e.g.
-https://usn.ubuntu.com/usn/usn-3522-1/ ?
-
-Of course there are notorious "IT-security professionals", who
-just want to spread destruction in their name. But there are also
-ones, that just want to make a decent living from their skils or
-in research areas, want to be seen at some level to earn research
-grants (yes, universities have to get their funding also on the
-free market), keep their position at universities (publish or
-parish), ...
-
-Question: someone knowing both documents, what (correct or incorrect)
-conclusions he might draw and how would he adapt his disclosure
-strategy in future?
-
-In my opinion, without having a minimalistic underlying framework
-to build and leverage trust, irrational and risky behaviour might
-become the more effective strategy, not only for egoistic individuals
-but also those who want to play nice but have the feeling that
-they are losing grounds compared to the big ones. Hence this is
-also about managing "attribution" in a consistent way, as without
-other standards, you are only judged by your deeds (and what is
-known about them).
-
-hd
-
-> ________________________________ From: Solar Designer
-> <solar@openwall.com> Sent: Friday, January 26, 2018 12:16 To:
-> oss-security@lists.openwall.com Subject: Re: [oss-security]
-> How to deal with reporters who don't want their bugs fixed?
->
-> On Fri, Jan 26, 2018 at 10:23:49AM -0500, Stiepan wrote:
->> I think that clear rules might be welcome:
->
-> I agree (specifically, I had suggested explicit maximum embargo
-> times), but such rules must not be one and only industry standard.
->  Anyone or any project may propose rules, and other projects
-> are welcome to reuse those rules, but they must not have to
-> - they could as well use different rules, or none.  At best,
-> a relatively non-controversial and brief boilerplate could
-> end up being reused by many projects.
->
->> We as a profession should have a clear code of ethics
->
-> No.  Let's not use the word ethics.  That word, except when
-> explicitly referring to a particular person's or group's ethics,
-> implies that when we (dis)agree or are judging others, we claim
-> to be necessarily right - but in reality we're necessarily
-> subjective.
->
-> This would be just as flawed a concept/term as "responsible
-> disclosure". (I refrain from using that term as well, except
-> when pointing out just how unnecessarily judgemental it is
-> - implying that other kinds of disclosure would have been
-> "irresponsible" - but we're subjective.)
->
->> universal ethics' code
->
-> That's an oxymoron.  No such thing can possibly exist.
->
-> Alexander
-
-------- =_aaaaaaaaaa0
-Content-Type: text/plain;
-	name="SecurityResearcher-CodeOfConduct-LeisureResearcher.txt";
-	charset="us-ascii"
-Content-Description: SecurityResearcher-CodeOfConduct-LeisureResearcher.txt
-Content-Disposition: attachment;
-	filename="SecurityResearcher-CodeOfConduct-LeisureResearcher.txt"
-
-Introduction:
-=============
-
-This code of conduct defines the rules to be obeyed by a signer,
-who is doing his work without any planned economical benefit and
-for the pure pleasure of doing it, but avoiding any unneccessary
-harm for human society by the researcher's own ethical standards.
+Jason
 
 
-Code of Conduct:
-================
+RHEL8 patch, which shipped yesterday:
 
-* Knowledge about vulnerabilities may be used for private purposes,
-  e.g. learning, experimentation, PoC-development, but:
+diff -ru linux-4.18.0-193.13.2.el8_2/drivers/acpi/acpi_configfs.c linux-4.18.0-193.14.3.el8_2/drivers/acpi/acpi_configfs.c
+--- linux-4.18.0-193.13.2.el8_2/drivers/acpi/acpi_configfs.c	2020-07-14 00:38:37.000000000 +0200
++++ linux-4.18.0-193.14.3.el8_2/drivers/acpi/acpi_configfs.c	2020-07-20 16:02:22.000000000 +0200
+@@ -14,6 +14,7 @@
+ #include <linux/module.h>
+ #include <linux/configfs.h>
+ #include <linux/acpi.h>
++#include <linux/kernel.h>
 
-  * researcher will apply protection against data theft, accidential
-    disclosure, sufficient to address expected risks from disclosure.
+ #include "acpica/accommon.h"
+ #include "acpica/actables.h"
+@@ -31,7 +32,10 @@
+ {
+ 	const struct acpi_table_header *header = data;
+ 	struct acpi_table *table;
+-	int ret;
++	int ret = kernel_is_locked_down("Modifying ACPI tables");
++
++	if (ret)
++		return ret;
 
-  * the researcher will not keep vulnerability information private,
-    where the risks from leakage are to high compared to the level
-    of protection, he/she can guarantee.
+ 	table = container_of(cfg, struct acpi_table, cfg);
 
-  * the researcher will not pass on any information to public before
-    cordinated responsible disclosure procedure was attempted with
-    vendor or another suitable partner, e.g. software distributor.
+diff -ru linux-4.18.0-193.13.2.el8_2/drivers/firmware/efi/efi.c linux-4.18.0-193.14.3.el8_2/drivers/firmware/efi/efi.c
+--- linux-4.18.0-193.13.2.el8_2/drivers/firmware/efi/efi.c	2020-07-14 00:38:37.000000000 +0200
++++ linux-4.18.0-193.14.3.el8_2/drivers/firmware/efi/efi.c	2020-07-20 16:02:22.000000000 +0200
+@@ -31,6 +31,7 @@
+ #include <linux/acpi.h>
+ #include <linux/ucs2_string.h>
+ #include <linux/memblock.h>
++#include <linux/kernel.h>
 
-  * The researcher is inclined to accept disclosure timelines from
-    other parties, when he/she has the feeling, that those decisions
-    were made on basis of sound risk management with the goal to
-    reduce the societal risk - NOT only the financial risk for the
-    affected party.
+ #include <asm/early_ioremap.h>
 
-* Interaction with software projects, vendors:
-
-  * Any party, the researcher really has worked together in analyzing
-    or fixing a security flaw, and that has an own "code of conduct",
-    may reqest the researcher to sign it. The researcher will do that,
-    referencing the issue addressed together. If the party requests
-    a rogue signature (no work done together), they did not stick
-    to their own code of conduct or the researcher deems their code
-    of conduct flawed, the researcher will generate a distrust
-    signature stating the reason.
-
-------- =_aaaaaaaaaa0--
+@@ -245,6 +246,11 @@
+ static char efivar_ssdt[EFIVAR_SSDT_NAME_MAX] __initdata;
+ static int __init efivar_ssdt_setup(char *str)
+ {
++	int ret = kernel_is_locked_down("Modifying ACPI tables");
++
++	if (ret)
++		return ret;
++
+ 	if (strlen(str) < sizeof(efivar_ssdt))
+ 		memcpy(efivar_ssdt, str, strlen(str));
+ 	else
 
 
