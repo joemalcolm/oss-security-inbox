@@ -1,39 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/14/4
-Message-ID: <218e1c3b-d8bc-9c70-88b8-cea51e64e217@apache.org>
-Date: Tue, 14 Jul 2020 13:24:45 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/30/1
+Message-ID: <2d168d9f-cb92-88e1-3cb3-c1c1c0692d13@nsfocus.com>
+Date: Thu, 30 Jul 2020 10:53:36 +0800
+From: 张云海 <zhangyunhai@...ocus.com>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2020-13934 Apache Tomcat HTTP/2 Denial of Service
+Subject: Re: [CVE-2020-14331] Linux Kernel: buffer over write in vgacon_scrollback_update
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-13934 Apache Tomcat HTTP/2 Denial of Service
+Hi All,
 
-Severity: Moderate
+I update the patch as Zhang Xiao points out that the check should use >
+instead of >=,
+otherwise the last line will be skip.
 
-Vendor: The Apache Software Foundation
+Regards,
+Yunhai Zhang / NSFOCUS Security Team
 
-Versions Affected:
-Apache Tomcat 10.0.0-M1 to 10.0.0-M6
-Apache Tomcat 9.0.0.M5 to 9.0.36
-Apache Tomcat 8.5.1 to 8.5.56
-
-Description:
-An h2c direct connection did not release the HTTP/1.1 processor after
-the upgrade to HTTP/2. If a sufficient number of such requests were
-made, an OutOfMemoryException could occur leading to a denial of service.
-
-Mitigation:
-- Upgrade to Apache Tomcat 10.0.0-M7 or later
-- Upgrade to Apache Tomcat 9.0.37 or later
-- Upgrade to Apache Tomcat 8.5.57 or later
-
-Credit:
-This issue was reported publicly via the Apache Tomcat Users mailing
-list without reference to the potential for DoS. The DoS risks were
-identified by the Apache Tomcat Security Team.
-
-References:
-[1] http://tomcat.apache.org/security-10.html
-[2] http://tomcat.apache.org/security-9.html
-[3] http://tomcat.apache.org/security-8.html
+View attachment "0001-Fix-for-missing-check-in-vgacon-scrollback-handling.patch" of type "text/plain" (1756 bytes)
