@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4480" "Thursday" "7" "September" "2017" "08:38:23" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<fb6b7e2d-977d-7eae-346e-a638f806bf34@orlitzky.com>" "102" "Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" "^Cc:" nil nil "9" "2017090712:38:23" "[oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" (number mark "        michael@orli Sep  7  102/4480  " thread-indent "\"Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation\"\n") "<87ingva5rf.fsf@fifthhorseman.net>" ("<f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>" "<87wp63jgxn.fsf@fifthhorseman.net>" "<2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>" "<87ingva5rf.fsf@fifthhorseman.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2695" "Thursday" "30" "July" "2020" "10:14:10" "-0700" "H.J. Lu" "hjl.tools@gmail.com" nil "59" nil "^Cc:" nil nil "7" nil nil (number mark "        hjl.tools@gm Jul 30   59/2695  " thread-indent "\"[oss-security] Re: Alternative CET ABI\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Alternative CET ABI" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28280 invoked by uid 550); 7 Sep 2017 12:53:49 -0000
+Received: (qmail 1349 invoked by uid 550); 30 Jul 2020 17:25:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,132 +11,105 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19506 invoked from network); 7 Sep 2017 12:38:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1504787912; bh=Efqpixc5NskF+3hiwg/1gEjGTQO5HpMtVwp2rgPcA8A=;
-	h=Subject:To:References:Cc:From:Date:In-Reply-To;
-	b=T8PRJIvDz1zrGBosRFF7jIGkbFT2q7r1FDa9Jdf6S9kCo3JTuV6Tlaj5uYzd3eZrr
-	 yyMdZ34BDJamVtXPtYYlys5F6ltEioBOIJ1DI77YyqRk3TbRij9rGz+GwYBfzcRlAm
-	 zuGMkTGm8ifdKj2Qp8RKx3RPKqu/JlYrELVzmXa4=
-References: <f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>
- <87wp63jgxn.fsf@fifthhorseman.net>
- <2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>
- <87ingva5rf.fsf@fifthhorseman.net>
-Message-ID: <fb6b7e2d-977d-7eae-346e-a638f806bf34@orlitzky.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.0
+Received: (qmail 24287 invoked from network); 30 Jul 2020 17:14:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SBf5My5eZ9Wekb7IVsuPtVhYipAan0zbC8RnkLTkJqI=;
+        b=hGWbqQEimRseVKiLJ2aLyaeEBNSRa/i3JJph8QSJU0RFkeWBCFppFMJ1SnZ6BKMl3n
+         2z67hfVY9sWZ0X92G4+oGBaOnDgLGnu7ruxFA3XwU5VtkftpiqIU0T0Scwn2F1PnTQd+
+         sabtmjKSe6hEYW802JfSHRidGBj//9+FYx6cELY//aI739x5c2XnzHytWX5mwfI278bO
+         RZXfVPuJno+gzfuo7/5Tpl5WRZJYqJs7Ol54cLwfcp6Usx52b2E4hL2gdv7mKTZtbh5l
+         Fkuj9KtTCpJeZQJVeaVF0YjEVPIDBJSVkKkEI5pYdO/kVmMqL1KgU+UJOoF7cUGrlJ1G
+         b/Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SBf5My5eZ9Wekb7IVsuPtVhYipAan0zbC8RnkLTkJqI=;
+        b=P9B+rpwsBR1MaEMMxaVgV/bib/UJO3/99fA/Q0DJCwuWhPz+B2qDhHZBZ1HanNEax8
+         nrhppSDJvDsGKpupzRFVLd/4UPuV057qzefm12Ita2NtWOzTg1fFv5yjosZWCIcYHHHF
+         MoKvPymiZSv7zZCVPHmvbocHqYiFAgEY1/iHYbzD6NWQUnKQ+06JXEE5Cr9zWjh7Q9cs
+         r9rSaF1EvzJQtW0AGBK7CByMuic904zv+7Ym3xy4PpODY4ZakS0j81Ku+s9NErWeOeGx
+         zvd3RkM1gnYuo0C/9OSZnTUuwlouzr8pt7L96mhSrnc0ZHmOOtBq346to07qhG61ej3W
+         lNaQ==
+X-Gm-Message-State: AOAM532SLaWEkM4x8HERFVKa5UH81Jvwqhf9nCamnHPwvzlHV+qXy0cJ
+	X2NNQJefgdpUzkTEgllxSccSoCJtSj6V1w48O6o=
+X-Google-Smtp-Source: ABdhPJzBS/IU12Q2YLBhyoz+6vJfUVaXcX4FrEtco80BQRcU0QzLZowxG3h7R3bmgOXFDeycWurJBTy2GY7RgpuGUiE=
+X-Received: by 2002:a92:874a:: with SMTP id d10mr40497264ilm.273.1596129286567;
+ Thu, 30 Jul 2020 10:14:46 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <87ingva5rf.fsf@fifthhorseman.net>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="MaFdin72oPkQvG8EuSV4oRdX7itULxN6g"
-Cc: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Date: Thu, 7 Sep 2017 08:38:23 -0400
-From: Michael Orlitzky <michael@orlitzky.com>
+References: <87k0ylgff0.fsf@oldenburg2.str.redhat.com> <CAG48ez3OF7DPupKv9mBBKmg-9hDVhVe83KrJ4Jk=CL0nOc7=Jg@mail.gmail.com>
+ <87h7tpeyed.fsf@oldenburg2.str.redhat.com>
+In-Reply-To: <87h7tpeyed.fsf@oldenburg2.str.redhat.com>
+Message-ID: <CAMe9rOqnPJMC+d9cRTc-zHaj7Pp5JvW-Zfqxhy3M3P6zG_CE0A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: Jann Horn <jannh@google.com>, oss-security@lists.openwall.com, 
+	x86-64-abi <x86-64-abi@googlegroups.com>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, Szabolcs Nagy <szabolcs.nagy@arm.com>
+Date: Thu, 30 Jul 2020 10:14:10 -0700
+From: "H.J. Lu" <hjl.tools@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation
- via PID file manipulation
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Alternative CET ABI
+To: Florian Weimer <fweimer@redhat.com>
 
---MaFdin72oPkQvG8EuSV4oRdX7itULxN6g
-Content-Type: multipart/mixed; boundary="6sfg5fqCMCa1mojmUO5LBxP9e6EO21RiJ";
- protected-headers="v1"
-From: Michael Orlitzky <michael@orlitzky.com>
-To: oss-security@lists.openwall.com
-Cc: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Message-ID: <fb6b7e2d-977d-7eae-346e-a638f806bf34@orlitzky.com>
-Subject: Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation
- via PID file manipulation
-References: <f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>
- <87wp63jgxn.fsf@fifthhorseman.net>
- <2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>
- <87ingva5rf.fsf@fifthhorseman.net>
-In-Reply-To: <87ingva5rf.fsf@fifthhorseman.net>
+On Thu, Jul 30, 2020 at 9:54 AM Florian Weimer <fweimer@redhat.com> wrote:
+>
+> * Jann Horn:
+>
+> > On Thu, Jul 30, 2020 at 6:02 PM Florian Weimer <fweimer@redhat.com> wrote:
+> >> Functions no longer start with the ENDBR64 prefix.  Instead, the link
+> >> editor produces a PLT entry with an ENDBR64 prefix if it detects any
+> >> address-significant relocation for it.  The PLT entry performs a NOTRACK
+> >> jump to the target address.  This assumes that the target address is
+> >> subject to RELRO, of course, so that redirection is not possible.
+> >> Without address-significant relocations, the link editor produces a PLT
+> >> entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
+> >> perhaps no PLT entry at all.
+> >
+> > How would this interact with function pointer comparisons? As in, if
+> > library A exports a function func1 without referencing it, and
+> > libraries B and C both take references to func1, would they end up
+> > with different function pointers (pointing to their respective PLT
+> > entries)?
+>
+> Same as today.  ELF already deals with this by picking one canonical
+> function address per process.
+>
+> Some targets already need PLTs for inter-DSO calls, so the problem is
+> not new.  It happens even on x86 because the main program can refer to
+> its PLT stubs without run-time relocations, so those determine the
+> canonical address of those functions, and not the actual implementation
+> in a shared object.
+>
+> > Would this mean that the behavior of a program that compares
+> > function pointers obtained through different shared libraries might
+> > change?
+>
+> Hopefully not, because that would break things quite horribly (as it's
+> sometimes possible to observe if the RTLD_DEEPBIND flag is used).
+>
+> Both the canonicalization and the fact in order to observe the function
+> pointer, you need to take its address should take care of this.
+>
+> > I guess you could maybe canonicalize function pointers somehow, but
+> > that'd probably at least break dlclose(), right?
+>
+> Ahh, dlclose.  I think in this case, my idea to generate a PLT stub
+> locally in the address-generating DSO will not work because the
+> canonical address must survive dlclose if it refers to another DSO.
+> There are two ways to deal with this: do not unload the PLT stub until
+> the target DSO is also unloaded (but make sure that the DSO can be
+> reloaded at a different address; probably not worth the complexity),
+> or use the dlsym hack I sketched for regular symbol binding as well.
+> Even more room for experiments, I guess.
+>
+> Thanks,
+> Florian
 
---6sfg5fqCMCa1mojmUO5LBxP9e6EO21RiJ
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+FWIW, we can introduce a different CET PLT as long as it is compatible
+with the past, current and future binaries.
 
-On 09/06/2017 05:15 PM, Daniel Kahn Gillmor wrote:
->=20
-> But i think future reports of problems with pidfiles (e.g. your helpful
-> cleanup of mimedefang -- thanks!)  should always include the suggestion
-> to disable pidfiles entirely and to encourage developers who must
-> implement them to ensure that they're only an extra feature, for use
-> with otherwise limited service managers, and perhaps to be compile-time
-> disabled.
->=20
-
-I've been reluctant to do this because I'm approaching these as an
-OpenRC user, and OpenRC has the ability to supervise the daemon. I
-always hate it when someone makes a suggestion (at my expense) that
-amounts to "I don't need this, so you don't need this" -- and I don't
-want to be /that/ guy.
-
-I think a compile-time option is reasonable, though. Maybe the ability
-to fork into the background should also be compiled out in that case.
-When I encounter more of these, I'll provide a list of possible
-solutions and include "get rid of the PID file" along with its trade-offs.
-
-Most of the PID file vulnerabilities that I've found are in the
-distribution init scripts: the only ones that hit this list are the
-upstream projects that make it impossible for the distro developers to
-get it right. Curiously though, a lot of the problems that I've found in
-the distro scripts are for daemons that run in the foreground and are
-supposed to be supervised.
-
-Basically, there are two accepted approaches. Forking,
-
-  1. Daemon forks
-  2. Daemon writes a PID file
-  3. Daemon drops privileges
-
-And supervised:
-
-  4. Daemon runs in the foreground, and does nothing special
-
-What I've found is that many programs choose any old subset of (1)
-through (4), and implement them in any order. As a result, init script
-authors haven't developed a feel for the right way to do things; they
-copy/paste snippets from other init scripts until things seem to work.
-
-I've found services that run with *two* PID files, one of which is
-ignored. I've found services that go out of their way to give away
-ownership of /run/foo, even though /run/foo/foo.pid is created and owned
-by root. Pretty much any way you can go wrong has made an appearance at
-least once, and all of these are for daemons that should be supervised
--- the service scripts should be trivial.
-
-Anyway, my point is, it may be optimistic to think that we can help
-people not do weird things in their service scripts =3D)
-
-
---6sfg5fqCMCa1mojmUO5LBxP9e6EO21RiJ--
-
---MaFdin72oPkQvG8EuSV4oRdX7itULxN6g
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQKTBAEBCgB9FiEEFOnXLXsa/e/AtBwfb0jT2gXC2tsFAlmxPcNfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDE0
-RTlENzJEN0IxQUZERUZDMEI0MUMxRjZGNDhEM0RBMDVDMkRBREIACgkQb0jT2gXC
-2tt2XRAApCSnQUHh8m2BpuRycicYsnM6TT/9VYUGlRsG63jQYBPabdj/uKurgloh
-qOyVW/dSVoNddL1P2iS43Jug6qMxVw+QGUDVVTZbkPNaqdZH3FKcOv2pGjomPdgi
-TpXOhdpGQu0sclLDDfovXu8Qzan3HIKH1dK0i5xMlJPsqvW7BKKpD4wXaVYHuwI2
-JJD/GO8LzbxO0ZeWcqveXpemkoe7+wdTLTg6OumNKirgXGJIjGYkfqgw4uzlmNc5
-LbqvscrhCctsb0psEo+ymCvGlDlOUDKmvxR1rM2DqIDpA5lSaNphSSz+6i4VfRFd
-lAkbXi6c0felQz7mRsHmsoW58pfJVSFxQeN/W0Blnee1YkoqB0nKUEigtOu5o2kB
-CUPWvdzV4gfZlx6qfxuCULvFWFBvthl2+CY10CucQR2SdMjmVO3o5vltVAzcTGqm
-533vewpaDrB46YI36kqP8pJ5ek25EG1KwFb9dr60v9yer51qAN4MWBhOfvdBxq1s
-8+I+STUAPOUNvrnXnbg4m64rJ2x9HRr7piJ+meM33MJaVtfALi8etuzC1At3RHik
-M1Wk1JoV0pLHQ7w/Zc7oqZIHqHHq4M/+fWGleuKwc6r1J4fR5nJaovP4sqtJfBhx
-ctNs4uTTqk1cYsTFhYMcWAQvUcwru0S6YGYcoblCg8N4IH5lz9Y=
-=M1KY
------END PGP SIGNATURE-----
-
---MaFdin72oPkQvG8EuSV4oRdX7itULxN6g--
+-- 
+H.J.
