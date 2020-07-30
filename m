@@ -1,145 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/18/1
-Message-ID: <1552538431.97.1589803413519@appsuite-dev-guard.open-xchange.com>
-Date: Mon, 18 May 2020 15:03:33 +0300 (EEST)
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>
-Subject: Multiple vulnerabilities in Dovecot IMAP server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/30/3
+Message-Id: <C76592F6-5353-4C8C-9263-E911D7020BA6@oracle.com>
+Date: Thu, 30 Jul 2020 13:23:47 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: UEFI SecureBoot bypass fixes rolled out to kernels below radar
 Content-Type: text/plain; charset=utf-8
 
-Dear subscribers,
 
-we are sending notifications for three vulnerabilities,
 
- - CVE-2020-10957
- - CVE-2020-10958
- - CVE-2020-10967
+> On 30 Jul 2020, at 12:48, Jason A. Donenfeld <Jason@...c4.com> wrote:
+> 
+> Hi,
+> 
+> I thought I should mention that yesterday's UEFI SecureBoot bypass
+> headlines neglected to mention the bugs I found over a month ago (with
+> the exception of Debian's announcement, which got some details wrong
+> initially but those have since been rectified).
+> 
+> It appears that Linux vendors are now releasing fixes for:
+> 
+> - CVE-2019-20908
+>  https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language.sh
+>  https://www.openwall.com/lists/oss-security/2020/06/14/1
+>  https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-20908
+> 
+> - CVE-2020-15780
+>  https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
+>  https://www.openwall.com/lists/oss-security/2020/06/15/3
+>  https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15780
+> 
+> In the Red Hat Enterprise Linux 8 kernel sources, diffing yesterday's
+> release with the one from a few weeks prior, we see a patch for both of
+> these, which I've put at the bottom of this email.
+> 
+> It seems like mention of these was left out from the advisories that
+> were making news yesterday from Microsoft/Red Hat/etc, presumably
+> because there's no shiny logo and press release route with these
+> exploits, but rather just shoddy exploits and posted them here,
+> alongside patches on LKML.
 
-Please find them below
+Yep.  I mentioned these in my post yesterday but I didn't go into any detail as they've been public for some little while.   The various vendor updates are patching both CVEs, as you noted.  Ubuntu punlished an advisory for these a few days ago (https://ubuntu.com/security/notices/USN-4440-1), we, and others, rolled the kernel fixes in with the rest of the changes.
 
----
-Aki Tuomi
-Open-Xchange Oy
+Important and necessary as these fixes are they're not the main reason for pushing new kernels out along with updated grub and shim.   Complete mitigation requires updating the entire signature chain and most vendors needed to resign the kernel.  (I'm not only losing track of who resigned what, but the will to live :))
 
-------------------
+> 
+> But anyway, PSA: if you're scrambling to get your systems updated for
+> this, be sure to update your kernel in addition to GRUB2. This is more
+> than just a bootloader situation. And I'm sure we'll have plenty more
+> SecureBoot bypasses coming up too.
 
-Open-Xchange Security Advisory 2020-05-18
 
-Product: Dovecot
-Vendor: OX Software GmbH
+In other breaking news, software is buggy :)  As sure as it rains in Lancashire, there will be more secure boot bypass bugs somewhere along the chain.  And we will be ready for them.
 
-Internal reference: DOV-3784
-Vulnerability type: NULL pointer dereference (CWE-476)
-Vulnerable version: 2.3.0 - 2.3.10
-Vulnerable component: submission, lmtp
-Report confidence: Confirmed
-Solution status: Fixed by Vendor
-Fixed version: 2.3.10.1
-Researcher credits: Philippe Antoine (Catena Cyber)
-Vendor notification: 2020-03-24
-Solution date: 2020-04-02
-Public disclosure: 2020-05-18
-CVE reference: CVE-2020-10957
-CVSS: 7.5  (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+Seriously, as I and others have said several times: you must update the entire signature chain then, and only then, you must update the dbx.    Someone, somewhere, probably several someones, are going to decide they know better and wind up bricking their secure boot systems.    Personally, they'll find my sympathy in short supply when they do :/
 
-Vulnerability Details:
-	Sending malformed NOOP command causes crash in submission, submission-login or
-	lmtp service.
+jch
 
-Risk:
-	Remote attacker can keep submission-login service down, causing denial of
-	service attack. For lmtp the risk is neglible, as lmtp is usually behind a
-	trusted MTA.
 
-Steps to reproduce:
-	Send ``NOOP EE"FY`` to submission port, or similarly malformed command.
+> 
+> Jason
+> 
+> 
+> RHEL8 patch, which shipped yesterday:
+> 
+> diff -ru linux-4.18.0-193.13.2.el8_2/drivers/acpi/acpi_configfs.c linux-4.18.0-193.14.3.el8_2/drivers/acpi/acpi_configfs.c
+> --- linux-4.18.0-193.13.2.el8_2/drivers/acpi/acpi_configfs.c	2020-07-14 00:38:37.000000000 +0200
+> +++ linux-4.18.0-193.14.3.el8_2/drivers/acpi/acpi_configfs.c	2020-07-20 16:02:22.000000000 +0200
+> @@ -14,6 +14,7 @@
+> #include <linux/module.h>
+> #include <linux/configfs.h>
+> #include <linux/acpi.h>
+> +#include <linux/kernel.h>
+> 
+> #include "acpica/accommon.h"
+> #include "acpica/actables.h"
+> @@ -31,7 +32,10 @@
+> {
+> 	const struct acpi_table_header *header = data;
+> 	struct acpi_table *table;
+> -	int ret;
+> +	int ret = kernel_is_locked_down("Modifying ACPI tables");
+> +
+> +	if (ret)
+> +		return ret;
+> 
+> 	table = container_of(cfg, struct acpi_table, cfg);
+> 
+> diff -ru linux-4.18.0-193.13.2.el8_2/drivers/firmware/efi/efi.c linux-4.18.0-193.14.3.el8_2/drivers/firmware/efi/efi.c
+> --- linux-4.18.0-193.13.2.el8_2/drivers/firmware/efi/efi.c	2020-07-14 00:38:37.000000000 +0200
+> +++ linux-4.18.0-193.14.3.el8_2/drivers/firmware/efi/efi.c	2020-07-20 16:02:22.000000000 +0200
+> @@ -31,6 +31,7 @@
+> #include <linux/acpi.h>
+> #include <linux/ucs2_string.h>
+> #include <linux/memblock.h>
+> +#include <linux/kernel.h>
+> 
+> #include <asm/early_ioremap.h>
+> 
+> @@ -245,6 +246,11 @@
+> static char efivar_ssdt[EFIVAR_SSDT_NAME_MAX] __initdata;
+> static int __init efivar_ssdt_setup(char *str)
+> {
+> +	int ret = kernel_is_locked_down("Modifying ACPI tables");
+> +
+> +	if (ret)
+> +		return ret;
+> +
+> 	if (strlen(str) < sizeof(efivar_ssdt))
+> 		memcpy(efivar_ssdt, str, strlen(str));
+> 	else
+> 
+> 
 
-Solution:
-	Upgrade to fixed version.
 
-------------------
-
-Open-Xchange Security Advisory 2020-05-18
-
-Product: Dovecot IMAP server
-Vendor: OX Software GmbH
-
-Internal reference: DOV-3875
-Vulnerability type: Improper handling of input data (CWE-20)
-Vulnerable version: 2.3.0 - 2.3.10
-Vulnerable component: submission, lmtp
-Report confidence: Confirmed
-Solution status: Fixed by Vendor
-Fixed version: 2.3.10.1
-Researcher credits: Philippe Antoine (Catena Cyber)
-Vendor notification: 2020-03-23
-Solution date: 2020-04-02
-Public disclosure: 2020-05-18
-CVE reference: CVE-2020-10958
-CVSS: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)
-
-Vulnerability Details:
-
-	Sending command followed by sufficient number of newlines triggers a
-	use-after-free bug that might crash submission-login, submission or
-	lmtp service.
-
-Risk:
-
-	Remote attacker can keep submission-login service down, causing denial
-	of service attack. For lmtp the risk is neglible, as lmtp is usually
-	behind a trusted MTA.
-
-Steps to reproduce:
-
-	This can be currently reproduced with ASAN or Valgrind. Reliable way to
-	crash has not yet been discovered.
-
-Solution:
-
-	Upgrade to fixed version.
-
-------------------
-
-Open-Xchange Security Advisory 2020-05-18
-
-Product: Dovecot
-Vendor: OX Software GmbH
-
-Internal reference: DOV-1745
-Vulnerability type: Improper input validation (CWE-20)
-Vulnerable version: 2.3.0 - 2.3.10
-Vulnerable component: submission, lmtp
-Report confidence: Confirmed
-Solution status: Fixed by Vendor
-Fixed version: 2.3.10.1
-Researcher credits: mailbox.org
-Vendor notification: 2020-03-20
-Solution date: 2020-04-02
-Public disclosure: 2020-05-18
-CVE reference: CVE-2020-10967
-CVSS: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)
-
-Vulnerability Details:
-	Sending mail with empty quoted localpart causes submission or lmtp component
-	to crash.
-
-Risk:
-	Malicious actor can cause denial of service to mail delivery by repeatedly
-	sending mails with bad sender or recipient address.
-
-Steps to reproduce:
-	Send mail with envelope sender or recipient as ``<""@example.org>``.
-
-Workaround:
-	For submission there is no workaround, but triggering the bug requires valid
-	credentials.
-	For lmtp, one can implement sufficient filtering on MTA level to prevent mails
-	with such addresses from ending up in LMTP delivery.
-
-Solution:
-	Upgrade to fixed version.
-
-------------------
-
-Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
