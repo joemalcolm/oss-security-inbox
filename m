@@ -1,83 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/16/2
-Message-ID: <20200616212416.GA26798@localhost.localdomain>
-Date: Tue, 16 Jun 2020 14:24:16 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Remote Code Execution in qmail (CVE-2005-1513)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/30/6
+Message-ID: <87h7tpeyed.fsf@oldenburg2.str.redhat.com>
+Date: Thu, 30 Jul 2020 18:54:50 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Jann Horn <jannh@...gle.com>
+Cc: oss-security@...ts.openwall.com,  x86-64-abi@...glegroups.com,  Kernel Hardening <kernel-hardening@...ts.openwall.com>,  Szabolcs Nagy <szabolcs.nagy@....com>
+Subject: Re: Alternative CET ABI
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+* Jann Horn:
 
-Our Linux exploit for CVE-2005-1513 in qmail is attached to this email.
-Alternatively, it will be available at:
+> On Thu, Jul 30, 2020 at 6:02 PM Florian Weimer <fweimer@...hat.com> wrote:
+>> Functions no longer start with the ENDBR64 prefix.  Instead, the link
+>> editor produces a PLT entry with an ENDBR64 prefix if it detects any
+>> address-significant relocation for it.  The PLT entry performs a NOTRACK
+>> jump to the target address.  This assumes that the target address is
+>> subject to RELRO, of course, so that redirection is not possible.
+>> Without address-significant relocations, the link editor produces a PLT
+>> entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
+>> perhaps no PLT entry at all.
+>
+> How would this interact with function pointer comparisons? As in, if
+> library A exports a function func1 without referencing it, and
+> libraries B and C both take references to func1, would they end up
+> with different function pointers (pointing to their respective PLT
+> entries)?
 
-https://www.qualys.com/research/security-advisories/
+Same as today.  ELF already deals with this by picking one canonical
+function address per process.
 
-A few notes about this exploit:
+Some targets already need PLTs for inter-DSO calls, so the problem is
+not new.  It happens even on x86 because the main program can refer to
+its PLT stubs without run-time relocations, so those determine the
+canonical address of those functions, and not the actual implementation
+in a shared object.
 
-- It works as-is against a default, unpatched installation of qmail on
-  Debian 10 (amd64). It requires roughly 4GB of disk space and 8GB of
-  memory on the target machine, and creates a file in /tmp when
-  successful.
+> Would this mean that the behavior of a program that compares
+> function pointers obtained through different shared libraries might
+> change?
 
-- It can be ported to other Linux distributions (if the qmail-local
-  binary is not full-RELRO) by modifying the lines marked with XXX in
-  the exploit code.
+Hopefully not, because that would break things quite horribly (as it's
+sometimes possible to observe if the RTLD_DEEPBIND flag is used).
 
-- To obtain the mmap layout described in our advisory, the exploit
-  simulates the qmail-local program, and must therefore be executed on
-  the same type of Linux distribution as the target. For example, in our
-  tests, we executed the exploit on a Debian 10.0 machine and remotely
-  attacked a Debian 10.3 machine.
+Both the canonicalization and the fact in order to observe the function
+pointer, you need to take its address should take care of this.
 
-  The exploit parameters can probably be calculated without the
-  qmail-local simulation, and can certainly be precalculated, but we
-  wanted to keep our exploit as general as possible.
+> I guess you could maybe canonicalize function pointers somehow, but
+> that'd probably at least break dlclose(), right?
 
-For the local exploit (LPE), there are only two command-line arguments:
+Ahh, dlclose.  I think in this case, my idea to generate a PLT stub
+locally in the address-generating DSO will not work because the
+canonical address must survive dlclose if it refers to another DSO.
+There are two ways to deal with this: do not unload the PLT stub until
+the target DSO is also unloaded (but make sure that the DSO can be
+reloaded at a different address; probably not worth the complexity),
+or use the dlsym hack I sketched for regular symbol binding as well.
+Even more room for experiments, I guess.
 
-- "user": the name of the target user (on a default Debian installation,
-  this can be "man", "root", "avahi-autoipd", or any real user account).
+Thanks,
+Florian
 
-- "domain": by default, the hostname in "/var/lib/qmail/control/me".
-
-For the command line of the remote exploit (RCE), there are three
-mandatory options, three arguments, and one optional option:
-
-- "-i client_ip": the IP address of the attacking machine, as seen by
-  the target machine.
-
-- "-h client_host": the hostname of the attacking machine (if it has no
-  reverse DNS, the empty string can be specified, and the exploit will
-  use qmail's default, "unknown").
-
-- "-s server_host": the hostname of the target machine (by default, the
-  same as the "domain" below).
-
-- "user": the name of the target user.
-
-- "domain": by default, the hostname in "/var/lib/qmail/control/me" on
-  the target machine (and hence the hostname in qmail's SMTP banner).
-
-- "server_ip": the IP address of the target machine.
-
-- "-d homedir": the home directory of the target user, if known
-  (otherwise, the exploit uses a reasonable default).
-
-We are at your disposal for questions, comments, and further
-discussions. Thank you very much!
-
-With best regards,
-
---
-the Qualys Security Advisory team
-
-
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
-
-
-
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
-
-Download attachment "CVE-2005-1513.tar.gz" of type "application/gzip" (68009 bytes)
