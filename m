@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2579" "Friday" "21" "June" "2019" "13:19:28" "+0200" "Erik Winkels" "erik.winkels@open-xchange.com" "<1438003945.458.1561115969008@appsuite-dev-guard.open-xchange.com>" "56" "[oss-security] PowerDNS Security Advisories 2019-04 and 2019-05" nil nil nil "6" "2019062111:19:28" "[oss-security] PowerDNS Security Advisories 2019-04 and 2019-05" (number mark "U       erik.winkels Jun 21   56/2579  " thread-indent "\"[oss-security] PowerDNS Security Advisories 2019-04 and 2019-05\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] PowerDNS Security Advisories 2019-04 and 2019-05" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3359" "Friday" "31" "July" "2020" "16:03:35" "+0200" "Matthieu Herrb" "matthieu@herrb.eu" nil "109" nil "^Date:" nil nil "7" nil nil (number mark "        matthieu@her Jul 31  109/3359  " thread-indent "\"[oss-security] Fwd: X.Org security advisory: July 31, 2020: libX11\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Fwd: X.Org security advisory: July 31, 2020: libX11" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21694 invoked by uid 550); 21 Jun 2019 11:22:54 -0000
+Received: (qmail 30527 invoked by uid 550); 31 Jul 2020 14:07:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,135 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18401 invoked from network); 21 Jun 2019 11:19:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=open-xchange.com;
-	s=201705; t=1561115969;
-	bh=SCBt8YDj2iZrvG+zz5ljF8pIL+Woz1H/Rgesb5dpTeA=;
-	h=Date:From:Reply-To:To:Subject:From;
-	b=umpQP30btcg7OW400MLAs7lkeD3MaDZDGGO53Wm3wmhAoF8IMZuUt9a/HJIn5gYqR
-	 udHHrY+un2vUVVh9r7EVAIIfZgbSlrnu8fyIOYuZNmTmXm2SnL1ntEJgP9orPy7p8v
-	 mveIOn0eStiBkOfnPzs8zlBINH75xTJMgcIWGaoobHE9UltkZ2qGB3ptwkdQm8G/UB
-	 Mv/7fEZ1ncnDWYGVYDk/EP7dMPS3OVATc/0XUxaY7GvHgDcTdB4XTKLgrj8AjMwYzE
-	 x7wHK8KAvV7vKmTvGSWTX4JwTnCytGoWf8e8xS7ny9t/179phntmjZcnGzH8gWgnV+
-	 jhYolGnfKFGnQ==
-Date: Fri, 21 Jun 2019 13:19:28 +0200 (CEST)
-From: Erik Winkels <erik.winkels@open-xchange.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Message-ID: <1438003945.458.1561115969008@appsuite-dev-guard.open-xchange.com>
+Received: (qmail 29710 invoked from network); 31 Jul 2020 14:03:50 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=herrb.eu; h=date:from:to
+	:subject:message-id:mime-version:content-type; s=20180121; bh=8A
+	PRfPjJDx4jDeKxisk6lf4o7uo=; b=lXUecJxEOheDoaSvif6+obPNCzmPy4iO9h
+	cCOgFVaO8zE7jIF+Iw4zfpwopK1HLFpcF2kMIjJBOGu+5SvR0VGfk0phHuCW2C7b
+	RaF4RvTVx397VxbkTrlgY/t6rmRZHCNZXdLvibRwCN9rvz5uGePzb9aXkB7IIY8R
+	/UyRLYpHI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=herrb.eu; h=date:from:to
+	:subject:message-id:mime-version:content-type; q=dns; s=20180121; b=
+	IZmZXbQpB1Rd2xH2wFCTdgHiSd/eFfQ5a00t4M+gSpK7YQc+GKhPj5jotOYke6mw
+	Ger9xW/uGK+5BslINxQ6EMVrWPE26ws+BD9js5JIpzuDj7YJbtccl+RQC3JL82ov
+	GS/NzcOFoFse1Qd8qdsqdpTQmty3no95syRZOZNxXRM=
+Message-ID: <20200731140335.GC69757@zuma.herrb.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; 
-	boundary="----=_Part_457_158478696.1561115969006"
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v7.10.2-Rev4
-X-Originating-Client: open-xchange-appsuite
-Subject: [oss-security] PowerDNS Security Advisories 2019-04 and 2019-05
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="x7uGNNMLqM1zUlCR"
+Content-Disposition: inline
+Date: Fri, 31 Jul 2020 16:03:35 +0200
+From: Matthieu Herrb <matthieu@herrb.eu>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Fwd: X.Org security advisory: July 31, 2020: libX11
+To: oss-security@lists.openwall.com
 
-------=_Part_457_158478696.1561115969006
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+--x7uGNNMLqM1zUlCR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Good day,
+----- Forwarded message from Matthieu Herrb <matthieu@herrb.eu> -----
 
-(via: https://blog.powerdns.com/2019/06/21/powerdns-authoritative-server-4-0-8-and-4-1-10-released/  )
+Date: Fri, 31 Jul 2020 15:37:55 +0200
+From: Matthieu Herrb <matthieu@herrb.eu>
+To: xorg-announce@lists.x.org
+Cc: xorg-devel@lists.x.org
+Subject: X.Org security advisory: July 31, 2020: libX11
 
-We just released PowerDNS Authoritative Server 4.0.8 and 4.1.10.
+X.Org security advisory: July 31, 2020
 
-The 4.0.8 and 4.1.10 (together with 4.1.9) releases fix the following security advisories:
+Heap corruption in the X input method client in libX11
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
 
-- PowerDNS Security Advisory 2019-04[1] (CVE-2019-10162)
-    - thanks to Gert van Dijk for finding and subsequently reporting this issue
+CVE-2020-14344
 
-- PowerDNS Security Advisory 2019-05[2] (CVE-2019-10163)
-    - thanks to George Asenov for finding and subsequently reporting this issue
+The X Input Method (XIM) client implementation in libX11 has some
+integer overflows and signed/unsigned comparison issues that can lead
+to heap corruption when handling malformed messages from an input
+method.
 
-Please also see the 4.0.8[3] and 4.1.10[4] changelogs for more details.
+Patches
+=3D=3D=3D=3D=3D=3D=3D
 
-The 4.0.8 tarball[5] (sig[6]) and 4.1.10 tarball[7] (sig[8]) are available at downloads.powerdns.com and packages for CentOS 6 and 7, Debian Jessie and Stretch, Ubuntu Trusty, Xenial and Bionic are available from repo.powerdns.com.
+Patches for these issues have been commited to the libX11 git repository.
+libX11 1.6.10 will be released shortly and will include those patches.
 
-Please send us all feedback and issues you might have via the mailing list[9], or in case of a bug, via GitHub[10].
+https://gitlab.freedesktop.org/xorg/lib/libx11
 
-[ 1] https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2019-04.html
-[ 2] https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2019-05.html
-[ 3] https://doc.powerdns.com/authoritative/changelog/4.0.html#powerdns-authoritative-server-4-0-8
-[ 4] https://doc.powerdns.com/authoritative/changelog/4.1.html#change-4.1.10
-[ 5] https://downloads.powerdns.com/releases/pdns-4.0.8.tar.bz2
-[ 6] https://downloads.powerdns.com/releases/pdns-4.0.8.tar.bz2.sig
-[ 7] https://downloads.powerdns.com/releases/pdns-4.1.10.tar.bz2
-[ 8] https://downloads.powerdns.com/releases/pdns-4.1.10.tar.bz2.sig
-[ 9] https://mailman.powerdns.com/mailman/listinfo/pdns-users
-[10] https://github.com/PowerDNS/pdns/issues/new
---
-Erik Winkels
-PowerDNS.COM BV -- https://www.powerdns.com
+commit 1703b9f3435079d3c6021e1ee2ec34fd4978103d (HEAD -> master)
 
-------=_Part_457_158478696.1561115969006
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename=signature.asc
+    Change the data_len parameter of _XimAttributeToValue() to CARD16
+=20=20=20=20
+    It's coming from a length in the protocol (unsigned) and passed
+    to functions that expect unsigned int parameters (_XCopyToArg()
+    and memcpy()).
+=20=20=20=20
+commit 1a566c9e00e5f35c1f9e7f3d741a02e5170852b2
+
+    Zero out buffers in functions
+=20=20=20=20
+    It looks like uninitialized stack or heap memory can leak
+    out via padding bytes.
+=20=20=20=20
+
+commit 2fcfcc49f3b1be854bb9085993a01d17c62acf60
+
+    Fix more unchecked lengths
+=20=20=20=20
+commit 388b303c62aa35a245f1704211a023440ad2c488
+
+    fix integer overflows in _XimAttributeToValue()
+=20=20=20=20
+
+commit 0e6561efcfaa0ae7b5c74eac7e064b76d687544e
+
+    Fix signed length values in _XimGetAttributeID()
+=20=20=20=20
+    The lengths are unsigned according to the specification. Passing
+    negative values can lead to data corruption.
+=20=20=20=20
+Thanks
+=3D=3D=3D=3D=3D=3D
+
+X.Org thanks Todd Carson for reporting these issues to our security
+team and assisting them in understanding them and providing fixes.
+
+
+--=20
+Matthieu Herrb
+
+
+
+_______________________________________________
+xorg-announce mailing list
+xorg-announce@lists.x.org
+https://lists.x.org/mailman/listinfo/xorg-announce
+
+
+----- End forwarded message -----
+
+
+--x7uGNNMLqM1zUlCR
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: BCPG v1.61
 
-iQEcBAABCgAGBQJdDL1BAAoJEG/8M0ObDQTfh1oIAKiVIe9LsSdd6QQb+DNa+vYD
-By2z+LiM+6Io/lq4g+VlAjYCaJleKDXIyPv/orE6ArLlXYteXg6z9k8yQeHRbW2m
-HfB9xr2fZR3WgCiZKAMp9buh83EqWeDUF1wIP2MqpcjGeD6tUQOAZ0+l7P69Vvm9
-ZQ822f0M3/TbJUmTITq5udqeM+0la7noQxvNcJJq5D7q64Ajo4da7Mth7nEDCImr
-9t/sD0uxolXtO6vyXichEaw88LrKAlnJwb81Swb5c7LC/YP5RJqbuoArDOK8+e4j
-XR/YqzUAtAXEBKJhdJUEeWALu/mUjLEyArtd2cDKVKBpnaL38Wa+JLlzQ37Y9gI=
-=cf5T
+iQIVAwUBXyQksmhzk+430Sj4AQKFAw//QTYPRRIq1Lqsuluxt5PdfYokhLKprvyY
+PzO8kaLtZgyUHJahDtkr08Rkbwwy1mZXwcesAryqHREhBfmBzq+OBqPH0cdOXPil
+d6QAlIKiCgosuzmTCprlOcC7UobfMheTrGDclkDJiWw9wfN12JnoGnJcetiwZOTj
+2QKJxx4wJNgPe0zKbdjuFVt3vIUdpkBcRUv/ymz9IMAlZ7F1ta2k4pf2OnnGib6r
+0KAK/MUkegfj511+Ot6Zjph/04WZkCvge+6WUDyUF12fWBNc499deu1epHExikhN
+EWvtI3oYKa2Y3aiT6Ktmdt3kiKO+HrWXx7d5fwiZxAcmQU04NUClySC0Z9BE86yv
+4DPwWixo4rt60kCoOSJCbB7RmRF5AuIcya56SBfRtm0Jn6r4R9Df99hrVeJlSBWE
+xJk6RdBP6pibsJ2m6Z42CP+St8qoOHqU3BXJnU1pqRKCIyEXfnbTwRlVFAT4SFHU
+ZwwLU2BxEUktFSkYBvchyVXgnB+fTfZPiKOgqzLH5/d8v2PazSGnv/Cd4Qmz7wip
+l/cmGscx2opWRiVykn4MkTyaw0jJ+Ow7qmZftHyO7IOJN4toswI2YgadQpFuw96r
+DGySz/dF9A9YokOiwtkjVuHNYXD3lGZ3k2OFSCUZyoykDteOXEkl7mYS4yO1jDks
+lNIaRka+k6Q=
+=/BUW
 -----END PGP SIGNATURE-----
 
-------=_Part_457_158478696.1561115969006--
+--x7uGNNMLqM1zUlCR--
