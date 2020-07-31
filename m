@@ -1,102 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/30/3
-Message-ID: <20200929224830.GA560751@fullerene.field.pennock-tech.net>
-Date: Tue, 29 Sep 2020 18:48:30 -0400
-From: Phil Pennock <oss-security-phil@...dhuis.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/31/1
+Message-ID: <20200731140335.GC69757@zuma.herrb.net>
+Date: Fri, 31 Jul 2020 16:03:35 +0200
+From: Matthieu Herrb <matthieu@...rb.eu>
 To: oss-security@...ts.openwall.com
-Cc: pdp@...s.io
-Subject: [CVE-2020-26149] NATS project vulnerabilities: nats.js, (nats.ws, nats.deno)
+Subject: Fwd: X.Org security advisory: July 31, 2020: libX11
 Content-Type: text/plain; charset=utf-8
 
-CVE: CVE-2020-26149
+----- Forwarded message from Matthieu Herrb <matthieu@...rb.eu> -----
 
-Background:
+Date: Fri, 31 Jul 2020 15:37:55 +0200
+From: Matthieu Herrb <matthieu@...rb.eu>
+To: xorg-announce@...ts.x.org
+Cc: xorg-devel@...ts.x.org
+Subject: X.Org security advisory: July 31, 2020: libX11
 
-NATS.io is a high performance open source pub-sub distributed communication
-technology, built for the cloud, on-premise, IoT, and edge computing.
-The server is written in Go and there are client libraries in many languages
-and frameworks.
+X.Org security advisory: July 31, 2020
 
-Problem Description:
+Heap corruption in the X input method client in libX11
+======================================================
 
-Preview versions of two NPM packages and one Deno package from the NATS
-project contain an information disclosure flaw, leaking options to the
-NATS server; for one package, this includes TLS private credentials.
+CVE-2020-14344
 
-The _connection_ configuration options in these JavaScript-based
-implementations were fully serialized and sent to the server in the
-client's CONNECT message, immediately after TLS establishment.
+The X Input Method (XIM) client implementation in libX11 has some
+integer overflows and signed/unsigned comparison issues that can lead
+to heap corruption when handling malformed messages from an input
+method.
 
-The nats.js client supports Mutual TLS and the credentials for the TLS
-client key are included in the connection configuration options;
-disclosure of the client's TLS private key to the server has been
-observed.
+Patches
+=======
 
-Most authentication mechanisms are handled after connection, instead of
-as part of connection, so other authentication mechanisms are
-unaffected.
-For clarity: NATS account NKey authentication is NOT affected.
+Patches for these issues have been commited to the libX11 git repository.
+libX11 1.6.10 will be released shortly and will include those patches.
 
-Neither the nats.ws nor the nats.deno clients support Mutual TLS: the
-affected versions listed below are those where the logic flaw is
-present.  We are including the nats.ws and nats.deno versions out of an
-abundance of caution, as library maintainers, but rate as minimal the
-likelihood of applications leaking sensitive data.
+https://gitlab.freedesktop.org/xorg/lib/libx11
+
+commit 1703b9f3435079d3c6021e1ee2ec34fd4978103d (HEAD -> master)
+
+    Change the data_len parameter of _XimAttributeToValue() to CARD16
+    
+    It's coming from a length in the protocol (unsigned) and passed
+    to functions that expect unsigned int parameters (_XCopyToArg()
+    and memcpy()).
+    
+commit 1a566c9e00e5f35c1f9e7f3d741a02e5170852b2
+
+    Zero out buffers in functions
+    
+    It looks like uninitialized stack or heap memory can leak
+    out via padding bytes.
+    
+
+commit 2fcfcc49f3b1be854bb9085993a01d17c62acf60
+
+    Fix more unchecked lengths
+    
+commit 388b303c62aa35a245f1704211a023440ad2c488
+
+    fix integer overflows in _XimAttributeToValue()
+    
+
+commit 0e6561efcfaa0ae7b5c74eac7e064b76d687544e
+
+    Fix signed length values in _XimGetAttributeID()
+    
+    The lengths are unsigned according to the specification. Passing
+    negative values can lead to data corruption.
+    
+Thanks
+======
+
+X.Org thanks Todd Carson for reporting these issues to our security
+team and assisting them in understanding them and providing fixes.
 
 
-Affected versions:
-
-Security impact:
-
-* NPM package nats.js:
-  + mainline is unaffected
-  + beta branch is vulnerable from 2.0.0-201, fixed in 2.0.0-209
-
-Logic flaw:
-
-* NPM package nats.ws:
-  + status: preview
-  + flawed from 1.0.0-85, fixed in 1.0.0-111
-* Deno repository https://github.com/nats-io/nats.deno
-  + status: preview
-  + flawed in all git tags prior to fix
-  + fixed with git tag v1.0.0-9
+-- 
+Matthieu Herrb
 
 
-Impact:
 
-For deployments using TLS client certificates (for mutual TLS), private
-key material for TLS is leaked from the client application to the
-server.  If the server is untrusted (run by a third party), or if the
-client application also disables TLS verification (and so the true
-identity of the server is unverifiable) then authentication credentials
-are leaked.
+_______________________________________________
+xorg-announce mailing list
+xorg-announce@...ts.x.org
+https://lists.x.org/mailman/listinfo/xorg-announce
 
-Workaround:
 
-None
+----- End forwarded message -----
 
-Solution:
 
-Upgrade your package dependencies to fixed versions, and then reissue
-any TLS client credentials (with new keys, not just new certificates)
-and revoke the old ones.
-
----
-
-Personal addenda:
-
-If anyone has any more questions which aren't for oss-security, then our
-Slack tends to be pretty helpful, https://slack.nats.io will arrange an
-invite link for you if needed, or connect you through.  If you want to
-stick to email, I can be reached at <pdp@...s.io>, and there's a PGP key
-for that address in WKD if it really needs to be private.
-
-Really, no official releases included this mistake, but we know some
-developers have done `npm install nats@...a` and that's why we're
-issuing an advisory.  We've marked the bad NPM versions as deprecated
-and have a ticket in with NPMJS to get them marked vulnerable too.
-
--Phil
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (794 bytes)
