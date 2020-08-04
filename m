@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1637" "Thursday" "13" "August" "2015" "11:36:10" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2DeUkw43uvh7iNaiR-aN7vXRgTwEZMuXuvE456zZoSnQ@mail.gmail.com>" "53" "Re: [oss-security] CVE request for saltstack" nil nil nil "8" "2015081317:36:10" "[oss-security] CVE request for saltstack" (number mark "        kseifried@re Aug 13   53/1637  " thread-indent "\"Re: [oss-security] CVE request for saltstack\"\n") "<20150813172537.GA19417@openwall.com>" ("<CANO=Ty1icpVKK4T-QLNe9ym1zeJRhvkRHvZFpVd7Vb1vM1tV2A@mail.gmail.com>" "<20150813172537.GA19417@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10605" "Tuesday" "4" "August" "2020" "16:45:49" "-0300" "Marco Benatto" "mbenatto@redhat.com" "<CAOGQQ28i1NvXp3WnNGtnVTF3Oe3-dZWFa+NL25kMViqdU5GK2Q@mail.gmail.com>" "298" "[oss-security] Re: [TrouSerS-tech] [oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon" nil nil nil "8" "2020080419:45:49" "[oss-security] Re: [TrouSerS-tech] [oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon" (number mark "U       mbenatto@red Aug  4  298/10605 " thread-indent "\"[oss-security] Re: [TrouSerS-tech] [oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon\"\n") "<0cf2322ef0b53c547c97da091b18f539a0fe51af.camel@linux.ibm.com>" ("<20200520125438.GB12616@f195.suse.de>" "<CAOGQQ2_wJ5ONi3XKv3RTho279O6S7S59UPXj+b6aoEjD4JzbqQ@mail.gmail.com>" "<0cf2322ef0b53c547c97da091b18f539a0fe51af.camel@linux.ibm.com>") nil nil nil nil nil nil nil "[oss-security] Re: [TrouSerS-tech] [oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25763 invoked by uid 550); 13 Aug 2015 17:36:23 -0000
+Received: (qmail 11797 invoked by uid 550); 4 Aug 2020 20:02:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,349 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25738 invoked from network); 13 Aug 2015 17:36:23 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=pmsHEbiw9/QUq6K6c56vIZvPSi+45BDMTVugNBN3l4A=;
-        b=caGohkASAtI3ilupZFDnYSE9UZipBbFLPpuP9NKQQ1Bt8EuBes3BpaNm3edUUb6FAE
-         okU9/LJnpBp4aGa8wHEg6Hl9sfYvwiDoEJ2p8feKxlWADOroQlvkp9NJxw6MVyQwf3Zw
-         ujkdgQRfVZsbLRTrrLPDBSu72EdM6mOvkKz8S4skCrHAxSZtAO4hRX8RCqG/bIJM6UMk
-         QIPm0xPmI7fGXQpmHLdafc/oH5BnPbBjM7D2k8fa7sZS8g9Avlmq13Ll4s1PuHgw6ll5
-         9Gvykik99lqvyLFJksHfw2/te0CZIwf+1+UtGDRfkOVwi0DnbvWgfxvJ0EHQ2iNnQaB2
-         BNFQ==
-X-Gm-Message-State: ALoCoQmDY3Fwou6+1/jj7dgd6+96ZJk0xLzOCNgHjI929LW+h0b/FuhhVpKD6Cb4tDes/eTSRysi
-MIME-Version: 1.0
-X-Received: by 10.129.2.86 with SMTP id 83mr9779563ywc.61.1439487370974; Thu,
- 13 Aug 2015 10:36:10 -0700 (PDT)
-In-Reply-To: <20150813172537.GA19417@openwall.com>
-References: <CANO=Ty1icpVKK4T-QLNe9ym1zeJRhvkRHvZFpVd7Vb1vM1tV2A@mail.gmail.com>
-	<20150813172537.GA19417@openwall.com>
-Message-ID: <CANO=Ty2DeUkw43uvh7iNaiR-aN7vXRgTwEZMuXuvE456zZoSnQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1140cb50681367051d34c5c8
-Cc: security@saltstack.com
-Date: Thu, 13 Aug 2015 11:36:10 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request for saltstack
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 1513 invoked from network); 4 Aug 2020 19:46:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1596570396;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=gSfwB6dSUrgpUwhj9r8Kg/VBR52asAinD6cDi5EMo3g=;
+	b=hboM0iVfbZwXl9UOwm9XBJsyJT5bU8F7EvgulfD7saJhpychoey1UJkVPFtmzBciAZt8jb
+	NoaigFyCYqEjqMUrCCjoK0IA9NCrqWxxWGslca2578nBA4e8yjBg+ariCENqBqsfPof9Xn
+	tQi3Mo3JxNDzqoSS/rwIUHMAHvA7/hE=
+X-MC-Unique: _c81sAT5N--dDmfQYpgmBw-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=gSfwB6dSUrgpUwhj9r8Kg/VBR52asAinD6cDi5EMo3g=;
+        b=k58n5wXmnwqqg21vw5EIIxAANieDZ1Gs9bwGPcRtL7LJVF4xsxkoFj5lUHiOdiEWkI
+         eY+1wMdSi0ZDxgctzI79L78/O0NsYQ925UMh/CU1Ahj9h32OxVY2SetAL6YMssFSPSW7
+         DRgF74aCgjQGL0KknuL/jy72Y1JAOmdK23TBLnMq4ig76mL8DCZNqgPUo5xEvpxY3NCn
+         svt5hAeCiqP5PhHZHN3dHbeqmcoJbeYkHJwaoQTJ1VeFzpCWt/wWXAX6TEp3H+Ltmkj5
+         JwRAReMapkyWzT2t+8GzRwbxA8/cX7JuDfQ/rwK+B+QOr1+uUbmdKuT4334bKlfuMFko
+         tr/Q==
+X-Gm-Message-State: AOAM533adpvDETsDBQsNwFLzWClvu+K/cNDuuihSu9em2KoL8z8eNJQx
+	+5C5DWbEpzEfNyLc9zcFKs7rpSpTfb1n5zQuvtmZXPrtvLJhqxcAkEeqgfbZCLORKBvU4r8mbhp
+	n1E5Db17JmjS08EEpUz4iS6UrDr3KpFsXfx+va6uMeByn
+X-Received: by 2002:a19:1c6:: with SMTP id 189mr11590235lfb.158.1596570386889;
+        Tue, 04 Aug 2020 12:46:26 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJx2bn6R3d7P8C2omi52RBKLveKv9jsFouJ6KqQdsud3CyjA7yVWW6dTOwIkqfbNMXN/b23PV+vyFLUZX5e/q+M=
+X-Received: by 2002:a19:1c6:: with SMTP id 189mr11590222lfb.158.1596570386420;
+ Tue, 04 Aug 2020 12:46:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200520125438.GB12616@f195.suse.de> <CAOGQQ2_wJ5ONi3XKv3RTho279O6S7S59UPXj+b6aoEjD4JzbqQ@mail.gmail.com>
+ <0cf2322ef0b53c547c97da091b18f539a0fe51af.camel@linux.ibm.com>
+In-Reply-To: <0cf2322ef0b53c547c97da091b18f539a0fe51af.camel@linux.ibm.com>
+From: Marco Benatto <mbenatto@redhat.com>
+Date: Tue, 4 Aug 2020 16:45:49 -0300
+Message-ID: <CAOGQQ28i1NvXp3WnNGtnVTF3Oe3-dZWFa+NL25kMViqdU5GK2Q@mail.gmail.com>
+To: Debora Velarde Babb <debora@linux.ibm.com>
+Cc: oss-security@lists.openwall.com, trousers-tech@lists.sourceforge.net
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Re: [TrouSerS-tech] [oss-security] Multiple Security Issues in the
+ TrouSerS tpm1.2 tscd Daemon
 
---001a1140cb50681367051d34c5c8
-Content-Type: text/plain; charset=UTF-8
+Thanks Debora,
 
-Ahh to funny. Someone pointed out the commit to me and I didn't even think
-to check if it got a CVE in the past. Please ignore my pre lunch
-shenanigans.
+please let me know if you need any help in the CVE assignment process
+and I'll be glad to help!
 
-On Thu, Aug 13, 2015 at 11:25 AM, Solar Designer <solar@openwall.com> wrote:
+Marco Benatto
+Red Hat Product Security
+secalert@redhat.com for urgent response
 
-> On Thu, Aug 13, 2015 at 11:06:10AM -0600, Kurt Seifried wrote:
-> > So someone pointed this out to me:
-> >
-> >
-> https://github.com/saltstack/salt/commit/e8ce66cf688b43aeb3e716e78b1af3a08e9940e3
-> >
-> >      priv = '{0}.pem'.format(base)
-> >      pub = '{0}.pub'.format(base)
-> >
-> > -    gen = RSA.gen_key(keysize, 1, callback=lambda x, y, z: None)
-> > +    gen = RSA.gen_key(keysize, 65537, callback=lambda x, y, z: None)
-> >      cumask = os.umask(191)
-> >      gen.save_key(priv, None)
-> >      os.umask(cumask)
-> >
-> > This is using the M2Crypto.RSA.
-> >
-> > TL;DR: doing RSA crypto with a public exponent value of "1" makes crypto
-> > very fast. Fast is not always good.
-> >
-> > Can we get a CVE for this please?
+On Tue, Aug 4, 2020 at 4:43 PM Debora Velarde Babb <debora@linux.ibm.com> w=
+rote:
 >
-> Duplicate CVE request, with wrong rationale this time (hilarious, though)?
+> On Mon, 2020-08-03 at 12:32 -0300, Marco Benatto wrote:
+> > Hello,
+> >
+> > Is there any follow up already for this issue in upstream (CVE
+> > assigned or upstream commits)?
+> >
+> > Thanks,
+> >
+> > Marco Benatto
+> > Red Hat Product Security
+> > secalert@redhat.com for urgent response
+> >
 >
-> http://www.openwall.com/lists/oss-security/2013/07/01/1
+> Not yet but I am working on creating a CVE and committing the patches.
+> This is my first time creating a CVE so trying to understand the
+> process.
 >
-> https://github.com/saltstack/salt/commit/5dd304276ba5745ec21fc1e6686a0b28da29e6fc
+> Thanks,
+> Debbie
 >
-> http://stackoverflow.com/questions/17490282/why-is-this-commit-that-sets-the-rsa-public-exponent-to-1-problematic
-> https://news.ycombinator.com/item?id=5993959
+> > On Wed, May 20, 2020 at 9:55 AM Matthias Gerstner <mgerstner@suse.de>
+> > wrote:
+> > >
+> > > Hello,
+> > >
+> > > I have discovered multiple security issues in the tcsd daemon of
+> > > the TrouSerS
+> > > [1] tpm 1.2 stack.
+> > >
+> > > Introduction
+> > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >
+> > > The tcsd daemon manages access to the tpm 1.2 compliant /dev/tpm0
+> > > device on
+> > > Linux systems. The daemon utilizes an unprivileged user and group
+> > > account to
+> > > run as. These are called tss:tss by default.
+> > >
+> > > The tcsd can be started directly as the tss user and group e.g. via
+> > > systemd or
+> > > via start-stop-daemon. In this case the /dev/tpm0 device needs to
+> > > be owned by
+> > > the tss user. This mode of operation is safe and is not affected by
+> > > the
+> > > following findings.
+> > >
+> > > If the tcsd is started with root privileges then it opens /dev/tpm0
+> > > as root
+> > > and drops privileges to the unprivileged user afterwards. In this
+> > > case the tss
+> > > user can achieve privilege escalations. The following logic is
+> > > performed by
+> > > the tcsd:
+> > >
+> > > 1) the daemon reads in the configuration in /etc/tcsd.conf after
+> > > making sure
+> > >   that the config file is owned by tss:tss mode 0600 (function
+> > >   `conf_file_init()`). From this configuration file the path
+> > > `system_ps_file`
+> > >   (by default /var/lib/tpm/system.data) is parsed and used for
+> > > further
+> > >   operations.
+> > >
+> > > 2) the daemon makes sure that the directory where the
+> > > `system_ps_file` is
+> > >   contained in exists (function `ps_dirs_init()`, /var/lib/tpm by
+> > > default).
+> > >   The directory is created, if necessary, using `mkdir()` and mode
+> > > 0700.
+> > >   Afterwards an explicit `chown()` to mode 0700 is made in case the
+> > > mode of
+> > >   the directory doesn't match this mode yet.
+> > >
+> > > 3) in the function `ps_init_disk_cache()` the function `get_file()`
+> > > is called
+> > >   which opens the `system_ps_file` using `O_RDWR|O_CREAT` and mode
+> > > 0600:
+> > >
+> > >   `openat(AT_FDCWD, "/var/lib/tpm/system.data", O_RDWR|O_CREAT,
+> > > 0600) =3D 4`
+> > >
+> > > 4) only after these steps a privilege drop to the tss uid is
+> > > performed in
+> > >    the `main()` function.
+> > >
+> > > Security Issues
+> > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >
+> > > The security issues resulting from this are as follows:
+> > >
+> > > a) Since /var/lib/tpm is owned by the tss user (as per
+> > > dist/Makefile.am), the
+> > >    creation of the `system.data` file in step 3) is prone to
+> > > symlink attacks. The
+> > >    tss user can thereby cause the creation of new files or the
+> > > corruption of
+> > >    existing files. These new files end up with mode 0600 and no
+> > > `chown()` to the
+> > >    tss user is performed by the tcsd. Thus it looks like no full
+> > > local root
+> > >    privilege escalation can be achieved but only DoS attacks.
+> > >
+> > > b) The tcsd only drops the root uid, not the root gid in step 4). A
+> > > call to
+> > >    `setgid()` is missing. Therefore the tcsd continues to run with
+> > > root group
+> > >    privileges it doesn't actually require. This could allow further
+> > > privilege
+> > >    escalations when combined with other, yet unknown attack
+> > > vectors.
+> > >
+> > > c) The configuration file /etc/tcsd.conf is _required_ by the tcsd
+> > > to be
+> > >    owned by tss:tss mode 0600. Therefore the unprivileged user can
+> > > change all
+> > >    daemon related settings, including the `system_ps_file` path.
+> > > This means
+> > >    the `mkdir()` and `chmod()` performed in step 2) can be directed
+> > > to an
+> > >    arbitrary path. This also includes the symlink attack described
+> > > in a)
+> > >    for arbitrary paths.
+> > >
+> > >    Further security issues could stem from this by manipulating
+> > > other config
+> > >    file options. I did not look deeper into this.
+> > >
+> > > d) Not directly related to the logic above. The example RPM spec
+> > > file [5] in
+> > >    the TrouSerS repository is using unsafe file and directory modes
+> > > for
+> > >    /var/lib/tpm and /usr/sbin/tcsd:
+> > >
+> > >    ```
+> > >    # create the default location for the persistent store files
+> > >    if test -e %{_localstatedir}/tpm; then
+> > >         mkdir -p %{_localstatedir}/tpm
+> > >         /bin/chown tss:tss %{_localstatedir}/tpm
+> > >         /bin/chmod 1777 %{_localstatedir}/tpm
+> > >    fi
+> > >
+> > >    # chown the daemon
+> > >    /bin/chown tss:tss %{_sbindir}/tcsd
+> > >    ```
+> > >
+> > >    So here a public sticky-bit directory is setup in /var/lib/tpm.
+> > > This could
+> > >    allow arbitrary users to setup the symlink attack mentioned in
+> > > a). It could
+> > >    also lead to an information leak. Once the tcsd is started as
+> > > root the mode
+> > >    of /var/lib/tpm will be corrected in step 1), however.
+> > >
+> > >    Passing ownership of /usr/sbin/tcsd to the tss user would allow
+> > > the tss
+> > >    user to replace the tcsd binary by malicious code that will
+> > > potentially be
+> > >    executed by the root user, leading to arbitrary code execution.
+> > >
+> > >    I'm not aware of any distribution actually using this spec file
+> > > or parts of
+> > >    it. Still it is a very bad example.
+> > >
+> > > Mitigation and Bugfixes
+> > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >
+> > > It seems best to me to run the tcsd as the tss:tss user and group
+> > > right away
+> > > and to not rely on the privilege drop logic implemented in the
+> > > daemon itself.
+> > > All of a), b) and c) should no longer be problematic in this case.
+> > > I found
+> > > that on Debian and Gentoo Linux this is already the case. To make
+> > > this work a
+> > > udev rule needs to be packaged that passes ownership of /dev/tpm0
+> > > device to
+> > > the tss user. To prevent regressions when switching from the
+> > > privilege drop
+> > > approach to this new approach, a possibly already existing
+> > > /var/lib/tpm/system.auth file needs to be safely chown()'ed to the
+> > > tss user
+> > > during package updates.
+> > >
+> > > On SUSE and Fedora Linux the tcsd is started as root via systemd,
+> > > thus they
+> > > are affected by the security issues. A preliminary suggested source
+> > > code fix
+> > > is attached to this mail. It makes sure that `O_NOFOLLOW` is added
+> > > to step 3)
+> > > to prevent a symlink attack. It also adds a drop of the root gid to
+> > > the tss
+> > > gid. And it modifies the check of /etc/tcsd.conf such that
+> > > ownership root:tss
+> > > and mode 0640 are necessary. The packaging needs to be adjusted
+> > > accordingly.
+> > >
+> > > The correct long term fix should probably be to *only* open
+> > > /dev/tpm0 as root,
+> > > immediately drop to tss:tss and only then perform the further
+> > > initialization
+> > > steps. The initialization sequence in `tcsd_startup()` is currently
+> > > running
+> > > completely in the root user context and seems rather complex. Maybe
+> > > there are
+> > > more details to this that I don't know of yet. For this reason I
+> > > didn't try a
+> > > patch in this direction yet.
+> > >
+> > > Upstream Reporting
+> > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >
+> > > I reported issues a), b) and d) privately to the documented
+> > > upstream contacts
+> > > without much success (see Timeline below). The SUSE Security Team
+> > > 90 days
+> > > maximum disclosure time has been reached, therefore I'm publishing
+> > > this now in
+> > > an uncoordinated way. While working on a fix I additionally
+> > > discovered issue
+> > > c). SUSE is tracking the issues in bsc#1164472 [6] currently.
+> > >
+> > > Issues a), b) and c) deserve CVE assignments in my opinion. I can't
+> > > request
+> > > CVEs myself though, because IBM upstream is a CNA themselves.
+> > > Therefore
+> > > upstream is required to assign their own CVEs.
+> > >
+> > > Timeline
+> > > =3D=3D=3D=3D=3D=3D=3D=3D
+> > >
+> > > 2020-02-19: I reported findings a), b) and d) to
+> > > honclo@linux.vnet.ibm.com,
+> > >             the security contact of the project according to the
+> > > README file [2].
+> > > 2020-02-28: I reported findings a), b) and d) to
+> > > debora@linux.ibm.com, the
+> > >             maintainer of the project according to the AUTHORS file
+> > > [3].
+> > > 2020-03-16: I received a reply from debora@linux.ibm.com, stating
+> > > that she
+> > >             will look into the findings.
+> > > 2020-05-06: I reminded debora@linux.ibm.com that the latest
+> > > disclosure time
+> > >             [4] for the findings is approaching and asked for any
+> > > updates.
+> > > 2020-05-20: I started working on a bugfix and mitigations,
+> > > discovered the
+> > >             additional finding c) and started publishing the
+> > > findings.
+> > >
+> > > [1]: https://sourceforge.net/projects/trousers
+> > > [2]:
+> > > https://sourceforge.net/p/trousers/trousers/ci/master/tree/README
+> > > [3]:
+> > > https://sourceforge.net/p/trousers/trousers/ci/master/tree/AUTHORS
+> > > [4]: https://en.opensuse.org/openSUSE:Security_disclosure_policy
+> > > [5]:
+> > > https://sourceforge.net/p/trousers/trousers/ci/master/tree/dist/trous=
+ers.spec.in
+> > > [6]: https://bugzilla.suse.com/show_bug.cgi?id=3D1164472
+> > >
+> > > Best Regards
+> > >
+> > > Matthias
+> > >
+> > > --
+> > > Matthias Gerstner <matthias.gerstner@suse.de>
+> > > Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+> > > https://www.suse.com/security
+> > > Phone: +49 911 740 53 290
+> > > GPG Key ID: 0x14C405C971923553
+> > >
+> > > SUSE Software Solutions Germany GmbH
+> > > HRB 36809, AG N=C3=BCrnberg
+> > > Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
+> > >
+> >
+> >
+> >
+> > _______________________________________________
+> > TrouSerS-tech mailing list
+> > TrouSerS-tech@lists.sourceforge.net
+> > https://lists.sourceforge.net/lists/listinfo/trousers-tech
 >
-> Alexander
 >
 
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a1140cb50681367051d34c5c8--
