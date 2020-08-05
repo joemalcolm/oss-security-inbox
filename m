@@ -1,61 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/30/6
-Message-ID: <142af9167b98ce5f330f2ce9ad10decb0bdb6163.camel@amazon.com>
-Date: Mon, 30 Nov 2020 19:00:16 +0000
-From: "Karp, Samuel" <skarp@...zon.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2020-15257: containerd-shim API exposed to host network containers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/05/3
+Message-ID: <CANh7qnQU4caCP7xQ2pGLo7b6rCrhkMPtdaw0rZgNygfK2001ag@mail.gmail.com>
+Date: Wed, 5 Aug 2020 20:59:26 +0800
+From: Sheng Wu <wusheng@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-13921] Apache SkyWalking SQL injection vulnerability after H2/MySQL/TiDB storage option activated.
 Content-Type: text/plain; charset=utf-8
 
-Impact
+[CVEID]:CVE-2020-13921
+[PRODUCT]:Apache SkyWalking
+[VERSION]:Apache SkyWalking 6.5.0, 6.6.0, 7.0.0, 8.0.0, 8.0.1
+[PROBLEMTYPE]:SQL Injection
+[REFERENCES]:https://github.com/apache/skywalking/pull/4970
+[DESCRIPTION]:**Resolved** Only when using H2/MySQL/TiDB as Apache
+SkyWalking storage,  there is a SQL injection vulnerability in the wildcard
+query cases.
+[ASSIGNINGCNA]: Apache Software Foundation
 
-Access controls for the shim’s API socket verified that the connecting
-process had an effective UID of 0, but did not otherwise restrict
-access to the abstract Unix domain socket. This would allow malicious
-containers running in the same network namespace as the shim, with an
-effective UID of 0 but otherwise reduced privileges, to cause new
-processes to be run with elevated privileges.
-
-
-Patches
-
-This vulnerability has been fixed in containerd 1.3.9 [1] and 1.4.3
-[2]. Users should update to these versions as soon as they are
-released. It should be noted that containers started with an old
-version of containerd-shim should be stopped and restarted, as running
-containers will continue to be vulnerable even after an upgrade.
-
-
-Workarounds
-
-If you are not providing the ability for untrusted users to start
-containers in the same network namespace as the shim (typically the
-"host" network namespace, for example with `docker run --net=host` or
-`hostNetwork: true` in a Kubernetes pod) and run with an effective UID
-of 0, you are not vulnerable to this issue.
-
-If you are running containers with a vulnerable configuration, you can
-deny access to all abstract sockets with AppArmor by adding a line
-similar to `deny unix addr=@**,` to your policy.
-
-It is best practice to run containers with a reduced set of privileges,
-with a non-zero UID, and with isolated namespaces. The containerd
-maintainers strongly advise against sharing namespaces with the host.
-Reducing the set of isolation mechanisms used for a container
-necessarily increases that container's privilege, regardless of what
-container runtime is used for running that container.
-
-
-Credits
-
-The containerd maintainers would like to thank Jeff Dileo of NCC Group
-for responsibly disclosing this issue in accordance with the containerd
-security policy [3] and for reviewing the patch.
-
-For further details, see 
-https://github.com/containerd/containerd/security/advisories/GHSA-36xw-fx78-c5r4
-
-[1] https://github.com/containerd/containerd/releases/tag/v1.3.9
-[2] https://github.com/containerd/containerd/releases/tag/v1.4.3
-[3] https://github.com/containerd/project/blob/master/SECURITY.md
+Sheng Wu 吴晟
+Twitter, wusheng1108
 
