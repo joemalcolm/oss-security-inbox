@@ -1,82 +1,11 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/29/1
-Message-ID: <08955624-d1e7-7f77-9ed3-2981360b0351@igalia.com>
-Date: Wed, 29 Jul 2020 12:40:42 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0007
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/05/2
+Message-ID: <CAHmME9qsMk3YL83OsFB2mebkP6LXhXZ7n1FXzT52cZheevB5Ww@mail.gmail.com>
+Date: Wed, 5 Aug 2020 09:35:32 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: security@...ntu.com, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: ansi escape sequence injection into ubuntu's add-apt-repository
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0007
-------------------------------------------------------------------------
-
-Date reported           : July 29, 2020
-Advisory ID             : WSA-2020-0007
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0007.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0007.html
-CVE identifiers         : CVE-2020-9862, CVE-2020-9893, CVE-2020-9894,
-                          CVE-2020-9895, CVE-2020-9915, CVE-2020-9925.
-
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-
-CVE-2020-9862
-    Versions affected: WebKitGTK before 2.28.4 and WPE WebKit before 2.28.4
-    Credit to Ophir Lojkine (@lovasoa).
-    Impact: Copying a URL from Web Inspector may lead to command
-    injection. Description: A command injection issue existed in Web
-    Inspector. This issue was addressed with improved escaping.
-
-CVE-2020-9893
-    Versions affected: WebKitGTK before 2.28.4 and WPE WebKit before 2.28.4
-    Credit to 0011 working with Trend Micro Zero Day Initiative.
-    Impact: A remote attacker may be able to cause unexpected
-    application termination or arbitrary code execution. Description: An
-    use-after-free issue was addressed with improved memory management.
-
-CVE-2020-9894
-    Versions affected: WebKitGTK before 2.28.4 and WPE WebKit before 2.28.4
-    Credit to 0011 working with Trend Micro Zero Day Initiative.
-    Impact: A remote attacker may be able to cause unexpected
-    application termination or arbitrary code execution. Description: An
-    out-of-bounds read was addressed with improved input validation.
-
-CVE-2020-9895
-    Versions affected: WebKitGTK before 2.28.4 and WPE WebKit before 2.28.4
-    Credit to Wen Xu of SSLab, Georgia Tech.
-    Impact: A remote attacker may be able to cause unexpected
-    application termination or arbitrary code execution. Description: An
-    use-after-free issue was addressed with improved memory management.
-
-CVE-2020-9915
-    Versions affected: WebKitGTK before 2.28.4 and WPE WebKit before 2.28.4
-    Credit to Ayoub AIT ELMOKHTAR of Noon.
-    Impact: Processing maliciously crafted web content may prevent
-    Content Security Policy from being enforced. Description: An access
-    issue existed in Content Security Policy.  This issue was addressed
-    with improved access restrictions.
-
-CVE-2020-9925
-    Versions affected: WebKitGTK before 2.28.4 and WPE WebKit before 2.28.4
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    universal cross site scripting. Description: A logic issue was
-    addressed with improved state management.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-July 29, 2020
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+Upstream tracker bug:
+https://bugs.launchpad.net/ubuntu/+source/software-properties/+bug/1890286
