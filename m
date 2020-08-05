@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3846" "Thursday" "7" "April" "2016" "07:43:32" "+0000" "=?gb2312?B?zfXDtw==?=" "wangmei@360.cn" "<04F55884-564E-4A3E-8D22-AF3E17DA229E@360.cn>" "67" "[oss-security] CVE-2016-3622 libtiff: Divide By Zero in the tiff2rgba tool" nil nil nil "4" "2016040707:43:32" "[oss-security] CVE-2016-3622 libtiff: Divide By Zero in the tiff2rgba tool" (number mark "U       wangmei@360. Apr  7   67/3846  " thread-indent "\"[oss-security] CVE-2016-3622 libtiff: Divide By Zero in the tiff2rgba tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["602" "Wednesday" "5" "August" "2020" "20:59:26" "+0800" "Sheng Wu" "wusheng@apache.org" "<CANh7qnQU4caCP7xQ2pGLo7b6rCrhkMPtdaw0rZgNygfK2001ag@mail.gmail.com>" "18" "[oss-security] [CVE-2020-13921] Apache SkyWalking SQL injection vulnerability after H2/MySQL/TiDB storage option activated." nil nil nil "8" "2020080512:59:26" "[oss-security] [CVE-2020-13921] Apache SkyWalking SQL injection vulnerability after H2/MySQL/TiDB storage option activated." (number mark "U       wusheng@apac Aug  5   18/602   " thread-indent "\"[oss-security] [CVE-2020-13921] Apache SkyWalking SQL injection vulnerability after H2/MySQL/TiDB storage option activated.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-13921] Apache SkyWalking SQL injection vulnerability after H2/MySQL/TiDB storage option activated." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25809 invoked by uid 550); 7 Apr 2016 07:59:28 -0000
+Received: (qmail 1026 invoked by uid 550); 5 Aug 2020 13:02:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +12,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11861 invoked from network); 7 Apr 2016 07:43:44 -0000
-From: =?gb2312?B?zfXDtw==?= <wangmei@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2016-3622 libtiff: Divide By Zero in the tiff2rgba tool
-Thread-Index: AQHRkKEvj5sEb0NTfk6p6aCAdt2waQ==
-Date: Thu, 7 Apr 2016 07:43:32 +0000
-Message-ID: <04F55884-564E-4A3E-8D22-AF3E17DA229E@360.cn>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.162]
-Content-Type: multipart/alternative;
-	boundary="_000_04F55884564E4A3E8D22AF3E17DA229E360cn_"
+Received: (qmail 32132 invoked from network); 5 Aug 2020 12:59:51 -0000
+X-Gm-Message-State: AOAM53265jlyJGmRBavfu9z7F5EFtlHWiJ4Y35xgjYVTf+JZJ3miDaKP
+	tKk368rZcbnr+77XrTMJLdyeehuAyGkqZqTuAA==
+X-Google-Smtp-Source: ABdhPJy/uTvmfOGe9nFkq9aw6c6S/QUo0wND4VKKxPUlHII5a7R/Cd0lzbTjNA4Gl/ZQZ5dU4D19wfOzQKnmQcpI8ys=
+X-Received: by 2002:aed:3728:: with SMTP id i37mr3156399qtb.347.1596632378863;
+ Wed, 05 Aug 2020 05:59:38 -0700 (PDT)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2016-3622 libtiff: Divide By Zero in the tiff2rgba tool
+From: Sheng Wu <wusheng@apache.org>
+Date: Wed, 5 Aug 2020 20:59:26 +0800
+X-Gmail-Original-Message-ID: <CANh7qnQU4caCP7xQ2pGLo7b6rCrhkMPtdaw0rZgNygfK2001ag@mail.gmail.com>
+Message-ID: <CANh7qnQU4caCP7xQ2pGLo7b6rCrhkMPtdaw0rZgNygfK2001ag@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000c775a105ac20f1a6"
+Subject: [oss-security] [CVE-2020-13921] Apache SkyWalking SQL injection
+ vulnerability after H2/MySQL/TiDB storage option activated.
 
---_000_04F55884564E4A3E8D22AF3E17DA229E360cn_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+--000000000000c775a105ac20f1a6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
-ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogRGl2
-aWRlIEJ5IFplcm8NClZlbmRvciBVUkw6IGh0dHA6Ly93d3cubGlidGlmZi5v
-cmcvDQpDVkUgSUQ6IENWRS0yMDE2LTM2MjINCkNyZWRpdDogTWVpIFdhbmcg
-b2YgdGhlIENsb3VkIFNlY3VyaXR5IFRlYW0sIFFpaG9vIDM2MA0KDQpJbnRy
-b2R1Y3Rpb24NCj09PT09PT09PT09PQ0KDQpEaXZpc2lvbiBieSB6ZXJvIG9j
-Y3VycyBpbiB0aGUgZnBBY2MgZnVuY3Rpb24gaW4gdGlmX3ByZWRpY3QuYyBp
-biB0aWZmMnJnYmEgYWxsb3dzIGF0dGFja2VycyB0byBjYXVzZSBhIGRlbmlh
-bCBvZiBzZXJ2aWNlIHZpYSBhIGNyYWZ0ZWQgVElGRiBpbWFnZS4NCg0KDQoN
-CmxpYnRpZmYtbWFzdGVyL2xpYnRpZmYvdGlmX3ByZWRpY3QuYzozODEuDQoN
-CjM3NyBmcEFjYyhUSUZGKiB0aWYsIHVpbnQ4KiBjcDAsIHRtc2l6ZV90IGNj
-KQ0KMzc4IHsNCjM3OSAgICAgICAgIHRtc2l6ZV90IHN0cmlkZSA9IFByZWRp
-Y3RvclN0YXRlKHRpZiktPnN0cmlkZTsNCjM4MCAgICAgICAgIHVpbnQzMiBi
-cHMgPSB0aWYtPnRpZl9kaXIudGRfYml0c3BlcnNhbXBsZSAvIDg7DQozODEg
-ICAgICAgICB0bXNpemVfdCB3YyA9IGNjIC8gYnBzOw0KMzgyICAgICAgICAg
-dG1zaXplX3QgY291bnQgPSBjYzsNCjM4MyAgICAgICAgIHVpbnQ4ICpjcCA9
-ICh1aW50OCAqKSBjcDA7DQozODQgICAgICAgICB1aW50OCAqdG1wID0gKHVp
-bnQ4ICopX1RJRkZtYWxsb2MoY2MpOw0KDQoNCmdkYiB0aWZmMnJnYmENCg0K
-KGdkYikgciBzYW1wbGUvdGlmZjJyZ2JhXzEudGlmICAxLnRpZg0KU3RhcnRp
-bmcgcHJvZ3JhbTogL3Vzci9sb2NhbC9iaW4vdGlmZjJyZ2JhIHNhbXBsZS90
-aWZmMnJnYmFfMS50aWYgIDEudGlmDQpUSUZGUmVhZERpcmVjdG9yeUNoZWNr
-T3JkZXI6IFdhcm5pbmcsIEludmFsaWQgVElGRiBkaXJlY3Rvcnk7IHRhZ3Mg
-YXJlIG5vdCBzb3J0ZWQgaW4gYXNjZW5kaW5nIG9yZGVyLg0Kc2FtcGxlL3Rp
-ZmYycmdiYV8xLnRpZjogV2FybmluZywgTm9uc3RhbmRhcmQgdGlsZSBsZW5n
-dGggMSwgY29udmVydCBmaWxlLg0KVElGRkZldGNoTm9ybWFsVGFnOiBXYXJu
-aW5nLCBJTyBlcnJvciBkdXJpbmcgcmVhZGluZyBvZiAiRG9jdW1lbnROYW1l
-IjsgdGFnIGlnbm9yZWQuDQpUSUZGRmV0Y2hOb3JtYWxUYWc6IFdhcm5pbmcs
-IEluY29ycmVjdCBjb3VudCBmb3IgIk9yaWVudGF0aW9uIjsgdGFnIGlnbm9y
-ZWQuDQoNClByb2dyYW0gcmVjZWl2ZWQgc2lnbmFsIFNJR0ZQRSwgQXJpdGht
-ZXRpYyBleGNlcHRpb24uDQoweDAwMDA3ZmZmZjdiYWZmZTAgaW4gZnBBY2Mg
-KHRpZj0weDYwNDkzMCwgY3AwPTB4NjA1NmIwICIiLCBjYz00KSBhdCB0aWZf
-cHJlZGljdC5jOjM4MQ0KMzgxICAgICAgICAgICAgIHRtc2l6ZV90IHdjID0g
-Y2MgLyBicHM7DQooZ2RiKSBwIGJwcw0KJDEgPSAwDQooZ2RiKSBidA0KIzAg
-IDB4MDAwMDdmZmZmN2JhZmZlMCBpbiBmcEFjYyAodGlmPTB4NjA0OTMwLCBj
-cDA9MHg2MDU2YjAgIiIsIGNjPTQpIGF0IHRpZl9wcmVkaWN0LmM6MzgxDQoj
-MSAgMHgwMDAwN2ZmZmY3YmIwNDU3IGluIFByZWRpY3RvckRlY29kZVRpbGUg
-KHRpZj0weDYwNDkzMCwgb3AwPTB4NjA1NmIwICIiLCBvY2MwPTQsIHM9MCkg
-YXQgdGlmX3ByZWRpY3QuYzo0NTMNCiMyICAweDAwMDA3ZmZmZjdiYjRmOWYg
-aW4gVElGRlJlYWRFbmNvZGVkVGlsZSAodGlmPTB4NjA0OTMwLCB0aWxlPTAs
-IGJ1Zj0weDYwNTZiMCwgc2l6ZT00KSBhdCB0aWZfcmVhZC5jOjY2OA0KIzMg
-IDB4MDAwMDdmZmZmN2JiNGU4NyBpbiBUSUZGUmVhZFRpbGUgKHRpZj0weDYw
-NDkzMCwgYnVmPTB4NjA1NmIwLCB4PTAsIHk9MCwgej0wLCBzPTApIGF0IHRp
-Zl9yZWFkLmM6NjQxDQojNCAgMHgwMDAwN2ZmZmY3Yjk3MmYxIGluIGd0VGls
-ZUNvbnRpZyAoaW1nPTB4N2ZmZmZmZmZkZDkwLCByYXN0ZXI9MHg2MDU5NDAs
-IHc9MzIsIGg9MzIpIGF0IHRpZl9nZXRpbWFnZS5jOjY2MQ0KIzUgIDB4MDAw
-MDdmZmZmN2I5NmNlNyBpbiBUSUZGUkdCQUltYWdlR2V0IChpbWc9MHg3ZmZm
-ZmZmZmRkOTAsIHJhc3Rlcj0weDYwNTk0MCwgdz0zMiwgaD0zMikgYXQgdGlm
-X2dldGltYWdlLmM6NTAwDQojNiAgMHgwMDAwN2ZmZmY3Yjk2ZGRkIGluIFRJ
-RkZSZWFkUkdCQUltYWdlT3JpZW50ZWQgKHRpZj0weDYwNDkzMCwgcndpZHRo
-PTMyLCByaGVpZ2h0PTMyLCByYXN0ZXI9MHg2MDU5NDAsIG9yaWVudGF0aW9u
-PTEsIHN0b3A9MCkNCiAgICBhdCB0aWZfZ2V0aW1hZ2UuYzo1MTkNCiM3ICAw
-eDAwMDAwMDAwMDA0MDE5NmMgaW4gY3Z0X3dob2xlX2ltYWdlIChpbj0weDYw
-NDkzMCwgb3V0PTB4NjA0MDEwKSBhdCB0aWZmMnJnYmEuYzozODYNCiM4ICAw
-eDAwMDAwMDAwMDA0MDFlNmQgaW4gdGlmZmN2dCAoaW49MHg2MDQ5MzAsIG91
-dD0weDYwNDAxMCkgYXQgdGlmZjJyZ2JhLmM6NTA0DQojOSAgMHgwMDAwMDAw
-MDAwNDAxMWI1IGluIG1haW4gKGFyZ2M9MywgYXJndj0weDdmZmZmZmZmZTQx
-OCkgYXQgdGlmZjJyZ2JhLmM6MTI2DQoNCg0KUmVmZXJlbmNlczoNClsxXSBo
-dHRwOi8vd3d3LnJlbW90ZXNlbnNpbmcub3JnL2xpYnRpZmYvDQpbMl0gaHR0
-cDovL2J1Z3ppbGxhLm1hcHRvb2xzLm9yZy9idWdsaXN0LmNnaT9wcm9kdWN0
-PWxpYnRpZmYNCg0KDQpUaGFuayB5b3UhDQpCZXN0IFJlZ2FyZHMsDQoNCg0K
-TWVpDQoNCg==
+[CVEID]:CVE-2020-13921
+[PRODUCT]:Apache SkyWalking
+[VERSION]:Apache SkyWalking 6.5.0, 6.6.0, 7.0.0, 8.0.0, 8.0.1
+[PROBLEMTYPE]:SQL Injection
+[REFERENCES]:https://github.com/apache/skywalking/pull/4970
+[DESCRIPTION]:**Resolved** Only when using H2/MySQL/TiDB as Apache
+SkyWalking storage,  there is a SQL injection vulnerability in the wildcard
+query cases.
+[ASSIGNINGCNA]: Apache Software Foundation
 
---_000_04F55884564E4A3E8D22AF3E17DA229E360cn_--
+Sheng Wu =E5=90=B4=E6=99=9F
+Twitter, wusheng1108
+
+--000000000000c775a105ac20f1a6--
