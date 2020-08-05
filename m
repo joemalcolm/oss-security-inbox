@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1741" "Tuesday" "1" "January" "2019" "12:41:10" "+0000" "Simon McVittie" "smcv@debian.org" "<20190101124110.GA15804@espresso.pseudorandom.co.uk>" "38" "Re: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" "^Cc:" nil nil "1" "2019010112:41:10" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" (number mark "        smcv@debian. Jan  1   38/1741  " thread-indent "\"Re: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<nn5zv8prfe.fsf@armitage.lysator.liu.se>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" "<nn5zv8prfe.fsf@armitage.lysator.liu.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["34" "Wednesday" "5" "August" "2020" "09:34:23" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9rC_D9U3ju_a-W5tsybNN3ZMsxGxXNeqE0g+QjKcxKXUQ@mail.gmail.com>" "1" "[oss-security] Re: ansi escape sequence injection into ubuntu's add-apt-repository" nil nil nil "8" "2020080507:34:23" "[oss-security] Re: ansi escape sequence injection into ubuntu's add-apt-repository" (number mark "U       Jason@zx2c4. Aug  5    1/34    " thread-indent "\"[oss-security] Re: ansi escape sequence injection into ubuntu's add-apt-repository\"\n") "<CAHmME9pxJZ8wYk0YEj0-78GOqwWgdZ8crvNE4usX7N-3KvGebw@mail.gmail.com>" ("<CAHmME9pxJZ8wYk0YEj0-78GOqwWgdZ8crvNE4usX7N-3KvGebw@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: ansi escape sequence injection into ubuntu's add-apt-repository" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1261 invoked by uid 550); 1 Jan 2019 12:41:35 -0000
+Received: (qmail 16230 invoked by uid 550); 5 Aug 2020 07:34:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,31 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1243 invoked from network); 1 Jan 2019 12:41:35 -0000
-Message-ID: <20190101124110.GA15804@espresso.pseudorandom.co.uk>
-References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
- <nn5zv8prfe.fsf@armitage.lysator.liu.se>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <nn5zv8prfe.fsf@armitage.lysator.liu.se>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: Jeffrey Walton <noloader@gmail.com>, gmp-bugs@gmplib.org
-Date: Tue, 1 Jan 2019 12:41:10 +0000
-From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Asserts considered harmful (or GMP spills its
- sensitive information)
-To: oss-security@lists.openwall.com
+Received: (qmail 16198 invoked from network); 5 Aug 2020 07:34:47 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:references:in-reply-to:from:date:message-id:subject:to
+	:content-type; s=mail; bh=ZRn3gQM767mWGmbu+mO2fWmXl3o=; b=19IYmz
+	5Lk6Fz85CfWKJNTf40FM2ihX6Ehr6gTX/QgmnxRnVAu6dwux/+k3TE9ZcOEhycvW
+	AkCHbkS4detRkkzbjL/2fyQW7r1Ki69zM3VoR7FRFWXsUOFaVckL7jKxlcoTZL4W
+	ceTvlHoL5HCa3gjFllUthPp11tHGSWMO88cIyC0pPtIWiVeVHvIPXJw2oXE2EJ/d
+	sPqnhdza1t1fR9mKaULc5oAEQkIExlgg8bPft39OUmQH7uaawDLpTqHJKvUSdcvI
+	ZhnVu3+Ls3ef0szVgKc3cYp74CJ46nYjgkc+Su8iUVJbZqqNOT/gMr2tZ9/ih16m
+	ynaCrbZlrDoQrvjA==
+X-Gm-Message-State: AOAM533jLhAq8+BmamED3SPzcdYT1alrGJuvZHv2l4B/6Fim2yNa0WIn
+	f2+lrNNpgzyuMHwPGywrRiDZ9R8uyL1SR2hkkb4=
+X-Google-Smtp-Source: ABdhPJzUwj6a26y21qHNWNExYGZiyaa5k3OKEtZoiKS9c+IvJyk5kF+YCnilFU7haVJEZSxTMsUskcfgHMqAjJzuNQ8=
+X-Received: by 2002:a92:ce12:: with SMTP id b18mr2646556ilo.207.1596612873957;
+ Wed, 05 Aug 2020 00:34:33 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAHmME9pxJZ8wYk0YEj0-78GOqwWgdZ8crvNE4usX7N-3KvGebw@mail.gmail.com>
+In-Reply-To: <CAHmME9pxJZ8wYk0YEj0-78GOqwWgdZ8crvNE4usX7N-3KvGebw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 5 Aug 2020 09:34:23 +0200
+X-Gmail-Original-Message-ID: <CAHmME9rC_D9U3ju_a-W5tsybNN3ZMsxGxXNeqE0g+QjKcxKXUQ@mail.gmail.com>
+Message-ID: <CAHmME9rC_D9U3ju_a-W5tsybNN3ZMsxGxXNeqE0g+QjKcxKXUQ@mail.gmail.com>
+To: security@ubuntu.com, oss-security <oss-security@lists.openwall.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Re: ansi escape sequence injection into ubuntu's add-apt-repository
 
-On Tue, 01 Jan 2019 at 12:07:17 +0100, Niels Möller wrote:
-> A security sensitive application can easily disable generation of core
-> files, using setrlimit (on the linux kernel, prctl may also be useful).
-
-If you want to avoid core dumps being recorded on Linux in the presence of
-system configuration that writes them into a pipe to a command instead
-of to a core file (systemd-coredump, corekeeper, abrt, apport etc.,
-using a string starting with | in /proc/sys/kernel/core_pattern), then
-you need to use prctl PR_SET_DUMPABLE. Setting RLIMIT_CORE to 0 prevents
-the kernel from creating core dump files itself, but does not prevent
-it from writing them to pipes.
-
-It might be helpful to look at a recent version of dbus, which has a
-reasonably portable implementation of "don't write core dumps", in a unit
-test helper program that deliberately segfaults (so that the actual unit
-test can assert that a segfaulting child process is handled correctly).
-This was implemented to avoid core-collecting programs wasting time and
-I/O bandwidth during unit test runs, rather than to avoid information
-leaks, but the procedure is the same.
-
-Some processes (including those that are setuid or setgid, I think?) are
-automatically undumpable.
-
-> And besides, most systems have zero ulimit -c as the system default
-> these days
-
-As noted above, this does not prevent writing the cores to pipes
-(precisely to make crash-recording services like systemd-coredump more
-useful).
-
-> to get proper core dumps, including
-> disabling the core dump collection "services" you mention
-
-Crash-recording services should be able to provide a way to extract
-the core from wherever they saved it, for example `coredumpctl -o... dump`
-with systemd-coredump.
-
-    smcv
+This was assigned CVE-2020-15709.
