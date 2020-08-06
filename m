@@ -1,42 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/09/2
-Message-ID: <CAFQnWdYH1hR3cVN6F+psHrUD2B6SK=QtvL40+HTXO0UuK16cXw@mail.gmail.com>
-Date: Fri, 9 Oct 2020 10:06:46 +0200
-From: Stamatis Zampetakis <zabetak@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/06/2
+Message-ID: <20200806110623.yubvwntnnuhff46p@archlinux.org>
+Date: Thu, 6 Aug 2020 13:06:23 +0200
+From: Jonas Witschel <diabonas@...hlinux.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-13955] Apache Calcite Disabled HTTPS Hostname Verification
+Cc: trousers-tech@...ts.sourceforge.net, security@...e.de, Matthias Gerstner <mgerstner@...e.de>, Jerry Snitselaar <jsnitsel@...hat.com>
+Subject: Re: Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate
+On 2020-08-05 14:51, Jerry Snitselaar wrote:
+> > Mitigation and Bugfixes
+> > =======================
+> >
+> > It seems best to me to run the tcsd as the tss:tss user and group right away
+> > and to not rely on the privilege drop logic implemented in the daemon itself.
+> > All of a), b) and c) should no longer be problematic in this case. I found
+> > that on Debian and Gentoo Linux this is already the case. To make this work a
+> > udev rule needs to be packaged that passes ownership of /dev/tpm0 device to
+> > the tss user. To prevent regressions when switching from the privilege drop
+> > approach to this new approach, a possibly already existing
+> > /var/lib/tpm/system.auth file needs to be safely chown()'ed to the tss user
+> > during package updates.
+> >
+> 
+> On Fedora and RHEL there currently is a udev rule (from upstream) that
+> ships with the tpm2-tss package that is setting ownership of /dev/tpm0
+> to tss:root. I don't recall what the reasoning was for the group being
+> root. For /dev/tpmrm0 it sets it to tss:tss, so not sure what the reason
+> was for /dev/tpm0. I believe that package is part of a default install,
+> so that will need to be worked out. I don't know if you run into that
+> with SUSE as well.
 
-Vendor:
-The Apache Software Foundation
+The idea behind not giving the tss group access to /dev/tpm0 as well is to prevent users from gaining direct access to the TPM and being able to DoS it. Users privileged to access the TPM should be added to the tss group so that they can access the TPM trough an access broker/resource manager (like tpm2-abrmd, the in-kernel resource manager /dev/tpmrm0, or tcsd in case of TPM 1.2), but not have "bare metal" access, which is limited to the tss user and root. See [1] for reference.
 
-Versions Affected:
-Apache Calcite 0.8 to 1.25
+Cheers,
+Jonas
 
-Description:
-HttpUtils#getURLConnection method disables explicitly hostname verification
-for HTTPS connections making clients vulnerable to man-in-the-middle
-attacks.
-Calcite uses internally this method to connect with Druid and Splunk so
-information leakage may happen when using the respective Calcite adapters.
+[1] https://github.com/tpm2-software/tpm2-tss/pull/963#issuecomment-381142241
 
-The method itself is in a utility class so people may use it to create
-vulnerable
-HTTPS connections for other applications.
-
->From Apache Calcite 1.26 onwards, the hostname verification will be
-performed using the default JVM truststore.
-
-Mitigation:
-Users should upgrade to 1.26 if:
-they are using Druid or Splunk adapters via HTTPS;
-they are using HttpUtils directly for HTTPS connections.
-
-Credit:
-This issue was discovered by ﻿Simon Gerst.
-
-References:
-https://issues.apache.org/jira/browse/CALCITE-4298
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
