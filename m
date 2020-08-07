@@ -1,96 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/30/2
-Message-ID: <20200730114841.GA513718@zx2c4.com>
-Date: Thu, 30 Jul 2020 13:48:41 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/07/3
+Message-ID: <1596799898.LUXZKPQK@httpd.apache.org>
+Date: Fri, 07 Aug 2020 06:31:38 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: UEFI SecureBoot bypass fixes rolled out to kernels below radar
+Subject: CVE-2020-11993: Apache httpd: Push Diary Crash on Specifically Crafted HTTP/2 Header
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I thought I should mention that yesterday's UEFI SecureBoot bypass
-headlines neglected to mention the bugs I found over a month ago (with
-the exception of Debian's announcement, which got some details wrong
-initially but those have since been rectified).
+CVE-2020-11993: Push Diary Crash on Specifically Crafted HTTP/2 Header
 
-It appears that Linux vendors are now releasing fixes for:
+Severity: moderate
 
-- CVE-2019-20908
-  https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language.sh
-  https://www.openwall.com/lists/oss-security/2020/06/14/1
-  https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-20908
+Vendor: Apache Software Foundation
 
-- CVE-2020-15780
-  https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
-  https://www.openwall.com/lists/oss-security/2020/06/15/3
-  https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15780
+Versions Affected:
+Apache HTTP Server 2.4.20 to 2.4.43
 
-In the Red Hat Enterprise Linux 8 kernel sources, diffing yesterday's
-release with the one from a few weeks prior, we see a patch for both of
-these, which I've put at the bottom of this email.
+Description:
+Apache HTTP Server versions 2.4.20 to 2.4.43
+When trace/debug was enabled for the HTTP/2 module and on
+certain traffic edge patterns, logging statements were made on
+the wrong connection, causing concurrent use of memory pools.
 
-It seems like mention of these was left out from the advisories that
-were making news yesterday from Microsoft/Red Hat/etc, presumably
-because there's no shiny logo and press release route with these
-exploits, but rather just shoddy exploits and posted them here,
-alongside patches on LKML.
+Configuring the LogLevel of mod_http2 above "info" will mitigate this vulnerability for unpatched servers.
 
-But anyway, PSA: if you're scrambling to get your systems updated for
-this, be sure to update your kernel in addition to GRUB2. This is more
-than just a bootloader situation. And I'm sure we'll have plenty more
-SecureBoot bypasses coming up too.
+Mitigation:
 
-Jason
+Credit:
+Felix Wilhelm of Google Project Zero
 
-
-RHEL8 patch, which shipped yesterday:
-
-diff -ru linux-4.18.0-193.13.2.el8_2/drivers/acpi/acpi_configfs.c linux-4.18.0-193.14.3.el8_2/drivers/acpi/acpi_configfs.c
---- linux-4.18.0-193.13.2.el8_2/drivers/acpi/acpi_configfs.c	2020-07-14 00:38:37.000000000 +0200
-+++ linux-4.18.0-193.14.3.el8_2/drivers/acpi/acpi_configfs.c	2020-07-20 16:02:22.000000000 +0200
-@@ -14,6 +14,7 @@
- #include <linux/module.h>
- #include <linux/configfs.h>
- #include <linux/acpi.h>
-+#include <linux/kernel.h>
-
- #include "acpica/accommon.h"
- #include "acpica/actables.h"
-@@ -31,7 +32,10 @@
- {
- 	const struct acpi_table_header *header = data;
- 	struct acpi_table *table;
--	int ret;
-+	int ret = kernel_is_locked_down("Modifying ACPI tables");
-+
-+	if (ret)
-+		return ret;
-
- 	table = container_of(cfg, struct acpi_table, cfg);
-
-diff -ru linux-4.18.0-193.13.2.el8_2/drivers/firmware/efi/efi.c linux-4.18.0-193.14.3.el8_2/drivers/firmware/efi/efi.c
---- linux-4.18.0-193.13.2.el8_2/drivers/firmware/efi/efi.c	2020-07-14 00:38:37.000000000 +0200
-+++ linux-4.18.0-193.14.3.el8_2/drivers/firmware/efi/efi.c	2020-07-20 16:02:22.000000000 +0200
-@@ -31,6 +31,7 @@
- #include <linux/acpi.h>
- #include <linux/ucs2_string.h>
- #include <linux/memblock.h>
-+#include <linux/kernel.h>
-
- #include <asm/early_ioremap.h>
-
-@@ -245,6 +246,11 @@
- static char efivar_ssdt[EFIVAR_SSDT_NAME_MAX] __initdata;
- static int __init efivar_ssdt_setup(char *str)
- {
-+	int ret = kernel_is_locked_down("Modifying ACPI tables");
-+
-+	if (ret)
-+		return ret;
-+
- 	if (strlen(str) < sizeof(efivar_ssdt))
- 		memcpy(efivar_ssdt, str, strlen(str));
- 	else
-
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html#CVE-2020-11993
 
