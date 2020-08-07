@@ -1,33 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/30/4
-Message-ID: <CAOo2v=DZnn16vnvyX_ncb0H0gciYwxpV6DNFLN2s-VB1WLnyPA@mail.gmail.com>
-Date: Wed, 30 Sep 2020 20:39:23 +0530
-From: Hardik Vyas <hvyas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-10762 gluster-block: information disclosure through world-readable gluster-block log files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/07/5
+Message-ID: <20200807125434.GA18666@openwall.com>
+Date: Fri, 7 Aug 2020 14:54:34 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Daniel Ruggeri <druggeri@...che.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi Daniel,
 
-An information-disclosure flaw was found in the way that gluster-block
-logs the output from gluster-block CLI operations. This includes recording
-passwords to the cmd_history.log file which is world-readable. This flaw
-allows local users to obtain sensitive information by reading the log file.
-The highest threat from this vulnerability is to data confidentiality.
+On Fri, Aug 07, 2020 at 06:31:38AM -0500, Daniel Ruggeri wrote:
+> CVE-2020-11984: mod_uwsgi buffer overlow
+> 
+> Severity: moderate
+> 
+> Vendor: The Apache Software Foundation
+> 
+> Versions Affected:
+> httpd 2.4.32 to 2.4.44
+> 
+> Description:
+> Apache HTTP Server 2.4.32 to 2.4.44
+> mod_proxy_uwsgi info disclosure and possible RCE
+>     
+> Mitigation:
+> disable mod_uwsgi
 
-CVE-2020-10762 has been assigned for this flaw.
+You appear to use mod_uwsgi and mod_proxy_uwsgi interchangeably in the
+above, but I guess they're actually different modules?
 
-Upstream PR: https://github.com/gluster/gluster-block/pull/280
-Release: https://github.com/gluster/gluster-block/releases/tag/v0.5.1
+> Credit:
+> Discovered by Felix Wilhelm of Google Project Zero
+> 
+> References:
+> https://httpd.apache.org/security/vulnerabilities_24.html
 
-Credit: Prasanna Kumar Kalever (Red Hat)
+The vulnerability description at that link mentions mod_proxy_uwsgi
+only, so I guess it's the one affected module, whereas mod_uwsgi is
+unaffected?
+
+In general, I think you include too little detail in these postings and
+at the link above.  You do include the bare minimum (thanks!), but it is
+unclear from these announcements where in the code the issues are.  You
+could reference source files and function names and/or commits fixing
+the issues.  You could also describe the impact in more detail - e.g.,
+what kind of "info disclosure" (what info is potentially disclosed and
+to where).  I am just using this as an example of how I think you could
+improve reporting on Apache httpd vulnerabilities in general.
 
 Thanks,
--- 
 
-Hardik Vyas / Red Hat Product Security
-
-BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
-secalert@...hat.com for urgent response
-<https://www.redhat.com>
-
+Alexander
