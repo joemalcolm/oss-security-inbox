@@ -1,54 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/01/7
-Message-ID: <CAH8yC8=P-5i_0WT-AWSJ65JeY1C3BrB7p9e+4SCtH938H5ZqVA@mail.gmail.com>
-Date: Wed, 1 Apr 2020 19:42:38 -0400
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/07/4
+Message-ID: <1596799897.MWJU0QDE@httpd.apache.org>
+Date: Fri, 07 Aug 2020 06:31:37 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Deficient engineering processes
+Subject: CVE-2020-9490: Apache httpd: Push Diary Crash on Specifically Crafted HTTP/2 Header
 Content-Type: text/plain; charset=utf-8
 
-Hi Everyone,
 
-Forgive my ignorance. I'm wondering how to handle deficient
-engineering processes, and I hope folks can share their thoughts.
+CVE-2020-9490: Push Diary Crash on Specifically Crafted HTTP/2 Header
 
-As I understand development lifecycles, there are 5 steps. The class I
-took in college taught them as SADIE: Survey, Analysis, Design,
-Implementation and Evaluation. I find a lot of projects have
-deficiencies in Implementation and Evaluation.
+Severity: important
 
-Implementation is what most people think of with software. It is the
-actual code. Implementation problems are usually handled through a bug
-tracker. Implementation problems are usually instance problems. They
-are an instance of a bigger class of problems the project may be
-vulnerable to.
+Vendor: Apache Software Foundation
 
-Evaluation is usually not handled. Evaluation is the feedback cycle,
-and it is where postmortem analysis are supposed to be performed. The
-postmortem analysis should reveal why an instance problem occurred.
-Results from the analysis create changes, which are then fed back into
-the the process and the cycle repeats.
+Versions Affected:
+Apache HTTP Server 2.4.20 to 2.4.43
 
-For example, suppose a bug is reported for an undefined behavior
-sanitizer finding. The developer may (or may not) fix the finding. At
-the Evaluation phase, the postmortem should reveal why the bug
-surfaced and why the project did not detect the defect. The postmortem
-usually reveals a defective engineering process. For example, the
-Continuous Integration pipeline may not include a job to build with
-sanitizers.
+Description:
+Apache HTTP Server versions 2.4.20 to 2.4.43
+A specially crafted value for the 'Cache-Digest' header in a HTTP/2
+request would result in a crash when the server actually tries to HTTP/2
+PUSH a resource afterwards.
 
-My question is, how to convince someone that following standard
-project management procedures is a good thing? How do we get them
-onboard with improving their engineering processes? Especially the
-evaluation phase, and leveraging a continuous integration pipeline to
-detect errors before they are released to users?
+Configuring the HTTP/2 feature via "H2Push off" will mitigate this vulnerability for unpatched servers.
 
-I know the GNU Coding Standards does not help here. It lacks the
-treatment of lifecycles and evaluation/feedback phase. It also lacks a
-recommendation for a continuous integration pipeline so many GNU
-projects do not use one. GNU Coding Standards also recommends "worse
-practices", like encouraging memory leaks which breaks testing. (The
-memory leaks are some of the worse advice I have seen in print.
-Attempts to get it corrected have fallen on deaf ears).
+Mitigation:
 
-Thanks in advance.
+Credit:
+Felix Wilhelm of Google Project Zero
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html#CVE-2020-9490
+
