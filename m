@@ -1,4 +1,9 @@
-Received: (qmail 11565 invoked by uid 550); 27 Jan 2026 12:00:59 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["540" "Saturday" "8" "August" "2020" "12:41:05" "+0200" "Sylvain Beucler" "beuc@beuc.net" "<2173625e-ade0-c8ce-173e-a50464faa12b@beuc.net>" "18" "Re: [oss-security] Voiding CVE-2020-16248" "^Cc:" nil nil "8" "2020080810:41:05" "[oss-security] Voiding CVE-2020-16248" (number mark "        beuc@beuc.ne Aug  8   18/540   " thread-indent "\"Re: [oss-security] Voiding CVE-2020-16248\"\n") "<CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>" ("<CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Voiding CVE-2020-16248" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15565 invoked by uid 550); 8 Aug 2020 12:40:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,211 +11,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11506 invoked from network); 27 Jan 2026 12:00:59 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 30430 invoked from network); 8 Aug 2020 10:41:19 -0000
+X-Virus-Scanned: Debian amavisd-new at mail.beuc.net
+References: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
+Autocrypt: addr=beuc@beuc.net; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <2173625e-ade0-c8ce-173e-a50464faa12b@beuc.net>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.510 (Entity 5.510)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1vkhkT-004FQb-1J@xenbits.xenproject.org>
-Date: Tue, 27 Jan 2026 12:00:45 +0000
-Subject: [oss-security] Xen Security Advisory 478 v2 (CVE-2025-58151) - varstored: TOCTOU
- issues with mapped guest memory
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+In-Reply-To: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+Cc: prometheus-team@googlegroups.com,
+ Prometheus Developers <prometheus-developers@googlegroups.com>
+Date: Sat, 8 Aug 2020 12:41:05 +0200
+From: Sylvain Beucler <beuc@beuc.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Voiding CVE-2020-16248
+To: oss-security@lists.openwall.com,
+ Richard Hartmann <richih.mailinglist@gmail.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-            Xen Security Advisory CVE-2025-58151 / XSA-478
-                               version 2
+On 08/08/2020 10:49, Richard Hartmann wrote:
+> I could not find out which organization has
+> reserved CVE-2020-16248 so I decided to send email to this list to
+> inform the organization, enabling them to update their records.
 
-           varstored: TOCTOU issues with mapped guest memory
+I would suggest reaching MITRE:
+https://cve.mitre.org/cve/update_cve_entries.html
+- "Request an update to an exiting CVE entry"
+- Type: "Rejection"
 
-UPDATES IN VERSION 2
-====================
+They'll either do the update or point you to the assigning CNA.
 
-Public release.
+Most likely they'll mark the issue as "DISPUTED" within a few business days.
 
-ISSUE DESCRIPTION
-=================
-
-varstored is a component of the Xapi toolstack handling UEFI Variables
-for a VM.  It has a communication path with OVMF inside the VM involving
-mapping a buffer prepared by OVMF.
-
-Within varstored, there were insufficient compiler barriers, creating
-TOCTOU issues with data in the shared buffer.
-
-The exact vulnerable behaviour depends on the code generated by the
-compiler.  In a build of varstored using default settings, the attacker
-can control an index used in a jump table.
-
-IMPACT
-======
-
-An attacker with kernel level access in a VM can escalate privilege via
-gaining code execution within varstored.
-
-VULNERABLE SYSTEMS
-==================
-
-Only systems using the Xapi toolstack are potentially affected.
-
-Systems running all versions of varstored are potentially affected.
-
-x86 HVM guests which have been configured as UEFI VMs can leverage the
-vulnerability.  x86 PV guests cannot leverage the vulnerability.
-
-A Xapi VM is configured for UEFI if the `HVM-boot-params` map contains
-`firmware=uefi`.  e.g.:
-
-  xe vm-param-list uuid=$UUID
-
-  ...
-  HVM-boot-params (MRW): firmware: uefi
-  ...
-
-If `firmware` is set to `bios`, or is absent entirely (PV guests), then
-the guest cannot leverage the vulnerability.
-
-MITIGATION
-==========
-
-There are no mitigations.
-
-CREDITS
-=======
-
-This issue was discovered by Teddy Astie of Vates.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa478.patch           varstored master
-
-$ sha256sum xsa478*
-401679429e22e202fecf418c5100144ea0ee1cca3643f09960107cf3d88821db  xsa478.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAml4qMEMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZp94IAKAafDWRsyB3vmmHsGG2cF3I1LFKQMzhtogNUu/w
-7QrhNwmyI9tdIhtlPk4JC75L1Em+kDXHh+vNkQF97QeKq2IyuEYt+q2ko6sV/RTF
-Ewv0BhJJIiJCfyI/x55dz+YANOwsSOo7bZrSy1l/VgUJOdVKK5L1VtcloD57ZX2D
-A4r/rfZbJwx/vJ+Zp8R+W0on7SWS6h4am6M0+7f2swiJ2MpoEUwhSgFMmigOcdUc
-xbUo/IKOiQVNX2A6j+J5tQT6JlrXC/K8bIUwe2oDKRPG1qSMYAr2lKZ4GvoflUra
-ckCA0k520KHw+ZfuHhQq/TzIFaLVDnr1kfChYdPSX0jXtb0=
-=B9ua
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa478.patch"
-Content-Disposition: attachment; filename="xsa478.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KU3ViamVjdDog
-W1BBVENIXSBGaXggVE9DVE9VIGlzc3VlcyB3aXRoIG1hcHBlZCBndWVzdCBtZW1vcnkKCm1lbWNw
-eSgpIGNhbiBiZSBvcHRpbWlzZWQgYnkgdGhlIGNvbXBpbGVyLCBsZWFkaW5nIHRvIFRPQ1RPVSBi
-dWdzIHdpdGggZGF0YSBpbgpndWVzdCBtZW1vcnkuICBXaXRob3V0IHRoZXNlIGJhcnJpZXJzLCBk
-aXNwYXRjaF9jb21tYW5kKCkgY29tcGlsZXMgaW4gYSB3YXkKd2hpY2ggaXMgdnVsbmVyYWJsZSB0
-byBjb2RlIGluamVjdGlvbi4KClRoaXMgaXMgWFNBLTQ3OCAvIENWRS0yMDI1LTU4MTUxCgpSZXBv
-cnRlZC1ieTogVGVkZHkgQXN0aWUgPHRlZGR5LmFzdGllQHZhdGVzLnRlY2g+ClNpZ25lZC1vZmYt
-Ynk6IEFuZHJldyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+ClJldmlld2VkLWJ5
-OiBGcmVkaWFubyBaaWdsaW8gPGZyZWRpYW5vLnppZ2xpb0BjaXRyaXguY29tPgpSZXZpZXdlZC1i
-eTogUm9zcyBMYWdlcndhbGwgPHJvc3MubGFnZXJ3YWxsQGNpdHJpeC5jb20+ClJldmlld2VkLWJ5
-OiBSb2dlciBQYXUgTW9ubsOpIDxyb2dlci5wYXVAY2l0cml4LmNvbT4KLS0tCiBpbmNsdWRlL3Nl
-cmlhbGl6ZS5oIHwgMTggKysrKysrKysrKysrKysrKysrCiAxIGZpbGUgY2hhbmdlZCwgMTggaW5z
-ZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL2luY2x1ZGUvc2VyaWFsaXplLmggYi9pbmNsdWRlL3Nl
-cmlhbGl6ZS5oCmluZGV4IDA0NDQxZWE4YTM3Mi4uMTY2Nzg2OGZlYWI0IDEwMDY0NAotLS0gYS9p
-bmNsdWRlL3NlcmlhbGl6ZS5oCisrKyBiL2luY2x1ZGUvc2VyaWFsaXplLmgKQEAgLTM1LDEyICsz
-NSwxNSBAQAogI2luY2x1ZGUgImVmaS5oIgogI2luY2x1ZGUgImhhbmRsZXIuaCIKIAorI2RlZmlu
-ZSBiYXJyaWVyKCkgYXNtIHZvbGF0aWxlICgiIiA6OjogIm1lbW9yeSIpCisKIHN0YXRpYyBpbmxp
-bmUgZW51bSBjb21tYW5kX3QKIHVuc2VyaWFsaXplX2NvbW1hbmQodWludDhfdCAqKnB0cikKIHsK
-ICAgICBVSU5UMzIgZGF0YTsKIAogICAgIG1lbWNweSgmZGF0YSwgKnB0ciwgc2l6ZW9mKGRhdGEp
-KTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXplb2YgZGF0YTsKIAogICAgIHJldHVy
-biAoZW51bSBjb21tYW5kX3QpZGF0YTsKQEAgLTUwLDkgKzUzLDExIEBAIHN0YXRpYyBpbmxpbmUg
-dm9pZAogc2VyaWFsaXplX2RhdGEodWludDhfdCAqKnB0ciwgY29uc3QgdWludDhfdCAqZGF0YSwg
-VUlOVE4gZGF0YV9sZW4pCiB7CiAgICAgbWVtY3B5KCpwdHIsICZkYXRhX2xlbiwgc2l6ZW9mKGRh
-dGFfbGVuKSk7CisgICAgYmFycmllcigpOwogICAgICpwdHIgKz0gc2l6ZW9mIGRhdGFfbGVuOwog
-ICAgIGlmIChkYXRhX2xlbikgewogICAgICAgICBtZW1jcHkoKnB0ciwgZGF0YSwgZGF0YV9sZW4p
-OworICAgICAgICBiYXJyaWVyKCk7CiAgICAgICAgICpwdHIgKz0gZGF0YV9sZW47CiAgICAgfQog
-fQpAQCAtNjEsNiArNjYsNyBAQCBzdGF0aWMgaW5saW5lIHZvaWQKIHNlcmlhbGl6ZV9yZXN1bHQo
-dWludDhfdCAqKnB0ciwgRUZJX1NUQVRVUyBzdGF0dXMpCiB7CiAgICAgbWVtY3B5KCpwdHIsICZz
-dGF0dXMsIHNpemVvZihzdGF0dXMpKTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXpl
-b2Ygc3RhdHVzOwogfQogCkBAIC02OCw2ICs3NCw3IEBAIHN0YXRpYyBpbmxpbmUgdm9pZAogc2Vy
-aWFsaXplX2d1aWQodWludDhfdCAqKnB0ciwgY29uc3QgRUZJX0dVSUQgKmd1aWQpCiB7CiAgICAg
-bWVtY3B5KCpwdHIsIGd1aWQsIEdVSURfTEVOKTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciAr
-PSBHVUlEX0xFTjsKIH0KIApAQCAtNzUsNiArODIsNyBAQCBzdGF0aWMgaW5saW5lIHZvaWQKIHNl
-cmlhbGl6ZV90aW1lc3RhbXAodWludDhfdCAqKnB0ciwgRUZJX1RJTUUgKnRpbWVzdGFtcCkKIHsK
-ICAgICBtZW1jcHkoKnB0ciwgdGltZXN0YW1wLCBzaXplb2YoKnRpbWVzdGFtcCkpOworICAgIGJh
-cnJpZXIoKTsKICAgICAqcHRyICs9IHNpemVvZigqdGltZXN0YW1wKTsKIH0KIApAQCAtODIsNiAr
-OTAsNyBAQCBzdGF0aWMgaW5saW5lIHZvaWQKIHNlcmlhbGl6ZV91aW50bih1aW50OF90ICoqcHRy
-LCBVSU5UTiB2YXIpCiB7CiAgICAgbWVtY3B5KCpwdHIsICZ2YXIsIHNpemVvZih2YXIpKTsKKyAg
-ICBiYXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXplb2YgdmFyOwogfQogCkBAIC04OSw2ICs5OCw3
-IEBAIHN0YXRpYyBpbmxpbmUgdm9pZAogc2VyaWFsaXplX3VpbnQzMih1aW50OF90ICoqcHRyLCBV
-SU5UMzIgdmFyKQogewogICAgIG1lbWNweSgqcHRyLCAmdmFyLCBzaXplb2YodmFyKSk7CisgICAg
-YmFycmllcigpOwogICAgICpwdHIgKz0gc2l6ZW9mIHZhcjsKIH0KIApAQCAtOTYsNiArMTA2LDcg
-QEAgc3RhdGljIGlubGluZSB2b2lkCiBzZXJpYWxpemVfdWludDY0KHVpbnQ4X3QgKipwdHIsIFVJ
-TlQ2NCB2YXIpCiB7CiAgICAgbWVtY3B5KCpwdHIsICZ2YXIsIHNpemVvZih2YXIpKTsKKyAgICBi
-YXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXplb2YgdmFyOwogfQogCkBAIC0xMDUsNiArMTE2LDcg
-QEAgdW5zZXJpYWxpemVfZGF0YSh1aW50OF90ICoqcHRyLCBVSU5UTiAqbGVuLCBVSU5UTiBsaW1p
-dCkKICAgICB1aW50OF90ICpkYXRhOwogCiAgICAgbWVtY3B5KGxlbiwgKnB0ciwgc2l6ZW9mKCps
-ZW4pKTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXplb2YgKmxlbjsKIAogICAgIGlm
-ICgqbGVuID4gbGltaXQgfHwgKmxlbiA9PSAwKQpAQCAtMTE1LDYgKzEyNyw3IEBAIHVuc2VyaWFs
-aXplX2RhdGEodWludDhfdCAqKnB0ciwgVUlOVE4gKmxlbiwgVUlOVE4gbGltaXQpCiAgICAgICAg
-IHJldHVybiBOVUxMOwogCiAgICAgbWVtY3B5KGRhdGEsICpwdHIsICpsZW4pOworICAgIGJhcnJp
-ZXIoKTsKICAgICAqcHRyICs9ICpsZW47CiAKICAgICByZXR1cm4gZGF0YTsKQEAgLTEyNCw2ICsx
-MzcsNyBAQCBzdGF0aWMgaW5saW5lIHZvaWQKIHVuc2VyaWFsaXplX2RhdGFfaW5wbGFjZSh1aW50
-OF90ICoqcHRyLCB1aW50OF90ICpidWYsIFVJTlROIGxlbikKIHsKICAgICBtZW1jcHkoYnVmLCAq
-cHRyLCBsZW4pOworICAgIGJhcnJpZXIoKTsKICAgICAqcHRyICs9IGxlbjsKIH0KIApAQCAtMTM3
-LDYgKzE1MSw3IEBAIHN0YXRpYyBpbmxpbmUgdm9pZAogdW5zZXJpYWxpemVfdGltZXN0YW1wKHVp
-bnQ4X3QgKipwdHIsIEVGSV9USU1FICp0aW1lc3RhbXApCiB7CiAgICAgbWVtY3B5KHRpbWVzdGFt
-cCwgKnB0ciwgc2l6ZW9mKCp0aW1lc3RhbXApKTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciAr
-PSBzaXplb2YoKnRpbWVzdGFtcCk7CiB9CiAKQEAgLTE0Niw2ICsxNjEsNyBAQCB1bnNlcmlhbGl6
-ZV91aW50bih1aW50OF90ICoqcHRyKQogICAgIFVJTlROIHJldDsKIAogICAgIG1lbWNweSgmcmV0
-LCAqcHRyLCBzaXplb2YocmV0KSk7CisgICAgYmFycmllcigpOwogICAgICpwdHIgKz0gc2l6ZW9m
-IHJldDsKIAogICAgIHJldHVybiByZXQ7CkBAIC0xNTcsNiArMTczLDcgQEAgdW5zZXJpYWxpemVf
-Ym9vbGVhbih1aW50OF90ICoqcHRyKQogICAgIEJPT0xFQU4gcmV0OwogCiAgICAgbWVtY3B5KCZy
-ZXQsICpwdHIsIHNpemVvZihyZXQpKTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXpl
-b2YgcmV0OwogCiAgICAgcmV0dXJuIHJldDsKQEAgLTE2OCw2ICsxODUsNyBAQCB1bnNlcmlhbGl6
-ZV91aW50MzIodWludDhfdCAqKnB0cikKICAgICBVSU5UMzIgcmV0OwogCiAgICAgbWVtY3B5KCZy
-ZXQsICpwdHIsIHNpemVvZihyZXQpKTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXpl
-b2YgcmV0OwogCiAgICAgcmV0dXJuIHJldDsKLS0gCjIuMzkuNQoK
-
---=separator--
+Cheers!
+Sylvain
