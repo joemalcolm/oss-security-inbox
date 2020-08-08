@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["667" "Saturday" "14" "January" "2017" "08:19:00" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170114071900.lxx3d4qoibwvgru7@eldamar.local>" "19" "[oss-security] Duplicates of CVE-2015-8789 CVE-2015-8790 for libebml from TALOS reports?" "^Date:" nil nil "1" "2017011407:19:00" "[oss-security] Duplicates of CVE-2015-8789 CVE-2015-8790 for libebml from TALOS reports?" (number mark "        carnil@debia Jan 14   19/667   " thread-indent "\"[oss-security] Duplicates of CVE-2015-8789 CVE-2015-8790 for libebml from TALOS reports?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1103" "Saturday" "8" "August" "2020" "14:17:04" "-0400" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8mYOYPtSBf4Zd8oo=NKZiO2wbi6OdyTUZaBWBn5ONGuPg@mail.gmail.com>" "27" "Re: [oss-security] Voiding CVE-2020-16248" "^Cc:" nil nil "8" "2020080818:17:04" "[oss-security] Voiding CVE-2020-16248" (number mark "        noloader@gma Aug  8   27/1103  " thread-indent "\"Re: [oss-security] Voiding CVE-2020-16248\"\n") "<20200808152144.j5fatn23s6tgncsb@shell.thinkmo.de>" ("<CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>" "<20200808152144.j5fatn23s6tgncsb@shell.thinkmo.de>") nil nil nil nil nil nil nil "Re: [oss-security] Voiding CVE-2020-16248" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32295 invoked by uid 550); 14 Jan 2017 07:19:15 -0000
+Received: (qmail 32510 invoked by uid 550); 8 Aug 2020 18:17:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32277 invoked from network); 14 Jan 2017 07:19:15 -0000
+Received: (qmail 32492 invoked from network); 8 Aug 2020 18:17:27 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=VabBLFTeti5t4srSYOxrRUSV0AjgX+baGL5q7Eo6wqg=;
-        b=ssio8g4Lx5soatNSzt22U4Uzp5RoA1w12pbfaRRhnPAJBwuqsurhXH2kDcWHZROI2H
-         vshSQQK1keX6VE6mvHZrF24D/XiIi8Qkwgsdc/rNGz5UxVI3lNwYuXTfS6jSghvDpa84
-         CtRLgAvc+KWH+SZHO8RIKSLR4cwcItopcEfSHSWffKddeZQRpGScCaqcTMhpHx2ywILg
-         qLLEvBnPa1o60QxaBlNzmC+iKl1r499lS3kIJ+620xK0BKBWNeDsySGaPx7mnkvXjAHs
-         le5e6dXEumaCjj+ClNR448huSgGMLh1YU2SME3ZLt5wo/JjLyeCvZWCsoFK6BircK1w0
-         +VGw==
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc;
+        bh=LNLXfYpUIf/uLdmV+gTZEydhN8Din4PZCd+SseqIs5g=;
+        b=GOLkwR0xsvniDaOjoWTTTCDoqN5pxHARi2j223/i+TvhQq0TktJowiSVt5GgZmiIIe
+         p6FkKL+sk88IKWUIFO8/igEO857CZQShfvKapb4zAKrp/5MIPHVdj8b1bBTeiLzLQFHf
+         CAGXfIEg6krruW2M4ilVMVG4Qjx6JxPzGVAa0UMJBOlUMCcTWlwhE8G4ndTSQ+12qrBY
+         jMneCDKzFLZzaWDwsUEZQu0Qn/7I858kdWtq4CMryth9MqaDbQhcfYSeFhm55C1QPTwZ
+         1cik9vOiuKCKCBDRn2yrqjjR1qqBhfQ/adn9wlOpnXfuwdDjNb/TtOYVhsZO5kpD6DWX
+         4Hig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=VabBLFTeti5t4srSYOxrRUSV0AjgX+baGL5q7Eo6wqg=;
-        b=SzMZbDsmRbNnZHnsAZVQ1qifAcP22V7e5z3oVlW5406JnaiKSMmdl+zlNAzcgJLad3
-         sD+PBMu0xshTvjR2jD+AWCgT9/dgfyynio9iIxO49GfH92h1qqvZHbTNz9G6Sc03i53j
-         Gu/UfEGSR6jlnIAhULAOElGOvHCTtVBSkXIN+vS62iaq7FI1wCOoH/tigZWGBWeYx4x5
-         kYokwHaTZaEtbC3P9nxZhOAAUkVnxt7o1gPi9NXabB7rx9x0bB2RsHSOCIuL13WOa2Mh
-         EJrAbhDALDTL5qdTLdrXyVlmMKg1Od09f/HS5xKSCt/c1xJr6/psYPuvbVotFTsV1Rrx
-         no2g==
-X-Gm-Message-State: AIkVDXIrzTUPkmXUKpkYbEOtSTHKeCjqOyU9E+dtF4ZbaWiHHQovBuSkWqdx92UOjNTUKQ==
-X-Received: by 10.28.72.3 with SMTP id v3mr5475364wma.20.1484378343310;
-        Fri, 13 Jan 2017 23:19:03 -0800 (PST)
-Message-ID: <20170114071900.lxx3d4qoibwvgru7@eldamar.local>
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc;
+        bh=LNLXfYpUIf/uLdmV+gTZEydhN8Din4PZCd+SseqIs5g=;
+        b=QMjCtcYrJ3nVreoci6j22BG6BD3gtascIiwTNYBmhaLVvg9ibt0Oln98RVz+r02rHM
+         Vao3842Lxj+TcU+l7SrrQC9yDsF0fA4oRBlPbe7ViNTlSWN4ZYmmN4lFBZ5DFuTl30fT
+         HspES5AUi+vtmiUUyanmkRXE46bBtCdWShZzANPH0rOelQsKUvq/4/h3jgNNEVXKa33f
+         ai2SOVjgMovy0t4/L+aTNsEw7BwZYXu4rtuwpx60RDGaNJ6w/W8lB14o3Qf6Fxq8PJW0
+         yesyTkdEz9htXeTAwusGSBCViKTqNLg+zVcAyJR05MbGaknLVxcnaru9IBQhNC759FdA
+         pYPA==
+X-Gm-Message-State: AOAM5328dPKXuX7iVz22AmzZhDS8ZSCPG9tjiASjwYGgrK8Iv0ml9W2d
+	guvuSLNku8Yr4FWF42+PAKDyGt+VQdTAoHfyRGkVV7H4mgk=
+X-Google-Smtp-Source: ABdhPJwIVXmiTRupNM/FaweQj2OZbqz3q8Qc4rTNInLS4MQ5hp7ajYO8EbcQklLaseaSBN/U+w7LprDKRpTMQIuBoAg=
+X-Received: by 2002:a05:6638:2162:: with SMTP id p2mr11670409jak.17.1596910635141;
+ Sat, 08 Aug 2020 11:17:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20161126 (1.7.1)
-Date: Sat, 14 Jan 2017 08:19:00 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
+References: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
+ <20200808152144.j5fatn23s6tgncsb@shell.thinkmo.de>
+In-Reply-To: <20200808152144.j5fatn23s6tgncsb@shell.thinkmo.de>
+Message-ID: <CAH8yC8mYOYPtSBf4Zd8oo=NKZiO2wbi6OdyTUZaBWBn5ONGuPg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: oss-security@lists.openwall.com
+Date: Sat, 8 Aug 2020 14:17:04 -0400
+From: Jeffrey Walton <noloader@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] Duplicates of CVE-2015-8789 CVE-2015-8790 for libebml from TALOS
- reports?
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] Voiding CVE-2020-16248
+To: Bastian Blank <bblank@thinkmo.de>
 
-Hi
+On Sat, Aug 8, 2020 at 1:46 PM Bastian Blank <bblank@thinkmo.de> wrote:
+>
+> Hi Richard
+>
+> On Sat, Aug 08, 2020 at 10:49:14AM +0200, Richard Hartmann wrote:
+> > the Prometheus project[1] has received a public "vulnerability"
+> > report[2] against what the reporter called SSRF, but what is the core
+> > functionality of blackbox_exporter[3]: The ability to trigger network
+> > probes over the network to monitor a target's availability.
+>
+> Could you please explain yourself why you think this is not a
+> vulnerability?  Even wanted functuality can constitute a vulnerability
+> if looked on closer.
+>
+> The software allows to send pre-defined requests to arbitrary targets
+> and extract at least parts of the response.  This is a typical SSRF.
+> Would you require to specify the allowed targets, noone would ask.
 
-CVE-2015-8789: following some downstream reports, this leads to commit
-https://github.com/Matroska-Org/libebml/commit/88409e2a94dd3b40ff81d08bf6d92f486d036b24
-which mentions Cisco TALOS-CAN-0037 report. Looking at
-http://www.talosintelligence.com/reports/TALOS-2016-0037/ . That
-mentions CVE-2016-1515. So I guess CVE-2016-1515 is a duplicate of the
-CVE-2015-8789 assignment.
+ICMP and the root user requirement makes blackbox_exporter a good target.
 
-Similarly:
+It also looks like a confused deputy to me, which also makes it a
+privilege escalation.
 
-CVE-2015-8790: leads to
-https://github.com/Matroska-Org/libebml/commit/ababb64e0c792ad2a314245233db0833ba12036b
-referring to Cisco TALOS-CAN-0036,
-http://www.talosintelligence.com/reports/TALOS-2016-0036/ which in
-turns has the CVE-2016-1514 mentioned. 
+Naively, it looks like a feature that provides an attacker
+reconnaissance capabilities and allows network enumeration.
 
-Regards,
-Salvatore
+Jeff
