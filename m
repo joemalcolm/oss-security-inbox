@@ -1,24 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/08/3
-Message-ID: <d5e3c4bd-b157-d9bd-5114-6c683be5a338@oracle.com>
-Date: Tue, 8 Sep 2020 08:07:57 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: "qflb.wu" <qflb.wu@...ppsecurity.com.cn>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: [FD] libcroco multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/10
+Message-ID: <20200808132134.GA22611@openwall.com>
+Date: Sat, 8 Aug 2020 15:21:35 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Daniel Ruggeri <druggeri@...che.org>
+Cc: oss-security@...ts.openwall.com, HTTPD Security <security@...pd.apache.org>
+Subject: Re: CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow
 Content-Type: text/plain; charset=utf-8
 
-On 8/13/20 10:57 AM, Alan Coopersmith wrote:
-> Upstream closed these bugs as WONTFIX today since they have ended
-> maintenance of the standalone libcroco, as discussed in the comments on
-> https://gitlab.gnome.org/Archive/libcroco/-/issues/8
-> (which is a different security fix, for CVE-2020-12825).
+On Sat, Aug 08, 2020 at 07:02:21AM -0500, Daniel Ruggeri wrote:
+> As you can
+> imagine, with such a strong downstream community from our releases, we
+> try to be careful so as to not place too much information in the
+> descriptions to make it trivial to exploit vulnerabilities before those
+> downstream packagers can incorporate fixes.
 
-Distro maintainers should take note that GNU gettext also has an
-embedded copy of libcroco sources:
+No, I couldn't have imagined that a well-established Open Source project
+like Apache httpd would still use this flawed practice of 20+ years ago.
 
-https://git.savannah.gnu.org/gitweb/?p=gettext.git;a=tree;f=libtextstyle/gnulib-local/lib/libcroco
+The current practice is to include all information that is helpful to
+address the issue, including by downstream packagers, who in many cases
+will need to do backports rather than merely update to a new release.
 
--- 
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+By deliberately withholding information as a standard practice, you hurt
+not only those who would exploit the vulnerabilities, but also (and even
+more certainly) those who would fix them.
+
+It'd have to be some rare special case with specific reasoning to decide
+on temporarily withholding anything from an otherwise public disclosure,
+and then you'd need to have a specific plan on disclosing the rest on a
+specific date (ideally pre-announced).  For example, this can be done to
+separate the disclosure of full vulnerability and fix detail (sufficient
+for backports) vs. publication of an exploit by a week, like e.g. Qualys
+has done on some recent occasions where exploitation was not trivial.
+If you're not planning on publishing exploitation techniques, there's
+usually nothing you can reasonably withhold from the initial disclosure.
+
+If you do want to reduce the window of exposure, there are ways to give
+your downstream packagers a few days (and ideally no more than that) to
+incorporate the fixes privately before you disclose the issues publicly.
+We host the distros list for this, and you may also contact some of your
+other downstreams separately.  I am not saying you should be doing that,
+but rather I am saying that if you're not doing it (which is fine), then
+you shouldn't try to make your public disclosures cryptic as a way to
+compensate for that.  I think it doesn't have a net positive effect.
+
+So my suggestion is that for most issues you just disclose everything
+publicly right away, and for occasional highest-severity issues you
+notify some of your downstreams in private first (unfortunately, no way
+to notify all without making the issue public) and give them just a
+little time before you disclose everything publicly.
+
+Alexander
