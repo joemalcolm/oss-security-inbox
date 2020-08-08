@@ -1,4 +1,9 @@
-Received: (qmail 7937 invoked by uid 550); 29 Mar 2024 21:56:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1117" "Saturday" "8" "August" "2020" "10:49:14" "+0200" "Richard Hartmann" "richih.mailinglist@gmail.com" "<CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>" "27" "[oss-security] Voiding CVE-2020-16248" nil nil nil "8" "2020080808:49:14" "[oss-security] Voiding CVE-2020-16248" (number mark "U       richih.maili Aug  8   27/1117  " thread-indent "\"[oss-security] Voiding CVE-2020-16248\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Voiding CVE-2020-16248" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15804 invoked by uid 550); 8 Aug 2020 09:44:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,69 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5904 invoked from network); 29 Mar 2024 21:54:28 -0000
-X-Injected-Via-Gmane: http://gmane.org/
+Received: (qmail 26603 invoked from network); 8 Aug 2020 08:49:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=ZB4ZcMGwRZskDA0UFwG+uv59makJw5ZALQjNA2hNtwg=;
+        b=vgdn5DAhKDS0bFg3aEEu0ChZev77tMexwVxLO6lR2QfZNyYSbw2xqxxnLhZpr1zdy9
+         oaYHL+oiQde2UtdYtf3xe35WZKQCCzq7LpRswOxlUg4NqddNF3oodkwhaVtJ7a/R4n1N
+         M8bmzGOHGC++looFHOTvlgeia9ZzCtMrQYhJCRHq2NW3gkvJ4v47UVhqiBf37G+KQ1bK
+         LPZ+W/WZnQTkbMEH7z0Jj+ZMlc7eoAEvw9GIxYh4PCx0h9coWS8W4d0Bae6lOQFFa8Yj
+         2E6fNqSBUwbwyljwCQjPeU5NmzlZYgzXi786dmlyt2Xz9MtH9YhM8ghtIs19KNtRaNXW
+         UL3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=ZB4ZcMGwRZskDA0UFwG+uv59makJw5ZALQjNA2hNtwg=;
+        b=BdCAwQiD1jKDY0K36P4d611P6Pf9SuwDLrBTg9CE5br35lwbqMFRtKaaZ5N7ihHnEE
+         jiPBAB3RY3uwr9wer9eUIFK3o4bHKTnQ1pOWO49oLgF93z/4+uNB9fXGJp7fhnE3P6Nd
+         Ue4TUo5GfKiDHPhOrSUnQPjSPFw7bk5HLaXxkI2ONIg1LGe47P3zI4wU32oKFFswbgFH
+         4O0T2KziaEZyFpgH4gP1RJ3QyXY4EzhkwIKXlILa2k56LhRhKl3s9zX/SICJjTK66VHQ
+         OkCgUpfj84Z9RTnsNXUdF+xfbABlV0XiVbDT2STPkp2p79SjlLQNj8DArLnXHuv8VNCZ
+         D7EQ==
+X-Gm-Message-State: AOAM533ONdDWfFqw+HHX6D9iryRlkUlTgqtdbRFJSjr+Jlsji0lnm1p+
+	CfkAIYba3NGyfcZZAtWa/UoWaYEZhA9zSoYtzTDv8pQD
+X-Google-Smtp-Source: ABdhPJyZ50ngZWZj8LE1TkQKcwhjKsR/lKGEJ+7wf6+tn9fO6LddPT2s+Xy4tpRRN60IdCIYQo8R7g5o7gQqH/3DqfI=
+X-Received: by 2002:aa7:cd08:: with SMTP id b8mr12783916edw.228.1596876565923;
+ Sat, 08 Aug 2020 01:49:25 -0700 (PDT)
+MIME-Version: 1.0
+From: Richard Hartmann <richih.mailinglist@gmail.com>
+Date: Sat, 8 Aug 2020 10:49:14 +0200
+Message-ID: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-From: Tavis Ormandy <taviso@gmail.com>
-Date: Fri, 29 Mar 2024 21:54:11 -0000 (UTC)
-Message-ID: <uu7da3$87n$1@ciao.gmane.io>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
-User-Agent: slrn/1.0.3 (Linux)
-Subject: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh server compromise
+Cc: prometheus-team@googlegroups.com, 
+	Prometheus Developers <prometheus-developers@googlegroups.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Voiding CVE-2020-16248
 
-On 2024-03-29, Solar Designer wrote:
->> I have a minor procedural question for Solar though, shouldn't this
->> have been redirected to oss-security immediately from distros? What's
->> the rationale for an embargo here?
->
-> We don't have a clear policy for such case.  Some distros list members
-> have indeed suggested making this public ASAP.  We ended up delaying
-> publication by one day per my suggestion (as a compromise between ASAP
-> and having no specific CRD), and I think these are some reasons why:
+Dear all,
 
-Thanks, a compromise is better than nothing :) I think I would have
-argued for immediately discussing this in the open.
+the Prometheus project[1] has received a public "vulnerability"
+report[2] against what the reporter called SSRF, but what is the core
+functionality of blackbox_exporter[3]: The ability to trigger network
+probes over the network to monitor a target's availability. The
+reporter stated that CVE-2020-16248 has been assigned. From context,
+it seems to be a paid assessment of our software for an unnamed client
+which increases motivation to get "results", in particular CVEs for
+"zero days" - which are then promptly reported publicly with an
+embargoed CVE.
 
->
-> If this were made public yesterday, there would be more of a panic.
+The reporter has not replied to our statement that this behaviour is
+core functionality. I could not find out which organization has
+reserved CVE-2020-16248 so I decided to send email to this list to
+inform the organization, enabling them to update their records.
 
-There are lots of actions possible without any official guidance from
-vendors, and sometimes hours can make a difference. I don't think it's
-fair to characterize that as panic.
+Sorry for using this list for that purpose, I could not find a less
+wrong place to inform the (hopefully) interested parties.
 
->
-> 2. We didn't know how the culprit (or group) would react when they
-> learned of the full extent of the community's awareness.
 
-This is true with any vulnerability, there is always the possibility an
-attacker is already aware of it. They could respond to a patch being
-released by trying to extract as much value from their exploit before
-it's worthless.
+Best,
+Richard
 
-I'm not convinced that's a good argument to delay making the patch available?
-
-> 3. We were aware of concurrent coordination efforts by other groups
-> (CERT/CC, CISA) and we didn't want to interfere with their plans.
-
-The trade-off here is we're delaying everybody elses ability to react.
-I worry they might want a delay to patch the systems they care about
-first.
-
-Perhaps if a representative had said the feds request a few hours
-because they're deploying a helicopter full of agents to make an arrest,
-well okay, that's more convincing :)
-
-> 4. More findings were still being made and the wording of Andres'
-> posting improved per private feedback.
->
-
-Sure, but this could have been done in the open on oss-security, right?
-
-Tavis.
-
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@sdf.org
-_\_V _( ) _( )  @taviso
-
+[1] https://prometheus.io/
+[2] https://github.com/prometheus/blackbox_exporter/issues/669
+[3] https://github.com/prometheus/blackbox_exporter
