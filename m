@@ -1,56 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/01/1
-Message-ID: <CAFcO6XPv=KkOzk_wzNJDSv1h-X3TnbVXrZm3CR2aS+-EA9CHzg@mail.gmail.com>
-Date: Tue, 1 Dec 2020 13:51:58 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/1
+Message-ID: <20200808012029.GD3169683@millbarge>
+Date: Sat, 8 Aug 2020 01:20:29 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Daniel Ruggeri <druggeri@...che.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I reported a use-after-free bug in snd_rawmidi_kernel_write1 in
-sound/core/rawmidi.c months ago. And I reproduced it in the latest version
-linux-5.7.0 at that time.
+On Fri, Aug 07, 2020 at 06:31:38AM -0500, Daniel Ruggeri wrote:
+> CVE-2020-11984: mod_uwsgi buffer overlow
+> Versions Affected:
+> httpd 2.4.32 to 2.4.44
 
-Description:
+> Description:
+> Apache HTTP Server 2.4.32 to 2.4.44
+> mod_proxy_uwsgi info disclosure and possible RCE
 
-It was found that the raw midi kernel driver does not protect
-against concurrent access which leads to a use-after-free in
-snd_rawmidi_kernel_read1() and snd_rawmidi_kernel_write1() in rawmidi.c
-file.
-A malicious local attacker could possibly use this for privilege
-escalation.
+> References:
+> https://httpd.apache.org/security/vulnerabilities_24.html
 
-Root Cause:
+Hello Daniel, all,
 
-The rawmidi core allows user to resize the runtime buffer via ioctl,
-and this may lead to UAF when performed during concurrent reads or writes:
-the read/write functions unlock the runtime lock temporarily during copying
-form/to user-space,
-and that's the race window.
+I'm confused: this english description of affected versions
+reads like 2.4.44 is affected. However, there is a heading on the
+vulnerabilities_24.html page that says this CVE is fixed in 2.4.44.
 
-Patch for this issue:
+Many projects include a "fixed in versions ..." list to indicate when
+something is fixed; I think this is less ambiguous.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c1f6e3c818dd734c30f6a7eeebf232ba2cf3181d
+The "affects versions" don't always line up with the heading that claims
+to be fixed, eg CVE-2019-10092 claims to be fixed in 2.4.41, but the
+Affects entry doesn't mention 2.4.40.
 
-CVE assigned:
+The headings are out of order:
 
-not assigned.
+$ curl -sq https://httpd.apache.org/security/vulnerabilities_24.html | grep "Fixed in Apache"
+Fixed in Apache httpd 2.4.44</h1><dl>
+Fixed in Apache httpd 2.4.25</h1><dl>  # 2.4.25 is between 2.4.42 and 2.4.44
+Fixed in Apache httpd 2.4.42</h1><dl>
+Fixed in Apache httpd 2.4.41</h1><dl>
+Fixed in Apache httpd 2.4.39</h1><dl>
+[..]
 
-Timeline:
+The download site doesn't have a 2.4.40 download:
+https://archive.apache.org/dist/httpd/
 
-*2020/5/7  - Vulnerability reported to security@...nel.org.
-*2020/5/7  - Vulnerability confirmed and patched.
-*2020/5/18 - Request a CVE ID via https://cveform.mitre.org/
-*2020/11/18 - CVE Request responded but not assigned.
-*2020/11/18 - Reported to Red Hat.
-*2020/12/1 - Opened on oss -security@...ts.openwall.com
+But the CHANGES_2.4.41 file shows a 2.4.40 release:
+https://archive.apache.org/dist/httpd/CHANGES_2.4.41
 
-Credit:
+I don't actually care that much about CVE-2019-10092 -- I just tried to
+figure out the status of CVE-2020-11984 by looking at other examples on
+the page and found the page difficult to understand.
 
-This issue was discovered by the ADLab of venustech.
+And, something is a bit off with the CURRENT-IS-$version markers:
 
+$ curl -sq https://archive.apache.org/dist/httpd/ | grep -c CURRENT
+47
 
-Regards.
- butt3rflyh4ck.
+I expected one in each of the 2.0, 2.2, and 2.4 series, or perhaps just
+one for the newest 2.4 release.
 
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
