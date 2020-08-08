@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1883" "Wednesday" "2" "March" "2016" "19:39:27" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160303003927.2F2A072E03C@smtpvbsrv1.mitre.org>" "44" "[oss-security] Re: CVE request Qemu: net: ne2000: infinite loop in ne2000_receive" "^Cc:" nil nil "3" "2016030300:39:27" "[oss-security] Re: CVE request Qemu: net: ne2000: infinite loop in ne2000_receive" (number mark "        cve-assign@m Mar  2   44/1883  " thread-indent "\"[oss-security] Re: CVE request Qemu: net: ne2000: infinite loop in ne2000_receive\"\n") "<alpine.LFD.2.20.1603022054390.31146@wniryva>" ("<alpine.LFD.2.20.1603022054390.31146@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1992" "Saturday" "8" "August" "2020" "17:21:44" "+0200" "Bastian Blank" "bblank@thinkmo.de" "<20200808152144.j5fatn23s6tgncsb@shell.thinkmo.de>" "48" "Re: [oss-security] Voiding CVE-2020-16248" "^Cc:" nil nil "8" "2020080815:21:44" "[oss-security] Voiding CVE-2020-16248" (number mark "        bblank@think Aug  8   48/1992  " thread-indent "\"Re: [oss-security] Voiding CVE-2020-16248\"\n") "<CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>" ("<CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Voiding CVE-2020-16248" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28516 invoked by uid 550); 3 Mar 2016 00:39:40 -0000
+Received: (qmail 7973 invoked by uid 550); 8 Aug 2020 17:45:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28485 invoked from network); 3 Mar 2016 00:39:39 -0000
-In-Reply-To: <alpine.LFD.2.20.1603022054390.31146@wniryva>
-Message-Id: <20160303003927.2F2A072E03C@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, yanghongke@huawei.com
-Date: Wed,  2 Mar 2016 19:39:27 -0500 (EST)
-From: cve-assign@mitre.org
+Received: (qmail 20326 invoked from network); 8 Aug 2020 15:21:56 -0000
+Message-ID: <20200808152144.j5fatn23s6tgncsb@shell.thinkmo.de>
+Mail-Followup-To: Bastian Blank <bblank@thinkmo.de>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	oss-security@lists.openwall.com
+References: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+Cc: oss-security@lists.openwall.com
+Date: Sat, 8 Aug 2020 17:21:44 +0200
+From: Bastian Blank <bblank@thinkmo.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request Qemu: net: ne2000: infinite loop in ne2000_receive
-To: ppandit@redhat.com
+Subject: Re: [oss-security] Voiding CVE-2020-16248
+To: Richard Hartmann <richih.mailinglist@gmail.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Richard
 
-> Qemu emulator built with the NE2000 NIC emulation support is vulnerable to an
-> infinite loop issue. It could occur when receiving packets over the network. A
-> privileged user inside guest could use this flaw to crash the Qemu instance
-> resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg06126.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1303106
+On Sat, Aug 08, 2020 at 10:49:14AM +0200, Richard Hartmann wrote:
+> the Prometheus project[1] has received a public "vulnerability"
+> report[2] against what the reporter called SSRF, but what is the core
+> functionality of blackbox_exporter[3]: The ability to trigger network
+> probes over the network to monitor a target's availability.
 
->> Ne2000 NIC uses ring buffer of NE2000_MEM_SIZE(49152) bytes to process 
->> network packets. Registers PSTART & PSTOP define ring buffer size & 
->> location. Setting these registers to invalid values could lead to 
->> infinite loop or OOB r/w access issues. Add check to avoid it.
+Could you please explain yourself why you think this is not a
+vulnerability?  Even wanted functuality can constitute a vulnerability
+if looked on closer.
 
-Use CVE-2016-2841.
+The software allows to send pre-defined requests to arbitrary targets
+and extract at least parts of the response.  This is a typical SSRF.
+Would you require to specify the allowed targets, noone would ask.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/ne2000.c but
-that may be an expected place for a later update.
+>                                                        From context,
+> it seems to be a paid assessment of our software for an unnamed client
+> which increases motivation to get "results", in particular CVEs for
+> "zero days" - which are then promptly reported publicly with an
+> embargoed CVE.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Please don't.  You just accused the reporter of malpractice on a public
+forum.  JFYI, this is punishable in your jurisdiction.
 
-iQIcBAEBCAAGBQJW14dFAAoJEL54rhJi8gl5IDMP/2U7nLNi4eNJn3ybPDVTjNWn
-ge3Y7dcPNs+PwEFNWXbyREH+uyflE1Af3SB03lVsrGcBEhFW/RsfpkAUYqfeYtku
-XtAzLVmO/qvhNdxtfN2GJVlPhIekaWZxxR9kk0nRN5S/fDQg6Mw1LADahoGL5pMx
-eOXnN/GfVkMG16Ee9uit7v5yDuC4kDT3Mg/0ORk9E5mw+rUKH1XvH1+FpPcRg6cF
-m4oDxjnwXM35EVcapHJzXbYQZP9Cqo7I+vmNW9QgjDZ5yIiDeQhxOfHv81BTChMD
-KRwuqnVq8nKOSQQFaxTtdrUkXBVKNXNG5T5XnbyllacYkq5COolY+jOIjadZkyaL
-dDPDuG/HL357ZG4mJFkfzPD1EBoRRUnTvVbCPRCjxslHg8OTD9OYq3oc52R8K+co
-WUL5fd6HzDPSHnkwuHhCPK15NbXgOui/s+vwcpDikFEx8luizkRWO3OnB2l/FG/0
-jdEHLwIoHArxzILYpcYMEs2OeLTWLePOzhRo9N+/kh4X0q4bPTlaoloSmQgHtb11
-IbnR4KboFKyD4zafLuU47cT5deQO42Jzi2hXRtMB32pLcZ2ZpDWf7t8GLsMxntfr
-HJqLoWUVu5RNNQ0mibrlQYGCHYwX21YWW6Kk9au95tLO+csiWb4tb1Cjvp6QbR9m
-GyaKy3pAUaLKO2DlifON
-=pz1l
------END PGP SIGNATURE-----
+Also embargo and posting a public issue on GitHub don't really mix.
+
+> The reporter has not replied to our statement that this behaviour is
+> core functionality. I could not find out which organization has
+> reserved CVE-2020-16248 so I decided to send email to this list to
+> inform the organization, enabling them to update their records.
+
+You did not address the reporter at all.  The reporter is also not a
+regular user of GitHub, where this issue was raised.
+
+> Sorry for using this list for that purpose, I could not find a less
+> wrong place to inform the (hopefully) interested parties.
+
+As others already told you, Mitre provides a form to request updates to
+CVE entries at https://cve.mitre.org/cve/update_cve_entries.html.
+
+Regards,
+Bastian
+
+-- 
+Our way is peace.
+		-- Septimus, the Son Worshiper, "Bread and Circuses",
+		   stardate 4040.7.
