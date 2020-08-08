@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/08/2
-Message-ID: <CAGSZ4d4B8qc1ppMhJefgatohZGUi4AriEPtSijBHUO3u2daKNg@mail.gmail.com>
-Date: Wed, 8 Jan 2020 06:49:31 +0100
-From: mibo <mibo@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2020-1925: Possible SSRF in AsyncResponseWrapperImpl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/6
+Message-ID: <2173625e-ade0-c8ce-173e-a50464faa12b@beuc.net>
+Date: Sat, 8 Aug 2020 12:41:05 +0200
+From: Sylvain Beucler <beuc@...c.net>
+To: oss-security@...ts.openwall.com, Richard Hartmann <richih.mailinglist@...il.com>
+Cc: prometheus-team@...glegroups.com, Prometheus Developers <prometheus-developers@...glegroups.com>
+Subject: Re: Voiding CVE-2020-16248
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-1925: Possible SSRF in AsyncResponseWrapperImpl
+Hi,
 
-Severity: Important
-Vendor: The Apache Software Foundation
+On 08/08/2020 10:49, Richard Hartmann wrote:
+> I could not find out which organization has
+> reserved CVE-2020-16248 so I decided to send email to this list to
+> inform the organization, enabling them to update their records.
 
-Versions Affected:
-Olingo 4.0.0 to 4.7.0
-The OData v2 versions of Olingo 2.x are not affected
+I would suggest reaching MITRE:
+https://cve.mitre.org/cve/update_cve_entries.html
+- "Request an update to an exiting CVE entry"
+- Type: "Rejection"
 
-Description:
-The AsyncRequestWrapperImpl class reads a URL from the Location
-header, and then sends a GET or DELETE request to this URL. It may
-allow to implement a SSRF attack. If an attacker tricks a client to
-connect to a malicious server, the server can make the client call any
-URL including internal resources which are not directly accessible by
-the attacker.
+They'll either do the update or point you to the assigning CNA.
 
-Mitigation:
-4.x.x users should upgrade to 4.7.1
+Most likely they'll mark the issue as "DISPUTED" within a few business days.
 
-Credit:
-This issue was discovered by Artem Smotrakov of SAP SE.
-
-Links:
-https://issues.apache.org/jira/browse/OLINGO-1416
+Cheers!
+Sylvain
