@@ -1,31 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/22/1
-Message-ID: <CAA8xKjULWQ+28j6enr=N30Y1h07EUNMO7pyHDmLQVLx4mM1kPA@mail.gmail.com>
-Date: Tue, 22 Dec 2020 18:06:13 +0100
-From: Mauro Matteo Cascella <mcascell@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: 330cjfdn@...il.com
-Subject: CVE-2020-25723 QEMU: assertion failure through usb_packet_unmap() in hw/usb/hcd-ehci.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/7
+Message-ID: <20200808102052.GA376865@oxygen>
+Date: Sat, 8 Aug 2020 12:20:52 +0200
+From: Julien Pivotto <roidelapluie@...metheus.io>
+To: Bartłomiej Płotka <bwplotka@...il.com>
+Cc: Richard Hartmann <richih.mailinglist@...il.com>, oss-security@...ts.openwall.com, PrometheusMonitoring <prometheus-team@...glegroups.com>, Prometheus Developers <prometheus-developers@...glegroups.com>
+Subject: Re: [prometheus-team] Voiding CVE-2020-16248
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 08 Aug 11:16, Bartłomiej Płotka wrote:
+> Thanks for this work Richi, this is quite... interesting that someone might
+> mark core functionality as CVE.
 
-A flaw was found in the USB EHCI controller emulation of QEMU. It
-could occur while processing USB requests due to DMA memory map
-failure not being properly detected. This was fixed in the following
-commit by checking the return value of usb_packet_map(), thus
-preventing a reachable assertion issue from occuring in a later call
-of usb_packet_unmap().
+That is not that crazy. You could "ddos" someone and hide your own IP
+address.
 
-Upstream commit:
-https://git.qemu.org/?p=qemu.git;a=commit;h=2fdb42d840400d58f2e706ecca82c142b97bcbd6
+> 
+> Kind Regards,
+> Bartek
+> 
+> On Sat, 8 Aug 2020 at 09:49, Richard Hartmann <richih.mailinglist@...il.com>
+> wrote:
+> 
+> > Dear all,
+> >
+> > the Prometheus project[1] has received a public "vulnerability"
+> > report[2] against what the reporter called SSRF, but what is the core
+> > functionality of blackbox_exporter[3]: The ability to trigger network
+> > probes over the network to monitor a target's availability. The
+> > reporter stated that CVE-2020-16248 has been assigned. From context,
+> > it seems to be a paid assessment of our software for an unnamed client
+> > which increases motivation to get "results", in particular CVEs for
+> > "zero days" - which are then promptly reported publicly with an
+> > embargoed CVE.
+> >
+> > The reporter has not replied to our statement that this behaviour is
+> > core functionality. I could not find out which organization has
+> > reserved CVE-2020-16248 so I decided to send email to this list to
+> > inform the organization, enabling them to update their records.
+> >
+> > Sorry for using this list for that purpose, I could not find a less
+> > wrong place to inform the (hopefully) interested parties.
+> >
+> >
+> > Best,
+> > Richard
+> >
+> > [1] https://prometheus.io/
+> > [2] https://github.com/prometheus/blackbox_exporter/issues/669
+> > [3] https://github.com/prometheus/blackbox_exporter
+> >
+> > --
+> > You received this message because you are subscribed to the Google Groups
+> > "Prometheus Team" group.
+> > To unsubscribe from this group and stop receiving emails from it, send an
+> > email to prometheus-team+unsubscribe@...glegroups.com.
+> > To view this discussion on the web visit
+> > https://groups.google.com/d/msgid/prometheus-team/CAD77%2BgR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8%2B8_%2Bdbw%40mail.gmail.com
+> > .
+> >
+> 
+> -- 
+> You received this message because you are subscribed to the Google Groups "Prometheus Team" group.
+> To unsubscribe from this group and stop receiving emails from it, send an email to prometheus-team+unsubscribe@...glegroups.com.
+> To view this discussion on the web visit https://groups.google.com/d/msgid/prometheus-team/CAMssQwbxY-LY1FmuZUeLEp2etkj6poQc%2BMVzL-ah%3DXoF2vptSg%40mail.gmail.com.
 
-This issue was reported by Cheolwoo Myung (cc'd).
-CVE-2020-25723 was assigned by Red Hat Inc.
-
-Best regards.
 -- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
-
+Julien Pivotto
+@roidelapluie
