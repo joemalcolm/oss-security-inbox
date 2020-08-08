@@ -1,46 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/30/5
-Message-ID: <20200130181637.GC29347@mbp>
-Date: Thu, 30 Jan 2020 18:16:37 +0000
-From: Catalin Marinas <catalin.marinas@....com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: arm64/KVM debug registers vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/11
+Message-ID: <20200808152144.j5fatn23s6tgncsb@shell.thinkmo.de>
+Date: Sat, 8 Aug 2020 17:21:44 +0200
+From: Bastian Blank <bblank@...nkmo.de>
+To: Richard Hartmann <richih.mailinglist@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Voiding CVE-2020-16248
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Richard
 
-A bug has been fixed in the arm64 KVM port (commit id
-4942dc6638b07b5326b6d2faa142635c559e7cd5 "KVM: arm64: Write
-arch.mdcr_el2 changes since last vcpu_load on VHE") which would allow a
-guest to access the debug/PMU registers used by the host without being
-trapped. This can only happen during the vCPU start until the first
-preemption. Systems with an ARMv8.1 or later CPU are affected (with the
-Virtualisation Host Extensions).
+On Sat, Aug 08, 2020 at 10:49:14AM +0200, Richard Hartmann wrote:
+> the Prometheus project[1] has received a public "vulnerability"
+> report[2] against what the reporter called SSRF, but what is the core
+> functionality of blackbox_exporter[3]: The ability to trigger network
+> probes over the network to monitor a target's availability.
 
-The implications are that a guest, for a brief period, may be able to
-read event counters belonging to the host or potentially trigger
-perf-related IRQs in the host.
+Could you please explain yourself why you think this is not a
+vulnerability?  Even wanted functuality can constitute a vulnerability
+if looked on closer.
 
-A more detailed description of the fix from the commit log [1]:
+The software allows to send pre-defined requests to arbitrary targets
+and extract at least parts of the response.  This is a typical SSRF.
+Would you require to specify the allowed targets, noone would ask.
 
-    KVM: arm64: Write arch.mdcr_el2 changes since last vcpu_load on VHE
+>                                                        From context,
+> it seems to be a paid assessment of our software for an unnamed client
+> which increases motivation to get "results", in particular CVEs for
+> "zero days" - which are then promptly reported publicly with an
+> embargoed CVE.
 
-    On VHE systems arch.mdcr_el2 is written to mdcr_el2 at vcpu_load time to
-    set options for self-hosted debug and the performance monitors
-    extension.
+Please don't.  You just accused the reporter of malpractice on a public
+forum.  JFYI, this is punishable in your jurisdiction.
 
-    Unfortunately the value of arch.mdcr_el2 is not calculated until
-    kvm_arm_setup_debug() in the run loop after the vcpu has been loaded.
-    This means that the initial brief iterations of the run loop use a zero
-    value of mdcr_el2 - until the vcpu is preempted. This also results in a
-    delay between changes to vcpu->guest_debug taking effect.
+Also embargo and posting a public issue on GitHub don't really mix.
 
-    Fix this by writing to mdcr_el2 in kvm_arm_setup_debug() on VHE systems
-    when a change to arch.mdcr_el2 has been detected.
+> The reporter has not replied to our statement that this behaviour is
+> core functionality. I could not find out which organization has
+> reserved CVE-2020-16248 so I decided to send email to this list to
+> inform the organization, enabling them to update their records.
 
-No CVE ID has been assigned to this bug.
+You did not address the reporter at all.  The reporter is also not a
+regular user of GitHub, where this issue was raised.
+
+> Sorry for using this list for that purpose, I could not find a less
+> wrong place to inform the (hopefully) interested parties.
+
+As others already told you, Mitre provides a form to request updates to
+CVE entries at https://cve.mitre.org/cve/update_cve_entries.html.
+
+Regards,
+Bastian
 
 -- 
-Catalin
-
-[1] https://git.kernel.org/linus/4942dc6638b07b5326b6d2faa142635c559e7cd5
+Our way is peace.
+		-- Septimus, the Son Worshiper, "Bread and Circuses",
+		   stardate 4040.7.
