@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9170" "Thursday" "14" "September" "2017" "09:26:15" "+0200" "Dr. Thomas Orgis" "thomas.orgis@uni-hamburg.de" "<20170914092615.5e8ab5e3@sturbolzen>" "172" "Re: [oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)" "^Date:" nil nil "9" "2017091407:26:15" "[oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)" (number mark "        thomas.orgis Sep 14  172/9170  " thread-indent "\"Re: [oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)\"\n") "<427445.19640425-sendEmail@localhost>" ("<427445.19640425-sendEmail@localhost>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2543" "Saturday" "8" "August" "2020" "01:20:29" "+0000" "Seth Arnold" "seth.arnold@canonical.com" "<20200808012029.GD3169683@millbarge>" "75" "Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow" nil nil nil "8" "2020080801:20:29" "[oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow" (number mark "U       seth.arnold@ Aug  8   75/2543  " thread-indent "\"Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow\"\n") "<1596799898.GKATVRZF@httpd.apache.org>" ("<1596799898.GKATVRZF@httpd.apache.org>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27798 invoked by uid 550); 14 Sep 2017 10:46:17 -0000
+Received: (qmail 20262 invoked by uid 550); 8 Aug 2020 01:20:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,194 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20430 invoked from network); 14 Sep 2017 07:27:56 -0000
-X-Virus-Scanned: by University of Hamburg ( RRZ / mgw03.rrz.uni-hamburg.de )
-X-Virus-Scanned: by University of Hamburg ( RRZ / mh01.rrz.uni-hamburg.de )
-Message-ID: <20170914092615.5e8ab5e3@sturbolzen>
-In-Reply-To: <427445.19640425-sendEmail@localhost>
-References: <427445.19640425-sendEmail@localhost>
-Organization: =?UTF-8?B?VW5pdmVyc2l0w6R0?= Hamburg
-X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=SHA256;
- boundary="Sig_/d4U+iLMwANW7oe_OIchYqnu";
- protocol="application/pkcs7-signature"
-Date: Thu, 14 Sep 2017 09:26:15 +0200
-From: "Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] mp3gain: NULL pointer dereference in sync_buffer
- (mpglibDBL/interface.c)
-To: oss-security@lists.openwall.com
+Received: (qmail 20241 invoked from network); 8 Aug 2020 01:20:43 -0000
+Date: Sat, 8 Aug 2020 01:20:29 +0000
+From: Seth Arnold <seth.arnold@canonical.com>
+To: Daniel Ruggeri <druggeri@apache.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20200808012029.GD3169683@millbarge>
+Mail-Followup-To: Daniel Ruggeri <druggeri@apache.org>,
+	oss-security@lists.openwall.com
+References: <1596799898.GKATVRZF@httpd.apache.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="/unnNtmY43mpUSKx"
+Content-Disposition: inline
+In-Reply-To: <1596799898.GKATVRZF@httpd.apache.org>
+Subject: Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer
+ overlow
 
---Sig_/d4U+iLMwANW7oe_OIchYqnu
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+--/unnNtmY43mpUSKx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Hi Agostino,
+On Fri, Aug 07, 2020 at 06:31:38AM -0500, Daniel Ruggeri wrote:
+> CVE-2020-11984: mod_uwsgi buffer overlow
+> Versions Affected:
+> httpd 2.4.32 to 2.4.44
 
-thanks for pointing out that mp3gain is yet another user of an outdated
-fork of mpg123 code. But this time with a twist: This again seems to be
-a lifted version of the modified mpg123 code from Lame! A forked fork.
+> Description:
+> Apache HTTP Server 2.4.32 to 2.4.44
+> mod_proxy_uwsgi info disclosure and possible RCE
 
-I'll have a look if I can rip that mpglib out of mp3gain and provide a
-patch that uses an up-to-date libmpg123 for parsing instead. This would
-perhaps be a better path forward for distros than to remove the
-vulnerable mp3gain altogether.
+> References:
+> https://httpd.apache.org/security/vulnerabilities_24.html
 
-An impressive list of vulnerabilities you have there =E2=80=A6 perhaps some
-specific to mp3gain's modifications, but I guess the overflows in
-layer3.c are well-known already from mpg123 and Lame.
+Hello Daniel, all,
 
+I'm confused: this english description of affected versions
+reads like 2.4.44 is affected. However, there is a heading on the
+vulnerabilities_24.html page that says this CVE is fixed in 2.4.44.
 
-Alrighty then,
+Many projects include a "fixed in versions ..." list to indicate when
+something is fixed; I think this is less ambiguous.
 
-Thomas
+The "affects versions" don't always line up with the heading that claims
+to be fixed, eg CVE-2019-10092 claims to be fixed in 2.4.41, but the
+Affects entry doesn't mention 2.4.40.
 
---=20
-Dr. Thomas Orgis
-Universit=C3=A4t Hamburg
-RRZ / Basisinfrastruktur / HPC
-Schl=C3=BCterstr. 70
-20146 Hamburg
-Tel.: 040/42838 8826
-Fax: 040/428 38 6270
+The headings are out of order:
 
---Sig_/d4U+iLMwANW7oe_OIchYqnu
-Content-Type: application/pkcs7-signature; name=smime.p7s
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=smime.p7s
+$ curl -sq https://httpd.apache.org/security/vulnerabilities_24.html | grep "Fixed in Apache"
+Fixed in Apache httpd 2.4.44</h1><dl>
+Fixed in Apache httpd 2.4.25</h1><dl>  # 2.4.25 is between 2.4.42 and 2.4.44
+Fixed in Apache httpd 2.4.42</h1><dl>
+Fixed in Apache httpd 2.4.41</h1><dl>
+Fixed in Apache httpd 2.4.39</h1><dl>
+[..]
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG
-9w0BBwEAAKCCFEUwggOfMIICh6ADAgECAgEmMA0GCSqGSIb3DQEBBQUAMHEx
-CzAJBgNVBAYTAkRFMRwwGgYDVQQKExNEZXV0c2NoZSBUZWxla29tIEFHMR8w
-HQYDVQQLExZULVRlbGVTZWMgVHJ1c3QgQ2VudGVyMSMwIQYDVQQDExpEZXV0
-c2NoZSBUZWxla29tIFJvb3QgQ0EgMjAeFw05OTA3MDkxMjExMDBaFw0xOTA3
-MDkyMzU5MDBaMHExCzAJBgNVBAYTAkRFMRwwGgYDVQQKExNEZXV0c2NoZSBU
-ZWxla29tIEFHMR8wHQYDVQQLExZULVRlbGVTZWMgVHJ1c3QgQ2VudGVyMSMw
-IQYDVQQDExpEZXV0c2NoZSBUZWxla29tIFJvb3QgQ0EgMjCCASIwDQYJKoZI
-hvcNAQEBBQADggEPADCCAQoCggEBAKsLozXgiykUsRSFrzwQ5DlvNV1Krt3q
-YY2VSfRvZKMaYGakqUAihNnUpeV4kw5oAa25TVw6ztO4qEJA38+juoJZapIb
-rBya2ggrJSf5aSNH8eDrLHqb9RMC0H40fMKePABZq/XaDPUyPCusUNrWw96D
-lMqoDJkyDghIVltq+9rhWFgBSV9yQTwVBgGOXa2quJO0zZ7rp+hqLVI02zrv
-XHVR2tvzMfnucZgyxFQVRAz5m1Xtrd8YCKCjhopJ7lMFjxlM1d5YeZvSahxC
-q8XVp89oD5bk4WGYdmHIkXzWPgDikVCH4Z0K5q2X0h3GOn3LvNoDNNWOWwH1
-age3FrZuSn8CAwEAAaNCMEAwHQYDVR0OBBYEFDHDeRu69VPXF+CJei0XbAqz
-K50zMA8GA1UdEwQIMAYBAf8CAQUwDgYDVR0PAQH/BAQDAgEGMA0GCSqGSIb3
-DQEBBQUAA4IBAQCUZFmtOWTnKesT/lrDixNXyAQk8HR3wGDjZ/vpiaaDv5aC
-fG7Uwz3vnoBuuym0mHqxO1TrORdHfhqOC/wfMVkxBLLOF/Msx2I2VeIi2IlV
-tJhIqmT61hw22ER4WlojOleX9XowT66fakxLK46gA+M+4KnU0nvSs6jicjyt
-nv+AWeSbRbT2O7DNORmYMuXqIWGQ5DEhjjSx9y81SoUQ2ueKNyG+WWPg8oWI
-MVPUVBSFcHn0LgZ3J3UvH7iK+f7Futg25IPs52W3v2Na80avgZQ31EGM1iPW
-Hs/1aBtEY6Jauqc1WaHlcAWbDiNXmZQKbbo5YyiGkvMYhNj70c8FVmRXMIIE
-1TCCA72gAwIBAgIIUE7G9T0RtGQwDQYJKoZIhvcNAQELBQAwcTELMAkGA1UE
-BhMCREUxHDAaBgNVBAoTE0RldXRzY2hlIFRlbGVrb20gQUcxHzAdBgNVBAsT
-FlQtVGVsZVNlYyBUcnVzdCBDZW50ZXIxIzAhBgNVBAMTGkRldXRzY2hlIFRl
-bGVrb20gUm9vdCBDQSAyMB4XDTE0MDcyMjEyMDgyNloXDTE5MDcwOTIzNTkw
-MFowWjELMAkGA1UEBhMCREUxEzARBgNVBAoTCkRGTi1WZXJlaW4xEDAOBgNV
-BAsTB0RGTi1QS0kxJDAiBgNVBAMTG0RGTi1WZXJlaW4gUENBIEdsb2JhbCAt
-IEcwMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAOmbw2eF+Q2u
-9Y1Uw5ZQNT1i6W5M7ZTXAFuVInTUIOs0j9bswDEEC5mB4qYU0lKgKCOEi3SJ
-BF5b4OJ4wXjLFssoNTl7LZBF0O2gAHp8v0oOGwDDhulcKzERewzzgiRDjBw4
-i2poAJru3E94q9LGE5t2re7eJujvAa90D8EJovZrzr3TzRQwT/Xl46TIYpuC
-GgMnMA0CZWBN7dEJIyqWNVgn03bGcbaQHcTt/zWGfW8zs9sPxRHCioOhlF1B
-a9jSEPVM/cpRrNm975KDu9rrixZWVkPP4dUTPaYfJzDNSVTbyRM0mnF1xWzq
-pwuY+SGdJ68+ozk5SGqMrcmZ+8MS8r0CAwEAAaOCAYYwggGCMA4GA1UdDwEB
-/wQEAwIBBjAdBgNVHQ4EFgQUSbfGz+g9H3/qRHsTKffxCnA+3mQwHwYDVR0j
-BBgwFoAUMcN5G7r1U9cX4Il6LRdsCrMrnTMwEgYDVR0TAQH/BAgwBgEB/wIB
-AjBiBgNVHSAEWzBZMBEGDysGAQQBga0hgiwBAQQCAjARBg8rBgEEAYGtIYIs
-AQEEAwAwEQYPKwYBBAGBrSGCLAEBBAMBMA8GDSsGAQQBga0hgiwBAQQwDQYL
-KwYBBAGBrSGCLB4wPgYDVR0fBDcwNTAzoDGgL4YtaHR0cDovL3BraTAzMzYu
-dGVsZXNlYy5kZS9ybC9EVF9ST09UX0NBXzIuY3JsMHgGCCsGAQUFBwEBBGww
-ajAsBggrBgEFBQcwAYYgaHR0cDovL29jc3AwMzM2LnRlbGVzZWMuZGUvb2Nz
-cHIwOgYIKwYBBQUHMAKGLmh0dHA6Ly9wa2kwMzM2LnRlbGVzZWMuZGUvY3J0
-L0RUX1JPT1RfQ0FfMi5jZXIwDQYJKoZIhvcNAQELBQADggEBAGMgKP2cIYZy
-vjlGWTkyJbypAZsNzMp9QZyGbQpuLLMTWXWxM5IbYScW/8Oy1TWC+4QqAUm9
-ZrtmL7LCBl1uP27jAVpbykNjXJW24TGnH9UHX03mZYJOMvnDfHpLzU1cdO4h
-8nUC7FI+0slq05AjbklnNb5/TVak7Mwvz7ehl6hyPsm8QNZapAg91ryCw7e3
-Mo6xLI5qbbc1AhnP9TlEWGOnJAAQsLv8Tq9uLzi7pVdJP9huUG8sl5bcHUaa
-ZYnPrszy5dmfU7M+oS+SqdgLxoQfBMbrHuiffbV7pQLxJMUkYxE0zFqTICp5
-iDolQpCpZTt8htMSFSMp/CzazDlbVBcwggWQMIIEeKADAgECAgcXpCSMct4w
-MA0GCSqGSIb3DQEBCwUAMFoxCzAJBgNVBAYTAkRFMRMwEQYDVQQKEwpERk4t
-VmVyZWluMRAwDgYDVQQLEwdERk4tUEtJMSQwIgYDVQQDExtERk4tVmVyZWlu
-IFBDQSBHbG9iYWwgLSBHMDEwHhcNMTQwNTI3MTQ1MzQ4WhcNMTkwNzA5MjM1
-OTAwWjCBsDELMAkGA1UEBhMCREUxEDAOBgNVBAgTB0hhbWJ1cmcxEDAOBgNV
-BAcTB0hhbWJ1cmcxHTAbBgNVBAoTFFVuaXZlcnNpdGFldCBIYW1idXJnMSEw
-HwYDVQQLExhSZWdpb25hbGVzIFJlY2hlbnplbnRydW0xFTATBgNVBAMTDFVI
-SCBDQSAtIEcwMjEkMCIGCSqGSIb3DQEJARYVdWhoLWNhQHVuaS1oYW1idXJn
-LmRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvXCaoC/APEqI
-H+7uxI2zNqhHTd0uCRO3B3uy7gW1hOHNP6wcY8QoWASlDZUs5pceDLpa5E7S
-I6pj2PrV+CP9ryRocT+BJLFvqzJo5v/Mc9TWpwpOEOxIQ/W7Yhh4LBGXNEkO
-IllgrFf80Yabb5Tb2rOuyA8+33clN5adZ2ZjIDtcuZYkMTDIQbWdz8S0AWqV
-rzmebenDmoL43wJolQAuFYlk0D8MuZ+wb8Laq2eTRIl/gW0QvmpJ9g3qUlhN
-g8WmTULV9fydsgDoamRjPNyms6pRN8nC9KOQCoSYzre0ef+W4IIB1VcYyOqh
-se2OjSfzDSSWjvK/x9zqpS0VSxzS7wIDAQABo4ICAjCCAf4wEgYDVR0TAQH/
-BAgwBgEB/wIBATAOBgNVHQ8BAf8EBAMCAQYwEQYDVR0gBAowCDAGBgRVHSAA
-MB0GA1UdDgQWBBQmoGoBqP/8Euv3FInjxTA20S45sjAfBgNVHSMEGDAWgBRJ
-t8bP6D0ff+pEexMp9/EKcD7eZDAgBgNVHREEGTAXgRV1aGgtY2FAdW5pLWhh
-bWJ1cmcuZGUwgYgGA1UdHwSBgDB+MD2gO6A5hjdodHRwOi8vY2RwMS5wY2Eu
-ZGZuLmRlL2dsb2JhbC1yb290LWNhL3B1Yi9jcmwvY2FjcmwuY3JsMD2gO6A5
-hjdodHRwOi8vY2RwMi5wY2EuZGZuLmRlL2dsb2JhbC1yb290LWNhL3B1Yi9j
-cmwvY2FjcmwuY3JsMIHXBggrBgEFBQcBAQSByjCBxzAzBggrBgEFBQcwAYYn
-aHR0cDovL29jc3AucGNhLmRmbi5kZS9PQ1NQLVNlcnZlci9PQ1NQMEcGCCsG
-AQUFBzAChjtodHRwOi8vY2RwMS5wY2EuZGZuLmRlL2dsb2JhbC1yb290LWNh
-L3B1Yi9jYWNlcnQvY2FjZXJ0LmNydDBHBggrBgEFBQcwAoY7aHR0cDovL2Nk
-cDIucGNhLmRmbi5kZS9nbG9iYWwtcm9vdC1jYS9wdWIvY2FjZXJ0L2NhY2Vy
-dC5jcnQwDQYJKoZIhvcNAQELBQADggEBAETwPbbrl7ufoE/ePRc51AwuHfKF
-+58so5L2T/Yh7kSkWZMwVO892TDF6XjyCUjA7TbRSNpDUwLFjk2RbvyuaJVN
-kxIfnAVssOstZFOG/M9Y03ACtK2aZaTHQUJAZHiitUMYjehqr1MlTx4DPxCc
-Gi6JaapGj30qN2p9LfW/awFAcv53tTEkP+jv2zKO1jb7dowFoykck3ZbwdDW
-VE6/BMWAaB8evATZiO7dVoSR2HlMdIFdEMZUD2xsli9iEKCuMeyw4Ou9JOeu
-KRZZc36tSAmb6v1AMqGp38CG3keZhLglUMBhAT1u4PQPRZyk+5FvGwmogKzu
-pWaQHS/jvyxhYQMwggYxMIIFGaADAgECAgwdVh1S0TpMboYzhQwwDQYJKoZI
-hvcNAQELBQAwgbAxCzAJBgNVBAYTAkRFMRAwDgYDVQQIEwdIYW1idXJnMRAw
-DgYDVQQHEwdIYW1idXJnMR0wGwYDVQQKExRVbml2ZXJzaXRhZXQgSGFtYnVy
-ZzEhMB8GA1UECxMYUmVnaW9uYWxlcyBSZWNoZW56ZW50cnVtMRUwEwYDVQQD
-EwxVSEggQ0EgLSBHMDIxJDAiBgkqhkiG9w0BCQEWFXVoaC1jYUB1bmktaGFt
-YnVyZy5kZTAeFw0xNzA2MDYxMjI3NDZaFw0xOTA3MDkyMzU5MDBaMIGhMQsw
-CQYDVQQGEwJERTEQMA4GA1UECAwHSGFtYnVyZzEQMA4GA1UEBwwHSGFtYnVy
-ZzEdMBsGA1UECgwUVW5pdmVyc2l0YWV0IEhhbWJ1cmcxDDAKBgNVBAsMA1JS
-WjEcMBoGA1UECwwTQmFzaXMtSW5mcmFzdHJ1a3R1cjEMMAoGA1UECwwDSFBD
-MRUwEwYDVQQDDAxUaG9tYXMgT3JnaXMwggEiMA0GCSqGSIb3DQEBAQUAA4IB
-DwAwggEKAoIBAQCkJ34EIDoZWX8r6zQOHymTOrdcVaEG0FMfF/qX3nIlVCXk
-5sGaEem64n9ZS2bb10NfQPFoNcAV5HUGbjwN1MZnb1cyzZfBDJgBWDQjc+bC
-++Me6ZEeKx6yf1YlUS7ZmG4oU/bzQOU4s+f1JE4djMe0g7aSXpOlcVb0sY3E
-O/Zr2E3cuwu7f+9XZc0cC47gbL2WrAAokVX7H6eQ6p7YOSjav52JJhJE5iX5
-0DNbUEtlahBv0bMp58GsFA7irIC5v6ILIeDbOC07lxXdS2Ffozk56k3RECx4
-NFrgaptpg7z/KRKlmWycCUBkzDt4JYS2uGzBiwI5BLymhU2pUaCUxzcVAgMB
-AAGjggJWMIICUjBABgNVHSAEOTA3MBEGDysGAQQBga0hgiwBAQQDBTARBg8r
-BgEEAYGtIYIsAgEEAwEwDwYNKwYBBAGBrSGCLAEBBDAJBgNVHRMEAjAAMA4G
-A1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQw
-HQYDVR0OBBYEFFyYaDcuInnsByjc5MBr35fReS1gMB8GA1UdIwQYMBaAFCag
-agGo//wS6/cUiePFMDbRLjmyMCYGA1UdEQQfMB2BG3Rob21hcy5vcmdpc0B1
-bmktaGFtYnVyZy5kZTCBjQYDVR0fBIGFMIGCMD+gPaA7hjlodHRwOi8vY2Rw
-MS5wY2EuZGZuLmRlL3VuaS1oYW1idXJnLWNhL3B1Yi9jcmwvZ19jYWNybC5j
-cmwwP6A9oDuGOWh0dHA6Ly9jZHAyLnBjYS5kZm4uZGUvdW5pLWhhbWJ1cmct
-Y2EvcHViL2NybC9nX2NhY3JsLmNybDCB2wYIKwYBBQUHAQEEgc4wgcswMwYI
-KwYBBQUHMAGGJ2h0dHA6Ly9vY3NwLnBjYS5kZm4uZGUvT0NTUC1TZXJ2ZXIv
-T0NTUDBJBggrBgEFBQcwAoY9aHR0cDovL2NkcDEucGNhLmRmbi5kZS91bmkt
-aGFtYnVyZy1jYS9wdWIvY2FjZXJ0L2dfY2FjZXJ0LmNydDBJBggrBgEFBQcw
-AoY9aHR0cDovL2NkcDIucGNhLmRmbi5kZS91bmktaGFtYnVyZy1jYS9wdWIv
-Y2FjZXJ0L2dfY2FjZXJ0LmNydDANBgkqhkiG9w0BAQsFAAOCAQEAEvcv/ly6
-MoTXLcgZ5KOGICgzMlpT0jnyhBcoC7e6EGvTEJvVCWnmzs3hmbhT5ddaYwf7
-49pAXO6ErrriiI6DQy9d09W9BSuURaFoPGD66xM6+odCa1H0DNq9fLGDAEab
-DisVUTOppU9voTJGjerMDCGGzC3mSuz0F6rSloN6CgoNbxsRd2xWZYWIaKyf
-5Ug3AG5jbreOY+D6l1ZK6w/s8SM7MIXa6GTrxPHkeCqrKozgpbFczTs/KD61
-C+Ud4wSdxOo+l7guyRLAixW5N4HJmzEt3kvrnu/kMQ9dFPLdOV8dGF6IxBYi
-vPxhAmC4JKaNRm9UTiQiBrCwBauSl6xQjTGCAoMwggJ/AgEBMIHBMIGwMQsw
-CQYDVQQGEwJERTEQMA4GA1UECBMHSGFtYnVyZzEQMA4GA1UEBxMHSGFtYnVy
-ZzEdMBsGA1UEChMUVW5pdmVyc2l0YWV0IEhhbWJ1cmcxITAfBgNVBAsTGFJl
-Z2lvbmFsZXMgUmVjaGVuemVudHJ1bTEVMBMGA1UEAxMMVUhIIENBIC0gRzAy
-MSQwIgYJKoZIhvcNAQkBFhV1aGgtY2FAdW5pLWhhbWJ1cmcuZGUCDB1WHVLR
-OkxuhjOFDDANBglghkgBZQMEAgEFAKCBkzAYBgkqhkiG9w0BCQMxCwYJKoZI
-hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xNzA5MTQwNzI2MTVaMCgGCSqGSIb3
-DQEJDzEbMBkwCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMC8GCSqGSIb3DQEJ
-BDEiBCD2r5x4vgmZcyBnOASQDFQMf7Flz5+IiqWvF9O04AFQ5jANBgkqhkiG
-9w0BAQEFAASCAQBrF6Y5le3eAe/NdHuC7G9QaRgepEzEKwsG6NrVzbz7kLc6
-H8uK9fa45H7hiTbudE2uGZo9BtKckBkgXhYVMsYgSZKMT9WGjlAdG9OFBV4L
-PdSENBLji7VhI8fK6trBzWbBDgzKQjxxv/ws4ihVD8PoLm8mAZ0sukhWbP6b
-X4sPHlxjfjqfHwPvcOIJ/nKAYcx6D9yV+AHfdvdX8jxktRM+e/FwkMvC/pAS
-/rC1nbwKrit4H8jwgCN14pjrMuU8Py4KAuQouFoDTR4qC67j/kI5RIRjQdcN
-zEbjfb8SLLYxhbKlk0vb4LaEOvLGeauv2Bpdiqc9V63Q4i4Rts8wlB+PAAAA
-AAAA
+The download site doesn't have a 2.4.40 download:
+https://archive.apache.org/dist/httpd/
 
---Sig_/d4U+iLMwANW7oe_OIchYqnu--
+But the CHANGES_2.4.41 file shows a 2.4.40 release:
+https://archive.apache.org/dist/httpd/CHANGES_2.4.41
+
+I don't actually care that much about CVE-2019-10092 -- I just tried to
+figure out the status of CVE-2020-11984 by looking at other examples on
+the page and found the page difficult to understand.
+
+And, something is a bit off with the CURRENT-IS-$version markers:
+
+$ curl -sq https://archive.apache.org/dist/httpd/ | grep -c CURRENT
+47
+
+I expected one in each of the 2.0, 2.2, and 2.4 series, or perhaps just
+one for the newest 2.4 release.
+
+Thanks
+
+--/unnNtmY43mpUSKx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAl8t/dkACgkQ8yFyWZ2N
+LperUAf/ajBZuyVPsnvLe6VSS+lkw2Nq28TrzEGX4otPBRkBMOqz2oTQjM34323g
+MP9KFQDElw5sHvukD7i0HxlsYyq9WURVYLEKSJY8SYZh93wDMxyF85fHopSEWLHD
+10VshkNy9cU9AoYe5QJBXuVC0WVNAvCYnVWgi0zrx/eL8C4rmC3fsqOtjC43vxnd
+6epB5Pbk20EOXj+u83+DNXM03maMfvsobw5Oa3qNTGHenvllFNhGTNWKfVgdT095
+VxiNQsvUMiG7ScPyCekvZVBD9UMUOS245tFYCdpGyJgkS39VQjiih4775PDisSBQ
+fnSi9uB4+4t+bmZ/3il1KltD6N+sCQ==
+=yqjW
+-----END PGP SIGNATURE-----
+
+--/unnNtmY43mpUSKx--
