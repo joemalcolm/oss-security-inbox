@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2558" "Wednesday" "17" "June" "2015" "17:21:39" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150617172139.0d9ce97f@pc1>" "65" "Re: [oss-security] Re: CVE Request: jabberd remote information disclosure" nil nil nil "6" "2015061715:21:39" "[oss-security] Re: CVE Request: jabberd remote information disclosure" (number mark "        hanno@hboeck Jun 17   65/2558  " thread-indent "\"Re: [oss-security] Re: CVE Request: jabberd remote information disclosure\"\n") "<20150223211638.C124242E00E@smtpvbsrv1.mitre.org>" ("<762269AD-1536-4CD5-87F9-90B425289707@thijsalkema.de>" "<20150223211638.C124242E00E@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2459" "Saturday" "8" "August" "2020" "12:20:52" "+0200" "Julien Pivotto" "roidelapluie@prometheus.io" "<20200808102052.GA376865@oxygen>" "60" "[oss-security] Re: [prometheus-team] Voiding CVE-2020-16248" "^Cc:" nil nil "8" "2020080810:20:52" "[oss-security] Re: [prometheus-team] Voiding CVE-2020-16248" (number mark "        roidelapluie Aug  8   60/2459  " thread-indent "\"[oss-security] Re: [prometheus-team] Voiding CVE-2020-16248\"\n") "<CAMssQwbxY-LY1FmuZUeLEp2etkj6poQc+MVzL-ah=XoF2vptSg@mail.gmail.com>" ("<CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>" "<CAMssQwbxY-LY1FmuZUeLEp2etkj6poQc+MVzL-ah=XoF2vptSg@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: [prometheus-team] Voiding CVE-2020-16248" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17795 invoked by uid 550); 17 Jun 2015 15:20:58 -0000
+Received: (qmail 15647 invoked by uid 550); 8 Aug 2020 12:40:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,117 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17774 invoked from network); 17 Jun 2015 15:20:57 -0000
-Message-ID: <20150617172139.0d9ce97f@pc1>
-In-Reply-To: <20150223211638.C124242E00E@smtpvbsrv1.mitre.org>
-References: <762269AD-1536-4CD5-87F9-90B425289707@thijsalkema.de>
-	<20150223211638.C124242E00E@smtpvbsrv1.mitre.org>
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-1021-1434554446-0001-2"
-Date: Wed, 17 Jun 2015 17:21:39 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Received: (qmail 22473 invoked from network); 8 Aug 2020 10:21:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=prometheus-io.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=rYtkg/yvFyaCemBC/uk60Ec09NhUdmgYTA9CwoCjmlE=;
+        b=ETCB3nHVBHw8Ngv7H0M7cJmjhGPi2IyLwO2ZN1DvP7+6votzMS6fHb+0xB1e6V65Q8
+         AgGXpUmlSb5DT/kSkfJE5g83BLqS4drHmJ7glaHKSSIA+RLNQ/dirNfQYn18Mdl+3Jj/
+         kVXT24Hck9sqzDpFX/xG0eEQmlhGqFHI4M+wjWtoZJdGcaBz6I+AdxOK2bNs6aHim4ff
+         McSUtf3bD6af2J1EiBMc0ziUV4cmjobHS7Y2+QnQOV9kOeTfMgSAWlwM2JdgzmCxBC7r
+         QaVbPay1dD1Z+wcr6knU4usXHHgSYG+wmUqow3BLKvQFvPcAeuF3To3nCf27jO9BGj4g
+         zaVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=rYtkg/yvFyaCemBC/uk60Ec09NhUdmgYTA9CwoCjmlE=;
+        b=jBK2zU2KNmTfCiuZkvzkwtYVFoPGMwKPinXbIY5Es6LHxEGyPEcOep1Zb5ncMvQhiu
+         C2vwpeUwDxoMww/8Qtm5+vCmx3iu8K6fTRu1Zs2S/8EH59cMqAW5gYLwf7KFyl0I4rlQ
+         /k4ioVS0hSVvFHBx9UbpZBPF91+1IbtDSCgXrBltw8GdXoWYVwFvB++zP5ehgYs9644K
+         qHuModq2y8H/wtOisw3HPnO+4agOD3lwyRlQFXwoa60/rlzhSlUt5z3ANQF5WhELdGWK
+         7Puvpn3F/LdlKCnsjQObjg64LLcD4fJNsK12VpqsvuDy2zrhJXcaYvmE2O6AEFonE9iP
+         HtEw==
+X-Gm-Message-State: AOAM531OlidUVbJcSxeV9o25Gw91itnLKm9Krgg7slRcTTwlY76fhTaf
+	hNpFp6VEdNl49RMKYUv3u7pZXw==
+X-Google-Smtp-Source: ABdhPJygG572b3etskuWA4zCeMjGi5oEeUdoFyHjM71kF+bzW9U4syfhWMsBZ7AqdychA/+tqRilpw==
+X-Received: by 2002:adf:cd12:: with SMTP id w18mr16335063wrm.352.1596882054217;
+        Sat, 08 Aug 2020 03:20:54 -0700 (PDT)
+Message-ID: <20200808102052.GA376865@oxygen>
+Mail-Followup-To: =?utf-8?Q?Bart=C5=82omiej_P=C5=82otka?= <bwplotka@gmail.com>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	oss-security@lists.openwall.com,
+	PrometheusMonitoring <prometheus-team@googlegroups.com>,
+	Prometheus Developers <prometheus-developers@googlegroups.com>
+References: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
+ <CAMssQwbxY-LY1FmuZUeLEp2etkj6poQc+MVzL-ah=XoF2vptSg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMssQwbxY-LY1FmuZUeLEp2etkj6poQc+MVzL-ah=XoF2vptSg@mail.gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
+Cc: Richard Hartmann <richih.mailinglist@gmail.com>,
+	oss-security@lists.openwall.com,
+	PrometheusMonitoring <prometheus-team@googlegroups.com>,
+	Prometheus Developers <prometheus-developers@googlegroups.com>
+Date: Sat, 8 Aug 2020 12:20:52 +0200
+From: Julien Pivotto <roidelapluie@prometheus.io>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request: jabberd remote information
- disclosure
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Subject: [oss-security] Re: [prometheus-team] Voiding CVE-2020-16248
+To: =?utf-8?Q?Bart=C5=82omiej_P=C5=82otka?= <bwplotka@gmail.com>
 
---=_zucker.schokokeks.org-1021-1434554446-0001-2
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On 08 Aug 11:16, Bartłomiej Płotka wrote:
+> Thanks for this work Richi, this is quite... interesting that someone might
+> mark core functionality as CVE.
 
-On Mon, 23 Feb 2015 16:16:38 -0500 (EST)
-cve-assign@mitre.org wrote:
+That is not that crazy. You could "ddos" someone and hide your own IP
+address.
 
-> > If the data ends with an unterminated multi-byte UTF8
-> > sequence then libidn may copy data past the buffer into the result.
->=20
-> > https://github.com/jabberd2/jabberd2/issues/85
->=20
-> > the stringprep functions from libidn require the input to be valid
-> > UTF8
->=20
-> > The libidn documentation claims "This function will not read or
-> > write to characters outside that size." about the length of the
-> > buffer that needs to be specified, but this is not true,
->=20
-> Use CVE-2015-2059 for this libidn out-of-bounds read issue. Possibly
-> it could be argued that this is a borderline case for a CVE. However,
-> the documentation says "This function will not read or write to
-> characters outside that size" rather than "If the input is valid
-> UTF-8, then this function will not read or write to characters outside
-> that size." If the input is not valid UTF-8, then the function is
-> entitled to undefined behavior within the bounds of the buffer.
+> 
+> Kind Regards,
+> Bartek
+> 
+> On Sat, 8 Aug 2020 at 09:49, Richard Hartmann <richih.mailinglist@gmail.com>
+> wrote:
+> 
+> > Dear all,
+> >
+> > the Prometheus project[1] has received a public "vulnerability"
+> > report[2] against what the reporter called SSRF, but what is the core
+> > functionality of blackbox_exporter[3]: The ability to trigger network
+> > probes over the network to monitor a target's availability. The
+> > reporter stated that CVE-2020-16248 has been assigned. From context,
+> > it seems to be a paid assessment of our software for an unnamed client
+> > which increases motivation to get "results", in particular CVEs for
+> > "zero days" - which are then promptly reported publicly with an
+> > embargoed CVE.
+> >
+> > The reporter has not replied to our statement that this behaviour is
+> > core functionality. I could not find out which organization has
+> > reserved CVE-2020-16248 so I decided to send email to this list to
+> > inform the organization, enabling them to update their records.
+> >
+> > Sorry for using this list for that purpose, I could not find a less
+> > wrong place to inform the (hopefully) interested parties.
+> >
+> >
+> > Best,
+> > Richard
+> >
+> > [1] https://prometheus.io/
+> > [2] https://github.com/prometheus/blackbox_exporter/issues/669
+> > [3] https://github.com/prometheus/blackbox_exporter
+> >
+> > --
+> > You received this message because you are subscribed to the Google Groups
+> > "Prometheus Team" group.
+> > To unsubscribe from this group and stop receiving emails from it, send an
+> > email to prometheus-team+unsubscribe@googlegroups.com.
+> > To view this discussion on the web visit
+> > https://groups.google.com/d/msgid/prometheus-team/CAD77%2BgR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8%2B8_%2Bdbw%40mail.gmail.com
+> > .
+> >
+> 
+> -- 
+> You received this message because you are subscribed to the Google Groups "Prometheus Team" group.
+> To unsubscribe from this group and stop receiving emails from it, send an email to prometheus-team+unsubscribe@googlegroups.com.
+> To view this discussion on the web visit https://groups.google.com/d/msgid/prometheus-team/CAMssQwbxY-LY1FmuZUeLEp2etkj6poQc%2BMVzL-ah%3DXoF2vptSg%40mail.gmail.com.
 
-Old thread, but I thought worth mentioning. This was already found by
-Sam Varshavchik in 2013:
-http://permalink.gmane.org/gmane.comp.gnu.libidn.general/462
-
-As the CVE is already assigned I don't think this matters too much, but
-maybe MITRE wants to reference that.
-
---=20
-Hanno B=C3=B6ck
-http://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
-
---=_zucker.schokokeks.org-1021-1434554446-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJVgZCDAAoJEKWIAHK7tR5CMMMP/2V3Ko1IS1ypCX3zADoH1WTK
-QAiwI0qmgZ0N/iSCkeS4qEZqVwY2EC97DcCePH9ZYkahZalL1++iOfKbuqr/Q0Tx
-T7xblvl4jUucbQXXAlwRsPLq9bsKMq4EMqZ5+4B4MVVJcgwo4gidCUtfoJZrL/gH
-rUYvv3JY8LgJBCT6034pLL668ZYMTkVCGCudHl50FU/zdBJlKITldUx7fnyEPftB
-2wJslAj1u0yXDN3rtI31yXXJulz8J442TqFQYp9x+H6YiGlxMRGQOY9sAtpWrMYj
-bRip4okXDg+nSaNTe1sMhmWONIuXZmTCfZei7B9qpeCgJw0GaHHL0dyemp2yxrt9
-oxY7uh0z1u3N5pvPh456xe04wZCEdO/yDFouM3tnOfE5ondW4CR2wwPk4/dSYdUH
-57kpZ/rFlqgtlGkjLsELyH5XzoZnJgBaXBsV8em78YedGapY2HE81OtCaKFprOUq
-OhcJhu1IVLarrdX0HOdS00afo+A8P43sVT24yQiZvwc3ABxKRW2vmU6/tTQuPzkS
-F3EkWQHOp0Q3qp0plIB7q7NkWJTZFMFrElNA+Zja+bjuBumJXAEMvNyvGEN8fdYD
-r0mYm59UhCXJ7anqbbC8TFoN6Zhj+Ko4OuVc4BSY3AWUcfsJuHb4fGEJoseoH4zL
-1S9tkhLWjWKoVHZ2RkZK
-=vJdl
------END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-1021-1434554446-0001-2--
+-- 
+Julien Pivotto
+@roidelapluie
