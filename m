@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/11/2
-Message-ID: <CAH5JyZpTnHka4PZFR60QKx_53NJsKVAYyYKHxe5Ro2P+ZgQEhg@mail.gmail.com>
-Date: Fri, 11 Dec 2020 13:14:07 +0000
-From: Kaxil Naik <kaxilnaik@...che.org>
-To: oss-security@...ts.openwall.com
-Cc: users@...flow.apache.org
-Subject: CVE-2020-17515: Apache Airflow Reflected XSS via Origin Parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/12
+Message-ID: <CAH8yC8mYOYPtSBf4Zd8oo=NKZiO2wbi6OdyTUZaBWBn5ONGuPg@mail.gmail.com>
+Date: Sat, 8 Aug 2020 14:17:04 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: Bastian Blank <bblank@...nkmo.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Voiding CVE-2020-16248
 Content-Type: text/plain; charset=utf-8
 
-Versions Affected: < 1.10.13
+On Sat, Aug 8, 2020 at 1:46 PM Bastian Blank <bblank@...nkmo.de> wrote:
+>
+> Hi Richard
+>
+> On Sat, Aug 08, 2020 at 10:49:14AM +0200, Richard Hartmann wrote:
+> > the Prometheus project[1] has received a public "vulnerability"
+> > report[2] against what the reporter called SSRF, but what is the core
+> > functionality of blackbox_exporter[3]: The ability to trigger network
+> > probes over the network to monitor a target's availability.
+>
+> Could you please explain yourself why you think this is not a
+> vulnerability?  Even wanted functuality can constitute a vulnerability
+> if looked on closer.
+>
+> The software allows to send pre-defined requests to arbitrary targets
+> and extract at least parts of the response.  This is a typical SSRF.
+> Would you require to specify the allowed targets, noone would ask.
 
-Description:
-The "origin" parameter passed to some of the endpoints like '/trigger' was
-vulnerable to XSS exploit. This issue affects Apache Airflow versions prior
-to 1.10.13.
+ICMP and the root user requirement makes blackbox_exporter a good target.
 
-This is same as CVE-2020-13944 but the implemented fix in Airflow 1.10.13
-did not fix the issue completely.
+It also looks like a confused deputy to me, which also makes it a
+privilege escalation.
 
-Credit:
-Ali Al-Habsi of Accellion
+Naively, it looks like a feature that provides an attacker
+reconnaissance capabilities and allows network enumeration.
 
-Thanks,
-Kaxil,
-on behalf of Apache Airflow PMC
-
+Jeff
