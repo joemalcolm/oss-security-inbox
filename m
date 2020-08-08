@@ -1,58 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/11
-Message-ID: <20200808152144.j5fatn23s6tgncsb@shell.thinkmo.de>
-Date: Sat, 8 Aug 2020 17:21:44 +0200
-From: Bastian Blank <bblank@...nkmo.de>
-To: Richard Hartmann <richih.mailinglist@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Voiding CVE-2020-16248
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/9
+Message-ID: <eb6a0eab-af5e-7fea-3183-9e3308b1e3db@apache.org>
+Date: Sat, 8 Aug 2020 07:21:35 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow
 Content-Type: text/plain; charset=utf-8
 
-Hi Richard
 
-On Sat, Aug 08, 2020 at 10:49:14AM +0200, Richard Hartmann wrote:
-> the Prometheus project[1] has received a public "vulnerability"
-> report[2] against what the reporter called SSRF, but what is the core
-> functionality of blackbox_exporter[3]: The ability to trigger network
-> probes over the network to monitor a target's availability.
+On 8/7/2020 8:20 PM, Seth Arnold wrote:
+> On Fri, Aug 07, 2020 at 06:31:38AM -0500, Daniel Ruggeri wrote:
+>> CVE-2020-11984: mod_uwsgi buffer overlow
+>> Versions Affected:
+>> httpd 2.4.32 to 2.4.44
+>> Description:
+>> Apache HTTP Server 2.4.32 to 2.4.44
+>> mod_proxy_uwsgi info disclosure and possible RCE
+>> References:
+>> https://httpd.apache.org/security/vulnerabilities_24.html
+> Hello Daniel, all,
+>
+> I'm confused: this english description of affected versions
+> reads like 2.4.44 is affected. However, there is a heading on the
+> vulnerabilities_24.html page that says this CVE is fixed in 2.4.44.
+Hi, Seth;
 
-Could you please explain yourself why you think this is not a
-vulnerability?  Even wanted functuality can constitute a vulnerability
-if looked on closer.
+   You're correct. That was an error on our part. We try to double check
+this data (since sometimes we burn a release number as we test the
+candidate) and things can get out of sync. I have it in my personal TODO
+list to add some tooling around automating this particular part of the
+release management process.
 
-The software allows to send pre-defined requests to arbitrary targets
-and extract at least parts of the response.  This is a typical SSRF.
-Would you require to specify the allowed targets, noone would ask.
+I've fixed this in a recent patch and the the site should now show the
+correct data - many thanks for the correction
 
->                                                        From context,
-> it seems to be a paid assessment of our software for an unnamed client
-> which increases motivation to get "results", in particular CVEs for
-> "zero days" - which are then promptly reported publicly with an
-> embargoed CVE.
+>
+> Many projects include a "fixed in versions ..." list to indicate when
+> something is fixed; I think this is less ambiguous.
+>
+> The "affects versions" don't always line up with the heading that claims
+> to be fixed, eg CVE-2019-10092 claims to be fixed in 2.4.41, but the
+> Affects entry doesn't mention 2.4.40.
 
-Please don't.  You just accused the reporter of malpractice on a public
-forum.  JFYI, this is punishable in your jurisdiction.
+Right - sometimes this will happen when we don't release a version. This
+particular example is because 2.4.40 was not released (see below for a
+bit more info).
 
-Also embargo and posting a public issue on GitHub don't really mix.
 
-> The reporter has not replied to our statement that this behaviour is
-> core functionality. I could not find out which organization has
-> reserved CVE-2020-16248 so I decided to send email to this list to
-> inform the organization, enabling them to update their records.
+>
+> The headings are out of order:
+>
+> $ curl -sq https://httpd.apache.org/security/vulnerabilities_24.html | grep "Fixed in Apache"
+> Fixed in Apache httpd 2.4.44</h1><dl>
+> Fixed in Apache httpd 2.4.25</h1><dl>  # 2.4.25 is between 2.4.42 and 2.4.44
+> Fixed in Apache httpd 2.4.42</h1><dl>
+> Fixed in Apache httpd 2.4.41</h1><dl>
+> Fixed in Apache httpd 2.4.39</h1><dl>
+> [..]
 
-You did not address the reporter at all.  The reporter is also not a
-regular user of GitHub, where this issue was raised.
+No problem - I thought about this as I was putting together the
+announcement but didn't adjust it at the time. I've fixed this as well
 
-> Sorry for using this list for that purpose, I could not find a less
-> wrong place to inform the (hopefully) interested parties.
 
-As others already told you, Mitre provides a form to request updates to
-CVE entries at https://cve.mitre.org/cve/update_cve_entries.html.
+> The download site doesn't have a 2.4.40 download:
+> https://archive.apache.org/dist/httpd/
+>
+> But the CHANGES_2.4.41 file shows a 2.4.40 release:
+> https://archive.apache.org/dist/httpd/CHANGES_2.4.41
 
-Regards,
-Bastian
+Correct - 2.4.40 was not released. We made a number of changes leading
+up to it, but ultimately found an issue in the release candidate that we
+fixed between then and a release that we were comfortable with.
 
--- 
-Our way is peace.
-		-- Septimus, the Son Worshiper, "Bread and Circuses",
-		   stardate 4040.7.
+If you're interested, you can see a bit more history (and even what's
+coming in future release) by taking a look at this file:
+http://svn.apache.org/repos/asf/httpd/httpd/branches/2.4.x/STATUS
+
+We always note when we tag a release and then the final release date for
+every version. You can find similar files for the old 2.2, 2.0, and 1.3
+branches too.
+
+>
+> I don't actually care that much about CVE-2019-10092 -- I just tried to
+> figure out the status of CVE-2020-11984 by looking at other examples on
+> the page and found the page difficult to understand.
+>
+> And, something is a bit off with the CURRENT-IS-$version markers:
+>
+> $ curl -sq https://archive.apache.org/dist/httpd/ | grep -c CURRENT
+> 47
+I can see how that appears odd. This URL is our archive distribution
+point, so anything we release to the formal distribution point will be
+added here automatically to preserve history. It's best to use the
+current distribution point:
+https://dist.apache.org/repos/dist/release/httpd/
+
+We always maintain the zero-length CURRNT-IS-foo file here and remove
+non-current releases.
+
+
+>
+> I expected one in each of the 2.0, 2.2, and 2.4 series, or perhaps just
+> one for the newest 2.4 release.
+>
+> Thanks
+
+
+Thanks for taking the time to provide feedback! Have a great weekend
+
+
