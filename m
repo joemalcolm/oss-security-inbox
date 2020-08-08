@@ -1,43 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/23/8
-Message-ID: <218e3919b8d7666c70e024d08acf668f855c314c.camel@redhat.com>
-Date: Thu, 23 Jul 2020 16:19:03 -0600
-From: Jeff Law <law@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/3
+Message-ID: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
+Date: Sat, 8 Aug 2020 10:49:14 +0200
+From: Richard Hartmann <richih.mailinglist@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Alban Crequy (Kinvolk)" <alban@...volk.io>, volkerdi@...ckware.com
-Subject: Re: Flatcar membership on the linux-distros list
+Cc: prometheus-team@...glegroups.com,  Prometheus Developers <prometheus-developers@...glegroups.com>
+Subject: Voiding CVE-2020-16248
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2020-07-24 at 00:01 +0200, Solar Designer wrote:
-> On Thu, Jul 23, 2020 at 01:44:46PM -0600, Jeff Law wrote:
-> > On Thu, 2020-07-23 at 20:45 +0200, Solar Designer wrote:
-> > > OK.  It looks like we'll add Flatcar as soon as an existing member
-> > > vouches for you.
-> > In what way do you need someone to vouch for Vincent?
-> 
-> This requirement is currently loosely specified as:
-> 
-> "Have someone already on the private list, or at least someone else who
-> has been active on oss-security for years but is not affiliated with
-> your distro nor your organization, vouch for at least one of the people
-> requesting membership on behalf of your distro (then that one
-> vouched-for person will be able to vouch for others on your team, in
-> case you'd like multiple people subscribed)"
-> 
-> So someone who's on (linux-)distros "or at least someone else who has
-> been active on oss-security for years but is not affiliated" should
-> state in here that they vouch for Vincent.  They may optionally make
-> this more specific (yet convincing) if they like, but that isn't
-> required.
-So I'm no longer affiliated with Vincent since he's left Red Hat and I'm not
-affiliated with flatcar at all.  We loosely worked together at Red Hat and I'll
-certainly vouch for Vincent.
+Dear all,
 
-I'm not sure how long I've been on oss-security, but I was the primary designer
-and implementor of the stack-clash mitigations for GCC and consultant for the
-LLVM stack-clash mitigations, as well as Red Hat's lead on the compiler side of
-spectre mitigations.
+the Prometheus project[1] has received a public "vulnerability"
+report[2] against what the reporter called SSRF, but what is the core
+functionality of blackbox_exporter[3]: The ability to trigger network
+probes over the network to monitor a target's availability. The
+reporter stated that CVE-2020-16248 has been assigned. From context,
+it seems to be a paid assessment of our software for an unnamed client
+which increases motivation to get "results", in particular CVEs for
+"zero days" - which are then promptly reported publicly with an
+embargoed CVE.
 
-Hope that helps,
-Jeff
+The reporter has not replied to our statement that this behaviour is
+core functionality. I could not find out which organization has
+reserved CVE-2020-16248 so I decided to send email to this list to
+inform the organization, enabling them to update their records.
 
+Sorry for using this list for that purpose, I could not find a less
+wrong place to inform the (hopefully) interested parties.
+
+
+Best,
+Richard
+
+[1] https://prometheus.io/
+[2] https://github.com/prometheus/blackbox_exporter/issues/669
+[3] https://github.com/prometheus/blackbox_exporter
