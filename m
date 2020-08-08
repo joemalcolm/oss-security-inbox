@@ -1,4 +1,9 @@
-Received: (qmail 20425 invoked by uid 550); 14 Feb 2025 01:38:44 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2456" "Saturday" "8" "August" "2020" "15:21:35" "+0200" "Solar Designer" "solar@openwall.com" "<20200808132134.GA22611@openwall.com>" "44" "Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow" "^Cc:" nil nil "8" "2020080813:21:35" "[oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow" (number mark "        solar@openwa Aug  8   44/2456  " thread-indent "\"Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow\"\n") "<3eab72b4-8e53-9b78-c529-0578f52e6599@apache.org>" ("<1596799898.GKATVRZF@httpd.apache.org>" "<20200807125434.GA18666@openwall.com>" "<3eab72b4-8e53-9b78-c529-0578f52e6599@apache.org>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 28069 invoked by uid 550); 8 Aug 2020 13:22:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,58 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 27785 invoked from network); 8 Aug 2020 13:21:39 -0000
+Message-ID: <20200808132134.GA22611@openwall.com>
+References: <1596799898.GKATVRZF@httpd.apache.org> <20200807125434.GA18666@openwall.com> <3eab72b4-8e53-9b78-c529-0578f52e6599@apache.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3eab72b4-8e53-9b78-c529-0578f52e6599@apache.org>
+User-Agent: Mutt/1.4.2.3i
+Cc: oss-security@lists.openwall.com,
+	HTTPD Security <security@httpd.apache.org>
+Date: Sat, 8 Aug 2020 15:21:35 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22202 invoked from network); 14 Feb 2025 00:55:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=j5pohgsoczgazltpw36knfrisu.protonmail; t=1739494523; x=1739753723;
-	bh=PLJrOKqgc6UwjyhbuTPgcaMkBvC5zCXl9zS+R/tyFuM=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
-	 List-Unsubscribe:List-Unsubscribe-Post;
-	b=LI9o9RtT2DzwhgvtoQBdkE3Fj2V0RIZ59m3YGo25VaJNRODjHoeqqDexmDomBiNOj
-	 KCJNwLFC6vqMpKqrq8Ra3+QpPBDLRK2PoZzfYd8vpDg0/Aj7WC0htE25xq8rxBqTTv
-	 BDfDl3npgrmzdoJNWhmf0LsBriU1KnmYJdzkTtWMn9YZVbSOqI1nsVIAWFtZX8HvTc
-	 V6wTK5L5D6AagdgZArXzG55EnYsWyIXedFYpTD/FMdbApXjVB+dxtmY4t7pSOKw7qA
-	 gYFc6ZfMi/e6AvMZo8zWXTNTcRgtFjfG7XXIsSU8ANVgMkhiUMjU4k53jut6k+HtXF
-	 kvCgJccyfZE/w==
-Date: Fri, 14 Feb 2025 00:55:16 +0000
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-From: "upper.underflow" <upper.underflow@proton.me>
-Message-ID: <8AvDbR3U4WQOKZyqLOKsFHlVjnI7D0bLNq2I57I3Cskpw3z0Mw4zJ3afH0kvFLj0P_g5GoBW91eXKo2dBqsF123LkhtQTaycnyIfqLoGpvE=@proton.me>
-Feedback-ID: 134459134:user:proton
-X-Pm-Message-ID: 76ea77c38b5801dafd5a420d8f3f78828ee69a67
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1=_uW297iUtVyuX73ALlyC98oOHAUFell7yhFzgOCil4"
-Subject: [oss-security] Monero 18.3.4 zero-day DoS vulnerability has been dropped publicly on social network.
+Subject: Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow
+To: Daniel Ruggeri <druggeri@apache.org>
 
---b1=_uW297iUtVyuX73ALlyC98oOHAUFell7yhFzgOCil4
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+On Sat, Aug 08, 2020 at 07:02:21AM -0500, Daniel Ruggeri wrote:
+> As you can
+> imagine, with such a strong downstream community from our releases, we
+> try to be careful so as to not place too much information in the
+> descriptions to make it trivial to exploit vulnerabilities before those
+> downstream packagers can incorporate fixes.
 
-SGVsbG8sCgpBYm91dCBhbiBob3VyIGFnbywgYSBncm91cCBhcHBlYXJpbmcgdG8gYmUgbmFtZWQg
-V3lSQ1YyIHBvc3RlZCBhIG5vdGUgb24gdGhlIG5vc3RyIHNvY2lhbCBuZXR3b3JrLCB3aGljaCBj
-YW4gYmUgZm91bmQgYXQgdGhlIGZvbGxvd2luZyBsaW5rOiBodHRwczovL3ByaW1hbC5uZXQvZS9u
-b3RlMXZ6aDBtajlyY3hheDljZ2NkYXB1cHl4ZWVoanByZDY4Z2Q5a2s5d3J2OTM5bThrbnVscnM0
-NzgweDcKCj5Nb25lcm8gWmVyby1kYXkgdnVsbmVyYWJpbGl0eSBhbmQgZXhwbG9pdAo+Cj5UYWtl
-IGRvd24gdGhlIFhNUiBuZXR3b3JrIHdpdGggdXMsIG1ha2UgdGhlIGZ1dHVyZSBhIGJldHRlciBh
-IHBsYWNlLgpTYXZlLCBzaGFyZSwgdXNlLgo+Cj5odHRwczpbLy9dYW5vbnBhc3RlLm9yZy8/Y2Nj
-Yjc2MzlhZmJkMDY1MCNIYU1RQWZ6RmRDcU1EaDlNd051R1JHVUJYTGd0azV5SFdkQXpTN01idkVW
-TgoKVGhlIHBhc3RlIGxpbmsgaW5jbHVkZXMgYSBsaXN0IG9mIG5vZGVzIHRoYXQgdGhlIGF0dGFj
-a2VyIGhhcyBpbnN0cnVjdGVkIHRvIHRhcmdldCwgYWxvbmcgd2l0aCBhIFB5dGhvbiBjb2RlIHRv
-IGxldmVyYWdlIHRoZSBhdHRhY2suIEFjY29yZGluZyB0byB0aGVpciBleHBsYW5hdGlvbiwgdGhp
-cyB2dWxuZXJhYmlsaXR5IGlzIGV4cGVjdGVkIHRvIGJlIHBhdGNoZWQgaW4gdGhlIG5leHQgcmVs
-ZWFzZSBvZiBNb25lcm8uIEFueSBNb25lcm8gbm9kZSB0aGF0IGV4cG9zZXMgaXRzIFJQQyBwb3J0
-IGlzIHZ1bG5lcmFibGUgdG8gbWVtb3J5IGV4aGF1c3Rpb24uCgpJIGNhbiBjb25maXJtIHRoYXQg
-dGhlIFB5dGhvbiBjb2RlIHdvcmtzIGFuZCB1c2luZyBpdCBhZ2FpbnN0IGEgdGVzdCBub2RlIGxl
-YWRzIHRvIGEgY3Jhc2ggZHVlIHRvIG1lbW9yeSBleGhhdXN0aW9uLiBUaGUgY29kZSBpcyBleHRy
-ZW1lbHkgc2ltcGxlLCBhcyBpdCBzcGFtcyByZXF1ZXN0cyB3aXRob3V0IGF0dGVtcHRpbmcgdG8g
-cmVhZCByZXNwb25zZXMsIGNhdXNpbmcgTW9uZXJvIHRvIGtlZXAgdGhlbSBpbmRlZmluaXRlbHkg
-aW4gbWVtb3J5IHVudGlsIGEgY3Jhc2ggb2NjdXJzLgoKVGhlIGF0dGFja2VycyBjbGFpbSB0byBo
-YXZlIHRha2VuIGRvd24gOCBwdWJsaWMgbm9kZXMgYW5kIDEgc2VlZCBub2RlLCB3aGljaCBpcyB1
-c2VkIGFzIGEgcmVuZGV6dm91cyBwb2ludCBmb3IgbmV3IG5vZGVzIHRvIGNvbm5lY3QgdG8gdGhl
-IG5ldHdvcmsu
+No, I couldn't have imagined that a well-established Open Source project
+like Apache httpd would still use this flawed practice of 20+ years ago.
 
---b1=_uW297iUtVyuX73ALlyC98oOHAUFell7yhFzgOCil4--
+The current practice is to include all information that is helpful to
+address the issue, including by downstream packagers, who in many cases
+will need to do backports rather than merely update to a new release.
 
+By deliberately withholding information as a standard practice, you hurt
+not only those who would exploit the vulnerabilities, but also (and even
+more certainly) those who would fix them.
+
+It'd have to be some rare special case with specific reasoning to decide
+on temporarily withholding anything from an otherwise public disclosure,
+and then you'd need to have a specific plan on disclosing the rest on a
+specific date (ideally pre-announced).  For example, this can be done to
+separate the disclosure of full vulnerability and fix detail (sufficient
+for backports) vs. publication of an exploit by a week, like e.g. Qualys
+has done on some recent occasions where exploitation was not trivial.
+If you're not planning on publishing exploitation techniques, there's
+usually nothing you can reasonably withhold from the initial disclosure.
+
+If you do want to reduce the window of exposure, there are ways to give
+your downstream packagers a few days (and ideally no more than that) to
+incorporate the fixes privately before you disclose the issues publicly.
+We host the distros list for this, and you may also contact some of your
+other downstreams separately.  I am not saying you should be doing that,
+but rather I am saying that if you're not doing it (which is fine), then
+you shouldn't try to make your public disclosures cryptic as a way to
+compensate for that.  I think it doesn't have a net positive effect.
+
+So my suggestion is that for most issues you just disclose everything
+publicly right away, and for occasional highest-severity issues you
+notify some of your downstreams in private first (unfortunately, no way
+to notify all without making the issue public) and give them just a
+little time before you disclose everything publicly.
+
+Alexander
