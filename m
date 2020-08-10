@@ -1,21 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/05/3
-Message-ID: <20201005165605.4utrysblp4cn2s3z@moyka>
-Date: Mon, 5 Oct 2020 09:56:05 -0700
-From: Ian Zimmerman <itz@...y.loosely.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/10/3
+Message-ID: <CAA8xKjXJ7DjJ7jAfR6hrbUOOfi7p8sCZSSdt9Hs7bj=Ez03eWA@mail.gmail.com>
+Date: Mon, 10 Aug 2020 11:57:02 +0200
+From: Mauro Matteo Cascella <mcascell@...hat.com>
+To: Michael Tokarev <mjt@....msk.ru>
+Cc: oss-security@...ts.openwall.com, Alexander Bulekov <alxndr@...edu>,  ziming zhang <ezrakiez@...il.com>
+Subject: Re: CVE-2020-16092 QEMU: reachable assertion failure in net_tx_pkt_add_raw_fragment() in hw/net/net_tx_pkt.c
 Content-Type: text/plain; charset=utf-8
 
-On 2020-10-05 14:43, Greg KH wrote:
+Hi Michael,
 
-> > Are there major security changes needed if gnu/linux dominates the
-> > desktop and/or mobile phone markets?
-> 
-> "if"?  You do know the market share of Linux-based mobile phones, right?
-> Last I looked, it made the Linux server market quantity a rounding error :)
+On Mon, Aug 10, 2020 at 11:23 AM Michael Tokarev <mjt@....msk.ru> wrote:
+>
+> Hmm. Is it really worth the effort to treat these things as security
+> issues? There are so many ways to crash a machine (be it virtual or
+> hardware), there are definitely countless ways to crash things from
+> within privileged code.. what's the security impact of a hardware
+> issue when, say, a driver code in the OS does a stupid thing and
+> the hardware locks up?
+>
 
-Tho OP wrote "gnu/linux", and I presume he doesn't include android in that.
+I see your point. Our general assumption is to *not* consider assert()
+failures CVE worthy if they can only be triggered by privileged users
+[1]. In this case specifically, given the assertion failure occurs
+while sending packets from the guest, we assumed it may be possible
+for an unprivileged guest user to cause a DoS scenario (e.g., by
+sending malicious/malformed network packets). In accordance with QEMU
+maintainers, we therefore decided to provide a fix for this bug. But
+again, I agree these kinds of issues tend to be questionable, so we
+typically proceed on a case-by-case basis.
+
+[1] https://lists.nongnu.org/archive/html/qemu-devel/2019-07/msg03869.html
+
+Thanks,
 
 -- 
-Ian
+Mauro Matteo Cascella, Red Hat Product Security
+6F78 E20B 5935 928C F0A8  1A9D 4E55 23B8 BB34 10B0
+
