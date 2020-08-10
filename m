@@ -1,93 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/11
-Message-ID: <20201006145009.GA45857@espresso.pseudorandom.co.uk>
-Date: Tue, 6 Oct 2020 15:50:09 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/10/4
+Message-ID: <61e677d2-4c00-acba-de1b-6366983bef8b@meiers.net>
+Date: Mon, 10 Aug 2020 18:24:20 +0200
+From: svenmeier@...che.org
 To: oss-security@...ts.openwall.com
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+Subject: [CVE-2020-11976] Apache Wicket information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 05 Oct 2020 at 19:30:22 -0400, Eli Schwartz wrote:
-> flatpak tries to provide a GUI appstore for popular applications in
-> sandboxes, with permission models for allowing resources into the
-> sandbox, e.g XDG Desktop Portal to broker access to files from the host
-> system through a trusted agent.
-> 
-> Though my understanding is in order to be (conveniently?) usable,
-> programs end up in practice needing to be granted access to the entire
-> host filesystem and therefore aren't really isolated after all.
+Severity: Important
 
-It depends on the program. If it does its file access via the typical
-GTK or KDE File->Open and File->Save As... dialogs, then access to those
-files can be mediated by xdg-desktop-portal (the dialog exists outside
-the sandbox, and magics only the selected files into existence inside),
-and the boundary is quite strong.
+Vendor:
+The Apache Software Foundation
 
-If the program does its file access by "knowing" that it has full access
-to everything, then, yes, you're going to have to give it access to
-everything it might conceivably need, statically, and the boundary is
-extremely leaky. The app framework cannot fix this, but maybe the app can.
+Versions Affected:
+Apache Wicket 7.16.0, 8.8.0 and 9.0.0-M5
 
-The developers of xdg-desktop-portal and related components have been
-doing what they can to make this transparent - for example, GTK 3 and
-4 apps automatically use the portals for various things if they detect
-that they're in a Flatpak sandbox, so that app authors don't have to
-change how their app works. However, this is not always possible, and
-some years- or decades-old assumptions about access to the host system
-are harder to unpick.
+Description:
 
-The other big problem with the Flatpak sandboxing model is X11,
-which just isn't a good privilege boundary: practical X11 apps assume
-that they can do things that ought to be only available to apps in the
-TCB. In GNOME this is mitigated by using Wayland by default, and Flatpak
-apps can be flagged to lose their X11 access when run under Wayland. I
-think KDE Plasma is heading in a similar direction. However, I suspect
-the audience of this mailing list contains a lot of the sort of people
-who either don't use GNOME or Plasma, or have switched GNOME or Plasma
-into X11 mode because Wayland breaks some feature that only ever worked
-because every X11 app trusts every other X11 app (such as screen-sharing
-by grabbing frames from the X server, or clever input-mapping tricks by
-injecting fake keyboard and mouse events into the X server, or
-screensavers that work in terms of X11 grabs).
+By crafting a special URL it is possible to make Wicket deliver 
+unprocessed HTML templates.
+This would allow an attacker to see possibly sensitive information 
+inside a HTML template that is usually removed during rendering.
+For example if there are credentials in the markup which are never 
+supposed to be visible to the client:
 
-I don't know as many technical details of Snap and Firejail, but I'm
-fairly confident that they are running into the same problems that
-Flatpak does.
+   <wicket:remove>
+      some secret
+   </wicket:remove>
 
-I would encourage security experts who are interested in this field to
-"do their own homework" and research what has already been done, and what
-is already known to be a missing piece of the puzzle.
+The application developers are recommended to upgrade to:
+- Apache Wicket 7.17.0
+<http://wicket.apache.org/news/2020/07/20/wicket-7.17.0-released.html>
+- Apache Wicket 8.9.0
+<http://wicket.apache.org/news/2020/07/15/wicket-8.9.0-released.html>
+- Apache Wicket 9.0.0
+<http://wicket.apache.org/news/2020/07/15/wicket-9-released.html>
 
-A conversation on oss-security is not going to change any of this,
-however well-intentioned: some security experts making statements about
-how (GNU/)Linux desktops "need to change" does not get code written, does
-not shift apps away from un-sandboxable patterns and towards sandboxable
-patterns, does not fill in missing functionality in Wayland that will let
-people use as a more-sandbox-friendly alternative to X11, and so on. If
-you want to see the situation improve, please help to improve it. The
-people doing the work, at least in GNOME (and I'm sure elsewhere too),
-are mostly the same few overworked developers who are also maintaining
-all the other core parts of the desktop.
+Credit:
+The vulnerability has been found and reported by Mariusz Popławski from 
+Afine.
 
-> Apparently both giving power to the user *and* preventing software from
-> running rogue, is indeed hard.
+Apache Wicket Team
 
-Yes, and harder still is retrofitting an app-store-like permissions
-model onto arbitrary programs that were originally designed to be run
-with full user privileges, without breaking them in the process.
-
-Again, Flatpak, Snap and Firejail are all attempts at this. They all
-have to make tradeoffs to be practically useful enough to be adopted,
-because a framework with perfect security and no working applications
-(or no users) is not practically useful.
-
-An additional threat here is that some of the same container and namespace
-tricks that we rely on to put up security boundaries between applications
-expose attack surface that can be exploited to break the security boundary
-between users (for example
-https://security-tracker.debian.org/tracker/source-package/bubblewrap,
-https://security-tracker.debian.org/tracker/source-package/firejail, and
-the attack surface referred to in
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=898446).
-
-    smcv
