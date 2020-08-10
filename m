@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2300" "Thursday" "26" "May" "2016" "02:18:16" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160526061816.F37E46C0410@smtpvmsrv1.mitre.org>" "49" "[oss-security] Re: CVE-Request: TYPO3 Extbase Missing Access Check" nil nil nil "5" "2016052606:18:16" "[oss-security] Re: CVE-Request: TYPO3 Extbase Missing Access Check" (number mark "U       cve-assign@m May 26   49/2300  " thread-indent "\"[oss-security] Re: CVE-Request: TYPO3 Extbase Missing Access Check\"\n") "<a33d4a482f974e8c91f260f173ca9d35@exchange.arcus-security.ch>" ("<a33d4a482f974e8c91f260f173ca9d35@exchange.arcus-security.ch>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2358" "Monday" "10" "August" "2020" "22:29:35" "+0000" "Seth Arnold" "seth.arnold@canonical.com" "<20200810222935.GA3601880@millbarge>" "63" "Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow" nil nil nil "8" "2020081022:29:35" "[oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow" (number mark "U       seth.arnold@ Aug 10   63/2358  " thread-indent "\"Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow\"\n") "<eb6a0eab-af5e-7fea-3183-9e3308b1e3db@apache.org>" ("<1596799898.GKATVRZF@httpd.apache.org>" "<20200808012029.GD3169683@millbarge>" "<eb6a0eab-af5e-7fea-3183-9e3308b1e3db@apache.org>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25757 invoked by uid 550); 26 May 2016 06:18:29 -0000
+Received: (qmail 18282 invoked by uid 550); 10 Aug 2020 22:29:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +12,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25739 invoked from network); 26 May 2016 06:18:28 -0000
-From: cve-assign@mitre.org
-To: stefan.horlacher@arcus-security.ch
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <a33d4a482f974e8c91f260f173ca9d35@exchange.arcus-security.ch>
-Message-Id: <20160526061816.F37E46C0410@smtpvmsrv1.mitre.org>
-Date: Thu, 26 May 2016 02:18:16 -0400 (EDT)
-Subject: [oss-security] Re: CVE-Request: TYPO3 Extbase Missing Access Check
+Received: (qmail 18264 invoked from network); 10 Aug 2020 22:29:49 -0000
+Date: Mon, 10 Aug 2020 22:29:35 +0000
+From: Seth Arnold <seth.arnold@canonical.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20200810222935.GA3601880@millbarge>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <1596799898.GKATVRZF@httpd.apache.org>
+ <20200808012029.GD3169683@millbarge>
+ <eb6a0eab-af5e-7fea-3183-9e3308b1e3db@apache.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="u3/rZRmxL6MmkK24"
+Content-Disposition: inline
+In-Reply-To: <eb6a0eab-af5e-7fea-3183-9e3308b1e3db@apache.org>
+Subject: Re: [oss-security] CVE-2020-11984: Apache httpd: mod_uwsgi buffer
+ overlow
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--u3/rZRmxL6MmkK24
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2016-013/
-> TYPO3-CORE-SA-2016-013
-> 
-> Extbase request handling fails to implement a proper access check for
-> requested controller/ action combinations, which makes it possible for
-> an attacker to execute arbitrary Extbase actions by crafting a special
-> request. To successfully exploit this vulnerability, an attacker must
-> have access to at least one Extbase plugin or module action in a TYPO3
-> installation. The missing access check inevitably leads to information
-> disclosure or remote code execution, depending on the action that an
-> attacker is able to execute.
+On Sat, Aug 08, 2020 at 07:21:35AM -0500, Daniel Ruggeri wrote:
+> =A0=A0 You're correct. That was an error on our part. We try to double ch=
+eck
+> this data (since sometimes we burn a release number as we test the
+> candidate) and things can get out of sync. I have it in my personal TODO
+> list to add some tooling around automating this particular part of the
+> release management process.
+>=20
+> I've fixed this in a recent patch and the the site should now show the
+> correct data - many thanks for the correction
 
-> TYPO3 installations with at least one publicly available Extbase
-> action, are exploitable without any further authentication.
-> 
-> TYPO3 installations without publicly available Extbase actions, are
-> still exploitable for authenticated backend users with access to a
-> backend module, which is based on Extbase.
+Hello Daniel, thanks for the fixes, this is a lot more clear to me now.
 
-Use CVE-2016-5091 for both of these installation scenarios. As far as
-we can tell, the second scenario ("without publicly available") occurs
-only because TYPO3 Core code (or a copy of TYPO3 Core code) exists in,
-or is reachable by, a (supported or unsupported) backend module.
+Quite a lot of my confusion came from not knowing that some releases were
+versioned but not released -- suddenly quite a lot more makes sense.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+> > The headings are out of order:
+
+> No problem - I thought about this as I was putting together the
+> announcement but didn't adjust it at the time. I've fixed this as well
+
+Thanks -- I know how it goes, there's always something somewhere that
+needs to fixed.
+
+> > And, something is a bit off with the CURRENT-IS-$version markers:
+> >
+> > $ curl -sq https://archive.apache.org/dist/httpd/ | grep -c CURRENT
+> > 47
+> I can see how that appears odd. This URL is our archive distribution
+> point, so anything we release to the formal distribution point will be
+> added here automatically to preserve history. It's best to use the
+> current distribution point:
+> https://dist.apache.org/repos/dist/release/httpd/
+
+Aha! And this explains the duplicates. It's nice to know it's intentional.
+
+> Thanks for taking the time to provide feedback! Have a great weekend
+
+Thanks for the quick fixes :)
+
+
+
+--u3/rZRmxL6MmkK24
+Content-Type: application/pgp-signature; name="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXRpTJAAoJEHb/MwWLVhi2vU8P/34LeiCcFMQRXakBpAKqBQv5
-Vox2Wg1HJO0lkpbihKE3ixhvRawSJsT/5TKMqSdBJG5HWQblIOHW9S0JHAazfIge
-ezxJDJObtDGo8jjUERgvDAsYGgT/ZZ15ApVnCJYaVNc1ZKgM9f1/V044O8+mE1WX
-4B6thQZmmbpCK8KWBEwQ9uOxES0168tS4QQ6Iu2mst7vpXnak8RxU1wI8qawFo/7
-ySqgNdX6mqAo0TXQ/mPJxkT9sa/Mf+7Hr7L4K8ukRG8OkVaQ74Py4noy+XKm6lV6
-IvVN+ILFcu3XcPM98Civu8B6lRi61JGjC1VQwk1UP9mgqSQBrxTRWDQSBOUrvdEI
-YviIMAMSGEXhEQfG+peTVNJmR0SJr5DBhYn9UY5gHiqqM8q6XMsH6jVrbOYSy/KQ
-FVVc/9K32pPwG53A9lnNkNs6FFIKzLVDOGBS3zHU9YBprN6ulV1ApIWcWuQm+sZh
-81z/CzQZSLV3ovNYagmJpXyOIRmcWkfpD9YtIPwcdZWk3IuuynswSUBKlT57Mu+F
-4N3SmHtRAy40ZJA35KWvnCW2PwXV8CQx+EU9B8rGCVYcbGOxtG6BTElMS5fuBwsJ
-luwySw1sbQgDaECk9JKjTtwBl558KZALjzDXRd3aLv1dq8q9vd93rMifeShSTIlQ
-7Oi3kAkzjD1dNVXjhC12
-=A6Qx
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAl8xyksACgkQ8yFyWZ2N
+Lpdulwf+OyW0/jJsB+5YMkuI2pB0OFWP5B93dX0BYvbRHbtpVgPfELR+8W2hF7nQ
+ghqh9JcORpQCKuIAJNOQbRy3HHQ/UUKuRi69QOsuVmLa481arhOqFvSNIqIhUCwD
++wFzlth7AOUMzRqZeQpG52w5ojLb0Gm9c5xwLzek4RUogJEVdAwI2F0Mm7q4nEEl
+fryfkwfIgS1hIu4kQaApvQZicdeWXoo2rqoxbrMvnwPNtwLMCxwfzugGfSKB4iIX
+hS0298niXXFkxPLYLDFDsYVSbk1WGrQTTvNvR8BONAe4tVdqOYKcMTJ2tL0oog52
+CJc8sqhZHDWV3+cWqxPR+/pjY89uUQ==
+=sdNe
 -----END PGP SIGNATURE-----
+
+--u3/rZRmxL6MmkK24--
