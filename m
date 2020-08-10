@@ -1,62 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/28/1
-Message-ID: <c7838a1a-1894-4679-06fb-23006f526bdc@windriver.com>
-Date: Tue, 28 Jul 2020 10:46:22 +0800
-From: Zhang Xiao <xiao.zhang@...driver.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Cc: xiao.zhang@...driver.com
-Subject: Re: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/10/5
+Message-ID: <20200810222935.GA3601880@millbarge>
+Date: Mon, 10 Aug 2020 22:29:35 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow
 Content-Type: text/plain; charset=utf-8
 
+On Sat, Aug 08, 2020 at 07:21:35AM -0500, Daniel Ruggeri wrote:
+>    You're correct. That was an error on our part. We try to double check
+> this data (since sometimes we burn a release number as we test the
+> candidate) and things can get out of sync. I have it in my personal TODO
+> list to add some tooling around automating this particular part of the
+> release management process.
+> 
+> I've fixed this in a recent patch and the the site should now show the
+> correct data - many thanks for the correction
 
-在 2020/7/23 下午7:56, Solar Designer 写道:
-> On Thu, Jul 23, 2020 at 01:51:17PM +0530, Mohammad Tausif Siddiqui wrote:
->> I think the ball is on the CNA: Hackerone side to get it published to
->> MITRE, so that they can show it up on their page.
->>
->> CNAs are provided with weekly reports by the root CNA: MITRE, which lists
->> Reserved But Public "RBP" CVEs owned by that CNA, irrespective of whether
->> the CVE was assigned on distros list or elsewhere. That closes the reminder
->> loop.
->>
->> There's no pull request for CVE-2020-8177 at
->> https://github.com/CVEProject/cvelist/pulls
->> We cannot determine if they used the alternative, web form:
->> https://cveform.mitre.org/
->>
->> You may want to reach Hackerone from the CNA contacts
->> <https://cve.mitre.org/cve/request_id.html#cna_participants>, for this
->> exception of delay.
-> Most of the above is once again too specific to the given CVE ID,
-> whereas we need a general understanding of whether the task Xiao
-> proposes and volunteers for is worthwhile or not.  I'd appreciate a
-> direct answer to that.
->
-> Do I interpret this paragraph correctly as implying the answer is no? -
->
->> CNAs are provided with weekly reports by the root CNA: MITRE, which lists
->> Reserved But Public "RBP" CVEs owned by that CNA, irrespective of whether
->> the CVE was assigned on distros list or elsewhere. That closes the reminder
->> loop.
-> In other words, CNAs receive their reminders from MITRE weekly, so
-> there's no need for anyone else reminding them, correct?  However, can
-> it happen that MITRE wouldn't recognize a CVE ID as "Reserved But
-> Public", continuing to treat it as merely reserved, in which case there
-> would be no reminder to correct that?  Could Xiao help with this?
+Hello Daniel, thanks for the fixes, this is a lot more clear to me now.
 
-Till now both CVE-2020-8177 and CVE-2020-8169 are still "reserved". I
-believe it is valuable to remind them and I am glad to do it, but I just
-realize I don't know how to make it.
+Quite a lot of my confusion came from not knowing that some releases were
+versioned but not released -- suddenly quite a lot more makes sense.
 
-I tried two methods but none of them works. Anyone can give me any
-advises to make it?
+> > The headings are out of order:
+
+> No problem - I thought about this as I was putting together the
+> announcement but didn't adjust it at the time. I've fixed this as well
+
+Thanks -- I know how it goes, there's always something somewhere that
+needs to fixed.
+
+> > And, something is a bit off with the CURRENT-IS-$version markers:
+> >
+> > $ curl -sq https://archive.apache.org/dist/httpd/ | grep -c CURRENT
+> > 47
+> I can see how that appears odd. This URL is our archive distribution
+> point, so anything we release to the formal distribution point will be
+> added here automatically to preserve history. It's best to use the
+> current distribution point:
+> https://dist.apache.org/repos/dist/release/httpd/
+
+Aha! And this explains the duplicates. It's nice to know it's intentional.
+
+> Thanks for taking the time to provide feedback! Have a great weekend
+
+Thanks for the quick fixes :)
 
 
-Thanks
 
-Xiao
-
-
-> Alexander
-
-Download attachment "pEpkey.asc" of type "application/pgp-keys" (2461 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
