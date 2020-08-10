@@ -1,16 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/12/4
-Message-ID: <CACdnJutPzcRCBu53nE9NOYE3gq5w1mTsmWzwHNzEyHmmXJZrAg@mail.gmail.com>
-Date: Thu, 12 Mar 2020 15:55:06 -0700
-From: Matthew Garrett <mjg59@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Bluez <5.53 DoS/privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/10/2
+Message-ID: <c177c453-0c5f-2bae-473b-881013cf8731@msgid.tls.msk.ru>
+Date: Mon, 10 Aug 2020 12:18:07 +0300
+From: Michael Tokarev <mjt@....msk.ru>
+To: oss-security@...ts.openwall.com, Mauro Matteo Cascella <mcascell@...hat.com>
+Cc: Alexander Bulekov <alxndr@...edu>, ziming zhang <ezrakiez@...il.com>
+Subject: Re: CVE-2020-16092 QEMU: reachable assertion failure in net_tx_pkt_add_raw_fragment() in hw/net/net_tx_pkt.c
 Content-Type: text/plain; charset=utf-8
 
-https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00352.html
-describes a vulnerability in versions below 5.53 of the Bluez
-Bluetooth stack. Intel do not appear to have disclosed this issue to
-distributions in advance, and have not yet made a release that
-includes the fixes. https://patchwork.kernel.org/patch/11428317/ and
-https://patchwork.kernel.org/patch/11428319/ should apply to older
-versions.
+10.08.2020 11:25, Mauro Matteo Cascella wrote:
+> Hello,
+> 
+> An assertion failure issue was found in QEMU in the network packet
+> processing component. This issue affects the "e1000e" and "vmxnet3"
+> network devices. This flaw allows a malicious guest user or process to
+> abort the QEMU process on the host, resulting in a denial of service
+> condition.
+> 
+> Upstream patch:
+>   -> https://git.qemu.org/?p=qemu.git;a=commit;h=035e69b063835a5fd23cacabd63690a3d84532a8
+
+Hmm. Is it really worth the effort to treat these things as security
+issues? There are so many ways to crash a machine (be it virtual or
+hardware), there are definitely countless ways to crash things from
+within privileged code.. what's the security impact of a hardware
+issue when, say, a driver code in the OS does a stupid thing and
+the hardware locks up?
+
+Thanks,
+
+/mjt
