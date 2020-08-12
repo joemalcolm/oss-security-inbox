@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5656" "Wednesday" "5" "June" "2019" "11:59:31" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20190605095931.GA13513@f195.suse.de>" "161" "[oss-security] pam-u2f: CVE-2019-12210: debug_file file descriptor leak, CVE-2019-12209: symlink attack on u2f_keys leading to possible information leak" nil nil nil "6" "2019060509:59:31" "[oss-security] pam-u2f: CVE-2019-12210: debug_file file descriptor leak, CVE-2019-12209: symlink attack on u2f_keys leading to possible information leak" (number mark "U       mgerstner@su Jun  5  161/5656  " thread-indent "\"[oss-security] pam-u2f: CVE-2019-12210: debug_file file descriptor leak, CVE-2019-12209: symlink attack on u2f_keys leading to possible information leak\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] pam-u2f: CVE-2019-12210: debug_file file descriptor leak, CVE-2019-12209: symlink attack on u2f_keys leading to possible information leak" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3818" "Wednesday" "12" "August" "2020" "15:20:24" "+0200" "Daniel Beck" "ml@beckweb.net" "<CC6AAEF3-55C7-4F5F-9664-624DFE79A227@beckweb.net>" "107" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" "^Date:" nil nil "8" "2020081213:20:24" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" (number mark "U       ml@beckweb.n Aug 12  107/3818  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24510 invoked by uid 550); 5 Jun 2019 09:59:44 -0000
+Received: (qmail 19809 invoked by uid 550); 12 Aug 2020 13:20:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,180 +11,125 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19769 invoked from network); 12 Aug 2020 13:20:36 -0000
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
+Message-Id: <CC6AAEF3-55C7-4F5F-9664-624DFE79A227@beckweb.net>
+X-Mailer: Apple Mail (2.3445.104.15)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1597238436;1bd48ffd;
+X-HE-SMSGID: 1k5qg5-0003Pw-68
+Date: Wed, 12 Aug 2020 15:20:24 +0200
+From: Daniel Beck <ml@beckweb.net>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24492 invoked from network); 5 Jun 2019 09:59:43 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Wed, 5 Jun 2019 11:59:31 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
+Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 To: oss-security@lists.openwall.com
-Message-ID: <20190605095931.GA13513@f195.suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: [oss-security] pam-u2f: CVE-2019-12210: debug_file file descriptor leak,
- CVE-2019-12209: symlink attack on u2f_keys leading to possible information
- leak
 
---sdtB3X0nJg68CQEu
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Hello,
+The following releases contain fixes for security vulnerabilities:
 
-pam-u2f [1] is a PAM module that allows to integrate universal 2nd
-factor authenticators like YubiKey into the PAM stack. In the context of
-a source code review [2] due to the inclusion of pam-u2f into SUSE Linux
-two security issues in this PAM module have been uncovered as described
-in the following sections.
+* Jenkins 2.252
+* Jenkins LTS 2.235.4
+* Email Extension Plugin 2.74
+* Pipeline Maven Integration Plugin 3.8.3
+* Yet Another Build Visualizer Plugin 1.12
 
-CVE-2019-12210: debug_file file descriptor leak
------------------------------------------------
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-If the `debug` and `debug_file` options are set then the opened debug
-file will be inherited to the successfully authenticated user's process.
-Therefore this user can write further information to it, possibly
-filling up a privileged file system or manipulating the information
-found in the debug file.
+* Flaky Test Handler Plugin
 
-In some contexts the program utilizing PAM closes off leaked file
-descriptors but it does work with su, for example, use the following
-line in the PAM stack:
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2020-08-12/
 
-```
-auth    optional        pam_u2f.so debug debug_file=3D/tmp/u2f-debug.txt
-```
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Then prepare the debug file such that the PAM module can open it:
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-root# touch /tmp/u2f-debug.txt
+---
 
-Then perform su on yourself as an unprivileged user:
+SECURITY-1955 / CVE-2020-2229
+Jenkins 2.251 and earlier, LTS 2.235.3 and earlier does not escape the
+tooltip content of help icons. Tooltip values can be contributed by
+plugins, some of which use user-specified values.
 
-user$ su user
-Password: XXX
-user$ ls -l /proc/$$/fd
-[...]
-l-wx------ 1 user users 64  8. Mai 11:44 3 -> /tmp/u2f-debug.txt
+This results in a stored cross-site scripting (XSS) vulnerability.
 
-As you can see the new user shell now has an open file descriptor for
-the debug file.
 
-CVE-2019-12209: symlink attack on u2f_keys leading to possible information =
-leak
----------------------------------------------------------------------------=
-----
+SECURITY-1957 / CVE-2020-2230
+Jenkins 2.251 and earlier, LTS 2.235.3 and earlier does not escape the
+project naming strategy description that is displayed on item creation.
 
-The file `$HOME/.config/Yubico/u2f_keys` is blindly followed by the PAM
-module. It can be a symlink pointing to an arbitrary file. The PAM
-module only rejects non-regular files and files owned by other users
-than root or the to-be-authenticated user. Even these checks are only
-made after open()'ing the file, which may already trigger certain logic
-in the kernel that is otherwise not reachable to regular users.
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by users with Overall/Manage permission.
 
-If the PAM modules' `debug` option is also enabled then most of the
-content of the file is written either to stdout, stderr, syslog or to
-the defined debug file.  Therefore this can pose an information leak to
-access e.g.  the contents of /etc/shadow, /root/.bash_history or similar
-sensitive files. Furthermore the symlink attack can be used to use other
-users' u2f_keys files in the authentication process.
 
-For example use the following line in the PAM stack:
+SECURITY-1960 / CVE-2020-2231
+Jenkins 2.251 and earlier, LTS 2.235.3 and earlier does not escape the
+remote address of the host starting a build via 'Trigger builds remotely'.
 
-```
-auth    optional        pam_u2f.so debug
-```
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by users with Job/Configure permission or knowledge of the
+Authentication Token.
 
-Then prepare a suitable symlink:
 
-```
-user$ mkdir -p ~/.config/Yubico
-user$ ln -s /etc/shadow ~/.config/Yubico/u2f_keys
-```
+SECURITY-1975 / CVE-2020-2232
+Email Extension Plugin stores an SMTP password in its global configuration
+file `hudson.plugins.emailext.ExtendedEmailPublisher.xml` on the Jenkins
+master as part of its configuration.
 
-Then authenticate the user on a text console:
+While this password is stored encrypted on disk, it is transmitted and
+displayed in plain text as part of the configuration form by Email
+Extension Plugin 2.72 and 2.73. This can result in exposure of the
+password.
 
-host login: user
-Password: XXX
-[...]
-debug(pam_u2f):  Authorization line: avahi:!:18019::::::
-[...]
 
-Notice the lines from /etc/shadow being output on the terminal.
+SECURITY-1794 (1) / CVE-2020-2233
+Pipeline Maven Integration Plugin 3.8.2 and earlier does not perform a
+permission check in an HTTP endpoint.
 
-Bugfixes and Mitigations
-------------------------
+This allows attackers with Overall/Read access to Jenkins to enumerate
+credentials IDs of credentials stored in Jenkins. Those can be used as part
+of an attack to capture the credentials using another vulnerability.
 
-The bugfix for CVE-2019-12210 is found in [3]. It solves the issue by
-passing `O_CLOEXEC` and more conservative flags to related `open()`
-calls.
 
-The bugfix for CVE-2019-12209 is found in [4]. It solves the issue by
-dropping privileges to the to-be-authenticated user before accessing the
-`u2f_keys` file.
+SECURITY-1794 (2) / CVE-2020-2234 (permission check) & CVE-2020-2235 (CSRF)
+Pipeline Maven Integration Plugin 3.8.2 and earlier does not perform a
+permission check in a method implementing form validation.
 
-Both bugfixes are contained in the upstream release 1.0.8 [5].
+This allows users with Overall/Read access to Jenkins to connect to an
+attacker-specified JDBC URL using attacker-specified credentials IDs
+obtained through another method, potentially capturing credentials stored
+in Jenkins.
 
-A major mitigation for both issues is to remove the `debug` and
-`debug_file` options for `pam_u2f.so` in the PAM configuration.
-Furthermore enabling the `openasuser` option will mitigate the symlink
-attack in CVE-2019-12209.
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
 
-Timeline and Responsible Disclosure
------------------------------------
 
-Communication with upstream was responsive and constructive over the
-complete timeline.
+SECURITY-1940 / CVE-2020-2236
+Yet Another Build Visualizer Plugin 1.11 and earlier does not escape
+tooltip content.
 
-2019-05-08: I reported the findings privately to the upstream maintainer.
-2019-05-20: security@yubico.com has been involved and we worked out and
-    reviewed patches together that have been agreed upon by this time.
-2019-05-22: Yubico assigned CVEs for the issues.
-2019-06-04: This was the established publication date and Yubico
-    released a fixed version as planned.
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by users with Run/Update permission.
 
-References
-----------
 
-[1]: https://developers.yubico.com/pam-u2f/
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=3D1087061
-[3]: https://github.com/Yubico/pam-u2f/commit/18b1914e32b74ff52000f10e97067=
-e841e5fff62
-[4]: https://github.com/Yubico/pam-u2f/commit/7db3386fcdb454e33a3ea30dcfb8e=
-8960d4c3aa3
-[5]: https://developers.yubico.com/pam-u2f/Release_Notes.html
+SECURITY-1763 / CVE-2020-2237
+Flaky Test Handler Plugin 1.0.4 and earlier does not require POST requests
+for the "Deflake this build" feature, resulting in a cross-site request
+forgery (CSRF) vulnerability.
 
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
+This vulnerability allows attackers to rebuild a project at a previous git
+revision where the tests were failing.
 
-SUSE Linux GmbH
-GF: Felix Imend=F6rffer, Mary Higgins, Sri Rasiah
-HRB 21284 (AG Nuernberg)
+As of publication of this advisory, there is no fix.
 
---sdtB3X0nJg68CQEu
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAlz3koAACgkQFMQFyXGS
-NVO+Zw/+I8jDbT8jzWp5Cs6Hs5s0u6Qpf/rHTQR7Fu98jtsCnmJtIfuOe/fNxNPO
-nQTl0b+MYCuit1cKel2Ay12f4gGaIsedHaAHh/i2KSDaySxvN1V+ubkhdNwVzJZ7
-fKExM3ahBf2wZlLam6JPIoSlmzWCFoSYQ0GOoq/Fr7eQ3d6+IWFCnljzwlAni76F
-RYCZKrtvoQBVd9o0SECQ8X8zzhWyANqkiDtwoB4KHV/+3Z1pez2SFdRm0yte4Gyj
-0iYf0KE1nsqZM64m2reMnH639PY+3kwPHMAK9uVX44CbX6FGsm2pHCFxK2gVRc2+
-EVKAgwq3n+/UNbLhandUYHbLrg+7FnbEe+89lSR7DW4kLZ+TK2YCdGvxQPxI48og
-NVfPdwJxSnZkK+ZYnaQrR8s1S96WH7JH1ABil6zuPzu6KfzBHcnNEy7/BfMK9wOo
-n0R7m2MrON9J21joBwg3efqOy0oHGKe1+8iUW+HNcCaG3SEK/oGwmHggsQOtmT9w
-+8Ajr1CfGILo3xL8Hit0O6YtZpyOlU4XdyXgsmX9KeFMRc1Zg2CH+ms+vMw5y3Eq
-bs6jAeBq9d6nB6DcORyBuR4EZvMCU34CvDqQF/NOfI/qltkyN4pqp3PEItZt2zNP
-cTz2Jixj8iz6Ma5LGBCBDlx2Oedeot5liWhNep7vIYxg17WnrcU=
-=ddrQ
------END PGP SIGNATURE-----
-
---sdtB3X0nJg68CQEu--
