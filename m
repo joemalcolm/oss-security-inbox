@@ -1,78 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/25/3
-Message-ID: <20200825153714.GJ30064@timmy>
-Date: Tue, 25 Aug 2020 17:37:14 +0200
-From: Matthieu Herrb <matthieu@...rb.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/12/4
+Message-Id: <CC6AAEF3-55C7-4F5F-9664-624DFE79A227@beckweb.net>
+Date: Wed, 12 Aug 2020 15:20:24 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: X.Org server security advisory: August 25, 2020
+Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Multiple input validation failures in X server extensions
-=========================================================
+The following releases contain fixes for security vulnerabilities:
 
-All theses issuses  can lead to local privileges elevation
-on systems where the X server is running privileged.
+* Jenkins 2.252
+* Jenkins LTS 2.235.4
+* Email Extension Plugin 2.74
+* Pipeline Maven Integration Plugin 3.8.3
+* Yet Another Build Visualizer Plugin 1.12
 
-* CVE-2020-14345 / ZDI CAN 11428 XkbSetNames Out-Of-Bounds Access
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-The handler for the XkbSetNames request does not validate the request
-length before accessing its contents.
+* Flaky Test Handler Plugin
 
-* CVE-2020-14346 / ZDI CAN 11429 XIChangeHierarchy Integer Underflow
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2020-08-12/
 
-An integer underflow exists in the handler for the XIChangeHierarchy
-request.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-* CVE-2020-14361 / ZDI CAN 11573 XkbSelectEvents Integer Underflow 
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-An integer underflow exist in the handler for the XkbSelectEvents
-request.
+---
 
-* CVE-2020-1436 / ZDI CAN 11574 XRecordRegisterClients Integer Underflow 
+SECURITY-1955 / CVE-2020-2229
+Jenkins 2.251 and earlier, LTS 2.235.3 and earlier does not escape the
+tooltip content of help icons. Tooltip values can be contributed by
+plugins, some of which use user-specified values.
 
-An integer underflow exist in the handler for the CreateRegister
-request of the X record extension.
-
-Patches
--------
-
-Patches for this issues have been commited to the xorg server git
-repository. xorg-server 1.20.9 will be released shortly and will
-include these patches.
-
-https://gitlab.freedesktop.org/xorg/xserver.git
-
-commit 11f22a3bf694d7061d552c99898d843bcdaf0cf1
-
-    Correct bounds checking in XkbSetNames()
-
-    CVE-2020-14345 / ZDI 11428
-
-commit 1e3392b07923987c6c9d09cf75b24f397b59bd5e
-
-    Fix XIChangeHierarchy() integer underflow
-
-    CVE-2020-14346 / ZDI-CAN-11429
-
-commit 90304b3c2018a6b8f4a79de86364d2af15cb9ad8
-
-    Fix XkbSelectEvents() integer underflow
-
-    CVE-2020-14361 ZDI-CAN 11573
-
-commit 24acad216aa0fc2ac451c67b2b86db057a032050
-
-    Fix XRecordRegisterClients() Integer underflow
-
-    CVE-2020-14362 ZDI-CAN-11574
-
-Thanks
-======
-
-These vulnerabilities have beend discovered by Jan-Niklas Sohn working
-with Trend Micro Zero Day Initiative.
+This results in a stored cross-site scripting (XSS) vulnerability.
 
 
--- 
-Matthieu Herrb
+SECURITY-1957 / CVE-2020-2230
+Jenkins 2.251 and earlier, LTS 2.235.3 and earlier does not escape the
+project naming strategy description that is displayed on item creation.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by users with Overall/Manage permission.
+
+
+SECURITY-1960 / CVE-2020-2231
+Jenkins 2.251 and earlier, LTS 2.235.3 and earlier does not escape the
+remote address of the host starting a build via 'Trigger builds remotely'.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by users with Job/Configure permission or knowledge of the
+Authentication Token.
+
+
+SECURITY-1975 / CVE-2020-2232
+Email Extension Plugin stores an SMTP password in its global configuration
+file `hudson.plugins.emailext.ExtendedEmailPublisher.xml` on the Jenkins
+master as part of its configuration.
+
+While this password is stored encrypted on disk, it is transmitted and
+displayed in plain text as part of the configuration form by Email
+Extension Plugin 2.72 and 2.73. This can result in exposure of the
+password.
+
+
+SECURITY-1794 (1) / CVE-2020-2233
+Pipeline Maven Integration Plugin 3.8.2 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read access to Jenkins to enumerate
+credentials IDs of credentials stored in Jenkins. Those can be used as part
+of an attack to capture the credentials using another vulnerability.
+
+
+SECURITY-1794 (2) / CVE-2020-2234 (permission check) & CVE-2020-2235 (CSRF)
+Pipeline Maven Integration Plugin 3.8.2 and earlier does not perform a
+permission check in a method implementing form validation.
+
+This allows users with Overall/Read access to Jenkins to connect to an
+attacker-specified JDBC URL using attacker-specified credentials IDs
+obtained through another method, potentially capturing credentials stored
+in Jenkins.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-1940 / CVE-2020-2236
+Yet Another Build Visualizer Plugin 1.11 and earlier does not escape
+tooltip content.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by users with Run/Update permission.
+
+
+SECURITY-1763 / CVE-2020-2237
+Flaky Test Handler Plugin 1.0.4 and earlier does not require POST requests
+for the "Deflake this build" feature, resulting in a cross-site request
+forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to rebuild a project at a previous git
+revision where the tests were failing.
+
+As of publication of this advisory, there is no fix.
+
+
+
