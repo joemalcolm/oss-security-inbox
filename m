@@ -1,4 +1,9 @@
-Received: (qmail 16264 invoked by uid 550); 24 Oct 2023 17:51:26 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1841" "Wednesday" "12" "August" "2020" "16:07:36" "+0300" "Aki Tuomi" "aki.tuomi@dovecot.fi" "<956af3a4-9b97-ad3f-cea5-001e9afe3435@dovecot.fi>" "65" "[oss-security] CVE-2020-12100: Dovecot IMAP server: Receiving mail with deeply nested MIME parts leads to resource exhaustion" "^Date:" nil nil "8" "2020081213:07:36" "[oss-security] CVE-2020-12100: Dovecot IMAP server: Receiving mail with deeply nested MIME parts leads to resource exhaustion" (number mark "        aki.tuomi@do Aug 12   65/1841  " thread-indent "\"[oss-security] CVE-2020-12100: Dovecot IMAP server: Receiving mail with deeply nested MIME parts leads to resource exhaustion\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-12100: Dovecot IMAP server: Receiving mail with deeply nested MIME parts leads to resource exhaustion" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11902 invoked by uid 550); 12 Aug 2020 13:19:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,216 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11300 invoked from network); 24 Oct 2023 16:56:40 -0000
-X-Virus-Scanned: amavis at mail.hlrs.de
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.hlrs.de E65005EA20B4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hlrs.de;
-	s=1806FB76-797D-11E5-BCE5-7B280A126CD4; t=1698166588;
-	bh=Q0Mq5m/9K++D+FqX6jimRcmgzmxI7QrhRkZEG/BLgO8=;
-	h=Message-ID:Date:MIME-Version:To:From;
-	b=LKZEacSdxow3AfIZCaFtFlQwohS1taNf9+CFxPfOZlIcY105+Hv2YcgV+SkI2waLM
-	 dyUAkhbIE2tQmfevyQXNPQYa7Ob7v0nUCj735DTfQV18aAMUAUG5XI5qVKASK+yFFF
-	 nNZ8K6k3RukNHcxgiXGR3GyxJMojyQhezp8X2LLU=
-Message-ID: <3cba653e-efec-4264-89df-f88caa37d84d@hlrs.de>
-Date: Tue, 24 Oct 2023 18:56:27 +0200
+Received: (qmail 30088 invoked from network); 12 Aug 2020 13:07:48 -0000
+Autocrypt: addr=aki.tuomi@dovecot.fi; prefer-encrypt=mutual; keydata=
+ xsBNBFb7bukBCACpK7GFwH/gyL0oF8t91WM7S+UjuQ1vOQZg2eoCUHi4ILpm1Kae4UeZLB2X
+ Vbeph+k29BIQbo+Hjv6rq6JzPfKIZCRLLrkMD1MtA0YB7ZYiACywLrATAdAMJ6sRq+DL5Rlr
+ A2CvviTifz6DwEnbqI+ckcKggsY2gywHs5muDw+n5TwLiL0V9IU478vg7OUWzMZ42toTmeTW
+ 2MtsIAE5xbnjZ58LUSZR2CNO8SAtDHYI558ACkS0wHBAoRFNv27IPr3cebiPsIglSEIBr0R1
+ F1Twbgm6mWVBhK+smDgGxmmuAhH6boSaKWoWAq+tNf+6oXnr3/D0IPtR8c/bZobtvWG3ABEB
+ AAHNJ1R1b21pLCBBa2kgPGFraS50dW9taUBvcGVuLXhjaGFuZ2UuY29tPsLAfgQTAQIAKAIb
+ AwUJEswDAAUCW2P/aAYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQGTtjY7NEQgYmMwf9
+ G5U0+vKJB+f3Vl8rjPqlXmUZu4waf6pig5lLCrgu56ZkqEDmjaxmxXAah7JZ6dD/66kzlQzK
+ QPYpLor0KnTZgm8XZr+MtqLK8DMF/4+iljADvkS4nfJuX3LbdafPyuk4x+GIa+6NJ+y34jZ2
+ 84Oesj+FtPOevthR9rDmnc2KQjBD30ceKsadxIKqWPYPqPESQ0PyMu9tOaWNdGntx8LvO3Ll
+ spZ2DzEh5rregFKtO01jR9ai5r3mbUrQqwzWLxJztBYjds8D5VAiCBeivUxetDqhoPr3CyKH
+ Stc5GfgHvazjG34H+CShReqIylfR4mwc654qkmVQfPMMUTaa677n8c7ATQRW+27pAQgAosZd
+ RB8tui65tjna4iYKPHqcNDZUXOUuPLTucYc2tY2v67POGr44gOZNzuQWKyXRSBs+Q2zJHcbc
+ cPe0ZEptkOCOwdhhvBwZLKa6nI9jnJ0K+szT2NbD0YkvaIDALA9pVGMJqa88wvkkocf/I5fk
+ dTk6xuLp8AamRXvcPZuUPo/s2PXQV4u+gtKdX1FmaHiBg1oQhtoDWZO04H74r9fyPPs499ra
+ 9iNckSlZP51OUFBbV/RmbtEC031r4iXUAgiL0nQ1mNpRIW+PU/5beX/4YwYeCpzy7g0XfMaJ
+ oMWDamRdXgzkXK6IJIxwo/89M8qPW+Bkh88yAennI2SsEvniXQARAQABwsBxBBgBAgAbBQJW
+ +27pAhsMBAsJCAcGFQoJCAsCBQkSzAMAAAoJEBk7Y2OzREIGCm8IAIZkj5FClx8EmPy1caC+
+ CNv1mVrC2YhKY9Zh255JUtt+Xp6tshN6IOr+saNkcwgUghxmx6+asZXPDHTqhXoswPi28k1u
+ CY7n4gvh3jlS7a0HeI0sy2RCsrkIaQD2uSt+ju9fpEM2aOXQHGT/x6gZhJ7Uwu+JfDnCB7CB
+ FjVnRaV2/87Y0ZImfhIMPYRzwOyWW6KR+JPIutyZAWo9c7mmjKbySLXhqgZariMJU+RQF5/d
+ aQsiRJKP1IkC/Ncy/iZSnGvPIRZjvQxtrz+4xexZX6NjG7IbKAwmbo1t27cF3hE4HejakF5b
+ LOhznVWubhjXp1J6pL9fymHmG2tZPsgwXcA=
+Message-ID: <956af3a4-9b97-ad3f-cea5-001e9afe3435@dovecot.fi>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="EfqyJTErrMnTA59pH42z0K30m7ZX6yWly"
+Date: Wed, 12 Aug 2020 16:07:36 +0300
+From: Aki Tuomi <aki.tuomi@dovecot.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2020-12100: Dovecot IMAP server: Receiving mail with deeply nested MIME parts leads to resource exhaustion
+To: oss-security <oss-security@lists.openwall.com>,
+ full-disclosure <full-disclosure@lists.openwall.com>
+
+--EfqyJTErrMnTA59pH42z0K30m7ZX6yWly
+Content-Type: multipart/mixed; boundary="65izoVlABH0NR742a1l62CGb6JJLTgr8I"
+
+--65izoVlABH0NR742a1l62CGb6JJLTgr8I
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Content-Language: en-US
-To: oss-security@lists.openwall.com
-References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
- <3a2a90f88bf54fd7687234a8f5a92c43.49e9d693@crystals.bloom>
- <20231020132741.GA4951@openwall.com>
- <d4af64a958768b48cc98670741c1f8e4.da8a7fea@penurious.financings>
-From: Martin Hecht <martin.hecht@hlrs.de>
-In-Reply-To: <d4af64a958768b48cc98670741c1f8e4.da8a7fea@penurious.financings>
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-512; boundary="------------ms090907050703000203040508"
-Subject: Re: [oss-security] with firefox on X11, any page can pastejack you
- anytime
 
---------------ms090907050703000203040508
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Open-Xchange Security Advisory 2020-08-12
 
-On 20/10/2023 17:21, Turistu wrote:
-> On Fri, Oct 20, 2023 at 03:27:41PM +0200, Solar Designer wrote:
->>
->> Or isolate Firefox to its own X server (or at least a separate one from
->> where you run terminal emulators managing important stuff), like it
->> happens when you run it in its own VM (or perhaps many instances of it
->> in many VMs) on Qubes OS.  Indeed this also removes the convenience of
-> 
-> If you do that, notice that you will also have to run a window manager
-> inside that separate X server, because firefox (which never implemented
-> the X11 and icccm protocols correctly) needs a wm in order to function
-> properly (more precisely a point-to-focus wm or one that simulates
-> point-to-focus just to keep firefox and some other horrors like old atk
-> java apps happy).
+Affected product: Dovecot IMAP server
+Internal reference: DOP-1849 (Bug ID)
+Vulnerability type: Uncontrolled recursion (CWE-674)
+Vulnerable version: 2.0
+Vulnerable component: submission, lmtp, lda
+Fixed version: 2.3.11.3
+Report confidence: Confirmed
+Solution status: Fix available
+Vendor notification: 2020-04-23
+CVE reference: CVE-2020-12100
+CVSS: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
 
-there was a recommendation to run firefox as a different user, e.g. 
-firefox, some time ago:
-https://seclists.org/fulldisclosure/2014/Jun/84
+Vulnerability Details:
+Receiving mail with deeply nested MIME parts leads to resource
+exhaustion as Dovecot attempts to
+parse it.
 
-this firefox user doesn't have access to the primary and secondary 
-selection buffer. Some details have changed, but basically I'm using 
-this approach since then. It's a bit uncomfortable in daily use (like 
-most security measures), because copy&paste out of firefox doesn't work 
-anymore. But there is also this addon as a workaround, which lets me 
-save text selected within firefox to a well-defined file, from where I 
-can pick it up after careful inspection under my regular user:
-https://addons.mozilla.org/en-US/firefox/addon/save-text-to-file/
+Risk:
+Malicious actor can cause denial of service to mail delivery by
+repeatedly sending mails with bad
+content.
 
-But still, we are left with the problem that within firefox scripts can 
-do all kind of bad things. NoScript addon can help here to some extend:
-https://addons.mozilla.org/en-US/firefox/addon/noscript/
+Workaround:
+Limit MIME structures in MTA.
 
-But unfortunately more and more web pages refuse to display anything if 
-no scripts are allowed at all by default, which forces me to either 
-admit tons of javascript on those pages or just leave them without 
-reading... Ok, using separate browser profiles for different kinds of 
-web pages is another approach (separate profiles for online banking, 
-admin guis, regular browsing, another one for pages you trust less...)
+Solution:
+Upgrade to fixed version.
 
-best regards, Martin
+Best regards,
+
+Aki Tuomi
+Open-Xchange oy
 
 
---------------ms090907050703000203040508
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgMFADCABgkqhkiG
-9w0BBwEAAKCCEbcwggUSMIID+qADAgECAgkA4wvV+K8l2YEwDQYJKoZIhvcN
-AQELBQAwgYIxCzAJBgNVBAYTAkRFMSswKQYDVQQKDCJULVN5c3RlbXMgRW50
-ZXJwcmlzZSBTZXJ2aWNlcyBHbWJIMR8wHQYDVQQLDBZULVN5c3RlbXMgVHJ1
-c3QgQ2VudGVyMSUwIwYDVQQDDBxULVRlbGVTZWMgR2xvYmFsUm9vdCBDbGFz
-cyAyMB4XDTE2MDIyMjEzMzgyMloXDTMxMDIyMjIzNTk1OVowgZUxCzAJBgNV
-BAYTAkRFMUUwQwYDVQQKEzxWZXJlaW4genVyIEZvZXJkZXJ1bmcgZWluZXMg
-RGV1dHNjaGVuIEZvcnNjaHVuZ3NuZXR6ZXMgZS4gVi4xEDAOBgNVBAsTB0RG
-Ti1QS0kxLTArBgNVBAMTJERGTi1WZXJlaW4gQ2VydGlmaWNhdGlvbiBBdXRo
-b3JpdHkgMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMtg1/9m
-oUHN0vqHl4pzq5lN6mc5WqFggEcVToyVsuXPztNXS43O+FZsFVV2B+pG/cgD
-RWM+cNSrVICxI5y+NyipCf8FXRgPxJiZN7Mg9mZ4F4fCnQ7MSjLnFp2uDo0p
-eQcAIFTcFV9Kltd4tjTTwXS1nem/wHdN6r1ZB+BaL2w8pQDcNb1lDY9/Mm3y
-WmpLYgHurDg0WUU2SQXaeMpqbVvAgWsRzNI8qIv4cRrKO+KA3Ra0Z3qLNupO
-kSk9s1FcragMvp0049ENF4N1xDkesJQLEvHVaY4l9Lg9K7/AjsMeO6W/VRCr
-Kq4Xl14zzsjz9AkH4wKGMUZrAcUQDBHHWekCAwEAAaOCAXQwggFwMA4GA1Ud
-DwEB/wQEAwIBBjAdBgNVHQ4EFgQUk+PYMiba1fFKpZFK4OpL4qIMz+EwHwYD
-VR0jBBgwFoAUv1kgNgB5oKAia4zV8mHSuCzLgkowEgYDVR0TAQH/BAgwBgEB
-/wIBAjAzBgNVHSAELDAqMA8GDSsGAQQBga0hgiwBAQQwDQYLKwYBBAGBrSGC
-LB4wCAYGZ4EMAQICMEwGA1UdHwRFMEMwQaA/oD2GO2h0dHA6Ly9wa2kwMzM2
-LnRlbGVzZWMuZGUvcmwvVGVsZVNlY19HbG9iYWxSb290X0NsYXNzXzIuY3Js
-MIGGBggrBgEFBQcBAQR6MHgwLAYIKwYBBQUHMAGGIGh0dHA6Ly9vY3NwMDMz
-Ni50ZWxlc2VjLmRlL29jc3ByMEgGCCsGAQUFBzAChjxodHRwOi8vcGtpMDMz
-Ni50ZWxlc2VjLmRlL2NydC9UZWxlU2VjX0dsb2JhbFJvb3RfQ2xhc3NfMi5j
-ZXIwDQYJKoZIhvcNAQELBQADggEBAIcL/z4Cm2XIVi3WO5qYi3FP2ropqiH5
-Ri71sqQPrhE4eTizDnS6dl2e6BiClmLbTDPo3flq3zK9LExHYFV/53RrtCyD
-2HlrtrdNUAtmB7Xts5et6u5/MOaZ/SLick0+hFvu+c+Z6n/XUjkurJgARH5p
-O7917tALOxrN5fcPImxHhPalR6D90Bo0fa3SPXez7vTXTf/D6OWST1k+kEcQ
-SrCFWMBvf/iu7QhCnh7U3xQuTY+8npTD5+32GPg8SecmqKc22CzeIs2LgtjZ
-eOJVEqM7h0S2EQvVDFKvaYwPBt/QolOLV5h7z/0HJPT8vcP9SpIClxvyt7bP
-ZYoaorVyGTkwggWsMIIElKADAgECAgcbY7rQHiw9MA0GCSqGSIb3DQEBCwUA
-MIGVMQswCQYDVQQGEwJERTFFMEMGA1UEChM8VmVyZWluIHp1ciBGb2VyZGVy
-dW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVzIGUuIFYuMRAw
-DgYDVQQLEwdERk4tUEtJMS0wKwYDVQQDEyRERk4tVmVyZWluIENlcnRpZmlj
-YXRpb24gQXV0aG9yaXR5IDIwHhcNMTYwNTI0MTEzODQwWhcNMzEwMjIyMjM1
-OTU5WjCBjTELMAkGA1UEBhMCREUxRTBDBgNVBAoMPFZlcmVpbiB6dXIgRm9l
-cmRlcnVuZyBlaW5lcyBEZXV0c2NoZW4gRm9yc2NodW5nc25ldHplcyBlLiBW
-LjEQMA4GA1UECwwHREZOLVBLSTElMCMGA1UEAwwcREZOLVZlcmVpbiBHbG9i
-YWwgSXNzdWluZyBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
-AJ07eRxH3h+Gy8Zp1xCeOdfZojDbchwFfylfS2jxrRnWTOFrG7ELf6Gr4HuL
-i9gtzm6IOhDuV+UefwRRNuu6cG1joL6WLkDh0YNMZj0cZGnlm6Stcq5oOVGH
-ecwX064vXWNxSzl660Knl5BpBb+Q/6RAcL0D57+eGIgfn5mITQ5HjUhfZZkQ
-0tkqSe3BuS0dnxLLFdM/fx5ULzquk1enfnjK1UriGuXtQX1TX8izKvWKMKzt
-FwUkP7agCwf9TRqaA1KgNpzeJIdl5Of6x5ZzJBTN0OgbaJ4YWa52fvfRCng8
-h0uwN89Tyjo4EPPLR22MZD08WkVKusqAfLjz56dMTM0CAwEAAaOCAgUwggIB
-MBIGA1UdEwEB/wQIMAYBAf8CAQEwDgYDVR0PAQH/BAQDAgEGMCkGA1UdIAQi
-MCAwDQYLKwYBBAGBrSGCLB4wDwYNKwYBBAGBrSGCLAEBBDAdBgNVHQ4EFgQU
-azqYi/nyU4na4K2yMh4JH+iqO3QwHwYDVR0jBBgwFoAUk+PYMiba1fFKpZFK
-4OpL4qIMz+EwgY8GA1UdHwSBhzCBhDBAoD6gPIY6aHR0cDovL2NkcDEucGNh
-LmRmbi5kZS9nbG9iYWwtcm9vdC1nMi1jYS9wdWIvY3JsL2NhY3JsLmNybDBA
-oD6gPIY6aHR0cDovL2NkcDIucGNhLmRmbi5kZS9nbG9iYWwtcm9vdC1nMi1j
-YS9wdWIvY3JsL2NhY3JsLmNybDCB3QYIKwYBBQUHAQEEgdAwgc0wMwYIKwYB
-BQUHMAGGJ2h0dHA6Ly9vY3NwLnBjYS5kZm4uZGUvT0NTUC1TZXJ2ZXIvT0NT
-UDBKBggrBgEFBQcwAoY+aHR0cDovL2NkcDEucGNhLmRmbi5kZS9nbG9iYWwt
-cm9vdC1nMi1jYS9wdWIvY2FjZXJ0L2NhY2VydC5jcnQwSgYIKwYBBQUHMAKG
-Pmh0dHA6Ly9jZHAyLnBjYS5kZm4uZGUvZ2xvYmFsLXJvb3QtZzItY2EvcHVi
-L2NhY2VydC9jYWNlcnQuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQCBeEWkTqR/
-DlXwCbFqPnjMaDWpHPOVnj/z+N9rOHeJLI21rT7H8pTNoAauusyosa0zCLYk
-hmI2THhuUPDVbmCNT1IxQ5dGdfBi5G5mUcFCMWdQ5UnnOR7Ln8qGSN4IFP8V
-Sytmm6A4nwDO/afr0X9XLchMX9wQEZc+lgQCXISoKTlslPwQkgZ7nu7YRrQb
-tQMMONncsKk/cQYLsgMHM8KNSGMlJTx6e1du94oFOO+4oK4v9NsH1VuEGMGp
-uEvObJAaguS5Pfp38dIfMwK/U+d2+dwmJUFvL6Yb+qQTkPp8ftkLYF3sv8pB
-oGH7EUkp2KgtdRXYShjqFu9VNCIaE40GMIIG7TCCBdWgAwIBAgIMJpJUZsyv
-EKPfVDGNMA0GCSqGSIb3DQEBCwUAMIGNMQswCQYDVQQGEwJERTFFMEMGA1UE
-Cgw8VmVyZWluIHp1ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3Jz
-Y2h1bmdzbmV0emVzIGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQD
-DBxERk4tVmVyZWluIEdsb2JhbCBJc3N1aW5nIENBMB4XDTIyMDUwNDE5NDEx
-M1oXDTI1MDUwMzE5NDExM1owgYkxCzAJBgNVBAYTAkRFMRIwEAYDVQQHDAlT
-dHV0dGdhcnQxHzAdBgNVBAoMFlVuaXZlcnNpdGFldCBTdHV0dGdhcnQxDTAL
-BgNVBAsMBEhMUlMxDjAMBgNVBAQMBUhlY2h0MQ8wDQYDVQQqDAZNYXJ0aW4x
-FTATBgNVBAMMDE1hcnRpbiBIZWNodDCCAiIwDQYJKoZIhvcNAQEBBQADggIP
-ADCCAgoCggIBAMWrI/1N3VQ1d8xUhk0rBiPopJ/A/1fte0tnKkpeFYpt+iI9
-l/emZiUUT5a+y79mF2rLZj6vGgXl5lGqE8pPV/XP/W2/9TvHpNw7BlDqIl5U
-64tLKu7VVgQ0DfwPufcRpa+EbXwBB8J8KpIi6nzjY2npgylob8XlZicJ3D6L
-oDJdVH+2U3X2Oh4d6PrU1UnXwB53w68F9XlXlTVyFILkwvc8ReV9RoSyYpj8
-Mg0DrZMgOvv1+ASlSBwlSv7N+nCLNdjbwkXFqrFU3CCzY5+lWjnzmPBSSF3d
-k/b6akX2RrYA0Qyp9lVCt5l/bV55zOQ90vY7zPxqsyp87YnxvXeW1rPqL9Wk
-0mLleTLoMiSPQRoY5ndZN8OI6U7rjVivtL2kKuCb/CyVp4ji1h33Z6Vu9sPU
-HXYAZNmbW7FGkrVuXbvYisD9IOFtGsLxlnWtdeuDBr/Ag71viq44OST61bGX
-M4YNi2IH4z24oKnhwZEibDwAM/ELC8b4N4njRzjNnVjGJA2SyZ3CP8DztHsf
-CmlthUrPaUkAcdw3bkzrsybEZVooHkEntCxX85E65wXu1JZlms/MYKffJl7g
-RObPSAZbDk7sRD4lVFuMJm/LL3JPXXLjAKViCNqPHbIN5t8T/DK72UxTCtio
-h7iSq/vnadZ94Kg8pztyU9BFgTsyeVZV95qfAgMBAAGjggJNMIICSTA+BgNV
-HSAENzA1MA8GDSsGAQQBga0hgiwBAQQwEAYOKwYBBAGBrSGCLAEBBAowEAYO
-KwYBBAGBrSGCLAIBBAowCQYDVR0TBAIwADAOBgNVHQ8BAf8EBAMCBeAwHQYD
-VR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMB0GA1UdDgQWBBTLgAsVkQuv
-G/7Nc4nJCq5vS4cBujAfBgNVHSMEGDAWgBRrOpiL+fJTidrgrbIyHgkf6Ko7
-dDAfBgNVHREEGDAWgRRtYXJ0aW4uaGVjaHRAaGxycy5kZTCBjQYDVR0fBIGF
-MIGCMD+gPaA7hjlodHRwOi8vY2RwMS5wY2EuZGZuLmRlL2Rmbi1jYS1nbG9i
-YWwtZzIvcHViL2NybC9jYWNybC5jcmwwP6A9oDuGOWh0dHA6Ly9jZHAyLnBj
-YS5kZm4uZGUvZGZuLWNhLWdsb2JhbC1nMi9wdWIvY3JsL2NhY3JsLmNybDCB
-2wYIKwYBBQUHAQEEgc4wgcswMwYIKwYBBQUHMAGGJ2h0dHA6Ly9vY3NwLnBj
-YS5kZm4uZGUvT0NTUC1TZXJ2ZXIvT0NTUDBJBggrBgEFBQcwAoY9aHR0cDov
-L2NkcDEucGNhLmRmbi5kZS9kZm4tY2EtZ2xvYmFsLWcyL3B1Yi9jYWNlcnQv
-Y2FjZXJ0LmNydDBJBggrBgEFBQcwAoY9aHR0cDovL2NkcDIucGNhLmRmbi5k
-ZS9kZm4tY2EtZ2xvYmFsLWcyL3B1Yi9jYWNlcnQvY2FjZXJ0LmNydDANBgkq
-hkiG9w0BAQsFAAOCAQEAK/Y+QHQD5lDheFJ3xtFxcNinPDjvGVtNRoG13ufC
-JCg5PMegelx6oE9mdtTLGvabOd/QlNyqkBIAApkT+gVLemtQccq+79TxP9L4
-U247hBiLodQXgCBi71qhiI3aXOU91DAVSkNOLtxP0s4ixYrWLlzIwtIM4fVM
-A07889Bz++XebQ9XxyMiB7GDbblUiSdT5ycf1xC8NrKc9ayAPZhLsAemJcF/
-03xu1GrEPVwLv7gCqQAbpsDRZBbF+LHOBlN/1lIZs6kGmgO+eNYymZmLJ204
-A8VrbAkW8Vb9Ndk911j/Ihr1F/FgcBy/eaw+5DlyFMUq38yLgo+pVY1520Z5
-IzGCBSswggUnAgEBMIGeMIGNMQswCQYDVQQGEwJERTFFMEMGA1UECgw8VmVy
-ZWluIHp1ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdz
-bmV0emVzIGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQDDBxERk4t
-VmVyZWluIEdsb2JhbCBJc3N1aW5nIENBAgwmklRmzK8Qo99UMY0wDQYJYIZI
-AWUDBAIDBQCgggJdMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZI
-hvcNAQkFMQ8XDTIzMTAyNDE2NTYyOFowTwYJKoZIhvcNAQkEMUIEQLuLGhN0
-LrpOvv7yEQz+QknDvKjArwnrz3x5BpUKPYZz11LvP2qHhUvFNyaoGzKdD7wN
-Bs04mFaP/8xmFmV78rUwbAYJKoZIhvcNAQkPMV8wXTALBglghkgBZQMEASow
-CwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDANBggq
-hkiG9w0DAgIBQDAHBgUrDgMCBzANBggqhkiG9w0DAgIBKDCBrwYJKwYBBAGC
-NxAEMYGhMIGeMIGNMQswCQYDVQQGEwJERTFFMEMGA1UECgw8VmVyZWluIHp1
-ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVz
-IGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQDDBxERk4tVmVyZWlu
-IEdsb2JhbCBJc3N1aW5nIENBAgwmklRmzK8Qo99UMY0wgbEGCyqGSIb3DQEJ
-EAILMYGhoIGeMIGNMQswCQYDVQQGEwJERTFFMEMGA1UECgw8VmVyZWluIHp1
-ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVz
-IGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQDDBxERk4tVmVyZWlu
-IEdsb2JhbCBJc3N1aW5nIENBAgwmklRmzK8Qo99UMY0wDQYJKoZIhvcNAQEB
-BQAEggIAq59f2jn67YZEdCCg+7wK2gkuoMT3x/vNEx/nECZHteePFao7iqBG
-K9OK1PPXJwJXsoJ966uXGdqOBC3RQ6jHkS7a9seDuzBUZRL953/WRMwEojTy
-14WDAEHow1eZ7rZvRnNW61G1iuSYYcpd4vqZBGKORHF0x7eYK2378JaH46Ip
-O4yownK0AaPJkvDrknTZ4oIU26TA5KRkLHI0RHoVTAwJaNVQ14OIb3hNPEbM
-Az5OagcilSwSw6dgmzidXFugwbQmMpQDxbe7m6AUR5v2jM5m4uKd+FrnLNrj
-9a0fjS6T6FZWA+cpcUqPer+oYHRNXSnMeZiLEtDYN0VwlbsW8JGGuB+Xk2RA
-Z2LjjzshSxXFN3/IAjNvgt0Q9Piv5zLsPAbXfHNDUr20O1QPlCNQV/qGU0ym
-esEYm9OVV/gyIcr2jyhYDeUgZg0uGn72LtpsGTQUgTo8RVPerdwUxbEgvZtH
-y2a/838PgPTTd+OastpbPdx+GmTgdrsad7WP8pKmSEW5AUsBJ32c80maXACF
-PtVtv56EYZJlej+WSdxUG2EAsrdi/gEyYsLSCUPndha0mYam7M0xyNxPkzoy
-M0fjpmo1EckII8Lx3CbILtwhmZCDvtLd8ORREou8Uw5tzWGPpxOya5ooq/DI
-9Qp5obQiq1TlLssp1EvbheiI/qGXtCsAAAAAAAA=
+--65izoVlABH0NR742a1l62CGb6JJLTgr8I--
 
---------------ms090907050703000203040508--
+--EfqyJTErrMnTA59pH42z0K30m7ZX6yWly
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEQtnWz3vebh9IQVAqGTtjY7NEQgYFAl8z6ZgACgkQGTtjY7NE
+QgZ5cQf7B2Q3Cz1ZTRS/1rei7VoOlqiJnysOx1zHBUnHI3S8/IcSuwGSMmUk0Soz
+IfJURpG2lrY5/W8cnvRZrcYaFo/TAvub/wOvn5qA3viPIbr0vcpMXIN+gBnVbp/c
+UFQsUc4KvdfGPkS16kpi5weMbqtt28Cpq1sG6synTaEHThH2p7mNj1Q615BEXk0t
+D4Odct3vECZ0/2nOQJKP74TEi5ix5iJQ5ZiVnJuQ+6rhM1l+vDZCNYUy1DUK7vKT
+linVBzVGKrriyK9r9ZPsfgrj7fGwnHtnJMEyEmp6gMvzwaWiYZd2P2EOA5bhrFcR
+7Q4XdeMWfWHtD9dZgR8CxALIkC8aNw==
+=iExz
+-----END PGP SIGNATURE-----
+
+--EfqyJTErrMnTA59pH42z0K30m7ZX6yWly--
