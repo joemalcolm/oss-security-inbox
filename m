@@ -1,46 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/20/2
-Message-ID: <20201120063321.GA348130@eldamar.lan>
-Date: Fri, 20 Nov 2020 07:33:21 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: libass ass_outline.c signed integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/13/1
+Message-ID: <1597307893318.52919@amazon.com>
+Date: Thu, 13 Aug 2020 08:38:15 +0000
+From: "Iorga, Serban" <seriorga@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2020-16843: Firecracker v0.20.0, v0.21.0 and v0.21.1 network stack can freeze under heavy ingress traffic
 Content-Type: text/plain; charset=utf-8
 
-Hi Ian,
+We have identified an issue in the Firecracker v0.20.0, v0.21.0 and v0.21.1 virtio-net emulation.
 
-On Thu, Nov 19, 2020 at 06:15:28PM -0800, Ian Zimmerman wrote:
-> On 2020-11-19 11:54, David A. Wheeler wrote:
-> 
-> > I read through the issue discussion. As best as I can tell, no one
-> > filed for a CVE, so there was no CVE.  Did I misunderstand something?
-> > 
-> > If my understanding is correct, that is *NOT* a failure of the CVE
-> > process.
-> 
-> As it often happens to me, what I wrote was too brief to be clear to
-> everyone.
-> 
-> The longer version would be something like:
-> 
->   This is an example of a situation where no one filed for a CVE because
->   of perceived hurdles in the process, even if the facts didn't justify
->   the perception.
-> 
-> Now of course Moritz tells us there is in fact a CVE and indeed I can
-> locate the issue in Debian's security tracker. I guess it has been
-> judged not serious enough to need fixing in buster. I disagree but
-> clearly that is up to the maintainers.
+# Issue Description
 
-What the no-dsa tag means: The issue will not warrant a dedicated
-security upload with an advisory, but issues marked so called 'no-dsa'
-can still be fixed as well in buster, via the regular point releases
-(for instance the next one happing on 5th of december).
+Under heavy network ingress traffic, when the host TAP interface's receive queue is not drained and the guest virtio-net device's receive queue is full, the microVM network interface ingress can freeze. There is no possibility to recover from this state, resulting in a denial of service on the microVM when it is configured with a single network interface, and causing an availability problem for the microVM network interface on which the issue is triggered.
 
-This though still requires someone to have spare resources and prepare
-an actual upload to be included.
+This issue is difficult to reproduce with TCP traffic. The TCP congestion algorithm makes it harder to fill both the TAP interface and virtio receive queues.
 
-Hope this helps,
+# Impact
 
-Regards,
-Salvatore
+When this issue is triggered, the guest kernel network interface will no longer receive packets.
+
+# Vulnerable Systems
+
+Firecracker releases v0.20.0, v0.21.0 and v0.21.1 are affected.
+
+# Mitigation
+
+Patched binaries mitigating this issue have been released as Firecracker v0.20.1[1] and Firecracker v0.21.2[2].
+If you are using Firecracker v0.20.0, v0.21.0 or v0.21.1, we recommend you apply the provided fix. If you are using Firecracker v0.19.1 or below, you do not need to take any action.
+
+[1] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.20.1
+[2] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.21.2
+
+Best Regards,
+Serban Iorga on behalf of the Firecracker maintainers team.
+
+Amazon Development Center (Romania) S.R.L. registered office: 27A Sf. Lazar Street, UBC5, floor 2, Iasi, Iasi County, 700045, Romania. Registered in Romania. Registration number J22/2621/2005.
+
+
+
+
+
+Amazon Development Center (Romania) S.R.L. registered office: 27A Sf. Lazar Street, UBC5, floor 2, Iasi, Iasi County, 700045, Romania. Registered in Romania. Registration number J22/2621/2005.
+
