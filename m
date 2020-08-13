@@ -1,29 +1,177 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/02/2
-Message-ID: <CALKeL-PCDy9Y1bd1Nuj196_giWr4fSYyvrk74jfoLxpSysJf=A@mail.gmail.com>
-Date: Wed, 1 Jul 2020 20:14:11 -0700
-From: Mike Jumper <mjumper@...che.org>
-To: announce@...che.org, announce@...camole.apache.org,  dev@...camole.apache.org, user@...camole.apache.org
-Cc: security@...camole.apache.org, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2020-9497: Apache Guacamole: Improper input validation of RDP static virtual channels
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/13/2
+Message-ID: <e26ab73a0e3ccf3b44d971b857986f18@breakpointingbad.com>
+Date: Thu, 13 Aug 2020 08:06:50 -0700
+From: vpn-research@...akpointingbad.com
+To: oss-security@...ts.openwall.com
+Subject: Blind in/on-path attacks against VPN-tunneled connections (CVE-2019-14899 follow-up)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-9497: Improper input validation of RDP static virtual channels
+Hi all,
 
-Versions affected:
-Apache Guacamole 1.1.0 and earlier
+This is reporting a vulnerability that allows an in/on-path attacker 
+between a VPN client and VPN server to infer and inject arbitrary data 
+into VPN-tunneled connections. This vulnerability is related to 
+CVE-2019-14899, but has a few key differences.
 
-Description:
-Apache Guacamole 1.1.0 and older do not properly validate data
-received from RDP servers via static virtual channels. If a user
-connects to a malicious or compromised RDP server, specially-crafted
-PDUs could result in disclosure of information within the memory of
-the guacd process handling the connection.
+- The attacker does not need to be the gateway or network adjacent, as 
+described in CVE-2019-14899.
 
-Mitigation:
-Users of versions of Apache Guacamole 1.1.0 and older that provide
-access to untrusted RDP servers should upgrade to 1.2.0.
+- The packets are not being spoofed "outside" of the tunnel. In the
+previous attack, the packets were sent to the wireless/ethernet 
+interface and were still being processed by the kernel despite coming 
+from a non-VPN interface, in this attack we are not subverting the 
+tunnel by sending packets to the incorrect interface, but sending 
+packets to the VPN server with the source address of the endhost (such 
+as a web server).  Thus, for the VPN server, the spoofed packets that 
+make it into the tunnel are identical to real packets from the endhost, 
+and enter the VPN server from the same interface.  For the VPN client, 
+the spoofed packets are coming through the VPN tunnel from the VPN 
+server.
 
-Credit:
-We would like to thank the GitHub Security Lab and Eyal Itkin (Check
-Point Research) for reporting this issue.
+- Enabling rp_filtering on the client machine does not prevent this
+attack, and source address validation on the scale of the Internet
+doesn't really exist.  Note that rp_filter on the server is irrelevant, 
+since spoofed packets enter on the same interface as legitimate packets.
+
+- The VPN providers and operating systems affected by this attack is 
+expanded to include policy-based VPNs and Windows etc.
+
+We reported this to disros@...openwall.org and security@...nel.org on 
+July 29th, but have not yet received any responses from any vendors with 
+a CVE pool. While related to CVE-2019-14899 in that we examine the 
+timing and size of encrypted packets to infer information about packet 
+headers, we believe this attack is significantly different and should be 
+assigned a CVE and addressed since the previous mitigation does not 
+prevent this attack.
+
+We have included our correspondence with distros and kernel security in 
+the form of a FAQ on our blog here: 
+https://breakpointingbad.com/2020/08/12/VPN-FAQ.html#faq.
+
+To prevent the cluster foxtrot of misinformation from the last 
+disclosure, we request that anyone wanting to report on this contact us 
+at vpn-research@...akpointingbad.com.
+
+William J. Tolley
+Beau Kujath
+Jedidiah R. Crandall
+
+Breakpointing Bad &
+Arizona State University
+
+***********************************************
+
+This is a follow-up to our report on November 20th of last year 
+detailing how connections inside a VPN tunnel could be inferred, reset, 
+and in some cases, hijacked by injecting data into the TCP stream. We 
+have expanded the attack by moving one or more hops away from the client 
+to an in-path middle router between the client and VPN server. In our 
+previous disclosure, a client-side mitigation using iptables or nftables 
+was suggested, but we are unsure of how to prevent this new attack and 
+do not believe there is a client-side solution.
+
+Our setup is as follows:
+
+
+vpn client ----- AP ----- router 1 ------ router 2 ----- vpn server
+
+                                  \        /
+
+                                    \    /
+
+                                      \/
+
+                                    router 3
+
+                                       |
+
+                                    website
+
+(If formatting is a problem: 
+https://breakpointingbad.com/assets/virtlab.jpg)
+
+
+The VPN client and access point both have reverse path filtering 
+enabled, and the client has an active connection to the website through 
+the VPN server. The attack is performed from router 1, spoofing a packet 
+that appears to be from the website to the VPN server. To infer a 
+connection that the VPN client has made on the other end of the VPN 
+tunnel, we spoof the packet coming from router 1 with the source address 
+and port of the website and the destination address of the VPN server.  
+By searching the ephemeral port space for the last part of the 4-tuple, 
+one of the spoofed packets will be NATed by the VPN server (if the 
+connection exists) and seen in the VPN tunnel by router 1 (by looking at 
+the size of encrypted packets going from VPN server to VPN client).
+
+Unlike the previous attack from the perspective of the gateway, or an 
+adjacent user, we do not need to know the virtual IP assigned to the 
+client.  However, as with the previous attack, the attacker must already 
+know the IP address that they anticipate the victim will connect to 
+using the VPN.  But testing a site is trivial, especially if we limit 
+the scope to a targeted attack from nation state testing against a 
+banned list, for example.
+
+We have tested this in a limited, virtual environment, but we are 
+starting our effort to test this on the “real internet”, where we will 
+need to account for packet loss, packet reordering, and packet delay, 
+but in many ways this attack is an easier attack than the original that 
+led to CVE-2019-14899 since it removes some of the most time-consuming 
+elements of the previous attack.
+
+We have tested this against OpenVPN, WireGuard, and StrongSwan. We 
+selected these since they are the most commonly used commercial VPN 
+platforms. It was suggested by Noel Kuntze in the previous thread that 
+the old attack wouldn’t work against policy-based VPNs, such as IPSec 
+using StrongSwan, so we included it in this effort to demonstrate how 
+the new attack does not depend on anything particular to the network 
+stack or VPN implementation of the client.  We have only tested 
+inferring that a TCP connection exists up to this point, but it should 
+be possible to reset or hijack that TCP connection in a manner similar 
+to the original attack since we can spoof packets into the tunnel at the 
+VPN server end.  Again, this works regardless of the VPN client’s 
+configuration, OS, etc.
+
+We are still developing other attacks using this method, including 
+attacks on DNS similar to those suggested by Colm MacCárthaigh.  By 
+using a DoS attack to have the DNS server ignore DNS requests from the 
+VPN server, we can guess the source port as above and then search as 
+much of the TXID space as possible within the timeout period of the DNS 
+request.  We have successfully hijacked VPN-tunneled DNS requests, and 
+are working on speeding up our attacks to make it more likely to work 
+for any given request.
+
+Just to summarize and put both forms of attack (spoofing to the VPN 
+client from a network adjacent position vs. spoofing to the VPN server 
+from any router on the path from VPN client to VPN server) into 
+perspective:
+
+-We’re still able to infer the existence of VPN-tunneled TCP 
+connections, and potentially RST and hijack them, regardless of VPN 
+client OS or anything the VPN client has done to patch against 
+CVE-2019-14899.
+
+-We note that TLS does not protect against inferring and resetting 
+connections in general, and our ability to hijack DNS requests also 
+means that TLS encryption alone will not protect a TCP connection.  VPNs 
+are supposed to protect the integrity of tunneled traffic independently 
+of application-layer protections (such as TLS). Our work shows that they 
+do not.
+
+-Attacking by spoofing packets to the VPN server instead of the VPN 
+client changes the threat model to be not only attackers that are 
+network adjacent to the VPN client, but also attackers that are 
+in/on-path between the VPN client and VPN server (e.g., the routers that 
+route packets between them).
+
+We also want to point out that the target audience for this disclosure 
+is kernel developers and others familiar with network stack 
+implementations and the details of how VPN routing works.  As with the 
+first disclosure we plan to follow list policy and make the disclosure 
+public after 14 days.  Our last disclosure was misinterpreted by many 
+media outlets and podcasters, so we’d like to point out that anybody 
+with questions about the disclosure can email 
+vpn-research@...akpointingbad.com and we’ll be happy to answer what 
+questions we can.
+
+
