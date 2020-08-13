@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2495" "Monday" "22" "January" "2018" "12:35:15" "+0100" "Daniel Beck" "ml@beckweb.net" "<9FA8984F-15E3-43F7-A50F-408E92B9D266@beckweb.net>" "77" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "1" "2018012211:35:15" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Jan 22   77/2495  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3795" "Thursday" "13" "August" "2020" "10:57:34" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" nil "122" nil "^Cc:" nil nil "8" nil nil (number mark "        alan.coopers Aug 13  122/3795  " thread-indent "\"Re: [oss-security] Re: [FD] libcroco multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: [FD] libcroco multiple vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13828 invoked by uid 550); 22 Jan 2018 11:35:28 -0000
+Received: (qmail 29896 invoked by uid 550); 13 Aug 2020 17:58:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,163 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 29878 invoked from network); 13 Aug 2020 17:58:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=subject : from : to :
+ cc : reply-to : references : message-id : date : mime-version :
+ in-reply-to : content-type : content-transfer-encoding; s=corp-2020-01-29;
+ bh=jxlx5Rjv9swCr+Rl9EQYnpunD/+xv0/Dp9/DFUOP4u0=;
+ b=ch+QV5LrQIxterg4KMVIzjVZWXRoQ7qTuK4H0iVij3NhxqkQWce6ozetZNh0TEw9kXxT
+ 2GPyLcRb2SYY+8N6w08xICmhIVqoFmitY9i3oaPZPN7JLCZbNwHMeshfc4+XLnnT9F7E
+ QPWZDxQ+aociTzahOO3CvvOT/q09eyf+hzk3G1nZYtLLtKhbW0DPjlF3ZXa7g/iHiFt/
+ XzZ81SGcPhUGvbQNOsqPi0v+iwnVga7IPJylN2NyUfPBZBC+7OkCHXJhp0tU+qARab02
+ rYMYl5WkIlIdsLg4t/9eAFH3p1jvlpXUXKuh04/1Vz3ZXsYupwjsX8nPmLayyV0QfDbi 6Q== 
+References: <50f7b717.f5b.15c809f2452.Coremail.qflb.wu@dbappsecurity.com.cn>
+ <8490d99d-bb3f-a827-4c22-74a0d22244a4@oracle.com>
+Message-ID: <3c159080-5b82-0a64-8fb3-dc4864688d2a@oracle.com>
+User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
+MIME-Version: 1.0
+In-Reply-To: <8490d99d-bb3f-a827-4c22-74a0d22244a4@oracle.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9712 signatures=668679
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 mlxlogscore=999 mlxscore=0
+ malwarescore=0 spamscore=0 suspectscore=0 phishscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
+ definitions=main-2008130128
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9712 signatures=668679
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 clxscore=1034
+ suspectscore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2008130128
+Cc: oss-security@lists.openwall.com
+Date: Thu, 13 Aug 2020 10:57:34 -0700
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13809 invoked from network); 22 Jan 2018 11:35:27 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-Id: <9FA8984F-15E3-43F7-A50F-408E92B9D266@beckweb.net>
-Date: Mon, 22 Jan 2018 12:35:15 +0100
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1516620927;e8267485;
-X-HE-SMSGID: 1edaNg-0003mS-9l
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Subject: Re: [oss-security] Re: [FD] libcroco multiple vulnerabilities
+To: "qflb.wu" <qflb.wu@dbappsecurity.com.cn>
 
-Jenkins is an open source automation server which enables developers around=
-=20
-the world to reliably build, test, and deploy their software. The following=
-=20
-plugin releases contain fixes for security vulnerabilities:
+Upstream closed these bugs as WONTFIX today since they have ended
+maintenance of the standalone libcroco, as discussed in the comments on
+https://gitlab.gnome.org/Archive/libcroco/-/issues/8
+(which is a different security fix, for CVE-2020-12825).
 
-* Ant plugin 1.8
-* Checkstyle plugin 3.50
-* DRY plugin 2.50
-* FindBugs plugin 4.72
-* Pipeline: Nodes and Processes plugin 2.18
-* PMD plugin 3.50
-* Release plugin 2.10
-* Translation Assistance plugin 1.16
-* Warnings plugin 4.65
+	-Alan Coopersmith-               alan.coopersmith@oracle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-01-22/
+On 6/8/17 10:00 AM, Alan Coopersmith wrote:
+> These appear to be reported to the maintainers as:
+> 
+> https://bugzilla.gnome.org/show_bug.cgi?id=782647
+> https://bugzilla.gnome.org/show_bug.cgi?id=782649
+> 
+> Please include info about the upstream bugs when possible as it helps others
+> track when fixes are available.
+> 
+>      -Alan Coopersmith-               alan.coopersmith@oracle.com
+>       Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+> 
+> On 06/ 6/17 08:35 PM, qflb.wu wrote:
+>> libcroco multiple vulnerabilities
+>> ================
+>> Author : qflb.wu
+>> ===============
+>>
+>>
+>> Introduction:
+>> =============
+>> Libcroco is a standalone css2 parsing and manipulation library.
+>> The parser provides a low level event driven SAC like api and a css object 
+>> model like api.
+>> Libcroco provides a CSS2 selection engine and an experimental xml/css 
+>> rendering engine.
+>>
+>>
+>> Affected version:
+>> =====
+>> 0.6.12
+>>
+>>
+>> Vulnerability Description:
+>> ==========================
+>> 1.
+>> the cr_tknzr_parse_comment function in cr-tknzr.c in libcroco 0.6.12 can cause 
+>> a denial of service (memory allocation error) via a crafted CSS file.
+>>
+>>
+>> ./csslint-0.6 --dump-location libcroco_0_6_12_memory_allocation_error.css
+>>
+>>
+>> ==21841==ERROR: AddressSanitizer failed to allocate 0x20002000 (536879104) 
+>> bytes of LargeMmapAllocator: 12
+>> ...
+>> ==21841==AddressSanitizer CHECK failed: 
+>> /build/buildd/llvm-toolchain-3.4-3.4/projects/compiler-rt/lib/sanitizer_common/sanitizer_posix.cc:68 
+>> "(("unable to mmap" && 0)) != (0)" (0x0, 0x0)
+>>      ...
+>>      #10 0x7fd78c2fcb4d in cr_tknzr_parse_comment 
+>> /home/a/Downloads/libcroco-0.6.12/src/cr-tknzr.c:462
+>>      #11 0x7fd78c2fcb4d in cr_tknzr_get_next_token 
+>> /home/a/Downloads/libcroco-0.6.12/src/cr-tknzr.c:2218
+>>      #12 0x7fd78c356f6e in cr_parser_try_to_skip_spaces_and_comments 
+>> /home/a/Downloads/libcroco-0.6.12/src/cr-parser.c:634
+>>      #13 0x7fd78c368a43 in cr_parser_parse_stylesheet 
+>> /home/a/Downloads/libcroco-0.6.12/src/cr-parser.c:2538
+>>      #14 0x7fd78c368a43 in cr_parser_parse 
+>> /home/a/Downloads/libcroco-0.6.12/src/cr-parser.c:4381
+>>      #15 0x480a8e in sac_parse_and_display_locations 
+>> /home/a/Downloads/libcroco-0.6.12/csslint/csslint.c:960
+>>      #16 0x480a8e in main 
+>> /home/a/Downloads/libcroco-0.6.12/csslint/csslint.c:1001
+>>      #17 0x7fd78b397f44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+>>      #18 0x47c95c in _start 
+>> (/home/a/Downloads/libcroco-0.6.12/csslint/.libs/lt-csslint-0.6+0x47c95c)
+>>
+>>
+>>      Reproducer:
+>>      libcroco_0_6_12_memory_allocation_error.css
+>>      CVE:
+>>      CVE-2017-8834
+>>
+>>
+>> 2.
+>> The cr_parser_parse_selector_core function in cr-parser.c in libcroco 0.6.12 
+>> can cause a denial of service(infinite loop and CPU consumption) via a crafted 
+>> CSS file.
+>>
+>>
+>> ./csslint-0.6 --dump-location libcroco_0_6_12_infinite_loop.css
+>>
+>>
+>> Reproducer:
+>> libcroco_0_6_12_infinite_loop.css
+>> CVE:
+>> CVE-2017-8871
+>>
+>>
+>> ===============================
+>>
+>>
+>> qflb.wu () dbappsecurity com cn
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>> _______________________________________________
+>> Sent through the Full Disclosure mailing list
+>> https://nmap.org/mailman/listinfo/fulldisclosure
+>> Web Archives & RSS: http://seclists.org/fulldisclosure/
+>>
+> 
+> 
+> 
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-655 (PMD)
-SECURITY-656 (Checkstyle)
-SECURITY-657 (DRY)
-SECURITY-658 (FindBugs)
-SECURITY-695 (Warnings)
-Multiple plugins based on the Static Analysis Utilities plugin are affected=
- by=20
-an XML External Entity (XXE) processing vulnerability. This allows attacker=
- to=20
-configure build processes so that one of these plugins parses a maliciously=
-=20
-crafted file that uses external entities for extraction of secrets from the=
-=20
-Jenkins master, server-side request forgery, or denial-of-service attacks.
-
-
-SECURITY-607
-Release plugin did not require form submissions to be submitted via POST,=20
-resulting in a CSRF vulnerability allowing attackers to trigger release bui=
-lds.
-
-
-SECURITY-507
-Translation Assistance did not require form submissions to be submitted via=
-=20
-POST, resulting in a CSRF vulnerability allowing attackers to override=20
-localized strings displayed to all users on the current Jenkins instance if=
-=20
-the victim is a Jenkins administrator.
-
-
-SECURITY-675
-On instances with Authorize Project plugin, the authentication associated w=
-ith=20
-a build may lack the Computer/Build permission on some agents. This did not=
-=20
-prevent the execution of Pipeline `node` blocks on those agents due to=20
-incorrect permissions checks in Pipeline: Nodes and Processes plugin.
-
-
-SECURITY-624 and SECURITY-694
-Ant plugin failed to escape tool names it shows on job configuration=20
-screens, resulting in a cross-site scripting (XSS) vulnerability that is=20
-exploitable only by Jenkins administrators.
-
-This is the same vulnerability that was announced without a fix on 2017-12-=
-05.
 
