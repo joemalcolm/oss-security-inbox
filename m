@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["915" "Tuesday" "9" "March" "2021" "09:56:16" "+0100" "Mauro Matteo Cascella" "mcascell@redhat.com" nil "28" "[oss-security] CVE-2021-3409 QEMU: sdhci: incomplete fix for CVE-2020-17380/CVE-2020-25085" nil nil nil "3" nil nil (number mark "U       mcascell@red Mar  9   28/915   " thread-indent "\"[oss-security] CVE-2021-3409 QEMU: sdhci: incomplete fix for CVE-2020-17380/CVE-2020-25085\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3409 QEMU: sdhci: incomplete fix for CVE-2020-17380/CVE-2020-25085" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2084" "Thursday" "13" "August" "2020" "08:38:15" "+0000" "Iorga, Serban" "seriorga@amazon.com" nil "59" nil "^Date:" nil nil "8" nil nil (number mark "U       seriorga@ama Aug 13   59/2084  " thread-indent "\"[oss-security] CVE-2020-16843: Firecracker v0.20.0, v0.21.0 and v0.21.1 network stack can freeze under heavy ingress traffic\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-16843: Firecracker v0.20.0, v0.21.0 and v0.21.1 network stack can freeze under heavy ingress traffic" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3793 invoked by uid 550); 9 Mar 2021 12:23:09 -0000
+Received: (qmail 16164 invoked by uid 550); 13 Aug 2020 10:57:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26308 invoked from network); 9 Mar 2021 08:56:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1615280191;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=jalneQFjaecpZepmmx5aQFAuJOLSqrRkAJozzVIDpEA=;
-	b=SsNFQK8H/ENsCP9FNXhyGFlx3zDVSPEvikkUgHgMuOehL0Y747jgBbxtE2Lfk9+Q2hXOup
-	D2ZBGws5m3/RYGwpUG54P4DCDfWekeP2xf5i3XKQ2a4W8OK/W+lGcrqws6mXeen9rmLxLN
-	LC10Tnwxt0yh/cWA0XNm2DeVREaqxOA=
-X-MC-Unique: AkslYEPONBSugrzgUChDHg-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=jalneQFjaecpZepmmx5aQFAuJOLSqrRkAJozzVIDpEA=;
-        b=OFjNQkQLMLDDFYsWZI6GQPmkd89uCKEKuj4e4ZcuRtIlDlQO2mHdrldFgEt56ZSCgK
-         Me09ONlDDxCQltAgThHqevNaFnnnPCUQQz4auDNr3h0uxWTQHyqFImTm2ap193q44WHb
-         QyMpCnexvw5gKxskpFYMtM7H7UxKzi/wppJ8YLOcL7oHXrB7O6jVkVT5ILbjSPl0JZDn
-         ojng2bkovF/gJRVKVeXcJ+ntxWiPlx2KHPWZZ0gb/K7b8sD1V0QmZjEgZYR3TDAnfRuq
-         o2IoviU7Akbcms4u3mzk/z6NODHFx32yj78Zc2HEIXz1XFbZxXfkYP/ZawjFFWsdWAnj
-         QblQ==
-X-Gm-Message-State: AOAM533AV5lrwGJcMarfU/2vYaj+ckEw3d2gxh1jV+G/MJk2Q8eMRZ0u
-	ulZ1un7ldPXtt7X+grYIKa7dNuGywYzTgANDy1a8K/lv0PdxCMIrfXoVTggd1i5tPnlyOj9NVld
-	SczPfxXXe0mCQw6WUyjIg/kqjP9cuxKbEfCrFmg77tYRa
-X-Received: by 2002:a63:2321:: with SMTP id j33mr24063995pgj.120.1615280187515;
-        Tue, 09 Mar 2021 00:56:27 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyI+Hb36VEbm7j1t4p1ggyFyBPfCFINVej9Y12Lfy5YmEUt6/2/vhutCgKsVc7Teh14UYmVVdSLu3sLpE4CaDA=
-X-Received: by 2002:a63:2321:: with SMTP id j33mr24063975pgj.120.1615280187153;
- Tue, 09 Mar 2021 00:56:27 -0800 (PST)
+Received: (qmail 3746 invoked from network); 13 Aug 2020 08:38:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1597307916; x=1628843916;
+  h=from:to:subject:date:message-id:mime-version;
+  bh=hE/Bs6iV7U1femlQGblseALtM5XOzVR63BhMQLMM1E0=;
+  b=uu521pG1TAcVJV6XTlz6jcPQ4kG3qxniekAWAOOdNL/whWgxCYFdAyCW
+   Tt+fTtOmaeUEVCTC2ZvFc9D2k5bxuYSrIXG+lDHgmqq0qTJ4vPbDA8s/T
+   aabx5ePH4du8/161uAxWmgi+WZTQRtw45he7GpPGo2N3tadH0eF8M84by
+   8=;
+IronPort-SDR: MJgA7hil61cDntctGMY+JnVowUPsmh0mmJiXxGWH5+ubdxr2t61WdVhlQnuwV8HnmU8XbU+l6+
+ UQNhOuVW+B5Q==
+X-IronPort-AV: E=Sophos;i="5.76,307,1592870400"; 
+   d="scan'208,217";a="67683476"
+Thread-Topic: CVE-2020-16843: Firecracker v0.20.0, v0.21.0 and v0.21.1 network
+ stack can freeze under heavy ingress traffic
+Thread-Index: AQHWcUWcc55oPHZtjES0JUgPekM+/g==
+Message-ID: <1597307893318.52919@amazon.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.43.160.156]
+Content-Type: multipart/alternative;
+	boundary="_000_159730789331852919amazoncom_"
 MIME-Version: 1.0
-From: Mauro Matteo Cascella <mcascell@redhat.com>
-Date: Tue, 9 Mar 2021 09:56:16 +0100
-Message-ID: <CAA8xKjUvFqcwS8YymfmUqipHXLae2TT81Sgg2_yZ+TcW1rqBsA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=mcascell@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2021-3409 QEMU: sdhci: incomplete fix for CVE-2020-17380/CVE-2020-25085
+Date: Thu, 13 Aug 2020 08:38:15 +0000
+From: "Iorga, Serban" <seriorga@amazon.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2020-16843: Firecracker v0.20.0, v0.21.0 and v0.21.1 network
+ stack can freeze under heavy ingress traffic
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Hello,
+--_000_159730789331852919amazoncom_
+Content-Type: text/plain; charset="iso-8859-1"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 
-QEMU upstream commit [1] was supposed to fix CVE-2020-17380 and
-CVE-2020-25085, both involving a heap buffer overflow in the SDHCI
-controller emulation code. In fact, commit [1] turned out to be
-incomplete, in that it was still possible to reproduce the same
-issue(s) with specially crafted input, inducing a bogus transfer and
-subsequent out-of-bounds read/write access in sdhci_do_adma() or
-sdhci_sdma_transfer_multi_blocks().
+We have identified an issue in the Firecracker v0.20.0, v0.21.0 and v0.21.1=
+ virtio-net emulation.
 
-A new series has been proposed (not merged yet) to address those
-issues, and CVE-2021-3409 was assigned to facilitate
-tracking/backporting of the new patch.
+# Issue Description
 
-Old patch:
-[1] https://git.qemu.org/?p=qemu.git;a=commit;h=dfba99f17feb6d4a129da19d38df1bcd8579d1c3
+Under heavy network ingress traffic, when the host TAP interface's receive =
+queue is not drained and the guest virtio-net device's receive queue is ful=
+l, the microVM network interface ingress can freeze. There is no possibilit=
+y to recover from this state, resulting in a denial of service on the micro=
+VM when it is configured with a single network interface, and causing an av=
+ailability problem for the microVM network interface on which the issue is =
+triggered.
 
-New patch series:
-https://lists.nongnu.org/archive/html/qemu-devel/2021-03/msg00949.html
+This issue is difficult to reproduce with TCP traffic. The TCP congestion a=
+lgorithm makes it harder to fill both the TAP interface and virtio receive =
+queues.
 
-CVE-2021-3409 assigned by Red Hat, Inc.
+# Impact
 
-Best regards.
--- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
+When this issue is triggered, the guest kernel network interface will no lo=
+nger receive packets.
+
+# Vulnerable Systems
+
+Firecracker releases v0.20.0, v0.21.0 and v0.21.1 are affected.
+
+# Mitigation
+
+Patched binaries mitigating this issue have been released as Firecracker v0=
+.20.1[1] and Firecracker v0.21.2[2].
+If you are using Firecracker v0.20.0, v0.21.0 or v0.21.1, we recommend you =
+apply the provided fix. If you are using Firecracker v0.19.1 or below, you =
+do not need to take any action.
+
+[1] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.20.1
+[2] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.21.2
+
+Best Regards,
+Serban Iorga on behalf of the Firecracker maintainers team.
+
+Amazon Development Center (Romania) S.R.L. registered office: 27A Sf. Lazar=
+ Street, UBC5, floor 2, Iasi, Iasi County, 700045, Romania. Registered in R=
+omania. Registration number J22/2621/2005.
+
+
+
+
+
+Amazon Development Center (Romania) S.R.L. registered office: 27A Sf. Lazar=
+ Street, UBC5, floor 2, Iasi, Iasi County, 700045, Romania. Registered in R=
+omania. Registration number J22/2621/2005.
+
+--_000_159730789331852919amazoncom_--
 
