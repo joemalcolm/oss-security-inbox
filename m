@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3601" "Thursday" "2" "June" "2016" "12:21:34" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160602162134.8A5D56C0659@smtpvmsrv1.mitre.org>" "79" "[oss-security] Re: CVE request: mat doesn't remove metadata in embedded images in PDFs" nil nil nil "6" "2016060216:21:34" "[oss-security] Re: CVE request: mat doesn't remove metadata in embedded images in PDFs" (number mark "U       cve-assign@m Jun  2   79/3601  " thread-indent "\"[oss-security] Re: CVE request: mat doesn't remove metadata in embedded images in PDFs\"\n") "<20160602103328.GA6618@layer-acht.org>" ("<20160602103328.GA6618@layer-acht.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1471" "Friday" "14" "August" "2020" "17:14:08" "-0400" "David Smiley" "dsmiley@apache.org" nil "36" nil nil nil nil "8" nil nil (number mark "U       dsmiley@apac Aug 14   36/1471  " thread-indent "\"[oss-security] [CVE-2020-13941] Apache Solr information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-13941] Apache Solr information disclosure vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19699 invoked by uid 550); 2 Jun 2016 16:21:46 -0000
+Received: (qmail 14025 invoked by uid 550); 15 Aug 2020 07:57:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,91 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19670 invoked from network); 2 Jun 2016 16:21:46 -0000
-From: cve-assign@mitre.org
-To: holger@layer-acht.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160602103328.GA6618@layer-acht.org>
-Message-Id: <20160602162134.8A5D56C0659@smtpvmsrv1.mitre.org>
-Date: Thu,  2 Jun 2016 12:21:34 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: mat doesn't remove metadata in embedded images in PDFs
+Received: (qmail 1916 invoked from network); 14 Aug 2020 21:14:32 -0000
+X-Gm-Message-State: AOAM533ggoydAJcQKj8gqv6rlnGM+TU+CFuHFXICbsaMRc5xgYg4b+ZB
+	BkMH0eB1Z27sYg8zxLUnxksLmgRLi/5De0PGOA==
+X-Google-Smtp-Source: ABdhPJz2Kose2HKOeuEkUnYPE6BsOqTQUqwpowrOOBCm4nj8zprpEoFQmCZPJlz4MdoYDqNGqI2nrAvfAnWb3vFSExc=
+X-Received: by 2002:a25:3bce:: with SMTP id i197mr6390943yba.426.1597439659580;
+ Fri, 14 Aug 2020 14:14:19 -0700 (PDT)
+MIME-Version: 1.0
+From: David Smiley <dsmiley@apache.org>
+Date: Fri, 14 Aug 2020 17:14:08 -0400
+X-Gmail-Original-Message-ID: <CABEwPvGwaijionFNmS7vMCTFkQ20Mp+KTBCp3wr+A02EFjyUrQ@mail.gmail.com>
+Message-ID: <CABEwPvGwaijionFNmS7vMCTFkQ20Mp+KTBCp3wr+A02EFjyUrQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000075a1a305acdce7b1"
+Subject: [oss-security] [CVE-2020-13941] Apache Solr information disclosure vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--00000000000075a1a305acdce7b1
+Content-Type: text/plain; charset="UTF-8"
 
-> https://digitalcourage.de/blog/2016/using-tails-be-careful-embedded-metadata
-> explains how mat fails to do what it's supposed to do, namely removing
-> embedded meta data. The bug is that it doesn't remove metadata from images
-> embedded in PDFs (while it does remove metadata from PDFs and from
-> images)
-> 
-> So basically the core feature of mat is partly broken :/ So I think this
-> warrants a CVE as IMHO this ain't just a missing feature and folks on
-> the #debian-security IRC channel agreed.
-> 
-> This issue is being tracked by it's developers as
-> https://labs.riseup.net/code/issues/11067 and in Debian as
-> https://bugs.debian.org/826101 and affects all versions of mat and is
-> not fixed anywhere yet.
+Reported in SOLR-14515 (private) and fixed in SOLR-14561 (public), released
+in Solr version 8.6.0.
+The Replication handler (
+https://lucene.apache.org/solr/guide/8_6/index-replication.html#http-api-commands-for-the-replicationhandler)
+allows commands backup, restore and deleteBackup. Each of these take a
+location parameter, which was not validated, i.e you could read/write to
+any location the solr user can access.
 
-https://digitalcourage.de/blog/2016/using-tails-be-careful-embedded-metadata
-says "We were able to recommend a software library to the main
-developer and thus convince him to tackle the problem. He marked the
-issue to be resolved for the next major release, 0.7." In other words,
-because pypdf2 exists, it is possible to address the specific issue of
-metadata inside content that is embedded in a PDF.
+On a windows system SMB paths such as \\10.0.0.99\share\folder may also be
+used, leading to:
+* The possibility of restoring another SolrCore from a server on the
+network (or mounted remote file system) may lead to:
+** Exposing search index data that the attacker should otherwise not have
+access to
+** Replacing the index data entirely by loading it from a remote file
+system that the attacker controls
 
-> Also I wonder if similar bugs happen with other recursive formats, like an
-> OpenDocument text embedding an image or embedding a pdf embedding an
-> image or a zip file containing a zip file containing a .odt file
-> containing an pdf containing an image
+* Launching SMB attacks which may result in:
+** The exfiltration of sensitive data such as OS user hashes (NTLM/LM
+hashes),
+** In case of misconfigured systems, SMB Relay Attacks which can lead to
+user impersonation on SMB Shares or, in a worse-case scenario, Remote Code
+Execution
 
-https://mat.boum.org/ currently says "MAT does its best to scrub as
-much metadata as possible, it's not really efficient at scrubbing
-embedded media inside complex formats. For examples, images embedded
-inside PDF may not be cleaned!"
+The solution implemented to address these issues was to:
+* Restrict the location parameter to trusted paths
+* Prevent remote connection when using Windows UNC Paths
 
-We prefer not to make decisions on whether a CVE ID should exist on
-the basis of ease-of-fix information. In other words, it is difficult
-to assign CVE IDs if the product's security model is "Complex
-embedding is, in general, unsupported, but we will make one-off
-changes for specific embedding scenarios when a solution is provided
-by a user."
+~ David Smiley
+Apache Lucene/Solr Search Developer
+http://www.linkedin.com/in/davidwsmiley
 
-We think you mean that a CVE ID can exist with the rationale of:
-
-  - as of version 0.7, there will be a required security update in
-    which the embedded-in-a-PDF security problem is resolved
-
-  - the CVE ID is needed to tag that required security update
-
-  - as of version 0.7, the https://mat.boum.org/ text may be changed
-    from "images embedded inside PDF may not be cleaned" to something
-    like "images embedded inside complex documents may not be cleaned,
-    but users can rely on cleaning in the specific case of PDF
-    documents"
-
-Does that match your intention for the CVE ID?
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXUFynAAoJEHb/MwWLVhi2MLQP/i9uyFB9jfMHIMTjfpa4pxNf
-+FeIcxaMQBJ6Dz56ccwaQRl12Q5LVquPeSxvZtfdh96DqpcNXYsRDh73tFDz8gut
-x1QRpxiKxKO/Qi2JEXLQStLqDgtjkasv0BWnaAstLKaDC7RrvKBgH+kd89nsdXom
-rXuVKKrHKlqGcGuvNY6QIP1O2c26iTWC4il4Ml5xb2AcQ0QZuEvEcURzcjFq0I7b
-eltelIndDxhzqPaZ9Pr8KAdjYTAZxkHi/RsYytA7aymHHe8Xye5V2zcXPtORUjsy
-y7WH8HyvEEygChJpvVnriHCq+7uoLLm0jOZDt0NJFeGPm1lK0BDXcy/fCEapUFJi
-0j7npiZOBX4RIxbxv3S313NwNoNQptAI7VuT964h0o1ziZZMPL4t1cKmX08kbOfK
-+KWC6pUwx6dhPGZfhI5+D+iSQPELfeRqkPMcBwhJI23PZQFbbY3oDKJqR2qpFRbp
-zULVuA4PHZnQLrMjjGhwqucNuGcvo5cltJHly7djy4IrksSQw5qip9VGSgYIoDjI
-yA06YHHfbmBVpxpZcEBTS/ire7IhY77bGUK8XTW6kplkuNq0Q5Bb9oZBdP/pDKHB
-NeixHM4QY/RtXfD81UoL6Q0643Qk/2emtgZGc/7/YlYEUP9IMizeBKR0NawdJfad
-EUj+1IljwFdfd8ojFcHM
-=l+kk
------END PGP SIGNATURE-----
+--00000000000075a1a305acdce7b1--
