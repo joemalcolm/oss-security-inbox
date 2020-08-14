@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["772" "Wednesday" "1" "March" "2017" "12:08:16" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1703011206260.1553@wniryva>" "25" "[oss-security] CVE-2017-6386 Virglrenderer: memory leakage while in vrend_create_vertex_elements_state" nil nil nil "3" "2017030106:38:16" "[oss-security] CVE-2017-6386 Virglrenderer: memory leakage while in vrend_create_vertex_elements_state" (number mark "U       ppandit@redh Mar  1   25/772   " thread-indent "\"[oss-security] CVE-2017-6386 Virglrenderer: memory leakage while in vrend_create_vertex_elements_state\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7359" "Friday" "14" "August" "2020" "01:39:34" "-0700" "Debora Velarde Babb" "debora@linux.ibm.com" nil "216" nil "^Cc:" nil nil "8" nil nil (number mark "        debora@linux Aug 14  216/7359  " thread-indent "\"[oss-security] Re: [TrouSerS-tech] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: [TrouSerS-tech] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5288 invoked by uid 550); 1 Mar 2017 06:38:34 -0000
+Received: (qmail 20315 invoked by uid 550); 14 Aug 2020 11:38:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,252 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 31817 invoked from network); 14 Aug 2020 08:39:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ mime-version : content-transfer-encoding; s=pp1;
+ bh=XW3A/ZkBglvbuc/ukbkT1n8XDd+OiGVT8OYch6mJWY8=;
+ b=qQsCvv9BnmpLmfFyUP/IYPy9+BgdXHST8emKB1+BdbzDnP+dYLjfVWi7PV8Lxwb0OCI3
+ Hr0u82X6T2CMR/xa7KHyXdfCz6dX8eOb1Z78rZJOHDGIk3n3EHmI5JxqABZyWhUc6nsO
+ IKPhi6Yat08VQjEfeW5ARsvJwGn4NFp2xiI4V7/bsrU9qn7syn70IJ9q5JB+iGUsuvDR
+ 16Iu7cWSsF8luLe/S4HVX68yYbQK/Ek5wCtc2mzy+TupgZwSmTFBRN4OQl//LFFq0WA7
+ KEhmGI0xo5kYYQYKbb6u5X/VHA+TgIrL2E7Rlue93LRgcRAz5M3b1p20e3SrNPyO4MK8 ng== 
+Message-ID: <da7d33de74a55b800b43cbec36a549e77612106e.camel@linux.ibm.com>
+In-Reply-To: <20200520125438.GB12616@f195.suse.de>
+References: <20200520125438.GB12616@f195.suse.de>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-8.el7) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235,18.0.687
+ definitions=2020-08-14_04:2020-08-14,2020-08-14 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ phishscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 clxscore=1034
+ bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2008140065
+Cc: trousers-tech@lists.sourceforge.net, security <security@suse.de>
+Date: Fri, 14 Aug 2020 01:39:34 -0700
+From: Debora Velarde Babb <debora@linux.ibm.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5270 invoked from network); 1 Mar 2017 06:38:33 -0000
-Date: Wed, 1 Mar 2017 12:08:16 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1703011206260.1553@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Wed, 01 Mar 2017 06:38:23 +0000 (UTC)
-Subject: [oss-security] CVE-2017-6386 Virglrenderer: memory leakage while in
- vrend_create_vertex_elements_state
+Subject: [oss-security] Re: [TrouSerS-tech] Multiple Security Issues in the TrouSerS tpm1.2
+ tscd Daemon
+To: Matthias Gerstner <mgerstner@suse.de>, oss-security@lists.openwall.com
 
-   Hello,
+On Wed, 2020-05-20 at 14:54 +0200, Matthias Gerstner wrote:
+> 
+> 
+> Security Issues
+> ===============
+> 
+> The security issues resulting from this are as follows:
+> 
+> a) Since /var/lib/tpm is owned by the tss user (as per
+> dist/Makefile.am), the
+>    creation of the `system.data` file in step 3) is prone to symlink
+> attacks. The
+>    tss user can thereby cause the creation of new files or the
+> corruption of
+>    existing files. These new files end up with mode 0600 and no
+> `chown()` to the
+>    tss user is performed by the tcsd. Thus it looks like no full
+> local root
+>    privilege escalation can be achieved but only DoS attacks.
 
-Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
-for the virtio GPU, is vulnerable to memory leakage issue. It could occur when 
-a guest tries to create vertex elements via 'VIRGL_OBJECT_VERTEX_ELEMENTS' 
-command.
+CVE-2020-24332 is assigned to issue a)
 
-A guest user/process could use this flaw to leak host memory resulting in DoS.
+[Suggested description]
+An issue was discovered in TrouSerS through 0.3.14.
+If the tcsd daemon is started with root privileges, the creation of
+the system.data file is prone to symlink attacks. The tss user can be
+used to create or corrupt existing files, which could possibly lead to
+a DoS attack.
 
-Upstream patch:
----------------
-   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=737c3350850ca4dbc5633b3bdb4118176ce59920
+> 
+> b) The tcsd only drops the root uid, not the root gid in step 4). A
+> call to
+>    `setgid()` is missing. Therefore the tcsd continues to run with
+> root group
+>    privileges it doesn't actually require. This could allow further
+> privilege
+>    escalations when combined with other, yet unknown attack vectors.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1427472
+CVE-2020-24330 assigned to security issue b)
 
-This issue was reported by Li Qiang of 360.cn Inc.
+[Suggested description]
+An issue was discovered in TrouSerS through 0.3.14.
+If the tcsd daemon is started with root privileges instead of by the
+tss user, it fails to drop the root gid privilege when
+no longer needed.
 
-'CVE-2017-6386' assigned via -> http://cveform.mitre.org/
+> 
+> c) The configuration file /etc/tcsd.conf is _required_ by the tcsd to
+> be
+>    owned by tss:tss mode 0600. Therefore the unprivileged user can
+> change all
+>    daemon related settings, including the `system_ps_file` path. This
+> means
+>    the `mkdir()` and `chmod()` performed in step 2) can be directed
+> to an
+>    arbitrary path. This also includes the symlink attack described in
+> a)
+>    for arbitrary paths.
+> 
+>    Further security issues could stem from this by manipulating other
+> config
+>    file options. I did not look deeper into this.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+CVE-2020-24331 is assigned to security issue c)
+
+[Suggested description]
+An issue was discovered in TrouSerS through 0.3.14.
+If the tcsd daemon is started with root privileges, the tss user still
+has read and write access to the /etc/tcsd.conf file (which contains
+various settings related to this daemon).
+
+
+> 
+> d) Not directly related to the logic above. The example RPM spec file
+> [5] in
+>    the TrouSerS repository is using unsafe file and directory modes
+> for
+>    /var/lib/tpm and /usr/sbin/tcsd:
+> 
+>    ```
+>    # create the default location for the persistent store files
+>    if test -e %{_localstatedir}/tpm; then
+>         mkdir -p %{_localstatedir}/tpm
+>         /bin/chown tss:tss %{_localstatedir}/tpm
+>         /bin/chmod 1777 %{_localstatedir}/tpm
+>    fi
+> 
+>    # chown the daemon
+>    /bin/chown tss:tss %{_sbindir}/tcsd
+>    ```
+> 
+>    So here a public sticky-bit directory is setup in /var/lib/tpm.
+> This could
+>    allow arbitrary users to setup the symlink attack mentioned in a).
+> It could
+>    also lead to an information leak. Once the tcsd is started as root
+> the mode
+>    of /var/lib/tpm will be corrected in step 1), however.
+> 
+>    Passing ownership of /usr/sbin/tcsd to the tss user would allow
+> the tss
+>    user to replace the tcsd binary by malicious code that will
+> potentially be
+>    executed by the root user, leading to arbitrary code execution.
+> 
+>    I'm not aware of any distribution actually using this spec file or
+> parts of
+>    it. Still it is a very bad example.
+> 
+> Mitigation and Bugfixes
+> =======================
+> 
+> It seems best to me to run the tcsd as the tss:tss user and group
+> right away
+> and to not rely on the privilege drop logic implemented in the daemon
+> itself.
+> All of a), b) and c) should no longer be problematic in this case. I
+> found
+> that on Debian and Gentoo Linux this is already the case. To make
+> this work a
+> udev rule needs to be packaged that passes ownership of /dev/tpm0
+> device to
+> the tss user. To prevent regressions when switching from the
+> privilege drop
+> approach to this new approach, a possibly already existing
+> /var/lib/tpm/system.auth file needs to be safely chown()'ed to the
+> tss user
+> during package updates.
+> 
+> On SUSE and Fedora Linux the tcsd is started as root via systemd,
+> thus they
+> are affected by the security issues. A preliminary suggested source
+> code fix
+> is attached to this mail. It makes sure that `O_NOFOLLOW` is added to
+> step 3)
+> to prevent a symlink attack. It also adds a drop of the root gid to
+> the tss
+> gid. And it modifies the check of /etc/tcsd.conf such that ownership
+> root:tss
+> and mode 0640 are necessary. The packaging needs to be adjusted
+> accordingly.
+> 
+> The correct long term fix should probably be to *only* open /dev/tpm0
+> as root,
+> immediately drop to tss:tss and only then perform the further
+> initialization
+> steps. The initialization sequence in `tcsd_startup()` is currently
+> running
+> completely in the root user context and seems rather complex. Maybe
+> there are
+> more details to this that I don't know of yet. For this reason I
+> didn't try a
+> patch in this direction yet.
+> 
+> Upstream Reporting
+> ==================
+> 
+> I reported issues a), b) and d) privately to the documented upstream
+> contacts
+> without much success (see Timeline below). The SUSE Security Team 90
+> days
+> maximum disclosure time has been reached, therefore I'm publishing
+> this now in
+> an uncoordinated way. While working on a fix I additionally
+> discovered issue
+> c). SUSE is tracking the issues in bsc#1164472 [6] currently.
+> 
+> Issues a), b) and c) deserve CVE assignments in my opinion. I can't
+> request
+> CVEs myself though, because IBM upstream is a CNA themselves.
+> Therefore
+> upstream is required to assign their own CVEs.
+> 
+> Timeline
+> ========
+> 
+> 2020-02-19: I reported findings a), b) and d) to 
+> honclo@linux.vnet.ibm.com,
+>             the security contact of the project according to the
+> README file [2].
+> 2020-02-28: I reported findings a), b) and d) to debora@linux.ibm.com
+> , the
+>             maintainer of the project according to the AUTHORS file
+> [3].
+> 2020-03-16: I received a reply from debora@linux.ibm.com, stating
+> that she
+>             will look into the findings.
+> 2020-05-06: I reminded debora@linux.ibm.com that the latest
+> disclosure time
+>             [4] for the findings is approaching and asked for any
+> updates.
+> 2020-05-20: I started working on a bugfix and mitigations, discovered
+> the
+>             additional finding c) and started publishing the
+> findings.
+> 
+> [1]: https://sourceforge.net/projects/trousers
+> [2]: 
+> https://sourceforge.net/p/trousers/trousers/ci/master/tree/README
+> [3]: 
+> https://sourceforge.net/p/trousers/trousers/ci/master/tree/AUTHORS
+> [4]: https://en.opensuse.org/openSUSE:Security_disclosure_policy
+> [5]: 
+> https://sourceforge.net/p/trousers/trousers/ci/master/tree/dist/trousers.spec.in
+> [6]: https://bugzilla.suse.com/show_bug.cgi?id=1164472
+> 
+> Best Regards
+> 
+> Matthias
+> 
+> _______________________________________________
+> TrouSerS-tech mailing list
+> TrouSerS-tech@lists.sourceforge.net
+> https://lists.sourceforge.net/lists/listinfo/trousers-tech
+
+
