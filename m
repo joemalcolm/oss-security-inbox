@@ -1,4 +1,9 @@
-Received: (qmail 15889 invoked by uid 550); 29 Oct 2025 15:20:06 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["229" "Monday" "17" "August" "2020" "13:22:32" "-0400" "Brian Demers" "bdemers@apache.org" "<CAH9eYVqCvw4SWnSTGqsyn_9HfZ8qtw0iNPEsZRC=r4o9jXC4nQ@mail.gmail.com>" "7" "[oss-security] [CVE-2020-13933] Apache Shiro Authentication Bypass Vulnerability" nil nil nil "8" "2020081717:22:32" "[oss-security] [CVE-2020-13933] Apache Shiro Authentication Bypass Vulnerability" (number mark "U       bdemers@apac Aug 17    7/229   " thread-indent "\"[oss-security] [CVE-2020-13933] Apache Shiro Authentication Bypass Vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-13933] Apache Shiro Authentication Bypass Vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1518 invoked by uid 550); 17 Aug 2020 18:27:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,25 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15856 invoked from network); 29 Oct 2025 15:20:06 -0000
-Message-ID: <28e080a3-5916-4e82-bfbd-bce9bc1da091@pipping.org>
-Date: Wed, 29 Oct 2025 16:19:55 +0100
+Received: (qmail 29917 invoked from network); 17 Aug 2020 17:22:55 -0000
+X-Gm-Message-State: AOAM531Uax5ceVTGv7VwE8/bhHOYVRZrRFd6UkUZkHng0lcZxAbTiJ2z
+	4YiG9++TeUEIGcAB5ieM/uwjuqGvhn33eG9FNAw=
+X-Google-Smtp-Source: ABdhPJyvAqdjmlGCsSQIkd68MfBF1SYVMheGm4NgxI71gvBniI4+3X/OwGlzSDeSTbPgvQ58ourOM5GzuRqTTZpokQQ=
+X-Received: by 2002:aa7:cd07:: with SMTP id b7mr16681097edw.172.1597684963132;
+ Mon, 17 Aug 2020 10:22:43 -0700 (PDT)
 MIME-Version: 1.0
+From: Brian Demers <bdemers@apache.org>
+Date: Mon, 17 Aug 2020 13:22:32 -0400
+X-Gmail-Original-Message-ID: <CAH9eYVqCvw4SWnSTGqsyn_9HfZ8qtw0iNPEsZRC=r4o9jXC4nQ@mail.gmail.com>
+Message-ID: <CAH9eYVqCvw4SWnSTGqsyn_9HfZ8qtw0iNPEsZRC=r4o9jXC4nQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-References: <A062B294-84C0-4E3F-8C08-C03D7E469B74@beckweb.net>
-Content-Language: en-US
-From: Sebastian Pipping <sebastian@pipping.org>
-In-Reply-To: <A062B294-84C0-4E3F-8C08-C03D7E469B74@beckweb.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Content-Type: multipart/alternative; boundary="000000000000b0caf105ad160480"
+Subject: [oss-security] [CVE-2020-13933] Apache Shiro Authentication Bypass Vulnerability
 
-Hi!
+--000000000000b0caf105ad160480
+Content-Type: text/plain; charset="UTF-8"
 
-On 10/29/25 14:03, Daniel Beck wrote:
-> Additionally, we announce unresolved security issues in the following
-> plugins:
-> 
-> * Azure CLI Plugin
-> * ByteGuard Build Actions Plugin
-> * Curseforge Publisher Plugin
-> * Eggplant Runner Plugin
-> * Extensible Choice Parameter Plugin
-> * JDepend Plugin
-> * Nexus Task Runner Plugin
-> * OpenShift Pipeline Plugin
-> * Publish to Bitbucket Plugin
-> * Start Windocks Containers Plugin
-> * Themis Plugin
+Apache Shiro before 1.6.0, when using Apache Shiro, a specially crafted
+HTTP request may cause an authentication bypass.
 
-For anyone else who also wonders about the combination of announcing 
-without a fix (and the motivation or story behind it), I found
-https://www.jenkins.io/security/plugins/#unresolved for a documented
-answer.
-
-Best, Sebastian
-
+--000000000000b0caf105ad160480--
