@@ -1,44 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/1
-Message-ID: <CAOo2v=DTvPoytxQ8QiEQuYvw2A+Us0ZVRmkuGr4zgQNMHAf=7Q@mail.gmail.com>
-Date: Tue, 19 May 2020 08:29:05 +0530
-From: Hardik Vyas <hvyas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/17/1
+Message-Id: <D2B3C916-4B3F-4971-A6CE-979187CB00EA@beckweb.net>
+Date: Mon, 17 Aug 2020 16:09:12 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-10736 ceph: authorization bypass in monitor and manager daemons
+Subject: Vulnerability in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-An authorization bypass vulnerability was found in Ceph versions 15.2.0 and
-later, where the ceph-mon and ceph-mgr daemons do not properly restrict
-access, resulting in gaining access to unauthorized resources. This flaw
-allows an authenticated client to modify the configuration and possibly
-conduct further attacks.
+The following releases contain fixes for security vulnerabilities:
 
-In ceph-mon daemon, the "kludge" for older clients in handle_command()
-allows any authenticated client access to the three whitelisted commands.
-An attacker with "mon r" caps can exploit this, e.g. to change
-configuration parameters using injectargs. For ceph-mgr daemon, in
-handle_command(MCommand), messages are queued to adminsocket without access
-checks if fsid is present. This can be exploited by an attacker without
-manager caps to run any MCommand including "config set".
+* Jenkins 2.243
+* Jenkins LTS 2.235.5
 
-CVE-2020-10736 has been assigned for this flaw. Octopus v15.2.2 release
-announcement : https://ceph.io/releases/v15-2-2-octopus-released/
 
-Upstream patches:
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2020-08-17/?
 
-[master]
-https://github.com/ceph/ceph/commit/c7e7009a690621aacd4ac2c70c6469f25d692868
-[v15.2.2]
-https://github.com/ceph/ceph/commit/f2cf2ce1bd9a86462510a7a12afa4e528b615df2
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Credit: Olle Segerdahl
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-Regards,
--- 
+---
 
-Hardik Vyas / Red Hat Product Security
+SECURITY-1983 / CVE-2019-17638
+Jenkins bundles Winstone-Jetty, a wrapper around Jetty, to act as HTTP and
+servlet server when started using `java -jar jenkins.war`. This is how
+Jenkins is run when using any of the installers or packages, but not when
+run using servlet containers such as Tomcat.
 
-BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
+Jenkins 2.224 through 2.242 and LTS 2.222.1 through 2.235.4 bundles Jetty
+9.4.27 with the security vulnerability CVE-2019-17638. This vulnerability
+may allow unauthenticated attackers to obtain HTTP response headers that
+may include sensitive data intended for another user.
 
