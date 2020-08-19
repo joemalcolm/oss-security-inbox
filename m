@@ -1,44 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/02/3
-Message-ID: <20200402024611.GA251781@millbarge>
-Date: Thu, 2 Apr 2020 02:46:11 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Jeffrey Walton <noloader@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Deficient engineering processes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/19/5
+Message-ID: <20200819171111.GA3705068@kroah.com>
+Date: Wed, 19 Aug 2020 19:11:11 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel 5.7.9 DRM  Double Free
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 01, 2020 at 07:42:38PM -0400, Jeffrey Walton wrote:
-> My question is, how to convince someone that following standard
-> project management procedures is a good thing? How do we get them
+On Wed, Aug 19, 2020 at 06:57:22PM +0200, Greg KH wrote:
+> On Wed, Aug 19, 2020 at 05:55:16PM +0200, Greg KH wrote:
+> > On Wed, Aug 19, 2020 at 03:42:33PM +0000, zdi-disclosures@...ndmicro.com wrote:
+> > > The specific flaw exists within DRM memory management. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to escalate privileges and execute code in the context of the kernel.
+> > 
+> > Note, this "vulnerability" was only accessible by root, so there's not
+> > all that many privileges that could really be escalated there.  Don't
+> > know why the original poster did not say that here, as they acknowledged
+> > it in the "bug report" they sent many of us.
+> 
+> And to be specific, as I was asked, this was only an issue in the
+> nouveau drm driver, not in the DRM "core" at all.  So only that one
+> driver was affected.
 
-I've heard variations on the phrase "we don't have time to fix these bugs
-before release" or "this new feature is our top priority" from dozens of
-projects over the years.
+And to be more specific, as someone else reminded me, you had to enable
+fault injection to be able to trip this up as well, something that only
+root could do.
 
-The impression is that fixing bugs won't win new customers, or finding
-bugs proactively means you might spend time fixing bugs your users might
-not encounter in practice (thus that time is wasted).
+thanks,
 
-But we have all seen software that's too buggy to be enjoyable, or even so
-buggy it is not fit for use. We've all got horror stories of a known, but
-ignored, bug, that cost thousands or millions of dollars. (I imagine a
-handful of people even know of billion-dollar errors. The usual example is
-https://en.wikipedia.org/wiki/Tony_Hoare#Apologies_and_retractions
-but this is probably far from the only case.)
-
-The costs of unknown or unfixed bugs is largely hidden from view, until
-the cost is large and impossible to ignore.
-
-We all also have examples of bugs that we're very glad to have caught
-before release: the bugs that would have cost thousands, or millions, of
-dollars to repair after release, if it's possible at all. These are much
-less known.
-
-Perhaps we need to talk more about our successes, too? Not just the cases
-where we went wrong, but also the cases where we went right, and thus
-saved a fortune?
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+greg k-h
