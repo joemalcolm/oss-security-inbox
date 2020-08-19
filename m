@@ -1,127 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/4
-Message-Id: <E1kKiTq-0002Hq-W9@xenbits.xenproject.org>
-Date: Tue, 22 Sep 2020 13:37:14 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 334 v3 (CVE-2020-25598) - Missing unlock in XENMEM_acquire_resource error path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/19/3
+Message-ID: <20200819155516.GA3690413@kroah.com>
+Date: Wed, 19 Aug 2020 17:55:16 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel 5.7.9 DRM  Double Free
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Aug 19, 2020 at 03:42:33PM +0000, zdi-disclosures@...ndmicro.com wrote:
+> The specific flaw exists within DRM memory management. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to escalate privileges and execute code in the context of the kernel.
 
-            Xen Security Advisory CVE-2020-25598 / XSA-334
-                               version 3
+Note, this "vulnerability" was only accessible by root, so there's not
+all that many privileges that could really be escalated there.  Don't
+know why the original poster did not say that here, as they acknowledged
+it in the "bug report" they sent many of us.
 
-         Missing unlock in XENMEM_acquire_resource error path
+> 
+> This has been already addressed in the upstream commit 5de5b6ecf97a021f29403aa272cb4e03318ef586
 
-UPDATES IN VERSION 3
-====================
+It was already "addressed" before this problem was pointed out to
+anyone, so this was not fixed in relation to this being reported.
 
-Public release.
+Also, the fix is now in the 4.19.140, 5.4.59, 5.7.16, 5.8.2 kernel
+releases for those that care.
 
-ISSUE DESCRIPTION
-=================
+And finally, it was pointed out that any kernel running with the
+CONFIG_SLAB_FREELIST_HARDENED=y option would not have any problems with
+this issue before it was fixed.
 
-The RCU (Read, Copy, Update) mechanism is a synchronisation primitive.
+> TREND MICRO EMAIL NOTICE
+> 
+> The information contained in this email and any attachments is confidential and may be subject to copyright or other intellectual property protection. If you are not the intended recipient, you are not authorized to use or disclose this information, and we request that you notify us by reply mail or telephone and delete the original message from your mail system.
 
-A buggy error path in the XENMEM_acquire_resource exits without
-releasing an RCU reference, which is conceptually similar to forgetting
-to unlock a spinlock.
+Very odd email footer for a public mailing list :)
 
-IMPACT
-======
+thanks,
 
-A buggy or malicious HVM stubdomain can cause an RCU reference to be
-leaked.  This causes subsequent administration operations, (e.g. CPU
-offline) to livelock, resulting in a host Denial of Service.
-
-VULNERABLE SYSTEMS
-==================
-
-The buggy codepath has been present since Xen 4.12.  Xen 4.14 and later
-are vulnerable to the DoS.  The side effects are believed to be benign
-on Xen 4.12 and 4.13, but patches are provided nevertheless.
-
-The vulnerability can generally only be exploited by x86 HVM VMs, as
-these are generally the only type of VM which have a Qemu stubdomain.
-x86 PV and PVH domains, as well as ARM VMs typically don't use a
-stubdomain.
-
-Only VMs using HVM stubdomains can exploit the vulnerability.  VMs using
-PV stubdomains, or with emulators running in dom0 cannot exploit the
-vulnerability.
-
-MITIGATION
-==========
-
-Running only x86 PV or PVH VMs will avoid the vulnerability.
-Reconfiguring x86 HVM guests to use a PV or no stubdom will also avoid
-the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa334.patch           Xen 4.13 - xen-unstable
-xsa334-4.12.patch      Xen 4.12
-
-$ sha256sum xsa334*
-80e7725a56c4244d860e9aebb56710a8165f7ffeae3fb67365cbc85b3b0518b3  xsa334.meta
-323cd9d24b2e95643833865a9943172c56edd25dfd170e4741034d28dfd0d4bd  xsa334.patch
-85341ba6322ea6279c0851493ce61e822c8560850034f5f26cbcb26be85ca102  xsa334-4.12.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/eYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZV94H/jhwML6zObPz+zvjbwwAUoHsYiQ66CSUlxluqjN5
-PXWpm56RzArptGIUakQyXKNI2Ht2fUn3Lu3w9JllujJRfmhbhiJJvI9Ar2QzOcri
-+XylcK9rRspfmNUgXB629BTEcGUuo9/J+T+O4T544zfWUBncixyDq9/Q9SGAdz9c
-kDZkL6UebpIFLtD6jrgYd4XAK9b1c6T7SmsGzq26m/zwGqJ1jol58kHl5GMXe7uX
-rd9xZbERKIhaABbTQ10zY5IDIE4oplibSLOiJVSTz6KSyzD9by+M7oszqeIbIiRV
-rY49lettdD4jfmzp5bbXQnf+9T31rG3AEHWaiOGdVcRFoq8=
-=a23E
------END PGP SIGNATURE-----
-
-Download attachment "xsa334.meta" of type "application/octet-stream" (1173 bytes)
-
-Download attachment "xsa334.patch" of type "application/octet-stream" (1953 bytes)
-
-Download attachment "xsa334-4.12.patch" of type "application/octet-stream" (2275 bytes)
+greg k-h
