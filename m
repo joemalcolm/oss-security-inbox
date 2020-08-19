@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1414" "Monday" "21" "September" "2015" "17:50:17" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150921155017.GA31242@eldamar.local>" "34" "Re: [oss-security] CVE request: Use-after-free in Linux kernel with aufs mmap patch" nil nil nil "9" "2015092115:50:17" "[oss-security] CVE request: Use-after-free in Linux kernel with aufs mmap patch" (number mark "        carnil@debia Sep 21   34/1414  " thread-indent "\"Re: [oss-security] CVE request: Use-after-free in Linux kernel with aufs mmap patch\"\n") "<1441913190.17007.15.camel@decadent.org.uk>" ("<1441913190.17007.15.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1117" "Wednesday" "19" "August" "2020" "19:11:11" "+0200" "Greg KH" "greg@kroah.com" "<20200819171111.GA3705068@kroah.com>" "21" "Re: [oss-security] Linux Kernel 5.7.9 DRM  Double Free" nil nil nil "8" "2020081917:11:11" "[oss-security] Linux Kernel 5.7.9 DRM Double Free" (number mark "U       greg@kroah.c Aug 19   21/1117  " thread-indent "\"Re: [oss-security] Linux Kernel 5.7.9 DRM Double Free\"\n") "<20200819165722.GD3698439@kroah.com>" ("<DM5PR0102MB347783E567BB3BD5C77AFE50805D0@DM5PR0102MB3477.prod.exchangelabs.com>" "<20200819155516.GA3690413@kroah.com>" "<20200819165722.GD3698439@kroah.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux Kernel 5.7.9 DRM Double Free" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14127 invoked by uid 550); 21 Sep 2015 15:50:31 -0000
+Received: (qmail 3154 invoked by uid 550); 19 Aug 2020 17:11:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14089 invoked from network); 21 Sep 2015 15:50:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=iYKN5lF0kPlU+n2Zdd87bQzMPVe4MMprJQVQ9li0vkQ=;
-        b=rsK3ZrCsRMVIHrIhLFe93SeADJWPE2Yf9IxVBdCc4MKM73zVgGEczs2FQVdJamxK9s
-         E1ahtiXi+YtZPD3p12m8UF1dJ1SFYg4hTD1fZo97SOoxfMZz54Fm+nv8buXQuyi4tXpo
-         E7q510Sz0f9HJ6YNZV4jRTCNyKR0RfH53e3xKYxbACDhbXQmXtLCB5lO+CtbSohU9ThZ
-         hMvKZ9NYldjSm17vDUDA7wEc/wTBQ1pCONUcxl7/dqYytr10tfvakOfIujcPayk4FH0w
-         cbvHqvDVVSjSokqwI1BOH7Wc6vi1XrZkxJC1MlD0pNov5hifaqkUWXHoIoppuO7oaRrx
-         XHCA==
-X-Received: by 10.194.209.240 with SMTP id mp16mr14960808wjc.100.1442850618955;
-        Mon, 21 Sep 2015 08:50:18 -0700 (PDT)
-Message-ID: <20150921155017.GA31242@eldamar.local>
-References: <1441913190.17007.15.camel@decadent.org.uk>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 3133 invoked from network); 19 Aug 2020 17:11:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm1; bh=SJsO17vLvCz6ilGoyME1l1ZM7r5
+	Bq7vmspdEuBn1WEs=; b=p4S3A+kVze/ztUPvxtCSH5pc6SZV7Da+zj7vZ6IuKlX
+	5KEgHDbP3ekaphK51bqhMU9CZxtmCE5ej5jmWx+RkX3KbJRJmwBVep1s3mtFClI0
+	O2WrRWhFDUDHcGMpFARyxHFVJdogurKuoz99rj6gW9PSVMHSyeAf5TUrEjHC7CXV
+	wHY9XRUNJGXT0ufMcYFJzWA2jEMfqmdVsZ9CN+wxZTWXtcubxVbr2bzkxJdyH93+
+	gs2DXKSzQMRBvIlwgXE2JCTK5qPW+eCwq4dLAJ9tpDJFhMgU9+oFYTATJ+1CpTo7
+	NXgf5IJlHmH3sxysNGrf7bctlKmRdhvCH/7C8WVbvfg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=SJsO17
+	vLvCz6ilGoyME1l1ZM7r5Bq7vmspdEuBn1WEs=; b=u5jcGPKEWIWt6Lh7/zv1rh
+	t9M4vk9d1BRC3BZsHvRjylNWZvjVPi5auZV9pgsfKNLjz/BeyQc/QQ4m+YykANiZ
+	2CvQypBOdJGgKOeZPHcl8kPwMkrLcnGdHeTJja7SS4+BuCxQZxQszC6O6Tqg7bb9
+	xB0Amb4vfdHTqtDTZaftBsqT2su5rRgpzTk6QKYwaDn7wwFFqOoyG0ZJbxQFcBNE
+	LQpkwj7ek6b4K3OCN2ULyjk/owDzkbsgLanxXwyvGH8a5QjijdeoOiGLBDNDb/cy
+	NX9LB6c1Plkmw4tXJffmaZZ3Ehk8MV9k+y1LsN2KnGs5XmW4+1JlWbMGXIYppv8A
+	==
+X-ME-Sender: <xms:GF09Xwb3PLSYUNDqh8ad1Q_Ms-adecc8bNY5EQdabI_DHu7-md9piA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddtkedgkeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
+    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
+    necuggftrfgrthhtvghrnhepveeuheejgfffgfeivddukedvkedtleelleeghfeljeeiue
+    eggeevueduudekvdetnecukfhppeekfedrkeeirdekledruddtjeenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtg
+    homh
+X-ME-Proxy: <xmx:GF09X7atYrn-WPAQer-uxwGqWQDqcoxlZgEqUBc4FYZiwYHfj40UHQ>
+    <xmx:GF09X6_SPYa_uLOstFaNkmiqntVuGSSTEjafUyhOH07IVLz6TTquow>
+    <xmx:GF09X6pa0_Oi4zH9_VDt73cx9yXVGO_HV1s9nwxwCI7At2o9W6vODg>
+    <xmx:Gl09Xw7GEkan3wJ__k7NyvEubARNHtYfYjAo00MKt1yiloO65yADgQ>
+Date: Wed, 19 Aug 2020 19:11:11 +0200
+From: Greg KH <greg@kroah.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20200819171111.GA3705068@kroah.com>
+References: <DM5PR0102MB347783E567BB3BD5C77AFE50805D0@DM5PR0102MB3477.prod.exchangelabs.com>
+ <20200819155516.GA3690413@kroah.com>
+ <20200819165722.GD3698439@kroah.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1441913190.17007.15.camel@decadent.org.uk>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: sfjro@users.sourceforge.net
-Date: Mon, 21 Sep 2015 17:50:17 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] CVE request: Use-after-free in Linux kernel with
- aufs mmap patch
-To: oss-security@lists.openwall.com
+In-Reply-To: <20200819165722.GD3698439@kroah.com>
+Subject: Re: [oss-security] Linux Kernel 5.7.9 DRM  Double Free
 
-Hi
-
-On Thu, Sep 10, 2015 at 08:26:30PM +0100, Ben Hutchings wrote:
-> The aufs (Advanced Union Filesystem) project provides an optional patch
-> for the Linux kernel, called either aufs3-mmap.patch or
-> aufs4-mmap.patch, which is needed to ensure correct behaviour of
-> memory-mapped files from an aufs mount.
+On Wed, Aug 19, 2020 at 06:57:22PM +0200, Greg KH wrote:
+> On Wed, Aug 19, 2020 at 05:55:16PM +0200, Greg KH wrote:
+> > On Wed, Aug 19, 2020 at 03:42:33PM +0000, zdi-disclosures@trendmicro.com wrote:
+> > > The specific flaw exists within DRM memory management. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to escalate privileges and execute code in the context of the kernel.
+> > 
+> > Note, this "vulnerability" was only accessible by root, so there's not
+> > all that many privileges that could really be escalated there.  Don't
+> > know why the original poster did not say that here, as they acknowledged
+> > it in the "bug report" they sent many of us.
 > 
-> Each memory mapping (vma) holds a reference to the file that is mapped.
-> This patch makes it also hold a reference to the virtual file on the
-> union mount through which the file was found, where applicable.
-> 
-> In two functions, madvise_remove() and sys_msync(), it is necessary to
-> take an extra reference to the mapped file before unlocking the current
-> memory management state, as the vma may be freed after that point.
-> Unfortunately the aufs patch introduces later uses of the vma, resulting
-> in a potential use-after-free.  This is certainly exploitable for a
-> minor denial of service (BUG in process context, so the task can't be
-> cleaned up properly but the system does not panic) but might also be
-> usable for privilege escalation.
-> 
-> I posted a patch here that works for me:
-> http://sourceforge.net/p/aufs/mailman/message/34449209/
-> 
-> Please assign a CVE ID to this.
+> And to be specific, as I was asked, this was only an issue in the
+> nouveau drm driver, not in the DRM "core" at all.  So only that one
+> driver was affected.
 
-Adding MITRE's CVE assignment team to CC.
+And to be more specific, as someone else reminded me, you had to enable
+fault injection to be able to trip this up as well, something that only
+root could do.
 
-Can you assign a CVE for this issue?
-http://www.openwall.com/lists/oss-security/2015/09/18/10 confirms that
-Ben Hutchins' patch fixes the issue.
+thanks,
 
-Regards,
-Salvatore
+greg k-h
