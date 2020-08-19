@@ -1,28 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/10
-Message-ID: <CAH8yC8n7ghXxZ4WgS2MfW-hAV8s_Zyfd1BoE8O03WfMhmA62UA@mail.gmail.com>
-Date: Mon, 12 Oct 2020 16:59:20 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: herman.harperink@...tahl.com
-Subject: Re: You are using an old email address "@stahl.de". Please note our new email addresses "@r-stahl.com"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/19/1
+Message-ID: <alpine.DEB.2.20.2008190951590.18028@tvnag.unkk.fr>
+Date: Wed, 19 Aug 2020 09:52:57 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] libcurl: wrong connect-only connection
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+libcurl: wrong connect-only connection
+======================================
 
-I'm getting these bounce-like messages when replying to the list.
+Project curl Security Advisory, August 19th 2020 -
+[Permalink](https://curl.haxx.se/docs/CVE-2020-8231.html)
 
-Maybe you can remove the user.
+VULNERABILITY
+-------------
 
-Thanks,
-Jeff
+An application that performs multiple requests with libcurl's multi API and
+sets the `CURLOPT_CONNECT_ONLY` option, might in rare circumstances experience
+that when subsequently using the setup connect-only transfer, libcurl will
+pick and use the wrong connection - and instead pick another one the
+application has created since then.
 
-On Mon, Oct 12, 2020 at 4:52 PM EXpert Mail | R. STAHL
-<noreply@...tahl.com> wrote:
->
-> You are using an old email address ″@stahl.de″.
-> Please note our new email addresses ″@r-stahl.com″
->
-> Please update your contact information.
->
-> Correct Email address is: herman.harperink@...tahl.com
+`CURLOPT_CONNECT_ONLY` is the option to tell libcurl to not perform an actual
+transfer, only connect. When that operation is completed, libcurl remembers
+which connection it used for that transfer and "easy handle". It remembers the
+connection using a pointer to the internal `connectdata` struct in memory.
+
+If more transfers are then done with the same multi handle before the
+connect-only connection is used, leading to the initial connect-only
+connection to get closed (for example due to idle time-out) while also new
+transfers (and connections) are setup, such a *new* connection might end up
+getting the exact same memory address as the now closed connect-only
+connection.
+
+If after those operations, the application then wants to use the original
+transfer's connect-only setup to for example use `curl_easy_send()` to send
+raw data over that connection, libcurl could **erroneously** find an existing
+connection still being alive at the address it remembered since before even
+though this is now a new and different connection.
+
+The application could then accidentally send data over that connection which
+wasn't at all intended for that recipient, entirely unknowingly.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This bug has existed at least since commit
+[c43127414d](https://github.com/curl/curl/commit/c43127414d), first shipped in
+curl 7.29.0.
+
+This flaw cannot trigger for users of the curl tool but only for applications
+using libcurl and the `CURLOPT_CONNECT_ONLY` option.
+
+The flaw only happens if the exact same memory address is re-used again for
+the new connection as for the original connect-only connection.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2020-8231 to this issue.
+
+CWE-825: Expired Pointer Dereference
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.29.0 to and including 7.71.1
+- Not affected versions: libcurl < 7.29.0 and libcurl >= 7.72.0
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2020-8231](https://github.com/curl/curl/commit/3c9e021f86872baae412a427e807fbfa2f3e8)
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.72.0
+
+  B - Apply the patch on your curl version and rebuild
+
+  C - Do not use `CURLOPT_CONNECT_ONLY`
+
+TIMELINE
+--------
+
+This issue was first reported to the curl project on July 31, 2020.
+
+This advisory was posted on August 19th 2020.
+
+CREDITS
+-------
+
+This issue was reported by Marc Aldorasi. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se | Commercial curl support up to 24x7 is available!
+                   | Private help, bug fixes, support, ports, new features
+                   | https://www.wolfssl.com/contact/
