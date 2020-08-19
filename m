@@ -1,62 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/30/6
-Message-ID: <87h7tpeyed.fsf@oldenburg2.str.redhat.com>
-Date: Thu, 30 Jul 2020 18:54:50 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Jann Horn <jannh@...gle.com>
-Cc: oss-security@...ts.openwall.com,  x86-64-abi@...glegroups.com,  Kernel Hardening <kernel-hardening@...ts.openwall.com>,  Szabolcs Nagy <szabolcs.nagy@....com>
-Subject: Re: Alternative CET ABI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/19/2
+Message-ID: <DM5PR0102MB347783E567BB3BD5C77AFE50805D0@DM5PR0102MB3477.prod.exchangelabs.com>
+Date: Wed, 19 Aug 2020 15:42:33 +0000
+From: "zdi-disclosures@...ndmicro.com" <zdi-disclosures@...ndmicro.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Linux Kernel 5.7.9 DRM  Double Free
 Content-Type: text/plain; charset=utf-8
 
-* Jann Horn:
+The specific flaw exists within DRM memory management. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to escalate privileges and execute code in the context of the kernel.
 
-> On Thu, Jul 30, 2020 at 6:02 PM Florian Weimer <fweimer@...hat.com> wrote:
->> Functions no longer start with the ENDBR64 prefix.  Instead, the link
->> editor produces a PLT entry with an ENDBR64 prefix if it detects any
->> address-significant relocation for it.  The PLT entry performs a NOTRACK
->> jump to the target address.  This assumes that the target address is
->> subject to RELRO, of course, so that redirection is not possible.
->> Without address-significant relocations, the link editor produces a PLT
->> entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
->> perhaps no PLT entry at all.
->
-> How would this interact with function pointer comparisons? As in, if
-> library A exports a function func1 without referencing it, and
-> libraries B and C both take references to func1, would they end up
-> with different function pointers (pointing to their respective PLT
-> entries)?
+This has been already addressed in the upstream commit 5de5b6ecf97a021f29403aa272cb4e03318ef586
+TREND MICRO EMAIL NOTICE
 
-Same as today.  ELF already deals with this by picking one canonical
-function address per process.
+The information contained in this email and any attachments is confidential and may be subject to copyright or other intellectual property protection. If you are not the intended recipient, you are not authorized to use or disclose this information, and we request that you notify us by reply mail or telephone and delete the original message from your mail system.
 
-Some targets already need PLTs for inter-DSO calls, so the problem is
-not new.  It happens even on x86 because the main program can refer to
-its PLT stubs without run-time relocations, so those determine the
-canonical address of those functions, and not the actual implementation
-in a shared object.
-
-> Would this mean that the behavior of a program that compares
-> function pointers obtained through different shared libraries might
-> change?
-
-Hopefully not, because that would break things quite horribly (as it's
-sometimes possible to observe if the RTLD_DEEPBIND flag is used).
-
-Both the canonicalization and the fact in order to observe the function
-pointer, you need to take its address should take care of this.
-
-> I guess you could maybe canonicalize function pointers somehow, but
-> that'd probably at least break dlclose(), right?
-
-Ahh, dlclose.  I think in this case, my idea to generate a PLT stub
-locally in the address-generating DSO will not work because the
-canonical address must survive dlclose if it refers to another DSO.
-There are two ways to deal with this: do not unload the PLT stub until
-the target DSO is also unloaded (but make sure that the DSO can be
-reloaded at a different address; probably not worth the complexity),
-or use the dlsym hack I sketched for regular symbol binding as well.
-Even more room for experiments, I guess.
-
-Thanks,
-Florian
-
+For details about what personal information we collect and why, please see our Privacy Notice on our website at: Read privacy policy<http://www.trendmicro.com/privacy>
