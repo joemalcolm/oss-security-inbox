@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/11/3
-Message-ID: <CAH5JyZppNAdEWSjZo5d50Yy5O1pvc-UUksHf4NPmamqguyH_+Q@mail.gmail.com>
-Date: Fri, 11 Dec 2020 13:39:06 +0000
-From: Kaxil Naik <kaxilnaik@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/19/4
+Message-ID: <20200819165722.GD3698439@kroah.com>
+Date: Wed, 19 Aug 2020 18:57:22 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: users@...flow.apache.org
-Subject: CVE-2020-17511: Apache Airflow Admin password gets logged in plain text
+Subject: Re: Linux Kernel 5.7.9 DRM  Double Free
 Content-Type: text/plain; charset=utf-8
 
-Versions Affected: < 1.10.13
+On Wed, Aug 19, 2020 at 05:55:16PM +0200, Greg KH wrote:
+> On Wed, Aug 19, 2020 at 03:42:33PM +0000, zdi-disclosures@...ndmicro.com wrote:
+> > The specific flaw exists within DRM memory management. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to escalate privileges and execute code in the context of the kernel.
+> 
+> Note, this "vulnerability" was only accessible by root, so there's not
+> all that many privileges that could really be escalated there.  Don't
+> know why the original poster did not say that here, as they acknowledged
+> it in the "bug report" they sent many of us.
 
-Description:
-In Airflow < 1.10.13, when creating a user using airflow CLI, the password
-gets logged in plain text in the Log table in Airflow Metadatase. Same
-happened when creating a Connection with a password field.
+And to be specific, as I was asked, this was only an issue in the
+nouveau drm driver, not in the DRM "core" at all.  So only that one
+driver was affected.
 
-Credit:
-Ali Al-Habsi of Accellion
+thanks,
 
-Thanks,
-Kaxil,
-on behalf of Apache Airflow PMC
-
+greg k-h
