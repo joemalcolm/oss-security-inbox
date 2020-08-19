@@ -1,4 +1,9 @@
-Received: (qmail 20438 invoked by uid 550); 5 Aug 2022 11:35:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["876" "Wednesday" "19" "August" "2020" "18:57:22" "+0200" "Greg KH" "greg@kroah.com" "<20200819165722.GD3698439@kroah.com>" "16" "Re: [oss-security] Linux Kernel 5.7.9 DRM  Double Free" nil nil nil "8" "2020081916:57:22" "[oss-security] Linux Kernel 5.7.9 DRM Double Free" (number mark "U       greg@kroah.c Aug 19   16/876   " thread-indent "\"Re: [oss-security] Linux Kernel 5.7.9 DRM Double Free\"\n") "<20200819155516.GA3690413@kroah.com>" ("<DM5PR0102MB347783E567BB3BD5C77AFE50805D0@DM5PR0102MB3477.prod.exchangelabs.com>" "<20200819155516.GA3690413@kroah.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux Kernel 5.7.9 DRM Double Free" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17543 invoked by uid 550); 19 Aug 2020 16:57:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,57 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21806 invoked from network); 4 Aug 2022 23:18:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc;
-        bh=ETHP03xOwkMpB7ptZrDYZ2uRBk3zHT/qgWwBrh71h1E=;
-        b=Pnoqq5TY4JFt9wPyXEIDdgN0R0skz3RSHk1Je9UjGNjQwZ64O3G65KsBL1rSsuMeGO
-         THU9in4hJRRCV0pGJNXU9W87H4//QC6IhGoXZK+WKM6D+Ff720XjdKwXGuGqgv5Nrw1V
-         UOwFBbkANpcyZy+QfdvKosDPsKoFKL7KHH1foU0mRjhte9O7lj9Vi5kM3x3imFLCb90C
-         ThA7WFzHT6AZoHN3KkK1zG0UvNf2PP+CUKi3J4Jiye5sia1zdy/o0C3sdocTqYtIQx4l
-         rzXUTT1tzhE3pC9r76P+x7xsHMM8P6sBWp/h3QqIfjq1vRI9AlWODRxxjWPwp7Uw/QgY
-         5eYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc;
-        bh=ETHP03xOwkMpB7ptZrDYZ2uRBk3zHT/qgWwBrh71h1E=;
-        b=ntPyQy4dw7cL/gsWMVIKUDsPMolXo85vOwl6BqwJbEup0amMK+XVm7w4p6dh2dY5QJ
-         oF7hP9vANs3B3T1hl/uIekZFnsRXuSg7hJjJnXTyumzX5HNAc+NUE4m1CNJ7mvnW5J2l
-         KJ1GJVBpMposjMgtS8p14ejdCV8I25yGNwWb1URwOA8aup4+bVNbgxHxwXDQHcwFmQD+
-         2cLL8iK07RUyWWyMGhAHBLH83bXduNBdztHuCssbZVpOi2lRSmg7ILdINKEaevacsC/y
-         DqyYEkRHCYoBg/155Yo1Irj8l29FOEmJFLTbfTkNXZVKCXMtRXACy7hvoc2sTHRlIIRo
-         9QnQ==
-X-Gm-Message-State: ACgBeo1oDQx491rQ33YUjXXOqrOllcvU1aLbkxzJKVOK4WyA46hj/mL7
-	E9BNpRxQrNZMm4w+YIkQchc3h8Wpw49pPO+1hyVGC5w2/kc=
-X-Google-Smtp-Source: AA6agR4zJWTm0p/0SgYctFzLqWkNGrs2/ZGWb4Ew6TJ06AhHIZ3uogxusjcgaun6P03hZIsNhAI+z9v2wCJd6p5/tlU=
-X-Received: by 2002:a81:1ed3:0:b0:31f:5186:91c0 with SMTP id
- e202-20020a811ed3000000b0031f518691c0mr3711238ywe.401.1659655082286; Thu, 04
- Aug 2022 16:18:02 -0700 (PDT)
-MIME-Version: 1.0
-From: Marko Lindqvist <cazfi74@gmail.com>
-Date: Fri, 5 Aug 2022 02:17:51 +0300
-Message-ID: <CAF6bG8ckH-W67J95eLHRnFH71n3PgtacBNk7aQdmJuyq8VRzMA@mail.gmail.com>
+Received: (qmail 17519 invoked from network); 19 Aug 2020 16:57:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm1; bh=fGqRHsm3wDrXOzVIFvbKtfwZSkw
+	UwjQAsxRRwCcFzN0=; b=T1/UCePdhjx4Xw+ETZNEYM5ramsnjzNs1WACf+lYRDb
+	2//wrCdBumFPT1tHPuoNPJZnxmk33H04neCVj/mGMd/y8UkFExFmUYB32H+fRDoD
+	21VZPd0HGS3ZmAh64fTsvFIAFpzLIyyWvbHYjy4/CTCFyFiozH17tE+nZ5jCAGn9
+	SQjHKSBGUnT2xiIKJvdj1lUXoQHchQxuWaXSfPOgpqIeb1//FyFMxSqZsI5okxAg
+	AB8OrROKdY8xjNDAZ2bRi0KunhFsa2X5nGOKb4JlHpQ7R2iisDgKLhCVMnKtSS6P
+	zePjODPxIrg0kbC5EeTISvhTHcaa+NNtRn2Odv+GYIQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=fGqRHs
+	m3wDrXOzVIFvbKtfwZSkwUwjQAsxRRwCcFzN0=; b=LjQXSMaWRGURl31EfMidTa
+	LXZEil3+9DOAZlUqWWFE5ZOfYCeSETT4wtetw/PE85RspyP7MCUvAQ38YOuWrsKA
+	0tvR/1NzxgRZESH15HJbVAzm11BIign2VEE76p6FRrSqyZPYc927D9yjAvl9O7Ub
+	QJkhhTPTXVsBIptyMB3eAK3McKSxeaSYE2ahA0Xk3se6FzJosJVgtCpFuAwkIAol
+	fMtqLzkS1cOu2fk9p03aeKAZ901DIGT8xu/NjqPnjw3sCGk7xIhAuIZfxosOutJa
+	Lh3tFdTBvUCIMYkfWs537ELAc32mbRKBA2NDiTViRu/fq1OXqUP5FimRbWFCBNCw
+	==
+X-ME-Sender: <xms:3Fk9X3IdFl9bcLQbdc4xqAJQyBzQ5dVjckv0hMEPeOp9yqACIb_Epg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddtkedgkedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
+    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
+    necuggftrfgrthhtvghrnhepveeuheejgfffgfeivddukedvkedtleelleeghfeljeeiue
+    eggeevueduudekvdetnecukfhppeekfedrkeeirdekledruddtjeenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtg
+    homh
+X-ME-Proxy: <xmx:3Fk9X7IR7aNdEsWYN6iw4MtwOI-9Q6vfu__ltAcb32ThM9sVR6vTZw>
+    <xmx:3Fk9X_vMTm1FUEuO33gIQ1JAjKAim61Gi148xzjfoZ1df1RAlPeuAQ>
+    <xmx:3Fk9XwY1_jyqBf5Li5Dsq_iQYSxfSfzXkUJ11M1ezCy61TXNLywlrg>
+    <xmx:3Vk9Xypqw1TOtwoA6al-ut1A7hpfV8SvPpOc_u92vzFWMxnI7xr6eQ>
+Date: Wed, 19 Aug 2020 18:57:22 +0200
+From: Greg KH <greg@kroah.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Freeciv < 2.6.7, freeciv-3.0 < 3.0.3, Modpack Installer buffer overflow
+Message-ID: <20200819165722.GD3698439@kroah.com>
+References: <DM5PR0102MB347783E567BB3BD5C77AFE50805D0@DM5PR0102MB3477.prod.exchangelabs.com>
+ <20200819155516.GA3690413@kroah.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200819155516.GA3690413@kroah.com>
+Subject: Re: [oss-security] Linux Kernel 5.7.9 DRM  Double Free
 
- Just released freeciv-2.6.7 & freeciv-3.0.3 fix buffer overflow in
-Modpack Installer utility's handling of the modpack URL. Specially
-crafted URLs, without any '/' -characters would result in an
-underflowing length (unsigned)(-1) string copy, i.e., all of the
-NULL-terminated string given as "URL" would get written beyond the
-buffer reserved for it.
+On Wed, Aug 19, 2020 at 05:55:16PM +0200, Greg KH wrote:
+> On Wed, Aug 19, 2020 at 03:42:33PM +0000, zdi-disclosures@trendmicro.com wrote:
+> > The specific flaw exists within DRM memory management. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to escalate privileges and execute code in the context of the kernel.
+> 
+> Note, this "vulnerability" was only accessible by root, so there's not
+> all that many privileges that could really be escalated there.  Don't
+> know why the original poster did not say that here, as they acknowledged
+> it in the "bug report" they sent many of us.
 
- Freeciv source tarballs are available from
-https://www.freeciv.org/download.html for current 3.0, and from
-https://www.freeciv.org/wiki/Old_downloads for 2.6.
+And to be specific, as I was asked, this was only an issue in the
+nouveau drm driver, not in the DRM "core" at all.  So only that one
+driver was affected.
 
- In case you can't make full version update at the moment, bug tracker
-ticket has also a patch for this single issue attached:
-https://osdn.net/projects/freeciv/ticket/45299
+thanks,
 
-
-
- - ML
+greg k-h
