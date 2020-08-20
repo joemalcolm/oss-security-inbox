@@ -1,33 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/20/5
-Message-ID: <20200520173917.GA1134@localhost.localdomain>
-Date: Wed, 20 May 2020 10:39:17 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
-To: Georgi Guninski <gguninski@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Remote Code Execution in qmail (CVE-2005-1513)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/20/2
+Message-ID: <3801c44c-e32a-1607-4764-1be5effec959@isc.org>
+Date: Thu, 20 Aug 2020 11:10:07 -0800
+From: Michael McNally <mcnally@....org>
+To: oss-security@...ts.openwall.com, "security-officer@....org" <security-officer@....org>
+Subject: Five vulnerabilities disclosed in BIND (CVE-2020-8620, CVE-2020-8621, CVE-2020-8622, CVE-2020-8623, and CVE-2020-8624)
 Content-Type: text/plain; charset=utf-8
 
-Hi Georgi,
+On August 20, 2020, we (Internet Systems Consortium) have disclosed five
+vulnerabilities in our BIND 9 software:
 
-On Wed, May 20, 2020 at 11:54:06AM +0300, Georgi Guninski wrote:
-> Did djb award you monetary bounty?
+   CVE-2020-8620: A specially crafted large TCP payload can trigger
+   an assertion failure in tcpdns.c
+   https://kb.isc.org/docs/cve-2020-8620
 
-No, he considers that this is a vulnerability in the OS startup scripts,
-not in qmail itself. In any case, the bug bounty would be yours, of
-course.
+   CVE-2020-8621: Attempting QNAME minimization after forwarding can
+   lead to an assertion failure in resolver.c
+   https://kb.isc.org/docs/cve-2020-8621
 
-Thanks again for all your security research, and your qmail research in
-particular!
+   CVE-2020-8622: A truncated TSIG response can lead to an assertion failure
+   https://kb.isc.org/docs/cve-2020-8622
 
-With best regards,
+   CVE-2020-8623: A flaw in native PKCS#11 code can lead to a remotely
+   triggerable assertion failure in pk11.c
+   https://kb.isc.org/docs/cve-2020-8623
 
---
-the Qualys Security Advisory team
+   CVE-2020-8624: update-policy rules of type "subdomain" are enforced incorrectly
+   https://kb.isc.org/docs/cve-2020-8624
 
+New versions of BIND are available from https://www.isc.org/downloads
 
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
+Operators and package maintainers who prefer to apply patches selectively can
+find individual vulnerability-specific patches in the "patches" subdirectory
+of the release directory for our two stable release branches (9.11 and 9.16)
 
+  https://downloads.isc.org/isc/bind9/9.11.22/patches
+  https://downloads.isc.org/isc/bind9/9.16.6/patches
 
-
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
+With the public announcement of these vulnerabilities, the embargo
+period is ended and any updated software packages that have been
+prepared may be released.
