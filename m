@@ -1,90 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/08/3
-Message-ID: <cb230f80-6311-6ee3-c366-6ffa66f43e6f@debian.org>
-Date: Thu, 8 Oct 2020 10:59:00 +0200
-From: Giacomo Catenazzi <cate@...ian.org>
-To: Georgi Guninski <gguninski@...il.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/21/1
+Message-ID: <20200821085725.GB24102@f195.suse.de>
+Date: Fri, 21 Aug 2020 10:57:25 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: chrony: CVE-2020-14367: unsafe pidfile creation allows privilege escalation from chrony user to root
 Content-Type: text/plain; charset=utf-8
 
 Hello,
 
-Sorry, I never told you it is a feature. Please read better, and try to 
-write better mails. if you had doubts, you could ask me, in the same tread.
+chrony is a versatile implementation of the Network Time Protocol (NTP)
+[1].
 
-And if you discover a vulnerability, you should disclose it. This is the 
-standard way.
+# Issue Description
+
+The following applies to chrony version 3.5.
+
+In chronyd's main() function the call to `write_pidfile()` is made with
+full root privileges, while the privilege drop logic is only performed
+later via `SYS_DropRoot()`. The pidfile is created using `fopen()`.
+
+It seems a common default setup for chronyd currently is as follows:
+
+- "chrony" user and group are used as unprivileged accounts to run
+  chronyd as.
+- The directory /run/chrony is created via systemd-tmpfiles (or during
+  runtime by chronyd itself, in `CNF_CreateDirs()`). Ownership is passed
+  to chrony:chrony, mode is 0750.
+- The DEFAULT_PID_FILE path is set to /run/chrony/chronyd.pid (since
+  chrony 3.4).
+
+This constellation means that a compromised chrony user account can
+stage a symlink attack in /run/chrony/chronyd.pid like follows:
+
+```
+root# systemctl stop chronyd.service
+root# sudo -u chrony /bin/bash
+
+# simulate a compromised chrony user staging a symlink attack
+chrony# cd /run/chrony
+chrony# ln -s /etc/fstab chronyd.pid
+chrony# exit
+
+# make sure to keep a backup of /etc/fstab if it is dear to you
+root# cp /etc/fstab /etc/fstab.back
+root# /usr/sbin/chronyd -n
+^C
+# fstab content got replaced by the chronyd PID
+root# cat /etc/fstab
+11354
+```
+
+So this attack mostly poses denial-of-service attack vector. It could
+also be used to pre-create a file with mode 0644 that would then later
+be used by other programs to store sensitive data.
+
+# Mitigations
+
+On recent systemd versions the issue is not severe as long as chronyd is
+only started via the systemd service unit. This is the case because it
+contains the ProtectSystem=full directive and thus no write permission
+is granted for system file locations.
+
+# Upstream Fixes
+
+Upstream created a bugfix release 3.5.1 [3] that fixes this issue. The
+development master branch in the upstream git repository was not
+affected any more due to changed file open logic (switched from using
+`fopen()` to using `open()` and appropriate flags). The bugfix [4] was
+performed on a release branch for version 3.5.1.
+
+# Timeline
+
+- 2020-08-05: I found the issue and reported it privately to the
+  upstream main developer Miroslav Lichvar. During the following two
+  weeks We discussed the issue and the possible fixes and agreed on a
+  patch. SUSE tracked the issue internally via Bugzilla [2].
+
+- 2020-08-19: Upstream communicated to me a CVE assignment for the issue
+  and prepared the publication of bugfix release 3.5.1.
+
+[1]: https://chrony.tuxfamily.org
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=1174911
+[3]: https://chrony.tuxfamily.org/news.html
+[4]: https://git.tuxfamily.org/chrony/chrony.git/commit/?id=f00fed20092b6a42283f29c6ee1f58244d74b545
+
+Cheers
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
 
 
-In any case:
-
-No password should be stored in a world readable file. This is enforced 
-e.g. in ssh.  This is a good security advice.
-
-DO NOT PUT WordPress passwords (e.g. for database, or admin password) in 
-world readable file (on multi-user machines).  This is in part a user error.
-
-But PHP (as default LAMP) has this problem. I told you possible 
-work-around. So no system administrator should allow untrusted 
-multi-user with default LAMP setting.  This is fault of system 
-administrator: he should know the security risk before setting up 
-services. It is his job, and this is very well documented.
-
-Then I told you various methods to improve the security.
-
-But it seems you still do not understand "/home/loser is with 
-permissions 755, default umask 0022". Note: this is also a question on 
-installation. System administrator choose this setting.
-
-
-Do you want PHP run by root? (required with umask 0000) Or tell me what 
-should be the right setting? The error is simple: do not enable PHP in 
-the simple LAMP way without considering the security implication. 
-(suPHP, proxy, etc. are better ways).
-
-Yes, Debian is not secure by default (if you install various packages), 
-but it has a lot of documentation, to asses the risk, and how to setup 
-things. But at the end, it is the system administrator job to check 
-security implication before to install servers. This is true on most of 
-professional distribution.  But look the Debian default of Apache: it is 
-still strict. WordPress installations (and so configuration snippet) are 
-just for single-user machine (and they have extensive documentation 
-about security).
-
-
-If a official Debian mirror has such problem, it is worrying. OTOH all 
-Debian files are static files (so no passwords), and Debian sign all 
-files: we do not trust mirrors.
-
-
-If you had some doubt on my answer, you could have reach me, and ask me 
-what you do not understand, or to continue the discussion. Your way to 
-ridicule Debian just ridicule yourself.
-
-And if you want to continue, check my mails: they are long: please write 
-more complete mails: it helps you to order your ideas, and find flaws.
-
-ciao
-	cate
-
-
-
-On 07.10.2020 20:00, Georgi Guninski wrote:
-> https://lists.debian.org/debian-security/2020/10/msg00000.html
-> 
-> ===
-> /home/loser is with permissions 755, default umask 0022
-> 
-> on multiuser machines this sucks much.
-> 
-> on a multiuser debian mirror we found a lot of data,
-> including the wordpress password of the admin.
-> ===
-> 
-> Then in the thread someone with @debian.org email explains
-> to me it is a feature, not a bug.
-> 
-> In a addition, they suggest to tell them the mirror, lol.
-> 
-> Are debian detached from reality?
-> 
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
