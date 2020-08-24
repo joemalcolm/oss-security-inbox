@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/22/5
-Message-ID: <20200522135550.36ba17a4@jabberwock.cb.piermont.com>
-Date: Fri, 22 May 2020 13:55:50 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Georgi Guninski <gguninski@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Short notes on qmail security guarantee
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/24/1
+Message-ID: <CAKx+4-rQYK+Tkzszw6S736L7PVH0nudX5Sd5Pu_V--qmaRWxEg@mail.gmail.com>
+Date: Mon, 24 Aug 2020 15:05:28 +0530
+From: Rohit Keshri <rkeshri@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-20794 kernel: task processes not being properly ended could lead to resource exhaustion
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 22 May 2020 18:45:00 +0300 Georgi Guninski
-<gguninski@...il.com> wrote:
-> Hi,
-> 
-> Thanks for the info.
-> 
-> I am not professional admin, but does postfix require limits?
+Hello Team,
 
-Postfix doesn't require them for remote exploitation security. The
-master.cf and main.cf files, which ship with Postfix, do specify some
-limits for performance tuning and to avoid denial of service.
+Red Hat has identified a vulnerability with the following details.
 
-> Do many widely used daemons need limits?
+A flaw was found when a user with PID namespace mounting a FUSE filesystem,
+If the userspace component is terminated (pid 1), this results into a
+denial of service (DoS) problem. This internally makes the fuse requests go
+into Uninterruptible state until the system is rebooted.
 
-Not of the sort qmail apparently demands, no.
 
-Perry
--- 
-Perry E. Metzger		perry@...rmont.com
+'CVE-2019-20794' was assigned via MITRE.
+
+Reference:
+
+https://github.com/sargun/fuse-example
+
+
+Thank you
+..
+Rohit Keshri / Red Hat Product Security Team
+PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+
+secalert@...hat.com for urgent response
+
