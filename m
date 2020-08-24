@@ -1,55 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/05/1
-Message-ID: <CACR6SAWNFaOtF9CqkHF+G5_ep1cTExtA70J61EmU-zAhH2X_FA@mail.gmail.com>
-Date: Fri, 5 Jun 2020 10:37:20 +0200
-From: Serge Huber <shuber@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [SECURITY][ANNOUNCEMENT] Fix for CVE-2020-11975 in Apache Unomi 1.5.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/24/2
+Message-Id: <E1kABQO-0005O2-Dh@xenbits.xenproject.org>
+Date: Mon, 24 Aug 2020 12:18:08 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 335 v2 (CVE-2020-14364) - QEMU: usb: out-of-bounds r/w access issue
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA256
 
-CVE-2020-11975: Remote Code Execution in Apache Unomi
+            Xen Security Advisory CVE-2020-14364 / XSA-335
+                               version 2
 
-Severity: Critical
+               QEMU: usb: out-of-bounds r/w access issue
 
-Vendor: The Apache Software Foundation
+UPDATES IN VERSION 2
+====================
 
-Versions Affected:
+Don't break the DSO by eliding the SoB on the patch.
 
-This vulnerability affects all versions of Apache Unomi prior to 1.5.1
+Update Vulnerable Systems section.
 
-Description:
+Public release.
 
-Apache Unomi allows conditions to use OGNL scripting which offers the
-possibility
-to call static Java classes from the JDK that could execute code with the
-permission level of the running Java process.
+ISSUE DESCRIPTION
+=================
 
-This has been fixed in revision:
+An out-of-bounds read/write access issue was found in the USB emulator
+of the QEMU. It occurs while processing USB packets from a guest, when
+'USBDevice->setup_len' exceeds the USBDevice->data_buf[4096], in
+do_token_{in,out} routines.
 
-https://git-wip-us.apache.org/repos/asf?p=unomi.git;h=789ae8e820c507866b9c91590feebffa4e996f5e
+IMPACT
+======
 
-Migration:
+A guest user may use this flaw to crash the QEMU process resulting in
+DoS OR potentially execute arbitrary code with the privileges of the
+QEMU process on the host.
 
-Apache Unomi users should upgrade to 1.5.1 or later.
+VULNERABLE SYSTEMS
+==================
 
-Credit: This issue was reported by Yiming Xiang of NSFOCUS.
+All versions of Qemu shipped with in-support versions of Xen are
+vulnerable.  This includes both qemu-traditional and qemu-xen.
+
+The vulnerability can only be exploited when Qemu is used as a device
+model.  This configuration is only used by default for x86 HVM guests.
+x86 PV, PVH and ARM guest do not use a device model by default.
+
+Guests configured to use a Qemu stubdomain contain the code execution
+within the stubdomain, and are therefore not considered vulnerable.
+
+MITIGATION
+==========
+
+No mitigation is available.
+
+CREDITS
+=======
+
+This issue was discovered by Xiao Wei of Qihoo 360 Inc.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa335-qemu.patch    QEMU
+xsa335-trad.patch    Xen unstable (SUPPORT.md update only)
+
+$ sha256sum xsa335*
+3af5f30c4fd21e3679fb749659f9e59d0ff335d092254352e128e7fee3340c41  xsa335-qemu.patch
+2ed7b8bac4c473c6f89173a73485904be16785eb29ee18e189717d201381f27f  xsa335-trad.patch
+$
+
+"QEMU XEN TRADITIONAL"
+======================
+
+This version of qemu is provided by the Xen Project for use as a
+device model stub domain.  In that configuration, there is not a
+security problem and no action is needed.
+
+But in other configurations, this version of qemu is lacking many
+security fixes.  It is beyond the capacity of the Xen Project Security
+Team to address these.  There is therefore no code resolution to
+XSA-335 for users of qemu-xen-traditional who are not using device
+model stub domains.
+
+The patch xsa335-trad.patch included in this advisory is merely an
+update for Xen's SUPPORT.md to document this situation.
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEFt9+Vnc4Fy+UXwQCfBnR+70asd8FAl7XwXcACgkQfBnR+70a
-sd9XYRAAjHv3p4IZd/Uy+JRS3+i2fgYEDJGVjLpewDeoLp1pCRc8hUTTeKQXgq+E
-j3YOAbji9rV0fFYyOCQzmMraIDoHzQFt49Oit2gglXnB9fSer5Rk9lOQf1DgaTJz
-Op1Hf/pTwMrrhUQqe4vNRg9NRp7DYyZkObpeXbZaLRarv/NuYsDEXl9A6xDyRabe
-5wLGLep85+OalIhAUAXlI6uLqfzfDbU2jlJgcSpvCstOj9vDpkB+jpZOxi7GsN+X
-An69bWE+otpE9KlIlhu9GD/lRzzNY8r9DkZXE5Mp24smNm8UYr8GutnYEmAQO09u
-Mc9H/hRcnTfiJUeG+pXSNQSRJ+FfgK5Lvp9P4cppo481AGwCTLP01uJu8nsJb/46
-AlDF4xA+d7D8TlbN6NXm4FUrP1/QhKyvPHfvGjrPjEs0TbirMU9ypwsO4ESh0O8B
-6CVDxSKqmBfWjwQ4AYo+Izddsuf9ABSscNRJmfNxMBQZ0MXvGULcboXipVASWjBF
-HS936RtYJY04SQ0aJuTpuN2c8J6S/P+OGzry2ETWuaE5e3nQXWsUry98GQ/qFrK9
-3Jm1QZiP9dv8epZ6my0k+845+F2W1P8vkzy2QpGbnYsjcf3/f5T6U+Nz/k0skMHZ
-iFNa6aoDShfbziW3pYqLiAwJ+zEQFvU0B9nSXIeiwZwg9ZqWCxk=
-=AjB8
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9Dr+0MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ274H/3FIK/DecsmdqVFs9UjqCi+RABmz6dFsgUxQYH9c
+ysZvN7R/BTR1m425+7tlPK1oglkFkHt6C9snc3+kTh/Bl5ktXakgVacoR6yeTh88
+1yJQC3JmG9OaXGS4AR9hmE+Wg0XTlrmvzPMFxtWv055kpPVEG6FWhnhV8d0FavoI
+RWnlelNSkXgai5zWlAqhF8jzR4EeEmOp4f/BtQX/cjZAodXZSYMvLW1zy3vx4Wik
+ZpL4qkJLE9GHOYZF9Ng8zwWx7c1CIi76zwdUvUgPu6IjTBIpo0LPZxlkbF+CqYcp
+rVFaAy7j7+xMOOJntlN2a/NAxD4zs+sCLF1legrfi+9uMH4=
+=bMZs
 -----END PGP SIGNATURE-----
 
+Download attachment "xsa335-qemu.patch" of type "application/octet-stream" (3042 bytes)
+
+Download attachment "xsa335-trad.patch" of type "application/octet-stream" (1647 bytes)
