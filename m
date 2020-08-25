@@ -1,25 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/27/4
-Message-ID: <CAEhjM2Bg=HG5+qfTL8T9nEOkezHgtPzEipCqfLXOVG-ostLNNA@mail.gmail.com>
-Date: Mon, 27 Apr 2020 15:41:01 -0400
-From: Nathan Gough <thenatog@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/25/1
+Message-ID: <20200825133847.GA1566487@eldamar.local>
+Date: Tue, 25 Aug 2020 15:38:47 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-9482] Apache NiFi Registry user log out issue
+Subject: Re: Fossil-SCM patch fixes RCE in all historic versions
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2020-9482
+Hi,
 
-[PRODUCT]:Apache NiFi Registry
+On Thu, Aug 20, 2020 at 11:15:41AM -0400, Richard Hipp wrote:
+> Researcher Max Justicz discovered a potential RCE and other
+> vulnerabilities in the Fossil distributed version control system.
+> (https://fossil-scm.org/)  Patches to address these issues are now
+> available for download.  Package maintainers who bundle Fossil are
+> encouraged to update their packages without unnecessary delay.
+> 
+> All vulnerabilities require a pre-existing trust relationship between
+> the victim and the attacker.  In other words, the attacker must be
+> either a site administrator, or someone with check-in privileges on
+> the project.  There are no known vulnerabilities to servers from web
+> users entering tickets or forum messages or wiki or doing other
+> on-line operations.  The attacks require the ability to push, at
+> least, and the most serious RCE problem requires the ability to
+> configure a server in malicious ways.  If you are unable to upgrade to
+> one of the patched versions of Fossil, then you are encouraged at
+> least to know well the people from whom you clone or pull.
+> 
+> Precompiled binaries and source tarballs for the patched versions of
+> Fossil are available on the Fossil download page
+> (http://fossil-scm.org/fossil/uv/download.html).  However, the dozens
+> of check-ins that went into generating these patches, and the tickets
+> that describe the specifics of the vulnerabilities, will be embargoed
+> for a few days.
+> 
+> See the thread on the Fossil Forum
+> (https://fossil-scm.org/forum/info/a05ae3ce7760daf6) for follow up
+> information or to communicate directly with the Fossil developers.
 
-[VERSION]:Apache NiFi Registry 0.1.0 to 0.5.0
+FWIW, the RCE issue has been assigned CVE-2020-24614 by MITRE.
 
-[PROBLEMTYPE]:Authentication
-
-[REFERENCES]:https://nifi.apache.org/registry-security.html#CVE-2020-9482
-
-[DESCRIPTION]:If NiFi Registry uses an authentication mechanism other than
-PKI, when the user clicks Log Out, NiFi Registry invalidates the
-authentication token on the client side but not on the server side. This
-permits the user's client-side token to be used for up to 12 hours after
-logging out to make API requests to NiFi Registry.
-
+Regards,
+Salvatore
