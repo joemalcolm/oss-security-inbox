@@ -1,162 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/06/1
-Message-ID: <f844fc65-2488-a416-a4eb-349866dca104@isc.org>
-Date: Thu, 5 Mar 2020 16:39:44 -0900
-From: ISC Security Officer <security-officer@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/25/4
+Message-ID: <20200825162407.2az2vg5jyfbvy7ky@yuggoth.org>
+Date: Tue, 25 Aug 2020 16:24:07 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Cc: "security-officer@....org" <security-officer@....org>
-Subject: BIND Operational Notification: An error in handling TCP client quota limits can exhaust TCP connections in BIND 9.16.0
+Subject: [OSSA-2020-006] Nova: Live migration fails to update persistent domain XML (CVE-2020-17376)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+===================================================================
+OSSA-2020-006: Live migration fails to update persistent domain XML
+===================================================================
 
-To the packagers and redistributors of BIND 9:
-
-ISC has been informed of a significant defect in BIND 9.16.0, the
-recently-issued first release in the BIND 9.16 branch.
-
-Once the quota level has been reached, a bug in TCP client quota
-enforcement can lead to servers improperly refusing additional TCP
-connections even after the number of current TCP clients drops back
-below the quota level.
-
-The defect only affects BIND 9.16.0 and a few of the final releases
-in the BIND 9.15 development branch (9.15.6 through 9.15.8) and
-does not interfere with UDP queries -- a server which hits this
-bug will stop accepting new TCP connections but will continue
-processing UDP traffic.  Because the majority of query traffic
-is not affected we have assessed the severity level of this bug
-as not high enough to require a CVE identifier assignment and a
-special security software release -- but still significant enough
-that operators ought to be informed about it, therefore we are
-issuing the BIND Operational Notification that follows.
-
-If you have any further questions after reading the Operational
-Notification below, please contact security-officer@....org and
-we will attempt to answer them.
-
-Once again, BIND 9.16.0 is the only stable production release
-version that is affected; a few versions of the 9.15 unstable
-development were affected as well (see below for exact details.)
-
-Michael McNally
-ISC Security Officer
+:Date: August 25, 2020
+:CVE: CVE-2020-17376
 
 
-- ---------------------------------------------------------------------
+Affects
+~~~~~~~
+- Nova: <19.3.1, >=20.0.0 <20.3.1, ==21.0.0
 
-Posting date:       05 March 2020
-Program Impacted:   BIND
-Versions affected:  9.16.0. Also versions 9.15.6 -> 9.15.8 of the
-                    9.15 development branch.
 
-Description:
+Description
+~~~~~~~~~~~
+Tadayoshi Hosoya (NEC) and Lee Yarwood (Red Hat) reported a
+vulnerability in Nova live migration. By performing a soft reboot of
+an instance which has previously undergone live migration, a user may
+gain access to destination host devices that share the same paths as
+host devices previously referenced by the virtual machine on the
+source. This can include block devices that map to different Cinder
+volumes on the destination than the source. The risk is increased
+significantly in non-default configurations allowing untrusted users
+to initiate live migrations, so administrators may consider
+temporarily disabling this in policy if they cannot upgrade
+immediately. This only impacts deployments where users are allowed to
+perform soft reboots of server instances; it is recommended to disable
+soft reboots in policy (only allowing hard reboots) until the fix can
+be applied.
 
-   One part of the development work done in the BIND 9.15 branch
-   was to modernize BIND's networking framework to use libuv, a
-   multi-platform C library that provides support for asynchronous
-   I/O based on event loops.
 
-   Unfortunately, during this work we introduced a problem in
-   enforcing TCP client quota limits. A discrepancy in our quota
-   code can result in a situation where the count is not properly
-   decremented in some cases.
+Patches
+~~~~~~~
+- https://review.opendev.org/747978 (Pike)
+- https://review.opendev.org/747976 (Queens)
+- https://review.opendev.org/747975 (Rocky)
+- https://review.opendev.org/747974 (Stein)
+- https://review.opendev.org/747973 (Train)
+- https://review.opendev.org/747972 (Ussuri)
+- https://review.opendev.org/747969 (Victoria)
 
-Impact:
 
-   Under some circumstances, especially if a server is accepting
-   TCP connections from clients on multiple interfaces, once the
-   quota has been reached the server may stop accepting new TCP
-   connections even after the number of active TCP connections has
-   fallen back below the quota limit.
+Credits
+~~~~~~~
+- Tadayoshi Hosoya from NEC (CVE-2020-17376)
+- Lee Yarwood from Red Hat (CVE-2020-17376)
 
-   Servers which encounter this defect will continue accepting and
-   processing UDP queries (which represent the majority of query
-   traffic on most servers) but can lose the ability to accept new
-   TCP connections until the server is restarted.
 
-Workarounds:
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1890501
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-17376
 
-   To avoid reaching this condition accidentally the operator of
-   an affected server can provision the tcp-clients limit high
-   enough so that it is not expected to be encountered in normal
-   operation. However a malicious party could still succeed in
-   triggering it deliberately.
 
-Solution:
+Notes
+~~~~~
+- The stable/rocky, stable/queens, and stable/pike branches are under extended
+  maintenance and will receive no new point releases, but patches for them are
+  provided as a courtesy.
 
-   Since the workaround listed above is not effective against
-   deliberate exploitation ISC recommends that operators running
-   an affected release of BIND either:
 
-   -  Download a patch diff (from https://downloads.isc.org/isc/bind9/9.16.0/patches);,
-      apply it to the 9.16.0 source code using the patch utility,
-      and recompile to include the behavior fix which will be included
-      in the next release of the 9.16 branch to prevent this defect,
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
 
-   -or-
-
-   -  Revert to a stable production release of BIND from a branch
-      before the libuv networking restructuring introduced in 9.15/9.16.
-      At the present time our supported release branches are 9.11
-      (most recent release: 9.11.16) and 9.14 (most recent release: 9.14.11).
-
-Acknowledgements:
-
-   ISC would like to thank Jay Ford of the University of Iowa for
-   reporting this issue.
-
-Do you still have questions? Questions regarding this advisory
-should go to security-officer@....org. To report a new issue, please
-encrypt your message using security-officer@....org's PGP key which
-can be found here: https://www.isc.org/pgpkey/. If you are unable
-to use encrypted email, you may also report new issues at:
-https://www.isc.org/reportbug/.
-
-Note:
-
-   ISC patches only currently supported versions. When possible we
-   indicate EOL versions affected. (For current information on which
-   versions are actively supported, please see
-   https://www.isc.org/download/);.
-
-ISC Security Vulnerability Disclosure Policy:
-
-   Details of our current security advisory policy and practice can
-   be found here: ISC Software Defect and Security Vulnerability
-   Disclosure Policy.
-
-This Knowledgebase article:
-
-https://kb.isc.org/docs/operational-notification-an-error-in-handling-tcp-client-quota-lim
-its-can-exhaust-tcp-connections-in-bind-9160
-
-is the complete and official operational notification document.
-
-Legal Disclaimer:
-
-   Internet Systems Consortium (ISC) is providing this notice on
-   an "AS IS" basis. No warranty or guarantee of any kind is expressed
-   in this notice and none should be implied. ISC expressly excludes
-   and disclaims any warranties regarding this notice or materials
-   referred to in this notice, including, without limitation, any
-   implied warranty of merchantability, fitness for a particular
-   purpose, absence of hidden defects, or of non-infringement. Your
-   use or reliance on this notice or materials referred to in this
-   notice is at your own risk. ISC may change this notice at any
-   time. A stand-alone copy or paraphrase of the text of this
-   document that omits the document URL is an uncontrolled copy.
-   Uncontrolled copies may lack important information, be out of
-   date, or contain factual errors.
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEempHtfnhIzrSVStcvZfcY57oxHsFAl5hqdoACgkQvZfcY57o
-xHtbXAf+OCvbM9tbXpmg6awukrth/22E64gp2lgc9mXI0Y4lJ9Nh93/DX+brHr2N
-K9lIG+LOA5C+P164B3vTBgnNX+32jr6UYIfdPE+gzEp9gyI+Wzwv39yBXcIVvxdv
-pt4Py7WoxOsAfsgLxTVu8Nz+6ul+RlWOr7il1oET4SqJTZ17oxeb6hElZSXo9oLY
-7u9HuQ8rCZWkAaxNmYYRi+yZfPiwiM1pEdeiur0MR2rF2XuI/84pM/Wl8jCyCxLP
-BodUfwg+Yjb8drucsFFN+70yazdBKAW88aaNyHvw1V+w15/6bEmnRt9LTIVdTqtK
-lO/lkhrjS9YtNWFaFdQD2Iu/Xz9YEQ==
-=rxet
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
