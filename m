@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5429" "Thursday" "3" "November" "2016" "15:26:54" "+0000" "Steve Grubb" "sgrubb@redhat.com" "<20161103152654.6200bbfd@ivy-bridge>" "114" "Re: [oss-security] CVE-2016-5195 \"Dirty COW\" Linux kernel privilege escalation vulnerability" nil nil nil "11" "2016110315:26:54" "[oss-security] CVE-2016-5195 \"Dirty COW\" Linux kernel privilege escalation vulnerability" (number mark "U       sgrubb@redha Nov  3  114/5429  " thread-indent "\"Re: [oss-security] CVE-2016-5195 \"Dirty COW\" Linux kernel privilege escalation vulnerability\"\n") "<20161026191357.GA22705@openwall.com>" ("<20161021003104.GA16605@openwall.com>" "<20161026191357.GA22705@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1765" "Tuesday" "25" "August" "2020" "17:37:14" "+0200" "Matthieu Herrb" "matthieu@herrb.eu" "<20200825153714.GJ30064@timmy>" "69" "[oss-security] X.Org server security advisory: August 25, 2020" nil nil nil "8" "2020082515:37:14" "[oss-security] X.Org server security advisory: August 25, 2020" (number mark "U       matthieu@her Aug 25   69/1765  " thread-indent "\"[oss-security] X.Org server security advisory: August 25, 2020\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] X.Org server security advisory: August 25, 2020" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32472 invoked by uid 550); 3 Nov 2016 15:55:01 -0000
+Received: (qmail 25954 invoked by uid 550); 25 Aug 2020 15:53:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,135 +12,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11283 invoked from network); 3 Nov 2016 15:26:31 -0000
-Date: Thu, 3 Nov 2016 15:26:54 +0000
-From: Steve Grubb <sgrubb@redhat.com>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20161103152654.6200bbfd@ivy-bridge>
-In-Reply-To: <20161026191357.GA22705@openwall.com>
-References: <20161021003104.GA16605@openwall.com>
-	<20161026191357.GA22705@openwall.com>
-Organization: Red Hat
+Received: (qmail 18290 invoked from network); 25 Aug 2020 15:37:27 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=herrb.eu; h=date:from:to
+	:subject:message-id:mime-version:content-type; s=20180121; bh=3B
+	BtUXuGe26fuSQieTfZv3pe2KQ=; b=Wp6RBxih/eOJ99VJjP81sJBjJpjKFz/SWt
+	xKRRakX3vFnYitf0lnEGDGySrLI8KVLLGBntaHkugQqYuG9RfKMEaLycmTStlgz0
+	NKOXh7UGc6mD9BrrKDSGm4uhLcIGHPnMs+YTvczZV532yhuyLXQ0yhnwIQlKklcJ
+	BehdokoNA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=herrb.eu; h=date:from:to
+	:subject:message-id:mime-version:content-type; q=dns; s=20180121; b=
+	gzPmlVPK8Zi9sUciVDYbXOupn6q2RsqjLI/0OUo/v3VmI3mLQjnO71s17MEti2hm
+	6pQHNGv9bV/z1bJYE2ywAxdb4D+STd8dpypP6yusW0WI1OlKZuyiQ7BZ1x4juX9Y
+	V2drWvY9Pf+9MXDEaEE7ORMYQ4Uh2CpIYtZx3bXgNrw=
+Date: Tue, 25 Aug 2020 17:37:14 +0200
+From: Matthieu Herrb <matthieu@herrb.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20200825153714.GJ30064@timmy>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Thu, 03 Nov 2016 15:26:20 +0000 (UTC)
-Subject: Re: [oss-security] CVE-2016-5195 "Dirty COW" Linux kernel privilege
- escalation vulnerability
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
+Subject: [oss-security] X.Org server security advisory: August 25, 2020
 
-On Wed, 26 Oct 2016 21:13:57 +0200
-Solar Designer <solar@openwall.com> wrote:
 
-> On Fri, Oct 21, 2016 at 02:31:04AM +0200, Solar Designer wrote:
-> > This was brought to the linux-distros list (and briefly
-> > inadvertently to the distros list, although discussion continued on
-> > linux-distros only) on October 13 and it was made public yesterday,
-> > so it must be in here as well.  Unfortunately, no one posted about
-> > it in here so far (the person who brought this to [linux-]distros
-> > must have done so!), and I don't have time to make a proper posting
-> > (with full detail in the message itself, as per oss-security list
-> > content guidelines), but I figured it's better for me to post
-> > something than nothing at all.
-> > 
-> > Red Hat's description:
-> > 
-> > "A race condition was found in the way the Linux kernel's memory
-> > subsystem handled the copy-on-write (COW) breakage of private
-> > read-only memory mappings.  An unprivileged local user could use
-> > this flaw to gain write access to otherwise read-only memory
-> > mappings and thus increase their privileges on the system."  
-> 
-> A lot was said about this vulnerability in lots of places, so I won't
-> dare to try and repeat all or post it in here (sorry!)  Many exploits
-> exist now, as summarized at:
-> 
-> https://github.com/dirtycow/dirtycow.github.io/wiki/PoCs
-> 
-> The exploits vary in whether they use /proc/self/mem (newer kernels
-> only)
+Multiple input validation failures in X server extensions
+=========================================================
 
-I am curious. Can anyone think of a good reason why /proc/self/mem
-_should_ be writable? I can understand the needs of debuggers to access
-other processes. But writing to yourself just doesn't seem like a
-normal use. PTRACE_POKEDATA should be covered by yama
-security controls. I wonder if /proc/self/mem should also be under the
-yama security control. Thoughts?
+All theses issuses  can lead to local privileges elevation
+on systems where the X server is running privileged.
 
--Steve
+* CVE-2020-14345 / ZDI CAN 11428 XkbSetNames Out-Of-Bounds Access
 
-> or PTRACE_POKEDATA (both newer and older kernels) and in what
-> they target: generic read-only write, SUID root program, libc, or
-> vDSO. All of them (that I've seen) also use MADV_DONTNEED.
-> 
-> vDSO appears to be the scariest target in that it allows for sandbox
-> or container escape without requiring any other sharing with the
-> outside world (no shared files, no KSM).  Some kernels have sysctl's
-> (varying across kernel versions and architectures) that allow to
-> disable vDSO on a live system, but keep in mind that already-started
-> processes retain their vDSOs and may in many scenarios be used for
-> the attack.  Also, disabling vDSO does nothing to prevent attacks
-> targeting something else (same sandbox/container or other page
-> sharing with the outside).
-> 
-> Luckily, many sandboxes exclude /proc and ptrace, which so far
-> prevents all of these exploits from working.
-> 
-> Surprisingly (to me), the published exploits appear to work as-is even
-> on systems with only one logical CPU (except on RHEL5 and alikes,
-> where 2+ CPUs appear to be needed, but don't count on this).
-> 
-> Here are a couple of challenges by me (and whoever is behind the
-> DirtyCow website kindly backed these with prizes of t-shirts priced at
-> thousands of dollars each):
-> 
-> 1. Exploit DirtyCow without MADV_DONTNEED.
-> 
-> 2. Exploit DirtyCow on RHEL5 with only 1 logical CPU.
-> 
-> and here's a new obvious one I add just now:
-> 
-> 3. Exploit DirtyCow without /proc/self/mem _and_ without PTRACE_POKE*.
-> 
-> Bonus points if you achieve several of these in one exploit.
-> 
-> Many distros have released updates by now.  This includes RHEL7 &
-> RHEL6, but (as far as I can tell) not yet RHEL5.  Since these legacy
-> kernels still matter to me and possibly to others, attached are two
-> patches for RHEL5'ish OpenVZ kernels, which should be reusable on
-> other RHEL5-alikes.
-> 
-> rhel5-owl-dirtycow.diff is what went into the kernel updates we
-> released for Owl a couple of days ago - it is a mitigation for
-> MADV_DONTNEED and PTRACE_POKE*, protecting both through write-locking
-> mmap_sem (thus, against each other as well as against other code
-> paths that read-lock mmap_sem).
-> 
-> rhel5-openvz-dirtycow.diff is interdiff between OpenVZ's older
-> "-408.el5.028stab120.2" kernels and "-408.el5.028stab120.3" they just
-> released today.  Unlike the mitigation in Owl, this is a backport of
-> the fix from newer kernels.  I have yet to test this one myself.  (I
-> briefly tried to produce a backport as well, but gave up after my
-> half-baked attempts failed testing.  I see this patch does at least
-> one thing that I missed in my backport attempts.  Kudos to OpenVZ
-> project, who had also released updates for their newer kernels.)
-> 
-> These two patches can also be reasonably used together.  (I think
-> we'll do just that in Owl, assuming that OpenVZ's fix passes our
-> testing. And yes, Owl is essentially a legacy system now, arguably
-> having served its purpose years ago, but we still maintain it for
-> some deployments.)
-> 
-> > https://access.redhat.com/security/cve/cve-2016-5195
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1384344
-> > https://security-tracker.debian.org/tracker/CVE-2016-5195
-> > http://www.v3.co.uk/v3-uk/news/2474845/linux-users-urged-to-protect-against-dirty-cow-security-flaw
-> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=19be0eaffa3ac7d8eb6784ad9bdbc7d67ed8e619
-> > https://lkml.org/lkml/2016/10/19/860
-> > https://dirtycow.ninja
-> > https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails
-> > https://twitter.com/DirtyCOWVuln  
-> 
-> Alexander
+The handler for the XkbSetNames request does not validate the request
+length before accessing its contents.
 
+* CVE-2020-14346 / ZDI CAN 11429 XIChangeHierarchy Integer Underflow
+
+An integer underflow exists in the handler for the XIChangeHierarchy
+request.
+
+* CVE-2020-14361 / ZDI CAN 11573 XkbSelectEvents Integer Underflow 
+
+An integer underflow exist in the handler for the XkbSelectEvents
+request.
+
+* CVE-2020-1436 / ZDI CAN 11574 XRecordRegisterClients Integer Underflow 
+
+An integer underflow exist in the handler for the CreateRegister
+request of the X record extension.
+
+Patches
+-------
+
+Patches for this issues have been commited to the xorg server git
+repository. xorg-server 1.20.9 will be released shortly and will
+include these patches.
+
+https://gitlab.freedesktop.org/xorg/xserver.git
+
+commit 11f22a3bf694d7061d552c99898d843bcdaf0cf1
+
+    Correct bounds checking in XkbSetNames()
+
+    CVE-2020-14345 / ZDI 11428
+
+commit 1e3392b07923987c6c9d09cf75b24f397b59bd5e
+
+    Fix XIChangeHierarchy() integer underflow
+
+    CVE-2020-14346 / ZDI-CAN-11429
+
+commit 90304b3c2018a6b8f4a79de86364d2af15cb9ad8
+
+    Fix XkbSelectEvents() integer underflow
+
+    CVE-2020-14361 ZDI-CAN 11573
+
+commit 24acad216aa0fc2ac451c67b2b86db057a032050
+
+    Fix XRecordRegisterClients() Integer underflow
+
+    CVE-2020-14362 ZDI-CAN-11574
+
+Thanks
+======
+
+These vulnerabilities have beend discovered by Jan-Niklas Sohn working
+with Trend Micro Zero Day Initiative.
+
+
+-- 
+Matthieu Herrb
