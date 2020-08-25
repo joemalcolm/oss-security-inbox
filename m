@@ -1,23 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/24/1
-Message-ID: <20200724071813.GC3948185@kroah.com>
-Date: Fri, 24 Jul 2020 09:18:13 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/25/2
+Message-ID: <20200825153621.GI30064@timmy>
+Date: Tue, 25 Aug 2020 17:36:21 +0200
+From: Matthieu Herrb <matthieu@...rb.eu>
 To: oss-security@...ts.openwall.com
-Cc: "Alban Crequy (Kinvolk)" <alban@...volk.io>, volkerdi@...ckware.com
-Subject: Re: Flatcar membership on the linux-distros list
+Subject: X.Org libX11 security advisory: August 25, 2020
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 24, 2020 at 12:01:24AM +0200, Solar Designer wrote:
-> So someone who's on (linux-)distros "or at least someone else who has
-> been active on oss-security for years but is not affiliated" should
-> state in here that they vouch for Vincent.  They may optionally make
-> this more specific (yet convincing) if they like, but that isn't
-> required.
 
-I think I meet this requirement, and have known Vincent for a number of
-years and would be glad to "vouch" for him.
+Double free in libX11 locale handling code
+==========================================
 
-thanks,
+CVE-2020-14363
 
-greg k-h
+There is an integer overflow and a double free vulnerability in the way
+LibX11 handles locales. The integer overflow is a necessary precursor to
+the double free.
+
+Patches
+-------
+
+A Patch for this issue has been committed to the libX11 git repository.
+libX11 1.6.12 will be released shortly and will include this patch.
+
+https://gitlab.freedesktop.org/xorg/lib/libx11
+
+
+commit acdaaadcb3d85c61fd43669fc5dddf0f8c3f911d (HEAD -> master)
+
+    Fix an integer overflow in init_om()
+    
+    CVE-2020-14363
+    
+    This can lead to a double free later, as reported by Jayden Rivers.
+    
+
+Thanks
+------
+
+X.Org thanks Jayden Rivers for reporting this issue to our security
+team and assisting them in understanding them and providing fixes.
+
+-- 
+Matthieu Herrb
