@@ -1,23 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/16/2
-Message-ID: <CAH5JyZrUWahjsjoU4pRRTSJwcCxcn_VqybXvhkpVdhwU_TmbKA@mail.gmail.com>
-Date: Wed, 16 Sep 2020 12:27:58 +0100
-From: Kaxil Naik <kaxilnaik@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/25/3
+Message-ID: <20200825153714.GJ30064@timmy>
+Date: Tue, 25 Aug 2020 17:37:14 +0200
+From: Matthieu Herrb <matthieu@...rb.eu>
 To: oss-security@...ts.openwall.com
-Cc: dev@...flow.apache.org
-Subject: [CVE-2020-13944] Apache Airflow Reflected XSS via Origin Parameter <= 1.10.12
+Subject: X.Org server security advisory: August 25, 2020
 Content-Type: text/plain; charset=utf-8
 
-Versions Affected: <= 1.10.12
-Description:
-The "origin" parameter passed to some of the endpoints like '/trigger' was
-vulnerable to XSS exploit.
 
-Credit:
-The issue was independently discovered and reported by Ali Al-Habsi of
-Accellion & Everardo Padilla Saca.
+Multiple input validation failures in X server extensions
+=========================================================
 
-Thanks,
-Kaxil,
-on behalf of Apache Airflow PMC
+All theses issuses  can lead to local privileges elevation
+on systems where the X server is running privileged.
 
+* CVE-2020-14345 / ZDI CAN 11428 XkbSetNames Out-Of-Bounds Access
+
+The handler for the XkbSetNames request does not validate the request
+length before accessing its contents.
+
+* CVE-2020-14346 / ZDI CAN 11429 XIChangeHierarchy Integer Underflow
+
+An integer underflow exists in the handler for the XIChangeHierarchy
+request.
+
+* CVE-2020-14361 / ZDI CAN 11573 XkbSelectEvents Integer Underflow 
+
+An integer underflow exist in the handler for the XkbSelectEvents
+request.
+
+* CVE-2020-1436 / ZDI CAN 11574 XRecordRegisterClients Integer Underflow 
+
+An integer underflow exist in the handler for the CreateRegister
+request of the X record extension.
+
+Patches
+-------
+
+Patches for this issues have been commited to the xorg server git
+repository. xorg-server 1.20.9 will be released shortly and will
+include these patches.
+
+https://gitlab.freedesktop.org/xorg/xserver.git
+
+commit 11f22a3bf694d7061d552c99898d843bcdaf0cf1
+
+    Correct bounds checking in XkbSetNames()
+
+    CVE-2020-14345 / ZDI 11428
+
+commit 1e3392b07923987c6c9d09cf75b24f397b59bd5e
+
+    Fix XIChangeHierarchy() integer underflow
+
+    CVE-2020-14346 / ZDI-CAN-11429
+
+commit 90304b3c2018a6b8f4a79de86364d2af15cb9ad8
+
+    Fix XkbSelectEvents() integer underflow
+
+    CVE-2020-14361 ZDI-CAN 11573
+
+commit 24acad216aa0fc2ac451c67b2b86db057a032050
+
+    Fix XRecordRegisterClients() Integer underflow
+
+    CVE-2020-14362 ZDI-CAN-11574
+
+Thanks
+======
+
+These vulnerabilities have beend discovered by Jan-Niklas Sohn working
+with Trend Micro Zero Day Initiative.
+
+
+-- 
+Matthieu Herrb
