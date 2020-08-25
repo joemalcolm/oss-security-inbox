@@ -1,4 +1,9 @@
-Received: (qmail 28478 invoked by uid 550); 14 Feb 2023 18:03:44 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1707" "Tuesday" "25" "August" "2020" "15:38:47" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20200825133847.GA1566487@eldamar.local>" "35" "Re: [oss-security] Fossil-SCM patch fixes RCE in all historic versions" nil nil nil "8" "2020082513:38:47" "[oss-security] Fossil-SCM patch fixes RCE in all historic versions" (number mark "U       carnil@debia Aug 25   35/1707  " thread-indent "\"Re: [oss-security] Fossil-SCM patch fixes RCE in all historic versions\"\n") "<CALwJ=Mwm84qq+99OYYsQTEhKs1O2kFC4NxpbsrGgfgoHK3t4_w@mail.gmail.com>" ("<CALwJ=Mwm84qq+99OYYsQTEhKs1O2kFC4NxpbsrGgfgoHK3t4_w@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Fossil-SCM patch fixes RCE in all historic versions" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30207 invoked by uid 550); 25 Aug 2020 13:39:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,243 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28457 invoked from network); 14 Feb 2023 18:03:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=wOtcK6/0BSW7PzaouV1UXsUM6DO4roV3+RcOb5t2Yi8=; b=PXePhEeRJ19SZpuPldjuDayADI
-	R9x62QaQAKgWTXEdyXoTyREMdEJk0ZRqjfbj+qiZT0+01Gb+b7MeWQpBCsveATfAjHH5II/ciZ5/W
-	XBXbg+Fn7oX3clQYQyYvu9qTJ0omR5MLhkx5wj/+VGymvXv20GpAbsoTNVTkbOskY+zg=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 30189 invoked from network); 25 Aug 2020 13:39:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+4nKy11Gz0uOygftNrsZkNyPWGBO/6ph8iVIiXEE1sI=;
+        b=TC6I1urFbblzHSwN6z8u4tpjMdFcNVH0Teo+o3W9q8MuYsWdnS5jK941Le6Xjds1cn
+         WUdkUhI+iawRQUc0Fb0QAiyZQXEZ3z2fHKrfFPLf++5GasxWva8X5cVT5je5KZIdTsvk
+         l0nbVj71klIZ6YFv2VSmrJtjAhNJM8e8eMqwv2CARBH+sd4IYT9yqCfXEu80i+LGzyrX
+         OlyR2Usp+yWU7OosqZ5ViejZ3T7tG0dLYVPoy1MT+Uu5E4RyqEtPw+QVmx/+IdREhD89
+         IY9Z9gq+zjkZe2IAqQ+vJIbJ2GhTwciAOJGPCWliVfPT2x93uXL23P5uCjT3dDe3F77B
+         d4wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=+4nKy11Gz0uOygftNrsZkNyPWGBO/6ph8iVIiXEE1sI=;
+        b=TJPhiDrjc1wDHQPfHE7/W8idPfvMldawHodDi6zr1QN/fK/1qDfjWLNpGNZ5wiTiIp
+         Cz0HC0KUzNo6btiNP8/f+ANYkecxd3+VUyvWZgUUkZNzEbCJDNucvxO85MXZD5iPLFNL
+         9Yrr67SEDzdU/Bt9OR/Q2LfBiRg7CD+DZyxI7A7bxyKy5px1VTlWIzUJokPqtUrQK+rI
+         cE2kQ7GIK0yMRhNvvHY25uN1YX5l/Y+U6vMRvdLeLyvfKYwMtGsl/JbtLS0G20jhn9oh
+         5fFGOuzBaRFBB22QsjG3hiQ6jw11qeobxsVonjacpxOry8AC9xoN86TIrEkZERN5U9KQ
+         ygkw==
+X-Gm-Message-State: AOAM533IAhpugJGXfTqittMckUKEplQA2S1DUnNu96HsBzndqjcHdolx
+	EuwpLOwqvYk49i1wwiIUjgKrqymYzP85mg==
+X-Google-Smtp-Source: ABdhPJxJDdcXj3p/T08IdObuwJhFRU9t1iFkav2ZVpeRguwO+ipxuammIpFgtF14KGAdXEj6vp86Vg==
+X-Received: by 2002:a1c:e108:: with SMTP id y8mr2088833wmg.74.1598362729654;
+        Tue, 25 Aug 2020 06:38:49 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 25 Aug 2020 15:38:47 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20200825133847.GA1566487@eldamar.local>
+References: <CALwJ=Mwm84qq+99OYYsQTEhKs1O2kFC4NxpbsrGgfgoHK3t4_w@mail.gmail.com>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1pRze8-0007sq-Ni@xenbits.xenproject.org>
-Date: Tue, 14 Feb 2023 18:03:16 +0000
-Subject: [oss-security] Xen Security Advisory 426 v1 (CVE-2022-27672) - x86: Cross-Thread
- Return Address Predictions
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <CALwJ=Mwm84qq+99OYYsQTEhKs1O2kFC4NxpbsrGgfgoHK3t4_w@mail.gmail.com>
+Subject: Re: [oss-security] Fossil-SCM patch fixes RCE in all historic
+ versions
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-            Xen Security Advisory CVE-2022-27672 / XSA-426
+On Thu, Aug 20, 2020 at 11:15:41AM -0400, Richard Hipp wrote:
+> Researcher Max Justicz discovered a potential RCE and other
+> vulnerabilities in the Fossil distributed version control system.
+> (https://fossil-scm.org/)  Patches to address these issues are now
+> available for download.  Package maintainers who bundle Fossil are
+> encouraged to update their packages without unnecessary delay.
+> 
+> All vulnerabilities require a pre-existing trust relationship between
+> the victim and the attacker.  In other words, the attacker must be
+> either a site administrator, or someone with check-in privileges on
+> the project.  There are no known vulnerabilities to servers from web
+> users entering tickets or forum messages or wiki or doing other
+> on-line operations.  The attacks require the ability to push, at
+> least, and the most serious RCE problem requires the ability to
+> configure a server in malicious ways.  If you are unable to upgrade to
+> one of the patched versions of Fossil, then you are encouraged at
+> least to know well the people from whom you clone or pull.
+> 
+> Precompiled binaries and source tarballs for the patched versions of
+> Fossil are available on the Fossil download page
+> (http://fossil-scm.org/fossil/uv/download.html).  However, the dozens
+> of check-ins that went into generating these patches, and the tickets
+> that describe the specifics of the vulnerabilities, will be embargoed
+> for a few days.
+> 
+> See the thread on the Fossil Forum
+> (https://fossil-scm.org/forum/info/a05ae3ce7760daf6) for follow up
+> information or to communicate directly with the Fossil developers.
 
-             x86: Cross-Thread Return Address Predictions
+FWIW, the RCE issue has been assigned CVE-2020-24614 by MITRE.
 
-ISSUE DESCRIPTION
-=================
-
-It has been discovered that on some AMD CPUs, the RAS (Return Address
-Stack, also called RAP - Return Address Predictor - in some AMD
-documentation, and RSB - Return Stack Buffer - in Intel terminology) is
-dynamically partitioned between non-idle threads.  This allows an
-attacker to control speculative execution on the adjacent thread.
-
-For more details, see:
-  https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1045
-
-IMPACT
-======
-
-An attacker might be able to infer the contents of arbitrary host
-memory, including memory assigned to other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-Only AMD CPUs are known to be potentially vulnerable.  CPUs from other
-hardware vendors are not believed to be impacted.
-
-Only the Zen1 and Zen2 microarchitectures are believed to be potentially
-vulnerable.  Other microarchitectures are not believed to be vulnerable.
-
-Only configurations with SMT activate are potentially vulnerable.  If
-SMT is disabled by the firmware, or at runtime with `smt=0` on Xen's
-command line, then the platform is not vulnerable.
-
-Xen 4.17 and later contains an optimisation, specifically:
-
-  c/s afab477fba3b ("x86/spec-ctrl: Skip RSB overwriting when safe to do so")
-
-which in combination with disabling 32bit PV guests (either at compile
-time with CONFIG_PV32=n, or at runtime with `pv=no-32` on the command
-line) renders Xen vulnerable to attack from PV guests.
-
-Note: multiple downstreams are known to have backported this
-optimisation to older versions of Xen.  Consult your software vendor
-documentation.
-
-MITIGATION
-==========
-
-On otherwise-vulnerable configurations, the issue can be mitigated by
-booting Xen with `spec-ctrl=rsb`, which will override the aforementioned
-optimisation.
-
-Alternatively, SMT can be disabled either in the firmware, or by booting
-Xen with `smt=0`.
-
-Alternatively, if 32bit PV guests are only runtime disabled in Xen, this
-issue can also be mitigated by booting Xen with `pv=32` to enable
-support 32bit PV guests.  It is not necessary for a 32bit PV guest to
-actually be running in order to mitigate the issue.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa426.patch          xen-unstable - Xen 4.17
-
-$ sha256sum xsa426*
-425b1d8931e02852afec9fe3d9f1d009f6d8a33c6387b2e8b3896f374732d470  xsa426.patch
-$
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmPrzJoMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZiqsIALrisP3l7ImoKe49Bmb1blNYmUv6UjYGdVF9acc9
-++QYPLq4Mu+kJuIlgKnT21hj7BFczL4KSi8sVw/nLqU3x8R/ZJ6nxXLlCod6RqGw
-4MYd6QmArx8a+hm3LC0288VEFVXFh0WTDA6PK15RkspiwcjsAZ4w7DA7cRk0FLP0
-9KJMhSPOAj9wCDhvOckr7DnA+D6gOKjMH83NCL0rg6Xe8+Bv0qTVYe49FqAnbWwc
-9RsYOKfRuZUci+Z+mALVRB97R7xvns5D9HnDvs55ADri506JWkxmdp1GvLtjezXV
-3Zds6TOrr1i0RQGV9M6aouinrI+DQNrOFR8V6p98KYxAo+Y=
-=T8Uh
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa426.patch"
-Content-Disposition: attachment; filename="xsa426.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L3NwZWMtY3RybDogTWl0aWdhdGUgQ3Jvc3MtVGhy
-ZWFkIFJldHVybiBBZGRyZXNzIFByZWRpY3Rpb25zCgpUaGlzIGlzIFhTQS00
-MjYgLyBDVkUtMjAyMi0yNzY3MgoKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENv
-b3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6
-IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQg
-YS9kb2NzL21pc2MveGVuLWNvbW1hbmQtbGluZS5wYW5kb2MgYi9kb2NzL21p
-c2MveGVuLWNvbW1hbmQtbGluZS5wYW5kb2MKaW5kZXggOTIzOTEwZjU1M2M1
-Li5hMmZmMzhjZGViZjIgMTAwNjQ0Ci0tLSBhL2RvY3MvbWlzYy94ZW4tY29t
-bWFuZC1saW5lLnBhbmRvYworKysgYi9kb2NzL21pc2MveGVuLWNvbW1hbmQt
-bGluZS5wYW5kb2MKQEAgLTIzNTUsNyArMjM1NSw3IEBAIGd1ZXN0cyB0byB1
-c2UuCiAgIG9uIGVudHJ5IGFuZCBleGl0LiAgVGhlc2UgYmxvY2tzIGFyZSBu
-ZWNlc3NhcnkgdG8gdmlydHVhbGlzZSBzdXBwb3J0IGZvcgogICBndWVzdHMg
-YW5kIGlmIGRpc2FibGVkLCBndWVzdHMgd2lsbCBiZSB1bmFibGUgdG8gdXNl
-IElCUlMvU1RJQlAvU1NCRC9ldGMuCiAqIGByc2I9YCBvZmZlcnMgY29udHJv
-bCBvdmVyIHdoZXRoZXIgdG8gb3ZlcndyaXRlIHRoZSBSZXR1cm4gU3RhY2sg
-QnVmZmVyIC8KLSAgUmV0dXJuIEFkZHJlc3MgU3RhY2sgb24gZW50cnkgdG8g
-WGVuLgorICBSZXR1cm4gQWRkcmVzcyBTdGFjayBvbiBlbnRyeSB0byBYZW4g
-YW5kIG9uIGlkbGUuCiAqIGBtZC1jbGVhcj1gIG9mZmVycyBjb250cm9sIG92
-ZXIgd2hldGhlciB0byB1c2UgVkVSVyB0byBmbHVzaAogICBtaWNyb2FyY2hp
-dGVjdHVyYWwgYnVmZmVycyBvbiBpZGxlIGFuZCBleGl0IGZyb20gWGVuLiAg
-Kk5vdGU6IEZvcgogICBjb21wYXRpYmlsaXR5IHdpdGggZGV2ZWxvcG1lbnQg
-dmVyc2lvbnMgb2YgdGhpcyBmaXgsIGBtZHM9YCBpcyBhbHNvIGFjY2VwdGVk
-CmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYvaW5jbHVkZS9hc20vY3B1ZmVh
-dHVyZXMuaCBiL3hlbi9hcmNoL3g4Ni9pbmNsdWRlL2FzbS9jcHVmZWF0dXJl
-cy5oCmluZGV4IDg2NWYxMTA5ODY2ZC4uZGEwNTkzZGU4NTQyIDEwMDY0NAot
-LS0gYS94ZW4vYXJjaC94ODYvaW5jbHVkZS9hc20vY3B1ZmVhdHVyZXMuaAor
-KysgYi94ZW4vYXJjaC94ODYvaW5jbHVkZS9hc20vY3B1ZmVhdHVyZXMuaApA
-QCAtMzUsNyArMzUsOCBAQCBYRU5fQ1BVRkVBVFVSRShTQ19SU0JfSFZNLCAg
-ICAgICAgWDg2X1NZTlRIKDE5KSkgLyogUlNCIG92ZXJ3cml0ZSBuZWVkZWQg
-Zm9yIEhWTQogWEVOX0NQVUZFQVRVUkUoWEVOX1NFTEZTTk9PUCwgICAgIFg4
-Nl9TWU5USCgyMCkpIC8qIFNFTEZTTk9PUCBnZXRzIHVzZWQgYnkgWGVuIGl0
-c2VsZiAqLwogWEVOX0NQVUZFQVRVUkUoU0NfTVNSX0lETEUsICAgICAgIFg4
-Nl9TWU5USCgyMSkpIC8qIENsZWFyIE1TUl9TUEVDX0NUUkwgb24gaWRsZSAq
-LwogWEVOX0NQVUZFQVRVUkUoWEVOX0xCUiwgICAgICAgICAgIFg4Nl9TWU5U
-SCgyMikpIC8qIFhlbiB1c2VzIE1TUl9ERUJVR0NUTC5MQlIgKi8KLS8qIEJp
-dHMgMjMsMjQgdW51c2VkLiAqLworLyogQml0cyAyMyB1bnVzZWQuICovCitY
-RU5fQ1BVRkVBVFVSRShTQ19SU0JfSURMRSwgICAgICAgWDg2X1NZTlRIKDI0
-KSkgLyogUlNCIG92ZXJ3cml0ZSBuZWVkZWQgZm9yIGlkbGUuICovCiBYRU5f
-Q1BVRkVBVFVSRShTQ19WRVJXX0lETEUsICAgICAgWDg2X1NZTlRIKDI1KSkg
-LyogVkVSVyB1c2VkIGJ5IFhlbiBmb3IgaWRsZSAqLwogWEVOX0NQVUZFQVRV
-UkUoWEVOX1NIU1RLLCAgICAgICAgIFg4Nl9TWU5USCgyNikpIC8qIFhlbiB1
-c2VzIENFVCBTaGFkb3cgU3RhY2tzICovCiBYRU5fQ1BVRkVBVFVSRShYRU5f
-SUJULCAgICAgICAgICAgWDg2X1NZTlRIKDI3KSkgLyogWGVuIHVzZXMgQ0VU
-IEluZGlyZWN0IEJyYW5jaCBUcmFja2luZyAqLwpkaWZmIC0tZ2l0IGEveGVu
-L2FyY2gveDg2L2luY2x1ZGUvYXNtL3NwZWNfY3RybC5oIGIveGVuL2FyY2gv
-eDg2L2luY2x1ZGUvYXNtL3NwZWNfY3RybC5oCmluZGV4IDZhNzdjMzkzNzg0
-NC4uMzkxOTczZWY2YTI4IDEwMDY0NAotLS0gYS94ZW4vYXJjaC94ODYvaW5j
-bHVkZS9hc20vc3BlY19jdHJsLmgKKysrIGIveGVuL2FyY2gveDg2L2luY2x1
-ZGUvYXNtL3NwZWNfY3RybC5oCkBAIC0xNTksNiArMTU5LDIxIEBAIHN0YXRp
-YyBhbHdheXNfaW5saW5lIHZvaWQgc3BlY19jdHJsX2VudGVyX2lkbGUoc3Ry
-dWN0IGNwdV9pbmZvICppbmZvKQogICAgICAqLwogICAgIGFsdGVybmF0aXZl
-X2lucHV0KCIiLCAidmVydyAlW3NlbF0iLCBYODZfRkVBVFVSRV9TQ19WRVJX
-X0lETEUsCiAgICAgICAgICAgICAgICAgICAgICAgW3NlbF0gIm0iIChpbmZv
-LT52ZXJ3X3NlbCkpOworCisgICAgLyoKKyAgICAgKiBDcm9zcy1UaHJlYWQg
-UmV0dXJuIEFkZHJlc3MgUHJlZGljdGlvbnM6CisgICAgICoKKyAgICAgKiBP
-biB2dWxuZXJhYmxlIHN5c3RlbXMsIHRoZSByZXR1cm4gcHJlZGljdGlvbnMg
-KFJTQi9SQVMpIGFyZSBzdGF0aWNhbGx5CisgICAgICogcGFydGl0aW9uZWQg
-YmV0d2VlbiBhY3RpdmUgdGhyZWFkcy4gIFdoZW4gZW50ZXJpbmcgaWRsZSwg
-b3VyIGVudHJpZXMKKyAgICAgKiBhcmUgcmUtcGFydGl0aW9uZWQgdG8gYWxs
-b3cgdGhlIG90aGVyIHRocmVhZHMgdG8gdXNlIHRoZW0uCisgICAgICoKKyAg
-ICAgKiBJbiBzb21lIGNhc2VzLCB3ZSBtaWdodCBzdGlsbCBoYXZlIGd1ZXN0
-IGVudHJpZXMgaW4gdGhlIFJBUywgc28gZmx1c2gKKyAgICAgKiB0aGVtIGJl
-Zm9yZSBpbmplY3RpbmcgdGhlbSBzaWRld2F5cyB0byBvdXIgc2libGluZyB0
-aHJlYWQuCisgICAgICoKKyAgICAgKiAoYWIpdXNlIGFsdGVybmF0aXZlX2lu
-cHV0KCkgdG8gc3BlY2lmeSBjbG9iYmVycy4KKyAgICAgKi8KKyAgICBhbHRl
-cm5hdGl2ZV9pbnB1dCgiIiwgIkRPX09WRVJXUklURV9SU0IiLCBYODZfRkVB
-VFVSRV9TQ19SU0JfSURMRSwKKyAgICAgICAgICAgICAgICAgICAgICA6ICJy
-YXgiLCAicmN4Iik7CiB9CiAKIC8qIFdBUk5JTkchIGByZXRgLCBgY2FsbCAq
-YCwgYGptcCAqYCBub3Qgc2FmZSBiZWZvcmUgdGhpcyBjYWxsLiAqLwpkaWZm
-IC0tZ2l0IGEveGVuL2FyY2gveDg2L3NwZWNfY3RybC5jIGIveGVuL2FyY2gv
-eDg2L3NwZWNfY3RybC5jCmluZGV4IGEzMjBiODE5NDdjOC4uZTgwZTJhNWVk
-MWE5IDEwMDY0NAotLS0gYS94ZW4vYXJjaC94ODYvc3BlY19jdHJsLmMKKysr
-IGIveGVuL2FyY2gveDg2L3NwZWNfY3RybC5jCkBAIC0xMzI3LDEzICsxMzI3
-LDM4IEBAIHZvaWQgX19pbml0IGluaXRfc3BlY3VsYXRpb25fbWl0aWdhdGlv
-bnModm9pZCkKICAgICAgKiAzKSBTb21lIENQVXMgaGF2ZSBSU0JzIHdoaWNo
-IGFyZSBub3QgZnVsbCB3aWR0aCwgd2hpY2ggYWxsb3cgdGhlCiAgICAgICog
-ICAgYXR0YWNrZXIncyBlbnRyaWVzIHRvIGFsaWFzIFhlbiBhZGRyZXNzZXMu
-CiAgICAgICoKKyAgICAgKiA0KSBTb21lIENQVXMgaGF2ZSBSU0JzIHdoaWNo
-IGFyZSByZS1wYXJ0aXRpb25lZCBiYXNlZCBvbiB0aHJlYWQKKyAgICAgKiAg
-ICBpZGxlbmVzcywgd2hpY2ggYWxsb3dzIGFuIGF0dGFja2VyIHRvIGluamVj
-dCBlbnRyaWVzIGludG8gdGhlIG90aGVyCisgICAgICogICAgdGhyZWFkLiAg
-V2Ugc3RpbGwgYWN0aXZlIHRoZSBvcHRpbWlzYXRpb24gaW4gdGhpcyBjYXNl
-LCBhbmQgbWl0aWdhdGUKKyAgICAgKiAgICBpbiB0aGUgaWRsZSBwYXRoIHdo
-aWNoIGhhcyBsb3dlciBvdmVyaGVhZC4KKyAgICAgKgogICAgICAqIEl0IGlz
-IHNhZmUgdG8gdHVybiBvZmYgUlNCIHN0dWZmaW5nIHdoZW4gWGVuIGlzIHVz
-aW5nIFNNRVAgaXRzZWxmLCBhbmQKICAgICAgKiAzMmJpdCBQViBndWVzdHMg
-YXJlIGRpc2FibGVkLCBhbmQgd2hlbiB0aGUgUlNCIGlzIGZ1bGwgd2lkdGgu
-CiAgICAgICovCiAgICAgQlVJTERfQlVHX09OKFJPX01QVF9WSVJUX1NUQVJU
-ICE9IFBNTDRfQUREUigyNTYpKTsKLSAgICBpZiAoIG9wdF9yc2JfcHYgPT0g
-LTEgJiYgYm9vdF9jcHVfaGFzKFg4Nl9GRUFUVVJFX1hFTl9TTUVQKSAmJgot
-ICAgICAgICAgIW9wdF9wdjMyICYmIHJzYl9pc19mdWxsX3dpZHRoKCkgKQot
-ICAgICAgICBvcHRfcnNiX3B2ID0gMDsKKyAgICBpZiAoIG9wdF9yc2JfcHYg
-PT0gLTEgKQorICAgIHsKKyAgICAgICAgb3B0X3JzYl9wdiA9IChvcHRfcHYz
-MiB8fCAhYm9vdF9jcHVfaGFzKFg4Nl9GRUFUVVJFX1hFTl9TTUVQKSB8fAor
-ICAgICAgICAgICAgICAgICAgICAgICFyc2JfaXNfZnVsbF93aWR0aCgpKTsK
-KworICAgICAgICAvKgorICAgICAgICAgKiBDcm9zcy1UaHJlYWQgUmV0dXJu
-IEFkZHJlc3MgUHJlZGljdGlvbnMuCisgICAgICAgICAqCisgICAgICAgICAq
-IFZ1bG5lcmFibGUgc3lzdGVtcyBhcmUgWmVuMS9aZW4yIHVhcmNoLCB3aGlj
-aCBpcyBBTUQgRmFtMTcgLyBIeWdvbgorICAgICAgICAgKiBGYW0xOCwgd2hl
-biBTTVQgaXMgYWN0aXZlLgorICAgICAgICAgKgorICAgICAgICAgKiBUbyBt
-aXRpZ2F0ZSwgd2UgbXVzdCBmbHVzaCB0aGUgUlNCL1JBUy9SQVAgb25jZSBi
-ZXR3ZWVuIGVudGVyaW5nCisgICAgICAgICAqIFhlbiBhbmQgZ29pbmcgaWRs
-ZS4KKyAgICAgICAgICoKKyAgICAgICAgICogTW9zdCBjYXNlcyBmbHVzaCBv
-biBlbnRyeSB0byBYZW4gYW55d2F5LiAgVGhlIG9uZSBjYXNlIHdoZXJlIHdl
-CisgICAgICAgICAqIGRvbid0IGlzIHdoZW4gdXNpbmcgdGhlIFNNRVAgb3B0
-aW1pc2F0aW9uIGZvciBQViBndWVzdHMuICBGbHVzaGluZworICAgICAgICAg
-KiBiZWZvcmUgZ29pbmcgaWRsZSBpcyBsZXNzIG92ZXJoZWFkIHRoYW4gZmx1
-c2hpbmcgb24gUFYgZW50cnkuCisgICAgICAgICAqLworICAgICAgICBpZiAo
-ICFvcHRfcnNiX3B2ICYmIGh3X3NtdF9lbmFibGVkICYmCisgICAgICAgICAg
-ICAgKGJvb3RfY3B1X2RhdGEueDg2X3ZlbmRvciAmIChYODZfVkVORE9SX0FN
-RHxYODZfVkVORE9SX0hZR09OKSkgJiYKKyAgICAgICAgICAgICAoYm9vdF9j
-cHVfZGF0YS54ODYgPT0gMHgxNyB8fCBib290X2NwdV9kYXRhLng4NiA9PSAw
-eDE4KSApCisgICAgICAgICAgICBzZXR1cF9mb3JjZV9jcHVfY2FwKFg4Nl9G
-RUFUVVJFX1NDX1JTQl9JRExFKTsKKyAgICB9CiAKICAgICBpZiAoIG9wdF9y
-c2JfcHYgKQogICAgIHsK
-
---=separator--
+Regards,
+Salvatore
