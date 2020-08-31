@@ -1,18 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/31/2
-Message-ID: <87mu7x8avo.fsf@hope.eyrie.org>
-Date: Mon, 30 Mar 2020 20:24:27 -0700
-From: Russ Allbery <eagle@...ie.org>
-To: kerberos@....edu
-Cc: oss-security@...ts.openwall.com
-Subject: Re: pam-krb5 security advisory (4.9 and earlier)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/31/1
+Message-ID: <CAAafH9QFUn9+sqmWs_i6XsBJdw+kPau5WePkUa_5tLfA908k-g@mail.gmail.com>
+Date: Mon, 31 Aug 2020 17:03:52 -0500
+From: Brandon Williams <brandonwilliams@...che.org>
+To: cassandra <user@...sandra.apache.org>, dev@...sandra.apache.org
+Cc: Jeremiah Jordan <jeremiah@...astax.com>, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: CVE-2016-3427 Apache Cassandra Unspecified vulnerability related to JMX
 Content-Type: text/plain; charset=utf-8
 
-Russ Allbery <eagle@...ie.org> writes:
+Versions Affected:
+All versions prior to: 2.1.22, 2.2.18, 3.0.22, 3.11.8 and 4.0-beta2
 
-> Public announcement: 2009-03-30
+Description:
+Unspecified vulnerability in Oracle Java SE 6u113, 7u99, and 8u77;
+Java SE Embedded 8u77; and JRockit R28.3.9 allows remote attackers to
+affect confidentiality, integrity, and availability via vectors
+related to JMX.   By default Cassandra only binds JMX locally.
 
-Mutter.  Obviously, this should be 2020-03-20.
+Mitigation:
+2.1.x users should upgrade to 2.1.22
+2.2.x users should upgrade to 2.2.18
+3.0.x users should upgrade to 3.0.22
+3.11.x users should upgrade to 3.11.8
+4.0-beta1 users should upgrade to 4.0-beta2
 
--- 
-Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
+Alternatively, users can upgrade their JVM to versions after those in
+the description.
