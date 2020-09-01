@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1245" "Thursday" "12" "November" "2015" "23:50:56" "-0500" "Jason Shepherd" "jshepher@redhat.com" "<1466254601.10395170.1447390256651.JavaMail.zimbra@redhat.com>" "22" "[oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw" "^Date:" nil nil "11" "2015111304:50:56" "[oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "U       jshepher@red Nov 12   22/1245  " thread-indent "\"[oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1040" "Tuesday" "1" "September" "2020" "15:33:43" "+0100" "Sam Tunnicliffe" "sam@beobal.com" "<8B86DF4D-6A38-4ACE-B5AD-F891E1165AEE@beobal.com>" "27" "[oss-security] CVE-2020-13946 Apache Cassandra RMI Rebind Vulnerability" nil nil nil "9" "2020090114:33:43" "[oss-security] CVE-2020-13946 Apache Cassandra RMI Rebind Vulnerability" (number mark "U       sam@beobal.c Sep  1   27/1040  " thread-indent "\"[oss-security] CVE-2020-13946 Apache Cassandra RMI Rebind Vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-13946 Apache Cassandra RMI Rebind Vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1986 invoked by uid 550); 13 Nov 2015 04:51:09 -0000
+Received: (qmail 9522 invoked by uid 550); 1 Sep 2020 18:18:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1962 invoked from network); 13 Nov 2015 04:51:09 -0000
-Message-ID: <1466254601.10395170.1447390256651.JavaMail.zimbra@redhat.com>
-In-Reply-To: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
-References: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.64.51.209]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF40 (Linux)/8.0.6_GA_5922)
-Thread-Topic: Assign CVE for common-collections remote code execution on deserialisation flaw
-Thread-Index: GwiytGA/IDdJaAuw8DiW0sDj65Wqdixy58jN
-Date: Thu, 12 Nov 2015 23:50:56 -0500 (EST)
-From: Jason Shepherd <jshepher@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Assign CVE for common-collections remote code execution on
- deserialisation flaw
+Received: (qmail 9299 invoked from network); 1 Sep 2020 14:33:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=beobal-com.20150623.gappssmtp.com; s=20150623;
+        h=from:reply-to:mime-version:subject:message-id:date:to;
+        bh=n1rGyDMIsIN7Wn3YMVLFkpH1KkYagO7hOwlmPjsqCL8=;
+        b=0ojLobcVDdT+GfF7/jxJ1IIXZ1u1FjR8PZ72Hob/oLMeL94uY4oDWBxuXk0iFuDGq8
+         YIa5FMA00pEDsWvTeCZsSzl8fAcT2n8krYR3YV2s9HTyqUz5mG38wNYv2TX9GpYsWKG7
+         QnOED/S6cJ4L7zUxhC3NCaX7OL/11NERqbjVOVcOI74O6x6fqS0ic1aMcVVBoTh9WAVc
+         Lnulxawb0S4GySwnvBlyHBSb/Ci+DDGx5jO+0hjbuoJqjmHBgdZIcH3g5zpKbADSjAby
+         sDh4h+6xtRB1Yj000DBCNu5PtupVG6HqE3exScXoZI+gD3WSEaX4w7zFwK3X9TZhqPjp
+         FJ2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:reply-to:mime-version:subject:message-id
+         :date:to;
+        bh=n1rGyDMIsIN7Wn3YMVLFkpH1KkYagO7hOwlmPjsqCL8=;
+        b=c7oq0rhTKHMHDjkkQmn7RkTO3Kkzwx3NE1CW6bxi0MAESN4X7emLE7x+r/DofUd1nw
+         n4Tbh3BXpUwG/OG7WTWkksyBDNyDtSgTDMl/zbc9jQQ6XnnjYVLwrJSbXMLyCqq08PXU
+         3Yp2+3+SrqGzDAYLObsCyBCCPRa5MTRATnD3TptpZRNM/LfjpEVmg7dJnb6etMFFjIeT
+         j4ma81Gz5ExAJPmZivxKbbXLv5U/MRR/cZcTmrVnGkuLycPgYrvs0M8oPCOd1SDYWmuU
+         csr+qbzcdt0uYkOWpu0mJgpD3hgAZDOJcSwO1wN/0E7CbFB2B02YDs5UX5k9g2niM8t0
+         yMbw==
+X-Gm-Message-State: AOAM533sgr1Vi4uMlNICiuv1phS5/IAzMBVbL7Bn6vDCQM/pF4slb0se
+	ymf7Vv3pC2iQs+aQBjVKhvoIT1aLvc8deFUiKTo=
+X-Google-Smtp-Source: ABdhPJwgjN46KVPl/ddsAkRWVMSbsN+0wAJP6fbj8QZiAjyJgX2TRzWXHOSjRwQ7g0kx8TUhUFagbQ==
+X-Received: by 2002:a5d:6343:: with SMTP id b3mr2381962wrw.179.1598970824562;
+        Tue, 01 Sep 2020 07:33:44 -0700 (PDT)
+From: Sam Tunnicliffe <sam@beobal.com>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_67923BC6-7ED7-4F28-87AB-0BEF0F499E58"
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Message-Id: <8B86DF4D-6A38-4ACE-B5AD-F891E1165AEE@beobal.com>
+Date: Tue, 1 Sep 2020 15:33:43 +0100
 To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
+Subject: [oss-security] CVE-2020-13946 Apache Cassandra RMI Rebind Vulnerability
 
-I think a precedent has been set with the Groovy issue [1] that we'd issue a CVE for the libraries that allow us to execute code during deserialization of their classes.
+--Apple-Mail=_67923BC6-7ED7-4F28-87AB-0BEF0F499E58
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-[1] CVE-2015-3253 
+CVE-2020-13946 Apache Cassandra RMI Rebind Vulnerability
 
-As Gsunde points out, it would make it a lot easier for everyone to refer to this issue if it had a CVE.
+Versions Affected:
+All versions prior to: 2.1.22, 2.2.18, 3.0.22, 3.11.8 and 4.0-beta2
 
------ Original Message -----
-From: "Jason Shepherd" <jshepher@redhat.com>
-To: oss-security@lists.openwall.com
-Sent: Monday, 9 November, 2015 10:36:20 AM
-Subject: Assign CVE for common-collections remote code execution on deserialisation flaw
+Description:
+It is possible for a local attacker without access to the Apache Cassandra =
+process or configuration files to manipulate the RMI registry to perform a =
+man-in-the-middle attack and capture user names and passwords used to acces=
+s the JMX interface. The attacker can then use these credentials to access =
+the JMX interface and perform unauthorised operations.
+Users should also be aware of CVE-2019-2684, a JRE vulnerability that enabl=
+es this issue to be exploited remotely.
 
-Hello oss-esc,
+Mitigation:
+2.1.x users should upgrade to 2.1.22
+2.2.x users should upgrade to 2.2.18
+3.0.x users should upgrade to 3.0.22
+3.11.x users should upgrade to 3.11.8
+4.0-beta1 users should upgrade to 4.0-beta2=
 
-It was found that a flaw in Apache commons-collections Java library allowed remote code execution when Deserialised with Java Object Serialization. Full details of the vulnerability can be found in this recent blog post, [1]. A proposed patch for 3.2.x branch has been submitted upstream, but no release has been made with the fix at the current time. The issue affects version 3.x, and 4.x of Apache common-collections, [2].
-
-   [1] http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/
-   [2] https://issues.apache.org/jira/browse/COLLECTIONS-580
-
-Regards,
-Jason Shepherd
-Red Hat Product Security
+--Apple-Mail=_67923BC6-7ED7-4F28-87AB-0BEF0F499E58--
