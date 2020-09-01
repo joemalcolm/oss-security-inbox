@@ -1,32 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/4
-Message-ID: <20200808120909.474405c1@computer>
-Date: Sat, 8 Aug 2020 12:09:09 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/01/4
+Message-Id: <8B86DF4D-6A38-4ACE-B5AD-F891E1165AEE@beobal.com>
+Date: Tue, 1 Sep 2020 15:33:43 +0100
+From: Sam Tunnicliffe <sam@...bal.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Voiding CVE-2020-16248
+Subject: CVE-2020-13946 Apache Cassandra RMI Rebind Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-FWIW while I don't particularly care about the CVE assignment issue, I
-think there is a valuable discussion to have here.
+CVE-2020-13946 Apache Cassandra RMI Rebind Vulnerability
 
-I feel the issue here is that with SSRF there often seems to be some
-kind of difficulty to pinpoint whether something is actually a flaw or
-an intended feature and who's to blame.
+Versions Affected:
+All versions prior to: 2.1.22, 2.2.18, 3.0.22, 3.11.8 and 4.0-beta2
 
-Ultimately these issues come down to this:
-* There's an expectation that network requests originating from
-  localhost (or from a tightly controlled internal network IP) can be
-  considered trustworthy and are performed by someone/something with
-  some form of local authority.
-* However that's not necessarily true as you may have many applications
-  that do outgoing network requests that in a variety of ways can be
-  controlled by an attacker.
+Description:
+It is possible for a local attacker without access to the Apache Cassandra process or configuration files to manipulate the RMI registry to perform a man-in-the-middle attack and capture user names and passwords used to access the JMX interface. The attacker can then use these credentials to access the JMX interface and perform unauthorised operations.
+Users should also be aware of CVE-2019-2684, a JRE vulnerability that enables this issue to be exploited remotely.
 
-I feel this is somehow also similar to fights between network security
-thinking and endpoint security thinking that we can see elsewhere.
-(e.g. the whole TLS interception debate.)
-
--- 
-Hanno Böck
-https://hboeck.de/
+Mitigation:
+2.1.x users should upgrade to 2.1.22
+2.2.x users should upgrade to 2.2.18
+3.0.x users should upgrade to 3.0.22
+3.11.x users should upgrade to 3.11.8
+4.0-beta1 users should upgrade to 4.0-beta2
