@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/29/1
-Message-ID: <CAF1jEfCZoRW_tJNgz9+X7THYd1Jb2N30MJnGMKk1kv=HK03HBw@mail.gmail.com>
-Date: Mon, 28 Dec 2020 23:05:36 -0500
-From: Billie Rinaldi <billie@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-17533: Apache Accumulo Improper Handling of Insufficient Permissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/03/4
+Message-ID: <20200903180936.GB16543@suse.de>
+Date: Thu, 3 Sep 2020 20:09:36 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: GNUPG released with AEAD sec fix CVE-2020-25125
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi,
 
-Apache Accumulo versions 1.5.0 through 1.10.0 and version 2.0.0 do not
-properly check the return value of some policy enforcement functions
-before permitting an authenticated user to perform certain administrative
-operations. Specifically, the return values of the 'canFlush' and
-'canPerformSystemActions' security functions are not checked in some
-instances, therefore allowing an authenticated user with insufficient
-permissions to perform the following actions: flushing a table, shutting
-down Accumulo or an individual tablet server, and setting or removing
-system-wide Accumulo configuration properties.
+gnupg just released a security fix update.
 
-This issue is being tracked as https://github.com/apache/accumulo/pull/1828
+CVE-2020-25125
 
-Mitigation:
+https://lists.gnupg.org/pipermail/gnupg-announce/2020q3/000448.html
 
-Upgrade to Apache Accumulo version 1.10.1, 2.0.1, or later.
+...
+Importing an OpenPGP key having a preference list for AEAD algorithms
+will lead to an array overflow and thus often to a crash or other
+undefined behaviour.
 
+Importing an arbitrary key can often easily be triggered by an attacker
+and thus triggering this bug.  Exploiting the bug aside from crashes is
+not trivial but likely possible for a dedicated attacker.  The major
+hurdle for an attacker is that only every second byte is under their
+control with every first byte having a fixed value of 0x04.
+
+Software distribution verification should not be affected by this bug
+because such a system uses a curated list of keys.
+
+A CVE-id has not yet been assigned.  We track this bug at
+https://dev.gnupg.org/T5050
+...
+
+Ciao, Marcus
