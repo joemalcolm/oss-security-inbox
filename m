@@ -1,148 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/10
-Message-Id: <E1kKiV4-00042p-8K@xenbits.xenproject.org>
-Date: Tue, 22 Sep 2020 13:38:30 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 343 v4 (CVE-2020-25599) - races with evtchn_reset()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/03/1
+Message-ID: <CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>
+Date: Thu, 3 Sep 2020 20:13:34 +0530
+From: Pramod Rana <varchashva@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Open Source Tool | vPrioritization | Risk Prioritization Framework
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+It is no secret that today we have more vulnerabilities than we can assess
+and remediate, timely and comprehensively. Risk prioritization is a key
+component for any vulnerability management program. Implementing a good
+risk prioritization framework is easier said than done because of the
+variable nature of risk.
 
-            Xen Security Advisory CVE-2020-25599 / XSA-343
-                               version 4
+I am glad to introduce vPrioritizer, a small step towards effective risk
+prioritization. vPrioritizer enables us to understand the contextualized
+risk (vPRisk) on asset-vulnerability relationship level across the
+organization, for teams to make more informed decision about what
+(vulnerability/ties) they should remediate (or can afford not to) and on
+which (asset/s).
 
-                       races with evtchn_reset()
 
-UPDATES IN VERSION 4
-====================
+To overcome above challenges, vPrioritizer is designed with primary
+objectives as below:
 
-Fix build of backports of patch 3.  Adjust affect versions.
+   -
 
-Public release.
+   *Centralized* - must serve as single-pane-of-glass for vulnerability
+   management
+   -
 
-ISSUE DESCRIPTION
-=================
+   *Automated* - any and every task which can be automated, must be
+   automated
+   -
 
-Uses of EVTCHNOP_reset (potentially by a guest on itself) or
-XEN_DOMCTL_soft_reset (by itself covered by XSA-77) can lead to the
-violation of various internal assumptions.  This may lead to out of
-bounds memory accesses or triggering of bug checks.
+   *Community Analytics *- utilization of community analytics to mature the
+   prioritization algorithm over the period of time
 
-IMPACT
-======
 
-In particular x86 PV guests may be able to elevate their privilege to
-that of the host.  Host and guest crashes are also possible, leading to
-a Denial of Service (DoS).  Information leaks cannot be ruled out.
 
-VULNERABLE SYSTEMS
-==================
 
-All Xen versions from 4.5 onwards are vulnerable.  Xen versions 4.4 and
-earlier are not vulnerable.
+*References: 1. GitHub: https://github.com/varchashva/vPrioritizer
+<https://github.com/varchashva/vPrioritizer> 2. For more details:
+https://medium.com/@rana.miet/learn-to-say-no-to-almost-every-vulnerability-intro-to-vprioritizer-9b2aa15369a1
+<https://medium.com/@rana.miet/learn-to-say-no-to-almost-every-vulnerability-intro-to-vprioritizer-9b2aa15369a1>3.
+Demo: https://youtu.be/P9IDpfJDoxI <https://youtu.be/P9IDpfJDoxI>*
 
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-Different aspects of this issue were discovered by Julien Grall of
-Amazon and by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate set of attached patches resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa343/xsa343-?.patch           Xen 4.13 - xen-unstable
-xsa343/xsa343-4.12-?.patch      Xen 4.12
-xsa343/xsa343-4.11-?.patch      Xen 4.11
-xsa343/xsa343-4.10-?.patch      Xen 4.10
-
-$ sha256sum xsa343* xsa343*/*
-097d5fa32e22fc7a18fddd757f950699e823202bbae67245eece783d6d06f4eb  xsa343.meta
-d714a542bae9d96b6a061c5a8f754549d699dcfb7bf2a766b721f6bbe33aefd2  xsa343/xsa343-1.patch
-657c44c8ea13523d2e59776531237bbc20166c9b7c3960e0e9ad381fce927344  xsa343/xsa343-2.patch
-2b275e3fa559167c1b59e6fd4a20bc4d1df9d9cb0cbd0050a3db9c3d0299b233  xsa343/xsa343-3.patch
-9aec124e2afcba57f8adaf7374ecebffc4a8ed1913512a7456f87761bb115f68  xsa343/xsa343-4.10-1.patch
-54d9ce9acdb8dcc6aa81928037afbb081a6cd579127aa225833767e285e30ea2  xsa343/xsa343-4.10-2.patch
-3801300cddd8d138c800dc45eeff111e313eb40cea3aa94e2e045ac8956ab9d3  xsa343/xsa343-4.10-3.patch
-7abbec828f77c427a53182db820fc19bdf34e37882fc6ae51351ed6027c56da1  xsa343/xsa343-4.11-1.patch
-5c90a53333e9c81ce938deddfc690f474d61e083d2a43b859d3227100f793aff  xsa343/xsa343-4.11-2.patch
-0e12cfe8e505b9685912c61a740b98084d62e4ba0670d51a47345739f463a039  xsa343/xsa343-4.11-3.patch
-f3462b4e672f69a9fa951b1c04a50d754c64d18aadf444ef248587b3ac7f635a  xsa343/xsa343-4.12-1.patch
-d99cbbc3792755c4998b73460bbeaef5612a8942f98adcaea0762950e5a07c2a  xsa343/xsa343-4.12-2.patch
-cf23d3b61d4f07efc7057035c45e53e32a0b0f8fc3b9bc6c05f0f5bc71204914  xsa343/xsa343-4.12-3.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/k0MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZQvkIAKG74lMZpma+6A2V3eZAWUFBWeUOXwgD9+UorfvT
-01zdpXBcVh5alrZ+ZSzmuAa/3tREUOnJHIHJD8fBpg+Yywy3dMduuxvv6RWzuQGj
-rnf0X4LNklQYzOQXsYO5HkF6hxkPyZsgJPnOO9Zwb8zB8nqpSQkq9NMJ2Ochgfmm
-+aZqWe7YXCNReBfMUzqyEpSwK2tNPNNE29IerxwEooqwUV5i9mHX3lYh1UYjwush
-7OrvZzTLl8csjWIenxNuXX+STxUGdS81UDAbxEENmqSLoG1djRrUkAkCu5pNphxK
-dkgAk9k8wAs2fc1BOYabCNeatZEUJ11n0dxJ7nn+AsnQ5YY=
-=rqkV
------END PGP SIGNATURE-----
-
-Download attachment "xsa343.meta" of type "application/octet-stream" (2436 bytes)
-
-Download attachment "xsa343/xsa343-1.patch" of type "application/octet-stream" (6549 bytes)
-
-Download attachment "xsa343/xsa343-2.patch" of type "application/octet-stream" (8313 bytes)
-
-Download attachment "xsa343/xsa343-3.patch" of type "application/octet-stream" (14475 bytes)
-
-Download attachment "xsa343/xsa343-4.10-1.patch" of type "application/octet-stream" (6117 bytes)
-
-Download attachment "xsa343/xsa343-4.10-2.patch" of type "application/octet-stream" (8178 bytes)
-
-Download attachment "xsa343/xsa343-4.10-3.patch" of type "application/octet-stream" (14025 bytes)
-
-Download attachment "xsa343/xsa343-4.11-1.patch" of type "application/octet-stream" (6119 bytes)
-
-Download attachment "xsa343/xsa343-4.11-2.patch" of type "application/octet-stream" (8178 bytes)
-
-Download attachment "xsa343/xsa343-4.11-3.patch" of type "application/octet-stream" (14028 bytes)
-
-Download attachment "xsa343/xsa343-4.12-1.patch" of type "application/octet-stream" (6156 bytes)
-
-Download attachment "xsa343/xsa343-4.12-2.patch" of type "application/octet-stream" (8158 bytes)
-
-Download attachment "xsa343/xsa343-4.12-3.patch" of type "application/octet-stream" (14028 bytes)
