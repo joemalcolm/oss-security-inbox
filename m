@@ -1,118 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/23/2
-Message-ID: <31b93b89-771c-3c78-c2e1-8201732e227e@windriver.com>
-Date: Thu, 23 Jul 2020 17:42:33 +0800
-From: Zhang Xiao <xiao.zhang@...driver.com>
-To: Mohammad Tausif Siddiqui <msiddiqu@...hat.com>, oss-security@...ts.openwall.com
-Cc: xiao.zhang@...driver.com
-Subject: Re: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/03/3
+Message-ID: <CAM6JnLfDLbZA1Ky+UDjcA8XOrbAqazh4YQgH8Ur9pyhjBA2nQQ@mail.gmail.com>
+Date: Thu, 3 Sep 2020 20:16:15 +0300
+From: Or Cohen <orcohen@...oaltonetworks.com>
+To: oss-security@...ts.openwall.com
+Cc: Nadav Markus <nmarkus@...oaltonetworks.com>
+Subject: CVE-2020-14386: Linux kernel: af_packet.c vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+This is an announcement of CVE-2020-14386.
 
-在 2020/7/23 下午4:21, Mohammad Tausif Siddiqui 写道:
->
->
-> On Tue, Jul 21, 2020 at 12:12 AM Solar Designer <solar@...nwall.com
-> <mailto:solar@...nwall.com>> wrote:
->
->     On Mon, Jul 13, 2020 at 03:37:03PM +0800, Zhang Xiao wrote:
->     > ??? 2020/7/12 ??????1:58, Solar Designer ??????:
->     > > On Thu, Jul 02, 2020 at 05:33:20PM +0800, Zhang Xiao wrote:
->     > >> And, I have another point want to discuss. As we know,
->     sometimes, the CVE and NVD website don't upgrade their web page
->     timely. For example:
->     > >>
->     > >> the security maillist had an encrypted mail called "curl:
->     overwrite local file with -J" in 20200617. It was a
->     "pre-notification about a security advisory about to ship next
->     week in sync with our next curl release", for CVE-2020-8177. On
->     curl's git tree, that very bug did been fixed and released in
->     20200621:
->     > >> https://github.com/curl/curl/commit/8236aba5854
->     > >>
->     > >> But, till now, both cve.mitre.org <http://cve.mitre.org> and
->     nvd.nist.gov <http://nvd.nist.gov> still mark this CVE as "RESERVED":
->     > >> https://nvd.nist.gov/vuln/detail/CVE-2020-8177
->     > >> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177
->     <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177>
->     > >>
->     > >> So I wonder if that is also an contribution to remind them,
->     if so, any advises to make it? And If it ca be defined as an
->     contribution, we can take it. :-)
->     > > We've received some responses in this thread regarding the
->     specific
->     > > example above, but I'd like more general responses please.  Is
->     there a
->     > > general task Wind River can reasonably help with for getting
->     CVE details
->     > > published for issues that pass the distros and/or oss-security
->     lists,
->     > > and how exactly could they help with that?
->     >
->     > Actually, we are glad to make it for some customers are also pay
->     > attention on these official web pages. We suppose it will be easy to
->     > make it through the "notify a vulnerability publication
->     > <https://cveform.mitre.org/>". But after I submitted the request
->     I just
->     > get a reply as "This CVE ID has been reserved by the CNA
->     Hackerone and
->     > we are currently waiting on them to submit the details." Seems
->     only "the
->     > CNA Hackerone" can make it. I have no idea on how to notify the
->     "the CNA
->     > Hackerone " to push it. :-(п╠Б∙░ Anyway, if possible we are glad
->     to make it.
->
->     Once again, I think CVE-2020-8177 is more of an exception than the
->     rule.
->     I would be more interested in comments by "CVE experts" on whether the
->     task Xiao proposes and volunteers for is in general worthwhile or not,
->     and why.  Would similar "notify a vulnerability publication" reminders
->     be desirable for issues that got the CVE IDs from one of the CNAs
->     on the
->     distros list?
->
->
-> Xiao, Alexander,
->
-> I think the ball is on the CNA: Hackerone side to get it published to
-> MITRE, so
-> that they can show it up on their page.
->
-> CNAs are provided with weekly reports by the root CNA: MITRE, which lists
-> Reserved But Public "RBP" CVEs owned by that CNA, irrespective of
-> whether the
-> CVE was assigned on distros list or elsewhere. That closes the
-> reminder loop.
->
-> There's no pull request for CVE-2020-8177 at
-> https://github.com/CVEProject/cvelist/pulls
-> We cannot determine if they used the alternative, web
-> form:https://cveform.mitre.org/ <https://cveform.mitre.org/>
->
-> You may want to reach Hackerone from the CNA contacts
-> <https://cve.mitre.org/cve/request_id.html#cna_participants>, for this
-> exception of delay.
->
-For these two CVEs, I mailed to support@...kerone.com  ten days ago but
-haven't get any reply yet. :-(
+I also reported the issue netdev@...r.kernel.org and I'm waiting for
+approval of my proposed patch.
 
+The report is as follows: ( a proposed patch and a reproducer are attached)
 
-Thanks
+I discovered a bug which leads to a memory corruption in
+(net/packet/af_packet.c). It can be exploited to gain root privileges
+from unprivileged processes.
 
-Xiao
+To create AF_PACKET sockets you need CAP_NET_RAW in your network
+namespace, which can be acquired by unprivileged processes on systems
+where unprivileged namespaces are enabled (Ubuntu, Fedora, etc).
 
-> Kind regards 
-> -- 
->
-> Tausif Siddiqui, PRODUCT SECURITY
->
-> 0EE1 F6BF 8991 9A65 0A79 A0A7 5849 60EC 88B8 2C71
->
-> secalert@...hat.com
-> <https://access.redhat.com/security/team/contact> for urgent response.
->
+I discovered the vulnerability while auditing the 5.7 kernel sources.
 
-Content of type "text/html" skipped
+The bug occurs in tpacket_rcv function, when calculating the netoff
+variable (unsigned short), po->tp_reserve (unsigned int) is added to
+it which can overflow netoff so it gets a small value.
 
-Download attachment "pEpkey.asc" of type "application/pgp-keys" (2461 bytes)
+macoff is calculated using: "macoff = netoff - maclen", we can control
+macoff so it will receive a small value (specifically, smaller then
+sizeof(struct virtio_net_hdr)).
+
+Later, when running the following code:
+...
+if (do_vnet &&
+   virtio_net_hdr_from_skb(skb, h.raw + macoff -
+sizeof(struct virtio_net_hdr),
+...
+
+If do_vnet is set, and because macoff < sizeof(struct virtio_net_hdr)
+a pointer to a memory area before the h.raw buffer will be sent to
+virtio_net_hdr_from_skb. This can lead to an out-of-bounds write of
+1-10 bytes, controlled by the user.
+
+The h.raw buffer is allocated in alloc_pg_vec and it's size is
+controlled by the user.
+
+The stack trace is as follows at the time of the crash: ( linux v5.7 )
+
+#0  memset_erms () at arch/x86/lib/memset_64.S:66
+#1  0xffffffff831934a6 in virtio_net_hdr_from_skb
+(little_endian=<optimized out>, has_data_valid=<optimized out>,
+    vlan_hlen=<optimized out>, hdr=<optimized out>, skb=<optimized
+out>) at ./include/linux/virtio_net.h:134
+#2  tpacket_rcv (skb=0xffff8881ef539940, dev=0xffff8881de534000,
+pt=<optimized out>, orig_dev=<optimized out>)
+        at net/packet/af_packet.c:2287
+#3  0xffffffff82c52e47 in dev_queue_xmit_nit (skb=0xffff8881ef5391c0,
+dev=<optimized out>) at net/core/dev.c:2276
+#4  0xffffffff82c5e3d4 in xmit_one (more=<optimized out>,
+txq=<optimized out>, dev=<optimized out>,
+            skb=<optimized out>) at net/core/dev.c:3473
+#5  dev_hard_start_xmit (first=0xffffc900001c0ff6, dev=0x0
+<fixed_percpu_data>, txq=0xa <fixed_percpu_data+10>,
+    ret=<optimized out>) at net/core/dev.c:3493
+#6  0xffffffff82c5fc7e in __dev_queue_xmit (skb=0xffff8881ef5391c0,
+sb_dev=<optimized out>) at net/core/dev.c:4052
+#7  0xffffffff831982d3 in packet_snd (len=65536, msg=<optimized out>,
+sock=<optimized out>) 0001-net-packet-fix-overflow-in-tpacket_rcv
+at net/packet/af_packet.c:2979
+#8  packet_sendmsg (sock=<optimized out>, msg=<optimized out>,
+len=65536) at net/packet/af_packet.c:3004
+#9  0xffffffff82be09ed in sock_sendmsg_nosec (msg=<optimized out>,
+sock=<optimized out>) at net/socket.c:652
+#10 sock_sendmsg (sock=0xffff8881e8ff56c0, msg=0xffff8881de56fd88) at
+net/socket.c:672
+
+Files attached:
+A proposed patch - 0001-net-packet-fix-overflow-in-tpacket_rcv.patch
+A reproducer for the bug - trigger_bug.c
+
+We are currently working on an exploit for getting root privileges
+from unprivileged context using this bug.
+
+Timeline:
+* 9.2.20 - Vulnerability reported to security@...nel.org and
+linux-distros@...openwall.org.
+* 9.3.20 - CVE-2020-14386 assigned.
+* 9.3.20 - Vulnerability reported to netdev.
+
+Or Cohen
+Palo Alto Networks
+
+Download attachment "0001-net-packet-fix-overflow-in-tpacket_rcv.patch" of type "application/octet-stream" (1674 bytes)
+
+Download attachment "trigger_bug.c" of type "application/octet-stream" (3809 bytes)
