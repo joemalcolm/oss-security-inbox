@@ -1,82 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/16/7
-Message-ID: <CABBoStgbyztdQ3rcAmjROt5LGLi49j3LqGKjgj9xWgOAEF5vXw@mail.gmail.com>
-Date: Wed, 16 Dec 2020 16:08:01 -0500
-From: Ana McTaggart <amctagga@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/03/5
+Message-ID: <a0e32c22-02fa-b01a-f26f-ce68563d9f9c@suse.com>
+Date: Thu, 3 Sep 2020 19:55:29 +0200
+From: Wolfgang Frisch <wolfgang.frisch@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-27781 User credentials can be manipulated and stolen by Native CephFS consumers of OpenStack Manila
+Subject: CVE-2020-25125: gnupg2: buffer overflow when importing a key with AEAD preferences
 Content-Type: text/plain; charset=utf-8
 
-Dear all,
-We have received a report of the following vulnerability affecting CephFS.
-At Red Hat, we have assigned it CVE-2020-27781
+CVE-2020-25125 was assigned to the following issue in GnuPG:
 
-We are proposing a public date of 12/16/2020, as suggested by the
-reporter, but want to ensure agreement with upstream first.
-I have included our original description of the flaw as follows.
+> Importing an OpenPGP key having a preference list for AEAD algorithms
+> will lead to an array overflow and thus often to a crash or other
+> undefined behaviour.
 
-Issue: User credentials can be manipulated and stolen by Native CephFS
-consumers of OpenStack Manila
+> These versions are affected:
+> 
+>  - GnuPG 2.2.21   (released 2020-07-09)
+>  - GnuPG 2.2.22   (released 2020-08-27)
+>  - Gpg4win 3.1.12 (released 2020-07-24)
 
-Products affected: RHCS 3.x, RHCS 4.x
+https://lists.gnupg.org/pipermail/gnupg-announce/2020q3/000448.html
 
-Who reported this vulnerability:
-   - Garbutt, John <john@...ngarbutt.com>
-   - Babel, Jahson <jahson.babel@...in2p3.fr>;
-   - Pacha Ravi, Goutham <gouthamr@...hat.com>;
-
-Details:
-
-OpenStack Manila can provide users with Native CephFS shared file
-systems [1]. When a user creates a "share" (short for "shared file
-system") via Manila, a CephFS "subvolume" is created on the Ceph
-cluster and exported to the manila user. After creating their share, a
-user can specify who has access to the share with the help of "cephx"
-client user names. A cephx client corresponds to Ceph Client Users
-[2]. When access is provided, a client user key is returned via
-manila. The interaction between manila and CephFS is driven by two
-important parts:
- - The CephFS driver in manila [3]
- - The "ceph_volume_client" python interface driver in ceph [4]
-
-The problem here is that OpenStack Manila users can request access to
-a share to any arbitrary cephx user, including privileged pre-existing
-users and the interface drivers will retrieve the access key of that
-user along with providing access to the share. This access key is then
-visible to all users of the OpenStack project that owns the share.
-With the help of any prior capabilities of the pre-existing cephx
-client user, an attacker has unintended access to the access key of
-the user and can target any resource that the user has access to. An
-attacker can even obtain the default ceph "admin" user's key in this
-manner, and execute any commands as the ceph administrator.
-
-Thanks,
-Goutham Pacha Ravi
-Project Technical Lead, OpenStack Manila
-Sr. Software Engineer, RH OSP Storage
+-- 
+Wolfgang Frisch <wolfgang.frisch@...e.com>
+Security Engineer
+OpenPGP fingerprint: A2E6 B7D4 53E9 544F BC13  D26B D9B3 56BD 4D4A 2D15
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 Nuremberg, Germany
+(HRB 36809, AG Nürnberg)
+Managing Director: Felix Imendörffer
 
 
-[1] https://docs.openstack.org/manila/latest/admin/cephfs_driver.html
-[2] https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/4/html/administration_guide/ceph-user-management
-[3] https://opendev.org/openstack/manila/src/commit/7b15796aa5567868e30a6b2b80c57006cfa4f085/manila/share/drivers/cephfs/driver.py
-[4] https://github.com/ceph/ceph/blob/c10a7240b657553c366fe62aca92e93d35b166e9/src/pybind/ceph_volume_client.py
-[5] https://ceph.io/security/
 
-Ana McTaggart
-
-Red Hat Product Security
-
-Red Hat Remote <https://www.redhat.com>
-
-
-secalert@...hat.com for urgent response
-
-
-amct@...hat.com
-
-
-M: +1 (774)279-0791 <7742790791>     IM: amctagga
-
-
-Pronouns:They/Them/Theirs
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
