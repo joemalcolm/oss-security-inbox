@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2475" "Saturday" "20" "May" "2017" "13:54:36" "-0400" "Leo Famulari" "leo@famulari.name" "<20170520175436.GA30962@jasmine>" "58" "Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" "^Date:" nil nil "5" "2017052017:54:36" "[oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" (number mark "        leo@famulari May 20   58/2475  " thread-indent "\"Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder\"\n") "<20170520152406.2339.3B884775@matica.foolinux.mooo.com>" ("<20170520072632.z5nbivrdwmqm3soe@eldamar.local>" "<20170520152406.2339.3B884775@matica.foolinux.mooo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2121" "Thursday" "3" "September" "2020" "19:55:29" "+0200" "Wolfgang Frisch" "wolfgang.frisch@suse.com" "<a0e32c22-02fa-b01a-f26f-ce68563d9f9c@suse.com>" "57" "[oss-security] CVE-2020-25125: gnupg2: buffer overflow when importing a key with AEAD preferences" nil nil nil "9" "2020090317:55:29" "[oss-security] CVE-2020-25125: gnupg2: buffer overflow when importing a key with AEAD preferences" (number mark "U       wolfgang.fri Sep  3   57/2121  " thread-indent "\"[oss-security] CVE-2020-25125: gnupg2: buffer overflow when importing a key with AEAD preferences\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-25125: gnupg2: buffer overflow when importing a key with AEAD preferences" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22442 invoked by uid 550); 20 May 2017 18:06:18 -0000
+Received: (qmail 15922 invoked by uid 550); 3 Sep 2020 18:49:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +11,131 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15440 invoked from network); 20 May 2017 17:54:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=famulari.name;
-	 h=content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=7e6y78AGe6CFfheSQTlaEh4QE6fXg9LPpurA+z
-	dvcys=; b=eFkL35oRf4QUkEyumeZ+stvv39xLTh+JeRoPe8iJjqX+J1x7skQuN0
-	oKLGKRJM39tERaEnGfYi02Np54iluTtVW7j6TAb8D1rXNMQtGfEhL8S5GB8gKmYj
-	X3eE/MyLc7ecIfZGivYYJkoHxluMyC9MPZVMmh58iCe0eWehDAJTo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=7e6y78AGe6CFfheSQT
-	laEh4QE6fXg9LPpurA+zdvcys=; b=R3rbBv+MCQOhAW0ljbhVyOMDtx8maLbi1w
-	bYkwjUuGFSaY3FfuNJB+EXXQQKwFxXY0B+n2XRdMKECcXQ6K+ofICDZlIRD9/haK
-	8OIc+mK7nWxWjX4GEPD2XP4NywfqCr15OC4YHolCNd4ZTy9yXq04P/VT2a+p3b5R
-	HLc69yM+a3KH5rMwPEynVW+poAQn9bpBcqeXamKFakJCy4NCA8dYKXxBkHwRtUeX
-	jT+L1ov2BTiJbcNcmtJc/atxOSJiDoZbF2eiNGVRa8RO+P8G53cFLy9lFoPtwyF0
-	JUdPdi1YmHqGnoowZXEksqFK6QDj/TwcRnW7smMC6twkpE2K9Oxg==
-X-ME-Sender: <xms:3oIgWUbmdxhjFdy9NR1Ot0LENG_eFX7dpY5pVZZghYEqWgaIH2uZVg>
-X-Sasl-enc: BYS8u9sdTL1X7XYi78HedMuaOO9hf58LTHTJkhufBQmQ 1495302877
-Message-ID: <20170520175436.GA30962@jasmine>
-References: <20170520072632.z5nbivrdwmqm3soe@eldamar.local>
- <20170520152406.2339.3B884775@matica.foolinux.mooo.com>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 15844 invoked from network); 3 Sep 2020 17:55:41 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+To: oss-security@lists.openwall.com
+From: Wolfgang Frisch <wolfgang.frisch@suse.com>
+Autocrypt: addr=wolfgang.frisch@suse.com; keydata=
+ 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
+Organization: SUSE Software Solutions Germany GmbH
+Message-ID: <a0e32c22-02fa-b01a-f26f-ce68563d9f9c@suse.com>
+Date: Thu, 3 Sep 2020 19:55:29 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="YiEDa0DAkWCtVeE4"
-Content-Disposition: inline
-In-Reply-To: <20170520152406.2339.3B884775@matica.foolinux.mooo.com>
-User-Agent: Mutt/1.8.2 (2017-04-18)
-Date: Sat, 20 May 2017 13:54:36 -0400
-From: Leo Famulari <leo@famulari.name>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of
- uninitialized memory in RLE decoder
-To: oss-security@lists.openwall.com
+ protocol="application/pgp-signature";
+ boundary="1XDRgys6p39do5awsqF0OcYAqdHlqfLLN"
+Subject: [oss-security] CVE-2020-25125: gnupg2: buffer overflow when importing a key with
+ AEAD preferences
 
---YiEDa0DAkWCtVeE4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--1XDRgys6p39do5awsqF0OcYAqdHlqfLLN
+Content-Type: multipart/mixed; boundary="sDZUmijPgEswP3e0i28tqdq9mzQe0xF0N"
+
+--sDZUmijPgEswP3e0i28tqdq9mzQe0xF0N
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, May 20, 2017 at 08:26:36AM -0700, Ian Zimmerman wrote:
-> On 2017-05-20 09:26, Salvatore Bonaccorso wrote:
+CVE-2020-25125 was assigned to the following issue in GnuPG:
+
+> Importing an OpenPGP key having a preference list for AEAD algorithms
+> will lead to an array overflow and thus often to a crash or other
+> undefined behaviour.
+
+> These versions are affected:
 >=20
-> > Chris Evans discovered that ImageMagick uses unitialized memory in the
-> > RLE decoder, allowing an attacker to leak sensitive information from
-> > process memory space. There is missing initialization in the
-> > ReadRLEImage function.
-> >=20
-> > Original article at:
-> >=20
-> > https://scarybeastsecurity.blogspot.com/2017/05/bleed-continues-18-byte=
--file-14k-bounty.html
->=20
-> It was good to see the discussion of how GraphicsMagick was affected, or
-> not.  I would love to see that in all *Magick weakness reports.
+>  - GnuPG 2.2.21   (released 2020-07-09)
+>  - GnuPG 2.2.22   (released 2020-08-27)
+>  - Gpg4win 3.1.12 (released 2020-07-24)
 
-Chris Evans' report (copied in the email you replied to) says this:
+https://lists.gnupg.org/pipermail/gnupg-announce/2020q3/000448.html
 
-GraphicsMagick vs. ImageMagick, again. Well, well, look at this :)
-GraphicsMagick fixed this issue in March 2016, for the v1.3.24 release, tuc=
-ked
-away in a changeset titled "Fix SourceForge bug #371 "out-of-bounds read in
-coders/rle.c:633:39" (see the second memset()). This is another case where =
-tons
-of vulnerabilities are being found and fixed in both GraphicsMagick and
-ImageMagick with little co-ordination. This seems like a waste of effort an=
-d a
-risk of 0-day (or is it 1-day?) exposure. It goes both ways: the RLE memory
-corruption I referenced in my previous blog post was only fixed in
-GraphicsMagick in March 2016, having been previously fixed in ImageMagick in
-Dec 2014.
+--=20
+Wolfgang Frisch <wolfgang.frisch@suse.com>
+Security Engineer
+OpenPGP fingerprint: A2E6 B7D4 53E9 544F BC13  D26B D9B3 56BD 4D4A 2D15
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 Nuremberg, Germany
+(HRB 36809, AG N=C3=BCrnberg)
+Managing Director: Felix Imend=C3=B6rffer
 
---YiEDa0DAkWCtVeE4
+
+--sDZUmijPgEswP3e0i28tqdq9mzQe0xF0N--
+
+--1XDRgys6p39do5awsqF0OcYAqdHlqfLLN
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAlkggtcACgkQJkb6MLrK
-fwgiMg//ds24CRVz7gI2V/uZHza73VQN2wUux6kQrPY5ncLIDFSvc1BulvgbH8gU
-tnATzd00BvE3KYlJklLPlranlXvZPdKfHEXZXMrSrDRLwNvZWb3vnnsxpJryM5f9
-MLd6qxb3bFnwv0j45ZFmr0T+AInbHs/HeGnXraaBzfPcUp2gXs77LSAuZ3DS1vZ2
-T4dckv/dQPV/FWViiO6mRRjaZ8Kr+8kgQO2suOsOEBrRO1c9mZVTdBGPA7mioGF/
-eyHsHiz0CfyCCEu2AJ+R0lakm8OFQfpO2puAdqcWB9a71q/2mRbg4/pSPQwNgOq9
-L4u5U58WDTMdx0CbkDFeWarzx+KmNTLSc+CT8RPmA2z9aOGbRS91rMoE3FHrRpwR
-cxg3kAtKrsVeAWFHusvr8vBN55uDP+ubZZeOX8vJXH7XSnBZLxoP/JDO29/weoe6
-H6kSKeMiDvkyhtOlbAJgeaIplqirEAXKz8axrqY0HnVwZvqVHq+Im3R/D7lA0m5p
-DSu/vyRf7LB8oeNz+LfJLQzB/lBS1sqKeToXQYAk7CuRUxCZOTd3w8w7kaQaqVYS
-EYgrQXhlqukAGIrA22qBUZ7PEVPNLQhiL3Z/qHSnjzflYjQzL9Plh17zA7Mnv9/N
-9BmNUHg+3CAkaks1OGvSTSEXQVm+DW7mxwif8WEXpFKe/28Q4oI=
-=Tf5d
+iQIzBAEBCAAdFiEEYqBDpiSp/H/7pxro7t22gcnlyyMFAl9RLhEACgkQ7t22gcnl
+yyOSiBAAwTIqCbnT8oAB5V66CU+6OYyY2lf+HCwPUTBCxfuBizTSnYCu+Uw8MQXO
+4LBGIVkYuVWoTYUXuC5WLYQrwmZX8oG6UjcUOxS1cNvm+P7sdzmZqWhssOF3yHli
+7FnMHdNwtnzQgGucQnFLHIYZ+Tz5klni7Yp8xQ8JlcIXAeqaFu+8WvK33pzTdOGF
+SQDMdY7d7bn7kp5ksjq7mXERtxYZj4o3BedaBgVn9df8OmLUQj2B6ZuziyqvDsW6
+njnbwut9y7AQ4bJ9+OVWh/6Bv62YqW9ZTITiXG1bHYrDqWOlRRNL3gb+bQz8BCIG
+7cEL6XxDwXJMQhUFSsXlFUpjMN/ZvQEs5qz0O4EJZhrk+TGoxuJZP3crVur8DGpe
+ymCCpIsl79qKRf8Ou9rCFKqx5HwJFxCbCIHFjPK1epByPq6KeVKpxb58LrSShuQd
+jbaK+RiHjk3rPQS/6PtlXx4OH4K+Fjn7EcWApSd5/CgCLijXBjGOSrOkkexsrwW9
+VhhMTwUM+RpGUi+8ctO7VyvypuXBxtDHQjh5tqn8xbxtuLrTsLdja2ZAy78BByMw
+xztkEvXRLFMsD8dddCxGfEf356QELe7RVmEtQU1QIPgMEkOvJTalUUOlzyPANUVO
+SpWpswMrsCsAdMyO/RAbI6R5WhuAJgjMr7dqK7xmiAHWpH4n8uQ=
+=6iW2
 -----END PGP SIGNATURE-----
 
---YiEDa0DAkWCtVeE4--
+--1XDRgys6p39do5awsqF0OcYAqdHlqfLLN--
