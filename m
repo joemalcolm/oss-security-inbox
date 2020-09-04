@@ -1,26 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/28/4
-Message-ID: <20200128235022.GA30755@openwall.com>
-Date: Wed, 29 Jan 2020 00:50:22 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/04/2
+Message-ID: <20200904073603.GA21152@openwall.com>
+Date: Fri, 4 Sep 2020 09:36:03 +0200
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Al Viro <viro@...iv.linux.org.uk>, Salvatore Mesoraca <s.mesoraca16@...il.com>, Kees Cook <keescook@...omium.org>, Linus Torvalds <torvalds@...ux-foundation.org>, Dan Carpenter <dan.carpenter@...cle.com>, Andrew Morton <akpm@...ux-foundation.org>
-Subject: Re: Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)
+Cc: Or Cohen <orcohen@...oaltonetworks.com>, Nadav Markus <nmarkus@...oaltonetworks.com>, Eric Dumazet <edumazet@...gle.com>
+Subject: Re: CVE-2020-14386: Linux kernel: af_packet.c vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 28, 2020 at 10:48:10PM +0100, Solar Designer wrote:
-> I intend to request a CVE ID and post it as a follow-up to this thread.
+On Thu, Sep 03, 2020 at 08:16:15PM +0300, Or Cohen wrote:
+> I discovered the vulnerability while auditing the 5.7 kernel sources.
+> 
+> The bug occurs in tpacket_rcv function, when calculating the netoff
+> variable (unsigned short), po->tp_reserve (unsigned int) is added to
+> it which can overflow netoff so it gets a small value.
+> 
+> macoff is calculated using: "macoff = netoff - maclen", we can control
+> macoff so it will receive a small value (specifically, smaller then
+> sizeof(struct virtio_net_hdr)).
+> 
+> Later, when running the following code:
+> ...
+> if (do_vnet &&
+>    virtio_net_hdr_from_skb(skb, h.raw + macoff -
+> sizeof(struct virtio_net_hdr),
+> ...
+> 
+> If do_vnet is set, and because macoff < sizeof(struct virtio_net_hdr)
+> a pointer to a memory area before the h.raw buffer will be sent to
+> virtio_net_hdr_from_skb. This can lead to an out-of-bounds write of
+> 1-10 bytes, controlled by the user.
+> 
+> The h.raw buffer is allocated in alloc_pg_vec and it's size is
+> controlled by the user.
+> 
+> The stack trace is as follows at the time of the crash: ( linux v5.7 )
+> 
+> #0  memset_erms () at arch/x86/lib/memset_64.S:66
+> #1  0xffffffff831934a6 in virtio_net_hdr_from_skb
 
-"Use CVE-2020-8428."
+In the proposed patch you have:
 
-> Al Viro found and analyzed the security impact of and fixed a bug in
-> Linux 4.19+ where open(2)'s eventual call to may_create_in_sticky() was
-> "done when we already have dropped the reference to dir" and thus with
-> dir (a "struct dentry" pointer) being potentially stale and potentially
-> pointing to reused memory.
+Fixes: 8913336a7e8d ("packet: add PACKET_RESERVE sockopt")
 
-> The bug was introduced with commit 30aba6656f61 and first included in
-> Linux 4.19.  Al fixed it with commit d0cb50185ae9 two days ago, and the
-> fix is already in Linux 5.5 and Greg KH is getting it into stable.
+That commit was in July 2008.
+
+While this is technically correct, it can be misleading, so I am posting
+the below clarification/excerpt from the discussion on linux-distros:
+
+> On Wed, Sep 2, 2020 at 4:47 PM Eric Dumazet <edumazet@...gle.com> wrote:
+> > At the time of commit 8913336a7e8d  virtio_net was not there yet.
+
+On Wed, Sep 02, 2020 at 05:14:03PM +0300, Or Cohen wrote:
+> This is the commit that introduced the feature and the arithmetic
+> overflow exists there, which is the root cause of the bug.
+> However, you are correct that it is probably not possible to trigger
+> the memory corruption because virtio_net is not there.
+
+I just looked into it some further, and it appears the bug was exposed
+to the known way to trigger it with 58d19b19cd99 ("packet: vnet_hdr
+support for tpacket_rcv") in February 2016, which first got into 4.6-rc1.
 
 Alexander
