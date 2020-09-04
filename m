@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4061" "Wednesday" "7" "August" "2019" "17:47:33" "+0300" "Jouni Malinen" "j@w1.fi" "<20190807144733.GA12078@w1.fi>" "85" "[oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update" nil nil nil "8" "2019080714:47:33" "[oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update" (number mark "U       j@w1.fi      Aug  7   85/4061  " thread-indent "\"[oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1133" "Friday" "4" "September" "2020" "02:27:19" "+0000" "Seth Arnold" "seth.arnold@canonical.com" "<20200904022719.GB1119445@millbarge>" "34" "Re: [oss-security] Contributing Back" nil nil nil "9" "2020090402:27:19" "[oss-security] Contributing Back" (number mark "U       seth.arnold@ Sep  4   34/1133  " thread-indent "\"Re: [oss-security] Contributing Back\"\n") "<20200903161427.GA15109@openwall.com>" ("<CAPsnWaD_9QOiV+513eH=ECkwBo+AWN38N9x7xauKcFyVpvc-Og@mail.gmail.com>" "<20190714174509.GA8267@openwall.com>" "<CAPsnWaD3YKPx6hnLoEmfM5VdKqFHrTKjvqRo1uG=8U1xU70-+Q@mail.gmail.com>" "<CA+aC4kuU2KVonpSER4rPb5asFR+gw8t0RAWXX7Di=4nDEJQnJw@mail.gmail.com>" "<20190715192801.GA12290@openwall.com>" "<20191105184228.GA27029@openwall.com>" "<CA+aC4ktDM9-TmhOOKx_C7zSZbKnAJVVe4XSLCGXvaY59q+vBzA@mail.gmail.com>" "<20200903161427.GA15109@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Contributing Back" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5200 invoked by uid 550); 7 Aug 2019 14:47:50 -0000
+Received: (qmail 25672 invoked by uid 550); 4 Sep 2020 02:27:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,99 +12,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5124 invoked from network); 7 Aug 2019 14:47:49 -0000
-X-Virus-Scanned: Debian amavisd-new at w1.fi
-Date: Wed, 7 Aug 2019 17:47:33 +0300
-From: Jouni Malinen <j@w1.fi>
-To: oss-security@lists.openwall.com
-Message-ID: <20190807144733.GA12078@w1.fi>
+Received: (qmail 25634 invoked from network); 4 Sep 2020 02:27:33 -0000
+Date: Fri, 4 Sep 2020 02:27:19 +0000
+From: Seth Arnold <seth.arnold@canonical.com>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20200904022719.GB1119445@millbarge>
+Mail-Followup-To: Solar Designer <solar@openwall.com>,
+	oss-security@lists.openwall.com
+References: <CAPsnWaD_9QOiV+513eH=ECkwBo+AWN38N9x7xauKcFyVpvc-Og@mail.gmail.com>
+ <20190714174509.GA8267@openwall.com>
+ <CAPsnWaD3YKPx6hnLoEmfM5VdKqFHrTKjvqRo1uG=8U1xU70-+Q@mail.gmail.com>
+ <CA+aC4kuU2KVonpSER4rPb5asFR+gw8t0RAWXX7Di=4nDEJQnJw@mail.gmail.com>
+ <20190715192801.GA12290@openwall.com>
+ <20191105184228.GA27029@openwall.com>
+ <CA+aC4ktDM9-TmhOOKx_C7zSZbKnAJVVe4XSLCGXvaY59q+vBzA@mail.gmail.com>
+ <20200903161427.GA15109@openwall.com>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="3lcZGd9BuhuYXNfi"
+Content-Disposition: inline
+In-Reply-To: <20200903161427.GA15109@openwall.com>
+Subject: Re: [oss-security] Contributing Back
+
+--3lcZGd9BuhuYXNfi
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Subject: [oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update
 
-Published: August 7, 2019
-Latest version available from: https://w1.fi/security/2019-6/
+On Thu, Sep 03, 2020 at 06:14:27PM +0200, Solar Designer wrote:
+> I primarily want to publicly acknowledge and thank Seth Arnold of
+> Ubuntu, Anthony Liguori of Amazon Linux, and Srivatsa S. Bhat of VMware
+> Photon OS for handling two of these tasks well lately.  Thank you!
 
-This is an update on earlier security advisories 2019-1 and
-2019-2. Please see those advisories for more details in the issues.
-https://w1.fi/security/2019-1/
-https://w1.fi/security/2019-2/
+Woo, thanks :)
 
-Vulnerability
+> So from this point on, I'd actually expect Ubuntu or/and Flatcar
+> Container Linux to state something on task 5 for each issue reported.
 
-hostapd and wpa_supplicant security advisories 2019-1 and 2019-2
-addressed side-channel attacks related to SAE and EAP-pwd. The
-improvements identified in those advisories made it more difficult to
-observe external differences in timing or memory access to mitigate
-against this type of attacks. However, the identified changes did not
-remove all differences. Especially when using ECC groups that use a
-prime that is not close to a power of two, those improvements were not
-complete. In practice, use of groups that use Brainpool curves (groups
-28-30) are in this category.
+Will do.
 
-Additional implementation changes are now available to improve
-mitigation against potential attacks. While these are expected to
-improve security of SAE and EAP-pwd in general to some extend, the
-largest help from these would be to the cases where groups 28-30 are
-used. However, for those groups, additional changes would likely be
-needed to make the protection against timing differences be at similar
-level as it is for other ECC groups. That would result in significantly
-higher need for CPU and that may not be practical for all devices. As
-such, the current recommended practice is to disable all use of the
-Brainpool curves in the context of SAE and EAP-pwd. This does not mean
-that these curves themselves have issues, but the way the SAE and
-EAP-pwd derivation of PWE is designed is not convenient for the primes
-used in these curves. In other words, this has no impact to other uses
-of the Brainpool curves.
+Thanks
 
-The timing differences even when using groups 28-30 are non-trivial to
-attack in practice, but cannot be ruled impossible. Cache attacks (see
-advisories 2019-1 and 2019-2 for more details) can still be feasible
-when using these groups in SAE or EAP-pwd with wpa_supplicant/hostapd
-v2.8.
+--3lcZGd9BuhuYXNfi
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-Vulnerable versions/configurations
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAl9RpgMACgkQ8yFyWZ2N
+LpeFhQgAk1E3vtnvpqlYsLq+h2Xlxi7mCxkh6hvEavA2veqo3bzP3OZcLyV0n1fU
+2uv3dooFIzqR8TTh2SFwtZ6TcgvWgJTwqMKVjrh3kqVEE/4P8ZDg2GCC+xzv4pw/
+7eQgeIyZtikWBUD9M1yhTL2dZxhjfNq1dVv2wEf+lPliQtCFjoB68OOieYPr0gN6
+4Zy6UIek5xGmdG1R1g8A50wuVNZw10tkDT5Of/NHHlcF5UWtGh2B/iCfOOXWLdbx
+UWeKl3rZGzHkV0LVoB9qfV9RLnVKhzRdcea8UlwEQnWS8BN0FnLpbv21r4M6pQEv
+xa+Q/WUyoqELjvatPb84DQ9wpTT+Xg==
+=OMJy
+-----END PGP SIGNATURE-----
 
-All wpa_supplicant and hostapd versions with SAE support (CONFIG_SAE=y
-in the build configuration and SAE with groups 28-30 enabled in the
-runtime configuration and supported by the used crypto library). Note
-that the applicable groups are not enabled by default in v2.8 (and in
-case of wpa_supplicant, in any version) and they would need to be
-explicitly enabled by adding the group identifies into the sae_groups
-configuration parameter.
-
-All wpa_supplicant and hostapd versions with EAP-pwd support
-(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
-in the runtime configuration). Note that EAP-pwd server implementation
-in hostapd enables only a single group at the time (pwd_group parameter)
-and by default, group 19 is used. As such, this would be applicable only
-if the pwd_group parameter is set to use one of the groups 28-30. The
-EAP-pwd peer implementation wpa_supplicant, follows the group selected
-by the server and as such, it would be vulnerable for the case where an
-attacker controls the authentication server (e.g., through a rogue AP)
-if the crypto library supports groups 28-30.
-
-As far as crypto library support for Brainpool curves is concerned,
-OpenSSL 1.0.2 and newer have support for them while BoringSSL does not.
-
-
-Possible mitigation steps
-
-- Update to wpa_supplicant/hostapd v2.9 or newer
-
-- Merge the following commits to wpa_supplicant/hostapd v2.8 and
-  rebuild:
-  
-  SAE: Use const_time_memcmp() for pwd_value >= prime comparison
-  EAP-pwd: Use const_time_memcmp() for pwd_value >= prime comparison
-  OpenSSL: Use BN_bn2binpad() or BN_bn2bin_padded() if available
-  SAE: Run through prf result processing even if it >= prime
-  EAP-pwd: Run through prf result processing even if it >= prime
-  dragonfly: Disable use of groups using Brainpool curves
-
-  These patches are available from https://w1.fi/security/2019-6/
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
+--3lcZGd9BuhuYXNfi--
