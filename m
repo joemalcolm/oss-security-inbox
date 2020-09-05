@@ -1,32 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/07/1
-Message-ID: <1596799898.GKATVRZF@httpd.apache.org>
-Date: Fri, 07 Aug 2020 06:31:38 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/05/2
+Message-ID: <20200905131323.pgpkb3spm263ijcg@yuggoth.org>
+Date: Sat, 5 Sep 2020 13:13:24 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow
+Subject: Risk and severity vectors (was: Open Source Tool | vPrioritization | Risk Prioritization Framework)
 Content-Type: text/plain; charset=utf-8
 
+On 2020-09-05 05:47:04 -0400 (-0400), Perry E. Metzger wrote:
+[...]
+> It is not feasible to calculate a probability of exploitation of a
+> given vulnerability, and it is not feasible to determine how bad the
+> damage from exploitation will be. This is a classic example of "tail
+> risk" where probability distributions are simply not calculable by
+> normal methods.
+> 
+> I keep hearing people in the security industry speak about scientific
+> risk assessment as though it were possible. I don't think it's
+> possible, and it seems cheaper to simply patch than to do some sort
+> of scientific assessment and prioritization of patches.
+[...]
 
-CVE-2020-11984: mod_uwsgi buffer overlow
+Related, software developers have been long pressed by consumers to
+assess a risk severity associated with vulnerabilities they
+announce. This is itself a challenge (and in many cases an
+insurmountable one), since the real-world risk presented by any
+given defect is often highly dependent on how and where the software
+is used.
 
-Severity: moderate
+Is the software's primary interface a network API? Then pretty much
+every vulnerability is "remotely exploitable" if the administrator
+exposes it to a network. Is it software as a service (SaaS)? Then
+the distinction between pre-authenticated and post-authenticated
+vulnerabilities is mostly irrelevant if the administrator adds some
+self-service account creation on top of it (attackers have an
+endless supply of stolen credit card numbers with which to sign up
+for your service). Does the API perform expensive resource-consuming
+operations? Then anyone with permission to call those methods can
+potentially bring the service down, and the associated risk really
+comes down to how broken the rest of your environment will be if
+that component can't process subsequent calls in a timely fashion
+(or at all). Does the software produce verbose logs, or store lots
+of temporary records in a database? It might be possible for users
+performing even reasonable operations to fill up your storage and
+make the system fall over if your admins aren't attentive or don't
+configure additional mitigations against that.
 
-Vendor: The Apache Software Foundation
+The knee-jerk reaction is to just classify all vulnerabilities as
+"high risk" even though they may not be for many, or even most
+consumers, since they could be for some subset; developers don't
+want to be responsible for someone not patching their systems
+because the "severity" was listed as being low. In reality, these
+sorts of metrics aren't something the creators and publishers of
+software can reasonably score. The frameworks which do exist, such
+as CVSS, are entirely arbitrary and unable to take into account
+information about the variety of end user deployments. In my
+opinion, developers should provide as much detail as they can about
+possible exploit scenarios and let end user organizations determine
+risk on their own. That is ultimately their responsibility anyway,
+especially when the software they're using comes with no paid
+support contract.
 
-Versions Affected:
-httpd 2.4.32 to 2.4.44
+And of course, if your organization is in doubt about the risk from
+a vulnerability, then apply the patch. You're far more likely to get
+useful assistance from the producers of the software in dealing with
+any negative impacts of that patch than you are in getting
+assistance with the impacts of the vulnerability you decided not to
+address.
+-- 
+Jeremy Stanley
 
-Description:
-Apache HTTP Server 2.4.32 to 2.4.44
-mod_proxy_uwsgi info disclosure and possible RCE
-    
-Mitigation:
-disable mod_uwsgi
-
-Credit:
-Discovered by Felix Wilhelm of Google Project Zero
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
-
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
