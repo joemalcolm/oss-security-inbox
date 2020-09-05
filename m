@@ -1,30 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/30/5
-Message-ID: <CAG48ez3OF7DPupKv9mBBKmg-9hDVhVe83KrJ4Jk=CL0nOc7=Jg@mail.gmail.com>
-Date: Thu, 30 Jul 2020 18:41:40 +0200
-From: Jann Horn <jannh@...gle.com>
-To: Florian Weimer <fweimer@...hat.com>
-Cc: oss-security@...ts.openwall.com, x86-64-abi@...glegroups.com,  Kernel Hardening <kernel-hardening@...ts.openwall.com>, Szabolcs Nagy <szabolcs.nagy@....com>
-Subject: Re: Alternative CET ABI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/05/1
+Message-ID: <20200905054704.1d90da6a@jabberwock.cb.piermont.com>
+Date: Sat, 5 Sep 2020 05:47:04 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Pramod Rana <varchashva@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 30, 2020 at 6:02 PM Florian Weimer <fweimer@...hat.com> wrote:
-> Functions no longer start with the ENDBR64 prefix.  Instead, the link
-> editor produces a PLT entry with an ENDBR64 prefix if it detects any
-> address-significant relocation for it.  The PLT entry performs a NOTRACK
-> jump to the target address.  This assumes that the target address is
-> subject to RELRO, of course, so that redirection is not possible.
-> Without address-significant relocations, the link editor produces a PLT
-> entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
-> perhaps no PLT entry at all.
+[Perhaps somewhat off topic, but the original announcement felt a bit
+tangental as well.]
 
-How would this interact with function pointer comparisons? As in, if
-library A exports a function func1 without referencing it, and
-libraries B and C both take references to func1, would they end up
-with different function pointers (pointing to their respective PLT
-entries)? Would this mean that the behavior of a program that compares
-function pointers obtained through different shared libraries might
-change?
+On Thu, 3 Sep 2020 20:13:34 +0530 Pramod Rana <varchashva@...il.com>
+wrote:
+> It is no secret that today we have more vulnerabilities than we can
+> assess and remediate, timely and comprehensively. Risk
+> prioritization is a key component for any vulnerability management
+> program.
 
-I guess you could maybe canonicalize function pointers somehow, but
-that'd probably at least break dlclose(), right?
+I'm not sure I agree with this premise.
+
+1. It is entirely feasible to keep even a very large organization
+comprehensively patched. There are organizations that do that.
+2. It is not feasible to calculate a probability of exploitation of a
+given vulnerability, and it is not feasible to determine how bad the
+damage from exploitation will be. This is a classic example of "tail
+risk" where probability distributions are simply not calculable by
+normal methods.
+
+I keep hearing people in the security industry speak about scientific
+risk assessment as though it were possible. I don't think it's
+possible, and it seems cheaper to simply patch than to do some sort
+of scientific assessment and prioritization of patches.
+
+My gut reaction is that the growth of this idea is attributable
+to the large number of large, well-funded organizations that are
+none the less not capable of properly maintaining their own
+infrastructure and thus not capable of patching in a timely manner.
+(I have consulted to many such organizations.)
+
+The notion that some sort of "risk analytics" could therefore justify
+failing to patch quickly and give a rationale for maintaining an
+incapable systems management team is thus attractive. However, the
+real solution is simply to patch; a capable systems management team is
+better than the illusion of a risk calculation system, and provides
+far more benefits than simply maintaining infrastructure in a fully
+patched state.
+
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
