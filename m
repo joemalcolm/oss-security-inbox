@@ -1,47 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/07/1
-Message-ID: <CAOo2v=Df__0oyoGc+m5HUH-hcdcZOMwACVawe99X2M2jmVj0vQ@mail.gmail.com>
-Date: Tue, 7 Apr 2020 11:59:24 +0530
-From: Hardik Vyas <hvyas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/07/1
+Message-ID: <CAOfWR+F8DVJeFDeUzfShBnyH_ovPEH3GMUmCXC8BtDBq1qx3_Q@mail.gmail.com>
+Date: Sun, 6 Sep 2020 19:28:55 -0400
+From: Robert Watson <robertcwatson1@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-1760 ceph: header-splitting in RGW GetObject has a possible XSS
+Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Since moderators are letting this discussion continue, I'll throw in a
+perspective from my experience with a large dedicated data center providing
+life and death related services (downtime not an option).
 
-A flaw was found in the Ceph Object Gateway, where it supports
-unauthenticated requests sent by an anonymous
-user in Amazon S3. This flaw could lead to potential XSS attacks due to the
-lack of proper neutralization of
-untrusted input. If the attacker knows the path to a publicly readable
-object on any RGW cluster and the object
-is at least large enough to cover the attack body then it's possible to run
-an XSS on any object.
+Patches and upgrades frequently break applications. The only way to prevent
+downtime from most patches and upgrades is to go through the whole process
+of applying it first to an identical test system and doing full QA on it.
+That takes tremendous resources that most management balks at.
 
-This flaw was introduced with commit
-f4a0b2d9260a4523745875e3977a8a1ef9dc5e2e(Oct 9, 2012) and affects
-all the way up to master. Red Hat has assigned CVE-2020-1760 for this issue.
+On Sun, Sep 6, 2020, 16:22 Amos Jeffries <squid3@...enet.co.nz> wrote:
 
-Upstream Patches:
-
-https://github.com/ceph/ceph-ci/commit/8aa1f77363ec32bdc57744a143035033291ab5e1
-https://github.com/ceph/ceph-ci/commit/18eb4d918b27d362312c29a3bbd57a421897c0a5
-https://github.com/ceph/ceph-ci/commit/1bf14094fec34770d2cc74317f4238ccb2dfef98
-
-Credit:
-
-- Initial report to DigitalOcean by William Bowling twitter handle
-@wcbowling
-- Further evaluation and extension to Robin H. Johnson @robbat2,
-rjohnson@...italocean.com
-
-PS: The patches are currently available from ceph.git clone(ceph-ci) and
-will be pushed to active releases soon.
-
-Regards,
--- 
-
-Hardik Vyas / Red Hat Product Security
-
-BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
+> On 6/09/20 7:48 pm, Pramod Rana wrote:
+> > Appreciate your comments.
+> >
+> > My two cents - Patch everything is far from reality to most (read all)
+> > organizations and I would argue that it's not a solution per se. To me it
+> > looks like buying every type of vehicle for commuting in every city of
+> the
+> > world but we don't do that, rather we decide what will work best
+> depending
+> > on factors like traffic, distance, roads, weather etc.
+> >
+>
+> My experience with corporate systems is more like they hire a vehicle on
+> lease. Insisting that it be the oldest most run-down and error-prone
+> model the lease company has to offer. Then complaining about downtime
+> costs of fixing problems when things to wrong.
+>
+> As a software maintainer myself I have actually had a corporate client
+> try to get me to backport several *thousand* patches. The plan being to
+> port every single bug fix and feature change from version N to version N-2.
+>  Installing the new version with a patch changing the version number to
+> N-2 would have been identical binary result.
+>
+>
+> > I believe prioritization is an integral part of everything we do and it
+> > works as reasoning to what we do (or don't).
+> >
+>
+> Imagine that your network is facing a highly organized prepared attacker
+> who has done their research and knows your network structure. How fast
+> can you apply every patch and security update you put off for later?
+>
+>
+> The point of the counter argument is that *not* doing anything is bad.
+> Possibly really, really bad. So don't bother wasting time on figuring
+> out priority/severity per-patch. Just work through the list of things
+> needing patching each day as fast stability testing allows.
+>
+>  Don't forget to report to appropriate management any resourcing lack or
+> process limitations that prevent each days patching list being finished
+> completely/easily. Those limitations are likely the worst security
+> problems you have - they are forcing security holes to remain open.
+>
+> When the systemic limits are gone you should only need to prioritize
+> *which* things to patch based on each ones importance to your
+> organization. Not any rating associated to the flaw itself.
+>
+> AYJ
+>
+>
+> > On Sat, Sep 5, 2020 at 3:17 PM Perry E. Metzger wrote:
+> >
+> >> [Perhaps somewhat off topic, but the original announcement felt a bit
+> >> tangental as well.]
+> >>
+> >> On Thu, 3 Sep 2020 20:13:34 +0530 Pramod Rana <varchashva@...il.com>
+> >> wrote:
+> >>> It is no secret that today we have more vulnerabilities than we can
+> >>> assess and remediate, timely and comprehensively. Risk
+> >>> prioritization is a key component for any vulnerability management
+> >>> program.
+> >>
+> >> I'm not sure I agree with this premise.
+> >>
+> >> 1. It is entirely feasible to keep even a very large organization
+> >> comprehensively patched. There are organizations that do that.
+> >> 2. It is not feasible to calculate a probability of exploitation of a
+> >> given vulnerability, and it is not feasible to determine how bad the
+> >> damage from exploitation will be. This is a classic example of "tail
+> >> risk" where probability distributions are simply not calculable by
+> >> normal methods.
+> >>
+> >> I keep hearing people in the security industry speak about scientific
+> >> risk assessment as though it were possible. I don't think it's
+> >> possible, and it seems cheaper to simply patch than to do some sort
+> >> of scientific assessment and prioritization of patches.
+> >>
+> >> My gut reaction is that the growth of this idea is attributable
+> >> to the large number of large, well-funded organizations that are
+> >> none the less not capable of properly maintaining their own
+> >> infrastructure and thus not capable of patching in a timely manner.
+> >> (I have consulted to many such organizations.)
+> >>
+> >> The notion that some sort of "risk analytics" could therefore justify
+> >> failing to patch quickly and give a rationale for maintaining an
+> >> incapable systems management team is thus attractive. However, the
+> >> real solution is simply to patch; a capable systems management team is
+> >> better than the illusion of a risk calculation system, and provides
+> >> far more benefits than simply maintaining infrastructure in a fully
+> >> patched state.
+> >>
+> >> Perry
+> >> --
+> >> Perry E. Metzger                perry@...rmont.com
+> >>
+> >
+>
+>
 
