@@ -1,4 +1,9 @@
-Received: (qmail 3579 invoked by uid 550); 29 Nov 2023 13:33:38 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5574" "Monday" "7" "September" "2020" "07:54:00" "+1200" "Amos Jeffries" "squid3@treenet.co.nz" "<cc307ff9-e850-1d33-9fdb-fc34739dd2c0@treenet.co.nz>" "129" "Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" "^Date:" nil nil "9" "2020090619:54:00" "[oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" (number mark "        squid3@treen Sep  7  129/5574  " thread-indent "\"Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework\"\n") "<CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>" ("<CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>" "<20200905054704.1d90da6a@jabberwock.cb.piermont.com>" "<CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7527 invoked by uid 550); 6 Sep 2020 20:20:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,95 +11,194 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 24286 invoked from network); 6 Sep 2020 20:00:08 -0000
+References: <CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>
+ <20200905054704.1d90da6a@jabberwock.cb.piermont.com>
+ <CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>
+Autocrypt: addr=squid3@treenet.co.nz; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <cc307ff9-e850-1d33-9fdb-fc34739dd2c0@treenet.co.nz>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
+MIME-Version: 1.0
+In-Reply-To: <CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="tKwNVGYipG5TEHhVwKz5iVguloDdXQ0bq"
+Date: Mon, 7 Sep 2020 07:54:00 +1200
+From: Amos Jeffries <squid3@treenet.co.nz>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3537 invoked from network); 29 Nov 2023 13:33:37 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
-Message-Id: <8100C957-0EFB-4A6F-98B2-5DB4544CA6F1@beckweb.net>
-Date: Wed, 29 Nov 2023 14:33:15 +0100
+Subject: Re: [oss-security] Open Source Tool | vPrioritization | Risk
+ Prioritization Framework
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3731.700.6)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1701264817;8f9a52cb;
-X-HE-SMSGID: 1r8Kgw-0007Aq-3C
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+--tKwNVGYipG5TEHhVwKz5iVguloDdXQ0bq
+Content-Type: multipart/mixed; boundary="Vfmt8bmwKMLi02GgaUsCZHt1WSJ8yPIMz"
 
-The following releases contain fixes for security vulnerabilities:
+--Vfmt8bmwKMLi02GgaUsCZHt1WSJ8yPIMz
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-* Google Compute Engine Plugin 4.551.v5a_4dc98f6962
-* Jira Plugin 3.12
-* MATLAB Plugin 2.11.1
-* NeuVector Vulnerability Scanner Plugin 2.2
+On 6/09/20 7:48 pm, Pramod Rana wrote:
+> Appreciate your comments.
+>=20
+> My two cents - Patch everything is far from reality to most (read all)
+> organizations and I would argue that it's not a solution per se. To me it
+> looks like buying every type of vehicle for commuting in every city of the
+> world but we don't do that, rather we decide what will work best depending
+> on factors like traffic, distance, roads, weather etc.
+>=20
 
+My experience with corporate systems is more like they hire a vehicle on
+lease. Insisting that it be the oldest most run-down and error-prone
+model the lease company has to offer. Then complaining about downtime
+costs of fixing problems when things to wrong.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-11-29/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3225 / CVE-2023-49653
-Jira Plugin 3.11 and earlier does not set the appropriate context for
-credentials lookup, allowing the use of system-scoped credentials otherwise
-reserved for the global configuration.
-
-This allows attackers with Item/Configure permission to access and capture
-credentials they are not entitled to.
+As a software maintainer myself I have actually had a corporate client
+try to get me to backport several *thousand* patches. The plan being to
+port every single bug fix and feature change from version N to version N-2.
+ Installing the new version with a patch changing the version number to
+N-2 would have been identical binary result.
 
 
-SECURITY-2835 / CVE-2023-49652
-Google Compute Engine Plugin 4.550.vb_327fca_3db_11 and earlier does not
-correctly perform permission checks in multiple HTTP endpoints. This allows
-attackers with global Item/Configure permission (while lacking
-Item/Configure permission on any particular job) to do the following:
+> I believe prioritization is an integral part of everything we do and it
+> works as reasoning to what we do (or don't).
+>=20
 
-* Enumerate system-scoped credentials IDs of credentials stored in Jenkins.
-  Those can be used as part of an attack to capture the credentials using
-  another vulnerability.
-* Connect to Google Cloud Platform using attacker-specified credentials IDs
-  obtained through another method, to obtain information about existing
-  projects.
+Imagine that your network is facing a highly organized prepared attacker
+who has done their research and knows your network structure. How fast
+can you apply every patch and security update you put off for later?
 
 
-SECURITY-3193 / CVE-2023-49654 (permission checks) & CVE-2023-49655 (CSRF) =
-& CVE-2023-49656 (XXE)
-MATLAB Plugin determines whether a user-specified directory on the Jenkins
-controller is the location of a MATLAB installation by parsing an XML file
-in that directory.
+The point of the counter argument is that *not* doing anything is bad.
+Possibly really, really bad. So don't bother wasting time on figuring
+out priority/severity per-patch. Just work through the list of things
+needing patching each day as fast stability testing allows.
 
-MATLAB Plugin 2.11.0 and earlier does not perform permission checks in
-several HTTP endpoints implementing related form validation.
+ Don't forget to report to appropriate management any resourcing lack or
+process limitations that prevent each days patching list being finished
+completely/easily. Those limitations are likely the worst security
+problems you have - they are forcing security holes to remain open.
 
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
+When the systemic limits are gone you should only need to prioritize
+*which* things to patch based on each ones importance to your
+organization. Not any rating associated to the flaw itself.
 
-Additionally, the plugin does not configure its XML parser to prevent XML
-external entity (XXE) attacks. This allows attackers able to create files
-on the Jenkins controller file system to have Jenkins parse a crafted XML
-document that uses external entities for extraction of secrets from the
-Jenkins controller or server-side request forgery.
+AYJ
 
 
-SECURITY-3256 / CVE-2023-49673 (CSRF) & CVE-2023-49674 (missing permission =
-check)
-NeuVector Vulnerability Scanner Plugin 1.22 and earlier does not perform a
-permission check in a connection test HTTP endpoint. This allows attackers
-with Overall/Read permission to connect to an attacker-specified hostname
-and port using attacker-specified username and password. Additionally, this
-HTTP endpoint does not require POST requests, resulting in a cross-site
-request forgery (CSRF) vulnerability.
+> On Sat, Sep 5, 2020 at 3:17 PM Perry E. Metzger wrote:
+>=20
+>> [Perhaps somewhat off topic, but the original announcement felt a bit
+>> tangental as well.]
+>>
+>> On Thu, 3 Sep 2020 20:13:34 +0530 Pramod Rana <varchashva@gmail.com>
+>> wrote:
+>>> It is no secret that today we have more vulnerabilities than we can
+>>> assess and remediate, timely and comprehensively. Risk
+>>> prioritization is a key component for any vulnerability management
+>>> program.
+>>
+>> I'm not sure I agree with this premise.
+>>
+>> 1. It is entirely feasible to keep even a very large organization
+>> comprehensively patched. There are organizations that do that.
+>> 2. It is not feasible to calculate a probability of exploitation of a
+>> given vulnerability, and it is not feasible to determine how bad the
+>> damage from exploitation will be. This is a classic example of "tail
+>> risk" where probability distributions are simply not calculable by
+>> normal methods.
+>>
+>> I keep hearing people in the security industry speak about scientific
+>> risk assessment as though it were possible. I don't think it's
+>> possible, and it seems cheaper to simply patch than to do some sort
+>> of scientific assessment and prioritization of patches.
+>>
+>> My gut reaction is that the growth of this idea is attributable
+>> to the large number of large, well-funded organizations that are
+>> none the less not capable of properly maintaining their own
+>> infrastructure and thus not capable of patching in a timely manner.
+>> (I have consulted to many such organizations.)
+>>
+>> The notion that some sort of "risk analytics" could therefore justify
+>> failing to patch quickly and give a rationale for maintaining an
+>> incapable systems management team is thus attractive. However, the
+>> real solution is simply to patch; a capable systems management team is
+>> better than the illusion of a risk calculation system, and provides
+>> far more benefits than simply maintaining infrastructure in a fully
+>> patched state.
+>>
+>> Perry
+>> --
+>> Perry E. Metzger                perry@piermont.com
+>>
+>=20
 
 
+--Vfmt8bmwKMLi02GgaUsCZHt1WSJ8yPIMz--
 
+--tKwNVGYipG5TEHhVwKz5iVguloDdXQ0bq
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEAimzwkzOwlQSfJUyANhjZ5QgvdMFAl9VPlkACgkQANhjZ5Qg
+vdP2eg/8CQF6xEa3YCGsVVY6RfUAtrGZ6q6KAz74PWpN4vJzf1OodsVee4PQDQMJ
+8cNKStfRbt5vd79zRj1hNwedeGetmCkSBIHZIotib4YD+sRhKxbfRHoxOG75wXqm
+6vMGHYunHVg7JwLLLCls3KOLgu3Siasjs+eg+BSdeARk+4gud6GbPSpR+ECPm4HR
+9kjO4yFu/aHtnr7uzj8ep2/uo5zfy4nn0QgIrCe+kAxe6FqlOff/wUWbAdLBuEk8
+yJ4JtgVrrZ3QHpEIfjJvcmjZd1pIGKIXxbdhdUhRr2kj1kkyrMY2Eq8j4KaZtRcf
+qtYdYX9U3fE0bMHGB3UEP+h2w6PaMpJX6CMy5OBsZerayb9Z02AL/hfBu3JmyKY4
+9dYHE+n8DdzF51r+m+f29yz9wWoHxnKW733t9ytBarUOTJ39by0ttBvWdhGVSGRT
+YrjQmFqKLjGYy3mueuuswkiA1C7YL69IVhR0hw8UsZt7SeUJGqf5aNJXzmDQKc8O
+Bm9by+d+RfbHlNJgz7rKxXVpFldxC7hxQTu3DtLTGzQUj2OyqVhvvyo7ytaPVlKk
+21HWreTtt2E0HWDqGgf+y/puyi4xghatZU5321W7WDBBzDkMZPFNybg1gRYTnm1g
+1sdWw3APey03xlvxWX8MkQ1R13GhQBFijjXDQX4QvxKWeT94F2A=
+=8bwU
+-----END PGP SIGNATURE-----
+
+--tKwNVGYipG5TEHhVwKz5iVguloDdXQ0bq--
