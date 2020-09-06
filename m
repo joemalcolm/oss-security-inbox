@@ -1,36 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/16/2
-Message-ID: <nycvar.YSQ.7.76.2001161441560.169985@xnncv>
-Date: Thu, 16 Jan 2020 14:48:39 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Vishnu Dev <vishnudevtj@...il.com>
-Subject: CVE-2020-7039 QEMU: slirp: OOB buffer access while emulating tcp protocols in tcp_emu()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/06/1
+Message-ID: <CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>
+Date: Sun, 6 Sep 2020 13:18:34 +0530
+From: Pramod Rana <varchashva@...il.com>
+To: "Perry E. Metzger" <perry@...rmont.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Appreciate your comments.
 
-A heap buffer overflow issue(s) were found in the SLiRP networking 
-implementation of the QEMU emulator. It occurs in tcp_emu() routine while 
-emulating IRC and other protocols.
+My two cents - Patch everything is far from reality to most (read all)
+organizations and I would argue that it's not a solution per se. To me it
+looks like buying every type of vehicle for commuting in every city of the
+world but we don't do that, rather we decide what will work best depending
+on factors like traffic, distance, roads, weather etc.
 
-A user/process could use this flaw to crash the Qemu process on the host 
-resulting in DoS or potentially execute arbitrary code with privileges of the 
-QEMU process.
+I believe prioritization is an integral part of everything we do and it
+works as reasoning to what we do (or don't).
 
-Upstream patch(es):
--------------------
-   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/2655fffed7a9e765bcb4701dd876e9dab975f289
-   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/ce131029d6d4a405cb7d3ac6716d03e58fb4a5d9
-   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/82ebe9c370a0e2970fb5695aa19aa5214a6a1c80
+On Sat, Sep 5, 2020 at 3:17 PM Perry E. Metzger <perry@...rmont.com> wrote:
 
-Heap overflow in emulating IRC commands (EMU_IRC) was found and reported by 
-Vishnu Dev (CC'd).
-
-'CVE-2020-7039' was assigned via -> https://cveform.mitre.org/
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+> [Perhaps somewhat off topic, but the original announcement felt a bit
+> tangental as well.]
+>
+> On Thu, 3 Sep 2020 20:13:34 +0530 Pramod Rana <varchashva@...il.com>
+> wrote:
+> > It is no secret that today we have more vulnerabilities than we can
+> > assess and remediate, timely and comprehensively. Risk
+> > prioritization is a key component for any vulnerability management
+> > program.
+>
+> I'm not sure I agree with this premise.
+>
+> 1. It is entirely feasible to keep even a very large organization
+> comprehensively patched. There are organizations that do that.
+> 2. It is not feasible to calculate a probability of exploitation of a
+> given vulnerability, and it is not feasible to determine how bad the
+> damage from exploitation will be. This is a classic example of "tail
+> risk" where probability distributions are simply not calculable by
+> normal methods.
+>
+> I keep hearing people in the security industry speak about scientific
+> risk assessment as though it were possible. I don't think it's
+> possible, and it seems cheaper to simply patch than to do some sort
+> of scientific assessment and prioritization of patches.
+>
+> My gut reaction is that the growth of this idea is attributable
+> to the large number of large, well-funded organizations that are
+> none the less not capable of properly maintaining their own
+> infrastructure and thus not capable of patching in a timely manner.
+> (I have consulted to many such organizations.)
+>
+> The notion that some sort of "risk analytics" could therefore justify
+> failing to patch quickly and give a rationale for maintaining an
+> incapable systems management team is thus attractive. However, the
+> real solution is simply to patch; a capable systems management team is
+> better than the illusion of a risk calculation system, and provides
+> far more benefits than simply maintaining infrastructure in a fully
+> patched state.
+>
+> Perry
+> --
+> Perry E. Metzger                perry@...rmont.com
+>
 
