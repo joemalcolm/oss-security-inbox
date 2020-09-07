@@ -1,55 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/10/2
-Message-ID: <CAL6HQvHDika0NmatJLfHLDE2hnb44o7s-W-EscFPvgt2yXmamw@mail.gmail.com>
-Date: Thu, 10 Sep 2020 00:30:40 +0200
-From: Kai Lüke <kai@...volk.io>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-14386: Linux kernel: af_packet.c vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/07/4
+Message-ID: <20200907165101.38058373@jabberwock.cb.piermont.com>
+Date: Mon, 7 Sep 2020 16:51:01 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Pramod Rana <varchashva@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Sun, 6 Sep 2020 13:18:34 +0530 Pramod Rana <varchashva@...il.com>
+wrote:
+> Appreciate your comments.
+> 
+> My two cents - Patch everything is far from reality to most (read
+> all) organizations
 
-here are some words on whether related issues to CVE-2020-14386 could
-exist in similar software.
+"All" is clearly false; I know many organizations that patch
+all their hardware fast, and a few that do it essentially within
+hours (unless CI tests for the patched infra fail). I don't have good
+statistics, but the existence of some organizations of significant
+size capable of patching everything leads me to believe the obstacle
+isn't whether it's possible.
 
-There are of course forks of Linux which get updates slower or not
-at all. The Android mainline branch at least has the fix already.
-In case of µClinux I found trees that are kept on old versions with no
-plans to update to newer major versions (for example, the GitHub
-project EmcraftSystems/linux-emcraft is on 2.6.33).
-
-Implementations of the Linux syscall ABI are getting more common.
-I didn't test the Windows WSL and WSL2 situation. For WSL I don't
-know if they implement support for RAW sockets and for WSL2 it
-likely means that the virtualized Linux kernel crashes. However,
-I tried to reproduce the bug with gVisor and FreeBSD.
-
-With gVisor and the default Go network stack it was not possible to
-open the RAW socket inside the runsc sandbox and a permission error
-was reported. This error went away when using the Linux host network
-stack and resulted in the new error
-"Address family not supported by protocol" which suggests that support
-for RAW sockets is not implemented but I didn't confirm it in the
-source code. I think that non-race memory corruptions are rare in Go.
-
-On FreeBSD and the Linux binary compatibility mode enabled I also got
-"Address family not supported by protocol" but here as well I didn't
-consult the source code to confirm that support for RAW sockets is
-indeed not implemented. I don't know if a native feature like
-PACKET_RESERVE exists.
-
-Regards,
-Kai
-
-
-
+Perry
 -- 
-Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
-
-Geschäftsführer/Directors: Alban Crequy, Chris Kühl, Iago López Galeiras
-
-Registergericht/Court of registration: Amtsgericht Charlottenburg
-
-Registernummer/Registration number: HRB 171414 B
-
-Ust-ID-Nummer/VAT ID number: DE302207000
+Perry E. Metzger		perry@...rmont.com
