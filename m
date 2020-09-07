@@ -1,148 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/4
-Message-Id: <E1kp9JT-00072J-Kk@xenbits.xenproject.org>
-Date: Tue, 15 Dec 2020 12:20:19 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 325 v3 (CVE-2020-29483) - Xenstore: guests can disturb domain cleanup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/07/2
+Message-ID: <8dad8ec32be2e14ecbeac7f6a46b39dfc650e4c9.camel@doppel-helix.eu>
+Date: Mon, 07 Sep 2020 16:28:14 +0200
+From: Matthias Bläsing <mblaesing@...pel-helix.eu>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-11986] Opening a Gradle project with Apache NetBeans executes foreign script immediately
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-ID
+------
+CVE-2020-11986
 
-            Xen Security Advisory CVE-2020-29483 / XSA-325
-                               version 3
+Summary
+-------
+Opening a Gradle project with Apache NetBeans executes foreign script
+immediately
 
-              Xenstore: guests can disturb domain cleanup
+Versions Affected: 
+------------------
+- All Apache NetBeans versions up to and including 12.0
+- NetBeans releases before the Apache transition started may be
+  also affected
 
-UPDATES IN VERSION 3
-====================
+Description:
+------------
+To be able to analyse a gradle project, the build script needs to be
+executed.
+Apache NetBeans follows this pattern and does not allow the user to
+intercept/prevent the execution.
 
-Public release.
+Mitigation:
+-----------
+- Only open trusted gradle projects with NetBeans
+- Update to NetBeans 12.0-u1
 
-ISSUE DESCRIPTION
-=================
+Credit:
+-------
+The problem was identified by Emilian Bold
 
-Xenstored and guests communicate via a shared memory page using a
-specific protocol. When a guest violates this protocol, xenstored will
-drop the connection to that guest.
-
-Unfortunately this is done by just removing the guest from xenstored's
-internal management, resulting in the same actions as if the guest had
-been destroyed, including sending an @releaseDomain event.
-
-@releaseDomain events do not say guest has been removed.  All watchers
-of this event must look at the states of all guests to find the guest
-which has been removed.  When an @releaseDomain is generated due to
-domain xenstored protocol violation, As the guest is still running, so
-the watchers will not react.
-
-Later, when the guest is actually destroyed, xenstored will no longer
-have it stored in its internal data base, so no further @releaseDomain
-event will be sent. This can lead to a zombie domain; memory mappings
-of that guest's memory will not be removed, due to the missing
-event. This zombie domain will be cleaned up only after another domain
-is destroyed, as that will trigger another @releaseDomain event.
-
-If the device model of the guest which violated the Xenstore protocol
-is running in a stub-domain, a use-after-free case could happen in
-xenstored, after having removed the guest from its internal data base,
-possibly resulting in a crash of xenstored.
-
-IMPACT
-======
-
-A malicious guest can block resources of the host for a period after
-its own death.
-
-Guests with a stub domain device model can eventually crash xenstored,
-resulting in a more serious denial of service (the prevention of any
-further domain management operations).
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are affected.
-
-Only the C variant of Xenstore is affected, the Ocaml variant is not
-affected.
-
-Only HVM guests with a stubdom device model can cause a serious DoS.
-
-MITIGATION
-==========
-
-Using the Ocaml variant of Xenstore (oxenstored) avoids the issue;
-Running HVM domains with a dom0 device model rather than a stubdom
-device model will avoid the more serious DoS.
-
-However, given the other vulnerabilities in both versions of xenstored
-being reported at this time, changing xenstored implementation, or
-switching to dom0 xenstored, is not a recommended approach to
-mitigation of individual issues.
-
-CREDITS
-=======
-
-This issue was discovered by Pawel Wieczorkiewicz of Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa325.patch           xen-unstable
-xsa325-4.14.patch      Xen 4.14 - 4.10
-
-$ sha256sum xsa325*
-29a81606e9c0e036dcc39b2a7e6ec0b1ce7d658972a368907b02d56f2aae3dc2  xsa325.meta
-56e09d92fa3d623b2896fd6e6a08805514b2ff9b1cde526968be3925fda28705  xsa325.patch
-702f0f4c20e685d2e23a9c1a31c0e0fda1824c9209bd8affca9dd3489dfbd23d  xsa325-4.14.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/Yqd4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ7AEH/0fHBNU0Sd9iVVcGmZvJblI3mKy9TA3Z8vcdiN7I
-j0TXOQlmjp90WPC8nYo/XtsFpCx5dhg0yLX1Unxe1R0twvt2OrXWRZTa0dbVFcou
-t8yq3lSRiOqzwNK186wzS2LSyAH7yit9CpWLGsXuL6WnocL84Hb3PSsJBP4nTZzm
-dcol+h85SvfQ5S+aMUTPqxdm+uE9qoSAN6rJU2Fill3jCThpJSfRUy1vIz5CDYes
-oD8Oq+H1sdfzCtDHGzgRveDqkHTr6rxCmlenxAI3UCshkhM6VJypoNQ4jQpS/yfN
-nrim4XntIOdy1HR4UgnHRYcnFOnn2qs7dkIU449KVzs1KCg=
-=83j/
------END PGP SIGNATURE-----
-
-Download attachment "xsa325.meta" of type "application/octet-stream" (2137 bytes)
-
-Download attachment "xsa325.patch" of type "application/octet-stream" (6376 bytes)
-
-Download attachment "xsa325-4.14.patch" of type "application/octet-stream" (6396 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
