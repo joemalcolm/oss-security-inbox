@@ -1,67 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/20/3
-Message-ID: <20200120134055.GC10486@f195.suse.de>
-Date: Mon, 20 Jan 2020 14:40:55 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/07/3
+Message-ID: <822f14305cc419ab1b2027fb88f1ca4c7b83c766.camel@debian.org>
+Date: Mon, 07 Sep 2020 17:34:00 +0100
+From: Luca Boccassi <bluca@...ian.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2020-15166: zeromq/libzmq: Denial-of-Service on CURVE/ZAP-protected servers by  unauthenticated clients
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-storeBackup [1] is a tool for performing disk-to-disk backups.
-In the course of a code review [2] for this package as it is included in
-openSUSE I found that the program, which typically runs as the root
-user, uses a fixed default path /tmp/storeBackup.lock to protect
-parallel instances of storeBackup against each other.
+A security vulnerability has been found in libzmq/zeromq.
 
-This opens up a DoS attack vector for unprivileged local users.
-If an unprivileged user simply does this:
-  
-$ echo 1 >/tmp/storeBackup.lock
-  
-then possibly configured system backups won't be executed, because
-storeBackup assumes that an instance is already running. In this
-situation the program will not wait for the "other instance" to finish
-but simply exit immediately, doing nothing.
-  
-Furthermore there's a race condition involved allowing a symlink attack.
-storeBackup first performs a stat() then an lstat() on
-/tmp/storeBackup.lock and only then opens it for creation. Thus if
-storeBackup runs as root and an unprivileged attacker wins this race
-condition then files can be created or overwritten. This way a system
-can be broken, or if additional conditions are met it might even allow
-to escalate privileges in some way.
+CVE-2020-15166: Denial-of-Service on CURVE/ZAP-protected servers by
+unauthenticated clients.
+If a raw TCP socket is opened and connected to an endpoint that is fully
+configured with CURVE/ZAP, legitimate clients will not be able to exchange
+any message. Handshakes complete successfully, and messages are delivered to
+the library, but the server application never receives them.
+For more information see the security advisory:
+https://github.com/zeromq/libzmq/security/advisories/GHSA-25wp-cf8g-938m
 
-As a workaround users can pass an explicit --lockFile, -L parameter to
-storeBackup to specify a safe lockfile location not accessible to
-unprivileged users.
+The following upstream releases fix the issue:
 
-There is currently no isolated patch available from upstream to deal
-with this problem. A new version 3.5.1 containing a fix is expected to
-be released (via savannah.gnu.org) in the course of next week. Attached
-is a patch authored by the openSUSE storeBackup package maintainer Jan
-Ritzerfeld that addresses the symlink attack vector by changing the way
-the lockfile is opened in the Perl code.
+https://github.com/zeromq/libzmq/releases/tag/v4.3.3
 
-Cheers
+https://github.com/zeromq/zeromq4-x/releases/tag/v4.0.10
 
-Matthias
+https://github.com/zeromq/zeromq4-1/releases/tag/v4.1.8
 
-[1]: http://storebackup.org
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=1156767
+
+Individual backported patches can be found on the upstream bug tracker,
+and have been sent separately to the security teams of various
+distributions:
+
+https://github.com/zeromq/libzmq/security/advisories/GHSA-25wp-cf8g-938m
 
 -- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
+Kind regards,
+Luca Boccassi
 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
-
-View attachment "fix-tmp-lock-file-race-condition.patch" of type "text/x-diff" (708 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
