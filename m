@@ -1,4 +1,9 @@
-Received: (qmail 19947 invoked by uid 550); 22 May 2023 12:53:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1823" "Monday" "7" "September" "2020" "17:34:00" "+0100" "Luca Boccassi" "bluca@debian.org" "<822f14305cc419ab1b2027fb88f1ca4c7b83c766.camel@debian.org>" "53" "[oss-security] CVE-2020-15166: zeromq/libzmq: Denial-of-Service on CURVE/ZAP-protected servers by  unauthenticated clients" nil nil nil "9" "2020090716:34:00" "[oss-security] CVE-2020-15166: zeromq/libzmq: Denial-of-Service on CURVE/ZAP-protected servers by unauthenticated clients" (number mark "U       bluca@debian Sep  7   53/1823  " thread-indent "\"[oss-security] CVE-2020-15166: zeromq/libzmq: Denial-of-Service on CURVE/ZAP-protected servers by unauthenticated clients\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-15166: zeromq/libzmq: Denial-of-Service on CURVE/ZAP-protected servers by unauthenticated clients" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29830 invoked by uid 550); 7 Sep 2020 16:40:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,199 +12,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1411 invoked from network); 22 May 2023 12:26:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brad-house.com; s=google; t=1684758393; x=1687350393;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Qmp+soy/Xgw4eAZjSoXi1vNGNGYD7sLYS/gTOjekreY=;
-        b=avrHHZdA9eUlftZktG+gUlO8KW0TvCZlo6FsW3zISLtdaTaeR6K7fWflB1FQflmzuF
-         855R3m0dV3uDCp+SI4UI+VOZQPNKsqW1BAs0lRzxKiuOR0REXIo7/BB1qJjU92Ay9nzk
-         +ZF1/46Unle+/nEAcVGtmtJMstJH9Y7N89dp50ocsQSJYhIEo5yMbjec35xMmLm+fNm0
-         4wwnKBRJi3xYsn/05Nf++bn/y9KovTfjyJt7gmzStPiGHCtTVUsaCQFXZW5rmfQCU36S
-         ZscndON8nGJ22AIEVx6tj67ElZrvByZGVN6mq9PigQg1+GB/n+GBcfewMMPG5iiHqAJ2
-         D6RA==
+Received: (qmail 27666 invoked from network); 7 Sep 2020 16:34:14 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684758393; x=1687350393;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Qmp+soy/Xgw4eAZjSoXi1vNGNGYD7sLYS/gTOjekreY=;
-        b=H1aMZSPK48fHtx1hy+6nX609IKJf5hrcVRz698o84Y6zabUA7/1It6m4EXsytZYaMi
-         gCSf1zBXHOuTfKKJ8y+0b2w9tzAI/IIEWlh9r+w4XuLflg+7eJVRa/wWUWwzumenly6b
-         8FoWhQJKRRMezgRTprnSVxggBqwYzWb6qqIfZNCKBrgptaWnU90LVfFBJq/TyqJuDOD0
-         wHtkrD+M3Pof3DM8ai6jcE0/IGzw3R1qlFXcmkHumuZs8pm8qDMfFMSNl+mj0ZH2wR1N
-         BoNOSeouwKlmRGek6+GuxbfZ06uPj1OOu8SA21w5OugsnThybn1IADmw7aF3VjZXj++J
-         N29w==
-X-Gm-Message-State: AC+VfDyJv8lYBZNyws93+BrQkXVNiu9di3oOq7wtLR96T8fHxpUFC7Iq
-	eW8KjoXFEwmy1xJP4zWHHoR7OuDqTayfwy+4O5uIxw==
-X-Google-Smtp-Source: ACHHUZ575f9MPNVG3TE44h8IDKNSwwgmSzM/IIY2dBfzw3SJZd8r9YUqAzphGJ0WyZuvM2wixSOHkg==
-X-Received: by 2002:a17:907:9445:b0:961:be96:b0e0 with SMTP id dl5-20020a170907944500b00961be96b0e0mr10069142ejc.73.1684758393512;
-        Mon, 22 May 2023 05:26:33 -0700 (PDT)
-Message-ID: <b7fbe4e4-9dc5-3872-903c-a16b9ff43c58@brad-house.com>
-Date: Mon, 22 May 2023 08:26:29 -0400
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:user-agent
+         :mime-version;
+        bh=GcdpJRcZF2TnTZxOyT8Re6tECi1AHLDXFOPEG/Mk28w=;
+        b=fF/C7ULkhuLL70YkOuo2A2gaeJoDmfVWR07OMi8dQdrUVfGYDt5Dn+0R9hxktS6hhs
+         odaqmeAS0egiQ+M7QjjR1+T2/fY4jhYHznuHgUeEixLKrO3wn+Pi0eUrBiGBweNkQZ14
+         YuHGzigyJtfe9kQ6CH3Z6nvh6XZFTX2JobM7PxK+NfZDwxP4ox51TpmhJaES3SKdx4sY
+         iAHOvbnNXLuZEBi0S2Tez6fG8xIWPjlSHeVCJM1njGTlnBk525zky4+qhtIU+AnaE0V5
+         LiC0xiGg6QrOjXpfqV25RCHEMlM5UJaDFOjyNPt6o4v6xZIfcTNZcvTJIrBu2PTAYSkK
+         YIBg==
+X-Gm-Message-State: AOAM530a3vF7f6B+t0qLeLPxv7khM3dioqdQTwVw1+swhM7Ig0K00Cp5
+	4dSEaHBIgEuRICg18xt1uA8n8ACsQJDqsA==
+X-Google-Smtp-Source: ABdhPJxhcwZbYW68e6CKCjHF9VBCiz9HZ2q/pfkmLXA+jKTOaucHA2C5iEcT/P08uomWOqDc7ZRaJQ==
+X-Received: by 2002:adf:81e6:: with SMTP id 93mr22467602wra.412.1599496442546;
+        Mon, 07 Sep 2020 09:34:02 -0700 (PDT)
+Message-ID: <822f14305cc419ab1b2027fb88f1ca4c7b83c766.camel@debian.org>
+From: Luca Boccassi <bluca@debian.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 07 Sep 2020 17:34:00 +0100
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-Df+QO70UMjk1PA4Mgk2M"
+User-Agent: Evolution 3.30.5-1.1 
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.11.0
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-Cc: Daniel Stenberg <daniel@haxx.se>
-From: Brad House <brad@brad-house.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] c-ares multiple vulnerabilities: CVE-2023-32067, CVE-2023-31147,
- CVE-2023-31130, CVE-2023-31124
+Subject: [oss-security] CVE-2020-15166: zeromq/libzmq: Denial-of-Service on
+ CURVE/ZAP-protected servers by  unauthenticated clients
 
+--=-Df+QO70UMjk1PA4Mgk2M
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-  CVE-2023-32067
+Hello,
 
+A security vulnerability has been found in libzmq/zeromq.
 
-      Impact
+CVE-2020-15166: Denial-of-Service on CURVE/ZAP-protected servers by
+unauthenticated clients.
+If a raw TCP socket is opened and connected to an endpoint that is fully
+configured with CURVE/ZAP, legitimate clients will not be able to exchange
+any message. Handshakes complete successfully, and messages are delivered to
+the library, but the server application never receives them.
+For more information see the security advisory:
+https://github.com/zeromq/libzmq/security/advisories/GHSA-25wp-cf8g-938m
 
-Denial of Service.
+The following upstream releases fix the issue:
 
-Attack Steps:
+https://github.com/zeromq/libzmq/releases/tag/v4.3.3
 
- 1. The target resolver sends a query
- 2. The attacker forges a malformed UDP packet with a length of 0 and
-    returns them to the target resolver
- 3. The target resolver erroneously interprets the 0 length as a
-    graceful shutdown of the connection. (this is only valid for TCP
-    connections, UDP is connection-less)
- 4. Current resolution fails, DoS attack is achieved.
+https://github.com/zeromq/zeromq4-x/releases/tag/v4.0.10
 
+https://github.com/zeromq/zeromq4-1/releases/tag/v4.1.8
 
-      Patches
 
-Patched in 1.19.1
+Individual backported patches can be found on the upstream bug tracker,
+and have been sent separately to the security teams of various
+distributions:
 
+https://github.com/zeromq/libzmq/security/advisories/GHSA-25wp-cf8g-938m
 
-      Workarounds
+--=20
+Kind regards,
+Luca Boccassi
 
-No workarounds are available.
+--=-Df+QO70UMjk1PA4Mgk2M
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
+-----BEGIN PGP SIGNATURE-----
 
-      Credit
+iQEzBAABCgAdFiEE6g0RLAGYhL9yp9G8SylmgFB4UWIFAl9WYPgACgkQSylmgFB4
+UWLoyAf/SejkMRKxbCTZJ1rTwE9+3wDDKvaPjWXS3F9wtlPv+kITpa+yCVDX7UTo
+5OSxwrxU/ZVLZG1DiQgPwlm/JPg4mjs8CwsXmtLuTNjJsEl23Czy48ZeC+x27IJm
+FDyvc8iG7NDlHc/NdaXrz9XWRwc/a27EI/PysWQcr0bhD+AZz48G4zardQfMjIG3
+emLCQrGB9Qj6ECKOyWwOu66wtIa2iRkvKJW33RD6FLmoPcVAskjOWwKy5dgzJLtV
+EDKVhBNsRbZxaRdsCZ0KtbCAbe1Vr+SdU9NTbkOdDqv2HdDUSDiYOk6WiMt9ZAqa
+QN5geyQpwfiynGeHOyy+tPF/OK73yg==
+=+C9g
+-----END PGP SIGNATURE-----
 
-Xiang Li
-Network and Information Security Laboratory, Tsinghua University
-
-
-----------
-
-
-  CVE-2023-31124
-
-
-      Impact
-
-When cross-compiling c-ares and using the autotools build system, 
-CARES_RANDOM_FILE will not be set, as seen when cross compiling aarch64 
-android. This will downgrade to using rand() as a fallback which could 
-allow an attacker to take advantage of the lack of entropy by not using 
-a CSPRNG.
-
-
-      Patches
-
-Patched in 1.19.1
-
-
-      Workarounds
-
-Use CMake build system
-
-
-      Credit
-
-David Gstir and Hannes Moesl
-X41 D-SEC GmbH
-Audit funded by Open Source Technology Improvement Fund (OSTIF)
-
-
-----------
-
-
-  CVE-2023-31130
-
-
-      Impact
-
-ares_inet_net_pton() is vulnerable to a buffer underflow for certain 
-ipv6 addresses, in particular "0::00:00:00/2" was found to cause an 
-issue. C-ares only uses this function internally for configuration 
-purposes which would require an administrator to configure such an 
-address via ares_set_sortlist().
-
-However, users may externally use ares_inet_net_pton() for other 
-purposes and thus be vulnerable to more severe issues.
-
-
-      Patches
-
-Fixed in 1.19.1
-
-
-      Workarounds
-
-No workarounds are available.
-
-
-      Credit
-
-Hannes Moesl
-X41 D-SEC GmbH
-Audit funded by Open Source Technology Improvement Fund (OSTIF)
-
-
-----------
-
-
-  CVE-2023-31147
-
-
-      Impact
-
-Description of issue(s):
-
- 1. When /dev/urandom or RtlGenRandom() are unavailable, c-ares uses
-    rand() to generate random numbers used for DNS query ids. This is
-    not a CSPRNG, and it is also not seeded by srand() so will generate
-    predictable output.
- 2. Input from the random number generator is fed into a non-compilant
-    RC4 implementation and may not be as strong as the original RC4
-    implementation.
- 3. No attempt is made to look for modern OS-provided CSPRNGs like
-    arc4random() that is widely available.
-
-Correction(s) made:
-
- 1. Detect arc4random() and if available, use it directly to generate
-    DNS query ids.
- 2. Use /dev/urandom or RtlGenRandom() directly to generate DNS query
-    ids as a fallback
- 3. As a last resort, use the current rand() + RC4 logic (should only
-    apply to esoteric systems), with these modifications:
-
-  * replace RC4 implementation with official algorithm
-  * seed rand() using srand()
-
-
-      Patches
-
-Fixed in 1.19.1
-
-
-      Workarounds
-
-No workarounds are available.
-
-
-      Credit
-
-David Gstir and Hannes Moesl
-X41 D-SEC GmbH
-Audit funded by Open Source Technology Improvement Fund (OSTIF)
-
-
+--=-Df+QO70UMjk1PA4Mgk2M--
