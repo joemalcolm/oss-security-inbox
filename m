@@ -1,112 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/16
-Message-Id: <E1kp9Jd-0007Cj-7U@xenbits.xenproject.org>
-Date: Tue, 15 Dec 2020 12:20:29 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 359 v3 (CVE-2020-29571) - FIFO event channels control structure ordering
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/08/2
+Message-ID: <20200908024135.GA70954@wopr>
+Date: Mon, 7 Sep 2020 19:41:35 -0700
+From: Kurt H Maier <khm@...ops.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Sep 07, 2020 at 09:11:00PM -0400, Jeffrey Walton wrote:
+> Every US Federal agency I have worked with patches. The Social
+> Security Administration does it within 30 days, and the Treasury
+> Department does it in a matter of days. SSA is one of the largest
+> networks in the world with over 100,000 hosts. Treasury had over
+> 40,000 hosts.
 
-            Xen Security Advisory CVE-2020-29571 / XSA-359
-                               version 3
+I've worked with US Federal agencies that did not patch.  I was able to
+change some minds, and it was productive work of which I'm proud.  My
+success rate is significantly below 100%, although my current employer
+is largely sympathetic to this effort.
 
-            FIFO event channels control structure ordering
+I would love to patch every computer with the latest available software,
+but there remains a gulf between 100k data-entry terminals and computers
+that must interact with the physical world.  Machines that are hooked up
+to scientific or manufacturing equipment can be extremely difficult to
+patch without breaking things and no amount of haughty lecturing seems
+to fix the problem, despite same being readily available from multiple
+sources as far back as I can remember.  
 
-UPDATES IN VERSION 3
-====================
+Risk assessment is for when you don't have absolute control over your
+environment.
 
-Public release.
+> Microsoft did a study years ago and found most hosts that are
+> compromised failed to install vendor patches.
 
-ISSUE DESCRIPTION
-=================
+"Software vendor finds that everything would improve if everyone
+listened to software vendors" fails by a considerable distance to meet
+with my interest.  "Software vendor stops breaking the driver ABI on
+supported operating systems" would get a lot farther.  Suggesting this
+generally results in an earth-shattering avalanche of excuses about how
+hard programming is.
 
-A bounds check common to most operation time functions specific to FIFO
-event channels depends on the CPU observing consistent state.  While the
-producer side uses appropriately ordered writes, the consumer side isn't
-protected against re-ordered reads, and may hence end up de-referencing
-a NULL pointer.
+In the meantime, we do what we can.
 
-IMPACT
-======
-
-Malicious or buggy guest kernels can mount a Denial of Service (DoS)
-attack affecting the entire system.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from 4.4 onwards are vulnerable.  Xen versions 4.3 and
-earlier are not vulnerable.
-
-Only Arm systems may be vulnerable.  Whether a system is vulnerable will
-depend on the specific CPU.  x86 systems are not vulnerable.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa359.patch           xen-unstable - 4.10
-
-$ sha256sum xsa359*
-cb009ad77d1a3d8044431b2af568dd9dffefe07fc9f537fb6b53c2ec57aa77b7  xsa359.meta
-3126d9304b68be84a89c42c223227c8f96ecbb96a0385a7e1bdc65ae5e0f344f  xsa359.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/YqeAMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZt6wIAJhvfVB8eRr5fqCbMUjZ++KKoG0AF/hoS7YRHiDn
-zCgK/ff5RkY/pHHkVnrSOQeQg88SPBp/HaYljUXhoANbhXVxlt383QxQb63JwanR
-1c3Sdvv5w0HdvrDyUMV16W/Edf/DGlSgciG/2saNz8pPbqiGKzeY3Q7nj3T3vLAE
-ouNlHb2NItalKB2AdC62y/BFIjsn66G/P1agxyrcGirJxdvzORBx+LY7VTFOrOEB
-L7yb8Y0U6Nj1XjGUXYm4X4xCCm+940Xc0Ht9zkDJlb3xSdO5sOtBE+Cx3F4uXn1c
-vTMiKziAOgEKKXWV7P3KSWR/7G1aTm2YVRMy5XWtS6GY5D0=
-=uRRE
------END PGP SIGNATURE-----
-
-Download attachment "xsa359.meta" of type "application/octet-stream" (2724 bytes)
-
-Download attachment "xsa359.patch" of type "application/octet-stream" (1245 bytes)
+khm
