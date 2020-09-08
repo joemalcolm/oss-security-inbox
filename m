@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4104" "Wednesday" "9" "November" "2016" "15:43:22" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2342970.3XqcyZiG6N@blackgate>" "109" "[oss-security] libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)" nil nil nil "11" "2016110914:43:22" "[oss-security] libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)" (number mark "U       ago@gentoo.o Nov  9  109/4104  " thread-indent "\"[oss-security] libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1683" "Monday" "7" "September" "2020" "19:41:35" "-0700" "Kurt H Maier" "khm@sciops.net" "<20200908024135.GA70954@wopr>" "36" "Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" "^Date:" nil nil "9" "2020090802:41:35" "[oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" (number mark "        khm@sciops.n Sep  7   36/1683  " thread-indent "\"Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework\"\n") "<CAH8yC8ms56V7hAVKz1VQ7wX01H+ZC78GAPnNbd7tXRQgRxBt6A@mail.gmail.com>" ("<CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>" "<20200905054704.1d90da6a@jabberwock.cb.piermont.com>" "<CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>" "<20200907165101.38058373@jabberwock.cb.piermont.com>" "<CAH8yC8ms56V7hAVKz1VQ7wX01H+ZC78GAPnNbd7tXRQgRxBt6A@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3828 invoked by uid 550); 9 Nov 2016 14:43:40 -0000
+Received: (qmail 20265 invoked by uid 550); 8 Sep 2020 02:41:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,125 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3759 invoked from network); 9 Nov 2016 14:43:38 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Wed, 09 Nov 2016 15:43:22 +0100
-Message-ID: <2342970.3XqcyZiG6N@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
+Received: (qmail 20247 invoked from network); 8 Sep 2020 02:41:48 -0000
+Message-ID: <20200908024135.GA70954@wopr>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>
+ <20200905054704.1d90da6a@jabberwock.cb.piermont.com>
+ <CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>
+ <20200907165101.38058373@jabberwock.cb.piermont.com>
+ <CAH8yC8ms56V7hAVKz1VQ7wX01H+ZC78GAPnNbd7tXRQgRxBt6A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH8yC8ms56V7hAVKz1VQ7wX01H+ZC78GAPnNbd7tXRQgRxBt6A@mail.gmail.com>
+Date: Mon, 7 Sep 2020 19:41:35 -0700
+From: Kurt H Maier <khm@sciops.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Open Source Tool | vPrioritization | Risk
+ Prioritization Framework
+To: oss-security@lists.openwall.com
 
-If it is suitable for a CVE please assign one. Thanks.
+On Mon, Sep 07, 2020 at 09:11:00PM -0400, Jeffrey Walton wrote:
+> Every US Federal agency I have worked with patches. The Social
+> Security Administration does it within 30 days, and the Treasury
+> Department does it in a matter of days. SSA is one of the largest
+> networks in the world with over 100,000 hosts. Treasury had over
+> 40,000 hosts.
 
-Description:
-libdwarf is a library to consume and produce DWARF debug information.
+I've worked with US Federal agencies that did not patch.  I was able to
+change some minds, and it was productive work of which I'm proud.  My
+success rate is significantly below 100%, although my current employer
+is largely sympathetic to this effort.
 
-A fuzz on an updated version revealed a buffer overflow.
+I would love to patch every computer with the latest available software,
+but there remains a gulf between 100k data-entry terminals and computers
+that must interact with the physical world.  Machines that are hooked up
+to scientific or manufacturing equipment can be extremely difficult to
+patch without breaking things and no amount of haughty lecturing seems
+to fix the problem, despite same being readily available from multiple
+sources as far back as I can remember.  
 
-The complete ASan output:
+Risk assessment is for when you don't have absolute control over your
+environment.
 
-# dwarfdump $FILE
-==27395==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x61300000de1c at pc 0x000000528cd3 bp 0x7ffd980a63b0 sp 0x7ffd980a63a8
-READ of size 1 at 0x61300000de1c thread T0
-    #0 0x528cd2 in get_attr_value 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:4978:21
-    #1 0x51e4a4 in print_attribute 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:3357:13
-    #2 0x51a651 in print_one_die 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:1458:38
-    #3 0x51710c in print_die_and_children_internal 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:1047:36
-    #4 0x517c6b in print_die_and_children_internal 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:1142:13
-    #5 0x5147cc in print_die_and_children 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:921:5
-    #6 0x5147cc in print_one_die_section 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:831
-    #7 0x512262 in print_infos 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:371:16
-    #8 0x4faafa in process_one_file 
-/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1371:9
-    #9 0x4faafa in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654
-    #10 0x7f883beec61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #11 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
+> Microsoft did a study years ago and found most hosts that are
+> compromised failed to install vendor patches.
 
-0x61300000de1c is located 0 bytes to the right of 348-byte region 
-[0x61300000dcc0,0x61300000de1c)
-allocated by thread T0 here:
-    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
-    #1 0x7f883cfc6206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
+"Software vendor finds that everything would improve if everyone
+listened to software vendors" fails by a considerable distance to meet
+with my interest.  "Software vendor stops breaking the driver ABI on
+supported operating systems" would get a lot farther.  Suggesting this
+generally results in an earth-shattering avalanche of excuses about how
+hard programming is.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:4978:21 in get_attr_value
-Shadow bytes around the buggy address:
-  0x0c267fff9b70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c267fff9b80: 00 00 00 00 00 00 00 00 00 00 03 fa fa fa fa fa
-  0x0c267fff9b90: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c267fff9ba0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c267fff9bb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c267fff9bc0: 00 00 00[04]fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c267fff9bd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c267fff9be0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c267fff9bf0: 00 00 00 00 00 00 00 00 00 00 00 03 fa fa fa fa
-  0x0c267fff9c00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c267fff9c10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==27395==ABORTING
+In the meantime, we do what we can.
 
-Affected version:
-20161021
-
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00025-libdwarf-heapoverflow-get_attr_value
-
-Timeline:
-2016-11-02: bug discovered and reported to upstream
-2016-11-05: upstream released a patch
-2016-11-07: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-get_attr_value-print_die-c
+khm
