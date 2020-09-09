@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/12/3
-Message-ID: <nycvar.YSQ.7.76.2005121907180.1451610@xnncv>
-Date: Tue, 12 May 2020 19:08:17 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Paolo Abeni <pabeni@...hat.com>, matthew.sheets@...ms.com,  Tyler Hicks <code@...icks.com>
-Subject: Re: CVE-2020-10711 Kernel: NetLabel: null pointer dereference while receiving CIPSO packet with null category
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/09/4
+Message-ID: <CAHp2X_RwPWOfr2uw7tbpL8omiLr=LsXt7_aPPfkPL-Y18aH+bg@mail.gmail.com>
+Date: Wed, 9 Sep 2020 16:46:18 -0400
+From: Vincent Batts <vbatts@...volk.io>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: Contributing Back
 Content-Type: text/plain; charset=utf-8
 
-+-- On Tue, 12 May 2020, P J P wrote --+
-| NULL pointer dereference(s) issue(s) was found in the Linux kernel's SELinux 
-| subsystem. It occurs while importing the Commercial IP Security Option 
-| (CIPSO) protocol's category bitmap into SELinux's extensible bitmap via 
-| 'ebitmap_netlbl_import' routine. While parsing the CIPSO restricted bitmap 
-| tag in 'cipso_v4_parsetag_rbm' routine, it sets the security attribute to 
-| indicate that category bitmap is present, even if it has not been allocated. 
-| This leads to the said NULL pointer dereference issue while importing the 
-| same category bitmap into SELinux. A remote network user could use this flaw 
-| to crash the system kernel resulting in DoS scenario.
-|
-| This issue was introduced by upstream commit:
-|   -> https://git.kernel.org/linus/4b8feff251da3d7058b5779e21b33a85c686b974
-|      netlabel: fix the horribly broken catmap functions
+On Thu, Sep 3, 2020 at 10:28 PM Seth Arnold <seth.arnold@...onical.com>
+wrote:
 
-Upstream patch:
-  -> https://lore.kernel.org/netdev/07d99ae197bfdb2964931201db67b6cd0b38db5b.1589276729.git.pabeni@redhat.com/T/#u
+> On Thu, Sep 03, 2020 at 06:14:27PM +0200, Solar Designer wrote:
+> > So from this point on, I'd actually expect Ubuntu or/and Flatcar
+> > Container Linux to state something on task 5 for each issue reported.
+>
+> Will do.
+>
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+Likewise, we will do our best to respond as well.
+The breadth of testing forks or similar implementations is something we're
+still getting a grasp of, as Flatcar distribution is comprised of a minimal
+set packages as compared to many Linux distributions.
+
+-- 
+
+Vincent Batts
+---
+Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
+Geschäftsführer/Directors: Alban Crequy, Chris Kühl, Iago López Galeiras
+Registergericht/Court of registration: Amtsgericht Charlottenburg
+Registernummer/Registration number: HRB 171414 B
+Ust-ID-Nummer/VAT ID number: DE302207000
 
