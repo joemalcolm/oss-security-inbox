@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["879" "Tuesday" "28" "November" "2017" "21:05:28" "-0500" "Michael Orlitzky" "michael@orlitzky.com" "<d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>" "17" "Re: [oss-security] Re: Security risk of server side text editing ..." "^Date:" nil nil "11" "2017112902:05:28" "[oss-security] Re: Security risk of server side text editing ..." (number mark "        michael@orli Nov 28   17/879   " thread-indent "\"Re: [oss-security] Re: Security risk of server side text editing ...\"\n") "<201711281319.vASDJxWP010037@masaka.moolenaar.net>" ("<201711281319.vASDJxWP010037@masaka.moolenaar.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1831" "Thursday" "10" "September" "2020" "00:30:40" "+0200" "=?UTF-8?B?S2FpIEzDvGtl?=" "kai@kinvolk.io" "<CAL6HQvHDika0NmatJLfHLDE2hnb44o7s-W-EscFPvgt2yXmamw@mail.gmail.com>" "47" "Re: [oss-security] CVE-2020-14386: Linux kernel: af_packet.c vulnerability" nil nil nil "9" "2020090922:30:40" "[oss-security] CVE-2020-14386: Linux kernel: af_packet.c vulnerability" (number mark "U       kai@kinvolk. Sep 10   47/1831  " thread-indent "\"Re: [oss-security] CVE-2020-14386: Linux kernel: af_packet.c vulnerability\"\n") "<20200904073603.GA21152@openwall.com>" ("<CAM6JnLfDLbZA1Ky+UDjcA8XOrbAqazh4YQgH8Ur9pyhjBA2nQQ@mail.gmail.com>" "<20200904073603.GA21152@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-14386: Linux kernel: af_packet.c vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25626 invoked by uid 550); 29 Nov 2017 02:06:03 -0000
+Received: (qmail 26236 invoked by uid 550); 10 Sep 2020 07:00:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24427 invoked from network); 29 Nov 2017 02:06:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1511921149; bh=/Hh1Mn6N03e4fBLE29RmDZhEQcIOCF04IwioADELImA=;
-	h=Subject:To:References:From:Date:In-Reply-To;
-	b=WPNpXMWeoa0yrigqcUQ36+gIqobEiY7DO8sT+zktARWSIWT0coSColOppc64xKE7N
-	 CIoi0GCU4brYIFsxQS+yS701S/hKtOLzFFmZlmgyzRBp78nVwAKfU3DgyG8d6jzuxm
-	 a/Nelw3GbMmb4S4/GtEa00Y2DR4JIaXxuLoFZss0=
-References: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
-Message-ID: <d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Date: Tue, 28 Nov 2017 21:05:28 -0500
-From: Michael Orlitzky <michael@orlitzky.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Security risk of server side text editing ...
+Received: (qmail 23666 invoked from network); 9 Sep 2020 22:31:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kinvolk.io; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=AUulCcjG9ge1sYAJPfS4TQWEd7AAutSz5W9EQwWan5c=;
+        b=Zd1lmqhoxefGncIaMoHRuPlPfwlt3X785ETS1WVRp9ajGGuxmlO6HN23PoUeWDFKJi
+         B99FpUyHVUmnkVJujkdglVOhZizyVttFE4uZsnr73nzj8Sx+TEVq9Y6TLFZrMSc8eg0K
+         a4zYUYz/uxLcMa5VHNN8wpu8ruLIWj4qbNzFM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=AUulCcjG9ge1sYAJPfS4TQWEd7AAutSz5W9EQwWan5c=;
+        b=YNIpd9D8a5cF0Aql2b8jnlVKsFweL+yxp1eH2PQIwz6826QFOWiIzBlpgPgoAmjxFR
+         CO8zaFoFAXKaj3frk1N4gwEOwuQzKj4ByEf+EOFers8m4Y9wA5IJ1FPZHb8wwevYohcV
+         nohpw/SJG7As0u+ePTzYTol/0EMFP6lUs2+bTlByyMiCojAv7PcTwek9kBqM1zMK5csp
+         JtCczgaDeQHIdHm91xlHDqg6kpywWJBY5TR2jgPHU2z6QbBlI/FxEK82w6CBSxzbd/F5
+         /dwWP7jFCJfuGu7IoO5SyzCcyejD5QtuKKoLk9u0L9n+OIm7UclOaRAbJ7cyVVSU2Did
+         AqFw==
+X-Gm-Message-State: AOAM532ljPad5EbWr2A5dImramNaZ12tpPSmbpKpzyBXq9Mcj50Z7W2s
+	jXtvuZkM/Tyyw8aH2DAeaebk4TGODgQ+r82oLgB1iYs6uGBALQ==
+X-Google-Smtp-Source: ABdhPJxdUdNZoaWw5RQbgvhwax0zJv3bXIKCgdGfnO5rV7P4NTi4uEsadZ5WzQJ68SjIXZiLFFJDwxGmU1dhfrjnHYo=
+X-Received: by 2002:a1c:6445:: with SMTP id y66mr5844863wmb.12.1599690650922;
+ Wed, 09 Sep 2020 15:30:50 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAM6JnLfDLbZA1Ky+UDjcA8XOrbAqazh4YQgH8Ur9pyhjBA2nQQ@mail.gmail.com>
+ <20200904073603.GA21152@openwall.com>
+In-Reply-To: <20200904073603.GA21152@openwall.com>
+From: =?UTF-8?B?S2FpIEzDvGtl?= <kai@kinvolk.io>
+Date: Thu, 10 Sep 2020 00:30:40 +0200
+Message-ID: <CAL6HQvHDika0NmatJLfHLDE2hnb44o7s-W-EscFPvgt2yXmamw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2020-14386: Linux kernel: af_packet.c vulnerability
 
-On 11/28/2017 08:19 AM, Bram Moolenaar wrote:
-> 
-> This is a problem with the configuration of the web server.  It should
-> not publish files it doesn't know about.  The problem also happens for
-> any other file manipulation, e.g. "cp file.php file.php.orig" if you
-> want to make some temporary changes.  A .orig and .rej file may also
-> appear when applying a patch.
+Hello,
 
-The main difference in my mind is that when you "cp" a file, you expect
-it to create a new file. Likewise with patch it tells you that the
-rejects were saved in a new file.
+here are some words on whether related issues to CVE-2020-14386 could
+exist in similar software.
 
-Editing a file in-place should not create *another* file in the current
-directory with a different name/suffix. I realize that's subjective, but
-a lot of (even long time) users will tell you that no way in hell did
-they expect that to happen. (What's the argument against using a
-subdirectory of $HOME to store these temporary files?)
+There are of course forks of Linux which get updates slower or not
+at all. The Android mainline branch at least has the fix already.
+In case of =C2=B5Clinux I found trees that are kept on old versions with no
+plans to update to newer major versions (for example, the GitHub
+project EmcraftSystems/linux-emcraft is on 2.6.33).
+
+Implementations of the Linux syscall ABI are getting more common.
+I didn't test the Windows WSL and WSL2 situation. For WSL I don't
+know if they implement support for RAW sockets and for WSL2 it
+likely means that the virtualized Linux kernel crashes. However,
+I tried to reproduce the bug with gVisor and FreeBSD.
+
+With gVisor and the default Go network stack it was not possible to
+open the RAW socket inside the runsc sandbox and a permission error
+was reported. This error went away when using the Linux host network
+stack and resulted in the new error
+"Address family not supported by protocol" which suggests that support
+for RAW sockets is not implemented but I didn't confirm it in the
+source code. I think that non-race memory corruptions are rare in Go.
+
+On FreeBSD and the Linux binary compatibility mode enabled I also got
+"Address family not supported by protocol" but here as well I didn't
+consult the source code to confirm that support for RAW sockets is
+indeed not implemented. I don't know if a native feature like
+PACKET_RESERVE exists.
+
+Regards,
+Kai
+
+
+
+--=20
+Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
+
+Gesch=C3=A4ftsf=C3=BChrer/Directors: Alban Crequy, Chris K=C3=BChl, Iago L=
+=C3=B3pez Galeiras
+
+Registergericht/Court of registration: Amtsgericht Charlottenburg
+
+Registernummer/Registration number: HRB 171414 B
+
+Ust-ID-Nummer/VAT ID number: DE302207000
