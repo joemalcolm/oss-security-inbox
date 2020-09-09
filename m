@@ -1,47 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/10
-Message-ID: <20200720184054.GA11135@openwall.com>
-Date: Mon, 20 Jul 2020 20:40:54 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/10/2
+Message-ID: <CAL6HQvHDika0NmatJLfHLDE2hnb44o7s-W-EscFPvgt2yXmamw@mail.gmail.com>
+Date: Thu, 10 Sep 2020 00:30:40 +0200
+From: Kai Lüke <kai@...volk.io>
 To: oss-security@...ts.openwall.com
-Subject: Re: Contributing Back
+Subject: Re: CVE-2020-14386: Linux kernel: af_packet.c vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 13, 2020 at 03:37:03PM +0800, Zhang Xiao wrote:
-> ??? 2020/7/12 ??????1:58, Solar Designer ??????:
-> > On Thu, Jul 02, 2020 at 05:33:20PM +0800, Zhang Xiao wrote:
-> >> And, I have another point want to discuss. As we know, sometimes, the CVE and NVD website don't upgrade their web page timely. For example:
-> >>
-> >> the security maillist had an encrypted mail called "curl: overwrite local file with -J" in 20200617. It was a "pre-notification about a security advisory about to ship next week in sync with our next curl release", for CVE-2020-8177. On curl's git tree, that very bug did been fixed and released in 20200621:
-> >> https://github.com/curl/curl/commit/8236aba5854
-> >>
-> >> But, till now, both cve.mitre.org and nvd.nist.gov still mark this CVE as "RESERVED":
-> >> https://nvd.nist.gov/vuln/detail/CVE-2020-8177
-> >> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177
-> >>
-> >> So I wonder if that is also an contribution to remind them, if so, any advises to make it? And If it ca be defined as an contribution, we can take it. :-)
-> > We've received some responses in this thread regarding the specific
-> > example above, but I'd like more general responses please.  Is there a
-> > general task Wind River can reasonably help with for getting CVE details
-> > published for issues that pass the distros and/or oss-security lists,
-> > and how exactly could they help with that?
-> 
-> Actually, we are glad to make it for some customers are also pay
-> attention on these official web pages. We suppose it will be easy to
-> make it through the "notify a vulnerability publication
-> <https://cveform.mitre.org/>". But after I submitted the request I just
-> get a reply as "This CVE ID has been reserved by the CNA Hackerone and
-> we are currently waiting on them to submit the details." Seems only "the
-> CNA Hackerone" can make it. I have no idea on how to notify the "the CNA
-> Hackerone " to push it. :-(  Anyway, if possible we are glad to make it.
+Hello,
 
-Once again, I think CVE-2020-8177 is more of an exception than the rule.
-I would be more interested in comments by "CVE experts" on whether the
-task Xiao proposes and volunteers for is in general worthwhile or not,
-and why.  Would similar "notify a vulnerability publication" reminders
-be desirable for issues that got the CVE IDs from one of the CNAs on the
-distros list?
+here are some words on whether related issues to CVE-2020-14386 could
+exist in similar software.
 
-Thanks,
+There are of course forks of Linux which get updates slower or not
+at all. The Android mainline branch at least has the fix already.
+In case of µClinux I found trees that are kept on old versions with no
+plans to update to newer major versions (for example, the GitHub
+project EmcraftSystems/linux-emcraft is on 2.6.33).
 
-Alexander
+Implementations of the Linux syscall ABI are getting more common.
+I didn't test the Windows WSL and WSL2 situation. For WSL I don't
+know if they implement support for RAW sockets and for WSL2 it
+likely means that the virtualized Linux kernel crashes. However,
+I tried to reproduce the bug with gVisor and FreeBSD.
+
+With gVisor and the default Go network stack it was not possible to
+open the RAW socket inside the runsc sandbox and a permission error
+was reported. This error went away when using the Linux host network
+stack and resulted in the new error
+"Address family not supported by protocol" which suggests that support
+for RAW sockets is not implemented but I didn't confirm it in the
+source code. I think that non-race memory corruptions are rare in Go.
+
+On FreeBSD and the Linux binary compatibility mode enabled I also got
+"Address family not supported by protocol" but here as well I didn't
+consult the source code to confirm that support for RAW sockets is
+indeed not implemented. I don't know if a native feature like
+PACKET_RESERVE exists.
+
+Regards,
+Kai
+
+
+
+-- 
+Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
+
+Geschäftsführer/Directors: Alban Crequy, Chris Kühl, Iago López Galeiras
+
+Registergericht/Court of registration: Amtsgericht Charlottenburg
+
+Registernummer/Registration number: HRB 171414 B
+
+Ust-ID-Nummer/VAT ID number: DE302207000
