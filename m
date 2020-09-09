@@ -1,40 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/27/3
-Message-ID: <CAFqZXNvNR3FWeNz5eTPmG0HbB8dZF6_xQcOeUNowo-a+93QwdA@mail.gmail.com>
-Date: Wed, 27 May 2020 09:44:50 +0200
-From: Ondrej Mosnacek <omosnace@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Paul Moore <paul@...l-moore.com>, Stephen Smalley <stephen.smalley.work@...il.com>,  Jeff Vander Stoep <jeffv@...gle.com>, Wade Mealing <wmealing@...hat.com>
-Subject: CVE-2020-10751 - Linux kernel: SELinux netlink permission check bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/09/3
+Message-ID: <-VsV_YGp-SKxR0Avc5nmv7S3e27DoHRHH1qczuALNMdZiIl_jakV8kvlugzgfmjbaYvq_GAMhX8EtW5cRtDI1Xj9Ni-usWd_Me04BYM4caU=@virtadpt.net>
+Date: Wed, 09 Sep 2020 14:49:42 +0000
+From: "The Doctor [412/724/301/703/415/510]" <drwho@...tadpt.net>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
 Content-Type: text/plain; charset=utf-8
 
-(Resending with correct ML address...)
 
-Hello,
+‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
+On Tuesday, September 8, 2020 6:03 PM, Alex Gaynor <alex.gaynor@...il.com> wrote:
 
-This flaw has already been announced and described here:
-https://www.openwall.com/lists/oss-security/2020/04/30/5
+> Oh they have a policy. It says that systems will be patched in a timely
+> manner. And then the kind accountants who perform the audits say, "Great
+> policy, this is fully compliant, have an ATO and a gold star". And then
 
-This is just a note to let you know that it has been assigned a
-CVE-2020-10751 upon request from Red Hat.
+I wish I could not confirm this.  In the assignments I was given, this was the rule
+and not the exception.
 
-The flaw is fixed by the following upstream commit:
+> random things all over the place are not patched at all because federal IT
+> departments have astonishly poor automation practices, extremely limited
 
-commit fb73974172ffaaf57a7c42f35424d9aece1a5af6
-Author: Paul Moore <paul@...l-moore.com>
-Date:   Tue Apr 28 09:59:02 2020 -0400
+A lot of that seems to boil down to "You want to run this random piece of software
+to automate the job we're paying you to do?  Forget it."  There is also the odd
+"We won't run any software that doesn't have <some number of expensive independent
+code audits and certifications> and what you want to do doesn't have those (even
+though you claim they do, we think you're lying)."
 
-   selinux: properly handle multiple messages in selinux_netlink_send()
+> reuse of systems across distinct projects (contracts) within the agency and
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fb73974172ffaaf57a7c42f35424d9aece1a5af6
+Secure data erasure and platform disposal practices have something to do with this.
 
-The flaw dates back at least to Linux-2.6.12-rc2, so likely all
-versions of Linux currently in use are affected.
+> there is nothing approaching a comprehensive way for a federal agency to
+> answer "did we deploy the updated struts for all of our stuff".
 
-RH tracker: https://bugzilla.redhat.com/show_bug.cgi?id=1839634
+With a side order of "the contractors we hired for this stuff should be on top of it,"
+even when they're not the prime on the contract anymore.
 
--- 
-Ondrej Mosnacek
-Software Engineer, Platform Security - SELinux kernel,
-Red Hat, Inc.
+The Doctor [412/724/301/703/415/510]
+WWW: https://drwho.virtadpt.net/
+The old world is dying, and the new world struggles to be born. Now is the time of monsters.
 
