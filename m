@@ -1,45 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/30/4
-Message-ID: <36f16149-4c3d-9c44-1dfb-2615af1481e9@igalia.com>
-Date: Mon, 30 Nov 2020 19:04:24 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0009
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/09/1
+Message-ID: <CAH8yC8n5AkLT-90ZDTyGSp4Y4FXc59254aiTuYEFutMpiuRmsA@mail.gmail.com>
+Date: Tue, 8 Sep 2020 20:54:57 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0009
-------------------------------------------------------------------------
+On Mon, Sep 7, 2020 at 10:42 PM Kurt H Maier <khm@...ops.net> wrote:
+>
+> On Mon, Sep 07, 2020 at 09:11:00PM -0400, Jeffrey Walton wrote:
+> > Every US Federal agency I have worked with patches. The Social
+> > Security Administration does it within 30 days, and the Treasury
+> > Department does it in a matter of days. SSA is one of the largest
+> > networks in the world with over 100,000 hosts. Treasury had over
+> > 40,000 hosts.
+>
+> I've worked with US Federal agencies that did not patch.  I was able to
+> change some minds, and it was productive work of which I'm proud.  My
+> success rate is significantly below 100%, although my current employer
+> is largely sympathetic to this effort.
 
-Date reported           : November 30, 2020
-Advisory ID             : WSA-2020-0009
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0009.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0009.html
-CVE identifiers         : CVE-2020-13543.
+I'd be interested to know which agencies don't have a comprehensive
+patch policy in place. And how they passed their SP800-53A audits.
+SI-2, Flaw Remediation, is part of all baselines.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+> I would love to patch every computer with the latest available software,
+> but there remains a gulf between 100k data-entry terminals and computers
+> that must interact with the physical world.
 
-CVE-2020-13543
-    Versions affected: WebKitGTK before 2.30.3 and WPE WebKit before 2.30.3.
-    Credit to Marcin 'Icewall' Noga of Cisco Talos.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An use after free issue was
-    addressed with improved memory management.
+> Machines that are hooked up
+> to scientific or manufacturing equipment can be extremely difficult to
+> patch without breaking things and no amount of haughty lecturing seems
+> to fix the problem, despite same being readily available from multiple
+> sources as far back as I can remember.
 
+I usually encounter this as a one-off problem (and not a farm of
+specialized machines). In my experience, there will be 500
+workstations and servers that can be updated, and one machine that
+cannot. The one machine is the damn fax server with some custom board.
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+> > Microsoft did a study years ago and found most hosts that are
+> > compromised failed to install vendor patches.
+>
+> "Software vendor finds that everything would improve if everyone
+> listened to software vendors" fails by a considerable distance to meet
+> with my interest.
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+:)
 
-The WebKitGTK and WPE WebKit team,
-November 30, 2020
+But it's hard to debunk facts like a new server will experience a
+break-in attempt within 3 minutes of being hung off the internet. It's
+a very repeatable experiment. And all the evidence is in the log
+files. (I think I have half of China and Europe banned through
+iptables).
 
+> "Software vendor stops breaking the driver ABI on
+> supported operating systems" would get a lot farther.  Suggesting this
+> generally results in an earth-shattering avalanche of excuses about how
+> hard programming is.
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+Jeff
