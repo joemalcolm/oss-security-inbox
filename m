@@ -1,50 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/10/1
-Message-ID: <20200110205241.GF6272@outflux.net>
-Date: Fri, 10 Jan 2020 12:52:41 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/09/2
+Message-ID: <CAFRnB2VYNrfRJKUv3TApDidJNgBQwOGS=M2Yt1+Y87ajuQ6zKA@mail.gmail.com>
+Date: Tue, 8 Sep 2020 21:03:52 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Jorge Lucangeli Obes <jorgelo@...gle.com>, Solar Designer <solar@...nwall.com>
-Subject: linux-distros membership adjustment/vouching
+Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+On Tue, Sep 8, 2020 at 8:56 PM Jeffrey Walton <noloader@...il.com> wrote:
 
-I've been a member of linux-distros for a long while, and my hat has
-slowly changed over that time. I'm subscribed there (and here) as
-kees@...ntu.com.  When I my responsibilities shifted from the Ubuntu
-Security Team to the Chrome OS Security Team, I just kept the email
-address (since it's a community address and I'm still part of the Ubuntu
-community).
+> On Mon, Sep 7, 2020 at 10:42 PM Kurt H Maier <khm@...ops.net> wrote:
+> >
+> > On Mon, Sep 07, 2020 at 09:11:00PM -0400, Jeffrey Walton wrote:
+> > > Every US Federal agency I have worked with patches. The Social
+> > > Security Administration does it within 30 days, and the Treasury
+> > > Department does it in a matter of days. SSA is one of the largest
+> > > networks in the world with over 100,000 hosts. Treasury had over
+> > > 40,000 hosts.
+> >
+> > I've worked with US Federal agencies that did not patch.  I was able to
+> > change some minds, and it was productive work of which I'm proud.  My
+> > success rate is significantly below 100%, although my current employer
+> > is largely sympathetic to this effort.
+>
+> I'd be interested to know which agencies don't have a comprehensive
+> patch policy in place. And how they passed their SP800-53A audits.
+> SI-2, Flaw Remediation, is part of all baselines.
+>
+>
+Oh they have a policy. It says that systems will be patched in a timely
+manner. And then the kind accountants who perform the audits say, "Great
+policy, this is fully compliant, have an ATO and a gold star". And then
+random things all over the place are not patched at all because federal IT
+departments have astonishly poor automation practices, extremely limited
+reuse of systems across distinct projects (contracts) within the agency and
+there is nothing approaching a comprehensive way for a federal agency to
+answer "did we deploy the updated struts for all of our stuff".
 
-However, as my responsibilities have shifted, I'm much less involved
-with the Chrome OS Security Team, and it was recently pointed out that
-no one else from the Chrome OS Security Team is (to our knowledge)
-a member right now.
+Alex
 
-So, attempting to solve things in a backwards order, I'd like to first
-vouch for a Chrome OS Security Team member who is already on oss-security,
-with the goal of having them added to the linux-distros list:
 
-    Jorge Lucangeli Obes <jorgelo@...gle.com>
+> > I would love to patch every computer with the latest available software,
+> > but there remains a gulf between 100k data-entry terminals and computers
+> > that must interact with the physical world.
+>
+> > Machines that are hooked up
+> > to scientific or manufacturing equipment can be extremely difficult to
+> > patch without breaking things and no amount of haughty lecturing seems
+> > to fix the problem, despite same being readily available from multiple
+> > sources as far back as I can remember.
+>
+> I usually encounter this as a one-off problem (and not a farm of
+> specialized machines). In my experience, there will be 500
+> workstations and servers that can be updated, and one machine that
+> cannot. The one machine is the damn fax server with some custom board.
+>
+> > > Microsoft did a study years ago and found most hosts that are
+> > > compromised failed to install vendor patches.
+> >
+> > "Software vendor finds that everything would improve if everyone
+> > listened to software vendors" fails by a considerable distance to meet
+> > with my interest.
+>
+> :)
+>
+> But it's hard to debunk facts like a new server will experience a
+> break-in attempt within 3 minutes of being hung off the internet. It's
+> a very repeatable experiment. And all the evidence is in the log
+> files. (I think I have half of China and Europe banned through
+> iptables).
+>
+> > "Software vendor stops breaking the driver ABI on
+> > supported operating systems" would get a lot farther.  Suggesting this
+> > generally results in an earth-shattering avalanche of excuses about how
+> > hard programming is.
+>
+> Jeff
+>
 
-Then I'd like to figure out what to do with my own membership. I'm
-still associated with Ubuntu, Chrome OS, and Android but I don't have
-"official" responsibilities as a representative of their respective
-security teams. I am, however, an upstream Linux kernel security contact
-(but that doesn't qualify as a "Unix-like operating system distro", from
-item "1" in the membership criteria[1]). I am still involved in fixing,
-notifying, negotiating, delegating, etc, in these various distros. Should
-I stay on linux-distros? I would prefer to (it makes that work simpler),
-but since there isn't any "criteria for continuing membership" on the
-Wiki, I'm not entirely sure what the right course of action should be.
-(And if I stay, perhaps it would be more accurate to use kees@...nel.org?)
-
-Thoughts? Thanks!
-
--Kees
-
-[1] https://oss-security.openwall.org/wiki/mailing-lists/distros
 
 -- 
-Kees Cook
+All that is necessary for evil to succeed is for good people to do nothing.
+
