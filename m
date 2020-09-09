@@ -1,4 +1,9 @@
-Received: (qmail 4041 invoked by uid 550); 17 May 2025 02:58:31 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1730" "Wednesday" "9" "September" "2020" "14:49:42" "+0000" "The Doctor [412/724/301/703/415/510]" "drwho@virtadpt.net" "<-VsV_YGp-SKxR0Avc5nmv7S3e27DoHRHH1qczuALNMdZiIl_jakV8kvlugzgfmjbaYvq_GAMhX8EtW5cRtDI1Xj9Ni-usWd_Me04BYM4caU=@virtadpt.net>" "45" "Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" "^Date:" nil nil "9" "2020090914:49:42" "[oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" (number mark "        drwho@virtad Sep  9   45/1730  " thread-indent "\"Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework\"\n") "<CAFRnB2VYNrfRJKUv3TApDidJNgBQwOGS=M2Yt1+Y87ajuQ6zKA@mail.gmail.com>" ("<CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>" "<20200905054704.1d90da6a@jabberwock.cb.piermont.com>" "<CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>" "<20200907165101.38058373@jabberwock.cb.piermont.com>" "<CAH8yC8ms56V7hAVKz1VQ7wX01H+ZC78GAPnNbd7tXRQgRxBt6A@mail.gmail.com>" "<20200908024135.GA70954@wopr>" "<CAH8yC8n5AkLT-90ZDTyGSp4Y4FXc59254aiTuYEFutMpiuRmsA@mail.gmail.com>" "<CAFRnB2VYNrfRJKUv3TApDidJNgBQwOGS=M2Yt1+Y87ajuQ6zKA@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32041 invoked by uid 550); 9 Sep 2020 15:50:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,87 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17561 invoked from network); 17 May 2025 02:52:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747450342; x=1748055142; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=lz4iSYw3Bd3g9Yxdl0+LD6hwT99TS5KyZ2mOP4Yxxrg=;
-        b=bHe4/v0fdBlTE1cYmNNkDQbVAGRntHlPjXLkt+V/wd4ndp38Y22IrAu+AL3IJWBTk/
-         hscVkBYhxMBzkPO+d3RUHhOtgkjUwl4uyNFmyZxldqQ2g83F2O9wzEZIaNBtF5dcZhjq
-         X+DmCFVldFKKcoVAl2xlpxDej/Qv+A7iTrJPhcb3Z7sqwlVBuflNqu7YA9XN+vQakRlG
-         UFlmvvA1pIpSfM+zkEoRTb5jld4DGBZJAwkOmf/qNL9oI6xMVpcJQYTSkOwh0fAGgW/A
-         GPRlGd2EuKnROMDfLnHnnXE2wGTYTEMpoH6zJT+2bvmQNcax6yce3txpmYNUXRpa3Nng
-         C2+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747450342; x=1748055142;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lz4iSYw3Bd3g9Yxdl0+LD6hwT99TS5KyZ2mOP4Yxxrg=;
-        b=xFeH7oaNlhR8US79VhQC7to4tigndwMJlXTQvgYmTa9DgdLxwSzdEawU/aiTrqpz1P
-         3uQvgI2sVZ7lxOQqrrpA9lx0yiQweirLpOjtXE5OF+btjQV1YwOvRpf9rW9wPxSBFzdh
-         CWGchE2i7MKKurXETj5wNNWvrBFVS3JHudM/OWIR2wxWYtm5v4FxU+ckzmRt3dodi+mZ
-         eQomV5/p5zj0PWKeAK/mNKrSNrj/EVEpDnXmjWlSgAk3g+PNEvrILcCDaM2vAFF+Uqii
-         aIVf4QTWu/aYZXewF8IFiihHDCr7hE/r8y6tqL38MQoQmCqtTHq5hwa6ZlbHe9knM92+
-         TXcA==
-X-Gm-Message-State: AOJu0YzE41wETm/GQuaRVDgZAPxZ4xkVOGnxOxDNYhXOHiJvBFyakGrh
-	Bm0y6a0aYddho07Q01AVc4zPbNyDVXzE5UE01XxkayBPY3MCw9/HsnklWyVTbA==
-X-Gm-Gg: ASbGncvwDQczHWGTnbiWNnUlKNNRV7Mh4j0rxN1ylyItvlFItlAR5z6xw3ajNwR9i0R
-	7670OOLpPvvrLuWImncmpTZlXAKlQDSPqtLQcUJIKxPduJO8nNGZ5qUldqZiESv2XrbFAZTNogJ
-	Ud6Y0RMPGFlpVzD4MAn+A1H03UvJcgrtbTsFzVzTgzUXO1ILbPzMmJWhvHH7E0RThDKEj8SvRHk
-	G+KsPp6ke7zkrU0sGrydKQUGM4r9p6d55D3bDa4LSvKLbitb5IPAREhzrs6MVzkvLh6b4FYdbP5
-	YMWb1zSQkH2fEWVlSq/9mD8Jem1leInEtDqg2j+dcf1n/R+B3J2U8oNOdbI=
-X-Google-Smtp-Source: AGHT+IHt3Bg6sO0puLwKhASFoklltgfvDvB40BIH2Z6ui4MysJG74RxCd6Noi4xySIYNOIfw9+D51A==
-X-Received: by 2002:a05:6820:1b08:b0:607:6268:c0a5 with SMTP id 006d021491bc7-609f46fb3d4mr2764929eaf.0.1747450341879;
-        Fri, 16 May 2025 19:52:21 -0700 (PDT)
-Message-ID: <8ea7f8f5-7645-4d5d-af38-d0b434636e40@gmail.com>
-Date: Fri, 16 May 2025 21:52:14 -0500
+Received: (qmail 7840 invoked from network); 9 Sep 2020 14:50:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtadpt.net;
+	s=protonmail; t=1599662991;
+	bh=qHSgVAJqqddqThK3lDVlCOV/6aa/3Tcyv0OmTzeycb8=;
+	h=Date:To:From:Reply-To:Subject:In-Reply-To:References:From;
+	b=D/ZiToZygCEQhBfjQDoimwenaSUrUM8X449gN+8KOZotRseLCZlkX9BPotZ4lpinx
+	 7DTydfbJnVJPhgTKJfauRw8UjSU9e63o9fwNMwUeDhaGYcJKdHxDjiw4ydLqFJ+B7i
+	 Rg8QuMDTZ5tyEay7jdnRBYAJ3+154o81hDxf7rkg=
+Message-ID: <-VsV_YGp-SKxR0Avc5nmv7S3e27DoHRHH1qczuALNMdZiIl_jakV8kvlugzgfmjbaYvq_GAMhX8EtW5cRtDI1Xj9Ni-usWd_Me04BYM4caU=@virtadpt.net>
+In-Reply-To: <CAFRnB2VYNrfRJKUv3TApDidJNgBQwOGS=M2Yt1+Y87ajuQ6zKA@mail.gmail.com>
+References: <CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com> <20200905054704.1d90da6a@jabberwock.cb.piermont.com> <CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com> <20200907165101.38058373@jabberwock.cb.piermont.com> <CAH8yC8ms56V7hAVKz1VQ7wX01H+ZC78GAPnNbd7tXRQgRxBt6A@mail.gmail.com> <20200908024135.GA70954@wopr> <CAH8yC8n5AkLT-90ZDTyGSp4Y4FXc59254aiTuYEFutMpiuRmsA@mail.gmail.com> <CAFRnB2VYNrfRJKUv3TApDidJNgBQwOGS=M2Yt1+Y87ajuQ6zKA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Eli Schwartz <eschwartz@gentoo.org>
-References: <20250516163157.BA80D8564D@mail.netbsd.org>
- <35a41210-9cd1-4845-bc6d-fdbff2d0c407@gentoo.org>
-Content-Language: en-US
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-In-Reply-To: <35a41210-9cd1-4845-bc6d-fdbff2d0c407@gentoo.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] describing affected systems (was: screen: Multiple
- Security Issues in Screen (mostly affecting release 5.0.0 and setuid-root
- installations))
-
-On 5/16/25 13:07, Eli Schwartz wrote:
-> On 5/16/25 12:31 PM, Taylor R Campbell wrote:
-> [...]
->> (a) the same pkgsrc packages are available on, e.g., NetBSD 9.x (which
->>      is not EOL); and
->>
->> (b) pkgsrc is used on platforms other than NetBSD, including macOS,
->>      SmartOS, and various Linux distributions (e.g., for unprivileged
->>      use on HPC clusters where it is more flexible and up-to-date than
->>      the Linux distribution's package manager).
->>
->> That is why it would be more accurate for the report to say
->> `pkgsrc-2025Q1', not `NetBSD 10.1'.
->
-> I strongly dispute this. It should instead list both, as both are
-> affected.
-
-Would "systems using pkgsrc-2025Q1, notably including NetBSD 9.x and 
-NetBSD 10.1" have been a fair way of describing that set?
-
-> (Again, b is the same distinction as "Gentoo, but also
-> portage-20250508, are both affected".)
-
-Am I mistaken that portage is unique to Gentoo, while pkgsrc is also 
-used for applications on systems other than its native NetBSD?
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 09 Sep 2020 14:49:42 +0000
+From: "The Doctor [412/724/301/703/415/510]" <drwho@virtadpt.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
 
--- Jacob
+=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
+ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
+On Tuesday, September 8, 2020 6:03 PM, Alex Gaynor <alex.gaynor@gmail.com> =
+wrote:
 
+> Oh they have a policy. It says that systems will be patched in a timely
+> manner. And then the kind accountants who perform the audits say, "Great
+> policy, this is fully compliant, have an ATO and a gold star". And then
+
+I wish I could not confirm this.  In the assignments I was given, this was =
+the rule
+and not the exception.
+
+> random things all over the place are not patched at all because federal IT
+> departments have astonishly poor automation practices, extremely limited
+
+A lot of that seems to boil down to "You want to run this random piece of s=
+oftware
+to automate the job we're paying you to do?  Forget it."  There is also the=
+ odd
+"We won't run any software that doesn't have <some number of expensive inde=
+pendent
+code audits and certifications> and what you want to do doesn't have those =
+(even
+though you claim they do, we think you're lying)."
+
+> reuse of systems across distinct projects (contracts) within the agency a=
+nd
+
+Secure data erasure and platform disposal practices have something to do wi=
+th this.
+
+> there is nothing approaching a comprehensive way for a federal agency to
+> answer "did we deploy the updated struts for all of our stuff".
+
+With a side order of "the contractors we hired for this stuff should be on =
+top of it,"
+even when they're not the prime on the contract anymore.
+
+The Doctor [412/724/301/703/415/510]
+WWW: https://drwho.virtadpt.net/
+The old world is dying, and the new world struggles to be born. Now is the =
+time of monsters.
 
