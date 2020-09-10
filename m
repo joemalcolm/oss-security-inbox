@@ -1,11 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/05/2
-Message-ID: <CAHmME9qsMk3YL83OsFB2mebkP6LXhXZ7n1FXzT52cZheevB5Ww@mail.gmail.com>
-Date: Wed, 5 Aug 2020 09:35:32 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: security@...ntu.com, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: ansi escape sequence injection into ubuntu's add-apt-repository
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/10/1
+Message-Id: <91D3B5A6-C405-4FF3-BE8D-042122A1780B@nanthrax.net>
+Date: Thu, 10 Sep 2020 07:27:04 +0200
+From: Jean-Baptiste Onofre <jb@...thrax.net>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-13920] ActiveMQ JMX vulenarable to MITM attack
 Content-Type: text/plain; charset=utf-8
 
-Upstream tracker bug:
-https://bugs.launchpad.net/ubuntu/+source/software-properties/+bug/1890286
+CVE-2020-13920: Apache ActiveMQ JMX is vulnerable to a MITM attack
+
+Severity: Moderate
+
+Vendor: The Apache Software Foundation
+
+Affected Version: Apache ActiveMQ version prior to 5.15.12
+
+Vulnerability details:
+Apache ActiveMQ uses LocateRegistry.createRegistry() to create the JMX RMI
+registry and binds the server to the "jmxrmi" entry. It is possible
+to connect to the registry without authentication and call the rebind
+method to rebind jmxrmi to something else. If an attacker creates another
+server to proxy the original, and bound that, he effectively becomes a 
+man in the middle and is able to intercept the credentials when an user
+connects.
+
+Mitigation:
+Upgrade to Apache ActiveMQ 5.15.12
+
+Credit: Jonathan Gallimore & Colm O hEigeartaigh
+
+
