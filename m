@@ -1,66 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/06/4
-Message-ID: <1596735649.25458.15.camel@linux.ibm.com>
-Date: Thu, 06 Aug 2020 10:40:49 -0700
-From: James Bottomley <jejb@...ux.ibm.com>
-To: Jonas Witschel <diabonas@...hlinux.org>, oss-security@...ts.openwall.com
-Cc: trousers-tech@...ts.sourceforge.net, security@...e.de
-Subject: Re: Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/10/4
+Message-ID: <20200910145248.GB79015@eldamar.local>
+Date: Thu, 10 Sep 2020 16:52:48 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: Andy Lutomirski <luto@...nel.org>
+Cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Linux kernel vsyscall page refcounting error
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2020-08-06 at 13:06 +0200, Jonas Witschel wrote:
-> On 2020-08-05 14:51, Jerry Snitselaar wrote:
-> > > Mitigation and Bugfixes
-> > > =======================
-> > > 
-> > > It seems best to me to run the tcsd as the tss:tss user and group
-> > > right away and to not rely on the privilege drop logic
-> > > implemented in the daemon itself. All of a), b) and c) should no
-> > > longer be problematic in this case. I found that on Debian and
-> > > Gentoo Linux this is already the case. To make this work a
-> > > udev rule needs to be packaged that passes ownership of /dev/tpm0
-> > > device to the tss user. To prevent regressions when switching
-> > > from the privilege drop approach to this new approach, a possibly
-> > > already existing /var/lib/tpm/system.auth file needs to be safely
-> > > chown()'ed to the tss user during package updates.
-> > > 
-> > 
-> > On Fedora and RHEL there currently is a udev rule (from upstream)
-> > that ships with the tpm2-tss package that is setting ownership of
-> > /dev/tpm0 to tss:root. I don't recall what the reasoning was for
-> > the group being root. For /dev/tpmrm0 it sets it to tss:tss, so not
-> > sure what the reason was for /dev/tpm0. I believe that package is
-> > part of a default install, so that will need to be worked out. I
-> > don't know if you run into that with SUSE as well.
+On Tue, Sep 08, 2020 at 08:33:00AM -0700, Andy Lutomirski wrote:
+> Linux 5.7 and 5.8 have a bug in the reference counting of the struct
+> page that backs the vsyscall page.  The result is a refcount
+> underflow.  This can be triggered by any 64-bit process that is
+> permitted to use ptrace() or process_vm_readv().  A creative attacker
+> can probably achieve kernel code escalation by using this bug.
 > 
-> The idea behind not giving the tss group access to /dev/tpm0 as well
-> is to prevent users from gaining direct access to the TPM and being
-> able to DoS it. Users privileged to access the TPM should be added to
-> the tss group so that they can access the TPM trough an access
-> broker/resource manager (like tpm2-abrmd, the in-kernel resource
-> manager /dev/tpmrm0, or tcsd in case of TPM 1.2), but not have "bare
-> metal" access, which is limited to the tss user and root. See [1] for
-> reference.
+> You can prevent the issue from triggering by booting with
+> vsyscall=xonly or vsyscall=none.  You can also effectively hotpatch a
+> kernel with suitable hardening options by running the updated test
+> case noted below -- the test case will underflow the refcount past
+> zero, preventing further use of the page.  (A real attacker would
+> carefully underflow it exactly to zero but not past.)  Or you can fix
+> your kernel.
+> 
+> (No one should be using vsyscall=emulate any more unless they have a
+> very specific use case that requires it.  vsyscall=xonly is better in
+> almost all cases.  For some reason, Fedora still seems to be using
+> emulate mode, though.)
+> 
+> Fixed by:
+> 
+> commit 9fa2dd946743ae6f30dc4830da19147bf100a7f2
+> Author: Dave Hansen <dave.hansen@...ux.intel.com>
+> Date:   Thu Sep 3 13:40:28 2020 -0700
+> 
+>     mm: fix pin vs. gup mismatch with gate pages
+> 
+> and tested a little better by:
+> 
+> commit 8891adc61dce2a8a41fc0c23262b681c3ec4b73a
+> Author: Andy Lutomirski <luto@...nel.org>
+> Date:   Thu Sep 3 13:40:30 2020 -0700
+> 
+>     selftests/x86/test_vsyscall: Improve the process_vm_readv() test
 
-That may be a bit of a misconception about how tpmrm operates.  It's
-simply the in-kernel resource manager which virtualizes the transient
-objects and the session handles (as far as the latter can be
-virtualized), so users making contact with the TPM over the tpmrm
-device can't interfere with each other (very necessary with TPM 2.0
-because it only has room for 3 transient keys).  However, a user with
-tpmrm access can still DoS the TPM by making it derive RSA keys, for
-instance.  Plus they can still access the full range of TPM privileged
-commands if they have the authorizations.  There was talk of adding a
-command restriction filter to tpmrm, but it's very hard to do reliably,
-which is why it's not been done.
+CVE-2020-25221 has been assigned by MITRE for this issue (note one
+cannot request anymore CVEs through that list but one can use
+https://cveform.mitre.org/)
 
-Basically TPM should be treated as a single owner resource, but that
-single owner still needs help: I use my TPM for keys for ssh, gpg,
-openvpn, secure boot and my general CA infrastructure.  Since those
-applications operate independently, they could stack enough transient
-objects into the TPM to give me an out of memory error unless I go via
-the tpmrm device.
-
-James
-
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+Regards,
+Salvatore
