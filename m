@@ -1,4 +1,9 @@
-Received: (qmail 10156 invoked by uid 550); 28 Jul 2022 08:17:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1096" "Thursday" "10" "September" "2020" "11:45:14" "+0200" "Jean-Baptiste Onofre" "jb@nanthrax.net" "<63E9EEC8-9E07-4CE5-B5EE-406FAFFBC1F4@nanthrax.net>" "34" "[oss-security] [CVE-2020-11998] Apache ActiveMQ JMX remote client could execute arbitrary code" nil nil nil "9" "2020091009:45:14" "[oss-security] [CVE-2020-11998] Apache ActiveMQ JMX remote client could execute arbitrary code" (number mark "U       jb@nanthrax. Sep 10   34/1096  " thread-indent "\"[oss-security] [CVE-2020-11998] Apache ActiveMQ JMX remote client could execute arbitrary code\"\n") "<2A06806A-5F35-436B-9D62-53AF557309A8@nanthrax.net>" ("<2A06806A-5F35-436B-9D62-53AF557309A8@nanthrax.net>") nil nil nil nil nil nil nil "[oss-security] [CVE-2020-11998] Apache ActiveMQ JMX remote client could execute arbitrary code" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3974 invoked by uid 550); 10 Sep 2020 13:03:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,39 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20146 invoked from network); 28 Jul 2022 07:38:46 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Ruben Q L <rubenql@apache.org>
+Received: (qmail 13863 invoked from network); 10 Sep 2020 09:45:30 -0000
+X-Originating-IP: 82.64.90.43
+From: Jean-Baptiste Onofre <jb@nanthrax.net>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_CF856646-6B6A-48C7-A3FD-98D580392161"
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Message-Id: <63E9EEC8-9E07-4CE5-B5EE-406FAFFBC1F4@nanthrax.net>
+References: <2A06806A-5F35-436B-9D62-53AF557309A8@nanthrax.net>
 To: oss-security@lists.openwall.com
-Message-ID: <9f4f4eb2-79d4-0351-0d36-05443710c549@apache.org>
+Date: Thu, 10 Sep 2020 11:45:14 +0200
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
+Subject: [oss-security] [CVE-2020-11998] Apache ActiveMQ JMX remote client could execute
+ arbitrary code
+
+--Apple-Mail=_CF856646-6B6A-48C7-A3FD-98D580392161
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 28 Jul 2022 07:38:24 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-36364: Apache Calcite Avatica JDBC driver
- `httpclient_impl` connection property can be used as an RCE vector 
+Content-Type: text/plain;
+	charset=us-ascii
 
-Severity: moderate
+CVE-2020-11998: Apache ActiveMQ JMX remote client could execute arbitrary c=
+ode
 
-Description:
+Severity: Moderate
 
-Apache Calcite Avatica JDBC driver creates HTTP client instances based on c=
-lass names provided via `httpclient_impl` connection property; however, the=
- driver does not verify if the class implements the expected interface befo=
-re instantiating it, which can lead to code execution loaded via arbitrary =
-classes and in rare cases remote code execution.
+Vendor: The Apache Software Foundation
 
-To exploit the vulnerability:
-1) the attacker needs to have privileges to control JDBC connection paramet=
-ers;
-2) and there should be a vulnerable class (constructor with URL parameter a=
-nd ability to execute code) in the classpath.
+Affected Version: only Apache ActiveMQ 5.15.12
 
->From Apache Calcite Avatica 1.22.0 onwards, it will be verified that the cl=
-ass implements the expected interface before invoking its constructor.
+Vulnerability details:=20
+A regression has been introduced in the commit preventing JMX re-bind.
+By passing an empty environment map to RMIConnectorServer, instead of the m=
+ap that contains
+he authentication credentials, it leaves ActiveMQ open to the following att=
+ack:
 
-Credit:
+ https://docs.oracle.com/javase/8/docs/technotes/guides/management/agent.ht=
+ml
 
-Apache Calcite Avatica would like to thank Peter M (https://twitter.com/h1p=
-mnh) for reporting this issue
+"A remote client could create a javax.management.loading.MLet MBean and use
+it to create new MBeans from arbitrary URLs, at least if there is no
+security manager. In other words, a rogue remote client could make your
+Java application execute arbitrary code."
 
+Mitigation: Upgrade to Apache ActiveMQ 5.15.13
+
+Credit: Jonathan Gallimore & Colm O hEigeartaigh
+
+--Apple-Mail=_CF856646-6B6A-48C7-A3FD-98D580392161--
