@@ -1,56 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/03/1
-Message-Id: <4A2798F3-D0B2-456D-8DDB-F79C7354C348@gmail.com>
-Date: Mon, 3 Feb 2020 10:56:32 +0100
-From: Carlton Gibson <carlton.gibson@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/11/1
+Message-ID: <6d2be9b1-ab9a-bc1b-b0e3-f2cdddbee90b@apache.org>
+Date: Fri, 11 Sep 2020 11:58:42 +0200
+From: Cédric Damioli <cdamioli@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Django 3.0.3, 2.2.10 and 1.11.28: CVE-2020-7471: Potential SQL injection via ``StringAgg(delimiter)``
+Subject: [CVE-2020-11991] Apache Cocoon security vulnerability
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2020/feb/03/security-releases/ <https://www.djangoproject.com/weblog/2020/feb/03/security-releases/>
+[CVE-2020-11991] Apache Cocoon security vulnerability
 
-In accordance with `our security release policy <https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django team is issuing `Django 3.0.3 <https://docs.djangoproject.com/en/dev/releases/3.0.3/>`_, `Django 2.2.10 <https://docs.djangoproject.com/en/dev/releases/2.2.10/>`_ and `Django 1.11.28 <https://docs.djangoproject.com/en/dev/releases/1.11.28/>`_. These releases address the security issue detailed below. We encourage all users of Django to upgrade as soon as possible.
+Severity: Important
 
-Affected supported versions
-===========================
+Vendor: The Apache Software Foundation
 
-* Django master branch
-* Django 3.0
-* Django 2.2
-* Django 1.11
+Versions Affected: Apache Cocoon up to 2.1.12
 
-CVE-2020-7471: Potential SQL injection via ``StringAgg(delimiter)``
-===================================================================
+Description: When using the StreamGenerator, the code parse a 
+user-provided XML.
 
-``django.contrib.postgres.aggregates.StringAgg`` aggregation function was
-subject to SQL injection, using a suitably crafted ``delimiter``.
+A specially crafted XML, including external system entities, could be 
+used to access any file on the server system.
 
-Thank you to Simon Charette for the report and patch. 
+Mitigation:
 
-Resolution
-==========
+The StreamGenerator now ignores external entities. 2.1.x users should 
+upgrade to 2.1.13
 
-Patches to resolve the issue have been applied to Django's master branch and
-the 3.0, 2.2, and 1.11 release branches. The patches may be obtained from the following changesets:
+Example:
 
-* On the `master branch <https://github.com/django/django/commit/eb31d845323618d688ad429479c6dda973056136>`__
-* On the `3.0 release branch <https://github.com/django/django/commit/505826b469b16ab36693360da9e11fd13213421b>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/c67a368c16e4680b324b4f385398d638db4d8147>`__
-* On the `1.11 release branch <https://github.com/django/django/commit/001b0634cd309e372edb6d7d95d083d02b8e37bd>`__
+With the following input :
 
-The following releases have been issued:
+<!--?xml version="1.0" ?--> <!DOCTYPE replace [<!ENTITY ent SYSTEM 
+"file:///etc/shadow"> ]> <userInfo> <firstName>John</firstName> 
+<lastName>&ent;</lastName> </userInfo> an attacker got the content of 
+/etc/shadow
 
-* Django 3.0.3 (`download Django 3.0.3 <https://www.djangoproject.com/m/releases/3.0/Django-3.0.3.tar.gz>`_ | `3.0.3 checksums <https://www.djangoproject.com/m/pgp/Django-3.0.3.checksum.txt>`_)
-* Django 2.2.10 (`download Django 2.2.10 <https://www.djangoproject.com/m/releases/2.2/Django-2.2.10.tar.gz>`_ | `2.2.10 checksums <https://www.djangoproject.com/m/pgp/Django-2.2.10.checksum.txt>`_)
-* Django 1.11.28 (`download Django 1.11.28 <https://www.djangoproject.com/m/releases/1.11/Django-1.11.28.tar.gz>`_ | `1.11.28 checksums <https://www.djangoproject.com/m/pgp/Django-1.11.28.checksum.txt>`_)
+Credit: This issue was discovered by ﻿Nassim Asrir.
 
-The PGP key ID used for these releases is Carlton Gibson: E17DF5C82B4F9D00.
 
-General notes regarding security reporting
-==========================================
+Regards,
 
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+-- 
+Cédric Damioli
+
+
