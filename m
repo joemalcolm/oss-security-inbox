@@ -1,38 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/24/7
-Message-ID: <20201124184338.GA29068@altlinux.org>
-Date: Tue, 24 Nov 2020 21:43:38 +0300
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/14/1
+Message-ID: <5d3591e4-ce5b-77ca-eebe-69651d696f11@apache.org>
+Date: Mon, 14 Sep 2020 12:33:10 +0200
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Heads up: PAM 1.5.0 has a auth bypass under some conditions
+Subject: [CVE-2020-11977] Apache Syncope: Remote Code Execution via Flowable workflow definition
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description:
+When the Flowable extension is enabled, an administrator with workflow entitlements can use Shell Service Tasks to perform malicious operations, including but not limited to file read, file write, and code execution.
 
-On Tue, Nov 24, 2020 at 07:20:21PM +0100, Marcus Meissner wrote:
-> Hi,
-> 
-> (via IRC, spotted by Foxboron)
-> 
-> PAM 1.5.0 had a potential auth bypass, if a user did not exist and the root password was
-> empty (but root locked down).
-> 
-> The reporters usecase was spammers pretending to be unknown users with a PAM enabled dovecot.
-> 
-> This issue affected only pam 1.5.0.
+Severity: Low
 
-I'd like to note that the issue affects pam_unix module only,
-those who use other authentication modules instead of pam_unix
-are not effected.
+Vendor: The Apache Software Foundation
 
-Nevertheless, Linux-PAM 1.5.1 is going to be released shortly
-to address this issue.
+Affects:
+2.1.X releases prior to 2.1.7
 
-Just for the record, the bug was introduced by commit
-https://github.com/linux-pam/linux-pam/commit/af0faf666c5008e54dfe43684f210e3581ff1bca
-and fixed by commit
-https://github.com/linux-pam/linux-pam/commit/30fdfb90d9864bcc254a62760aaa149d373fd4eb
+Solution:
+2.1.X users: upgrade to 2.1.7
+
+Credit:
+This issue was discovered by ch0wn of Orz Lab.
 
 
--- 
-ldv
