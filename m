@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1588" "Wednesday" "5" "July" "2017" "23:28:06" "+0100" "Simon McVittie" "smcv@debian.org" "<20170705222806.u44tcrhruczgpkb7@perpetual.pseudorandom.co.uk>" "30" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070522:28:06" "[oss-security] systemd fails to parse user that should run service" (number mark "        smcv@debian. Jul  5   30/1588  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>" ("<20170705215814.4wyzvq2deid4ln7q@perpetual.pseudorandom.co.uk>" "<9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["424" "Monday" "14" "September" "2020" "12:33:10" "+0200" "=?UTF-8?B?RnJhbmNlc2NvIENoaWNjaGlyaWNjw7I=?=" "ilgrosso@apache.org" "<5d3591e4-ce5b-77ca-eebe-69651d696f11@apache.org>" "17" "[oss-security] [CVE-2020-11977] Apache Syncope: Remote Code Execution via Flowable workflow definition" nil nil nil "9" "2020091410:33:10" "[oss-security] [CVE-2020-11977] Apache Syncope: Remote Code Execution via Flowable workflow definition" (number mark "U       ilgrosso@apa Sep 14   17/424   " thread-indent "\"[oss-security] [CVE-2020-11977] Apache Syncope: Remote Code Execution via Flowable workflow definition\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-11977] Apache Syncope: Remote Code Execution via Flowable workflow definition" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5797 invoked by uid 550); 5 Jul 2017 22:28:40 -0000
+Received: (qmail 19468 invoked by uid 550); 14 Sep 2020 10:56:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5779 invoked from network); 5 Jul 2017 22:28:39 -0000
-Message-ID: <20170705222806.u44tcrhruczgpkb7@perpetual.pseudorandom.co.uk>
-References: <20170705215814.4wyzvq2deid4ln7q@perpetual.pseudorandom.co.uk>
- <9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Date: Wed, 5 Jul 2017 23:28:06 +0100
-From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd fails to parse user that should run
- service
+Received: (qmail 11844 invoked from network); 14 Sep 2020 10:33:24 -0000
+From: =?UTF-8?Q?Francesco_Chicchiricc=c3=b2?= <ilgrosso@apache.org>
 To: oss-security@lists.openwall.com
+Autocrypt: addr=ilgrosso@apache.org; prefer-encrypt=mutual; keydata=
+ mQENBE9EncsBCAC02uAixULU/lI6u7y2a4hPLZ+J9eb1ZNVrg4iockEktP39C8zsve4rxltc
+ 9SnT5wa2XwVTwiSl8HjxFGmc/CyMP4l+JLYLqAxvN25BXzoC7pvIpH5VcXMnTKP2bqIcIQ3H
+ bR2gLxjxlEzRBgmzsnrtNWhlCi4DNuUcarMrzaWbQkW5DiieW/V7BNEKw7L/WESXWbXTC9zj
+ vyf9JQ/Ql3ys7n7y+/C7nnnnRys9kJahJkYbiLasJTxRMm/ENjzwamE1s2khxNDhYXmeXyUf
+ PYDv46rVP39TNNbecG9EuHbZZ1pRRSkGZJZnpWBu0O6VWOfn0aF2rR5mfbGHsQA8CQWlABEB
+ AAG0OEZyYW5jZXNjbyBDaGljY2hpcmljY8OyIChpbGdyb3NzbykgPGlsZ3Jvc3NvQGFwYWNo
+ ZS5vcmc+iQE4BBMBAgAiBQJPRJ3LAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRBr
+ QxPtJz3yh5j3B/46VEpC62uq3wiwDaUYI2fl6DYjlAuSGbI9Q7Avxpz+yDieaPE7Q3C19Xx+
+ wTFrHyPOswbltmT5KDNqEpe5C9IpqoSyu7UIkqHtlXTxhsu+rFWpfABnI4sfQ0ui1VOLN3JB
+ xG7G8PHCmIdYThSCRoM14u4KSU1ytd3SFtOpNLVU5TVBGm+aJWOu++XPSICn97101ndn8AJm
+ JDTlHQwqMzpQTejLQnv020SouLq5cB2O6HSuSmSDpctFCdYkYLzHA6p3WzKgVXt9c3CV7Zhf
+ w/XufaqXQQIkr1VLN/l13PlbPPnLluzPO+agDuCsJReFzF2JwxJYBLUIu0T8A+yrfTIzuQEN
+ BE9EncsBCADQrFXb7lIhSSaTIkNnE987DGgLn9QRUEvSa+132lWcZYx+knLehdH0++F/cqUc
+ 2KT17anzbOidGo0rvxwj5s42NV3lOUWIFBM7pUCwN2ef2CM3TVwA+/WrKGRFq/+cwAhSfDoc
+ jtN4+vYd4NbIgzSA7ZuoaT4vKRpBex0fAN2J8tLOzXSbXdsoWRj4pVBnJ0N6WHRlaqLQnQ7o
+ F1E6ZrNREMWasjxRuZ38mlpfbArnqw+lAbHL6T/BsKXOEjASe5iOPN9r95HW6dH1vmef1mOk
+ /Pu6wr+eIcqwPIBUQRvHw5UnOrMugUf1ohgnx2NvggLOSlvgGBnZo47MphpOd5DVABEBAAGJ
+ AR8EGAECAAkFAk9EncsCGwwACgkQa0MT7Sc98oeFHggAro4b3tGyKCV7tMz8q9drqigl/6n+
+ /2riaumndUcPFZOsewDmg/75jszjc6hoe7wreBkJi0u8kvm6F0RpIlGk5WpCa7bljEc6Erm9
+ GLON/DoYn1MSpdMZdwucairqvMK1YWg/7wI/xjgq6br5FBoLegVE8bd3Iy4SVWKUIRURBF7q
+ Ft3rVRUJdcmqHvCWpxDJ1VKPRDHf5szVkWXFJI0xiU6KuICWidZ9Hg3WXUsm3SePD7FtokiK
+ 0Y9SBzHpd9EZe8KRIHekl5gVS2Xe83GC5GvPHEXE0usYUNRDArOXqIkGUCWHZ7gzueMBcWqW
+ x+uxeS7bQfZZO/7ew7lIDf4gYA==
+Message-ID: <5d3591e4-ce5b-77ca-eebe-69651d696f11@apache.org>
+Date: Mon, 14 Sep 2020 12:33:10 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+Subject: [oss-security] [CVE-2020-11977] Apache Syncope: Remote Code Execution via Flowable
+ workflow definition
 
-On Thu, 06 Jul 2017 at 00:02:58 +0200, Kristian Fiskerstrand wrote:
-> On 07/05/2017 11:58 PM, Simon McVittie wrote:
-> > systemd does have a (public, and publically-archived) mailing list, which
-> > has a current thread on the subject of this issue.
-> > 
-> > In particular the mail in that thread from Felipe Sateler, and some of
-> > the discussion on the upstream bug, touches on reasons why neither
-> > "if anything is not as expected, reject the whole unit" nor the current
-> > behaviour is right. I suspect the resolution is likely to be something
-> > in between.
-> 
-> It would be useful with a reference to the thread in question so this
-> can be further looked into.
+Description:
+When the Flowable extension is enabled, an administrator with workflow entitlements can use Shell Service Tasks to perform malicious operations, including but not limited to file read, file write, and code execution.
 
-The systemd mailing list is indexed by major search engines. I
-deliberately didn't provide a link, in the hope that a small barrier to
-entry will lead to fewer responses reiterating what has already been said,
-and a correspondingly greater chance of a response not getting lost in
-the noise from someone who has read the context and will propose a
-patch that achieves the desired result without breaking intended
-functionality (in particular "graceful degradation" when units released
-in upstream projects are interpreted by an older systemd, so that
-upstreams can opt-in to new security hardening flags without making their
-software inoperable in currently-deployed systemd versions).
+Severity: Low
 
-Of course, if I was an exemplary open source developer I would have been
-spending my free time on writing that patch instead of getting drawn into
-conversations on oss-security, so perhaps this is partially my fault now.
+Vendor: The Apache Software Foundation
 
-    S
+Affects:
+2.1.X releases prior to 2.1.7
+
+Solution:
+2.1.X users: upgrade to 2.1.7
+
+Credit:
+This issue was discovered by ch0wn of Orz Lab.
+
+
