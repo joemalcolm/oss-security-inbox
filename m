@@ -1,27 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/17/2
-Message-ID: <20200417083359.GA141762@kroah.com>
-Date: Fri, 17 Apr 2020 10:33:59 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/15/3
+Message-ID: <6a34e3be-2417-4f99-a36f-fbfaaef07458@Spark>
+Date: Tue, 15 Sep 2020 09:37:34 -0700
+From: William Barrett <will@...set.io>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic
+Subject: [CVE-2020-13948] Apache Superset Remote Code Execution Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 17, 2020 at 12:40:10PM +0800, 陈伟宸(田各) wrote:
-> 
-> "A race condition was found in the Linux kernel audit subsystem. When the system is configured to panic on events being dropped, an attacker who is able to trigger an audit event that starts while auditd is in the process of starting may be able to cause the system to panic by exploiting a race condition in audit event handling. This creates a denial of service by causing a panic."
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1822593
+Affected Versions: Apache Superset < 0.37.1
 
-That bug link seems to be restricted at the moment :(
+While investigating a bug report on Apache Superset, it was determined that an authenticated user could craft requests via a number of templated text fields in the product that would allow arbitrary access to Python’s `os` package in the web application process. It was thus possible for an authenticated user to list and access files, environment variables, and process information. Additionally it was possible to set environment variables for the current process, create and update files in folders writable by the web process, and execute arbitrary programs accessible by the web process. All other operations available to the `os` package in Python were also available, even if not explicitly enumerated in this CVE.
 
-> Env:
->     Red Hat Enterprise Linux Server release 7.7 (Maipo)
->     3.10.0-1062.12.1.el7.x86_64
+Will Barrett
+Staff Software Engineer
+Preset, Inc. | https://preset.io
 
-Any hint on if this is still an issue on the "mainline" kernel.org
-releases or not given that 3.10 is a bit old?
-
-thanks,
-
-greg k-h
