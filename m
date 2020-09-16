@@ -1,33 +1,288 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/11
-Message-ID: <326221db60085d047ec552343f0f3a5e0e14ae7e.camel@gathman.org>
-Date: Thu, 23 Apr 2020 12:33:34 -0400
-From: "Stuart D. Gathman" <stuart@...hman.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/16/3
+Message-Id: <FD6A661E-E3CE-43BD-BA96-27B337545A10@beckweb.net>
+Date: Wed, 16 Sep 2020 15:13:22 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: spoofing of local email sender via a homoglyph attack
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2020-04-23 at 17:32 +0300, PromiseLabs Pentest Research wrote:
-> 
-> is that it could be used to advance a social-engineer attack into 
-> tricking the recipients believing that they are getting an email from
-> a 
-> high-level position at the company.
-> 
-> It's related to the from header.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-This is not really job of postfix to block.  It is trivial to block
-internationalized local mail in a milter (note: I maintain pymilter) -
-or just refuse to create non-ascii mailboxes.  
+The following releases contain fixes for security vulnerabilities:
 
-You don't even need utf-
-8 for this attack - the infamous Arial font makes homoglyphs like lBM
-(which looks exactly like IBM in Arial) possible, and email localpart
-is case sensitive.  So I also recommend forcing all local mailboxes to
-be all lower case.  (Some businesses force to all upper case instead.) 
+* Blue Ocean Plugin 1.23.3
+* computer-queue-plugin Plugin 1.6
+* Email Extension Plugin 2.76
+* Health Advisor by CloudBees Plugin 3.2.1
+* Mailer Plugin 1.32.1
+* Perfecto Plugin 1.18
+* Pipeline Maven Integration Plugin 3.9.3
+* Validating String Parameter Plugin 2.5
+
+Additionally, we announce unresolved security issues in the following
+plugins:
+
+* Android Lint Plugin
+* chosen-views-tabbar Plugin
+* ClearCase Release Plugin
+* Copy data to workspace Plugin
+* Coverage/Complexity Scatter Plot Plugin
+* Custom Job Icon Plugin
+* Description Column Plugin
+* ElasTest Plugin
+* Locked Files Report Plugin
+* MongoDB Plugin
+* Radiator View Plugin
+* Selection tasks Plugin
+* Storable Configs Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2020-09-16/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1813 / CVE-2020-2252
+Mailer Plugin 1.32 and earlier does not perform hostname validation when
+connecting to the configured SMTP server. This lack of validation could be
+abused using a man-in-the-middle attack to intercept these connections.
 
 
-If anything, this is a security bug in the *font* (which the term
-homoglyph implies), and the CVE should specify the problematic font or
-fonts.
+SECURITY-1851 / CVE-2020-2253
+Email Extension Plugin 2.75 and earlier does not perform hostname
+validation when connecting to the configured SMTP server. This lack of
+validation could be abused using a man-in-the-middle attack to intercept
+these connections.
 
+
+SECURITY-1956 / CVE-2020-2254
+Blue Ocean Plugin 1.23.2 and earlier provides an undocumented feature flag,
+`blueocean.features.GIT_READ_SAVE_TYPE`, that when set to the value `clone`
+allows an attacker with Item/Configure or Item/Create permission to read
+arbitrary files on the Jenkins controller file system.
+
+
+SECURITY-1961 / CVE-2020-2255
+A missing permission check in a REST API in Blue Ocean Plugin 1.23.2 and
+earlier allows attackers with Overall/Read permission to initiate a
+connection test to an attacker-specified URL.
+
+
+SECURITY-1976 / CVE-2020-2256
+Pipeline Maven Integration Plugin 3.9.2 and earlier does not escape the
+upstream job's display name shown as part of a build cause.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
+
+SECURITY-1935 / CVE-2020-2257
+Validating String Parameter Plugin 2.4 and earlier does not escape regular
+expressions in tooltips. Additionally, Validating String Parameter Plugin
+2.4 does not escape parameter names and parameter descriptions.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
+
+SECURITY-1998 / CVE-2020-2258
+Health Advisor by CloudBees Plugin 3.2.0 and earlier does not correctly
+perform a permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to view an
+administrative configuration page.
+
+
+SECURITY-1912 / CVE-2020-2259
+computer-queue-plugin Plugin 1.5 and earlier does not escape the agent name
+in tooltips.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Agent/Configure permission.
+
+
+SECURITY-1979 / CVE-2020-2260
+Perfecto Plugin 1.17 and earlier does not perform a permission check in a
+method implementing a connection test.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified HTTP URL using attacker-specified username and password.
+
+
+SECURITY-1980 / CVE-2020-2261
+Perfecto Plugin allows specifying Perfecto Connect Path and Perfecto
+Connect File Name in job configurations.
+
+This command is executed on the Jenkins controller in Perfecto Plugin 1.17
+and earlier, allowing attackers with Job/Configure permission to run
+arbitrary commands on the Jenkins controller.
+
+
+SECURITY-1908 / CVE-2020-2262
+Android Lint Plugin 2.6 and earlier does not escape the annotation message
+in tooltips.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to provide report files to the 'Publish
+Android Lint results' post-build step.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1927 / CVE-2020-2263
+Radiator View Plugin 1.29 and earlier does not escape the full name of the
+jobs in tooltips.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1914 / CVE-2020-2264
+Custom Job Icon Plugin 0.2 and earlier does not escape the job descriptions
+in tooltips.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1913 / CVE-2020-2265
+Coverage/Complexity Scatter Plot Plugin 1.1.1 and earlier does not escape
+the method information in tooltips.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to provide report files to the 'Publish
+Coverage / Complexity Scatter Plot' post-build step.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1916 / CVE-2020-2266
+Description Column Plugin 1.3 and earlier does not escape the job
+description in the column tooltips.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1904 / CVE-2020-2267 (missing permission check) & CVE-2020-2268 (CSRF)
+MongoDB Plugin 1.3 and earlier does not perform permission checks in
+methods implementing form validation.
+
+This allows attackers with Overall/Read permission to gain access to some
+metadata of any arbitrary files on the Jenkins controller.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1869 / CVE-2020-2269
+chosen-views-tabbar Plugin 1.2 and earlier does not escape view names in
+the dropdown to select views.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with the ability to configure views.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1911 / CVE-2020-2270
+ClearCase Release Plugin 0.3 and earlier does not escape the composite
+baseline in badge tooltip.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1921 / CVE-2020-2271
+Locked Files Report Plugin 1.6 and earlier does not escape locked files'
+names in tooltips.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1903 / CVE-2020-2272 (missing permission check) & CVE-2020-2273 (CSRF)
+ElasTest Plugin 1.2.1 and earlier does not perform a permission check in a
+method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2014 / CVE-2020-2274
+ElasTest Plugin 1.2.1 and earlier stores its server password in plain text
+in the global configuration file
+`jenkins.plugins.elastest.ElasTestInstallation.xml`. This password can be
+viewed by users with access to the Jenkins controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1966 / CVE-2020-2275
+Copy data to workspace Plugin allows users to copy files from the Jenkins
+controller to job workspaces.
+
+Copy data to workspace Plugin 1.0 and earlier does not limit which
+directories can be copied. This allows attackers with Job/Configure
+permission to read arbitrary files on the Jenkins controller.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1967 / CVE-2020-2276
+Selection tasks Plugin implements a job parameter that dynamically
+generates possible values from the output of a program. The path to that
+program is specified as part of the parameter configuration.
+
+Selection tasks Plugin 1.0 and earlier executes this user-specified program
+on the Jenkins controller. This allows attackers with Job/Configure
+permission to execute an arbitrary system command on the Jenkins controller
+as the OS user that the Jenkins process is running as.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1968 (1) / CVE-2020-2277
+Storable Configs Plugin 1.0 and earlier allows users with Job/Read
+permission to read arbitrary files on the Jenkins controller.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1968 (2) / CVE-2020-2278
+Storable Configs Plugin allows storing copies of a job's `config.xml` file
+on the Jenkins controller with a user-specified file name.
+
+Storable Configs Plugin 1.0 and earlier does not restrict the
+user-specified file name, except that a `.xml` suffix is added if it's not
+already present. This allows attackers with Job/Configure permission to
+replace any other `.xml` file on the Jenkins controller with the job's
+`config.xml` file's content.
+
+As of publication of this advisory, there is no fix.
