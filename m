@@ -1,59 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/27/5
-Message-ID: <CAHp2X_SKNRYB8PdBHr8Zrcs76MQ+0RCgOLg7r9vDb9JgYvjWSQ@mail.gmail.com>
-Date: Wed, 27 May 2020 15:03:05 -0400
-From: Vincent Batts <vbatts@...volk.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/16/4
+Message-ID: <CAH5JyZrCbbV0OgZ9A_+3GqiR6YkUX5SYV5oR35N_xEfa4_W0cg@mail.gmail.com>
+Date: Wed, 16 Sep 2020 15:09:39 +0100
+From: Kaxil Naik <kaxilnaik@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CoreOS leaving distros/linux-distros on May 26, handing off responsibilities
+Cc: dev@...flow.apache.org
+Subject: Re: [CVE-2020-13944] Apache Airflow Reflected XSS via Origin Parameter <= 1.10.12
 Content-Type: text/plain; charset=utf-8
 
-Thanks bgilbert for your efforts.
+Correction the issue only affects < 1.10.12 (not <= 1.10.12)
 
-This has been a recent task of mine, as I'm new to the Flatcar Container
-Linux team. I'm readying the request for inclusion on the
-distros/linux-distro list.
+On Wed, Sep 16, 2020, 12:27 Kaxil Naik <kaxilnaik@...il.com> wrote:
 
-vb
-
-On Wed, May 27, 2020 at 2:55 PM Benjamin Gilbert <
-benjamin.gilbert@...eos.com> wrote:
-
-> On Thu, May 07, 2020 at 07:04:20PM -0400, Benjamin Gilbert wrote:
-> > On Tue, May 05, 2020 at 09:24:58PM +0200, Solar Designer wrote:
-> > > On Tue, Mar 03, 2020 at 12:07:29AM -0500, Benjamin Gilbert wrote:
-> > > > Red Hat recently announced [1] that CoreOS Container Linux will reach
-> > > > end-of-life on May 26.  The Container Linux team will be leaving the
-> > > > distros lists on that date,
-> > >
-> > > I assume you'll remind me about that on that date.
-> > >
-> > > > We plan to continue executing our current responsibilities until May
-> > > > 26, but if other distros want to take over our roles sooner for ease
-> > > > of bookkeeping, we're open to that.
-> > >
-> > > I suggest that Oracle and CloudLinux already start to act as primary
-> for
-> > > their respective tasks, and CoreOS as backup until you leave on May 26.
-> >
-> > That all sounds good to us.
+> Versions Affected: <= 1.10.12
+> Description:
+> The "origin" parameter passed to some of the endpoints like '/trigger' was
+> vulnerable to XSS exploit.
 >
-> CoreOS has now unsubscribed from distros/linux-distros.  Thanks, all.
+> Credit:
+> The issue was independently discovered and reported by Ali Al-Habsi of
+> Accellion & Everardo Padilla Saca.
 >
-> --Benjamin Gilbert
+> Thanks,
+> Kaxil,
+> on behalf of Apache Airflow PMC
 >
-
-
--- 
-
-Vincent Batts
-
-CTO
-
-
----
-Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
-Geschäftsführer/Directors: Alban Crequy, Chris Kühl, Iago López Galeiras
-Registergericht/Court of registration: Amtsgericht Charlottenburg
-Registernummer/Registration number: HRB 171414 B
-Ust-ID-Nummer/VAT ID number: DE302207000
 
