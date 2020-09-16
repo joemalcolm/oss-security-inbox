@@ -1,177 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/13/2
-Message-ID: <e26ab73a0e3ccf3b44d971b857986f18@breakpointingbad.com>
-Date: Thu, 13 Aug 2020 08:06:50 -0700
-From: vpn-research@...akpointingbad.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/17/2
+Message-ID: <a06dc6d7-b8b3-9abc-9c71-33dfdd9e459a@catalyst.net.nz>
+Date: Thu, 17 Sep 2020 10:43:53 +1200
+From: Douglas Bagnall <douglas.bagnall@...alyst.net.nz>
 To: oss-security@...ts.openwall.com
-Subject: Blind in/on-path attacks against VPN-tunneled connections (CVE-2019-14899 follow-up)
+Subject: Samba and CVE-2020-1472 ("Zerologon")
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+In August, Microsoft patched CVE-2020-1472, which gives administrator
+access to an unauthenticated user on a Domain Controller.  Microsoft gave
+it a CVSS score of 10.
 
-This is reporting a vulnerability that allows an in/on-path attacker 
-between a VPN client and VPN server to infer and inject arbitrary data 
-into VPN-tunneled connections. This vulnerability is related to 
-CVE-2019-14899, but has a few key differences.
+https://portal.msrc.microsoft.com/en-us/security-guidance/advisory/CVE-2020-1472#ID0EUGAC
 
-- The attacker does not need to be the gateway or network adjacent, as 
-described in CVE-2019-14899.
+The Samba security team was not contacted before the announcement, which
+is very sparse on detail, and was unable to learn much through an
+established (and generally quite useful) channel for discussing Microsoft
+protocols:
 
-- The packets are not being spoofed "outside" of the tunnel. In the
-previous attack, the packets were sent to the wireless/ethernet 
-interface and were still being processed by the kernel despite coming 
-from a non-VPN interface, in this attack we are not subverting the 
-tunnel by sending packets to the incorrect interface, but sending 
-packets to the VPN server with the source address of the endhost (such 
-as a web server).  Thus, for the VPN server, the spoofed packets that 
-make it into the tunnel are identical to real packets from the endhost, 
-and enter the VPN server from the same interface.  For the VPN client, 
-the spoofed packets are coming through the VPN tunnel from the VPN 
-server.
+https://lists.samba.org/archive/cifs-protocol/2020-August/003520.html
+https://lists.samba.org/archive/cifs-protocol/2020-August/003521.html	
 
-- Enabling rp_filtering on the client machine does not prevent this
-attack, and source address validation on the scale of the Internet
-doesn't really exist.  Note that rp_filter on the server is irrelevant, 
-since spoofed packets enter on the same interface as legitimate packets.
+On September 14, Secura, who found the vulnerability, released a blog
+post, a whitepaper, and an exploit:
 
-- The VPN providers and operating systems affected by this attack is 
-expanded to include policy-based VPNs and Windows etc.
+https://www.secura.com/blog/zero-logon
 
-We reported this to disros@...openwall.org and security@...nel.org on 
-July 29th, but have not yet received any responses from any vendors with 
-a CVE pool. While related to CVE-2019-14899 in that we examine the 
-timing and size of encrypted packets to infer information about packet 
-headers, we believe this attack is significantly different and should be 
-assigned a CVE and addressed since the previous mitigation does not 
-prevent this attack.
+The bug is in the Netlogon *protocol*, not an implementation flaw, so any
+implementation that correctly follows the protocol will be vulnerable.
+Samba is vulnerable.
 
-We have included our correspondence with distros and kernel security in 
-the form of a FAQ on our blog here: 
-https://breakpointingbad.com/2020/08/12/VPN-FAQ.html#faq.
+HOWEVER, since Samba 4.8 (2018-03), by default Samba will insist on a
+secure netlogon channel
 
-To prevent the cluster foxtrot of misinformation from the last 
-disclosure, we request that anyone wanting to report on this contact us 
-at vpn-research@...akpointingbad.com.
+https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#SERVERSCHANNEL
 
-William J. Tolley
-Beau Kujath
-Jedidiah R. Crandall
+The default of "server schannel = yes" gives the same protection as
+Microsoft's "FullSecureChannelProtection=1" registry key (which is the
+CVE-2020-1472 fix). I believe this mitigation was introduced in light of
+an increased awareness of protocol level bugs following BadLock, and
+particular credit should go to Stefan Metzmacher for [sort of] fixing this
+bug two years before its discovery.
 
-Breakpointing Bad &
-Arizona State University
+That is not the end of the story, though. Many distros have very old
+versions of Samba, and many people set "server schannel = auto", because
+who doesn't like auto, or because a third party thing requires it.
 
-***********************************************
-
-This is a follow-up to our report on November 20th of last year 
-detailing how connections inside a VPN tunnel could be inferred, reset, 
-and in some cases, hijacked by injecting data into the TCP stream. We 
-have expanded the attack by moving one or more hops away from the client 
-to an in-path middle router between the client and VPN server. In our 
-previous disclosure, a client-side mitigation using iptables or nftables 
-was suggested, but we are unsure of how to prevent this new attack and 
-do not believe there is a client-side solution.
-
-Our setup is as follows:
+Patches allowing more fine-grained schannel policy for these third-party
+cases are being worked on right now.
 
 
-vpn client ----- AP ----- router 1 ------ router 2 ----- vpn server
+Distros: use supported versions of Samba!
 
-                                  \        /
+People stuck with old versions of a Samba Domain Controller: set "server
+schannel = yes" in your smb.conf, now. For you, this is a low effort
+potentially catastrophic 0-day.
 
-                                    \    /
+Follow https://bugzilla.samba.org/show_bug.cgi?id=14497
 
-                                      \/
-
-                                    router 3
-
-                                       |
-
-                                    website
-
-(If formatting is a problem: 
-https://breakpointingbad.com/assets/virtlab.jpg)
-
-
-The VPN client and access point both have reverse path filtering 
-enabled, and the client has an active connection to the website through 
-the VPN server. The attack is performed from router 1, spoofing a packet 
-that appears to be from the website to the VPN server. To infer a 
-connection that the VPN client has made on the other end of the VPN 
-tunnel, we spoof the packet coming from router 1 with the source address 
-and port of the website and the destination address of the VPN server.  
-By searching the ephemeral port space for the last part of the 4-tuple, 
-one of the spoofed packets will be NATed by the VPN server (if the 
-connection exists) and seen in the VPN tunnel by router 1 (by looking at 
-the size of encrypted packets going from VPN server to VPN client).
-
-Unlike the previous attack from the perspective of the gateway, or an 
-adjacent user, we do not need to know the virtual IP assigned to the 
-client.  However, as with the previous attack, the attacker must already 
-know the IP address that they anticipate the victim will connect to 
-using the VPN.  But testing a site is trivial, especially if we limit 
-the scope to a targeted attack from nation state testing against a 
-banned list, for example.
-
-We have tested this in a limited, virtual environment, but we are 
-starting our effort to test this on the “real internet”, where we will 
-need to account for packet loss, packet reordering, and packet delay, 
-but in many ways this attack is an easier attack than the original that 
-led to CVE-2019-14899 since it removes some of the most time-consuming 
-elements of the previous attack.
-
-We have tested this against OpenVPN, WireGuard, and StrongSwan. We 
-selected these since they are the most commonly used commercial VPN 
-platforms. It was suggested by Noel Kuntze in the previous thread that 
-the old attack wouldn’t work against policy-based VPNs, such as IPSec 
-using StrongSwan, so we included it in this effort to demonstrate how 
-the new attack does not depend on anything particular to the network 
-stack or VPN implementation of the client.  We have only tested 
-inferring that a TCP connection exists up to this point, but it should 
-be possible to reset or hijack that TCP connection in a manner similar 
-to the original attack since we can spoof packets into the tunnel at the 
-VPN server end.  Again, this works regardless of the VPN client’s 
-configuration, OS, etc.
-
-We are still developing other attacks using this method, including 
-attacks on DNS similar to those suggested by Colm MacCárthaigh.  By 
-using a DoS attack to have the DNS server ignore DNS requests from the 
-VPN server, we can guess the source port as above and then search as 
-much of the TXID space as possible within the timeout period of the DNS 
-request.  We have successfully hijacked VPN-tunneled DNS requests, and 
-are working on speeding up our attacks to make it more likely to work 
-for any given request.
-
-Just to summarize and put both forms of attack (spoofing to the VPN 
-client from a network adjacent position vs. spoofing to the VPN server 
-from any router on the path from VPN client to VPN server) into 
-perspective:
-
--We’re still able to infer the existence of VPN-tunneled TCP 
-connections, and potentially RST and hijack them, regardless of VPN 
-client OS or anything the VPN client has done to patch against 
-CVE-2019-14899.
-
--We note that TLS does not protect against inferring and resetting 
-connections in general, and our ability to hijack DNS requests also 
-means that TLS encryption alone will not protect a TCP connection.  VPNs 
-are supposed to protect the integrity of tunneled traffic independently 
-of application-layer protections (such as TLS). Our work shows that they 
-do not.
-
--Attacking by spoofing packets to the VPN server instead of the VPN 
-client changes the threat model to be not only attackers that are 
-network adjacent to the VPN client, but also attackers that are 
-in/on-path between the VPN client and VPN server (e.g., the routers that 
-route packets between them).
-
-We also want to point out that the target audience for this disclosure 
-is kernel developers and others familiar with network stack 
-implementations and the details of how VPN routing works.  As with the 
-first disclosure we plan to follow list policy and make the disclosure 
-public after 14 days.  Our last disclosure was misinterpreted by many 
-media outlets and podcasters, so we’d like to point out that anybody 
-with questions about the disclosure can email 
-vpn-research@...akpointingbad.com and we’ll be happy to answer what 
-questions we can.
-
+regards,
+Douglas Bagnall
 
