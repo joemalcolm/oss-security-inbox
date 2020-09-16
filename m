@@ -1,78 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/28/1
-Message-ID: <CAFcO6XMVKLjFtBRR_9Gie7tOpxpMjdd8ESqgfbt_OwfG58i9PA@mail.gmail.com>
-Date: Mon, 28 Dec 2020 16:14:59 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-27815 Linux kernel: jfs: array-index-out-of-bounds in dbAdjTree
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/16/6
+Message-ID: <nycvar.YSQ.7.78.906.2009170022480.10832@xnncv>
+Date: Thu, 17 Sep 2020 00:25:27 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: bugs-syssec@....de
+Subject: CVE-2020-25085 QEMU: sdhci: out-of-bounds access issue while doing multi block SDMA
 Content-Type: text/plain; charset=utf-8
 
-Patch for this issue :
+   Hello,
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c61b3e4839007668360ed8b87d7da96d2e59fc6c
+An out-of-bounds r/w access issue was found in the SDHCI Controller emulator 
+of QEMU. It may occur while doing multi block SDMA, if transfer block size 
+exceeds the 's->fifo_buffer[s->buf_maxsz]' size. It'd leave the current 
+element pointer 's->data_count' pointing out of bounds. Leading the subsequent 
+DMA r/w operation to OOB access issue. A guest user/process may use this flaw 
+to crash the QEMU process resulting in DoS scenario.
 
-Regards.
- butt3rflyh4ck.
+Upstream patches:
+-----------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg00733.html
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg01439.html
+
+* This issue was reported by Sergej Schumilo, Cornelius Aschermann, Simon
+   Wrner of Ruhr-University Bochum.
+
+* 'CVE-2020-25085' assigned via https://cveform.mitre.org
 
 
-On Tue, Dec 1, 2020 at 1:50 AM butt3rflyh4ck <butterflyhuangxx@...il.com>
-wrote:
-
-> Hello,
->
-> I report an array-index-out-of-bounds bugs in fs/jfs/jfs_dmap.c in
-> dbAdjTree and reproduce it in Linux kernel 5.9.6 version.
->
-> Description:
->
-> In the Linux kernel through 5.9.6, there is a
-> array-index-out-of-bounds in fs/jfs/jfs_dmap.c in dbAdjTree and it may
-> cause out of bounds read and Denial of Service.
->
-> Root Cause:
->
-> the dmtree_t is that
->  typedef union dmtree {
->  struct dmaptree t1;
->  struct dmapctl t2;
-> } dmtree_t;
->
->  the dmaptree is that
->   struct dmaptree {
->   __le32 nleafs; /* 4: number of tree leafs */
->   __le32 l2nleafs; /* 4: l2 number of tree leafs */
->   __le32 leafidx; /* 4: index of first tree leaf */
->   __le32 height; /* 4: height of the tree */
->   s8 budmin; /* 1: min l2 tree leaf value to combine */
->   s8 stree[TREESIZE]; /* TREESIZE: tree */
->   u8 pad[2]; /* 2: pad to word boundary */
->  };the TREESIZE is totally 341.
->
-> the dmapctl is that:
-> struct dmapctl {
-> __le32 nleafs; /* 4: number of tree leafs */
-> __le32 l2nleafs; /* 4: l2 number of tree leafs */
-> __le32 leafidx; /* 4: index of the first tree leaf */
-> __le32 height; /* 4: height of tree */
-> s8 budmin; /* 1: minimum l2 tree leaf value */
-> s8 stree[CTLTREESIZE]; /* CTLTREESIZE: dmapctl tree */
-> u8 pad[2714]; /* 2714: pad to 4096 */
-> }; /* - 4096 - */
-> the CTLTREESIZE is totally 1365.
-> The dmt_stree was used in dbAdjTree. Since dmt_stree can refer to the
-> stree in both structures dmaptree and dmapctl. the stree size is not
-> consistent, may it cause index out of range.
->
-> CVE assigned :
-> CVE-2020-27815
->
-> Patch:
-> It's in linux-next now, not available in upstream.
->
-> Credit:
-> This issue was discovered by the ADLab of venustech.
->
-> Regards.
->  butt3rflyh4ck.
->
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
