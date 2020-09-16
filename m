@@ -1,68 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/9
-Message-ID: <20200519172525.GF22032@localhost.localdomain>
-Date: Tue, 19 May 2020 10:25:25 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
-To: oss-security@...ts.openwall.com
-Subject: qmail: short/int vs. gid_t
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/16/5
+Message-ID: <nycvar.YSQ.7.78.906.2009162354330.10832@xnncv>
+Date: Wed, 16 Sep 2020 23:57:52 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: bugs-syssec@....de
+Subject: CVE-2020-25084 QEMU: usb: use-after-free issue while setting up packet
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+   Hello,
 
-While discussing the qmail vulnerabilities on distros@...nwall, we also
-discussed the following issue (which exists in qmail and in related
-software such as checkpassword):
+An use-after-free issue was found in USB(xHCI/eHCI) controller emulators of 
+QEMU. It occurs while setting up USB packet, as usb_packet_map() routine may 
+return an error, which was not checked. A guest user/process may use this flaw 
+to crash the QEMU process resulting in DoS scenario.
 
-On Thu, May 07, 2020 at 05:39:18PM +0200, Solar Designer wrote:
-> BTW, how about this piece in qmail 1.03? -
->
-> /* XXX: there are more portability problems here waiting to leap out at me */
->
-> int prot_gid(gid) int gid;
-> {
-> #ifdef HASSHORTSETGROUPS
->   short x[2];
->   x[0] = gid; x[1] = 73; /* catch errors */
->   if (setgroups(1,x) == -1) return -1;
-> #else
->   if (setgroups(1,&gid) == -1) return -1;
-> #endif
->   return setgid(gid); /* _should_ be redundant, but on some systems it isn't */
-> }
->
-> As you can see, this tries to workaround ancient systems where the size
-> of groups array elements might not be reliably known.  However, notice
-> that none of the compile-time options uses gid_t.  If the size of gid_t
-> doesn't match either "short" or "int" (whichever is chosen at compile
-> time above), this might set a wrong supplementary group, especially on
-> big-endian architectures.
->
-> The workaround with setting two groups array elements is rather common -
-> I used that one myself - but it's only safe on modern systems when used
-> along with gid_t (so the extra element is guaranteed to be ignored when
-> the workaround is unneeded).
->
-> You might want to check how this function changed(?) in currently
-> maintained qmail forks, and suggest they use gid_t if not already.
->
-> I guess original qmail didn't use gid_t so that it'd build on systems
-> that don't define this type.  Supporting those systems should be
-> unneeded now.
+Upstream patches:
+-----------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-08/msg08050.html
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-08/msg08043.html
 
-The developers of notqmail have been working on a fix for this issue:
+References:
+-----------
+   -> https://ruhr-uni-bochum.sciebo.de/s/NNWP2GfwzYKeKwE?path=%2Fxhci_uaf_2
 
-    https://github.com/notqmail/notqmail/pull/72
+* This issue was reported by Sergej Schumilo, Cornelius Aschermann, Simon
+   Wrner of Ruhr-University Bochum.
 
-Thank you very much!
+* 'CVE-2020-25084' assigned via https://cveform.mitre.org
 
-With best regards,
 
+Thank you.
 --
-the Qualys Security Advisory team
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
-
-
-
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
