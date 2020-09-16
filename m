@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1802" "Tuesday" "26" "June" "2018" "12:02:28" "-0400" "Joey Hess" "id@joeyh.name" "<20180626160228.GA30329@kitenet.net>" "44" "[oss-security] CVE-2018-10857 and CVE-2018-10859: git-annex private data exposure" nil nil nil "6" "2018062616:02:28" "[oss-security] CVE-2018-10857 and CVE-2018-10859: git-annex private data exposure" (number mark "U       id@joeyh.nam Jun 26   44/1802  " thread-indent "\"[oss-security] CVE-2018-10857 and CVE-2018-10859: git-annex private data exposure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2133" "Thursday" "17" "September" "2020" "10:43:53" "+1200" "Douglas Bagnall" "douglas.bagnall@catalyst.net.nz" "<a06dc6d7-b8b3-9abc-9c71-33dfdd9e459a@catalyst.net.nz>" "54" "[oss-security] Samba and CVE-2020-1472 (\"Zerologon\")" "^Date:" nil nil "9" "2020091622:43:53" "[oss-security] Samba and CVE-2020-1472 (\"Zerologon\")" (number mark "        douglas.bagn Sep 17   54/2133  " thread-indent "\"[oss-security] Samba and CVE-2020-1472 (\"Zerologon\")\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Samba and CVE-2020-1472 (\"Zerologon\")" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14325 invoked by uid 550); 26 Jun 2018 16:19:32 -0000
+Received: (qmail 29995 invoked by uid 550); 17 Sep 2020 10:47:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28008 invoked from network); 26 Jun 2018 16:02:47 -0000
-X-Question: 42
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-	t=1530028948; bh=0W0BN8wHKxT3pnsuohUNgV6Roms+gK0qIBA+lm55LHk=;
-	h=Date:From:To:Subject:From;
-	b=FiVlyDKOlIzCKYSPfoHmtnUYG3aZopfrOnJFLr7v7B5IPFjSnyEDhcguxflL29bTs
-	 JjEtF8oul+tofUh4VG0jlpX60Knepan+0qQbBcEvwjhMhJhoUar2NixnSsouIJDwtY
-	 ojs8Yr/4vWUDNdK5oyvCyeWaVM+kmIIcCssLyXEY=
-Date: Tue, 26 Jun 2018 12:02:28 -0400
-From: Joey Hess <id@joeyh.name>
-To: oss-security@lists.openwall.com
-Message-ID: <20180626160228.GA30329@kitenet.net>
+Received: (qmail 26289 invoked from network); 16 Sep 2020 22:44:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=catalyst.net.nz;
+	s=default; t=1600296237;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=7PdeCRt4DkAqAFRrCJve1tkGpCWLVVI1trC2Lz2Df10=;
+	b=ejjcKuJETw3XdRnOJm/96hUJpXaEOP2nHBvjJq8q1v4dfIq+T4ZiR7cVo9J7mVLU1b7mdi
+	nRGTPx6bTqs2rIgPYXpTX3hXg+tPE7qR5SZ/i8UmGbN2onHxhOWsy3Kp6x+zwE4vIDwMDN
+	lILB96jBRvAaKHTjxmqiU2YtN/dkvuD3aM5AWe3SWGm9XI1e4ED017z0nTGz6ndNrzlvyf
+	OCMpCZUSbmBO/2HI0rBmc8ypTNbYZDV83X0M3axj2ahxbP1g8km8YW16x/q8dom5ctVSN8
+	XKcpyYbLR5XstP9G2PV6C5dlucrnfh831JMypYZPTU8FarbVjYgkPJlXUSz2Rg==
+Message-ID: <a06dc6d7-b8b3-9abc-9c71-33dfdd9e459a@catalyst.net.nz>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="k1lZvvs/B4yU6o8G"
-Content-Disposition: inline
-User-Agent: Mutt/1.10.0 (2018-05-17)
-Subject: [oss-security] CVE-2018-10857 and CVE-2018-10859: git-annex private data exposure
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=douglasb@catalyst.net.nz smtp.mailfrom=douglas.bagnall@catalyst.net.nz
+X-Spam: Yes
+Date: Thu, 17 Sep 2020 10:43:53 +1200
+From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Samba and CVE-2020-1472 ("Zerologon")
+To: oss-security@lists.openwall.com
 
---k1lZvvs/B4yU6o8G
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In August, Microsoft patched CVE-2020-1472, which gives administrator
+access to an unauthenticated user on a Domain Controller.  Microsoft gave
+it a CVSS score of 10.
 
-CVE-2018-10857: Some uses of git-annex were vulnerable to a private data
-exposure and exfiltration attack. It could expose the content of files
-located outside the git-annex repository, or content from a private web
-server on localhost or the LAN. Joey Hess discovered this attack.
+https://portal.msrc.microsoft.com/en-us/security-guidance/advisory/CVE-2020-1472#ID0EUGAC
 
-CVE-2018-10859: A malicious server for a special remote could
-trick git-annex into decrypting a file that was encrypted to the user's gpg
-key. This attack could be used to expose encrypted data that was never
-stored in git-annex. Daniel Dent discovered this attack in collaboration
-with Joey Hess.
+The Samba security team was not contacted before the announcement, which
+is very sparse on detail, and was unable to learn much through an
+established (and generally quite useful) channel for discussing Microsoft
+protocols:
 
-git-annex version 6.20180626 fixes these problems.
+https://lists.samba.org/archive/cifs-protocol/2020-August/003520.html
+https://lists.samba.org/archive/cifs-protocol/2020-August/003521.html	
 
-https://git-annex.branchable.com/security/CVE-2018-10857_and_CVE-2018-10859/
+On September 14, Secura, who found the vulnerability, released a blog
+post, a whitepaper, and an exploit:
 
---=20
-see shy jo
+https://www.secura.com/blog/zero-logon
 
---k1lZvvs/B4yU6o8G
-Content-Type: application/pgp-signature; name="signature.asc"
+The bug is in the Netlogon *protocol*, not an implementation flaw, so any
+implementation that correctly follows the protocol will be vulnerable.
+Samba is vulnerable.
 
------BEGIN PGP SIGNATURE-----
+HOWEVER, since Samba 4.8 (2018-03), by default Samba will insist on a
+secure netlogon channel
 
-iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAlsyY5QACgkQ2xLbD/Bf
-jzjKrw/+Mw2qB8TpXwJ2vf7E6lRhUr2VnyEuvKcSFQO/PbmbLCOVDlpv23AaMMRS
-5NsYly1TLD2ZjM/cx4dIr5I7ROfnQidMUPsKz3oKt0NtMVxFgdqPieoVXcfy61Z7
-ZpSKJFPqXTK2odCVYoLXgo32VSBf+gt6cop0Ll8xoadY8sbt5Ik5VAn00YznRwy5
-S4Tp46CIgAp1LARa7SZukQTZns+ixf02GLC1nWrZhqEJWxm1a4RayDB9zYw4MAzE
-1E1ToSVJBCSv/WKwmXmguBCZIKtuMyTLGzfNMFY4Blt2/7sPLfrD6z6vTdyHhoHK
-YDFkgfX8NtkLhiaC7x9HgGX1cMdxkmn8hHsMLzkg04OiBh2y45wCqo1QvkxvluXc
-miGBk1hcOKi4WiN3Yxf8WaWgFWLxRV9FthZMGASwMiy2c9QHWYJzBWHKikqbx0YV
-gE5UIwUcA+c0IUF0lw4XWP1IRUCGG5O0FqSZ2mDxWGLy41kOesp51tgGMmwlJlfy
-J9IFWjMMwlEDgCzbMPHgWO7ABeWuU0599uAl6NlDgQffXNGqQmjOzLnDuRkFfgCv
-ONZK0ufAFYh9pjK/E8twgIH6QN84tye6zk+hHyHK6YZSTXtWX6yMVXyxyi8AgiVw
-I1EFl9HrMPLvcqmByIMEiHQdyvLqJCFHJ122gI4tXQQ4ts9IJEY=
-=E/Z7
------END PGP SIGNATURE-----
+https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#SERVERSCHANNEL
 
---k1lZvvs/B4yU6o8G--
+The default of "server schannel = yes" gives the same protection as
+Microsoft's "FullSecureChannelProtection=1" registry key (which is the
+CVE-2020-1472 fix). I believe this mitigation was introduced in light of
+an increased awareness of protocol level bugs following BadLock, and
+particular credit should go to Stefan Metzmacher for [sort of] fixing this
+bug two years before its discovery.
+
+That is not the end of the story, though. Many distros have very old
+versions of Samba, and many people set "server schannel = auto", because
+who doesn't like auto, or because a third party thing requires it.
+
+Patches allowing more fine-grained schannel policy for these third-party
+cases are being worked on right now.
+
+
+Distros: use supported versions of Samba!
+
+People stuck with old versions of a Samba Domain Controller: set "server
+schannel = yes" in your smb.conf, now. For you, this is a low effort
+potentially catastrophic 0-day.
+
+Follow https://bugzilla.samba.org/show_bug.cgi?id=14497
+
+regards,
+Douglas Bagnall
+
