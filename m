@@ -1,36 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/16/2
-Message-ID: <CAGRgoZh0pZ4LP0s3za98GDqkuLJimhMQugOU4X4h8Rcq444mUg@mail.gmail.com>
-Date: Wed, 16 Dec 2020 16:31:08 +0000
-From: Jonathan Gallimore <jonathan.gallimore@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-13931 Apache TomEE - Incorrect config on JMS Resource Adapter can lead to JMX being enabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/17/1
+Message-ID: <nycvar.YSQ.7.78.906.2009171539530.10832@xnncv>
+Date: Thu, 17 Sep 2020 15:43:46 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2020-25625 QEMU: usb: hcd-ohci: infinite loop issue while processing transfer descriptors
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
+   Hello,
 
-Vendor: The Apache Software Foundation
+An infinite loop issue was found in the USB OHCI controller emulator of QEMU. 
+It could occur while servicing OHCI isochronous transfer descriptors (TD) in 
+ohci_service_iso_td routine, as it retires a TD if it has passed its time 
+frame. While doing so it does not check if the TD was already processed ones 
+and holds an error code in TD_CC. It may happen if the TD list has a loop.
 
-Versions Affected:
-Apache TomEE 8.0.0-M1 - 8.0.3
-Apache TomEE 7.1.0 - 7.1.3
-Apache TomEE 7.0.0-M1 - 7.0.8
-Apache TomEE 1.0.0 - 1.7.5
+A guest user/process may use this flaw to consume cpu cycles on the host 
+resulting in a DoS scenario.
 
-Description:
-If Apache TomEE is configured to use the embedded ActiveMQ broker, and the
-broker config is misconfigured, a JMX port is opened on TCP port 1099,
-which does not include authentication. CVE-2020-11969 previously addressed
-the creation of the JMX management interface, however the incomplete fix
-did not cover this edge case.
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg05905.html
 
-Mitigation:
-- Upgrade to TomEE 7.0.9 or later
-- Upgrade to TomEE 7.1.4 or later
-- Upgrade to TomEE 8.0.4 or later
+'CVE-2020-25625' assigned via https://cveform.mitre.org/
 
-Ensure the correct VM broker name is used consistently across the resource
-adapter config.
-
-Credit: Thanks to Frans Henskens for discovering and reporting this issue.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
