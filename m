@@ -1,74 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/3
-Message-ID: <CANnLRdjG_iOxa7L8ENK5fRAzRkZK5JTGBsdwC0ezdaxkMDdgRw@mail.gmail.com>
-Date: Mon, 16 Nov 2020 13:50:03 -0500
-From: Stephen John Smoogen <smooge@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/9
+Message-Id: <E1kKiTu-0002Mo-6u@xenbits.xenproject.org>
+Date: Tue, 22 Sep 2020 13:37:18 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 340 v3 (CVE-2020-25603) - Missing memory barriers when accessing/allocating an event channel
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 16 Nov 2020 at 12:44, David A. Wheeler <dwheeler@...eeler.com>
-wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
->
-> > On Fri, Nov 13, 2020 at 01:33:31PM +0100, Hanno Böck wrote:
-> >> 3 years ago I reported a heap overflow vulnerability in raptor, an RDF
-> >> parsing library:
-> >> https://www.openwall.com/lists/oss-security/2017/06/07/1 <
-> https://www.openwall.com/lists/oss-security/2017/06/07/1> ,,,
-> >> Maybe noteworthy is that this didn't get a CVE in 2017. It seems many
-> >> distros rely on CVEs to get a process of backporting fixes rolling.
-> >> Given the fluctuating reliability of CVE assignments not sure this is
-> >> wise. I have now requested a CVE (CVE-2017-18926).
-> ...
->
-> > On Nov 14, 2020, at 6:58 AM, Marcus Meissner <meissner@...e.de> wrote:
-> > I think the only thing you can do additional is to request a CVE.
-> >
-> > All tracking by everyone is using CVEs, this is the core identifier
-> > of the software security world.
->
-> I think this is key. If you find a vulnerability, you typically need to
-> ensure that it gets
-> a CVE assigned if you want coordination & resolution to happen. It's how
-> coordination happens.
-> There are issues with CVEs, but I’ve never seen a CVE assignment
-> get dropped in recent years once it was requested properly.
-> Delayed, yes, but I know CVE assignments don’t take 3 years :-).
-> And yes, there are special issues with the Linux kernel, but this package
-> isn’t the Linux kernel.
->
-> If you think that CVE assignment is still of “fluctuating reliability” I’d
-> like to hear that argument
-> and get it fixed. It’s normally better to fix the standard process for
-> doing something than
-> to create yet another process that runs in parallel. I’ve seen no recent
-> evidence of this reliability issue.
->
->
-My guess is that there was an assumption that if an email with a
-vulnerability was sent to this list, someone would do the CVE filing for
-them. Looking through my archives, there are times where someone posts a
-vulnerability and miraculously someone says shortly "Please use
-CVE-2XXX-YYYY for all future announcements." If you aren't on the lists all
-the time or know that various groups do this full time, there is no clue
-that there was some sort of extra work done to get that number... it just
-looks like it was done as a service. When a person posts a vulnerability
-and then gets no extra emails.. then it looks like a secret society. "Oh
-you forgot to shake Smooge's hand with your middle finger hooked and your
-pinky out... can't give you a CVE"
+            Xen Security Advisory CVE-2020-25603 / XSA-340
+                               version 3
 
+  Missing memory barriers when accessing/allocating an event channel
 
+UPDATES IN VERSION 3
+====================
 
+Public release.
 
+ISSUE DESCRIPTION
+=================
 
-> Sing this (to “Single Ladies”):
-> "If you like it, then you shoulda put a CVE on it...:"
->
-> --- David A. Wheeler
->
->
+Event channels control structures can be accessed lockless as long as the port
+is considered to be valid. Such sequence is missing appropriate memory barrier
+(e.g smp_*mb()) to prevent both the compiler and CPU to re-order access.
 
--- 
-Stephen J Smoogen.
+IMPACT
+======
 
+A malicious guest may be able to cause a hypervisor crash resulting in a
+Denial of Service (DoS). Information leak and privilege escalation cannot be
+excluded.
+
+VULNERABLE SYSTEMS
+==================
+
+Systems running all versions of Xen are affected.  Whether a system is
+vulnerable will depend on the CPU and compiler used to build Xen.
+
+For all the systems, the presence and the scope of the vulnerability
+depends on the precise re-ordering performed by the compiler used to
+build Xen.
+
+We have not been able to survey compilers; consequently we cannot say
+which compiler(s) might produce vulnerable code (with which code generation
+options).  GCC documentation clearly suggests that re-ordering is possible.
+
+Arm systems will also be vulnerable if the CPU is able to re-order memory
+access.  Please consult your CPU vendor.
+
+x86 systems are only vulnerable if a compiler performs re-ordering.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of Amazon.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa340.patch           Xen 4.10 - xen-unstable
+
+$ sha256sum xsa340*
+72b75011b99e914ddb479082f88329063dcd1f55cc931059d950ecda276ee944  xsa340.meta
+2bb088fcc1f8f79bf5ddb7b4e101cb1db76a343d2fb1cdafb7cd54612e4009da  xsa340.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/ecMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZaBsH/RbQVpTAfl0zd7RyKXO34WZnWsYfwC+l8erEtf51
+rmETfcqQP5rjNZZKEIDWcoYbJQU1DdC5tfVarUEYbGzCxPyBXlckcNKWmIVpkWnC
+i+/XBALNjErN3AoJJOc8Tb3nfOZJlRrh3PXaqFo+xOqBn2vijgQJCXlpr1yRLDov
+CatUy5DWmzVWVgByrkHs9Y+hsK7hb+DzxFvNiZUE7kv8a+R3F3smNgXDe/N7AasL
+ZCJNVpfJGjqpk+EnffaTti9gd2aPxxzzmsWAoiW0C/6s/eJckhj/LxF7ZG5WbuVT
+inhxm6zkQwBwvSTM7GLZpOuPXPegI8/RX+fO6lqsD0bcuQo=
+=J1Xd
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa340.meta" of type "application/octet-stream" (2163 bytes)
+
+Download attachment "xsa340.patch" of type "application/octet-stream" (2403 bytes)
