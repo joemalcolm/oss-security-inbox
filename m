@@ -1,51 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/06/2
-Message-ID: <20200406160112.GA863041@nxnw.org>
-Date: Mon, 6 Apr 2020 09:01:12 -0700
-From: Steve Beattie <steve.beattie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/11
+Message-ID: <9b808b6d273b88bb2db281f8bea6b6920369242f.camel@powerdns.com>
+Date: Tue, 22 Sep 2020 22:34:23 +0200
+From: Peter van Dijk <peter.van.dijk@...erdns.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-8834: Linux kernel Power8 conflicting use of HSTATE_HOST_R1 vulnerability
+Subject: [Fwd: [Pdns-announce] security advisories for Authoritative 4.3.1, 4.2.3, 4.1.14]
 Content-Type: text/plain; charset=utf-8
+
+-------- Forwarded Message --------
+From: Peter van Dijk via Pdns-announce <
+pdns-announce@...lman.powerdns.com>
+Reply-To: Peter van Dijk <peter.van.dijk@...erdns.com>
+To: pdns-announce@...lman.powerdns.com, pdns-dev@...lman.powerdns.com, 
+pdns-users@...lman.powerdns.com
+Subject: [Pdns-announce] security advisories for Authoritative 4.3.1, 
+4.2.3, 4.1.14
+Date: Tue, 22 Sep 2020 21:48:04 +0200
 
 Hello,
 
-KVM in the Linux kernel on Power8 processors has a conflicting
-use of HSTATE_HOST_R1 to store r1 state in kvmppc_hv_entry plus in
-kvmppc_{save,restore}_tm, leading to a stack corruption. Because
-of this, an attacker with the ability run code in kernel space of a
-guest VM can cause the host kernel to panic.
+Today we have released PowerDNS Authoritative Server versions 4.3.1, 4.2.3 and 4.1.14, containing a fix for PowerDNS Security Advisory 2020-05 [1].
 
-There were two commits that, according to the reporter, introduced the
-vulnerability:
+Additionally, we are publishing PowerDNS Security Advisory 2020-06 [2] today (‘Various issues have been found in our GSS-TSIG support, where an unauthorized attacker could cause crashes, possibly leak uninitialised memory, and possibly execute arbitrary code.’). Our GSS-TSIG support was never shipped in any packages by us or, to our knowledge, any other distributions. The GSS-TSIG code will be gone in version 4.4.0. We’ve chosen to leave the code intact for older versions, so that users that do rely on it today can keep doing so, keeping in mind the risks detailed in Advisory 2020-06.
 
-  f024ee098476 ("KVM: PPC: Book3S HV: Pull out TM state save/restore
-  		into separate procedures")
-  87a11bb6a7f7 ("KVM: PPC: Book3S HV: Work around XER[SO] bug in fake
-  		suspend mode")
+Regarding 2020-05: An issue has been found in PowerDNS Authoritative Server where an authorized user with the ability to insert crafted records into a zone might be able to leak the content of uninitialized memory. Such a user could be a customer inserting data via a control panel, or somebody with access to the REST API. Crafted records cannot be inserted via AXFR. This issue is resolved in the versions mentioned above. (4.1.14 changelog [3], 4.2.3 changelog [4])
 
-The former landed in 4.8, the latter in 4.17. This was fixed without
-realizing the impact in 4.18 with the following three commits, though
-it's believed the first is the only strictly necessary commit:
+Version 4.3.2 also contains various other bug fixes and improvements, please see the changelog [5] for all details.
 
-  6f597c6b63b6 ("KVM: PPC: Book3S PR: Add guest MSR parameter for
-  		kvmppc_save_tm()/kvmppc_restore_tm()")
-  7b0e827c6970 ("KVM: PPC: Book3S HV: Factor fake-suspend handling out
-  		of kvmppc_save/restore_tm")
-  009c872a8bc4 ("KVM: PPC: Book3S PR: Move kvmppc_save_tm/kvmppc_restore_tm
-  		to separate file")
+Tarballs and signatures are available at https://downloads.powerdns.com/releases/
 
-Thus, the only upstream kernel affected is the 4.17 kernel -- Ubuntu's
-4.15 kernels are affected because we backported 87a11bb6a7f7 to our 4.15
-kernels. It does not appear to have been cherrypicked to any of the
-upstream stable kernels.
+Packages for various Linux distributions are available from our repository at https://repo.powerdns.com/
 
-Discovered by Gustavo Romero and Paul Mackerras.
-Ref: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1867717
-CVE: CVE-2020-8834
+4.0 and older releases are EOL, refer to the documentation for details about our release cycles.
 
+Please send us all feedback and issues you might have via the mailing list or our IRC channel, or in case of a bug, via GitHub.
+
+1: https://docs.powerdns.com/authoritative/security-advisories/powerdns-advisory-2020-05.html
+2: https://docs.powerdns.com/authoritative/security-advisories/powerdns-advisory-2020-06.html
+3: https://doc.powerdns.com/authoritative/changelog/4.1.html#change-4.1.14
+4: https://doc.powerdns.com/authoritative/changelog/4.2.html#change-4.2.3
+5: https://doc.powerdns.com/authoritative/changelog/4.2.html#change-4.3.1
+
+Kind regards,
 -- 
-Steve Beattie
-<sbeattie@...ntu.com>
-http://NxNW.org/~steve/
+Peter van Dijk
+PowerDNS.COM BV - https://www.powerdns.com/
+_______________________________________________
+Pdns-announce mailing list
+Pdns-announce@...lman.powerdns.com
+https://mailman.powerdns.com/mailman/listinfo/pdns-announce
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (915 bytes)
