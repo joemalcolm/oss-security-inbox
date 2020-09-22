@@ -1,66 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/9
-Message-ID: <87lfgj35vv.fsf@mpe.ellerman.id.au>
-Date: Tue, 06 Oct 2020 23:17:56 +1100
-From: Michael Ellerman <mpe@...erman.id.au>
-To: Greg KH <greg@...ah.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/3
+Message-Id: <E1kKiTt-0002Lq-ID@xenbits.xenproject.org>
+Date: Tue, 22 Sep 2020 13:37:17 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 339 v3 (CVE-2020-25596) - x86 pv guest kernel DoS via SYSENTER
 Content-Type: text/plain; charset=utf-8
 
-Greg KH <greg@...ah.com> writes:
-> On Wed, Sep 30, 2020 at 10:35:56AM +1000, Wade Mealing wrote:
->> Gday,
->> 
->> A flaw was found in the Linux kernels implementation of biovec usage.  A
->> zero-length biovec request issued to the block subsystem could cause the
->> kernel to enter an infinite loop causing a denial of service. An attacker
->> with a local account can issue requests to a block device can cause a
->> denial of service.
->> 
->> This has been assigned CVE-2020-25641,
->> 
->> According to the fix commits "Introduced in":
->> # git tag --contains 1bdc76aea115 | head -n 1
->> v4.10
->
-> That's odd, and not the best way to do this, the commit really showed up
-> in 4.8-rc1:
-> 	$ git describe --contains 1bdc76aea115
-> 	v4.8-rc1~162^2~21
->
-> You forgot to sort by "version", which is what you need to do if you
-> want to try to look at tags, but then it's still a bit off:
-> 	$ git tag --contains 1bdc76aea115 | sort -V | head -n 10
-> 	v4.8
-> 	v4.8-rc1
-> 	v4.8-rc2
-> 	v4.8-rc3
-> 	v4.8-rc4
-> 	v4.8-rc5
-> 	v4.8-rc6
-> 	v4.8-rc7
-> 	v4.8-rc8
-> 	v4.9
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Git can do the sorting for you with --sort.
+            Xen Security Advisory CVE-2020-25596 / XSA-339
+                               version 3
 
-And if you have other tags in your repo that can confuse things, so
-specifying that you want "v*" tags avoids that.
+                 x86 pv guest kernel DoS via SYSENTER
 
-eg:
+UPDATES IN VERSION 3
+====================
 
-$ git tag -l "v*" --sort=v:refname --contains 1bdc76aea115 | head -n 10
-v4.8
-v4.8-rc1
-v4.8-rc2
-v4.8-rc3
-v4.8-rc4
-v4.8-rc5
-v4.8-rc6
-v4.8-rc7
-v4.8-rc8
-v4.9
+Public release.
 
-Obviously for ease of use you want that in an alias or script.
+ISSUE DESCRIPTION
+=================
 
-cheers
+The SYSENTER instruction leaves various state sanitization activities
+to software.  One of Xen's sanitization paths injects a #GP fault, and
+incorrectly delivers it twice to the guest.
+
+This causes the guest kernel to observe a kernel-privilege #GP fault
+(typically fatal) rather than a user-privilege #GP fault (usually
+converted into SIGSEGV/etc).
+
+IMPACT
+======
+
+Malicious or buggy userspace can crash the guest kernel, resulting in
+a VM Denial of Service.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen from 3.2 onwards are vulnerable.
+
+Only x86 systems are vulnerable.  ARM platforms are not vulnerable.
+
+Only x86 systems which support the SYSENTER instruction in 64bit mode
+are vulnerable.  This is believed to be Intel, Centaur and Shanghai
+CPUs.  AMD and Hygon CPUs are not believed to be vulnerable.
+
+Only x86 PV guests can exploit the vulnerability.  x86 PVH / HVM
+guests cannot exploit the vulnerability.
+
+MITIGATION
+==========
+
+Running only x86 PVH / HVM guests avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa339.patch           Xen 4.10 - xen-unstable
+
+$ sha256sum xsa339*
+5cece13878cc40b32bc5753c0ef64f989f9b1c7f9549d62ea4fcd06e9620de9e  xsa339.meta
+b6ffa7671d905aa12498ad64915be3b7cba74ce1c5bf6bce18b1f106ebf6d715  xsa339.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/ecMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZgEUH/1/5DUgXRKzwvYuERdBintUdCUaezYpjY0VEJ/v5
+nPXEZDDkBFZZxtWmLg6gqMsJg4O6npTcZ6Z3ZpP8xTiRexr0fHHRY5FHqOCW0aS+
+c0WYQzSvfDW1L/m9fjwsbFKKRCmrwE24L/Jc7GZJlpps22f1mZpn3cwsjidlofHi
+WxqpdAPNDLsPDF3+iwt5a8gL3onyeo03MaBhO29UAJIKCo4hxiKu5/e3upXFBdN2
+Z4Pyr79E51SiCGxZ/A1NTil9+FyYkP1DgBQdJ6pVrxMnZUhdcjbGLEbrUNaTfgox
+yORU8rE3XS2ZajRpW3D2CIGnKJj3zGWaQqx+FufX1m6Y8qE=
+=tkQp
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa339.meta" of type "application/octet-stream" (2061 bytes)
+
+Download attachment "xsa339.patch" of type "application/octet-stream" (2873 bytes)
