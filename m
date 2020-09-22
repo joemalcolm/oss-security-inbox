@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2257" "Thursday" "20" "June" "2019" "14:38:02" "-0600" "Joel Smith" "joelsmith@redhat.com" "<CAEftUarE+73RVs+D9QhDbFShJqttj0Y48Hg1WQFQevMP66jjKA@mail.gmail.com>" "85" "[oss-security] [ANNOUNCE] Incomplete fixes for CVE-2019-1002101, kubectl cp potential directory traversal - CVE-2019-11246" "^Date:" nil nil "6" "2019062020:38:02" "[oss-security] [ANNOUNCE] Incomplete fixes for CVE-2019-1002101, kubectl cp potential directory traversal - CVE-2019-11246" (number mark "        joelsmith@re Jun 20   85/2257  " thread-indent "\"[oss-security] [ANNOUNCE] Incomplete fixes for CVE-2019-1002101, kubectl cp potential directory traversal - CVE-2019-11246\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [ANNOUNCE] Incomplete fixes for CVE-2019-1002101, kubectl cp potential directory traversal - CVE-2019-11246" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["23187" "Tuesday" "22" "September" "2020" "13:37:18" "+0000" "Xen.org security team" "security@xen.org" nil "443" nil nil nil nil "9" nil nil (number mark "U       security@xen Sep 22  443/23187 " thread-indent "\"[oss-security] Xen Security Advisory 342 v3 (CVE-2020-25600) - out of bounds event channels available to 32-bit x86 domains\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 342 v3 (CVE-2020-25600) - out of bounds event channels available to 32-bit x86 domains" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5240 invoked by uid 550); 21 Jun 2019 08:32:25 -0000
+Received: (qmail 10125 invoked by uid 550); 22 Sep 2020 13:37:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,114 +11,467 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26318 invoked from network); 20 Jun 2019 20:38:29 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=TLC2j2dxwn33g4+Nm4fjDliQonQtmiD5v7Cs8SD22nA=;
-        b=gpJOJZ9t1TAWlXbKYp8EWseUYWRbhNjn8dNeOalbzPui+FF7atZ+BroeaLfPioq/hZ
-         SLaDui1bcLXyB5TYT9fH2fBoMnG0nMhoLr0giEYWZgw/XpaQPK82exVUHTdOFq8lsOJO
-         0tNVY2ltBA3IkBE+4ykDQkkVTCgfjSh8UlLQUDasa27ePXsd3UithBlWfvKeYO7bgrwS
-         jGRFoZbFlcSe1McTnwbmQi+mXvGksi4/p5Q1uki2+vrSTCr8tKVI5knNwbtFW2jkvWoH
-         nMeX7wAopY0Z28pcpcaTzJGSZg9qoSYQxGZ4zJ1gI+R017cKT8phVwY0xLJSN+dkQMwM
-         IUMQ==
-X-Gm-Message-State: APjAAAUq1tY/jPDodwdhcRc1pwFN9NpnhlANWdNRhZ3ZdKq5q7V+0VLO
-	qEc83fZOH7x/uPFIb6t5scMV39hsNNkfcaQgWOeRzprWE2k=
-X-Google-Smtp-Source: APXvYqzUqE7woEinDsJD9WQmzX5R3hGdRslvIxMxXesGWts6ynpSD3GgdHIFQMFBDK8mmkIGct6Tgnd5heF6RaU7jv0=
-X-Received: by 2002:a50:883b:: with SMTP id b56mr47538029edb.178.1561063098053;
- Thu, 20 Jun 2019 13:38:18 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAEftUarE+73RVs+D9QhDbFShJqttj0Y48Hg1WQFQevMP66jjKA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000006e89b3058bc753a2"
-Date: Thu, 20 Jun 2019 14:38:02 -0600
-From: Joel Smith <joelsmith@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [ANNOUNCE] Incomplete fixes for CVE-2019-1002101, kubectl cp
- potential directory traversal - CVE-2019-11246
-To: oss-security@lists.openwall.com
+Received: (qmail 9912 invoked from network); 22 Sep 2020 13:37:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=s1/eiQL/ZKRDrFJhSUS04wCMUoU1Q8fXwLgWCPlBcm4=; b=d6pkkz1JaebTjOSwVyOnQDPDk+
+	j/u2P+Ji2BUPYj0TnQ66EtU15MUai0EZx6gla7Bg8uS+5PltcyJgqnxdxyBbnzq6E6IXda/4t69HZ
+	fMwtohaJ5ExGtfl4Fcayqs0d/0xIqOaAhkFrD8QvD/HnaT/Ok4ljOyZohjm1JFzpipAU=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1kKiTu-0002Nl-RM@xenbits.xenproject.org>
+Date: Tue, 22 Sep 2020 13:37:18 +0000
+Subject: [oss-security] Xen Security Advisory 342 v3 (CVE-2020-25600) - out of bounds
+ event channels available to 32-bit x86 domains
 
---0000000000006e89b3058bc753a2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Hello Kubernetes Community,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+            Xen Security Advisory CVE-2020-25600 / XSA-342
+                               version 3
 
+      out of bounds event channels available to 32-bit x86 domains
 
-Another security issue was discovered with the Kubernetes kubectl cp
-command that could enable a directory traversal such that a malicious
-container could replace or create files on a user=E2=80=99s workstation. The
-vulnerability is a client-side defect and requires user interaction to be
-exploited. The issue is High severity and upgrading kubectl to Kubernetes
-1.12.9, 1.13.6, and 1.14.2 or later is encouraged to fix this issue.
+UPDATES IN VERSION 3
+====================
 
+Public release.
 
+ISSUE DESCRIPTION
+=================
 
-*Am I vulnerable?*
+The so called 2-level event channel model imposes different limits on
+the number of usable event channels for 32-bit x86 domains vs 64-bit
+or Arm (either bitness) ones.  32-bit x86 domains can use only 1023
+channels, due to limited space in their shared (between guest and Xen)
+information structure, whereas all other domains can use up to 4095 in
+this model.  The recording of the respective limit during domain
+initialization, however, has occurred at a time where domains are still
+deemed to be 64-bit ones, prior to actually honoring respective domain
+properties.  At the point domains get recognized as 32-bit ones, the
+limit didn't get updated accordingly.
 
+Due to this misbehavior in Xen, 32-bit domains (including Domain 0)
+servicing other domains may observe event channel allocations to succeed
+when they should really fail.  Subsequent use of such event channels
+would then possibly lead to corruption of other parts of the shared
+info structure.
 
+IMPACT
+======
 
-Run kubectl version --client and if it does not say client version 1.12.9,
-1.13.6, or 1.14.2 or newer, you are running a vulnerable version.
+An unprivileged guest may cause another domain, in particular Domain 0,
+to misbehave.  This may lead to a Denial of Service (DoS) for the entire
+system.
 
+VULNERABLE SYSTEMS
+==================
 
+All Xen versions from 4.4 onwards are vulnerable.  Xen versions 4.3 and
+earlier are not vulnerable.
 
-*How do I upgrade?*
+Only x86 32-bit domains servicing other domains are vulnerable.
 
+Arm systems as well as x86 64-bit domains are not vulnerable.
 
+MITIGATION
+==========
 
-Follow installation instructions here
-https://kubernetes.io/docs/tasks/tools/install-kubectl/
+There is no known workaround for x86 32-bit Domain 0.
 
+The problem can be avoided by reducing the number of event channels
+available to 32-bit x86 guests to no more than 1023.  For example,
+setting "max_event_channels=1023" in the xl domain configuration, or
+deleting any existing setting (since 1023 is the default for xl/libxl).
 
+CREDITS
+=======
 
-Not all instructions will provide up-to-date kubectl versions at the time
-of this announcement. So, always confirm with kubectl version.
+This issue was discovered by Julien Grall of Amazon.
 
+RESOLUTION
+==========
 
+Applying the appropriate attached patch resolves this issue.
 
-*Vulnerability Details*
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
+xsa342.patch           Xen 4.14 - xen-unstable
+xsa342-4.13.patch      Xen 4.10 - 4.13
 
+$ sha256sum xsa342*
+8e85719f2783d5d0fc3da7a6aefb6c83717c7aa195d027b6aa52ff3a31c489aa  xsa342.meta
+060caee3fb5971fca0f2fbdef622c52d9bc6e0ed9efad33de5b6b504651c2112  xsa342.patch
+ef34839148d33b8d9cb03d56ffafdcdcbe9641a737211a50343d019132b169dd  xsa342-4.13.patch
+$
 
-The details for this vulnerability are very similar to CVE-2019-1002101.
-The original fix for that issue was incomplete and a new exploit method was
-discovered.
+DEPLOYMENT DURING EMBARGO
+=========================
 
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
-The kubectl cp command allows copying files between containers and the user
-machine. To copy files from a container, Kubernetes runs tar inside the
-container to create a tar archive, copies it over the network, and kubectl
-unpacks it on the user=E2=80=99s machine.
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-If the tar binary in the container is malicious, it could run any code and
-output unexpected, malicious results. An attacker could use this to write
-files to any path on the user=E2=80=99s machine when kubectl cp is called, =
-limited
-only by the system permissions of the local user.
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/ecMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ+RAIAKhulm14Ze1LmVTCGKcTJ525DARSmzGdki4iX3ow
+qvQkV1B8TacFnuzZp1VfRnm5vRGBY/uXaFORw21Z/rWSRQ3xjgcazTsG0jhNQ8QG
+onH1JaxE26BfYu12oTSEKyTWWu1XSdrFTxWp07p79+qHvKGY6GtGRWGhkI6YNgkD
+X2TwRtt6GF6wRTq3PCc+7CGnn5jp7FRyJpI/2uiNZC6cL6lGUYNl9wgujSnefqQO
+1sAZSc3DmvIuvFl4XWUeU7mH/6xL93sDN4vIrVllvcI9nEswqFwju6+SP76Pnkoh
+KBSYNk79QNlbBdXJwNmYxqp4sYpH/JYEm6+u2Zw1hxCMgM4=
+=EebG
+-----END PGP SIGNATURE-----
 
+--=separator
+Content-Type: application/octet-stream; name="xsa342.meta"
+Content-Disposition: attachment; filename="xsa342.meta"
+Content-Transfer-Encoding: base64
 
+ewogICJYU0EiOiAzNDIsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIs
+CiAgICAiNC4xMSIsCiAgICAiNC4xMCIKICBdLAogICJUcmVlcyI6IFsKICAg
+ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAg
+ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
+YWJsZVJlZiI6ICI5M2JlOTQzZTdkNzU5MDE1YmQ1ZGI0MWE0OGY2ZGNlNThl
+NTgwZDVhIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
+MzYsCiAgICAgICAgICAgIDMzNywKICAgICAgICAgICAgMzM4LAogICAgICAg
+ICAgICAzMzksCiAgICAgICAgICAgIDM0MAogICAgICAgICAgXSwKICAgICAg
+ICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzQyLTQuMTMucGF0
+Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAg
+IjQuMTEiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7
+CiAgICAgICAgICAiU3RhYmxlUmVmIjogImRkYWFjY2JiYWI2YjE5YmYyMWVk
+MmMwOTdmMzA1NWEzYzI1NDRjOGQiLAogICAgICAgICAgIlByZXJlcXMiOiBb
+CiAgICAgICAgICAgIDMzMywKICAgICAgICAgICAgMzM2LAogICAgICAgICAg
+ICAzMzcsCiAgICAgICAgICAgIDMzOCwKICAgICAgICAgICAgMzM5LAogICAg
+ICAgICAgICAzNDAKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6
+IFsKICAgICAgICAgICAgInhzYTM0Mi00LjEzLnBhdGNoIgogICAgICAgICAg
+XQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjEyIjogewogICAg
+ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
+YWJsZVJlZiI6ICIxMzM2Y2ExNzc0MjQ3MWZjNGE1OTg3OWFlMmY2MzdhNTk1
+MzBhOTMzIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
+MzMsCiAgICAgICAgICAgIDMzNCwKICAgICAgICAgICAgMzM2LAogICAgICAg
+ICAgICAzMzcsCiAgICAgICAgICAgIDMzOCwKICAgICAgICAgICAgMzM5LAog
+ICAgICAgICAgICAzNDAKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hl
+cyI6IFsKICAgICAgICAgICAgInhzYTM0Mi00LjEzLnBhdGNoIgogICAgICAg
+ICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjEzIjogewog
+ICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAg
+IlN0YWJsZVJlZiI6ICI5YjM2N2IyYjBiNzE0ZjNmZmI2OWVkNmJlMGExMThl
+OGQzZWFjMDdmIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAg
+ICAzMzMsCiAgICAgICAgICAgIDMzNCwKICAgICAgICAgICAgMzM2LAogICAg
+ICAgICAgICAzMzcsCiAgICAgICAgICAgIDMzOCwKICAgICAgICAgICAgMzM5
+LAogICAgICAgICAgICAzNDAKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0
+Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM0Mi00LjEzLnBhdGNoIgogICAg
+ICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjE0Ijog
+ewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAg
+ICAgIlN0YWJsZVJlZiI6ICJjM2EwZmMyMmFmOTBlZjI4ZTY4YjExNmM2YTQ5
+ZDljZWM1N2Y3MWNmIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAg
+ICAgICAzMzMsCiAgICAgICAgICAgIDMzNCwKICAgICAgICAgICAgMzM2LAog
+ICAgICAgICAgICAzMzcsCiAgICAgICAgICAgIDMzOCwKICAgICAgICAgICAg
+MzM5LAogICAgICAgICAgICAzNDAKICAgICAgICAgIF0sCiAgICAgICAgICAi
+UGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM0Mi5wYXRjaCIKICAgICAg
+ICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAibWFzdGVyIjog
+ewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAg
+ICAgIlN0YWJsZVJlZiI6ICJiMTE5MTAwODJkOTBiYjE1OTdmNjY3OTUyNGVi
+NzI2YTMzMzA2NjcyIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAg
+ICAgICAzMzMsCiAgICAgICAgICAgIDMzNCwKICAgICAgICAgICAgMzM2LAog
+ICAgICAgICAgICAzMzcsCiAgICAgICAgICAgIDMzOCwKICAgICAgICAgICAg
+MzM5LAogICAgICAgICAgICAzNDAKICAgICAgICAgIF0sCiAgICAgICAgICAi
+UGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM0Mi5wYXRjaCIKICAgICAg
+ICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0KICB9Cn0=
 
-See https://github.com/kubernetes/kubernetes/pull/76788 for details.
+--=separator
+Content-Type: application/octet-stream; name="xsa342.patch"
+Content-Disposition: attachment; filename="xsa342.patch"
+Content-Transfer-Encoding: base64
 
-*Acknowledgements*
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiBldnRjaG4veDg2OiBlbmZvcmNlIGNvcnJlY3QgdXBwZXIgbGltaXQgZm9y
+IDMyLWJpdCBndWVzdHMKClRoZSByZWNvcmRpbmcgb2YgZC0+bWF4X2V2dGNo
+bnMgaW4gZXZ0Y2huXzJsX2luaXQoKSwgaW4gcGFydGljdWxhciB3aXRoCnRo
+ZSBsaW1pdGVkIHNldCBvZiBjYWxsZXJzIG9mIHRoZSBmdW5jdGlvbiwgaXMg
+aW5zdWZmaWNpZW50LiBOZWl0aGVyIGZvcgpQViBub3IgZm9yIEhWTSBndWVz
+dHMgdGhlIGJpdG5lc3MgaXMga25vd24gYXQgZG9tYWluX2NyZWF0ZSgpIHRp
+bWUsIHlldAp0aGUgdXBwZXIgYm91bmQgaW4gMi1sZXZlbCBtb2RlIGRlcGVu
+ZHMgdXBvbiBndWVzdCBiaXRuZXNzLiBSZWNvcmRpbmcKdG9vIGhpZ2ggYSBs
+aW1pdCAiYWxsb3dzIiB4ODYgMzItYml0IGRvbWFpbnMgdG8gb3BlbiBub3Qg
+cHJvcGVybHkgdXNhYmxlCmV2ZW50IGNoYW5uZWxzLCBtYW5hZ2VtZW50IG9m
+IHdoaWNoIChpbnNpZGUgWGVuKSB3b3VsZCB0aGVuIHJlc3VsdCBpbgpjb3Jy
+dXB0aW9uIG9mIHRoZSBzaGFyZWQgaW5mbyBhbmQgdkNQVSBpbmZvIHN0cnVj
+dHVyZXMuCgpLZWVwIHRoZSB1cHBlciBsaW1pdCBkeW5hbWljIGZvciB0aGUg
+Mi1sZXZlbCBjYXNlLCBpbnRyb2R1Y2luZyBhIGhlbHBlcgpmdW5jdGlvbiB0
+byByZXRyaWV2ZSB0aGUgZWZmZWN0aXZlIGxpbWl0LiBUaGlzIGhlbHBlciBp
+cyBub3cgc3VwcG9zZWQgdG8KYmUgcHJpdmF0ZSB0byB0aGUgZXZlbnQgY2hh
+bm5lbCBjb2RlLiBUaGUgdXNlZCBpbiBkb19wb2xsKCkgYW5kCmRvbWFpbl9k
+dW1wX2V2dGNobl9pbmZvKCkgd2VyZW4ndCBjb25zaXN0ZW50IHdpdGggcG9y
+dCB1c2VzIGVsc2V3aGVyZQphbmQgaGVuY2UgZ2V0IHN3aXRjaGVkIHRvIHBv
+cnRfaXNfdmFsaWQoKS4KCkZ1cnRoZXJtb3JlIEZJRk8gbW9kZSdzIHNldHVw
+X3BvcnRzKCkgZ2V0cyBhZGp1c3RlZCB0byBsb29wIG9ubHkgdXAgdG8KdGhl
+IHByaW9yIEFCSSBsaW1pdCwgcmF0aGVyIHRoYW4gYWxsIHRoZSB3YXkgdXAg
+dG8gdGhlIG5ldyBvbmUuCgpGaW5hbGx5IGEgd29yZCBvbiB0aGUgY2hhbmdl
+IHRvIGRvX3BvbGwoKTogQWNjZXNzaW5nIC0+bWF4X2V2dGNobnMKd2l0aG91
+dCBob2xkaW5nIGEgc3VpdGFibGUgbG9jayB3YXMgbmV2ZXIgc2FmZSwgYXMg
+aXQgYXMgd2VsbCBhcwotPmV2dGNobl9wb3J0X29wcyBtYXkgY2hhbmdlIGJl
+aGluZCBkb19wb2xsKCkncyBiYWNrLiBVc2luZwpwb3J0X2lzX3ZhbGlkKCkg
+aW5zdGVhZCB3aWRlbnMgc29tZSB0aGUgd2luZG93IGZvciBwb3RlbnRpYWwg
+YWJ1c2UsCnVudGlsIHdlJ3ZlIGRlYWx0IHdpdGggdGhlIHJhY2UgYWx0b2dl
+dGhlciAoc2VlIFhTQS0zNDMpLgoKVGhpcyBpcyBYU0EtMzQyLgoKUmVwb3J0
+ZWQtYnk6IEp1bGllbiBHcmFsbCA8amdyYWxsQGFtYXpvbi5jb20+CkZpeGVz
+OiA0ODk3NGU2Y2U1MmUgKCJldnRjaG46IHVzZSBhIHBlci1kb21haW4gdmFy
+aWFibGUgZm9yIHRoZSBtYXggbnVtYmVyIG9mIGV2ZW50IGNoYW5uZWxzIikK
+U2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29t
+PgpSZXZpZXdlZC1ieTogU3RlZmFubyBTdGFiZWxsaW5pIDxzc3RhYmVsbGlu
+aUBrZXJuZWwub3JnPgpSZXZpZXdlZC1ieTogSnVsaWVuIEdyYWxsIDxqZ3Jh
+bGxAYW1hem9uLmNvbT4KLS0tCnY2OiBEcm9wIHJlZHVuZGFudCBwb3J0X2lz
+X3ZhbGlkKCkgY2hlY2sgZnJvbSBkb21haW5fZHVtcF9ldnRjaG5faW5mbygp
+LgogICAgQWRkIGNvbW1lbnQgaW4gZXZ0Y2huX2ZpZm9faW5pdF9jb250cm9s
+KCkuCnY1OiBTcGxpdCBvZmYgcG9ydF9pc192YWxpZCgpIGNoYW5nZS4gRHJv
+cCBtYXhfZXZ0Y2hucyBmaWVsZC4KdjQ6IEFsc28gbWVudGlvbiB0aGUgYWxs
+b2NfdW5ib3VuZF94ZW5fZXZlbnRfY2hhbm5lbCgpIGNhc2UgdGhhdCBnZXRz
+CiAgICBmaXhlZCBoZXJlLgp2MjogUmVtb3ZlIG1heF9ldnRjaG5zIGNoZWNr
+IGZyb20gcG9ydF9pc192YWxpZCgpLgoKLS0tIGEveGVuL2NvbW1vbi9ldmVu
+dF8ybC5jCisrKyBiL3hlbi9jb21tb24vZXZlbnRfMmwuYwpAQCAtMTAzLDcg
+KzEwMyw2IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgZXZ0Y2huX3BvcnRfb3Bz
+IGV2dGMKIHZvaWQgZXZ0Y2huXzJsX2luaXQoc3RydWN0IGRvbWFpbiAqZCkK
+IHsKICAgICBkLT5ldnRjaG5fcG9ydF9vcHMgPSAmZXZ0Y2huX3BvcnRfb3Bz
+XzJsOwotICAgIGQtPm1heF9ldnRjaG5zID0gQklUU19QRVJfRVZUQ0hOX1dP
+UkQoZCkgKiBCSVRTX1BFUl9FVlRDSE5fV09SRChkKTsKIH0KIAogLyoKLS0t
+IGEveGVuL2NvbW1vbi9ldmVudF9jaGFubmVsLmMKKysrIGIveGVuL2NvbW1v
+bi9ldmVudF9jaGFubmVsLmMKQEAgLTE1MSw3ICsxNTEsNyBAQCBzdGF0aWMg
+dm9pZCBmcmVlX2V2dGNobl9idWNrZXQoc3RydWN0IGRvCiAKIGludCBldnRj
+aG5fYWxsb2NhdGVfcG9ydChzdHJ1Y3QgZG9tYWluICpkLCBldnRjaG5fcG9y
+dF90IHBvcnQpCiB7Ci0gICAgaWYgKCBwb3J0ID4gZC0+bWF4X2V2dGNobl9w
+b3J0IHx8IHBvcnQgPj0gZC0+bWF4X2V2dGNobnMgKQorICAgIGlmICggcG9y
+dCA+IGQtPm1heF9ldnRjaG5fcG9ydCB8fCBwb3J0ID49IG1heF9ldnRjaG5z
+KGQpICkKICAgICAgICAgcmV0dXJuIC1FTk9TUEM7CiAKICAgICBpZiAoIHBv
+cnRfaXNfdmFsaWQoZCwgcG9ydCkgKQpAQCAtMTM5NiwxMyArMTM5NiwxMSBA
+QCBzdGF0aWMgdm9pZCBkb21haW5fZHVtcF9ldnRjaG5faW5mbyhzdHJ1CiAK
+ICAgICBzcGluX2xvY2soJmQtPmV2ZW50X2xvY2spOwogCi0gICAgZm9yICgg
+cG9ydCA9IDE7IHBvcnQgPCBkLT5tYXhfZXZ0Y2huczsgKytwb3J0ICkKKyAg
+ICBmb3IgKCBwb3J0ID0gMTsgcG9ydF9pc192YWxpZChkLCBwb3J0KTsgKytw
+b3J0ICkKICAgICB7CiAgICAgICAgIGNvbnN0IHN0cnVjdCBldnRjaG4gKmNo
+bjsKICAgICAgICAgY2hhciAqc3NpZDsKIAotICAgICAgICBpZiAoICFwb3J0
+X2lzX3ZhbGlkKGQsIHBvcnQpICkKLSAgICAgICAgICAgIGNvbnRpbnVlOwog
+ICAgICAgICBjaG4gPSBldnRjaG5fZnJvbV9wb3J0KGQsIHBvcnQpOwogICAg
+ICAgICBpZiAoIGNobi0+c3RhdGUgPT0gRUNTX0ZSRUUgKQogICAgICAgICAg
+ICAgY29udGludWU7Ci0tLSBhL3hlbi9jb21tb24vZXZlbnRfZmlmby5jCisr
+KyBiL3hlbi9jb21tb24vZXZlbnRfZmlmby5jCkBAIC00NzgsNyArNDc4LDcg
+QEAgc3RhdGljIHZvaWQgY2xlYW51cF9ldmVudF9hcnJheShzdHJ1Y3QgZAog
+ICAgIGQtPmV2dGNobl9maWZvID0gTlVMTDsKIH0KIAotc3RhdGljIHZvaWQg
+c2V0dXBfcG9ydHMoc3RydWN0IGRvbWFpbiAqZCkKK3N0YXRpYyB2b2lkIHNl
+dHVwX3BvcnRzKHN0cnVjdCBkb21haW4gKmQsIHVuc2lnbmVkIGludCBwcmV2
+X2V2dGNobnMpCiB7CiAgICAgdW5zaWduZWQgaW50IHBvcnQ7CiAKQEAgLTQ4
+OCw3ICs0ODgsNyBAQCBzdGF0aWMgdm9pZCBzZXR1cF9wb3J0cyhzdHJ1Y3Qg
+ZG9tYWluICpkCiAgICAgICogLSBzYXZlIGl0cyBwZW5kaW5nIHN0YXRlLgog
+ICAgICAqIC0gc2V0IGRlZmF1bHQgcHJpb3JpdHkuCiAgICAgICovCi0gICAg
+Zm9yICggcG9ydCA9IDE7IHBvcnQgPCBkLT5tYXhfZXZ0Y2huczsgcG9ydCsr
+ICkKKyAgICBmb3IgKCBwb3J0ID0gMTsgcG9ydCA8IHByZXZfZXZ0Y2huczsg
+cG9ydCsrICkKICAgICB7CiAgICAgICAgIHN0cnVjdCBldnRjaG4gKmV2dGNo
+bjsKIApAQCAtNTQ2LDYgKzU0Niw4IEBAIGludCBldnRjaG5fZmlmb19pbml0
+X2NvbnRyb2woc3RydWN0IGV2dGMKICAgICBpZiAoICFkLT5ldnRjaG5fZmlm
+byApCiAgICAgewogICAgICAgICBzdHJ1Y3QgdmNwdSAqdmNiOworICAgICAg
+ICAvKiBMYXRjaCB0aGUgdmFsdWUgYmVmb3JlIGl0IGNoYW5nZXMgZHVyaW5n
+IHNldHVwX2V2ZW50X2FycmF5KCkuICovCisgICAgICAgIHVuc2lnbmVkIGlu
+dCBwcmV2X2V2dGNobnMgPSBtYXhfZXZ0Y2hucyhkKTsKIAogICAgICAgICBm
+b3JfZWFjaF92Y3B1ICggZCwgdmNiICkgewogICAgICAgICAgICAgcmMgPSBz
+ZXR1cF9jb250cm9sX2Jsb2NrKHZjYik7CkBAIC01NjIsOCArNTY0LDcgQEAg
+aW50IGV2dGNobl9maWZvX2luaXRfY29udHJvbChzdHJ1Y3QgZXZ0YwogICAg
+ICAgICAgICAgZ290byBlcnJvcjsKIAogICAgICAgICBkLT5ldnRjaG5fcG9y
+dF9vcHMgPSAmZXZ0Y2huX3BvcnRfb3BzX2ZpZm87Ci0gICAgICAgIGQtPm1h
+eF9ldnRjaG5zID0gRVZUQ0hOX0ZJRk9fTlJfQ0hBTk5FTFM7Ci0gICAgICAg
+IHNldHVwX3BvcnRzKGQpOworICAgICAgICBzZXR1cF9wb3J0cyhkLCBwcmV2
+X2V2dGNobnMpOwogICAgIH0KICAgICBlbHNlCiAgICAgICAgIHJjID0gbWFw
+X2NvbnRyb2xfYmxvY2sodiwgZ2ZuLCBvZmZzZXQpOwotLS0gYS94ZW4vY29t
+bW9uL3NjaGVkL2NvcmUuYworKysgYi94ZW4vY29tbW9uL3NjaGVkL2NvcmUu
+YwpAQCAtMTQyOCw3ICsxNDI4LDcgQEAgc3RhdGljIGxvbmcgZG9fcG9sbChz
+dHJ1Y3Qgc2NoZWRfcG9sbCAqcwogICAgICAgICAgICAgZ290byBvdXQ7CiAK
+ICAgICAgICAgcmMgPSAtRUlOVkFMOwotICAgICAgICBpZiAoIHBvcnQgPj0g
+ZC0+bWF4X2V2dGNobnMgKQorICAgICAgICBpZiAoICFwb3J0X2lzX3ZhbGlk
+KGQsIHBvcnQpICkKICAgICAgICAgICAgIGdvdG8gb3V0OwogCiAgICAgICAg
+IHJjID0gMDsKLS0tIGEveGVuL2luY2x1ZGUveGVuL2V2ZW50LmgKKysrIGIv
+eGVuL2luY2x1ZGUveGVuL2V2ZW50LmgKQEAgLTEwNSw2ICsxMDUsMTIgQEAg
+dm9pZCBub3RpZnlfdmlhX3hlbl9ldmVudF9jaGFubmVsKHN0cnVjdAogI2Rl
+ZmluZSBidWNrZXRfZnJvbV9wb3J0KGQsIHApIFwKICAgICAoKGdyb3VwX2Zy
+b21fcG9ydChkLCBwKSlbKChwKSAlIEVWVENITlNfUEVSX0dST1VQKSAvIEVW
+VENITlNfUEVSX0JVQ0tFVF0pCiAKK3N0YXRpYyBpbmxpbmUgdW5zaWduZWQg
+aW50IG1heF9ldnRjaG5zKGNvbnN0IHN0cnVjdCBkb21haW4gKmQpCit7Cisg
+ICAgcmV0dXJuIGQtPmV2dGNobl9maWZvID8gRVZUQ0hOX0ZJRk9fTlJfQ0hB
+Tk5FTFMKKyAgICAgICAgICAgICAgICAgICAgICAgICAgOiBCSVRTX1BFUl9F
+VlRDSE5fV09SRChkKSAqIEJJVFNfUEVSX0VWVENITl9XT1JEKGQpOworfQor
+CiBzdGF0aWMgaW5saW5lIGJvb2xfdCBwb3J0X2lzX3ZhbGlkKHN0cnVjdCBk
+b21haW4gKmQsIHVuc2lnbmVkIGludCBwKQogewogICAgIGlmICggcCA+PSBy
+ZWFkX2F0b21pYygmZC0+dmFsaWRfZXZ0Y2hucykgKQotLS0gYS94ZW4vaW5j
+bHVkZS94ZW4vc2NoZWQuaAorKysgYi94ZW4vaW5jbHVkZS94ZW4vc2NoZWQu
+aApAQCAtMzU5LDcgKzM1OSw2IEBAIHN0cnVjdCBkb21haW4KICAgICAvKiBF
+dmVudCBjaGFubmVsIGluZm9ybWF0aW9uLiAqLwogICAgIHN0cnVjdCBldnRj
+aG4gICAqZXZ0Y2huOyAgICAgICAgICAgICAgICAgICAgICAgICAvKiBmaXJz
+dCBidWNrZXQgb25seSAqLwogICAgIHN0cnVjdCBldnRjaG4gICoqZXZ0Y2hu
+X2dyb3VwW05SX0VWVENITl9HUk9VUFNdOyAvKiBhbGwgb3RoZXIgYnVja2V0
+cyAqLwotICAgIHVuc2lnbmVkIGludCAgICAgbWF4X2V2dGNobnM7ICAgICAv
+KiBudW1iZXIgc3VwcG9ydGVkIGJ5IEFCSSAqLwogICAgIHVuc2lnbmVkIGlu
+dCAgICAgbWF4X2V2dGNobl9wb3J0OyAvKiBtYXggcGVybWl0dGVkIHBvcnQg
+bnVtYmVyICovCiAgICAgdW5zaWduZWQgaW50ICAgICB2YWxpZF9ldnRjaG5z
+OyAgIC8qIG51bWJlciBvZiBhbGxvY2F0ZWQgZXZlbnQgY2hhbm5lbHMgKi8K
+ICAgICBzcGlubG9ja190ICAgICAgIGV2ZW50X2xvY2s7Cg==
 
+--=separator
+Content-Type: application/octet-stream; name="xsa342-4.13.patch"
+Content-Disposition: attachment; filename="xsa342-4.13.patch"
+Content-Transfer-Encoding: base64
 
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiBldnRjaG4veDg2OiBlbmZvcmNlIGNvcnJlY3QgdXBwZXIgbGltaXQgZm9y
+IDMyLWJpdCBndWVzdHMKClRoZSByZWNvcmRpbmcgb2YgZC0+bWF4X2V2dGNo
+bnMgaW4gZXZ0Y2huXzJsX2luaXQoKSwgaW4gcGFydGljdWxhciB3aXRoCnRo
+ZSBsaW1pdGVkIHNldCBvZiBjYWxsZXJzIG9mIHRoZSBmdW5jdGlvbiwgaXMg
+aW5zdWZmaWNpZW50LiBOZWl0aGVyIGZvcgpQViBub3IgZm9yIEhWTSBndWVz
+dHMgdGhlIGJpdG5lc3MgaXMga25vd24gYXQgZG9tYWluX2NyZWF0ZSgpIHRp
+bWUsIHlldAp0aGUgdXBwZXIgYm91bmQgaW4gMi1sZXZlbCBtb2RlIGRlcGVu
+ZHMgdXBvbiBndWVzdCBiaXRuZXNzLiBSZWNvcmRpbmcKdG9vIGhpZ2ggYSBs
+aW1pdCAiYWxsb3dzIiB4ODYgMzItYml0IGRvbWFpbnMgdG8gb3BlbiBub3Qg
+cHJvcGVybHkgdXNhYmxlCmV2ZW50IGNoYW5uZWxzLCBtYW5hZ2VtZW50IG9m
+IHdoaWNoIChpbnNpZGUgWGVuKSB3b3VsZCB0aGVuIHJlc3VsdCBpbgpjb3Jy
+dXB0aW9uIG9mIHRoZSBzaGFyZWQgaW5mbyBhbmQgdkNQVSBpbmZvIHN0cnVj
+dHVyZXMuCgpLZWVwIHRoZSB1cHBlciBsaW1pdCBkeW5hbWljIGZvciB0aGUg
+Mi1sZXZlbCBjYXNlLCBpbnRyb2R1Y2luZyBhIGhlbHBlcgpmdW5jdGlvbiB0
+byByZXRyaWV2ZSB0aGUgZWZmZWN0aXZlIGxpbWl0LiBUaGlzIGhlbHBlciBp
+cyBub3cgc3VwcG9zZWQgdG8KYmUgcHJpdmF0ZSB0byB0aGUgZXZlbnQgY2hh
+bm5lbCBjb2RlLiBUaGUgdXNlZCBpbiBkb19wb2xsKCkgYW5kCmRvbWFpbl9k
+dW1wX2V2dGNobl9pbmZvKCkgd2VyZW4ndCBjb25zaXN0ZW50IHdpdGggcG9y
+dCB1c2VzIGVsc2V3aGVyZQphbmQgaGVuY2UgZ2V0IHN3aXRjaGVkIHRvIHBv
+cnRfaXNfdmFsaWQoKS4KCkZ1cnRoZXJtb3JlIEZJRk8gbW9kZSdzIHNldHVw
+X3BvcnRzKCkgZ2V0cyBhZGp1c3RlZCB0byBsb29wIG9ubHkgdXAgdG8KdGhl
+IHByaW9yIEFCSSBsaW1pdCwgcmF0aGVyIHRoYW4gYWxsIHRoZSB3YXkgdXAg
+dG8gdGhlIG5ldyBvbmUuCgpGaW5hbGx5IGEgd29yZCBvbiB0aGUgY2hhbmdl
+IHRvIGRvX3BvbGwoKTogQWNjZXNzaW5nIC0+bWF4X2V2dGNobnMKd2l0aG91
+dCBob2xkaW5nIGEgc3VpdGFibGUgbG9jayB3YXMgbmV2ZXIgc2FmZSwgYXMg
+aXQgYXMgd2VsbCBhcwotPmV2dGNobl9wb3J0X29wcyBtYXkgY2hhbmdlIGJl
+aGluZCBkb19wb2xsKCkncyBiYWNrLiBVc2luZwpwb3J0X2lzX3ZhbGlkKCkg
+aW5zdGVhZCB3aWRlbnMgc29tZSB0aGUgd2luZG93IGZvciBwb3RlbnRpYWwg
+YWJ1c2UsCnVudGlsIHdlJ3ZlIGRlYWx0IHdpdGggdGhlIHJhY2UgYWx0b2dl
+dGhlciAoc2VlIFhTQS0zNDMpLgoKVGhpcyBpcyBYU0EtMzQyLgoKUmVwb3J0
+ZWQtYnk6IEp1bGllbiBHcmFsbCA8amdyYWxsQGFtYXpvbi5jb20+CkZpeGVz
+OiA0ODk3NGU2Y2U1MmUgKCJldnRjaG46IHVzZSBhIHBlci1kb21haW4gdmFy
+aWFibGUgZm9yIHRoZSBtYXggbnVtYmVyIG9mIGV2ZW50IGNoYW5uZWxzIikK
+U2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29t
+PgpSZXZpZXdlZC1ieTogU3RlZmFubyBTdGFiZWxsaW5pIDxzc3RhYmVsbGlu
+aUBrZXJuZWwub3JnPgpSZXZpZXdlZC1ieTogSnVsaWVuIEdyYWxsIDxqZ3Jh
+bGxAYW1hem9uLmNvbT4KCi0tLSBhL3hlbi9jb21tb24vZXZlbnRfMmwuYwor
+KysgYi94ZW4vY29tbW9uL2V2ZW50XzJsLmMKQEAgLTEwMyw3ICsxMDMsNiBA
+QCBzdGF0aWMgY29uc3Qgc3RydWN0IGV2dGNobl9wb3J0X29wcyBldnRjCiB2
+b2lkIGV2dGNobl8ybF9pbml0KHN0cnVjdCBkb21haW4gKmQpCiB7CiAgICAg
+ZC0+ZXZ0Y2huX3BvcnRfb3BzID0gJmV2dGNobl9wb3J0X29wc18ybDsKLSAg
+ICBkLT5tYXhfZXZ0Y2hucyA9IEJJVFNfUEVSX0VWVENITl9XT1JEKGQpICog
+QklUU19QRVJfRVZUQ0hOX1dPUkQoZCk7CiB9CiAKIC8qCi0tLSBhL3hlbi9j
+b21tb24vZXZlbnRfY2hhbm5lbC5jCisrKyBiL3hlbi9jb21tb24vZXZlbnRf
+Y2hhbm5lbC5jCkBAIC0xNTEsNyArMTUxLDcgQEAgc3RhdGljIHZvaWQgZnJl
+ZV9ldnRjaG5fYnVja2V0KHN0cnVjdCBkbwogCiBpbnQgZXZ0Y2huX2FsbG9j
+YXRlX3BvcnQoc3RydWN0IGRvbWFpbiAqZCwgZXZ0Y2huX3BvcnRfdCBwb3J0
+KQogewotICAgIGlmICggcG9ydCA+IGQtPm1heF9ldnRjaG5fcG9ydCB8fCBw
+b3J0ID49IGQtPm1heF9ldnRjaG5zICkKKyAgICBpZiAoIHBvcnQgPiBkLT5t
+YXhfZXZ0Y2huX3BvcnQgfHwgcG9ydCA+PSBtYXhfZXZ0Y2hucyhkKSApCiAg
+ICAgICAgIHJldHVybiAtRU5PU1BDOwogCiAgICAgaWYgKCBwb3J0X2lzX3Zh
+bGlkKGQsIHBvcnQpICkKQEAgLTEzOTYsMTMgKzEzOTYsMTEgQEAgc3RhdGlj
+IHZvaWQgZG9tYWluX2R1bXBfZXZ0Y2huX2luZm8oc3RydQogCiAgICAgc3Bp
+bl9sb2NrKCZkLT5ldmVudF9sb2NrKTsKIAotICAgIGZvciAoIHBvcnQgPSAx
+OyBwb3J0IDwgZC0+bWF4X2V2dGNobnM7ICsrcG9ydCApCisgICAgZm9yICgg
+cG9ydCA9IDE7IHBvcnRfaXNfdmFsaWQoZCwgcG9ydCk7ICsrcG9ydCApCiAg
+ICAgewogICAgICAgICBjb25zdCBzdHJ1Y3QgZXZ0Y2huICpjaG47CiAgICAg
+ICAgIGNoYXIgKnNzaWQ7CiAKLSAgICAgICAgaWYgKCAhcG9ydF9pc192YWxp
+ZChkLCBwb3J0KSApCi0gICAgICAgICAgICBjb250aW51ZTsKICAgICAgICAg
+Y2huID0gZXZ0Y2huX2Zyb21fcG9ydChkLCBwb3J0KTsKICAgICAgICAgaWYg
+KCBjaG4tPnN0YXRlID09IEVDU19GUkVFICkKICAgICAgICAgICAgIGNvbnRp
+bnVlOwotLS0gYS94ZW4vY29tbW9uL2V2ZW50X2ZpZm8uYworKysgYi94ZW4v
+Y29tbW9uL2V2ZW50X2ZpZm8uYwpAQCAtNDc4LDcgKzQ3OCw3IEBAIHN0YXRp
+YyB2b2lkIGNsZWFudXBfZXZlbnRfYXJyYXkoc3RydWN0IGQKICAgICBkLT5l
+dnRjaG5fZmlmbyA9IE5VTEw7CiB9CiAKLXN0YXRpYyB2b2lkIHNldHVwX3Bv
+cnRzKHN0cnVjdCBkb21haW4gKmQpCitzdGF0aWMgdm9pZCBzZXR1cF9wb3J0
+cyhzdHJ1Y3QgZG9tYWluICpkLCB1bnNpZ25lZCBpbnQgcHJldl9ldnRjaG5z
+KQogewogICAgIHVuc2lnbmVkIGludCBwb3J0OwogCkBAIC00ODgsNyArNDg4
+LDcgQEAgc3RhdGljIHZvaWQgc2V0dXBfcG9ydHMoc3RydWN0IGRvbWFpbiAq
+ZAogICAgICAqIC0gc2F2ZSBpdHMgcGVuZGluZyBzdGF0ZS4KICAgICAgKiAt
+IHNldCBkZWZhdWx0IHByaW9yaXR5LgogICAgICAqLwotICAgIGZvciAoIHBv
+cnQgPSAxOyBwb3J0IDwgZC0+bWF4X2V2dGNobnM7IHBvcnQrKyApCisgICAg
+Zm9yICggcG9ydCA9IDE7IHBvcnQgPCBwcmV2X2V2dGNobnM7IHBvcnQrKyAp
+CiAgICAgewogICAgICAgICBzdHJ1Y3QgZXZ0Y2huICpldnRjaG47CiAKQEAg
+LTU0Niw2ICs1NDYsOCBAQCBpbnQgZXZ0Y2huX2ZpZm9faW5pdF9jb250cm9s
+KHN0cnVjdCBldnRjCiAgICAgaWYgKCAhZC0+ZXZ0Y2huX2ZpZm8gKQogICAg
+IHsKICAgICAgICAgc3RydWN0IHZjcHUgKnZjYjsKKyAgICAgICAgLyogTGF0
+Y2ggdGhlIHZhbHVlIGJlZm9yZSBpdCBjaGFuZ2VzIGR1cmluZyBzZXR1cF9l
+dmVudF9hcnJheSgpLiAqLworICAgICAgICB1bnNpZ25lZCBpbnQgcHJldl9l
+dnRjaG5zID0gbWF4X2V2dGNobnMoZCk7CiAKICAgICAgICAgZm9yX2VhY2hf
+dmNwdSAoIGQsIHZjYiApIHsKICAgICAgICAgICAgIHJjID0gc2V0dXBfY29u
+dHJvbF9ibG9jayh2Y2IpOwpAQCAtNTYyLDggKzU2NCw3IEBAIGludCBldnRj
+aG5fZmlmb19pbml0X2NvbnRyb2woc3RydWN0IGV2dGMKICAgICAgICAgICAg
+IGdvdG8gZXJyb3I7CiAKICAgICAgICAgZC0+ZXZ0Y2huX3BvcnRfb3BzID0g
+JmV2dGNobl9wb3J0X29wc19maWZvOwotICAgICAgICBkLT5tYXhfZXZ0Y2hu
+cyA9IEVWVENITl9GSUZPX05SX0NIQU5ORUxTOwotICAgICAgICBzZXR1cF9w
+b3J0cyhkKTsKKyAgICAgICAgc2V0dXBfcG9ydHMoZCwgcHJldl9ldnRjaG5z
+KTsKICAgICB9CiAgICAgZWxzZQogICAgICAgICByYyA9IG1hcF9jb250cm9s
+X2Jsb2NrKHYsIGdmbiwgb2Zmc2V0KTsKLS0tIGEveGVuL2NvbW1vbi9zY2hl
+ZHVsZS5jCisrKyBiL3hlbi9jb21tb24vc2NoZWR1bGUuYwpAQCAtMTQzNCw3
+ICsxNDM0LDcgQEAgc3RhdGljIGxvbmcgZG9fcG9sbChzdHJ1Y3Qgc2NoZWRf
+cG9sbCAqcwogICAgICAgICAgICAgZ290byBvdXQ7CiAKICAgICAgICAgcmMg
+PSAtRUlOVkFMOwotICAgICAgICBpZiAoIHBvcnQgPj0gZC0+bWF4X2V2dGNo
+bnMgKQorICAgICAgICBpZiAoICFwb3J0X2lzX3ZhbGlkKGQsIHBvcnQpICkK
+ICAgICAgICAgICAgIGdvdG8gb3V0OwogCiAgICAgICAgIHJjID0gMDsKLS0t
+IGEveGVuL2luY2x1ZGUveGVuL2V2ZW50LmgKKysrIGIveGVuL2luY2x1ZGUv
+eGVuL2V2ZW50LmgKQEAgLTEwNSw2ICsxMDUsMTIgQEAgdm9pZCBub3RpZnlf
+dmlhX3hlbl9ldmVudF9jaGFubmVsKHN0cnVjdAogI2RlZmluZSBidWNrZXRf
+ZnJvbV9wb3J0KGQsIHApIFwKICAgICAoKGdyb3VwX2Zyb21fcG9ydChkLCBw
+KSlbKChwKSAlIEVWVENITlNfUEVSX0dST1VQKSAvIEVWVENITlNfUEVSX0JV
+Q0tFVF0pCiAKK3N0YXRpYyBpbmxpbmUgdW5zaWduZWQgaW50IG1heF9ldnRj
+aG5zKGNvbnN0IHN0cnVjdCBkb21haW4gKmQpCit7CisgICAgcmV0dXJuIGQt
+PmV2dGNobl9maWZvID8gRVZUQ0hOX0ZJRk9fTlJfQ0hBTk5FTFMKKyAgICAg
+ICAgICAgICAgICAgICAgICAgICAgOiBCSVRTX1BFUl9FVlRDSE5fV09SRChk
+KSAqIEJJVFNfUEVSX0VWVENITl9XT1JEKGQpOworfQorCiBzdGF0aWMgaW5s
+aW5lIGJvb2xfdCBwb3J0X2lzX3ZhbGlkKHN0cnVjdCBkb21haW4gKmQsIHVu
+c2lnbmVkIGludCBwKQogewogICAgIGlmICggcCA+PSByZWFkX2F0b21pYygm
+ZC0+dmFsaWRfZXZ0Y2hucykgKQotLS0gYS94ZW4vaW5jbHVkZS94ZW4vc2No
+ZWQuaAorKysgYi94ZW4vaW5jbHVkZS94ZW4vc2NoZWQuaApAQCAtMzgyLDcg
+KzM4Miw2IEBAIHN0cnVjdCBkb21haW4KICAgICAvKiBFdmVudCBjaGFubmVs
+IGluZm9ybWF0aW9uLiAqLwogICAgIHN0cnVjdCBldnRjaG4gICAqZXZ0Y2hu
+OyAgICAgICAgICAgICAgICAgICAgICAgICAvKiBmaXJzdCBidWNrZXQgb25s
+eSAqLwogICAgIHN0cnVjdCBldnRjaG4gICoqZXZ0Y2huX2dyb3VwW05SX0VW
+VENITl9HUk9VUFNdOyAvKiBhbGwgb3RoZXIgYnVja2V0cyAqLwotICAgIHVu
+c2lnbmVkIGludCAgICAgbWF4X2V2dGNobnM7ICAgICAvKiBudW1iZXIgc3Vw
+cG9ydGVkIGJ5IEFCSSAqLwogICAgIHVuc2lnbmVkIGludCAgICAgbWF4X2V2
+dGNobl9wb3J0OyAvKiBtYXggcGVybWl0dGVkIHBvcnQgbnVtYmVyICovCiAg
+ICAgdW5zaWduZWQgaW50ICAgICB2YWxpZF9ldnRjaG5zOyAgIC8qIG51bWJl
+ciBvZiBhbGxvY2F0ZWQgZXZlbnQgY2hhbm5lbHMgKi8KICAgICBzcGlubG9j
+a190ICAgICAgIGV2ZW50X2xvY2s7Cg==
 
-This issue was discovered by Charles Holmes, Atredis Partners as part of
-the CNCF-sponsored Kubernetes Third-party Security Audit. Thanks to Maciej
-Szulik for the fix, to Tim Allclair for the test cases and fix review, and
-to the patch release managers for including the fix in their releases.
-
-
-
-Thanks,
-
-
-
-Joel Smith on behalf of the Kubernetes Product Security Committee
-
---0000000000006e89b3058bc753a2--
+--=separator--
