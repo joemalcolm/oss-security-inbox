@@ -1,27 +1,143 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/09/4
-Message-ID: <ecf4ae371694ce099bbebc4ab108fb23c19270a6.camel@apache.org>
-Date: Wed, 09 Dec 2020 08:01:39 -0800
-From: Brennan Ashton <btashton@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-17528: Apache NuttX (incubating) Out of Bound Write from invalid TCP Urgent length
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/5
+Message-Id: <E1kKiTs-0002Kw-UN@xenbits.xenproject.org>
+Date: Tue, 22 Sep 2020 13:37:16 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 338 v4 (CVE-2020-25597) - once valid event channels may not turn invalid
 Content-Type: text/plain; charset=utf-8
 
-Description:
-Out-of-bounds Write vulnerability in TCP stack of Apache Software
-Foundation Apache NuttX (incubating) allows attacker to corrupt memory
-by supplying arbitrary urgent data pointer offsets within TCP packets
-including beyond the length of the packet.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This issue affects:
-Apache Software Foundation Apache NuttX (incubating) versions prior to
-9.1.1 AND 10.0.0.
+            Xen Security Advisory CVE-2020-25597 / XSA-338
+                               version 4
 
-This issue is also known as AMNESIA:33 CVE-2020-17437
+            once valid event channels may not turn invalid
 
-Credit:
-Apache NuttX would like to thank Forescout for reporting the issue
+UPDATES IN VERSION 4
+====================
 
-Thanks you,
-Brennan Ashton
+Public release.
 
+ISSUE DESCRIPTION
+=================
+
+Logic in the handling of event channel operations in Xen assumes that an
+event channel, once valid, will not become invalid over the life time of
+a guest.  However, operations like the resetting of all event channels
+may involve decreasing one of the bounds checked when determining
+validity.  This may lead to bug checks triggering, crashing the host.
+
+IMPACT
+======
+
+An unprivileged guest may be able to crash Xen, leading to a Denial of
+Service (DoS) for the entire system.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from 4.4 onwards are vulnerable.  Xen versions 4.3 and
+earlier are not vulnerable.
+
+Only systems with untrusted guests permitted to create more than the
+default number of event channels are vulnerable.  This number depends
+on the architecture and type of guest.  For 32-bit x86 PV guests, this
+is 1023; for 64-bit x86 PV guests, and for all ARM guests, this number
+is 4095.  Systems where untrusted guests are limited to fewer than
+this number are not vulnerable.
+
+Note that xl and libxl limit max_event_channels to 1023 by default, so
+systems using exlusively xl, libvirt+libxl, or their own toolstack
+based on libxl, and not explicitly setting max_event_channels, are not
+vulnerable.
+
+MITIGATION
+==========
+
+The problem can be avoided by reducing the number of event channels
+available to the guest to no more than 1023.  For example, setting
+"max_event_channels=1023" in the xl domain configuration, or deleting
+any existing setting (since 1023 is the default for xl/libxl).
+
+For ARM systems, any limit no more than 4095 is safe.
+
+For 64-bit x86 PV guests, any limit no more than 4095 is likewise safe
+if the host configuration prevents the guest administrator from
+substituting and running a 32-bit kernel (and thereby putting the
+guest into 32-bit PV mode).
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa338.patch           Xen 4.10 - xen-unstable
+
+$ sha256sum xsa338*
+56c322b89a96db6be40cf15fdb9303e24ff692aa5a6274b2d7718bfc05acf309  xsa338.meta
+7345eac1cbad23b082523e9cbd0331f8a9f16c6e459fb2a686606253f5514c9b  xsa338.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the *patch* described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+And: deployment of the event channel limit reduction mitigation is NOT
+permitted (except where all the affected systems and VMs are
+administered and used only by organisations which are members of the
+Xen Project Security Issues Predisclosure List).  Specifically,
+deployment on public cloud systems is NOT permitted.
+
+This is because such a change can be visible to the guest, so it would
+leak the preconditions for the vulnerability and maybe lead to
+rediscovery.
+
+Deployment of this, or similar mitigations, is permitted only AFTER
+the embargo ends.
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/ecMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZlToIAMY5ZvKvqVmLzy/UEZrq3lgf8DA2+n9BFnec+XlI
+gDz7ssJNgwnkrrt7BF/XGeaAwly/pRACLapYd7hP8KNM3qPz/DG++S2FS/O44AkQ
+7yjYRoEJRxFK1RnG3UeVw9S8aDrUrsTIoh7WFsX7rvEw6zg6o4kii4YSjvUSV5ug
+uYh0p3i56CWqjlKd94ZQlESfacrl1wZd/AemdDbAzj/FMF0ZyQujQ3PHBAcLjbPR
+jzE/EJRjpEPe9kMWKDWX06VlWja6cUDFIlaqZM9nlgiyI643y2iRSuilQbansMPA
+zG6SXQOqzSWc+OQ3wUaf972mjNfiKiBSFo/hB95HdS5I2Pk=
+=EzUa
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa338.meta" of type "application/octet-stream" (1959 bytes)
+
+Download attachment "xsa338.patch" of type "application/octet-stream" (1737 bytes)
