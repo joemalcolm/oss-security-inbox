@@ -1,109 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/3
-Message-ID: <CANnLRdgs1rZm-=qujdjMBdVxm2ss=OXfu8mn4JqXJdyjTHF4kg@mail.gmail.com>
-Date: Mon, 5 Oct 2020 17:29:20 -0400
-From: Stephen John Smoogen <smooge@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/1
+Message-Id: <E1kKiTq-0002Gr-8r@xenbits.xenproject.org>
+Date: Tue, 22 Sep 2020 13:37:14 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 333 v3 (CVE-2020-25602) - x86 pv: Crash when handling guest access to MSR_MISC_ENABLE
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 5 Oct 2020 at 16:49, Solar Designer <solar@...nwall.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Hi all,
->
-> As a moderator I approved all messages in this thread so far, but I am
-> unhappy about the quality of both Georgi's message and the replies.
->
-> This is a valid topic, but there's no room in it for trolling (that's
-> how Georgi's message came across, even if maybe unintentionally) nor for
-> responding only about the presumed trolling.  Just assume good faith and
-> post a response that's actually useful to others in here.  I'll try:
->
-> On Mon, Oct 05, 2020 at 03:02:33PM +0300, Georgi Guninski wrote:
-> > Are there major security changes needed if
-> > gnu/linux dominates the desktop and/or mobile phone
-> > markets?
->
-> I'd say yes, major security changes are needed.
->
-On the desktop, major Linux distributions (and by the way *BSDs and
-> Solaris are not very different in this respect, I think) when used as
-> single-user desktop systems lack security isolation between applications
-> of the user.  (And also between the user and root, due to the typical
-> recommended use of sudo from the user account.)
->
->
-I think it would take a lot of 'training' on why this is not wanted and
-setting expectations about how one is supposed to use a computer without
-that access. It is hard enough trying to explain to the person who wanted
-everything containerized for 'better' security that allowing them to ssh
-into the container so they can 'debug it' also removes the security that
-they wanted.
+            Xen Security Advisory CVE-2020-25602 / XSA-333
+                               version 3
 
+      x86 pv: Crash when handling guest access to MSR_MISC_ENABLE
 
+UPDATES IN VERSION 3
+====================
 
-> This kind of security isolation is something we have on Android, but at
-> the price of the user not having full access to (not entirely) their
-> device.  The user cannot even have e.g. a file manager app with which
-> they'd access all files of other apps.
->
-Then there's the trend towards having a desktop-like Linux system on
-> mobile devices again.  Before Android, we had e.g. Maemo and MeeGo.  Now
-> we have e.g. Ubuntu Touch, postmarketOS, and Sailfish OS.  As far as I'm
-> aware, so far this means lack of isolation between the apps just like we
-> have on the desktop.
->
-> We need the best of both worlds - isolation, yet full control.  I guess
-> this could be achieved by devices gaining a physical button that would
-> need to be pressed at the time a newly installed app is to be granted
-> privileges by a component in the system's TCB.  Said component would
-> also need to assure the user that it's the only one in control at the
-> moment (kind of after a SAK) and that the displayed privileges request
-> is truthful and complete, e.g. by lighting a dedicated LED.  You want to
-> install an all-powerful file manager?  Just wait for that LED to light
-> up, review what privileges would be granted to where, and press that
-> button to accept.  Perhaps too cumbersome for typical users.  Maybe an
-> alternative approach could be developed where a portion of the
-> touchscreen (or a secondary one) would be reserved for interacting with
-> the OS TCB.  Perhaps something like MacBook Pro's Touch Bar could be
-> used for that purpose - and having that is already a precedent, it's
-> just not used for a security purpose yet (or I haven't heard of that).
->
->
-That would be useful and trusted if the touch bar has a direct path to the
-TCB versus being able to be reprogrammed by the OS. It would also be
-helpful if there is a way to weigh 'trust' of a system. Each time a person
-installs an app like that, the bar turns more red.. at some level it just
-goes amber and turns off the need to press the button anymore. Then if you
-are asked if Bob's computer is allowed on the computer, you look at the
-touch bar and say 'Nooope'.
+Public release.
 
- This is mainly to try and give users better education about the tradeoffs
-versus them just blind clicking [OK] which many of them will do anyway.
-Most users don't really have the time or knowledge to know if XYZ app
-really needs some control to work. There is no way to know if something is
-like driving without a seatbelt, or driving without working brakes. People
-may still do either of them but people do it more often if they have no
-'feedback' that it can cause problems.
+ISSUE DESCRIPTION
+=================
 
-[snipped things that I don't have anything to add to]
+When a guest accesses certain Model Specific Registers, Xen first reads
+the value from hardware to use as the basis for auditing the guest
+access.
 
+For the MISC_ENABLE MSR, which is an Intel specific MSR, this MSR read
+is performed without error handling for a #GP fault, which is the
+consequence of trying to read this MSR on non-Intel hardware.
 
-> Relaxed file permissions like that may also further weaken some partial
-> sandboxes (when a service is running with its dedicated credentials, but
-> with retained filesystem access - such as because it needs that).
->
-> Then there are also plenty of other local security risks on typical
-> Linux distros, starting with risky data processing by apport and abrt.
-> Those would matter more if other issues I mentioned are addressed.
->
-> I might be right or wrong or (most likely) both, but I hope this sets
-> the tone for constructive further discussion.
->
-> Alexander
->
+IMPACT
+======
+
+A buggy or malicious PV guest administrator can crash Xen, resulting in
+a host Denial of Service.
+
+VULNERABLE SYSTEMS
+==================
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+Only Xen versions 4.11 and onwards are vulnerable.  4.10 and earlier are
+not vulnerable.
+
+Only x86 systems which do not implement the MISC_ENABLE MSR (0x1a0) are
+vulnerable.  AMD and Hygon systems do not implement this MSR and are
+vulnerable.  Intel systems do implement this MSR and are not vulnerable.
+Other manufacturers have not been checked.
+
+Only x86 PV guests can exploit the vulnerability.  x86 HVM/PVH guests
+cannot exploit the vulnerability.
+
+MITIGATION
+==========
+
+Running only HVM/PVH guests avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa333.patch           Xen 4.11 - xen-unstable
+
+$ sha256sum xsa333*
+3f3d974ede9fe80f4eb63640dce058cf9e2073cd79e4c085c944f3ca5e454e26  xsa333.meta
+8edec914fbdf036fba8cb54a75d3a9b025fac936e0af35512954a2dc2b12a26f  xsa333.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
--- 
-Stephen J Smoogen.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/eUMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZu5EH/RAaLJocX5UJfEZ4QT2osvnc1aaZjBXNz4JN1HDj
+46pGxBOv1kEDxBu/lqbbXEY2aLeBLder2nj0OHCYgDkPCh4fqaciBqCEO97COqzo
+dFvN17dZ0pjyBUoSXs8mVPWjMblBjf6/Mt+/gh8speJQ32V3lHz6xYc9Nu0CVoL5
++RiaRVPGYOVndF5A0XK6UIiiMAOcVgPHpg485QFT2EIVPlKVu/jDrrsYep/9OrmP
+bamEjKcYoFBBsMlpUNAtUK0QZGnSAe2vVtbUNeHgY5T5BDuJzLZXdMDGmBDXK2vV
+0PNMOoIeFev6Pq7yuvvTqI0PKEBmO825hkbZ5sEva/7pZ60=
+=zf3E
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa333.meta" of type "application/octet-stream" (1301 bytes)
+
+Download attachment "xsa333.patch" of type "application/octet-stream" (1296 bytes)
