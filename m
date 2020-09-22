@@ -1,4 +1,9 @@
-Received: (qmail 7853 invoked by uid 550); 2 Oct 2024 13:40:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10569" "Tuesday" "22" "September" "2020" "13:37:17" "+0000" "Xen.org security team" "security@xen.org" nil "235" nil nil nil nil "9" nil nil (number mark "U       security@xen Sep 22  235/10569 " thread-indent "\"[oss-security] Xen Security Advisory 339 v3 (CVE-2020-25596) - x86 pv guest kernel DoS via SYSENTER\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 339 v3 (CVE-2020-25596) - x86 pv guest kernel DoS via SYSENTER" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9905 invoked by uid 550); 22 Sep 2020 13:37:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,112 +12,258 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7818 invoked from network); 2 Oct 2024 13:40:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=beckweb.net
-	; s=he112721; h=To:Date:Message-Id:Subject:Mime-Version:
-	Content-Transfer-Encoding:Content-Type:From:From:Sender:Reply-To:Subject:Date
-	:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=KtkHhs0QKclbHLZrbSM9s2kn18b04Z+U+F1JtiT1QYI=; t=1727876407; x=1728308407;
-	 b=IuqLtKdJqM1BZ2OyAnkYslmD+LafYtHRnTBikDZeRPLefXzXV9dUasrCeHgb4/sdcae46nRuA8
-	HaU4Md0huj5mdUv1pcmWjh9TDf3F9fN8TQVDr6q22ttjquahReHBF9iNnAKKlNh72ARRIdmAaRP39
-	MZKq72ATpYG05GBQN+peJEIlBJ+ohYG37vEhD82JH8//79+Tv/tioopDTRCxW7lEzyaKPbJ4JQeJq
-	iopwWdesBZt298zfoSDMrxJg1UF2baHifkbYp288DptSdvQgNLet7S4kRB0NXdKVk+eCMMbBX/eNO
-	mleS/AIznJZBcGpy8IBGyVeiEWsXDPyVgkNbA==;
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
+Received: (qmail 9733 invoked from network); 22 Sep 2020 13:37:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=mW+BhOO+gLBe3N5yVv/AmCHZwB1mJcUT0ffbghSDYeg=; b=wy0GH4ziap/HWkXdZrqidx8kl+
+	F4YDk6IlVxg95QmmwBcpz3sOqjqZ1O9hJpk+NnGlQyRTXnRoSzMnqrtXeSDMFF48l1rIcsKswhwxU
+	yDvCGW4VuoDXs5YFClNmnvUxOiQr19kHkz/yDMYAg3xveZL+97Cx9G23kETAUrA/WPrI=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1kKiTt-0002Lq-ID@xenbits.xenproject.org>
+Date: Tue, 22 Sep 2020 13:37:17 +0000
+Subject: [oss-security] Xen Security Advisory 339 v3 (CVE-2020-25596) - x86 pv guest
+ kernel DoS via SYSENTER
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.1\))
-Message-Id: <CFB3E269-B6B5-4497-A131-75FF0887E890@beckweb.net>
-Date: Wed, 2 Oct 2024 15:39:46 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3776.700.51.11.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1727876407;8c6a3173;
-X-HE-SMSGID: 1svza8-0000V8-Fz
-Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The following releases contain fixes for security vulnerabilities:
+            Xen Security Advisory CVE-2020-25596 / XSA-339
+                               version 3
 
-* Jenkins 2.479
-* Jenkins LTS 2.462.3
-* Credentials Plugin 1381.v2c3a_12074da_b_
-* OpenId Connect Authentication Plugin 4.355.v3a_fb_fca_b_96d4
+                 x86 pv guest kernel DoS via SYSENTER
 
+UPDATES IN VERSION 3
+====================
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2024-10-02/
+Public release.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+ISSUE DESCRIPTION
+=================
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+The SYSENTER instruction leaves various state sanitization activities
+to software.  One of Xen's sanitization paths injects a #GP fault, and
+incorrectly delivers it twice to the guest.
 
----
+This causes the guest kernel to observe a kernel-privilege #GP fault
+(typically fatal) rather than a user-privilege #GP fault (usually
+converted into SIGSEGV/etc).
 
-SECURITY-3451 / CVE-2024-47803
-Jenkins provides the `secretTextarea` form field for multi-line secrets.
+IMPACT
+======
 
-Jenkins 2.478 and earlier, LTS 2.462.2 and earlier does not redact
-multi-line secret values in error messages generated for form submissions
-involving the `secretTextarea` form field.
+Malicious or buggy userspace can crash the guest kernel, resulting in
+a VM Denial of Service.
 
-This can result in exposure of multi-line secrets through those error
-messages, e.g., in the system log.
+VULNERABLE SYSTEMS
+==================
 
+All versions of Xen from 3.2 onwards are vulnerable.
 
-SECURITY-3448 / CVE-2024-47804
-Jenkins provides APIs for fine-grained control of item creation:
+Only x86 systems are vulnerable.  ARM platforms are not vulnerable.
 
-* Authorization strategies can prohibit the creation of items of a given
-  type in a given item group.
-* Item types can prohibit creation of new instances in a given item group.
+Only x86 systems which support the SYSENTER instruction in 64bit mode
+are vulnerable.  This is believed to be Intel, Centaur and Shanghai
+CPUs.  AMD and Hygon CPUs are not believed to be vulnerable.
 
-If an attempt is made to create an item of a prohibited type through the
-Jenkins CLI or the REST API and either of the above checks fail, Jenkins
-2.478 and earlier, LTS 2.462.2 and earlier creates the item in memory, only
-deleting it from disk.
+Only x86 PV guests can exploit the vulnerability.  x86 PVH / HVM
+guests cannot exploit the vulnerability.
 
-This allows attackers with Item/Create permission to bypass these
-restrictions, creating a temporary item. With Item/Configure permission,
-they can also save the item to persist it.
+MITIGATION
+==========
 
+Running only x86 PVH / HVM guests avoids the vulnerability.
 
-SECURITY-3373 / CVE-2024-47805
-Credentials Plugin 1380.va_435002fa_924 and earlier, except
-1371.1373.v4eb_fa_b_7161e9, does not redact encrypted values of credentials
-using the `SecretBytes` type (e.g., Certificate credentials, or Secret file
-credentials from Plain Credentials Plugin) when accessing item `config.xml`
-via REST API or CLI.
+CREDITS
+=======
 
-This allows attackers with Item/Extended Read permission to view encrypted
-`SecretBytes` values in credentials.
+This issue was discovered by Andrew Cooper of Citrix.
 
+RESOLUTION
+==========
 
-SECURITY-3441 (1) / CVE-2024-47806
-OpenId Connect Authentication Plugin 4.354.v321ce67a_1de8 and earlier does
-not check the `aud` (Audience) claim of an ID Token during its
-authentication flow, a value to verify the token is issued for the correct
-client.
+Applying the attached patch resolves this issue.
 
-This vulnerability may allow attackers to subvert the authentication flow,
-potentially gaining administrator access to Jenkins.
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
+xsa339.patch           Xen 4.10 - xen-unstable
 
-SECURITY-3441 (2) / CVE-2024-47807
-OpenId Connect Authentication Plugin 4.354.v321ce67a_1de8 and earlier does
-not check the `iss` (Issuer) claim of an ID Token during its authentication
-flow, a value that identifies the Originating Party (IdP).
+$ sha256sum xsa339*
+5cece13878cc40b32bc5753c0ef64f989f9b1c7f9549d62ea4fcd06e9620de9e  xsa339.meta
+b6ffa7671d905aa12498ad64915be3b7cba74ce1c5bf6bce18b1f106ebf6d715  xsa339.patch
+$
 
-This vulnerability may allow attackers to subvert the authentication flow,
-potentially gaining administrator access to Jenkins.
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/ecMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZgEUH/1/5DUgXRKzwvYuERdBintUdCUaezYpjY0VEJ/v5
+nPXEZDDkBFZZxtWmLg6gqMsJg4O6npTcZ6Z3ZpP8xTiRexr0fHHRY5FHqOCW0aS+
+c0WYQzSvfDW1L/m9fjwsbFKKRCmrwE24L/Jc7GZJlpps22f1mZpn3cwsjidlofHi
+WxqpdAPNDLsPDF3+iwt5a8gL3onyeo03MaBhO29UAJIKCo4hxiKu5/e3upXFBdN2
+Z4Pyr79E51SiCGxZ/A1NTil9+FyYkP1DgBQdJ6pVrxMnZUhdcjbGLEbrUNaTfgox
+yORU8rE3XS2ZajRpW3D2CIGnKJj3zGWaQqx+FufX1m6Y8qE=
+=tkQp
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa339.meta"
+Content-Disposition: attachment; filename="xsa339.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAzMzksCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIs
+CiAgICAiNC4xMSIsCiAgICAiNC4xMCIKICBdLAogICJUcmVlcyI6IFsKICAg
+ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAg
+ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
+YWJsZVJlZiI6ICI5M2JlOTQzZTdkNzU5MDE1YmQ1ZGI0MWE0OGY2ZGNlNThl
+NTgwZDVhIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
+MzYsCiAgICAgICAgICAgIDMzNywKICAgICAgICAgICAgMzM4CiAgICAgICAg
+ICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ez
+MzkucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9
+LAogICAgIjQuMTEiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4
+ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogImRkYWFjY2JiYWI2YjE5
+YmYyMWVkMmMwOTdmMzA1NWEzYzI1NDRjOGQiLAogICAgICAgICAgIlByZXJl
+cXMiOiBbCiAgICAgICAgICAgIDMzMywKICAgICAgICAgICAgMzM2LAogICAg
+ICAgICAgICAzMzcsCiAgICAgICAgICAgIDMzOAogICAgICAgICAgXSwKICAg
+ICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzM5LnBhdGNo
+IgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0
+LjEyIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewog
+ICAgICAgICAgIlN0YWJsZVJlZiI6ICIxMzM2Y2ExNzc0MjQ3MWZjNGE1OTg3
+OWFlMmY2MzdhNTk1MzBhOTMzIiwKICAgICAgICAgICJQcmVyZXFzIjogWwog
+ICAgICAgICAgICAzMzMsCiAgICAgICAgICAgIDMzNCwKICAgICAgICAgICAg
+MzM2LAogICAgICAgICAgICAzMzcsCiAgICAgICAgICAgIDMzOAogICAgICAg
+ICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNh
+MzM5LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAg
+fSwKICAgICI0LjEzIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
+eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI5YjM2N2IyYjBiNzE0
+ZjNmZmI2OWVkNmJlMGExMThlOGQzZWFjMDdmIiwKICAgICAgICAgICJQcmVy
+ZXFzIjogWwogICAgICAgICAgICAzMzMsCiAgICAgICAgICAgIDMzNCwKICAg
+ICAgICAgICAgMzM2LAogICAgICAgICAgICAzMzcsCiAgICAgICAgICAgIDMz
+OAogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAg
+ICAgICAieHNhMzM5LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAg
+ICAgfQogICAgfSwKICAgICI0LjE0IjogewogICAgICAiUmVjaXBlcyI6IHsK
+ICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJjM2Ew
+ZmMyMmFmOTBlZjI4ZTY4YjExNmM2YTQ5ZDljZWM1N2Y3MWNmIiwKICAgICAg
+ICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAzMzMsCiAgICAgICAgICAg
+IDMzNCwKICAgICAgICAgICAgMzM2LAogICAgICAgICAgICAzMzcsCiAgICAg
+ICAgICAgIDMzOAogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjog
+WwogICAgICAgICAgICAieHNhMzM5LnBhdGNoIgogICAgICAgICAgXQogICAg
+ICAgIH0KICAgICAgfQogICAgfSwKICAgICJtYXN0ZXIiOiB7CiAgICAgICJS
+ZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxl
+UmVmIjogImIxMTkxMDA4MmQ5MGJiMTU5N2Y2Njc5NTI0ZWI3MjZhMzMzMDY2
+NzIiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDMzMywK
+ICAgICAgICAgICAgMzM0LAogICAgICAgICAgICAzMzYsCiAgICAgICAgICAg
+IDMzNywKICAgICAgICAgICAgMzM4CiAgICAgICAgICBdLAogICAgICAgICAg
+IlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EzMzkucGF0Y2giCiAgICAg
+ICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9CiAgfQp9
+
+--=separator
+Content-Type: application/octet-stream; name="xsa339.patch"
+Content-Disposition: attachment; filename="xsa339.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeDg2L3B2OiBBdm9pZCBkb3VibGUgZXhjZXB0aW9uIGlu
+amVjdGlvbgoKVGhlcmUgaXMgYXQgbGVhc3Qgb25lIHBhdGggKFNZU0VOVEVS
+IHdpdGggTlQgc2V0LCBYZW4gY29udmVydHMgdG8gI0dQKSB3aGljaAplbmRz
+IHVwIGluamVjdGluZyB0aGUgI0dQIGZhdWx0IHR3aWNlLCBmaXJzdCBpbiBj
+b21wYXRfc3lzZW50ZXIoKSwgYW5kIHRoZW4gYQpzZWNvbmQgdGltZSBpbiBj
+b21wYXRfdGVzdF9hbGxfZXZlbnRzKCksIGR1ZSB0byB0aGUgc3RhbGUgVEJG
+X0VYQ0VQVElPTiBsZWZ0CmluIFRSQVBCT1VOQ0VfZmxhZ3MuCgpUaGUgZ3Vl
+c3Qga2VybmVsIHNlZXMgdGhlIHNlY29uZCBmYXVsdCBmaXJzdCwgd2hpY2gg
+aXMgYSBrZXJuZWwgbGV2ZWwgI0dQCnBvaW50aW5nIGF0IHRoZSBoZWFkIG9m
+IHRoZSAjR1AgaGFuZGxlciwgYW5kIGlzIHRoZXJlZm9yZSBhIHVzZXJzcGFj
+ZQp0cmlnZ2VyLWFibGUgRG9TLgoKVGhpcyBwYXJ0aWN1bGFyIGJ1ZyBoYXMg
+Yml0dGVuIHVzIHNldmVyYWwgdGltZXMgYmVmb3JlLCBzbyByZWFycmFuZ2UK
+e2NvbXBhdF8sfWNyZWF0ZV9ib3VuY2VfZnJhbWUoKSB0byBjbG9iYmVyIFRS
+QVBCT1VOQ0Ugb24gc3VjY2VzcywgcmF0aGVyIHRoYW4KbGVhdmluZyB0aGlz
+IHRhc2sgdG8gb25lIGFyZWEgb2YgY29kZSB3aGljaCBpc24ndCB1c2VkIHVu
+aWZvcm1seS4KCk90aGVyIHNjZW5hcmlvcyB3aGljaCBtaWdodCByZXN1bHQg
+aW4gYSBkb3VibGUgaW5qZWN0aW9uIChlLmcuIHR3byBjYWxscwpkaXJlY3Rs
+eSB0byBjb21wYXRfY3JlYXRlX2JvdW5jZV9mcmFtZSkgd2lsbCBub3cgY3Jh
+c2ggdGhlIGd1ZXN0LCB3aGljaCBpcyBmYXIKbW9yZSBvYnZpb3VzIHRoYW4g
+bGV0dGluZyB0aGUga2VybmVsIHJ1biB3aXRoIGNvcnJ1cHQgc3RhdGUuCgpU
+aGlzIGlzIFhTQS0zMzkKCkZpeGVzOiBmZGFjOTUxNTYwN2IgKCJ4ODY6IGNs
+ZWFyIEVGTEFHUy5OVCBpbiBTWVNFTlRFUiBlbnRyeSBwYXRoIikKU2lnbmVk
+LW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4
+LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNl
+LmNvbT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYveDg2XzY0L2NvbXBh
+dC9lbnRyeS5TIGIveGVuL2FyY2gveDg2L3g4Nl82NC9jb21wYXQvZW50cnku
+UwppbmRleCBjM2U2MmY4NzM0Li43MzYxOWY1N2NhIDEwMDY0NAotLS0gYS94
+ZW4vYXJjaC94ODYveDg2XzY0L2NvbXBhdC9lbnRyeS5TCisrKyBiL3hlbi9h
+cmNoL3g4Ni94ODZfNjQvY29tcGF0L2VudHJ5LlMKQEAgLTc4LDcgKzc4LDYg
+QEAgY29tcGF0X3Byb2Nlc3Nfc29mdGlycXM6CiAgICAgICAgIHN0aQogLkxj
+b21wYXRfYm91bmNlX2V4Y2VwdGlvbjoKICAgICAgICAgY2FsbCAgY29tcGF0
+X2NyZWF0ZV9ib3VuY2VfZnJhbWUKLSAgICAgICAgbW92YiAgJDAsIFRSQVBC
+T1VOQ0VfZmxhZ3MoJXJkeCkKICAgICAgICAgam1wICAgY29tcGF0X3Rlc3Rf
+YWxsX2V2ZW50cwogCiAJQUxJR04KQEAgLTM1Miw3ICszNTEsMTMgQEAgX19V
+TkxJS0VMWV9FTkQoY29tcGF0X2JvdW5jZV9udWxsX3NlbGVjdG9yKQogICAg
+ICAgICBtb3ZsICAlZWF4LFVSRUdTX2NzKzgoJXJzcCkKICAgICAgICAgbW92
+bCAgVFJBUEJPVU5DRV9laXAoJXJkeCksJWVheAogICAgICAgICBtb3ZsICAl
+ZWF4LFVSRUdTX3JpcCs4KCVyc3ApCisKKyAgICAgICAgLyogVHJhcGJvdW5j
+ZSBjb21wbGV0ZS4gIENsb2JiZXIgc3RhdGUgdG8gYXZvaWQgYW4gZXJyb25l
+b3VzIHNlY29uZCBpbmplY3Rpb24uICovCisgICAgICAgIHhvciAgICVlYXgs
+ICVlYXgKKyAgICAgICAgbW92ICAgJWF4LCAgVFJBUEJPVU5DRV9jcyglcmR4
+KQorICAgICAgICBtb3YgICAlYWwsICBUUkFQQk9VTkNFX2ZsYWdzKCVyZHgp
+CiAgICAgICAgIHJldAorCiAuc2VjdGlvbiAuZml4dXAsImF4IgogLkxmeDEz
+OgogICAgICAgICB4b3JsICAlZWRpLCVlZGkKZGlmZiAtLWdpdCBhL3hlbi9h
+cmNoL3g4Ni94ODZfNjQvZW50cnkuUyBiL3hlbi9hcmNoL3g4Ni94ODZfNjQv
+ZW50cnkuUwppbmRleCAxZTg4MGViOWY2Li43MWEwMGU4NDZiIDEwMDY0NAot
+LS0gYS94ZW4vYXJjaC94ODYveDg2XzY0L2VudHJ5LlMKKysrIGIveGVuL2Fy
+Y2gveDg2L3g4Nl82NC9lbnRyeS5TCkBAIC05MCw3ICs5MCw2IEBAIHByb2Nl
+c3Nfc29mdGlycXM6CiAgICAgICAgIHN0aQogLkxib3VuY2VfZXhjZXB0aW9u
+OgogICAgICAgICBjYWxsICBjcmVhdGVfYm91bmNlX2ZyYW1lCi0gICAgICAg
+IG1vdmIgICQwLCBUUkFQQk9VTkNFX2ZsYWdzKCVyZHgpCiAgICAgICAgIGpt
+cCAgIHRlc3RfYWxsX2V2ZW50cwogCiAgICAgICAgIEFMSUdOCkBAIC01MTIs
+NiArNTExLDExIEBAIFVOTElLRUxZX1NUQVJUKHosIGNyZWF0ZV9ib3VuY2Vf
+ZnJhbWVfYmFkX2JvdW5jZV9pcCkKICAgICAgICAgam1wICAgYXNtX2RvbWFp
+bl9jcmFzaF9zeW5jaHJvbm91cyAgLyogRG9lcyBub3QgcmV0dXJuICovCiBf
+X1VOTElLRUxZX0VORChjcmVhdGVfYm91bmNlX2ZyYW1lX2JhZF9ib3VuY2Vf
+aXApCiAgICAgICAgIG1vdnEgICVyYXgsVVJFR1NfcmlwKzgoJXJzcCkKKwor
+ICAgICAgICAvKiBUcmFwYm91bmNlIGNvbXBsZXRlLiAgQ2xvYmJlciBzdGF0
+ZSB0byBhdm9pZCBhbiBlcnJvbmVvdXMgc2Vjb25kIGluamVjdGlvbi4gKi8K
+KyAgICAgICAgeG9yICAgJWVheCwgJWVheAorICAgICAgICBtb3YgICAlcmF4
+LCBUUkFQQk9VTkNFX2VpcCglcmR4KQorICAgICAgICBtb3YgICAlYWwsICBU
+UkFQQk9VTkNFX2ZsYWdzKCVyZHgpCiAgICAgICAgIHJldAogCiAgICAgICAg
+IC5wdXNoc2VjdGlvbiAuZml4dXAsICJheCIsIEBwcm9nYml0cwo=
+
+--=separator--
