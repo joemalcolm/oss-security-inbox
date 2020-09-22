@@ -1,55 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/25/1
-Message-ID: <96bf2c19-1a4d-494a-a643-a7501a22fc67@kde.org>
-Date: Thu, 25 Jun 2020 12:05:03 +0200
-From: Jan Kundrát <jkt@....org>
-To: <oss-security@...ts.openwall.com>
-Cc: <security@....org>
-Subject: Requesting a CVE id for Trojitá, an e-mail client: Improper Certificate Validation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/2
+Message-Id: <E1kKiTr-0002Ip-K6@xenbits.xenproject.org>
+Date: Tue, 22 Sep 2020 13:37:15 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 336 v3 (CVE-2020-25604) - race when migrating timers between x86 HVM vCPU-s
 Content-Type: text/plain; charset=utf-8
 
-Hi folks, I would appreciate a Cc on responses as I'm not subscribed to 
-this list. I would like to request a CVE for the following vulnerability:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Summary
--------
+            Xen Security Advisory CVE-2020-25604 / XSA-336
+                               version 3
 
-Damian Poddebniak discovered a TLS verification failure (CWE-295) in 
-Trojitá [1], a fast Qt IMAP e-mail client. When sending e-mails over SMTP, 
-all TLS errors were ignored.
+           race when migrating timers between x86 HVM vCPU-s
 
-Background
-----------
+UPDATES IN VERSION 3
+====================
 
-Trojita first gained support for SMTP submission in patch 0083eea5ed [2]. 
-Since that commit (May 2009), there's been a FIXME comment in the code that 
-SSL errors should be handled properly. Unfortunately, this issue kept 
-falling through the cracks and we never re-enabled TLS validation as the 
-SMTP backend matured. As a result, outgoing SMTP connections were 
-suspectible to a MITM attack, with authentication details including 
-passwords and the message content potentially available to attackers.
+Public release.
 
-IMAP connections are not suspectible to this bug.
+ISSUE DESCRIPTION
+=================
 
-Affected versions
------------------
+When migrating timers of x86 HVM guests between its vCPU-s, the locking
+model used allows for a second vCPU of the same guest also operating on
+the timers to release a lock that it didn't acquire.
 
-All versions of Trojita up to and including v0.7 are affected. The fix [3] 
-will be included in version v0.8 which will be released once the CVE gets 
-assigned.
+IMPACT
+======
 
-Acknowledgement
----------------
+The most likely effect of the issue is a hang or crash of the
+hypervisor, i.e. a Denial of Service (DoS).
 
-Thanks to Damian Poddebniak for reporting [4] this bug.
+VULNERABLE SYSTEMS
+==================
 
-[1] http://trojita.flaska.net/
-[2] https://invent.kde.org/pim/trojita/-/commit/0083eea5ed
-[3] https://gerrit.vesnicky.cesnet.cz/r/1035
-[4] https://bugs.kde.org/show_bug.cgi?id=423453
+All versions of Xen are affected.
 
-With kind regards,
-Jan
+Only x86 systems are vulnerable.  Arm systems are not vulnerable.
 
--- 
-Trojitá, a fast Qt IMAP e-mail client -- http://trojita.flaska.net/
+Only x86 HVM guests can leverage the vulnerability.  x86 PV and PVH
+cannot leverage the vulnerability.
+
+Only guests with more than one vCPU can exploit the vulnerability.
+
+MITIGATION
+==========
+
+Running only PV and PVH guests will avoid the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Igor Druzhinin of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa336.patch           Xen 4.12 - xen-unstable
+xsa336-4.11.patch      Xen 4.10 - 4.11
+
+$ sha256sum xsa336*
+6cb13a54c2b0fcb6948a1c4045095da4e43aad262a1dd8993ea2a3bd90d4c72d  xsa336.meta
+ecb59876fb92cfe0916ed5f3227a30efe038224c1f6ec36bc3706c4e2214552c  xsa336.patch
+c0c7983bfd70eb54277af9fddfcc3cc95bbd745d92d9ffb71d5b32281c437510  xsa336-4.11.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/eYMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZe28H/3oTZLe4eVhykU7a+BbN7ENJ2WMYsj0VM5wUiQyK
+ZrY3CnbO0ne6h0BeAgSNG1XRP9QvwJLOIm6gZkqoNCWyJK2IbCO/mlF4czBlpUBR
+FtM2wJz4FLzkiYMozk8TOZk6pCW6gaqxNiYr2L/3ijh2PQCMwnte/u+T3mZAAWxB
+nJbVnwux26nvRY/5XBZ7cZ/Qxi1DKed2cyf2A9oZ/AmGIMBT2r6SZ+arf+d4jHRG
+yQok+7gdXr1lOL/pPZZWepHtbPJMrrYxQZN/zKGt20c9ksBLiOyyQxTO4tegLx7N
+PxRgzy+DgY+xqYFA68xpM6jJxfWYmHpjAtbYtQoPvyPsIag=
+=0Kkw
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa336.meta" of type "application/octet-stream" (1755 bytes)
+
+Download attachment "xsa336.patch" of type "application/octet-stream" (8648 bytes)
+
+Download attachment "xsa336-4.11.patch" of type "application/octet-stream" (7811 bytes)
