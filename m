@@ -1,65 +1,127 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/29/1
-Message-ID: <nycvar.YSQ.7.78.906.2009291216520.10832@xnncv>
-Date: Tue, 29 Sep 2020 14:35:01 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: bugs-syssec@....de
-Subject: QEMU: NULL pointer derefrence issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/4
+Message-Id: <E1kKiTq-0002Hq-W9@xenbits.xenproject.org>
+Date: Tue, 22 Sep 2020 13:37:14 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 334 v3 (CVE-2020-25598) - Missing unlock in XENMEM_acquire_resource error path
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-1. CVE-2020-25741 QEMU: fdc: null pointer dereference during r/w data transfer
+            Xen Security Advisory CVE-2020-25598 / XSA-334
+                               version 3
 
-A null pointer dereference issue was found in the Floppy disk emulator of 
-QEMU. It could occur while transferring data via fdctrl_read_data(), 
-fdctrl_write_data() routines, if current drive has a null block pointer. A 
-guest may use this flaw to crash the QEMU process on the host resulting in DoS 
-scenario.
+         Missing unlock in XENMEM_acquire_resource error path
 
-References:
------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg07779.html
-   -> https://ruhr-uni-bochum.sciebo.de/s/NNWP2GfwzYKeKwE?path=%2Ffdc_nullptr1
-===
+UPDATES IN VERSION 3
+====================
 
-2. CVE-2020-25742 QEMU: scsi: lsi: null pointer dereference during memory move
+Public release.
 
-A null pointer dereference issue was found in the LSI53C895A SCSI Host Bus 
-Adapter emulator of QEMU. It could occur while processing 'Memory Move' 
-instructions to move data between dma memory and i/o address space via 
-lsi_memcpy(). A guest user/process may use this flaw to crash the QEMU process 
-resulting in DoS scenario.
+ISSUE DESCRIPTION
+=================
 
-References:
------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg05294.html
-   -> https://ruhr-uni-bochum.sciebo.de/s/NNWP2GfwzYKeKwE?path=%2Flsi_nullptr1
-===
+The RCU (Read, Copy, Update) mechanism is a synchronisation primitive.
+
+A buggy error path in the XENMEM_acquire_resource exits without
+releasing an RCU reference, which is conceptually similar to forgetting
+to unlock a spinlock.
+
+IMPACT
+======
+
+A buggy or malicious HVM stubdomain can cause an RCU reference to be
+leaked.  This causes subsequent administration operations, (e.g. CPU
+offline) to livelock, resulting in a host Denial of Service.
+
+VULNERABLE SYSTEMS
+==================
+
+The buggy codepath has been present since Xen 4.12.  Xen 4.14 and later
+are vulnerable to the DoS.  The side effects are believed to be benign
+on Xen 4.12 and 4.13, but patches are provided nevertheless.
+
+The vulnerability can generally only be exploited by x86 HVM VMs, as
+these are generally the only type of VM which have a Qemu stubdomain.
+x86 PV and PVH domains, as well as ARM VMs typically don't use a
+stubdomain.
+
+Only VMs using HVM stubdomains can exploit the vulnerability.  VMs using
+PV stubdomains, or with emulators running in dom0 cannot exploit the
+vulnerability.
+
+MITIGATION
+==========
+
+Running only x86 PV or PVH VMs will avoid the vulnerability.
+Reconfiguring x86 HVM guests to use a PV or no stubdom will also avoid
+the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa334.patch           Xen 4.13 - xen-unstable
+xsa334-4.12.patch      Xen 4.12
+
+$ sha256sum xsa334*
+80e7725a56c4244d860e9aebb56710a8165f7ffeae3fb67365cbc85b3b0518b3  xsa334.meta
+323cd9d24b2e95643833865a9943172c56edd25dfd170e4741034d28dfd0d4bd  xsa334.patch
+85341ba6322ea6279c0851493ce61e822c8560850034f5f26cbcb26be85ca102  xsa334-4.12.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-3. CVE-2020-25743 QEMU: ide: null pointer dereference while cancelling i/o operation
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-A null pointer dereference issue was found in the IDE disk emulator of QEMU. 
-It could occur while cancelling an i/o operation via ide_cancel_dma_sync() 
-routine, if a block drive pointer is null. A guest may use this flaw to crash 
-the QEMU process on the host resulting in DoS scenario.
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-References:
------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg01568.html
-   -> https://ruhr-uni-bochum.sciebo.de/s/NNWP2GfwzYKeKwE?path=%2Fide_nullptr1b
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/eYMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZV94H/jhwML6zObPz+zvjbwwAUoHsYiQ66CSUlxluqjN5
+PXWpm56RzArptGIUakQyXKNI2Ht2fUn3Lu3w9JllujJRfmhbhiJJvI9Ar2QzOcri
++XylcK9rRspfmNUgXB629BTEcGUuo9/J+T+O4T544zfWUBncixyDq9/Q9SGAdz9c
+kDZkL6UebpIFLtD6jrgYd4XAK9b1c6T7SmsGzq26m/zwGqJ1jol58kHl5GMXe7uX
+rd9xZbERKIhaABbTQ10zY5IDIE4oplibSLOiJVSTz6KSyzD9by+M7oszqeIbIiRV
+rY49lettdD4jfmzp5bbXQnf+9T31rG3AEHWaiOGdVcRFoq8=
+=a23E
+-----END PGP SIGNATURE-----
 
+Download attachment "xsa334.meta" of type "application/octet-stream" (1173 bytes)
 
-* These issues were reported by Sergej Schumilo, Cornelius Aschermann, Simon
-   Wrner of Ruhr-University Bochum.
+Download attachment "xsa334.patch" of type "application/octet-stream" (1953 bytes)
 
-* CVE-2020-2574[123]? assigned via -> https://cveform.mitre.org/
-
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-
+Download attachment "xsa334-4.12.patch" of type "application/octet-stream" (2275 bytes)
