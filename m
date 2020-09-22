@@ -1,4 +1,9 @@
-Received: (qmail 24182 invoked by uid 550); 29 Jan 2025 17:02:22 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["11743" "Tuesday" "22" "September" "2020" "13:37:14" "+0000" "Xen.org security team" "security@xen.org" nil "258" nil nil nil nil "9" nil nil (number mark "U       security@xen Sep 22  258/11743 " thread-indent "\"[oss-security] Xen Security Advisory 334 v3 (CVE-2020-25598) - Missing unlock in XENMEM_acquire_resource error path\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 334 v3 (CVE-2020-25598) - Missing unlock in XENMEM_acquire_resource error path" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9873 invoked by uid 550); 22 Sep 2020 13:37:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,214 +12,281 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24154 invoked from network); 29 Jan 2025 17:02:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
-	content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=corp-2023-11-20; bh=D7OP5hzcueVaFAIQ8T
-	5GJ1So4sMMXm3L7vnvd3NVZ4c=; b=b6ugZ3TJmfOd9YOBugb0I6f0FFM7a6aCXg
-	z5bPy+rIuXGj9xfBOzRn8gxsp5BPCpTsEuw76N+e9pMJ8aNPhIurQ+ItF0siBceY
-	8MqgKlc9Lm9U4aDyUGqBQwBFWdNkZ6m6Vbf/wRR9xYt/2GxwHx1wG//N5xJj2sHA
-	sn7IrAVZyD1VRxzgbBAwJfqhvRNRqdbTIFG/tK4uNoJtv76/1IFAEiHxzNKoG47y
-	OqfSzqRVh330VYhn916tNhBcq8DSFRrN3c16Exg5oa/R2GinDn6jm34V93QLcP5e
-	aIE9ks5X8LReYxwyHSfyisBMey1QUiIL24QKjI6L/c+xgqsuLqcQ==
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DXUWctAEebKMd1m3P9ROzt2FqeZ3PRuM6wHDbaKRXq0D5wfSTTqj2Q5mrIcrLClaI8RrkC73v0yRm3BBdXSynDVaKr6lS13p6kj3J5VomCPvuej8FTxHYDUTdvhl+a1dvIio318C4LRJ8nT/8bKAMpJbJpWhlsPmK0E8vFsKCM6OPh/6+PU/hgjclQUVcO6SVNkbzyUSBwItXH6On5Vz7noeFnkSGAh2o3mMO62696qIohw6WJl0Hh5HVXnMIyZJwXBar/8LQ34rd2nsHmn8ZbEVOa+Eex6BduOptzLLBMfL5ekNSksrN0JEfOZhYhtblSq3HFvbtV/z/o7AXxOKtA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=D7OP5hzcueVaFAIQ8T5GJ1So4sMMXm3L7vnvd3NVZ4c=;
- b=EasTdpTM/kDh954kTmjgbI1AmzrWVh7GdfY3IocBEHnWQwZCkKu1xNMJNf64UjRDQlql3iX0A0cpXUgsUlyGl01fNb/0V14aRYkrHzTbGWzHAPGwxoRLuxAwLv9XyCiB2DRJxgQ51y3OUq6mC7YioUyle+MIcMbQzCZS3SMLY4Cj4RrWRy/YgQfx+Z+/sHyS67e9rcZiJ47tBz/x0H0hKZQMWqlfb+h/Bymtt2bbVoCmaGPiHUzmXJuKOKenCDEHIsF8r9qphnl+dzmm4ID9nrEQbXAflJBtvSFN8hy2bHIntZgWsV8FmuZYLPvB5xzmuQ6bIB7+tVSgGI4SYevH7Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=D7OP5hzcueVaFAIQ8T5GJ1So4sMMXm3L7vnvd3NVZ4c=;
- b=IX/+GerNPDxMsk7fwdGAOh6A2oJuZpzGTlFOV2qjfv/5L6X9TD+O6zFODwxMZtKN3EXQTwfMzAK8l8x3/Mb3rHN/ywlEFHTkyex1verQvi2zaaRH155eDhQEXrjErREyNi/KJOZ+EeTlGAO/vaL9KNFFPnHoUBtg4Qc45JyB0c8=
-From: John Haxby <john.haxby@oracle.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [oss-security] Oracle January 2025 Critical Patch Update
-Thread-Index: AQHbbUDDYFPxP0QQLEGRyQpphIree7MknL0AgAlnwAA=
-Date: Wed, 29 Jan 2025 17:02:07 +0000
-Message-ID: <CFC2B795-05B1-4F6E-B112-F291200C4C69@oracle.com>
-References: <20250123024222.GA16803@openwall.com>
- <fb02293c-d4cb-4de6-85d8-2cd82d574ba8@oracle.com>
-In-Reply-To: <fb02293c-d4cb-4de6-85d8-2cd82d574ba8@oracle.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator:
-x-mailer: Apple Mail (2.3826.300.87.4.3)
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM6PR10MB4155:EE_|SA1PR10MB5887:EE_
-x-ms-office365-filtering-correlation-id: 3ceff598-b5f8-456d-5807-08dd4086a994
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|10070799003|366016|376014|38070700018|13003099007;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?uNOGnbGTRAJOCNCed2b3+yeM18DsHE8CwouqzWMyubVdDrJW2N/xWdrVbZRv?=
- =?us-ascii?Q?H7hv37K8f9CCK18I1sXAqJC2DQxSLoMYJgP4VDctdJV4tzXMofzZPEUHx7kC?=
- =?us-ascii?Q?vjkutwr21YDtNABfuc+GL2uGnTV+C8Wt9FGG+jWShc/i9KWmXaAkMJJKs5oQ?=
- =?us-ascii?Q?aDHmBsrLq3MsKQFbjYYdWYtXqINMjQiDSVbjmq2guKSkFKSPGD7p3I8W9TNx?=
- =?us-ascii?Q?fHaN3MME77T8vTxbo1/zUq58l1nGKHtkwtIGro5uXwVruvoqiN+hl6jOdr8N?=
- =?us-ascii?Q?u9zY75ZlwDJTKTncQ4KqemxAKfpQnupEuC0B9mTyWgnfqJzSTB42y4ugY9aj?=
- =?us-ascii?Q?9ytDBxuPwvYhWpd3AX2HzjMc4EZ6oqEBPNJTnKvGlkWgSVqOKc/wTHy98sr7?=
- =?us-ascii?Q?PsVwuxazeP5C/NWNHz4n77y+Ni4f7rUxuucT9MST1DcArPExQJ3r9F2GO5TT?=
- =?us-ascii?Q?gn52a2zfXvVzQRMlYF8GUNJT/NE9IOsXrjg1TYBNUVGVvBiRDha/nIXEQIFL?=
- =?us-ascii?Q?rFmNFypvJ2CWmMO3qHjCgVBjuKmxnrrbbF6BLJp2iec9jS7KDRHvBWt2QiiH?=
- =?us-ascii?Q?iYUlAb4tojd0YdDL7Xg8wwSs1eakfRiQAb45qJf//iCotwMjmXqRn66bRvD1?=
- =?us-ascii?Q?6MUrZG+bQHI2WxDtJD6rroGctIJhRb1n83huLo1v5Y3sLPxaC1chMPZ0xHFg?=
- =?us-ascii?Q?hQl1EYcw0yWRvBAhU1kv0r9ja4/ynnWzZq6kQ4NlR8VkfYgFR91JOLJPZKJ8?=
- =?us-ascii?Q?0/01ze0Q3vccF4djipfDAXKK9A64TpsXdFtORkXb0qe3HMerFFnUoMvreN6n?=
- =?us-ascii?Q?GxEkTdu73nA/3DflVTGQcYRFpZ14uNkcpMaZI11Ld6MSp5Vc9bPkrieb49EB?=
- =?us-ascii?Q?S+QjJlIRAmXycYkh8UuRAbKHi+Kv6HHwPWmbAAVdBCiJaURU9vKUrsT51TDa?=
- =?us-ascii?Q?7mfuLHzlKgb0LWZ2/n9LjGsibMF4m5wED8PGV2c/UFSycdlaS6M1ht0hdBYP?=
- =?us-ascii?Q?q1eVZHY8RmuCcm3j33u7t3qVw2msJ93DhZ3W/mkJLOUgfUwbgkkjobkJClvB?=
- =?us-ascii?Q?pjWRORspCn2/0VOaZTYeCR6W3j/J8qUQRFyhTPxe+XpNR/fR37GKXNuOvvk0?=
- =?us-ascii?Q?ZVIGD2+YVlkmO23jtZYVUMZMuBN8D0mQFklo4h5vB/WCJVEK+hOVJ1ZcyjlE?=
- =?us-ascii?Q?MnWojhUopKghtkAJzD05zmiOrI+aZqRsBJ5HN+Ni27bMJ/b9gooqV2Uc9l8i?=
- =?us-ascii?Q?q77TFVPswKfhX5NK/v3bp2mPknCAMboNgWW3HI/o7B0keBzD8HJK8n2Ksh+B?=
- =?us-ascii?Q?maXmJAOD546IGy119SxCmOuEs01BtUM/AmKJ9oOxR6d88a12pxM2+bmlWQMl?=
- =?us-ascii?Q?TUx1+CbkHX1aw29arFY4qn+B4IXoWzm2dE6zAUpbHulzLO6QDw=3D=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR10MB4155.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(10070799003)(366016)(376014)(38070700018)(13003099007);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?PiUMjIbJEobA5IfhaZgAzTUEkmEsqDViRzsZr/rm9p/97R7GWnYM/7xOEeWe?=
- =?us-ascii?Q?tojQ83QsA6mnAbxMdXYIrsRG420ChCo6JXrqW9oroerYDxO+41LNb7h/EOJy?=
- =?us-ascii?Q?2Kf33is3DivbYtyI2L3Pca2jQy312nO55F4rKqFJNGHFVJUGsDlbRywXS1Hi?=
- =?us-ascii?Q?X3S9UN2DhjqJJYavA+GEFbQV//BM+ea1a75PBmk0XOn5ZDfZY5UmneHdzfik?=
- =?us-ascii?Q?unCry8FiLwBuAzPiFViqF+1lNizWOJ4zhlnbk1mE/HDxXbIvBZdpuiB1oYaU?=
- =?us-ascii?Q?zAyg72vPXvHzEXbZiNTUi+H00T0ll8E8WEMt4QqFEJznvmKF9J/VwxBVU6gn?=
- =?us-ascii?Q?+EdogMEGNmQ/+Fs3dZWg/WSw0hOmitPJWT3okhh2CvDwbkuudZHaj+aGmK2t?=
- =?us-ascii?Q?xDiZ0yaA86+jXLSRJmLc6AKVtcRaG5HzHY4vKdL1gru2ScHjw1AC3Ji/BCoZ?=
- =?us-ascii?Q?gctTZSGvKCTMXy++nO9rdwaEoGztwRzkGSPV0ScASbF75cQ3FBcJuYz5pMSv?=
- =?us-ascii?Q?te5Ef7XxyjvsACJlv5p/fiBAMhjY66CEOfkvlS6TSO3widGBUP8nrYUEyxb5?=
- =?us-ascii?Q?XQ6Rxfba+wEu9Pu7etojEN3BPES7qy18of1c/EbkHrVhsIIuEivYnyl65/GL?=
- =?us-ascii?Q?WFUneVfAIr0FYjUPzWw3iZZb2aCOpkJQUJ1tUhW4hsr21k07L7SlJwaWtKwu?=
- =?us-ascii?Q?+MW7/nYkOkrFnKBVyOl2jswyC0cDjrCq4PhBBBiLXsxRGocZ553gjHWvLbIp?=
- =?us-ascii?Q?TeQfQMTV1/L1hwz+3ZMPbsOvJ/yoJSXxfbPOpQLx98ScJKr45ykRLOxQme9i?=
- =?us-ascii?Q?ifpnSYZCr4WDP1qwTwT0Jyxk38YaGLnUIt0r40Lws2DtKcwh/xcC3hmBoKtl?=
- =?us-ascii?Q?NBGiiC3ucCZcexMJiFrmMmykw2WUu98xnkQqGEGUGLtZ5W7RE2+dbs9XiGPP?=
- =?us-ascii?Q?kMOmq66c78kjm0NIZtpNJKWThuq63oaL7tJKS5eyizctAbbGMZOylUs9I0/w?=
- =?us-ascii?Q?nCs8lNVc/hQ8lEj/X1MpAajM2fFnYQZkH6DfR6QDTfMs1qMUvf/sYpQQ3B1+?=
- =?us-ascii?Q?wtGaCYmYhWoFNWsDEBf7X7FIs0YzvjPsyh9YeCsTGrOgpDUcrAJP3nFyJj4O?=
- =?us-ascii?Q?rX0i1buJa8Am531JtYhAa/VEqxlXJ5ElQyhMJ7hiHa6+WJRnTUYPrcBKBPpJ?=
- =?us-ascii?Q?sJN+4O13ubobgvpgvgp3JpjOD5+qhVA8bImXL7VSbNhvmELDw/5lTwGfnK+K?=
- =?us-ascii?Q?gdGh8PetzkpgJQJ+FDpxcSX4wOZ9Q4tk83N6H4mIWfInxgeBDX8/qukbbO/r?=
- =?us-ascii?Q?Wtv0gtSw2ldJVu6JZ8hTRGAUf/0eYJ2Pc9LhqMJzZ2dKfI+/woi1XcqF6ESs?=
- =?us-ascii?Q?W6eC+Oa4GJLri1EROL2ci5esh/RSNmo91S+smn0BeBJGZsIU40GRnWawl/aB?=
- =?us-ascii?Q?zBMgzuCdeTimV9/RXXRy3qV6E4jgGEtf3jcMhkkOTxC/oRG00GgZJYA0LsZP?=
- =?us-ascii?Q?PKB/5zlpBNks3M6qLQprziHnDXhdilZNRXTMLyYpWkK7nDLGFFPgSBsuCzCA?=
- =?us-ascii?Q?2DZxzp7KwmnbOhUuXfCb9JyE3sdYgkbMHSG5c+ype6OhajaAHG6nf2kc7FJi?=
- =?us-ascii?Q?04LgPjRQ66RjfX5XWwwlTOxsbv8+PndR7EymD8uxJC3n62s0JgEYhWoy+xvw?=
- =?us-ascii?Q?/7V3ug=3D=3D?=
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_680CEB6D-7E9E-4DCE-8BD7-029D756A9F70";
-	protocol="application/pgp-signature"; micalg=pgp-sha512
+Received: (qmail 9676 invoked from network); 22 Sep 2020 13:37:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=c6RX2Eh49YE7OXM04xyXFpYd39JbxFOoTIStedBMvL8=; b=rM6xd5wRjGqlRV/jEulI4YD5Lu
+	42Vf+LRsF2W7mjTgLVmHwGQ1cYiUcH09sdB+hsIVjzuCHvpWHwiLfxULIwAp4lW7WHY6B77tCW/eR
+	noNMrDMJ8lBJdW+HjU3rfgXy7Yktlan5Ss7tWjYbGF+1KOqxb5k1WUPRa211QWBfXH5I=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	XCCW23Prwnh0tAYCSh4lYbg8HY5xGsF2Te1p3n6pix/Y1NseZ9JohrnorHiuhMqdT3vmSYG7Afy44GudIBWeqkin5jOFXt1sS+EOQENrLQsrfPPFpVsO54eK4GPVT//6DcaVWni3U/dUiFgpPiaW67dGAtQx5pietAj5XLVVMj5wIgCZgBtZN/mAw3Qucmavax50r4CPpRKqujayuqkUlorYXVw/AblzWw+Vc0XPlUQCxCIwXlnrxzeW4rGQPHoHCVEFU6pB4UZ0KywbRMMQlP8LmArdVUS7A9bPehgvybNbtXHjYVk5MTEmMhLyfVdqXxG4LMpALwM8kN7rGl3EhUMvC9GmyaiDiM8wz1AzNsHazwYm1kfsQqv0qGZle0nEWt8SnMYvzLX4c41vdGg4nw9TIJb/WHDXVwg4aqP8oYlMWoliVn7D/4mi1SLDIH1YB1bRxjTqIjI7g4Y15Kd3UyzdT9jDqf5MqOimzQUtLl/ZSl5/JSr9tH71lQpuftOR8+7Eq1GZUPsW//h1+FQy66JrXc/NxlzibaymwGGdxr6RAKvkt/G8+tnSJIy5JDJYDTRK4TDUGkhriA3WUZsCTJpOkOpeCsheqDGjOlTgaOM=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR10MB4155.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3ceff598-b5f8-456d-5807-08dd4086a994
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jan 2025 17:02:07.0843
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5/1u+t95kXvZx9dOI1HITenGl0LvcH/nUJoHk5Ssdi7x9ARhl5SfgEclFVO9GYkVNy6YWJnKF6s6i4NiijnjWg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB5887
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-29_03,2025-01-29_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 mlxscore=0 adultscore=0
- malwarescore=0 spamscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
- definitions=main-2501290136
-X-Proofpoint-ORIG-GUID: k1IZFtaUbm-GALZp73xRzHdYQ99335jn
-X-Proofpoint-GUID: k1IZFtaUbm-GALZp73xRzHdYQ99335jn
-Subject: Re: [oss-security] Oracle January 2025 Critical Patch Update
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1kKiTq-0002Hq-W9@xenbits.xenproject.org>
+Date: Tue, 22 Sep 2020 13:37:14 +0000
+Subject: [oss-security] Xen Security Advisory 334 v3 (CVE-2020-25598) - Missing unlock in
+ XENMEM_acquire_resource error path
 
---Apple-Mail=_680CEB6D-7E9E-4DCE-8BD7-029D756A9F70
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
-
-
-
-> On 23 Jan 2025, at 17:24, Alan Coopersmith <alan.coopersmith@oracle.com> =
-wrote:
->=20
-> On 1/22/25 18:42, Solar Designer wrote:
->> Hi,
->> Once in a while, Oracle publishes what they call Critical Patch Update
->=20
-> Once a quarter, per the schedule published on:
-> https://www.oracle.com/security-alerts/#CriticalPatchUpdates
->=20
->> documents, which list many vulnerabilities addressed across many Oracle
->> products, some of them Open Source and some not.  This is great, but it
->> would be even better if Oracle also communicated to oss-security about
->> those vulnerabilities in its Open Source products, perhaps one message
->> per product (e.g., MySQL separately from VirtualBox).  I hope someone
->> from Oracle reads this and will get the wheels moving.  Anyone?
->=20
-> People from Oracle have read this, but it's specifically people from
-> the Security Alerts team who publish those documents who would need to
-> do this.
->=20
->> Perhaps there's more Open Source software listed in there, which needs
->> similar treatment.
->=20
-> The open source packages delivered in Oracle Linux & Oracle Solaris are
-> listed separately, but these are downstreams, so I've always thought they=
-'d
-> be off topic here, since we normally only cover upstream issues, and don't
-> publish every distro's notices that they've applied the latest fixes to
-> rsync, openssl, glibc, or whatever upstream was fixed this week.
->=20
-> For those who want to see such downstream notices, you can find them at:
->=20
-> Oracle Linux:
->   https://linux.oracle.com/security/
->   https://oss.oracle.com/mailman/listinfo/el-errata
->   https://www.oracle.com/security-alerts/#OLBulletin
-
-Yhe errata mailing list: https://oss.oracle.com/mailman/listinfo/el-errata =
-is an analogue of the late lamented red hat announcement mailing list and i=
-t's a bit too busy to post that here (eg there we bout 20 new messages toda=
-y which are announcements,basically, of backported security fixes to the va=
-rious bistro versions).  The quarterly linux security bulletin is unfortuna=
-tely about three months out of date by the time it arrives.
-
-
->=20
-> Oracle Solaris:
->   https://www.oracle.com/security-alerts/#SolarisThirdPartyBulletin
->=20
-> --=20
->        -Alan Coopersmith-                 alan.coopersmith@oracle.com
->         Oracle Solaris Engineering - https://blogs.oracle.com/solaris
-
-
---Apple-Mail=_680CEB6D-7E9E-4DCE-8BD7-029D756A9F70
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename="signature.asc"
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Message signed with OpenPGP
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+            Xen Security Advisory CVE-2020-25598 / XSA-334
+                               version 3
+
+         Missing unlock in XENMEM_acquire_resource error path
+
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The RCU (Read, Copy, Update) mechanism is a synchronisation primitive.
+
+A buggy error path in the XENMEM_acquire_resource exits without
+releasing an RCU reference, which is conceptually similar to forgetting
+to unlock a spinlock.
+
+IMPACT
+======
+
+A buggy or malicious HVM stubdomain can cause an RCU reference to be
+leaked.  This causes subsequent administration operations, (e.g. CPU
+offline) to livelock, resulting in a host Denial of Service.
+
+VULNERABLE SYSTEMS
+==================
+
+The buggy codepath has been present since Xen 4.12.  Xen 4.14 and later
+are vulnerable to the DoS.  The side effects are believed to be benign
+on Xen 4.12 and 4.13, but patches are provided nevertheless.
+
+The vulnerability can generally only be exploited by x86 HVM VMs, as
+these are generally the only type of VM which have a Qemu stubdomain.
+x86 PV and PVH domains, as well as ARM VMs typically don't use a
+stubdomain.
+
+Only VMs using HVM stubdomains can exploit the vulnerability.  VMs using
+PV stubdomains, or with emulators running in dom0 cannot exploit the
+vulnerability.
+
+MITIGATION
+==========
+
+Running only x86 PV or PVH VMs will avoid the vulnerability.
+Reconfiguring x86 HVM guests to use a PV or no stubdom will also avoid
+the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa334.patch           Xen 4.13 - xen-unstable
+xsa334-4.12.patch      Xen 4.12
+
+$ sha256sum xsa334*
+80e7725a56c4244d860e9aebb56710a8165f7ffeae3fb67365cbc85b3b0518b3  xsa334.meta
+323cd9d24b2e95643833865a9943172c56edd25dfd170e4741034d28dfd0d4bd  xsa334.patch
+85341ba6322ea6279c0851493ce61e822c8560850034f5f26cbcb26be85ca102  xsa334-4.12.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iHUEAREKAB0WIQT+pxvb11CFWUkNSOVFC7t+lC+jyAUCZ5pfAgAKCRBFC7t+lC+j
-yGqIAP9qbW0Kmf6GtD8A/YkBPHo3eYQD4ns0L4Vbvjr782MjggEAlqZ/P5Mmp5G6
-QFoWFnTY3bo64xqxY8TGXkVbBd7FB04=
-=w0wC
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/eYMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZV94H/jhwML6zObPz+zvjbwwAUoHsYiQ66CSUlxluqjN5
+PXWpm56RzArptGIUakQyXKNI2Ht2fUn3Lu3w9JllujJRfmhbhiJJvI9Ar2QzOcri
++XylcK9rRspfmNUgXB629BTEcGUuo9/J+T+O4T544zfWUBncixyDq9/Q9SGAdz9c
+kDZkL6UebpIFLtD6jrgYd4XAK9b1c6T7SmsGzq26m/zwGqJ1jol58kHl5GMXe7uX
+rd9xZbERKIhaABbTQ10zY5IDIE4oplibSLOiJVSTz6KSyzD9by+M7oszqeIbIiRV
+rY49lettdD4jfmzp5bbXQnf+9T31rG3AEHWaiOGdVcRFoq8=
+=a23E
 -----END PGP SIGNATURE-----
 
---Apple-Mail=_680CEB6D-7E9E-4DCE-8BD7-029D756A9F70--
+--=separator
+Content-Type: application/octet-stream; name="xsa334.meta"
+Content-Disposition: attachment; filename="xsa334.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAzMzQsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIK
+ICBdLAogICJUcmVlcyI6IFsKICAgICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6
+IHsKICAgICI0LjEyIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
+eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICIxMzM2Y2ExNzc0MjQ3
+MWZjNGE1OTg3OWFlMmY2MzdhNTk1MzBhOTMzIiwKICAgICAgICAgICJQcmVy
+ZXFzIjogWwogICAgICAgICAgICAzMzMKICAgICAgICAgIF0sCiAgICAgICAg
+ICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTMzNC00LjEyLnBhdGNo
+IgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0
+LjEzIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewog
+ICAgICAgICAgIlN0YWJsZVJlZiI6ICI5YjM2N2IyYjBiNzE0ZjNmZmI2OWVk
+NmJlMGExMThlOGQzZWFjMDdmIiwKICAgICAgICAgICJQcmVyZXFzIjogWwog
+ICAgICAgICAgICAzMzMKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hl
+cyI6IFsKICAgICAgICAgICAgInhzYTMzNC5wYXRjaCIKICAgICAgICAgIF0K
+ICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC4xNCI6IHsKICAgICAg
+IlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFi
+bGVSZWYiOiAiYzNhMGZjMjJhZjkwZWYyOGU2OGIxMTZjNmE0OWQ5Y2VjNTdm
+NzFjZiIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMzMz
+CiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAg
+ICAgICJ4c2EzMzQucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAg
+ICB9CiAgICB9LAogICAgIm1hc3RlciI6IHsKICAgICAgIlJlY2lwZXMiOiB7
+CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiYjEx
+OTEwMDgyZDkwYmIxNTk3ZjY2Nzk1MjRlYjcyNmEzMzMwNjY3MiIsCiAgICAg
+ICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMzMzCiAgICAgICAgICBd
+LAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EzMzQu
+cGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9CiAg
+fQp9
+
+--=separator
+Content-Type: application/octet-stream; name="xsa334.patch"
+Content-Disposition: attachment; filename="xsa334.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeGVuL21lbW9yeTogRG9uJ3Qgc2tpcCB0aGUgUkNVIHVu
+bG9jayBwYXRoIGluIGFjcXVpcmVfcmVzb3VyY2UoKQoKSW4gdGhlIGNhc2Ug
+dGhhdCBhbiBIVk0gU3R1YmRvbWFpbiBtYWtlcyBhbiBYRU5NRU1fYWNxdWly
+ZV9yZXNvdXJjZSBoeXBlcmNhbGwsCnRoZSBGSVhNRSBwYXRoIHdpbGwgYnlw
+YXNzIHJjdV91bmxvY2tfZG9tYWluKCkgb24gdGhlIHdheSBvdXQgb2YgdGhl
+IGZ1bmN0aW9uLgoKTW92ZSB0aGUgY2hlY2sgdG8gdGhlIHN0YXJ0IG9mIHRo
+ZSBmdW5jdGlvbi4gIFRoaXMgZG9lcyBjaGFuZ2UgdGhlIGJlaGF2aW91cgpv
+ZiB0aGUgZ2V0LXNpemUgcGF0aCBmb3IgSFZNIFN0dWJkb21haW5zLCBidXQg
+dGhhdCBmdW5jdGlvbmFsaXR5IGlzIGN1cnJlbnRseQpicm9rZW4gYW5kIHVu
+dXNlZCBhbnl3YXksIGFzIHdlbGwgYXMgYmVpbmcgcXVpdGUgdXNlbGVzcyB0
+byBlbnRpdGllcyB3aGljaApjYW4ndCBhY3R1YWxseSBtYXAgdGhlIHJlc291
+cmNlIGFueXdheS4KClRoaXMgaXMgWFNBLTMzNC4KCkZpeGVzOiA4M2ZhNjU1
+MmNlICgiY29tbW9uOiBhZGQgYSBuZXcgbWFwcGFibGUgcmVzb3VyY2UgdHlw
+ZTogWEVOTUVNX3Jlc291cmNlX2dyYW50X3RhYmxlIikKU2lnbmVkLW9mZi1i
+eTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4K
+UmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4K
+CmRpZmYgLS1naXQgYS94ZW4vY29tbW9uL21lbW9yeS5jIGIveGVuL2NvbW1v
+bi9tZW1vcnkuYwppbmRleCAxYTNjOWZmYjMwLi4yOTc0MWQ4OTA0IDEwMDY0
+NAotLS0gYS94ZW4vY29tbW9uL21lbW9yeS5jCisrKyBiL3hlbi9jb21tb24v
+bWVtb3J5LmMKQEAgLTEwNTgsNiArMTA1OCwxNCBAQCBzdGF0aWMgaW50IGFj
+cXVpcmVfcmVzb3VyY2UoCiAgICAgeGVuX3Bmbl90IG1mbl9saXN0WzMyXTsK
+ICAgICBpbnQgcmM7CiAKKyAgICAvKgorICAgICAqIEZJWE1FOiBVbnRpbCBm
+b3JlaWduIHBhZ2VzIGluc2VydGVkIGludG8gdGhlIFAyTSBhcmUgcHJvcGVy
+bHkKKyAgICAgKiAgICAgICAgcmVmZXJlbmNlIGNvdW50ZWQsIGl0IGlzIHVu
+c2FmZSB0byBhbGxvdyBtYXBwaW5nIG9mCisgICAgICogICAgICAgIHJlc291
+cmNlIHBhZ2VzIHVubGVzcyB0aGUgY2FsbGVyIGlzIHRoZSBoYXJkd2FyZSBk
+b21haW4uCisgICAgICovCisgICAgaWYgKCBwYWdpbmdfbW9kZV90cmFuc2xh
+dGUoY3VycmQpICYmICFpc19oYXJkd2FyZV9kb21haW4oY3VycmQpICkKKyAg
+ICAgICAgcmV0dXJuIC1FQUNDRVM7CisKICAgICBpZiAoIGNvcHlfZnJvbV9n
+dWVzdCgmeG1hciwgYXJnLCAxKSApCiAgICAgICAgIHJldHVybiAtRUZBVUxU
+OwogCkBAIC0xMTE0LDE0ICsxMTIyLDYgQEAgc3RhdGljIGludCBhY3F1aXJl
+X3Jlc291cmNlKAogICAgICAgICB4ZW5fcGZuX3QgZ2ZuX2xpc3RbQVJSQVlf
+U0laRShtZm5fbGlzdCldOwogICAgICAgICB1bnNpZ25lZCBpbnQgaTsKIAot
+ICAgICAgICAvKgotICAgICAgICAgKiBGSVhNRTogVW50aWwgZm9yZWlnbiBw
+YWdlcyBpbnNlcnRlZCBpbnRvIHRoZSBQMk0gYXJlIHByb3Blcmx5Ci0gICAg
+ICAgICAqICAgICAgICByZWZlcmVuY2UgY291bnRlZCwgaXQgaXMgdW5zYWZl
+IHRvIGFsbG93IG1hcHBpbmcgb2YKLSAgICAgICAgICogICAgICAgIHJlc291
+cmNlIHBhZ2VzIHVubGVzcyB0aGUgY2FsbGVyIGlzIHRoZSBoYXJkd2FyZSBk
+b21haW4uCi0gICAgICAgICAqLwotICAgICAgICBpZiAoICFpc19oYXJkd2Fy
+ZV9kb21haW4oY3VycmQpICkKLSAgICAgICAgICAgIHJldHVybiAtRUFDQ0VT
+OwotCiAgICAgICAgIGlmICggY29weV9mcm9tX2d1ZXN0KGdmbl9saXN0LCB4
+bWFyLmZyYW1lX2xpc3QsIHhtYXIubnJfZnJhbWVzKSApCiAgICAgICAgICAg
+ICByYyA9IC1FRkFVTFQ7CiAK
+
+--=separator
+Content-Type: application/octet-stream; name="xsa334-4.12.patch"
+Content-Disposition: attachment; filename="xsa334-4.12.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeGVuL21lbW9yeTogRG9uJ3Qgc2tpcCB0aGUgUkNVIHVu
+bG9jayBwYXRoIGluIGFjcXVpcmVfcmVzb3VyY2UoKQoKSW4gdGhlIGNhc2Ug
+dGhhdCBhbiBIVk0gU3R1YmRvbWFpbiBtYWtlcyBhbiBYRU5NRU1fYWNxdWly
+ZV9yZXNvdXJjZSBoeXBlcmNhbGwsCnRoZSBGSVhNRSBwYXRoIHdpbGwgYnlw
+YXNzIHJjdV91bmxvY2tfZG9tYWluKCkgb24gdGhlIHdheSBvdXQgb2YgdGhl
+IGZ1bmN0aW9uLgoKTW92ZSB0aGUgY2hlY2sgdG8gdGhlIHN0YXJ0IG9mIHRo
+ZSBmdW5jdGlvbi4gIFRoaXMgZG9lcyBjaGFuZ2UgdGhlIGJlaGF2aW91cgpv
+ZiB0aGUgZ2V0LXNpemUgcGF0aCBmb3IgSFZNIFN0dWJkb21haW5zLCBidXQg
+dGhhdCBmdW5jdGlvbmFsaXR5IGlzIGN1cnJlbnRseQpicm9rZW4gYW5kIHVu
+dXNlZCBhbnl3YXksIGFzIHdlbGwgYXMgYmVpbmcgcXVpdGUgdXNlbGVzcyB0
+byBlbnRpdGllcyB3aGljaApjYW4ndCBhY3R1YWxseSBtYXAgdGhlIHJlc291
+cmNlIGFueXdheS4KClRoaXMgaXMgWFNBLTMzNC4KCkZpeGVzOiA4M2ZhNjU1
+MmNlICgiY29tbW9uOiBhZGQgYSBuZXcgbWFwcGFibGUgcmVzb3VyY2UgdHlw
+ZTogWEVOTUVNX3Jlc291cmNlX2dyYW50X3RhYmxlIikKU2lnbmVkLW9mZi1i
+eTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4K
+UmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4K
+CkJhY2twb3J0IG5vdGU6IFRoZSBkZWxldGlvbiBvZiB0aGUgWEVOTUVNX3Jz
+cmNfYWNxX2NhbGxlcl9vd25lZCBjbGF1c2UgaXMKY29ycmVjdCBhbmQgaW50
+ZW50aW9uYWwuICBUaGlzIHdhcyBhbiBvdXRwdXQtb25seSBmbGFnIHdobydz
+IHVzZSBuZXZlcgpzdXJ2aXZlZCBpbnRvIHRoZSBYZW4gNC4xMiByZWxlYXNl
+LCBhbmQgd2FzIHN1YnNlcXVlbnRseSBkZWxldGVkIGluIFhlbiA0LjEzLgoK
+ZGlmZiAtLWdpdCBhL3hlbi9jb21tb24vbWVtb3J5LmMgYi94ZW4vY29tbW9u
+L21lbW9yeS5jCmluZGV4IGRiYzA2ZmIwYmYuLmZmODhlYmIzMTQgMTAwNjQ0
+Ci0tLSBhL3hlbi9jb21tb24vbWVtb3J5LmMKKysrIGIveGVuL2NvbW1vbi9t
+ZW1vcnkuYwpAQCAtMTA1OSw2ICsxMDU5LDE0IEBAIHN0YXRpYyBpbnQgYWNx
+dWlyZV9yZXNvdXJjZSgKICAgICB4ZW5fcGZuX3QgbWZuX2xpc3RbMzJdOwog
+ICAgIGludCByYzsKIAorICAgIC8qCisgICAgICogRklYTUU6IFVudGlsIGZv
+cmVpZ24gcGFnZXMgaW5zZXJ0ZWQgaW50byB0aGUgUDJNIGFyZSBwcm9wZXJs
+eQorICAgICAqICAgICAgICByZWZlcmVuY2UgY291bnRlZCwgaXQgaXMgdW5z
+YWZlIHRvIGFsbG93IG1hcHBpbmcgb2YKKyAgICAgKiAgICAgICAgcmVzb3Vy
+Y2UgcGFnZXMgdW5sZXNzIHRoZSBjYWxsZXIgaXMgdGhlIGhhcmR3YXJlIGRv
+bWFpbi4KKyAgICAgKi8KKyAgICBpZiAoIHBhZ2luZ19tb2RlX3RyYW5zbGF0
+ZShjdXJyZCkgJiYgIWlzX2hhcmR3YXJlX2RvbWFpbihjdXJyZCkgKQorICAg
+ICAgICByZXR1cm4gLUVBQ0NFUzsKKwogICAgIGlmICggY29weV9mcm9tX2d1
+ZXN0KCZ4bWFyLCBhcmcsIDEpICkKICAgICAgICAgcmV0dXJuIC1FRkFVTFQ7
+CiAKQEAgLTExMTUsMTYgKzExMjMsNiBAQCBzdGF0aWMgaW50IGFjcXVpcmVf
+cmVzb3VyY2UoCiAgICAgICAgIHhlbl9wZm5fdCBnZm5fbGlzdFtBUlJBWV9T
+SVpFKG1mbl9saXN0KV07CiAgICAgICAgIHVuc2lnbmVkIGludCBpOwogCi0g
+ICAgICAgIC8qCi0gICAgICAgICAqIEZJWE1FOiBVbnRpbCBmb3JlaWduIHBh
+Z2VzIGluc2VydGVkIGludG8gdGhlIFAyTSBhcmUgcHJvcGVybHkKLSAgICAg
+ICAgICogICAgICAgIHJlZmVyZW5jZSBjb3VudGVkLCBpdCBpcyB1bnNhZmUg
+dG8gYWxsb3cgbWFwcGluZyBvZgotICAgICAgICAgKiAgICAgICAgbm9uLWNh
+bGxlci1vd25lZCByZXNvdXJjZSBwYWdlcyB1bmxlc3MgdGhlIGNhbGxlciBp
+cwotICAgICAgICAgKiAgICAgICAgdGhlIGhhcmR3YXJlIGRvbWFpbi4KLSAg
+ICAgICAgICovCi0gICAgICAgIGlmICggISh4bWFyLmZsYWdzICYgWEVOTUVN
+X3JzcmNfYWNxX2NhbGxlcl9vd25lZCkgJiYKLSAgICAgICAgICAgICAhaXNf
+aGFyZHdhcmVfZG9tYWluKGN1cnJkKSApCi0gICAgICAgICAgICByZXR1cm4g
+LUVBQ0NFUzsKLQogICAgICAgICBpZiAoIGNvcHlfZnJvbV9ndWVzdChnZm5f
+bGlzdCwgeG1hci5mcmFtZV9saXN0LCB4bWFyLm5yX2ZyYW1lcykgKQogICAg
+ICAgICAgICAgcmMgPSAtRUZBVUxUOwogCg==
+
+--=separator--
