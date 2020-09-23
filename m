@@ -1,95 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/09/2
-Message-ID: <CAD77+gTYpB6Y2jc9P9GXiGNMMxcoRrYX7DODG620RKhLiWf=vg@mail.gmail.com>
-Date: Sun, 9 Aug 2020 11:05:38 +0200
-From: Richard Hartmann <richih.mailinglist@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/23/1
+Message-Id: <72558D3A-640E-4561-862F-91453510916E@beckweb.net>
+Date: Wed, 23 Sep 2020 14:57:59 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Voiding CVE-2020-16248
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi Bastian,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-I have been wondering if I should reply or not as mutual feelings of
-XKCD 386 are usually not conductive to a mailing lists' S/N ratio. As
-we have known each other for ~15-20 years and as you asked directly, I
-decided to reply.
+The following releases contain fixes for security vulnerabilities:
 
-> Could you please explain yourself why you think this is not a
-> vulnerability?  Even wanted functuality can constitute a vulnerability
-> if looked on closer.
-
-It's not just wanted, it's literally the reason blackbox_exporter exists.
+* Implied Labels Plugin 0.7
+* Liquibase Runner Plugin 1.4.8
+* Lockable Resources Plugin 2.9
+* Script Security Plugin 1.75
+* Warnings Plugin 5.0.2
 
 
-> The software allows to send pre-defined requests to arbitrary targets
-> and extract at least parts of the response.  This is a typical SSRF.
-> Would you require to specify the allowed targets, noone would ask.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2020-09-23/
 
-Many tools in the networking, security, and monitoring space fit
-common exploit characteristics. This is why they are useful as tools.
-Precisely this consideration is why our security documentation[1]
-talks about exporters and calls out blackbox_exporter and
-snmp_exporter as their purpose is to proxy probes from certain vantage
-points in networks. This has been pointed out in the GH issue as well.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Related: Before we even close the issue, I have suggested within
-prometheus-team@ that we might want to consider allowlists in those
-two exporters. Allowing users to itemize URLs, glob on FQDNs/URLs, and
-subnet-match in their configuration may be striking a better balance.
-The counterargument is that you should not be exposing internal
-debugging tools on the public Internet anyway and that snmp_exporter
-has secret data (SNMP communities) so it MUST NOT be on the public
-Internet. As of today, there is no consensus within -team either way.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-Based on my experience, I would expect to receive fewer, but not none,
-false reports if/when we carry an allowlist. It will still allow
-"SSRF" on _some_ targets which especially tools set up to emphasize a
-company's security, and thus domain names etc. And security scanners
-need human interpretation and context as this can not reasonably be
-codified in scanners as of today.
+---
 
+SECURITY-2020 / CVE-2020-2279
+Script Security Plugin provides a sandbox feature that allows low
+privileged users to define scripts, including Pipelines, that are generally
+safe to execute. Calls to code defined inside a sandboxed script are
+intercepted, and various allowlists are checked to determine whether the
+call is to be allowed.
 
-> Please don't.  You just accused the reporter of malpractice on a public
-> forum.  JFYI, this is punishable in your jurisdiction.
+In Script Security Plugin 1.74 and earlier, any calls from outside a
+sandboxed script to code defined inside a sandboxed script were always
+allowed. As sandboxed scripts can communicate their results through script
+return values and similar mechanisms, this could result in code defined
+inside of a sandboxed script to be called without sandbox protection.
 
-As we have known each other for so long, you know that IANAL and I
-know that YANAL unless you changed careers lately. As a layman I do,
-however, disagree with your implication/assessment that I exposed
-myself legally in my original email. This seems to be a highly
-hypothetical consideration anyway.
+This vulnerability allows attackers with permission to define and run
+sandboxed scripts, including Pipelines, to bypass the sandbox protection
+and execute arbitrary code in the context of the Jenkins controller JVM.
 
 
-> Also embargo and posting a public issue on GitHub don't really mix.
+SECURITY-2042 / CVE-2020-2280
+Warnings Plugin 5.0.1 and earlier does not require POST requests for a form
+validation method intended for testing custom warnings parsers, resulting
+in a cross-site request forgery (CSRF) vulnerability.
 
-That is part of my critique of the CVE's reporter as this is the
-status of CVE & GH issue as of today.
-
-
-> You did not address the reporter at all.
-
-While I did not reply before the issue was closed, Brian replied in
-less than seven hours, pointing to our documentation about why we do
-not consider this a security vulnerability and how to report them
-outside of public GH issues. I did address the reporter asking them to
-close the issues, though.
-All in all, I am not 100% clear what point you're making here, but I
-hope the above is not completely off.
+This vulnerability allows attackers to execute arbitrary code.
 
 
-> The reporter is also not a
-> regular user of GitHub, where this issue was raised.
+SECURITY-1958 / CVE-2020-2281
+Lockable Resources Plugin 2.8 and earlier does not require POST requests
+for several HTTP endpoints, resulting in a cross-site request forgery
+(CSRF) vulnerability.
 
-Github sends email for issue replies by default. On a more general
-point, I would expect anyone who reports a vulnerability to make a
-reasonable effort of being available for follow-up questions.
+This vulnerability allows attackers to reserve, unreserve, unlock, and
+reset resources.
 
 
-Best,
-Richard
+SECURITY-2004 / CVE-2020-2282
+Implied Labels Plugin 0.6 and earlier does not perform a permission check
+in an HTTP endpoint.
 
-PS: Sorry for the TOFU and CCs earlier; GMail's UI is made to
-disregard proper quoting and most mailing lists I am on today use,
-sadly, GMail and other MUAs which favour TOFU. So I kinda got used to
-it but still should not have done it on this list.
+This allows attackers with Overall/Read permission to configure the plugin.
 
-[1] https://prometheus.io/docs/operating/security/#exporters
+
+SECURITY-1885 / CVE-2020-2283
+Liquibase Runner Plugin 1.4.5 and earlier does not escape changeset
+contents when showing them on the build page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to provide Liquibase changesets evaluated by
+the plugin.
+
+
+SECURITY-1887 / CVE-2020-2284
+Liquibase Runner Plugin 1.4.5 and earlier does not configure its XML parser
+to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to provide Liquibase changesets evaluated by the
+plugin to have Jenkins parse a crafted XML file that uses external entities
+for extraction of secrets from the Jenkins controller or server-side
+request forgery.
+
+
+SECURITY-2030 / CVE-2020-2285
+Liquibase Runner Plugin 1.4.7 and earlier does not perform a permission
+check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+
