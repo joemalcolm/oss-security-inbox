@@ -1,98 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/29/3
-Message-Id: <29B1C52A-3781-4893-BBB3-9345E98B83DC@oracle.com>
-Date: Wed, 29 Jul 2020 17:57:44 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/26/1
+Message-ID: <CAE_88GaByiC_nus8mGsCmEGKd3+j4JYRiJagC0VR9VBP6mju_A@mail.gmail.com>
+Date: Sat, 26 Sep 2020 16:44:15 -0300
+From: "Thiago H. de Paula Figueiredo" <thiagohp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: multiple secure boot grub2 and linux kernel vulnerabilities
+Subject: [CVE-2020-13953] Apache Tapestry WEB-INF file download vulnerability
 Content-Type: text/plain; charset=utf-8
 
-[This message expands slightly on the post to the distros list on 2020-07-20.]
+CVE-2020-13953: Apache Tapestry: URL manipulation allows Java webapp files
+inside WEB-INF to be listed and downloaded.
 
-Hello All,
+Vendor:
+The Apache Software Foundation
 
-There are several CVEs both in GRUB2 and the Linux kernel (details
-below) that compromise UEFI Secure boot and kernel lockdown.
+Versions Affected:
+Tapestry 5.4.0 to 5.5.0
 
- * These bugs allow unsigned code to be booted and run on hardware
-   configured to prevent that.
+Description:
+Crafting specific URLs, an attacker can download files inside the WEB-INF
+folder.
 
- * Affected vendors will be publishing fixed, re-signed shim, grub and
-   kernels to allow systems to continue to boot post-mitigation.
-   Details of exactly what is published will vary from vendor to
-   vendor.
+Mitigation:
+Upgrade to Apache Tapestry 5.6.0 or later.
+Credit:
+This issue was discovered by Thomas Moore.
 
- * The actual mitigation is a UEFI Revocation List update that
-   prevents exploitable binaries from loading. This list will be
-   available from: https://uefi.org/revocationlistfile soon.  Vendors
-   may also include this in an updated release of a dbxtool package.
+References:
+https://tapestry.apache.org/security.html
 
- * In addition to the Microsoft Key Encryption Key (KEK)-signed UEFI
-   Revocation List updates, hardware vendors may also issue their own
-   updates signed with their own KEKs.  Again, this will vary from
-   vendor to vendor.
+-- 
+Thiago
 
-Exploiting these flaws require a significant level of access to a
-system. The flaws would allow, for example, a nefarious kernel to hide
-a rootkit or similar to be loaded onto a system that has UEFI Secure
-Boot enabled. It is important to note that updating the exploitable
-binaries does not in fact mitigate the CVE, since an attacker could
-bring an old, exploitable, signed copy of a grub binary onto a system
-with whatever kernel they wished to load. In order to mitigate, the
-UEFI Revocation List (dbx) must be updated on a system. Once the UEFI
-Revocation List is updated on a system, it will no longer boot
-binaries that pre-date these fixes. This includes old install media.
-
-Fully mitigating a system against these flaws should be done with the
-clear understanding that old kernels and old install media will not
-boot on a secure-boot system.
-
-CVE details:
-
-There are two kernel CVEs that are already public: CVE-2019-20908 and
-CVE-2020-15780.  In addition there are the following GRUB2 CVEs:
-
-CVE-2020-10713
-    8.2/CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H
-    This is the original flaw discovered by Eclypsium, also known as
-    "BootHole" and is describe in Eclypsium's paper at
-    https://www.eclypsium.com/2020/07/29/theres-a-hole-in-the-boot/
-
-CVE-2020-14308
-    6.4/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H
-    grub2: grub_malloc does not validate allocation size allowing for
-    arithmetic overflow and subsequent heap-based buffer overflow.
-
-CVE-2020-14309
-    5.7/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:N/I:H/A:H
-    grub2: Integer overflow in grub_squash_read_symlink may lead to
-    heap based overflow.
-
-CVE-2020-14310
-    5.7/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:N/I:H/A:H
-    grub2: Integer overflow read_section_from_string may lead to heap
-    based overflow.
-
-CVE-2020-14311
-    5.7/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:N/I:H/A:H
-    grub2: Integer overflow in grub_ext2_read_link leads to heap based
-    buffer overflow.
-
-CVE-2020-15705
-    grub: avoid loading unsigned kernels when grub is booted directly
-    under secureboot without shim
-    6.4/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H
-
-CVE-2020-15706
-    script: Avoid a use-after-free when redefining a function during
-    execution
-    6.4/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H
-
-CVE-2020-15707
-    grub2: Integer overflow in initrd size handling.
-    5.7/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:N/I:H/A:H
-
-jch
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
