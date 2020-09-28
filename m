@@ -1,38 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/07/8
-Message-ID: <alpine.GSO.2.20.2010071604290.15793@scrappy.simplesystems.org>
-Date: Wed, 7 Oct 2020 16:09:59 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/28/3
+Message-ID: <73386a14-6e5a-83e4-051d-125b5c5fe5d9@intel.com>
+Date: Mon, 28 Sep 2020 16:23:53 +0100
+From: Ferruh Yigit <ferruh.yigit@...el.com>
+To: dpdk-announce <announce@...k.org>
+Cc: security@...k.org, security-prerelease@...k.org, oss-security@...ts.openwall.com, "dev@...k.org" <dev@...k.org>
+Subject: DPDK security advisory for multiple vhost crypto issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 7 Oct 2020, Georgi Guninski wrote:
+A set of vulnerabilities are fixed in DPDK:
+- CVE-2020-14374
+- CVE-2020-14375
+- CVE-2020-14376
+- CVE-2020-14377
+- CVE-2020-14378
 
-> https://lists.debian.org/debian-security/2020/10/msg00000.html
->
-> ===
-> /home/loser is with permissions 755, default umask 0022
->
-> on multiuser machines this sucks much.
+Some downstream stakeholders were warned in advance in order to coordinate the
+release of fixes and reduce the vulnerability window.
 
-These are my preferred default settings for multiuser machines and is 
-the historical default.  The settings can be changed when appropriate.
+Problem:
+A malicious guest can harm the host using vhost crypto, this includes
+executing code in host (VM Escape), reading host application memory
+space to guest and causing partially denial of service in the host.
 
-Ubuntu Linux (a Debian derivative) has changed the default.  However, 
-we found that the Ubuntu default caused problems for us while building 
-our software, and so we changed them back.
+All users of the vhost library are strongly encouraged to upgrade as soon as
+possible.
 
-Users often need to share data.
+Thanks to "Ryan Hall <ryan.e.hall@...el.com>" for reporting the issues.
 
-There is a lesson to be learned that sensitive data and directories 
-under a user's home directory may still need to have more strict 
-permissions set by the applications which create them since the top of 
-the user's home directory might allow sharing.
 
-Bob
+Stable releases download links:
+
+DPDK 18.11.10 (LTS)
+http://fast.dpdk.org/rel/dpdk-18.11.10.tar.xz
+
+DPDK 19.11.5 (LTS)
+https://fast.dpdk.org/rel/dpdk-19.11.5.tar.xz
+
+
+Details:
+
+CVE: CVE-2020-14374
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
+Severity: 8.8 (High)
+CVSS scores: CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
+Summary : Remote Code Execution in vhost_crypto (VM Escape)
+Reporter: Ryan Hall <ryan.e.hall@...el.com>
+
+CVE: CVE-2020-14375
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
+Severity: 7.8 (High)
+CVSS scores: CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H
+Summary : Time-of-check time-of-use vulnerabilities throughout vhost_crypto.c
+Reporter: Ryan Hall <ryan.e.hall@...el.com>
+
+CVE: CVE-2020-14376
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
+Severity: 7.8 (High)
+CVSS scores: CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H
+Summary : Buffer overflow copying iv_data from guest to
+           host(prepare_sym_cipher_op & prepare_sym_chain_op)
+Reporter: Ryan Hall <ryan.e.hall@...el.com>
+
+CVE: CVE-2020-14377
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
+Severity: 7.1 (High)
+CVSS scores: CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:H
+Summary: write_back_data buffer over read (cipher->para.dst_data_len &
+          desc->len)
+Reporter: Ryan Hall <ryan.e.hall@...el.com>
+
+CVE: CVE-2020-14378
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
+Severity: 3.3 (Low)
+CVSS scores: CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L
+Summary : Partial Denial of Service due to Integer Underflow
+Reporter: Ryan Hall <ryan.e.hall@...el.com>
+
+
+Commits:
+main repo (will be 20.11.0)
+https://git.dpdk.org/dpdk/commit/?id=57680e34498
+https://git.dpdk.org/dpdk/commit/?id=5677e68c05d
+https://git.dpdk.org/dpdk/commit/?id=b2866f47336
+https://git.dpdk.org/dpdk/commit/?id=409c47c7c5b
+https://git.dpdk.org/dpdk/commit/?id=e15b7c01120
+https://git.dpdk.org/dpdk/commit/?id=2d962bb7365
+
+DPDK 18.11.10 (LTS)
+https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=ab6314978567
+https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=7a5af91f8bf4
+https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=7e7c75edc635
+https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=ff65dc28bc71
+https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=75f8df70a2c8
+https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=6e8a4da39e68
+
+DPDK 19.11.5 (LTS)
+https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=3f2635c5a9c3
+https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=81e969483020
+https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=e4a7c14f0248
+https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=319b498e4b16
+https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=6a3a414698e4
+https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=e2666ec24535
+
 -- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+DPDK Security Team
+http://core.dpdk.org/security/
+
+
+
+
+
+
+
+
