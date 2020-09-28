@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/05/1
-Message-ID: <20200205095955.GI121861@fedorawork>
-Date: Wed, 5 Feb 2020 10:59:55 +0100
-From: Riccardo Schirone <rschiron@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/28/1
+Message-ID: <CAP+3qq52fdBO3WmcYZWs6ETxJ7y6SG-V2KomfaB+xbBn4aSApw@mail.gmail.com>
+Date: Mon, 28 Sep 2020 14:42:30 +0900
+From: Akira Ajisaka <aajisaka@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-1712 systemd: use-after-free when asynchronous polkit queries are performed
+Subject: CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces
 
-A heap use-after-free vulnerability was found in systemd, when asynchronous
-Polkit queries are performed while handling Dbus messages. A local unprivileged
-attacker can abuse this flaw to crash systemd services or potentially execute
-code and elevate their privileges, by sending specially crafted Dbus messages.
+Severity: Important
 
-CVE-2020-1712 has been assigned to this issue.
+Vendor: The Apache Software Foundation
 
-This flaw happens due to the way bus_verify_polkit_async() works. Some DBus
-interfaces use a cache to store objects for a short period and they clear it as
-soon as the bus is again in the idle state. However, if a DBus method uses
-bus_verify_polkit_async(), the method may have to wait a while until the polkit
-action is resolved and when that happens the method handler is called again,
-with the userdata previously allocated. If the polkit request takes too long,
-the clearing of the cache would free the stored objects before the method is
-called the second time, causing the use-after-free vulnerability.
+Versions affected:
+3.0.0-alpha2 to 3.0.0, 2.9.0 to 2.9.2, 2.8.0 to 2.8.5
 
-The issue was reported by Tavis Ormandy, Google Project Zero.
+Description:
+When Kerberos authentication is enabled and SPNEGO through HTTP is not
+enabled, any users can access some servlets without authentication.
 
-Upstream fix is included in v245-rc1:
-https://github.com/systemd/systemd/commit/ea0d0ede03c6f18dbc5036c5e9cccf97e415ccc2
+Mitigation:
+Users should upgrade to Apache Hadoop 2.10.0, 3.0.1 or upper. If you
+are using the affected version of Apache Hadoop, you need to enable
+SPNEGO through HTTP.
 
-Thanks,
--- 
-Riccardo Schirone
-Red Hat -- Product Security
-Email: rschiron@...hat.com
-PGP-Key ID: CF96E110
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Credit:
+This issue was discovered by Owen O'Malley and reported by Larry McCay.
