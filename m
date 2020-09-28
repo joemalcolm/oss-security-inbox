@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/15
-Message-Id: <E9ED0420-574C-4912-A130-6753D5AFE82C@oracle.com>
-Date: Thu, 23 Apr 2020 21:21:35 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/28/2
+Message-ID: <CAJmbs8gsGV2FtFMf8rqmXeZn3Rekm++kC6dP1Z879pH3moew9g@mail.gmail.com>
+Date: Mon, 28 Sep 2020 19:04:56 +0700
+From: Maxim Solodovnik <solomax@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Wietse Venema <wietse@...cupine.org>
-Subject: Re: spoofing of local email sender via a homoglyph attack
+Subject: [ANNOUNCE] CVE-2020-13951 - Apache Openmeetings: DoS via public web service
 Content-Type: text/plain; charset=utf-8
 
+Severity: High
 
+Vendor: The Apache Software Foundation
 
-> On 23 Apr 2020, at 19:12, Solar Designer <solar@...nwall.com> wrote:
-> 
-> 
-> Does anyone see any reasonable action on these (non-)issues?  If not, I
-> think the CVE should be rejected.  It's a case of "works as intended."
+Versions Affected: 4.0.0 - 5.0.0
 
+Description: NetTest web service can be used to perform Denial of Service attack
+CVE-2020-13951
 
-Yep.  I agree.   I don't see this as an issue at all -- it's the way SMTP works, basically.
+The issue was fixed in 5.0.1
+All users are recommended to upgrade to Apache OpenMeetings 5.0.1
 
-jch
-
-> 
->>>>>>> Use CVE-2020-12063.
-> 
-> Alexander
-
+Credit: This issue was identified by Trung Le, Chi Tran, Ngo Van Thien
