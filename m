@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["821" "Monday" "17" "August" "2015" "23:45:55" "-0400" "Wade Mealing" "wmealing@redhat.com" "<1347252297.10141328.1439869555742.JavaMail.zimbra@redhat.com>" "26" "[oss-security] CVE request: linux kernel:fd leak in vhost ioctl VHOST_SET_LOG_FD" nil nil nil "8" "2015081803:45:55" "[oss-security] CVE request: linux kernel:fd leak in vhost ioctl VHOST_SET_LOG_FD" (number mark "        wmealing@red Aug 17   26/821   " thread-indent "\"[oss-security] CVE request: linux kernel:fd leak in vhost ioctl VHOST_SET_LOG_FD\"\n") "<421643713.5763678.1439194103335.JavaMail.zimbra@redhat.com>" ("<421643713.5763678.1439194103335.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["614" "Monday" "28" "September" "2020" "14:42:30" "+0900" "Akira Ajisaka" "aajisaka@apache.org" "<CAP+3qq52fdBO3WmcYZWs6ETxJ7y6SG-V2KomfaB+xbBn4aSApw@mail.gmail.com>" "20" "[oss-security] CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces" nil nil nil "9" "2020092805:42:30" "[oss-security] CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces" (number mark "U       aajisaka@apa Sep 28   20/614   " thread-indent "\"[oss-security] CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9233 invoked by uid 550); 18 Aug 2015 03:46:09 -0000
+Received: (qmail 6143 invoked by uid 550); 28 Sep 2020 06:35:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 8175 invoked from network); 18 Aug 2015 03:46:08 -0000
-Message-ID: <1347252297.10141328.1439869555742.JavaMail.zimbra@redhat.com>
-In-Reply-To: <421643713.5763678.1439194103335.JavaMail.zimbra@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.64.48.179]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC44 (Mac)/8.0.6_GA_5922)
-Thread-Topic: CVE request: linux kernel:fd leak in vhost ioctl VHOST_SET_LOG_FD
-Thread-Index: iStE0gDXnKRdCYWQSZEcXFyEsvXReA==
-Cc: cve-assign@mitre.org
-Date: Mon, 17 Aug 2015 23:45:55 -0400 (EDT)
-From: Wade Mealing <wmealing@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: linux kernel:fd leak in vhost ioctl VHOST_SET_LOG_FD
-To: OSS Security List <oss-security@lists.openwall.com>
+Received: (qmail 15493 invoked from network); 28 Sep 2020 05:42:54 -0000
+X-Gm-Message-State: AOAM530YjZAWKebOz9qbilSNGqo8UE/u3665zdLoQ6K28Pm0dbFz64eK
+	MGcP5GJ3Epj0PL8qKpSMy+OuwflwdvQukuiOxv8=
+X-Google-Smtp-Source: ABdhPJy9w6TzfCg0gDI4lkfqAurnSllzRNKYMf2rlkvZN+jGH/wlarVP2UGJtoU0qUPYE27P81jS6R3SOFmyXL/lnfg=
+X-Received: by 2002:a05:651c:38d:: with SMTP id e13mr4105564ljp.38.1601271761525;
+ Sun, 27 Sep 2020 22:42:41 -0700 (PDT)
+MIME-Version: 1.0
+From: Akira Ajisaka <aajisaka@apache.org>
+Date: Mon, 28 Sep 2020 14:42:30 +0900
+X-Gmail-Original-Message-ID: <CAP+3qq52fdBO3WmcYZWs6ETxJ7y6SG-V2KomfaB+xbBn4aSApw@mail.gmail.com>
+Message-ID: <CAP+3qq52fdBO3WmcYZWs6ETxJ7y6SG-V2KomfaB+xbBn4aSApw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces
 
-Gday,
+CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces
 
-I'd like to request a CVE for the following issue:
+Severity: Important
 
-A flaw was found in the way Linux kernel's vhost driver treated userspace
-provided log fd while processing VHOST_SET_LOG_FD ioctl command. A
-privileged local user with access to the /dev/vhost-net files.  The
-provided descriptor would never be released and consume kernel memory.
+Vendor: The Apache Software Foundation
 
-Usually this /dev/vhost-net file(s) have write access with
-root permissions but applications may access it with privileged 
-access through libvirt or other virtualisation.
+Versions affected:
+3.0.0-alpha2 to 3.0.0, 2.9.0 to 2.9.2, 2.8.0 to 2.8.5
 
-A file descriptor may waste memory for each VHOST_SET_LOG_FD command issued, eventually
-wasting available system resources creating a denial of service.
+Description:
+When Kerberos authentication is enabled and SPNEGO through HTTP is not
+enabled, any users can access some servlets without authentication.
 
-Thanks,
+Mitigation:
+Users should upgrade to Apache Hadoop 2.10.0, 3.0.1 or upper. If you
+are using the affected version of Apache Hadoop, you need to enable
+SPNEGO through HTTP.
 
-Wade Mealing
-Red Hat Product Security
-
-Patch:
-https://lkml.org/lkml/2015/8/10/375
-
-Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1251839
+Credit:
+This issue was discovered by Owen O'Malley and reported by Larry McCay.
