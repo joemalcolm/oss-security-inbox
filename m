@@ -1,32 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/25/1
-Message-ID: <CAHbpyFYWV3mM9GHwpmKhVB-aMhXKa2w4HBRwSER6sqGHuYP2ag@mail.gmail.com>
-Date: Tue, 24 Mar 2020 23:21:38 -0400
-From: Daniel Klco <dklco@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/29/3
+Message-ID: <b8d7ab76-2bef-4c91-bc3b-a187f7ea47d5@Spark>
+Date: Tue, 29 Sep 2020 10:34:33 -0700
+From: Will Barrett <barrett.william@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-1949: Apache Sling CMS Reflected XSS Vulnerability
+Subject: [CVE-2020-13952] Apache Superset Information Disclosure Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium
+Affected Versions: Apache Superset < 0.37.2
 
-Vendor:
-The Apache Software Foundation
+In the course of work on the open source project it was discovered that authenticated users running queries against Hive and Presto database engines could access information via a number of templated fields including the contents of query description metadata database, the hashed version of the authenticated users’ password, and access to connection information including the plaintext password for the current connection. It would also be possible to run arbitrary methods on the database connection object for the Presto or Hive connection, allowing the user to bypass security controls internal to Superset. This vulnerability is present in every Apache Superset version < 0.37.2.
 
-Versions Affected:
-Sling CMS 0.14.0 and previous releases
-
-Description:
-Scripts in Sling CMS do not property escape the Sling Selector from URLs
-when generating navigational elements for the administrative consoles and
-are vulnerable to reflected XSS attacks.
-
-Mitigation:
-All users should upgrade to 0.16.0
-
-Credit:
-This issue was discovered by Guillaume GRABÉ Pentester from Orange
-Cyberdefense France
-
-References:
-https://sling.apache.org/project-information/security.html
+Will Barrett
+Member of the Project Management Committee
+Apache Incubator Superset
 
