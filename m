@@ -1,4 +1,9 @@
-Received: (qmail 15644 invoked by uid 550); 12 Apr 2023 21:15:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4217" "Tuesday" "29" "September" "2020" "18:48:30" "-0400" "Phil Pennock" "oss-security-phil@spodhuis.org" "<20200929224830.GA560751@fullerene.field.pennock-tech.net>" "118" "[oss-security] [CVE-2020-26149] NATS project vulnerabilities: nats.js, (nats.ws, nats.deno)" nil nil nil "9" "2020092922:48:30" "[oss-security] [CVE-2020-26149] NATS project vulnerabilities: nats.js, (nats.ws, nats.deno)" (number mark "U       oss-security Sep 29  118/4217  " thread-indent "\"[oss-security] [CVE-2020-26149] NATS project vulnerabilities: nats.js, (nats.ws, nats.deno)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-26149] NATS project vulnerabilities: nats.js, (nats.ws, nats.deno)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5635 invoked by uid 550); 30 Sep 2020 07:13:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,113 +12,154 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24123 invoked from network); 12 Apr 2023 20:40:59 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IxwfkaxY1xJwB7ugjq+nT0nnAJ5sW6FKbMO0d9/DUIkMsNnApKhHWk2jV6UfhH4ZuBtyIFzyG4PiA2QCgj9jlQqvrq9JLJvsF1YdbKlnNGPXB69Zhgmvar7HnAq4nEUm+qhVfwPiAdIm4Agmx+B27GIkf/EnXWPp0fOj+YHsO8lc8ZVShAbp1C7GXUJkJIXzzGEJOK8XYpz5OmyxXHBUuY0g9OjF/FmGgXQTwEWsI8u759NH6rV3uVyUNjkWOY82hnNMuRBV9Y4Et93pSJ+syqbpb6W/vC9FuaNS9++SQjrNbtn8LDwhUW8sHyZpPnEMfHWTBrB+UYbUlZXD+Qd9Jg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QsBz4KWjlg4cBCC/flwpkPq9YMMKxyn5Nk+5VN4Jmrw=;
- b=IZGKjRcrXwcEjNxXqibm7QvkTjRNeLIWmuD8CFr5L+rluXVZAgqMNMFxltrjoB8mv719fQaMuahJCysUKJW4Iw0PBXt92px3IsyZq0a36qoNJ3zAV574vk5sZrg5mJhre1UDN/9cneqxxw205CSeiqRzPhcn0Zq/r1ePkaNu+ORIbXk2G30G7ak5ptvfNHGttw7MSl0BeVjmQMRvb/Qd4PSHUyXL27YPl4uyzckpQh4ps7RyyoAzF/YamwwixM3H+Ffi6PgXw5PepdE2av6ShDao7H+s8M1tG3Kmq+OVUOcDQYNDdPEe6WfsnBsflVqampzSYjHTUnC6+yHeUjac2w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QsBz4KWjlg4cBCC/flwpkPq9YMMKxyn5Nk+5VN4Jmrw=;
- b=dVi37lilUaWsuQuNGrzgNlmy273jNb4RK0k5mqJtj2s2R0N+WPLuoB7dSF9RJiWzrA7iZT7UPqlZg313LoIFb+buHDs7dSwilMszfjJFs28iT1ThA7QlZkh0TC8MO3o60yJZa92ljQfVJ+X5RnIGmCCTAZ8p5l/pp/Qqcvw6CvI=
-From: "Jonathan Bar Or (JBO)" <jobaror@microsoft.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: ncurses fixes upstream
-Thread-Index: AdltfwDD46a6LDCbRpu0p4EAqVdOnA==
-Date: Wed, 12 Apr 2023 20:40:37 +0000
-Message-ID:
- <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=bbb50ce1-7df8-4d86-b9f0-8d9911191e53;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2023-04-12T20:39:56Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SN6PR00MB0447:EE_|CH2PR00MB0827:EE_
-x-ms-office365-filtering-correlation-id: 22255295-b6ce-413b-19ee-08db3b962c69
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- k7cd6PsphBNFUuf8O/vgbH2y/om9UOopfWsaOmI33AiqFKj+5hJFyJgSwt0NfbP10SowMBL0cjePZIextqBWCgHs1XXDHvYyjmnt9RUJV4fS4cU72BQgUPR0J9iq08YkXtY3g4XNFLjw440uD+BPWq520rg+N/LKN4j7t6UfSznOjp3F5/oUIFnKndcdLhFwn2/hjqBEIRhfD5e1TweGASWRQUQyvq2ONTxqpD7WgrLCGgngo8JIVahKJKuwxgcTz+BPGAy/J2aOwu8wHEcV3+hGUkNXOcyeAW4pTtJdB7qqBbRXHm/TsggJ1EX1xpNsy1RieAwtEaXV+sJjiH5O6H6FRx6/Sok4Egdh6YNE4EARBq+tnczsuS8HWwl601lOzt2swsIrkhhtE1HuvLoEKg24zYFxsHfXt41g4vMCtusM0+AuGCup/VTvjgmD7i746Rf3IRa5gEcZItSJTvMrZQ8h7aB5Ztw9XFRTm70N7TumBEIeVgH3lc7RiKNEqbBwXPIco8ll+f+Yxf2nuHb6hlx0AQ7z67v3SPfhDWKJlJ8udbnncodc3fpO+zQoS36QJW/IhIPk7HcfT/MXu7oJEyGb/wNU1zqs+TacV0RUGC9SJjquIprKjey0ATKpvxCGpTk2Uc0Lu+g8sRzt2kSUmA/r5d9x8EeWgn/187yx7yg=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN6PR00MB0447.namprd00.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(39860400002)(346002)(396003)(376002)(136003)(451199021)(786003)(66556008)(316002)(66446008)(64756008)(66476007)(66946007)(6916009)(76116006)(38070700005)(8936002)(2906002)(4744005)(3480700007)(83380400001)(86362001)(8676002)(5660300002)(7116003)(52536014)(41300700001)(8990500004)(55016003)(71200400001)(6506007)(9686003)(7696005)(38100700002)(10290500003)(122000001)(478600001)(33656002)(82950400001)(186003)(82960400001)(166002)(133083001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?5F06GtlQ080UiYsEUrNLwh2sGJe7Kr9JdzurPIqIvlTRL2baZIEkLWEodTHD?=
- =?us-ascii?Q?eZ/x20Rs6tB7EI2/D84LSUtiEMZmfFvHJzBjOkdtUMHoJs50rPSSvRpyWasZ?=
- =?us-ascii?Q?0NEjTr544oegyKaKCf8bakINOgucZ8TUEc/ch1di0LWBCEgmBW5nTjw3iR5s?=
- =?us-ascii?Q?qLMXVxuqq7B782dAgr4Et5pbaf/EX1ErGSksCbVznwHRofxFqoB6UPFTjtez?=
- =?us-ascii?Q?peKyudp3+pceZ5H1mk8WK7xwNDIwQE2rMxETukgym64q+woKzh2hxYVgXKdi?=
- =?us-ascii?Q?8xt3MsvItO+Xnfln6fyKaeQL2XdLBQI2vf04aLAsZBWW3+DmO57IyQWM+kLt?=
- =?us-ascii?Q?KOUdC692ncC1iAiiHPnR8dIQoMVtAkfDPgm39nk646QVFNJ9ygfq50CejfNU?=
- =?us-ascii?Q?rtkmj4eLK+5IL3xqL5v7VC7C6RFBCFdYfGeVL9rMJUlhpeULbwKjE1VvnNEm?=
- =?us-ascii?Q?x1zl+Dgb2m7SmqyIlXu3UOXyKHrOU1msb3KE4519QMtn8nMuvfuU+FzA919Y?=
- =?us-ascii?Q?RiNujbPzHsiq9nJzqr5++PVws5FqalVMyRDe27aW0Had+XV6gYveMkJyNrmu?=
- =?us-ascii?Q?94x8FqVGYr0/Bj6MC7HYC9E/deRDxJLT0rWNIrrDuaR5roO1GdMxTZD7wol5?=
- =?us-ascii?Q?ztVYZPon6+socnzEjOloMIDagtJZTVAUaCg4EhnPlsr0SUMn8y0TAfRos2Jp?=
- =?us-ascii?Q?Oj5dazNsSdmFSKV0BLsrmuXtGXIIJLc4FagJmNjvU4nBi0WatRMyGNLoMDri?=
- =?us-ascii?Q?QS0Bw1JgiI2DESfabTEFmbVB+nnNvWpHhEFUJ1VVpDonAMNQJTiSP9J2tAOk?=
- =?us-ascii?Q?Ilcy6x1fFo803ySHoGukjsEEGV7BKrOrfLuqQvdkfv35nsSj5UJooijD7tMO?=
- =?us-ascii?Q?KYVKX02QE2WVznK3U3Zm0w0zc8cllwAi60U/JnctaMNGgDBVQkx35400tNy8?=
- =?us-ascii?Q?aGLtSJ7WT4MEm/GjDnN/gWoHp3TGIN0SuorVL8eAet/hB2xxkm6IItA0jzIx?=
- =?us-ascii?Q?3IIjetNRgas/eySS6H4cEF/mTR8glJEzIDb4/dfooxQm+sLG0WlgoIBjr9lY?=
- =?us-ascii?Q?jylv3CMghIwLCPQHS5IyAEaYdFTy+TF38+ZomXfkFOHR31FM46rJd/hhCaAO?=
- =?us-ascii?Q?7QvMnIZmsc/ED5lgFUA5NRFGif8w1djrGW6yBt1H/m5jiBGlpZuU8EOCJI8X?=
- =?us-ascii?Q?jLGKWXpQIQLXZTWFrlG2MOS85aAuRtrQYU9Al7PO77R62qDA5iB1+4mFXev4?=
- =?us-ascii?Q?IQquRGveAmiV2iVU/GGJrNTN0To3wzXnxifA5etT71mq9C5Fvx1oBwDcQJW2?=
- =?us-ascii?Q?vrpDHdfM1319S1kNnbwfqTiq0QmQX4P9rgnrt/tE6fztVoOFBE+x22Wi6J+t?=
- =?us-ascii?Q?0nVSWAJZZHwgYVa8T6zVrPTFJUBYhmh/m7V+YyVX8CNzSyS3QjlMTUktUWty?=
- =?us-ascii?Q?z41jiZPq08U4lLRNjDSEFEsDLgsLqC5pr4KHYeP8LU25Q4UmUmchuSAZv0a7?=
- =?us-ascii?Q?Nfkz9BDx61bOuZs4Gtho7n3iC5i77IFq52mQdaq8PckU8AinUghcOand7U5p?=
- =?us-ascii?Q?Cgd3ep1sNx0MYbdVqUmaZAPlDpPdlY7XR/tGZKTUCJuCCXI4LENQElwUY/1a?=
- =?us-ascii?Q?ScgAWE/WKgylHdlHI3FEZJBsrAc6HVlbf/2ACOku5Jy8?=
-Content-Type: multipart/alternative;
-	boundary="_000_SN6PR00MB044717AE269F0AABB8456C86A89BASN6PR00MB0447namp_"
+Received: (qmail 2007 invoked from network); 29 Sep 2020 22:48:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=spodhuis.org; s=d202008; h=OpenPGP:Content-Type:MIME-Version:Message-ID:
+	Subject:Cc:To:From:Date:From:Reply-To:Subject:Date:To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
+	References:OpenPGP:Organization;
+	bh=OnXsoL/JafosJWpVivIaowu3oTn18KzxPRq3qwoIAVM=; t=1601419726; x=1602629326;
+	 b=TLNCAPiMSTGG6aVmjeHhz65XruU7q9U5NoAy5nmB8poyjWuNN32eTU3rfgKgR3xbaZbR4SGnx7
+	gGk9fels6V7PKYs8z771sU43A4oWwPldyGf170BE1yqK26G9xWfvpHwRA2n5NMJXIN/7GVjh/Q0Ve
+	4Zj0JLsC/tMbiwgG3jJVq/DHKDuEQY3O2GKlQndoxpTW9WMETQ/X/p42G5+8YMkaFLDqJo5EECt1D
+	bI/KPorfxHCwWwk4aIfgoosKSOmi5hzdXK7+9W/My363puARxi9tsg4YUeL74a7QQ8sNmc46RcTj3
+	VvtDqNUk4BctkY7NhseXx/31SHxRd563gQEGA==;
+DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=spodhuis.org; s=d202008e2; h=OpenPGP:Content-Type:MIME-Version:Message-ID:
+	Subject:Cc:To:From:Date:From:Reply-To:Subject:Date:To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
+	References:OpenPGP:Organization;
+	bh=OnXsoL/JafosJWpVivIaowu3oTn18KzxPRq3qwoIAVM=; t=1601419726; x=1602629326;
+	 b=NO+ljKZBFenYrS5s/fAsAnRKSEwg0cnopV2XsNLJ43KGj03PZ9OhFOuBdBgrx5I3WnwbiEtdEA
+	8rsdjjoIgiCA==;
+Date: Tue, 29 Sep 2020 18:48:30 -0400
+From: Phil Pennock <oss-security-phil@spodhuis.org>
+To: oss-security@lists.openwall.com
+Cc: pdp@nats.io
+Message-ID: <20200929224830.GA560751@fullerene.field.pennock-tech.net>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SN6PR00MB0447.namprd00.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 22255295-b6ce-413b-19ee-08db3b962c69
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Apr 2023 20:40:37.9025
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ugifaH7MZ3b6dKGQiY4O+W8ahU/VsVJb9nshHdGooUUXfF1zrUQSSTp0ti1n9PS05S7s+Tx2jLRMAda3V0KjXQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR00MB0827
-Subject: [oss-security] ncurses fixes upstream
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="DocE+STaALJfprDB"
+Content-Disposition: inline
+OpenPGP: url=https://nats.io/.well-known/openpgpkey/hu/96bqcjktdxra6hd6mor16dn1huc49irf
+Subject: [oss-security] [CVE-2020-26149] NATS project vulnerabilities: nats.js, (nats.ws,
+ nats.deno)
 
---_000_SN6PR00MB044717AE269F0AABB8456C86A89BASN6PR00MB0447namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+--DocE+STaALJfprDB
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Subject: [CVE-2020-26149] NATS project vulnerabilities: nats.js, (nats.ws,
+ nats.deno)
 
-Hello oss-security,
+CVE: CVE-2020-26149
 
-Our team has worked with the maintainer of the ncurses library (used by sev=
-eral software packages in Linux) to fix several memory corruption vulnerabi=
-lities.
-They are now fixed at commit 20230408 - see details here (https://invisible=
--island.net/ncurses/NEWS.html#index-t20230408)
-A CVE was assigned (CVE-2023-29491) - it's still under a "reserved" status.
+Background:
 
-How can we ensure those fixes get deployed upstream, in major Linux distrib=
-utions?
-We've reached out to Arch, RedHat, Canonical and other popular distros inde=
-pendently.
+NATS.io is a high performance open source pub-sub distributed communication
+technology, built for the cloud, on-premise, IoT, and edge computing.
+The server is written in Go and there are client libraries in many languages
+and frameworks.
 
-Thanks!
-                             JBO
+Problem Description:
+
+Preview versions of two NPM packages and one Deno package from the NATS
+project contain an information disclosure flaw, leaking options to the
+NATS server; for one package, this includes TLS private credentials.
+
+The _connection_ configuration options in these JavaScript-based
+implementations were fully serialized and sent to the server in the
+client's CONNECT message, immediately after TLS establishment.
+
+The nats.js client supports Mutual TLS and the credentials for the TLS
+client key are included in the connection configuration options;
+disclosure of the client's TLS private key to the server has been
+observed.
+
+Most authentication mechanisms are handled after connection, instead of
+as part of connection, so other authentication mechanisms are
+unaffected.
+For clarity: NATS account NKey authentication is NOT affected.
+
+Neither the nats.ws nor the nats.deno clients support Mutual TLS: the
+affected versions listed below are those where the logic flaw is
+present.  We are including the nats.ws and nats.deno versions out of an
+abundance of caution, as library maintainers, but rate as minimal the
+likelihood of applications leaking sensitive data.
 
 
---_000_SN6PR00MB044717AE269F0AABB8456C86A89BASN6PR00MB0447namp_--
+Affected versions:
+
+Security impact:
+
+* NPM package nats.js:
+  + mainline is unaffected
+  + beta branch is vulnerable from 2.0.0-201, fixed in 2.0.0-209
+
+Logic flaw:
+
+* NPM package nats.ws:
+  + status: preview
+  + flawed from 1.0.0-85, fixed in 1.0.0-111
+* Deno repository https://github.com/nats-io/nats.deno
+  + status: preview
+  + flawed in all git tags prior to fix
+  + fixed with git tag v1.0.0-9
+
+
+Impact:
+
+For deployments using TLS client certificates (for mutual TLS), private
+key material for TLS is leaked from the client application to the
+server.  If the server is untrusted (run by a third party), or if the
+client application also disables TLS verification (and so the true
+identity of the server is unverifiable) then authentication credentials
+are leaked.
+
+Workaround:
+
+None
+
+Solution:
+
+Upgrade your package dependencies to fixed versions, and then reissue
+any TLS client credentials (with new keys, not just new certificates)
+and revoke the old ones.
+
+---
+
+Personal addenda:
+
+If anyone has any more questions which aren't for oss-security, then our
+Slack tends to be pretty helpful, https://slack.nats.io will arrange an
+invite link for you if needed, or connect you through.  If you want to
+stick to email, I can be reached at <pdp@nats.io>, and there's a PGP key
+for that address in WKD if it really needs to be private.
+
+Really, no official releases included this mistake, but we know some
+developers have done `npm install nats@beta` and that's why we're
+issuing an advisory.  We've marked the bad NPM versions as deprecated
+and have a ticket in with NPMJS to get them marked vulnerable too.
+
+-Phil
+
+--DocE+STaALJfprDB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEVxDd4DGA5NfSuf2jZNNikmKH3kMFAl9zubMACgkQZNNikmKH
+3kNtnQ//Tp+0WO6AN4USMVt5sOFtE0fCmWef2JIj+9VOghXvi6dKVHDZgpGi1iXR
+RC7FrXiIQqp32VMWJ17Wu/bjpsAFFnoG9i78cedt7IUfymAngouNrYTo+i/KU9X6
+xlCKXJvzZUgc9GXxzIrVA7bVe2enN0YIfe1GB2uV4BlMXmXxVUYQeO15vbu7M+LN
+Z4O62nnzGufZewcjlvxuZTT2yVjadzB1X5H9XHqWssBBM8Aztin2lclvJJIWDwre
+MWIsM1MIc5cgFoSu6xYci/wbrfnadDUPDefYYk5Y43Mbuad5RPB1JXKJ0YIde8DY
+wnCnP+wwecHw2qHzi9Sm3BRoWsufaeV3toktFfgXOm9J29mvL9zlGdIPr1X8vM7b
+Bu4vasEGpifSjTP95TMtLN0lDRlT61QniFR2ahDlXTM2gpdOfGp0Cd+JfKB1EApt
+s/+VX400ym5F+xjEKXFucKDENbA9StsrG8GB2VmDfvcjjACl/ez0CuCiLqApCTXP
+G5JbFGyAAzfYAHhsAv7qaUcOZB/udzJ3BCD01nbjZie+wxrtdAQ9i+5tF89j2p/V
+StJy+0aFAhuwcHWi8ztGzcw3HMItE1+OFtvijCz1NjM/jaTrNJcUnJD5BMFn1Lrr
+VIu36ZXXOzT9IOU9OMZrNfYieq51GClR+R2UfwC/y/lgx7trqNI=
+=Y/xl
+-----END PGP SIGNATURE-----
+
+--DocE+STaALJfprDB--
