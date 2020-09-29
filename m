@@ -1,49 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/03/4
-Message-ID: <CAD77+gTN-F3e_KYuUtkWF6xQFQ0=tW3UCvc7PdM+Ap0YgokSSw@mail.gmail.com>
-Date: Wed, 3 Jun 2020 15:34:26 +0200
-From: Richard Hartmann <richih.mailinglist@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/30/3
+Message-ID: <20200929224830.GA560751@fullerene.field.pennock-tech.net>
+Date: Tue, 29 Sep 2020 18:48:30 -0400
+From: Phil Pennock <oss-security-phil@...dhuis.org>
 To: oss-security@...ts.openwall.com
-Subject: Grafana 6.7.4 and 7.0.2 released with fix for CVE-2020-13379
+Cc: pdp@...s.io
+Subject: [CVE-2020-26149] NATS project vulnerabilities: nats.js, (nats.ws, nats.deno)
 Content-Type: text/plain; charset=utf-8
 
-Dear all,
+CVE: CVE-2020-26149
 
-today we are releasing Grafana 6.7.4 and 7.0.2. These patch releases
-include an important security fix for an issue that affects all
-Grafana versions from 3.0.1 to 7.0.1.
+Background:
 
-Incorrect access control vulnerability (CVE-2020-13379)
-We received a security report to security@...fana.com on May 14, 2020,
-about a vulnerability in Grafana regarding the avatar feature. It was
-later identified as affecting Grafana versions from 3.0.1 to 7.0.1.
-CVE-2020-13379 has been assigned to this vulnerability.
+NATS.io is a high performance open source pub-sub distributed communication
+technology, built for the cloud, on-premise, IoT, and edge computing.
+The server is written in Go and there are client libraries in many languages
+and frameworks.
 
-This vulnerability allows any unauthenticated user/client to make
-Grafana send HTTP requests to any URL and return its result to the
-user/client. This can be used to gain information about the network
-that Grafana is running on.
+Problem Description:
 
-If for some reason you cannot upgrade, the impact can be mitigated by
-blocking access to the avatar feature by blocking the /avatar/* URL
-via a web application firewall, load balancer, reverse proxy, or
-similar. It can also be mitigated by restricting access to Grafana.
+Preview versions of two NPM packages and one Deno package from the NATS
+project contain an information disclosure flaw, leaking options to the
+NATS server; for one package, this includes TLS private credentials.
 
-Affected versions
-Grafana releases 3.0.1 through 7.0.1
+The _connection_ configuration options in these JavaScript-based
+implementations were fully serialized and sent to the server in the
+client's CONNECT message, immediately after TLS establishment.
 
-Patched versions
-7.x and 6.7.x
+The nats.js client supports Mutual TLS and the credentials for the TLS
+client key are included in the connection configuration options;
+disclosure of the client's TLS private key to the server has been
+observed.
 
-Solutions and mitigations
-Download and install the appropriate patch for your version of Grafana.
+Most authentication mechanisms are handled after connection, instead of
+as part of connection, so other authentication mechanisms are
+unaffected.
+For clarity: NATS account NKey authentication is NOT affected.
 
-Grafana Cloud instances have already been patched, and Grafana
-Enterprise customers were provided with updated binaries, under
-embargo, on May 27.
-
-Further information can be found at
-https://grafana.com/blog/2020/06/03/grafana-6.7.4-and-7.0.2-released-with-important-security-fix/
+Neither the nats.ws nor the nats.deno clients support Mutual TLS: the
+affected versions listed below are those where the logic flaw is
+present.  We are including the nats.ws and nats.deno versions out of an
+abundance of caution, as library maintainers, but rate as minimal the
+likelihood of applications leaking sensitive data.
 
 
-Richard
+Affected versions:
+
+Security impact:
+
+* NPM package nats.js:
+  + mainline is unaffected
+  + beta branch is vulnerable from 2.0.0-201, fixed in 2.0.0-209
+
+Logic flaw:
+
+* NPM package nats.ws:
+  + status: preview
+  + flawed from 1.0.0-85, fixed in 1.0.0-111
+* Deno repository https://github.com/nats-io/nats.deno
+  + status: preview
+  + flawed in all git tags prior to fix
+  + fixed with git tag v1.0.0-9
+
+
+Impact:
+
+For deployments using TLS client certificates (for mutual TLS), private
+key material for TLS is leaked from the client application to the
+server.  If the server is untrusted (run by a third party), or if the
+client application also disables TLS verification (and so the true
+identity of the server is unverifiable) then authentication credentials
+are leaked.
+
+Workaround:
+
+None
+
+Solution:
+
+Upgrade your package dependencies to fixed versions, and then reissue
+any TLS client credentials (with new keys, not just new certificates)
+and revoke the old ones.
+
+---
+
+Personal addenda:
+
+If anyone has any more questions which aren't for oss-security, then our
+Slack tends to be pretty helpful, https://slack.nats.io will arrange an
+invite link for you if needed, or connect you through.  If you want to
+stick to email, I can be reached at <pdp@...s.io>, and there's a PGP key
+for that address in WKD if it really needs to be private.
+
+Really, no official releases included this mistake, but we know some
+developers have done `npm install nats@...a` and that's why we're
+issuing an advisory.  We've marked the bad NPM versions as deprecated
+and have a ticket in with NPMJS to get them marked vulnerable too.
+
+-Phil
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
