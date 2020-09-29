@@ -1,35 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/07/4
-Message-ID: <1596799897.MWJU0QDE@httpd.apache.org>
-Date: Fri, 07 Aug 2020 06:31:37 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-9490: Apache httpd: Push Diary Crash on Specifically Crafted HTTP/2 Header
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/29/1
+Message-ID: <nycvar.YSQ.7.78.906.2009291216520.10832@xnncv>
+Date: Tue, 29 Sep 2020 14:35:01 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: bugs-syssec@....de
+Subject: QEMU: NULL pointer derefrence issues
 Content-Type: text/plain; charset=utf-8
 
+   Hello,
 
-CVE-2020-9490: Push Diary Crash on Specifically Crafted HTTP/2 Header
+1. CVE-2020-25741 QEMU: fdc: null pointer dereference during r/w data transfer
 
-Severity: important
-
-Vendor: Apache Software Foundation
-
-Versions Affected:
-Apache HTTP Server 2.4.20 to 2.4.43
-
-Description:
-Apache HTTP Server versions 2.4.20 to 2.4.43
-A specially crafted value for the 'Cache-Digest' header in a HTTP/2
-request would result in a crash when the server actually tries to HTTP/2
-PUSH a resource afterwards.
-
-Configuring the HTTP/2 feature via "H2Push off" will mitigate this vulnerability for unpatched servers.
-
-Mitigation:
-
-Credit:
-Felix Wilhelm of Google Project Zero
+A null pointer dereference issue was found in the Floppy disk emulator of 
+QEMU. It could occur while transferring data via fdctrl_read_data(), 
+fdctrl_write_data() routines, if current drive has a null block pointer. A 
+guest may use this flaw to crash the QEMU process on the host resulting in DoS 
+scenario.
 
 References:
-https://httpd.apache.org/security/vulnerabilities_24.html#CVE-2020-9490
+-----------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg07779.html
+   -> https://ruhr-uni-bochum.sciebo.de/s/NNWP2GfwzYKeKwE?path=%2Ffdc_nullptr1
+===
+
+2. CVE-2020-25742 QEMU: scsi: lsi: null pointer dereference during memory move
+
+A null pointer dereference issue was found in the LSI53C895A SCSI Host Bus 
+Adapter emulator of QEMU. It could occur while processing 'Memory Move' 
+instructions to move data between dma memory and i/o address space via 
+lsi_memcpy(). A guest user/process may use this flaw to crash the QEMU process 
+resulting in DoS scenario.
+
+References:
+-----------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg05294.html
+   -> https://ruhr-uni-bochum.sciebo.de/s/NNWP2GfwzYKeKwE?path=%2Flsi_nullptr1
+===
+
+
+3. CVE-2020-25743 QEMU: ide: null pointer dereference while cancelling i/o operation
+
+A null pointer dereference issue was found in the IDE disk emulator of QEMU. 
+It could occur while cancelling an i/o operation via ide_cancel_dma_sync() 
+routine, if a block drive pointer is null. A guest may use this flaw to crash 
+the QEMU process on the host resulting in DoS scenario.
+
+References:
+-----------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg01568.html
+   -> https://ruhr-uni-bochum.sciebo.de/s/NNWP2GfwzYKeKwE?path=%2Fide_nullptr1b
+
+
+* These issues were reported by Sergej Schumilo, Cornelius Aschermann, Simon
+   Wrner of Ruhr-University Bochum.
+
+* CVE-2020-2574[123]? assigned via -> https://cveform.mitre.org/
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
