@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["554" "Saturday" "12" "June" "2021" "11:04:42" "+0200" "Andreas Lehmkuehler" "andreas@lehmi.de" nil "18" "[oss-security] CVE-2021-31811: Apache PDFBox: A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading a tiny file" nil nil nil "6" nil nil (number mark "U       andreas@lehm Jun 12   18/554   " thread-indent "\"[oss-security] CVE-2021-31811: Apache PDFBox: A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading a tiny file\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-31811: Apache PDFBox: A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading a tiny file" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4203" "Wednesday" "30" "September" "2020" "19:42:34" "+0000" "Seth Arnold" "seth.arnold@canonical.com" "<20200930194234.GA3059991@millbarge>" "134" "[oss-security] [cve-request@mitre.org: Re: [scr966354] oniguruma regular expression library - fixed in devel version cbe9f8bd9cfc6c3c87a60fbae58fa1a85db59df0]" nil nil nil "9" "2020093019:42:34" "[oss-security] [cve-request@mitre.org: Re: [scr966354] oniguruma regular expression library - fixed in devel version cbe9f8bd9cfc6c3c87a60fbae58fa1a85db59df0]" (number mark "U       seth.arnold@ Sep 30  134/4203  " thread-indent "\"[oss-security] [cve-request@mitre.org: Re: [scr966354] oniguruma regular expression library - fixed in devel version cbe9f8bd9cfc6c3c87a60fbae58fa1a85db59df0]\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [cve-request@mitre.org: Re: [scr966354] oniguruma regular expression library - fixed in devel version cbe9f8bd9cfc6c3c87a60fbae58fa1a85db59df0]" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7804 invoked by uid 550); 12 Jun 2021 10:56:39 -0000
+Received: (qmail 20101 invoked by uid 550); 30 Sep 2020 19:42:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,71 +12,150 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7355 invoked from network); 12 Jun 2021 09:04:54 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1623488682; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=l+6aeJyiJN5t8I2FNggEy6bHHY/Mfc+jd2YqZWNZIUK8YWYWnODTT4poIbOrm7ZyOC
-    4QHKDpkFK8x6KWmIm33pM3cfHWNuGQ3reEejrubgYekfSi/sR3nbcnJT3kKc9QfDU1U/
-    Yx5B/6pv9drckV2Qyo/SFCVf6Z+WdMj4CDaQ+o0D0DaO288RPWD5BijuvR0zs83lzHpt
-    FRBsWNHeWJ+XwuCfjOpb5Sg4vP/hVfZanXCRI9YmEjJ8qbnoGSvK3m6n+j1kIrkt+7+W
-    YSBMhmO7yu74ljSP6tLYyTkAGEK/WdmgzhgyWRfLr8MCeYssqV4HhCherSR3v8vyRjHG
-    Siww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1623488682;
-    s=strato-dkim-0002; d=strato.com;
-    h=Date:Message-ID:Subject:From:Reply-To:To:Cc:Date:From:Subject:
-    Sender;
-    bh=fyLme3k+s8G7/g9AVWIcJwJamhL+zBemf0xHWRDB1+M=;
-    b=dSeY9dDfnWOyVJW2ikWzBOz4CKLmF+xMNKcB54ngujurqb65FJOoxGPFpVbPwXvi4J
-    Pf0k28FDkT9xV6ZS8jOFJCTit6hKy7e7zc/wn+vpxZg/uQpMKGFLk2UcMsk7fNXeStKt
-    aUUBPC2cif+xypZXNqfe6Z6sLBI8B5yG44S9sIxS9hKXqukJOg+yw+/Q4HdJR61YnvKR
-    yOojuBig7fQitbaaJ0Z1n4o4AIBTheLSbjVQIgVjlO+RCAyHEZnwQ+WVXtglHc81bc7A
-    T1Pctuy/Oazka9dn0Vlj2KzudLbx7vmRJEB4dzDII33PqLFgmTf8Pp3AVDs+TmY4X2Xs
-    WX7Q==
-ARC-Authentication-Results: i=1; strato.com;
-    dkim=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1623488682;
-    s=strato-dkim-0002; d=lehmi.de;
-    h=Date:Message-ID:Subject:From:Reply-To:To:Cc:Date:From:Subject:
-    Sender;
-    bh=fyLme3k+s8G7/g9AVWIcJwJamhL+zBemf0xHWRDB1+M=;
-    b=WAvuBwWzKb1++Jn5VoTSuNTZRgE8E/QS/HHjfjxyrdxXc2AwO4vWtQRiV6WAZwkGNv
-    1y1gBgJp6sseaCszS8SkgNytlpDyCGBXR886j8NV9jbwoyBN5CYZHFRG6vecUpiwRvhN
-    r0EFhdxVYOP6qOWGIAWWlfltPA6fnZIKJ2Mq7zFpcSBh0LkavqdJv69Rd2VNkU8U1YDX
-    DPhdlMKLgCdpwu50Vd7lbGM/k+ohd1YgwbcxqJeUVCWFr77vngF0MV+RUpsRXriyfsfZ
-    IJauMlZ1HRR+zF/ELTM/J/wePdCZ7xHT/KiY23LrU0QBp0Y+EebB/mwWC+nMJo3gol9r
-    RSYg==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":LWIAZ0WpaN8UY5o8XRz0jOyrHsdUGPvBRfQHLwW1oA/8m8QyX/Sant12icD8rTquXMu3"
-X-RZG-CLASS-ID: mo00
+Received: (qmail 20083 invoked from network); 30 Sep 2020 19:42:48 -0000
+Date: Wed, 30 Sep 2020 19:42:34 +0000
+From: Seth Arnold <seth.arnold@canonical.com>
 To: oss-security@lists.openwall.com
-From: Andreas Lehmkuehler <andreas@lehmi.de>
-Message-ID: <8324dd87-9dce-280d-de27-4e3281419f93@lehmi.de>
-Date: Sat, 12 Jun 2021 11:04:42 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+Message-ID: <20200930194234.GA3059991@millbarge>
+Mail-Followup-To: oss-security@lists.openwall.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2021-31811: Apache PDFBox: A carefully crafted PDF file can
- trigger an OutOfMemory-Exception while loading a tiny file
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rwEMma7ioTxnRzrJ"
+Content-Disposition: inline
+Subject: [oss-security] [cve-request@mitre.org: Re: [scr966354] oniguruma regular expression
+ library - fixed in devel version cbe9f8bd9cfc6c3c87a60fbae58fa1a85db59df0]
 
-Description:
+--rwEMma7ioTxnRzrJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading 
-the file. This issue affects Apache PDFBox version 2.0.23 and prior 2.0.x versions.
+Hello, Eduardo Barretto discovered a one-byte buffer overflow in the
+oniguruma regular expression library while doing a coverity scan. It
+appears to be part of compiling a regular expression, and I'm not sure if
+the overflow is actually reachable from untrusted inputs.
 
-This issue is being tracked as PDFBOX-5177
+To be on the safe side we've allocated a CVE number for this overflow.
 
-Mitigation:
+Thanks
 
-This issue was fixed in 2.0.24. All users are recommended to upgrade to Apache 
-PDFBox 2.0.24
+----- Forwarded message from cve-request@mitre.org -----
 
-Credit:
+Date: Wed, 30 Sep 2020 08:40:12 -0400 (EDT)
+From: cve-request@mitre.org
+To: security@ubuntu.com
+Cc: cve-request@mitre.org
+Subject: Re: [scr966354] oniguruma regular expression library - fixed in de=
+vel version
+	cbe9f8bd9cfc6c3c87a60fbae58fa1a85db59df0
+Message-Id: <20200930124012.C2BC39295BB@smtprhmv1.mitre.org>
 
-Apache PDFBox would like to thank Chaoyuan Peng for reporting this issue
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-References:
-https://lists.apache.org/thread.html/re3bd16f0cc8f1fbda46b06a4b8241cd417f71402809baa81548fc20e%40%3Cusers.pdfbox.apache.org%3E
+> [Suggested description]
+> In Oniguruma 6.9.5_rev1,
+> an attacker able to supply a regular expression for compilation may be ab=
+le to overflow a buffer by one byte
+> in concat_opt_exact_str in src/regcomp.c.
+>=20
+> ------------------------------------------
+>=20
+> [Additional Information]
+> We haven't confirmed that this is reachable by an untrusted actor, nor th=
+at it has real-world consequences. Thanks.
+>=20
+> ------------------------------------------
+>=20
+> [Vulnerability Type]
+> Buffer Overflow
+>=20
+> ------------------------------------------
+>=20
+> [Vendor of Product]
+> oniguruma regular expression library
+>=20
+> ------------------------------------------
+>=20
+> [Affected Product Code Base]
+> oniguruma regular expression library - fixed in devel version cbe9f8bd9cf=
+c6c3c87a60fbae58fa1a85db59df0
+>=20
+> ------------------------------------------
+>=20
+> [Affected Component]
+> concat_opt_exact_str() function in  src/regcomp.c
+>=20
+> ------------------------------------------
+>=20
+> [Attack Type]
+> Context-dependent
+>=20
+> ------------------------------------------
+>=20
+> [Attack Vectors]
+> An attacker able to supply a regular expression for compilation may be ab=
+le to overflow a buffer by one byte.
+>=20
+> ------------------------------------------
+>=20
+> [Reference]
+> https://github.com/kkos/oniguruma/issues/207
+> https://github.com/kkos/oniguruma/commit/cbe9f8bd9cfc6c3c87a60fbae58fa1a8=
+5db59df0
+>=20
+> ------------------------------------------
+>=20
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+>=20
+> ------------------------------------------
+>=20
+> [Discoverer]
+> Eduardo Barretto
+
+Use CVE-2020-26159.
+
+
+- --=20
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJfdHx6AAoJEPNX0OmQPkAI2KUQAKv3Lkv3qK7Eo6piCpicU6Ut
+hBVcB4JB5H8T1Cp1M6fX2X09OwJW/CBBlz/KuQbLmq2ty8uS6dPwEQ9GJMO62CLr
+oPdezDnBxhqlvz1iqPfR0UYbvSIKToDP1sZOxRrV+FmlesV5vddEv68jQk1r16Bk
+TI3Q73F3NreuaNrs4rHBJ22H8nHGHo/IYOHaPQPdMRGjtSifC+kn0Cootwce6hEG
+sKAwVZJgDMPnwIh/BQ4mDSSA+haWfwtj+mRBomjFUrKSsWZTy3UqvapKzmhPrZ2h
+WHgT2ZE9jj2I/neyChguwLiGpwrjdLRiv+9Xy6qcwKRMaHDYwhfv/7BNgVweVB/i
+cZaFwCzlFRsGmQIilqPzpQ8R41CVjmj/faXDIcfmfQfz+DU0p2MNw7+pDkbrDPsw
+NJQbaP6HUteKlfdsmKqSc9dT4vJiA9Hwow+dkZQaDZdclet/AUGMPAzzUONTyrvW
+Vg1YYEtbLcJmqDG+65ANT38nuFXmfyNBJzQvZ3ut0pRwm/fo9FU+8YR7k+ER3Js8
+iwIE+rGhiqGNVi88GKinJCLbP/ojKW2vLWRi3VFCdYqdebuyGp2dUruIrRO91NP6
+ntC4Ci6Jq4v3HBkLoIPP0W9A5kQDngIxYjs0NpjyzHQRCIeUb5qoJxT0baMg1Rsi
+eDui/It7tMfjjDk4/+J1
+=3Do0hc
+-----END PGP SIGNATURE-----
+
+
+----- End forwarded message -----
+
+--rwEMma7ioTxnRzrJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAl9036YACgkQ8yFyWZ2N
+LpdiGwgAnz1X5HpIyZ/8XwD+/pd2G6cl5ETu1k8yEHX6fmTp+D/BoeNT0hpoSXM3
+fVdM4G8QI0t/P1xKT+E+J+Q3A8XARlaRTpBKSVjkxqOIibZGJAH1k4uAicQhTb6f
+d55crYJuZfhNZHiIsNEjteymAICXhoyPC+WyTw9kjrLDf/uU1u7Lf18JScNq+WLJ
+3c6tSURL1L+NWGrvCGl2XhDAAEinV2r37NBf+ijAZuWKJNMXGNrcBGq6Fwb6yhqu
+tQzO3ccykh218kcnquT60AuKt3tgkDJqGW5T7eGRbjpJlenmniYRO6jVn8nqhmc0
+j+GL5xncukhk+uQjEnie1EOAnvBajQ==
+=4K/A
+-----END PGP SIGNATURE-----
+
+--rwEMma7ioTxnRzrJ--
