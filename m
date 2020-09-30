@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1247" "Friday" "22" "May" "2015" "22:42:52" "+0800" "Jing Wang" "justqdjing@gmail.com" "<CAFWG0-iENjnG1wnBwBsqx6YFyeTs5gcgeVV0QSAfUe0=P4emNA@mail.gmail.com>" "55" "[oss-security] Innovative WebPAC Pro 2.0 Open Redirect Web Security Vulnerabilities - CVE Request" nil nil nil "5" "2015052214:42:52" "[oss-security] Innovative WebPAC Pro 2.0 Open Redirect Web Security Vulnerabilities - CVE Request" (number mark "        justqdjing@g May 22   55/1247  " thread-indent "\"[oss-security] Innovative WebPAC Pro 2.0 Open Redirect Web Security Vulnerabilities - CVE Request\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["996" "Wednesday" "30" "September" "2020" "08:32:54" "+0200" "Greg KH" "greg@kroah.com" "<20200930063254.GB1474755@kroah.com>" "37" "Re: [oss-security] CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs." "^Date:" nil nil "9" "2020093006:32:54" "[oss-security] CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs." (number mark "        greg@kroah.c Sep 30   37/996   " thread-indent "\"Re: [oss-security] CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs.\"\n") "<CALJHwhTWAWPjfWD1nLho+zxXneEt_CCbYFROJY=trcDvqsA7uw@mail.gmail.com>" ("<CALJHwhTWAWPjfWD1nLho+zxXneEt_CCbYFROJY=trcDvqsA7uw@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11791 invoked by uid 550); 22 May 2015 14:43:20 -0000
+Received: (qmail 9616 invoked by uid 550); 30 Sep 2020 06:33:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11666 invoked from network); 22 May 2015 14:43:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=xnNeZgcmacN+LF0LatvmSJTJpb3TactR5c9+99XbJE0=;
-        b=IX+nfU9i7VKHvs5JDO9/0M8JZQdJMTIaNdqqNrOCgtatxOhvJmgePrGdoo4IdycuR5
-         x9ZQ2toVeA+W6f/f4s0iq9CGJdGP4FWluD/xgLJuP6+ujar6uuq0ahWKffEl0TrrMJqn
-         V1v6Gha+ow8YvV2BwdhWlXIZ8k9cogOZYbaPMkZnlOL36Y/0WGE+7kkclYbVgETFZ8hV
-         QZVndM8p9rZTx4qThE149d2Z32wlwKc+lIIcPNzw1mpRjab6KAQtUQGMGe008aZWXlZ7
-         G9kfKx5UWZuW+9XinXb5l6mbRI3/RsIr/BFgOD5QGj2IM3knjpV/cnAjklnnD1q+RuOS
-         XkfA==
+Received: (qmail 9595 invoked from network); 30 Sep 2020 06:33:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm1; bh=LiWd1tmqutBDoRD0oxWY2kYQIlC
+	jxW6tFuArmDOXOAs=; b=JMnI630z5cvYckD8uqcvytwD5tNEVMcIhf6FXQTlITt
+	03uBSeod94Ob0EwoHR82GgTz3vxR5oxG1cDeZNoQLaYWL28YT2X6Eaz6TflxY0vB
+	jnI1sdtvQKFAI1Vx1mc+W8sbsQjqLQmeJ+Hm7qI9/ljnS2pmdjoKdO5CsMxQGUQ9
+	P9JCg8BoI7pZv64eUesSxzfEd9sQxOF/NTy5AL05rmRSEy1TgMSSE13bV/Sd1xIE
+	x13isyiyFt2fG4jMy+JgoG9Q4rvKnrj1WMM0UbM4n5zO0vOvbetSg7TXHVnQEtKX
+	Nnxg4xN5PBs9bn8lOsW6YtG4BHNElp4MqzD49/tAdgA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=LiWd1t
+	mqutBDoRD0oxWY2kYQIlCjxW6tFuArmDOXOAs=; b=NDGXc2fSDt05ZbVTScdlnS
+	tLJzhtTi3rF6+GYJ2b+/KEYrAMvZdIOCa06Q5R/epE6BGyczIxEvPv04lfyb9onk
+	5VxdREwxJerfJ66V/EC+0fWtKewTHANwOzj3/N5LagyHW1AcTDzwxUZcMG6xskcq
+	rZ6dRkPpI/DKglv+xRW8nl9VvpuM1GaOtZJyjGPkqp/oTUGyBmxG8TbXrou98agH
+	gxF3+qo3PRseQJLtJvNTkS4RYZDwKTBvSimCKex5C9nUFhX1cXEGyWML0LSYFgB8
+	GMoIDhYcutAjvfHLT4ijrfbd/ew8rjvLcMjLRfAYHizHu1e3A1nLVzVNmMP7qFbw
+	==
+X-ME-Sender: <xms:kyZ0X5erR7log-e7okor_77V-wHa_VL0Wq3XdEN_qKUIIY3cbxH2VQ>
+    <xme:kyZ0X3PV17C3XVI3fBlwKzedGETNNI41meMH-NrMdr_22FYSMlEWBLD3iln183nby
+    eoQAJ3cbjuwXw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrfedtgddutdekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
+    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
+    necuggftrfgrthhtvghrnhepveeuheejgfffgfeivddukedvkedtleelleeghfeljeeiue
+    eggeevueduudekvdetnecukfhppeekfedrkeeirdejgedrieegnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhrvghgsehkrhhorghhrdgtoh
+    hm
+X-ME-Proxy: <xmx:kyZ0XyiMD61Pbi1Mi_UWW0_VESYq2mp8TI2gEwVmK22rMu8HOX4X-Q>
+    <xmx:kyZ0Xy8JTtGSv86gHH27MQZfc_5tvXxR_bWMs7pOoxWm0SC1OyIwiQ>
+    <xmx:kyZ0X1vnEbB6vYl4yvFoUnLGTR0_b7SPvd_YTcDyTfXxue3I5L07sw>
+    <xmx:lCZ0Xz5S84fcU-toVT0Zref2aAAyN1Zmf9PG--2nVccAi1IDzvyHbw>
+Message-ID: <20200930063254.GB1474755@kroah.com>
+References: <CALJHwhTWAWPjfWD1nLho+zxXneEt_CCbYFROJY=trcDvqsA7uw@mail.gmail.com>
 MIME-Version: 1.0
-X-Received: by 10.60.228.67 with SMTP id sg3mr4345oec.32.1432305772668; Fri,
- 22 May 2015 07:42:52 -0700 (PDT)
-Message-ID: <CAFWG0-iENjnG1wnBwBsqx6YFyeTs5gcgeVV0QSAfUe0=P4emNA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11363046ca2c550516acac73
-Date: Fri, 22 May 2015 22:42:52 +0800
-From: Jing Wang <justqdjing@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALJHwhTWAWPjfWD1nLho+zxXneEt_CCbYFROJY=trcDvqsA7uw@mail.gmail.com>
+Date: Wed, 30 Sep 2020 08:32:54 +0200
+From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Innovative WebPAC Pro 2.0 Open Redirect Web Security Vulnerabilities
- - CVE Request
+Subject: Re: [oss-security] CVE-2020-25641 kernel: soft lockup when
+ submitting zero length bvecs.
 To: oss-security@lists.openwall.com
 
---001a11363046ca2c550516acac73
-Content-Type: text/plain; charset=UTF-8
+On Wed, Sep 30, 2020 at 10:35:56AM +1000, Wade Mealing wrote:
+> Gday,
+> 
+> A flaw was found in the Linux kernels implementation of biovec usage.  A
+> zero-length biovec request issued to the block subsystem could cause the
+> kernel to enter an infinite loop causing a denial of service. An attacker
+> with a local account can issue requests to a block device can cause a
+> denial of service.
+> 
+> This has been assigned CVE-2020-25641,
+> 
+> According to the fix commits "Introduced in":
+> # git tag --contains 1bdc76aea115 | head -n 1
+> v4.10
 
-Hello,
+That's odd, and not the best way to do this, the commit really showed up
+in 4.8-rc1:
+	$ git describe --contains 1bdc76aea115
+	v4.8-rc1~162^2~21
 
-Could you assign a CVE reference ID for the following vulnerability?
-Thank you very much.
+You forgot to sort by "version", which is what you need to do if you
+want to try to look at tags, but then it's still a bit off:
+	$ git tag --contains 1bdc76aea115 | sort -V | head -n 10
+	v4.8
+	v4.8-rc1
+	v4.8-rc2
+	v4.8-rc3
+	v4.8-rc4
+	v4.8-rc5
+	v4.8-rc6
+	v4.8-rc7
+	v4.8-rc8
+	v4.9
 
-http://seclists.org/fulldisclosure/2015/Mar/80
-http://packetstormsecurity.com/files/130841/innovationwebpac-redirect.txt
-http://tetraph.com/security/open-redirect/innovative-webpac-pro-2-0-unvalidated-redirects-and-forwards-url-redirection-security-vulnerabilities/
-http://permalink.gmane.org/gmane.comp.security.fulldisclosure/1722
-http://lists.openwall.net/full-disclosure/2015/03/16/4
-http://cxsecurity.com/issue/WLB-2015030103
-http://www.intelligentexploit.com/view-details.html?id=20924
+hope this helps,
 
-
-========
-
-Exploit Title:
-Innovative WebPAC Pro 2.0 Unvalidated Redirects and Forwards (URL
-Redirection) Cyber Security Vulnerabilities
-
-Product:
-WebPAC Pro
-
-Vendor:
-Innovative Interfaces Inc
-
-Vendor Link:
-http://www.iii.com/products/webpac_pro.shtml
-
-Vulnerable Versions:
-2.0
-
-Tested Versions:
-2.0
-
-========
-
-
-
-
-Best Regards,
-Wang Jing,
-
-
-Division of Mathematical Sciences (MAS),
-School of Physical and Mathematical Sciences (SPMS),
-Nanyang Technological University (NTU),
-Singapore.
-http://www.tetraph.com/wangjing/
-https://twitter.com/justqdjing
-
---001a11363046ca2c550516acac73--
+greg k-h
