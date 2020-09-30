@@ -1,75 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/23/3
-Message-ID: <88f013a4-5478-f698-eebd-7dc0f4aaa216@igalia.com>
-Date: Mon, 23 Nov 2020 17:50:25 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0008
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/30/7
+Message-ID: <20200930194234.GA3059991@millbarge>
+Date: Wed, 30 Sep 2020 19:42:34 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: [cve-request@...re.org: Re: [scr966354] oniguruma regular expression library - fixed in devel version cbe9f8bd9cfc6c3c87a60fbae58fa1a85db59df0]
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0008
-------------------------------------------------------------------------
+Hello, Eduardo Barretto discovered a one-byte buffer overflow in the
+oniguruma regular expression library while doing a coverity scan. It
+appears to be part of compiling a regular expression, and I'm not sure if
+the overflow is actually reachable from untrusted inputs.
 
-Date reported           : November 23, 2020
-Advisory ID             : WSA-2020-0008
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0008.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0008.html
-CVE identifiers         : CVE-2020-13584, CVE-2020-9948, CVE-2020-9951,
-                          CVE-2020-9952, CVE-2020-9983.
+To be on the safe side we've allocated a CVE number for this overflow.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+Thanks
 
-CVE-2020-13584
-    Versions affected: WebKitGTK before 2.30.3 and WPE WebKit before 2.30.3.
-    Credit to Cisco.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An use after free issue was
-    addressed with improved memory management.
+----- Forwarded message from cve-request@...re.org -----
 
-CVE-2020-9948
-    Versions affected: WebKitGTK before 2.30.0 and WPE WebKit before 2.30.0.
-    Credit to Brendan Draper (@6r3nd4n) working with Trend Micro Zero
-    Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A type confusion issue was
-    addressed with improved memory handling.
+Date: Wed, 30 Sep 2020 08:40:12 -0400 (EDT)
+From: cve-request@...re.org
+To: security@...ntu.com
+Cc: cve-request@...re.org
+Subject: Re: [scr966354] oniguruma regular expression library - fixed in devel version
+	cbe9f8bd9cfc6c3c87a60fbae58fa1a85db59df0
+Message-Id: <20200930124012.C2BC39295BB@...prhmv1.mitre.org>
 
-CVE-2020-9951
-    Versions affected: WebKitGTK before 2.30.0 and WPE WebKit before 2.30.0.
-    Credit to Marcin 'Icewall' Noga of Cisco Talos.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An use after free issue was
-    addressed with improved memory management.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-CVE-2020-9952
-    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3.
-    Credit to Ryan Pickren (ryanpickren.com).
-    Impact: Processing maliciously crafted web content may lead to a
-    cross site scripting attack. Description: An input validation issue
-    was addressed with improved input validation.
+> [Suggested description]
+> In Oniguruma 6.9.5_rev1,
+> an attacker able to supply a regular expression for compilation may be able to overflow a buffer by one byte
+> in concat_opt_exact_str in src/regcomp.c.
+> 
+> ------------------------------------------
+> 
+> [Additional Information]
+> We haven't confirmed that this is reachable by an untrusted actor, nor that it has real-world consequences. Thanks.
+> 
+> ------------------------------------------
+> 
+> [Vulnerability Type]
+> Buffer Overflow
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> oniguruma regular expression library
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> oniguruma regular expression library - fixed in devel version cbe9f8bd9cfc6c3c87a60fbae58fa1a85db59df0
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> concat_opt_exact_str() function in  src/regcomp.c
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Context-dependent
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> An attacker able to supply a regular expression for compilation may be able to overflow a buffer by one byte.
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://github.com/kkos/oniguruma/issues/207
+> https://github.com/kkos/oniguruma/commit/cbe9f8bd9cfc6c3c87a60fbae58fa1a85db59df0
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Eduardo Barretto
 
-CVE-2020-9983
-    Versions affected: WebKitGTK before 2.30.3 and WPE WebKit before 2.30.3.
-    Credit to zhunki.
-    Impact: Processing maliciously crafted web content may lead to code
-    execution. Description: An out-of-bounds write issue was addressed
-    with improved bounds checking.
+Use CVE-2020-26159.
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+iQIcBAEBCAAGBQJfdHx6AAoJEPNX0OmQPkAI2KUQAKv3Lkv3qK7Eo6piCpicU6Ut
+hBVcB4JB5H8T1Cp1M6fX2X09OwJW/CBBlz/KuQbLmq2ty8uS6dPwEQ9GJMO62CLr
+oPdezDnBxhqlvz1iqPfR0UYbvSIKToDP1sZOxRrV+FmlesV5vddEv68jQk1r16Bk
+TI3Q73F3NreuaNrs4rHBJ22H8nHGHo/IYOHaPQPdMRGjtSifC+kn0Cootwce6hEG
+sKAwVZJgDMPnwIh/BQ4mDSSA+haWfwtj+mRBomjFUrKSsWZTy3UqvapKzmhPrZ2h
+WHgT2ZE9jj2I/neyChguwLiGpwrjdLRiv+9Xy6qcwKRMaHDYwhfv/7BNgVweVB/i
+cZaFwCzlFRsGmQIilqPzpQ8R41CVjmj/faXDIcfmfQfz+DU0p2MNw7+pDkbrDPsw
+NJQbaP6HUteKlfdsmKqSc9dT4vJiA9Hwow+dkZQaDZdclet/AUGMPAzzUONTyrvW
+Vg1YYEtbLcJmqDG+65ANT38nuFXmfyNBJzQvZ3ut0pRwm/fo9FU+8YR7k+ER3Js8
+iwIE+rGhiqGNVi88GKinJCLbP/ojKW2vLWRi3VFCdYqdebuyGp2dUruIrRO91NP6
+ntC4Ci6Jq4v3HBkLoIPP0W9A5kQDngIxYjs0NpjyzHQRCIeUb5qoJxT0baMg1Rsi
+eDui/It7tMfjjDk4/+J1
+=o0hc
+-----END PGP SIGNATURE-----
 
-The WebKitGTK and WPE WebKit team,
-November 23, 2020
 
+----- End forwarded message -----
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
