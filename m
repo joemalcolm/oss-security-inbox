@@ -1,27 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/21/1
-Message-ID: <CAP+3qq4w3UX6hdjr2SszhtfXUpbrg16PMyyJPHT+8PXimBTPMg@mail.gmail.com>
-Date: Wed, 21 Oct 2020 15:21:39 +0900
-From: Akira Ajisaka <aajisaka@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/30/2
+Message-ID: <20200930063254.GB1474755@kroah.com>
+Date: Wed, 30 Sep 2020 08:32:54 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2018-11764] Apache Hadoop Privilege escalation in web endpoint
+Subject: Re: CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs.
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-11764: Apache Hadoop Privilege escalation in web endpoint
+On Wed, Sep 30, 2020 at 10:35:56AM +1000, Wade Mealing wrote:
+> Gday,
+> 
+> A flaw was found in the Linux kernels implementation of biovec usage.  A
+> zero-length biovec request issued to the block subsystem could cause the
+> kernel to enter an infinite loop causing a denial of service. An attacker
+> with a local account can issue requests to a block device can cause a
+> denial of service.
+> 
+> This has been assigned CVE-2020-25641,
+> 
+> According to the fix commits "Introduced in":
+> # git tag --contains 1bdc76aea115 | head -n 1
+> v4.10
 
-Severity: Critical
+That's odd, and not the best way to do this, the commit really showed up
+in 4.8-rc1:
+	$ git describe --contains 1bdc76aea115
+	v4.8-rc1~162^2~21
 
-Vendor: The Apache Software Foundation
+You forgot to sort by "version", which is what you need to do if you
+want to try to look at tags, but then it's still a bit off:
+	$ git tag --contains 1bdc76aea115 | sort -V | head -n 10
+	v4.8
+	v4.8-rc1
+	v4.8-rc2
+	v4.8-rc3
+	v4.8-rc4
+	v4.8-rc5
+	v4.8-rc6
+	v4.8-rc7
+	v4.8-rc8
+	v4.9
 
-Versions affected:
-3.0.0-alpha4, 3.0.0-beta1, and 3.0.0
+hope this helps,
 
-Description:
-Web endpoint authentication check is broken. Authenticated users may
-impersonate any user even if no proxy user is configured.
-
-Mitigation:
-Users should upgrade to Apache Hadoop 3.0.1 or upper.
-
-Credit:
-This issue was discovered by Daryn Sharp.
+greg k-h
