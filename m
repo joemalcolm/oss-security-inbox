@@ -1,61 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/7
-Message-ID: <CAOfWR+Ew1+0u8R7+=h7KO4u-asj3kZWi7o0u7c-a+6Z713gJmg@mail.gmail.com>
-Date: Tue, 8 Dec 2020 17:18:04 -0500
-From: Robert Watson <robertcwatson1@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/30/5
+Message-ID: <CAOo2v=CLkuWf46je09e_h_5NkFS8hihdsBdarZgC1bXV3AB0PA@mail.gmail.com>
+Date: Wed, 30 Sep 2020 20:40:59 +0530
+From: Hardik Vyas <hvyas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?
+Subject: CVE-2020-10763 heketi: gluster-block volume password details available in logs
 Content-Type: text/plain; charset=utf-8
 
-Question from a retired programmer but security novice... Since fuzzing is
-used to find bugs in other programs, doesn't it need to be held to a bit
-higher standard in order to maintain credibility?
+Hello,
 
-On Tue, Dec 8, 2020, 16:12 Eric Biggers <ebiggers@...nel.org> wrote:
+An information-disclosure flaw was found in the way Heketi logs sensitive
+information.
+This flaw allows an attacker with local access to the Heketi server, to
+read potentially
+sensitive information, such as gluster-block passwords.
 
-> On Tue, Dec 08, 2020 at 08:01:14PM +0100, yersinia wrote:
-> > At this link, multiple security bugs of various kinds are highlighted in
-> > very widespread basic cryptographic applications, which have then been
-> > corrected. I haven't done a deep analysis on all of them but I haven't
-> > found any associated CVEs of some of them. Do I have to assume that they
-> > weren't all that important or that the process of reporting them was
-> > missing? Thanks
-> >
-> > https://github.com/guidovranken/cryptofuzz
->
-> Fuzzing can easily find large numbers of bugs, and it's usually unclear
-> what the
-> security impact of them is.  So if people want CVEs, someone has to
-> actually put
-> the effort into analyzing each bug and (if applicable) filing for a CVE.
-> Presumably just no one has done that for the above bugs.
->
-> Something similar happened when I added fuzz tests to the Linux kernel's
-> crypto
-> API last year.  In less than a year they had resulted in over 100 bug
-> fixes.
-> Most didn't *seem* too concerning, e.g. most were bugs in crypto drivers
-> that
-> seemed to be rarely used, or crypto algorithms that seemed to be rarely
-> used, or
-> edge cases in the crypto API that seemed to be rarely or never encountered.
->
-> The bugs in userspace libraries found by cryptofuzz look somewhat
-> similar.  They
-> include some of the same kinds of bugs, like mishandling zero-length
-> inputs,
-> mishandling data passed in specific chunk sizes, or bugs in weird
-> algorithms.
->
-> However, in both cases it isn't possible to be certain of the impact and
-> applicability for a CVE of each bug without analyzing each bug in detail,
-> which
-> would be very time-consuming, and in general it's no one's job to do that.
->
-> Likewise, syzkaller has found thousands of Linux kernel bugs and most
-> haven't
-> had CVEs filed.
->
-> - Eric
->
+CVE-2020-10763 has been assigned for this flaw.
+
+Upstream PR: https://github.com/heketi/heketi/pull/1790
+Release: https://github.com/heketi/heketi/releases/tag/v10.1.0
+
+Credit: Prasanna Kumar Kalever (Red Hat)
+
+Thanks,
+-- 
+
+Hardik Vyas / Red Hat Product Security
+
+BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
+secalert@...hat.com for urgent response
+<https://www.redhat.com>
 
