@@ -1,4 +1,9 @@
-Received: (qmail 18307 invoked by uid 550); 1 Feb 2024 23:27:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3981" "Thursday" "1" "October" "2020" "08:21:46" "-0700" "Andy LoPresto" "alopresto@apache.org" "<E492E0E3-8DFC-42F6-8CC4-93A914082B35@apache.org>" "110" "[oss-security] [ANNOUNCE] Apache NiFi CVE-2020-9486, CVE-2020-9487, CVE-2020-9491, CVE-2020-13940" nil nil nil "10" "2020100115:21:46" "[oss-security] [ANNOUNCE] Apache NiFi CVE-2020-9486, CVE-2020-9487, CVE-2020-9491, CVE-2020-13940" (number mark "U       alopresto@ap Oct  1  110/3981  " thread-indent "\"[oss-security] [ANNOUNCE] Apache NiFi CVE-2020-9486, CVE-2020-9487, CVE-2020-9491, CVE-2020-13940\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [ANNOUNCE] Apache NiFi CVE-2020-9486, CVE-2020-9487, CVE-2020-9491, CVE-2020-13940" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23685 invoked by uid 550); 1 Oct 2020 16:23:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,128 +12,145 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18286 invoked from network); 1 Feb 2024 23:27:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706830191; x=1707434991; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Vcz7rPB8+NxbP3UeUfYKvZjtQ92Y3EZXdwHrWqSbESs=;
-        b=hridlAyMPo/83aSt0V5nWz/EyL9/XTRB+6T2h7YZiiS4XSYaWRYuY3lU/P6aftXWKZ
-         HRWPfcFqoVNMNNbd7G9kD5GEM65s4UG1ayU6SuFdcvxDb0rAoCcChDv/LYz/ygJBpazf
-         DCZ3O2JagMD8SjyLOFoDhzRapSwZIQ7g/kQWnwOniOk9gDWzBAwADj9T6qDiRk1EsdCg
-         +GCEuFUbuS0RE7EveOsQNqOeyd4Q3VckkMCtPVK4I14cEBSUlci3Ld3TYQjLLLxR2TvA
-         oY83nNIkW4m4QMykmOIl00Jy8TMuk3M1IiIRjYLJ4JIuNCvg5SUesGrNprodTH538zSb
-         oHfA==
+Received: (qmail 26508 invoked from network); 1 Oct 2020 15:22:01 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706830191; x=1707434991;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vcz7rPB8+NxbP3UeUfYKvZjtQ92Y3EZXdwHrWqSbESs=;
-        b=fGAMz9fMNJC1T3/00Eu2wFS5F7MIkEk03GrgJSR49KsZvMNFTWGve3VyGV27RcQtTk
-         a34WdhJdZHM74TwekLojJWaPdaaUXVQYTamzc4bWNDo45Uwc9euKc5tA/thUmSvmHLWx
-         gzq1QlJA7bhRsAiUee54u3c2ZPyjtVizMhAHpI7EGb5U0g0Y5xAt/v4/txKu4clabdV1
-         /KO5jVKtthpBQXyCmEx1hFIkRU/WHTobwY9t4RzTWslOeQudrMyyKs9DkP652g4Yk4XB
-         OnEC28re/lu5WJmlFSIXe72vYQM7qPtsfZvW6Rxa5emkJDQxgL4PDOS93B+05dQ0tLxg
-         7aJg==
-X-Gm-Message-State: AOJu0Yw0adlnjz4bwVm2IlgDy0vh0g3+pUX2mKD8NiH06YF293thfu46
-	+cx8rnQbApP95gv76kkxiPQmlIPMH54YRDel1O0os+uruqF53Y1+z+syuVb6rZmNoy8K5jUdyB2
-	2Vrz/s/d65H2YDDDOrfiuQJqX8d2ConCzk64=
-X-Google-Smtp-Source: AGHT+IHF56/4GzzeqyQiXUQx5sggye1CJP3ovXvxWKQh55B9jTVMHlu0KXWWJH8KM4mZityO743Y1e0jhvr4cn96F34=
-X-Received: by 2002:a25:8185:0:b0:dc2:4c31:774a with SMTP id
- p5-20020a258185000000b00dc24c31774amr606447ybk.49.1706830190645; Thu, 01 Feb
- 2024 15:29:50 -0800 (PST)
-MIME-Version: 1.0
-References: <20240201123100.42ba1334.hanno@hboeck.de>
-In-Reply-To: <20240201123100.42ba1334.hanno@hboeck.de>
-From: Alex Gaynor <alex.gaynor@gmail.com>
-Date: Thu, 1 Feb 2024 18:29:39 -0500
-Message-ID: <CAFRnB2UBm6VXnK3te6NaZ6AQWHjYWe8XSWdWN3CD6TWyYzfUZA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:reply-to:mime-version:subject:message-id
+         :date:to;
+        bh=8VrMigHuLIls1AVa2ejCcD/Xf0LwRI17oJHohD75BFM=;
+        b=fGJY5Kpz4H/O83lXENts9cTI510xYGAkaZppmvvWmODni3soqp2D5ER9GAjUE20GW2
+         KfCQOx5uRBH/WSUUjo4t4w+FwWhSxzE/h8s3qeDYv1MKK8v+32hPt3O6nY9eQcd3YCv7
+         bb9BxfXgvLdNY79JRU00opIA/IngX/4WTGJQjIlze3gGtJ5hxPjXc4OhU705On/XWKTY
+         PzguEZmItvCaTyd/A6KcYaFQ8CQ/Gu+N4t6M9/KuNv0nr2g4C/xr+IkIRP570D4Ox0x6
+         Xu47f/hSlgDmdw0tdT09ZfqVRz4RlB0Ku04iMxU5+Rs0zCBnHCMmjBA4+Qsuogls2T5X
+         jH4A==
+X-Gm-Message-State: AOAM530z0irEIuNmSXmcaNsLsXwRM7F4E59g6uT65cgV4fBikDBKl0kD
+	ZAW8R50nzwugihqSnUG3rH8=
+X-Google-Smtp-Source: ABdhPJyINCh6qvIuaIS4fOlzP1107Vr0zQ5pwJXCBFJy9ARddZvRRfh7OkozgTB4T/zI+kqsHIQAog==
+X-Received: by 2002:a9d:69ce:: with SMTP id v14mr5289914oto.11.1601565709260;
+        Thu, 01 Oct 2020 08:21:49 -0700 (PDT)
+From: Andy LoPresto <alopresto@apache.org>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_D540FD4E-ABA2-48D9-BA9C-39E90BE2C5B1"
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Message-Id: <E492E0E3-8DFC-42F6-8CC4-93A914082B35@apache.org>
+Date: Thu, 1 Oct 2020 08:21:46 -0700
+To: security@nifi.apache.org,
+ dev@nifi.apache.org,
+ users@nifi.apache.org,
+ oss-security@lists.openwall.com,
+ announce@apache.org
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
+Subject: [oss-security] [ANNOUNCE] Apache NiFi CVE-2020-9486, CVE-2020-9487, CVE-2020-9491,
+ CVE-2020-13940
+
+--Apple-Mail=_D540FD4E-ABA2-48D9-BA9C-39E90BE2C5B1
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Python standard library defaults to insecure TLS
- for mail protocols
+Content-Type: text/plain;
+	charset=us-ascii
 
-I'm the original author of PEP 476, which made certificate
-verification on by default for TLS. In 2014 I scoped it to HTTPS-only
-to minimize the risk of breakages, and ensure we could get the PEP
-approved and implemented (particularly given it was going to be
-enabled by default on Python 2.7, without a major version bump). It
-was never intended to be the final destination for cert verification.
+Apache NiFi PMC would like to announce the discovery and resolution of CVE-=
+2020-9486, CVE-2020-9487, CVE-2020-9491, and CVE-2020-13940. These issues h=
+ave been resolved and a new version of the Apache NiFi project was released=
+ in accordance with the Apache Release Process.=20
 
-I think it'd be reasonable to start a discussion on the Python
-discourse about moving forward with fixing SMTP as well:
-https://discuss.python.org/
+Apache NiFi is an easy to use, powerful, and reliable system to process and=
+ distribute data. It supports powerful and scalable directed graphs of data=
+ routing, transformation, and system mediation logic.
 
-Alex
-
-On Thu, Feb 1, 2024 at 6:32=E2=80=AFAM Hanno B=C3=B6ck <hanno@hboeck.de> wr=
-ote:
->
-> Hello,
->
-> By default, the mail protocol functions in Python's standard library do
-> not validate certificates for TLS connections. The API is surprising
-> and unintuitive. This is not a new issue, but I was surprised to learn
-> about it. Therefore, I'm sharing it here so more people know.
->
-> Python provides functionality for the standard email protocols in its
-> standard library. One can create a connection to an IMAP host like this:
-> c =3D imaplib.IMAP4_SSL(host=3D"example.com")
->
-> Similar functions exist for pop3 and smtp. This code is insecure and
-> vulnerable to man-in-the-middle attacks, as certificates are not
-> checked.
->
-> The secure version looks like this:
-> c =3D imaplib.IMAP4_SSL(host=3D"example.com",
-> ssl_context=3Dssl.create_default_context())
-> (The parameter is sometimes called "ssl_context" and sometimes
-> "context", depending on the protocol.)
->
-> In my view this is not just an insecure default, but also very
-> counterintuitive.  Nothing about
-> "ssl_context=3Dssl.create_default_context()" implies that this is about
-> certificate checking. Furthermore, it is surprising and
-> counterintuitive that you need a "default context" to enable something
-> and that the "default context" is not the default.
->
-> This is documented behavior [1].
->
-> There exists a discussion in the Python issue tracker [2] since April
-> 2022. According to that, the same issue exists for NNTP and FTP
-> functionality. It was discussed to change the default, but it hasn't
-> happened yet.
->
-> Python already had a previous discussion about enabling certificate
-> validation by default in the standard library, but it was only done for
-> HTTPS connections [3]. The PEP document says that this should be
-> reviewed in the future for other protocols.
->
-> The company Pentagrid has reached out to a large number of open source
-> projects impacted by this, and wrote a blogpost [4].
->
-> Also relevant is RFC 8314, which contains guidelines for TLS
-> connections in email protocols [5]. ("MUAs MUST validate TLS server
-> certificates [...]") It targets client software, but I believe it is
-> reasonable to apply the same standards to client APIs.
->
->
-> [1] https://docs.python.org/3/library/ssl.html#ssl-security
-> [2] https://github.com/python/cpython/issues/91826
-> [3] https://peps.python.org/pep-0476/
-> [4]
-> https://www.pentagrid.ch/en/blog/python-mail-libraries-certificate-verifi=
-cation/
-> [5] https://datatracker.ietf.org/doc/html/rfc8314
->
-> --
-> Hanno B=C3=B6ck
-> https://hboeck.de/
+Fixed in Apache NiFi 1.12.0 (Released: August 18, 2020)
 
 
 
---=20
-All that is necessary for evil to succeed is for good people to do nothing.
+CVE-2020-9486: Apache NiFi information disclosure in logs
+
+Severity: Important
+
+Versions Affected: Apache NiFi 1.10.0 - 1.11.4
+
+Description: The NiFi stateless execution engine produced log output which =
+included sensitive property values. When a flow was triggered, the flow def=
+inition configuration JSON was printed, potentially containing sensitive va=
+lues in plaintext.
+
+Mitigation: Implemented Argon2 secure hashing to provide a deterministic lo=
+ggable value which does not reveal the sensitive value. Users running any p=
+revious NiFi release should upgrade to the latest release.
+
+Credit: This issue was discovered by Andy LoPresto and Pierre Villard.
+
+
+
+CVE-2020-9487: Apache NiFi denial of service
+
+Severity: Important
+
+Versions Affected: Apache NiFi 1.0.0 - 1.11.4
+
+Description: The NiFi download token (one-time password) mechanism used a f=
+ixed cache size and did not authenticate a request to create a download tok=
+en, only when attempting to use the token to access the content. An unauthe=
+nticated user could repeatedly request download tokens, preventing legitima=
+te users from requesting download tokens.
+
+Mitigation: Disabled anonymous authentication, implemented a multi-indexed =
+cache, and limited token creation requests to one concurrent request per us=
+er. Users running any previous NiFi release should upgrade to the latest re=
+lease.
+
+Credit: This issue was discovered by Dennis Detering (IT Security Consultan=
+t at Spike Reply).
+
+
+
+CVE-2020-9491: Apache NiFi use of weak TLS protocols
+
+Severity: Critical
+
+Versions Affected: Apache NiFi 1.2.0 - 1.11.4
+
+Description: The NiFi UI and API were protected by mandating TLS v1.2, as w=
+ell as listening connections established by processors like ListenHTTP, Han=
+dleHttpRequest, etc. However intracluster communication such as cluster req=
+uest replication, Site-to-Site, and load balanced queues continued to suppo=
+rt TLS v1.0 or v1.1.
+
+Mitigation: Refactored disparate internal SSL and TLS code, reducing exposu=
+re for extension and framework developers to low-level primitives. Added su=
+pport for TLS v1.3 on supporting JVMs. Restricted all incoming TLS communic=
+ations to TLS v1.2+. Users running any previous NiFi release should upgrade=
+ to the latest release.
+
+Credit: This issue was discovered by Juan Carlos Sequeiros and Andy LoPrest=
+o.
+
+
+
+CVE-2020-13940: Apache NiFi information disclosure by XXE
+
+Severity: Low
+
+Versions Affected: Apache NiFi 1.0.0 - 1.11.4
+
+Description: The notification service manager and various policy authorizer=
+ and user group provider objects allowed trusted administrators to inadvert=
+ently configure a potentially malicious XML file. The XML file has the abil=
+ity to make external calls to services (via XXE).
+
+Mitigation: An XML validator was introduced to prevent malicious code from =
+being parsed and executed. Users running any previous NiFi release should u=
+pgrade to the latest release.
+
+Credit: This issue was discovered by Matt Burgess and Andy LoPresto.
+
+For more information: https://nifi.apache.org/security.html <https://nifi.a=
+pache.org/security.html>
+
+Andy LoPresto
+alopresto@apache.org
+alopresto.apache@gmail.com
+He/Him
+PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
+
+
+--Apple-Mail=_D540FD4E-ABA2-48D9-BA9C-39E90BE2C5B1--
