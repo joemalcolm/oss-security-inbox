@@ -1,47 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/8
-Message-ID: <87o8lf38fg.fsf@mpe.ellerman.id.au>
-Date: Tue, 06 Oct 2020 22:22:59 +1100
-From: Michael Ellerman <mpe@...erman.id.au>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/01/1
+Message-Id: <E492E0E3-8DFC-42F6-8CC4-93A914082B35@apache.org>
+Date: Thu, 1 Oct 2020 08:21:46 -0700
+From: Andy LoPresto <alopresto@...che.org>
+To: security@...i.apache.org, dev@...i.apache.org, users@...i.apache.org, oss-security@...ts.openwall.com, announce@...che.org
+Subject: [ANNOUNCE] Apache NiFi CVE-2020-9486, CVE-2020-9487, CVE-2020-9491, CVE-2020-13940
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer <solar@...nwall.com> writes:
-> Hi all,
->
-> As a moderator I approved all messages in this thread so far, but I am
-> unhappy about the quality of both Georgi's message and the replies.
->
-> This is a valid topic, but there's no room in it for trolling (that's
-> how Georgi's message came across, even if maybe unintentionally) nor for
-> responding only about the presumed trolling.  Just assume good faith and
-> post a response that's actually useful to others in here.  I'll try:
->
-> On Mon, Oct 05, 2020 at 03:02:33PM +0300, Georgi Guninski wrote:
->> Are there major security changes needed if
->> gnu/linux dominates the desktop and/or mobile phone
->> markets?
->
-> I'd say yes, major security changes are needed.
+Apache NiFi PMC would like to announce the discovery and resolution of CVE-2020-9486, CVE-2020-9487, CVE-2020-9491, and CVE-2020-13940. These issues have been resolved and a new version of the Apache NiFi project was released in accordance with the Apache Release Process. 
 
-Agree.
+Apache NiFi is an easy to use, powerful, and reliable system to process and distribute data. It supports powerful and scalable directed graphs of data routing, transformation, and system mediation logic.
 
-> On the desktop, major Linux distributions (and by the way *BSDs and
-> Solaris are not very different in this respect, I think) when used as
-> single-user desktop systems lack security isolation between applications
-> of the user.
+Fixed in Apache NiFi 1.12.0 (Released: August 18, 2020)
 
-You can get some isolation fairly easily using firejail.
 
-It's not as secure as eg. Qubes, but it's available in most distros and
-can be as simple as sticking "firejail" in front of a command.
 
-You can use it to isolate your browser/irc/mail client, or possibly more
-importantly your build environment, from your wider home directory.
+CVE-2020-9486: Apache NiFi information disclosure in logs
 
-As usual the arch wiki has good doco:
+Severity: Important
 
-  https://wiki.archlinux.org/index.php/firejail#Usage
+Versions Affected: Apache NiFi 1.10.0 - 1.11.4
 
-cheers
+Description: The NiFi stateless execution engine produced log output which included sensitive property values. When a flow was triggered, the flow definition configuration JSON was printed, potentially containing sensitive values in plaintext.
+
+Mitigation: Implemented Argon2 secure hashing to provide a deterministic loggable value which does not reveal the sensitive value. Users running any previous NiFi release should upgrade to the latest release.
+
+Credit: This issue was discovered by Andy LoPresto and Pierre Villard.
+
+
+
+CVE-2020-9487: Apache NiFi denial of service
+
+Severity: Important
+
+Versions Affected: Apache NiFi 1.0.0 - 1.11.4
+
+Description: The NiFi download token (one-time password) mechanism used a fixed cache size and did not authenticate a request to create a download token, only when attempting to use the token to access the content. An unauthenticated user could repeatedly request download tokens, preventing legitimate users from requesting download tokens.
+
+Mitigation: Disabled anonymous authentication, implemented a multi-indexed cache, and limited token creation requests to one concurrent request per user. Users running any previous NiFi release should upgrade to the latest release.
+
+Credit: This issue was discovered by Dennis Detering (IT Security Consultant at Spike Reply).
+
+
+
+CVE-2020-9491: Apache NiFi use of weak TLS protocols
+
+Severity: Critical
+
+Versions Affected: Apache NiFi 1.2.0 - 1.11.4
+
+Description: The NiFi UI and API were protected by mandating TLS v1.2, as well as listening connections established by processors like ListenHTTP, HandleHttpRequest, etc. However intracluster communication such as cluster request replication, Site-to-Site, and load balanced queues continued to support TLS v1.0 or v1.1.
+
+Mitigation: Refactored disparate internal SSL and TLS code, reducing exposure for extension and framework developers to low-level primitives. Added support for TLS v1.3 on supporting JVMs. Restricted all incoming TLS communications to TLS v1.2+. Users running any previous NiFi release should upgrade to the latest release.
+
+Credit: This issue was discovered by Juan Carlos Sequeiros and Andy LoPresto.
+
+
+
+CVE-2020-13940: Apache NiFi information disclosure by XXE
+
+Severity: Low
+
+Versions Affected: Apache NiFi 1.0.0 - 1.11.4
+
+Description: The notification service manager and various policy authorizer and user group provider objects allowed trusted administrators to inadvertently configure a potentially malicious XML file. The XML file has the ability to make external calls to services (via XXE).
+
+Mitigation: An XML validator was introduced to prevent malicious code from being parsed and executed. Users running any previous NiFi release should upgrade to the latest release.
+
+Credit: This issue was discovered by Matt Burgess and Andy LoPresto.
+
+For more information: https://nifi.apache.org/security.html <https://nifi.apache.org/security.html>
+
+Andy LoPresto
+alopresto@...che.org
+alopresto.apache@...il.com
+He/Him
+PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
+
+
