@@ -1,80 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/17/1
-Message-ID: <43b894ae-c437-4d49-bb57-6fa33535fb4e.splendidsky.cwc@alibaba-inc.com>
-Date: Fri, 17 Apr 2020 12:40:10 +0800
-From: "陈伟宸(田各)" <splendidsky.cwc@...baba-inc.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/02/1
+Message-ID: <CAA8xKjVm5LJHMYVWYGRU81ysLHnAMNyE106ipqcCMnKbPvxSeg@mail.gmail.com>
+Date: Fri, 2 Oct 2020 11:30:01 +0200
+From: Mauro Matteo Cascella <mcascell@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-25637 libvirt: double free in qemuAgentGetInterfaces() in qemu_agent.c
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-"A race condition was found in the Linux kernel audit subsystem. When the system is configured to panic on events being dropped, an attacker who is able to trigger an audit event that starts while auditd is in the process of starting may be able to cause the system to panic by exploiting a race condition in audit event handling. This creates a denial of service by causing a panic."
+A double free memory issue was found to occur in the libvirt API
+responsible for requesting information about network interfaces of a
+running QEMU domain. This flaw affects the polkit access control
+driver. Specifically, clients connecting to the read-write socket with
+limited ACL permissions could use this flaw to crash the libvirt
+daemon, resulting in a denial of service, or potentially escalate
+their privileges on the system.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1822593
+CVE-2020-25637 has been assigned for this flaw.
 
-Env:
-    Red Hat Enterprise Linux Server release 7.7 (Maipo)
-    3.10.0-1062.12.1.el7.x86_64
+Fixed in libvirt v6.8.0 (2020-10-01).
 
-Details:
-Function audit_log_end and audit_panic may have race conditions when auditd is restarting because audit_pid can be NULL in audit_log_end and then become not NULL in audit_panic, which may allow attackers to trigger kernel panic. Here is panic call stack:
+Upstream commits:
+* https://libvirt.org/git/?p=libvirt.git;a=commit;h=955029bd0ad7ef96000f529ac38204a8f4a96401
+* https://libvirt.org/git/?p=libvirt.git;a=commit;h=50864dcda191eb35732dbd80fb6ca251a6bba923
+* https://libvirt.org/git/?p=libvirt.git;a=commit;h=e4116eaa44cb366b59f7fe98f4b88d04c04970ad
+* https://libvirt.org/git/?p=libvirt.git;a=commit;h=a63b48c5ecef077bf0f909a85f453a605600cf05
 
+Credit: Ilja Van Sprundel (IOActive).
 
-void audit_log_end(struct audit_buffer *ab)
-{
-    if (!ab)
-        return;
-    if (!audit_rate_check()) {
-        audit_log_lost("rate limit exceeded");
-    } else {
-        struct nlmsghdr *nlh = nlmsg_hdr(ab->skb);
-        nlh->nlmsg_len = ab->skb->len - NLMSG_HDRLEN;
+Thank you,
 
-        if (audit_pid) {
-            skb_queue_tail(&audit_skb_queue, ab->skb);
-            wake_up_interruptible(&kauditd_wait);
-        } else {
-            audit_printk_skb(ab->skb); // <- audit_pid == NULL when auditd is killed
-        }
-        ab->skb = NULL;
-    }
-    audit_buffer_free(ab);
-}
--> audit_printk_skb -> audit_log_lost ->
-void audit_panic(const char *message)
-{
-    switch (audit_failure)
-    {
-    case AUDIT_FAIL_SILENT:
-        break;
-    case AUDIT_FAIL_PRINTK:
-        if (printk_ratelimit())
-            printk(KERN_ERR "audit: %s\n", message);
-        break;
-    case AUDIT_FAIL_PANIC:
-        /* test audit_pid since printk is always losey, why bother? */
-        if (audit_pid) // <- audit_pid not NULL because auditd is restarting
-            panic("audit: %s\n", message);
-        break;
-    }
-}
+-- 
+Mauro Matteo Cascella, Red Hat Product Security
+6F78 E20B 5935 928C F0A8  1A9D 4E55 23B8 BB34 10B0
 
-How to reproduce：
-1. set audit-failure to AUDIT_FAIL_PANIC(2) and add a random audit rule like:
-[root@...t ~]# cat /etc/audit/rules.d/audit.rules
--D
--b 8192
--f 2
--w /etc/hosts -p rwa -k hosts
-2. keep killing auditd and then starting auditd, for example:
-while true; do ps aux | grep "/sbin/auditd" | grep -v "grep" | awk '{print $2}' | xargs kill; service auditd start; systemctl reset-failed auditd.service; done
-3. log in a low privilege user and keep reading /etc/hosts, for example:
-while true; do cat /etc/hosts > /dev/null; done
-4. kernel panic will happen within several minutes
-
-Thanks.
-
-
-Content of type "text/html" skipped
-
-Download attachment "temp4cj.png" of type "application/octet-stream" (143344 bytes)
