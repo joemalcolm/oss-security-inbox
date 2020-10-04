@@ -1,34 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/20/8
-Message-ID: <CAH+vQmMmWe_ghWoob-aKYkBXW5Nfaw30FFfsMBGMT-p4L1-Uqg@mail.gmail.com>
-Date: Mon, 20 Jul 2020 17:17:16 +0100
-From: Gary Tully <gtully@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/04/2
+Message-ID: <20201004091709.GA10953@openwall.com>
+Date: Sun, 4 Oct 2020 11:17:10 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-13932 Apache ActiveMQ Artemis - Remote XSS in Web console Diagram Plugin
+Subject: Re: the Bugtraq list archives before 2000
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2017-5648
+On Sun, Oct 04, 2020 at 11:18:53AM +0300, Georgi Guninski wrote:
+> hi, We are looking for the Bugtraq list archives before 2000.
 
-Apache ActiveMQ Artemis - Remote XSS in Web console Diagram Plugin
+This one has messages since Nov 1993:
 
-Severity: Medium
+https://seclists.org/bugtraq/
 
-Vendor: The Apache Software Foundation
-
-Affected Version: Apache ActiveMQ Artemis 2.5.0 to 2.13.0
-
-Vulnerability details:
-A specifically crafted MQTT packet which has an XSS payload as
-client-id or topic name can exploit this vulnerability. The XSS
-payload is being injected into the admin console's browser. The XSS
-payload is triggered in the diagram plugin; queue node and the info
-section.
-
-Mitigation:
-Upgrade to Apache ActiveMQ Artemis 2.14.0
-
-Credit: This issue was discovered by Arun Magesh from Payatu Software Labs
-
-see:
-https://activemq.apache.org/security-advisories.data/CVE-2020-13932-announcement.txt
-
+Alexander
