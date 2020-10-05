@@ -1,39 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/17/3
-Message-ID: <b79b57ed-1d59-419a-911e-8b3b482cecf4.splendidsky.cwc@alibaba-inc.com>
-Date: Fri, 17 Apr 2020 17:20:21 +0800
-From: "陈伟宸(田各)" <splendidsky.cwc@...baba-inc.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: 回复：CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/3
+Message-ID: <CANnLRdgs1rZm-=qujdjMBdVxm2ss=OXfu8mn4JqXJdyjTHF4kg@mail.gmail.com>
+Date: Mon, 5 Oct 2020 17:29:20 -0400
+From: Stephen John Smoogen <smooge@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
+On Mon, 5 Oct 2020 at 16:49, Solar Designer <solar@...nwall.com> wrote:
 
-Hey, it's public now. Please visit: https://bugzilla.redhat.com/show_bug.cgi?id=1822593
+> Hi all,
+>
+> As a moderator I approved all messages in this thread so far, but I am
+> unhappy about the quality of both Georgi's message and the replies.
+>
+> This is a valid topic, but there's no room in it for trolling (that's
+> how Georgi's message came across, even if maybe unintentionally) nor for
+> responding only about the presumed trolling.  Just assume good faith and
+> post a response that's actually useful to others in here.  I'll try:
+>
+> On Mon, Oct 05, 2020 at 03:02:33PM +0300, Georgi Guninski wrote:
+> > Are there major security changes needed if
+> > gnu/linux dominates the desktop and/or mobile phone
+> > markets?
+>
+> I'd say yes, major security changes are needed.
+>
+On the desktop, major Linux distributions (and by the way *BSDs and
+> Solaris are not very different in this respect, I think) when used as
+> single-user desktop systems lack security isolation between applications
+> of the user.  (And also between the user and root, due to the typical
+> recommended use of sudo from the user account.)
+>
+>
+I think it would take a lot of 'training' on why this is not wanted and
+setting expectations about how one is supposed to use a computer without
+that access. It is hard enough trying to explain to the person who wanted
+everything containerized for 'better' security that allowing them to ssh
+into the container so they can 'debug it' also removes the security that
+they wanted.
 
-I'm not sure whether it exists on the mainline kernel. Maybe I'll do some research sometime.
 
-Thanks.
-------------------------------------------------------------------
-发件人：Greg KH <greg@...ah.com>
-发送时间：2020年4月17日(星期五) 16:55
-收件人：oss-security <oss-security@...ts.openwall.com>
-主　题：Re: [oss-security] CVE-2020-10708 kernel: race condition in kernel/audit.c may allow low privilege users trigger kernel panic
 
-On Fri, Apr 17, 2020 at 12:40:10PM +0800, 陈伟宸(田各) wrote:
-> 
-> "A race condition was found in the Linux kernel audit subsystem. When the system is configured to panic on events being dropped, an attacker who is able to trigger an audit event that starts while auditd is in the process of starting may be able to cause the system to panic by exploiting a race condition in audit event handling. This creates a denial of service by causing a panic."
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1822593
+> This kind of security isolation is something we have on Android, but at
+> the price of the user not having full access to (not entirely) their
+> device.  The user cannot even have e.g. a file manager app with which
+> they'd access all files of other apps.
+>
+Then there's the trend towards having a desktop-like Linux system on
+> mobile devices again.  Before Android, we had e.g. Maemo and MeeGo.  Now
+> we have e.g. Ubuntu Touch, postmarketOS, and Sailfish OS.  As far as I'm
+> aware, so far this means lack of isolation between the apps just like we
+> have on the desktop.
+>
+> We need the best of both worlds - isolation, yet full control.  I guess
+> this could be achieved by devices gaining a physical button that would
+> need to be pressed at the time a newly installed app is to be granted
+> privileges by a component in the system's TCB.  Said component would
+> also need to assure the user that it's the only one in control at the
+> moment (kind of after a SAK) and that the displayed privileges request
+> is truthful and complete, e.g. by lighting a dedicated LED.  You want to
+> install an all-powerful file manager?  Just wait for that LED to light
+> up, review what privileges would be granted to where, and press that
+> button to accept.  Perhaps too cumbersome for typical users.  Maybe an
+> alternative approach could be developed where a portion of the
+> touchscreen (or a secondary one) would be reserved for interacting with
+> the OS TCB.  Perhaps something like MacBook Pro's Touch Bar could be
+> used for that purpose - and having that is already a precedent, it's
+> just not used for a security purpose yet (or I haven't heard of that).
+>
+>
+That would be useful and trusted if the touch bar has a direct path to the
+TCB versus being able to be reprogrammed by the OS. It would also be
+helpful if there is a way to weigh 'trust' of a system. Each time a person
+installs an app like that, the bar turns more red.. at some level it just
+goes amber and turns off the need to press the button anymore. Then if you
+are asked if Bob's computer is allowed on the computer, you look at the
+touch bar and say 'Nooope'.
 
-That bug link seems to be restricted at the moment :(
+ This is mainly to try and give users better education about the tradeoffs
+versus them just blind clicking [OK] which many of them will do anyway.
+Most users don't really have the time or knowledge to know if XYZ app
+really needs some control to work. There is no way to know if something is
+like driving without a seatbelt, or driving without working brakes. People
+may still do either of them but people do it more often if they have no
+'feedback' that it can cause problems.
 
-> Env:
->     Red Hat Enterprise Linux Server release 7.7 (Maipo)
->     3.10.0-1062.12.1.el7.x86_64
+[snipped things that I don't have anything to add to]
 
-Any hint on if this is still an issue on the "mainline" kernel.org
-releases or not given that 3.10 is a bit old?
 
-thanks,
+> Relaxed file permissions like that may also further weaken some partial
+> sandboxes (when a service is running with its dedicated credentials, but
+> with retained filesystem access - such as because it needs that).
+>
+> Then there are also plenty of other local security risks on typical
+> Linux distros, starting with risky data processing by apport and abrt.
+> Those would matter more if other issues I mentioned are addressed.
+>
+> I might be right or wrong or (most likely) both, but I hope this sets
+> the tone for constructive further discussion.
+>
+> Alexander
+>
 
-greg k-h
+
+-- 
+Stephen J Smoogen.
+
