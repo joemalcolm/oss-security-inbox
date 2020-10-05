@@ -1,37 +1,159 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/02/1
-Message-ID: <CAA8xKjVm5LJHMYVWYGRU81ysLHnAMNyE106ipqcCMnKbPvxSeg@mail.gmail.com>
-Date: Fri, 2 Oct 2020 11:30:01 +0200
-From: Mauro Matteo Cascella <mcascell@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/4
+Message-ID: <51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>
+Date: Mon, 5 Oct 2020 15:53:26 -0600
+From: Grant Taylor <gtaylor@...tconsulting.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-25637 libvirt: double free in qemuAgentGetInterfaces() in qemu_agent.c
+Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 10/5/20 2:48 PM, Solar Designer wrote:
+> Hi all,
 
-A double free memory issue was found to occur in the libvirt API
-responsible for requesting information about network interfaces of a
-running QEMU domain. This flaw affects the polkit access control
-driver. Specifically, clients connecting to the read-write socket with
-limited ACL permissions could use this flaw to crash the libvirt
-daemon, resulting in a denial of service, or potentially escalate
-their privileges on the system.
+Hi,
 
-CVE-2020-25637 has been assigned for this flaw.
+> As a moderator I approved all messages in this thread so far, but I 
+> am unhappy about the quality of both Georgi's message and the replies.
 
-Fixed in libvirt v6.8.0 (2020-10-01).
+Thank you ...
 
-Upstream commits:
-* https://libvirt.org/git/?p=libvirt.git;a=commit;h=955029bd0ad7ef96000f529ac38204a8f4a96401
-* https://libvirt.org/git/?p=libvirt.git;a=commit;h=50864dcda191eb35732dbd80fb6ca251a6bba923
-* https://libvirt.org/git/?p=libvirt.git;a=commit;h=e4116eaa44cb366b59f7fe98f4b88d04c04970ad
-* https://libvirt.org/git/?p=libvirt.git;a=commit;h=a63b48c5ecef077bf0f909a85f453a605600cf05
+> This is a valid topic, but there's no room in it for trolling (that's 
+> how Georgi's message came across, even if maybe unintentionally) nor 
+> for responding only about the presumed trolling.  Just assume good 
+> faith and post a response that's actually useful to others in here.
 
-Credit: Ilja Van Sprundel (IOActive).
+... for presuming good intent in the hopes of a constructive conversation.
 
-Thank you,
+> I'll try:
+
+:-)
+
+> I'd say yes, major security changes are needed.
+> 
+> On the desktop, major Linux distributions (and by the way *BSDs 
+> and Solaris are not very different in this respect, I think) when 
+> used as single-user desktop systems lack security isolation between 
+> applications of the user.
+
+I agree that there is a lot of room for improvement here.  But -- like 
+you say -- I don't think this is isolated to Linux by any stretch of the 
+imagination.  Unless I'm sorely mistaken, just about every contemporary 
+desktop, and possibly server, operating system only gets as granular as 
+the user level.
+
+> (And also between the user and root, due to the typical recommended 
+> use of sudo from the user account.)
+
+Please elaborate what you mean here?
+
+Are you commenting on the use of sudo (vs other access control 
+mechanisms) or the seemingly default recommendation to allow members of 
+the sudo group run any and all commands via sudo?  E.g.:
+
+    %group ALL=(ALL) NOPASSWD: ALL
+
+I personally have found judicious use of sudo to be quite effective. 
+Meaning give the DB Administrators access to the explicit commands that 
+they need.  Likewise with the OS Administrators.  Backup Operators, yep, 
+them too.  But each group only gets the commands that they need and 
+can't run the commands for other groups without additional level of 
+intervention.
+
+I believe that sudo as a tool has a LOT of potential and that many 
+people are only using a tiny fraction of what it can do.
+
+> This kind of security isolation is something we have on Android, 
+> but at the price of the user not having full access to (not entirely) 
+> their device.  The user cannot even have e.g. a file manager app with 
+> which they'd access all files of other apps.
+
+I don't know anything about Android other than it made me mad the last 
+time I tried to use it.
+
+I have seen some recent references to user namespaces and sub-IDs.  I'm 
+on the lookout for information to see if that might be a way to run 
+different applications as their own sub-user-id and then behave 
+similarly to how applications running as different users work.  Meaning 
+that each application -> user ID would have it's own files and would 
+then rely on being a member of another group to access other files.  All 
+the while relying on file system permissions to protect other things.
+
+Aside:  If you know of something that I should be reading, please point 
+me towards it.
+
+Have Firefox run as <username>-<firefox> and Evolution run as 
+<username>-<evolution>.  Both user would appear as a different user than 
+just <username> thereby enabling traditional user & group security 
+models between applications run by the same user.
+
+I don't know if I'm hallucinating or if something like this is possible, 
+or even done somewhere that I'm not aware of.
+
+> For typical desktop Linux users, realistically most security is 
+> provided by the web browser, which these days at least uses a 
+> sandbox, protecting the user's files and other apps from itself. 
+> That's something the underlying systems tend to lack.
+
+I'm grateful that the web browser does do sandboxing.  But I don't think 
+that we should need to rely on it for as much security as we do. 
+Presuming of course that fat applications are being used and we're not 
+running /everything/ inside the web browser.
+
+> Sure malware and social engineering are valid threats to keep in mind.
+
+I don't see how the operating system / security infrastructure can be 
+responsible for protecting people here.
+
+I guess the OS could make changes in some manner that they can be rolled 
+back and rely on behavioral monitoring to detect when such a roll back 
+is necessary as the result of deletion / encryption / corruption of 
+documents.
+
+> It's also a good idea not to rely solely on the browser's built-in 
+> authorization checks, but to limit its access to system resources 
+> such as the microphone and camera.  Qubes OS does that.
+
+I naively think that some of this can be controlled with traditional 
+file system permissions on the relevant device files.  If your (sub)user 
+is not in the group to access the microphone -- guess what -- you don't 
+get access to it.  Further, your (repeated) attempt to do so can be 
+treated as an indicator of compromise.  Rinse, later, and repeat for 
+other devices / files.
+
+> Now this is about the lack of security isolation between the users, 
+> if there's more than one actual user on a system.  I also do think 
+> this is very wrong and needs to change (and is an easy change, unlike 
+> others I pointed out above).
+
+Linux, being a Unix like operating system, has been pressed into uses 
+that weren't imagined when the old user based security model was developed.
+
+The idea that multiple users have accounts on the same system and 
+leverage group membership to divide their personal files from their 
+teams files from other teams files simply does not remotely match our 
+current use of these systems.
+
+> Relaxed file permissions like that may also further weaken some partial 
+> sandboxes (when a service is running with its dedicated credentials, 
+> but with retained filesystem access - such as because it needs that).
+
+I want to agree with that.  But, with things ultimately running as the 
+same user, then any subdivision therein is difficult to enforce.
+
+> Then there are also plenty of other local security risks on typical 
+> Linux distros, starting with risky data processing by apport and abrt. 
+> Those would matter more if other issues I mentioned are addressed.
+> 
+> I might be right or wrong or (most likely) both, but I hope this sets 
+> the tone for constructive further discussion.
+
+:-)
+
+
 
 -- 
-Mauro Matteo Cascella, Red Hat Product Security
-6F78 E20B 5935 928C F0A8  1A9D 4E55 23B8 BB34 10B0
+Grant. . . .
+unix || die
 
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4013 bytes)
