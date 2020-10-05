@@ -1,22 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/27/1
-Message-ID: <20200127094358.GA11637@f195.suse.de>
-Date: Mon, 27 Jan 2020 10:43:58 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/05/3
+Message-ID: <20201005165605.4utrysblp4cn2s3z@moyka>
+Date: Mon, 5 Oct 2020 09:56:05 -0700
+From: Ian Zimmerman <itz@...y.loosely.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-18932: sarg: insecure usage of /tmp/sarg allows privilege escalation / DoS attack vector
+Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
-> I've informed the upstream maintainer about this issue on 2019-11-13 and
-> discussed various aspects of a suitable security fix with him. No
-> agreement on a suitable publication date for this finding or a final
-> patch could be achieved and I did not hear back for around a month by
-> now.
+On 2020-10-05 14:43, Greg KH wrote:
 
-I've been informed by a third party that an upstream release sarg-2.4.0
-[1] containing a fix [2] is now available.
+> > Are there major security changes needed if gnu/linux dominates the
+> > desktop and/or mobile phone markets?
+> 
+> "if"?  You do know the market share of Linux-based mobile phones, right?
+> Last I looked, it made the Linux server market quantity a rounding error :)
 
-[1]: https://sourceforge.net/projects/sarg/files/sarg/sarg-2.4.0/
-[2]: https://sourceforge.net/p/sarg/code/ci/8ec6d20be8c0da3c885aba78e63251f2e5080748
+Tho OP wrote "gnu/linux", and I presume he doesn't include android in that.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+-- 
+Ian
