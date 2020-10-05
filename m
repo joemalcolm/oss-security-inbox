@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/15/2
-Message-ID: <20200415140329.GC25468@kitsune.suse.cz>
-Date: Wed, 15 Apr 2020 16:03:29 +0200
-From: Michal Suchánek <msuchanek@...e.de>
-To: Andrew Donnellan <ajd@...ux.ibm.com>
-Cc: oss-security@...ts.openwall.com, linuxppc-dev <linuxppc-dev@...ts.ozlabs.org>
-Subject: Re: CVE-2020-11669: Linux kernel 4.10 to 5.1: powerpc: guest can cause DoS on POWER9 KVM hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/05/1
+Message-ID: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>
+Date: Mon, 5 Oct 2020 15:02:33 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 15, 2020 at 10:52:53PM +1000, Andrew Donnellan wrote:
-> The Linux kernel for powerpc from v4.10 to v5.1 has a bug where the
-> Authority Mask Register (AMR), Authority Mask Override Register (AMOR) and
-> User Authority Mask Override Register (UAMOR) are not correctly saved and
-> restored when the CPU is going into/coming out of idle state.
-> 
-> On POWER9 CPUs, this means that a CPU may return from idle with the AMR
-> value of another thread on the same core.
-> 
-> This allows a trivial Denial of Service attack against KVM hosts, by booting
-> a guest kernel which makes use of the AMR, such as a v5.2 or later kernel
-> with Kernel Userspace Access Prevention (KUAP) enabled.
-> 
-> The guest kernel will set the AMR to prevent userspace access, then the
-> thread will go idle. At a later point, the hardware thread that the guest
-> was using may come out of idle and start executing in the host, without
-> restoring the host AMR value. The host kernel can get caught in a page fault
-> loop, as the AMR is unexpectedly causing memory accesses to fail in the
-> host, and the host is eventually rendered unusable.
+Disclaimer: I am not watching the security theatre closely,
+so this is likely trivial.
 
-Hello,
+Are there major security changes needed if
+gnu/linux dominates the desktop and/or mobile phone
+markets?
 
-shouldn't the kernel restore the host registers when leaving the guest?
-
-I recall some code exists for handling the *AM*R when leaving guest. Can
-the KVM guest enter idle without exiting to host?
-
-Thanks
-
-Michal
+Remarks:
+1. there was android malware on google play
+2. ad-free and free as in beer android games are hard to find for us
+3. we are pissed off by browsers accessing the microphone
+or camera (seen in the wild)
+4. reading $HOME might reveal more interesting stuff than
+root reading /etc/ (on debian 10 /home/loser is 755 and the
+default umask is 0022)
