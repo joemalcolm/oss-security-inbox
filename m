@@ -1,4 +1,9 @@
-Received: (qmail 29893 invoked by uid 550); 21 Dec 2022 18:25:06 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6279" "Monday" "5" "October" "2020" "22:48:20" "+0200" "Solar Designer" "solar@openwall.com" "<20201005204820.GA8410@openwall.com>" "129" "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" "^Date:" nil nil "10" "2020100520:48:20" "[oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" (number mark "U       solar@openwa Oct  5  129/6279  " thread-indent "\"Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?\"\n") "<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>" ("<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12082 invoked by uid 550); 5 Oct 2020 20:49:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,101 +11,146 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11642 invoked from network); 5 Oct 2020 20:48:33 -0000
+Message-ID: <20201005204820.GA8410@openwall.com>
+References: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Mon, 5 Oct 2020 22:48:20 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19581 invoked from network); 21 Dec 2022 18:14:02 -0000
-MIME-Version: 1.0
-Date: Wed, 21 Dec 2022 18:13:50 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Yann Droneaud" <ydroneaud@opteya.com>
-Message-ID: <cad6e3380e53431ae91d5a3b520e59a59043ab90@opteya.com>
+Subject: Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?
 To: oss-security@lists.openwall.com
-In-Reply-To: <Y6NBGsQ+7FAaWuv/@itl-email>
-References: <Y6NBGsQ+7FAaWuv/@itl-email>
- <CACT4Y+aqb9V=WO0gsN1DgqimrjHiY3x+KvKGiz7b95jh9gubhw@mail.gmail.com>
-X-Originating-IP: 10.0.20.16
-Subject: Re: [oss-security] [Linux] /proc/pid/stat parsing bugs
 
-Hi,
+Hi all,
 
-21 d=C3=A9cembre 2022 =C3=A0 18:59 "Demi Marie Obenour" <demi@invisiblethin=
-gslab.com> a =C3=A9crit:
-> On Wed, Dec 21, 2022 at 06:13:17PM +0100, Dmitry Vyukov wrote:
->=20
-> >=20
-> > Hello,
-> >=20=20
-> >  This is not a single vulnerability, the list of affected software is
-> >  large, but it's not a security issue for all of it.
-> >=20=20
-> >  It occurred to me that most of the Linux procfs /proc/pid/stat and
-> >  /proc/pid/task/tid/stat parsing code out there is buggy. The fine
-> >  contains a set of numbers about the task:
-> >  https://man7.org/linux/man-pages/man5/proc.5.html
-> >=20=20
-> >  e.g. $ cat /proc/self/stat
-> >  1715376 (cat) R 1544883 1715376 1544883 34819 1715376 4194304 106 0 0
-> >  0 0 0 0 0 20 0 1 0 42505561 9207808 237 18446744073709551615
-> >  93955355631616 93955355651497 140737444557056 0 0 0 0 0 0 0 0 0 17 36
-> >  0 0 0 0 0 93955355667504 93955355669120 93955385581568 140737444559745
-> >  140737444559765 140737444559765 140737444564971 0
-> >=20=20
-> >  Most of the code splits it by space and takes an N-th field.
-> >  The problem is that the process name "(cat)" can contain spaces (and
-> >  brackets). Potentially some important software (containers/sandboxes)
-> >  can be tricked into getting wrong data, and I've seen cases close to
-> >  stack overflows (buffer for a fixed number of fields is allocated on
-> >  stack).
-> >=20=20
-> >  Some examples:
-> >  OpenJDK:
-> >  https://sourcegraph.com/github.com/openjdk/jdk/-/blob/src/jdk.manageme=
-nt/unix/native/libmanagement_ext/OperatingSystemImpl.c?L133-139
-> >  https://sourcegraph.com/github.com/openjdk/jdk8u/-/blob/jdk/src/solari=
-s/native/sun/management/OperatingSystemImpl.c?L223-229
-> >=20=20
-> >  Ansible:
-> >  https://sourcegraph.com/github.com/ansible/ansible/-/blob/lib/ansible/=
-modules/yum.py?L507-510
-> >=20=20
-> >  Libuv:
-> >  https://sourcegraph.com/github.com/libuv/libuv/-/blob/src/unix/linux.c=
-?L674-701
-> >=20=20
-> >  bdwgc:
-> >  https://sourcegraph.com/github.com/mono/linux-packaging-mono/-/blob/ex=
-ternal/bdwgc/os_dep.c?L1138-1155
-> >=20=20
-> >  But really most of the code that does it:
-> >  https://sourcegraph.com/search?q=3Dcontext:global+/%5C%22%5C/proc%5C/.=
-*%5C/stat%5C%22/
-> >=20=20
-> >  The only way to parse it is to do strrchr(')') first (fortunately it
-> >  contains just one unescaped string).
-> >=20=20
-> >  Thanks
-> >=20
->=20
-> Should Linux be patched to somehow escape the spaces, or replace them
-> with something else? /proc/pid/status is even harder to parse robustly.
+As a moderator I approved all messages in this thread so far, but I am
+unhappy about the quality of both Georgi's message and the replies.
 
-It might be difficult because of Linux's policy to not break userspace ABI.
+This is a valid topic, but there's no room in it for trolling (that's
+how Georgi's message came across, even if maybe unintentionally) nor for
+responding only about the presumed trolling.  Just assume good faith and
+post a response that's actually useful to others in here.  I'll try:
 
-For example, I've suggested some sort of escaping on /proc/net/unix, and
-it was not welcomed.
+On Mon, Oct 05, 2020 at 03:02:33PM +0300, Georgi Guninski wrote:
+> Are there major security changes needed if
+> gnu/linux dominates the desktop and/or mobile phone
+> markets?
 
-https://lore.kernel.org/all/20220406102213.2020784-1-ydroneaud@opteya.com/
+I'd say yes, major security changes are needed.
 
-In a follow up, I've added a PoC for injecting fake entries in /proc/net/un=
-ix
+On the desktop, major Linux distributions (and by the way *BSDs and
+Solaris are not very different in this respect, I think) when used as
+single-user desktop systems lack security isolation between applications
+of the user.  (And also between the user and root, due to the typical
+recommended use of sudo from the user account.)
 
-https://lore.kernel.org/all/8a87957e-4d33-9351-ae74-243441cb03cd@opteya.com/
+This kind of security isolation is something we have on Android, but at
+the price of the user not having full access to (not entirely) their
+device.  The user cannot even have e.g. a file manager app with which
+they'd access all files of other apps.
 
-I didn't found a way to abuse this issue: no vulnerability, no need for
-a change that would break userspace ABI.
+Then there's the trend towards having a desktop-like Linux system on
+mobile devices again.  Before Android, we had e.g. Maemo and MeeGo.  Now
+we have e.g. Ubuntu Touch, postmarketOS, and Sailfish OS.  As far as I'm
+aware, so far this means lack of isolation between the apps just like we
+have on the desktop.
 
-Regards.
+We need the best of both worlds - isolation, yet full control.  I guess
+this could be achieved by devices gaining a physical button that would
+need to be pressed at the time a newly installed app is to be granted
+privileges by a component in the system's TCB.  Said component would
+also need to assure the user that it's the only one in control at the
+moment (kind of after a SAK) and that the displayed privileges request
+is truthful and complete, e.g. by lighting a dedicated LED.  You want to
+install an all-powerful file manager?  Just wait for that LED to light
+up, review what privileges would be granted to where, and press that
+button to accept.  Perhaps too cumbersome for typical users.  Maybe an
+alternative approach could be developed where a portion of the
+touchscreen (or a secondary one) would be reserved for interacting with
+the OS TCB.  Perhaps something like MacBook Pro's Touch Bar could be
+used for that purpose - and having that is already a precedent, it's
+just not used for a security purpose yet (or I haven't heard of that).
 
---=20
-Yann Droneaud
-OPTEYA
+Then there's the issue of attack surface and of few layers of security.
+Linux kernel is quite poor in this respect when it comes to attacks by a
+locally running program.  Even Android doesn't change that.  One way to
+address this is to introduce a security layer between the (host) Linux
+kernel and the program, running programs in VMs.  This replaces the
+attack surface with that of the hypervisor (and of the UI and components
+needed to integrate the VMs back).  Another (poor man's) way to
+partially mitigate this is to have something watch and protect the Linux
+kernel (Samsung KNOX, LKRG).
+
+A desktop Linux distro that theoretically gets close to what's needed is
+Qubes OS.  It runs programs in VMs yet integrates them on a single
+desktop.  It effectively reserves a portion of the screen for control by
+not letting VMs access full screen mode by default.
+
+In practice though, there are severe security risks even with Qubes OS.
+The in-VM systems need to be updated, and each update is a risk of
+bringing in malicious code.  When most VMs are based off the same Fedora
+template, updating that means trusting all installed packages' Fedora
+maintainers.  Any package can gain full control through a malicious pre-
+or post-install script, even if the software it installs is never
+explicitly used in a given VM.  This means instant access to all VMs on
+next system restart.
+
+For typical desktop Linux users, realistically most security is provided
+by the web browser, which these days at least uses a sandbox, protecting
+the user's files and other apps from itself.  That's something the
+underlying systems tend to lack.
+
+> Remarks:
+> 1. there was android malware on google play
+
+Yet Android at least tries to limit apps to the permissions you approve
+them to have, and isolates them from other apps (except for shared
+storage of pictures and "SD card" if you agree to those permissions).
+
+Desktop distros and desktop-like mobile distros don't even have that in
+their typical usage.
+
+> 2. ad-free and free as in beer android games are hard to find for us
+
+I guess weird out-of-line things like that is part of why people think
+Georgi was trolling.
+
+> 3. we are pissed off by browsers accessing the microphone
+> or camera (seen in the wild)
+
+I don't know what this refers to, but I guess if unauthorized by the
+user that would be a browser vulnerability or a modified malicious copy
+of the browser (malware) or maybe active modification of a browser on
+the system (also by malware).
+
+Sure malware and social engineering are valid threats to keep in mind.
+
+It's also a good idea not to rely solely on the browser's built-in
+authorization checks, but to limit its access to system resources such
+as the microphone and camera.  Qubes OS does that.
+
+> 4. reading $HOME might reveal more interesting stuff than
+> root reading /etc/ (on debian 10 /home/loser is 755 and the
+> default umask is 0022)
+
+Now this is about the lack of security isolation between the users, if
+there's more than one actual user on a system.  I also do think this is
+very wrong and needs to change (and is an easy change, unlike others I
+pointed out above).
+
+Relaxed file permissions like that may also further weaken some partial
+sandboxes (when a service is running with its dedicated credentials, but
+with retained filesystem access - such as because it needs that).
+
+Then there are also plenty of other local security risks on typical
+Linux distros, starting with risky data processing by apport and abrt.
+Those would matter more if other issues I mentioned are addressed.
+
+I might be right or wrong or (most likely) both, but I hope this sets
+the tone for constructive further discussion.
+
+Alexander
