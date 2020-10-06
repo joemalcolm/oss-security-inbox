@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1357" "Friday" "18" "August" "2017" "15:24:50" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170818132450.GE13079@suse.de>" "43" "[oss-security] Re: ***UNCHECKED*** [oss-security] UnRAR: directory traversal + memory safety bugs" nil nil nil "8" "2017081813:24:50" "[oss-security] Re: ***UNCHECKED*** [oss-security] UnRAR: directory traversal + memory safety bugs" (number mark "U       meissner@sus Aug 18   43/1357  " thread-indent "\"[oss-security] Re: ***UNCHECKED*** [oss-security] UnRAR: directory traversal + memory safety bugs\"\n") "<20170814223948.w4j6rsznsgixhc43@jwilk.net>" ("<20170814223948.w4j6rsznsgixhc43@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["437" "Tuesday" "6" "October" "2020" "11:29:34" "+0300" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD8JLbW_GKgtgTp0SYy7zZkDzZuQiA=AZ6fm59Zu-6mZ6Q@mail.gmail.com>" "15" "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil "10" "2020100608:29:34" "[oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" (number mark "U       gguninski@gm Oct  6   15/437   " thread-indent "\"Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?\"\n") "<20201005124358.GA806250@kroah.com>" ("<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>" "<20201005124358.GA806250@kroah.com>") nil nil nil nil nil nil nil "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7915 invoked by uid 550); 18 Aug 2017 13:25:02 -0000
+Received: (qmail 28492 invoked by uid 550); 6 Oct 2020 10:44:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7897 invoked from network); 18 Aug 2017 13:25:02 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Fri, 18 Aug 2017 15:24:50 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20170818132450.GE13079@suse.de>
-References: <20170814223948.w4j6rsznsgixhc43@jwilk.net>
+Received: (qmail 13682 invoked from network); 6 Oct 2020 08:29:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1/v5uOEPFGZ1pAUnnFDgJffhfE4/tXe7xk73jK9WPM0=;
+        b=FPtWxtTQsY+fyxwlJE3wzhMjF7YtrARKlc2aZQ4gpFP/5RyFSPL8MPCQuz0/kbl8A/
+         GrlhQwKPgAr0U2MDVQjW2dGyEcFqOciRna//uj7W4TXu+2lHeF4/uHyQIIathmSzf+Ws
+         uH467IzHFXAysvgMvAoi82L20UmHZctbjiTt9GOJmD9UdMmcr5p618bJj3QDRjBg8uVg
+         odjCTpgM5uPAHsYFfSg1rmakc2Q3uB+TS8FVtSJj0kFMfsPZdXYAenpf+UaNlOpuUHpo
+         xJ70xtOtLBoRMlFiPRWw9kzLYKZ00QimwFwj5idLbm0RX+CD7z/qNzEY0tsxCdDxwLrX
+         gNeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1/v5uOEPFGZ1pAUnnFDgJffhfE4/tXe7xk73jK9WPM0=;
+        b=seNDds3hCbtmXlVY6EJTKgm/jfjFAHlO5bqMPPtTNvHlRaNEkWdKTdLzgmdKOLcAn+
+         Ueh8Y8GCv3fgeQWrsLmFxM1g4uGWeG95Nb93KyFy7Y6tSxJ6DIdWReMWlNJ4SnCmvloJ
+         N+cAC7tjVTappip6yhiP6MLYNj6ZePrxGive4r6zu7QK7TFOTcQY95JZCuq4nRqrDdoa
+         But80uCp1R1mivjrSAMKMWkrvGwzai/uAKLJ7uUyRlQ0vXwvZr/46hDhrM2jzsnYV8WK
+         k8cZmKBt7kSOMAbT3btTQInTgz9tgpKdCf6CTseS+ZHriOKfv+0G4IZBX2t7Gk4qPGv+
+         zAqw==
+X-Gm-Message-State: AOAM531RgYFrs82TnbOyjVymQErDAtJlgo92Jrv8ZtIWsFVIzD+VP5jW
+	O4/s2yxI+3Fso/u3efKGox8IOSda5fGibPILxDPKzj+OMoo=
+X-Google-Smtp-Source: ABdhPJwgmy6fq8I4mXr1E6Puh4F4DazQcy7NyZx83rvacpeuXo6zkTQYAUhUPj7qEDQQYdzHhiETFHI29N4al3CdHvg=
+X-Received: by 2002:a1c:6807:: with SMTP id d7mr3427676wmc.38.1601972986653;
+ Tue, 06 Oct 2020 01:29:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170814223948.w4j6rsznsgixhc43@jwilk.net>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] Re: ***UNCHECKED*** [oss-security] UnRAR: directory traversal +
- memory safety bugs
+References: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>
+ <20201005124358.GA806250@kroah.com>
+In-Reply-To: <20201005124358.GA806250@kroah.com>
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Tue, 6 Oct 2020 11:29:34 +0300
+Message-ID: <CAGUWgD8JLbW_GKgtgTp0SYy7zZkDzZuQiA=AZ6fm59Zu-6mZ6Q@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: greg@kroah.com, itz@very.loosely.org
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] major changes if gnu/linux dominates the desktop
+ and/or mobile market?
 
-On Tue, Aug 15, 2017 at 12:39:48AM +0200, Jakub Wilk wrote:
-> (I'm not sure UnRAR bugs are on-topic here. UnRAR is not free software, even
-> though the source is available. But the last time UnRAR was discussed nobody
-> objected, so hey, let me try too.)
-> 
-> I found directory traversal and a few memory safety bugs in UnRAR 5.5.6.
-> These bugs have been fixed in UnRAR 5.5.7.
-> 
-> The memory safety bugs were found using American Fuzzy Lop.
-> 
-> Here are details of the bugs:
-> 
-> * Directory traversal
-> 
-> The PoC (traversal.rar) contains two symlinks and a regular file:
-> 
->   cur -> .
->   cur/par -> ..
->   par/moo
-> 
-> This setup defeats UnRAR's directory traversal protections:
-> 
->   $ ls ../moo
->   /bin/ls: cannot access '../moo': No such file or directory
-> 
->   $ unrar x traversal.rar
->   ...
->   Extracting  cur                                                       OK
->   Extracting  cur/par                                                   OK
->   Extracting  par/moo                                                   OK
->   All OK
-> 
->   $ ls ../moo
->   ../moo
-> 
-> The code that was used to generate the PoC is available here:
-> https://github.com/jwilk/path-traversal-samples
+On Mon, Oct 5, 2020 at 3:44 PM Greg KH <greg@kroah.com> wrote:
+>
 
-The directory traversal has been assigned CVE-2017-12938.
+>
+> "if"?  You do know the market share of Linux-based mobile phones, right?
+> Last I looked, it made the Linux server market quantity a rounding error :)
+>
 
-(My request just yielded this 1 CVE, i replied requesting also for the other issues.)
+AINL!
 
-Ciao, Marcus
+Android Is Not Linux!
+
+https://www.theregister.com/2015/06/17/debian_chromium_hubbub/
+Chrome, Debian Linux, and the secret binary blob download riddle
+Browser snuck proprietary voice-snoop code into distro
