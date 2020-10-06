@@ -1,43 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/11/1
-Message-ID: <CAMNRR76nvdbR33WNWP-Rag0V7pFs-WFCLWv+=saSX0AsqgPC7w@mail.gmail.com>
-Date: Wed, 11 Mar 2020 12:32:54 +0800
-From: Chen QingYang <chenqingyang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/10
+Message-ID: <CAA8xKjW3i-jA6c-UtkvECzmYDMs9NL=i62poTgz6cfi_Z=xgPQ@mail.gmail.com>
+Date: Tue, 6 Oct 2020 14:38:23 +0200
+From: Mauro Matteo Cascella <mcascell@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-1947] Apache ShardingSphere(incubator) deserialization vulnerability
+Cc: Frediano Ziglio <fziglio@...hat.com>
+Subject: CVE-2020-14355 spice: multiple buffer overflow vulnerabilities in QUIC decoding code
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-1947: Apache ShardingSphere(incubator) deserialization
-vulnerability
+Hello,
 
-Severity: low
+Multiple buffer overflow vulnerabilities were found in the QUIC image
+decoding process of the SPICE remote display system. More
+specifically, these flaws reside in the spice-common shared code
+between the client and server of SPICE. In other words, both the
+client (spice-gtk) and server are affected by these flaws. A malicious
+client or server could send specially crafted messages which could
+result in a process crash or potential code execution scenario.
 
-Vendor:
-The Apache Software Foundation
+CVE-2020-14355 has been assigned for this flaw by Red Hat Inc.
 
-Versions Affected:
-ShardingSphere 4.0.0-RC3, 4.0.0
+Upstream commits:
+* https://gitlab.freedesktop.org/spice/spice-common/-/commit/762e0aba
+* https://gitlab.freedesktop.org/spice/spice-common/-/commit/404d7478
+* https://gitlab.freedesktop.org/spice/spice-common/-/commit/ef1b6ff7
+* https://gitlab.freedesktop.org/spice/spice-common/-/commit/b24fe6b6
 
-Description:
-Apache ShardingSphere's web console uses the SnakeYAML library for parsing
-YAML inputs to load datasource configuration. SnakeYAML allows to unmarshal
-data to a Java type By using the YAML tag. Unmarshalling untrusted data can
-lead to security flaws of RCE.
+Credit: Frediano Ziglio (Red Hat)
 
-Mitigation:
-4.0.0-RC3 and 4.0.0 users should upgrade to 4.0.1
+Thank you,
 
-Example:
-An attacker can use untrusted data to fill in the DataSource Config after
-login the sharding-ui.
-
-Credit:
-This issue was discovered by WuXiong of QI`ANXIN YUNYING Labs.
-
-References:
-https://shardingsphere.apache.org/community/en/security/
-
-
-Chen QingYang
-Apache ShardingSphere
+-- 
+Mauro Matteo Cascella, Red Hat Product Security
+6F78 E20B 5935 928C F0A8  1A9D 4E55 23B8 BB34 10B0
 
