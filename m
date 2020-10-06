@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2878" "Monday" "16" "November" "2020" "13:50:03" "-0500" "Stephen John Smoogen" "smooge@gmail.com" "<CANnLRdjG_iOxa7L8ENK5fRAzRkZK5JTGBsdwC0ezdaxkMDdgRw@mail.gmail.com>" "73" "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil "11" "2020111618:50:03" "[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" (number mark "U       smooge@gmail Nov 16   73/2878  " thread-indent "\"Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros\"\n") "<E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>" ("<20201113133331.48185f9f@computer>" "<20201114115850.GB5193@suse.de>" "<E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>") nil nil nil nil nil nil nil "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3616" "Tuesday" "6" "October" "2020" "17:51:29" "-0400" "Steve Grubb" "sgrubb@redhat.com" "<801016241.0ifERbkFSE@x2>" "67" "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil "10" "2020100621:51:29" "[oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" (number mark "U       sgrubb@redha Oct  6   67/3616  " thread-indent "\"Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?\"\n") "<20201006151706.GB45857@espresso.pseudorandom.co.uk>" ("<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>" "<5643462.lOV4Wx5bFT@x2>" "<20201006151706.GB45857@espresso.pseudorandom.co.uk>") nil nil nil nil nil nil nil "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22203 invoked by uid 550); 16 Nov 2020 19:40:53 -0000
+Received: (qmail 23779 invoked by uid 550); 6 Oct 2020 21:51:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,113 +12,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3433 invoked from network); 16 Nov 2020 18:50:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=bp+QrSxamzMsjGpeu47eTuR/AE4CJV4hXHzg2bskxwI=;
-        b=rkDoWq4Y1f0z1KqRlkRIP8WQkDX/kvRTcax8yvKya+iWjWpotSm5LZ0kkuGHAbMFkv
-         yXGCZ9ojOPMzvL0+GWxrlKC8YilMx1BySv/XDwkbbrPWC3iIyVK9ZMAbfux68N9OyTpT
-         qe8O/MQQWViI4sMPKJJ7Fp3omxZYx3B929sa+m1SkaSMZdbWjfXnJK3Et7KzmpOHmY8o
-         VbtAqK6+cJ/zbeilVu2VdbCjPhUbZXc9mYiK5lCnO3m6EAw7Ej1hZ5eTcvZEjQNl29aR
-         QNA6GmAd4dhH3rzKOmjF2+P/jvAnnhztFUcbGjVdqD/ZvX/DTQ76H4PMHjyql8r7JX3J
-         1A5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=bp+QrSxamzMsjGpeu47eTuR/AE4CJV4hXHzg2bskxwI=;
-        b=DN44dpA6naMM23jDPqsK1JYbUgpSXN2kAlY0C4JonM0tz5N9aO4MkFFomjLRLGUyNP
-         Vm+zI3QCShcA9WxC8ng68KtlghroBat2uwCzkVgwCZUInLh2vKzJc1BVyLCQDF7zS+eu
-         C9s1JdyURdJ+jVZtvHKaaOe5AV7pE4lGjScqnn3zCUz9PzaycdUth+PQePVdlANgf9+S
-         1626yt9eXbs3nSo5ejo/vzGTRwESptI1tPra8dioZEn6dTmXYe/oSP+xlTESXp9kL/qG
-         l9Ce/zOG3IJrB81XCTZzQmDh/xdbeK56hnhjHtTqfLJNIT/X2+dkTxcoChrF4hOW8jXu
-         kz4w==
-X-Gm-Message-State: AOAM533fqsjPDGi26tnI4Rf37lJXgN62LsBeC4AoOZ6vyJfBWt9LKE3I
-	HJ9n1/Rpww8cO6PYmFEQhqfisMeYVGOJwHjIoFzzHcdtpug=
-X-Google-Smtp-Source: ABdhPJzyjV1tFZppoaX6REaG3nNWQYLkEXdXqxBzN2kc1kzC6fE2xS0+t2IpU9Nsi6WuIj4wZes0MUJ4RLAAGF30hb0=
-X-Received: by 2002:a63:389:: with SMTP id 131mr519958pgd.128.1605552614990;
- Mon, 16 Nov 2020 10:50:14 -0800 (PST)
-MIME-Version: 1.0
-References: <20201113133331.48185f9f@computer> <20201114115850.GB5193@suse.de> <E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>
-In-Reply-To: <E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>
-From: Stephen John Smoogen <smooge@gmail.com>
-Date: Mon, 16 Nov 2020 13:50:03 -0500
-Message-ID: <CANnLRdjG_iOxa7L8ENK5fRAzRkZK5JTGBsdwC0ezdaxkMDdgRw@mail.gmail.com>
+Received: (qmail 23761 invoked from network); 6 Oct 2020 21:51:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1602021093;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=djCapmWjviS7ZmRcbhLyU2fkJIMEoEnVgPggyWPLOPE=;
+	b=FGC8PFoqNRh+whxFN12j4/dK0Ly53fg/VYXdwEDMj91MP6hbAwdkkXIGygogs8AVHhbyOx
+	JlK3OLzdV4p3o6fWf3zpAHRJviHcym5vO1yrGCZgd6fvrbFAdFjWmDhxs0kFS0jNxcioLg
+	+PbQ5m9+CEiY5cCCtix3+6/z5qtlmGo=
+X-MC-Unique: HnXoW0odOwKzxxChUef9dA-1
+From: Steve Grubb <sgrubb@redhat.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000048e72205b43dd99d"
-Subject: Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros
+Cc: Simon McVittie <smcv@debian.org>
+Date: Tue, 06 Oct 2020 17:51:29 -0400
+Message-ID: <801016241.0ifERbkFSE@x2>
+Organization: Red Hat
+In-Reply-To: <20201006151706.GB45857@espresso.pseudorandom.co.uk>
+References: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com> <5643462.lOV4Wx5bFT@x2> <20201006151706.GB45857@espresso.pseudorandom.co.uk>
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=sgrubb@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Subject: Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?
 
---00000000000048e72205b43dd99d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tuesday, October 6, 2020 11:17:06 AM EDT Simon McVittie wrote:
+> On Mon, 05 Oct 2020 at 22:36:14 -0400, Steve Grubb wrote:
+> > I will skip the whole discussion on access control. However to prove
+> > security requires going through a Common Criteria certification. The
+> > biggest issue is that the desktoptop uses dbus instantiation which does
+> > not have the auid of the requesting process. Meaning audit cannot work.
+> > 
+> > The fix was kdus. That was rejected. But the issue remains. There cannot
+> > be a secure desktop without auditing.
 
-On Mon, 16 Nov 2020 at 12:44, David A. Wheeler <dwheeler@dwheeler.com>
-wrote:
+<snip>
 
->
-> > On Fri, Nov 13, 2020 at 01:33:31PM +0100, Hanno B=C3=B6ck wrote:
-> >> 3 years ago I reported a heap overflow vulnerability in raptor, an RDF
-> >> parsing library:
-> >> https://www.openwall.com/lists/oss-security/2017/06/07/1 <
-> https://www.openwall.com/lists/oss-security/2017/06/07/1> ,,,
-> >> Maybe noteworthy is that this didn't get a CVE in 2017. It seems many
-> >> distros rely on CVEs to get a process of backporting fixes rolling.
-> >> Given the fluctuating reliability of CVE assignments not sure this is
-> >> wise. I have now requested a CVE (CVE-2017-18926).
-> ...
->
-> > On Nov 14, 2020, at 6:58 AM, Marcus Meissner <meissner@suse.de> wrote:
-> > I think the only thing you can do additional is to request a CVE.
-> >
-> > All tracking by everyone is using CVEs, this is the core identifier
-> > of the software security world.
->
-> I think this is key. If you find a vulnerability, you typically need to
-> ensure that it gets
-> a CVE assigned if you want coordination & resolution to happen. It's how
-> coordination happens.
-> There are issues with CVEs, but I=E2=80=99ve never seen a CVE assignment
-> get dropped in recent years once it was requested properly.
-> Delayed, yes, but I know CVE assignments don=E2=80=99t take 3 years :-).
-> And yes, there are special issues with the Linux kernel, but this package
-> isn=E2=80=99t the Linux kernel.
->
-> If you think that CVE assignment is still of =E2=80=9Cfluctuating reliabi=
-lity=E2=80=9D I=E2=80=99d
-> like to hear that argument
-> and get it fixed. It=E2=80=99s normally better to fix the standard proces=
-s for
-> doing something than
-> to create yet another process that runs in parallel. I=E2=80=99ve seen no=
- recent
-> evidence of this reliability issue.
->
->
-My guess is that there was an assumption that if an email with a
-vulnerability was sent to this list, someone would do the CVE filing for
-them. Looking through my archives, there are times where someone posts a
-vulnerability and miraculously someone says shortly "Please use
-CVE-2XXX-YYYY for all future announcements." If you aren't on the lists all
-the time or know that various groups do this full time, there is no clue
-that there was some sort of extra work done to get that number... it just
-looks like it was done as a service. When a person posts a vulnerability
-and then gets no extra emails.. then it looks like a secret society. "Oh
-you forgot to shake Smooge's hand with your middle finger hooked and your
-pinky out... can't give you a CVE"
+> With dbus maintainer hat on, if there are facts that I can know about
+> the (AF_UNIX socket belonging to the) requesting process in a way that
+> does not involve race conditions, I'm happy to review patches to plumb
+> them through D-Bus and make them available to other processes. This
+> would have to look a lot like the recent addition of SO_PEERGROUPS
+> (D-Bus representation: UnixGroupIDs) and less recently, SO_PEERSEC
+> (LinuxSecurityLabel), so the prerequisite is the Linux kernel adding new
+> SO_PEERTHING options that give the necessary information (or a *BSD, etc.
+> kernel providing an analogous interface).
+> 
+> If audit is important to you, a new SO_PEERAUDIT that looks like
+> SO_PEERCRED but carries a struct { session ID, loginuid } would make sense?
+
+The main issue is that you want impersonation baked in to activation. For 
+example, you have a clock application on the desktop. It cannot set the 
+system clock because that needs privileges. So, enter dbus activation. It can 
+start up a helper application with the right privileges and call 
+clock_settime. But if you are auditing for time change, you see that root 
+with auid=-1 did it. That is not what you want. You want the real credentials 
+of who did it.
+
+You want cooperating applications to be able to transfer auid/session to the 
+helper application. This would have to be carefully done so that you don't 
+enable forcing credentials on an unsuspecting app or credential stealing. So, 
+the thought was let the kernel do it so that dbus isn't involved. The idea 
+was that one would do a "give out my credentials", the other would say "give 
+me credentials". But this was back when kdbus was being worked on. As a 
+kernel module it can see both ends and make the transfer without anything 
+leaving the kernel.
+
+With dbus in user space, the kernel sees comm between client/dbus and dbus/
+helper. It can't see how these belong together. I'm not certain that it can 
+be done reliably with a user space process as an intermediary. That is unless 
+during activation, it forks, closes all descriptors except the one to the 
+client side and there is a convention for discovering your peer's fd once you 
+start up as the helper. This would be a model where dbus steps out of the way 
+for comm. But even then, you have to trust that there's no mixup on the fd's.
 
 
+> As far as I'm aware, reading /proc is not suitable for this purpose,
+> because the dbus-daemon retrieving this information for a particular pid
+> can race with the process exiting and its pid being reused. If there was
+> a SO_PEERPIDFD that provided race-free access to a pidfd for the initiator
+> of the connection, that would maybe work? (As long as there's no mechanism
+> by which a process can exec a setuid or otherwise privileged binary that
+> can reset its audit session ID and/or loginuid.)
+
+I beleive that loginuid can only be set if its currently -1 or you have 
+CAP_AUDIT_CONTROL and its your own pid. But the main issue is how to connect 
+the two processes with something in the middle?
+
+Best Regards,
+-Steve
 
 
-
-> Sing this (to =E2=80=9CSingle Ladies=E2=80=9D):
-> "If you like it, then you shoulda put a CVE on it...:"
->
-> --- David A. Wheeler
->
->
-
---=20
-Stephen J Smoogen.
-
---00000000000048e72205b43dd99d--
