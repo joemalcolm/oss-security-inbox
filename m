@@ -1,42 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/30/3
-Message-ID: <d5a7615a-706f-0d44-a2c4-8d648be9a3ea@apache.org>
-Date: Thu, 30 Jan 2020 00:18:13 -0500
-From: "Kevin A. McGrail" <kmcgrail@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/13
+Message-ID: <871ribhxyi.fsf@canidae.wired.pri>
+Date: Wed, 07 Oct 2020 08:00:05 +1100
+From: Brian May <brian@...uxpenguins.xyz>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-1930] Apache SpamAssassin Nefarious rule configuration (.cf) files can be configured to run system commands
+Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
-Apache SpamAssassin 3.4.4 was recently released [1], and fixes an issue
-of security note where nefarious rule configuration (.cf) files can be
-configured to run system commands similar to CVE-2018-11805.  With this
-bug unpatched, exploits can be injected in a number of scenarios
-including the same privileges as spamd is run which may be elevated
-though doing so remotely is difficult.  In addition to upgrading to SA
-3.4.4, we again recommend that users should only use update channels or
-3rd party .cf files from trusted places.  If you cannot upgrade, do not
-use 3rd party rulesets, do not use sa-compile and do not run spamd as an
-account with elevated privileges.
+Greg KH <greg@...ah.com> writes:
 
-This issue has been assigned CVE id CVE-2020-1930 [2]
+>> https://www.theregister.com/2015/06/17/debian_chromium_hubbub/
+>> Chrome, Debian Linux, and the secret binary blob download riddle
+>> Browser snuck proprietary voice-snoop code into distro
+>
+> I don't understand the question here, that was something over 5 years
+> ago.  How is that relevant for "mobile devices" that run Linux today?
 
-To contact the Apache SpamAssassin security team, please e-mail
-security at spamassassin.apache.org.  For more information about Apache
-SpamAssassin, visit the http://spamassassin.apache.org/ web site.
+That link looks like a once of issue that Debian had with the
+distribution of Chromium. Which was probably fixed years ago.
 
-Apache SpamAssassin Security Team
+More generally, in a typical Android install, there is closed source
+software - drivers, firmware, Google APIs, Google Play. Before you even
+get to installing closed source apps from Google Play.
 
-[1]:
-https://svn.apache.org/repos/asf/spamassassin/branches/3.4/build/announcements/3.4.4.txt
+These are a concern from a security point of view because you have to
+trust the device manufacturer / Google with the security aspects of such
+code, and there is no possibility of somebody else auditing the code
+because the source code is not available.
 
-[2]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2020-1930
-
+Android devices typically require a forked version of the Linux kernel.
+I believe they are slowly moving to reduce the changes required by
+merging them mainline, but not sure how that is progressing right now.
+Otherwise, I imagine this might have security concerns too.
 -- 
-
-Kevin A. McGrail
-KMcGrail@...che.org
-
-Member, Apache Software Foundation
-Chair Emeritus Apache SpamAssassin Project
-https://www.linkedin.com/in/kmcgrail - 703.798.0171
-
+Brian May <brian@...uxpenguins.xyz>
+https://linuxpenguins.xyz/brian/
