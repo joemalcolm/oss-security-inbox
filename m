@@ -1,123 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/30/6
-Message-ID: <aff309c0b243705e@sudo.ws>
-Date: Thu, 30 Jan 2020 11:23:28 -0700
-From: "Todd C. Miller" <Todd.Miller@...o.ws>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/11
+Message-ID: <20201006145009.GA45857@espresso.pseudorandom.co.uk>
+Date: Tue, 6 Oct 2020 15:50:09 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled
+Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
-[CVE-2019-18634 was made public unexpectedly early yesterday which
- is why there was no advance notice for the distros list.]
+On Mon, 05 Oct 2020 at 19:30:22 -0400, Eli Schwartz wrote:
+> flatpak tries to provide a GUI appstore for popular applications in
+> sandboxes, with permission models for allowing resources into the
+> sandbox, e.g XDG Desktop Portal to broker access to files from the host
+> system through a trusted agent.
+> 
+> Though my understanding is in order to be (conveniently?) usable,
+> programs end up in practice needing to be granted access to the entire
+> host filesystem and therefore aren't really isolated after all.
 
-Summary:
+It depends on the program. If it does its file access via the typical
+GTK or KDE File->Open and File->Save As... dialogs, then access to those
+files can be mediated by xdg-desktop-portal (the dialog exists outside
+the sandbox, and magics only the selected files into existence inside),
+and the boundary is quite strong.
 
-Sudo's "pwfeedback" option can be used to provide visual feedback
-when the user is inputting their password.  For each key press, an
-asterisk is printed.  This option was added in response to user
-confusion over how the standard "Password:" prompt disables the
-echoing of key presses.  While "pwfeedback" is not enabled by default
-in the upstream version of sudo, some systems, such as Linux Mint
-and Elementary OS, do enable it in their default sudoers files.
+If the program does its file access by "knowing" that it has full access
+to everything, then, yes, you're going to have to give it access to
+everything it might conceivably need, statically, and the boundary is
+extremely leaky. The app framework cannot fix this, but maybe the app can.
 
-Due to a bug, when the "pwfeedback" option is enabled in the sudoers
-file, a user may be able to trigger a stack-based buffer overflow.
-This bug can be triggered even by users not listed in the sudoers
-file.  There is _no_ impact unless "pwfeedback" has been enabled.
+The developers of xdg-desktop-portal and related components have been
+doing what they can to make this transparent - for example, GTK 3 and
+4 apps automatically use the portals for various things if they detect
+that they're in a Flatpak sandbox, so that app authors don't have to
+change how their app works. However, this is not always possible, and
+some years- or decades-old assumptions about access to the host system
+are harder to unpick.
 
-Sudo versions affected:
+The other big problem with the Flatpak sandboxing model is X11,
+which just isn't a good privilege boundary: practical X11 apps assume
+that they can do things that ought to be only available to apps in the
+TCB. In GNOME this is mitigated by using Wayland by default, and Flatpak
+apps can be flagged to lose their X11 access when run under Wayland. I
+think KDE Plasma is heading in a similar direction. However, I suspect
+the audience of this mailing list contains a lot of the sort of people
+who either don't use GNOME or Plasma, or have switched GNOME or Plasma
+into X11 mode because Wayland breaks some feature that only ever worked
+because every X11 app trusts every other X11 app (such as screen-sharing
+by grabbing frames from the X server, or clever input-mapping tricks by
+injecting fake keyboard and mouse events into the X server, or
+screensavers that work in terms of X11 grabs).
 
-Sudo versions 1.7.1 to 1.8.30 inclusive are affected but only if
-the "pwfeedback" option is enabled in sudoers.
+I don't know as many technical details of Snap and Firejail, but I'm
+fairly confident that they are running into the same problems that
+Flatpak does.
 
-A user with sudo privileges can check whether "pwfeedback" is enabled
-by running:
+I would encourage security experts who are interested in this field to
+"do their own homework" and research what has already been done, and what
+is already known to be a missing piece of the puzzle.
 
-    $ sudo -l
+A conversation on oss-security is not going to change any of this,
+however well-intentioned: some security experts making statements about
+how (GNU/)Linux desktops "need to change" does not get code written, does
+not shift apps away from un-sandboxable patterns and towards sandboxable
+patterns, does not fill in missing functionality in Wayland that will let
+people use as a more-sandbox-friendly alternative to X11, and so on. If
+you want to see the situation improve, please help to improve it. The
+people doing the work, at least in GNOME (and I'm sure elsewhere too),
+are mostly the same few overworked developers who are also maintaining
+all the other core parts of the desktop.
 
-If "pwfeedback" is listed in the "Matching Defaults entries" output,
-the sudoers configuration is affected.  In the following example,
-the sudoers configuration is vulnerable:
+> Apparently both giving power to the user *and* preventing software from
+> running rogue, is indeed hard.
 
-    $ sudo -l
-    Matching Defaults entries for millert on linux-build:
-	insults, pwfeedback, mail_badpass, mailerpath=/usr/sbin/sendmail
+Yes, and harder still is retrofitting an app-store-like permissions
+model onto arbitrary programs that were originally designed to be run
+with full user privileges, without breaking them in the process.
 
-    User millert may run the following commands on linux-build:
-	(ALL : ALL) ALL
+Again, Flatpak, Snap and Firejail are all attempts at this. They all
+have to make tradeoffs to be practically useful enough to be adopted,
+because a framework with perfect security and no working applications
+(or no users) is not practically useful.
 
-CVE ID:
+An additional threat here is that some of the same container and namespace
+tricks that we rely on to put up security boundaries between applications
+expose attack surface that can be exploited to break the security boundary
+between users (for example
+https://security-tracker.debian.org/tracker/source-package/bubblewrap,
+https://security-tracker.debian.org/tracker/source-package/firejail, and
+the attack surface referred to in
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=898446).
 
-This vulnerability has been assigned CVE-2019-18634 in the Common
-Vulnerabilities and Exposures database.
-
-Details:
-
-Exploiting the bug does not require sudo permissions, merely that
-pwfeedback be enabled.  The bug can be reproduced by passing a large
-input to sudo via a pipe when it prompts for a password.  For
-example:
-
-    $ perl -e 'print(("A" x 100 . "\x{00}") x 50)' | sudo -S id
-    Password: Segmentation fault
-
-There are two flaws that contribute to this vulnerability:
-
-    1.	The "pwfeedback" option is not ignored, as it should be,
-	when reading from something other than a terminal device.
-        Due to the lack of a terminal, the saved version of the
-        line erase character remains at its initialized value of 0.
-
-    2.	The code that erases the line of asterisks does not
-        properly reset the buffer position if there is a write
-        error, but it does reset the remaining buffer length.
-	As a result, the getln() function can write past the
-	end of the buffer.
-
-On systems with unidirectional pipes, an attempt to write to the
-read end of the pipe will result in a write error.  Because the
-remaining buffer length is not reset correctly on write error when
-the line is erased, a buffer on the stack can be overflowed.
-
-Impact:
-
-There is no impact unless "pwfeedback" has been enabled in the
-sudoers file.
-
-If "pwfeedback" is enabled in sudoers, the stack overflow may allow
-unprivileged users to escalate to the root account.  Because the
-attacker has complete control of the data used to overflow the
-buffer, there is a high likelihood of exploitability.
-
-Workaround:
-
-If the sudoers file has "pwfeedback" enabled, disabling it by
-pre-pending an exclamation point is sufficient to prevent exploitation
-of the bug.  For example, change:
-
-    Defaults pwfeedback
-
-To:
-
-    Defaults !pwfeedback
-
-After disabling "pwfeedback" in sudoers using the visudo command,
-the example "sudo -l" output becomes:
-
-    $ sudo -l
-    Matching Defaults entries for millert on linux-build:
-	insults, mail_badpass, mailerpath=/usr/sbin/sendmail
-
-    User millert may run the following commands on linux-build:
-	(ALL : ALL) ALL
-
-Fix:
-
-The bug is fixed in sudo 1.8.31.
-
-The following commit fixes CVE-2019-18634:
-https://github.com/sudo-project/sudo/commit/fa8ffeb17523494f0e8bb49a25e53635f4509078
-
-Credit:
-
-Joe Vennix from Apple Information Security found and analyzed the bug.
+    smcv
