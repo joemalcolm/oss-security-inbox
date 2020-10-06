@@ -1,24 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/01/4
-Message-Id: <8B86DF4D-6A38-4ACE-B5AD-F891E1165AEE@beobal.com>
-Date: Tue, 1 Sep 2020 15:33:43 +0100
-From: Sam Tunnicliffe <sam@...bal.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-13946 Apache Cassandra RMI Rebind Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/8
+Message-ID: <87o8lf38fg.fsf@mpe.ellerman.id.au>
+Date: Tue, 06 Oct 2020 22:22:59 +1100
+From: Michael Ellerman <mpe@...erman.id.au>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-13946 Apache Cassandra RMI Rebind Vulnerability
+Solar Designer <solar@...nwall.com> writes:
+> Hi all,
+>
+> As a moderator I approved all messages in this thread so far, but I am
+> unhappy about the quality of both Georgi's message and the replies.
+>
+> This is a valid topic, but there's no room in it for trolling (that's
+> how Georgi's message came across, even if maybe unintentionally) nor for
+> responding only about the presumed trolling.  Just assume good faith and
+> post a response that's actually useful to others in here.  I'll try:
+>
+> On Mon, Oct 05, 2020 at 03:02:33PM +0300, Georgi Guninski wrote:
+>> Are there major security changes needed if
+>> gnu/linux dominates the desktop and/or mobile phone
+>> markets?
+>
+> I'd say yes, major security changes are needed.
 
-Versions Affected:
-All versions prior to: 2.1.22, 2.2.18, 3.0.22, 3.11.8 and 4.0-beta2
+Agree.
 
-Description:
-It is possible for a local attacker without access to the Apache Cassandra process or configuration files to manipulate the RMI registry to perform a man-in-the-middle attack and capture user names and passwords used to access the JMX interface. The attacker can then use these credentials to access the JMX interface and perform unauthorised operations.
-Users should also be aware of CVE-2019-2684, a JRE vulnerability that enables this issue to be exploited remotely.
+> On the desktop, major Linux distributions (and by the way *BSDs and
+> Solaris are not very different in this respect, I think) when used as
+> single-user desktop systems lack security isolation between applications
+> of the user.
 
-Mitigation:
-2.1.x users should upgrade to 2.1.22
-2.2.x users should upgrade to 2.2.18
-3.0.x users should upgrade to 3.0.22
-3.11.x users should upgrade to 3.11.8
-4.0-beta1 users should upgrade to 4.0-beta2
+You can get some isolation fairly easily using firejail.
+
+It's not as secure as eg. Qubes, but it's available in most distros and
+can be as simple as sticking "firejail" in front of a command.
+
+You can use it to isolate your browser/irc/mail client, or possibly more
+importantly your build environment, from your wider home directory.
+
+As usual the arch wiki has good doco:
+
+  https://wiki.archlinux.org/index.php/firejail#Usage
+
+cheers
