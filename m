@@ -1,44 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/4
-Message-Id: <CDC3220B-901E-4A8C-B297-C39451934DE0@jasper.la>
-Date: Thu, 23 Apr 2020 15:28:48 +0200
-From: Jasper Lievisse Adriaanse <j@...per.la>
-To: oss-security@...ts.openwall.com
-Subject: Exuberant Ctags and x2vpn format string vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/2
+Message-ID: <20201006083708.GA14390@kroah.com>
+Date: Tue, 6 Oct 2020 10:37:08 +0200
+From: Greg KH <greg@...ah.com>
+To: Georgi Guninski <gguninski@...il.com>
+Cc: oss-security@...ts.openwall.com, itz@...y.loosely.org
+Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Tue, Oct 06, 2020 at 11:29:34AM +0300, Georgi Guninski wrote:
+> On Mon, Oct 5, 2020 at 3:44 PM Greg KH <greg@...ah.com> wrote:
+> >
+> 
+> >
+> > "if"?  You do know the market share of Linux-based mobile phones, right?
+> > Last I looked, it made the Linux server market quantity a rounding error :)
+> >
+> 
+> AINL!
+> 
+> Android Is Not Linux!
 
-I noticed two format string vulnerabilities in Exuberant Ctags and x2vpn, both of these were fixed back in 2009 and 2012 however they don't appear to have been picked up widely.
-(Note this concerns Excuberant Ctags and not Universalt Ctags which is a continuation for the former.)
+<pedantic>
 
-For example the issue in ctags was fixed in 2009 by the original author in the upstream subversion repository, but a proper release was never made after the affected 5.8 version was released.
-Some distributions (most notably Debian, Centos 8) have switched to distributing a version based on an svn checkout, whereas others (OpenBSD, FreeBSD, pkgsrc, CentOS < 8, Homebrew, etc) were still using the actual 5.8 release.
+Linux is a kernel.  And also commonly used as a name to describe a
+system running that kernel, to make it easier for people to talk about,
+and discuss overall.
 
-For ctags it can be triggered by specifying an existent but unreadable regex file with the following proof-of-concept:
+Android runs on, and requires at this point in time, the Linux kernel,
+so one can say that Android is a successful implementation of Linux on
+mobile devices.  It's also widely successful, so much so that it dwarfs
+any other installed Linux system out there by orders of magnitude.  So
+why ignore it as a valid Linux system?
 
-$ touch "%p %p"; chmod 000 "%p %p"; ectags --regex-c="@%p %p"
-ectags: Warning: 0x0 0x189fa32db1da : Permission denied
-ectags: No files specified. Try "ectags --help".
-$
+The fact that I can run a userspace based on a "traditional" Linux
+system (like Debian), on an Android device, with no file conflicts, is a
+great engineering success, don't you think?
 
-Or a simple crasher:
+</pedantic>
 
-$ touch %n; chmod 000 %n; ectags --regex-c=@%n
-ectags: Warning: zsh: segmentation fault (core dumped)  ectags --regex-c=@%n
-$
+> https://www.theregister.com/2015/06/17/debian_chromium_hubbub/
+> Chrome, Debian Linux, and the secret binary blob download riddle
+> Browser snuck proprietary voice-snoop code into distro
 
-and for x2vpn it relies on overwriting argv[0]:
+I don't understand the question here, that was something over 5 years
+ago.  How is that relevant for "mobile devices" that run Linux today?
 
-tau:2011 ctags % ARGV0="%08x %08x" x2vnc localhost:0
-00000010 1e950c0a: ConnectToTcpAddr: connect: Connection refused
-%08x %08x: unable to connect to VNC server
-tau:2012 ctags %
+thanks,
 
-I described some more details in https://blog.jasper.la/poking-old-format-string-bugs.html
-
-I'm posting to this list to make sure other vendors are aware of these issues in ctags and x2vnc because eventhough there were fixed in 2009/2012, many vendors are still shipping the vulnerable code.
-If CVEs were to be allocated from the 2009 and 2012 ranges for ctags and x2vnc respectively to make tracking these issues easier, that wouldn't hurt I guess.
-
-Cheers,
-Jasper
+greg k-h
