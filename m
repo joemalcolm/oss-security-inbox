@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/22/3
-Message-ID: <20200122130709.GA23176@f195.suse.de>
-Date: Wed, 22 Jan 2020 14:07:09 +0100
-From: Matthias Gerstner <matthias.gerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/07/1
+Message-ID: <20201007073140.GA340590@kroah.com>
+Date: Wed, 7 Oct 2020 09:31:40 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock
+Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-> > Should we tell the site owner his site may have been stolen ?
+On Wed, Oct 07, 2020 at 08:00:05AM +1100, Brian May wrote:
 > 
-> Hmm I never bothered to look deeper into the website but now that you're
-> pointing to it, it looks strange. I can give the upstream author a hint,
-> to check up on his website.
+> Android devices typically require a forked version of the Linux kernel.
 
-I have heard back from the author and he told me that storebackup.org
-never was owned by him, but created by some user of storeBackup, and by
-now is completely unrelated to the software. He wants to remove any
-reference to the URL from his documentation.
+That is due to SoC support, not an Android-specific issue at all.
 
-The official upstream website is on GNU Savannah [1].
+You can run Android code just fine on mainline kernels, if you have
+proper hardware support merged upstream.  This has been true for many
+years now.
 
-[1]: https://savannah.nongnu.org/projects/storebackup
+> I believe they are slowly moving to reduce the changes required by
+> merging them mainline, but not sure how that is progressing right now.
 
-Cheers
+See the lwn.net articles from the Plumbers conference for the past few
+years as to the status of that effort.  Last I looked, it was a handful
+of out-of-tree patches for a few things that upstream did not want to
+take, but Android still had to support for backwards-compatibility
+issues.  Nothing major at all, odds are your favorite Linux distro
+kernel has more changes in it :)
 
-Matthias
+And all of those changes are public and can be easily audited if you so
+desire.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+thanks,
+
+greg k-h
