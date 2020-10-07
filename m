@@ -1,64 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/20/5
-Message-ID: <20200120145027.GF10486@f195.suse.de>
-Date: Mon, 20 Jan 2020 15:50:28 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-18899: apt-cacher-ng: openSUSE packaging for apt-cacher-ng runs the daemon as root instead of as an unprivileged user
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/07/3
+Message-ID: <1GaG2-aqK--4nCAdHTeFIx-6-pQJJNysDvCH9qNTD-4VgG4VDIx0IjXoSQZn14MTl-S7Hw3nxjfqSPwewhsZ1znP-AyHZi2vW1pkWoL0KOw=@protonmail.com>
+Date: Wed, 07 Oct 2020 10:32:05 +0000
+From: caveman رجل الكهف <toraboracaveman@...tonmail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+hi.  following this:
 
-apt-cacher-ng is a caching proxy for downloading packages from
-Debian-style software repositories [1]. In the course of a code review
-of apt-cacher-ng I noticed a mismatch between upstream configuration and
-the configuration used in the openSUSE packaging.
+    https://seclists.org/oss-sec/2019/q4/122
 
-While the upstream configuration expects the daemon to run as the
-apt-cacher-ng unprivileged user, the openSUSE packaging ships a
-diverging systemd service unit configuration, causing the apt-cacher-ng
-daemon to be running as the root user. Apart from a generally increased
-attack surface by not lowering privileges this causes the following
-security issue:
+i think using rp filtering won't be a neat
+solution as it is technically incorrect in my
+view.  my reason is as follows:
 
-Although the openSUSE packaging for apt-cacher-ng doesn't employ the
-unprivileged apt-cacher-ng user, it still creates it in the system. The
-directory /run/apt-cacher-ng is created for the apt-cacher-ng user via
-a systemd-tmpfiles configuration file from the upstream sources. This
-results in the apt-cacher-ng daemon running as root, which handles files
-in /run/apt-cacher-ng which is owned by the apt-cacher-ng user. The
-daemon correctly assumes that this directory is safe to handle without
-precautions, but this assumption is broken by the bad packaging.
+    - rp filtering assumes that my path to reach
+      others is also the path that others would
+      use to reach me.
 
-Therefore a compromised apt-cacher-ng user account can perform symlink
-attacks in /run/apt-cacher-ng to cause writes to privileged file system
-locations by root, once the apt-cacher-ng service is (re)started.
-Furthermore the socket path /run/apt-cacher-ng/socket can be replaced by
-an attacker owned socket, thereby allowing him to hijack privileged
-client connections to apt-cacher-ng. Additional unexplored security
-issues could be possible.
+that assumption is either false, or
+unsubstantiated.  hence, either way, there is no
+reason to assume that it is true (occam's razor).
 
-An update for the broken packaging will be supplied for openSUSE Leap
-15.1. Furthermore, since there is no active maintainer for the package
-in openSUSE, the apt-cacher-ng package is removed from the
-openSUSE:Factory project and thus from the openSUSE Tumbleweed rolling
-release distribution in the future.
+even if it is usually true, there is no reason why
+this is always true, and there are cases where
+this can be false.
 
-[1]: https://wiki.debian.org/AptCacherNg
+in fact, cases exist where this is not true.  e.g.
+a linux box in a LAN with 2 gateways can itself
+choose a different default gateway than the one
+the network uses to send it packets.
 
-Cheers
+therefore i think using rp filtering is a dirty
+hack that is going to create another problem.
 
-Matthias
+in my view, the real problem is that while vpns
+are offering a kind of partitioning over the wire,
+such partitioning is lost when it comes to
+in-kernel connection states.
 
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
+therefore, i suggest the real fix is to export
+vpn's partitioning into the connection states
+table by using some in-kernel tags, as follows:
 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
+    - packets entering a linux box from any
+      interface, will inherit such specified tags
+      from the connection.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+    - the connection states table will have an
+      extra "tag" column that will store such
+      tag.
+
+    - connection states are invisible from each
+      other if they do not have the same tag.
+
+    - for backwards compatibility, all interfaces
+      will use "default" tag.  so, by default,
+      everything feels normal.
+
+    - for wireguard, it may use the added API to
+      set a different tag for its packets, such as
+      "wireguard".  the user could also manually
+      set other tags by `wg set states-tag newtag`
+      if they want to have different states
+      partitions across different wireguard
+      tunnels.
+
+this way, in the same way that the vpn paritions
+packets on the wire, connection states with
+different tags will remain invisible from each
+other.
+
+in a sense similar to how VLAN IDs create the
+effect of separate physical switches using the
+same physical switch.  not an accurate analogy,
+but i thought it may help.  VLANs also communicate
+their IDs over trunk links (so the analogy is not
+too bad i guess).
+
+regards,
+cm
+
