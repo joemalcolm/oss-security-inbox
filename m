@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3709" "Saturday" "6" "July" "2019" "18:29:36" "-0400" "Sasha Levin" "sashal@kernel.org" "<20190706222936.GL10104@sasha-vm>" "82" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "7" "2019070622:29:36" "[oss-security] linux-distros membership application - Microsoft" (number mark "        sashal@kerne Jul  6   82/3709  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190706193737.GA23344@openwall.com>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>" "<20190628125743.GA2187@openwall.com>" "<20190628170812.GG11506@sasha-vm>" "<20190706193737.GA23344@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1072" "Wednesday" "7" "October" "2020" "16:09:59" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.2010071604290.15793@scrappy.simplesystems.org>" "29" "Re: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" nil nil nil "10" "2020100721:09:59" "[oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" (number mark "U       bfriesen@sim Oct  7   29/1072  " thread-indent "\"Re: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022\"\n") "<CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>" ("<CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31815 invoked by uid 550); 6 Jul 2019 22:29:51 -0000
+Received: (qmail 23599 invoked by uid 550); 7 Oct 2020 21:10:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31787 invoked from network); 6 Jul 2019 22:29:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1562452178;
-	bh=OJ1+2Y4KPi/dsAYcipvRZDiayl9h9t0Bm3H7ezOa8CM=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=g91jj/EwzBc5WAi4GXENsghKPYpGhVqYuUQ/M5DmpinpYrbzwCOx6qpsK6beZT63U
-	 OgKnWBoZ3UviAqHcqyiZ+dFXN71k9wRNIxjt815Jw1WwRjdoJui2Ss6YchyVlFFq2+
-	 8dfNTkD23bBIQEkWslTfw5tNkm7T3UdWnbx6QVfE=
-Message-ID: <20190706222936.GL10104@sasha-vm>
-References: <20190626141358.GK7898@sasha-vm>
- <20190627140321.GA29338@openwall.com>
- <20190627170508.GB11506@sasha-vm>
- <20190628125743.GA2187@openwall.com>
- <20190628170812.GG11506@sasha-vm>
- <20190706193737.GA23344@openwall.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20190706193737.GA23344@openwall.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Sat, 6 Jul 2019 18:29:36 -0400
-From: Sasha Levin <sashal@kernel.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] linux-distros membership application - Microsoft
-To: oss-security@lists.openwall.com
+Received: (qmail 23581 invoked from network); 7 Oct 2020 21:10:11 -0000
+Date: Wed, 7 Oct 2020 16:09:59 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+X-X-Sender: bfriesen@scrappy.simplesystems.org
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+In-Reply-To: <CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>
+Message-ID: <alpine.GSO.2.20.2010071604290.15793@scrappy.simplesystems.org>
+References: <CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Wed, 07 Oct 2020 16:09:59 -0500 (CDT)
+Subject: Re: [oss-security] Debian FEATURE: /home/loser is with permissions
+ 755, default umask 0022
 
-On Sat, Jul 06, 2019 at 09:37:37PM +0200, Solar Designer wrote:
->Hi all,
+On Wed, 7 Oct 2020, Georgi Guninski wrote:
+
+> https://lists.debian.org/debian-security/2020/10/msg00000.html
 >
->Per our current policy and precedents, I see no valid reasons not to
->subscribe Microsoft (or part(s) of it, see below) to linux-distros.  So
->I intend to figure out some detail and proceed with the subscription.
-
-Thank you.
-
-[snip]
-
->On Fri, Jun 28, 2019 at 01:08:12PM -0400, Sasha Levin wrote:
->> Can I suggest that we fork the discussion around security-bugs.rst to
->> LKML? I can suggest an initial patch to address your comments here but I
->> think that this is better handled on LKML.
+> ===
+> /home/loser is with permissions 755, default umask 0022
 >
->Yes, please.
+> on multiuser machines this sucks much.
 
-Sure, give me a day or two to get it out. I'll cross-post
-LKML/ksummit-discuss/oss-security as I think it's one of those times it
-actually makes sense.
+These are my preferred default settings for multiuser machines and is 
+the historical default.  The settings can be changed when appropriate.
 
->> Microsoft's history with Linux is a rather recent one. I can offer the
->> following examples if you're willing to give us a few months off of the
->> "1 year" requirement:
->>
->> CVE-2018-1002105:
->> https://azure.microsoft.com/en-us/updates/aks-clusters-patched-for-kubernetes-vulnerability/
->> CVE-2018-5391, CVE-2018-5390:
->> https://azure.microsoft.com/en-us/blog/security-bulletin-for-august-2018/
->> CVE-2019-5736:
->> https://azure.microsoft.com/en-us/updates/iot-edge-fix-cve-2019-5736/
->> CVE-2019-11477, CVE-2019-11478, CVE-2019-11479:
->> https://azure.microsoft.com/en-us/updates/security-advisory-on-linux-kernel-tcp-vulnerabilities-for-hdinsight-clusters/
->
->The oldest of these is August 8, 2018, which is just 1 month short of
->the 1 year term.  I suppose we could either give Microsoft this 1 month
->off as you suggest based on Microsoft's track record of promptly dealing
->with security issues in non-Linux products, or subscribe Microsoft to
->linux-distros in August 2019 (or later).
+Ubuntu Linux (a Debian derivative) has changed the default.  However, 
+we found that the Ubuntu default caused problems for us while building 
+our software, and so we changed them back.
 
-Whatever list admins/members are comfortable with.
+Users often need to share data.
 
->More importantly, maybe we shouldn't list "Microsoft" as a member of
->linux-distros.  Microsoft is so much more than the recent Linux-based
->products and services.  We similarly list "Amazon Linux AMI" rather than
->"Amazon", and "Chrome OS" rather than "Google" (and we had separately
->listed "Android", which has since unsubscribed), and "Ubuntu" rather
->than "Canonical".  OTOH, we were not as careful to list proper products,
->etc. for some others such as "Oracle".
->
->If we list "Microsoft", this might be especially confusing since issues
->being reported might also be relevant to Windows.  The reporters need to
->know they're not reaching Windows security team unless they specifically
->authorize that.
->
->Any suggestions on the above?
+There is a lesson to be learned that sensitive data and directories 
+under a user's home directory may still need to have more strict 
+permissions set by the applications which create them since the top of 
+the user's home directory might allow sharing.
 
-Yes, this is tricky. Maybe "Microsoft Linux Systems Group"? Thats our
-group name within Microsoft. I guess that we can also add a short wiki
-page with references to the products/distros we support as well as a
-clarification that this has nothing to do with Windows and list MSRC's
-contact information.
-
->Regardless, the list policy only allows use of the information for
->"getting the issue fixed for your distro's users and, only in rare
->extreme cases, for deployment of maximally non-revealing changes to
->maintain security of your distro's infrastructure most essential to the
->distro users' security in face of the security issue being dealt with.
->The need-to-know condition is met only if the person needs to
->participate in one of these two activities."  This is meant to preclude
->sharing within the organization beyond its parts responsible for the
->"distro" the organization is subscribed for.
-
-As I've indicated before, we intend to follow the list's policies.
-Information obtained from the list will be used only for the purposes
-listed in our original application, and any additional future use will
-go through the list for approvals first.
-
---
-Thanks,
-Sasha
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
