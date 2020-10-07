@@ -1,57 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/24/2
-Message-ID: <20201124124443.jhl25ldkhkawmzdb@Air-de-Roger>
-Date: Tue, 24 Nov 2020 13:44:43 +0100
-From: Roger Pau Monné <roger.pau@...rix.com>
-To: Xen.org security team <security@....org>
-CC: <xen-announce@...ts.xen.org>, <xen-devel@...ts.xen.org>, <xen-users@...ts.xen.org>, <oss-security@...ts.openwall.com>, Xen.org security team <security-team-members@....org>
-Subject: Re: Xen Security Advisory 355 v2 - stack corruption from XSA-346 change
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/07/4
+Message-ID: <CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>
+Date: Wed, 7 Oct 2020 21:00:35 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: cate@...ian.org
+Subject: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 24, 2020 at 12:03:45PM +0000, Xen.org security team wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
->                     Xen Security Advisory XSA-355
->                               version 2
-> 
->                  stack corruption from XSA-346 change
-> 
-> UPDATES IN VERSION 2
-> ====================
-> 
-> Added metadata file.
-> 
-> Public release.
-> 
-> ISSUE DESCRIPTION
-> =================
-> 
-> One of the two changes for XSA-346 introduced an on-stack array.  The
-> check for guarding against overrunning this array was off by one,
-> allowing for corruption of the first stack slot immediately following
-> this array.
-> 
-> IMPACT
-> ======
-> 
-> A malicious or buggy HVM or PVH guest can cause Xen to crash, resulting
-> in a Denial of Service (DoS) to the entire host.  Privilege escalation
-> as well as information leaks cannot be excluded.
-> 
-> VULNERABLE SYSTEMS
-> ==================
-> 
-> All Xen versions which have the patches for XSA-346 applied are
-> vulnerable.
-> 
-> Only x86 HVM and PVH guests can leverage the vulnerability.  Arm guests
-> and x86 PV guests cannot leverage the vulnerability.
-> 
-> Only x86 HVM and PVH guests which have physical devices passed through
-> to them can leverage the vulnerability.
+https://lists.debian.org/debian-security/2020/10/msg00000.html
 
-There's no support for passthrough for x86 PVH guests yet, so this
-issue only affects x86 HVM with passthrough.
+===
+/home/loser is with permissions 755, default umask 0022
 
-Roger.
+on multiuser machines this sucks much.
+
+on a multiuser debian mirror we found a lot of data,
+including the wordpress password of the admin.
+===
+
+Then in the thread someone with @debian.org email explains
+to me it is a feature, not a bug.
+
+In a addition, they suggest to tell them the mirror, lol.
+
+Are debian detached from reality?
