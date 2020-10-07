@@ -1,37 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/4
-Message-ID: <CAGRgoZiPvmkmdrS1JjMCK-qPiJ+zATuv19jTTjz=orE_z-pYBg@mail.gmail.com>
-Date: Mon, 15 Jun 2020 13:45:21 +0100
-From: Jonathan Gallimore <jgallimore@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-11969 Apache TomEE - useJMX attribute on ActiveMQ resource adapter URI causes authenticated JMX port to be open
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/07/8
+Message-ID: <alpine.GSO.2.20.2010071604290.15793@scrappy.simplesystems.org>
+Date: Wed, 7 Oct 2020 16:09:59 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-11969: Apache TomEE - useJMX attribute on ActiveMQ resource
-adapter URI causes authenticated JMX port to be open
+On Wed, 7 Oct 2020, Georgi Guninski wrote:
 
-Severity: High
+> https://lists.debian.org/debian-security/2020/10/msg00000.html
+>
+> ===
+> /home/loser is with permissions 755, default umask 0022
+>
+> on multiuser machines this sucks much.
 
-Vendor: The Apache Software Foundation
+These are my preferred default settings for multiuser machines and is 
+the historical default.  The settings can be changed when appropriate.
 
-Versions Affected:
-Apache TomEE 8.0.0-M1 - 8.0.1
-Apache TomEE 7.1.0 - 7.1.2
-Apache TomEE 7.0.0-M1 - 7.0.7
-Apache TomEE 1.0.0 - 1.7.5
+Ubuntu Linux (a Debian derivative) has changed the default.  However, 
+we found that the Ubuntu default caused problems for us while building 
+our software, and so we changed them back.
 
-Description:
-If Apache TomEE is configured to use the embedded ActiveMQ broker, and the
-broker URI includes the useJMX=true parameter, a JMX port is opened on TCP
-port 1099, which does not include authentication.
+Users often need to share data.
 
-Mitigation:
-- Upgrade to TomEE 7.0.8 or later
-- Upgrade to TomEE 7.1.3 or later
-- Upgrade to TomEE 8.0.2 or later
+There is a lesson to be learned that sensitive data and directories 
+under a user's home directory may still need to have more strict 
+permissions set by the applications which create them since the top of 
+the user's home directory might allow sharing.
 
-Alternatively, users may wish to remove the useJMX option from the URI (the
-default is false).
-
-- The Apache TomEE team.
-
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
