@@ -1,51 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/20/3
-Message-Id: <20201119232934.366442-1-dja@axtens.net>
-Date: Fri, 20 Nov 2020 10:29:34 +1100
-From: Daniel Axtens <dja@...ens.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/07/7
+Message-ID: <87v9flhhj5.fsf@canidae.wired.pri>
+Date: Thu, 08 Oct 2020 08:07:10 +1100
+From: Brian May <brian@...uxpenguins.xyz>
 To: oss-security@...ts.openwall.com
-Cc: cmr@...ormatik.wtf, ruscur@...sell.cc, npiggin@...il.com, mpe@...erman.id.au, spoorts2@...ibm.com, dja@...ens.net
-Subject: CVE-2020-4788: Speculation on incompletely validated data on IBM Power9
+Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Jeremy Stanley <fungi@...goth.org> writes:
 
-IBM Power9 processors can speculatively operate on data in the L1
-cache before it has been completely validated, via a way-prediction
-mechanism. It is not possible for an attacker to determine the
-contents of impermissible memory using this method, since these
-systems implement a combination of hardware and software security
-measures to prevent scenarios where protected data could be leaked.
+> As a long-time Debian user myself, I agree that this default is
+> showing its age, and can represent a risk for operators who overlook
+> it.
 
-However these measures don't address the scenario where an attacker
-induces the operating system to speculatively execute instructions
-using data that the attacker controls. This can be used for example to
-speculatively bypass "kernel user access prevention" techniques, as
-discovered by Anthony Steinhauser of Google's Safeside Project. This
-is not an attack by itself, but there is a possibility it could be
-used in conjunction with side-channels or other weaknesses in the
-privileged code to construct an attack.
+Yes, I agree the default should be changed.
 
-This issue can be mitigated by flushing the L1 cache between privilege
-boundaries of concern.
+Just note that there is a reasonable amount of software install
+instructions that assume umask is 022 and will install software with
+unusable permissions if it is not.
 
-Patches to fix this have been sent to the linuxppc-dev mailing list:
-https://lore.kernel.org/linuxppc-dev/20201119231333.361771-1-dja@axtens.net/T/#me4f6a44748747e3327d27cd95200bf7a87486ffc
-https://patchwork.ozlabs.org/project/linuxppc-dev/list/?series=215657&state=%2A&archive=both
-
-Backports to supported stable trees are currently being sent to the
-stable mailing list.
-
-Fixes for AIX and IBM i are also available from IBM.
-
-CVE-2020-4788 has been assigned. Further details, including the CVSS
-score, will be available at
-https://exchange.xforce.ibmcloud.com/vulnerabilities/CVE-2020-4788
-
-Thanks to Nick Piggin, Russell Currey, Christopher M. Riedl, Michael
-Ellerman and Spoorthy S for their work in developing, optimising,
-testing and backporting these fixes, and to the many others who helped
-behind the scenes.
-
-Kind regards,
-Daniel Axtens
+Perhaps the worst example I can think of is Docker image builds.
+COPY/ADD will install the files in the Docker image with their current
+permissions with no way to override. So all the files inside the image
+unreadable for everyone except by root. If you want to run stuff inside
+the Docker image as non-root (which is recommended) you either have to
+fix the permissions first or add a RUN command to fix the permissions -
+which can be slow and the layer generated can be large (due to the
+inefficient way layers are represented in Docker).
+-- 
+Brian May <brian@...uxpenguins.xyz>
+https://linuxpenguins.xyz/brian/
