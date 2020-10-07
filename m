@@ -1,32 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/25/5
-Message-ID: <886744ab-08e1-4602-98a0-828cea1cda17@oracle.com>
-Date: Tue, 25 Aug 2020 12:22:35 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/07/5
+Message-ID: <20201007191856.2v7cpinvpzsmzuiw@yuggoth.org>
+Date: Wed, 7 Oct 2020 19:18:56 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Cc: "X.Org Security Team" <xorg-security@...ts.x.org>
-Subject: Re: X.Org server security advisory: August 25, 2020
+Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
-On 8/25/20 8:37 AM, Matthieu Herrb wrote:
-> * CVE-2020-1436 / ZDI CAN 11574 XRecordRegisterClients Integer Underflow
+On 2020-10-07 21:00:35 +0300 (+0300), Georgi Guninski wrote:
+> https://lists.debian.org/debian-security/2020/10/msg00000.html
 > 
-> An integer underflow exist in the handler for the CreateRegister
-> request of the X record extension.
-
-This entry was missing a digit in the CVE id, the correct id was listed
-in the later half:
-
-> commit 24acad216aa0fc2ac451c67b2b86db057a032050
+> ===
+> /home/loser is with permissions 755, default umask 0022
 > 
->      Fix XRecordRegisterClients() Integer underflow
+> on multiuser machines this sucks much.
 > 
->      CVE-2020-14362 ZDI-CAN-11574
+> on a multiuser debian mirror we found a lot of data,
+> including the wordpress password of the admin.
+> ===
 
-These advisories have also now been published on the X.Org security page at
-https://www.x.org/wiki/Development/Security/
+It's tradition that on multi-user systems, users would want to share
+data with one another and also serve content from their home
+directories in Web sites. Further, it's not at all uncommon for
+sysadmins to not understand or consider the system defaults when
+making deployment decisions and failing to secure sensitive files.
 
+As a long-time Debian user myself, I agree that this default is
+showing its age, and can represent a risk for operators who overlook
+it.
+
+> Then in the thread someone with @debian.org email explains
+> to me it is a feature, not a bug.
+
+Nowhere in that response do they call it a feature, and it's
+disingenuous of you to imply that they did. It's a default, which is
+almost always going to be a balance between two (or more) competing
+needs. Also, I encourage you to take a guess at how many people
+there are "with @debian.org email" (hint, it's not a small number).
+
+A more informative response would probably have been to point you to
+https://wiki.debian.org/Debate/umask which provides pointers to
+where and how this would need to be solved in the long run.
+
+> In a addition, they suggest to tell them the mirror, lol.
+
+Yes, do you fault them for wanting to remove a likely compromised
+server from the network of volunteer-run package mirrors?
+
+> Are debian detached from reality?
+
+Your brusque and insulting attitude (saying their choices suck,
+calling them detached from reality, laughing at their explanations)
+is likely to trigger glib responses and cause people to be less
+inclined to pay attention to what you have to say.
 -- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	  X.Org Security Response Team - xorg-security@...ts.x.org
+Jeremy Stanley
 
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
