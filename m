@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1188" "Monday" "10" "October" "2016" "04:32:57" "-0300" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzssdZ5k5H92mOKaLHE38Db0har=n4azHZeNosC-wsr55dw@mail.gmail.com>" "37" "[oss-security] CVE-2016-5425 - Apache Tomcat packaging on RedHat-based distros - Root Privilege Escalation (affecting CentOS, Fedora, OracleLinux, RedHat etc.)" nil nil nil "10" "2016101007:32:57" "[oss-security] CVE-2016-5425 - Apache Tomcat packaging on RedHat-based distros - Root Privilege Escalation (affecting CentOS, Fedora, OracleLinux, RedHat etc.)" (number mark "U       dawid@legalh Oct 10   37/1188  " thread-indent "\"[oss-security] CVE-2016-5425 - Apache Tomcat packaging on RedHat-based distros - Root Privilege Escalation (affecting CentOS, Fedora, OracleLinux, RedHat etc.)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5257" "Thursday" "8" "October" "2020" "14:36:42" "+0200" "Daniel Beck" "ml@beckweb.net" "<E9AC7759-6DB8-4293-A90A-58174CDC637F@beckweb.net>" "156" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "10" "2020100812:36:42" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Oct  8  156/5257  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3574 invoked by uid 550); 10 Oct 2016 07:53:26 -0000
+Received: (qmail 22438 invoked by uid 550); 8 Oct 2020 12:36:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,73 +12,173 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14256 invoked from network); 10 Oct 2016 07:33:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=B6C78yPjGZoDrqeul5VrQBrq5u8bZa32RtDafPsZ2lQ=;
-        b=E9/8gJVfpOqZ0Vj1ALZwBvLW7MFneFhmPaXgEKfZqXuUtiwW/+iIGfsN2R+2JwwWNH
-         hWHqzsqh0fODesEWchNBgtudeVuNISvlRdnEljG2BSREHDJzjdl4eYSlMsDqNAMBfdTi
-         GnG7pE2b3o8mQkIkvQQYJxgK2Bx9qNswdjKRf45FAUwVMR7/QzO7bus5PYEGxHKQnVR+
-         6VxRSuYdEOGZGb5o+MHyvxU4KEfjk0B6jYIIRkrD5uxuVpsotba0Q6aHXMACbQAgzpV+
-         LGLOErwOoq0QuqMa4q3afZJa0MUul7O9Pq7id3LLH5aCjwGoShljrcytwP6hP7+QoCUZ
-         +p4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=B6C78yPjGZoDrqeul5VrQBrq5u8bZa32RtDafPsZ2lQ=;
-        b=FfwFASXj3Q5/8MXBcHXDXd9Z0vUYZHfdu0YRZftkYZBANDbV4CxmqD73yd1WTxn/NW
-         DIal3Nep9hEdsK63fX5R0P7XWRt0RUZ7zjqFWT98hWftHg0b9wSczBHXLMkAQB97DR9V
-         fTizzWa5PHk2wKubKAN6aLnQoIMA9P+VXf6i76geRAmHwIEs7rnbErgfQSgj/FE+Pl6v
-         ST79v8n1lxv78I/uX780vtdzjLXHycg8v0FUy8anxOVOxooFy673TWg/aT0tUdZC4w7b
-         m/wKshz1WOnghGroNWLb8icz/1X/kIzfwfoB3HOPQstpDUed3LB1Z4lHPKvyfmyjk0X3
-         PVug==
-X-Gm-Message-State: AA6/9RnbkwvvwJqNltmUm8rULzPYOX/HvWn83NHWfZmYCIopMe8v9KMjhcBzmnhWwQml2kEBnS8FzbzjMUdt+A==
-X-Received: by 10.194.6.36 with SMTP id x4mr2866490wjx.175.1476084778289; Mon,
- 10 Oct 2016 00:32:58 -0700 (PDT)
-MIME-Version: 1.0
-From: Dawid Golunski <dawid@legalhackers.com>
-Date: Mon, 10 Oct 2016 04:32:57 -0300
-Message-ID: <CADSYzssdZ5k5H92mOKaLHE38Db0har=n4azHZeNosC-wsr55dw@mail.gmail.com>
+Received: (qmail 22416 invoked from network); 8 Oct 2020 12:36:53 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
+Message-Id: <E9AC7759-6DB8-4293-A90A-58174CDC637F@beckweb.net>
+Date: Thu, 8 Oct 2020 14:36:42 +0200
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE-2016-5425 - Apache Tomcat packaging on RedHat-based distros -
- Root Privilege Escalation (affecting CentOS, Fedora, OracleLinux, RedHat etc.)
+X-Mailer: Apple Mail (2.3445.104.15)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1602160613;af925302;
+X-HE-SMSGID: 1kQVA2-0008Rc-Am
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Vulnerability: Apache Tomcat packaging on RedHat-based distros
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-CVE-2016-5425
+The following releases contain fixes for security vulnerabilities:
 
-Discovered by:
-Dawid Golunski (http://legalhackers.com)
+* Active Choices Plugin 2.5
+* Audit Trail Plugin 3.7
+* couchdb-statistics Plugin 0.4
+* Role-based Authorization Strategy Plugin 3.1
 
-Affected systems: Multiple Tomcat packages on RedHat-based systems
-including: CentOS,Fedora,OracleLinux,RedHat etc.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-Short Description:
+* Maven Cascade Release Plugin
+* Nerrvana Plugin
+* Persona Plugin
+* Release Plugin
+* Shared Objects Plugin
+* SMS Notification Plugin
 
-Apache Tomcat packages provided by default repositories of RedHat-based
-distributions (including CentOS, RedHat, OracleLinux, Fedora,  etc.)
-create a tmpfiles.d configuration file with insecure permissions which
-allow attackers who are able to write files with tomcat user permissions
-(for example, through a vulnerability in web application hosted on Tomcat)
-to escalate their privileges from tomcat user to root and fully compromise
-the target system.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2020-10-08/
 
-Full advisory and a working root privilege escalation exploit can be found
-at:
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-http://legalhackers.com/advisories/Tomcat-RedHat-Pkgs-Root-PrivEsc-Exploit-CVE-2016-5425.html
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1767 / CVE-2020-2286
+Role-based Authorization Strategy Plugin 2.12 and newer uses a cache to
+speed up permission lookups.
+
+In Role-based Authorization Strategy Plugin 3.0 and earlier this cache is
+not invalidated properly when an administrator changes the permission
+configuration. This can result in permissions being granted long after the
+configuration was changed to no longer grant them.
 
 
-BTW. If you are using Tomcat on a Debian-based distro,  you may want
-to check out
-my previous Tomcat advisory and exploit at:
+SECURITY-1815 / CVE-2020-2287
+Audit Trail Plugin logs requests whose URL path matches an admin-configured
+regular expression.
 
-http://legalhackers.com/advisories/Tomcat-DebPkgs-Root-Privilege-Escalation-Exploit-CVE-2016-1240.html
+A discrepancy between the behavior of the plugin and the Stapler web
+framework in parsing URL paths allows attackers to craft URLs that would
+bypass request logging in Audit Trail Plugin 3.6 and earlier.
 
 
--- 
-Regards,
-Dawid Golunski
-http://legalhackers.com
+SECURITY-1846 / CVE-2020-2288
+Audit Trail Plugin uses regular expressions to match requested URLs whose
+dispatch should be logged.
+
+In Audit Trail Plugin 3.6 and earlier, the default regular expression
+pattern could be bypassed in many cases by adding a suffix to the URL that
+would be ignored during request handling.
+
+
+SECURITY-1954 / CVE-2020-2289
+Active Choices Plugin 2.4 and earlier does not escape the name and
+description of build parameters.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
+
+SECURITY-2008 / CVE-2020-2290
+Active Choices Plugin 2.4 and earlier does not escape `List` and `Map`
+return values of sandboxed scripts for _Reactive Reference Parameter_.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
+
+SECURITY-2065 / CVE-2020-2291
+couchdb-statistics Plugin 0.3 and earlier stores its server password
+unencrypted in its global configuration file
+`org.jenkinsci.plugins.couchstats.CouchStatsConfig.xml` on the Jenkins
+controller as part of its configuration.
+
+This password can be viewed by users with access to the Jenkins controller
+file system.
+
+
+SECURITY-1928 / CVE-2020-2292
+Release Plugin 2.10.2 and earlier does not escape the release version in
+the badge tooltip.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Release/Release permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2046 / CVE-2020-2293
+Persona Plugin 2.4 and earlier allows users with Overall/Read permission to
+read arbitrary files on the Jenkins controller.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2049 / CVE-2020-2294 (permission check) & CVE-2020-2295 (CSRF)
+Maven Cascade Release Plugin 1.3.2 and earlier does not perform permission
+checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to start cascade builds
+and layout builds, and reconfigure the plugin.
+
+Additionally, these endpoints do not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2052 / CVE-2020-2296
+Shared Objects Plugin 0.44 and earlier does not require POST requests for
+an HTTP endpoint, resulting in a cross-site request forgery (CSRF)
+vulnerability.
+
+This vulnerability allows attackers to configure shared objects.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2054 / CVE-2020-2297
+SMS Notification Plugin 1.2 and earlier stores an access token unencrypted
+in its global configuration file
+`com.hoiio.jenkins.plugin.SMSNotification.xml` on the Jenkins controller as
+part of its configuration.
+
+This access token can be viewed by users with access to the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2097 / CVE-2020-2298
+Nerrvana Plugin 1.02.06 and earlier does not configure its XML parser to
+prevent XML external entity (XXE) attacks.
+
+This allows attackers with Overall/Read permission to have Jenkins parse a
+crafted HTTP request with XML data that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+Additionally, XML parsing is exposed as a form validation endpoint that
+does not require POST requests, allowing exploitation by users without
+Overall/Read permission via CSRF.
+
+As of publication of this advisory, there is no fix.
+
+
+
