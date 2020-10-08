@@ -1,136 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/13
-Message-Id: <E1kp9JZ-00078k-EE@xenbits.xenproject.org>
-Date: Tue, 15 Dec 2020 12:20:25 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 353 v4 (CVE-2020-29479) - oxenstored: permissions not checked on root node
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/08/4
+Message-ID: <957319a25dba4efdb7523141231a6f35385ca72d.camel@apache.org>
+Date: Thu, 08 Oct 2020 12:56:47 +0200
+From: Oleg Kalnichevski <olegk@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-13956] Apache HttpClient incorrect handling of malformed URI authority component
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2020-13956: Apache HttpClient incorrect handling of malformed
+authority component in request URIs
 
-            Xen Security Advisory CVE-2020-29479 / XSA-353
-                               version 4
+Severity: Medium
 
-           oxenstored: permissions not checked on root node
+Vendor:
+The Apache Software Foundation
 
-UPDATES IN VERSION 4
-====================
+Versions Affected:
+Apache HttpClient 4.5.12 and prior 
+Apache HttpClient 5.0.2 and prior
 
-Public release.
+Description:
 
-ISSUE DESCRIPTION
-=================
+Apache HttpClient versions prior to version 4.5.13 and 5.0.3 can
+misinterpret malformed authority component in request URIs passed to
+the library as java.net.URI object and pick the wrong target host for
+request execution.  
 
-In the Ocaml xenstored implementation, the internal representation of
-the tree has special cases for the root node, because this node has no
-parent.
+Mitigation:
 
-Unfortunately, permissions were not checked for certain operations on
-the root node.
+As of release 4.5.13 and 5.0.3 HttpClient will reject URIs with
+ambiguous malformed authority component as invalid. Users of HttpClient
+are advised to upgrade to version 4.5.13 or 5.0.3 and sanitize request
+URIs when using java.net.URI as input.
 
-Unprivileged guests can get and modify permissions, list, and delete
-the root node.  Deleting the whole xenstore tree is a hostwide denial
-of service.  Depending on the circumstances, the vulnerability can
-also be leveraged into an ability to gain write access to any part of
-xenstore.
+Credit:
+This issue was discovered and reported by Priyank Nigam
 
-IMPACT
-======
-
-A guest administrator can deny service to the whole system
-simply by deleting the whole of xenstore.
-
-Additionally, depending on other software in use, privilege escalation
-may be possible.  With the default "xl" toolstack, a guest
-administrator can escalate their privilege to that of the host.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems using oxenstored are vulnerable.  Building and using
-oxenstored is the default in the upstream Xen distribution, if the
-Ocaml compiler is available.
-
-The impact depends on the toolstack and other management software in
-use.  Systems using libxl (for example, via "xl" or libvirt) are
-vulnerable to privilege escalation.
-
-Systems using C xenstored are not vulnerable, no matter what toolstack
-or management software is in use.
-
-MITIGATION
-==========
-
-There are no mitigations.
-
-Changing to use of C xenstored would avoid this vulnerability.  However,
-given the other vulnerabilities in both versions of xenstored being
-reported at this time, changing xenstored implementation is not a
-recommended approach to mitigation of individual issues.
-
-CREDITS
-=======
-
-This issue was discovered by Edwin Török of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-Note that the Ocaml patches for XSA-115 depend on this patch.
-
-xsa353.patch           xen-unstable - 4.10
-
-$ sha256sum xsa353*
-48fa1f414773ab1a4135fe62aaae25c7c543efe5a4c5dba71db9e497fa9f3362  xsa353.meta
-e14922bf6b2095c1b17849b130e999726a1a31e29be1374e0cd3f9a8fa59fd3d  xsa353.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/Yqd8MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZmg8IALQltyH/EPk78gGNyeb/1ri3jr7IVR5lyCy1Aedg
-zckh8FNaaRCplZAoa2Kc2aV2H1Lc5x/UfWtoOLaiSdcyRNXRKRFwq7LoBT7OH2SH
-KSo2HK0licTOv61SL2LoJ38tXec86V0Cos89DuWtSMLQT3LUmixQlSdiTUueFidH
-Fei8mqoYor5WtzjfgKjdR5KwrrPj65QFyUic3bRgdcc/t27Wr+oQU5iGg7ayeCNw
-5Ylz8eyJj88rkNVw1S4jFH815lyENaJbVn56VvlEm0KDsnY7G4YAHExZ1lElrOdj
-nkOXN3o6CGiHTkXPOsbPuy0WboSrXK9AZykasml/EDw41Vg=
-=V1xW
------END PGP SIGNATURE-----
-
-Download attachment "xsa353.meta" of type "application/octet-stream" (1542 bytes)
-
-Download attachment "xsa353.patch" of type "application/octet-stream" (3108 bytes)
