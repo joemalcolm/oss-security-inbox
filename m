@@ -1,35 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/15/1
-Message-ID: <nycvar.YSQ.7.76.2005151113190.1451610@xnncv>
-Date: Fri, 15 May 2020 11:27:06 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: "Singh, Balbir" <sblbir@...zon.com>
-cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "matthew.sheets@...ms.com" <matthew.sheets@...ms.com>,  "code@...icks.com" <code@...icks.com>,  "Mendoza-jonas, Samuel" <samjonas@...zon.com>,  "pabeni@...hat.com" <pabeni@...hat.com>
-Subject: Re: [test case][kunit] CVE-2020-10711 Kernel netLabel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/08/7
+Message-ID: <CAGUWgD8GSLAn2hT-0fuDzJia9S6+xtxtzx1nMfti0cka8VoH6g@mail.gmail.com>
+Date: Thu, 8 Oct 2020 15:20:17 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
-  Hello Balbir,
+> /home/loser is with permissions 755, default umask 0022
 
-+-- On Fri, 15 May 2020, Singh, Balbir wrote --+
-| I've spent some time writing a kunit test case for CVE-2020-10711 using the
-| KUNIT framework. I am attaching the patch below for reference. The patch is
-| against the latest linux-next. The details are in the test case, there
-| are some TODOs:
-| 
-| 1. Add test cases for the ipv6 variant
-| 2. Add a test case for cipso_v4_parsetag_rpm variant
-| 
-| Please feel to suggest improvements or better ways to test this, this is
-| a rough patch, but I still wanted to share it and see if it helps others/
-| get comments on the approach to testing it.
-
-Thank you so much for working on this. At first glance it looks okay, you need 
-to send this to an upstream -netdev list for better reviews/inputs.
-
-  -> http://vger.kernel.org/vger-lists.html#netdev
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-
+For people who don't understand the above:
+On default debian 10, if except root you have more than one
+system user, the users can list and read each others home
+directories.
