@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["584" "Tuesday" "16" "May" "2017" "13:52:09" "-0400" "Christos Zoulas" "christos@zoulas.com" "<20170516175209.C043217FDA8@rebar.astron.com>" "17" "Re: [oss-security] NetBSD/pkgsrc membership on distros list" "^Date:" nil nil "5" "2017051617:52:09" "[oss-security] NetBSD/pkgsrc membership on distros list" (number mark "        christos@zou May 16   17/584   " thread-indent "\"Re: [oss-security] NetBSD/pkgsrc membership on distros list\"\n") "<20170516174512.274A517FDA8@rebar.astron.com>" ("<20170516174512.274A517FDA8@rebar.astron.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["816" "Thursday" "8" "October" "2020" "12:56:47" "+0200" "Oleg Kalnichevski" "olegk@apache.org" "<957319a25dba4efdb7523141231a6f35385ca72d.camel@apache.org>" "29" "[oss-security] [CVE-2020-13956] Apache HttpClient incorrect handling of malformed URI authority component" nil nil nil "10" "2020100810:56:47" "[oss-security] [CVE-2020-13956] Apache HttpClient incorrect handling of malformed URI authority component" (number mark "U       olegk@apache Oct  8   29/816   " thread-indent "\"[oss-security] [CVE-2020-13956] Apache HttpClient incorrect handling of malformed URI authority component\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-13956] Apache HttpClient incorrect handling of malformed URI authority component" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9785 invoked by uid 550); 16 May 2017 17:53:36 -0000
+Received: (qmail 5771 invoked by uid 550); 8 Oct 2020 10:58:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,32 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9441 invoked from network); 16 May 2017 17:52:21 -0000
-In-Reply-To: <20170516174512.274A517FDA8@rebar.astron.com>
-       from Christos Zoulas (May 16,  1:45pm)
-Organization: Astron Software
-X-Mailer: Mail User's Shell (7.2.6 beta(4.pl1)+dynamic 20000103)
-Message-Id: <20170516175209.C043217FDA8@rebar.astron.com>
-Date: Tue, 16 May 2017 13:52:09 -0400
-From: christos@zoulas.com (Christos Zoulas)
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] NetBSD/pkgsrc membership on distros list
+Received: (qmail 5405 invoked from network); 8 Oct 2020 10:57:03 -0000
+Message-ID: <957319a25dba4efdb7523141231a6f35385ca72d.camel@apache.org>
+From: Oleg Kalnichevski <olegk@apache.org>
 To: oss-security@lists.openwall.com
+Date: Thu, 08 Oct 2020 12:56:47 +0200
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.4-0ubuntu1 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [CVE-2020-13956] Apache HttpClient incorrect handling of malformed
+ URI authority component
 
-On May 16,  1:45pm, christos@zoulas.com (Christos Zoulas) wrote:
--- Subject: Re: [oss-security] NetBSD/pkgsrc membership on distros list
+CVE-2020-13956: Apache HttpClient incorrect handling of malformed
+authority component in request URIs
 
-| On May 16,  5:39pm, solar@openwall.com (Solar Designer) wrote:
-| -- Subject: [oss-security] NetBSD/pkgsrc membership on distros list
-| 
-| | If anyone from NetBSD who is on oss-security has anything relevant to
-| | say on this, please speak up.
-| 
-| Hi Alexander,
-| 
-| I've contacted the pkgsrc people and I will get back to you (or they will).
-| You are right; you should be chasing distros.
+Severity: Medium
 
-Oops, "should be *not* chasing distros".
+Vendor:
+The Apache Software Foundation
 
-christos
+Versions Affected:
+Apache HttpClient 4.5.12 and prior 
+Apache HttpClient 5.0.2 and prior
+
+Description:
+
+Apache HttpClient versions prior to version 4.5.13 and 5.0.3 can
+misinterpret malformed authority component in request URIs passed to
+the library as java.net.URI object and pick the wrong target host for
+request execution.  
+
+Mitigation:
+
+As of release 4.5.13 and 5.0.3 HttpClient will reject URIs with
+ambiguous malformed authority component as invalid. Users of HttpClient
+are advised to upgrade to version 4.5.13 or 5.0.3 and sanitize request
+URIs when using java.net.URI as input.
+
+Credit:
+This issue was discovered and reported by Priyank Nigam
+
