@@ -1,165 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/08/5
-Message-Id: <E9AC7759-6DB8-4293-A90A-58174CDC637F@beckweb.net>
-Date: Thu, 8 Oct 2020 14:36:42 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/08/1
+Message-ID: <20201008003001.GE378617@millbarge>
+Date: Thu, 8 Oct 2020 00:30:01 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+On Wed, Oct 07, 2020 at 04:09:59PM -0500, Bob Friesenhahn wrote:
+> Ubuntu Linux (a Debian derivative) has changed the default.  However, we
+> found that the Ubuntu default caused problems for us while building our
+> software, and so we changed them back.
 
-The following releases contain fixes for security vulnerabilities:
+Hello Bob, can you please share some details on this?
 
-* Active Choices Plugin 2.5
-* Audit Trail Plugin 3.7
-* couchdb-statistics Plugin 0.4
-* Role-based Authorization Strategy Plugin 3.1
+I expect Ubuntu home directories to be 755 by default:
+https://wiki.ubuntu.com/SecurityTeam/Policies#Permissive_Home_Directory_Access
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+And while it is very difficult to say "the umask", given that every
+process's umask setting depends upon the actions of not only itself but
+also its nearest parent to use the umask(2) syscall, but:
 
-* Maven Cascade Release Plugin
-* Nerrvana Plugin
-* Persona Plugin
-* Release Plugin
-* Shared Objects Plugin
-* SMS Notification Plugin
+$ grep ^UMASK /etc/login.defs
+UMASK		022
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2020-10-08/
+$ systemctl show -p UMask '*' | sort -u
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+UMask=0022
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+I'd certainly expect the default settings to be a umask of 0022, there's a
+variety of umasks on the systems I've got easy access to:
 
----
+$ sudo grep -h Umask /proc/*/status | sort -u
+Umask:	0000
+Umask:	0002
+Umask:	0022
+Umask:	0077
+Umask:	0777
+$ sudo grep -h Umask /proc/*/status | sort -u
+Umask:	0000
+Umask:	0002
+Umask:	0022
+Umask:	0077
+$ sudo grep -h Umask /proc/*/status | sort -u
+Umask:	0000
+Umask:	0002
+Umask:	0022
 
-SECURITY-1767 / CVE-2020-2286
-Role-based Authorization Strategy Plugin 2.12 and newer uses a cache to
-speed up permission lookups.
+Thanks
 
-In Role-based Authorization Strategy Plugin 3.0 and earlier this cache is
-not invalidated properly when an administrator changes the permission
-configuration. This can result in permissions being granted long after the
-configuration was changed to no longer grant them.
-
-
-SECURITY-1815 / CVE-2020-2287
-Audit Trail Plugin logs requests whose URL path matches an admin-configured
-regular expression.
-
-A discrepancy between the behavior of the plugin and the Stapler web
-framework in parsing URL paths allows attackers to craft URLs that would
-bypass request logging in Audit Trail Plugin 3.6 and earlier.
-
-
-SECURITY-1846 / CVE-2020-2288
-Audit Trail Plugin uses regular expressions to match requested URLs whose
-dispatch should be logged.
-
-In Audit Trail Plugin 3.6 and earlier, the default regular expression
-pattern could be bypassed in many cases by adding a suffix to the URL that
-would be ignored during request handling.
-
-
-SECURITY-1954 / CVE-2020-2289
-Active Choices Plugin 2.4 and earlier does not escape the name and
-description of build parameters.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission.
-
-
-SECURITY-2008 / CVE-2020-2290
-Active Choices Plugin 2.4 and earlier does not escape `List` and `Map`
-return values of sandboxed scripts for _Reactive Reference Parameter_.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission.
-
-
-SECURITY-2065 / CVE-2020-2291
-couchdb-statistics Plugin 0.3 and earlier stores its server password
-unencrypted in its global configuration file
-`org.jenkinsci.plugins.couchstats.CouchStatsConfig.xml` on the Jenkins
-controller as part of its configuration.
-
-This password can be viewed by users with access to the Jenkins controller
-file system.
-
-
-SECURITY-1928 / CVE-2020-2292
-Release Plugin 2.10.2 and earlier does not escape the release version in
-the badge tooltip.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Release/Release permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2046 / CVE-2020-2293
-Persona Plugin 2.4 and earlier allows users with Overall/Read permission to
-read arbitrary files on the Jenkins controller.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2049 / CVE-2020-2294 (permission check) & CVE-2020-2295 (CSRF)
-Maven Cascade Release Plugin 1.3.2 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to start cascade builds
-and layout builds, and reconfigure the plugin.
-
-Additionally, these endpoints do not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2052 / CVE-2020-2296
-Shared Objects Plugin 0.44 and earlier does not require POST requests for
-an HTTP endpoint, resulting in a cross-site request forgery (CSRF)
-vulnerability.
-
-This vulnerability allows attackers to configure shared objects.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2054 / CVE-2020-2297
-SMS Notification Plugin 1.2 and earlier stores an access token unencrypted
-in its global configuration file
-`com.hoiio.jenkins.plugin.SMSNotification.xml` on the Jenkins controller as
-part of its configuration.
-
-This access token can be viewed by users with access to the Jenkins
-controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2097 / CVE-2020-2298
-Nerrvana Plugin 1.02.06 and earlier does not configure its XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows attackers with Overall/Read permission to have Jenkins parse a
-crafted HTTP request with XML data that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-Additionally, XML parsing is exposed as a form validation endpoint that
-does not require POST requests, allowing exploitation by users without
-Overall/Read permission via CSRF.
-
-As of publication of this advisory, there is no fix.
-
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
