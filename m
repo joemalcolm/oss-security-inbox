@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["643" "Tuesday" "26" "January" "2016" "18:02:45" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20160126170245.GA2314@eldamar.local>" "22" "Re: [oss-security] Out-of-bounds Read in the libxml2's htmlParseNameComplex() function" "^Date:" nil nil "1" "2016012617:02:45" "[oss-security] Out-of-bounds Read in the libxml2's htmlParseNameComplex() function" (number mark "        carnil@debia Jan 26   22/643   " thread-indent "\"Re: [oss-security] Out-of-bounds Read in the libxml2's htmlParseNameComplex() function\"\n") "<3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>" ("<3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1573" "Thursday" "8" "October" "2020" "08:29:39" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.2010080824330.3742@scrappy.simplesystems.org>" "39" "Re: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" nil nil nil "10" "2020100813:29:39" "[oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" (number mark "U       bfriesen@sim Oct  8   39/1573  " thread-indent "\"Re: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022\"\n") "<20201008003001.GE378617@millbarge>" ("<CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>" "<alpine.GSO.2.20.2010071604290.15793@scrappy.simplesystems.org>" "<20201008003001.GE378617@millbarge>") nil nil nil nil nil nil nil "Re: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7536 invoked by uid 550); 26 Jan 2016 17:03:00 -0000
+Received: (qmail 21517 invoked by uid 550); 8 Oct 2020 13:29:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7516 invoked from network); 26 Jan 2016 17:02:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=hoyMIBOOyb8dSJgeoeLIUY0zznZ0ESFj1g09XRjNjI8=;
-        b=uoyyLRiopWcqADHSFHtXWFEw3hhKamM51tvz30xqhnutefqa0UkhEXiU+QZaAhM0cp
-         h7c/r9pV3+PuARoiGbPQFbvp0WdWxNEn2HqVfLtDInf5VQNNgxRXzSByg2wBHd9AAl6e
-         nMckLNoMhlFOmdcK2Y9viuvL0QaTG83Uqxa9DFC4dO5k5Tx1PTWVGAynIaptC3Y9oWJU
-         MdabcxO3ICL37/aiBwU/eAJWIGNXpW/BbqRnvtZKYix1MkdKj9rUv7JAfggG5j/U5QEn
-         o5d4QAm3maZ+02QR26og7KLU8UAnifu3BOTWL76YOzzoY7hdNaQIWFLdqIV4t85A6IcJ
-         94eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=hoyMIBOOyb8dSJgeoeLIUY0zznZ0ESFj1g09XRjNjI8=;
-        b=XBwfkYiRXXi66eK7UOK3AJ2mFdo8jVPxTz3YFD1Ic6Qj7+h4UE+Xg9IOiPFdIM0+gM
-         /feH+5ns8C/idDG5uuFBNsndjQxk3OqsBjbZzL5bfImsFo+UiTmIR40/L+BWB9Uw3M++
-         cfv4Eg05GV+SPKvBjaCjIVBqa/XZdxYgI9DHSI6fHizDOa7WynubbMlUapFxLfB46R3y
-         wTM7XPs4ecpCAL/VYXTaq5rXe98ZPfxK1slJ58eyee+myQYCi2wMUPO/4ur0+5x4J5iq
-         wDwwKvISNUkL5E3e8tYsgxP6sKHUmnxaCw/Rbtr2et8mIwsCiFFt+OxxNAvhDgq26ONe
-         IWNQ==
-X-Gm-Message-State: AG10YORQk3zFBvdzlWS3zWunAXOId0Zb+qnIKAZSzKN1c+AQFmwCM0D0cSywtoE0uDIV8Q==
-X-Received: by 10.195.13.129 with SMTP id ey1mr23852945wjd.132.1453827768319;
-        Tue, 26 Jan 2016 09:02:48 -0800 (PST)
-Message-ID: <20160126170245.GA2314@eldamar.local>
-References: <3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Tue, 26 Jan 2016 18:02:45 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] Out-of-bounds Read in the libxml2's
- htmlParseNameComplex() function
+Received: (qmail 20472 invoked from network); 8 Oct 2020 13:29:53 -0000
+Date: Thu, 8 Oct 2020 08:29:39 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+X-X-Sender: bfriesen@scrappy.simplesystems.org
 To: oss-security@lists.openwall.com
+In-Reply-To: <20201008003001.GE378617@millbarge>
+Message-ID: <alpine.GSO.2.20.2010080824330.3742@scrappy.simplesystems.org>
+References: <CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com> <alpine.GSO.2.20.2010071604290.15793@scrappy.simplesystems.org> <20201008003001.GE378617@millbarge>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Thu, 08 Oct 2020 08:29:39 -0500 (CDT)
+Subject: Re: [oss-security] Debian FEATURE: /home/loser is with permissions
+ 755, default umask 0022
 
-Hi,
+On Thu, 8 Oct 2020, Seth Arnold wrote:
 
-On Mon, Jan 25, 2016 at 08:01:08AM +0000, limingxing wrote:
-> 
-> 
-> Hello,
-> We find a vulnerability in the way libxml2's htmlParseNameComplex() function parsed certain xml file.
-> I was successful in reproducing this issuel in the latest version of libxml2(git clone git://git.gnome.org/libxml2).
-> HTMLparser.c line:2517 :
-> 
->        return(xmlDictLookup(ctxt->dict, ctxt->input->cur - len, len));
-> 
-> "ctxt->input->cur - len"  cause Out-of-bounds Read.
+> On Wed, Oct 07, 2020 at 04:09:59PM -0500, Bob Friesenhahn wrote:
+>> Ubuntu Linux (a Debian derivative) has changed the default.  However, we
+>> found that the Ubuntu default caused problems for us while building our
+>> software, and so we changed them back.
+>
+> Hello Bob, can you please share some details on this?
+>
+> I expect Ubuntu home directories to be 755 by default:
+> https://wiki.ubuntu.com/SecurityTeam/Policies#Permissive_Home_Directory_Access
+>
+> And while it is very difficult to say "the umask", given that every
+> process's umask setting depends upon the actions of not only itself but
+> also its nearest parent to use the umask(2) syscall, but:
+>
+> $ grep ^UMASK /etc/login.defs
+> UMASK		022
 
-While checking upstream bugzilla to see if that was reported I noticed
+It seems that the issue we encountered is due to 'USERGROUPS_ENAB yes' 
+in /etc/login.defs.  I am not sure if this is specific to Ubuntu. 
+This setting changes the umask from the default:
 
-https://bugzilla.gnome.org/show_bug.cgi?id=749115
+# Enable setting of the umask group bits to be the same as owner bits
+# (examples: 022 -> 002, 077 -> 007) for non-root users, if the uid is
+# the same as gid, and username is the same as the primary group name.
+#
+# If set to yes, userdel will remove the user's group if it contains no
+# more members, and useradd will create by default a group with the name
+# of the user.
+#
+USERGROUPS_ENAB yes
 
-Does this have the same root cause?
-
-Regards,
-Salvatore
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
