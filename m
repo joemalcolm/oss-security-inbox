@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/02/1
-Message-ID: <3d207449-3d64-7a06-be08-b388de39f606@apache.org>
-Date: Sat, 2 May 2020 14:27:25 +0200
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/08/2
+Message-ID: <CAH8yC8mWjOFAPe==ceGEfe=1sGpaicMRPwzdET61D04bJFa6fA@mail.gmail.com>
+Date: Wed, 7 Oct 2020 22:09:43 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-17557] Enduser UI XSS
+Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
-Description:
-It was found that the EndUser UI login page reflects the successMessage parameters.
-By this mean, a user accessing the Enduser UI could execute javascript code from URL query string.
+On Wed, Oct 7, 2020 at 3:20 PM Jeremy Stanley <fungi@...goth.org> wrote:
+>
+> On 2020-10-07 21:00:35 +0300 (+0300), Georgi Guninski wrote:
+> > https://lists.debian.org/debian-security/2020/10/msg00000.html
+> >
+> > ===
+> > /home/loser is with permissions 755, default umask 0022
+> > on multiuser machines this sucks much.
+> >
+>
+> It's tradition that on multi-user systems, users would want to share
+> data with one another and also serve content from their home
+> directories in Web sites. Further, it's not at all uncommon for
+> sysadmins to not understand or consider the system defaults when
+> making deployment decisions and failing to secure sensitive files.
+>
+> As a long-time Debian user myself, I agree that this default is
+> showing its age, and can represent a risk for operators who overlook
+> it.
 
-Severity: Medium
+Microsoft has an elegant solution with Bypass Traverse Checking
+(SeChangeNotifyPrivilege). It allows an admin to deny access to
+/home/loser, but allow access to /home/loser/www. Instead of a
+permission check working down the hierarchy, just the www object is
+checked.
 
-Vendor: The Apache Software Foundation
-
-Affects:
-2.0.X releases prior to 2.0.15
-2.1.X releases prior to 2.1.6
-
-Solution:
-2.0.X users: upgrade to 2.0.15
-2.1.X users: upgrade to 2.1.6
-
-Credit:
-This issue was independently discovered by CNCERT songmingxuan and GitHub Security Lab team member Alvaro Muñoz - https://github.com/pwntester
-
-References:
-https://syncope.apache.org/security
-
-
-
+Jeff
