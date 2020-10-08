@@ -1,63 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/30/1
-Message-ID: <4121113.n0WVUT9hOZ@tjmaciei-mobl1>
-Date: Wed, 29 Jan 2020 17:17:49 -0800
-From: Thiago Macieira <thiago.macieira@...el.com>
-To: <oss-security@...ts.openwall.com>
-Subject: New Qt vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/08/8
+Message-ID: <20201008210213.GB2102371@millbarge>
+Date: Thu, 8 Oct 2020 21:02:13 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
-The Qt security team was made aware of two issues affecting the currently-
-released versions of Qt that could lead to loading of untrusted plugins, which 
-can execute code immediately upon loading. We have assigned two IDs for them. 
-The patches fixing those issues are linked to below.
+On Thu, Oct 08, 2020 at 08:29:39AM -0500, Bob Friesenhahn wrote:
+> It seems that the issue we encountered is due to 'USERGROUPS_ENAB yes' in
+> /etc/login.defs.  I am not sure if this is specific to Ubuntu. This setting
+> changes the umask from the default:
 
-Issue 1) CVE-2020-0569
-Score: 7.3 (High) - CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H/E:F/RL:O/RC:C
-* Vendor: Qt Project
-* Product: Qt
-* Versions affected: 5.0.0 to 5.13.2
-* Versions fixed: 5.14.0 (already released), 5.12.7, 5.9.10 (future)
-* Issue: local attack, loading and execution of untrusted code
-* Scope: class QPluginLoader (qtbase/src/corelib/plugin/qpluginloader.cpp)
-* Description:
-QPluginLoader in Qt versions 5.0.0 through 5.13.2 would search for certain 
-plugins first on the current working directory of the application, which 
-allows an attacker that can place files in the file system and influence the 
-working directory of Qt-based applications to load and execute malicious code. 
-This issue was verified on macOS and Linux and probably affects all other Unix 
-operating systems. This issue does not affect Windows.
+Aha, thanks for indulging my curiosity and tracking this down. Ubuntu
+doesn't carry any changes to this package compared to the Debian
+package (any differences would be in a 'login' directory in
+https://patches.ubuntu.com/l/ ).
 
-Patches:
-- 5.6.0 through 5.13.2: https://code.qt.io/cgit/qt/qtbase.git/commit/?
-id=bf131e8d2181b3404f5293546ed390999f760404
-- 5.0.0 through 5.5.1: https://code.qt.io/cgit/qt/qtbase.git/commit/?
-id=5c4234ed958130d655df8197129806f687d4df0d
+"USERGROUPS_ENAB yes" may have been a Debian default setting since 1999 or
+so; archaelogy on packages this old is a little difficult, but the tarball
+on:
 
-Issue 2) CVE-2020-0570
-Score: 7.3 (High) - CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H/E:F/RL:O/RC:C
-* Vendor: Qt Project
-* Product: Qt
-* Versions affected: 5.12.0 through 5.14.0
-* Versions fixed: 5.14.1 (released), 5.12.7, 5.9.10 (future)
-* Issue: local attack, loading and execution of untrusted code
-* Scope: class QLibrary (qtbase/src/corelib/plugin)
-* Reference: https://bugreports.qt.io/browse/QTBUG-81272
-* Description:
-QLibrary in Qt versions 5.12.0 through 5.14.0, on certain x86 machines, would 
-search for certain libraries and plugins relative to current working directory 
-of the application, which allows an attacker that can place files in the file 
-system and influence the working directory of Qt-based applications to load 
-and execute malicious code. This issue was verified on Linux and probably 
-affects all Unix operating systems, other than macOS (Darwin). This issue does 
-not affect Windows.
+https://sources.debian.org/src/shadow/19990827-20/
 
-Patch: https://code.qt.io/cgit/qt/qtbase.git/commit/?
-id=e6f1fde24f77f63fb16b2df239f82a89d2bf05dd
+has several login.defs* files:
 
--- 
-Thiago Macieira - thiago.macieira (AT) intel.com
-  Software Architect - Intel System Software Products
+$ ls -l etc/login.defs*
+-rw-r--r-- 1 sarnold sarnold  5426 May  1  1997 etc/login.defs
+-rw-r--r-- 1 sarnold sarnold  4272 Aug 27  1999 etc/login.defs.hurd
+-rw-r--r-- 1 sarnold sarnold 10165 Aug 27  1999 etc/login.defs.linux
+$ grep USERGROUPS etc/login.*
+etc/login.defs.hurd:USERGROUPS_ENAB yes
+etc/login.defs.linux:USERGROUPS_ENAB yes
 
+By 2005 or so, the archaelogy gets easier:
 
+https://sources.debian.org/src/shadow/1:4.0.18.1-7+etch1/etc/login.defs/
+https://sources.debian.org/src/shadow/1:4.0.18.1-7+etch1/debian/changelog/
 
+I believe "USERGROUPS_ENAB yes" has been a Debian default since 1998 or 1999.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
