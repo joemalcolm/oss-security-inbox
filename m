@@ -1,39 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/1
-Message-ID: <20201116114318.GA335292@eldamar.lan>
-Date: Mon, 16 Nov 2020 12:43:18 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/08/3
+Message-ID: <cb230f80-6311-6ee3-c366-6ffa66f43e6f@debian.org>
+Date: Thu, 8 Oct 2020 10:59:00 +0200
+From: Giacomo Catenazzi <cate@...ian.org>
+To: Georgi Guninski <gguninski@...il.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-On Fri, Nov 13, 2020 at 01:33:31PM +0100, Hanno Böck wrote:
-[...]
-> FWIW I recently tried to fuzz raptor again with the fix applied. I
-> quickly found another OOB issue
-> https://bugs.librdf.org/mantis/view.php?id=650
-> 
-> From the bug report:
-> 
-> A malformed input file can lead to a segfault due to an out of bounds
-> array access in raptor_xml_writer_start_element_common.
-> 
-> Bug happens in line 230 of raptor_xml_writer.c (current git):
-> https://github.com/dajobe/raptor/blob/master/src/raptor_xml_writer.c#L230
-> 
-> From looking at that code it seems to me it always expects
-> nspace_declarations_count to be lower than element->attribute_count,
-> however this input seems to create a different situation. I made an
-> attempt at a patch that throws an error in this situation (but please
-> review it, I am not familiar with what this code does and should do -
-> though the patch doesn't seem to introduce test failures).
-> 
-> (proposed patch, example file and stacktrace can be found attached to
-> the bugreport)
+Sorry, I never told you it is a feature. Please read better, and try to 
+write better mails. if you had doubts, you could ask me, in the same tread.
 
-CVE-2020-25713 was assigned for this issue.
+And if you discover a vulnerability, you should disclose it. This is the 
+standard way.
 
-Regards,
-Salvatore
+
+In any case:
+
+No password should be stored in a world readable file. This is enforced 
+e.g. in ssh.  This is a good security advice.
+
+DO NOT PUT WordPress passwords (e.g. for database, or admin password) in 
+world readable file (on multi-user machines).  This is in part a user error.
+
+But PHP (as default LAMP) has this problem. I told you possible 
+work-around. So no system administrator should allow untrusted 
+multi-user with default LAMP setting.  This is fault of system 
+administrator: he should know the security risk before setting up 
+services. It is his job, and this is very well documented.
+
+Then I told you various methods to improve the security.
+
+But it seems you still do not understand "/home/loser is with 
+permissions 755, default umask 0022". Note: this is also a question on 
+installation. System administrator choose this setting.
+
+
+Do you want PHP run by root? (required with umask 0000) Or tell me what 
+should be the right setting? The error is simple: do not enable PHP in 
+the simple LAMP way without considering the security implication. 
+(suPHP, proxy, etc. are better ways).
+
+Yes, Debian is not secure by default (if you install various packages), 
+but it has a lot of documentation, to asses the risk, and how to setup 
+things. But at the end, it is the system administrator job to check 
+security implication before to install servers. This is true on most of 
+professional distribution.  But look the Debian default of Apache: it is 
+still strict. WordPress installations (and so configuration snippet) are 
+just for single-user machine (and they have extensive documentation 
+about security).
+
+
+If a official Debian mirror has such problem, it is worrying. OTOH all 
+Debian files are static files (so no passwords), and Debian sign all 
+files: we do not trust mirrors.
+
+
+If you had some doubt on my answer, you could have reach me, and ask me 
+what you do not understand, or to continue the discussion. Your way to 
+ridicule Debian just ridicule yourself.
+
+And if you want to continue, check my mails: they are long: please write 
+more complete mails: it helps you to order your ideas, and find flaws.
+
+ciao
+	cate
+
+
+
+On 07.10.2020 20:00, Georgi Guninski wrote:
+> https://lists.debian.org/debian-security/2020/10/msg00000.html
+> 
+> ===
+> /home/loser is with permissions 755, default umask 0022
+> 
+> on multiuser machines this sucks much.
+> 
+> on a multiuser debian mirror we found a lot of data,
+> including the wordpress password of the admin.
+> ===
+> 
+> Then in the thread someone with @debian.org email explains
+> to me it is a feature, not a bug.
+> 
+> In a addition, they suggest to tell them the mirror, lol.
+> 
+> Are debian detached from reality?
+> 
