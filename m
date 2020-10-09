@@ -1,39 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/31/2
-Message-ID: <CAOo2v=A-zfgSrFy73_XMGxV4FbV_fv3Ptj_JdWa3W6U=iowWsA@mail.gmail.com>
-Date: Sat, 1 Feb 2020 01:17:26 +0530
-From: Hardik Vyas <hvyas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/09/3
+Message-ID: <CANMpf843uQjY+oT8k-C7U_w9yfxNq9jyYDY7Xby3a4oO8RPVSg@mail.gmail.com>
+Date: Fri, 9 Oct 2020 12:52:56 -0700
+From: James Dailey <jamespdailey@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-1700 ceph: connection leak in the RGW Beast front-end permits a DoS against the RGW server
+Subject: CVE-2018-20243: Apache Fineract: password passed in URL, not via POST
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Passing the password in a URL parameter, instead of POST body, risked
+exposing the credentials e.g. in log files and HTTP intermediaries like
+proxies.
 
-A flaw was found in the way the Ceph RGW Beast front-end handles unexpected
-disconnects.
-An authenticated attacker can abuse this flaw by making multiple disconnect
-attempts resulting
-in a permanent leak of a socket connection by radosgw. This flaw could lead
-to a denial of service
-condition by pile up of CLOSE_WAIT sockets, eventually leading to the
-exhaustion of available
-resources, preventing legitimate users from connecting to the system.
+*Release branch*: The fix is available at
+https://github.com/apache/fineract/tree/1.4.0. as of  Sept 18, 2020
 
-This flaw affects Nautilus based versions. If Beast front end is in use,
-switch to CivetWeb to mitigate
-the issue. Red Hat has assigned CVE-2020-1700 and rated as Moderate impact
-flaw.
+The dev list was notified on Oct 8, 2020
 
-PR: https://github.com/ceph/ceph/pull/33017
-Patch:
-https://github.com/ceph/ceph/commit/ff72c50a2c43c57aead933eb4903ad1ca6d1748a
-
-Credit: Or Friedmann(Red Hat)
-
-Regards,
--- 
-
-Hardik Vyas / Red Hat Product Security
-
-BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
+https://lists.apache.org/thread.html/r040d46835aff3c192656b549ca82f62d87fb044ef9a9dd49408b49b4%40%3Cdev.fineract.apache.org%3E
 
