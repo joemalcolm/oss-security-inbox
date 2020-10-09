@@ -1,74 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/31/2
-Message-ID: <20200731140421.GD69757@zuma.herrb.net>
-Date: Fri, 31 Jul 2020 16:04:21 +0200
-From: Matthieu Herrb <matthieu@...rb.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/09/2
+Message-ID: <CAFQnWdYH1hR3cVN6F+psHrUD2B6SK=QtvL40+HTXO0UuK16cXw@mail.gmail.com>
+Date: Fri, 9 Oct 2020 10:06:46 +0200
+From: Stamatis Zampetakis <zabetak@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: X.Org security advisory: July 31, 2020: Xserver
+Subject: [CVE-2020-13955] Apache Calcite Disabled HTTPS Hostname Verification
 Content-Type: text/plain; charset=utf-8
 
------ Forwarded message from Matthieu Herrb <matthieu@...rb.eu> -----
+Severity: Moderate
 
-Date: Fri, 31 Jul 2020 15:44:44 +0200
-From: Matthieu Herrb <matthieu@...rb.eu>
-To: xorg-announce@...ts.x.org
-Cc: xorg-devel@...ts.x.org
-Subject: X.Org security advisory: July 31, 2020: Xserver
+Vendor:
+The Apache Software Foundation
 
-X.Org security advisory: July 31, 2020
+Versions Affected:
+Apache Calcite 0.8 to 1.25
 
-X Server Pixel Data Uninitialized Memory Information Disclosure 
-===============================================================
+Description:
+HttpUtils#getURLConnection method disables explicitly hostname verification
+for HTTPS connections making clients vulnerable to man-in-the-middle
+attacks.
+Calcite uses internally this method to connect with Druid and Splunk so
+information leakage may happen when using the respective Calcite adapters.
 
-CVE-2020-14347
+The method itself is in a utility class so people may use it to create
+vulnerable
+HTTPS connections for other applications.
 
-Allocation for pixmap data in AllocatePixmap() does not initialize the
-memory in xserver, it leads to leak uninitialize heap memory to
-clients. When the X server runs with elevated privileges.
+>From Apache Calcite 1.26 onwards, the hostname verification will be
+performed using the default JVM truststore.
 
-This flaw can lead to ASLR bypass, which when combined with other
-flaws (known/unknown) could lead to lead to privilege elevation in the
-client.
+Mitigation:
+Users should upgrade to 1.26 if:
+they are using Druid or Splunk adapters via HTTPS;
+they are using HttpUtils directly for HTTPS connections.
 
-Patch
-=====
+Credit:
+This issue was discovered by ﻿Simon Gerst.
 
-A patch for this issue has been commited to the xorg server git
-repository.  xorg-server 1.20.9 will be released shortly and will
-include this patch.
+References:
+https://issues.apache.org/jira/browse/CALCITE-4298
 
-https://gitlab.freedesktop.org/xorg/xserver.git
-
-diff --git a/dix/pixmap.c b/dix/pixmap.c
-index 1186d7dbb..5a0146bbb 100644
---- a/dix/pixmap.c
-+++ b/dix/pixmap.c
-@@ -116,7 +116,7 @@ AllocatePixmap(ScreenPtr pScreen, int pixDataSize)
-     if (pScreen->totalPixmapSize > ((size_t) - 1) - pixDataSize)
-         return NullPixmap;
- 
--    pPixmap = malloc(pScreen->totalPixmapSize + pixDataSize);
-+    pPixmap = calloc(1, pScreen->totalPixmapSize + pixDataSize);
-     if (!pPixmap)
-         return NullPixmap;
-    
-Thanks
-======
-
-This vulnerability was discovered by Jan-Niklas Sohn working with
-Trend Micro Zero Day Initiative.
-
--- 
-Matthieu Herrb
-
-
-
-_______________________________________________
-xorg-announce mailing list
-xorg-announce@...ts.x.org
-https://lists.x.org/mailman/listinfo/xorg-announce
-
-
------ End forwarded message -----
-
-Download attachment "signature.asc" of type "application/pgp-signature" (794 bytes)
