@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3749" "Monday" "27" "September" "2021" "17:16:25" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" nil "108" "[oss-security] [OSSA-2021-002] Nova: Open Redirect in noVNC proxy (CVE-2021-3654)" nil nil nil "9" nil nil (number mark "U       fungi@yuggot Sep 27  108/3749  " thread-indent "\"[oss-security] [OSSA-2021-002] Nova: Open Redirect in noVNC proxy (CVE-2021-3654)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [OSSA-2021-002] Nova: Open Redirect in noVNC proxy (CVE-2021-3654)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["540" "Friday" "9" "October" "2020" "12:52:56" "-0700" "James Dailey" "jamespdailey@gmail.com" "<CANMpf843uQjY+oT8k-C7U_w9yfxNq9jyYDY7Xby3a4oO8RPVSg@mail.gmail.com>" "15" "[oss-security] CVE-2018-20243: Apache Fineract: password passed in URL, not via POST" nil nil nil "10" "2020100919:52:56" "[oss-security] CVE-2018-20243: Apache Fineract: password passed in URL, not via POST" (number mark "U       jamespdailey Oct  9   15/540   " thread-indent "\"[oss-security] CVE-2018-20243: Apache Fineract: password passed in URL, not via POST\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2018-20243: Apache Fineract: password passed in URL, not via POST" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31750 invoked by uid 550); 27 Sep 2021 17:16:39 -0000
+Received: (qmail 17679 invoked by uid 550); 9 Oct 2020 20:01:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,127 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30708 invoked from network); 27 Sep 2021 17:16:38 -0000
-Date: Mon, 27 Sep 2021 17:16:25 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20210927171624.v6hor5ehfoa65ijs@yuggoth.org>
+Received: (qmail 13802 invoked from network); 9 Oct 2020 19:53:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=MkDbbduaBXTURfpHrErSU1SI/Du1r18kMJe2SQgdE/U=;
+        b=CZK7OdXbbIbSD+11O2WFdn6t/Ljzdlg/8jaVEcfxneNa6atVtAv3lJnpV5859ZX+lj
+         fgQcTrEDAVgZpuNsgqnYKR2eZ0ElQQFIWIjPXCcoTRbybcpP5SKL0FPiZgxEtkXiB0SB
+         X6QJ8kGCQVg4CVdAUm+4DblanDiuwrWcXVbUW4aZIM6sjlq3S6YIn1Cdub0BW81tMmXC
+         i4HvQiRt07+xnI9NlHJhQSmLhNFySFW6SeXyrQs2vTjOs3sspC9shMy2oPUyU8BJ5QMI
+         dW7cGp10OqqkqfDTH1PeLTXxwNHbSu8tIMt0YG76pBUA7wi/6svcgOWNXf6RQ4cIJ1iz
+         qvpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=MkDbbduaBXTURfpHrErSU1SI/Du1r18kMJe2SQgdE/U=;
+        b=bB2XmCq120VOhsKkeaKgSo0apbZxFSxQ8i6HSpzAekjwIEod81Q99uRadP91bbDJRi
+         k86xlPKYKKhjmTvUDbt2qD+Pd48CaNHtuB92KaRyzdcmoXQKZA8ypZ2/jvyEoHVF0Hcb
+         +7YZBU/HDmaqaVUzAt3WfmDkJlfan43E4Bba7OJtZpuOZ2PpCxYRjAtXUi+zHm6nejgM
+         aSXceeG8bICWY/PmJzdVpFfl0GM1sTsu7oXSrdc1g8EWgzczKih/McGtsv3KFnGpHa9c
+         Er5qP/NzbuZs3tsLq8laEeOpWGhafaz9qbg0j5sBXbJW6OYr6qMP4ocDBMIPo9sMKMVU
+         pXQg==
+X-Gm-Message-State: AOAM5312toGHuqJOIDtB7wtp3FJUCJwukekDzzBtE2o9xYpSRtCzCdaB
+	EVev1v2R0jy+0rgtn2IsakgoLDnAjHHyhSH1Ug+f2fDhrbNzZweo
+X-Google-Smtp-Source: ABdhPJwK1x8/esjahspy18WxtDnM1sRwlXDHko01FnDTPFBxyULTXsjdQtpV3yB0n8bpB3f/5V20+PSvTef5+eQEBHg=
+X-Received: by 2002:a4a:d622:: with SMTP id n2mr10212127oon.23.1602273188017;
+ Fri, 09 Oct 2020 12:53:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="btnugij2i6maw4l6"
-Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: [oss-security] [OSSA-2021-002] Nova: Open Redirect in noVNC proxy (CVE-2021-3654)
+From: James Dailey <jamespdailey@gmail.com>
+Date: Fri, 9 Oct 2020 12:52:56 -0700
+Message-ID: <CANMpf843uQjY+oT8k-C7U_w9yfxNq9jyYDY7Xby3a4oO8RPVSg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000034796805b1424c52"
+Subject: [oss-security] CVE-2018-20243: Apache Fineract: password passed in URL, not via POST
 
---btnugij2i6maw4l6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--00000000000034796805b1424c52
+Content-Type: text/plain; charset="UTF-8"
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2021-002: Open Redirect in noVNC proxy
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Passing the password in a URL parameter, instead of POST body, risked
+exposing the credentials e.g. in log files and HTTP intermediaries like
+proxies.
 
-:Date: July 29, 2021
-:CVE: CVE-2021-3654
+*Release branch*: The fix is available at
+https://github.com/apache/fineract/tree/1.4.0. as of  Sept 18, 2020
 
+The dev list was notified on Oct 8, 2020
 
-Affects
-~~~~~~~
-- Nova: <21.2.3, >=3D22.0.0 <22.2.3, >=3D23.0.0 <23.0.3
+https://lists.apache.org/thread.html/r040d46835aff3c192656b549ca82f62d87fb044ef9a9dd49408b49b4%40%3Cdev.fineract.apache.org%3E
 
-
-Description
-~~~~~~~~~~~
-Swe Aung, Shahaan Ayyub, and Salman Khan with the Monash University
-Cyber Security team reported a vulnerability affecting Nova's noVNC
-proxying implementation which exposed access to a well-known
-redirect behavior in the Python standard library's
-http.server.SimpleHTTPRequestHandler and thus noVNC's
-WebSockifyRequestHandler which uses it. By convincing a user to
-follow a specially-crafted novncproxy URL, the user could be
-redirected to an unrelated site under control of the attacker in an
-attempt to convince them to divulge credentials or other sensitive
-data. All Nova deployments with novncproxy enabled are affected.
-
-
-Errata
-~~~~~~
-The initial fix did not take into account the possibility of bypass
-using exactly three slashes. This update provides a more thorough
-revised fix for the issue. The affected versions list has been
-updated to indicate versions expected to include the newer solution.
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/791807 (Train)
-- https://review.opendev.org/806629 (errata 1) (Train)
-- https://review.opendev.org/791806 (Ussuri)
-- https://review.opendev.org/806628 (errata 1) (Ussuri)
-- https://review.opendev.org/791805 (Victoria)
-- https://review.opendev.org/806626 (errata 1) (Victoria)
-- https://review.opendev.org/791577 (Wallaby)
-- https://review.opendev.org/805818 (errata 1) (Wallaby)
-- https://review.opendev.org/791297 (Xena)
-- https://review.opendev.org/805654 (errata 1) (Xena)
-
-
-Credits
-~~~~~~~
-- Swe Aung from Monash University Cyber Security team (CVE-2021-3654)
-- Shahaan Ayyub from Monash University Cyber Security team (CVE-2021-3654)
-- Salman Khan from Monash University Cyber Security team (CVE-2021-3654)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1927677
-- https://bugs.python.org/issue32084
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2021-3654
-
-
-Notes
-~~~~~
-- The stable/train branch is under extended maintenance and will
-  receive no new point releases, but a patch for it is provided as a
-  courtesy.
-
-
-OSSA History
-~~~~~~~~~~~~
-- 2021-09-27 - Errata 1
-- 2021-07-29 - Original Version
-
---=20
-Jeremy Stanley
-
---btnugij2i6maw4l6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmFR/GhfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCl4UhAA415XxJH3n+qRdx02FaBnL1+0bFDGvAggXZLiyzk1AA8W3waR4MR+Ea9k
-AFVjNg13PDhSKMhrzowB3bVKSXEzM2BsxwNr02OnGW26+eyz1i4eZMNoIfYrp37/
-cjLJje7H1BbB+iolS/U5i95rRkba4lH5DU8TV+CPirC7IZ44Jh/S9O21+ToLSH2r
-z06ycphsazuwdhK0iS6vUbxWplt5ff2zyOGxtjo5JQIIZAN9bNmv6+11wt12MZ9P
-V+0nwu6xolMKNDh7BgCb9BuOaxV1BMzGQZEh0hE2SWtcX9rBhcXaWWj4mpN5WXq2
-q4CGlFu23uyp7H5riKXD/CySyR3+teVb53ibMzl0+lVDxxFu2AZqq63Wl46lPDkL
-F+7zRrWgO3fyODDYTgZMJaazB7QIBrkEQDzJ8HmJZBoThyCLbDgb1n+9uoLKSSPG
-wksvQelQLeOn4QQib9aaxQoEtLt7SLH3gumKHKg/1dbJPBrLNXdH3TlFeVpHJ5+V
-V7P0Itk4fH6H9RC4XkeT5xwVa3ucIu0oAxQWeqDYWK3ng+Law8b2JSTryMUJlEpK
-pfHx95q2eldx8HZHvTz6WqnEsYlafWochvBHQhDiMxSU3xpTcHAsOLaX3XyjGN5F
-TYgI6Nus1CU6rzvNp9YjtFRBo+WBBHH8sxuqXBPdzRkMiLLGqHc=
-=rKXu
------END PGP SIGNATURE-----
-
---btnugij2i6maw4l6--
+--00000000000034796805b1424c52--
