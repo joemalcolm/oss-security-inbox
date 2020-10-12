@@ -1,182 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/20/4
-Message-Id: <E1kUqJo-00021v-0d@xenbits.xenproject.org>
-Date: Tue, 20 Oct 2020 12:00:44 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 345 v3 - x86: Race condition in Xen mapping code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/13/2
+Message-ID: <841f6eac-05fd-49b3-a03b-3d291e62bee7@archlinux.org>
+Date: Mon, 12 Oct 2020 16:13:05 -0400
+From: Eli Schwartz <eschwartz@...hlinux.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 10/12/20 3:41 PM, Solar Designer wrote:
+> Hi,
+> 
+> A problem with Georgi's message that started this thread, besides its
+> overall tone, is that it singled out Debian.  In my experience, most
+> Unix-like distributions use insecure defaults like this.
+> 
+> On Thu, Oct 08, 2020 at 08:07:10AM +1100, Brian May wrote:
+>> Jeremy Stanley <fungi@...goth.org> writes:
+>>
+>>> As a long-time Debian user myself, I agree that this default is
+>>> showing its age, and can represent a risk for operators who overlook
+>>> it.
+>>
+>> Yes, I agree the default should be changed.
+> 
+> I also think the defaults should be changed, and not only on Debian.
+> 
+> Special cases like serving web pages do not justify insecure default
+> home directory permissions - rather, they're reasons to provide extra
+> setup instructions in web server packages, etc.
 
-                    Xen Security Advisory XSA-345
-                              version 3
+https://wiki.archlinux.org/index.php/Access_Control_Lists#Granting_execution_permissions_for_private_files_to_a_web_server
 
-                x86: Race condition in Xen mapping code
+This seems like a fairly solvable problem.
 
-UPDATES IN VERSION 3
-====================
+By default, Arch Linux's login.defs umask is 077, so home directories
+created by useradd cannot be read at all by other users. (It is then
+overridden by /etc/profile to 022.)
 
-Public release.
+>> Just note that there is a reasonable amount of software install
+>> instructions that assume umask is 022 and will install software with
+>> unusable permissions if it is not.
+> 
+> This is indeed a problem.  When building software manually (not
+> packaged) and wanting to install it on a system globally (e.g., in
+> /usr/local), a workaround is to use "(umask 022; make install)" - that
+> is, temporarily relax the umask to 022 just for that one command by
+> running it in a subshell.
+> 
+> RPM typically invokes "umask 022" for all(?) package build scripts,
+> including the %install section, which lets it build proper packages even
+> when run on a system with umask 077 even when the packaged software's
+> install scripts assume umask 022.
+> 
+> I think package install scripts should learn not to assume umask, or at
+> least not when installing software globally.  When installing to a
+> subdirectory of the user's home directory, it makes sense to honor the
+> user's umask, but those cases probably can't be recognized reliably.
+> 
+> It's a pity that software will just assume it's to be installed globally
+> (or with equivalent permissions), but the current reality is no better
+> where things break arbitrarily (e.g., some files mode 644, some 600)
+> when installing unprepared software with umask 077.
 
-ISSUE DESCRIPTION
-=================
+It depends how the software is installed, surely? Some things use
+mkdir/cp, some use install (which defaults to 755).
 
-The Xen code handling the updating of the hypervisor's own pagetables
-tries to use 2MiB and 1GiB superpages as much as possible to maximize
-TLB efficiency.  Some of the operations for checking and coalescing
-superpages take non-negligible amount of time; to avoid potential lock
-contention, this code also tries to avoid holding locks for the entire
-operation.
+Some build systems, like meson, have a core setting for the installation
+umask, ignoring the process umask in favor of 022 by default or whatever
+configuration option was passed.
 
-Unfortunately, several potential race conditions were not considered;
-precisely-timed guest actions could potentially lead to the code
-writing to a page which has been freed (and thus potentially already
-reused).
-
-IMPACT
-======
-
-A malicious guest can cause a host denial-of-service.  Data corruption
-or privilege escalation cannot be ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-Versions of Xen from at least 3.2 onward are affected.
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-Guests can only exercise the vulnerability if they have passed through
-hardware devices.  Guests without passthrough configured cannot
-exploit the vulnerability.
-
-Furthermore, HVM and PVH guests can only exercise the vulnerability if
-they are running in shadow mode, and only when running on VT-x capable
-hardware (as opposed to SVM).  This is believed to be Intel, Centaur
-and Shanghai CPUs.
-
-MITIGATION
-==========
-
-Running all guests in HVM or PVH mode, in each case with HAP enabled,
-prevent those guests from exploiting the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Hongyan Xia of Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa345/*.patch           xen-unstable
-xsa345-4.14/*.patch      Xen 4.14.x
-xsa345-4.13/*.patch      Xen 4.12.x, Xen 4.13.x
-xsa345-4.11/*.patch      Xen 4.11.x
-xsa345-4.10/*.patch      Xen 4.10.x
-
-$ sha256sum xsa345* xsa345*/*
-c8b9445b05aa4c585d9817c2e6cbf08466452a15381ca5b9a0224a377522edf9  xsa345.meta
-4ed69dce620449bedda29f3ce1ed767908d2bbeb888701e7c4c2461216b724f7  xsa345-4.10/0001-x86-mm-Refactor-map_pages_to_xen-to-have-only-a-sing.patch
-98d3b171b197c1ff9f26ff70499a0cde3b23d048d622b12bf2ea0899de4f9e7f  xsa345-4.10/0002-x86-mm-Refactor-modify_xen_mappings-to-have-one-exit.patch
-78c4be2f1747051d13869001180ee25bdeabe5e8138d0604a33db610b24e38f1  xsa345-4.10/0003-x86-mm-Prevent-some-races-in-hypervisor-mapping-upda.patch
-4abd8271a70593fcde683071fdf0ac342ff9b0859b60c9790b14dd7e5ae85129  xsa345-4.11/0001-x86-mm-Refactor-map_pages_to_xen-to-have-only-a-sing.patch
-3209195c1a7e8a6186b704d6bb791a3fb3c251d59e15b42bcb0ecc0d38f13a4f  xsa345-4.11/0002-x86-mm-Refactor-modify_xen_mappings-to-have-one-exit.patch
-7e73f6c14718a0d4b25b4453b45c20bf265bd54c91b77678815be1ef7beae61f  xsa345-4.11/0003-x86-mm-Prevent-some-races-in-hypervisor-mapping-upda.patch
-b68b82911c96feee9d05abcddf174c2f6b278829bc8c3bf3062739de8c4704b2  xsa345-4.12/0001-x86-mm-Refactor-map_pages_to_xen-to-have-only-a-sing.patch
-fe2a1568a3e273ae01b3984c193e75aea16da53c6c9db27d21a2196d0f204c6e  xsa345-4.12/0002-x86-mm-Refactor-modify_xen_mappings-to-have-one-exit.patch
-22c98f4a264bc6b15ed29da8698a733947849c16a3e9da58de88bf16986b6aad  xsa345-4.12/0003-x86-mm-Prevent-some-races-in-hypervisor-mapping-upda.patch
-16299d885c19e1cd378a856caf8c1d1365c341bea648c0a0d5f24ae7d56015ae  xsa345-4.13/0001-x86-mm-Refactor-map_pages_to_xen-to-have-only-a-sing.patch
-b820061c242c7fa4da44cbb44fa16e0d0542c16815a89699385da0c87321f7ea  xsa345-4.13/0002-x86-mm-Refactor-modify_xen_mappings-to-have-one-exit.patch
-8a87ac2478c9bda6ef28c480b256448d51393a5e04f6e8a68ea29d9aeba92e47  xsa345-4.13/0003-x86-mm-Prevent-some-races-in-hypervisor-mapping-upda.patch
-acf093741fecccccce0018d4a5c0f5dba367373dd1d6d04ed76ff3f178579670  xsa345-4.14/0001-x86-mm-Refactor-map_pages_to_xen-to-have-only-a-sing.patch
-616f2547b4bb6d5eb9f853b1659e6e2a1fc0f67866665f4f6cdd8d763effcdfc  xsa345-4.14/0002-x86-mm-Refactor-modify_xen_mappings-to-have-one-exit.patch
-17ae72d2af6759da17ce777e0fc9eef8f8eb6be3fe6d5b38b3589f641fc0f918  xsa345-4.14/0003-x86-mm-Prevent-some-races-in-hypervisor-mapping-upda.patch
-65c56cb4d34ff4e97220311b303c09b54bfa44bcf4adc8e81d4a50c50eeb6b95  xsa345/0001-x86-mm-Refactor-map_pages_to_xen-to-have-only-a-sing.patch
-5512bd167c29ba7da06b2ace1397fc43ed33a362174ea927d6ca3f9bdd31748b  xsa345/0002-x86-mm-Refactor-modify_xen_mappings-to-have-one-exit.patch
-392524c9b0a01618e6c86a39dc1c68288065300b49548e29e9e6672947858060  xsa345/0003-x86-mm-Prevent-some-races-in-hypervisor-mapping-upda.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+> I think distros have to take the first step and change the default umask
+> to 077.  Until enough distros do, software maintainers won't have the
+> incentive to support that or won't even know about the problem.
+> 
+> Alexander
+> 
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+-- 
+Eli Schwartz
+Arch Linux Bug Wrangler and Trusted User
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+OzqoMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZLt4H/2hHMHfpQsPiWUXQj6/SXmjZrnIuBsBeP6Hno3p+
-aKVzdFJkdBHN6thRlIgir1tffawxbzrFG4ARN3A4mBfdEJYFMLo79v6dn1FtCdzw
-OFdI95/sZ+zeOR8InfjedX67S0fNzVW4QkU2dpS5pwupdn+wg+Z4313FIyV7Oteo
-sbN8dCeCn9t2mDBXa6D9Tyhc5iTfPBU09AZWh29wjnjGH4nOgarDwHX4x7VzZLyY
-CB18RZ/Ezwud3thlsZdLWfzGOvpRDMKFq2pYwBHd3Dc7cSOLRGf6x8FLAHVc7XzR
-a5cLY0oYOppJa++a/yyG8pKs7O410943SZ7292mDv0hwjnw=
-=pVu8
------END PGP SIGNATURE-----
 
-Download attachment "xsa345.meta" of type "application/octet-stream" (1741 bytes)
-
-Download attachment "xsa345-4.10/0001-x86-mm-Refactor-map_pages_to_xen-to-have-only-a-sing.patch" of type "application/octet-stream" (2650 bytes)
-
-Download attachment "xsa345-4.10/0002-x86-mm-Refactor-modify_xen_mappings-to-have-one-exit.patch" of type "application/octet-stream" (2284 bytes)
-
-Download attachment "xsa345-4.10/0003-x86-mm-Prevent-some-races-in-hypervisor-mapping-upda.patch" of type "application/octet-stream" (8436 bytes)
-
-Download attachment "xsa345-4.11/0001-x86-mm-Refactor-map_pages_to_xen-to-have-only-a-sing.patch" of type "application/octet-stream" (2661 bytes)
-
-Download attachment "xsa345-4.11/0002-x86-mm-Refactor-modify_xen_mappings-to-have-one-exit.patch" of type "application/octet-stream" (2284 bytes)
-
-Download attachment "xsa345-4.11/0003-x86-mm-Prevent-some-races-in-hypervisor-mapping-upda.patch" of type "application/octet-stream" (8394 bytes)
-
-Download attachment "xsa345-4.12/0001-x86-mm-Refactor-map_pages_to_xen-to-have-only-a-sing.patch" of type "application/octet-stream" (2619 bytes)
-
-Download attachment "xsa345-4.12/0002-x86-mm-Refactor-modify_xen_mappings-to-have-one-exit.patch" of type "application/octet-stream" (2242 bytes)
-
-Download attachment "xsa345-4.12/0003-x86-mm-Prevent-some-races-in-hypervisor-mapping-upda.patch" of type "application/octet-stream" (8302 bytes)
-
-Download attachment "xsa345-4.13/0001-x86-mm-Refactor-map_pages_to_xen-to-have-only-a-sing.patch" of type "application/octet-stream" (2661 bytes)
-
-Download attachment "xsa345-4.13/0002-x86-mm-Refactor-modify_xen_mappings-to-have-one-exit.patch" of type "application/octet-stream" (2284 bytes)
-
-Download attachment "xsa345-4.13/0003-x86-mm-Prevent-some-races-in-hypervisor-mapping-upda.patch" of type "application/octet-stream" (8347 bytes)
-
-Download attachment "xsa345-4.14/0001-x86-mm-Refactor-map_pages_to_xen-to-have-only-a-sing.patch" of type "application/octet-stream" (2655 bytes)
-
-Download attachment "xsa345-4.14/0002-x86-mm-Refactor-modify_xen_mappings-to-have-one-exit.patch" of type "application/octet-stream" (2305 bytes)
-
-Download attachment "xsa345-4.14/0003-x86-mm-Prevent-some-races-in-hypervisor-mapping-upda.patch" of type "application/octet-stream" (8374 bytes)
-
-Download attachment "xsa345/0001-x86-mm-Refactor-map_pages_to_xen-to-have-only-a-sing.patch" of type "application/octet-stream" (3075 bytes)
-
-Download attachment "xsa345/0002-x86-mm-Refactor-modify_xen_mappings-to-have-one-exit.patch" of type "application/octet-stream" (2305 bytes)
-
-Download attachment "xsa345/0003-x86-mm-Prevent-some-races-in-hypervisor-mapping-upda.patch" of type "application/octet-stream" (8374 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (1602 bytes)
