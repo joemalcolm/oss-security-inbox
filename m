@@ -1,37 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/7
-Message-ID: <1752678237.112165.1589465926257@mail.yahoo.com>
-Date: Thu, 14 May 2020 14:18:46 +0000 (UTC)
-From: Andrea Cosentino <ancosen1985@...oo.com>
-To: "dev@...el.apache.org" <dev@...el.apache.org>,  "users@...el.apache.org" <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "Colm O. HEigeartaigh" <coheigea@...che.org>,  Jonathan Gallimore <jonathan.gallimore@...il.com>
-Subject: [SECURITY] New security advisory CVE-2020-11971 released for Apache Camel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/7
+Message-ID: <20201012194139.GA30753@openwall.com>
+Date: Mon, 12 Oct 2020 21:41:39 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache Camel, that is fixed in
-the recent 2.25.1 and 3.2.0 releases.
+Hi,
 
-CVE-2020-11971: Apache Camel JMX Rebind Flaw Vulnerability
+A problem with Georgi's message that started this thread, besides its
+overall tone, is that it singled out Debian.  In my experience, most
+Unix-like distributions use insecure defaults like this.
 
-Severity: MEDIUM
+On Thu, Oct 08, 2020 at 08:07:10AM +1100, Brian May wrote:
+> Jeremy Stanley <fungi@...goth.org> writes:
+> 
+> > As a long-time Debian user myself, I agree that this default is
+> > showing its age, and can represent a risk for operators who overlook
+> > it.
+> 
+> Yes, I agree the default should be changed.
 
-Vendor: The Apache Software Foundation
+I also think the defaults should be changed, and not only on Debian.
 
-Versions Affected: Camel 2.25.0, Camel 3.0.0 to 3.1.0. The unsupported Camel 2.x (2.24 and earlier) versions may be also affected.
+Special cases like serving web pages do not justify insecure default
+home directory permissions - rather, they're reasons to provide extra
+setup instructions in web server packages, etc.
 
-Description: Apache Camel JMX Rebind Flaw Vulnerability
+> Just note that there is a reasonable amount of software install
+> instructions that assume umask is 022 and will install software with
+> unusable permissions if it is not.
 
-Mitigation: 2.x users should upgrade to 2.25.1, 3.x users should upgrade to 3.2.0 The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-14811 refers to the various commits that resovoled the issue, and have more details.
+This is indeed a problem.  When building software manually (not
+packaged) and wanting to install it on a system globally (e.g., in
+/usr/local), a workaround is to use "(umask 022; make install)" - that
+is, temporarily relax the umask to 022 just for that one command by
+running it in a subshell.
 
-Credit: This issue was discovered by Colm O. HEigeartaigh <coheigea at apache dot org> from Apache Software Foundation and Jonathan Gallimore <jonathan dot gallimore at gmail dot com> from Tomitribe
+RPM typically invokes "umask 022" for all(?) package build scripts,
+including the %install section, which lets it build proper packages even
+when run on a system with umask 077 even when the packaged software's
+install scripts assume umask 022.
 
-On behalf of the Apache Camel PMC
+I think package install scripts should learn not to assume umask, or at
+least not when installing software globally.  When installing to a
+subdirectory of the user's home directory, it makes sense to honor the
+user's umask, but those cases probably can't be recognized reliably.
 
---
-Andrea Cosentino 
-----------------------------------
-Apache Camel PMC Chair
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@...oo.com
-Twitter: @oscerd2
-Github: oscerd
+It's a pity that software will just assume it's to be installed globally
+(or with equivalent permissions), but the current reality is no better
+where things break arbitrarily (e.g., some files mode 644, some 600)
+when installing unprepared software with umask 077.
+
+I think distros have to take the first step and change the default umask
+to 077.  Until enough distros do, software maintainers won't have the
+incentive to support that or won't even know about the problem.
+
+Alexander
