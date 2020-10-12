@@ -1,40 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/19/2
-Message-ID: <360777c3.7d8b.17540bb5b7a.Coremail.xxyu@apache.org>
-Date: Mon, 19 Oct 2020 20:00:21 +0800 (CST)
-From: "Xiaoxiang Yu" <xxyu@...che.org>
-To: info@...rlabs.sg, user@...in.apache.org, dev@...in.apache.org,  oss-security@...ts.openwall.com, security@...che.org
-Subject: [SECURITY][CVE-2020-13937] Unauthenticated Configuration Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/11
+Message-ID: <871ri3p2l4.fsf@canidae.wired.pri>
+Date: Tue, 13 Oct 2020 08:16:23 +1100
+From: Brian May <brian@...uxpenguins.xyz>
+To: oss-security@...ts.openwall.com
+Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
-Versions Affected:
+Jeffrey Walton <noloader@...il.com> writes:
 
-Kylin 2.0.0, 2.1.0, 2.2.0, 2.3.0, 2.3.1, 2.3.2, 2.4.0, 2.4.1, 2.5.0, 2.5.1, 2.5.2, 2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 3.0.0-alpha, 3.0.0-alpha2, 3.0.0-beta, 3.0.0, 3.0.1, 3.0.2, 3.1.0, 4.0.0-alpha.
+> [...] like making /home/loser/www available to other users.
 
+Does anybody even do this anymore?
 
+Once upon a time, a shared Unix system account come with an implied web
+account which you could use to publish files and create your own
+website. But I cannot personally think of any examples where this still
+happens. websystems and shell accounts are generally stored on distinct
+and independent systems.
 
+Plus even if I was going to implement such a system today, I might
+seriously consider using - say "/web/loser" instead. Although this might
+have implications if quotas are important. Or maybe something that bind
+mounts /home/loser/www to /web/loser, that way the web software doesn't
+need access to /home/loser.
 
-Description:
-
-Kylin has one restful api which exposed Kylin's configuration information without any authentication, so it is dangerous because some confidential information entries will be disclosed to everyone.
-
-
-
-
-Mitigation:
-
-Users could edit "$KYLIN_HOME/WEB-INF/classes/kylinSecurity.xml", and remove this line "<scr:intercept-url pattern="/api/admin/config" access="permitAll"/>". After that,  restart all Kylin instances to make it effective.
-
-Otherwise, you can upgrade Kylin to 3.1.1.
-
-
-
-
-Credit:
-
-This issue was discovered by Ngo Wei Lin (@Creastery) of STAR Labs (@starlabs_sg).
-
---
-
-Best wishes to you ! 
-From ：Xiaoxiang Yu
+Even shared systems - while still around and still very important (HPC
+comes to mind) - are a lot less common then they use to be. Most Linux
+installs are private non-shared systems. Which I suspect explains why
+there isn't a more pressure to fix the default umask issue.
+-- 
+Brian May <brian@...uxpenguins.xyz>
+https://linuxpenguins.xyz/brian/
