@@ -1,4 +1,9 @@
-Received: (qmail 15723 invoked by uid 550); 24 Jan 2024 18:15:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3023" "Monday" "12" "October" "2020" "14:30:20" "+0200" "Solar Designer" "solar@openwall.com" "<20201012123020.GA26643@openwall.com>" "64" "[oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil "10" "2020101212:30:20" "[oss-security] Gentoo's \"contributing back\" linux-distros tasks" (number mark "U       solar@openwa Oct 12   64/3023  " thread-indent "\"[oss-security] Gentoo's \"contributing back\" linux-distros tasks\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 8003 invoked by uid 550); 12 Oct 2020 12:30:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,52 +12,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12177 invoked from network); 24 Jan 2024 18:13:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sijanec.eu; s=mail;
-	t=1706120149; bh=olo9706kzXfJH30RNZnjB8qTtquk2EDUn/cylgbjF1I=;
-	h=Date:From:To:Subject:In-Reply-To:References;
-	b=dJ5bg0wTq6wSvPaONLBWTQAhpkgACyQeuODdqsRi3BMv01wRZCX0/J5L4zIUWQF10
-	 8RBbnQ3rCSzPKCVraOkUtlkGlpMrsdPazUDbyB1KbF2Vb/VW5KeNitoXyLOtIZAZ7M
-	 YNjhMT2Pc+P03v8gwWsyou1b+2cmhAfjFj7ylduslmNDXxau3Pz4IeqbXyJgIfSY2D
-	 NXh96mviBUWyYut7863hG7IuR04ilAFvT93jY8+r2RJQzN9dAPSKW+zu26sENN3ljf
-	 B3j5CLC38Q+6B4O9uKyfyF86mSDytNRB6TD0nyXE7xa+80JwANwjJ9Z+x0IQQT/Y5g
-	 N7oSzV4v6AMcw==
-Date: Wed, 24 Jan 2024 19:15:49 +0100
-From: =?UTF-8?Q?Anton_Luka_=C5=A0ijanec?= <anton@sijanec.eu>
+Received: (qmail 7878 invoked from network); 12 Oct 2020 12:30:26 -0000
+Date: Mon, 12 Oct 2020 14:30:20 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-User-Agent: K-9 Mail for Android
-In-Reply-To: <jnc745riho5bck4f24gfjhz755zedqma77hbpdcwn7hchttluu@n6ajzobn5ukx>
-References: <Za-XWUEPml2pcATt@kasco.suse.de> <20240124084235.360eb42b.hanno@hboeck.de> <ZbDH9FfiyKDUFv64@suse.com> <jnc745riho5bck4f24gfjhz755zedqma77hbpdcwn7hchttluu@n6ajzobn5ukx>
-Message-ID: <99053B65-6161-46F7-A5B2-BB13B2BD6503@sijanec.eu>
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary=----AOO8O5ACMI89THOSE7MBAR0S8TUXT0
-Content-Transfer-Encoding: 7bit
-Subject: =?US-ASCII?Q?Re=3A_=5Boss-security=5D_Re=3A_darkhttpd=3A_timing_attac?= =?US-ASCII?Q?k_and_local_leak_of_HTTP_basic_auth_credentials?=
+Message-ID: <20201012123020.GA26643@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Gentoo's "contributing back" linux-distros tasks
 
-------AOO8O5ACMI89THOSE7MBAR0S8TUXT0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Hello,
+Gentoo signed up for these "contributing back" tasks for linux-distros:
 
-I can see UID numbers in /proc/net/tcp6 as a non-root user even though my p=
-rocfs is mounted with hidepid=3Dinvisible (ps aux only shows my processes).=
- My system is Gentoo Linux with kernel 6.1.69. Peeking at the source, it lo=
-oks like oidentd indeed reads from /proc/net/tcp6. I run oidentd on a syste=
-m with hidepid=3Dinvisible and oidentd runs as a separate oidentd user and =
-does work (tested by trying to connect to an IrcNet server).
+https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
 
-regards
+9. Stay on top of issues to ensure progress is being made, remind others
+when there's no apparent progress, as well as when the public disclosure
+date for an issue is approaching and when it's finally reached (unless
+the reporter beats you to it by making their mandatory posting to
+oss-security first) - primary: Gentoo, backup: Amazon
 
-On 24 January 2024 18:39:38 CET, nightmare.yeah27@aceecat.org wrote:
->Do not the various implementations of the *ident* protocol (example: oiden=
-td)
->rely on this interface? They are often, or always, intentionally configured
->to run as nobody or a dedicated UID.
->
->--=20
->Ian
+11. Make sure the mandatory oss-security posting is made promptly and is
+sufficiently detailed, and remind the reporter if not - primary: Gentoo,
+backup: Amazon
 
-------AOO8O5ACMI89THOSE7MBAR0S8TUXT0--
+12. If exploit(s) were shared on the list, make sure that either they're
+included in the oss-security posting along with the issue detail or the
+posting includes an announcement of planned later posting of the
+exploits (with the delay being within list policy), and in the latter
+case also make sure that the later posting is in fact made as planned,
+and remind the reporter if not - primary: Gentoo, backup: Amazon
+
+13. Keep track of per-report and per-issue handling and disclosure
+timelines (at least times of notification of the private list and of
+actual public disclosure), at regular intervals produce and share
+statistics (most notably, the average embargo duration) as well as the
+raw data (except on issues that are still under embargo) by posting to
+oss-security - primary: Gentoo, backup: Amazon
+
+and we saw some contributions from Gentoo on these, most notable being
+their work on the statistics (task 13 above):
+
+https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+
+Unfortunately, the last update of these statistics ("Last modified:
+2019/10/15 01:52 by kristianf") is also when the contributions ceased.
+
+Some others have been taking care of tasks 9, 11, 12 (in particular,
+Anthony Liguori of Amazon has been helping, but on various occasions
+also many others from other distros), but not yet of task 13.
+
+I understand that Gentoo is a community project run by volunteers, and I
+am not complaining.  Rather, I think we need to discuss with Gentoo in
+here and reassign to other distros whatever responsibilities Gentoo no
+longer has resources for.  We should ideally keep at least one task
+Gentoo's responsibility (and Gentoo should have specific people assigned
+to that task), at least to be consistent with our current requirements
+for new distros joining (linux-)distros.
+
+To Gentoo: which of these tasks, or other "contributing back" tasks, are
+you (still) willing to handle, and who on your team would handle them?
+
+To others on linux-distros: which of the above tasks do you volunteer to
+become primary for?
+
+To Amazon: do you want to remain backup for task 13, or do you not have
+the resources to handle it?
+
+If Gentoo already has some work-in-progress on task 13 for October 2019
+and on, yet we reassign this task to another distro, then that data and
+instructions should probably be transferred to the other distro.
+
+Alexander
