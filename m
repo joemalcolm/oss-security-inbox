@@ -1,20 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/8
-Message-ID: <20201012203108.GA25626@wopr>
-Date: Mon, 12 Oct 2020 13:31:08 -0700
-From: Kurt H Maier <khm@...ops.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/6
+Message-ID: <CAECwjAVeHJV6_L+S-eTkw66RS+vMGngU0ztVgmee6zfJbT7ETQ@mail.gmail.com>
+Date: Mon, 12 Oct 2020 11:39:50 -0700
+From: Tomas Fernandez Lobbe <tflobbe@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
+Cc: private@...ene.apache.org
+Subject: [CVE-2020-13957] The checks added to unauthenticated configset uploads in Apache Solr can be circumvented
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 12, 2020 at 09:41:39PM +0200, Solar Designer wrote:
-> I also think the defaults should be changed, and not only on Debian.
+Severity: High
 
-This is just kicking the can down the road.  X years ago people
-complained about oppressive defaults.  X years from now these defaults
-will also be insufficient.   We could save a lot of treadmill labor
-dollars by just admitting that global filesystem namespaces are a
-mistake, but the sunk cost fallacy is preventing this.  It's the same
-story as SETUID all over again.
+Vendor: The Apache Software Foundation
 
-khm
+Versions Affected:
+6.6.0 to 6.6.5
+7.0.0 to 7.7.3
+8.0.0 to 8.6.2
+
+Description:
+Solr prevents some features considered dangerous (which could be used for
+remote code execution) to be configured in a ConfigSet that's uploaded via
+API without authentication/authorization. The checks in place to prevent
+such features can be circumvented by using a combination of UPLOAD/CREATE
+actions.
+
+Mitigation:
+Any of the following are enough to prevent this vulnerability:
+* Disable UPLOAD command in ConfigSets API if not used by setting the
+system property: "configset.upload.enabled" to "false" [1]
+* Use Authentication/Authorization and make sure unknown requests aren't
+allowed [2]
+* Upgrade to Solr 8.6.3 or greater.
+* If upgrading is not an option, consider applying the patch in SOLR-14663
+([3])
+* No Solr API, including the Admin UI, is designed to be exposed to
+non-trusted parties. Tune your firewall so that only trusted computers and
+people are allowed access
+
+Credit:
+Tomás Fernández Löbbe, András Salamon
+
+References:
+[1] https://lucene.apache.org/solr/guide/8_6/configsets-api.html
+[2]
+https://lucene.apache.org/solr/guide/8_6/authentication-and-authorization-plugins.html
+[3] https://issues.apache.org/jira/browse/SOLR-14663
+[4] https://issues.apache.org/jira/browse/SOLR-14925
+[5] https://wiki.apache.org/solr/SolrSecurity
+
