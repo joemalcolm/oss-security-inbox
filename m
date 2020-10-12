@@ -1,68 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/5
-Message-Id: <3113FCBB-7A3C-4D83-B4B5-3F1CE524EE8C@cmpct.info>
-Date: Mon, 16 Nov 2020 19:42:17 +0000
-From: Sam James <sam@...ct.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/8
+Message-ID: <20201012203108.GA25626@wopr>
+Date: Mon, 12 Oct 2020 13:31:08 -0700
+From: Kurt H Maier <khm@...ops.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
+Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Oct 12, 2020 at 09:41:39PM +0200, Solar Designer wrote:
+> I also think the defaults should be changed, and not only on Debian.
 
+This is just kicking the can down the road.  X years ago people
+complained about oppressive defaults.  X years from now these defaults
+will also be insufficient.   We could save a lot of treadmill labor
+dollars by just admitting that global filesystem namespaces are a
+mistake, but the sunk cost fallacy is preventing this.  It's the same
+story as SETUID all over again.
 
-> On 16 Nov 2020, at 18:50, Stephen John Smoogen <smooge@...il.com> wrote:
-> 
-> On Mon, 16 Nov 2020 at 12:44, David A. Wheeler <dwheeler@...eeler.com>
-> wrote:
-> 
->>> [snip]
->> 
->> I think this is key. If you find a vulnerability, you typically need to
->> ensure that it gets
->> a CVE assigned if you want coordination & resolution to happen. It's how
->> coordination happens.
->> There are issues with CVEs, but I’ve never seen a CVE assignment
->> get dropped in recent years once it was requested properly.
->> Delayed, yes, but I know CVE assignments don’t take 3 years :-).
->> And yes, there are special issues with the Linux kernel, but this package
->> isn’t the Linux kernel.
->> 
->> If you think that CVE assignment is still of “fluctuating reliability” I’d
->> like to hear that argument
->> and get it fixed. It’s normally better to fix the standard process for
->> doing something than
->> to create yet another process that runs in parallel. I’ve seen no recent
->> evidence of this reliability issue.
->> 
->> 
-> My guess is that there was an assumption that if an email with a
-> vulnerability was sent to this list, someone would do the CVE filing for
-> them. Looking through my archives, there are times where someone posts a
-> vulnerability and miraculously someone says shortly "Please use
-> CVE-2XXX-YYYY for all future announcements." If you aren't on the lists all
-> the time or know that various groups do this full time, there is no clue
-> that there was some sort of extra work done to get that number... it just
-> looks like it was done as a service. When a person posts a vulnerability
-> and then gets no extra emails.. then it looks like a secret society. "Oh
-> you forgot to shake Smooge's hand with your middle finger hooked and your
-> pinky out... can't give you a CVE"
-> 
-> 
-
-There’s a webform where you can apply and the folks are quite good at replying
-with helpful comments & feedback if needed.
-
-But I can see why someone might get that impression.
-
-> 
-> 
-> 
->> Sing this (to “Single Ladies”):
->> "If you like it, then you shoulda put a CVE on it...:"
->> 
->> --- David A. Wheeler
->> 
->> 
-> 
-> -- 
-> Stephen J Smoogen.
-
+khm
