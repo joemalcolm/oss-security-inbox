@@ -1,30 +1,157 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/25/2
-Message-ID: <20200225110636.GA23823@localhost.localdomain>
-Date: Tue, 25 Feb 2020 03:06:36 -0800
-From: Qualys Security Advisory <qsa@...lys.com>
-To: "Alexander E. Patrakov" <patrakov@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/4
+Message-ID: <5a3464785c26496ea796470a1a0d82d1@tencent.com>
+Date: Mon, 12 Oct 2020 15:53:06 +0000
+From: kiyin(尹亮) <kiyin@...cent.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Anthony Liguori <aliguori@...zon.com>, Solar Designer <solar@...nwall.com>
+Subject: Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+There are four security bugs in Broadcom SPU driver. The patch was public in https://www.spinics.net/lists/linux-crypto/msg50839.html. CVE ID request is in progress.
 
-On Tue, Feb 25, 2020 at 12:54:50AM +0500, Alexander E. Patrakov wrote:
-> Is the hole exploitable in this configuration?
+Here is the patch detail:
 
-If there is absolutely nothing else in your configuration file, you
-should be fine. Still, we recommend that you patch as soon as possible;
-just in case we missed an attack vector.
 
-With best regards,
+
+The setkey function for GCM/CCM algorithms didn't verify the key
+
+length before copying the key and subtracting the salt length.
+
+
+
+This patch delays the copying of the key til after the verification
+
+has been done.  It also adds checks on the key length to ensure
+
+that it's at least as long as the salt.
+
+
+
+Fixes: 9d12ba86f818 ("crypto: brcm - Add Broadcom SPU driver")
+
+Cc: <stable@...xxxxxxxxxxxx>
+
+Reported-by: kiyin(尹亮) <kiyin@...xxxxxxxx>
+
+Signed-off-by: Herbert Xu <herbert@...xxxxxxxxxxxxxxxx>
+
+
+
+diff --git a/drivers/crypto/bcm/cipher.c b/drivers/crypto/bcm/cipher.c
+
+index 5d38b87b9d77..50d169e61b41 100644
+
+--- a/drivers/crypto/bcm/cipher.c
+
++++ b/drivers/crypto/bcm/cipher.c
+
+@@ -2867,7 +2867,6 @@ static int aead_gcm_ccm_setkey(struct crypto_aead *cipher,
+
+
+
+        ctx->enckeylen = keylen;
+
+        ctx->authkeylen = 0;
+
+-       memcpy(ctx->enckey, key, ctx->enckeylen);
+
+
+
+        switch (ctx->enckeylen) {
+
+        case AES_KEYSIZE_128:
+
+@@ -2883,6 +2882,8 @@ static int aead_gcm_ccm_setkey(struct crypto_aead *cipher,
+
+               goto badkey;
+
+        }
+
+
+
++       memcpy(ctx->enckey, key, ctx->enckeylen);
+
++
+
+        flow_log("  enckeylen:%u authkeylen:%u\n", ctx->enckeylen,
+
+                ctx->authkeylen);
+
+        flow_dump("  enc: ", ctx->enckey, ctx->enckeylen);
+
+@@ -2937,6 +2938,10 @@ static int aead_gcm_esp_setkey(struct crypto_aead *cipher,
+
+        struct iproc_ctx_s *ctx = crypto_aead_ctx(cipher);
+
+
+
+        flow_log("%s\n", __func__);
+
++
+
++       if (keylen < GCM_ESP_SALT_SIZE)
+
++               return -EINVAL;
+
++
+
+        ctx->salt_len = GCM_ESP_SALT_SIZE;
+
+        ctx->salt_offset = GCM_ESP_SALT_OFFSET;
+
+        memcpy(ctx->salt, key + keylen - GCM_ESP_SALT_SIZE, GCM_ESP_SALT_SIZE);
+
+@@ -2965,6 +2970,10 @@ static int rfc4543_gcm_esp_setkey(struct crypto_aead *cipher,
+
+        struct iproc_ctx_s *ctx = crypto_aead_ctx(cipher);
+
+
+
+        flow_log("%s\n", __func__);
+
++
+
++       if (keylen < GCM_ESP_SALT_SIZE)
+
++              return -EINVAL;
+
++
+
+        ctx->salt_len = GCM_ESP_SALT_SIZE;
+
+        ctx->salt_offset = GCM_ESP_SALT_OFFSET;
+
+        memcpy(ctx->salt, key + keylen - GCM_ESP_SALT_SIZE, GCM_ESP_SALT_SIZE);
+
+@@ -2994,6 +3003,10 @@ static int aead_ccm_esp_setkey(struct crypto_aead *cipher,
+
+        struct iproc_ctx_s *ctx = crypto_aead_ctx(cipher);
+
+
+
+        flow_log("%s\n", __func__);
+
++
+
++       if (keylen < CCM_ESP_SALT_SIZE)
+
++              return -EINVAL;
+
++
+
+        ctx->salt_len = CCM_ESP_SALT_SIZE;
+
+        ctx->salt_offset = CCM_ESP_SALT_OFFSET;
+
+        memcpy(ctx->salt, key + keylen - CCM_ESP_SALT_SIZE, CCM_ESP_SALT_SIZE);
 
 --
-the Qualys Security Advisory team
+
+Email: Herbert Xu <herbert@...xxxxxxxxxxxxxxxx>
+
+Home Page: http://gondor.apana.org.au/~herbert/
+
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
 
 
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
-
-
-
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
