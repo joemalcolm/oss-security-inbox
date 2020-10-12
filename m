@@ -1,25 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/09/1
-Message-ID: <9255c8f6-1d98-fd80-b6b1-bb53d8ca8dd6@redhat.com>
-Date: Thu, 9 Apr 2020 14:57:58 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: libssh - CVE-2020-1730
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/5
+Message-ID: <749d9302-fcd1-4dc5-15d6-27802f36b081@gentoo.org>
+Date: Mon, 12 Oct 2020 14:36:55 -0400
+From: Yury German <blueknight@...too.org>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: Gentoo's "contributing back" linux-distros tasks
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
 
-A vulnerability was found in libssh through version 0.8.0, where a
-malicious client or server could crash the counterpart implemented with
-libssh AES-CTR ciphers are used and don't get fully initialized. It will
-crash when it tries to cleanup the AES-CTR ciphers when closing the
-connection.
+On 10/12/20 8:30 AM, Solar Designer wrote:
+> Hi,
+>
+> Gentoo signed up for these "contributing back" tasks for linux-distros:
+>
+> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+>
+> 9. Stay on top of issues to ensure progress is being made, remind others
+> when there's no apparent progress, as well as when the public disclosure
+> date for an issue is approaching and when it's finally reached (unless
+> the reporter beats you to it by making their mandatory posting to
+> oss-security first) - primary: Gentoo, backup: Amazon
+>
+> 11. Make sure the mandatory oss-security posting is made promptly and is
+> sufficiently detailed, and remind the reporter if not - primary: Gentoo,
+> backup: Amazon
+>
+> 12. If exploit(s) were shared on the list, make sure that either they're
+> included in the oss-security posting along with the issue detail or the
+> posting includes an announcement of planned later posting of the
+> exploits (with the delay being within list policy), and in the latter
+> case also make sure that the later posting is in fact made as planned,
+> and remind the reporter if not - primary: Gentoo, backup: Amazon
+>
+> 13. Keep track of per-report and per-issue handling and disclosure
+> timelines (at least times of notification of the private list and of
+> actual public disclosure), at regular intervals produce and share
+> statistics (most notably, the average embargo duration) as well as the
+> raw data (except on issues that are still under embargo) by posting to
+> oss-security - primary: Gentoo, backup: Amazon
+>
+> and we saw some contributions from Gentoo on these, most notable being
+> their work on the statistics (task 13 above):
+>
+> https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+>
+> Unfortunately, the last update of these statistics ("Last modified:
+> 2019/10/15 01:52 by kristianf") is also when the contributions ceased.
+>
+> Some others have been taking care of tasks 9, 11, 12 (in particular,
+> Anthony Liguori of Amazon has been helping, but on various occasions
+> also many others from other distros), but not yet of task 13.
+>
+> I understand that Gentoo is a community project run by volunteers, and I
+> am not complaining.  Rather, I think we need to discuss with Gentoo in
+> here and reassign to other distros whatever responsibilities Gentoo no
+> longer has resources for.  We should ideally keep at least one task
+> Gentoo's responsibility (and Gentoo should have specific people assigned
+> to that task), at least to be consistent with our current requirements
+> for new distros joining (linux-)distros.
+>
+> To Gentoo: which of these tasks, or other "contributing back" tasks, are
+> you (still) willing to handle, and who on your team would handle them?
 
-Reference:
-https://www.libssh.org/security/advisories/CVE-2020-1730.txt
+Alexander,
+
+As you mentioned Gentoo is a purely volunteer distribution and due to
+the happenings in the world we could not devote a lot of time.
+
+Currently I have been maintaining the statistics for the list, but there
+was a time from October to January that I was off the list and do not
+have the archive of the messages. I will need to work with someone to
+fill out those statistics as K_F is currently not available.
+
+I will be able to continue with Task 13, and will catch up during the
+weekend.
 
 
-
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security
+>
+> To others on linux-distros: which of the above tasks do you volunteer to
+> become primary for?
+>
+> To Amazon: do you want to remain backup for task 13, or do you not have
+> the resources to handle it?
+>
+> If Gentoo already has some work-in-progress on task 13 for October 2019
+> and on, yet we reassign this task to another distro, then that data and
+> instructions should probably be transferred to the other distro.
+>
+> Alexander
 
