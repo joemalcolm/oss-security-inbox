@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["621" "Saturday" "27" "August" "2016" "22:14:13" "+0800" "=?UTF-8?B?5pu+6bi/5Z2k?=" "hongkun.zeng@dbappsecurity.com.cn" "<654bd3de.fa5.156cc59cf29.Coremail.hongkun.zeng@dbappsecurity.com.cn>" "15" "[oss-security] CVE Request - Intelliants Subrion CMS Arbitrary Files Delete" nil nil nil "8" "2016082714:14:13" "[oss-security] CVE Request - Intelliants Subrion CMS Arbitrary Files Delete" (number mark "U       hongkun.zeng Aug 27   15/621   " thread-indent "\"[oss-security] CVE Request - Intelliants Subrion CMS Arbitrary Files Delete\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4401" "Monday" "12" "October" "2020" "15:53:06" "+0000" "=?gb2312?B?a2l5aW4o0vzBwSk=?=" "kiyin@tencent.com" "<5a3464785c26496ea796470a1a0d82d1@tencent.com>" "76" "[oss-security] Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey" nil nil nil "10" "2020101215:53:06" "[oss-security] Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey" (number mark "U       kiyin@tencen Oct 12   76/4401  " thread-indent "\"[oss-security] Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14160 invoked by uid 550); 27 Aug 2016 14:32:02 -0000
+Received: (qmail 21519 invoked by uid 550); 12 Oct 2020 16:39:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +12,104 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11835 invoked from network); 27 Aug 2016 14:27:52 -0000
-X-Originating-IP: [112.10.126.234]
-Date: Sat, 27 Aug 2016 22:14:13 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?5pu+6bi/5Z2k?= <hongkun.zeng@dbappsecurity.com.cn>
-To: oss-security <oss-security@lists.openwall.com>
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 5.0.4 dev build
- 20151203(78088.8298) Copyright (c) 2002-2016 www.mailtech.cn dbappsecurity
-X-SendMailWithSms: false
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_14196_466670929.1472307253028"
+Received: (qmail 18305 invoked from network); 12 Oct 2020 15:53:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tencent.com;
+	s=s202002; t=1602518076;
+	bh=KBgMwaXF7nm3/UNmg8P8rWKHXtF1Zz9m4E4pZ72z3kw=;
+	h=From:To:CC:Subject:Date;
+	b=HNOWxh3vxfb+m12ZeSkmy0DA9NuNnHbpwfFOJqoL1Fj2INLyW5Unkm/Uh1esKEJ00
+	 0b6ulQ4G5YPGCGrFucPyWsoiB+k+wxZNE47S3uJpubxfVudlko+VzMngaK8RTeTRf8
+	 nzwVCmv5dZIyx3AOABcsXBaePtVWwQnnumcFunDI=
+From: =?gb2312?B?a2l5aW4o0vzBwSk=?= <kiyin@tencent.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+CC: Anthony Liguori <aliguori@amazon.com>, Solar Designer <solar@openwall.com>
+Thread-Topic: [PATCH] crypto: bcm - Verify GCM/CCM key length in setkey
+Thread-Index: Adagr69BtZLJx7+YRNqprkDKOhO4Tw==
+Date: Mon, 12 Oct 2020 15:53:06 +0000
+Message-ID: <5a3464785c26496ea796470a1a0d82d1@tencent.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [9.19.161.113]
+Content-Type: multipart/alternative;
+	boundary="_000_5a3464785c26496ea796470a1a0d82d1tencentcom_"
 MIME-Version: 1.0
-Message-ID: <654bd3de.fa5.156cc59cf29.Coremail.hongkun.zeng@dbappsecurity.com.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:AQAAfwCXn881oMFXEQIAAA--.2W
-X-CM-SenderInfo: 5krqwytxqo6vdqj6vu5dss2vpfxux331of0zgofq/1tbiAQAAB1V+
-	eM9lPQAIsK
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VW7Jw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
-Subject: [oss-security] CVE Request - Intelliants Subrion CMS Arbitrary Files Delete
+Subject: [oss-security] Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey
 
-------=_Part_14196_466670929.1472307253028
-Content-Type: text/plain; charset=UTF-8
+--_000_5a3464785c26496ea796470a1a0d82d1tencentcom_
+Content-Type: text/plain; charset="gb2312"
 Content-Transfer-Encoding: base64
 
-SW50ZWxsaWFudHMgU3VicmlvbiBDTVMgQXJiaXRyYXJ5IEZpbGVzIERlbGV0
-ZQpUaGlzIHZ1bG5lcmFiaWxpdHkgYWxsb3dzIHJlbW90ZSBhdXRoZW50aWNh
-dGVkIHVzZXJzIHRvIGRlbGV0ZSBhcmJpdHJhcnkgZmlsZXMgb24gdGhlIHNl
-cnZlci4KRml4IGNvbW1pdDogaHR0cHM6Ly9naXRodWIuY29tL2ludGVsbGlh
-bnRzL3N1YnJpb24vY29tbWl0L2JmMjU5NmYyYWIyN2UzNzQ1NjkxMDg4NmU2
-OWI0ODQ4NGE3NmRkNjQKCgpUaGUgYXV0by11cGdyYWRlciBwYXRjaCBoYXMg
-YmVlbiByZWxlYXNlZC4KQ291bGQgeW91IGFsbG9jYXRlIGEgQ1ZFIElEIGZv
-ciB0aGlzPwoKClRoYW5rIHlvdQ==
+VGhlcmUgYXJlIGZvdXIgc2VjdXJpdHkgYnVncyBpbiBCcm9hZGNvbSBTUFUg
+ZHJpdmVyLiBUaGUgcGF0Y2ggd2FzIHB1YmxpYyBpbiBodHRwczovL3d3dy5z
+cGluaWNzLm5ldC9saXN0cy9saW51eC1jcnlwdG8vbXNnNTA4MzkuaHRtbC4g
+Q1ZFIElEIHJlcXVlc3QgaXMgaW4gcHJvZ3Jlc3MuDQoNCkhlcmUgaXMgdGhl
+IHBhdGNoIGRldGFpbDoNCg0KDQoNClRoZSBzZXRrZXkgZnVuY3Rpb24gZm9y
+IEdDTS9DQ00gYWxnb3JpdGhtcyBkaWRuJ3QgdmVyaWZ5IHRoZSBrZXkNCg0K
+bGVuZ3RoIGJlZm9yZSBjb3B5aW5nIHRoZSBrZXkgYW5kIHN1YnRyYWN0aW5n
+IHRoZSBzYWx0IGxlbmd0aC4NCg0KDQoNClRoaXMgcGF0Y2ggZGVsYXlzIHRo
+ZSBjb3B5aW5nIG9mIHRoZSBrZXkgdGlsIGFmdGVyIHRoZSB2ZXJpZmljYXRp
+b24NCg0KaGFzIGJlZW4gZG9uZS4gIEl0IGFsc28gYWRkcyBjaGVja3Mgb24g
+dGhlIGtleSBsZW5ndGggdG8gZW5zdXJlDQoNCnRoYXQgaXQncyBhdCBsZWFz
+dCBhcyBsb25nIGFzIHRoZSBzYWx0Lg0KDQoNCg0KRml4ZXM6IDlkMTJiYTg2
+ZjgxOCAoImNyeXB0bzogYnJjbSAtIEFkZCBCcm9hZGNvbSBTUFUgZHJpdmVy
+IikNCg0KQ2M6IDxzdGFibGVAeHh4eHh4eHh4eHh4eHh4Pg0KDQpSZXBvcnRl
+ZC1ieToga2l5aW4o0vzBwSkgPGtpeWluQHh4eHh4eHh4eHh4Pg0KDQpTaWdu
+ZWQtb2ZmLWJ5OiBIZXJiZXJ0IFh1IDxoZXJiZXJ0QHh4eHh4eHh4eHh4eHh4
+eHh4eHg+DQoNCg0KDQpkaWZmIC0tZ2l0IGEvZHJpdmVycy9jcnlwdG8vYmNt
+L2NpcGhlci5jIGIvZHJpdmVycy9jcnlwdG8vYmNtL2NpcGhlci5jDQoNCmlu
+ZGV4IDVkMzhiODdiOWQ3Ny4uNTBkMTY5ZTYxYjQxIDEwMDY0NA0KDQotLS0g
+YS9kcml2ZXJzL2NyeXB0by9iY20vY2lwaGVyLmMNCg0KKysrIGIvZHJpdmVy
+cy9jcnlwdG8vYmNtL2NpcGhlci5jDQoNCkBAIC0yODY3LDcgKzI4NjcsNiBA
+QCBzdGF0aWMgaW50IGFlYWRfZ2NtX2NjbV9zZXRrZXkoc3RydWN0IGNyeXB0
+b19hZWFkICpjaXBoZXIsDQoNCg0KDQogICAgICAgIGN0eC0+ZW5ja2V5bGVu
+ID0ga2V5bGVuOw0KDQogICAgICAgIGN0eC0+YXV0aGtleWxlbiA9IDA7DQoN
+Ci0gICAgICAgbWVtY3B5KGN0eC0+ZW5ja2V5LCBrZXksIGN0eC0+ZW5ja2V5
+bGVuKTsNCg0KDQoNCiAgICAgICAgc3dpdGNoIChjdHgtPmVuY2tleWxlbikg
+ew0KDQogICAgICAgIGNhc2UgQUVTX0tFWVNJWkVfMTI4Og0KDQpAQCAtMjg4
+Myw2ICsyODgyLDggQEAgc3RhdGljIGludCBhZWFkX2djbV9jY21fc2V0a2V5
+KHN0cnVjdCBjcnlwdG9fYWVhZCAqY2lwaGVyLA0KDQogICAgICAgICAgICAg
+ICBnb3RvIGJhZGtleTsNCg0KICAgICAgICB9DQoNCg0KDQorICAgICAgIG1l
+bWNweShjdHgtPmVuY2tleSwga2V5LCBjdHgtPmVuY2tleWxlbik7DQoNCisN
+Cg0KICAgICAgICBmbG93X2xvZygiICBlbmNrZXlsZW46JXUgYXV0aGtleWxl
+bjoldVxuIiwgY3R4LT5lbmNrZXlsZW4sDQoNCiAgICAgICAgICAgICAgICBj
+dHgtPmF1dGhrZXlsZW4pOw0KDQogICAgICAgIGZsb3dfZHVtcCgiICBlbmM6
+ICIsIGN0eC0+ZW5ja2V5LCBjdHgtPmVuY2tleWxlbik7DQoNCkBAIC0yOTM3
+LDYgKzI5MzgsMTAgQEAgc3RhdGljIGludCBhZWFkX2djbV9lc3Bfc2V0a2V5
+KHN0cnVjdCBjcnlwdG9fYWVhZCAqY2lwaGVyLA0KDQogICAgICAgIHN0cnVj
+dCBpcHJvY19jdHhfcyAqY3R4ID0gY3J5cHRvX2FlYWRfY3R4KGNpcGhlcik7
+DQoNCg0KDQogICAgICAgIGZsb3dfbG9nKCIlc1xuIiwgX19mdW5jX18pOw0K
+DQorDQoNCisgICAgICAgaWYgKGtleWxlbiA8IEdDTV9FU1BfU0FMVF9TSVpF
+KQ0KDQorICAgICAgICAgICAgICAgcmV0dXJuIC1FSU5WQUw7DQoNCisNCg0K
+ICAgICAgICBjdHgtPnNhbHRfbGVuID0gR0NNX0VTUF9TQUxUX1NJWkU7DQoN
+CiAgICAgICAgY3R4LT5zYWx0X29mZnNldCA9IEdDTV9FU1BfU0FMVF9PRkZT
+RVQ7DQoNCiAgICAgICAgbWVtY3B5KGN0eC0+c2FsdCwga2V5ICsga2V5bGVu
+IC0gR0NNX0VTUF9TQUxUX1NJWkUsIEdDTV9FU1BfU0FMVF9TSVpFKTsNCg0K
+QEAgLTI5NjUsNiArMjk3MCwxMCBAQCBzdGF0aWMgaW50IHJmYzQ1NDNfZ2Nt
+X2VzcF9zZXRrZXkoc3RydWN0IGNyeXB0b19hZWFkICpjaXBoZXIsDQoNCiAg
+ICAgICAgc3RydWN0IGlwcm9jX2N0eF9zICpjdHggPSBjcnlwdG9fYWVhZF9j
+dHgoY2lwaGVyKTsNCg0KDQoNCiAgICAgICAgZmxvd19sb2coIiVzXG4iLCBf
+X2Z1bmNfXyk7DQoNCisNCg0KKyAgICAgICBpZiAoa2V5bGVuIDwgR0NNX0VT
+UF9TQUxUX1NJWkUpDQoNCisgICAgICAgICAgICAgIHJldHVybiAtRUlOVkFM
+Ow0KDQorDQoNCiAgICAgICAgY3R4LT5zYWx0X2xlbiA9IEdDTV9FU1BfU0FM
+VF9TSVpFOw0KDQogICAgICAgIGN0eC0+c2FsdF9vZmZzZXQgPSBHQ01fRVNQ
+X1NBTFRfT0ZGU0VUOw0KDQogICAgICAgIG1lbWNweShjdHgtPnNhbHQsIGtl
+eSArIGtleWxlbiAtIEdDTV9FU1BfU0FMVF9TSVpFLCBHQ01fRVNQX1NBTFRf
+U0laRSk7DQoNCkBAIC0yOTk0LDYgKzMwMDMsMTAgQEAgc3RhdGljIGludCBh
+ZWFkX2NjbV9lc3Bfc2V0a2V5KHN0cnVjdCBjcnlwdG9fYWVhZCAqY2lwaGVy
+LA0KDQogICAgICAgIHN0cnVjdCBpcHJvY19jdHhfcyAqY3R4ID0gY3J5cHRv
+X2FlYWRfY3R4KGNpcGhlcik7DQoNCg0KDQogICAgICAgIGZsb3dfbG9nKCIl
+c1xuIiwgX19mdW5jX18pOw0KDQorDQoNCisgICAgICAgaWYgKGtleWxlbiA8
+IENDTV9FU1BfU0FMVF9TSVpFKQ0KDQorICAgICAgICAgICAgICByZXR1cm4g
+LUVJTlZBTDsNCg0KKw0KDQogICAgICAgIGN0eC0+c2FsdF9sZW4gPSBDQ01f
+RVNQX1NBTFRfU0laRTsNCg0KICAgICAgICBjdHgtPnNhbHRfb2Zmc2V0ID0g
+Q0NNX0VTUF9TQUxUX09GRlNFVDsNCg0KICAgICAgICBtZW1jcHkoY3R4LT5z
+YWx0LCBrZXkgKyBrZXlsZW4gLSBDQ01fRVNQX1NBTFRfU0laRSwgQ0NNX0VT
+UF9TQUxUX1NJWkUpOw0KDQotLQ0KDQpFbWFpbDogSGVyYmVydCBYdSA8aGVy
+YmVydEB4eHh4eHh4eHh4eHh4eHh4eHh4Pg0KDQpIb21lIFBhZ2U6IGh0dHA6
+Ly9nb25kb3IuYXBhbmEub3JnLmF1L35oZXJiZXJ0Lw0KDQpQR1AgS2V5OiBo
+dHRwOi8vZ29uZG9yLmFwYW5hLm9yZy5hdS9+aGVyYmVydC9wdWJrZXkudHh0
+DQoNCg0K
 
-------=_Part_14196_466670929.1472307253028--
-
+--_000_5a3464785c26496ea796470a1a0d82d1tencentcom_--
