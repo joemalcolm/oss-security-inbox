@@ -1,24 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/1
-Message-ID: <CANh7qnT+p-gxLVQLTSNxQAX2KQL1A9iTCD7bVPqXW1QfOkfRAw@mail.gmail.com>
-Date: Mon, 15 Jun 2020 15:45:55 +0800
-From: Sheng Wu <wusheng@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-9483] Apache SkyWalking SQL injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/3
+Message-ID: <cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>
+Date: Mon, 12 Oct 2020 08:29:13 -0700
+From: Anthony Liguori <aliguori@...n.com>
+To: Solar Designer <solar@...nwall.com>, <oss-security@...ts.openwall.com>
+Subject: Re: Gentoo's "contributing back" linux-distros tasks
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2020-9483
-[PRODUCT]:Apache SkyWalking
-[VERSION]:Apache SkyWalking 6.0.0 to 6.6.0, 7.0.0
-[PROBLEMTYPE]:SQL Injection
-[DESCRIPTION]: When use H2/MySQL/TiDB as Apache SkyWalking storage, the
-metadata query through GraphQL protocol, there is a SQL injection
-vulnerability,
-               which allows to access unpexcted data. Apache SkyWalking
-6.0.0 to 6.6.0, 7.0.0 H2/MySQL/TiDB storage implementations don't use the
-appropriate
-               way to set SQL parameters.
+Solar Designer <solar@...nwall.com> writes:
 
-Sheng Wu 吴晟
-Twitter, wusheng1108
+> Gentoo signed up for these "contributing back" tasks for linux-distros:
+>
+> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+>
+> 9. Stay on top of issues to ensure progress is being made, remind others
+> when there's no apparent progress, as well as when the public disclosure
+> date for an issue is approaching and when it's finally reached (unless
+> the reporter beats you to it by making their mandatory posting to
+> oss-security first) - primary: Gentoo, backup: Amazon
+>
+> 11. Make sure the mandatory oss-security posting is made promptly and is
+> sufficiently detailed, and remind the reporter if not - primary: Gentoo,
+> backup: Amazon
+>
+> 12. If exploit(s) were shared on the list, make sure that either they're
+> included in the oss-security posting along with the issue detail or the
+> posting includes an announcement of planned later posting of the
+> exploits (with the delay being within list policy), and in the latter
+> case also make sure that the later posting is in fact made as planned,
+> and remind the reporter if not - primary: Gentoo, backup: Amazon
 
+I'm happy to take primary on any of the above.
+
+> 13. Keep track of per-report and per-issue handling and disclosure
+> timelines (at least times of notification of the private list and of
+> actual public disclosure), at regular intervals produce and share
+> statistics (most notably, the average embargo duration) as well as the
+> raw data (except on issues that are still under embargo) by posting to
+> oss-security - primary: Gentoo, backup: Amazon
+>
+> and we saw some contributions from Gentoo on these, most notable being
+> their work on the statistics (task 13 above):
+>
+> https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+>
+> Unfortunately, the last update of these statistics ("Last modified:
+> 2019/10/15 01:52 by kristianf") is also when the contributions ceased.
+>
+> Some others have been taking care of tasks 9, 11, 12 (in particular,
+> Anthony Liguori of Amazon has been helping, but on various occasions
+> also many others from other distros), but not yet of task 13.
+>
+> I understand that Gentoo is a community project run by volunteers, and I
+> am not complaining.  Rather, I think we need to discuss with Gentoo in
+> here and reassign to other distros whatever responsibilities Gentoo no
+> longer has resources for.  We should ideally keep at least one task
+> Gentoo's responsibility (and Gentoo should have specific people assigned
+> to that task), at least to be consistent with our current requirements
+> for new distros joining (linux-)distros.
+>
+> To Gentoo: which of these tasks, or other "contributing back" tasks, are
+> you (still) willing to handle, and who on your team would handle them?
+>
+> To others on linux-distros: which of the above tasks do you volunteer to
+> become primary for?
+>
+> To Amazon: do you want to remain backup for task 13, or do you not have
+> the resources to handle it?
+
+It's hard to be backup for this one as it is quite a lot of work
+compared to most other tasks.  I'd prefer someone else to pick it up if
+possible.  While I don't have the cycles to pick up 13, if you're
+willing to consider adding another person from Amazon, I think we could
+take primary on this one though.
+
+Regards,
+
+Anthony Liguori
+
+>
+> If Gentoo already has some work-in-progress on task 13 for October 2019
+> and on, yet we reassign this task to another distro, then that data and
+> instructions should probably be transferred to the other distro.
+>
+> Alexander
