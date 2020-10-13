@@ -1,62 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/13/2
-Message-ID: <319958e3-7813-1a39-d1d1-dad2fa885011@apache.org>
-Date: Wed, 13 May 2020 20:08:48 +0200
-From: Chesnay Schepler <chesnay@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/13/6
+Message-ID: <20201013171034.GA68820@nxnw.org>
+Date: Tue, 13 Oct 2020 10:10:34 -0700
+From: Steve Beattie <steve.beattie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-1960] Apache Flink JMX information disclosure vulnerability
+Subject: CVE-2020-16120 - incorrect unprivileged overlayfs permission checking
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-1960: Apache Flink JMX information disclosure vulnerability
+Hello,
 
-Severity: Medium
-(CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:L/A:H)
+CVE-2020-16120 - incorrect unprivileged overlayfs permission checking
 
-Vendor:
-The Apache Software Foundation
+Giuseppe Scrivano discovered that overlayfs did not properly perform
+permission checking when copying up files in an overlayfs, and can be
+exploited from within a user namespace, if, for example, unprivileged
+user namespaces are allowed.
 
-Versions Affected:
-Flink 1.1.0 to 1.1.5
-Flink 1.2.0 to 1.2.1
-Flink 1.3.0 to 1.3.3
-Flink 1.4.0 to 1.4.2
-Flink 1.5.0 to 1.5.6
-Flink 1.6.0 to 1.6.4
-Flink 1.7.0 to 1.7.2
-Flink 1.8.0 to 1.8.3
-Flink 1.9.0 to 1.9.2
-Flink 1.10.0
+An attacker can abuse this to get read access to files on the system
+that they would not normally be permitted to access.
 
-Description:
-When running a process with an enabled JMXReporter, with a port 
-configured via metrics.reporter.<reporter_name>.port, an attacker with 
-local access to the machine and JMX port can execute a man-in-the-middle 
-attack using a specially crafted request to rebind the JMXRMI registry 
-to one under the attacker's control. This compromises any connection 
-established to the process via JMX, allowing extraction of credentials 
-and any other transferred data.
+This likely only has an impact on Ubuntu kernels, where unprivileged
+user namespaces are enabled by default.
 
-Mitigation:
-All users should either
-- remove the port parameter from the reporter configuration,
-- upgrade to 1.9.3 or 1.10.1,
-- obtain the source for their release from the Flink website or git and 
-apply the patch corresponding to their version from the list below:
+The following upstream commits address the issue:
 
-1.1: a61b5d2b362d11e7b9deeb2334d275325574bd7b
-1.2: d2a051267ffbeef5c1fd981860fb7032d9ac8a60
-1.3: 4f06bb75cd726096af43587ca4fb182b2e4bae2e
-1.4: 12787eceb49c566b28aa876fc2892d21a0ec3d79
-1.5: f9b4e0dea71abbcd6463c757577c70c45b3e6bbf
-1.6: b8647b1ca019003ae939b7494bba4e54de167b6f
-1.7: 5e0b7970a9aea74aba4ebffaa75c37e960799b93
-1.8: 0e8e8062bcc159e9ed2a0d4a0a61db4efcb01f2f
-1.9: 58b58f4b16a2e25c95b465377d43a51ad8ef3f6a
-1.10: 804ae70024bf8be7c0c7093d02addb080c318662
+  48bd024b8a40d73ad6b086de2615738da0c7004f ("ovl: switch to mounter creds in readdir")
+  56230d956739b9cb1cbde439d76227d77979a04d ("ovl: verify permissions in ovl_path_open()")
+  05acefb4872dae89e772729efb194af754c877e8 ("ovl: check permission to open real file")
 
-Credit:
-The issue was discovered in Flink by Jonathan Gallimore, Tomitribe and 
-Colm O hEigeartaigh, Talend.
-The underlying vulnerability pattern was discovered by An Trinh and 
-published at Blackhat.
+The following commits also may be desired or necessary:
 
+  130fdbc3d1f9966dd4230709c30f3768bccd3065 ("ovl: pass correct flags for opening real directory")
+  292f902a40c11f043a5ca1305a114da0e523eaa3 ("ovl: call secutiry hook in ovl_real_ioctl()")
+
+Mitigation on systems where unprivileged user namespaces are enabled
+but not needed is to set the kernel.unprivileged_userns_clone sysctl
+to 0. e.g.:
+
+  $ sudo sysctl kernel.unprivileged_userns_clone=0
+
+and across reboots by adding a file in /etc/sysctl.d/ that contains:
+
+  kernel.unprivileged_userns_clone=0
+
+Thanks.
+
+-- 
+Steve Beattie
+<sbeattie@...ntu.com>
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
