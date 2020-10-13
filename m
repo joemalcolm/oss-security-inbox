@@ -1,36 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/03/4
-Message-ID: <20200903180936.GB16543@suse.de>
-Date: Thu, 3 Sep 2020 20:09:36 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: GNUPG released with AEAD sec fix CVE-2020-25125
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/13/3
+Message-ID: <fd935b51-2dc8-f38b-64e8-7dd0b9733f3a@open-xchange.com>
+Date: Tue, 13 Oct 2020 13:13:59 +0200
+From: Otto Moerbeek <otto.moerbeek@...n-xchange.com>
+To: oss-security@...ts.openwall.com
+Subject: PowerDNS Recursor 4.3.5, 4.2.5. and 4.1.18 released fixing a cache pollution issue (CVE-2020-25829)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello!,
 
-gnupg just released a security fix update.
+Today we are releasing PowerDNS Recursor 4.3.5, 4.2.5. and 4.1.18,
+containing a security fix for CVE-2020-25829[1]:
 
-CVE-2020-25125
+An issue has been found in PowerDNS Recursor where a remote attacker
+can cause the cached records for a given name to be updated to the
+Bogus DNSSEC validation state, instead of their actual DNSSEC Secure
+state, via a DNS ANY query. This results in a denial of service for
+installations that always validate (dnssec=validate) and for clients
+requesting validation when on-demand validation is enabled
+(dnssec=process). The severity is high for these cases.
 
-https://lists.gnupg.org/pipermail/gnupg-announce/2020q3/000448.html
+As usual, there were also other smaller enhancements and
+bugfixes. Please refer to the 4.3.5 changelog[2], 4.2.5 changelog[3]
+and 4.1.18 changelog[4] for details.
 
-...
-Importing an OpenPGP key having a preference list for AEAD algorithms
-will lead to an array overflow and thus often to a crash or other
-undefined behaviour.
+The 4.3.5 tarball[5] (signature[6]), 4.2.5 tarball[7] (signature[8])
+and 4.1.18 tarball[9] (signature[10]) are available at our download
+site[11] and packages for CentOS 6, 7 and 8, Debian Stretch and
+Buster, Ubuntu Xenial and Bionic are available from our
+repository[12].
 
-Importing an arbitrary key can often easily be triggered by an attacker
-and thus triggering this bug.  Exploiting the bug aside from crashes is
-not trivial but likely possible for a dedicated attacker.  The major
-hurdle for an attacker is that only every second byte is under their
-control with every first byte having a fixed value of 0x04.
+4.0 and older releases are EOL, refer to the documentation[13] for details
+about our release cycles.
 
-Software distribution verification should not be affected by this bug
-because such a system uses a curated list of keys.
+Please send us all feedback and issues you might have via the mailing
+list[14], or in case of a bug, via GitHub[15].
 
-A CVE-id has not yet been assigned.  We track this bug at
-https://dev.gnupg.org/T5050
-...
+Regards,
 
-Ciao, Marcus
+ -Otto and the PowerDNS Team
+ 
+[1] https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2020-07.html
+[2] https://doc.powerdns.com/recursor/changelog/4.3.html#change-4.3.5
+[3] https://doc.powerdns.com/recursor/changelog/4.2.html#change-4.2.5
+[4] https://doc.powerdns.com/recursor/changelog/4.1.html#change-4.1.18
+[5] https://downloads.powerdns.com/releases/pdns-recursor-4.3.5.tar.bz2
+[6] https://downloads.powerdns.com/releases/pdns-recursor-4.3.5.tar.bz2.sig
+[7] https://downloads.powerdns.com/releases/pdns-recursor-4.2.5.tar.bz2
+[8] https://downloads.powerdns.com/releases/pdns-recursor-4.2.5.tar.bz2.sig
+[9] https://downloads.powerdns.com/releases/pdns-recursor-4.1.18.tar.bz2
+[10] https://downloads.powerdns.com/releases/pdns-recursor-4.1.18.tar.bz2.sig
+[11] https://downloads.powerdns.com/releases/
+[12] https://repo.powerdns.com/
+[13] https://docs.powerdns.com/recursor/appendices/EOL.html
+[14] https://mailman.powerdns.com/mailman/listinfo/pdns-users
+[15] https://github.com/PowerDNS/pdns/issues/new/choose
+
+-- 
+kind regards,
+Otto Moerbeek
+Senior PowerDNS Developer
+
+Email: otto.moerbeek@...n-xchange.com
+
+
+
+
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
