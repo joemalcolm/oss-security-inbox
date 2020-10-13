@@ -1,81 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/01/1
-Message-ID: <c8f3b8a3-fc11-9526-8db8-fbda8674b4d1@open-xchange.com>
-Date: Wed, 1 Jul 2020 14:10:33 +0200
-From: Otto Moerbeek <otto.moerbeek@...n-xchange.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/13/7
+Message-ID: <20201013172352.GA66549@nxnw.org>
+Date: Tue, 13 Oct 2020 10:23:52 -0700
+From: Steve Beattie <steve.beattie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: PowerDNS Recursor 4.3.2, 4.2.3. and 4.1.17 released fixing CVE-2020-14196: Access restriction,bypass
+Subject: CVE-2020-16119 - Linux kernel DCCP CCID structure use-after-free
 Content-Type: text/plain; charset=utf-8
 
-Hello!,
+Hello,
 
-Today we are releasing PowerDNS Recursor 4.3.2, 4.2.3. and 4.1.17,
-containing a security fix for CVE-2020-14196: Access restriction
-bypass[0].
+CVE-2020-16119 - Linux kernel DCCP CCID structure use-after-free
 
-An issue has been found in PowerDNS Recursor where the ACL applied to
-the internal web server via `webserver-allow-from` is not properly
-enforced, allowing a remote attacker to send HTTP queries to the
-internal web server, bypassing the restriction.
+Hadar Manor reported that by reusing a DCCP socket with an attached
+dccps_hc_tx_ccid as a listener, it will be used after being released,
+leading to a denial of service or possibly code execution.
 
-Note that the web server is not enabled by default. Only installations
-using a non-default value for `webserver` and `webserver-address` are
-affected.
+It was introduced by:
 
-Workarounds are: disable the webserver or set a password or an API
-key. Additionally, restrict the binding address using the
-`webserver-address` setting to local addresses only and/or use a
-firewall to disallow web requests from untrusted sources reaching the
-webserver listening address.
+ 2677d20677314101293e6da0094ede7b5526d2b1 "dccp: don't free
+ ccid2_hc_tx_sock struct in dccp_disconnect()"
 
-As usual, there were also other smaller enhancements and bugfixes. In
-particular, the 4.3.2 release contains fixes that allow long CNAME
-chains to resolve properly, where previously they could fail if qname
-minimization is enabled.  Please refer to the 4.3.2 changelog[1],
-4.2.3 changelog[2] and 4.1.17 changelog[3] for details.
+Proposed fixes have been posted to:
+  https://lore.kernel.org/netdev/20201013171849.236025-1-kleber.souza@canonical.com/T/
 
-The 4.3.2 tarball[4] (signature[5]), 4.2.3 tarball[6] (signature[7])
-and 4.1.17 tarball[8] (signature[9]) are available from our download
-site[10] and packages for CentOS 6, 7 and 8, Debian Stretch and
-Buster, Ubuntu Xenial and Bionic are available from our
-repository[11].
+To mitigate this on systems that have DCCP enabled but do not
+use it, block module autoloading via adding the following to
+/etc/modprobe.d/blacklist-dccp.conf:
 
-4.0 and older releases are EOL, refer to the documentation[12] for
-details about our release cycles.
+   alias net-pf-2-proto-0-type-6 off
+   alias net-pf-2-proto-33-type-6 off
+   alias net-pf-10-proto-0-type-6 off
+   alias net-pf-10-proto-33-type-6 off
 
-Please send us all feedback and issues you might have via the mailing
-list[13], or in case of a bug, via GitHub[14].
+Alternatively, to prevent the dccp module from being loaded entirely,
+add:
 
-[0] https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2020-04.html
-[1] https://doc.powerdns.com/recursor/changelog/4.3.html#change-4.3.2
-[2] https://doc.powerdns.com/recursor/changelog/4.2.html#change-4.2.3
-[3] https://doc.powerdns.com/recursor/changelog/4.1.html#change-4.1.17
-[4] https://downloads.powerdns.com/releases/pdns-recursor-4.3.2.tar.bz2
-[5] https://downloads.powerdns.com/releases/pdns-recursor-4.3.2.tar.bz2.sig
-[6] https://downloads.powerdns.com/releases/pdns-recursor-4.2.3.tar.bz2
-[7] https://downloads.powerdns.com/releases/pdns-recursor-4.2.3.tar.bz2.sig
-[8] https://downloads.powerdns.com/releases/pdns-recursor-4.1.17.tar.bz2
-[9] https://downloads.powerdns.com/releases/pdns-recursor-4.1.17.tar.bz2.sig
-[10] https://downloads.powerdns.com/releases/
-[11] https://repo.powerdns.com/
-[12] https://docs.powerdns.com/recursor/appendices/EOL.html
-[13] https://mailman.powerdns.com/mailman/listinfo/pdns-users
-[14] https://github.com/PowerDNS/pdns/issues/new/choose
+  blacklist dccp
+  install dccp /bin/false
 
-Regards, 
-
-  Otto and the PowerDNS team
+Thanks.
 
 -- 
-Otto Moerbeek
-Senior PowerDNS Developer
+Steve Beattie
+<sbeattie@...ntu.com>
 
-Email: otto.moerbeek@...n-xchange.com
-
-
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
