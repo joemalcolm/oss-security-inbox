@@ -1,186 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/20/5
-Message-Id: <E1kUqJq-00023M-Qq@xenbits.xenproject.org>
-Date: Tue, 20 Oct 2020 12:00:46 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 346 v2 - undue deferral of IOMMU TLB flushes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/14/2
+Message-ID: <oxqCR3d1ydEMwuGW3PBgnpgk9XUJjoqNeS5JCk7dcaEaQGJyq7TxVPJk2fWAgk9Bjd4MfdLDr_CHRPBTeJv9kRZPOV4X2b0HAALr17Vy5Wo=@protonmail.ch>
+Date: Wed, 14 Oct 2020 13:14:31 +0000
+From: Jordan Glover <Golden_Miller83@...tonmail.ch>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: "sbeattie@...ntu.com" <sbeattie@...ntu.com>
+Subject: Re: CVE-2020-16120 - incorrect unprivileged overlayfs permission checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tuesday, October 13, 2020 5:10 PM, Steve Beattie <steve.beattie@...onical.com> wrote:
 
-                    Xen Security Advisory XSA-346
-                              version 2
+> Hello,
+>
+> CVE-2020-16120 - incorrect unprivileged overlayfs permission checking
+>
+> Giuseppe Scrivano discovered that overlayfs did not properly perform
+> permission checking when copying up files in an overlayfs, and can be
+> exploited from within a user namespace, if, for example, unprivileged
+> user namespaces are allowed.
+>
+> An attacker can abuse this to get read access to files on the system
+> that they would not normally be permitted to access.
+>
+> This likely only has an impact on Ubuntu kernels, where unprivileged
+> user namespaces are enabled by default.
 
-                  undue deferral of IOMMU TLB flushes
+AFAIK unpriv user ns are enabled by default on vast majority of distros nowadays with debian (rhel?) being an exception (although this is going to change at some point[1]). I think what makes ubuntu different is unpriv overlayfs which doesn't exist upstream thus in most other distros.
 
-UPDATES IN VERSION 2
-====================
+[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=898446
 
-Public release.
+>
+> The following upstream commits address the issue:
+>
+> 48bd024b8a40d73ad6b086de2615738da0c7004f ("ovl: switch to mounter creds in readdir")
+> 56230d956739b9cb1cbde439d76227d77979a04d ("ovl: verify permissions in ovl_path_open()")
+> 05acefb4872dae89e772729efb194af754c877e8 ("ovl: check permission to open real file")
+>
+> The following commits also may be desired or necessary:
+>
+> 130fdbc3d1f9966dd4230709c30f3768bccd3065 ("ovl: pass correct flags for opening real directory")
+> 292f902a40c11f043a5ca1305a114da0e523eaa3 ("ovl: call secutiry hook in ovl_real_ioctl()")
+>
+> Mitigation on systems where unprivileged user namespaces are enabled
+> but not needed is to set the kernel.unprivileged_userns_clone sysctl
+> to 0. e.g.:
+>
+> $ sudo sysctl kernel.unprivileged_userns_clone=0
+>
+> and across reboots by adding a file in /etc/sysctl.d/ that contains:
+>
+> kernel.unprivileged_userns_clone=0
 
-ISSUE DESCRIPTION
-=================
+This will only work with out-of-tree patch included in distro kernel.
 
-To efficiently change the physical to machine address mappings of a
-larger range of addresses for fully virtualized guests, Xen contains
-an optimization to coalesce per-page IOMMU TLB flushes into a single,
-wider flush after all adjustments have been made.  While this is fine
-to do for newly introduced page mappings, the possible removal of
-pages from such guests during this operation should not be "optimized"
-in the same way.  This is because the (typically) final reference of
-such pages is dropped before the coalesced flush, and hence the pages
-may have been put to a different use even though DMA initiated by
-their original owner mightstill be in progress.
-
-IMPACT
-======
-
-A malicious guest might be able to cause data corruption and data
-leaks.  Host or guest Denial of Service (DoS), and privilege
-escalation, cannot be ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from 4.2 onwards are vulnerable.  Xen versions 4.1 and
-earlier are not vulnerable.
-
-Only x86 HVM and PVH guests can leverage the vulnerability.  Arm guests
-as well as x86 PV ones cannot leverage the vulnerability.
-
-Only x86 HVM and PVH guests which have physical devices passed through
-to them can leverage the vulnerability.
-
-Only x86 HVM and PVH guests configured to not share IOMMU and CPU
-page tables can leverage the vulnerability.  Sharing these page tables
-is the default on capable Intel (VT-d) hardware.  On AMD hardware
-sharing is not possible.  On Intel (VT-d) hardware sharing may also not
-be possible, depending on hardware properties.  Whether it is possible
-can be seen from the presence (or absence) of "iommu_hap_pt_share" on
-the "virt_caps" line of "xl info" output.  Guests run in shadow mode
-can leverage the vulnerability.
-
-MITIGATION
-==========
-
-Not passing through physical devices to untrusted guests will avoid
-the vulnerability.
-
-On systems permitting page table sharing, not suppressing use of the
-functionality will allow to avoid the vulnerability. This means guests
-should not be run in
-* shadow mode, i.e. hardware needs to be HAP (Hardware Assisted Paging)
-  capable, there should not be "hap=0" in the guest's xl configuration
-  file, and there should not be "hap=0" or equivalent on Xen's command
-  line,
-* non-shared page table mode, i.e. hardware needs to be capable of
-  sharing, there should not be "passthrough=sync_pt" in the guest's xl
-  configuration file, and there should not be "iommu=no-sharept" or
-  equivalent on Xen's command line.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate pair of attached patches resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa346/xsa346-?.patch           Xen 4.14 - xen-unstable
-xsa346/xsa346-4.13-?.patch      Xen 4.13
-xsa346/xsa346-4.12-?.patch      Xen 4.12
-xsa346/xsa346-4.11-?.patch      Xen 4.11
-xsa346/xsa346-4.10-?.patch      Xen 4.10
-
-$ sha256sum xsa346* xsa346*/*
-ba560d34cb46f45d6da0ba5d672cb896c173e90de5c022d22415ace20c5e47b8  xsa346.meta
-5f8b3e5565bc7d87283af173f5f2b35975e4ab6bff502780799d14fb263f730d  xsa346/xsa346-1.patch
-9de89ca360f303e7aa3b42529cdf4191b0700ee7cb6928a22068195e047a4db7  xsa346/xsa346-2.patch
-f3612bfad219160917a3bc46ea5b31673137593d62ae4f819a8e80ade0339c5b  xsa346/xsa346-4.10-1.patch
-734ed82d583bbce342ffabeb9dd84e300f2717ec71e3de866670b0ddf18d57aa  xsa346/xsa346-4.10-2.patch
-7a41bf06e19590cfc69d4f2ac132a23843dcec2ea5f98d86c4be971f9eec86af  xsa346/xsa346-4.11-1.patch
-1359801b8f64ac62dc8de4e3acc15ec42c040f692f3a1ee9986acb478ee330cd  xsa346/xsa346-4.11-2.patch
-190f594bb77dd044af8f0a051ab1d4143c348da192206da9b390af91c0a2cdec  xsa346/xsa346-4.12-1.patch
-5bcb65dc45f6d74c644ee6b6add518044c9875e6759254773d3816e718c2be28  xsa346/xsa346-4.12-2.patch
-69e0158276a922829eb60dc5bb13e60a71a232ace808843f45dac407716b107b  xsa346/xsa346-4.13-1.patch
-eb8132a02c252dc65be1f334939f252db0c30ae2db8aa23f0d9e67f8148e2d2d  xsa346/xsa346-4.13-2.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-HOWEVER, deployment of the mitigations is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because removal of pass-through devices or their replacement by
-emulated devices is a guest visible configuration change, which may lead
-to re-discovery of the issue.  Similarly the possible guest
-configuration changes can't be excluded to be noticeable to guests.
-
-Deployment of this mitigation is permitted only AFTER the embargo ends.
-
-AND: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+OzqwMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZVwEH/1NuF+s6eI2O9rFtIrKLdHXtT6ehGJsj+UAHR18N
-V6COF6AbGJ3me/RB5OVo1Fl7WGE5js2sMUpP8s6hO+y+iCiRoOF/Um7eXivmp3Yv
-xKqHKr/6fjs2g8WP+SX/02bwPWS6qupBiZeC+EGKDbJRO2uBeGlXrVD0Nxrdx33Y
-ATA92CEUnJvqRQAHo15pL/32AK2B+fNHY/voAWMMp3PXKCBMhdw9HVlQz2tJS+2s
-mX7SRWzOMjBwo7jCz88nKIBjWkGNObuREEogt2hWrICUaKCQH1Gv4TFBI5UvE4YJ
-MsaPmCQAyZDPs1N0VB3OZykm5Z1bktzsVWykab2b/xhSqgU=
-=2aos
------END PGP SIGNATURE-----
-
-Download attachment "xsa346.meta" of type "application/octet-stream" (1880 bytes)
-
-Download attachment "xsa346/xsa346-1.patch" of type "application/octet-stream" (1886 bytes)
-
-Download attachment "xsa346/xsa346-2.patch" of type "application/octet-stream" (6896 bytes)
-
-Download attachment "xsa346/xsa346-4.10-1.patch" of type "application/octet-stream" (2046 bytes)
-
-Download attachment "xsa346/xsa346-4.10-2.patch" of type "application/octet-stream" (6611 bytes)
-
-Download attachment "xsa346/xsa346-4.11-1.patch" of type "application/octet-stream" (2046 bytes)
-
-Download attachment "xsa346/xsa346-4.11-2.patch" of type "application/octet-stream" (6798 bytes)
-
-Download attachment "xsa346/xsa346-4.12-1.patch" of type "application/octet-stream" (1886 bytes)
-
-Download attachment "xsa346/xsa346-4.12-2.patch" of type "application/octet-stream" (6854 bytes)
-
-Download attachment "xsa346/xsa346-4.13-1.patch" of type "application/octet-stream" (1886 bytes)
-
-Download attachment "xsa346/xsa346-4.13-2.patch" of type "application/octet-stream" (6913 bytes)
+>
+> Thanks.
+>
+>
+>
+> Steve Beattie
+> sbeattie@...ntu.com
