@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3621" "Wednesday" "4" "October" "2017" "15:43:03" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<757654.26512541-sendEmail@localhost>" "76" "[oss-security] binutils: NULL pointer dereference in bfd_hash_hash (hash.c)" nil nil nil "10" "2017100415:43:03" "[oss-security] binutils: NULL pointer dereference in bfd_hash_hash (hash.c)" (number mark "U       ago@gentoo.o Oct  4   76/3621  " thread-indent "\"[oss-security] binutils: NULL pointer dereference in bfd_hash_hash (hash.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2892" "Thursday" "15" "October" "2020" "17:33:53" "+0000" "Karp, Samuel" "skarp@amazon.com" "<5b9cad3b63470a24da85f7eb36fb46d91894be4d.camel@amazon.com>" "48" "[oss-security] CVE-2020-15157: containerd v1.2.x can be coerced into leaking credentials during image pull" nil nil nil "10" "2020101517:33:53" "[oss-security] CVE-2020-15157: containerd v1.2.x can be coerced into leaking credentials during image pull" (number mark "U       skarp@amazon Oct 15   48/2892  " thread-indent "\"[oss-security] CVE-2020-15157: containerd v1.2.x can be coerced into leaking credentials during image pull\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-15157: containerd v1.2.x can be coerced into leaking credentials during image pull" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22001 invoked by uid 550); 4 Oct 2017 15:43:20 -0000
+Received: (qmail 9507 invoked by uid 550); 15 Oct 2020 17:43:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,88 +12,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21894 invoked from network); 4 Oct 2017 15:43:19 -0000
-Message-ID: <757654.26512541-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
+Received: (qmail 5789 invoked from network); 15 Oct 2020 17:34:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1602783253; x=1634319253;
+  h=from:to:subject:date:message-id:content-id:
+   content-transfer-encoding:mime-version;
+  bh=EsgU7a0PeR/LCPQm7eO8ie1wY794qK8/GlelwWh11Ow=;
+  b=S9Ow82d2Lrj3KAUIlEZlJFIM0mp7Rgj63Z30CGNutflCOCOldqWrBk51
+   zq3goEqYU2O5VbTKyBuJH3ZUnaW/IrM9964CUCtem2J+cgGAqzVxYQ7gW
+   4uTUqR6Bk6nKzcZqWW8GsPjhhtF8ovIAcW39CRE1BEBd5tiPoQAVdtm4A
+   4=;
+X-IronPort-AV: E=Sophos;i="5.77,379,1596499200"; 
+   d="scan'208";a="59985021"
+From: "Karp, Samuel" <skarp@amazon.com>
 To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Wed, 4 Oct 2017 15:43:03 +0000
+Thread-Topic: CVE-2020-15157: containerd v1.2.x can be coerced into leaking
+ credentials during image pull
+Thread-Index: AQHWoxlZPy19u+tdo0WqeZLhB6ga6w==
+Date: Thu, 15 Oct 2020 17:33:53 +0000
+Message-ID: <5b9cad3b63470a24da85f7eb36fb46d91894be4d.camel@amazon.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.43.162.73]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <DFFFDC18956C404EA94922FF12C4C03A@amazon.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-172807.872601883"
-Subject: [oss-security] binutils: NULL pointer dereference in bfd_hash_hash (hash.c)
+Subject: [oss-security] CVE-2020-15157: containerd v1.2.x can be coerced into leaking
+ credentials during image pull
 
-------MIME delimiter for sendEmail-172807.872601883
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-
-Description:
-binutils is a set of tools necessary to build programs.
-
-The stacktrace of this issue appears to be a NULL pointer access. However the upstream maintainer changed the summary of the bugreport to “DW_AT_name with out of bounds reference”. The commit also 
-reference to “DW_AT_name with out of bounds reference”
-
-The complete ASan output of the issue:
-
-# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==8739==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00000053bf16 bp 0x7ffcab59ee60 sp 0x7ffcab59ee20 T0)
-==8739==The signal is caused by a READ memory access.
-==8739==Hint: address points to the zero page.
-    #0 0x53bf15 in bfd_hash_hash /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/hash.c:441:15
-    #1 0x53bf15 in bfd_hash_lookup /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/hash.c:467
-    #2 0x6a2049 in insert_info_hash_table /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:487:37
-    #3 0x6a2049 in comp_unit_hash_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3776
-    #4 0x6a2049 in stash_maybe_update_info_hash_tables /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4120
-    #5 0x69cbbc in stash_maybe_enable_info_hash_tables /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4214:3
-    #6 0x69cbbc in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4613
-    #7 0x5f330e in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10
-    #8 0x5176a3 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
-    #9 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
-    #10 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
-    #11 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #12 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #13 0x7fd148c7b680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #14 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/hash.c:441:15 in bfd_hash_hash
-==8739==ABORTING
-
-Affected version:
-2.29.51.20170924 and maybe past releases
-
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=11855d8a1f11b102a702ab76e95b22082cccf2f8
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-15022
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00375-binutils-NULLptr-bfd_hash_hash
-
-Timeline:
-2017-09-25: bug discovered and reported to upstream
-2017-09-25: upstream released a patch
-2017-10-03: blog post about the issue
-2017-10-04: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core
-Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/10/03/binutils-null-pointer-dereference-in-bfd_hash_hash-hash-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-172807.872601883--
-
+SW1wYWN0DQoNCklmIGEgY29udGFpbmVyIGltYWdlIG1hbmlmZXN0IGluIHRo
+ZSBPQ0kgSW1hZ2UgZm9ybWF0IG9yIERvY2tlciBJbWFnZQ0KVjIgU2NoZW1h
+IDIgZm9ybWF0IGluY2x1ZGVzIGEgVVJMIGZvciB0aGUgbG9jYXRpb24gb2Yg
+YSBzcGVjaWZpYyBpbWFnZQ0KbGF5ZXIgKG90aGVyd2lzZSBrbm93biBhcyBh
+IOKAnGZvcmVpZ24gbGF5ZXLigJ0pLCB0aGUgZGVmYXVsdCBjb250YWluZXJk
+DQpyZXNvbHZlciB3aWxsIGZvbGxvdyB0aGF0IFVSTCB0byBhdHRlbXB0IHRv
+IGRvd25sb2FkIGl0LiBJbiB2MS4yLnggYnV0DQpub3QgMS4zLjAgb3IgbGF0
+ZXIsIHRoZSBkZWZhdWx0IGNvbnRhaW5lcmQgcmVzb2x2ZXIgd2lsbCBwcm92
+aWRlIGl0cw0KYXV0aGVudGljYXRpb24gY3JlZGVudGlhbHMgaWYgdGhlIHNl
+cnZlciB3aGVyZSB0aGUgVVJMIGlzIGxvY2F0ZWQNCnByZXNlbnRzIGFuIEhU
+VFAgNDAxIHN0YXR1cyBjb2RlIGFsb25nIHdpdGggcmVnaXN0cnktc3BlY2lm
+aWMgSFRUUA0KaGVhZGVycy4NCg0KSWYgYW4gYXR0YWNrZXIgcHVibGlzaGVz
+IGEgcHVibGljIGltYWdlIHdpdGggYSBtYW5pZmVzdCB0aGF0IGRpcmVjdHMN
+Cm9uZSBvZiB0aGUgbGF5ZXJzIHRvIGJlIGZldGNoZWQgZnJvbSBhIHdlYiBz
+ZXJ2ZXIgdGhleSBjb250cm9sIGFuZCB0aGV5DQp0cmljayBhIHVzZXIgb3Ig
+c3lzdGVtIGludG8gcHVsbGluZyB0aGUgaW1hZ2UsIHRoZXkgY2FuIG9idGFp
+biB0aGUNCmNyZWRlbnRpYWxzIHVzZWQgZm9yIHB1bGxpbmcgdGhhdCBpbWFn
+ZS4gSW4gc29tZSBjYXNlcywgdGhpcyBtYXkgYmUgdGhlDQp1c2VyJ3MgdXNl
+cm5hbWUgYW5kIHBhc3N3b3JkIGZvciB0aGUgcmVnaXN0cnkuIEluIG90aGVy
+IGNhc2VzLCB0aGlzIG1heQ0KYmUgdGhlIGNyZWRlbnRpYWxzIGF0dGFjaGVk
+IHRvIHRoZSBjbG91ZCB2aXJ0dWFsIGluc3RhbmNlIHdoaWNoIGNhbg0KZ3Jh
+bnQgYWNjZXNzIHRvIG90aGVyIGNsb3VkIHJlc291cmNlcyBpbiB0aGUgYWNj
+b3VudC4NCg0KVGhlIGRlZmF1bHQgY29udGFpbmVyZCByZXNvbHZlciBpcyB1
+c2VkIGJ5IHRoZSBjcmktY29udGFpbmVyZCBwbHVnaW4NCih3aGljaCBjYW4g
+YmUgdXNlZCBieSBLdWJlcm5ldGVzKSwgdGhlIGN0ciBkZXZlbG9wbWVudCB0
+b29sLCBhbmQgb3RoZXINCmNsaWVudCBwcm9ncmFtcyB0aGF0IGhhdmUgZXhw
+bGljaXRseSBsaW5rZWQgYWdhaW5zdCBpdC4NCg0KDQpQYXRjaGVzDQoNClRo
+aXMgdnVsbmVyYWJpbGl0eSBoYXMgYmVlbiBmaXhlZCBpbiBjb250YWluZXJk
+IDEuMi4xNCBbMV0uIGNvbnRhaW5lcmQNCjEuMyBhbmQgbGF0ZXIgYXJlIG5v
+dCBhZmZlY3RlZC4NCg0KDQpXb3JrYXJvdW5kcw0KDQpJZiB5b3UgYXJlIHVz
+aW5nIGNvbnRhaW5lcmQgMS4zIG9yIGxhdGVyLCB5b3UgYXJlIG5vdCBhZmZl
+Y3RlZC4gSWYgeW91DQphcmUgdXNpbmcgY3JpLWNvbnRhaW5lcmQgaW4gdGhl
+IDEuMiBzZXJpZXMgb3IgcHJpb3IsIHlvdSBzaG91bGQgZW5zdXJlDQp5b3Ug
+b25seSBwdWxsIGltYWdlcyBmcm9tIHRydXN0ZWQgc291cmNlcy4gT3RoZXIg
+Y29udGFpbmVyIHJ1bnRpbWVzDQpidWlsdCBvbiB0b3Agb2YgY29udGFpbmVy
+ZCBidXQgbm90IHVzaW5nIHRoZSBkZWZhdWx0IHJlc29sdmVyIChzdWNoIGFz
+DQpEb2NrZXIpIGFyZSBub3QgYWZmZWN0ZWQuDQoNCg0KQ3JlZGl0cw0KDQpU
+aGUgY29udGFpbmVyZCBtYWludGFpbmVycyB3b3VsZCBsaWtlIHRvIHRoYW5r
+IEJyYWQgR2Vlc2FtYW4sIEpvc2gNCkxhcnNlbiwgSWFuIENvbGR3YXRlciwg
+RHVmZmllIENvb2xleSwgYW5kIFJvcnkgTWNDdW5lIGZvciByZXNwb25zaWJs
+eQ0KZGlzY2xvc2luZyB0aGlzIGlzc3VlIGluIGFjY29yZGFuY2Ugd2l0aCB0
+aGUgY29udGFpbmVyZCBzZWN1cml0eSBwb2xpY3kNClsyXS4NCg0KRm9yIGZ1
+cnRoZXIgZGV0YWlscywgc2VlIA0KaHR0cHM6Ly9naXRodWIuY29tL2NvbnRh
+aW5lcmQvY29udGFpbmVyZC9zZWN1cml0eS9hZHZpc29yaWVzL0dIU0EtNzQy
+dy04OWdjLThtOWMNCg0KWzFdIGh0dHBzOi8vZ2l0aHViLmNvbS9jb250YWlu
+ZXJkL2NvbnRhaW5lcmQvcmVsZWFzZXMvdGFnL3YxLjIuMTQNClsyXSBodHRw
+czovL2dpdGh1Yi5jb20vY29udGFpbmVyZC9wcm9qZWN0L2Jsb2IvbWFzdGVy
+L1NFQ1VSSVRZLm1kDQoNCg==
