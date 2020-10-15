@@ -1,37 +1,135 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/6
-Message-ID: <CAG48ez3fQbBLUBUkSaF-0b_DhL8M_1JU4DKkjTYXGB_6G1RgiA@mail.gmail.com>
-Date: Mon, 15 Jun 2020 19:02:51 +0200
-From: Jann Horn <jannh@...gle.com>
-To: John Haxby <john.haxby@...cle.com>
-Cc: oss-security@...ts.openwall.com, "Jason A. Donenfeld" <Jason@...c4.com>,  linux-security-module <linux-security-module@...r.kernel.org>, linux-acpi@...r.kernel.org,  Matthew Garrett <mjg59@...f.ucam.org>,  Kernel Hardening <kernel-hardening@...ts.openwall.com>,  Ubuntu Kernel Team <kernel-team@...ts.ubuntu.com>
-Subject: Re: lockdown bypass on mainline kernel for loading unsigned modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/16/2
+Message-ID: <d8d112fb-a588-d6d6-6b04-500fd1fe851e@redhat.com>
+Date: Fri, 16 Oct 2020 09:55:45 +1000
+From: Sam Fowler <sfowler@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Kubernetes: Multiple secret leaks when verbose logging is enabled
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 15, 2020 at 6:24 PM John Haxby <john.haxby@...cle.com> wrote:
-> > On 15 Jun 2020, at 11:26, Jason A. Donenfeld <Jason@...c4.com> wrote:
-> > Yesterday, I found a lockdown bypass in Ubuntu 18.04's kernel using
-> > ACPI table tricks via the efi ssdt variable [1]. Today I found another
-> > one that's a bit easier to exploit and appears to be unpatched on
-> > mainline, using acpi_configfs to inject an ACPI table. The tricks are
-> > basically the same as the first one, but this one appears to be
-> > unpatched, at least on my test machine. Explanation is in the header
-> > of the PoC:
-> >
-> > https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
-> >
-> > I need to get some sleep, but if nobody posts a patch in the
-> > meanwhile, I'll try to post a fix tomorrow.
-> >
-> > Jason
-> >
-> > [1] https://www.openwall.com/lists/oss-security/2020/06/14/1
->
->
-> This looks CVE-worthy.   Are you going to ask for a CVE for it?
+Hello,
 
-Does it really make sense to dole out CVEs for individual lockdown
-bypasses when various areas of the kernel (such as filesystems and
-BPF) don't see root->kernel privilege escalation issues as a problem?
-It's not like applying the fix for this one issue is going to make
-systems meaningfully safer.
+Multiple security issues have been discovered in Kubernetes that allow 
+for the exposure of secret data in logs, when verbose logging options 
+are enabled. These issues have been rated Medium, with a CVSS of 4.7 
+CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N. CVE-2020-8563 has been 
+rated slightly higher as the leaked credential allows for a scope change 
+to the underlying cloud provider.
+
+  * CVE-2020-8563: Secret leaks in logs for vSphere Provider
+    kube-controller-manager
+  * CVE-2020-8564: Docker config secrets leaked when file is malformed
+    and loglevel >= 4
+  * CVE-2020-8565: Incomplete fix for CVE-2019-11250 allows for token
+    leak in logs when logLevel >= 9
+  * CVE-2020-8566: Ceph RBD adminSecrets exposed in logs when loglevel >= 4
+
+
+## Am I vulnerable?
+
+  * CVE-2020-8563 - Vulnerable if using VSphere provider and
+    kube-controller-manager is using logLevel >= 4
+  * CVE-2020-8564 - Vulnerable if pull secrets are stored in a docker
+    config file and loglevel >= 4. Also requires the docker config file
+    to be malformed.
+  * CVE-2020-8565 - Vulnerable if kube-apiserver is using logLevel >= 9
+  * CVE-2020-8566 - Vulnerable if Ceph RBD volumes are supported and
+    kube-controller-manager is using logLevel >= 4
+
+
+### Affected Versions
+
+CVE-2020-8563 only affects 1.19.0 -1.19.2. All other CVEs affect 1.19, 
+1.18 and 1.17 releases and earlier.
+
+
+### Fixed Versions
+
+  *      CVE-2020-8563 - v1.19.3
+  *      CVE-2020-8564 - v1.19.3, v1.18.10, v1.17.13
+  *      CVE-2020-8565 - v1.20.0-alpha2
+  *      CVE-2020-8566 - v1.19.3, v1.18.10, v1.17.13
+
+
+### Fixes
+
+  *      CVE-2020-8563 - https://github.com/kubernetes/kubernetes/pull/95236
+  *      CVE-2020-8564 -
+    https://github.com/kubernetes/kubernetes/pull/94712
+  *      CVE-2020-8565 -
+    https://github.com/kubernetes/kubernetes/pull/95316
+  *      CVE-2020-8566 -
+    https://github.com/kubernetes/kubernetes/pull/95245
+
+
+## Impact
+
+If sufficient verbose logging is enabled, the following secrets can be 
+exposed in logs:
+
+  *      CVE-2020-8563 - VSphere Cloud credentials
+  *      CVE-2020-8564 - Pull secrets or other credentials in docker
+    config file
+  *      CVE-2020-8565 - Kubernetes authorization tokens (incl. bearer
+    tokens and basic auth)
+  *      CVE-2020-8566 - Ceph RBD Admin secrets
+
+
+## How do I mitigate these vulnerabilities?
+
+All four vulnerabilities are only exposed when verbose logging levels 
+are enabled for the respective component, which is not done by default. 
+These vulnerabilities can all therefore be mitigated by ensuring that 
+the log level is below 4.
+
+All four vulnerabilities can additionally be mitigated by preventing 
+untrusted access to log files. An attacker can only recover the 
+sensitive information exposed by these vulnerabilities if they can 
+access the target logs.
+
+If any exposed secrets are found in log files, it is recommended to 
+rotate them as soon as possible. Exposure can occur in Kubernetes server 
+side components, including kube-apiserver and kube-contoller-manager. 
+Client tools using the affected code, like kubectl, can also log secret 
+data.
+Detection
+
+Logs can be searched for any secret values that have already been 
+exposed. The individual pull requests for each vulnerability contain 
+details on the particular log entries that can include secret values.
+
+For example, one can examine the kube-controller-manager logs for 
+entries exposing Ceph RBD admin secrets:
+
+$ kubectl logs -n kube-system kube-controller-manager | grep rbd | grep key
+
+## Additional Details
+
+Please refer to the individual pull issues for further details:
+
+  *      CVE-2020-8563 -
+    https://github.com/kubernetes/kubernetes/issues/95621
+  *      CVE-2020-8564 -
+    https://github.com/kubernetes/kubernetes/issues/95622
+  *      CVE-2020-8565 -
+    https://github.com/kubernetes/kubernetes/issues/95623
+  *      CVE-2020-8566 -
+    https://github.com/kubernetes/kubernetes/issues/95624
+
+
+## Acknowledgements
+
+  *      CVE-2020-8563 - Kaizhe Huang (derek0405)
+  *      CVE-2020-8564 - Nikolaos Moraitis (Red Hat)
+  *      CVE-2020-8565 - Patrick Rhomberg (purelyapplied)
+  *      CVE-2020-8566 - Kaizhe Huang (derek0405)
+
+
+
+Thank you,
+
+Sam Fowler, on behalf of the Kubernetes Product Security Committee
+
+
+
+
