@@ -1,30 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/14
-Message-ID: <20200423191032.zjab7ydsiw6ibotf@yuggoth.org>
-Date: Thu, 23 Apr 2020 19:10:32 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: spoofing of local email sender via a homoglyph attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/15/1
+Message-ID: <5b9cad3b63470a24da85f7eb36fb46d91894be4d.camel@amazon.com>
+Date: Thu, 15 Oct 2020 17:33:53 +0000
+From: "Karp, Samuel" <skarp@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2020-15157: containerd v1.2.x can be coerced into leaking credentials during image pull
 Content-Type: text/plain; charset=utf-8
 
-On 2020-04-23 20:12:34 +0200 (+0200), Solar Designer wrote:
-[...]
-> What you reported originally, where you bypass something that just
-> happens that way in some configurations and wasn't meant to
-> provide any security against sender address spoofing, looks like
-> even less of an issue to me.
-[...]
+Impact
 
-Indeed, if the local attacker is already capable of opening a socket
-to the MTA, then it seems like it would be even easier instead to
-just open an outbound socket to the target's MTA directly from that
-server and bypass the restrictions applied by the local relaying MTA
-entirely (unless the local MTA process has privileged access to
-something like a DKIM key or durable TLS client key which the
-attacker can't access due to filesystem ACLs). Then they wouldn't
-need to lean on lack of homoglyph differentiation at the recipient's
-end at all.
--- 
-Jeremy Stanley
+If a container image manifest in the OCI Image format or Docker Image
+V2 Schema 2 format includes a URL for the location of a specific image
+layer (otherwise known as a “foreign layer”), the default containerd
+resolver will follow that URL to attempt to download it. In v1.2.x but
+not 1.3.0 or later, the default containerd resolver will provide its
+authentication credentials if the server where the URL is located
+presents an HTTP 401 status code along with registry-specific HTTP
+headers.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+If an attacker publishes a public image with a manifest that directs
+one of the layers to be fetched from a web server they control and they
+trick a user or system into pulling the image, they can obtain the
+credentials used for pulling that image. In some cases, this may be the
+user's username and password for the registry. In other cases, this may
+be the credentials attached to the cloud virtual instance which can
+grant access to other cloud resources in the account.
+
+The default containerd resolver is used by the cri-containerd plugin
+(which can be used by Kubernetes), the ctr development tool, and other
+client programs that have explicitly linked against it.
+
+
+Patches
+
+This vulnerability has been fixed in containerd 1.2.14 [1]. containerd
+1.3 and later are not affected.
+
+
+Workarounds
+
+If you are using containerd 1.3 or later, you are not affected. If you
+are using cri-containerd in the 1.2 series or prior, you should ensure
+you only pull images from trusted sources. Other container runtimes
+built on top of containerd but not using the default resolver (such as
+Docker) are not affected.
+
+
+Credits
+
+The containerd maintainers would like to thank Brad Geesaman, Josh
+Larsen, Ian Coldwater, Duffie Cooley, and Rory McCune for responsibly
+disclosing this issue in accordance with the containerd security policy
+[2].
+
+For further details, see 
+https://github.com/containerd/containerd/security/advisories/GHSA-742w-89gc-8m9c
+
+[1] https://github.com/containerd/containerd/releases/tag/v1.2.14
+[2] https://github.com/containerd/project/blob/master/SECURITY.md
+
