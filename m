@@ -1,21 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/24/5
-Message-ID: <CACR6SAXDk+Ronjh8KQ91q2W4FpiOmiJyjkUe9v4o9L8Bvkhvvw@mail.gmail.com>
-Date: Tue, 24 Nov 2020 18:12:36 +0100
-From: Serge Huber <shuber@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-13942: Remote Code Execution in Apache Unomi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/16/4
+Message-ID: <20201016070349.GA574432@kroah.com>
+Date: Fri, 16 Oct 2020 09:03:49 +0200
+From: Greg KH <gregkh@...uxfoundation.org>
+To: Jiri Slaby <jirislaby@...nel.org>
+Cc: Minh Yuan <yuanmingbuaa@...il.com>, oss-security@...ts.openwall.com, Linux kernel mailing list <linux-kernel@...r.kernel.org>
+Subject: Re: CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Fri, Oct 16, 2020 at 08:58:34AM +0200, Jiri Slaby wrote:
+> Cc Greg.
+> 
+> On 16. 10. 20, 5:39, Minh Yuan wrote:
+> > Hi,
+> > 
+> > We recently discovered a uaf read in vt_do_kdgkb_ioctl from linux kernel
+> > version 3.4 to the latest version (v5.9 for now).
+> > 
+> > The root cause of this vulnerability is that there exits a race in
+> > KDGKBSENT and KDSKBSENT.
+> > 
+> > Here are details:
+> > 1. use  KDSKBSENT to allocate a lager heap buffer to funcbufptr;
+> > 2. use KDGKBSENT to obtain the allocated heap pointer in step1 by
+> > func_table, at the same time, due to KDGKBSENT has no lock, we can use
+> > KDSKBSENT again to allocate a larger buffer than step1, and the old
+> > funcbufptr will be freed. However, we've obtained the heap pointer in
+> > KDGKBSENT, so a uaf read will happen while executing put_user.
+> 
+> Hi,
+> 
+> this is likely the issue I am fixing at:
+> https://git.kernel.org/pub/scm/linux/kernel/git/jirislaby/linux.git/commit/?h=devel&id=57c85191e788e172a446e34ef77d34473cfb1e8d
+> 
+> I think, it won't apply cleanly as it's a part of a larger set. I will
+> reorder the patch and send something during the day.
 
-It is possible to inject malicious OGNL or MVEL scripts into the
-/context.json public endpoint. This was partially fixed in 1.5.1 but a
-new attack vector was found. In version 1.5.2 scripts are now
-completely filtered from the input. It is highly recommended to
-upgrade to the latest available version of the 1.5.x release to fix
-this problem.
-References:
+Great, thanks for looking into this!
 
-http://unomi.apache.org./security/cve-2020-13942.txt
-
+greg k-h
