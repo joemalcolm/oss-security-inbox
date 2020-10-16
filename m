@@ -1,24 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/8
-Message-ID: <nycvar.YSQ.7.77.849.2006152326260.24307@xnncv>
-Date: Mon, 15 Jun 2020 23:27:50 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2020-13754 QEMU: msix: OOB access during mmio operations may lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/16/5
+Message-ID: <20201016170329.GB84510@raider.home>
+Date: Fri, 16 Oct 2020 19:03:29 +0200
+From: Pierre Riteau <pierre@...ckhpc.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2020-007] Blazar: Remote code execution in blazar-dashboard (CVE-2020-26943)
 Content-Type: text/plain; charset=utf-8
 
-+-- On Mon, 1 Jun 2020, P J P wrote --+
-| An OOB access issue was found in the Message Signalled Interrupt (MSI-X) 
-| device support of QEMU. It could occur while performing MSI-X mmio 
-| operations when a guest sent address goes beyond the mmio region. A guest 
-| user/process may use this flaw to crash the QEMU process resulting in DoS 
-| scenario.
+========================================================
+OSSA-2020-007: Remote code execution in blazar-dashboard
+========================================================
 
-Revised upstream patch:
-  -> https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg03732.html
+:Date: October 12, 2020
+:CVE: CVE-2020-26943
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
+Affects
+~~~~~~~
+- Blazar-dashboard: <1.3.1, ==2.0.0, ==3.0.0
+
+
+Description
+~~~~~~~~~~~
+Lukas Euler (Positive Security) reported a vulnerability in
+blazar-dashboard. A user allowed to access the Blazar dashboard in
+Horizon may trigger code execution on the Horizon host as the user the
+Horizon service runs under. This may result in Horizon host
+unauthorized access and further compromise of the Horizon service. All
+setups using the Horizon dashboard with the blazar-dashboard plugin
+are affected.
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/755814 (Stein)
+- https://review.opendev.org/755813 (Train)
+- https://review.opendev.org/755812 (Ussuri)
+- https://review.opendev.org/756064 (Victoria)
+- https://review.opendev.org/755810 (Wallaby)
+
+
+Credits
+~~~~~~~
+- Lukas Euler from Positive Security (CVE-2020-26943)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1895688
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-26943
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
