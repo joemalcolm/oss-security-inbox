@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/14/1
-Message-ID: <CANfpUcv3P9nza4UAJSHGScvrft53c8APzOaD=6sf0zrD4tiNMA@mail.gmail.com>
-Date: Tue, 14 Jul 2020 11:31:04 +0800
-From: ShaoFeng Shi <shaofengshi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/19/3
+Message-ID: <20201019175022.phn5sbd2ms7ocq5l@moyka>
+Date: Mon, 19 Oct 2020 10:50:22 -0700
+From: Ian Zimmerman <itz@...y.loosely.org>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY][CVE-2020-13925] Apache Kylin command injection vulnerability
+Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
-Versions Affected: 2.3.0, 2.3.1, 2.3.2, 2.4.0, 2.4.1, 2.5.0, 2.5.1, 2.5.2,
-2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 3.0.0-alpha, 3.0.0-alpha2,
-3.0.0-beta, 3.0.0, 3.0.1 3.0.2
+On 2020-10-19 13:22, Solar Designer wrote:
 
-Description:
+> Yes, the most difficult part with securing a desktop system is to keep
+> it conveniently usable.  I think it is possible to isolate the desktop
+> environment from user programs without inconveniencing the user.  As
+> to isolation between the user's programs, yes, that becomes visible to
+> the user and would require some training on how to explicitly transfer
+> data between the programs when needed.  Perhaps there are ways to make
+> this intuitive, e.g. drag-and-drop.
 
-Similar to CVE-2020-1956, Kylin has one more restful API which concatenates
-the API inputs into OS commands and then executes them on the server; while
-the reported API misses necessary input validation, which causes the
-hackers to have the possibility to execute OS command remotely.
+I sure hope that doesn't become the _only_ way, or I'll have some dark
+thoughts about the person who proposed it ;-) In any case I'll probably
+be dead by the time any of this is implemented, so maybe he has no
+worries.
 
-Mitigation:
-Users of all previous versions after 2.3 should upgrade to 3.1.0.
+I transfer between XA_PRIMARY and XA_SECONDARY using the Emacs
+*scratch* buffer as a way station. The only way I'm even physically able
+to drag is using pointer keys, ie. keypad Insert followed by keypad arrow
+keys followed by keypad Delete. And no I don't fit any of the predefined
+"disabled" pigeonholes so various accessibility kits do nothing for me.
 
-Credit:
-We would like to thank Clancey <clanceyz@...tonmail.com> for reporting
-this issue.
+XWindow and desktops based on it have many flaws including security
+ones, but it is flexible enough to be usable by "different" folks like
+me. Which of the modern replacements can say that, or even has
+actionable plans to address that?
 
-Best regards,
-
-Shaofeng Shi 史少锋
-Apache Kylin PMC
-Email: shaofengshi@...che.org
-
-Apache Kylin FAQ: https://kylin.apache.org/docs/gettingstarted/faq.html
-Join Kylin user mail group: user-subscribe@...in.apache.org
-Join Kylin dev mail group: dev-subscribe@...in.apache.org
-
+-- 
+Ian
