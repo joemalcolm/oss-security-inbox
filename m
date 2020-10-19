@@ -1,107 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/15/5
-Message-ID: <CAAWM14cNTy-LSFk6iHYXCQE+pXG8VjQdZw9byBeTk21nCrPFyA@mail.gmail.com>
-Date: Wed, 15 Jul 2020 17:52:43 +0200
-From: Wadeck Follonier <wfollonier@...udbees.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/19/4
+Message-ID: <20201019202139.GA30622@espresso.pseudorandom.co.uk>
+Date: Mon, 19 Oct 2020 21:21:39 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+On Mon, 19 Oct 2020 at 13:22:49 +0200, Solar Designer wrote:
+> So let's accept that the user account running the desktop environment is
+> root-equivalent security-wise (is only different from root for safety,
+> not security) as long as it's ever used to reach root.
 
-The following releases contain fixes for security vulnerabilities:
+If you want to isolate apps from each other, then I think there are
+really two sets of security boundaries:
 
-* Jenkins 2.245
-* Jenkins LTS 2.235.2
-* Deployer Framework Plugin 1.3
-* Gitlab Authentication Plugin 1.6
-* Matrix Authorization Strategy Plugin 2.6.2
-* Matrix Project Plugin 1.17
+* The system: Between user A, user B and root
+  - root and root-equivalent users are in the TCB for this set of
+    security contexts
+  - some system services like polkit and dbus-daemon --system are typically
+    also in the TCB
 
+* Per-user: Between user A's app 1, user A's app 2, and user A's desktop
+  - user A's desktop is in the TCB for this set of security contexts
+  - user A's desktop includes their window manager/compositor,
+    dbus-daemon --session, PulseAudio or PipeWire, etc.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-07-15/
+and it's possible for a program to be in the TCB for neither of those,
+for both of those, or for just the per-user boundary (meaning the desktop
+environment of an unprivileged user).
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+The Apertis automotive OS is an example of a similar model in a non-desktop
+context, heavily based on how these things work in "freedesktop" OSs.
+https://www.apertis.org/designs/security/#security-boundaries-and-threat-model
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+> Yes, the most difficult part with securing a desktop system is to keep
+> it conveniently usable.  I think it is possible to isolate the desktop
+> environment from user programs without inconveniencing the user.  As to
+> isolation between the user's programs, yes, that becomes visible to the
+> user and would require some training on how to explicitly transfer data
+> between the programs when needed.
 
----
+Flatpak does this by having each Flatpak app in a (separate) sandbox.
+Communication between apps goes through components in what you might call
+the desktop TCB (trusted by this user, but not necessarily by the sysadmin),
+such as the Wayland compositor, dbus-daemon --session, and
+xdg-desktop-portal.
 
-SECURITY-1868 / CVE-2020-2220
-Jenkins 2.244 and earlier, LTS 2.235.1 and earlier does not escape the
-agent name on build time trend pages. This results in a stored cross-site
-scripting (XSS) vulnerability exploitable by users with Agent/Configure
-permission.
+There are various tricks for making crossing the sandbox boundary automatic
+while preserving user control. For example, if you do File->Open... in a
+Flatpak app, the Open dialog that pops up is part of the trusted desktop
+session, not part of the app itself (so it can see all your files). On
+choosing a file to open, that file - but none of other files that you
+declined to open - appears in the sandbox (on a FUSE filesystem).
 
+I think Snap uses xdg-desktop-portal in a similar way. Qubes would not
+be able to use it unmodified, because its isolation between contexts is
+"heavier" (virtualization rather than containers), but it could certainly
+use similar concepts.
 
-SECURITY-1901 / CVE-2020-2221
-Jenkins 2.244 and earlier, LTS 2.235.1 and earlier does not escape the
-upstream job's display name shown as part of a build cause. This results in
-a stored cross-site scripting (XSS) vulnerability exploitable by users with
-Job/Configure permission.
+> "Containerizing" things (at best) protects the outside from what's
+> contained, not vice versa.
 
+Right. In an OS that makes heavy use of Flatpak, like Endless, basically
+all the user-facing apps are in Flatpak sandboxes (containers). Anything
+that is not sandboxed (like desktop configuration), or is in a sandbox
+that cannot provide a meaningful security boundary because that would
+defeat the purpose of the program (like file managers, development tools
+and sysadmin tools), is effectively part of the TCB of the desktop.
 
-SECURITY-1902 / CVE-2020-2222
-Jenkins 2.244 and earlier, LTS 2.235.1 and earlier does not escape the job
-name in the 'Keep this build forever' badge tooltip. This results in a
-stored cross-site scripting (XSS) vulnerability exploitable by users able
-to configure job names.
-
-As job names do not generally support the character set needed for XSS,
-this is believed to be difficult to exploit in common configurations.
-
-
-SECURITY-1945 / CVE-2020-2223
-Jenkins 2.244 and earlier, LTS 2.235.1 and earlier does not escape the
-`href` attribute of links to downstream jobs displayed in the build console
-page. This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by users with Job/Configure permission.
-
-
-SECURITY-1924 / CVE-2020-2224
-Matrix Project Plugin 1.16 and earlier does not escape node names shown in
-tooltips on the overview page of builds with a single axis. This results in
-a stored cross-site scripting (XSS) vulnerability exploitable by users with
-Agent/Configure permission.
-
-
-SECURITY-1925 / CVE-2020-2225
-Matrix Project Plugin 1.16 and earlier does not escape the axis names shown
-in tooltips on the overview page of builds with multiple axes. This results
-in a stored cross-site scripting (XSS) vulnerability exploitable by users
-with Job/Configure permission.
-
-
-SECURITY-1909 / CVE-2020-2226
-Matrix Authorization Strategy Plugin 2.6.1 and earlier does not escape user
-names shown in the permission table. This results in a stored cross-site
-scripting (XSS) vulnerability. When using project-based matrix
-authorization, this vulnerability can be exploited by a user with
-Job/Configure or Agent/Configure permission, otherwise by users with
-Overall/Administer permission.
-
-
-SECURITY-1915 / CVE-2020-2227
-Deployer Framework Plugin is a framework plugin allowing other plugins to
-provide a way to deploy artifacts. Deployer Framework Plugin 1.2 and
-earlier does not escape the URL displayed in the build home page. This
-results in a stored cross-site scripting (XSS) vulnerability exploitable by
-users able to provide the location.
-
-The exploitability of this vulnerability depends on the specific
-implementation using Deployer Framework Plugin. The Jenkins security team
-is not aware of any exploitable implementation.
-
-
-SECURITY-1792 / CVE-2020-2228
-Gitlab Authentication Plugin 1.5 and earlier does not differentiate between
-user names and hierarchical group names when performing authorization. This
-allows an attacker with permissions to create groups in GitLab to gain the
-privileges granted to another user or group.
-
+    smcv
