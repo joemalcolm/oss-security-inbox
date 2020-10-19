@@ -1,4 +1,9 @@
-Received: (qmail 28647 invoked by uid 550); 16 Oct 2025 00:45:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["14554" "Monday" "19" "October" "2020" "13:22:49" "+0200" "Solar Designer" "solar@openwall.com" "<20201019112249.GA14339@openwall.com>" "272" "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil "10" "2020101911:22:49" "[oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" (number mark "U       solar@openwa Oct 19  272/14554 " thread-indent "\"Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?\"\n") "<51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>" ("<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>" "<20201005204820.GA8410@openwall.com>" "<51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>") nil nil nil nil nil nil nil "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15554 invoked by uid 550); 19 Oct 2020 11:25:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,92 +12,288 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24020 invoked from network); 16 Oct 2025 00:40:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=catalyst.net.nz;
-	s=default; t=1760575198;
-	bh=jD5kqokEkL1SmZoIExcdnIQTGcFNwGMQegL856GgONg=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=ynsdcENDIwDSEVLVtkx1P+iFaIyejRuKVBYmpkDeijrNHob5DYKrQ/cL66oPUTZp8
-	 r7lTkgP4IeYLlBkYVw6QdcLzWoquCNDkgbnJVYQAxNi3h/EqxfPqw2xcs+FGQWtLKd
-	 vTQc+npNffppwThpc0tgVTCH1Vq5BtfujH1z5JoThUXiKBlrs5LgPR8wdUJtAUWO5K
-	 GBuL2O8ebrxPsAF++4r4JYSi/IXTsAPQeTVLmhhbCt+e3PTGhr97stPewcVY5wvP7x
-	 E+7e/PoxG7yw88G7w2qf7db1md7Mh5ADJvPth4XvkmG+xby63+L/04+SpJJujUb1rT
-	 WnSoJvBWv6RTg==
-Message-ID: <5b273beb-4110-4710-97ea-befaf5d4d6b1@catalyst.net.nz>
-Date: Thu, 16 Oct 2025 13:39:57 +1300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com,
- "Caveney, Seamus G" <sgcaveney@seattleschools.org>
-References: <20f5f042-d3de-411b-aa09-b2c46ee19cc8@samba.org>
- <da7aa05f-01c0-4798-8496-33f1c0010e4e@catalyst.net.nz>
- <2338e6b3-44d5-4d9e-bd94-e3b96534359d@catalyst.net.nz>
- <DS1PR04MB965568BE9229892AA593E6E8C0E8A@DS1PR04MB9655.namprd04.prod.outlook.com>
-Content-Language: en-NZ
-From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
-Autocrypt: addr=douglas.bagnall@catalyst.net.nz; keydata=
- xsBNBFTZNuABCACnBtS+eLzGts68jAJrZstbH5vM0d/4+OsGcvFkrXGPE9D6PsRdVM+jPT1Z
- fASzsarvWkx0b7p6/XTwTo2Al3KRRVLq3FQFPOLyKzSXK8u+vUi/py7Cv133t4Uea7+Pp+YM
- tWjXGwB/y3s5TBwJkYShSTBpAhDnkKjxRSQXIr7gIE0fIPIS1uy19g1q/BuXuj1sfcISRMpp
- z8qs9cAsk45tG1JItaLjO7+K47Q3LEfskChGPbhwh7tWCquDzreQC7q+h3dK6A1AOrorskON
- +Wy3aucRoOw6scNfV2H1y6lDza2lwZxCDRs6zkn7SQVjX62j9kVczShyi5udgqfWsW2jABEB
- AAHNMURvdWdsYXMgQmFnbmFsbCA8ZG91Z2xhcy5iYWduYWxsQGNhdGFseXN0Lm5ldC5uej7C
- wHgEEwECACIFAlTZNuACGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEHcqM0mxsX5t
- XIoH/jiHvUuw4xrBKuk9KzAE5JNd5rcTQdaRgiIvM/6C6X/uobzO2CDKFEUOmTpYSSXkq0/3
- YmwCRqWMja/5N1886qFrkcrIkTMRb0imxkNVwd7JIPdryK6dFCzCRUC1hByqeI8EwO41ROX+
- qw6DT+H/o6QkPWAB1P8ODVtq0F3TUZ0/Xpe3xYK1QF6Ud0BKWVcKBMAdS7CWTsVRD6m9it80
- Mp4N3y6Ka0vrgZ6IEskBHGVJ/Mm6ONrHIjl4OAbAKK4PuFha5PjPx1YYYOnsp4JvhrSJQDag
- A9vDdm7mbJpxxVY0Rx4t7xRvh+jsZ1f6yVGx5UTpdtvSbriZ2SZ3F29hBGfOwE0EVNk24AEI
- ANSG9xaPHGxr7l1Wcz8J51IDT0EE7ozS3TSYRE80OSH8oB26w5StLbQkC+iWj0GsTveJL9x6
- Vp/dfsPGfG9CP9J0C4ZOwY7+V9ex1d10xzr32zetKiUt7ZEimzIiCnmnR9K54jVbGDvVfJie
- uTOGruqRLIUAO69ZyhplRywyee6MRtgmfLpJlnOySgvihR4kHmq03zHe6whhJ0RmbKSIwb/F
- Ri/ZmpujNZ7PTYcmw7sp/5HpE4taYA0f3QvK9/DTjuoITdugrxhOwBdv6jLAAzI8d0quOFf+
- 5IeGizYTa6HPmBtIUyyzVajjiUpXiB8WuhgTL5pP0BT5j6BtW8Li/YEAEQEAAcLAXwQYAQIA
- CQUCVNk24AIbDAAKCRB3KjNJsbF+bYRnB/94DaFuxGVA65kkr5iubWbwKnaiTWlZLIFQp0RH
- QRk/jgdpuQj3E4D660QdfoMqhTeozOPTBH3cJOCjgN/klI7xrkvdq8sLTMWyM5Bbu+XhDaSr
- 8hnjvdhZM7bHQdaH3FI5zdm2rMbP8nB6IH8wYSxHzywjR9vks6PTsqxqeCoupqdVO/kZ3jsU
- F0LOxxnMTlT8YZIn8lFVptsz5HMOKFnUdR3fYpcO+CTc9vXqcLWqnMwchdSQPp1cjZ5eUl+G
- jmq9xwOWLG/0u5b9stC3cEiCNSZn8Nyy7KaY8fQeKn//sBeyu3htjZ2wZ+oRVuc/XR/+/hl6
- QCGP/4UC6mJGdmU0
-In-Reply-To: <DS1PR04MB965568BE9229892AA593E6E8C0E8A@DS1PR04MB9655.namprd04.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Samba security releases for CVE-2025-10230 and
- CVE-2025-9640
+Received: (qmail 13776 invoked from network); 19 Oct 2020 11:23:16 -0000
+Date: Mon, 19 Oct 2020 13:22:49 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20201019112249.GA14339@openwall.com>
+References: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com> <20201005204820.GA8410@openwall.com> <51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?
 
-On 16/10/25 12:30, Caveney, Seamus G wrote:
+Hi,
 
-> Illegal characters in a NetBIOS hostname are:
+This is a belated combined reply to what several of you wrote.  I felt I
+had to at least address Grant's request for me to clarify what I meant.
+
+On Mon, Oct 05, 2020 at 03:53:26PM -0600, Grant Taylor wrote:
+> On 10/5/20 2:48 PM, Solar Designer wrote:
+> >On the desktop, major Linux distributions (and by the way *BSDs 
+> >and Solaris are not very different in this respect, I think) when 
+> >used as single-user desktop systems lack security isolation between 
+> >applications of the user.
 > 
-> \ / : * ? " < > | ,
+> I agree that there is a lot of room for improvement here.  But -- like 
+> you say -- I don't think this is isolated to Linux by any stretch of the 
+> imagination.  Unless I'm sorely mistaken, just about every contemporary 
+> desktop, and possibly server, operating system only gets as granular as 
+> the user level.
+
+Sure.  My mention of *BSDs and Solaris was in reference to other major
+Open Source operating systems.
+
+> >(And also between the user and root, due to the typical recommended 
+> >use of sudo from the user account.)
 > 
-> notably excluding backticks and semicolons. I'm not deeply familiar
-> with the Samba code base but a glance at nbtname.c and winsserver.c
-> seems to suggest that those character limitations aren't enforced at
-> the protocol level, so it might be possible to use pipes, redirects
-> or exec a local binary with a short path. Otherwise, the easiest
-> exploitable payload I can think of would be:
+> Please elaborate what you mean here?
 > 
-> ;`curl ab.cd`;
+> Are you commenting on the use of sudo (vs other access control 
+> mechanisms) or the seemingly default recommendation to allow members of 
+> the sudo group run any and all commands via sudo?  E.g.:
+> 
+>    %group ALL=(ALL) NOPASSWD: ALL
 
-The characters '<', ';', and '>' are blocked by the needs of the ldb
-database that this server uses (I am not sure I checked '`', but it is
-probably allowed). But of course '&' works just as well as ';'.
+Neither.  Rather, I refer to the fundamentally flawed approach of
+elevating privileges from a user account that is also used for other
+purposes.  When doing so, you equate that account to the target
+(elevated) one.  Even if you have to enter a password (user's with sudo
+or root's with su, which doesn't make a difference) when you elevate
+privileges, you nevertheless expose the new privileged context and
+whatever you had to enter to reach it to other programs running as the
+user.  You also have no reliable way to know that you're entering this
+password to the intended program (such as sudo or su) rather than to
+something the possibly-already-compromised user context might have
+substituted in its place (e.g., a shell alias).
 
-If '>' worked, I think you could build up a script with a lot of
-"&echo foo>>x&" followed by a `tr`.
+So the typical "best practice" approach of logging in as a user and then
+sudo'ing or su'ing to root when needed is only good against mistakes and
+a subset of attacks, but doesn't provide any guarantee (even assuming
+perfect design and implementation of the system in all other aspects,
+and the user resisting social engineering to the best extent possible).
 
-> I'd be interested to see if anybody has a living Samba install
-> configured as a DC with WINS still running in 2025.
+So let's accept that the user account running the desktop environment is
+root-equivalent security-wise (is only different from root for safety,
+not security) as long as it's ever used to reach root.
 
-Me too!
+Then our next logical step is not to run programs that are not an
+essential part of the desktop environment as that same user account,
+with the only exception being for whatever is used for accessing the
+root account (and maybe other accounts) - e.g., there might be an option
+to open a terminal window where you'd use sudo, or maybe even open a
+root terminal right away (like Qubes OS has), maybe with password
+protection for safety and for some loose security against
+not-too-determined attackers with physical access to a live system
+(although Qubes OS doesn't bother with that).
 
-The last indication of a 'wins hook' line I have seen was in 2016, and 
-that was commented out.
+In other words, instead of having a seemingly unprivileged user account
+from which you occasionally elevate privileges, acknowledge that you
+actually have a privileged desktop user account from which you drop
+privileges to run most programs and from which you occasionally access
+root (without crossing a security boundary, but only a safety one).
 
-An example of a place that may use it is a factory where some machinery 
-is a few decades old and only knows WINS but otherwise still works well.
+Unfortunately, programs allowed to talk to the same X server that the
+desktop environment uses are not really isolated from it.  We need to
+solve that.  (Qubes OS does so by running separate X servers in VMs, but
+the use of VMs is orthogonal to this.  Poor man's solutions such as
+limiting of X server features might also work, of course keeping the X
+server with all of its attack surface in the TCB, which us unfortunate.
+Then there's Wayland, which might also be part of a solution.)
 
-cheers,
-Douglas
+Finally, we need to integrate those programs on the same desktop and
+with ability to explicitly share files and clipboard.  (Qubes OS does
+this, too.  A poor man's alternative or an intermediate evolutionary
+step might be to run all programs other than the desktop environment as
+just one other user account.  This would address the issue of accessing
+root securely, but wouldn't yet provide isolation between the user's
+programs.)
+
+> >This kind of security isolation is something we have on Android, 
+> >but at the price of the user not having full access to (not entirely) 
+> >their device.  The user cannot even have e.g. a file manager app with 
+> >which they'd access all files of other apps.
+> 
+> I don't know anything about Android other than it made me mad the last 
+> time I tried to use it.
+> 
+> I have seen some recent references to user namespaces and sub-IDs.  I'm 
+> on the lookout for information to see if that might be a way to run 
+> different applications as their own sub-user-id and then behave 
+> similarly to how applications running as different users work.  Meaning 
+> that each application -> user ID would have it's own files and would 
+> then rely on being a member of another group to access other files.  All 
+> the while relying on file system permissions to protect other things.
+> 
+> Aside:  If you know of something that I should be reading, please point 
+> me towards it.
+> 
+> Have Firefox run as <username>-<firefox> and Evolution run as 
+> <username>-<evolution>.  Both user would appear as a different user than 
+> just <username> thereby enabling traditional user & group security 
+> models between applications run by the same user.
+> 
+> I don't know if I'm hallucinating or if something like this is possible, 
+> or even done somewhere that I'm not aware of.
+
+On Android, each app you install gets its own pseudo-user like you
+describe.  An issue is then being able to access one app's files from
+another app when that is needed.  This is typically achieved by apps
+that sometimes need to share files requesting permission to access
+global shared storage such as "SD card" (which is often just a partition
+on the device's internal storage).  This is not perfect: permission is
+granted "just in case", not if and when access is needed, and it's not
+granular.  (I'm not familiar with how this might have been improved in
+recent Android, though.)
+
+On typical desktop systems, there's also the shared X server issue.
+(That said, I've been running a customized system like this for years.
+With my e-mail in Mutt, that one pseudo-user wasn't privileged to access
+the X server, so couldn't e.g. capture my SSH key passphrases.)
+
+> >For typical desktop Linux users, realistically most security is 
+> >provided by the web browser, which these days at least uses a 
+> >sandbox, protecting the user's files and other apps from itself. 
+> >That's something the underlying systems tend to lack.
+> 
+> I'm grateful that the web browser does do sandboxing.  But I don't think 
+> that we should need to rely on it for as much security as we do. 
+
+Of course, better not to rely on one layer of security.  I just point
+out that the state of desktop OS security is currently worse than the
+state of web browser security.
+
+> >Sure malware and social engineering are valid threats to keep in mind.
+> 
+> I don't see how the operating system / security infrastructure can be 
+> responsible for protecting people here.
+
+The OS should at least provide a means for a knowledgeable user to
+unambiguously determine where pop-up windows, prompts, etc. really come
+from.  (Such as Qubes OS coloring of window titles.)
+
+> >It's also a good idea not to rely solely on the browser's built-in 
+> >authorization checks, but to limit its access to system resources 
+> >such as the microphone and camera.  Qubes OS does that.
+> 
+> I naively think that some of this can be controlled with traditional 
+> file system permissions on the relevant device files.  If your (sub)user 
+> is not in the group to access the microphone -- guess what -- you don't 
+> get access to it.
+
+I'm afraid, there's typically no way at the device file level to grant
+access to audio output without also granting access to audio input.
+Maybe this needs to be introduced into the kernel.
+
+Besides, these days programs typically work through a server process
+such as pulseaudio.  In my example with having a dedicated pseudo-user
+account for the desktop environment, that one could also control whether
+audio input is enabled or disabled in the audio server, and the user's
+programs would need to be disallowed to control that.
+
+> >Relaxed file permissions like that may also further weaken some partial 
+> >sandboxes (when a service is running with its dedicated credentials, 
+> >but with retained filesystem access - such as because it needs that).
+> 
+> I want to agree with that.  But, with things ultimately running as the 
+> same user, then any subdivision therein is difficult to enforce.
+
+I was referring e.g. to Postfix daemons, some of which run with full
+filesystem access yet as a (pseudo-)user that wouldn't be privileged to
+access a user's home directory if the home directory and files inside of
+it have stricter permissions than 755/644.
+
+On Mon, Oct 05, 2020 at 05:29:20PM -0400, Stephen John Smoogen wrote:
+> On Mon, 5 Oct 2020 at 16:49, Solar Designer <solar@openwall.com> wrote:
+> > On the desktop, major Linux distributions (and by the way *BSDs and
+> > Solaris are not very different in this respect, I think) when used as
+> > single-user desktop systems lack security isolation between applications
+> > of the user.  (And also between the user and root, due to the typical
+> > recommended use of sudo from the user account.)
+> 
+> I think it would take a lot of 'training' on why this is not wanted and
+> setting expectations about how one is supposed to use a computer without
+> that access.
+
+Yes, the most difficult part with securing a desktop system is to keep
+it conveniently usable.  I think it is possible to isolate the desktop
+environment from user programs without inconveniencing the user.  As to
+isolation between the user's programs, yes, that becomes visible to the
+user and would require some training on how to explicitly transfer data
+between the programs when needed.  Perhaps there are ways to make this
+intuitive, e.g. drag-and-drop.
+
+> It is hard enough trying to explain to the person who wanted
+> everything containerized for 'better' security that allowing them to ssh
+> into the container so they can 'debug it' also removes the security that
+> they wanted.
+
+"Containerizing" things (at best) protects the outside from what's
+contained, not vice versa.  This is similar to the problem with sudo'ing
+or su'ing to root, and requires a similar solution.  This isn't hard for
+the user if access to containers is managed from a preconfigured desktop
+environment that's part of the TCB (like on Qubes OS), and that isn't
+used to run unrelated programs in the same security context.  The hard
+part is integration of the isolated environments and learning when and
+how to use it.
+
+> > Then there's the trend towards having a desktop-like Linux system on
+> > mobile devices again.  Before Android, we had e.g. Maemo and MeeGo.  Now
+> > we have e.g. Ubuntu Touch, postmarketOS, and Sailfish OS.  As far as I'm
+> > aware, so far this means lack of isolation between the apps just like we
+> > have on the desktop.
+
+BTW, there's a Russian security-hardened fork of Sailfish OS called
+Aurora.  I've skimmed and searched its user's manual (in Russian) for
+any mentions of isolation between the apps - found nothing, so I assume
+there's none.  (This isn't to say they haven't implemented any security
+changes - I think they have.  An interview I read with their CEO
+looked surprisingly reasonable.  However, it appears that addressing
+cross-app attacks is completely out of their focus.)
+
+> > We need the best of both worlds - isolation, yet full control.  I guess
+> > this could be achieved by devices gaining a physical button that would
+> > need to be pressed at the time a newly installed app is to be granted
+> > privileges by a component in the system's TCB.  Said component would
+> > also need to assure the user that it's the only one in control at the
+> > moment (kind of after a SAK) and that the displayed privileges request
+> > is truthful and complete, e.g. by lighting a dedicated LED.  You want to
+> > install an all-powerful file manager?  Just wait for that LED to light
+> > up, review what privileges would be granted to where, and press that
+> > button to accept.  Perhaps too cumbersome for typical users.  Maybe an
+> > alternative approach could be developed where a portion of the
+> > touchscreen (or a secondary one) would be reserved for interacting with
+> > the OS TCB.  Perhaps something like MacBook Pro's Touch Bar could be
+> > used for that purpose - and having that is already a precedent, it's
+> > just not used for a security purpose yet (or I haven't heard of that).
+> 
+> That would be useful and trusted if the touch bar has a direct path to the
+> TCB versus being able to be reprogrammed by the OS.
+
+Some components of the OS are normally part of the TCB (except in some
+other contexts).  Having dedicated screen space for control (like with
+Qubes OS preventing VMs' full screen mode by default) or indeed a
+dedicated screen is a reasonable security feature.  And yes, there's no
+security difference between dedicated screen space and dedicated screen
+when they're managed by the OS, but that's OK.
+
+On Mon, Oct 05, 2020 at 10:36:14PM -0400, Steve Grubb wrote:
+> I will skip the whole discussion on access control. However to prove security 
+> requires going through a Common Criteria certification. The biggest issue is 
+> that the desktoptop uses dbus instantiation which does not have the auid of 
+> the requesting process. Meaning audit cannot work.
+> 
+> The fix was kdus. That was rejected. But the issue remains. There cannot be a 
+> secure desktop without auditing. And no one is really pushing for a desktop 
+> certification, therefore no one is pushing to fix audit desktop problems.
+
+I think it's a bit ridiculous to talk about audit on the desktop when we
+haven't got the basics right.  A typical desktop system user won't know
+and won't benefit from audit, but would possibly benefit (ideally, not
+having to know about it!) from isolation of the desktop environment from
+other programs (e.g., as it relates to which programs can control the
+audio settings).
+
+Alexander
