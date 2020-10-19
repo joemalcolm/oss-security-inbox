@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2421" "Thursday" "14" "January" "2016" "11:33:28" "+0300" "Solar Designer" "solar@openwall.com" "<20160114083328.GA27255@openwall.com>" "56" "Re: [oss-security] [security] Go security release v1.5.3" "^Cc:" nil nil "1" "2016011408:33:28" "[oss-security] [security] Go security release v1.5.3" (number mark "        solar@openwa Jan 14   56/2421  " thread-indent "\"Re: [oss-security] [security] Go security release v1.5.3\"\n") "<CA+s3sfH_VUEnbiXJtymJZmKD5JNy3hazrZ8y=Ex6Xzrim5bbYg@mail.gmail.com>" ("<CA+s3sfH_VUEnbiXJtymJZmKD5JNy3hazrZ8y=Ex6Xzrim5bbYg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1351" "Monday" "19" "October" "2020" "20:00:21" "+0800" "Xiaoxiang Yu" "xxyu@apache.org" "<360777c3.7d8b.17540bb5b7a.Coremail.xxyu@apache.org>" "27" "[oss-security] [SECURITY][CVE-2020-13937] Unauthenticated Configuration Disclosure" nil nil nil "10" "2020101912:00:21" "[oss-security] [SECURITY][CVE-2020-13937] Unauthenticated Configuration Disclosure" (number mark "U       xxyu@apache. Oct 19   27/1351  " thread-indent "\"[oss-security] [SECURITY][CVE-2020-13937] Unauthenticated Configuration Disclosure\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY][CVE-2020-13937] Unauthenticated Configuration Disclosure" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25800 invoked by uid 550); 14 Jan 2016 08:33:30 -0000
+Received: (qmail 26073 invoked by uid 550); 19 Oct 2020 13:14:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25778 invoked from network); 14 Jan 2016 08:33:30 -0000
-Message-ID: <20160114083328.GA27255@openwall.com>
-References: <CA+s3sfH_VUEnbiXJtymJZmKD5JNy3hazrZ8y=Ex6Xzrim5bbYg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+s3sfH_VUEnbiXJtymJZmKD5JNy3hazrZ8y=Ex6Xzrim5bbYg@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: Jason Buberel <jbuberel@google.com>
-Date: Thu, 14 Jan 2016 11:33:28 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [security] Go security release v1.5.3
-To: oss-security@lists.openwall.com
+Received: (qmail 30409 invoked from network); 19 Oct 2020 12:01:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=W48pP
+	5Qz6jK0qsiQtQhOq/kdAkUempafqzoR8SrbVrQ=; b=lQZZ+4TCKyi7rRJmNHbnH
+	rtax5o/4RiJGPMErNSs0nYPnxoxmcAgV/zZF4c5gDW38lSYCBvrDSW5pEGFEpf/u
+	0yZPBlEeG9hD5iUpGgtX/NFQndCSO/1LKurHuFrA4ErJI2KyT6TCs8o8HbpVtThq
+	m89LayvDm1G1dCimcx4myc=
+X-Originating-IP: [116.228.210.42]
+Date: Mon, 19 Oct 2020 20:00:21 +0800 (CST)
+From: "Xiaoxiang Yu" <xxyu@apache.org>
+To: info@starlabs.sg, user@kylin.apache.org, dev@kylin.apache.org, 
+	oss-security@lists.openwall.com, security@apache.org
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2020 www.mailtech.cn 126com
+Sender: hit_lacus@126.com
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_110748_1144993078.1603108821882"
+MIME-Version: 1.0
+Message-ID: <360777c3.7d8b.17540bb5b7a.Coremail.xxyu@apache.org>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: FcqowAAXJ_vWf41fOsryAA--.29716W
+X-CM-SenderInfo: pklwszpdfx2qqrswhudrp/1tbinwfC4lpEAK815wACsZ
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Subject: [oss-security] [SECURITY][CVE-2020-13937] Unauthenticated Configuration Disclosure
 
-On Wed, Jan 13, 2016 at 09:06:57PM +0000, Jason Buberel wrote:
-> A security-related issue has been reported in Go's math/big package. The
-> issue was introduced in Go 1.5. We recommend that all users upgrade to Go
-> 1.5.3, which fixes the issue. Go programs must be recompiled with Go 1.5.3
-> in order to receive the fix.
-> 
-> The Go team would like to thank Nick Craig-Wood for identifying the issue.
-> 
-> This issue can affect RSA computations in crypto/rsa, which is used by
-> crypto/tls. TLS servers on 32-bit systems could plausibly leak their RSA
-> private key due to this issue. Other protocol implementations that create
-> many RSA signatures could also be impacted in the same way.
-> 
-> Specifically, incorrect results in one part of the RSA Chinese Remainder
-> computation can cause the result to be incorrect in such a way that it
-> leaks one of the primes. While RSA blinding should prevent an attacker from
-> crafting specific inputs that trigger the bug, on 32-bit systems the bug
-> can be expected to occur at random around one in 2^26 times. Thus
-> collecting around 64 million signatures (of known data) from an affected
-> server should be enough to extract the private key used.
-> 
-> On 64-bit systems, the frequency of the bug is so low (less than one in
-> 2^50) that it would be very difficult to exploit. Nonetheless, everyone is
-> strongly encouraged to upgrade.
-> 
-> Go 1.6 will include include a change to double-check the RSA computation,
-> which is a generic countermeasure to this class of bug.
+------=_Part_110748_1144993078.1603108821882
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-A concern here is that this might increase side-channel leaks.  Related
-discussion:
+VmVyc2lvbnMgQWZmZWN0ZWQ6CgpLeWxpbiAyLjAuMCwgMi4xLjAsIDIuMi4w
+LCAyLjMuMCwgMi4zLjEsIDIuMy4yLCAyLjQuMCwgMi40LjEsIDIuNS4wLCAy
+LjUuMSwgMi41LjIsIDIuNi4wLCAyLjYuMSwgMi42LjIsIDIuNi4zLCAyLjYu
+NCwgMi42LjUsIDIuNi42LCAzLjAuMC1hbHBoYSwgMy4wLjAtYWxwaGEyLCAz
+LjAuMC1iZXRhLCAzLjAuMCwgMy4wLjEsIDMuMC4yLCAzLjEuMCwgNC4wLjAt
+YWxwaGEuCgoKCgpEZXNjcmlwdGlvbjoKCkt5bGluIGhhcyBvbmUgcmVzdGZ1
+bCBhcGkgd2hpY2ggZXhwb3NlZCBLeWxpbidzIGNvbmZpZ3VyYXRpb24gaW5m
+b3JtYXRpb24gd2l0aG91dCBhbnkgYXV0aGVudGljYXRpb24sIHNvIGl0IGlz
+IGRhbmdlcm91cyBiZWNhdXNlIHNvbWUgY29uZmlkZW50aWFsIGluZm9ybWF0
+aW9uIGVudHJpZXMgd2lsbCBiZSBkaXNjbG9zZWQgdG8gZXZlcnlvbmUuCgoK
+CgpNaXRpZ2F0aW9uOgoKVXNlcnMgY291bGQgZWRpdCAiJEtZTElOX0hPTUUv
+V0VCLUlORi9jbGFzc2VzL2t5bGluU2VjdXJpdHkueG1sIiwgYW5kIHJlbW92
+ZSB0aGlzIGxpbmUgIjxzY3I6aW50ZXJjZXB0LXVybCBwYXR0ZXJuPSIvYXBp
+L2FkbWluL2NvbmZpZyIgYWNjZXNzPSJwZXJtaXRBbGwiLz4iLiBBZnRlciB0
+aGF0LCAgcmVzdGFydCBhbGwgS3lsaW4gaW5zdGFuY2VzIHRvIG1ha2UgaXQg
+ZWZmZWN0aXZlLgoKT3RoZXJ3aXNlLCB5b3UgY2FuIHVwZ3JhZGUgS3lsaW4g
+dG8gMy4xLjEuCgoKCgpDcmVkaXQ6CgpUaGlzIGlzc3VlIHdhcyBkaXNjb3Zl
+cmVkIGJ5IE5nbyBXZWkgTGluIChAQ3JlYXN0ZXJ5KSBvZiBTVEFSIExhYnMg
+KEBzdGFybGFic19zZykuCgotLQoKQmVzdCB3aXNoZXMgdG8geW91ICEgCkZy
+b20go7pYaWFveGlhbmcgWXU=
 
-http://www.openwall.com/lists/oss-security/2014/07/10/3
-http://www.openwall.com/lists/oss-security/2014/07/10/5
+------=_Part_110748_1144993078.1603108821882--
 
-I guess you intend to be careful with that?
-
-> The CVE issue descriptions and fixes are linked below. Downloads are
-> available at http://golang.org/dl for all supported platforms.
-> 
-> CVE-2015-8618
-> 
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8618
-> 
-> CLs fixing the issue:
-> 
-> https://go-review.googlesource.com/#/c/17672/
-> https://go-review.googlesource.com/#/c/18491/
-
-"Gerrit requires a JavaScript enabled browser."
-OK, launched another browser. ;-)
-
-Alexander
-
-P.S. My extra excuse to post this and to over-quote is DMARC, which has
-likely prevented delivery of the original @google.com message to some
-recipients.  I know I got to workaround it in list configuration soon.
