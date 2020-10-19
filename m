@@ -1,25 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/19/4
-Message-ID: <20200819165722.GD3698439@kroah.com>
-Date: Wed, 19 Aug 2020 18:57:22 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel 5.7.9 DRM  Double Free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/19/2
+Message-ID: <360777c3.7d8b.17540bb5b7a.Coremail.xxyu@apache.org>
+Date: Mon, 19 Oct 2020 20:00:21 +0800 (CST)
+From: "Xiaoxiang Yu" <xxyu@...che.org>
+To: info@...rlabs.sg, user@...in.apache.org, dev@...in.apache.org,  oss-security@...ts.openwall.com, security@...che.org
+Subject: [SECURITY][CVE-2020-13937] Unauthenticated Configuration Disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 19, 2020 at 05:55:16PM +0200, Greg KH wrote:
-> On Wed, Aug 19, 2020 at 03:42:33PM +0000, zdi-disclosures@...ndmicro.com wrote:
-> > The specific flaw exists within DRM memory management. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to escalate privileges and execute code in the context of the kernel.
-> 
-> Note, this "vulnerability" was only accessible by root, so there's not
-> all that many privileges that could really be escalated there.  Don't
-> know why the original poster did not say that here, as they acknowledged
-> it in the "bug report" they sent many of us.
+Versions Affected:
 
-And to be specific, as I was asked, this was only an issue in the
-nouveau drm driver, not in the DRM "core" at all.  So only that one
-driver was affected.
+Kylin 2.0.0, 2.1.0, 2.2.0, 2.3.0, 2.3.1, 2.3.2, 2.4.0, 2.4.1, 2.5.0, 2.5.1, 2.5.2, 2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 3.0.0-alpha, 3.0.0-alpha2, 3.0.0-beta, 3.0.0, 3.0.1, 3.0.2, 3.1.0, 4.0.0-alpha.
 
-thanks,
 
-greg k-h
+
+
+Description:
+
+Kylin has one restful api which exposed Kylin's configuration information without any authentication, so it is dangerous because some confidential information entries will be disclosed to everyone.
+
+
+
+
+Mitigation:
+
+Users could edit "$KYLIN_HOME/WEB-INF/classes/kylinSecurity.xml", and remove this line "<scr:intercept-url pattern="/api/admin/config" access="permitAll"/>". After that,  restart all Kylin instances to make it effective.
+
+Otherwise, you can upgrade Kylin to 3.1.1.
+
+
+
+
+Credit:
+
+This issue was discovered by Ngo Wei Lin (@Creastery) of STAR Labs (@starlabs_sg).
+
+--
+
+Best wishes to you ! 
+From ：Xiaoxiang Yu
