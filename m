@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3331" "Thursday" "1" "June" "2017" "18:03:59" "+0000" "Liguori, Anthony" "aliguori@amazon.com" "<1496340239333.24020@amazon.com>" "75" "Re: [oss-security] unresponsive distros" "^Date:" nil nil "6" "2017060118:03:59" "[oss-security] unresponsive distros" (number mark "        aliguori@ama Jun  1   75/3331  " thread-indent "\"Re: [oss-security] unresponsive distros\"\n") "<20170601180053.GA4752@openwall.com>" ("<20170601180053.GA4752@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3192" "Monday" "19" "October" "2020" "21:21:39" "+0100" "Simon McVittie" "smcv@debian.org" "<20201019202139.GA30622@espresso.pseudorandom.co.uk>" "63" "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil "10" "2020101920:21:39" "[oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" (number mark "U       smcv@debian. Oct 19   63/3192  " thread-indent "\"Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?\"\n") "<20201019112249.GA14339@openwall.com>" ("<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>" "<20201005204820.GA8410@openwall.com>" "<51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>" "<20201019112249.GA14339@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19638 invoked by uid 550); 1 Jun 2017 18:07:21 -0000
+Received: (qmail 13627 invoked by uid 550); 19 Oct 2020 20:21:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17745 invoked from network); 1 Jun 2017 18:04:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1496340261; x=1527876261;
-  h=from:to:subject:date:message-id:references:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=4XKpdYQiDWcs4PCPZf939MDospo644Msb9m4oi0nOBQ=;
-  b=KbBvqNejoCuckwbOp0z6RZnAL5SG1HR3iihefEe46528FGu1W2qplQUd
-   Iouu2YsI41qJeXwiEdGuejSBXKQX08F0MOpfHol4BzoGl1rtjdd2OabeB
-   nrZyX1w+IWNxc3yyVZ0LHmSC79zasuKQNsUl41hzs1DxrGa68NFFsQ7jO
-   Y=;
-X-IronPort-AV: E=Sophos;i="5.39,280,1493683200"; 
-   d="scan'208";a="291544898"
-Thread-Topic: [oss-security] unresponsive distros
-Thread-Index: AQHS2wEa3VHSqTrNjU+8YAvS7z+TWqIQTH+r
-Message-ID: <1496340239333.24020@amazon.com>
-References: <20170601180053.GA4752@openwall.com>
-In-Reply-To: <20170601180053.GA4752@openwall.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.43.162.197]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-Date: Thu, 1 Jun 2017 18:03:59 +0000
-From: "Liguori, Anthony" <aliguori@amazon.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] unresponsive distros
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-
-Hrm, I've been following the thread but apparently missed your request Sola=
-r.
-
-Regards,
-
-Anthony Liguori
-________________________________________
-From: Solar Designer <solar@openwall.com>
-Sent: Thursday, June 1, 2017 11:00 AM
+Received: (qmail 13609 invoked from network); 19 Oct 2020 20:21:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	 s=smtpauto.master; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:To:From:Date:Reply-To:Cc:Content-Transfer-Encoding:
+	Content-ID:Content-Description;
+	bh=Xj9CQ4+ILRfZ6EXdYLojQKWWPWK8+H6rK0Q8ILCUPOA=; b=cNqmvkYTDzcZ3nItHQ6eHgLmWM
+	MMEQAj5xY+5sGH0BpY7JoaLmLsU71b9yEwWKVcoL8EPGFCGCKeok9WhHNuA2/BUAS0iWXS2ZI52cI
+	z6U6lUmAP3e7lD/PW6Ln0qFiwndHUATN2iTjX4q4VXYx3rYwAtm6wsVHtlob8mLqLgwKlBWnJhQZi
+	TCDbxQp1oMDpVBsoE/TabN6BRH1BIsMEItj3F2nhzEgMVPa2LnPrFs3VEbWHvRhPw4zhB7F45dhR1
+	XMnBc1ZJ1yzyKePy5CpQCOhKHnFAsT1A4xSxFdl8IAK+w1WwcFTUkzbtJFSQvLXX5Bu0TbjZkhomD
+	mJnVuVlQ==;
+Date: Mon, 19 Oct 2020 21:21:39 +0100
+From: Simon McVittie <smcv@debian.org>
 To: oss-security@lists.openwall.com
-Subject: [oss-security] unresponsive distros
+Message-ID: <20201019202139.GA30622@espresso.pseudorandom.co.uk>
+References: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>
+ <20201005204820.GA8410@openwall.com>
+ <51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>
+ <20201019112249.GA14339@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201019112249.GA14339@openwall.com>
+Subject: Re: [oss-security] major changes if gnu/linux dominates the desktop
+ and/or mobile market?
 
-Hi,
+On Mon, 19 Oct 2020 at 13:22:49 +0200, Solar Designer wrote:
+> So let's accept that the user account running the desktop environment is
+> root-equivalent security-wise (is only different from root for safety,
+> not security) as long as it's ever used to reach root.
 
-A certain issue being handled on the distros list provided for a
-particularly good opportunity for me to test whether/which distros are
-actually paying attention and intend to respond to issues during the
-embargo period.  In the middle of a lengthy thread with a somewhat
-generic Subject (since it travels unencrypted), I asked literally all
-(and I emphasized that) distros to respond to the thread with status
-updates regarding their handling of the issue.  That was on May 27.
-I gave distros time until May 30 (Tuesday) to respond.  I then gave them
-about 2 days more, as you can see.
+If you want to isolate apps from each other, then I think there are
+really two sets of security boundaries:
 
-Most distros responded, with varying amount of detail.  But 3 did not:
+* The system: Between user A, user B and root
+  - root and root-equivalent users are in the TCB for this set of
+    security contexts
+  - some system services like polkit and dbus-daemon --system are typically
+    also in the TCB
 
-FreeBSD
-Amazon Linux AMI
-MontaVista Software
+* Per-user: Between user A's app 1, user A's app 2, and user A's desktop
+  - user A's desktop is in the TCB for this set of security contexts
+  - user A's desktop includes their window manager/compositor,
+    dbus-daemon --session, PulseAudio or PipeWire, etc.
 
-We had heard from FreeBSD earlier in the thread, although I would have
-expected them to reply to the specific request as well (and I did say so
-explicitly).  Maybe it's fatigue from too many encrypted messages, most
-of which happen to be focusing on Linux-specific aspects of the issue.
-That's not great at all, but it is somewhat understandable.  Part of the
-problem is that when an issue is potentially relevant to both *BSD and
-Linux, we're rarely careful to separate postings and sub-threads between
-the distros and linux-distros lists, resulting in "spamming" (and risk
-of leaks) of the Linux-specific aspects to (and via) the *BSD's.  This
-is something for us all to improve.  (Some of the sub-threads were in
-fact correctly separated to go only to linux-distros in this present
-case, though.)
+and it's possible for a program to be in the TCB for neither of those,
+for both of those, or for just the per-user boundary (meaning the desktop
+environment of an unprivileged user).
 
-As to Amazon and MontaVista, it is likely they'll have to leave the
-distros list for inactivity.
+The Apertis automotive OS is an example of a similar model in a non-desktop
+context, heavily based on how these things work in "freedesktop" OSs.
+https://www.apertis.org/designs/security/#security-boundaries-and-threat-model
 
-As far as I can tell, last posting/reply on the (linux-)distros list by
-Amazon was in July 2016 and before that in November 2014.  As far as I
-can tell, MontaVista never posted to the list.  Being a user of the info
-only, without participation in discussions, is not strictly disallowed,
-but this time it's coupled with lack of response when specifically asked
-to respond, and on an issue that is at least potentially relevant to the
-distros (not just a responsiveness test).
+> Yes, the most difficult part with securing a desktop system is to keep
+> it conveniently usable.  I think it is possible to isolate the desktop
+> environment from user programs without inconveniencing the user.  As to
+> isolation between the user's programs, yes, that becomes visible to the
+> user and would require some training on how to explicitly transfer data
+> between the programs when needed.
 
-At this point, there will have to be a very good reason to justify
-keeping Amazon and MontaVista on the list.  Is there any?
+Flatpak does this by having each Flatpak app in a (separate) sandbox.
+Communication between apps goes through components in what you might call
+the desktop TCB (trusted by this user, but not necessarily by the sysadmin),
+such as the Wayland compositor, dbus-daemon --session, and
+xdg-desktop-portal.
 
-OTOH, there's just one person subscribed for each of Amazon and
-MontaVista, and all messages are encrypted to the recipient's own keys
-(but of course the headers are unencrypted, including the Subjects).
-So e.g. an unattended mailbox isn't that much of a risk.
+There are various tricks for making crossing the sandbox boundary automatic
+while preserving user control. For example, if you do File->Open... in a
+Flatpak app, the Open dialog that pops up is part of the trusted desktop
+session, not part of the app itself (so it can see all your files). On
+choosing a file to open, that file - but none of other files that you
+declined to open - appears in the sandbox (on a FUSE filesystem).
 
-I am not going to ping Amazon and MontaVista directly (just like I did
-not ping NetBSD directly last month, although others promptly did
-anyway).  If they missed the messages on the distros list and also miss
-the message here, so be it.
+I think Snap uses xdg-desktop-portal in a similar way. Qubes would not
+be able to use it unmodified, because its isolation between contexts is
+"heavier" (virtualization rather than containers), but it could certainly
+use similar concepts.
 
-While I am at it: there have been 3624 messages on linux-distros (and a
-subset of those on distros) since the list was setup on April 3, 2011
-and until today.  That's about 1.6 messages per day on average, but
-sometimes there are spikes (like there is now) and sometimes there are
-quiet periods.
+> "Containerizing" things (at best) protects the outside from what's
+> contained, not vice versa.
 
-Alexander
+Right. In an OS that makes heavy use of Flatpak, like Endless, basically
+all the user-facing apps are in Flatpak sandboxes (containers). Anything
+that is not sandboxed (like desktop configuration), or is in a sandbox
+that cannot provide a meaningful security boundary because that would
+defeat the purpose of the program (like file managers, development tools
+and sysadmin tools), is effectively part of the TCB of the desktop.
 
+    smcv
