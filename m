@@ -1,40 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/10/3
-Message-ID: <CAA8xKjXJ7DjJ7jAfR6hrbUOOfi7p8sCZSSdt9Hs7bj=Ez03eWA@mail.gmail.com>
-Date: Mon, 10 Aug 2020 11:57:02 +0200
-From: Mauro Matteo Cascella <mcascell@...hat.com>
-To: Michael Tokarev <mjt@....msk.ru>
-Cc: oss-security@...ts.openwall.com, Alexander Bulekov <alxndr@...edu>,  ziming zhang <ezrakiez@...il.com>
-Subject: Re: CVE-2020-16092 QEMU: reachable assertion failure in net_tx_pkt_add_raw_fragment() in hw/net/net_tx_pkt.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/20/1
+Message-Id: <E1kUqJd-0001yN-2q@xenbits.xenproject.org>
+Date: Tue, 20 Oct 2020 12:00:33 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 331 v2 - Race condition in Linux event handler may crash dom0
 Content-Type: text/plain; charset=utf-8
 
-Hi Michael,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Mon, Aug 10, 2020 at 11:23 AM Michael Tokarev <mjt@....msk.ru> wrote:
->
-> Hmm. Is it really worth the effort to treat these things as security
-> issues? There are so many ways to crash a machine (be it virtual or
-> hardware), there are definitely countless ways to crash things from
-> within privileged code.. what's the security impact of a hardware
-> issue when, say, a driver code in the OS does a stupid thing and
-> the hardware locks up?
->
+                    Xen Security Advisory XSA-331
+                              version 2
 
-I see your point. Our general assumption is to *not* consider assert()
-failures CVE worthy if they can only be triggered by privileged users
-[1]. In this case specifically, given the assertion failure occurs
-while sending packets from the guest, we assumed it may be possible
-for an unprivileged guest user to cause a DoS scenario (e.g., by
-sending malicious/malformed network packets). In accordance with QEMU
-maintainers, we therefore decided to provide a fix for this bug. But
-again, I agree these kinds of issues tend to be questionable, so we
-typically proceed on a case-by-case basis.
+         Race condition in Linux event handler may crash dom0
 
-[1] https://lists.nongnu.org/archive/html/qemu-devel/2019-07/msg03869.html
+UPDATES IN VERSION 2
+====================
 
-Thanks,
+Public release.
 
--- 
-Mauro Matteo Cascella, Red Hat Product Security
-6F78 E20B 5935 928C F0A8  1A9D 4E55 23B8 BB34 10B0
+ISSUE DESCRIPTION
+=================
 
+The Linux kernel event channel handling code doesn't defend the
+handling of an event against the same event channel being removed in
+parallel.
+
+This can result in accesses to already freed memory areas or NULL
+pointer dereferences in the event handling code, leading to
+misbehaviour of the system or even crashes.
+
+IMPACT
+======
+
+A misbehaving guest can trigger a dom0 crash by sending events for a
+paravirtualized device while simultaneously reconfiguring it.
+
+VULNERABLE SYSTEMS
+==================
+
+All systems with a Linux dom0 are vulnerable.
+
+All Linux kernel versions are vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Jinoh Kang of Theori.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa331-linux.patch     Linux
+
+$ sha256sum xsa331*
+8583392c0c573f7baa85e41c9afbdf74dcb04aea1be992d78991f0787230a193  xsa331-linux.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+OzqMMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZuo4H/R4b4Z7ZTMwwpL4u3PrguNZduaTc3vy9R+Gd0+5z
+hY0Zfif7SfhJ2apN4Ihs1eAGxyWLI/I8kQQGE4xKgZy2ygciMbTK0OCsoGxfEr6v
+bi4RKV9I03g3fQHy48z+lOt4XKTY8+OpHw8LYY3W7jdnQ0YJrPCOmap0Xkv91QhP
++EkmxzahVQv0T16cP4fxZFUvY0M9gijEjE9h9Gv23M+tLP9SGkW9Hd11qM135AKh
+vVSYUIuvyd20zb5uiqXono9qP1CeKyCOXHL+YQ+K7eOjYCVbEDdREneBegFlS9By
+jaFukH/psQDdemQDT4amzOmtBzdImIzkGhflvj+b5axRlrw=
+=FLDG
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa331-linux.patch" of type "application/octet-stream" (4730 bytes)
