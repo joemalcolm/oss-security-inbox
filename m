@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1050" "Thursday" "3" "November" "2016" "17:26:27" "+0100" "Florian Weimer" "fw@deneb.enyo.de" "<87ins4bkcs.fsf@mid.deneb.enyo.de>" "22" "Re: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" "^Date:" nil nil "11" "2016110316:26:27" "[oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" (number mark "        fw@deneb.eny Nov  3   22/1050  " thread-indent "\"Re: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host\"\n") "<alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>" ("<alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["162" "Tuesday" "20" "October" "2020" "20:36:38" "+0200" "Werner LEMBERG" "wl@gnu.org" "<20201020.203638.1561056568598070988.wl@gnu.org>" "8" "[oss-security] Re: CVE-2020-15999 fixed in FreeType 2.10.4" nil nil nil "10" "2020102018:36:38" "[oss-security] Re: CVE-2020-15999 fixed in FreeType 2.10.4" (number mark "U       wl@gnu.org   Oct 20    8/162   " thread-indent "\"[oss-security] Re: CVE-2020-15999 fixed in FreeType 2.10.4\"\n") "<28f1351e-1176-153d-1fc3-6768d807397c@oracle.com>" ("<20201020.074731.286155678758388099.wl@gnu.org>" "<28f1351e-1176-153d-1fc3-6768d807397c@oracle.com>") nil nil nil nil nil nil nil "[oss-security] Re: CVE-2020-15999 fixed in FreeType 2.10.4" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3964 invoked by uid 550); 3 Nov 2016 16:26:39 -0000
+Received: (qmail 22026 invoked by uid 550); 20 Oct 2020 18:41:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,27 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3945 invoked from network); 3 Nov 2016 16:26:39 -0000
-References: <alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>
-In-Reply-To: <alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr> (Daniel
-	Stenberg's message of "Wed, 2 Nov 2016 08:13:26 +0100 (CET)")
-Message-ID: <87ins4bkcs.fsf@mid.deneb.enyo.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 03 Nov 2016 17:26:27 +0100
-From: Florian Weimer <fw@deneb.enyo.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
-To: oss-security@lists.openwall.com
+Received: (qmail 17438 invoked from network); 20 Oct 2020 18:36:52 -0000
+Date: Tue, 20 Oct 2020 20:36:38 +0200 (CEST)
+Message-Id: <20201020.203638.1561056568598070988.wl@gnu.org>
+To: alan.coopersmith@oracle.com
+Cc: oss-security@lists.openwall.com
+From: Werner LEMBERG <wl@gnu.org>
+In-Reply-To: <28f1351e-1176-153d-1fc3-6768d807397c@oracle.com>
+References: <20201020.074731.286155678758388099.wl@gnu.org>
+	<28f1351e-1176-153d-1fc3-6768d807397c@oracle.com>
+X-Mailer: Mew version 6.8 on Emacs 28.0.50 / Mule 6.0 (HANACHIRUSATO)
+Mime-Version: 1.0
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Re: CVE-2020-15999 fixed in FreeType 2.10.4
 
-* Daniel Stenberg:
 
-> When curl is built with libidn to handle International Domain Names
-> (IDNA), it translates them to puny code for DNS resolving using the
-> IDNA 2003 standard, while IDNA 2008 is the modern and up-to-date
-> IDNA standard.
+> But distros should be warned that 2.10.3 and later may break the
+> build of ghostscript, [...]
 
-I think everyone in the software space assumes that all DNS registries
-block registrations which would allocate names colliding under the
-IDNA 2003 and 2008 standards to different owners.  There were even
-attempts at the registry level to automatically alias different
-encodings (something which is difficult because it interferes with the
-goal to make the whole thing application-centric).
+Done, both on the mailing lists and freetype.org.
 
-> For example, `stra=DFe.de` is translated into `strasse.de` using IDNA
-> 2003 but is translated into `xn--strae-oqa.de` using IDNA
-> 2008. Needless to say, those host names could very well resolve to
-> different addresses and be two completely independent servers. IDNA
-> 2008 is mandatory for .de domains.
 
-What does DENIC say about this matter?  It looks like their
-implementation of IDNA is just very broken.
+    Werner
