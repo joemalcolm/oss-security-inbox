@@ -1,140 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/03/3
-Message-Id: <BC62CA7E-C08B-4762-AD58-5E0751CC4334@beckweb.net>
-Date: Wed, 3 Jun 2020 14:33:18 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/20/3
+Message-Id: <E1kUqJf-0001zq-Rt@xenbits.xenproject.org>
+Date: Tue, 20 Oct 2020 12:00:35 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 332 v3 - Rogue guests can cause DoS of Dom0 via high frequency events
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The following releases contain fixes for security vulnerabilities:
+                    Xen Security Advisory XSA-332
+                              version 3
 
-* Compact Columns Plugin 1.12
-* ECharts API Plugin 4.7.0-4
-* Script Security Plugin 1.73
-* Self-Organizing Swarm Plug-in Modules Plugin 3.21
+     Rogue guests can cause DoS of Dom0 via high frequency events
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+UPDATES IN VERSION 3
+====================
 
-* Play Framework Plugin
-* Project Inheritance Plugin
-* Selenium Plugin
-* Subversion Partial Release Manager Plugin
+Public release.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-06-03/
+ISSUE DESCRIPTION
+=================
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+The handling of Xen events in the Linux kernel runs with interrupts
+disabled in a loop until no further event is pending.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Whenever an event has been accepted by the kernel, another event can
+come in via the same event channel.  This can result in the event
+handling loop running for an extended time if new events are coming in
+at a high rate.  In extreme cases this can lead to a complete hang of
+the kernel, resulting in a DoS situation of the host when dom0 is
+affected.
 
----
+IMPACT
+======
 
-SECURITY-1866 / CVE-2020-2190
-Script Security Plugin 1.72 and earlier does not correctly escape pending
-or approved classpath entries on the In-process Script Approval page.
+Malicious guests can hang the host by sending events to dom0 at a high
+frequency.
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by users able to configure sandboxed scripts.
+VULNERABLE SYSTEMS
+==================
 
+All systems with a Linux dom0 are affected.
 
-SECURITY-1200 / CVE-2020-2191 (permission checks) & CVE-2020-2192 (CSRF)
-Self-Organizing Swarm Plug-in Modules Plugin adds API endpoints to add or
-remove agent labels. In Self-Organizing Swarm Plug-in Modules Plugin 3.20
-and earlier these only require a global Swarm secret to use, and no regular
-permission check is performed. This allows users with Agent/Create
-permission to add or remove labels of any agent.
+All Linux kernel versions are affected.
 
-Additionally, these API endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
+MITIGATION
+==========
 
+There is no known mitigation.
 
-SECURITY-1841 / CVE-2020-2193
-ECharts API Plugin 4.7.0-3 and earlier does not escape the parser
-identifier when rendering charts.
+CREDITS
+=======
 
-This results in a stored cross-site scripting (XSS) vulnerability that can
-be exploited by users with Job/Configure permission.
+This issue was discovered by Julien Grall from Arm
 
+RESOLUTION
+==========
 
-SECURITY-1842 / CVE-2020-2194
-ECharts API Plugin 4.7.0-3 and earlier does not escape the display name of
-the builds in the trend chart.
+Applying the appropriate attached patches resolves this issue.
 
-This results in a stored cross-site scripting (XSS) vulnerability that can
-be exploited by users with Run/Update permission.
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
+xsa332-linux-??.patch  Linux
 
-SECURITY-1837 / CVE-2020-2195
-Compact Columns Plugin 1.11 and earlier displays the unprocessed job
-description in tooltips.
+$ sha256sum xsa332*
+92d0789e8e5b9ec7ae0cd8b01ef31e27930dbe9b81b727521d46328107f3c719  xsa332-linux-01.patch
+0bd82febcaf7fc72b88082f46cae9b67f39786d03b3e6aae5f0789cf855e6143  xsa332-linux-02.patch
+e646b7caf11ded7f22b209635b209f50ac583cbaeb3270148ce66a3cd922f0c1  xsa332-linux-03.patch
+9bed2213774a8107a2f2c157aeb0ebfda7cc6384cee0a245017b3a9eb28cff7f  xsa332-linux-04.patch
+8839af506b71946db35f223ff614aa92b4386aaf95e4d8b1408fbf31436ff80f  xsa332-linux-05.patch
+b261706bd7f7120fadff0e928be366924cfc13418c81a67ad45724b4179e8a5c  xsa332-linux-06.patch
+fc0c963a9a965fc7a72468b1a1ce0834dc866e77392ca0c1d9c8162457a526a0  xsa332-linux-07.patch
+5d821c58dd7fcdb157c2844ba34675305c320de25f54409305ffcba610d5922b  xsa332-linux-08.patch
+242eb83eca8e3b6d2d303e2943aa041b5f19ea54242cd0de20252d2ae3d128d1  xsa332-linux-09.patch
+70a042006d1df3dbbefc4c7d4dfd50da8f3a8e47ee77c2d6d0ba1eda405ae574  xsa332-linux-10.patch
+ebbfa66d11b8c81353b72ed5f381672e6784a67895df482f7e791a9fb4c6fbf0  xsa332-linux-11.patch
+cda1cbcca19860d43804e80ec2d7d13b295a140b42aa7d16118bb2d20bd63cae  xsa332-linux-12.patch
+$
 
-This results in a stored cross-site scripting vulnerability that can be
-exploited by users with Job/Configure permission.
+DEPLOYMENT DURING EMBARGO
+=========================
 
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
-SECURITY-1766 / CVE-2020-2196
-Selenium Plugin 3.141.59 and earlier has no CSRF protection for its HTTP
-endpoints.
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
-This allows attackers to perform the following actions:
-
-* Restart the Selenium Grid hub.
-* Delete or replace the plugin configuration.
-* Start, stop, or restart Selenium configurations on specific nodes.
-
-Through carefully chosen configuration parameters, these actions can result
-in OS command injection on the Jenkins master.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1582 / CVE-2020-2197 (permission check) & CVE-2020-2198 (unredacted encrypted secrets)
-Jenkins limits access to job configuration XML data (`config.xml`) to users
-with Job/ExtendedRead permission, typically implied by Job/Configure
-permission. Project Inheritance Plugin has several job inspection features,
-including the API URL `/job/.../getConfigAsXML` for its Inheritance Project
-job type that does something similar.
-
-Project Inheritance Plugin 19.08.02 and earlier does not check permissions
-for this new endpoint, granting access to job configuration XML data to
-every user with Job/Read permission.
-
-Additionally, the encrypted values of secrets stored in the job
-configuration are not redacted, as they would be by the `config.xml` API
-for users without Job/Configure permission.
-
-As of publication of this advisory, there is no fix.
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-SECURITY-1726 / CVE-2020-2199
-Subversion Partial Release Manager Plugin 1.0.1 and earlier does not escape
-the error message for the repository URL field form validation.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-This results in a reflected cross-site scripting (XSS) vulnerability that
-can also be exploited similar to a stored cross-site scripting
-vulnerability by users with Job/Configure permission.
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-As of publication of this advisory, there is no fix.
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+OzqQMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ3MIIAJR5SsBiZM7dhNHSJWMv1OXZK9MBpIxUgJuLY6da
+dlpsb6c5eb7ppAfHzkg+JABzc1hIKQkzKBL9n/tvP57KAWqnCbrPfk3/pVrvAf9E
+Vubra4+Ec8hY+8JqJsxHS6ZPyLzViFaE505pBEHlFOGZYkSgqM/s96SgoZtgMSpx
+pUpFGJCAUPZ7uR+urznM4QrWvvytsRbZo3fUrqn0f9WgMXFge0U9vE7Clt1yzZns
+J5nmYq2gBJkrMINreth8T7oDCx7l+I+Cq4yJ0hreUWCxp6svl7kbjI55sdlrI99O
+J7rXH6uaGEHSFfy/Zx4aek3eB5LP6Asgp2pQZkXOcSg8RLE=
+=q2XX
+-----END PGP SIGNATURE-----
 
+Download attachment "xsa332-linux-01.patch" of type "application/octet-stream" (1501 bytes)
 
-SECURITY-1879 / CVE-2020-2200
-A form validation endpoint in Play Framework Plugin executes the `play`
-command to validate a given input file.
+Download attachment "xsa332-linux-02.patch" of type "application/octet-stream" (1993 bytes)
 
-Play Framework Plugin 1.0.2 and earlier lets users specify the path to the
-`play` command on the Jenkins master. This results in an OS command
-injection vulnerability exploitable by users able to store such a file on
-the Jenkins master (e.g. through archiving artifacts).
+Download attachment "xsa332-linux-03.patch" of type "application/octet-stream" (11307 bytes)
 
-As of publication of this advisory, there is no fix.
+Download attachment "xsa332-linux-04.patch" of type "application/octet-stream" (4380 bytes)
 
+Download attachment "xsa332-linux-05.patch" of type "application/octet-stream" (8590 bytes)
 
+Download attachment "xsa332-linux-06.patch" of type "application/octet-stream" (3443 bytes)
+
+Download attachment "xsa332-linux-07.patch" of type "application/octet-stream" (6972 bytes)
+
+Download attachment "xsa332-linux-08.patch" of type "application/octet-stream" (8401 bytes)
+
+Download attachment "xsa332-linux-09.patch" of type "application/octet-stream" (1844 bytes)
+
+Download attachment "xsa332-linux-10.patch" of type "application/octet-stream" (5171 bytes)
+
+Download attachment "xsa332-linux-11.patch" of type "application/octet-stream" (15368 bytes)
+
+Download attachment "xsa332-linux-12.patch" of type "application/octet-stream" (3739 bytes)
