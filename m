@@ -1,92 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/01/3
-Message-ID: <CABdrxGDFrs7pUS5DNae80GQds8vc3qAavJrTkH-fVEmxXvfMtg@mail.gmail.com>
-Date: Tue, 31 Mar 2020 16:07:32 -0700
-From: CJ Cullen <cjcullen@...gle.com>
-To: kubernetes-announce@...glegroups.com,  kubernetes-dev <kubernetes-dev@...glegroups.com>,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss@...glegroups.com, oss-security@...ts.openwall.com,  kubernetes+announcements@...coursemail.com
-Subject: CVE-2019-11254: Kubernetes: denial of service vulnerability from malicious YAML payloads
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/20/7
+Message-ID: <28f1351e-1176-153d-1fc3-6768d807397c@oracle.com>
+Date: Tue, 20 Oct 2020 09:49:31 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+Cc: Werner LEMBERG <wl@....org>
+Subject: CVE-2020-15999 fixed in FreeType 2.10.4
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+Before making this release, Werner said:
+
+> I've just fixed a heap buffer overflow that can happen for some
+> malformed `.ttf` files with PNG sbit glyphs.  It seems that this
+> vulnerability gets already actively used in the wild, so I ask all
+> users to apply the corresponding commit as soon as possible.
+
+But distros should be warned that 2.10.3 and later may break the build
+of ghostscript, due to ghostscript's use of a withdrawn macro that
+wasn't intended for external usage:
+
+https://bugs.ghostscript.com/show_bug.cgi?id=702985
+https://lists.nongnu.org/archive/html/freetype-devel/2020-10/msg00002.html
+
+Ghostscript's fix for that is at:
+https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=41ef9a0bc36b
+
+	-Alan Coopersmith-               alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+
+-------- Forwarded Message --------
+Subject: [ft-announce] Announcing FreeType 2.10.4
+Date: Tue, 20 Oct 2020 07:47:31 +0200 (CEST)
+From: Werner LEMBERG <wl@....org>
+To: freetype-announce@...gnu.org, freetype-devel@...gnu.org, freetype@...gnu.org
 
 
+FreeType 2.10.4 has been released.
 
-A denial of service vulnerability in the Kubernetes API Server was
-discovered and assigned CVE-2019-11254. This vulnerability has been given
-an initial severity of Medium (CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H)
-<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H>.
-Details are below and at https://issue.k8s.io/89535
+It is available from
 
+     http://savannah.nongnu.org/download/freetype/
 
+or
 
-The following versions including the fix have been released:
+     http://sourceforge.net/projects/freetype/files/
 
-   -
+The latter site also holds older versions of the FreeType library.
 
-   v1.15.10 <https://github.com/kubernetes/kubernetes/releases/tag/v1.15.10>
-   -
+See below for the relevant snippet from the CHANGES file.
 
-   v1.16.7 <https://github.com/kubernetes/kubernetes/releases/tag/v1.16.7>
-   -
-
-   v1.17.3 <https://github.com/kubernetes/kubernetes/releases/tag/v1.17.3>
+Enjoy!
 
 
-
-Details
-
-CVE-2019-11254 is a denial of service vulnerability in the kube-apiserver,
-allowing authorized users sending malicious YAML payloads to cause
-kube-apiserver to consume excessive CPU cycles while parsing YAML.
+    Werner
 
 
-
-The issue was discovered
-<https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=18496> via the fuzz
-test kubernetes/kubernetes#83750
-<https://github.com/kubernetes/kubernetes/pull/83750>.
-
+PS: Downloads from  savannah.nongnu.org  will redirect to your nearest
+     mirror site.   Files on  mirrors may  be subject to  a replication
+     delay   of   up   to   24   hours.   In   case   of  problems  use
+     http://download-mirror.savannah.gnu.org/releases/
 
 
-Affected components:
-
-Kubernetes API server
+----------------------------------------------------------------------
 
 
-
-Affected versions:
-
-   -
-
-   <= v1.15.9
-   -
-
-   v1.16.0-v1.16.6
-   -
-
-   v1.17.0-v1.17.2
-
-How do I mitigate this vulnerability?
-
-Prior to upgrading, these vulnerabilities can be mitigated by preventing
-unauthenticated or unauthorized access to kube-apiserver.
+http://www.freetype.org
 
 
+FreeType 2  is a software  font engine that  is designed to  be small,
+efficient,  highly   customizable,  and  portable   while  capable  of
+producing high-quality output (glyph images) of most vector and bitmap
+font formats.
 
-Acknowledgements
+Note that  FreeType 2 is  a font service  and doesn't provide  APIs to
+perform higher-level features, like text layout or graphics processing
+(e.g.,  colored  text  rendering,  `hollowing',  etc.).   However,  it
+greatly simplifies these tasks by providing a simple, easy to use, and
+uniform interface to access the content of font files.
+
+FreeType  2  is  released  under  two open-source  licenses:  our  own
+BSD-like FreeType  License and the  GPL.  It can  thus be used  by any
+kind of projects, be they proprietary or not.
 
 
-
-Thanks to Mark Wolters from Google for writing the fuzz tests
-<http://kubernetes/kubernetes#83750>, and to oss-fuzz
-<https://github.com/google/oss-fuzz> for the support.
+----------------------------------------------------------------------
 
 
+CHANGES BETWEEN 2.10.3 and 2.10.4
 
-Thanks to Mike Danese from Google for reporting this issue
-<https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=18496>.
+   I. IMPORTANT BUG FIXES
 
+   - A heap buffer overflow has been found  in the handling of embedded
+     PNG bitmaps, introduced in FreeType version 2.6.
 
+       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15999
 
-- CJ Cullen on behalf of the Kubernetes Product Security Team
+     If you  use option  FT_CONFIG_OPTION_USE_PNG  you  should  upgrade
+     immediately.
 
+_______________________________________________
+Freetype-announce mailing list
+Freetype-announce@...gnu.org
+https://lists.nongnu.org/mailman/listinfo/freetype-announce
