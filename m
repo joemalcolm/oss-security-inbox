@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2226" "Wednesday" "2" "October" "2019" "06:42:19" "-0400" "Akamai" "larry0@me.com" "<E37AAD4E-43F8-493A-AEEC-9FAE1A3D8E66@me.com>" "48" "[oss-security] Multiple vulnerabilities in Online store system v1.0 Stored XSS and unauthenticated product deletions." nil nil nil "10" "2019100210:42:19" "[oss-security] Multiple vulnerabilities in Online store system v1.0 Stored XSS and unauthenticated product deletions." (number mark "U       larry0@me.co Oct  2   48/2226  " thread-indent "\"[oss-security] Multiple vulnerabilities in Online store system v1.0 Stored XSS and unauthenticated product deletions.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Online store system v1.0 Stored XSS and unauthenticated product deletions." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9689" "Tuesday" "20" "October" "2020" "12:00:33" "+0000" "Xen.org security team" "security@xen.org" "<E1kUqJd-0001yN-2q@xenbits.xenproject.org>" "217" "[oss-security] Xen Security Advisory 331 v2 - Race condition in Linux event handler may crash dom0" nil nil nil "10" "2020102012:00:33" "[oss-security] Xen Security Advisory 331 v2 - Race condition in Linux event handler may crash dom0" (number mark "U       security@xen Oct 20  217/9689  " thread-indent "\"[oss-security] Xen Security Advisory 331 v2 - Race condition in Linux event handler may crash dom0\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 331 v2 - Race condition in Linux event handler may crash dom0" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24463 invoked by uid 550); 2 Oct 2019 10:42:34 -0000
+Received: (qmail 26579 invoked by uid 550); 20 Oct 2020 12:00:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +12,240 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24445 invoked from network); 2 Oct 2019 10:42:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
-	t=1570012941; bh=pIdNdQp4g8Fp7EYPEcmoSrXR3AWltAHGdpavk+9WYn4=;
-	h=Date:Subject:From:To:Message-ID:Content-type;
-	b=SrjVc7ytP+nGKF3ht/bw3h/2nh1RJntO0ENAgWPEzrW0nXc7SW1pAXnTHBkMNxorr
-	 8/1cNQZzYM/k5iQcNkobKEbaj3S3GoOBG47vbFLU2/LBStU9tfw7z5KagR8WHyD2Zl
-	 5ddkTuCfYSg0TAJ2FTMCh3TAym/o4/3pX5/XhSxutFVk6BjFDc1EzuNASGOHDZ6ln7
-	 kGxJqqmTB4nAfeXEcdZqfiJi7zHA9mj47y5v2w8xkp0oiAnzPu5SSmiuK6VDmxbsbw
-	 mE1B8BwS4aD4A1Dqd8X+FnKnNfHVnV+dhZWMjETnmuQPyikc7W1cJUS7+tPHrlj9FW
-	 YrI536LMvHBCg==
-User-Agent: Microsoft-MacOutlook/10.1d.0.190908
-Date: Wed, 02 Oct 2019 06:42:19 -0400
-From: Akamai <larry0@me.com>
-To: Open Security <oss-security@lists.openwall.com>
-Message-ID: <E37AAD4E-43F8-493A-AEEC-9FAE1A3D8E66@me.com>
-Thread-Topic: Multiple vulnerabilities in Online store system v1.0 Stored XSS
- and unauthenticated product deletions.
-Mime-version: 1.0
-Content-type: text/plain;
-	charset="UTF-8"
-Content-transfer-encoding: quoted-printable
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-10-02_06:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1910020101
-Subject: [oss-security] Multiple vulnerabilities in Online store system v1.0 Stored XSS and
- unauthenticated product deletions.
+Received: (qmail 26543 invoked from network); 20 Oct 2020 12:00:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=03oVv59KE3qloTC2GXz56bxSgfUd293N6vDaNG5POWU=; b=o6i1k7+agkIQZkUtyHYq0MCw6h
+	iU+AFyvv2kkB98w2zRrth1GHZxmu0iPDVoA6k80fqClcFGW9lMlkdA7jQrWmPdfkJuSPrrPeUR0HE
+	Ar18jKm1AQmTyW3I13olHndppo2xJHmDuT7US0hHPHhDrh+myV1kx09qXe2sx7U3v0Ng=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1kUqJd-0001yN-2q@xenbits.xenproject.org>
+Date: Tue, 20 Oct 2020 12:00:33 +0000
+Subject: [oss-security] Xen Security Advisory 331 v2 - Race condition in Linux event
+ handler may crash dom0
 
-Title:=C2=A0Multiple vulnerabilities in Online store system v1.0 Stored XSS=
- and unauthenticated product deletions.
-Author:=C2=A0Larry W. Cashdollar @_larry0
-Date:=C2=A02019-09-18
-CVE-IDs: CVE-2019-8288 CVE-2019-8289 CVE-2019-8290 CVE-2019-8291
-Download Site:=C2=A0https://www.abcprintf.com/view_download.php?id=3D17
-Vendor:=C2=A0adcprintf
-Vendor Notified:=C2=A02019-09-18
-Vendor Contact:=C2=A0abcprintf@gmail.com
-Advisory:=C2=A0http://www.vapidlabs.com/advisory.php?v=3D210
-Description:=C2=A0"Online store system" is a drop in customizable electroni=
-c store front. It has an administrative interface allowing user and product=
- management.=20
-Vulnerability:
-The application contains stored XSS vulnerabilities throughout the form pag=
-e user_view.php  as none of the variables are sanitized before being presen=
-ted back to the client. This can be exploited by a new user injecting cooki=
-e stealing code into their login information form and waiting for an admini=
-strative user to navigate to the users panel.=20
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-CVE-2019-8288=20
-159  echo '<td>'.$row['adidas_member_user'].'</td>';=20
-CVE-2019-8289=20
-160 echo '<td>'. $row['adidas_member_email'] . '</td>';
- CVE-2019-8290 The registration form requirements for the member email form=
-at can be bypassed by posting directly to sent_register.php allowing specia=
-l characters to be included and an XSS payload to be injected.=20
-CVE-2019-8291 The code in delete_file.php doesn't check to see if a user ha=
-s administrative rights nor does it check for path traversal allowing a '..=
-' to delete arbitrary files owned by the httpd process.=20
-CVE-2019-8292 The code in delete_product.php doesn't check to see if a user=
- has administrative rights before allowing them to delete a product from th=
-e database.
-Exploit Code:
-1. Set login name or email to "><script>alert(1);</script>
-2. $ curl -s cookie.txt -X POST -d "username=3Djsmith&password=3Djsmith123&=
-email=3D\"><script>alert(1);</script>%40email.com" http://example.com/pso/s=
-ent_register.php
-3. =C2=A0
-4. =C2=A0
-5. $ curl -s cookie.txt "http://example.com/pso/admin/delete_file.php?id=3D=
-0&filename=3D../women.php"
-6. =C2=A0
-7. $ curl -s cookie.txt http://example.com/pso/admin/product_delete.php?id=
-=3D4
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+                    Xen Security Advisory XSA-331
+                              version 2
+
+         Race condition in Linux event handler may crash dom0
+
+UPDATES IN VERSION 2
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The Linux kernel event channel handling code doesn't defend the
+handling of an event against the same event channel being removed in
+parallel.
+
+This can result in accesses to already freed memory areas or NULL
+pointer dereferences in the event handling code, leading to
+misbehaviour of the system or even crashes.
+
+IMPACT
+======
+
+A misbehaving guest can trigger a dom0 crash by sending events for a
+paravirtualized device while simultaneously reconfiguring it.
+
+VULNERABLE SYSTEMS
+==================
+
+All systems with a Linux dom0 are vulnerable.
+
+All Linux kernel versions are vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Jinoh Kang of Theori.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa331-linux.patch     Linux
+
+$ sha256sum xsa331*
+8583392c0c573f7baa85e41c9afbdf74dcb04aea1be992d78991f0787230a193  xsa331-linux.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+OzqMMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZuo4H/R4b4Z7ZTMwwpL4u3PrguNZduaTc3vy9R+Gd0+5z
+hY0Zfif7SfhJ2apN4Ihs1eAGxyWLI/I8kQQGE4xKgZy2ygciMbTK0OCsoGxfEr6v
+bi4RKV9I03g3fQHy48z+lOt4XKTY8+OpHw8LYY3W7jdnQ0YJrPCOmap0Xkv91QhP
++EkmxzahVQv0T16cP4fxZFUvY0M9gijEjE9h9Gv23M+tLP9SGkW9Hd11qM135AKh
+vVSYUIuvyd20zb5uiqXono9qP1CeKyCOXHL+YQ+K7eOjYCVbEDdREneBegFlS9By
+jaFukH/psQDdemQDT4amzOmtBzdImIzkGhflvj+b5axRlrw=
+=FLDG
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa331-linux.patch"
+Content-Disposition: attachment; filename="xsa331-linux.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBhNWFiMWQ3OGJlZmViNTNjM2I2MzI3MjFhYTViN2I0YjVlYzliNjQ4
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
+IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IE1vbiwgNyBTZXAgMjAyMCAxNTo0
+NzoyNyArMDIwMApTdWJqZWN0OiBbUEFUQ0hdIHhlbi9ldmVudHM6IGF2b2lk
+IHJlbW92aW5nIGFuIGV2ZW50IGNoYW5uZWwgd2hpbGUKIGhhbmRsaW5nIGl0
+CgpUb2RheSBpdCBjYW4gaGFwcGVuIHRoYXQgYW4gZXZlbnQgY2hhbm5lbCBp
+cyBiZWluZyByZW1vdmVkIGZyb20gdGhlCnN5c3RlbSB3aGlsZSB0aGUgZXZl
+bnQgaGFuZGxpbmcgbG9vcCBpcyBhY3RpdmUuIFRoaXMgY2FuIGxlYWQgdG8g
+YQpyYWNlIHJlc3VsdGluZyBpbiBjcmFzaGVzIG9yIFdBUk4oKSBzcGxhdHMg
+d2hlbiB0cnlpbmcgdG8gYWNjZXNzIHRoZQppcnFfaW5mbyBzdHJ1Y3R1cmUg
+cmVsYXRlZCB0byB0aGUgZXZlbnQgY2hhbm5lbC4KCkZpeCB0aGlzIHByb2Js
+ZW0gYnkgdXNpbmcgYSByd2xvY2sgdGFrZW4gYXMgcmVhZGVyIGluIHRoZSBl
+dmVudApoYW5kbGluZyBsb29wIGFuZCBhcyB3cml0ZXIgd2hlbiBkZWFsbG9j
+YXRpbmcgdGhlIGlycV9pbmZvIHN0cnVjdHVyZS4KCkFzIHRoZSBvYnNlcnZl
+ZCBwcm9ibGVtIHdhcyBhIE5VTEwgZGVyZWZlcmVuY2UgaW4gZXZ0Y2huX2Zy
+b21faXJxKCkKbWFrZSB0aGlzIGZ1bmN0aW9uIG1vcmUgcm9idXN0IGFnYWlu
+c3QgcmFjZXMgYnkgdGVzdGluZyB0aGUgaXJxX2luZm8KcG9pbnRlciB0byBi
+ZSBub3QgTlVMTCBiZWZvcmUgZGVyZWZlcmVuY2luZyBpdC4KCkFuZCBmaW5h
+bGx5IG1ha2UgYWxsIGFjY2Vzc2VzIHRvIGV2dGNobl90b19pcnFbcm93XVtj
+b2xdIGF0b21pYyBvbmVzCmluIG9yZGVyIHRvIGF2b2lkIHNlZWluZyBwYXJ0
+aWFsIHVwZGF0ZXMgb2YgYW4gYXJyYXkgZWxlbWVudCBpbiBpcnEKaGFuZGxp
+bmcuIE5vdGUgdGhhdCBpcnEgaGFuZGxpbmcgY2FuIGJlIGVudGVyZWQgb25s
+eSBmb3IgZXZlbnQgY2hhbm5lbHMKd2hpY2ggaGF2ZSBiZWVuIHZhbGlkIGJl
+Zm9yZSwgc28gYW55IG5vdCBwb3B1bGF0ZWQgcm93IGlzbid0IGEgcHJvYmxl
+bQppbiB0aGlzIHJlZ2FyZCwgYXMgcm93cyBhcmUgb25seSBldmVyIGFkZGVk
+IGFuZCBuZXZlciByZW1vdmVkLgoKVGhpcyBpcyBYU0EtMzMxLgoKQ2M6IHN0
+YWJsZUB2Z2VyLmtlcm5lbC5vcmcKUmVwb3J0ZWQtYnk6IEppbm9oIEthbmcg
+PGx1a2UxMzM3QHRoZW9yaS5pbz4KU2lnbmVkLW9mZi1ieTogSnVlcmdlbiBH
+cm9zcyA8amdyb3NzQHN1c2UuY29tPgpSZXZpZXdlZC1ieTogU3RlZmFubyBT
+dGFiZWxsaW5pIDxzc3RhYmVsbGluaUBrZXJuZWwub3JnPgpSZXZpZXdlZC1i
+eTogV2VpIExpdSA8d2xAeGVuLm9yZz4KLS0tCiBkcml2ZXJzL3hlbi9ldmVu
+dHMvZXZlbnRzX2Jhc2UuYyB8IDQxICsrKysrKysrKysrKysrKysrKysrKysr
+KysrKystLS0tCiAxIGZpbGUgY2hhbmdlZCwgMzYgaW5zZXJ0aW9ucygrKSwg
+NSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL3hlbi9ldmVu
+dHMvZXZlbnRzX2Jhc2UuYyBiL2RyaXZlcnMveGVuL2V2ZW50cy9ldmVudHNf
+YmFzZS5jCmluZGV4IDZmMDJjMThmYTY1Yy4uNDA3NzQxZWNlMDg0IDEwMDY0
+NAotLS0gYS9kcml2ZXJzL3hlbi9ldmVudHMvZXZlbnRzX2Jhc2UuYworKysg
+Yi9kcml2ZXJzL3hlbi9ldmVudHMvZXZlbnRzX2Jhc2UuYwpAQCAtMzMsNiAr
+MzMsNyBAQAogI2luY2x1ZGUgPGxpbnV4L3NsYWIuaD4KICNpbmNsdWRlIDxs
+aW51eC9pcnFuci5oPgogI2luY2x1ZGUgPGxpbnV4L3BjaS5oPgorI2luY2x1
+ZGUgPGxpbnV4L3NwaW5sb2NrLmg+CiAKICNpZmRlZiBDT05GSUdfWDg2CiAj
+aW5jbHVkZSA8YXNtL2Rlc2MuaD4KQEAgLTcxLDYgKzcyLDIzIEBAIGNvbnN0
+IHN0cnVjdCBldnRjaG5fb3BzICpldnRjaG5fb3BzOwogICovCiBzdGF0aWMg
+REVGSU5FX01VVEVYKGlycV9tYXBwaW5nX3VwZGF0ZV9sb2NrKTsKIAorLyoK
+KyAqIExvY2sgcHJvdGVjdGluZyBldmVudCBoYW5kbGluZyBsb29wIGFnYWlu
+c3QgcmVtb3ZpbmcgZXZlbnQgY2hhbm5lbHMuCisgKiBBZGRpbmcgb2YgZXZl
+bnQgY2hhbm5lbHMgaXMgbm8gaXNzdWUgYXMgdGhlIGFzc29jaWF0ZWQgSVJR
+IGJlY29tZXMgYWN0aXZlCisgKiBvbmx5IGFmdGVyIGV2ZXJ5dGhpbmcgaXMg
+c2V0dXAgKGJlZm9yZSByZXF1ZXN0X1t0aHJlYWRlZF9daXJxKCkgdGhlIGhh
+bmRsZXIKKyAqIGNhbid0IGJlIGVudGVyZWQgZm9yIGFuIGV2ZW50LCBhcyB0
+aGUgZXZlbnQgY2hhbm5lbCB3aWxsIGJlIHVubWFza2VkIG9ubHkKKyAqIHRo
+ZW4pLgorICovCitzdGF0aWMgREVGSU5FX1JXTE9DSyhldnRjaG5fcndsb2Nr
+KTsKKworLyoKKyAqIExvY2sgaGllcmFyY2h5OgorICoKKyAqIGlycV9tYXBw
+aW5nX3VwZGF0ZV9sb2NrCisgKiAgIGV2dGNobl9yd2xvY2sKKyAqICAgICBJ
+UlEtZGVzYyBsb2NrCisgKi8KKwogc3RhdGljIExJU1RfSEVBRCh4ZW5faXJx
+X2xpc3RfaGVhZCk7CiAKIC8qIElSUSA8LT4gVklSUSBtYXBwaW5nLiAqLwpA
+QCAtMTA1LDcgKzEyMyw3IEBAIHN0YXRpYyB2b2lkIGNsZWFyX2V2dGNobl90
+b19pcnFfcm93KHVuc2lnbmVkIHJvdykKIAl1bnNpZ25lZCBjb2w7CiAKIAlm
+b3IgKGNvbCA9IDA7IGNvbCA8IEVWVENITl9QRVJfUk9XOyBjb2wrKykKLQkJ
+ZXZ0Y2huX3RvX2lycVtyb3ddW2NvbF0gPSAtMTsKKwkJV1JJVEVfT05DRShl
+dnRjaG5fdG9faXJxW3Jvd11bY29sXSwgLTEpOwogfQogCiBzdGF0aWMgdm9p
+ZCBjbGVhcl9ldnRjaG5fdG9faXJxX2FsbCh2b2lkKQpAQCAtMTQyLDcgKzE2
+MCw3IEBAIHN0YXRpYyBpbnQgc2V0X2V2dGNobl90b19pcnEoZXZ0Y2huX3Bv
+cnRfdCBldnRjaG4sIHVuc2lnbmVkIGludCBpcnEpCiAJCWNsZWFyX2V2dGNo
+bl90b19pcnFfcm93KHJvdyk7CiAJfQogCi0JZXZ0Y2huX3RvX2lycVtyb3dd
+W2NvbF0gPSBpcnE7CisJV1JJVEVfT05DRShldnRjaG5fdG9faXJxW3Jvd11b
+Y29sXSwgaXJxKTsKIAlyZXR1cm4gMDsKIH0KIApAQCAtMTUyLDcgKzE3MCw3
+IEBAIGludCBnZXRfZXZ0Y2huX3RvX2lycShldnRjaG5fcG9ydF90IGV2dGNo
+bikKIAkJcmV0dXJuIC0xOwogCWlmIChldnRjaG5fdG9faXJxW0VWVENITl9S
+T1coZXZ0Y2huKV0gPT0gTlVMTCkKIAkJcmV0dXJuIC0xOwotCXJldHVybiBl
+dnRjaG5fdG9faXJxW0VWVENITl9ST1coZXZ0Y2huKV1bRVZUQ0hOX0NPTChl
+dnRjaG4pXTsKKwlyZXR1cm4gUkVBRF9PTkNFKGV2dGNobl90b19pcnFbRVZU
+Q0hOX1JPVyhldnRjaG4pXVtFVlRDSE5fQ09MKGV2dGNobildKTsKIH0KIAog
+LyogR2V0IGluZm8gZm9yIElSUSAqLwpAQCAtMjYxLDEwICsyNzksMTQgQEAg
+c3RhdGljIHZvaWQgeGVuX2lycV9pbmZvX2NsZWFudXAoc3RydWN0IGlycV9p
+bmZvICppbmZvKQogICovCiBldnRjaG5fcG9ydF90IGV2dGNobl9mcm9tX2ly
+cSh1bnNpZ25lZCBpcnEpCiB7Ci0JaWYgKFdBUk4oaXJxID49IG5yX2lycXMs
+ICJJbnZhbGlkIGlycSAlZCFcbiIsIGlycSkpCisJY29uc3Qgc3RydWN0IGly
+cV9pbmZvICppbmZvID0gTlVMTDsKKworCWlmIChsaWtlbHkoaXJxIDwgbnJf
+aXJxcykpCisJCWluZm8gPSBpbmZvX2Zvcl9pcnEoaXJxKTsKKwlpZiAoIWlu
+Zm8pCiAJCXJldHVybiAwOwogCi0JcmV0dXJuIGluZm9fZm9yX2lycShpcnEp
+LT5ldnRjaG47CisJcmV0dXJuIGluZm8tPmV2dGNobjsKIH0KIAogdW5zaWdu
+ZWQgaW50IGlycV9mcm9tX2V2dGNobihldnRjaG5fcG9ydF90IGV2dGNobikK
+QEAgLTQ0MCwxNiArNDYyLDIxIEBAIHN0YXRpYyBpbnQgX19tdXN0X2NoZWNr
+IHhlbl9hbGxvY2F0ZV9pcnFfZ3NpKHVuc2lnbmVkIGdzaSkKIHN0YXRpYyB2
+b2lkIHhlbl9mcmVlX2lycSh1bnNpZ25lZCBpcnEpCiB7CiAJc3RydWN0IGly
+cV9pbmZvICppbmZvID0gaW5mb19mb3JfaXJxKGlycSk7CisJdW5zaWduZWQg
+bG9uZyBmbGFnczsKIAogCWlmIChXQVJOX09OKCFpbmZvKSkKIAkJcmV0dXJu
+OwogCisJd3JpdGVfbG9ja19pcnFzYXZlKCZldnRjaG5fcndsb2NrLCBmbGFn
+cyk7CisKIAlsaXN0X2RlbCgmaW5mby0+bGlzdCk7CiAKIAlzZXRfaW5mb19m
+b3JfaXJxKGlycSwgTlVMTCk7CiAKIAlXQVJOX09OKGluZm8tPnJlZmNudCA+
+IDApOwogCisJd3JpdGVfdW5sb2NrX2lycXJlc3RvcmUoJmV2dGNobl9yd2xv
+Y2ssIGZsYWdzKTsKKwogCWtmcmVlKGluZm8pOwogCiAJLyogTGVnYWN5IElS
+USBkZXNjcmlwdG9ycyBhcmUgbWFuYWdlZCBieSB0aGUgYXJjaC4gKi8KQEAg
+LTEyMzMsNiArMTI2MCw4IEBAIHN0YXRpYyB2b2lkIF9feGVuX2V2dGNobl9k
+b191cGNhbGwodm9pZCkKIAlzdHJ1Y3QgdmNwdV9pbmZvICp2Y3B1X2luZm8g
+PSBfX3RoaXNfY3B1X3JlYWQoeGVuX3ZjcHUpOwogCWludCBjcHUgPSBzbXBf
+cHJvY2Vzc29yX2lkKCk7CiAKKwlyZWFkX2xvY2soJmV2dGNobl9yd2xvY2sp
+OworCiAJZG8gewogCQl2Y3B1X2luZm8tPmV2dGNobl91cGNhbGxfcGVuZGlu
+ZyA9IDA7CiAKQEAgLTEyNDMsNiArMTI3Miw4IEBAIHN0YXRpYyB2b2lkIF9f
+eGVuX2V2dGNobl9kb191cGNhbGwodm9pZCkKIAkJdmlydF9ybWIoKTsgLyog
+SHlwZXJ2aXNvciBjYW4gc2V0IHVwY2FsbCBwZW5kaW5nLiAqLwogCiAJfSB3
+aGlsZSAodmNwdV9pbmZvLT5ldnRjaG5fdXBjYWxsX3BlbmRpbmcpOworCisJ
+cmVhZF91bmxvY2soJmV2dGNobl9yd2xvY2spOwogfQogCiB2b2lkIHhlbl9l
+dnRjaG5fZG9fdXBjYWxsKHN0cnVjdCBwdF9yZWdzICpyZWdzKQotLSAKMi4y
+Ni4yCgo=
+
+--=separator--
