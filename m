@@ -1,145 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/23/1
-Message-ID: <0869cb33-611f-1baa-e76f-f3bff5e52168@treenet.co.nz>
-Date: Thu, 23 Apr 2020 21:02:54 +1200
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/21/1
+Message-ID: <CAP+3qq4w3UX6hdjr2SszhtfXUpbrg16PMyyJPHT+8PXimBTPMg@mail.gmail.com>
+Date: Wed, 21 Oct 2020 15:21:39 +0900
+From: Akira Ajisaka <aajisaka@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [ADVISORY] SQUID-2019:12 Multiple issues in ESI Response processing
+Subject: [CVE-2018-11764] Apache Hadoop Privilege escalation in web endpoint
 Content-Type: text/plain; charset=utf-8
 
-__________________________________________________________________
+CVE-2018-11764: Apache Hadoop Privilege escalation in web endpoint
 
-    Squid Proxy Cache Security Update Advisory SQUID-2019:12
-__________________________________________________________________
+Severity: Critical
 
-Advisory ID:        SQUID-2019:12
-Date:               April 23, 2020
-Summary:            Multiple issues
-                    in ESI Response processing.
-Affected versions:  Squid 3.x -> 3.5.28
-                    Squid 4.x -> 4.10
-                    Squid 5.x -> 5.0.1
-Fixed in version:   Squid 4.11 and 5.0.2
-__________________________________________________________________
+Vendor: The Apache Software Foundation
 
-    http://www.squid-cache.org/Advisories/SQUID-2019_12.txt
-    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-12519
-    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-12521
-__________________________________________________________________
+Versions affected:
+3.0.0-alpha4, 3.0.0-beta1, and 3.0.0
 
-Problem Description:
+Description:
+Web endpoint authentication check is broken. Authenticated users may
+impersonate any user even if no proxy user is configured.
 
- Due to incorrect buffer handling Squid is vulnerable to cache
- poisoning, remote execution, and denial of service attacks when
- processing ESI responses.
+Mitigation:
+Users should upgrade to Apache Hadoop 3.0.1 or upper.
 
-__________________________________________________________________
-
-Severity:
-
- These problems allow a remote server delivering certain ESI
- response syntax to trigger a buffer overflow.
-
- On systems with heap overflow protection overflow will shutdown
- the proxy causing a denial of service for all clients accessing
- the Squid service.
-
- On systems with ESI buffer pooling (the default) overflow will
- truncate portions of generated payloads. Poisoning the HTTP
- response cache with corrupted objects.
-
- The CVE-2019-12519 issue also overwrites arbitrary attacker
- controlled information onto the process stack. Allowing remote
- code execution with certain crafted ESI payloads.
-
- These problems are restricted to ESI responses received from an
- upstream server. Attackers have to compromise the server or
- transmission channel to utilize these vulnerabilities.
-
-__________________________________________________________________
-
-Updated Packages:
-
- This bug is fixed by Squid versions 4.11 and 5.0.2.
-
- In addition, patches addressing this problem for the stable
- releases can be found in our patch archives:
-
-Squid 4:
- <http://www.squid-cache.org/Versions/v4/changesets/squid-4-fdd4123629320aa1ee4c3481bb392437c90d188d.patch>
-
- If you are using a prepackaged version of Squid then please refer
- to the package vendor for availability information on updated
- packages.
-
-__________________________________________________________________
-
-Determining if your version is vulnerable:
-
- All Squid-2.x are not vulnerable.
-
- All Squid built with --disable-esi are not vulnerable.
-
- All Squid-3.0 versions built without --enable-esi are not
- vulnerable.
-
- All Squid-3.x versions built with --enable-esi are vulnerable.
-
- All Squid-4.x up to and including Squid-4.10 are vulnerable.
-
- Squid-5.0.1 is not vulnerable to the CVE-2019-12519 remote code
- execution issue.
-
- Squid-5.0.1 is vulnerable to the CVE-2019-12521 issues.
-
-__________________________________________________________________
-
-Workaround:
-
- Build Squid with --disable-esi
-
-__________________________________________________________________
-
-Contact details for the Squid project:
-
- For installation / upgrade support on binary packaged versions
- of Squid: Your first point of contact should be your binary
- package vendor.
-
- If your install and build Squid from the original Squid sources
- then the squid-users@...ts.squid-cache.org mailing list is your
- primary support point. For subscription details see
- <http://www.squid-cache.org/Support/mailing-lists.html>.
-
- For reporting of non-security bugs in the latest STABLE release
- the squid bugzilla database should be used
- <http://bugs.squid-cache.org/>.
-
- For reporting of security sensitive bugs send an email to the
- squid-bugs@...ts.squid-cache.org mailing list. It's a closed
- list (though anyone can post) and security related bug reports
- are treated in confidence until the impact has been established.
-
-__________________________________________________________________
-
-Credits:
-
- This vulnerability was discovered by Jeriko One
- <jeriko.one@....us>.
-
- Fixed by Amos Jeffries of Treehouse Networks Ltd.
-
-__________________________________________________________________
-
-Revision history:
-
- 2019-05-14 14:56:49 UTC Initial Report
- 2019-05-20 11:23:13 UTC Patches Released
- 2019-06-05 15:52:17 UTC CVE Assignment
- 2020-04-23 08:00:00 UTC Advisory Released
-__________________________________________________________________
-END
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Credit:
+This issue was discovered by Daryn Sharp.
