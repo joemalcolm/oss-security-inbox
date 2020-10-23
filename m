@@ -1,4 +1,9 @@
-Received: (qmail 3503 invoked by uid 550); 20 May 2026 20:44:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1911" "Friday" "23" "October" "2020" "10:42:14" "+0000" "Iordache, Alexandra" "aghecen@amazon.com" "<1603449734487.64669@amazon.com>" "57" "[oss-security] CVE-2020-27174: Firecracker serial console emulation may allocate an unbounded amount of memory" nil nil nil "10" "2020102310:42:14" "[oss-security] CVE-2020-27174: Firecracker serial console emulation may allocate an unbounded amount of memory" (number mark "U       aghecen@amaz Oct 23   57/1911  " thread-indent "\"[oss-security] CVE-2020-27174: Firecracker serial console emulation may allocate an unbounded amount of memory\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-27174: Firecracker serial console emulation may allocate an unbounded amount of memory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13415 invoked by uid 550); 23 Oct 2020 12:02:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,81 +12,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1079 invoked from network); 20 May 2026 19:18:53 -0000
-Message-ID: <7758b7f4-a71a-48a6-b4a9-516700650a7e@free.fr>
-Date: Wed, 20 May 2026 21:18:43 +0200
+Received: (qmail 14155 invoked from network); 23 Oct 2020 10:42:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1603449756; x=1634985756;
+  h=from:to:subject:date:message-id:mime-version;
+  bh=BNY1ROIClqZe2MwQfkcS5zoG7RDzZzmLhA1Y8pSWxZk=;
+  b=hFlV1ivktE7eUQDCfd3STTKWcfTSRbqvT+lf29c178IR5o9jVz6whWTC
+   IMSoa26JKjVkHuX08mEgV9rZUTCsVw5thNzNDr8mWEyoqfoL8CwFkJEa9
+   9szXlh0L66xkOiUDRYAux47C6+dxfSWbPfiNysgqmGOI8hU5XpC7LGq2e
+   s=;
+X-IronPort-AV: E=Sophos;i="5.77,407,1596499200"; 
+   d="scan'208,217";a="79561226"
+From: "Iordache, Alexandra" <aghecen@amazon.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2020-27174: Firecracker serial console emulation may
+ allocate an unbounded amount of memory
+Thread-Index: AQHWqSkOqmWzUilkpkmvyqHCiY0BKQ==
+Date: Fri, 23 Oct 2020 10:42:14 +0000
+Message-ID: <1603449734487.64669@amazon.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.43.160.27]
+Content-Type: multipart/alternative;
+	boundary="_000_160344973448764669amazoncom_"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Gabriel Corona <gabriel.corona@free.fr>
-To: oss-security@lists.openwall.com
-References: <20260518220116.170677b2@riseup.net>
- <agw1YBkrV6kcsdYr@definition.pseudorandom.co.uk>
- <20260519193042.3feb8374@gmail.com>
- <ag2EONSuspJdhYfd@definition.pseudorandom.co.uk>
- <31c511c3-5e29-4d2d-bfd1-ad1e336f5541@gmail.com>
-Content-Language: fr, en-US
-In-Reply-To: <31c511c3-5e29-4d2d-bfd1-ad1e336f5541@gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------PaJkq7HwRbTbjhQtgRpiH9th"
-Subject: Re: [oss-security] On the issue of MIME handlers that execute
- arbitrary code (e.g. Wine)
+Subject: [oss-security] CVE-2020-27174: Firecracker serial console emulation may allocate an
+ unbounded amount of memory
 
---------------PaJkq7HwRbTbjhQtgRpiH9th
-Content-Type: multipart/mixed; boundary="------------8dQB5gaZtju2xme8wdyzm0Ug";
- protected-headers="v1"
-From: Gabriel Corona <gabriel.corona@free.fr>
-To: oss-security@lists.openwall.com
-Message-ID: <7758b7f4-a71a-48a6-b4a9-516700650a7e@free.fr>
-Subject: Re: [oss-security] On the issue of MIME handlers that execute
- arbitrary code (e.g. Wine)
-References: <20260518220116.170677b2@riseup.net>
- <agw1YBkrV6kcsdYr@definition.pseudorandom.co.uk>
- <20260519193042.3feb8374@gmail.com>
- <ag2EONSuspJdhYfd@definition.pseudorandom.co.uk>
- <31c511c3-5e29-4d2d-bfd1-ad1e336f5541@gmail.com>
-In-Reply-To: <31c511c3-5e29-4d2d-bfd1-ad1e336f5541@gmail.com>
+--_000_160344973448764669amazoncom_
+Content-Type: text/plain; charset="iso-8859-1"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 
---------------8dQB5gaZtju2xme8wdyzm0Ug
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+We have identified an issue in the Firecracker serial console emulation of =
+all Firecracker versions up to v0.21.2 and Firecracker v0.22.0
 
-PiBTYW5kYm94ZXMgc2hvdWxkIG9ubHkgYWxsb3cgYWxsb3dsaXN0IG9mIGZpbGUgdHlwZXMgYW5k
-IG1ha2UgZXZlcnl0aGluZw0KPiBlbHNlIGZhbGwgYmFjayB0byBhIHNhZmUgZGVmYXVsdC4gIFRo
-aXMgY291bGQgYmUgYSBzaW1wbGUgdGV4dCBlZGl0b3INCj4gKG5vIElERSBzdXBwb3J0ISkgZm9y
-IHRleHQgZmlsZXMsIGFuZCBhIGhleCBlZGl0b3IgKG9yIGFuIGVycm9yKSBmb3INCj4gYmluYXJ5
-IGZpbGVzLg0KDQpUaGF0IHNvdW5kcyBleHRyZW1lbHkgaW5jb252ZW5pZW50LiBSdW5uaW5nIGFu
-IGVtYWlsIGNsaWVudCBpbiBhIA0Kc2FuZGJveD8gSXQgY2FuJ3Qgb3BlbiBhIFBERiBvciBhIEpQ
-RUcgKG9yIHdvcnNlLCB5b3UnbGwgZ2V0IGFuIA0KaGV4LWVkaXRvcikgLi4uDQoNCklmIHRoZSBz
-YW5kYm94ZWQgYXBwbGljYXRpb24gaXMgYmFkbHkgaW50ZWdyYXRlZCBhbmQgY2FuJ3Qgb3BlbiBm
-aWxlcyANCmFuZCBVUklzLCB0aGUgdXNlciAobWUgaW5jbHVkZWQpIHdpbGwgcHJlZmVyIHVzaW5n
-IHRoZSBub24tc2FuZGJveGVkIA0KdmVyc2lvbiBpbiBvcmRlciB0byBnZXQgdGhpbmdzIGRvbmUg
-KG9yIHdpbGwgcHJlZmVyIHVzaW5nIGEgbW9yZSANCnVzZXItZnJpZW5kbHkgT1MpLiBUaGlzIHdv
-dWxkIGRlZmVhdCB0aGUgcHVycG9zZSBvZiBoYXZpbmcgc2FuZGJveGVkIA0KYXBwbGljYXRpb25z
-Lg0KDQpHYWJyaWVsDQo=
+# Issue Description
 
---------------8dQB5gaZtju2xme8wdyzm0Ug--
+The Firecracker implementation of the serial console emulation allows buffe=
+ring of an unlimited number of bytes when data is written to the Firecracke=
+r process standard input at a high rate.
 
---------------PaJkq7HwRbTbjhQtgRpiH9th
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+# Impact
 
------BEGIN PGP SIGNATURE-----
+Firecracker customers that forward the standard input of the Firecracker pr=
+ocess to untrusted users can become subject to DoS attacks. If memory limit=
+s are not imposed on the Firecracker process, this might impair other micro=
+VMs on the same host from allocating memory, potentially becoming an availa=
+bility issue.
 
-wsF5BAABCAAjFiEEleStherPvjH3F2XUIWPS9KpGc+gFAmoOCRQFAwAAAAAACgkQIWPS9KpGc+jp
-kw//cGqtGGxfyCTkMPoLwMT+W/At02Ds7CO+fD3At1ZmVgwzpUbxE/VGfxh+g51Pl1JMdagWJyji
-wLvRMamE54x8JkikPuesfop2zbCsb6PEdhbZi74qlBgEVm1HxhGWiR4+PBFbLj73iw+haS/HMH0F
-Zf9GJjPxNLc/uyj+MlmzwqUjpcU9JkjDsIO7WmNac/8gMcWY2qOrtEr0k5nI0kx2bcyNkteZqiYy
-a7OCc9mAy5qZwaJCeBIcHxo4+0ihksD4kUbOYDKaRcMUocT59CkFPZRDeSkIjNj4GOeCZPbLaNqG
-7VWusPYKW73X27rsokCjuR8GHtCDSDKSsXOFqCEBM176P+oS1i2fm130UqCzctVv7Ok3Zg5kqvdf
-GjBIBw9vMABsjcktPpAHxTVmUZ6ktIiy+Ltoq2fvy9NNmJ7RI99LurXxJeBT7MX2qY0N5c1yZbdR
-bfdbtmXBLclgHBxjo2ILoqmxKkGth6CX8TZi/76KZ/LELk/VhJuLi9beGGzAQNG7a+IZeYkFjO4Y
-f9YCgXj1OdClShX0T2sfuS2viFtd1Ze1fgBaoSqfeX2Tbs9N9iwOgHzeFjEetInTbP6fXZZW22tf
-aFkM+Y0wA9dl99ml+DHj1fP0PdOP/IShYdw05Xm3x8Vhf5SDYmIwKW4PlVpFis+mRhPNHOW3YX6b
-SIs=
-=gtBG
------END PGP SIGNATURE-----
+Serial output generated by the guest can't trigger the issue.
 
---------------PaJkq7HwRbTbjhQtgRpiH9th--
+# Affected Systems
+
+Firecracker versions v0.22.0 and v0.21.2, while all older releases might be=
+ impacted.
+
+# Mitigation
+
+Impact can be mitigated by applying memory limits to the Firecracker proces=
+s or by applying a rate limit when writing to the Firecracker process stand=
+ard input.
+
+Customers may apply:
+Patched binaries mitigating this issue have been released as Firecracker v0=
+.21.3[1] and Firecracker v0.22.1[2].
+If you are using Firecracker versions up to v0.21.2 or Firecracker v0.22.0,=
+ we recommend you apply the provided fix.
+
+[1] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.21.3
+[2] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.22.1?
+
+
+Best regards,
+Alexandra on behalf of the Firecracker maintainers team?
+
+
+
+
+Amazon Development Center (Romania) S.R.L. registered office: 27A Sf. Lazar=
+ Street, UBC5, floor 2, Iasi, Iasi County, 700045, Romania. Registered in R=
+omania. Registration number J22/2621/2005.
+
+--_000_160344973448764669amazoncom_--
+
