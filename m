@@ -1,31 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/28/1
-Message-ID: <nycvar.YSQ.7.77.849.2005281030080.62159@xnncv>
-Date: Thu, 28 May 2020 10:32:53 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: "Ding, Ren" <rding@...ech.edu>, "Zhao, Hanqing" <hanqing@...ech.edu>
-Subject: CVE-2020-13361 QEMU: es1370: OOB access due to incorrect frame count leads to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/27/1
+Message-ID: <4505d03f-b9a3-3fab-2441-2f64dacc9773@redhat.com>
+Date: Tue, 27 Oct 2020 13:23:01 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-25654 pacemaker: ACL restrictions bypass
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi All,
 
-An OOB access issue was found in the ES1370 audio device emulator of the QEMU. 
-The issue occurs in 'audio_pcm_sw_read', while reading audio byte stream from 
-a channel, if the channel frame count is set to a malicious value. A guest 
-user/process may use this flaw to crash the QEMU process on the host resulting 
-in DoS scenario.
+Pacemaker is a high-availability cluster manager comprising multiple
+daemon processes that interact with each other and with user requests
+via IPC.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-05/msg07230.html
+Users must either be root or in the haclient group to access Pacemaker
+daemon IPC.
 
-This issue was reported by Ren Ding & Hanqing Zhao of SSLab Georgia Tech. 
-'CVE-2020-13361' requested via -> https://cveform.mitre.org/
+One of these daemons, pacemaker-based, manages the Pacemaker
+configuration, known as the Cluster Information Base (CIB). Pacemaker
+may be built with support for Access Control Lists (ACLs) in which case
+pacemaker-based applies configured ACLs when processing user requests to
+read or write any part of the configuration.
+
+When ACLs are not in use, any user in the haclient group has full
+access to the configuration, which effectively gives them the ability
+to run any code as root. (This is intentional, as the point of a
+cluster manager is to run arbitrary services.)
+
+When ACLs are in use, users still must be in the haclient group, but
+their read and write access to various parts of the configuration is
+limited by configured ACLs.
+
+The vulnerability is that users may use IPC communication with the
+various daemons directly to perform certain tasks that they would be
+prevented by ACLs from doing if they went through the configuration.
+This is not difficult; Pacemaker provides command-line tools to send
+many types of IPC requests.
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+More details along with patches is available at:
+https://bugzilla.redhat.com/show_bug.cgi?id=1888191
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security
 
