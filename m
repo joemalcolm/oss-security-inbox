@@ -1,117 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/22/2
-Message-Id: <E1kKiTr-0002Ip-K6@xenbits.xenproject.org>
-Date: Tue, 22 Sep 2020 13:37:15 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 336 v3 (CVE-2020-25604) - race when migrating timers between x86 HVM vCPU-s
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/02/2
+Message-ID: <20201102173429.GA1527710@fullerene.field.pennock-tech.net>
+Date: Mon, 2 Nov 2020 12:34:29 -0500
+From: Phil Pennock <oss-security-phil@...dhuis.org>
+To: oss-security@...ts.openwall.com
+Cc: Phil Pennock <pdp@...adia.com>
+Subject: [CVE-2020-26521][CVE-2020-26892] NATS JWT vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Folks,
 
-            Xen Security Advisory CVE-2020-25604 / XSA-336
-                               version 3
+The NATS project has a new advisories website:
+  <https://advisories.nats.io/>
 
-           race when migrating timers between x86 HVM vCPU-s
+We also have two new CVEs; both relate to our JWT handling and both
+affect the NATS server:
 
-UPDATES IN VERSION 3
-====================
+* CVE-2020-26521
+  + Nil deref in JWT library, causing Go panic
+  + NATS server upgrade required to avoid Denial-of-Service
+  + 2020-11-02
+* CVE-2020-26892
+  + Incorrect credential expiration handling via JWT library
+  + API fixes needed by library users
+  + NATS server upgrade required for expiration to work
+  + 2020-11-02
 
-Public release.
+The text of our advisories should be attached.
 
-ISSUE DESCRIPTION
-=================
+We have just released NATS server 2.1.9 which includes the fixes for
+both these issues.
 
-When migrating timers of x86 HVM guests between its vCPU-s, the locking
-model used allows for a second vCPU of the same guest also operating on
-the timers to release a lock that it didn't acquire.
+Regards,
+-Phil Pennock
 
-IMPACT
-======
+View attachment "CVE-2020-26521.txt" of type "text/plain" (1525 bytes)
 
-The most likely effect of the issue is a hang or crash of the
-hypervisor, i.e. a Denial of Service (DoS).
+View attachment "CVE-2020-26892.txt" of type "text/plain" (1633 bytes)
 
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are affected.
-
-Only x86 systems are vulnerable.  Arm systems are not vulnerable.
-
-Only x86 HVM guests can leverage the vulnerability.  x86 PV and PVH
-cannot leverage the vulnerability.
-
-Only guests with more than one vCPU can exploit the vulnerability.
-
-MITIGATION
-==========
-
-Running only PV and PVH guests will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Igor Druzhinin of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa336.patch           Xen 4.12 - xen-unstable
-xsa336-4.11.patch      Xen 4.10 - 4.11
-
-$ sha256sum xsa336*
-6cb13a54c2b0fcb6948a1c4045095da4e43aad262a1dd8993ea2a3bd90d4c72d  xsa336.meta
-ecb59876fb92cfe0916ed5f3227a30efe038224c1f6ec36bc3706c4e2214552c  xsa336.patch
-c0c7983bfd70eb54277af9fddfcc3cc95bbd745d92d9ffb71d5b32281c437510  xsa336-4.11.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/eYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZe28H/3oTZLe4eVhykU7a+BbN7ENJ2WMYsj0VM5wUiQyK
-ZrY3CnbO0ne6h0BeAgSNG1XRP9QvwJLOIm6gZkqoNCWyJK2IbCO/mlF4czBlpUBR
-FtM2wJz4FLzkiYMozk8TOZk6pCW6gaqxNiYr2L/3ijh2PQCMwnte/u+T3mZAAWxB
-nJbVnwux26nvRY/5XBZ7cZ/Qxi1DKed2cyf2A9oZ/AmGIMBT2r6SZ+arf+d4jHRG
-yQok+7gdXr1lOL/pPZZWepHtbPJMrrYxQZN/zKGt20c9ksBLiOyyQxTO4tegLx7N
-PxRgzy+DgY+xqYFA68xpM6jJxfWYmHpjAtbYtQoPvyPsIag=
-=0Kkw
------END PGP SIGNATURE-----
-
-Download attachment "xsa336.meta" of type "application/octet-stream" (1755 bytes)
-
-Download attachment "xsa336.patch" of type "application/octet-stream" (8648 bytes)
-
-Download attachment "xsa336-4.11.patch" of type "application/octet-stream" (7811 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
