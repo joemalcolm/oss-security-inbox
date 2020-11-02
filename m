@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1693" "Monday" "22" "June" "2015" "08:16:03" "-0500" "Kyle Kelley" "rgbkrk@gmail.com" "<CA+tbMaXPPLNRLW8MeN3c9nvupz6z0E2EZRgg55psyvEB-1fb3g@mail.gmail.com>" "60" "[oss-security] CVE request: IPython XSS in JSON error responses" nil nil nil "6" "2015062213:16:03" "[oss-security] CVE request: IPython XSS in JSON error responses" (number mark "U       rgbkrk@gmail Jun 22   60/1693  " thread-indent "\"[oss-security] CVE request: IPython XSS in JSON error responses\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4625" "Monday" "2" "November" "2020" "12:34:29" "-0500" "Phil Pennock" "oss-security-phil@spodhuis.org" "<20201102173429.GA1527710@fullerene.field.pennock-tech.net>" "179" "[oss-security] [CVE-2020-26521][CVE-2020-26892] NATS JWT vulnerabilities" nil nil nil "11" "2020110217:34:29" "[oss-security] [CVE-2020-26521][CVE-2020-26892] NATS JWT vulnerabilities" (number mark "U       oss-security Nov  2  179/4625  " thread-indent "\"[oss-security] [CVE-2020-26521][CVE-2020-26892] NATS JWT vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-26521][CVE-2020-26892] NATS JWT vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21785 invoked by uid 550); 22 Jun 2015 13:16:16 -0000
+Received: (qmail 13696 invoked by uid 550); 2 Nov 2020 18:04:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,85 +12,214 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21755 invoked from network); 22 Jun 2015 13:16:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=3lcKlToLdLInUqE7SdZaAQF/YcB1SuzaQLLQikguCIU=;
-        b=qb86IXIBb5T8SXe2B4rHpFP2XG3K8w/AqiY7UBfDRomOtkH4jE8qVkKB8guoLbenPg
-         +nuz4Eg9DhyEFiebxg5p030Ep+Ioa3oM/8eswGofEHKK4/+eXXXvj3bWHbfp+ExEWarw
-         poun0i1oKT3hyYjZXo/qL0qVTjxNmfT+COInTk2egRLPRkX3fwe+qazrI7v20/4jrHWX
-         5kHznN34tHX7AlA8t4mCxICMrUBIZ+qBO+r/a0Z2sIRxedh7ffxcEi3Bo3vv1LujmE0+
-         FSGQ29VanDuEcYpJ5nfWe85ua86WLIcme1CYbAAx0ywDQsmGqYZz1xbEJmtvTBwLuaDR
-         LCiw==
-MIME-Version: 1.0
-X-Received: by 10.55.18.31 with SMTP id c31mr41971388qkh.15.1434978963384;
- Mon, 22 Jun 2015 06:16:03 -0700 (PDT)
-Date: Mon, 22 Jun 2015 08:16:03 -0500
-Message-ID: <CA+tbMaXPPLNRLW8MeN3c9nvupz6z0E2EZRgg55psyvEB-1fb3g@mail.gmail.com>
-From: Kyle Kelley <rgbkrk@gmail.com>
+Received: (qmail 18232 invoked from network); 2 Nov 2020 17:34:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=spodhuis.org; s=d202008; h=OpenPGP:Content-Type:MIME-Version:Message-ID:
+	Subject:Cc:To:From:Date:From:Reply-To:Subject:Date:To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
+	References:OpenPGP:Organization;
+	bh=F2Do+5dWIeknE3Mp2z8RtDvXat3jVWuaKoJvKqAGVZc=; t=1604338486; x=1605548086;
+	 b=x+XKq6B74GMEnsangwQrzY5q6Jm1Pc4uIO/wrJ+kpdY5nS2Y++rnDkloT4Cr2acLZ4hvZCvdB7
+	sP82uP8eNlKi8m3jrT0QpQgHA/N6VUm2dB65Q9qMP0BPSZ9PO05N6f8bIbFMahle0XZSO6Oc+hr7S
+	qWIrMKMhJGqV1gS9CcJJ6H1G873NKKcnSbpOlwCfagOdZoC3YA86aoY7YBGOM+dbrwYQAnGAkRnop
+	UZZdAJwcHbaCxHU3B1VIFREBzIoezaZzv3WYhHbT0O3swpPy0Wbr2FvMX6OdlPklaRBQrgFPfhCFO
+	t1CCBTJ3BLguLYmQAE4NwN8dLY3jv8fx3SnIA==;
+DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=spodhuis.org; s=d202008e2; h=OpenPGP:Content-Type:MIME-Version:Message-ID:
+	Subject:Cc:To:From:Date:From:Reply-To:Subject:Date:To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
+	References:OpenPGP:Organization;
+	bh=F2Do+5dWIeknE3Mp2z8RtDvXat3jVWuaKoJvKqAGVZc=; t=1604338486; x=1605548086;
+	 b=Ol9apkalbpuwG1XP2dv/0w6SsZ1jQiw8JXAxV7FM+iMUJkxANYGpdrVqEj/2Q45MdokX1PMkug
+	O+svEWr1P/AQ==;
+Date: Mon, 2 Nov 2020 12:34:29 -0500
+From: Phil Pennock <oss-security-phil@spodhuis.org>
 To: oss-security@lists.openwall.com
-Cc: security@ipython.org
-Content-Type: multipart/alternative; boundary=001a11475a805f706005191b13fd
-Subject: [oss-security] CVE request: IPython XSS in JSON error responses
+Cc: Phil Pennock <pdp@synadia.com>
+Message-ID: <20201102173429.GA1527710@fullerene.field.pennock-tech.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="EuxKj2iCbKjpUGkD"
+Content-Disposition: inline
+OpenPGP: url=https://www.security.spodhuis.org/PGP/keys/keys-2013rsa-2020cv25519.asc
+Subject: [oss-security] [CVE-2020-26521][CVE-2020-26892] NATS JWT vulnerabilities
 
---001a11475a805f706005191b13fd
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Email addresses of requester: security@ipython.org; rgbkrk@gmail.com;
-khanam@us.ibm.com
-Software name: IPython notebook
-Type of vulnerability: XSS
-Attack outcome: Remote execution
-Patch/issue:
- * Current 3.x release
-https://github.com/ipython/ipython/commit/7222bd53ad089a65fd610fab4626f9d0a=
-b47dfce
- * Minor backport to 2.x
-https://github.com/ipython/ipython/commit/c2078a53543ed502efd968649fee1125e=
-0eb549c
+--EuxKj2iCbKjpUGkD
+Content-Type: multipart/mixed; boundary="vtzGhvizbBRQ85DL"
+Content-Disposition: inline
 
 
-Affected versions: 2.0 =E2=89=A4 version =E2=89=A4 2.4.1, 3.0 =E2=89=A4 ver=
-sion =E2=89=A4 3.1
+--vtzGhvizbBRQ85DL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Summary: JSON error responses from the IPython notebook REST API contained
-URL parameters and were incorrectly reported as text/html instead of
-application/json. The error messages included some of these URL params,
-resulting in a cross site scripting attack. This affects users on Mozilla
-Firefox but not Chromium/Google Chrome.
+Folks,
 
-API paths with issues:
+The NATS project has a new advisories website:
+  <https://advisories.nats.io/>
 
-* /api/contents (3.0-3.1)
-* /api/notebooks (2.0-2.4, 3.0-3.1)
+We also have two new CVEs; both relate to our JWT handling and both
+affect the NATS server:
 
-Mitigations:
+* CVE-2020-26521
+  + Nil deref in JWT library, causing Go panic
+  + NATS server upgrade required to avoid Denial-of-Service
+  + 2020-11-02
+* CVE-2020-26892
+  + Incorrect credential expiration handling via JWT library
+  + API fixes needed by library users
+  + NATS server upgrade required for expiration to work
+  + 2020-11-02
 
-Upgrade to IPython 3.2. If using pip,
+The text of our advisories should be attached.
 
-  pip install --upgrade ipython[notebook]
+We have just released NATS server 2.1.9 which includes the fixes for
+both these issues.
 
-For conda:
+Regards,
+-Phil Pennock
 
-  conda update conda
-  conda update ipython ipython-notebook
+--vtzGhvizbBRQ85DL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline; filename="CVE-2020-26521.txt"
 
-If you can't upgrade directly,
+Subject: Nil dereference in NATS JWT, DoS of nats-server
 
-* Set the content security policy for the API headers of the notebook to
-include `default-src 'none'` (
-https://ipython.org/ipython-doc/3/whatsnew/version3.html#content-security-p=
-olicy
-)
-* Set the content type on API handlers to application/json
+CVE: CVE-2020-26521
 
-Vulnerability was found by Ahmad Khan, Security Engineer at IBM.
+Background:
+
+NATS.io is a high performance open source pub-sub distributed communication
+technology, built for the cloud, on-premise, IoT, and edge computing.
+The server is written in Go and there are client libraries in many languages
+and frameworks.
+
+The nats-io JWT library provides the handling for JWTs common to the NATS.io
+projects.
 
 
---=20
-Kyle Kelley (@rgbkrk <https://twitter.com/rgbkrk>; lambdaops.com,
-developer.rackspace.com)
+Problem Description:
 
---001a11475a805f706005191b13fd--
+The NATS account system has an Operator trusted by the servers, which
+signs Accounts, and each Account can then create and sign Users within
+their account.  The Operator should be able to safely issue Accounts to
+other entities which it does not fully trust.
+
+A malicious Account could create and sign a User JWT with a state not
+created by the normal tooling, such that decoding by the NATS JWT
+library (written in Go) would attempt a nil dereference, aborting
+execution.
+
+The NATS Server is known to be impacted by this.
+
+
+Affected versions:
+
+JWT library:
+ * all versions prior to 1.1.0
+
+NATS Server:
+ * Version 2 prior to 2.1.9
+
+
+Impact:
+
+JWT library:
+ * Programs would nil dereference and panic, aborting execution by default.
+
+NATS server:
+ * Denial of Service caused by process termination
+
+
+Workaround:
+
+If your NATS servers do not trust any accounts which are managed by
+untrusted entities, then malformed User credentials are unlikely to be
+encountered.
+
+
+Solution:
+
+Upgrade the JWT dependency in any application using it.
+
+Upgrade the NATS server if using NATS Accounts.
+
+
+--vtzGhvizbBRQ85DL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline; filename="CVE-2020-26892.txt"
+
+Subject: Incorrect handling of credential expiry by NATS Server
+
+CVE: CVE-2020-26892
+
+Background:
+
+NATS.io is a high performance open source pub-sub distributed communication
+technology, built for the cloud, on-premise, IoT, and edge computing.
+The server is written in Go and there are client libraries in many languages
+and frameworks.
+
+The nats-io JWT library provides the handling for JWTs common to the NATS.io
+projects.
+
+
+Problem Description:
+
+NATS nats-server through 2020-10-07 has Incorrect Access Control because of how
+expired credentials are handled.
+
+The NATS accounts system has expiration timestamps on credentials; the
+<https://github.com/nats-io/jwt> library had an API which encouraged misuse and
+an IsRevoked() method which misused its own API.
+
+A new IsClaimRevoked() method has correct handling and the nats-server has been
+updated to use this.  The old IsRevoked() method now always returns true and
+other client code will have to be updated to avoid calling it.
+
+The CVE identifier should cover any application using the old JWT API, where
+the nats-server is one of those applications.
+
+
+Affected versions:
+
+JWT library:
+ * all versions prior to 1.1.0
+ * fixed after nats-io/jwt PR 103 landed (2020-10-06)
+
+NATS Server:
+ * Version 2 prior to 2.1.9
+   + 2.0.0 through and including 2.1.8 are vulnerable.
+ * fixed with nats-io/nats-server PRs 1632, 1635, 1645
+
+
+Impact:
+
+Time-based credential expiry did not work.
+
+
+Workaround:
+
+Have credentials which only expire after fixes can be deployed.
+
+
+Solution:
+
+Upgrade the JWT dependency in any application using it.
+
+Upgrade the NATS server if using NATS Accounts.
+
+--vtzGhvizbBRQ85DL--
+
+--EuxKj2iCbKjpUGkD
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQSpb2i1s4FmGYGL+VvhPiXtYNF+awUCX6BDHAAKCRDhPiXtYNF+
+a5xIAP4msPcuBXfb+f2KJuW9b0jXZjTmrAAcTmQvK23eAKDMcgEAjJXKeQKft+Sy
+Rb/gjx3CJQESRz5GZuYiGUlCcgjImQ4=
+=Elyf
+-----END PGP SIGNATURE-----
+
+--EuxKj2iCbKjpUGkD--
