@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["535" "Tuesday" "13" "June" "2017" "15:39:26" "+1200" "Murray McAllister" "murray.mcallister@insomniasec.com" "<58b3f24c-90fe-a92e-1ae8-dc8ad702401f@insomniasec.com>" "16" "[oss-security] Linux kernel: drm/vmwgfx: 4 byte read of uninitialised kernel memory in vmw_gb_surface_define_ioctl()" "^Date:" nil nil "6" "2017061303:39:26" "[oss-security] Linux kernel: drm/vmwgfx: 4 byte read of uninitialised kernel memory in vmw_gb_surface_define_ioctl()" (number mark "        murray.mcall Jun 13   16/535   " thread-indent "\"[oss-security] Linux kernel: drm/vmwgfx: 4 byte read of uninitialised kernel memory in vmw_gb_surface_define_ioctl()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["638" "Tuesday" "3" "November" "2020" "17:27:46" "+0530" "P J P" "ppandit@redhat.com" "<4so0n6n6-14p0-3r18-2p12-ors0683rono7@erqung.pbz>" "20" "[oss-security] CVE-2020-27616 QEMU: ati-vga: potential crash via invalid x y parameter values" nil nil nil "11" "2020110311:57:46" "[oss-security] CVE-2020-27616 QEMU: ati-vga: potential crash via invalid x y parameter values" (number mark "U       ppandit@redh Nov  3   20/638   " thread-indent "\"[oss-security] CVE-2020-27616 QEMU: ati-vga: potential crash via invalid x y parameter values\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-27616 QEMU: ati-vga: potential crash via invalid x y parameter values" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3368 invoked by uid 550); 13 Jun 2017 11:03:11 -0000
+Received: (qmail 7490 invoked by uid 550); 3 Nov 2020 11:58:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,34 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19528 invoked from network); 13 Jun 2017 03:39:40 -0000
-Message-ID: <58b3f24c-90fe-a92e-1ae8-dc8ad702401f@insomniasec.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Date: Tue, 13 Jun 2017 15:39:26 +1200
-From: Murray McAllister <murray.mcallister@insomniasec.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Linux kernel: drm/vmwgfx: 4 byte read of uninitialised kernel memory
- in vmw_gb_surface_define_ioctl()
-To: oss-security@lists.openwall.com
+Received: (qmail 7472 invoked from network); 3 Nov 2020 11:58:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1604404674;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=vnzKsSY7cLxV8a/02LHVbFDWubAx1Z7S2gDWxE3sPRI=;
+	b=eVPpkk7AvkIxMVrcGPgdXj/3saVFRBzWxEm69O8pUqKvp6JDtx97Atsx0URDEWmHawteVs
+	NeDU2wAOGo861kSfDqUvKyXmgi+MP4e3PE1bsToosAcg7Nh/sunU0X5yYX+TlpgGJViC9Z
+	KtPcp7Rygzai/uR2iwbb4VwdO9w7dNM=
+X-MC-Unique: SWjPYfvCOH6IYW-AEAxDAw-1
+Date: Tue, 3 Nov 2020 17:27:46 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+To: oss security list <oss-security@lists.openwall.com>
+cc: Gaoning Pan <pgn@zju.edu.cn>
+Message-ID: <4so0n6n6-14p0-3r18-2p12-ors0683rono7@erqung.pbz>
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ppandit@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] CVE-2020-27616 QEMU: ati-vga: potential crash via invalid x y
+ parameter values
 
-The vmw_gb_surface_define_ioctl() function (accessible via
-DRM_IOCTL_VMW_GB_SURFACE_CREATE) defines a backup_handle variable but
-does not give it an initial value. If you attempt to create a GB
-surface, and provide a previously-allocated DMA buffer to be used as a
-backup buffer, the backup_handle variable does not get written to and is
-then later returned to user-space.
+   Hello,
 
-Upstream commit:
+An out-of-bounds access issue was found in the ati-vga emulator of the QEMU. 
+It could occur when the source and destination x,y display parameters in 
+ati_2d_blt() have invalid values. A guest user/process may use this flaw to 
+crash the QEMU process resulting in DoS scenario.
 
-https://github.com/torvalds/linux/commit/07678eca2cf9c9a18584e546c2b2a0d0c9a3150c
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-10/msg06080.html
 
-CVE:
+This issue is reported by Gaoning Pan of Zhejiang University.
 
-I'll request one now and reply once I have one.
+'CVE-2020-27616' assigned via -> https://cveform.mitre.org/
 
-Chur
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+
