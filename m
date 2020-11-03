@@ -1,4 +1,9 @@
-Received: (qmail 10080 invoked by uid 550); 11 Mar 2026 06:55:00 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["569" "Tuesday" "3" "November" "2020" "16:25:31" "+0530" "P J P" "ppandit@redhat.com" "<p6n9p43q-n5s1-q123-43q2-35nn86n0oo1q@erqung.pbz>" "18" "[oss-security] CVE-2020-27152 Kernel: KVM: host stack overflow via loop due to lazy update IOAPIC" nil nil nil "11" "2020110310:55:31" "[oss-security] CVE-2020-27152 Kernel: KVM: host stack overflow via loop due to lazy update IOAPIC" (number mark "U       ppandit@redh Nov  3   18/569   " thread-indent "\"[oss-security] CVE-2020-27152 Kernel: KVM: host stack overflow via loop due to lazy update IOAPIC\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-27152 Kernel: KVM: host stack overflow via loop due to lazy update IOAPIC" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1145 invoked by uid 550); 3 Nov 2020 10:55:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,102 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 10036 invoked from network); 11 Mar 2026 06:55:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
-	t=1773212087; bh=Q0trA+PN6tj+HriJ3Og2eHDVJF4yF1d+1KoVcrbDypI=;
-	h=Date:From:To:Subject:From;
-	b=PzEMXn/kwbpLPU9PaZcyIymyfsvje6SA5Eeea3RT1G7nDhgmSmF4CHub+9slPQSUv
-	 k38K0J9gdl+Ke6kop7hDgwLZwNey2eIbFLtTshtrgO3iS072EQZDjFvzm5dNT+U1gJ
-	 OO0MaEU5OFgzMI+bzRCMsxoC9b95WgXn+qg5mBd8k85USrO1Hil7yWOPBx+ZPsxIyw
-	 4DSbypcnxwfJWyyEEf/PZx3SGAY2d0kasXskr8G4CH5mFfGFhDeQwzYLI/Q5ObPGxB
-	 Js7caFfAtG0t0DIE7o2lY/2D0owThqX1aKwRiGx5DbDiHhhkyKybTtW61jS3iqOFe9
-	 FxlHPLB9kn64w==
-Date: Wed, 11 Mar 2026 07:54:47 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <n8rpp77p-p9on-rr66-16ro-3q062qoq809r@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 1127 invoked from network); 3 Nov 2020 10:55:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1604400939;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=Es6dP8TcYaKOtDrUnQ0eEDlVhesDdfX5zzLaKH3NIAw=;
+	b=GOzPKgH02A/kXmtjPVTX8ebIPRgHwDKIXBzMDmbXT4ljdxDeIryceZ9wogihaty+wc4AwN
+	idOKaChX7cz2k6BUdWr/hsRTPmLgHWposiIXSxLuwy5UBBp6cb/h5HbRJ5VPf5rm/GSMqe
+	TWpI2FJkE74d+nqbk1vXVr7REj5W5tU=
+X-MC-Unique: UqygRvGhOPSwP5QB_Od4cQ-1
+Date: Tue, 3 Nov 2020 16:25:31 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+To: oss security list <oss-security@lists.openwall.com>
+Message-ID: <p6n9p43q-n5s1-q123-43q2-35nn86n0oo1q@erqung.pbz>
 MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ppandit@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [ADVISORY] curl: CVE-2026-3784: wrong proxy connection reuse with
- credentials
+Subject: [oss-security] CVE-2020-27152 Kernel: KVM: host stack overflow via loop due to lazy
+ update IOAPIC
 
-wrong proxy connection reuse with credentials
-=============================================
+   Hello,
 
-Project curl Security Advisory, March 11th 2026
-[Permalink](https://curl.se/docs/CVE-2026-3784.html)
+A stack overflow via an infinite loop condition issue was found in the KVM 
+hypervisor of the Linux kernel. It could occur while processing interrupts 
+because irq state is erroneously set. A guest user may use this flaw to crash 
+the host kernel resulting in DoS scenario.
 
-VULNERABILITY
--------------
-
-curl would wrongly reuse an existing HTTP proxy connection doing CONNECT to a
-server, even if the new request uses different credentials for the HTTP proxy.
-The proper behavior is to create or use a separate connection.
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2026-3784 to this issue.
-
-CWE-305: Authentication Bypass by Primary Weakness
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.7 to and including 8.18.0
-- Not affected versions: curl < 7.7 and >= 8.19.0
-- Introduced-in: https://github.com/curl/curl/commit/a1d6ad26100bc493c7b
-
-libcurl is used by many applications, but not always advertised as such!
-
-This bug is not considered a *C mistake*. It is not likely to have been
-avoided had we not been using C.
-
-This flaw also affects the curl command line tool.
-
-SOLUTION
---------
-
-curl 8.19.0 fixes this flaw
-
-- Fixed-in: https://github.com/curl/curl/commit/5f13a7645e565c5c1a06f3
-
-RECOMMENDATIONS
+Upstream patch:
 ---------------
+   -> https://git.kernel.org/linus/77377064c3a94911339f13ce113b3abf265e06da
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+'CVE-2020-27152' assigned via -> https://cveform.mitre.org/
 
-  A - Upgrade to curl and libcurl 8.19.0
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-  B - Apply the patch and rebuild libcurl
-
-  C - Avoid using HTTP proxy with alternating credentials
-
-TIMELINE
----------
-
-It was reported to the curl project on March 4th 2026. We contacted
-distros@openwall on March 8.
-
-libcurl 8.19.0 was released on March 11th 2026, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Muhamad Arga Reksapati (HackerOne: nobcoder)
-- Patched-by: Stefan Eissing
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se || https://rock-solid.curl.dev
