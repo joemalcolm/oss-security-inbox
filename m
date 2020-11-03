@@ -1,56 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/12/2
-Message-Id: <4FF677C8-DA5B-4335-8136-6DB805323F05@nanthrax.net>
-Date: Fri, 12 Jun 2020 07:09:13 +0200
-From: Jean-Baptiste Onofre <jb@...thrax.net>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-11980] A remote client could create MBeans from arbitrary URLs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/03/1
+Message-ID: <p6n9p43q-n5s1-q123-43q2-35nn86n0oo1q@redhat.com>
+Date: Tue, 3 Nov 2020 16:25:31 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2020-27152 Kernel: KVM: host stack overflow via loop due to lazy update IOAPIC
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-11980: A remote client could create MBeans from arbitrary URLs
+   Hello,
 
-Severity: Low
+A stack overflow via an infinite loop condition issue was found in the KVM 
+hypervisor of the Linux kernel. It could occur while processing interrupts 
+because irq state is erroneously set. A guest user may use this flaw to crash 
+the host kernel resulting in DoS scenario.
 
-Vendor: The Apache Software Foundation
+Upstream patch:
+---------------
+   -> https://git.kernel.org/linus/77377064c3a94911339f13ce113b3abf265e06da
 
-Versions Affected: all versions of Apache Karaf prior to 4.2.9
+'CVE-2020-27152' assigned via -> https://cveform.mitre.org/
 
-Description:
-
-In Karaf, JMX authentication takes place using JAAS and authorization takes
-place using ACL files. By default, only an "admin" can actually invoke on
-an MBean. However there is a vulnerability there for someone who is not an
-admin, but has a "viewer" role. In the 'etc/jmx.acl.cfg', such as role can
-call get*. This leaves it partially vulnerable to this attack:
-
-https://docs.oracle.com/javase/8/docs/technotes/guides/management/agent.html
-
-"A remote client could create a javax.management.loading.MLet MBean and use
-it to create new MBeans from arbitrary URLs, at least if there is no
-security manager. In other words, a rogue remote client could make your
-Java application execute arbitrary code."
-
-It's possible to authenticate as a viewer role + invokes on the MLet
-getMBeansFromURL method, which goes off to a remote server to fetch the
-desired MBean, which is then registered in Karaf. At this point the attack
-fails as "viewer" doesn't have the permission to invoke on the MBean.
-Still, it could act as a SSRF style attack and also it essentially allows a
-"viewer" role to pollute the MBean registry, which is a kind of privilege
-escalation.
-
-
-The vulnerability is low as it's possible to add a ACL to limit access.
-
-This has been fixed in revision:
-
-https://gitbox.apache.org/repos/asf?p=karaf.git;a=commit;h=3e4c4bed2d08e81ca5961ab5fcadab23470db1c9
-https://gitbox.apache.org/repos/asf?p=karaf.git;a=commit;h=2ccfba48bdfac6c2cd09c8f058641da0011e4c7e
-
-Mitigation: Apache Karaf users should upgrade to 4.2.9
-or later as soon as possible, or a new JMX ACL in etc configuration.
-
-JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-6763
-
-Credit: This issue was reported by Colm O hEigeartaigh
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
