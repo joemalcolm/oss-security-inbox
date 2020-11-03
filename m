@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/24/6
-Message-ID: <X71KzJHgsplpNDjT@sol>
-Date: Tue, 24 Nov 2020 12:02:52 -0600
-From: John Helmert III <jchelmert3@...teo.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Heads up: PAM 1.5.0 has a auth bypass under some conditions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/03/2
+Message-ID: <4so0n6n6-14p0-3r18-2p12-ors0683rono7@redhat.com>
+Date: Tue, 3 Nov 2020 17:27:46 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Gaoning Pan <pgn@....edu.cn>
+Subject: CVE-2020-27616 QEMU: ati-vga: potential crash via invalid x y parameter values
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 24, 2020 at 07:20:21PM +0100, Marcus Meissner wrote:
-> Hi,
-> 
-> (via IRC, spotted by Foxboron)
-> 
-> PAM 1.5.0 had a potential auth bypass, if a user did not exist and the root password was
-> empty (but root locked down).
-> 
-> The reporters usecase was spammers pretending to be unknown users with a PAM enabled dovecot.
-> 
-> This issue affected only pam 1.5.0.
-> 
-> News entry:
-> https://github.com/linux-pam/linux-pam/commit/28b8c7045ac8ea4ea080bce02a2df9e3b9e98f06
-> 
-> CVE-2020-27780
-> 
-> github issue reporting the problem: https://github.com/linux-pam/linux-pam/issues/284
-> Fixing commit: https://github.com/linux-pam/linux-pam/commit/af0faf666c5008e54dfe43684f210e3581ff1bca
+   Hello,
 
-It looks like that commit is in 1.5.0, and the issue was closed by
-commit 30fdfb9 (not af0faf6).
+An out-of-bounds access issue was found in the ati-vga emulator of the QEMU. 
+It could occur when the source and destination x,y display parameters in 
+ati_2d_blt() have invalid values. A guest user/process may use this flaw to 
+crash the QEMU process resulting in DoS scenario.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-10/msg06080.html
+
+This issue is reported by Gaoning Pan of Zhejiang University.
+
+'CVE-2020-27616' assigned via -> https://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+
