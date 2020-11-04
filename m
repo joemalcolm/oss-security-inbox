@@ -1,56 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/25/5
-Message-ID: <20200225130532.GA4071@lorien.valinor.li>
-Date: Tue, 25 Feb 2020 14:05:33 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Amadeusz Slawinski <amade@...blr.net>
-Subject: Re: GNU screen "out of bounds access when setting w_xtermosc after OSC 49"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/04/5
+Message-ID: <619a4d6d03be41568f42c16958558281@tencent.com>
+Date: Wed, 4 Nov 2020 11:33:26 +0000
+From: kiyin(尹亮) <kiyin@...cent.com>
+To: tausif <msiddiqu@...hat.com>
+CC: Anthony Liguori <aliguori@...zon.com>, Solar Designer <solar@...nwall.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey(Internet mail)
 Content-Type: text/plain; charset=utf-8
 
-Hi
-
-On Thu, Feb 06, 2020 at 03:04:18PM +0100, Solar Designer wrote:
-> Hi,
-> 
-> GNU screen 4.8.0 was released yesterday with a documented security fix
-> in it:
-> 
-> https://lists.gnu.org/archive/html/screen-devel/2020-02/msg00007.html
-> 
-> ---
-> From: 	Amadeusz Slawinski
-> Subject: 	[screen-devel] GNU Screen v.4.8.0
-> Date: 	Wed, 5 Feb 2020 21:45:35 +0100
-> 
-> Hello everyone,
->  
-> I'm announcing availability of GNU Screen v.4.8.0
-> 
-> Screen is a full-screen window manager that multiplexes a physical
-> terminal between several processes, typically interactive shells. 
-> 
-> This release
->   * Improves startup time by only polling for already open files to
->     close
->   * Fixes:
->        - Fix for segfault if termcap doesn't have Km entry
->        - Make screen exit code be 0 when checking --version
->        - Fix potential memory corruption when using OSC 49
-> 
-> As last fix, fixes potential memory overwrite of quite big size (~768
-> bytes), and even though I'm not sure about potential exploitability of
-> that issue, I highly recommend everyone to upgrade as soon as possible.
-> This issue is present at least since v.4.2.0 (haven't checked earlier).
-> Thanks to pippin who brought this to my attention.
-
-Regarding the affected versions,
-https://bugzilla.redhat.com/show_bug.cgi?id=1801405#c6 points out that
-the issue is caused by the upsteram commit
-https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v4&id=c5db181b6e017cfccb8d7842ce140e59294d9f62
-which would be only in v4.7.0.
-
-Is this correct?
+Hi Tausif,
+    I submitted the request in 2020/10/09. except for an auto replay email "CVE Request 971543 for CVE ID Request(Internet mail)", I got no response until now. I wonder whether they ignore personal request.
 
 Regards,
-Salvatore
+kiyin.
+
+> -----Original Message-----
+> From: Mohammad Tausif Siddiqui [mailto:msiddiqu@...hat.com]
+> Sent: Wednesday, November 4, 2020 5:19 PM
+> To: oss-security@...ts.openwall.com
+> Cc: Anthony Liguori <aliguori@...zon.com>; Solar Designer
+> <solar@...nwall.com>
+> Subject: Re: [oss-security] Linux kernel: crypto: bcm - Verify GCM/CCM key
+> length in setkey(Internet mail)
+> 
+> On Mon, Oct 12, 2020 at 10:10 PM kiyin(尹亮) <kiyin@...cent.com> wrote:
+> 
+> > There are four security bugs in Broadcom SPU driver. The patch was
+> > public in https://www.spinics.net/lists/linux-crypto/msg50839.html.
+> > CVE ID request is in progress.
+> >
+> 
+> Hi Kiyin, do you have an update to the CVE assignment from Mitre here?
+> --
+> 
+> TAUSIF SIDDIQUI RED HAT PRODUCT SECURITY
+> 
+> 0EE1 F6BF 8991 9A65 0A79 A0A7 5849 60EC 88B8 2C71
+> 
+> secalert@...hat.com <https://access.redhat.com/security/team/contact> for
+> urgent response.
