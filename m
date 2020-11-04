@@ -1,97 +1,249 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/04/5
-Message-ID: <20200604122811.GA31148@f195.suse.de>
-Date: Thu, 4 Jun 2020 14:28:11 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/04/6
+Message-Id: <9185D043-96BC-4E0F-9B09-6EF97C4AF4C5@beckweb.net>
+Date: Wed, 4 Nov 2020 15:10:32 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: linux-pam: pam_setquota.so vulnerability facilitated through fusermount setuid-root program
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-During a review of newly added PAM modules in the linux-pam project [1]
-I found a vulnerability [2] in the pam_setquota.so module.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Vulnerability Description
-=========================
+The following releases contain fixes for security vulnerabilities:
 
-The pam_setquota module iterates over all mounted file systems using
-`setmntent()` and `getmntent()`. It tries to find the longest match of a
-file system mounted on /home/$USER or above (except when the explicit
-fs=/some/path parameter is passed to the pam module).
+* Active Directory Plugin 2.20
+* Ansible Plugin 1.1
+* AppSpider Plugin 1.0.13
+* AWS Global Configuration Plugin 1.6
+* Azure Key Vault Plugin 2.1
+* Kubernetes Plugin 1.27.4
+* Mercurial Plugin 2.12
+* SQLPlus Script Runner Plugin 2.0.13
+* Subversion Plugin 2.13.2
+* Visualworks Store Plugin 1.1.4
 
-The home directory /home/$USER is owned by the unprivileged user,
-however. There exist tools like `fusermount` from libfuse which is by
-default installed setuid-root for everybody. `fusermount` allows
-unprivileged users to mount a FUSE file system using an arbitrary
-source device name.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-Thus given the following precondition:
+* FindBugs Plugin
+* Mail Commander Plugin for Jenkins-ci Plugin
+* Static Analysis Utilities Plugin
+* VMware Lab Manager Slaves Plugin
 
-1) there is only the root file system (/) or a file system is mounted on
-   /home, but not on /home/$USER.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2020-11-04/
 
-a non-privileged attacker can achieve the following:
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-2) the attacker mounts a fake FUSE file system over its own home directory:
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-  ```
-  user $ export _FUSE_COMMFD=0
-  user $ fusermount $HOME -ononempty,fsname=/dev/sda1
-  ```
+---
 
-  This will result in a mount entry in /proc/mounts looking like this:
+SECURITY-2117 / CVE-2020-2299
+Active Directory Plugin implements two separate modes: Integration with
+ADSI on Windows, and an OS agnostic LDAP-based mode.
 
-  ```
-  /dev/sda1 on /home/user type fuse (rw,nosuid,nodev,relatime,user_id=1000,group_id=100)
-  ```
-
-3) when the attacker now logs in with pam_setquota configured then
-   pam_setquota will identify /dev/sda1 as the file system to apply the
-   user's quota on.
-
-As a result an unprivileged user has full control over onto which block
-device the quota is applied.
-
-Consequences Regarding `fusermount`
-===================================
-
-It seems that developers find it suprising that regular user accounts
-can specify arbitrary source device names in mount entries. It would be
-desirable to apply restrictions on the source device string in the
-`fusermount` setuid-root tool. It will probably be difficult to
-implement this in a backward-compatible and safe way, however.
-
-Bugfix
-======
-
-This issue is fixed via upstream commit
-27ded8954a1235bb65ffc9c730ae5a50b1dfed61 [3].
-
-Vulnerability Reporting
-=======================
-
-This finding was reported privately to upstream. Since the
-pam_setquota.so PAM module was never part of an official release no
-embargo was setup.  For this reason I also did not request a CVE for the
-issue.
-
-[1]: https://github.com/linux-pam/linux-pam.git
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=1171721
-[3]: https://github.com/linux-pam/linux-pam/commit/27ded8954a1235bb65ffc9c730ae5a50b1dfed61
-
-Cheers
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
+The LDAP-based mode in Active Directory Plugin 2.19 and earlier shares code
+between user lookup and user authentication and distinguishes these
+behaviors through the use of a magic constant used in place of a real
+password. This allows attackers to log in as any user if the magic constant
+is used as the password in Active Directory Plugin 2.19 and earlier.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+SECURITY-2099 / CVE-2020-2300
+Active Directory Plugin implements two separate modes: Integration with
+ADSI on Windows, and an OS agnostic LDAP-based mode.
+
+The Windows/ADSI mode does not specifically prohibit use of empty passwords
+in Active Directory Plugin 2.19 and earlier. If the Active Directory server
+allows the unauthenticated bind operation, this allows attackers to log in
+to Jenkins as any user by providing an empty password.
+
+
+SECURITY-2123 / CVE-2020-2301
+Active Directory Plugin implements two separate modes: Integration with
+ADSI on Windows, and an OS agnostic LDAP-based mode. Optionally, to reduce
+lookup time, a cache can be configured to remember user lookups and user
+authentications.
+
+In Active Directory Plugin 2.19 and earlier, when run in Windows/ADSI mode,
+the provided password was not used when looking up an applicable cache
+entry. This allows attackers to log in as any user using any password while
+a successful authentication of that user is still in the cache.
+
+As a workaround for this issue, the cache can be disabled.
+
+
+SECURITY-1999 / CVE-2020-2302
+Active Directory Plugin 2.19 and earlier does not perform a permission
+check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to access the domain
+health check diagnostic page.
+
+
+SECURITY-2126 / CVE-2020-2303
+Active Directory Plugin 2.19 and earlier does not require POST requests for
+multiple HTTP endpoints implementing connection and authentication tests,
+resulting in cross-site request forgery (CSRF) vulnerabilities.
+
+This vulnerability allows attackers to perform connection tests, connecting
+to attacker-specified or previously configured Active Directory servers
+using attacker-specified credentials.
+
+
+SECURITY-2145 / CVE-2020-2304
+Subversion Plugin 2.13.1 and earlier does not configure its XML parser to
+prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control an agent process to have Jenkins
+parse a crafted changelog file that uses external entities for extraction
+of secrets from the Jenkins controller or server-side request forgery.
+
+
+SECURITY-2115 / CVE-2020-2305
+Mercurial Plugin 2.11 and earlier does not configure its XML changelog
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control an agent process to have Jenkins
+parse a crafted changelog file that uses external entities for extraction
+of secrets from the Jenkins controller or server-side request forgery.
+
+
+SECURITY-2104 / CVE-2020-2306
+Mercurial Plugin 2.11 and earlier does not perform a permission check in an
+HTTP endpoint.
+
+This allows attackers with Overall/Read permission to obtain a list of
+names of configured Mercurial installations.
+
+
+SECURITY-1646 / CVE-2020-2307
+Kubernetes Plugin 1.27.3 and earlier includes a feature to replace
+placeholders in pod template and container template fields with environment
+variable values.
+
+This feature allows low-privilege users to access possibly sensitive
+Jenkins controller environment variables.
+
+
+SECURITY-2102 / CVE-2020-2308
+Kubernetes Plugin 1.27.3 and earlier does not perform a permission check in
+an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to list global pod
+template names.
+
+
+SECURITY-2103 / CVE-2020-2309
+Kubernetes Plugin 1.27.3 and earlier does not perform a permission check in
+an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-1943 / CVE-2020-2310
+Ansible Plugin 1.0 and earlier does not perform permission checks in
+methods implementing form validation.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-2101 / CVE-2020-2311
+AWS Global Configuration Plugin 1.5 and earlier does not perform a
+permission check in an HTTP endpoint processing form submissions.
+
+This allows attackers with Overall/Read permission to replace the global
+AWS configuration.
+
+
+SECURITY-2129 / CVE-2020-2312
+SQLPlus Script Runner Plugin 2.0.12 and earlier prints the `sqlplus`
+command invocation to the build log.
+
+This log message does not redact a password provided as part of a command
+line argument. This password can be viewed by users with Item/Read
+permission.
+
+
+SECURITY-2110 / CVE-2020-2313
+Azure Key Vault Plugin 2.0 and earlier does not perform permission checks
+in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-2058 / CVE-2020-2314
+AppSpider Plugin 1.0.12 and earlier stores a password unencrypted in its
+global configuration file `com.rapid7.jenkinspider.PostBuildScan.xml` on
+the Jenkins controller as part of its configuration.
+
+This password can be viewed by users with access to the Jenkins controller
+file system.
+
+
+SECURITY-1900 / CVE-2020-2315
+Visualworks Store Plugin 1.1.3 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers with the ability to control the output of a script
+that run Visualworks with StoreCI, or able to control an agent process, to
+have Jenkins parse a crafted file that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+
+SECURITY-1907 / CVE-2020-2316
+Static Analysis Utilities Plugin 1.96 and earlier does not escape the
+annotation message in tooltips.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1918 / CVE-2020-2317
+FindBugs Plugin 5.0.0 and earlier does not escape the annotation message in
+tooltips.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to provide report files to FindBugs Plugin's
+post build step.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2085 / CVE-2020-2318
+Mail Commander Plugin for Jenkins-ci Plugin 1.0.0 and earlier stores
+passwords unencrypted in job `config.xml` files on the Jenkins controller
+as part of its configuration.
+
+These passwords can be viewed by users with Item/Extended Read permission
+or access to the Jenkins controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2084 / CVE-2020-2319
+VMware Lab Manager Slaves Plugin 0.2.8 and earlier stores a password
+unencrypted in the global `config.xml` file on the Jenkins controller as
+part of its configuration.
+
+This password can be viewed by users with access to the Jenkins controller
+file system.
+
+As of publication of this advisory, there is no fix.
+
+
