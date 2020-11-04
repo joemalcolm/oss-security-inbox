@@ -1,136 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/5
-Message-Id: <E1kp9JS-00071M-L4@xenbits.xenproject.org>
-Date: Tue, 15 Dec 2020 12:20:18 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 324 v3 (CVE-2020-29484) - Xenstore: guests can crash xenstored via watchs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/04/2
+Message-ID: <20201104103613.GB10006@f195.suse.de>
+Date: Wed, 4 Nov 2020 11:36:13 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: sddm: CVE-2020-28049: local privilege escalation due to race condition in creation of the Xauthority file
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello list,
 
-            Xen Security Advisory CVE-2020-29484 / XSA-324
-                               version 3
+a local privilege escalation has been discovered in the sddm display
+manager [1].
 
-            Xenstore: guests can crash xenstored via watchs
+sddm passes the -auth and -displayfd command line arguments when
+starting the Xserver. It then waits for the display number to be
+received from the Xserver via the `displayfd`, before the Xauthority
+file specified via the `-auth` parameter is actually written. This
+results in a race condition, creating a time window in which no valid
+Xauthority file is existing while the Xserver is already running.
 
-UPDATES IN VERSION 3
-====================
+The X.Org server, when encountering a non-existing, empty or
+corrupt/incomplete Xauthority file, will grant any connecting client
+access to the Xorg display [2]. A local unprivileged attacker can thus
+create an unauthorized connection to the Xserver and grab e.g. keyboard
+input events from other legitimate users accessing the Xserver.
 
-Public release.
+A simple reproducer works like this:
 
-ISSUE DESCRIPTION
-=================
+```
+# run this from an unpriliged account before sddm is started to exploit
+# the race condition and kill the X server
+inotifywait /tmp/.X11-unix; while ! xkill; do :; done
+```
 
-When a Xenstore watch fires, the xenstore client which registered the
-watch will receive a Xenstore message containing the path of the
-modified Xenstore entry which triggered the watch, and the tag which
-was specified when registering the watch.
+The security issue was discovered by our SUSE sddm package maintainer
+Fabian Vogt. The issue is included in sddm since version 0.12.0 and
+was recently fixed in a new upstream release 0.19.0. The upstream commit
+fixing this issue is found in [3]. The SUSE bugzilla bug tracking this
+issue is found in [4].
 
-Any communication with xenstored is done via Xenstore messages,
-consisting of a message header and the payload. The payload length is
-limited to 4096 bytes. Any request to xenstored resulting in a
-response with a payload longer than 4096 bytes will result in an
-error.
+[1]: https://github.com/sddm/sddm
+[2]: https://github.com/freedesktop/xorg-xserver/blob/96d19e898acb56d8fc6e6febbc6498f67cdd66a0/os/auth.c#L190
+[3]: https://github.com/sddm/sddm/commit/be202f533ab98a684c6a007e8d5b4357846bc222
+[4]: https://bugzilla.suse.com/show_bug.cgi?id=1177201
 
-When registering a watch the payload length limit applies to the
-combined length of the watched path and the specified tag. As watches
-for a specific path are also triggered for all nodes below that path,
-the payload of a watch event message can be longer than the payload
-needed to register the watch.
+Cheers
 
-A malicious guest which registers a watch using a very large tag (ie
-with a registration operation payload length close to the 4096 byte
-limit) can cause the generation of watch events with a payload length
-larger than 4096 bytes, by writing to Xenstore entries below the
-watched path.
+Matthias
 
-This will result in an error condition in xenstored.  This error can
-result in a NULL pointer dereference leading to a crash of xenstored.
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
 
-IMPACT
-======
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
 
-A malicious guest administrator can cause xenstored to crash, leading
-to a denial of service.  Following a xenstored crash, domains may
-continue to run, but management operations will be impossible.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are affected.
-
-Only C xenstored is affected, oxenstored is not affected.
-
-MITIGATION
-==========
-
-There are no mitigations.
-
-Changing to use of Ocaml xenstored would avoid this vulnerability.
-However, given the other vulnerabilities in both versions of xenstored
-being reported at this time, changing xenstored implementation is not a
-recommended approach to mitigation of individual issues.
-
-CREDITS
-=======
-
-This issue was discovered by Jürgen Groß of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa324.patch           xen-unstable - 4.10
-
-$ sha256sum xsa324*
-78932f0a83b479902553b1acdf601f7625b383497c03c6e834a0a2b847f1a72e  xsa324.meta
-8dba79842fa913290c7043d065a50abb0efe27fa5a173e421c21c544cc1e264c  xsa324.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/Yqd4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZBoIH/ir2NdOiUg6JFoa/DXgtMBosLXRkRRjikvlaMJTY
-krz3r/aBZ0nLn8wsF5u+BctJYdHrIQDrt3N7GGv1wyvnLA18HrtupsxqrHj+CCMD
-pogl6QxRmmqRina7+EzRTt8N8qe6fhi8tuVmH3TYlsL1PeHyqNurwwTZizHL9BFx
-uCY10qNUV0FTY05tUhdP0FD3yiNfN8QwytARo/LRhELbUMx7D+N/CmUtCKh5uklr
-KfBBHy3Vb4MDlGPN7pa5vdEjZGFVj4xHWxUP+72C+bdhvLEiDi+IKkvy/TVbjoAN
-eQEfFVjBpj21MeQV+3mHJMJGknaJ8NTc00txrLM5D+WscHM=
-=KypE
------END PGP SIGNATURE-----
-
-Download attachment "xsa324.meta" of type "application/octet-stream" (2010 bytes)
-
-Download attachment "xsa324.patch" of type "application/octet-stream" (1753 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
