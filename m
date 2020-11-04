@@ -1,35 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/07/1
-Message-ID: <20201007073140.GA340590@kroah.com>
-Date: Wed, 7 Oct 2020 09:31:40 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/04/7
+Message-ID: <CAH9eYVpmWAVAnUm5=7ASohtnOyWsN5zoeZ7ieDCeaML_tvq35w@mail.gmail.com>
+Date: Wed, 4 Nov 2020 16:30:27 -0500
+From: Brian Demers <bdemers@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+Cc: security <security@...ro.apache.org>
+Subject: [CVE-2020-17510] Apache Shiro Authentication Bypass Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 07, 2020 at 08:00:05AM +1100, Brian May wrote:
-> 
-> Android devices typically require a forked version of the Linux kernel.
+Apache Shiro before 1.7.0, when using Apache Shiro with Spring, a specially
+crafted HTTP request may cause an authentication bypass.
 
-That is due to SoC support, not an Android-specific issue at all.
+If you are NOT using Shiro’s Spring Boot Starter
+(`shiro-spring-boot-web-starter`), you must configure add the
+ShiroRequestMappingConfig auto configuration[1] to your application or
+configure the equivalent manually[2].
 
-You can run Android code just fine on mainline kernels, if you have
-proper hardware support merged upstream.  This has been true for many
-years now.
+[0] https://www.apache.org/security/
+[1] https://shiro.apache.org/spring-framework.html#SpringFramework-WebConfig
+[2]
+https://github.com/apache/shiro/blob/shiro-root-1.7.0/support/spring/src/main/java/org/apache/shiro/spring/web/config/ShiroRequestMappingConfig.java#L28-L30
 
-> I believe they are slowly moving to reduce the changes required by
-> merging them mainline, but not sure how that is progressing right now.
-
-See the lwn.net articles from the Plumbers conference for the past few
-years as to the status of that effort.  Last I looked, it was a handful
-of out-of-tree patches for a few things that upstream did not want to
-take, but Android still had to support for backwards-compatibility
-issues.  Nothing major at all, odds are your favorite Linux distro
-kernel has more changes in it :)
-
-And all of those changes are public and can be easily audited if you so
-desire.
-
-thanks,
-
-greg k-h
