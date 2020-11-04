@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/05/2
-Message-ID: <20201005124358.GA806250@kroah.com>
-Date: Mon, 5 Oct 2020 14:43:58 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/04/4
+Message-ID: <CAC5HUDz6+v0Tou3Fg=_5Q4ru9Vg7TA2x+SxtFAGfYBc3CighHA@mail.gmail.com>
+Date: Wed, 4 Nov 2020 14:48:46 +0530
+From: Mohammad Tausif Siddiqui <msiddiqu@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
+Cc: Anthony Liguori <aliguori@...zon.com>, Solar Designer <solar@...nwall.com>
+Subject: Re: Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 05, 2020 at 03:02:33PM +0300, Georgi Guninski wrote:
-> Disclaimer: I am not watching the security theatre closely,
-> so this is likely trivial.
-> 
-> Are there major security changes needed if
-> gnu/linux dominates the desktop and/or mobile phone
-> markets?
+On Mon, Oct 12, 2020 at 10:10 PM kiyin(尹亮) <kiyin@...cent.com> wrote:
 
-"if"?  You do know the market share of Linux-based mobile phones, right?
-Last I looked, it made the Linux server market quantity a rounding error :)
+> There are four security bugs in Broadcom SPU driver. The patch was public
+> in https://www.spinics.net/lists/linux-crypto/msg50839.html. CVE ID
+> request is in progress.
+>
 
-thanks,
+Hi Kiyin, do you have an update to the CVE assignment from Mitre here?
+-- 
 
-greg k-h
+TAUSIF SIDDIQUI RED HAT PRODUCT SECURITY
+
+0EE1 F6BF 8991 9A65 0A79 A0A7 5849 60EC 88B8 2C71
+
+secalert@...hat.com <https://access.redhat.com/security/team/contact> for
+urgent response.
+
