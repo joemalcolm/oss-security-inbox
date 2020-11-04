@@ -1,4 +1,9 @@
-Received: (qmail 8156 invoked by uid 550); 11 Aug 2022 11:08:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3027" "Wednesday" "4" "November" "2020" "11:36:13" "+0100" "Matthias Gerstner" "mgerstner@suse.de" "<20201104103613.GB10006@f195.suse.de>" "80" "[oss-security] sddm: CVE-2020-28049: local privilege escalation due to race condition in creation of the Xauthority file" nil nil nil "11" "2020110410:36:13" "[oss-security] sddm: CVE-2020-28049: local privilege escalation due to race condition in creation of the Xauthority file" (number mark "U       mgerstner@su Nov  4   80/3027  " thread-indent "\"[oss-security] sddm: CVE-2020-28049: local privilege escalation due to race condition in creation of the Xauthority file\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] sddm: CVE-2020-28049: local privilege escalation due to race condition in creation of the Xauthority file" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 2031 invoked by uid 550); 4 Nov 2020 10:36:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,65 +12,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22227 invoked from network); 11 Aug 2022 08:01:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	 s=debian1.codehelp.user; h=Content-Type:MIME-Version:Message-ID:Subject:Cc:
-	To:From:Date:From:Reply-To:Subject:Content-Transfer-Encoding:Content-ID:
-	Content-Description:In-Reply-To:References:X-Debbugs-Cc;
-	bh=YqXs+fY4pmnSFmHvDBEQJF5YSX4gge7tYwifueVbUlo=; b=QtfokYjap/UF5RNSohtOceLYn5
-	02/zJMfJ5p4hIsIiKLleUO+YibnUiU5sv/B8Wb+URJAO1DRTUhR2Iz1wh5iYKayUxBAOZLeQ11a4H
-	RuO+dd+Uv3NdQHBbZOCC19I9UVnmhr+dfY4j4QqagZY6ReoGbG9D9FrFb8GzC1vm3sreU5iM+kEbz
-	tXU+ajkRBLFJaOWKmTky/lb1EP2sKtzDGe5OjcKx9W/lSmG9Dfdviw81VU7vzKbLHao6HRKNemwr5
-	QN2z1GcwknD6gx6Mh2e786GlZrIreF189+y8I4ifoXPzEWlf4EnZM5aX3GkG8mDY3TF+5MyG5UtX+
-	Y2wuExEg==;
-Date: Thu, 11 Aug 2022 09:01:32 +0100
-From: Neil Williams <codehelp@debian.org>
+Received: (qmail 2007 invoked from network); 4 Nov 2020 10:36:25 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Wed, 4 Nov 2020 11:36:13 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
 To: oss-security@lists.openwall.com
-Cc: team@security.debian.org
-Message-ID: <20220811090132.66cb95e2@felix.codehelp>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+Message-ID: <20201104103613.GB10006@f195.suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/Z0jjSBLASKZ5N85hx7JcvRW";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-Subject: [oss-security] CVE-2022-20359 is not mentioned in linked bulletin
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="ZwgA9U+XZDXt4+m+"
+Content-Disposition: inline
+Subject: [oss-security] sddm: CVE-2020-28049: local privilege escalation due to race
+ condition in creation of the Xauthority file
 
---Sig_/Z0jjSBLASKZ5N85hx7JcvRW
-Content-Type: text/plain; charset=US-ASCII
+--ZwgA9U+XZDXt4+m+
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2022-20359
+Hello list,
 
-URL: https://source.android.com/security/bulletin/2022-08-01
+a local privilege escalation has been discovered in the sddm display
+manager [1].
 
-CVE-2022-20359 is not mentioned in that particular bulletin. Lots of
-others, either side, but not that one.
+sddm passes the -auth and -displayfd command line arguments when
+starting the Xserver. It then waits for the display number to be
+received from the Xserver via the `displayfd`, before the Xauthority
+file specified via the `-auth` parameter is actually written. This
+results in a race condition, creating a time window in which no valid
+Xauthority file is existing while the Xserver is already running.
 
-Does anyone know of the correct URL for more information?
+The X.Org server, when encountering a non-existing, empty or
+corrupt/incomplete Xauthority file, will grant any connecting client
+access to the Xorg display [2]. A local unprivileged attacker can thus
+create an unauthorized connection to the Xserver and grab e.g. keyboard
+input events from other legitimate users accessing the Xserver.
+
+A simple reproducer works like this:
+
+```
+# run this from an unpriliged account before sddm is started to exploit
+# the race condition and kill the X server
+inotifywait /tmp/.X11-unix; while ! xkill; do :; done
+```
+
+The security issue was discovered by our SUSE sddm package maintainer
+Fabian Vogt. The issue is included in sddm since version 0.12.0 and
+was recently fixed in a new upstream release 0.19.0. The upstream commit
+fixing this issue is found in [3]. The SUSE bugzilla bug tracking this
+issue is found in [4].
+
+[1]: https://github.com/sddm/sddm
+[2]: https://github.com/freedesktop/xorg-xserver/blob/96d19e898acb56d8fc6e6=
+febbc6498f67cdd66a0/os/auth.c#L190
+[3]: https://github.com/sddm/sddm/commit/be202f533ab98a684c6a007e8d5b435784=
+6bc222
+[4]: https://bugzilla.suse.com/show_bug.cgi?id=3D1177201
+
+Cheers
+
+Matthias
 
 --=20
-Neil Williams
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-https://linux.codehelp.co.uk/
+Matthias Gerstner <matthias.gerstner@suse.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
 
---Sig_/Z0jjSBLASKZ5N85hx7JcvRW
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
+
+--ZwgA9U+XZDXt4+m+
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEf3HB6ceOc10DYMbM8WfkPIFDtoIFAmL0t1wACgkQ8WfkPIFD
-toIJZw//TeA1m2LDS6NUcprbjFEdHZwalSC7JjVH9aBzx0fuN5PJk3QlxlwECAqu
-Brfg+YKb9HlLjl5mKG6XxV3nhLH6MkM6a5mM4ovLzGFFukiTQBYkg2b3pyd69Xud
-RMy4O4ZMPQY7dKUa3noLAYGxHigFBU6reuU0m4efn2+zBWxMI7F06haNJwgzOoDo
-MrWjAvoVpJT+5Sc1iH1v3UMHJ9bkNCSDhBkQV1UtPF9eRrdBJ3jyV5wUVAvkhWHi
-A+a1s8hFAABQzSDKRtIt+p0QVE/cKSQHKG/E4Do5bNgEQ+3ydZIcgCL6z0RyHUZR
-Xek/nvNWMTeDWqLy1EM34F02UiQRPbhq65fzIt2JMswhwaoHCio2DAA7qhHIPvUL
-sD+8ZYZP1nlwhB5LdyYLINdhbyrHNjN1qGzuq2gRfykmmAcvTSe0O3xTrMaHjw6v
-jj06biW0uWqUAm7MUmk/9SZfZbrugqNmbpufNUXkSMklIg496Z8NO43gRQW1XJoq
-Qvn9oi8PUjh9Vxkn/+Jqus0cbVhElUnhuGsqGqaETW8qi81Ag2Hz8iq0MW+8U3Kj
-lfbr52423Tb0Vy/VLB/rixAISgqfRDPtWLoGlth+A3kzXMIwW5a5F7IpxVzGHrZN
-VCZYZDuYeVOCl3pV6VNuA0l3tti+EEScpqdNBA/0Aj+bdpo3Bpw=
-=VaDX
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl+ihB0ACgkQFMQFyXGS
+NVN6jRAAgdk5Snb+//FyStciI3zBmRhRjIaYkg3B6dremsSe8LLhnuxirsRLqbHy
+0cdfJiLvjhH2BKaqPTCLwk+r04jQiylrD2MWgWc66+XEFgJB5LUbqv84kiZJU5dT
+HkKJHUYI/CFTeGgzvQyOKkzrR+zMjs6brRXL+tL3YftnM6ukrAUEmAksr8RvReAp
+23+H0pKjvN6/DQmi1m3cZwPt/2zK6XZ2PaH93cSCuOC9J/Y2HiUyv2h1dA0sF3Ym
+oC2gScgT0WwjVvIdYBn/SM+GlT+2tx8zW7kT5xAio5KXMsdElxfMNSqG8JPWT6mC
+y6m/5zf4gG1xBNn76EuaajR4ZLNlgv5Z1fRsJx8LsEu5HqMUScEnVq7W3WD+B0mV
+wG823F/Qo24M5ITaebQ71PGlKMKk8oULNfiCl2YZZi53pRb7+3Wcm41BT1oge0Ij
+ileiYdyZbsKIBV56IG/7h5gpzfWv8iwv6aLQb+XB3lHLi98YNEK1H+PLUsXCgtVq
+CQUZ1FnmpN+9TdK0aNDfAXRE0cyviEapd22GHWQdNrEs9RbCR4yLGiFqZnUqEQkL
+nMGpXyUXZdkctyi3wzJfGROEX5LZoG5TO8QU7/pz/dkJGyqCm1/v5FIiBfhtEqoQ
+RH/dIw+nxM59CcLpYxN8XHZwuKKwKxNUxkRWlqXHAbjwZuM8ZBI=
+=gs30
 -----END PGP SIGNATURE-----
 
---Sig_/Z0jjSBLASKZ5N85hx7JcvRW--
+--ZwgA9U+XZDXt4+m+--
