@@ -1,115 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/07/5
-Message-Id: <E1jsmde-00040K-Bc@xenbits.xenproject.org>
-Date: Tue, 07 Jul 2020 12:23:54 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 327 v3 (CVE-2020-15564) - Missing alignment check in VCPUOP_register_vcpu_info
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/10/1
+Message-ID: <CAH5JyZqaxXZGfSivNw-SMdCzY-x2nf2j_VWuC9=f5vOyRxnwow@mail.gmail.com>
+Date: Tue, 10 Nov 2020 13:11:24 +0000
+From: Kaxil Naik <kaxilnaik@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: dev@...flow.apache.org
+Subject: [CVE-2020-13927] - Insecure Default Configuration for Experimental API in Airflow < 1.10.11
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Versions Affected: <1.10.11
 
-            Xen Security Advisory CVE-2020-15564 / XSA-327
-                               version 3
+Description:
+The previous default setting for Airflow's Experimental API was to allow
+all API requests without authentication, but this
+poses security risks to users who miss this fact.
 
-         Missing alignment check in VCPUOP_register_vcpu_info
 
-UPDATES IN VERSION 3
-====================
+>From Airflow 1.10.11 the default has been changed to deny all
+requests by default and is documented at
+https://airflow.apache.org/docs/1.10.11/security.html#api-authentication .
 
-Public release.
+Note this change fixes it for new installs but existing users need to
+change their config to default
+`[api] auth_backend = airflow.api.auth.backend.deny_all` as mentioned in
+the Updating Guide:
 
-ISSUE DESCRIPTION
-=================
+https://github.com/apache/airflow/blob/1.10.11/UPDATING.md#experimental-api-will-deny-all-request-by-default
 
-The hypercall VCPUOP_register_vcpu_info is used by a guest to register
-a shared region with the hypervisor. The region will be mapped into Xen address
-space so it can be directly accessed.
 
-On Arm, the region is accessed with instructions which require a specific
-alignment. Unfortunately, there is no check that the address provided by
-the guest will be correctly aligned.
+Credits:
+Reported by Anonymous User
 
-As a result, a malicious guest could cause a hypervisor crash by passing
-a misaligned address.
-
-IMPACT
-======
-
-A malicious guest administrator may cause a hypervisor crash, resulting in a
-Denial of Service (DoS).
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are vulnerable.
-
-Only Arm systems are vulnerable.  x86 systems are not affected.
-
-MITIGATION
-==========
-
-There is no mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa327.patch           Xen 4.9 - xen-unstable
-
-$ sha256sum xsa327*
-f046eefcc1368708bd1fafc88e063d3dbc5c4cdb593d68b3b04917c6cdb7bcb5  xsa327.meta
-1d057695d5b74ce2857204103e943caeaf773bc4fb9d91ea78016e01a9147ed7  xsa327.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patch and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8EaVAMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZcqIIAKpb992pMq1jFStIGPhk6HsaIhxVEGep67eJHq9d
-TMaFiyBix125djY0zV8KaznmZmRpM2pNKVsIkGe1XHgtEMcWgMAYARejJLRC4UnW
-xHhpunI7rJMQc1vL5ZGxAFbVYF6U/PX0rwESwQb2/Rt0eLBTAmH4m25TQiSEnrkM
-3C4Dbk3puCbaeB7VGiyccK07hh6qQhEO8s1FhZTNVTaqqcNWZYqy/SbmRYHiT/in
-2dK6XOiBgRhHnjsDDoXj5abSMb00KnJ9PkWu8RC2b7+BVZJUii1557T8zpDo9Fyl
-CJ3YXrekd+gQSFxgwCts00BbLr2NUf3uqEtpY1EEV7UKmvQ=
-=fPiG
------END PGP SIGNATURE-----
-
-Download attachment "xsa327.meta" of type "application/octet-stream" (1991 bytes)
-
-Download attachment "xsa327.patch" of type "application/octet-stream" (2064 bytes)
