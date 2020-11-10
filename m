@@ -1,92 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/30/1
-Message-ID: <20200629210508.GB3565@localhost.localdomain>
-Date: Mon, 29 Jun 2020 17:05:08 -0400
-From: Dennis Goodlett <dennis@...ricanelabs.com>
-To: oss-security@...ts.openwall.com
-Subject: default behavior in unzip more dangerous then -^
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/10/7
+Message-ID: <fd19615e-b049-ee54-9d34-3c89bda717b4@gmail.com>
+Date: Tue, 10 Nov 2020 14:12:49 -0500
+From: "Demi M. Obenour" <demiobenour@...il.com>
+To: "Vladimir D. Seleznev" <vseleznv@...linux.org>, oss-security@...ts.openwall.com
+Subject: Re: The importance of mutual authentication: Local Privilege Escalation in X11
 Content-Type: text/plain; charset=utf-8
 
-I want to bring attention to default behavior of unzip on Linux. I
-consider its current behavior unexpected and potentially dangerous.
+On 11/10/20 1:43 PM, Vladimir D. Seleznev wrote:
+>>> This contravenes the ability to run X11 client from another user. The
+>>> idea is that X11 server allows any clients with right credentials
+>>> regardless of theirs processes UID or GID to connect to the server.
+>> Indeed it does, and I mention cryptographic authentication mechanisms
+>> below.  Instead of /tmp, /run/X11 would work just as well.  It is
+>> the mutual authentication that matters.
+> Do I understand you correctly: you propose to forbid running X11 clients
+> which processes belong to another users? In that case it is a bad idea:
+> I would like to run untrusted clients with special UIDs. Or if I
+> understand you wrongly, please explain how client of other user can
+> connect to the socket placed in /run/user/$UID with these strict access
+> permissions 0700?
 
-# Unzip without -^ argument
-By default unzip removes special characters from file names. This can
-result in files being renamed or overwritten. In some circumstances this could
-result in remote code execution.
+If you aren’t using the X Security Extension or the X Access
+Control Extension, then X clients aren’t effectively isolated from
+each other.  Therefore, connecting untrusted X clients to the desktop
+session is a bad idea.
 
-Consider the case of a LAMP server that prevents users from uploading
-files with a ".php" extension. If the system administrator restores or
-refreshes the directory with unzip, he needs to use the "-^" flag to
-keep from creating a ".php" file. See the following example:
+Under my proposal, you would still be able to run an X server with
+cryptographic authentication, but it would be more secure than it
+is today.  Depending on the display manager, you might need to run
+your own X server.
 
-```
-$ ls uploads/ |grep "php" 		#### no php files in uploads
-$ zip ./z.zip ./uploads/*
-  adding: uploads/index.^[p^[h^[p (stored 0%)
-$ unzip z.zip
-Archive:  z.zip
- extracting: uploads/index.php
-$ ls uploads/ |grep "php" 		#### unzip created index.php
-index.php
-```
+Sincerely,
 
-Another example shows that files can be overwritten. While this example uses
-"-f", the results would be the same without "-f" due to the order of the files.
+Demi
 
-```
-$ cat uploads/old_file
-OLD
-$ zip z.zip uploads/*
-adding: uploads/old_file (stored 0%)
-adding: uploads/old_file^[ (stored 0%)
-$ unzip -fo z.zip
-Archive:  z.zip
-extracting: uploads/old_file
-$ cat uploads/old_file
-NEW INJECTED
-```
+Download attachment "OpenPGP_0xB288B55FFF9C22C1.asc" of type "application/pgp-keys" (3987 bytes)
 
-# My Opinion
-I consider the file name "/e\x1btc/\x1bshadow" dangerous because some program
-might mishandle the name and overwrite "/etc/shadow". The unzip utility agrees
-so the default behavior will change "/e\x1btc/\x1bshadow" into "/etc/shadow".
-
-# Potential Changes/fixes
-Personally, I would prefer unzip to act like 7z and just extract the given name
-without changes. Just updating unzip this way could cause problems for some
-people that rely on the sanitization behavior.
-
-A better solution would be to skip the extraction of files that have special
-characters in their name. This is the current philosophy when encountering
-directory traversal.
-
-# Thank You
-Thanks to Seth Arnold from Ubuntu's security team for pointing out the
-"-^" argument to me.
-
--- 
-Dennis Goodlett
-Hurricane Labs
-Cell: (216) 218-1372
-GIT: https://github.com/swoops
-http://hurricanelabs.com (@hurricanelabs)
-EOF
-
--- 
-
-
-
-This email and any files transmitted with it are confidential and 
-intended solely for the use of the individual or entity to whom they are 
-addressed. If you have received this email in error please notify the 
-system manager. This message contains confidential information and is 
-intended only for the individual named. If you are not the named addressee 
-you should not disseminate, distribute or copy this e-mail. Please notify 
-the sender immediately by e-mail if you have received this e-mail by 
-mistake and delete this e-mail from your system. If you are not the 
-intended recipient you are notified that disclosing, copying, distributing 
-or taking any action in reliance on the contents of this information is 
-strictly prohibited.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (834 bytes)
