@@ -1,34 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/25/1
-Message-ID: <CACmp6kpW7T64bucUe4oi50j=L-qQp9fEWG8iPGzOoZLmJeptQQ@mail.gmail.com>
-Date: Sat, 25 Apr 2020 11:44:29 -0500
-From: Matt Sicker <mattsicker@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/10/5
+Message-ID: <CAJvTdK=tZjaiCaS=1=L=r0ZKg16jLS0OMqQ3bfxmhnopMo59Gw@mail.gmail.com>
+Date: Tue, 10 Nov 2020 13:37:31 -0500
+From: Len Brown <lenb@...nel.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-9488] Improper validation of certificate with host mismatch in Apache Log4j SMTP appender
+Subject: CVE-2020-8694 RAPL power meter, Linux intel_powercap
 Content-Type: text/plain; charset=utf-8
 
-Summary: Improper validation of certificate with host mismatch in
-Log4j2 SMTP appender. This could allow an SMTPS connection to be
-intercepted by a man-in-the-middle attack which could leak any log
-messages sent through that appender.
+FYI,
 
-Mitigation: Users should upgrade to Apache Log4j 2.13.2 which fixed
-this issue in LOG4J2-2819 by making SSL settings configurable for
-SMTPS mail sessions. As a workaround for previous releases, users can
-set the `mail.smtp.ssl.checkserveridentity` system property to `true`
-to enable SMTPS hostname verification for all SMTPS mail sessions.
+Today Linux was patched:
 
-https://issues.apache.org/jira/browse/LOG4J2-2819
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=949dd0104c496fa7c14991a23c03c62e44637e71
 
-CVE Details:
-CWE: 297
-CVSS: 3.7 (Low) CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N
-Affects: Apache Log4j <= 2.13.1
-Fixed: Log4j 2.13.2
-Reported by: Peter Stöckli <peter.stockli@...habot.com>
+to help address the vulnerability of employing the hardware RAPL power
+meter in a side-channel attack.
 
+https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00389.html
 
--- 
-Matt Sicker
-Secretary, Apache Software Foundation
-VP Logging Services, ASF
+thanks,
+Len Brown, Intel Open Source Technology Center
