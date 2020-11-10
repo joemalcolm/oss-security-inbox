@@ -1,79 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/19/1
-Message-ID: <20200219090304.675dab3d@computer>
-Date: Wed, 19 Feb 2020 09:03:04 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Wordpress themegrill-demo-importer: database reset/auth bypass, incomplete fix due to CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/10/4
+Message-Id: <E1kcXxR-0000JO-SU@xenbits.xenproject.org>
+Date: Tue, 10 Nov 2020 18:01:29 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 351 v1 - Information leak via power sidechannel
 Content-Type: text/plain; charset=utf-8
 
-A severe vulnerability in a wordpress plugin called ThemeGrill Demo
-Importer was discovered by the company WebARX:
-https://www.webarxsecurity.com/critical-issue-in-themegrill-demo-importer/
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The vulnerability is as follows:
-The plugin adds a hook to wordpress that can be reached with the
-ajax-interface (admin-ajax.php) and that has a functionality to reset
-the wordpress database which will be triggered if the GET variable
-do_reset_wordpress is set.
+                    Xen Security Advisory XSA-351
 
-The problem: This had no authentication whatsoever.
+                 Information leak via power sidechannel
 
-PoC:
-curl https://example.org/wp-admin/admin-ajax.php?do_reset_wordpress01
---data 'action=heartbeat' -i
+ISSUE DESCRIPTION
+=================
 
-This can obviously delete all existing posts and other data. If there
-exists a user called "admin" (i.e. the name of the user is admin, not
-just a user with an admin role) then after triggering that function the
-attacking user will be logged in as the admin, so in that case he can
-use that to e.g. install a plugin and gain code execution. For further
-details read the WebARX post.
+Researchers have demonstrated using software power/energy monitoring
+interfaces to create covert channels, and infer the operations/data used
+by other contexts within the system.
 
-This is already being actively exploitet, I observed several vulnerable
-installations that were empty yesterday (i.e. only showing the standard
-"Hello World" post of a new wordpress installation).
+Access to these interfaces should be restricted to privileged software,
+but it was found that Xen doesn't restrict access suitably, and the
+interfaces are accessible to all guests.
 
-Incomplete Fix / CSRF
-=====================
+For more information, see:
+  https://platypusattack.com
+  https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00389.html
 
-As a fix for this the developers of the plugin added a check if one is
-logged in as a user with sufficient permission in version 1.6.2.
-This is not a full fix, because there is no protection from Cross Site
-Request Forgery. This means the functionality can no longer be
-triggered by an unauthenticated user, but one can lure the admin of an
-affected site to a site triggering a POST request executing that
-function.
+IMPACT
+======
 
-PoC code:
-<form id="f1"
-action="https://example.org/wp-admin/admin-ajax.php?do_reset_wordpress=1"
-method="POST"> <input type=hidden name=action value="heartbeat">
-</form>  
-<script>
-document.getElementById("f1").submit();
-</script>
+An unprivileged guest administrator can sample platform power/energy
+data.  This may be used to infer the operations/data used by other
+contexts within the system.
 
-I had reported this to the developers of the plugin on Monday, but
-given that this is almost entirely obvious looking at the fix I was
-likely not the only one who has noticed. WebARX also told me they
-noticed this and had already told Themegrill about it.
+The research demonstrates using this sidechannel to leak the AES keys
+used elsewhere in the system.
 
-There's now an update 1.6.3 that adds a nonce check. I have
-not reviewed that change in detail. Patches:
-https://github.com/themegrill/themegrill-demo-importer/commit/b350a29628fb40522468a576e98e45abbc4de0c7
-https://github.com/themegrill/themegrill-demo-importer/commit/564d8496d1f0d10f6aab4798eeec7ddefc81bdd2
+VULNERABLE SYSTEMS
+==================
 
-From the functionality this plugin provides I believe it's only useful
-during development and testing of themes. Therefore even if the
-vulnerability is now hopefully fixed it is probably a good idea to
-remove it from production installations when it's no longer needed.
+Power/energy monitoring interfaces are platform and architecture
+specific.  Consult your hardware vendor to ascertain what power feedback
+interfaces are available.
 
-Summary on affected versions:
-1.3.4 to 1.6.1: vulnerable to original/severe variant
-1.6.2: Insufficient fix, attack with CSRF possible
-1.6.3: hopefully fixed
+For ARM systems, all versions of Xen are vulnerable.  The fix restricts
+access to the AMU (Activity Monitors Unit) interface, introduced in
+Armv8.4.
 
--- 
-Hanno Böck
-https://hboeck.de/
+For x86 systems, Xen 4.14 and earlier are vulnerable - master is not
+vulnerable, as these issues have been addressed in a more general
+fashion.
+
+The x86 fixes restrict access to:
+ * Intel RAPL interface, introduced in SandyBridge CPUs.
+ * Intel platform energy interface.
+ * Intel perf_ctl interface, introduced in Pentium 4 CPUs and also
+   implemented by other vendors.
+ * AMD RAPL interface, introduced in Ryzen/EPYC CPUs.
+ * AMD compute unit energy interface, present in Fam15/16 CPUs.
+
+MITIGATION
+==========
+
+There are no mitigations available.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa351-arm.patch             Xen unstable - 4.10.x [ARM]
+xsa351-x86-4.14-?.patch      Xen 4.14.x            [x86]
+xsa351-x86-4.13-?.patch      Xen 4.13.x            [x86]
+xsa351-x86-4.12-?.patch      Xen 4.12.x            [x86]
+xsa351-x86-4.11-?.patch      Xen 4.11.x - 4.10.x   [x86]
+
+$ sha256sum xsa351*
+cad287981a870f13484834fa2364ffee68178517e906f55d2889304a4a9eae06  xsa351.meta
+70ebd0e93af240af2680374dcfd8ff4a5dd3eefccf670f1cb9b546d763d6a554  xsa351-arm.patch
+49b52a1366912a29e184e3014a9f1f579e8a0dd8a36f01d38d995d2c8ed81928  xsa351-arm-4.11.patch
+2e7b7c2b98625d70c8b10047a9f668372f3ccede167344dedb712312606acbca  xsa351-x86-4.11-1.patch
+ab9e2cb7d5e3e0c3a916f006c697495f4f01146e09df60ece59ce0a8f7aa5ed0  xsa351-x86-4.11-2.patch
+bb68f6e6905bc1566156cafab058cbaf02a17c197385c33a83b7f73885913c1c  xsa351-x86-4.12-1.patch
+53f464269f59498f8a9a614f10a47cfb1d81c666f0d684346e28005015de962c  xsa351-x86-4.12-2.patch
+67a29d66230faafd9a8047ac80ec18130b5659e80a38c3a412cb2be6d3288a8f  xsa351-x86-4.13-1.patch
+f7d8717dec33ee7484b36490402d113f1e7e168e7541bcf193fef620df299f08  xsa351-x86-4.13-2.patch
+7d4fbe11a766226d7f1b93c5bf34664d8855deee09d1feebc76f11e49f2aa9c9  xsa351-x86-4.14-1.patch
+41df825deafe3ef28e8594ec956033689af69f84a4a6dd92f97d1071e925203d  xsa351-x86-4.14-2.patch
+$
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+Despite an attempt to organise predisclosure, the discoverers ultimately
+did not authorise a predisclosure.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+q1WwMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZANkH+wf8pft4t9KoC9HFxd96DfCjZ+FQnD0hMp+890cY
+ztNJM4+o+SBP2ytEMZLIoN1oJeTSQqyNgQh2sXNm7/WpseklOTR6s8zw4LWATEfz
+rqF8G2xIN8ka7AAqAwOzkzj6qlxuWbiXKm4ENd5ocRxVvF1A2PYyEX88uCPgmupg
+dqfufhYQF7hrz8VKDRDYtLsMrRaIFCWqGdOdQfVF64pHGHLvGZkANGN8yva8mBfC
+uavwvX+O3CdVMENS4AA3TNo6p2nnWp1iQJCiBwLGCRbTQaRtRucV4Q/eSLC3pHLp
+NO26OxieT4tLJN7Ox4ex43KZIsyweZSaUl18rfg0J8MB3FM=
+=/6Fo
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa351.meta" of type "application/octet-stream" (1772 bytes)
+
+Download attachment "xsa351-arm.patch" of type "application/octet-stream" (2418 bytes)
+
+Download attachment "xsa351-arm-4.11.patch" of type "application/octet-stream" (2714 bytes)
+
+Download attachment "xsa351-x86-4.11-1.patch" of type "application/octet-stream" (6244 bytes)
+
+Download attachment "xsa351-x86-4.11-2.patch" of type "application/octet-stream" (4448 bytes)
+
+Download attachment "xsa351-x86-4.12-1.patch" of type "application/octet-stream" (5992 bytes)
+
+Download attachment "xsa351-x86-4.12-2.patch" of type "application/octet-stream" (4682 bytes)
+
+Download attachment "xsa351-x86-4.13-1.patch" of type "application/octet-stream" (5988 bytes)
+
+Download attachment "xsa351-x86-4.13-2.patch" of type "application/octet-stream" (4800 bytes)
+
+Download attachment "xsa351-x86-4.14-1.patch" of type "application/octet-stream" (6075 bytes)
+
+Download attachment "xsa351-x86-4.14-2.patch" of type "application/octet-stream" (5173 bytes)
