@@ -1,104 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/20/7
-Message-ID: <28f1351e-1176-153d-1fc3-6768d807397c@oracle.com>
-Date: Tue, 20 Oct 2020 09:49:31 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/10/6
+Message-ID: <20201110184321.GA2311015@portlab>
+Date: Tue, 10 Nov 2020 21:43:21 +0300
+From: "Vladimir D. Seleznev" <vseleznv@...linux.org>
 To: oss-security@...ts.openwall.com
-Cc: Werner LEMBERG <wl@....org>
-Subject: CVE-2020-15999 fixed in FreeType 2.10.4
+Cc: "Demi M. Obenour" <demiobenour@...il.com>
+Subject: Re: The importance of mutual authentication: Local Privilege Escalation in X11
 Content-Type: text/plain; charset=utf-8
 
-Before making this release, Werner said:
+On Tue, Nov 10, 2020 at 12:51:27PM -0500, Demi M. Obenour wrote:
+> On 11/10/20 11:43 AM, Vladimir D. Seleznev wrote:
+> > On Mon, Nov 09, 2020 at 11:00:50AM -0500, Demi M. Obenour wrote:
+> >> [...skip...]
+> >> ### Placing the X socket in a secure directory
+> >>
+> >> X11 is usually used with AF_UNIX sockets.  In this case, performing
+> >> the attack requires that either the directory containing the X socket
+> >> be writable by an attacker, or that the abstract namespace is in use.
+> >> If neither condition is met, the attack is thwarted.  In this case, the
+> >> server is implicitly authenticated by being able to write to a location
+> >> on the file system.  On systems other than macOS, placing the X socket
+> >> in a non-default directory requires changes to X.  On Linux, this also
+> >> requires that abstract sockets be disabled in the X client libraries.
+> >>
+> >> A user’s home directory is a safe location on virtually all systems.
+> >> /run/user/$UID is a good choice when it is secure and available,
+> >> such as on systemd-based Linux distributions.  /tmp/.X11-unix can
+> >> be made safer by ensuring that it is created before any untrusted
+> >> code runs and ensuring that untrusted code cannot write to it.
+> >> For example, it could be owned by root and have 0755 permissions.
+> >> For this to be effective, untrusted code must not be allowed to start
+> >> if creating /tmp/.X11-unix fails; this can be enforced by dropping
+> >> into single-user mode in this case.  Furthermore, if the standard
+> >> location for lock files (/tmp/.X*-lock) is used, there is still a
+> >> potential denial of service, as anyone can create a lock file and
+> >> prevent the legitimate server from starting.
+> > 
+> > This contravenes the ability to run X11 client from another user. The
+> > idea is that X11 server allows any clients with right credentials
+> > regardless of theirs processes UID or GID to connect to the server.
+> 
+> Indeed it does, and I mention cryptographic authentication mechanisms
+> below.  Instead of /tmp, /run/X11 would work just as well.  It is
+> the mutual authentication that matters.
 
-> I've just fixed a heap buffer overflow that can happen for some
-> malformed `.ttf` files with PNG sbit glyphs.  It seems that this
-> vulnerability gets already actively used in the wild, so I ask all
-> users to apply the corresponding commit as soon as possible.
+Do I understand you correctly: you propose to forbid running X11 clients
+which processes belong to another users? In that case it is a bad idea:
+I would like to run untrusted clients with special UIDs. Or if I
+understand you wrongly, please explain how client of other user can
+connect to the socket placed in /run/user/$UID with these strict access
+permissions 0700?
 
-But distros should be warned that 2.10.3 and later may break the build
-of ghostscript, due to ghostscript's use of a withdrawn macro that
-wasn't intended for external usage:
-
-https://bugs.ghostscript.com/show_bug.cgi?id=702985
-https://lists.nongnu.org/archive/html/freetype-devel/2020-10/msg00002.html
-
-Ghostscript's fix for that is at:
-https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=41ef9a0bc36b
-
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
-
--------- Forwarded Message --------
-Subject: [ft-announce] Announcing FreeType 2.10.4
-Date: Tue, 20 Oct 2020 07:47:31 +0200 (CEST)
-From: Werner LEMBERG <wl@....org>
-To: freetype-announce@...gnu.org, freetype-devel@...gnu.org, freetype@...gnu.org
-
-
-FreeType 2.10.4 has been released.
-
-It is available from
-
-     http://savannah.nongnu.org/download/freetype/
-
-or
-
-     http://sourceforge.net/projects/freetype/files/
-
-The latter site also holds older versions of the FreeType library.
-
-See below for the relevant snippet from the CHANGES file.
-
-Enjoy!
-
-
-    Werner
-
-
-PS: Downloads from  savannah.nongnu.org  will redirect to your nearest
-     mirror site.   Files on  mirrors may  be subject to  a replication
-     delay   of   up   to   24   hours.   In   case   of  problems  use
-     http://download-mirror.savannah.gnu.org/releases/
-
-
-----------------------------------------------------------------------
-
-
-http://www.freetype.org
-
-
-FreeType 2  is a software  font engine that  is designed to  be small,
-efficient,  highly   customizable,  and  portable   while  capable  of
-producing high-quality output (glyph images) of most vector and bitmap
-font formats.
-
-Note that  FreeType 2 is  a font service  and doesn't provide  APIs to
-perform higher-level features, like text layout or graphics processing
-(e.g.,  colored  text  rendering,  `hollowing',  etc.).   However,  it
-greatly simplifies these tasks by providing a simple, easy to use, and
-uniform interface to access the content of font files.
-
-FreeType  2  is  released  under  two open-source  licenses:  our  own
-BSD-like FreeType  License and the  GPL.  It can  thus be used  by any
-kind of projects, be they proprietary or not.
-
-
-----------------------------------------------------------------------
-
-
-CHANGES BETWEEN 2.10.3 and 2.10.4
-
-   I. IMPORTANT BUG FIXES
-
-   - A heap buffer overflow has been found  in the handling of embedded
-     PNG bitmaps, introduced in FreeType version 2.6.
-
-       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15999
-
-     If you  use option  FT_CONFIG_OPTION_USE_PNG  you  should  upgrade
-     immediately.
-
-_______________________________________________
-Freetype-announce mailing list
-Freetype-announce@...gnu.org
-https://lists.nongnu.org/mailman/listinfo/freetype-announce
+-- 
+   WBR,
+   Vladimir D. Seleznev
