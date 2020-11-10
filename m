@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["449" "Wednesday" "17" "May" "2017" "00:15:55" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>" "17" "Re: [oss-security] terminal emulators' processing of escape sequences" "^Cc:" nil nil "5" "2017051622:15:55" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        Jason@zx2c4. May 17   17/449   " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<20170516220345.GA10874@openwall.com>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["847" "Tuesday" "10" "November" "2020" "13:11:24" "+0000" "Kaxil Naik" "kaxilnaik@gmail.com" "<CAH5JyZqaxXZGfSivNw-SMdCzY-x2nf2j_VWuC9=f5vOyRxnwow@mail.gmail.com>" "27" "[oss-security] [CVE-2020-13927] - Insecure Default Configuration for Experimental API in Airflow < 1.10.11" nil nil nil "11" "2020111013:11:24" "[oss-security] [CVE-2020-13927] - Insecure Default Configuration for Experimental API in Airflow < 1.10.11" (number mark "U       kaxilnaik@gm Nov 10   27/847   " thread-indent "\"[oss-security] [CVE-2020-13927] - Insecure Default Configuration for Experimental API in Airflow < 1.10.11\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-13927] - Insecure Default Configuration for Experimental API in Airflow < 1.10.11" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11738 invoked by uid 550); 17 May 2017 10:03:23 -0000
+Received: (qmail 23591 invoked by uid 550); 10 Nov 2020 14:12:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28069 invoked from network); 16 May 2017 22:16:08 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
-	:in-reply-to:references:from:date:message-id:subject:to:cc
-	:content-type; s=mail; bh=OHGyMkJd//dnNMce5YewcQVgYwY=; b=RbziCD
-	7pWn/+GNlt1X8b/Cq14hTJGcbyYwdq8B9s7tGjZkhbttG5EdY4kqKvT9rnnJK52p
-	ISb0PfRvWj2cpPFPvgH9pF43ufx4OKekNrSzKPSOnczhINCEznjh73ibBZHobVqo
-	rGCYtp89Ti1AJ1PX9uHI7Ir3tRfKgZNoJ/15H8g7iAiLyoe8tijqj25t3b89MnF8
-	HDHmivoIsSqpAlAcl1myiG0lS0u3mChrDN9f2br6nfzYPPNMx3Z3WrprpNF+bCDC
-	Je7SrFhHaPByCbbIPxeL4OmLoQ1KjYG6h210lbNRDmApd+IgG+JRrc0otGBfpT4W
-	iThEDc69ueYEIkBA==
-X-Gm-Message-State: AODbwcCJTuXYgxSMoVD7oOmMIrvHamAhIWTQMSQ6cQ4lEVMeB0NDBZYX
-	64J470yAfxZVR0QW8cqYue2+euqGLg==
-X-Received: by 10.157.4.138 with SMTP id 10mr156646otm.249.1494972956366; Tue,
- 16 May 2017 15:15:56 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20170516220345.GA10874@openwall.com>
-References: <20170501164428.GA12322@openwall.com> <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>
- <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com> <20170516220345.GA10874@openwall.com>
-X-Gmail-Original-Message-ID: <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
-Message-ID: <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: rxvt-unicode@lists.schmorp.de, rxvt@schmorp.de
-Date: Wed, 17 May 2017 00:15:55 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] terminal emulators' processing of escape sequences
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 27671 invoked from network); 10 Nov 2020 13:11:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=nQQN/Etg6YEnAxae7xm+tyfraDwFOLW4OPrnu1f5KxM=;
+        b=rXW2WS21LUZkzilxjM6ZZuG4zfsYzxelCAo34DOa4Jaci3p6h75NrZCv7lG45JNAn1
+         /yDr4gItm5PhBwCVY/Xwxx1xvurz9VNoC6Es8arVhwvsnt+U3vOJIyFUQwvPtOGO/NEO
+         eukhuNGw/iNxOLUkXysOjk7mPM3przywmRxQEpDEoEQZOFC4Vel2OI4vgRPLrUnW3pYx
+         9aU8V0odTM0IAPhzM3LsFDBNNQA8iRur4SWZQIysfEyfhqRsAKYA6SuVmdCKwsZ4Xk9c
+         Jiucmto8wlXkpkNloR2RUjpQjmjeN1Qq5qVxltaKtEJKVuj1nWtkGIXyhUGoPLckG/l6
+         W0sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=nQQN/Etg6YEnAxae7xm+tyfraDwFOLW4OPrnu1f5KxM=;
+        b=mH5ET5LMmDsyfahpRqQywe7cgnhb6M4Rv++QSHUzkPtakztzDUDEAxdTZvdVuVhc0j
+         j2OOpvvT/rCOgIFki3cohqSRkKXkUNIC1zghQFur18BADjX4Fe3GZNDc2HlcYwAcuDQo
+         iq4VeBseQNB2O5VP1//KYcuQ7dYnTxphXahqrRdGbi1xzx+6B3fgXDyKjO5ny3e+Svwl
+         YOsc0tO/OlR/eLT8j27s13plQ2NgEh2ui/+pBo9sfUghV4Pk1Ta1vviQPx0YJazO+Fug
+         LN/gxeuYWxFHRMo7uNof/jXTuXgBmLFQbHMVr+rUVkzTD52rhbTCuy9YoX9bgvz4uqvc
+         yxFQ==
+X-Gm-Message-State: AOAM531Zzq9Lq7/+zDJ9CeFG59meuebF5YsQOU6dKhhT2KcM2daCxd6t
+	wS+bFbQaJNQ5afGCHDVW6KrkYewsH86zGxX8oJ+gDwQx8rVfXg==
+X-Google-Smtp-Source: ABdhPJzpOwa6ehZaXXCmR5k61/URIr6Zgi0UvC11uex9r0DkmgKEJvzepRkuIfv89yKUaJJad7rWp4cLeHyiwdAYURE=
+X-Received: by 2002:a17:906:5c43:: with SMTP id c3mr4190104ejr.390.1605013894828;
+ Tue, 10 Nov 2020 05:11:34 -0800 (PST)
+MIME-Version: 1.0
+From: Kaxil Naik <kaxilnaik@gmail.com>
+Date: Tue, 10 Nov 2020 13:11:24 +0000
+Message-ID: <CAH5JyZqaxXZGfSivNw-SMdCzY-x2nf2j_VWuC9=f5vOyRxnwow@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: dev@airflow.apache.org
+Content-Type: multipart/alternative; boundary="0000000000000f966805b3c06bbb"
+Subject: [oss-security] [CVE-2020-13927] - Insecure Default Configuration for Experimental
+ API in Airflow < 1.10.11
 
-On Wed, May 17, 2017 at 12:03 AM, Solar Designer <solar@openwall.com> wrote:
-> Jason, Robert -
->
-> On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
->> A harmless example from rxvt - pushing back the new-line character:
->>
->> $ echo -ne "\eGQ;"
->> ;$ 0
->> bash: 0: command not found
->
-> Does this also affect rxvt-unicode?
+--0000000000000f966805b3c06bbb
+Content-Type: text/plain; charset="UTF-8"
 
-It does, actually. I've CCd rxvt-unicode upstream on this in order to
-hear their assessment.
+Versions Affected: <1.10.11
 
-Regards,
-Jason
+Description:
+The previous default setting for Airflow's Experimental API was to allow
+all API requests without authentication, but this
+poses security risks to users who miss this fact.
+
+
+>From Airflow 1.10.11 the default has been changed to deny all
+requests by default and is documented at
+https://airflow.apache.org/docs/1.10.11/security.html#api-authentication .
+
+Note this change fixes it for new installs but existing users need to
+change their config to default
+`[api] auth_backend = airflow.api.auth.backend.deny_all` as mentioned in
+the Updating Guide:
+
+https://github.com/apache/airflow/blob/1.10.11/UPDATING.md#experimental-api-will-deny-all-request-by-default
+
+
+Credits:
+Reported by Anonymous User
+
+--0000000000000f966805b3c06bbb--
