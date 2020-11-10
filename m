@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["393" "Tuesday" "7" "July" "2015" "14:47:59" "+0200" "Yann Ylavic" "ylavic.dev@gmail.com" "<CAKQ1sVO9axLdmFyiyMK1d9UJsqh3itB65O03NZmqDCmSxg6T_Q@mail.gmail.com>" "12" "Re: [oss-security] [ANNOUNCE] Apache Directory LDAP API 1.0.0-M31 released" nil nil nil "7" "2015070712:47:59" "[oss-security] [ANNOUNCE] Apache Directory LDAP API 1.0.0-M31 released" (number mark "U       ylavic.dev@g Jul  7   12/393   " thread-indent "\"Re: [oss-security] [ANNOUNCE] Apache Directory LDAP API 1.0.0-M31 released\"\n") "<20150707115217.GA30660@pisco.westfalen.local>" ("<CAG8=FRj5sL+J6YUJqY95uBJN=vxtS=rWfngAfHk4k2vyShadHw@mail.gmail.com>" "<20150707115217.GA30660@pisco.westfalen.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2519" "Tuesday" "10" "November" "2020" "21:43:21" "+0300" "Vladimir D. Seleznev" "vseleznv@altlinux.org" "<20201110184321.GA2311015@portlab>" "46" "Re: [oss-security] The importance of mutual authentication: Local Privilege Escalation in X11" nil nil nil "11" "2020111018:43:21" "[oss-security] The importance of mutual authentication: Local Privilege Escalation in X11" (number mark "U       vseleznv@alt Nov 10   46/2519  " thread-indent "\"Re: [oss-security] The importance of mutual authentication: Local Privilege Escalation in X11\"\n") "<d4b7741b-24aa-c4ca-adb7-71db69dc27ce@gmail.com>" ("<606c5dc2-b39c-2547-d00c-9c44778303b9@gmail.com>" "<20201110164347.GA2236829@portlab>" "<d4b7741b-24aa-c4ca-adb7-71db69dc27ce@gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] The importance of mutual authentication: Local Privilege Escalation in X11" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 4043 invoked by uid 550); 7 Jul 2015 12:53:57 -0000
+Received: (qmail 23764 invoked by uid 550); 10 Nov 2020 18:51:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +12,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1351 invoked from network); 7 Jul 2015 12:48:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=KuZ6O1Gx4jLORzhsGU7EJ3BggxPVuemPpVw36Ja5/vU=;
-        b=rET0XQQGyKENKkrBV/UvDCYqeSuus7d/TKQZYCa+sf+JHn0qt5HWdaVbqUGeQqEf98
-         a5Hd90cV+0wOTt4yY8P3FIKoNlnytZKDHRBKIykS0mPtFi8e8AktEviRZ9AlSShFd69E
-         h3MaQ8bveRPiMibkkVFWpfsVxngc5mSNWao8xKOS5FjYEgJ96T/yDJsDoRmUNdKUVuvV
-         EV3w2VzLl3EyEmM5BcMNptNmK3V2kcOP4y9tFR7xpW+3HyeN32nr0OgjQEMbuiC/hVc+
-         CImZ/NChZvz9addYjWWAE9FGAA6KuRyJ6jXAtQh/rSOq7ROP6jVbLTPzlQh5T4Q4CKI3
-         IN5Q==
+Received: (qmail 15829 invoked from network); 10 Nov 2020 18:43:33 -0000
+Date: Tue, 10 Nov 2020 21:43:21 +0300
+From: "Vladimir D. Seleznev" <vseleznv@altlinux.org>
+To: oss-security@lists.openwall.com
+Cc: "Demi M. Obenour" <demiobenour@gmail.com>
+Message-ID: <20201110184321.GA2311015@portlab>
+References: <606c5dc2-b39c-2547-d00c-9c44778303b9@gmail.com>
+ <20201110164347.GA2236829@portlab>
+ <d4b7741b-24aa-c4ca-adb7-71db69dc27ce@gmail.com>
 MIME-Version: 1.0
-X-Received: by 10.42.203.4 with SMTP id fg4mr39586069icb.52.1436273279492;
- Tue, 07 Jul 2015 05:47:59 -0700 (PDT)
-In-Reply-To: <20150707115217.GA30660@pisco.westfalen.local>
-References: <CAG8=FRj5sL+J6YUJqY95uBJN=vxtS=rWfngAfHk4k2vyShadHw@mail.gmail.com>
-	<20150707115217.GA30660@pisco.westfalen.local>
-Date: Tue, 7 Jul 2015 14:47:59 +0200
-Message-ID: <CAKQ1sVO9axLdmFyiyMK1d9UJsqh3itB65O03NZmqDCmSxg6T_Q@mail.gmail.com>
-From: Yann Ylavic <ylavic.dev@gmail.com>
-To: Moritz Muehlenhoff <jmm@debian.org>
-Cc: oss-security@lists.openwall.com, security@apache.org
-Content-Type: text/plain; charset=UTF-8
-Subject: Re: [oss-security] [ANNOUNCE] Apache Directory LDAP API 1.0.0-M31 released
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d4b7741b-24aa-c4ca-adb7-71db69dc27ce@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] The importance of mutual authentication: Local
+ Privilege Escalation in X11
 
-On Tue, Jul 7, 2015 at 1:52 PM, Moritz Muehlenhoff <jmm@debian.org> wrote:
-> On Tue, Jul 07, 2015 at 11:07:37AM +0200, Emmanuel Lecharny wrote:
->>
->> This release is fixing a security vulnerability : CVE-2015-3050, a
->> Timing Attack vulnerability.
->
-> This ID is already used for a vulnerability in Adobe Reader?
+On Tue, Nov 10, 2020 at 12:51:27PM -0500, Demi M. Obenour wrote:
+> On 11/10/20 11:43 AM, Vladimir D. Seleznev wrote:
+> > On Mon, Nov 09, 2020 at 11:00:50AM -0500, Demi M. Obenour wrote:
+> >> [...skip...]
+> >> ### Placing the X socket in a secure directory
+> >>
+> >> X11 is usually used with AF_UNIX sockets.  In this case, performing
+> >> the attack requires that either the directory containing the X socket
+> >> be writable by an attacker, or that the abstract namespace is in use.
+> >> If neither condition is met, the attack is thwarted.  In this case, the
+> >> server is implicitly authenticated by being able to write to a location
+> >> on the file system.  On systems other than macOS, placing the X socket
+> >> in a non-default directory requires changes to X.  On Linux, this also
+> >> requires that abstract sockets be disabled in the X client libraries.
+> >>
+> >> A user’s home directory is a safe location on virtually all systems.
+> >> /run/user/$UID is a good choice when it is secure and available,
+> >> such as on systemd-based Linux distributions.  /tmp/.X11-unix can
+> >> be made safer by ensuring that it is created before any untrusted
+> >> code runs and ensuring that untrusted code cannot write to it.
+> >> For example, it could be owned by root and have 0755 permissions.
+> >> For this to be effective, untrusted code must not be allowed to start
+> >> if creating /tmp/.X11-unix fails; this can be enforced by dropping
+> >> into single-user mode in this case.  Furthermore, if the standard
+> >> location for lock files (/tmp/.X*-lock) is used, there is still a
+> >> potential denial of service, as anyone can create a lock file and
+> >> prevent the legitimate server from starting.
+> > 
+> > This contravenes the ability to run X11 client from another user. The
+> > idea is that X11 server allows any clients with right credentials
+> > regardless of theirs processes UID or GID to connect to the server.
+> 
+> Indeed it does, and I mention cryptographic authentication mechanisms
+> below.  Instead of /tmp, /run/X11 would work just as well.  It is
+> the mutual authentication that matters.
 
-That's probably a typo, CVE-2015-3250 being the assigned one.
+Do I understand you correctly: you propose to forbid running X11 clients
+which processes belong to another users? In that case it is a bad idea:
+I would like to run untrusted clients with special UIDs. Or if I
+understand you wrongly, please explain how client of other user can
+connect to the socket placed in /run/user/$UID with these strict access
+permissions 0700?
 
-Regards,
-Yann.
+-- 
+   WBR,
+   Vladimir D. Seleznev
