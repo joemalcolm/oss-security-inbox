@@ -1,42 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/16/4
-Message-ID: <CAB8XdGAqVbPj=oaCN=0_aXNmLLr4NqeAR=r74ogJegEwJqpfWw@mail.gmail.com>
-Date: Thu, 16 Jan 2020 14:10:53 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/11/2
+Message-Id: <A3E2C6BA-99BC-4A5F-B341-D5DB69CF04BF@apache.org>
+Date: Tue, 10 Nov 2020 15:36:50 -0800
+From: Dave Fisher <wave@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-17573] Apache CXF Reflected XSS in the services listing page
+Subject: [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-17573: Apache CXF Reflected XSS in the services listing page
+CVE-2020-13958 Unrestricted actions leads to arbitrary code execution in crafted documents
 
-Severity: Moderate
+Fixed in Apache OpenOffice 4.1.8
+
+Description
+
+A vulnerability in Apache OpenOffice scripting events allows an attacker to construct 
+documents containing hyperlinks pointing to an executable on the target users file system.
+These hyperlinks can be triggered unconditionally. In fixed versions no internal protocol 
+may be called from the document event handler and other hyperlinks require a control-click.
+
+Severity: Low
+
+There are no known exploits of this vulnerability.
+A proof-of-concept demonstration exists.
 
 Vendor: The Apache Software Foundation
 
-Versions Affected:
+Versions Affected
 
-This vulnerability affects all versions of Apache CXF prior to 3.3.5 and
-3.2.12.
+Apache OpenOffice 4.0.0, 4.0.1, 4.1.0, 4.1.1, 4.1.2, 4.1.3, 4.1.4, 4.1.5, 4.1.6, and 4.1.7
+OpenOffice.org versions may also be affected.
 
-Description:
+Mitigation
 
-By default, Apache CXF creates a /services page containing a listing of the
-available endpoint names and addresses. This webpage is vulnerable to a
-reflected Cross-Site Scripting (XSS) attack, which allows a malicious actor
-to
-inject javascript into the web page.
+Install Apache OpenOffice 4.1.8 for the latest maintenance and cumulative security fixes.
+Use the Apache OpenOffice download page (https://www.openoffice.org/download/).
 
-Please note that the attack exploits a feature which is not typically not
-present in modern browsers, who remove dot segments before sending the
-request. However, Mobile applications may be vulnerable.
+Acknowledgments
 
-Mitigation:
+The Apache OpenOffice Security Team would like to thank Imre Rad for discovering and
+reporting this attack vector.
 
-Users of Apache CXF should update to either 3.3.5 or 3.2.12. Alternatively,
-it is possible to disable the service listing altogether by setting the
-"hide-service-list-page" servlet parameter to "true".
+Further Information
 
-Credit:
+For additional information and assistance, consult the Apache OpenOffice Community Forums
+(https://forum.openoffice.org) or make requests to the users@...noffice.apache.org
+(mailto:users@...noffice.apache.org) public mailing list.
 
-We would like to thank the GE cyber security team for reporting this issue.
+The latest information on Apache OpenOffice security bulletins can be found at the
+Bulletin Archive page (https://www.openoffice.org/security/bulletin.html).
+> 
+
 
