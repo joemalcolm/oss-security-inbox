@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4155" "Monday" "23" "November" "2020" "17:50:25" "+0100" "Carlos Alberto Lopez Perez" "clopez@igalia.com" "<88f013a4-5478-f698-eebd-7dc0f4aaa216@igalia.com>" "97" "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2020-0008" nil nil nil "11" "2020112316:50:25" "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2020-0008" (number mark "U       clopez@igali Nov 23   97/4155  " thread-indent "\"[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2020-0008\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2020-0008" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2963" "Tuesday" "10" "November" "2020" "19:09:28" "-0800" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<1236f86f-9196-c26f-ef8e-df9a82e7ef63@oracle.com>" "52" "Re: [oss-security] The importance of mutual authentication: Local Privilege Escalation in X11" nil nil nil "11" "2020111103:09:28" "[oss-security] The importance of mutual authentication: Local Privilege Escalation in X11" (number mark "U       alan.coopers Nov 10   52/2963  " thread-indent "\"Re: [oss-security] The importance of mutual authentication: Local Privilege Escalation in X11\"\n") "<fd19615e-b049-ee54-9d34-3c89bda717b4@gmail.com>" ("<606c5dc2-b39c-2547-d00c-9c44778303b9@gmail.com>" "<20201110164347.GA2236829@portlab>" "<d4b7741b-24aa-c4ca-adb7-71db69dc27ce@gmail.com>" "<20201110184321.GA2311015@portlab>" "<fd19615e-b049-ee54-9d34-3c89bda717b4@gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] The importance of mutual authentication: Local Privilege Escalation in X11" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5554 invoked by uid 550); 23 Nov 2020 16:50:51 -0000
+Received: (qmail 28340 invoked by uid 550); 11 Nov 2020 03:09:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,145 +12,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5515 invoked from network); 23 Nov 2020 16:50:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
-	h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:Cc:To; bh=X4PbOJPBQLi8M5hAO6QAGC7weHe9tTaDjC6FHUdUslA=;
-	b=nr8D/nlhe6z75iBVsq4ZD0by6YSsU8qbpLwTF3L+348W3wEeMffuRF9Y5CpkqlVyc8w8b1VeimczCplThr2nd4Oixjmppl4Sm5JnO6uTxrDqR1cY6LATH1TTuqKR/W6b9fQHfgm5QcDPrVVyuThQuXVnp66aZLuOIC2C+rKoVCI/0tGgVnHCPNc5PkTuH1M0dCiutnO9N5QqS+iK3n52roNGCzID/8RH1SwFAm13SngHrI2r2lm9NMbJxb0G/Lz8MR2hBHqfqwaNrWgARm05lsmQUONAyGWomAsgdps+UIl93csPosgAjnUI8dwvnbxLpLI+YZPK2ByL8gUhNYppjQ==;
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-Autocrypt: addr=clopez@igalia.com; prefer-encrypt=mutual; keydata=
- mQINBE7H3fkBEADG64zFhuz6Esa+YnKvbeW474RlXVO9vfFSrrzFNAcCUcu2kF5itAXoEKJV
- mWs2xqE/TRrXbWGETu2S0802MTi2Suy/7vOFCOrlEQmt2JskAHjowAixokHop52/Ed/1Jf+i
- D9DtLEx47GanUJHRavsnhl/++kMGYhpFUZXU8TyDaFxI64/y5lEjjE71jNwK29fZSCL0uWi4
- 3mkgxGCIUsqGC+IQ8ZjeGTT3OvS8IpL6GnKFFZ6QLRiWlpqB/fuaJw00aQ0k5tiU1GNEHFIS
- 5uonRcYVpUYKNITq2l5PhU1mwBw3/mMaVoDCWTFdxulleWULdoTO/oeumvDalhYlb4f5WnJb
- 1RubNHlAXkX2cONSqNT0zajlCCuX29B44vCyGr+nUAkNgbLMGJz4fOHPL3N6eUTZbBV/rJ8k
- OQq5kld9DPbRn9b0pY3ThuU3BQzQSmZXTQQ7R/aV5aJI1V8mO7EsRXoqhyLKHpwlUACRXpja
- rsf8lqOqviu2OnK1LFlnZ1QKJ9bPIuIotO1NID+Rs0IihaKyNTiL+/XGtf+kT+wwajpI/5mI
- QVi5OtEfcIhBL4LgP1Fga+vTLmQEA+9eC6PccWg5RAR4sE1pdiu8rsK05r7u7gE/5KtefY1i
- vltj3dbrn0SJuw7bqb/q0Q2W3VzLoIqtdHb+seqSmH/qF4xcRwARAQABtC5DYXJsb3MgQWxi
- ZXJ0byBMb3BleiBQZXJleiA8Y2xvcGV6QGlnYWxpYS5jb20+iQJXBBMBCgBBAhsDBQsJCAcD
- BRUKCQgLBRYCAwEAAh4BAheAAhkBFiEEtdK1C8SOx/HukNmrllCJzmuV+IIFAlleJkAFCRP8
- SccACgkQllCJzmuV+IKdvA/+PMovN76eeoAu53ge1impC3k/ELsm9d3as3g1GwcFmM9aprLT
- 1kpx1VjGwr+HTsvUpkZQshXM5mUQ/wTtu83EJ3OWh/R6NbCGvpiuTEzaIUcMGBz2c7VrbK+4
- w+3VcFFU8PxT/Jg1OFl2AeVEwbZGXvcOj4LdpVrczo2fXXbR1TTED6aOjmpfxsfxqiZtBYZ/
- qisO4nvxxZqLon7YW8/67d/GJW2fX61PF9PI9bal1b/LkbW1+2TrtnBWv3ie0h9mMzOzIyRi
- HWIeFbOitKbANdzufk/OxpWCRwCWoFxeCfzAuRp/7YI1FWAoOuip4u4JFsIS+kig+70tFQbu
- u8LqAVTLwN4I1PKSS8kMloHClKGm51ygb0BZY06yBLUnhmojMdwCjQV+GZwK++YC8RKRaxDj
- JUMGW85NMsC3rKzxcq4ndmdyB/xokqmjNdYheqYjT5cQMz9YYJqQ/g43W7Ps79GuhfH+QCWG
- PkBRfGnPlCtBTAbeQLZJrvw6cg5pzpGMRAZyCOcq5xooLbEk0oyssuP2x/J83+WUfe4VWuBv
- 4tS+P6052kNH8eA+bLCmU1H0nfKU2n8FaMxIrwBJuFCR6V4XxlOmO4c9SSQeiVyjWEGhljz2
- JiVX7C0mxjuGDMNLmxB/+5ykaSoeWz9fhTMjesT1sEZnSHgodjnL5qcGyPc=
-Organization: Igalia S.L.
-Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
- security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Message-ID: <88f013a4-5478-f698-eebd-7dc0f4aaa216@igalia.com>
-Date: Mon, 23 Nov 2020 17:50:25 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+Received: (qmail 28311 invoked from network); 11 Nov 2020 03:09:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : references : cc
+ : from : subject : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=corp-2020-01-29;
+ bh=CBKX2csu5x1cCsZWjlE+t7fxnPU5nhDh9x4mDUdmM5I=;
+ b=op62YpwzI1imhReXpvwdJPMuwArKHjEKMEaeH5/bbLm9C4RUBRVcj0zgBcDTKPVa+X2g
+ 3OYPVKv0gklRwtuGWpTKnKHqSMUrt0giRrgStIIsfDaLHwGFQ1kTlO2KtX0hY7dME7vi
+ 5xXzZ90isq3bKMqA6NyJfMAn7+VtRakdYri3AeXk5YzGBnRVbBaavh02V83MZ5qcvOEc
+ 5F1HZDMhihsJnuJXlomUScWcqTzR6O2n+ubVm/UHPmwUyKsCSD9KQNfmsRtSyoY9ZNEp
+ GCb7fR5V8BNIT4C7nFTEKEwnAXsLGr0Z35IdMYqJKSRWY21Ni0uUvH5CziC3Vedr2Lw6 /g== 
+To: oss-security@lists.openwall.com,
+        "Demi M. Obenour"
+ <demiobenour@gmail.com>,
+        "Vladimir D. Seleznev" <vseleznv@altlinux.org>
+References: <606c5dc2-b39c-2547-d00c-9c44778303b9@gmail.com>
+ <20201110164347.GA2236829@portlab>
+ <d4b7741b-24aa-c4ca-adb7-71db69dc27ce@gmail.com>
+ <20201110184321.GA2311015@portlab>
+ <fd19615e-b049-ee54-9d34-3c89bda717b4@gmail.com>
+Cc: "X.Org Security Team" <xorg-security@lists.x.org>
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+Message-ID: <1236f86f-9196-c26f-ef8e-df9a82e7ef63@oracle.com>
+Date: Tue, 10 Nov 2020 19:09:28 -0800
+User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="nTnB5fEIVhoswNY4SdbRW2C7bGFLTIf5G"
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2020-0008
+In-Reply-To: <fd19615e-b049-ee54-9d34-3c89bda717b4@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9801 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 mlxlogscore=999
+ adultscore=0 mlxscore=0 malwarescore=0 suspectscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2011110013
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9801 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxlogscore=999 mlxscore=0
+ malwarescore=0 suspectscore=0 lowpriorityscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 spamscore=0 impostorscore=0 clxscore=1034
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2011110014
+Subject: Re: [oss-security] The importance of mutual authentication: Local
+ Privilege Escalation in X11
 
---nTnB5fEIVhoswNY4SdbRW2C7bGFLTIf5G
-Content-Type: multipart/mixed; boundary="hZFbFYgswIXSRRaBcOis2uOKkQgOoxa4C"
+On 11/10/20 11:12 AM, Demi M. Obenour wrote:
+> On 11/10/20 1:43 PM, Vladimir D. Seleznev wrote:
+>>>> This contravenes the ability to run X11 client from another user. The
+>>>> idea is that X11 server allows any clients with right credentials
+>>>> regardless of theirs processes UID or GID to connect to the server.
+>>> Indeed it does, and I mention cryptographic authentication mechanisms
+>>> below.  Instead of /tmp, /run/X11 would work just as well.  It is
+>>> the mutual authentication that matters.
+>> Do I understand you correctly: you propose to forbid running X11 clients
+>> which processes belong to another users? In that case it is a bad idea:
+>> I would like to run untrusted clients with special UIDs. Or if I
+>> understand you wrongly, please explain how client of other user can
+>> connect to the socket placed in /run/user/$UID with these strict access
+>> permissions 0700?
+> 
+> If you aren’t using the X Security Extension or the X Access
+> Control Extension, then X clients aren’t effectively isolated from
+> each other.  Therefore, connecting untrusted X clients to the desktop
+> session is a bad idea.
 
---hZFbFYgswIXSRRaBcOis2uOKkQgOoxa4C
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: quoted-printable
+If they are truly untrusted, that is true, but that's rarely the case
+in practice, even if they have a different UID.  In most cases, the
+process that should be least trusted is the web browser running code
+from so many untrusted sites under your own UID, but that's not something
+we can fix at the X11 level.  In practice, no one really uses those extensions
+as they have no need to isolate their clients from one another - the primary
+real users I've seen are in multi-level desktop environments for maintaining
+different data classification levels (Confidential, Restricted, Top Secret,
+etc) and those are mostly migrating to separate VM's these days as most of
+the multi-level desktop vendors exited the market as it was too small to be
+profitable.
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0008
-------------------------------------------------------------------------
+The biggest reason we don't have a fix after months of discussion is that
+this isn't a simple implementation flaw like a buffer or integer overflow
+for which the fix is obvious - this is outside the bounds of the security
+model envisioned by the original designers of X11, and requires redesigning
+our connection process for a different security model, and not everyone
+agrees on what the correct security model is here.  If we start checking
+UID's, how do we specify which UID's are allowed - an environment variable,
+a config file, some other mechanism?  Do we store the actual uid value or
+a user name that may depend on LDAP or NIS lookup?  What UID's do we accept
+by default?
 
-Date reported           : November 23, 2020
-Advisory ID             : WSA-2020-0008
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0008.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0008.html
-CVE identifiers         : CVE-2020-13584, CVE-2020-9948, CVE-2020-9951,
-                          CVE-2020-9952, CVE-2020-9983.
+I'm hopeful we can make more progress now that this is something that can
+be publicly discussed and worked out, instead of restricting it to the
+small number of core developers on the security list.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+-- 
+	-Alan Coopersmith-              alan.coopersmith@oracle.com
+	  X.Org Security Response Team - xorg-security@lists.x.org
 
-CVE-2020-13584
-    Versions affected: WebKitGTK before 2.30.3 and WPE WebKit before 2.30.3.
-    Credit to Cisco.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An use after free issue was
-    addressed with improved memory management.
-
-CVE-2020-9948
-    Versions affected: WebKitGTK before 2.30.0 and WPE WebKit before 2.30.0.
-    Credit to Brendan Draper (@6r3nd4n) working with Trend Micro Zero
-    Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A type confusion issue was
-    addressed with improved memory handling.
-
-CVE-2020-9951
-    Versions affected: WebKitGTK before 2.30.0 and WPE WebKit before 2.30.0.
-    Credit to Marcin 'Icewall' Noga of Cisco Talos.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An use after free issue was
-    addressed with improved memory management.
-
-CVE-2020-9952
-    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3.
-    Credit to Ryan Pickren (ryanpickren.com).
-    Impact: Processing maliciously crafted web content may lead to a
-    cross site scripting attack. Description: An input validation issue
-    was addressed with improved input validation.
-
-CVE-2020-9983
-    Versions affected: WebKitGTK before 2.30.3 and WPE WebKit before 2.30.3.
-    Credit to zhunki.
-    Impact: Processing maliciously crafted web content may lead to code
-    execution. Description: An out-of-bounds write issue was addressed
-    with improved bounds checking.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-November 23, 2020
-
-
---hZFbFYgswIXSRRaBcOis2uOKkQgOoxa4C--
-
---nTnB5fEIVhoswNY4SdbRW2C7bGFLTIf5G
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Comment: You can fetch my GnuPG key from http://key.neutrino.es
-
-iQIzBAEBCgAdFiEEtdK1C8SOx/HukNmrllCJzmuV+IIFAl+76FIACgkQllCJzmuV
-+IK9zA//fC+RqBzwye2/YG7WXzn6REvFMtH1Jug8cOC/B8GH3yifXInFmlb+QuGt
-71Rl+g/SSKESgUk7APk24M08Wupe42rA96PmhopzgBAR5pkElz2+Oh2+YxmEwNvC
-abwAvG7TzxA5mry2JTBHWJgsq5BiMBFzyPCpXNAo8zPlvwLl2CsBksnKTVGnESjz
-0UxZsDmR8agJFUZ3RWinzUdg6Av1agjMVQo2v9uPTFfz7INCOE6BZKDOSr9SQr2x
-Ri07najpXFb84piMrrASZDmDTV5OXUwqi6H1n91JNeA9J6bVUKihibXgaTrXv7Dl
-Z33eYTp1QQilca/r6ht1U9kKaLl1RCy4yzOFQuKqJYboiJC9OnhFBRUAmmqKTWLL
-MI5Udr08pgeO+v8yeuwbUreoMgiZbq8t1P/6nzNdRWZfHhXnlKBdCFkm/eECr3cd
-wkIViFSoeAAlj5KYm9tXOH7PvyS3THf6DULlX5ke4MItORsVcWP/x3vOBBw9LTDN
-8Jzr7eA2fMgprz3kZ3MCz69lgqOGEyoE3oPkCzsBxKNXAFEXCGLWNkYtAHEGbOjG
-HeTksk0NdmW7X+KByMmnVkpmfhoqsM1KKGj3HsvIW5BO18eG/vkjAMIVysEMN91j
-mln82CJ3aArEj9vxy8dBxaY+1vFhIA7xZRpcqJFbI4jd3Dm9kGs=
-=S+Dr
------END PGP SIGNATURE-----
-
---nTnB5fEIVhoswNY4SdbRW2C7bGFLTIf5G--
+(As always, the above opinions are mine, and may not match my employer's.)
