@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4986" "Tuesday" "19" "July" "2016" "01:03:26" "-0400" "Scott Arciszewski" "scott@paragonie.com" "<CAKws9z1pthfTVXjyyuXpbGK1Ya7bPk91QzY_4Mc61MxAJJ4rQA@mail.gmail.com>" "141" "[oss-security] Re: Ruining the Magic of Magento's Encryption Library" "^Date:" nil nil "7" "2016071905:03:26" "[oss-security] Re: Ruining the Magic of Magento's Encryption Library" (number mark "U       scott@parago Jul 19  141/4986  " thread-indent "\"[oss-security] Re: Ruining the Magic of Magento's Encryption Library\"\n") "<CAKws9z0pq63ZK2q_zVgoYF+U+evLNvqD5v=7HKnOy5H263Z8rA@mail.gmail.com>" ("<CAKws9z0pq63ZK2q_zVgoYF+U+evLNvqD5v=7HKnOy5H263Z8rA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1849" "Wednesday" "11" "November" "2020" "10:13:16" "+0100" "Imre Rad" "radimre83@gmail.com" "<CAPWzz4yY2xMF4ciWRwwEBFd=_EXb12WSXyj290JqJPZGpdHSzg@mail.gmail.com>" "63" "Re: [oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents" nil nil nil "11" "2020111109:13:16" "[oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents" (number mark "U       radimre83@gm Nov 11   63/1849  " thread-indent "\"Re: [oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents\"\n") "<A3E2C6BA-99BC-4A5F-B341-D5DB69CF04BF@apache.org>" ("<A59B8270-B4D2-4ADC-B721-51B5E4741487@apache.org>" "<A3E2C6BA-99BC-4A5F-B341-D5DB69CF04BF@apache.org>") nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30264 invoked by uid 550); 19 Jul 2016 05:03:45 -0000
+Received: (qmail 18395 invoked by uid 550); 11 Nov 2020 09:39:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,180 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30221 invoked from network); 19 Jul 2016 05:03:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paragonie-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=T0JAvUOah56eB88wYQm/5JtCnjdhu7+6AoCqsPWcjqM=;
-        b=KGfx+2oHkFlcPMC4fPEMlx3K7Cz6ZM6+xJbb82lCPbmk5dTRZGr+YFX3bLAzWMlb2+
-         G7PHqkyERMVxs/XBCD7OKt/6Dxu4cV+2XLPPFFYGsm4k5iITA2cFQqtBlPHCuhMYLMw5
-         rO6KXMDAtGpnGMvHXph7LN2vQy8RF9tTZVusXKs1hKeK4lLpiiLsrQy2RksbaAcNEfX7
-         fIfSDkcVHMxY8MXljTYsWoV0uPZZNkKwOufjZHlITl1RQliqQQwdqAgWSLtMfKwjx9D3
-         gxCH44YJq9+i6XwuqZg9e6WlZcAq41z4HKQHTzS/8hvyUedIqVPty504EpF2Tu93/Cxv
-         vOCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=T0JAvUOah56eB88wYQm/5JtCnjdhu7+6AoCqsPWcjqM=;
-        b=lI1z7TZEa1SBx08a1SyjBg80VJoM+KBC/mm6vi1eyHADbckGVqr1nR36v12wjAp+it
-         Kuls1hmFW2FKeGBTduAZOjmR3ckfI1nAHFaJwHNFf4i75hl+sSH6+ja/VYOlkxrgJLDe
-         UAXPQrAGOQhADPeGrpnvU2TUDbzt8BkVzXVDMhYS+TJ2roENBIAibBt+P3EMsFFglxH8
-         /W6mVaymiwBf83Rl82m8ZhKIl/7+Q8ao0/P1nCI20QaM94dVloC1LuQzpV+daqRDAbq7
-         a3KvfNgQMT8XsemRJXyXOnsR9POd8HohTK7SxNIoZNht0dkDhx8tgcfUkGz76takORPr
-         TWdg==
-X-Gm-Message-State: ALyK8tIJXbFPOxsjwWb8UvDyqIj6Lz2aOZirBwrD9GbKIM1CSY7qo/QZcuNtJLnY335ZVRz+M3sFp+u7zb7cgw==
-X-Received: by 10.202.102.100 with SMTP id a97mr16958967oic.77.1468904606491;
- Mon, 18 Jul 2016 22:03:26 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAKws9z0pq63ZK2q_zVgoYF+U+evLNvqD5v=7HKnOy5H263Z8rA@mail.gmail.com>
-References: <CAKws9z0pq63ZK2q_zVgoYF+U+evLNvqD5v=7HKnOy5H263Z8rA@mail.gmail.com>
-Message-ID: <CAKws9z1pthfTVXjyyuXpbGK1Ya7bPk91QzY_4Mc61MxAJJ4rQA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1140f5a24771b70537f6011d
-Date: Tue, 19 Jul 2016 01:03:26 -0400
-From: Scott Arciszewski <scott@paragonie.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Ruining the Magic of Magento's Encryption Library
-To: fulldisclosure@seclists.org, oss-security@lists.openwall.com
+Received: (qmail 4048 invoked from network); 11 Nov 2020 09:13:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=nxWtLiw9fC1DRZ87MvGax1E6hnBuzvKwQ+Qm1kmcKSE=;
+        b=jmPYsZ9YtDJfEZ24sdprKY58JhqeC73+PUCMGtqolPP8QropeezxqOKKjP4ZL1r4Bw
+         hmsXJhIdkETY2vAGLf5UViJWjTvw4x1D4VoGhAYenOf/gAVGDcCEjDBw8pW40+9d3vB0
+         bJlbDNNWTEWKLHXIadQG788CeriTkvvK1t2lsAKt4usnHq8j1YTH0WHw/P2v7whRz7Bs
+         G07YUmnTK6H5WwNu1gPY/CX7IYt8K7Vcv3AH7zwlbQKL487XsUi2F8A9nT3KISPLTV3s
+         gEWW9kPCjh/S/3QMiki5JFJ7rQT9S6X4YkpK4DnDFKP6uusDBACIftSDmN2j1jQqL+3p
+         EDUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=nxWtLiw9fC1DRZ87MvGax1E6hnBuzvKwQ+Qm1kmcKSE=;
+        b=WmGyCVK4+IbsNdlmHlPB3aLeg0QGGnoZGO+jM4SDthNgfeScYzFmenuXim+LCXwiqM
+         4l0aJUa4AI8xJ2h7dNVPCEaEiI86kyR30N3uWPm0WOCncn9ORS9kckkX5LnGRoHbPDak
+         GQa6fb5Qu7MKgiVc3frJca0iqypVc8S2Uh7ecv2kxCyNNjUXkmP+7Ol2VIDuRRg6uz9J
+         4ei6G1MRlutLxshLuUijhmzMNwcfW2xLtp7NnYUon+WkwV1iKz3DnFmTo+m6FGhKqf+8
+         wOnueD2aTrvycKraBeiX8v6klGwSJp6k2oKx+/DAgoeamopiev/o4cSP7iv755Apv/cj
+         u09Q==
+X-Gm-Message-State: AOAM53298wJSv3KEI/XDF1EpwoyNRw2npV2y6c5gxlhGpnmHsnXD2AMS
+	WkoivhmMxkut3vsmLX8YERpcwuotH0pAR75/i22ynBUOX+srTQ==
+X-Google-Smtp-Source: ABdhPJwbOF5mI3hJ2WyFFJrXXU3bLftcRz9VJN06Q6vSeErivKTZvic/KOY3VNLsjT3P4CqMK/u41GhLANaTdlbTpm4=
+X-Received: by 2002:a63:fe0c:: with SMTP id p12mr240228pgh.31.1605085993270;
+ Wed, 11 Nov 2020 01:13:13 -0800 (PST)
+MIME-Version: 1.0
+References: <A59B8270-B4D2-4ADC-B721-51B5E4741487@apache.org> <A3E2C6BA-99BC-4A5F-B341-D5DB69CF04BF@apache.org>
+In-Reply-To: <A3E2C6BA-99BC-4A5F-B341-D5DB69CF04BF@apache.org>
+From: Imre Rad <radimre83@gmail.com>
+Date: Wed, 11 Nov 2020 10:13:16 +0100
+Message-ID: <CAPWzz4yY2xMF4ciWRwwEBFd=_EXb12WSXyj290JqJPZGpdHSzg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted
+ actions leads to arbitrary code execution in crafted documents
 
---001a1140f5a24771b70537f6011d
-Content-Type: text/plain; charset=UTF-8
+Proof of concept and more technical details can be found here:
+https://github.com/irsl/apache-openoffice-rce-via-uno-links
 
-EXHIBIT D
-=========
+Imre
 
-Yes, that is how Magento hashes passwords. Which is weird: They go out of
-their way to compare strings in constant-time, but they don't use a proper
-password hashing method (e.g. bcrypt).
-
-(Part of the sentence was lobbed off, due to stupidity and/or insanity
-caused by exposure to Magento's source code.)
-
-
-Scott Arciszewski
-Chief Development Officer
-Paragon Initiative Enterprises <https://paragonie.com>
-
-On Tue, Jul 19, 2016 at 12:56 AM, Scott Arciszewski <scott@paragonie.com>
-wrote:
-
-> Hello mcrypt, my old friend
-> I've come to exploit you again
-> Because a version slowly rotting
-> Is well-deserved for a boycotting
-> And the S-box that was planted in its GOST
-> Still remains
-> Within the sound of silence
+Dave Fisher <wave@apache.org> ezt =C3=ADrta (id=C5=91pont: 2020. nov. 11., =
+Sze, 7:38):
 >
-> ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8<
-> ~
+> CVE-2020-13958 Unrestricted actions leads to arbitrary code execution in =
+crafted documents
 >
-> Let's talk about Magento.
+> Fixed in Apache OpenOffice 4.1.8
 >
-> The Wikipedia page for Magento begins, "Magento is an open-source
-> e-commerce platform written in PHP." This bears emphasis: e-commerce
-> platform.
+> Description
 >
-> When I hear e-commerce, I think "financial information". I think "credit
-> card numbers" and "probably PCI-DSS violations should anything be obviously
-> stupid".
+> A vulnerability in Apache OpenOffice scripting events allows an attacker =
+to construct
+> documents containing hyperlinks pointing to an executable on the target u=
+sers file system.
+> These hyperlinks can be triggered unconditionally. In fixed versions no i=
+nternal protocol
+> may be called from the document event handler and other hyperlinks requir=
+e a control-click.
 >
-> Let's look at how Magento implements cryptography, with a series of
-> exhibits followed by an explanation of what's happening and why it's
-> dangerous:
+> Severity: Low
 >
->   A.
-> https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L268-L320
->   B.
-> https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L390-L399
->   C.
-> https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Crypt.php#L63-L77
+> There are no known exploits of this vulnerability.
+> A proof-of-concept demonstration exists.
 >
-> D.
-> https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L170
+> Vendor: The Apache Software Foundation
 >
-> If you looked at the code, I promise this is every bit as bad as it looks
-> at a glance.
+> Versions Affected
 >
-> EXHIBIT A
-> =========
+> Apache OpenOffice 4.0.0, 4.0.1, 4.1.0, 4.1.1, 4.1.2, 4.1.3, 4.1.4, 4.1.5,=
+ 4.1.6, and 4.1.7
+> OpenOffice.org versions may also be affected.
 >
-> Magento's decryption expects up to 4 strings concatenated by a :
-> character. Depending on the number of pieces, it assumes a totally
-> different setup:
+> Mitigation
 >
-> 1 piece: Blowfish, in ECB mode!
-> 2 or 3 pieces: Probably blowfish, but maybe AES or Rijndael-256, depending
-> on the integer supplied by the attacker.
-> 4 pieces: We finally get an initialization vector, which means CBC mode
-> can be used.
+> Install Apache OpenOffice 4.1.8 for the latest maintenance and cumulative=
+ security fixes.
+> Use the Apache OpenOffice download page (https://www.openoffice.org/downl=
+oad/).
 >
-> At no point do they authenticate _anything_, so no matter what:
+> Acknowledgments
 >
-> - You get to control which branch is selected by breaking pieces off the
-> attacker-chosen message.
-> - You get to choose the ciphertext that the attempted decryption is
-> performed upon.
+> The Apache OpenOffice Security Team would like to thank Imre Rad for disc=
+overing and
+> reporting this attack vector.
 >
-> EXHIBIT B
-> =========
+> Further Information
 >
-> If you thought the ability to be encrypted with AES was a saving grace,
-> too bad. They hard-code your choice to ECB mode.
+> For additional information and assistance, consult the Apache OpenOffice =
+Community Forums
+> (https://forum.openoffice.org) or make requests to the users@openoffice.a=
+pache.org
+> (mailto:users@openoffice.apache.org) public mailing list.
 >
-> The only way you can get CBC mode (which, again, is unauthenticated) is to
-> use the non-standard Rijndael256 cipher.
+> The latest information on Apache OpenOffice security bulletins can be fou=
+nd at the
+> Bulletin Archive page (https://www.openoffice.org/security/bulletin.html).
+> >
 >
-> EXHIBIT C
-> =========
->
-> If you thought it couldn't possibly get any worse, Magento's encryption
-> library will either:
->
-> - Give you an IV consisting entirely of NULL bytes.
-> - Generate it, using rand(), on a 62-character keyspace.
->
-> (Y'know, because it's not XORed with the plaintext in CBC mode and biases
-> aren't a concern or anything.)
->
-> EXHIBIT D
-> =========
->
-> Yes, that is how Magento hashes passwords. Which is weird: They go out of
-> their way to compare strings in constant-time, but
->
-> PUTTING IT ALL TOGETHER
-> =======================
->
-> An attacker has a great deal of control over the ciphertext, and
-> incidentally which cipher mode is used by the decryption routine.
-> Nothing is authenticated. At all.
-> ECB mode everywhere.
-> When CBC mode is actually used, it's used with a laughably weak IV and a
-> non-standard cipher. Also, unauthenticated.
->
-> Magento, one of the largest open source e-commerce platforms, ships a
-> broken cryptography library that clueless developers are probably using to
-> encrypt your credit card information for their client's customers.
->
-> Given the prevalence of ECB mode, and the weak IV used in CBC mode, you
-> should assume anything you encrypted with Magento's encryption library is
-> both:
->
-> - Decryptable, if an attacker can alter plaintexts or ciphertexts and
-> study the output of either operation, without the key
-> - Forgeable
->
-> This cryptography implementation is very irresponsible and, because
-> cryptography is involved, warrants immediate full disclosure so everyone
-> can cease to use their broken crypto as soon as possible.
->
-> If you need a remediation strategy, I've got you covered:
-> https://paragonie.com/blog/2015/11/choosing-right-cryptography-library-for-your-php-project-guide
->
-> Scott Arciszewski
-> Chief Development Officer
-> Paragon Initiative Enterprises <https://paragonie.com>
->
-
---001a1140f5a24771b70537f6011d--
