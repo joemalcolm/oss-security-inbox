@@ -1,30 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/28/2
-Message-ID: <nycvar.YSQ.7.77.849.2005281113450.62159@xnncv>
-Date: Thu, 28 May 2020 11:16:50 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: "Ding, Ren" <rding@...ech.edu>, "Zhao, Hanqing" <hanqing@...ech.edu>,  Alexander Bulekov <alxndr@...edu>
-Subject: CVE-2020-13362 QEMU: megasas: OOB read access due to invalid index leads to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/11/1
+Message-ID: <1236f86f-9196-c26f-ef8e-df9a82e7ef63@oracle.com>
+Date: Tue, 10 Nov 2020 19:09:28 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, "Demi M. Obenour" <demiobenour@...il.com>, "Vladimir D. Seleznev" <vseleznv@...linux.org>
+Cc: "X.Org Security Team" <xorg-security@...ts.x.org>
+Subject: Re: The importance of mutual authentication: Local Privilege Escalation in X11
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On 11/10/20 11:12 AM, Demi M. Obenour wrote:
+> On 11/10/20 1:43 PM, Vladimir D. Seleznev wrote:
+>>>> This contravenes the ability to run X11 client from another user. The
+>>>> idea is that X11 server allows any clients with right credentials
+>>>> regardless of theirs processes UID or GID to connect to the server.
+>>> Indeed it does, and I mention cryptographic authentication mechanisms
+>>> below.  Instead of /tmp, /run/X11 would work just as well.  It is
+>>> the mutual authentication that matters.
+>> Do I understand you correctly: you propose to forbid running X11 clients
+>> which processes belong to another users? In that case it is a bad idea:
+>> I would like to run untrusted clients with special UIDs. Or if I
+>> understand you wrongly, please explain how client of other user can
+>> connect to the socket placed in /run/user/$UID with these strict access
+>> permissions 0700?
+> 
+> If you aren’t using the X Security Extension or the X Access
+> Control Extension, then X clients aren’t effectively isolated from
+> each other.  Therefore, connecting untrusted X clients to the desktop
+> session is a bad idea.
 
-An OOB read access issue was found in the MegaRAID SAS 8708EM2 emulator of the 
-QEMU. It occurs in 'megasas_lookup_frame' routine when 's->reply_queue_head' 
-is set to a malicious value. A guest user/process may use this flaw to crash 
-the QEMU process on the host resulting in DoS scenario.
+If they are truly untrusted, that is true, but that's rarely the case
+in practice, even if they have a different UID.  In most cases, the
+process that should be least trusted is the web browser running code
+from so many untrusted sites under your own UID, but that's not something
+we can fix at the X11 level.  In practice, no one really uses those extensions
+as they have no need to isolate their clients from one another - the primary
+real users I've seen are in multi-level desktop environments for maintaining
+different data classification levels (Confidential, Restricted, Top Secret,
+etc) and those are mostly migrating to separate VM's these days as most of
+the multi-level desktop vendors exited the market as it was too small to be
+profitable.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-05/msg03463.html
+The biggest reason we don't have a fix after months of discussion is that
+this isn't a simple implementation flaw like a buffer or integer overflow
+for which the fix is obvious - this is outside the bounds of the security
+model envisioned by the original designers of X11, and requires redesigning
+our connection process for a different security model, and not everyone
+agrees on what the correct security model is here.  If we start checking
+UID's, how do we specify which UID's are allowed - an environment variable,
+a config file, some other mechanism?  Do we store the actual uid value or
+a user name that may depend on LDAP or NIS lookup?  What UID's do we accept
+by default?
 
-This issue was reported by Ren Ding & Hanqing Zhao of SSLab Georgia Tech and 
-also by Alexander Bulekov. CVE-2020-13362 requested via -> 
-https://cveform.mitre.org/
+I'm hopeful we can make more progress now that this is something that can
+be publicly discussed and worked out, instead of restricting it to the
+small number of core developers on the security list.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	  X.Org Security Response Team - xorg-security@...ts.x.org
 
+(As always, the above opinions are mine, and may not match my employer's.)
