@@ -1,56 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/05/3
-Message-ID: <20200205124521.GA16369@f195.suse.de>
-Date: Wed, 5 Feb 2020 13:45:21 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/11/3
+Message-ID: <20201111044821.GA15234@sinister.lan.codevat.com>
+Date: Tue, 10 Nov 2020 20:48:21 -0800
+From: Eric Pruitt <eric.pruitt@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-18901: mariadb: possible symlink attack for the mysql user in the SUSE specific mysql-systemd-helper script
+Subject: Dash executes code when noexec ("-n") is specified
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+I emailed security@...ian.org a couple of weeks ago about an issue with
+Dash executing code when I wouldn't expect it to based on its
+documentation and the POSIX spec, but I didn't get a response, so I'm
+posting the message here in hopes of getting another opinion:
 
-in the course of a review of the mariadb packaging in the SUSE Linux
-distribution I discovered that a SUSE specific helper script
-"mysql-systemd-helper" unsafely operates with root privileges in
-the /var/lib/mysql directory [1].
+Most UNIX shells support "-n" / noexec which should syntax check scripts
+without executing them, but Dash will execute code anyway in some
+contexts:
 
-During initial package installation and during upgrade scenarios the
-file /var/lib/mysql/mysql_upgrade_info is created/overwritten and
-modified using the following shell commands:
+    $ dash -n -c 'echo this should not be executed'
+    this should not be executed
 
-```
-echo -n "$MYSQLVER" > "$datadir"/mysql_upgrade_info
-chmod 640 "$datadir/mysql_upgrade_info"
-```
+Interestingly, it does not execute code that gets piped in:
 
-Since the unprivileged mysql user owns the parent directory it can
-remove this file and replace it with a symlink to write/overwrite in
-privileged file systems locations. This could mostly be used for
-denial-of-service purposes, a full privilege escalation should not be
-easily achieved by this vulnerability, since the file content cannot be
-controlled by a potential attacker.
+    $ echo 'echo this should not be executed' | dash -n
+    $
 
-Future SUSE mariadb packages will keep this file in a safe location in
-/var/lib/misc. Older, still supported packages will be fixed soon.
+In discussing "set -n" / noexec, POSIX 2018
+(https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#set)
+states "The shell shall read commands but does not execute them; this
+can be used to check for shell script syntax errors. An interactive
+shell may ignore this option," and I did not find anything in the Dash
+manual that would suggest this is intentional:
 
-Cheers
+    $ man dash | fgrep -C2 noexec
+               -f noglob        Disable pathname expansion.
 
-Matthias
+               -n noexec        If not interactive, read commands but do
+                                not execute them.  This is useful for
+                                checking the syntax of shell scripts.
 
-References
-----------
+Maybe this is an issue with how Dash determines whether its being
+executed interactively, but even if I try redirecting file descriptors
+so none of them point to a TTY, the code still gets run:
 
-[1]: https://bugzilla.suse.com/show_bug.cgi?id=1160895
+    $ ls -l
+    total 0
+    $ dash -n -c 'touch script_was_executed' < /dev/null >/dev/null 2>&1
+    $ ls -l
+    total 0
+    -rw------- 1 ericpruitt ericpruitt 0 Oct 28 17:22 script_was_executed
+    $
 
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
+None of the other shells I tested exhibit this:
 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
+    $ ksh -n -c 'echo this should not be executed'
+    $ mksh -n -c 'echo this should not be executed'
+    $ zsh -n -c 'echo this should not be executed'
+    $ bash -n -c 'echo this should not be executed'
+    $
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+This has the potential to be a security hazard because programs could
+unintentionally execute arbitrary code. I discovered this while helping
+someone with a test framework in which I suggested implementing shell
+script syntax checking as part of validating some configuration files
+that contain short Bash and Dash scripts (e.g. Cron jobs). Had this
+issue not been discovered, it's possible the build system would've
+inadvertently executed code I only wanted to syntax check.
+
+Can you confirm whether or not this behavior is expected?
+
+Thanks,
+Eric
