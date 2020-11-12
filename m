@@ -1,49 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/7
-Message-ID: <CAHmME9oR=X2OayrySfVaA-1uxHGAu0ix2caf9jAvNg72V0mbyg@mail.gmail.com>
-Date: Mon, 15 Jun 2020 11:28:57 -0600
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: Jann Horn <jannh@...gle.com>
-Cc: John Haxby <john.haxby@...cle.com>, oss-security@...ts.openwall.com,  linux-security-module <linux-security-module@...r.kernel.org>, linux-acpi@...r.kernel.org,  Matthew Garrett <mjg59@...f.ucam.org>,  Kernel Hardening <kernel-hardening@...ts.openwall.com>,  Ubuntu Kernel Team <kernel-team@...ts.ubuntu.com>
-Subject: Re: lockdown bypass on mainline kernel for loading unsigned modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/12/3
+Message-Id: <79EF808D-1EB1-496E-875E-003FF44B6B12@oracle.com>
+Date: Thu, 12 Nov 2020 18:10:46 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-4508
 Content-Type: text/plain; charset=utf-8
 
-On 6/15/20, Jann Horn <jannh@...gle.com> wrote:
-> On Mon, Jun 15, 2020 at 6:24 PM John Haxby <john.haxby@...cle.com> wrote:
->> > On 15 Jun 2020, at 11:26, Jason A. Donenfeld <Jason@...c4.com> wrote:
->> > Yesterday, I found a lockdown bypass in Ubuntu 18.04's kernel using
->> > ACPI table tricks via the efi ssdt variable [1]. Today I found another
->> > one that's a bit easier to exploit and appears to be unpatched on
->> > mainline, using acpi_configfs to inject an ACPI table. The tricks are
->> > basically the same as the first one, but this one appears to be
->> > unpatched, at least on my test machine. Explanation is in the header
->> > of the PoC:
->> >
->> > https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
->> >
->> > I need to get some sleep, but if nobody posts a patch in the
->> > meanwhile, I'll try to post a fix tomorrow.
->> >
->> > Jason
->> >
->> > [1] https://www.openwall.com/lists/oss-security/2020/06/14/1
->>
->>
->> This looks CVE-worthy.   Are you going to ask for a CVE for it?
->
-> Does it really make sense to dole out CVEs for individual lockdown
-> bypasses when various areas of the kernel (such as filesystems and
-> BPF) don't see root->kernel privilege escalation issues as a problem?
-> It's not like applying the fix for this one issue is going to make
-> systems meaningfully safer.
->
+Hello,
 
-Indeed, I'm more or less of the same mind: lockdown is kind of a
-best-effort thing at the moment, and it'd be crazy to rely on it,
-considering various bypasses and differing attitudes on the security
-model from different subsystems. This acpi bypass is a bug, maybe, but
-it doesn't feel like a "real" security bug, because I'm not sure why
-this would be a feature somebody would want to lean on at this point
-in time. I wrote a PoC for this one rather than others because it
-seemed fun and technically interesting to poke around with acpi in
-this way, not because it's particularly rare or something.
+This is an old CVE but it was recently "rediscovered" [1].
+
+CVE-2014-4508 is a memory leak in the auditing subsystem in the kernel.  On old 32 bit linux kernels that don't have [2] this memory leak turns out to be quite bad: you can trigger an out of memory condition that the system cannot recover from not matter how hard it tries.
+
+If you believe you have such a kernel, please get in touch with me directly.
+
+jch
+
+
+
+
+[1] Thanks to Dan Moulding for bringing this to our attention
+[2] 554086d85e71 ("x86_32, entry: Do syscall exit work on badsys (CVE-2014-4508)")
+
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
