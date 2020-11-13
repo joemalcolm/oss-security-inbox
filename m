@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["641" "Friday" "4" "September" "2015" "20:08:11" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150904180811.GA22933@eldamar.local>" "21" "[oss-security] CVE Request: PgBouncer: failed auth_query lookup leads to connection as auth_user" nil nil nil "9" "2015090418:08:11" "[oss-security] CVE Request: PgBouncer: failed auth_query lookup leads to connection as auth_user" (number mark "U       carnil@debia Sep  4   21/641   " thread-indent "\"[oss-security] CVE Request: PgBouncer: failed auth_query lookup leads to connection as auth_user\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3362" "Friday" "13" "November" "2020" "13:33:31" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20201113133331.48185f9f@computer>" "72" "[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil "11" "2020111312:33:31" "[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" (number mark "U       hanno@hboeck Nov 13   72/3362  " thread-indent "\"[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7278 invoked by uid 550); 4 Sep 2015 18:08:25 -0000
+Received: (qmail 7446 invoked by uid 550); 13 Nov 2020 12:33:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7257 invoked from network); 4 Sep 2015 18:08:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        bh=Muiza4YX4FjuvEUBQBRhpdUSpfj9M6bfCBDzGImbzO4=;
-        b=OyIUk8Tx+lEXN/uhErRna/T+8U28jRIaKYzPT9oQ+V8RwhDyXb53lldm8rwaLAuCp1
-         E+rnvlU1CmN21xj83xgqfunQhjAxW+7M0VAhvD+ShbcOFARiabd3HDoluJLOEWlB6zPZ
-         X6avmRkmSxc1fc9Fn/Ho8A5ctYe31Fg269zuMdJLOcIYNXhmty3nw4/tcWTwc+sQHOnM
-         4Dn8yPj+PUqzWx9ycRxX/L5m29+Lb9OKJfh5Hn3bfJLwAN9/2DSGgXPYTO26kxO23QKg
-         giFIS6TVBGwiHE6E0YQUyqgOB855uYbVtKGLzj60mKcWQ6ksLg1VgWWHqMu6zMb+P+ph
-         Ql6w==
-X-Received: by 10.181.11.134 with SMTP id ei6mr9448088wid.83.1441390093412;
-        Fri, 04 Sep 2015 11:08:13 -0700 (PDT)
-Message-ID: <20150904180811.GA22933@eldamar.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>
-Date: Fri, 4 Sep 2015 20:08:11 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] CVE Request: PgBouncer: failed auth_query lookup leads to connection
- as auth_user
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Received: (qmail 7422 invoked from network); 13 Nov 2020 12:33:49 -0000
+Date: Fri, 13 Nov 2020 13:33:31 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20201113133331.48185f9f@computer>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros
 
-Hi
+3 years ago I reported a heap overflow vulnerability in raptor, an RDF
+parsing library:
+https://www.openwall.com/lists/oss-security/2017/06/07/1
 
-Could you please assign a CVE for the following PgBouncer issue?
+raptor has not created a new release since 2014.
 
->From upstream announce:
+The most prominent user seems to be libreoffice. This is triggerable
+from within an ODT file. Back then I reported this to libreoffice as
+well and they patched it in their builds. However on linux systems
+libreoffice package usually use the system-provided libraptor, so if
+that's not patched it is vulnerable.
 
-https://pgbouncer.github.io/2015/09/pgbouncer-1-6-1/
-> New auth_user functionality introduced in 1.6 allows login as
-> auth_user when client presents unknown username. It’s quite likely
-> auth_user is superuser. Affects only setups that have enabled
-> auth_user in their config.
+This was unpatched for a long time in many linux distros, in some it
+still is. Debian+Ubuntu have released updates in the past few days.
 
-References:
- - https://github.com/pgbouncer/pgbouncer/issues/69
- - http://comments.gmane.org/gmane.comp.db.postgresql.pgbouncer.general/1251
+It may be interesting to discuss how this happened. From my side I feel
+I did what I should do - I reported it to the project and later
+disclosed it publicly on oss-security. Apparently it seems there is no
+reliable process to make sure publicly reported vulns eventually get
+patched in distros if there is no active upstream.
+Maybe noteworthy is that this didn't get a CVE in 2017. It seems many
+distros rely on CVEs to get a process of backporting fixes rolling.
+Given the fluctuating reliability of CVE assignments not sure this is
+wise. I have now requested a CVE (CVE-2017-18926).
 
-Upstream fix:
-https://github.com/pgbouncer/pgbouncer/commit/7ca3e5279d05fceb1e8a043c6f5b6f58dea3ed38
 
-Regards,
-Salvatore
+Here is a minimal reproducer embedded in an ODT file:
+UEsDBBQAAgAIAIqMZlHHyBrQfgAAAKUAAAAMABwAbWFuaWZlc3QucmRmVVQJAAOEe6VfEXylX3V4
+CwABBOgDAAAE6AMAAE3NQQ7CIBCF4as0uKYoriC0q8YDGC9A6qhNWpjMYKC3tzSauP3zvTxH94e9
+DpemLHNgC6UTr5TRKpVzbqH4BWdoIz1V4IP4qm1TWfqxfN7FyRijjlppLTcheQ3JF1l3vas3A/BI
+E6Ypht5BsdjUip4YbitCJ8RfJuD4pnGvH1BLAwQKAAAAAABhX2ZRAAAAAAAAAAAAAAAACQAcAE1F
+VEEtSU5GL1VUCQADdSylXxF8pV91eAsAAQToAwAABOgDAABQSwMEFAACAAgAC41mUbMm7RFxAAAA
+9AAAABUAHABNRVRBLUlORi9tYW5pZmVzdC54bWxVVAkAA3V8pV9hfKVfdXgLAAEE6AMAAAToAwAA
+jY/BCoQwDER/Zel1aXsX3X8JNsVAmgYbF/179eB62Iu34THMY/oCQhmbdVf49D+UidGj2Ly9brYw
+ewWbBhfdjQsmAm+b4uBAlWkEoyrxKylUaNRCVZRUx6Ucg8FwNRefqy4W5pQfWI/Wey18GuL/wR1Q
+SwECHgMUAAIACACKjGZRx8ga0H4AAAClAAAADAAYAAAAAAABAAAApIEAAAAAbWFuaWZlc3QucmRm
+VVQFAAOEe6VfdXgLAAEE6AMAAAToAwAAUEsBAh4DCgAAAAAAYV9mUQAAAAAAAAAAAAAAAAkAGAAA
+AAAAAAAQAO1BxAAAAE1FVEEtSU5GL1VUBQADdSylX3V4CwABBOgDAAAE6AMAAFBLAQIeAxQAAgAI
+AAuNZlGzJu0RcQAAAPQAAAAVABgAAAAAAAEAAACkgQcBAABNRVRBLUlORi9tYW5pZmVzdC54bWxV
+VAUAA3V8pV91eAsAAQToAwAABOgDAABQSwUGAAAAAAMAAwD8AAAAxwEAAAAA
+
+I get an
+malloc(): invalid size (unsorted)
+message, which I believe indicates this successfully triggers a heap
+corruption.
+
+
+FWIW I recently tried to fuzz raptor again with the fix applied. I
+quickly found another OOB issue
+https://bugs.librdf.org/mantis/view.php?id=3D650
+
+=46rom the bug report:
+
+A malformed input file can lead to a segfault due to an out of bounds
+array access in raptor_xml_writer_start_element_common.
+
+Bug happens in line 230 of raptor_xml_writer.c (current git):
+https://github.com/dajobe/raptor/blob/master/src/raptor_xml_writer.c#L230
+
+=46rom looking at that code it seems to me it always expects
+nspace_declarations_count to be lower than element->attribute_count,
+however this input seems to create a different situation. I made an
+attempt at a patch that throws an error in this situation (but please
+review it, I am not familiar with what this code does and should do -
+though the patch doesn't seem to introduce test failures).
+
+(proposed patch, example file and stacktrace can be found attached to
+the bugreport)
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
