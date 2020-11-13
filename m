@@ -1,93 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/08/1
-Message-ID: <alpine.DEB.2.20.2001080744190.29816@tvnag.unkk.fr>
-Date: Wed, 8 Jan 2020 07:46:22 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: SMB access smuggling via FILE URL on Windows (CVE-2019-15601)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/13/2
+Message-Id: <0B12AA49-1E09-4C8F-BDF4-F83DF85F9432@dwheeler.com>
+Date: Fri, 13 Nov 2020 15:46:01 -0500
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
 Content-Type: text/plain; charset=utf-8
 
-SMB access smuggling via FILE URL on Windows
-============================================
 
-Project curl Security Advisory, January 8th 2020 -
-[Permalink](https://curl.haxx.se/docs/CVE-2019-15601.html)
+> On Nov 13, 2020, at 7:33 AM, Hanno Böck <hanno@...eck.de> wrote:
+> 
+> 3 years ago I reported a heap overflow vulnerability in raptor, an RDF
+> parsing library:
+> https://www.openwall.com/lists/oss-security/2017/06/07/1
+> 
+> raptor has not created a new release since 2014.
+> 
+> The most prominent user seems to be libreoffice. This is triggerable
+> from within an ODT file. Back then I reported this to libreoffice as
+> well and they patched it in their builds. However on linux systems
+> libreoffice package usually use the system-provided libraptor, so if
+> that's not patched it is vulnerable.
+> 
+> This was unpatched for a long time in many linux distros, in some it
+> still is. Debian+Ubuntu have released updates in the past few days.
+> 
+> It may be interesting to discuss how this happened. From my side I feel
+> I did what I should do - I reported it to the project and later
+> disclosed it publicly on oss-security. Apparently it seems there is no
+> reliable process to make sure publicly reported vulns eventually get
+> patched in distros if there is no active upstream.
+> Maybe noteworthy is that this didn't get a CVE in 2017. It seems many
+> distros rely on CVEs to get a process of backporting fixes rolling.
+> Given the fluctuating reliability of CVE assignments not sure this is
+> wise. I have now requested a CVE (CVE-2017-18926).
 
-VULNERABILITY
--------------
+I don’t know what you mean by “fluctuating reliability”.
+I think the #1 reason a vulnerability doesn’t have a CVE assignment
+is that no one has reported the vulnerability to a CVE Numbering Authority (CNA).
+If that’s the “reliability” problem, it’s hard to blame CNAs for that.
 
-libcurl can be told to load a file from a `FILE://` URL. It will then load the
-file from the path specified in the URL from the local file system.
+There *is* a process to alert all affected parties; it’s called CVE assignment.
+In the case of an unmaintained package that’s in use it’s *especially* important to
+have a CVE assigned; the project itself might never release a fix or alert, so we
+*need* an external system like CVEs to track those vulnerabilities.
+As you noted, backports are often triggered by CVE assignments.
+That’s not a problem, that’s a fact that is getting ignored.
+“The standard process to trigger backports (namely CVE assignment) was not used and
+now I’m unhappy that backports didn’t occur” sounds almost tautological.
 
-If you craft the given path so that it starts with two slashes (or
-backslashes) followed by a host name, Windows systems will automatically treat
-that as a request to access the host name using SMB instead of reading a local
-file with that name. This is not expected nor documented libcurl behavior.
+As you well know, CVEs aren’t perfect. Far from it (let me help you make that list).
+CVE assignments sometimes backlog, but I think since 2017 is enough time :-).
+The CVE process does struggle with projects that update relatively rapidly
+(hi Linux kernel!), but that’s not the issue in this case. But while CVEs have their
+shortcomings, they would trivially have solved this if the process had been actually used.
 
-Applications allowing users to provide URLs or parts of URLs could be
-vulnerable to this flaw. Both the curl tool and library.
+I think that in addition, any project that patches an external dependency
+(like LibreOffice) should also add to their automated test suite a test that verifies that the
+fix is actually correctly applied.  Many system packaging systems have a way
+to run a test suite as part of the packaging. The packagers should call test suites if they’re
+present, and packagers should provide test suites. That would have prevented this kind
+of problem (and many others) in a general way. The reproducer .odt file you
+just posted would probably be perfect for this.
 
-Example URL exploiting this: `file://localhost//hostname/home/secret.txt`.
+--- David A. Wheeler
 
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This bug only exists when libcurl runs on a Microsoft Windows operating
-system.
-
-This bug exists in the first code import we have, from 1999.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2019-15601 to this issue.
-
-CWE-20: Improper Input Validation
-
-Severity: 3.0 (Low)
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: all versions to and including 7.67.0
-- Not affected versions: libcurl >= 7.68.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2019-15601](https://github.com/curl/curl/commit/1b71bc532bde8621fd3260843f8197182a467ff2)
-
-RECOMMENDATIONS
---------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.68.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - do not use `FILE://` URLs
-
-TIMELINE
---------
-
-The issue was reported to the curl project on October 31, 2019. The initial
-fix was done, verified and communicated with the reporter on November 7, 2019.
-
-This advisory was posted on January 8th 2020.
-
-CREDITS
--------
-
-Reported by Fernando Muñoz. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se | Get the best commercial curl support there is - from me
-                   | Private help, bug fixes, support, ports, new features
-                   | https://www.wolfssl.com/contact/
