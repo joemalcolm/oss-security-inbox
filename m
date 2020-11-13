@@ -1,93 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/14/3
-Message-Id: <E1irN46-0005Hs-GO@xenbits.xenproject.org>
-Date: Tue, 14 Jan 2020 14:21:06 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 312 v1 - arm: a CPU may speculate past the ERET instruction
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/13/1
+Message-ID: <20201113133331.48185f9f@computer>
+Date: Fri, 13 Nov 2020 13:33:31 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Buffer Overflow in raptor widely unfixed in Linux distros
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+3 years ago I reported a heap overflow vulnerability in raptor, an RDF
+parsing library:
+https://www.openwall.com/lists/oss-security/2017/06/07/1
 
-                    Xen Security Advisory XSA-312
+raptor has not created a new release since 2014.
 
-          arm: a CPU may speculate past the ERET instruction
+The most prominent user seems to be libreoffice. This is triggerable
+from within an ODT file. Back then I reported this to libreoffice as
+well and they patched it in their builds. However on linux systems
+libreoffice package usually use the system-provided libraptor, so if
+that's not patched it is vulnerable.
 
-ISSUE DESCRIPTION
-=================
+This was unpatched for a long time in many linux distros, in some it
+still is. Debian+Ubuntu have released updates in the past few days.
 
-Some CPUs can speculate past an ERET instruction and potentially perform
-speculative accesses to memory before processing the exception return.
-Since the register state is often controlled by lower privilege level
-(i.e guest kernel/userspace) at the point of the ERET, this could
-potentially be used as part of a side-channel attack.
+It may be interesting to discuss how this happened. From my side I feel
+I did what I should do - I reported it to the project and later
+disclosed it publicly on oss-security. Apparently it seems there is no
+reliable process to make sure publicly reported vulns eventually get
+patched in distros if there is no active upstream.
+Maybe noteworthy is that this didn't get a CVE in 2017. It seems many
+distros rely on CVEs to get a process of backporting fixes rolling.
+Given the fluctuating reliability of CVE assignments not sure this is
+wise. I have now requested a CVE (CVE-2017-18926).
 
-IMPACT
-======
 
-An attacker, which could include a malicious untrusted user process on
-a trusted guest, or an untrusted guest, may be able to use it as part of
-side-channel attack to read host memory.
+Here is a minimal reproducer embedded in an ODT file:
+UEsDBBQAAgAIAIqMZlHHyBrQfgAAAKUAAAAMABwAbWFuaWZlc3QucmRmVVQJAAOEe6VfEXylX3V4
+CwABBOgDAAAE6AMAAE3NQQ7CIBCF4as0uKYoriC0q8YDGC9A6qhNWpjMYKC3tzSauP3zvTxH94e9
+DpemLHNgC6UTr5TRKpVzbqH4BWdoIz1V4IP4qm1TWfqxfN7FyRijjlppLTcheQ3JF1l3vas3A/BI
+E6Ypht5BsdjUip4YbitCJ8RfJuD4pnGvH1BLAwQKAAAAAABhX2ZRAAAAAAAAAAAAAAAACQAcAE1F
+VEEtSU5GL1VUCQADdSylXxF8pV91eAsAAQToAwAABOgDAABQSwMEFAACAAgAC41mUbMm7RFxAAAA
+9AAAABUAHABNRVRBLUlORi9tYW5pZmVzdC54bWxVVAkAA3V8pV9hfKVfdXgLAAEE6AMAAAToAwAA
+jY/BCoQwDER/Zel1aXsX3X8JNsVAmgYbF/179eB62Iu34THMY/oCQhmbdVf49D+UidGj2Ly9brYw
+ewWbBhfdjQsmAm+b4uBAlWkEoyrxKylUaNRCVZRUx6Ucg8FwNRefqy4W5pQfWI/Wey18GuL/wR1Q
+SwECHgMUAAIACACKjGZRx8ga0H4AAAClAAAADAAYAAAAAAABAAAApIEAAAAAbWFuaWZlc3QucmRm
+VVQFAAOEe6VfdXgLAAEE6AMAAAToAwAAUEsBAh4DCgAAAAAAYV9mUQAAAAAAAAAAAAAAAAkAGAAA
+AAAAAAAQAO1BxAAAAE1FVEEtSU5GL1VUBQADdSylX3V4CwABBOgDAAAE6AMAAFBLAQIeAxQAAgAI
+AAuNZlGzJu0RcQAAAPQAAAAVABgAAAAAAAEAAACkgQcBAABNRVRBLUlORi9tYW5pZmVzdC54bWxV
+VAUAA3V8pV91eAsAAQToAwAABOgDAABQSwUGAAAAAAMAAwD8AAAAxwEAAAAA
 
-VULNERABLE SYSTEMS
-==================
+I get an
+malloc(): invalid size (unsorted)
+message, which I believe indicates this successfully triggers a heap
+corruption.
 
-System running all version of Xen are affected.
 
-Whether an individual Arm-based CPU is vulnerable depends on its
-speculation properties.  Consult your CPU vendor.
+FWIW I recently tried to fuzz raptor again with the fix applied. I
+quickly found another OOB issue
+https://bugs.librdf.org/mantis/view.php?id=650
 
-x86 systems are not vulnerable.
+From the bug report:
 
-MITIGATION
-==========
+A malformed input file can lead to a segfault due to an out of bounds
+array access in raptor_xml_writer_start_element_common.
 
-There is no mitigation available.
+Bug happens in line 230 of raptor_xml_writer.c (current git):
+https://github.com/dajobe/raptor/blob/master/src/raptor_xml_writer.c#L230
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
+From looking at that code it seems to me it always expects
+nspace_declarations_count to be lower than element->attribute_count,
+however this input seems to create a different situation. I made an
+attempt at a patch that throws an error in this situation (but please
+review it, I am not familiar with what this code does and should do -
+though the patch doesn't seem to introduce test failures).
 
-This was reported publicly, as affecting other Open Source projects,
-before the Xen Project Security Team was made aware.
+(proposed patch, example file and stacktrace can be found attached to
+the bugreport)
 
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa312.patch           xen-unstable, Xen 4.13 - 4.12
-xsa312-4.11.patch      Xen 4.11 - 4.10
-xsa312-4.9.patch       Xen 4.9
-
-$ sha256sum xsa312*
-112c9d77f964174db5709c758626a2bd5fec9bfdacc89fbc96f1ddd44aca6bbf  xsa312.meta
-9b2078d448e4815c9ddc6554bf869d64412dc787b1b94830a24e47df6a9f30e7  xsa312.patch
-29b95d6ea0295e124c3cfd5b1611ae341bb195d1c441ee69976e2f74cde652a8  xsa312-4.9.patch
-8d64b3039c570f4b5c82abbbcf2714ec3b60db55fe3e1b3bb838df7dfaf627e9  xsa312-4.11.patch
-$
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl4dzjAMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZOx4H/2nt+377yBhbqNqUO2nCbqUWBkCB/OHQQ3uyjytp
-PEDW9epevCJHOvQ3w24gh9SplWupHvrzS2PbqCWwEMPZXfkYB6Ye2kr7hbJHMOxB
-bP6qm71plWG/RGmKSTVeVbOqAtiwdXkIvE8PIETGSuQ3Ip8exIkWvXnkY3v7KQne
-WIg+vcadAqvv9oZj8UAv+V6oihUr1MyOMaddsW0QczF1yhs7EErpSBrLT1G2+nm/
-MxY8nE40rAzZBs+G1puODC8uK/LSmGlvms+200FOPHnyyIKmznmAtGLE7pziPj7F
-Qdy4GOWLAE1oQcrglmdk6SOCK7CRJSSZ0RminYNNPSX6EqM=
-=FnmX
------END PGP SIGNATURE-----
-
-Download attachment "xsa312.meta" of type "application/octet-stream" (1566 bytes)
-
-Download attachment "xsa312.patch" of type "application/octet-stream" (2797 bytes)
-
-Download attachment "xsa312-4.9.patch" of type "application/octet-stream" (2748 bytes)
-
-Download attachment "xsa312-4.11.patch" of type "application/octet-stream" (2859 bytes)
+-- 
+Hanno Böck
+https://hboeck.de/
