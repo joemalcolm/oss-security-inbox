@@ -1,45 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/7
-Message-Id: <FC2E54FA-15CB-4732-9E1B-FB35F7A01EEB@apache.org>
-Date: Tue, 19 May 2020 16:05:37 +0200
-From: Jan Lehnardt <jan@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-1955] Apache CouchDB Remote Privilege Escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/15/1
+Message-ID: <alpine.BSF.2.21.9999.2011150915180.48674@aneurin.horsfall.org>
+Date: Sun, 15 Nov 2020 09:19:46 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
 Content-Type: text/plain; charset=utf-8
 
-Description
-===========
+On Sat, 14 Nov 2020, Dave Horsfall wrote:
 
-CouchDB version 3.0.0 shipped with a new configuration setting that
-governs access control to the entire database server called
-`require_valid_user_except_for_up`. It was meant as an extension to the
-long-standing setting `require_valid_user`, which in turn requires that
-any and all requests to CouchDB will have to be made with valid
-credentials, effectively forbidding any anonymous requests.
+> There's always the "Full Disclosure" list (URL forgotten, but 
+> http://lists.grok.org.uk rings a bell).
 
-The new `require_valid_user_except_for_up` is an off-by-default setting
-that was meant to allow requiring valid credentials for all endpoints
-except for the `/_up` endpoint.
+Rats; it got shut down by legal scumbags.  However, there is still
 
-However, the implementation of this made an error that lead to not
-enforcing credentials on any endpoint, when enabled.
+     http://nmap.org/mailman/listinfo/fulldisclosure
 
-CouchDB versions 3.0.1[1] and 3.1.0[2] fix this issue.
+It seems to continue the tradition: fix it, or else...
 
-Mitigation
-==========
-
-Users who have not enabled `require_valid_user_except_for_up` are not
-affected.
-
-Users who have it enabled can either disable it again, or upgrade to
-CouchDB versions 3.0.1[1] and 3.1.0[2].
-
-[1]: https://docs.couchdb.org/en/stable/whatsnew/3.0.html#version-3-0-1
-[2]: https://docs.couchdb.org/en/stable/whatsnew/3.1.html#version-3-1-0
-
-On behalf of the CouchDB Security team,
-Jan LehnardT
-—
-
-
+-- Dave
