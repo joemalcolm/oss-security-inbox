@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["591" "Wednesday" "25" "May" "2016" "12:29:04" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<3197eee1-d6c3-1376-b83c-a14101703e63@redhat.com>" "23" "[oss-security] 3 libxml2 issues" nil nil nil "5" "2016052506:59:04" "[oss-security] 3 libxml2 issues" (number mark "U       huzaifas@red May 25   23/591   " thread-indent "\"[oss-security] 3 libxml2 issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["961" "Saturday" "14" "November" "2020" "14:35:01" "+1100" "Dave Horsfall" "dave@horsfall.org" "<alpine.BSF.2.21.9999.2011141426320.48674@aneurin.horsfall.org>" "24" "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil "11" "2020111403:35:01" "[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" (number mark "U       dave@horsfal Nov 14   24/961   " thread-indent "\"Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros\"\n") "<20201113133331.48185f9f@computer>" ("<20201113133331.48185f9f@computer>") nil nil nil nil nil nil nil "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24362 invoked by uid 550); 25 May 2016 06:59:19 -0000
+Received: (qmail 1628 invoked by uid 550); 14 Nov 2020 11:41:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24344 invoked from network); 25 May 2016 06:59:18 -0000
-To: oss-security@lists.openwall.com
-From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
-Message-ID: <3197eee1-d6c3-1376-b83c-a14101703e63@redhat.com>
-Date: Wed, 25 May 2016 12:29:04 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.0
+Received: (qmail 3529 invoked from network); 14 Nov 2020 03:35:19 -0000
+X-RG-Spam: Unknown
+X-RazorGate-Vade: gggruggvucftvghtrhhoucdtuddrgedujedruddviedgiedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuuffpveftpgfvgffnuffvtfetpdfqfgfvnecuuegrihhlohhuthemucegtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvufgjkfhffgggtgesmhdttdertderjeenucfhrhhomhepffgrvhgvucfjohhrshhfrghllhcuoegurghvvgeshhhorhhsfhgrlhhlrdhorhhgqeenucggtffrrghtthgvrhhnpeejtdduffejhfetffejieeugefhtdejueffveefteffledtfeegteelvdettdefueenucffohhmrghinhepghhrohhkrdhorhhgrdhukhenucfkphepuddutddrudeguddrudelfedrvdeffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhephhgvlhhopegrnhgvuhhrihhnrdhhohhrshhfrghllhdrohhrghdpihhnvghtpeduuddtrddugedurdduleefrddvfeefpdhmrghilhhfrhhomhepoegurghvvgeshhhorhhsfhgrlhhlrdhorhhgqecuuefqffgjpeekuefkvffokffogfdprhgtphhtthhopeeoohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomheq
+X-RazorGate-Vade-Verdict: clean 0
+X-RazorGate-Vade-Classification: clean
+X-RG-VS-CLASS: clean
+X-Authentication-Warning: aneurin.horsfall.org: dave owned process doing -bs
+Date: Sat, 14 Nov 2020 14:35:01 +1100 (EST)
+From: Dave Horsfall <dave@horsfall.org>
+To: OSS Security <oss-security@lists.openwall.com>
+In-Reply-To: <20201113133331.48185f9f@computer>
+Message-ID: <alpine.BSF.2.21.9999.2011141426320.48674@aneurin.horsfall.org>
+References: <20201113133331.48185f9f@computer>
+User-Agent: Alpine 2.21.9999 (BSF 287 2018-06-16)
+X-GPG-Public-Key: http://www.horsfall.org/gpgkey.pub
+X-GPG-Fingerprint: 05B4 FFBC 0218 B438 66E0  587B EF46 7357 EF5E F58B
+X-Home-Page: http://www.horsfall.org/
+X-Witty-Saying: "chmod 666 the_mode_of_the_beast"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Wed, 25 May 2016 06:59:07 +0000 (UTC)
-Subject: [oss-security] 3 libxml2 issues
+Content-Type: multipart/mixed; boundary="1483753691-1414010470-1605324903=:48674"
+Subject: Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux
+ distros
 
-Hi All,
+--1483753691-1414010470-1605324903=:48674
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-The following issues were reported to us:
+On Fri, 13 Nov 2020, Hanno Böck wrote:
 
-1. CVE-2016-4447: libxml2: Heap-based buffer underreads due to xmlParseName
+[...]
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1338686
+> It may be interesting to discuss how this happened. From my side I feel 
+> I did what I should do - I reported it to the project and later 
+> disclosed it publicly on oss-security. Apparently it seems there is no 
+> reliable process to make sure publicly reported vulns eventually get 
+> patched in distros if there is no active upstream.
 
-2. CVE-2016-4448 libxml2: Format string vulnerability
+There's always the "Full Disclosure" list (URL forgotten, but 
+http://lists.grok.org.uk rings a bell).
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1338700
+Their policy is simple: provide ample warning, then disclose the bug; the 
+problem is that Big Corporations brush off a bug report with "We're 
+working on it" and actually do nothing, because fixing bugs takes time 
+and money.  Funny how quickly a bug is fixed when it's published...
 
-3. CVE-2016-4449 libxml2: Inappropriate fetch of entities content
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1338701
-
-
-Each of the Red Hat bugs , contain links to the commits which fix these
-issues. (The upstream bugs are currently private)
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+-- Dave
+--1483753691-1414010470-1605324903=:48674--
