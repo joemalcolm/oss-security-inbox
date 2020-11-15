@@ -1,39 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/20/2
-Message-ID: <9DA63DD0-2736-42F2-9576-65102276E985@contoso.com>
-Date: Mon, 20 Jan 2020 10:35:26 +0000
-From: Marco Ivaldi <marco.ivaldi@...iaservice.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/15/2
+Message-ID: <c94dc00201e741daa78ce7c466d53136@tencent.com>
+Date: Sun, 15 Nov 2020 12:40:08 +0000
+From: kiyin(尹亮) <kiyin@...cent.com>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2020-2656, CVE-2020-2696 - Multiple vulnerabilities in Oracle Solaris
+Subject: Linux kernel: net/x25: a couple of overflows
 Content-Type: text/plain; charset=utf-8
 
-Dear oss-security,
+Hi,
 
-As suggested by Solar Designer, I’m cross-posting two recent advisories for the following vulnerabilities, fixed in Oracle's Critical Patch Update (CPU) of January 2020:
+The .x25_addr[] address comes from the user and is not necessarily NUL terminated. This leads to a couple problems.
 
-CVE-2020-2656 - Low impact information disclosure via Solaris xlock
-"A low impact information disclosure vulnerability in the setuid root xlock binary distributed with Solaris may allow local users to read partial contents of sensitive files. Due to the fact that target files must be in a very specific format, exploitation of this flaw to escalate privileges in a realistic scenario is unlikely."
+1) x25_bind read overflow
 
-CVE-2020-2696 - Local privilege escalation via CDE dtsession
-"A buffer overflow in the CheckMonitor() function in the Common Desktop Environment 2.3.1 and earlier and 1.6 and earlier, as distributed with Oracle Solaris 10 1/13 (Update 11) and earlier, allows local users to gain root privileges via a long palette name passed to dtsession in a malicious .Xdefaults file."
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/net/x25/af_x25.c?h=v5.9.3#n677
 
-Please find the advisories attached to this email.
+677	static int x25_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+678	{
+679		struct sock *sk = sock->sk;
+680		struct sockaddr_x25 *addr = (struct sockaddr_x25 *)uaddr;
+681		int len, i, rc = 0;
+682	
+683		if (addr_len != sizeof(struct sockaddr_x25) ||
+684			addr->sx25_family != AF_X25) {
+685			rc = -EINVAL;
+686			goto out;
+687		}
+688	
+689		/* check for the null_x25_address */
+690		if (strcmp(addr->sx25_addr.x25_addr, null_x25_address.x25_addr)) {
+691	
+692			len = strlen(addr->sx25_addr.x25_addr);                           <----------------------- there is no check whether the addr->sx25_addr.x25_addr is null-terminated. if not, strlen will read out of sockaddr_x25 struct.
+693			for (i = 0; i < len; i++) {
+694				if (!isdigit(addr->sx25_addr.x25_addr[i])) {
+695					rc = -EINVAL;
+696					goto out;
+697				}
+698			}
+699		}
+......................................................................................................................................................................................................................
+713	}
 
-For further details and some background information on my recent vulnerability research project focused on Oracle Solaris, please refer to:
-https://techblog.mediaservice.net/2020/01/local-privilege-escalation-via-cde-dtsession/
-https://techblog.mediaservice.net/2019/10/local-privilege-escalation-on-solaris-11-x-via-xscreensaver/
-https://techblog.mediaservice.net/2019/05/raptor-at-infiltrate-2019/
+affected Linux kernel versions:
+2.6.34～5.9.8
+
+2) x25_addr_aton write overflow
+
+The call tree is:
+  x25_connect()
+  --> x25_write_internal()
+      --> x25_addr_aton()
+
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/net/x25/af_x25.c?h=v5.9.3#n154
+154	int x25_addr_aton(unsigned char *p, struct x25_address *called_addr,
+155			  struct x25_address *calling_addr)
+156	{
+157		unsigned int called_len, calling_len;
+158		char *called, *calling;
+159		int i;
+160	
+161		called  = called_addr->x25_addr;                            <----------------------- there is no check of x25->dest_addr, x25->source_addr in these three functions.
+162		calling = calling_addr->x25_addr;
+163	
+164		called_len  = strlen(called);
+165		calling_len = strlen(calling);                              <----------------------- the strlen in x25_addr_aton() will lead to write overflow the "addresses" buffer from x25_write_internal()
+166	
+167		*p++ = (calling_len << 4) | (called_len << 0);
+168	
+169		for (i = 0; i < (called_len + calling_len); i++) {
+170			if (i < called_len) {
+171				if (i % 2 != 0) {
+172					*p |= (*called++ - '0') << 0;                   <-----------------------  write overflow the "addresses" buffer from x25_write_internal()
+173					p++;
+174				} else {
+175					*p = 0x00;
+176					*p |= (*called++ - '0') << 4;
+177				}
+178			} else {
+179				if (i % 2 != 0) {
+180					*p |= (*calling++ - '0') << 0;
+181					p++;
+182				} else {
+183					*p = 0x00;
+184					*p |= (*calling++ - '0') << 4;
+185				}
+186			}
+187		}
+188	
+189		return 1 + (called_len + calling_len + 1) / 2;
+190	}
+
+this security bug has been existed for 24 years since X.25 Project added first in Linux kernel 2.1.16.
+
+affected Linux kernel versions:
+2.1.16～5.9.8
+
+patch:
+The x25 protocol only allows 15 character addresses so putting a NUL terminator as the 16th character is safe.
+
+diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c index 0bbb283f23c9..3180f15942fe 100644
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -686,6 +686,8 @@ static int x25_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+ 		goto out;
+ 	}
+ 
++	addr->sx25_addr.x25_addr[X25_ADDR_LEN - 1] = '\0';
++
+ 	/* check for the null_x25_address */
+ 	if (strcmp(addr->sx25_addr.x25_addr, null_x25_address.x25_addr)) {
+ 
+@@ -779,6 +781,7 @@ static int x25_connect(struct socket *sock, struct sockaddr *uaddr,
+ 		goto out;
+ 
+ 	rc = -ENETUNREACH;
++	addr->sx25_addr.x25_addr[X25_ADDR_LEN - 1] = '\0';
+ 	rt = x25_get_route(&addr->sx25_addr);
+ 	if (!rt)
+ 		goto out;
 
 Regards,
-
--- 
-Marco Ivaldi, Offensive Security Manager
-CISSP, OSCP, QSA, ASV, OPSA, OPST, OWSE, LA27001, PRINCE2F
-@Mediaservice.net S.r.l. con Socio Unico
-https://www.mediaservice.net/
-Tel: +39 011 19016595 | Fax: +39 011 3246497
-
-
-View attachment "2020-01-solaris-xlock.txt" of type "text/plain" (5327 bytes)
-
-View attachment "2020-02-cde-dtsession.txt" of type "text/plain" (4331 bytes)
+kiyin.
