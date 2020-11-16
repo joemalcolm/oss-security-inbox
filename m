@@ -1,4 +1,9 @@
-Received: (qmail 11947 invoked by uid 550); 8 Oct 2024 13:34:56 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1092" "Monday" "16" "November" "2020" "12:43:18" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20201116114318.GA335292@eldamar.lan>" "30" "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil "11" "2020111611:43:18" "[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" (number mark "U       carnil@debia Nov 16   30/1092  " thread-indent "\"Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros\"\n") "<20201113133331.48185f9f@computer>" ("<20201113133331.48185f9f@computer>") nil nil nil nil nil nil nil "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1273 invoked by uid 550); 16 Nov 2020 11:43:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,160 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15658 invoked from network); 8 Oct 2024 06:10:06 -0000
-DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=josefsson.org; s=ed2303; h=Content-Type:MIME-Version:Message-ID:In-Reply-To
-	:Date:References:Subject:Cc:To:From:Sender:Reply-To:Content-Transfer-Encoding
-	:Content-ID:Content-Description;
-	bh=oGvLYfC9KdsDIJrVXasRel4XIcqrLmpUl9cXFRLAXeo=; t=1728367802; x=1729577402; 
-	b=oBOupMAzBBJFaMm+s1zUQvHw9b94hNrKM/GCfupgVBeQxArD7cI8jMxL1whH4ml0FN4WNxbtdOC
-	tom5YX+DHAw==;
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=josefsson.org; s=rsa2303; h=Content-Type:MIME-Version:Message-ID:
-	In-Reply-To:Date:References:Subject:Cc:To:From:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=oGvLYfC9KdsDIJrVXasRel4XIcqrLmpUl9cXFRLAXeo=; t=1728367802; x=1729577402; 
-	b=PsVbjRusGpidSkRz7516AZ8ck7D77oOJeXYuQkW2ggyeq1AFD6dBxtZ7lKsDm/zjYJ00QpqHE9e
-	TU0xO6y92OcA7ZqZ6EAYFH3Lfuet2G74kWMWfpMbU5eloHgDnUeRO/Tpm5v4a90MLzmD/9OcntQMv
-	EIsR+dBnFM63xvgKPbetOAGmObF0Vr5a66z/lh6MK60ZsPtK6HLezWdagexSAvI20ecygnDx73prx
-	m0x2X4/0LhGkSqWT3ni8m0NJY0uwu3FGrXSan1MXXxy6HP+U6lcmjBSQSkvn7gQoDx2i5DTMhLLRY
-	13EkGE/ejKEJ34a5UwPc450N7USjeG7AKEKzUAGQ/IaZTs+3ANx54Phu5LIWceO/XSgrg8zSP1DtP
-	pmlfL72fjRkOEGE/8swbN/B9SgOyyiUo20Awtlvjt/DjXZVWOK1GTObBMkit4vkQf6Rcqjr2k;
-From: Simon Josefsson <simon@josefsson.org>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com
-References: <Zv-9gAGM_X7QQShJ@suse.com> <878qv251x7.fsf@kaka.sjd.se>
-	<20241008025402.GA2904@openwall.com>
-OpenPGP: id=B1D2BD1375BECB784CF4F8C4D73CF638C53C06BE;
- url=https://josefsson.org/key-20190320.txt
-X-Hashcash: 1:23:241008:oss-security@lists.openwall.com::rEX2Z2qw29g9ZVs7:+4y
-X-Hashcash: 1:23:241008:solar@openwall.com::sausnt8R5+QJUpya:2E4b
-Date: Tue, 08 Oct 2024 08:10:17 +0200
-In-Reply-To: <20241008025402.GA2904@openwall.com> (Solar Designer's message of
-	"Tue, 8 Oct 2024 04:54:02 +0200")
-Message-ID: <878quzt99y.fsf@kaka.sjd.se>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+Received: (qmail 1249 invoked from network); 16 Nov 2020 11:43:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=SnK+gcPeLNPszBLf23tADD65HdZYy3qyXMsSK/JdP2k=;
+        b=jl6MxkQDFvLnE97JdueikgydVZgJccghJFyBBL/84aXf037kO/Y1EYMZq+fAioselc
+         GXur97lppWcQ3A3nUZlutCxyVZJ9wNK+zpNU07YrjBOnXq+8Nv4+OyQD9ytL1zlXn4zQ
+         HXEWi3KPLAX2D/X3fYShR8DlLZuMKoIMj540TEsIwRL51edMQCDwFXhk+0tmAHVkNWgr
+         l6Zdi06Ge2PpCTvKiwtMs8G1xUnLo3hKwZyV4kbrLNXmCS9DzxCSmGurqV+C1JyTgSGQ
+         yZda/XHg5+oNpLgazsosWHAxWrIXsoSISI9SKnZcSYA26JcBg7cDE1340qH0/jtGp66Y
+         nj0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=SnK+gcPeLNPszBLf23tADD65HdZYy3qyXMsSK/JdP2k=;
+        b=iePmHwDC5iDy/qbq10Rky5DpBBsx7Jj4I8UiLjoNuVSdOmvR3HFobeKTxJ61umnupz
+         MGY4kafl1IfE7gUC7RNE1pPla9qF6YOVaFsxyGLBow/AmBMG8JwoVkunIHSczzEYhecV
+         gIwYAox+eIICSgASDVGNlZoVpvXf48l+J8EEv8Wy8Xhd2o1RuV4hzOs8zAX3LPqGImM4
+         0TxaTD0KxBE5Y2LZQJP9limtG3eKS5tAb1CoqhXR9R9bv17JNWJZ6RuNgzqKuMJxC2hd
+         viAirLlkCkinOmKVVAFxCoFGRHkt2sxryB21uw7Eh+zP8zUYuhMF2hvNgmWbtzO5pmCF
+         QmdQ==
+X-Gm-Message-State: AOAM530l5y8thL50QSiqMbCiSNLg8xfff9dnBW/pz9kpN58jAgqhqHid
+	F+TOyDszf+JjcBEnZ//GKQpGqjxXbWnRNg==
+X-Google-Smtp-Source: ABdhPJwd3Idy1h+vmH7yBvBz1u7TVmS84LmrUmwzwXqqPt1DFEZ58ADdiijpmPNM20G/HUmX/kvrQg==
+X-Received: by 2002:a05:600c:286:: with SMTP id 6mr11501525wmk.125.1605527000554;
+        Mon, 16 Nov 2020 03:43:20 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Mon, 16 Nov 2020 12:43:18 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20201116114318.GA335292@eldamar.lan>
+References: <20201113133331.48185f9f@computer>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha256; protocol="application/pgp-signature"
-Subject: [oss-security] Re: CVE-2024-47191: Local root exploit in the PAM module pam_oath.so
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201113133331.48185f9f@computer>
+Subject: Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux
+ distros
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Solar Designer <solar@openwall.com> writes:
+On Fri, Nov 13, 2020 at 01:33:31PM +0100, Hanno Böck wrote:
+[...]
+> FWIW I recently tried to fuzz raptor again with the fix applied. I
+> quickly found another OOB issue
+> https://bugs.librdf.org/mantis/view.php?id=650
+> 
+> From the bug report:
+> 
+> A malformed input file can lead to a segfault due to an out of bounds
+> array access in raptor_xml_writer_start_element_common.
+> 
+> Bug happens in line 230 of raptor_xml_writer.c (current git):
+> https://github.com/dajobe/raptor/blob/master/src/raptor_xml_writer.c#L230
+> 
+> From looking at that code it seems to me it always expects
+> nspace_declarations_count to be lower than element->attribute_count,
+> however this input seems to create a different situation. I made an
+> attempt at a patch that throws an error in this situation (but please
+> review it, I am not familiar with what this code does and should do -
+> though the patch doesn't seem to introduce test failures).
+> 
+> (proposed patch, example file and stacktrace can be found attached to
+> the bugreport)
 
-> This link requires authentication.  I guess you meant to post:
->
-> https://gitlab.com/oath-toolkit/oath-toolkit/-/commit/95ef255e6a401949ce3=
-f67609bf8aac2029db418
+CVE-2020-25713 was assigned for this issue.
 
-Fixed, thank you!  The writeup is available here:
-
-https://www.nongnu.org/oath-toolkit/CVE-2024-47191.html
-
-> I note a few things:
->
-> 1. Neither the SUSE nor the upstream patches change the supplementary
-> groups.  SUSE patches fork() and then in the child setgid() and
-> setuid().  Upstream doesn't fork(), but switches with setegid() and
-> seteuid(), and then back.  If the intent is solely to avoid the need for
-> fchown(), then that's sufficient.  Hopefully, along with SUSE's openat()
-> and flags magic or with upstream's fopen(, "x"), nothing more is needed.
-> However, if the intent is to avoid even trying to access files in user's
-> directory with potentially excessive privileges, then supplementary
-> groups should also be switched or dropped.
->
-> I'm sorry I didn't get around to bringing this maybe-issue up in the
-> pre-disclosure thread on the distros list (which Johannes Segitz from
-> SUSE kindly started on September 27).  I feel it was not essential to
-> discuss/address pre-disclosure, and is fine to discuss in public now.
-
-Thanks for review and mentioning this!  I added some comments:
-
-https://gitlab.com/oath-toolkit/oath-toolkit/-/issues/47
-
-I noticed that that there are Linux-PAM helpers to drop privileges:
-
-https://github.com/linux-pam/linux-pam/blob/master/libpam/pam_modutil_priv.=
-c#L52
-
-I have found another implementation of this in yubico-pam:
-
-https://github.com/Yubico/yubico-pam/blob/master/drop_privs.c
-
-> 2. Switching task credentials from library code is tricky, given that
-> the program could have threads that don't expect this.  set*id() and
-> setgroups() libc calls would typically affect all threads.  On Linux,
-> it's possible to affect the current thread only, which e.g. we do in
-> tcb[1] by using setfs*id() and direct setgroups() syscall (the latter
-> only in our recent git code at this time, previously we used the libc
-> function).  I assume Simon is aware of the Linux specific way, but
-> deliberately chose not to do this in upstream oath-toolkit for
-> portability to non-Linux.
->
-> [1] https://www.openwall.com/tcb/ and https://github.com/openwall/tcb
-
-Thanks for the pointer!  Yes, even the mild use of POSIX APIs in liboath
-usersfile.c causes portability problems today, so I would like to avoid
-adding more and ideally even remove the current usersfile stuff since it
-doesn't belong in the core HOTP/TOTP library.
-
-The thread concern is worrying though, but I'm hoping usage of this API
-is not that widespread in any threaded applications.
-
-> 4. As Simon also noted:
->
->> SUSE's alternative patch and advisory can be found via:
->>=20
->> https://security.opensuse.org/2024/10/04/oath-toolkit-vulnerability.html
->>=20
->> It rely on Linux kernel specific features and uses fork() which was
->> determined to be contrary to the liboath design, which aims to be
->> portable to macOS and *BSD and beyond.
->
-> I agree fork() from library code is tricky, but not so much because of
-> portability concerns.
-
-Making fork() work on Windows from within a library is not that fun.
-
-> Again, the program using the library may not expect it to ever have an
-> extra child process.  Sure the library should use waitpid() on this
-> specific process, yet the program could receive unexpected SIGCHLD.
-> The combination of the program's threads and our fork() could also
-> have unexpected consequences.
->
-> In tcb, we chose to make usage of fork() a PAM module option, so that by
-> enabling it the distro or sysadmin acknowledges that it's acceptable in
-> the specific PAM configuration.  Our usage of fork() is for a different
-> reason, though: "Using this option one can be sure that after a call to
-> pam_end(3) there is no sensitive data left in the process' address
-> space."  I wonder if this property would also be relevant in
-> oath-toolkit patches if more processing is moved to the child process,
-> or if this would be excessive under the relevant threat models.
-
-Nice catch, I've opened an issue about this aspect:
-
-https://gitlab.com/oath-toolkit/oath-toolkit/-/issues/48
-
-Btw, do you have any thoughts on WHICH user to drop privileges to?  The
-SUSE patch drops privs to the credential file owner.  My patch drops
-privs to the PAM user that is being authenticated.  I think there are
-reasonable arguments for both choices, and for all reasonable
-configurations that I'm aware of, I don't think the choice matters.
-
-/Simon
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iIoEARYIADIWIQSjzJyHC50xCrrUzy9RcisI/kdFogUCZwTMyRQcc2ltb25Aam9z
-ZWZzc29uLm9yZwAKCRBRcisI/kdFosd7APwNv8Jo8igseAIDSpDcWC4z9kdFHuot
-WslTpoFCLthmzgD/ahnvMC2B0qkOrckGC7HINp3uzemxSKjiT4wdPqae6AA=
-=WRKk
------END PGP SIGNATURE-----
---=-=-=--
+Regards,
+Salvatore
