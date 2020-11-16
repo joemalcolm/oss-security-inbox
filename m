@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/07/4
-Message-ID: <CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>
-Date: Wed, 7 Oct 2020 21:00:35 +0300
-From: Georgi Guninski <gguninski@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: cate@...ian.org
-Subject: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/4
+Message-ID: <87eekt9l5k.fsf@gnu.org>
+Date: Mon, 16 Nov 2020 20:06:15 +0100
+From: Marius Bakke <marius@....org>
+To: "David A. Wheeler" <dwheeler@...eeler.com>, oss-security@...ts.openwall.com
+Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
 Content-Type: text/plain; charset=utf-8
 
-https://lists.debian.org/debian-security/2020/10/msg00000.html
+"David A. Wheeler" <dwheeler@...eeler.com> writes:
 
-===
-/home/loser is with permissions 755, default umask 0022
+> If you think that CVE assignment is still of “fluctuating reliability” I’d like to hear that argument
+> and get it fixed. It’s normally better to fix the standard process for doing something than
+> to create yet another process that runs in parallel. I’ve seen no recent evidence of this reliability issue.
 
-on multiuser machines this sucks much.
+Speaking as a co-maintainer of an understaffed GNU/Linux distribution
+who fixed this back in 2017[0], I preferred the "old days" when free
+software security problems were almost always discussed on this list.
 
-on a multiuser debian mirror we found a lot of data,
-including the wordpress password of the admin.
-===
+While there's no questioning the utility of CVEs in general (Guix can
+check the CVE list for any given package with 'guix lint -c cve PKG'),
+there are still unresolved CPE mappings, and I don't know how to get
+informed of new problems without checking specific (or all) packages.
 
-Then in the thread someone with @debian.org email explains
-to me it is a feature, not a bug.
+I tried following the CVE assignment RSS feed initially, but it was not
+suitable for human consumption.
 
-In a addition, they suggest to tell them the mirror, lol.
+How do other distros keep up with new CVE assignments?
 
-Are debian detached from reality?
+[0] https://git.savannah.gnu.org/cgit/guix.git/commit/?id=099c9fdae623e06e4fded8b0d4e55d9d5b56715b
+
+Download attachment "signature.asc" of type "application/pgp-signature" (508 bytes)
