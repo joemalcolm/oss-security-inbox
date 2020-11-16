@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/12
-Message-ID: <CAH8yC8mYOYPtSBf4Zd8oo=NKZiO2wbi6OdyTUZaBWBn5ONGuPg@mail.gmail.com>
-Date: Sat, 8 Aug 2020 14:17:04 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: Bastian Blank <bblank@...nkmo.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Voiding CVE-2020-16248
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/6
+Message-ID: <20201116201020.ta7nkdve2g4c5coq@yuggoth.org>
+Date: Mon, 16 Nov 2020 20:10:20 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Aug 8, 2020 at 1:46 PM Bastian Blank <bblank@...nkmo.de> wrote:
->
-> Hi Richard
->
-> On Sat, Aug 08, 2020 at 10:49:14AM +0200, Richard Hartmann wrote:
-> > the Prometheus project[1] has received a public "vulnerability"
-> > report[2] against what the reporter called SSRF, but what is the core
-> > functionality of blackbox_exporter[3]: The ability to trigger network
-> > probes over the network to monitor a target's availability.
->
-> Could you please explain yourself why you think this is not a
-> vulnerability?  Even wanted functuality can constitute a vulnerability
-> if looked on closer.
->
-> The software allows to send pre-defined requests to arbitrary targets
-> and extract at least parts of the response.  This is a typical SSRF.
-> Would you require to specify the allowed targets, noone would ask.
+On 2020-11-16 20:06:15 +0100 (+0100), Marius Bakke wrote:
+[...]
+> How do other distros keep up with new CVE assignments?
+[...]
 
-ICMP and the root user requirement makes blackbox_exporter a good target.
+While I can't speak from the distro side of things, the projects I
+work on have a policy that a copy of all security advisories are
+sent to this ML (and also possibly the private linux-distros ML
+first if the vulnerability is being fixed under embargo via
+coordinated disclosure).
+-- 
+Jeremy Stanley
 
-It also looks like a confused deputy to me, which also makes it a
-privilege escalation.
-
-Naively, it looks like a feature that provides an attacker
-reconnaissance capabilities and allows network enumeration.
-
-Jeff
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
