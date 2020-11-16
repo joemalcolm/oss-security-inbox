@@ -1,45 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/08/2
-Message-ID: <20200908024135.GA70954@wopr>
-Date: Mon, 7 Sep 2020 19:41:35 -0700
-From: Kurt H Maier <khm@...ops.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/3
+Message-ID: <CANnLRdjG_iOxa7L8ENK5fRAzRkZK5JTGBsdwC0ezdaxkMDdgRw@mail.gmail.com>
+Date: Mon, 16 Nov 2020 13:50:03 -0500
+From: Stephen John Smoogen <smooge@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Open Source Tool | vPrioritization | Risk Prioritization Framework
+Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 07, 2020 at 09:11:00PM -0400, Jeffrey Walton wrote:
-> Every US Federal agency I have worked with patches. The Social
-> Security Administration does it within 30 days, and the Treasury
-> Department does it in a matter of days. SSA is one of the largest
-> networks in the world with over 100,000 hosts. Treasury had over
-> 40,000 hosts.
+On Mon, 16 Nov 2020 at 12:44, David A. Wheeler <dwheeler@...eeler.com>
+wrote:
 
-I've worked with US Federal agencies that did not patch.  I was able to
-change some minds, and it was productive work of which I'm proud.  My
-success rate is significantly below 100%, although my current employer
-is largely sympathetic to this effort.
+>
+> > On Fri, Nov 13, 2020 at 01:33:31PM +0100, Hanno Böck wrote:
+> >> 3 years ago I reported a heap overflow vulnerability in raptor, an RDF
+> >> parsing library:
+> >> https://www.openwall.com/lists/oss-security/2017/06/07/1 <
+> https://www.openwall.com/lists/oss-security/2017/06/07/1> ,,,
+> >> Maybe noteworthy is that this didn't get a CVE in 2017. It seems many
+> >> distros rely on CVEs to get a process of backporting fixes rolling.
+> >> Given the fluctuating reliability of CVE assignments not sure this is
+> >> wise. I have now requested a CVE (CVE-2017-18926).
+> ...
+>
+> > On Nov 14, 2020, at 6:58 AM, Marcus Meissner <meissner@...e.de> wrote:
+> > I think the only thing you can do additional is to request a CVE.
+> >
+> > All tracking by everyone is using CVEs, this is the core identifier
+> > of the software security world.
+>
+> I think this is key. If you find a vulnerability, you typically need to
+> ensure that it gets
+> a CVE assigned if you want coordination & resolution to happen. It's how
+> coordination happens.
+> There are issues with CVEs, but I’ve never seen a CVE assignment
+> get dropped in recent years once it was requested properly.
+> Delayed, yes, but I know CVE assignments don’t take 3 years :-).
+> And yes, there are special issues with the Linux kernel, but this package
+> isn’t the Linux kernel.
+>
+> If you think that CVE assignment is still of “fluctuating reliability” I’d
+> like to hear that argument
+> and get it fixed. It’s normally better to fix the standard process for
+> doing something than
+> to create yet another process that runs in parallel. I’ve seen no recent
+> evidence of this reliability issue.
+>
+>
+My guess is that there was an assumption that if an email with a
+vulnerability was sent to this list, someone would do the CVE filing for
+them. Looking through my archives, there are times where someone posts a
+vulnerability and miraculously someone says shortly "Please use
+CVE-2XXX-YYYY for all future announcements." If you aren't on the lists all
+the time or know that various groups do this full time, there is no clue
+that there was some sort of extra work done to get that number... it just
+looks like it was done as a service. When a person posts a vulnerability
+and then gets no extra emails.. then it looks like a secret society. "Oh
+you forgot to shake Smooge's hand with your middle finger hooked and your
+pinky out... can't give you a CVE"
 
-I would love to patch every computer with the latest available software,
-but there remains a gulf between 100k data-entry terminals and computers
-that must interact with the physical world.  Machines that are hooked up
-to scientific or manufacturing equipment can be extremely difficult to
-patch without breaking things and no amount of haughty lecturing seems
-to fix the problem, despite same being readily available from multiple
-sources as far back as I can remember.  
 
-Risk assessment is for when you don't have absolute control over your
-environment.
 
-> Microsoft did a study years ago and found most hosts that are
-> compromised failed to install vendor patches.
 
-"Software vendor finds that everything would improve if everyone
-listened to software vendors" fails by a considerable distance to meet
-with my interest.  "Software vendor stops breaking the driver ABI on
-supported operating systems" would get a lot farther.  Suggesting this
-generally results in an earth-shattering avalanche of excuses about how
-hard programming is.
 
-In the meantime, we do what we can.
+> Sing this (to “Single Ladies”):
+> "If you like it, then you shoulda put a CVE on it...:"
+>
+> --- David A. Wheeler
+>
+>
 
-khm
+-- 
+Stephen J Smoogen.
+
