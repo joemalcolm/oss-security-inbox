@@ -1,33 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/20/1
-Message-ID: <20201120021528.pduwcibewbab47he@moyka>
-Date: Thu, 19 Nov 2020 18:15:28 -0800
-From: Ian Zimmerman <itz@...y.loosely.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/2
+Message-Id: <E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>
+Date: Mon, 16 Nov 2020 12:43:10 -0500
+From: "David A. Wheeler" <dwheeler@...eeler.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libass ass_outline.c signed integer overflow
+Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
 Content-Type: text/plain; charset=utf-8
 
-On 2020-11-19 11:54, David A. Wheeler wrote:
 
-> I read through the issue discussion. As best as I can tell, no one
-> filed for a CVE, so there was no CVE.  Did I misunderstand something?
+> On Fri, Nov 13, 2020 at 01:33:31PM +0100, Hanno Böck wrote:
+>> 3 years ago I reported a heap overflow vulnerability in raptor, an RDF
+>> parsing library:
+>> https://www.openwall.com/lists/oss-security/2017/06/07/1 <https://www.openwall.com/lists/oss-security/2017/06/07/1> ,,,
+>> Maybe noteworthy is that this didn't get a CVE in 2017. It seems many
+>> distros rely on CVEs to get a process of backporting fixes rolling.
+>> Given the fluctuating reliability of CVE assignments not sure this is
+>> wise. I have now requested a CVE (CVE-2017-18926).
+...
+
+> On Nov 14, 2020, at 6:58 AM, Marcus Meissner <meissner@...e.de> wrote:
+> I think the only thing you can do additional is to request a CVE.
 > 
-> If my understanding is correct, that is *NOT* a failure of the CVE
-> process.
+> All tracking by everyone is using CVEs, this is the core identifier
+> of the software security world.
 
-As it often happens to me, what I wrote was too brief to be clear to
-everyone.
+I think this is key. If you find a vulnerability, you typically need to ensure that it gets
+a CVE assigned if you want coordination & resolution to happen. It's how coordination happens.
+There are issues with CVEs, but I’ve never seen a CVE assignment
+get dropped in recent years once it was requested properly.
+Delayed, yes, but I know CVE assignments don’t take 3 years :-).
+And yes, there are special issues with the Linux kernel, but this package isn’t the Linux kernel.
 
-The longer version would be something like:
+If you think that CVE assignment is still of “fluctuating reliability” I’d like to hear that argument
+and get it fixed. It’s normally better to fix the standard process for doing something than
+to create yet another process that runs in parallel. I’ve seen no recent evidence of this reliability issue.
 
-  This is an example of a situation where no one filed for a CVE because
-  of perceived hurdles in the process, even if the facts didn't justify
-  the perception.
+Sing this (to “Single Ladies”):
+"If you like it, then you shoulda put a CVE on it...:"
 
-Now of course Moritz tells us there is in fact a CVE and indeed I can
-locate the issue in Debian's security tracker. I guess it has been
-judged not serious enough to need fixing in buster. I disagree but
-clearly that is up to the maintainers.
+--- David A. Wheeler
 
--- 
-Ian
+
