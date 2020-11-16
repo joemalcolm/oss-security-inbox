@@ -1,29 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/18/4
-Message-ID: <CAC1dCwU+88efiYG75neuPT3yaNEzWFjZxSoLEnV9PfB5yTyK4w@mail.gmail.com>
-Date: Wed, 18 Mar 2020 12:03:23 -0400
-From: Tim Allison <tallison@...che.org>
-To: "<dev@...a.apache.org>" <dev@...a.apache.org>, user@...a.apache.org, announce@...che.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [CVE-2020-1951] Infinite Loop (DoS) vulnerability in Apache Tika's PSDParser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/7
+Message-Id: <379461F4-66C3-4EAF-A762-BB3C14B9152F@gentoo.org>
+Date: Mon, 16 Nov 2020 19:49:01 +0000
+From: Sam James <sam@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
 Content-Type: text/plain; charset=utf-8
 
-TItle: [CVE-2020-1951] Infinite Loop (DoS) vulnerability in Apache Tika's
-PSDParser
-
-Severity: Medium
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: Apache Tika  1.0 to 1.23
-
-Description:
-A carefully crafted or corrupt PSD file can cause an infinite loop in Apache
-Tika's PSDParser in versions 1.0-1.23.
 
 
-Mitigation:
-Apache Tika users should upgrade to 1.24 or later.
+> On 16 Nov 2020, at 19:06, Marius Bakke <marius@....org> wrote:
+> 
+> "David A. Wheeler" <dwheeler@...eeler.com> writes:
+> 
+>> If you think that CVE assignment is still of “fluctuating reliability” I’d like to hear that argument
+>> and get it fixed. It’s normally better to fix the standard process for doing something than
+>> to create yet another process that runs in parallel. I’ve seen no recent evidence of this reliability issue.
+> 
+> Speaking as a co-maintainer of an understaffed GNU/Linux distribution
+> who fixed this back in 2017[0], I preferred the "old days" when free
+> software security problems were almost always discussed on this list.
+> 
+> While there's no questioning the utility of CVEs in general (Guix can
+> check the CVE list for any given package with 'guix lint -c cve PKG'),
+> there are still unresolved CPE mappings, and I don't know how to get
+> informed of new problems without checking specific (or all) packages.
+> 
+> I tried following the CVE assignment RSS feed initially, but it was not
+> suitable for human consumption.
+> 
 
-Credit:
-This issue was discovered by Tim Allison on the Apache Tika team.
+I share the same problems.
+
+We’ve taken to a mix in Gentoo:
+
+1) Automated import of RSS feeds (but this isn’t that fit for human consumption, especially with the large dumps of various corporate appliance CVEs every so often);
+
+2) I maintain a list of announcement mailing lists to read: https://wiki.gentoo.org/wiki/User:Sam/Security/Release_announcements. I skim announcements for security-related notes. But this doesn’t help if upstream is inactive;
+
+3) I subscribe to *other* distros’ security announcement mailing lists to help reduce the chance of missing anything;
+
+4) I check the Twitter @CVENew feed ~regularly;
+
+5) Repology (https://repology.org/) has the ability to say if it thinks a package is vulnerable. It’s not 100% accurate (it can’t be), but it helps;
+
+6) Of course, subscribe to this list (and linux-distros);
+
+7) Subscribe to other security-related mailing lists like fulldisclosure.
+
+There’s probably some other ways that I’m not thinking of right now. I’m still relatively new to the game so any tips are really welcome too.
+
+> How do other distros keep up with new CVE assignments?
+> 
+> [0] https://git.savannah.gnu.org/cgit/guix.git/commit/?id=099c9fdae623e06e4fded8b0d4e55d9d5b56715b
 
