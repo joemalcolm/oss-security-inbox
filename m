@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2681" "Friday" "24" "November" "2017" "22:59:12" "-0500" "Phil Pennock" "oss-security-phil@spodhuis.org" "<20171125035912.GA20323@breadbox.private.spodhuis.org>" "69" "[oss-security] RCE in Exim reported" nil nil nil "11" "2017112503:59:12" "[oss-security] RCE in Exim reported" (number mark "U       oss-security Nov 24   69/2681  " thread-indent "\"[oss-security] RCE in Exim reported\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2878" "Monday" "16" "November" "2020" "13:50:03" "-0500" "Stephen John Smoogen" "smooge@gmail.com" "<CANnLRdjG_iOxa7L8ENK5fRAzRkZK5JTGBsdwC0ezdaxkMDdgRw@mail.gmail.com>" "73" "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil "11" "2020111618:50:03" "[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" (number mark "U       smooge@gmail Nov 16   73/2878  " thread-indent "\"Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros\"\n") "<E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>" ("<20201113133331.48185f9f@computer>" "<20201114115850.GB5193@suse.de>" "<E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>") nil nil nil nil nil nil nil "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3403 invoked by uid 550); 25 Nov 2017 05:02:45 -0000
+Received: (qmail 22203 invoked by uid 550); 16 Nov 2020 19:40:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,94 +12,113 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24390 invoked from network); 25 Nov 2017 03:59:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=spodhuis.org; s=d201711; h=Content-Type:MIME-Version:Message-ID:Subject:To:
-	From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=T3LiOP89SvZylwbHf4L9yxyIyXmkB/6S38p/JOlhoM0=; b=Ner4X2rHogquTaQ7UVTuaFAAwD
-	RB94+G1CEz0/3Z7V2bEs8biROPNDmvAyon+idLpgtcUwz9pjKWm/HaU/OPR8BfThdH/q2QXfmSdxv
-	7G05cYlz1Tccf6jgInnbsvhb4SFHi6fFHqN29BANsyhHIHh/RN00Drt+1+nI6QB6cWPgIap0QoAWK
-	HkGyMkqv2AhD1zDVA0eodP87bsdC;
-Date: Fri, 24 Nov 2017 22:59:12 -0500
-From: Phil Pennock <oss-security-phil@spodhuis.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20171125035912.GA20323@breadbox.private.spodhuis.org>
+Received: (qmail 3433 invoked from network); 16 Nov 2020 18:50:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=bp+QrSxamzMsjGpeu47eTuR/AE4CJV4hXHzg2bskxwI=;
+        b=rkDoWq4Y1f0z1KqRlkRIP8WQkDX/kvRTcax8yvKya+iWjWpotSm5LZ0kkuGHAbMFkv
+         yXGCZ9ojOPMzvL0+GWxrlKC8YilMx1BySv/XDwkbbrPWC3iIyVK9ZMAbfux68N9OyTpT
+         qe8O/MQQWViI4sMPKJJ7Fp3omxZYx3B929sa+m1SkaSMZdbWjfXnJK3Et7KzmpOHmY8o
+         VbtAqK6+cJ/zbeilVu2VdbCjPhUbZXc9mYiK5lCnO3m6EAw7Ej1hZ5eTcvZEjQNl29aR
+         QNA6GmAd4dhH3rzKOmjF2+P/jvAnnhztFUcbGjVdqD/ZvX/DTQ76H4PMHjyql8r7JX3J
+         1A5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=bp+QrSxamzMsjGpeu47eTuR/AE4CJV4hXHzg2bskxwI=;
+        b=DN44dpA6naMM23jDPqsK1JYbUgpSXN2kAlY0C4JonM0tz5N9aO4MkFFomjLRLGUyNP
+         Vm+zI3QCShcA9WxC8ng68KtlghroBat2uwCzkVgwCZUInLh2vKzJc1BVyLCQDF7zS+eu
+         C9s1JdyURdJ+jVZtvHKaaOe5AV7pE4lGjScqnn3zCUz9PzaycdUth+PQePVdlANgf9+S
+         1626yt9eXbs3nSo5ejo/vzGTRwESptI1tPra8dioZEn6dTmXYe/oSP+xlTESXp9kL/qG
+         l9Ce/zOG3IJrB81XCTZzQmDh/xdbeK56hnhjHtTqfLJNIT/X2+dkTxcoChrF4hOW8jXu
+         kz4w==
+X-Gm-Message-State: AOAM533fqsjPDGi26tnI4Rf37lJXgN62LsBeC4AoOZ6vyJfBWt9LKE3I
+	HJ9n1/Rpww8cO6PYmFEQhqfisMeYVGOJwHjIoFzzHcdtpug=
+X-Google-Smtp-Source: ABdhPJzyjV1tFZppoaX6REaG3nNWQYLkEXdXqxBzN2kc1kzC6fE2xS0+t2IpU9Nsi6WuIj4wZes0MUJ4RLAAGF30hb0=
+X-Received: by 2002:a63:389:: with SMTP id 131mr519958pgd.128.1605552614990;
+ Mon, 16 Nov 2020 10:50:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="gKMricLos+KVdGMg"
-Content-Disposition: inline
-OpenPGP: url=https://www.security.spodhuis.org/PGP/keys/0x4D1E900E14C1CC04.asc
-Subject: [oss-security] RCE in Exim reported
+References: <20201113133331.48185f9f@computer> <20201114115850.GB5193@suse.de> <E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>
+In-Reply-To: <E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>
+From: Stephen John Smoogen <smooge@gmail.com>
+Date: Mon, 16 Nov 2020 13:50:03 -0500
+Message-ID: <CANnLRdjG_iOxa7L8ENK5fRAzRkZK5JTGBsdwC0ezdaxkMDdgRw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000048e72205b43dd99d"
+Subject: Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros
 
---gKMricLos+KVdGMg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--00000000000048e72205b43dd99d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-In Post-Thanksgiving mail-catchup, I see that the Exim Project was
-gifted with a couple of surprises in our public bugtracker on Thursday
-morning.  Complete with proof-of-concept small Python script.
+On Mon, 16 Nov 2020 at 12:44, David A. Wheeler <dwheeler@dwheeler.com>
+wrote:
 
-I've requested CVEs, don't have them yet.
+>
+> > On Fri, Nov 13, 2020 at 01:33:31PM +0100, Hanno B=C3=B6ck wrote:
+> >> 3 years ago I reported a heap overflow vulnerability in raptor, an RDF
+> >> parsing library:
+> >> https://www.openwall.com/lists/oss-security/2017/06/07/1 <
+> https://www.openwall.com/lists/oss-security/2017/06/07/1> ,,,
+> >> Maybe noteworthy is that this didn't get a CVE in 2017. It seems many
+> >> distros rely on CVEs to get a process of backporting fixes rolling.
+> >> Given the fluctuating reliability of CVE assignments not sure this is
+> >> wise. I have now requested a CVE (CVE-2017-18926).
+> ...
+>
+> > On Nov 14, 2020, at 6:58 AM, Marcus Meissner <meissner@suse.de> wrote:
+> > I think the only thing you can do additional is to request a CVE.
+> >
+> > All tracking by everyone is using CVEs, this is the core identifier
+> > of the software security world.
+>
+> I think this is key. If you find a vulnerability, you typically need to
+> ensure that it gets
+> a CVE assigned if you want coordination & resolution to happen. It's how
+> coordination happens.
+> There are issues with CVEs, but I=E2=80=99ve never seen a CVE assignment
+> get dropped in recent years once it was requested properly.
+> Delayed, yes, but I know CVE assignments don=E2=80=99t take 3 years :-).
+> And yes, there are special issues with the Linux kernel, but this package
+> isn=E2=80=99t the Linux kernel.
+>
+> If you think that CVE assignment is still of =E2=80=9Cfluctuating reliabi=
+lity=E2=80=9D I=E2=80=99d
+> like to hear that argument
+> and get it fixed. It=E2=80=99s normally better to fix the standard proces=
+s for
+> doing something than
+> to create yet another process that runs in parallel. I=E2=80=99ve seen no=
+ recent
+> evidence of this reliability issue.
+>
+>
+My guess is that there was an assumption that if an email with a
+vulnerability was sent to this list, someone would do the CVE filing for
+them. Looking through my archives, there are times where someone posts a
+vulnerability and miraculously someone says shortly "Please use
+CVE-2XXX-YYYY for all future announcements." If you aren't on the lists all
+the time or know that various groups do this full time, there is no clue
+that there was some sort of extra work done to get that number... it just
+looks like it was done as a service. When a person posts a vulnerability
+and then gets no extra emails.. then it looks like a secret society. "Oh
+you forgot to shake Smooge's hand with your middle finger hooked and your
+pinky out... can't give you a CVE"
 
-My mail to our announce list:
-  https://lists.exim.org/lurker/message/20171125.034842.d1d75cac.en.html
 
-Remote code execution in the first vulnerability, getting execution as
-the Exim run-time user.
 
-A complete mitigation is to disable advertising the CHUNKING extension,
-in which case an attempt to use the BDAT verb should result in:
 
-  503 BDAT command used when CHUNKING not advertised
 
-The instructions I wrote in the mail to our announce-list, were:
+> Sing this (to =E2=80=9CSingle Ladies=E2=80=9D):
+> "If you like it, then you shoulda put a CVE on it...:"
+>
+> --- David A. Wheeler
+>
+>
 
-} With immediate effect, please apply this workaround: if you are running
-} Exim 4.88 or newer (4.89 is current, 4.90 is upcoming) then in the main
-} section of your Exim configuration, set:
-}
-}   chunking_advertise_hosts =
-}
-} That's an empty value, nothing on the right of the equals. This
-} disables advertising the ESMTP CHUNKING extension, making the BDAT verb
-} unavailable and avoids letting an attacker apply the logic.
+--=20
+Stephen J Smoogen.
 
-Chunking support was introduced with Exim 4.88; the current release is
-4.89, 4.90 is in RC series now, it looks like a 2-line fix (written by
-Jeremy Harris) is probably right for the first issue.
-
-Public bugtracker links:
-
-  https://bugs.exim.org/show_bug.cgi?id=2199
-  https://bugs.exim.org/show_bug.cgi?id=2201
-
--Phil
-
---gKMricLos+KVdGMg
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYIAB0WIQROXBeef/xNv45sEy9REE5mjdBEgQUCWhjqhQAKCRBREE5mjdBE
-gWLSAP4nb0QTL4zufOf9i6uZ1ff+rEWGHGfNrOHbhlu7aJSSKgD+Ld4Zv2PqKuDV
-/+jQV1UJfQuqINab9Dp0/HczDdk0pgGJAjMEAQEIAB0WIQTGk6A04e1u6VTK4toT
-2tmcfkFRnAUCWhjqjwAKCRAT2tmcfkFRnE2OD/0TaWd45fueYyKmR9TOWk2fpsqf
-q0wqCgjLLxS2uyuS7wqMNhG2/RgV0UMPgbUsPxQ34GLFEke33ed3XmR9DUIgrIgs
-GY53xpqmniMNynt4ExEj9vr4sZZvgNPY3xSfIqgWE4HXGV5aGH3R03CNUwMdBwJ7
-cO51Ktm2ChFimHYaqL4biG0HCFOtMYow3dfhCcXdgZcPID/V26Xrqjjp+piG7T4w
-TZi4mTm5nynuU3oZssmRBE67ggIeUyewEbPWKeJHOniduN90SM54A6NDOb2o/KTL
-X4HTgTEDAAtaVTfrRIlgoioZ1N1+1rEjzokSrJ1VR4Ej6Lpkl2QIJ4HC0pvFRtqr
-V1kKTvtce4JK6tz2k2AgOCb9nc3jU6lxjObAK8RV+pmcW3S5CoF+3Ht7DrFMJ1qA
-gMeP3WshZ7yNAOHHHkim2//04wz/y4uvEysTjyWyR6cMmbHF3egyBxRfuXipCMoH
-b1dC3YROYT+9hyWPsO7MrxjW+IhK8XqKXklzzlzjRe8vSXoWZTGL4tnja1YJGuHE
-yePU9Cq2Ks/yEydZINGYeyAeC5ZDov16IxaEcmS9Iub9ZUMsVjZU580szVcZEgph
-BkiQ+hRBUN17G8NCgIWs7Xzv0wFSWnToTpbIIu+ZiTCkCjopdZq0GhV3PEoPwnrl
-4ufilVhSimWPwmXJ7A==
-=zuXm
------END PGP SIGNATURE-----
-
---gKMricLos+KVdGMg--
+--00000000000048e72205b43dd99d--
