@@ -1,83 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/17/4
-Message-ID: <CABBoStheRyxSVH2Bsr5gS_yQRDEGa0PtGBAE1fZO+z-1yxmgQg@mail.gmail.com>
-Date: Tue, 17 Nov 2020 11:30:45 -0500
-From: Ana McTaggart <amctagga@...hat.com>
-To: Ilya Dryomov <idryomov@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-25677 ceph: CEPHX_V2 replay attack protection lost
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/5
+Message-Id: <3113FCBB-7A3C-4D83-B4B5-3F1CE524EE8C@cmpct.info>
+Date: Mon, 16 Nov 2020 19:42:17 +0000
+From: Sam James <sam@...ct.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
 Content-Type: text/plain; charset=utf-8
 
-Correction. The correct CVE is CVE-2020-25660
-
-Ana McTaggart
-
-Red Hat Product Security
-
-Red Hat Remote <https://www.redhat.com>
 
 
-secalert@...hat.com for urgent response
+> On 16 Nov 2020, at 18:50, Stephen John Smoogen <smooge@...il.com> wrote:
+> 
+> On Mon, 16 Nov 2020 at 12:44, David A. Wheeler <dwheeler@...eeler.com>
+> wrote:
+> 
+>>> [snip]
+>> 
+>> I think this is key. If you find a vulnerability, you typically need to
+>> ensure that it gets
+>> a CVE assigned if you want coordination & resolution to happen. It's how
+>> coordination happens.
+>> There are issues with CVEs, but I’ve never seen a CVE assignment
+>> get dropped in recent years once it was requested properly.
+>> Delayed, yes, but I know CVE assignments don’t take 3 years :-).
+>> And yes, there are special issues with the Linux kernel, but this package
+>> isn’t the Linux kernel.
+>> 
+>> If you think that CVE assignment is still of “fluctuating reliability” I’d
+>> like to hear that argument
+>> and get it fixed. It’s normally better to fix the standard process for
+>> doing something than
+>> to create yet another process that runs in parallel. I’ve seen no recent
+>> evidence of this reliability issue.
+>> 
+>> 
+> My guess is that there was an assumption that if an email with a
+> vulnerability was sent to this list, someone would do the CVE filing for
+> them. Looking through my archives, there are times where someone posts a
+> vulnerability and miraculously someone says shortly "Please use
+> CVE-2XXX-YYYY for all future announcements." If you aren't on the lists all
+> the time or know that various groups do this full time, there is no clue
+> that there was some sort of extra work done to get that number... it just
+> looks like it was done as a service. When a person posts a vulnerability
+> and then gets no extra emails.. then it looks like a secret society. "Oh
+> you forgot to shake Smooge's hand with your middle finger hooked and your
+> pinky out... can't give you a CVE"
+> 
+> 
 
+There’s a webform where you can apply and the folks are quite good at replying
+with helpful comments & feedback if needed.
 
-amct@...hat.com
+But I can see why someone might get that impression.
 
-
-M: 7742790791     IM: amctagga
-
-
-Pronouns:They/Them/Theirs
-
-
-
-On Tue, Nov 17, 2020 at 9:10 AM Ana McTaggart <amctagga@...hat.com> wrote:
-
-> Dear all,
-> cephx authentication protocol does not verify ceph clients correctly, and
-> is vulnerable to replay attacks in nautilus and later. An attacker with
-> access to the Ceph cluster network can use this vulnerability to
-> authenticate with ceph service, via a packet sniffer. This allows them to
-> perform actions allowed by the ceph service. This is a reintroduction of
-> CVE-2018-1128[1], affecting msgr2 protocol. msgr 2 protocol is used for all
-> communication except for older clients that do not support msgr2 protocol.
-> msgr1 protocol is not affected.
->
-> This was introduced in commit to msgr2 321548010578 ("mon/MonClient: skip
-> CEPHX_V2 challenge if client doesn't support it") , due to commit
-> c58c5754dfd2 ("msg/async/ProtocolV1: use AuthServer and AuthClient") . This
-> results in nautilus and ceph being affected because commit c58c5754dfd2
-> wasn't backported to nautilus, and although msgr1 isn't affected in
-> nautilus, msgr 2 is the default. This made it so authorizer challenges
-> could be skipped for peers which did not support CEPHX_V2, unfortunately
-> making it so authorizer challenges are skipped for all peers in both msgr 1
-> and msgr2 cases, disabling the protection that was put in place in commit
-> f80b848d3f83 ("auth/cephx: add authorizer challenge", CVE-2018-1128).
->
-> Proposed Patch:
-> See attached.
->
-> We have assigned it a CVE of CVE-2020-25677 at Red Hat.
->
-> Credits to Ilya Dryomov
->
-> [1]https://www.cvedetails.com/cve/CVE-2018-1128/
->
-> Ana McTaggart
->
-> Red Hat Product Security
->
-> Red Hat Remote <https://www.redhat.com>
->
->
-> secalert@...hat.com for urgent response
->
->
-> amct@...hat.com
->
->
-> M: 7742790791     IM: amctagga
->
->
-> Pronouns:They/Them/Theirs
->
->
+> 
+> 
+> 
+>> Sing this (to “Single Ladies”):
+>> "If you like it, then you shoulda put a CVE on it...:"
+>> 
+>> --- David A. Wheeler
+>> 
+>> 
+> 
+> -- 
+> Stephen J Smoogen.
 
