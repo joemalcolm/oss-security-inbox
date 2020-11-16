@@ -1,33 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/10/1
-Message-ID: <CAH5JyZqaxXZGfSivNw-SMdCzY-x2nf2j_VWuC9=f5vOyRxnwow@mail.gmail.com>
-Date: Tue, 10 Nov 2020 13:11:24 +0000
-From: Kaxil Naik <kaxilnaik@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/8
+Message-ID: <20201116231142.GA2956665@millbarge>
+Date: Mon, 16 Nov 2020 23:11:42 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: dev@...flow.apache.org
-Subject: [CVE-2020-13927] - Insecure Default Configuration for Experimental API in Airflow < 1.10.11
+Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
 Content-Type: text/plain; charset=utf-8
 
-Versions Affected: <1.10.11
+On Mon, Nov 16, 2020 at 08:06:15PM +0100, Marius Bakke wrote:
+> I tried following the CVE assignment RSS feed initially, but it was not
+> suitable for human consumption.
+> 
+> How do other distros keep up with new CVE assignments?
 
-Description:
-The previous default setting for Airflow's Experimental API was to allow
-all API requests without authentication, but this
-poses security risks to users who miss this fact.
+We (Ubuntu security team) have weekly role rotations among the team. The
+person on CVE triage duty will use our tooling to download
 
+https://cve.mitre.org/data/downloads/allitems.xml.gz
+https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-recent.json.gz
+https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-2020.json.gz
+https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-2019.json.gz
+etc
 
->From Airflow 1.10.11 the default has been changed to deny all
-requests by default and is documented at
-https://airflow.apache.org/docs/1.10.11/security.html#api-authentication .
+We also pull from Debian's security team:
+https://salsa.debian.org/security-tracker-team/security-tracker.git
 
-Note this change fixes it for new installs but existing users need to
-change their config to default
-`[api] auth_backend = airflow.api.auth.backend.deny_all` as mentioned in
-the Updating Guide:
+We collect CVEs from this list using local mboxes.
 
-https://github.com/apache/airflow/blob/1.10.11/UPDATING.md#experimental-api-will-deny-all-request-by-default
+We collect CVEs from Red Hat's security announce list:
+https://www.redhat.com/archives/rhsa-announce/
+and oval feeds:
+https://www.redhat.com/security/data/oval/v2/RHEL8/
 
+Having a variety of inputs gives us some resiliency when one or another
+service is offline for whatever reason,
 
-Credits:
-Reported by Anonymous User
+I hope this helps.
 
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
