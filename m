@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2686" "Tuesday" "17" "July" "2018" "10:16:06" "-0400" "Justin Bull" "me@justinbull.ca" "<CAFB0D2SFn6Hc2NQcHrTc3d2Pmx0SgE37Y1LjxhGVEXhRprBr=g@mail.gmail.com>" "87" "[oss-security] [CVE-2018-1000211] Public apps can't revoke OAuth access & refresh tokens in Doorkeeper" nil nil nil "7" "2018071714:16:06" "[oss-security] [CVE-2018-1000211] Public apps can't revoke OAuth access & refresh tokens in Doorkeeper" (number mark "U       me@justinbul Jul 17   87/2686  " thread-indent "\"[oss-security] [CVE-2018-1000211] Public apps can't revoke OAuth access & refresh tokens in Doorkeeper\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1636" "Tuesday" "17" "November" "2020" "11:24:24" "+0100" "Marcus Meissner" "meissner@suse.de" "<20201117102424.GE28237@suse.de>" "39" "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil "11" "2020111710:24:24" "[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" (number mark "U       meissner@sus Nov 17   39/1636  " thread-indent "\"Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros\"\n") "<87eekt9l5k.fsf@gnu.org>" ("<20201113133331.48185f9f@computer>" "<20201114115850.GB5193@suse.de>" "<E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>" "<87eekt9l5k.fsf@gnu.org>") nil nil nil nil nil nil nil "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23767 invoked by uid 550); 17 Jul 2018 14:34:49 -0000
+Received: (qmail 31931 invoked by uid 550); 17 Nov 2020 10:24:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,127 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13389 invoked from network); 17 Jul 2018 14:16:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=justinbull-ca.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=z5CC9DPjhhVGILda0OCNvbAh/TW2iB1+ljH7MGfs/PE=;
-        b=Zcp2JlP/8out2ZMAyx3oc1y0bUkTat9l1QQrNt4HYmR0b86inJVy+fr1vWqepaDq5j
-         4yBWuYoVoM0l7cfu8pdlucTf6ie5AIlaG5jXw6/tzOnhzQI8d2/frOnlZO2oAtO9aiSl
-         QJ5lW1355kXLY5Kw5H9S9twD8Jg9Dk1doDvmZe16QrlYxElKo2xhIcu6H67WrMixoBsi
-         bWS+BY9aQNksstQepU4cNfHLZ7FwHI7rn8duoMsNmNww4Zf43edoo627hQ6A7x52hifX
-         BpeXi17BvtNM6TAw6+KCL7e9gCxXQ9gFKHcmjeh4RKA6/P5oIJPlSnrpWHHWXrUEOjHk
-         V0SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=z5CC9DPjhhVGILda0OCNvbAh/TW2iB1+ljH7MGfs/PE=;
-        b=teoLm1rUrNpgZBEPBSRp06TUrmovvh37OJ0448m2sjLYCg/RSkX0zelKZZ3z9biU3D
-         fbtdfTWZ9QPPAdfucMSI39bTyxwzZLZmk+eXSKo0d3NN9lMTAHWCeXi1ap+ADdTrjjDA
-         KNFurfbKN1v3f3W5zCKOqu4v9ih7irmz3YYi8iB5zcfIrLRk1rwcSXyO5/5JqywYkd5G
-         RlemdcpifshcXKdHn19FuU87ehTglb6EI1AZ5PMht2UybUnnCrDChgK48o3BQ+hkvHHL
-         mIcrkA6FKr2ELpFqQAZHO5oIJ7qRmp9fvf78crL63tySFLjPkFhlG0xJyYbKGA7NDCVm
-         4ZXw==
-X-Gm-Message-State: AOUpUlGmA15fosHlrTB5ehppCkLhqOpyZpriBVKsR16g1YdwCBUZaNNT
-	K0ZwYHtcNMF9U5gw0OPuVNKjY7g/zl3ESexQmx2FIyJjxA==
-X-Google-Smtp-Source: AAOMgpdLnhJf+RHTJX8rZWPUNrG9vfueItxWP9e5OdTrqf+ApRM/iASmGTjEVuQyTMTBzhaXd6KT1U24ZXZ6UDtXvJo=
-X-Received: by 2002:adf:a541:: with SMTP id j1-v6mr1672406wrb.155.1531836986582;
- Tue, 17 Jul 2018 07:16:26 -0700 (PDT)
+Received: (qmail 31910 invoked from network); 17 Nov 2020 10:24:34 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Tue, 17 Nov 2020 11:24:24 +0100
+From: Marcus Meissner <meissner@suse.de>
+To: oss-security@lists.openwall.com
+Cc: "David A. Wheeler" <dwheeler@dwheeler.com>
+Message-ID: <20201117102424.GE28237@suse.de>
+References: <20201113133331.48185f9f@computer>
+ <20201114115850.GB5193@suse.de>
+ <E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>
+ <87eekt9l5k.fsf@gnu.org>
 MIME-Version: 1.0
-X-Originating-IP: [76.9.198.110]
-From: Justin Bull <me@justinbull.ca>
-Date: Tue, 17 Jul 2018 10:16:06 -0400
-Message-ID: <CAFB0D2SFn6Hc2NQcHrTc3d2Pmx0SgE37Y1LjxhGVEXhRprBr=g@mail.gmail.com>
-To: oss-security@lists.openwall.com, bugtraq@securityfocus.com, 
-	fulldisclosure@seclists.org
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [CVE-2018-1000211] Public apps can't revoke OAuth access & refresh
- tokens in Doorkeeper
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87eekt9l5k.fsf@gnu.org>
+Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
+ =?iso-8859-1?Q?many_GmbH=2C_Maxfeldstr=2E_5=2C_90409_Nuernberg=2C_Germany?=
+ =?iso-8859-1?Q?=2C_GF=3A_Felix_Imend=F6rffer=2C_HRB_36809=2C_AG_N=FCrnber?=
+ =?iso-8859-1?Q?g?=
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux
+ distros
 
-Good morning everyone,
+On Mon, Nov 16, 2020 at 08:06:15PM +0100, Marius Bakke wrote:
+> "David A. Wheeler" <dwheeler@dwheeler.com> writes:
+> 
+> > If you think that CVE assignment is still of “fluctuating reliability” I’d like to hear that argument
+> > and get it fixed. It’s normally better to fix the standard process for doing something than
+> > to create yet another process that runs in parallel. I’ve seen no recent evidence of this reliability issue.
+> 
+> Speaking as a co-maintainer of an understaffed GNU/Linux distribution
+> who fixed this back in 2017[0], I preferred the "old days" when free
+> software security problems were almost always discussed on this list.
+> 
+> While there's no questioning the utility of CVEs in general (Guix can
+> check the CVE list for any given package with 'guix lint -c cve PKG'),
+> there are still unresolved CPE mappings, and I don't know how to get
+> informed of new problems without checking specific (or all) packages.
+> 
+> I tried following the CVE assignment RSS feed initially, but it was not
+> suitable for human consumption.
+> 
+> How do other distros keep up with new CVE assignments?
 
-A security bulletin for all of you.
+SUSE has an internal ticket system like tool that fetches from various
+sources:
 
-Software:
---------
-Doorkeeper (https://github.com/doorkeeper-gem/doorkeeper)
+- NVD
+- SUSE Bugzilla
+- Oracle CPU CVRF feeds
+- Redhat, Canonical trackers
 
-Description:
-----------
-Doorkeeper is an OAuth 2 provider for Rails written in Ruby.
+And presents this as ticketstyle input.
 
-Affected Versions:
----------------
-4.2.0 - 4.3.2
-5.0.0.rc1
+We have assigned engineers going through all incoming ones, reviewing,
+associating packages, codestreams and products, and CVSS v3.1 ratings in this
+tool and opening Bugreports in our Bugzilla for our packagers.
 
-Fixed Versions:
--------------
-4.4.0
-5.0.0.rc2
+Without some ticketing system like tooling you will not be able to keep up
+these days.
 
-Problem:
---------
-
-Any OAuth application that uses public/non-confidential authentication when
-interacting with Doorkeeper is unable to revoke its tokens when calling the
-revocation endpoint.
-
-A bug in the token revocation API causes it to try to authenticate the public
-OAuth client as if it was a confidential app. Because of this, the token is
-never revoked.
-
-If Doorkeeper is used to facilitate public OAuth apps and leverage token
-revocation functionality (RFC 7009[1]), upgrade to the patched versions
-immediately.
-
-Impact:
--------
-
-All public, non-confidential clients respecting the RFC will not have their
-access or refresh tokens revoked when sending a valid, well-formed &
-unauthenticated revocation request to doorkeeper.
-
-Any such clients relying on Doorkeeper's revocation functionality are
-susceptible to a session replay attack, even after the victim terminates their
-session via a revocation/log out.
-
-1. Attacker gains access token via any acceptable means (MiTM, physical
-   computer access, bug in client code, etc.)
-2. Victim logs out/attempts to revoke the access token
-3. Attacker is not affected, as the token is still valid for the duration of
-   its lifespan. Furthermore, the refresh token can be used to extend the
-   attacker's privileged access.
-
-This scenario is captured under the OWASP Top 10 (2013)'s A2: Broken
-Authentication and Session Management as a vulnerability[2].
-
-Solution:
----------
-
-Doorkeeper needed a structural update so it is able to define which OAuth
-client application is intended to be public or confidential.
-
-With that now available, the tokens revocation API knows to either enforce
-authentication (as required for confidential clients) or accept just the client
-ID (as is the case for a public client)[1].
-
-See the following PRs for more info:
-
-* https://github.com/doorkeeper-gem/doorkeeper/pull/1119
-* https://github.com/doorkeeper-gem/doorkeeper/pull/1031
-* https://github.com/doorkeeper-gem/doorkeeper/issues/891
-
-Credit:
--------
-All credit to Roberto Ostinelli[3] for discovery.
-
-Thanks to the Distributed Weakness Filing Project for a swift assignment of a
-CVE identifier (CVE-2018-1000211).
-
-References:
------------
-
-[1]: https://tools.ietf.org/html/rfc7009
-[2]: https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management
-[3]: https://github.com/ostinelli
+Ciao, Marcus
