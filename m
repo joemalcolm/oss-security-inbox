@@ -1,31 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/14/3
-Message-ID: <20200514102117.78d600ac@computer>
-Date: Thu, 14 May 2020 10:21:17 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: XSS in BigBlueButton < 2.2.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/17/4
+Message-ID: <CABBoStheRyxSVH2Bsr5gS_yQRDEGa0PtGBAE1fZO+z-1yxmgQg@mail.gmail.com>
+Date: Tue, 17 Nov 2020 11:30:45 -0500
+From: Ana McTaggart <amctagga@...hat.com>
+To: Ilya Dryomov <idryomov@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2020-25677 ceph: CEPHX_V2 replay attack protection lost
 Content-Type: text/plain; charset=utf-8
 
-BigBlueButton was vulnerable to Cross Site Scripting in the
-Presentation upload.
+Correction. The correct CVE is CVE-2020-25660
 
-When one uploads a presentation that is an HTML payload, but named as
-an image (e.g. "foo.png") and allows download the download would be
-served with an HTML mime type and executed in the browser.
+Ana McTaggart
 
-Proof of concept:
-* create file named foo.png with content:
-<html><script>alert(document.domain)</script>
-* Upload as presentation, allow download.
-* Click on download.
+Red Hat Product Security
 
-I reported this to the BigBlueButton developers, but was informed that
-at this point it was already fixed. It was previously reported here [1].
+Red Hat Remote <https://www.redhat.com>
 
 
-[1] https://github.com/bigbluebutton/bigbluebutton/pull/9102
+secalert@...hat.com for urgent response
 
--- 
-Hanno Böck
-https://hboeck.de/
+
+amct@...hat.com
+
+
+M: 7742790791     IM: amctagga
+
+
+Pronouns:They/Them/Theirs
+
+
+
+On Tue, Nov 17, 2020 at 9:10 AM Ana McTaggart <amctagga@...hat.com> wrote:
+
+> Dear all,
+> cephx authentication protocol does not verify ceph clients correctly, and
+> is vulnerable to replay attacks in nautilus and later. An attacker with
+> access to the Ceph cluster network can use this vulnerability to
+> authenticate with ceph service, via a packet sniffer. This allows them to
+> perform actions allowed by the ceph service. This is a reintroduction of
+> CVE-2018-1128[1], affecting msgr2 protocol. msgr 2 protocol is used for all
+> communication except for older clients that do not support msgr2 protocol.
+> msgr1 protocol is not affected.
+>
+> This was introduced in commit to msgr2 321548010578 ("mon/MonClient: skip
+> CEPHX_V2 challenge if client doesn't support it") , due to commit
+> c58c5754dfd2 ("msg/async/ProtocolV1: use AuthServer and AuthClient") . This
+> results in nautilus and ceph being affected because commit c58c5754dfd2
+> wasn't backported to nautilus, and although msgr1 isn't affected in
+> nautilus, msgr 2 is the default. This made it so authorizer challenges
+> could be skipped for peers which did not support CEPHX_V2, unfortunately
+> making it so authorizer challenges are skipped for all peers in both msgr 1
+> and msgr2 cases, disabling the protection that was put in place in commit
+> f80b848d3f83 ("auth/cephx: add authorizer challenge", CVE-2018-1128).
+>
+> Proposed Patch:
+> See attached.
+>
+> We have assigned it a CVE of CVE-2020-25677 at Red Hat.
+>
+> Credits to Ilya Dryomov
+>
+> [1]https://www.cvedetails.com/cve/CVE-2018-1128/
+>
+> Ana McTaggart
+>
+> Red Hat Product Security
+>
+> Red Hat Remote <https://www.redhat.com>
+>
+>
+> secalert@...hat.com for urgent response
+>
+>
+> amct@...hat.com
+>
+>
+> M: 7742790791     IM: amctagga
+>
+>
+> Pronouns:They/Them/Theirs
+>
+>
+
