@@ -1,4 +1,9 @@
-Received: (qmail 21612 invoked by uid 550); 7 Apr 2026 14:40:46 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1488" "Tuesday" "17" "November" "2020" "11:35:21" "+0100" "Morten Linderud" "foxboron@archlinux.org" "<20201117103521.3m5bpqtcbpeuirpg@anathema>" "35" "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil "11" "2020111710:35:21" "[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" (number mark "U       foxboron@arc Nov 17   35/1488  " thread-indent "\"Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros\"\n") "<87eekt9l5k.fsf@gnu.org>" ("<20201113133331.48185f9f@computer>" "<20201114115850.GB5193@suse.de>" "<E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>" "<87eekt9l5k.fsf@gnu.org>") nil nil nil nil nil nil nil "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25872 invoked by uid 550); 17 Nov 2020 11:03:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,55 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13923 invoked from network); 7 Apr 2026 13:58:58 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Michael Semb Wever <mck@apache.org>
+Received: (qmail 15526 invoked from network); 17 Nov 2020 10:35:36 -0000
+Authentication-Results: linderud.pw; dkim=none; dkim-atps=neutral
+Date: Tue, 17 Nov 2020 11:35:21 +0100
+From: Morten Linderud <foxboron@archlinux.org>
 To: oss-security@lists.openwall.com
-Message-ID: <7768d3d7-10e2-c605-706a-a639c55b193f@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 07 Apr 2026 13:57:47 +0000
+Cc: "David A. Wheeler" <dwheeler@dwheeler.com>
+Message-ID: <20201117103521.3m5bpqtcbpeuirpg@anathema>
+References: <20201113133331.48185f9f@computer>
+ <20201114115850.GB5193@suse.de>
+ <E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>
+ <87eekt9l5k.fsf@gnu.org>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-27315: Apache Cassandra: cqlsh history sensitive
- information leak 
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87eekt9l5k.fsf@gnu.org>
+Subject: Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux
+ distros
 
-Severity: low=20
+On Mon, Nov 16, 2020 at 08:06:15PM +0100, Marius Bakke wrote:
+> I tried following the CVE assignment RSS feed initially, but it was not
+> suitable for human consumption.
+> 
+> How do other distros keep up with new CVE assignments?
 
-Affected versions:
+Depends. Commercial distributions like Ubuntu, SUSE or RedHat keeps up mostly(?)
+fine by throwing money on the problem. The story is very different on volunteer
+distributions.
 
-- Apache Cassandra (apache-cassandra) 4.0 through 4.0.19
+Arch Linux is unable to keep up.
 
-Description:
+Consuming the CVE feeds in any structured way takes quite a bit of effort, and
+then you need the manpower to wade through the assignments. Even if you did
+manage to do all this, there might not be a clear reference of the fix in
+question. For all you know the assigned CVE is only for the vulnerability and
+there is no fix written yet. You simply do not know.
 
-Sensitive Information Leak in cqlsh in Apache Cassandra 4.0 allows access t=
-o sensitive information, like passwords, from previously executed cqlsh com=
-mand via =C2=A0~/.cassandra/cqlsh_history=C2=A0local file access.
+For Arch Linux it's a manpower problem handling the CVEs and writing advisories
+for the published packages, along with things sometimes not being very easy to
+fix for package maintainers. It is very much a best effort basis.
 
-Users are recommended to upgrade to version 4.0.20, which fixes this issue.
+Severe issues gets handled in a timely fashion, but it always depends on the
+time available of the volunteers.
 
---
-Description: Cassandra's command-line tool, cqlsh, provides a command histo=
-ry feature that allows users to recall previously executed commands using t=
-he up/down arrow keys. These history records are saved in the ~/.cassandra/=
-cqlsh_history file in the user's home directory.
+I think a lot can be solved with information sharing and better tooling. There
+was an attempt to have an shared IRC channel for distribution security teams,
+and I think initiatives like the OpenSSF vulnerability disclosure WG are
+important for this.
 
-However, cqlsh does not redact sensitive information when saving command hi=
-story. This means that if a user executes operations involving passwords (s=
-uch as logging in or creating users) within cqlsh, these passwords are perm=
-anently stored in cleartext in the history file on the disk.
+https://github.com/ossf/wg-vulnerability-disclosures
 
-This issue is being tracked as CASSANDRA-21180=20
-
-Credit:
-
-Youlong Chen, Institute of Computing Technology, Chinese Academy of Science=
-s (reporter)
-
-References:
-
-https://issues.apache.org/jira/browse/CASSANDRA-21180
-https://cassandra.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-27315
-https://issues.apache.org/jira/browse/CASSANDRA-21180
-
+-- 
+Morten Linderud
+PGP: 9C02FF419FECBE16
