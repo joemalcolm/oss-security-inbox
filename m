@@ -1,42 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/12/1
-Message-ID: <77e0eda865a892045c325dea268c0fa92995343e.camel@apache.org>
-Date: Mon, 11 May 2020 14:28:56 -0700
-From: Brennan Ashton <btashton@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/17/2
+Message-ID: <20201117103521.3m5bpqtcbpeuirpg@anathema>
+Date: Tue, 17 Nov 2020 11:35:21 +0100
+From: Morten Linderud <foxboron@...hlinux.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-1939] Apache NuttX optional/example ftpd program NULL pointer bug
+Cc: "David A. Wheeler" <dwheeler@...eeler.com>
+Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-1939: Apache NuttX optional/example ftpd program NULL pointer
-bug
+On Mon, Nov 16, 2020 at 08:06:15PM +0100, Marius Bakke wrote:
+> I tried following the CVE assignment RSS feed initially, but it was not
+> suitable for human consumption.
+> 
+> How do other distros keep up with new CVE assignments?
 
-Severity: Important
+Depends. Commercial distributions like Ubuntu, SUSE or RedHat keeps up mostly(?)
+fine by throwing money on the problem. The story is very different on volunteer
+distributions.
 
-Vendor:
-Apache NuttX (Incubating)
+Arch Linux is unable to keep up.
 
-Versions Affected:
-6.15 to 8.2 (all pre-date NuttX joining the Apache.org Incubator)
+Consuming the CVE feeds in any structured way takes quite a bit of effort, and
+then you need the manpower to wade through the assignments. Even if you did
+manage to do all this, there might not be a clear reference of the fix in
+question. For all you know the assigned CVE is only for the vulnerability and
+there is no fix written yet. You simply do not know.
 
-Description:
-The Apache NuttX (Incubating) project provides an optional separate
-"apps" repository which contains various optional components and
-example programs. One of these, ftpd, had a NULL pointer dereference
-bug. The NuttX RTOS itself is not affected. Users of the optional apps
-repository are affected only if they have enabled ftpd.
+For Arch Linux it's a manpower problem handling the CVEs and writing advisories
+for the published packages, along with things sometimes not being very easy to
+fix for package maintainers. It is very much a best effort basis.
 
-Mitigation:
-Users of affected versions should upgrade to 9.0.0 or apply the
-following patch:
-https://patch-diff.githubusercontent.com/raw/apache/incubator-nuttx-apps/pull/10.patch
+Severe issues gets handled in a timely fashion, but it always depends on the
+time available of the volunteers.
 
-Credit:
-This issue was discovered by Jakub Botwicz of Samsung R&D Poland.
+I think a lot can be solved with information sharing and better tooling. There
+was an attempt to have an shared IRC channel for distribution security teams,
+and I think initiatives like the OpenSSF vulnerability disclosure WG are
+important for this.
 
-References:
-https://bitbucket.org/nuttx/apps-old/issues/15/null-dereference-in-ftp-size-command
-https://github.com/apache/incubator-nuttx-apps/pull/10
+https://github.com/ossf/wg-vulnerability-disclosures
 
-Regards,
-Brennan Ashton
-
+-- 
+Morten Linderud
+PGP: 9C02FF419FECBE16
