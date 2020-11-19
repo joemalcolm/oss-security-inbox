@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/10/5
-Message-ID: <CAJvTdK=tZjaiCaS=1=L=r0ZKg16jLS0OMqQ3bfxmhnopMo59Gw@mail.gmail.com>
-Date: Tue, 10 Nov 2020 13:37:31 -0500
-From: Len Brown <lenb@...nel.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-8694 RAPL power meter, Linux intel_powercap
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/20/4
+Message-ID: <20201119234717.GA18029@oevtugenva.nrevsny.pk>
+Date: Thu, 19 Nov 2020 18:47:22 -0500
+From: Rich Felker <dalias@...c.org>
+To: musl@...ts.openwall.com, oss-security@...ts.openwall.com
+Subject: CVE-2020-28928: musl libc: wcsnrtombs destination buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-FYI,
+The wcsnrtombs function in all musl libc versions up through 1.2.1 has
+been found to have multiple bugs in handling of destination buffer
+size when limiting the input character count, which can lead to
+infinite loop with no forward progress (no overflow) or writing past
+the end of the destination buffera.
 
-Today Linux was patched:
+This function is not used internally in musl and is not widely used,
+but does appear in some applications. The non-input-limiting form
+wcsrtombs is not affected.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=949dd0104c496fa7c14991a23c03c62e44637e71
+All users of musl 1.2.1 and prior versions should apply the attached
+patch, which replaces the overly complex and erroneous implementation.
+The upcoming 1.2.2 release will adopt this new implementation.
 
-to help address the vulnerability of employing the hardware RAPL power
-meter in a side-channel attack.
-
-https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00389.html
-
-thanks,
-Len Brown, Intel Open Source Technology Center
+View attachment "wcsnrtombs-cve-2020-28928.diff" of type "text/plain" (1373 bytes)
