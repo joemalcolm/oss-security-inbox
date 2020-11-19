@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/10/1
-Message-ID: <CACmp6kpAsk8fefZNCLNFSinfSC9Xyyr_wVkc01omALUMJhbE+A@mail.gmail.com>
-Date: Sun, 10 May 2020 13:21:33 -0500
-From: Matt Sicker <mattsicker@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/19/2
+Message-ID: <20201119063857.sxqn3n4kbpdvyf3l@moyka>
+Date: Wed, 18 Nov 2020 22:38:57 -0800
+From: Ian Zimmerman <itz@...y.loosely.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2018-1285] XXE vulnerability in Apache log4net
+Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
 Content-Type: text/plain; charset=utf-8
 
-Summary: Apache log4net does not disable XML external entities when
-parsing log4net configuration files. This could allow for XXE-based
-attacks in applications that accept arbitrary configuration files from
-users. [1]
+On 2020-11-15 09:19, Dave Horsfall wrote:
 
-Affected: log4net up to 2.0.8
+>     http://nmap.org/mailman/listinfo/fulldisclosure
+> 
+> It seems to continue the tradition: fix it, or else...
 
-Mitigation: as there are no further releases of log4net beyond 2.0.8,
-and the Logging Services PMC has voted [2] to mark the project
-dormant, users should not allow arbitrary configuration files to be
-specified from untrusted sources. While this is arguably a
-vulnerability, misuse of any framework allowing untrusted input to
-configure things is always a bad idea.
-
-[1]: https://issues.apache.org/jira/browse/LOG4NET-575
-[2]: https://lists.apache.org/thread.html/r6691036b0f85419e8bc97f6f522b8c353dd250b0a329164167b021a6%40%3Cdev.logging.apache.org%3E
+I am not familiar with that list, but a quick glance into the archive
+makes me think it is only meant to cover commercial products, while
+raptor is part of the redland RDF community project.
 
 -- 
-Matt Sicker
-Secretary, Apache Software Foundation
-VP Logging Services, ASF
+Ian
