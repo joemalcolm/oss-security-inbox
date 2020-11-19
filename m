@@ -1,43 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/2
-Message-Id: <E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>
-Date: Mon, 16 Nov 2020 12:43:10 -0500
-From: "David A. Wheeler" <dwheeler@...eeler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/19/4
+Message-ID: <7c4034ea-f116-808e-bcb3-749cd3e35e34@gmx.ch>
+Date: Thu, 19 Nov 2020 14:51:06 +0000
+From: sjw@....ch
 To: oss-security@...ts.openwall.com
-Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
+Subject: Unpatched XSS in Redmine 4.1
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-> On Fri, Nov 13, 2020 at 01:33:31PM +0100, Hanno Böck wrote:
->> 3 years ago I reported a heap overflow vulnerability in raptor, an RDF
->> parsing library:
->> https://www.openwall.com/lists/oss-security/2017/06/07/1 <https://www.openwall.com/lists/oss-security/2017/06/07/1> ,,,
->> Maybe noteworthy is that this didn't get a CVE in 2017. It seems many
->> distros rely on CVEs to get a process of backporting fixes rolling.
->> Given the fluctuating reliability of CVE assignments not sure this is
->> wise. I have now requested a CVE (CVE-2017-18926).
-...
+This is a heads up about a public, unpatched XSS vulnerability in
+Redmine 4.1.
 
-> On Nov 14, 2020, at 6:58 AM, Marcus Meissner <meissner@...e.de> wrote:
-> I think the only thing you can do additional is to request a CVE.
-> 
-> All tracking by everyone is using CVEs, this is the core identifier
-> of the software security world.
+About 3 months ago, a public issue [1] has been reported in the Redmine
+bug tracker regarding unsanitized HTML tags. This basically means that
+you can inject any HTML code in issue titles, including JavaScript.
+I've successfully verified this on Redmine 4.1. There's a (untested)
+patch attached in the issue.
 
-I think this is key. If you find a vulnerability, you typically need to ensure that it gets
-a CVE assigned if you want coordination & resolution to happen. It's how coordination happens.
-There are issues with CVEs, but I’ve never seen a CVE assignment
-get dropped in recent years once it was requested properly.
-Delayed, yes, but I know CVE assignments don’t take 3 years :-).
-And yes, there are special issues with the Linux kernel, but this package isn’t the Linux kernel.
+I've also sent this to the Redmine security team but since there was no
+response from the maintainers so far and the issue is already public for
+a long time I'm posting this here to make people aware of it.
 
-If you think that CVE assignment is still of “fluctuating reliability” I’d like to hear that argument
-and get it fixed. It’s normally better to fix the standard process for doing something than
-to create yet another process that runs in parallel. I’ve seen no recent evidence of this reliability issue.
-
-Sing this (to “Single Ladies”):
-"If you like it, then you shoulda put a CVE on it...:"
-
---- David A. Wheeler
+Best regards
 
 
+[1] https://redmine.org/issues/33846
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
