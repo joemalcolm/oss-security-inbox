@@ -1,75 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/07/3
-Message-Id: <998BFA97-3645-4239-9DB9-99919CB5606D@beckweb.net>
-Date: Tue, 7 Apr 2020 14:19:48 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/19/7
+Message-ID: <20201119185104.GD7401@pisco.westfalen.local>
+Date: Thu, 19 Nov 2020 19:51:04 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: libass ass_outline.c signed integer overflow
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+On Thu, Nov 19, 2020 at 11:54:07AM -0500, David A. Wheeler wrote:
+> >> In `ass_outline_construct`'s call to `outline_stroke` a signed integer
+> >> overflow happens *(undefined behaviour)*. On my machine signed overflow
+> >> happens to wrap around to a negative value, thus failing the assert.
+> >> https://github.com/libass/libass/issues/431
+> >> 
+> >> https://github.com/libass/libass/pull/432
+> > 
+> > I have followed the links above, and this seems to be an example of a
+> > situation where the CVE process has failed. It is still not fixed in
+> > Debian, possibly for that reason. I'll report a Debian bug today.
+> 
+> I read through the issue discussion. As best as I can tell, no one filed for a CVE, so there was no CVE.
+> Did I misunderstand something?
+> 
+> If my understanding is correct, that is *NOT* a failure of the CVE process.
 
-The following releases contain fixes for security vulnerabilities:
+Yes, everything worked as designed here. This is CVE-2020-26682
 
-* AWSEB Deployment Plugin 0.3.20
-* Code Coverage API Plugin 1.1.5
-* FitNesse Plugin 1.33
-* Gatling Plugin 1.3.0
-* useMango Runner Plugin 1.5
-
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-04-07/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1699 / CVE-2020-2172
-Code Coverage API Plugin 1.1.4 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks. This allows a user
-able to control the input files for the "Publish Coverage Report"
-post-build step to have Jenkins parse a crafted file that uses external
-entities for extraction of secrets from the Jenkins master or server-side
-request forgery.
-
-
-SECURITY-1633 / CVE-2020-2173
-Gatling Plugin 1.2.7 and earlier serves Gatling reports in a manner that
-bypasses the `Content-Security-Policy` protection introduced in Jenkins
-1.641 and 1.625.3. This results in a cross-site scripting (XSS)
-vulnerability exploitable by users able to change report content.
-
-
-SECURITY-1769 / CVE-2020-2174
-AWSEB Deployment Plugin 0.3.19 and earlier does not escape various values
-printed as part of form validation output.
-
-This results in a reflected cross-site scripting (XSS) vulnerability.
-
-
-SECURITY-1801 / CVE-2020-2175
-FitNesse Plugin 1.31 and earlier does not correctly escape report contents
-before showing them on the Jenkins UI.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by users able to control the XML input files processed by the
-plugin.
-
-
-SECURITY-1780 / CVE-2020-2176
-Multiple form validation endpoints in useMango Runner Plugin 1.4 and
-earlier do not escape values received from the useMango service.
-
-This results in a cross-site scripting (XSS) vulnerability exploitable by
-users able to control the values returned from the useMango service.
-
-
-
+Cheers,
+        Moritz
