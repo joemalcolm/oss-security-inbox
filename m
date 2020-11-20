@@ -1,106 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/06/3
-Message-Id: <2EAAFD2D-2302-40AF-84DB-5DA8E46A40B2@beckweb.net>
-Date: Wed, 6 May 2020 14:32:27 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/20/1
+Message-ID: <20201120021528.pduwcibewbab47he@moyka>
+Date: Thu, 19 Nov 2020 18:15:28 -0800
+From: Ian Zimmerman <itz@...y.loosely.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: libass ass_outline.c signed integer overflow
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+On 2020-11-19 11:54, David A. Wheeler wrote:
 
-The following releases contain fixes for security vulnerabilities:
+> I read through the issue discussion. As best as I can tell, no one
+> filed for a CVE, so there was no CVE.  Did I misunderstand something?
+> 
+> If my understanding is correct, that is *NOT* a failure of the CVE
+> process.
 
-* Amazon EC2 Plugin 1.50.2
-* Copy Artifact Plugin 1.44
-* Credentials Binding Plugin 1.23
-* CVS Plugin 2.16
-* SCM Filter Jervis Plugin 0.3
+As it often happens to me, what I wrote was too brief to be clear to
+everyone.
 
+The longer version would be something like:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-05-06/?
+  This is an example of a situation where no one filed for a CVE because
+  of perceived hurdles in the process, even if the facts didn't justify
+  the perception.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Now of course Moritz tells us there is in fact a CVE and indeed I can
+locate the issue in Debian's security tracker. I guess it has been
+judged not serious enough to need fixing in buster. I disagree but
+clearly that is up to the maintainers.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1374 / CVE-2020-2181
-Credentials Binding Plugin 1.22 and earlier does not mask (i.e., replace
-with asterisks) secrets in the build log when the build contains no build
-steps.
-
-
-SECURITY-1835 / CVE-2020-2182
-Credentials Binding Plugin allows specifying passwords and other secrets as
-environment variables, and will hide them from console output in builds. As
-a side effect of the fix for SECURITY-698, `$` characters in secrets are
-escaped to `$$`. This will then be expanded to `$` again once the secret is
-passed to (post) build steps.
-
-Credentials Binding Plugin 1.22 and earlier does not mask the escaped form
-of the secret (containing `$$`). This occurs for example in the "Execute
-Maven top-level targets" build step included in Jenkins.
-
-
-SECURITY-988 / CVE-2020-2183
-Copy Artifact Plugin 1.43.1 and earlier performs improper permission checks
-when determining whether a build can copy artifacts from another project
-build. This allows attackers, usually with Job/Configure permission, to
-configure jobs to copy artifacts from jobs they have no permission to
-access.
-
-
-SECURITY-1094 / CVE-2020-2184
-CVS Plugin 2.15 and earlier does not require POST requests in several HTTP
-endpoints, resulting in cross-site request forgery (CSRF) vulnerabilities.
-This allows attackers to create and manipulate tags, and to connect to an
-attacker-specified URL.
-
-
-SECURITY-381 / CVE-2020-2185
-Amazon EC2 Plugin 1.50.1 and earlier does not use SSH host key validation
-when connecting to agents. This lack of validation could be abused using a
-man-in-the-middle attack to intercept these connections to build agents.
-
-
-SECURITY-1408 / CVE-2020-2186
-Amazon EC2 Plugin 1.50.1 and earlier does not require POST requests in
-several HTTP endpoints, resulting in cross-site request forgery (CSRF)
-vulnerabilities. This allows an attacker to provision instances with an
-attacker-specified template ID.
-
-
-SECURITY-1528 / CVE-2020-2187
-Amazon EC2 Plugin connects to Windows agents via HTTPS.
-
-Amazon EC2 Plugin 1.50.1 and earlier unconditionally accepts self-signed
-HTTPS certificates and does not perform hostname validation when connecting
-to Windows agents. This lack of validation could be abused using a
-man-in-the-middle attack to intercept these connections to build agents.
-
-
-SECURITY-1844 / CVE-2020-2188
-Amazon EC2 Plugin provides a list of applicable credentials IDs to allow
-users configuring the plugin to select the one to use.
-
-This functionality does not correctly check permissions in Amazon EC2
-Plugin 1.50.1 and earlier, allowing any user with Overall/Read permission
-to get a list of valid credentials IDs. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-1826 / CVE-2020-2189
-SCM Filter Jervis Plugin 0.2.1 and earlier does not configure its YAML
-parser to prevent the instantiation of arbitrary types. This results in a
-remote code execution (RCE) vulnerability exploitable by users able to
-configure jobs with the filter, or control the contents of a previously
-configured job's SCM repository.
-
+-- 
+Ian
