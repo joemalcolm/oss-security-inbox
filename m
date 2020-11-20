@@ -1,89 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/3
-Message-ID: <d1ab860e-7dda-f02e-483f-27444b31b9ba@open-xchange.com>
-Date: Tue, 19 May 2020 11:00:44 +0200
-From: Otto Moerbeek <otto.moerbeek@...n-xchange.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/20/2
+Message-ID: <20201120063321.GA348130@eldamar.lan>
+Date: Fri, 20 Nov 2020 07:33:21 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: PowerDNS Recursor 4.3.1, 4.2.2. and 4.1.16 released fixing multiple vulnerabilities
+Subject: Re: Re: libass ass_outline.c signed integer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello!,
+Hi Ian,
 
-Today we are releasing PowerDNS Recursor 4.3.1, 4.2.2. and 4.1.16,
-containing security fixes for three CVEs:
+On Thu, Nov 19, 2020 at 06:15:28PM -0800, Ian Zimmerman wrote:
+> On 2020-11-19 11:54, David A. Wheeler wrote:
+> 
+> > I read through the issue discussion. As best as I can tell, no one
+> > filed for a CVE, so there was no CVE.  Did I misunderstand something?
+> > 
+> > If my understanding is correct, that is *NOT* a failure of the CVE
+> > process.
+> 
+> As it often happens to me, what I wrote was too brief to be clear to
+> everyone.
+> 
+> The longer version would be something like:
+> 
+>   This is an example of a situation where no one filed for a CVE because
+>   of perceived hurdles in the process, even if the facts didn't justify
+>   the perception.
+> 
+> Now of course Moritz tells us there is in fact a CVE and indeed I can
+> locate the issue in Debian's security tracker. I guess it has been
+> judged not serious enough to need fixing in buster. I disagree but
+> clearly that is up to the maintainers.
 
-- CVE-2020-10995[1]
-- CVE-2020-12244[2]
-- CVE-2020-10030[3]
+What the no-dsa tag means: The issue will not warrant a dedicated
+security upload with an advisory, but issues marked so called 'no-dsa'
+can still be fixed as well in buster, via the regular point releases
+(for instance the next one happing on 5th of december).
 
-The issues are:
+This though still requires someone to have spare resources and prepare
+an actual upload to be included.
 
-CVE-2020-10995: An issue in the DNS protocol has been found that allows
-malicious parties to use recursive DNS services to attack third party
-authoritative name servers. Severity is medium. We would like to thank
-Lior Shafir, Yehuda Afek and Anat Bremler-Barr for finding and
-subsequently reporting this issue!
+Hope this helps,
 
-CVE-2020-12244: Records in the answer section of a NXDOMAIN response
-lacking an SOA were not properly validated. Severity is medium. We would
-like to thank Matt Nordhoff for finding and subsequently reporting this
-issue!
-
-CVE-2020-10030: An attacker with enough privileges to change the
-hostname might be able to disclose uninitialized memory. This issue also
-affects the Authoritative Server and dnsdist; since the attack requires
-very high privileges and the issue does not affect Linux, we will not be
-releasing new versions for those just for this issue. Severity is low.
-
-As usual, there were also other smaller enhancements and bugfixes.
-Please refer to the 4.3.1 changelog[4], 4.2.2 changelog[5] and 4.1.16
-changelog[6] for details.
-
-The 4.3.1 tarball[7] (signature[8]), 4.2.2 tarball[9] (signature[10])
-and 4.1.16 tarball[11] (signature[12]) are available at our download
-site[13] and packages for CentOS 6, 7 and 8, Debian Stretch and Buster,
-Ubuntu Xenial and Bionic are available from our repository[14]
-
-Note that the 4.1 packages will be published later today.
-
-4.0 and older releases are EOL, refer to the documentation[15] for
-details about our release cycles.
-
-Please send us all feedback and issues you might have via the mailing
-list[16], or in case of a bug, via GitHub[17].
-
-
-[1]
-https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2020-01.html
-[2]
-https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2020-02.html
-[3]
-https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2020-03.html
-[4] https://doc.powerdns.com/recursor/changelog/4.3.html#change-4.3.1
-[5] https://doc.powerdns.com/recursor/changelog/4.2.html#change-4.2.2
-[6] https://doc.powerdns.com/recursor/changelog/4.1.html#change-4.1.16
-[7] https://downloads.powerdns.com/releases/pdns-recursor-4.3.1.tar.bz2
-[8] https://downloads.powerdns.com/releases/pdns-recursor-4.3.1.tar.bz2.sig
-[9] https://downloads.powerdns.com/releases/pdns-recursor-4.2.2.tar.bz2
-[10] https://downloads.powerdns.com/releases/pdns-recursor-4.2.2.tar.bz2.sig
-[11] https://downloads.powerdns.com/releases/pdns-recursor-4.1.16.tar.bz2
-[12]
-https://downloads.powerdns.com/releases/pdns-recursor-4.1.16.tar.bz2.sig
-[13] https://downloads.powerdns.com/releases
-[14] https://repo.powerdns.com/
-[15] https://docs.powerdns.com/recursor/appendices/EOL.html
-[16] https://mailman.powerdns.com/mailman/listinfo/pdns-users
-[17] https://github.com/PowerDNS/pdns/issues/new/choose
-
--- 
-kind regards,
-Otto Moerbeek
-Senior PowerDNS Developer
-
-Email: otto.moerbeek@...n-xchange.com
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Regards,
+Salvatore
