@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6043" "Thursday" "4" "June" "2020" "19:01:12" "+0800" "Fan Yang" "fan_yang@SJTU.EDU.CN" "<1D1C8F3C-62C9-4415-A828-76ED276FB7AF@SJTU.EDU.CN>" "192" "[oss-security] CVE-2020-10757 Linux kernel: mremap hugepage mmaped DAX nvdimm may cause corrupted page table" nil nil nil "6" "2020060411:01:12" "[oss-security] CVE-2020-10757 Linux kernel: mremap hugepage mmaped DAX nvdimm may cause corrupted page table" (number mark "U       fan_yang@SJT Jun  4  192/6043  " thread-indent "\"[oss-security] CVE-2020-10757 Linux kernel: mremap hugepage mmaped DAX nvdimm may cause corrupted page table\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-10757 Linux kernel: mremap hugepage mmaped DAX nvdimm may cause corrupted page table" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["565" "Tuesday" "24" "November" "2020" "01:41:13" "+1100" "Andrew Donnellan" "ajd@linux.ibm.com" "<a2fd9901-d8fc-3ba7-4422-2616bbf23220@linux.ibm.com>" "13" "[oss-security] Re: Linux kernel: powerpc: RTAS calls can be used to compromise kernel integrity" nil nil nil "11" "2020112314:41:13" "[oss-security] Re: Linux kernel: powerpc: RTAS calls can be used to compromise kernel integrity" (number mark "U       ajd@linux.ib Nov 24   13/565   " thread-indent "\"[oss-security] Re: Linux kernel: powerpc: RTAS calls can be used to compromise kernel integrity\"\n") "<09cb1e1e-c71b-83a3-4c04-4e47e7c85342@linux.ibm.com>" ("<09cb1e1e-c71b-83a3-4c04-4e47e7c85342@linux.ibm.com>") nil nil nil nil nil nil nil "[oss-security] Re: Linux kernel: powerpc: RTAS calls can be used to compromise kernel integrity" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22508 invoked by uid 550); 4 Jun 2020 11:17:43 -0000
+Received: (qmail 12031 invoked by uid 550); 23 Nov 2020 14:48:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,209 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13601 invoked from network); 4 Jun 2020 11:01:26 -0000
-X-Virus-Scanned: amavisd-new at proxy01.sjtu.edu.cn
-From: Fan Yang <fan_yang@SJTU.EDU.CN>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Message-Id: <1D1C8F3C-62C9-4415-A828-76ED276FB7AF@SJTU.EDU.CN>
-Date: Thu, 4 Jun 2020 19:01:12 +0800
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
-Subject: [oss-security] CVE-2020-10757 Linux kernel: mremap hugepage mmaped DAX nvdimm may
- cause corrupted page table
+Received: (qmail 3776 invoked from network); 23 Nov 2020 14:41:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=subject : from : to :
+ references : message-id : date : mime-version : in-reply-to : content-type
+ : content-transfer-encoding; s=pp1;
+ bh=KnziEfikCqGSE2HX4LMTmDdjvGMqZWp8Q+v2urztntY=;
+ b=l8+AUWsMCNOSZlh9tzCoCtq31cChNPBSZULne8Yjcdw3DhAA/VKFLjMvlBw33cJMX4Pe
+ +ZDgPM32Qjxf6Of3A1tMUgI++V0GB5dSTk7iG1uj2DwOeHUCuTsxfOwXwFRRQ6lROtQP
+ 4z+U0Rz5ymuqBraa+1uALQ0wzNt+XIoo0bVUn8WsG984Xn8GJeA2uVA2G8WvoLFwZOqr
+ 5jp67bJ4bJi5vAKwlQmi0/K6Cv/LsLTEr+zz2n/fOOIq8Z5tNAA33GqYhsxswWejEt/S
+ 5tbBoli+TaCpDWkUe3OEb6gn0AfKdeLouI9qh6DkdWK0tHVlgEJFHXcatyThsG/m1pQb Wg== 
+From: Andrew Donnellan <ajd@linux.ibm.com>
+To: oss-security@lists.openwall.com,
+        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>
+References: <09cb1e1e-c71b-83a3-4c04-4e47e7c85342@linux.ibm.com>
+Message-ID: <a2fd9901-d8fc-3ba7-4422-2616bbf23220@linux.ibm.com>
+Date: Tue, 24 Nov 2020 01:41:13 +1100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.2
+MIME-Version: 1.0
+In-Reply-To: <09cb1e1e-c71b-83a3-4c04-4e47e7c85342@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312,18.0.737
+ definitions=2020-11-23_11:2020-11-23,2020-11-23 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ phishscore=0 adultscore=0 mlxlogscore=976 clxscore=1034 bulkscore=0
+ lowpriorityscore=0 mlxscore=0 suspectscore=0 priorityscore=1501
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2011230096
+Subject: [oss-security] Re: Linux kernel: powerpc: RTAS calls can be used to compromise
+ kernel integrity
 
-Hi all,
+On 9/10/20 12:20 pm, Andrew Donnellan wrote:
+> The Linux kernel for powerpc has an issue with the Run-Time Abstraction 
+> Services (RTAS) interface, allowing root (or CAP_SYS_ADMIN users) in a 
+> VM to overwrite some parts of memory, including kernel memory.
+> 
+> This issue impacts guests running on top of PowerVM or KVM hypervisors 
+> (pseries platform), and does *not* impact bare-metal machines (powernv 
+> platform).
+CVE-2020-27777 has been assigned.
 
-NOTE: this bug have been assigned CVE id CVE-2020-10757.  Its impact dates
-back to the commit 5c7fb56e5e3f ("mm, dax: dax-pmd vs thp-pmd vs
-hugetlbfs-pmd=E2=80=9D), at kernel version v4.5.  And it can be fixed by th=
-e patch
-here (https://lkml.org/lkml/2020/6/4/314).
-
-Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-I observed this bug when mremap a mmaped DAX nvdimm to a mmaped anonymous
-memory region.  The mremap system call returns successfully but when access
-the region afterwards, the program get killed due to corrupted page table:
-
-try_mremap: Corrupted page table at address 7facc4fd1000
-PGD 800000015beee067 P4D 800000015beee067 PUD 40695a067 PMD 1614ec067 PTE 6=
-969696969696969
-Bad pagetable: 000f [#3] SMP PTI
-CPU: 6 PID: 11264 Comm: try_mremap Tainted: G    B D W         5.6.6-300.fc=
-32.x86_64 #1
-Hardware name: System manufacturer System Product Name/PRIME Z270M-PLUS, BI=
-OS 0601 01/13/2017
-RIP: 0033:0x4012fc
-Code: 00 00 e8 87 fd ff ff 48 89 45 e8 48 8b 45 e8 48 3b 45 f8 74 11 bf 3a =
-20 40 00 e8 8f fd ff ff b8 ff ff ff ff eb 0c 48 8b 45 f8 <c6> 00 aa b8 00 0=
-0 00 00 c9 c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f
-RSP: 002b:00007ffde40d8d00 EFLAGS: 00010246
-RAX: 00007facc4fd1000 RBX: 0000000000000000 RCX: 00007facc4f0255e
-RDX: 0000000000001000 RSI: 0000000000001000 RDI: 00007facc4a00000
-RBP: 00007ffde40d8d30 R08: 00007facc4fd1000 R09: 0000000000000000
-R10: 0000000000000003 R11: 0000000000000202 R12: 00000000004010a0
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-...
-BUG: Bad page map in process try_mremap  pte:6969696969696969 pmd:1614ec067
-addr:00007facc4fd1000 vm_flags:288000fb anon_vma:0000000000000000 mapping:f=
-fff9badd87a28a0 index:0
-file:try_mremap fault:ext4_dax_fault mmap:ext4_file_mmap readpage:0x0
-CPU: 6 PID: 11264 Comm: try_mremap Tainted: G    B D W         5.6.6-300.fc=
-32.x86_64 #1
-Hardware name: System manufacturer System Product Name/PRIME Z270M-PLUS, BI=
-OS 0601 01/13/2017
-Call Trace:
-dump_stack+0x64/0x88
-print_bad_pte.cold+0x95/0xbf
-vm_normal_page+0xbe/0xd0
-unmap_page_range+0x68b/0xeb0
-unmap_vmas+0x6a/0xd0
-exit_mmap+0x97/0x170
-mmput+0x61/0x140
-do_exit+0x2f3/0xae0
-rewind_stack_do_exit+0x17/0x20
-
-Note that the weird 0x69 in the pte value is the ascii of "i" which I had
-written to the memory.  This bug is due to in move_page_tables:mm/mremap.c,
-the condition to handle a huge pmd is as follows:
-
-		if (is_swap_pmd(*old_pmd) || pmd_trans_huge(*old_pmd)) {
-
-However, the DAX file is mapped as huge page but it is not transparent huge
-page.  So the huge pmd is not split, the physical page the pmd points to is
-treated as a page table (but actually it is a 2M data page).  Then
-move_ptes uses the value of the "pte" to update the pte where the page
-remap to, and the mremap system call returns successfully.  Afterwards, the
-access to the new address incurs corrupted page table.
-
-Re-produce Instructions
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-1. one need to have a machine with Intel Optane DC Persistent Memory
-(https://www.intel.com/content/www/us/en/architecture-and-technology/optane=
--dc-persistent-memory.html),
-or run a VM with a virtualized NVDIMM
-(https://software.intel.com/content/www/us/en/develop/articles/how-to-emula=
-te-persistent-memory-on-an-intel-architecture-server.html).
-
-2. mount a DAX file system (e.g., I use ext4).
-
-3. Write a userspace program to mremap a DAX mmaped file to a mmaped
-  anonymous memory region.
-
-Here is the code I use:
-
-#define _GNU_SOURCE
-#include <sys/mman.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <errno.h>
-
-#define PROT			PROT_READ|PROT_WRITE
-
-#define REGION_PM_TMP_PATH	"/mnt/pmem0/try_mremap"
-
-#define REGION_MEM_SIZE 4096*4
-#define REGION_PM_SIZE	4096*512
-#define REMAP_MEM_OFF   0
-#define REMAP_PM_OFF    0
-#define REMAP_SIZE      4096
-
-char * map_tmp_pm_region(void)
-{
-	int fd;
-
-	fd =3D open(REGION_PM_TMP_PATH, O_RDWR|O_CREAT, 0644);
-	if (fd < 0) {
-		perror(REGION_PM_TMP_PATH);
-		exit(-1);
-	}
-
-	if (ftruncate(fd, REGION_PM_SIZE)) {
-		perror("ftruncate");
-		exit(-1);
-	}
-
-	return mmap(NULL, REGION_PM_SIZE, PROT, MAP_SHARED_VALIDATE|MAP_SYNC,
-		    fd, 0);
-}
-
-int main(int argc, char **argv)
-{
-	char *regm, *regp, *remap;
-	int ret;
-
-	regm =3D mmap(NULL, REGION_MEM_SIZE, PROT, MAP_PRIVATE|MAP_ANONYMOUS,
-		    -1, 0);
-	if (regm =3D=3D MAP_FAILED) {
-		perror("regm");
-		return -1;
-	}
-
-	regp =3D map_tmp_pm_region();
-	if (regp =3D=3D MAP_FAILED) {
-		perror("regp");
-		return -1;
-	}
-
-	memset(regm, 'a', REGION_MEM_SIZE);
-	memset(regp, 'i', REGION_PM_SIZE);
-
-	remap =3D mremap(regp + REMAP_PM_OFF, REMAP_SIZE, REMAP_SIZE,
-		       MREMAP_MAYMOVE|MREMAP_FIXED, regm + REMAP_MEM_OFF);
-	if (remap !=3D regm + REMAP_MEM_OFF) {
-		perror("mremap");
-		return -1;
-	}
-
-	*regm =3D 0xAA;		/* write anything to the address */
-	return 0;
-}
-
-The Patch
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-arch/x86/include/asm/pgtable.h | 1 +
-mm/mremap.c                    | 2 +-
-2 files changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/arch/x86/include/asm/pgtable.h b/arch/x86/include/asm/pgtable.h
-index 4d02e64af1b3..19cdeebfbde6 100644
---- a/arch/x86/include/asm/pgtable.h
-+++ b/arch/x86/include/asm/pgtable.h
-@@ -257,6 +257,7 @@ static inline int pmd_large(pmd_t pte)
-}
-
-#ifdef CONFIG_TRANSPARENT_HUGEPAGE
-+/* NOTE: when predicate huge page, consider also pmd_devmap, or use pmd_la=
-rge */
-static inline int pmd_trans_huge(pmd_t pmd)
-{
-	return (pmd_val(pmd) & (_PAGE_PSE|_PAGE_DEVMAP)) =3D=3D _PAGE_PSE;
-diff --git a/mm/mremap.c b/mm/mremap.c
-index 6aa6ea605068..57b1f999f789 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -266,7 +266,7 @@ unsigned long move_page_tables(struct vm_area_struct *v=
-ma,
-		new_pmd =3D alloc_new_pmd(vma->vm_mm, vma, new_addr);
-		if (!new_pmd)
-			break;
--		if (is_swap_pmd(*old_pmd) || pmd_trans_huge(*old_pmd)) {
-+		if (is_swap_pmd(*old_pmd) || pmd_trans_huge(*old_pmd) || pmd_devmap(*old=
-_pmd)) {
-			if (extent =3D=3D HPAGE_PMD_SIZE) {
-				bool moved;
-				/* See comment in move_ptes() */
---=20
-2.25.4
-
-
+-- 
+Andrew Donnellan              OzLabs, ADL Canberra
+ajd@linux.ibm.com             IBM Australia Limited
