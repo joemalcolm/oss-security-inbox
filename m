@@ -1,31 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/05/1
-Message-ID: <nycvar.YSQ.7.76.2003051452250.5086@xnncv>
-Date: Thu, 5 Mar 2020 14:59:17 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2019-20382 QEMU: vnc: memory leakage upon disconnect
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/23/3
+Message-ID: <88f013a4-5478-f698-eebd-7dc0f4aaa216@igalia.com>
+Date: Mon, 23 Nov 2020 17:50:25 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0008
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0008
+------------------------------------------------------------------------
 
-A memory leakage flaw was found in the way VNC display driver of QEMU handled 
-connection disconnect, when ZRLE, Tight encoding is enabled. It creates two 
-vncState objects, one of which allocates memory for Zlib's data object. This 
-allocated memory is not free'd upon disconnection resulting in the said memory 
-leakage issue.
+Date reported           : November 23, 2020
+Advisory ID             : WSA-2020-0008
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0008.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0008.html
+CVE identifiers         : CVE-2020-13584, CVE-2020-9948, CVE-2020-9951,
+                          CVE-2020-9952, CVE-2020-9983.
 
-A user able to connect to the VNC server could use this flaw to leak host 
-memory leading to a potential DoS scenario.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Upstream patch:
----------------
-   -> https://git.qemu.org/?p=qemu.git;a=commitdiff;h=6bf21f3d83e95bcc4ba35a7a07cc6655e8b010b0
+CVE-2020-13584
+    Versions affected: WebKitGTK before 2.30.3 and WPE WebKit before 2.30.3.
+    Credit to Cisco.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: An use after free issue was
+    addressed with improved memory management.
 
-CVE-2019-20382 assigned via -> https://cveform.mitre.org/
+CVE-2020-9948
+    Versions affected: WebKitGTK before 2.30.0 and WPE WebKit before 2.30.0.
+    Credit to Brendan Draper (@6r3nd4n) working with Trend Micro Zero
+    Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A type confusion issue was
+    addressed with improved memory handling.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+CVE-2020-9951
+    Versions affected: WebKitGTK before 2.30.0 and WPE WebKit before 2.30.0.
+    Credit to Marcin 'Icewall' Noga of Cisco Talos.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: An use after free issue was
+    addressed with improved memory management.
 
+CVE-2020-9952
+    Versions affected: WebKitGTK before 2.28.3 and WPE WebKit before 2.28.3.
+    Credit to Ryan Pickren (ryanpickren.com).
+    Impact: Processing maliciously crafted web content may lead to a
+    cross site scripting attack. Description: An input validation issue
+    was addressed with improved input validation.
+
+CVE-2020-9983
+    Versions affected: WebKitGTK before 2.30.3 and WPE WebKit before 2.30.3.
+    Credit to zhunki.
+    Impact: Processing maliciously crafted web content may lead to code
+    execution. Description: An out-of-bounds write issue was addressed
+    with improved bounds checking.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+November 23, 2020
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
