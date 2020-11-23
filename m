@@ -1,26 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/25/2
-Message-ID: <CAH8yC8ngRsZP4qinC_ccQQpQg=B3wVD8udxsj1nxxFVaBbc5iA@mail.gmail.com>
-Date: Thu, 24 Dec 2020 21:13:09 -0500
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: More CVE request experience (Fwd: Automatic reply: [EXT] Need a CVE for Crypto++)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/23/2
+Message-ID: <a2fd9901-d8fc-3ba7-4422-2616bbf23220@linux.ibm.com>
+Date: Tue, 24 Nov 2020 01:41:13 +1100
+From: Andrew Donnellan <ajd@...ux.ibm.com>
+To: oss-security@...ts.openwall.com, linuxppc-dev <linuxppc-dev@...ts.ozlabs.org>
+Subject: Re: Linux kernel: powerpc: RTAS calls can be used to compromise kernel integrity
 Content-Type: text/plain; charset=utf-8
 
-The form at https://cveform.mitre.org/ is broken. Emailing
-cve@...re.org for a CVE assignment after the failed web submission
-results in this.
+On 9/10/20 12:20 pm, Andrew Donnellan wrote:
+> The Linux kernel for powerpc has an issue with the Run-Time Abstraction 
+> Services (RTAS) interface, allowing root (or CAP_SYS_ADMIN users) in a 
+> VM to overwrite some parts of memory, including kernel memory.
+> 
+> This issue impacts guests running on top of PowerVM or KVM hypervisors 
+> (pseries platform), and does *not* impact bare-metal machines (powernv 
+> platform).
+CVE-2020-27777 has been assigned.
 
-I hope people do not see the drop in CVE submissions as an improvement
-in software quality.
-
----------- Forwarded message ---------
-From: Common Vulnerabilities & Exposures <cve@...re.org>
-Date: Thu, Dec 24, 2020 at 9:08 PM
-Subject: Automatic reply: [EXT] Need a CVE for Crypto++
-To: Walton, Jeffrey <noloader@...il.com>
-
-This email address is not monitored.
-
-To contact the CVE Program, use https://cveform.mitre.org and choose
-“Other” from the dropdown menu.
+-- 
+Andrew Donnellan              OzLabs, ADL Canberra
+ajd@...ux.ibm.com             IBM Australia Limited
