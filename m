@@ -1,4 +1,9 @@
-Received: (qmail 11655 invoked by uid 550); 9 Mar 2024 18:49:34 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["532" "Tuesday" "24" "November" "2020" "18:12:36" "+0100" "Serge Huber" "shuber@apache.org" "<CACR6SAXDk+Ronjh8KQ91q2W4FpiOmiJyjkUe9v4o9L8Bvkhvvw@mail.gmail.com>" "16" "[oss-security] CVE-2020-13942: Remote Code Execution in Apache Unomi" nil nil nil "11" "2020112417:12:36" "[oss-security] CVE-2020-13942: Remote Code Execution in Apache Unomi" (number mark "U       shuber@apach Nov 24   16/532   " thread-indent "\"[oss-security] CVE-2020-13942: Remote Code Execution in Apache Unomi\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-13942: Remote Code Execution in Apache Unomi" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13916 invoked by uid 550); 24 Nov 2020 17:50:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,82 +12,34 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11325 invoked from network); 9 Mar 2024 18:49:17 -0000
-Date: Sat, 9 Mar 2024 19:53:12 +0100
-From: Solar Designer <solar@openwall.com>
-To: Miguel Suarez <suarezmiguelc@icloud.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20240309185312.GA8513@openwall.com>
-References: <20240307215637.GA31298@openwall.com> <4B120A46-E3BD-4B98-8A9C-BCD93661C1B5@icloud.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4B120A46-E3BD-4B98-8A9C-BCD93661C1B5@icloud.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] help wanted - bring more issues in here
+Received: (qmail 1545 invoked from network); 24 Nov 2020 17:13:00 -0000
+X-Gm-Message-State: AOAM530K+mD71Ku66PX8pvdR0nva/ote5sQairqMtvE7f7tmXCUE+Q2P
+	+9AkCJMoW4Jt/D9ZSgrCwjuf4IssYxXro2YYxxhkjQ==
+X-Google-Smtp-Source: ABdhPJzMWXHqKYAoqRhhwpSHIhTIIeyfm5EBiuki5M+RMbcgJnqaHzxwp5pQqq9nKNdU3dW31JaP2G+9LKdK48oNjOA=
+X-Received: by 2002:a05:651c:1195:: with SMTP id w21mr2123332ljo.427.1606237967346;
+ Tue, 24 Nov 2020 09:12:47 -0800 (PST)
+MIME-Version: 1.0
+From: Serge Huber <shuber@apache.org>
+Date: Tue, 24 Nov 2020 18:12:36 +0100
+X-Gmail-Original-Message-ID: <CACR6SAXDk+Ronjh8KQ91q2W4FpiOmiJyjkUe9v4o9L8Bvkhvvw@mail.gmail.com>
+Message-ID: <CACR6SAXDk+Ronjh8KQ91q2W4FpiOmiJyjkUe9v4o9L8Bvkhvvw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000007804a605b4dd6bd5"
+Subject: [oss-security] CVE-2020-13942: Remote Code Execution in Apache Unomi
 
-Hi Miguel,
+--0000000000007804a605b4dd6bd5
+Content-Type: text/plain; charset="UTF-8"
 
-Somehow you didn't send your message as a reply to the thread - as a
-moderator, I've manually edited its headers to make it part of the
-thread.  Going forward, when you want to comment on a thread in here,
-please just hit reply on a message in the thread, so that your reply is
-also part of the thread.  Also, posting from your phone is probably not
-a good idea.
+Description:
 
-On Sat, Mar 09, 2024 at 07:21:55PM +0100, Miguel Suarez wrote:
-> I have taken a look at the hep wanted mail threat, and became interested in it, so I wanted to ask for more details,
-> 
-> I'm interested in the third subtask, I wonder how much time would this take
+It is possible to inject malicious OGNL or MVEL scripts into the
+/context.json public endpoint. This was partially fixed in 1.5.1 but a
+new attack vector was found. In version 1.5.2 scripts are now
+completely filtered from the input. It is highly recommended to
+upgrade to the latest available version of the 1.5.x release to fix
+this problem.
+References:
 
-It can vary a lot, but I'd guesstimate half an hour per a reasonable
-quality write-up on average.  Some lucky ones can take 5 minutes (just
-forward a relevant message from another mailing list you're on, writing
-only the Subject line).  Some complex ones can take hours (refer to
-multiple sources, figure out what the issue really is, describe it in
-your own words if no correct and complete description already exists).
-Typical is in between (e.g., extract content from a blog post e.g. with
-ELinks as I had suggested earlier, wrap it with proper attribution into
-a properly formatted message).  There's no requirement on how many
-issues you handle (during the period of your involvement, whatever it
-is), but my expectation is that it won't be just one (otherwise it's
-quicker for me to just handle that one myself rather than delegate it).
+http://unomi.apache.org./security/cve-2020-13942.txt
 
-> and, if possible, small details on the requirements,
-
-The messages you post should meet the list content guidelines:
-
-https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
-
-When you're handling just the third sub-task, it means that I (or
-someone else) have already made sure the topic is valid for the list.
-So only the style and quality guidelines are left for you to meet:
-
-- English
-
-- Plain text (no HTML)
-
-- When applicable, the message Subject must include the name and
-version(s) of affected software, and vulnerability type. For example, a
-Subject saying only "CVE-2099-99999" is not appropriate, whereas
-"CVE-2099-99999: Acme Placeholder 1.0 buffer overflow" would be OK.
-
-- At least the most essential part of your message (e.g., vulnerability
-detail and/or exploit) should be directly included in the message itself
-(and in plain text), rather than only included by reference to an
-external resource.  Posting links to relevant external resources as well
-is acceptable, but posting only links is not.  Your message should
-remain valuable even with all of the external resources gone.
-
-and specific to this task:
-
-- Third-party content you quote should be clearly separated from your
-own writing as well as from other quotes (if you quote multiple
-sources), and clearly attributed.
-
-Please let me know off-list if you'd like me to suggest an initial task
-to you.
-
-Thanks,
-
-Alexander
+--0000000000007804a605b4dd6bd5--
