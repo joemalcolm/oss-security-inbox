@@ -1,17 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/15/3
-Message-ID: <6a34e3be-2417-4f99-a36f-fbfaaef07458@Spark>
-Date: Tue, 15 Sep 2020 09:37:34 -0700
-From: William Barrett <will@...set.io>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-13948] Apache Superset Remote Code Execution Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/24/4
+Message-ID: <CAO8bUymajJNtxsHG8RT7iyjFjBHVQFLm4DXqoX=XLpURas-RLg@mail.gmail.com>
+Date: Tue, 24 Nov 2020 17:42:07 +0100
+From: Frank Morgner <frankmorgner@...il.com>
+To: OpenSC Development <opensc-devel@...ts.sourceforge.net>,  opensc-announce@...ts.sourceforge.net
+Cc: oss-security@...ts.openwall.com
+Subject: OpenSC 0.21.0 released
 Content-Type: text/plain; charset=utf-8
 
-Affected Versions: Apache Superset < 0.37.1
+Hi all!
 
-While investigating a bug report on Apache Superset, it was determined that an authenticated user could craft requests via a number of templated text fields in the product that would allow arbitrary access to Python’s `os` package in the web application process. It was thus possible for an authenticated user to list and access files, environment variables, and process information. Additionally it was possible to set environment variables for the current process, create and update files in folders writable by the web process, and execute arbitrary programs accessible by the web process. All other operations available to the `os` package in Python were also available, even if not explicitly enumerated in this CVE.
+I'm happy to finally announce the new release 0.21.0 of OpenSC
+<https://github.com/OpenSC/OpenSC/releases/tag/0.21.0>. You can read a full
+summary of the changes and get the release binaries on GitHub. We recommend
+upgrading your installation, most notably for fixing CVE-2020-26570,
+CVE-2020-26571 and CVE-2020-26572.
 
-Will Barrett
-Staff Software Engineer
-Preset, Inc. | https://preset.io
+We've not only focused on fixing many bugs with different cards and
+environments from a variety of vendors. This release also adds support for
+two new types of tokens, Gemalto IDPrime and Polish eID card (e-dowód, eDO).
+
+Regards,
+Frank Morgner.
 
