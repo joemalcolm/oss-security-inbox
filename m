@@ -1,97 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/24/1
-Message-ID: <CAKG8Do7hTrBroswvkqKsMQ66a4+vk2jO4Wb=4TzAvXR2WgGqKQ@mail.gmail.com>
-Date: Mon, 24 Feb 2020 14:27:00 +0100
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: GNU screen "out of bounds access when setting w_xtermosc after OSC 49"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/24/1
+Message-Id: <E1khX2v-0002f4-3b@xenbits.xenproject.org>
+Date: Tue, 24 Nov 2020 12:03:45 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 355 v2 - stack corruption from XSA-346 change
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Thu, Feb 6, 2020 at 5:55 PM Amadeusz Sławiński <amade@...blr.net> wrote:
->
-> Hi,
->
-> >
-> > The fix commit is:
-> >
-> > ---
-> > commit 68386dfb1fa33471372a8cd2e74686758a2f527b
-> > Author: Amadeusz Slawinski <amade@...blr.net>
-> > Date:   Thu Jan 30 17:56:27 2020 +0100
-> >
-> >     Fix out of bounds access when setting w_xtermosc after OSC 49
-> >
-> >     echo -e "\e]49\e;                                    \n\ec"
-> >     crashes screen.
-> >
-> >     This happens because 49 is divided by 10 and used as table index
-> >     resulting in access to w_xtermosc[4], which is out of bounds with table
-> >     itself being size 4. Increase size of table by 1 to 5, which is enough
-> >     for all current uses.
-> >
-> >     As this overwrites memory based on user input it is potential security
-> >     issue.
-> >
-> >     Reported-by: pippin@...p.org
-> >     Signed-off-by: Amadeusz Slawinski <amade@...blr.net>
-> > ---
-> >
-> > This is followed by another related commit:
-> >
-> > ---
-> > commit 0dd53533e20d2948351a99ec5336fbc9b82b226a
-> > Author: Amadeusz Slawinski <amade@...blr.net>
-> > Date:   Wed Feb 5 21:05:28 2020 +0100
-> >
-> >     Increase permitted length of OSC
-> >
-> >     hyperlink feature used by some terminals requires lots of characters
-> >     https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#length-limits
-> >     mentions around 2083 characters, set it to a bit more.
-> >
-> >     Bug: 57718
-> >
-> >     Signed-off-by: Amadeusz Slawinski <amade@...blr.net>
-> > ---
-> >
-> > Combined, these two commits change:
-> >
-> >   char   w_xtermosc[4][MAXSTR]; /* special xterm/rxvt escapes */
-> >
-> > (where MAXSTR is 768) to:
-> >
-> >   char   w_xtermosc[5][2560];   /* special xterm/rxvt escapes */
-> >
->
-> The report which resulted in second commit just happened to be reported
-> at similar time and is not related to the issue at hand apart from same
-> location in source code.
->
-> > These are as seen on the screen-v4 branch.  On that branch, and thus in
-> > all screen releases so far, the bug appears to be exposed only when
-> > building with the "--enable-rxvt_osc" option.  Builds and packages made
-> > without that option appear to be safe.  Amadeusz, can you confirm this?
->
-> Yes builds without this option should be safe, however do note that
-> as far as I know most distributions do enable it (I checked Debian,
-> Arch Linux, Fedora and Gentoo).
->
-> >
-> > On master branch, the functionality is always enabled (and the option is
-> > dropped), thus (not too ancient) builds from that branch are vulnerable
-> > (until the above fixes, which were also made to that branch).
->
-> Yes, however do note that all v4 releases are done from screen-v4 branch.
-Has a CVE been requested already ?
-I do not see one on cve.mitre.org
->
-> Amadeusz
->
+                    Xen Security Advisory XSA-355
+                              version 2
 
+                 stack corruption from XSA-346 change
 
--- 
-Cedric Buissart,
-Product Security
+UPDATES IN VERSION 2
+====================
 
+Added metadata file.
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+One of the two changes for XSA-346 introduced an on-stack array.  The
+check for guarding against overrunning this array was off by one,
+allowing for corruption of the first stack slot immediately following
+this array.
+
+IMPACT
+======
+
+A malicious or buggy HVM or PVH guest can cause Xen to crash, resulting
+in a Denial of Service (DoS) to the entire host.  Privilege escalation
+as well as information leaks cannot be excluded.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions which have the patches for XSA-346 applied are
+vulnerable.
+
+Only x86 HVM and PVH guests can leverage the vulnerability.  Arm guests
+and x86 PV guests cannot leverage the vulnerability.
+
+Only x86 HVM and PVH guests which have physical devices passed through
+to them can leverage the vulnerability.
+
+MITIGATION
+==========
+
+Not passing through physical devices to untrusted guests will avoid
+the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa355.patch           xen-unstable - Xen 4.10.x
+
+$ sha256sum xsa355*
+a93bfc376897e7cffd095d395f1a66476adb9503d7d80a59b7861e64c2675323  xsa355.meta
+dae633c11cf2eff3e304737265e18ab09213e8e4640458080a944ae7a40819a4  xsa355.patch
+$
+
+NOTE CONCERNING SHORT EMBARGO
+=============================
+
+This issue is likely to be re-discovered as the changes for XSA-346
+are deployed more widely, since the issue is also triggerable without
+any malice or bugginess.
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+89pEMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZRHQH/1D8CfjZWYgLcdYOg6sDO6BIK8IsnAiOoe2C8b9i
+M8QPFzHlUx09FI5CHVb0Va/pFliR1OS2tmmIU30DL9nmiDLcaP2uvpgJAYo5GwL5
+Rzccjo4qbXwfSRQvHmLzbr+XN8sHDxbekpFd8T5WvuarUgxOaPCLTfSG0nag/t52
+OVNIdDcP5lSt/Z88lYW75j4gBAsXUZDEXgn81JpeHj9js8YLFC3WFcwh58Jjd+hw
+5DH955jNAKD8TRSy6uffDpvN1m9wm2vDGeXSUcJyswlV8Nqi6YRW4XO4Q6Cfj+CG
+LVBS/T977JZGJjRvTw4j0H+xAXiLFwQ1I/6v6fSZzxDMt9k=
+=+4M1
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa355.meta" of type "application/octet-stream" (1542 bytes)
+
+Download attachment "xsa355.patch" of type "application/octet-stream" (821 bytes)
