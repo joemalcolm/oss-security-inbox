@@ -1,35 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/08/2
-Message-ID: <CAPmGPbh1WL1HejDqCMCQnqTrn1fnENs=XSXc4+HbN+tzYyYz6Q@mail.gmail.com>
-Date: Fri, 8 May 2020 18:38:08 +0800
-From: qing xu <m1s5p6688@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: two buffer overflow in the marvell wifi driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/24/8
+Message-Id: <C7BPQ8QXYYWF.D8NINZX15SL4@mussels>
+Date: Tue, 24 Nov 2020 15:41:38 -0300
+From: Érico Nogueira <ericonr@...root.org>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Heads up: PAM 1.5.0 has a auth bypass under some conditions
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-There are two buffer overflows in marvell wifi chip driver in Linux kernel
-which cause a denial of service(system crash) or possibly execute arbitrary
-code.
+On Tue Nov 24, 2020 at 3:02 PM -03, John Helmert III wrote:
+> On Tue, Nov 24, 2020 at 07:20:21PM +0100, Marcus Meissner wrote:
+> > Hi,
+> > 
+> > (via IRC, spotted by Foxboron)
+> > 
+> > PAM 1.5.0 had a potential auth bypass, if a user did not exist and the root password was
+> > empty (but root locked down).
+> > 
+> > The reporters usecase was spammers pretending to be unknown users with a PAM enabled dovecot.
+> > 
+> > This issue affected only pam 1.5.0.
+> > 
+> > News entry:
+> > https://github.com/linux-pam/linux-pam/commit/28b8c7045ac8ea4ea080bce02a2df9e3b9e98f06
+> > 
+> > CVE-2020-27780
+> > 
+> > github issue reporting the problem: https://github.com/linux-pam/linux-pam/issues/284
+> > Fixing commit: https://github.com/linux-pam/linux-pam/commit/af0faf666c5008e54dfe43684f210e3581ff1bca
+>
+> It looks like that commit is in 1.5.0, and the issue was closed by
+> commit 30fdfb9 (not af0faf6).
 
-Description
-==========
-[1]CVE-2020-12653：The mwifiex_cmd_append_vsie_tlv() in
-drivers/net/wireless/marvell/mwifiex/scan.c calls memcpy() without checking
-the destination size may trigger a buffer overflower, which a local user
-could use to cause denial of service or the execution of arbitrary code.
+>From the PR [1] that fixed it, the issue was introduced in af0faf6.
 
-[2]CVE-2020-12654：mwifiex_ret_wmm_get_status() in
-drivers/net/wireless/marvell/mwifiex/wmm.c calls memcpy() without checking
-the destination size.Since the source is given from remote AP which
-contains illegal wmm elements , this may trigger a heap buffer overflow.
+Commit 30fdfb9 was made 4 days ago, and is not in the 1.5.0 release
+(clearing this up for others, since I thought you meant the issue had
+been solved in 1.5.0 already, and was a bit confused).
 
-Patch
-==========
-https://patchwork.kernel.org/patch/11315255/
-https://patchwork.kernel.org/patch/11315253/
+- [1] https://github.com/linux-pam/linux-pam/pull/300
 
-Credit
-==========
-This issue was discovered by ADLab of Venustech
-
+Cheers,
+Érico
