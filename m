@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/28/1
-Message-ID: <CAP+3qq52fdBO3WmcYZWs6ETxJ7y6SG-V2KomfaB+xbBn4aSApw@mail.gmail.com>
-Date: Mon, 28 Sep 2020 14:42:30 +0900
-From: Akira Ajisaka <aajisaka@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/24/5
+Message-ID: <CACR6SAXDk+Ronjh8KQ91q2W4FpiOmiJyjkUe9v4o9L8Bvkhvvw@mail.gmail.com>
+Date: Tue, 24 Nov 2020 18:12:36 +0100
+From: Serge Huber <shuber@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces
+Subject: CVE-2020-13942: Remote Code Execution in Apache Unomi
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces
-
-Severity: Important
-
-Vendor: The Apache Software Foundation
-
-Versions affected:
-3.0.0-alpha2 to 3.0.0, 2.9.0 to 2.9.2, 2.8.0 to 2.8.5
-
 Description:
-When Kerberos authentication is enabled and SPNEGO through HTTP is not
-enabled, any users can access some servlets without authentication.
 
-Mitigation:
-Users should upgrade to Apache Hadoop 2.10.0, 3.0.1 or upper. If you
-are using the affected version of Apache Hadoop, you need to enable
-SPNEGO through HTTP.
+It is possible to inject malicious OGNL or MVEL scripts into the
+/context.json public endpoint. This was partially fixed in 1.5.1 but a
+new attack vector was found. In version 1.5.2 scripts are now
+completely filtered from the input. It is highly recommended to
+upgrade to the latest available version of the 1.5.x release to fix
+this problem.
+References:
 
-Credit:
-This issue was discovered by Owen O'Malley and reported by Larry McCay.
+http://unomi.apache.org./security/cve-2020-13942.txt
+
