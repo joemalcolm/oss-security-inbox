@@ -1,75 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/25/4
-Message-ID: <20200825162407.2az2vg5jyfbvy7ky@yuggoth.org>
-Date: Tue, 25 Aug 2020 16:24:07 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2020-006] Nova: Live migration fails to update persistent domain XML (CVE-2020-17376)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/24/2
+Message-ID: <20201124124443.jhl25ldkhkawmzdb@Air-de-Roger>
+Date: Tue, 24 Nov 2020 13:44:43 +0100
+From: Roger Pau Monné <roger.pau@...rix.com>
+To: Xen.org security team <security@....org>
+CC: <xen-announce@...ts.xen.org>, <xen-devel@...ts.xen.org>, <xen-users@...ts.xen.org>, <oss-security@...ts.openwall.com>, Xen.org security team <security-team-members@....org>
+Subject: Re: Xen Security Advisory 355 v2 - stack corruption from XSA-346 change
 Content-Type: text/plain; charset=utf-8
 
-===================================================================
-OSSA-2020-006: Live migration fails to update persistent domain XML
-===================================================================
+On Tue, Nov 24, 2020 at 12:03:45PM +0000, Xen.org security team wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+>                     Xen Security Advisory XSA-355
+>                               version 2
+> 
+>                  stack corruption from XSA-346 change
+> 
+> UPDATES IN VERSION 2
+> ====================
+> 
+> Added metadata file.
+> 
+> Public release.
+> 
+> ISSUE DESCRIPTION
+> =================
+> 
+> One of the two changes for XSA-346 introduced an on-stack array.  The
+> check for guarding against overrunning this array was off by one,
+> allowing for corruption of the first stack slot immediately following
+> this array.
+> 
+> IMPACT
+> ======
+> 
+> A malicious or buggy HVM or PVH guest can cause Xen to crash, resulting
+> in a Denial of Service (DoS) to the entire host.  Privilege escalation
+> as well as information leaks cannot be excluded.
+> 
+> VULNERABLE SYSTEMS
+> ==================
+> 
+> All Xen versions which have the patches for XSA-346 applied are
+> vulnerable.
+> 
+> Only x86 HVM and PVH guests can leverage the vulnerability.  Arm guests
+> and x86 PV guests cannot leverage the vulnerability.
+> 
+> Only x86 HVM and PVH guests which have physical devices passed through
+> to them can leverage the vulnerability.
 
-:Date: August 25, 2020
-:CVE: CVE-2020-17376
+There's no support for passthrough for x86 PVH guests yet, so this
+issue only affects x86 HVM with passthrough.
 
-
-Affects
-~~~~~~~
-- Nova: <19.3.1, >=20.0.0 <20.3.1, ==21.0.0
-
-
-Description
-~~~~~~~~~~~
-Tadayoshi Hosoya (NEC) and Lee Yarwood (Red Hat) reported a
-vulnerability in Nova live migration. By performing a soft reboot of
-an instance which has previously undergone live migration, a user may
-gain access to destination host devices that share the same paths as
-host devices previously referenced by the virtual machine on the
-source. This can include block devices that map to different Cinder
-volumes on the destination than the source. The risk is increased
-significantly in non-default configurations allowing untrusted users
-to initiate live migrations, so administrators may consider
-temporarily disabling this in policy if they cannot upgrade
-immediately. This only impacts deployments where users are allowed to
-perform soft reboots of server instances; it is recommended to disable
-soft reboots in policy (only allowing hard reboots) until the fix can
-be applied.
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/747978 (Pike)
-- https://review.opendev.org/747976 (Queens)
-- https://review.opendev.org/747975 (Rocky)
-- https://review.opendev.org/747974 (Stein)
-- https://review.opendev.org/747973 (Train)
-- https://review.opendev.org/747972 (Ussuri)
-- https://review.opendev.org/747969 (Victoria)
-
-
-Credits
-~~~~~~~
-- Tadayoshi Hosoya from NEC (CVE-2020-17376)
-- Lee Yarwood from Red Hat (CVE-2020-17376)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1890501
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-17376
-
-
-Notes
-~~~~~
-- The stable/rocky, stable/queens, and stable/pike branches are under extended
-  maintenance and will receive no new point releases, but patches for them are
-  provided as a courtesy.
-
-
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+Roger.
