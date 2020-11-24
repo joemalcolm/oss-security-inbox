@@ -1,69 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/29/2
-Message-ID: <20200729125839.GA14359@openwall.com>
-Date: Wed, 29 Jul 2020 14:58:39 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Yunhai Zhang <zhangyunhai@...ocus.com>, Jiri Slaby <jslaby@...e.cz>
-Subject: Re: [CVE-2020-14331] Linux Kernel: buffer over write in vgacon_scrollback_update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/24/3
+Message-ID: <20201124182021.GB13107@suse.de>
+Date: Tue, 24 Nov 2020 19:20:21 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Heads up: PAM 1.5.0 has a auth bypass under some conditions
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 28, 2020 at 11:59:14AM -0700, Eric Biggers wrote:
-> On Tue, Jul 28, 2020 at 11:16:55AM +0800, ????????? wrote:
-> > There is a buffer over write in drivers/video/console/vgacon.c in
-> > vgacon_scrollback_update.
-> > 
-> > The issue is reported by Yunhai Zhang / NSFOCUS Security Team
-> > <zhangyunhai@...ocus.com>, CVE-2020-14331 assigned via Red Hat.
-> > 
-> > # Affected Versions
-> > The issue is found and tested on 5.7.0-rc6.
-> > The issue is introduced in commit:
-> > 15bdab959c9bb909c0317480dd9b35748a8f7887 ([PATCH] vgacon: Add support
-> > for soft scrollback)
+Hi,
 
-That was in 2006.
+(via IRC, spotted by Foxboron)
 
-> > According to code review, all versions older than
-> > 92ed301919932f777713b9172e525674157e983d (v5.8-rc7) are affected.
-> 
-> Thanks for the writeup.  Note that there are many open syzbot reports in the
-> fbdev, vt, and vgacon kernel subsystems.  These subsystems aren't actively
-> maintained (receiving drive-by fixes only), and the kernel developers recommend
-> to not enable these subsystems if you care about security
-> (https://lkml.kernel.org/lkml/CAKMK7uF5zZH3CaHueWsLR96-AzT==wP8=MpymTqx-T+SRsXWHA@mail.gmail.com/).
-> 
-> This particular bug, for example, appears to have been already found by someone
-> running syzkaller and publicly reported over 2 years ago, with a C reproducer:
-> (https://lkml.kernel.org/lkml/CAEAjamsJnG-=TSOwgRbbb3B9Z-PA63oWmNPoKYWQ=Z=+X49akg@mail.gmail.com/).
-> No one did anything.
-> 
-> I suggest that people relying on the security of these kernel subsystems
-> contribute resources to fixing the many known fuzzing bugs in them.
+PAM 1.5.0 had a potential auth bypass, if a user did not exist and the root password was
+empty (but root locked down).
 
-Wow.  I suppose the biggest risk here is services that just happen to
-run on the console (or able to access it if they re-open /dev/tty) as a
-result of normal system startup.  Since an ioctl() is required at least
-to trigger CVE-2020-14331, at least this one is limited to attacks by
-someone who already got code execution within one of such services, but
-I suppose it could in some cases be used to gain ring 0 access from a
-non-root pseudo-user that the service (or even merely its privsep child)
-might run as.  If any other related issues are triggerable purely by
-terminal escapes codes, it's much worse - could even allow for remote
-attacks without a prior compromise of any service.
+The reporters usecase was spammers pretending to be unknown users with a PAM enabled dovecot.
 
-Do others see this same threat model or something different?  I think
-non-root users with intentional console access mounting attacks is less
-of a concern.
+This issue affected only pam 1.5.0.
 
-Meanwhile, Jiri Slaby brought the discussion around fixing vgacon
-properly to LKML:
+News entry:
+https://github.com/linux-pam/linux-pam/commit/28b8c7045ac8ea4ea080bce02a2df9e3b9e98f06
 
-https://lists.openwall.net/linux-kernel/2020/07/29/234
+CVE-2020-27780
 
-The patch posted in this very first LKML message (with the added check
-before the loop) is already known to be insufficient - see the
-follow-ups.  The patch posted by Yunhai Zhang here on oss-security
-(with the added check in the loop) is still considered sufficient.
+github issue reporting the problem: https://github.com/linux-pam/linux-pam/issues/284
+Fixing commit: https://github.com/linux-pam/linux-pam/commit/af0faf666c5008e54dfe43684f210e3581ff1bca
 
-Alexander
+Ciao, Marcus
