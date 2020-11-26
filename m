@@ -1,129 +1,144 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/29/1
-Message-Id: <E012A6FB-C892-4272-BF4E-3300727D2F4F@beckweb.net>
-Date: Wed, 29 Jan 2020 16:10:08 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/26/1
+Message-Id: <E1kiKNx-0000Us-Ep@xenbits.xenproject.org>
+Date: Thu, 26 Nov 2020 16:44:45 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 351 v2 (CVE-2020-28368) - Information leak via power sidechannel
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The following releases contain fixes for security vulnerabilities:
+            Xen Security Advisory CVE-2020-28368 / XSA-351
+                              version 2
 
-* Jenkins 2.219
-* Jenkins LTS 2.204.2
-* Code Coverage API Plugin 1.1.3
-* Fortify Plugin 19.2.30
+                 Information leak via power sidechannel
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+UPDATES IN VERSION 2
+====================
 
-* WebSphere Deployer Plugin
+CVE assigned.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-01-29/
+ISSUE DESCRIPTION
+=================
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Researchers have demonstrated using software power/energy monitoring
+interfaces to create covert channels, and infer the operations/data used
+by other contexts within the system.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Access to these interfaces should be restricted to privileged software,
+but it was found that Xen doesn't restrict access suitably, and the
+interfaces are accessible to all guests.
 
----
+For more information, see:
+  https://platypusattack.com
+  https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00389.html
 
-SECURITY-1682 / CVE-2020-2099
-Jenkins 2.213 and earlier, LTS 2.204.1 and earlier includes support for the
-Inbound TCP Agent Protocol/3 for communication between master and agents.
-While this protocol has been deprecated in 2018 and was recently removed
-from Jenkins in 2.214, it could still easily be enabled in Jenkins LTS
-2.204.1, 2.213, and older.
+IMPACT
+======
 
-This protocol incorrectly reuses encryption parameters which allow an
-unauthenticated remote attacker to determine the connection secret. This
-secret can then be used to connect attacker-controlled Jenkins agents to
-the Jenkins master.
+An unprivileged guest administrator can sample platform power/energy
+data.  This may be used to infer the operations/data used by other
+contexts within the system.
 
+The research demonstrates using this sidechannel to leak the AES keys
+used elsewhere in the system.
 
-SECURITY-1641 / CVE-2020-2100
-Jenkins 2.218 and earlier, LTS 2.204.1 and earlier supports two network
-discovery services (UDP multicast/broadcast and DNS multicast) by default.
+VULNERABLE SYSTEMS
+==================
 
-The UDP multicast/broadcast service can be used in an amplification
-reflection attack, as very few bytes sent to the respective endpoint result
-in much larger responses: A single byte request to this service would
-respond with more than 100 bytes of Jenkins metadata which could be used in
-a DDoS attack on a Jenkins master. Within the same network, spoofed UDP
-packets could also be sent to make two Jenkins masters go into an infinite
-loop of replies to one another, thus causing a denial of service.
+Power/energy monitoring interfaces are platform and architecture
+specific.  Consult your hardware vendor to ascertain what power feedback
+interfaces are available.
 
+For ARM systems, all versions of Xen are vulnerable.  The fix restricts
+access to the AMU (Activity Monitors Unit) interface, introduced in
+Armv8.4.
 
-SECURITY-1659 / CVE-2020-2101
-Jenkins 2.218 and earlier, LTS 2.204.1 and earlier does not use a
-constant-time comparison validating the connection secret when an inbound
-TCP agent connection is initiated. This could potentially allow attackers
-to use statistical methods to obtain the connection secret.
+For x86 systems, Xen 4.14 and earlier are vulnerable - master is not
+vulnerable, as these issues have been addressed in a more general
+fashion.
 
+The x86 fixes restrict access to:
+ * Intel RAPL interface, introduced in SandyBridge CPUs.
+ * Intel platform energy interface.
+ * Intel perf_ctl interface, introduced in Pentium 4 CPUs and also
+   implemented by other vendors.
+ * AMD RAPL interface, introduced in Ryzen/EPYC CPUs.
+ * AMD compute unit energy interface, present in Fam15/16 CPUs.
 
-SECURITY-1660 / CVE-2020-2102
-Jenkins 2.218 and earlier, LTS 2.204.1 and earlier does not use a
-constant-time comparison when checking whether two HMACs are equal. This
-could potentially allow attackers to use statistical methods to obtain a
-valid HMAC for an attacker-controlled input value.
+MITIGATION
+==========
 
+There are no mitigations available.
 
-SECURITY-1695 / CVE-2020-2103
-Jenkins shows various technical details about the current user on the
-`/whoAmI` page. In a previous fix, the `Cookie` header value containing the
-HTTP session ID was redacted. However, user metadata shown on this page
-could also include the HTTP session ID in Jenkins 2.218 and earlier, LTS
-2.204.1 and earlier.
+RESOLUTION
+==========
 
-This allows attackers able to exploit a cross-site scripting vulnerability
-to obtain the HTTP session ID value from this page.
+Applying the appropriate attached patch resolves this issue.
 
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-SECURITY-1650 / CVE-2020-2104
-Jenkins includes a feature that shows a JVM memory usage chart for the
-Jenkins master.
+xsa351-arm.patch             Xen unstable - 4.10.x [ARM]
+xsa351-x86-4.14-?.patch      Xen 4.14.x            [x86]
+xsa351-x86-4.13-?.patch      Xen 4.13.x            [x86]
+xsa351-x86-4.12-?.patch      Xen 4.12.x            [x86]
+xsa351-x86-4.11-?.patch      Xen 4.11.x - 4.10.x   [x86]
 
-Access to the chart in Jenkins 2.218 and earlier, LTS 2.204.1 and earlier
-requires no permissions beyond the general Overall/Read, allowing users who
-are not administrators to view JVM memory usage data.
+$ sha256sum xsa351*
+cad287981a870f13484834fa2364ffee68178517e906f55d2889304a4a9eae06  xsa351.meta
+70ebd0e93af240af2680374dcfd8ff4a5dd3eefccf670f1cb9b546d763d6a554  xsa351-arm.patch
+49b52a1366912a29e184e3014a9f1f579e8a0dd8a36f01d38d995d2c8ed81928  xsa351-arm-4.11.patch
+2e7b7c2b98625d70c8b10047a9f668372f3ccede167344dedb712312606acbca  xsa351-x86-4.11-1.patch
+ab9e2cb7d5e3e0c3a916f006c697495f4f01146e09df60ece59ce0a8f7aa5ed0  xsa351-x86-4.11-2.patch
+bb68f6e6905bc1566156cafab058cbaf02a17c197385c33a83b7f73885913c1c  xsa351-x86-4.12-1.patch
+53f464269f59498f8a9a614f10a47cfb1d81c666f0d684346e28005015de962c  xsa351-x86-4.12-2.patch
+67a29d66230faafd9a8047ac80ec18130b5659e80a38c3a412cb2be6d3288a8f  xsa351-x86-4.13-1.patch
+f7d8717dec33ee7484b36490402d113f1e7e168e7541bcf193fef620df299f08  xsa351-x86-4.13-2.patch
+7d4fbe11a766226d7f1b93c5bf34664d8855deee09d1feebc76f11e49f2aa9c9  xsa351-x86-4.14-1.patch
+41df825deafe3ef28e8594ec956033689af69f84a4a6dd92f97d1071e925203d  xsa351-x86-4.14-2.patch
+$
 
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
-SECURITY-1704 / CVE-2020-2105
-Jenkins 2.218 and earlier, LTS 2.204.1 and earlier does not serve the
-`X-Frame-Options: deny` HTTP header on REST API responses to protect
-against clickjacking attacks. An attacker could exploit this by routing the
-victim through a specially crafted web page that embeds a REST API endpoint
-in an iframe and tricking the user into performing an action which would
-allow for the attacker to learn the content of that REST API endpoint.
+Despite an attempt to organise predisclosure, the discoverers ultimately
+did not authorise a predisclosure.
+-----BEGIN PGP SIGNATURE-----
 
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+/22UMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZt0IH/1P4OlmyExkX0u1mVXcG3o85esBYDAD6RKDhRCr5
+IjbitMUItESGYyz/Z6BEmuUIiJ1gfNx7xs4I3b4i8UUBYdBvvsdjeL3WK75Ym3nW
+Jh63AQzbDeNjkEnK4UnF6+V/9BJJUYB4avH6m82LU8+9Gp8S9CGH4y73gpiTGhcK
+VHPhdPOSc+ZDJ/OEQUR/3uMci9nuQ+qw9PClGybj3j4iru3PWfPRCSsdy2sAZO0T
+KwS+PvDgFKWqKiIAL6Ahfb0VnREP8zqpIxSq2cN8+SuVQym+H6zKh2exvYtEjq/j
+pWNzHublyLZoSBLvfguIeNKj4x2va9dF7/jJAnLfNVrvJCI=
+=QgHs
+-----END PGP SIGNATURE-----
 
-SECURITY-1680 / CVE-2020-2106
-Code Coverage API Plugin 1.1.2 and earlier does not escape the filename of
-the coverage report used in its view.
+Download attachment "xsa351.meta" of type "application/octet-stream" (1772 bytes)
 
-This results in a stored cross-site scripting vulnerability that can be
-exploited by users able to change the job configuration.
+Download attachment "xsa351-arm.patch" of type "application/octet-stream" (2418 bytes)
 
+Download attachment "xsa351-arm-4.11.patch" of type "application/octet-stream" (2714 bytes)
 
-SECURITY-1565 / CVE-2020-2107
-Fortify Plugin 19.1.29 and earlier stored its proxy server password
-unencrypted in job `config.xml` files. This password could be read by users
-with the Extended Read permission.
+Download attachment "xsa351-x86-4.11-1.patch" of type "application/octet-stream" (6244 bytes)
 
+Download attachment "xsa351-x86-4.11-2.patch" of type "application/octet-stream" (4448 bytes)
 
-SECURITY-1719 / CVE-2020-2108
-WebSphere Deployer Plugin 1.6.1 and earlier does not configure the XML
-parser to prevent XML external entity (XXE) attacks. This could be
-exploited by a user with Job/Configure permissions to upload a specially
-crafted war file containing a `WEB-INF/ibm-web-ext.xml` which is parsed by
-the plugin.
+Download attachment "xsa351-x86-4.12-1.patch" of type "application/octet-stream" (5992 bytes)
 
-As of publication of this advisory, there is no fix.
+Download attachment "xsa351-x86-4.12-2.patch" of type "application/octet-stream" (4682 bytes)
 
+Download attachment "xsa351-x86-4.13-1.patch" of type "application/octet-stream" (5988 bytes)
+
+Download attachment "xsa351-x86-4.13-2.patch" of type "application/octet-stream" (4800 bytes)
+
+Download attachment "xsa351-x86-4.14-1.patch" of type "application/octet-stream" (6075 bytes)
+
+Download attachment "xsa351-x86-4.14-2.patch" of type "application/octet-stream" (5173 bytes)
