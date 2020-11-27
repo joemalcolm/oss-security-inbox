@@ -1,4 +1,9 @@
-Received: (qmail 20022 invoked by uid 550); 5 May 2026 18:28:39 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["696" "Friday" "27" "November" "2020" "18:38:05" "+0530" "P J P" "ppandit@redhat.com" "<60o7969p-qnp-s3s1-spn2-1s4p509qp1@erqung.pbz>" "22" "[oss-security] CVE-2020-29129 CVE-2020-29130 QEMU: slirp: out-of-bounds access while processing ARP/NCSI packets" nil nil nil "11" "2020112713:08:05" "[oss-security] CVE-2020-29129 CVE-2020-29130 QEMU: slirp: out-of-bounds access while processing ARP/NCSI packets" (number mark "U       ppandit@redh Nov 27   22/696   " thread-indent "\"[oss-security] CVE-2020-29129 CVE-2020-29130 QEMU: slirp: out-of-bounds access while processing ARP/NCSI packets\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-29129 CVE-2020-29130 QEMU: slirp: out-of-bounds access while processing ARP/NCSI packets" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26190 invoked by uid 550); 27 Nov 2020 13:08:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,58 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9733 invoked from network); 5 May 2026 18:27:56 -0000
-Date: Tue, 5 May 2026 20:27:25 +0200
-From: Solar Designer <solar@openwall.com>
-To: Eric Covener <covener@apache.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20260505182725.GA27198@openwall.com>
-References: <e6a48645-bb78-c3df-755f-56456a8e58f3@apache.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e6a48645-bb78-c3df-755f-56456a8e58f3@apache.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2026-29169: Apache HTTP Server: mod_dav_lock indirect lock crash
+Received: (qmail 26172 invoked from network); 27 Nov 2020 13:08:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1606482496;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=EDmBVrMHY0aG1q++7zmPYb5tklm4WmsCu2xUOhs0/HA=;
+	b=SoGkW6dUVBjH87nMgPSydpYiyazpSvAOOLZhOls9n5gb7QXMyGvPaKZRU97TXx8lXHtXkq
+	pUp512kPHClYVq4J+ti1e2V12z2nKwaWfwstZnvTn1BLWYyDxoaNoCo8/+H4r4aswYckXo
+	vFOCN48QWFfFDeiE1g8mL44AGuibYCc=
+X-MC-Unique: p3k6X58CPYGqFETlUrhqyA-1
+Date: Fri, 27 Nov 2020 18:38:05 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+To: oss security list <oss-security@lists.openwall.com>
+cc: Qiuhao.Li@outlook.com
+Message-ID: <60o7969p-qnp-s3s1-spn2-1s4p509qp1@erqung.pbz>
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ppandit@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] CVE-2020-29129 CVE-2020-29130 QEMU: slirp: out-of-bounds access
+ while processing ARP/NCSI packets
 
-On Mon, May 04, 2026 at 02:15:25PM +0000, Eric Covener wrote:
-> Severity: low 
-> 
-> Affected versions:
-> 
-> - Apache HTTP Server through 2.4.66
-> 
-> Description:
-> 
-> A NULL pointer dereference in mod_dav_lock in Apache HTTP Server 2.4.66 and earlier may allow an attacker to crash the server with a malicious request.mod_dav_lock is not used internally by mod_dav or mod_dav_fs.
-> 
-> The only known use-case for mod_dav_lock was mod_dav_svn from Apache Subversion earlier than version 1.2.0.
-> 
-> Users are recommended to upgrade to version 2.4.66, which fixes this issue, or remove mod_dav_lock.
+   Hello,
 
-As confirmed by Eric off-list, the above line is erroneous.  It should
-say "upgrade to version 2.4.67", not 2.4.66.  The website has it right:
+An out-of-bounds access issue was found in the SLiRP user networking 
+implementation of QEMU. It could occur while processing ARP/NCSI packets, if 
+the packet length was shorter than required to accommodate respective protocol 
+headers and payload. A privileged guest user may use this flaw to potentially 
+leak host information bytes.
 
-https://httpd.apache.org/security/vulnerabilities_24.html
+Upstream patch:
+---------------
+   -> https://lists.freedesktop.org/archives/slirp/2020-November/000115.html
 
-"Users are recommended to upgrade to version 2.4.67, which fixes this
-issue, or remove mod_dav_lock."
+* This issue was reported by Qiuhao Li (cc'd).
 
-> Credit:
-> 
-> Pavel Kohout, Aisle Research, Aisle.com (finder)
-> 
-> References:
-> 
-> https://httpd.apache.org/security/vulnerabilities_24.html
-> https://httpd.apache.org/
-> https://www.cve.org/CVERecord?id=CVE-2026-29169
-> 
-> Timeline:
-> 
-> 2026-03-04: Report received
-> 2026-05-04: 2.4.67 released
-> 2026-05-04: fixed in 2.4.x by r1933354
+* CVE-2020-29129 CVE-2020-29130 assigned via -> https://cveform.mitre.org/
 
-Alexander
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+
