@@ -1,68 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/8
-Message-ID: <3eab72b4-8e53-9b78-c529-0578f52e6599@apache.org>
-Date: Sat, 8 Aug 2020 07:02:21 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, HTTPD Security <security@...pd.apache.org>
-Subject: Re: CVE-2020-11984: Apache httpd: mod_uwsgi buffer overlow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/29/1
+Message-ID: <20201129165312.64bd840f@fabiankeil.de>
+Date: Sun, 29 Nov 2020 16:53:12 +0100
+From: Fabian Keil <freebsd-listen@...iankeil.de>
+To: oss-security@...ts.openwall.com
+Subject: Multiple memory leaks fixed in Privoxy 3.0.29 stable
 Content-Type: text/plain; charset=utf-8
 
-Hi, Alexander;
+               Announcing Privoxy 3.0.29 stable
+--------------------------------------------------------------------
 
-On 8/7/2020 7:54 AM, Solar Designer wrote:
-> Hi Daniel,
->
-> On Fri, Aug 07, 2020 at 06:31:38AM -0500, Daniel Ruggeri wrote:
->> CVE-2020-11984: mod_uwsgi buffer overlow
->>
->> Severity: moderate
->>
->> Vendor: The Apache Software Foundation
->>
->> Versions Affected:
->> httpd 2.4.32 to 2.4.44
->>
->> Description:
->> Apache HTTP Server 2.4.32 to 2.4.44
->> mod_proxy_uwsgi info disclosure and possible RCE
->>     
->> Mitigation:
->> disable mod_uwsgi
-> You appear to use mod_uwsgi and mod_proxy_uwsgi interchangeably in the
-> above, but I guess they're actually different modules?
-Yes, you're correct. There is a mod_uwsgi maintained elsewhere in the
-wild. This one was a typo that had made its way into the description.
->
->> Credit:
->> Discovered by Felix Wilhelm of Google Project Zero
->>
->> References:
->> https://httpd.apache.org/security/vulnerabilities_24.html
-> The vulnerability description at that link mentions mod_proxy_uwsgi
-> only, so I guess it's the one affected module, whereas mod_uwsgi is
-> unaffected?
->
-> In general, I think you include too little detail in these postings and
-> at the link above.  You do include the bare minimum (thanks!), but it is
-> unclear from these announcements where in the code the issues are.  You
-> could reference source files and function names and/or commits fixing
-> the issues.  You could also describe the impact in more detail - e.g.,
-> what kind of "info disclosure" (what info is potentially disclosed and
-> to where).  I am just using this as an example of how I think you could
-> improve reporting on Apache httpd vulnerabilities in general.
+Privoxy 3.0.29 stable fixes a couple of memory leaks and introduces
+https inspection which allows to filter encrypted requests and
+responses.
 
-Thanks - I've included our security mailing list to pass this feedback
-along to the rest of the security group as a heads up. As you can
-imagine, with such a strong downstream community from our releases, we
-try to be careful so as to not place too much information in the
-descriptions to make it trivial to exploit vulnerabilities before those
-downstream packagers can incorporate fixes. At the same time, there's
-always room for improvement :-)
+--------------------------------------------------------------------
+ChangeLog for Privoxy 3.0.29
+--------------------------------------------------------------------
 
-Have a great weekend!
+- Security/Reliability:
+  - Fixed memory leaks when a response is buffered and the buffer
+    limit is reached or Privoxy is running out of memory.
+    Commits bbd53f1010b and 4490d451f9b. OVE-20201118-0001.
+    Sponsored by: Robert Klemme
+  - Fixed a memory leak in the show-status CGI handler when
+    no action files are configured. Commit c62254a686.
+    OVE-20201118-0002.
+    Sponsored by: Robert Klemme
+  - Fixed a memory leak in the show-status CGI handler when
+    no filter files are configured. Commit 1b1370f7a8a.
+    OVE-20201118-0003.
+    Sponsored by: Robert Klemme
+  - Fixes a memory leak when client tags are active.
+    Commit 245e1cf32. OVE-20201118-0004.
+    Sponsored by: Robert Klemme
+  - Fixed a memory leak if multiple filters are executed
+    and the last one is skipped due to a pcre error.
+    Commit 5cfb7bc8fe. OVE-20201118-0005.
+  - Prevent an unlikely dereference of a NULL-pointer that
+    could result in a crash if accept-intercepted-requests
+    was enabled, Privoxy failed to get the request destination
+    from the Host header and a memory allocation failed.
+    Commit 7530132349. CID 267165. OVE-20201118-0006.
+  - Fixed memory leaks in the client-tags CGI handler when
+    client tags are configured and memory allocations fail.
+    Commit cf5640eb2a. CID 267168. OVE-20201118-0007.
+  - Fixed memory leaks in the show-status CGI handler when memory
+    allocations fail. Commit 064eac5fd0 and commit fdee85c0bf3.
+    CID 305233. OVE-20201118-0008.
 
-> Thanks,
->
-> Alexander
+- General improvements:
+[...]
 
+-----------------------------------------------------------------
+About Privoxy:
+-----------------------------------------------------------------
+
+Privoxy is a non-caching web proxy with advanced filtering capabilities for
+enhancing privacy, modifying web page data and HTTP headers, controlling
+access, and removing ads and other obnoxious Internet junk. Privoxy has a
+flexible configuration and can be customized to suit individual needs and
+tastes. It has application for both stand-alone systems and multi-user
+networks.
+
+Privoxy is Free Software and licensed under the GNU GPLv2.
+
+[...]
+
+Home Page: 
+   https://www.privoxy.org/
+
+Content of type "application/pgp-signature" skipped
