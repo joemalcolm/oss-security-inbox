@@ -1,45 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/22/2
-Message-ID: <20200122084245.GA10489@f195.suse.de>
-Date: Wed, 22 Jan 2020 09:42:45 +0100
-From: Matthias Gerstner <matthias.gerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/30/3
+Message-ID: <10f61e14-05f3-0294-8cda-e63764d98cbc@citrix.com>
+Date: Mon, 30 Nov 2020 16:10:35 +0000
+From: Andrew Cooper <andrew.cooper3@...rix.com>
+To: Mauro Matteo Cascella <mcascell@...hat.com>, <oss-security@...ts.openwall.com>
+CC: <xen-announce@...ts.xen.org>, <xen-devel@...ts.xen.org>, <xen-users@...ts.xen.org>, Xen.org security team <security-team-members@....org>
+Subject: Re: Xen Security Advisory 355 v2 - stack corruption from XSA-346 change
 Content-Type: text/plain; charset=utf-8
 
-Hi Nick,
+On 30/11/2020 16:07, Mauro Matteo Cascella wrote:
+> Hello,
+>
+> Has a CVE been assigned for this issue?
+>
+> Regards,
 
-> > storeBackup [1] is a tool for performing disk-to-disk backups.
-> [...]
-> > [1]: http://storebackup.org
-> 
-> Er ... when I looked just now, the page at that URL began :
-> 
-> > How to Create Cryptocurrency – Simple Strategy
-> 
-> and continued:
-> 
-> > Everyone is aware of the bitcoin which is the cryptocurrency
-> > trending in the world of IT
-> 
-> In "the world of IT" we are instantly wondering who exactly has
-> written this webpage about a backup utility ....   Should we tell the
-> site owner his site may have been stolen ?
+Some unknown 3rd party appears to have allocated a CVE and we're
+currently trying to track down who.
 
-Hmm I never bothered to look deeper into the website but now that you're
-pointing to it, it looks strange. I can give the upstream author a hint,
-to check up on his website.
-
-This storeBackup project is near-dead anyways, sadly. There seem to be
-some die hard fans out there that use it, but the author only manages to
-send out one email roughly every week. There seems to be no code
-repository for it so we're getting tarballs - not even patches.
-
-Thank you for the hint. If I get any more information about the
-situation of the website I will get back to you.
-
-Cheers
-
-Matthias
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+~Andrew
