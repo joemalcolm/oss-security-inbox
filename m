@@ -1,41 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/07/2
-Message-ID: <8dad8ec32be2e14ecbeac7f6a46b39dfc650e4c9.camel@doppel-helix.eu>
-Date: Mon, 07 Sep 2020 16:28:14 +0200
-From: Matthias Bläsing <mblaesing@...pel-helix.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/30/1
+Message-ID: <20201130090941.GA11303@f195.suse.de>
+Date: Mon, 30 Nov 2020 10:09:41 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-11986] Opening a Gradle project with Apache NetBeans executes foreign script immediately
+Subject: Re: kdeconnect: CVE-2020-26164: multiple security issues in kdeconnectd network daemon
 Content-Type: text/plain; charset=utf-8
 
-CVE-ID
-------
-CVE-2020-11986
+Hi,
 
-Summary
--------
-Opening a Gradle project with Apache NetBeans executes foreign script
-immediately
+On Tue, Oct 13, 2020 at 02:29:12PM +0200, Matthias Gerstner wrote:
+> following is a security review report concerning kdeconnect [1].
 
-Versions Affected: 
-------------------
-- All Apache NetBeans versions up to and including 12.0
-- NetBeans releases before the Apache transition started may be
-  also affected
+this is an amendment to my original report. Upstream wanted to keep this
+private until they had something to address it. Originally I raised the
+following additional concern:
 
-Description:
-------------
-To be able to analyse a gradle project, the build script needs to be
-executed.
-Apache NetBeans follows this pattern and does not allow the user to
-intercept/prevent the execution.
+    ## General Observations and Recommendations
+      
+    ### Pairing Procedure
+    
+    The pairing procedure currently seems lacking. The GUI component only presents
+    the friendly 'deviceName' to identify peer devices, which is completely under
+    attacker control. Furthermore the 'deviceName' is transmitted in cleartext in
+    UDP broadcast messages for all other nodes in the network segment to see.
+    Therefore malicious devices can attempt to confuse users by requesting a
+    pairing under the same 'deviceName' to gain access to a system.
+    
+    I strongly suggest to introduce a secure procedure here, like displaying the
+    certificate fingerprint to the user.
 
-Mitigation:
------------
-- Only open trusted gradle projects with NetBeans
-- Update to NetBeans 12.0-u1
+Upstream addresses this now [1]. A sha256 fingerprint of the
+concatenated public keys of the two involved certificates is displayed.
+I'm not completely happy with the chosen solution, because in the
+initial popup only a prefix of 8 hex digits of the fingerprint is
+displayed. The full fingerprint is only reachable via an additional
+"view key" button. There are no additional instructions for the end user
+and no explanation about the severity of trusting a device. At least in
+theory it is now possible to do a proper peer device verification.
 
-Credit:
--------
-The problem was identified by Emilian Bold
+Other discussed approaches to make the verification more user friendly
+and/or more secure would have been:
+
+- displaying a randomart image in the fashion of ssh-keygen.
+- scanning a QR code displayed on the PC end using the kdeconnect
+  Android app.
+- requiring the user to enter (at least part of) the fingerprint on the
+  PC end to force proper user interaction. Since the pairing procedure
+  should not occur very often and given the importance of verifying
+  device identity this would have been justified.
+
+[1]: https://github.com/KDE/kdeconnect-kde/commit/e7518493df7398f27f7dffbfc3f79750bc1fda50
+
+Cheers
+
+Matthias
 
 Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
