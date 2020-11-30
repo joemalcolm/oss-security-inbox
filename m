@@ -1,42 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/16/8
-Message-ID: <20201116231142.GA2956665@millbarge>
-Date: Mon, 16 Nov 2020 23:11:42 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Buffer Overflow in raptor widely unfixed in Linux distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/30/6
+Message-ID: <142af9167b98ce5f330f2ce9ad10decb0bdb6163.camel@amazon.com>
+Date: Mon, 30 Nov 2020 19:00:16 +0000
+From: "Karp, Samuel" <skarp@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2020-15257: containerd-shim API exposed to host network containers
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 16, 2020 at 08:06:15PM +0100, Marius Bakke wrote:
-> I tried following the CVE assignment RSS feed initially, but it was not
-> suitable for human consumption.
-> 
-> How do other distros keep up with new CVE assignments?
+Impact
 
-We (Ubuntu security team) have weekly role rotations among the team. The
-person on CVE triage duty will use our tooling to download
+Access controls for the shim’s API socket verified that the connecting
+process had an effective UID of 0, but did not otherwise restrict
+access to the abstract Unix domain socket. This would allow malicious
+containers running in the same network namespace as the shim, with an
+effective UID of 0 but otherwise reduced privileges, to cause new
+processes to be run with elevated privileges.
 
-https://cve.mitre.org/data/downloads/allitems.xml.gz
-https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-recent.json.gz
-https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-2020.json.gz
-https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-2019.json.gz
-etc
 
-We also pull from Debian's security team:
-https://salsa.debian.org/security-tracker-team/security-tracker.git
+Patches
 
-We collect CVEs from this list using local mboxes.
+This vulnerability has been fixed in containerd 1.3.9 [1] and 1.4.3
+[2]. Users should update to these versions as soon as they are
+released. It should be noted that containers started with an old
+version of containerd-shim should be stopped and restarted, as running
+containers will continue to be vulnerable even after an upgrade.
 
-We collect CVEs from Red Hat's security announce list:
-https://www.redhat.com/archives/rhsa-announce/
-and oval feeds:
-https://www.redhat.com/security/data/oval/v2/RHEL8/
 
-Having a variety of inputs gives us some resiliency when one or another
-service is offline for whatever reason,
+Workarounds
 
-I hope this helps.
+If you are not providing the ability for untrusted users to start
+containers in the same network namespace as the shim (typically the
+"host" network namespace, for example with `docker run --net=host` or
+`hostNetwork: true` in a Kubernetes pod) and run with an effective UID
+of 0, you are not vulnerable to this issue.
 
-Thanks
+If you are running containers with a vulnerable configuration, you can
+deny access to all abstract sockets with AppArmor by adding a line
+similar to `deny unix addr=@**,` to your policy.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+It is best practice to run containers with a reduced set of privileges,
+with a non-zero UID, and with isolated namespaces. The containerd
+maintainers strongly advise against sharing namespaces with the host.
+Reducing the set of isolation mechanisms used for a container
+necessarily increases that container's privilege, regardless of what
+container runtime is used for running that container.
+
+
+Credits
+
+The containerd maintainers would like to thank Jeff Dileo of NCC Group
+for responsibly disclosing this issue in accordance with the containerd
+security policy [3] and for reviewing the patch.
+
+For further details, see 
+https://github.com/containerd/containerd/security/advisories/GHSA-36xw-fx78-c5r4
+
+[1] https://github.com/containerd/containerd/releases/tag/v1.3.9
+[2] https://github.com/containerd/containerd/releases/tag/v1.4.3
+[3] https://github.com/containerd/project/blob/master/SECURITY.md
+
