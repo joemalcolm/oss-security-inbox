@@ -1,80 +1,137 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/01/1
-Message-Id: <E492E0E3-8DFC-42F6-8CC4-93A914082B35@apache.org>
-Date: Thu, 1 Oct 2020 08:21:46 -0700
-From: Andy LoPresto <alopresto@...che.org>
-To: security@...i.apache.org, dev@...i.apache.org, users@...i.apache.org, oss-security@...ts.openwall.com, announce@...che.org
-Subject: [ANNOUNCE] Apache NiFi CVE-2020-9486, CVE-2020-9487, CVE-2020-9491, CVE-2020-13940
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/30/2
+Message-ID: <CAA8xKjWY2+xo57n8hsvG6yMyhs6nAH+S4NbCsEJLWEVff_aWzg@mail.gmail.com>
+Date: Mon, 30 Nov 2020 17:07:43 +0100
+From: Mauro Matteo Cascella <mcascell@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org,  xen-users@...ts.xen.org,  "Xen.org security team" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 355 v2 - stack corruption from XSA-346 change
 Content-Type: text/plain; charset=utf-8
 
-Apache NiFi PMC would like to announce the discovery and resolution of CVE-2020-9486, CVE-2020-9487, CVE-2020-9491, and CVE-2020-13940. These issues have been resolved and a new version of the Apache NiFi project was released in accordance with the Apache Release Process. 
+Hello,
 
-Apache NiFi is an easy to use, powerful, and reliable system to process and distribute data. It supports powerful and scalable directed graphs of data routing, transformation, and system mediation logic.
+Has a CVE been assigned for this issue?
 
-Fixed in Apache NiFi 1.12.0 (Released: August 18, 2020)
+Regards,
+
+On Tue, Nov 24, 2020 at 1:06 PM Xen.org security team <security@....org> wrote:
+>
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>                     Xen Security Advisory XSA-355
+>                               version 2
+>
+>                  stack corruption from XSA-346 change
+>
+> UPDATES IN VERSION 2
+> ====================
+>
+> Added metadata file.
+>
+> Public release.
+>
+> ISSUE DESCRIPTION
+> =================
+>
+> One of the two changes for XSA-346 introduced an on-stack array.  The
+> check for guarding against overrunning this array was off by one,
+> allowing for corruption of the first stack slot immediately following
+> this array.
+>
+> IMPACT
+> ======
+>
+> A malicious or buggy HVM or PVH guest can cause Xen to crash, resulting
+> in a Denial of Service (DoS) to the entire host.  Privilege escalation
+> as well as information leaks cannot be excluded.
+>
+> VULNERABLE SYSTEMS
+> ==================
+>
+> All Xen versions which have the patches for XSA-346 applied are
+> vulnerable.
+>
+> Only x86 HVM and PVH guests can leverage the vulnerability.  Arm guests
+> and x86 PV guests cannot leverage the vulnerability.
+>
+> Only x86 HVM and PVH guests which have physical devices passed through
+> to them can leverage the vulnerability.
+>
+> MITIGATION
+> ==========
+>
+> Not passing through physical devices to untrusted guests will avoid
+> the vulnerability.
+>
+> CREDITS
+> =======
+>
+> This issue was discovered by Jan Beulich of SUSE.
+>
+> RESOLUTION
+> ==========
+>
+> Applying the attached patch resolves this issue.
+>
+> Note that patches for released versions are generally prepared to
+> apply to the stable branches, and may not apply cleanly to the most
+> recent release tarball.  Downstreams are encouraged to update to the
+> tip of the stable branch before applying these patches.
+>
+> xsa355.patch           xen-unstable - Xen 4.10.x
+>
+> $ sha256sum xsa355*
+> a93bfc376897e7cffd095d395f1a66476adb9503d7d80a59b7861e64c2675323  xsa355.meta
+> dae633c11cf2eff3e304737265e18ab09213e8e4640458080a944ae7a40819a4  xsa355.patch
+> $
+>
+> NOTE CONCERNING SHORT EMBARGO
+> =============================
+>
+> This issue is likely to be re-discovered as the changes for XSA-346
+> are deployed more widely, since the issue is also triggerable without
+> any malice or bugginess.
+>
+> DEPLOYMENT DURING EMBARGO
+> =========================
+>
+> Deployment of the patches and/or mitigations described above (or
+> others which are substantially similar) is permitted during the
+> embargo, even on public-facing systems with untrusted guest users and
+> administrators.
+>
+> But: Distribution of updated software is prohibited (except to other
+> members of the predisclosure list).
+>
+> Predisclosure list members who wish to deploy significantly different
+> patches and/or mitigations, please contact the Xen Project Security
+> Team.
+>
+> (Note: this during-embargo deployment notice is retained in
+> post-embargo publicly released Xen Project advisories, even though it
+> is then no longer applicable.  This is to enable the community to have
+> oversight of the Xen Project Security Team's decisionmaking.)
+>
+> For more information about permissible uses of embargoed information,
+> consult the Xen Project community's agreed Security Policy:
+>   http://www.xenproject.org/security-policy.html
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+89pEMHHBncEB4ZW4u
+> b3JnAAoJEIP+FMlX6CvZRHQH/1D8CfjZWYgLcdYOg6sDO6BIK8IsnAiOoe2C8b9i
+> M8QPFzHlUx09FI5CHVb0Va/pFliR1OS2tmmIU30DL9nmiDLcaP2uvpgJAYo5GwL5
+> Rzccjo4qbXwfSRQvHmLzbr+XN8sHDxbekpFd8T5WvuarUgxOaPCLTfSG0nag/t52
+> OVNIdDcP5lSt/Z88lYW75j4gBAsXUZDEXgn81JpeHj9js8YLFC3WFcwh58Jjd+hw
+> 5DH955jNAKD8TRSy6uffDpvN1m9wm2vDGeXSUcJyswlV8Nqi6YRW4XO4Q6Cfj+CG
+> LVBS/T977JZGJjRvTw4j0H+xAXiLFwQ1I/6v6fSZzxDMt9k=
+> =+4M1
+> -----END PGP SIGNATURE-----
 
 
 
-CVE-2020-9486: Apache NiFi information disclosure in logs
-
-Severity: Important
-
-Versions Affected: Apache NiFi 1.10.0 - 1.11.4
-
-Description: The NiFi stateless execution engine produced log output which included sensitive property values. When a flow was triggered, the flow definition configuration JSON was printed, potentially containing sensitive values in plaintext.
-
-Mitigation: Implemented Argon2 secure hashing to provide a deterministic loggable value which does not reveal the sensitive value. Users running any previous NiFi release should upgrade to the latest release.
-
-Credit: This issue was discovered by Andy LoPresto and Pierre Villard.
-
-
-
-CVE-2020-9487: Apache NiFi denial of service
-
-Severity: Important
-
-Versions Affected: Apache NiFi 1.0.0 - 1.11.4
-
-Description: The NiFi download token (one-time password) mechanism used a fixed cache size and did not authenticate a request to create a download token, only when attempting to use the token to access the content. An unauthenticated user could repeatedly request download tokens, preventing legitimate users from requesting download tokens.
-
-Mitigation: Disabled anonymous authentication, implemented a multi-indexed cache, and limited token creation requests to one concurrent request per user. Users running any previous NiFi release should upgrade to the latest release.
-
-Credit: This issue was discovered by Dennis Detering (IT Security Consultant at Spike Reply).
-
-
-
-CVE-2020-9491: Apache NiFi use of weak TLS protocols
-
-Severity: Critical
-
-Versions Affected: Apache NiFi 1.2.0 - 1.11.4
-
-Description: The NiFi UI and API were protected by mandating TLS v1.2, as well as listening connections established by processors like ListenHTTP, HandleHttpRequest, etc. However intracluster communication such as cluster request replication, Site-to-Site, and load balanced queues continued to support TLS v1.0 or v1.1.
-
-Mitigation: Refactored disparate internal SSL and TLS code, reducing exposure for extension and framework developers to low-level primitives. Added support for TLS v1.3 on supporting JVMs. Restricted all incoming TLS communications to TLS v1.2+. Users running any previous NiFi release should upgrade to the latest release.
-
-Credit: This issue was discovered by Juan Carlos Sequeiros and Andy LoPresto.
-
-
-
-CVE-2020-13940: Apache NiFi information disclosure by XXE
-
-Severity: Low
-
-Versions Affected: Apache NiFi 1.0.0 - 1.11.4
-
-Description: The notification service manager and various policy authorizer and user group provider objects allowed trusted administrators to inadvertently configure a potentially malicious XML file. The XML file has the ability to make external calls to services (via XXE).
-
-Mitigation: An XML validator was introduced to prevent malicious code from being parsed and executed. Users running any previous NiFi release should upgrade to the latest release.
-
-Credit: This issue was discovered by Matt Burgess and Andy LoPresto.
-
-For more information: https://nifi.apache.org/security.html <https://nifi.apache.org/security.html>
-
-Andy LoPresto
-alopresto@...che.org
-alopresto.apache@...il.com
-He/Him
-PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
-
+-- 
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
