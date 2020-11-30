@@ -1,34 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/12/11
-Message-ID: <871ri3p2l4.fsf@canidae.wired.pri>
-Date: Tue, 13 Oct 2020 08:16:23 +1100
-From: Brian May <brian@...uxpenguins.xyz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/30/5
+Message-ID: <CAFcO6XMCxbHjiHFWUoFW5jcwfOrgz3atyW_MfHaQ4Akv6XF4jw@mail.gmail.com>
+Date: Tue, 1 Dec 2020 01:50:50 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
+Subject: CVE-2020-27815 Linux kernel: jfs: array-index-out-of-bounds in dbAdjTree
 Content-Type: text/plain; charset=utf-8
 
-Jeffrey Walton <noloader@...il.com> writes:
+Hello,
 
-> [...] like making /home/loser/www available to other users.
+I report an array-index-out-of-bounds bugs in fs/jfs/jfs_dmap.c in
+dbAdjTree and reproduce it in Linux kernel 5.9.6 version.
 
-Does anybody even do this anymore?
+Description:
 
-Once upon a time, a shared Unix system account come with an implied web
-account which you could use to publish files and create your own
-website. But I cannot personally think of any examples where this still
-happens. websystems and shell accounts are generally stored on distinct
-and independent systems.
+In the Linux kernel through 5.9.6, there is a
+array-index-out-of-bounds in fs/jfs/jfs_dmap.c in dbAdjTree and it may
+cause out of bounds read and Denial of Service.
 
-Plus even if I was going to implement such a system today, I might
-seriously consider using - say "/web/loser" instead. Although this might
-have implications if quotas are important. Or maybe something that bind
-mounts /home/loser/www to /web/loser, that way the web software doesn't
-need access to /home/loser.
+Root Cause:
 
-Even shared systems - while still around and still very important (HPC
-comes to mind) - are a lot less common then they use to be. Most Linux
-installs are private non-shared systems. Which I suspect explains why
-there isn't a more pressure to fix the default umask issue.
--- 
-Brian May <brian@...uxpenguins.xyz>
-https://linuxpenguins.xyz/brian/
+the dmtree_t is that
+ typedef union dmtree {
+ struct dmaptree t1;
+ struct dmapctl t2;
+} dmtree_t;
+
+ the dmaptree is that
+  struct dmaptree {
+  __le32 nleafs; /* 4: number of tree leafs */
+  __le32 l2nleafs; /* 4: l2 number of tree leafs */
+  __le32 leafidx; /* 4: index of first tree leaf */
+  __le32 height; /* 4: height of the tree */
+  s8 budmin; /* 1: min l2 tree leaf value to combine */
+  s8 stree[TREESIZE]; /* TREESIZE: tree */
+  u8 pad[2]; /* 2: pad to word boundary */
+ };the TREESIZE is totally 341.
+
+the dmapctl is that:
+struct dmapctl {
+__le32 nleafs; /* 4: number of tree leafs */
+__le32 l2nleafs; /* 4: l2 number of tree leafs */
+__le32 leafidx; /* 4: index of the first tree leaf */
+__le32 height; /* 4: height of tree */
+s8 budmin; /* 1: minimum l2 tree leaf value */
+s8 stree[CTLTREESIZE]; /* CTLTREESIZE: dmapctl tree */
+u8 pad[2714]; /* 2714: pad to 4096 */
+}; /* - 4096 - */
+the CTLTREESIZE is totally 1365.
+The dmt_stree was used in dbAdjTree. Since dmt_stree can refer to the
+stree in both structures dmaptree and dmapctl. the stree size is not
+consistent, may it cause index out of range.
+
+CVE assigned :
+CVE-2020-27815
+
+Patch:
+It's in linux-next now, not available in upstream.
+
+Credit:
+This issue was discovered by the ADLab of venustech.
+
+Regards.
+ butt3rflyh4ck.
