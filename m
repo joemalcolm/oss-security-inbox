@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2176" "Friday" "22" "May" "2020" "18:00:12" "-0400" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8k1=bzu9N3-x8NXLesjbb07tYpkwWgx0Bkoo=d44N2Nhg@mail.gmail.com>" "42" "Re: [oss-security] Short notes on qmail security guarantee" "^Date:" nil nil "5" "2020052222:00:12" "[oss-security] Short notes on qmail security guarantee" (number mark "        noloader@gma May 22   42/2176  " thread-indent "\"Re: [oss-security] Short notes on qmail security guarantee\"\n") "<20200522121750.GA24868@openwall.com>" ("<CAGUWgD8s3DtM6sG9Pj478H06G_evwPsF49pK5Cig0VUHY_mrQg@mail.gmail.com>" "<20200522121750.GA24868@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Short notes on qmail security guarantee" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1443" "Tuesday" "1" "December" "2020" "13:51:58" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" "<CAFcO6XPv=KkOzk_wzNJDSv1h-X3TnbVXrZm3CR2aS+-EA9CHzg@mail.gmail.com>" "51" "[oss-security] Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1" nil nil nil "12" "2020120105:51:58" "[oss-security] Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1" (number mark "U       butterflyhua Dec  1   51/1443  " thread-indent "\"[oss-security] Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31913 invoked by uid 550); 22 May 2020 22:00:43 -0000
+Received: (qmail 16269 invoked by uid 550); 1 Dec 2020 06:08:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31895 invoked from network); 22 May 2020 22:00:43 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 7290 invoked from network); 1 Dec 2020 05:52:21 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to;
-        bh=F3vD3em3tYgJ2cbMts7uxUrAGaOzcqsOj4G0waQRHfA=;
-        b=p9e2axmvCFzHRt2JQj3WMvVHpj2ST9H61INB8I8JR1UFCLo4FHZ7Of1yUYZnCPBQGf
-         c6NkccEraBbP3Xw5goyEEkYrLMxzuCQgd6BfsljV6vt6zh2/rjuLimdJy/V0uYKAQLO2
-         Yw/safBIcGFutiU30E1HfsDGNEvtpdz9YsZKZs89ThZlhVsYj8XlgE5U8S+8Y8NMAY0R
-         wQNa2XF/G+P39m1aMpsKfvTrTCfpGaN/kDccd1oenFAUq4AI6dw6JaKvwXmZ9eShwWeK
-         M1qSLnpKAhZDC7v0JEqr4aTBCDMQkzeHR/pD1z4Q/9xMx97kiff4Nj3COpj6ADQSeD78
-         q2zw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=PyzgTC8khHPHuMAAzxlSP+REg2/op+Q0SW36VRq78RY=;
+        b=AvOCwl+BsIhnbuCMg7hO498CVJHWt3D7pacEwf8XJoPW4y1HH9hesVoFuUE19U7yng
+         7Boknwobyq7erXIKy4ThNJFb7G7eHSMn9bZDhUtFg5VYyBkHT5TUDvkgWduO+d3zqJpx
+         UQXoLcAjTw/wmHMafF9p7zBRn6e9SpofiY4KTcL0WEp/nDwEppYhjewAWj3R13INWu5/
+         YLhMaR18rbY7tuVj+LTDf527g5WtrIDR4dhXBe5Q8GgebJFcAWD+cBVaAsSEqusH/5L+
+         h0AXrBC16yzsscHSvDOYTDRiySKih9QFgmO9+N1tabAoOSR5kX6TlgcrRywG7FlE0UI3
+         iq0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to;
-        bh=F3vD3em3tYgJ2cbMts7uxUrAGaOzcqsOj4G0waQRHfA=;
-        b=C7/GAfPrJ/9TB7WG6og5WRf0IhLaxdxykSWqOXfRZfV/vobMDIhvMYTWPBhhJJq+QU
-         vcaZfkTcGfOB2c8iaRBYEFbwHKroNU0IgSR5RnMmWe4K7RnCcEvNYyaD8hX/f5zMnab7
-         NDleMcIa7uq2geY5FrIJE5TEEV1EOqXWfkPpz+Zi/OIeZGzbL+vY9H2UuiOuPev8zXl9
-         s/nBkkyZE5hsnVFGQTJ9rhryLWvPwh3oLPR90xmazsUf24LHYrQ1rUWzM3+wOuP7LRTW
-         A46WMUAQnGzM42TBbxFf9OFcSAiW+T4hcLEPvfplImS759AKUiFAotrLejbHl3T5CDGR
-         YjLg==
-X-Gm-Message-State: AOAM531fS4+bFqJFJpZY+r87p4riAN6wynj9xD0O7TH4J4y/ROE+Hi/e
-	837qHAZSqGuAhnsBk/06+uR2PbyLFoPGl9FvOAsmtISxBfw=
-X-Google-Smtp-Source: ABdhPJwIWFEtj1bwqp3hc9DGsPpzvzk1pqAy9g/HakLZ0xAA8DneNwbAD2/y4wOeCE4Huj6u8BdZeQBeG7OxmWmU/eE=
-X-Received: by 2002:a92:914f:: with SMTP id t76mr15723271ild.238.1590184830910;
- Fri, 22 May 2020 15:00:30 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=PyzgTC8khHPHuMAAzxlSP+REg2/op+Q0SW36VRq78RY=;
+        b=jmFKMH1sZv5Ko5vTN30F+1Ak7xvqd2Ndgm0lKbqEaPrTwTP06YOA1vGGH8F3jSol+i
+         d8zQXTUr2TaBd8EFbHjcUdHrY/KizZRmvKgqH3GW6gr2DeLR3Io6yvjsi79ItRhfz2HI
+         r6MSxqqHW14ersOe+e6Eqyd0L6a4f1a0SzSn+kVakpyDWN2cT2EgHOcpwNTrwDTgy4d+
+         4vhMYCYW0BK85p1M4X9kwlBw1ISpH6U+fAGqLq7rmL+QU+Ilmsa5okFc/m7COAzcmNOv
+         VRlvMuX0+CsXQo9I9jsY6Zuht6jYkt+jdqlbl5BRePfydCVJu0asN9StqZ52T9bwXb0I
+         or8Q==
+X-Gm-Message-State: AOAM5301Lus78fG+TWRelYVakZA2c1ZzLLuwDZgB9t6HaiYdiEfY+ATP
+	sEvDxuToPJOQWAbhHZnPom/5D2OumBfxhb3ztt7tsmuY800=
+X-Google-Smtp-Source: ABdhPJxD6gm2tmQMCEt1mqrJP82hj4oCt1/NO/hCoWLh4jUi2IBdc6vpW+ngKV6I4G5VOCmtvlB9rqQ5i2KYc8SQwTs=
+X-Received: by 2002:a25:8b89:: with SMTP id j9mr1193866ybl.302.1606801929156;
+ Mon, 30 Nov 2020 21:52:09 -0800 (PST)
 MIME-Version: 1.0
-References: <CAGUWgD8s3DtM6sG9Pj478H06G_evwPsF49pK5Cig0VUHY_mrQg@mail.gmail.com>
- <20200522121750.GA24868@openwall.com>
-In-Reply-To: <20200522121750.GA24868@openwall.com>
-Message-ID: <CAH8yC8k1=bzu9N3-x8NXLesjbb07tYpkwWgx0Bkoo=d44N2Nhg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Fri, 22 May 2020 18:00:12 -0400
-From: Jeffrey Walton <noloader@gmail.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Short notes on qmail security guarantee
+From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Date: Tue, 1 Dec 2020 13:51:58 +0800
+Message-ID: <CAFcO6XPv=KkOzk_wzNJDSv1h-X3TnbVXrZm3CR2aS+-EA9CHzg@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000363beb05b560ba35"
+Subject: [oss-security] Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1
 
-On Fri, May 22, 2020 at 8:19 AM Solar Designer <solar@openwall.com> wrote:
-> ...
-> Writing code that avoids artificial limits yet is safe, is hard.  One
-> way to do it is to avoid artificial limits throughout the code, but then
-> impose them at a higher level, where they can be adjusted easily.  One
-> such higher level is the operating system, but that makes the program's
-> security dependent on its environment in this extra way (beyond many
-> others) and with greater risk impact (worse than DoS).  Arguably, this
-> makes the program unnecessarily fragile.  Another higher level would be
-> within the program, like we see in Qualys' patch for qmail now.  This
-> reduces the dependency of the program's security on its environment.
+--000000000000363beb05b560ba35
+Content-Type: text/plain; charset="UTF-8"
 
-I don't use Qmail so I don't really have a dog in this fight, but ...
-I'm not sure its a good idea to depend on another layer for security
-properties, especially when a control is readily available. (re: the
-first part of the paragraph).
+Hi,
+I reported a use-after-free bug in snd_rawmidi_kernel_write1 in
+sound/core/rawmidi.c months ago. And I reproduced it in the latest version
+linux-5.7.0 at that time.
 
-Qmail should not depend on the operating system for security when it
-is readily available to Qmail. In my mind's model, Qmail can remediate
-this at the application level and has no need to turn to the operating
-system at the platform level.
+Description:
 
-To drive the point home, consider an application that uses Apple iOS
-4-digit PIN rather then a more proper authentication system that
-requires sufficiently sized passcodes or phrases. Here, the
-application's security depends on the operating system's security. ANd
-many folks would not consider a 4 character PIN code sufficient for
-authentication.
+It was found that the raw midi kernel driver does not protect
+against concurrent access which leads to a use-after-free in
+snd_rawmidi_kernel_read1() and snd_rawmidi_kernel_write1() in rawmidi.c
+file.
+A malicious local attacker could possibly use this for privilege
+escalation.
 
-As another example, consider an application that depends upon
-infrastructure for security instead of application security. Most
-people would agree it would be a bad idea to forgo IPsec, VPN or TLS
-because the infrastructure should be secure.
+Root Cause:
 
-Another way I view it as a vulnerability in Qmail is, Qmail is
-trusting the user for its security in a default state. Here, Qmail
-trusts the user will set an appropriate limit on 32-bit platforms.
-Trust is something you turn to when you don't have a security control
-to place. But in this case there is a control to place - a sane
-default limit inside Qmail.
+The rawmidi core allows user to resize the runtime buffer via ioctl,
+and this may lead to UAF when performed during concurrent reads or writes:
+the read/write functions unlock the runtime lock temporarily during copying
+form/to user-space,
+and that's the race window.
 
-Jeff
+Patch for this issue:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c1f6e3c818dd734c30f6a7eeebf232ba2cf3181d
+
+CVE assigned:
+
+not assigned.
+
+Timeline:
+
+*2020/5/7  - Vulnerability reported to security@kernel.org.
+*2020/5/7  - Vulnerability confirmed and patched.
+*2020/5/18 - Request a CVE ID via https://cveform.mitre.org/
+*2020/11/18 - CVE Request responded but not assigned.
+*2020/11/18 - Reported to Red Hat.
+*2020/12/1 - Opened on oss -security@lists.openwall.com
+
+Credit:
+
+This issue was discovered by the ADLab of venustech.
+
+
+Regards.
+ butt3rflyh4ck.
+
+--000000000000363beb05b560ba35--
