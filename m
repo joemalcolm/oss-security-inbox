@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2033" "Monday" "6" "April" "2015" "18:57:56" "+0200" "Gerhard Rieger" "gerhard@dest-unreach.org" "<5522BB14.2020608@dest-unreach.org>" "69" "[oss-security] Socat security advisory 6 - Possible DoS with fork (update: CVE-Id: CVE-2015-1379; fix for version 2)" nil nil nil "4" "2015040616:57:56" "[oss-security] Socat security advisory 6 - Possible DoS with fork (update: CVE-Id: CVE-2015-1379; fix for version 2)" (number mark "        gerhard@dest Apr  6   69/2033  " thread-indent "\"[oss-security] Socat security advisory 6 - Possible DoS with fork (update: CVE-Id: CVE-2015-1379; fix for version 2)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["639" "Tuesday" "1" "December" "2020" "14:55:22" "+0530" "P J P" "ppandit@redhat.com" "<37sqsnq6-99n6-o8np-sp65-q9po9s494510@erqung.pbz>" "20" "[oss-security] CVE-2020-28916 QEMU: e1000e: infinite loop scenario in case of null packet descriptor" nil nil nil "12" "2020120109:25:22" "[oss-security] CVE-2020-28916 QEMU: e1000e: infinite loop scenario in case of null packet descriptor" (number mark "U       ppandit@redh Dec  1   20/639   " thread-indent "\"[oss-security] CVE-2020-28916 QEMU: e1000e: infinite loop scenario in case of null packet descriptor\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-28916 QEMU: e1000e: infinite loop scenario in case of null packet descriptor" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3364 invoked by uid 550); 6 Apr 2015 16:58:20 -0000
+Received: (qmail 1936 invoked by uid 550); 1 Dec 2020 09:25:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3294 invoked from network); 6 Apr 2015 16:58:13 -0000
-X-Virus-Scanned: Debian amavisd-new at clausfischer.com
-Message-ID: <5522BB14.2020608@dest-unreach.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="5RgrIHJUhiesQ2BUwoPUSu43MGAK98JUC"
-Date: Mon, 06 Apr 2015 18:57:56 +0200
-From: Gerhard Rieger <gerhard@dest-unreach.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Socat security advisory 6 - Possible DoS with fork (update: CVE-Id:
- CVE-2015-1379; fix for version 2)
-To: oss-security@lists.openwall.com
+Received: (qmail 1915 invoked from network); 1 Dec 2020 09:25:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1606814732;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=eARcaaRjx1cCw7EWu4Sy3DKSah4L52FBdWtQbo5NwOU=;
+	b=bfUo3iy/fiwt9/NpnkUAO/NvAwfmYU57my9+g/tN6dxA/BEwfTGaSZkC5VlLJU/GOj/Ssr
+	u5sVfoCycvoScXnkAOK7y+JPvZPs2i/G4SuUbPAdV9GWFZq2kp3ZJ2m5Pln0PEuX05LHDa
+	QU2zjo5AOzGSfPjDoVCPORmzoqlZq8Y=
+X-MC-Unique: RijtCzo6NtWU98ey5MUWRg-1
+Date: Tue, 1 Dec 2020 14:55:22 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+To: oss security list <oss-security@lists.openwall.com>
+cc: Cheol-woo Myung <330cjfdn@gmail.com>
+Message-ID: <37sqsnq6-99n6-o8np-sp65-q9po9s494510@erqung.pbz>
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ppandit@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] CVE-2020-28916 QEMU: e1000e: infinite loop scenario in case of null
+ packet descriptor
 
---5RgrIHJUhiesQ2BUwoPUSu43MGAK98JUC
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+   Hello,
 
-Socat security advisory 6 - Possible DoS with fork
+An infinite loop issue was found in the e1000e device emulator in QEMU. The 
+issue could occur while receiving packets via e1000e_write_packet_to_guest() 
+routine, if the receive(RX) descriptor has NULL buffer address. A privileged 
+guest user may use this flaw to induce a DoS scenario on the host.
 
-Overview
-  socats signal handler implementations are not async-signal-safe and
-  can cause crash or freeze of socat processes
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-11/msg03185.html
 
-Vulnerability Id: CVE-2015-1379.
+This issue was reported by Cheol-woo Myung.
 
-Severity: Low
+CVE-2020-28916 assigned via -> https://cveform.mitre.org/
 
-Details
-  Socats signal handler implementations are not asnyc-signal-safe. When
-  a signal is triggered while the process is within a non
-  async-signal-safe function the signal handler will call a non
-  sync-signal-safe function too. POSIX specifies the behaviour in this
-  situation as undefined. Dependend on involved functions, libraries,
-  and operating system, the process can continue, freeze, or crash.
-  Mostly this issue occurs when socat is in listening mode with fork
-  option and a couple of child processes terminate at the same time.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-Testcase
-  none
-
-Affected versions
-  1.0.0.0 - 1.7.2.4
-  2.0.0-b1 - 2.0.0-b7
-
-Not affected or corrected versions
-  1.7.3.0 and later
-  2.0.0-b8 and later
-
-Workaround
-  none
-
-Download
-  The updated sources can be downloaded from:
-
-    http://www.dest-unreach.org/socat/download/socat-1.7.3.0.tar.gz
-    http://www.dest-unreach.org/socat/download/socat-2.0.0-b8.tar.gz
-
-Credits
-   Credits to Peter Lobsinger
-
-
-
-
-
---5RgrIHJUhiesQ2BUwoPUSu43MGAK98JUC
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJVIrsUAAoJEBszgb37UeYgAEwH/iQHT+Zlu1lflWFVSkl0hq5f
-hKCAY4AXFhJXMaHM8sM0/bTX2uvODL7sf8W8gw0Ub3INxlw9dlm6FEtdY7ioBvD5
-nZJtUrz5QVOsnvSyVYrBCRgya+BIIBPYJZ3pyMtmvVFZSrTMp4seqO1sVnmT7QNV
-D1oN4e/ZXH1ElGK4fEdC1npLlP52FyYyuT7K/c/XhG6BETrfavhrGMRTiKAcZxr5
-3FfGRT7aV6PP3i+dO/mfMZClGQxkDoG35iRTGKmPKWCeSfMQR7zHfZYJjETR7Kxp
-TSe+hCZmMM7ngunNG8qBlsGJcokG+AxG4SFiXaGQnWfbZxV8oYfjBTR9EgIwuhw=
-=OukO
------END PGP SIGNATURE-----
-
---5RgrIHJUhiesQ2BUwoPUSu43MGAK98JUC--
