@@ -1,47 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/16/3
-Message-ID: <fd936e74-01a4-b9df-1b50-733293493ec9@igalia.com>
-Date: Thu, 16 Apr 2020 14:10:59 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/01/3
+Message-ID: <20201201151602.GC10502@herrb.net>
+Date: Tue, 1 Dec 2020 16:16:02 +0100
+From: Matthieu Herrb <matthieu@...rb.eu>
+To: oss-security@...ts.openwall.com
+Subject: X.Org server security advisory: December 1, 2020
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0004
-------------------------------------------------------------------------
-
-Date reported           : April 16, 2020
-Advisory ID             : WSA-2020-0004
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0004.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0004.html
-CVE identifiers         : CVE-2020-11793.
-
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-
-CVE-2020-11793
-    Versions affected: WebKitGTK before 2.28.1 and WPE WebKit before
-    2.28.1.
-    Credit to Cim Stordal of Cognite.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution or application crash (denial of service).
-    Description: A memory corruption issue (use-after-free) was
-    addressed with improved memory handling.
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+Multiple input validation failures in X server XKB extension
+============================================================
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+These issues can lead to privileges elevations for authorized clients
+on systems where the X server is running privileged.
 
-The WebKitGTK and WPE WebKit team,
-April 16, 2020
+* CVE-2020-14360 / ZDI CAN 11572 XkbSetMap Out-Of-Bounds Access
+
+Insufficient checks on the lengths of the XkbSetMap request can lead to
+out of bounds memory accesses in the X server.
+
+* CVE-2020-25712 / ZDI-CAN-11839 XkbSetDeviceInfo Heap-based Buffer Overflow
+
+Insufficient checks on input of the XkbSetDeviceInfo request can lead
+to a buffer overflow on the head in the X server.
+
+Patches
+-------
+
+Patches for these issues have been committed to the xorg server git
+repository. xorg-server 1.20.10 will be released shortly and will
+include these patches.
 
 
+https://gitlab.freedesktop.org/xorg/xserver.git
 
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+commit 446ff2d3177087b8173fa779fa5b77a2a128988b
+
+    Check SetMap request length carefully.
+    
+    Avoid out of bounds memory accesses on too short request.
+
+    ZDI-CAN 11572 /  CVE-2020-14360
+
+
+commit 87c64fc5b0db9f62f4e361444f4b60501ebf67b9
+
+    Fix XkbSetDeviceInfo() and SetDeviceIndicators() heap overflows
+
+    ZDI-CAN 11389 / CVE-2020-25712
+
+
+Thanks
+======
+
+These vulnerabilities have been discovered by Jan-Niklas Sohn working
+with Trend Micro Zero Day Initiative.
+
+
+-- 
+Matthieu Herrb
