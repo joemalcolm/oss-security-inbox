@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/10/4
-Message-ID: <20200610153645.GB2107284@kroah.com>
-Date: Wed, 10 Jun 2020 17:36:45 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/03/3
+Message-ID: <c5bf3041-13a2-fa1a-b8b2-d70fcbdb24c1@apache.org>
+Date: Thu, 3 Dec 2020 18:07:07 +0000
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768
+Subject: [SECURITY] CVE-2020-17527 Apache Tomcat HTTP/2 Request header mix-up
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 11, 2020 at 01:14:03AM +1000, Wade Mealing wrote:
-> > Did you ask the authors of the patches?  I think they might have already
-> > assigned CVEs from Google's pool, based on previous interactions with
-> > those developers...
-> 
-> I am in discussions with Anthony Steinhauser from Google, Anthony
-> stated there were no CVE's assigned.  This message was mainly for the
-> other CNA's  ( https://cve.mitre.org/cve/request_id.html ) who may be
-> able to assign CVE's.
+CVE-2020-17527 Apache Tomcat HTTP/2 Request header mix-up
 
-Is oss-security the place to sync up on those things?  I thought you all
-had your own list to sync on those things, as that must happen often.
+Severity: Moderate
 
-> If the kernel was a CVE Numbering Authority, they could assign their
-> own ( https://cve.mitre.org/cve/cna.html#become_a_cna ) and this whole
-> problem would not exist.  I'm not on the security@...nel.org mailing
-> list (even after asking), so I can't really say what goes on behind
-> those closed doors, I would think it falls under their interests.
+Vendor: The Apache Software Foundation
 
-The kernel does NOT want to become a CVE Numbering Authority, and our
-documentation explicitly states that if you want a CVE for a kernel
-issue, you can just go ask MITRE or someone else for it:
-	https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
+Versions Affected:
+Apache Tomcat 10.0.0-M1 to 10.0.0-M9
+Apache Tomcat 9.0.0.M5 to 9.0.39
+Apache Tomcat 8.5.1 to 8.5.59
 
-There's loads of reasons why CVEs don't really work for the kernel at
-all, as has been discussed many times here on this list, and in other
-places, and even with MITRE themselves (and they agree with me).
+Description:
+While investigating Bug 64830 it was discovered that Apache Tomcat could
+re-use an HTTP request header value from the previous stream received
+on an HTTP/2 connection for the request associated with the subsequent
+stream. While this would most likely lead to an error and the closure of
+the HTTP/2 connection, it is possible that information could leak
+between requests.
 
-I don't think we want to rehash that again here :)
+Mitigation:
+- Upgrade to Apache Tomcat 10.0.0-M10 or later
+- Upgrade to Apache Tomcat 9.0.40 or later
+- Upgrade to Apache Tomcat 8.5.60 or later
 
-thanks,
+Credit:
+This issue was identified by the Apache Tomcat Security Team.
 
-greg k-h
+References:
+[1] http://tomcat.apache.org/security-10.html
+[2] http://tomcat.apache.org/security-9.html
+[3] http://tomcat.apache.org/security-8.html
