@@ -1,62 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/11/2
-Message-ID: <20200211213431.GA26083@grsecurity.net>
-Date: Tue, 11 Feb 2020 16:34:31 -0500
-From: Brad Spengler <spender@...ecurity.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/03/1
+Message-ID: <CAFcO6XPbh8JSYktdb4HstBunmsUfj-28hAT=qhU+AC0Z7UxBog@mail.gmail.com>
+Date: Thu, 3 Dec 2020 10:41:11 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Potential regression and/or incomplete fix for CVE-2017-12762
+Subject: Re: Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1
 Content-Type: text/plain; charset=utf-8
 
-Hi Ibrahim,
+Hi,
+this was assigned CVE-2020-27786 via Red Hat.
 
-> I think it is incomplete and can lead to reading out of bound since it does
-> *not* check if the src buffer (p) in this case has 10 bytes at least. The
-> fix assumes p has 10 bytes and copies that into newname. The fix
-> uses strscpy (
-> https://github.com/torvalds/linux/blob/cc12071ff39060fc2e47c58b43e249fe0d0061ee/lib/string.c#L180)
-> which
-> based on its code it starts copying from count and decrements to zero.
 
-This isn't correct.  There is a 'count' variable that decrements to zero, yes,
-but that's not what is used to index the strings.  'res' is used for that, and
-it increments from zero as you'd expect.
+Regards.
+ butt3rflyh4ck.
 
-Regarding OOB, there is the read-by-word trickery, but it's safe and won't
-trip up KASAN for the max 7 bytes it can end up reading past bounds, and won't
-in any instance cross a page boundary.
+ butt3rflyh4ck.
 
-Since 'param' is guaranteed to be NUL-terminated from the fix (the isdn_common.c
-change), so is 'p', so the strscpy is fine here, especially since the later
-use of the buffer (coming from the netdev netname) uses strlen as the length
-for the buffer copy to userland here:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/isdn/i4l/isdn_common.c?id=9f5af546e6acc30f075828cb58c7f09665033967#n1385
-So strscpy_pad() wasn't necessary in this instance, despite it often being
-needed for kernel work (and the better defensive choice, unless performance
-is critical and you can guarantee the remaining part of the buffer never gets
-copied to userland or used in any way).
 
-> ## Regression
-> I looked quickly into latest version for the kernel v3.16.81 and it seems
-> that the patch was probably reverted as the code matches exactly to the
-> vulnerable version to the CVE (
-> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/isdn/i4l/isdn_net.c?id=v3.16.81#n2646
-> )
-> Not sure if the fix was reworked but wanted to surface that issue as well
 
-This wasn't due to a revert, the fix was just never backported to 3.16. 
-Happens all the time.  There's never a guarantee that just because a 
-security fix is backported to some newer kernel version that it'll be 
-backported to all affected versions.  If the patch doesn't apply cleanly 
-and no one fixes it up, it just never gets fixed.
 
-For this instance, you can confirm it by looking at the git log for that tree:
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log/drivers/isdn/i4l/isdn_net.c?h=linux-3.16.y
-
-The 3.16 kernel has a different maintainer than others listed on kernel.org:
-https://www.kernel.org/category/releases.html
-so there may be different critera for what's selected for backporting there.
-
-Thanks,
--Brad
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+On Tue, Dec 1, 2020 at 1:51 PM butt3rflyh4ck <butterflyhuangxx@...il.com> wrote:
+>
+> Hi,
+> I reported a use-after-free bug in snd_rawmidi_kernel_write1 in sound/core/rawmidi.c months ago. And I reproduced it in the latest version linux-5.7.0 at that time.
+>
+> Description:
+>
+> It was found that the raw midi kernel driver does not protect
+> against concurrent access which leads to a use-after-free in snd_rawmidi_kernel_read1() and snd_rawmidi_kernel_write1() in rawmidi.c file.
+> A malicious local attacker could possibly use this for privilege escalation.
+>
+> Root Cause:
+>
+> The rawmidi core allows user to resize the runtime buffer via ioctl,
+> and this may lead to UAF when performed during concurrent reads or writes: the read/write functions unlock the runtime lock temporarily during copying form/to user-space,
+> and that's the race window.
+>
+> Patch for this issue:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c1f6e3c818dd734c30f6a7eeebf232ba2cf3181d
+>
+> CVE assigned:
+>
+> not assigned.
+>
+> Timeline:
+>
+> *2020/5/7  - Vulnerability reported to security@...nel.org.
+> *2020/5/7  - Vulnerability confirmed and patched.
+> *2020/5/18 - Request a CVE ID via https://cveform.mitre.org/
+> *2020/11/18 - CVE Request responded but not assigned.
+> *2020/11/18 - Reported to Red Hat.
+> *2020/12/1 - Opened on oss -security@...ts.openwall.com
+>
+> Credit:
+>
+> This issue was discovered by the ADLab of venustech.
+>
+>
+> Regards.
+>  butt3rflyh4ck.
