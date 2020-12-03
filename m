@@ -1,4 +1,9 @@
-Received: (qmail 26141 invoked by uid 550); 4 Nov 2025 08:42:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1580" "Thursday" "3" "December" "2020" "10:41:11" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" "<CAFcO6XPbh8JSYktdb4HstBunmsUfj-28hAT=qhU+AC0Z7UxBog@mail.gmail.com>" "53" "Re: [oss-security] Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1" nil nil nil "12" "2020120302:41:11" "[oss-security] Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1" (number mark "U       butterflyhua Dec  3   53/1580  " thread-indent "\"Re: [oss-security] Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1\"\n") "<CAFcO6XPv=KkOzk_wzNJDSv1h-X3TnbVXrZm3CR2aS+-EA9CHzg@mail.gmail.com>" ("<CAFcO6XPv=KkOzk_wzNJDSv1h-X3TnbVXrZm3CR2aS+-EA9CHzg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21726 invoked by uid 550); 3 Dec 2020 08:38:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,109 +12,93 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26092 invoked from network); 4 Nov 2025 08:42:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
-	t=1762245722; bh=30dl7LZguwRfzJHXp+nG0E+RwPKzZssnrYD2aFek4Lg=;
-	h=Date:From:To:Subject:From;
-	b=KF2jurzxgZQXJ0aOv4nH2b3PlLbWvK8gcVdKHxOpL6+1NyohuIHFERjQjhv9n48Y0
-	 rj40zA1HgS57mes6SgaVR+NbRKgVEIlcrCkNRI0WMjGSp3PzBod4cs1m37JmV0AGlY
-	 Nwxo+kZKSZrnLBePydhEpH+8wJl0ww9bz7LKQVKQlNlGakCtdf9SsZU+YHaxbnlKQe
-	 Z9zkVfv4Grk2IdYbIypQw7VyRknVbyMQdevVs32e+dV41SpEec+61YahXxktTuyLfp
-	 cH2JhGoiOnq2XCONDj+O3NU5pmUASUkhP3u/uBUAsPsRk2h8pO3Bfu6fgduE06JoIs
-	 l5IUY/1tI0INg==
-Date: Tue, 4 Nov 2025 09:42:02 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, oss-security@lists.openwall.com
-Message-ID: <2s5nq6r1-o4qn-8ps1-5456-19op48512p93@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 3637 invoked from network); 3 Dec 2020 02:41:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=J2J++pXNZ4fh3ALjG9rDinWekohl+oehjvwr3mHr1Kc=;
+        b=qqhikdbwcWM8bXCyZnB3D6e0YarucB99ml/8ZfPvxE5Mt/dXJ7iytxM01OO79gVoqH
+         eil5m+TZCLmtW1Pfb2dtX/mOE0UheIOfT0Ydin2GFPHLx//TMvkszyel5C4Ma2KQMPN+
+         oSRj9nejhylx1GXufaLMWE5Q8nWlf3JpLkRp/xZHk6pv2TgzGYU3U+AvMpeOu/NyA4fB
+         Uq59yWPDElae327oRuM7UjApWqTeVlEaY1aZw0Eo8JrNuP1/VQAO6sUb56yEHiLGivbv
+         esUd+XaxBIZSeaDL+CBjVFp6/zpUA+G/Vk+GYi02lxKFu8p9praVj55cb5+Dj+Mfeb+d
+         0VQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=J2J++pXNZ4fh3ALjG9rDinWekohl+oehjvwr3mHr1Kc=;
+        b=ErNTmxBfsedHm8E3o5pHl+jdQfp7YzJemLirsGhUNqXdEmkjeUnqhkEaE3LUqLLEO4
+         aqxly8UdgSTypPTZRuYfGf0TlsPa44WtNkyuTEHRKG5f6LrG3IxZkHX/D1sM1Tf9M8UY
+         Xz75CdRE0p4Qw5O83XXfWyZDu8SQTYqlm27NYPtKcA1oj2JLh15NBrW5fk4xU41pezd2
+         6WYWDa9aaO08MBXG70x8pdPUUr4BcnwYxJVVeIMVsGBA2qCN3J9Az4hBQwV6uLfbZ41G
+         evpoidqzXBkkQEXc1+ewRuPCAfjCXdLtX5OTFxqfHbxta5gXrCHSv/+Wx+h1JDvhTyHn
+         5kjw==
+X-Gm-Message-State: AOAM533gFk9X8A0tTK2P514TqDI8K1N/KhEg3mcaeaYjPvbkraampbur
+	U5eZJhip1/Eb+5LcuepZ45xZfEi/SVf1qwxxKn8xvLpl
+X-Google-Smtp-Source: ABdhPJw7JKAYuJRFmkkaZdclBNOHipsjfR2KQGCN+End6VqxeTWk/Vj0yLj5oWrNrdsTA7gOAnsAuuh+pv/Kiz7YzK8=
+X-Received: by 2002:a25:ac92:: with SMTP id x18mr1671402ybi.484.1606963282553;
+ Wed, 02 Dec 2020 18:41:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] wcurl path traversal with percent-encoded
- slashes
+References: <CAFcO6XPv=KkOzk_wzNJDSv1h-X3TnbVXrZm3CR2aS+-EA9CHzg@mail.gmail.com>
+In-Reply-To: <CAFcO6XPv=KkOzk_wzNJDSv1h-X3TnbVXrZm3CR2aS+-EA9CHzg@mail.gmail.com>
+From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Date: Thu, 3 Dec 2020 10:41:11 +0800
+Message-ID: <CAFcO6XPbh8JSYktdb4HstBunmsUfj-28hAT=qhU+AC0Z7UxBog@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] Linux Kernel: ALSA: use-after-free Write in snd_rawmidi_kernel_write1
 
-wcurl path traversal with percent-encoded slashes
-=================================================
+Hi,
+this was assigned CVE-2020-27786 via Red Hat.
 
-Project curl Security Advisory, November 4 2025 -
-[Permalink](https://curl.se/docs/CVE-2025-11563.html)
 
-VULNERABILITY
--------------
+Regards.
+ butt3rflyh4ck.
 
-URLs containing percent-encoded slashes (`/` or `\`) can trick wcurl into
-saving the output file outside of the current directory without the user
-explicitly asking for it.
+ butt3rflyh4ck.
 
-INFO
-----
 
-wcurl will not overwrite any files if the curl version is >= 7.83.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2025-11563 to this issue.
 
-CWE-35: Path Traversal
-
-Severity: Moderate
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: wcurl shipped with curl 8.14.0 to and including 8.16.0
-- Affected versions: wcurl 2024.12.08 to and including 2025.09.27
-- Not affected versions: wcurl shipped with curl < 8.14.0 and >= 8.17.0
-- Not affected versions: wcurl < 2024.12.08 and >= 2025.11.04
-- Introduced-in: https://github.com/curl/wcurl/commit/e01d578582a23695ee3cec08
-- Introduced-in: https://github.com/curl/curl/commit/23bed347b3892277938259
-
-This flaw only affects the wcurl command line tool.
-
-SOLUTION
-------------
-
-Starting in wcurl 2025.11.04 (shipped with curl 8.17.0), this mistake is
-fixed.
-
-- Fixed-in: https://github.com/curl/wcurl/commit/524f7e733237cd26553dfd
-- Fixed-in: https://github.com/curl/curl/commit/fb0c014e30e5f4de7aa0d566c
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade wcurl to the one shipped in curl version 8.17.0, wcurl to version
-      2025.11.04
-
-  B - Apply the patch to your local wcurl version
-
-  C - Explicitly choose an output filename with `-o/-O/--output`
-
-  D - Disable percent-decoding for output filenames with `--no-decode-filename`
-
-TIMELINE
---------
-
-This issue was reported to the curl project on October 6, 2025. We contacted
-distros@openwall on October 30.
-
-wcurl 2025.11.04 was released on November 4 2025, coordinated with the
-publication of this advisory.
-
-curl 8.17.0 was released on November 5 2025.
-
-The curl security team is not aware of any active exploits using this
-vulnerability.
-
-CREDITS
--------
-
-- Reported-by: Stanislav Fort (Aisle Research)
-- Patched-by: Samuel Henrique
-- Patched-by: Sergio Durigan Junior
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se || https://rock-solid.curl.dev
+On Tue, Dec 1, 2020 at 1:51 PM butt3rflyh4ck <butterflyhuangxx@gmail.com> wrote:
+>
+> Hi,
+> I reported a use-after-free bug in snd_rawmidi_kernel_write1 in sound/core/rawmidi.c months ago. And I reproduced it in the latest version linux-5.7.0 at that time.
+>
+> Description:
+>
+> It was found that the raw midi kernel driver does not protect
+> against concurrent access which leads to a use-after-free in snd_rawmidi_kernel_read1() and snd_rawmidi_kernel_write1() in rawmidi.c file.
+> A malicious local attacker could possibly use this for privilege escalation.
+>
+> Root Cause:
+>
+> The rawmidi core allows user to resize the runtime buffer via ioctl,
+> and this may lead to UAF when performed during concurrent reads or writes: the read/write functions unlock the runtime lock temporarily during copying form/to user-space,
+> and that's the race window.
+>
+> Patch for this issue:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c1f6e3c818dd734c30f6a7eeebf232ba2cf3181d
+>
+> CVE assigned:
+>
+> not assigned.
+>
+> Timeline:
+>
+> *2020/5/7  - Vulnerability reported to security@kernel.org.
+> *2020/5/7  - Vulnerability confirmed and patched.
+> *2020/5/18 - Request a CVE ID via https://cveform.mitre.org/
+> *2020/11/18 - CVE Request responded but not assigned.
+> *2020/11/18 - Reported to Red Hat.
+> *2020/12/1 - Opened on oss -security@lists.openwall.com
+>
+> Credit:
+>
+> This issue was discovered by the ADLab of venustech.
+>
+>
+> Regards.
+>  butt3rflyh4ck.
