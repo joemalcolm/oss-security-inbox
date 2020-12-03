@@ -1,155 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/09/3
-Message-Id: <E1jihbt-0000Ja-1n@xenbits.xenproject.org>
-Date: Tue, 09 Jun 2020 17:00:25 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 320 v1 (CVE-2020-0543) - Special Register Buffer speculative side channel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/03/2
+Message-Id: <6A75EEA9-CCEB-432D-9D2E-AB8F66A325F0@beckweb.net>
+Date: Thu, 3 Dec 2020 16:22:46 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-            Xen Security Advisory CVE-2020-0543 / XSA-320
+The following releases contain fixes for security vulnerabilities:
 
-           Special Register Buffer speculative side channel
+* Chaos Monkey Plugin 0.4 and 0.4.1
+* CVS Plugin 2.17
+* Plugin Installation Manager Tool 2.2.0
+* Shelve Project Plugin 3.1
 
-ISSUE DESCRIPTION
-=================
 
-This issue is related to the MDS and TAA vulnerabilities.  Please see
-https://xenbits.xen.org/xsa/advisory-297.html (MDS) and
-https://xenbits.xen.org/xsa/advisory-305.html (TAA) for details.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2020-12-03/?
 
-Certain processor operations microarchitecturally need to read data from
-outside the physical core (e.g. to communicate with the random number
-generator).  In some implementations, this operation is called a Special
-Register Read.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-In some implementations, data are staged in a single shared buffer, and
-a full cache line at a time is returned to the core which made the
-Special Register Read.  On parts vulnerable to MFBDS or TAA, an attacker
-may be able to access stale data requested by other cores in the system.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-For more details, see:
-  https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00320.html
+---
 
-IMPACT
-======
+SECURITY-2146 / CVE-2020-2324
+CVS Plugin 2.16 and earlier does not configure its XML parser to prevent
+XML external entity (XXE) attacks.
 
-An attacker, which could include a malicious untrusted user process on a
-trusted guest, or an untrusted guest, can sample the contents of
-certain off-core accesses by other cores in the system.
+This allows attackers able to control an agent process to have Jenkins
+parse a crafted changelog file that uses external entities for extraction
+of secrets from the Jenkins controller or server-side request forgery.
 
-This can include data whose use may depend on the secrecy of the value,
-such as data from the Random Number Generator (e.g. RDRAND/RDSEED
-instructions).
 
-VULNERABLE SYSTEMS
-==================
+SECURITY-1856 / CVE-2020-2320
+Plugin Installation Manager Tool is part of the Jenkins project Docker
+images. As `jenkins-plugin-cli` it is used to download and install plugins
+even before Jenkins is running.
 
-Systems running all versions of Xen are affected.
+Plugin Installation Manager Tool 2.1.3 and earlier does not verify plugin
+downloads. This may allow third parties such as mirror operators to provide
+crafted plugin downloads.
 
-Only x86 processors are vulnerable.
-ARM processors are not believed to be vulnerable.
 
-Only Intel based processors are affected.  Processors from other
-manufacturers (e.g. AMD) are not believed to be vulnerable.
+SECURITY-2108 / CVE-2020-2321
+Shelve Project Plugin 3.0 and earlier does not require POST requests for
+HTTP endpoints, resulting in cross-site request forgery (CSRF)
+vulnerabilities.
 
-Please consult the Intel Security Advisory for details on the affected
-processors.
+These vulnerabilities allow attackers to shelve, unshelve, or delete a
+project.
 
-MITIGATION
-==========
 
-There is no mitigation available.
+SECURITY-2109 (1) / CVE-2020-2322
+Chaos Monkey Plugin 0.3 and earlier does not perform permission checks in
+several HTTP endpoints.
 
-RESOLUTION
-==========
+This allows attackers with Overall/Read permission to generate load and to
+generate memory leaks.
 
-New microcode is being released on affected parts to work around the
-vulnerability.  It may be available via a firmware update (consult your
-hardware vendor), or available for OS loading (consult your dom0 OS
-vendor).
 
-On Xen 4.13 and later, OS microcode can be loaded at runtime. See
-https://xenbits.xen.org/docs/latest/admin-guide/microcode-loading.html#runtime-microcode-loading
-for details on the xen-ucode utility.
+SECURITY-2109 (2) / CVE-2020-2323
+Chaos Monkey Plugin 0.4 and earlier does not perform permission checks in
+an HTTP endpoint.
 
-Loading the microcode, either at boot or at runtime, suffices to
-mitigate the issue, as protections are active by default.  The
-mitigations do have an impact on latency of individual RDRAND/RDSEED
-instructions.
-
-The patches below are for Xen, and offer boot time information, defaults
-selection, and opt-out controls.  They are recommended to take, but not
-absolutely necessary for protection.
-
-Note that patches for released versions are generally prepared to apply
-to the stable branches, and may not apply cleanly to the most recent
-release tarball.  Downstreams are encouraged to update to the tip of the
-stable branch before applying these patches.
-
-xsa320/xsa320-?.patch        xen-unstable
-xsa320/xsa320-4.13-?.patch   Xen 4.13.x
-xsa320/xsa320-4.12-?.patch   Xen 4.12.x
-xsa320/xsa320-4.11-?.patch   Xen 4.11.x
-xsa320/xsa320-4.10-?.patch   Xen 4.10.x
-xsa320/xsa320-4.9-?.patch    Xen 4.9.x
-
-$ sha256sum xsa320*/*
-84e4f66492042b08e69b0894ea7feb20c17c89a696cf95f05a8826fba4f26355  xsa320/xsa320-1.patch
-5a3a06c72d0281fa1191ba18e39b836d2748400d9bf6a59dd45447850530c88b  xsa320/xsa320-2.patch
-759259ef88c980363d44e11d9c272f6a4a15918e5e6bcdfe971b1ce7ea160cd9  xsa320/xsa320-4.9-1.patch
-ebac2c011841c55c3c1e99d9e8afc53e56e54268d379ec8b904f6bfe6a1a5045  xsa320/xsa320-4.9-2.patch
-5c622c74358ab21cbd27484c649f26df0f08e89ec333c346415bc51e35ba26c1  xsa320/xsa320-4.10-1.patch
-f112e34a6a4564a043926fc255a15c7e319001bd023a97ae2947228024e1c306  xsa320/xsa320-4.10-2.patch
-f24b51292be0cb5de80c6eff0b26983629dd48cc39ae5a331e2e38e15a6cf712  xsa320/xsa320-4.11-1.patch
-03579810eaf2e9eeb1a82de4b50ff5c4b01e60b30ccf7609c9e3378ef576d81e  xsa320/xsa320-4.11-2.patch
-282537ffe2fd4332c0e061ddc537bea3e135a7bbd9253ec298becb49047323cf  xsa320/xsa320-4.12-1.patch
-e4417429297354c233e8f5c261aff4888aae602f8c68897c09b16ea1aa44b1ca  xsa320/xsa320-4.12-2.patch
-611f2ab1a1c67e04767188d9803b6afd7d304e81a5b4f1eb1744d3e8a68ced66  xsa320/xsa320-4.13-1.patch
-cd1bc0071e72e2342ff4508ea3d937988694f4c03506b3afb3184f7d81aa1c86  xsa320/xsa320-4.13-2.patch
-$
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-Despite an attempt to organise predisclosure, the discoverers ultimately
-did not authorise a predisclosure.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl7fufEMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZCNgIALz6dLCvvznL7n3HFzYgKcelmOySjoZ52hJhg6ki
-N4C1AaPQmo1QPprycmuJ4uQIcLUP55Nh+h19V5PnRqSX1+7Qa8TXnv2TTpVK58fC
-JBfWBZ3xiXYdmaQOWYlJtD1Nq3vywA0LII9TZ7JdCUxjmPxn2y5ZOv6lRG6P9CVJ
-U+w3py0Zt32ZwYvVCbBPP49SdQmArH2BItEbGSQR5xeKnD/8Bx2/9odN0Mrnq5RQ
-euJxRled3nCGw6tWZJj3uYOy+dWWfmFwPFoFvI++zhrcwWGprcgjFuSGFbsGttMD
-ZB9+CZIJAHvgU4wu/B4SflHDgsmJS+iCmDR6e/NUlLohej0=
-=w+E7
------END PGP SIGNATURE-----
-
-Download attachment "xsa320/xsa320-1.patch" of type "application/octet-stream" (5888 bytes)
-
-Download attachment "xsa320/xsa320-2.patch" of type "application/octet-stream" (7413 bytes)
-
-Download attachment "xsa320/xsa320-4.9-1.patch" of type "application/octet-stream" (7086 bytes)
-
-Download attachment "xsa320/xsa320-4.9-2.patch" of type "application/octet-stream" (7319 bytes)
-
-Download attachment "xsa320/xsa320-4.10-1.patch" of type "application/octet-stream" (6339 bytes)
-
-Download attachment "xsa320/xsa320-4.10-2.patch" of type "application/octet-stream" (7331 bytes)
-
-Download attachment "xsa320/xsa320-4.11-1.patch" of type "application/octet-stream" (6271 bytes)
-
-Download attachment "xsa320/xsa320-4.11-2.patch" of type "application/octet-stream" (7331 bytes)
-
-Download attachment "xsa320/xsa320-4.12-1.patch" of type "application/octet-stream" (6291 bytes)
-
-Download attachment "xsa320/xsa320-4.12-2.patch" of type "application/octet-stream" (7332 bytes)
-
-Download attachment "xsa320/xsa320-4.13-1.patch" of type "application/octet-stream" (5763 bytes)
-
-Download attachment "xsa320/xsa320-4.13-2.patch" of type "application/octet-stream" (7378 bytes)
+This allows attackers with Overall/Read permission to access the Chaos
+Monkey page and to see the history of actions.
