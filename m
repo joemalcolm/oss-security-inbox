@@ -1,4 +1,9 @@
-Received: (qmail 13708 invoked by uid 550); 29 Oct 2023 19:57:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["274" "Saturday" "5" "December" "2020" "09:44:10" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<X8tIWqUvzrWFujHy@eldamar.lan>" "13" "Re: [oss-security] Security fixes from Android 10 release which are relevant outside the Android ecosystem?" nil nil nil "12" "2020120508:44:10" "[oss-security] Security fixes from Android 10 release which are relevant outside the Android ecosystem?" (number mark "U       carnil@debia Dec  5   13/274   " thread-indent "\"Re: [oss-security] Security fixes from Android 10 release which are relevant outside the Android ecosystem?\"\n") "<20191107182804.GE6595@outflux.net>" ("<20191025212309.GA18967@pisco.westfalen.local>" "<20191107182804.GE6595@outflux.net>") nil nil nil nil nil nil nil "Re: [oss-security] Security fixes from Android 10 release which are relevant outside the Android ecosystem?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23976 invoked by uid 550); 5 Dec 2020 08:44:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,90 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9794 invoked from network); 29 Oct 2023 19:52:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=spodhuis.org; s=d202305; h=OpenPGP:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:Subject:Date:To:
-	Cc:Content-Transfer-Encoding:Content-ID:Content-Description:OpenPGP:
-	Organization:Auto-Submitted; bh=/mwVL0EvBCe47Sz7ORWBpy0qJcRThSzb5NE3XewR9WI=;
-	t=1698609128; x=1699818728; b=QjUVSF0p5G/PSoTI2wvH+MAJIuyzVNzhcQJQn8iDJxgdJ4M
-	DhvcPvFC0llQdvy/LzgzzrYuIHCnT81H8FWt9ZlB2RjN2i+o62a+ReM0LMxrpWzz4dD3Jg68FBvV2
-	ka/UEZtMAn5XJKLks2Bxtg3KIPA+qIQrDj2/WX29RjG0UINfGxcjZQ8bRCwIyLZrMcowQ1nIfsLfp
-	SB2FaoTUN3DUhUX2LI0Z28kUgVRv30wxt6tFR2MX1+KX+CL4KoUTcNW44kKm0GnAyl/vVQlM1XXGW
-	ugVaeCQycGs3t+O62nFBfKIZV2LIj8fyhoNKOD65U7jIrRjyRp3EIlgUg0Fpv/HA==;
-DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=spodhuis.org; s=d202305e2; h=OpenPGP:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:Subject:Date:To:
-	Cc:Content-Transfer-Encoding:Content-ID:Content-Description:OpenPGP:
-	Organization:Auto-Submitted; bh=/mwVL0EvBCe47Sz7ORWBpy0qJcRThSzb5NE3XewR9WI=;
-	t=1698609128; x=1699818728; b=c2B0nnxoEz2vooTXd4KSKn/mG3Pu+HVwHHwZEq/U5jnEQs9
-	BCqeEljmjkqrc/pxjDrIWsaJxMvRMbgotrKpaAA==;
-Date: Sun, 29 Oct 2023 15:51:53 -0400
-From: Phil Pennock <oss-security-phil@spodhuis.org>
+Received: (qmail 23955 invoked from network); 5 Dec 2020 08:44:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=hmhYd3pxrUXqktOEEdyu3qqhQ4NkLl9YMpgo0iVdDrU=;
+        b=BYuUUvuApWJbnzsDPpIU/VxIOAd6r1/rHYp+Qex5IErlIwTsQCoTVux+dMo4ftRwcm
+         w7iia2cFpPuuqnAYt9TFpemOZlkt16q5o7EtBsgomi65CFi6o3xtYgYOuRWYt2/61i8L
+         4V7sQVtmekI1u0lZmbq2ZWDAs1P06HEbxveHR9Wa7GFraV+Va1f6JKV144LqXH06e5cd
+         ozwtUvmivqDDXHzm6WD8DsQjdFqwEKuq3TC1yWKo1t6d0Yi1lvYnEajQ9PGAcpVFd8IG
+         flgRPvz14kMjZJMQMQWCa08Qku5UbGpzdVciqX+yyhuA6KID/B4R9ljUgzPZzFQjtrAu
+         brFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=hmhYd3pxrUXqktOEEdyu3qqhQ4NkLl9YMpgo0iVdDrU=;
+        b=WCA51SX1hdKyw4bEhZTgWyXm04/oKAQEeDa7rcovoSYlxO2MTF2L8lDKIYLauBaHiv
+         JdOr0CiJoOHhJYQLNaBu1K0X24xOtLRfTR1lQlQrTy3BuegyaNAIGdPpBPabM7E5J+Dy
+         GuFFr9L++6efw6tn0N+M3+4Ykj8XVL2fUB8UuAjhEHFkpKXZ+ce/Z3bd4iBI7s68t8uv
+         tzmEdMxAy13jaK/Q+9lWraZEYzpeeP9Mb/pPUWBC4J4xI1Ri+nInhBPYlgxRS1Z/2L0S
+         8uCSnBBiBLCIaJXKADWlSA2LPElYURBb8h2eZM9dHbNy71HnqugDFBF6ZFZEww6az1RZ
+         xdUg==
+X-Gm-Message-State: AOAM530tUC52jd7viPRuS4OV9v6xj7xxKzz+PeBIzbk6pp5f7dGUG+d1
+	hGoR0hkgVPpysPzzZXhLrv6Vmi53uAM+WA==
+X-Google-Smtp-Source: ABdhPJzFVkWKAi2fLsa1gUxXZLfU5V0tXADI32wMU7g9x5CCPLP42/A4eqwkpnBYUi5A7KBzOHmnaw==
+X-Received: by 2002:a5d:438f:: with SMTP id i15mr9350428wrq.121.1607157852227;
+        Sat, 05 Dec 2020 00:44:12 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sat, 5 Dec 2020 09:44:10 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-Cc: pdp@nats.io
-Message-ID: <ZT632cGIWqgIJCoj@fullerene.field.pennock-tech.net>
-References: <ZSit-X8iB2gx54hq@fullerene.field.pennock-tech.net>
- <ZT0t-5HDT_cAcgC2@eldamar.lan>
+Message-ID: <X8tIWqUvzrWFujHy@eldamar.lan>
+References: <20191025212309.GA18967@pisco.westfalen.local>
+ <20191107182804.GE6595@outflux.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="MkPdZoNwXkL8A5+L"
-Content-Disposition: inline
-In-Reply-To: <ZT0t-5HDT_cAcgC2@eldamar.lan>
-OpenPGP: url=https://www.security.spodhuis.org/PGP/keys/keys-2013rsa-2020cv25519.asc
-Subject: Re: [oss-security] NATS: 2023-01: Adding accounts for just the
- system account adds auth bypass
-
---MkPdZoNwXkL8A5+L
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20191107182804.GE6595@outflux.net>
+Subject: Re: [oss-security] Security fixes from Android 10 release which are
+ relevant outside the Android ecosystem?
 
-On 2023-10-28 at 17:51 +0200, Salvatore Bonaccorso wrote:
-> On Thu, Oct 12, 2023 at 10:39:53PM -0400, Phil Pennock wrote:
-> > [ CVE has been requested, still waiting for assignment, so we're just
-> >   inventing our own in-house numbering for advisories; we'll make sure
-> >   this one continues to work after the CVE is issued ]
-> >=20
-> > NATS-advisory-ID: 2023-01
-> > CVE: pending
-> > Date: 2023-10-12
-> > Fixed in: 2.9.23, 2.10.2
->=20
-> While I see the later NATS-advisory-ID 2023-02 has a CVE assigned, for
-> the 2023-01 was above with CVE pending. has one been assigned in
-> meanwhile?
+hi Kees,
 
-No.
+On Thu, Nov 07, 2019 at 10:28:04AM -0800, Kees Cook wrote:
+[...]
+> > CVE-2019-9423 (also libexif and opencv)
+> 
+> This one I can't find an external reference for. I've asked for more
+> details internally.
 
-For 2023-01 I went with our existing procedure and requested an
-assignment from MITRE, just as in all prior cases.  I got the automated
-acknowledgement (on Thursday 28th Sep, request ID 1532633).  I've yet to
-get a CVE assignment.
+Did you got any feedback on this one?
 
-So for the next one, I tried a new approach.  I filled out the GitHub
-Security Advisory flow ahead of release, got a GHSA, and requested a CVE
-immediately.  It looks like that was issued the next day.
-
-Going forward, the NATS project will be using GitHub's processes for
-requesting a CVE assignment.  Our documented procedures have been
-updated.
-
-I'm adjusting our published text format to have known aliases near the
-top, to make it easier to cross-reference.  For NATS advisory 2023-01,
-this is aka GHSA-fr2g-9hjm-wr23 and GO-2023-2133.
-
--Phil
-
---MkPdZoNwXkL8A5+L
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQSpb2i1s4FmGYGL+VvhPiXtYNF+awUCZT630AAKCRDhPiXtYNF+
-a87rAQDikg2YN+OxbvUI/t8b6JGsOR8OSqt43aCEx3eXRSYbFgD+KsZi6n+EIefS
-vKJZKNB8au2dm7ZNoX21Da9fzqsESQw=
-=VGlm
------END PGP SIGNATURE-----
-
---MkPdZoNwXkL8A5+L--
+Regards,
+Salvatore
