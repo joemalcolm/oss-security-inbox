@@ -1,26 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/06/1
-Message-ID: <20200206102507.GA11632@f195.suse.de>
-Date: Thu, 6 Feb 2020 11:25:07 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/05/1
+Message-ID: <X8tIWqUvzrWFujHy@eldamar.lan>
+Date: Sat, 5 Dec 2020 09:44:10 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-18901: mariadb: possible symlink attack for the mysql user in the SUSE specific mysql-systemd-helper script
+Subject: Re: Security fixes from Android 10 release which are relevant outside the Android ecosystem?
 Content-Type: text/plain; charset=utf-8
 
-Hello Larry,
+hi Kees,
 
-On Wed, Feb 05, 2020 at 11:31:55AM -0500, Larry W. Cashdollar wrote:
-> That chmod 640 might be interesting if applied to /etc/shadow.
-> It > could allow some users to read the password hashes.
+On Thu, Nov 07, 2019 at 10:28:04AM -0800, Kees Cook wrote:
+[...]
+> > CVE-2019-9423 (also libexif and opencv)
+> 
+> This one I can't find an external reference for. I've asked for more
+> details internally.
 
-true. Generally it allows to grant groups read permissions on files. I'm
-not aware of an instance where this directly allows the mysql user to
-escalate privileges. But it could work when combined with further
-weaknesses in the system that allow to compromise further user/group
-accounts.
+Did you got any feedback on this one?
 
-Cheers
-
-Matthias
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Regards,
+Salvatore
