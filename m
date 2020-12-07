@@ -1,62 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/01/3
-Message-ID: <20201201151602.GC10502@herrb.net>
-Date: Tue, 1 Dec 2020 16:16:02 +0100
-From: Matthieu Herrb <matthieu@...rb.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/2
+Message-ID: <CAE4Awf8zd+J4vhSv=cypMur2F24PxFnfsLZJsjZUzaHviQRTjA@mail.gmail.com>
+Date: Mon, 7 Dec 2020 16:43:33 -0600
+From: Gage Hugo <gagehugo@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: X.Org server security advisory: December 1, 2020
+Subject: [OSSA-2020-008] horizon: Open redirect in workflow forms (CVE-2020-29565)
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+==============================================
+OSSA-2020-008: Open redirect in workflow forms
+==============================================
+
+:Date: December 03, 2020
+:CVE: CVE-2020-29565
 
 
-Multiple input validation failures in X server XKB extension
-============================================================
+Affects
+~~~~~~~
+- - Horizon:  <15.3.2, >=16.0.0 <16.2.1, >=17.0.0 <18.3.3, >=18.4.0 <18.6.0
 
-These issues can lead to privileges elevations for authorized clients
-on systems where the X server is running privileged.
 
-* CVE-2020-14360 / ZDI CAN 11572 XkbSetMap Out-Of-Bounds Access
+Description
+~~~~~~~~~~~
+Pritam Singh (Red Hat) reported a vulnerability in Horizon's workflow
+forms. Previously there was a lack of validation on the "next"
+parameter, which would allow someone to supply a malicious URL in
+Horizon that can cause an automatic redirect to the provided malicious
+URL.
 
-Insufficient checks on the lengths of the XkbSetMap request can lead to
-out of bounds memory accesses in the X server.
-
-* CVE-2020-25712 / ZDI-CAN-11839 XkbSetDeviceInfo Heap-based Buffer Overflow
-
-Insufficient checks on input of the XkbSetDeviceInfo request can lead
-to a buffer overflow on the head in the X server.
 
 Patches
--------
-
-Patches for these issues have been committed to the xorg server git
-repository. xorg-server 1.20.10 will be released shortly and will
-include these patches.
+~~~~~~~
+- - https://review.opendev.org/758843 (Stein)
+- - https://review.opendev.org/758841 (Train)
 
 
-https://gitlab.freedesktop.org/xorg/xserver.git
-
-commit 446ff2d3177087b8173fa779fa5b77a2a128988b
-
-    Check SetMap request length carefully.
-    
-    Avoid out of bounds memory accesses on too short request.
-
-    ZDI-CAN 11572 /  CVE-2020-14360
+Credits
+~~~~~~~
+- - Pritam Singh from Red Hat (CVE-2020-29565)
 
 
-commit 87c64fc5b0db9f62f4e361444f4b60501ebf67b9
+References
+~~~~~~~~~~
+- - https://launchpad.net/bugs/1865026
+- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-29565
+-----BEGIN PGP SIGNATURE-----
 
-    Fix XkbSetDeviceInfo() and SetDeviceIndicators() heap overflows
+iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl/OrjwACgkQ56j9K3b+
+vRG/Gg//Tyj5La8eFwIrwhpDbV/tKNFS+t3NzuhJzLS24WNS9cLf5yDronRdBPdT
+Ow2OegTZ7K5GyoRARpycTjtE66RIizX9I8Kx27FXPc83hLYYOs/MButYpqcp0swM
+687RXZGFcZ5HZtPuRuTcclEcyhzvcUX7HXmznOCmVOHchr+RXzmp6cXC7tyCuNkV
+cGuuMtptDfkFmn2MpGmiTWEiMusMRbV5HqeyY39jg5dwph0kbMCcuzkX6c2WHubE
+T+rjVKbmqHr+v7og6mkZoK+pVk6Ulta/lGsYh/0NlszdQw3poN4FIt//TIwJZVwx
+WSlbMt6IwBW5XiPXvjpX9Awis6CT0jxlIV5XBq+klr3Jo+YnDsChElIPQs3CRKoM
+vqXVextHCk3LK1Evs3FkBns2Taro4tWOlkGYKR6INT4F1TJKNIzIUiF08673uF3B
+8zXDfnVEb7tEMqwu6OdVnfQQ4SRu7uyrN1sHhtwIyfK10AAI7gfJL/wbItJy21Om
+SQahTfDnikEY5gYYU+NH0LBMXkE0I/T+uvPh4LgP7wUxCMR9uI8+iA0711Gp/aPD
+WUdm3pUfIJYE7Gq6sT7BJQftHyMPcxOBj+MIrmFDFOxyPV70Mub+f34zxdu3Qoda
+tZNpy/BGL19VqrlRa9R8H65tzzNy7k5GqkaUYEF5/LegfUgZOTo=
+=jr+k
+-----END PGP SIGNATURE-----
 
-    ZDI-CAN 11389 / CVE-2020-25712
-
-
-Thanks
-======
-
-These vulnerabilities have been discovered by Jan-Niklas Sohn working
-with Trend Micro Zero Day Initiative.
-
-
--- 
-Matthieu Herrb
