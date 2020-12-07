@@ -1,100 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/03/3
-Message-ID: <CAM6JnLfDLbZA1Ky+UDjcA8XOrbAqazh4YQgH8Ur9pyhjBA2nQQ@mail.gmail.com>
-Date: Thu, 3 Sep 2020 20:16:15 +0300
-From: Or Cohen <orcohen@...oaltonetworks.com>
-To: oss-security@...ts.openwall.com
-Cc: Nadav Markus <nmarkus@...oaltonetworks.com>
-Subject: CVE-2020-14386: Linux kernel: af_packet.c vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/07/3
+Message-ID: <CA+-U7QBR-P1==EsFfr+ZxEQ8Tt2D6obJumq1oN165NWFJi6Caw@mail.gmail.com>
+Date: Mon, 7 Dec 2020 19:02:02 +0800
+From: - Nop <nopitydays@...il.com>
+To: John Haxby <john.haxby@...cle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-This is an announcement of CVE-2020-14386.
 
-I also reported the issue netdev@...r.kernel.org and I'm waiting for
-approval of my proposed patch.
-
-The report is as follows: ( a proposed patch and a reproducer are attached)
-
-I discovered a bug which leads to a memory corruption in
-(net/packet/af_packet.c). It can be exploited to gain root privileges
-from unprivileged processes.
-
-To create AF_PACKET sockets you need CAP_NET_RAW in your network
-namespace, which can be acquired by unprivileged processes on systems
-where unprivileged namespaces are enabled (Ubuntu, Fedora, etc).
-
-I discovered the vulnerability while auditing the 5.7 kernel sources.
-
-The bug occurs in tpacket_rcv function, when calculating the netoff
-variable (unsigned short), po->tp_reserve (unsigned int) is added to
-it which can overflow netoff so it gets a small value.
-
-macoff is calculated using: "macoff = netoff - maclen", we can control
-macoff so it will receive a small value (specifically, smaller then
-sizeof(struct virtio_net_hdr)).
-
-Later, when running the following code:
-...
-if (do_vnet &&
-   virtio_net_hdr_from_skb(skb, h.raw + macoff -
-sizeof(struct virtio_net_hdr),
-...
-
-If do_vnet is set, and because macoff < sizeof(struct virtio_net_hdr)
-a pointer to a memory area before the h.raw buffer will be sent to
-virtio_net_hdr_from_skb. This can lead to an out-of-bounds write of
-1-10 bytes, controlled by the user.
-
-The h.raw buffer is allocated in alloc_pg_vec and it's size is
-controlled by the user.
-
-The stack trace is as follows at the time of the crash: ( linux v5.7 )
-
-#0  memset_erms () at arch/x86/lib/memset_64.S:66
-#1  0xffffffff831934a6 in virtio_net_hdr_from_skb
-(little_endian=<optimized out>, has_data_valid=<optimized out>,
-    vlan_hlen=<optimized out>, hdr=<optimized out>, skb=<optimized
-out>) at ./include/linux/virtio_net.h:134
-#2  tpacket_rcv (skb=0xffff8881ef539940, dev=0xffff8881de534000,
-pt=<optimized out>, orig_dev=<optimized out>)
-        at net/packet/af_packet.c:2287
-#3  0xffffffff82c52e47 in dev_queue_xmit_nit (skb=0xffff8881ef5391c0,
-dev=<optimized out>) at net/core/dev.c:2276
-#4  0xffffffff82c5e3d4 in xmit_one (more=<optimized out>,
-txq=<optimized out>, dev=<optimized out>,
-            skb=<optimized out>) at net/core/dev.c:3473
-#5  dev_hard_start_xmit (first=0xffffc900001c0ff6, dev=0x0
-<fixed_percpu_data>, txq=0xa <fixed_percpu_data+10>,
-    ret=<optimized out>) at net/core/dev.c:3493
-#6  0xffffffff82c5fc7e in __dev_queue_xmit (skb=0xffff8881ef5391c0,
-sb_dev=<optimized out>) at net/core/dev.c:4052
-#7  0xffffffff831982d3 in packet_snd (len=65536, msg=<optimized out>,
-sock=<optimized out>) 0001-net-packet-fix-overflow-in-tpacket_rcv
-at net/packet/af_packet.c:2979
-#8  packet_sendmsg (sock=<optimized out>, msg=<optimized out>,
-len=65536) at net/packet/af_packet.c:3004
-#9  0xffffffff82be09ed in sock_sendmsg_nosec (msg=<optimized out>,
-sock=<optimized out>) at net/socket.c:652
-#10 sock_sendmsg (sock=0xffff8881e8ff56c0, msg=0xffff8881de56fd88) at
-net/socket.c:672
-
-Files attached:
-A proposed patch - 0001-net-packet-fix-overflow-in-tpacket_rcv.patch
-A reproducer for the bug - trigger_bug.c
-
-We are currently working on an exploit for getting root privileges
-from unprivileged context using this bug.
-
-Timeline:
-* 9.2.20 - Vulnerability reported to security@...nel.org and
+yes, we asked for a CVE in the original email sent to
 linux-distros@...openwall.org.
-* 9.3.20 - CVE-2020-14386 assigned.
-* 9.3.20 - Vulnerability reported to netdev.
 
-Or Cohen
-Palo Alto Networks
+Thanks,
+Bodong Zhao
 
-Download attachment "0001-net-packet-fix-overflow-in-tpacket_rcv.patch" of type "application/octet-stream" (1674 bytes)
+On Mon, Dec 7, 2020 at 6:23 PM John Haxby <john.haxby@...cle.com> wrote:
 
-Download attachment "trigger_bug.c" of type "application/octet-stream" (3809 bytes)
+>
+>
+> > On 7 Dec 2020, at 02:20, Shisong Qin <qinshisong1205@...il.com> wrote:
+> >
+> > Recently we found another NULL-ptr deref BUG in spk_ttyio.c in the latest
+> > Linux kernel(5.9.11 is the latest at that now). In the
+> > spk_ttyio_receive_buf2() function, it would dereference spk_ttyio_synth
+> > without checking whether it is NULL or not, and may lead to a NULL-ptr
+> > deref crash.
+>
+> Did you ask for a CVE for bug?
+>
+> jch
+>
+
