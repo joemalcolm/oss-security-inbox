@@ -1,36 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/21/1
-Message-ID: <20200421072905.GA210610@ryzen.bugs.fi>
-Date: Tue, 21 Apr 2020 10:29:05 +0300
-From: Henri Salo <henri@...v.fi>
-To: Agostino Sarubbo <ago@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: re2c: heap overflow in Scanner::fill (scanner.cc)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/07/5
+Message-ID: <CALXpagzJ3+xVHu8S+BSpKss7BtKe+hvAFe_wPyr46V4_CVn5Dw@mail.gmail.com>
+Date: Mon, 7 Dec 2020 09:11:48 -0800
+From: Tim Allclair <timallclair@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [kubernetes] CVE-2020-8554: Man in the middle using LoadBalancer or ExternalIPs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+A security issue was discovered with Kubernetes affecting multitenant
+clusters. If a potential attacker can already create or edit services and
+pods, then they may be able to intercept traffic from other pods (or nodes)
+in the cluster.
 
-On Sun, Apr 19, 2020 at 04:59:48PM +0200, Agostino Sarubbo wrote:
-> http://blogs.gentoo.org/ago/2020/04/19/re2c-heap-overflow-in-scannerfill-scanner-cc/
+This issue has been rated medium severity (
+CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L
+<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L>),
+and assigned CVE-2020-8554.
 
-Use CVE-2020-11958.
+An attacker that is able to create a ClusterIP service and set the
+spec.externalIPs field can intercept traffic to that IP. An attacker that
+is able to patch the status (which is considered a privileged operation and
+should not typically be granted to users) of a LoadBalancer service can set
+the status.loadBalancer.ingress.ip to similar effect.
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
+This issue is a design flaw that cannot be mitigated without user-facing
+changes. With this public announcement, we can begin conversations about a
+long-term fix.
+Affected Components and Configurations
 
-iQIzBAEBCgAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAl6eoL8ACgkQJ633pE6q
-dXQjNxAArR8FasEqoCZe3REbzgztybaAqsagPsZ8hFGJMOM3Lfug5D8VeMVKGPO/
-yI5ADpOjEZyJsRhM/E7vxyd7inLq5IJuUSvux36SNzCAW3i0gFJqHjHEkX0Z63rO
-4hL81wZ+jc0K61C2s583vyfZSuuJksb1rtn8rTNbyfDVWETnXGC3YVTgu+AvKZqH
-a3y/OF4jyhw9ho0bf/onRTmk3/0tPEJxs7x5ZfwE7TSTJLaNJEcKt1CPIs8fo0KC
-QMGsUURJxuaMKJCU7owESzojlEZn3XEjingC5E5MOpQmeTocYH5JSB0q4vJk2UTp
-jolwX8eR9O5GbDob8xbtqMVc7JEwsnelxd8ChPRBrmulgjdW77yDu70GBL9weHdv
-+a3NcqwJ7LGOVwQyE/tYkh7OYV7PSMCPsb0Qs0Dwdrd8yrVybTq8sh1AsjvaYrgy
-J6Xg2vNX9VOlRjhEER0Saf2ChoaAZEDuhClRJKdcFOCHptc2bB1tIACEGdSvG+5R
-CD0FyOZb/bpQGd0NwtAPajdZs7aXw2aaFIo0f91r55e7tk7bBZ2jYvXcMVQp3DXF
-FwvPit1JqLHgECPxT2aAtSWXwDv57pZjbh1OB0vFz+x0O3BNkGYGZbBLqTwcEPQC
-VpTH6uKcOIAG7JyN2cdAH+7cDjlxrdeDO82VmAZLLLW1iFGaL9I=
-=/3xD
------END PGP SIGNATURE-----
+All Kubernetes versions are affected. Multi-tenant clusters that grant
+tenants the ability to create and update services and pods are most
+vulnerable.
+Mitigations
+
+There is no patch for this issue, and it can currently only be mitigated by
+restricting access to the vulnerable features. Because an in-tree fix would
+require a breaking change, we will open a conversation about a longer-term
+fix or built-in mitigation after the embargo is lifted
+
+To restrict the use of external IPs we are providing an admission webhook
+container: k8s.gcr.io/multitenancy/externalip-webhook:v1.0.0. The source
+code and deployment instructions are published at
+https://github.com/kubernetes-sigs/externalip-webhook.
+
+Alternatively, external IPs can be restricted using OPA Gatekeeper
+<https://github.com/open-policy-agent/gatekeeper>. A sample
+ConstraintTemplate and Constraint can be found here:
+https://github.com/open-policy-agent/gatekeeper-library/tree/master/library/general/externalip
+.
+
+No mitigations are provided for LoadBalancer IPs since we do not recommend
+granting users patch service/status permission. If LoadBalancer IP
+restrictions are required, the approach for the external IP mitigations can
+be copied.
+Detection
+
+ExternalIP services are not widely used, so we recommend manually auditing
+any external IP usage. Users should not patch service status, so audit
+events for patch service status requests authenticated to a user may be
+suspicious.
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Details
+
+See the GitHub issue for more updates:
+https://github.com/kubernetes/kubernetes/issues/97076
+Acknowledgements
+
+This vulnerability was reported by Etienne Champetier of Anevia.
+
+Thank You,
+
+Tim Allclair on behalf of the Kubernetes Product Security Committee(
+
