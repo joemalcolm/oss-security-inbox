@@ -1,95 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/24/6
-Message-ID: <CAN_LGv3fr1pk3Xwp39Qv4mFv6b2xNw+pfo6Ban993FCQZoqfAA@mail.gmail.com>
-Date: Tue, 25 Feb 2020 00:54:50 +0500
-From: "Alexander E. Patrakov" <patrakov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/07/4
+Message-ID: <CAKzgDd0PnhRjveFpeyrZ3gsNZsUtw8RfpBEuW=x4d63oXXLUog@mail.gmail.com>
+Date: Mon, 7 Dec 2020 21:18:01 +0800
+From: YuanSheng Wang <membphis@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
+Subject: [SECURITY] CVE-2020-13945: Apache APISIX's Admin API default access token vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 24, 2020 at 10:55 PM Qualys Security Advisory
-<qsa@...lys.com> wrote:
->
->
-> Qualys Security Advisory
->
-> LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
->
->
-> ==============================================================================
-> Contents
-> ==============================================================================
->
-> Summary
-> Analysis
-> ...
-> Acknowledgments
->
->
-> ==============================================================================
-> Summary
-> ==============================================================================
->
-> We discovered a vulnerability in OpenSMTPD, OpenBSD's mail server. This
-> vulnerability, an out-of-bounds read introduced in December 2015 (commit
-> 80c6a60c, "when peer outputs a multi-line response ..."), is exploitable
-> remotely and leads to the execution of arbitrary shell commands: either
-> as root, after May 2018 (commit a8e22235, "switch smtpd to new
-> grammar"); or as any non-root user, before May 2018.
->
-> Because this vulnerability resides in OpenSMTPD's client-side code
-> (which delivers mail to remote SMTP servers), we must consider two
-> different scenarios:
->
-> - Client-side exploitation: This vulnerability is remotely exploitable
->   in OpenSMTPD's (and hence OpenBSD's) default configuration. Although
->   OpenSMTPD listens on localhost only, by default, it does accept mail
->   from local users and delivers it to remote servers. If such a remote
->   server is controlled by an attacker (either because it is malicious or
->   compromised, or because of a man-in-the-middle, DNS, or BGP attack --
->   SMTP is not TLS-encrypted by default), then the attacker can execute
->   arbitrary shell commands on the vulnerable OpenSMTPD installation.
->
-> - Server-side exploitation: First, the attacker must connect to the
->   OpenSMTPD server (which accepts external mail) and send a mail that
->   creates a bounce. Next, when OpenSMTPD connects back to their mail
->   server to deliver this bounce, the attacker can exploit OpenSMTPD's
->   client-side vulnerability. Last, for their shell commands to be
->   executed, the attacker must (to the best of our knowledge) crash
->   OpenSMTPD and wait until it is restarted (either manually by an
->   administrator, or automatically by a system update or reboot).
->
-> We developed a simple exploit for this vulnerability and successfully
-> tested it against OpenBSD 6.6 (the current release), OpenBSD 5.9 (the
-> first vulnerable release), Debian 10 (stable), Debian 11 (testing), and
-> Fedora 31. At OpenBSD's request, and to give OpenSMTPD's users a chance
-> to patch their systems, we are withholding the exploitation details and
-> code until Wednesday, February 26, 2020.
->
-> Last-minute note: we tested our exploit against the recent changes in
-> OpenSMTPD 6.6.3p1, and our results are: if the "mbox" method is used for
-> local delivery (the default in OpenBSD -current), then arbitrary command
-> execution as root is still possible; otherwise (if the "maildir" method
-> is used, for example), arbitrary command execution as any non-root user
-> is possible.
+CVE-2020-13945: Apache APISIX's Admin API default access token vulnerability
 
-I would like a bit of clarification. We use OpenSMTPD as a dumb thing
-that only relays mail to a central server and never delivers it
-locally. The remote server is under our control.
+Severity: low
 
-=============
-table credentials { smarthost.example.com=myuser:mypassword }
+Vendor:
+The Apache Software Foundation
 
-listen on 127.0.0.1
+Versions Affected:
+APISIX 1.2, 1.3, 1.4, 1.5.
 
-# No local mailboxes
-action to_postfix relay host
-smtp+tls://smarthost.example.com@...rthost.example.com auth
-<credentials> helo myhostname.example.com
-match from local for any action to_postfix
-=============
+Description:
+The user enabled the Admin API and deleted the Admin API access IP
+restriction rules.
+Eventually, the default token is allowed to access APISIX management data.
 
-Is the hole exploitable in this configuration?
+Mitigation:
+APISIX 1.2 ~ 1.5 upgrade to 2.0
+
+Or users can apply this patch:
+https://github.com/apache/apisix/pull/2244
+
+Credit:
+This issue was discovered by "国家信息安全漏洞共享平台".
 
 -- 
-Alexander E. Patrakov
+
+*MembPhis*
+My GitHub: https://github.com/membphis
+Apache APISIX: https://github.com/apache/apisix
+
