@@ -1,35 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/17/1
-Message-ID: <CAH8yC8n6X75L0dC_50wjc+Cq-Cubj568g=NXon19s_-Kxgz+2w@mail.gmail.com>
-Date: Thu, 16 Jan 2020 23:21:52 -0500
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/1
+Message-ID: <20201208073801.GA26544@suse.de>
+Date: Tue, 8 Dec 2020 08:38:01 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume
+Cc: John Haxby <john.haxby@...cle.com>
+Subject: Re: Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2
 Content-Type: text/plain; charset=utf-8
 
-This just made my radar. It appears some AMD cpus with RDRAND fail to
-produce random numbers after a suspend/resume. It looks like it was
-first reported in 2014 or so.
+Hi,
 
-Kernel bug:
+CVE-2020-27830 was assigned on linux-distros by Redhat.
 
-    * https://bugzilla.kernel.org/show_bug.cgi?id=85911
+(It might be good to keep discussions on oss-security after publication to avoid parallel threads.)
 
-Systemd bug:
+Ciao, Marcus
 
-    * https://github.com/systemd/systemd/issues/11810
-
-Fedora bug:
-
-    * https://bugzilla.redhat.com/show_bug.cgi?id=1150286
-
-AMD patch:
-
-    * https://lore.kernel.org/patchwork/patch/1115413/
-
-I agree with Lennart Poettering. This seems CVE worthy given RDRAND is
-often used to get the kernel generator (and other userland generators)
-in good working order.
-
-(Thanks to https://www.phoronix.com/scan.php?page=news_item&px=AMD-CPUs-RdRand-Suspend
-for the article and links).
+On Mon, Dec 07, 2020 at 07:02:02PM +0800, - Nop wrote:
+> Hi,
+> 
+> yes, we asked for a CVE in the original email sent to
+> linux-distros@...openwall.org.
+> 
+> Thanks,
+> Bodong Zhao
+> 
+> On Mon, Dec 7, 2020 at 6:23 PM John Haxby <john.haxby@...cle.com> wrote:
+> 
+> >
+> >
+> > > On 7 Dec 2020, at 02:20, Shisong Qin <qinshisong1205@...il.com> wrote:
+> > >
+> > > Recently we found another NULL-ptr deref BUG in spk_ttyio.c in the latest
+> > > Linux kernel(5.9.11 is the latest at that now). In the
+> > > spk_ttyio_receive_buf2() function, it would dereference spk_ttyio_synth
+> > > without checking whether it is NULL or not, and may lead to a NULL-ptr
+> > > deref crash.
+> >
+> > Did you ask for a CVE for bug?
+> >
+> > jch
+> >
