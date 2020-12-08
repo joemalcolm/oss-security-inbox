@@ -1,130 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/03/2
-Message-ID: <20200903161427.GA15109@openwall.com>
-Date: Thu, 3 Sep 2020 18:14:27 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/3
+Message-ID: <CAMopvkNhCA2dWwKMJbZjJLGD6NrxCRyZ3QOSetwdXPnGRz9mLQ@mail.gmail.com>
+Date: Tue, 8 Dec 2020 07:55:04 +0100
+From: Lukasz Lenart <lukaszlenart@...che.org>
+To: Struts Users Mailing List <user@...uts.apache.org>
+Cc: "announcements@...uts.apache.org" <announcements@...uts.apache.org>, announce@...che.org,  "security@...uts.apache.org" <security@...uts.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: Apache Struts 2: CVE-2020-17530: Potential RCE when using forced evaluation
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Forced OGNL evaluation, when evaluated on raw user input in tag
+attributes, may lead to remote code execution.
 
-Sorry for adding to an old thread (over-quoted below my signature).
+Problem
+Some of the tag's attributes could perform a double evaluation if a
+developer applied forced OGNL evaluation by using the %{...} syntax.
+Using forced OGNL evaluation on untrusted user input can lead to a
+Remote Code Execution and security degradation.
 
-I primarily want to publicly acknowledge and thank Seth Arnold of
-Ubuntu, Anthony Liguori of Amazon Linux, and Srivatsa S. Bhat of VMware
-Photon OS for handling two of these tasks well lately.  Thank you!
+Solution
+Avoid using forced OGNL evaluation on untrusted user input, and/or
+upgrade to Struts 2.5.26 which checks if expression evaluation won't
+lead to the double evaluation.
 
-In particular, I am seeing good contributions on tasks 3 and 4 below:
+Please read our Security Bulletin for more details:
+https://cwiki.apache.org/confluence/display/WW/S2-061
 
-3. Review and/or test the proposed patches and point out potential
-issues with them (such as incomplete fixes for the originally reported
-issues, additional issues you might notice, and newly introduced bugs),
-and inform the list of the work done even if no issues were encountered
-- primary: Ubuntu, backup: Amazon
+This vulnerability was identified by:
+- Alvaro Munoz - pwntester at github dot com
+- Masato Anzai of Aeye Security Lab, inc.
 
-4. Check if related issues exist in the same piece of software (e.g., same
-bug class common across the software, or other kinds of bugs exist in
-its problematic component), and inform the list either way
-- primary: Ubuntu, backup: VMware Photon OS
+All developers are strongly advised to perform this action.
 
-I am not yet seeing contributions on task 5.  It's more open-ended - the
-contributor would need to identify "implementations of similar
-functionality in other software" first, and depending on how you define
-"similar" and what "other software" is in scope these might or might not
-exist.  That task's description is:
 
-5. Check if related issues exist in implementations of similar
-functionality in other software (e.g., forked code including the same
-bug, or the same error made independently), and inform the list either
-way - primary: Ubuntu, backup: Flatcar Container Linux
-
-Notice that it does say "and inform the list either way".  For clarity,
-can we please have that include cases where no "implementations of
-similar functionality in other software" were identified?  In those
-cases, just state so and how you were looking for those implementations
-and why you think there might not be any or they would be too difficult
-to identify.  In other words, some statement on work done or not done
-and why, but not silence.  I hope that this requirement will encourage
-actual work on this task, not just statements on work not done, but I
-recognize that sometimes the latter will be the case, and that's fine.
-
-So from this point on, I'd actually expect Ubuntu or/and Flatcar
-Container Linux to state something on task 5 for each issue reported.
-
-Thanks again,
-
-Alexander
-
-On Tue, Nov 05, 2019 at 07:04:00PM -0800, Anthony Liguori wrote:
-> On Tue, Nov 5, 2019 at 10:45 AM Solar Designer <solar@...nwall.com> wrote:
-> >
-> > Hi Joe, hi Anthony -
-> >
-> > I'll over-quote a bit since it's an old thread:
-> >
-> > On Mon, Jul 15, 2019 at 09:28:01PM +0200, Solar Designer wrote:
-> > > On Mon, Jul 15, 2019 at 11:54:23AM -0700, Anthony Liguori wrote:
-> > > > On Mon, Jul 15, 2019 at 11:47 AM Joe McManus <joe.mcmanus@...onical.com> wrote:
-> > > > > > On Tue, Jul 09, 2019 at 07:00:36PM -0600, Joe McManus wrote:
-> > > > > > > Hey All - The Ubuntu Security Team would like to sign up for items 3,4
-> > > > > > > & 5 from the technical list <
-> > > > > > > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> > > > > > > >:
-> > > > > > >
-> > > > > > > 3 - Review and/or test the proposed patches and point out potential issues
-> > > > > > >   with them [...]
-> > > > > > > 4 - Check if related issues exist in the same piece of software [...]
-> > > > > > > 5 - Check if related issues exist in implementations of similar
-> > > > > > >   functionality in other software [...]
-> > > [...]
-> > > > > Yes, this will be taken care of by Ubuntu Security Team members who
-> > > > > are already on the list, however if after some time we need to cycle
-> > > > > someone in or out I might come asking. I know you don't want to add
-> > > > > anyone so we will do our best to prevent this from happening.
-> > > > >
-> > > > > For 3 we can be either primary or backup, just let me know your
-> > > > > preference and we'll do the work.
-> > > >
-> > > > I would be happy for y'all to be primary.  We don't ship as many
-> > > > packages as Ubuntu does so there will be more things that you are
-> > > > likely to test compared to what we do.
-> > >
-> > > OK, I've just listed Ubuntu as primary for 3, 4, 5.  Amazon is now
-> > > backup for 3.
-> > >
-> > > Please note that these items include "and inform the list of the work
-> > > done even if no issues were encountered" (item 3), "and inform the list
-> > > either way" (items 4, 5), so we'll expect replies to the list as per
-> > > these items for each and every issue reported to there.
-> >
-> > I am not seeing this "inform the list either way" stuff actually
-> > happening.  Without it, no other distro has a way to know the work is
-> > actually being done.  Once I had pointed this need out a while before,
-> > Amazon briefly started making those mandatory postings for task 3, until
-> > they were replaced by Ubuntu as primary.  In fact, given the lack of
-> > such postings by Ubuntu, I would still expect Amazon to take over for
-> > task 3, which they're the backup for, and it looks like they did that
-> > exactly once:
-> >
-> > As far as I can see, the last time Amazon handled task 3 was on July 25,
-> > which is 10 days after Ubuntu became primary for that task.  This was
-> > much appreciated.  Unfortunately, as far as I can see, neither distro
-> > (visibly) handled these tasks ever since, with one exception:
-> >
-> > Ubuntu did point out that a patch didn't have a corresponding testsuite
-> > change, and thus tests failed, in a posting on October 10.  So hopefully
-> > they were doing the work, except for the "inform the list either way"
-> > part - but that's an important part!
-> >
-> > It is possible that I missed or don't recall some other occasions, but I
-> > think I got the overall picture right.
-> >
-> > Joe, Anthony - can you please have your distros start handling these
-> > tasks fully, as described?
-> 
-> Ack.
-> 
-> Regards,
-> 
-> Anthony Liguori
+Kind regards
+-- 
+Łukasz
++ 48 606 323 122 http://www.lenart.org.pl/
