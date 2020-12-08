@@ -1,27 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/01/23/1
-Message-ID: <CACqxkW+KKgmqZmEeardoPrSQGDccoRnQiCvg-T2qYuqTKgSXAA@mail.gmail.com>
-Date: Thu, 23 Jan 2020 15:17:27 +0000
-From: Nick Boyce <nick.boyce@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/5
+Message-ID: <CAH5b-BUVDeMaifMPf5HibLqjQKky3ch0__eYnzU1f_k3=JmMTg@mail.gmail.com>
+Date: Tue, 8 Dec 2020 20:01:14 +0100
+From: yersinia <yersinia.spiros@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: matthias.gerstner@...e.de
-Subject: Re: CVE-2020-7040: storeBackup: denial of service and symlink attack vector via fixed lockfile path /tmp/storeBackup.lock
+Subject: Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 22 Jan 2020 at 13:24, Matthias Gerstner
-<matthias.gerstner@...e.de> wrote:
->
-> > > Should we tell the site owner his site may have been stolen ?
-> >
-> > Hmm I never bothered to look deeper into the website but now that you're
-> > pointing to it, it looks strange. I can give the upstream author a hint,
-[...]
-> I have heard back from the author and he told me that storebackup.org
-> never was owned by him, but created by some user of storeBackup
-[...]
-> The official upstream website is on GNU Savannah [1].
-> [1]: https://savannah.nongnu.org/projects/storebackup
+At this link, multiple security bugs of various kinds are highlighted in
+very widespread basic cryptographic applications, which have then been
+corrected. I haven't done a deep analysis on all of them but I haven't
+found any associated CVEs of some of them. Do I have to assume that they
+weren't all that important or that the process of reporting them was
+missing? Thanks
 
-Thanks Matthias for the clarification.
+https://github.com/guidovranken/cryptofuzz
 
-Nick
