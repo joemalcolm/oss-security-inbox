@@ -1,132 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/07/3
-Message-Id: <E1jsmYX-0000Xl-BV@xenbits.xenproject.org>
-Date: Tue, 07 Jul 2020 12:18:37 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 319 v3 (CVE-2020-15563) - inverted code paths in x86 dirty VRAM tracking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/6
+Message-ID: <X8/iqSaDQqige53U@gmail.com>
+Date: Tue, 8 Dec 2020 12:31:37 -0800
+From: Eric Biggers <ebiggers@...nel.org>
+To: yersinia <yersinia.spiros@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Dec 08, 2020 at 08:01:14PM +0100, yersinia wrote:
+> At this link, multiple security bugs of various kinds are highlighted in
+> very widespread basic cryptographic applications, which have then been
+> corrected. I haven't done a deep analysis on all of them but I haven't
+> found any associated CVEs of some of them. Do I have to assume that they
+> weren't all that important or that the process of reporting them was
+> missing? Thanks
+> 
+> https://github.com/guidovranken/cryptofuzz
 
-            Xen Security Advisory CVE-2020-15563 / XSA-319
-                               version 3
+Fuzzing can easily find large numbers of bugs, and it's usually unclear what the
+security impact of them is.  So if people want CVEs, someone has to actually put
+the effort into analyzing each bug and (if applicable) filing for a CVE.
+Presumably just no one has done that for the above bugs.
 
-            inverted code paths in x86 dirty VRAM tracking
+Something similar happened when I added fuzz tests to the Linux kernel's crypto
+API last year.  In less than a year they had resulted in over 100 bug fixes.
+Most didn't *seem* too concerning, e.g. most were bugs in crypto drivers that
+seemed to be rarely used, or crypto algorithms that seemed to be rarely used, or
+edge cases in the crypto API that seemed to be rarely or never encountered.
 
-UPDATES IN VERSION 3
-====================
+The bugs in userspace libraries found by cryptofuzz look somewhat similar.  They
+include some of the same kinds of bugs, like mishandling zero-length inputs,
+mishandling data passed in specific chunk sizes, or bugs in weird algorithms.
 
-Public release.
+However, in both cases it isn't possible to be certain of the impact and
+applicability for a CVE of each bug without analyzing each bug in detail, which
+would be very time-consuming, and in general it's no one's job to do that.
 
-ISSUE DESCRIPTION
-=================
+Likewise, syzkaller has found thousands of Linux kernel bugs and most haven't
+had CVEs filed.
 
-An inverted conditional in x86 HVM guests' dirty video RAM tracking
-code allows such guests to make Xen de-reference a pointer guaranteed
-to point at unmapped space.
-
-IMPACT
-======
-
-A malicious or buggy HVM guest may cause the hypervisor to crash,
-resulting in Denial of Service (DoS) affecting the entire host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions from 4.8 onwards are affected.  Xen versions 4.7 and
-earlier are not affected.
-
-Only x86 systems are affected.  Arm systems are not affected.
-
-Only x86 HVM guests using shadow paging can leverage the vulnerability.
-In addition there needs to be an entity actively monitoring a guest's
-video frame buffer (typically for display purposes) in order for such a
-guest to be able to leverage the vulnerability.  x86 PV guests as well
-as x86 HVM guest using hardware assisted paging (HAP) cannot leverage
-the vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid the vulnerability.
-
-For HVM guest explicitly configured to use shadow paging (e.g. via the
-`hap=0' xl domain configuration file parameter), changing to HAP (e.g.
-by setting `hap=1') will avoid exposing the vulnerability to those
-guests.  HAP is the default (in upstream Xen), where the hardware
-supports it; so this mitigation is only applicable if HAP has been
-disabled by configuration.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa319.patch           xen-unstable, 4.13 - 4.9
-
-$ sha256sum xsa319*
-1fe0dc2e274776b8e1275f85129280f280f94ca4eabe6a8166113283dad93ed8  xsa319.meta
-c145f394f8ac7d8838c376a97e1850c4125c12e478fc66ebe025ae397b27e6ea  xsa319.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patch described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-HOWEVER deployment of the "use HAP mode" mitigation described above is
-NOT permitted (except where all the affected systems and VMs are
-administered and used only by organisations which are members of the Xen
-Project Security Issues Predisclosure List).  Specifically, deployment
-on public cloud systems is NOT permitted.
-
-This is because in that case the configuration change can be observed
-by guests, which could lead to the rediscovery of the vulnerability.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8EZ/sMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ75YH/jX/sAs0icOgBtHkwVZHg318OBExxt9x+ehk/pxb
-i+1ZlS/IrJ8eJdHJYq8HYvAlxmtmFP1I0t+C9vmwbP4QMcR++RmKgdJI4+/sqCsB
-AMEnK+cVJSbHxD7y7eW2CPuU3h0cKx0H24JgtzA2ONse7dVz7RN+oa97D5IKryTL
-cBW8WroMn2InbKMCUy/5zj89NLAlbSuWSVZzQidDwzTITukzhZZ7Xw0+Q2yh1nkK
-S4kcmz7Bzzd5Mc1gFr1Eh1FxfmVVl5RxwDE//3a5VbmfPVo/f0kMOIWjXVd1R1dj
-x78SPrPojOAZbb8+f1LYqHmqzCgzvpa4EFbsOnsB7CBmP2Q=
-=bDFh
------END PGP SIGNATURE-----
-
-Download attachment "xsa319.meta" of type "application/octet-stream" (1675 bytes)
-
-Download attachment "xsa319.patch" of type "application/octet-stream" (889 bytes)
+- Eric
