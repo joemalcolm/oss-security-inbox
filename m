@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/30/3
-Message-ID: <20200630145459.1d12bb01@lenovo>
-Date: Tue, 30 Jun 2020 14:54:59 +0200
-From: Stefan Cornelius <scorneli@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: libvncserver: old websocket decoding patch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/4
+Message-ID: <CA+-U7QAbjc5H+0TD_ZAOgod57N9XU8YRoAB=kxJKE1GLr3F5HA@mail.gmail.com>
+Date: Tue, 8 Dec 2020 15:30:30 +0800
+From: - Nop <nopitydays@...il.com>
+To: John Haxby <john.haxby@...cle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel NULL-ptr deref bug in spk_ttyio_receive_buf2
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 30 Jun 2020 10:50:09 +0200
-Stefan Cornelius <scorneli@...hat.com> wrote:
+Hi,
 
-> Hi,
-> 
-> Upstream libvncserver fixed a websocket decoding issue >3years ago in
-> https://github.com/LibVNC/libvncserver/commit/aac95a9dcf4bbba87b76c72706c3221a842ca433
-> 
-> AFAICT, this never got a CVE and wasn't backported by some
-> distributions.
-> 
-> Thanks and kind regards,
-> 
-> [I sent a heads-up about this to distros last Friday, 'embargo' ran
-> out on Monday 20:00 UTC]
+CVE-2020-27830 has been assigned to this issue.
 
-Please use CVE-2017-18922
+Regards,
+Bodong
 
--- 
-Stefan Cornelius / Red Hat Product Security
+On Mon, Dec 7, 2020 at 6:23 PM John Haxby <john.haxby@...cle.com> wrote:
+
+>
+>
+> > On 7 Dec 2020, at 02:20, Shisong Qin <qinshisong1205@...il.com> wrote:
+> >
+> > Recently we found another NULL-ptr deref BUG in spk_ttyio.c in the latest
+> > Linux kernel(5.9.11 is the latest at that now). In the
+> > spk_ttyio_receive_buf2() function, it would dereference spk_ttyio_synth
+> > without checking whether it is NULL or not, and may lead to a NULL-ptr
+> > deref crash.
+>
+> Did you ask for a CVE for bug?
+>
+> jch
+>
 
