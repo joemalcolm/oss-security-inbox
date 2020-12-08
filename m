@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/15/9
-Message-ID: <CAHmME9q76P+sjuNXhGXQwLThJ=k2O04BC=P0Vsz+9XGvbeB4Rg@mail.gmail.com>
-Date: Mon, 15 Jun 2020 17:02:05 -0600
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: Re: lockdown bypass on ubuntu 18.04's 4.15 kernel for loading unsigned modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/8
+Message-ID: <20201208223558.GF3381169@millbarge>
+Date: Tue, 8 Dec 2020 22:35:58 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Robert Watson <robertcwatson1@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?
 Content-Type: text/plain; charset=utf-8
 
-Hi Mitre,
+On Tue, Dec 08, 2020 at 05:18:04PM -0500, Robert Watson wrote:
+> Question from a retired programmer but security novice... Since fuzzing is
+> used to find bugs in other programs, doesn't it need to be held to a bit
+> higher standard in order to maintain credibility?
 
-People are requesting a CVE to track this and are poking me to poke
-you to assign one.
+The output from fuzzers is a large body of inputs (or programs, in the
+case of syzkaller) that directly demonstrate the problem in the program
+being fuzzed.
 
-Jason
+The generated inputs can be used separately from the fuzzing framework.
+Many are only useful when combined with sanitizers, or debug builds,
+or similar efforts to turn errors into something visible (corrupting
+the stack may not be visible directly, for example). It's unfortunate
+that this step is required, and I have seen maintainers not interested
+in taking fixes that are "only visible with ubsan", for example, but
+this attitude is thankfully rare.
 
-On Sun, Jun 14, 2020 at 12:30 AM Jason A. Donenfeld <Jason@...c4.com> wrote:
->
-> Hey folks,
->
-> I noticed that Ubuntu 18.04's 4.15 kernels forgot to protect
-> efivar_ssdt with lockdown, making that a vector for disabling lockdown
-> on an efi secure boot machine. I wrote a little PoC exploit to
-> demonstrate these types of ACPI shenanigans:
->
-> https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language.sh
->
-> The comment on the top has description of exploit strategy and such. I
-> haven't yet looked into other kernels and distros that might be
-> affected, though afaict, Canonical's kernel seems to deviate a lot
-> from upstream.
->
-> Jason
+Developers can keep these example inputs for their test suites, CI /
+CD systems, etc, and make sure that their programs don't fail on these
+inputs in the future, too.
+
+This does put a lot of trust into the sanitizers but compilers tend to
+have pretty good test suites. Afterall, they, too, are fuzzed, and
+automated tooling like csmith, creduce, delta, cvise, and probably more,
+can help find minimal test cases.
+
+The most difficult part of working with fuzzers, in my opinion, is that
+it can take a long time to figure out the cause of a crash or sanitizer
+alert. Often finding the causes, or to propose a fix, takes longer than
+finding issues.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
