@@ -1,4 +1,9 @@
-Received: (qmail 12179 invoked by uid 550); 12 May 2026 15:54:36 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["525" "Tuesday" "8" "December" "2020" "20:01:14" "+0100" "yersinia" "yersinia.spiros@gmail.com" "<CAH5b-BUVDeMaifMPf5HibLqjQKky3ch0__eYnzU1f_k3=JmMTg@mail.gmail.com>" "13" "[oss-security] Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?" nil nil nil "12" "2020120819:01:14" "[oss-security] Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?" (number mark "U       yersinia.spi Dec  8   13/525   " thread-indent "\"[oss-security] Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 16241 invoked by uid 550); 8 Dec 2020 19:08:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,98 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7239 invoked from network); 12 May 2026 15:34:58 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1778599616; bh=Xp4w70zF7YstuocKSOvgtRkGz3dlWMvp1JfShG+8cD4=;
-	h=Date:To:From:Subject:From;
-	b=F26TBsVdWOk94YqkFXiDFeHODSXnRjr/+8k/4we9tmO3VCQq4pVXWdWaorHOLnnyB
-	 pt1LOk0+Vpa3+bcAcmtBI9VIGSiIDXsZENH9edfVQVMk1EiIPqlIuo2nllrrIEacgk
-	 vg8PDr1CKfAhnyHRpMn2Jz/AqY6mBzlfcF11AkySwmxSye9dwSlFMhPMwEFXxzyMFw
-	 hF7uQOZgPqoaD0cfoiFObIPXO1HiK8HnWtzjPCn8nPG6Ltps0p4vIY8kWJnRMbDpj8
-	 G+aw3tVdTQbUwEusLu7KDk+W239tcFPj8YORuwQmF5rT2gx7+i3R3NAbM/OyX0jwBU
-	 buxYxTYWo3Oug==
-Message-ID: <d050a42f-e050-4b55-8d51-20b3d205328b@apache.org>
-Date: Tue, 12 May 2026 16:26:54 +0100
+Received: (qmail 13469 invoked from network); 8 Dec 2020 19:01:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=4cqv3CH99EoKyaZt5Bmj4own8ngFDxNk7CwuLwtL3nc=;
+        b=LQDFpbMnq5vx6qUlNFjO9QoAcZo6hXzkdwqmCbciWLkMsk09WJ48NzJGmCU4t/BWSM
+         2nCwMHwVYljCHtfhz6518nq9hdrUakvzHMhTc0vZFBKhuK6LEWU12HTXbk6AkOaCgOr5
+         cJDBYfFw1dsrXdKo5mnJpF5TBQ5kb7Lmaq2Zb1EbPhgtfahoMurdl4gWBbcImTCXIHLP
+         1WdguqwJF6iGNNpbt+boYP7CHaOL7bYGWk6P/8fjHWftJuuVc0aDfIV78OJQvCpqKiUc
+         fo00V2lIf6l0lKtRQvtuU7wHfWT2j12I7QoVv3OqHphWYqDqSHDdzMqSG7RwjuemdrbA
+         FdSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=4cqv3CH99EoKyaZt5Bmj4own8ngFDxNk7CwuLwtL3nc=;
+        b=YAQAhOauEaNHI7mUAXvwPIk99pXPMin9vb1x9KR8hgDWk59MTCjdbv3InFnoY9w0F4
+         znH8Lo+Uk909B732eHe4G6u16KhF7X6+yBwlxzhOJRRgpvOoIRqmBhV/Ujs3z77EGFla
+         JAPOzlkrihdTGOfpcHQ8+pv5yztVUHSpiNdSIkgMq6yJ7jfTvsXQsaY70wMzQcihXbNb
+         dImSQufnFeshl9eztNq0LStylBXE79BfBEQZWPzzVOFSuBqF6LNp3YTRAXR/EYsdPQjB
+         6LYQrwWL6M1Hfbk2pZfS09SKEiGy/Lt5vkIbFfuQZLZ/NXB0KL2lyP9fcvvwJWMqlz0L
+         N3YQ==
+X-Gm-Message-State: AOAM530+QKEXpicw1RrgLiJ1YLcLiLmXKV4y+aVFeUDuWfksLqb/VBKW
+	x5MsgEfAsfQJXhzPBvM3apGxmMwMMgQ2PpE55T846nmGyIgrKw==
+X-Google-Smtp-Source: ABdhPJxWN12n1mUlIaSxcxneT8wKQNX7/3MtRLFENTolAgWSu7SW/e38IpZAYE6zjR15VESgdrbcsURjjMgyQwNzPSM=
+X-Received: by 2002:a50:e083:: with SMTP id f3mr10690034edl.223.1607454086571;
+ Tue, 08 Dec 2020 11:01:26 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
+From: yersinia <yersinia.spiros@gmail.com>
+Date: Tue, 8 Dec 2020 20:01:14 +0100
+Message-ID: <CAH5b-BUVDeMaifMPf5HibLqjQKky3ch0__eYnzU1f_k3=JmMTg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Autocrypt: addr=markt@apache.org; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2026-43513: Apache Tomcat: LockOutRealm treats user names as
- case-sensitive
+Content-Type: multipart/alternative; boundary="000000000000d2aa3505b5f89153"
+Subject: [oss-security] Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?
 
-Severity: low
+--000000000000d2aa3505b5f89153
+Content-Type: text/plain; charset="UTF-8"
 
-Affected versions:
+At this link, multiple security bugs of various kinds are highlighted in
+very widespread basic cryptographic applications, which have then been
+corrected. I haven't done a deep analysis on all of them but I haven't
+found any associated CVEs of some of them. Do I have to assume that they
+weren't all that important or that the process of reporting them was
+missing? Thanks
 
-- Apache Tomcat 11.0.0-M1 through 11.0.21
-- Apache Tomcat 10.1.0-M1 through 10.1.54
-- Apache Tomcat 9.0.0.M1 through 9.0.117
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat 7.0.0 through 7.0.109
-- Apache Tomcat before 7.00 unknown
+https://github.com/guidovranken/cryptofuzz
 
-Description:
-
-Improper Handling of Case Sensitivity vulnerability in LockOutRealm in 
-Apache Tomcat.
-
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.21, from 
-10.1.0-M1 through 10.1.54, from 9.0.0.M1 through 9.0.117, from 8.5.0 
-through 8.5.100, from 7.0.0 through 7.0.109.
-Older unsupported versions may also be affected.
-
-Users are recommended to upgrade to version 11.0.22, 10.1.55 or 9.0.118 
-which fix the issue.
-
-References:
-
-https://lists.apache.org/thread/ytjcgldshj73lcnd1sh95od5hrghwogp
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-43513
+--000000000000d2aa3505b5f89153--
