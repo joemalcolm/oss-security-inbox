@@ -1,4 +1,9 @@
-Received: (qmail 26242 invoked by uid 550); 6 Sep 2025 16:10:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3552" "Wednesday" "9" "December" "2020" "07:53:28" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.2012080923130.16776@tvnag.unkk.fr>" "114" "[oss-security] [SECURITY ADVISORY] curl: trusting FTP PASV responses" nil nil nil "12" "2020120906:53:28" "[oss-security] [SECURITY ADVISORY] curl: trusting FTP PASV responses" (number mark "U       daniel@haxx. Dec  9  114/3552  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: trusting FTP PASV responses\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: trusting FTP PASV responses" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3554 invoked by uid 550); 9 Dec 2020 06:53:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,133 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3610 invoked from network); 5 Sep 2025 15:24:48 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Chao Gong <gongchao@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <9a48a4b7-0766-eac5-343d-8e5bfba2d069@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 05 Sep 2025 15:21:58 +0000
+Received: (qmail 3523 invoked from network); 9 Dec 2020 06:53:41 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 9 Dec 2020 07:53:28 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.2012080923130.16776@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-24404: Apache HertzBeat (incubating): RCE by parse http
- sitemap xml response 
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: trusting FTP PASV responses
 
-Severity: moderate=20
+trusting FTP PASV responses
+===========================
 
-Affected versions:
+Project curl Security Advisory, December 9th 2020 -
+[Permalink](https://curl.se/docs/CVE-2020-8284.html)
 
-- Apache HertzBeat (incubating) before 1.7.0
+VULNERABILITY
+-------------
 
-Description:
+When curl performs a passive FTP transfer, it first tries the `EPSV` command
+and if that is not supported, it falls back to using `PASV`.  Passive mode is
+what curl uses by default.
 
-XML Injection RCE by parse http sitemap xml response vulnerability in Apach=
-e HertzBeat.
+A server response to a `PASV` command includes the (IPv4) address and port
+number for the client to connect back to in order to perform the actual data
+transfer.
 
-This issue affects Apache HertzBeat (incubating): before 1.7.0.
+This is how the FTP protocol is designed to work.
 
-Users are recommended to upgrade to version 1.7.0, which fixes the issue.
+A malicious server can use the `PASV` response to trick curl into connecting
+back to a given IP address and port, and this way potentially make curl
+extract information about services that are otherwise private and not
+disclosed, for example doing port scanning and service banner extractions.
 
-Credit:
+If curl operates on a URL provided by a user (which by all means is an unwise
+setup), a user can exploit that and pass in a URL to a malicious FTP server
+instance without needing any server breach to perform the attack.
 
-unam4 (finder)
-springkill (finder)
-Zoiltin (finder)
+We are not aware of any exploit of this flaw.
 
-References:
+INFO
+----
 
-https://hertzbeat.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2025-24404
+This issue has existed in curl for as long as FTP has been supported, since
+day 1.
 
+The flaw only exists for IPv4 since `PASV` doesn't work for IPv6 and curl will
+prefer `EPSV`. The passive mode setup for FTP is used for both uploads and
+downloads.
+
+curl can be built without FTP support and applications can explicitly disable
+FTP for single transfers.
+
+curl users could already mitigate this flaw with `CURLOPT_FTP_SKIP_PASV_IP`
+and `--ftp-skip-pasv-ip`.
+
+Other FTP clients have in the past also had this flaw and have fixed it at
+different points in time. Firefox fixed it in 2007: CVE-2007-1562.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2020-8284 to this issue.
+
+CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 4.0 to and including 7.73.0
+- Not affected versions: curl >= 7.74.0
+
+Also note that (lib)curl is used by many applications, and not always
+advertised as such.
+
+THE SOLUTION
+------------
+
+The IP address part of the response is now ignored by default, by making
+`CURLOPT_FTP_SKIP_PASV_IP` default to `1L` instead of previously being `0L`.
+
+This has the minor drawback that a small fraction of use cases might break,
+when a server truly needs the client to connect back to a different IP address
+than what the control connection uses and for those `CURLOPT_FTP_SKIP_PASV_IP`
+can be set to `0L`.
+
+The same goes for the command line tool, which then might need
+`--no-ftp-skip-pasv-ip` set to prevent curl from ignoring the address in the
+server response.
+
+A [fix for CVE-2020-8284](https://github.com/curl/curl/commit/ec9cc725d598ac)
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.74.0
+
+  B - Set `CURLOPT_FTP_SKIP_PASV_IP` to `1L` or use `--ftp-skip-pasv-ip`
+
+  C - Disable FTP availability for your transfers
+
+TIMELINE
+--------
+
+This issue was first reported to the curl project on November 21, 2020.
+
+This advisory was posted on December 9th 2020.
+
+CREDITS
+-------
+
+This issue was reported by Varnavas Papaioannou. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://www.wolfssl.com/contact/
