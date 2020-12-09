@@ -1,64 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/21/1
-Message-Id: <202007210812.06L8Ci5i010126@room101.nl.oracle.com>
-Date: Tue, 21 Jul 2020 10:12:44 +0200
-From: Casper.Dik@...cle.COM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/09/4
+Message-ID: <ecf4ae371694ce099bbebc4ab108fb23c19270a6.camel@apache.org>
+Date: Wed, 09 Dec 2020 08:01:39 -0800
+From: Brennan Ashton <btashton@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Perl 5.32.0 mishandling of rpath and runpath tokens 
+Subject: CVE-2020-17528: Apache NuttX (incubating) Out of Bound Write from invalid TCP Urgent length
 Content-Type: text/plain; charset=utf-8
 
+Description:
+Out-of-bounds Write vulnerability in TCP stack of Apache Software
+Foundation Apache NuttX (incubating) allows attacker to corrupt memory
+by supplying arbitrary urgent data pointer offsets within TCP packets
+including beyond the length of the packet.
 
->Hi Everyone,
->
->Perl mishandles rpath tokens $ORIGIN, $LIB and $PLATFORM. Also see
->https://man7.org/linux/man-pages/man8/ld.so.8.html.
->
->Building on Linux or Solaris with LDFLAGS that includes a rpath or runpath:
->
->    -Wl,-R,$ORIGIN/../lib -Wl,-R,$HOME/tmp/ok2delete/lib
->
->results in a rpath or runpath similar to below (Solaris is shown):
->
->    # From $HOME/perl-5.32.0 directory
->    $ elfdump libperl.so | grep PATH
->    [10]  RUNPATH         0xaf4d
->/../lib:/export/home/jwalton/tmp/ok2delete/lib
->    [11]  RPATH           0xaf4d
->/../lib:/export/home/jwalton/tmp/ok2delete/lib
->
->Now the interesting thing here is, $ORIGIN was expanded to nothing and
->/../lib is just /lib. And Solaris /lib directory contains old
->libraries, like zLib 1.2.8 and Bzip 1.0.6. zLib 1.2.8 and Bzip 1.0.6
->have CVEs against them. So rather than use the new zLib and Bzip in
->$HOME/tmp/ok2delete/lib, Perl uses the old ones with CVEs in /lib.
+This issue affects:
+Apache Software Foundation Apache NuttX (incubating) versions prior to
+9.1.1 AND 10.0.0.
 
-The current version shipped with Solaris are zlib 1.2.11  and bzip2 1.0.8.
+This issue is also known as AMNESIA:33 CVE-2020-17437
 
+Credit:
+Apache NuttX would like to thank Forescout for reporting the issue
 
->Perl stated they won't fix the problem. Also see
->https://github.com/Perl/perl5/issues/17534.
->
->The best workarounds I have found is to run patchelf (Linux) or
->editelf (Solaris) on all programs and libraries after 'make' and
->before 'make check', and after 'make check' and before 'make install'.
->The procedure has to happen twice because Perl rebuilds some things
->after 'make', including some shared objects built during 'make check'.
-
-There is another possible solution on Solaris by setting the following 
-variables in the environment:
-
-	LD_UNSET="-R/../lib"    (drops -R/../lib; multiple options can be
-				 given)
-
-	LD_OPTIONS='-R$ORIGIN/../lib' (multiple options possible here too)
-
-/tmp$  cc foo.c -o foo -R/fuz -R/bar -R/blah
-/tmp$ dump -Lv foo | grep RPATH
-[5]     RPATH           /fuz:/bar:/blah
-/tmp$  LD_OPTIONS=-R/foo/bar LD_UNSET="-R/fuz -R/bar"  cc foo.c -o foo -R/fuz -R/bar -R/blah
-ld: warning: unsetting option '-R/fuz': LD_UNSET directed
-ld: warning: unsetting option '-R/bar': LD_UNSET directed
-/tmp$ dump -Lv foo | grep RPATH                                                 [5]     RPATH           /foo/bar:/blah
-
-Casper
+Thanks you,
+Brennan Ashton
 
