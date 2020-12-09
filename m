@@ -1,4 +1,9 @@
-Received: (qmail 7405 invoked by uid 550); 16 Jan 2023 11:56:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3258" "Wednesday" "9" "December" "2020" "07:53:32" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.2012080925290.16776@tvnag.unkk.fr>" "104" "[oss-security] [SECURITY ADVISORY] libcurl: FTP wildcard stack overflow" nil nil nil "12" "2020120906:53:32" "[oss-security] [SECURITY ADVISORY] libcurl: FTP wildcard stack overflow" (number mark "U       daniel@haxx. Dec  9  104/3258  " thread-indent "\"[oss-security] [SECURITY ADVISORY] libcurl: FTP wildcard stack overflow\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] libcurl: FTP wildcard stack overflow" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3976 invoked by uid 550); 9 Dec 2020 06:53:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,32 +12,123 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9939 invoked from network); 16 Jan 2023 09:20:14 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Daniel Gaspar <dpgaspar@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <28e387b6-3a42-cdc1-2477-a18329614f4e@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 16 Jan 2023 09:19:57 +0000
+Received: (qmail 3931 invoked from network); 9 Dec 2020 06:53:45 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 9 Dec 2020 07:53:32 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.2012080925290.16776@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-43719: Apache Superset: Cross Site Request Forgery (CSRF)
- on accept, request access API 
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] libcurl: FTP wildcard stack overflow
 
-Severity: moderate
+FTP wildcard stack overflow
+===========================
 
-Description:
+Project curl Security Advisory, December 9th 2020 -
+[Permalink](https://curl.se/docs/CVE-2020-8285.html)
 
-Two legacy REST API endpoints for approval and request access are vulnerabl=
-e to cross site request forgery. This issue affects Apache Superset version=
- 1.5.2 and prior versions and version 2.0.0.
+VULNERABILITY
+-------------
 
-Credit:
+libcurl offers a wildcard matching functionality, which allows a callback (set
+with `CURLOPT_CHUNK_BGN_FUNCTION`) to return information back to libcurl on
+how to handle a specific entry in a directory when libcurl iterates over a
+list of all available entries.
 
-Positive Technologies (finder)
+When this callback returns `CURL_CHUNK_BGN_FUNC_SKIP`, to tell libcurl to not
+deal with that file, the internal function in libcurl then calls itself
+recursively to handle the next directory entry.
 
-References:
+If there's a sufficient amount of file entries and if the callback returns
+"skip" enough number of times, libcurl runs out of stack space. The exact
+amount will of course vary with platforms, compilers and other environmental
+factors.
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2022-43719
+The content of the remote directory is not kept on the stack, so it seems hard
+for the attacker to control exactly what data that overwrites the stack -
+however it remains a Denial-Of-Service vector as a malicious user who controls
+a server that a libcurl-using application works with under these premises can
+trigger a crash.
 
+(There is also a few other ways the function can be made to call itself and
+trigger this problem.)
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This issue was unfortunately reported publicly in the curl GitHub issue
+tracker as [issue 6255](https://github.com/curl/curl/issues/6255).
+
+This flaw has existed in curl since commit
+[0825cd80a](https://github.com/curl/curl/commit/0825cd80a) in curl 7.21.0.
+
+This functionality is not used by the curl tool so it is not affected.
+Further: it is not a very widely used feature.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2020-8285 to this issue.
+
+CWE-674: Uncontrolled Recursion
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.21.0 to and including 7.73.0
+- Not affected versions: libcurl < 7.21.0 and libcurl >= 7.74.0
+
+Also note that libcurl is used by many applications, and not always
+advertised as such.
+
+THE SOLUTION
+------------
+
+The internal function is rewritten to instead and more appropriately use an
+ordinary loop instead of the recursive approach. This way, the stack use will
+remain the same no matter how many files that are skipped.
+
+A [fix for CVE-2020-8285](https://github.com/curl/curl/commit/69a358f2186e04)
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.74.0
+
+  B - Disable FTP wildcard use (`CURLOPT_WILDCARDMATCH`)
+
+  C - Make sure your `CURLOPT_CHUNK_BGN_FUNCTION` callback doesn't do multiple skips.
+
+TIMELINE
+--------
+
+This issue was first reported to the curl project on November 27, 2020.
+
+This advisory was posted on December 9th 2020.
+
+CREDITS
+-------
+
+This issue was initially reported by xnynx on GitHub. Daniel took it to the
+security team immediately. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://www.wolfssl.com/contact/
