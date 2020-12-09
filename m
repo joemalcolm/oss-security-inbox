@@ -1,76 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/06/4
-Message-ID: <CAE4Awf9+28ooqR9jH5m=NkARWYazK0Utb8=NzqQzOhC5-1MjpQ@mail.gmail.com>
-Date: Wed, 6 May 2020 14:44:27 -0500
-From: Gage Hugo <gagehugo@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2020-003] Keystone: Keystone does not check signature TTL of the EC2 credential auth method (CVE PENDING)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/09/1
+Message-ID: <alpine.DEB.2.20.2012080923130.16776@tvnag.unkk.fr>
+Date: Wed, 9 Dec 2020 07:53:28 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: trusting FTP PASV responses
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+trusting FTP PASV responses
+===========================
 
-======================================================================================
-OSSA-2020-003: Keystone does not check signature TTL of the EC2 credential
-auth method
-======================================================================================
+Project curl Security Advisory, December 9th 2020 -
+[Permalink](https://curl.se/docs/CVE-2020-8284.html)
 
-:Date: May 06, 2020
-:CVE: Pending
+VULNERABILITY
+-------------
 
+When curl performs a passive FTP transfer, it first tries the `EPSV` command
+and if that is not supported, it falls back to using `PASV`.  Passive mode is
+what curl uses by default.
 
-Affects
-~~~~~~~
-- - Keystone: <15.0.1, ==16.0.0
+A server response to a `PASV` command includes the (IPv4) address and port
+number for the client to connect back to in order to perform the actual data
+transfer.
 
+This is how the FTP protocol is designed to work.
 
-Description
-~~~~~~~~~~~
-kay reported a vulnerability with keystone's EC2 API. Keystone doesn't
-have a signature TTL check for AWS signature V4 and an attacker can
-sniff the auth header, then use it to reissue an openstack token an
-unlimited number of times.
+A malicious server can use the `PASV` response to trick curl into connecting
+back to a given IP address and port, and this way potentially make curl
+extract information about services that are otherwise private and not
+disclosed, for example doing port scanning and service banner extractions.
 
+If curl operates on a URL provided by a user (which by all means is an unwise
+setup), a user can exploit that and pass in a URL to a malicious FTP server
+instance without needing any server breach to perform the attack.
 
-Patches
-~~~~~~~
-- - https://review.opendev.org/725385 (Rocky)
-- - https://review.opendev.org/725069 (Stein)
-- - https://review.opendev.org/724954 (Train)
-- - https://review.opendev.org/724746 (Ussuri)
-- - https://review.opendev.org/724124 (Victoria)
+We are not aware of any exploit of this flaw.
 
+INFO
+----
 
-Credits
-~~~~~~~
-- - kay (CVE Pending)
+This issue has existed in curl for as long as FTP has been supported, since
+day 1.
 
+The flaw only exists for IPv4 since `PASV` doesn't work for IPv6 and curl will
+prefer `EPSV`. The passive mode setup for FTP is used for both uploads and
+downloads.
 
-References
-~~~~~~~~~~
-- - https://launchpad.net/bugs/1872737
-- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=Pending
+curl can be built without FTP support and applications can explicitly disable
+FTP for single transfers.
 
+curl users could already mitigate this flaw with `CURLOPT_FTP_SKIP_PASV_IP`
+and `--ftp-skip-pasv-ip`.
 
-Notes
-~~~~~
-- - The stable/rocky branch is under extended maintenance and will receive
-no new
-  point releases, but a patch for it is provided as a courtesy.
------BEGIN PGP SIGNATURE-----
+Other FTP clients have in the past also had this flaw and have fixed it at
+different points in time. Firefox fixed it in 2007: CVE-2007-1562.
 
-iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAl6zEjwACgkQ56j9K3b+
-vRFejhAAvzq3MBwKGXIKsJxQmwVS0RxVFifTAfnKIjBGskG3knWkQHopY0IcmwoZ
-3Kv2AnRgFVBuQpZ0t9Y3S3U7KRI63FT+kzA3gy9sB+h7rdqzquxejXvljRMGJlex
-WRCOQwRP4prFpzpUqzBg9/bIAyWpkrjJIvz7iJ9U3z6MbrZIjV+YEZ3JIRQTdMUj
-MajgwJ4EDynkh8trm63n7Gyuvq8ukj1FCrG1APWJi96HhwNz6XwiqXIWci4CTaEW
-sY9v8luETMCyv+nY2pt9IF8wXOaJKJXPTilf6sisjN2zDq+UWgsxEC0sp3h09tnZ
-m6cy3OvUQeDmdJVQ/VNsfUTeRYRvYri2u44FaOUBjsNxeZca1U4MCVkAiN9BBzkg
-k1Xb8zgGoXaytT/lzzyr67h6ZghKm6cnSUktWnX56847byOMPi/g9q1cu0edUwwC
-7SDaQ08JbsEstiXtPVBhatTLxbjlNy5eql6NaZmFQatYJAQKZsasvwV4YBv290mu
-OsVHUEqjmYk4b4CZNPQC2681CDtAQpiLuasYiLnxC6I+zBTwfP+6tzP0xVHW4woi
-4Jhl/watZMudrtMS3YoOmwZ4iFNJRzQcDWmiAr0CZiC0NGamLjvHWHRslnvmhy92
-kSGWLilaMD5vBODXVY82lQHrbl96dPRbpe8/z29sALsEs6aNFYk=
-=qyBV
------END PGP SIGNATURE-----
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2020-8284 to this issue.
 
+CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 4.0 to and including 7.73.0
+- Not affected versions: curl >= 7.74.0
+
+Also note that (lib)curl is used by many applications, and not always
+advertised as such.
+
+THE SOLUTION
+------------
+
+The IP address part of the response is now ignored by default, by making
+`CURLOPT_FTP_SKIP_PASV_IP` default to `1L` instead of previously being `0L`.
+
+This has the minor drawback that a small fraction of use cases might break,
+when a server truly needs the client to connect back to a different IP address
+than what the control connection uses and for those `CURLOPT_FTP_SKIP_PASV_IP`
+can be set to `0L`.
+
+The same goes for the command line tool, which then might need
+`--no-ftp-skip-pasv-ip` set to prevent curl from ignoring the address in the
+server response.
+
+A [fix for CVE-2020-8284](https://github.com/curl/curl/commit/ec9cc725d598ac)
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.74.0
+
+  B - Set `CURLOPT_FTP_SKIP_PASV_IP` to `1L` or use `--ftp-skip-pasv-ip`
+
+  C - Disable FTP availability for your transfers
+
+TIMELINE
+--------
+
+This issue was first reported to the curl project on November 21, 2020.
+
+This advisory was posted on December 9th 2020.
+
+CREDITS
+-------
+
+This issue was reported by Varnavas Papaioannou. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://www.wolfssl.com/contact/
