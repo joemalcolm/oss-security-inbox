@@ -1,62 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/19/2
-Message-ID: <20200419190928.GA145297@ryzen.bugs.fi>
-Date: Sun, 19 Apr 2020 22:09:28 +0300
-From: Henri Salo <henri@...v.fi>
-To: Agostino Sarubbo <ago@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: re2c: heap overflow in Scanner::fill (scanner.cc)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/09/2
+Message-ID: <alpine.DEB.2.20.2012080925290.16776@tvnag.unkk.fr>
+Date: Wed, 9 Dec 2020 07:53:32 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] libcurl: FTP wildcard stack overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+FTP wildcard stack overflow
+===========================
 
-On Sun, Apr 19, 2020 at 04:59:48PM +0200, Agostino Sarubbo wrote:
-> Affected version:
-> 1.3
->
-> Fixed version:
-> Will be 2.0
->
-> Commit fix:
-> https://github.com/skvadrik/re2c/commit/
-> c4603ba5ce229db83a2a4fb93e6d4b4e3ec3776a
->
-> Credit:
-> This bug was discovered by Agostino Sarubbo.
->
-> CVE:
-> I don’t care anymore about a CVE. If you will obtain one about this issue, 
-> feel free to reach me. I will update this as well.
->
-> Note:
-> This bug was found with American Fuzzy Lop.
-> This bug was identified with bare metal servers donated by Packet. This work 
-> is also supported by the Core Infrastructure Initiative.
->
-> Permalink:
-> http://blogs.gentoo.org/ago/2020/04/19/re2c-heap-overflow-in-scannerfill-scanner-cc/
+Project curl Security Advisory, December 9th 2020 -
+[Permalink](https://curl.se/docs/CVE-2020-8285.html)
 
-Good job again ago! I created CVE request for you. I don't think that you
-should stop fuzzing as mentioned in blog. Instead you should pick responsive
-and important targets (e.g. re2c) and add a donation button to your web page,
-thanks :)
+VULNERABILITY
+-------------
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
+libcurl offers a wildcard matching functionality, which allows a callback (set
+with `CURLOPT_CHUNK_BGN_FUNCTION`) to return information back to libcurl on
+how to handle a specific entry in a directory when libcurl iterates over a
+list of all available entries.
 
-iQIzBAEBCgAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAl6coeUACgkQJ633pE6q
-dXR+Sg//T9YuxN+Ef49RaPpChhWuZqsS6/gTimhdr6A5Obncl7LHqYj/IViHX23W
-Ck+/wpLTNVt3vZGKB5607XkwoeJkfHgtKxdWcIMNSBevDpvKX4fJd01csD8FTqGR
-6tmTmS6EgFRRevfGTut2mmwMkQDOTZ9EbedcxqanmCVZ6IDUVSlvdRrwtFXPcgHG
-qTafrAyaYNbrbJLHPlnliTY+k7HdXPsT8j2Oe97+u/as3E8+B21xssUkerVRwQ6S
-MPey0/7bMh7IV4x+u5NFbIwl7W6OlksDcemR41ZSiwlyd7SfMcU9kBHHdC1LVYgh
-pyeWGys4CUjj/b7fYf5lJEYLdsGTEcYgtWpLisE2rd+2vyMkzx/NWYDgqHsMzK90
-zHyNYVLq/qowu8h5V+tRW/VhgYl9m/U1zxFllhVYVOEu87+fdk0FfhT2AFq5HtX8
-7+l3EnInfu4TUAMATerInYR6wsjOOj7vjNjbYbpStRC8IZavsGMlwneaNr1QkQtf
-5gu+85yU8VmwYUrYftaGdsvbjUR6xz+LNkiF2Y72r0/kKDi29/oi3gekYYumcBB3
-zaRXGsoliVV7eTeFF7N/HGeGheIkHaCGo1yB+GQ2BZt/723EBg10WRpZYbCaweQQ
-LuTyN2OBwdCDyPF+T+E1oOF6CtkkHa6cYcdG9s6NZ7Ij9v2ky2w=
-=N3U9
------END PGP SIGNATURE-----
+When this callback returns `CURL_CHUNK_BGN_FUNC_SKIP`, to tell libcurl to not
+deal with that file, the internal function in libcurl then calls itself
+recursively to handle the next directory entry.
+
+If there's a sufficient amount of file entries and if the callback returns
+"skip" enough number of times, libcurl runs out of stack space. The exact
+amount will of course vary with platforms, compilers and other environmental
+factors.
+
+The content of the remote directory is not kept on the stack, so it seems hard
+for the attacker to control exactly what data that overwrites the stack -
+however it remains a Denial-Of-Service vector as a malicious user who controls
+a server that a libcurl-using application works with under these premises can
+trigger a crash.
+
+(There is also a few other ways the function can be made to call itself and
+trigger this problem.)
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This issue was unfortunately reported publicly in the curl GitHub issue
+tracker as [issue 6255](https://github.com/curl/curl/issues/6255).
+
+This flaw has existed in curl since commit
+[0825cd80a](https://github.com/curl/curl/commit/0825cd80a) in curl 7.21.0.
+
+This functionality is not used by the curl tool so it is not affected.
+Further: it is not a very widely used feature.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2020-8285 to this issue.
+
+CWE-674: Uncontrolled Recursion
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.21.0 to and including 7.73.0
+- Not affected versions: libcurl < 7.21.0 and libcurl >= 7.74.0
+
+Also note that libcurl is used by many applications, and not always
+advertised as such.
+
+THE SOLUTION
+------------
+
+The internal function is rewritten to instead and more appropriately use an
+ordinary loop instead of the recursive approach. This way, the stack use will
+remain the same no matter how many files that are skipped.
+
+A [fix for CVE-2020-8285](https://github.com/curl/curl/commit/69a358f2186e04)
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.74.0
+
+  B - Disable FTP wildcard use (`CURLOPT_WILDCARDMATCH`)
+
+  C - Make sure your `CURLOPT_CHUNK_BGN_FUNCTION` callback doesn't do multiple skips.
+
+TIMELINE
+--------
+
+This issue was first reported to the curl project on November 27, 2020.
+
+This advisory was posted on December 9th 2020.
+
+CREDITS
+-------
+
+This issue was initially reported by xnynx on GitHub. Daniel took it to the
+security team immediately. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://www.wolfssl.com/contact/
