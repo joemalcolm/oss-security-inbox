@@ -1,51 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/01/2
-Message-ID: <CAB8XdGDCati--2zruoauZNU0Lta66Y3VmYX6EzGyznvRu0irhg@mail.gmail.com>
-Date: Wed, 1 Apr 2020 10:57:20 +0100
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-1954: Apache CXF JMX Integration is vulnerable to a MITM attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/10/1
+Message-ID: <20201210070524.GA10095@suse.de>
+Date: Thu, 10 Dec 2020 08:05:24 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: 2 kernel issues
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-1954: Apache CXF JMX Integration is vulnerable to a MITM attack
+Hi,
 
-Severity: Moderate
+Jann Horn found 2 locking issues in the Linux Kernel tty subsystem, which can be used for
+the usual memory corruption things.
 
-Vendor: The Apache Software Foundation
+Mitre assigned 2 CVEs:
 
-Versions Affected:
+CVE-2020-29660:
 
-This vulnerability affects all versions of Apache CXF prior to 3.3.6 and
-3.2.13.
+A locking inconsistency issue was discovered in the tty subsystem of the Linux kernel through 5.9.13.
+drivers/tty/tty_io.c and drivers/tty/tty_jobctrl.c may
+allow a read-after-free attack against TIOCGSID,
+aka CID-c8bcd9c5be24.
+ 
+[Reference]
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c8bcd9c5be24fb9e6132e97da5a35e55a83e36b9
 
-Description:
 
-Apache CXF has the ability to integrate with JMX by registering an
-InstrumentationManager extension with the CXF bus. If the
-"createMBServerConnectorFactory" property of the default
-InstrumentationManagerImpl is not disabled, then it is vulnerable to a
-man-in-the-middle (MITM) style attack.
 
-An attacker on the same host can connect to the registry and rebind the
-entry
-to another server, thus acting as a proxy to the original. They are then
-able
-to gain access to all of the information that is sent and received over JMX.
+CVE-2020-29661:
 
-Mitigation:
+A locking issue was discovered in the tty subsystem of the Linux kernel through 5.9.13.
+drivers/tty/tty_jobctrl.c allows a use-after-free attack against TIOCSPGRP, aka CID-54ffccbf053b.
 
-Users of Apache CXF that use the InstrumentationManagerImpl should update to
-either 3.3.6 or 3.2.13. Alternatively, set the
-createMBServerConnectorFactory
-property to false and use the default JVM JMX remote capabilities instead.
-From
-CXF 3.4.0, the createMBServerConnectorFactory property will be removed
-altogether.
+[Reference]
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=54ffccbf053b5b6ca4f6e45094b942fab92a25fc
 
-Credit:
-
-Jonathan Gallimore, Tomitribe and Colm O hEigeartaigh, Talend.
-
-Reference:
-http://cxf.apache.org/security-advisories.data/CVE-2020-1954.txt.asc?version=1&modificationDate=1585730169000&api=v2
-
+Ciao, Marcus
