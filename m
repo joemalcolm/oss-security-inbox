@@ -1,18 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/08/5
-Message-ID: <CAH5b-BUVDeMaifMPf5HibLqjQKky3ch0__eYnzU1f_k3=JmMTg@mail.gmail.com>
-Date: Tue, 8 Dec 2020 20:01:14 +0100
-From: yersinia <yersinia.spiros@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/10/2
+Message-ID: <512b0d2f-1b50-743b-9cff-efc0cff4b9e9@linux.ibm.com>
+Date: Thu, 10 Dec 2020 23:47:30 +1100
+From: Andrew Donnellan <ajd@...ux.ibm.com>
+To: oss-security@...ts.openwall.com, linuxppc-dev <linuxppc-dev@...ts.ozlabs.org>
+Cc: Tyrel Datwyler <tyreld@...ux.ibm.com>
+Subject: Re: Linux kernel: powerpc: RTAS calls can be used to compromise kernel integrity
 Content-Type: text/plain; charset=utf-8
 
-At this link, multiple security bugs of various kinds are highlighted in
-very widespread basic cryptographic applications, which have then been
-corrected. I haven't done a deep analysis on all of them but I haven't
-found any associated CVEs of some of them. Do I have to assume that they
-weren't all that important or that the process of reporting them was
-missing? Thanks
+On 24/11/20 1:41 am, Andrew Donnellan wrote:
+> On 9/10/20 12:20 pm, Andrew Donnellan wrote:
+>> The Linux kernel for powerpc has an issue with the Run-Time 
+>> Abstraction Services (RTAS) interface, allowing root (or CAP_SYS_ADMIN 
+>> users) in a VM to overwrite some parts of memory, including kernel 
+>> memory.
+>>
+>> This issue impacts guests running on top of PowerVM or KVM hypervisors 
+>> (pseries platform), and does *not* impact bare-metal machines (powernv 
+>> platform).
+> CVE-2020-27777 has been assigned.
 
-https://github.com/guidovranken/cryptofuzz
+A minor regression has been identified, affecting the ibm,open-errinjct 
+RTAS call.
 
+A patch is available at 
+https://patchwork.ozlabs.org/project/linuxppc-dev/patch/20201208195434.8289-1-tyreld@linux.ibm.com/
+
+Thanks to Tyrel Datwyler for identifying and fixing this issue.
+
+-- 
+Andrew Donnellan              OzLabs, ADL Canberra
+ajd@...ux.ibm.com             IBM Australia Limited
