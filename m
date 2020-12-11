@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1029" "Sunday" "7" "June" "2015" "22:51:38" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.11.1506072243170.5813@wniryva>" "31" "Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" nil nil nil "6" "2015060717:21:38" "[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" (number mark "        ppandit@redh Jun  7   31/1029  " thread-indent "\"Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic\"\n") "<87r3pq2has.fsf@x220.int.ebiederm.org>" ("<20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>" "<alpine.LFD.2.11.1506051728280.15797@wniryva>" "<87r3pq2has.fsf@x220.int.ebiederm.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["506" "Friday" "11" "December" "2020" "13:14:07" "+0000" "Kaxil Naik" "kaxilnaik@apache.org" "<CAH5JyZpTnHka4PZFR60QKx_53NJsKVAYyYKHxe5Ro2P+ZgQEhg@mail.gmail.com>" "21" "[oss-security] CVE-2020-17515: Apache Airflow Reflected XSS via Origin Parameter" nil nil nil "12" "2020121113:14:07" "[oss-security] CVE-2020-17515: Apache Airflow Reflected XSS via Origin Parameter" (number mark "U       kaxilnaik@ap Dec 11   21/506   " thread-indent "\"[oss-security] CVE-2020-17515: Apache Airflow Reflected XSS via Origin Parameter\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-17515: Apache Airflow Reflected XSS via Origin Parameter" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15829 invoked by uid 550); 7 Jun 2015 17:22:00 -0000
+Received: (qmail 30220 invoked by uid 550); 11 Dec 2020 13:16:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15805 invoked from network); 7 Jun 2015 17:21:59 -0000
-X-X-Sender: pjp@javelin
-In-Reply-To: <87r3pq2has.fsf@x220.int.ebiederm.org>
-Message-ID: <alpine.LFD.2.11.1506072243170.5813@wniryva>
-References: <20150604135744.3617A6C0050@smtpvmsrv1.mitre.org> <alpine.LFD.2.11.1506051728280.15797@wniryva> <87r3pq2has.fsf@x220.int.ebiederm.org>
-MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-cc: oss security list <oss-security@lists.openwall.com>, cve-assign@mitre.org
-Date: Sun, 7 Jun 2015 22:51:38 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces
- panic
-To: "Eric W. Biederman" <ebiederm@xmission.com>
+Received: (qmail 28267 invoked from network); 11 Dec 2020 13:14:48 -0000
+X-Gm-Message-State: AOAM530RXs5SHf5cCRTkV8GcUUWBOf1Ev1yfOs3w8aYWO4QCp/ybZNfG
+	VKQdqpy7MofoBJlvE08cgy9/8uflKHoTteDN7B0=
+X-Google-Smtp-Source: ABdhPJy+GlbjGQUf4oWTOZWHELPx/b2d+Rhjn30gZTAWnu8Fy2MA6xlKd3uU0xniWvi6KoAqH2tTrKTjS2Fp6JJFvtM=
+X-Received: by 2002:aa7:d6d8:: with SMTP id x24mr11984822edr.105.1607692457887;
+ Fri, 11 Dec 2020 05:14:17 -0800 (PST)
+MIME-Version: 1.0
+From: Kaxil Naik <kaxilnaik@apache.org>
+Date: Fri, 11 Dec 2020 13:14:07 +0000
+X-Gmail-Original-Message-ID: <CAH5JyZpTnHka4PZFR60QKx_53NJsKVAYyYKHxe5Ro2P+ZgQEhg@mail.gmail.com>
+Message-ID: <CAH5JyZpTnHka4PZFR60QKx_53NJsKVAYyYKHxe5Ro2P+ZgQEhg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: users@airflow.apache.org
+Content-Type: multipart/alternative; boundary="000000000000dc4ef705b6301144"
+Subject: [oss-security] CVE-2020-17515: Apache Airflow Reflected XSS via Origin Parameter
 
-  Hello Eric,
+--000000000000dc4ef705b6301144
+Content-Type: text/plain; charset="UTF-8"
 
-+-- On Fri, 5 Jun 2015, Eric W. Biederman wrote --+
-| There are no dependencies between
-| e0c9c0afd2fc958ffa34b697972721d81df8a56f and
-| cd4a40174b71acd021877341684d8bb1dc8ea4ae
+Versions Affected: < 1.10.13
 
-  Sorry if I misunderstood; I was referring to
+Description:
+The "origin" parameter passed to some of the endpoints like '/trigger' was
+vulnerable to XSS exploit. This issue affects Apache Airflow versions prior
+to 1.10.13.
 
-|| >> From: ebiederm@xmission.com (Eric W. Biederman)
-|| >> So I believe cd4a40174b71acd021877341684d8bb1dc8ea4ae prevents a
-|| >> difficult to trigger crash if you have
-|| >> e0c9c0afd2fc958ffa34b697972721d81df8a56f applied.
-|
+This is same as CVE-2020-13944 but the implemented fix in Airflow 1.10.13
+did not fix the issue completely.
 
-  And also that, commit 'e0c9c0afd2' improvises upon 'ce07d891a089'; So unless 
-'ce07d891a089' is present, 'e0c9c0afd2' would not apply cleanly.
+Credit:
+Ali Al-Habsi of Accellion
 
-| Neither commit (cec9c... or cd4a4017...) missing is a problem unless
-| ce07d891a0891d3c0d0c2d73d577490486b809e1 is present.
-| 
-| Commits (cec9c... and cd4a4017...) are harmless on their own.
-| 
-| I hope that clarifies things.
+Thanks,
+Kaxil,
+on behalf of Apache Airflow PMC
 
-  Did you mean commit 'e0c9c0afd2'? (couldn't find commit 'cec9c...')
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+--000000000000dc4ef705b6301144--
