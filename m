@@ -1,46 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/08/8
-Message-ID: <20201008210213.GB2102371@millbarge>
-Date: Thu, 8 Oct 2020 21:02:13 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Debian FEATURE: /home/loser is with permissions 755, default umask 0022
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/11/2
+Message-ID: <CAH5JyZpTnHka4PZFR60QKx_53NJsKVAYyYKHxe5Ro2P+ZgQEhg@mail.gmail.com>
+Date: Fri, 11 Dec 2020 13:14:07 +0000
+From: Kaxil Naik <kaxilnaik@...che.org>
+To: oss-security@...ts.openwall.com
+Cc: users@...flow.apache.org
+Subject: CVE-2020-17515: Apache Airflow Reflected XSS via Origin Parameter
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 08, 2020 at 08:29:39AM -0500, Bob Friesenhahn wrote:
-> It seems that the issue we encountered is due to 'USERGROUPS_ENAB yes' in
-> /etc/login.defs.  I am not sure if this is specific to Ubuntu. This setting
-> changes the umask from the default:
+Versions Affected: < 1.10.13
 
-Aha, thanks for indulging my curiosity and tracking this down. Ubuntu
-doesn't carry any changes to this package compared to the Debian
-package (any differences would be in a 'login' directory in
-https://patches.ubuntu.com/l/ ).
+Description:
+The "origin" parameter passed to some of the endpoints like '/trigger' was
+vulnerable to XSS exploit. This issue affects Apache Airflow versions prior
+to 1.10.13.
 
-"USERGROUPS_ENAB yes" may have been a Debian default setting since 1999 or
-so; archaelogy on packages this old is a little difficult, but the tarball
-on:
+This is same as CVE-2020-13944 but the implemented fix in Airflow 1.10.13
+did not fix the issue completely.
 
-https://sources.debian.org/src/shadow/19990827-20/
+Credit:
+Ali Al-Habsi of Accellion
 
-has several login.defs* files:
+Thanks,
+Kaxil,
+on behalf of Apache Airflow PMC
 
-$ ls -l etc/login.defs*
--rw-r--r-- 1 sarnold sarnold  5426 May  1  1997 etc/login.defs
--rw-r--r-- 1 sarnold sarnold  4272 Aug 27  1999 etc/login.defs.hurd
--rw-r--r-- 1 sarnold sarnold 10165 Aug 27  1999 etc/login.defs.linux
-$ grep USERGROUPS etc/login.*
-etc/login.defs.hurd:USERGROUPS_ENAB yes
-etc/login.defs.linux:USERGROUPS_ENAB yes
-
-By 2005 or so, the archaelogy gets easier:
-
-https://sources.debian.org/src/shadow/1:4.0.18.1-7+etch1/etc/login.defs/
-https://sources.debian.org/src/shadow/1:4.0.18.1-7+etch1/debian/changelog/
-
-I believe "USERGROUPS_ENAB yes" has been a Debian default since 1998 or 1999.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
