@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1501" "Tuesday" "1" "March" "2016" "14:12:35" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160301191235.EDA1852E01C@smtpvbsrv1.mitre.org>" "34" "[oss-security] Re: CVE's for SSLv2 support" "^Cc:" nil nil "3" "2016030119:12:35" "[oss-security] Re: CVE's for SSLv2 support" (number mark "        cve-assign@m Mar  1   34/1501  " thread-indent "\"[oss-security] Re: CVE's for SSLv2 support\"\n") "<CANO=Ty0ZOjCGL-iXCZ46FbSQ3i+fpGHBB6X1x2Agy9jftQ3ozA@mail.gmail.com>" ("<CANO=Ty0ZOjCGL-iXCZ46FbSQ3i+fpGHBB6X1x2Agy9jftQ3ozA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9002" "Tuesday" "15" "December" "2020" "12:20:29" "+0000" "Xen.org security team" "security@xen.org" "<E1kp9Jd-0007Cj-7U@xenbits.xenproject.org>" "206" "[oss-security] Xen Security Advisory 359 v3 (CVE-2020-29571) - FIFO event channels control structure ordering" nil nil nil "12" "2020121512:20:29" "[oss-security] Xen Security Advisory 359 v3 (CVE-2020-29571) - FIFO event channels control structure ordering" (number mark "U       security@xen Dec 15  206/9002  " thread-indent "\"[oss-security] Xen Security Advisory 359 v3 (CVE-2020-29571) - FIFO event channels control structure ordering\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 359 v3 (CVE-2020-29571) - FIFO event channels control structure ordering" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27716 invoked by uid 550); 1 Mar 2016 19:13:47 -0000
+Received: (qmail 22486 invoked by uid 550); 15 Dec 2020 12:20:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,230 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27683 invoked from network); 1 Mar 2016 19:13:46 -0000
-In-Reply-To: <CANO=Ty0ZOjCGL-iXCZ46FbSQ3i+fpGHBB6X1x2Agy9jftQ3ozA@mail.gmail.com>
-Message-Id: <20160301191235.EDA1852E01C@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue,  1 Mar 2016 14:12:35 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE's for SSLv2 support
-To: kseifried@redhat.com
+Received: (qmail 22255 invoked from network); 15 Dec 2020 12:20:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=DTGzKZvQBksUtA7KN6vQ6CiaDeJA+4XjSDthDt+VsaA=; b=MjBAuCP3VL1ehn2MvtIe6Bg2ho
+	rQfAaSpxiWFCSQQdx6BOxPd0JCqhwAYxFoa/Q0USpDy5gnbgXNy6uO53PC4seslINVUlTsXjs1jrL
+	bWYQUSHZFGpaHLDeh1wjURAGOzzlEc8cM2tPBBSrx9SjlMh+JGodSqLjLSsaa5qUUI54=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1kp9Jd-0007Cj-7U@xenbits.xenproject.org>
+Date: Tue, 15 Dec 2020 12:20:29 +0000
+Subject: [oss-security] Xen Security Advisory 359 v3 (CVE-2020-29571) - FIFO event
+ channels control structure ordering
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
-> default should it receive a CVE?
+            Xen Security Advisory CVE-2020-29571 / XSA-359
+                               version 3
 
-There's no general answer to that question. CVE ID assignments are not
-based on outsiders making guesses about the expectations of a product's
-customers. For example, there might be a crypto library intended for
-communication on isolated networks to high-value embedded devices that
-support only SSLv2, and cannot and will not ever be updated.
+            FIFO event channels control structure ordering
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+A bounds check common to most operation time functions specific to FIFO
+event channels depends on the CPU observing consistent state.  While the
+producer side uses appropriately ordered writes, the consumer side isn't
+protected against re-ordered reads, and may hence end up de-referencing
+a NULL pointer.
+
+IMPACT
+======
+
+Malicious or buggy guest kernels can mount a Denial of Service (DoS)
+attack affecting the entire system.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from 4.4 onwards are vulnerable.  Xen versions 4.3 and
+earlier are not vulnerable.
+
+Only Arm systems may be vulnerable.  Whether a system is vulnerable will
+depend on the specific CPU.  x86 systems are not vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of Amazon.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa359.patch           xen-unstable - 4.10
+
+$ sha256sum xsa359*
+cb009ad77d1a3d8044431b2af568dd9dffefe07fc9f537fb6b53c2ec57aa77b7  xsa359.meta
+3126d9304b68be84a89c42c223227c8f96ecbb96a0385a7e1bdc65ae5e0f344f  xsa359.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW1ekCAAoJEL54rhJi8gl5dQEQAK5x43W8Q157sNT4gUg8rQtS
-U0UlnjmsT1S40FlNiwZpK5IPkE7hdeTeiWUoFMsvc13vtlfpwfHCBfb05B5fcQBP
-2b3ssj49aH5yXVxnGE2ab6W5c63wN2jkbBBihVBXZ8SB9h4tNNSey+7dJrLyMqi0
-Um76Tv5htBbpm+6UtlgN7zV3tT9MIe6bZI/b7xxuf23nM8/mBvc1nX8dpCFF16og
-ks9d9A1Rnn79xCvWZ++jR8PRlmFwmLym/PEQulJ6k4WQdOECH78ytYWg9MG7EuIg
-6PbKloy7u36+ZgrUXxYnydoH834H6yOQIPro7hARFA0fpkbmydBJKnP4letuVS5w
-S89g15c2ymxIyKaKy+qT31LEKBGf+N6vPoPNL/IWeRh+8GmSyWkWF7Rx0CboFCTs
-7+Ft9T+0Lfi6bYkYqAFUVe8gBkM84tLR+4HXgkANLAfhLEsKaCYqAkNYlbDvCXtB
-RyFZHcVhp8XYWx7b5YN3BBB5VWK/fS8y8ilHaf143Bkbn+Yu6yrFb+DIAYhKPPAI
-1CURZksBwzSSjiprsExD4dODDJGzl/0khHdkDkdZp7o9drt3D4VkKGgkBPoG5NFk
-cX1XQc6o3Hv72oYFLyatCA5H8k9HZLEUjl8cYuf/QIvfwJwjlLqZ+HrPWvs2SY5C
-K4C7mIXfd9Iem6DqXfNK
-=ylcp
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/YqeAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZt6wIAJhvfVB8eRr5fqCbMUjZ++KKoG0AF/hoS7YRHiDn
+zCgK/ff5RkY/pHHkVnrSOQeQg88SPBp/HaYljUXhoANbhXVxlt383QxQb63JwanR
+1c3Sdvv5w0HdvrDyUMV16W/Edf/DGlSgciG/2saNz8pPbqiGKzeY3Q7nj3T3vLAE
+ouNlHb2NItalKB2AdC62y/BFIjsn66G/P1agxyrcGirJxdvzORBx+LY7VTFOrOEB
+L7yb8Y0U6Nj1XjGUXYm4X4xCCm+940Xc0Ht9zkDJlb3xSdO5sOtBE+Cx3F4uXn1c
+vTMiKziAOgEKKXWV7P3KSWR/7G1aTm2YVRMy5XWtS6GY5D0=
+=uRRE
 -----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa359.meta"
+Content-Disposition: attachment; filename="xsa359.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAzNTksCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIs
+CiAgICAiNC4xMSIsCiAgICAiNC4xMCIKICBdLAogICJUcmVlcyI6IFsKICAg
+ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAg
+ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
+YWJsZVJlZiI6ICIxZDcyZDk5MTVlZGZmMGRkNDFmNjAxYmJiMGIxZjgzYzAy
+ZmYxNjg5IiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
+NTMsCiAgICAgICAgICAgIDExNSwKICAgICAgICAgICAgMzIyLAogICAgICAg
+ICAgICAzMjMsCiAgICAgICAgICAgIDMyNCwKICAgICAgICAgICAgMzI1LAog
+ICAgICAgICAgICAzMzAsCiAgICAgICAgICAgIDM1MiwKICAgICAgICAgICAg
+MzQ4LAogICAgICAgICAgICAzNTYsCiAgICAgICAgICAgIDM1OAogICAgICAg
+ICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNh
+MzU5LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAg
+fSwKICAgICI0LjExIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
+eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI0MWE4MjJjMzkyNjM1
+MGYyNjkxN2Q3NDdjOGRmZWQxYzQ0YTJjZjQyIiwKICAgICAgICAgICJQcmVy
+ZXFzIjogWwogICAgICAgICAgICAzNTMsCiAgICAgICAgICAgIDExNSwKICAg
+ICAgICAgICAgMzIyLAogICAgICAgICAgICAzMjMsCiAgICAgICAgICAgIDMy
+NCwKICAgICAgICAgICAgMzI1LAogICAgICAgICAgICAzMzAsCiAgICAgICAg
+ICAgIDM1MiwKICAgICAgICAgICAgMzQ4LAogICAgICAgICAgICAzNTYsCiAg
+ICAgICAgICAgIDM1OAogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVz
+IjogWwogICAgICAgICAgICAieHNhMzU5LnBhdGNoIgogICAgICAgICAgXQog
+ICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjEyIjogewogICAgICAi
+UmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJs
+ZVJlZiI6ICI4MTQ1ZDM4YjQ4MDA5MjU1YTMyYWI4N2EwMmU0ODFjZDA5Yzgx
+MWY5IiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAzNTMs
+CiAgICAgICAgICAgIDExNSwKICAgICAgICAgICAgMzIyLAogICAgICAgICAg
+ICAzMjMsCiAgICAgICAgICAgIDMyNCwKICAgICAgICAgICAgMzI1LAogICAg
+ICAgICAgICAzMzAsCiAgICAgICAgICAgIDM1MiwKICAgICAgICAgICAgMzQ4
+LAogICAgICAgICAgICAzNTYsCiAgICAgICAgICAgIDM1OAogICAgICAgICAg
+XSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzU5
+LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwK
+ICAgICI0LjEzIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVu
+IjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJiNTMwMjI3M2UyYzUxOTQw
+MTcyNDAwNDg2NjQ0NjM2ZjJmNGZjNjRhIiwKICAgICAgICAgICJQcmVyZXFz
+IjogWwogICAgICAgICAgICAzNTMsCiAgICAgICAgICAgIDExNSwKICAgICAg
+ICAgICAgMzIyLAogICAgICAgICAgICAzMjMsCiAgICAgICAgICAgIDMyNCwK
+ICAgICAgICAgICAgMzI1LAogICAgICAgICAgICAzMzAsCiAgICAgICAgICAg
+IDM1MiwKICAgICAgICAgICAgMzQ4LAogICAgICAgICAgICAzNTYsCiAgICAg
+ICAgICAgIDM1OAogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjog
+WwogICAgICAgICAgICAieHNhMzU5LnBhdGNoIgogICAgICAgICAgXQogICAg
+ICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjE0IjogewogICAgICAiUmVj
+aXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJl
+ZiI6ICIxZDFkMWY1MzkxOTc2NDU2YTc5ZGFhYzBkY2ZlNzE1N2RhMWU1NGY3
+IiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAzNTMsCiAg
+ICAgICAgICAgIDExNSwKICAgICAgICAgICAgMzIyLAogICAgICAgICAgICAz
+MjMsCiAgICAgICAgICAgIDMyNCwKICAgICAgICAgICAgMzI1LAogICAgICAg
+ICAgICAzMzAsCiAgICAgICAgICAgIDM1MiwKICAgICAgICAgICAgMzQ4LAog
+ICAgICAgICAgICAzNTYsCiAgICAgICAgICAgIDM1OAogICAgICAgICAgXSwK
+ICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzU5LnBh
+dGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAg
+ICJtYXN0ZXIiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4i
+OiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjNhZTQ2OWFmOGU2ODBkZjMx
+ZWVjZDBhMmFjNmE4M2I1OGFkN2NlNTMiLAogICAgICAgICAgIlByZXJlcXMi
+OiBbCiAgICAgICAgICAgIDM1MywKICAgICAgICAgICAgMTE1LAogICAgICAg
+ICAgICAzMjIsCiAgICAgICAgICAgIDMyMywKICAgICAgICAgICAgMzI0LAog
+ICAgICAgICAgICAzMjUsCiAgICAgICAgICAgIDMzMCwKICAgICAgICAgICAg
+MzUyLAogICAgICAgICAgICAzNDgsCiAgICAgICAgICAgIDM1NiwKICAgICAg
+ICAgICAgMzU4CiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBb
+CiAgICAgICAgICAgICJ4c2EzNTkucGF0Y2giCiAgICAgICAgICBdCiAgICAg
+ICAgfQogICAgICB9CiAgICB9CiAgfQp9
+
+--=separator
+Content-Type: application/octet-stream; name="xsa359.patch"
+Content-Disposition: attachment; filename="xsa359.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiBldnRjaG4vRklGTzogYWRkIDJuZCBzbXBfcm1iKCkgdG8gZXZ0Y2huX2Zp
+Zm9fd29yZF9mcm9tX3BvcnQoKQoKQmVzaWRlcyB3aXRoIGFkZF9wYWdlX3Rv
+X2V2ZW50X2FycmF5KCkgdGhlIGZ1bmN0aW9uIGFsc28gbmVlZHMgdG8Kc3lu
+Y2hyb25pemUgd2l0aCBldnRjaG5fZmlmb19pbml0X2NvbnRyb2woKSBzZXR0
+aW5nIGJvdGggZC0+ZXZ0Y2huX2ZpZm8KYW5kIChzdWJzZXF1ZW50bHkpIGQt
+PmV2dGNobl9wb3J0X29wcy4KClRoaXMgaXMgWFNBLTM1OSAvIENWRS0yMDIw
+LTI5NTcxLgoKUmVwb3J0ZWQtYnk6IEp1bGllbiBHcmFsbCA8amdyYWxsQGFt
+YXpvbi5jb20+ClNpZ25lZC1vZmYtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGlj
+aEBzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IEp1bGllbiBHcmFsbCA8amdyYWxs
+QGFtYXpvbi5jb20+CgotLS0gYS94ZW4vY29tbW9uL2V2ZW50X2ZpZm8uYwor
+KysgYi94ZW4vY29tbW9uL2V2ZW50X2ZpZm8uYwpAQCAtNTUsNiArNTUsMTMg
+QEAgc3RhdGljIGlubGluZSBldmVudF93b3JkX3QgKmV2dGNobl9maWZvXwog
+ewogICAgIHVuc2lnbmVkIGludCBwLCB3OwogCisgICAgLyoKKyAgICAgKiBD
+YWxsZXJzIGFyZW4ndCByZXF1aXJlZCB0byBob2xkIGQtPmV2ZW50X2xvY2ss
+IHNvIHdlIG5lZWQgdG8gc3luY2hyb25pemUKKyAgICAgKiB3aXRoIGV2dGNo
+bl9maWZvX2luaXRfY29udHJvbCgpIHNldHRpbmcgZC0+ZXZ0Y2huX3BvcnRf
+b3BzIC9hZnRlci8KKyAgICAgKiBkLT5ldnRjaG5fZmlmby4KKyAgICAgKi8K
+KyAgICBzbXBfcm1iKCk7CisKICAgICBpZiAoIHVubGlrZWx5KHBvcnQgPj0g
+ZC0+ZXZ0Y2huX2ZpZm8tPm51bV9ldnRjaG5zKSApCiAgICAgICAgIHJldHVy
+biBOVUxMOwogCkBAIC02MDYsNiArNjEzLDEwIEBAIGludCBldnRjaG5fZmlm
+b19pbml0X2NvbnRyb2woc3RydWN0IGV2dGMKICAgICAgICAgaWYgKCByYyA8
+IDAgKQogICAgICAgICAgICAgZ290byBlcnJvcjsKIAorICAgICAgICAvKgor
+ICAgICAgICAgKiBUaGlzIGNhbGwsIGFzIGEgc2lkZSBlZmZlY3QsIHN5bmNo
+cm9uaXplcyB3aXRoCisgICAgICAgICAqIGV2dGNobl9maWZvX3dvcmRfZnJv
+bV9wb3J0KCkuCisgICAgICAgICAqLwogICAgICAgICByYyA9IG1hcF9jb250
+cm9sX2Jsb2NrKHYsIGdmbiwgb2Zmc2V0KTsKICAgICAgICAgaWYgKCByYyA8
+IDAgKQogICAgICAgICAgICAgZ290byBlcnJvcjsK
+
+--=separator--
