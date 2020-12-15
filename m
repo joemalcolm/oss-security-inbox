@@ -1,86 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/04/19/1
-Message-ID: <1842330.usQuhbGJ8B@spectre>
-Date: Sun, 19 Apr 2020 16:59:48 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: re2c: heap overflow in Scanner::fill (scanner.cc)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/14
+Message-Id: <E1kp9Jc-0007Bp-9a@xenbits.xenproject.org>
+Date: Tue, 15 Dec 2020 12:20:28 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 358 v4 (CVE-2020-29570) - FIFO event channels control block related ordering
 Content-Type: text/plain; charset=utf-8
 
-Description:
-re2c is a tool for generating C-based recognizers from regular expressions.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-There is an heap overflow reproducible with a crafted file.
+            Xen Security Advisory CVE-2020-29570 / XSA-358
+                               version 4
 
-~ $ re2c -o /tmp/out $FILE
-=================================================================
-==43995==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x629000004212 at pc 0x00000049937f bp 0x7ffc0521bc00 sp 0x7ffc0521b3c8
-WRITE of size 18 at 0x629000004212 thread T0
-    #0 0x49937e in __asan_memset /var/tmp/portage/sys-libs/compiler-rt-
-sanitizers-9.0.0/work/compiler-rt-9.0.0.src/lib/asan/
-asan_interceptors_memintrinsics.cc:26:3
-    #1 0x67a291 in re2c::Scanner::fill(unsigned long) /var/tmp/portage/dev-
-util/re2c-1.3/work/re2c-1.3/src/parse/scanner.cc:167:9
-    #2 0x682a51 in re2c::Scanner::echo(re2c::Output&) /var/tmp/portage/dev-
-util/re2c-1.3/work/re2c-1.3/src/parse/lex.cc:94:33
-    #3 0x61d5f4 in re2c::compile(re2c::Scanner&, re2c::Output&, re2c::Opt&) /
-var/tmp/portage/dev-util/re2c-1.3/work/re2c-1.3/src/compile.cc:148:41
-    #4 0x4cc668 in main /var/tmp/portage/dev-util/re2c-1.3/work/re2c-1.3/src/
-main.cc:33:5
-    #5 0x7f26392c9dca in __libc_start_main /var/tmp/portage/sys-libs/
-glibc-2.29-r2/work/glibc-2.29/csu/../csu/libc-start.c:308:16
-    #6 0x421d39  (/usr/bin/re2c+0x421d39)
+          FIFO event channels control block related ordering
 
-0x629000004212 is located 0 bytes to the right of 16402-byte region 
-[0x629000000200,0x629000004212)
-allocated by thread T0 here:
-    #0 0x4c949d in operator new[](unsigned long) /var/tmp/portage/sys-libs/
-compiler-rt-sanitizers-9.0.0/work/compiler-rt-9.0.0.src/lib/asan/
-asan_new_delete.cc:102:3
-    #1 0x67a0f2 in re2c::Scanner::fill(unsigned long) /var/tmp/portage/dev-
-util/re2c-1.3/work/re2c-1.3/src/parse/scanner.cc:154:22
-    #2 0x682a51 in re2c::Scanner::echo(re2c::Output&) /var/tmp/portage/dev-
-util/re2c-1.3/work/re2c-1.3/src/parse/lex.cc:94:33
-    #3 0x61d5f4 in re2c::compile(re2c::Scanner&, re2c::Output&, re2c::Opt&) /
-var/tmp/portage/dev-util/re2c-1.3/work/re2c-1.3/src/compile.cc:148:41
-    #4 0x4cc668 in main /var/tmp/portage/dev-util/re2c-1.3/work/re2c-1.3/src/
-main.cc:33:5
-    #5 0x7f26392c9dca in __libc_start_main /var/tmp/portage/sys-libs/
-glibc-2.29-r2/work/glibc-2.29/csu/../csu/libc-start.c:308:16
+UPDATES IN VERSION 4
+====================
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-libs/
-compiler-rt-sanitizers-9.0.0/work/compiler-rt-9.0.0.src/lib/asan/
-asan_interceptors_memintrinsics.cc:26:3 in __asan_memset
+Public release.
 
-Affected version:
-1.3
+ISSUE DESCRIPTION
+=================
 
-Fixed version:
-Will be 2.0
+Recording of the per-vCPU control block mapping maintained by Xen and
+that of pointers into the control block is reversed.  The consumer
+assumes, seeing the former initialized, that the latter are also ready
+for use.
 
-Commit fix:
-https://github.com/skvadrik/re2c/commit/
-c4603ba5ce229db83a2a4fb93e6d4b4e3ec3776a
+IMPACT
+======
 
-Credit:
-This bug was discovered by Agostino Sarubbo.
+Malicious or buggy guest kernels can mount a Denial of Service (DoS)
+attack affecting the entire system.
 
-CVE:
-I don’t care anymore about a CVE. If you will obtain one about this issue, 
-feel free to reach me. I will update this as well.
+VULNERABLE SYSTEMS
+==================
 
-Timeline:
-2020-04-17: bug discovered and reported to upstream
-2020-04-17: upstream fixed the issue
-2020-04-19: blog post about the issue
+All Xen versions from 4.4 onwards are vulnerable.  Xen versions 4.3 and
+earlier are not vulnerable.
 
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work 
-is also supported by the Core Infrastructure Initiative.
+MITIGATION
+==========
 
-Permalink:
-http://blogs.gentoo.org/ago/2020/04/19/re2c-heap-overflow-in-scannerfill-scanner-cc/
+There is no known mitigation.
 
+CREDITS
+=======
 
+This issue was discovered by Julien Grall of Amazon.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa358.patch           xen-unstable - 4.10
+
+$ sha256sum xsa358*
+c8392659f71ea31574f9f82ab80a37e1359e8b8178d7b060167500bfb134eecc  xsa358.meta
+ee719ff8dbf30794ddac1464267cb47c1aac7e39da32d82263f4aebc1a9b509b  xsa358.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/YqeAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZlv0H/0tFfvZ8aKiUPFYwu/9WgNwLZIZJUgqIt1q1ooxt
+6S+e8yHGhg3mBoAmfqN38sffVdD14z9DVFfIpMtrZpyfGzX2kmCPwC+MAtPliaNC
+8rH7CDJHuQU35z5c/3q12pldtAFKLBhhqulg3Q5jLHi/HAKvypJFibLyqmqY+Uoo
+yEMqpE1UtzhoYD4RsttcT1chGiBn8Gk8wBVcLx/SzzcU6xJ+X0F37VaIyTPW+69l
+74ov4jzpt667mr4VtNOCmIAHuRZNLhValRUwzwSvGGjmiF8ACKbeKZ5IQ3m7gCBA
+7fNRaRDdsKJi9amdifKfyn28u/+ltkPoCK6jAQcO1Eg/+0Q=
+=lxX6
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa358.meta" of type "application/octet-stream" (2622 bytes)
+
+Download attachment "xsa358.patch" of type "application/octet-stream" (1955 bytes)
