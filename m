@@ -1,131 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/18/2
-Message-ID: <aeb18210-13f9-7aae-bf42-9cd5f7d03ffb@intel.com>
-Date: Mon, 18 May 2020 15:49:58 +0100
-From: Ferruh Yigit <ferruh.yigit@...el.com>
-To: dpdk-announce <announce@...k.org>
-Cc: security@...k.org, security-prerelease@...k.org, oss-security@...ts.openwall.com, dpdk-dev <dev@...k.org>
-Subject: DPDK security advisory for multiple vhost related issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/15
+Message-Id: <E1kp9Jb-0007Au-Bq@xenbits.xenproject.org>
+Date: Tue, 15 Dec 2020 12:20:27 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 356 v3 (CVE-2020-29567) - infinite loop when cleaning up IRQ vectors
 Content-Type: text/plain; charset=utf-8
 
-A set of vulnerabilities fixed in DPDK:
-- CVE-2020-10722
-- CVE-2020-10723
-- CVE-2020-10724
-- CVE-2020-10725
-- CVE-2020-10726
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Some downstream stakeholders were warned in advance in order to coordinate the
-release of fixes and reduce the vulnerability window.
+            Xen Security Advisory CVE-2020-29567 / XSA-356
+                               version 3
 
-Problem:
-A malicious guess/container can cause resource leak resulting a
-Denial-of-Service, or memory corruption and crash, or information leak in
-vhost-user backend application.
+              infinite loop when cleaning up IRQ vectors
 
-All users of the vhost library are strongly encouraged to upgrade as soon as
-possible.
+UPDATES IN VERSION 3
+====================
 
-Thanks to the reporters, all credit goes to them:
-Ilja Van Sprundel <ivansprundel@...ctive.com>
-Marvin Liu <yong.liu@...el.com>
-Xiaolong Ye <xiaolong.ye@...el.com>
+Public release.
 
+ISSUE DESCRIPTION
+=================
 
-Stable Releases download links:
-DPDK 20.02.1
-http://fast.dpdk.org/rel/dpdk-20.02.1.tar.xz
+When moving IRQs between CPUs to distribute the load of IRQ handling,
+IRQ vectors are dynamically allocated and de-allocated on the relevant
+CPUs.  De-allocation has to happen when certain constraints are met.
+If these conditions are not met when first checked, the checking CPU
+may send an interrupt to itself, in the expectation that this IRQ will
+be delivered only after the condition preventing the cleanup has
+cleared.  For two specific IRQ vectors this expectation was violated,
+resulting in a continuous stream of self-interrupts, which renders the
+CPU effectively unusable.
 
-DPDK 18.11.8 (LTS)
-http://fast.dpdk.org/rel/dpdk-18.11.8.tar.xz
+IMPACT
+======
 
-DPDK 19.11.2 (LTS)
-http://fast.dpdk.org/rel/dpdk-19.11.2.tar.xz
+A domain with a passed through PCI device can cause lockup of a
+physical CPU, resulting in a Denial of Service (DoS) to the entire
+host.
 
+VULNERABLE SYSTEMS
+==================
 
+Only Xen 4.14 is affected.  Xen versions 4.13 and older are not
+affected.
 
-Details:
+Only x86 systems are vulnerable.  Arm systems are not vulnerable.
 
-CVE-2020-10722
-Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=267
-Severity: 5.1 (Medium)
-CVSS scores: CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:H
-Summary: DPDK librte_vhost: Interger overflow in vhost_user_set_log_base()
-Reporter: Ilja Van Sprundel <ivansprundel@...ctive.com>
+Only guests with physical PCI devices passed through to them can exploit
+the vulnerability.
 
+MITIGATION
+==========
 
-CVE-2020-10723
-Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=268
-Severity: 5.1 (Medium)
-CVSS scores: CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:H
-Summary: DPDK librte_vhost: Integer truncation in
-         vhost_user_check_and_alloc_queue_pair()
-Reporter: Ilja Van Sprundel <ivansprundel@...ctive.com>
+There is no known mitigation.
 
+CREDITS
+=======
 
-CVE-2020-10724
-Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=269
-Severity: 5.1 (Medium)
-CVSS scores: CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:H
-Summary: DPDK librte_vhost: Missing inputs validation in Vhost-crypto
-Reporter: Ilja Van Sprundel <ivansprundel@...ctive.com>
+This issue was discovered by Roger Pau Monné of Citrix.
 
+RESOLUTION
+==========
 
-CVE-2020-10725
-Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=270
-Severity: 7.7 (High)
-CVSS scores: CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H
-Summary: DPDK librte_vhost: Malicious guest could cause segfault by sending
-         invalid Virtio descriptor
-Reporter: Marvin Liu <yong.liu@...el.com>
+Applying the attached patch resolves this issue.
 
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-CVE-2020-10726
-Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=271
-Severity: 6.0 (Medium)
-CVSS scores: CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:C/C:N/I:N/A:H
-Summary: DPDK librte_vhost: VHOST_USER_GET_INFLIGHT_FD message flooding to
-         result in a DOS
-Reporter: Marvin Liu <yong.liu@...el.com> & Xiaolong Ye <xiaolong.ye@...el.com>
+xsa356.patch           xen-unstable - Xen 4.14.x
 
+$ sha256sum xsa356*
+77316e3b86e2482ee9741db7484d323a399028762af1c88734f8c83e78069fb3  xsa356.meta
+21c217e41549bf74d5fcc26f1d23b6d902c5c72de5e2c8490842aea9f999b036  xsa356.patch
+$
 
-Commits:
-main repo
-https://git.dpdk.org/dpdk/commit/?id=3ae4beb079ce
-https://git.dpdk.org/dpdk/commit/?id=c78d94189dce
-https://git.dpdk.org/dpdk/commit/?id=acd4c92fa693
-https://git.dpdk.org/dpdk/commit/?id=97ecc1c85c95
-https://git.dpdk.org/dpdk/commit/?id=549de54c4f9f
-https://git.dpdk.org/dpdk/commit/?id=e7debf602633
+DEPLOYMENT DURING EMBARGO
+=========================
 
-DPDK 20.02.1
-https://git.dpdk.org/dpdk-stable/commit/?h=20.02&id=0545a19f5b99
-https://git.dpdk.org/dpdk-stable/commit/?h=20.02&id=dca5d97491b4
-https://git.dpdk.org/dpdk-stable/commit/?h=20.02&id=64a4d90c673e
-https://git.dpdk.org/dpdk-stable/commit/?h=20.02&id=47791d99afe4
-https://git.dpdk.org/dpdk-stable/commit/?h=20.02&id=74b0c5db0f1e
-https://git.dpdk.org/dpdk-stable/commit/?h=20.02&id=a827e27d81cc
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
-DPDK 18.11.8 (LTS)
-https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=338f5eae5de73
-https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=d87b67f57ef93
-https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=5e4bc0f0e1e48
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
-DPDK 19.11.2 (LTS)
-https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=2cf9c470ebff
-https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=8e9652b0b616
-https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=963b6eea05f3
-https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=cd0ea71bb6a7
-https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=95e1f29c2677
-https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=c9c630a117cf
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
--- 
-DPDK Security Team
-http://core.dpdk.org/security/
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/YqeAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZv4cIAIdqAn7O/TicwVod/L1Lktuk94g73LQlhRxMFnQ2
+CoFrIBJtvyFq0m0OqRcVav3hb8wa7EdbmbJXgvoC4emKUcIcUkMA/dyvUi9SKdGP
+5iQDL0Vsasq7rQN5vjuUA6KIDp4qyT87mxNLUwMzwrXDORFHT9YZO/SZLY37WU7S
+UX0qaDh9FpwtdB4nDULqNimAZcy1yonXkD8bb6jDmHIeTx33cfe4BNvYqApwTPD8
+fxctAlsYHLuwfnEBdQ+cadfcjF/PqkRcsGtMk6hGRn2hEscEfHWMH9I/R9lZvyj5
+CjfFKzb2WpDu3KUuJJJBTavkZ97Bs+flVNGLrQ/AgKoitQs=
+=vDoA
+-----END PGP SIGNATURE-----
 
+Download attachment "xsa356.meta" of type "application/octet-stream" (904 bytes)
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Download attachment "xsa356.patch" of type "application/octet-stream" (2499 bytes)
