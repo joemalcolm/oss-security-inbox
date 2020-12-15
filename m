@@ -1,116 +1,154 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/12/4
-Message-Id: <CC6AAEF3-55C7-4F5F-9664-624DFE79A227@beckweb.net>
-Date: Wed, 12 Aug 2020 15:20:24 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/8
+Message-Id: <E1kp9JV-00074c-Ji@xenbits.xenproject.org>
+Date: Tue, 15 Dec 2020 12:20:21 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 348 v3 (CVE-2020-29566) - undue recursion in x86 HVM context switch code
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The following releases contain fixes for security vulnerabilities:
+            Xen Security Advisory CVE-2020-29566 / XSA-348
+                               version 3
 
-* Jenkins 2.252
-* Jenkins LTS 2.235.4
-* Email Extension Plugin 2.74
-* Pipeline Maven Integration Plugin 3.8.3
-* Yet Another Build Visualizer Plugin 1.12
+            undue recursion in x86 HVM context switch code
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+UPDATES IN VERSION 3
+====================
 
-* Flaky Test Handler Plugin
+Public release.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2020-08-12/
+ISSUE DESCRIPTION
+=================
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+When they require assistance from the device model, x86 HVM guests
+must be temporarily de-scheduled.  The device model will signal Xen
+when it has completed its operation, via an event channel, so that the
+relevant vCPU is rescheduled.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+If the device model were to signal Xen without having actually
+completed the operation, the de-schedule / re-schedule cycle would
+repeat.  If, in addition, Xen is resignalled very quickly, the
+re-schedule may occur before the de-schedule was fully complete,
+triggering a shortcut.  This potentially repeating process uses
+ordinary recursive function calls, so could result a stack overflow.
 
----
+IMPACT
+======
 
-SECURITY-1955 / CVE-2020-2229
-Jenkins 2.251 and earlier, LTS 2.235.3 and earlier does not escape the
-tooltip content of help icons. Tooltip values can be contributed by
-plugins, some of which use user-specified values.
+A malicious or buggy stubdomain serving a HVM guest can cause Xen to
+crash, resulting in a Denial of Service (DoS) to the entire host.
 
-This results in a stored cross-site scripting (XSS) vulnerability.
+VULNERABLE SYSTEMS
+==================
 
+All Xen versions are vulnerable.
 
-SECURITY-1957 / CVE-2020-2230
-Jenkins 2.251 and earlier, LTS 2.235.3 and earlier does not escape the
-project naming strategy description that is displayed on item creation.
+Only x86 systems are affected.  Arm systems are not affected.
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by users with Overall/Manage permission.
+Only x86 stubdomains serving HVM guests can exploit the vulnerability.
 
+MITIGATION
+==========
 
-SECURITY-1960 / CVE-2020-2231
-Jenkins 2.251 and earlier, LTS 2.235.3 and earlier does not escape the
-remote address of the host starting a build via 'Trigger builds remotely'.
+Running only PV or PVH guests will avoid the vulnerability.
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by users with Job/Configure permission or knowledge of the
-Authentication Token.
+(Switching from a device model stub domain to a dom0 device model does
+NOT mitigate this vulnerability.  Rather, it simply recategorises the
+vulnerability to hostile management code, regarding it "as designed";
+thus it merely reclassifies these issues as "not a bug".  The security
+of a Xen system using stub domains is still better than with a qemu-dm
+running as a dom0 process.  Users and vendors of stub qemu dm systems
+should not change their configuration to use a dom0 qemu process.)
 
+CREDITS
+=======
 
-SECURITY-1975 / CVE-2020-2232
-Email Extension Plugin stores an SMTP password in its global configuration
-file `hudson.plugins.emailext.ExtendedEmailPublisher.xml` on the Jenkins
-master as part of its configuration.
+This issue was discovered by Julien Grall of Amazon.
 
-While this password is stored encrypted on disk, it is transmitted and
-displayed in plain text as part of the configuration form by Email
-Extension Plugin 2.72 and 2.73. This can result in exposure of the
-password.
+RESOLUTION
+==========
 
+Applying the appropriate (set of) attached patch(es) resolves this issue.
 
-SECURITY-1794 (1) / CVE-2020-2233
-Pipeline Maven Integration Plugin 3.8.2 and earlier does not perform a
-permission check in an HTTP endpoint.
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-This allows attackers with Overall/Read access to Jenkins to enumerate
-credentials IDs of credentials stored in Jenkins. Those can be used as part
-of an attack to capture the credentials using another vulnerability.
+xsa348-?.patch           xen-unstable - Xen 4.14.x
+xsa348-4.13-?.patch      Xen 4.13.x
+xsa348-4.12.patch        Xen 4.12.x
+xsa348-4.11.patch        Xen 4.11.x
+xsa348-4.10.patch        Xen 4.10.x
 
+$ sha256sum xsa348*
+f9606145cdbd3caacf6be7e5bcb62fc7d2c0b76572c1be26db608c5eac57ead0  xsa348.meta
+b619dac8453daa9f85526dec67ed67d999d182ccbc39b91be122b3365a0b5cb9  xsa348-1.patch
+01b11ea3be160704c992187ad727ac1f03841cc452bbe2c142b53fddfa2da844  xsa348-2.patch
+2c54474da9680625717e5a61b2a3a5ac23acad6f7bc0fcb306fe181fd0a38f1d  xsa348-3.patch
+e2f4cbec1a763f045e827ececf13d06dedcc7cc49b42136160c8d986778529ae  xsa348-4.10.patch
+15d4f5fb894a45027f4a17a557d4fdb0a390575ab2c2d3aa2b265d3c6239c765  xsa348-4.11.patch
+58b1a771dc720b1efb205a9d1baf46aea0205d4c65310e693dd2cfe7834cd8b9  xsa348-4.12.patch
+1d181edd11f2437ff9298f9b5e81d75f5e5db8a79a8ce2c5aed0d75882473a0b  xsa348-4.13-1.patch
+b68d3dfa2003a7444c165ab3639886b9b502c06cdfd4f43bea747d8fb14dc7cd  xsa348-4.13-2.patch
+67ecb0819041bf0b20a1af42970af72a15842571beb13cd0d740b0600e1aa2fd  xsa348-4.13-3.patch
+$
 
-SECURITY-1794 (2) / CVE-2020-2234 (permission check) & CVE-2020-2235 (CSRF)
-Pipeline Maven Integration Plugin 3.8.2 and earlier does not perform a
-permission check in a method implementing form validation.
+DEPLOYMENT DURING EMBARGO
+=========================
 
-This allows users with Overall/Read access to Jenkins to connect to an
-attacker-specified JDBC URL using attacker-specified credentials IDs
-obtained through another method, potentially capturing credentials stored
-in Jenkins.
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
-SECURITY-1940 / CVE-2020-2236
-Yet Another Build Visualizer Plugin 1.11 and earlier does not escape
-tooltip content.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by users with Run/Update permission.
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/YqEoMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZHysH/RUkeyzKbsafoC4gOpdTKsbCOkR6U609yR5Gpv0G
+JjoeMculUV+4q4aEJVm+FoXpK2H526akTA9iZnfhxZH224/nJ/MuK8IYdCCUxAPH
+GTBa64RMTcl9lwHUZUOOWNFbEwTy7CiLBh+ccAi+o8BJGBDcXYFOtD5CerD08wFI
+HJ/OKa4a36q6YDbG5ESvPK+9KL7e/VM+4BUCtvrlQFMV/4zSiBh9rKLlJEa975zB
+NC4dZ6ZsM/uRV8s39WQ1ihz2ylAB0Ol/uemYCMWKZRscXxolKJdoWN5F5kpygj3n
+ETmwpMQSwDcG+yhIBMbJ3CnCguQzEIVyWs8Z7wPcFMZk9QQ=
+=UJMI
+-----END PGP SIGNATURE-----
 
-SECURITY-1763 / CVE-2020-2237
-Flaky Test Handler Plugin 1.0.4 and earlier does not require POST requests
-for the "Deflake this build" feature, resulting in a cross-site request
-forgery (CSRF) vulnerability.
+Download attachment "xsa348.meta" of type "application/octet-stream" (2444 bytes)
 
-This vulnerability allows attackers to rebuild a project at a previous git
-revision where the tests were failing.
+Download attachment "xsa348-1.patch" of type "application/octet-stream" (4202 bytes)
 
-As of publication of this advisory, there is no fix.
+Download attachment "xsa348-2.patch" of type "application/octet-stream" (2601 bytes)
 
+Download attachment "xsa348-3.patch" of type "application/octet-stream" (6526 bytes)
 
+Download attachment "xsa348-4.10.patch" of type "application/octet-stream" (6591 bytes)
 
+Download attachment "xsa348-4.11.patch" of type "application/octet-stream" (6623 bytes)
+
+Download attachment "xsa348-4.12.patch" of type "application/octet-stream" (6578 bytes)
+
+Download attachment "xsa348-4.13-1.patch" of type "application/octet-stream" (4455 bytes)
+
+Download attachment "xsa348-4.13-2.patch" of type "application/octet-stream" (2692 bytes)
+
+Download attachment "xsa348-4.13-3.patch" of type "application/octet-stream" (6516 bytes)
