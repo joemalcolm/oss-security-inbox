@@ -1,46 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/12/2
-Message-ID: <df88d6a7-2a82-7fce-9701-1336d104048a@dovecot.fi>
-Date: Wed, 12 Feb 2020 14:05:37 +0200
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: oss-security <oss-security@...ts.openwall.com>, full-disclosure <full-disclosure@...ts.openwall.com>
-Subject: CVE-2020-7957: Dovecot: Specially crafted mail can crash snippet generation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/9
+Message-Id: <E1kp9JX-00076t-Hu@xenbits.xenproject.org>
+Date: Tue, 15 Dec 2020 12:20:23 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 350 v4 (CVE-2020-29569) - Use after free triggered by block frontend in Linux blkback
 Content-Type: text/plain; charset=utf-8
 
-Open-Xchange Security Advisory 2020-02-12
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected product: Dovecot Core
-Internal reference: DOV-3743 (JIRA ID)
-Vulnerability type: Improper Input Validation (CWE-30)
-Vulnerable version: 2.3.9
-Vulnerable component: lmtp, imap
-Fixed version: 2.3.9.3
-Report confidence: Confirmed
-Solution status: Fixed
-Researcher credits: Open-Xchange oy
-Vendor notification: 2020-01-14
-CVE reference: CVE-2020-7957
-CVSS: 3.1 (CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:N/A:L)
+            Xen Security Advisory CVE-2020-29569 / XSA-350
+                               version 4
 
-Vulnerability Details:
+      Use after free triggered by block frontend in Linux blkback
 
-Snippet generation crashes if:
+UPDATES IN VERSION 4
+====================
 
-     message is large enough that message-parser returns multiple body
-blocks
-    The first block(s) don't contain the full snippet (e.g. full of
-whitespace)
-    input ends with '>'
+Public release.
 
-Risk:
+ISSUE DESCRIPTION
+=================
 
-Sending specially crafted email can cause mailbox to have permanently
-unaccessible mail, or the mail can be stuck in delivery.
+The Linux kernel PV block backend expects the kernel thread handler
+to reset ring->xenblkd to NULL when stopped. However, the handler may
+not have time to run if the frontend quickly toggle between the states
+connect and disconnect.
 
-Solution:
+As a consequence, the block backend may re-use a pointer after it was
+freed.
 
-Upgrade to 2.3.9.3
+IMPACT
+======
+
+A misbehaving guest can trigger a dom0 crash by continuously
+connecting / disconnecting a block frontend. Privileged escalation and
+information leak cannot be ruled out.
+
+VULNERABLE SYSTEMS
+==================
+
+Systems using Linux blkback are vulnerable.  This includes most
+systems with a Linux dom0, or Linux driver domains.
+
+Linux versions containing a24fa22ce22a ("xen/blkback: don't use
+xen_blkif_get() in xen-blkback kthread"), or its backports, are
+vulnerable.  This includes all current linux-stable branches back to
+at least linux-stable/linux-4.4.y.
+
+When the Xen PV block backend is provided by userspace (eg qemu), that
+backend is not vulnerable.  So configurations where the xl.cfg domain
+configuration file specifies all disks with backendtype="qdisk" are
+not vulnerable.
+
+The Linux blkback only supports raw format images, so when all disks
+have a format than format="raw", the system is not vulnerable.
+
+MITIGATION
+==========
+
+Switching the disk backend to qemu with backendtype="qdisk" will avoid
+the vulnerability.  This mitigation is not always available, depending
+on the other aspects of the configuration.
+
+CREDITS
+=======
+
+This issue was discovered by Olivier Benjamin and Pawel Wieczorkiewicz of
+Amazon.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa350-linux.patch     Linux
+
+$ sha256sum xsa350*
+46e8141bcfd21629043df0af4d237d6c264b27c1137fc84d4a1127ace30926c4  xsa350-linux.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
 
+Deployment of the mitigation to change the block backend is NOT
+permitted (except where all the affected systems and VMs are
+administered and used only by organisations which are members of the
+Xen Project Security Issues Predisclosure List).  Specifically,
+deployment on public cloud systems is NOT permitted.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+This is because this is a guest-visible change, which will indicate
+that it is the block backend which has a vulnerability.
+
+Deployment is permitted only AFTER the embargo ends.
+
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQE/BAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/Yqd8MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZRusH9RGJFExFzCDQ/y99mvchhcIXGf4g0V373W9YrPAF
+zUIiKBGEWuE07tY9YVKV5ocNnPQNdGwsnKJXPsFJAjW4DTDyL00e0yFUNQ7c1kTl
+vdRgh0D5VtzIcaiqIC/4GjRzuBTQ3d9gTSOzJGhBS0yoIsZTSr5KyJBAiw1Slz7Y
+IHmLZawGdQrDF6YpGLEXPRM7TxNNLn0wPqpPTxC+qMnTThdLuogf4HWLae7xHqX+
+Q8b6KYxnkouq5sOddESglf+Gh+j9JHoLCIRm3XA4LrtGtQoUrvdqeS8rklRPH7Xk
+yGP99M+J++KMx02ZJJUNrJmtSExDl35liz84qRiRfcKpxQ==
+=qnB/
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa350-linux.patch" of type "application/octet-stream" (1878 bytes)
