@@ -1,94 +1,143 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/19/1
-Message-ID: <20200319165840.GA16288@tc-lan-adapter.local>
-Date: Thu, 19 Mar 2020 09:58:40 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2020-5267] Possible XSS vulnerability in ActionView
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/3
+Message-Id: <E1kp9JQ-0006zQ-Lh@xenbits.xenproject.org>
+Date: Tue, 15 Dec 2020 12:20:16 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 322 v4 (CVE-2020-29481) - Xenstore: new domains inheriting existing node permissions
 Content-Type: text/plain; charset=utf-8
 
-There is a possible XSS vulnerability in ActionView's JavaScript literal
-escape helpers.  Views that use the `j` or `escape_javascript` methods
-may be susceptible to XSS attacks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     6.0.2.2, 5.2.4.2
+            Xen Security Advisory CVE-2020-29481 / XSA-322
+                               version 4
 
-### Impact
+       Xenstore: new domains inheriting existing node permissions
 
-There is a possible XSS vulnerability in the `j` and `escape_javascript`
-methods in ActionView.  These methods are used for escaping JavaScript string
-literals.  Impacted code will look something like this:
+UPDATES IN VERSION 4
+====================
 
-```erb
-<script>let a = `<%= j unknown_input %>`</script>
-```
+Public release.
 
-or
+ISSUE DESCRIPTION
+=================
 
-```erb
-<script>let a = `<%= escape_javascript unknown_input %>`</script>
-```
+Access rights of Xenstore nodes are per domid.  Unfortunately,
+existing granted access rights are not removed when a domain is
+destroyed.  This means that a new domain created with the same domid
+will inherit the access rights to Xenstore nodes from the previous
+domain(s) with the same domid.
 
-### Releases
+All Xenstore entries of a guest below /local/domain/<domid> are
+deleted by Xen tools when a guest is destroyed.  Therefore only
+entries belonging to other guests, referring to the deleted guests,
+are potentially affected.
 
-The 6.0.2.2 and 5.2.4.2 releases are available at the normal locations.
+IMPACT
+======
 
-### Workarounds
+In some circumstances, it might be possible for a new guest domain to
+access resources belonging to a previous domain.  The impact would
+depend on the software in use and the configuration, but might include
+any of denial of service, information leak, or privilege escalation.
 
-For those that can't upgrade, the following monkey patch may be used:
+VULNERABLE SYSTEMS
+==================
 
-```ruby
-ActionView::Helpers::JavaScriptHelper::JS_ESCAPE_MAP.merge!(
-  {
-    "`" => "\\`",
-    "$" => "\\$"
-  }
-)
+All versions of Xen are in principle vulnerable.
 
-module ActionView::Helpers::JavaScriptHelper
-  alias :old_ej :escape_javascript
-  alias :old_j :j
+Both Xenstore implementations (C and Ocaml) are vulnerable.
 
-  def escape_javascript(javascript)
-    javascript = javascript.to_s
-    if javascript.empty?
-      result = ""
-    else
-      result = javascript.gsub(/(\\|<\/|\r\n|\342\200\250|\342\200\251|[\n\r"']|[`]|[$])/u, JS_ESCAPE_MAP)
-    end
-    javascript.html_safe? ? result.html_safe : result
-  end
+Vulnerable systems are only those running software where one domain is
+granted access to another's xenstore nodes, without complete cleanup
+of those nodes on domain destruction.  No such software is enabled in
+default configurations of upstream Xen.
 
-  alias :j :escape_javascript
-end
-```
+Therefore upstream Xen, without additional management software (in
+host or guest(s)), is not vulnerable in the default (host and guest)
+configuration.
 
-### Patches
+MITIGATION
+==========
 
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
+There is no mitigation available.
 
-* 5-2-js-helper-xss.patch - Patch for 5.2 series
-* 6-0-js-helper-xss.patch - Patch for 6.0 series
+CREDITS
+=======
 
-Please note that only the 5.2 and 6.0 series are supported at present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible as we
-cannot guarantee the continued availability of security fixes for unsupported
-releases.
+This issue was discovered by Jürgen Groß of SUSE.
 
-### Credits
+RESOLUTION
+==========
 
-Thanks to Jesse Campos from Chef Secure
+Applying the appropriate attached patch resolves this issue.
 
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-View attachment "5-2-js-helper-xss.patch" of type "text/plain" (2461 bytes)
+xsa322-c.patch             xen-unstable        [C xenstored]
+xsa322-4.14-c.patch        Xen 4.14 - 4.13     [C xenstored]
+xsa322-4.13-c.patch        Xen 4.12 - 4.10     [C xenstored]
 
-View attachment "6-0-js-helper-xss.patch" of type "text/plain" (2383 bytes)
+xsa322-o.patch             xen-unstable - 4.12 [Ocaml xenstored]
+xsa322-4.11-o.patch        Xen 4.11 - 4.10     [Ocaml xenstored]
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+$ sha256sum xsa322*
+89e40422e41b8b2f8926ee5081da0e494e8e7312091151d31bfaa29eefa9b669  xsa322.meta
+0cfeb0f8dd1c95e628e06f3402cbb5fb58c0972d6616958f5a0fbed59813dd6c  xsa322-4.11-o.patch
+d4f9362b6f7ebfb7349849d4449f70b6004779c35238dc628736c541fe9e4279  xsa322-4.12-c.patch
+8efe8fc39bf91a1c0cbdbf572deb2592930b757725951f4fdf0c387904ce4293  xsa322-4.14-c.patch
+9275c7c36127f0e9719d4cb3162e39ce9233b2b55e9f9307b4c4d370a7b636a3  xsa322-c.patch
+42c0818ceff11792517530237c4972967099c9828b4e2b5ec4bf6bfc1825cd7c  xsa322-o.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/Yqd4MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZm4QH/A4suMmviY3ihK5d97oiKhJWg/5bgt6ePoJtZwAe
+28nqNX3pI3+hi09RTAUpINVXt+3ealblDs9XY4u+2trTX7yqtbdtRrMF+mhkHueK
+Pnqvp3qSREDNaAJUN5gmsJ9vfgNwYTWscHqYga69cq4bHaLZJnEZC1He2qvvac67
+MmKJk69go6VxCLG6ZAU59aHXzfs0EoQGKPhV6+Fw41HK9CNG8YErfdK1h2RIJ6Jg
+GIf0bhgNSPxMs/0wcKJDmj4u3kmFStfDJbzsYxjmu5K0MZVMD87cQv89EHC+gCCc
+e4ipgRwM6ba7pD338JT42gDHptqj2Rhg1YszmG2bQO0TQoA=
+=MQnE
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa322.meta" of type "application/octet-stream" (2033 bytes)
+
+Download attachment "xsa322-4.11-o.patch" of type "application/octet-stream" (4524 bytes)
+
+Download attachment "xsa322-4.12-c.patch" of type "application/octet-stream" (16469 bytes)
+
+Download attachment "xsa322-4.14-c.patch" of type "application/octet-stream" (16424 bytes)
+
+Download attachment "xsa322-c.patch" of type "application/octet-stream" (16388 bytes)
+
+Download attachment "xsa322-o.patch" of type "application/octet-stream" (4523 bytes)
