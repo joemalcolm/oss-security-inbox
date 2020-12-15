@@ -1,29 +1,136 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/24/3
-Message-ID: <1309bdbba176b41aebdbeacf5a402fd9180f05c4.camel@k4vqc.com>
-Date: Mon, 24 Feb 2020 11:06:38 -0500
-From: Jim Popovitch <jim@...qc.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: mailman 2.x: XSS via file attachments in list archives
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/5
+Message-Id: <E1kp9JS-00071M-L4@xenbits.xenproject.org>
+Date: Tue, 15 Dec 2020 12:20:18 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 324 v3 (CVE-2020-29484) - Xenstore: guests can crash xenstored via watchs
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2020-02-24 at 15:34 +0100, Hanno Böck wrote:
-> This change is in mailman 2.1.30rc1, but not in any stable release of
-> mailman.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Just for some added info, Mailman v2.1.30 is almost released, the holdup
-is with some language translations.  Mailman v2.1.30 will be the last of
-the Mailman v2 releases as primary development and effort has long
-shifted to Mailman v3. Further, the Mailman v2 branch is tied to Python
-v2, which is now EOL by the fine Python folk.
+            Xen Security Advisory CVE-2020-29484 / XSA-324
+                               version 3
 
-Once Mailman v2.1.30 is release, I'm sure the various distributions will
-pull the commit and merge the particulars into their release branches,
-and that will surely include this XSS fix. 
+            Xenstore: guests can crash xenstored via watchs
 
-I'm not a formal Mailman Developer, but as a contributor and member of
-the general Mailman Community I say Thank You to Hanno for identifying
-and reporting  this vulnerability.
+UPDATES IN VERSION 3
+====================
 
--Jim P.
+Public release.
 
+ISSUE DESCRIPTION
+=================
+
+When a Xenstore watch fires, the xenstore client which registered the
+watch will receive a Xenstore message containing the path of the
+modified Xenstore entry which triggered the watch, and the tag which
+was specified when registering the watch.
+
+Any communication with xenstored is done via Xenstore messages,
+consisting of a message header and the payload. The payload length is
+limited to 4096 bytes. Any request to xenstored resulting in a
+response with a payload longer than 4096 bytes will result in an
+error.
+
+When registering a watch the payload length limit applies to the
+combined length of the watched path and the specified tag. As watches
+for a specific path are also triggered for all nodes below that path,
+the payload of a watch event message can be longer than the payload
+needed to register the watch.
+
+A malicious guest which registers a watch using a very large tag (ie
+with a registration operation payload length close to the 4096 byte
+limit) can cause the generation of watch events with a payload length
+larger than 4096 bytes, by writing to Xenstore entries below the
+watched path.
+
+This will result in an error condition in xenstored.  This error can
+result in a NULL pointer dereference leading to a crash of xenstored.
+
+IMPACT
+======
+
+A malicious guest administrator can cause xenstored to crash, leading
+to a denial of service.  Following a xenstored crash, domains may
+continue to run, but management operations will be impossible.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are affected.
+
+Only C xenstored is affected, oxenstored is not affected.
+
+MITIGATION
+==========
+
+There are no mitigations.
+
+Changing to use of Ocaml xenstored would avoid this vulnerability.
+However, given the other vulnerabilities in both versions of xenstored
+being reported at this time, changing xenstored implementation is not a
+recommended approach to mitigation of individual issues.
+
+CREDITS
+=======
+
+This issue was discovered by Jürgen Groß of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa324.patch           xen-unstable - 4.10
+
+$ sha256sum xsa324*
+78932f0a83b479902553b1acdf601f7625b383497c03c6e834a0a2b847f1a72e  xsa324.meta
+8dba79842fa913290c7043d065a50abb0efe27fa5a173e421c21c544cc1e264c  xsa324.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/Yqd4MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZBoIH/ir2NdOiUg6JFoa/DXgtMBosLXRkRRjikvlaMJTY
+krz3r/aBZ0nLn8wsF5u+BctJYdHrIQDrt3N7GGv1wyvnLA18HrtupsxqrHj+CCMD
+pogl6QxRmmqRina7+EzRTt8N8qe6fhi8tuVmH3TYlsL1PeHyqNurwwTZizHL9BFx
+uCY10qNUV0FTY05tUhdP0FD3yiNfN8QwytARo/LRhELbUMx7D+N/CmUtCKh5uklr
+KfBBHy3Vb4MDlGPN7pa5vdEjZGFVj4xHWxUP+72C+bdhvLEiDi+IKkvy/TVbjoAN
+eQEfFVjBpj21MeQV+3mHJMJGknaJ8NTc00txrLM5D+WscHM=
+=KypE
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa324.meta" of type "application/octet-stream" (2010 bytes)
+
+Download attachment "xsa324.patch" of type "application/octet-stream" (1753 bytes)
