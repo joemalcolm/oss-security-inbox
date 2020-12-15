@@ -1,35 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/16/6
-Message-ID: <nycvar.YSQ.7.78.906.2009170022480.10832@xnncv>
-Date: Thu, 17 Sep 2020 00:25:27 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: bugs-syssec@....de
-Subject: CVE-2020-25085 QEMU: sdhci: out-of-bounds access issue while doing multi block SDMA
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/16
+Message-Id: <E1kp9Jd-0007Cj-7U@xenbits.xenproject.org>
+Date: Tue, 15 Dec 2020 12:20:29 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 359 v3 (CVE-2020-29571) - FIFO event channels control structure ordering
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-An out-of-bounds r/w access issue was found in the SDHCI Controller emulator 
-of QEMU. It may occur while doing multi block SDMA, if transfer block size 
-exceeds the 's->fifo_buffer[s->buf_maxsz]' size. It'd leave the current 
-element pointer 's->data_count' pointing out of bounds. Leading the subsequent 
-DMA r/w operation to OOB access issue. A guest user/process may use this flaw 
-to crash the QEMU process resulting in DoS scenario.
+            Xen Security Advisory CVE-2020-29571 / XSA-359
+                               version 3
 
-Upstream patches:
------------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg00733.html
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg01439.html
+            FIFO event channels control structure ordering
 
-* This issue was reported by Sergej Schumilo, Cornelius Aschermann, Simon
-   Wrner of Ruhr-University Bochum.
+UPDATES IN VERSION 3
+====================
 
-* 'CVE-2020-25085' assigned via https://cveform.mitre.org
+Public release.
 
+ISSUE DESCRIPTION
+=================
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+A bounds check common to most operation time functions specific to FIFO
+event channels depends on the CPU observing consistent state.  While the
+producer side uses appropriately ordered writes, the consumer side isn't
+protected against re-ordered reads, and may hence end up de-referencing
+a NULL pointer.
 
+IMPACT
+======
+
+Malicious or buggy guest kernels can mount a Denial of Service (DoS)
+attack affecting the entire system.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from 4.4 onwards are vulnerable.  Xen versions 4.3 and
+earlier are not vulnerable.
+
+Only Arm systems may be vulnerable.  Whether a system is vulnerable will
+depend on the specific CPU.  x86 systems are not vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of Amazon.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa359.patch           xen-unstable - 4.10
+
+$ sha256sum xsa359*
+cb009ad77d1a3d8044431b2af568dd9dffefe07fc9f537fb6b53c2ec57aa77b7  xsa359.meta
+3126d9304b68be84a89c42c223227c8f96ecbb96a0385a7e1bdc65ae5e0f344f  xsa359.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/YqeAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZt6wIAJhvfVB8eRr5fqCbMUjZ++KKoG0AF/hoS7YRHiDn
+zCgK/ff5RkY/pHHkVnrSOQeQg88SPBp/HaYljUXhoANbhXVxlt383QxQb63JwanR
+1c3Sdvv5w0HdvrDyUMV16W/Edf/DGlSgciG/2saNz8pPbqiGKzeY3Q7nj3T3vLAE
+ouNlHb2NItalKB2AdC62y/BFIjsn66G/P1agxyrcGirJxdvzORBx+LY7VTFOrOEB
+L7yb8Y0U6Nj1XjGUXYm4X4xCCm+940Xc0Ht9zkDJlb3xSdO5sOtBE+Cx3F4uXn1c
+vTMiKziAOgEKKXWV7P3KSWR/7G1aTm2YVRMy5XWtS6GY5D0=
+=uRRE
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa359.meta" of type "application/octet-stream" (2724 bytes)
+
+Download attachment "xsa359.patch" of type "application/octet-stream" (1245 bytes)
