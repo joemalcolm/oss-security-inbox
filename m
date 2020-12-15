@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1913" "Thursday" "1" "October" "2015" "16:10:46" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20151001231046.GB16643@hunt>" "51" "Re: [oss-security] Re: CVE request for wget" nil nil nil "10" "2015100123:10:46" "[oss-security] Re: CVE request for wget" (number mark "        seth.arnold@ Oct  1   51/1913  " thread-indent "\"Re: [oss-security] Re: CVE request for wget\"\n") "<20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>" ("<CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>" "<20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2035" "Tuesday" "15" "December" "2020" "13:41:14" "+1300" "Douglas Bagnall" "douglas.bagnall@catalyst.net.nz" "<366300f0-53e7-dd61-0a89-740ecc402a37@catalyst.net.nz>" "41" "Re: [oss-security] Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?" nil nil nil "12" "2020121500:41:14" "[oss-security] Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?" (number mark "U       douglas.bagn Dec 15   41/2035  " thread-indent "\"Re: [oss-security] Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?\"\n") "<20201208223558.GF3381169@millbarge>" ("<CAH5b-BUVDeMaifMPf5HibLqjQKky3ch0__eYnzU1f_k3=JmMTg@mail.gmail.com>" "<X8/iqSaDQqige53U@gmail.com>" "<CAOfWR+Ew1+0u8R7+=h7KO4u-asj3kZWi7o0u7c-a+6Z713gJmg@mail.gmail.com>" "<20201208223558.GF3381169@millbarge>") nil nil nil nil nil nil nil "Re: [oss-security] Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30106 invoked by uid 550); 1 Oct 2015 23:11:01 -0000
+Received: (qmail 10083 invoked by uid 550); 15 Dec 2020 09:57:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30083 invoked from network); 1 Oct 2015 23:11:00 -0000
-Message-ID: <20151001231046.GB16643@hunt>
-Mail-Followup-To: cve-assign@mitre.org, austinenglish@gmail.com,
-	oss-security@lists.openwall.com
-References: <CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>
- <20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="XF85m9dhOBO43t/C"
-Content-Disposition: inline
-In-Reply-To: <20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: austinenglish@gmail.com, oss-security@lists.openwall.com
-Date: Thu, 1 Oct 2015 16:10:46 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE request for wget
-To: cve-assign@mitre.org
+Received: (qmail 27739 invoked from network); 15 Dec 2020 00:41:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=catalyst.net.nz;
+	s=default; t=1607992897;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=muBYmR1Scmx0Ms11DT6XFpl4EcgduqCGn64xxcEH0EM=;
+	b=oRaG30312tOPwUs4KAdmcu3T7NbKyHR+CjrxSkw0IDdLOfXcKrDkvGiU14DbdQZtNJMpow
+	2wG7z2Qf8nwugdmj8AZCuHVI2F8sso/js3Znjuwzgvt8mJNF7PsfgjvxO59QlqfvthXW7A
+	nWYS1vRONv3D/wBnrNoqepbxsPzPqP44B7GC3XaxZTx11IMnmvO5F6LVtNAyysd8J2JeKo
+	y7p4UjMhDuXhWnkl7pvOzOxGqh2rWfvYSVTWD0bm/BJ1n4s/4ME6UtuEHLqexOoepqk8xM
+	q9Y9/hh4FUZJVME6eUIs4UiGiZ502bnukbhZWo4Ppe5aVbJZeifqqkFGyZw3Ew==
+To: oss-security@lists.openwall.com
+References: <CAH5b-BUVDeMaifMPf5HibLqjQKky3ch0__eYnzU1f_k3=JmMTg@mail.gmail.com>
+ <X8/iqSaDQqige53U@gmail.com>
+ <CAOfWR+Ew1+0u8R7+=h7KO4u-asj3kZWi7o0u7c-a+6Z713gJmg@mail.gmail.com>
+ <20201208223558.GF3381169@millbarge>
+From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
+Message-ID: <366300f0-53e7-dd61-0a89-740ecc402a37@catalyst.net.nz>
+Date: Tue, 15 Dec 2020 13:41:14 +1300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
+MIME-Version: 1.0
+In-Reply-To: <20201208223558.GF3381169@millbarge>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=douglasb@catalyst.net.nz smtp.mailfrom=douglas.bagnall@catalyst.net.nz
+Subject: Re: [oss-security] Bugs found by Cryptofuzz - some missing CVEs or
+ too low impact for CVE?
 
---XF85m9dhOBO43t/C
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Tue, Dec 08, 2020 at 05:18:04PM -0500, Robert Watson wrote:
+>> Question from a retired programmer but security novice... Since fuzzing is
+>> used to find bugs in other programs, doesn't it need to be held to a bit
+>> higher standard in order to maintain credibility?
 
-On Thu, Oct 01, 2015 at 06:57:26PM -0400, cve-assign@mitre.org wrote:
-> If there is any additional Tails vulnerability related to this,
-> another CVE ID may be needed. For example,
->=20
->   https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00050.html
->=20
-> says
->=20
->   to be 100% sure, you should add --passive-ftp to your command line.
->   If you don't do that, your /etc/wgetrc or ~/.wgetrc could include
->   --no-passive-ftp (or passiveftp =3D off).
->=20
-> If Tails is supposed to try to ensure that, perhaps there's a
-> requirement to have something like:
->=20
->   alias wget=3D"wget --passive-ftp"
->=20
-> in a system-wide location (possibly /etc/bash.bashrc). The concept of
-> CVE IDs for "failure of a torify step" issues is new, and we aren't
-> sure of the best approach.
+As a developer, I find running fuzzers to be interesting and useful. I
+don't just mean that it is nice to have confidence in the software or to
+avoid embarrassment and disclosure chores. What I like is that fuzzers
+sometimes throw up really intriguing puzzles, and that writing them to
+thoroughly and efficiently exercise the attack surface is an interesting
+problem in itself.
 
-I suspect using a bash alias in a site-wide config might then qualify for
-another CVE in the future, along the lines of "programs that spawn wget
-via system(3), popen(3), or exec family of functions can use unsafe active
-mode by accident". If Tails is in the business of fixing these things
-for safety, removing active ftp support from tools seems like better fix.
+The first of those points is putting a positive spin on Seth Arnold's
 
-Thanks
+> The most difficult part of working with fuzzers, in my opinion, is that
+> it can take a long time to figure out the cause of a crash or sanitizer
+> alert. Often finding the causes, or to propose a fix, takes longer than
+> finding issues.
 
---XF85m9dhOBO43t/C
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+It is not bad (and hopefully not so hard) for programmers maintaining a
+piece of code to be forced to understand it.  And after each curly fuzz
+problems you might look to see if the same pattern occurs in unfuzzed code.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The second point relates to knowing the structure of your program and
+where the bodies lie. If you have a huge wrinkly attack surface (in my
+case, Samba) you can't just fuzz the whole thing, you need to package up
+the each parser or interacting subset into its own executable. As a
+developer, you have a huge advantage over others in knowing how to do
+this. Also, you know which bits you distrust most, and which bugs will
+have the most impact. Just as with other tests, projects should provide
+their own fuzz targets.
 
-iQEcBAEBAgAGBQJWDb12AAoJEPMhclmdjS6XclgIALwefITzmqZxXZTuStBKX4Z1
-mX8O+BZDMCGcFaK4P65CW8OWmlnfXAf/IquezduMrOsDFFssWlsyeNacCLfEvex4
-dxW0xAherwtUADNYRg/PASd2OEPxMskX9z15MCTq/474KPRkshUOPivRMPVdXV0U
-xndtiEpZWZv5Jfk6BkpA9u4w2FYSkHaZVaE7jshF3W5wQkZNqWoJwf2AkzmlbaXj
-ace6ciO95BWf7aoRrcghnBc7ycGtdohQ8MBRw6Ixa7Y6dZOh9e7sjiZKjCpxcI0H
-bDTzY4N8d0W3lptEelzzb+y7JdXTGbKuWDvZS5Jv/pYx7LJBfJ6oK/qBy8vWpDM=
-=goNa
------END PGP SIGNATURE-----
+Seth Arnold wrote:
+> I have seen maintainers not interested
+> in taking fixes that are "only visible with ubsan", for example, but
+>> this attitude is thankfully rare.
 
---XF85m9dhOBO43t/C--
+In my experience, UBSan-only fuzz bugs are mostly false-ish positives, but
+OF COURSE we still fix them in the manner we fix annoying compiler warnings.
+
+Douglas
