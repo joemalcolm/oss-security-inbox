@@ -1,57 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/24/2
-Message-ID: <20200224153451.4d773294@computer>
-Date: Mon, 24 Feb 2020 15:34:51 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: mailman 2.x: XSS via file attachments in list archives
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/6
+Message-Id: <E1kp9JR-00070O-Mj@xenbits.xenproject.org>
+Date: Tue, 15 Dec 2020 12:20:17 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 323 v3 (CVE-2020-29482) - Xenstore: wrong path length check
 Content-Type: text/plain; charset=utf-8
 
-I have reported this quite a while ago and forgotten to properly
-announce it.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-In the mailman 2 mailing list manager there's a stored cross site
-scripting vulnerability due to the way file attachments are handled.
+            Xen Security Advisory CVE-2020-29482 / XSA-323
+                               version 3
 
-Up to mailman 2.1.29 when sending a file without a file extension (or
-an unknown file extension) then the file is stored in the list archive
-with the file extension .obj.
-Most web servers (e.g. apache httpd) will try to assign a mime type
-based on the file extension and entries in /etc/mime.types.
+                   Xenstore: wrong path length check
 
-In many Linux distributions (Debian, Fedora, Ubuntu) .obj is not
-specified in /etc/mime.types. This means the web server will usually
-send it out without a mime type.
-The browser will then try to guess the MIME type based on the file's
-content (MIME-sniffing). If the content is HTML then it will execute any
-javascript contained.
+UPDATES IN VERSION 3
+====================
 
-I have reported this a while ago to mailman and they changed the
-default from .obj to .bin. All distributions I tested assign
-application/octet-stream to .bin files, which makes sure the browser
-does not try to sniff the file type.
-This change is in mailman 2.1.30rc1, but not in any stable release of
-mailman.
+Public release.
 
-I gave a talk discussing this type of vulnerability at last year's
-SecurityFest conference:
-https://www.youtube.com/watch?v=8t8JYpt0egE
+ISSUE DESCRIPTION
+=================
+
+A guest may access xenstore paths via absolute paths containing a full
+pathname, or via a relative path, which implicitly includes
+/local/domain/$DOMID for their own domain id.  Management tools must
+access paths in guests' namespaces, necessarily using absolute paths.
+
+oxenstored imposes a path name limit which is applied solely to the
+relative or absolute path specified by the client.  Therefore, a guest
+can create paths in its own namespace which are too long for management
+tools to access.
+
+IMPACT
+======
+
+Depending on the toolstack in use, a malicious guest administrator
+might cause some management tools and debugging operations to fail.
+For example, a guest administrator can cause `xenstore-ls -r` to fail.
+
+However a guest administrator cannot prevent the host administrator
+from tearing down the domain.
+
+VULNERABLE SYSTEMS
+==================
+
+All systems using oxenstored are vulnerable.  Building and using
+oxenstored is the default in the upstream Xen distribution, if the
+Ocaml compiler is available.
+
+Systems using C xenstored are not vulnerable.
+
+MITIGATION
+==========
+
+There are no mitigations.
+
+Changing to use of C xenstored would avoid this vulnerability.  However,
+given the other vulnerabilities in both versions of xenstored being
+reported at this time, changing xenstored implementation is not a
+recommended approach to mitigation of individual issues.
+
+CREDITS
+=======
+
+This issue was discovered by Edwin Török and analysed by Andrew Cooper, both
+of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa323.patch           xen-unstable - Xen 4.11.x
+xsa323-4.10.patch      Xen 4.10.x
+
+$ sha256sum xsa323*
+b693f259d92033ffc568412f1ea591b63d7e8dcaa7f88b62158b3c09e65ad122  xsa323.meta
+fdfefa3c064c6c5f49d666d7c3444f919777d557c8cb9c2e9ae6ac94711d37de  xsa323.patch
+90ab525fad3f43b6de2858f8a58128ce0d4ca97f5960bcd2af5be55d49059c92  xsa323-4.10.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-Mitigating factors:
-* Some web servers send a default mime type (e.g. nginx). This is
-  generally a good way to prevent such vulnerabilities, although some
-  people disagree [1]
-* In Gentoo and Suse it is assigned to application/x-tgif, which is
-  probably not what's intended here, but enough to prevent the
-  vulnerability.
-* Setting "X-Content-Type-Options: nosniff" will not prevent this
-  vulnerability type in all browsers. The reason is that originally
-  this header only applied to javascript and css content, not to HTML.
-  Chrome still disables content sniffing for HTML, Firefox hopefully
-  will soon.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-[1] https://www.w3.org/2001/tag/doc/mime-respect.html
--- 
-Hanno Böck
-https://hboeck.de/
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/Yqd4MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZNeEH/iXf3oBcCJAICRa2WuXXR8zs/R/GUaiQCJYvU2So
+OBil7cnb6bIomVmDd7TxjYUaHL3ilMEFHPTbUq0gLLKPlaJqVJTLyxDzss6VEmqp
+eyQ8GBRODHLHCGcQaS3eKtCN9e6Oyd+rEm5CIPXvcu+g+HVnxG1BCdzHOei7NEPS
+P5rmOn3Gkv6LlYQpVPYzVX3baIpLe09Ha+1iCS2bflArPgAc23ajxHHffuI90TIF
+cBjN93AOpgBc89wGM0G11NSPAjnVUWe69qLJp6HDW6mQRaUxHQVbpBesd0V43/9P
+XCvo6TxWdfDgJFOubZRKg6jHP5CKqobL4PZZT+X1MC8ZNbI=
+=ilKH
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa323.meta" of type "application/octet-stream" (1913 bytes)
+
+Download attachment "xsa323.patch" of type "application/octet-stream" (5747 bytes)
+
+Download attachment "xsa323-4.10.patch" of type "application/octet-stream" (5216 bytes)
