@@ -1,25 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/09/04/1
-Message-ID: <20200904022719.GB1119445@millbarge>
-Date: Fri, 4 Sep 2020 02:27:19 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/15/1
+Message-ID: <366300f0-53e7-dd61-0a89-740ecc402a37@catalyst.net.nz>
+Date: Tue, 15 Dec 2020 13:41:14 +1300
+From: Douglas Bagnall <douglas.bagnall@...alyst.net.nz>
+To: oss-security@...ts.openwall.com
+Subject: Re: Bugs found by Cryptofuzz - some missing CVEs or too low impact for CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 03, 2020 at 06:14:27PM +0200, Solar Designer wrote:
-> I primarily want to publicly acknowledge and thank Seth Arnold of
-> Ubuntu, Anthony Liguori of Amazon Linux, and Srivatsa S. Bhat of VMware
-> Photon OS for handling two of these tasks well lately.  Thank you!
+> On Tue, Dec 08, 2020 at 05:18:04PM -0500, Robert Watson wrote:
+>> Question from a retired programmer but security novice... Since fuzzing is
+>> used to find bugs in other programs, doesn't it need to be held to a bit
+>> higher standard in order to maintain credibility?
 
-Woo, thanks :)
+As a developer, I find running fuzzers to be interesting and useful. I
+don't just mean that it is nice to have confidence in the software or to
+avoid embarrassment and disclosure chores. What I like is that fuzzers
+sometimes throw up really intriguing puzzles, and that writing them to
+thoroughly and efficiently exercise the attack surface is an interesting
+problem in itself.
 
-> So from this point on, I'd actually expect Ubuntu or/and Flatcar
-> Container Linux to state something on task 5 for each issue reported.
+The first of those points is putting a positive spin on Seth Arnold's
 
-Will do.
+> The most difficult part of working with fuzzers, in my opinion, is that
+> it can take a long time to figure out the cause of a crash or sanitizer
+> alert. Often finding the causes, or to propose a fix, takes longer than
+> finding issues.
 
-Thanks
+It is not bad (and hopefully not so hard) for programmers maintaining a
+piece of code to be forced to understand it.  And after each curly fuzz
+problems you might look to see if the same pattern occurs in unfuzzed code.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+The second point relates to knowing the structure of your program and
+where the bodies lie. If you have a huge wrinkly attack surface (in my
+case, Samba) you can't just fuzz the whole thing, you need to package up
+the each parser or interacting subset into its own executable. As a
+developer, you have a huge advantage over others in knowing how to do
+this. Also, you know which bits you distrust most, and which bugs will
+have the most impact. Just as with other tests, projects should provide
+their own fuzz targets.
+
+Seth Arnold wrote:
+> I have seen maintainers not interested
+> in taking fixes that are "only visible with ubsan", for example, but
+>> this attitude is thankfully rare.
+
+In my experience, UBSan-only fuzz bugs are mostly false-ish positives, but
+OF COURSE we still fix them in the manner we fix annoying compiler warnings.
+
+Douglas
