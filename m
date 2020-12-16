@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2501" "Thursday" "18" "March" "2021" "22:06:13" "+0000" "Piotr Krysiuk" "piotras@gmail.com" nil "61" "[oss-security] [CVE-2020-27170] Protection against speculatively out-of-bounds loads in the Linux kernel can be bypassed by unprivileged local users to leak content of kernel memory" nil nil nil "3" nil nil (number mark "U       piotras@gmai Mar 18   61/2501  " thread-indent "\"[oss-security] [CVE-2020-27170] Protection against speculatively out-of-bounds loads in the Linux kernel can be bypassed by unprivileged local users to leak content of kernel memory\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-27170] Protection against speculatively out-of-bounds loads in the Linux kernel can be bypassed by unprivileged local users to leak content of kernel memory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["12358" "Wednesday" "16" "December" "2020" "17:04:33" "+0000" "Xen.org security team" "security@xen.org" "<E1kpaE5-0006zV-Gk@xenbits.xenproject.org>" "263" "[oss-security] Xen Security Advisory 358 v5 (CVE-2020-29570) - FIFO event channels control block related ordering" nil nil nil "12" "2020121617:04:33" "[oss-security] Xen Security Advisory 358 v5 (CVE-2020-29570) - FIFO event channels control block related ordering" (number mark "U       security@xen Dec 16  263/12358 " thread-indent "\"[oss-security] Xen Security Advisory 358 v5 (CVE-2020-29570) - FIFO event channels control block related ordering\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 358 v5 (CVE-2020-29570) - FIFO event channels control block related ordering" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32692 invoked by uid 550); 19 Mar 2021 06:42:05 -0000
+Received: (qmail 19913 invoked by uid 550); 16 Dec 2020 17:04:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,100 +12,286 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28164 invoked from network); 18 Mar 2021 22:06:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=irsKywwfocNw+fjqPJhsr5cV4b6jKSKD53QtgA0eO14=;
-        b=BQpNG2HiyfOt45K7ZkQamq3ELB+KLk6v3RWjNfwADpnrwlDxgMRSn1xe4O5mgBEOFD
-         hQEDxMa3IOlmE6oW1LPGSQJwF98MAvpbv5+7RnO7BKxTw0hGgn/3sNUyPO+rZtfcuNOT
-         41B6RZBCScbzY2y5HMNGxAtm+xl1FHWkIq3Dt6eaEiFKhkCEr8PPLG9wR5yqCCYrep3t
-         M3SQq2JEiyHXq7hgYqk4CZGHaCR3AoK+WyN3+0nCUzDlgPjtCeVukDtDXG+VwMq2qdt8
-         ypAfm7mBA6Bi2H3wUYbkvV1gXh7CGS8fVQl4VNJmDpVonfJRILcxr62kn4W5hvoIthmt
-         xxCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=irsKywwfocNw+fjqPJhsr5cV4b6jKSKD53QtgA0eO14=;
-        b=BVGMxarJoscQRmdNo4abSPXRx7aVFdBPGe8BhLgfyvA5c9D20lEbZTuRIo4/a76v+k
-         +xj55/HyRcEpfgvJ+7j6iwHviglHuVCog26JNQs7KJ7WBXZdSHbnJl3POypHn62z04n4
-         ljaYI6VtA4l3sBvO0424rUmGUe/J4ZfMjFmqNCrc12BJJG0zx3R0Dpthaf4WbpFH2/03
-         ytKAPSd1c0FSGkWVWtnh5MQDR71vAoh0jXyg8zTfdTVJXi19+YxQEKw8pbpU9foy4wh8
-         zcbAx5DgfJ/rr5za8rQMfcckecJ28nrmr1qYe/qgT6JtRE0oGPsZOBfaj75CtPcYOR9X
-         VsXA==
-X-Gm-Message-State: AOAM533KG1dxTA5hgSAVZEDocRzHENlyixOhzT8h6UWx+Esw7WLuxotG
-	DddWaxKMj9GbeE6IJRUOGYBzMgCaWKi6lnp1nhnQh4TiM5S3MzPS
-X-Google-Smtp-Source: ABdhPJy2avzaZPt+5jbOlas6ynawwyMUgVH8zqSJkz4e2Z42piZCYxtf4O3i/UiBLFG+46U4PVdIUtetWcxpHAvqZhY=
-X-Received: by 2002:a5d:4281:: with SMTP id k1mr1315446wrq.374.1616105184097;
- Thu, 18 Mar 2021 15:06:24 -0700 (PDT)
+Received: (qmail 19895 invoked from network); 16 Dec 2020 17:04:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=VjL2K3I6xHxwJ5PIAY3BGQUreSWLBHFBY5XsSudfb48=; b=QJZmExHmf5/+4nUx6r3uN9LFw7
+	nL/D0QNv0eGMVzZ2rbCmJKu225eHoyOn49rseQu2SLx7AQa8mcowXvVKU5OqDZnxDaPWEH7No0DAc
+	shtGlg5cRo8zz38EPF2j1JLEcd8k+wMg4LBoAyAbO0hiLbhe0ME1uJ5k4unmHXT64aeY=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-From: Piotr Krysiuk <piotras@gmail.com>
-Date: Thu, 18 Mar 2021 22:06:13 +0000
-Message-ID: <CAFzhf4pJm_SLYd_tE69gspYvXm0VRvxhEi6c2JFL4cx_5=wwQg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000006af8cb05bdd6cfee"
-Subject: [oss-security] [CVE-2020-27170] Protection against speculatively out-of-bounds loads
- in the Linux kernel can be bypassed by unprivileged local users to leak
- content of kernel memory
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1kpaE5-0006zV-Gk@xenbits.xenproject.org>
+Date: Wed, 16 Dec 2020 17:04:33 +0000
+Subject: [oss-security] Xen Security Advisory 358 v5 (CVE-2020-29570) - FIFO event
+ channels control block related ordering
 
---0000000000006af8cb05bdd6cfee
-Content-Type: text/plain; charset="UTF-8"
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-A gap in the Linux kernel mechanism to mitigate speculatively
-out-of-bounds loads (Spectre mitigation) has been identified.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Unprivileged BPF programs running on affected systems can bypass
-the protection and execute speculatively out-of-bounds loads from
-any location within the kernel memory. This can be abused to extract
-contents of kernel memory via side-channel.
+            Xen Security Advisory CVE-2020-29570 / XSA-358
+                               version 5
 
-The identified gap is that unprivileged BPF programs are allowed to
-perform pointer arithmetic on particular pointer types not defining
-ptr_limit. Pointer arithmetic on such pointer types is not protected
-against out-of-bounds speculation.
+          FIFO event channels control block related ordering
 
-I developed a PoC to demonstrate the issue using ctx pointers that
-allows unprivileged local users to extract contents of kernel memory.
+UPDATES IN VERSION 5
+====================
 
-The PoC has been shared privately with <security@kernel.org> to assist
-with fix development.
+"Unstable" patch updated (needed re-basing).
 
-The patches are available from BPF subsystem public git repository. The
-minimal fix is:
+ISSUE DESCRIPTION
+=================
 
-* bpf: Prohibit alu ops for pointer types not defining ptr_limit [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=f232326f6966cf2a1d1db7bc917a4ce5f9f55f76
-]
+Recording of the per-vCPU control block mapping maintained by Xen and
+that of pointers into the control block is reversed.  The consumer
+assumes, seeing the former initialized, that the latter are also ready
+for use.
 
-However it is recommended to apply the whole series as it includes
-fix for another speculatively out-of-bounds vulnerability in BPF that
-I reported at the same time and some additional hardening of the
-affected code:
+IMPACT
+======
 
-* bpf: Prohibit alu ops for pointer types not defining ptr_limit [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=f232326f6966cf2a1d1db7bc917a4ce5f9f55f76
-]
-* bpf: Fix off-by-one for area size in creating mask to left [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=10d2bb2e6b1d8c4576c56a748f697dbeb8388899
-]
-* bpf: Simplify alu_limit masking for pointer arithmetic [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=b5871dca250cd391885218b99cc015aca1a51aea
-]
-* bpf: Add sanity check for upper ptr_limit [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=1b1597e64e1a610c7a96710fc4717158e98a08b3
-]
-* bpf, selftests: Fix up some test_verifier cases for unprivileged [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=0a13e3537ea67452d549a6a80da3776d6b7dedb3
-]
+Malicious or buggy guest kernels can mount a Denial of Service (DoS)
+attack affecting the entire system.
 
-Details of the other vulnerability to be provided in a separate email.
+VULNERABLE SYSTEMS
+==================
 
-# Discoverer
+All Xen versions from 4.4 onwards are vulnerable.  Xen versions 4.3 and
+earlier are not vulnerable.
 
-Piotr Krysiuk <piotras@gmail.com>
+MITIGATION
+==========
 
-# References
+There is no known mitigation.
 
-CVE-2020-27170 (reserved via https://cveform.mitre.org/)
+CREDITS
+=======
 
---0000000000006af8cb05bdd6cfee--
+This issue was discovered by Julien Grall of Amazon.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa358.patch           xen-unstable
+xsa358-4.14.patch      Xen 4.14 - 4.10
+
+$ sha256sum xsa358*
+0e8428a52e9bedafb2d8cbbb8dffae4e882e4b0898e4e7df3576c99e0e607167  xsa358.meta
+c0763c85287d138a02dc795aa5d2e903ca7efc641390bee53ea2f7473f4f95af  xsa358.patch
+937a3786d3d0147aef63eed373ed1df9ede75d1fabf5ad8f6ccaacfbf7fbcf42  xsa358-4.14.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/aPhoMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZhWkH/08MG6OKo6O0vXv9PuznO/6JPjpSmAgkQYUBqYkw
+cAp/yq1kXo3kA+TyHQUPZwBzWx+B0OAG7OBDIoyDlVRhj5Z24YINY+knWzocyXmn
+7b6p8RdEf47cvWYn3Nugh2KXDdVo+CZ2C597kUBJSSuAJicT3BU3NIexXXLM9phU
+zeGcm39u4/ucZoBAAzP8IlsjxTs3woZG8ZlNNRrcF2QF98AWK1joIR3j54bWqwKs
+xvI+BLOXjhpr9Q2P/WY7zQsvWfw2dRsYpGMtPRpug+jpYOV51q//CnrDoSF7mXj9
+oHMklW1n/C+U0NeXMXdiwb+PhcP40m1ltya0Vfal8rPH1G4=
+=GzHh
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa358.meta"
+Content-Disposition: attachment; filename="xsa358.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAzNTgsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIs
+CiAgICAiNC4xMSIsCiAgICAiNC4xMCIKICBdLAogICJUcmVlcyI6IFsKICAg
+ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAg
+ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
+YWJsZVJlZiI6ICIxZDcyZDk5MTVlZGZmMGRkNDFmNjAxYmJiMGIxZjgzYzAy
+ZmYxNjg5IiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
+NTMsCiAgICAgICAgICAgIDExNSwKICAgICAgICAgICAgMzIyLAogICAgICAg
+ICAgICAzMjMsCiAgICAgICAgICAgIDMyNCwKICAgICAgICAgICAgMzI1LAog
+ICAgICAgICAgICAzMzAsCiAgICAgICAgICAgIDM1MiwKICAgICAgICAgICAg
+MzQ4LAogICAgICAgICAgICAzNTYKICAgICAgICAgIF0sCiAgICAgICAgICAi
+UGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM1OC00LjE0LnBhdGNoIgog
+ICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjEx
+IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAg
+ICAgICAgIlN0YWJsZVJlZiI6ICI0MWE4MjJjMzkyNjM1MGYyNjkxN2Q3NDdj
+OGRmZWQxYzQ0YTJjZjQyIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAg
+ICAgICAgICAzNTMsCiAgICAgICAgICAgIDExNSwKICAgICAgICAgICAgMzIy
+LAogICAgICAgICAgICAzMjMsCiAgICAgICAgICAgIDMyNCwKICAgICAgICAg
+ICAgMzI1LAogICAgICAgICAgICAzMzAsCiAgICAgICAgICAgIDM1MiwKICAg
+ICAgICAgICAgMzQ4LAogICAgICAgICAgICAzNTYKICAgICAgICAgIF0sCiAg
+ICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM1OC00LjE0
+LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwK
+ICAgICI0LjEyIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVu
+IjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI4MTQ1ZDM4YjQ4MDA5MjU1
+YTMyYWI4N2EwMmU0ODFjZDA5YzgxMWY5IiwKICAgICAgICAgICJQcmVyZXFz
+IjogWwogICAgICAgICAgICAzNTMsCiAgICAgICAgICAgIDExNSwKICAgICAg
+ICAgICAgMzIyLAogICAgICAgICAgICAzMjMsCiAgICAgICAgICAgIDMyNCwK
+ICAgICAgICAgICAgMzI1LAogICAgICAgICAgICAzMzAsCiAgICAgICAgICAg
+IDM1MiwKICAgICAgICAgICAgMzQ4LAogICAgICAgICAgICAzNTYKICAgICAg
+ICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhz
+YTM1OC00LjE0LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAg
+fQogICAgfSwKICAgICI0LjEzIjogewogICAgICAiUmVjaXBlcyI6IHsKICAg
+ICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJiNTMwMjI3
+M2UyYzUxOTQwMTcyNDAwNDg2NjQ0NjM2ZjJmNGZjNjRhIiwKICAgICAgICAg
+ICJQcmVyZXFzIjogWwogICAgICAgICAgICAzNTMsCiAgICAgICAgICAgIDEx
+NSwKICAgICAgICAgICAgMzIyLAogICAgICAgICAgICAzMjMsCiAgICAgICAg
+ICAgIDMyNCwKICAgICAgICAgICAgMzI1LAogICAgICAgICAgICAzMzAsCiAg
+ICAgICAgICAgIDM1MiwKICAgICAgICAgICAgMzQ4LAogICAgICAgICAgICAz
+NTYKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAg
+ICAgICAgInhzYTM1OC00LjE0LnBhdGNoIgogICAgICAgICAgXQogICAgICAg
+IH0KICAgICAgfQogICAgfSwKICAgICI0LjE0IjogewogICAgICAiUmVjaXBl
+cyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6
+ICIxZDFkMWY1MzkxOTc2NDU2YTc5ZGFhYzBkY2ZlNzE1N2RhMWU1NGY3IiwK
+ICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAzNTMsCiAgICAg
+ICAgICAgIDExNSwKICAgICAgICAgICAgMzIyLAogICAgICAgICAgICAzMjMs
+CiAgICAgICAgICAgIDMyNCwKICAgICAgICAgICAgMzI1LAogICAgICAgICAg
+ICAzMzAsCiAgICAgICAgICAgIDM1MiwKICAgICAgICAgICAgMzQ4LAogICAg
+ICAgICAgICAzNTYKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6
+IFsKICAgICAgICAgICAgInhzYTM1OC00LjE0LnBhdGNoIgogICAgICAgICAg
+XQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICJtYXN0ZXIiOiB7CiAg
+ICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAi
+U3RhYmxlUmVmIjogImRjOGIwMWFmZmQ3ZjZmMzZkMzRjMzg1NGY1MWRmMDg0
+N2RmM2VjMGUiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAgICAg
+ICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzU4LnBhdGNoIgogICAg
+ICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfQogIH0KfQ==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa358.patch"
+Content-Disposition: attachment; filename="xsa358.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiBldnRjaG4vRklGTzogcmUtb3JkZXIgYW5kIHN5bmNocm9uaXplICh3aXRo
+KSBtYXBfY29udHJvbF9ibG9jaygpCgpGb3IgZXZ0Y2huX2ZpZm9fc2V0X3Bl
+bmRpbmcoKSdzIGNoZWNrIG9mIHRoZSBjb250cm9sIGJsb2NrIGhhdmluZyBi
+ZWVuCnNldCB0byBiZSBlZmZlY3RpdmUsIG9yZGVyaW5nIG9mIHJlc3BlY3Rp
+dmUgcmVhZHMgYW5kIHdyaXRlcyBuZWVkcyB0byBiZQplbnN1cmVkOiBUaGUg
+Y29udHJvbCBibG9jayBwb2ludGVyIG5lZWRzIHRvIGJlIHJlY29yZGVkIHN0
+cmljdGx5IGFmdGVyCnRoZSBzZXR0aW5nIG9mIGFsbCB0aGUgcXVldWUgaGVh
+ZHMsIGFuZCBpdCBuZWVkcyBjaGVja2luZyBzdHJpY3RseQpiZWZvcmUgYW55
+IHVzZXMgb2YgdGhlbSAodGhpcyBsYXR0ZXIgYXNwZWN0IHdhcyBhbHJlYWR5
+IGd1YXJhbnRlZWQpLgoKVGhpcyBpcyBYU0EtMzU4IC8gQ1ZFLTIwMjAtMjk1
+NzAuCgpSZXBvcnRlZC1ieTogSnVsaWVuIEdyYWxsIDxqZ3JhbGxAYW1hem9u
+LmNvbT4KU2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1
+c2UuY29tPgpBY2tlZC1ieTogSnVsaWVuIEdyYWxsIDxqZ3JhbGxAYW1hem9u
+LmNvbT4KLS0tCnY0OiBSZS1iYXNlLgp2MzogRHJvcCByZWFkLXNpZGUgYmFy
+cmllciBhZ2FpbiwgbGV2ZXJhZ2luZyBndWVzdF90ZXN0X2FuZF9zZXRfYml0
+KCkuCnYyOiBSZS1iYXNlIG92ZXIgcXVldWUgbG9ja2luZyByZS13b3JrLgoK
+LS0tIGEveGVuL2NvbW1vbi9ldmVudF9maWZvLmMKKysrIGIveGVuL2NvbW1v
+bi9ldmVudF9maWZvLmMKQEAgLTI0OSw2ICsyNDksMTAgQEAgc3RhdGljIHZv
+aWQgZXZ0Y2huX2ZpZm9fc2V0X3BlbmRpbmcoc3RydQogICAgICAqIExpbmsg
+dGhlIGV2ZW50IGlmIGl0IHVubWFza2VkIGFuZCBub3QgYWxyZWFkeSBsaW5r
+ZWQuCiAgICAgICovCiAgICAgaWYgKCAhZ3Vlc3RfdGVzdF9iaXQoZCwgRVZU
+Q0hOX0ZJRk9fTUFTS0VELCB3b3JkKSAmJgorICAgICAgICAgLyoKKyAgICAg
+ICAgICAqIFRoaXMgYWxzbyBhY3RzIGFzIHRoZSByZWFkIGNvdW50ZXJwYXJ0
+IG9mIHRoZSBzbXBfd21iKCkgaW4KKyAgICAgICAgICAqIG1hcF9jb250cm9s
+X2Jsb2NrKCkuCisgICAgICAgICAgKi8KICAgICAgICAgICFndWVzdF90ZXN0
+X2FuZF9zZXRfYml0KGQsIEVWVENITl9GSUZPX0xJTktFRCwgd29yZCkgKQog
+ICAgIHsKICAgICAgICAgLyoKQEAgLTQ3NCw2ICs0NzgsNyBAQCBzdGF0aWMg
+aW50IHNldHVwX2NvbnRyb2xfYmxvY2soc3RydWN0IHZjCiBzdGF0aWMgaW50
+IG1hcF9jb250cm9sX2Jsb2NrKHN0cnVjdCB2Y3B1ICp2LCB1aW50NjRfdCBn
+Zm4sIHVpbnQzMl90IG9mZnNldCkKIHsKICAgICB2b2lkICp2aXJ0OworICAg
+IHN0cnVjdCBldnRjaG5fZmlmb19jb250cm9sX2Jsb2NrICpjb250cm9sX2Js
+b2NrOwogICAgIHVuc2lnbmVkIGludCBpOwogICAgIGludCByYzsKIApAQCAt
+NDg0LDEwICs0ODksMTUgQEAgc3RhdGljIGludCBtYXBfY29udHJvbF9ibG9j
+ayhzdHJ1Y3QgdmNwdQogICAgIGlmICggcmMgPCAwICkKICAgICAgICAgcmV0
+dXJuIHJjOwogCi0gICAgdi0+ZXZ0Y2huX2ZpZm8tPmNvbnRyb2xfYmxvY2sg
+PSB2aXJ0ICsgb2Zmc2V0OworICAgIGNvbnRyb2xfYmxvY2sgPSB2aXJ0ICsg
+b2Zmc2V0OwogCiAgICAgZm9yICggaSA9IDA7IGkgPD0gRVZUQ0hOX0ZJRk9f
+UFJJT1JJVFlfTUlOOyBpKysgKQotICAgICAgICB2LT5ldnRjaG5fZmlmby0+
+cXVldWVbaV0uaGVhZCA9ICZ2LT5ldnRjaG5fZmlmby0+Y29udHJvbF9ibG9j
+ay0+aGVhZFtpXTsKKyAgICAgICAgdi0+ZXZ0Y2huX2ZpZm8tPnF1ZXVlW2ld
+LmhlYWQgPSAmY29udHJvbF9ibG9jay0+aGVhZFtpXTsKKworICAgIC8qIEFs
+bCBxdWV1ZSBoZWFkcyBtdXN0IGhhdmUgYmVlbiBzZXQgYmVmb3JlIHNldHRp
+bmcgdGhlIGNvbnRyb2wgYmxvY2suICovCisgICAgc21wX3dtYigpOworCisg
+ICAgdi0+ZXZ0Y2huX2ZpZm8tPmNvbnRyb2xfYmxvY2sgPSBjb250cm9sX2Js
+b2NrOwogCiAgICAgcmV0dXJuIDA7CiB9Cg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa358-4.14.patch"
+Content-Disposition: attachment; filename="xsa358-4.14.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiBldnRjaG4vRklGTzogcmUtb3JkZXIgYW5kIHN5bmNocm9uaXplICh3aXRo
+KSBtYXBfY29udHJvbF9ibG9jaygpCgpGb3IgZXZ0Y2huX2ZpZm9fc2V0X3Bl
+bmRpbmcoKSdzIGNoZWNrIG9mIHRoZSBjb250cm9sIGJsb2NrIGhhdmluZyBi
+ZWVuCnNldCB0byBiZSBlZmZlY3RpdmUsIG9yZGVyaW5nIG9mIHJlc3BlY3Rp
+dmUgcmVhZHMgYW5kIHdyaXRlcyBuZWVkcyB0byBiZQplbnN1cmVkOiBUaGUg
+Y29udHJvbCBibG9jayBwb2ludGVyIG5lZWRzIHRvIGJlIHJlY29yZGVkIHN0
+cmljdGx5IGFmdGVyCnRoZSBzZXR0aW5nIG9mIGFsbCB0aGUgcXVldWUgaGVh
+ZHMsIGFuZCBpdCBuZWVkcyBjaGVja2luZyBzdHJpY3RseQpiZWZvcmUgYW55
+IHVzZXMgb2YgdGhlbSAodGhpcyBsYXR0ZXIgYXNwZWN0IHdhcyBhbHJlYWR5
+IGd1YXJhbnRlZWQpLgoKVGhpcyBpcyBYU0EtMzU4IC8gQ1ZFLTIwMjAtMjk1
+NzAuCgpSZXBvcnRlZC1ieTogSnVsaWVuIEdyYWxsIDxqZ3JhbGxAYW1hem9u
+LmNvbT4KU2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1
+c2UuY29tPgpBY2tlZC1ieTogSnVsaWVuIEdyYWxsIDxqZ3JhbGxAYW1hem9u
+LmNvbT4KCi0tLSBhL3hlbi9jb21tb24vZXZlbnRfZmlmby5jCisrKyBiL3hl
+bi9jb21tb24vZXZlbnRfZmlmby5jCkBAIC0yNDksNiArMjQ5LDEwIEBAIHN0
+YXRpYyB2b2lkIGV2dGNobl9maWZvX3NldF9wZW5kaW5nKHN0cnUKICAgICAg
+ICAgICAgIGdvdG8gdW5sb2NrOwogICAgICAgICB9CiAKKyAgICAgICAgLyoK
+KyAgICAgICAgICogVGhpcyBhbHNvIGFjdHMgYXMgdGhlIHJlYWQgY291bnRl
+cnBhcnQgb2YgdGhlIHNtcF93bWIoKSBpbgorICAgICAgICAgKiBtYXBfY29u
+dHJvbF9ibG9jaygpLgorICAgICAgICAgKi8KICAgICAgICAgaWYgKCBndWVz
+dF90ZXN0X2FuZF9zZXRfYml0KGQsIEVWVENITl9GSUZPX0xJTktFRCwgd29y
+ZCkgKQogICAgICAgICAgICAgZ290byB1bmxvY2s7CiAKQEAgLTQ3NCw2ICs0
+NzgsNyBAQCBzdGF0aWMgaW50IHNldHVwX2NvbnRyb2xfYmxvY2soc3RydWN0
+IHZjCiBzdGF0aWMgaW50IG1hcF9jb250cm9sX2Jsb2NrKHN0cnVjdCB2Y3B1
+ICp2LCB1aW50NjRfdCBnZm4sIHVpbnQzMl90IG9mZnNldCkKIHsKICAgICB2
+b2lkICp2aXJ0OworICAgIHN0cnVjdCBldnRjaG5fZmlmb19jb250cm9sX2Js
+b2NrICpjb250cm9sX2Jsb2NrOwogICAgIHVuc2lnbmVkIGludCBpOwogICAg
+IGludCByYzsKIApAQCAtNDg0LDEwICs0ODksMTUgQEAgc3RhdGljIGludCBt
+YXBfY29udHJvbF9ibG9jayhzdHJ1Y3QgdmNwdQogICAgIGlmICggcmMgPCAw
+ICkKICAgICAgICAgcmV0dXJuIHJjOwogCi0gICAgdi0+ZXZ0Y2huX2ZpZm8t
+PmNvbnRyb2xfYmxvY2sgPSB2aXJ0ICsgb2Zmc2V0OworICAgIGNvbnRyb2xf
+YmxvY2sgPSB2aXJ0ICsgb2Zmc2V0OwogCiAgICAgZm9yICggaSA9IDA7IGkg
+PD0gRVZUQ0hOX0ZJRk9fUFJJT1JJVFlfTUlOOyBpKysgKQotICAgICAgICB2
+LT5ldnRjaG5fZmlmby0+cXVldWVbaV0uaGVhZCA9ICZ2LT5ldnRjaG5fZmlm
+by0+Y29udHJvbF9ibG9jay0+aGVhZFtpXTsKKyAgICAgICAgdi0+ZXZ0Y2hu
+X2ZpZm8tPnF1ZXVlW2ldLmhlYWQgPSAmY29udHJvbF9ibG9jay0+aGVhZFtp
+XTsKKworICAgIC8qIEFsbCBxdWV1ZSBoZWFkcyBtdXN0IGhhdmUgYmVlbiBz
+ZXQgYmVmb3JlIHNldHRpbmcgdGhlIGNvbnRyb2wgYmxvY2suICovCisgICAg
+c21wX3dtYigpOworCisgICAgdi0+ZXZ0Y2huX2ZpZm8tPmNvbnRyb2xfYmxv
+Y2sgPSBjb250cm9sX2Jsb2NrOwogCiAgICAgcmV0dXJuIDA7CiB9Cg==
+
+--=separator--
