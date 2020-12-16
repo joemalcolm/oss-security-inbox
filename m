@@ -1,47 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/10/27/1
-Message-ID: <4505d03f-b9a3-3fab-2441-2f64dacc9773@redhat.com>
-Date: Tue, 27 Oct 2020 13:23:01 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-25654 pacemaker: ACL restrictions bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/16/1
+Message-ID: <9o47rr38-30r2-8r7-8rp8-6p7634sss92@redhat.com>
+Date: Wed, 16 Dec 2020 20:38:25 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: QEMU Developers <qemu-devel@...gnu.org>
+cc: oss security list <oss-security@...ts.openwall.com>,  Daniel Berrange <berrange@...hat.com>,  Michael Tsirkin <mtsirkin@...hat.com>, Petr Matousek <pmatouse@...hat.com>,  Stefano Stabellini <sstabellini@...nel.org>,  Michael Roth <michael.roth@....com>
+Subject: [ANNOUNCE] qemu-security mailing list
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+   Hello,
 
-Pacemaker is a high-availability cluster manager comprising multiple
-daemon processes that interact with each other and with user requests
-via IPC.
+* QEMU project has set-up a dedicated mailing list to receive and triage all
+   its security issues.
 
-Users must either be root or in the haclient group to access Pacemaker
-daemon IPC.
+   Please see:
+     -> https://www.qemu.org/contribute/security-process/
+     -> https://lists.nongnu.org/mailman/listinfo/qemu-security
 
-One of these daemons, pacemaker-based, manages the Pacemaker
-configuration, known as the Cluster Information Base (CIB). Pacemaker
-may be built with support for Access Control Lists (ACLs) in which case
-pacemaker-based applies configured ACLs when processing user requests to
-read or write any part of the configuration.
+* If you are a security researcher OR think you've found a potential security
+   issue in QEMU, please kindly follow the new process to report your issues.
 
-When ACLs are not in use, any user in the haclient group has full
-access to the configuration, which effectively gives them the ability
-to run any code as root. (This is intentional, as the point of a
-cluster manager is to run arbitrary services.)
+* This is a moderated mailing list. It is meant for systematic handling of
+   QEMU security issues and coordinate their public disclosure.
 
-When ACLs are in use, users still must be in the haclient group, but
-their read and write access to various parts of the configuration is
-limited by configured ACLs.
+* Membership of this list is limited to people involved in the analysis and
+   triage of QEMU security issues.
 
-The vulnerability is that users may use IPC communication with the
-various daemons directly to perform certain tasks that they would be
-prevented by ACLs from doing if they went through the configuration.
-This is not difficult; Pacemaker provides command-line tools to send
-many types of IPC requests.
+* To report QEMU security issues you need/should not subscribe to this list.
+
+* We'd like to invite representatives of security teams who are downstream
+   consumers of QEMU to contact the list, if they wish to participate in the
+   triage process.
+
+* All members will be required to agree and adhere to the embargo rules and
+   restrictions.
 
 
-More details along with patches is available at:
-https://bugzilla.redhat.com/show_bug.cgi?id=1888191
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
