@@ -1,51 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/02/5
-Message-ID: <CAKgU3W_1sg2DLq3_H2hs6QTb0sK=7by7f8bbkhdjZia6zStoQQ@mail.gmail.com>
-Date: Thu, 2 Jul 2020 12:20:44 +0200
-From: Francis Perron <francisp@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/16/6
+Message-ID: <CAA8xKjXKseHt=cdka4K5+hQCXTD88=uyKxYJ-UQW6+ZoczTp2A@mail.gmail.com>
+Date: Wed, 16 Dec 2020 18:05:58 +0100
+From: Mauro Matteo Cascella <mcascell@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: xiao.zhang@...driver.com, Solar Designer <solar@...nwall.com>, daniel@...x.se
-Subject: Re: Contributing Back
+Cc: Alexander Bulekov <alxndr@...edu>
+Subject: CVE-2020-27821 QEMU: heap buffer overflow in msix_table_mmio_write() in hw/pci/msix.c
 Content-Type: text/plain; charset=utf-8
 
-Xiao -
-  this delay may be possible due to many things, but the simplest
-possibility that comes to mind is that Daniel (here cc'd) from H1 has only
-gotten a reservation of CVE number, and he and MITRE have not triggered the
-submission yet.
+Hello,
 
-The classic turnaround with MITRE submissions (via the webform) is less
-than 48h from my experience, so when we're seeing weeks of delays, it
-typically means MITRE has not been told to publish it yet.
+A flaw was found in the memory management API of QEMU during the
+initialization of a memory region cache. This flaw could lead to an
+out-of-bounds access of the Message Signalled Interrupt (MSI-X) table
+while performing MMIO operations. A privileged guest user may abuse
+this issue to crash the QEMU process on the host, resulting in a
+denial of service.
 
+Upstream fix:
+https://git.qemu.org/?p=qemu.git;a=commit;h=4bfb024bc76973d40a359476dc0291f46e435442
 
-Hope that helps,
+This issue was reported by Alexander Bulekov (cc'd).
+CVE-2020-27821 was assigned by Red Hat Inc.
 
-On Thu, Jul 2, 2020 at 12:07 PM Zhang Xiao <xiao.zhang@...driver.com> wrote:
-
-> Hi All,
->
-> I am an engineer of WindRiver. Thanks for Alexander's remind about the distribution and we would like to "backup" the first item of the administrative list:https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->
-> 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date/time) *- primary: Oracle, backup: vacant
-> *
-> Please let me know how we get started helping out.
->
-> And, I have another point want to discuss. As we know, sometimes, the CVE and NVD website don't upgrade their web page timely. For example:
->
-> the security maillist had an encrypted mail called "curl: overwrite local file with -J" in 20200617. It was a "pre-notification about a security advisory about to ship next week in sync with our next curl release", for CVE-2020-8177. On curl's git tree, that very bug did been fixed and released in 20200621:https://github.com/curl/curl/commit/8236aba5854
->
-> But, till now, both cve.mitre.org and nvd.nist.gov still mark this CVE as "RESERVED":https://nvd.nist.gov/vuln/detail/CVE-2020-8177https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177
->
-> So I wonder if that is also an contribution to remind them, if so, any advises to make it? And If it ca be defined as an contribution, we can take it. :-)
->
->
-> Thanks
-> Xiao
->
->
-
+Best regards.
 -- 
-Francis Perron
-  Vulnerability Coordination @ Google inc.
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
