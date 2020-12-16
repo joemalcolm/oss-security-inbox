@@ -1,4 +1,9 @@
-Received: (qmail 12122 invoked by uid 550); 2 Apr 2024 18:29:07 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["649" "Wednesday" "16" "December" "2020" "18:05:58" "+0100" "Mauro Matteo Cascella" "mcascell@redhat.com" "<CAA8xKjXKseHt=cdka4K5+hQCXTD88=uyKxYJ-UQW6+ZoczTp2A@mail.gmail.com>" "21" "[oss-security] CVE-2020-27821 QEMU: heap buffer overflow in msix_table_mmio_write() in hw/pci/msix.c" nil nil nil "12" "2020121617:05:58" "[oss-security] CVE-2020-27821 QEMU: heap buffer overflow in msix_table_mmio_write() in hw/pci/msix.c" (number mark "U       mcascell@red Dec 16   21/649   " thread-indent "\"[oss-security] CVE-2020-27821 QEMU: heap buffer overflow in msix_table_mmio_write() in hw/pci/msix.c\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-27821 QEMU: heap buffer overflow in msix_table_mmio_write() in hw/pci/msix.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5243 invoked by uid 550); 16 Dec 2020 19:41:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,103 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9659 invoked from network); 2 Apr 2024 18:27:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=korelogic.com;
-	s=mail; t=1712082440;
-	bh=cxfEkqMjGhpfSxfHEONdfwlK7PwEh6r3AIuBSL2NWvw=;
-	h=Date:From:To:Subject:Reply-To:In-Reply-To;
-	b=FT8CVdZA36aj/ukWiJVlELfjYOjmj8v+/LOrNbkgSEtCmZzxIVxBx++bu/qyDcZuZ
-	 xaTUYgEBgD+tP7D9GhKwbmSab6oRRDDZCsaSEmFFOlWS4v7GHRqtyXAU0t/CuP4iuJ
-	 72Dtasp7Mgu07XGkWKPte0tIBELKq+ZWVlwsRyao=
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.103.8 at mail.korelogic.com
-Date: Tue, 2 Apr 2024 12:27:18 -0600
-From: Hank Leininger <hlein@korelogic.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20240402121050.552d3d82-1bc9-4d55-8d92-91b935e0e308@korelogic.com>
+Received: (qmail 30418 invoked from network); 16 Dec 2020 17:06:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1608138374;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=njZVqXMYIOq6dE1ml283FXbkSC6mvDd8HhTcnoBFKic=;
+	b=YmfgkIt/5wNwT869aHi6CiT8qNFUTniRqj7e36lj5RDSRtOi5r3D6/+wGZqh2UGV5NGXHC
+	xEB11nkA8FyfBg22j5wOp8HG/vmefiq+kspen1e8wvp81w3+EqDyd+/1prZQ8sMDEbW8z6
+	WGpAMA3/1CmMCie2mbKI17wswfmJ3gk=
+X-MC-Unique: 2vJVhJgFM-GvVuQeefycdw-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=njZVqXMYIOq6dE1ml283FXbkSC6mvDd8HhTcnoBFKic=;
+        b=szC88SqhFAsiTWbaTYzDqwegp/KPnEBIyDq8sIqLaiKgGx5NYDwFaanv0wyVH38oJj
+         3al1/VtqfzmjN9eKusGK0X2+n4oPdE8dH24sxYjRW+3eLxAsuiao+JTUMeBSZXINTwkd
+         WSdTpCdRD8twpMftA/3V49ZpYlTAB9EA7t2a5htVxRGklKGyITqHhYYerV4piwyU6sG9
+         91qizoazaxmFyKMKKY3zcJm7X9Cyja9l6r/KL9ym61/mRWHHNb+vEhGLXDuPDKkOQ3YH
+         8k01VnIU/WkAGWhOEWvDCGTtUrgHrPztxC0B8KU83AmyI8qUD2jRcen1hFqxKzpk4tMG
+         OiZQ==
+X-Gm-Message-State: AOAM5313QdX8Mx5agQ1s4SaStpsEMEERC8EGe5ds7QTT2EVcdgWvO24U
+	HkeX1gS7ITNlE6q4kWc6LmazF1p2ZwbKbkuDINq6oQU946vFleAGNFWTFfVdRTbbQ/rkMUqYbCy
+	HxrubUsZzoHn39RFo+egOLaiMaqgT2AcsLd8PMUJf6lNO
+X-Received: by 2002:a17:906:2818:: with SMTP id r24mr30575688ejc.100.1608138369289;
+        Wed, 16 Dec 2020 09:06:09 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJxWtlA87Hd8nqAVWA9noV5zhsw1x0JmgjMbCSE+hnGXQhlkh7JAbg1HvAB5/83/iSXyWm/BbA83UGmSd0YrlVw=
+X-Received: by 2002:a17:906:2818:: with SMTP id r24mr30575672ejc.100.1608138369118;
+ Wed, 16 Dec 2020 09:06:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="Kzz4DPwJl+Q0505E"
-Content-Disposition: inline
-In-Reply-To: <uuhg0r$3dd$1@ciao.gmane.io>
-Subject: [oss-security] Re: finding similar compromises (was Re: From xz to ibus: ...
+From: Mauro Matteo Cascella <mcascell@redhat.com>
+Date: Wed, 16 Dec 2020 18:05:58 +0100
+Message-ID: <CAA8xKjXKseHt=cdka4K5+hQCXTD88=uyKxYJ-UQW6+ZoczTp2A@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: Alexander Bulekov <alxndr@bu.edu>
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=mcascell@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2020-27821 QEMU: heap buffer overflow in
+ msix_table_mmio_write() in hw/pci/msix.c
 
---Kzz4DPwJl+Q0505E
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hello,
 
-On 2024-04-02, Tavis Ormandy wrote:
-> On 2024-04-02, Tavis Ormandy wrote:
-> > On 2024-04-01, HW42 wrote:
-> >> Hi Jan,
-> >>
-> >> great that you are looking for further problems. (Just to be clear,
-> >> I'm not associated with ibus in any way.)
-> >
-> > Yes, agreed. In the interests of discussing things in the open after
-> > just complaining about embargoes... :)
+A flaw was found in the memory management API of QEMU during the
+initialization of a memory region cache. This flaw could lead to an
+out-of-bounds access of the Message Signalled Interrupt (MSI-X) table
+while performing MMIO operations. A privileged guest user may abuse
+this issue to crash the QEMU process on the host, resulting in a
+denial of service.
 
-Along similar lines, I've been analyzing other packages to see if I can
-find similar fragments to those used in the stage0, stage1, stage2
-loaders from the xz-utils backdoor:
+Upstream fix:
+https://git.qemu.org/?p=qemu.git;a=commit;h=4bfb024bc76973d40a359476dc0291f46e435442
 
-https://github.com/hlein/distro-backdoor-scanner
+This issue was reported by Alexander Bulekov (cc'd).
+CVE-2020-27821 was assigned by Red Hat Inc.
 
-tl;dr: did some scans, more to come, nothing found yet; help add patterns.
+Best regards.
+-- 
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
-I'll quote my own README here:
-
-###
-
-The toolkit used for the xz-utils backdoor is far too sophisticated to
-be a first draft. Were there earlier iterations of this, that shared
-some things in common but were slightly simpler, injected into other
-projects? Can we detect the style/"fist" of the author elsewhere? Moreso
-the delivery mechanics than the contents of the extracted+injected
-malicious .so.
-
-These scripts unpack the source packages for all of a distro repo's
-current packages, then scan them for content similar to the malware that
-was added to xz-utils.
-
-Running over the unpacked source trees of ~19k Gentoo packages and ~40k
-Debian packages gives a manageable amount of results (~hundreds of
-hits), digestable by a human. So far the only confirmed malicious
-results are... from the backdoored xz-utils versions.
-
-There need to be more search patterns, among other things; see TODO.
-
-###
-
-Working on some submitted patches and adding Rocky Linux support ~today.
-
-Thanks,
-
---=20
-
-Hank Leininger <hlein@korelogic.com>
-8428 ED14 5268 C727 0C48  F454 846F 0637 5FEB 1612
-
---Kzz4DPwJl+Q0505E
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEhCjtFFJoxycMSPRUhG8GN1/rFhIFAmYMTgYACgkQhG8GN1/r
-FhJWCw/9Fo7fHDzilNGaO8yDGuTw83KcHU601xEgARDCEUQ4/DXEL/1oxBA2tmar
-W54tNuXDI1CcUzaP31GW2MmkATFdJcgB5SbQyIeaupwVzEtjojlMG8+xV9J2RlKM
-n3vH+6+HtqQaBz9eXmL7O9RHPSbN6yEM6KBHNrA9ttBpVO6YToLDlxfuy4oCT11C
-YGkV92i1fdNws5xzKecUv5O+i3a4iGuQG416Zmp5Y5sK9egXDn9L+nXJ+S+wC7B6
-C0bWl0j9h9r/IE8jIqLFS+HHg99luxPE5z79g6xvrZBNh1/e8ROFDjCsOBy82X6X
-0MiLFaiBE9mk6eNOQ/gx5s0yr/4KaGVkCpSmRU/rQNpYiZC+Gm+LtpHuEI755EtG
-ipOZ3XjUsqdnkDfg/c70haObaKOq9bBdVoAN8MmMCPZTMq4oKjoFastwwyVUHSZ3
-6xuDCjMOX+kGJKWiRRPsWKxXdnqcfkZlDKsf+z37aDFvKE3kUA4+BB0vpRhSVtnm
-b/KanSvHTpMdJraoW0HUm4X3XusQVk532DpJJ6KZEPCyaKM9z7DNkm/FEckOR8YZ
-9RvlMV+0ERFIn3n710e2QQv+R5YDs8TKOjRIdXjzQx8Znugp98JNUl+Az7zDjg72
-lU7mRf6OccqHArcMrPrQOum5XrVl2dZCNPJMFs7gTASZ8gDWc0g=
-=xLZx
------END PGP SIGNATURE-----
-
---Kzz4DPwJl+Q0505E--
