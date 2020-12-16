@@ -1,29 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/2
-Message-ID: <CAKMqrge9afTtC-oF6b6-sn6dN-4+QNHSmt50eA54mMnP=vCzzw@mail.gmail.com>
-Date: Fri, 7 Aug 2020 17:27:04 -0700
-From: Ian Maxon <imaxon@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-9479] Directory traversal vulnerability in Apache AsterixDB
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/16/4
+Message-Id: <E1kpaE5-0006zV-Gk@xenbits.xenproject.org>
+Date: Wed, 16 Dec 2020 17:04:33 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 358 v5 (CVE-2020-29570) - FIFO event channels control block related ordering
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-9479: AsterixDB directory traversal
-Severity: Important
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Vendor: The Apache Software Foundation
+            Xen Security Advisory CVE-2020-29570 / XSA-358
+                               version 5
 
-Versions Affected: None released, git commits
-580b81aa5e8888b8e1b0620521a1c9680e54df73 to
-28c0ee84f1387ab5d0659e9e822f4e3923ddc22d ,
-fixed in 28c0ee84f1387ab5d0659e9e822f4e3923ddc22d and mitigated by
-694ffd194ce5c6e610f61368c1511778d0bff254
-Description: When loading a UDF, a specially crafted zip file could
-allow files to be placed outside of the UDF deployment directory.
+          FIFO event channels control block related ordering
 
-Mitigation: Upgrade unreleased versions past
-28c0ee84f1387ab5d0659e9e822f4e3923ddc22d or to 0.9.5 .
-Don't allow untrusted access to the UDF endpoint.
+UPDATES IN VERSION 5
+====================
 
-Example: The zip file will contain a directory entry named ".."
+"Unstable" patch updated (needed re-basing).
 
-Credit: This issue was discovered by Yiming Xiang of NSFOCUS
+ISSUE DESCRIPTION
+=================
+
+Recording of the per-vCPU control block mapping maintained by Xen and
+that of pointers into the control block is reversed.  The consumer
+assumes, seeing the former initialized, that the latter are also ready
+for use.
+
+IMPACT
+======
+
+Malicious or buggy guest kernels can mount a Denial of Service (DoS)
+attack affecting the entire system.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from 4.4 onwards are vulnerable.  Xen versions 4.3 and
+earlier are not vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of Amazon.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa358.patch           xen-unstable
+xsa358-4.14.patch      Xen 4.14 - 4.10
+
+$ sha256sum xsa358*
+0e8428a52e9bedafb2d8cbbb8dffae4e882e4b0898e4e7df3576c99e0e607167  xsa358.meta
+c0763c85287d138a02dc795aa5d2e903ca7efc641390bee53ea2f7473f4f95af  xsa358.patch
+937a3786d3d0147aef63eed373ed1df9ede75d1fabf5ad8f6ccaacfbf7fbcf42  xsa358-4.14.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/aPhoMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZhWkH/08MG6OKo6O0vXv9PuznO/6JPjpSmAgkQYUBqYkw
+cAp/yq1kXo3kA+TyHQUPZwBzWx+B0OAG7OBDIoyDlVRhj5Z24YINY+knWzocyXmn
+7b6p8RdEf47cvWYn3Nugh2KXDdVo+CZ2C597kUBJSSuAJicT3BU3NIexXXLM9phU
+zeGcm39u4/ucZoBAAzP8IlsjxTs3woZG8ZlNNRrcF2QF98AWK1joIR3j54bWqwKs
+xvI+BLOXjhpr9Q2P/WY7zQsvWfw2dRsYpGMtPRpug+jpYOV51q//CnrDoSF7mXj9
+oHMklW1n/C+U0NeXMXdiwb+PhcP40m1ltya0Vfal8rPH1G4=
+=GzHh
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa358.meta" of type "application/octet-stream" (2467 bytes)
+
+Download attachment "xsa358.patch" of type "application/octet-stream" (2050 bytes)
+
+Download attachment "xsa358-4.14.patch" of type "application/octet-stream" (1840 bytes)
