@@ -1,32 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/10/2
-Message-ID: <c177c453-0c5f-2bae-473b-881013cf8731@msgid.tls.msk.ru>
-Date: Mon, 10 Aug 2020 12:18:07 +0300
-From: Michael Tokarev <mjt@....msk.ru>
-To: oss-security@...ts.openwall.com, Mauro Matteo Cascella <mcascell@...hat.com>
-Cc: Alexander Bulekov <alxndr@...edu>, ziming zhang <ezrakiez@...il.com>
-Subject: Re: CVE-2020-16092 QEMU: reachable assertion failure in net_tx_pkt_add_raw_fragment() in hw/net/net_tx_pkt.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/16/7
+Message-ID: <CABBoStgbyztdQ3rcAmjROt5LGLi49j3LqGKjgj9xWgOAEF5vXw@mail.gmail.com>
+Date: Wed, 16 Dec 2020 16:08:01 -0500
+From: Ana McTaggart <amctagga@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-27781 User credentials can be manipulated and stolen by Native CephFS consumers of OpenStack Manila
 Content-Type: text/plain; charset=utf-8
 
-10.08.2020 11:25, Mauro Matteo Cascella wrote:
-> Hello,
-> 
-> An assertion failure issue was found in QEMU in the network packet
-> processing component. This issue affects the "e1000e" and "vmxnet3"
-> network devices. This flaw allows a malicious guest user or process to
-> abort the QEMU process on the host, resulting in a denial of service
-> condition.
-> 
-> Upstream patch:
->   -> https://git.qemu.org/?p=qemu.git;a=commit;h=035e69b063835a5fd23cacabd63690a3d84532a8
+Dear all,
+We have received a report of the following vulnerability affecting CephFS.
+At Red Hat, we have assigned it CVE-2020-27781
 
-Hmm. Is it really worth the effort to treat these things as security
-issues? There are so many ways to crash a machine (be it virtual or
-hardware), there are definitely countless ways to crash things from
-within privileged code.. what's the security impact of a hardware
-issue when, say, a driver code in the OS does a stupid thing and
-the hardware locks up?
+We are proposing a public date of 12/16/2020, as suggested by the
+reporter, but want to ensure agreement with upstream first.
+I have included our original description of the flaw as follows.
+
+Issue: User credentials can be manipulated and stolen by Native CephFS
+consumers of OpenStack Manila
+
+Products affected: RHCS 3.x, RHCS 4.x
+
+Who reported this vulnerability:
+   - Garbutt, John <john@...ngarbutt.com>
+   - Babel, Jahson <jahson.babel@...in2p3.fr>;
+   - Pacha Ravi, Goutham <gouthamr@...hat.com>;
+
+Details:
+
+OpenStack Manila can provide users with Native CephFS shared file
+systems [1]. When a user creates a "share" (short for "shared file
+system") via Manila, a CephFS "subvolume" is created on the Ceph
+cluster and exported to the manila user. After creating their share, a
+user can specify who has access to the share with the help of "cephx"
+client user names. A cephx client corresponds to Ceph Client Users
+[2]. When access is provided, a client user key is returned via
+manila. The interaction between manila and CephFS is driven by two
+important parts:
+ - The CephFS driver in manila [3]
+ - The "ceph_volume_client" python interface driver in ceph [4]
+
+The problem here is that OpenStack Manila users can request access to
+a share to any arbitrary cephx user, including privileged pre-existing
+users and the interface drivers will retrieve the access key of that
+user along with providing access to the share. This access key is then
+visible to all users of the OpenStack project that owns the share.
+With the help of any prior capabilities of the pre-existing cephx
+client user, an attacker has unintended access to the access key of
+the user and can target any resource that the user has access to. An
+attacker can even obtain the default ceph "admin" user's key in this
+manner, and execute any commands as the ceph administrator.
 
 Thanks,
+Goutham Pacha Ravi
+Project Technical Lead, OpenStack Manila
+Sr. Software Engineer, RH OSP Storage
 
-/mjt
+
+[1] https://docs.openstack.org/manila/latest/admin/cephfs_driver.html
+[2] https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/4/html/administration_guide/ceph-user-management
+[3] https://opendev.org/openstack/manila/src/commit/7b15796aa5567868e30a6b2b80c57006cfa4f085/manila/share/drivers/cephfs/driver.py
+[4] https://github.com/ceph/ceph/blob/c10a7240b657553c366fe62aca92e93d35b166e9/src/pybind/ceph_volume_client.py
+[5] https://ceph.io/security/
+
+Ana McTaggart
+
+Red Hat Product Security
+
+Red Hat Remote <https://www.redhat.com>
+
+
+secalert@...hat.com for urgent response
+
+
+amct@...hat.com
+
+
+M: +1 (774)279-0791 <7742790791>     IM: amctagga
+
+
+Pronouns:They/Them/Theirs
+
