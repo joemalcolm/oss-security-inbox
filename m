@@ -1,4 +1,9 @@
-Received: (qmail 26368 invoked by uid 550); 28 Dec 2022 15:37:43 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2884" "Wednesday" "16" "December" "2020" "16:08:01" "-0500" "Ana McTaggart" "amctagga@redhat.com" "<CABBoStgbyztdQ3rcAmjROt5LGLi49j3LqGKjgj9xWgOAEF5vXw@mail.gmail.com>" "78" "[oss-security] CVE-2020-27781 User credentials can be manipulated and stolen by Native CephFS consumers of OpenStack Manila" nil nil nil "12" "2020121621:08:01" "[oss-security] CVE-2020-27781 User credentials can be manipulated and stolen by Native CephFS consumers of OpenStack Manila" (number mark "U       amctagga@red Dec 16   78/2884  " thread-indent "\"[oss-security] CVE-2020-27781 User credentials can be manipulated and stolen by Native CephFS consumers of OpenStack Manila\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-27781 User credentials can be manipulated and stolen by Native CephFS consumers of OpenStack Manila" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 8093 invoked by uid 550); 16 Dec 2020 21:21:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,117 +12,122 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18121 invoked from network); 28 Dec 2022 15:25:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hardenedbsd.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/B1rOCH9HmW+vhDEypyd7tOOp9ZpzuMp1iRK/8e6VVE=;
-        b=dZRaLcJt0LA5Sb4x8OsTw5hsUcfVPzPLAtoCa/4ntHT8PwvuRAlD76g80CtcyygsYa
-         dCo0hik7AA0m6xY+AeiUqVhR23n9WtVTg7Kw51xF8uWZWA6QGFqCzD8wsH/7eiGIIHQm
-         wud3Ghtd73qp89MrwYRwTRtMkJx24SZwmnQO/hWC5rhlkH0FS/O6L8KrTOjsTLZBT9Qd
-         dMdnGSbm5PRoj5NlqmEJXr8WgYn4WqdcsySTmyES12faWKFpV7V5bO6FdmF/RAa8aQ6r
-         yeeFn/QBhmT+PtTxeOQbRqGexlNjisovgvqBc3Q9xi3fiOhSKcBkFzRQAA4bI5JuDjUl
-         35dw==
+Received: (qmail 1538 invoked from network); 16 Dec 2020 21:08:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1608152897;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=KZuDMNU77Fk1TAE8/Sl+9oHS9SZXoHHrTPm3stBAk+c=;
+	b=gGjBs1CAlU6xL4mN+6BTO9H82OfuvLo1txYZNiN3pUYTYg5RTs0xbDeBccoHaxvDZYY36W
+	/pqhWFZHC3J302qZEl5o3NJNauA/pPnFbsJ/DSYek+YCGoiNlTSarApseQW01V3OojV578
+	A78jdg0nb6dnMyWUGayVcyHw/IMlx8Y=
+X-MC-Unique: JO8E9xTsOs2sbGQj05Yvig-1
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/B1rOCH9HmW+vhDEypyd7tOOp9ZpzuMp1iRK/8e6VVE=;
-        b=dlqXqPlSQcEOS10t5R7DERIScU0mZpCuZeB7r7RJibGbognBqnE4yg1v9xB/87KF1N
-         YRN2yvt4Opd88YTGGY+LPXrAyapSH+9MrKeCk4DIY3Y/UTfcVbD6S/UB+A5smrkpjC60
-         bO3AuQqwwEm6y2wSZaZvk4IY3DRKnvxrqgR7cl8YABWIxctzx83as9BUkJAyD5RfLoNO
-         0nFg2W1ruPGrzd7k6zajaOcynQMKFN8X21WUwKTLjHkl2LZSQAbNyK57fsUC3gvjrbje
-         xzQNqdkgj3Lz4JYOVIMpAqKEMtFca70y08UYtwlfHKhkUkeLpDBLwxzIKn0+tvBBP3yp
-         eIzg==
-X-Gm-Message-State: AFqh2kpyNMbgaUIcnD7xARDroaI6yz47TKZYs48Ne48dR8ccmuv34nWE
-	LZ4O0C/n94YDWAxLkanngCtDrdhzJwCCCMaSGJY2MR439coMNz6IK3Gub0b/GQkSiUxRzZIvDXE
-	eT4JExABimVMgrxFsVUzjYYD7eUkU1y7aCLDV29YWD8uLM9CMljnP7OirAIkqEQvw1Tbl54k7G0
-	xFfD/jcZg2pSp0lUXHmQ==
-X-Google-Smtp-Source: AMrXdXv4sMiSL7vKKuaChkyg9/yi5j3uuoC3NO91mZj+xIm23uyWN3whKb8odSyXTWfADQZtfdST6Q==
-X-Received: by 2002:a0d:d452:0:b0:364:1ba1:4bd2 with SMTP id w79-20020a0dd452000000b003641ba14bd2mr26414420ywd.43.1672241099492;
-        Wed, 28 Dec 2022 07:24:59 -0800 (PST)
-Date: Wed, 28 Dec 2022 10:24:58 -0500
-From: Shawn Webb <shawn.webb@hardenedbsd.org>
-To: oss-security@lists.openwall.com
-Cc: Alejandro Colomar <alx.manpages@gmail.com>,
-	Michael Kerrisk <mtk.manpages@gmail.com>,
-	linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
-Message-ID: <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
-X-Operating-System: FreeBSD mutt-hbsd 14.0-CURRENT-HBSD FreeBSD
- 14.0-CURRENT-HBSD 
-X-PGP-Key: https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/blob/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
-References: <Y6SJDbKBk471KE4k@p183>
- <Y6TUJcr/IHrsTE0W@codewreck.org>
- <1a1963aa1036ba07@orthanc.ca>
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=KZuDMNU77Fk1TAE8/Sl+9oHS9SZXoHHrTPm3stBAk+c=;
+        b=qxKNBTjetFlFeJrdbCj5QcDMX6MjiZFRGYmQYcP3MV7JrL2TahPmLUWZEjht+4nj7e
+         lznnhCHYhb4yQHoy/+pRTSD/a1yjVtKA2YOTlzlUNntsxACbe+ytLoSvIHCjJvfnm6dp
+         WgMt2pHXqBUgLRM4ISxZ6j9Y7O/PBDPRasbg2UdO4LPJxifH6EE9aKb9E9UxJvt5ma1Z
+         MVaNtRNC+SS1pzakS9zxdKgYSdRt7roEibMa113XMImWS0rL3Zn3CtT8VsuSZFvv1T0l
+         QDByRdJllXZBlVaPtYHA5a5U2EnPskh0uTPmZFMPL+6itdSULM+y36T6ct78sP0NZXVv
+         xjkw==
+X-Gm-Message-State: AOAM532zFVwjBcXrRAzClPDjRKZYtX0JLOBmfUwRgVAMCSwU/yTZgxM5
+	0yNVaRHWOWTe9EJ9Odmyf0ETIluea/M2sqg949MeX+6zKRuv6VVUBEwEMzYYB5MSfwH0obBhW1N
+	2tI2H91E8gOK0O8tmW0fcyDW5CKopRbeVvEPEqhGWcvPd
+X-Received: by 2002:a05:6214:110d:: with SMTP id e13mr45454040qvs.50.1608152892276;
+        Wed, 16 Dec 2020 13:08:12 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJzR2e/JLebmomrmiUFff58y1eScOBjxTM3SMP9A9pYSL/QiNWQKSe9w6sDBVc+IzF3ZDXv0qGIQSD10GpWlnmM=
+X-Received: by 2002:a05:6214:110d:: with SMTP id e13mr45454012qvs.50.1608152891915;
+ Wed, 16 Dec 2020 13:08:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="tq67mwsdswvrgjh4"
-Content-Disposition: inline
-In-Reply-To: <1a1963aa1036ba07@orthanc.ca>
-Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
- correctly
+From: Ana McTaggart <amctagga@redhat.com>
+Date: Wed, 16 Dec 2020 16:08:01 -0500
+Message-ID: <CABBoStgbyztdQ3rcAmjROt5LGLi49j3LqGKjgj9xWgOAEF5vXw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=amctagga@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="000000000000de42aa05b69b4520"
+Subject: [oss-security] CVE-2020-27781 User credentials can be manipulated and stolen by
+ Native CephFS consumers of OpenStack Manila
 
---tq67mwsdswvrgjh4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--000000000000de42aa05b69b4520
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) =
-wrote:
-> Dominique Martinet writes:
->=20
-> > But, really, I just don't see how this can practically be said to be pa=
-rsable...
->=20
-> In its current form it never will be.  The solution is to place
-> this variable-length field last.  Then you can "cut -d ' ' -f 51-"
-> to get the command+args part (assuming I counted all those fields
-> correctly ...)
->=20
-> Of course, this breaks backwards compatability.
+Dear all,
+We have received a report of the following vulnerability affecting CephFS.
+At Red Hat, we have assigned it CVE-2020-27781
 
-It would also break forwards compatibility in the case new fields
-needed to be added.
+We are proposing a public date of 12/16/2020, as suggested by the
+reporter, but want to ensure agreement with upstream first.
+I have included our original description of the flaw as follows.
 
-The only solution would be a libxo-style feature wherein a
-machine-parseable format is exposed by virtue of a file extension.
+Issue: User credentials can be manipulated and stolen by Native CephFS
+consumers of OpenStack Manila
 
-Examples:
+Products affected: RHCS 3.x, RHCS 4.x
 
-1. /proc/pid/stats.json
-2. /proc/pid/stats.xml
-3. /proc/pid/stats.yaml_shouldnt_be_a_thing
+Who reported this vulnerability:
+   - Garbutt, John <john@johngarbutt.com>
+   - Babel, Jahson <jahson.babel@cc.in2p3.fr>;
+   - Pacha Ravi, Goutham <gouthamr@redhat.com>;
+
+Details:
+
+OpenStack Manila can provide users with Native CephFS shared file
+systems [1]. When a user creates a "share" (short for "shared file
+system") via Manila, a CephFS "subvolume" is created on the Ceph
+cluster and exported to the manila user. After creating their share, a
+user can specify who has access to the share with the help of "cephx"
+client user names. A cephx client corresponds to Ceph Client Users
+[2]. When access is provided, a client user key is returned via
+manila. The interaction between manila and CephFS is driven by two
+important parts:
+ - The CephFS driver in manila [3]
+ - The "ceph_volume_client" python interface driver in ceph [4]
+
+The problem here is that OpenStack Manila users can request access to
+a share to any arbitrary cephx user, including privileged pre-existing
+users and the interface drivers will retrieve the access key of that
+user along with providing access to the share. This access key is then
+visible to all users of the OpenStack project that owns the share.
+With the help of any prior capabilities of the pre-existing cephx
+client user, an attacker has unintended access to the access key of
+the user and can target any resource that the user has access to. An
+attacker can even obtain the default ceph "admin" user's key in this
+manner, and execute any commands as the ceph administrator.
 
 Thanks,
+Goutham Pacha Ravi
+Project Technical Lead, OpenStack Manila
+Sr. Software Engineer, RH OSP Storage
 
---=20
-Shawn Webb
-Cofounder / Security Engineer
-HardenedBSD
 
-https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A=
-4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
+[1] https://docs.openstack.org/manila/latest/admin/cephfs_driver.html
+[2] https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/4/html/administration_guide/ceph-user-management
+[3] https://opendev.org/openstack/manila/src/commit/7b15796aa5567868e30a6b2b80c57006cfa4f085/manila/share/drivers/cephfs/driver.py
+[4] https://github.com/ceph/ceph/blob/c10a7240b657553c366fe62aca92e93d35b166e9/src/pybind/ceph_volume_client.py
+[5] https://ceph.io/security/
 
---tq67mwsdswvrgjh4
-Content-Type: application/pgp-signature; name="signature.asc"
+Ana McTaggart
 
------BEGIN PGP SIGNATURE-----
+Red Hat Product Security
 
-iQIzBAABCAAdFiEEA6TL67gupaZ9nzhT/y5nonf44foFAmOsX7sACgkQ/y5nonf4
-4frR+g/9FSG8mCUh/OYcCWgfRUJRi+2bBxoklcCfEcswS60dOe+dAOZ3kfpnmPig
-SLm/eY5Bgl1hkHF8+Mz6pFJu9Nlg3+ZmJ4LlWV6L6SZsry0V5NTlwAmUqyqysqYO
-e3R6UXGnv5JBYK2fyzk7r2eebzfUtGwCo+vBeq1tJNSPKkqA49fvSVZeGQYPYmAW
-FZJHQhKdJ0OBpxNa8JPW+HAsmJInXVBRlZos9yYkaAsvTFH+ymtp8Dn+2h99HL0H
-hClUswUv+DD9M/XeBeovg7f07BWUj8kwWjKDfgZCAJKvupFu7hLZemh7+ZDXgXcZ
-Wiog9NqztTFJHfZO9YmcEdoBlT1IM9aIwNjOtCjsWNzNINOe//VFuNdc1obx4l32
-nnu3FjxLx6kv7rkWfMPB1gloIcKDZmiSVWm8m0UYoVEwIpX0avaGNGg0URVq/Vf1
-FukDumq8CSsyb673Z5m4iDJBbKBo2KnMOQcDEdHqkbvXb4Ug/8tGpfq/NRVRjqkB
-KV4tDnYZ70paHbJOX6Bb6MEPA4ywyT9Hy4MZv+3SBZkWvLNkpVs+GBWpmzcTQWuO
-clxGl1Kz+aHZon4RAnxwU31NBjmvvRvbkGHTjzFFrUxNCrIdu/VSDPFZX4/uWFX2
-Qj1SV0/8/pL0CAzLtxiYD9hEWqMEyS0yMZ5zcv2XUMSICItK3/A=
-=YDgV
------END PGP SIGNATURE-----
+Red Hat Remote <https://www.redhat.com>
 
---tq67mwsdswvrgjh4--
+
+secalert@redhat.com for urgent response
+
+
+amct@redhat.com
+
+
+M: +1 (774)279-0791 <7742790791>     IM: amctagga
+
+
+Pronouns:They/Them/Theirs
+
+--000000000000de42aa05b69b4520--
+
