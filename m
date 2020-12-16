@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2820" "Saturday" "5" "March" "2016" "22:28:05" "+0100" "=?iso-8859-1?Q?Ren=E9_Rebe?=" "rene@exactcode.de" "<1F770735-1836-4A8A-B8E2-14B39E77EB78@exactcode.de>" "89" "[oss-security] Re: [exact-image] Missing fixes for CVEs in upstream dcraw" nil nil nil "3" "2016030521:28:05" "[oss-security] Re: [exact-image] Missing fixes for CVEs in upstream dcraw" (number mark "U       rene@exactco Mar  5   89/2820  " thread-indent "\"[oss-security] Re: [exact-image] Missing fixes for CVEs in upstream dcraw\"\n") "<CAFGhKbxmdh=rjvzWE2QRh_c_Wwq7mVm2JYhN=Q_LTw1USq-XeA@mail.gmail.com>" ("<CAFGhKbyhOpRC-P6EEJuiWNz5Fb46GiYzrSNGaouy0-0hV5_b2Q@mail.gmail.com>" "<20160305023423.GA20136@shell.cybercom.net>" "<CAFGhKbxmdh=rjvzWE2QRh_c_Wwq7mVm2JYhN=Q_LTw1USq-XeA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["918" "Wednesday" "16" "December" "2020" "16:31:08" "+0000" "Jonathan Gallimore" "jonathan.gallimore@gmail.com" "<CAGRgoZh0pZ4LP0s3za98GDqkuLJimhMQugOU4X4h8Rcq444mUg@mail.gmail.com>" "31" "[oss-security] CVE-2020-13931 Apache TomEE - Incorrect config on JMS Resource Adapter can lead to JMX being enabled" nil nil nil "12" "2020121616:31:08" "[oss-security] CVE-2020-13931 Apache TomEE - Incorrect config on JMS Resource Adapter can lead to JMX being enabled" (number mark "U       jonathan.gal Dec 16   31/918   " thread-indent "\"[oss-security] CVE-2020-13931 Apache TomEE - Incorrect config on JMS Resource Adapter can lead to JMX being enabled\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-13931 Apache TomEE - Incorrect config on JMS Resource Adapter can lead to JMX being enabled" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28424 invoked by uid 550); 5 Mar 2016 21:33:46 -0000
+Received: (qmail 8002 invoked by uid 550); 16 Dec 2020 16:33:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,114 +12,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25603 invoked from network); 5 Mar 2016 21:29:16 -0000
-Content-Type: text/plain; charset=iso-8859-1
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-From: =?iso-8859-1?Q?Ren=E9_Rebe?= <rene@exactcode.de>
-In-Reply-To: <CAFGhKbxmdh=rjvzWE2QRh_c_Wwq7mVm2JYhN=Q_LTw1USq-XeA@mail.gmail.com>
-Date: Sat, 5 Mar 2016 22:28:05 +0100
-Cc: rawstudio-users@rawstudio.org,
- =?iso-8859-1?Q?G=E1bor_Horv=E1th?= <ghorvath@hit.bme.hu>,
- Anders Brander <anders@brander.dk>,
- dcoffin@cybercom.net,
- darktable-dev@lists.darktable.org,
- ExactImage developers mailing list <exact-image@exactcode.de>,
- xbmc-addons@lists.sourceforge.net,
- ufraw-devel@lists.sourceforge.net,
- oss-security@lists.openwall.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <1F770735-1836-4A8A-B8E2-14B39E77EB78@exactcode.de>
-References: <CAFGhKbyhOpRC-P6EEJuiWNz5Fb46GiYzrSNGaouy0-0hV5_b2Q@mail.gmail.com> <20160305023423.GA20136@shell.cybercom.net> <CAFGhKbxmdh=rjvzWE2QRh_c_Wwq7mVm2JYhN=Q_LTw1USq-XeA@mail.gmail.com>
-To: Charlemagne Lasse <charlemagnelasse@gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
-Subject: [oss-security] Re: [exact-image] Missing fixes for CVEs in upstream dcraw
+Received: (qmail 7360 invoked from network); 16 Dec 2020 16:31:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=m4Sp3AMq5TW8WZciR2hhULTtA15jjiGJnhhfXMXlD0M=;
+        b=Mh0FDy9izaHtlD24PpaCdBx/vDce/wpiKiGc2ORqvB5nwqo0OVNyAMxouQObuBnEAm
+         meJZYqVgjOsk0TW/3zAP/AOIGK0AaRJspadZ7mmKSTWp78FCDwAV2s6zXPsrsbI+jENS
+         c8toC7FlsF5DwAcE+3zw/T4r3nkB0Fq0GksO09L3dFmZ2WDZeJIS82K7V+H8k/zJmWst
+         XR6lLQG66CIFqqAKdwJXudW7O54UxlRKnBCaFWppgLjPBvgzyWP34aJSkWPfu1QqO/Lx
+         AEqN+0/CMFMQA1GoRlOfGne8bnLd9dHYlxMNKjY51nODti4NSlcPs1Wf6qVSUv2QciXO
+         zKcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=m4Sp3AMq5TW8WZciR2hhULTtA15jjiGJnhhfXMXlD0M=;
+        b=kTUr1/Kf8AykLU1VMywjweUc1vVy4WylyozANjk+Aftk23XNcGdgjCJDdaAAW35u4T
+         TtuSSOlpjm0SEsuWHLe4FZtBayZ3SWozYCiv2Dk4TrsWo9SfWNAQ3DHfvqvfie02+TwD
+         66GAJI9ryZNdjxJVYHSjHFGdswUQFWMFf9QmSEVPGwWS99rJ1OiEUKqZbc5LtwQmeM+L
+         KdDyG6Dw/CkOS5ARIkSwiIfOjI304FEcjXGoedGpL1pb7KacX3lakfFxAFoFx+Bc6XUG
+         sIAAI2kAzHQtY8dAvB828NCqYttHiUIzO+quppACAiQUEFGa2rUeTZEhdmvE2mVYKHif
+         gntg==
+X-Gm-Message-State: AOAM530HBwgr2MpC+PB07MIXWBgK5P8k+K70yy1+HVBpqqQaazhCfF+6
+	zsLskEPK4eNrG6vtT9TQxbQpNkCjlaNVCMK5R5SASyGQEDU=
+X-Google-Smtp-Source: ABdhPJxhzC80MjjZ+bWDONqp0mkcvNTZ1cJGcDR+/cN85sV5ilaod/ArgtT5mdzjtqfxnBTCXy7asrcDbPXKG3+HGqA=
+X-Received: by 2002:a2e:a58e:: with SMTP id m14mr15388981ljp.1.1608136279096;
+ Wed, 16 Dec 2020 08:31:19 -0800 (PST)
+MIME-Version: 1.0
+From: Jonathan Gallimore <jonathan.gallimore@gmail.com>
+Date: Wed, 16 Dec 2020 16:31:08 +0000
+Message-ID: <CAGRgoZh0pZ4LP0s3za98GDqkuLJimhMQugOU4X4h8Rcq444mUg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000aa801805b6976732"
+Subject: [oss-security] CVE-2020-13931 Apache TomEE - Incorrect config on JMS Resource
+ Adapter can lead to JMX being enabled
 
-Hi Charles,
+--000000000000aa801805b6976732
+Content-Type: text/plain; charset="UTF-8"
 
-I do not remember adding anything special to just disable dcraw.
+Severity: High
 
-The most straight forward would be to comment it out in the Makefile via NO=
-T_SRCS while building.
+Vendor: The Apache Software Foundation
 
-If you the CVE has a test case I can include the test case and fix in the e=
-xact-iamge source tree.
+Versions Affected:
+Apache TomEE 8.0.0-M1 - 8.0.3
+Apache TomEE 7.1.0 - 7.1.3
+Apache TomEE 7.0.0-M1 - 7.0.8
+Apache TomEE 1.0.0 - 1.7.5
 
-Greetings,
-	Ren=E9
+Description:
+If Apache TomEE is configured to use the embedded ActiveMQ broker, and the
+broker config is misconfigured, a JMX port is opened on TCP port 1099,
+which does not include authentication. CVE-2020-11969 previously addressed
+the creation of the JMX management interface, however the incomplete fix
+did not cover this edge case.
 
-On Mar 5, 2016, at 21:49, Charlemagne Lasse <charlemagnelasse@gmail.com> wr=
-ote:
+Mitigation:
+- Upgrade to TomEE 7.0.9 or later
+- Upgrade to TomEE 7.1.4 or later
+- Upgrade to TomEE 8.0.4 or later
 
->=20
-> Thanks for the answer.
->=20
-> It is a rather odd decision to ignore an existing fix for
-> CVE-2013-1438. This also means that dcraw cannot be used when any
-> untrusted person has access (or he can DoS a service).
->=20
-> Rene Rebe, is it possible to disable dcraw support in the
-> perl/php/python bindings of exactimage to work around this problem on
-> webservices?
->=20
->=20
->=20
-> 2016-03-05 2:34 GMT+00:00  <dcoffin@shell.cybercom.net>:
->> Hi Guys,
->>=20
->>     CVE-2015-3885 was fixed in v9.26 and CVE-2015-8366 will
->> be fixed in v9.27.  Overrunning an automatic array is how most
->> hijacks happen, and overrunning a malloc'd buffer is probably
->> not good either.
->>=20
->>     CVE-2013-1438 seems designed to prevent dcraw from entering
->> an infinite or very time-consuming loop.  I'm not interested in
->> this because there are infinitely many ways to create a loop in
->> a TIFF file, and solving the Halting Problem is beyond the scope
->> of dcraw.
->>                                Dave Coffin  3/4/2016
->>=20
->> On Sat, Feb 27, 2016 at 02:28:18PM +0000, Charlemagne Lasse wrote:
->>> Hi,
->>>=20
->>> it looks like there are a number of CVE against dcraw. All of them were
->>> fixed in the downstream project libRAW but none of them were fixed by
->>> you in the upstream project dcraw. When can we expect that these are
->>> fixed in dcraw? The list of CVE's I know about are:
->>>=20
->>> CVE-2015-8366
->>> https://github.com/LibRaw/LibRaw/commit/89d065424f09b788f443734d4485728=
-9489ca9e2
->>>=20
->>> CVE-2015-3885
->>> https://bugzilla.redhat.com/attachment.cgi?id=3D1027072
->>>=20
->>> CVE-2013-1438
->>> https://sourceforge.net/p/ufraw/bugs/361/attachment/0001-CVE-2013-1438-=
-fix-various-security-issues.patch
->>>=20
->>> Several other downstream projects may still be affected. I've Cc'ed the
->>> ones which I know
->>>=20
->>> darktable
->>> exactimage
->>> kodi/xbmc
->>> rawstudio
->>> rawtherapee
->>> ufraw
->>>=20
->>> Thanks
->=20
->=20
->=20
-> -----------------------------------------------------------=20
-> If you wish to unsubscribe from this mailing, send mail to
-> lists@exactcode.de with a subject of: unsubscribe exact-image
+Ensure the correct VM broker name is used consistently across the resource
+adapter config.
 
---=20
- ExactCODE GmbH, Lietzenburger Str. 42, DE-10789 Berlin
- DE Legal: Amtsgericht Berlin (Charlottenburg) HRB 105123B, Tax-ID#: DE2516=
-02478
- Managing Director: Ren=E9 Rebe
- http://exactcode.com | http://exactscan.com | http://ocrkit.com | http://t=
-2-project.org | http://rene.rebe.de
+Credit: Thanks to Frans Henskens for discovering and reporting this issue.
 
+--000000000000aa801805b6976732--
