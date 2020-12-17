@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6752" "Monday" "28" "August" "2017" "13:56:04" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<49942.0993469073-sendEmail@localhost>" "124" "[oss-security] openjpeg: heap-based buffer overflow in opj_t2_encode_packet (t2.c)" nil nil nil "8" "2017082813:56:04" "[oss-security] openjpeg: heap-based buffer overflow in opj_t2_encode_packet (t2.c)" (number mark "U       ago@gentoo.o Aug 28  124/6752  " thread-indent "\"[oss-security] openjpeg: heap-based buffer overflow in opj_t2_encode_packet (t2.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["664" "Thursday" "17" "December" "2020" "17:45:12" "+0800" "Guangning E" "guangning@apache.org" "<CACYv8z24DeHGiULFr16tRxLqoXu9Nrbb4fEE08egsqjc2F6dEg@mail.gmail.com>" "26" "[oss-security] CVE-2020-17520 Apache Pulsar Manager Information Disclosure (bypass admin interceptor)" nil nil nil "12" "2020121709:45:12" "[oss-security] CVE-2020-17520 Apache Pulsar Manager Information Disclosure (bypass admin interceptor)" (number mark "U       guangning@ap Dec 17   26/664   " thread-indent "\"[oss-security] CVE-2020-17520 Apache Pulsar Manager Information Disclosure (bypass admin interceptor)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-17520 Apache Pulsar Manager Information Disclosure (bypass admin interceptor)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32158 invoked by uid 550); 28 Aug 2017 13:56:21 -0000
+Received: (qmail 5654 invoked by uid 550); 17 Dec 2020 10:56:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,136 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32137 invoked from network); 28 Aug 2017 13:56:20 -0000
-Message-ID: <49942.0993469073-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 28 Aug 2017 13:56:04 +0000
+Received: (qmail 10100 invoked from network); 17 Dec 2020 09:45:30 -0000
+X-Gm-Message-State: AOAM531Cdn6oKsde/ES60AGet7yyP4RL6vNJ4U9JT3WEy5UuraKuLiDm
+	vMmuqNbnLLtvLLvXUFTBenJupiLqyuQGn7XGIUA=
+X-Google-Smtp-Source: ABdhPJzUzVYvWn4Tm89FAxnklrW/ZQYIPgJaaNVN7gH/uEwFOTib6LliFJ7bCYCWB178CI/TJX4KhChkSiV2ph0pq0c=
+X-Received: by 2002:a05:6e02:ecc:: with SMTP id i12mr34510142ilk.0.1608198317749;
+ Thu, 17 Dec 2020 01:45:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-339592.16026506"
-Subject: [oss-security] openjpeg: heap-based buffer overflow in opj_t2_encode_packet (t2.c)
+From: Guangning E <guangning@apache.org>
+Date: Thu, 17 Dec 2020 17:45:12 +0800
+X-Gmail-Original-Message-ID: <CACYv8z24DeHGiULFr16tRxLqoXu9Nrbb4fEE08egsqjc2F6dEg@mail.gmail.com>
+Message-ID: <CACYv8z24DeHGiULFr16tRxLqoXu9Nrbb4fEE08egsqjc2F6dEg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000753e7205b6a5d959"
+Subject: [oss-security] CVE-2020-17520 Apache Pulsar Manager Information Disclosure (bypass admin interceptor)
 
-------MIME delimiter for sendEmail-339592.16026506
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--000000000000753e7205b6a5d959
+Content-Type: text/plain; charset="UTF-8"
 
-Description:
-openjpeg is an open-source JPEG 2000 library.
+CVE-2020-17520 Apache Pulsar Manager Information Disclosure
 
-The complete ASan output of the issue:
+Severity: High
 
-# opj_compress -r 20,10,1 -jpip -EPH -SOP -cinema2K 24 -n 1 -i $FILE -o null.j2k
-TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not sorted in ascending order.
-TIFFReadDirectory: Warning, Unknown field with tag 27154 (0x6a12) encountered.
-TIFFReadDirectory: Warning, Unknown field with tag 32512 (0x7f00) encountered.
-TIFFReadDirectory: Warning, Unknown field with tag 15163 (0x3b3b) encountered.
-TIFFReadDirectory: Warning, Unknown field with tag 15318 (0x3bd6) encountered.
-TIFFFetchNormalTag: Warning, Incorrect count for "FillOrder"; tag ignored.
-TIFFReadDirectory: Warning, TIFF directory is missing required "StripByteCounts" field, calculating from imagelength.
-=================================================================
-==114390==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6080000000f4 at pc 0x7f05a3983aa9 bp 0x7ffd1be5ba40 sp 0x7ffd1be5ba38
-WRITE of size 1 at 0x6080000000f4 thread T0
-    #0 0x7f05a3983aa8 in opj_t2_encode_packet /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/t2.c:632:14
-    #1 0x7f05a3980801 in opj_t2_encode_packets /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/t2.c:316:23
-    #2 0x7f05a399619b in opj_tcd_t2_encode /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/tcd.c:2217:11
-    #3 0x7f05a399619b in opj_tcd_encode_tile /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/tcd.c:1390
-    #4 0x7f05a38b5e2b in opj_j2k_write_sod /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:4661:11
-    #5 0x7f05a38b5e2b in opj_j2k_write_all_tile_parts /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:11586
-    #6 0x7f05a38b5e2b in opj_j2k_post_write_tile /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:11287
-    #7 0x7f05a38b445d in opj_j2k_encode /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:11028:15
-    #8 0x7f05a38ff2f8 in opj_encode /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/openjpeg.c:775:20
-    #9 0x50b942 in main /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/opj_compress.c:1993:36
-    #10 0x7f05a2296680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #11 0x41bc18 in _start (/usr/bin/opj_compress+0x41bc18)
+Vendor: The Apache Software Foundation
 
-0x6080000000f4 is located 0 bytes to the right of 84-byte region [0x6080000000a0,0x6080000000f4)
-allocated by thread T0 here:
-    #0 0x4d15c8 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
-    #1 0x7f05a39aae29 in opj_malloc /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/opj_malloc.c:196:12
-    #2 0x7f05a38e1760 in opj_j2k_update_rates /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:5157:22
-    #3 0x7f05a38b837f in opj_j2k_exec /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:7954:33
-    #4 0x7f05a38b837f in opj_j2k_start_compress /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:11103
-    #5 0x7f05a38ff19c in opj_start_compress /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/openjpeg.c:758:20
-    #6 0x50b90f in main /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/opj_compress.c:1970:20
-    #7 0x7f05a2296680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+Versions Affected:
+Apache Pulsar Manager 0.1.0
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/t2.c:632:14 in opj_t2_encode_packet
-Shadow bytes around the buggy address:
-  0x0c107fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c107fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c107fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c107fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c107fff8000: fa fa fa fa 00 00 00 00 00 00 00 00 00 00 00 fa
-=>0x0c107fff8010: fa fa fa fa 00 00 00 00 00 00 00 00 00 00[04]fa
-  0x0c107fff8020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c107fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c107fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c107fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c107fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==114390==ABORTING
-CINEMA 2K profile activated
-Other options specified could be overridden
-WARNING:
-Input image bitdepth is 4 bits
-TIF conversion has automatically rescaled to 12-bits
-to comply with cinema profiles.
-[WARNING] JPEG 2000 Profile-3 and 4 (2k/4k dc profile) requires:
-1 single quality layer-> Number of layers forced to 1 (rather than 3)
--> Rate of the last layer (1.0) will be used[INFO] tile number 1 / 1
+Description
+In Pulsar manager 0.1.0 version, malicious users will be able to bypass
+pulsar-manager's admin, permission verification mechanism by constructing
+special URLs, thereby accessing any HTTP API
 
-Affected version:
-Master at 2017-08-16 and maybe past releases
-
-Fixed version:
-N/A
-
-Commit fix:
-https://github.com/uclouvain/openjpeg/commit/c535531f03369623b9b833ef41952c62257b507e
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Upgrade to Pulsar Manager 0.2.0 or later
 
 Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+This issue was identified by the threedr3am.
 
-CVE:
-Waiting for a CVE assignment
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00322-openjpeg-heapoverflow-opj_t2_encode_packet
-
-Timeline:
-2017-08-16: bug discovered and reported to upstream
-2017-08-28: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/28/openjpeg-heap-based-buffer-overflow-in-opj_t2_encode_packet-t2-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-339592.16026506--
-
+--000000000000753e7205b6a5d959--
