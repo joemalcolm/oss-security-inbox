@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/07/19/1
-Message-ID: <MCZ-_KW--3-2@keemail.me>
-Date: Sun, 19 Jul 2020 00:24:26 +0200 (CEST)
-From: ali.of.south@...mail.me
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/22/1
+Message-ID: <CAA8xKjULWQ+28j6enr=N30Y1h07EUNMO7pyHDmLQVLx4mM1kPA@mail.gmail.com>
+Date: Tue, 22 Dec 2020 18:06:13 +0100
+From: Mauro Matteo Cascella <mcascell@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-21036: Sails.js before v1.0.0-46 DoS
+Cc: 330cjfdn@...il.com
+Subject: CVE-2020-25723 QEMU: assertion failure through usb_packet_unmap() in hw/usb/hcd-ehci.c
 Content-Type: text/plain; charset=utf-8
 
 Hello,
 
-Sails.js (https://sailsjs.com/) <https://sailsjs.com/> before v1.0.0-46 allows attackers to cause a denial of service with a single request because there is no error handler in sails-hook-sockets to handle an empty pathname in a WebSocket request.
-[Affected Product Code Base]
-Sails.js - < v1.0.0-46
-sails-hook-sockets - < 1.5.5
+A flaw was found in the USB EHCI controller emulation of QEMU. It
+could occur while processing USB requests due to DMA memory map
+failure not being properly detected. This was fixed in the following
+commit by checking the return value of usb_packet_map(), thus
+preventing a reachable assertion issue from occuring in a later call
+of usb_packet_unmap().
 
-[Attack Vectors]
-To exploit vulnerability, attacker should make a request with malformed URL to the socket.
+Upstream commit:
+https://git.qemu.org/?p=qemu.git;a=commit;h=2fdb42d840400d58f2e706ecca82c142b97bcbd6
 
-[Reproducing]
-1. generate a default sails app.
-2. sails lift
-3. open app in the browser.
-4. open the browser console.
-5. execute this code: io.socket.get('?').
+This issue was reported by Cheolwoo Myung (cc'd).
+CVE-2020-25723 was assigned by Red Hat Inc.
 
-[Reference]
-- https://github.com/balderdashy/sails-hook-sockets/commit/ff02114eaec090ee51db48435cc32d451662606e
-- https://github.com/balderdashy/sails-hook-sockets/commit/0533a4864b1920fd8fbb5287bc0889193c5faf44
-- https://github.com/balderdashy/sails/blob/56f8276f6501a144a03d1f0f28df4ccdb4ad82e2/CHANGELOG.md
-
-Thanks,
-Ali Norouzi
+Best regards.
+-- 
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
