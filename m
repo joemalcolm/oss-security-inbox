@@ -1,44 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/10/4
-Message-ID: <61e677d2-4c00-acba-de1b-6366983bef8b@meiers.net>
-Date: Mon, 10 Aug 2020 18:24:20 +0200
-From: svenmeier@...che.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/23/2
+Message-ID: <CALDM2HcJCXfMBybnqKiAVQq44DMhhgb0m81wG+WFBtesbr-1QQ@mail.gmail.com>
+Date: Wed, 23 Dec 2020 11:24:31 -0700
+From: Nick Tait <ntait@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-11976] Apache Wicket information disclosure vulnerability
+Subject: Re: CVE request experience (was: Multiple memory leaks fixed in Privoxy 3.0.29 stable)
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+That is a rather poor experience Fabian, sorry! Took a look at that
+incident number and no encrypted message appears on our end. I believe you
+did actually send a message but not sure what went wrong. While I can't
+directly help, did request the appropriate people follow up with you.
 
-Vendor:
-The Apache Software Foundation
+Nick Tait
 
-Versions Affected:
-Apache Wicket 7.16.0, 8.8.0 and 9.0.0-M5
+He / Him / His 🏳️‍🌈
 
-Description:
+Product Security Engineer - OpenStack
 
-By crafting a special URL it is possible to make Wicket deliver 
-unprocessed HTML templates.
-This would allow an attacker to see possibly sensitive information 
-inside a HTML template that is usually removed during rendering.
-For example if there are credentials in the markup which are never 
-supposed to be visible to the client:
+Red Hat
+<https://www.redhat.com>
 
-   <wicket:remove>
-      some secret
-   </wicket:remove>
+secalert@...hat.com for urgent response
+<https://www.redhat.com>
 
-The application developers are recommended to upgrade to:
-- Apache Wicket 7.17.0
-<http://wicket.apache.org/news/2020/07/20/wicket-7.17.0-released.html>
-- Apache Wicket 8.9.0
-<http://wicket.apache.org/news/2020/07/15/wicket-8.9.0-released.html>
-- Apache Wicket 9.0.0
-<http://wicket.apache.org/news/2020/07/15/wicket-9-released.html>
+IM: nickthetait
 
-Credit:
-The vulnerability has been found and reported by Mariusz Popławski from 
-Afine.
+If I am replying on an unusual time or day it is because I am working an
+adjusted schedule. No pressure to reply immediately, wait until your normal
+working hours.
+<https://www.redhat.com>
 
-Apache Wicket Team
+
+On Wed, Dec 23, 2020 at 10:20 AM Fabian Keil <freebsd-listen@...iankeil.de>
+wrote:
+
+> Fabian Keil <freebsd-listen@...iankeil.de> wrote on 2020-11-29:
+>
+> >                Announcing Privoxy 3.0.29 stable
+> [...]
+> > - Security/Reliability:
+> >   - Fixed memory leaks when a response is buffered and the buffer
+> >     limit is reached or Privoxy is running out of memory.
+> >     Commits bbd53f1010b and 4490d451f9b. OVE-20201118-0001.
+>
+> I tried to get a CVE for OVE-20201118-0001 by using the
+> "new" form at https://cveform.mitre.org/ on 2020-11-18 but
+> was told by MITRE that "the reported vulnerabilities would
+> fall in the scope of Red Hat for assignment" and that their
+> mail should be forwarded to secalert@...hat.com.
+>
+> I did that on 2020-11-18 using the OpenPGP key recommended at:
+> https://access.redhat.com/security/team/contact
+>
+> On 2020-11-23 I received a response from Red Hat claiming
+> that my e-mail had "no body".
+>
+> The same day I replied with an unencrypted mail explaining
+> that the previous mail was OpenPGP-encrypted and asked whether
+> that was still supported.
+>
+> As a result I was informed that "INC1525130" "has been resolved".
+>
+> As of today I still haven't received a CVE and thus did
+> not bother to request CVEs for the other issues fixed in
+> Privoxy 3.0.29 ...
+>
+> Fabian
+>
 
