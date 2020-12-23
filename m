@@ -1,24 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/06/30/2
-Message-ID: <20200630105009.46d2de6d@lenovo>
-Date: Tue, 30 Jun 2020 10:50:09 +0200
-From: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/23/1
+Message-ID: <20201223175828.48163487@fabiankeil.de>
+Date: Wed, 23 Dec 2020 17:58:28 +0100
+From: Fabian Keil <freebsd-listen@...iankeil.de>
 To: oss-security@...ts.openwall.com
-Subject: libvncserver: old websocket decoding patch
+Subject: CVE request experience (was: Multiple memory leaks fixed in Privoxy 3.0.29 stable)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Fabian Keil <freebsd-listen@...iankeil.de> wrote on 2020-11-29:
 
-Upstream libvncserver fixed a websocket decoding issue >3years ago in
-https://github.com/LibVNC/libvncserver/commit/aac95a9dcf4bbba87b76c72706c3221a842ca433
+>                Announcing Privoxy 3.0.29 stable
+[...]
+> - Security/Reliability:
+>   - Fixed memory leaks when a response is buffered and the buffer
+>     limit is reached or Privoxy is running out of memory.
+>     Commits bbd53f1010b and 4490d451f9b. OVE-20201118-0001.
 
-AFAICT, this never got a CVE and wasn't backported by some
-distributions.
+I tried to get a CVE for OVE-20201118-0001 by using the
+"new" form at https://cveform.mitre.org/ on 2020-11-18 but
+was told by MITRE that "the reported vulnerabilities would
+fall in the scope of Red Hat for assignment" and that their
+mail should be forwarded to secalert@...hat.com.
 
-Thanks and kind regards,
+I did that on 2020-11-18 using the OpenPGP key recommended at:
+https://access.redhat.com/security/team/contact
 
-[I sent a heads-up about this to distros last Friday, 'embargo' ran out
-on Monday 20:00 UTC]
--- 
-Stefan Cornelius / Red Hat Product Security
+On 2020-11-23 I received a response from Red Hat claiming
+that my e-mail had "no body".
 
+The same day I replied with an unencrypted mail explaining
+that the previous mail was OpenPGP-encrypted and asked whether
+that was still supported.
+
+As a result I was informed that "INC1525130" "has been resolved".
+
+As of today I still haven't received a CVE and thus did
+not bother to request CVEs for the other issues fixed in
+Privoxy 3.0.29 ...
+
+Fabian
+
+Content of type "application/pgp-signature" skipped
