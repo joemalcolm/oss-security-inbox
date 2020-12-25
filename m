@@ -1,70 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/08/08/7
-Message-ID: <20200808102052.GA376865@oxygen>
-Date: Sat, 8 Aug 2020 12:20:52 +0200
-From: Julien Pivotto <roidelapluie@...metheus.io>
-To: Bartłomiej Płotka <bwplotka@...il.com>
-Cc: Richard Hartmann <richih.mailinglist@...il.com>, oss-security@...ts.openwall.com, PrometheusMonitoring <prometheus-team@...glegroups.com>, Prometheus Developers <prometheus-developers@...glegroups.com>
-Subject: Re: [prometheus-team] Voiding CVE-2020-16248
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/25/2
+Message-ID: <CAH8yC8ngRsZP4qinC_ccQQpQg=B3wVD8udxsj1nxxFVaBbc5iA@mail.gmail.com>
+Date: Thu, 24 Dec 2020 21:13:09 -0500
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: More CVE request experience (Fwd: Automatic reply: [EXT] Need a CVE for Crypto++)
 Content-Type: text/plain; charset=utf-8
 
-On 08 Aug 11:16, Bartłomiej Płotka wrote:
-> Thanks for this work Richi, this is quite... interesting that someone might
-> mark core functionality as CVE.
+The form at https://cveform.mitre.org/ is broken. Emailing
+cve@...re.org for a CVE assignment after the failed web submission
+results in this.
 
-That is not that crazy. You could "ddos" someone and hide your own IP
-address.
+I hope people do not see the drop in CVE submissions as an improvement
+in software quality.
 
-> 
-> Kind Regards,
-> Bartek
-> 
-> On Sat, 8 Aug 2020 at 09:49, Richard Hartmann <richih.mailinglist@...il.com>
-> wrote:
-> 
-> > Dear all,
-> >
-> > the Prometheus project[1] has received a public "vulnerability"
-> > report[2] against what the reporter called SSRF, but what is the core
-> > functionality of blackbox_exporter[3]: The ability to trigger network
-> > probes over the network to monitor a target's availability. The
-> > reporter stated that CVE-2020-16248 has been assigned. From context,
-> > it seems to be a paid assessment of our software for an unnamed client
-> > which increases motivation to get "results", in particular CVEs for
-> > "zero days" - which are then promptly reported publicly with an
-> > embargoed CVE.
-> >
-> > The reporter has not replied to our statement that this behaviour is
-> > core functionality. I could not find out which organization has
-> > reserved CVE-2020-16248 so I decided to send email to this list to
-> > inform the organization, enabling them to update their records.
-> >
-> > Sorry for using this list for that purpose, I could not find a less
-> > wrong place to inform the (hopefully) interested parties.
-> >
-> >
-> > Best,
-> > Richard
-> >
-> > [1] https://prometheus.io/
-> > [2] https://github.com/prometheus/blackbox_exporter/issues/669
-> > [3] https://github.com/prometheus/blackbox_exporter
-> >
-> > --
-> > You received this message because you are subscribed to the Google Groups
-> > "Prometheus Team" group.
-> > To unsubscribe from this group and stop receiving emails from it, send an
-> > email to prometheus-team+unsubscribe@...glegroups.com.
-> > To view this discussion on the web visit
-> > https://groups.google.com/d/msgid/prometheus-team/CAD77%2BgR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8%2B8_%2Bdbw%40mail.gmail.com
-> > .
-> >
-> 
-> -- 
-> You received this message because you are subscribed to the Google Groups "Prometheus Team" group.
-> To unsubscribe from this group and stop receiving emails from it, send an email to prometheus-team+unsubscribe@...glegroups.com.
-> To view this discussion on the web visit https://groups.google.com/d/msgid/prometheus-team/CAMssQwbxY-LY1FmuZUeLEp2etkj6poQc%2BMVzL-ah%3DXoF2vptSg%40mail.gmail.com.
+---------- Forwarded message ---------
+From: Common Vulnerabilities & Exposures <cve@...re.org>
+Date: Thu, Dec 24, 2020 at 9:08 PM
+Subject: Automatic reply: [EXT] Need a CVE for Crypto++
+To: Walton, Jeffrey <noloader@...il.com>
 
--- 
-Julien Pivotto
-@roidelapluie
+This email address is not monitored.
+
+To contact the CVE Program, use https://cveform.mitre.org and choose
+“Other” from the dropdown menu.
