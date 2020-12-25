@@ -1,56 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/20/4
-Message-ID: <33dd7a06-a3b6-90dc-35dd-7d58b57611d8@apache.org>
-Date: Wed, 20 May 2020 16:22:21 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/25/1
+Message-ID: <CAH8yC8=VXvPCwbSSDv==QPOp7N+j28_9H1E0C+fSC84JbMdHQg@mail.gmail.com>
+Date: Thu, 24 Dec 2020 21:05:31 -0500
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-9484 Apache Tomcat Remote Code Execution via session persistence
+Subject: Re: CVE request experience (was: Multiple memory leaks fixed in Privoxy 3.0.29 stable)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-9484 Apache Tomcat Remote Code Execution via session persistence
+On Wed, Dec 23, 2020 at 12:21 PM Fabian Keil
+<freebsd-listen@...iankeil.de> wrote:
+>
+> Fabian Keil <freebsd-listen@...iankeil.de> wrote on 2020-11-29:
+>
+> >                Announcing Privoxy 3.0.29 stable
+> [...]
+> > - Security/Reliability:
+> >   - Fixed memory leaks when a response is buffered and the buffer
+> >     limit is reached or Privoxy is running out of memory.
+> >     Commits bbd53f1010b and 4490d451f9b. OVE-20201118-0001.
+>
+> I tried to get a CVE for OVE-20201118-0001 by using the
+> "new" form at https://cveform.mitre.org/ on 2020-11-18 but
+> was told by MITRE that "the reported vulnerabilities would
+> fall in the scope of Red Hat for assignment" and that their
+> mail should be forwarded to secalert@...hat.com.
+> ...
 
-Severity: High
+Related, you are not alone. I just tried to use the form at
+https://cveform.mitre.org/ to get a CVE for a memory error.
 
-Vendor: The Apache Software Foundation
+That form is impossible to use. I emailed cve@...re.org and asked for
+the assignment.
 
-Versions Affected:
-Apache Tomcat 10.0.0-M1 to 10.0.0-M4
-Apache Tomcat 9.0.0.M1 to 9.0.34
-Apache Tomcat 8.5.0 to 8.5.54
-Apache Tomcat 7.0.0 to 7.0.103
-
-Description:
-If:
-a) an attacker is able to control the contents and name of a file on the
-   server; and
-b) the server is configured to use the PersistenceManager with a
-   FileStore; and
-c) the PersistenceManager is configured with
-   sessionAttributeValueClassNameFilter="null" (the default unless a
-   SecurityManager is used) or a sufficiently lax filter to allow the
-   attacker provided object to be deserialized; and
-d) the attacker knows the relative file path from the storage location
-   used by FileStore to the file the attacker has control over;
-then, using a specifically crafted request, the attacker will be able to
-trigger remote code execution via deserialization of the file under
-their control. Note that all of conditions a) to d) must be true for the
-attack to succeed.
-
-Mitigation:
-- Upgrade to Apache Tomcat 10.0.0-M5 or later
-- Upgrade to Apache Tomcat 9.0.35 or later
-- Upgrade to Apache Tomcat 8.5.55 or later
-- Upgrade to Apache Tomcat 7.0.104 or later
-Alternatively, users may configure the PersistenceManager with an
-appropriate value for sessionAttributeValueClassNameFilter to ensure
-that only application provided attributes are serialized and deserialized.
-
-Credit:
-This issue was discovered and reported responsibly to the Apache Tomcat
-Security Team by report by jarvis threedr3am of pdd security research
-
-References:
-[1] http://tomcat.apache.org/security-10.html
-[2] http://tomcat.apache.org/security-9.html
-[3] http://tomcat.apache.org/security-8.html
-[4] http://tomcat.apache.org/security-7.html
+Jeff
