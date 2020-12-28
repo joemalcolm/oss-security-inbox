@@ -1,36 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/03/14/1
-Message-ID: <CAEwge-G24JXjkEEayqufi=zon-mo5usfiS3H8MYvtpg8=g0HuA@mail.gmail.com>
-Date: Fri, 13 Mar 2020 17:28:26 -0700
-From: Anthony Baker <abaker@...che.org>
-To: announce@...che.org, user@...de.apache.org, geode <dev@...de.apache.org>,  asf-security <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [CVE-2019-10091] Apache Geode SSL endpoint verification vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/28/1
+Message-ID: <CAFcO6XMVKLjFtBRR_9Gie7tOpxpMjdd8ESqgfbt_OwfG58i9PA@mail.gmail.com>
+Date: Mon, 28 Dec 2020 16:14:59 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2020-27815 Linux kernel: jfs: array-index-out-of-bounds in dbAdjTree
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-10091 Apache Geode SSL endpoint verification vulnerability
+Patch for this issue :
 
-Severity: Medium
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c61b3e4839007668360ed8b87d7da96d2e59fc6c
 
-Vendor: The Apache Software Foundation
+Regards.
+ butt3rflyh4ck.
 
-Versions Affected:
-Apache Geode 1.9.0
 
-Description:
-When TLS is enabled with ssl-endpoint-identification-enabled set to
-true, Apache Geode fails to perform hostname verification of the
-entries in the certificate SAN during the SSL handshake.  This could
-compromise intra-cluster communication using a man-in-the-middle
-attack.
+On Tue, Dec 1, 2020 at 1:50 AM butt3rflyh4ck <butterflyhuangxx@...il.com>
+wrote:
 
-Mitigation:
-Users of the affected versions should upgrade to Apache Geode 1.9.1,
-1.10.0, or later.
+> Hello,
+>
+> I report an array-index-out-of-bounds bugs in fs/jfs/jfs_dmap.c in
+> dbAdjTree and reproduce it in Linux kernel 5.9.6 version.
+>
+> Description:
+>
+> In the Linux kernel through 5.9.6, there is a
+> array-index-out-of-bounds in fs/jfs/jfs_dmap.c in dbAdjTree and it may
+> cause out of bounds read and Denial of Service.
+>
+> Root Cause:
+>
+> the dmtree_t is that
+>  typedef union dmtree {
+>  struct dmaptree t1;
+>  struct dmapctl t2;
+> } dmtree_t;
+>
+>  the dmaptree is that
+>   struct dmaptree {
+>   __le32 nleafs; /* 4: number of tree leafs */
+>   __le32 l2nleafs; /* 4: l2 number of tree leafs */
+>   __le32 leafidx; /* 4: index of first tree leaf */
+>   __le32 height; /* 4: height of the tree */
+>   s8 budmin; /* 1: min l2 tree leaf value to combine */
+>   s8 stree[TREESIZE]; /* TREESIZE: tree */
+>   u8 pad[2]; /* 2: pad to word boundary */
+>  };the TREESIZE is totally 341.
+>
+> the dmapctl is that:
+> struct dmapctl {
+> __le32 nleafs; /* 4: number of tree leafs */
+> __le32 l2nleafs; /* 4: l2 number of tree leafs */
+> __le32 leafidx; /* 4: index of the first tree leaf */
+> __le32 height; /* 4: height of tree */
+> s8 budmin; /* 1: minimum l2 tree leaf value */
+> s8 stree[CTLTREESIZE]; /* CTLTREESIZE: dmapctl tree */
+> u8 pad[2714]; /* 2714: pad to 4096 */
+> }; /* - 4096 - */
+> the CTLTREESIZE is totally 1365.
+> The dmt_stree was used in dbAdjTree. Since dmt_stree can refer to the
+> stree in both structures dmaptree and dmapctl. the stree size is not
+> consistent, may it cause index out of range.
+>
+> CVE assigned :
+> CVE-2020-27815
+>
+> Patch:
+> It's in linux-next now, not available in upstream.
+>
+> Credit:
+> This issue was discovered by the ADLab of venustech.
+>
+> Regards.
+>  butt3rflyh4ck.
+>
 
-Credit:
-This issue was reported responsibly to the Apache Geode Security Team
-by Sai Boorlagadda from Pivotal.
-
-References:
-[1] https://issues.apache.org/jira/browse/GEODE-7018
-[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
