@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6327" "Wednesday" "10" "May" "2017" "12:05:04" "+0200" "Sebastian Krahmer" "krahmer@suse.com" "<20170510100504.GA17705@suse.de>" "174" "[oss-security] generic kde LPE" nil nil nil "5" "2017051010:05:04" "[oss-security] generic kde LPE" (number mark "U       krahmer@suse May 10  174/6327  " thread-indent "\"[oss-security] generic kde LPE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2334" "Monday" "4" "January" "2021" "14:03:19" "+0200" "Aki Tuomi" "aki.tuomi@dovecot.fi" "<0ae0a000-6574-8df2-5b00-51157f562339@dovecot.fi>" "71" "[oss-security] CVE-2020-25275: Dovecot: MIME parsing crash" nil nil nil "1" "2021010412:03:19" "[oss-security] CVE-2020-25275: Dovecot: MIME parsing crash" (number mark "U       aki.tuomi@do Jan  4   71/2334  " thread-indent "\"[oss-security] CVE-2020-25275: Dovecot: MIME parsing crash\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-25275: Dovecot: MIME parsing crash" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13779 invoked by uid 550); 10 May 2017 10:05:17 -0000
+Received: (qmail 15931 invoked by uid 550); 4 Jan 2021 12:27:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,192 +12,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13748 invoked from network); 10 May 2017 10:05:15 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Wed, 10 May 2017 12:05:04 +0200
-From: Sebastian Krahmer <krahmer@suse.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20170510100504.GA17705@suse.de>
+Received: (qmail 9537 invoked from network); 4 Jan 2021 12:03:32 -0000
+To: oss-security@lists.openwall.com, fulldisclosure@seclists.org
+From: Aki Tuomi <aki.tuomi@dovecot.fi>
+Autocrypt: addr=aki.tuomi@dovecot.fi; keydata=
+ mQENBFb7bukBCACpK7GFwH/gyL0oF8t91WM7S+UjuQ1vOQZg2eoCUHi4ILpm1Kae4UeZLB2X
+ Vbeph+k29BIQbo+Hjv6rq6JzPfKIZCRLLrkMD1MtA0YB7ZYiACywLrATAdAMJ6sRq+DL5Rlr
+ A2CvviTifz6DwEnbqI+ckcKggsY2gywHs5muDw+n5TwLiL0V9IU478vg7OUWzMZ42toTmeTW
+ 2MtsIAE5xbnjZ58LUSZR2CNO8SAtDHYI558ACkS0wHBAoRFNv27IPr3cebiPsIglSEIBr0R1
+ F1Twbgm6mWVBhK+smDgGxmmuAhH6boSaKWoWAq+tNf+6oXnr3/D0IPtR8c/bZobtvWG3ABEB
+ AAG0IEFraSBUdW9taSA8YWtpLnR1b21pQGRvdmVjb3QuZmk+iQFBBBMBAgArBgsJCAcDAgYV
+ CAIJCgsEFgIDAQKeAQIbAwWJEswDAAUDAAAAAAWCW2P/aAAKCRAZO2Njs0RCBtIDB/0ZMEkE
+ E++YlettvCNyfIUkbfwPcjUUgl3B3NQmIpy0Ztt+g9qst9AE8idfJjycHmQuwp+cQ7iYtUss
+ RCP1WNe+IEhuVgveb6vBZhSoSpjED2Gu4F4LC9/lQX1KECEThBXA+ZKk/1vYL/BGRqt2oAkX
+ gVlOK8Lc+DeypY46dCGn3teMDFdsqBwiPusC+oozQOU8Jb+sN1HomMNP8Ruf4P4AEs1lZVke
+ wTvb4LpUl8dJqPfGcAhfIYT9qgGyymZb+cEslrDrfP7bjrkFoA6NU2J1ZclFY7S6xQ8p7xy9
+ 4YPMzQmHHt0oEu4dPFpnWJBW7DmrPAIlZmuiN1/VfhdEjpkNuQENBFb7bukBCACixl1EHy26
+ Lrm2OdriJgo8epw0NlRc5S48tO5xhza1ja/rs84avjiA5k3O5BYrJdFIGz5DbMkdxtxw97Rk
+ Sm2Q4I7B2GG8HBksprqcj2OcnQr6zNPY1sPRiS9ogMAsD2lUYwmprzzC+SShx/8jl+R1OTrG
+ 4unwBqZFe9w9m5Q+j+zY9dBXi76C0p1fUWZoeIGDWhCG2gNZk7Tgfviv1/I8+zj32tr2I1yR
+ KVk/nU5QUFtX9GZu0QLTfWviJdQCCIvSdDWY2lEhb49T/lt5f/hjBh4KnPLuDRd8xomgxYNq
+ ZF1eDORcrogkjHCj/z0zyo9b4GSHzzIB6ecjZKwS+eJdABEBAAGJATEEGAECABsFAlb7bukC
+ GwwECwkIBwYVCgkICwIFCRLMAwAACgkQGTtjY7NEQgYKbwgAhmSPkUKXHwSY/LVxoL4I2/WZ
+ WsLZiEpj1mHbnklS235enq2yE3og6v6xo2RzCBSCHGbHr5qxlc8MdOqFeizA+LbyTW4Jjufi
+ C+HeOVLtrQd4jSzLZEKyuQhpAPa5K36O71+kQzZo5dAcZP/HqBmEntTC74l8OcIHsIEWNWdF
+ pXb/ztjRkiZ+Egw9hHPA7JZbopH4k8i63JkBaj1zuaaMpvJIteGqBlquIwlT5FAXn91pCyJE
+ ko/UiQL81zL+JlKca88hFmO9DG2vP7jF7Flfo2MbshsoDCZujW3btwXeETgd6NqQXlss6HOd
+ Va5uGNenUnqkv1/KYeYba1k+yDBdwA==
+Message-ID: <0ae0a000-6574-8df2-5b00-51157f562339@dovecot.fi>
+Date: Mon, 4 Jan 2021 14:03:19 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
- =?utf-8?Q?=F6rffer?= =?utf-8?Q?=2C?= Jane Smithard, Graham Norton, HRB 21284
- (AG Nuernberg)
-User-Agent: Outlook
-Subject: [oss-security] generic kde LPE
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="VLGoJ4YZDouakNCKNeqZVyvv1oxLJk1Mk"
+Subject: [oss-security] CVE-2020-25275: Dovecot: MIME parsing crash
 
-Hi,
+--VLGoJ4YZDouakNCKNeqZVyvv1oxLJk1Mk
+Content-Type: multipart/mixed; boundary="mJv5S3junJfhkNlcdeN0hyx3OFug44Pm5";
+ protected-headers="v1"
+From: Aki Tuomi <aki.tuomi@dovecot.fi>
+To: oss-security@lists.openwall.com, fulldisclosure@seclists.org
+Message-ID: <0ae0a000-6574-8df2-5b00-51157f562339@dovecot.fi>
+Subject: CVE-2020-25275: Dovecot: MIME parsing crash
 
-As per distros list policy, I forward the info here. The document
-has slightly been modified (spelling and newlines, no new content).
+--mJv5S3junJfhkNlcdeN0hyx3OFug44Pm5
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-CVE-2017-8422 (KAuth) and CVE-2017-8849 (smb4k) have meanwhile been
-assigned by the kde project.
-Also see https://cgit.kde.org/kauth.git/commit/?id=df875f725293af53399f5146362eb158b4f9216a
+Open-Xchange Security Advisory 2021-01-04
 
-Updates are on their way, and once available I will also share
-the PoC.
+Product: Dovecot
+Vendor: OX Software GmbH
+Internal reference: DOV-4113 (Bug ID)
+Vulnerability type: CWE-20: Improper Input Validation
+Vulnerable version: 2.3.11-2.3.11.3
+Vulnerable component: lda, lmtp, imap
+Report confidence: Confirmed
+Solution status: Fixed by Vendor
+Fixed version: 2.3.13
+Vendor notification: 2020-09-10
+Solution date: 2020-09-14
+Public disclosure: 2021-01-04
+CVE reference: CVE-2020-25275
+CVSS: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)
+Researcher credit: Innokentii Sennovskiy (Rumata888) from BI.ZONE
 
-Just to show you that theres notable research outside of P0 :)
+Vulnerability Details:
 
+Mail delivery / parsing crashed when the 10 000th MIME part was
+message/rfc822 (or if parent was multipart/digest). This happened
+due to earlier MIME parsing changes for CVE-2020-12100.
 
+Risk:
 
------8<----- snip ------
+Malicious sender can crash dovecot repeatedly by sending / uploading
+message with more than 10 000 MIME parts.
 
+Workaround:
 
+These are usually dropped by MTA, where the mitigation can also be applied.
 
-This document describes a generic root exploit against kde.
+Solution:
 
-The exploit is achieved by abusing a logic flaw within
-the KAuth framework which is present in kde4 (org.kde.auth) and kde5
-(org.kde.kf5auth). It is possible to spoof what KAuth calls
-callerID's which are indeed DBUS unique names of the sender of a DBUS
-message.
-Exploitation requires a helper which is doing some privileged work
-as root. Kde ships quite some of them, but for this writeup I chose the
-smb4k helper because it contains another vulnerability that makes
-exploitation a lot easier; but in general any KAuth privileged helper code
-can be triggered by users with arbitrary arguments which leads to
-LPE on default kde installations.
-
-I will describe the overall problem by walking through the smb4k code and
-explain which DBUS functions are called and how a particular smb4k bug maps
-into the bigger picture of the KAuth flaw.
-
-Theres a problem with smb4k using the KAuth framework
-and trusting all the arguments passed to the helper:
-
-ActionReply Smb4KMountHelper::mount(const QVariantMap &args)
-{
-
-...
-
-command << args["mh_command"].toString();
-command << args["mh_unc"].toString();
-command << args["mh_mountpoint"].toString();
-command << args["mh_options"].toStringList();
-
-...
-
-proc.setProgram(command);
-// Run the mount process.
-proc.start();
-...
-}
-
-This code is running as root, triggered via DBUS activation by smb4k GUI
-code running as user, and the "args" supplied by the user, via:
-
-void Smb4KMountJob::slotStartMount()
-{
-...
-
- Action::executeActions(actions, NULL, "net.sourceforge.smb4k.mounthelper");
-...
-}
-
-after filling "actions" (theres only one) with the proper Name
-(net.sourceforge.smb4k.mounthelper.mount) and HelperID
-(net.sourceforge.smb4k.mounthelper) in order to trigger DBUS activation as
-well as the argument dictionary which contains the "mh_command" etc.
-key/value pairs. Its calling the list-version of Action::executeAction()
-[note the trailing 's'] with a one-element list, but that doesn't matter.
-The important thing here is that the arguments are created by code
-running as user - potentially containing evil input - and are evaluated
-by the helper program running as root.
-
-The above call ends at DBusHelperProxy::executeAction(), still at callers
-side. This function translates it into a DBUS method call which is
-finally running privileged and has the following interface:
-
-<interface name="org.kde.kf5auth">
-...
-    <method name="performAction" >
-        <arg name="action" type="s" direction="in" />
-        <arg name="callerID" type="ay" direction="in" />
-        <arg name="arguments" type="ay" direction="in" />
-        <arg name="r" type="ay" direction="out" />
-    </method>
-...
-</interface>
-
-Unlike the root helpers DBUS interfaces itself, which are not
-accessible as user, the KAuth DBUS interface org.kde.kf5auth is:
-
-<busconfig>
-  <policy context="default">
-    <allow send_interface="org.kde.kf5auth"/>
-    <allow receive_sender="org.kde.kf5auth"/>
-    <allow receive_interface="org.kde.kf5auth"/>
-  </policy>
-</busconfig>
-
-The code for actually doing the call from user to root is this:
-
-void DBusHelperProxy::executeAction(const QString &action,
-     const QString &helperID, const QVariantMap &arguments)
-{
-...
-
-QDBusMessage::createMethodCall(helperID, QLatin1String("/"),
-   QLatin1String("org.kde.kf5auth"), QLatin1String("performAction"));
-
-QList<QVariant> args;
-args << action << BackendsManager::authBackend()->callerID() << blob;
-message.setArguments(args);
-
-m_actionsInProgress.push_back(action);
-
-QDBusPendingCall pendingCall = m_busConnection.asyncCall(message);
-
-...
-}
-
-This code is invoking the performAction() DBUS method, passing along the
-user supplied arguments dictionary, in our smb4k case containing the
-handcrafted evil "mh_command" key, amongst others key/value pairs.
-
-There are two problems:
-
-The KAuth frameworks performAction() method is passed the callerID by the
-user and the method is invokable by the user. This allows to mask as any
-caller, bypassing any polkit checks that may happen later in the KAuth
-polkit backend via calls into
-
-PolicyKitBackend::isCallerAuthorized(const QString &action,
-                                     QByteArray callerID)
-
-The second problem is smb4k trusting the arguments that are passed from the
-user and which are forwarded by the KAuth DBUS service running as root to
-the mount helper DBUS service which is also running as root but not allowed
-to be contacted by users.
-Thats a logical flaw. It was probably not intented that users invoke
-performAction() themself, using it as a proxy into DBUS services and
-faking caller IDs en-passant. The callerID usually looks like ":1.123"
-and is a DBUS unique name that maps to the sender of the message.
-You can think of it like the source address of an IP packet.
-This ID should be obtained via a DBUS function while the message is
-arriving, so it can actually be trusted and used as a subject for polit
-authorizations when using systembus-name subjects. Allowing callers to
-arbitrarily choosing values for this ID is taking down the whole idea
-of authentication and authorization.
-
-I made an exploit for smb4k that works on openSUSE Leap 42.2 thats using
-the org.kde.auth interface (rather than org.kde.kf5auth) but both
-interfaces share the same problems. The exploit also works on the latest
-Fedora26 Alpha kde spin with SELinux in enforcing mode. In order to test
-the callerID spoofing, I "protected" the smb4k helper code via "auth_admin"
-polkit settings and tried mounting SMB shares via smb4k GUI. This asked for
-the root password, as its expected. The exploit however still works, as its
-spoofing the callerID to be DBUs itself and the request is taken as legit,
-requiring no root password.
+Operators should update to 2.3.13 or later version.
 
 
+--mJv5S3junJfhkNlcdeN0hyx3OFug44Pm5--
 
--- 
+--VLGoJ4YZDouakNCKNeqZVyvv1oxLJk1Mk
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@suse.com - SuSE Security Team
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAEBCgAdFiEEQtnWz3vebh9IQVAqGTtjY7NEQgYFAl/zBAcACgkQGTtjY7NE
+Qgb6bgf/UhP9YZBIUzqhTHqLxZwP3fsbES9Lntk6/GWXh05qv+YlJgBThFzVG+co
+HL1EHv3CevLJ/8FyAfkJynve8TNvPShBOFhF5aD0fa4Pz0TC8cXrgrNtPBM7x4yA
+uwa6j2gBIpNfEysJYszeGOUL27z69myMWc++WQoaEOeZYxkXsPVsZEBu6PnWshxp
+m95QOtA/p80CMKtTbsGfGnPeDJLmhj2iO8jqiBrKqUsO1tAPShhztbLu5USNR/dO
+11oYYLoCno9nqTJniUp60yqtpc6ENBlSvZmhpQ/6ZEQS9YCEX7e0wtejLNlZ20yA
+V8QRvHbRxw3zJv6OUSad/zYYKlKyLg==
+=RAbg
+-----END PGP SIGNATURE-----
+
+--VLGoJ4YZDouakNCKNeqZVyvv1oxLJk1Mk--
