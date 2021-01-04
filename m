@@ -1,23 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/04/1
-Message-ID: <14378199-be13-16b2-fd4e-c57b92064820@apache.org>
-Date: Sun, 04 Jul 2021 12:50:26 +0000
-From: Andy Seaborne <andy@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-33192: Apache Jena Fuseki: Display information UI XSS 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/04/5
+Message-ID: <CAA8xKjUGZPdrDvpisd4YpJfwL1wUMbr5KiM7x_SCNetAsLU8Ww@mail.gmail.com>
+Date: Mon, 4 Jan 2021 14:27:59 +0100
+From: Mauro Matteo Cascella <mcascell@...hat.com>
+To: Ferruh Yigit <ferruh.yigit@...el.com>
+Cc: oss-security@...ts.openwall.com, security@...k.org,  security-prerelease@...k.org, "dev@...k.org" <dev@...k.org>,  Ryan Hall <ryan.e.hall@...el.com>
+Subject: Re: [dpdk-dev] DPDK security advisory for multiple vhost crypto issues
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium
+On Mon, Jan 4, 2021 at 12:29 PM Ferruh Yigit <ferruh.yigit@...el.com> wrote:
+>
+> On 1/4/2021 8:28 AM, Mauro Matteo Cascella wrote:
+> > Hello,
+> >
+> > Is there any particular reason for the Scope metric to be Unchanged
+> > (S:U) for CVE-2020-14377 and CVE-2020-14378?
+> >
+>
+> removed dpdk-announce mail list
+>
+> Hi Mauro,
+>
+> CVE-2020-14377, the memory over read is in the scope of the same application,
+> that is the reason of the unchanged scope. There is another CVE below that can
+> use this information to figure out where to overwrite for remote execution which
+> has scope set as 'Changed'.
+>
+> CVE-2020-14378, can cause loop taken longer time and delays the service, since
+> it is eating the core cycles, if there is something else using that specific
+> core technically it may delay it too, but DPDK mostly uses all core for itself
+> and since mainly the vhost crypto service is affected, scope selected as Unchanged.
+>
+> Is there a concern on the selected scope metric?
+>
+> Thanks.
+>
 
-Description:
+Thank you for the timely reply. With regard to CVE-2020-14377, the
+Scope metric was rated differently by NIST [1] hence my initial
+question.
 
-A vulnerability in the HTML pages of Apache Jena Fuseki allows an attacker to execute arbitrary javascript on certain page views.  This issue affects Apache Jena Fuseki from version 2.0.0 to version 4.0.0 (inclusive).
+[1] https://nvd.nist.gov/vuln/detail/CVE-2020-14377
 
-Mitigation:
+> > On Mon, Sep 28, 2020 at 5:43 PM Ferruh Yigit <ferruh.yigit@...el.com> wrote:
+> >>
+> >> A set of vulnerabilities are fixed in DPDK:
+> >> - CVE-2020-14374
+> >> - CVE-2020-14375
+> >> - CVE-2020-14376
+> >> - CVE-2020-14377
+> >> - CVE-2020-14378
+> >>
+> >> Some downstream stakeholders were warned in advance in order to coordinate the
+> >> release of fixes and reduce the vulnerability window.
+> >>
+> >> Problem:
+> >> A malicious guest can harm the host using vhost crypto, this includes
+> >> executing code in host (VM Escape), reading host application memory
+> >> space to guest and causing partially denial of service in the host.
+> >>
 
-Users are advised to upgrade to Apache Jena 4.1.0 or later.
+>From the problem statement above I assume all these CVEs lead to some
+kind of guest-to-host compromise, which usually implies a Scope change
+(or at least, this holds true for QEMU flaws). Therefore I was
+wondering what's the reason behind the different evaluation of the
+Scope metric between CVE-2020-14377 and the others.
 
-Credit:
-
-Apache Jena would like to thank Luka Safonov for reporting this issue.
+Regards.
+--
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
