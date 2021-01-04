@@ -1,143 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/4
-Message-Id: <E1mIrb3-00063N-Gg@xenbits.xenproject.org>
-Date: Wed, 25 Aug 2021 12:01:33 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 379 v2 (CVE-2021-28697) - grant table v2 status pages may remain accessible after de-allocation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/04/3
+Message-ID: <0ae0a000-6574-8df2-5b00-51157f562339@dovecot.fi>
+Date: Mon, 4 Jan 2021 14:03:19 +0200
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
+To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
+Subject: CVE-2020-25275: Dovecot: MIME parsing crash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Open-Xchange Security Advisory 2021-01-04
 
-            Xen Security Advisory CVE-2021-28697 / XSA-379
-                               version 2
+Product: Dovecot
+Vendor: OX Software GmbH
+Internal reference: DOV-4113 (Bug ID)
+Vulnerability type: CWE-20: Improper Input Validation
+Vulnerable version: 2.3.11-2.3.11.3
+Vulnerable component: lda, lmtp, imap
+Report confidence: Confirmed
+Solution status: Fixed by Vendor
+Fixed version: 2.3.13
+Vendor notification: 2020-09-10
+Solution date: 2020-09-14
+Public disclosure: 2021-01-04
+CVE reference: CVE-2020-25275
+CVSS: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)
+Researcher credit: Innokentii Sennovskiy (Rumata888) from BI.ZONE
 
- grant table v2 status pages may remain accessible after de-allocation
+Vulnerability Details:
 
-UPDATES IN VERSION 2
-====================
+Mail delivery / parsing crashed when the 10 000th MIME part was
+message/rfc822 (or if parent was multipart/digest). This happened
+due to earlier MIME parsing changes for CVE-2020-12100.
 
-Patches updated to fix a typo in a comment.
+Risk:
 
-Public release.
+Malicious sender can crash dovecot repeatedly by sending / uploading
+message with more than 10 000 MIME parts.
 
-ISSUE DESCRIPTION
-=================
+Workaround:
 
-Guest get permitted access to certain Xen-owned pages of memory.  The
-majority of such pages remain allocated / associated with a guest for
-its entire lifetime.  Grant table v2 status pages, however, get
-de-allocated when a guest switched (back) from v2 to v1.  The freeing
-of such pages requires that the hypervisor know where in the guest
-these pages were mapped.  The hypervisor tracks only one use within
-guest space, but racing requests from the guest to insert mappings of
-these pages may result in any of them to become mapped in multiple
-locations.  Upon switching back from v2 to v1, the guest would then
-retain access to a page that was freed and perhaps re-used for other
-purposes.
+These are usually dropped by MTA, where the mitigation can also be applied.
 
-IMPACT
-======
+Solution:
 
-A malicious guest may be able to elevate its privileges to that of the
-host, cause host or guest Denial of Service (DoS), or cause information
-leaks.
+Operators should update to 2.3.13 or later version.
 
-VULNERABLE SYSTEMS
-==================
 
-All Xen versions from 4.0 onwards are affected.  Xen versions 3.4 and
-older are not affected.
 
-Only x86 HVM and PVH guests permitted to use grant table version 2
-interfaces can leverage this vulnerability.  x86 PV guests cannot
-leverage this vulnerability.  On Arm, grant table v2 use is explicitly
-unsupported.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this vulnerability.
-
-Suppressing use of grant table v2 interfaces for HVM or PVH guests will
-also avoid this vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa379.patch           xen-unstable
-xsa379-4.15.patch      Xen 4.15.x
-xsa379-4.14.patch      Xen 4.14.x - 4.13.x
-xsa379-4.12.patch      Xen 4.12.x - 4.11.x
-
-$ sha256sum xsa379*
-bdda4cb431301551336388ff7300a6ae95bb75af8fcae09cfb12c22a91d399d9  xsa379.meta
-508dbfcac7420ec780df39402116bf7d3f497c4a9d883a369df7bf5340778e6c  xsa379.patch
-2a1db918f1fa387a97d7bcb525eaa928fd71a9967e6ced4e7ac6e39a79ab5b80  xsa379-4.12.patch
-c57b72078460f45a5e003db5c4c3669f27310420e04eb16e4413318dfee54fa1  xsa379-4.14.patch
-3154869b12fcde70ce845df723aae4bbb2eb9576d90267c1be01eb6d3c5196e9  xsa379-4.15.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or PV-guest-only mitigations described
-above (or others which are substantially similar) is permitted during
-the embargo, even on public-facing systems with untrusted guest users
-and administrators.
-
-HOWEVER, deployment of the grant table v2 disabling mitigation described
-above is NOT permitted during the embargo on public-facing systems with
-untrusted guest users and administrators.  This is because such a
-configuration change is recognizable by the affected guests.
-
-AND: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmEmMPYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZLogH/icXkFdjXfxIFXLbvcX98qFYFcFbNgyitfngfR4d
-VUbiuglViFtSxVY+LytV1RZHEqFiwYCLYcy7lf/EcDyzZT+BLA+S/z5r45F9rQcv
-2gwMiQu+xoy1pDTSqVvGb+29NGT/btPRDfRlpaenqjQnGuOX2ymR9zGSmba/PDjp
-QVIsSsvEbldlkVzwx9B3C7n+27mUPU6iVnU7j3s60mDfkjz/gIdnuzl8Tv/n6QR0
-iZ8URQLn6wobbMBZM1+znfWNeT9dv4UiES1QuUrq1fT7LltQK8mZjAHP+VhXc3XZ
-EA9H1LMp5G9Rw+IfgCquQXR5O1usACxnjHM1b9iG2ZP/jZU=
-=eASl
------END PGP SIGNATURE-----
-
-Download attachment "xsa379.meta" of type "application/octet-stream" (1814 bytes)
-
-Download attachment "xsa379.patch" of type "application/octet-stream" (3208 bytes)
-
-Download attachment "xsa379-4.12.patch" of type "application/octet-stream" (3049 bytes)
-
-Download attachment "xsa379-4.14.patch" of type "application/octet-stream" (3036 bytes)
-
-Download attachment "xsa379-4.15.patch" of type "application/octet-stream" (3265 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
