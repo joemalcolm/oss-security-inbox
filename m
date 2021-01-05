@@ -1,28 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/17
-Message-ID: <CAKx+4-qm94y68oc4fT20OpYjs1kXn6mTMem7WD18DtAyFsWzdw@mail.gmail.com>
-Date: Thu, 18 Mar 2021 01:20:18 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/05/1
+Message-ID: <CAGr9p8A6LeRDMwc88DDOPo1WfGr1PR63WvGOSrPdHqR6uupZ4g@mail.gmail.com>
+Date: Tue, 5 Jan 2021 12:19:59 +0100
+From: Robert Metzger <rmetzger@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-35519 Linux kernel: x25_bind out-of-bounds read
+Subject: [CVE-2020-17518] Apache Flink directory traversal attack: remote file writing through the REST API
 Content-Type: text/plain; charset=utf-8
 
-Hello Team,
+CVE-2020-17518: Apache Flink directory traversal attack: remote file
+writing through the REST API
 
-An out-of-bounds (OOB) memory access flaw was found in x25_bind in
-net/x25/af_x25.c in the Linux kernel. A bounds check failure allows a local
-attacker with a user account on the system to gain access to out-of-bounds
-memory, leading to a system crash or a leak of internal kernel information.
-The highest threat from this vulnerability is to confidentiality,
-integrity, as well as system availability.
+Vendor:
+The Apache Software Foundation
 
-'CVE-2020-35519' was assigned by Red Hat.
+Versions Affected:
+1.5.1 to 1.11.2
 
+Description:
+Flink 1.5.1 introduced a REST handler that allows you to write an uploaded
+file to an arbitrary location on the local file system, through a
+maliciously modified HTTP HEADER. The files can be written to any location
+accessible by Flink 1.5.1.
 
-Regards,
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+Mitigation:
+All users should upgrade to Flink 1.11.3 or 1.12.0 if their Flink
+instance(s) are exposed.
+The issue was fixed in commit a5264a6f41524afe8ceadf1d8ddc8c80f323ebc4 from
+apache/flink:master.
 
-secalert@...hat.com for urgent response
+Credits:
+This issue was discovered by 0rich1 of Ant Security FG Lab
 
