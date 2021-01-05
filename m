@@ -1,10 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/16/1
-Message-ID: <5AD4FFC2-6E4A-44C4-92A9-8203C9244484@amazon.com>
-Date: Tue, 16 Feb 2021 00:05:36 +0000
-From: "Fuller, Abby" <abbyfull@...zon.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: 2021-01 stats
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/05/2
+Message-ID: <CAGr9p8CrKpXdkd2aP9P7ke9M+fADrYHd9D=AAv+VJe3kRsqndA@mail.gmail.com>
+Date: Tue, 5 Jan 2021 12:20:58 +0100
+From: Robert Metzger <rmetzger@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-17519] Apache Flink directory traversal attack: reading remote files through the REST API
 Content-Type: text/plain; charset=utf-8
 
-2021-01 stats are up on the wiki: https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+CVE-2020-17519: Apache Flink directory traversal attack: reading remote
+files through the REST API
+
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+1.11.0, 1.11.1, 1.11.2
+
+Description:
+A change introduced in Apache Flink 1.11.0 (and released in 1.11.1 and
+1.11.2 as well) allows attackers to read any file on the local filesystem
+of the JobManager through the REST interface of the JobManager process.
+Access is restricted to files accessible by the JobManager process.
+
+Mitigation:
+All users should upgrade to Flink 1.11.3 or 1.12.0 if their Flink
+instance(s) are exposed.
+The issue was fixed in commit b561010b0ee741543c3953306037f00d7a9f0801 from
+apache/flink:master.
+
+Credits:
+This issue was discovered by 0rich1 of Ant Security FG Lab
+
