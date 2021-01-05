@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3528" "Tuesday" "23" "October" "2018" "16:46:41" "+1300" "Philip Withnall" "philip@tecnocode.co.uk" "<1540266401.7250.22.camel@tecnocode.co.uk>" "80" "[oss-security] GLib (2.20.0+): GVariant, GDBus and GMarkup out of bounds reads, DoS and unbounded recursion" nil nil nil "10" "2018102303:46:41" "[oss-security] GLib (2.20.0+): GVariant, GDBus and GMarkup out of bounds reads, DoS and unbounded recursion" (number mark "U       philip@tecno Oct 23   80/3528  " thread-indent "\"[oss-security] GLib (2.20.0+): GVariant, GDBus and GMarkup out of bounds reads, DoS and unbounded recursion\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["809" "Tuesday" "5" "January" "2021" "12:19:59" "+0100" "Robert Metzger" "rmetzger@apache.org" "<CAGr9p8A6LeRDMwc88DDOPo1WfGr1PR63WvGOSrPdHqR6uupZ4g@mail.gmail.com>" "28" "[oss-security] [CVE-2020-17518] Apache Flink directory traversal attack: remote file writing through the REST API" nil nil nil "1" "2021010511:19:59" "[oss-security] [CVE-2020-17518] Apache Flink directory traversal attack: remote file writing through the REST API" (number mark "U       rmetzger@apa Jan  5   28/809   " thread-indent "\"[oss-security] [CVE-2020-17518] Apache Flink directory traversal attack: remote file writing through the REST API\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-17518] Apache Flink directory traversal attack: remote file writing through the REST API" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30660 invoked by uid 550); 23 Oct 2018 10:22:55 -0000
+Received: (qmail 1197 invoked by uid 550); 5 Jan 2021 11:49:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,121 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11405 invoked from network); 23 Oct 2018 03:47:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tecnocode.co.uk;
-	 h=message-id:subject:from:reply-to:to:date:content-type
-	:mime-version; s=fm3; bh=84jRLF6MJ1Iza9l0m2dVMKuprF4crX2Ys00Mtwc
-	kaNM=; b=ANA00Jn4wTx+dpL8DnSF/Ikv1NTy+BSJvE1K9O1bcobo1DyqEANtVyu
-	VYEq0/JHMBPnX9FXZL+wBZUxnNWaCPEXVC1X5jzdsGWY0HsDdcVt5NU/myiGC4KK
-	kFXM9ILhZp6rs5wYz3N3alE2jkYXeWoPG5AeIQTpgskmTP3rgoKP/U8sTctY1XdI
-	uKVKv6uWNM499ymbN3TY2tV4nFg4hQcAsw+MVbwQWoLHVKyI2AQavr4fMWllBhQP
-	qW1luMkKGc421+rLoZhtf2M2/Y52gTrTOxa1xgn2Xs6wm2qIV3Y1MGZCTT+WvxWd
-	7ErwBDANZsamObt+Cb/EOkCgV+lf6Uw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:message-id
-	:mime-version:reply-to:subject:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=84jRLF6MJ1Iza9l0m
-	2dVMKuprF4crX2Ys00MtwckaNM=; b=d5RTf96E37/uKXy3FkuXD/Lm7wEFwS14b
-	HULaMLIea3FDpxcDjYorq02YAwAGD3vGRuQ2I7Sd36iNQ3HM5B3Lu46I91zFbKW3
-	IOIBMZT0s7aCLfQZ1oImn3eZbXOBJlwlrEZPTT9eFoyYUM5crJJ81ebCqBlHs8Z1
-	FzYNm1+3RSoW02KLSdEY5coePCulY3rnw3WmYy8THAS4vcfR2HeeJhahcEUOjDo2
-	pFXDj7wmhlJrIvgOySHigOr1hGmvFwEii/UTCBl6QhFSlGPPXHzFvPzEyUS+X6HQ
-	3Z38zlzPoTCRkNH+5jAudJEvqK5oIaPjiGPYVraYZAGAoOMTIWQ2g==
-X-ME-Sender: <xms:rZnOW244OTukxIssIO7mU55osm5ytk3lzSzB4jBbTFNslbgmtzGU1g>
-X-ME-Proxy: <xmx:rZnOW4STwXBND0oE8Ma9BYMSZqxvZFrwcoDxs9h062opDVXkDKDryA>
-    <xmx:rZnOW-gCzf9zkEiGJGy-KgFm_qCthrrLudBkgLlDtK0gXVtMAW0y7w>
-    <xmx:rZnOW0jMZUO9wqB4PI9_Y_hjKPDvAtHYKYA_2qAU-Pu4B5dVz5-OUA>
-    <xmx:rZnOW-ZBW0w0mTjUfRhTCQ75dzxEdrXEUw1TThdsE9YKaWdgg_ccqA>
-    <xmx:rZnOW1Vyzk8a-lp5XrDD2xH9Iu_IehGAPB3g_4DvzWePxoz4lDKyKg>
-    <xmx:rZnOW7uObS-WJjJJjGo9BaOxGkRH2qsYjbGSxZGIx5AhHRlsHflTCA>
-Message-ID: <1540266401.7250.22.camel@tecnocode.co.uk>
-From: Philip Withnall <philip@tecnocode.co.uk>
+Received: (qmail 22023 invoked from network); 5 Jan 2021 11:20:30 -0000
+X-Gm-Message-State: AOAM532VCjklrPKw1W8+VR18goonanxb1e/NIu3wBtbcVHrtDhRgKjwd
+	GnDkpxW7UejCekqKBhFIq4LXIOTsj+zS64T+pKE=
+X-Google-Smtp-Source: ABdhPJykhw1Qzbf8lwnqEmwA+Mvw0F1VX0hoGfpyBuNzpMCv5x5Yvzkw4OvJOAOQ6clCSHqUZRhgYjBlNnKPGVMDkyQ=
+X-Received: by 2002:a05:6808:199:: with SMTP id w25mr2217791oic.151.1609845615678;
+ Tue, 05 Jan 2021 03:20:15 -0800 (PST)
+MIME-Version: 1.0
+From: Robert Metzger <rmetzger@apache.org>
+Date: Tue, 5 Jan 2021 12:19:59 +0100
+X-Gmail-Original-Message-ID: <CAGr9p8A6LeRDMwc88DDOPo1WfGr1PR63WvGOSrPdHqR6uupZ4g@mail.gmail.com>
+Message-ID: <CAGr9p8A6LeRDMwc88DDOPo1WfGr1PR63WvGOSrPdHqR6uupZ4g@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Date: Tue, 23 Oct 2018 16:46:41 +1300
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-/oajDtbbzJW+la8HfG41"
-X-Mailer: Evolution 3.26.6 (3.26.6-1.fc27) 
-Mime-Version: 1.0
-Subject: [oss-security] GLib (2.20.0+): GVariant, GDBus and GMarkup out of bounds reads,
- DoS and unbounded recursion
+Content-Type: multipart/alternative; boundary="00000000000010d9cc05b82564fe"
+Subject: [oss-security] [CVE-2020-17518] Apache Flink directory traversal attack: remote file
+ writing through the REST API
 
---=-/oajDtbbzJW+la8HfG41
+--00000000000010d9cc05b82564fe
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hello,
+CVE-2020-17518: Apache Flink directory traversal attack: remote file
+writing through the REST API
 
-Various fixes to GVariant, GDBus and GMarkup have just been pushed to
-GLib, to deal with several problems kindly found in them by the oss-
-fuzz project.
+Vendor:
+The Apache Software Foundation
 
-The fixes are here, with an explanation of each problem in the commit
-messages:
+Versions Affected:
+1.5.1 to 1.11.2
 
-https://gitlab.gnome.org/GNOME/glib/merge_requests/411
+Description:
+Flink 1.5.1 introduced a REST handler that allows you to write an uploaded
+file to an arbitrary location on the local file system, through a
+maliciously modified HTTP HEADER. The files can be written to any location
+accessible by Flink 1.5.1.
 
-We are looking at doing backports to the glib-2-58 and glib-2-56
-branches. They will be linked from the above merge request when
-available, but will differ due to not being able to introduce new APIs.
+Mitigation:
+All users should upgrade to Flink 1.11.3 or 1.12.0 if their Flink
+instance(s) are exposed.
+The issue was fixed in commit a5264a6f41524afe8ceadf1d8ddc8c80f323ebc4 from
+apache/flink:master.
 
-We do not plan to make new tarball releases purely to include these
-fixes. If you need to package the fixes, please pick them from the
-merge request above.
+Credits:
+This issue was discovered by 0rich1 of Ant Security FG Lab
 
-It=E2=80=99s likely that the GVariant and GDBus implementations shipped in =
-all
-prior versions of GLib are affected. GVariant first shipped in GLib
-2.20.0; GDBus in GLib 2.26.0. It=E2=80=99s also likely that the GMarkup code
-has always been vulnerable. We have not verified the minimum bound of
-the vulnerable versions, though.
-
-In brief, the problems fixed are:
- =E2=80=A2 Arithmetic underflow when calculating GVariant tuple element ends
-resulting from missing validation of the offset table. This can result
-in an out of bound read. Fixed by adding validation.
- =E2=80=A2 Unbounded call recursion when handling highly recursive GVariant
-types. This can result in a call stack overflow. Fixed by limiting
-GVariant type recursion with static and dynamic types in untrusted
-GVariant instances.
- =E2=80=A2 Infinite loop when getting a child from a serialised variable ar=
-ray,
-due to missing validation that the child offset does not point into the
-offset table itself. Fixed by adding validation.
- =E2=80=A2 Similarly for serialised tuples.
- =E2=80=A2 nul bytes could pass through UTF-8 validation for long GVariant
-strings due to a signed/unsigned mismatch. Fix: add a new validation
-function which operates on an unsigned string length.
- =E2=80=A2 Critical warning when parsing a D-Bus message with the wrong type
-for its signature field in its message header. Fix: validate the type
-before unwrapping that field.
- =E2=80=A2 Critical warning when parsing a D-Bus message with a header field
-containing a variant with an empty type signature, due to a mismatch
-between validation of D-Bus type signatures and validation of GVariant
-type strings. Fix: validate that the field is a valid type string too.
-
-Philip=
-
---=-/oajDtbbzJW+la8HfG41
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE+GmSZq7WqgcC/S8XOOgst84G7YUFAlvOmaIACgkQOOgst84G
-7YUn0A/+NphjF2tifVK5e6Si62BugoFDqfEhhtsxnyVngdpBIo7YR7D3YETWGEcN
-oHBo1kzOujAB7o57h7sG8TZlpYXpoUTl2r6UY0WLIc3Yq/w37THFBa7+KVBly1R5
-Ci1OGKwna7FOUx9U8vXHQRaQw6L5V2PsaBdxELf/gbzr05vNbVkxm4wTlQtjRDUr
-gjX98SbqJ9J8TKIu3o+xCPUW7paMPxGCEMUSS/msdfbDyiXaGcaraE/gESlAGBSH
-P3xW4e0ilapQy4xPZ9LPid9XGzaNqQ1AfdqtmXZqqGbgWGOCXKSH/Lu8o5Y29hlO
-W62hWq7h+e3eOj/PCphu677iIVBjunQatuljiHVsSY0BW/7P3Lvm8eSrK0H65Ksj
-ayKFZdvAz6561EMZG2oU2eqc+PtSxLvxYayaDVSaUjZA/rev+IQcwFPGstkCcr8w
-fUkuEP+qOgoQbjaU0xO3FwkcLVI96nG7HYdnFnEuPY7l3/p/DZORWtdzF7yZK8nP
-HKYzySPkPuH4uDt+oHYqKMspRRMLTRDsTifWdkfRdAsGefwOUXh9ynoZyxIca5JY
-dWRXr6yJvNPjwBC+9ZN+vgelQ1ydB81qW283GVtz4Q0zmVycjEQ8CwhQxuWBpYM9
-R2iarI9as3byHBgJuB0jrNRD852T5LjZ/LW/g79tj5Kc+4SiQSc=
-=EtrS
------END PGP SIGNATURE-----
-
---=-/oajDtbbzJW+la8HfG41--
-
+--00000000000010d9cc05b82564fe--
