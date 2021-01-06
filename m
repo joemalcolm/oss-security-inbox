@@ -1,148 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/14/2
-Message-ID: <CABBoStjanoz=h-VNkzJRzwAdOmWtrUkc=r4Cbz2JTSPAGTaMPg@mail.gmail.com>
-Date: Wed, 14 Apr 2021 13:22:11 -0400
-From: Ana McTaggart <amctagga@...hat.com>
-To: oss-security@...ts.openwall.com, Ilya Dryomov <idryomov@...hat.com>,  Sage Weil <sweil@...hat.com>
-Subject: CVE-2021-20288 Ceph: Unauthorized global_id reuse in cephx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/06/1
+Message-ID: <cig3328s95zvj3.fsf@u54e1add816995a33037d.ant.amazon.com>
+Date: Wed, 6 Jan 2021 11:59:28 -0800
+From: Anthony Liguori <aliguori@...zon.com>
+To: <oss-security@...ts.openwall.com>
+CC: <security@...nel.org>, <luolikang@...ocus.com>
+Subject: A security vulnerability in linux kernel 5.8.10
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+The following message was sent to the distros@ list.  Unfortunate the
+sender was not responsive and it's unclear if it's actually an issue.
+The report overall did not follow the policies of the list with the
+information provided.
 
-An authentication flaw was found in ceph. When the monitor handles
-CEPHX_GET_AUTH_SESSION_KEY requests, it doesn't sanitize other_keys,
-allowing key reuse. An attacker who can request a global_id can exploit the
-ability of any user to request a global_id previously associated with
-another user, as ceph does not force the reuse of old keys to generate new
-ones. The highest threat from this vulnerability is to data confidentiality
-and integrity as well as system availability.
+Per the distros list policy, we've past the 14 day mark and even with a
+little extra time due to the holiday, this needs to be made public.
 
+Posting follows below.
 
-CVE-2021-20288 has been assigned for this flaw.
-Upstream patches:
-https://github.com/ceph/ceph/commits/nautilus (commits on top of 14.2.19)
-https://github.com/ceph/ceph/commits/octopus (commits on top of 15.2.10)
-https://github.com/ceph/ceph/commits/pacific (commits on top of 16.2.0)
+Regards,
 
-The main patches (i.e. ones that actually close the holes) are
-"auth/cephx: option to disallow unauthorized global_id (re)use" and
-"auth/cephx: ignore CEPH_ENTITY_TYPE_AUTH in requested keys".
+Anthony Liguori
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Including the original reporting email below for context, as reported by
-Ilya.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Subject: A security vulnerability in linux kernel 5.8.10
+To: security@...nel.org
+Cc: linux-distros@...openwall.org
+Date: Fri, 18 Dec 2020 16:53:59 +0800
+
+���: 梵 <luolikang@...ocus.com> 
+��ʱ�: 2020�12�18� 13:23
+ռ�: 'security@...nel.org' <security@...nel.org>
+��: change the poc
+
+Sorry , please use this poc
+
+���: 梵 <luolikang@...ocus.com <mailto:luolikang@...ocus.com> > 
+��ʱ�: 2020�12�18� 11:46
+ռ�: 'security@...nel.org' <security@...nel.org
+<mailto:security@...nel.org> >
+��: A security vulnerability in linux kernel 5.8.10
+
 Hello,
+I have found a security vulnerability in linux kernel 5.8.10. When I use the
+DCCP protocol to establish a connection, the kernel will crash.
 
-In nautilus+, when the monitor handles CEPHX_GET_AUTH_SESSION_KEY
-requests, it doesn't sanitize other_keys.  If other_keys contains
-CEPH_ENTITY_TYPE_AUTH, it ends up encoding two auth tickets: the
-first (possibly encrypted with the old session key) in response to
-CEPHX_GET_AUTH_SESSION_KEY itself [1] and the second in response to
-CEPH_ENTITY_TYPE_AUTH in other_keys [2].  The second ticket takes
-effect but a) it isn't encrypted with the old session key even if
-needed and b) its validity is wrong, namely auth_service_ticket_ttl
-instead of auth_mon_ticket_ttl.  Unfortunately our client always sets
-CEPH_ENTITY_TYPE_AUTH in other_keys [3].
+My analysis are followed: When call the  ___slab_alloc function, it will
+enter the new_slab branch, and the new_slab_objects will return a normal
+freelist, but in  alloc_debug_processing, it will change the second object
+ptr in freelist to an invalid address,and then cause dos.
 
-CEPHX_GET_PRINCIPAL_SESSION_KEY arm has the same issue, but at least
-our client doesn't set CEPH_ENTITY_TYPE_AUTH in keys in that case.
-
-Attached is the patch I made.
-
-Trying to assess the security impact, I realized that I don't follow
-the outer logic and that there may be another much larger bug lurking
-there.  I have always thought that the purpose of encrypting the new
-auth ticket with the old session key was to ensure that the client is
-authentic (vs someone who just snooped the old ticket when the monitor
-shared it with the client or any time the client provided it back to
-the monitor as part of requesting service tickets) before allowing
-reuse of global_id from the old ticket.  However, after looking at the
-code, I'm having doubts because we are very lax about giving out
-global_ids: it looks like a client can assign itself any global_id of
-its choosing by simply passing something other than 0 in MAuth message
-[4,5] or AUTH_REQUEST frame [6,7] and not even bother supplying an old
-ticket.  This includes obtaining a global_id currently in use by
-another client, which can screw with a lot of things: idempotence
-logic, out of order op detection, possibly lock ownerships and anything
-else that relies on global_id being a cluster-wide unique id.
-
-I dug into history and found that both the reuse via an old ticket,
-the encryption safeguard on the new ticket and the negotiation change
-that allowed clients to pass an arbitrary global_id came alongside when
-cephx was being implemented in 2009, committed within a couple of days:
-
-  "auth: reuse global_id when requesting tickets" on Nov 17, 2009
-
-https://github.com/ceph/ceph/commit/0669ca21f4f784e450068d8b937b37fb0240b595
-
-  "auth: change server side negotiation a bit" on Nov 18, 2009
-
-https://github.com/ceph/ceph/commit/5eeb711b6b2beb883d903636b05b89e95066c983
-
-  "auth: when renewing session, encrypt ticket" on Nov 19, 2009
-
-https://github.com/ceph/ceph/commit/fec31964a12b82f3d7d3a130b749aee428dbc265
-
-With that negotiation change in place, the whole reuse via an old
-ticket scheme together with the encryption safeguard seems rather
-meaningless to me.  Am I missing something obvious?
-
-Sage, Yehuda, do you remember the details by any chance?  The commit
-messages are empty and neither of the two cephx write-ups we have shed
-any light.  In fact, quite the opposite:
-
-  "... If old_ticket is present, verify it is valid, and we
-   can reuse the same global_id.  (Otherwise, a new global_id is
-   assigned by the monitor.)"
-
-But as it is (and apparently always has been), a new global_id is
-assigned only if global_id == 0 in the initial handshake message/frame.
-Then, the value from the handshake is potentially overridden by the
-value from the old ticket, and if the old ticket isn't present, the
-monitor just continues on [8]...
-
-What was (and still is, since this aspect of auth negotiation got
-carried over to msgr2) the use case for allowing a client to provide
-a global_id in the initial handshake message/frame?
-
-Should a client be allowed to assume the provided global_id if it
-doesn't follow through with a ticket proving previous possession of
-that global_id?
-
-[1]
-https://github.com/ceph/ceph/blob/08af21c9c0c3c5b391a60d13140c0af414146bb8/src/auth/cephx/CephxServiceHandler.cc#L148-L176
-[2]
-https://github.com/ceph/ceph/blob/08af21c9c0c3c5b391a60d13140c0af414146bb8/src/auth/cephx/CephxServiceHandler.cc#L211-L232
-[3]
-https://github.com/ceph/ceph/blob/08af21c9c0c3c5b391a60d13140c0af414146bb8/src/auth/cephx/CephxClientHandler.cc#L78
-[4]
-https://github.com/ceph/ceph/blob/08af21c9c0c3c5b391a60d13140c0af414146bb8/src/mon/AuthMonitor.cc#L628
-[5]
-https://github.com/ceph/ceph/blob/08af21c9c0c3c5b391a60d13140c0af414146bb8/src/mon/AuthMonitor.cc#L711-L712
-[6]
-https://github.com/ceph/ceph/blob/08af21c9c0c3c5b391a60d13140c0af414146bb8/src/mon/Monitor.cc#L6326
-[7]
-https://github.com/ceph/ceph/blob/08af21c9c0c3c5b391a60d13140c0af414146bb8/src/mon/Monitor.cc#L6356-L6357
-[8]
-https://github.com/ceph/ceph/blob/08af21c9c0c3c5b391a60d13140c0af414146bb8/src/auth/cephx/CephxServiceHandler.cc#L138-L144
-
-
-Ana McTaggart
-
-Red Hat Product Security
-
-Red Hat Remote <https://www.redhat.com>
-
-
-secalert@...hat.com for urgent response
-
-
-amct@...hat.com
-
-
-M: +1 (774)279-0791 <7742790791>     IM: amctagga
-
-
-Pronouns:They/Them/Theirs
 
