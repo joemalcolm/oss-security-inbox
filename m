@@ -1,4 +1,9 @@
-Received: (qmail 22454 invoked by uid 550); 1 Nov 2024 16:11:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1973" "Sunday" "10" "January" "2021" "19:08:42" "+0100" "Solar Designer" "solar@openwall.com" "<20210110180842.GA2432@openwall.com>" "44" "Re: [oss-security] distros list archive" nil nil nil "1" "2021011018:08:42" "[oss-security] distros list archive" (number mark "U       solar@openwa Jan 10   44/1973  " thread-indent "\"Re: [oss-security] distros list archive\"\n") "<20171120224205.GA14494@openwall.com>" ("<20170624163950.GA405@openwall.com>" "<20171120224205.GA14494@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] distros list archive" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19661 invoked by uid 550); 10 Jan 2021 18:10:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,179 +12,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13446 invoked from network); 1 Nov 2024 12:57:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uni-hamburg.de;
-	s=rrzs003; t=1730465831;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BYQvmpmrc/IJji1ovFxV3ywRkehthzlG9g06YIt3i+U=;
-	b=OGvdpQzyhauaKVXj0F9owHNGeAHzUygtG4X1eApWixsNXOuFDm6LyD0rN8b3iwqtDQeMu0
-	S5oCclcahCiGt/uDm/soUD9m58Pdr7C1rZsPJK3sfFqV8vbggXD1T0GfGFkR5rR1217C+t
-	Dl3PLrYM0ACcQaSSLIwfTRhjQJ+YMCSlVNGPVmiSgX4yvocAq+tOUb/3/DH5gTpPmHbVms
-	Vu5wlNUOhpNxQAOC9ePHqthWOm+o37u2uq5LXucM+sVE6Wp+MKL5/CYOVJj5ThCM0rw0UT
-	7hW6khibrOWN10bUgs3yVkDuhOGxFfvu8XQQG6DrgNGkS41ZUtIwyi5jnVwg2A==
-Date: Fri, 1 Nov 2024 13:52:21 +0100
-From: "Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>
-To: <oss-security@lists.openwall.com>
-Message-ID: <20241101135221.7a7f5037@cortex.rrz.uni-hamburg.de>
-In-Reply-To: <CAN_LGv0ruQFGn4R-VwRSm2Cj_=d5UEcHqKigKV3ciVaDqkPSJw@mail.gmail.com>
-References: <20241030183237.4e46db4f@plasteblaster>
-	<CAOGQQ28MtkwOyqSZNw7pnTqD3chm9q7q6b9H_MFNE9zRHPoMsQ@mail.gmail.com>
-	<CAOGQQ28MhqvZF9Jq8Hka-jyZzmhxey6riwAwn-4uxL8PKn6hWg@mail.gmail.com>
-	<CAN_LGv0ruQFGn4R-VwRSm2Cj_=d5UEcHqKigKV3ciVaDqkPSJw@mail.gmail.com>
-Organization: =?UTF-8?B?VW5pdmVyc2l0w6R0?= Hamburg
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.39; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [134.100.3.33]
-X-ClientProxiedBy: EX-S-MR05.uni-hamburg.de (134.100.84.88) To
- EX-S-MR06.uni-hamburg.de (134.100.84.89)
-Subject: Re: [oss-security] mpg123 buffer overflow in versions before 1.32.8
- (Frankenstein's Monster)
+Received: (qmail 18034 invoked from network); 10 Jan 2021 18:08:54 -0000
+Date: Sun, 10 Jan 2021 19:08:42 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20210110180842.GA2432@openwall.com>
+References: <20170624163950.GA405@openwall.com> <20171120224205.GA14494@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171120224205.GA14494@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] distros list archive
 
-Am Fri, 1 Nov 2024 08:52:28 +0800
-schrieb Alexander Patrakov <patrakov@gmail.com>:
+Hi,
 
-> Is there any way to check if any of my MP3 files contain the stuff
-> that triggers the bug? Would, for example, Checkmate
-> (https://github.com/Sjord/checkmate) flag them without also being
-> exposed to security risks?
+I've just updated the headers-only archives of (linux-)distros mentioned
+in the message below to include headers of everything posted until
+December 31, 2020.  There was relatively little need for this for a
+while due to the statistics kindly maintained by Gentoo, but now those
+are lagging behind (last updated until September 2019 inclusive).  They
+will need to also be updated, and I felt updating these archives might
+help with hopefully making that upcoming update and with its review.
 
-It's tricky to detect the exact situation(s) that would lead to the
-decoder buffer overflow. The mpg123 parser is very persistent in making
-various damaged or ill-prepared MPEG streams work. MPEG streams (files)
-have a history of lots of stuff being tagged on or even just being
-actually damaged during transfer/storage. This makes it kind of a worst
-case from the security POV and my main defense for still maintaining
-this is that the codebase has been tested for bugs over a long period
-now and things like that are rather rare to be still found. This
-particular issue is embarrassing, though. In retrospect I should have
-not supported Frankenstein streams at all, I guess (I _think_ I added
-that … been a long time). But I do have hope that the extensive testing
-the code gets on various fronts results in minimal chance of such
-glaring flaw surfacing again.
+Alexander
 
-What a scanner like checkmate can do is to tell you if the file matches
-an ideal simple structure and will definitely not trigger the issue. It
-will be overly cautionous. Mpg123 will properly decode a lot more files,
-including the case of
-
-	cat *.mp3 | mpg123 -
-
-where the individual files may wary in lots of properties. The
-triggering of the bug needs two conditions:
-
-1. MPEG headers vary in format (stereo or mono, for example).
-2. There are incomplete frames that trigger the situation where the
-   header got parsed, but no matching frame body was read.
-
-Even this is not enough to really say if this is a stream that would
-trigger, as you need a certain combination of libmpg123 usage and
-stream.
-
-If you know you deal with clean individual files and no streamdumps
-with random junk inserted, your referred scanner could do the trick and
-be a safe option. If you want to be a bit less extreme and more correct
-in terms of how mpg123 would parse the stream, with more error
-resilience, you can check for Frankenstein streams as mpg123 itself
-detects them:
-
-	mpg123 --index -n 0  file.mp3
-
-will just run the parser over the file for indexing frame offsets, but
-not run the decoder on any of them (-n 0).
-
-$ mpg123 --index -n 0 ~/Downloads/mpg123_heapoverflow_write 
-High Performance MPEG 1.0/2.0/2.5 Audio Player for Layers 1, 2 and 3
-	version 1.32.8; written and copyright by Michael Hipp and others
-	free software (LGPL) without any warranty but with best wishes
-
-Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
-Note: Illegal Audio-MPEG-Header 0x00000000 at offset 609.
-Note: Trying to resync...
-Note: Skipped 92 bytes in input.
-
-Warning: Encountered more data after announced end of track (frame 1/1). Frankenstein!
-Note: Illegal Audio-MPEG-Header 0x6f9d179f at offset 910.
-Note: Trying to resync...
-Note: Skipped 17 bytes in input.
-
-Warning: Real sample count 3456 differs from given gapless sample count 1152. Frankenstein stream?
-Directory: /home/user/Downloads/
-
-Terminal control enabled, press 'h' for listing of keys and functions.
-
-Playing MPEG stream 1 of 1: mpg123_heapoverflow_write ...
-
-This was a Frankenstein track.
-[0:00] Decoding of mpg123_heapoverflow_write finished.
-
-You could check for the message like this:
-
-$ test "This was a Frankenstein track." = "$(mpg123 --index -n 0 ~bernd/Downloads/mpg123_heapoverflow_write 2>&1 | tail -n 2 | head -n 1)" && echo yes
-yes
-
-You could be more cautionous by looking for 'Frankenstein' anywhere in
-the output, but that would catch files with that in the Path.
-
-Also, you can add --no-infoframe to still let concatenated files that
-match in decoder properties pass through:
-
-$ cat /some/album/*.mp3 > /dev/shm/test.mp3
-$ mpg123 --no-infoframe --index -n 0 /dev/shm/test.mp3 
-High Performance MPEG 1.0/2.0/2.5 Audio Player for Layers 1, 2 and 3
-	version 1.32.8; written and copyright by Michael Hipp and others
-	free software (LGPL) without any warranty but with best wishes
-
-Directory: /dev/shm/
-
-Terminal control enabled, press 'h' for listing of keys and functions.
-
-Playing MPEG stream 1 of 1: test.mp3 ...
-
-[0:00] Decoding of test.mp3 finished.
-
-(no Frankenstein complaint)
-
-$ mpg123  --index -n 0 /dev/shm/test.mp3 
-High Performance MPEG 1.0/2.0/2.5 Audio Player for Layers 1, 2 and 3
-	version 1.32.8; written and copyright by Michael Hipp and others
-	free software (LGPL) without any warranty but with best wishes
-
-Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
-
-Warning: Encountered more data after announced end of track (frame 204/204). Frankenstein!
-
-Warning: Real sample count 185602176 differs from given gapless sample count 235008. Frankenstein stream?
-Directory: /dev/shm/
-
-Terminal control enabled, press 'h' for listing of keys and functions.
-
-Playing MPEG stream 1 of 1: test.mp3 ...
-
-This was a Frankenstein track.
-[0:00] Decoding of test.mp3 finished.
-
-Thinking about this, I just realize that -n 0 also neatly avoids noise
-through metadata display, as that is only triggered by mpg123 when
-actually decoding.
-
-So in short:
-
-	mpg123 --no-infoframe --index -n 0 testfile.mp3 \
-	| grep '^This was a Frankenstein track\.'
-
-would be an adequate test.
-
-
-Alrighty then,
-
-Thomas
-
--- 
-Dr. Thomas Orgis
-HPC @ Universität Hamburg
+On Mon, Nov 20, 2017 at 11:42:05PM +0100, Solar Designer wrote:
+> On Sat, Jun 24, 2017 at 06:39:50PM +0200, Solar Designer wrote:
+> > I've just set up these archives of the private lists up until June 19:
+> > 
+> > http://www.openwall.com/lists/linux-distros/
+> > http://www.openwall.com/lists/distros/
+> > 
+> > I did not decrypt the actual messages, but the statistics and the
+> > message headers should provide some visibility into how much and roughly
+> > what was discussed and when.
+> 
+> I've just updated these with message headers until November 19 (although
+> there was nothing posted after November 9, until further still-embargoed
+> messages appeared today).
+> 
+> > The messages appearing on distros should be strictly a subset of those
+> > appearing on linux-distros, as per the description of the lists here:
+> > 
+> > http://oss-security.openwall.org/wiki/mailing-lists/distros
+> > 
+> > As you may notice, the Subject lines sometimes contain [vs] and other
+> > times [vs-plain].  This reflects whether the messages traveled to the
+> > list exploder in encrypted or plaintext form, respectively.  They
+> > traveled to the list members in re-encrypted form either way.  The
+> > [vs-plain] case commonly occurs on messages CC'ed to other parties, for
+> > which the sender might not have had the keys.  MUAs generally don't
+> > allow a message to be encrypted to a subset of the addressees and sent
+> > in plaintext to others.
+> > 
+> > Enjoy.
+> 
+> Alexander
