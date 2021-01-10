@@ -1,27 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/26/4
-Message-ID: <20210526155535.GA26800@openwall.com>
-Date: Wed, 26 May 2021 17:55:35 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/10/3
+Message-ID: <20210110184458.GA2808@openwall.com>
+Date: Sun, 10 Jan 2021 19:44:58 +0100
 From: Solar Designer <solar@...nwall.com>
-To: "Eduardo' Vela <Nava>" <evn@...gle.com>
-Cc: oss-security@...ts.openwall.com, Paolo Bonzini <pbonzini@...hat.com>
-Subject: Re: CVE-2021-22543 - /dev/kvm LPE
+To: Anthony Liguori <aliguori@...n.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Gentoo's "contributing back" linux-distros tasks
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On Wed, May 26, 2021 at 03:48:22PM +0200, Eduardo' Vela <Nava> wrote:
-> I believe this still doesn't have a patch, but +Paolo Bonzini
-> <pbonzini@...hat.com> has been working on one for some time now.
+On Mon, Oct 12, 2020 at 08:29:13AM -0700, Anthony Liguori wrote:
+> Solar Designer <solar@...nwall.com> writes:
 > 
-> Please use CVE-2021-22543 to refer to this issue.
+> > Gentoo signed up for these "contributing back" tasks for linux-distros:
+> >
+> > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> >
+> > 9. Stay on top of issues to ensure progress is being made, remind others
+> > when there's no apparent progress, as well as when the public disclosure
+> > date for an issue is approaching and when it's finally reached (unless
+> > the reporter beats you to it by making their mandatory posting to
+> > oss-security first) - primary: Gentoo, backup: Amazon
+> >
+> > 11. Make sure the mandatory oss-security posting is made promptly and is
+> > sufficiently detailed, and remind the reporter if not - primary: Gentoo,
+> > backup: Amazon
+> >
+> > 12. If exploit(s) were shared on the list, make sure that either they're
+> > included in the oss-security posting along with the issue detail or the
+> > posting includes an announcement of planned later posting of the
+> > exploits (with the delay being within list policy), and in the latter
+> > case also make sure that the later posting is in fact made as planned,
+> > and remind the reporter if not - primary: Gentoo, backup: Amazon
 > 
-> Advisory:
-> https://github.com/google/security-research/security/advisories/GHSA-7wq5-phmq-m584
+> I'm happy to take primary on any of the above.
 
-To comply with the no link-only postings policy we have here, attached
-is a text export of the above web page, for archival.
+Thank you, Anthony!
+
+Gentoo, please let us all know whether you'd like to stay primary for
+these tasks, be moved to backup, or something else?
+
+> > 13. Keep track of per-report and per-issue handling and disclosure
+> > timelines (at least times of notification of the private list and of
+> > actual public disclosure), at regular intervals produce and share
+> > statistics (most notably, the average embargo duration) as well as the
+> > raw data (except on issues that are still under embargo) by posting to
+> > oss-security - primary: Gentoo, backup: Amazon
+> >
+> > and we saw some contributions from Gentoo on these, most notable being
+> > their work on the statistics (task 13 above):
+> >
+> > https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+> >
+> > Unfortunately, the last update of these statistics ("Last modified:
+> > 2019/10/15 01:52 by kristianf") is also when the contributions ceased.
+> >
+> > Some others have been taking care of tasks 9, 11, 12 (in particular,
+> > Anthony Liguori of Amazon has been helping, but on various occasions
+> > also many others from other distros), but not yet of task 13.
+> >
+> > I understand that Gentoo is a community project run by volunteers, and I
+> > am not complaining.  Rather, I think we need to discuss with Gentoo in
+> > here and reassign to other distros whatever responsibilities Gentoo no
+> > longer has resources for.  We should ideally keep at least one task
+> > Gentoo's responsibility (and Gentoo should have specific people assigned
+> > to that task), at least to be consistent with our current requirements
+> > for new distros joining (linux-)distros.
+> >
+> > To Gentoo: which of these tasks, or other "contributing back" tasks, are
+> > you (still) willing to handle, and who on your team would handle them?
+> >
+> > To others on linux-distros: which of the above tasks do you volunteer to
+> > become primary for?
+> >
+> > To Amazon: do you want to remain backup for task 13, or do you not have
+> > the resources to handle it?
+> 
+> It's hard to be backup for this one as it is quite a lot of work
+> compared to most other tasks.  I'd prefer someone else to pick it up if
+> possible.  While I don't have the cycles to pick up 13, if you're
+> willing to consider adding another person from Amazon, I think we could
+> take primary on this one though.
+
+No problem adding another person from Amazon, as long as that addition
+wouldn't be solely for the statistics task, but would also benefit the
+users of Amazon Linux.
+
+Let's figure out if we should do that (and if it's still an option from
+Amazon's side), or if another distro maybe offers to be primary for the
+statistics task?
 
 Alexander
-
-View attachment "GHSA-7wq5-phmq-m584.txt" of type "text/plain" (9520 bytes)
