@@ -1,24 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/06/3
-Message-ID: <39c0a5b8-8523-d46c-9488-77d9c422bb8b@apache.org>
-Date: Mon, 06 Dec 2021 19:13:10 +0000
-From: Marcus Christie <machristie@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/10/1
+Message-ID: <20210110180842.GA2432@openwall.com>
+Date: Sun, 10 Jan 2021 19:08:42 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-43410: Apache Airavata Django Portal: airavata-django-portal allows CRLF log injection because of the lack of escaping in the log statements 
+Subject: Re: distros list archive
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Hi,
 
-Description:
+I've just updated the headers-only archives of (linux-)distros mentioned
+in the message below to include headers of everything posted until
+December 31, 2020.  There was relatively little need for this for a
+while due to the statistics kindly maintained by Gentoo, but now those
+are lagging behind (last updated until September 2019 inclusive).  They
+will need to also be updated, and I felt updating these archives might
+help with hopefully making that upcoming update and with its review.
 
-Apache Airavata Django Portal allows CRLF log injection because of lack of escaping log statements. In particular, some HTTP request parameters are logged without first being escaped.
+Alexander
 
-Versions affected:
-master branch before commit 3c5d8c7 [1] of airavata-django-portal
-
-[1] https://github.com/apache/airavata-django-portal/commit/3c5d8c72bfc3eb0af8693a655a5d60f9273f8170
-
-Credit:
-
-Apache Airavata would like to thank haby0 of Duxiaoman Financial Security Team for reporting this vulnerability.
-
+On Mon, Nov 20, 2017 at 11:42:05PM +0100, Solar Designer wrote:
+> On Sat, Jun 24, 2017 at 06:39:50PM +0200, Solar Designer wrote:
+> > I've just set up these archives of the private lists up until June 19:
+> > 
+> > http://www.openwall.com/lists/linux-distros/
+> > http://www.openwall.com/lists/distros/
+> > 
+> > I did not decrypt the actual messages, but the statistics and the
+> > message headers should provide some visibility into how much and roughly
+> > what was discussed and when.
+> 
+> I've just updated these with message headers until November 19 (although
+> there was nothing posted after November 9, until further still-embargoed
+> messages appeared today).
+> 
+> > The messages appearing on distros should be strictly a subset of those
+> > appearing on linux-distros, as per the description of the lists here:
+> > 
+> > http://oss-security.openwall.org/wiki/mailing-lists/distros
+> > 
+> > As you may notice, the Subject lines sometimes contain [vs] and other
+> > times [vs-plain].  This reflects whether the messages traveled to the
+> > list exploder in encrypted or plaintext form, respectively.  They
+> > traveled to the list members in re-encrypted form either way.  The
+> > [vs-plain] case commonly occurs on messages CC'ed to other parties, for
+> > which the sender might not have had the keys.  MUAs generally don't
+> > allow a message to be encrypted to a subset of the addressees and sent
+> > in plaintext to others.
+> > 
+> > Enjoy.
+> 
+> Alexander
