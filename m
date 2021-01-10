@@ -1,4 +1,9 @@
-Received: (qmail 28494 invoked by uid 550); 21 Dec 2023 14:30:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3975" "Sunday" "10" "January" "2021" "19:44:58" "+0100" "Solar Designer" "solar@openwall.com" "<20210110184458.GA2808@openwall.com>" "82" "Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil "1" "2021011018:44:58" "[oss-security] Gentoo's \"contributing back\" linux-distros tasks" (number mark "U       solar@openwa Jan 10   82/3975  " thread-indent "\"Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks\"\n") "<cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>" ("<20201012123020.GA26643@openwall.com>" "<cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>") nil nil nil nil nil nil nil "Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7967 invoked by uid 550); 10 Jan 2021 18:47:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,48 +12,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32183 invoked from network); 21 Dec 2023 07:04:23 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Ephraim Anierobi <ephraimanierobi@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <f229a045-e964-c47f-8f69-9d6178032408@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 21 Dec 2023 07:04:46 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-47265: Apache Airflow: DAG Params alllow to embed
- unchecked Javascript 
+Received: (qmail 5350 invoked from network); 10 Jan 2021 18:45:04 -0000
+Date: Sun, 10 Jan 2021 19:44:58 +0100
+From: Solar Designer <solar@openwall.com>
+To: Anthony Liguori <aliguori@amzn.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20210110184458.GA2808@openwall.com>
+References: <20201012123020.GA26643@openwall.com> <cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Gentoo's "contributing back" linux-distros tasks
 
-Severity: low
+On Mon, Oct 12, 2020 at 08:29:13AM -0700, Anthony Liguori wrote:
+> Solar Designer <solar@openwall.com> writes:
+> 
+> > Gentoo signed up for these "contributing back" tasks for linux-distros:
+> >
+> > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> >
+> > 9. Stay on top of issues to ensure progress is being made, remind others
+> > when there's no apparent progress, as well as when the public disclosure
+> > date for an issue is approaching and when it's finally reached (unless
+> > the reporter beats you to it by making their mandatory posting to
+> > oss-security first) - primary: Gentoo, backup: Amazon
+> >
+> > 11. Make sure the mandatory oss-security posting is made promptly and is
+> > sufficiently detailed, and remind the reporter if not - primary: Gentoo,
+> > backup: Amazon
+> >
+> > 12. If exploit(s) were shared on the list, make sure that either they're
+> > included in the oss-security posting along with the issue detail or the
+> > posting includes an announcement of planned later posting of the
+> > exploits (with the delay being within list policy), and in the latter
+> > case also make sure that the later posting is in fact made as planned,
+> > and remind the reporter if not - primary: Gentoo, backup: Amazon
+> 
+> I'm happy to take primary on any of the above.
 
-Affected versions:
+Thank you, Anthony!
 
-- Apache Airflow 2.6.0 before 2.8.0
+Gentoo, please let us all know whether you'd like to stay primary for
+these tasks, be moved to backup, or something else?
 
-Description:
+> > 13. Keep track of per-report and per-issue handling and disclosure
+> > timelines (at least times of notification of the private list and of
+> > actual public disclosure), at regular intervals produce and share
+> > statistics (most notably, the average embargo duration) as well as the
+> > raw data (except on issues that are still under embargo) by posting to
+> > oss-security - primary: Gentoo, backup: Amazon
+> >
+> > and we saw some contributions from Gentoo on these, most notable being
+> > their work on the statistics (task 13 above):
+> >
+> > https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+> >
+> > Unfortunately, the last update of these statistics ("Last modified:
+> > 2019/10/15 01:52 by kristianf") is also when the contributions ceased.
+> >
+> > Some others have been taking care of tasks 9, 11, 12 (in particular,
+> > Anthony Liguori of Amazon has been helping, but on various occasions
+> > also many others from other distros), but not yet of task 13.
+> >
+> > I understand that Gentoo is a community project run by volunteers, and I
+> > am not complaining.  Rather, I think we need to discuss with Gentoo in
+> > here and reassign to other distros whatever responsibilities Gentoo no
+> > longer has resources for.  We should ideally keep at least one task
+> > Gentoo's responsibility (and Gentoo should have specific people assigned
+> > to that task), at least to be consistent with our current requirements
+> > for new distros joining (linux-)distros.
+> >
+> > To Gentoo: which of these tasks, or other "contributing back" tasks, are
+> > you (still) willing to handle, and who on your team would handle them?
+> >
+> > To others on linux-distros: which of the above tasks do you volunteer to
+> > become primary for?
+> >
+> > To Amazon: do you want to remain backup for task 13, or do you not have
+> > the resources to handle it?
+> 
+> It's hard to be backup for this one as it is quite a lot of work
+> compared to most other tasks.  I'd prefer someone else to pick it up if
+> possible.  While I don't have the cycles to pick up 13, if you're
+> willing to consider adding another person from Amazon, I think we could
+> take primary on this one though.
 
-Apache Airflow, versions 2.6.0 through 2.7.3 has a stored XSS vulnerability=
- that allows a DAG author to add an unbounded and not-sanitized javascript =
-in the parameter description field of the DAG.=C2=A0This Javascript can be =
-executed on the client side of any of the user who looks at the tasks in th=
-e browser sandbox. While this issue does not allow to exit the browser sand=
-box or manipulation of the server-side data - more than the DAG author alre=
-ady has, it allows to modify what the user looking at the DAG details sees =
-in the browser - which opens up all kinds of possibilities of misleading ot=
-her users.
+No problem adding another person from Amazon, as long as that addition
+wouldn't be solely for the statistics task, but would also benefit the
+users of Amazon Linux.
 
-Users of Apache Airflow are recommended to upgrade to version 2.8.0 or newe=
-r to mitigate the risk associated with this vulnerability
+Let's figure out if we should do that (and if it's still an option from
+Amazon's side), or if another distro maybe offers to be primary for the
+statistics task?
 
-Credit:
-
-Jens Scheffler (finder)
-Andrey Anshin (finder)
-Jens Scheffler (remediation developer)
-
-References:
-
-https://github.com/apache/airflow/pull/35460
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-47265
-
+Alexander
