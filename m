@@ -1,58 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/13
-Message-ID: <20210807215316.gfuujxnzj6lkb57x@sym.noone.org>
-Date: Sat, 7 Aug 2021 23:53:18 +0200
-From: Axel Beckert <abe@...ian.org>
-To: Ariadne Conill <ariadne@...eferenced.org>
-Cc: Salvatore Bonaccorso <carnil@...ian.org>, oss-security@...ts.openwall.com, lynx-dev@...gnu.org
-Subject: Re: Re: Bug#991971: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/10/2
+Message-ID: <20210110183829.GA2703@openwall.com>
+Date: Sun, 10 Jan 2021 19:38:29 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Yury German <blueknight@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Gentoo's "contributing back" linux-distros tasks
 Content-Type: text/plain; charset=utf-8
 
-Hi Ariadne,
-
-[Dropping the Debian-specific recipients as this is no more related to
-the maintenance of Debian's lynx package.]
-
-Ariadne Conill wrote:
-> > Citing from Ariadne's mail:
-> > > The issue itself is far more severe: HTParse() does not understand
-> > > the authn part of the URI at all.
-> > […]
-> > > But it will also leak in the Host: header on unencrypted
-> > > connections, and also probably SSL ones too.
-> > 
-> > But that looks to me as if Ariadne just refers to the code and hasn't
-> > actually checked it by trying it. Nevertheless thanks to Ariadne for
-> > having had a look and proposing a patch!
+On Mon, Oct 12, 2020 at 02:36:55PM -0400, Yury German wrote:
+> On 10/12/20 8:30 AM, Solar Designer wrote:
+> > 13. Keep track of per-report and per-issue handling and disclosure
+> > timelines (at least times of notification of the private list and of
+> > actual public disclosure), at regular intervals produce and share
+> > statistics (most notably, the average embargo duration) as well as the
+> > raw data (except on issues that are still under embargo) by posting to
+> > oss-security - primary: Gentoo, backup: Amazon
+> >
+> > and we saw some contributions from Gentoo on these, most notable being
+> > their work on the statistics (task 13 above):
+> >
+> > https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+> >
+> > Unfortunately, the last update of these statistics ("Last modified:
+> > 2019/10/15 01:52 by kristianf") is also when the contributions ceased.
+[...]
+> Currently I have been maintaining the statistics for the list, but there
+> was a time from October to January that I was off the list and do not
+> have the archive of the messages. I will need to work with someone to
+> fill out those statistics as K_F is currently not available.
 > 
-> Yes, this was my guess since HTParse() doesn't understand the authn part.
-> But this seems like a rather unfortunate design: parse the URI wrong, and
-> then "fix" it later?  Why not just parse the URI right, to begin with?
+> I will be able to continue with Task 13, and will catch up during the
+> weekend.
 
-I agree that it looks a bit unconventional and unintuitive. But I
-assume this is because Lynx is actually older than the WWW. According
-to Wikipedia[1], Lynx "is oldest web browser still being maintained,
-having started in 1992". It was initially written for another
-hypertext protocol (something university-internal and gopher-ish
-according to Wikipedia -- English and German Wikipedia tell slightly
-different stories here).
+We had some discussions on the above with Gentoo folks off-list.  The
+outcome is that Gentoo is unable to continue handling the statistics
+task from the beginning of 2021 and on.  Yury has left Gentoo's security
+team (and thus is now unsubscribed from linux-distros), but is
+nevertheless willing to update the statistics until the end of 2020 as
+he had kindly offered, in his personal capacity.  Thank you, Yury!
 
-So it has quite some amount of history in its code and probably
-especially in its code structure. And compared to those nearly 30
-years, the Host header probably came in only after 5 years of
-developement with HTTP/1.1 in 1997 or so. (And SNI much, much later,
-kinda "just recently".) So I kinda have some understanding for this
-unintuitive locations as most of the code is historically grown.
+As to the missing period when Yury was off list, I am suggesting he uses
+the headers-only archive I've just posted publicly to try and map issues
+to oss-security postings.  Where headers are not enough, Yury will need
+to ping me or someone from Gentoo who was on the list at the time to
+help match things.
 
-Then again, big kudos to Thomas Dickey for still maintaining and
-developing Lynx. It can't be that easy to maintain a niche program
-with a code base which such a long history.
-
-[1] https://en.wikipedia.org/wiki/Lynx_(web_browser)
-
-		Regards, Axel
--- 
- ,''`.  |  Axel Beckert <abe@...ian.org>, https://people.debian.org/~abe/
-: :' :  |  Debian Developer, ftp.ch.debian.org Admin
-`. `'   |  4096R: 2517 B724 C5F6 CA99 5329  6E61 2FF9 CD59 6126 16B5
-  `-    |  1024D: F067 EA27 26B9 C3FC 1486  202E C09E 1D89 9593 0EDE
+Alexander
