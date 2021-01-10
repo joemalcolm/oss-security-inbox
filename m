@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10545" "Friday" "29" "May" "2015" "19:51:43" "+0200" "Noel Kuntze" "noel@familie-kuntze.de" "<5568A72F.2070005@familie-kuntze.de>" "149" "Re: [oss-security] StrongSwan VPN client for Android leaks username to rouge server" nil nil nil "5" "2015052917:51:43" "[oss-security] StrongSwan VPN client for Android leaks username to rouge server" (number mark "        noel@familie May 29  149/10545 " thread-indent "\"Re: [oss-security] StrongSwan VPN client for Android leaks username to rouge server\"\n") "<5568A654.7020703@gmail.com>" ("<md5:fMhkBS7qmAbL0iMu8xkv5g==>" "<5568A654.7020703@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1982" "Sunday" "10" "January" "2021" "19:38:29" "+0100" "Solar Designer" "solar@openwall.com" "<20210110183829.GA2703@openwall.com>" "39" "Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil "1" "2021011018:38:29" "[oss-security] Gentoo's \"contributing back\" linux-distros tasks" (number mark "U       solar@openwa Jan 10   39/1982  " thread-indent "\"Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks\"\n") "<749d9302-fcd1-4dc5-15d6-27802f36b081@gentoo.org>" ("<20201012123020.GA26643@openwall.com>" "<749d9302-fcd1-4dc5-15d6-27802f36b081@gentoo.org>") nil nil nil nil nil nil nil "Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8029 invoked by uid 550); 29 May 2015 17:51:56 -0000
+Received: (qmail 21615 invoked by uid 550); 10 Jan 2021 18:39:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,172 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 8008 invoked from network); 29 May 2015 17:51:55 -0000
-Message-ID: <5568A72F.2070005@familie-kuntze.de>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-MIME-Version: 1.0
-References: <md5:fMhkBS7qmAbL0iMu8xkv5g==> <5568A654.7020703@gmail.com>
-In-Reply-To: <5568A654.7020703@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID:  V03:K0:sb6Yu31L6IdlihAzygWBLFTdyWv2Wqzus9IbL3Pehu2EtuYxtU6
- O0m0fTUzFCit0p4C7PQwRz1FPP57d7n34yVY/mR3naMTdeAnppUGT1O2CvGVyOJGVaqL6E0
- bmmpLI2bNzpRUgV3pQg9fna99U6yEO09uPC1+z3JOLiNk0p+p4SkdRGvey+tD3qViD9SXlM
- HPfzGXUbqJvF1/lkVa2LA==
-X-UI-Out-Filterresults: notjunk:1;
-Date: Fri, 29 May 2015 19:51:43 +0200
-From: Noel Kuntze <noel@familie-kuntze.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] StrongSwan VPN client for Android leaks username
- to rouge server
-To: oss-security@lists.openwall.com
+Received: (qmail 20284 invoked from network); 10 Jan 2021 18:38:43 -0000
+Date: Sun, 10 Jan 2021 19:38:29 +0100
+From: Solar Designer <solar@openwall.com>
+To: Yury German <blueknight@gentoo.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20210110183829.GA2703@openwall.com>
+References: <20201012123020.GA26643@openwall.com> <749d9302-fcd1-4dc5-15d6-27802f36b081@gentoo.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <749d9302-fcd1-4dc5-15d6-27802f36b081@gentoo.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Gentoo's "contributing back" linux-distros tasks
 
+On Mon, Oct 12, 2020 at 02:36:55PM -0400, Yury German wrote:
+> On 10/12/20 8:30 AM, Solar Designer wrote:
+> > 13. Keep track of per-report and per-issue handling and disclosure
+> > timelines (at least times of notification of the private list and of
+> > actual public disclosure), at regular intervals produce and share
+> > statistics (most notably, the average embargo duration) as well as the
+> > raw data (except on issues that are still under embargo) by posting to
+> > oss-security - primary: Gentoo, backup: Amazon
+> >
+> > and we saw some contributions from Gentoo on these, most notable being
+> > their work on the statistics (task 13 above):
+> >
+> > https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+> >
+> > Unfortunately, the last update of these statistics ("Last modified:
+> > 2019/10/15 01:52 by kristianf") is also when the contributions ceased.
+[...]
+> Currently I have been maintaining the statistics for the list, but there
+> was a time from October to January that I was off the list and do not
+> have the archive of the messages. I will need to work with someone to
+> fill out those statistics as K_F is currently not available.
+> 
+> I will be able to continue with Task 13, and will catch up during the
+> weekend.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+We had some discussions on the above with Gentoo folks off-list.  The
+outcome is that Gentoo is unable to continue handling the statistics
+task from the beginning of 2021 and on.  Yury has left Gentoo's security
+team (and thus is now unsubscribed from linux-distros), but is
+nevertheless willing to update the statistics until the end of 2020 as
+he had kindly offered, in his personal capacity.  Thank you, Yury!
 
-Hello Alexander,
+As to the missing period when Yury was off list, I am suggesting he uses
+the headers-only archive I've just posted publicly to try and map issues
+to oss-security postings.  Where headers are not enough, Yury will need
+to ping me or someone from Gentoo who was on the list at the time to
+help match things.
 
-That is a known issue (at least to me).
-
-What would be even worse than eap-mschapv2 (a digest mechanism)
-would be to propose eap-gtc, which transmits username and password in clear text.
-
-Mit freundlichen Grüßen/Kind Regards,
-Noel Kuntze
-
-GPG Key ID: 0x63EC6658
-Fingerprint: 23CA BB60 2146 05E7 7278 6592 3839 298F 63EC 6658
-
-Am 29.05.2015 um 19:48 schrieb Alexander E. Patrakov:
-> Hello.
->
-> I found that, in the event of DNS spoofing, StrongSwan VPN client for Android can leak the username and the MSCHAPv2 authentication value to a rogue server if it has any valid X.509 certificate. Unless I misunderstand something about X.509 certificates and their use for confirming IKEv2 identities, and unless this is already known, this might use a CVE ID.
->
-> The client that I am talking about is this Android application:
->
-> https://play.google.com/store/apps/details?id=org.strongswan.android
->
-> In the example below, the client was supposed to connect to vpn.xorp.ru using username "alice" and a password. The server identity is validated by a CA-issued certificate that ultimately chains to something in the default trust store. However, a hacker has spoofed the DNS (well, in the example, that's actually a deliberate misconfiguration by me) so that vpn.xorp.ru points to his server (185.48.56.74 in this example) instead. On that server, he (legitimately) has a valid certificate for vpn.armority.ru.
->
-> The settings on the client are:
->
-> Profile Name: VPN
-> Gateway: vpn.xorp.ru
-> Type: IKEv2 EAP (Login/Password)
-> Login: alice
-> Password: <hidden>
-> CA Certificate: Choose automatically
->
-> And here is the log.
->
->> May 27 21:39:23 00[DMN] Starting IKE charon daemon (strongSwan 5.2.1dr1, Linux 3.4.5-CM-gb461bba, armv7l)
->> May 27 21:39:23 00[KNL] kernel-netlink plugin might require CAP_NET_ADMIN capability
->> May 27 21:39:23 00[LIB] loaded plugins: androidbridge charon android-log openssl fips-prf random nonce pubkey pkcs1 pkcs8 pem xcbc hmac socket-default kernel-netlink eap-identity eap-mschapv2 eap-md5 eap-gtc eap-tls
->> May 27 21:39:23 00[LIB] unable to load 9 plugin features (9 due to unmet dependencies)
->> May 27 21:39:23 00[JOB] spawning 16 worker threads
->> May 27 21:39:23 07[IKE] initiating IKE_SA android[3] to 185.48.56.74
->> May 27 21:39:23 07[ENC] generating IKE_SA_INIT request 0 [ SA KE No N(NATD_S_IP) N(NATD_D_IP) N(FRAG_SUP) ]
->> May 27 21:39:23 07[NET] sending packet: from 192.168.1.237[42224] to 185.48.56.74[500] (996 bytes)
->> May 27 21:39:23 11[NET] received packet: from 185.48.56.74[500] to 192.168.1.237[42224] (553 bytes)
->> May 27 21:39:23 11[ENC] parsed IKE_SA_INIT response 0 [ SA KE No N(NATD_S_IP) N(NATD_D_IP) CERTREQ N(FRAG_SUP) N(MULT_AUTH) ]
->> May 27 21:39:24 11[IKE] local host is behind NAT, sending keep alives
->> May 27 21:39:24 11[IKE] remote host is behind NAT
->> May 27 21:39:24 11[IKE] received cert request for "C=SE, O=AddTrust AB, OU=AddTrust External TTP Network, CN=AddTrust External CA Root"
->> May 27 21:39:24 11[IKE] received cert request for "C=GB, ST=Greater Manchester, L=Salford, O=COMODO CA Limited, CN=COMODO ECC Certification Authority"
->> May 27 21:39:24 11[IKE] received 3 cert requests for an unknown ca
->> May 27 21:39:24 11[IKE] sending cert request for "C=US, ST=UT, L=Salt Lake City, O=The USERTRUST Network, OU=http://www.usertrust.com, CN=UTN-USERFirst-Hardware"
->> May 27 21:39:24 11[IKE] sending cert request for "C=US, O=GeoTrust Inc., CN=GeoTrust Global CA"
-> <many more "sending cert request" messages go here>
->> May 27 21:39:24 11[IKE] sending cert request for "C=EE, O=AS Sertifitseerimiskeskus, CN=EE Certification Centre Root CA, E=pki@sk.ee"
->> May 27 21:39:24 11[IKE] establishing CHILD_SA android
->> May 27 21:39:24 11[ENC] generating IKE_AUTH request 1 [ IDi N(INIT_CONTACT) CERTREQ CPRQ(ADDR ADDR6 DNS DNS6) N(ESP_TFC_PAD_N) SA TSi TSr N(MOBIKE_SUP) N(ADD_6_ADDR) N(ADD_6_ADDR) N(ADD_6_ADDR) N(ADD_6_ADDR) N(ADD_6_ADDR) N(ADD_6_ADDR) N(MULT_AUTH) N(EAP_ONLY) ]
->> May 27 21:39:24 11[ENC] splitting IKE message with length of 3660 bytes into 3 fragments
->> May 27 21:39:24 11[ENC] generating IKE_AUTH request 1 [ EF ]
->> May 27 21:39:24 11[ENC] generating IKE_AUTH request 1 [ EF ]
->> May 27 21:39:24 11[ENC] generating IKE_AUTH request 1 [ EF ]
->> May 27 21:39:24 11[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (1360 bytes)
->> May 27 21:39:24 11[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (1360 bytes)
->> May 27 21:39:24 11[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (1072 bytes)
->> May 27 21:39:24 12[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (544 bytes)
->> May 27 21:39:24 12[ENC] parsed IKE_AUTH response 1 [ EF ]
->> May 27 21:39:24 12[ENC] received fragment #1 of 5, waiting for complete IKE message
->> May 27 21:39:24 13[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (544 bytes)
->> May 27 21:39:24 13[ENC] parsed IKE_AUTH response 1 [ EF ]
->> May 27 21:39:24 13[ENC] received fragment #2 of 5, waiting for complete IKE message
->> May 27 21:39:24 14[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (544 bytes)
->> May 27 21:39:24 14[ENC] parsed IKE_AUTH response 1 [ EF ]
->> May 27 21:39:24 14[ENC] received fragment #3 of 5, waiting for complete IKE message
->> May 27 21:39:24 16[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (544 bytes)
->> May 27 21:39:24 16[ENC] parsed IKE_AUTH response 1 [ EF ]
->> May 27 21:39:24 16[ENC] received fragment #4 of 5, waiting for complete IKE message
->> May 27 21:39:24 08[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (176 bytes)
->> May 27 21:39:24 08[ENC] parsed IKE_AUTH response 1 [ EF ]
->> May 27 21:39:24 08[ENC] received fragment #5 of 5, reassembling fragmented IKE message
->> May 27 21:39:24 08[ENC] parsed IKE_AUTH response 1 [ IDr CERT CERT AUTH EAP/REQ/ID ]
->> May 27 21:39:24 08[IKE] received end entity cert "OU=Domain Control Validated, OU=PositiveSSL, CN=vpn.armority.ru"
->> May 27 21:39:24 08[IKE] received issuer cert "C=GB, ST=Greater Manchester, L=Salford, O=COMODO CA Limited, CN=COMODO ECC Domain Validation Secure Server CA"
->> May 27 21:39:24 08[CFG]   using certificate "OU=Domain Control Validated, OU=PositiveSSL, CN=vpn.armority.ru"
->> May 27 21:39:24 08[CFG]   using untrusted intermediate certificate "C=GB, ST=Greater Manchester, L=Salford, O=COMODO CA Limited, CN=COMODO ECC Domain Validation Secure Server CA"
->> May 27 21:39:24 08[CFG]   using trusted ca certificate "C=GB, ST=Greater Manchester, L=Salford, O=COMODO CA Limited, CN=COMODO ECC Certification Authority"
->> May 27 21:39:24 08[CFG]   reached self-signed root ca with a path length of 1
->> May 27 21:39:24 08[IKE] authentication of 'vpn.armority.ru' with ECDSA-256 signature successful
->
-> Wait... we are supposed to connect to vpn.xorp.ru!
->
->> May 27 21:39:24 08[IKE] server requested EAP_IDENTITY (id 0x00), sending 'alice'
->
-> Oops... the server admin now knows a valid login at vpn.xorp.ru.
->
->> May 27 21:39:24 08[ENC] generating IKE_AUTH request 2 [ EAP/RES/ID ]
->> May 27 21:39:24 08[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (76 bytes)
->> May 27 21:39:24 09[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (108 bytes)
->> May 27 21:39:24 09[ENC] parsed IKE_AUTH response 2 [ EAP/REQ/MSCHAPV2 ]
->> May 27 21:39:24 09[IKE] server requested EAP_MSCHAPV2 authentication (id 0xAD)
->> May 27 21:39:24 09[ENC] generating IKE_AUTH request 3 [ EAP/RES/MSCHAPV2 ]
->> May 27 21:39:24 09[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (140 bytes)
->
-> Now he has an authentication value and can mount an offline dictionary attack. I don't know if he could offer something worse than EAP_MSCHAPv2 here for easier password cracking, or maybe convince the client to reveal a plaintext password.
->
->> May 27 21:39:25 10[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (140 bytes)
->> May 27 21:39:25 10[ENC] parsed IKE_AUTH response 3 [ EAP/REQ/MSCHAPV2 ]
->> May 27 21:39:25 10[IKE] EAP-MS-CHAPv2 succeeded: 'Welcome2strongSwan'
->> May 27 21:39:25 10[ENC] generating IKE_AUTH request 4 [ EAP/RES/MSCHAPV2 ]
->> May 27 21:39:25 10[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (76 bytes)
->> May 27 21:39:25 07[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (76 bytes)
->> May 27 21:39:25 07[ENC] parsed IKE_AUTH response 4 [ EAP/SUCC ]
->> May 27 21:39:25 07[IKE] EAP method EAP_MSCHAPV2 succeeded, MSK established
->> May 27 21:39:25 07[IKE] authentication of 'alice' (myself) with EAP
->> May 27 21:39:25 07[ENC] generating IKE_AUTH request 5 [ AUTH ]
->> May 27 21:39:25 07[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (92 bytes)
->> May 27 21:39:25 11[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (236 bytes)
->> May 27 21:39:25 11[ENC] parsed IKE_AUTH response 5 [ AUTH CPRP(ADDR DNS) SA TSi TSr N(AUTH_LFT) N(MOBIKE_SUP) N(NO_ADD_ADDR) ]
->> May 27 21:39:25 11[IKE] authentication of 'vpn.armority.ru' with EAP successful
->> May 27 21:39:25 11[CFG] constraint check failed: identity 'vpn.xorp.ru' required
->
-> Dear StrongSwan VPN client, you were supposed to notice this hostname mismatch earlier.
->
->> May 27 21:39:25 11[CFG] selected peer config 'android' inacceptable: constraint checking failed
->> May 27 21:39:25 11[CFG] no alternative config found
->> May 27 21:39:25 11[ENC] generating INFORMATIONAL request 6 [ N(AUTH_FAILED) ]
->> May 27 21:39:25 11[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (76 bytes)
->
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJVaKcsAAoJEDg5KY9j7GZYlrgP/3y9S2skH0Ka9QRaRBf6LwbQ
-lB2OyWZfE3btzj4ydRy07XjtQ0lC/hmXdyKSU/Y2pDZqRVwc6VYEOqUqL1VK8RSF
-dZJBcIY7jSNdj1j+uKf9/Lnfz8zCnT0KohoZunfeqv85raDVaAlZebivm+BpL+16
-sv4RWYlDrJpqQSsKJcLJK1ucm7iR+yNpp9pd1qVqb7VcZht2cvsoX/VC1A5eDWZ2
-JB/fV71VGHJwOB2L+eJaiOfViMfM37zCBiRfG3WQ4WDjwsiXC1lwShPcZ+cftjt3
-P8/pf3JkdaZM+ElAKrNKReuHD0C/v8wmGEakKC7AZPwhoH1R5bQgTz4nih5DPy0y
-ydpxyTAA+LS9esHN3+n3MQxclENi951JqVLOtBai9MyS82vjcgRwKw0T0KQ7XIvd
-eCr7MY2v+kxFV6eQx22Qkg/GbS77Kz7AC6Uk8PaFUzlVySC+ptD+QW0ykyUJW3cN
-9cHEPm/o3k2b1fVbFLrEDLVxVyWjrjl2iWs8LRAvzAEp6vw9dj5DQc/+QWLnpR73
-KWl/GIbkDrziz2NxzaDndq1rqP6aJKn7sZz8wJ9EgC5cqtJb2coKJDBcn9PfZZSK
-efQAIPCMVysBegsf4Ju+tzyk1X0inABr7ucxGlvU+uo+jWbqdWM+SQHcnhcxnsLn
-6624RkiOFDmpRCIw0fl+
-=gt+R
------END PGP SIGNATURE-----
-
+Alexander
