@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["759" "Wednesday" "17" "March" "2021" "17:14:57" "-0400" "Sasha Levin" "sashal@kernel.org" nil "22" "Re: [oss-security] CVE-2020-35519 Linux kernel: x25_bind out-of-bounds read" nil nil nil "3" nil nil (number mark "U       sashal@kerne Mar 17   22/759   " thread-indent "\"Re: [oss-security] CVE-2020-35519 Linux kernel: x25_bind out-of-bounds read\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-35519 Linux kernel: x25_bind out-of-bounds read" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1082" "Monday" "11" "January" "2021" "13:38:40" "+0100" "Jaroslav Tulach" "jaroslav.tulach@gmail.com" "<20923736.EfDdHjke4D@logout>" "38" "[oss-security] [CVE-2020-17534] HTML/Java API 1.7: A race condition between deletion of the temporary file and creation of the temporary directory" nil nil nil "1" "2021011112:38:40" "[oss-security] [CVE-2020-17534] HTML/Java API 1.7: A race condition between deletion of the temporary file and creation of the temporary directory" (number mark "U       jaroslav.tul Jan 11   38/1082  " thread-indent "\"[oss-security] [CVE-2020-17534] HTML/Java API 1.7: A race condition between deletion of the temporary file and creation of the temporary directory\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-17534] HTML/Java API 1.7: A race condition between deletion of the temporary file and creation of the temporary directory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5627 invoked by uid 550); 17 Mar 2021 21:15:12 -0000
+Received: (qmail 23965 invoked by uid 550); 11 Jan 2021 12:47:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +12,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5607 invoked from network); 17 Mar 2021 21:15:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1616015699;
-	bh=evZ3QVKg+62oVqtnm2HQqcrl0oyJaZP7RQ9LImH4+TI=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=CwrK8nuVAaalAEWHIGV+1tyykG6y2WFbgE/h74XEhgyZzvdIXoD7niRr7mmR9lnBP
-	 mDz/SJouRmzQqe6QsP8m28bTdLQ/4S5hFb73aNFbQaigBjKj7i0CzrX2ogQkul6evi
-	 RllYTIK3c4X3qMjEKXt1nyiIybNuMSjQ2zGlkDorldJe8tvwenwsTwm/Nu1KB55ob3
-	 UyZny8CK1gFuPVl6QCTguusWdVMzBqLZYWc2xnZ4INbt99zjTw9oOIQko224QK6gGj
-	 vA2FQBbOq0IkIuupOAi4WBw0bWLL78G3405TYLGJhk7ZTqNonuPRGsWICCmB5g4AnU
-	 PVCuWzm3ojwrw==
-Date: Wed, 17 Mar 2021 17:14:57 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: oss-security@lists.openwall.com
-Message-ID: <YFJxUTwEHsaHhO7/@sashalap>
-References: <CAKx+4-qm94y68oc4fT20OpYjs1kXn6mTMem7WD18DtAyFsWzdw@mail.gmail.com>
+Received: (qmail 20382 invoked from network); 11 Jan 2021 12:38:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:reply-to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GotQIIU7nGxjYctSDmJugWJMCeSiA6KNWZkv6WMsSDQ=;
+        b=XZuGk/6420vxG/UVTu/y3wnRgn9EnCA4teuhh2oNbp+oXUzgUXMPIJVDGl4HRpAUIm
+         ndppg4Difu7njBCzkt7fp40QK/iFZNCmxNMqVIaFTTxFWVf6yArpijpXg3lq/6xLB6tB
+         95XGdYAUGun5uK+CooJEmF+voptcWwasg0acJYmlEPAkimUfA5eVewFNWr0Fb3OR/3PQ
+         LDdiy3TfGg3kZ2TEvK5PhKDfE6H7sfTRfY+7J43aCBrbHwJTMUz1T7POKTVFce6zPV6t
+         j8PNz1DpybZxO2qv53ku1nT5LJIcUGnOBRO17FtJ5sFZAIJF8ZyqbkgzMdTideonllT/
+         p/YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:reply-to:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=GotQIIU7nGxjYctSDmJugWJMCeSiA6KNWZkv6WMsSDQ=;
+        b=N0U3IeDSzFnDDEZL1/dP+n/q/tjvhmehR6f12l6fsYJxWjjyiZZjszlyY4Zq82e4hG
+         +kM6Q6wRv6TlRNoh3H4eAjQXzd49QexCJZtbKEaxqiZHE81VQ2idyjm1VvHesV3CFX7H
+         xlZF4jKNTtChOyk1ng91nKz8gmrD2/nfGUqHD/4T3ltYtcluKlwvg1duTo1G0KjgxByF
+         N2yKq1qEYkD5wqIqzPbKCJB3g6Sk2cvkMhvz0U3Z8aERFA8egDWphMHK5BSWI0GYcHF2
+         meRzualhw4ngcwPIL1k0WrMvUdbDTOmquOgjFTrngshQTBBHkGPhrVWlevcu1hGIZidc
+         yQYQ==
+X-Gm-Message-State: AOAM532XeMDWcWotyMpKX0u8ku+eUkuLea3EZc/db2tQDtADzSNbEQQQ
+	RtzebJV4pfiMykmdtW/xTkM=
+X-Google-Smtp-Source: ABdhPJxON2c2wZ+hL/i5rLVDn5BkmwpQipflJERU3o7fSiQo3DnWoyJ7PY971amdbnYy8aH4WDM/ag==
+X-Received: by 2002:a50:fe0e:: with SMTP id f14mr14303380edt.159.1610368722611;
+        Mon, 11 Jan 2021 04:38:42 -0800 (PST)
+From: Jaroslav Tulach <jaroslav.tulach@gmail.com>
+To: Apache NetBeans <dev@netbeans.apache.org>, Jonathan Leitschuh <jonathan.leitschuh@gmail.com>, Apache Security Team <security@apache.org>, oss-security@lists.openwall.com
+Date: Mon, 11 Jan 2021 13:38:40 +0100
+Message-ID: <20923736.EfDdHjke4D@logout>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAKx+4-qm94y68oc4fT20OpYjs1kXn6mTMem7WD18DtAyFsWzdw@mail.gmail.com>
-Subject: Re: [oss-security] CVE-2020-35519 Linux kernel: x25_bind
- out-of-bounds read
+Content-Type: multipart/alternative; boundary="nextPart7199003.EvYhyI6sBW"
+Content-Transfer-Encoding: 7Bit
+Subject: [oss-security] [CVE-2020-17534] HTML/Java API 1.7: A race condition between deletion of the temporary file and creation of the temporary directory
 
-On Thu, Mar 18, 2021 at 01:20:18AM +0530, Rohit Keshri wrote:
->Hello Team,
->
->An out-of-bounds (OOB) memory access flaw was found in x25_bind in
->net/x25/af_x25.c in the Linux kernel. A bounds check failure allows a local
->attacker with a user account on the system to gain access to out-of-bounds
->memory, leading to a system crash or a leak of internal kernel information.
->The highest threat from this vulnerability is to confidentiality,
->integrity, as well as system availability.
->
->'CVE-2020-35519' was assigned by Red Hat.
+--nextPart7199003.EvYhyI6sBW
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="iso-8859-1"
 
-This mail doesn't even mention where/how this is fixed. Is this
-6ee50c8e262a ("net/x25: prevent a couple of overflows")?
+CVE-ID------CVE-2020-17534
 
-If so, it's already fixed in all stable kernels.
+Summary-------A race condition between the deletion of the temporary file and creation of 
+the temporary directory
 
-How can the issue cause a leak btw?
 
--- 
-Thanks,
-Sasha
+There exists a race condition between the deletion of the temporary file and the creation 
+of the temporary directory in `webkit` subproject of HTML/Java API version 1.7.  
+
+
+A similar vulnerability has recently been disclosed in other Java projects and the fix in 
+HTML/Java API version 1.7.1 follows theirs: To avoid local privilege escalation version 1.7.1 
+creates the temporary directory atomically without dealing with the temporary file: https://
+github.com/apache/netbeans-html4j/commit/
+fa70e507e5555e1adb4f6518479fc408a7abd0e6[1]
+
+
+-----------
+
+- Avoid using webkit presenter 1.7
+- Update to HTML/Java API 1.7.1
+
+Credit:-------The problem was identified by Jonathan Leitschuh
+
+
+
+--------
+[1] https://github.com/apache/netbeans-html4j/commit/
+fa70e507e5555e1adb4f6518479fc408a7abd0e6
+
+--nextPart7199003.EvYhyI6sBW--
+
+
+
