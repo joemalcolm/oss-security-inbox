@@ -1,41 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/05/2
-Message-ID: <YGtPL7ZucGDYmkmw@ryzen.bugs.fi>
-Date: Mon, 5 Apr 2021 20:55:59 +0300
-From: Henri Salo <henri@...v.fi>
-To: Leo Famulari <leo@...ulari.name>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Risk of local privilege escalation in GNU Guix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/11/1
+Message-ID: <20923736.EfDdHjke4D@logout>
+Date: Mon, 11 Jan 2021 13:38:40 +0100
+From: Jaroslav Tulach <jaroslav.tulach@...il.com>
+To: Apache NetBeans <dev@...beans.apache.org>, Jonathan Leitschuh <jonathan.leitschuh@...il.com>, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [CVE-2020-17534] HTML/Java API 1.7: A race condition between deletion of the temporary file and creation of the temporary directory
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+CVE-ID------CVE-2020-17534
 
-On Mon, Apr 05, 2021 at 12:43:15PM -0400, Leo Famulari wrote:
-> We applied for a CVE ID via MITRE's web form [0] on March 18, 2021.
-> We have not yet received a reply. Does anybody know if that is expected?
+Summary-------A race condition between the deletion of the temporary file and creation of 
+the temporary directory
 
-This is not normal. Please send inquiry to cve-request@...re.org and
-cve@...re.org. Include the request ID that you received after submitting CVE
-request. Spam filtering or something might be involved in this case. Feel free
-to contact me off list if you need help. It usually takes 1-2 days to get CVEs
-via cveform.
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
+There exists a race condition between the deletion of the temporary file and the creation 
+of the temporary directory in `webkit` subproject of HTML/Java API version 1.7.  
 
-iQIzBAEBCgAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAmBrTy0ACgkQJ633pE6q
-dXSpmhAAh7aFS3mHg5sAnymvwLuEy2OsuZfw+LxdnkleffALYMh+q8BdIoPEpkTz
-aKavJgx4zZMnRkVULFx0kKmFORFxEtKFeQULnBf7V+0NqCVnMRsg1V8GbsI5JLu0
-WgC0HpXQwCW1Rfqvge19NDPIxd9ey/02p3wPITIBQO93/OuN1dyCJNN+dyELpACH
-WiiLB1zGHAJ486wcbJ0j0l9HlmGSpRetOEKaKfojilEF/dcMqya0288EfK9gjJTA
-CgIjpryc69K/P90ooX86LX6alcKWq1Y5wgvH6pFUt8VNM7I89bP0wPCMaSaNFd4u
-CC0WZzKoSy7+9kkHBPhqe4sQAKdE7swxNVPG432q6hmRxpnB4l4GILVtQkB/iflg
-t/TQ9lTLG6Y1u+nF5DCrJW7zyKaXqyvNdFGH1ONYCp/BCKP+LLQ6HH/9ubJYgWTp
-lz19hOISPk2l47SZWIIl651XBz/XBZ5eSExZ3UKWLTaZcMrLszKUXGpUftqUldYN
-hVEDU3JCnS48BCw2tNfshlxKkns0EW4VN9jVabT2zZfmogseeQZTLx16gKK+lijv
-kP+b3x5CLezUb1eZNEPIK2BKIz4Q7qUesGvWE4uctpZeCGLiQQRCUR3N0kScEBen
-7aI7JcvR6vZrY8rmoUFwc1jCL4Im4RQHuPprS7UyKJkSpJELD0o=
-=lR+P
------END PGP SIGNATURE-----
+
+A similar vulnerability has recently been disclosed in other Java projects and the fix in 
+HTML/Java API version 1.7.1 follows theirs: To avoid local privilege escalation version 1.7.1 
+creates the temporary directory atomically without dealing with the temporary file: https://
+github.com/apache/netbeans-html4j/commit/
+fa70e507e5555e1adb4f6518479fc408a7abd0e6[1]
+
+
+-----------
+
+- Avoid using webkit presenter 1.7
+- Update to HTML/Java API 1.7.1
+
+Credit:-------The problem was identified by Jonathan Leitschuh
+
+
+
+--------
+[1] https://github.com/apache/netbeans-html4j/commit/
+fa70e507e5555e1adb4f6518479fc408a7abd0e6
+
