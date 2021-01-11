@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["873" "Saturday" "1" "May" "2021" "21:36:56" "+0100" "Kaxil Naik" "kaxilnaik@apache.org" nil "27" "[oss-security] CVE-2021-28359: Apache Airflow Reflected XSS via Origin Query Argument in URL" nil nil nil "5" nil nil (number mark "U       kaxilnaik@ap May  1   27/873   " thread-indent "\"[oss-security] CVE-2021-28359: Apache Airflow Reflected XSS via Origin Query Argument in URL\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-28359: Apache Airflow Reflected XSS via Origin Query Argument in URL" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1070" "Monday" "11" "January" "2021" "14:41:22" "-0800" "Anthony Liguori" "aliguori@amzn.com" "<cig332bldvw0z1.fsf@u54e1add816995a33037d.ant.amazon.com>" "28" "Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil "1" "2021011122:41:22" "[oss-security] Gentoo's \"contributing back\" linux-distros tasks" (number mark "U       aliguori@amz Jan 11   28/1070  " thread-indent "\"Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks\"\n") "<20210110184458.GA2808@openwall.com>" ("<20201012123020.GA26643@openwall.com>" "<cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>" "<20210110184458.GA2808@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19511 invoked by uid 550); 1 May 2021 20:46:30 -0000
+Received: (qmail 9494 invoked by uid 550); 11 Jan 2021 22:44:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14231 invoked from network); 1 May 2021 20:37:21 -0000
-X-Gm-Message-State: AOAM53103rzo+3jLdkxgWs+ZF4ZRlztAUJPEmIQ8O/5JnvJpcFsxaAJU
-	JK/luX+0FI61sjKADi05Lr/3ZRBE1UK2dQ1c6/Y=
-X-Google-Smtp-Source: ABdhPJyGv4MHKu9OdHAFAO6/Z9nqAcujyMBzYxcSc06T4NIgo05pIWw/ZOPhGp+BE8oHRRZ/j1SKuWIPirsXsM+UxsE=
-X-Received: by 2002:a17:906:5056:: with SMTP id e22mr10030236ejk.289.1619901427213;
- Sat, 01 May 2021 13:37:07 -0700 (PDT)
+Received: (qmail 7835 invoked from network); 11 Jan 2021 22:41:42 -0000
+X-IronPort-AV: E=Sophos;i="5.79,339,1602547200"; 
+   d="scan'208";a="111394140"
+From: Anthony Liguori <aliguori@amzn.com>
+To: Solar Designer <solar@openwall.com>
+CC: <oss-security@lists.openwall.com>
+In-Reply-To: <20210110184458.GA2808@openwall.com>
+References: <20201012123020.GA26643@openwall.com>
+ <cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>
+ <20210110184458.GA2808@openwall.com>
+User-Agent: Notmuch/0.21 (http://notmuchmail.org) Emacs/24.5.1 (x86_64-pc-linux-gnu)
+Date: Mon, 11 Jan 2021 14:41:22 -0800
+Message-ID: <cig332bldvw0z1.fsf@u54e1add816995a33037d.ant.amazon.com>
 MIME-Version: 1.0
-From: Kaxil Naik <kaxilnaik@apache.org>
-Date: Sat, 1 May 2021 21:36:56 +0100
-X-Gmail-Original-Message-ID: <CAH5JyZqJHpFTWJxZ19CDhZ5N9Q=V9mLQybPYdSNw+8G1iEpBkw@mail.gmail.com>
-Message-ID: <CAH5JyZqJHpFTWJxZ19CDhZ5N9Q=V9mLQybPYdSNw+8G1iEpBkw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: users@airflow.apache.org
-Content-Type: multipart/alternative; boundary="00000000000023ec4305c14ab150"
-Subject: [oss-security] CVE-2021-28359: Apache Airflow Reflected XSS via Origin Query
- Argument in URL
+Content-Type: text/plain
+Subject: Re: [oss-security] Gentoo's "contributing back" linux-distros tasks
 
---00000000000023ec4305c14ab150
-Content-Type: text/plain; charset="UTF-8"
+Solar Designer <solar@openwall.com> writes:
 
-Versions Affected: <1.10.15, 2.0.0, 2.0.1
+> On Mon, Oct 12, 2020 at 08:29:13AM -0700, Anthony Liguori wrote:
+>> Solar Designer <solar@openwall.com> writes:
+>> 
+>> It's hard to be backup for this one as it is quite a lot of work
+>> compared to most other tasks.  I'd prefer someone else to pick it up if
+>> possible.  While I don't have the cycles to pick up 13, if you're
+>> willing to consider adding another person from Amazon, I think we could
+>> take primary on this one though.
+>
+> No problem adding another person from Amazon, as long as that addition
+> wouldn't be solely for the statistics task, but would also benefit the
+> users of Amazon Linux.
 
-Description:
-The "origin" parameter passed to some of the endpoints like '/trigger' was
-vulnerable to XSS exploit. This issue affects Apache Airflow versions
-<1.10.15 in 1.x series and affects 2.0.0 and 2.0.1 and 2.x series. Update
-to Airflow 1.10.15 or 2.0.2.
+Yes, of course.  Give me a day or two and we'll send a note proposing
+another person to add.  We'll happily take on this role and it will also
+be good to have someone to back me up on the other tasks.
 
-This is the same as CVE-2020-13944 & CVE-2020-17515 but the implemented fix
-did not account for certain cases.
+Regards,
 
-Please also update your Python version to the latest available PATCH
-releases of the installed MINOR versions, for example, update to Python
-3.6.13 if you are on Python 3.6.10. (Those contain the fix
-for CVE-2021-23336 (https://nvd.nist.gov/vuln/detail/CVE-2021-23336).
+Anthony Liguori
 
-Credit:
-Vasileios Daskalakis
-
-Thanks,
-Kaxil,
-on behalf of Apache Airflow PMC
-
---00000000000023ec4305c14ab150--
+> Let's figure out if we should do that (and if it's still an option from
+> Amazon's side), or if another distro maybe offers to be primary for the
+> statistics task?
+>
+> Alexander
