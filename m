@@ -1,4 +1,9 @@
-Received: (qmail 15755 invoked by uid 550); 1 May 2026 16:13:38 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9848" "Monday" "11" "January" "2021" "15:05:23" "+0100" "Matthias Gerstner" "mgerstner@suse.de" "<X/xbI+6vsPHK6TmT@f195.suse.de>" "230" "[oss-security] Various security fixes in sudo 1.9.5 (CVE-2021-23239, CVE-2021-23240)" nil nil nil "1" "2021011114:05:23" "[oss-security] Various security fixes in sudo 1.9.5 (CVE-2021-23239, CVE-2021-23240)" (number mark "U       mgerstner@su Jan 11  230/9848  " thread-indent "\"[oss-security] Various security fixes in sudo 1.9.5 (CVE-2021-23239, CVE-2021-23240)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Various security fixes in sudo 1.9.5 (CVE-2021-23239, CVE-2021-23240)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1466 invoked by uid 550); 11 Jan 2021 14:05:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,198 +12,245 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15724 invoked from network); 1 May 2026 16:13:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=zLMsSdPRojL3Gj4zLbFYPrhi1wtaxLqLdim1yW0iuEQ=; b=
-	hHWLPN7H7szJA0ysb4STPP34gZ6fl9GMMnFi3vujuf0SpdO/AwC5Vdn3H+WEWNx1
-	G7SOZ5ZqF7WuG7sIOfnejAteycSRop8F6oVCn/Fh0qXXBI8qYhsdI/yYDKGNswAH
-	/hXZcLIJq8XHnjv84wc7XrOi1KmMgW4/Ogj8xVKrsO2BWHPjg6o1oNck5/atxdWp
-	RxdfAnw1O9uM1luTJcnL2QqJfxhnLwAkusa4qi+Io26VZlytrXyOQDs7oPFHZUpd
-	rR1AYWLA6qwys1b6aC74wtY2MRksC3IDiEttK4gbMWjZKjdfKZXF4qhLdhg1WFMv
-	Y2j42s/oCZJrFUw95Jz1Yg==
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cKjdP/xooAxT2/D2Vd3NeOWYQxY9L+iS33uA63GuZ+GPnrhMexWJwGFD5kvoXcnIBu98ThWoXEPS+3f6MYlUP4himBUq5i1ydzOuOYK7cb3tZXpNzt353GpmoNPDWG3KxoChAgzt8sbmp0qDkhP3EAzHGn2rYjp91eDtMD1U3/9DpdNB67JzhcUaBQvXqcYRQgHNPIWulgWTB5v3AryCKEl26ryKKxjRTzJrx+ZUXu26AnpL5E1B3C+oWp7zZcM6yTY6Ak4NrZClrhVAr1WVCYajXjwyG+M9HOc4uDdzI1rCc6G/j57Z8mWoFL4GqkjFUdwh9raUt9sCRyv3PJybdA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zLMsSdPRojL3Gj4zLbFYPrhi1wtaxLqLdim1yW0iuEQ=;
- b=cqhLiquPMNU4GB7cX+Fkln284Aa5XL1WduzZTIQO/U7ogOp7yDJrxNL7QlldAzc+P7fR4e8xd6w/U5JGmVEr/q9mxXFnRIVWtDV3FAkrnOZ5UAgrAQ81AT/OCTSOOLeJpTJ51O6hK8kGbHkW0lLtqPLLPRFyHfgFUqtGczRBFAsyBtLN1fh7OGaJlf7EmlZ2AQdz0UgiW45wNNMfkHfToVmR6h+Vq0Qta8Hqy/oXRzLSmBOSUlLA9oaZ/tkqm7wccTyOYs70PPzchzz7GlxbcJwfxUJz/gtW7Hchza085FZUK7+MnNRh5yYm0dJgeHedgPpdd5GhVGRpzn0WeBeThw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zLMsSdPRojL3Gj4zLbFYPrhi1wtaxLqLdim1yW0iuEQ=;
- b=oZA9N364wkFFJ3vNSCD+Yl1KpYPE3gfUSoJjWOfIn3PQJGuO88kIeup6zzKfP+Gr/yvvfK611Rvd8PWiV1/Zf1OpY0Vj7uVcQ1S49b3bgoy1DprV4pgjr0la3q8vA30RYu96+3/C9Iyfi8SCKTUhvJTQDsha6qjyBTIDAEem5zY=
-Message-ID: <52cfdf6a-d4ee-40ec-9d64-e28b8f81132e@oracle.com>
-Date: Fri, 1 May 2026 09:13:17 -0700
-User-Agent: Mozilla Thunderbird
+Received: (qmail 1445 invoked from network); 11 Jan 2021 14:05:35 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Mon, 11 Jan 2021 15:05:23 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
 To: oss-security@lists.openwall.com
-References: <afRr2BAmpEL8GnJM@donburi.himad.notcom.org>
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-Content-Language: en-US
-Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
- 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
- 5V9JclVH6u5Gug==
-In-Reply-To: <afRr2BAmpEL8GnJM@donburi.himad.notcom.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DS7PR05CA0057.namprd05.prod.outlook.com
- (2603:10b6:8:2f::21) To CH3PR10MB6739.namprd10.prod.outlook.com
- (2603:10b6:610:147::6)
+Message-ID: <X/xbI+6vsPHK6TmT@f195.suse.de>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR10MB6739:EE_|CH3PR10MB7648:EE_
-X-MS-Office365-Filtering-Correlation-Id: 51d5ac73-14a0-478d-2ac5-08dea79c8f58
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|1800799024|18002099003|22082099003|56012099003;
-X-Microsoft-Antispam-Message-Info:
-	BsPNOnE5H9XqF/Kbh7V8aUv5tS7zkw5xlwvREwaZavkWY1aBcReywagUjAu5ZDrq/AcqhvkIJjD9CqFKOBgaNQ4wyugJOAoH1yZfizDIJOyoZss1nZFq4HeeNLaxEhzUDlpYCdOjeGvb3NZDYfROBtkZJeaJiOLzTq3wZmuVuyO0dc3RH0sWLhe1vEjhRTu0el8scdy6FIt/dxUf2vAOyhe07wwTwlXP3nQ3+inrfvKfnMjwslckcyzM+qbxO2ZpL+e8V/4tCtTtGT3fRu+gaIvPEgATR1IZD/FNNmMsIr5Q+/X50yY6ew1bYJSSdIddocUXgSffXsvXZ2c1+xBrCQ5MXwbobEq5te4QnIfxf30YFg6QldVXyJdOsSReZ8/DgUKSYZWcFe0DmqxrSoHBf4JQFet8Dpm0neLNNe2qkM9bFzPY5yVlOedt5Ujo12VzoiB9PU+cAo3TW9IqDrQsSGW3AvMq/tAJY4q5c8oLUcm6D31IXcjibtBHuysgLDeEwqUE2XlwnuXndsct8/B/1DMC84KZn/XlPNu5vuD/TPNjxPOibFFDPmq1748PFIQizpr7+7FvetldJmUGG/iO0LnIyIVyd+Bt9Gm858GC2iozkJuYzfyQ25It5Af1Vth3GQF3MDB1TFl3z74sb/eB9w==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR10MB6739.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(18002099003)(22082099003)(56012099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NXF6S1NObWowNiszYWN2VWNPQVRzZDByVDB2eDNsb1hBQTBnckZoZTRoeXlk?=
- =?utf-8?B?MWVFbGd5U3BmTkcyc01EcmJ3K3p5ZEVCZ0ovZlZrL1g5cXd5b0dHWmR2RG1p?=
- =?utf-8?B?bkc2YlRPeHVKZmdxWVdvY0ZKYld0eFBCU0FpdjJrMVZJSjU2TE95TGxSU3h6?=
- =?utf-8?B?b0VEaHdaVk9WTHl0RFRPZHhxRkFiZWJFLzR4ZGwvOUVnSW9sNEpVUEdxTHIv?=
- =?utf-8?B?RTZrclZ2bEJramxmc3NzejB5NkJMZndCOWtaZkxBQkdrV1JjU3EyVjVsZXBo?=
- =?utf-8?B?bS8xbXdzbm9WN3NqRjRDcllQVXZwOXhkWFJoQ3dwRDlRYzBTWGdkT3FUd2x1?=
- =?utf-8?B?R0UvTVA0dlZNMEpaRGx2elNJY0lIU21DL2JvQkpvWTRRb2NUalVrT0VOb2lC?=
- =?utf-8?B?RHVVTXVsN0pUR1ZYK2kreGtHTHhQWVZ1VGdVeGp5RE1GcmNnblZCSHZkR0VJ?=
- =?utf-8?B?bGZlZC91ZDg0dWdxaDVVZUNDdHU3WjJ5dklzdmFJZTFKTUJrVHpjVHErZVdq?=
- =?utf-8?B?emU5cGhhdWZ5YlZIbUNtQ0M3bDVwV3hzVnk2Y3hnMjkwVlVuMWFLWGR3NjY4?=
- =?utf-8?B?Y2FHS0dxZFN4MHhGRUg2Z3pGcUJkaWxCSlc1NUt1UUJjeHUyQkE5R2lDdVJn?=
- =?utf-8?B?QkhVNHlXSlc5L2hyOVlVdlJnWHd5aFVKNU1RUE1laFZXTlJjakdKZm53YUF5?=
- =?utf-8?B?R05iMW9hMGZsQ252M2l1a1dyZTJaK3Vzd2Y1dGFTNVlLNXUwL0trang4RUV2?=
- =?utf-8?B?QW94OGNQV1N6YWJEMnFPZ2NNWWFud0pGN2NMYjZDTmpOVjRYMklXeUZZUFFv?=
- =?utf-8?B?NitraTdVL3A1NVc3UzJyTzJETWNCc1o5THNCdW9CRmhnWUlpbVBuU0lTa1NT?=
- =?utf-8?B?UURBWVBpcktKNllTaTVSeG9NUm5oR0ZCL1NPUnd2QkNqNmZoVlVuWmNsSVNF?=
- =?utf-8?B?QmU2SUhDZDE1MXFBbkY2RnVmcjE5b0tQN2FSZnRDVXhHaVo0QXVIeDFDdzJk?=
- =?utf-8?B?SkZQNHVNWHRQVkxXSDZFdmdqM0J0WXFUQmo0d05pWmozWmRURnJzczRBeXpV?=
- =?utf-8?B?SHdabnJFa1ZvVEZJd2pYQlRiV3JmbXM1WXFxZ0hsMGdqcHljelVNMm5nR3J1?=
- =?utf-8?B?MHF4bC9FdGVjNmsxNnQwdFhVanhYNkNKVVVFbjhtS25QRnJVUTBIUHpJVjdK?=
- =?utf-8?B?YStxbVhHbmxjbHQzWFRYZUxQT1lROW0xTFBhTGFVT2k0TlJHZnovUVF2WVU3?=
- =?utf-8?B?YjlUN016Ymw4TnVaZm1DajJWRjZoYTFXbFBrQkI1NDZBRmZuazE2K0VvWjFU?=
- =?utf-8?B?MWtjY3pQRHlZNkZuMUFPVXRmM3V1KzV1U1Q0L3Q4NkRnK3A0OFQyZHAvTkxY?=
- =?utf-8?B?endRQzZSaXg2V2hTMEZiMXNmeUQ1djdXNlNvaC9NeUMxejFqQnRkVzNIM1dC?=
- =?utf-8?B?Tm9CTzVEUlNVTWM1blh6V01PZ1k1bzRqWDYzQklURlVCdVU2RXdnbm5qd1oy?=
- =?utf-8?B?dkJwRFNmTUFnNytEbGZxdm5rRU1xbnhnNUNBMHcraWxKclRLTkdhRnplZStr?=
- =?utf-8?B?VzNKdXFQRitiZDV5OHpmQzVIRjhud1k3V0tmN0VWYlpZS2JLYjBrcDJ6eHJl?=
- =?utf-8?B?dDF1VU9LQnhoRWFkZkl3elRSVmQ1aW4wVFVhalZUSWZqME5NRWpKVjhEOFha?=
- =?utf-8?B?UmpxcG9yLytqTnpscDU1V3NXZVhpdW9peFVmWmE3dEt3YUNJaXZwMHZEL1Nx?=
- =?utf-8?B?c3lCeE1oY2VHanVpV0xSNUMrMi9DT1h3TEhIb2Naelc2OUJIS3JiMUdyT0FQ?=
- =?utf-8?B?NUFKZHBibWhUUk5vNndXY0VoNlhQNDgyRlArSlZKaEpYd1NTUEVlSmcxcGtN?=
- =?utf-8?B?Q0FIWko4akJFeS9YVCtZcUphRVhDTk9rUlA3WHBqSkxQaXpwMTVsaVU2VllB?=
- =?utf-8?B?MGMvdjdySndiZ21LNThOekE4cktOeFQ3MTB0UndBNFhlNkNFb1h5OTVzYXJX?=
- =?utf-8?B?djhnNW4rOEZqSmJXbEtXbmdzNVM1ZU0weHFFUHJPTVRCZExSbmVMY0pyMS9Z?=
- =?utf-8?B?Vy9zRmo5TUxoK0NIN2RIeUVsWFJKRzkwL1oxSzJzT1Vra2hMdk1objJHcEpS?=
- =?utf-8?B?M3VrWE5BeTliTjNsdDV2VWU3SXU3SW5PSEhLZWVQRXJRRXRVZ1FHbUxnL1Ft?=
- =?utf-8?B?QkFxMlEwbEI0Rk1rYndjZWZlaGNudm1oS1ZTS2QzcldZYnl3em0yd3N3MWxZ?=
- =?utf-8?B?N3dEL3BZWXV0dVN4cmVaYnVWTzQxRm1NQ2liOUV2Ty9KcVRPT3V1d0N5VFhC?=
- =?utf-8?B?L0I3STl5TTRBcWVoQS9OaDdKRVZ5S0xaZHg3VFRiMmwwTnJURVliS0tkNUJm?=
- =?utf-8?Q?Dv4M8bB53VipItaI=3D?=
-X-Exchange-RoutingPolicyChecked:
-	E0a7IqWiBITAxIKNp07xuBno/3lnMq0ghAx6zzV1VApmxQPURyBpoI322pwXEWvWsuqNXciOO+hlf0HmxWDbIuf1vWZTtroRk8OZQTopVEGHUPqR22D0DZq33Uvl/+X/3ySHQtjL+aQkVFnHVwmYNIMAjApxQJECogoUVZ/XKsB4izRQgAZAJqu3lTjgk34qZ7HkiVUq8F6Jq+N2v7ZjVkX8Pqmcyzy8h0nun3ncBIwp4fU4BavqV5V9KjwCefdJ/Aa9Wgr1/9/khkXlZ+TYwdHo3jxeZhuy2ae0zpze/RM9CA3UBW3r1/qNGDtamecARX3AIvR6hOH5FDLYmvC44g==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	YRkoIpHl+Dc//S86Ti3GtKQn1VSSyTSNqsBD+XKn7K+FEJX8o32MXDYywrG808Z7AphJ1ptRAajk1a0pQ55NTStBKGsbKAhqC7Q4FXjGBYy8YNl1Y9VYmTq0a7Bi+v1xtgebnDlzbdaYpHrPr6mOHFosSUOCN1AfTI4LgYtDdtI7C6QE8THVLXjUMIFcw18rS82IQB/sTjFwmZRyb50KFwK0P9SpRfKzg5PlYl0xDiPl4ekG+b27NUzazPiTGRI29Cux0uZXVf8Vyy/xKqImgo03quBtJtEU1DBSRYBFdk3tKaPnY0RGsOgCQ43G/kZz437p+w9xKo4/gygKFOxN2pDpqi5LGVTFAtBNZ/E7HCfDhNiay5NsJEHp2j9xQD9bEwh8C5CKRYatnOUlfs9uO/uDHgiJI/7z81vwa0yqXtJZy2I6YPyQSNY56mYJSCvlJiwbhL6eSGl1SM0E+oPPpiIc2ohw+EgGFHoP2B0AO5vMGMbv5WPU74tbSEOtLKL1kzLCOOrkj70UOWfNgnOZmfKER/cny773jxcIr2NKUBrj37QsHPTKfwuVWq/2Lq1afGss3zYrpqdWyoZb3fltRsxHJxDruswbQtULOrvC3Eo=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 51d5ac73-14a0-478d-2ac5-08dea79c8f58
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB6739.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 May 2026 16:13:19.7564
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1NmINScjtCAqMMtJBjHmOEKuB7jqkn558NJw1TCkjiu/rmIcESEnm6RDgLwckFvnAQAYZruT+BVWOJ2CIRwEegnylf+6qhU00MxhyaXD34U=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR10MB7648
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-01_04,2026-04-30_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- mlxlogscore=999 bulkscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
- spamscore=0 mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2604200000 definitions=main-2605010158
-X-Authority-Analysis: v=2.4 cv=U7uiy+ru c=1 sm=1 tr=0 ts=69f4d128 b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=NGcC8JguVDcA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=EIcjfB9IiI4px24ztqRk:22 a=xHmGWb7dAAAA:8
- a=u_SgSZvrAAAA:20 a=NEAV23lmAAAA:8 a=yPCof4ZbAAAA:8 a=6hYQuj7T74MVNx02174A:9
- a=QEXdDO2ut3YA:10 a=dUxtNc5KqGcdvnm1qQk7:22 a=bA3UWDv6hWIuX7UZL3qL:22 cc=ntf
- awl=host:13840
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAxMDE1OCBTYWx0ZWRfXwRErjY/DALdJ
- dasQK+XcAY75slsYRJClQ8NIisvuRzeoSgkE518LBrExJRPpe3+X+FRs9Dt3YEGSakJk8yNn6zF
- qFMVH93o4ZxncAqbTkassqWmScWLcghQ15b4F1OMyIrkd/4HnOWiETaSdEC+iS1FpU9sXaXhCTK
- HxTout1wHv2PpDIo1oAXu9NtkjnZijHLJAz95xQneuTa/JzF3+g60vpW4uEzXftpnym9FLL0erA
- Tl17B+CuimDBhKTthdJoxqw8l1VLgzPXpmhrIkWywTX4+zbkYjJMvJhSePKzSr1gIxeaVv5ePeX
- fKIJU+E+7T8zXF0YVmXrw9EuB2N5XlgkAezaWVAWr5o8hiOT4MS7gEj0Y+zzb/RVgJBtwd+d8Iy
- DaADLajtBgpQdOdJV9NQCNcdZzmO66LEIaBpkeBYyqq5nq+6hrwVZlebJ+wXUYW4FFzy25ZYr22
- 6eppQXNbyq/BebgDjk1Lem/hPkUOG/Q5yFA1+ooU=
-X-Proofpoint-GUID: Ij-7a_WWsBTJDo0EOaCAh7hK1BlwYDhH
-X-Proofpoint-ORIG-GUID: Ij-7a_WWsBTJDo0EOaCAh7hK1BlwYDhH
-Subject: Re: [oss-security] CVE-2026-42167: SQL injection in ProFTPd prior to
- 1.3.9a
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="gkbslUjjCOIrOzdy"
+Content-Disposition: inline
+Subject: [oss-security] Various security fixes in sudo 1.9.5 (CVE-2021-23239, CVE-2021-23240)
 
-On 5/1/26 02:25, Valtteri Vuorikoski wrote:
-> The official site <https://www.proftpd.org> seems to be down at the moment so I
-> don't know if or how this has been officially announced.
-It is listed in the NEWS filed for the 1.3.9a release on their github repo:
-https://github.com/proftpd/proftpd/blob/1.3.9/NEWS
+--gkbslUjjCOIrOzdy
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The bug report is also visible there:
-https://github.com/proftpd/proftpd/issues/2052
+Hello list,
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@oracle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+concerns have been raised with us about half a year ago that new
+features like the python plugin in sudo [1] major version 1.9 could have
+introduced new security issues. Recently I performed a review of the
+current sudo code base and found a couple of minor and moderate issues
+(not necessarily in the new features) that will be addressed in a soon
+to be available sudo upstream release 1.9.5.
+
+The following findings are all based on the `SUDO_1_9_4` tag in the
+Mercurial upstream repository [2]. Only the two issues c) and d) have
+been considered severe enough to request CVEs for them.
+
+# a) User Could Enable Debug Settings not Intended for it
+
+Function `sudo_conf_debug_files_v1()` is passed the unfiltered program
+basename from `argv[0]`. In /etc/sudo.conf debug settings are based on
+the program name, for example:
+
+```
+Debug sudo /var/log/sudo.log all@debug
+```
+
+Example scenario: An Admin experimented with something, say, the
+`python_plugin.so` and enabled debugging for it and afterwards removed
+the `python_plugin.so` from the Plugin configuration but forgot to also
+remove it from the Debug configuration.
+
+Now an unprivileged user can set argv[0] to `python_plugin.so` when
+executing sudo, which will cause debugging to be enabled for the sudo
+main program.
+
+Log files created by sudo have root:root 0600 permissions so nothing
+really bad should come from this. Still I think that the unprivileged
+user should not be able to confuse the debugging system.
+
+This has been addressed in upstream commit 12797:1d32c53859f9 [3].
+
+# b) Result of `fcntl(..., FD_CLOEXEC)` is not Checked in `sudo_debug_new_o=
+utput()`
+
+In `sudo_debug.c:183` the result of `fcntl(output->fd, F_SETFD,
+FD_CLOEXEC)` is ignored. If this would fail (while unlikely), then the
+open debug file descriptor would be inherited into the target user
+context. There seems to be no other code in place that closes this file
+descriptor before executing the target command.
+
+This has been addressed in upstream commit 12798:f1ca39a0d870 [4].
+
+# c) CVE-2021-23239: Possible Dir Existence Test due to Race Condition in `=
+sudoedit`
+
+The `sudoedit` personality by default wants to prevent that the edited
+file is in any way under control of an unprivileged user. This logic is
+rooted in `sudo_edit_open()` / `sudo_edit_open_nonwritable()`. It
+follows the complete file path from the file system root downwards and
+avoids symlinks in directories that are writable by unprivileged users.
+
+There is a corner case, however, when the target file does not exist
+yet. This is handled in `sudo_edit.c:545`. `errno` will be set to
+`ENOENT`, because the file didn't exist yet. Now the code checks the
+parent directory of the path for existence and whether it is a
+directory. If this is both true then the edit operation continues in the
+expectation that later on a new file will be created. The check is done
+using `stat()`, however, thus if the parent directory is under control
+of the unprivileged user, it can try to win a race condition and place
+an arbitrary symlink at the parent directory location just in time for
+the check in `sudo_edit.c:549` to succeed.
+
+This means the precondition covered in `sudo_edit.c:576` is no longer
+true ("editing files in a writable directory is not permitted"). As far
+as I can see this only allows an attacker to test for existence of
+directories in arbitrary locations, if the target user is root, because
+`sudoedit` behaves differently if the link target exists and is a
+directory, or if it doesn't exist or isn't a directory. It *cannot* be
+used to write to arbitrary locations, because the write operation
+happens in `sudo_edit.c:1043` via `sudo_edit_copy_tfiles()`, which uses
+`sudo_edit_open()`, this time with `O_CREAT` to open the target file.
+This will not follow a symlink this time.
+
+Example: A regular user 'testuser' is for some reason allowed to edit
+the file /home/testuser/subdir/file with root privileges and without
+password entry.
+
+```
+sudoedit ~/subdir/file
+```
+
+Initially ~/subdir is empty or doesn't exist. The logic in
+`sudo_edit.c:545` will come into play. 'testuser' wins the race to
+create a symlink:
+
+```
+ln -s /root/.gnupg ~/subdir
+```
+
+If /root/.gnupg exists then `sudoedit` will now open the editor, if it
+doesn't exist it will fail with
+
+```
+sudoedit: /home/testuser/subdir/file: No such file or directory
+```
+
+This has been addressed in upstream commit 12799:ea19d0073c02 [5]
+
+# d) CVE-2021-23240: Possible Symlink Attack in SELinux Context in `sudoedi=
+t`
+
+If SELinux is enabled on a system then `sudoedit` uses alternate code
+paths to create temporary files and to copy temporary files to target
+files, namely `selinux_edit_copy_tfiles()` and
+`selinux_edit_create_tfiles()`. Both functions employ `chown()` system
+calls which follow symlinks.
+
+Especially in `selinux_edit_copy_tfiles()` a `chown()` to the target
+user is performed on a temporary file path that is owned by the
+unprivileged user in e.g. /var/tmp. The unprivileged user could remove
+this file and replace it by a symlink to a another file, that would be
+followed by `sudoedit` to change its ownership.
+
+When SELinux is in enforce mode then it should prevent such a thing to
+happen. But a system might run in SELinux permissive mode in which case
+the SELinux logic in `sudoedit` would still trigger but the protection
+effect would be gone. In this case still the symlink protection in the
+kernel can prevent the attack, if it is enabled.
+
+This has been addressed in upstream commit 12800:8fcb36ef422a [6].
+
+# e) Bad Buffer Size Calculation in `get_net_ifs()`
+
+In the `get_net_ifs()` function the remaining space in the `cp` buffer
+is calculated for passing it to the `snprintf()` function calls in line
+175 and line 192. The calculation `ailen - (*addrinfo - cp)` is
+erroneous, however, because the expression in parantheses will become
+negative for increasing values of `cp`, thus passing an ever larger
+buffer size to `snprintf` instead of the correctly remaining space. The
+correct calculation would be `ailen - (cp - *addrinfo)`.
+
+The impact could be a heap buffer overflow for certain values of IP
+addresses on network interfaces that would exhaust the actually
+available space in the `cp` buffer. However it should not be possible to
+trigger this, because the buffer is allocated with enough space for
+(`2 * INET6_ADDRSTRLEN`) bytes for each pair of interface address and
+netmask. And even then an unprivileged user should not usually be able
+to assign crafted IP addresses that would result in such an overflow.
+
+This has been addressed in upstream commit 12796:b0cae3ac8e46 [7].
+
+# f) Python Plugin `_verify_import()` Follows Symlinks
+
+In `python_importblocker.c:39` a `stat()` system call that follows
+symlinks is performed to determine the security of the to-be-imported
+Python module. If the target directory would be under control of an
+unprivileged user then it could attempt to place a symlink at the
+`file_path` location that points to a file that fulfills the necessary
+conditions and then could replace the symlink by a user controlled
+module that would then be loaded by the Python importer.
+
+To be completely safe here a check of all path components like done in
+`sudo_edit_open_nonwritable()` would need to be made to make sure that
+no unprivileged user has control over parent directories of the Python
+module path.
+
+Ideally a safely opened file descriptor would be used directly to load
+the module (if possible with the Python API).
+
+Upstream told me that this code is not actually intended to be a
+security check but more of a debugging utility for admins. The Python
+API does not allow to make this particular check safe. Therefore a safe
+configuration is the responsibility of the sudo administrator.
+
+# Upstream Communication
+
+I shared this report with the sudo main developer Todd Miller on
+2020-12-21. Since then we discussed the issues and possible patches, I
+requested CVEs from Mitre for issues c) and d) and this week the 1.9.5
+release with all bugfixes will be made.
+
+See also the detailed analysis of issue d) done by Todd [8].
+
+[1]: https://www.sudo.ws/
+[2]: https://www.sudo.ws/repos/sudo
+[3]: https://www.sudo.ws/repos/sudo/rev/1d32c53859f9
+[4]: https://www.sudo.ws/repos/sudo/rev/f1ca39a0d870
+[5]: https://www.sudo.ws/repos/sudo/rev/ea19d0073c02=20
+[6]: https://www.sudo.ws/repos/sudo/rev/8fcb36ef422a=20
+[7]: https://www.sudo.ws/repos/sudo/rev/b0cae3ac8e46=20
+[8]: https://www.sudo.ws/alerts/sudoedit_selinux.html
+
+Cheers
+
+Matthias
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
+
+--gkbslUjjCOIrOzdy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl/8WyIACgkQFMQFyXGS
+NVO78RAAh+wqq5zi84ivKwijXovbB1DjeXfqd9xIhMgzdJGLLRElXhEjVskB38e6
+pISCUqWsVVTRDLjX+jgocujU/WeOkHX3KcexH5Y59+m9MZAvU2OL4LbwNlaeda6e
+v0UfWjQxOnGZK4GqBSF5tl+3Ui2u8FpRafdiKkqnz4GdAo9a0w7x0ptbgW4/DdJU
+vBztZp3hE1ja6tOYWdJ/HHEWQwq9YvSKAueMgy4mXlVCHYwz39DPC5zDHLIbkJ5o
+/fhbily1mypy1HNar0YZ5+PHBx+Yw4RXIEkkcRHcdH5eRev6HzWhvIeSEwY8VoGb
+LsbztcQRlGfqV8fXvOXcZlLQBNV/hQqO/sn7mM011rtXhYLtCySQle+XhGueeDc0
+51UAjnb7VHDJxk85wMjSvNkO8hT3fOUJ95K6tqFTso49s9dCwpIz7ehCObgbcyEi
+atS9ss5pEvHhyVw76H1YNYQmje6rgDLBjmlZII1Vn3lJcTziE+ETRfsFJjNMQYVI
+5F2/6rR6eEYfAEBDt4E/ZZ4IwGFVct0W5URoP9pArgn3gcLhKQgUFQGpEtI8t85s
+lXJG6DDyPAqslJgPRZcK8gzp5tzrCwHBnQ3xBC6BTf2wChd2QNYjPXistZxRmHPz
+lhVdc5VFmRMCS0NH2B1mXLzeK9jGBpYAvDA6CLwV5YJzaAHz+qQ=
+=SH9t
+-----END PGP SIGNATURE-----
+
+--gkbslUjjCOIrOzdy--
