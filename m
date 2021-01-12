@@ -1,4 +1,9 @@
-Received: (qmail 23588 invoked by uid 550); 9 Apr 2024 13:07:22 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5310" "Tuesday" "12" "January" "2021" "19:01:34" "+0100" "David Disseldorp" "ddiss@suse.de" "<20210112190134.585e5a60@suse.de>" "124" "[oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" nil nil nil "1" "2021011218:01:34" "[oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" (number mark "U       ddiss@suse.d Jan 12  124/5310  " thread-indent "\"[oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 14174 invoked by uid 550); 12 Jan 2021 18:45:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,99 +12,138 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32094 invoked from network); 9 Apr 2024 04:00:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712635250; x=1713240050; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZdaKxQf2eGw+pxcSOCaMuuehgGGg4F5ezRMwbnRF+CU=;
-        b=YbwZw8hWEMkmUHjWHw/CzTzkzmVzZanz8TBN4l3Wx9kS2QKhvUNVkc7PxcjOKitAn5
-         LTPUx5dtdjv9MnyAEnPLsUJ7+gyU14nItiZvUh5Yntfo6kZ4LNpQMoZZspRPbWEFje++
-         U6KwkttAMbRUJ3bqPPpniovRxCuSzxBsFhw5On+AqFzhQV6F5Az+NUN+vMlHvUOFZWc0
-         uuwkXzVkEgpy8qY0DeXTQtiP58cYpbO8vgwbM36Gm33dqy7ZtK4dKeckedifjuPv0yG/
-         Zf6NXjYukV+GZ/+lKy6rdKVPXZiO0eI5qLMaplifclCquonr30roQ9HktFwpEj43YJiD
-         o+Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712635250; x=1713240050;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZdaKxQf2eGw+pxcSOCaMuuehgGGg4F5ezRMwbnRF+CU=;
-        b=OVDVOEO+arPlaa/elSq8dRgQPaGF5PNZHXEW7oHplDB9JM6lzn1MWjn6Cu4inNTmOY
-         boe1mparQ+w8hjW0/ZuX4nfn67Bxf9ujUvm55cCrLTZTjmwIMxxIhCL8oQBoc1jofva3
-         37LMENPKwdQLgMZShBgq67Tl68KnU2+aTQKV+c5x4j8ef/lyPpaqHgPEzOP2/ZUQvV0f
-         8RPK93FZlgDWTpjKl6I3WqoMl3UNiDzthEWBSnZzlZVhSHIUxHi2N8Sc4oQM8zqGdfSY
-         RbI7u7ZpLO7TAJk8+r42ad8dPnY6y0tHTaau/7r4U1X9IAqXMf/jY5K2UVcHGXY/PSa2
-         qx2g==
-X-Gm-Message-State: AOJu0YxqzfYr3yk64t/Jq9U7nZ2PIyfN/x75ti6Ya/01lzZgcQZr/DMd
-	iP35K3mlE9H7gLyoAZ1MCO33ZxoB98u1xw5rLQHJOMn3NZhGxx8rZ7vJIvsWPlg=
-X-Google-Smtp-Source: AGHT+IH1LqOBxkorfCHDHo/ZfpK971pxDOOKX0FBGNys9GTLjYvIma16ptNyMxaEOsxMxEb9AJ9rJA==
-X-Received: by 2002:a05:6820:20c:b0:5a9:d53a:4859 with SMTP id bw12-20020a056820020c00b005a9d53a4859mr11638881oob.0.1712635249867;
-        Mon, 08 Apr 2024 21:00:49 -0700 (PDT)
-Message-ID: <6614BD70.8090200@gmail.com>
-Date: Mon, 08 Apr 2024 23:00:48 -0500
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 MultiZilla/1.8.3.4e SeaMonkey/1.1.17 Mnenhy/0.7.6.0
-MIME-Version: 1.0
+Received: (qmail 32043 invoked from network); 12 Jan 2021 18:01:47 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Tue, 12 Jan 2021 19:01:34 +0100
+From: David Disseldorp <ddiss@suse.de>
 To: oss-security@lists.openwall.com
-References: <loqt-RGEN6MMP_6J6pm7KJN3UgHgOBQ3NLoF3NsdmxQhyJrFIS0XYItBeLNZeSMliq69Lw8ogw3rnIW3BZEqCIHQQSFq307cqsyIt7dcocE=@proton.me> <42bf95dbef6e44d416c030ff6dad7b6806f54cbf.camel@sec.16bits.net>
-In-Reply-To: <42bf95dbef6e44d416c030ff6dad7b6806f54cbf.camel@sec.16bits.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] xz backdoor prevention using hosts.deny?
+Message-ID: <20210112190134.585e5a60@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload
 
-Ángel wrote:
-> On 2024-04-03 at 03:31 +0000, Nick Sal wrote:
->   
->> Hi,
->>
->> Assume we filter SSH access only to a public domain subnet using the
->> files hosts.{deny,allow} as seen below.
->> Would this prevent an attack if a malicious payload was *not* sent
->> from the allowed subnet?
->> Trying to figure out if an attack like this was still possible, for
->> the few days in March the backdoor was active and undetected in
->> rolling distros (e..g. debian testing).
->>
->> /etc/hosts.deny:  sshd: ALL
->> /etc/hosts.allow: sshd: "a_subnet"
->>     
->
-> If your sshd uses libwrap, blocking access except from that subnet
-> (I would check it is indeed doing what you expect, by trying from an
-> external ip) then yes, it would protect from that.
-> The libwrap filtering happens before the exchange identification.
->   
-
-Does libwrap filtering happen in the sshd process?  If so, do not be so 
-certain.
-
->> Moreover, allowing only public-key authentication for SSH does not
->> help, isn't this right?
->>     
->
-> Right. It doesn't help in this case, since the backdoor happens at the
-> preauth phase, when it would be validating the provided public key
-> (certificate).
-
-I am not so sure about this.  The original discovery of this backdoor 
-observed a slowdown in refusing a session for a nonexistent account 
-using only SSH publickey auth, *not* SSH certificate auth.  Reports have 
-also suggested that testing began after common botnet scans were 
-observed to be causing sshd to use an inordinate amount of CPU time.  I 
-doubt botnets are presenting certificates either.
-
-I am unsure how sshd would call RSA_public_decrypt in those situations, 
-which suggests that the backdoor blob is more complex than we currently 
-think.  In fact, I would expect sshd to reject the connection without 
-ever attempting to verify a signature if the requested account does not 
-exist, yet a significant delay in that rejection led to the discovery of 
-the backdoor.  (Lead the client through a fake exchange to hide that the 
-account does not exist, sure, but a non-existent account has no 
-.ssh/authorized_keys file, so where would sshd get a public key for 
-verification?)
+===============================================================================
+== Subject:     Linux SCSI target (LIO) unrestricted copy offload
+==
+==
+== CVE ID#:     CVE-2020-28374
+==
+== Versions:    Linux: v3.12 and later
+==              tcmu-runner: v1.3.0 and later
+==
+== Summary:     An attacker with access to a LUN and knowledge of Unit Serial
+==              Number assignments can read and write to any LIO backstore,
+==              regardless of SCSI transport settings.
+===============================================================================
 
 
--- Jacob
+Description
+-----------
+SCSI "EXTENDED COPY" (XCOPY) requests sent to a Linux SCSI target (LIO) allow an
+attacker to read or write anywhere on any LIO backstore configured on the
+host, provided the attacker has access to one LUN and knowledge of the victim
+backstore's vpd_unit_serial (AKA "wwn"). This is possible regardless of the
+transport/HBA settings for the victim backstore.
+- with vhost-scsi this can allow VM guests to read or write to images assigned
+  to other qemu processes
+- with iSCSI this allows CHAP, ACL and network portal isolation bypass
+- backstores with no corresponding transport LUN mapping remain vulnerable
+- all other LIO transports and backstores which allow for XCOPY processing by
+  LIO's target_core_xcopy handler should be considered vulnerable
+- tcmu-runner based user backstores are also vulnerable via a similar logic bug
 
+This is due to the way that LIO behaves when processing XCOPY
+copy-source/copy-destination (CSCD) descriptors; when attempting to match
+CSCD descriptors with corresponding se_devices, target_xcopy_locate_se_dev_e4()
+iterates over LIO's global devices list, which includes all configured
+backstores, instead of only considering backstores which are exposed to the
+initiator via transport layer ACL settings.
+
+Similarly, when LIO is configured to forward SCSI requests to the user-space
+tcmu-runner daemon (via target_core_user), tcmu-runner's xcopy_locate_udev()
+iterates over all tcmu-runner devices, without considering any transport layer
+restrictions.
+
+
+Exploitation
+------------
+The attacker sends an XCOPY request with two CSCD descriptors.
+One CSCD descriptor must correspond to the NAA IEEE identifier for the LUN to
+which the attacker has access. The other (victim) CSCD descriptor must be an
+NAA IEEE identifier which matches another configured backstore within LIO's
+global device inventory.
+
+For successful exploitation of this bug an attacker must be able to provide a
+matching NAA identifier for the victim backstore.
+
+
+Affected Versions
+-----------------
+Linux Kernel (LIO target_core_xcopy)
+- Exploitable as of
+  f99715ac8d6f ("target: Enable global EXTENDED_COPY setup/release")
+  + mainline v3.12-rc1 and later
+
+tcmu-runner (user-space SCSI target, coupled with LIO's target_core_user)
+- Exploitable as of 9c86bd0db97a ("tcmur: Add emulate XCOPY command support")
+  + tcmu-runner v1.3.0 and later
+
+
+Relevance
+---------
+Linux kernel LIO deployments are affected under the following conditions:
+- Linux kernel with f99715ac8d6f, i.e. mainline v3.12-rc1 or later
+- LIO SCSI target (target_core_mod) loaded
+- at least two configured backstores
+- one "attacker backstore" must be exposed via a SCSI transport (e.g. iSCSI)
+  which permits access to a potential attacker
+  + the attacker backstore must allow and use in-kernel LIO XCOPY command
+    emulation
+    - all backstores except special "pscsi" passthrough and "user" types
+    - emulate_3pc=1 must be set (default)
+- one or more "victim backstores" must be configured
+  + transport settings for victim backstores are irrelevant
+  + all backstore types are vulnerable, including "iblock", "fileio", "rd_mcp",
+    "pscsi" and "user"
+  + emulate_3pc=1 must be set the victim backstore (default)
+
+tcmu-runner deployments are affected under the following conditions:
+- tcmu-runner with 9c86bd0db97a, i.e. v1.3.0 or later
+- one "attacker backstore" must be exposed via a SCSI transport (e.g. iSCSI)
+  which permits access to a potential attacker
+- one or more "victim backstores" must be configured
+  + transport settings for victim backstores are irrelevant
+  + the victim backstore must also be managed by the same tcmu-runner instance
+    - e.g. an XCOPY request to a "user"+tcmu-runner backstore can't be used to
+      read or write to an "iblock" backstore, only to other backstores handled
+      by the same tcmu-runner instance.
+
+
+Mitigation
+----------
+Caveat: instructions below do *not* affect XCOPY requests sent to tcmu-runner
+        based backstores. They are only suitable for disabling kernel
+	(target_core_xcopy) support for XCOPY requests.
+
+Requires acb3f2600eb8 ("target: Reject EXTENDED_COPY when emulate_3pc is disabled")
+- v3.12-rc7 or later
+
+XCOPY support is enabled by default, but can be disabled via:
+  echo 0 > /sys/kernel/config/target/core/<backstore>/<name>/attrib/emulate_3pc
+or
+  targetcli /backstores/<backstore>/<name> set attribute emulate_3pc=0
+
+...where <backstore> and <name> should be filled appropriately.
+
+
+Fixes
+-----
+Linux kernel and tcmu-runner fixes will be provided following the coordinated
+release date: 2021-01-12 10:00 Pacific Standard Time.
+
+
+Credits
+-------
+Research and patches by David Disseldorp of SUSE.
+Patch review by Mike Christie of Oracle, and Lee Duncan of SUSE.
