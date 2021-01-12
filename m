@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2848" "Tuesday" "19" "April" "2016" "10:09:32" "+0100" "Ignat Korchagin" "ignat.korchagin@gmail.com" "<CAOs+rJVMeTCh8J38eKABrf7WVd=HCv=q0doYkURsgh4bC6MsTw@mail.gmail.com>" "71" "[oss-security] Re: CVE Request: Linux kernel: remote buffer overflow in usbip" "^Cc:" nil nil "4" "2016041909:09:32" "[oss-security] Re: CVE Request: Linux kernel: remote buffer overflow in usbip" (number mark "        ignat.korcha Apr 19   71/2848  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel: remote buffer overflow in usbip\"\n") "<20160419083512.GB18866@kroah.com>" ("<20160419080643.GA26432@suse.de>" "<20160419083512.GB18866@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1304" "Tuesday" "12" "January" "2021" "09:04:49" "+0100" "Greg KH" "greg@kroah.com" "<X/1YIT59FZ7clijT@kroah.com>" "39" "Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic" nil nil nil "1" "2021011208:04:49" "[oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic" (number mark "U       greg@kroah.c Jan 12   39/1304  " thread-indent "\"Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic\"\n") "<CALJHwhR0d-q7dPhC1wXWm63WA9cLh9cQX_GYRJO7Mw0O8kDL4w@mail.gmail.com>" ("<CALJHwhR0d-q7dPhC1wXWm63WA9cLh9cQX_GYRJO7Mw0O8kDL4w@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14269 invoked by uid 550); 19 Apr 2016 14:53:36 -0000
+Received: (qmail 24164 invoked by uid 550); 12 Jan 2021 08:05:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,114 +11,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28434 invoked from network); 19 Apr 2016 09:09:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=jbwAbSzlENNHwWKJyic1X88KchbHTAQQDyyRFVYLgS4=;
-        b=DVE5EAV7EXH+GmtLcW4WUl/xMwTe5xRAYunWBqwTjrv1UadoTojun/eoljjAj4CSqr
-         4XZr8a25MdTc+e3ieswMa6o2/m0qmIEVi68rBfwcuV7vsQ63oIjet8TP/CE5LTkjTQHm
-         cDvLuqc0mKFysD3RYKWx3oPp3bs3+OIlqdHPGVglHh6PJ2cEa+PdpNFPtWQQBJNw/6pg
-         6x+bcMBg812IjzyyDeuicyDQJnhKG2WMHQzS5qRL3uYm0+grG7Ig/xKWyeAboAWvkmhw
-         ofpCSX9yd7RpUHdN6BRFzMabSb3huUJeD8ijdTo6WkTAT/b08ihwsaOgwKHuOTyenRLi
-         GU6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=jbwAbSzlENNHwWKJyic1X88KchbHTAQQDyyRFVYLgS4=;
-        b=W01YUl2fmHlcfA89qmmpsiN3WRw7qiAdGeNA+2KGE53is9lMzz3mvICfoR1Qgitaun
-         GCXl5mO43lf31IxbNlQnadOTUNcfTr4fBWujcEmpFIdkrtgQ2CoGRDdFvKx7MOW/v2rJ
-         5qjoNPexkAwHydvYZeDx0zuPwUvRJ0aOkdGnLuwSOgkbTZnAYrf8RiRGo6fq6SVYfXNl
-         hD3r4B6DM57k/R01bCi2JCRRUlUpa3P8W0MXhdtbOdvZ7PTVRAoo9hdoseANCkwPZHou
-         ci6Q2AgCW74sAR/+QwpkDh8UBPLGPt1vjxnSG0fd3D3bQUyT+AdV+Fkd7g42Fq16kY/I
-         jVTg==
-X-Gm-Message-State: AOPr4FUj96b7ctZLRYX1DDjSwiLUfYNe5zpp1iIDNxa6T50i1BzUDv07gAs80p5MDISu4XSrDBlWBrYuaMowWA==
-MIME-Version: 1.0
-X-Received: by 10.159.40.200 with SMTP id d66mr860114uad.89.1461056972979;
- Tue, 19 Apr 2016 02:09:32 -0700 (PDT)
-In-Reply-To: <20160419083512.GB18866@kroah.com>
-References: <20160419080643.GA26432@suse.de>
-	<20160419083512.GB18866@kroah.com>
-Message-ID: <CAOs+rJVMeTCh8J38eKABrf7WVd=HCv=q0doYkURsgh4bC6MsTw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: Marcus Meissner <meissner@suse.de>, OSS Security List <oss-security@lists.openwall.com>, 
-	security@kernel.org
-Date: Tue, 19 Apr 2016 10:09:32 +0100
-From: Ignat Korchagin <ignat.korchagin@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux kernel: remote buffer overflow in usbip
-To: Greg KH <greg@kroah.com>
+Received: (qmail 24141 invoked from network); 12 Jan 2021 08:05:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm2; bh=9vPKBSTLF/k350MBxWrJEiReCT6
+	cmYnDi+cQWc1/79E=; b=z+6/sei9u5JixyVYiidDQOLw3idq3gAXJc2LdB5yPlV
+	NhF8LUGo+R6qEft1KqYtX0zhkHjoJxDXOvrnH/tb8nJ+X/77dK/SJ6XaY6BdMOVU
+	ZSe11r1f0SCuZSuhzKowKkFG6z0VE/wpWlor1vm7PiBh++deLiAaqPvWG+XAe9HK
+	dWqLuoz03JLjPlSyTcSMXdRSqXuyXCLIOnhH7ccnAszIlDl/UAw0aziJhlovn/hG
+	oOFesHmlNqh1Nx+YOVUUopG8nezq3ZOD2l0r2LBs6Mb+FTXscnYJ6jZkmGDrrFix
+	UubLx2eQbD1j6QE87oWwOL8nsZSCVEFSHd7ETjX+arQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=9vPKBS
+	TLF/k350MBxWrJEiReCT6cmYnDi+cQWc1/79E=; b=IrwG9E780Eu25Jol8TCrWd
+	tBMe85QKMgL47Y9zPHd+CCLrwskF39NsMEW/Ya3YT6aB27jjtOrLoxXLsh78waKW
+	WrSPGz1bugO/dfCnQNdiDh2KFlF6m7jDvD2ObQRlFYjY34Fpp/th1m15Eshbo940
+	7XV/6FNraGonUYr60kKhYfeA/l2WLcAU/BMkHhijENqDxvL5l2sNLfIYybgtlQjW
+	fBZJ4v1c24gHOVBntdBrCU1qKfJynsUzOc7d0XzfkMv0SNPNluDnC1lZ+mFEHMMw
+	xQ9a3iGWSeozhzf309NNpq1FOgGaX1XNCj49v1Cg0pRfEh6M1CO4xVJ89U5jOHfQ
+	==
+X-ME-Sender: <xms:I1j9XyIdkxRl8vMs4MT21warLCQ_obhhnwS4Ufh4d3HdlaG5lEUbIw>
+    <xme:I1j9X6IPHo4Lk4E5wsJDlQ0GQ_kteZZxA_BXCx3_5zHE57OhMbuUIHi9RFZzUNEDn
+    rrgTDGO7Jkx8Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrvdehvddgudduhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttd
+    ertddttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhm
+    qeenucggtffrrghtthgvrhhnpeelhfefuedvledtfeegteejheetvdfhkeelfeevleehhf
+    fhieegtdeuvefgieffudenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhrvgguhhgr
+    thdrtghomhenucfkphepkeefrdekiedrjeegrdeigeenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:I1j9XyuMkGERmWkcb220G1j2J_C-WLSYuQEalORvD2hupXiCn9qKPA>
+    <xmx:I1j9X3a8AS9gxy0j5c5rtnPpp6eX6aLl3uNXFXjLm1b06dvew0Eg_g>
+    <xmx:I1j9X5YGG-CopO_gl5I257vXmwlRnhVP2xL1wzvs5a7_KJWI6zZ0Mw>
+    <xmx:I1j9XylKSebZA83peIO5jmPROLUB_qtC9nqJH1xmds7XZiN0xc7VyA>
+Date: Tue, 12 Jan 2021 09:04:49 +0100
+From: Greg KH <greg@kroah.com>
+To: oss-security@lists.openwall.com
+Message-ID: <X/1YIT59FZ7clijT@kroah.com>
+References: <CALJHwhR0d-q7dPhC1wXWm63WA9cLh9cQX_GYRJO7Mw0O8kDL4w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALJHwhR0d-q7dPhC1wXWm63WA9cLh9cQX_GYRJO7Mw0O8kDL4w@mail.gmail.com>
+Subject: Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule
+ could result in kernel panic
 
-Hello,
+On Tue, Jan 12, 2021 at 04:58:07PM +1000, Wade Mealing wrote:
+> Gday,
+> 
+> A flaw was found in the Linux kernels implementation of string matching
+> within a packet. A privileged user
+> (with root or CAP_NET_ADMIN ) when inserting iptables rules could insert a
+> rule which can panic the system.
+> 
+> Likely a user with these permissions could do worse, however it crashes the
+> system (DOS) and the user is going to have a bad day
+> especially if the rule is inserted and restored on every boot.
+> 
+> At this time it doesn't affect RHEL releases, and there are fixes already
+> in multiple upstream trees.
+> 
+> Thanks,
+> 
+> Wade Mealing
+> 
+> Upstream patch:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ca58fbe06c54
+> 
+> Upstream bugzilla:
+> https://bugzilla.kernel.org/show_bug.cgi?id=209823
+> 
+> Red Hat Bugzilla:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1914719
 
-Yes, I contacted cve-assign@mitre.org and they provided me with the
-following number:
-CVE-2016-3955
+I still do not understand why you report issues that are fixed over a
+year ago (October 2019) and assign them a CVE like this.  Who does this
+help out?  And what about the thousands of other issues that are fixed
+in the kernel and not assigned a CVE like this, are they somehow not as
+important to your group?
 
-Regards,
-Ignat
+What determines what you want to give a CVE to and what you do not?
 
-2016-04-19 9:35 GMT+01:00 Greg KH <greg@kroah.com>:
-> On Tue, Apr 19, 2016 at 10:06:43AM +0200, Marcus Meissner wrote:
->> Hi,
->>
->> https://github.com/torvalds/linux/commit/b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
->>
->> commit b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
->> Author: Ignat Korchagin <ignat.korchagin@gmail.com>
->> Date:   Thu Mar 17 18:00:29 2016 +0000
->>
->>     USB: usbip: fix potential out-of-bounds write
->>
->>     Fix potential out-of-bounds write to urb->transfer_buffer
->>     usbip handles network communication directly in the kernel. When receiving a
->>     packet from its peer, usbip code parses headers according to protocol. As
->>     part of this parsing urb->actual_length is filled. Since the input for
->>     urb->actual_length comes from the network, it should be treated as untrusted.
->>     Any entity controlling the network may put any value in the input and the
->>     preallocated urb->transfer_buffer may not be large enough to hold the data.
->>     Thus, the malicious entity is able to write arbitrary data to kernel memory.
->>
->>     Signed-off-by: Ignat Korchagin <ignat.korchagin@gmail.com>
->>     Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->>
->> diff --git a/drivers/usb/usbip/usbip_common.c b/drivers/usb/usbip/usbip_common.c
->> index facaaf0..e40da77 100644
->> --- a/drivers/usb/usbip/usbip_common.c
->> +++ b/drivers/usb/usbip/usbip_common.c
->> @@ -741,6 +741,17 @@ int usbip_recv_xbuff(struct usbip_device *ud, struct urb *urb)
->>         if (!(size > 0))
->>                 return 0;
->>
->> +       if (size > urb->transfer_buffer_length) {
->> +               /* should not happen, probably malicious packet */
->> +               if (ud->side == USBIP_STUB) {
->> +                       usbip_event_add(ud, SDEV_EVENT_ERROR_TCP);
->> +                       return 0;
->> +               } else {
->> +                       usbip_event_add(ud, VDEV_EVENT_ERROR_TCP);
->> +                       return -EPIPE;
->> +               }
->> +       }
->> +
->>         ret = usbip_recv(ud->tcp_socket, urb->transfer_buffer, size);
->>         if (ret != size) {
->>                 dev_err(&urb->dev->dev, "recv xbuf, %d\n", ret);
->>
->> Our USB developer confirms:
->> https://bugzilla.suse.com/show_bug.cgi?id=975945
->> |The vulnerability is true. If an attacker can get a malicious package
->> |into the connection the kernel will accept all of the data in that
->> |package whether it fits into the buffer or not.
->> |You can scribble about 1k into RAM, albeit at an unpredictable location.
->
-> I think Ignat already asked for a CVE for this through some other
-> channel, and was going to announce it in some manner.
->
-> Ignat, did you do that?
->
-> thanks,
->
-> greg k-h
+thanks,
+
+greg k-h
