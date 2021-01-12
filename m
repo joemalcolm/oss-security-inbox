@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/14/1
-Message-ID: <20210514083118.GA18622@openwall.com>
-Date: Fri, 14 May 2021 10:31:18 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/5
+Message-Id: <192EDE83-5DF6-40A9-8928-1CD1739177A0@dwheeler.com>
+Date: Tue, 12 Jan 2021 11:02:51 -0500
+From: "David A. Wheeler" <dwheeler@...eeler.com>
 To: oss-security@...ts.openwall.com
-Cc: Norbert Slusarek <nslusarek@....net>
-Subject: Re: Linux kernel: net/can/isotp: race condition leads to local privilege escalation
+Subject: Re: CVE-2021-20177 kernel: iptables string match rule could result in kernel panic
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 14, 2021 at 01:52:04AM +0200, Norbert Slusarek wrote:
-> As Salvatore already mentioned, the assigned CVE ID is CVE-2021-32606.
-> The exploitation details are published in an article available on github
-> via this link:
-> https://git.io/JsYYB
 
-Thanks, Norbert!
+>> On 12 Jan 2021, at 08:04, Greg KH <greg@...ah.com> wrote:
+>> 
+>> I still do not understand why you report issues that are fixed over a
+>> year ago (October 2019) and assign them a CVE like this.  Who does this
+>> help out? ...
+> 
+> On Jan 12, 2021, at 10:23 AM, John Haxby <john.haxby@...cle.com> wrote:
+> 
+> I think I can answer that.   There's nothing technical going on here, it's down to the behaviour of the end users of enterprise systems.
+> 
+> A lot of those people have a hard time understanding that they do actually want bug fixes and an even harder time understanding that they need to actually do something to install those fixes.   (I was once asked if I could fix a problem without changing anything, anything at all when the fix was a one-off chmod.)   A CVE number gets attention: think of it as getting hold of the customer by the lapels and going nose-to-nose to explain in words of one syllable they if they don't update their systems that they will crash and they will get hacked.
+> 
+> Ooh, no, they say, we can't possibly take the risk of updating our systems.  Suppose something goes wrong?   Sheesh.   Suppose, instead, someone comes along and sees a known, fixed bug is unfixed and uses that to trash your systems.    Or that you've got a bug that crashes the machine once a week for which there's a fix.   But, no, apparently the mythical risk of a tested update vs the actual quantifiable risk of leaving the bug unfixed is so great that they'd rather take the real, quantifiable risk.   I suppose that's understandable, after a fashion, even though actual regressions are quite rare.
 
-I'm attaching files from the above link to this message for archival,
-per this content guideline:
+I suspect in many cases there’s a simple answer: who takes the *blame* when something goes wrong?
 
-https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+If someone updates a component when “they don’t have to”, and it causes a problem, that person takes the fall: gets demoted, fired, whatever. If a component is not updated, and the system is attacked, the *attacker** is blamed & the admins don’t get demoted, fired, whatever. So updates are rare & involve >1 year testing to ensure that the blame is fully distributed away from any one person.
 
-"At least the most essential part of your message (e.g., vulnerability
-detail and/or exploit) should be directly included in the message itself
-(and in plain text), rather than only included by reference to an
-external resource.  Posting links to relevant external resources as well
-is acceptable, but posting only links is not.  Your message should
-remain valuable even with all of the external resources gone."
+Some organizations make an explicit exception: if there’s a CVE, then you *are* “required” to update the component by policy. Then those who updated the component are no longer at serious career risk, because when someone tries to blame the person who did the update, they can say “I was required to update by policy”.
 
-Alexander
+In short, I think it’s all about incentives.
 
-View attachment "cve-2021-32606.md" of type "text/plain" (20004 bytes)
+--- David A. Wheeler
+
+
