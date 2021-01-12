@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["357" "Sunday" "2" "August" "2015" "13:27:55" "-0400" "Andrew Nacin" "nacin@wordpress.org" "<CABRvpqA_VEWLe7Wq21-jDhc533z=CJ+C=5rwihEzpoKU2VGf_g@mail.gmail.com>" "14" "[oss-security] Re: WP Slimstat < 4.1.6 - Referer Header XSS" nil nil nil "8" "2015080217:27:55" "[oss-security] Re: WP Slimstat < 4.1.6 - Referer Header XSS" (number mark "        nacin@wordpr Aug  2   14/357   " thread-indent "\"[oss-security] Re: WP Slimstat < 4.1.6 - Referer Header XSS\"\n") "<20150802110623.GB19794@tunkki>" ("<20150730003044.GB5181@pizzey.me>" "<20150802110623.GB19794@tunkki>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2649" "Tuesday" "12" "January" "2021" "11:02:51" "-0500" "David A. Wheeler" "dwheeler@dwheeler.com" "<192EDE83-5DF6-40A9-8928-1CD1739177A0@dwheeler.com>" "52" "Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic" nil nil nil "1" "2021011216:02:51" "[oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic" (number mark "U       dwheeler@dwh Jan 12   52/2649  " thread-indent "\"Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic\"\n") "<93325B6B-DDAD-492B-9954-9CE8A372E086@oracle.com>" ("<CALJHwhR0d-q7dPhC1wXWm63WA9cLh9cQX_GYRJO7Mw0O8kDL4w@mail.gmail.com>" "<X/1YIT59FZ7clijT@kroah.com>" "<93325B6B-DDAD-492B-9954-9CE8A372E086@oracle.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7967 invoked by uid 550); 2 Aug 2015 17:28:40 -0000
+Received: (qmail 1755 invoked by uid 550); 12 Jan 2021 16:03:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7928 invoked from network); 2 Aug 2015 17:28:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=oRiwrS3Jw71YxSZXCpThe1+1STc1oX5YGhwE7Vt5g/o=;
-        b=w6VFZMAYT9AqIqErYU/6aOJk/cDi3CkUK4DlMHFbACBJoZ0B9oT60RC8F3Stt/Qwss
-         xvhP23zBta6KR70KXYJCD7QGjG7UZQOxJNiPXp3rMU2cen+fGpMUqpwrORYp35/2N8/h
-         gCNRsvYYlD+k3lWeVlHWneptlcnZoBZgQH2C9GhbpHNO1PzYXdapC6KWAJBfL2A8+of7
-         arLvO0Nz3pDG0r7DeBVg2DwCysYn65DsogedKwgPGTpZ8YulPBbs0qOL4shFhg6fa51y
-         T9pueaR01aR3yeSjJY0ojPrI5grFomxXyYHvyLuqYOG4fyYZY4BcRUL/K2DcfcIaxWqP
-         CqZQ==
-X-Received: by 10.182.210.194 with SMTP id mw2mr12718882obc.59.1438536504735;
- Sun, 02 Aug 2015 10:28:24 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20150802110623.GB19794@tunkki>
-References: <20150730003044.GB5181@pizzey.me> <20150802110623.GB19794@tunkki>
-X-Google-Sender-Auth: ftKL6crUVWIvOhJfFVJAJfFQ1xE
-Message-ID: <CABRvpqA_VEWLe7Wq21-jDhc533z=CJ+C=5rwihEzpoKU2VGf_g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11c22f125c7e74051c5761ea
-Cc: Open Source Security <oss-security@lists.openwall.com>
-Date: Sun, 2 Aug 2015 13:27:55 -0400
-From: Andrew Nacin <nacin@wordpress.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: andrewnacin@gmail.com
-Subject: [oss-security] Re: WP Slimstat < 4.1.6 - Referer Header XSS
-To: Henri Salo <henri@nerv.fi>
+Received: (qmail 1734 invoked from network); 12 Jan 2021 16:03:14 -0000
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Date: Tue, 12 Jan 2021 11:02:51 -0500
+References: <CALJHwhR0d-q7dPhC1wXWm63WA9cLh9cQX_GYRJO7Mw0O8kDL4w@mail.gmail.com>
+ <X/1YIT59FZ7clijT@kroah.com>
+ <93325B6B-DDAD-492B-9954-9CE8A372E086@oracle.com>
+To: oss-security@lists.openwall.com
+In-Reply-To: <93325B6B-DDAD-492B-9954-9CE8A372E086@oracle.com>
+Message-Id: <192EDE83-5DF6-40A9-8928-1CD1739177A0@dwheeler.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
+Subject: Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule
+ could result in kernel panic
 
---001a11c22f125c7e74051c5761ea
-Content-Type: text/plain; charset=UTF-8
 
-On Sun, Aug 2, 2015 at 7:06 AM, Henri Salo <henri@nerv.fi> wrote:
->
-> > Patched:  22/7/2015 as per
-> https://plugins.trac.wordpress.org/changeset/1204104
->
-> There seems to be major issue in WordPress Trac. Is this known issue Nacin?
+>> On 12 Jan 2021, at 08:04, Greg KH <greg@kroah.com> wrote:
+>>=20
+>> I still do not understand why you report issues that are fixed over a
+>> year ago (October 2019) and assign them a CVE like this.  Who does this
+>> help out? ...
+>=20
+> On Jan 12, 2021, at 10:23 AM, John Haxby <john.haxby@oracle.com> wrote:
+>=20
+> I think I can answer that.   There's nothing technical going on here, it'=
+s down to the behaviour of the end users of enterprise systems.
+>=20
+> A lot of those people have a hard time understanding that they do actuall=
+y want bug fixes and an even harder time understanding that they need to ac=
+tually do something to install those fixes.   (I was once asked if I could =
+fix a problem without changing anything, anything at all when the fix was a=
+ one-off chmod.)   A CVE number gets attention: think of it as getting hold=
+ of the customer by the lapels and going nose-to-nose to explain in words o=
+f one syllable they if they don't update their systems that they will crash=
+ and they will get hacked.
+>=20
+> Ooh, no, they say, we can't possibly take the risk of updating our system=
+s.  Suppose something goes wrong?   Sheesh.   Suppose, instead, someone com=
+es along and sees a known, fixed bug is unfixed and uses that to trash your=
+ systems.    Or that you've got a bug that crashes the machine once a week =
+for which there's a fix.   But, no, apparently the mythical risk of a teste=
+d update vs the actual quantifiable risk of leaving the bug unfixed is so g=
+reat that they'd rather take the real, quantifiable risk.   I suppose that'=
+s understandable, after a fashion, even though actual regressions are quite=
+ rare.
+
+I suspect in many cases there=E2=80=99s a simple answer: who takes the *bla=
+me* when something goes wrong?
+
+If someone updates a component when =E2=80=9Cthey don=E2=80=99t have to=E2=
+=80=9D, and it causes a problem, that person takes the fall: gets demoted, =
+fired, whatever. If a component is not updated, and the system is attacked,=
+ the *attacker** is blamed & the admins don=E2=80=99t get demoted, fired, w=
+hatever. So updates are rare & involve >1 year testing to ensure that the b=
+lame is fully distributed away from any one person.
+
+Some organizations make an explicit exception: if there=E2=80=99s a CVE, th=
+en you *are* =E2=80=9Crequired=E2=80=9D to update the component by policy. =
+Then those who updated the component are no longer at serious career risk, =
+because when someone tries to blame the person who did the update, they can=
+ say =E2=80=9CI was required to update by policy=E2=80=9D.
+
+In short, I think it=E2=80=99s all about incentives.
+
+--- David A. Wheeler
 
 
-Fixed, thanks.
-
---001a11c22f125c7e74051c5761ea--
