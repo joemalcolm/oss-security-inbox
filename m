@@ -1,174 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/30/1
-Message-ID: <9159-1611958545.228355@RO_f.XC4o.3wJr>
-Date: Fri, 29 Jan 2021 22:15:45 +0000
-From: Roman Fiedler <roman.fiedler@...aralleled.eu>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: sudo: Ineffective NO_ROOT_MAILER and Baron Samedit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/6
+Message-ID: <20210112160429.GM4035784@sasha-vm>
+Date: Tue, 12 Jan 2021 11:04:29 -0500
+From: Sasha Levin <sashal@...nel.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-20177 kernel: iptables string match rule could result in kernel panic
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+On Tue, Jan 12, 2021 at 03:23:16PM +0000, John Haxby wrote:
+>> On 12 Jan 2021, at 08:04, Greg KH <greg@...ah.com> wrote:
+>>
+>> I still do not understand why you report issues that are fixed over a
+>> year ago (October 2019) and assign them a CVE like this.  Who does this
+>> help out?  And what about the thousands of other issues that are fixed
+>> in the kernel and not assigned a CVE like this, are they somehow not as
+>> important to your group?
+>>
+>> What determines what you want to give a CVE to and what you do not?
+>
+>
+>I think I can answer that.   There's nothing technical going on here, it's down to the behaviour of the end users of enterprise systems.
+>
+>A lot of those people have a hard time understanding that they do actually want bug fixes and an even harder time understanding that they need to actually do something to install those fixes.   (I was once asked if I could fix a problem without changing anything, anything at all when the fix was a one-off chmod.)   A CVE number gets attention: think of it as getting hold of the customer by the lapels and going nose-to-nose to explain in words of one syllable they if they don't update their systems that they will crash and they will get hacked.
+>
+>Ooh, no, they say, we can't possibly take the risk of updating our systems.  Suppose something goes wrong?   Sheesh.   Suppose, instead, someone comes along and sees a known, fixed bug is unfixed and uses that to trash your systems.    Or that you've got a bug that crashes the machine once a week for which there's a fix.   But, no, apparently the mythical risk of a tested update vs the actual quantifiable risk of leaving the bug unfixed is so great that they'd rather take the real, quantifiable risk.   I suppose that's understandable, after a fashion, even though actual regressions are quite rare.
+>
+>If you present a customer with a CVE number (with or without a score) then they have SLAs which will ensure that that fix gets applied.
 
-While reproducing the exploitation of "Baron Samedit" another
-minor issue in Sudo was discovered. It affects Sudo 1.9.4
-and newer and renders the "NO_ROOT_MAILER" hardening option
-useless. While this bug by itself is not known to be exploitable
-on its own, combining it with the "Baron Samedit" heap overflow
-eases exploitation of the later tremendously.
+The subject of this thread is a "vulnerability" that requires root to
+exploit and was fixed ages ago.
 
-Further analysis of the issue in cooperation with Qualys showed,
-that therefore on newer systems Qualys complex end timeconsuming
-exploitation methods can be avoided, thus allowing trivial, reliable
-privilege escalation. The loss of the feature allows to overwrite
-the default mailer binary name "/usr/sbin/sendmail" on the heap
-with a user controlled string. The rogue mailer is then invoked
-with full privileges due to "NO_ROOT_MAILER" failing.
+If we all agree that CVEs (in the context of the kernel, not userspace)
+aren't here to provide technical value but rather a marketing scheme,
+maybe we should just start treating them as such?
 
-Luckily Debian stable, Ubuntu LTS,... are not vulnerable due
-to older Sudo version, but e.g. Debian Bullseye (Sudo 1.9.5p1-1)
-was affected.
+About 95% of the commits that go in the stable tree qualify as CVEs,
+maybe the path forward here is to request CVEs for a handful of those,
+for each stable release and encourage customers to upgrade more often
+that way?
 
-
-
-Meanwhile Todd C. Miller has confirmed the bug/vulnerability and
-provided a patch:
-
-===============
-... The bug was
-introduced in sudo 1.9.4 as part of the logging refactor.  The
-following diff fixes the problem.
-
-I've committed this as https://www.sudo.ws/repos/sudo/rev/e0d4f196ba02
-
- - todd
-
-diff -r cd1c7615e861 plugins/sudoers/logging.c
---- a/plugins/sudoers/logging.c	Tue Dec 08 12:35:21 2020 -0700
-+++ b/plugins/sudoers/logging.c	Fri Jan 29 05:30:31 2021 -0700
-@@ -786,11 +786,6 @@ void
- init_eventlog_config(void)
- {
-     int logtype = 0;
--#ifdef NO_ROOT_MAILER
--    uid_t mailuid = user_uid;
--#else
--    uid_t mailuid = ROOT_UID;
--#endif
-     debug_decl(init_eventlog_config, SUDOERS_DEBUG_LOGGING);
- 
-     if (def_syslog)
-@@ -805,7 +800,7 @@ init_eventlog_config(void)
-     eventlog_set_syslog_alertpri(def_syslog_badpri);
-     eventlog_set_syslog_maxlen(def_syslog_maxlen);
-     eventlog_set_file_maxlen(def_loglinelen);
--    eventlog_set_mailuid(mailuid);
-+    eventlog_set_mailuid(ROOT_UID);
-     eventlog_set_omit_hostname(!def_log_host);
-     eventlog_set_logpath(def_logfile);
-     eventlog_set_time_fmt(def_log_year ? "%h %e %T %Y" : "%h %e %T");
-diff -r cd1c7615e861 plugins/sudoers/policy.c
---- a/plugins/sudoers/policy.c	Tue Dec 08 12:35:21 2020 -0700
-+++ b/plugins/sudoers/policy.c	Fri Jan 29 05:30:31 2021 -0700
-@@ -518,6 +518,10 @@ sudoers_policy_deserialize_info(void *v)
-     /* Some systems support fexecve() which we use for digest matches. */
-     cmnd_fd = -1;
- 
-+#ifdef NO_ROOT_MAILER
-+    eventlog_set_mailuid(user_uid);
-+#endif
-+
-     /* Dump settings and user info (XXX - plugin args) */
-     for (cur = info->settings; *cur != NULL; cur++)
- 	sudo_debug_printf(SUDO_DEBUG_INFO, "settings: %s", *cur);
-
-
-===============
-
-
-
-Without the patch "sudoers_init" in "plugins/sudoers/sudoers.c"
-calls "init_eventlog_config" (via "init_defaults") and
-"sudoers_policy_deserialize_info" in the wrong order regarding
-the uid:
-
-    154 int
-    155 sudoers_init(void *info, char * const envp[])
-    156 {
-...
-    174     /* Setup defaults data structures. */
-    175     if (!init_defaults()) {
-    176         sudo_warnx("%s", U_("unable to initialize sudoers default values        "));
-    177         debug_return_int(-1);
-    178     }
-    179
-    180     /* Parse info from front-end. */
-    181     sudo_mode = sudoers_policy_deserialize_info(info);
-
-
-Therefore "init_eventlog_config" in "plugins/sudoers/logging.c"
-copies the "user_uid" from uninitialized memory (0 == root):
-
-    785 void
-    786 init_eventlog_config(void)
-    787 {
-    788     int logtype = 0;
-    789 #ifdef NO_ROOT_MAILER
-    790     uid_t mailuid = user_uid;
-    791 #else
-    792     uid_t mailuid = ROOT_UID;
-    793 #endif
-    794     debug_decl(init_eventlog_config, SUDOERS_DEBUG_LOGGING);
-...
-    808     eventlog_set_mailuid(mailuid);
-
-
-Only afterwards the "user_uid" is set in "sudoers_policy_deserialize_info"
-in "plugins/sudoers/policy.c" but the new value cannot reach
-"eventlog_set_mailuid" any more:
-
-
-     88 int
-     89 sudoers_policy_deserialize_info(void *v)
-     90 {
-...
-    360     user_uid = (gid_t)-1;
-...
-    369         if (MATCHES(*cur, "uid=")) {
-    370             p = *cur + sizeof("uid=") - 1;
-    371             user_uid = (uid_t) sudo_strtoid(p, &errstr);
-
-
-
-The easiest way to see if a sudo-version is affected is to replace
-"/usr/sbin/sendmail" with
-
-=========
-#!/bin/sh
-cat /proc/self/status >> /root/sendmail.log
-=========
-
-and run suduedit as a test user, failing the password prompt:
-
-/usr/bin/sudoedit -S  X < /dev/null
-
-
-The log then will be created and contains:
-
-...
-Uid:    0 0    0  0
-Gid:    100    100 100 100
-...
-
-
-Thanks to Qualys Security Advisory team supporting the analysis
-of the issue and Todd C. Miller for quickly providing a fix!
-
-
-Kind regards,
-Roman
-
-| |  DI Roman Fiedler
-| /  roman.fiedler at unparalleled.eu  +43 677 63 29 28 29
-/ |  Unparalleled IT Services e.U.     FN: 516074h           VAT: ATU75050524
-| |  https://unparalleled.eu/          Felix-Dahn-Platz 4, 8010 Graz, Austria
-
+-- 
+Thanks,
+Sasha
