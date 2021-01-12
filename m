@@ -1,43 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/14/4
-Message-ID: <CABBoSthTBNKwjLs40gL6n7KZ9ojiSomYyNVdG=1Jfr7eN6ha1w@mail.gmail.com>
-Date: Fri, 14 May 2021 14:55:13 -0400
-From: Ana McTaggart <amctagga@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-3509: Ceph: Cross Site Scripting via token Cookie
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/11
+Message-ID: <cig332o8hut4z5.fsf@u54e1add816995a33037d.ant.amazon.com>
+Date: Tue, 12 Jan 2021 09:55:26 -0800
+From: Anthony Liguori <aliguori@...zon.com>
+To: Solar Designer <solar@...nwall.com>, Thomas Deutschmann <whissi@...too.org>
+CC: <oss-security@...ts.openwall.com>
+Subject: RE: Gentoo's "contributing back" linux-distros tasks
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Solar Designer <solar@...nwall.com> writes:
+> On Mon, Jan 11, 2021 at 10:09:18PM +0100, Thomas Deutschmann wrote:
+>> On 2021-01-10 19:44, Solar Designer wrote:
+>> >Gentoo, please let us all know whether you'd like to stay primary for
+>> >these tasks, be moved to backup, or something else?
+>>
+>> I think we will be able to act as backup.
+>
+> If possible, please stay or become primary for at least one task.  We've
+> been asking the same from newly joining distros lately.
+>
+>> We will need to figure out a workflow to ensure we notice when we are on
+>> call but I am sure we will find a way. I'll contact Anthony directly for
+>> the details.
+>
+> Great to know you're coordinating with Anthony (Amazon), but a meaning
+> of backup is that you'd also need to take over when the primary fails to
+> handle a task without notifying you first.
 
-A flaw was found in the Red Hat Ceph Storage Dashboard. In response to
-CVE-2020-27839, the JWT token was moved  from localStorage to an httpOnly
-cookie. However, token cookies are used in the body  of the HTTP response
-for the documentation, ensuring that the vulnerability remains.
+Current thinking is to setup a private git repository with the various
+scripts for generating the wiki report + a running tally of stats from
+the list.
 
-We have assigned it a CVE of CVE-2021-3509, and released patches for it.
+This allows for a backup to watch the repo and make sure the stats are
+being gathered and backfill/publish if necessary.
 
-Nautilus:
-https://github.com/ceph/ceph/commit/adda853e64bdba1288d46bc7d462d23d8f2f10ca
-Octopus:
-https://github.com/ceph/ceph/commit/7a1ca8d372da3b6a4fc3d221a0e5f72d1d61c27b
-Pacific:
-https://github.com/ceph/ceph/commit/af3fffab3b0f13057134d96e5d481e400d8bfd27
+This isn't something we had before and I think it will help solve this
+problem and also let the infrastructure be carried forward.
 
-Ana McTaggart
+We can probably also publish the repository publicly as long as it
+trails by two weeks so no on-going issues are disclosed prematurely.
 
-Red Hat Product Security
+Regards,
 
-Red Hat Remote <https://www.redhat.com>
+Anthony Liguori
 
-
-secalert@...hat.com for urgent response
-
-
-amct@...hat.com
-
-
-M: +1 (774)279-0791 <7742790791>     IM: amctagga
-
-
-Pronouns:They/Them/Theirs
-
+>
+> Alexander
