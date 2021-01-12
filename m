@@ -1,24 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/04/3
-Message-ID: <CALSkbjrEnXHaaq-QqvZN-JZ_8BWP3CLzZs10yZG8hWza4NMZpg@mail.gmail.com>
-Date: Thu, 4 Mar 2021 15:08:16 +0000
-From: daniel gaspar <danielvazgaspar@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/7
+Message-ID: <X/3JxrqAuE7mDlpZ@kroah.com>
+Date: Tue, 12 Jan 2021 17:09:42 +0100
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-27907: Apache Superset stored XSS on Dashboard markdown
+Subject: Re: CVE-2021-20177 kernel: iptables string match rule could result in kernel panic
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Tue, Jan 12, 2021 at 03:23:16PM +0000, John Haxby wrote:
+> 
+> 
+> > On 12 Jan 2021, at 08:04, Greg KH <greg@...ah.com> wrote:
+> > 
+> > I still do not understand why you report issues that are fixed over a
+> > year ago (October 2019) and assign them a CVE like this.  Who does this
+> > help out?  And what about the thousands of other issues that are fixed
+> > in the kernel and not assigned a CVE like this, are they somehow not as
+> > important to your group?
+> > 
+> > What determines what you want to give a CVE to and what you do not?
+> 
+> 
+> I think I can answer that.   There's nothing technical going on here,
+> it's down to the behaviour of the end users of enterprise systems.
 
-Apache Superset  up to and including 0.38.0 allowed the creation of a
-Markdown component on a Dashboard page for describing chart's related
-information. Abusing this functionality, a malicious user could inject
-javascript code executing unwanted action in the context of the user's
-browser. The javascript code will be automatically executed (Stored
-XSS) when a legitimate user surfs on the dashboard page. The
-vulnerability is exploitable creating a “div” section and embedding in
-it a “svg” element with javascript code.
+Ok, I can understand that crazyness, and somehow believe it, so I have
+not complained when announcements like this come out for issues that
+affect RHEL releases as RH is known for abusing^using the CVE system in
+this manner.  But that was not the case here at all, which is why I
+asked this.
 
-Credit:
+thanks,
 
-This issue was reported by Gianluca Veltri and Dario Castrogiovanni of Cuebiq
-
+greg k-h
