@@ -1,74 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/01/3
-Message-ID: <9c3be1f8-052f-f034-5026-22ab4ecff61b@mh-sec.de>
-Date: Mon, 1 Mar 2021 15:48:57 +0100
-From: Marc <mh@...sec.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/12
+Message-ID: <20210112190134.585e5a60@suse.de>
+Date: Tue, 12 Jan 2021 19:01:34 +0100
+From: David Disseldorp <ddiss@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Multiple Vulnerabilities in jpeg-xl (CVE-2021-27804)
+Subject: CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload
 Content-Type: text/plain; charset=utf-8
 
-
-Multiple Vulnerabilities in jpeg-xl
-===================================
-CVE: CVE-2021-27804
-Highest Severity Rating: High
-Confirmed Affected Versions: jpeg-xl v0.3.1 and earlier
-Vendor: Joint Photographic Experts Group (JPEG)
-Vendor URL: https://gitlab.com/wg1/jpeg-xl
-
-
-Summary and Impact
-------------------
-jpeg-xl is the reference implementation by the Joint Photographic
-Experts Group (JPEG) of the new JPEG XL standard.
-Multiple memory corruption vulnerabilities were found and reported in
-the last 3 months. The security issues were responsively reported to
-the vendor and were fixed in subsequent version, however silently.
-
-The changelog does not reflect security issues being fixed:
-
-jpeg-xl (0.3.2) urgency=medium
-
-  * Bump JPEG XL version to 0.3.2.
-  * Fix embedded ICC encoding regression #149.
-
- -- Fri, 12 Feb 2021 21:00:12 +0100
-
-jpeg-xl (0.3.1) urgency=medium
-
-  * Bump JPEG XL version to 0.3.1.
-
- -- Tue, 09 Feb 2021 09:48:43 +0100
-
-jpeg-xl (0.3) urgency=medium
-
-  * Bump JPEG XL version to 0.3.
-
- -- Wed, 27 Jan 2021 22:36:32 +0100
-
-All the while it is already being available e.g. in Arch Linux
-(https://aur.archlinux.org/packages/libjpeg-xl-git/) and FreeBSD
-(https://pkgs.org/download/jpeg-xl) and is currently in the process of
-being added to Debian and therefore to Ubuntu and Kali Linux.
-
-Hence the need to sit down and write a boring advisory to publish on a
-mailing list instead of doing something more interesting :(
-
-For anyone interested, the memory corruptions were discovered by using
-the AFL++ fuzzer (https://github.com/AFLplusplus/AFLplusplus) for just a
-few hours for testing purposes. The current v0.3.2 release of jpeg-xl
-also produces writeable memory corruptions when fuzzing for a very short
-time (with a good starting corpus that is).
+===============================================================================
+== Subject:     Linux SCSI target (LIO) unrestricted copy offload
+==
+==
+== CVE ID#:     CVE-2020-28374
+==
+== Versions:    Linux: v3.12 and later
+==              tcmu-runner: v1.3.0 and later
+==
+== Summary:     An attacker with access to a LUN and knowledge of Unit Serial
+==              Number assignments can read and write to any LIO backstore,
+==              regardless of SCSI transport settings.
+===============================================================================
 
 
-Recommendation
---------------
-The vendor should establish a proper notification on fixed security
-issues in the changelog and not put the Internet at risk.
+Description
+-----------
+SCSI "EXTENDED COPY" (XCOPY) requests sent to a Linux SCSI target (LIO) allow an
+attacker to read or write anywhere on any LIO backstore configured on the
+host, provided the attacker has access to one LUN and knowledge of the victim
+backstore's vpd_unit_serial (AKA "wwn"). This is possible regardless of the
+transport/HBA settings for the victim backstore.
+- with vhost-scsi this can allow VM guests to read or write to images assigned
+  to other qemu processes
+- with iSCSI this allows CHAP, ACL and network portal isolation bypass
+- backstores with no corresponding transport LUN mapping remain vulnerable
+- all other LIO transports and backstores which allow for XCOPY processing by
+  LIO's target_core_xcopy handler should be considered vulnerable
+- tcmu-runner based user backstores are also vulnerable via a similar logic bug
+
+This is due to the way that LIO behaves when processing XCOPY
+copy-source/copy-destination (CSCD) descriptors; when attempting to match
+CSCD descriptors with corresponding se_devices, target_xcopy_locate_se_dev_e4()
+iterates over LIO's global devices list, which includes all configured
+backstores, instead of only considering backstores which are exposed to the
+initiator via transport layer ACL settings.
+
+Similarly, when LIO is configured to forward SCSI requests to the user-space
+tcmu-runner daemon (via target_core_user), tcmu-runner's xcopy_locate_udev()
+iterates over all tcmu-runner devices, without considering any transport layer
+restrictions.
 
 
--- 
-Marc Heuse
-www.mh-sec.de
+Exploitation
+------------
+The attacker sends an XCOPY request with two CSCD descriptors.
+One CSCD descriptor must correspond to the NAA IEEE identifier for the LUN to
+which the attacker has access. The other (victim) CSCD descriptor must be an
+NAA IEEE identifier which matches another configured backstore within LIO's
+global device inventory.
 
-PGP: AF3D 1D4C D810 F0BB 977D  3807 C7EE D0A0 6BE9 F573
+For successful exploitation of this bug an attacker must be able to provide a
+matching NAA identifier for the victim backstore.
+
+
+Affected Versions
+-----------------
+Linux Kernel (LIO target_core_xcopy)
+- Exploitable as of
+  f99715ac8d6f ("target: Enable global EXTENDED_COPY setup/release")
+  + mainline v3.12-rc1 and later
+
+tcmu-runner (user-space SCSI target, coupled with LIO's target_core_user)
+- Exploitable as of 9c86bd0db97a ("tcmur: Add emulate XCOPY command support")
+  + tcmu-runner v1.3.0 and later
+
+
+Relevance
+---------
+Linux kernel LIO deployments are affected under the following conditions:
+- Linux kernel with f99715ac8d6f, i.e. mainline v3.12-rc1 or later
+- LIO SCSI target (target_core_mod) loaded
+- at least two configured backstores
+- one "attacker backstore" must be exposed via a SCSI transport (e.g. iSCSI)
+  which permits access to a potential attacker
+  + the attacker backstore must allow and use in-kernel LIO XCOPY command
+    emulation
+    - all backstores except special "pscsi" passthrough and "user" types
+    - emulate_3pc=1 must be set (default)
+- one or more "victim backstores" must be configured
+  + transport settings for victim backstores are irrelevant
+  + all backstore types are vulnerable, including "iblock", "fileio", "rd_mcp",
+    "pscsi" and "user"
+  + emulate_3pc=1 must be set the victim backstore (default)
+
+tcmu-runner deployments are affected under the following conditions:
+- tcmu-runner with 9c86bd0db97a, i.e. v1.3.0 or later
+- one "attacker backstore" must be exposed via a SCSI transport (e.g. iSCSI)
+  which permits access to a potential attacker
+- one or more "victim backstores" must be configured
+  + transport settings for victim backstores are irrelevant
+  + the victim backstore must also be managed by the same tcmu-runner instance
+    - e.g. an XCOPY request to a "user"+tcmu-runner backstore can't be used to
+      read or write to an "iblock" backstore, only to other backstores handled
+      by the same tcmu-runner instance.
+
+
+Mitigation
+----------
+Caveat: instructions below do *not* affect XCOPY requests sent to tcmu-runner
+        based backstores. They are only suitable for disabling kernel
+	(target_core_xcopy) support for XCOPY requests.
+
+Requires acb3f2600eb8 ("target: Reject EXTENDED_COPY when emulate_3pc is disabled")
+- v3.12-rc7 or later
+
+XCOPY support is enabled by default, but can be disabled via:
+  echo 0 > /sys/kernel/config/target/core/<backstore>/<name>/attrib/emulate_3pc
+or
+  targetcli /backstores/<backstore>/<name> set attribute emulate_3pc=0
+
+...where <backstore> and <name> should be filled appropriately.
+
+
+Fixes
+-----
+Linux kernel and tcmu-runner fixes will be provided following the coordinated
+release date: 2021-01-12 10:00 Pacific Standard Time.
+
+
+Credits
+-------
+Research and patches by David Disseldorp of SUSE.
+Patch review by Mike Christie of Oracle, and Lee Duncan of SUSE.
