@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/10/3
-Message-ID: <9aa6ae9f-fa20-0804-1511-cb81d1491cc8@eenterphace.org>
-Date: Fri, 10 Dec 2021 19:55:34 +0100
-From: Moritz Bechler <mbechler@...terphace.org>
-To: oss-security@...ts.openwall.com, rgoers@...che.org
-Subject: Re: CVE-2021-44228: Apache Log4j2 JNDI features do not protect against attacker controlled LDAP and other JNDI related endpoints
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/4
+Message-Id: <93325B6B-DDAD-492B-9954-9CE8A372E086@oracle.com>
+Date: Tue, 12 Jan 2021 15:23:16 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-20177 kernel: iptables string match rule could result in kernel panic
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
 
-> Java 8u121 (see https://www.oracle.com/java/technologies/javase/8u121-relnotes.html) protects against remote code execution by defaulting "com.sun.jndi.rmi.object.trustURLCodebase" and "com.sun.jndi.cosnaming.object.trustURLCodebase" to "false".
+> On 12 Jan 2021, at 08:04, Greg KH <greg@...ah.com> wrote:
 > 
-
-I also believe this should be Java 8u191, as only then remote 
-classloading for LDAP was disabled by default. Only since then the 
-direct remote classloading attack vector through JNDI injection is 
-mitigated.
-
-I put together a little post on the different JNDI attack vectors and 
-how which Java versions are affected:
-<https://mbechler.github.io/2021/12/10/PSA_Log4Shell_JNDI_Injection/>
-
-TLDR:
-- Direct remote classloading through RMI up to 8u121 (and corresponding 
-patch versions)
-- Direct remote classloading through LDAP up to 8u191 (and corresponding 
-patch versions)
-- Runtime environment may provide exploitable local JNDI factory classes 
-(Tomcat, WebSphere known)
-- Deserialization attacks are possible (if no global filter is applied), 
-independent of runtime version
-
-=> Do not rely on newer Java versions for mitigation, do patch 
-immediately (or remove/disable the functionality)
+> I still do not understand why you report issues that are fixed over a
+> year ago (October 2019) and assign them a CVE like this.  Who does this
+> help out?  And what about the thousands of other issues that are fixed
+> in the kernel and not assigned a CVE like this, are they somehow not as
+> important to your group?
+> 
+> What determines what you want to give a CVE to and what you do not?
 
 
+I think I can answer that.   There's nothing technical going on here, it's down to the behaviour of the end users of enterprise systems.
 
-Moritz
+A lot of those people have a hard time understanding that they do actually want bug fixes and an even harder time understanding that they need to actually do something to install those fixes.   (I was once asked if I could fix a problem without changing anything, anything at all when the fix was a one-off chmod.)   A CVE number gets attention: think of it as getting hold of the customer by the lapels and going nose-to-nose to explain in words of one syllable they if they don't update their systems that they will crash and they will get hacked.
+
+Ooh, no, they say, we can't possibly take the risk of updating our systems.  Suppose something goes wrong?   Sheesh.   Suppose, instead, someone comes along and sees a known, fixed bug is unfixed and uses that to trash your systems.    Or that you've got a bug that crashes the machine once a week for which there's a fix.   But, no, apparently the mythical risk of a tested update vs the actual quantifiable risk of leaving the bug unfixed is so great that they'd rather take the real, quantifiable risk.   I suppose that's understandable, after a fashion, even though actual regressions are quite rare.
+
+If you present a customer with a CVE number (with or without a score) then they have SLAs which will ensure that that fix gets applied.
+
+This is a long way from ideal -- people need to wake up and smell the coffee and get around to the idea that a system that has not been updated in thirteen and a half years (not this one, another one) is not acceptable and they need to get on and have an update system in place that will, dammit, keep them up to date.   Until they do, a CVE is the best way of getting attention.
+
+Not that I'm bitter or anything.
+
+jch
+
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
