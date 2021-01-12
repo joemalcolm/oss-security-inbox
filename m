@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["884" "Thursday" "16" "July" "2015" "01:24:02" "-0500" "Brian Carpenter" "brian.carpenter@gmail.com" "<CANMVOuxUyP_6479fSMMQsWbK1iSywX8OzMC9Px1+wa+3k9jjZg@mail.gmail.com>" "40" "[oss-security] CVE Request: use after free in PHP 5.6 and 7 (possibly others)" nil nil nil "7" "2015071606:24:02" "[oss-security] CVE Request: use after free in PHP 5.6 and 7 (possibly others)" (number mark "        brian.carpen Jul 16   40/884   " thread-indent "\"[oss-security] CVE Request: use after free in PHP 5.6 and 7 (possibly others)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1424" "Tuesday" "12" "January" "2021" "09:55:26" "-0800" "Anthony Liguori" "aliguori@amazon.com" "<cig332o8hut4z5.fsf@u54e1add816995a33037d.ant.amazon.com>" "38" "RE: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil "1" "2021011217:55:26" "[oss-security] Gentoo's \"contributing back\" linux-distros tasks" (number mark "U       aliguori@ama Jan 12   38/1424  " thread-indent "\"RE: [oss-security] Gentoo's \"contributing back\" linux-distros tasks\"\n") "<20210112174919.GA2815@openwall.com>" ("<20201012123020.GA26643@openwall.com>" "<cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>" "<20210110184458.GA2808@openwall.com>" "<f74590e7-e57b-08cf-aec0-9ebd251ca9ac@gentoo.org>" "<20210112174919.GA2815@openwall.com>") nil nil nil nil nil nil nil "RE: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32579 invoked by uid 550); 16 Jul 2015 06:24:54 -0000
+Received: (qmail 18068 invoked by uid 550); 12 Jan 2021 17:58:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32558 invoked from network); 16 Jul 2015 06:24:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=E2L/hAN/jh4x3c4j16T89HAsxysftq9G27BKqsMUlQc=;
-        b=0qD28lbeJIItBIVtPYV0axFi3k63kgAEZW3SUxTNqXuiKe7xl2ub9iJh9LxSP82RNE
-         /eZF+By0yNTZuSEOKck1rwVNEnQ6eGBPh8T+/yj9JinOYmTSyvwKuN51My5P4ooj3Euc
-         yJpRT1SFZaRecaNrqJrgec5op9TcUINDNl20Z0byVRxbIv1vP2qTFijPCuivWSY9CJzN
-         8GHnjBjC/0UgBDDY3EFP0Dxf3uZUWbl6ZMbZpVo/zreabcmUaHtxmXZka5gDvMzbmcy+
-         op9GydwajH7t2JVnYCgFA+jbbbIPmeG85NQRZ8t25KMgP3a9Va4GhRbDdiLo6rlE+yYl
-         JAEw==
-X-Received: by 10.107.6.231 with SMTP id f100mr1587623ioi.61.1437027882194;
- Wed, 15 Jul 2015 23:24:42 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CANMVOuxUyP_6479fSMMQsWbK1iSywX8OzMC9Px1+wa+3k9jjZg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113f9be4735f9c051af8208a
-Date: Thu, 16 Jul 2015 01:24:02 -0500
-From: Brian Carpenter <brian.carpenter@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: use after free in PHP 5.6 and 7 (possibly others)
-To: oss-security@lists.openwall.com
+Received: (qmail 17574 invoked from network); 12 Jan 2021 17:55:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1610474144; x=1642010144;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=+S5P+9VvPV+KlqFGIGuLsuPWp36h9KfCUBB/ELPiub8=;
+  b=dH//9hEy4zDteBek6VfubgMY4dWpjlnkznuWj5K8kvbUY2ai5ZTolBZW
+   rafIF9aeIY6ofiRlSX02uk6nKreNW7xN0sjC5IY9/uanHkscnlKyfLFQI
+   1o2wBCsvsbbmRUjWxNgpvJ7jU1LA8C74yfeiKZOzus7ZKcAdLAx5iDSWE
+   A=;
+X-IronPort-AV: E=Sophos;i="5.79,342,1602547200"; 
+   d="scan'208";a="77093045"
+From: Anthony Liguori <aliguori@amazon.com>
+To: Solar Designer <solar@openwall.com>, Thomas Deutschmann
+	<whissi@gentoo.org>
+CC: <oss-security@lists.openwall.com>
+In-Reply-To: <20210112174919.GA2815@openwall.com>
+References: <20201012123020.GA26643@openwall.com>
+ <cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>
+ <20210110184458.GA2808@openwall.com>
+ <f74590e7-e57b-08cf-aec0-9ebd251ca9ac@gentoo.org>
+ <20210112174919.GA2815@openwall.com>
+User-Agent: Notmuch/0.21 (http://notmuchmail.org) Emacs/24.5.1 (x86_64-pc-linux-gnu)
+Date: Tue, 12 Jan 2021 09:55:26 -0800
+Message-ID: <cig332o8hut4z5.fsf@u54e1add816995a33037d.ant.amazon.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: RE: [oss-security] Gentoo's "contributing back" linux-distros tasks
 
---001a113f9be4735f9c051af8208a
-Content-Type: text/plain; charset=UTF-8
+Solar Designer <solar@openwall.com> writes:
+> On Mon, Jan 11, 2021 at 10:09:18PM +0100, Thomas Deutschmann wrote:
+>> On 2021-01-10 19:44, Solar Designer wrote:
+>> >Gentoo, please let us all know whether you'd like to stay primary for
+>> >these tasks, be moved to backup, or something else?
+>>
+>> I think we will be able to act as backup.
+>
+> If possible, please stay or become primary for at least one task.  We've
+> been asking the same from newly joining distros lately.
+>
+>> We will need to figure out a workflow to ensure we notice when we are on
+>> call but I am sure we will find a way. I'll contact Anthony directly for
+>> the details.
+>
+> Great to know you're coordinating with Anthony (Amazon), but a meaning
+> of backup is that you'd also need to take over when the primary fails to
+> handle a task without notifying you first.
 
-Bug Report:
-https://bugs.php.net/bug.php?id=70083
+Current thinking is to setup a private git repository with the various
+scripts for generating the wiki report + a running tally of stats from
+the list.
 
-Fixed in PHP 5.6:
-http://git.php.net/?p=php-src.git;a=commitdiff;h=f57cb13c566613eec0e1c2f6d96d18565436a9b7
+This allows for a backup to watch the repo and make sure the stats are
+being gathered and backfill/publish if necessary.
 
-Fixed in 7:
-http://git.php.net/?p=php-src.git;a=commit;h=0af07333520f65def3a72f31effa38c907e962f9
+This isn't something we had before and I think it will help solve this
+problem and also let the infrastructure be carried forward.
 
-This bug may also affect PHP 5.0.4, 5.0.5, 5.1.0-5.1.6, 5.4.0-5.5.26 (based
-on 3v4l.org responses), triggered by this unminimized test case which
-wasn't included in the original bug report:
-
-<?php
-
-class wpq {
-    private $unrenced;
-
-    public function __get($name) {
-        return $this;
-    }
-}
- function ret_assoc() {
-    return array('Roo' => 'bar');
-}
-
-$wpq = new wpq;
-$wpq->interesting =& ret_assoc();
-$x +@$wpq->interesting;
-printf("%s\n", $x);
+We can probably also publish the repository publicly as long as it
+trails by two weeks so no on-going issues are disclosed prematurely.
 
 Regards,
 
-Brian 'geeknik' Carpenter
-https://twitter.com/geeknik
+Anthony Liguori
 
---001a113f9be4735f9c051af8208a--
+>
+> Alexander
