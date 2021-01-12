@@ -1,53 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/15/1
-Message-ID: <CAHvrgmzXNe+pEZAEW6FDwFuM1oGrnu5Y1iOABUQPEXNrmxy35A@mail.gmail.com>
-Date: Mon, 15 Nov 2021 18:01:27 +0100
-From: Vardan Torosyan <vardan.torosyan@...fana.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/1
+Message-ID: <CALJHwhR0d-q7dPhC1wXWm63WA9cLh9cQX_GYRJO7Mw0O8kDL4w@mail.gmail.com>
+Date: Tue, 12 Jan 2021 16:58:07 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Grafana 8.2.4 released with security fixes
+Subject: CVE-2021-20177 kernel: iptables string match rule could result in kernel panic
 Content-Type: text/plain; charset=utf-8
 
-Dear all,
+Gday,
 
-We have released Grafana 8.2.4 with security fixes This patch release
-includes security fixes that affect Grafana versions 8.0.0 through 8.2.3.
+A flaw was found in the Linux kernels implementation of string matching
+within a packet. A privileged user
+(with root or CAP_NET_ADMIN ) when inserting iptables rules could insert a
+rule which can panic the system.
 
-The vulnerability only affects Grafana instances where fine-grained access
-control beta is enabled, and there is more than one organization in the
-Grafana instance. Grafana Cloud instances have not been affected by the
-vulnerability.
+Likely a user with these permissions could do worse, however it crashes the
+system (DOS) and the user is going to have a bad day
+especially if the rule is inserted and restored on every boot.
 
-*Incorrect Access Control (CVE-2021-41244)*
+At this time it doesn't affect RHEL releases, and there are fixes already
+in multiple upstream trees.
 
-On Nov. 2, during an internal security audit, we discovered that when the
-fine-grained access control beta feature is enabled and there is more than
-one organization in the Grafana instance, Grafana 8.0 introduced a
-mechanism which allowed users with the Organization Admin role to list,
-add, remove, and update users’ roles in other organizations in which they
-are not an admin.
+Thanks,
 
-Affected versions with high severity
+Wade Mealing
 
-Grafana 8.0 to 8.2.3
+Upstream patch:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ca58fbe06c54
 
+Upstream bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=209823
 
-*Solutions and mitigations*
-All installations between v8.0 and v8.2.3 that have fine-grained access
-control beta enabled and more than one organization should be upgraded as
-soon as possible. If you cannot upgrade, you should turn off the
-fine-grained access control using a feature flag.
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1914719
 
 
-*Patched versions*
-Release v8.2.4, only containing a security fix:
+-- 
 
-* Download Grafana 8.2.4 - https://grafana.com/grafana/download/8.2.4
-* Release notes -
-https://grafana.com/docs/grafana/latest/release-notes/release-notes-8-2-4/
+Wade Mealing
 
-Further information can be found at
-https://grafana.com/blog/2021/11/15/grafana-8.2.4-released-with-security-fixes/
+Product Security - Kernel, RHCE
 
-Best Regards,
-Vardan Torosyan
+Red Hat
+
+<https://www.redhat.com>
+
+wmealing@...hat.com
+<https://red.ht/sig>
+TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
+
+secalert@...hat.com for urgent response
 
