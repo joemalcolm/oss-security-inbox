@@ -1,58 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/17/5
-Message-ID: <20210917164913.GA10425@openwall.com>
-Date: Fri, 17 Sep 2021 18:49:13 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/8
+Message-ID: <20210112163450.GB2212@openwall.com>
+Date: Tue, 12 Jan 2021 17:34:50 +0100
 From: Solar Designer <solar@...nwall.com>
-To: Alan Coopersmith <alan.coopersmith@...cle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Oracle Solaris membership in the distros list
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-20177 kernel: iptables string match rule could result in kernel panic
 Content-Type: text/plain; charset=utf-8
 
-Hi Alan,
-
-Thank you for submitting a thorough application.  This provides a good
-example for other projects applying for (linux-)distros membership.
-
-Please consider this approved, and please e-mail me off-list with a list
-of e-mail addresses and PGP keys to use for Oracle Solaris subscription
-to the distros list.
-
-On Tue, Sep 14, 2021 at 03:36:21PM -0700, Alan Coopersmith wrote:
-> On 9/6/21 11:35 AM, Solar Designer wrote:
-> >     Help ensure that each message posted to oss-security contains the
-> >most essential information (e.g., vulnerability detail and/or exploit)
-> >directly in the message itself (and in plain text) rather than only by
-> >reference to an external resource, and add the missing information
-> >(e.g., in your own words, by quoting with proper attribution, and/or by
-> >creating and attaching a properly attributed text/plain export of a
-> >previously referenced web page) and remind the original sender of this
-> >requirement (for further occasions) in a "reply" posting when necessary
+On Tue, Jan 12, 2021 at 09:04:49AM +0100, Greg KH wrote:
+> On Tue, Jan 12, 2021 at 04:58:07PM +1000, Wade Mealing wrote:
+> > A flaw was found in the Linux kernels implementation of string matching
+> > within a packet. A privileged user
+> > (with root or CAP_NET_ADMIN ) when inserting iptables rules could insert a
+> > rule which can panic the system.
+> > 
+> > Likely a user with these permissions could do worse, however it crashes the
+> > system (DOS) and the user is going to have a bad day
+> > especially if the rule is inserted and restored on every boot.
+> > 
+> > At this time it doesn't affect RHEL releases, and there are fixes already
+> > in multiple upstream trees.
+> > 
+> > Thanks,
+> > 
+> > Wade Mealing
+> > 
+> > Upstream patch:
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ca58fbe06c54
+> > 
+> > Upstream bugzilla:
+> > https://bugzilla.kernel.org/show_bug.cgi?id=209823
+> > 
+> > Red Hat Bugzilla:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=1914719
 > 
-> That seems like something we could help with.
+> I still do not understand why you report issues that are fixed over a
+> year ago (October 2019) and assign them a CVE like this.  Who does this
+> help out?
 
-Please do.  I've just listed Oracle Solaris for this task on the wiki.
+I think this specific issue is relevant to projects providing container
+virtualization with a security boundary, yet letting container root
+manage the local iptables rules for the container.  Wade's posting is a
+useful heads-up for such projects.  I've just forwarded it to
+Virtuozzo/OpenVZ developers, so they don't miss it.
 
-> I also note that there are
-> many vulnerabilities we discover in the FOSS packages we ship that never
-> make it to this list - when the researchers or project maintainers don't
-> send notices to oss-security, should folks like us at least give a heads
-> up here?
+> And what about the thousands of other issues that are fixed
+> in the kernel and not assigned a CVE like this, are they somehow not as
+> important to your group?
 > 
-> One obvious one in the last week was the highly publicized Ghostscript
-> "0 day" - aka CVE-2021-3781, for which the upstream bug report is at
-> https://bugs.ghostscript.com/show_bug.cgi?id=704342 and media report at
-> https://therecord.media/ghostscript-zero-day-allows-full-server-compromises
-> (and yes, as noted in the above quote, an actual report to the list
->  needs more details than just these url's).
-> 
-> Of course, we ship a smaller subset of FOSS than most Linux distros do,
-> so we won't spot everything, but can help contribute to a larger effort.
+> What determines what you want to give a CVE to and what you do not?
 
-Yes, I had thought of this problem too - and yes, I think it would be
-helpful to the community if more issues were brought in here.  Please
-feel free to help with that.  Thank you!
+These are good questions.  My guess is most issues simply haven't been
+analyzed enough, or not considered at all, for CVE ID (non-)allocation.
 
-I'm not sure if we can/should list this as one of the contributing-back
-tasks because it has no clear scope.
+Visiting the URLs above, the upstream commit message does not make it
+clear the issue's security relevance was understood back then.  Perhaps
+it simply was not.  The two Bugzilla entries make the security relevance
+much clearer, and are more recent.  So perhaps this is not sudden CVE ID
+assignment to an old issue; this is recent new understanding and its
+correspondingly timely assignment.
+
+I have no idea why Red Hat in particular looked into this now.  My guess
+is it's because the issue was recently reported to Red Hat by some means.
 
 Alexander
