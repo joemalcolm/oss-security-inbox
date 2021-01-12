@@ -1,49 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/15
-Message-ID: <6822116c-31f0-bdc4-5b40-d2e0b91a5e02@virtuozzo.com>
-Date: Wed, 17 Mar 2021 18:39:14 +0300
-From: Evgenii Shatokhin <eshatokhin@...tuozzo.com>
-To: Salvatore Bonaccorso <carnil@...ian.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/2
+Message-ID: <X/1YIT59FZ7clijT@kroah.com>
+Date: Tue, 12 Jan 2021 09:04:49 +0100
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-20177 kernel: iptables string match rule could result in kernel panic
 Content-Type: text/plain; charset=utf-8
 
-On 17.03.2021 18:29, Salvatore Bonaccorso wrote:
-> Hi Rohit,
+On Tue, Jan 12, 2021 at 04:58:07PM +1000, Wade Mealing wrote:
+> Gday,
 > 
-> On Wed, Mar 17, 2021 at 04:17:05PM +0100, Greg KH wrote:
->> On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
->>> Hello Team,
->>>
->>> A denial of service vulnerability was found in n_tty_receive_char_special
->>> in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
->>> with a normal user privilege could delay the loop (due to a changing
->>> ldata->read_head, and a missing sanity check) and cause a threat to the
->>> system availability.
->>>
->>> 'CVE-2021-20219' was assigned by Red Hat.
->>>
->>> Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
->>
->> Really?  Not the tools or people that reported this issue and fixed it
->> in the community back in 2018?
+> A flaw was found in the Linux kernels implementation of string matching
+> within a packet. A privileged user
+> (with root or CAP_NET_ADMIN ) when inserting iptables rules could insert a
+> rule which can panic the system.
 > 
-> Can you clarify, would 3d63b7e4ae0d ("n_tty: Fix stall at
-> n_tty_receive_char_special().") be the upstream fix you are referring
-> to for it?
-
-Sorry for jumping in.
-
-Yes, this is the original fix, but the issue I reported is specific to 
-RHEL 7: their backport of that fix was incomplete.
-
+> Likely a user with these permissions could do worse, however it crashes the
+> system (DOS) and the user is going to have a bad day
+> especially if the rule is inserted and restored on every boot.
 > 
-> Regards,
-> Salvatore
-> .
-
-Regards,
-Evgenii
-
+> At this time it doesn't affect RHEL releases, and there are fixes already
+> in multiple upstream trees.
 > 
+> Thanks,
+> 
+> Wade Mealing
+> 
+> Upstream patch:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ca58fbe06c54
+> 
+> Upstream bugzilla:
+> https://bugzilla.kernel.org/show_bug.cgi?id=209823
+> 
+> Red Hat Bugzilla:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1914719
 
+I still do not understand why you report issues that are fixed over a
+year ago (October 2019) and assign them a CVE like this.  Who does this
+help out?  And what about the thousands of other issues that are fixed
+in the kernel and not assigned a CVE like this, are they somehow not as
+important to your group?
+
+What determines what you want to give a CVE to and what you do not?
+
+thanks,
+
+greg k-h
