@@ -1,61 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/04/4
-Message-ID: <ebd36c0a-458e-c7ca-d3dd-42298abee061@oracle.com>
-Date: Mon, 4 Oct 2021 09:17:26 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: 3 new CVE's in vim
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/13/2
+Message-ID: <20210113104130.61f82484@suse.de>
+Date: Wed, 13 Jan 2021 10:41:30 +0100
+From: David Disseldorp <ddiss@...e.de>
+To: john.haxby@...cle.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload
 Content-Type: text/plain; charset=utf-8
 
-Those incentives for reporting bugs as security vulnerabilities
-haven't changed.  But previously maintainers had more incentive
-to push back on claiming a bug was a security vulnerability - its
-often more work for them to put out an advisory/new release than
-just checking in a non-security fix.  Certainly I know as one of
-the X.Org security team we'd not list things as security bugs if
-they didn't let an attacker do something outside the bounds of
-expected operation - for example, the X11 protocol already lets
-a client terminate the connection of another client, so a bug
-letting you do that is just a bug, not a vulnerability.
+[replying via parent, as I'm not on this list]
 
-	-alan-
+Hi John,
 
-On 10/4/2021 9:04 AM, Alex Gaynor wrote:
-> It seems a bit like huntr.dev makes an incentive, that has always
-> existed, explicit: There are rewards for getting CVEs issued. Folks
-> put them on their resumes, include them in audit reports they do, etc.
-> At least they're paying for fixes as well!
-> 
-> Alex
-> 
-> On Mon, Oct 4, 2021 at 11:50 AM Alan Coopersmith
-> <alan.coopersmith@...cle.com> wrote:
->>
->> On 9/30/2021 7:39 PM, Alan Coopersmith wrote:
->>> I haven't seen these make it to the list yet, but three CVE's were
->>> recently assigned for bugs in vim.  [I personally don't see how
->>> there's a security boundary crossed in normal vim usage here, but
->>> could see issues if someone had configured vim to run with raised
->>> privileges for editing system/application configuration files or
->>> similar.]
->>
->> I do note all three of these were submitted via huntr.dev, which offers
->> bounties for both reporting & fixing security bugs.  As a maintainer of
->> an upstream open source project which is struggling with finding people
->> to fix reported security bugs [1], I do appreciate the additional
->> incentive to provide fixes here.  But as a maintainer of a distro, I see
->> a mismatch with the incentives here, as you get bounties for accepting
->> everything as a security bug and not pushing back, and flooding the
->> distros with CVE's - even if your distro policy isn't to handle every
->> CVE that applies, security auditors will often make your users query
->> about every CVE that they think applies, costing your time to respond.
->>
->> [1] https://indico.freedesktop.org/event/1/contributions/28/
->> https://www.youtube.com/watch?v=IU3NeVvDSp0
->>
->> --
->>         -Alan Coopersmith-               alan.coopersmith@...cle.com
->>          Oracle Solaris Engineering - https://blogs.oracle.com/alanc
-> 
-> 
-> 
+> On Tue, 12 Jan 2021 19:01:34 +0100, David Disseldorp wrote:
+>
+> > ===============================================================================
+> > == Subject:     Linux SCSI target (LIO) unrestricted copy offload
+> > ==
+> > ==
+> > == CVE ID#:     CVE-2020-28374
+> > ==
+> > == Versions:    Linux: v3.12 and later
+> > ==              tcmu-runner: v1.3.0 and later
+> > ==
+> > == Summary:     An attacker with access to a LUN and knowledge of Unit Serial
+> > ==              Number assignments can read and write to any LIO backstore,
+> > ==              regardless of SCSI transport settings.
+> > ===============================================================================
+
+> David -- did you mean to attach the patches you posted to linux-distros?
+
+No, the kernel patches have gone out via the regular mainline and stable
+repositories. The tcmu-runner fix is queued at
+https://github.com/open-iscsi/tcmu-runner/pull/644
+
+Cheers, David
