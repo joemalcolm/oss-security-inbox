@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/22/6
-Message-ID: <20210722213027.au2c6scyynktfrjj@jwilk.net>
-Date: Thu, 22 Jul 2021 23:30:27 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: ipython3 may execute code from the current working directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/13/4
+Message-ID: <CAA8xKjWQazSpUaRSpyVenSAwJMvev8GvN+_AXm-5RizhYtLnzg@mail.gmail.com>
+Date: Wed, 13 Jan 2021 15:42:17 +0100
+From: Mauro Matteo Cascella <mcascell@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-11947 QEMU: heap buffer overflow in iSCSI block driver may lead to information disclosure
 Content-Type: text/plain; charset=utf-8
 
-* Jakub Wilk <jwilk@...lk.net>, 2021-07-22, 13:35:
->* Georgi Guninski <gguninski@...il.com>, 2021-07-22, 11:52:
->>Summary: under certain circumstances, ipython3 may execute code from 
->>the current working directory.
->
->Looks like this might be intentional? Or at least there's an option to 
->turn off this behavior:
->
->https://github.com/ipython/ipython/blob/7.25.0/IPython/core/shellapp.py#L219
+Hello all,
 
-BTW, I used https://github.com/jwilk/python-syspath-tracker to locate 
-the code that tampers with sys.path.
+A heap buffer overflow was found in the QEMU block driver for iSCSI
+images. This flaw could lead to an out-of-bounds read access and
+possible information disclosure from the QEMU process memory to a
+malicious guest. The highest threat from this vulnerability is to data
+confidentiality.
 
->However, in some Debian packages (at least 5.8.0-1 from Debian 
->buster), even --ignore-cwd doesn't help, because /usr/bin/python3 
->looks like this:
+Upstream fix:
+https://git.qemu.org/?p=qemu.git;a=commit;h=ff0507c239a246fd7215b31c5658fc6a3ee1e4c5
 
-Oops, I meant /usr/bin/ipython3 of course.
+CVE-2020-11947 was assigned to this issue by MITRE Corporation.
 
+Best regards.
 -- 
-Jakub Wilk
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
+
