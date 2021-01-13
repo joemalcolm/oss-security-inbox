@@ -1,26 +1,168 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/12/2
-Message-ID: <-PX6HwUqABskTVCZ1I6D8RgZ1ZqDwqGw56VKpf4-39X_dCz7PBtqXbtP_W5lRNHPOgaR4t4IpwbDJ0o-CTmJbT9BYJbUZYutrWS4_hBl-FU=@protonmail.com>
-Date: Wed, 12 May 2021 14:46:31 +0000
-From: "harris.johnson.x" <harris.johnson.x@...tonmail.com>
-To: "qsa@...lys.com" <qsa@...lys.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: [CVE-2020-28018] Use-After-Free on Exim Question
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/13/3
+Message-Id: <FC7D4C78-D385-4BF3-8BF9-FB707830F104@beckweb.net>
+Date: Wed, 13 Jan 2021 15:24:49 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Greetings OSS-Security!
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-I took a look at that flaw too...but I wonder if there is a good technique to groom the heap to get that allocation right before the objective data. There are some limits on using a MAIL cmd, first u cannot use it if another MAIL cmd was successful. Second it calls smtp_reset() after finished. The only way 'd be using RSET so u can use MAIL again, but it will free all the subsequent heap buffers and return yield to the ptr specified on smtp_reset().
+The following releases contain fixes for security vulnerabilities:
 
-The only time in which u can send a MAIL cmd to alloc it would be between the second part of the cmd sent in the first TLS session, and the initialization of the new TLS session. After the initialization of the first TLS session lot of allocations happen, this will in fact extend the heap from the top chunk.
+* Jenkins 2.275
+* Jenkins LTS 2.263.2
+* Bumblebee HP ALM Plugin 4.1.6
+* TICS Plugin 2020.3.0.7
+* TraceTronic ECU-TEST Plugin 2.24
 
-Once TLS connection is dropped out, and we start on plaintext again, after sending the EHLO cmd, smtp_reset() will be called, which will finally end up on freeing all subsequent heap buffers, except from the one pointed to by reset_point in the middle, which it's yield is just restored to point to it. At this point, top chunk size increased thanks to all the recently released chunks consequent to each other. And the objective struct is intact on the top chunk.
 
-As u mentioned to "null p0int3r", there is an interesting parameter for MAIL cmd that lets you use encoding so it is an string, but then converted to binary data when copied to the allocated memory, so it bypasses any stuff related to parsing or NULL bytes. That specific parameter uses store_get(), so it hangs from the POOL_MAIN memory. This means the only way to perform an independent malloc() (so memory from top chunk is stolen, including the objective data) is first filling the current block, so in the store.c code, size will be > yield_length[store_pool], and will call malloc, so finally returning to us pointer to objective data to be overwrite with ours. Also, it will be better for that malloc() to have a really high request size, so the malloc() request does not reuse a freed chunk with specific requirements to be returned (if any).
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-01-13/
 
-R u guys using any specific technique to groom the heap / get the chunk returned by store_get() on that struct?
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Good luck!
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
 ---
-Harris Johnson
+
+SECURITY-1889 / CVE-2021-21603
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier does not escape
+notification bar response contents (typically shown after form submissions
+via Apply button).
+
+This results in a cross-site scripting (XSS) vulnerability exploitable by
+attackers able to influence notification bar contents.
+
+
+SECURITY-2035 / CVE-2021-21608
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier does not escape button
+labels in the Jenkins UI.
+
+This results in a cross-site scripting vulnerability exploitable by
+attackers with the ability to control button labels. An example of buttons
+with a user-controlled label are the buttons of the Pipeline `input` step.
+
+
+SECURITY-2153 / CVE-2021-21610
+Jenkins allows administrators to choose the markup formatter to use for
+descriptions of jobs, builds, views, etc. displayed in Jenkins. When
+editing such a description, users can choose to have Jenkins render a
+formatted preview of the description they entered.
+
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier does not implement any
+restrictions for the URL rendering the formatted preview of markup passed
+as a query parameter. This results in a reflected cross-site scripting
+(XSS) vulnerability if the configured markup formatter does not prohibit
+unsafe elements (JavaScript) in markup, like Anything Goes Formatter
+Plugin.
+
+
+SECURITY-2171 / CVE-2021-21611
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier does not escape display
+names and IDs of item types shown on the New Item page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to specify display names or IDs of item
+types.
+
+
+SECURITY-1923 / CVE-2021-21604
+Jenkins provides XML REST APIs to configure views, jobs, and other items.
+When deserialization fails because of invalid data, Jenkins 2.274 and
+earlier, LTS 2.263.1 and earlier stores invalid object references created
+through these endpoints in the Old Data Monitor. If an administrator
+discards the old data, some erroneous data submitted to these endpoints may
+be persisted.
+
+This allows attackers with View/Create, Job/Create, Agent/Create, or their
+respective */Configure permissions to inject crafted content into Old Data
+Monitor that results in the instantiation of potentially unsafe objects
+when discarded by an administrator.
+
+
+SECURITY-1452 / CVE-2021-21602
+The file browser for workspaces, archived artifacts, and
+`$JENKINS_HOME/userContent/` follows symbolic links to locations outside
+the directory being browsed in Jenkins 2.274 and earlier, LTS 2.263.1 and
+earlier.
+
+This allows attackers with Job/Workspace permission and the ability to
+control workspace contents (e.g., with Job/Configure permission or the
+ability to change SCM contents) to create symbolic links that allow them to
+access files outside workspaces using the workspace browser.
+
+
+SECURITY-2021 / CVE-2021-21605
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier allows users with
+Agent/Configure permission to choose agent names that cause Jenkins to
+override unrelated `config.xml` files. If the global `config.xml` file is
+replaced, Jenkins will start up with unsafe legacy defaults after a
+restart.
+
+
+SECURITY-2023 / CVE-2021-21606
+Jenkins provides a feature for jobs to store and track fingerprints of
+files used during a build. Jenkins 2.274 and earlier, LTS 2.263.1 and
+earlier provides a REST API to check where a given fingerprint was used by
+which builds. This endpoint does not fully validate that the provided
+fingerprint ID is properly formatted before checking for the XML metadata
+for that fingerprint on the controller file system.
+
+This allows attackers with Overall/Read permission to check for the
+existence of XML files on the controller file system where the relative
+path can be constructed as 32 characters.
+
+
+SECURITY-2025 / CVE-2021-21607
+Jenkins renders several different graphs for features like agent and label
+usage statistics, memory usage, or various plugin-provided statistics.
+
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier does not limit the graph
+size provided as query parameters.
+
+This allows attackers to request, or to have legitimate Jenkins users
+request, crafted URLs that rapidly use all available memory in Jenkins,
+potentially leading to out of memory errors.
+
+
+SECURITY-2047 / CVE-2021-21609
+Jenkins includes a static list of URLs that are always accessible even
+without Overall/Read permission, such as the login form. These URLs are
+excluded from an otherwise universal permission check.
+
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier does not correctly
+compare requested URLs with that list.
+
+
+SECURITY-2057 / CVE-2021-21612
+TraceTronic ECU-TEST Plugin 2.23.1 and earlier stores credentials
+unencrypted in its global configuration file
+`de.tracetronic.jenkins.plugins.ecutest.report.atx.installation.ATXInstallation.xml`
+on the Jenkins controller as part of its configuration.
+
+These credentials can be viewed by users with access to the Jenkins
+controller file system.
+
+
+SECURITY-2098 / CVE-2021-21613
+TICS Plugin 2020.3.0.6 and earlier does not escape TICS service responses.
+
+This results in a cross-site scripting (XSS) vulnerability exploitable by
+attackers able to control TICS service response content.
+
+
+SECURITY-2156 / CVE-2021-21614
+Bumblebee HP ALM Plugin 4.1.5 and earlier stores credentials unencrypted in
+its global configuration file
+`com.agiletestware.bumblebee.BumblebeeGlobalConfig.xml` on the Jenkins
+controller as part of its configuration.
+
+These credentials can be viewed by users with access to the Jenkins
+controller file system.
