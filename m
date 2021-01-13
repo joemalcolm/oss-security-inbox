@@ -1,4 +1,9 @@
-Received: (qmail 9273 invoked by uid 550); 21 Jan 2026 16:15:08 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5936" "Wednesday" "13" "January" "2021" "16:40:06" "+0100" "Marcus Meissner" "meissner@suse.de" "<20210113154006.GF13248@suse.de>" "137" "Re: [oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" nil nil nil "1" "2021011315:40:06" "[oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" (number mark "U       meissner@sus Jan 13  137/5936  " thread-indent "\"Re: [oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload\"\n") "<20210112190134.585e5a60@suse.de>" ("<20210112190134.585e5a60@suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29887 invoked by uid 550); 13 Jan 2021 15:40:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,131 +12,159 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25641 invoked from network); 21 Jan 2026 15:30:59 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1769009449; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GA+DrEGy8529dj3oz2SKvkk1r9x2kurO40m+3mwcoJmC1upmlcdVdejxZRApxdLLQC
-         gLWU5EdeZ9Byz0/QiDwhqp9rWWpeFFzGhlOUldPIDQtxK2SBC7rdRkz2YmLHNmlsJ53+
-         0/5ROGna4pDLEzIyiW3ybANMGR963xdkwd37LVtq2A6gkvjavt1D9ioUbeY1b1OGL4pv
-         xTF7dKi6mjTjD1mINOGfgo2y9I/YFFMYkspshgfRIgs+R8DEOQGpUJvMBSitAgBwm6Nj
-         U/+dxvrBiuXw70+w+Dkt4NyKy205Ivw4s1MCM64sueyVOtlV8Fn9Auwz+/oUiMo0qQnk
-         Nfmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :dkim-signature;
-        bh=btWVBeIJnFArpozuZwWKhM2gs/2QHKbmwfPmQWXbWb4=;
-        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
-        b=kn7X0QUBXgdMzpowbyJL1K2yLCNExo/eB+cELhNCxYNueBfVDIz5/i4j2NfeiPhiTl
-         OX0GQH8UMYWGIuwh+LpsBnR6FX1b0KJvPoBOaxgxB1dwivvecvsIGsOdYp5rYLY9yoe4
-         evkGyvNUXNT1yk7j4L8zPNc+TA1SqN1yan4Z8smvzJjSX16nLwnUTCpe34dLSWjjWvfb
-         I2Z5PYnnAiW+dhdw51i1Vl/xYbYOUdhHlHRDDUgsJGaJOXRm/sqm8Du+d5FGUUGfpM7h
-         UWnNv73KUaBwV67eX71xunLbv1szM6EFTL9ChWY8asK0H7B4nh6Jya04FC5CQj0DH4lD
-         0RCQ==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769009449; x=1769614249; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=btWVBeIJnFArpozuZwWKhM2gs/2QHKbmwfPmQWXbWb4=;
-        b=cZ3TB/p/QA97VEzMKlnROnzCHRhxSG6DWJ+Oh2CLXeBs1w/AfQtHOkDRa2t1anrFBI
-         DmTQK/T+RsUdLiQYy/+o55nlVq3jFn0fPKXEa+3E6a8mf66VbpVGEE9Ej6MaJ+MC9wJP
-         Pd7Dna6ePQUdqFciAyP+IuFQSDnDAa5vo/ZoTrjI1jRnMJyR8yXlBSlozYuUiK0iIZuo
-         Duz+JhBCVGPu8UQG0ogNN14tDFgOW+HafLviZLzwbMf0Rs0sudlgi6/U9qhXkxFsPQTV
-         3H5VFJ+sBGzQYADhnZw9iL6Mj2ZgT0GV5MM3v03efZV0zuym+QIz5fILDzS9ajTfjKx6
-         9DHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769009449; x=1769614249;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=btWVBeIJnFArpozuZwWKhM2gs/2QHKbmwfPmQWXbWb4=;
-        b=wB5xKtTP+76sru18WFR3B6U1Mm4+rxZbhO2gpTv8gK/Sog7/nZQ8i4tZ/AappDHVu2
-         AvaraBVPDgJ6nFfO6LIpxF0uTGhbXsT3XMR4Bl4DSNHj75J2VnThFw8WvFqOeB9BNgsh
-         SUaiwutTV2Etis2+Q44ATpJfd72+mFS8Q9Ezp0vVlv0mt23/XG7Imv86qUGOpQjisBU9
-         UR3/5Jl45b0eRbB6tOfaUAIVFY0gmV0jbUlbJTzb+4FkwqK8G0/qx6Ci5swBsWS9mR2q
-         guh6PYa+1Z6ke5sQoFpdqhFHVFSk/JpZQ7K8eGlsE8w9CvYpErzfV03hayd6LvaLQ2HQ
-         9iiw==
-X-Gm-Message-State: AOJu0YwZzVfc5DwjrtYrQNjBpIzxD1MNYmTWhiyuEwE0fMpvQHJ1aDhC
-	hY5tvWXAijyyZIuPt4YM0K5nYfCrohWl4UuzJFyRBwaT4FmYwm3D5d8a2s6RqGeR8aU1vAqQivR
-	7WFqNHKIpWJiC1PGgBpRS8SVJyTMjrTlKAo0h
-X-Gm-Gg: AZuq6aJIVtQmakIyrD3Rs5spX1fZ8ZBYlrMLS1nQfLmBv2ITyZcag2n3fZh59b6y1kG
-	C02W/a4HkTGDvwvXfKN1Bd7eecevSOI86XB3NaXcwPWYKr8CHimaGTfYF88llgnm8Q3iOjgXyQI
-	B06QcDwY+Kba/8zASqha6i5e9tOKJjEbPIU5z5q9U4akjHnWECHLG/8v6hEvvQ5djm05WLoJeWf
-	ZRG6vUDN62u72uIK5c93uOwN4Q8DhzIQvWPBkAfsYlE/cx2MrYUgu3urRuEWYoi4CoNtOzH6fiX
-	E8npnJkepORktLxCTLo0qjtzBT7+vB2eWsq0NS6V5ut8YbW+Hq+qFn8u8iZb
-X-Received: by 2002:a05:651c:31c9:b0:37b:8b7e:efd with SMTP id
- 38308e7fff4ca-385a54a18e7mr21253591fa.39.1769009449042; Wed, 21 Jan 2026
- 07:30:49 -0800 (PST)
-MIME-Version: 1.0
-References: <CACepC7XhXqWh45fOYL-4kdZW-h1jQfMb2b10W38RD9euV1j+OA@mail.gmail.com>
- <aW_XAUlC0doseY7y@inutil.org> <20260121115126.7ff75d1d@hboeck.de>
-In-Reply-To: <20260121115126.7ff75d1d@hboeck.de>
-From: Soatok Dreamseeker <soatok.dhole@gmail.com>
-Date: Wed, 21 Jan 2026 10:30:37 -0500
-X-Gm-Features: AZwV_Qj-f-gld6-QkkMbST5Ht-smMZmY1wC_QgnNtDTgt7sEPHmK9W1umcb5USw
-Message-ID: <CAOvwWh2qvQ8C2kiRHck4DFzWmVruKi0wR=NmjRTSscYzGOg00g@mail.gmail.com>
+Received: (qmail 29869 invoked from network); 13 Jan 2021 15:40:18 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Wed, 13 Jan 2021 16:40:06 +0100
+From: Marcus Meissner <meissner@suse.de>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000d086290648e79b4a"
-Subject: Re: [oss-security] WordPress Plugin "Under Construction & Maintenance
- Mode": Exposed debug functionality
+Message-ID: <20210113154006.GF13248@suse.de>
+References: <20210112190134.585e5a60@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210112190134.585e5a60@suse.de>
+Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
+ =?iso-8859-1?Q?many_GmbH=2C_Maxfeldstr=2E_5=2C_90409_Nuernberg=2C_Germany?=
+ =?iso-8859-1?Q?=2C_GF=3A_Felix_Imend=F6rffer=2C_HRB_36809=2C_AG_N=FCrnber?=
+ =?iso-8859-1?Q?g?=
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] CVE-2020-28374: Linux SCSI target (LIO)
+ unrestricted copy offload
 
---000000000000d086290648e79b4a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Wed, Jan 21, 2026 at 6:42=E2=80=AFAM Hanno B=C3=B6ck <hanno@hboeck.de> w=
-rote:
+For tcmu-runner Mitre suggested that we use a different CVE as its not the same codebase.
 
-> On Tue, 20 Jan 2026 19:26:57 +0000
-> Moritz M=C3=BChlenhoff <jmm@inutil.org> wrote:
->
-> > But on a more general level, please let's avoid posting WordPress
-> > plugin vulnerabilities on oss-sec.
-> >
-> > Looking at the Debian Security Tracker there are have been 9773 CVE
-> > IDs on WordPress plugins in 2025, they are not packaged in any Linux
-> > distribution and posting a few individual ones really misses the
-> > "There has to be desirable information for others in the Open Source
-> > community" aspect of the list charter.
->
->
-> Erh... I disagree.
->
-> * My understanding of the oss-security list is that it is about the
->   wider Open Source ecosystem, not limited to "stuff packaged in Linux
->   distributions".
->
-> * Wordpress plugin security is certainly part of Open Source security,
->   and, IMHO, a relevant topic and completely on-topic on this list.
->
-> * We currently do not have a problem with a flood of Wordpress plugin
->   security issues posted to this list. If that would be a problem, we
->   could deal with it by having a separate list for it, but until then,
->   I think it's completely fine to have such posts every now and then.
->
-> * My experience with Wordpress plugin issues is that, unfortunately,
->   often the public information available is quite limited. I appreciate
->   when security researchers share information about such
->   vulnerabilities, and, from a brief read, the original mail of this
->   thread looks like a good description of a valid security
->   vulnerability.
->
-> --
-> Hanno B=C3=B6ck - Independent security researcher
-> https://itsec.hboeck.de/
-> https://badkeys.info/
+Please use CVE-2021-3139 for tcmu-runner.
 
+Ciao, Marcus
 
-I agree with Hanno. WordPress is quite a bit of the Internet
-<https://w3techs.com/technologies/overview/content_management>, and plugins
-are almost universally open source (or at least, should be, as WordPress is
-GPL), so it's on-topic.
+On Tue, Jan 12, 2021 at 07:01:34PM +0100, David Disseldorp wrote:
+> ===============================================================================
+> == Subject:     Linux SCSI target (LIO) unrestricted copy offload
+> ==
+> ==
+> == CVE ID#:     CVE-2020-28374
+> ==
+> == Versions:    Linux: v3.12 and later
+> ==              tcmu-runner: v1.3.0 and later
+> ==
+> == Summary:     An attacker with access to a LUN and knowledge of Unit Serial
+> ==              Number assignments can read and write to any LIO backstore,
+> ==              regardless of SCSI transport settings.
+> ===============================================================================
+> 
+> 
+> Description
+> -----------
+> SCSI "EXTENDED COPY" (XCOPY) requests sent to a Linux SCSI target (LIO) allow an
+> attacker to read or write anywhere on any LIO backstore configured on the
+> host, provided the attacker has access to one LUN and knowledge of the victim
+> backstore's vpd_unit_serial (AKA "wwn"). This is possible regardless of the
+> transport/HBA settings for the victim backstore.
+> - with vhost-scsi this can allow VM guests to read or write to images assigned
+>   to other qemu processes
+> - with iSCSI this allows CHAP, ACL and network portal isolation bypass
+> - backstores with no corresponding transport LUN mapping remain vulnerable
+> - all other LIO transports and backstores which allow for XCOPY processing by
+>   LIO's target_core_xcopy handler should be considered vulnerable
+> - tcmu-runner based user backstores are also vulnerable via a similar logic bug
+> 
+> This is due to the way that LIO behaves when processing XCOPY
+> copy-source/copy-destination (CSCD) descriptors; when attempting to match
+> CSCD descriptors with corresponding se_devices, target_xcopy_locate_se_dev_e4()
+> iterates over LIO's global devices list, which includes all configured
+> backstores, instead of only considering backstores which are exposed to the
+> initiator via transport layer ACL settings.
+> 
+> Similarly, when LIO is configured to forward SCSI requests to the user-space
+> tcmu-runner daemon (via target_core_user), tcmu-runner's xcopy_locate_udev()
+> iterates over all tcmu-runner devices, without considering any transport layer
+> restrictions.
+> 
+> 
+> Exploitation
+> ------------
+> The attacker sends an XCOPY request with two CSCD descriptors.
+> One CSCD descriptor must correspond to the NAA IEEE identifier for the LUN to
+> which the attacker has access. The other (victim) CSCD descriptor must be an
+> NAA IEEE identifier which matches another configured backstore within LIO's
+> global device inventory.
+> 
+> For successful exploitation of this bug an attacker must be able to provide a
+> matching NAA identifier for the victim backstore.
+> 
+> 
+> Affected Versions
+> -----------------
+> Linux Kernel (LIO target_core_xcopy)
+> - Exploitable as of
+>   f99715ac8d6f ("target: Enable global EXTENDED_COPY setup/release")
+>   + mainline v3.12-rc1 and later
+> 
+> tcmu-runner (user-space SCSI target, coupled with LIO's target_core_user)
+> - Exploitable as of 9c86bd0db97a ("tcmur: Add emulate XCOPY command support")
+>   + tcmu-runner v1.3.0 and later
+> 
+> 
+> Relevance
+> ---------
+> Linux kernel LIO deployments are affected under the following conditions:
+> - Linux kernel with f99715ac8d6f, i.e. mainline v3.12-rc1 or later
+> - LIO SCSI target (target_core_mod) loaded
+> - at least two configured backstores
+> - one "attacker backstore" must be exposed via a SCSI transport (e.g. iSCSI)
+>   which permits access to a potential attacker
+>   + the attacker backstore must allow and use in-kernel LIO XCOPY command
+>     emulation
+>     - all backstores except special "pscsi" passthrough and "user" types
+>     - emulate_3pc=1 must be set (default)
+> - one or more "victim backstores" must be configured
+>   + transport settings for victim backstores are irrelevant
+>   + all backstore types are vulnerable, including "iblock", "fileio", "rd_mcp",
+>     "pscsi" and "user"
+>   + emulate_3pc=1 must be set the victim backstore (default)
+> 
+> tcmu-runner deployments are affected under the following conditions:
+> - tcmu-runner with 9c86bd0db97a, i.e. v1.3.0 or later
+> - one "attacker backstore" must be exposed via a SCSI transport (e.g. iSCSI)
+>   which permits access to a potential attacker
+> - one or more "victim backstores" must be configured
+>   + transport settings for victim backstores are irrelevant
+>   + the victim backstore must also be managed by the same tcmu-runner instance
+>     - e.g. an XCOPY request to a "user"+tcmu-runner backstore can't be used to
+>       read or write to an "iblock" backstore, only to other backstores handled
+>       by the same tcmu-runner instance.
+> 
+> 
+> Mitigation
+> ----------
+> Caveat: instructions below do *not* affect XCOPY requests sent to tcmu-runner
+>         based backstores. They are only suitable for disabling kernel
+> 	(target_core_xcopy) support for XCOPY requests.
+> 
+> Requires acb3f2600eb8 ("target: Reject EXTENDED_COPY when emulate_3pc is disabled")
+> - v3.12-rc7 or later
+> 
+> XCOPY support is enabled by default, but can be disabled via:
+>   echo 0 > /sys/kernel/config/target/core/<backstore>/<name>/attrib/emulate_3pc
+> or
+>   targetcli /backstores/<backstore>/<name> set attribute emulate_3pc=0
+> 
+> ...where <backstore> and <name> should be filled appropriately.
+> 
+> 
+> Fixes
+> -----
+> Linux kernel and tcmu-runner fixes will be provided following the coordinated
+> release date: 2021-01-12 10:00 Pacific Standard Time.
+> 
+> 
+> Credits
+> -------
+> Research and patches by David Disseldorp of SUSE.
+> Patch review by Mike Christie of Oracle, and Lee Duncan of SUSE.
+> 
 
-That said, I do agree that a disclosure timeline without dates is useless.
-That's my only critique for the Mohammed's initial email.
-
-Thanks for sharing.
-
---000000000000d086290648e79b4a--
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
