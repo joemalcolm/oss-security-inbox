@@ -1,34 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/08/1
-Message-Id: <A9D6FE26-5B9B-4505-A830-A2D4DBE3DFE6@nanthrax.net>
-Date: Mon, 8 Feb 2021 06:25:40 +0100
-From: Jean-Baptiste Onofre <jb@...thrax.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-13947 - XSS in Apache ActiveMQ WebConsole
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/13/6
+Message-ID: <1997272077.1689973.1610560284705@mail.yahoo.com>
+Date: Wed, 13 Jan 2021 17:51:24 +0000 (UTC)
+From: "fanningpj@...che.org" <fanningpj@...che.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2021-23926: XMLBeans XML Entity Expansion
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-13947 - XSS in WebConsole
-
-Severity: Medium
-
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-Apache ActiveMQ prior to 5.15.12 and 5.16.0
-
 Description:
-An instance of a cross-site scripting
-vulnerability was identified to be present in the web based
-administration console on the message.jsp page of Apache ActiveMQ
-versions 5.15.12 to 5.16.0.
 
-Mitigation:
-Upgrade to at least Apache ActiveMQ 5.15.13 or 5.16.1
+The XML parsers used by XMLBeans up to version 2.6.0 did not set the properties needed to protect the user from malicious XML input. Vulnerabilities include possibilities for XML Entity Expansion attacks.
 
-Credit:
-This issue was discovery by:
-
-* qiang qiang <silbul2017@...il.com>
+Affects XMLBeans up to and including v2.6.0.
 
 
+This issue is being tracked as https://issues.apache.org/jira/browse/XMLBEANS-517References:
+
+https://poi.apache.org/
+https://issues.apache.org/jira/browse/XMLBEANS-517
