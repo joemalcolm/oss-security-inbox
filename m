@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1979" "Wednesday" "7" "December" "2016" "08:48:35" "-0500" "Brad Spengler" "spender@grsecurity.net" "<20161207134835.GA20060@grsecurity.net>" "56" "Re: [oss-security] Re: CVE-2016-8655 Linux af_packet.c race condition (local root)" "^Date:" nil nil "12" "2016120713:48:35" "[oss-security] Re: CVE-2016-8655 Linux af_packet.c race condition (local root)" (number mark "        spender@grse Dec  7   56/1979  " thread-indent "\"Re: [oss-security] Re: CVE-2016-8655 Linux af_packet.c race condition (local root)\"\n") "<20161207141515.4f21682f@pc1>" ("<CAHQ_-nTXwwmno6iu2fFRsH+JJwZ4rRT93kf7_eRFtoi00kJK2g@mail.gmail.com>" "<CAHQ_-nTRLMQ21e3DHESbRcJcK3H3DCZGB9yrkx-TeMRi4f5vVQ@mail.gmail.com>" "<20161207141515.4f21682f@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6362" "Wednesday" "13" "January" "2021" "15:24:49" "+0100" "Daniel Beck" "ml@beckweb.net" "<FC7D4C78-D385-4BF3-8BF9-FB707830F104@beckweb.net>" "160" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil "1" "2021011314:24:49" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" (number mark "U       ml@beckweb.n Jan 13  160/6362  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13606 invoked by uid 550); 7 Dec 2016 14:55:34 -0000
+Received: (qmail 7952 invoked by uid 550); 13 Jan 2021 14:25:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,178 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13558 invoked from network); 7 Dec 2016 13:48:47 -0000
-Message-ID: <20161207134835.GA20060@grsecurity.net>
-References: <CAHQ_-nTXwwmno6iu2fFRsH+JJwZ4rRT93kf7_eRFtoi00kJK2g@mail.gmail.com>
- <CAHQ_-nTRLMQ21e3DHESbRcJcK3H3DCZGB9yrkx-TeMRi4f5vVQ@mail.gmail.com>
- <20161207141515.4f21682f@pc1>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Dxnq1zWXvFF0Q93v"
-Content-Disposition: inline
-In-Reply-To: <20161207141515.4f21682f@pc1>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Wed, 7 Dec 2016 08:48:35 -0500
-From: Brad Spengler <spender@grsecurity.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE-2016-8655 Linux af_packet.c race
- condition (local root)
-To: oss-security@lists.openwall.com
-
---Dxnq1zWXvFF0Q93v
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Received: (qmail 7931 invoked from network); 13 Jan 2021 14:25:01 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
+Message-Id: <FC7D4C78-D385-4BF3-8BF9-FB707830F104@beckweb.net>
+Date: Wed, 13 Jan 2021 15:24:49 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.104.15)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1610547901;f0fb8d88;
+X-HE-SMSGID: 1kzh4r-0008G1-Q4
+Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 
-4.8.12 doesn't have the fix included, despite being released on the same
-day the commit was merged into net/ and despite the advance notice in
-private via security@kernel.org.  It's currently in the net/ "stable" queue
-which operates seperately from the rest of the kernel.  It'll be merged
-whenever that process plays itself out.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
--Brad
+The following releases contain fixes for security vulnerabilities:
 
-On Wed, Dec 07, 2016 at 02:15:15PM +0100, Hanno B??ck wrote:
-> Hi,
->=20
-> I'm running kernel 4.8.12, which has the fix you pointed out included,
-> however:
->=20
-> > You can also run it with "crash" as the first argument to force a
-> > panic.
->=20
-> running your code with the "crash" parameter reliably panics this
-> kernel.
-> This doesn't seem right. Is this an incomplete or nonworking fix?
->=20
-> --=20
-> Hanno B??ck
-> https://hboeck.de/
->=20
-> mail/jabber: hanno@hboeck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+* Jenkins 2.275
+* Jenkins LTS 2.263.2
+* Bumblebee HP ALM Plugin 4.1.6
+* TICS Plugin 2020.3.0.7
+* TraceTronic ECU-TEST Plugin 2.24
 
---Dxnq1zWXvFF0Q93v
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-01-13/
 
-iQIcBAEBCgAGBQJYSBMsAAoJEETRwPglJf5JuNwQAIT7KwM36z9FYllmStG4SJXs
-g5sZBLS5wQmlkvSFFXqxGp5WS4HbPt8IVU0kwLVWgKXPgsyU6T6m80bgyT9xzKK2
-v7Ile/LpIHhT+v9Di/9iguwaaYMjOv11zL7mhe+mHTG05NoxWjn4MWQCsrToUIFy
-6FJmKEHOQ1EwdbI+t2kM1fc2E3fJuOZJqf14N4UAVLk2aOUSwAyfqETBjpM9Vi9j
-WQWwvGpqBnfI1pY4N0YOcWS+56c5y+CPDDGUFBJtWyMRyiTPkTRz1++oY76wTII5
-6GYfyfRsQ/Yfpm8HY097d13fHJtSHkFZrbRoOtn5myZ7lyUpA5KUqqYJQJXMq1oD
-EXysiM1ooRXTvg3/le6FkXqLnd6DMOjb2H3Cd3QpUy3XdxHUmGJLeNT4z1iZFKIV
-OyFfi5185Z31oat/lOeIvoJge82Zgf3h7nVpb+0SoLfqrmwjCC90vxiFwXnt3Rm2
-XuoncHOQo3v/dTta8YF9S5BVT28k0zs5lDXMHVkaM6r2Jdr7Stee/g+2qcCb6b5g
-qRXBLxXYZNvPmovfEV2ZX0w4Z/FKqAgAvdbQYm39DE/ilI6hpMUXQ+f4Dswzgmqa
-xBq6VSpV6pKcnsDJuNpK76bRcH4OhNUshZKXzHt0sYYavrMP2PrIIiYnhjMgy9Kq
-VqlQC8dICxd6ZpbFuYw2
-=XsSX
------END PGP SIGNATURE-----
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
---Dxnq1zWXvFF0Q93v--
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1889 / CVE-2021-21603
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier does not escape
+notification bar response contents (typically shown after form submissions
+via Apply button).
+
+This results in a cross-site scripting (XSS) vulnerability exploitable by
+attackers able to influence notification bar contents.
+
+
+SECURITY-2035 / CVE-2021-21608
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier does not escape button
+labels in the Jenkins UI.
+
+This results in a cross-site scripting vulnerability exploitable by
+attackers with the ability to control button labels. An example of buttons
+with a user-controlled label are the buttons of the Pipeline `input` step.
+
+
+SECURITY-2153 / CVE-2021-21610
+Jenkins allows administrators to choose the markup formatter to use for
+descriptions of jobs, builds, views, etc. displayed in Jenkins. When
+editing such a description, users can choose to have Jenkins render a
+formatted preview of the description they entered.
+
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier does not implement any
+restrictions for the URL rendering the formatted preview of markup passed
+as a query parameter. This results in a reflected cross-site scripting
+(XSS) vulnerability if the configured markup formatter does not prohibit
+unsafe elements (JavaScript) in markup, like Anything Goes Formatter
+Plugin.
+
+
+SECURITY-2171 / CVE-2021-21611
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier does not escape display
+names and IDs of item types shown on the New Item page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to specify display names or IDs of item
+types.
+
+
+SECURITY-1923 / CVE-2021-21604
+Jenkins provides XML REST APIs to configure views, jobs, and other items.
+When deserialization fails because of invalid data, Jenkins 2.274 and
+earlier, LTS 2.263.1 and earlier stores invalid object references created
+through these endpoints in the Old Data Monitor. If an administrator
+discards the old data, some erroneous data submitted to these endpoints may
+be persisted.
+
+This allows attackers with View/Create, Job/Create, Agent/Create, or their
+respective */Configure permissions to inject crafted content into Old Data
+Monitor that results in the instantiation of potentially unsafe objects
+when discarded by an administrator.
+
+
+SECURITY-1452 / CVE-2021-21602
+The file browser for workspaces, archived artifacts, and
+`$JENKINS_HOME/userContent/` follows symbolic links to locations outside
+the directory being browsed in Jenkins 2.274 and earlier, LTS 2.263.1 and
+earlier.
+
+This allows attackers with Job/Workspace permission and the ability to
+control workspace contents (e.g., with Job/Configure permission or the
+ability to change SCM contents) to create symbolic links that allow them to
+access files outside workspaces using the workspace browser.
+
+
+SECURITY-2021 / CVE-2021-21605
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier allows users with
+Agent/Configure permission to choose agent names that cause Jenkins to
+override unrelated `config.xml` files. If the global `config.xml` file is
+replaced, Jenkins will start up with unsafe legacy defaults after a
+restart.
+
+
+SECURITY-2023 / CVE-2021-21606
+Jenkins provides a feature for jobs to store and track fingerprints of
+files used during a build. Jenkins 2.274 and earlier, LTS 2.263.1 and
+earlier provides a REST API to check where a given fingerprint was used by
+which builds. This endpoint does not fully validate that the provided
+fingerprint ID is properly formatted before checking for the XML metadata
+for that fingerprint on the controller file system.
+
+This allows attackers with Overall/Read permission to check for the
+existence of XML files on the controller file system where the relative
+path can be constructed as 32 characters.
+
+
+SECURITY-2025 / CVE-2021-21607
+Jenkins renders several different graphs for features like agent and label
+usage statistics, memory usage, or various plugin-provided statistics.
+
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier does not limit the graph
+size provided as query parameters.
+
+This allows attackers to request, or to have legitimate Jenkins users
+request, crafted URLs that rapidly use all available memory in Jenkins,
+potentially leading to out of memory errors.
+
+
+SECURITY-2047 / CVE-2021-21609
+Jenkins includes a static list of URLs that are always accessible even
+without Overall/Read permission, such as the login form. These URLs are
+excluded from an otherwise universal permission check.
+
+Jenkins 2.274 and earlier, LTS 2.263.1 and earlier does not correctly
+compare requested URLs with that list.
+
+
+SECURITY-2057 / CVE-2021-21612
+TraceTronic ECU-TEST Plugin 2.23.1 and earlier stores credentials
+unencrypted in its global configuration file
+`de.tracetronic.jenkins.plugins.ecutest.report.atx.installation.ATXInstalla=
+tion.xml`
+on the Jenkins controller as part of its configuration.
+
+These credentials can be viewed by users with access to the Jenkins
+controller file system.
+
+
+SECURITY-2098 / CVE-2021-21613
+TICS Plugin 2020.3.0.6 and earlier does not escape TICS service responses.
+
+This results in a cross-site scripting (XSS) vulnerability exploitable by
+attackers able to control TICS service response content.
+
+
+SECURITY-2156 / CVE-2021-21614
+Bumblebee HP ALM Plugin 4.1.5 and earlier stores credentials unencrypted in
+its global configuration file
+`com.agiletestware.bumblebee.BumblebeeGlobalConfig.xml` on the Jenkins
+controller as part of its configuration.
+
+These credentials can be viewed by users with access to the Jenkins
+controller file system.=
