@@ -1,25 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/23/1
-Message-ID: <Yosq94tksfo9y+xM@kroah.com>
-Date: Mon, 23 May 2022 08:34:31 +0200
-From: Greg KH <greg@...ah.com>
-To: Sam James <sam@...too.org>
-Cc: oss-security@...ts.openwall.com, seth.arnold@...onical.com
-Subject: Re: linux-distros list policy and Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/14/1
+Message-ID: <0b682bd8-5aa1-1c74-abf8-5b3cd81c0c85@apache.org>
+Date: Thu, 14 Jan 2021 14:22:50 +0000
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2021-24122 Apache Tomcat Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Sun, May 22, 2022 at 08:55:50PM +0100, Sam James wrote:
-> I'd also like to ask that the final commit messages please reference any
-> relevant CVEs or at least the security impact. There've been a fair number
-> of incidents where such information is stripped and it makes tracking
-> issues *really* hard.
+CVE-2021-24122 Apache Tomcat Information Disclosure
 
-That is pretty much impossible and goes against the whole goal of "get
-this fixed and in a public tree and only tell the world that it was an
-issue after-the-fact" way that the kernel team works.  If we put all of
-that in the commit to start with, the whole world knows this info.  We
-can't go back in time and change git commits for obvious reasons.
+Severity: Important
 
-thanks,
+Vendor: The Apache Software Foundation
 
-gre gk-h
+Versions Affected:
+Apache Tomcat 10.0.0-M1 to 10.0.0-M9
+Apache Tomcat 9.0.0.M1 to 9.0.39
+Apache Tomcat 8.5.0 to 8.5.59
+Apache Tomcat 7.0.0 to 7.0.106
+
+Description:
+When serving resources from a network location using the NTFS file
+system it was possible to bypass security constraints and/or view the
+source code for JSPs in some configurations. The root cause was the
+unexpected behaviour of the JRE API File.getCanonicalPath() which in
+turn was caused by the inconsistent behaviour of the Windows API
+(FindFirstFileW) in some circumstances.
+
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Upgrade to Apache Tomcat 10.0.0-M10 or later
+- Upgrade to Apache Tomcat 9.0.40 or later
+- Upgrade to Apache Tomcat 8.5.60 or later
+- Upgrade to Apache Tomcat 7.0.107 or later
+
+Credit:
+This issue was identified by Ilja Brander.
+
+History:
+2021-01-14 Original advisory
+
+References:
+[1] https://tomcat.apache.org/security-10.html
+[2] https://tomcat.apache.org/security-9.html
+[3] https://tomcat.apache.org/security-8.html
+[4] https://tomcat.apache.org/security-7.html
