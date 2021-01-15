@@ -1,62 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/5
-Message-Id: <82FEB890-2BBE-4E1E-968B-3CC16744C784@isc.org>
-Date: Fri, 19 Feb 2021 11:27:27 +0100
-From: Ondřej Surý <ondrej@....org>
-To: Hanno Böck <hanno@...eck.de>
-Cc: ISC Security Officer <security-officer@....org>, oss-security@...ts.openwall.com
-Subject: Re: BIND Operational Notification: Enabling the new BIND option "stale-answer-client-timeout" can result in unexpected server termination
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/16/1
+Message-ID: <cig332o8hpx300.fsf@u54e1add816995a33037d.ant.amazon.com>
+Date: Fri, 15 Jan 2021 14:13:35 -0800
+From: Anthony Liguori <aliguori@...zon.com>
+To: Solar Designer <solar@...nwall.com>, <oss-security@...ts.openwall.com>
+CC: Abby Fuller <abbyfull@...zon.com>
+Subject: Adding an additional Amazon Linux member to distros@
 Content-Type: text/plain; charset=utf-8
 
-Hi Hanno,
+Hi,
 
-by the time Michael was writing the message, we were still reviewing
-the fix for the issue.
+I'm splitting off from the previous thread.  I would like to propose
+adding Abby Fuller from the Amazon Linux security as the second member
+of distros@ from Amazon.  Abby would back me up for the Amazon assigned
+tasks which is important as I'll be going on parental leave in March for
+6-12 weeks and will be slow to respond.  We will also take primary on
+item 13:
 
-The fix has been made public now:
-https://gitlab.isc.org/isc-projects/bind9/-/merge_requests/4714
+"Keep track of per-report and per-issue handling and disclosure
+timelines (at least times of notification of the private list and of
+actual public disclosure), at regular intervals produce and share
+statistics (most notably, the average embargo duration) as well as the
+raw data (except on issues that are still under embargo) by posting to
+oss-security"
 
-FTR we are not treating this as a security issue as this is a newly
-introduced option and disabled by default. Same reason why not
-make a new release in a haste. There’s a whole QA machinery
-around the release which means that we would be able to speed
-up the release only by a week or so, and that doesn’t make much
-sense.
+https://keybase.io/abby
 
-Cheers,
-Ondrej
---
-Ondřej Surý (He/Him)
-ondrej@....org
+Regards,
 
-> On 19. 2. 2021, at 9:17, Hanno Böck <hanno@...eck.de> wrote:
-> 
-> On Thu, 18 Feb 2021 20:09:47 -0900
-> ISC Security Officer <security-officer@....org> wrote:
-> 
->> 2)  If you already have packages based on 9.16.12, we expect to have
->> a patch ready well before the next maintenance release.  A candidate
->> patch is under review now and can be delivered after review and
->> quality assurance testing.  If you wish to receive updates on the
->> progress of this patch, please e-mail your request to
->> security-officer@....org
-> 
-> I am confused by your actions here.
-> 
-> You warn people about a messed up release (can happen, no problem), you
-> say you have a preliminary patch, but you make it extra complicated to
-> get that patch? Why not just post the patch?
-> 
-> Also I read into your words that you don't plan to publish a quick
-> followup release, which would be the right thing to do ("we expect to
-> have a patch ready well before the next maintenance release" - I read
-> that as you don't plan to make a new maintenance release as soon as
-> the patch is ready, which would be the right thing to do).
-> 
-> 
-> --
-> Hanno Böck
-> https://hboeck.de/
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Anthony Liguori
