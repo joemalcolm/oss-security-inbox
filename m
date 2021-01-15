@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/4
-Message-Id: <93325B6B-DDAD-492B-9954-9CE8A372E086@oracle.com>
-Date: Tue, 12 Jan 2021 15:23:16 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/15/2
+Message-ID: <20210115165756.tdsblbvt4hljd764@anathema>
+Date: Fri, 15 Jan 2021 17:57:56 +0100
+From: Morten Linderud <foxboron@...hlinux.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-20177 kernel: iptables string match rule could result in kernel panic
+Subject: Re: Re: [vs] Cinnamon lock screen bypass in multiple distributions
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Jan 15, 2021 at 09:14:03PM +0500, Alexander E. Patrakov wrote:
+> As this is already public, no need to hold it on the distros list.
+>
+> >> Arch Linux:
+> >> https://u.pcloud.link/publink/show?code=kZWfUYXZ7gbkkdrvvALNp1WkDy2EkJCjBAH7
+> >> This distribution also has the latest released cinnamon-screensaver,
+> >> 4.8.1-1. xorg-server version is 1.20.10-3, the only patches applied
+> >> are for the build system, not for C code.
+
+Is there any assigned CVE for this yet?
+
+-- 
+Morten Linderud
+PGP: 9C02FF419FECBE16
 
 
-> On 12 Jan 2021, at 08:04, Greg KH <greg@...ah.com> wrote:
-> 
-> I still do not understand why you report issues that are fixed over a
-> year ago (October 2019) and assign them a CVE like this.  Who does this
-> help out?  And what about the thousands of other issues that are fixed
-> in the kernel and not assigned a CVE like this, are they somehow not as
-> important to your group?
-> 
-> What determines what you want to give a CVE to and what you do not?
-
-
-I think I can answer that.   There's nothing technical going on here, it's down to the behaviour of the end users of enterprise systems.
-
-A lot of those people have a hard time understanding that they do actually want bug fixes and an even harder time understanding that they need to actually do something to install those fixes.   (I was once asked if I could fix a problem without changing anything, anything at all when the fix was a one-off chmod.)   A CVE number gets attention: think of it as getting hold of the customer by the lapels and going nose-to-nose to explain in words of one syllable they if they don't update their systems that they will crash and they will get hacked.
-
-Ooh, no, they say, we can't possibly take the risk of updating our systems.  Suppose something goes wrong?   Sheesh.   Suppose, instead, someone comes along and sees a known, fixed bug is unfixed and uses that to trash your systems.    Or that you've got a bug that crashes the machine once a week for which there's a fix.   But, no, apparently the mythical risk of a tested update vs the actual quantifiable risk of leaving the bug unfixed is so great that they'd rather take the real, quantifiable risk.   I suppose that's understandable, after a fashion, even though actual regressions are quite rare.
-
-If you present a customer with a CVE number (with or without a score) then they have SLAs which will ensure that that fix gets applied.
-
-This is a long way from ideal -- people need to wake up and smell the coffee and get around to the idea that a system that has not been updated in thirteen and a half years (not this one, another one) is not acceptable and they need to get on and have an update system in place that will, dammit, keep them up to date.   Until they do, a CVE is the best way of getting attention.
-
-Not that I'm bitter or anything.
-
-jch
-
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
