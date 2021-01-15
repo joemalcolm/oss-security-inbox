@@ -1,296 +1,146 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/03/1
-Message-ID: <12510d5a023346ec@cvs.openbsd.org>
-Date: Tue, 2 Mar 2021 18:19:55 -0700 (MST)
-From: Damien Miller <djm@....openbsd.org>
-To: oss-security@...ts.openwall.com
-Subject: Announce: OpenSSH 8.5 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/15/1
+Message-ID: <CAN_LGv2FGF9z4oiLdXnbpkuabXy78JktatTnQzMc05MLwN2v3w@mail.gmail.com>
+Date: Fri, 15 Jan 2021 21:14:03 +0500
+From: "Alexander E. Patrakov" <patrakov@...il.com>
+To: Clement Lefebvre <clement.lefebvre@...uxmint.com>, oss-security@...ts.openwall.com
+Subject: Re: [vs] Cinnamon lock screen bypass in multiple distributions
 Content-Type: text/plain; charset=utf-8
 
-OpenSSH 8.5 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
+As this is already public, no need to hold it on the distros list.
+
+пт, 15 янв. 2021 г. в 21:05, Clement Lefebvre <
+clement.lefebvre@...uxmint.com>:
+
+> Hi Alexander,
+>
+> Many thanks for contacting us. I think it's fixed on our side, but the way
+> to reproduce it is slightly different. We use the virtual keyboard and long
+> press E, then press E with the bar on top.
+>
+> You can find the issue and resolution at
+> https://github.com/linuxmint/cinnamon-screensaver/issues/354.
+>
+> It's a regression (or improvement depending on the way to look at it) in
+> Xorg. You correctly identified this. It affects libcaribou.
+>
+> We sent them an MR but I don't think they care... their project looks
+> dead: https://gitlab.gnome.org/GNOME/caribou/-/merge_requests/3.
+>
+> We urged the Arch and Debian maintainers of Cinnamon to take action on
+> github already but no CVE was done. Like you, we don't really know if this
+> should be against Xorg or libcaribou.
+>
+> We patched caribou in all Mint releases that were affected (Mint 19.x,
+> Mint 20.x and LMDE 4).
+>
+> Mint 18.x is also affected but the versions of Cinnamon over there are
+> lesser than 4.2, so they don't have an on-screen keyboard in their
+> screensaver.
+>
+> Regards,
+>
+> Clement Lefebvre
+> Linux Mint
+>
+>
+>
+> On Fri, Jan 15, 2021 at 3:28 PM Alexander E. Patrakov <patrakov@...il.com>
+> wrote:
+>
+>> Hi,
+>>
+>> I found a trivial way to bypass the screen lock in the Cinnamon DE.
+>> However, I don't know how to contact Cinnamon or Linux Mint people
+>> properly, that's why I am posting here. Also, I am not sure whether
+>> this is a Cinnamon bug or Xorg bug.
+>>
+>> For the exploit to work, more than one keyboard layout needs to be
+>> configured in Cinnamon keyboard settings, on the "layouts" tab. In the
+>> demo VMs linked below, that's English and Russian. Instructions:
+>>
+>> 1. Boot the system. Or, boot a demo VM using the provided ./start.sh
+>> script.
+>> 2. Log in. In the demo VMs, the username is "user" and the password is
+>> "password".
+>> 3. Lock the screen, using the "Lock Screen" icon in the main menu.
+>> 4.  Click the following using your mouse. On real hardware, a
+>> touchscreen also works, so watch out for cats doing this by accident
+>> ;) Important: do not use a hardware keyboard.
+>>
+>>  * The virtual keyboard button at the bottom. The virtual keyboard
+>> should appear.
+>>  * The country flag or two-letter code on the left of the password
+>> field. It should switch to RU, Russian.
+>>  * The "q" virtual key, maybe more than once (what apparently matters
+>> is that the character is not in the layout indicated in the password
+>> field).
+>>
+>> You may need to wait a few seconds for cinnamon-screensaver to actually
+>> crash.
+>>
+>> Distributions affected:
+>>
+>> Linux Mint 20.1 with Cinnamon DE:
+>>
+>> https://u.pcloud.link/publink/show?code=kZBnOYXZq6WVUsKA6VQgrz9HgBGiyBC2JreX
+>> cinnamon-screensaver
+>> <https://u.pcloud.link/publink/show?code=kZBnOYXZq6WVUsKA6VQgrz9HgBGiyBC2JreXcinnamon-screensaver>
+>> 4.8.1+ulyssa, xserver-xorg-core 2:1.20.8-2ubuntu2.6
+>> Note: if one updates the xserver-xorg-core package using apt (to
+>> 2:1.20.9-2ubuntu1.1~20.04.1) and reboots the VM, the bug is no longer
+>> reproducible, so it may be a Xorg problem, not Cinnamon DE problem,
+>> after all. The changelog entry for 2:1.20.8-2ubuntu6 does ring a bell,
+>> it's for CVE-2020-14345 "Correct bounds checking in XkbSetNames()",
+>>
+>> https://gitlab.freedesktop.org/xorg/xserver/-/commit/f7cd1276bbd4fe3a9700096dec33b52b8440788d
+>> . However, the _XkbCheckRequestBounds() function added by this patch
+>> also exists in the xorg-server version used by Arch Linux, so this
+>> can't be it.
+>>
+>> Debian Testing:
+>>
+>> https://u.pcloud.link/publink/show?code=kZGwUYXZC1oC2dQq0TzDxhB0OBAL87B7JAaV
+>> This distribution has 4.8.1-2, the only patch is for the path to PNG
+>> versions of country flags. xserver-xorg-core is at 2:1.20.10-2, the
+>> only patch is for a MIPS-specific build issue, obviously irrelevant
+>> here. Dist-upgrading to Debian Unstable and rebooting does not fix the
+>> bug.
+>>
+>> Arch Linux:
+>> https://u.pcloud.link/publink/show?code=kZWfUYXZ7gbkkdrvvALNp1WkDy2EkJCjBAH7
+>> This distribution also has the latest released cinnamon-screensaver,
+>> 4.8.1-1. xorg-server version is 1.20.10-3, the only patches applied
+>> are for the build system, not for C code.
+>>
+>> Note: for the purpose of not destroying the evidence, the VMs above
+>> use "snapshot=on", so all changes will be lost on shutdown. Rebooting
+>> is OK.
+>>
+>> Distributions not affected:
+>>
+>> Fedora 33 (automatically switches the layout to US)
+>> cinnamon-screensaver 4.6.0-2.fc33
+>> xorg-x11-server-common-1.20.10-1.fc33 in updates
+>>
+>> Fedora 34 pre-release (Rawhide, also automatically switches the layout to
+>> US)
+>> cinnamon-screensaver 4.8.1-1.fc34
+>> xorg-x11-server-common 1.20.10-1.fc34
+>>
+>> Debian 10 (cinnamon-screensaver 3.8.2-1 does not have a virtual keyboard)
+>>
+>> I have not tested anything else. The above data points do not let me
+>> conclude which package is responsible, so I cannot file a CVE at this
+>> point.
+>>
+>> --
+>> Alexander E. Patrakov
+>> CV: http://u.pc.cd/wT8otalK
+>>
+>
+
+-- 
+Alexander E. Patrakov
+CV: http://u.pc.cd/wT8otalK
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
-
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
-
-Future deprecation notice
-=========================
-
-It is now possible[1] to perform chosen-prefix attacks against the
-SHA-1 algorithm for less than USD$50K.
-
-In the SSH protocol, the "ssh-rsa" signature scheme uses the SHA-1
-hash algorithm in conjunction with the RSA public key algorithm.
-OpenSSH will disable this signature scheme by default in the near
-future.
-
-Note that the deactivation of "ssh-rsa" signatures does not necessarily
-require cessation of use for RSA keys. In the SSH protocol, keys may be
-capable of signing using multiple algorithms. In particular, "ssh-rsa"
-keys are capable of signing using "rsa-sha2-256" (RSA/SHA256),
-"rsa-sha2-512" (RSA/SHA512) and "ssh-rsa" (RSA/SHA1). Only the last of
-these is being turned off by default.
-
-This algorithm is unfortunately still used widely despite the
-existence of better alternatives, being the only remaining public key
-signature algorithm specified by the original SSH RFCs that is still
-enabled by default.
-
-The better alternatives include:
-
- * The RFC8332 RSA SHA-2 signature algorithms rsa-sha2-256/512. These
-   algorithms have the advantage of using the same key type as
-   "ssh-rsa" but use the safe SHA-2 hash algorithms. These have been
-   supported since OpenSSH 7.2 and are already used by default if the
-   client and server support them.
-
- * The RFC8709 ssh-ed25519 signature algorithm. It has been supported
-   in OpenSSH since release 6.5.
-
- * The RFC5656 ECDSA algorithms: ecdsa-sha2-nistp256/384/521. These
-   have been supported by OpenSSH since release 5.7.
-
-To check whether a server is using the weak ssh-rsa public key
-algorithm, for host authentication, try to connect to it after
-removing the ssh-rsa algorithm from ssh(1)'s allowed list:
-
-    ssh -oHostKeyAlgorithms=-ssh-rsa user@...t
-
-If the host key verification fails and no other supported host key
-types are available, the server software on that host should be
-upgraded.
-
-This release enables the UpdateHostKeys option by default to assist
-the client by automatically migrating to better algorithms.
-
-[1] "SHA-1 is a Shambles: First Chosen-Prefix Collision on SHA-1 and
-    Application to the PGP Web of Trust" Leurent, G and Peyrin, T
-    (2020) https://eprint.iacr.org/2020/014.pdf
-
-Security
-========
-
- * ssh-agent(1): fixed a double-free memory corruption that was
-   introduced in OpenSSH 8.2 . We treat all such memory faults as
-   potentially exploitable. This bug could be reached by an attacker
-   with access to the agent socket.
-
-   On modern operating systems where the OS can provide information
-   about the user identity connected to a socket, OpenSSH ssh-agent
-   and sshd limit agent socket access only to the originating user
-   and root. Additional mitigation may be afforded by the system's
-   malloc(3)/free(3) implementation, if it detects double-free
-   conditions.
-
-   The most likely scenario for exploitation is a user forwarding an
-   agent either to an account shared with a malicious user or to a
-   host with an attacker holding root access.
-
- * Portable sshd(8): Prevent excessively long username going to PAM.
-   This is a mitigation for a buffer overflow in Solaris' PAM username
-   handling (CVE-2020-14871), and is only enabled for Sun-derived PAM
-   implementations.  This is not a problem in sshd itself, it only
-   prevents sshd from being used as a vector to attack Solaris' PAM.
-   It does not prevent the bug in PAM from being exploited via some
-   other PAM application. GHPR#212
-
-
-Potentially-incompatible changes
-================================
-
-This release includes a number of changes that may affect existing
-configurations:
-
- * ssh(1), sshd(8): this release changes the first-preference signature
-   algorithm from ECDSA to ED25519.
-
- * ssh(1), sshd(8): set the TOS/DSCP specified in the configuration
-   for interactive use prior to TCP connect. The connection phase of
-   the SSH session is time-sensitive and often explicitly interactive.
-   The ultimate interactive/bulk TOS/DSCP will be set after
-   authentication completes.
-
- * ssh(1), sshd(8): remove the pre-standardization cipher
-   rijndael-cbc@...ator.liu.se. It is an alias for aes256-cbc before
-   it was standardized in RFC4253 (2006), has been deprecated and
-   disabled by default since OpenSSH 7.2 (2016) and was only briefly
-   documented in ssh.1 in 2001.
-
- * ssh(1), sshd(8): update/replace the experimental post-quantum
-   hybrid key exchange method based on Streamlined NTRU Prime coupled
-   with X25519.
-
-   The previous sntrup4591761x25519-sha512@...yssh.org method is
-   replaced with sntrup761x25519-sha512@...nssh.com. Per its
-   designers, the sntrup4591761 algorithm was superseded almost two
-   years ago by sntrup761.
-
-   (note this both the updated method and the one that it replaced are
-   disabled by default)
-
- * ssh(1): disable CheckHostIP by default. It provides insignificant
-   benefits while making key rotation significantly more difficult,
-   especially for hosts behind IP-based load-balancers.
-
-Changes since OpenSSH 8.4
-=========================
-
-New features
-------------
-
- * ssh(1): this release enables UpdateHostkeys by default subject to
-   some conservative preconditions:
-    - The key was matched in the UserKnownHostsFile (and not in the
-      GlobalKnownHostsFile).
-    - The same key does not exist under another name.
-    - A certificate host key is not in use.
-    - known_hosts contains no matching wildcard hostname pattern.
-    - VerifyHostKeyDNS is not enabled.
-    - The default UserKnownHostsFile is in use.
-
-   We expect some of these conditions will be modified or relaxed in
-   future.
-
- * ssh(1), sshd(8): add a new LogVerbose configuration directive for
-   that allows forcing maximum debug logging by file/function/line
-   pattern-lists.
-
- * ssh(1): when prompting the user to accept a new hostkey, display
-   any other host names/addresses already associated with the key.
-
- * ssh(1): allow UserKnownHostsFile=none to indicate that no
-   known_hosts file should be used to identify host keys.
-
- * ssh(1): add a ssh_config KnownHostsCommand option that allows the
-   client to obtain known_hosts data from a command in addition to
-   the usual files.
-
- * ssh(1): add a ssh_config PermitRemoteOpen option that allows the
-   client to restrict the destination when RemoteForward is used
-   with SOCKS.
-
- * ssh(1): for FIDO keys, if a signature operation fails with a
-   "incorrect PIN" reason and no PIN was initially requested from the
-   user, then request a PIN and retry the operation. This supports
-   some biometric devices that fall back to requiring PIN when reading
-   of the biometric failed, and devices that require PINs for all
-   hosted credentials.
-
- * sshd(8): implement client address-based rate-limiting via new
-   sshd_config(5) PerSourceMaxStartups and PerSourceNetBlockSize
-   directives that provide more fine-grained control on a per-origin
-   address basis than the global MaxStartups limit.
-
-Bugfixes
---------
-
- * ssh(1): Prefix keyboard interactive prompts with "(user@...t)" to
-   make it easier to determine which connection they are associated
-   with in cases like scp -3, ProxyJump, etc. bz#3224
-
- * sshd(8): fix sshd_config SetEnv directives located inside Match
-   blocks. GHPR#201
-
- * ssh(1): when requesting a FIDO token touch on stderr, inform the
-   user once the touch has been recorded.
-
- * ssh(1): prevent integer overflow when ridiculously large
-   ConnectTimeout values are specified, capping the effective value
-   (for most platforms) at 24 days. bz#3229
-
- * ssh(1): consider the ECDSA key subtype when ordering host key
-   algorithms in the client.
-
- * ssh(1), sshd(8): rename the PubkeyAcceptedKeyTypes keyword to
-   PubkeyAcceptedAlgorithms. The previous name incorrectly suggested
-   that it control allowed key algorithms, when this option actually
-   specifies the signature algorithms that are accepted. The previous
-   name remains available as an alias. bz#3253
-
- * ssh(1), sshd(8): similarly, rename HostbasedKeyTypes (ssh) and
-   HostbasedAcceptedKeyTypes (sshd) to HostbasedAcceptedAlgorithms.
-
- * sftp-server(8): add missing lsetstat@...nssh.com documentation
-   and advertisement in the server's SSH2_FXP_VERSION hello packet.
-
- * ssh(1), sshd(8): more strictly enforce KEX state-machine by
-   banning packet types once they are received. Fixes memleak caused
-   by duplicate SSH2_MSG_KEX_DH_GEX_REQUEST (oss-fuzz #30078).
-
- * sftp(1): allow the full range of UIDs/GIDs for chown/chgrp on 32bit
-   platforms instead of being limited by LONG_MAX. bz#3206
-
- * Minor man page fixes (capitalization, commas, etc.) bz#3223
-
- * sftp(1): when doing an sftp recursive upload or download of a
-   read-only directory, ensure that the directory is created with
-   write and execute permissions in the interim so that the transfer
-   can actually complete, then set the directory permission as the
-   final step. bz#3222
-
- * ssh-keygen(1): document the -Z, check the validity of its argument
-   earlier and provide a better error message if it's not correct.
-   bz#2879
-
- * ssh(1): ignore comments at the end of config lines in ssh_config,
-   similar to what we already do for sshd_config. bz#2320
-
- * sshd_config(5): mention that DisableForwarding is valid in a
-   sshd_config Match block. bz3239
-
- * sftp(1): fix incorrect sorting of "ls -ltr" under some
-   circumstances. bz3248.
-
- * ssh(1), sshd(8): fix potential integer truncation of (unlikely)
-   timeout values. bz#3250
-
- * ssh(1): make hostbased authentication send the signature algorithm
-   in its SSH2_MSG_USERAUTH_REQUEST packets instead of the key type.
-   This make HostbasedAcceptedAlgorithms do what it is supposed to -
-   filter on signature algorithm and not key type.
-
-Portability
------------
-
- * sshd(8): add a number of platform-specific syscalls to the Linux
-   seccomp-bpf sandbox. bz#3232 bz#3260
-
- * sshd(8): remove debug message from sigchld handler that could cause
-   deadlock on some platforms. bz#3259
-
- * Sync contrib/ssh-copy-id with upstream.
-
- * unittests: add a hostname function for systems that don't have it.
-   Some systems don't have a hostname command (it's not required by
-   POSIX). The do have uname -n (which is), but not all of those have
-   it report the FQDN.
-
-Checksums:
-==========
-
- - SHA1 (openssh-8.5.tar.gz) = 04cae43c389fb411227c01219e4eb46e3113f34e
- - SHA256 (openssh-8.5.tar.gz) = 5qB2CgzNG4io4DmChTjHgCWqRWvEOvCKJskLdJCz+SU=
-
- - SHA1 (openssh-8.5p1.tar.gz) = 72eadcbe313b07b1dd3b693e41d3cd56d354e24e
- - SHA256 (openssh-8.5p1.tar.gz) = 9S8/QdQpqpkY44zyAK8iXM3Y5m8FLaVyhwyJc3ZG7CU=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available from the mirror sites:
-https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-
-Please note that the OpenPGP key used to sign releases has been
-rotated for this release. The new key has been signed by the previous
-key to provide continuity.
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@...nssh.com
