@@ -1,68 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/21/4
-Message-ID: <a27e3c69-2e14-929c-0a57-42427760b778@oracle.com>
-Date: Thu, 21 Oct 2021 12:04:47 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/17/2
+Message-ID: <ru239p$147u$1@ciao.gmane.io>
+Date: Sun, 17 Jan 2021 19:31:05 -0000 (UTC)
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Mailman 2.1.35 security release
+Subject: mutt recipient parsing memory leak
 Content-Type: text/plain; charset=utf-8
 
-Quoting from Mark Sapiro's emails at:
-https://mail.python.org/archives/list/mailman-announce@python.org/thread/IKCO6JU755AP5G5TKMBJL6IEZQTTNPDQ/
+Hello, I noticed mutt was leaking memory whenever I opened a particular
+mailbox. I tracked down the problem: Using rfc822 groups without the madatory
+labels wasn't being parsed properly.
 
-> A couple of vulnerabilities have recently been reported. Thanks to Andre 
-> Protas, Richard Cloke and Andy Nuttall of Apple for reporting these and 
-> helping with the development of a fix.
-> 
-> CVE-2021-42096 could allow a list member to discover the list admin 
-> password.
-> 
-> CVE-2021-42097 could allow a list member to create a successful CSRF 
-> attack against another list member enabling takeover of the members account.
-> 
-> These attacks can't be carried out by non-members so may not be of 
-> concern for sites with only trusted list members.
+https://tools.ietf.org/html/rfc822#section-6.2.6
 
+(A spammer had just put some junk in there, they weren't deliberately using
+exotic addressing schemes.. haha).
 
-> I am pleased to announce the release of Mailman 2.1.35.
-> 
-> This is a security and minor bug fix release. See the attached 
-> README.txt for details. For those who just want a patch for the security 
-> issues, see 
-> https://bazaar.launchpad.net/~mailman-coders/mailman/2.1/revision/1873.
-> The patch is also attached to the bug reports at 
-> https://bugs.launchpad.net/mailman/+bug/1947639 and 
-> https://bugs.launchpad.net/mailman/+bug/1947640. The patch is the same 
-> on both and fixes both issues.
-> 
-> As noted Mailman 2.1.30 was the last feature release of the Mailman 2.1
-> branch from the GNU Mailman project. There has been some discussion as
-> to what this means. It means there will be no more releases from the GNU
-> Mailman project containing any new features. There may be future patch
-> releases to address the following:
-> 
-> i18n updates.
-> security issues.
-> bugs affecting operation for which no satisfactory workaround exists.
-> 
-> Mailman 2.1.35 is the fifth such patch release.
-> 
-> Mailman is free software for managing email mailing lists and
-> e-newsletters. Mailman is used for all the python.org and
-> SourceForge.net mailing lists, as well as at hundreds of other sites.
-> 
-> For more information, please see our web site at one of:
-> 
-> http://www.list.org
-> https://www.gnu.org/software/mailman
-> http://mailman.sourceforge.net/
-> 
-> Mailman 2.1.35 can be downloaded from
-> 
-> https://launchpad.net/mailman/2.1/
-> https://ftp.gnu.org/gnu/mailman/
-> https://sourceforge.net/projects/mailman/
+It turns out that you can send a small message that leaks a *lot* of memory. A
+small message can leak GBs of memory, effectively preventing you from opening
+your mailbox. You would need to use a different mail client to clean up the
+malformed message before you can use mutt again.
+
+I sent this upstream as a DoS, but they don't want to treat it as a security
+isssue. I though I'd just send a FYI here instead in case anyone wants to
+backport the patch.
+
+Here's the bug with a repro: https://gitlab.com/muttmua/mutt/-/issues/323
+
+Here's the patch:
+
+https://gitlab.com/muttmua/mutt/-/commit/c059e20ea4c7cb3ee9ffd3500ffe313ae84b2545
+
+Tavis.
 
 -- 
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
+
