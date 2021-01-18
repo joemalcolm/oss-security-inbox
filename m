@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/14/1
-Message-ID: <0b682bd8-5aa1-1c74-abf8-5b3cd81c0c85@apache.org>
-Date: Thu, 14 Jan 2021 14:22:50 +0000
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2021-24122 Apache Tomcat Information Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/18/2
+Message-ID: <p5o8qpsn-412o-3935-r5ss-n11o348op8s@redhat.com>
+Date: Mon, 18 Jan 2021 19:48:07 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Wenxiang Qian <leonwxqian@...il.com>
+Subject: CVE-2020-29443 QEMU: ide: atapi: OOB access while processing read commands
 Content-Type: text/plain; charset=utf-8
 
-CVE-2021-24122 Apache Tomcat Information Disclosure
+   Hello,
 
-Severity: Important
+An out-of-bounds read access issue was found in the ATAPI Emulator of QEMU. It 
+occurs while processing ATAPI read command if logical block address(LBA) is 
+set to an invalid value. A guest user may use this flaw to crash the QEMU 
+process on the host resulting in DoS scenario.
 
-Vendor: The Apache Software Foundation
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2021-01/msg04255.html
+   -> https://git.qemu.org/?p=qemu.git;a=commit;h=813212288970c39b1800f63e83ac6e96588095c6
 
-Versions Affected:
-Apache Tomcat 10.0.0-M1 to 10.0.0-M9
-Apache Tomcat 9.0.0.M1 to 9.0.39
-Apache Tomcat 8.5.0 to 8.5.59
-Apache Tomcat 7.0.0 to 7.0.106
+This issue was reported by Wenxiang Qian of Tencent Blade Team.
 
-Description:
-When serving resources from a network location using the NTFS file
-system it was possible to bypass security constraints and/or view the
-source code for JSPs in some configurations. The root cause was the
-unexpected behaviour of the JRE API File.getCanonicalPath() which in
-turn was caused by the inconsistent behaviour of the Windows API
-(FindFirstFileW) in some circumstances.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Upgrade to Apache Tomcat 10.0.0-M10 or later
-- Upgrade to Apache Tomcat 9.0.40 or later
-- Upgrade to Apache Tomcat 8.5.60 or later
-- Upgrade to Apache Tomcat 7.0.107 or later
-
-Credit:
-This issue was identified by Ilja Brander.
-
-History:
-2021-01-14 Original advisory
-
-References:
-[1] https://tomcat.apache.org/security-10.html
-[2] https://tomcat.apache.org/security-9.html
-[3] https://tomcat.apache.org/security-8.html
-[4] https://tomcat.apache.org/security-7.html
