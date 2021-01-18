@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2155" "Thursday" "9" "February" "2017" "14:48:10" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<4623205.KGy1lP8IPD@blackgate>" "68" "[oss-security] zziplib: NULL pointer dereference in zzip_mem_entry_new (memdisk.c)" nil nil nil "2" "2017020913:48:10" "[oss-security] zziplib: NULL pointer dereference in zzip_mem_entry_new (memdisk.c)" (number mark "U       ago@gentoo.o Feb  9   68/2155  " thread-indent "\"[oss-security] zziplib: NULL pointer dereference in zzip_mem_entry_new (memdisk.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["714" "Monday" "18" "January" "2021" "02:41:32" "-0800" "Mike Jumper" "mjumper@apache.org" "<CALKeL-OMTh-2TSdo8KvxX4U905KhtEF2h7EgsFUV7Q9H_xgCfw@mail.gmail.com>" "18" "[oss-security] [SECURITY] CVE-2020-11997: Apache Guacamole: Inconsistent restriction of connection history visibility" nil nil nil "1" "2021011810:41:32" "[oss-security] [SECURITY] CVE-2020-11997: Apache Guacamole: Inconsistent restriction of connection history visibility" (number mark "U       mjumper@apac Jan 18   18/714   " thread-indent "\"[oss-security] [SECURITY] CVE-2020-11997: Apache Guacamole: Inconsistent restriction of connection history visibility\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY] CVE-2020-11997: Apache Guacamole: Inconsistent restriction of connection history visibility" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28370 invoked by uid 550); 9 Feb 2017 13:48:30 -0000
+Received: (qmail 31744 invoked by uid 550); 18 Jan 2021 11:39:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,82 +12,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28118 invoked from network); 9 Feb 2017 13:48:27 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Thu, 09 Feb 2017 14:48:10 +0100
-Message-ID: <4623205.KGy1lP8IPD@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
+Received: (qmail 23923 invoked from network); 18 Jan 2021 10:42:21 -0000
+X-Gm-Message-State: AOAM533+Yrer9cSOWq2x6InFDi4eT0s9NqsQI50KeJEd9m3qlumiKA9q
+	qGar286oj1Ww5vT9HJ2yvaDZEZJtBwJX5Thqe3bHIQ==
+X-Google-Smtp-Source: ABdhPJzGvg1c78RgDAMOT6t3ZxYQ5/Q+XaWu9INpCsl2B5jSy7d3GrAgdoTHN4RWHERIW9ZlR7Rt3WW0Rd3NcxFQsF0=
+X-Received: by 2002:a25:d704:: with SMTP id o4mr278395ybg.151.1610966529093;
+ Mon, 18 Jan 2021 02:42:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] zziplib: NULL pointer dereference in zzip_mem_entry_new (memdisk.c)
+From: Mike Jumper <mjumper@apache.org>
+Date: Mon, 18 Jan 2021 02:41:32 -0800
+X-Gmail-Original-Message-ID: <CALKeL-OMTh-2TSdo8KvxX4U905KhtEF2h7EgsFUV7Q9H_xgCfw@mail.gmail.com>
+Message-ID: <CALKeL-OMTh-2TSdo8KvxX4U905KhtEF2h7EgsFUV7Q9H_xgCfw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [SECURITY] CVE-2020-11997: Apache Guacamole: Inconsistent restriction
+ of connection history visibility
+
+CVE-2020-11997: Inconsistent restriction of connection history visibility
+
+Versions affected:
+Apache Guacamole 1.2.0 and earlier
 
 Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
+Apache Guacamole 1.2.0 and older do not consistently restrict access
+to connection history based on user visibility. If multiple users
+share access to the same connection, those users may be able to see
+which other users have accessed that connection, as well as the IP
+addresses from which that connection was accessed, even if those users
+do not otherwise have permission to see other users.
 
-A fuzz on it discovered an NULL pointer access.
-
-The complete ASan output:
-
-# unzzipcat-mem $FILE
-==7955==ERROR: AddressSanitizer: SEGV on unknown address 0x00000000001a (pc 
-0x7fcfc78e3c50 bp 0x7ffdf55d4f70 sp 0x7ffdf55d4e40 T0)
-==7955==The signal is caused by a READ memory access.
-==7955==Hint: address points to the zero page.
-    #0 0x7fcfc78e3c4f in zzip_mem_entry_new /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:182:21
-    #1 0x7fcfc78e3c4f in zzip_mem_disk_load /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
-    #2 0x7fcfc78e38b7 in zzip_mem_disk_open /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
-    #3 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12
-    #4 0x7fcfc6a2361f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #5 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/zzip/memdisk.c:182:21 in zzip_mem_entry_new
-==7955==ABORTING
-
-also, the undefined behavior sanitizer says about:
-
-# unzzipcat-mem $FILE
-/tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/zzip/memdisk.c:182:21: runtime error: member access 
-within null pointer of type 'struct zzip_file_header'
-
-Affected version:
-0.13.62
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
+Mitigation:
+Users of versions of Apache Guacamole 1.2.0 and older should upgrade to 1.3.0.
 
 Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00154-zziplib-nullptr-zzip_mem_entry_new
-
-Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-zzip_mem_entry_new-memdisk-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+We would like to thank William Le Berre (Synetis) for reporting this issue.
