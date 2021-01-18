@@ -1,35 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/29/5
-Message-ID: <5cae2a23-b169-43f6-0403-a316a1e661f9@amazon.com>
-Date: Thu, 29 Apr 2021 21:11:44 +0300
-From: "Paraschiv, Andra-Irina" <andraprs@...zon.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: security <security@...nel.org>, linux-distros <linux-distros@...openwall.org>, ne-devel-upstream <ne-devel-upstream@...zon.com>, Mathias Krause <minipli@...ecurity.net>
-Subject: Nitro Enclaves kernel driver issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/18/3
+Message-ID: <YAWkPB4mFDvqtep9@f195.suse.de>
+Date: Mon, 18 Jan 2021 16:07:40 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: libreoffice-online "loolforkit" privileged program local root exploit
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello list,
 
-An issue was found in the Nitro Enclaves kernel driver codebase [1] 
-included in the v5.10 upstream Linux kernel. The fix for it has been 
-tested on the AWS side. The issue does not break the isolation or 
-security of what is running inside the enclave. Nitro Enclaves already 
-assumes that the instance running the Nitro Enclaves kernel driver is 
-untrusted.
+libreoffice-online [1] contains a privileged setuid-root like binary
+"loolforkit" [2] that carries Linux capability bits for CAP_FOWNER,
+CAP_MKNOD and CAP_SYSCHROOT.
 
-We would like to thank Mathias Krause from Open Source Security, Inc. 
-for reporting and providing a fix for this issue directly to AWS.
+Upstream's intention seems to be that this program should only be
+accessible to the "loolforkit" user in the system. This precondition is
+not fulfilled in the 7.0 release versions of the "loolforkit" program,
+however, because a command line switch "--disable-lool-user-checking"
+allows to bypass this check. In the upstream repository this was fixed
+as a "side effect" of commit d9708437b2 [3].
 
-The patch [2] will be merged into the latest upstream Linux kernel 
-release and into the v5.10+ stable kernel releases.
+Any user that is allowed to run this program can obtain root privileges.
+In the `globalPreinit()` function the program attempts to load a shared
+library under the user specified lotemplate path (parameter
+"--lotemplate"). Thus the unprivileged caller can cause arbitrary code
+to be executed in the context of the privileged program.
 
-Thanks,
-Andra
+Even with the fix from commit d9708437b2 the "loolforkit" user is
+equivalent to root, because it can execute arbitrary code as root using
+this attack vector. I think this creates a false sense of security,
+because to unaware users it looks like there is user separation in
+place. A compromised "loolforkit" user account can easily become root
+using the "loolforkit" program, however.
 
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/virt/nitro_enclaves
-[2] https://lore.kernel.org/lkml/20210429165941.27020-1-andraprs@amazon.com/
+I did not fully review the program source. The large amount of command
+line switches the program accepts and the general program philosophy
+"it's okay if the right user is calling it" make me suspect that there a
+further weaknesses over the '--lotemplate' approach in this program that
+might allow to escalate privileges.
 
+I contacted upstream by email on 2020-12-14 and offered coordinated
+disclosure of these issues and recommended to thoroughly check the
+program's source code for issues. It seems upstream considers this fixed
+with commit d9708437b2 and doesn't consider it an issue that the
+"loolforkit" user can escalate privileges to root using this program. I
+recommended to assign at least a CVE for the combination of the two
+issues that allows arbitrary users in the system to become root using
+the "loolforkit" binary. Nothing happened so far, however.
 
+Formally libreoffice-online is covered by the "Document Foundation" CNA,
+therefore I did not request a CVE for this via the Mitre CVE form. I
+will try to contact the CNA directly in this matter.
 
-Amazon Development Center (Romania) S.R.L. registered office: 27A Sf. Lazar Street, UBC5, floor 2, Iasi, Iasi County, 700045, Romania. Registered in Romania. Registration number J22/2621/2005.
+[1]: https://github.com/LibreOffice/online
+[2]: https://github.com/LibreOffice/online/blob/master/kit/ForKit.cpp
+[3]: https://github.com/LibreOffice/online/commit/d9708437b2ba2f8c10eeb95c9ce7bd78cc83d244
+
+Cheers
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+ 
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
