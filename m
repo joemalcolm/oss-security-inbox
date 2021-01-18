@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/12/2
-Message-ID: <8324dd87-9dce-280d-de27-4e3281419f93@lehmi.de>
-Date: Sat, 12 Jun 2021 11:04:42 +0200
-From: Andreas Lehmkuehler <andreas@...mi.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/18/1
+Message-ID: <CALKeL-OMTh-2TSdo8KvxX4U905KhtEF2h7EgsFUV7Q9H_xgCfw@mail.gmail.com>
+Date: Mon, 18 Jan 2021 02:41:32 -0800
+From: Mike Jumper <mjumper@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-31811: Apache PDFBox: A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading a tiny file
+Subject: [SECURITY] CVE-2020-11997: Apache Guacamole: Inconsistent restriction of connection history visibility
 Content-Type: text/plain; charset=utf-8
 
+CVE-2020-11997: Inconsistent restriction of connection history visibility
+
+Versions affected:
+Apache Guacamole 1.2.0 and earlier
+
 Description:
-
-A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading 
-the file. This issue affects Apache PDFBox version 2.0.23 and prior 2.0.x versions.
-
-This issue is being tracked as PDFBOX-5177
+Apache Guacamole 1.2.0 and older do not consistently restrict access
+to connection history based on user visibility. If multiple users
+share access to the same connection, those users may be able to see
+which other users have accessed that connection, as well as the IP
+addresses from which that connection was accessed, even if those users
+do not otherwise have permission to see other users.
 
 Mitigation:
-
-This issue was fixed in 2.0.24. All users are recommended to upgrade to Apache 
-PDFBox 2.0.24
+Users of versions of Apache Guacamole 1.2.0 and older should upgrade to 1.3.0.
 
 Credit:
-
-Apache PDFBox would like to thank Chaoyuan Peng for reporting this issue
-
-References:
-https://lists.apache.org/thread.html/re3bd16f0cc8f1fbda46b06a4b8241cd417f71402809baa81548fc20e%40%3Cusers.pdfbox.apache.org%3E
+We would like to thank William Le Berre (Synetis) for reporting this issue.
