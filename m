@@ -1,122 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/5
-Message-Id: <E1mIrb5-00066J-MJ@xenbits.xenproject.org>
-Date: Wed, 25 Aug 2021 12:01:35 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/19/9
+Message-Id: <E1l1txS-0002wW-Tt@xenbits.xenproject.org>
+Date: Tue, 19 Jan 2021 16:34:18 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 382 v2 (CVE-2021-28699) - inadequate grant-v2 status frames array bounds check
+Subject: Xen Security Advisory 347 v3 (CVE-2020-27670) - unsafe AMD IOMMU page table updates
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2021-28699 / XSA-382
-                               version 2
+            Xen Security Advisory CVE-2020-27670 / XSA-347
+                              version 3
 
-         inadequate grant-v2 status frames array bounds check
+                  unsafe AMD IOMMU page table updates
 
-UPDATES IN VERSION 2
+UPDATES IN VERSION 3
 ====================
 
-Public release.
+CVE assigned.
 
 ISSUE DESCRIPTION
 =================
 
-The v2 grant table interface separates grant attributes from grant
-status.  That is, when operating in this mode, a guest has two tables.
-As a result, guests also need to be able to retrieve the addresses that
-the new status tracking table can be accessed through.
+AMD IOMMU page table entries are updated in a step by step manner,
+without regard to them being potentially in use by the IOMMU.  Therefore
+it was possible that the IOMMU would read and then use a half-updated
+entry.  Furthermore, updates to Device Table entries lacked suitable
+ordering enforcement for certain steps involved in these updates.
 
-For 32-bit guests on x86, translation of requests has to occur because
-the interface structure layouts commonly differ between 32- and 64-bit.
-
-The translation of the request to obtain the frame numbers of the
-grant status table involves translating the resulting array of frame
-numbers.  Since the space used to carry out the translation is limited,
-the translation layer tells the core function the capacity of the array
-within translation space.  Unfortunately the core function then only
-enforces array bounds to be below 8 times the specified value, and would
-write past the available space if enough frame numbers needed storing.
+In both case the specific outcome heavily depends on how exactly the
+compiler translated the affected pieces of code.
 
 IMPACT
 ======
 
-Malicious or buggy guest kernels may be able to mount a Denial of
-Service (DoS) attack affecting the entire system.  Privilege escalation
-and information leaks cannot be ruled out.
+A malicious guest might be able to cause data corruption and data
+leaks.  Host or guest Denial of Service (DoS), and privilege
+escalation, cannot be ruled out.
 
 VULNERABLE SYSTEMS
 ==================
 
-All Xen versions from 4.10 onwards are affected.  Xen versions 4.9 and
-older are not affected.
+All Xen versions are potentially vulnerable.
 
-Only 32-bit x86 guests permitted to use grant table version 2 interfaces
-can leverage this vulnerability.  64-bit x86 guests cannot leverage this
-vulnerability, but note that HVM and PVH guests are free to alter their
-bitness as they see fit.  On Arm, grant table v2 use is explicitly
-unsupported.
+Only x86 systems with AMD, Hygon, or compatible IOMMU hardware are
+vulnerable.  Arm systems as well as x86 systems with VT-d hardware or
+without any IOMMUs in use are not vulnerable.
 
-Only guests permitted to have 8177 or more grant table frames can
-leverage this vulnerability.
+Only x86 guests which have physical devices passed through to them can
+leverage the vulnerability.
 
 MITIGATION
 ==========
 
-The problem can be avoided by not increasing too much the number of
-grants Xen would allow guests to establish.  The limit is controlled by
-the "gnttab_max_frames" Xen command line option and the
-"max_grant_frames" xl domain configuration setting.
-
-- From Xen 4.14 onwards it is also possible to alter the system wide upper
-bound of the number of grants Xen would allow guests to establish by
-writing to the /params/gnttab_max_frames hypervisor file system node.
-Note however that changing the value this way will only affect guests
-yet to be created on the respective host.
-
-Suppressing use of grant table v2 interfaces for 32-bit x86 guests will
-also avoid this vulnerability.
+Not passing through physical devices to untrusted guests will avoid
+the vulnerability.
 
 CREDITS
 =======
 
-This issue was discovered by Jan Beulich of SUSE.
+This issue was discovered by Paul Durrant of Amazon and Jan Beulich of
+SUSE.
 
 RESOLUTION
 ==========
 
-Applying the attached patch resolves this issue.
+Applying the appropriate set of attached patches resolves this issue.
 
 Note that patches for released versions are generally prepared to
 apply to the stable branches, and may not apply cleanly to the most
 recent release tarball.  Downstreams are encouraged to update to the
 tip of the stable branch before applying these patches.
 
-xsa382.patch           xen-unstable - Xen 4.11.x
+xsa347/xsa347-?.patch           xen-unstable
+xsa347/xsa347-4.14-?.patch      Xen 4.14
+xsa347/xsa347-4.13-?.patch      Xen 4.13
+xsa347/xsa347-4.12-?.patch      Xen 4.12
+xsa347/xsa347-4.11-?.patch      Xen 4.10 - 4.11
 
-$ sha256sum xsa382*
-1254d62c8ec2c6b45c117d1483af9a71f5de0e4142c9451dd5a75ee334219542  xsa382.meta
-9e500ba2bfe36bebf27262afcb9be7b02f950aed4a7b6c1738606d5ed538c2b8  xsa382.patch
+$ sha256sum xsa347* xsa347*/*
+f16e1a348b0e45601c96b2bd08afc4202bbccc92c8af8344b3c8286ca819acef  xsa347.meta
+82e14d0507ec94f8cfac2b4d5d1b60681b925218ab927332bee338e6b6c679c9  xsa347/xsa347-1.patch
+1bc6018c3685727ba4035bf0b5cea95940a1b9c4746fa9bddfd41507482d68a1  xsa347/xsa347-2.patch
+f1bd8eba268300f564837ac37fe43b774ace885c9cbf8fcacae457128730bc80  xsa347/xsa347-3.patch
+5aec8f3b15aa799e1ff7ec0dfe53523cb91aa5fd88033f7f034cb74ebaa6abe4  xsa347/xsa347-4.11-1.patch
+4ab3a6fa181ce486b4c9943f6629b7c1a4337c7ccb92701ae6e40108533778ca  xsa347/xsa347-4.11-2.patch
+fec82340dc65fc1001358de51d0639b2b401818fa1e831f8715cb1780b17dc7b  xsa347/xsa347-4.12-1.patch
+be89e976fe03464ce3a73b162c07927128f41a8a03466e903ebfa4ea0dc46116  xsa347/xsa347-4.12-2.patch
+5dc0abf73d1a9d21f2b57e6c57ee5c15cc3febbb783123c0946f3e5778671929  xsa347/xsa347-4.13-1.patch
+6d2b6ea7a373fb1c4cce63db349bbafa8603b5e7c6b74fc6d029954075f2268d  xsa347/xsa347-4.13-2.patch
+4e154bfca5101569c8260e307eb6439783bc99547b7dfb5aba2bafebbde46190  xsa347/xsa347-4.13-3.patch
+6a70c2afba0d3ad73b12743a6808ba8002e9ee573d7c460397355e40de3b553f  xsa347/xsa347-4.14-1.patch
+1bc6018c3685727ba4035bf0b5cea95940a1b9c4746fa9bddfd41507482d68a1  xsa347/xsa347-4.14-2.patch
+f1bd8eba268300f564837ac37fe43b774ace885c9cbf8fcacae457128730bc80  xsa347/xsa347-4.14-3.patch
 $
 
 DEPLOYMENT DURING EMBARGO
 =========================
 
-Deployment of the patches and/or grant-frames-limiting mitigation
-described above (or others which are substantially similar) is permitted
-during the embargo, even on public-facing systems with untrusted guest
-users and administrators.
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
 
-HOWEVER, care has to be taken to avoid restricting guests too much, as
-them suddenly being unable to establish grants they used to be able to
-establish may lead to re-discovery of the issue.
+HOWEVER, deployment of the mitigation is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
 
-AND: Deployment of the grant table v2 disabling mitigation described
-above is NOT permitted during the embargo on public-facing systems with
-untrusted guest users and administrators.  This is because such a
-configuration change is recognizable by the affected guests.
+This is because removal of pass-through devices or their replacement by
+emulated devices is a guest visible configuration change, which may lead
+to re-discovery of the issue.
+
+Deployment of this mitigation is permitted only AFTER the embargo ends.
 
 AND: Distribution of updated software is prohibited (except to other
 members of the predisclosure list).
@@ -135,16 +133,40 @@ consult the Xen Project community's agreed Security Policy:
   http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmEmMPYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZwnkIALnDReUPP6qoQzBWHf9s93UPwM6YVdHl/ao1Nh9l
-IyMGtTKjJjtYR9at0tIJDmVecFZzsBtLhQlKWe5DvNP84ZQ99EGDjzsqYKGdJMZK
-QIfyUz74UKN5PwEzxeT2C3Q9tOIq2NA41Vax19MjAXSbvAi3jp/0CSj7i6h+bK5f
-WoBX9Av8Ie2ykF3Fe5i7yNl9gMpCyqEl3dijWwjezLIxlxzdBrjbKni+yBvmLBS9
-XdS++bu9LwAbQXeDc5oB0b6mvy+7oHzEJfvCH+tA6o6V6bls94sF8owi5H52rn1n
-23HzFQwbwqX9wmW5OKSS/NBzI9vJwzRCyOEVQw+eaZQGiHw=
-=kWGv
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAHB6UMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZnS4H/20DvLqB+ZlD94WUZF4hR0V2Weg9Nb4iGVh2hNJT
+DFDzDsWHtIzuPUgPI6uDrE+gNLRxrZGlThz7zyyxZkWftX/pIGIdGIwES1jDfq5Q
+3D2ZGVgSSxqUPoIFn7aU9DXxI5NlDlgBV9c8q4e/DQvo6VI34oo1A5eENWcBusda
+DxLPyuh2b58lET+LwMJ/V0OprqsZYXd1rBprfwg1YpGS3Ydc8jPL64orrGk5EXew
+A7OO/rhiqYubvJhjwYs88A2mL2eoT6UkP0cIBo/ezyK8mkjvBmBYE2O+rM5WGUpl
+EavAQ38vXVhDp7oz1lSlOowVWRscRbRAtb18GyAGsDU6V5I=
+=lo6o
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa382.meta" of type "application/octet-stream" (1908 bytes)
+Download attachment "xsa347.meta" of type "application/octet-stream" (1987 bytes)
 
-Download attachment "xsa382.patch" of type "application/octet-stream" (1431 bytes)
+Download attachment "xsa347/xsa347-1.patch" of type "application/octet-stream" (4405 bytes)
+
+Download attachment "xsa347/xsa347-2.patch" of type "application/octet-stream" (2195 bytes)
+
+Download attachment "xsa347/xsa347-3.patch" of type "application/octet-stream" (2201 bytes)
+
+Download attachment "xsa347/xsa347-4.11-1.patch" of type "application/octet-stream" (1808 bytes)
+
+Download attachment "xsa347/xsa347-4.11-2.patch" of type "application/octet-stream" (3458 bytes)
+
+Download attachment "xsa347/xsa347-4.12-1.patch" of type "application/octet-stream" (1857 bytes)
+
+Download attachment "xsa347/xsa347-4.12-2.patch" of type "application/octet-stream" (3521 bytes)
+
+Download attachment "xsa347/xsa347-4.13-1.patch" of type "application/octet-stream" (4998 bytes)
+
+Download attachment "xsa347/xsa347-4.13-2.patch" of type "application/octet-stream" (2195 bytes)
+
+Download attachment "xsa347/xsa347-4.13-3.patch" of type "application/octet-stream" (2201 bytes)
+
+Download attachment "xsa347/xsa347-4.14-1.patch" of type "application/octet-stream" (4990 bytes)
+
+Download attachment "xsa347/xsa347-4.14-2.patch" of type "application/octet-stream" (2195 bytes)
+
+Download attachment "xsa347/xsa347-4.14-3.patch" of type "application/octet-stream" (2201 bytes)
