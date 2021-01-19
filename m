@@ -1,51 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/6
-Message-Id: <E1mIrb6-00067W-Nc@xenbits.xenproject.org>
-Date: Wed, 25 Aug 2021 12:01:36 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/19/3
+Message-Id: <E1l1txP-0002qH-QD@xenbits.xenproject.org>
+Date: Tue, 19 Jan 2021 16:34:15 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 383 v2 (CVE-2021-28700) - xen/arm: No memory limit for dom0less domUs
+Subject: Xen Security Advisory 331 v3 (CVE-2020-27675) - Race condition in Linux event handler may crash dom0
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2021-28700 / XSA-383
-                               version 2
+            Xen Security Advisory CVE-2020-27675 / XSA-331
+                              version 3
 
-              xen/arm: No memory limit for dom0less domUs
+         Race condition in Linux event handler may crash dom0
 
-UPDATES IN VERSION 2
+UPDATES IN VERSION 3
 ====================
 
-Public release.
+CVE assigned.
 
 ISSUE DESCRIPTION
 =================
 
-The dom0less feature allows an administrator to create multiple
-unprivileged domains directly from Xen.  Unfortunately, the
-memory limit from them is not set. This allow a domain to allocate
-memory beyond what an administrator originally configured.
+The Linux kernel event channel handling code doesn't defend the
+handling of an event against the same event channel being removed in
+parallel.
+
+This can result in accesses to already freed memory areas or NULL
+pointer dereferences in the event handling code, leading to
+misbehaviour of the system or even crashes.
 
 IMPACT
 ======
 
-Malicious dom0less guest could drive Xen out of memory and may
-result to a Denial of Service (DoS) attack affecting the entire
-system.
+A misbehaving guest can trigger a dom0 crash by sending events for a
+paravirtualized device while simultaneously reconfiguring it.
 
 VULNERABLE SYSTEMS
 ==================
 
-Only Arm systems are vulnerable. Only domains created using the
-dom0less feature are affected.
+All systems with a Linux dom0 are vulnerable.
 
-Only domains created using the dom0less feature can leverage the
-vulnerability.
-
-All versions of Xen since 4.12 are vulnerable.
+All Linux kernel versions are vulnerable.
 
 MITIGATION
 ==========
@@ -55,7 +53,7 @@ There is no known mitigation.
 CREDITS
 =======
 
-This issue was discovered by Julien Grall of Amazon.
+This issue was discovered by Jinoh Kang of Theori.
 
 RESOLUTION
 ==========
@@ -67,13 +65,10 @@ apply to the stable branches, and may not apply cleanly to the most
 recent release tarball.  Downstreams are encouraged to update to the
 tip of the stable branch before applying these patches.
 
-xsa383.patch           xen-unstable - Xen 4.13.x
-xsa383-4.12.patch      Xen 4.12.x
+xsa331-linux.patch     Linux
 
-$ sha256sum xsa383*
-773fe38d5d182ce43b5552fcdf6ed08c33126ed728e40d94c5050f89bfb3bd4d  xsa383.meta
-cfd0632d250cc36d88269ae08e19e742c6bd07ba130c2604d51a10ba64d4e413  xsa383.patch
-d18f72fa595f330fa8ed13c9412a36fba58a8baf9ad30b9fc2fd4e4533c0ee1a  xsa383-4.12.patch
+$ sha256sum xsa331*
+8583392c0c573f7baa85e41c9afbdf74dcb04aea1be992d78991f0787230a193  xsa331-linux.patch
 $
 
 DEPLOYMENT DURING EMBARGO
@@ -91,6 +86,7 @@ Predisclosure list members who wish to deploy significantly different
 patches and/or mitigations, please contact the Xen Project Security
 Team.
 
+
 (Note: this during-embargo deployment notice is retained in
 post-embargo publicly released Xen Project advisories, even though it
 is then no longer applicable.  This is to enable the community to have
@@ -101,18 +97,14 @@ consult the Xen Project community's agreed Security Policy:
   http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmEmMPYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZmboIALCcOpac8K7jPXZ+D5S5S1kGExOHYCLDBCZ6LyPt
-jUmuR3r7xnkpJmcwSqGBHF5/PR6Sug+AjiggR8WHAFYiKod7yt1NjR4dm92Jy89x
-t4mpyQ2ZX7PIMOiTfxlsmzsDspBxjk9sV6Pt7w4o25MiWdmY41hEkE+qtJ0OBto0
-btzbaInKko6SXZWPGGpAToKlKPnwcApe2DehGYO98xl8eUZ8Ql/1lieHjuSK60Nx
-RlboPeGDZwDgDroRj8GFNGxl2hESULVof0tG3w2IXPmYoa9iTKNUnO3KFL4kAJ/p
-ZWzyRuHbX9FjQXBFnJJ5pyTHrc1aYzXJCwxAoSt436aRX2c=
-=NGUO
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAHB6QMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZDpEH/1DgvbcVJRbGyzc8TA80oAT+zeVQpTaZkgGthQV/
+PvJQH/sMi5mrgQ7pkTVu08wY4/BWTzz+0bceD/+PqMoXBYn+56y3oavVUdAsrK6P
+Bjucd+TI0kOrRx/82FlVtjir8xPZuiBi1xHxb4mQRc70BqJfI9GETOnFsGYhFpcX
+woDuHAfum3+6fUFyRPhyu7MoWChfyOQxu6IxU22rpelT1wAOPsIi15fX0Xbz3nJi
+7bIbc3Hv9EAv114RsDZbNhz8ymzj5BL/gXWQO13187NGVhDlKdi91zdDQqbKTKTW
+4Hvl/6zARGLEPxh6oQbQhxhnMHD5+BVPvacarjNjtHdkJTk=
+=pzTm
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa383.meta" of type "application/octet-stream" (1696 bytes)
-
-Download attachment "xsa383.patch" of type "application/octet-stream" (1859 bytes)
-
-Download attachment "xsa383-4.12.patch" of type "application/octet-stream" (1855 bytes)
+Download attachment "xsa331-linux.patch" of type "application/octet-stream" (4730 bytes)
