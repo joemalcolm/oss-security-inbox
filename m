@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3498" "Friday" "20" "May" "2016" "14:54:45" "+0200" "Sven Kieske" "s.kieske@mittwald.de" "<573F0915.2060200@mittwald.de>" "107" "Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714" "^Date:" nil nil "5" "2016052012:54:45" "[oss-security] ImageMagick Is On Fire -- CVE-2016-3714" (number mark "        s.kieske@mit May 20  107/3498  " thread-indent "\"Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714\"\n") "<alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>" ("<CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>" "<20160503181505.GA8195@openwall.com>" "<57292879.7050303@gmail.com>" "<alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7182" "Tuesday" "19" "January" "2021" "16:34:19" "+0000" "Xen.org security team" "security@xen.org" "<E1l1txT-0002xV-JD@xenbits.xenproject.org>" "182" "[oss-security] Xen Security Advisory 355 v3 (CVE-2020-29040) - stack corruption from XSA-346 change" nil nil nil "1" "2021011916:34:19" "[oss-security] Xen Security Advisory 355 v3 (CVE-2020-29040) - stack corruption from XSA-346 change" (number mark "U       security@xen Jan 19  182/7182  " thread-indent "\"[oss-security] Xen Security Advisory 355 v3 (CVE-2020-29040) - stack corruption from XSA-346 change\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 355 v3 (CVE-2020-29040) - stack corruption from XSA-346 change" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13858 invoked by uid 550); 20 May 2016 12:55:00 -0000
+Received: (qmail 15480 invoked by uid 550); 19 Jan 2021 16:34:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,134 +11,206 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13840 invoked from network); 20 May 2016 12:55:00 -0000
-X-Virus-Scanned: Debian amavisd-new at ac01.mittwald.de
-X-Authenticated-mymxserver.com: Yes
-References: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>
- <20160503181505.GA8195@openwall.com> <57292879.7050303@gmail.com>
- <alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>
-Message-ID: <573F0915.2060200@mittwald.de>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-MIME-Version: 1.0
-In-Reply-To: <alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature";
-	boundary="nvpJjhNg1bRnHjSejAKl0l2L2mnVnWiSS"
-X-Originating-IP: [192.168.8.112]
-X-KSE-AntiSpam-Interceptor-Info: white sender email list
-X-KSE-Antivirus-Interceptor-Info: scan successful
-X-KSE-Antivirus-Info: Clean
-Date: Fri, 20 May 2016 14:54:45 +0200
-From: Sven Kieske <s.kieske@mittwald.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714
-To: <oss-security@lists.openwall.com>
+Received: (qmail 15408 invoked from network); 19 Jan 2021 16:34:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=C5UK2QtG/S7aEUEH9HsxEYXIX3VPu03wMMkvuOHpN9s=; b=r9ncFBV/rNhrGQF79pMEu4Izgc
+	AoB35AXs+zQdh8jmIGAqiDeXyocBCfOs4Tm3mYo4jyvm/4YDDwPmnUeaXpEoi7j9DmMrA3Ao7yD/t
+	tmn6B7WfftmlOqRB4lnvfVt68Ua8sg5XZ/n1QLGoPpiDhQ4y94xoN2bT/OATGzrMfmV4=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1l1txT-0002xV-JD@xenbits.xenproject.org>
+Date: Tue, 19 Jan 2021 16:34:19 +0000
+Subject: [oss-security] Xen Security Advisory 355 v3 (CVE-2020-29040) - stack corruption
+ from XSA-346 change
 
---nvpJjhNg1bRnHjSejAKl0l2L2mnVnWiSS
-Content-Type: multipart/mixed; boundary="oOoE8fxlT5WEMIBd0q7DIAulsFLMmIBI4"
-From: Sven Kieske <s.kieske@mittwald.de>
-To: oss-security@lists.openwall.com
-Message-ID: <573F0915.2060200@mittwald.de>
-X-Authenticated-mymxserver.com: Yes
-Subject: Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714
-References: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>
- <20160503181505.GA8195@openwall.com> <57292879.7050303@gmail.com>
- <alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>
-In-Reply-To: <alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
---oOoE8fxlT5WEMIBd0q7DIAulsFLMmIBI4
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 19/05/16 19:07, Bob Friesenhahn wrote:
->=20
-> As an example Ubuntu 14.04.4 LTS (which is supposed to be getting
-> security updates) has not provided ImageMagick or GraphicsMagick
-> package updates in 3 years.
+            Xen Security Advisory CVE-2020-29040 / XSA-355
+                              version 3
 
-Hi,
+                 stack corruption from XSA-346 change
 
-as you can see here:
+UPDATES IN VERSION 3
+====================
 
-http://packages.ubuntu.com/trusty/graphicsmagick
+CVE assigned.
 
-GM in Ubuntu resides in the "universe" repository
+ISSUE DESCRIPTION
+=================
 
-When you read up about "universe" here:
+One of the two changes for XSA-346 introduced an on-stack array.  The
+check for guarding against overrunning this array was off by one,
+allowing for corruption of the first stack slot immediately following
+this array.
 
-https://help.ubuntu.com/community/Repositories/Ubuntu
+IMPACT
+======
 
-you will see that:
+A malicious or buggy HVM or PVH guest can cause Xen to crash, resulting
+in a Denial of Service (DoS) to the entire host.  Privilege escalation
+as well as information leaks cannot be excluded.
 
-"Universe - Community maintained software, i.e. not officially supported
-software."
+VULNERABLE SYSTEMS
+==================
 
-which means all software from universe is _not_ officially supported
-by canonical and thus receives only timely updates, if a community
-member picks up the necessary work.
+All Xen versions which have the patches for XSA-346 applied are
+vulnerable.
 
-Too also quote from https://wiki.ubuntu.com/LTS
+Only x86 HVM and PVH guests can leverage the vulnerability.  Arm guests
+and x86 PV guests cannot leverage the vulnerability.
 
-"The LTS designation applies only to specific subsets of the Ubuntu
-archive."
+Only x86 HVM and PVH guests which have physical devices passed through
+to them can leverage the vulnerability.
 
-See also this (german) article about packages which do not
-get security updates in Ubuntu "LTS" releases, because they are
-only community maintained:
+MITIGATION
+==========
 
-http://www.heise.de/ct/artikel/Ubuntu-LTS-Langzeitpflege-gibt-es-nur-fuer-d=
-as-Wichtigste-3179960.html
+Not passing through physical devices to untrusted guests will avoid
+the vulnerability.
 
-There is also a command line tool to find out about unsupported
-packages:
+CREDITS
+=======
 
-ubuntu-support-status --show-unsupported
+This issue was discovered by Jan Beulich of SUSE.
 
+RESOLUTION
+==========
 
-HTH
+Applying the attached patch resolves this issue.
 
---=20
-Mit freundlichen Gr=FC=DFen / Regards
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-Sven Kieske
+xsa355.patch           xen-unstable - Xen 4.10.x
 
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-K=F6nigsberger Stra=DFe 6
-32339 Espelkamp
-T: +495772 293100
-F: +495772 293333
-https://www.mittwald.de
-Gesch=E4ftsf=FChrer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplement=E4rin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhaus=
-en
+$ sha256sum xsa355*
+a93bfc376897e7cffd095d395f1a66476adb9503d7d80a59b7861e64c2675323  xsa355.meta
+dae633c11cf2eff3e304737265e18ab09213e8e4640458080a944ae7a40819a4  xsa355.patch
+$
 
+NOTE CONCERNING SHORT EMBARGO
+=============================
 
---oOoE8fxlT5WEMIBd0q7DIAulsFLMmIBI4--
+This issue is likely to be re-discovered as the changes for XSA-346
+are deployed more widely, since the issue is also triggerable without
+any malice or bugginess.
 
---nvpJjhNg1bRnHjSejAKl0l2L2mnVnWiSS
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+DEPLOYMENT DURING EMBARGO
+=========================
 
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQIcBAEBAgAGBQJXPwkWAAoJEMby9TMDAbQRgDAP/2DG6FFu5v58uKOKPkNAz0CM
-rlunSU5/G04SPhVYTzFrfSL8H6dYB9RskQYlY1OnXfqgB3OCHGcP+SFr3zM7gya+
-KUdFAPODwx6AtU2V75SbuHxI4SI0cN9jjhk4a2d+i13j7uoJVDmzma4aTbIjkvpg
-QZXOpXFaapoLWdW+xq+pDs71sMmKgNOmuMMz4Ur+/wD5fBmdQ21LHl27KUgqXnbf
-/us3ZGU7TfMx7EJe9rTwcdtUNMpkudQUYwUDxzI6gl4URrFCnxKnn8qtJLx+40Wy
-3gvG8tO8LSVkSTFZW8lkCvQ89TU6O/uEQtywiFUrmYndUAJOlcoeRNw4iYkOEyoS
-uG0T6Fkg3GmfX0xhCffcjVLJTlGA//ogPr+jGWtbb2Tr8jWPqTr9AE/lZkb6LIFl
-lYvu3PvK6BmWQn6jnnt1fY3Qy40XeylTkh2AW3KMI2I/aCq690q92KHQ3VtvURj4
-FN74pw6gTJYYW7MRBjf5/J/CxgYvMpFEPiSL4EuKq5/jg0wbeFK46yAdlfbRNJE/
-PnLFlTmLPxvXPOA+USMnpvSC9oG++r0cfoeXe9OAfjwftdl9bh/2TAS2Z6VdJGca
-ozEp1kogRCpcyseYVKj6hlbf5KTUYJ3zU6jGTq2e0RI+pJHQaKSIUx4npsASrMLv
-Ctum63PaHGKWIrJVMJSv
-=8E5A
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAHB6UMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZpMAH/AwWuyJ0tQS95kJmfCSe9gxFkIZwnoOlxAIF1fQ8
+0W7OXmgrr9giz3lVR6Kjannq3HextHuLoVttg3soJ6pCqPBOH84/k0vyHEb9ChBF
+ypkvH0iG1wnpVo+DdYOnY7OnaBHrPsB0E83WfKohP05e+Ymcroq09vKw02fR6B+z
++D3uNzbNi1kZz1DcTZFsCAmHJsc3zS+D8jyEwOFQwlVckugJ+zDuylKtSDau56CN
+WGG3nkoDldWm1687ui4stnal8WIBP6sMgErwnv9hpzfL5glc/m0PSELQ8hZgNmAX
+KMoWvdjPenwPQEhrii92P15DbXGz6uktIZFrKRgCUx2u5ss=
+=1hd2
 -----END PGP SIGNATURE-----
 
---nvpJjhNg1bRnHjSejAKl0l2L2mnVnWiSS--
+--=separator
+Content-Type: application/octet-stream; name="xsa355.meta"
+Content-Disposition: attachment; filename="xsa355.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAzNTUsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIs
+CiAgICAiNC4xMSIsCiAgICAiNC4xMCIKICBdLAogICJUcmVlcyI6IFsKICAg
+ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAg
+ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
+YWJsZVJlZiI6ICIxNWIyOTgwOTcyODlmMWMxMWI5ODE0NTRhM2RjOTEyYjk1
+ZTJmNjViIiwKICAgICAgICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAi
+UGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM1NS5wYXRjaCIKICAgICAg
+ICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC4xMSI6IHsK
+ICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAg
+ICJTdGFibGVSZWYiOiAiMTQ0N2Q0NDlmYWI3ZTQ4Yzg1ZmFmODM5NTE4NDJi
+YjYwZDdkYWJlNSIsCiAgICAgICAgICAiUHJlcmVxcyI6IFtdLAogICAgICAg
+ICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EzNTUucGF0Y2giCiAg
+ICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTIi
+OiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAg
+ICAgICAiU3RhYmxlUmVmIjogIjE0YzljMGZjZWFlOTJhMThkZWRjM2YyODBl
+YmY4YjlmNTJlMzlkZTUiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAg
+ICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzU1LnBhdGNo
+IgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0
+LjEzIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewog
+ICAgICAgICAgIlN0YWJsZVJlZiI6ICJkNGMwNDgzYzBiODc3NjhjZDliOTU1
+NDJlOTgxMTFlNGMwOThkNTdmIiwKICAgICAgICAgICJQcmVyZXFzIjogW10s
+CiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM1NS5w
+YXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAg
+ICAiNC4xNCI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6
+IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiZDEwMWI0MTdiNzg0YTI2MzI2
+ZmM3ODAwYTc5Y2M1MzliYTU3MGI3OSIsCiAgICAgICAgICAiUHJlcmVxcyI6
+IFtdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ez
+NTUucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9
+LAogICAgIm1hc3RlciI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAg
+InhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiYjY1OWE1Y2ViZDYx
+MWRiZTY5OGU2M2MwMzQ4NWI1ZmU4Y2Q5NjRhZCIsCiAgICAgICAgICAiUHJl
+cmVxcyI6IFtdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAg
+ICJ4c2EzNTUucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9
+CiAgICB9CiAgfQp9
+
+--=separator
+Content-Type: application/octet-stream; name="xsa355.patch"
+Content-Disposition: attachment; filename="xsa355.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiBtZW1vcnk6IGZpeCBvZmYtYnktb25lIGluIFhTQS0zNDYgY2hhbmdlCgpU
+aGUgY29tcGFyaXNvbiBhZ2FpbnN0IEFSUkFZX1NJWkUoKSBuZWVkcyB0byBi
+ZSA+PSBpbiBvcmRlciB0byBhdm9pZApvdmVycnVubmluZyB0aGUgcGFnZXNb
+XSBhcnJheS4KClRoaXMgaXMgWFNBLTM1NS4KCkZpeGVzOiA1Nzc3YTM3NDJk
+ODggKCJJT01NVTogaG9sZCBwYWdlIHJlZiB1bnRpbCBhZnRlciBkZWZlcnJl
+ZCBUTEIgZmx1c2giKQpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJl
+dWxpY2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBKdWxpZW4gR3JhbGwgPGpn
+cmFsbEBhbWF6b24uY29tPgoKLS0tIGEveGVuL2NvbW1vbi9tZW1vcnkuYwor
+KysgYi94ZW4vY29tbW9uL21lbW9yeS5jCkBAIC04NTQsNyArODU0LDcgQEAg
+aW50IHhlbm1lbV9hZGRfdG9fcGh5c21hcChzdHJ1Y3QgZG9tYWluCiAgICAg
+ICAgICAgICArK2V4dHJhLnBwYWdlOwogCiAgICAgICAgIC8qIENoZWNrIGZv
+ciBjb250aW51YXRpb24gaWYgaXQncyBub3QgdGhlIGxhc3QgaXRlcmF0aW9u
+LiAqLwotICAgICAgICBpZiAoICgrK2RvbmUgPiBBUlJBWV9TSVpFKHBhZ2Vz
+KSAmJiBleHRyYS5wcGFnZSkgfHwKKyAgICAgICAgaWYgKCAoKytkb25lID49
+IEFSUkFZX1NJWkUocGFnZXMpICYmIGV4dHJhLnBwYWdlKSB8fAogICAgICAg
+ICAgICAgICh4YXRwLT5zaXplID4gZG9uZSAmJiBoeXBlcmNhbGxfcHJlZW1w
+dF9jaGVjaygpKSApCiAgICAgICAgIHsKICAgICAgICAgICAgIHJjID0gc3Rh
+cnQgKyBkb25lOwo=
+
+--=separator--
