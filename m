@@ -1,139 +1,128 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/04/2
-Message-ID: <69a35308-0697-780d-8e72-422c7a2173d8@intel.com>
-Date: Mon, 4 Jan 2021 11:27:50 +0000
-From: Ferruh Yigit <ferruh.yigit@...el.com>
-To: Mauro Matteo Cascella <mcascell@...hat.com>, oss-security@...ts.openwall.com
-Cc: security@...k.org, security-prerelease@...k.org, "dev@...k.org" <dev@...k.org>, Ryan Hall <ryan.e.hall@...el.com>
-Subject: Re: [dpdk-dev] DPDK security advisory for multiple vhost crypto issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/19/1
+Message-ID: <20210119123049.GB228699@fedorawork>
+Date: Tue, 19 Jan 2021 13:30:49 +0100
+From: Riccardo Schirone <rschiron@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Multiple CVEs in dnsmasq fixed in version 2.83
 Content-Type: text/plain; charset=utf-8
 
-On 1/4/2021 8:28 AM, Mauro Matteo Cascella wrote:
-> Hello,
-> 
-> Is there any particular reason for the Scope metric to be Unchanged
-> (S:U) for CVE-2020-14377 and CVE-2020-14378?
-> 
+Hi,
 
-removed dpdk-announce mail list
+Multiple issues were discovered in dnsmasq up to version 2.82, included, by
+Moshe Kol (JSOF) and Shlomi Oberman (JSOF). It is recommended that you adopt
+the latest update bringing your version of the software to 2.83.
 
-Hi Mauro,
+Upstream release:
+http://lists.thekelleys.org.uk/pipermail/dnsmasq-discuss/2021q1/014599.html
+https://www.thekelleys.org.uk/dnsmasq/dnsmasq-2.83.tar.gz
 
-CVE-2020-14377, the memory over read is in the scope of the same application, 
-that is the reason of the unchanged scope. There is another CVE below that can 
-use this information to figure out where to overwrite for remote execution which 
-has scope set as 'Changed'.
+Reference:
+https://www.jsof-tech.com/disclosures/dnspooq/
 
-CVE-2020-14378, can cause loop taken longer time and delays the service, since 
-it is eating the core cycles, if there is something else using that specific 
-core technically it may delay it too, but DPDK mostly uses all core for itself 
-and since mainly the vhost crypto service is affected, scope selected as Unchanged.
 
-Is there a concern on the selected scope metric?
 
-Thanks.
+CVE-2020-25681
+A heap-based buffer overflow was discovered in dnsmasq in the way it sorts
+RRSets before validating them with DNSSEC data. An attacker on the network,
+who can forge DNS replies such as that they are accepted as valid, could use
+this flaw to cause an overflow with arbitrary data in a heap-allocated memory,
+possibly executing code on the machine.
 
-> Thank you,
-> 
-> On Mon, Sep 28, 2020 at 5:43 PM Ferruh Yigit <ferruh.yigit@...el.com> wrote:
->>
->> A set of vulnerabilities are fixed in DPDK:
->> - CVE-2020-14374
->> - CVE-2020-14375
->> - CVE-2020-14376
->> - CVE-2020-14377
->> - CVE-2020-14378
->>
->> Some downstream stakeholders were warned in advance in order to coordinate the
->> release of fixes and reduce the vulnerability window.
->>
->> Problem:
->> A malicious guest can harm the host using vhost crypto, this includes
->> executing code in host (VM Escape), reading host application memory
->> space to guest and causing partially denial of service in the host.
->>
->> All users of the vhost library are strongly encouraged to upgrade as soon as
->> possible.
->>
->> Thanks to "Ryan Hall <ryan.e.hall@...el.com>" for reporting the issues.
->>
->>
->> Stable releases download links:
->>
->> DPDK 18.11.10 (LTS)
->> http://fast.dpdk.org/rel/dpdk-18.11.10.tar.xz
->>
->> DPDK 19.11.5 (LTS)
->> https://fast.dpdk.org/rel/dpdk-19.11.5.tar.xz
->>
->>
->> Details:
->>
->> CVE: CVE-2020-14374
->> Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
->> Severity: 8.8 (High)
->> CVSS scores: CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
->> Summary : Remote Code Execution in vhost_crypto (VM Escape)
->> Reporter: Ryan Hall <ryan.e.hall@...el.com>
->>
->> CVE: CVE-2020-14375
->> Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
->> Severity: 7.8 (High)
->> CVSS scores: CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H
->> Summary : Time-of-check time-of-use vulnerabilities throughout vhost_crypto.c
->> Reporter: Ryan Hall <ryan.e.hall@...el.com>
->>
->> CVE: CVE-2020-14376
->> Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
->> Severity: 7.8 (High)
->> CVSS scores: CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H
->> Summary : Buffer overflow copying iv_data from guest to
->>             host(prepare_sym_cipher_op & prepare_sym_chain_op)
->> Reporter: Ryan Hall <ryan.e.hall@...el.com>
->>
->> CVE: CVE-2020-14377
->> Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
->> Severity: 7.1 (High)
->> CVSS scores: CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:H
->> Summary: write_back_data buffer over read (cipher->para.dst_data_len &
->>            desc->len)
->> Reporter: Ryan Hall <ryan.e.hall@...el.com>
->>
->> CVE: CVE-2020-14378
->> Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
->> Severity: 3.3 (Low)
->> CVSS scores: CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L
->> Summary : Partial Denial of Service due to Integer Underflow
->> Reporter: Ryan Hall <ryan.e.hall@...el.com>
->>
->>
->> Commits:
->> main repo (will be 20.11.0)
->> https://git.dpdk.org/dpdk/commit/?id=57680e34498
->> https://git.dpdk.org/dpdk/commit/?id=5677e68c05d
->> https://git.dpdk.org/dpdk/commit/?id=b2866f47336
->> https://git.dpdk.org/dpdk/commit/?id=409c47c7c5b
->> https://git.dpdk.org/dpdk/commit/?id=e15b7c01120
->> https://git.dpdk.org/dpdk/commit/?id=2d962bb7365
->>
->> DPDK 18.11.10 (LTS)
->> https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=ab6314978567
->> https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=7a5af91f8bf4
->> https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=7e7c75edc635
->> https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=ff65dc28bc71
->> https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=75f8df70a2c8
->> https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=6e8a4da39e68
->>
->> DPDK 19.11.5 (LTS)
->> https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=3f2635c5a9c3
->> https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=81e969483020
->> https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=e4a7c14f0248
->> https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=319b498e4b16
->> https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=6a3a414698e4
->> https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=e2666ec24535
->>
->> --
->> DPDK Security Team
->> http://core.dpdk.org/security/
->>
+Relevant patches:
+http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=4e96a4be685c9e4445f6ee79ad0b36b9119b502a
 
+CVE-2020-25682
+A buffer overflow vulnerability was discovered in the way dnsmasq extract
+names from DNS packets before validating them with DNSSEC data. An attacker on
+the network, who can create valid DNS replies, could use this flaw to cause an
+overflow with arbitrary data in a heap-allocated memory, possibly executing
+code on the machine. The flaw is in rfc1035.c:extract_name() function, which
+writes data to the memory pointed by name assuming MAXDNAME*2 bytes are
+available in the buffer. However, in some code execution paths it is possible
+extract_name() gets passed an offset from the base buffer, thus reducing in
+practice the number of available bytes that can be written in the buffer.
+
+Relevant patches:
+http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=4e96a4be685c9e4445f6ee79ad0b36b9119b502a
+
+CVE-2020-25683
+A heap-based buffer overflow was discovered in dnsmasq when DNSSEC is enabled
+and before it validates the received DNS entries. A remote attacker, who can
+create valid DNS replies, could use this flaw to cause an overflow in a
+heap-allocated memory. This flaw is caused by the lack of length checks in
+rtc1035.c:extract_name(), which could be abused to make the code execute
+memcpy() with a negative size in get_rdata() and cause a crash in dnsmasq,
+resulting in a Denial of Service.
+
+Relevant patches:
+http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=4e96a4be685c9e4445f6ee79ad0b36b9119b502a
+
+CVE-2020-25684
+A flaw was found when getting a reply from a forwarded query, where dnsmasq
+checks in forward.c:reply_query() if the reply destination address/port is
+used by the pending forwarded queries. However, it does not use the
+address/port to retrieve the exact forwarded query, substantially reducing the
+number of attempts an attacker on the network would have to perform to forge a
+reply and get it accepted by dnsmasq. This issue contrasts with RFC5452, which
+specifies a query's attributes that all must be used to match a reply. This
+flaw allows an attacker to perform a DNS Cache Poisoning attack. If chained
+with CVE-2020-25685 or CVE-2020-25686, the attack complexity of a successful
+attack is reduced.
+
+Relevant patches:
+http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=257ac0c5f7732cbc6aa96fdd3b06602234593aca
+
+CVE-2020-25685
+When getting a reply from a forwarded query, dnsmasq checks in
+forward.c:reply_query() which one is the forwarded query that matches the
+reply, by only using a weak hash of the query name. Due to the weak hash
+(CRC32 when dnsmasq is compiled without DNSSEC, SHA-1 when it is) an off-path
+attacker can find several different domains all having the same hash,
+substantially reducing the number of attempts he would have to perform to
+forge a reply and get it accepted by dnsmasq. This is in contrast with
+RFC5452, which specifies that query name is one of the attributes of a query
+that must be used to match a reply. This flaw could be abused to perform a DNS
+Cache Poisoning attack. If chained with CVE-2020-25684 the attack complexity
+of a successful attack is reduced.
+
+Relevant patches:
+http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=2d765867c597db18be9d876c9c17e2c0fe1953cd
+http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=2024f9729713fd657d65e64c2e4e471baa0a3e5b
+
+CVE-2020-25686
+A flaw was found when receiving a query, where dnsmasq does not check for an
+existing pending request for the same name and forwards a new request. By
+default, a maximum of 150 pending queries can be sent to upstream servers, so
+there can be at most 150 queries for the same name. This flaw allows an
+off-path attacker on the network to substantially reduce the number of
+attempts that would have to be performed to forge a reply and have it accepted
+by dnsmasq. This issue is mentioned in the "Birthday Attacks" section of
+RFC5452. If chained with CVE-2020-25684, the attack complexity of a successful
+attack is reduced.
+
+Relevant patches:
+http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=15b60ddf935a531269bb8c68198de012a4967156
+http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=6a6e06fbb0d4690507ceaf2bb6f0d8910f3d4914
+
+CVE-2020-25687
+A heap-based buffer overflow was discovered in dnsmasq when DNSSEC is enabled
+and before it validates the received DNS entries. A remote attacker, who can
+create valid DNS replies, could use this flaw to cause an overflow in a
+heap-allocated memory. This flaw is caused by the lack of length checks in
+rtc1035.c:extract_name(), which could be abused to make the code execute
+memcpy() with a negative size in sort_rrset() and cause a crash in dnsmasq,
+resulting in a Denial of Service.
+
+Relevant patches:
+http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=4e96a4be685c9e4445f6ee79ad0b36b9119b502a
+
+
+Thanks,
+-- 
+Riccardo Schirone
+Red Hat -- Product Security
+Email: rschiron@...hat.com
+PGP-Key ID: CF96E110
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
