@@ -1,188 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/13
-Message-ID: <20210317151834.GE2541@quack2.suse.cz>
-Date: Wed, 17 Mar 2021 16:18:34 +0100
-From: Jan Kara <jack@...e.cz>
-To: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
-Cc: Salvatore Bonaccorso <carnil@...ian.org>, oss-security@...ts.openwall.com, Theodore Ts'o <tytso@....edu>, Jan Kara <jack@...e.cz>, Lukas Czerner <lczerner@...hat.com>, Wolfgang Frisch <wolfgang.frisch@...e.com>, stable@...r.kernel.org
-Subject: Re: CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/19/6
+Message-Id: <E1l1txQ-0002rl-Jk@xenbits.xenproject.org>
+Date: Tue, 19 Jan 2021 16:34:16 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 332 v4 (CVE-2020-27673) - Rogue guests can cause DoS of Dom0 via high frequency events
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed 17-03-21 14:02:43, Greg Kroah-Hartman wrote:
-> On Wed, Mar 17, 2021 at 01:40:55PM +0100, Salvatore Bonaccorso wrote:
-> > On Wed, Mar 17, 2021 at 11:11:04AM +0100, Greg KH wrote:
-> > > On Wed, Mar 17, 2021 at 11:21:23AM +0530, Rohit Keshri wrote:
-> > > > Hello Team,
-> > > > 
-> > > > A flaw was found in the Linux kernel. A denial of service problem is
-> > > > identified if an extent tree is corrupted in a crafted ext4 filesystem in
-> > > > fs/ext4/extents.c in ext4_es_cache_extent. Fabricating an integer overflow,
-> > > > A local attacker with a special user privilege may cause a system crash
-> > > > problem which can lead to an availability threat.
-> > > 
-> > > Please include what kernel version things like this were "found in" and
-> > > when it was fixed, otherwise you force everyone to go scramble just to
-> > > find that this was reported in July of 2020 and fixed then in the 5.9
-> > > kernel release and has already been backported to all relevant stable
-> > > kernel releases in August of last year.
+            Xen Security Advisory CVE-2020-27673 / XSA-332
+                              version 4
 
-I absolutely second this. Please include in report if the problem is
-already fixed and which commit fixed it. Because I've just spent 20 minutes
-this morning searching my mailboxes because I remembered I've been fixing a
-problem that very much resembled this report but it took me a while to find
-our bugzilla... And it was me who actually fixed the bug a few months ago
-so I knew what to look for. When I have to deal with similar situation for
-problems I never heard of before it's even bigger waste of time and in some
-cases I'm not even sure I found the right problem.
+     Rogue guests can cause DoS of Dom0 via high frequency events
 
-> > > In other words, no one running an updated kernel version from kernel.org
-> > > is vulnerable today, right?  Are you saying that specific distro kernels
-> > > are vulnerable to this?  If so, which ones?
-> > 
-> > It might be missing in some stable trees from a quick check. I just
-> > checked the SUSE bug and it lists the following three relevant
-> > commits, whilst the last one seems the relevant one:
-> > 
-> > d176b1f62f24 "ext4: handle error of ext4_setup_system_zone() on remount"
-> > bf9a379d0980 "ext4: don't allow overlapping system zones"
-> > ce9f24cccdc0 "ext4: check journal inode extents more carefully"
-> > 
-> > ce9f24cccdc0 was indeed included in 5.9-rc2, and backported to
-> > 
-> > v5.7.18: 3b654d118548ef2bb212dca361a5d1d19707822d ext4: check journal inode extents more carefully
-> > v5.8.4: cfa678021a1bb6b5ce4aa45c865f2d3167646f89 ext4: check journal inode extents more carefully
-> > v5.9-rc2: ce9f24cccdc019229b70a5c15e2b09ad9c0ab5d1 ext4: check journal inode extents more carefully
-> > 
-> > Then though it has 
-> G> 
-> > Fixes: 0a944e8a6c66 ("ext4: don't perform block validity checks on the journal inode")
-> > 
-> > and 0a944e8a6c66 itself was backported to some of the stable series as
-> > well, I found:
-> > 
-> > v3.16.85: 71bfaf9e30125ec5b408fd328e412abf3b23214d ext4: don't perform block validity checks on the journal inode
-> > v4.14.178: fc3293a80acc469fbabc91bfbf2e65dc84377dc7 ext4: don't perform block validity checks on the journal inode
-> > v4.19.73: 97fbf573460e56ddf172614f70cdfa2af03b20ea ext4: don't perform block validity checks on the journal inode
-> > v4.4.221: 571fa68cacdf5fa70a6fdb71bda051f822d3cfb6 ext4: don't perform block validity checks on the journal inode
-> > v4.9.221: 2130aae807893cff163404bf6f6f6a4906dd14a1 ext4: don't perform block validity checks on the journal inode
-> > v5.2-rc2: 0a944e8a6c66ca04c7afbaa17e22bf208a8b37f0 ext4: don't perform block validity checks on the journal inode
-> > 
-> > So in the current still supported stable series, in 4.9.221, 4.14.178 and
-> > 4.19.73.
-> > 
-> > I just tried the reproducer from
-> > https://bugzilla.suse.com/show_bug.cgi?id=1173485 on a system with 4.19.177
-> > which so has not yet the 0a944e8a6c66 ("ext4: don't perform block validity
-> > checks on the journal inode") fix backported and it indeed causes:
-> > 
-> > [  224.003978] ------------[ cut here ]------------
-> > [  224.005052] kernel BUG at fs/ext4/extents_status.c:762!
-> > [  224.006659] invalid opcode: 0000 [#1] SMP PTI
-> > [  224.008378] CPU: 0 PID: 594 Comm: mount Not tainted 4.19.0-15-amd64 #1 Debian 4.19.177-1
-> > [  224.011292] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-> > [  224.014043] RIP: 0010:ext4_es_cache_extent+0xfe/0x100 [ext4]
-> > [  224.015770] Code: 48 8b 45 00 48 8b 7d 08 48 83 c5 18 48 89 e2 4c 89 e6 e8 a5 15 d8 d2 48 8b 45 00 48 85 c0 75 e4 e9 54 ff ff ff e8 a2 65 3f d2 <0f> 0b 0f 1f 44 00 00 41 55 49 89 fd 41 54 55 48 89 d5 53 89 f3 0f
-> > [  224.019834] RSP: 0018:ffffa7a840b8f958 EFLAGS: 00010213
-> > [  224.021034] RAX: 07ffffffffffffff RBX: 0000000000007ffd RCX: 0000ffffffffffff
-> > [  224.022658] RDX: 0000000000007fff RSI: 00000000ffffffff RDI: ffff940d78a78968
-> > [  224.024283] RBP: 0000000000007fff R08: 1000ffffffffffff R09: 00000000000002c9
-> > [  224.025913] R10: 00000000000002c9 R11: 0000000000000041 R12: ffff940d78a78968
-> > [  224.027549] R13: 00000000ffffffff R14: ffffffffffffffff R15: 00000000ffffffff
-> > [  224.029179] FS:  00007fe8d33fb100(0000) GS:ffff940d7ba00000(0000) knlGS:0000000000000000
-> > [  224.031011] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> > [  224.032354] CR2: 000056074c755878 CR3: 0000000135184001 CR4: 00000000001606f0
-> > [  224.033990] Call Trace:
-> > [  224.034634]  ext4_cache_extents+0x63/0xd0 [ext4]
-> > [  224.035712]  __read_extent_tree_block+0x111/0x160 [ext4]
-> > [  224.036665]  ? __kmalloc+0x180/0x220
-> > [  224.037343]  ? ext4_find_extent+0x144/0x320 [ext4]
-> > [  224.038247]  ext4_find_extent+0x144/0x320 [ext4]
-> > [  224.039144]  ext4_ext_map_blocks+0x6a/0xda0 [ext4]
-> > [  224.040063]  ? schedule+0x28/0x80
-> > [  224.040747]  ? __wait_on_bit+0x58/0x90
-> > [  224.041476]  ext4_map_blocks+0x2e4/0x5f0 [ext4]
-> > [  224.042350]  ? ext4_data_block_valid+0x1d/0x20 [ext4]
-> > [  224.043313]  ? __ext4_ext_check+0x238/0x3a0 [ext4]
-> > [  224.044261]  _ext4_get_block+0x8e/0x110 [ext4]
-> > [  224.045158]  ? unlock_new_inode+0x4e/0x60
-> > [  224.045960]  generic_block_bmap+0x4b/0x70
-> > [  224.046765]  jbd2_journal_init_inode+0x11/0xb0 [jbd2]
-> > [  224.047794]  ext4_fill_super+0x3052/0x3c70 [ext4]
-> > [  224.048730]  ? bdev_name.isra.6+0x2a/0xa0
-> > [  224.049530]  ? ext4_calculate_overhead+0x490/0x490 [ext4]
-> > [  224.050555]  ? snprintf+0x49/0x60
-> > [  224.051234]  ? ext4_calculate_overhead+0x490/0x490 [ext4]
-> > [  224.052309]  ? mount_bdev+0x177/0x1b0
-> > [  224.053074]  ? ext4_calculate_overhead+0x490/0x490 [ext4]
-> > [  224.054146]  mount_bdev+0x177/0x1b0
-> > [  224.054858]  mount_fs+0x3e/0x150
-> > [  224.055533]  vfs_kern_mount.part.36+0x54/0x120
-> > [  224.056394]  do_mount+0x20e/0xcc0
-> > [  224.057022]  ? _copy_from_user+0x37/0x60
-> > [  224.057781]  ? memdup_user+0x4b/0x70
-> > [  224.058530]  ksys_mount+0xb6/0xd0
-> > [  224.059231]  __x64_sys_mount+0x21/0x30
-> > [  224.059949]  do_syscall_64+0x53/0x110
-> > [  224.060631]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
-> > [  224.061531] RIP: 0033:0x7fe8d35f9fea
-> > [  224.062255] Code: 48 8b 0d a9 0e 0c 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 49 89 ca b8 a5 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 76 0e 0c 00 f7 d8 64 89 01 48
-> > [  224.065741] RSP: 002b:00007ffcd2022e38 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
-> > [  224.067223] RAX: ffffffffffffffda RBX: 000056074c748fb0 RCX: 00007fe8d35f9fea
-> > [  224.068620] RDX: 000056074c751050 RSI: 000056074c7491e0 RDI: 000056074c7491c0
-> > [  224.069987] RBP: 00007fe8d39471c4 R08: 0000000000000000 R09: 0000000000000000
-> > [  224.071399] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-> > [  224.072764] R13: 0000000000000000 R14: 000056074c7491c0 R15: 000056074c751050
-> > [  224.074101] Modules linked in: loop sctp binfmt_misc crct10dif_pclmul crc32_pclmul ghash_clmulni_intel button virtio_console virtio_balloon evdev qemu_fw_cfg joydev pcspkr serio_raw nfsd auth_rpcgss nfs_acl lockd grace sunrpc ip_tables x_tables autofs4 ext4 crc16 mbcache jbd2 fscrypto ecb hid_generic usbhid hid btrfs xor zstd_decompress zstd_compress xxhash raid6_pq libcrc32c crc32c_generic dm_mod ata_generic virtio_net net_failover failover virtio_blk crc32c_intel ata_piix libata uhci_hcd ehci_pci ehci_hcd scsi_mod floppy aesni_intel usbcore psmouse aes_x86_64 crypto_simd cryptd glue_helper i2c_piix4 virtio_pci virtio_ring virtio usb_common
-> > [  224.084374] ---[ end trace a93d957244af62ea ]---
-> > [  224.085298] RIP: 0010:ext4_es_cache_extent+0xfe/0x100 [ext4]
-> > [  224.086402] Code: 48 8b 45 00 48 8b 7d 08 48 83 c5 18 48 89 e2 4c 89 e6 e8 a5 15 d8 d2 48 8b 45 00 48 85 c0 75 e4 e9 54 ff ff ff e8 a2 65 3f d2 <0f> 0b 0f 1f 44 00 00 41 55 49 89 fd 41 54 55 48 89 d5 53 89 f3 0f
-> > [  224.089834] RSP: 0018:ffffa7a840b8f958 EFLAGS: 00010213
-> > [  224.090832] RAX: 07ffffffffffffff RBX: 0000000000007ffd RCX: 0000ffffffffffff
-> > [  224.092181] RDX: 0000000000007fff RSI: 00000000ffffffff RDI: ffff940d78a78968
-> > [  224.093539] RBP: 0000000000007fff R08: 1000ffffffffffff R09: 00000000000002c9
-> > [  224.094899] R10: 00000000000002c9 R11: 0000000000000041 R12: ffff940d78a78968
-> > [  224.096264] R13: 00000000ffffffff R14: ffffffffffffffff R15: 00000000ffffffff
-> > [  224.097586] FS:  00007fe8d33fb100(0000) GS:ffff940d7ba00000(0000) knlGS:0000000000000000
-> > [  224.099144] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> > [  224.100284] CR2: 000056074c755878 CR3: 0000000135184001 CR4: 00000000001606f0
-> > 
-> > So likely the 4.9.y, 4.14.y and 4.19.y still have the bug?  Is this correct? I
-> > only quickly skimmed over the report, but this seems to be the case.
-> 
-> It's hard to tell if those older kernels have this issue as the fix for
-> this does not apply at all, and even SUSE didn't backport the change as
-> it didn't seem relevant to them.
+UPDATES IN VERSION 4
+====================
 
-Yes, they do have the problem. In fact I'm just testing a backport to 4.4
-kernel (which is as far as I can be bothered to backport this). We (as in
-SUSE) actually did backport the fixes to all "proactively maintained"
-branches at the time fixes were merged upstream. Which also included
-SLE15-SP1 based on 4.12 kernel.
+CVE assigned.
 
-> But I'll gladly take backports if someone wants to provide them :)
+ISSUE DESCRIPTION
+=================
 
-I'll check whether the backports I have do apply to -stable branches and
-forward them to you.
+The handling of Xen events in the Linux kernel runs with interrupts
+disabled in a loop until no further event is pending.
 
-> Do distros consider "mounting untrusted ext4 filesystem images" a valid
-> thing to worry about?  If so, that is against what the ext4 developers
-> have said in the past from what I recall, so that might be good to get
-> straightened out, and maybe why SUSE didn't assign a CVE for this...
+Whenever an event has been accepted by the kernel, another event can
+come in via the same event channel.  This can result in the event
+handling loop running for an extended time if new events are coming in
+at a high rate.  In extreme cases this can lead to a complete hang of
+the kernel, resulting in a DoS situation of the host when dom0 is
+affected.
 
-This is kind of a grey area. On one hand ext4 developers make it clear that
-mounting untrusted images is not safe. That's also why we (as in SUSE)
-didn't bother with CVE for the bug when it was originally found. On the
-other hand the reality is that especially for desktop / laptop users this
-can easily happen (most users have automount of plugged-in storage enabled
-in their desktop environment). So if ext4 developers learn about a problem,
-they try to fix it and in SUSE we tend to backport those fixes to all
-"community" distros that are still actively maintained. For server distros
-it's a judgement call as there mounting untrusted fs images is much less
-probable.
+IMPACT
+======
 
-								Honza
--- 
-Jan Kara <jack@...e.com>
-SUSE Labs, CR
+Malicious guests can hang the host by sending events to dom0 at a high
+frequency.
+
+VULNERABLE SYSTEMS
+==================
+
+All systems with a Linux dom0 are affected.
+
+All Linux kernel versions are affected.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall from Arm
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patches resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa332-linux-??.patch  Linux
+
+$ sha256sum xsa332*
+92d0789e8e5b9ec7ae0cd8b01ef31e27930dbe9b81b727521d46328107f3c719  xsa332-linux-01.patch
+0bd82febcaf7fc72b88082f46cae9b67f39786d03b3e6aae5f0789cf855e6143  xsa332-linux-02.patch
+e646b7caf11ded7f22b209635b209f50ac583cbaeb3270148ce66a3cd922f0c1  xsa332-linux-03.patch
+9bed2213774a8107a2f2c157aeb0ebfda7cc6384cee0a245017b3a9eb28cff7f  xsa332-linux-04.patch
+8839af506b71946db35f223ff614aa92b4386aaf95e4d8b1408fbf31436ff80f  xsa332-linux-05.patch
+b261706bd7f7120fadff0e928be366924cfc13418c81a67ad45724b4179e8a5c  xsa332-linux-06.patch
+fc0c963a9a965fc7a72468b1a1ce0834dc866e77392ca0c1d9c8162457a526a0  xsa332-linux-07.patch
+5d821c58dd7fcdb157c2844ba34675305c320de25f54409305ffcba610d5922b  xsa332-linux-08.patch
+242eb83eca8e3b6d2d303e2943aa041b5f19ea54242cd0de20252d2ae3d128d1  xsa332-linux-09.patch
+70a042006d1df3dbbefc4c7d4dfd50da8f3a8e47ee77c2d6d0ba1eda405ae574  xsa332-linux-10.patch
+ebbfa66d11b8c81353b72ed5f381672e6784a67895df482f7e791a9fb4c6fbf0  xsa332-linux-11.patch
+cda1cbcca19860d43804e80ec2d7d13b295a140b42aa7d16118bb2d20bd63cae  xsa332-linux-12.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAHB6QMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZbAwIAIDvNzGNP3XXzGzMbI3yiEBTzixf3W/75IqO8sHA
+fFGJVPv9GEk2miB9NbwX/3opX1LXOlX+l4Uq+Zh+LnVO3tOYFwpzNaL+ji6D0BCp
+Pi1i8B1MRhvHITcmoB76I9bZYWnAOKwMSoPIYWVInh5STFSosERmccvFAA5ar7Rw
+aJYcs9Cuxt/8cJTpETD9nvm1m7vmXuqcj7szAd0DSVmaJwidHwTiIr4Qs1pVSk3K
+RqPeHkjfg7/KRhQkpwwZbELDVRRylo5oEL9RklBwUPyiS297EFLFJut6w5rmycbS
+vTK7w7Sby5Z2hv6oUn+2w6Y62LzHWZIFp5fwbvO5x6EdGRc=
+=/68h
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa332-linux-01.patch" of type "application/octet-stream" (1501 bytes)
+
+Download attachment "xsa332-linux-02.patch" of type "application/octet-stream" (1993 bytes)
+
+Download attachment "xsa332-linux-03.patch" of type "application/octet-stream" (11307 bytes)
+
+Download attachment "xsa332-linux-04.patch" of type "application/octet-stream" (4380 bytes)
+
+Download attachment "xsa332-linux-05.patch" of type "application/octet-stream" (8590 bytes)
+
+Download attachment "xsa332-linux-06.patch" of type "application/octet-stream" (3443 bytes)
+
+Download attachment "xsa332-linux-07.patch" of type "application/octet-stream" (6972 bytes)
+
+Download attachment "xsa332-linux-08.patch" of type "application/octet-stream" (8401 bytes)
+
+Download attachment "xsa332-linux-09.patch" of type "application/octet-stream" (1844 bytes)
+
+Download attachment "xsa332-linux-10.patch" of type "application/octet-stream" (5171 bytes)
+
+Download attachment "xsa332-linux-11.patch" of type "application/octet-stream" (15368 bytes)
+
+Download attachment "xsa332-linux-12.patch" of type "application/octet-stream" (3739 bytes)
