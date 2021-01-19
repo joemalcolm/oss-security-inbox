@@ -1,99 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/18/3
-Message-ID: <2132838.iZASKD2KPV@x2>
-Date: Thu, 18 Feb 2021 09:32:06 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: Felix Kosterhon <felix.kosterhon@...uinfra.com>
-Subject: Re: Vulnerability in the Linux Audit Framework Auditd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/19/4
+Message-Id: <E1l1txT-0002xV-JD@xenbits.xenproject.org>
+Date: Tue, 19 Jan 2021 16:34:19 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 355 v3 (CVE-2020-29040) - stack corruption from XSA-346 change
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I normally do not comment on security announcements, but this needs some 
-fixing...
+            Xen Security Advisory CVE-2020-29040 / XSA-355
+                              version 3
 
-On Thursday, February 18, 2021 5:15:20 AM EST Felix Kosterhon wrote:
-> my name is Felix Kosterhon and i am Cyber Defense Analyst at SECUINFRA
-> GmbH, Germany.
-> 
-> We discovered a security vulnerability in the Linux Audit Framework
-> (Auditd).
+                 stack corruption from XSA-346 change
 
-Before people start asking for an updated audit package, auditd is not 
-responsible for this. The Linux Kernel is where any issue might lie. Blaming 
-auditd  is like saying syslog has a security problem because a login was not 
-recorded.
+UPDATES IN VERSION 3
+====================
 
-> During our research we discovered that the usage of a certain
-> open-syscall (open_by_handle_at) is not covered by the current file watch
-> implementation of Auditd.
+CVE assigned.
 
-Where to begin? name_to_handle_at/open_by_handle_at work together. 
-name_to_handle_at is the syscall that would have the path name and returns a 
-handle. open_by_handle_at() takes the handle and makes a descriptor. That 
-means open_by_handle_at() has no idea what the path might be. All it has is 
-numbers. So, if there was going to be a watch placed, it would be more 
-meaningful on name_to_handle_at(). Anyone concerned can place a syscall audit 
-rule on name_to_handle_at() like this:
+ISSUE DESCRIPTION
+=================
 
--a always,exit -F arch=b32 -S name_to_handle_at  -F auid>=1000 -F auid!=unset
--a always,exit -F arch=b64 -S name_to_handle_at -F auid>=1000 -F auid!=unset
+One of the two changes for XSA-346 introduced an on-stack array.  The
+check for guarding against overrunning this array was off by one,
+allowing for corruption of the first stack slot immediately following
+this array.
 
-But then...what might use this? All the references I can find seem to 
-associate this syscall with NFS. And if that is the case, the audit system 
-doesn't really support remote file systems. Sometimes it does. But that is 
-more likely accidental than anything planned.
+IMPACT
+======
 
-But this does not stop anyone with admin privileges from using the syscall 
-pair locally.
+A malicious or buggy HVM or PVH guest can cause Xen to crash, resulting
+in a Denial of Service (DoS) to the entire host.  Privilege escalation
+as well as information leaks cannot be excluded.
 
--Steve
+VULNERABLE SYSTEMS
+==================
 
-> This allows a local attacker with elevated
-> privileges (CAP_DAC_READ_SEARCH capability) to read and modify files
-> without being noticed by the implemented Auditd file watches.
->
-> We disclosed our finding to RedHat, Inc. in November and it will be
-> published today, Feb 18, under CVE-2020-35501. As suggested by RedHat,
-> Inc., we want to inform you about this security flaw. If you have any
-> further questions, we are happy to help you.
-> 
-> We would also like to subscribe to your mailing list to stay informed about
-> current security topics.
-> 
-> Best Regards,
-> 
-> 
-> 
-> Felix Kosterhon
-> 
-> Cyber Defense Analyst
-> 
-> 
-> 
-> 
-> 
-> SECUINFRA GmbH
-> 
-> Münchener Straße 36
-> 
-> 60329 Frankfurt/Main
-> 
-> 
-> 
-> Mobile:  +49 151 18975666
-> 
-> 
-> 
-> felix.kosterhon@...uinfra.com
-> 
-> www.secuinfra.com
-> 
-> 
-> 
-> Follow us on XING.
+All Xen versions which have the patches for XSA-346 applied are
+vulnerable.
 
+Only x86 HVM and PVH guests can leverage the vulnerability.  Arm guests
+and x86 PV guests cannot leverage the vulnerability.
 
+Only x86 HVM and PVH guests which have physical devices passed through
+to them can leverage the vulnerability.
 
+MITIGATION
+==========
 
+Not passing through physical devices to untrusted guests will avoid
+the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa355.patch           xen-unstable - Xen 4.10.x
+
+$ sha256sum xsa355*
+a93bfc376897e7cffd095d395f1a66476adb9503d7d80a59b7861e64c2675323  xsa355.meta
+dae633c11cf2eff3e304737265e18ab09213e8e4640458080a944ae7a40819a4  xsa355.patch
+$
+
+NOTE CONCERNING SHORT EMBARGO
+=============================
+
+This issue is likely to be re-discovered as the changes for XSA-346
+are deployed more widely, since the issue is also triggerable without
+any malice or bugginess.
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAHB6UMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZpMAH/AwWuyJ0tQS95kJmfCSe9gxFkIZwnoOlxAIF1fQ8
+0W7OXmgrr9giz3lVR6Kjannq3HextHuLoVttg3soJ6pCqPBOH84/k0vyHEb9ChBF
+ypkvH0iG1wnpVo+DdYOnY7OnaBHrPsB0E83WfKohP05e+Ymcroq09vKw02fR6B+z
++D3uNzbNi1kZz1DcTZFsCAmHJsc3zS+D8jyEwOFQwlVckugJ+zDuylKtSDau56CN
+WGG3nkoDldWm1687ui4stnal8WIBP6sMgErwnv9hpzfL5glc/m0PSELQ8hZgNmAX
+KMoWvdjPenwPQEhrii92P15DbXGz6uktIZFrKRgCUx2u5ss=
+=1hd2
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa355.meta" of type "application/octet-stream" (1542 bytes)
+
+Download attachment "xsa355.patch" of type "application/octet-stream" (821 bytes)
