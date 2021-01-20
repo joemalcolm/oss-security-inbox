@@ -1,112 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/23/3
-Message-ID: <ae651bbb-c98f-9cb8-5392-5f47b254264a@oracle.com>
-Date: Tue, 23 Mar 2021 10:13:48 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/20/1
+Message-ID: <CAE-dkstC2zp20DUosQ-2CfHf+f=Lj1vz+0JsA9vp42dX8FufLQ@mail.gmail.com>
+Date: Thu, 21 Jan 2021 08:30:17 +0900
+From: Andrew Wesie <andrew@...ori.io>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple memory leaks fixed in Privoxy 3.0.29 stable
+Subject: CVE-2021-3185 gstreamer: buffer overflow in gst_h264_slice_parse_dec_ref_pic_marking
 Content-Type: text/plain; charset=utf-8
 
-It looks like Red Hat has assigned CVE ids for these issues now, but
-not yet told Mitre to publish them:
+Hello all,
 
-CVE-2020-35502 privoxy: memory leaks when a response is buffered
-https://bugzilla.redhat.com/show_bug.cgi?id=1928749
+During a source code audit, Theori discovered a stack buffer overflow
+in the h264parse module which is part of gstreamer-plugins-bad 1.x.
+The vulnerable code path can be triggered when gstreamer parses any
+attacker-controlled H.264 content. This flaw could lead to remote code
+execution.
 
-CVE-2021-20209 privoxy: memory leak in the show-status CGI handler when no
-action files are configured
-https://bugzilla.redhat.com/show_bug.cgi?id=1928726
+The flaw was fixed by the GStreamer project in gstreamer 1.18.1 and
+gstreamer 1.16.3:
+https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/-/merge_requests/1703
 
-CVE-2021-20210 privoxy: memory leak in the show-status CGI handler when no
-filter files are configured
-https://bugzilla.redhat.com/show_bug.cgi?id=1928729
+CVE-2021-3185 was assigned for this issue.
 
-CVE-2021-20211 privoxy: memory leak when client tags are active
-https://bugzilla.redhat.com/show_bug.cgi?id=1928733
+Affected versions:
 
-CVE-2021-20212 privoxy: memory leak if multiple filters are executed and the
-last one is skipped due to a pcre error
-https://bugzilla.redhat.com/show_bug.cgi?id=1928736
+gstreamer 1.x before 1.18.1 and 1.16.3
 
-CVE-2021-20213 privoxy: dereference of a NULL-pointer that could result in a
-crash if accept-intercepted-requests was enabled
-https://bugzilla.redhat.com/show_bug.cgi?id=1928740
+Technical details:
 
-CVE-2021-20214 privoxy: memory leak in the client-tags CGI handler when
-client tags are configured
-https://bugzilla.redhat.com/show_bug.cgi?id=1928743
+There is a stack buffer overflow in
+gst_h264_slice_parse_dec_ref_pic_marking when parsing a H.264
+bitstream. There is no bounds check on the index variable,
+dec_ref_pic_m->n_ref_pic_marking, and the destination array,
+dec_ref_pic_m->ref_pic_marking, has a fixed size of 10 elements. The
+fix is to check that the index variable does not go past the end of
+the array.
 
-CVE-2021-20215 privoxy: memory leaks in the show-status CGI handler when
-memory allocations fail
-https://bugzilla.redhat.com/show_bug.cgi?id=1928747
+The overflown array is within a GstH264DecRefPicMarking structure
+allocated on the stack in gst_h264_parse_process_nal as part of a
+GstH264SliceHdr structure. This leads to the usual stack buffer
+overflow exploitation techniques, and to the possibility of an
+attacker overflowing the array to modify other fields within
+GstH264SliceHdr without triggering a stack canary.
 
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+The overflown array type is an array of GstH264RefPicMarking
+structures. The attacker can only control one field of the structure
+for each element. However, since the index variable is a byte, an
+attacker can cause the index variable to wrap around and fill in
+additional fields within each element. The attacker can also choose to
+use an unhandled operation field value so that they do not overwrite
+some portions of the stack memory. It is theoretically possible an
+attacker could use this to "jump" over the stack canary and avoid
+triggering an abort.
 
+This vulnerability was discovered by Theori during a source code audit
+for a customer who uses gstreamer. We were able to exploit this
+vulnerability to achieve remote code execution in their environment.
+They were using only partial ASLR and not using stack canaries; we
+believe that exploitation would've been significantly more difficult
+on a modern desktop Linux distribution.
 
+Distributions shipping older branches of gstreamer 1.x should backport
+the fix. We believe that any version of gstreamer 1.x before the fix
+was committed will be vulnerable.
 
-On 11/29/20 7:53 AM, Fabian Keil wrote:
->                 Announcing Privoxy 3.0.29 stable
-> --------------------------------------------------------------------
-> 
-> Privoxy 3.0.29 stable fixes a couple of memory leaks and introduces
-> https inspection which allows to filter encrypted requests and
-> responses.
-> 
-> --------------------------------------------------------------------
-> ChangeLog for Privoxy 3.0.29
-> --------------------------------------------------------------------
-> 
-> - Security/Reliability:
->    - Fixed memory leaks when a response is buffered and the buffer
->      limit is reached or Privoxy is running out of memory.
->      Commits bbd53f1010b and 4490d451f9b. OVE-20201118-0001.
->      Sponsored by: Robert Klemme
->    - Fixed a memory leak in the show-status CGI handler when
->      no action files are configured. Commit c62254a686.
->      OVE-20201118-0002.
->      Sponsored by: Robert Klemme
->    - Fixed a memory leak in the show-status CGI handler when
->      no filter files are configured. Commit 1b1370f7a8a.
->      OVE-20201118-0003.
->      Sponsored by: Robert Klemme
->    - Fixes a memory leak when client tags are active.
->      Commit 245e1cf32. OVE-20201118-0004.
->      Sponsored by: Robert Klemme
->    - Fixed a memory leak if multiple filters are executed
->      and the last one is skipped due to a pcre error.
->      Commit 5cfb7bc8fe. OVE-20201118-0005.
->    - Prevent an unlikely dereference of a NULL-pointer that
->      could result in a crash if accept-intercepted-requests
->      was enabled, Privoxy failed to get the request destination
->      from the Host header and a memory allocation failed.
->      Commit 7530132349. CID 267165. OVE-20201118-0006.
->    - Fixed memory leaks in the client-tags CGI handler when
->      client tags are configured and memory allocations fail.
->      Commit cf5640eb2a. CID 267168. OVE-20201118-0007.
->    - Fixed memory leaks in the show-status CGI handler when memory
->      allocations fail. Commit 064eac5fd0 and commit fdee85c0bf3.
->      CID 305233. OVE-20201118-0008.
-> 
-> - General improvements:
-> [...]
-> 
-> -----------------------------------------------------------------
-> About Privoxy:
-> -----------------------------------------------------------------
-> 
-> Privoxy is a non-caching web proxy with advanced filtering capabilities for
-> enhancing privacy, modifying web page data and HTTP headers, controlling
-> access, and removing ads and other obnoxious Internet junk. Privoxy has a
-> flexible configuration and can be customized to suit individual needs and
-> tastes. It has application for both stand-alone systems and multi-user
-> networks.
-> 
-> Privoxy is Free Software and licensed under the GNU GPLv2.
-> 
-> [...]
-> 
-> Home Page:
->     https://www.privoxy.org/
-> 
-
+--
+Andrew Wesie
+Theori
