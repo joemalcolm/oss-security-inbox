@@ -1,4 +1,9 @@
-Received: (qmail 9820 invoked by uid 550); 28 Dec 2023 21:21:24 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1480" "Thursday" "21" "January" "2021" "11:22:38" "+0100" "Matthias Gerstner" "mgerstner@suse.de" "<YAlV7n+yLVBceb3c@f195.suse.de>" "38" "Re: [oss-security] libreoffice-online \"loolforkit\" privileged program local root exploit" nil nil nil "1" "2021012110:22:38" "[oss-security] libreoffice-online \"loolforkit\" privileged program local root exploit" (number mark "U       mgerstner@su Jan 21   38/1480  " thread-indent "\"Re: [oss-security] libreoffice-online \"loolforkit\" privileged program local root exploit\"\n") "<YAWkPB4mFDvqtep9@f195.suse.de>" ("<YAWkPB4mFDvqtep9@f195.suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] libreoffice-online \"loolforkit\" privileged program local root exploit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9678 invoked by uid 550); 21 Jan 2021 10:22:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,41 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32488 invoked from network); 28 Dec 2023 20:54:52 -0000
-Authentication-Results: apache.org; auth=none
-Date: Thu, 28 Dec 2023 21:55:38 +0100
-From: Arrigo Marchiori <ardovm@apache.org>
+Received: (qmail 9657 invoked from network); 21 Jan 2021 10:22:49 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Thu, 21 Jan 2021 11:22:38 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
 To: oss-security@lists.openwall.com
-Message-ID: <ZY3gyvwqE8oxamz3@nuvolo>
+Message-ID: <YAlV7n+yLVBceb3c@f195.suse.de>
+References: <YAWkPB4mFDvqtep9@f195.suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="ydslp/axYI7XqV36"
 Content-Disposition: inline
-Subject: [oss-security] CVE-2023-1183: Apache OpenOffice: Arbitrary file write in Apache
- OpenOffice Base
+In-Reply-To: <YAWkPB4mFDvqtep9@f195.suse.de>
+Subject: Re: [oss-security] libreoffice-online "loolforkit" privileged
+ program local root exploit
 
-Severity: Moderate
+--ydslp/axYI7XqV36
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Affected versions:
+On Mon, Jan 18, 2021 at 04:07:40PM +0100, Matthias Gerstner wrote:
+> Formally libreoffice-online is covered by the "Document Foundation" CNA,
+> therefore I did not request a CVE for this via the Mitre CVE form. I
+> will try to contact the CNA directly in this matter.
 
-- Apache OpenOffice through 4.1.15
+The Document Foundation assigned CVE-2021-25630 for the missing
+enforcement of only allowing the "loolforkit" user to access the
+sensitive features of the program.
 
-Description:
+Cheers
 
-An attacker can craft an OBD containing a "database/script" file with
-a SCRIPT command where the contents of the file could be written to a
-new file whose location was determined by the attacker.
+Matthias
 
-There are no known exploits of this vulnerability.
-A proof-of-concept demonstration exists.
+--ydslp/axYI7XqV36
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks to the reporter for discovering this issue.
+-----BEGIN PGP SIGNATURE-----
 
-Credit:
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmAJVe0ACgkQFMQFyXGS
+NVO/IRAAhP/0RvDDAeFetkCEX7w4GXCohWHneKQGBVDjSt0WhcCTqN2Pgh1eNb0x
+BplW+WNfjGjA/cNOodG5DPw5tcyX3Yqk2xLol04D6WBEzmgc5c+iUUejFthth5TF
+GwshRC/FZNP5P76NUaUbEvDIJcc+dlo9D1mQrZb7FiuyKvh5jyewjZIpPtwbNZbR
+BXAbgS84wDvIb8aOXpG80Q+R4IPcieaU6oe5+/wOstsMtCgMg8gAl5zUWUf9kVwg
+lEgpTjiSKjUuyLdvb/pxYJacpm1g1qDG/LPBWATpa2Jyry0LCQcjJZpB+yXfxS/T
+/QuAimisl2RESOZ9tKkrxg7lq1nCSDfqfOS8xJYgjgK12tDgDcs+pD3a7navgaRk
+iJf4BUokpWGdz1l1fn4tfCC/wqj7WfI1c12G6hn2bPomqgVF8NPUVacLbYIcegaq
+UR5NwLV38xtb9l1Euu9nnH4XNybjWXxsZrmUTYLywL18A+Ao2ZJ98B4HB9tJCjWR
+FpuAJhr/emMGxkD29JxXlRBh/fcVVVH+tp2fXcXuOiHaQvPfd9s8x62AKCEGxu/F
+j22hHAgHYvSuWiXGE78obVLbU5rH39mkeQreG5NIxBQHFBmDtjiASnuJHGeM9RQs
+x9edojmRtbo9Yb+ol5C7/FM18iPttl1fgGEYftvDg3gR+r3vtAw=
+=t+pm
+-----END PGP SIGNATURE-----
 
-The Apache OpenOffice Security Team would like to thank Gregor Kopf of Secfault Security GmbH (Germany) for discovering and reporting this attack vector and Fred Toussi for kindly providing a solution to this issue within HSQLDB.
-
-References:
-https://openoffice.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-1183
--- 
-Arrigo
+--ydslp/axYI7XqV36--
