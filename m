@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/21/2
-Message-ID: <YAlV7n+yLVBceb3c@f195.suse.de>
-Date: Thu, 21 Jan 2021 11:22:38 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/21/4
+Message-ID: <YAnSSXu4Kpq6Avco@espresso.pseudorandom.co.uk>
+Date: Thu, 21 Jan 2021 19:13:13 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: libreoffice-online "loolforkit" privileged program local root exploit
+Subject: CVE-2021-21261: Flatpak sandbox escape via spawn portal (aka GHSA-4ppf-fxf6-vxg2)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 18, 2021 at 04:07:40PM +0100, Matthias Gerstner wrote:
-> Formally libreoffice-online is covered by the "Document Foundation" CNA,
-> therefore I did not request a CVE for this via the Mitre CVE form. I
-> will try to contact the CNA directly in this matter.
+Affected versions: flatpak >= 0.11.4
+Fixed versions: flatpak >= 1.10.0, and 1.8.x >= 1.8.5
 
-The Document Foundation assigned CVE-2021-25630 for the missing
-enforcement of only allowing the "loolforkit" user to access the
-sensitive features of the program.
+Flatpak is a system for building, distributing, and running sandboxed
+desktop applications on Linux.
 
-Cheers
+I discovered a bug in the flatpak-portal service that can allow sandboxed
+applications to execute arbitrary code on the host system (a sandbox
+escape). This is fixed in 1.10.0 and 1.8.5.
 
-Matthias
+The initial fixed versions introduced a regression for users of
+'flatpak build' on systems where a setuid version of bubblewrap (bwrap)
+is required. Version 1.10.1 additionally resolves the regression. The
+regression fix has been backported to the flatpak-1.8.x branch but is
+not currently in any 1.8.x release.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+More details:
+https://github.com/flatpak/flatpak/security/advisories/GHSA-4ppf-fxf6-vxg2
