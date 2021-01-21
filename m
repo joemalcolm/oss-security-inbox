@@ -1,67 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/12
-Message-ID: <bd75b23c-3e7d-a52d-7df8-501d5e30a7f3@dereferenced.org>
-Date: Sat, 7 Aug 2021 15:26:09 -0500 (CDT)
-From: Ariadne Conill <ariadne@...eferenced.org>
-To: Axel Beckert <abe@...ian.org>
-cc: Salvatore Bonaccorso <carnil@...ian.org>, oss-security@...ts.openwall.com,  Ariadne Conill <ariadne@...eferenced.org>, 991971@...s.debian.org,  lynx-dev@...gnu.org, security@...ian.org
-Subject: Re: Re: Bug#991971: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/21/2
+Message-ID: <YAlV7n+yLVBceb3c@f195.suse.de>
+Date: Thu, 21 Jan 2021 11:22:38 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: libreoffice-online "loolforkit" privileged program local root exploit
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Jan 18, 2021 at 04:07:40PM +0100, Matthias Gerstner wrote:
+> Formally libreoffice-online is covered by the "Document Foundation" CNA,
+> therefore I did not request a CVE for this via the Mitre CVE form. I
+> will try to contact the CNA directly in this matter.
 
-On Sat, 7 Aug 2021, Axel Beckert wrote:
+The Document Foundation assigned CVE-2021-25630 for the missing
+enforcement of only allowing the "loolforkit" user to access the
+sensitive features of the program.
 
-> Hi Salvatore, Dear Ariadne,
->
-> Salvatore Bonaccorso wrote:
->>> This is more severe than it initially looked like: Due to TLS Server
->>> Name Indication (SNI) the hostname as parsed by Lynx (i.e with
->>> "user:pass@" included) is sent in _clear_ text over the wire even
->>> _before_ I can even said "n" for "no, don't continue to talk with this
->>> server" in Lynx's prompt as shown above.
-> […]
->>> IMHO this nevertheless needs a CVE-ID.
->>
->> MITRE did assign CVE-2021-38165.
->
-> Thanks Salvatore. I updated the debian/changelog entry for the next
-> upload as well as the title of the Debian bug report.
+Cheers
 
-+1, thanks for getting a CVE for this.
+Matthias
 
->> MITRE raised the question: Does 2.9.0dev.9 (mentioned on the
->> https://lynx.invisible-island.net/current/CHANGES.html page) fix the
->> entire problem?
->
-> At this point a huge thanks to Thomas Dickey (Lynx upstream) for
-> providing a fixed version so quickly!
-
-I think 2.9.0dev.9 fixes the problem, even if the fix is, well, not the 
-way I would do it.
-
->
->> https://www.openwall.com/lists/oss-security/2021/08/07/7 claims that
->> credentials appear in the HTTP Host header to an http:// (i.e.,
->> non-SSL) website.
->
-> Indeed and a good point.
->
-> Citing from Ariadne's mail:
->> The issue itself is far more severe: HTParse() does not understand
->> the authn part of the URI at all.
-> […]
->> But it will also leak in the Host: header on unencrypted
->> connections, and also probably SSL ones too.
->
-> But that looks to me as if Ariadne just refers to the code and hasn't
-> actually checked it by trying it. Nevertheless thanks to Ariadne for
-> having had a look and proposing a patch!
-
-Yes, this was my guess since HTParse() doesn't understand the authn part. 
-But this seems like a rather unfortunate design: parse the URI wrong, and 
-then "fix" it later?  Why not just parse the URI right, to begin with?
-
-So strange...
-
-Ariadne
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
