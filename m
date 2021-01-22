@@ -1,20 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/09/1
-Message-ID: <e2aab54c-0042-d9fd-7df6-386cb1b498e1@apache.org>
-Date: Thu, 09 Sep 2021 11:22:49 +0000
-From: Kaxil Naik <kaxilnaik@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/22/2
+Message-ID: <807f9c58-ee87-c594-ea89-be816ac6d2ae@redhat.com>
+Date: Fri, 22 Jan 2021 05:37:22 -0500
+From: Daniel Walsh <dwalsh@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-38540: Apache Airflow: Variable Import endpoint missed authentication check 
+Subject: Re: CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest
 Content-Type: text/plain; charset=utf-8
 
-Description:
-
-The variable import endpoint was not protected by authentication in Airflow >=2.0.0, <2.1.3. This allowed unauthenticated users to hit that endpoint to add/modify Airflow variables used in DAGs, potentially
-resulting in a denial of service, information disclosure or remote code execution.
-
-This issue affects Apache Airflow >=2.0.0, <2.1.3.
-
-Credit:
-
-Apache Airflow would like to thank Nathan Jones, National Australia Bank’s Offensive Security Team
+On 1/22/21 03:12, P J P wrote:
+>   Hello,
+>
+> A potential host privilege escalation issue was found in the virtio-fs 
+> shared file system daemon (virtiofsd) of the QEMU. Virtio-fs daemon 
+> shares host directory tree with a guest VM. The said privilege 
+> escalation scenario may occur if a privileged guest user was to create 
+> device special file in the shared directory and use it to r/w access 
+> host devices. A privileged guest user may use this flaw to arbitrarily 
+> access (r/w) host files resulting in DoS scenario or may potentially 
+> escalate privileges on the host.
+>
+> Upstream patch:
+> ---------------
+>   -> https://lists.gnu.org/archive/html/qemu-devel/2021-01/msg05461.html
+>
+> * This issue was reported by Alex Xu (CC'd).
+>
+> * 'CVE-2020-35517' assigned by Red Hat Inc.
+>
+> Thank you.
+> -- 
+> Prasad J Pandit / Red Hat Product Security Team
+> 8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+>
+Did SELinux block this flaw?  Seems virtiofsd should be running without 
+CAP_MKNOD by default.
 
