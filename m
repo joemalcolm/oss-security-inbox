@@ -1,76 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/05/1
-Message-ID: <CAFcO6XPZGdhZ6p=iy2=HS2LcwRw30B2=dgevmrnU1hQM14qwXg@mail.gmail.com>
-Date: Fri, 5 Nov 2021 23:11:42 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: isdn: cpai: array-index-out-of-bounds in detach_capi_ctr in drivers/isdn/capi/kcapi.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/22/1
+Message-ID: <so4o1n2-r92q-8sn6-829r-qns5o0qo873@redhat.com>
+Date: Fri, 22 Jan 2021 13:42:27 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Alex Xu <alex@...u.ca>, Stefan Hajnoczi <shajnocz@...hat.com>
+Subject: CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest
 Content-Type: text/plain; charset=utf-8
 
-Hi, the Mitre has assigned CVE-2021-43389 to this issue.
+   Hello,
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-43389
+A potential host privilege escalation issue was found in the virtio-fs shared 
+file system daemon (virtiofsd) of the QEMU. Virtio-fs daemon shares host 
+directory tree with a guest VM. The said privilege escalation scenario may 
+occur if a privileged guest user was to create device special file in the 
+shared directory and use it to r/w access host devices. A privileged guest 
+user may use this flaw to arbitrarily access (r/w) host files resulting in DoS 
+scenario or may potentially escalate privileges on the host.
 
-Regards,
-  butt3rflyh4ck.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2021-01/msg05461.html
 
+* This issue was reported by Alex Xu (CC'd).
 
-On Tue, Oct 19, 2021 at 11:21 PM butt3rflyh4ck
-<butterflyhuangxx@...il.com> wrote:
->
-> Hi, there is an array-index-out-bounds bug in detach_capi_ctr in
-> drivers/isdn/capi/kcapi.c and I reproduce it on 5.15.0-rc2+.
->
-> #Root Cause
-> we can call CMTPCONNADD ioctl and it would invoke
-> do_cmtp_sock_ioctl(), it would call cmtp_add_connection().
-> The chain of call is as follows.
-> ioctl(CMTPCONNADD)
->    ->cmtp_sock_ioctl()
->          -->do_cmtp_sock_ioctl()
->             --->cmtp_add_connection()
->                 ---->kthread_run()
->                 ---->cmtp_attach_device()
-> the function would add a cmtp session to a controller.
->
-> The cmtp_add_connection() would add a cmtp session to a controller
-> and run a kernel thread to process cmtp.
->
->         __module_get(THIS_MODULE);
->         session->task = kthread_run(cmtp_session, session, "kcmtpd_ctr_%d",
->                                                                 session->num);
->
-> During this process, the kernel thread would call detach_capi_ctr()
-> to detach a register controller. if the controller
-> was not attached yet, detach_capi_ctr() would
-> trigger an array-index-out-bounds bug.
->
->
-> #analyze
-> https://lore.kernel.org/netdev/CAFcO6XOvGQrRTaTkaJ0p3zR7y7nrAWD79r48=L_BbOyrK9X-vA@mail.gmail.com/
->
-> #patch
-> The patch is available upstream now.
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1f3e2e97c003f80c4b087092b225c8787ff91e4d
->
-> #Timeline
-> *2021/9/24 - Vulnerability reported to netdev@...r.kernel.org.
-> *2021/9/24 - Vulnerability confirmed.
-> *2021/10/8 - Vulnerability patched.
-> *2021/10/9 - Vulnerability reported to secalert@...hat.com and confirmed
-> *2021/10/19 - Opened on oss-security@...ts.openwall.com.
->
-> #Credit
-> Active Defense Lab of Venustech.
->
->
-> Regards,
->  butt3rflyh4ck.
->
-> --
-> Active Defense Lab of Venustech
+* 'CVE-2020-35517' assigned by Red Hat Inc.
 
-
-
+Thank you.
 --
-Active Defense Lab of Venustech
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+
