@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2100" "Saturday" "28" "January" "2017" "15:47:39" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<ed10da959b8b4d51bdfc70e3820c6a89@imshyb01.MITRE.ORG>" "52" "[oss-security] Re: CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues" nil nil nil "1" "2017012820:47:39" "[oss-security] Re: CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues" (number mark "U       cve-assign@m Jan 28   52/2100  " thread-indent "\"[oss-security] Re: CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues\"\n") "<20170127061304.GA12270@lorien.valinor.li>" ("<20170127061304.GA12270@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1016" "Friday" "22" "January" "2021" "05:37:22" "-0500" "Daniel Walsh" "dwalsh@redhat.com" "<807f9c58-ee87-c594-ea89-be816ac6d2ae@redhat.com>" "28" "Re: [oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest" nil nil nil "1" "2021012210:37:22" "[oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest" (number mark "U       dwalsh@redha Jan 22   28/1016  " thread-indent "\"Re: [oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest\"\n") "<so4o1n2-r92q-8sn6-829r-qns5o0qo873@erqung.pbz>" ("<so4o1n2-r92q-8sn6-829r-qns5o0qo873@erqung.pbz>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15989 invoked by uid 550); 28 Jan 2017 20:47:52 -0000
+Received: (qmail 30102 invoked by uid 550); 22 Jan 2021 10:37:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,66 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15971 invoked from network); 28 Jan 2017 20:47:52 -0000
-From: <cve-assign@mitre.org>
-To: <carnil@debian.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20170127061304.GA12270@lorien.valinor.li>
-Message-ID: <ed10da959b8b4d51bdfc70e3820c6a89@imshyb01.MITRE.ORG>
-Date: Sat, 28 Jan 2017 15:47:39 -0500
+Received: (qmail 30084 invoked from network); 22 Jan 2021 10:37:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1611311847;
+	h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=U0KF6k1e49PqMaFqbWk1u6ZmDFC98DF6EufGlwiwt/M=;
+	b=aw0b7Al6LWDEwnsGGMtnONFgi01r910NPI1vKrQyWK3T6KPpw+u7BesqnhuaN2UvAxrr/n
+	i0ogA9QS+kGK7WAQcgT+jzMdrA4arWYukGUdXi3aZsbBN1Tjzq6l5Mr+7Z84P8u+krKsh+
+	Hnyo6kw8lXROvjx7hgyo5Y84g5mCYQU=
+X-MC-Unique: mzU9vKotPLOIHc9UmGwqfQ-1
+To: oss-security@lists.openwall.com
+References: <so4o1n2-r92q-8sn6-829r-qns5o0qo873@erqung.pbz>
+From: Daniel Walsh <dwalsh@redhat.com>
+Organization: Red Hat
+Message-ID: <807f9c58-ee87-c594-ea89-be816ac6d2ae@redhat.com>
+Date: Fri, 22 Jan 2021 05:37:22 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues
+In-Reply-To: <so4o1n2-r92q-8sn6-829r-qns5o0qo873@erqung.pbz>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=dwalsh@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Subject: Re: [oss-security] CVE-2020-35517 QEMU: virtiofsd: potential
+ privileged host device access from guest
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 1/22/21 03:12, P J P wrote:
+>   Hello,
+>
+> A potential host privilege escalation issue was found in the virtio-fs 
+> shared file system daemon (virtiofsd) of the QEMU. Virtio-fs daemon 
+> shares host directory tree with a guest VM. The said privilege 
+> escalation scenario may occur if a privileged guest user was to create 
+> device special file in the shared directory and use it to r/w access 
+> host devices. A privileged guest user may use this flaw to arbitrarily 
+> access (r/w) host files resulting in DoS scenario or may potentially 
+> escalate privileges on the host.
+>
+> Upstream patch:
+> ---------------
+>   -> https://lists.gnu.org/archive/html/qemu-devel/2021-01/msg05461.html
+>
+> * This issue was reported by Alex Xu (CC'd).
+>
+> * 'CVE-2020-35517' assigned by Red Hat Inc.
+>
+> Thank you.
+> -- 
+> Prasad J Pandit / Red Hat Product Security Team
+> 8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+>
+Did SELinux block this flaw?  Seems virtiofsd should be running without 
+CAP_MKNOD by default.
 
-> https://wordpress.org/news/2017/01/wordpress-4-7-2-security-release/
-> https://codex.wordpress.org/Version_4.7.2
-
-> [] 1/ The user interface for assigning taxonomy terms in Press This is shown to
-> users who do not have permissions to use it. Reported by David Herrera of Alley
-> Interactive.
-> https://github.com/WordPress/WordPress/commit/21264a31e0849e6ff793a06a17de877dd88ea454
-
-Use CVE-2017-5610.
-
-
-> [] 2/ WP_Query is vulnerable to a SQL injection (SQLi) when passing unsafe data.
-> WordPress core is not directly vulnerable to this issue, but we've added
-> hardening to prevent plugins and themes from accidentally causing a
-> vulnerability. Reported by Mo Jangda (batmoo).
-> https://github.com/WordPress/WordPress/commit/85384297a60900004e27e417eac56d24267054cb
-
-Use CVE-2017-5611.
-
-
-> [] 3/ A cross-site scripting (XSS) vulnerability was discovered in the posts list
-> table. Reported by Ian Dunn of the WordPress Security Team.
-> https://github.com/WordPress/WordPress/commit/4482f9207027de8f36630737ae085110896ea849
-
-Use CVE-2017-5612.
-
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYjQMaAAoJEHb/MwWLVhi29sYP/jzIGOAGx8INCPLVLnadqphE
-VDvhcdL6uWZEy5ykTVydja6UmUqSQ3rJULtE2+R86Nfl5EXpmPSvqTJRxaoWgJSu
-w0a+v/ZJMb6WNFx2DlR24EN8fKSWHRYR8eu9pquHJwqTgLHH2YKd4WeXCtGmraAg
-FOh4Dxecayh22RR2WrGN2oALW5vFz6CNnc3MhQWAzgEWvqBwm8VMznrT8NlvjLrA
-IyxaVbfUcKLw0cWPmHw0b/054wlXCfTLuFKlCp9QEjeF8+B7L5XlhEkEueV8a0Ir
-Cg1J+PVbPDpmp686rZWfULyI0WODOOpUIBFnXUOs529knkQxUyKY5ZB6j6a1Kaj6
-JbMh10sPSPVnGUAWH5I9fzOzwqkSqtqNGXKOOBTllGIW3WsKARckmex7eqJXydhD
-xef8UEFOYxVUbUDAUAUlSVvRXmKh6lFUE7iYG5drxRtOVeNkmdX7F4zOfl3Dkc9H
-G3nXPzPRJ1EiAMHzO0wHDrT1Y2tsvVrPGEYoNCgMPMpwIiCx9DUBEjhYqz/IytXd
-U23Zd2YRLn4LQ2RNkVlKgLKZj5wP1aHRA+NXow3VYNf9L66w/5zw7ouxg+c8aPEd
-G5UqJ3Bl3pUtOP5BsciINs5aXFXdIJvPcny4zg6Ta6/d+Jk/w9q1TX3nQ7xhcfff
-d3Jj+zNCED6LUCSRPtde
-=dkka
------END PGP SIGNATURE-----
