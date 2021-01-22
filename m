@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1047" "Tuesday" "15" "September" "2015" "16:33:13" "+0000" "Kurt Grutzmacher" "grutz@jingojango.net" "<CAMDnkS=1BX3c0CEE1+nhcjiE2LNS_QhJnYd+W98-Tb_SCBWsvg@mail.gmail.com>" "38" "Re: [oss-security] CVE-2015-6584: XSS in DataTables" nil nil nil "9" "2015091516:33:13" "[oss-security] CVE-2015-6584: XSS in DataTables" (number mark "        grutz@jingoj Sep 15   38/1047  " thread-indent "\"Re: [oss-security] CVE-2015-6584: XSS in DataTables\"\n") "<87mvwoj6gu.fsf@redhat.com>" ("<87mvwoj6gu.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["522" "Friday" "22" "January" "2021" "16:52:19" "+0530" "P J P" "ppandit@redhat.com" "<osro0op-5878-q9n9-55r2-9021propo6n3@erqung.pbz>" "19" "Re: [oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest" nil nil nil "1" "2021012211:22:19" "[oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest" (number mark "U       ppandit@redh Jan 22   19/522   " thread-indent "\"Re: [oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest\"\n") "<807f9c58-ee87-c594-ea89-be816ac6d2ae@redhat.com>" ("<so4o1n2-r92q-8sn6-829r-qns5o0qo873@erqung.pbz>" "<807f9c58-ee87-c594-ea89-be816ac6d2ae@redhat.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28306 invoked by uid 550); 15 Sep 2015 16:51:42 -0000
+Received: (qmail 9696 invoked by uid 550); 22 Jan 2021 11:22:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32523 invoked from network); 15 Sep 2015 16:33:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jingojango.net; s=dkim;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-type;
-        bh=bSf9l/UudAc13ipDhy5H9HjJOsiSsJZR3oNvTckdUuA=;
-        b=dfcUFgnIbMSAkrCVRfCCn1jfuPUgmXz4NQBBj8Ni52GPHjcT5w0Em6MQ6eTZpJp4fr
-         XpWfNq3qHnTpGPaHHpzEYgw8/mkCZXtTUm+A//aWJ6si5MRvVxwrgozzHCipk6FlQ0N7
-         pIL9kGbt/J6MYomILRajzd3weGPavXdenW8l4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-type;
-        bh=bSf9l/UudAc13ipDhy5H9HjJOsiSsJZR3oNvTckdUuA=;
-        b=AERezs8ZH3fUngOfvwiKymAhR7huKf9Qqu4h2FYrq61zKJc5v+c9Y1NdZYh9LUWHTx
-         OntpQV323NMMX6LHqXSqpoEEf3CIMcdJxFmzWP+COydtora4bnZw6sp6sQJEQfIEW6Z9
-         mvGOefzPfclDB1BWar0QyP3keKPVce4RUHBKAxIUkNHNgSeQsVmoqW6alfRdy75NPTMO
-         24DYQH+3ITLaX4qOT8C/CF6wdjDExq8pRBFeuxfprOw8t71+PTzG5N6QxCxviYjaTsXy
-         hLJ7viIIiYk1q0XMbgkNdAmxB4178n5SycuBwEKr7MxVdkzP1pOkEKviVzIQmUMjNlWj
-         2dJg==
-X-Gm-Message-State: ALoCoQnvgnQkaBVPEcdNJqIlhhb4FiilSgODkiwf9qLbeYNQ6CVn4JZ/x9vJ2JTkZVUen1hQcu24
-X-Received: by 10.140.92.106 with SMTP id a97mr33446014qge.43.1442334803430;
- Tue, 15 Sep 2015 09:33:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <87mvwoj6gu.fsf@redhat.com>
-In-Reply-To: <87mvwoj6gu.fsf@redhat.com>
-Message-ID: <CAMDnkS=1BX3c0CEE1+nhcjiE2LNS_QhJnYd+W98-Tb_SCBWsvg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1139644e9b54c3051fcbbd00
-Date: Tue, 15 Sep 2015 16:33:13 +0000
-From: Kurt Grutzmacher <grutz@jingojango.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2015-6584: XSS in DataTables
+Received: (qmail 9675 invoked from network); 22 Jan 2021 11:22:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1611314552;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=CYp7fMwPb+vTK8kv47IrpRlnmWoYBEtOuBGIFxBvu4M=;
+	b=F9tOX4Wp/rBhRlzbW91i1qX9XMeojqGmVFungM6fpLbqu8yrstGoYM7W0pPe/kmOMxIxGp
+	CM6f08yAsGQFE5ZUy7PM7sgO5kCXdGu8FgVCXiVyvEH8kBomlV2qELMo195T8gPG4ED/CE
+	kiDUjJo1dSVLlGsSjcM/MmBYdbDnCwE=
+X-MC-Unique: -D3EHK5WN3yPlQGZTmCQ4w-1
+Date: Fri, 22 Jan 2021 16:52:19 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 To: oss security list <oss-security@lists.openwall.com>
+In-Reply-To: <807f9c58-ee87-c594-ea89-be816ac6d2ae@redhat.com>
+Message-ID: <osro0op-5878-q9n9-55r2-9021propo6n3@erqung.pbz>
+References: <so4o1n2-r92q-8sn6-829r-qns5o0qo873@erqung.pbz> <807f9c58-ee87-c594-ea89-be816ac6d2ae@redhat.com>
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ppandit@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=US-ASCII
+Subject: Re: [oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged
+ host device access from guest
 
---001a1139644e9b54c3051fcbbd00
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
++-- On Fri, 22 Jan 2021, Daniel Walsh wrote --+
+| Did SELinux block this flaw?
 
-https://github.com/DataTables/DataTables/issues/602 speaks to the XSS in
-the unit testing code.
+* Not sure if there's a SELinux policy to block it. Didn't have a reproducer 
+  handy.
 
-https://github.com/DataTables/DataTablesSrc/commit/ccf86dc5982bd8e16d is
-the commit.
+| Seems virtiofsd should be running without CAP_MKNOD by default.
 
+* Yes, there's an issue for nodev
+    -> https://gitlab.com/virtio-fs/qemu/-/issues/24
 
+  virtiofsd(1) also supports '-o modcaps=-mknod' option, it's not default 
+  though.
 
-On Tue, Sep 15, 2015 at 3:57 AM Martin Prpic <mprpic@redhat.com> wrote:
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-> Hi,
->
-> CVE-2015-6584 was assigned to a cross-site scripting flaw in DataTables:
->
->
-> https://www.netsparker.com/cve-2015-6384-xss-vulnerability-identified-in-=
-datatables/
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-6584
->
-> Any pointers on which commit fixes this issue? The advisory linked above
-> only mentions it was fixed in 1.10.9, but the changelog for that version
-> does not mention the CVE, or any change that looks like XSS for that
-> matter.
->
-> https://cdn.datatables.net/1.10.9/
-> https://github.com/DataTables/DataTables/commits/master
->
-> Thanks!
->
-> --
-> Martin Prpi=C4=8D / Red Hat Product Security
->
-
---001a1139644e9b54c3051fcbbd00--
