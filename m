@@ -1,23 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/12/2
-Message-ID: <CAJRvFdqhi0PfOmZsxOyVYxW3Jyv6E9GAR_UKnM0LqD_Ti5io6w@mail.gmail.com>
-Date: Mon, 12 Apr 2021 16:09:56 -0500
-From: Mike Drob <mdrob@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/24/1
+Message-ID: <CAGaRif2XUBMb+AqvioCesPjRi9p_cQzUJHOaDz2aChr1m7H1DA@mail.gmail.com>
+Date: Sun, 24 Jan 2021 13:37:50 -0800
+From: lewis john mcgibbney <lewismc@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-29943: Apache Solr Unprivileged users may be able to perform unauthorized read/write to collections
+Subject: CVE-2021-23901: An XML external entity (XXE) injection vulnerability exists in the Nutch DmozParser
 Content-Type: text/plain; charset=utf-8
 
 Description:
 
-When using ConfigurableInternodeAuthHadoopPlugin for authentication,
-Apache Solr versions prior to 8.8.2 would forward/proxy distributed
-requests using server credentials instead of original client
-credentials. This would result in incorrect authorization resolution
-on the receiving hosts.
+An XML external entity (XXE) injection vulnerability was discovered in the
+Nutch DmozParser and is known to affect Nutch versions < 1.18. XML external
+entity injection (also known as XXE) is a web security vulnerability that
+allows an attacker to interfere with an application's processing of XML
+data. It often allows an attacker to view files on the application server
+filesystem, and to interact with any back-end or external systems that the
+application itself can access.
 
-This issue is being tracked as SOLR-15233
+
+This issue is being tracked as NUTCH-2841
 
 Credit:
 
-Geza Nagy
+The Apache Nutch Project Management Committee would like to thank Martin
+Heyden for reporting this issue to the Apache Security Team. We are
+indebted.
+
+
+
+--
+http://home.apache.org/~lewismc/
+http://people.apache.org/keys/committer/lewismc
 
