@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9655" "Monday" "2" "September" "2019" "14:22:17" "+0000" "(RS) Tyler Schroder" "redorhcs@redcoded.com" nil "177" nil "^Date:" nil nil "9" nil nil (number mark "        redorhcs@red Sep  2  177/9655  " thread-indent "\"Re: [oss-security] MITRE response time\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] MITRE response time" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["891" "Sunday" "24" "January" "2021" "13:37:50" "-0800" "lewis john mcgibbney" "lewismc@apache.org" "<CAGaRif2XUBMb+AqvioCesPjRi9p_cQzUJHOaDz2aChr1m7H1DA@mail.gmail.com>" "29" "[oss-security] CVE-2021-23901: An XML external entity (XXE) injection vulnerability exists in the Nutch DmozParser" nil nil nil "1" "2021012421:37:50" "[oss-security] CVE-2021-23901: An XML external entity (XXE) injection vulnerability exists in the Nutch DmozParser" (number mark "U       lewismc@apac Jan 24   29/891   " thread-indent "\"[oss-security] CVE-2021-23901: An XML external entity (XXE) injection vulnerability exists in the Nutch DmozParser\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-23901: An XML external entity (XXE) injection vulnerability exists in the Nutch DmozParser" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27896 invoked by uid 550); 2 Sep 2019 14:25:58 -0000
+Received: (qmail 6029 invoked by uid 550); 24 Jan 2021 21:44:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,243 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26283 invoked from network); 2 Sep 2019 14:22:31 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IL0+/Hg9NJ6nNiIfBx+/ySe8SBdERw2kBc4HsrdCLoZKFTRHnGeRfgpM8FMNXIu0rxy5QIq2yszC4ldbI8t4eEb5QP3QaTJTFEDjc94CQhsC+KFzCmpr167GrC1aBBiXjQz4EGzzLAa7B2SOhjJIeNzl5AV0xm8GU8WVuOycbgm6YCqs0rEbLboftyA7Os1xO812Ge5rtud1x/z30rVTVfpXCWGoprDdyhXWST5JcSf2cNoe4H8+DXzWi9Wsuv5wVj5QIPa9kUjtb9wBp2J2UAoSTo91E9kwnWk3YXE0a8I9V96tvUvkbw3DJlOa+hQF1fHRb73yfBoeF2AUcFL93A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YdsAMUmmPk80XHh7RfWcQxkuB2rCIRwBnW1TCD76pRQ=;
- b=fCbBj5HE8h2710YUsNO9kPJ4X2rWXinPU5aOF4B2/qdnSkIS8QDg7vpO+2m452IvxZVcfkLYsF1R8ElQbszntr174vbSowxfTJ9HFTF96ohYSrhhdhN0+dBLPcX+HHKfjMeUkiB9zER6GnpvXeKVbiJ297I44PykNpICfFWONVQVtufHymS3pdcsNv/9AfFU0sHEv4MrrL1QcXg6Dcex7YRf8rbDrsSzKPrtaK1sorgyqACDJpX4LF85CjhHiw9ST7bVp9KHxbud32u2MyyzvICO0IBh1fyee8an3pkl+9hwPYkBOhqyar6GzfF24/D6fLYNQfRIX0yh9sDcARaJ1A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=redcoded.com; dmarc=pass action=none header.from=redcoded.com;
- dkim=pass header.d=redcoded.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redcoded.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YdsAMUmmPk80XHh7RfWcQxkuB2rCIRwBnW1TCD76pRQ=;
- b=YP2h8T5N14doc/8s57zevk5M2iP4DFUdNXo7JkzMmHbtvsbLkbh8hdC4RxieFo4rSa80QKlZDQADh/4g4DOHz1ndiWx5Mi24WwJfJYfcW/R7liJRi8kcSdQA7gSyvYlWpvWLyu+tfdVXNdBuDaIMytOU99CD3S6yPvS2iIschRs=
-Message-ID: <644B8CEF-F82D-4FB8-AE63-6F499D63E7B2@redcoded.com>
-References: <20190902141502.GH3837@jumper.schlittermann.de>
-In-Reply-To: <20190902141502.GH3837@jumper.schlittermann.de>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=redorhcs@redcoded.com; 
-x-originating-ip: [173.79.190.22]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 004addfa-73fd-4049-d0a2-08d72fb0f570
-x-microsoft-antispam: 
- BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(7021145)(8989299)(4534185)(7022145)(4603075)(4627221)(201702281549075)(8990200)(7048125)(7024125)(7027125)(7023125)(5600166)(711020)(4605104)(1401327)(2017052603328)(49563074)(7193020);SRVR:BL0PR18MB2115;
-x-ms-traffictypediagnostic: BL0PR18MB2115:
-x-microsoft-antispam-prvs: 
- <BL0PR18MB2115950EFC46BB709DD99A3CB9BE0@BL0PR18MB2115.namprd18.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:6430;
-x-forefront-prvs: 01480965DA
-x-forefront-antispam-report: 
- SFV:NSPM;SFS:(10009020)(346002)(39830400003)(376002)(396003)(366004)(136003)(189003)(199004)(2906002)(6436002)(99936001)(6916009)(229853002)(6246003)(6486002)(8936002)(8676002)(81156014)(81166006)(76116006)(66476007)(66616009)(66946007)(3846002)(6116002)(66446008)(66556008)(64756008)(7110500001)(486006)(15650500001)(53546011)(6506007)(102836004)(316002)(476003)(2616005)(11346002)(446003)(76176011)(2420400007)(508600001)(33656002)(26005)(7736002)(606006)(14454004)(86362001)(186003)(21615005)(2351001)(99286004)(2501003)(36756003)(66066001)(256004)(14444005)(25786009)(71200400001)(5640700003)(5660300002)(71190400001)(66574012)(6306002)(54896002)(236005)(6512007)(966005)(53386004)(53936002)(4742235003);DIR:OUT;SFP:1101;SCL:1;SRVR:BL0PR18MB2115;H:BL0PR18MB2258.namprd18.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: redcoded.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: 
- GYcznutETrPz4Mnvx5Gyd/Ic6ZD+NEpns41cQlQvsv5mGUk8fRVie5BhACBNRBDGlTpejyCCqVGfyKbFKIkK3Ag2S/SXKqwLSkXi1Ic/XrVgpiByyS+xTi/v0gqZTa6eXOmN/emxdsXtkMuu+UPLzbupISc/t2B/7OmohEXTPIuN7h1qjLU6S3uJowt3I7vhcA9WPls/lccSCZ/0Vyzf/rXLkw+JC2qymz9z4TSRXXXEm9TWtsqEDM/kGTNjAQOAWVGmosIIGt3F1m7emIx2KDznVr8Io/LZnO4f5Q36YzgRYA6d9m0hwx4RvCRFPJ1dEdMmqq3282SAM2VWUab+asTBMOivb6zJq1P+x4i82rVETDr4AsBVz/b5toxlcSzQhJ4G1j/y/PFVAKD6XrZrqabNOcVLtAf2kl/NPAlUnAI=
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/signed;
-	boundary=Apple-Mail-1EB17941-7F1C-41AD-8ED5-B70B1CC748E2;
-	protocol="application/pkcs7-signature";
-	micalg=sha-256
-MIME-Version: 1.0
-X-OriginatorOrg: redcoded.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 004addfa-73fd-4049-d0a2-08d72fb0f570
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Sep 2019 14:22:17.1287
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 6b97143c-b9d8-48d2-9320-ff1a19f9e058
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: YOSjrdt9Gve9jNtzialJVhoBvA1b6U7Y3ZznZPq1qwSxvEBg/Wd403dUrYfPBkkKt4UZz1OswH1iNEe+00qCUQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR18MB2115
-Date: Mon, 2 Sep 2019 14:22:17 +0000
-From: "(RS) Tyler Schroder" <redorhcs@redcoded.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] MITRE response time
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 3517 invoked from network); 24 Jan 2021 21:38:41 -0000
+X-Gm-Message-State: AOAM5321vWJ+87MCIl+KhCrHtHmW8SXJbztF5lv6qGsKkVkLTUPS2qj+
+	t1MIb2dEKXp+021t7vYVQtd7UTqtql/Cj6As+OE=
+X-Google-Smtp-Source: ABdhPJzVTe3Qt49JxE9Lvq9MdvBASs1aaS3XwgnDjn8IBWc95lFJv8hciK/9ZHysIQDUjz4bh6JRzwhrT3QMLyPG1Y4=
+X-Received: by 2002:aa7:c3c4:: with SMTP id l4mr1966484edr.255.1611524281364;
+ Sun, 24 Jan 2021 13:38:01 -0800 (PST)
+MIME-Version: 1.0
+From: lewis john mcgibbney <lewismc@apache.org>
+Date: Sun, 24 Jan 2021 13:37:50 -0800
+X-Gmail-Original-Message-ID: <CAGaRif2XUBMb+AqvioCesPjRi9p_cQzUJHOaDz2aChr1m7H1DA@mail.gmail.com>
+Message-ID: <CAGaRif2XUBMb+AqvioCesPjRi9p_cQzUJHOaDz2aChr1m7H1DA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000056737305b9ac3c89"
+Subject: [oss-security] CVE-2021-23901: An XML external entity (XXE) injection vulnerability
+ exists in the Nutch DmozParser
 
---Apple-Mail-1EB17941-7F1C-41AD-8ED5-B70B1CC748E2
-Content-Type: multipart/alternative;
-	boundary=Apple-Mail-56E6AA84-05DC-4A28-9C23-4F90BDCA3102
-Content-Transfer-Encoding: 7bit
+--00000000000056737305b9ac3c89
+Content-Type: text/plain; charset="UTF-8"
+
+Description:
+
+An XML external entity (XXE) injection vulnerability was discovered in the
+Nutch DmozParser and is known to affect Nutch versions < 1.18. XML external
+entity injection (also known as XXE) is a web security vulnerability that
+allows an attacker to interfere with an application's processing of XML
+data. It often allows an attacker to view files on the application server
+filesystem, and to interact with any back-end or external systems that the
+application itself can access.
 
 
---Apple-Mail-56E6AA84-05DC-4A28-9C23-4F90BDCA3102
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: base64
+This issue is being tracked as NUTCH-2841
 
-SGVpa28sDQoNCk15IHVzdWFsIHJlc3BvbnNlIHRpbWUgZnJvbSB0aGVtIGlz
-IDItNSBidXNpbmVzcyBkYXlzIChzb21ldGltZXMgbm90IHRvbyBtdWNoIGxv
-bmdlciBpZiB0aGUgdGVhbSBpcyBzaG9ydCBoYW5kZWQpIHJlcXVlc3Rpbmcg
-aW5kaXZpZHVhbCBJRHMuIA0KDQpNSVRSRSBpcyB0aGUgY29ycmVjdCBDTkEg
-Zm9yIHByb2plY3RzIG5vdCBhbHJlYWR5IGxpc3RlZCBvbiB0aGF0IHBhZ2Ug
-Y292ZXJlZCBieSBhIGRpZmZlcmVudCBDTkEuIE1ha2Ugc3VyZSB0byB1c2Ug
-dGhlIHdlYiBmb3JtIGF0IENWRS5taXRyZS5vcmcNCg0KDQpUeWxlcg0KPT09
-PT09PT09PT09PT0NClIuIFMuIFR5bGVyIFNjaHJvZGVyDQpLMTIgVGVjaG5p
-Y2lhbg0KDQoNCg0KKERpc2NsYWltZXI6IGZvcm1lciBpbnRlcm4gdGhlcmUg
-YnV0IG5vdCB3aXRoIHRoZSBDVkUgcHJvZ3JhbSkNCg0KPiBPbiBTZXAgMiwg
-MjAxOSwgYXQgMTA6MTYgQU0sIEhlaWtvIFNjaGxpdHRlcm1hbm4gPGhzQG5v
-ZG1hcmMuc2NobGl0dGVybWFubi5kZT4gd3JvdGU6DQo+IA0KPiBIZWxsbywN
-Cj4gDQo+IHdoYXQgaXMgeW91ciBleHBlcmllbmNlIHdpdGggTUlUUkUncyBy
-ZXNwb25zZSB0aW1lIHRvIGFuIENWRSByZXF1ZXN0Pw0KPiANCj4gTGFzdCB0
-aHVyc2RheSBJIHJlcXVlc3RlZCBhIENWRSBvbiBiZWhhbGYgb2YgYSBwcm9q
-ZWN0IEknbSBpbnZvbHZlZCBpbg0KPiAoYW5kIHdoaWNoIGlzIG5vdCBjb3Zl
-cmVkIGJ5IGFueSBvZiB0aGUgQ05BcyBsaXN0ZWQgb24NCj4gaHR0cHM6Ly9j
-dmUubWl0cmUub3JnL2N2ZS9yZXF1ZXN0X2lkLmh0bWwuDQo+IA0KPiBXaGVy
-ZSBkbyB5b3UgcmVxdWVzdCBDVkVzIGZvciBwcm9qZWN0cyBub3QgbGlzdGVk
-IHRoZXJlPw0KPiANCj4gICAgQmVzdCByZWdhcmRzIGZyb20gRHJlc2Rlbi9H
-ZXJtYW55DQo+ICAgIFZpZWxlIEdyw7zDn2UgYXVzIERyZXNkZW4NCj4gICAg
-SGVpa28gU2NobGl0dGVybWFubg0KPiAtLQ0KPiBTQ0hMSVRURVJNQU5OLmRl
-IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gaW50ZXJuZXQgJiB1bml4
-IHN1cHBvcnQgLQ0KPiBIZWlrbyBTY2hsaXR0ZXJtYW5uLCBEaXBsLi1Jbmcu
-IChUVSkgLSB7Zm9uLGZheH06ICs0OS4zNTEuODAyOTk4ezEsM30gLQ0KPiBn
-bnVwZyBlbmNyeXB0ZWQgbWVzc2FnZXMgYXJlIHdlbGNvbWUgLS0tLS0tLS0t
-LS0tLS0tIGtleSBJRDogRjY5Mzc2Q0UgLQ0KPiAhIGtleSBpZCA3Q0JGNzY0
-QSBhbmQgOTcyRUFDOUYgYXJlIHJldm9rZWQgc2luY2UgMjAxNS0wMSAtLS0t
-LS0tLS0tLS0gLQ0K
+Credit:
 
---Apple-Mail-56E6AA84-05DC-4A28-9C23-4F90BDCA3102
-Content-Type: text/html;
-	charset=utf-8
-Content-Transfer-Encoding: base64
+The Apache Nutch Project Management Committee would like to thank Martin
+Heyden for reporting this issue to the Apache Security Team. We are
+indebted.
 
-PGh0bWw+PGhlYWQ+PG1ldGEgaHR0cC1lcXVpdj0iY29udGVudC10eXBlIiBj
-b250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPjwvaGVhZD48Ym9k
-eSBkaXI9ImF1dG8iPkhlaWtvLDxkaXY+PGJyPjwvZGl2PjxkaXY+TXkgdXN1
-YWwgcmVzcG9uc2UgdGltZSBmcm9tIHRoZW0gaXMgMi01IGJ1c2luZXNzIGRh
-eXMgKHNvbWV0aW1lcyBub3QgdG9vIG11Y2ggbG9uZ2VyIGlmIHRoZSB0ZWFt
-IGlzIHNob3J0IGhhbmRlZCkgcmVxdWVzdGluZyBpbmRpdmlkdWFsIElEcy4m
-bmJzcDs8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pk1JVFJFIGlzIHRoZSBj
-b3JyZWN0IENOQSBmb3IgcHJvamVjdHMgbm90IGFscmVhZHkgbGlzdGVkIG9u
-IHRoYXQgcGFnZSBjb3ZlcmVkIGJ5IGEgZGlmZmVyZW50IENOQS4gTWFrZSBz
-dXJlIHRvIHVzZSB0aGUgd2ViIGZvcm0gYXQgPGEgaHJlZj0iaHR0cDovL0NW
-RS5taXRyZS5vcmciPkNWRS5taXRyZS5vcmc8L2E+PGJyPjxicj48YnI+VHls
-ZXI8L2Rpdj48ZGl2Pj09PT09PT09PT09PT09PGJyPjxkaXYgZGlyPSJsdHIi
-PjxwIHN0eWxlPSJtYXJnaW46IDBweDsgZm9udC1zdHJldGNoOiBub3JtYWw7
-IGZvbnQtc2l6ZTogMTJweDsgbGluZS1oZWlnaHQ6IG5vcm1hbDsgZm9udC1m
-YW1pbHk6IEhlbHZldGljYTsiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6IDEy
-cHQ7Ij5SLiBTLiBUeWxlciBTY2hyb2Rlcjwvc3Bhbj48L3A+PHAgc3R5bGU9
-Im1hcmdpbjogMHB4OyBmb250LXN0cmV0Y2g6IG5vcm1hbDsgZm9udC1zaXpl
-OiAxMnB4OyBsaW5lLWhlaWdodDogbm9ybWFsOyBmb250LWZhbWlseTogSGVs
-dmV0aWNhOyI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMTJwdDsiPksxMiBU
-ZWNobmljaWFuPC9zcGFuPjwvcD48cCBzdHlsZT0ibWFyZ2luOiAwcHg7IGZv
-bnQtc3RyZXRjaDogbm9ybWFsOyBmb250LXNpemU6IDEycHg7IGxpbmUtaGVp
-Z2h0OiBub3JtYWw7IGZvbnQtZmFtaWx5OiBIZWx2ZXRpY2E7Ij48c3BhbiBz
-dHlsZT0iZm9udC1zaXplOiAxMnB0OyI+PGJyPjwvc3Bhbj48L3A+PHAgc3R5
-bGU9Im1hcmdpbjogMHB4OyBmb250LXN0cmV0Y2g6IG5vcm1hbDsgZm9udC1z
-aXplOiAxMnB4OyBsaW5lLWhlaWdodDogbm9ybWFsOyBmb250LWZhbWlseTog
-SGVsdmV0aWNhOyI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMTJwdDsiPjxi
-cj48L3NwYW4+PC9wPjxwIHN0eWxlPSJtYXJnaW46IDBweDsgZm9udC1zdHJl
-dGNoOiBub3JtYWw7IGZvbnQtc2l6ZTogMTJweDsgbGluZS1oZWlnaHQ6IG5v
-cm1hbDsgZm9udC1mYW1pbHk6IEhlbHZldGljYTsiPjxzcGFuIHN0eWxlPSJm
-b250LXNpemU6IDEycHQ7Ij48YnI+PC9zcGFuPjwvcD48cCBzdHlsZT0ibWFy
-Z2luOiAwcHg7IGZvbnQtc3RyZXRjaDogbm9ybWFsOyBmb250LXNpemU6IDEy
-cHg7IGxpbmUtaGVpZ2h0OiBub3JtYWw7IGZvbnQtZmFtaWx5OiBIZWx2ZXRp
-Y2E7Ij48c3BhbiBzdHlsZT0iZm9udC1zaXplOiAxMnB0OyI+KERpc2NsYWlt
-ZXI6IGZvcm1lciBpbnRlcm4gdGhlcmUgYnV0IG5vdCB3aXRoIHRoZSBDVkUg
-cHJvZ3JhbSk8L3NwYW4+PC9wPjwvZGl2PjxkaXYgZGlyPSJsdHIiPjxicj5P
-biBTZXAgMiwgMjAxOSwgYXQgMTA6MTYgQU0sIEhlaWtvIFNjaGxpdHRlcm1h
-bm4gJmx0OzxhIGhyZWY9Im1haWx0bzpoc0Bub2RtYXJjLnNjaGxpdHRlcm1h
-bm4uZGUiPmhzQG5vZG1hcmMuc2NobGl0dGVybWFubi5kZTwvYT4mZ3Q7IHdy
-b3RlOjxicj48YnI+PC9kaXY+PGJsb2NrcXVvdGUgdHlwZT0iY2l0ZSI+PGRp
-diBkaXI9Imx0ciI+PHNwYW4+SGVsbG8sPC9zcGFuPjxicj48c3Bhbj48L3Nw
-YW4+PGJyPjxzcGFuPndoYXQgaXMgeW91ciBleHBlcmllbmNlIHdpdGggTUlU
-UkUncyByZXNwb25zZSB0aW1lIHRvIGFuIENWRSByZXF1ZXN0Pzwvc3Bhbj48
-YnI+PHNwYW4+PC9zcGFuPjxicj48c3Bhbj5MYXN0IHRodXJzZGF5IEkgcmVx
-dWVzdGVkIGEgQ1ZFIG9uIGJlaGFsZiBvZiBhIHByb2plY3QgSSdtIGludm9s
-dmVkIGluPC9zcGFuPjxicj48c3Bhbj4oYW5kIHdoaWNoIGlzIG5vdCBjb3Zl
-cmVkIGJ5IGFueSBvZiB0aGUgQ05BcyBsaXN0ZWQgb248L3NwYW4+PGJyPjxz
-cGFuPjxhIGhyZWY9Imh0dHBzOi8vY3ZlLm1pdHJlLm9yZy9jdmUvcmVxdWVz
-dF9pZC5odG1sIj5odHRwczovL2N2ZS5taXRyZS5vcmcvY3ZlL3JlcXVlc3Rf
-aWQuaHRtbDwvYT4uPC9zcGFuPjxicj48c3Bhbj48L3NwYW4+PGJyPjxzcGFu
-PldoZXJlIGRvIHlvdSByZXF1ZXN0IENWRXMgZm9yIHByb2plY3RzIG5vdCBs
-aXN0ZWQgdGhlcmU/PC9zcGFuPjxicj48c3Bhbj48L3NwYW4+PGJyPjxzcGFu
-PiAmbmJzcDsmbmJzcDsmbmJzcDtCZXN0IHJlZ2FyZHMgZnJvbSBEcmVzZGVu
-L0dlcm1hbnk8L3NwYW4+PGJyPjxzcGFuPiAmbmJzcDsmbmJzcDsmbmJzcDtW
-aWVsZSBHcsO8w59lIGF1cyBEcmVzZGVuPC9zcGFuPjxicj48c3Bhbj4gJm5i
-c3A7Jm5ic3A7Jm5ic3A7SGVpa28gU2NobGl0dGVybWFubjwvc3Bhbj48YnI+
-PHNwYW4+LS08L3NwYW4+PGJyPjxzcGFuPiA8YSBocmVmPSJodHRwOi8vU0NI
-TElUVEVSTUFOTi5kZSI+U0NITElUVEVSTUFOTi5kZTwvYT4gLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLSBpbnRlcm5ldCAmYW1wOyB1bml4IHN1cHBv
-cnQgLTwvc3Bhbj48YnI+PHNwYW4+IEhlaWtvIFNjaGxpdHRlcm1hbm4sIERp
-cGwuLUluZy4gKFRVKSAtIHtmb24sZmF4fTogKzQ5LjM1MS44MDI5OTh7MSwz
-fSAtPC9zcGFuPjxicj48c3Bhbj4gZ251cGcgZW5jcnlwdGVkIG1lc3NhZ2Vz
-IGFyZSB3ZWxjb21lIC0tLS0tLS0tLS0tLS0tLSBrZXkgSUQ6IEY2OTM3NkNF
-IC08L3NwYW4+PGJyPjxzcGFuPiAhIGtleSBpZCA3Q0JGNzY0QSBhbmQgOTcy
-RUFDOUYgYXJlIHJldm9rZWQgc2luY2UgMjAxNS0wMSAtLS0tLS0tLS0tLS0g
-LTwvc3Bhbj48YnI+PC9kaXY+PC9ibG9ja3F1b3RlPjwvZGl2PjwvYm9keT48
-L2h0bWw+
 
---Apple-Mail-56E6AA84-05DC-4A28-9C23-4F90BDCA3102--
 
---Apple-Mail-1EB17941-7F1C-41AD-8ED5-B70B1CC748E2
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Transfer-Encoding: base64
+--
+http://home.apache.org/~lewismc/
+http://people.apache.org/keys/committer/lewismc
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG
-9w0BBwEAAKCCBTowggU2MIIEHqADAgECAhEAoZwpBCnZ2KyeX9ZfHKqv8jAN
-BgkqhkiG9w0BAQsFADCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0
-ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09N
-T0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1
-dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0EwHhcNMTgxMTA3MDAw
-MDAwWhcNMTkxMTA3MjM1OTU5WjAmMSQwIgYJKoZIhvcNAQkBFhVyZWRvcmhj
-c0ByZWRjb2RlZC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB
-AQCkpUqngSwAV09D02ijgHlaBBF8AdRRM/1Qzu1a53Nqp6v2rxvrCrQACgd8
-+hF/kZosHgdfNCwV7M4pSPh6JQTNsflkjX37yEg6Vn0I4807VY2ZTAhiPHRS
-uc3rgql1ljzZiQ6kvUAdoA0aA8CeWXBS1I94+LJwatIygf4ggto1Y7ZKrSlc
-Oq5V59xo6xNDwrGIj3l1m/snjzovs/j50h52Edekt8BrftxEZkMJpw/nCGZR
-ehx/ChbRSelnjlQxpuNm8geBK3XOV1zNmWjzWFnSCt59wst/NsZc+mofBxOX
-Souqh3sxZJja8NDU1mQPJPwEGn4EgHBqLyR1DDGVfmLvAgMBAAGjggHrMIIB
-5zAfBgNVHSMEGDAWgBSCr2yM+MX+lmF86B89K3FIXsSLwDAdBgNVHQ4EFgQU
-fKS2H0LCZYDXps/tfvGWUtv3qTgwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB
-/wQCMAAwIAYDVR0lBBkwFwYIKwYBBQUHAwQGCysGAQQBsjEBAwUCMBEGCWCG
-SAGG+EIBAQQEAwIFIDBGBgNVHSAEPzA9MDsGDCsGAQQBsjEBAgEBATArMCkG
-CCsGAQUFBwIBFh1odHRwczovL3NlY3VyZS5jb21vZG8ubmV0L0NQUzBaBgNV
-HR8EUzBRME+gTaBLhklodHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9DT01PRE9S
-U0FDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWlsQ0EuY3JsMIGL
-BggrBgEFBQcBAQR/MH0wVQYIKwYBBQUHMAKGSWh0dHA6Ly9jcnQuY29tb2Rv
-Y2EuY29tL0NPTU9ET1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJl
-RW1haWxDQS5jcnQwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9kb2Nh
-LmNvbTAgBgNVHREEGTAXgRVyZWRvcmhjc0ByZWRjb2RlZC5jb20wDQYJKoZI
-hvcNAQELBQADggEBAK9qd2ZmEWVnMNQf/Yrr7HoUimUR+Ia1rI5PlW1f97cs
-i7ZUQvo3qmmMNnZo4tL30C8ON62hIVCoiYg4Zi3beXCsMZY318F7Yzp7IoKa
-lBrqnZ/dYhYTN6M0vPXgKmTcIYp8dlzh+kMYk0IHRyUVxteffPdRBTXvcfT7
-EHrLMsSVMIblOYIbwSDCPnjk8aAmVcmKvJYbVsUXJkZUW5clt5IkqV42d2gO
-z3oWWVVdMXLKUUxhI2QA1n8CSqE9pGsPVYFUZ/vxIWSKvMBqwIwdoFKNw9C2
-367ueMPCgY/Bd4DHYlQ62LZa+yPRXhvHvcW05cfm2G6WeuDXHWp5LLOjVUox
-ggPKMIIDxgIBATCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0
-ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09N
-T0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1
-dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEQChnCkEKdnYrJ5f
-1l8cqq/yMA0GCWCGSAFlAwQCAQUAoIIB7TAYBgkqhkiG9w0BCQMxCwYJKoZI
-hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xOTA5MDIxNDIyMTZaMC8GCSqGSIb3
-DQEJBDEiBCDasQ4K2S4iz7U2ThibsmgCUD/2kYTnhW7VPNZdGC2MizCBvgYJ
-KwYBBAGCNxAEMYGwMIGtMIGXMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFD
-T01PRE8gQ0EgTGltaXRlZDE9MDsGA1UEAxM0Q09NT0RPIFJTQSBDbGllbnQg
-QXV0aGVudGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAKGcKQQp2dis
-nl/WXxyqr/IwgcAGCyqGSIb3DQEJEAILMYGwoIGtMIGXMQswCQYDVQQGEwJH
-QjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxm
-b3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDE9MDsGA1UEAxM0Q09N
-T0RPIFJTQSBDbGllbnQgQXV0aGVudGljYXRpb24gYW5kIFNlY3VyZSBFbWFp
-bCBDQQIRAKGcKQQp2disnl/WXxyqr/IwDQYJKoZIhvcNAQEBBQAEggEAAjKa
-ve8278hRSxlChRZKxnochdkSz0Md6iXtEAgRFlv7i/86OsnMWXmqE8H/Kt2v
-m3FIobnIdGQnqZQleD1iNv0GXB+Iw8VfSmNOowc8/LCASSfuKi0QCrtWBnpo
-c1CMpbof0KRINWH/jFBPZkoFhZV0Gl3by0x9bJa4mLrL7llwROoyMsHCpHU7
-phXxVFJnuLrgjzITXz3Ah0KNG6HCOYXCSa8pVC5+jdl+I+t1C3qHXV0PEY3Q
-zecdOroiEYD9YgIGw0urZqhKzULd6cZbR4dhMWB/0YyPBOQIQJxN2yGpDH3o
-wVB+0LyDBjahTOFfdWqsTsWg5nM9dqxxVMS60gAAAAAAAA==
-
---Apple-Mail-1EB17941-7F1C-41AD-8ED5-B70B1CC748E2--
+--00000000000056737305b9ac3c89--
