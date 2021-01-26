@@ -1,46 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/10/2
-Message-ID: <20210510061053.GA23700@lorien.valinor.li>
-Date: Mon, 10 May 2021 08:10:53 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Alex Murray <alex.murray@...onical.com>
-Cc: oss-security@...ts.openwall.com, Nadav Markus <nmarkus@...oaltonetworks.com>, Or Cohen <orcohen@...oaltonetworks.com>
-Subject: Re: CVE-2021-23133: Linux kernel: race condition in sctp sockets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/26/1
+Message-ID: <CAP+3qq5E8oXmyo4XU4FKzy9ZyDVUYLY+RtUuHeTPycc9gagFNA@mail.gmail.com>
+Date: Tue, 26 Jan 2021 09:34:07 +0900
+From: Akira Ajisaka <aajisaka@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-9492] Apache Hadoop Potential privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi Alex,
+CVE-2020-9492. Apache Hadoop Potential privilege escalation
 
-On Mon, May 10, 2021 at 03:28:02PM +0930, Alex Murray wrote:
-> 
-> On Mon, 2021-05-10 at 13:54:43 +0930, Salvatore Bonaccorso wrote:
-> 
-> > Hi,
-> > 
-> > On Sun, Apr 18, 2021 at 11:41:06AM +0300, Or Cohen wrote:
-> > > Hello,
-> > > 
-> > > This is an announcement about CVE-2021-23133 which is a race-condition
-> > > I found in Linux kernel sctp sockets (net/sctp/socket.c). It can
-> > > lead to kernel
-> > > privilege escalation from the context of a network service or from
-> > > an unprivileged process if certain conditions are met.
-> > > 
-> > > The bug was fixed on April 13, 2021:
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b166a20b07382b8bc1dcee2a448715c9c2c81b5b
-> > 
-> > It looks that additionally
-> > https://git.kernel.org/linus/34e5b01186858b36c4d7c87e1a025071e8e2401f
-> > refer to CVE-2021-23133.
-> 
-> It seems b166a20b07382b8bc1dcee2a448715c9c2c81b5b got reverted in the
-> follow-up commit
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sctp/socket.c?id=01bfe5e8e428b475982a98a46cca5755726f3f7f
-> and so 34e5b01186858b36c4d7c87e1a025071e8e2401f would appear to be the
-> most correct fix from what I can tell.
+Severity: Important
 
-Ah right, I missed the revert of the original commit.
+Vendor: The Apache Software Foundation
 
-Thanks for pointing that to me.
+Versions Affected:
+3.2.0 to 3.2.1, 3.0.0-alpha1 to 3.1.3, 2.0.0-alpha to 2.10.0
 
-Regards,
-Salvatore
+Description:
+WebHDFS client might send SPNEGO authorization header to remote URL
+without proper verification. A crafty user can trigger services to
+send server credentials to a webhdfs path for capturing the service
+principal.
+
+Mitigation:
+Users of the affected versions should apply either of the following mitigations:
+- Set different http signature secrets and use dedicated hosts for
+each privileged impersonation service (such as HiveServer2).
+- Upgrade to 3.3.0, 3.2.2, 3.1.4, 2.10.1, or newer with TLS encryption
+enabled and configure dfs.http.policy to HTTPS_ONLY.
+
+Credit:
+This issue was discovered by Kevin Risden.
