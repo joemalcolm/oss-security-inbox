@@ -1,7 +1,7 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/20/3
-Message-Id: <58F4A3F7-04B6-4CF1-B422-D8403105F09F@beckweb.net>
-Date: Tue, 20 Apr 2021 19:53:53 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/26/2
+Message-Id: <406A0181-35A5-49BF-96C5-6EF46B0365E7@beckweb.net>
+Date: Tue, 26 Jan 2021 11:46:34 +0100
 From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
 Subject: Vulnerability in Jenkins
@@ -12,12 +12,13 @@ the world to reliably build, test, and deploy their software.
 
 The following releases contain fixes for security vulnerabilities:
 
-* Jenkins 2.286
-* Jenkins LTS 2.277.3
+* Jenkins 2.276
+* Jenkins LTS 2.263.3
+
 
 Summaries of the vulnerabilities are below. More details, severity, and
 attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-04-20/
+https://www.jenkins.io/security/advisory/2021-01-26/
 
 We provide advance notification for security updates on this mailing list:
 https://groups.google.com/d/forum/jenkinsci-advisories
@@ -28,14 +29,14 @@ https://www.jenkins.io/security/#reporting-vulnerabilities
 
 ---
 
-JENKINS-65280 / CVE-2021-28165
-Jenkins bundles Winstone-Jetty, a wrapper around Jetty, to act as HTTP and
-servlet server when started using `java -jar jenkins.war`. This is how
-Jenkins is run when using any of the installers or packages, but not when
-run using servlet containers such as Tomcat.
+SECURITY-2197 / CVE-2021-21615
+Due to a time-of-check to time-of-use (TOCTOU) race condition, the file
+browser for workspaces, archived artifacts, and
+`$JENKINS_HOME/userContent/` follows symbolic links to locations outside
+the directory being browsed in Jenkins 2.275 and LTS 2.263.2.
 
-Jenkins 2.285 and earlier, LTS 2.277.2 and earlier bundles Jetty 9.4.38 or
-earlier with multiple security vulnerabilities, including CVE-2021-28165.
-This vulnerability may allow unauthenticated attackers to cause a denial of
-service if Winstone-Jetty is configured to handle SSL/TLS connections.
+This allows attackers with Job/Workspace permission and the ability to
+control workspace contents, e.g., with Job/Configure permission or the
+ability to change SCM contents, to create symbolic links that allow them to
+access files outside workspaces using the workspace browser.
 
