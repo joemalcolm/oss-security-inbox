@@ -1,43 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/27/1
-Message-ID: <CAFzhf4r3C=hqrH_yXVQExeQV5iqrdim7kp-NBDTm6FmSCicbeQ@mail.gmail.com>
-Date: Wed, 26 May 2021 23:09:05 +0100
-From: Piotr Krysiuk <piotras@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-33200] Linux kernel enforcing incorrect limits for pointer arithmetic operations by BPF verifier can be abused to perform out-of-bounds reads and writes in kernel memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/26/4
+Message-Id: <E1l4WRb-0000Px-Rq@xenbits.xenproject.org>
+Date: Tue, 26 Jan 2021 22:04:15 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 360 v2 (CVE-2021-3308) - IRQ vector leak on x86
 Content-Type: text/plain; charset=utf-8
 
-An issue has been discovered in the Linux kernel that can be abused by
-unprivileged local users to escalate privileges.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The issue is with how the BPF verifier computes limits to enforce on
-the pointer arithmetic operations in BPF programs. In a particular
-scenario these limits are computed incorrectly. When any incorrect
-limits are enforced, performing the pointer arithmetic operation may
-lead to out-of-bounds reads and writes in the kernel memory.
+            Xen Security Advisory CVE-2021-3308 / XSA-360
+                              version 2
 
-I developed PoCs that allow unprivileged local users to examine and
-modify critical data structures in the kernel memory. It is possible,
-for example, to reliably hijack control flow.
+                        IRQ vector leak on x86
 
-One of these PoCs has been shared privately with <security@...nel.org>
-to assist with fix development.
+UPDATES IN VERSION 2
+====================
 
-The buggy computation was introduced with the commit
-7fedb63a8307dda0ec3b8969a3b233a1dd7ea8e0 ("bpf: Tighten speculative
-pointer arithmetic mask").
+CVE assigned.
 
-The patches are available from BPF subsystem public git repository.
-The full patch series is as follows:
+ISSUE DESCRIPTION
+=================
 
-* https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=3d0220f6861d713213b015b582e9f21e5b28d2e0
-* https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=bb01a1bba579b4b1c5566af24d95f1767859771e
-* https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=a7036191277f9fa68d92f2071ddc38c09b1e5ee5
+An x86 HVM guest with PCI pass through devices can force the allocation
+of all IDT vectors on the system by rebooting itself with MSI or MSI-X
+capabilities enabled and entries setup.
 
-# Discoverers
+Such reboots will leak any vectors used by the MSI(-X) entries that the
+guest might had enabled, and hence will lead to vector exhaustion on the
+system, not allowing further PCI pass through devices to work properly.
 
-Piotr Krysiuk <piotras@...il.com>
+IMPACT
+======
 
-# References
+HVM guests with PCI pass through devices can mount a Denial of Service (DoS)
+attack affecting the pass through of PCI devices to other guests or the
+hardware domain.  In the latter case this would affect the entire host.
 
-CVE-2021-33200 (reserved via https://cveform.mitre.org/)
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.12.3, 4.12.4, and all versions from 4.13.1 onwards are
+vulnerable.  Xen version 4.13.0 and all versions up to 4.12.2 are not
+affected.
+
+Only x86 systems running HVM guests with PCI pass through devices are
+vulnerable.
+
+MITIGATION
+==========
+
+Not running HVM guests with PCI pass through devices will avoid the
+vulnerability.  Note that even non-malicious guests can trigger this
+vulnerability as part of normal operation.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa360.patch           xen-unstable
+xsa360-4.14.patch      Xen 4.14 - 4.12
+
+$ sha256sum xsa360*
+c874ad2b9edb0791ac975735306d055b1916f4acbc59e6f1550fbf33223d6106  xsa360.meta
+592f3afda63777d31844e0e34d85fbe387a62d59fa7903ee19b22a98fba68894  xsa360.patch
+809515011efb781a2a8742e9acfd76412d3920c2d4142bb187588cd36f77383e  xsa360-4.14.patch
+$
+
+CREDITS
+=======
+
+This issue was discovered by James McCoy, debugged in combination with
+Samuel Verschelde of Vates, and recognised as a security issue by Roger
+Pau Monné of Citrix.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This was reported and debugged publicly, before the security
+implications were apparent.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAQkcMMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZCnkIAL4JBZ19GKWeLyjZSYJxMR7y677B0CQ627Swmu0L
+UoCk6VhVmwNuqgU12yEiE8fgUA1sx2WIHcc4ZLBSA6RmaWLy21SKpDywNk1bDuGu
+aAYqzgWg4ESaEt22khvOdqvWYVn7N6Ferg7Xeaf+w8MJo5qwwAqnbn2sO432uWga
+rSeOBMnmrNsgWkoCNmcTVzFjhxHKz94mReGFGStN96zQuI2DedkKzWHS6YcDydAw
+qyRmO3D+2RJGwTIAYQqKvT/wBtTLI1uCp2DOYEDS8A8zkMy88k9+1703N/BxfB31
+Ax04vEHoJj0EaLV4dyqRaVDcW9iZSpgvMQGB/x2Jp6knrG8=
+=Dr9U
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa360.meta" of type "application/octet-stream" (1589 bytes)
+
+Download attachment "xsa360.patch" of type "application/octet-stream" (3431 bytes)
+
+Download attachment "xsa360-4.14.patch" of type "application/octet-stream" (3318 bytes)
