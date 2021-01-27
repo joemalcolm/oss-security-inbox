@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/24/2
-Message-ID: <000801d70aa4$bbfa3410$33ee9c30$@gmail.com>
-Date: Wed, 24 Feb 2021 12:01:06 -0000
-From: "Simon Steiner" <simonsteiner1984@...il.com>
-To: <oss-security@...ts.openwall.com>
-Subject: [CVE-2020-11987] Apache XML Graphics Batik SSRF vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/27/3
+Message-ID: <rus04o$q3o$1@ciao.gmane.io>
+Date: Wed, 27 Jan 2021 15:16:40 -0000 (UTC)
+From: Tavis Ormandy <taviso@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: glibc iconv crash with ISO-2022-JP-3
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-11987:
-        Apache XML Graphics Batik SSRF vulnerability
+Hello list, I suddenly got interested in mutt attack surface after
+CVE-2021-3181, and some testing found a crash via charset conversion
+glibc. It's just an abort(), I don't think there's any further impact.
 
-Severity:
-        Medium
+I believe this would crash anything that does character conversion with
+iconv. Mail clients do automatic charset conversion when they see a
+Subject like:
 
-Vendor:
-        The Apache Software Foundation
+    Subject: =?ISO-2022-JP-3?B?.....
 
-Versions Affected:
-        Batik 1.13 and earlier
+or a MIME header like this:
 
-Description:
-        The Apache Batik library is vulnerable to SSRF via the NodePickerPanel that allow an
-attacker to cause the underlying server to make arbitrary GET requests.
+    Content-Type: text/plain; charset=ISO-2022-JP-3
 
-Mitigation:
-        Users should upgrade to Batik 1.13 or later
+The impact is just that you can't open your mail client, because it
+crashes as soon as it sees the subject.
 
-Credit:
-        This issue was independently reported by 张相浩
+Upstream bug: https://sourceware.org/bugzilla/show_bug.cgi?id=27256
+Patch: https://sourceware.org/pipermail/libc-alpha/2021-January/122058.html
 
-References:
-        http://xmlgraphics.apache.org/security.html
+Thanks, Tavis.
 
-The Apache XML Graphics team.
-
-
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
 
