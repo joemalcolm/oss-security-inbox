@@ -1,32 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/08/6
-Message-ID: <CAKQ1sVP9YFXTvqqfHDSpGDv=552iL48xdDtQyqV7-MAVg4jWCA@mail.gmail.com>
-Date: Fri, 8 Oct 2021 23:59:03 +0200
-From: Yann Ylavic <ylavic.dev@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/27/2
+Message-ID: <alpine.BSF.2.21.9999.2101272010280.36435@aneurin.horsfall.org>
+Date: Wed, 27 Jan 2021 20:31:51 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: Baron Samedit: Heap-based buffer overflow in Sudo (CVE-2021-3156)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 8, 2021 at 11:46 PM Solar Designer <solar@...nwall.com> wrote:
->
-> On Fri, Oct 08, 2021 at 11:27:37PM +0200, Yann Ylavic wrote:
-> > For completeness I'll add this tweet/blog from Stefan (OP) about the
-> > vulnerability and the fixes in httpd:
-> > https://twitter.com/icing/status/1446504661448593408
->
-> Thanks, but you just did that again...  For completeness, let's have the
-> actual content on the list, not only links to content.
->
-> That tweet above refers to "Apache httpd 2.4.50 post mortem" at:
->
-> https://github.com/icing/blog/blob/main/httpd-2.4.50.md
->
-> I'm attaching the httpd-2.4.50.md file above to this message.
->
-> This way, historians will be able to make full sense of the thread in
-> here even after Twitter and GitHub are gone. ;-)
+> I think that's a very fair point. Also it seems the development trend in 
+> sudo is to actually increase complexity even more and adding all kinds 
+> of features that really should not be part of a suid tool, see e.g. 
+> https://computingforgeeks.com/better-secure-new-sudo-release/
 
-Noted, thanks for correcting me (again).
+I just happen to have a very much simplified version called "ssu"; I 
+worked on it and fixed a few gaping security holes...  They should have 
+been obvious to any novice programmer (which said idiot^2 boss was not).
 
-Regards;
-Yann.
+-- Dave
