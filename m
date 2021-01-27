@@ -1,4 +1,9 @@
-Received: (qmail 4060 invoked by uid 550); 27 Feb 2024 13:38:26 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["543" "Wednesday" "27" "January" "2021" "15:54:48" "+0000" "Gary Tully" "gtully@apache.org" "<CAH+vQmNsjKW04ovT5Vmu-fYCn3877OUQ2DgUtRQCqTe0e4as+g@mail.gmail.com>" "20" "[oss-security] CVE-2021-26118: Flaw in ActiveMQ Artemis OpenWire support" nil nil nil "1" "2021012715:54:48" "[oss-security] CVE-2021-26118: Flaw in ActiveMQ Artemis OpenWire support" (number mark "U       gtully@apach Jan 27   20/543   " thread-indent "\"[oss-security] CVE-2021-26118: Flaw in ActiveMQ Artemis OpenWire support\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-26118: Flaw in ActiveMQ Artemis OpenWire support" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 16049 invoked by uid 550); 27 Jan 2021 15:58:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,48 +12,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13649 invoked from network); 27 Feb 2024 12:25:11 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Benoit Tellier <btellier@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <caae87f6-2f72-9701-fc2a-97e716c5edbd@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 27 Feb 2024 12:28:33 +0000
+Received: (qmail 11378 invoked from network); 27 Jan 2021 15:55:12 -0000
+X-Gm-Message-State: AOAM533LoD69DNUw4tL+pBAoB2jZRzohNS8LGCkA7Vqh8AyFgewgCloa
+	DILL01iQTBfqYILjL/pM88Y05yiSSZguwaUHMu4=
+X-Google-Smtp-Source: ABdhPJytYBUEEflPQpql0Ys0fwAo3wgQWMQcs1lwOa+THVWc8wE1RqDkY2fWVL+2yie9vYIhbXVUun4IwrhhO0XD9oU=
+X-Received: by 2002:a02:6208:: with SMTP id d8mr6476394jac.56.1611762898689;
+ Wed, 27 Jan 2021 07:54:58 -0800 (PST)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-51747: SMTP smuggling in Apache James 
-
-Severity: important
-
-Affected versions:
-
-- Apache James server through 3.7.4
-- Apache James server 3.8 through 3.8.0
+From: Gary Tully <gtully@apache.org>
+Date: Wed, 27 Jan 2021 15:54:48 +0000
+X-Gmail-Original-Message-ID: <CAH+vQmNsjKW04ovT5Vmu-fYCn3877OUQ2DgUtRQCqTe0e4as+g@mail.gmail.com>
+Message-ID: <CAH+vQmNsjKW04ovT5Vmu-fYCn3877OUQ2DgUtRQCqTe0e4as+g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2021-26118: Flaw in ActiveMQ Artemis OpenWire support
 
 Description:
 
-Apache James prior to versions 3.8.1 and 3.7.5 is vulnerable to SMTP smuggl=
-ing.
+While investigating ARTEMIS-2964 it was found that the creation of
+advisory messages in the OpenWire protocol head of Apache ActiveMQ
+Artemis 2.15.0 bypassed policy based access control for the entire
+session. Production of advisory messages was not subject to access
+control in error.
 
-A lenient behaviour in line delimiter handling might create a difference of=
- interpretation between the sender and the receiver which can be exploited =
-by an attacker to forge an SMTP envelop, allowing for instance to bypass SP=
-F checks.
 
-The patch implies enforcement of CRLF as a line delimiter as part of the DA=
-TA transaction.
+This issue is being tracked as
+https://issues.apache.org/jira/browse/ARTEMIS-2964
 
-We recommend James users to upgrade to non vulnerable versions.
+Mitigation:
+
+Upgrade to Apache ActiveMQ Artemis 2.16.0
 
 Credit:
 
-Benoit TELLIER (coordinator)
-
-References:
-
-https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwi=
-de/
-https://postfix.org/smtp-smuggling.html
-https://james.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-51747
-
+Apache ActiveMQ  would like to thank Francesco Marchioni (Red Hat) for
+reporting this issue.
