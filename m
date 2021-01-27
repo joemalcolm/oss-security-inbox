@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5290" "Wednesday" "15" "June" "2016" "02:28:58" "+0000" "=?utf-8?B?5byg5byA57+U?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0BB624A@EX02.corp.qihoo.net>" "90" "[oss-security] =?utf-8?B?Q1ZFLTIwMTYtNTMxNO+8mmxpYnRpZmYgNC4wLjYgUGl4YXJMb2dEZWNvZGUo?==?utf-8?B?KSBvdXQtb2YtYm91bmQgd3JpdGVz?=" nil nil nil "6" "2016061502:28:58" "[oss-security] =?utf-8?B?Q1ZFLTIwMTYtNTMxNO+8mmxpYnRpZmY=?= =?utf-8?B?NC4wLjY=?= =?utf-8?B?UGl4YXJMb2dEZWNvZGUo?==?utf-8?B?KQ==?= =?utf-8?B?b3V0LW9mLWJvdW5k?= =?utf-8?B?d3JpdGVz?=" (number mark "U       zhangkaixian Jun 15   90/5290  " thread-indent "\"[oss-security] =?utf-8?B?Q1ZFLTIwMTYtNTMxNO+8mmxpYnRpZmYgNC4wLjYgUGl4YXJMb2dEZWNvZGUo?==?utf-8?B?KSBvdXQtb2YtYm91bmQgd3JpdGVz?=\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["864" "Wednesday" "27" "January" "2021" "15:16:40" "-0000" "Tavis Ormandy" "taviso@gmail.com" "<rus04o$q3o$1@ciao.gmane.io>" "27" "[oss-security] glibc iconv crash with ISO-2022-JP-3" nil nil nil "1" "2021012715:16:40" "[oss-security] glibc iconv crash with ISO-2022-JP-3" (number mark "U       taviso@gmail Jan 27   27/864   " thread-indent "\"[oss-security] glibc iconv crash with ISO-2022-JP-3\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] glibc iconv crash with ISO-2022-JP-3" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7589 invoked by uid 550); 15 Jun 2016 02:33:06 -0000
+Received: (qmail 15534 invoked by uid 550); 27 Jan 2021 15:32:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,112 +12,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5166 invoked from network); 15 Jun 2016 02:29:11 -0000
-From: =?utf-8?B?5byg5byA57+U?= <zhangkaixiang@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: =?utf-8?B?Q1ZFLTIwMTYtNTMxNO+8mmxpYnRpZmYgNC4wLjYgUGl4YXJMb2dEZWNvZGUo?=
- =?utf-8?Q?)_out-of-bound_writes?=
-Thread-Index: AdHGrXdab8SDrD3XTK+n0gb473+knQ==
-Date: Wed, 15 Jun 2016 02:28:58 +0000
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB624A@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.62]
-Content-Type: multipart/alternative;
-	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0BB624AEX02corpqihoonet_"
-MIME-Version: 1.0
-Subject: [oss-security] =?utf-8?B?Q1ZFLTIwMTYtNTMxNO+8mmxpYnRpZmYgNC4wLjYgUGl4YXJMb2dEZWNvZGUo?=
- =?utf-8?Q?)_out-of-bound_writes?=
+Received: (qmail 5537 invoked from network); 27 Jan 2021 15:16:57 -0000
+X-Injected-Via-Gmane: http://gmane.org/
+To: oss-security@lists.openwall.com
+From: Tavis Ormandy <taviso@gmail.com>
+Date: Wed, 27 Jan 2021 15:16:40 -0000 (UTC)
+Message-ID: <rus04o$q3o$1@ciao.gmane.io>
+User-Agent: slrn/pre1.0.4-5 (Linux)
+Subject: [oss-security] glibc iconv crash with ISO-2022-JP-3
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BB624AEX02corpqihoonet_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Hello list, I suddenly got interested in mutt attack surface after
+CVE-2021-3181, and some testing found a crash via charset conversion
+glibc. It's just an abort(), I don't think there's any further impact.
 
-DQpEZXRhaWxzDQo9PT09PT09DQoNClByb2R1Y3Q6IGxpYnRpZmYNCkFmZmVj
-dGVkIFZlcnNpb25zOiA8PSA0LjAuNg0KVnVsbmVyYWJpbGl0eSBUeXBlOiBv
-dXQtb2YtYm91bmQgd3JpdGVzDQpWZW5kb3IgVVJMOiBodHRwOi8vd3d3LnJl
-bW90ZXNlbnNpbmcub3JnL2xpYnRpZmYvDQpDVkUgSUQ6IENWRS0yMDE2LTUz
-MTQNCkNyZWRpdDogS2FpeGlhbmcgWmhhbmcgb2YgdGhlIENsb3VkIFNlY3Vy
-aXR5IFRlYW0sIFFpaG9vIDM2MA0KDQpJbnRyb2R1Y3Rpb24NCj09PT09PT0N
-Cg0KSXQgd2FzIGFsd2F5cyBjb3JydXB0ZWQgd2hlbiBJIHVzZSByZ2IyeWNi
-Y3IgY29tbWFuZCBmb2xsb3dlZCBieSBhIGNyYWZ0ZWQgVElGRiBpbWFnZS4g
-VGhlIHZ1bG5lcmFiaWxpdHkgb2Ygb3V0LW9mLWJvdW5kIHdyaXRlcyBjb21l
-cyBmcm9tIFBpeGFyTG9nRGVjb2RlKCkgZnVuY3Rpb24gd2l0aG91dCBjaGVj
-a2luZyB0aGUgYnVmZmVyIGxlbmd0aCwgd2hpY2ggY2F1c2UgdGhlIGhlYWQg
-b2YgbmV4dCBoZWFwIGNvdWxkIGJlIGZpbGxlZCB3aXRoIGFueSBkYXRhLCBj
-cmFzaCBvY2N1cnMgd2hlbiBtYWxsb2MoKSBvciBmcmVlKCkgaXMgY2FsbGVk
-LkF0dGFja2VycyBjb3VsZCBleHBsb2l0IHRoaXMgaXNzdWUgdG8gcmVzdWx0
-IGluIERvUy4NCg0KDQpIZXJlIGlzIHRoZSBzdGFjayBpbmZvOg0KZ2RiIOKA
-k2FyZ3MgLi9yZ2IyeWNiY3IgZ3RUaWxlQ29udGlnLnRpZiB0bXBvdXQudGlm
-DQotLS0gLS0tDQooZ2RiKSBiIHRpZl9waXhhcmxvZy5jOjc4Nw0KQnJlYWtw
-b2ludCAxIGF0IDB4YjdmNzkxNmM6IGZpbGUgdGlmX3BpeGFybG9nLmMsIGxp
-bmUgNzg3Lg0KKGdkYikgcg0KLS0tIC0tLQ0KQnJlYWtwb2ludCAxLCBQaXhh
-ckxvZ0RlY29kZSAodGlmPTB4ODA0ZjE0OCwgb3A9MHg4MDRmNTA4ICIiLCBv
-Y2M9PG9wdGltaXplZCBvdXQ+LCBzPTApIGF0IHRpZl9waXhhcmxvZy5jOjc4
-Nw0KNzg3ICAgICAgICAgICAgICAgICAgICAgaW50IHN0YXRlID0gaW5mbGF0
-ZSgmc3AtPnN0cmVhbSwgWl9QQVJUSUFMX0ZMVVNIKTsNCihnZGIpIHgvMzJ4
-dyAgc3AtPnN0cmVhbS0+bmV4dF9vdXQNCjB4ODA0ZjU5ODogICAgICAgMHhi
-N2Q5MTdiMCAgICAgMHhiN2Q5MTdiMCAgICAgMHg5YjlhOTk5OCAgICAgMHg5
-ZjllOWQ5Yw0KMHg4MDRmNWE4OiAgICAgICAweGEzYTJhMWEwICAgICAweGE3
-YTZhNWE0ICAgICAweGFiYWFhOWE4ICAgICAweGFmYWVhZGFjDQoweDgwNGY1
-Yjg6ICAgICAgIDB4YjNiMmIxYjAgICAgIDB4YjdiNmI1YjQgICAgIDB4YmJi
-YWI5YjggICAgIDB4YmZiZWJkYmMNCjB4ODA0ZjVjODogICAgICAgMHhjM2My
-YzFjMCAgICAgMHhjN2M2YzVjNCAgICAgMHhjYmNhYzljOCAgICAgMHhjZmNl
-Y2RjYw0KMHg4MDRmNWQ4OiAgICAgICAweGQzZDJkMWQwICAgICAweGQ3ZDZk
-NWQ0ICAgICAweGRiZGFkOWQ4ICAgICAweDAwMDAwMDkxDQoweDgwNGY1ZTg6
-ICAgICAgIDB4YjdkOTE4MzggICAgIDB4YjdkOTE4MzggICAgIDB4ZWJlYWU5
-ZTggICAgIDB4ZWZlZWVkZWMNCg0KKGdkYikgZmluaXNoDQooZ2RiKSB4LzMy
-eHcgIHNwLT5zdHJlYW0tPm5leHRfb3V0DQoweDgwNGY1OTg6ICAgICAgIDB4
-ODY4Njg2ODYgICAgIDB4OTM5MjBkMGMgICAgICAweGEwOWUxYTE4ICAgICAw
-eGFkYWEyNzI0DQoweDgwNGY1YTg6ICAgICAgIDB4YmFiNjM0MzAgICAgIDB4
-YzdjMjQxM2MgICAgICAweGQ0Y2U0ZTQ4ICAgICAweGUxZGE1YjU0DQoweDgw
-NGY1Yjg6ICAgICAgIDB4ZWVlNjY4NjAgICAgIDB4ZmJmMjc1NmMgICAgICAw
-eDA4ZmU4Mjc4ICAgICAweDE2MGE4Zjg0DQoweDgwNGY1Yzg6ICAgICAgIDB4
-MjMxNjljOTAgICAgIDB4MzAyMmE5OWMgICAgICAweDNkMmViNmE4ICAgICAw
-eDRhM2FjM2I0DQoweDgwNGY1ZDg6ICAgICAgIDB4NTc0NmQwYzAgICAgIDB4
-ODY4NmRkY2MgICAgICAweDkzOTIwZDBjICAgICAweDQwOWQxYTE4DQoweDgw
-NGY1ZTg6ICAgICAgIDB4NGRhOWM3MjMgICAgIDB4NWFiNWQ0MmYgICAgICAw
-eDY3YzFlMTNiICAgICAweDc0Y2RlZTQ3DQoNCihnZGIpIGMNCkNvbnRpbnVp
-bmcuDQpQcm9ncmFtIHJlY2VpdmVkIHNpZ25hbCBTSUdTRUdWLCBTZWdtZW50
-YXRpb24gZmF1bHQuDQoweGI3YzNiZDM4IGluIF9pbnRfZnJlZSAoYXY9MHhi
-N2Q5MTc4MCA8bWFpbl9hcmVuYT4sIHA9PG9wdGltaXplZCBvdXQ+LCBoYXZl
-X2xvY2s9MCkgYXQgbWFsbG9jLmM6NDAxNQ0KNDAxNSAgICAgICAgICAgICAg
-ICAgICB1bmxpbmsoYXYsIG5leHRjaHVuaywgYmNrLCBmd2QpOw0KKGdkYikg
-YnQNCiMwICAweGI3YzNiZDM4IGluIF9pbnRfZnJlZSAoYXY9MHhiN2Q5MTc4
-MCA8bWFpbl9hcmVuYT4sIHA9PG9wdGltaXplZCBvdXQ+LCBoYXZlX2xvY2s9
-MCkgYXQgbWFsbG9jLmM6NDAxNQ0KIzEgIDB4YjdjM2Y2ZTAgaW4gX19HSV9f
-X2xpYmNfZnJlZSAobWVtPTB4ODA0ZjUwOCkgYXQgbWFsbG9jLmM6Mjk2OQ0K
-IzIgIDB4YjdmYWE4ZjggaW4gX1RJRkZmcmVlIChwPTB4ODA0ZjUwOCkgYXQg
-dGlmX3VuaXguYzozMjINCiMzICAweGI3ZjI5MDUwIGluIGd0VGlsZUNvbnRp
-ZyAoaW1nPTB4YmZmZmU1ODQsIHJhc3Rlcj0weDgwNjhiMDAsIHc9MzQsIGg9
-NCkgYXQgdGlmX2dldGltYWdlLmM6NjkxDQojNCAgMHhiN2YzMTUxNyBpbiBU
-SUZGUkdCQUltYWdlR2V0IChpbWc9MHhiZmZmZTU4NCwgcmFzdGVyPTB4ODA2
-OGIwMCwgdz0zNCwgaD00KSBhdCB0aWZfZ2V0aW1hZ2UuYzo1MDANCiM1ICAw
-eGI3ZjMxNzNjIGluIFRJRkZSZWFkUkdCQUltYWdlT3JpZW50ZWQgKHRpZj0w
-eDgwNGYxNDgsIHJ3aWR0aD0zNCwgcmhlaWdodD00LCByYXN0ZXI9MHg4MDY4
-YjAwLCBvcmllbnRhdGlvbj00LCBzdG9wPTApIGF0IHRpZl9nZXRpbWFnZS5j
-OjUxOQ0KIzYgIDB4YjdmMzE3YmEgaW4gVElGRlJlYWRSR0JBSW1hZ2UgKHRp
-Zj0weDgwNGYxNDgsIHJ3aWR0aD0zNCwgcmhlaWdodD00LCByYXN0ZXI9MHg4
-MDY4YjAwLCBzdG9wPTApIGF0IHRpZl9nZXRpbWFnZS5jOjUzNw0KIzcgIDB4
-MDgwNGE1OWYgaW4gdGlmZmN2dCAoaW49aW5AZW50cnk9MHg4MDRmMTQ4LCBv
-dXQ9b3V0QGVudHJ5PTB4ODA0ZTAwOCkgYXQgcmdiMnljYmNyLmM6MzE1DQoj
-OCAgMHgwODA0OTRhMSBpbiBtYWluIChhcmdjPTMsIGFyZ3Y9MHhiZmZmZjNi
-NCkgYXQgcmdiMnljYmNyLmM6MTI3DQoNCihnZGIpIHgvOHh3IDB4ODA0ZjUw
-OC04DQoweDgwNGY1MDA6ICAgICAgIDB4MDAwMDAwMzAgICAgIDB4MDAwMDAw
-OTEgICAgIDB4ZmZmZmZmZmYgICAgMHg0MmM0ZmZmZg0KMHg4MDRmNTEwOiAg
-ICAgICAweDAyZjcwZWI4ICAgICAgMHhmZmZmZmZmZiAgICAweDFiYjE3ZDlj
-ICAgICAweGZmZmYwNjFiDQooZ2RiKSB4Lzh4dyAweDgwNGY1MDArMHg5MA0K
-MHg4MDRmNTkwOiAgICAgICAweDhiOGE4OTg4ICAgICAweDAwMDAwMDUxICAg
-ICAweDg2ODY4Njg2ICAgICAweDkzOTIwZDBjDQoweDgwNGY1YTA6ICAgICAg
-IDB4YTA5ZTFhMTggICAgIDB4YWRhYTI3MjQgICAgIDB4YmFiNjM0MzAgICAg
-IDB4YzdjMjQxM2MNCihnZGIpIHgvOHh3IDB4ODA0ZjUwMCsweDkwKzB4NTAN
-CjB4ODA0ZjVlMDogICAgICAgMHg5MzkyMGQwYyAgICAgMHg0MDlkMWExOCAg
-ICAgMHg0ZGE5YzcyMyAgICAgMHg1YWI1ZDQyZg0KMHg4MDRmNWYwOiAgICAg
-ICAweDY3YzFlMTNiICAgICAweDc0Y2RlZTQ3ICAgICAweDgxZDlmYjUzICAg
-ICAgMHg4ZWU1MDg1Zg0KDQoNClJlZmVyZW5jZXM6DQpbMV0gaHR0cDovL3d3
-dy5yZW1vdGVzZW5zaW5nLm9yZy9saWJ0aWZmLw0KDQpUaGFuayB5b3UhDQpC
-ZXN0IFJlZ2FyZHMsDQo=
+I believe this would crash anything that does character conversion with
+iconv. Mail clients do automatic charset conversion when they see a
+Subject like:
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BB624AEX02corpqihoonet_--
+    Subject: =?ISO-2022-JP-3?B?.....
+
+or a MIME header like this:
+
+    Content-Type: text/plain; charset=ISO-2022-JP-3
+
+The impact is just that you can't open your mail client, because it
+crashes as soon as it sees the subject.
+
+Upstream bug: https://sourceware.org/bugzilla/show_bug.cgi?id=27256
+Patch: https://sourceware.org/pipermail/libc-alpha/2021-January/122058.html
+
+Thanks, Tavis.
+
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
+
