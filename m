@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/20/1
-Message-ID: <CANvfmP8oAx1QMY-dStGLA1obfucRF3Us4Vq2EnqE9bORcLXQtA@mail.gmail.com>
-Date: Sat, 20 Feb 2021 09:52:09 +0800
-From: Jerry Shao <jshao@...che.org>
-To: user@...y.incubator.apache.org, oss-security@...ts.openwall.com
-Subject: CVE-2021-26544: Apache Livy (Incubating) is vulnerable to cross site scripting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/28/1
+Message-ID: <75q7866n-1r8s-1np8-sro1-o6268nn87n6@redhat.com>
+Date: Thu, 28 Jan 2021 12:29:04 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Gaoning Pan <pgn@....edu.cn>
+Subject: CVE-2021-20196 QEMU: block: fdc: null pointer dereference may lead to guest crash
 Content-Type: text/plain; charset=utf-8
 
-Description:
+   Hello,
 
-Livy server version 0.7.0-incubating (only) is vulnerable to a cross
-site scripting issue in the session name.  A malicious user could use
-this flaw to access logs and results of other users' sessions and run
-jobs with their privileges.  This issue is fixed in Livy
-0.7.1-incubating.
+A NULL pointer dereference issue was found in the Floopy disk emulator of 
+QEMU. It could occur while processing read/write ioport commands, if the 
+selected Floopy drive is not initialised with a block device. A privileged 
+guest user could use this flaw to crash the QEMU process on the host resulting 
+in DoS scenario.
 
-This issue is being tracked as
-https://github.com/apache/incubator-livy/commit/4d8a912699683b973eee76d4e91447d769a0cb0d
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2021-01/msg05986.html
 
-Mitigation:
+This issue was reported by Gaoning Pan of Zhejiang University & Ant Security 
+Light-Year Lab.
 
-Users can upgrade to 0.7.1-incubating or apply the patch at the github URL.
-
-Credit:
-
-We would like to thank Andras Beni for reporting this issue
-
-References:
-https://github.com/apache/incubator-livy/commit/4d8a912699683b973eee76d4e91447d769a0cb0d
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
