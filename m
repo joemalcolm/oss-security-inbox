@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/02/2
-Message-ID: <cig332v9bacnlt.fsf@u54e1add816995a33037d.ant.amazon.com>
-Date: Tue, 2 Feb 2021 10:48:30 -0800
-From: Anthony Liguori <aliguori@...n.com>
-To: Solar Designer <solar@...nwall.com>, <oss-security@...ts.openwall.com>
-Subject: Re: Gentoo's "contributing back" linux-distros tasks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/28/3
+Message-ID: <CAFcO6XMDdVx8uoM8-dJf=AP5t+Tva-J2sOE+gV4F11dvU99yrg@mail.gmail.com>
+Date: Fri, 29 Jan 2021 02:10:20 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: linux-block: nbd: use-after-free Read in nbd_queue_rq
 Content-Type: text/plain; charset=utf-8
 
-Anthony Liguori <aliguori@...n.com> writes:
+Hi, I reported a use-after-free Read bug in ndb_queue_rq() in
+drivers/block/nbd.c and reproduced in linux-5.11.0-rc4+ too.
 
-> Solar Designer <solar@...nwall.com> writes:
->
->> 13. Keep track of per-report and per-issue handling and disclosure
->> timelines (at least times of notification of the private list and of
->> actual public disclosure), at regular intervals produce and share
->> statistics (most notably, the average embargo duration) as well as the
->> raw data (except on issues that are still under embargo) by posting to
->> oss-security - primary: Gentoo, backup: Amazon
->>
->> and we saw some contributions from Gentoo on these, most notable being
->> their work on the statistics (task 13 above):
->>
->> https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
->>
->> Unfortunately, the last update of these statistics ("Last modified:
->> 2019/10/15 01:52 by kristianf") is also when the contributions ceased.
->>
+Root Cause:
 
-As part of planning on getting this going again, I want to just review
-the cadence and update duration.
+There is a race condition in nbd ioctl.
+NBD_SET_SIZE_BLOCKS ioctl will call nbd_size_set(), it will change the
+block size.
+NBD_SET_SOCK ioctl will call nbd_add_socket() and it will invoke
+krealloc() to update a block, free and realloc a new one.
+But nbd_queue_rq() is in runtime. and calls nbd_handle_cmd(), there
+will use config->sock. there accesses to config->socks without any locking.
 
-I think this is easiest to do on the 15th of every month for the
-previous month.  As example, on 2/15, we would post the statistics for
-February.  Since the maximum embargo duration is 2-weeks, this would not
-disclose any embargoed information.
+Patch for this issue:
+https://lore.kernel.org/linux-block/24dff677353e2e30a71d8b66c4dffdbdf77c4dbd.1611595239.git.josef@toxicpanda.com/
 
-Does this seem reasonable?
+CVE assigned:
+not assigned.
+
+Timeline:
+*2021/1/25  - Vulnerability reported to security@...nel.org.
+*2020/1/26  - Vulnerability confirmed and patched.
+*2020/1/28 - Vulnerability reported to linux-distros@...openwall.org.
+*2021/1/29 - Opened on oss-security@...ts.openwall.com.
+
+Credit:
+This issue was discovered by the ADLab of venustech.
+
 
 Regards,
-
-Anthony Liguori
+ butt3rflyh4ck.
