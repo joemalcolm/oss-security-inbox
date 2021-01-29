@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["896" "Tuesday" "1" "June" "2021" "15:37:06" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "31" "[oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil "6" nil nil (number mark "U       butterflyhua Jun  1   31/896   " thread-indent "\"[oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5147" "Friday" "29" "January" "2021" "22:15:45" "+0000" "Roman Fiedler" "roman.fiedler@unparalleled.eu" "<9159-1611958545.228355@RO_f.XC4o.3wJr>" "168" "[oss-security] sudo: Ineffective NO_ROOT_MAILER and Baron Samedit" nil nil nil "1" "2021012922:15:45" "[oss-security] sudo: Ineffective NO_ROOT_MAILER and Baron Samedit" (number mark "U       roman.fiedle Jan 29  168/5147  " thread-indent "\"[oss-security] sudo: Ineffective NO_ROOT_MAILER and Baron Samedit\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] sudo: Ineffective NO_ROOT_MAILER and Baron Samedit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14143 invoked by uid 550); 1 Jun 2021 09:29:52 -0000
+Received: (qmail 15686 invoked by uid 550); 30 Jan 2021 08:26:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,68 +12,181 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24133 invoked from network); 1 Jun 2021 07:37:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=6SLjqErgFUgRCgEMdd49kJw/49/WU5fJgkSTQdPfijE=;
-        b=fEsdb/RNJ/rbJKO4UftgFp6HzPgxnz4y/Cx3Bqrg2IA9hGZQ2hV4sW7vhIFDCERMp4
-         alGYCy2dB+2ccurB36SHwbbBeePo9aI0Nkon2IKveEp+dVxAOBUsF45wbPHZih8JUWhg
-         OtT5hSBs3AWmsuC6OwA/bv61k4qL+w2ypZuVtQ3dhkIgfc7Hel68loJ8zTOQUsFh8DSA
-         jRMb1NaUQWFdnaEVXczxqTvEczkHrkhy7JH/ubn/q5fPHy0DJaGOz0xR3D2/6qYlrAki
-         +fYdFF+qJo6fyH0fMH+IEXSec3jfste2y2jEjNn72oOO7XelzeChPAfpMbzaaLWl79/K
-         cBQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=6SLjqErgFUgRCgEMdd49kJw/49/WU5fJgkSTQdPfijE=;
-        b=XcIonxTqs1JcCkXVMqAczptm38DY/xQbcxtMBV3FsyLelI999HGV+bSeoE2c/eilnN
-         f9DYYGLLqD3dBEbDNG5S0XBbAOLitSi09cjVSsuOANBC5E5Rw1ucvNugufYvmq63m1tj
-         JT0bGLzBOjn3QCxjXiS85Q30uCn59Ez8ua6+JnvQgdLfjkn6j1VsU6sk/24r0f6dF/Ov
-         JrZr4XhKc+P0Gy+SeBZJ3eLotl797QkoZXI1hS1JdovxTKha/+kkKAlyhz4RxGhfecbx
-         cjD659VPhMfgp9bmUvD2Y/IJBUEtlFwNjhlGXCoD7FwE4147PsBcsnPg3nHwiZlgiHlx
-         sK9w==
-X-Gm-Message-State: AOAM532lncAAytDpuMTn0+3ve1XA2AuajAoTeiSz/ectAsVVL0oLKPrw
-	3Uald47FMT0bkrJZhgyNSAlbL2W8wPx/AHbCoN2tWQlsSvU=
-X-Google-Smtp-Source: ABdhPJyPsec7A+R/zi4x51/B0wzZdZ2OydChX1BwNHwmkZpHYSPa3Z2pCMYp+26OMD6ayYGlK7O/W/c93M3HDktJwVA=
-X-Received: by 2002:a25:1b0b:: with SMTP id b11mr38638417ybb.302.1622533035831;
- Tue, 01 Jun 2021 00:37:15 -0700 (PDT)
+Received: (qmail 11916 invoked from network); 29 Jan 2021 22:16:54 -0000
+From: Roman Fiedler <roman.fiedler@unparalleled.eu>
+To: oss-security <oss-security@lists.openwall.com>
 MIME-Version: 1.0
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Tue, 1 Jun 2021 15:37:06 +0800
-Message-ID: <CAFcO6XOFPEGiO_HwajTB3zA9d3jyhUwDX742huVhaNtQy0=TfQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 29 Jan 2021 22:15:45 +0000
+Message-ID: <9159-1611958545.228355@RO_f.XC4o.3wJr>
+Subject: [oss-security] sudo: Ineffective NO_ROOT_MAILER and Baron Samedit
 
- Hi, there was a null pointer dereference in llcp_sock_getname in
-net/nfc/llcp_sock.c and reproduced it in linux-5.13.0-rc2. An
-unprivileged user can trigger this bug and cause denial of service.
+Hello list,
 
-#Root Cause
-After creating an nfc socket, bind the address by calling bind(), if
-LLCP_SAP_MAX was used as SAP, it cause the bind() failed and there
-would set llcp_sock->service_name  as NULL.
+While reproducing the exploitation of "Baron Samedit" another
+minor issue in Sudo was discovered. It affects Sudo 1.9.4
+and newer and renders the "NO_ROOT_MAILER" hardening option
+useless. While this bug by itself is not known to be exploitable
+on its own, combining it with the "Baron Samedit" heap overflow
+eases exploitation of the later tremendously.
 
-Although bind() returns an error here, it does not affect calling
-other socket functions. sock_getname() would invoke
-llcp_sock_getname(), llcp_sock_getname copied service  name from
-llcp_sock->service_name by memcpy but llcp_sock->service_name is NULL.
+Further analysis of the issue in cooperation with Qualys showed,
+that therefore on newer systems Qualys complex end timeconsuming
+exploitation methods can be avoided, thus allowing trivial, reliable
+privilege escalation. The loss of the feature allows to overwrite
+the default mailer binary name "/usr/sbin/sendmail" on the heap
+with a user controlled string. The rogue mailer is then invoked
+with full privileges due to "NO_ROOT_MAILER" failing.
 
-#Fix
-the patch for this issue:
-https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=4ac06a1e013c
-
-#CVE
-CVE not assigned.
-
-#Credits
-Active Defense Lab of Venustech.
+Luckily Debian stable, Ubuntu LTS,... are not vulnerable due
+to older Sudo version, but e.g. Debian Bullseye (Sudo 1.9.5p1-1)
+was affected.
 
 
 
-Regards,
-   butt3rflyh4ck.
+Meanwhile Todd C. Miller has confirmed the bug/vulnerability and
+provided a patch:
 
---
-Active Defense Lab of Venustech
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+... The bug was
+introduced in sudo 1.9.4 as part of the logging refactor.  The
+following diff fixes the problem.
+
+I've committed this as https://www.sudo.ws/repos/sudo/rev/e0d4f196ba02
+
+ - todd
+
+diff -r cd1c7615e861 plugins/sudoers/logging.c
+--- a/plugins/sudoers/logging.c	Tue Dec 08 12:35:21 2020 -0700
++++ b/plugins/sudoers/logging.c	Fri Jan 29 05:30:31 2021 -0700
+@@ -786,11 +786,6 @@ void
+ init_eventlog_config(void)
+ {
+     int logtype =3D 0;
+-#ifdef NO_ROOT_MAILER
+-    uid_t mailuid =3D user_uid;
+-#else
+-    uid_t mailuid =3D ROOT_UID;
+-#endif
+     debug_decl(init_eventlog_config, SUDOERS_DEBUG_LOGGING);
+=20
+     if (def_syslog)
+@@ -805,7 +800,7 @@ init_eventlog_config(void)
+     eventlog_set_syslog_alertpri(def_syslog_badpri);
+     eventlog_set_syslog_maxlen(def_syslog_maxlen);
+     eventlog_set_file_maxlen(def_loglinelen);
+-    eventlog_set_mailuid(mailuid);
++    eventlog_set_mailuid(ROOT_UID);
+     eventlog_set_omit_hostname(!def_log_host);
+     eventlog_set_logpath(def_logfile);
+     eventlog_set_time_fmt(def_log_year ? "%h %e %T %Y" : "%h %e %T");
+diff -r cd1c7615e861 plugins/sudoers/policy.c
+--- a/plugins/sudoers/policy.c	Tue Dec 08 12:35:21 2020 -0700
++++ b/plugins/sudoers/policy.c	Fri Jan 29 05:30:31 2021 -0700
+@@ -518,6 +518,10 @@ sudoers_policy_deserialize_info(void *v)
+     /* Some systems support fexecve() which we use for digest matches. */
+     cmnd_fd =3D -1;
+=20
++#ifdef NO_ROOT_MAILER
++    eventlog_set_mailuid(user_uid);
++#endif
++
+     /* Dump settings and user info (XXX - plugin args) */
+     for (cur =3D info->settings; *cur !=3D NULL; cur++)
+ 	sudo_debug_printf(SUDO_DEBUG_INFO, "settings: %s", *cur);
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+
+
+Without the patch "sudoers_init" in "plugins/sudoers/sudoers.c"
+calls "init_eventlog_config" (via "init_defaults") and
+"sudoers_policy_deserialize_info" in the wrong order regarding
+the uid:
+
+    154 int
+    155 sudoers_init(void *info, char * const envp[])
+    156 {
+...
+    174     /* Setup defaults data structures. */
+    175     if (!init_defaults()) {
+    176         sudo_warnx("%s", U_("unable to initialize sudoers default v=
+alues        "));
+    177         debug_return_int(-1);
+    178     }
+    179
+    180     /* Parse info from front-end. */
+    181     sudo_mode =3D sudoers_policy_deserialize_info(info);
+
+
+Therefore "init_eventlog_config" in "plugins/sudoers/logging.c"
+copies the "user_uid" from uninitialized memory (0 =3D=3D root):
+
+    785 void
+    786 init_eventlog_config(void)
+    787 {
+    788     int logtype =3D 0;
+    789 #ifdef NO_ROOT_MAILER
+    790     uid_t mailuid =3D user_uid;
+    791 #else
+    792     uid_t mailuid =3D ROOT_UID;
+    793 #endif
+    794     debug_decl(init_eventlog_config, SUDOERS_DEBUG_LOGGING);
+...
+    808     eventlog_set_mailuid(mailuid);
+
+
+Only afterwards the "user_uid" is set in "sudoers_policy_deserialize_info"
+in "plugins/sudoers/policy.c" but the new value cannot reach
+"eventlog_set_mailuid" any more:
+
+
+     88 int
+     89 sudoers_policy_deserialize_info(void *v)
+     90 {
+...
+    360     user_uid =3D (gid_t)-1;
+...
+    369         if (MATCHES(*cur, "uid=3D")) {
+    370             p =3D *cur + sizeof("uid=3D") - 1;
+    371             user_uid =3D (uid_t) sudo_strtoid(p, &errstr);
+
+
+
+The easiest way to see if a sudo-version is affected is to replace
+"/usr/sbin/sendmail" with
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+#!/bin/sh
+cat /proc/self/status >> /root/sendmail.log
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+and run suduedit as a test user, failing the password prompt:
+
+/usr/bin/sudoedit -S  X < /dev/null
+
+
+The log then will be created and contains:
+
+...
+Uid:    0 0    0  0
+Gid:    100    100 100 100
+...
+
+
+Thanks to Qualys Security Advisory team supporting the analysis
+of the issue and Todd C. Miller for quickly providing a fix!
+
+
+Kind regards,
+Roman
+
+| |  DI Roman Fiedler
+| /  roman.fiedler at unparalleled.eu  +43 677 63 29 28 29
+/ |  Unparalleled IT Services e.U.     FN: 516074h           VAT: ATU750505=
+24
+| |  https://unparalleled.eu/          Felix-Dahn-Platz 4, 8010 Graz, Austr=
+ia
+
