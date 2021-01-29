@@ -1,4 +1,9 @@
-Received: (qmail 21712 invoked by uid 550); 8 Oct 2023 08:19:48 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1757" "Friday" "29" "January" "2021" "12:30:01" "-0500" "David A. Wheeler" "dwheeler@dwheeler.com" "<B55D8C2E-39CF-4588-9C85-B78849C7D903@dwheeler.com>" "42" "Re: [oss-security] Linux Kernel: local priv escalation via futexes" nil nil nil "1" "2021012917:30:01" "[oss-security] Linux Kernel: local priv escalation via futexes" (number mark "U       dwheeler@dwh Jan 29   42/1757  " thread-indent "\"Re: [oss-security] Linux Kernel: local priv escalation via futexes\"\n") "<20210129170111.GO2759@suse.de>" ("<20210129100928.GD6548@suse.de>" "<20210129164208.GA8779@openwall.com>" "<20210129170111.GO2759@suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] Linux Kernel: local priv escalation via futexes" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21685 invoked by uid 550); 29 Jan 2021 17:30:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,116 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21691 invoked from network); 8 Oct 2023 08:19:48 -0000
-Date: Sun, 8 Oct 2023 10:18:13 +0200
-From: Fabian Keil <freebsd-listen@fabiankeil.de>
+Received: (qmail 21650 invoked from network); 29 Jan 2021 17:30:18 -0000
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_21E76CFE-44C8-4703-B333-05DB9A8BBFD0"
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Date: Fri, 29 Jan 2021 12:30:01 -0500
+References: <20210129100928.GD6548@suse.de>
+ <20210129164208.GA8779@openwall.com> <20210129170111.GO2759@suse.de>
 To: oss-security@lists.openwall.com
-Message-ID: <20231008101808.54aa75f7@fabiankeil.de>
-In-Reply-To: <1061E5A7-416D-4C7A-A2CC-AA3617ACAE13@dwheeler.com>
-References: <1061E5A7-416D-4C7A-A2CC-AA3617ACAE13@dwheeler.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: Nzc1MDY3
-Subject: Re: [oss-security] European Union Cyber Resilience Act (CRA)
+In-Reply-To: <20210129170111.GO2759@suse.de>
+Message-Id: <B55D8C2E-39CF-4588-9C85-B78849C7D903@dwheeler.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
+Subject: Re: [oss-security] Linux Kernel: local priv escalation via futexes
 
-"David A. Wheeler" <dwheeler@dwheeler.com> wrote on 2023-10-05 at 11:08:51:
+--Apple-Mail=_21E76CFE-44C8-4703-B333-05DB9A8BBFD0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-> Solar Designed posted on October 1, 2023:
-> > The talk... starts with a mention of the European Union Cyber Resiliance Act (CRA)
-> > and how it is problematic for Open Source...
-> > (If we want to discuss in here, which I'm not sure of, please start a
-> > separate thread for this sub-topic, do not just reply to this one.)
-> 
-> Fair enough. The CRA *definitely* impacts open source software,
-> and it includes security-related requirements. So it seems on-topic for this mailing list, at
-> least to note that *many* people find the CRA concerning & to point to more information.
 
-I agree that it's on-topic.
 
-> I think a good place to start is "Understanding the Cyber Resilience Act:
-> What Everyone involved in Open Source Development Should Know" from the Linux Foundation:
-> https://www.linuxfoundation.org/blog/understanding-the-cyber-resilience-act
+> On Jan 29, 2021, at 12:01 PM, Marcus Meissner <meissner@suse.de> wrote:
+> Mitre has now assigned CVE-2021-3347.
+>=20
+> On Fri, Jan 29, 2021 at 05:42:08PM +0100, Solar Designer wrote:
+>> Hi,
+>>=20
+>> I'm not familiar with futexes, but just to save others a few minutes on
+>> looking this up:
+>=20
+> (Is anyone? Futex are too complex for me at least, I would guess also=20
+> using them is error prone.)
 
-I tried to access this URL but it seems to be "protected" by
-ClownFlare and as a Tor user I'm apparently not allowed to
-access the page without executing proprietary JavaScript,
-for details see [0].
+Here=E2=80=99s some helpful context. "A futex overview and update=E2=80=9D =
+(2009) at https://lwn.net/Articles/360699/
+"The futex mechanism... is a fast, lightweight kernel-assisted locking prim=
+itive for user-space applications. It provides for very fast uncontended lo=
+ck acquisition and release. The futex state is stored in a user-space varia=
+ble (an unsigned 32-bit integer on all platforms). Atomic operations are us=
+ed in order to change the state of the futex in the uncontended case withou=
+t the overhead of a syscall. In the contended cases, the kernel is invoked =
+to put tasks to sleep and wake them up. Futexes are the basis of several mu=
+tual exclusion constructs commonly used in threaded programming."
 
-Maybe someone from the "Linux Foundation" could fix this
-as it looks a bit ridiculous to me.
+More recently: "Rethinking the futex API=E2=80=9D (2020): https://lwn.net/A=
+rticles/823513/
+"The current effort to rework futexes appears to be driven by a couple of c=
+oncerns. One that goes mostly unstated is the desire to create a system-cal=
+l interface that makes a bit more sense than futex(), which is a complex, m=
+ultiplexed API with wildly varying arguments and a number of special cases.=
+=E2=80=9D
 
-If their GNU/Linux servers can't handle the load anymore
-they could probably simply use a BSD instead ...
+--- David A. Wheeler
 
-> The Linux Foundation EU has a page about the CRA:
-> https://linuxfoundation.eu/cyber-resilience-act
-> ... it has many links, and is urging people work to #FixTheCRA.
 
-Sounds somewhat interesting but accessing it seems to require
-the execution of proprietary JavaScript as well so I didn't read
-it either.
-
-> Many organizations *have* been trying to get EU regulators
-> to fix the CRA. This isn't a case where no one spoke up.
-> The problem is that for the most part their concerns have
-> been ignored by regulators:
-> https://www.globenewswire.com/news-release/2023/04/17/2647861/0/en/The-Eclipse-Foundation-and-Leading-Open-Source-Organisations-Deliver-Open-Letter-to-European-Commission-Regarding-the-Cyber-Resilience-Act.html
-
-Great, a link that actually works.
-
-The "demands" seem somewhat reasonable to me:
-
-| Moving forward, we urge you to engage with the open source
-| community and take our concerns into account as you consider the
-| implementation of the Cyber Resilience Act. Specifically, moving
-| forward, we urge you to:
-|
-| 1. Recognise the unique characteristics of open source software
-|    and ensure that the Cyber Resilience Act does not
-|    unintentionally harm the open source ecosystem.
-| 2. Consult with the open source community during the co-legislative
-|    process.
-| 3. Ensure that any development under the CRA takes into account
-|    the diversity of open and transparent open source software
-|    development practices.
-| 4. Establish a mechanism for ongoing dialogue and collaboration
-|    between the European institutions and the open source community,
-|    to ensure that future legislation and policy decisions are informed.
-
-Of course the organisations that wrote the letter don't actually
-represent the whole "open source community" which I assume includes
-the free software community as well but I assume the "demands" will
-be ignored anyway so it probably doesn't make a difference.
-
-> I think the overall *goals* of the CRA are laudable.
-
-I must confess that I still haven't figured out what the goals
-are supposed to be. The article you posted above doesn't seem
-to mention the goals or maybe I just overlooked them.
-
-Anyway:
-
->                                                      However,
-> when evaluating laws & regulations you should always IGNORE
-> their goals, because their goals are IRRELEVANT. What matters
-> is what the laws and regulations will actually *CAUSE*. Put
-> another way, RESULTS are the *only* legitimate basis for
-> evaluating laws and regulations.
-
-Agreed.
-
-> In this case, I think too many regulators are focused on
-> theoretical goals while ignoring what will actually happen.
-
-Given that we are talking about the EU I also wouldn't
-rule out the possibility that at least some regulators
-have already been bought by "lobbyists" and thus aren't
-interested in doing "the right thing" anyway and then
-there are probably a fair amount of regulators who are
-simply to stupid to understand reasonable arguments ...
-
-Happy hacking,
-Fabian
-
-[0] <https://curl.se/mail/lib-2023-09/0056.html>
+--Apple-Mail=_21E76CFE-44C8-4703-B333-05DB9A8BBFD0--
