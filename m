@@ -1,49 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/10/2
-Message-ID: <20210110183829.GA2703@openwall.com>
-Date: Sun, 10 Jan 2021 19:38:29 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Yury German <blueknight@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Gentoo's "contributing back" linux-distros tasks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/29/5
+Message-Id: <B55D8C2E-39CF-4588-9C85-B78849C7D903@dwheeler.com>
+Date: Fri, 29 Jan 2021 12:30:01 -0500
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel: local priv escalation via futexes
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 12, 2020 at 02:36:55PM -0400, Yury German wrote:
-> On 10/12/20 8:30 AM, Solar Designer wrote:
-> > 13. Keep track of per-report and per-issue handling and disclosure
-> > timelines (at least times of notification of the private list and of
-> > actual public disclosure), at regular intervals produce and share
-> > statistics (most notably, the average embargo duration) as well as the
-> > raw data (except on issues that are still under embargo) by posting to
-> > oss-security - primary: Gentoo, backup: Amazon
-> >
-> > and we saw some contributions from Gentoo on these, most notable being
-> > their work on the statistics (task 13 above):
-> >
-> > https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
-> >
-> > Unfortunately, the last update of these statistics ("Last modified:
-> > 2019/10/15 01:52 by kristianf") is also when the contributions ceased.
-[...]
-> Currently I have been maintaining the statistics for the list, but there
-> was a time from October to January that I was off the list and do not
-> have the archive of the messages. I will need to work with someone to
-> fill out those statistics as K_F is currently not available.
+
+
+> On Jan 29, 2021, at 12:01 PM, Marcus Meissner <meissner@...e.de> wrote:
+> Mitre has now assigned CVE-2021-3347.
 > 
-> I will be able to continue with Task 13, and will catch up during the
-> weekend.
+> On Fri, Jan 29, 2021 at 05:42:08PM +0100, Solar Designer wrote:
+>> Hi,
+>> 
+>> I'm not familiar with futexes, but just to save others a few minutes on
+>> looking this up:
+> 
+> (Is anyone? Futex are too complex for me at least, I would guess also 
+> using them is error prone.)
 
-We had some discussions on the above with Gentoo folks off-list.  The
-outcome is that Gentoo is unable to continue handling the statistics
-task from the beginning of 2021 and on.  Yury has left Gentoo's security
-team (and thus is now unsubscribed from linux-distros), but is
-nevertheless willing to update the statistics until the end of 2020 as
-he had kindly offered, in his personal capacity.  Thank you, Yury!
+Here’s some helpful context. "A futex overview and update” (2009) at https://lwn.net/Articles/360699/
+"The futex mechanism... is a fast, lightweight kernel-assisted locking primitive for user-space applications. It provides for very fast uncontended lock acquisition and release. The futex state is stored in a user-space variable (an unsigned 32-bit integer on all platforms). Atomic operations are used in order to change the state of the futex in the uncontended case without the overhead of a syscall. In the contended cases, the kernel is invoked to put tasks to sleep and wake them up. Futexes are the basis of several mutual exclusion constructs commonly used in threaded programming."
 
-As to the missing period when Yury was off list, I am suggesting he uses
-the headers-only archive I've just posted publicly to try and map issues
-to oss-security postings.  Where headers are not enough, Yury will need
-to ping me or someone from Gentoo who was on the list at the time to
-help match things.
+More recently: "Rethinking the futex API” (2020): https://lwn.net/Articles/823513/
+"The current effort to rework futexes appears to be driven by a couple of concerns. One that goes mostly unstated is the desire to create a system-call interface that makes a bit more sense than futex(), which is a complex, multiplexed API with wildly varying arguments and a number of special cases.”
 
-Alexander
+--- David A. Wheeler
+
+
