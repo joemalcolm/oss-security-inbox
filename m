@@ -1,30 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/12/3
-Message-ID: <CAJRvFdpVe6LQf3TDoPyhhQBeMTLQe+kRdyMH+Ge5kJ8L5NYcog@mail.gmail.com>
-Date: Mon, 12 Apr 2021 16:09:58 -0500
-From: Mike Drob <mdrob@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/29/4
+Message-ID: <20210129170111.GO2759@suse.de>
+Date: Fri, 29 Jan 2021 18:01:11 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-29262: Apache Solr: Misapplied Zookeeper ACLs can result in leakage of configured authentication and authorization settings
+Subject: Re: Linux Kernel: local priv escalation via futexes
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi,
 
-When starting Apache Solr versions prior to 8.8.2, configured with the
-SaslZkACLProvider or VMParamsAllAndReadonlyDigestZkACLProvider and no
-existing security.json znode, if the optional read-only user is
-configured then Solr would not treat that node as a sensitive path and
-would allow it to be readable.
+Mitre has now assigned CVE-2021-3347.
 
-Additionally, with any ZkACLProvider, if the security.json is already
-present, Solr will not automatically update the ACLs.
+On Fri, Jan 29, 2021 at 05:42:08PM +0100, Solar Designer wrote:
+> Hi,
+> 
+> I'm not familiar with futexes, but just to save others a few minutes on
+> looking this up:
 
-This issue is being tracked as SOLR-15249
+(Is anyone? Futex are too complex for me at least, I would guess also 
+ using them is error prone.)
 
-Mitigation:
+> On Fri, Jan 29, 2021 at 11:09:28AM +0100, Marcus Meissner wrote:
+> >        - Address a longstanding issue where the user space part of the PI
+> >          futex is not writeable. The kernel returns with inconsistent state
+> >          which can in the worst case result in a UAF of a tasks kernel
+> >          stack.
+> > 
+> >          The solution is to establish consistent kernel state which makes
+> >          future operations on the futex fail because user space and kernel
+> >          space state are inconsistent. Not a problem as PI futexes
+> >          fundamentaly require a functional RW mapping and if user space
+> >          pulls the rug under it, then it can keep the pieces it asked for.
+> 
+> >     * tag 'locking-urgent-2021-01-28' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip:
+> >       futex: Handle faults correctly for PI futexes
+> 
+> FWIW, this commit has:
+> 
+> Fixes: 1b7558e457ed ("futexes: fix fault handling in futex_lock_pi")
+> 
+> and that other commit is from 2008.  So probably all currently
+> maintained Linux distros and deployments are affected, unless something
+> else mitigated the issue in some kernel versions.
 
-Manually set appropriate ACLs on /security.json znode.
+Yes, goes back to a long history, sorry for leaving this out.
 
-Credit:
-
-Timothy Potter and Mike Drob, Apple Cloud Services
-
+Ciao, Marcus
