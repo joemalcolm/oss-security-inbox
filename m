@@ -1,4 +1,9 @@
-Received: (qmail 13917 invoked by uid 550); 26 Mar 2024 00:33:11 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["793" "Friday" "29" "January" "2021" "09:57:45" "-0800" "Jihoon Son" "jihoonson@apache.org" "<CACZfFK5qhiaNND7Tsf4AKG=Jh9Nk4pHKSLKKCmZS7Au6pEgVqA@mail.gmail.com>" "20" "[oss-security] CVE-2021-25646: Authenticated users can override system configurations in their requests which allows them to execute arbitrary code." nil nil nil "1" "2021012917:57:45" "[oss-security] CVE-2021-25646: Authenticated users can override system configurations in their requests which allows them to execute arbitrary code." (number mark "U       jihoonson@ap Jan 29   20/793   " thread-indent "\"[oss-security] CVE-2021-25646: Authenticated users can override system configurations in their requests which allows them to execute arbitrary code.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-25646: Authenticated users can override system configurations in their requests which allows them to execute arbitrary code." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11946 invoked by uid 550); 29 Jan 2021 18:01:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,127 +12,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21580 invoked from network); 25 Mar 2024 23:31:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
-	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=LN+NTymopWCYSLghaUwao2XgjQ1owgd9F5D0VDU0YZs=; b=kmdVDrzePqrEiyoETZdnf4nH/0
-	8Wec2C2iJOIjyYS3dL6ohPGTuG4BttNsuvNU+oav9RtKrXcy738jvSolLXhT8sosgF3X7GTgxCnyF
-	Z55SVLy6sKbHoCxU96e/G642BqyCSTNZtb4BGsvd6hN84vsnqttJrrC7JsUHeqFvrqp+FPYQysWv3
-	czA4dvfWvdgZQwH9F9fas7GDmfKWngo1mcohzYsVzINz0PG/BzJWkWuC+j0nYQgb2KT01PxZSGTRZ
-	eOumqgnuzsBom7+RhA4QSps1RuuItjMFK5qPMVJKbQNmHtR4SD2AEzKY6+l+fMleUnbPjkJ50Td+X
-	UlAUIzmA==;
-Date: Tue, 26 Mar 2024 01:35:28 +0200
-Message-ID: <20240326013528.GD1018219@igalia.com>
-From: Adrian Perez de Castro <aperez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-References:
+Received: (qmail 11500 invoked from network); 29 Jan 2021 17:58:23 -0000
+X-Gm-Message-State: AOAM530/dcvZuqW4T+bPpFL7X0mIfD8fz61MI+z43k0TSU577v3trpO4
+	ftcbPYzypYXyqkiuWKrUXDbHNLgjN7G3owQfj3U=
+X-Google-Smtp-Source: ABdhPJxq8RRpcpGKhVCfbXAE/SZzlZSOHzRQvrxPqKEKGBEvPuewvVn2OM4iG+1NMck3HyyGmGmp0U28Ak+3K51UOO0=
+X-Received: by 2002:a05:622a:248:: with SMTP id c8mr5169785qtx.122.1611943076118;
+ Fri, 29 Jan 2021 09:57:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="7emtdgs3NHvTmNrW"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2024-0002
+From: Jihoon Son <jihoonson@apache.org>
+Date: Fri, 29 Jan 2021 09:57:45 -0800
+X-Gmail-Original-Message-ID: <CACZfFK5qhiaNND7Tsf4AKG=Jh9Nk4pHKSLKKCmZS7Au6pEgVqA@mail.gmail.com>
+Message-ID: <CACZfFK5qhiaNND7Tsf4AKG=Jh9Nk4pHKSLKKCmZS7Au6pEgVqA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2021-25646: Authenticated users can override system
+ configurations in their requests which allows them to execute arbitrary code.
 
---7emtdgs3NHvTmNrW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: base64
+Description:
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BF
-IFdlYktpdCBTZWN1cml0eSBBZHZpc29yeSAgICAgICAgICAgICAgICAgV1NB
-LTIwMjQtMDAwMgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUg
-cmVwb3J0ZWQgICAgICAgICAgIDogTWFyY2ggMjYsIDIwMjQKQWR2aXNvcnkg
-SUQgICAgICAgICAgICAgOiBXU0EtMjAyNC0wMDAyCldlYktpdEdUSyBBZHZp
-c29yeSBVUkwgIDogaHR0cHM6Ly93ZWJraXRndGsub3JnL3NlY3VyaXR5L1dT
-QS0yMDI0LTAwMDIuaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5IFVSTCA6IGh0
-dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNC0wMDAyLmh0
-bWwKQ1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNC0yMzI1Miwg
-Q1ZFLTIwMjQtMjMyNTQsCiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZF
-LTIwMjQtMjMyNjMsIENWRS0yMDI0LTIzMjgwLAogICAgICAgICAgICAgICAg
-ICAgICAgICAgIENWRS0yMDI0LTIzMjg0LCBDVkUtMjAyMy00Mjk1MCwKICAg
-ICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyMy00Mjk1NiwgQ1ZFLTIw
-MjMtNDI4NDMuCgpTZXZlcmFsIHZ1bG5lcmFiaWxpdGllcyB3ZXJlIGRpc2Nv
-dmVyZWQgaW4gV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0LgoKQ1ZFLTIwMjQt
-MjMyNTIKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQ
-RSBXZWJLaXQgYmVmb3JlIDIuNDQuMC4KICAgIENyZWRpdCB0byBhbmJ1MTAy
-NCBvZiBTZWNBTlQuCiAgICBJbXBhY3Q6IFByb2Nlc3Npbmcgd2ViIGNvbnRl
-bnQgbWF5IGxlYWQgdG8gYSBkZW5pYWwtb2Ytc2VydmljZS4KICAgIERlc2Ny
-aXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVk
-IG1lbW9yeSBoYW5kbGluZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMjYzNzU4
-CgpDVkUtMjAyNC0yMzI1NAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktp
-dEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40NC4wLgogICAgQ3JlZGl0
-IHRvIEphbWVzIExlZSAoQFdpbmRvd3NyY2VyKS4KICAgIEltcGFjdDogQSBt
-YWxpY2lvdXMgd2Vic2l0ZSBtYXkgZXhmaWx0cmF0ZSBhdWRpbyBkYXRhIGNy
-b3NzLW9yaWdpbi4KICAgIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFk
-ZHJlc3NlZCB3aXRoIGltcHJvdmVkIFVJIGhhbmRsaW5nLgogICAgV2ViS2l0
-IEJ1Z3ppbGxhOiAyNjM3OTUKCkNWRS0yMDI0LTIzMjYzCiAgICBWZXJzaW9u
-cyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAy
-LjQ0LjAuCiAgICBDcmVkaXQgdG8gSm9oYW4gQ2FybHNzb24gKGpvYXhjYXIp
-LgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQg
-d2ViIGNvbnRlbnQgbWF5IHByZXZlbnQKICAgIENvbnRlbnQgU2VjdXJpdHkg
-UG9saWN5IGZyb20gYmVpbmcgZW5mb3JjZWQuIERlc2NyaXB0aW9uOiBBIGxv
-Z2ljCiAgICBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQgdmFs
-aWRhdGlvbi4KICAgIFdlYktpdCBCdWd6aWxsYTogMjY0ODExCgpDVkUtMjAy
-NC0yMzI4MAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQg
-V1BFIFdlYktpdCBiZWZvcmUgMi40NC4wLgogICAgQ3JlZGl0IHRvIEFuIGFu
-b255bW91cyByZXNlYXJjaGVyLgogICAgSW1wYWN0OiBBIG1hbGljaW91c2x5
-IGNyYWZ0ZWQgd2VicGFnZSBtYXkgYmUgYWJsZSB0byBmaW5nZXJwcmludCB0
-aGUKICAgIHVzZXIuIERlc2NyaXB0aW9uOiBBbiBpbmplY3Rpb24gaXNzdWUg
-d2FzIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkCiAgICB2YWxpZGF0aW9uLgog
-ICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNjY3MDMKCkNWRS0yMDI0LTIzMjg0CiAg
-ICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0
-IGJlZm9yZSAyLjQ0LjAuCiAgICBDcmVkaXQgdG8gR2VvcmcgRmVsYmVyIGFu
-ZCBNYXJjbyBTcXVhcmNpbmEuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFs
-aWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgcHJldmVudAogICAg
-Q29udGVudCBTZWN1cml0eSBQb2xpY3kgZnJvbSBiZWluZyBlbmZvcmNlZC4g
-RGVzY3JpcHRpb246IEEgbG9naWMKICAgIGlzc3VlIHdhcyBhZGRyZXNzZWQg
-d2l0aCBpbXByb3ZlZCBzdGF0ZSBtYW5hZ2VtZW50LgogICAgV2ViS2l0IEJ1
-Z3ppbGxhOiAyNjcyNDEKCkNWRS0yMDIzLTQyOTUwCiAgICBWZXJzaW9ucyBh
-ZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ0
-LjAuCiAgICBDcmVkaXQgdG8gTmFuIFdhbmcgKEBldGVybmFsc2FrdXJhMTMp
-IG9mIDM2MCBWdWxuZXJhYmlsaXR5IFJlc2VhcmNoCiAgICBJbnN0aXR1dGUg
-YW5kIHJ1c2hpa2VzaCBuYW5kZWRrYXIuCiAgICBJbXBhY3Q6IFByb2Nlc3Np
-bmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0
-bwogICAgYXJiaXRyYXJ5IGNvZGUgZXhlY3V0aW9uLiBEZXNjcmlwdGlvbjog
-QSB1c2UgYWZ0ZXIgZnJlZSBpc3N1ZSB3YXMKICAgIGFkZHJlc3NlZCB3aXRo
-IGltcHJvdmVkIG1lbW9yeSBtYW5hZ2VtZW50LgogICAgV2ViS2l0IEJ1Z3pp
-bGxhOiAyNjM2ODIKCkNWRS0yMDIzLTQyOTU2CiAgICBWZXJzaW9ucyBhZmZl
-Y3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ0LjAu
-CiAgICBDcmVkaXQgdG8gU3VuZ0t3b24gTGVlIChEZW1vbi5UZWFtKS4KICAg
-IEltcGFjdDogUHJvY2Vzc2luZyB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBh
-IGRlbmlhbC1vZi1zZXJ2aWNlLgogICAgRGVzY3JpcHRpb246IFRoZSBpc3N1
-ZSB3YXMgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5n
-LgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNjM5ODkKCkNWRS0yMDIzLTQyODQz
-CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2Vi
-S2l0IGJlZm9yZSAyLjQ0LjAuCiAgICBDcmVkaXQgdG8gS2FjcGVyIEt3YXBp
-c3ogKEBLS0thc18pLgogICAgSW1wYWN0OiBWaXNpdGluZyBhIG1hbGljaW91
-cyB3ZWJzaXRlIG1heSBsZWFkIHRvIGFkZHJlc3MgYmFyCiAgICBzcG9vZmlu
-Zy4gRGVzY3JpcHRpb246IEFuIGluY29uc2lzdGVudCB1c2VyIGludGVyZmFj
-ZSBpc3N1ZSB3YXMKICAgIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIHN0YXRl
-IG1hbmFnZW1lbnQuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI2MDA0NgoKCldl
-IHJlY29tbWVuZCB1cGRhdGluZyB0byB0aGUgbGF0ZXN0IHN0YWJsZSB2ZXJz
-aW9ucyBvZiBXZWJLaXRHVEsgYW5kIFdQRQpXZWJLaXQuIEl0IGlzIHRoZSBi
-ZXN0IHdheSB0byBlbnN1cmUgdGhhdCB5b3UgYXJlIHJ1bm5pbmcgc2FmZSB2
-ZXJzaW9ucwpvZiBXZWJLaXQuIFBsZWFzZSBjaGVjayBvdXIgd2Vic2l0ZXMg
-Zm9yIGluZm9ybWF0aW9uIGFib3V0IHRoZSBsYXRlc3QKc3RhYmxlIHJlbGVh
-c2VzLgoKRnVydGhlciBpbmZvcm1hdGlvbiBhYm91dCBXZWJLaXRHVEsgYW5k
-IFdQRSBXZWJLaXQgc2VjdXJpdHkgYWR2aXNvcmllcwpjYW4gYmUgZm91bmQg
-YXQ6IGh0dHBzOi8vd2Via2l0Z3RrLm9yZy9zZWN1cml0eS5odG1sIG9yCmh0
-dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS8uCgpUaGUgV2ViS2l0R1RL
-IGFuZCBXUEUgV2ViS2l0IHRlYW0sCk1hcmNoIDI2LCAyMDI0Cg==
+Apache Druid includes the ability to execute user-provided JavaScript
+code embedded in various types of requests. This functionality is
+intended for use in high-trust environments, and is disabled by
+default. However, in Druid 0.20.0 and earlier, it is possible for an
+authenticated user to send a specially-crafted request that forces
+Druid to run user-provided JavaScript code for that request,
+regardless of server configuration. This can be leveraged to execute
+code on the target machine with the privileges of the Druid server
+process.
 
---7emtdgs3NHvTmNrW
-Content-Type: application/pgp-signature; name="signature.asc"
+Mitigation:
 
------BEGIN PGP SIGNATURE-----
+Users should upgrade to Druid 0.20.1. Whenever possible, network
+access to cluster machines should be restricted to trusted hosts only.
 
-iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZgIKQAAKCRCRxVnb5MkS
-OwFUAJ9e3P9paf3x11X0ySZF/Fk5nP/rlQCeNkngBLST6uEgdlfpIwTRCRHo8gM=
-=YIes
------END PGP SIGNATURE-----
+Credit:
 
---7emtdgs3NHvTmNrW--
+This issue was discovered by Litch1 from the Security Team of Alibaba Cloud.
