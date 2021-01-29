@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["800" "Friday" "23" "June" "2017" "19:48:13" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1706231946010.19155@wniryva>" "27" "[oss-security] CVE-2017-7518 Kernel: KVM: debug exception via syscall emulation" nil nil nil "6" "2017062314:18:13" "[oss-security] CVE-2017-7518 Kernel: KVM: debug exception via syscall emulation" (number mark "U       ppandit@redh Jun 23   27/800   " thread-indent "\"[oss-security] CVE-2017-7518 Kernel: KVM: debug exception via syscall emulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1225" "Friday" "29" "January" "2021" "17:42:08" "+0100" "Solar Designer" "solar@openwall.com" "<20210129164208.GA8779@openwall.com>" "29" "Re: [oss-security] Linux Kernel: local priv escalation via futexes" nil nil nil "1" "2021012916:42:08" "[oss-security] Linux Kernel: local priv escalation via futexes" (number mark "U       solar@openwa Jan 29   29/1225  " thread-indent "\"Re: [oss-security] Linux Kernel: local priv escalation via futexes\"\n") "<20210129100928.GD6548@suse.de>" ("<20210129100928.GD6548@suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] Linux Kernel: local priv escalation via futexes" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23662 invoked by uid 550); 23 Jun 2017 14:18:30 -0000
+Received: (qmail 12216 invoked by uid 550); 29 Jan 2021 16:42:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23638 invoked from network); 23 Jun 2017 14:18:29 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com D0E1E40F14
-Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com D0E1E40F14
-Date: Fri, 23 Jun 2017 19:48:13 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-Message-ID: <alpine.LFD.2.20.1706231946010.19155@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Fri, 23 Jun 2017 14:18:18 +0000 (UTC)
-Subject: [oss-security] CVE-2017-7518 Kernel: KVM: debug exception via syscall emulation
+Received: (qmail 12131 invoked from network); 29 Jan 2021 16:42:26 -0000
+Date: Fri, 29 Jan 2021 17:42:08 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20210129164208.GA8779@openwall.com>
+References: <20210129100928.GD6548@suse.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210129100928.GD6548@suse.de>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Linux Kernel: local priv escalation via futexes
 
-    Hello,
+Hi,
 
-Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
-is vulnerable to an incorrect debug exception(#DB) error. It could occur while 
-emulating a syscall instruction.
+I'm not familiar with futexes, but just to save others a few minutes on
+looking this up:
 
-A user/process inside guest could use this flaw to potentially escalate their 
-privileges inside guest.
+On Fri, Jan 29, 2021 at 11:09:28AM +0100, Marcus Meissner wrote:
+>        - Address a longstanding issue where the user space part of the PI
+>          futex is not writeable. The kernel returns with inconsistent state
+>          which can in the worst case result in a UAF of a tasks kernel
+>          stack.
+> 
+>          The solution is to establish consistent kernel state which makes
+>          future operations on the futex fail because user space and kernel
+>          space state are inconsistent. Not a problem as PI futexes
+>          fundamentaly require a functional RW mapping and if user space
+>          pulls the rug under it, then it can keep the pieces it asked for.
 
-Note: Linux guests are not affected.
+>     * tag 'locking-urgent-2021-01-28' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip:
+>       futex: Handle faults correctly for PI futexes
 
-Upstream patch:
----------------
-   -> https://www.spinics.net/lists/kvm/msg151817.html
+FWIW, this commit has:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1464473
-   -> https://www.spinics.net/lists/kvm/msg151819.html
-   -> https://xenbits.xen.org/xsa/advisory-204.html
+Fixes: 1b7558e457ed ("futexes: fix fault handling in futex_lock_pi")
 
-'CVE-2017-7518' has been assigned to this issue by Red Hat Inc.
+and that other commit is from 2008.  So probably all currently
+maintained Linux distros and deployments are affected, unless something
+else mitigated the issue in some kernel versions.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Alexander
