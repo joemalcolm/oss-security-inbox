@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/21/4
-Message-ID: <YAnSSXu4Kpq6Avco@espresso.pseudorandom.co.uk>
-Date: Thu, 21 Jan 2021 19:13:13 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/29/6
+Message-ID: <CACZfFK5qhiaNND7Tsf4AKG=Jh9Nk4pHKSLKKCmZS7Au6pEgVqA@mail.gmail.com>
+Date: Fri, 29 Jan 2021 09:57:45 -0800
+From: Jihoon Son <jihoonson@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-21261: Flatpak sandbox escape via spawn portal (aka GHSA-4ppf-fxf6-vxg2)
+Subject: CVE-2021-25646: Authenticated users can override system configurations in their requests which allows them to execute arbitrary code.
 Content-Type: text/plain; charset=utf-8
 
-Affected versions: flatpak >= 0.11.4
-Fixed versions: flatpak >= 1.10.0, and 1.8.x >= 1.8.5
+Description:
 
-Flatpak is a system for building, distributing, and running sandboxed
-desktop applications on Linux.
+Apache Druid includes the ability to execute user-provided JavaScript
+code embedded in various types of requests. This functionality is
+intended for use in high-trust environments, and is disabled by
+default. However, in Druid 0.20.0 and earlier, it is possible for an
+authenticated user to send a specially-crafted request that forces
+Druid to run user-provided JavaScript code for that request,
+regardless of server configuration. This can be leveraged to execute
+code on the target machine with the privileges of the Druid server
+process.
 
-I discovered a bug in the flatpak-portal service that can allow sandboxed
-applications to execute arbitrary code on the host system (a sandbox
-escape). This is fixed in 1.10.0 and 1.8.5.
+Mitigation:
 
-The initial fixed versions introduced a regression for users of
-'flatpak build' on systems where a setuid version of bubblewrap (bwrap)
-is required. Version 1.10.1 additionally resolves the regression. The
-regression fix has been backported to the flatpak-1.8.x branch but is
-not currently in any 1.8.x release.
+Users should upgrade to Druid 0.20.1. Whenever possible, network
+access to cluster machines should be restricted to trusted hosts only.
 
-More details:
-https://github.com/flatpak/flatpak/security/advisories/GHSA-4ppf-fxf6-vxg2
+Credit:
+
+This issue was discovered by Litch1 from the Security Team of Alibaba Cloud.
