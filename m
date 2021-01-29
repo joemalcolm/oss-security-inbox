@@ -1,94 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/12
-Message-ID: <20210319195825.GA28654@grsecurity.net>
-Date: Fri, 19 Mar 2021 15:58:25 -0400
-From: Brad Spengler <spender@...ecurity.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/29/1
+Message-ID: <20210129100928.GD6548@suse.de>
+Date: Fri, 29 Jan 2021 11:09:28 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+Subject: Linux Kernel: local priv escalation via futexes
 Content-Type: text/plain; charset=utf-8
 
-Hi Sasha,
+Hi,
 
-> I'm really not sure how to respond to this. I don't own upstream, my
-> name isn't Linus, Greg, nor do I maintain a major subsystem. I don't
-> have any control over how upstream commits look like.
+Yesterday a patchset was merged to Linux Kernel mainline, which could be used
+to execute code in the kernel due to bugs in PI futexes.
 
-Both you and Greg certainly have control over stable kernel commit
-messages (it's the same ability you use to add the upstream commit ID).
-Greg at least receives private notification of security vulnerabilities
-through security@...nel.org.  I've privately received several complaints
-from different researchers about what was lacking from commit messages
-for vulnerabilities they reported there.
+I am filing a CVE request just now.
 
-> Can you please stop complaining about Greg's mails as if I was the one
-> who wrote them? I'm not his alter-ego, twin, or so on. If you have a
-> concern with what he writes take it up with him.
+Ciao, Marcus
 
-I wanted to avoid having to send multiple mails to the mailing list
-and cluttering it up even more (which is now unavoidable).
+merge commit:
 
-But since I'm here, I'll also address an assertion Greg repeated today:
-https://seclists.org/oss-sec/2021/q1/242
-that RH had incorrectly credited the CVE, after it had been already
-pointed out here:
-https://seclists.org/oss-sec/2021/q1/225
-that the reporter had found a flaw in the backport of the original
-fix that had happened years ago.  This is not improper acknowledgement.
-If Greg wanted to ensure proper acknowledgement of a CVE for the *original*
-issue, he could have done that back in 2018 when he committed the
-original fix:
+commit c64396cc36c6e60704ab06c1fb1c4a46179c9120
+Merge: e5ff2cb9cf67 34b1a1ce1458
+Author: Linus Torvalds <torvalds@...ux-foundation.org>
+Date:   Thu Jan 28 11:18:43 2021 -0800
 
-commit 3d63b7e4ae0dc5e02d28ddd2fa1f945defc68d81
-Author:     Tetsuo Handa <penguin-kernel@...ove.SAKURA.ne.jp>
-AuthorDate: Sat May 26 09:53:13 2018 +0900
-Commit:     Greg Kroah-Hartman <gregkh@...uxfoundation.org>
-CommitDate: Thu Jun 28 21:30:16 2018 +0900
+    Pull locking fixes from Thomas Gleixner:
+     "A set of PI futex fixes:
 
-    n_tty: Fix stall at n_tty_receive_char_special().
+       - Address a longstanding issue where the user space part of the PI
+         futex is not writeable. The kernel returns with inconsistent state
+         which can in the worst case result in a UAF of a tasks kernel
+         stack.
 
-I'm in agreement that since the flaw was in the backport, it should have
-been attributed to RHEL, BTW.
+         The solution is to establish consistent kernel state which makes
+         future operations on the futex fail because user space and kernel
+         space state are inconsistent. Not a problem as PI futexes
+         fundamentaly require a functional RW mapping and if user space
+         pulls the rug under it, then it can keep the pieces it asked for.
 
-> Great, let's work together on making it better, but it's been following
-> the same pattern for quite a while now.
+       - Address an issue where the return value is incorrect in case that
+         the futex was acquired after a timeout/signal made the waiter drop
+         out of the rtmutex wait.
 
-I think both you and Greg are exaggerating the level of "extra work" this
-temporary blip creates for you -- with the exception of the RH backport
-issue, it was not difficult at all for me to determine what issue was
-being discussed, without even having to plug the CVEs into bugzilla.redhat.com
-which produces:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2020-35519
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2021-3428
-(though these are equally light on information)
+         In one of the corner cases the kernel returned an error code
+         despite having successfully acquired the futex"
 
-Greg's annoyances on this list have been going on for far longer than these
-recent advisories, and are not specific even to RH advisories.  For instance,
-in the middle of his RH tirade, he posted this useless email about another
-set of issues:
-https://seclists.org/oss-sec/2021/q1/217
-It's not the concern of the list why the reporter did or did not provide the
-fixes upstream (at least two of which were already upstreamed).
+    * tag 'locking-urgent-2021-01-28' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip:
+      futex: Handle faults correctly for PI futexes
+      futex: Simplify fixup_pi_state_owner()
+      futex: Use pi_state_update_owner() in put_pi_state()
+      rtmutex: Remove unused argument from rt_mutex_proxy_unlock()
+      futex: Provide and use pi_state_update_owner()
+      futex: Replace pointless printk in fixup_owner()
+      futex: Ensure the correct return value from futex_lock_pi()
 
-We do not need more emails from Greg like:
-https://seclists.org/oss-sec/2021/q1/21
-"I still do not understand why you report issues that are fixed over a year ago"
-"Who does this help out"
-
-https://seclists.org/oss-sec/2021/q1/100
-"5.1.0 is _VERY_ old"
-
-https://seclists.org/oss-sec/2021/q1/233
-"Is that a mistake in your kernel development process that should be
-resolved?"
-
-They are as useless to this list as his boilerplate "all users must upgrade"
-stable announcements every 3 days.
-
-I'm hopeful that RH's advisories will return to their previous level of
-information (not "start" as Greg characterized it).  What can be said of
-upstream's policies that everyone's been putting up with for ~16 years now?
-
-Thanks,
--Brad
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
