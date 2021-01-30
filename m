@@ -1,40 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/28/3
-Message-ID: <CAFcO6XMDdVx8uoM8-dJf=AP5t+Tva-J2sOE+gV4F11dvU99yrg@mail.gmail.com>
-Date: Fri, 29 Jan 2021 02:10:20 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/30/2
+Message-ID: <CAFcO6XP+LtLLCzLakN9QFKNOcDHQhdgxyLz59OCr+5ebXxAkRg@mail.gmail.com>
+Date: Sat, 30 Jan 2021 16:46:30 +0800
 From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: linux-block: nbd: use-after-free Read in nbd_queue_rq
+Subject: Re: Linux kernel: linux-block: nbd: use-after-free Read in nbd_queue_rq
 Content-Type: text/plain; charset=utf-8
 
-Hi, I reported a use-after-free Read bug in ndb_queue_rq() in
-drivers/block/nbd.c and reproduced in linux-5.11.0-rc4+ too.
+the patch for this issue in upstream:
 
-Root Cause:
-
-There is a race condition in nbd ioctl.
-NBD_SET_SIZE_BLOCKS ioctl will call nbd_size_set(), it will change the
-block size.
-NBD_SET_SOCK ioctl will call nbd_add_socket() and it will invoke
-krealloc() to update a block, free and realloc a new one.
-But nbd_queue_rq() is in runtime. and calls nbd_handle_cmd(), there
-will use config->sock. there accesses to config->socks without any locking.
-
-Patch for this issue:
-https://lore.kernel.org/linux-block/24dff677353e2e30a71d8b66c4dffdbdf77c4dbd.1611595239.git.josef@toxicpanda.com/
-
-CVE assigned:
-not assigned.
-
-Timeline:
-*2021/1/25  - Vulnerability reported to security@...nel.org.
-*2020/1/26  - Vulnerability confirmed and patched.
-*2020/1/28 - Vulnerability reported to linux-distros@...openwall.org.
-*2021/1/29 - Opened on oss-security@...ts.openwall.com.
-
-Credit:
-This issue was discovered by the ADLab of venustech.
-
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b98e762e3d71e893b221f871825dc64694cfb258
 
 Regards,
  butt3rflyh4ck.
+
+
+On Fri, Jan 29, 2021 at 2:10 AM butt3rflyh4ck <butterflyhuangxx@...il.com>
+wrote:
+
+> Hi, I reported a use-after-free Read bug in ndb_queue_rq() in
+> drivers/block/nbd.c and reproduced in linux-5.11.0-rc4+ too.
+>
+> Root Cause:
+>
+> There is a race condition in nbd ioctl.
+> NBD_SET_SIZE_BLOCKS ioctl will call nbd_size_set(), it will change the
+> block size.
+> NBD_SET_SOCK ioctl will call nbd_add_socket() and it will invoke
+> krealloc() to update a block, free and realloc a new one.
+> But nbd_queue_rq() is in runtime. and calls nbd_handle_cmd(), there
+> will use config->sock. there accesses to config->socks without any locking.
+>
+> Patch for this issue:
+>
+> https://lore.kernel.org/linux-block/24dff677353e2e30a71d8b66c4dffdbdf77c4dbd.1611595239.git.josef@toxicpanda.com/
+>
+> CVE assigned:
+> not assigned.
+>
+> Timeline:
+> *2021/1/25  - Vulnerability reported to security@...nel.org.
+> *2020/1/26  - Vulnerability confirmed and patched.
+> *2020/1/28 - Vulnerability reported to linux-distros@...openwall.org.
+> *2021/1/29 - Opened on oss-security@...ts.openwall.com.
+>
+> Credit:
+> This issue was discovered by the ADLab of venustech.
+>
+>
+> Regards,
+>  butt3rflyh4ck.
+>
+
