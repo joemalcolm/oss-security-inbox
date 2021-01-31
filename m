@@ -1,25 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/23/1
-Message-ID: <20210323091036.GB2094@dhcp-25-225.brq.redhat.com>
-Date: Tue, 23 Mar 2021 10:10:37 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/31/1
+Message-ID: <20210131131329.56c9be0d@fabiankeil.de>
+Date: Sun, 31 Jan 2021 13:13:29 +0100
+From: Fabian Keil <freebsd-listen@...iankeil.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+Subject: Re: CVE request experience
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Nick Tait <ntait@...hat.com> wrote on 2020-12-23:
 
-we are reviewing our approach to sending CVE kernel announcements to
-oss-security after the (mostly) constructive feedback received in this
-email thread.
+> That is a rather poor experience Fabian, sorry! Took a look at that
+> incident number and no encrypted message appears on our end. I believe
+> you did actually send a message but not sure what went wrong. While I
+> can't directly help, did request the appropriate people follow up with
+> you.
 
-I admit that several of the recent announcements were not up to par with
-the minimal standard we strive to achieve and I apologize for that. Our
-intention never was to cause unnecessary work for others, quite the
-opposite.
+Thanks a lot for your help, Nick.
 
-Thank you,
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+I was contacted by someone from Red Hat Product Security
+on 2020-12-24 and received a CVE.
 
+I replied and requested CVEs for the other issues fixed in
+Privoxy 3.0.29 but did not receive a reply yet. I just
+forwarded the request to <secalert@...hat.com>.
+
+Fabian
+
+Content of type "application/pgp-signature" skipped
