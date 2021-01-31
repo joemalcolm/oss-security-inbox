@@ -1,24 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/11/2
-Message-ID: <8bebbc45-baa9-c3fe-2114-786d6c70c440@apache.org>
-Date: Mon, 11 Oct 2021 03:05:11 +0000
-From: Dave Fisher <wave@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/31/2
+Message-ID: <20210131131308.47c79861@fabiankeil.de>
+Date: Sun, 31 Jan 2021 13:13:08 +0100
+From: Fabian Keil <freebsd-listen@...iankeil.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-41831: Apache OpenOffice: Timestamp Manipulation with Signature Wrapping 
+Subject: Two DoS issues fixed in Privoxy 3.0.31 stable
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+               Announcing Privoxy 3.0.31 stable
+--------------------------------------------------------------------
 
-Description:
+Privoxy 3.0.31 fixes two security issues that were discovered while
+preparing the 3.0.30 release. The issues also affect earlier Privoxy
+releases.
 
-It is possible for an attacker to manipulate the timestamp of signed documents.
+--------------------------------------------------------------------
+ChangeLog for Privoxy 3.0.31
+--------------------------------------------------------------------
 
-All versions of Apache OpenOffice up to 4.1.10 are affected. Users are advised to update to version 4.1.11.
+- Security/Reliability:
+  - Prevent an assertion from getting triggered by a crafted CGI request.
+    Commit 5bba5b89193fa. OVE-20210130-0001.
+    Reported by: Joshua Rogers (Opera)
+  - Fixed a memory leak when decompression fails "unexpectedly".
+    Commit f431d61740cc0. OVE-20210128-0001.
+[...]
+-----------------------------------------------------------------
+About Privoxy:
+-----------------------------------------------------------------
 
-See CVE-2021-25634 for the LibreOffice advisory.
+Privoxy is a non-caching web proxy with advanced filtering capabilities for
+enhancing privacy, modifying web page data and HTTP headers, controlling
+access, and removing ads and other obnoxious Internet junk. Privoxy has a
+flexible configuration and can be customized to suit individual needs and
+tastes. It has application for both stand-alone systems and multi-user
+networks.
 
+Privoxy is Free Software and licensed under the GNU GPLv2.
 
-Credit:
+[...]
 
-Apache OpenOffice would like to thank Simon Rohlmann, Vladislav Mladenov, Christian Mainka, and Jorg Schwenk of Ruhr University Bochum, Germany
+Home Page: 
+https://www.privoxy.org/
 
+ChangeLog:
+https://www.privoxy.org/3.0.31/user-manual/whatsnew.html
+
+Content of type "application/pgp-signature" skipped
