@@ -1,74 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/18/3
-Message-ID: <YAWkPB4mFDvqtep9@f195.suse.de>
-Date: Mon, 18 Jan 2021 16:07:40 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/01/2
+Message-ID: <27226ce7-d477-5cb5-fbf2-050d8096a151@gmail.com>
+Date: Mon, 1 Feb 2021 10:44:09 +0100
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: libreoffice-online "loolforkit" privileged program local root exploit
+Subject: Django: CVE-2021-3281: Potential directory-traversal via archive.extract()
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+https://www.djangoproject.com/weblog/2021/feb/01/security-releases/
 
-libreoffice-online [1] contains a privileged setuid-root like binary
-"loolforkit" [2] that carries Linux capability bits for CAP_FOWNER,
-CAP_MKNOD and CAP_SYSCHROOT.
+In accordance with `our security release policy 
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team is issuing
+`Django 3.1.6 <https://docs.djangoproject.com/en/dev/releases/3.1.6/>`_,
+`Django 3.0.12 
+<https://docs.djangoproject.com/en/dev/releases/3.0.12/>`_ and
+`Django 2.2.18 <https://docs.djangoproject.com/en/dev/releases/2.2.18/>`_.
+These releases address the security issue with severity "low" detailed 
+below. We encourage all users of Django to upgrade as soon as possible.
 
-Upstream's intention seems to be that this program should only be
-accessible to the "loolforkit" user in the system. This precondition is
-not fulfilled in the 7.0 release versions of the "loolforkit" program,
-however, because a command line switch "--disable-lool-user-checking"
-allows to bypass this check. In the upstream repository this was fixed
-as a "side effect" of commit d9708437b2 [3].
+CVE-2021-3281: Potential directory-traversal via ``archive.extract()``
+======================================================================
 
-Any user that is allowed to run this program can obtain root privileges.
-In the `globalPreinit()` function the program attempts to load a shared
-library under the user specified lotemplate path (parameter
-"--lotemplate"). Thus the unprivileged caller can cause arbitrary code
-to be executed in the context of the privileged program.
+The ``django.utils.archive.extract()`` function, used by
+``startapp --template`` and ``startproject --template``, allowed
+directory-traversal via an archive with absolute paths or relative paths 
+with
+dot segments.
 
-Even with the fix from commit d9708437b2 the "loolforkit" user is
-equivalent to root, because it can execute arbitrary code as root using
-this attack vector. I think this creates a false sense of security,
-because to unaware users it looks like there is user separation in
-place. A compromised "loolforkit" user account can easily become root
-using the "loolforkit" program, however.
+Thank you to Wang Baohua for the report.
 
-I did not fully review the program source. The large amount of command
-line switches the program accepts and the general program philosophy
-"it's okay if the right user is calling it" make me suspect that there a
-further weaknesses over the '--lotemplate' approach in this program that
-might allow to escalate privileges.
+Affected supported versions
+===========================
 
-I contacted upstream by email on 2020-12-14 and offered coordinated
-disclosure of these issues and recommended to thoroughly check the
-program's source code for issues. It seems upstream considers this fixed
-with commit d9708437b2 and doesn't consider it an issue that the
-"loolforkit" user can escalate privileges to root using this program. I
-recommended to assign at least a CVE for the combination of the two
-issues that allows arbitrary users in the system to become root using
-the "loolforkit" binary. Nothing happened so far, however.
+* Django master branch
+* Django 3.2 (currently at alpha status)
+* Django 3.1
+* Django 3.0
+* Django 2.2
 
-Formally libreoffice-online is covered by the "Document Foundation" CNA,
-therefore I did not request a CVE for this via the Mitre CVE form. I
-will try to contact the CNA directly in this matter.
+Resolution
+==========
 
-[1]: https://github.com/LibreOffice/online
-[2]: https://github.com/LibreOffice/online/blob/master/kit/ForKit.cpp
-[3]: https://github.com/LibreOffice/online/commit/d9708437b2ba2f8c10eeb95c9ce7bd78cc83d244
+Patches to resolve the issue have been applied to Django's master branch and
+the 3.2, 3.1, 3.0, and 2.2 release branches. The patches may be obtained 
+from the following changesets:
 
-Cheers
+* On the `master branch 
+<https://github.com/django/django/commit/05413afa8c18cdb978fcdf470e09f7a12b234a23>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/f944f79e555c91571192022a6bb9ddf2178db7ed>`__
+* On the `3.1 release branch 
+<https://github.com/django/django/commit/02e6592835b4559909aa3aaaf67988fef435f624>`__
+* On the `3.0 release branch 
+<https://github.com/django/django/commit/52e409ed17287e9aabda847b6afe58be2fa9f86a>`__
+* On the `2.2 release branch 
+<https://github.com/django/django/commit/21e7622dec1f8612c85c2fc37fe8efbfd3311e37>`__
 
-Matthias
+The following releases have been issued:
 
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
- 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
+* Django 3.1.6 (`download Django 3.1.6 
+<https://www.djangoproject.com/m/releases/3.1/Django-3.1.6.tar.gz>`_ | 
+`3.1.6 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.1.6.checksum.txt>`_)
+* Django 3.0.12 (`download Django 3.0.12 
+<https://www.djangoproject.com/m/releases/3.0/Django-3.0.12.tar.gz>`_ | 
+`3.0.12 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.0.12.checksum.txt>`_)
+* Django 2.2.18 (`download Django 2.2.18 
+<https://www.djangoproject.com/m/releases/2.2/Django-2.2.18.tar.gz>`_ | 
+`2.2.18 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.2.18.checksum.txt>`_)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+
