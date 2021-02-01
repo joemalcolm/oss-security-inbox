@@ -1,75 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/05/1
-Message-ID: <CALBaBG8=MYzxc7UAA_iMMX_SO1YzN2KPN0zfXAGBOzOqctWDsg@mail.gmail.com>
-Date: Wed, 5 May 2021 09:36:49 -0700
-From: Aaron Patterson <aaron.patterson@...il.com>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com,  ruby-security-ann@...glegroups.com
-Subject: [CVE-2021-22902] Possible Denial of Service vulnerability in Action Dispatch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/02/1
+Message-Id: <DFF27630-BB03-4FC8-9A1D-75F16C947044@apache.org>
+Date: Mon, 1 Feb 2021 23:49:20 +0000
+From: Aleksey Yeschenko <aleksey@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-17516] Apache Cassandra internode encryption enforcement vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-There is a possible Denial of Service vulnerability in the Mime type parser
-of
-Action Dispatch. This vulnerability has been assigned the CVE identifier
-CVE-2021-22902.
+CVE-2020-17516: Apache Cassandra doesn't enforce encryption setting on inbound internode connections
 
-Versions Affected:  >= 6.0.0
-Not affected:       < 6.0.0
-Fixed Versions:     6.0.3.7, 6.1.0.2
+Severity:
+Important
 
-Impact
-------
-There is a possible Denial of Service vulnerability in Action Dispatch.
-Carefully crafted Accept headers can cause the mime type parser in Action
-Dispatch to do catastrophic backtracking in the regular expression engine.
+Vendor:
+The Apache Software Foundation
 
-Releases
---------
-The fixed releases are available at the normal locations.
+Versions Affected:
+Cassandra 2.1.0 to 2.1.22
+Cassandra 2.2.0 to 2.2.19
+Cassandra 3.0.0 to 3.0.23
+Cassandra 3.11.0 to 3.11.9
 
-Workarounds
------------
-The following monkey patch placed in an initializer can be used to work
-around
-the issue:
+Description:
+When using ‘dc’ or ‘rack’ internode_encryption setting, a Cassandra instance allows both encrypted
+and unencrypted connections. A misconfigured node or a malicious user can use the unencrypted
+connection despite not being in the same rack or dc, and bypass mutual TLS requirement.
 
-```ruby
-module Mime
-  class Type
-    MIME_REGEXP =
-/\A(?:\*\/\*|#{MIME_NAME}\/(?:\*|#{MIME_NAME})(?>\s*#{MIME_PARAMETER}\s*)*)\z/
-  end
-end
-```
+Mitigation:
+Users of ALL versions should switch from ‘dc’ or ‘rack’ to ‘all’ internode_encryption setting, as they are inherently insecure
+3.0.x users should additionally upgrade to 3.0.24
+3.11.x users should additionally upgrade to 3.11.10
 
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided
-patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 6-0-Prevent-catastrophic-backtracking-during-mime-parsin.patch - Patch
-for 6.0 series
-* 6-1-Prevent-catastrophic-backtracking-during-mime-parsin.patch - Patch
-for 6.1 series
-
-Please note that only the 6.1.Z, 6.0.Z, and 5.2.Z series are supported at
-present. Users of earlier unsupported releases are advised to upgrade as
-soon
-as possible as we cannot guarantee the continued availability of security
-fixes for unsupported releases.
-
-Credits
--------
-
-Thanks to Security Curious <security-curious@...me> for reporting this!
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-Content of type "text/html" skipped
-
-Download attachment "6-0-Prevent-catastrophic-backtracking-during-mime-parsin.patch" of type "application/octet-stream" (2246 bytes)
-
-Download attachment "6-1-Prevent-catastrophic-backtracking-during-mime-parsin.patch" of type "application/octet-stream" (2290 bytes)
+Credit:
+This issue was discoverd by Jon Meredith
