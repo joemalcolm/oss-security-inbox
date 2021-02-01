@@ -1,46 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/4
-Message-ID: <28BC3D20-FB43-4E52-9D84-5589FC4366FC@oracle.com>
-Date: Wed, 17 Mar 2021 12:40:41 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Use After Free and Double Free bugs in Linux Kernel mainline
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/01/4
+Message-ID: <20210201192439.GA23096@openwall.com>
+Date: Mon, 1 Feb 2021 20:24:39 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel: local priv escalation via futexes
 Content-Type: text/plain; charset=utf-8
 
-This one isn't a security bug:
+On Fri, Jan 29, 2021 at 06:01:11PM +0100, Marcus Meissner wrote:
+> Mitre has now assigned CVE-2021-3347.
 
-> On 17 Mar 2021, at 11:53, lyl2019@...l.ustc.edu.cn wrote:
-> 
-> Bug2: nvme/rdma: Fix a use after free in nvmet_rdma_write_data_done
-> Commit Url: https://github.com/torvalds/linux/commit/abec6561fc4e0fbb19591a0b35676d8c783b5493
-> 
-> In nvmet_rdma_write_data_done, rsp is recoverd by wc->wr_cqe
-> and freed by nvmet_rdma_release_rsp(). But after that, pr_info()
-> used the freed chunk's member object and could leak the freed
-> chunk address with wc->wr_cqe by computing the offset.
-> 
-> drivers/nvme/target/rdma.c | 5 ++---
-> 1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-> index 06b6b742bb21..6c1f3ab7649c 100644
-> --- a/drivers/nvme/target/rdma.c
-> +++ b/drivers/nvme/target/rdma.c
-> @@ -802,9 +802,8 @@ static void nvmet_rdma_write_data_done(struct ib_cq *cq, struct ib_wc *wc)
-> 		nvmet_req_uninit(&rsp->req);
-> 		nvmet_rdma_release_rsp(rsp);
-> 		if (wc->status != IB_WC_WR_FLUSH_ERR) {
-> -			pr_info("RDMA WRITE for CQE 0x%p failed with status %s (%d).\n",
-> -				wc->wr_cqe, ib_wc_status_msg(wc->status),
-> -				wc->status);
-> +			pr_info("RDMA WRITE for CQE failed with status %s (%d).\n",
-> +				ib_wc_status_msg(wc->status), wc->status);
-> 			nvmet_rdma_error_comp(queue);
-> 		}
-> 		return;
+FWIW, here's a recent writeup and exploit for a different futex
+vulnerability:
 
-Commit ad67b74d2469 ("printk: hash addresses printed with %p") back in 2017 made '%p' a non-security issue. That commit noted that there were approximately 14,000 places in the kernel where there was an address printed with %p.  Rather than 14,000 CVEs :) this was fixed once and once only by that commit.
+https://elongl.github.io/exploitation/2021/01/08/cve-2014-3153.html
+https://github.com/elongl/CVE-2014-3153
 
-That's not to say that this "0x%p" doesn't have a problem: for a start you don't need the "0x" because %p prints one anyway. That point is moot, though, because no one objected to just removing the pointer.  The commit message is wrong though: it doesn't leak an address.
+Might help someone get into futexes... and exploiting their bugs.
 
-jch
+Alexander
