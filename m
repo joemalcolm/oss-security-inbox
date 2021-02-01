@@ -1,40 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/17/2
-Message-ID: <ru239p$147u$1@ciao.gmane.io>
-Date: Sun, 17 Jan 2021 19:31:05 -0000 (UTC)
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/01/3
+Message-ID: <CAH9eYVpH-8Trnfzi_9PznBjBt8KNJf4ySGPtAqT308Afzm2wpQ@mail.gmail.com>
+Date: Mon, 1 Feb 2021 11:07:59 -0500
+From: Brian Demers <bdemers@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: mutt recipient parsing memory leak
+Subject: [CVE-2020-17523] Apache Shiro authentication bypass
 Content-Type: text/plain; charset=utf-8
 
-Hello, I noticed mutt was leaking memory whenever I opened a particular
-mailbox. I tracked down the problem: Using rfc822 groups without the madatory
-labels wasn't being parsed properly.
+The Shiro team is pleased to announce the release of Apache Shiro version
+1.7.1.
 
-https://tools.ietf.org/html/rfc822#section-6.2.6
+This security release contains 1 fix since the 1.7.0 release and is
+available for Download now [1].
 
-(A spammer had just put some junk in there, they weren't deliberately using
-exotic addressing schemes.. haha).
+Bug
+    [SHIRO-797] - Shiro 1.7.0 is lower than using springboot version
+2.0.7 dependency error
 
-It turns out that you can send a small message that leaks a *lot* of memory. A
-small message can leak GBs of memory, effectively preventing you from opening
-your mailbox. You would need to use a different mail client to clean up the
-malformed message before you can use mutt again.
+CVE-2020-17523:
+    Apache Shiro before 1.7.1, when using Apache Shiro with Spring, a
+specially crafted HTTP request may cause an authentication bypass.
 
-I sent this upstream as a DoS, but they don't want to treat it as a security
-isssue. I though I'd just send a FYI here instead in case anyone wants to
-backport the patch.
+The Apache Shiro team thanks differ from the Zorelworld iLab team for
+reporting this issue!
 
-Here's the bug with a repro: https://gitlab.com/muttmua/mutt/-/issues/323
+Release binaries (.jars) are also available through Maven Central and
+source bundles through Apache distribution mirrors.
 
-Here's the patch:
+For more information on Shiro, please read the documentation [2].
 
-https://gitlab.com/muttmua/mutt/-/commit/c059e20ea4c7cb3ee9ffd3500ffe313ae84b2545
+-The Apache Shiro Team
 
-Tavis.
-
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
+[1] http://shiro.apache.org/download.html
+[2] http://shiro.apache.org/documentation.html
 
