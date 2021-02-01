@@ -1,53 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/5
-Message-ID: <CAFRnB2W5J+vibKP58U36UJkq=G1BAzSLKtNHqodgi+LAhkrvNg@mail.gmail.com>
-Date: Fri, 5 Feb 2021 10:02:09 -0500
-From: Alex Gaynor <alex.gaynor@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/01/1
+Message-ID: <20210201064344.GA21262@suse.de>
+Date: Mon, 1 Feb 2021 07:43:44 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-20226 kernel: use-after-free in io_uring feature
+Subject: Re: Re: Linux kernel: linux-block: nbd: use-after-free Read in nbd_queue_rq
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Hi,
 
-Your message says that this is a DoS, however the ZDI page says it's a
-priv-esc. Which is right?
+Mitre has assigned CVE-2021-3348 to this issue.
 
-Alex
-
-On Fri, Feb 5, 2021 at 10:00 AM Rohit Keshri <rkeshri@...hat.com> wrote:
->
-> Hello Team,
->
-> A use-after-free flaw was found in the io_uring in Linux kernel, where a
-> local attacker with a user privilege could cause a denial of service
-> problem on the system
->
-> The issue results from the lack of validating the existence of an object
-> prior to performing operations on the object by not incrementing the file
-> reference counter while in use.
->
-> The highest threat from this vulnerability is to data integrity,
-> confidentiality and system availability.
->
->
-> 'CVE-2021-20226' was assigned by Red Hat.
->
-> This issue was reported by Ryota Shiga of Flatt Security Team.
->
->
-> Reference:
->
-> https://www.zerodayinitiative.com/advisories/ZDI-21-001/
->
->
-> Thanks and Regards
-> ..
-> Rohit Keshri / Red Hat Product Security Team
-> PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
->
-> secalert@...hat.com for urgent response
-
-
+Ciao, Marcus
+On Sat, Jan 30, 2021 at 04:46:30PM +0800, butt3rflyh4ck wrote:
+> the patch for this issue in upstream:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b98e762e3d71e893b221f871825dc64694cfb258
+> 
+> Regards,
+>  butt3rflyh4ck.
+> 
+> 
+> On Fri, Jan 29, 2021 at 2:10 AM butt3rflyh4ck <butterflyhuangxx@...il.com>
+> wrote:
+> 
+> > Hi, I reported a use-after-free Read bug in ndb_queue_rq() in
+> > drivers/block/nbd.c and reproduced in linux-5.11.0-rc4+ too.
+> >
+> > Root Cause:
+> >
+> > There is a race condition in nbd ioctl.
+> > NBD_SET_SIZE_BLOCKS ioctl will call nbd_size_set(), it will change the
+> > block size.
+> > NBD_SET_SOCK ioctl will call nbd_add_socket() and it will invoke
+> > krealloc() to update a block, free and realloc a new one.
+> > But nbd_queue_rq() is in runtime. and calls nbd_handle_cmd(), there
+> > will use config->sock. there accesses to config->socks without any locking.
+> >
+> > Patch for this issue:
+> >
+> > https://lore.kernel.org/linux-block/24dff677353e2e30a71d8b66c4dffdbdf77c4dbd.1611595239.git.josef@toxicpanda.com/
+> >
+> > CVE assigned:
+> > not assigned.
+> >
+> > Timeline:
+> > *2021/1/25  - Vulnerability reported to security@...nel.org.
+> > *2020/1/26  - Vulnerability confirmed and patched.
+> > *2020/1/28 - Vulnerability reported to linux-distros@...openwall.org.
+> > *2021/1/29 - Opened on oss-security@...ts.openwall.com.
+> >
+> > Credit:
+> > This issue was discovered by the ADLab of venustech.
+> >
+> >
+> > Regards,
+> >  butt3rflyh4ck.
+> >
 
 -- 
-All that is necessary for evil to succeed is for good people to do nothing.
+Marcus Meissner, Project Manager Security
+SUSE Software Solutions Germany GmbH, Maxfeldstr. 5, 90409 Nuernberg, Germany,
+GF: Felix Imendoerffer, HRB 36809, AG Nuernberg
