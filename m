@@ -1,4 +1,9 @@
-Received: (qmail 3412 invoked by uid 550); 27 Feb 2025 16:50:02 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["938" "Monday" "1" "February" "2021" "11:07:59" "-0500" "Brian Demers" "bdemers@apache.org" "<CAH9eYVpH-8Trnfzi_9PznBjBt8KNJf4ySGPtAqT308Afzm2wpQ@mail.gmail.com>" "31" "[oss-security] [CVE-2020-17523] Apache Shiro authentication bypass" nil nil nil "2" "2021020116:07:59" "[oss-security] [CVE-2020-17523] Apache Shiro authentication bypass" (number mark "U       bdemers@apac Feb  1   31/938   " thread-indent "\"[oss-security] [CVE-2020-17523] Apache Shiro authentication bypass\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-17523] Apache Shiro authentication bypass" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11599 invoked by uid 550); 1 Feb 2021 16:32:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,128 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 8163 invoked from network); 27 Feb 2025 15:33:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
-	s=mte1; t=1740670398; x=1740940398;
-	bh=dBZBuubQa/S8+YBv2cd4IjhfRktslY9IUjteuJ0fU1c=;
-	h=From:Subject:Message-Id:To:Cc:References:In-Reply-To:Feedback-ID:
-	 Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
-	 Subject:From;
-	b=mTBsk0ZdtBn7+sKrbaoPqIBUnE0UdqgXKHQR1ujW/HRVpk+zWwnhlPPSZcgJ6REbL
-	 K59VSMcv7Gs3YIS1GqLPRyToIIsBxzrLuI2VZKBgZdeHJgihtvfC4cYs8GB8WMT+BB
-	 OqhLaOw+K47i2BDFiQ2YYk7mR3fTIh8o4LlmbUgaaJWAUOpWL8ZpbtI8xpqEHp2VUx
-	 YyxYSd7V+/gTBb1ezxN8UjGZdIa0257HzvoUCvu51NdOZbqdAXzFxQHjj+Wld7Ea61
-	 /bXC0TYJVV6wfynABF63TpxNmzk1JGCdgE9TPvRddhmdtpA7ScER8MOdP897d7hFu4
-	 Qsw5MLVUgmM3Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vates.tech; s=mte1;
-	t=1740670398; x=1740930898; i=teddy.astie@vates.tech;
-	bh=dBZBuubQa/S8+YBv2cd4IjhfRktslY9IUjteuJ0fU1c=;
-	h=From:Subject:Message-Id:To:Cc:References:In-Reply-To:Feedback-ID:
-	 Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
-	 Subject:From;
-	b=lO09eHDfRFa11vVah+O9Yd7KF92UUHe15eXQa/y5Sw/sQC+ALBn6J3EWPPIxOGgqF
-	 jXeo2O1+75zviMOCIRLkERvqQCDtuElaWyBsSztQ+8pHxi+gRGoulJNUKt5s7MtTph
-	 ciKwFfyE6G9ZYcXngusjuBr4RqnjBwx62ND47GGkV74paWwerKvIBqBv9k7x+/wyJi
-	 gMK+wTMLZQzKfeLiovqwXYBylrhNnkcrQQL6drtHs3cI6JpHSRi9t55WJE8tX2jPc6
-	 nfvr5iyEb4XCic5ynzPE+Fui+B0RHfjOdAN2PpcHTXGCF+JRyenruwtwDBxUP+nwKa
-	 1g5T02hNpBclQ==
-From: "Teddy Astie" <teddy.astie@vates.tech>
-X-Bm-Disclaimer: Yes
-X-Bm-Milter-Handled: 4ffbd6c1-ee69-4e1b-aabd-f977039bd3e2
-X-Bm-Transport-Timestamp: 1740670397704
-Message-Id: <5ecf18f8-e8e9-431d-bb59-4631a598574e@vates.tech>
-To: "Xen.org security team" <security@xen.org>, xen-announce@lists.xen.org, xen-devel@lists.xen.org, xen-users@lists.xen.org, oss-security@lists.openwall.com
-Cc: "Xen.org security team" <security-team-members@xen.org>
-References: <E1tndOO-00CM3B-2R@xenbits.xenproject.org>
-In-Reply-To: <E1tndOO-00CM3B-2R@xenbits.xenproject.org>
-X-Native-Encoded: 1
-X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,=20including=20all=20headers,=20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.fcc4f5bd6f254d9887f8dad41cd017c9?=
-X-Mandrill-User: md_30504962
-Feedback-ID: 30504962:30504962.20250227:md
-Date: Thu, 27 Feb 2025 15:33:18 +0000
+Received: (qmail 3570 invoked from network); 1 Feb 2021 16:08:34 -0000
+X-Gm-Message-State: AOAM530nzE4RaWv+N2rj912VaXG0s8TvwbfEo2XeLe/+F8svjPUIgFPE
+	icYkdqYgxeONjEY79yq2RYWy8PusTqKqGCAxFJA=
+X-Google-Smtp-Source: ABdhPJxlKVHEtjFiH8Q65FfRXBtLuyFiWtZxH3qKsOCbilYWiY32XonJKJwrv29ADUCqIT6C8HJwet7VxuOqymzDlHA=
+X-Received: by 2002:a05:6402:3122:: with SMTP id dd2mr19611767edb.262.1612195690875;
+ Mon, 01 Feb 2021 08:08:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] =?utf-8?Q?Re:=20Xen=20Security=20Advisory=20467=20v1=20(CVE-2025-1713)=20-=20deadlock=20potential=20with=20VT-d=20and=20legacy=20PCI=20device=20pass-through?=
+From: Brian Demers <bdemers@apache.org>
+Date: Mon, 1 Feb 2021 11:07:59 -0500
+X-Gmail-Original-Message-ID: <CAH9eYVpH-8Trnfzi_9PznBjBt8KNJf4ySGPtAqT308Afzm2wpQ@mail.gmail.com>
+Message-ID: <CAH9eYVpH-8Trnfzi_9PznBjBt8KNJf4ySGPtAqT308Afzm2wpQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000076a64205ba488f12"
+Subject: [oss-security] [CVE-2020-17523] Apache Shiro authentication bypass
 
-Hello,
+--00000000000076a64205ba488f12
+Content-Type: text/plain; charset="UTF-8"
 
-Le 27/02/2025 =C3=A0 13:57, Xen.org security team a =C3=A9crit :
->              Xen Security Advisory CVE-2025-1713 / XSA-467
->
->      deadlock potential with VT-d and legacy PCI device pass-through
->
-> ISSUE DESCRIPTION
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> When setting up interrupt remapping for legacy PCI(-X) devices,
-> including PCI(-X) bridges, a lookup of the upstream bridge is required.
-> This lookup, itself involving acquiring of a lock, is done in a context
-> where acquiring that lock is unsafe.  This can lead to a deadlock.
->
-> IMPACT
-> =3D=3D=3D=3D=3D=3D
->
-> The passing through of certain kinds of devices to an unprivileged guest
-> can result in a Denial of Service (DoS) affecting the entire host.
->
-> Note: Normal usage of such devices by a privileged domain can also
->        trigger the issue.  In such a scenario, the deadlock is not
->        considered a security issue, but just a plain bug.
->
-> VULNERABLE SYSTEMS
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> Xen versions 4.0 and later are affected.  Xen versions 3.4 and earlier
-> are not directly affected, but had other issues.
->
-> Systems with Intel IOMMU hardware (VT-d) are affected.  Systems using
-> AMD or non-x86 hardware are not affected.
->
-> Only systems where certain kinds of devices are passed through to an
-> unprivileged guest are vulnerable.
->
-> MITIGATION
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> Avoiding the passing through of the affected device types will avoid
-> the vulnerability.
->
+The Shiro team is pleased to announce the release of Apache Shiro version
+1.7.1.
 
-Is disabling interrupt remapping another way of mitigating this
-vulnerability (e.g iommu=3Dno-intremap) ?
+This security release contains 1 fix since the 1.7.0 release and is
+available for Download now [1].
 
-> RESOLUTION
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> Applying the attached patch resolves this issue.
->
-> Note that patches for released versions are generally prepared to
-> apply to the stable branches, and may not apply cleanly to the most
-> recent release tarball.  Downstreams are encouraged to update to the
-> tip of the stable branch before applying these patches.
->
-> xsa467.patch           xen-unstable - Xen 4.17.x
->
-> $ sha256sum xsa467*
-> 2fffaa8892b3daecd698b4af95701045874a76edc2e18c8d2abbec85a39aa05c  xsa467.=
-patch
-> $
->
-> NOTE REGARDING LACK OF EMBARGO
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
->
-> The issue was reported initially on a public bug tracker and discussed in
-> public before it was realized that there was a security aspect.
+Bug
+    [SHIRO-797] - Shiro 1.7.0 is lower than using springboot version
+2.0.7 dependency error
 
-Teddy
+CVE-2020-17523:
+    Apache Shiro before 1.7.1, when using Apache Shiro with Spring, a
+specially crafted HTTP request may cause an authentication bypass.
 
+The Apache Shiro team thanks differ from the Zorelworld iLab team for
+reporting this issue!
 
-Teddy Astie | Vates XCP-ng Developer
+Release binaries (.jars) are also available through Maven Central and
+source bundles through Apache distribution mirrors.
 
-XCP-ng & Xen Orchestra - Vates solutions
+For more information on Shiro, please read the documentation [2].
 
-web: https://vates.tech
+-The Apache Shiro Team
 
+[1] http://shiro.apache.org/download.html
+[2] http://shiro.apache.org/documentation.html
+
+--00000000000076a64205ba488f12--
