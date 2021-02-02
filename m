@@ -1,33 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/25/2
-Message-ID: <o215932q-o26q-5o78-nr77-p0s99088rr23@redhat.com>
-Date: Thu, 25 Feb 2021 16:58:53 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Ruhr-University Bochum <bugs-syssec@....de>,  Cheolwoo Myung <cwmyung@....ac.kr>, Alexander Bulekov <alxndr@...edu>
-Subject: CVE-2021-20257 QEMU: net: e1000: infinite loop while processing transmit descriptors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/02/2
+Message-ID: <cig332v9bacnlt.fsf@u54e1add816995a33037d.ant.amazon.com>
+Date: Tue, 2 Feb 2021 10:48:30 -0800
+From: Anthony Liguori <aliguori@...n.com>
+To: Solar Designer <solar@...nwall.com>, <oss-security@...ts.openwall.com>
+Subject: Re: Gentoo's "contributing back" linux-distros tasks
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Anthony Liguori <aliguori@...n.com> writes:
 
-An infinite loop issue was found in the e1000 NIC emulator of the QEMU. It 
-occurs while processing transmit (tx) descriptors in process_tx_desc, if 
-various descriptor fields are initialised with invalid values. A guest may use 
-this flaw to consume cpu cycles on the host resulting in DoS scenario.
+> Solar Designer <solar@...nwall.com> writes:
+>
+>> 13. Keep track of per-report and per-issue handling and disclosure
+>> timelines (at least times of notification of the private list and of
+>> actual public disclosure), at regular intervals produce and share
+>> statistics (most notably, the average embargo duration) as well as the
+>> raw data (except on issues that are still under embargo) by posting to
+>> oss-security - primary: Gentoo, backup: Amazon
+>>
+>> and we saw some contributions from Gentoo on these, most notable being
+>> their work on the statistics (task 13 above):
+>>
+>> https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+>>
+>> Unfortunately, the last update of these statistics ("Last modified:
+>> 2019/10/15 01:52 by kristianf") is also when the contributions ceased.
+>>
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg07428.html
+As part of planning on getting this going again, I want to just review
+the cadence and update duration.
 
-'CVE-2021-20257' assigned by Red Hat Inc.
+I think this is easiest to do on the 15th of every month for the
+previous month.  As example, on 2/15, we would post the statistics for
+February.  Since the maximum embargo duration is 2-weeks, this would not
+disclose any embargoed information.
 
-This issue was independently reported by Sergej Schumilo, Cornelius 
-Aschermann, Simon Werner of Ruhr-University Bochum; Cheolwoo Myung of Seoul 
-National University; And Alexander Bulekov (CC'd).
+Does this seem reasonable?
 
+Regards,
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-
+Anthony Liguori
