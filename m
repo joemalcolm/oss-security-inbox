@@ -1,4 +1,9 @@
-Received: (qmail 1760 invoked by uid 550); 16 Oct 2023 08:09:04 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2666" "Wednesday" "3" "February" "2021" "12:05:55" "+0100" "Fabian Keil" "freebsd-listen@fabiankeil.de" "<20210203120555.5ffc809e@fabiankeil.de>" "65" "Re: [oss-security] Multiple memory leaks fixed in Privoxy 3.0.29 stable" nil nil nil "2" "2021020311:05:55" "[oss-security] Multiple memory leaks fixed in Privoxy 3.0.29 stable" (number mark "U       freebsd-list Feb  3   65/2666  " thread-indent "\"Re: [oss-security] Multiple memory leaks fixed in Privoxy 3.0.29 stable\"\n") "<20201129165312.64bd840f@fabiankeil.de>" ("<20201129165312.64bd840f@fabiankeil.de>") nil nil nil nil nil nil nil "Re: [oss-security] Multiple memory leaks fixed in Privoxy 3.0.29 stable" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13389 invoked by uid 550); 3 Feb 2021 11:16:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,132 +12,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1739 invoked from network); 16 Oct 2023 08:09:03 -0000
-Date: Mon, 16 Oct 2023 10:08:50 +0200
-From: Marcus Meissner <meissner@suse.de>
+Received: (qmail 11604 invoked from network); 3 Feb 2021 11:12:30 -0000
+Date: Wed, 3 Feb 2021 12:05:55 +0100
+From: Fabian Keil <freebsd-listen@fabiankeil.de>
 To: oss-security@lists.openwall.com
-Message-ID: <20231016080850.GF10758@suse.de>
-References: <ZSyUUSF_-3YbT14k@workstation>
+Message-ID: <20210203120555.5ffc809e@fabiankeil.de>
+In-Reply-To: <20201129165312.64bd840f@fabiankeil.de>
+References: <20201129165312.64bd840f@fabiankeil.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZSyUUSF_-3YbT14k@workstation>
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
- =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
- =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Authentication-Results: smtp-out2.suse.de;
-	dkim=none;
-	dmarc=none;
-	spf=softfail (smtp-out2.suse.de: 149.44.160.134 is neither permitted nor denied by domain of meissner@suse.de) smtp.mailfrom=meissner@suse.de
-Subject: Re: [oss-security] linux-distros membership application of openEuler
+Content-Type: multipart/signed; boundary="Sig_/er0hk59D0PJNef7aEXllfLT";
+ protocol="application/pgp-signature"; micalg=pgp-sha1
+X-Df-Sender: Nzc1MDY3
+Subject: Re: [oss-security] Multiple memory leaks fixed in Privoxy 3.0.29
+ stable
 
-Hi,
+--Sig_/er0hk59D0PJNef7aEXllfLT
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Regardless of your viability of subscription status I think we also
-(sadly) have to consider current geopolitical issues here.
+Fabian Keil <freebsd-listen@fabiankeil.de> wrote on 2020-11-29:
 
-As far as I understand, US companies and US citizens are not permitted
-to work with Chinese organizations and/or Chinese nationals.
+>                Announcing Privoxy 3.0.29 stable
+> --------------------------------------------------------------------
+>=20
+> Privoxy 3.0.29 stable fixes a couple of memory leaks and introduces
+> https inspection which allows to filter encrypted requests and
+> responses.
+>=20
+> --------------------------------------------------------------------
+> ChangeLog for Privoxy 3.0.29
+> --------------------------------------------------------------------
 
-Due to US companies subscribed on the lists this would then likely lead to
-conflicts of interest.
+Here are the updated ChangeLog entries with CVEs:
 
+- Security/Reliability:
+  - Fixed memory leaks when a response is buffered and the buffer
+    limit is reached or Privoxy is running out of memory.
+    Commits bbd53f1010b and 4490d451f9b. OVE-20201118-0001.
+    CVE-2020-35502.
+    Sponsored by: Robert Klemme
+  - Fixed a memory leak in the show-status CGI handler when
+    no action files are configured. Commit c62254a686.
+    OVE-20201118-0002. CVE-2021-20209.
+    Sponsored by: Robert Klemme
+  - Fixed a memory leak in the show-status CGI handler when
+    no filter files are configured. Commit 1b1370f7a8a.
+    OVE-20201118-0003. CVE-2021-20210.
+    Sponsored by: Robert Klemme
+  - Fixes a memory leak when client tags are active.
+    Commit 245e1cf32. OVE-20201118-0004. CVE-2021-20211.
+    Sponsored by: Robert Klemme
+  - Fixed a memory leak if multiple filters are executed
+    and the last one is skipped due to a pcre error.
+    Commit 5cfb7bc8fe. OVE-20201118-0005. CVE-2021-20212.
+  - Prevent an unlikely dereference of a NULL-pointer that
+    could result in a crash if accept-intercepted-requests
+    was enabled, Privoxy failed to get the request destination
+    from the Host header and a memory allocation failed.
+    Commit 7530132349. CID 267165. OVE-20201118-0006. CVE-2021-20213.
+  - Fixed memory leaks in the client-tags CGI handler when
+    client tags are configured and memory allocations fail.
+    Commit cf5640eb2a. CID 267168. OVE-20201118-0007. CVE-2021-20214.
+  - Fixed memory leaks in the show-status CGI handler when memory
+    allocations fail. Commit 064eac5fd0 and commit fdee85c0bf3.
+    CID 305233. OVE-20201118-0008. CVE-2021-20215.
 
-I have no good idea on how to approach this, perhaps someone else has.
+Fabian
 
+--Sig_/er0hk59D0PJNef7aEXllfLT
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
-Ciao, Marcus
+-----BEGIN PGP SIGNATURE-----
 
-On Mon, Oct 16, 2023 at 09:39:29AM +0800, Aron Xu wrote:
-> Hi,
-> 
-> I'm requesting linux-distros mailing list membership on behalf of
-> openEuler[1], a Linux distro that's actively maintained since 2020. It is
-> hosted by OpenAtom Foundation[2] with many forms of support available from
-> Huawei, Kylin, UnionTech, etc. It is publicly available, free to use and open
-> to contribution.
-> 
-> Here are the responses to the membership criteria:
-> 
-> > 1. Be an actively maintained Unix-like operating system distro with
-> >    substantial use of Open Source components
-> > 2. Have a userbase not limited to your own organization
-> 
-> The distro and its commercial derivatives have more than 4.5 million accumulated
-> deployments on bare metal (since 2020), and even more if considering public and
-> private cloud instances. Joining linux-distros will make a real difference for
-> patching important issues for users.
-> 
-> > 3. Have a publicly verifiable track record, dating back at least 1 year
-> >    and continuing to present day, of fixing security issues (including
-> >    some that had been handled on (linux-)distros, meaning that membership
-> >    would have been relevant to you) and releasing the fixes within 10 days
-> >    (and preferably much less than that) of the issues being made public
-> >    (if it takes you ages to fix an issue, your users wouldn't
-> >    substantially benefit from the additional time, often around 7 days and
-> >    sometimes up to 14 days, that list membership could give you)
-> 
-> The distribution has a complete public record of security fixes[3]. Although
-> there is no defined policy on enforcing release time of security patches
-> (yet), the actual timeline in execution is 7 days for high impact issues and
-> 14 days for medium ones.
-> 
-> > 4. Not be (only) downstream or a rebuild of another distro (or else we
-> >    need convincing additional justification of how the list membership
-> >    would enable you to release fixes sooner, presumably not relying on the
-> >    upstream distro having released their fixes first?)
-> 
-> The distribution is not a downstream or a rebuild of another distro. There
-> are confusions on this question (especially Wikipedia pages) because before
-> the project existed, there is an internal-only distro named "Euler OS" which
-> is RHEL-based. When openEuler project is found the distribution is rebuilt and
-> maintained from scratch, and there are also a few flavors of kernel packages
-> with different patchsets. There are also a few commercial and/or community
-> downstream distros of openEuler, too.
-> 
-> > 5. Be a participant and preferably an active contributor in relevant
-> >    public communities (most notably, if you're not watching for issues
-> >    being made public on oss-security, which are a superset of those that
-> >    had been handled on (linux-)distros, then there's no valid reason for
-> >    you to be on (linux-)distros)
-> 
-> openEuler has been actively working on patching upstream issues and there is a
-> complete tracking and triaging of all issues with a CVE number[4]. The team
-> is following oss-security's information closely, although weren't actively
-> participating in discussions.
-> 
-> > 6. Accept the list policy (see above)
-> > 7. Be able and willing to contribute back (see above), preferably in
-> >    specific ways announced in advance (so that you're responsible for a
-> >    specific area and so that we know what to expect from which member),
-> >    and demonstrate actual contributions once you've been a member for a
-> >    while
-> 
-> Yes we accept the list policy and are willing to contribute back in ways we
-> are able to.
-> 
-> > 8. Be able and willing to handle PGP-encrypted e-mail
-> > 9. Have someone already on the private list, or at least someone else who
-> >    has been active on oss-security for years but is not affiliated with
-> >    your distro nor your organization, vouch for at least one of the people
-> >    requesting membership on behalf of your distro (then that one
-> >    vouched-for person will be able to vouch for others on your team, in
-> >    case you'd like multiple people subscribed)
-> 
-> Besides my role at openEuler, I’m also a part of the Debian Security Team,
-> though I’m not subscribed to linux-distros since there are already people
-> representing. If this application is accepted, I would like to step up to be
-> the representative of openEuler.
-> 
-> 
-> Regards,
-> Aron
-> 
-> [1]https://www.openeuler.org/
-> [2]https://www.openatom.org/
-> [3]https://www.openeuler.org/en/security/security-bulletins/
-> [4]https://www.openeuler.org/en/security/cve
+iF0EARECAB0WIQTKUNd6H/m3+ByGULIFiohV/3dUnQUCYBqDlAAKCRAFiohV/3dU
+nbVgAJ9edYp5lLkr0IJQ4N5IhPkQZySzEwCaAszGbtQaZRegY4K2MVwqKdm02rc=
+=CrIY
+-----END PGP SIGNATURE-----
 
+--Sig_/er0hk59D0PJNef7aEXllfLT--
