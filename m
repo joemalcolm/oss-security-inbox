@@ -1,125 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/08/8
-Message-Id: <E1lqf9T-0004vc-JX@xenbits.xenproject.org>
-Date: Tue, 08 Jun 2021 17:04:31 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 377 v2 (CVE-2021-28690) - x86: TSX Async Abort protections not restored after S3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/03/4
+Message-ID: <20210203230932.GB431400@w1.fi>
+Date: Thu, 4 Feb 2021 01:09:32 +0200
+From: Jouni Malinen <j@...fi>
+To: oss-security@...ts.openwall.com
+Subject: wpa_supplicant P2P group information processing vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-            Xen Security Advisory CVE-2021-28690 / XSA-377
-                               version 2
-
-        x86: TSX Async Abort protections not restored after S3
-
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-This issue relates to the TSX Async Abort speculative security vulnerability.
-Please see https://xenbits.xen.org/xsa/advisory-305.html for details.
-
-Mitigating TAA by disabling TSX (the default and preferred option) requires
-selecting a non-default setting in MSR_TSX_CTRL.  This setting isn't restored
-after S3 suspend.
-
-IMPACT
-======
-
-After using S3 suspend at least once, CPU0 remains vulnerable to TAA.
-
-This is an information leak.  For full details of the impact, see
-XSA-305.
-
-VULNERABLE SYSTEMS
-==================
-
-See XSA-305 for details of susceptibility to TAA.
-
-Only systems which are susceptible to TAA and have the XSA-305 fix are
-vulnerable.  Only systems which support S3 suspend/resume are vulnerable.
-
-The vulnerability is only exposed if S3 suspend/resume is used.
-
-MITIGATION
-==========
-
-Not using S3 suspend/resume avoids the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa377.patch           xen-unstable - Xen 4.13.x
-xsa377-4.12.patch      Xen 4.12.x
-xsa377-4.11.patch      Xen 4.11.x
-
-$ sha256sum xsa377*
-532cb030f97d72e8e534ad97182cd5e3aa0efeef405e255bb49649b4f0dd9947  xsa377.meta
-21a30dbf80f6e78057cc7e785c8fda475d5a8a0b6b9442af3bd8ca31dd69becf  xsa377.patch
-3279317d56e7b8d0a2b0152b64b4c577381b8b01fa0a1a21ec6f855bb964278a  xsa377-4.11.patch
-65f61f1cb7bb0e068fd32e40755b9a9aae464d15ccd42c94dae68e495c5a45e0  xsa377-4.12.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+Published: February 4, 2021
+Latest version available from: https://w1.fi/security/2020-2/
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+Vulnerability
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+A vulnerability was discovered in how wpa_supplicant processing P2P
+(Wi-Fi Direct) group information from active group owners. The actual
+parsing of that information validates field lengths appropriately, but
+processing of the parsed information misses a length check when storing
+a copy of the secondary device types. This can result in writing
+attacker controlled data into the peer entry after the area assigned for
+the secondary device type. The overflow can result in corrupting
+pointers for heap allocations. This can result in an attacker within
+radio range of the device running P2P discovery being able to cause
+unexpected behavior, including termination of the wpa_supplicant process
+and potentially arbitrary code execution.
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmC/oxIMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZZ0wH/AyYmZO221SvMaSa1kGaV9+tATBWtxKEmUr2I+/Y
-jOHJ4Ydw2RarJtZ6reYJ+J0qlTdgI65ceo87VEm1bm+LyvxhlLRmkBfavdTg66aX
-VU6uPGqJ9HMUY4rwN7aUgsc/qhquMZQYSWd5A/QknhNHlOtXhX0bnaIqgXoAroi7
-PRVs3sawkEizIn1Rqc8nLk+xkOrV3xvu+ollj/VNHgPDKU7SFKZiraBzUW7bErCZ
-AjCsgM7SalHDKIMpUqco4hutVJ7ykPE/pbEdC7q93TQ+PWE4/QY3JXcjC7L6KN1/
-v9rRTIFTR6fc5EcJfhH2zpWi69OWfE/vjM7k9XhpMoAdUZc=
-=fqiA
------END PGP SIGNATURE-----
 
-Download attachment "xsa377.meta" of type "application/octet-stream" (1918 bytes)
+Vulnerable versions/configurations
 
-Download attachment "xsa377.patch" of type "application/octet-stream" (908 bytes)
+wpa_supplicant v1.0-v2.9 with CONFIG_P2P build option enabled
 
-Download attachment "xsa377-4.11.patch" of type "application/octet-stream" (908 bytes)
+An attacker (or a system controlled by the attacker) needs to be within
+radio range of the vulnerable system to send a suitably constructed
+management frame that triggers a P2P peer device information to be
+created or updated.
 
-Download attachment "xsa377-4.12.patch" of type "application/octet-stream" (909 bytes)
+
+Acknowledgments
+
+This issue was discovered by fuzz testing of wpa_supplicant by Google's
+OSS-Fuzz.
+
+Possible mitigation steps
+
+- Merge the following commit to wpa_supplicant and rebuild it:
+
+  P2P: Fix copying of secondary device types for P2P group client
+  
+  This patch is available from https://w1.fi/security/2020-2/
+  
+- Update to wpa_supplicant v2.10 or newer, once available
+
+- Disable P2P (control interface command "P2P_SET disabled 1" or
+  "p2p_disabled=1" in (each, if multiple interfaces used) wpa_supplicant
+  configuration file)
+
+- Disable P2P from the build (remove CONFIG_P2P=y)
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
