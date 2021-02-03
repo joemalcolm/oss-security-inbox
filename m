@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/08/2
-Message-ID: <20210208091105.GF17977@suse.de>
-Date: Mon, 8 Feb 2021 10:11:05 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Remote code execution in connman
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/03/2
+Message-ID: <YBpObXzJVfFDoJbc@kroah.com>
+Date: Wed, 3 Feb 2021 08:19:09 +0100
+From: Greg KH <gregkh@...uxfoundation.org>
+To: ???? <zhaowenjia@....xjtu.edu.cn>
+Cc: security@...nel.org, oss-security@...ts.openwall.com, jirislaby@...nel.org, nico@...xnic.net
+Subject: Re: KASAN: use-after-free in con_scroll​
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Feb 03, 2021 at 03:04:55PM +0800, ???? wrote:
+> Dear Linux kernel developers,
+> 
+> I found a crash "KASAN: use-after-free in con_scroll+0x45c/0x620 drivers/tty/vt/vt.c:641"  when running the syzkaller,  
+> 
+> It is can be reproduced. I did not find a report about this problem. Hope it is useful.
+> 
+> 
+> 
+> 
+> Linux version: Linux v5.9-rc8 (549738f15)
+> 
+> 
+> The following is the crash report.
+> 
+> ==================================================================
+> 
+> BUG: KASAN: use-after-free in scr_memmovew include/linux/vt_buffer.h:68 [inline]
+> BUG: KASAN: use-after-free in con_scroll+0x45c/0x620 drivers/tty/vt/vt.c:641
+> Read of size 693770 at addr ffff8880000b894c by task syz-executor.2/7755
+> 
+> CPU: 0 PID: 7755 Comm: syz-executor.2 Not tainted 5.1.0 #4
 
-Tesla has reported a remote (adjacent network) code execution flaw in
-connman, a lightweight network manager, to our SUSE colleage and
-connman upstream maintainer Daniel Wagner,
+5.1.0 is _VERY_ old, please try reproducing this on a more modern kernel
+(i.e. 5.10 or newer).
 
-https://git.kernel.org/pub/scm/network/connman/connman.git/
+thanks,
 
-https://git.kernel.org/pub/scm/network/connman/connman.git/commit/?id=e4079a20f617a4b076af503f6e4e8b0304c9f2cb
-
-Mitre has assigned CVE-2021-26675.
-
-The commit fixes a stack buffer overflow that can be used to execute code by network adjacent attackers.
-
-https://git.kernel.org/pub/scm/network/connman/connman.git/commit/?id=a74524b3e3fad81b0fd1084ffdf9f2ea469cd9b1
-https://git.kernel.org/pub/scm/network/connman/connman.git/commit/?id=58d397ba74873384aee449690a9070bacd5676fa
-
-Mitre has assigned CVE-2021-26676
-
-Remote stack information leak which can be used to help execute CVE-2021-26675 reliably.
-
-Ciao, Marcus
+greg k-h
