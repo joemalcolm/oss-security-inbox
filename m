@@ -1,52 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/08/1
-Message-ID: <CAKx+4-riLe6E466yDMO=_zV-ZDisOESHT82=Wofc=o5G3BDWGA@mail.gmail.com>
-Date: Wed, 8 Sep 2021 13:15:34 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-3715 Linux kernel: use-after-free in route4_change() in net/sched/cls_route.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/04/5
+Message-ID: <f345a0d3-34f2-a013-545b-bf49ec5a4818@linux.com>
+Date: Fri, 5 Feb 2021 00:43:31 +0300
+From: Alexander Popov <alex.popov@...ux.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: linux-distros@...openwall.org, Linus Torvalds <torvalds@...uxfoundation.org>, Greg KH <greg@...ah.com>, "security@...nel.org" <security@...nel.org>, Norbert Slusarek <nslusarek@....net>, Stefano Garzarella <sgarzare@...hat.com>, Eric Dumazet <edumazet@...gle.com>, Anthony Liguori <aliguori@...zon.com>, David Miller <davem@...emloft.net>, Jakub Kicinski <kuba@...nel.org>, Jorgen Hansen <jhansen@...are.com>, Stefan Schmidt <stefan@...enfreihafen.org>, Jeff Vander Stoep <jeffv@...gle.com>, Andrey Konovalov <andreyknvl@...gle.com>
+Subject: Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation
 Content-Type: text/plain; charset=utf-8
 
-Thank you Greg,
+Hello!
 
-Correction please,  This issue was fixed in the upstream Kernel 5.6 onward
-with ef299cc3fa1a9
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+Let me inform you about the Linux kernel vulnerabilities that I've found in
+AF_VSOCK implementation. I managed to exploit one of them for a local privilege
+escalation on Fedora Server 33 for x86_64, bypassing SMEP and SMAP. I'm going to
+share all the details about the exploit techniques later.
 
-secalert@...hat.com for urgent response
+CONFIG_VSOCKETS and CONFIG_VIRTIO_VSOCKETS are shipped as kernel modules in all
+major GNU/Linux distributions. The vulnerable modules are automatically loaded
+when you create a socket for AF_VSOCK. That is available for unprivileged users
+and user namespaces are not needed for that.
 
+These vulnerabilities are race conditions caused by wrong locking in
+net/vmw_vsock/af_vsock.c. The race conditions were implicitly introduced in
+November 2019 in the commits c0cfa2d8a788fcf4 and 6a2c0962105ae8ce that added
+VSOCK multi-transport support. These commits were merged in the Linux kernel
+v5.5-rc1.
 
-On Tue, Sep 7, 2021 at 3:47 PM Greg KH <greg@...ah.com> wrote:
+I prepared the fixing patch and made responsible disclosure to
+security@...nel.org. Now the patch is merged into the mainline kernel:
+  "vsock: fix the race conditions in multi-transport support"
 
-> On Tue, Sep 07, 2021 at 02:09:52PM +0530, Rohit Keshri wrote:
-> > Hello Team,
-> >
-> > A flaw was found in the "Routing decision" classifier in the Linux
-> kernel's
-> > Traffic Control networking subsystem in the way it handled changing of
-> > classification filters, leading to a use-after-free condition. This flaw
-> > allows unprivileged local users to escalate their privileges on the
-> system.
-> > The highest threat from this vulnerability is confidentiality, integrity,
-> > as well as system availability.
-> >
-> > This issue was fixed in the upstream Kernel 5.10 onward with
-> ef299cc3fa1a9
->
-> Note, commit ef299cc3fa1a ("net_sched: cls_route: remove the right
-> filter from hashtable") came out in the 5.6 kernel release, in March of
-> 2020, and was also backported to all relevant stable kernel releases at
-> the beginning of April, 2020:
->         4.4.218 4.9.218 4.14.175 4.19.114 5.4.29 5.5.14
->
-> How did 5.10 get messed up in this, it was not released until December
-> 2020?
->
-> thanks,
->
-> greg k-h
->
->
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c518adafa39f37858697ac9309c6cf1805581446
+This patch is also backported into the affected stable trees.
 
+I've requested a CVE ID for these vulnerabilities at https://cveform.mitre.org/.
+
+Best regards,
+Alexander
