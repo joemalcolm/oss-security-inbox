@@ -1,4 +1,9 @@
-Received: (qmail 22340 invoked by uid 550); 6 Feb 2025 03:37:09 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1385" "Friday" "5" "February" "2021" "00:43:31" "+0300" "Alexander Popov" "alex.popov@linux.com" "<f345a0d3-34f2-a013-545b-bf49ec5a4818@linux.com>" "29" "[oss-security] Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation" nil nil nil "2" "2021020421:43:31" "[oss-security] Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation" (number mark "U       alex.popov@l Feb  5   29/1385  " thread-indent "\"[oss-security] Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9302 invoked by uid 550); 4 Feb 2021 21:43:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,93 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1225 invoked from network); 6 Feb 2025 03:22:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738812150; x=1739416950; darn=lists.openwall.com;
-        h=in-reply-to:from:content-language:references:to:subject:reply-to
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kNn0N6W2FmBnl29AjAq+qSjDBIXWqngScPDOKWR2afk=;
-        b=BpFnvT0AL0iAUYkvqPXG7QrmGjaUzSKWgtc7ioE4rndYZ2fk1D2teBG7qeDHsyTFYJ
-         vkq+q7eGesXIT0UTCJQx1gYginvdVz3L6aAGAuTqq7uzUHamKkx5VFbTYrvVq2g9vqyw
-         V4KxsZthV2eDNu97yHDBeM0dH8zExmKoPHanNW5Ai1D9G2r5alE9w0omB9uPJXphAcV2
-         pOHiVJ9SJpsAkyIKUN8lspyNi4tPSCqLrZ2246NOzP42dgRm4gZiZTFLBGJJWasvt64M
-         ZTJfbNMUgjTAb6gBYZcCgYUfESYr9+nsJMHTku/DCjFFvgEKrhETCK1woxBFdG4NzQ8I
-         xsGA==
+Received: (qmail 9284 invoked from network); 4 Feb 2021 21:43:45 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738812150; x=1739416950;
-        h=in-reply-to:from:content-language:references:to:subject:reply-to
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=kNn0N6W2FmBnl29AjAq+qSjDBIXWqngScPDOKWR2afk=;
-        b=PzhwLKSbzpadTc3Pxh3RQ00VLvS1AqVipsTuMRb9WVmEq51pvKY8ansZ1q94XK8/YR
-         vdSlMeZB9j3FCGO4GV6lReNe5pT5iRPM3jRDa5DTqVm5tHwaFhBkPnlTj0+yNSnq3hPw
-         1gs/utMZsm8AIoN/8Jk+GCtiSvFhhp52CwEVquSTmFA0iXvgpv5uzTYuR42FjCxD8OBt
-         XNO54j5v5bs8qsj95qlwPh2nL4+miqzZqQCiexuxYO/ildWQNp2bLWDNxmewjHFgalGl
-         xSgG4woAZXQPBYvo+Ld2hg+t1qh24KcavOXIDbmHffbhVufB26z6AEXvqYMSEQnWnfkx
-         HyCw==
-X-Gm-Message-State: AOJu0Yx9YAw+acljpoJgbsMViwP1qVugyieO+eRhjcim8svwX8sr3Glz
-	tMR2HY0aX4gCMWKi/ZMGPeIWsOoht6K6SpvADYrTlgqQ4Lq+FhQQjsdbBA==
-X-Gm-Gg: ASbGncso+MDxK9s9z+pNAuUwG3qdgyxQGNQ/JXOzH3oVnyDRMxrrv2CoGacD4gnsNxI
-	+mYxEATZYLfS9ij3HEZxgFEHsDPwY/xsh2Zp1GYF43KLlTcL1uwDf8UtNbW4wp1IbGGvDSOElD8
-	BFuJZdbVAScNLmcqGv6vp+MUAWlDlOfs1QpePedN5Wm1BQtsQEFqtl/oMgYAF0UVZS9NUWJI8Ey
-	XNiPvPHlyggF71T/o/n702KOPaGS/o9jBBcW+xqMfPoZqWeNNUiLrxUJ8OT8h43avNpWNS8ucqf
-	nswq2dTyXHEn
-X-Google-Smtp-Source: AGHT+IFByBv7VQUDP73fWixVmu9nqleCQ6WXAvCsnM50/7UfXZHAw9B3nZoUW/pfHpKjPbdz7V6TiQ==
-X-Received: by 2002:a05:6830:6316:b0:716:1530:fc7e with SMTP id 46e09a7af769-726a4160053mr3758783a34.1.1738812149908;
-        Wed, 05 Feb 2025 19:22:29 -0800 (PST)
-Content-Type: multipart/alternative;
- boundary="------------9wWRUqNuvyojoBbOxnoei9it"
-Message-ID: <32e961ce-1088-4e21-803a-3539a0ceaa3a@gmail.com>
-Date: Wed, 5 Feb 2025 21:22:21 -0600
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:to:cc:from:subject:message-id:date
+         :user-agent:mime-version:content-language:content-transfer-encoding;
+        bh=obp2Sig8Ad/8fz4+hH8W54AVlYayuolIVnRIXC8JEh4=;
+        b=d1ZyrXH9FOSOqI/0ekSIY9YoC/8w9bWhxOF4Y5g2kQ/Lv+ErE4v+3GQy4UzhziniDe
+         c9fvnlVwtQj0/UP2nUtZxklaQ9+3i2PMXXxxyCqjLXA3+Jv2MQFJu32XYc/WymOTgJGb
+         +4tGdxh096Cyv/Jgr7TfKeysWjRakd2KdULfkjTdptpW700VS4rFGBXCi6hCh1uNAC8U
+         H1f3LzdoBl/Hps7flsrRxb4/G89vBnS8VncEyvlDKebOLCaV+805Gqe+78qQHPtZIR1S
+         9t72fyeh2GlKFF8//i2PsfoycZwTMwVQ3TGDS6qc1ukFP0yFhLBYinLsFF93W8py0ATy
+         0fNQ==
+X-Gm-Message-State: AOAM531/AvoQgYn9qR4sJUus2Ub1shHdUdsdCTPSMYCz4Vs1U7XS4/KO
+	xYWfN5151cC7XQ6ZdNfp46g=
+X-Google-Smtp-Source: ABdhPJxG6KG6FDFlfJ6W1J3FP1kFew3Rm/Um3Zma+dtn4iDE+khtAmz0QeoEG90xKVMBbOQgsSP6OQ==
+X-Received: by 2002:adf:e381:: with SMTP id e1mr1457291wrm.22.1612475014445;
+        Thu, 04 Feb 2021 13:43:34 -0800 (PST)
+To: oss-security <oss-security@lists.openwall.com>
+Cc: linux-distros@vs.openwall.org,
+ Linus Torvalds <torvalds@linuxfoundation.org>, Greg KH <greg@kroah.com>,
+ "security@kernel.org" <security@kernel.org>,
+ Norbert Slusarek <nslusarek@gmx.net>,
+ Stefano Garzarella <sgarzare@redhat.com>, Eric Dumazet
+ <edumazet@google.com>, Anthony Liguori <aliguori@amazon.com>,
+ David Miller <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
+ Jorgen Hansen <jhansen@vmware.com>,
+ Stefan Schmidt <stefan@datenfreihafen.org>,
+ Jeff Vander Stoep <jeffv@google.com>,
+ Andrey Konovalov <andreyknvl@google.com>
+From: Alexander Popov <alex.popov@linux.com>
+Message-ID: <f345a0d3-34f2-a013-545b-bf49ec5a4818@linux.com>
+Date: Fri, 5 Feb 2021 00:43:31 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
-References: <Z5BYg9WPFBF7JBEB@thinkstation.cmpxchg8b.net>
- <Z5B2PA7DHTBbvbOq@itl-email> <Z5EUUMd1xkSSKAEM@thinkstation.cmpxchg8b.net>
- <20250204101028.GA20864@openwall.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-In-Reply-To: <20250204101028.GA20864@openwall.com>
-Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
-
---------------9wWRUqNuvyojoBbOxnoei9it
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation
 
-On 2/4/25 04:10, Solar Designer wrote:
-> On Wed, Jan 22, 2025 at 07:52:48AM -0800, Tavis Ormandy wrote:
->> [...]
->>
->> AMD SEV-SNP users can verify the fix by confirming TCB values for SNP in
->> their attestation reports (can be observed from a VM, consult AMD's
->> security bulletin for further details).
->>
->> [...]
-> The corresponding AMD security bulletin is:
->
-> https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3019.html
->
->> [...] Additionally, an SEV firmware update
->> is required for some platforms to support SEV-SNP attestation. Updating
->> the system BIOS image and rebooting the platform will enable attestation
->> of the mitigation. A confidential guest can verify the mitigation has
->> been enabled on the target platform through the SEV-SNP attestation
->> report.
+Hello!
 
-[*raises hand*]
+Let me inform you about the Linux kernel vulnerabilities that I've found in
+AF_VSOCK implementation. I managed to exploit one of them for a local privilege
+escalation on Fedora Server 33 for x86_64, bypassing SMEP and SMAP. I'm going to
+share all the details about the exploit techniques later.
 
-If an attacker is able to control the hypervisor (necessary to load 
-rogue microcode) and the processor microcode, how can the VM trust that 
-it is actually verifying that attestation and not being sent down a "oh 
-yes it is exactly what you want it to be" garden path?
+CONFIG_VSOCKETS and CONFIG_VIRTIO_VSOCKETS are shipped as kernel modules in all
+major GNU/Linux distributions. The vulnerable modules are automatically loaded
+when you create a socket for AF_VSOCK. That is available for unprivileged users
+and user namespaces are not needed for that.
 
-Do the instructions necessary to obtain and verify that attestation not 
-use microcode at all?
+These vulnerabilities are race conditions caused by wrong locking in
+net/vmw_vsock/af_vsock.c. The race conditions were implicitly introduced in
+November 2019 in the commits c0cfa2d8a788fcf4 and 6a2c0962105ae8ce that added
+VSOCK multi-transport support. These commits were merged in the Linux kernel
+v5.5-rc1.
 
+I prepared the fixing patch and made responsible disclosure to
+security@kernel.org. Now the patch is merged into the mainline kernel:
+  "vsock: fix the race conditions in multi-transport support"
 
--- Jacob
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c518adafa39f37858697ac9309c6cf1805581446
+This patch is also backported into the affected stable trees.
 
+I've requested a CVE ID for these vulnerabilities at https://cveform.mitre.org/.
 
---------------9wWRUqNuvyojoBbOxnoei9it--
+Best regards,
+Alexander
