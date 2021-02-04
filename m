@@ -1,58 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/03/3
-Message-ID: <20210203120555.5ffc809e@fabiankeil.de>
-Date: Wed, 3 Feb 2021 12:05:55 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/04/4
+Message-ID: <20210204164632.07072b24@fabiankeil.de>
+Date: Thu, 4 Feb 2021 16:46:32 +0100
 From: Fabian Keil <freebsd-listen@...iankeil.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple memory leaks fixed in Privoxy 3.0.29 stable
+Subject: Re: Two DoS issues fixed in Privoxy 3.0.31 stable
 Content-Type: text/plain; charset=utf-8
 
-Fabian Keil <freebsd-listen@...iankeil.de> wrote on 2020-11-29:
+Fabian Keil <freebsd-listen@...iankeil.de> wrote on 2021-01-31:
 
->                Announcing Privoxy 3.0.29 stable
+> --------------------------------------------------------------------
+> ChangeLog for Privoxy 3.0.31
 > --------------------------------------------------------------------
 > 
-> Privoxy 3.0.29 stable fixes a couple of memory leaks and introduces
-> https inspection which allows to filter encrypted requests and
-> responses.
-> 
-> --------------------------------------------------------------------
-> ChangeLog for Privoxy 3.0.29
-> --------------------------------------------------------------------
+> - Security/Reliability:
+>   - Prevent an assertion from getting triggered by a crafted CGI request.
+>     Commit 5bba5b89193fa. OVE-20210130-0001.
+>     Reported by: Joshua Rogers (Opera)
 
-Here are the updated ChangeLog entries with CVEs:
+CVE-2021-20217.
 
-- Security/Reliability:
-  - Fixed memory leaks when a response is buffered and the buffer
-    limit is reached or Privoxy is running out of memory.
-    Commits bbd53f1010b and 4490d451f9b. OVE-20201118-0001.
-    CVE-2020-35502.
-    Sponsored by: Robert Klemme
-  - Fixed a memory leak in the show-status CGI handler when
-    no action files are configured. Commit c62254a686.
-    OVE-20201118-0002. CVE-2021-20209.
-    Sponsored by: Robert Klemme
-  - Fixed a memory leak in the show-status CGI handler when
-    no filter files are configured. Commit 1b1370f7a8a.
-    OVE-20201118-0003. CVE-2021-20210.
-    Sponsored by: Robert Klemme
-  - Fixes a memory leak when client tags are active.
-    Commit 245e1cf32. OVE-20201118-0004. CVE-2021-20211.
-    Sponsored by: Robert Klemme
-  - Fixed a memory leak if multiple filters are executed
-    and the last one is skipped due to a pcre error.
-    Commit 5cfb7bc8fe. OVE-20201118-0005. CVE-2021-20212.
-  - Prevent an unlikely dereference of a NULL-pointer that
-    could result in a crash if accept-intercepted-requests
-    was enabled, Privoxy failed to get the request destination
-    from the Host header and a memory allocation failed.
-    Commit 7530132349. CID 267165. OVE-20201118-0006. CVE-2021-20213.
-  - Fixed memory leaks in the client-tags CGI handler when
-    client tags are configured and memory allocations fail.
-    Commit cf5640eb2a. CID 267168. OVE-20201118-0007. CVE-2021-20214.
-  - Fixed memory leaks in the show-status CGI handler when memory
-    allocations fail. Commit 064eac5fd0 and commit fdee85c0bf3.
-    CID 305233. OVE-20201118-0008. CVE-2021-20215.
+>   - Fixed a memory leak when decompression fails "unexpectedly".
+>     Commit f431d61740cc0. OVE-20210128-0001.
+
+CVE-2021-20216.
 
 Fabian
 
