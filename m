@@ -1,29 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/17/1
-Message-ID: <3ba4a13789030965b7bf6aa7258cfd830db1d63c.camel@apache.org>
-Date: Tue, 16 Nov 2021 13:51:52 -0700
-From: Zach Hoffman <zrhoffman@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/5
+Message-ID: <CAFRnB2W5J+vibKP58U36UJkq=G1BAzSLKtNHqodgi+LAhkrvNg@mail.gmail.com>
+Date: Fri, 5 Feb 2021 10:02:09 -0500
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-43350: Apache Traffic Control: LDAP filter injection vulnerability in Traffic Ops
+Subject: Re: CVE-2021-20226 kernel: use-after-free in io_uring feature
 Content-Type: text/plain; charset=utf-8
 
-CORRECTION:
-This issue was discovered by Apache Traffic Control user zhouxufeng@...edance.com.
+Hey,
 
-On Thu, 2021-11-11 at 20:45 +0000, Zach Hoffman wrote:
-> Severity: critical
-> 
-> Description:
-> 
-> An unauthenticated Apache Traffic Control Traffic Ops user can send a request with a specially-crafted username to the POST /login endpoint of any API version to inject unsanitized content into the LDAP filter.
-> 
-> 
-> Credit:
-> 
-> This issue was discovered by Apache Traffic Control user pupiles.
-> 
-> References:
-> 
-> https://trafficcontrol.apache.org/security/
-> 
+Your message says that this is a DoS, however the ZDI page says it's a
+priv-esc. Which is right?
 
+Alex
+
+On Fri, Feb 5, 2021 at 10:00 AM Rohit Keshri <rkeshri@...hat.com> wrote:
+>
+> Hello Team,
+>
+> A use-after-free flaw was found in the io_uring in Linux kernel, where a
+> local attacker with a user privilege could cause a denial of service
+> problem on the system
+>
+> The issue results from the lack of validating the existence of an object
+> prior to performing operations on the object by not incrementing the file
+> reference counter while in use.
+>
+> The highest threat from this vulnerability is to data integrity,
+> confidentiality and system availability.
+>
+>
+> 'CVE-2021-20226' was assigned by Red Hat.
+>
+> This issue was reported by Ryota Shiga of Flatt Security Team.
+>
+>
+> Reference:
+>
+> https://www.zerodayinitiative.com/advisories/ZDI-21-001/
+>
+>
+> Thanks and Regards
+> ..
+> Rohit Keshri / Red Hat Product Security Team
+> PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+>
+> secalert@...hat.com for urgent response
+
+
+
+-- 
+All that is necessary for evil to succeed is for good people to do nothing.
