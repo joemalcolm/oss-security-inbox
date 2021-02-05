@@ -1,36 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/9
-Message-ID: <38355066-A140-44A7-8E3D-58339304E77E@juniper.net>
-Date: Wed, 25 Aug 2021 17:39:02 +0000
-From: Travis Finkenauer <tmfink@...iper.net>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Possible memory leak on getspnam / getspnam_r
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/4
+Message-ID: <CAKx+4-p+SyakmdxCd0XDm-1U3inx6uMdCNbhg_Y6270aXkaNJg@mail.gmail.com>
+Date: Fri, 5 Feb 2021 20:27:57 +0530
+From: Rohit Keshri <rkeshri@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-20226 kernel: use-after-free in io_uring feature
 Content-Type: text/plain; charset=utf-8
 
+Hello Team,
 
-> On Aug 24, 2021, at 4:14 PM, Jean Diogo <j@....com.br> wrote:
-> 
-> Thus, although caching is mostly required for performance, maybe this
-> (caching) should happen only on getspnam function but not on getspnam_r.
-> That's because on getspnam_r the user wants to have control over this
-> buffering, then the user has a way to clean up it's memory when this
-> caching is not desired.
+A use-after-free flaw was found in the io_uring in Linux kernel, where a
+local attacker with a user privilege could cause a denial of service
+problem on the system
 
-Per Hyrum's Law [1], there are users who expect this caching behavior. Such
-users would hit a performance regression and be upset.
+The issue results from the lack of validating the existence of an object
+prior to performing operations on the object by not incrementing the file
+reference counter while in use.
 
-To control the caching behavior, there could be another function like
-getspnam_r_with_cache() that takes an additional 'void **cache' parameter.
-getspnam_r_with_cache() could update the pointer to point to a cache. If a user
-wants to avoid caching, then the user could just pass NULL instead.
+The highest threat from this vulnerability is to data integrity,
+confidentiality and system availability.
 
-Alternatively, a new function cleanup_and_zeroize_caches() could added. A user
-could call this after fork().
 
-Of course, introducing a new function complicates the APIs and requires
-developers to add them. Also, to support multiple versions of libraries,
-developers would need to protect the call with an '#ifdef SUPPORTS_NEW_FUNCTION'.
+'CVE-2021-20226' was assigned by Red Hat.
 
--Travis
+This issue was reported by Ryota Shiga of Flatt Security Team.
 
-[1]: https://www.hyrumslaw.com/
+
+Reference:
+
+https://www.zerodayinitiative.com/advisories/ZDI-21-001/
+
+
+Thanks and Regards
+..
+Rohit Keshri / Red Hat Product Security Team
+PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+
+secalert@...hat.com for urgent response
+
