@@ -1,68 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/27/3
-Message-ID: <20210727175924.GA16557@openwall.com>
-Date: Tue, 27 Jul 2021 19:59:24 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/3
+Message-Id: <EE41A0A9-8E0F-4C15-8FE0-258A6B3C6FEB@consensys.net>
+Date: Fri, 5 Feb 2021 10:42:28 +0100
+From: Martin Ortner <martin.ortner@...sensys.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Pop!_OS Membership to linux-distros list
+Subject: [no-cve] Nim - Insecure SSL/TLS Defaults, MitM, and nimble shell command injection
 Content-Type: text/plain; charset=utf-8
 
-Hi Jeremy,
+title: "Nim - Insecure SSL/TLS Defaults, MitM, and nimble shell command injection"
+date: 2021-02-04T14:13:23+01:00
 
-On Tue, Jul 20, 2021 at 02:23:26PM -0600, Jeremy Soller wrote:
-> 3. Have a publicly verifiable track record, dating back at least 1 year and
-> continuing to present day, of fixing security issues (including some that had
-> been handled on (linux-)distros, meaning that membership would have been
-> relevant to you) and releasing the fixes within 10 days (and preferably much
-> less than that) of the issues being made public (if it takes you ages to fix an
-> issue, your users wouldn't substantially benefit from the additional time,
-> often around 7 days and sometimes up to 14 days, that list membership could
-> give you)
-> 
-> Over the history of Pop!_OS, dating back to 2017, we have maintained critical
-> packages and applied security patches soon after they are made public. Our
-> membership to this list would significantly help our users stay secure by
-> allowing us to prepare and test security updates ahead of public disclosure.
-> Please see our GitHub organization for more evidence: https://github.com/pop-os
+cve: 
+vendor: nim-lang
+vendorUrl: https://nim-lang.org/
+authors: tintinweb
+affectedVersions: [ "<= 1.2.6", "nimble <=v0.12.0"]
+vulnClass: CWE-295, CWE-78, CWE-348
 
-I think it'd be most convincing for us all to see specific examples of
-you having "applied security patches soon after they are made public",
-with dates public vs. fixed in Pop!_OS.
+Vulnerability Note: https://consensys.net/diligence/vulnerabilities/nim-insecure-ssl-tls-defaults-remote-code-execution/
+Vulnerability Note: https://github.com/tintinweb/pub/
+Group: https://consensys.net/diligence/research/
 
-> 7. Be able and willing to contribute back (see above), preferably in specific
-> ways announced in advance (so that you're responsible for a specific area and
-> so that we know what to expect from which member), and demonstrate actual
-> contributions once you've been a member for a while
-> 
-> I am able and willing to contribute back.
 
-Please choose a specific task (or several).
 
-I suggest the statistics task:
+# Vulnerability Note
 
-"13. Keep track of per-report and per-issue handling and disclosure
-timelines (at least times of notification of the private list and of
-actual public disclosure), at regular intervals produce and share
-statistics (most notably, the average embargo duration) as well as the
-raw data (except on issues that are still under embargo) by posting to
-oss-security - primary: Amazon, backup: Gentoo"
+## Summary 
 
-As you can see, it is currently assigned to Amazon and Gentoo, but as
-far as I can see neither is actually handling it now, so I'd like to
-formally unassign it from them and have another distro handle it.
+We found a couple of critical security issues in the defaults for one of the standard-lib components that allows peer-impersonation (MitM) on secure transports. This also affects the languages package manager. Additionally, the package manager is vulnerable to shell command injection when fetching remote repositories before installing packages:
 
-> 9. Have someone already on the private list, or at least someone else who has
-> been active on oss-security for years but is not affiliated with your distro
-> nor your organization, vouch for at least one of the people requesting
-> membership on behalf of your distro (then that one vouched-for person will be
-> able to vouch for others on your team, in case you'd like multiple people
-> subscribed)
-> 
-> I do not know if I have contacts that are already on the linux-distros list.
+* 2.1 - `httpClient` does no validate peer certificates by default (appears to be fixed in 1.4.x)
+* 2.2 - the package manager `nimble` relies on the insecure `httpClient` defaults (unfixed; latest 0.12.0 has not been re-compiled with a fixed nim-c)
+* 2.3 - `nimble` falls back to insecure transports if `https` is blocked (unfixed)
+* 2.4 - `nimble` shell command injection when fetching a package for installation (unfixed)
 
-It can also be "someone else who has been active on oss-security for
-years but is not affiliated".  Anyone?
 
-Thanks,
+**TLDR;** The Nim (`at least <=1.2.6`) `httpClient` default SSL/TLS configuration does not enforce peer certificate verification by default. Non-secure settings should not be the default as this might unexpectedly expose other projects to security risks. If you're using `nimble <= 0.12.0` anyone can block your TLS session and it will fall back to an insecure transport. Because of the insecure `httpClient` defaults, one can also just intercept your TLS session as the peer verification is too lax. Additionally, nimble appears to be vulnerable to a direct shell command injection when installing a package (but one can as well just provide a malicious package).
 
-Alexander
+## Details
+
+see https://consensys.net/diligence/vulnerabilities/nim-insecure-ssl-tls-defaults-remote-code-execution/
+
+## Proof of Concept
+
+see https://consensys.net/diligence/vulnerabilities/nim-insecure-ssl-tls-defaults-remote-code-execution/
+
+### Timeline
+
+```
+JUL/09/2020 - contact nim developers @telegram; provided details, PoC
+FEB/04/2021 - deadline met. full disclosure.
+```
+
+
+
