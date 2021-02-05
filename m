@@ -1,42 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/20/1
-Message-ID: <6fe1e735-82c6-91e0-d6e7-b0b237f2870c@igalia.com>
-Date: Mon, 20 Sep 2021 12:49:39 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/7
+Message-ID: <YB12hcO6rarPbHg8@eldamar.lan>
+Date: Fri, 5 Feb 2021 17:47:01 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-20226 kernel: use-after-free in io_uring feature
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0005
-------------------------------------------------------------------------
+Hi,
 
-Date reported           : September 20, 2021
-Advisory ID             : WSA-2021-0005
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0005.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0005.html
-CVE identifiers         : CVE-2021-30858.
+On Fri, Feb 05, 2021 at 08:27:57PM +0530, Rohit Keshri wrote:
+> Hello Team,
+> 
+> A use-after-free flaw was found in the io_uring in Linux kernel, where a
+> local attacker with a user privilege could cause a denial of service
+> problem on the system
+> 
+> The issue results from the lack of validating the existence of an object
+> prior to performing operations on the object by not incrementing the file
+> reference counter while in use.
+> 
+> The highest threat from this vulnerability is to data integrity,
+> confidentiality and system availability.
+> 
+> 
+> 'CVE-2021-20226' was assigned by Red Hat.
+> 
+> This issue was reported by Ryota Shiga of Flatt Security Team.
+> 
+> 
+> Reference:
+> 
+> https://www.zerodayinitiative.com/advisories/ZDI-21-001/
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+Can you point to the upstream fixes for this issue? The above
+reference claims it to be fixed in 5.10.2 (but I guess this is just
+the version where it was re-verified to be fixed). The timeline would
+indicate that the issue would be fixed earlier (and there seem to be
+no io_uring changes between 5.10.1 and 5.10.2).
 
-CVE-2021-30858
-    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Apple is aware of a report that this issue
-    may have been actively exploited. Description: A use after free
-    issue was addressed with improved memory management.
+It was reported on 2020-07-17 to the vendor, as the maximum embargo
+time would be 7 days if this was via security@k.o does this means that
+it was possibly fixed somehwere already around the 5.9-rc1 release?
 
+The Red Hat report has a bit more details:
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+A use-after-free flaw was found in io_grab_files in fs/io_uring.c in
+io_uring I/O access. This flaw could allow a local attacker with a
+user privilege to crash the system at device IORING_OP_CLOSE operation
+where a file reference counter was not incremented while in use. This
+vulnerability could even lead to a kernel information leak problem.
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+https://bugzilla.redhat.com/show_bug.cgi?id=1873476
 
-The WebKitGTK and WPE WebKit team,
-September 20, 2021
+Is the fix included thus in the merge from
+
+https://git.kernel.org/linus/cdc8fcb49905c0b67e355e027cb462ee168ffaa3
+(v5.9-rc1)?
+
+Many thanks in advance!
+
+Regards,
+Salvatore
