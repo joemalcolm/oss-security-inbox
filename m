@@ -1,57 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/16
-Message-ID: <YFIlh+AKXSV7Wt5Y@kroah.com>
-Date: Wed, 17 Mar 2021 16:51:35 +0100
-From: Greg KH <greg@...ah.com>
-To: Evgenii Shatokhin <eshatokhin@...tuozzo.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/6
+Message-ID: <F228DD28-51EB-41AC-9092-8E5EC9ACDE79@linux.com>
+Date: Fri, 05 Feb 2021 18:33:26 +0300
+From: Alexander Popov <alex.popov@...ux.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: linux-distros@...openwall.org,Linus Torvalds <torvalds@...uxfoundation.org>,Greg KH <greg@...ah.com>,"security@...nel.org" <security@...nel.org>,Norbert Slusarek <nslusarek@....net>,Stefano Garzarella <sgarzare@...hat.com>,Eric Dumazet <edumazet@...gle.com>,Anthony Liguori <aliguori@...zon.com>,David Miller <davem@...emloft.net>,Jakub Kicinski <kuba@...nel.org>,Jorgen Hansen <jhansen@...are.com>,Stefan Schmidt <stefan@...enfreihafen.org>,Jeff Vander Stoep <jeffv@...gle.com>,Andrey Konovalov <andreyknvl@...gle.com>
+Subject: Re: Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 17, 2021 at 06:36:29PM +0300, Evgenii Shatokhin wrote:
-> On 17.03.2021 18:17, Greg KH wrote:
-> > On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
-> > > Hello Team,
-> > > 
-> > > A denial of service vulnerability was found in n_tty_receive_char_special
-> > > in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
-> > > with a normal user privilege could delay the loop (due to a changing
-> > > ldata->read_head, and a missing sanity check) and cause a threat to the
-> > > system availability.
-> > > 
-> > > 'CVE-2021-20219' was assigned by Red Hat.
-> > > 
-> > > Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
-> > 
-> > Really?  Not the tools or people that reported this issue and fixed it
-> > in the community back in 2018?
-> 
-> The description is misleading, unfortunately.
-> 
-> RedHat backported that original fix (commit 3d63b7e4ae0d "n_tty: Fix stall
-> at n_tty_receive_char_special().") long ago.
-> 
-> I just found that their backport was incomplete: one hunk of the patch was
-> lost. This lead to the problem I reported: the reproducer program caused
-> n_tty_receive_char() to loop forever. As a result, other processes could
-> hang too.
 
-Ah, so the above text should have said "of the Red Hat Enterprise Linux
-Kernel release XX.XX only", right?
 
-Given that the above CVE is not public in any database that I can find,
-one can only hope that the text will reflect what really is happening
-here.  Rohit, why was this even published?
+On February 5, 2021 12:43:31 AM GMT+03:00, Alexander Popov <alex.popov@...ux.com> wrote:
+>Hello!
+>
+>Let me inform you about the Linux kernel vulnerabilities that I've
+>found in
+>AF_VSOCK implementation. I managed to exploit one of them for a local
+>privilege
+>escalation on Fedora Server 33 for x86_64, bypassing SMEP and SMAP. I'm
+>going to
+>share all the details about the exploit techniques later.
+>
+>CONFIG_VSOCKETS and CONFIG_VIRTIO_VSOCKETS are shipped as kernel
+>modules in all
+>major GNU/Linux distributions. The vulnerable modules are automatically
+>loaded
+>when you create a socket for AF_VSOCK. That is available for
+>unprivileged users
+>and user namespaces are not needed for that.
+>
+>These vulnerabilities are race conditions caused by wrong locking in
+>net/vmw_vsock/af_vsock.c. The race conditions were implicitly
+>introduced in
+>November 2019 in the commits c0cfa2d8a788fcf4 and 6a2c0962105ae8ce that
+>added
+>VSOCK multi-transport support. These commits were merged in the Linux
+>kernel
+>v5.5-rc1.
+>
+>I prepared the fixing patch and made responsible disclosure to
+>security@...nel.org. Now the patch is merged into the mainline kernel:
+>  "vsock: fix the race conditions in multi-transport support"
+>
+>https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c518adafa39f37858697ac9309c6cf1805581446
+>This patch is also backported into the affected stable trees.
+>
+>I've requested a CVE ID for these vulnerabilities at
+>https://cveform.mitre.org/.
 
-Again, stuff like this is just causing extra work by everyone else for
-no good reason that I can see.
+CVE-2021-26708 is assigned to these issues:
+https://nvd.nist.gov/vuln/detail/CVE-2021-26708
 
-Rohit, PLEASE work on making these types of "announcements" reflect what
-is actually happening.  I understand your company process rules require
-the assignment of CVEs to issues to make things get resolved easier, but
-that doesn't mean you should inflict that pain on the rest of the
-world...
-
-thanks,
-
-gre gk-h
+Best regards,
+Alexander
