@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2457" "Thursday" "22" "December" "2016" "11:26:31" "+0000" "Nicholas Prowse" "nick5990@yahoo.co.uk" "<1590235068.409323.1482405991070@mail.yahoo.com>" "71" "Re: [oss-security] Curious about the security of my router fermwair." nil nil nil "12" "2016122211:26:31" "[oss-security] Curious about the security of my router fermwair." (number mark "U       nick5990@yah Dec 22   71/2457  " thread-indent "\"Re: [oss-security] Curious about the security of my router fermwair.\"\n") "<1590235068.409323.1482405991070.ref@mail.yahoo.com>" ("<1590235068.409323.1482405991070.ref@mail.yahoo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2419" "Friday" "5" "February" "2021" "10:42:28" "+0100" "Martin Ortner" "martin.ortner@consensys.net" "<EE41A0A9-8E0F-4C15-8FE0-258A6B3C6FEB@consensys.net>" "67" "[oss-security] [no-cve] Nim - Insecure SSL/TLS Defaults, MitM, and nimble shell command injection" nil nil nil "2" "2021020509:42:28" "[oss-security] [no-cve] Nim - Insecure SSL/TLS Defaults, MitM, and nimble shell command injection" (number mark "U       martin.ortne Feb  5   67/2419  " thread-indent "\"[oss-security] [no-cve] Nim - Insecure SSL/TLS Defaults, MitM, and nimble shell command injection\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [no-cve] Nim - Insecure SSL/TLS Defaults, MitM, and nimble shell command injection" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13709 invoked by uid 550); 22 Dec 2016 11:28:34 -0000
+Received: (qmail 31951 invoked by uid 550); 5 Feb 2021 10:09:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,97 +12,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12167 invoked from network); 22 Dec 2016 11:26:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s2048; t=1482405992; bh=/p0WQXYF4OreSbEbafXcsVBwlq4yxe/DimWqrruWlHU=; h=Date:From:Reply-To:To:Subject:References:From:Subject; b=il5kBBKBMOoREqONGmZShxSXBEO6irtI1wyaxw/bhX6C1RGA9cwP1lz0opYdzJ46xz90teFLcrq9Nvluv20PsMVqkVvlKY7V5gktu3zIAym7sHsh7vWOYshhLgScSaZJ7L+3KHgKY7XuwHLEK+gJfwgqG1Wv2uwqqCOYetHJuccZCNOfOkARsGbRBDSW40a1AQIMJcyaK+eY6nbhtVP2b9sfD/fyvpEsS9NH0So6eTAb8DFDjh3A7qJe4+rC6IgKlbmMGdpzXFRkMGDhIEqkPveOwmLVU9izVcLlbZurL2QH2HLaXjSI8HpHHB85Mk4izR8QX3Rs8odDu50vC0VC4w==
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 364866.75845.bm@omp1032.mail.ir2.yahoo.com
-X-YMail-OSG: BsRF2LkVM1mmNnMl27B6115VeA8Ld9TlgY4W1rLl3cJ9GscWa2Wo3ZArpT1jG25
- r9YiQ8eWx8j.4E.7_9gw3yehT2wHK_1t_CN9vOkTMHw.le7P0FKkr9WoJfjwVmCjayFks8V3jVy2
- iQvfCAgHV0wgZcMZFHdiVxf9Xl6EoeSGK2uKYHKAGHiScq3sgC82lZjrHrcmXiyb5HLzb7hiJlae
- VSWiWyiczcB8NXJVWIV3j9msXNZzNon8RYRhjz2jYdaEqALDniDFzilkhBM7S2ZdFERpa9Abnuuh
- ZGCV3CFVtzBkgSy_rOQJ0.Ce60rZd.nFa8igAtHIQAxVFw3iB1iLc6ScI_KMXADpmkcruqm.COUs
- ttTAzu1X1waMZnxi6lM.fGrNQS13l59ooXjfNLRVJ7PeN8nCcJBlF7E3OR8rx24mOtVEGjfnS0jr
- zHXVeHFbdV91LuSK89aobLxT05ZkjyYpOeaNTQV2qXu_6nq_C0z1_kek7JxvmyvdzzTVZ2tHCK4k
- 5y8qkR74Jcyjg5vRLqqAotXo3iEvSKID7u5NmlSw-
-Date: Thu, 22 Dec 2016 11:26:31 +0000 (UTC)
-From: Nicholas Prowse <nick5990@yahoo.co.uk>
-To:  <oss-security@lists.openwall.com>
-Message-ID: <1590235068.409323.1482405991070@mail.yahoo.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Received: (qmail 17947 invoked from network); 5 Feb 2021 09:42:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=consensys.net; s=google;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=yzfJajWEY6iPvu50FpMZyvGGW1vQs7vJ0ZXb9pLNxzA=;
+        b=EVdDAgB/RDhaDY6vKxnXRu7fuV/Y+9ajdSISmWUGQqQ0GYJo4eLwFHgq+FdmnhCZZ8
+         l7IoDo7UCKFZYPalwIz3i5ld1l6V8xpzrzkpb9B085RIYGVXwe4ou/ojY2SRLQUZ31Kd
+         QrHXKtyO6jADR3GIaIm++jKbTQq6mqnq6zDYA5ov+1IQuXkxbiaDdFUjDJoZqoWmLFzR
+         fLmHtyv50rWgDDAIPR38mKBJvXaBm7mm7D5VZYi4Cw+Jvn0iaZ6qvBHbsWGfaG1IHPUt
+         bQxK5Xv4OIlBMQkBvK8kJeWGAoMmHo5bBSNbc6NGTLHOtNxRe9gX5Z0GebJSYePvXDLf
+         IaJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=yzfJajWEY6iPvu50FpMZyvGGW1vQs7vJ0ZXb9pLNxzA=;
+        b=BrCPtKvxm3elcCuE7n/XkB3/vh/mOYOQczyq3l+Ra4/+k0lkHLrbhMl/mx8RdFHJS8
+         Pu3tbA4GT8UjJDlCX5HLonMaVJYIYPW3PMXs/1W8+GW+3LBolnOVGwqtvmGlQe+cftc9
+         8WkX+AhLIAjs/fhlowkSjDtBnd9MibPAXpHEJ9knr4aUorbh+g8gDz0IhAVPB8ptXoWP
+         VZky18rnXbX03nL6LEY/6d0VSg/veY4na/kkM96QVN+Lk+xl6YqqzO5JndlsLsI0VGXz
+         qCJpTrgVC8n4KAWAHMOODl313HI+MokEesSwt6bVfWBVhbhUe9KITFay4vbj03BRAntH
+         jVug==
+X-Gm-Message-State: AOAM532dPRAr+Hd0Y3IyKWk1FVnfWC3Kxz3QR0XAoiAM0UAhLWOCpeu1
+	rktOL36Q5PJmPj11pzndVJs72vrU1NvA/50/TM/jRhIC2/zNy1JRQ45cvH5QKOv2soCL/Tv2gVn
+	DA8OBsIcPKWCqa0VnH6dk2i+MNAYEKr/oboKsPp6aDw/eCIwhUv9yZNG+sOAbYXzLul98OKERqa
+	PiG+VojtecPvr+hlNNPyE=
+X-Google-Smtp-Source: ABdhPJwo48fb+3BCNZHV+ghgOORk7qI+hVxyatgrANkEgo97BXX6tjf9v1CztiJhIYLGRIwE9SIVrA==
+X-Received: by 2002:a5d:4046:: with SMTP id w6mr3854656wrp.369.1612518151640;
+        Fri, 05 Feb 2021 01:42:31 -0800 (PST)
+From: Martin Ortner <martin.ortner@consensys.net>
+Content-Type: text/plain;
+	charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-References: <1590235068.409323.1482405991070.ref@mail.yahoo.com>
-Subject: Re: [oss-security] Curious about the security of my router
- fermwair.
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Message-Id: <EE41A0A9-8E0F-4C15-8FE0-258A6B3C6FEB@consensys.net>
+Date: Fri, 5 Feb 2021 10:42:28 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
+Subject: [oss-security] [no-cve] Nim - Insecure SSL/TLS Defaults, MitM, and nimble shell
+ command injection
 
-Jonathan,
+title: "Nim - Insecure SSL/TLS Defaults, MitM, and nimble shell command inj=
+ection"
+date: 2021-02-04T14:13:23+01:00
 
-- My suggestion is to port scan all devices eg routers you own. Then store =
-and analyse the results. Only scan devices you own since scanning other peo=
-ples devices / networks may be illegal.
+cve:=20
+vendor: nim-lang
+vendorUrl: https://nim-lang.org/
+authors: tintinweb
+affectedVersions: [ "<=3D 1.2.6", "nimble <=3Dv0.12.0"]
+vulnClass: CWE-295, CWE-78, CWE-348
 
-- A wide variety of tutorials and information about port scanning is availa=
-ble online.
+Vulnerability Note: https://consensys.net/diligence/vulnerabilities/nim-ins=
+ecure-ssl-tls-defaults-remote-code-execution/
+Vulnerability Note: https://github.com/tintinweb/pub/
+Group: https://consensys.net/diligence/research/
 
-- I found through port scanning some of the devices I own earlier this year=
-, that there were many open and filtered ports and stated services such as =
-telnet, upnp, and ssdp. I found out via research that these services / prot=
-ocols have had vulnerabilities in the past that are publicly known. There a=
-re likely many devices with known and unknown weaknesses in circulation.
 
-- shodan.io can tell one how many requests are being sent by specific servi=
-ces / protocols. Some results were quite surprising to me.
 
-Q: Does anyone know if there are databases / listings / websites that have =
-port scan results by device? If yes, some examples would be good.
+# Vulnerability Note
 
-Regards,
-Nick
+## Summary=20
 
---------------------------------------------
-On Wed, 12/21/16, tapper <lancett01@googlemail.com> wrote:
+We found a couple of critical security issues in the defaults for one of th=
+e standard-lib components that allows peer-impersonation (MitM) on secure t=
+ransports. This also affects the languages package manager. Additionally, t=
+he package manager is vulnerable to shell command injection when fetching r=
+emote repositories before installing packages:
 
- Subject: [oss-security] Curious about the security of my router fermwair.
- To: oss-security@lists.openwall.com, oss-security@lists.openwall.com
- Date: Wednesday, December 21, 2016, 11:39 AM
-=20
- =C2=A0=C2=A0=C2=A0 Hi my name is
- Jonathan. I don't know if this is the write place to ask=20
- about this but here gos.
-=20
- I would like to know if any one would like to have a poke
- around at the=20
- third party router firmware I use on my router called
- Gargoyle.
- Its a easy to use interface built on top of Openwrt.
-=20
- I use this firmware because it has some grate plug ins and
- the user=20
- interface has grate a11y. I use a screen reader as I am
- blind and the=20
- html5 interface is easy for me to get around in.
-=20
- It's homepage
- https://www.gargoyle-router.com/index.php
- GitHub
- https://github.com/ericpaulbishop/gargoyle
- forum
- https://www.gargoyle-router.com/phpbb/index.php
-=20
- The devs behind Gargoyle are really nice people and have
- helped me out=20
- with bugs and made me a mod on the forum.
- What I would really like to know is just how secure is this
- firmware?
-=20
- I'm not a coder. I am just interested in how safe is my
- router firmware=20
- keeping me?
-=20
- If any one finds any sacurety bugs I know they will get
- fix.
-=20
- Thanks and sorry about my spelling
- Jonathan=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0
- =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=20
-=20
+* 2.1 - `httpClient` does no validate peer certificates by default (appears=
+ to be fixed in 1.4.x)
+* 2.2 - the package manager `nimble` relies on the insecure `httpClient` de=
+faults (unfixed; latest 0.12.0 has not been re-compiled with a fixed nim-c)
+* 2.3 - `nimble` falls back to insecure transports if `https` is blocked (u=
+nfixed)
+* 2.4 - `nimble` shell command injection when fetching a package for instal=
+lation (unfixed)
+
+
+**TLDR;** The Nim (`at least <=3D1.2.6`) `httpClient` default SSL/TLS confi=
+guration does not enforce peer certificate verification by default. Non-sec=
+ure settings should not be the default as this might unexpectedly expose ot=
+her projects to security risks. If you're using `nimble <=3D 0.12.0` anyone=
+ can block your TLS session and it will fall back to an insecure transport.=
+ Because of the insecure `httpClient` defaults, one can also just intercept=
+ your TLS session as the peer verification is too lax. Additionally, nimble=
+ appears to be vulnerable to a direct shell command injection when installi=
+ng a package (but one can as well just provide a malicious package).
+
+## Details
+
+see https://consensys.net/diligence/vulnerabilities/nim-insecure-ssl-tls-de=
+faults-remote-code-execution/
+
+## Proof of Concept
+
+see https://consensys.net/diligence/vulnerabilities/nim-insecure-ssl-tls-de=
+faults-remote-code-execution/
+
+### Timeline
+
+```
+JUL/09/2020 - contact nim developers @telegram; provided details, PoC
+FEB/04/2021 - deadline met. full disclosure.
+```
+
+
+
