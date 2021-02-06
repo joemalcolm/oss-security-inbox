@@ -1,29 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/09/1
-Message-ID: <CAPWJUnz=mf9+zHrrxgBYYZdQzDW-zKf0kCOeVY4y-61CeA9HPg@mail.gmail.com>
-Date: Sun, 9 May 2021 14:32:25 +1000
-From: William Bowling <will@...wling.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/06/1
+Message-ID: <YB7BNW/c2BsiVj4I@eldamar.lan>
+Date: Sat, 6 Feb 2021 17:17:57 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-22204] ExifTool - Arbitrary code execution in the DjVu module when parsing a malicious image
+Subject: Re: wpa_supplicant P2P group information processing vulnerability
 Content-Type: text/plain; charset=utf-8
 
-ExifTool 7.44 to 12.23 has a bug in the DjVu module which allows for
-arbitrary code execution when parsing malicious images. The bug can be
-triggered from a wide variety of valid file formats.
+Hi,
 
-The bug has been fixed in version 12.24.
+On Thu, Feb 04, 2021 at 01:09:32AM +0200, Jouni Malinen wrote:
+> Published: February 4, 2021
+> Latest version available from: https://w1.fi/security/2020-2/
+> 
+> 
+> Vulnerability
+> 
+> A vulnerability was discovered in how wpa_supplicant processing P2P
+> (Wi-Fi Direct) group information from active group owners. The actual
+> parsing of that information validates field lengths appropriately, but
+> a copy of the secondary device types. This can result in writing
+> attacker controlled data into the peer entry after the area assigned for
+> the secondary device type. The overflow can result in corrupting
+> pointers for heap allocations. This can result in an attacker within
+> radio range of the device running P2P discovery being able to cause
+> unexpected behavior, including termination of the wpa_supplicant process
+> and potentially arbitrary code execution.
+> 
+> 
+> Vulnerable versions/configurations
+> 
+> wpa_supplicant v1.0-v2.9 with CONFIG_P2P build option enabled
+> 
+> An attacker (or a system controlled by the attacker) needs to be within
+> radio range of the vulnerable system to send a suitably constructed
+> management frame that triggers a P2P peer device information to be
+> created or updated.
+> 
+> 
+> Acknowledgments
+> 
+> This issue was discovered by fuzz testing of wpa_supplicant by Google's
+> OSS-Fuzz.
+> 
+> Possible mitigation steps
+> 
+> - Merge the following commit to wpa_supplicant and rebuild it:
+> 
+>   P2P: Fix copying of secondary device types for P2P group client
+>   
+>   This patch is available from https://w1.fi/security/2020-2/
+>   
+> - Update to wpa_supplicant v2.10 or newer, once available
+> 
+> - Disable P2P (control interface command "P2P_SET disabled 1" or
+>   "p2p_disabled=1" in (each, if multiple interfaces used) wpa_supplicant
+>   configuration file)
+> 
+> - Disable P2P from the build (remove CONFIG_P2P=y)
 
+>From https://source.android.com/security/bulletin/2021-02-01
+following/referencing to
+https://android.googlesource.com/platform/external/wpa_supplicant_8/+/0b60cb210510c68871c8d735285bc4915de3bd80
+and the information on
+https://bugzilla.redhat.com/show_bug.cgi?id=1925152 this looks that it
+hs CVE-2021-0326 assigned.
 
-References:
-
-Fixed release - https://exiftool.org/history.html#v12.24
-Upstream patch -
-https://github.com/exiftool/exiftool/commit/cf0f4e7dcd024ca99615bfd1102a841a25dde031#diff-fa0d652d10dbcd246e6b1df16c1e992931d3bb717a7e36157596b76bdadb3800
-CVE - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-22204
-
---
-
-GPG Key ID: 0x980F711A
-
-GPG Key Fingerprint: AA38 2A0E 7D22 18A9 6086  0289 41DC E04B 980F 711A
-
+Regards,
+Salvatore
