@@ -1,21 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/09/1
-Message-ID: <YG9wlSsUVoqEtZuG@jasmine.lan>
-Date: Thu, 8 Apr 2021 17:07:33 -0400
-From: Leo Famulari <leo@...ulari.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/07/1
+Message-ID: <CAEJYuxGBZfg_erJDPG9d0waU2jLqkG2tTrtHg-gXCoaaKF1M4Q@mail.gmail.com>
+Date: Sun, 7 Feb 2021 12:30:19 +0100
+From: Szabolcs Beki <szabolcs.beki@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Risk of local privilege escalation in GNU Guix
+Subject: [CVE-2020-13924] Apache Ambari Arbitrary File Download Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 05, 2021 at 12:43:15PM -0400, Leo Famulari wrote:
-> We applied for a CVE ID via MITRE's web form [0] on March 18, 2021.
-> 
-> We have not yet received a reply. Does anybody know if that is expected?
+[CVEID]:CVE-2020-13924
+[PRODUCT]:Apache Ambari
+[VERSION]:All 2.6.x and before
+[PROBLEMTYPE]:Information Disclosure
+[REFERENCES]:
+https://mail-archives.apache.org/mod_mbox/ambari-user/202102.mbox/%3CCAEJYuxEQZ_aPwJdAaSxPu-Dva%3Dhc7zZUx3-pzBORbd23g%2BGH1A%40mail.gmail.com%3E
+[DESCRIPTION]:Malicious users can construct file names for directory
+traversal and traverse to other directories to download files.
 
-Well, there is an LWN article about it, but still no CVE:
-
-https://lwn.net/Articles/851849/
-
-🤷
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
