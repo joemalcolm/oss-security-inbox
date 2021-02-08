@@ -1,13 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/11/4
-Message-ID: <CAKOHTSaJ5pR9vy6rHZ5BXFupHGqTBTByOao9pqKuWq2VEtKe_A@mail.gmail.com>
-Date: Thu, 11 Nov 2021 14:26:59 -0700
-From: Zach Hoffman <zrhoffman@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-43350: Apache Traffic Control: LDAP filter injection vulnerability in Traffic Ops
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/08/2
+Message-ID: <20210208091105.GF17977@suse.de>
+Date: Mon, 8 Feb 2021 10:11:05 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Remote code execution in connman
 Content-Type: text/plain; charset=utf-8
 
-Mitigation:
+Hi,
 
-6.0.x users should upgrade to 6.0.1.
-5.1.x users should upgrade to 5.1.4.
+Tesla has reported a remote (adjacent network) code execution flaw in
+connman, a lightweight network manager, to our SUSE colleage and
+connman upstream maintainer Daniel Wagner,
+
+https://git.kernel.org/pub/scm/network/connman/connman.git/
+
+https://git.kernel.org/pub/scm/network/connman/connman.git/commit/?id=e4079a20f617a4b076af503f6e4e8b0304c9f2cb
+
+Mitre has assigned CVE-2021-26675.
+
+The commit fixes a stack buffer overflow that can be used to execute code by network adjacent attackers.
+
+https://git.kernel.org/pub/scm/network/connman/connman.git/commit/?id=a74524b3e3fad81b0fd1084ffdf9f2ea469cd9b1
+https://git.kernel.org/pub/scm/network/connman/connman.git/commit/?id=58d397ba74873384aee449690a9070bacd5676fa
+
+Mitre has assigned CVE-2021-26676
+
+Remote stack information leak which can be used to help execute CVE-2021-26675 reliably.
+
+Ciao, Marcus
