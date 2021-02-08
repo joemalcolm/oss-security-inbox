@@ -1,11 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/29/2
-Message-ID: <CACZfFK7iNuZ33z5H7b8spJxGZhPyc51O-9zfRq-Cp4Cf-tTqTw@mail.gmail.com>
-Date: Mon, 29 Mar 2021 12:19:36 -0700
-From: Jihoon Son <jihoonson@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/08/1
+Message-Id: <A9D6FE26-5B9B-4505-A830-A2D4DBE3DFE6@nanthrax.net>
+Date: Mon, 8 Feb 2021 06:25:40 +0100
+From: Jean-Baptiste Onofre <jb@...thrax.net>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-26919] Authenticated users can execute arbitrary code from malicious MySQL database systems
+Subject: CVE-2020-13947 - XSS in Apache ActiveMQ WebConsole
 Content-Type: text/plain; charset=utf-8
+
+CVE-2020-13947 - XSS in WebConsole
 
 Severity: Medium
 
@@ -13,24 +15,20 @@ Vendor:
 The Apache Software Foundation
 
 Versions Affected:
-Druid 0.20.1 and earlier
+Apache ActiveMQ prior to 5.15.12 and 5.16.0
 
 Description:
-Druid allows users to read data from other database systems using
-JDBC. This functionality is to allow trusted users with the proper
-permissions to set up lookups or submit ingestion tasks. The MySQL
-JDBC driver supports certain properties, which, if left unmitigated,
-can allow an attacker to execute arbitrary code from a
-hacker-controlled malicious MySQL server within Druid server
-processes.
+An instance of a cross-site scripting
+vulnerability was identified to be present in the web based
+administration console on the message.jsp page of Apache ActiveMQ
+versions 5.15.12 to 5.16.0.
 
 Mitigation:
-Users should upgrade to Druid 0.20.2 and enable new Druid
-configurations to mitigate vulnerable MySQL JDBC properties.
-Whenever possible, network access to cluster machines should be
-restricted to trusted hosts only.
-Ensure that users have the minimum set of Druid permissions necessary,
-and are not granted access to functionality that they do not require.
+Upgrade to at least Apache ActiveMQ 5.15.13 or 5.16.1
 
 Credit:
-This issue was discovered by fantasyC4t from the Ant FG Security Lab.
+This issue was discovery by:
+
+* qiang qiang <silbul2017@...il.com>
+
+
