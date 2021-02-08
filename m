@@ -1,25 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/15/2
-Message-ID: <32945ab5-3cec-2ba1-cc35-b01dec67ed86@apache.org>
-Date: Fri, 15 Oct 2021 13:06:39 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-41971: Apache Superset: Possible SQL Injection when template processing is enabled 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/08/5
+Message-ID: <NKuWiXQK3sAwyMdDQT07Bdnnl5XSSBmKbvUMqaIhhCSShwaQMmOUKOVT9TCVVDGv43RDuHjy42O3GILwnaZiA2dadJ42Mqn09BhGaGu8BhE=@protonmail.com>
+Date: Mon, 08 Feb 2021 14:15:05 +0000
+From: netblue30 <netblue30@...tonmail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [cve-pending] Firejail: root privilege escalation in OverlayFS code
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
 
-Description:
+Security Advisory - Feb 8, 2021
 
-Apache Superset up to and including 1.3.0 when configured with ENABLE_TEMPLATE_PROCESSING on (disabled by default) allowed SQL injection when a malicious authenticated user sends an http request with a custom URL.
+Summary: A vulnerability resulting in root privilege escalation was discovered in Firejail's OverlayFS code,
+
+Versions affected: Firejail software versions starting with 0.9.30.
+Long Term Support (LTS) Firejail branch is not affected by this bug.
+
+Workaround: Disable overlayfs feature at runtime. In a text editor open /etc/firejail/firejail.config file,
+and set "overlayfs" entry to "no".
+
+      $ grep overlayfs /etc/firejail/firejail.config
+      # Enable or disable overlayfs features, default enabled.
+      overlayfs no
+
+Fix: The bug is fixed in Firejail version 0.9.64.4
+
+GitHub commit: (file configure.ac)
+https://github.com/netblue30/firejail/commit/97d8a03cad19501f017587cc4e47d8418273834b
+
+Credit:  Security researcher Roman Fiedler analyzed the code and discovered the vulnerability.
+Functional PoC exploit code was provided to Firejail development team.
+A description of the problem is here on Roman's blog:
+
+https://unparalleled.eu/publications/2021/advisory-unpar-2021-0.txt
+https://unparalleled.eu/blog/2021/20210208-rigged-race-against-firejail-for-local-root/
 
 
-Mitigation:
+Regards,
 
-Don't enable ENABLE_TEMPLATE_PROCESSING (disabled by default).
-Or upgrade to Apache Superset 1.3.1 
+netblue30
+(https://github.com/netblue30/firejail)
 
-Credit:
 
-Apache Superset would like to thank Kevin Kusnardi for reporting this issue
+Sent with ProtonMail Secure Email.
+
 
