@@ -1,28 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/01/7
-Message-ID: <21B1982A-2C53-4E5B-BB7E-178EAAADB089@juniper.net>
-Date: Wed, 1 Dec 2021 18:40:59 +0000
-From: Travis Finkenauer <tmfink@...iper.net>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: IMA gadgets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/08/3
+Message-ID: <CAKx+4-qGABkT2ssKnXPrGY2_1BT0RKxr+-XiDnBcB0yFCP8mJw@mail.gmail.com>
+Date: Mon, 8 Feb 2021 15:00:18 +0530
+From: Rohit Keshri <rkeshri@...hat.com>
+To: oss-security@...ts.openwall.com, alex.gaynor@...il.com
+Subject: Re: CVE-2021-20226 kernel: use-after-free in io_uring feature
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-> On Dec 1, 2021, at 12:06 AM, Johannes Segitz <jsegitz@...e.de> wrote:
-> 
-> From a security POV it doesn't
-> help much (on a normal Linux system, can be different if you really strip
-> it down).
+The flaw CVE-2021-20226 is identified as a use-after-free problem with
+breach to data integrity, confidentiality and system availability, and
+this may even cause escalated privileges with good troubleshooting
+skills.
 
-I agree. It's difficult to add an IMA-like security policy that is both effective and general-purpose. But, if you don't care about your system being general-purpose, IMA can be useful on "locked-down vendor systems".
 
-If you can use IMA to enforce a "write XOR execute" policy on a filesystem, then you could have separate filesystems for executable code and writeable config. For example, you could:
+I also wanted to add that the affected souce (as was reported for
+kernel v5.7.0) has been modified from v5.10 kernel version with patch
+233295130e53 with following cleanup details.
 
-1) Have your executable code in a read-only squashfs filesystem. Use IMA to enforce only signed binaries will run.
-2) Put writeable data in a "noexec" filesystem.
-3) Lock-down (or remove) interpreters (python, perl, bash, etc.) that could "execute" data whose provenance does not come from a signed, read-only filesystem.
+~~~
 
-Such a locked-down setup provides some security by trying to ensure only vendor-provided code is executed.
-But, this setup is probably not suitable for a general-purpose end-user system.
+$ git show 233295130e53
+commit 233295130e53c8dfe6dbef3f52634c3f7e44cd6a
+Author: Pavel Begunkov <asml.silence@...il.com>
+Date:   Sat Oct 10 18:34:06 2020 +0100
 
--Travis
+    io_uring: clean up ->files grabbing
+
+    Move work.files grabbing into io_prep_async_work() to all other work
+    resources initialisation. We don't need to keep it separately now, as
+    ->ring_fd/file are gone. It also allows to not grab it when a request
+    is not going to io-wq.
+..
+
+$ git tag --contains 233295130e53
+v5.10
+v5.10-rc1
+v5.10-rc2
+v5.10-rc3
+v5.10-rc4
+v5.10-rc5
+v5.10-rc6
+v5.10-rc7
+v5.11-rc1
+v5.11-rc2
+v5.11-rc3
+v5.11-rc4
+v5.11-rc5
+v5.11-rc6
+v5.11-rc7
+
+~~~
+
+Regards,
+..
+Rohit Keshri / Red Hat Product Security Team
+PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+
+secalert@...hat.com for urgent response
+
+
+On Mon, Feb 8, 2021 at 2:37 PM Alex Gaynor <alex.gaynor@...il.com> wrote:
+
+> Hey,
+>
+> Your message says that this is a DoS, however the ZDI page says it's a
+> priv-esc. Which is right?
+>
+> Alex
+>
+> On Fri, Feb 5, 2021 at 10:00 AM Rohit Keshri <rkeshri@...hat.com> wrote:
+> >
+> > Hello Team,
+> >
+> > A use-after-free flaw was found in the io_uring in Linux kernel, where a
+> > local attacker with a user privilege could cause a denial of service
+> > problem on the system
+> >
+> > The issue results from the lack of validating the existence of an object
+> > prior to performing operations on the object by not incrementing the file
+> > reference counter while in use.
+> >
+> > The highest threat from this vulnerability is to data integrity,
+> > confidentiality and system availability.
+> >
+> >
+> > 'CVE-2021-20226' was assigned by Red Hat.
+> >
+> > This issue was reported by Ryota Shiga of Flatt Security Team.
+> >
+> >
+> > Reference:
+> >
+> > https://www.zerodayinitiative.com/advisories/ZDI-21-001/
+> >
+> >
+> > Thanks and Regards
+> > ..
+> > Rohit Keshri / Red Hat Product Security Team
+> > PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+> >
+> > secalert@...hat.com for urgent response
+>
+>
+>
+> --
+> All that is necessary for evil to succeed is for good people to do nothing.
+>
+>
+
