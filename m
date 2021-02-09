@@ -1,53 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/29/1
-Message-ID: <CALLT8kikyVve2ZhJi-tK8RzrYQQOxpbgKciMA6DwxAZmSJP=sg@mail.gmail.com>
-Date: Wed, 28 Jul 2021 18:35:17 -0400
-From: "Alex O'Ree" <alexoree@...che.org>
-To: "user@...di.apache.org" <user@...di.apache.org>, dev@...di.apache.org,  security <security@...che.org>, oss-security@...ts.openwall.com,  Artem Smotrakov <artem.smotrakov@...il.com>
-Subject: [SECURITY] CVE-2021-37578 Apache jUDDI Remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/5
+Message-ID: <rvudf9$12d5$1@ciao.gmane.io>
+Date: Tue, 9 Feb 2021 16:32:41 -0000 (UTC)
+From: Tavis Ormandy <taviso@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: screen crash processing combining characters
 Content-Type: text/plain; charset=utf-8
 
-CVE-2021-37578 Apache jUDDI Remote code execution
+On 2021-02-09, Tavis Ormandy wrote:
+> Hello, I noticed someone posted this to the screen-devel list. I can
+> reproduce it here, just catting the testcase does crash my screen
+> session.
+>
+> https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
+>
 
-Severity: Low
+In fact, just curl'ing that URL reproduces it here.
 
-VERSION:  older than 3.3.10
+Tavis.
 
-PROBLEMTYPE: Remote Code Execution
-
-REFERENCES: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37578
-https://juddi.apache.org/security.html
-
-DESCRIPTION:
-Apache jUDDI uses several classes related to Java's Remote Method
-Invocation (RMI) which (as an extension to UDDI) provides an alternate
-transport for accessing UDDI services.
-
-RMI uses the default Java serialization mechanism to pass parameters in RMI
-invocations. A remote attacker can send a malicious serialized object to
-the above RMI entries. The objects get deserialized without any check on
-the incoming data. In the worst case, it may let the attacker run arbitrary
-code remotely.
-
-For both jUDDI web service applications and jUDDI clients, the usage of RMI
-is disabled by default. Since this is an optional feature and an extension
-to the UDDI protocol, the likelihood of impact is low. Starting with
-3.3.10, all RMI related code was removed.
-
-Mitigation:
-
-jUDDI Clients, disable RMITransports (found in uddi.xml) and use alternate
-transports such as HTTPS.
-jUDDI Server (juddiv3.war/WEB-INF/classes/juddiv3.xml), disable JNDI and
-RMI settings in juddiv3.xml.
-The appropriate settings are located below in xpath style notation.
-
-    juddi/jndi/registration=false
-    juddi/rmi/registration=false
-
-If the settings are not present, then JNDI and RMI are already disabled.
-This is the default setting.
-
-
-Reported by Artem Smotrakov
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
 
