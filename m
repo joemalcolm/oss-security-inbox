@@ -1,39 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/14
-Message-ID: <20210511205319.GA22017@localhost.localdomain>
-Date: Tue, 11 May 2021 20:55:17 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: null p0int3r <nullp0int3rx@...il.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: [CVE-2020-28018] Use-After-Free on Exim Question
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/2
+Message-ID: <20210209154829.GA4167@openwall.com>
+Date: Tue, 9 Feb 2021 16:48:29 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: major changes if gnu/linux dominates the desktop and/or mobile market?
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-On Tue, May 11, 2021 at 01:23:43PM +0200, null p0int3r wrote:
-> So I suppose that command is the first you send after the second
-> "STARTTLS" command being sent right?
+Here are a couple of updates on what was said in this thread earlier.
 
-Yes! After the second STARTTLS we send an invalid MAIL FROM command (for
-example, "MAIL FROM:(\"${run{...}}\")\n"). Exim then responds with a 501
-error message that includes our "${run{...}}" string, and since corked
-in tls_write() is still non-NULL, this string is written to where the
-used-after-free corked points to.
+Things started changing regarding home directory permissions on Ubuntu:
 
-Hopefully this helps!
+https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2020-November/018842.html
+https://discourse.ubuntu.com/t/private-home-directories-for-ubuntu-21-04-onwards/19533
 
-> PD: Congrats for those nice bugs discovered.
+Alex Murray from Canonical proposed "that it is time we moved ahead and
+stopped creating home directories as world-readable on Ubuntu".  Later
+he added: "since there was no opposition to this proposal, I have
+uploaded updated adduser and shadow packages to hirsute-proposed to
+support setting the mode of home directories to 750 by default when they
+are created via either adduser or useradd."
 
-Thank you very much for your mail!
+On Mon, Oct 19, 2020 at 01:22:49PM +0200, Solar Designer wrote:
+> > On 10/5/20 2:48 PM, Solar Designer wrote:
+> > > Then there's the trend towards having a desktop-like Linux system on
+> > > mobile devices again.  Before Android, we had e.g. Maemo and MeeGo.  Now
+> > > we have e.g. Ubuntu Touch, postmarketOS, and Sailfish OS.  As far as I'm
+> > > aware, so far this means lack of isolation between the apps just like we
+> > > have on the desktop.
+> 
+> BTW, there's a Russian security-hardened fork of Sailfish OS called
+> Aurora.  I've skimmed and searched its user's manual (in Russian) for
+> any mentions of isolation between the apps - found nothing, so I assume
+> there's none.  (This isn't to say they haven't implemented any security
+> changes - I think they have.  An interview I read with their CEO
+> looked surprisingly reasonable.  However, it appears that addressing
+> cross-app attacks is completely out of their focus.)
 
-With best regards,
+The release notes for Sailfish OS 4.0.1 include this:
 
---
-the Qualys Security Advisory team
+"Contributions from Aurora OS
+[...]
+Security: Isolation of applications (a.k.a. application sandboxing)
+implemented for the platform (core) apps, based on Firejail app
+sandboxing."
 
-
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
-
-
-
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
+Alexander
