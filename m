@@ -1,30 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/3
-Message-ID: <20210422095945.GA2495@scully.more-magic.net>
-Date: Thu, 22 Apr 2021 11:59:45 +0200
-From: Peter Bex <peter@...e-magic.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/3
+Message-ID: <rvubtf$lnv$1@ciao.gmane.io>
+Date: Tue, 9 Feb 2021 16:06:07 -0000 (UTC)
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Malicious commits to Linux kernel as part of university study
+Subject: screen crash processing combining characters
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 22, 2021 at 11:44:49AM +0200, Albert Veli wrote:
-> Supply chain attacks are a real threat to open source projects.
+Hello, I noticed someone posted this to the screen-devel list. I can
+reproduce it here, just catting the testcase does crash my screen
+session.
 
-Absolutely, see also the recent malicious commits to the PHP project
-which were injected through some security vulnerability in their git
-server as just another example.
+https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
 
-> The Linux kernel is not the easiest way to introduce malicious commits.
-> But other projects like much used pip python modules, npm javascript
-> modules and ruby gem modules might be less vetted before they accept
-> commits and that is a serious risk.
+(I think it wasn't supposed to be public, but it is, so better it's
+visible to security teams)
 
-Indeed.  My reason for posting was as a heads up to developers so they
-can be extra vigilant for bad patches *from this particular group*.
-But one should in general always be on the lookout, of course, because
-commits might also just accidentally introduce security issues.
+It looks like it might be exploitable at first glance, I see a crash
+here in encoding.c, because i is out of range.
 
-Cheers,
-Peter
+1411   else if (!combchars[i])
+1412     {
+1413       combchars[i] = (struct combchar *)malloc(sizeof(struct combchar));
+1414       if (!combchars[i])
+1415            return;
+1416       combchars[i]->prev = i;
+1417       combchars[i]->next = i;
+1418     }
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Exploitable or not, it would be annoying if someone stuffed this into logfiles
+being tailed, or whatever.
+
+Tavis.
+
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
+
