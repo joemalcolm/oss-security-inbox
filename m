@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2027" "Wednesday" "16" "August" "2017" "12:10:09" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>" "56" "[oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" "^Date:" nil nil "8" "2017081616:10:09" "[oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" (number mark "        michael@orli Aug 16   56/2027  " thread-indent "\"[oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1835" "Tuesday" "9" "February" "2021" "18:11:37" "-0000" "Tavis Ormandy" "taviso@gmail.com" "<rvuj8p$n59$1@ciao.gmane.io>" "48" "[oss-security] Re: screen crash processing combining characters" "^Date:" nil nil "2" "2021020918:11:37" "[oss-security] Re: screen crash processing combining characters" (number mark "        taviso@gmail Feb  9   48/1835  " thread-indent "\"[oss-security] Re: screen crash processing combining characters\"\n") "<alpine.DEB.2.21.2102091921540.21881@o7.fi>" ("<rvubtf$lnv$1@ciao.gmane.io>" "<alpine.DEB.2.21.2102091921540.21881@o7.fi>") nil nil nil nil nil nil nil "[oss-security] Re: screen crash processing combining characters" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22295 invoked by uid 550); 16 Aug 2017 16:13:30 -0000
+Received: (qmail 22128 invoked by uid 550); 9 Feb 2021 18:14:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17795 invoked from network); 16 Aug 2017 16:10:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1502899811; bh=AzNw9a7nN8/W7sKX21vO7abiE7sp63C8L4zQyBkf2IY=;
-	h=To:From:Subject:Date;
-	b=Oa1022qHpBvy8vL5JbPeQbHRplLDJTSf4o605RAfrvvUWM8HUGx2ePqNfprj+myd0
-	 WUdI0r6IplsQ9FSTU0S2BLj9rfzwKQeaEZ9qqXH0Jy3eA7hZqbd5IE43eeA/tY1b3q
-	 zbNUMKPh2SeeFFYWOcOYag3Ks9TTK6Iu5DZy7N/U=
-Message-ID: <f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Date: Wed, 16 Aug 2017 12:10:09 -0400
-From: Michael Orlitzky <michael@orlitzky.com>
+Received: (qmail 20112 invoked from network); 9 Feb 2021 18:11:55 -0000
+X-Injected-Via-Gmane: http://gmane.org/
+Message-ID: <rvuj8p$n59$1@ciao.gmane.io>
+References: <rvubtf$lnv$1@ciao.gmane.io>
+ <alpine.DEB.2.21.2102091921540.21881@o7.fi>
+User-Agent: slrn/pre1.0.4-5 (Linux)
+Date: Tue, 9 Feb 2021 18:11:37 -0000 (UTC)
+From: Tavis Ormandy <taviso@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file
- manipulation
+Subject: [oss-security] Re: screen crash processing combining characters
 To: oss-security@lists.openwall.com
 
-Product: Nagios Core
-Versions-affected: 4.3.2 and earlier
-Fixed-in: commits 1b19734 and 3baffa7, version 4.3.3
-Bug-report: https://github.com/NagiosEnterprises/nagioscore/issues/404
-Author: Michael Orlitzky
-Acknowledgments: Bryan Heden (upstream) for his fast response and help
+On 2021-02-09, Harry Sintonen wrote:
+> On Tue, 9 Feb 2021, Tavis Ormandy wrote:
+>
+>> Hello, I noticed someone posted this to the screen-devel list. I can
+>> reproduce it here, just catting the testcase does crash my screen
+>> session.
+>>
+>> https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
+>
+> I managed to reproduce this against screen + irssi. It was a bit tricky to 
+> get it triggered but eventually screen did die.
+>
 
-== Summary ==
+welp, I minimized it a bit and it crashed xterm too.
 
-The nagios daemon should create its PID file before dropping
-privileges. This represents a minor security issue; additional factors
-are needed to make it exploitable.
+I minimized it to 772 characters:
 
-== Details ==
+$ wc -m input.txt
+772 input.txt
 
-The purpose of the PID file is to hold the PID of the running daemon,
-so that later it can be stopped, restarted, or otherwise signalled
-(many daemons reload their configurations in response to a SIGHUP).
-To fulfill that purpose, the contents of the PID file need to be
-trustworthy. If the PID file is writable by a non-root user, then he
-can replace its contents with the PID of a root process. Afterwards,
-any attempt to signal the PID contained in the PID file will instead
-signal a root process chosen by the non-root user (a vulnerability).
+Here is the minimized version (gzipped and base64 encoded to avoid
+crashing anything anybody's mail client).
 
-This is commonly exploitable by init scripts that are run as root and
-which blindly trust the contents of their PID files. Nagios itself ships
-such an init script (daemon-init.in), so the risk is not theoretical in
-this case.
+$ gzip -9c < input.txt | base64
+H4sIAD7OImACA02W61IiQQyFX10WpkdZF5QFF4TVWbkoKpcZVuQyMM/iD99DTPM1p4qiTp1O0klO
+OvDp3Mf3p/gsio+4ZqB9+D4ybm+gJ8y7gesTEyffwG2EiQ3ci9fGwOLERAsDffGaGYiFiQx0JE6O
+TZk4SwOZePmjW/F6MZAK4yO/ideVAani2JZ/wpwZOBMvqyIuhHkyUDkyriRHXUDJjoLXOyASY+v8
+3gnTImf0igriwBzb8io5Nw2MyWcoR3PA1EBZ1EkN5GJsKhdbYTpoGm7/YeBScm7S1T1MRg8HeFWs
+UumhuwDcAcJkmtyuivEf8fLzox0b0I2EozLqbC3OCuMZ/dnB1CVyDHglsu/Pi9wVUu1RYELkcORn
+Yy2Rn+3S/8JcERB1Ij/zN3LXFr3GMI8GErE5N9CE2RD5r9j4V6m3twBv2Pj3VZPZ2DO0QfcbA12J
+7BW8E8bvjQl9Hsilv7CZACygzacxD4CUQRqJe8MAUrowCQdQZyA98yz5FGySDu5N5jDU1ebtRHhV
+AHVsJlyxgumicninGVO3wX3MZI643XdM1oVL2S1hP484eiB53425ePWR2yHTBCY8qyXTkhI5533l
+yH3BFvXlhL0RhOtjc9iQJfLJ2VGMsTfe70SdMOENbPz0NkQd/4iepC5qjzsw57Qu6JWRD5XGbZIP
+PRwaCAukTM6J5LxArwSmxLYJHXN0w/GIlhj/BqzYkFu8PDOVugYoWGPBZjTzDuAv/SlvOeLSUPsQ
+Y0bUrQ084tU7lRORz3GBzFlxGe4t8WInxGu8qsw8izGuMhJlNm1KOSHDW+6ih+7SwFK6ERK7ZoEs
+sLE4Lvw92InXPerk5DNlfixDJz8K0ZxGxSg484P6Be3RyjwMCQAA
 
-== Exploitation ==
+To reproduce in XTerm, decode the file then try to select the line.
 
-An example scenario involving an init script would be,
+I'll send a report to Thomas Dickey.
 
-1. I run "/etc/init.d/nagios start" to start the daemon.
+Tavis.
 
-2. nagios drops to the "nagios" user.
-
-3. nagios writes its PID file, now owned by the "nagios" user.
-
-4. Someone compromises the daemon, which sits on the network.
-
-5. The attacker is generally limited in what he can do because the
-   daemon doesn't run as root. However, he can write "1" into the
-   PID file, and he does.
-
-6. I run "/etc/init.d/nagios stop" to stop the daemon while I
-   investigate the weird behavior resulting from the hack.
-
-7. The machine reboots, because I killed PID 1 (this is normally
-   restricted to root).
-
-== Resolution ==
-
-The problem is avoided by creating the PID file as root, before dropping
-privileges.
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
 
