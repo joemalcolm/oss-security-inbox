@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1644" "Friday" "15" "January" "2016" "13:32:42" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160115183242.1A23733E005@smtpvbsrv1.mitre.org>" "43" "[oss-security] Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" "^Cc:" nil nil "1" "2016011518:32:42" "[oss-security] Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" (number mark "        cve-assign@m Jan 15   43/1644  " thread-indent "\"[oss-security] Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778\"\n") "<CANO=Ty33aP09VUvRTYncYLOt0ZFNRBw4-PJMau93s7R9SO9H9w@mail.gmail.com>" ("<CANO=Ty33aP09VUvRTYncYLOt0ZFNRBw4-PJMau93s7R9SO9H9w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["623" "Tuesday" "9" "February" "2021" "19:24:26" "+0200" "Harry Sintonen" "sintonen@iki.fi" "<alpine.DEB.2.21.2102091921540.21881@o7.fi>" "15" "Re: [oss-security] screen crash processing combining characters" "^Date:" nil nil "2" "2021020917:24:26" "[oss-security] screen crash processing combining characters" (number mark "        sintonen@iki Feb  9   15/623   " thread-indent "\"Re: [oss-security] screen crash processing combining characters\"\n") "<rvubtf$lnv$1@ciao.gmane.io>" ("<rvubtf$lnv$1@ciao.gmane.io>") nil nil nil nil nil nil nil "Re: [oss-security] screen crash processing combining characters" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26403 invoked by uid 550); 15 Jan 2016 18:32:54 -0000
+Received: (qmail 26416 invoked by uid 550); 9 Feb 2021 17:29:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,32 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26382 invoked from network); 15 Jan 2016 18:32:53 -0000
-In-Reply-To: <CANO=Ty33aP09VUvRTYncYLOt0ZFNRBw4-PJMau93s7R9SO9H9w@mail.gmail.com>
-Message-Id: <20160115183242.1A23733E005@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 15 Jan 2016 13:32:42 -0500 (EST)
-From: cve-assign@mitre.org
+Received: (qmail 24550 invoked from network); 9 Feb 2021 17:24:39 -0000
+X-X-Sender: p@o7.fi
+In-Reply-To: <rvubtf$lnv$1@ciao.gmane.io>
+Message-ID: <alpine.DEB.2.21.2102091921540.21881@o7.fi>
+References: <rvubtf$lnv$1@ciao.gmane.io>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Date: Tue, 9 Feb 2021 19:24:26 +0200 (EET)
+From: Harry Sintonen <sintonen@iki.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
-To: kseifried@redhat.com, corsac@debian.org
+Subject: Re: [oss-security] screen crash processing combining characters
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, 9 Feb 2021, Tavis Ormandy wrote:
 
->>> https://anongit.mindrot.org/openssh.git/commit/?id=ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c
+> Hello, I noticed someone posted this to the screen-devel list. I can
+> reproduce it here, just catting the testcase does crash my screen
+> session.
+>
+> https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
 
->>>> eliminate fallback from untrusted X11 forwarding to trusted forwarding
->>>> when the X server disables the SECURITY extension; Reported by Thomas
->>>> Hoger
+I managed to reproduce this against screen + irssi. It was a bit tricky to 
+get it triggered but eventually screen did die.
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1298741
-
->> would lead to remote X clients having more
->> privileged access to the local X server than intended
-
-> https://bugzilla.redhat.com/show_bug.cgi?id=1298741#c4
-
->> Actually, openssh-7.1p2 does not fix this issue and it will be as part
->> of the next release.
-
-Use CVE-2016-1908.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWmTrRAAoJEL54rhJi8gl5m7EP/2K8TEGoIsd6mqpyzdOhAcb0
-Wep2p3360yu03LOYxybP10LlW20aH5uaWeML9eMGZPuXqrmN20YiUWHBGEmXfU+a
-ySHLKxg1+OORMvxDOy7TKpQVePb8pkq5FNVIspY/LY08tyx8xwFt6ce9IbGhtoud
-RAkHpAAvRIk0n/dIKAT/LzMtlD/8ld0fx2nKm4AbFsk65bIF9zii7dKy4UQ+/q1V
-7bPQoEO5yv5P5h/A+E02FcXfUYuJaT+zo36Opvu3X3SmDUKAMFMjzlzSvrxkOAZZ
-kd7fPuGp7kkkvfA8G4vkpK6005VQ0H8aCbaqiuf6lek2Fk3jWLg8nCYiesSetXCm
-lJtUEeNd07DFU97hgfkW9hQmME3N1/BCR7fIeQeQ2PX6gdNmaqjZLtaAVyYiINEo
-yN9bwf2gD6s2jTzybLZgh8NPuiwzf90YbPVyI5pSmuwSbSH3P0FanDY4spzBsTwu
-9QsA2Z91Xwgb2uAk2y2Yv7vPliw4/AxMR6zOWRcvaht7p8ckswFCIPgpRjuJGN8C
-DaeiveJ2tzAsUtWknkw38bgOo7+Nq7RE8H+0IFGnZdcx++Hfzz8n0gE5T0atf7rs
-vFp2rbS07uq5cLXwGpfusR2pE7Zv1WwI8HkqwvnIM+6qRmpuYJTgj4QuxmSduUy5
-VzoKwYZR3d0WAtFLTQIy
-=EebB
------END PGP SIGNATURE-----
+-- 
+l=2001;main(i){float o,O,_,I,D;for(;O=I=l/571.-1.75,l;)for(putchar(--l%80?
+i:10),o=D=l%80*.05-2,i=31;_=O*O,O=2*o*O+I,o=o*o-_+D,o+_+_<4+D&i++<87;);puts
+("  Harry 'Piru' Sintonen <sintonen@iki.fi> https://www.iki.fi/sintonen");}
