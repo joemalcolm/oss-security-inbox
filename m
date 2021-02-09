@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["785" "Tuesday" "9" "January" "2018" "14:07:14" "-0800" "Anthony Baker" "abaker@apache.org" "<CAEwge-FQAHe37U1zdM19NCj8NkAuyVUx7=ii5WHz_3=EY+BkLw@mail.gmail.com>" "26" "[oss-security] [SECURITY] CVE-2017-12622 Apache Geode gfsh authorization vulnerability" nil nil nil "1" "2018010922:07:14" "[oss-security] [SECURITY] CVE-2017-12622 Apache Geode gfsh authorization vulnerability" (number mark "U       abaker@apach Jan  9   26/785   " thread-indent "\"[oss-security] [SECURITY] CVE-2017-12622 Apache Geode gfsh authorization vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["435" "Tuesday" "9" "February" "2021" "16:32:41" "-0000" "Tavis Ormandy" "taviso@gmail.com" "<rvudf9$12d5$1@ciao.gmane.io>" "17" "[oss-security] Re: screen crash processing combining characters" "^Date:" nil nil "2" "2021020916:32:41" "[oss-security] Re: screen crash processing combining characters" (number mark "        taviso@gmail Feb  9   17/435   " thread-indent "\"[oss-security] Re: screen crash processing combining characters\"\n") "<rvubtf$lnv$1@ciao.gmane.io>" ("<rvubtf$lnv$1@ciao.gmane.io>") nil nil nil nil nil nil nil "[oss-security] Re: screen crash processing combining characters" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19737 invoked by uid 550); 9 Jan 2018 22:25:16 -0000
+Received: (qmail 3164 invoked by uid 550); 9 Feb 2021 16:54:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,31 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28512 invoked from network); 9 Feb 2021 16:32:57 -0000
+X-Injected-Via-Gmane: http://gmane.org/
+Message-ID: <rvudf9$12d5$1@ciao.gmane.io>
+References: <rvubtf$lnv$1@ciao.gmane.io>
+User-Agent: slrn/pre1.0.4-5 (Linux)
+Date: Tue, 9 Feb 2021 16:32:41 -0000 (UTC)
+From: Tavis Ormandy <taviso@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3315 invoked from network); 9 Jan 2018 22:07:29 -0000
-X-Gm-Message-State: AKwxytdY1siHeXbc7G/KeTUBKqmip/mPN+pq0jYSYKZ4ZeiSSFQHbpLT
-	t5kKFaOJf6Wfnb3X0ufy3pI91RhxAVlkmr8uIPMb4g==
-X-Google-Smtp-Source: ACJfBos3Bh0WShvS3NXaHxO8SNd4r7X2FKFRMMCdc8vCvr+Rff51bmsgFfSD8dvcBvuuB2LxDfHir4Osyzyn/ufsO9w=
-X-Received: by 10.159.50.70 with SMTP id y6mr16032811uad.188.1515535634879;
- Tue, 09 Jan 2018 14:07:14 -0800 (PST)
-MIME-Version: 1.0
-From: Anthony Baker <abaker@apache.org>
-Date: Tue, 9 Jan 2018 14:07:14 -0800
-X-Gmail-Original-Message-ID: <CAEwge-FQAHe37U1zdM19NCj8NkAuyVUx7=ii5WHz_3=EY+BkLw@mail.gmail.com>
-Message-ID: <CAEwge-FQAHe37U1zdM19NCj8NkAuyVUx7=ii5WHz_3=EY+BkLw@mail.gmail.com>
-To: user@geode.apache.org, dev@geode.apache.org, announce@apache.org, 
-	asf-security <security@apache.org>, oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [SECURITY] CVE-2017-12622 Apache Geode gfsh authorization vulnerability
+Subject: [oss-security] Re: screen crash processing combining characters
+To: oss-security@lists.openwall.com
 
-CVE-2017-12622 Apache Geode gfsh authorization vulnerability
+On 2021-02-09, Tavis Ormandy wrote:
+> Hello, I noticed someone posted this to the screen-devel list. I can
+> reproduce it here, just catting the testcase does crash my screen
+> session.
+>
+> https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
+>
 
-Severity:  Important
+In fact, just curl'ing that URL reproduces it here.
 
-Vendor: The Apache Software Foundation
+Tavis.
 
-Versions Affected:  Apache Geode 1.0.0 through 1.2.1
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
 
-Description:
-When an authenticated user connects to a Geode cluster using the gfsh
-tool with HTTP, the user is able to obtain status information and
-control cluster members even without CLUSTER:MANAGE privileges.
-
-Mitigation:
-Users of the affected versions should upgrade to Apache Geode 1.3.0 or later.
-
-Credit:
-This issue was reported responsibly to the Apache Geode Security Team
-by Patrick Rhomberg from Pivotal.
-
-References:
-[1] https://issues.apache.org/jira/browse/GEODE-3685
-[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
-
----
-The Geode PMC
