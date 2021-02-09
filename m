@@ -1,46 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/29/2
-Message-ID: <CAGGkMiuFnMtwuUOeP7zdtf0dryKk0JLHfnHAk0uCzioKWeWKfw@mail.gmail.com>
-Date: Wed, 29 Sep 2021 20:20:22 +0200
-From: Przemyslaw Roguski <proguski@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/9
+Message-ID: <rvv4ba$vs$1@ciao.gmane.io>
+Date: Tue, 9 Feb 2021 23:03:06 -0000 (UTC)
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-3762 quay/claircore: directory traversal when scanning crafted container image
+Subject: Re: screen crash processing combining characters
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 2021-02-09, Tavis Ormandy wrote:
+> I'll send a report to Thomas Dickey.
+>
 
-A directory traversal vulnerability was found in the ClairCore engine of
-Clair.
-An attacker can exploit this by supplying a crafted container image which,
-when scanned by Clair, allows for arbitrary file write on the filesystem,
-potentially allowing for remote code execution.
+Fyi, Thomas (XTerm maintainer) replied - he was able to repro, and said
+the fix is going to be in patch #366, a bug fix release coming soon.
 
-Red Hat has assigned CVE-2021-3762 to this vulnerability.
-These issues have been rated Critical, with a CVSS:
-9.8CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
-
-### Affected Versions
-ClairCore 0.4.6 release and higher (Clair v4.1.4 and higher)
-ClairCore 0.5.3 release and higher (Clair v4.2.1 and higher)
-
-### Fixed Versions
-ClairCore v0.4.8 (shipped in Clair v4.1.6)
-ClairCore v0.5.5 (shipped in Clair v4.2.3)
-
-### Fixes
-https://github.com/quay/claircore/pull/478
-https://github.com/quay/clair/pull/1379
-https://github.com/quay/clair/pull/1380
-
-## Acknowledgements
-Yanir Tsarimi
-twitter.com/Yanir_
-(Orca Security)
+Tavis.
 
 
-Best regards,
-Przemyslaw Roguski
-
---
-Przemyslaw Roguski / Red Hat Product Security
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
 
