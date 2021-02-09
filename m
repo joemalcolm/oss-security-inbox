@@ -1,29 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/05/1
-Message-ID: <YGs+I9NUYzddLP9P@jasmine.lan>
-Date: Mon, 5 Apr 2021 12:43:15 -0400
-From: Leo Famulari <leo@...ulari.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/1
+Message-ID: <20210209063615.GA25153@lorien.valinor.li>
+Date: Tue, 9 Feb 2021 07:36:15 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Risk of local privilege escalation in GNU Guix
+Subject: Re: [cve-pending] Firejail: root privilege escalation in OverlayFS code
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 18, 2021 at 05:27:09PM -0400, Leo Famulari wrote:
-> # Vulnerability
+Hi,
+
+On Mon, Feb 08, 2021 at 02:15:05PM +0000, netblue30 wrote:
 > 
-> The attack consists in having an unprivileged user spawn a build process, for 
-> instance with `guix build`, that makes its build directory world-writable.  The 
-> user then creates a hardlink to a root-owned file such as `/etc/shadow` in that
-> build directory.  If the user passed the `--keep-failed` option and the build
-> eventually fails, the daemon changes ownership of the whole build tree,
-> including the hardlink, to the user.  At that point, the user has write access
-> to the target file.
+> Security Advisory - Feb 8, 2021
+> 
+> Summary: A vulnerability resulting in root privilege escalation was discovered in Firejail's OverlayFS code,
+> 
+> Versions affected: Firejail software versions starting with 0.9.30.
+> Long Term Support (LTS) Firejail branch is not affected by this bug.
+> 
+> Workaround: Disable overlayfs feature at runtime. In a text editor open /etc/firejail/firejail.config file,
+> and set "overlayfs" entry to "no".
+> 
+>       $ grep overlayfs /etc/firejail/firejail.config
+>       # Enable or disable overlayfs features, default enabled.
+>       overlayfs no
+> 
+> Fix: The bug is fixed in Firejail version 0.9.64.4
+> 
+> GitHub commit: (file configure.ac)
+> https://github.com/netblue30/firejail/commit/97d8a03cad19501f017587cc4e47d8418273834b
+> 
+> Credit:  Security researcher Roman Fiedler analyzed the code and discovered the vulnerability.
+> Functional PoC exploit code was provided to Firejail development team.
+> A description of the problem is here on Roman's blog:
+> 
+> https://unparalleled.eu/publications/2021/advisory-unpar-2021-0.txt
+> https://unparalleled.eu/blog/2021/20210208-rigged-race-against-firejail-for-local-root/
 
-We applied for a CVE ID via MITRE's web form [0] on March 18, 2021.
+CVE-2021-26910 was assigned for this issue according to
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-26910 .
 
-We have not yet received a reply. Does anybody know if that is expected?
-
-Is there another method for independent projects to receive CVE IDs?
-
-[0] https://cveform.mitre.org/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Regards,
+Salvatore
