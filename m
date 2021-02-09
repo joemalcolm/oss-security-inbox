@@ -1,137 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/09/1
-Message-ID: <6fd35694-5ddd-7e1c-b140-835834aa70bf@sit.fraunhofer.de>
-Date: Tue, 9 Nov 2021 11:22:58 +0100
-From: "Philipp Jeitner (SIT)" <philipp.jeitner@....fraunhofer.de>
-To: <oss-security@...ts.openwall.com>
-Subject: [CVE-2021-43523] Incorrect handling of special characters in domain names in uclibc and uclibc-ng
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/6
+Message-ID: <alpine.DEB.2.21.2102091921540.21881@o7.fi>
+Date: Tue, 9 Feb 2021 19:24:26 +0200 (EET)
+From: Harry Sintonen <sintonen@....fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: screen crash processing combining characters
 Content-Type: text/plain; charset=utf-8
 
-Security Issue: Incorrect handling of special characters in domain names 
-in uclibc and uclibc-ng
+On Tue, 9 Feb 2021, Tavis Ormandy wrote:
 
-#### Description of the vulnerability
+> Hello, I noticed someone posted this to the screen-devel list. I can
+> reproduce it here, just catting the testcase does crash my screen
+> session.
+>
+> https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
 
-Incorrect handling of special characters in domain names returned by 
-Domain Name Servers in uclibc and uclibc-ng below 1.0.39 via the 
-gethostbyname(), getaddrinfo(), gethostbyaddr() and getnameinfo() calls 
-can lead to output of wrong hostnames (leading to Domain Hijacking) and 
-injection vulnerabilities in applications using the library (leading to 
-Remote Code Execution, XSS, Applications crashes, etc.).
+I managed to reproduce this against screen + irssi. It was a bit tricky to 
+get it triggered but eventually screen did die.
 
-Examples of incorrect behavior:
-
-     example.com\000.attacker.com is returned as example.com
-     www\.example.com is returned as www.example.com
-     <script>alert('xss')</script>.attacker.com is not filtered even 
-though this is not a valid hostname.
-
-#### CVE ID
-
-This vulnerability has been assigned CVE-2021-43523.
-
-#### Patch
-
-This vulnerability was patched with uclibc-ng version 1.0.39:
-
-https://github.com/wbx-github/uclibc-ng/commit/0f822af0445e5348ce7b7bd8ce1204244f31d174
-
-#### Attack vector(s):
-
-Lookup of attacker controlled domain name or other cases where an 
-attacker can control the DNS response returned by used DNS servers.
-
-#### Attack type
-
-Context-dependent
-
-#### Impact
-
-Impact depends on the application using the libc stub resolver. In case 
-a cache is implemented, misinterpretation of \000 or \. can lead to 
-cache poisoning. In case unfiltered input is processed, this can lead to 
-XSS, SQL-injection, etc. We are aware of applications which are 
-vulnerable due to such stub-resolver behavior, such as CVE-2021-33425.
-
-#### Affected Components:
-
-DNS resolver library functions `gethostbyname()`, `getaddrinfo()`, 
-`gethostbyaddr()` and `getnameinfo()`.
-
-#### Discoverer(s)/Credits
-
-Philipp Jeitner and Haya Shulman, Fraunhofer SIT
-
-philipp.jeitner@....fraunhofer.de
-haya.shulman@....fraunhofer.de
-
-#### Reference(s)
-
-  - https://www.uclibc.org/
-  - https://uclibc-ng.org/
-  - https://xdi-attack.net/
-  - Injection Attacks Reloaded: Tunnelling Malicious Payloads over DNS
-    https://www.usenix.org/conference/usenixsecurity21/presentation/jeitner
-
-#### Additional information
-
-The POSIX Standard for Information Technology [1] defines interfaces for 
-DNS lookups in systems standard C libraries. This Standard includes 
-functions for forward lookups (gethostbyname, getaddrinfo) as well as 
-backward-lookups (gethostbyaddr, getnameinfo). These functions cannot 
-only return IP addresses but can also contain hostnames of aliases 
-(CNAME) of the requested host name in case of forward-lookups, or the 
-primary host name of that ip address in the case of backward-lookups 
-(PTR). The POSIX Standard defines the data format of these host names as 
-a null-terminated C-String containing a "hostname" or "nodename", which 
-are typically expected by developers and defined by RFC952 [2] and 
-RFC1123 [3] to only contain alphanumeric characters (a-z,A-Z,0-9), 
-hyphens ("-") and periods (".") to split labels. This creates a mismatch 
-of allowed characters between "hostnames" and "domain names" as defined 
-by the DNS standard [4] which defines "domain names" as a series of 
-"text labels" which are textually represented by concatenating all "text 
-labels" and joining them together with period signs. However, "text 
-labels" can contain any octet value, even zero-bytes ("\x00") and period 
-signs (".") and recursive DNS resolvers are required by the DNS standard 
-to support any of these characters in DNS records, thus not implementing 
-any sanitiy checks on domain names.
-
-When DNS responses are parsed by the stub DNS resolver implemented by 
-stub resolver library as part of the `gethostbyname()`, `getaddrinfo()`, 
-`gethostbyaddr()` and `getnameinfo()` functions, these functions must 
-therefore ensure that the returned, null-terminated C-Strings must be 
-valid domain names as defined by the POSIX standard, else applications 
-which use these values might include that information in contexts where 
-malicious data can included inside the domain name and used for command 
-injection attacks like Cross-Site-Scripting, SQL-injections, etc. 
-Furthermore, if domain names contain text labels with periods (`"\."`) 
-or zero-bytes (`"\000"`) and the stub resolver library does naively 
-decode these domain names into strings, attackers can create malicious 
-domain names which are misinterpreted by the naive decoding logic to 
-look like different domain names than they actually are. When these 
-misinterpreted domain names are than cached by applications using the 
-stub resolver, this allows for domain hijacking by poisoning of the 
-applications DNS cache which uses the vulnerable stub resolver library.
-
-For an example on how stub resolvers should sanitize domain names 
-returned by those functions, we refer to the `ns_name_ntop` [5] and 
-`res_hnok` [6] functions in glibc.
-
-[1]: Standard for Information Technology - Portable Operating System 
-Interface (POSIX(R)) Base Specifications, Issue 7 - 
-https://ieeexplore.ieee.org/document/7582338
-
-[2]: RFC952 - DOD INTERNET HOST TABLE SPECIFICATION - 
-https://tools.ietf.org/html/rfc952
-
-[3]: RFC1123 - Requirements for Internet Hosts -- Application and 
-Support - https://tools.ietf.org/html/rfc1123
-
-[4]: RFC6895 - Domain Name System (DNS) IANA Considerations - 
-https://tools.ietf.org/html/rfc6895
-
-[5]: Github: 
-https://github.com/bminor/glibc/blob/be9b0b9a012780a403a266c90878efffb9a5f3ca/resolv/ns_name.c#L58
-
-[6]: Github: 
-https://github.com/bminor/glibc/blob/21c3f4b5368686ade28d90d8c7d79c4c95c72c1b/resolv/res_comp.c#L198
+-- 
+l=2001;main(i){float o,O,_,I,D;for(;O=I=l/571.-1.75,l;)for(putchar(--l%80?
+i:10),o=D=l%80*.05-2,i=31;_=O*O,O=2*o*O+I,o=o*o-_+D,o+_+_<4+D&i++<87;);puts
+("  Harry 'Piru' Sintonen <sintonen@....fi> https://www.iki.fi/sintonen");}
