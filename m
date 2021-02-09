@@ -1,4 +1,9 @@
-Received: (qmail 30623 invoked by uid 550); 23 Dec 2022 14:04:40 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["340" "Tuesday" "9" "February" "2021" "23:03:06" "-0000" "Tavis Ormandy" "taviso@gmail.com" "<rvv4ba$vs$1@ciao.gmane.io>" "15" "[oss-security] Re: screen crash processing combining characters" "^Date:" nil nil "2" "2021020923:03:06" "[oss-security] Re: screen crash processing combining characters" (number mark "        taviso@gmail Feb  9   15/340   " thread-indent "\"[oss-security] Re: screen crash processing combining characters\"\n") "<rvuj8p$n59$1@ciao.gmane.io>" ("<rvubtf$lnv$1@ciao.gmane.io>" "<alpine.DEB.2.21.2102091921540.21881@o7.fi>" "<rvuj8p$n59$1@ciao.gmane.io>") nil nil nil nil nil nil nil "[oss-security] Re: screen crash processing combining characters" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 21748 invoked by uid 550); 9 Feb 2021 23:06:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,40 +11,30 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 18075 invoked from network); 9 Feb 2021 23:03:23 -0000
+X-Injected-Via-Gmane: http://gmane.org/
+Message-ID: <rvv4ba$vs$1@ciao.gmane.io>
+References: <rvubtf$lnv$1@ciao.gmane.io>
+ <alpine.DEB.2.21.2102091921540.21881@o7.fi> <rvuj8p$n59$1@ciao.gmane.io>
+User-Agent: slrn/pre1.0.4-5 (Linux)
+Date: Tue, 9 Feb 2021 23:03:06 -0000 (UTC)
+From: Tavis Ormandy <taviso@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30602 invoked from network); 23 Dec 2022 14:04:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1671804267;
-	bh=AofUqtvWAb7p4sJGAPzg/l1qpcyTPnI9JB9qdpTvQHU=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=BMzLVJ/BKAAcXMrs5Xu0HQwAqB8Vf9T0uUEP+nNSdpI6VpWssn5XOHcCHxXZOxIVP
-	 WU8sxK836cCL3EmzWDpDRRk+l7E00+g+ikzTSY9GaFbqgLRryHCLBRSD30ZwaB+f67
-	 egVZwhUStpxhnJbX1PxIRrBbSRq09igce5rX73fXxmRwfYPyt0xrmT0WMcxaTC/BAp
-	 zeDmJdieuW9EFhGcuxC6rDPzq4Fw4xNwvCwpYpy5Uf+A0I/McXZDwDyAumPrh6upu0
-	 /AyYJpkcQgAs4kUwTJMCi5xy10MCuSpAt3/Xuzu7CmQM28k4w6UGFV6+nEUbLnHAcr
-	 Yq3t5iBXs6XSA==
-Date: Fri, 23 Dec 2022 09:04:25 -0500
-From: Sasha Levin <sashal@kernel.org>
+Subject: [oss-security] Re: screen crash processing combining characters
 To: oss-security@lists.openwall.com
-Message-ID: <Y6W1aSG2z5mBJDu8@sashalap>
-References: <CAKoP-y-rbU=xEowJGp6my0khWMSbE05+ncDiE3wtXTOWwvyScA@mail.gmail.com>
- <Y6TQ0HyCJOMkKSDn@netmeister.org>
- <Y6VTdO608VUE38Ke@kroah.com>
- <20221223081727.GB2404@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20221223081727.GB2404@suse.de>
-Subject: Re: [oss-security] Details on this supposed Linux Kernel ksmbd RCE
 
-On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
->Not sure why they do not like you, but to be very clear anyone else can
->requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
+On 2021-02-09, Tavis Ormandy wrote:
+> I'll send a report to Thomas Dickey.
+>
 
-For CVEs assigned (earlier this month) to issues in drivers/staging,
-what would be the process to remove the assignment or mark them as
-invalid?
+Fyi, Thomas (XTerm maintainer) replied - he was able to repro, and said
+the fix is going to be in patch #366, a bug fix release coming soon.
+
+Tavis.
+
 
 -- 
-Thanks,
-Sasha
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
+
