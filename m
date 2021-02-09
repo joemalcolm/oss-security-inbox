@@ -1,58 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/18/2
-Message-ID: <20210818152612.5v3noomg4xt4a6pi@redhat.com>
-Date: Wed, 18 Aug 2021 10:26:12 -0500
-From: Eric Blake <eblake@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: STARTTLS vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/4
+Message-ID: <20210209162915.xuycdrqtslfu25zi@jwilk.net>
+Date: Tue, 9 Feb 2021 17:29:15 +0100
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: charset.alias in pkexec/glib/gnulib
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 16, 2021 at 02:04:06PM -0500, Eric Blake wrote:
-> On Wed, Aug 11, 2021 at 06:02:35PM +0200, Hanno Böck wrote:
-> > On Wed, 11 Aug 2021 10:31:58 -0500
-> > Eric Blake <eblake@...hat.com> wrote:
-> > 
-> > > Not mentioned in that list was ndb, but as far as I can tell, that
-> > > project has already documented the ramifications of opportunistic
-> > > encryption as being a security risk, and all known implementations
-> > > (both servers and clients) with TLS support have a mode of execution
-> > > that ensures the connection is dropped if a downgrade attack is
-> > > attempted:
-> > 
-> > I should point out that our research is not on simple downgrade attacks.
-> > These are kinda obvious by the design of STARTTLS if you implement it
-> > in an opportunistic way.
-> > 
-> > The buffering vulnerabilities we found are in STARTTLS implementations
-> > that have the expectation to enforce a secure connection, but suffer
-> > from various vulnerabilities in the implementation.
-> 
-> Thank you for persisting.  As a result, I have found a security bug in
-> nbdkit, which improperly cached the result of NBD_OPT_STRUCTURED_REPLY
-> from a plaintext MitM attacker prior to acting on NBD_OPT_STARTTLS, to
-> the potential confusion of a client that does not expect structured
-> replies.  I will follow up again when I have a CVE number.
-> 
-> https://listman.redhat.com/archives/libguestfs/2021-August/msg00077.html
+* Jakub Wilk <jwilk@...lk.net>, 2017-06-23, 20:23:
+>* Tavis Ormandy <taviso@...xchg8b.com>, 2014-07-13, 18:59:
+>>because pkexec links to glib, the built-in iconv/gconv conversion 
+>>stuff is used by default. This allows you to setup aliases, which 
+>>are of the form "charset <arbitrary alias>", for example:
+>>
+>>
+>>$ echo "UTF-7 ThisIsAnAlias" > charset.alias
+>>$ CHARSET=ThisIsAnAlias CHARSETALIASDIR=$(pwd) pkexec
+>>pkexec --version +AHw
+>>      --help +AHw
+>>      --disable-internal-agent +AHw
+>>      +AFs---user username+AF0 PROGRAM +AFs-ARGUMENTS...+AF0
 
-Now designated as CVE-2021-3716, affecting nbdkit versions 1.12
-through 1.26.4; fixed nbdkit 1.26.5 will be released later today.
-
-Mitigating factors: the bug is only possible when nbdkit is used in
-opportunistic mode (--tls=on); you can avoid it by requesting that
-nbdkit use forced tls mode (--tls=require on the command line).
-Furthermore, all impacted nbdkit versions give successful replies to
-repeated NBD_OPT_STRUCTURED_REPLY requests even though the NBD
-protocol did not mandate that, so any client that requests structured
-replies after STARTTLS will not see any change in behavior in spite of
-the MitM injection.  In short, the bug will only impact really old
-clients that understand TLS but not structured replies (at this point,
-I'm aware of qemu 2.6 through 2.10, where most distros have moved to
-newer versions of qemu; and all versions of nbd-client 3.15 to the
-present).
+I believe this was fixed in glib 2.63.6:
+https://gitlab.gnome.org/GNOME/glib/commit/3529bb4450a51995
 
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.           +1-919-301-3266
-Virtualization:  qemu.org | libvirt.org
-
+Jakub Wilk
