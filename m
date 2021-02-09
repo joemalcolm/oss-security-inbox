@@ -1,63 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/01/6
-Message-ID: <43ba10b9-4b20-81d4-6bdc-18f9c2e2e0bc@citrix.com>
-Date: Wed, 1 Sep 2021 15:15:42 +0100
-From: Andrew Cooper <andrew.cooper3@...rix.com>
-To: Jason Andryuk <jandryuk@...il.com>, Xen.org security team <security@....org>
-CC: <xen-announce@...ts.xen.org>, <xen-devel@...ts.xen.org>, <xen-users@...ts.xen.org>, <oss-security@...ts.openwall.com>, "Xen.org security team" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 378 v3 (CVE-2021-28694,CVE-2021-28695,CVE-2021-28696) - IOMMU page mapping issues on x86
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/8
+Message-ID: <CAPP0f97oRuLdWwc7hMA1Fv3ymOkwptS3rks9D7FTFjhJLFvvZw@mail.gmail.com>
+Date: Wed, 10 Feb 2021 01:12:21 +0530
+From: Utkarsh Gupta <utkarsh@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: screen crash processing combining characters
 Content-Type: text/plain; charset=utf-8
 
-On 01/09/2021 14:22, Jason Andryuk wrote:
-> On Wed, Sep 1, 2021 at 5:34 AM Xen.org security team <security@....org> wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA256
->>
->>  Xen Security Advisory CVE-2021-28694,CVE-2021-28695,CVE-2021-28696 / XSA-378
->>                                    version 3
->>
->>                    IOMMU page mapping issues on x86
->>
->> UPDATES IN VERSION 3
->> ====================
->>
->> Warn about dom0=pvh breakage in Resolution section.
->>
->> ISSUE DESCRIPTION
->> =================
->>
->> Both AMD and Intel allow ACPI tables to specify regions of memory
->> which should be left untranslated, which typically means these
->> addresses should pass the translation phase unaltered.  While these
->> are typically device specific ACPI properties, they can also be
->> specified to apply to a range of devices, or even all devices.
->>
->> On all systems with such regions Xen failed to prevent guests from
->> undoing/replacing such mappings (CVE-2021-28694).
-> Hi,
+Hi,
+
+On Tue, 9 Feb, 2021, 9:39 pm Tavis Ormandy, <taviso@...il.com> wrote:
+
+> Hello, I noticed someone posted this to the screen-devel list. I can
+> reproduce it here, just catting the testcase does crash my screen
+> session.
 >
-> Is there a way to identify if a system's ACPI tables have untranslated
-> regions?  Does it show up in xen or linux dmesg or can it be
-> identified in sysfs?
+> https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
+>
+> (I think it wasn't supposed to be public, but it is, so better it's
+> visible to security teams)
+>
+> It looks like it might be exploitable at first glance, I see a crash
+> here in encoding.c, because i is out of range.
+>
+> 1411   else if (!combchars[i])
+> 1412     {
+> 1413       combchars[i] = (struct combchar *)malloc(sizeof(struct
+> combchar));
+> 1414       if (!combchars[i])
+> 1415            return;
+> 1416       combchars[i]->prev = i;
+> 1417       combchars[i]->next = i;
+> 1418     }
+>
+> Exploitable or not, it would be annoying if someone stuffed this into
+> logfiles
+> being tailed, or whatever.
+>
 
-It's possible, but a little convoluted to do.  In dom0 (and in an empty
-directory) you want:
+Got CVE-2021-26937 assigned for this.
 
-acpidump > acpi.dmp
-acpixtract -a acpi.dmp
 
-On Intel, open up rmad.dat and hexedit the first 4 bytes from RMAD to
-DMAR (yes - really - this is how we stop the dom0 kernel from trying to
-poke the IOMMU directly.)
+- u
 
-Then disassemble (iasl -d) either rmad.dat or ivrs.dat depending on
-whether you're on Intel or AMD.
-
-On Intel, you're looking for Reserved Memory Regions, while on AMD
-you're looking for IVMD ranges (specifically, types 20 thru 22)
-
-These, if present, describe a range of memory needing identity mapping,
-and a scope of the PCI device(s) the range applies to.
-
-~Andrew
+>
 
