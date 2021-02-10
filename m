@@ -1,69 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/4
-Message-Id: <267FB491-4BEA-4D72-912C-BE75DCCB8207@gmail.com>
-Date: Fri, 19 Feb 2021 10:17:05 +0100
-From: Carlton Gibson <carlton.gibson@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/10/5
+Message-ID: <CAKx+4-rJk=tc6uRfvNFZhr33g4-vi7ZMpBzFu2bjZ=a_-Fu-8Q@mail.gmail.com>
+Date: Wed, 10 Feb 2021 20:34:37 +0530
+From: Rohit Keshri <rkeshri@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Django security releases: CVE-2021-23336: Web cache poisoning via ``django.utils.http.limited_parse_qsl()``
+Subject: CVE-2021-20200: Linux kernel: close race between munmap() and expand_upwards()/downwards()
 Content-Type: text/plain; charset=utf-8
 
-Reference: https://www.djangoproject.com/weblog/2021/feb/19/security-releases/
+Hello Team,
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django team
-is issuing
-`Django 3.1.7 <https://docs.djangoproject.com/en/dev/releases/3.1.7/>`_,
-`Django 3.0.13 <https://docs.djangoproject.com/en/dev/releases/3.0.13/>`_, and
-`Django 2.2.19 <https://docs.djangoproject.com/en/dev/releases/2.1.19/>`_.
-These release addresses the security issue detailed below. We encourage all users of Django to upgrade as soon as possible.
-
-CVE-2021-23336: Web cache poisoning via ``django.utils.http.limited_parse_qsl()``
-=================================================================================
-
-Django contains a copy of ``urllib.parse.parse_qsl()`` which was added to
-backport some security fixes. A further security fix has been issued recently
-such that ``parse_qsl()`` no longer allows using ``;`` as a query parameter
-separator by default. Django now includes this fix. See `bpo-42967
-<https://bugs.python.org/issue42967>`_ for further details.
-
-This issue has moderate severity, according to the Django security policy.
-
-Affected supported versions
-===========================
-
-* Django 3.2 (currently at beta status)
-* Django 3.1
-* Django 3.0
-* Django 2.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to the 3.2, 3.1, 3.0, and 2.2 release
-branches. The patches may be obtained from the following changesets:
-
-* On the `3.2 release branch <https://github.com/django/django/commit/be8237c7cce24b06aabde0b97afce98ddabbe3b6>`__
-* On the `3.1 release branch <https://github.com/django/django/commit/8f6d431b08cbb418d9144b976e7b972546607851>`__
-* On the `3.0 release branch <https://github.com/django/django/commit/326a926beef869d3341bc9ef737887f0449b6b71>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/fd6b6afd5959b638c62dbf4839ccff97e7f7dfda>`__
-
-The following releases have been issued:
-
-* Django 3.1.7 (`download Django 3.1.7 <https://www.djangoproject.com/m/releases/3.1/Django-3.1.7.tar.gz>`_ | `3.1.7 checksums <https://www.djangoproject.com/m/pgp/Django-3.1.7.checksum.txt>`_)
-* Django 3.0.13 (`download Django 3.0.13 <https://www.djangoproject.com/m/releases/3.0/Django-3.0.13.tar.gz>`_ | `3.0.13 checksums <https://www.djangoproject.com/m/pgp/Django-3.0.13.checksum.txt>`_)
-* Django 2.2.19 (`download Django 2.2.19 <https://www.djangoproject.com/m/releases/2.2/Django-2.2.19.tar.gz>`_ | `2.2.19 checksums <https://www.djangoproject.com/m/pgp/Django-2.2.19.checksum.txt>`_)
-
-The PGP key ID used for these releases is Carlton Gibson: `E17DF5C82B4F9D00
-<https://github.com/carltongibson.gpg>`_.
+A use-after-free flaw may be seen due to a race problem while in
+detach_vmas_to_be_unmapped() in mm/mmap.c in VMA access while
+munmap(). This flaw could allow a local attacker with a user privilege
+to crash the system, because VMA with VM_GROWSDOWN or VM_GROWSUP flag
+set may change their size under mmap_read_lock(). This vulnerability
+could even lead to a kernel information leak problem.
 
 
-Django 3.2 beta 1 will be released in a separate blog post later today.
+'CVE-2021-20200' was assigned by Red Hat.
 
-General notes regarding security reporting
-==========================================
+References:
+https://bugs.chromium.org/p/project-zero/issues/detail?id=2056
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=246c320a8cfe0b11d81a4af38fa9985ef0cc9a4c
 
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+Thanks and Regards
+..
+Rohit Keshri / Red Hat Product Security Team
+PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+
+secalert@...hat.com for urgent response
+
