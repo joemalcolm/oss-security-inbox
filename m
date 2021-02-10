@@ -1,101 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/03/2
-Message-ID: <20210803153701.12f8cac5@gmail.com>
-Date: Tue, 3 Aug 2021 15:37:01 +0300
-From: "Alexandr Savca (chinarulezzz)" <alexandr.savca89@...il.com>
-To: John Helmert III <jchelmert3@...teo.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Polipo: denial-of-service using range
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/10/4
+Message-ID: <e49accc1-7fe2-5427-b26a-8497c52384b4@redhat.com>
+Date: Wed, 10 Feb 2021 11:53:47 -0300
+From: Flavio Leitner <fbl@...hat.com>
+To: oss-security@...ts.openwall.com, ovs-announce@...nvswitch.org, ovs-discuss@...nvswitch.org
+Cc: fbl@...hat.com, Ilya Maximets <i.maximets@....org>
+Subject: CVE-2020-35498: Open vSwitch: Packet parsing vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello John,
+Description
+===========
 
-I reproduced it with the original PoC script.
-There is an important point that I have overlooked: the parent proxy must be started.
+Multiple versions of Open vSwitch are vulnerable to potential problems
+like denial of service attacks, in which crafted network packets could
+cause the packet lookup to ignore network header fields from layers 3
+and 4.
 
-I'm using socks5/tor parent proxy, and have not tested squid/http. 
+Both kernel and userspace datapaths are affected, including DPDK enabled
+Open vSwitch (OVS-DPDK) as an example of the latter.
 
-Here is my polipo config file:
+The crafted network packet is an ordinary IPv4 or IPv6 packet with
+Ethernet padding length above 255 bytes. This causes the packet sanity
+check to abort parsing header fields after layer 2.
 
-```
-daemonise = false
-pidFile = /var/run/polipo/pid
-logFile = /var/log/polipo/log
-proxyAddress = 127.0.0.1
-proxyPort = 8123
-allowedClients = 127.0.0.1
-socksParentProxy = "localhost:9050"
-socksProxyType = socks5
-```
+When that situation happens, the classifier will use an unexpected set
+of header fields. This could cause the packet lookup to either match
+on unintended flows or return the default table miss action 'drop'.
 
-Without starting a parent proxy (tor instance) on localhost:9050,
-I get ERROR 504 just like you.
+As a consequence, the datapath can be instructed to match on an
+incorrect range of packets with an action to drop them, for example.
+Further legit traffic could hit the cached flow preventing it to
+expire extending the situation.
+
+The Common Vulnerabilities and Exposures project (cve.mitre.org)
+assigned the identifier CVE-2020-35498 to this issue.
+
+Mitigation
+==========
+
+For any version of Open vSwitch, preventing such packets to be
+received by Open vSwitch or removing the excess of padding before
+they are received by Open vSwitch mitigates the vulnerability. We
+do not recommend attempting to mitigate the vulnerability this way
+because of the following difficulties:
+
+      - Open vSwitch obtains packets before the iptables or nftables
+        host firewall, so iptables or nftables on the Open vSwitch host
+        cannot ordinarily block the vulnerability.
+
+      - If Open vSwitch is configured to support tunnels, such packets
+        encapsulated within tunnels must also be prevented from reaching
+        the host.
+
+      - If Open vSwitch runs on a hypervisor, such packets from VMs can
+        also trigger the vulnerability.
+
+
+Fix
+===
+
+Patches to fix these vulnerabilities in Open vSwitch 2.5.x and newer are
+applied to the various appropriate branches:
+
+* master
+https://github.com/openvswitch/ovs/commit/79349cbab0b2a755140eedb91833ad2760520a83
+
+* 2.15
+https://github.com/openvswitch/ovs/commit/0625dc79aec73b966f206e55655a2816696246d0
+
+* 2.14
+https://github.com/openvswitch/ovs/commit/59b588604b89e85b463984ba08a99badb4fcba15
+
+* 2.13
+https://github.com/openvswitch/ovs/commit/3512fb512c76a1f08eba4005aa2eb69160d0840e
+
+* 2.12
+https://github.com/openvswitch/ovs/commit/53c1b8b166f3dd217bc391d707885f789e9ecc49
+
+* 2.11
+https://github.com/openvswitch/ovs/commit/abd7a457652e6734902720fe6a5dddb3fc0d1e3b
+
+* 2.10
+https://github.com/openvswitch/ovs/commit/79cec1a736b91548ec882d840986a11affda1068
+
+* 2.9
+https://github.com/openvswitch/ovs/commit/48ceca0446b1c2c2c03e7551048c5b19ed23cc97
+
+* 2.8
+https://github.com/openvswitch/ovs/commit/35c280072c1c3ed58202745b7d27fbbd0736999b
+
+* 2.7
+https://github.com/openvswitch/ovs/commit/ad0d22f6435b43ecfc30c0e877d490d36721f200
+
+* 2.6
+https://github.com/openvswitch/ovs/commit/673c08eee8c8d4f2999ddd31524de7ff0f72b559
+
+* 2.5
+https://github.com/openvswitch/ovs/commit/354e7d860e444fd1472541b0fdc3b8678aa74828
+
+
+Recommendation
+==============
+
+We recommend that users of Open vSwitch apply the included patch, or
+upgrade to a known patched version of Open vSwitch.  These include:
+
+* 2.14.2
+* 2.13.3
+* 2.12.3
+* 2.11.6
+* 2.10.7
+* 2.9.9
+* 2.8.11
+* 2.7.13
+* 2.6.10
+* 2.5.12
+
+
+Acknowledgments
+===============
+
+The Open vSwitch team wishes to thank the reporter:
+
+     Joakim Hindersson <joakim.hindersson@...stx.se>
 
 
 
-On Sun,  1 Aug 2021 18:31:27 +0000
-John Helmert III <jchelmert3@...teo.net> wrote:
 
-> How did you produce this? I can't seem to reproduce with the original
-> PoC script. Running it, polipo outputs:
-> 
-> Empty DNS name.
-> Host (unknown) lookup failed: empty name (22).
-> 
-> The script outputs:
-> 
-> HTTP/1.1 504 Host (unknown) lookup failed: empty name
-> Connection: keep-alive
-> Date: Sun, 01 Aug 2021 18:07:07 GMT
-> Content-Type: text/html
-> Content-Length: 515
-> Expires: 0
-> Cache-Control: no-cache
-> Pragma: no-cache
-> 
-> <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-> <html><head>
-> <title>Proxy error: 504 Host (unknown) lookup failed: empty name.</title>
-> </head><body>
-> <h1>504 Host (unknown) lookup failed: empty name</h1>
-> <p>The following error occurred while trying to access <strong>http://</strong>:<br><br>
-> <strong>504 Host (unknown) lookup failed: empty name</strong></p>
-> <hr>Generated Sun, 01 Aug 2021 13:07:07 CDT by Polipo on <em>localhost:8123</em>.
-> </body></html>
-> 
-> 
-> Fixing the script to GET a real website shows a bunch of memory alignment
-> issues, but no heap overflow as far as I can tell:
-> 
-> dns.c:1467:5: runtime error: store to misaligned address 0x7ffe1de13c69 for type 'short unsigned int', which requires 2 byte alignment
-> 0x7ffe1de13c69: note: pointer points here
->  63 6f 6d  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00
->               ^
-> dns.c:1468:5: runtime error: store to misaligned address 0x7ffe1de13c6b for type 'short unsigned int', which requires 2 byte alignment
-> 0x7ffe1de13c6b: note: pointer points here
->  6d  00 00 01 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00
->               ^
-> dns.c:1554:5: runtime error: load of misaligned address 0x7ffe1de13b69 for type 'short unsigned int', which requires 2 byte alignment
-> 0x7ffe1de13b69: note: pointer points here
->  63 6f 6d  00 00 01 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe
->               ^
-> dns.c:1555:5: runtime error: load of misaligned address 0x7ffe1de13b6b for type 'short unsigned int', which requires 2 byte alignment
-> 0x7ffe1de13b6b: note: pointer points here
->  6d  00 00 01 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00
->               ^
-> dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b6f for type 'short unsigned int', which requires 2 byte alignment
-> 0x7ffe1de13b6f: note: pointer points here
->  00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00
->              ^
-> dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b71 for type 'short unsigned int', which requires 2 byte alignment
-> 0x7ffe1de13b71: note: pointer points here
->  c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40
->               ^
-> dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b73 for type 'unsigned int', which requires 4 byte alignment
-> 0x7ffe1de13b73: note: pointer points here
->  00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40 60 00
->               ^
-> dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b77 for type 'short unsigned int', which requires 2 byte alignment
-> 0x7ffe1de13b77: note: pointer points here
->  00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40 60 00 00  6b 3c e1
->              ^
+
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (496 bytes)
