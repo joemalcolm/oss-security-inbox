@@ -1,66 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/28/1
-Message-ID: <20210228102346.65e49420@fabiankeil.de>
-Date: Sun, 28 Feb 2021 10:23:46 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
-To: oss-security@...ts.openwall.com
-Subject: Multiple DoS issues fixed in Privoxy 3.0.32 stable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/10/3
+Message-ID: <YCPhfDAncjgPysNr@byrne.stsp.name>
+Date: Wed, 10 Feb 2021 14:37:00 +0100
+From: Stefan Sperling <stsp@...che.org>
+To: announce@...version.apache.org, users@...version.apache.org, dev@...version.apache.org, announce@...che.org
+Cc: security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [SECURITY][ANNOUNCE] Apache Subversion 1.10.7 released
 Content-Type: text/plain; charset=utf-8
 
-               Announcing Privoxy 3.0.32 stable
---------------------------------------------------------------------
+I'm happy to announce the release of Apache Subversion 1.10.7.
+Please choose the mirror closest to you by visiting:
 
-Privoxy 3.0.32 fixes multiple DoS issues and a couple of other bugs.
-The issues also affect earlier Privoxy releases.
+    https://subversion.apache.org/download.cgi#supported-releases
 
---------------------------------------------------------------------
-ChangeLog for Privoxy 3.0.32
---------------------------------------------------------------------
-- Security/Reliability:
-  - ssplit(): Remove an assertion that could be triggered with a
-    crafted CGI request.
-    Commit 2256d7b4d67. OVE-20210203-0001.
-    Reported by: Joshua Rogers (Opera)
-  - cgi_send_banner(): Overrule invalid image types. Prevents a
-    crash with a crafted CGI request if Privoxy is toggled off.
-    Commit e711c505c48. OVE-20210206-0001.
-    Reported by: Joshua Rogers (Opera)
-  - socks5_connect(): Don't try to send credentials when none are
-    configured. Fixes a crash due to a NULL-pointer dereference
-    when the socks server misbehaves.
-    Commit 85817cc55b9. OVE-20210207-0001.
-    Reported by: Joshua Rogers (Opera)
-  - chunked_body_is_complete(): Prevent an invalid read of size two.
-    Commit a912ba7bc9c. OVE-20210205-0001.
-    Reported by: Joshua Rogers (Opera)
-  - Obsolete pcre: Prevent invalid memory accesses with an invalid
-    pattern passed to pcre_compile(). Note that the obsolete pcre code
-    is scheduled to be removed before the 3.0.33 release. There has been
-    a warning since 2008 already.
-    Commit 28512e5b624. OVE-20210222-0001.
-    Reported by: Joshua Rogers (Opera)
+This is a stable bugfix and security release of the Apache Subversion
+open source version control system.
 
-[...]
+THIS RELEASE CONTAINS AN IMPORTANT SECURITY FIX:
 
------------------------------------------------------------------
-About Privoxy:
------------------------------------------------------------------
+  CVE-2020-17525
+  "Remote unauthenticated denial-of-service in Subversion mod_authz_svn"
 
-Privoxy is a non-caching web proxy with advanced filtering capabilities for
-enhancing privacy, modifying web page data and HTTP headers, controlling
-access, and removing ads and other obnoxious Internet junk. Privoxy has a
-flexible configuration and can be customized to suit individual needs and
-tastes. It has application for both stand-alone systems and multi-user
-networks.
+The full security advisory for CVE-2020-17525 is available at:
+  https://subversion.apache.org/security/CVE-2020-17525-advisory.txt
 
-Privoxy is Free Software and licensed under the GNU GPLv2.
+A brief summary of this advisory follows:
 
-[...]
+  Subversion's mod_authz_svn module will crash if the server is using
+  in-repository authz rules with the AuthzSVNReposRelativeAccessFile
+  option and a client sends a request for a non-existing repository URL.
 
-Home Page: 
-   https://www.privoxy.org/
+  This can lead to disruption for users of the service.
 
-Complete announcement:
-   https://lists.privoxy.org/pipermail/privoxy-announce/2021-February/000007.html
+  We recommend all users to upgrade to the 1.10.7 or 1.14.1 release
+  of the Subversion mod_dav_svn server.
 
-Content of type "application/pgp-signature" skipped
+  As a workaround, the use of in-repository authz rules files with
+  the AuthzSVNReposRelativeAccessFile can be avoided by switching
+  to an alternative configuration which fetches an authz rules file
+  from the server's filesystem, rather than from an SVN repository.
+
+  This issue was reported by Thomas Åkesson.
+
+SHA-512 checksums are available at:
+
+    https://www.apache.org/dist/subversion/subversion-1.10.7.tar.bz2.sha512
+    https://www.apache.org/dist/subversion/subversion-1.10.7.tar.gz.sha512
+    https://www.apache.org/dist/subversion/subversion-1.10.7.zip.sha512
+
+PGP Signatures are available at:
+
+    https://www.apache.org/dist/subversion/subversion-1.10.7.tar.bz2.asc
+    https://www.apache.org/dist/subversion/subversion-1.10.7.tar.gz.asc
+    https://www.apache.org/dist/subversion/subversion-1.10.7.zip.asc
+
+For this release, the following people have provided PGP signatures:
+
+   Stefan Sperling [2048R/4F7DBAA99A59B973] with fingerprint:
+    8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973
+   Branko Čibej [4096R/1BCA6586A347943F] with fingerprint:
+    BA3C 15B1 337C F0FB 222B  D41A 1BCA 6586 A347 943F
+   Johan Corveleyn [4096R/B59CE6D6010C8AAD] with fingerprint:
+    8AA2 C10E EAAD 44F9 6972  7AEA B59C E6D6 010C 8AAD
+
+These public keys are available at:
+
+    https://www.apache.org/dist/subversion/subversion-1.10.7.KEYS
+
+Release notes for the 1.10.x release series may be found at:
+
+    https://subversion.apache.org/docs/release-notes/1.10.html
+
+You can find the list of changes between 1.10.7 and earlier versions at:
+
+    https://svn.apache.org/repos/asf/subversion/tags/1.10.7/CHANGES
+
+Questions, comments, and bug reports to users@...version.apache.org.
+
+Thanks,
+- The Subversion Team
+
+--
+To unsubscribe, please see:
+
+    https://subversion.apache.org/mailing-lists.html#unsubscribing
