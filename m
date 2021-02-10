@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["814" "Tuesday" "17" "August" "2021" "14:26:42" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" nil "20" "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil "8" nil nil (number mark "U       carnil@debia Aug 17   20/814   " thread-indent "\"Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["325" "Wednesday" "10" "February" "2021" "21:25:57" "+0530" "Utkarsh Gupta" "utkarsh@debian.org" "<CAPP0f95myr-waB5z3qVvXp3BGNzyU5f8UwSTdMzV_zGb1wCt9w@mail.gmail.com>" "11" "Re: [oss-security] Re: screen crash processing combining characters" "^Cc:" nil nil "2" "2021021015:55:57" "[oss-security] Re: screen crash processing combining characters" (number mark "        utkarsh@debi Feb 10   11/325   " thread-indent "\"Re: [oss-security] Re: screen crash processing combining characters\"\n") "<rvv4ba$vs$1@ciao.gmane.io>" ("<rvubtf$lnv$1@ciao.gmane.io>" "<alpine.DEB.2.21.2102091921540.21881@o7.fi>" "<rvuj8p$n59$1@ciao.gmane.io>" "<rvv4ba$vs$1@ciao.gmane.io>") nil nil nil nil nil nil nil "Re: [oss-security] Re: screen crash processing combining characters" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24325 invoked by uid 550); 17 Aug 2021 12:26:58 -0000
+Received: (qmail 22113 invoked by uid 550); 10 Feb 2021 16:06:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24307 invoked from network); 17 Aug 2021 12:26:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=SR8Idf2L3HR3O4MWxx3JymNcOWu/zpZ9D+3PVFVIQik=;
-        b=t2VeWmZy4NL9Gf8GjXuff66J6FVTqoJI874Dodl3VyahTFYeNR/yJ11OeZYaZqSb6y
-         rs7/f/HOBDNMiHSQydKiDvaKQElg4Cq3aNz60jGIzj0VwFXOeHsJfJ1EFUedW6FgsSu3
-         R+Q7v/PTHxGmvW9h1VQaLg21QKwuytZKo2LTjkw19SXc+Fphf9LwtrOre1DpxkXGRi/j
-         cQ4k5ELKhnye8hVpTI9ZQcWXW8hnHk3Vj+XjIXkYUDY5PXs2A0WgvPZIBqECynUafvFL
-         LPSaBI8wy8INJxJS3AZCna9nCVCKJGenpR/3N+dYvXDTJ83rS9KFutXMHqWAJRrVll7p
-         hP7Q==
+Received: (qmail 13600 invoked from network); 10 Feb 2021 15:56:47 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=SR8Idf2L3HR3O4MWxx3JymNcOWu/zpZ9D+3PVFVIQik=;
-        b=FhwnPxLmZ5/rv/8h/qCxw8gM/xsR1jmlieeoVpDuv3nezPg+KpzNNeDiJEVyxE5j/p
-         cZQ3t30a7BSWlOxMS8SqT+N2x5nDOijKWTf/fNz4dRsoU26xwFRDvQ3M9UW0Kyn37NqU
-         aHxnz+ckW1HdJWRbybrWO1yl3TvkawI7+EWZnDuIe+g+4fYNx5pJLAT5l+wgwA0lv6r4
-         3aiefoxVCe6SsYMZew8bhiH6hTEb6xaRng1d0okeNkRELVtFODRvcmnoO4BI3PKCYKiG
-         pzfxUWk97QMwzfo1Mx8Ph6VI1XznAyesUiyxSvEe0wgo8XzRo1dDMQ34igQif1KH1Suc
-         Xvdw==
-X-Gm-Message-State: AOAM530jNMz+PQupM5oqCRmtwivGX+TzuZ597OfSfhSsOXJlruZRslCK
-	6nsTVnFW1DJCLjZBVyq5f6c=
-X-Google-Smtp-Source: ABdhPJxxM+lZiweKHf55d16NiY/F69g7d+OG1Uo45aGbnzQ1xn76bCKCJtv22MEHY4GN/w9WD6LGdA==
-X-Received: by 2002:a05:6402:278b:: with SMTP id b11mr3785675ede.339.1629203206337;
-        Tue, 17 Aug 2021 05:26:46 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Tue, 17 Aug 2021 14:26:42 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Cc: Wade Mealing <wmealing@redhat.com>
-Message-ID: <YRurAomxEDQrxY+i@eldamar.lan>
-References: <CAFcO6XOFPEGiO_HwajTB3zA9d3jyhUwDX742huVhaNtQy0=TfQ@mail.gmail.com>
- <CAFcO6XP_-WSEzDB2E=r90Yk4sXwUjo6fRsY=E+ZoAYunpry=qw@mail.gmail.com>
- <CALJHwhSkYWmBk3u5nBnOZfSskksFPP6k9oFfWGdtDpbr1yVFAA@mail.gmail.com>
- <CAFcO6XOYL=EN3xkkyE72gR_tau+3=BhrgNub3NYtR1isr77MbA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2QbYpDzBqzpSAug2WJ/zuPc6AwG3Im/gU61W3l/IpOs=;
+        b=ODwWRMZmdxq9Ds85UlRIzJkmlkbR4VO3M794FuoZrJzNOCzsLAuEukj4+d9H5jlko5
+         6YxSlQFFn0JHcXAPiJytWWJVFMN6G8kMv4BRs/CAlnMYU1pqN0+hAoZzMfwcvKkrfusL
+         BWhUTPvjC/W+cnaHe6VMfLX91m7eN8MHEdo8NRbj5yaDvn9rrVSIKZZkCAxZyWJqT39u
+         dpvcnm42tIlGfAqj7T8KjuA4bahOAksyWIyhEDqgGVffRBY9YN72rGELrhwTF4oYW1qI
+         1x8bR9YtSZU9+0uzuH2GHWPXua08ZyzKIKFKb4JYVyUqudLIoqEGSDbS3I2BhcEh00db
+         9nxA==
+X-Gm-Message-State: AOAM53052g3TVPAJiwI0V0ecbX3YZ+b/om9PG/GeFrTzs4DjolKi64GQ
+	1LMIqRVueJIBZza7o7buEjVDLx0yn+8hiA==
+X-Google-Smtp-Source: ABdhPJySYB+CiPmvsvBlJ7LwLatesKMTP4A8UxsLTpL/1yzGvbKA8pn8OYdek3Gly9Sg5blK0zgD8g==
+X-Received: by 2002:a02:6f47:: with SMTP id b7mr3950051jae.64.1612972595230;
+        Wed, 10 Feb 2021 07:56:35 -0800 (PST)
+X-Received: by 2002:a92:d249:: with SMTP id v9mr1626414ilg.305.1612972594656;
+ Wed, 10 Feb 2021 07:56:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFcO6XOYL=EN3xkkyE72gR_tau+3=BhrgNub3NYtR1isr77MbA@mail.gmail.com>
-Subject: Re: [oss-security] Linux kernel: nfc: null ptr dereference in
- llcp_sock_getname
+References: <rvubtf$lnv$1@ciao.gmane.io> <alpine.DEB.2.21.2102091921540.21881@o7.fi>
+ <rvuj8p$n59$1@ciao.gmane.io> <rvv4ba$vs$1@ciao.gmane.io>
+In-Reply-To: <rvv4ba$vs$1@ciao.gmane.io>
+X-Gmail-Original-Message-ID: <CAPP0f95myr-waB5z3qVvXp3BGNzyU5f8UwSTdMzV_zGb1wCt9w@mail.gmail.com>
+Message-ID: <CAPP0f95myr-waB5z3qVvXp3BGNzyU5f8UwSTdMzV_zGb1wCt9w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: oss-security@lists.openwall.com
+Date: Wed, 10 Feb 2021 21:25:57 +0530
+From: Utkarsh Gupta <utkarsh@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: screen crash processing combining characters
+To: taviso@gmail.com
 
-Hi,
+Hi Tavis,
 
-On Tue, Aug 17, 2021 at 04:17:38PM +0800, butt3rflyh4ck wrote:
-> Hi, MITRE has assigned CVE-2021-38208 to this issue,
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38208
-> 
-> The CVE-2021-3587 assigned by Redhat was 'RESERVED' now.
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3587
-> 
-> There was some confusion here, Maybe CVE-2021-3587 should be 'REJECT'.
+On Wed, Feb 10, 2021 at 4:37 AM Tavis Ormandy <taviso@gmail.com> wrote:
+> Fyi, Thomas (XTerm maintainer) replied - he was able to repro, and said
+> the fix is going to be in patch #366, a bug fix release coming soon.
 
-I wonder if it would actually be better the other way around, but
-leaving the decision to MITRE CNA and Red Hat: Several downstream
-Linux distrubutions seem to have already used CVE-2021-3587 in their
-advisories, so rejecting CVE-2021-38208 would seem to cause less
-turnarounds). But I have a biased view here, at least Debian, Ubuntu,
-Slackware, Fedora and Mageia used already accordingly CVE-2021-3587.
+Great, thanks! Could you also tell Thomas that CVE-2021-27135 has been
+assigned for that?
 
-Regards,
-Salvatore
+
+- u
