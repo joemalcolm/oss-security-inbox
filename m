@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/04/4
-Message-ID: <20210204164632.07072b24@fabiankeil.de>
-Date: Thu, 4 Feb 2021 16:46:32 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Two DoS issues fixed in Privoxy 3.0.31 stable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/11/2
+Message-ID: <5AC665375A88489691186D327AC3D0FF@HAGGIS>
+Date: Thu, 11 Feb 2021 23:43:29 +0100
+From: "Jens Geyer" <jensg@...che.org>
+To: <oss-security@...ts.openwall.com>, <security@...che.org>, "Thrift-Dev" <dev@...ift.apache.org>, <user@...ift.apache.org>
+Subject: CVE-2020-13949: Apache Thrift: potential DoS when processing untrusted payloads
 Content-Type: text/plain; charset=utf-8
 
-Fabian Keil <freebsd-listen@...iankeil.de> wrote on 2021-01-31:
+CVE-2020-13949: potential DoS when processing untrusted Thrift payloads
 
-> --------------------------------------------------------------------
-> ChangeLog for Privoxy 3.0.31
-> --------------------------------------------------------------------
-> 
-> - Security/Reliability:
->   - Prevent an assertion from getting triggered by a crafted CGI request.
->     Commit 5bba5b89193fa. OVE-20210130-0001.
->     Reported by: Joshua Rogers (Opera)
+Severity: Important
 
-CVE-2021-20217.
+Vendor:
+The Apache Software Foundation
 
->   - Fixed a memory leak when decompression fails "unexpectedly".
->     Commit f431d61740cc0. OVE-20210128-0001.
+Versions Affected:
+Apache Thrift up to and including 0.13.0
 
-CVE-2021-20216.
+Description:
+Applications using Thrift would not error upon receiving messages declaring containers of sizes larger than the payload. As a result, malicious RPC clients could send short messages which would result in a large memory allocation, potentially leading to denial of service.
 
-Fabian
+Mitigation:
+Upgrade to version 0.14.0
 
-Content of type "application/pgp-signature" skipped
+Credit:
+This issue was reported by Hasnain Lakhani of Facebook.
+
+On behalf of the Apache Thrift PMC,
+Jens Geyer
