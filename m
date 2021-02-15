@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3600" "Thursday" "18" "August" "2016" "17:16:54" "+0200" "Marcus Meissner" "meissner@suse.de" "<20160818151654.GK2701@suse.de>" "83" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" "^Cc:" nil nil "8" "2016081815:16:54" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" (number mark "        meissner@sus Aug 18   83/3600  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices\"\n") "<20160818145724.GA32181@kroah.com>" ("<20160818142216.GH2701@suse.de>" "<20160818143014.GA27854@kroah.com>" "<20160818143957.GI2701@suse.de>" "<20160818145724.GA32181@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1393" "Monday" "15" "February" "2021" "16:26:27" "+0100" "Carlos Alberto Lopez Perez" "clopez@igalia.com" nil "32" "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0001" nil nil nil "2" nil nil (number mark "U       clopez@igali Feb 15   32/1393  " thread-indent "\"[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0001\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0001" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9990 invoked by uid 550); 18 Aug 2016 15:17:07 -0000
+Received: (qmail 31947 invoked by uid 550); 15 Feb 2021 15:26:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,110 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9972 invoked from network); 18 Aug 2016 15:17:06 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20160818151654.GK2701@suse.de>
-References: <20160818142216.GH2701@suse.de>
- <20160818143014.GA27854@kroah.com>
- <20160818143957.GI2701@suse.de>
- <20160818145724.GA32181@kroah.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160818145724.GA32181@kroah.com>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: OSS Security List <oss-security@lists.openwall.com>,
-	cve-assign@mitre.org, security@kernel.org
-Date: Thu, 18 Aug 2016 17:16:54 +0200
-From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in
- malicious USB devices
-To: Greg KH <greg@kroah.com>
+Received: (qmail 31911 invoked from network); 15 Feb 2021 15:26:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:Subject:From:Cc:To; bh=QsaAYgl28SLnuSLi+m+qkCzzCmqeLTmFPa3M5EnUO0Y=;
+	b=Po8vcVYvgybnRjkyrtO8CR1/C8CBai+nGLiRQLe++OqSNAZG2qX2MG1vweq9I5MnOQMGkhcphftqVj7bN+npgaNsM5sun+7DYHmrRrn2PkGxSTyrM8+cHGd2i3dXUMASX0UjoVCDCD0WXGp9fQN6bdPrFRomPTv5IsrZl55la+vErLdutBB6Zl1+QxkS5uVEj8EEhYOO6QAoJvd3ynDJtn5qJIkvVjEXAk0TtoEyXUImCH6CSlogRyG4ZgYlFud/rDNAyh5/LI8PEWPJDlJvfx+PkENUTBTOrLXNEHbLYoLp93tWltr9ZPOMXEuBUmQCOHQGCZTGOtMlJ6zvyV789g==;
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
+ security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Message-ID: <21a077b5-6921-04b4-9149-571ee259da97@igalia.com>
+Date: Mon, 15 Feb 2021 16:26:27 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0001
 
-On Thu, Aug 18, 2016 at 04:57:24PM +0200, Greg KH wrote:
-> On Thu, Aug 18, 2016 at 04:39:57PM +0200, Marcus Meissner wrote:
-> > On Thu, Aug 18, 2016 at 04:30:14PM +0200, Greg KH wrote:
-> > > On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
-> > > > Hi,
-> > > > 
-> > > > I think this does not have a CVE yet, please assign.
-> > > > 
-> > > > https://www.spinics.net/lists/linux-usb/msg144177.html
-> > > > 
-> > > > Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
-> > > > Platforms:        Ubuntu
-> > > > Versions:         Linux Kernel 4.4.0-22-generic
-> > > 
-> > > Huh?  It's much more pervasive than just that single platform or single
-> > > version.
-> > 
-> > That was the quote from the original e-mail. I read further on it affects
-> > more kernel versions.
-> >  
-> > > > CVSS Score:       4.7
-> > > > CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
-> > > > Filed Defects:    
-> > > > Related Defects:  
-> > > > CWE Tags:         
-> > > > Cycle:            
-> > > > Found by:         Jake Lamberson
-> > > > 
-> > > > 
-> > > > Linux Kernel panics when using an OHCI controller if a USB device reports being 
-> > > > a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
-> > > > controller driver fails to reserve bandwidth for the device, causing the 
-> > > > keyboard handler to fail when attaching to the HID. Later, when the device is 
-> > > > removed, the system crashes due to a null pointer dereference in a linked list 
-> > > > of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP 
-> > > > software. Given an appropriately configured Facedancer and UMAP setup, the crash 
-> > > > can be re-created with: 
-> > > > sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
-> > > > 
-> > > > Note: OHCI is a USB 1.1 controller standard that can be included with devices
-> > > > that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
-> > > > all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
-> > > > this particular bug.
-> > > > 
-> > > > -----------------
-> > > > 
-> > > > The proposed fixing patch is here:
-> > > > https://www.spinics.net/lists/linux-usb/msg144269.html
-> > > > 
-> > > > 
-> > > > It has not yet been committed to the USB tree or to Linus Tree as far as I see.
-> > > 
-> > > Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe in
-> > > the usb tree and in linux-next and will be sent to Linus tomorrow.
-> > 
-> > Ah sorry, only looked briefly.
-> 
-> This was also asked about 2 hours ago on the linux-usb mailing list, why
-> all of the sudden interest in something that we had been discussing for
-> weeks now in public?
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0001
+------------------------------------------------------------------------
 
-No one asked for a CVE before.
+Date reported           : February 15, 2021
+Advisory ID             : WSA-2021-0001
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0001.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0001.html
+CVE identifiers         : CVE-2020-13558.
 
-If that email request was from Oliver Neukum, he pinged me on it, so I
-started acting on it, so that explains this parallelism.
- 
-> > > And are we really assigning CVE numbers for when you use an active
-> > > "hardware test probe"?  If so, how many are people going to be assigning
-> > > for these same problems on other operating systems?  :)
-> > 
-> > I think attaching malicious USB devices and crashing the kernel should
-> > probably get CVE ids, or do you think it should not?
-> 
-> I don't know, that's why I'm asking, it requires "physical presence"
-> which is much different from most threat models that people work to
-> protect against.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-There has been quite a number of CVEs assigned to malicious USB devices
-this year already, this does not seem to be different.
+CVE-2020-13558
+    Versions affected: WebKitGTK before 2.30.5 and WPE WebKit before 2.30.5.
+    Credit to Marcin 'Icewall' Noga of Cisco Talos.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: An use after free issue in
+    the AudioSourceProviderGStreamer class was addressed with improved
+    memory management.
 
-(e.g. CVE-2016-2384, CVE-2016-2188, CVE-2016-2187 etc.)
 
-Ciao, Marcus
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+February 15, 2021
