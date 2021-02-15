@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/07/1
-Message-ID: <CAA8xKjWKrn+JxskDdH1ULYUSFDvqTZ-doGTd=e_vrSSc8PD-EA@mail.gmail.com>
-Date: Fri, 7 May 2021 16:07:04 +0200
-From: Mauro Matteo Cascella <mcascell@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Remy Noel <remy.noel@...de-group.com>
-Subject: Re: CVE-2021-3527 QEMU: usb: unbounded stack allocation in usbredir
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/15/3
+Message-ID: <21a077b5-6921-04b4-9149-571ee259da97@igalia.com>
+Date: Mon, 15 Feb 2021 16:26:27 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0001
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 5, 2021 at 7:09 PM Mauro Matteo Cascella
-<mcascell@...hat.com> wrote:
->
-> Upstream patchset:
-> https://lists.nongnu.org/archive/html/qemu-devel/2021-05/msg00564.html
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0001
+------------------------------------------------------------------------
 
-Note that the xhci patch was dropped [1] and a new USB patchset has
-been proposed without it [2]. As discussed upstream, this could leave
-room for unbound allocation on the heap, although more difficult to
-exploit by the guest to crash the QEMU process on the host.
+Date reported           : February 15, 2021
+Advisory ID             : WSA-2021-0001
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0001.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0001.html
+CVE identifiers         : CVE-2020-13558.
 
-[1] https://lists.nongnu.org/archive/html/qemu-devel/2021-05/msg01372.html
-[2] https://lists.nongnu.org/archive/html/qemu-devel/2021-05/msg01373.html
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
--- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
+CVE-2020-13558
+    Versions affected: WebKitGTK before 2.30.5 and WPE WebKit before 2.30.5.
+    Credit to Marcin 'Icewall' Noga of Cisco Talos.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: An use after free issue in
+    the AudioSourceProviderGStreamer class was addressed with improved
+    memory management.
 
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+February 15, 2021
