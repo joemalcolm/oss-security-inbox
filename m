@@ -1,63 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/8
-Message-ID: <CAH8yC8nTm=upoz34jXs5cXnQBTZzQHKx-nUrsacD0=GEUZ9f_g@mail.gmail.com>
-Date: Sat, 7 Aug 2021 12:08:25 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Axel Beckert <abe@...ian.org>, lynx-dev@...gnu.org,  Debian Security Team <security@...ian.org>, 991971@...s.debian.org
-Subject: Re: SNI is a security vulnerability all by itself (was Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances))
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/16/5
+Message-Id: <E1lBzZj-0002cK-EW@xenbits.xenproject.org>
+Date: Tue, 16 Feb 2021 12:35:31 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 364 v3 (CVE-2021-26933) - arm: The cache may not be cleaned for newly allocated scrubbed pages
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Aug 7, 2021 at 8:29 AM Thorsten Glaser <tg@...bsd.de> wrote:
->
-> >Axel Beckert dixit:
->
-> >>IMHO this nevertheless needs a CVE-ID.
->
-> I wonder… perhaps the use of SNI, both in the TLSv1.3 standard
-> and in some TLSv1.2 implementations, should receive CVEs as well?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-As far as I know, the only problem associated with SNI is leaking the
-server name to a passive adversary in TLS 1.2 and below. TLS 1.3 and
-above provide for encrypted server names.
+            Xen Security Advisory CVE-2021-26933 / XSA-364
+                               version 3
 
-> It certainly ought to be disabled by default. Perhaps add some
-> environment variable to enable SNI in the SSL library, and if
-> it’s not present or explicitly set to 0, disable SNI (which also
-> would disable TLSv1.3 as it requires SNI). Hmm, yes, this sounds
-> completely like a good idea.
+ arm: The cache may not be cleaned for newly allocated scrubbed pages
 
-If you disable SNI, then you won't be able to setup an encrypted
-channel. SNI is needed to setup the encrypted channel. During the
-client_hello, the server needs to know which server/virtual host to
-route the client_hello to.
+UPDATES IN VERSION 3
+====================
 
-The user:password@ is for the application layer or HTTP/HTTPS. It
-should not be present in the transport layer. It is a bug in the
-application layer, not the transport layer.
+Public release.
 
-The transport layer does have a password based authentication scheme,
-but it is going to be either Thomas Wu's Secure Remote Password (SRP)
-or Preshared Key (PSK). SRP is based on Diffie-Hellman (something like
-a^password), while PSK uses a symmetric cipher (something like
-enc_k(password)).
+ISSUE DESCRIPTION
+=================
 
-> (Considering SNI also leaks the vhost addressed by the end user,
-> which is otherwise hidden with wildcard certificates or grouped
-> with tone others in multi-subjectAltName certificates, it ought
-> to have been anyway.)
+On Arm, a guest is allowed to control whether memory access bypass the
+cache.  This means that Xen needs to ensure that all writes (such as
+the ones during scrubbing) have reached memory before handing over the
+page to a guest.
 
-Yes, the client will learn the server's IP address. That is not
-related to SNI. That's just how TLS works under the IETF's threat
-model.
+Unfortunately the operation to clean the cache happens before checking
+if the page was scrubbed.  Therefore there is no guarantee when all
+the writes will reach the memory.
 
-Maybe you are thinking of (or need) something like a Tor hidden
-service. Transport Layer Security does not provide a guarantee like a
-hidden service.
+IMPACT
+======
 
-Wildcards are garbage. You should be wary of an operator that uses
-them nowadays. A wildcard certificate could be used by an attacker to
-have you connect to the receptionist's machine in the lobby running a
-fake site rather than the organization's web server.
+A malicious guest may be able to read sensitive data from memory that
+previously belonged to another guest.
 
-Jeff
+VULNERABLE SYSTEMS
+==================
+
+Xen version 4.9 onwards are vulnerable. Only Arm systems are vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of Amazon.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa364.patch           xen-unstable - 4.11
+
+$ sha256sum xsa364*
+c9dcb3052bb6ca4001e02b3ad889c70b4eebf1931bef83dfb7de86452851f3c8  xsa364.meta
+dc313c70bb07b4096bbc4612cbbc180589923277411dede2fda37f04ecc846d6  xsa364.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAru/UMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZT0UH/0Lzw4sShqmyO06n0HWcXyzXKx7Qh67tjBglmB0D
+XHKrlTKR0Cs1S2NR3GCSZCSPNKXcXU689qEXlvK07EpheO/xCUgpZNkt/Eab/JFK
+NngYbuev1z6+bGeCi70b6RItCXoWiwDWEJqLlLKROwBXMZaodwgjY7/o3GR2D8ZV
+Qyz2EcAdJUIYmMsLC3hJ7gTLXvdySp+0lZ9oO6qe4YYQ3CIwPJnlflWFTzcASfML
+D9lMVG6u6ratiqt4N1egE0gxBe3/QP8KoptSqiV+MDdwPnsK009g/G+0Ea430ZEh
+lviVSgCxhdELx2Tv+Q7qSSbnfMSdnibSHAxipcbyhvjiEJU=
+=mHyv
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa364.meta" of type "application/octet-stream" (1302 bytes)
+
+Download attachment "xsa364.patch" of type "application/octet-stream" (2493 bytes)
