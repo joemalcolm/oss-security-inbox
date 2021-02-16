@@ -1,68 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/3
-Message-ID: <CAFzhf4qsDm74NJYA2toWYAVxUvvJyP7dD9sPC88EPkHpxf+cag@mail.gmail.com>
-Date: Thu, 18 Mar 2021 23:47:24 +0000
-From: Piotr Krysiuk <piotras@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-27171] Numeric error when restricting speculative pointer arithmetic allows unprivileged local users to leak content of kernel memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/16/4
+Message-Id: <E1lBzZi-0002aT-2R@xenbits.xenproject.org>
+Date: Tue, 16 Feb 2021 12:35:30 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 362 v3 (CVE-2021-26931) - Linux: backends treating grant mapping errors as bugs
 Content-Type: text/plain; charset=utf-8
 
-Numeric error in the Linux kernel mechanism to mitigate speculatively
-out-of-bounds loads (Spectre mitigation) has been identified.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Unprivileged BPF programs running on affected 64-bit systems can
-exploit this to execute speculatively out-of-bounds loads from 4GB
-window within the kernel memory. This can be abused to extract
-contents of kernel memory via side-channel.
+            Xen Security Advisory CVE-2021-26931 / XSA-362
+                               version 3
 
-The identified issue is when computing ptr_limit for preventing
-out-of-bounds speculation on pointer arithmetic. The computation of
-ptr_limit is off-by-one whenever the pointer moves to the left.
+         Linux: backends treating grant mapping errors as bugs
 
-The computed ptr_limit is zero in particular when subtracting zero
-offset from a pointer that is already at the beginning of map element
-value. This leads to integer underflow in fixup_bpf_calls() where
-sanitization code is generated.
+UPDATES IN VERSION 3
+====================
 
-I developed a PoC to demonstrate how unprivileged local users can
-extract contents of kernel memory.
+Public release.
 
-The PoC has been shared privately with <security@...nel.org> to assist
-with fix development.
+ISSUE DESCRIPTION
+=================
 
-The patches are available from BPF subsystem public git repository. The
-minimal fix is:
+Block, net, and SCSI backends consider certain errors a plain bug,
+deliberately causing a kernel crash.  For errors potentially being at
+least under the influence of guests, like out of memory conditions, it
+isn't correct to assume so.  Memory allocations potentially causing
+such crashes occur only when Linux is running in PV mode, though.
 
-* bpf: Fix off-by-one for area size in creating mask to left [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=10d2bb2e6b1d8c4576c56a748f697dbeb8388899
-]
+IMPACT
+======
 
-However it is recommended to apply the whole series as it includes
-fix for another speculatively out-of-bounds vulnerability in BPF
-[CVE-2020-27170] that I reported at the same time and some additional
-hardening of the affected code:
+A malicious or buggy frontend driver may be able to crash the
+corresponding backend driver, potentially affecting the entire domain
+running the backend driver.
 
-* bpf: Prohibit alu ops for pointer types not defining ptr_limit [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=f232326f6966cf2a1d1db7bc917a4ce5f9f55f76
-]
-* bpf: Fix off-by-one for area size in creating mask to left [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=10d2bb2e6b1d8c4576c56a748f697dbeb8388899
-]
-* bpf: Simplify alu_limit masking for pointer arithmetic [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=b5871dca250cd391885218b99cc015aca1a51aea
-]
-* bpf: Add sanity check for upper ptr_limit [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=1b1597e64e1a610c7a96710fc4717158e98a08b3
-]
-* bpf, selftests: Fix up some test_verifier cases for unprivileged [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=0a13e3537ea67452d549a6a80da3776d6b7dedb3
-]
+VULNERABLE SYSTEMS
+==================
 
-# Discoverer
+Linux versions from at least 2.6.39 onwards are vulnerable, when run in
+PV mode.  Earlier versions differ significantly in behavior and may
+therefore instead surface other issues under the same conditions.  Linux
+run in HVM / PVH modes is not vulnerable.
 
-Piotr Krysiuk <piotras@...il.com>
+MITIGATION
+==========
 
-# References
+For Linux, running the backends in HVM or PVH domains will avoid the
+vulnerability.
 
-CVE-2020-27171 (reserved via https://cveform.mitre.org/)
+For protocols where non-Linux-kernel based backends are available,
+reconfiguring guests to use alternative (e.g. qemu-based) backends may
+allow to avoid the vulnerability.
 
+In all other cases there is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patches resolves this issue.
+
+Applying the attached patches resolves this issue.
+
+xsa362-linux-1.patch           Linux 5.11-rc - 5.10
+xsa362-linux-2.patch           Linux 5.11-rc - 3.16
+xsa362-linux-3.patch           Linux 5.11-rc - 4.1
+
+$ sha256sum xsa362*
+d64334807f16ff9909503b3cc9b8b93fd42d2c36e1fb0e508b89a765a53071a8  xsa362-linux-1.patch
+b6d02952e7fbede55b868cb2dc4d8853284996883dc72518a0cd5b14d6c7fdd4  xsa362-linux-2.patch
+0a2661380d8f786fefe12e5a8b1528d4a79f1ad058c26b417c52449a7e16a302  xsa362-linux-3.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+Deployment of the mitigation to switch to HVM / PVH backend domains
+is also permitted during the embargo, even on public-facing systems with
+untrusted guest users and administrators.
+
+HOWEVER, deployment of the non-kernel-based backends mitigation
+described above is NOT permitted during the embargo on public-facing
+systems with untrusted guest users and administrators.  This is because
+such a configuration change may be recognizable by the affected guests.
+
+AND: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAru/UMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZszQH/jwCgehGBbejtpFjiOqEPdqIQhd0X+Q1feFD9PB6
+07gfGanmSds5mitr0ezTHbfLw85CoFbAJhalNdx9XeQrZTIvRAizkCi779rE9UYZ
+H0CN73GoObF4E8q+tVRpZni0Rcnb77bETRsmlYjRYRjtZNZ1+7vbn4tf4JMccoo0
+qhz1/bqY3e4yHPcdxb9P3T/DQKNG+nJjkn4kNueYo1PUGUetxw6HXbXWHh6WvbOr
+mfd+sTxRSf+Nk2OZhtofjIYEIeL058axZoSuARBIPphBmOCumUTGzrypZwe5BTuF
+GMQqlguxPU0rFscGd/Js05suFhQQR4ccJlSGRs7pswt9i0M=
+=KnG3
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa362-linux-1.patch" of type "application/octet-stream" (1165 bytes)
+
+Download attachment "xsa362-linux-2.patch" of type "application/octet-stream" (984 bytes)
+
+Download attachment "xsa362-linux-3.patch" of type "application/octet-stream" (1028 bytes)
