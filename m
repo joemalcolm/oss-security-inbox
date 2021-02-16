@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1752" "Tuesday" "12" "May" "2015" "14:37:35" "-0400" "Tristan Cacqueray" "tristan.cacqueray@enovance.com" "<5552486F.4090707@enovance.com>" "50" "[oss-security] CVE request for vulnerability in OpenStack Horizon" nil nil nil "5" "2015051218:37:35" "[oss-security] CVE request for vulnerability in OpenStack Horizon" (number mark "        tristan.cacq May 12   50/1752  " thread-indent "\"[oss-security] CVE request for vulnerability in OpenStack Horizon\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1351" "Tuesday" "16" "February" "2021" "14:12:50" "+0100" "Solar Designer" "solar@openwall.com" nil "31" "Re: [oss-security] 2021-01 stats" nil nil nil "2" nil nil (number mark "U       solar@openwa Feb 16   31/1351  " thread-indent "\"Re: [oss-security] 2021-01 stats\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] 2021-01 stats" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22311 invoked by uid 550); 12 May 2015 18:37:31 -0000
+Received: (qmail 11709 invoked by uid 550); 16 Feb 2021 13:13:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22285 invoked from network); 12 May 2015 18:37:30 -0000
-X-Virus-Scanned: amavisd-new at enovance.com
-Message-ID: <5552486F.4090707@enovance.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="HNUxjjU2Fd9egtAp9ctlkbG1geoKMH4En"
-Date: Tue, 12 May 2015 14:37:35 -0400
-From: Tristan Cacqueray <tristan.cacqueray@enovance.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request for vulnerability in OpenStack Horizon
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Received: (qmail 11492 invoked from network); 16 Feb 2021 13:12:55 -0000
+Date: Tue, 16 Feb 2021 14:12:50 +0100
+From: Solar Designer <solar@openwall.com>
+To: "Fuller, Abby" <abbyfull@amazon.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20210216131249.GA28858@openwall.com>
+References: <5AD4FFC2-6E4A-44C4-92A9-8203C9244484@amazon.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5AD4FFC2-6E4A-44C4-92A9-8203C9244484@amazon.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] 2021-01 stats
 
---HNUxjjU2Fd9egtAp9ctlkbG1geoKMH4En
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hi Abby,
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+On Tue, Feb 16, 2021 at 12:05:36AM +0000, Fuller, Abby wrote:
+> 2021-01 stats are up on the wiki: https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
 
-Title: Persistent XSS in Horizon metadata dashboard
-Reporter: Sunil Yadav (IBM)
-Products: Horizon
-Affects: version 2015.1.0
+Thank you for starting to work on this!  Please make these changes:
 
-Description:
-Sunil Yadav from IBM Security Services reported a persistent XSS in
-Horizon. An authenticated user may conduct a persistent XSS attack by
-setting a malicious metadata to a Glance image, a Nova flavor or a Host
-Aggregate and tricking an administrator to load the update metadata
-page. Once executed in a legitimate context this attack may result in a
-privilege escalation. All Horizon setups are affected.
+1. Add the raw data (to the end of the Data section, or to a new wiki
+sub-page) corresponding to these statistics you added.  Otherwise they
+can't be verified.
 
-References:
-https://launchpad.net/bugs/1449260
+2. Move the 2021-01 column to its own table, which you'd then use for
+all of 2021.  In general, I suggest that we have one table per calendar
+year, and have per-year totals and averages (in addition to per-month).
 
-Thanks in advance,
+(Also, I am still hoping Yury German will complete the table for 2019
+and create one for 2020.)
 
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+3. "These statistics are updated as of 2021-02-15 23:56 (UTC)" isn't
+what it should say.  This is when you made the update, but the
+statistics are only for issues up to the end of January and exclude any
+issues that are being handled in February (some of those not yet
+public).  So this should say e.g. "2021-01-31 23:59 (UTC)" if that's the
+cut-off date/time for the issues you included.  Alternatively, you can
+drop this line altogether since it's implied that the statistics are
+published for full months and since there's a gap (so the statistics
+are not really updated for the entire dates range yet).
 
+Thanks again,
 
---HNUxjjU2Fd9egtAp9ctlkbG1geoKMH4En
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBAgAGBQJVUkhzAAoJECK5oFySXMXYM9wIAI55Sg1gGQoxy81fnhNYTfgP
-GuD9Nf9JTbxR2P6jF7/22YRTDasJ8sk6XP02m6l1eiKBuVDc+r4f06vuNY+zZ9K5
-LGyacrf6/MVKfbDeikG3v5d1Ik/VMxD0ZAJkra0uOO6pFTUmUbY8qGTwxkRBShEx
-JXs9zZNM5vIyz4TYoS7G9fw/GJDQMj9LMfJDGzdRmWj8TVTcOHYoH78x+0s24vt8
-y62dO0TIMz+tYs94ZUHY++gc7Ayo/leKRVmV+lwonJ8iwrI9YvHpzPnr6mnDSFIc
-drn5q6FxIyFJE6wwv7v9lFQV+1VD0SIfiKI00C4wEkKVPnKZUW6vFFK+0EpYsf8=
-=BVIl
------END PGP SIGNATURE-----
-
---HNUxjjU2Fd9egtAp9ctlkbG1geoKMH4En--
+Alexander
