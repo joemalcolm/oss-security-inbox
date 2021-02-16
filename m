@@ -1,80 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/5
-Message-ID: <CAHvrgmw1HW6Fe_iX0ioM9yrsc2b9Pt0owD=Ygc3gcMMC=d_sQQ@mail.gmail.com>
-Date: Fri, 19 Mar 2021 10:16:59 +0100
-From: Vardan Torosyan <vardan.torosyan@...fana.com>
-To: oss-security@...ts.openwall.com
-Subject: Grafana 7.4.5, 7.3.10 and 6.7.6 released with security fixes for Grafana Enterprose
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/16/6
+Message-Id: <E1lBzZk-0002dG-4W@xenbits.xenproject.org>
+Date: Tue, 16 Feb 2021 12:35:32 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 365 v3 (CVE-2021-26930) - Linux: error handling issues in blkback's grant mapping
 Content-Type: text/plain; charset=utf-8
 
-Dear all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We have released Grafana 7.4.5, 7.3.10 and 6.7.6 with important security
-fixes for all Grafana Enterprise versions from 6.1.0-beta1 through 7.4.4.
-Grafana OSS is not affected, as it does not use the features affected by
-vulnerabilities.
+            Xen Security Advisory CVE-2021-26930 / XSA-365
+                               version 3
 
-*Remote Escalation of Privileges vulnerability (CVE-2021-27962)*
+        Linux: error handling issues in blkback's grant mapping
 
+UPDATES IN VERSION 3
+====================
 
-On the 26th of February during an internal security audit, we discovered
-that Grafana Enterprise 7.2.0 introduced a mechanism which allows users
-with the Editor role to bypass data source permissions on an organization’s
-default data source, if configured. To our knowledge, this has not been
-detected by anyone else.
+Public release.
 
+ISSUE DESCRIPTION
+=================
 
-Affected versions: Grafana Enterprise releases 7.2.0 through 7.4.3 are
-affected by this vulnerability.
+To service requests, the driver maps grant references provided by the
+frontend.  In this process, errors may be encountered.  In one case an
+error encountered earlier might be discarded by later processing,
+resulting in the caller assuming successful mapping, and hence
+subsequent operations trying to access space that wasn't mapped.  In
+another case internal state would be insufficiently updated, preventing
+safe recovery from the error.
 
-Patched versions: 7.3.x and 7.4.x
+IMPACT
+======
 
+A malicious or buggy frontend driver may be able to crash the
+corresponding backend driver, potentially affecting the entire domain
+running the backend driver.  In configurations without driver domains
+or similar disaggregation, that is a host-wide denial of sevice.
 
-*Remote Access Control Bypass vulnerabilities (CVE-2021-28146,
-CVE-2021-28147)*
+Privilege escalation and information leaks cannot be ruled out.
 
-On the 10th of March during our internal security audit, we discovered that
-on Grafana Enterprise instances using an external authentication service,
-Grafana Enterprise 7.4.0 introduced a mechanism which allows any
-authenticated user to add external groups to existing teams. We have
-reserved CVE-2021-28146 for this issue.
+VULNERABLE SYSTEMS
+==================
 
-As we continued an internal audit, on the 11th of March we discovered that
-Grafana Enterprise 6.1.0 introduced the same vulnerability as above, but
-only for Grafana instances which have editorsCanAdmin feature enabled. We
-have reserved CVE-2021-28147for this issue.
+Linux versions from at least 3.11 onwards are vulnerable.
 
-Affected versions: Grafana Enterprise 7.4.0-beta1 through 7.4.4 are
-affected by CVE-2021-28146 and 6.1.0-beta1 through 7.4.4 are affected by
-CVE-2021-28147.
+MITIGATION
+==========
 
-Patched versions: 6.x, 7.3.x and 7.4.x
+Reconfiguring guests to use alternative (e.g. qemu-based) backends may
+avoid the vulnerability.
 
-*Remote Unauthenticated Denial of Service vulnerability (CVE-2021-28148)*
+CREDITS
+=======
 
-On the 11th of March during our internal security audit, we discovered
-that Grafana
-Enterprise 6.6.0 introduced a new HTTP API endpoint for usage insights
-which allows any unauthenticated user to send an unlimited number of
-requests to the endpoint, leading to a denial of service (DoS) attacks
-against Grafana Enterprise instances.
+This issue was discovered by Olivier Benjamin, Norbert Manthey, Martin
+Mazein, and Jan H. Schönherr, all from Amazon.
 
-Affected versions: Grafana Enterprise 6.6.0-beta1 to 7.4.4
+RESOLUTION
+==========
 
-Patched versions: 6.x, 7.3.x and 7.4.x
+Applying the attached patch resolves this issue.
 
-*Solutions and mitigations*
+xsa365-linux.patch           Linux 5.11-rc - 5.10
 
-Download and install the appropriate patch for your version of Grafana.
+$ sha256sum xsa365*
+7e45fcf3c70eb40debe9997a1773de7c4a2edcde5c23f76aeb5c1b6e3a34a654  xsa365-linux.patch
+$
 
+DEPLOYMENT DURING EMBARGO
+=========================
 
-Affected Grafana Cloud instances have been already upgraded to the versions
-with fix. Grafana Enterprise customers have been provided with updated
-binaries ahead of this disclosure.
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
 
-Further information can be found at
-https://grafana.com/blog/2021/03/18/grafana-6.7.6-7.3.10-and-7.4.5-released-with-important-security-fixes-for-grafana-enterprise/
+HOWEVER, deployment of the non-kernel-based backends mitigation
+described above is NOT permitted during the embargo on public-facing
+systems with untrusted guest users and administrators.  This is because
+such a configuration change may be recognizable by the affected guests.
 
-Best Regards,
-Vardan Torosyan
+AND: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAru/UMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZnpQH/jMHOQao08C5s4VlCUIDJTJ8AZXIjFKW2zOKBqt5
+Gp7HiRZSLKa2s/dqxIdiVHTnMzGyFegfzK0AeLjLeftSbOANSvI9tx/S6ajOr6Mx
+s5j0r2JzCBsh1bULJbRV7MBVaRqyOR77i3sREu7o0uuRxMd0RNnck7rVm0slmG1P
+FoFfC2tF+gxnYZi8tpBS4aY/e3tZ4y+J6s0Fgyfln4p33/j1JwILzzYscGnRdDvG
+31DnotOq3E+TqcTZRK4BrLJqZodZLsd9en1DriJj2dDqrobs6QS4sZkHKX20gcxC
+RnGvkdHXI+u/du6qpb3GHep2F5pg5+2vMzBNvxxBjr8vmi4=
+=HBCB
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa365-linux.patch" of type "application/octet-stream" (2235 bytes)
