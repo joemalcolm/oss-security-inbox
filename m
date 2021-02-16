@@ -1,90 +1,148 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/16/1
-Message-ID: <CABdrxGDyYMjUeuWmRtbmwmcCAXGiWEqtCqJnFcTQaadi401bNg@mail.gmail.com>
-Date: Wed, 15 Sep 2021 14:17:55 -0700
-From: CJ Cullen <cjcullen@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2021-25741: Symlink Exchange Can Allow Host Filesystem Access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/16/3
+Message-Id: <E1lBzZh-0002ZO-3z@xenbits.xenproject.org>
+Date: Tue, 16 Feb 2021 12:35:29 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 361 v4 (CVE-2021-26932) - Linux: grant mapping error handling issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A security issue was discovered in Kubernetes where a user may be able to
-create a container with subpath volume mounts to access files & directories
-outside of the volume, including on the host filesystem.
+            Xen Security Advisory CVE-2021-26932 / XSA-361
+                               version 4
 
-This issue has been rated High (CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
-<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>),
-and assigned CVE-2021-25741.
-Affected Components and Configurations
+                Linux: grant mapping error handling issues
 
-This bug affects kubelet.
+UPDATES IN VERSION 4
+====================
 
-Environments where cluster administrators have restricted the ability to
-create hostPath mounts are the most seriously affected. Exploitation allows
-hostPath-like access without use of the hostPath feature, thus bypassing
-the restriction.
+Public release.
 
-In a default Kubernetes environment, exploitation could be used to obscure
-misuse of already-granted privileges.
-Affected Versions
+ISSUE DESCRIPTION
+=================
 
-   -
+Grant mapping operations often occur in batch hypercalls, where a
+number of operations are done in a single hypercall, the success or
+failure of each one reported to the backend driver, and the backend
+driver then loops over the results, performing follow-up actions based
+on the success or failure of each operation.
 
-   v1.22.0 - v1.22.1
-   -
+Unfortunately, when running in PV mode, the Linux backend drivers
+mishandle this: Some errors are ignored, effectively implying their
+success from the success of related batch elements.  In other cases,
+errors resulting from one batch element lead to further batch elements
+not being inspected, and hence successful ones to not be possible to
+properly unmap upon error recovery.
 
-   v1.21.0 - v1.21.4
-   -
+IMPACT
+======
 
-   v1.20.0 - v1.20.10
-   -
+A malicious or buggy frontend driver may be able to crash the
+corresponding backend driver, causing a denial of service potentially
+affecting the entire domain running the backend driver.
 
-   <= v1.19.14
+A malicious or buggy frontend driver may be able to cause resource
+leaks in the domain running the corresponding backend driver, leading
+to a denial of service.
 
-Fixed Versions
+VULNERABLE SYSTEMS
+==================
 
-This issue is fixed in the following versions:
+All Linux versions back to at least 3.2 are vulnerable, when running in
+PV mode on x86 or when running on Arm.
 
-   -
+On x86, only systems with Linux backends running in PV mode are
+vulnerable.  Linux backends run in HVM / PVH modes are not vulnerable.
 
-   v1.22.2
-   -
+MITIGATION
+==========
 
-   v1.21.5
-   -
-
-   v1.20.11
-   -
-
-   v1.19.15
-
-Mitigation
-
-To mitigate this vulnerability without upgrading kubelet, you can disable
-the VolumeSubpath feature gate on kubelet and kube-apiserver, and remove
-any existing Pods making use of the feature.
-
-You can also use admission control to prevent less-trusted users from
-running containers as root to reduce the impact of successful exploitation.
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-Additional Details
-
-See Kubernetes Issue #104980
-<https://github.com/kubernetes/kubernetes/issues/104980> for more details.
-Acknowledgements
-
-This vulnerability was reported by Fabricio Voznika and Mark Wolters of
-Google.
-
-Thanks as well to Ian Coldwater, Duffie Cooley, Brad Geesaman, and Rory
-McCune for the thorough security research that led to the discovery of this
+On x86, running the backends in HVM or PVH domains will avoid the
 vulnerability.
 
-Thank You,
+For protocols where other, e.g. non-kernel-based backends are available,
+reconfiguring guests to use alternative (e.g. qemu-based) backends may
+allow to avoid the vulnerability as long as these backends don't rely on
+similar functionality provided by the xen-gntdev (/dev/gntdev) driver.
 
-CJ Cullen on behalf of the Kubernetes Security Response Committee
+In all other cases there is no known mitigation.
 
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patches resolves this issue.
+
+xsa361-linux-1.patch           Linux 5.11-rc - 3.19
+xsa361-linux-2.patch           Linux 5.11-rc - 3.15
+xsa361-linux-3.patch           Linux 5.11-rc - 4.19
+xsa361-linux-4.patch           Linux 5.11-rc - 4.19
+xsa361-linux-5.patch           Linux 5.11-rc - 4.4
+
+$ sha256sum xsa361*
+bb00ab6319b4fc536566af50c73e064f10f8b99eaa6b0f0b35a8d174c285a905  xsa361-linux-1.patch
+73b6a54aa3773ce11f0de6b9aa1d80dd7f4c297dc71924b1a3886bc3b99ac859  xsa361-linux-2.patch
+8e554cfab8cdb4fe1b74601a9432ea4c570f74a952ad757f9294ba1666cbeaea  xsa361-linux-3.patch
+8c290895d10fc148f99e2a6587811b3037f29c3a0201d69d448ff520cea6f96d  xsa361-linux-4.patch
+231ae3e1b9bec1b75dbbbee4b5acff620ef7ac2853332aa7b3c4957c6ca7f341  xsa361-linux-5.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+Deployment of the mitigation to switch to HVM / PVH backend domains is
+also permitted during the embargo, even on public-facing systems with
+untrusted guest users and administrators.
+
+HOWEVER, deployment of the non-kernel-based backends mitigation
+described above is NOT permitted during the embargo on public-facing
+systems with untrusted guest users and administrators.  This is because
+such a configuration change may be recognizable by the affected guests.
+
+AND: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAru/QMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZmFkH/Ay1RoZbbcA4ywdhy9xdnpt0DHMFLjZSbE4sNTi+
+J+m9rn69UTK01VDD0RUohTcmWO0nv8ZD+jKETsSq31GiYhVk7XnSmCJkzILGujr8
+cf+7jUWWJPcqBmN7xcLBaor9lhpKfMpYlMLBG7twIRHfqOSw6Sm+iD4YC23nkGKF
+Cb8tpkYCpX3dPMMP74nX00Wta2rqd1BrpAGvAnt9hrHIBfTcpwWE8A4H1eFL/7Dv
+5+pVvrSMkyzaR5kI/QBeriXsuOP509CiafUBpeXU85pGWpLgZAqD+puodEVQ2fpT
+/MqATdNRhgnCzqSqh/ElN/1ZdB7406DbdCnErJiyDdN/OCE=
+=DUXr
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa361-linux-1.patch" of type "application/octet-stream" (1669 bytes)
+
+Download attachment "xsa361-linux-2.patch" of type "application/octet-stream" (823 bytes)
+
+Download attachment "xsa361-linux-3.patch" of type "application/octet-stream" (2641 bytes)
+
+Download attachment "xsa361-linux-4.patch" of type "application/octet-stream" (2252 bytes)
+
+Download attachment "xsa361-linux-5.patch" of type "application/octet-stream" (1024 bytes)
