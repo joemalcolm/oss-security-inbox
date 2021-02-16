@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2554" "Monday" "1" "May" "2017" "11:40:19" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<974628.333791287-sendEmail@localhost>" "65" "[oss-security] libmad: heap-based buffer overflow in mad_layer_III (layer3.c)" nil nil nil "5" "2017050111:40:19" "[oss-security] libmad: heap-based buffer overflow in mad_layer_III (layer3.c)" (number mark "U       ago@gentoo.o May  1   65/2554  " thread-indent "\"[oss-security] libmad: heap-based buffer overflow in mad_layer_III (layer3.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8726" "Tuesday" "16" "February" "2021" "12:35:31" "+0000" "Xen.org security team" "security@xen.org" nil "201" "[oss-security] Xen Security Advisory 364 v3 (CVE-2021-26933) - arm: The cache may not be cleaned for newly allocated scrubbed pages" nil nil nil "2" nil nil (number mark "U       security@xen Feb 16  201/8726  " thread-indent "\"[oss-security] Xen Security Advisory 364 v3 (CVE-2021-26933) - arm: The cache may not be cleaned for newly allocated scrubbed pages\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 364 v3 (CVE-2021-26933) - arm: The cache may not be cleaned for newly allocated scrubbed pages" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28573 invoked by uid 550); 1 May 2017 11:40:38 -0000
+Received: (qmail 24120 invoked by uid 550); 16 Feb 2021 12:35:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +12,224 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28493 invoked from network); 1 May 2017 11:40:38 -0000
-Message-ID: <974628.333791287-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 1 May 2017 11:40:19 +0000
+Received: (qmail 24004 invoked from network); 16 Feb 2021 12:35:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=IHjlcNqY9zVQG6xPpJPwS1esZBtm3kl4cjbgTTWsTRU=; b=Ww+Gi67omVf9Ru77k14K1xTV/Z
+	h3mTaS7e/r1khuCnYVxpZuOomlXQz+ykuTN4mO1X4xfDDy1ChAc4a4lwU0tVy4yIifF0tXvA7LxU7
+	/9uRxUDcrduK7p9U1CnLG9275u2h31jacTH0Yh+J7ZERTlYM9RfSGhAXQpMg7WMtrb+0=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-92537.1922357989"
-Subject: [oss-security] libmad: heap-based buffer overflow in mad_layer_III (layer3.c)
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1lBzZj-0002cK-EW@xenbits.xenproject.org>
+Date: Tue, 16 Feb 2021 12:35:31 +0000
+Subject: [oss-security] Xen Security Advisory 364 v3 (CVE-2021-26933) - arm: The cache
+ may not be cleaned for newly allocated scrubbed pages
 
-------MIME delimiter for sendEmail-92537.1922357989
-Content-Type: text/plain;
-        charset="UTF-8"
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 7bit
 
-Description:
-libmad stays for “M”peg “A”udio “D”ecoder library.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-There is an heap overflow discovered through madplay.
+            Xen Security Advisory CVE-2021-26933 / XSA-364
+                               version 3
 
-The complete ASan output:
+ arm: The cache may not be cleaned for newly allocated scrubbed pages
 
-# madplay -v -i -o raw:out $FILE
-==14773==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61e00000fa87 at pc 0x0000004bc8ec bp 0x7ffcda3263d0 sp 0x7ffcda325b80
-WRITE of size 2060 at 0x61e00000fa87 thread T0
-    #0 0x4bc8eb in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
-    #1 0x7f37ddfa397d in mad_layer_III /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/layer3.c:2635:2
-    #2 0x7f37ddf6784d in mad_frame_decode /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/frame.c:453:7
-    #3 0x7f37ddf8c4e4 in run_sync /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/decoder.c:404:11
-    #4 0x7f37ddf8ac59 in mad_decoder_run /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/decoder.c:557:12
-    #5 0x5277a1 in decode /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:1862:12
-    #6 0x5277a1 in play_one /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:1951
-    #7 0x5277a1 in play_all /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:2041
-    #8 0x5215a2 in player_run /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:2768:14
-    #9 0x50c46c in main /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/madplay.c:816:7
-    #10 0x7f37dce4f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #11 0x41aa78 in _init (/usr/bin/madplay+0x41aa78)
+UPDATES IN VERSION 3
+====================
 
-Affected version:
-0.15.1b
+Public release.
 
-Fixed version:
-N/A
+ISSUE DESCRIPTION
+=================
 
-Commit fix:
-N/A
+On Arm, a guest is allowed to control whether memory access bypass the
+cache.  This means that Xen needs to ensure that all writes (such as
+the ones during scrubbing) have reached memory before handing over the
+page to a guest.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-This bug came out in the past during the debug of mp3splt with Dave Kennedy
+Unfortunately the operation to clean the cache happens before checking
+if the page was scrubbed.  Therefore there is no guarantee when all
+the writes will reach the memory.
 
-CVE:
-CVE-2017-8373
+IMPACT
+======
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00213-libmad-heapoverflow-mad_layer_III
+A malicious guest may be able to read sensitive data from memory that
+previously belonged to another guest.
 
-Timeline:
-2017-01-01: bug discovered and reported to upstream
-2017-04-30: blog post about the issue
-2017-05-01: CVE assigned
+VULNERABLE SYSTEMS
+==================
 
-Note:
-This bug was found with American Fuzzy Lop.
+Xen version 4.9 onwards are vulnerable. Only Arm systems are vulnerable.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/30/libmad-heap-based-buffer-overflow-in-mad_layer_iii-layer3-c/
+MITIGATION
+==========
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+There is no known mitigation.
 
+CREDITS
+=======
 
-------MIME delimiter for sendEmail-92537.1922357989--
+This issue was discovered by Julien Grall of Amazon.
 
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa364.patch           xen-unstable - 4.11
+
+$ sha256sum xsa364*
+c9dcb3052bb6ca4001e02b3ad889c70b4eebf1931bef83dfb7de86452851f3c8  xsa364.meta
+dc313c70bb07b4096bbc4612cbbc180589923277411dede2fda37f04ecc846d6  xsa364.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAru/UMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZT0UH/0Lzw4sShqmyO06n0HWcXyzXKx7Qh67tjBglmB0D
+XHKrlTKR0Cs1S2NR3GCSZCSPNKXcXU689qEXlvK07EpheO/xCUgpZNkt/Eab/JFK
+NngYbuev1z6+bGeCi70b6RItCXoWiwDWEJqLlLKROwBXMZaodwgjY7/o3GR2D8ZV
+Qyz2EcAdJUIYmMsLC3hJ7gTLXvdySp+0lZ9oO6qe4YYQ3CIwPJnlflWFTzcASfML
+D9lMVG6u6ratiqt4N1egE0gxBe3/QP8KoptSqiV+MDdwPnsK009g/G+0Ea430ZEh
+lviVSgCxhdELx2Tv+Q7qSSbnfMSdnibSHAxipcbyhvjiEJU=
+=mHyv
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa364.meta"
+Content-Disposition: attachment; filename="xsa364.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAzNjQsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIs
+CiAgICAiNC4xMSIKICBdLAogICJUcmVlcyI6IFsKICAgICJ4ZW4iCiAgXSwK
+ICAiUmVjaXBlcyI6IHsKICAgICI0LjExIjogewogICAgICAiUmVjaXBlcyI6
+IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICIz
+MTBhYjc5ODc1Y2I3MDVjYzJjN2RhZGRmZjQxMmI1YTQ4OTlmOGM5IiwKICAg
+ICAgICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsK
+ICAgICAgICAgICAgInhzYTM2NC5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
+ICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC4xMiI6IHsKICAgICAgIlJlY2lw
+ZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYi
+OiAiY2NlN2NiZDk4NmMxMjJhODY1ODJmZjM3NzViNmI1NTlkODc3NDA3YyIs
+CiAgICAgICAgICAiUHJlcmVxcyI6IFtdLAogICAgICAgICAgIlBhdGNoZXMi
+OiBbCiAgICAgICAgICAgICJ4c2EzNjQucGF0Y2giCiAgICAgICAgICBdCiAg
+ICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTMiOiB7CiAgICAgICJS
+ZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxl
+UmVmIjogImU0MTYxOTM4YjMxNWYzYjljNmExM2FkZTMwZDE2YzExNTA0YTJk
+MTYiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAgICAgICJQYXRj
+aGVzIjogWwogICAgICAgICAgICAieHNhMzY0LnBhdGNoIgogICAgICAgICAg
+XQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjE0IjogewogICAg
+ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
+YWJsZVJlZiI6ICI0MTcwMjE4Y2I5NjU0NjQyNjY2NGU1YzFkMDBjNWE4NDhh
+MjZhZTllIiwKICAgICAgICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAi
+UGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM2NC5wYXRjaCIKICAgICAg
+ICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAibWFzdGVyIjog
+ewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAg
+ICAgIlN0YWJsZVJlZiI6ICI1ZTdhYTkwNDQwNWZhMmYyNjhjM2FmMjEzNTE2
+YmFlMjcxZGUzMjY1IiwKICAgICAgICAgICJQcmVyZXFzIjogW10sCiAgICAg
+ICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM2NC5wYXRjaCIK
+ICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0KICB9Cn0K
+
+--=separator
+Content-Type: application/octet-stream; name="xsa364.patch"
+Content-Disposition: attachment; filename="xsa364.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBkYWRiNWI0YjIxYzkwNGNlNTkwMjRjNjg2ZWIxYzU1YmU4ZjQ2YzUy
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWxpZW4gR3JhbGwg
+PGpncmFsbEBhbWF6b24uY29tPgpEYXRlOiBUaHUsIDIxIEphbiAyMDIxIDEw
+OjE2OjA4ICswMDAwClN1YmplY3Q6IFtQQVRDSF0geGVuL3BhZ2VfYWxsb2M6
+IE9ubHkgZmx1c2ggdGhlIHBhZ2UgdG8gUkFNIG9uY2Ugd2Uga25vdyB0aGV5
+CiBhcmUgc2NydWJiZWQKCkF0IHRoZSBtb21lbnQsIGVhY2ggcGFnZSBhcmUg
+Zmx1c2hlZCB0byBSQU0ganVzdCBhZnRlciB0aGUgYWxsb2NhdG9yCmZvdW5k
+IHNvbWUgZnJlZSBwYWdlcy4gSG93ZXZlciwgdGhpcyBpcyBoYXBwZW5pbmcg
+YmVmb3JlIGNoZWNrIGlmIHRoZQpwYWdlIHdhcyBzY3J1YmJlZC4KCkFzIGEg
+Y29uc2VxdWVuY2UsIG9uIEFybSwgYSBndWVzdCBtYXkgYmUgYWJsZSB0byBh
+Y2Nlc3MgdGhlIG9sZCBjb250ZW50Cm9mIHRoZSBzY3J1YmJlZCBwYWdlcyBp
+ZiBpdCBoYXMgY2FjaGUgZGlzYWJsZWQgKGRlZmF1bHQgYXQgYm9vdCkgYW5k
+CnRoZSBjb250ZW50IGRpZG4ndCByZWFjaCB0aGUgUG9pbnQgb2YgQ29oZXJl
+bmN5LgoKVGhlIGZsdXNoIGlzIG5vdyBtb3ZlZCBhZnRlciB3ZSBrbm93IHRo
+ZSBjb250ZW50IG9mIHRoZSBwYWdlIHdpbGwgbm90CmNoYW5nZS4gVGhpcyBh
+bHNvIGhhcyB0aGUgYmVuZWZpdCB0byByZWR1Y2UgdGhlIGFtb3VudCBvZiB3
+b3JrIGhhcHBlbmluZwp3aXRoIHRoZSBoZWFwX2xvY2sgaGVsZC4KClRoaXMg
+aXMgWFNBLTM2NC4KCkZpeGVzOiAzMDdjM2JlM2NjYjIgKCJtbTogRG9uJ3Qg
+c2NydWIgcGFnZXMgd2hpbGUgaG9sZGluZyBoZWFwIGxvY2sgaW4gYWxsb2Nf
+aGVhcF9wYWdlcygpIikKU2lnbmVkLW9mZi1ieTogSnVsaWVuIEdyYWxsIDxq
+Z3JhbGxAYW1hem9uLmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxq
+YmV1bGljaEBzdXNlLmNvbT4KLS0tCiB4ZW4vY29tbW9uL3BhZ2VfYWxsb2Mu
+YyB8IDE0ICsrKysrKysrKy0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgOSBpbnNl
+cnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3hlbi9j
+b21tb24vcGFnZV9hbGxvYy5jIGIveGVuL2NvbW1vbi9wYWdlX2FsbG9jLmMK
+aW5kZXggMDJhYzFmYTYxM2U3Li4xNzQ0ZTZmYWE1YzQgMTAwNjQ0Ci0tLSBh
+L3hlbi9jb21tb24vcGFnZV9hbGxvYy5jCisrKyBiL3hlbi9jb21tb24vcGFn
+ZV9hbGxvYy5jCkBAIC05MjQsNiArOTI0LDcgQEAgc3RhdGljIHN0cnVjdCBw
+YWdlX2luZm8gKmFsbG9jX2hlYXBfcGFnZXMoCiAgICAgYm9vbCBuZWVkX3Rs
+YmZsdXNoID0gZmFsc2U7CiAgICAgdWludDMyX3QgdGxiZmx1c2hfdGltZXN0
+YW1wID0gMDsKICAgICB1bnNpZ25lZCBpbnQgZGlydHlfY250ID0gMDsKKyAg
+ICBtZm5fdCBtZm47CiAKICAgICAvKiBNYWtlIHN1cmUgdGhlcmUgYXJlIGVu
+b3VnaCBiaXRzIGluIG1lbWZsYWdzIGZvciBub2RlSUQuICovCiAgICAgQlVJ
+TERfQlVHX09OKChfTUVNRl9iaXRzIC0gX01FTUZfbm9kZSkgPCAoOCAqIHNp
+emVvZihub2RlaWRfdCkpKTsKQEAgLTEwMjIsMTEgKzEwMjMsNiBAQCBzdGF0
+aWMgc3RydWN0IHBhZ2VfaW5mbyAqYWxsb2NfaGVhcF9wYWdlcygKICAgICAg
+ICAgcGdbaV0udS5pbnVzZS50eXBlX2luZm8gPSAwOwogICAgICAgICBwYWdl
+X3NldF9vd25lcigmcGdbaV0sIE5VTEwpOwogCi0gICAgICAgIC8qIEVuc3Vy
+ZSBjYWNoZSBhbmQgUkFNIGFyZSBjb25zaXN0ZW50IGZvciBwbGF0Zm9ybXMg
+d2hlcmUgdGhlCi0gICAgICAgICAqIGd1ZXN0IGNhbiBjb250cm9sIGl0cyBv
+d24gdmlzaWJpbGl0eSBvZi90aHJvdWdoIHRoZSBjYWNoZS4KLSAgICAgICAg
+ICovCi0gICAgICAgIGZsdXNoX3BhZ2VfdG9fcmFtKG1mbl94KHBhZ2VfdG9f
+bWZuKCZwZ1tpXSkpLAotICAgICAgICAgICAgICAgICAgICAgICAgICAhKG1l
+bWZsYWdzICYgTUVNRl9ub19pY2FjaGVfZmx1c2gpKTsKICAgICB9CiAKICAg
+ICBzcGluX3VubG9jaygmaGVhcF9sb2NrKTsKQEAgLTEwNjIsNiArMTA1OCwx
+NCBAQCBzdGF0aWMgc3RydWN0IHBhZ2VfaW5mbyAqYWxsb2NfaGVhcF9wYWdl
+cygKICAgICBpZiAoIG5lZWRfdGxiZmx1c2ggKQogICAgICAgICBmaWx0ZXJl
+ZF9mbHVzaF90bGJfbWFzayh0bGJmbHVzaF90aW1lc3RhbXApOwogCisgICAg
+LyoKKyAgICAgKiBFbnN1cmUgY2FjaGUgYW5kIFJBTSBhcmUgY29uc2lzdGVu
+dCBmb3IgcGxhdGZvcm1zIHdoZXJlIHRoZSBndWVzdAorICAgICAqIGNhbiBj
+b250cm9sIGl0cyBvd24gdmlzaWJpbGl0eSBvZi90aHJvdWdoIHRoZSBjYWNo
+ZS4KKyAgICAgKi8KKyAgICBtZm4gPSBwYWdlX3RvX21mbihwZyk7CisgICAg
+Zm9yICggaSA9IDA7IGkgPCAoMVUgPDwgb3JkZXIpOyBpKysgKQorICAgICAg
+ICBmbHVzaF9wYWdlX3RvX3JhbShtZm5feChtZm4pICsgaSwgIShtZW1mbGFn
+cyAmIE1FTUZfbm9faWNhY2hlX2ZsdXNoKSk7CisKICAgICByZXR1cm4gcGc7
+CiB9CiAKLS0gCjIuMTcuMQoK
+
+--=separator--
