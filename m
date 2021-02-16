@@ -1,48 +1,10 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/11
-Message-ID: <cig332o8hut4z5.fsf@u54e1add816995a33037d.ant.amazon.com>
-Date: Tue, 12 Jan 2021 09:55:26 -0800
-From: Anthony Liguori <aliguori@...zon.com>
-To: Solar Designer <solar@...nwall.com>, Thomas Deutschmann <whissi@...too.org>
-CC: <oss-security@...ts.openwall.com>
-Subject: RE: Gentoo's "contributing back" linux-distros tasks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/16/1
+Message-ID: <5AD4FFC2-6E4A-44C4-92A9-8203C9244484@amazon.com>
+Date: Tue, 16 Feb 2021 00:05:36 +0000
+From: "Fuller, Abby" <abbyfull@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: 2021-01 stats
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer <solar@...nwall.com> writes:
-> On Mon, Jan 11, 2021 at 10:09:18PM +0100, Thomas Deutschmann wrote:
->> On 2021-01-10 19:44, Solar Designer wrote:
->> >Gentoo, please let us all know whether you'd like to stay primary for
->> >these tasks, be moved to backup, or something else?
->>
->> I think we will be able to act as backup.
->
-> If possible, please stay or become primary for at least one task.  We've
-> been asking the same from newly joining distros lately.
->
->> We will need to figure out a workflow to ensure we notice when we are on
->> call but I am sure we will find a way. I'll contact Anthony directly for
->> the details.
->
-> Great to know you're coordinating with Anthony (Amazon), but a meaning
-> of backup is that you'd also need to take over when the primary fails to
-> handle a task without notifying you first.
-
-Current thinking is to setup a private git repository with the various
-scripts for generating the wiki report + a running tally of stats from
-the list.
-
-This allows for a backup to watch the repo and make sure the stats are
-being gathered and backfill/publish if necessary.
-
-This isn't something we had before and I think it will help solve this
-problem and also let the infrastructure be carried forward.
-
-We can probably also publish the repository publicly as long as it
-trails by two weeks so no on-going issues are disclosed prematurely.
-
-Regards,
-
-Anthony Liguori
-
->
-> Alexander
+2021-01 stats are up on the wiki: https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
