@@ -1,54 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/18/4
-Message-ID: <CABdrxGC=YmZPJC9Vs3rYmFatqkmgkEULnnXq8_Ux5wZOD+EvsA@mail.gmail.com>
-Date: Tue, 18 May 2021 12:28:20 -0700
-From: CJ Cullen <cjcullen@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2021-25737: Holes in EndpointSlice Validation Enable Host Network Hijack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/16/2
+Message-Id: <E1lBzZi-0002bO-P6@xenbits.xenproject.org>
+Date: Tue, 16 Feb 2021 12:35:30 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 363 v3 (CVE-2021-26934) - Linux: display frontend "be-alloc" mode is unsupported
 Content-Type: text/plain; charset=utf-8
 
-A security issue was discovered in Kubernetes where a user may be able to
-redirect pod traffic to private networks on a Node. Kubernetes already
-prevents creation of Endpoint IPs in the localhost or link-local range, but
-the same validation was not performed on EndpointSlice IPs.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-*This issue has been rated Low
-(CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N
-<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N>),
-and assigned CVE-2021-25737.*Affected Component
+            Xen Security Advisory CVE-2021-26934 / XSA-363
+                               version 3
 
-*kube-apiserver*Affected Versions
+        Linux: display frontend "be-alloc" mode is unsupported
 
+UPDATES IN VERSION 3
+====================
 
-* - v1.21.0- v1.20.0 - v1.20.6- v1.19.0 - v1.19.10- v1.16.0 - v1.18.18
-(Note: EndpointSlices were not enabled by default in 1.16-1.18)*Fixed
-Versions
+Public release.
 
+ISSUE DESCRIPTION
+=================
 
+The backend allocation mode of Linux'es drm_xen_front drivers was
+not meant to be a supported configuration, but this wasn't stated
+accordingly in its support status entry.
 
-*This issue is fixed in the following versions: - v1.21.1- v1.20.7-
-v1.19.11- v1.18.19*Mitigation
+IMPACT
+======
 
-*To mitigate this vulnerability without upgrading kube-apiserver, you can
-create a validating admission webhook that prevents EndpointSlices with
-endpoint addresses in the 127.0.0.0/8 <http://127.0.0.0/8> and
-169.254.0.0/16 <http://169.254.0.0/16> ranges. If you have an existing
-admission policy mechanism (like OPA Gatekeeper) you can create a policy
-that enforces this restriction.*Detection
+Use of the feature may have unknown effects.
 
-*To detect whether this vulnerability has been exploited, you can list
-EndpointSlices and check for endpoint addresses in the 127.0.0.0/8
-<http://127.0.0.0/8> and 169.254.0.0/16 <http://169.254.0.0/16> ranges. If
-you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io <security@...ernetes.io>*Additional Details
+VULNERABLE SYSTEMS
+==================
 
-See Kubernetes Issue #102106
-<https://github.com/kubernetes/kubernetes/issues/102106> for more details.
-Acknowledgements
+Linux versions from 4.18 onwards are affected.  Earlier Linux versions
+do not provide the affected driver.
 
-This vulnerability was reported by John Howard of Google.
+MITIGATION
+==========
 
-Thank You,
+Not using the driver or its backend allocation mode will avoid the
+vulnerability.
 
-CJ Cullen on behalf of the Kubernetes Product Security Committee
+CREDITS
+=======
 
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch documents the situation.  The patch does
+not fix any security issues.
+
+xsa363.patch           xen-unstable
+
+$ sha256sum xsa363*
+cf2f2eff446aec625b19d9d01301ec66098b58b792d74012235f10c62a21bb68  xsa363.patch
+$
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAru/UMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZSocH/3jAI0MeZtnhvuyOM4CxkNmr0fI4HIXnA1xGNhWY
+Wa2WgtOuFVaPUFX1Tj/e6zCoibatl1gicETI9hL+w4Dg6/GzIeTogOuzv5D6Ux91
+9a6n2tryFfSAs0OxTKq6etLv63VEEicYMHrZT8n700JFvJsAWYAMvuanMDknGxBP
+5/Z+DASnZxT09cpvP4REKuG7rW9vIif+6EZ0T0kU87InouDts/YOhzNsdvBD1wKH
+y5e/MZh2sOyMOovuhgbvoK+YezHTAcZeGWnUk3yQoTGnW3p+W9XZVURsc8/e2FbZ
+heY3Tj918LsY50wGpMZ2PDoHC8PSHaUqEOTq0MPmnPlppvU=
+=tJD0
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa363.patch" of type "application/octet-stream" (658 bytes)
