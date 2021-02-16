@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["621" "Saturday" "15" "October" "2016" "06:57:11" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20161015045711.2hyce3mpwtmypwri@eldamar.local>" "20" "[oss-security] CVE Request: libgd: Stack Buffer Overflow in GD dynamicGetbuf" nil nil nil "10" "2016101504:57:11" "[oss-security] CVE Request: libgd: Stack Buffer Overflow in GD dynamicGetbuf" (number mark "U       carnil@debia Oct 15   20/621   " thread-indent "\"[oss-security] CVE Request: libgd: Stack Buffer Overflow in GD dynamicGetbuf\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2825" "Tuesday" "16" "February" "2021" "12:35:30" "+0000" "Xen.org security team" "security@xen.org" nil "93" "[oss-security] Xen Security Advisory 363 v3 (CVE-2021-26934) - Linux: display frontend \"be-alloc\" mode is unsupported" nil nil nil "2" nil nil (number mark "U       security@xen Feb 16   93/2825  " thread-indent "\"[oss-security] Xen Security Advisory 363 v3 (CVE-2021-26934) - Linux: display frontend \"be-alloc\" mode is unsupported\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 363 v3 (CVE-2021-26934) - Linux: display frontend \"be-alloc\" mode is unsupported" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12137 invoked by uid 550); 15 Oct 2016 04:57:24 -0000
+Received: (qmail 23994 invoked by uid 550); 16 Feb 2021 12:35:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +12,116 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12116 invoked from network); 15 Oct 2016 04:57:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=bchca2zQDsotVorqr3AEGUdaCvN/wl38OTjV0YRDCuE=;
-        b=C6hfNCnSVSndGUa9kZWi/PrbwLVPhmSLbj08RmH2FtjtE9Pyjj7UTak7mFiM9/eA4r
-         CexCepkfeIWIMQVqNf/chn/Dx4YIHBIv10n00ShF2WD9ag1goM/dLqcW+EMg9tbAGm1Q
-         Kr3q5wC/MQKWFGxV9w1XMWe4LQufUqgMpfdnJbgrcmjMUau5uah845LLw7Xsy4JvvgvP
-         uXlFcU/8n1kvpn3q/z8SqMbB0OO8vF8CetwoTn/XZ69xqZXFjnv/42OHpiDCUo1cEe6N
-         MhFkAuvIGsDBNQbz6peWPLNRHx3n9N+YPPLqrm/av+9njn6h8NZyyGn6u0gfSnBhyh58
-         kKsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=bchca2zQDsotVorqr3AEGUdaCvN/wl38OTjV0YRDCuE=;
-        b=RFGzxlXZRWvKZG6g7u4AkEC3FDgqD8c72Eih8fTKtb72ixPhZtXInLb1IPLs9eLjPb
-         iWYiUj9zTVMX/SlI7FcSH/M0vCXYab45LSdNUm+YAYc5hHMBQ+T7IVmMfDisclblmLUW
-         tOoltkE7/6+oCkjk0yneYvpW8p93bJUcI6Ipuc0TdZAp75tU9xwH7GwL4rI8O5CS4/uT
-         ILawZ10n/QC3p02SKIcbajoSvsvY+8yyY8gti8/svS9ioXpv8PIZ/+4nGCezqj1M+kXG
-         NMhM85nR8PsjPL+9wbQSsCzLKOt7IL3yPMKUIPNV2hghiCN3if++2+w0jnrneZgCEgQ5
-         CQaw==
-X-Gm-Message-State: AA6/9RkEmQOEqeZ3JaHZ+7SvIkKsBNKGV8eiQd1W2hJqf5vKGU25r7Y7gfUsANZj8maM3w==
-X-Received: by 10.194.246.39 with SMTP id xt7mr4242258wjc.50.1476507432828;
-        Fri, 14 Oct 2016 21:57:12 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sat, 15 Oct 2016 06:57:11 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20161015045711.2hyce3mpwtmypwri@eldamar.local>
+Received: (qmail 23939 invoked from network); 16 Feb 2021 12:35:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=CNx9HA2TuAgcqoV4Hd77YdCoDcvs1DeLFjIGIr9cIf8=; b=VNhge+CiWitYtuDMDdiguZfn3B
+	obUidPsr5cz3im2ad4rV5YsGbjJbYFE5FYlUnP8elWnZbO9bjGekvUFcfkltrDh9aipBXOd65NcP0
+	j4WJcnoja+Yva7WGZjdXG/fdKbPHTdz3VuXv+wY+CqwcQZprR16SROClEB74DU33CmgQ=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1lBzZi-0002bO-P6@xenbits.xenproject.org>
+Date: Tue, 16 Feb 2021 12:35:30 +0000
+Subject: [oss-security] Xen Security Advisory 363 v3 (CVE-2021-26934) - Linux: display
+ frontend "be-alloc" mode is unsupported
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-User-Agent: NeoMutt/20160916 (1.7.0)
-Subject: [oss-security] CVE Request: libgd: Stack Buffer Overflow in GD dynamicGetbuf
+Content-Transfer-Encoding: 7bit
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On the PHP bug tracker Emmanuel Law reported a flaw in the libgd
-library in dynamicGetbuf. The PHP bug report is at (cannot quote the
-full report for the list archive, sinc a bit long):
+            Xen Security Advisory CVE-2021-26934 / XSA-363
+                               version 3
 
-https://bugs.php.net/bug.php?id=73280
+        Linux: display frontend "be-alloc" mode is unsupported
 
-It has been reported upstream apparently (not via the issue tracker)
-and fixed in upstream as with commit:
+UPDATES IN VERSION 3
+====================
 
-https://github.com/libgd/libgd/commit/53110871935244816bbb9d131da0bccff734bfe9
+Public release.
 
-Debian has issued a DSA containing this fix as well in DSA-3693-1,
-https://lists.debian.org/debian-security-announce/2016/msg00274.html
+ISSUE DESCRIPTION
+=================
 
-Could you please assign a CVE for this issue?
+The backend allocation mode of Linux'es drm_xen_front drivers was
+not meant to be a supported configuration, but this wasn't stated
+accordingly in its support status entry.
 
-Regards,
-Salvatore
+IMPACT
+======
+
+Use of the feature may have unknown effects.
+
+VULNERABLE SYSTEMS
+==================
+
+Linux versions from 4.18 onwards are affected.  Earlier Linux versions
+do not provide the affected driver.
+
+MITIGATION
+==========
+
+Not using the driver or its backend allocation mode will avoid the
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch documents the situation.  The patch does
+not fix any security issues.
+
+xsa363.patch           xen-unstable
+
+$ sha256sum xsa363*
+cf2f2eff446aec625b19d9d01301ec66098b58b792d74012235f10c62a21bb68  xsa363.patch
+$
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAru/UMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZSocH/3jAI0MeZtnhvuyOM4CxkNmr0fI4HIXnA1xGNhWY
+Wa2WgtOuFVaPUFX1Tj/e6zCoibatl1gicETI9hL+w4Dg6/GzIeTogOuzv5D6Ux91
+9a6n2tryFfSAs0OxTKq6etLv63VEEicYMHrZT8n700JFvJsAWYAMvuanMDknGxBP
+5/Z+DASnZxT09cpvP4REKuG7rW9vIif+6EZ0T0kU87InouDts/YOhzNsdvBD1wKH
+y5e/MZh2sOyMOovuhgbvoK+YezHTAcZeGWnUk3yQoTGnW3p+W9XZVURsc8/e2FbZ
+heY3Tj918LsY50wGpMZ2PDoHC8PSHaUqEOTq0MPmnPlppvU=
+=tJD0
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa363.patch"
+Content-Disposition: attachment; filename="xsa363.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiBTVVBQT1JULm1kOiBQViBkaXNwbGF5IGZyb250ZW5kIGlzIHVuc3VwcG9y
+dGVkIGluICJiYWNrZW5kIGFsbG9jYXRpb24iIG1vZGUKClRoaXMgd2Fzbid0
+IG1lYW50IHRvIGJlIHN1cHBvcnRlZCwgYnV0IHdhc24ndCBzdGF0ZWQgdGhp
+cyB3YXkuCgpUaGlzIGlzIFhTQS0zNjMuCgpSZXBvcnRlZC1ieTogSmFuIEJl
+bGljaCA8amJldWxpY2hAc3VzZS5jb20+ClNpZ25lZC1vZmYtYnk6IEphbiBC
+ZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCi0tLSBhL1NVUFBPUlQubWQK
+KysrIGIvU1VQUE9SVC5tZApAQCAtNDE0LDcgKzQxNCw4IEBAIEd1ZXN0LXNp
+ZGUgZHJpdmVyIGNhcGFibGUgb2Ygc3BlYWtpbmcgdGgKIAogR3Vlc3Qtc2lk
+ZSBkcml2ZXIgY2FwYWJsZSBvZiBzcGVha2luZyB0aGUgWGVuIFBWIGRpc3Bs
+YXkgcHJvdG9jb2wKIAotICAgIFN0YXR1cywgTGludXg6IFN1cHBvcnRlZAor
+ICAgIFN0YXR1cywgTGludXg6IFN1cHBvcnRlZCAob3V0c2lkZSBvZiAiYmFj
+a2VuZCBhbGxvY2F0aW9uIiBtb2RlKQorICAgIFN0YXR1cywgTGludXg6IEV4
+cGVyaW1lbnRhbCAoaW4gImJhY2tlbmQgYWxsb2NhdGlvbiIgbW9kZSkKIAog
+IyMjIFBWIENvbnNvbGUgKGZyb250ZW5kKQogCg==
+
+--=separator--
