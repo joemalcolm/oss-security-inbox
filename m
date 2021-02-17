@@ -1,32 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/4
-Message-ID: <1622544225.GNSHSBOT@httpd.apache.org>
-Date: Wed, 09 Jun 2021 23:11:00 +0200
-From: Christophe JAILLET <jailletc36@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/17/4
+Message-ID: <eb9b5bdc-aee2-8295-4711-276759fbeae0@isc.org>
+Date: Wed, 17 Feb 2021 11:25:57 -0900
+From: Michael McNally <mcnally@....org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-13950: Apache httpd: mod_proxy_http NULL pointer dereference
+Cc: "security-officer@....org" <security-officer@....org>
+Subject: One BIND vulnerability (CVE-2020-8625) has been publicly disclosed
 Content-Type: text/plain; charset=utf-8
 
+On February 17, 2021, Internet Systems Consortium has disclosed a
+vulnerability in our BIND 9 software about which we previously
+provided advance notice.
 
-CVE-2020-13950: mod_proxy_http NULL pointer dereference
+    CVE-2020-8625: A vulnerability in BIND's GSSAPI security policy
+    negotiation can be targeted by a buffer overflow attack
+    https://kb.isc.org/docs/cve-2020-8625
 
-Severity: low
+With the public announcement of this vulnerability, the embargo
+period is ended and any updated software packages that have been
+prepared may be released.
 
-Vendor: The Apache Software Foundation
+ISC's own releases containing fixes are:
 
-Versions Affected:
-httpd 2.4.41 to 2.4.46
+    -  BIND 9.11.28
+    -  BIND 9.16.12
+    -  BIND 9.17.10
 
-Description:
-Apache HTTP Server 2.4.41 to 2.4.46
-mod_proxy_http can be made to crash (NULL pointer dereference) with specially crafted requests using both Content-Length and Transfer-Encoding headers, leading to a Denial of Service
+each of which can be downloaded via the ISC downloads page,
+https://www.isc.org/downloads
 
-Mitigation:
-None
+For package maintainers who want *only* the fixes for the
+CVE vulnerabilities, patch diffs are available for each branch
+in the "patches" subdirectory of the branch's February 2021
+maintenance release, e.g.:
 
-Credit:
-Reported by Marc Stern (<marc.stern approach.be>)
+   9.11 branch:  https://downloads.isc.org/isc/bind9/9.11.28/patches
+   9.16 branch:  https://downloads.isc.org/isc/bind9/9.16.12/patches
+   9.17 branch:  no patch necessary for versions >= 9.17.2
 
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+Sincerely,
 
+Michael McNally
+ISC Security Officer
