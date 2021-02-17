@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/18/6
-Message-ID: <bc3a6689-bbcd-612f-e9f8-e94543cf39fa@oracle.com>
-Date: Sun, 18 Apr 2021 10:29:56 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/17/1
+Message-ID: <CAH5JyZq+Jr3Y8FdHhJ_axMN-a97aBLmnDzCAV4OdR0u8e9=SeQ@mail.gmail.com>
+Date: Wed, 17 Feb 2021 13:15:33 +0000
+From: Kaxil Naik <kaxilnaik@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: xscreensaver package caps gets raw socket
+Cc: users@...flow.apache.org
+Subject: CVE-2021-26559: Apache Airflow 2.0.0: CWE-284 Improper Access Control on Configurations Endpoint for the Stable API
 Content-Type: text/plain; charset=utf-8
 
-On 4/17/21 5:51 PM, Érico Nogueira wrote:
-> Using `secure_getenv` in some of these cases would probably work as well as 
-> checking `getauxval(AT_SECURE)`, especially because it seems (from my quick 
-> search over at <https://man.bsd.lv>) that both are Linux specific anyway.
+Versions Affected: 2.0.0
 
-Solaris also has secure_getenv since the 11.3.10 release.  It uses the
-issetugid() call that's been available since Solaris 9 (2002) and which
-is also available in FreeBSD & OpenBSD:
+*Description*:
 
-https://man.openbsd.org/issetugid.2
-https://www.freebsd.org/cgi/man.cgi?query=issetugid&sektion=2
-https://docs.oracle.com/cd/E88353_01/html/E37841/issetugid-2.html
+Improper Access Control on Configurations Endpoint for the Stable API
+of Apache Airflow allows users with Viewer or User role to get Airflow
+Configurations including sensitive information even when `[webserver]
+expose_config` is set to `False` in `airflow.cfg`.
 
-Though Nico Williams warns not all implementations work the same way:
-https://gist.github.com/nicowilliams/4daf74a3a0c86848d3cbd9d0cdb5e26e
+This allowed a privilege escalation attack.
 
--- 
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+This issue affects Apache Airflow 2.0.0.
+
+
+*Mitigation*:
+
+Upgrade to Airflow 2.0.1 or remove `can read on Configurations`
+permission from the roles like Viewer and Users if you want to
+restrict users with those roles to view configurations in 2.0.0.
+
+
+*Credit*:
+Apache Airflow would like to thank Ian Carroll for reporting this issue.
+
+Thanks,
+Kaxil,
+on behalf of Apache Airflow PMC
+
