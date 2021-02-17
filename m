@@ -1,60 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/19/1
-Message-ID: <CAFcO6XNFySfp80uRssnz5jhgndpCvmgNbSE88ttMhXdZzqcfhw@mail.gmail.com>
-Date: Tue, 19 Oct 2021 23:21:52 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/17/2
+Message-ID: <CAH5JyZq1We7GoJGuOu5jzgRiOQ-iQf46yYdO=rWw8Cf-8KR=5g@mail.gmail.com>
+Date: Wed, 17 Feb 2021 14:09:11 +0000
+From: Kaxil Naik <kaxilnaik@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: isdn: cpai: array-index-out-of-bounds in detach_capi_ctr in drivers/isdn/capi/kcapi.c
+Subject: CVE-2021-26697: Apache Airflow: Lineage API endpoint for Experimental API missed authentication check
 Content-Type: text/plain; charset=utf-8
 
-Hi, there is an array-index-out-bounds bug in detach_capi_ctr in
-drivers/isdn/capi/kcapi.c and I reproduce it on 5.15.0-rc2+.
+Description:
 
-#Root Cause
-we can call CMTPCONNADD ioctl and it would invoke
-do_cmtp_sock_ioctl(), it would call cmtp_add_connection().
-The chain of call is as follows.
-ioctl(CMTPCONNADD)
-   ->cmtp_sock_ioctl()
-         -->do_cmtp_sock_ioctl()
-            --->cmtp_add_connection()
-                ---->kthread_run()
-                ---->cmtp_attach_device()
-the function would add a cmtp session to a controller.
+The lineage endpoint of the deprecated Experimental API was not
+protected by authentication in Airflow 2.0.0. This allowed
+unauthenticated users to hit that endpoint.
 
-The cmtp_add_connection() would add a cmtp session to a controller
-and run a kernel thread to process cmtp.
+This is low-severity CVE as the attacker needs to be aware of certain
+parameters to pass to that endpoint and even after can just get some
+metadata about a DAG and a Task.
 
-        __module_get(THIS_MODULE);
-        session->task = kthread_run(cmtp_session, session, "kcmtpd_ctr_%d",
-                                                                session->num);
+This issue affects Apache Airflow 2.0.0.
 
-During this process, the kernel thread would call detach_capi_ctr()
-to detach a register controller. if the controller
-was not attached yet, detach_capi_ctr() would
-trigger an array-index-out-bounds bug.
+Credit:
 
+Apache Airflow would like to thank Ian Carroll for reporting this issue.
 
-#analyze
-https://lore.kernel.org/netdev/CAFcO6XOvGQrRTaTkaJ0p3zR7y7nrAWD79r48=L_BbOyrK9X-vA@mail.gmail.com/
+References:
+https://lists.apache.org/thread.html/re21fec81baea7a6d73b0b5d31efd07cc02c61f832e297f65bb19b519%40%3Cusers.airflow.apache.org%3E
 
-#patch
-The patch is available upstream now.
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1f3e2e97c003f80c4b087092b225c8787ff91e4d
-
-#Timeline
-*2021/9/24 - Vulnerability reported to netdev@...r.kernel.org.
-*2021/9/24 - Vulnerability confirmed.
-*2021/10/8 - Vulnerability patched.
-*2021/10/9 - Vulnerability reported to secalert@...hat.com and confirmed
-*2021/10/19 - Opened on oss-security@...ts.openwall.com.
-
-#Credit
-Active Defense Lab of Venustech.
-
-
-Regards,
- butt3rflyh4ck.
-
---
-Active Defense Lab of Venustech
