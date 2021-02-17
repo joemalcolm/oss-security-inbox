@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/14/1
-Message-ID: <20210614121256.75640f6b@computer>
-Date: Mon, 14 Jun 2021 12:12:56 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/17/3
+Message-ID: <5d2e2615-eed6-40ac-2788-3e4a882e2f80@census-labs.com>
+Date: Wed, 17 Feb 2021 20:06:00 +0200
+From: Dimitrios Glynos <dimitris@...sus-labs.com>
 To: oss-security@...ts.openwall.com
-Subject: xscreensaver: filename command injection in vidwhacker screensaver
+Subject: CVE-2021-26911: Canary Mail with IMAP STARTTLS missing certificate validation
 Content-Type: text/plain; charset=utf-8
 
-The "vidwhacker" screensaver in xscreensaver does not properly escape
-filenames of input images, allowing command injection via filenames.
+Hello,
 
-The autor of xscreensaver considers this a non-issue.
+Rayd Debbas of CENSUS identified that Canary Mail versions 3.20 and 3.21
+(and possibly previous versions) do not perform a certificate validation
+check when configured for IMAP in STARTTLS mode. This bug affects Canary
+Mail builds for Apple MacOS and iOS.
 
-xscreensaver contains a screensaver called "vidwhacker" which uses
-image files as an input and passes them to various command line tools
-for decoding. A user can configure a directory with images.
+It is thus possible to carry out a man-in-the-middle attack in such
+scenarios, and victim users receive no warning. More information
+about the issue can be found here:
 
-The filenames are passed to the command line tools without any
-escaping. This allows injecting commands, e.g. via subshells.
+https://census-labs.com/news/2021/02/17/canary-mail-app-missing-certificate-validation-check-on-imap-starttls/
 
-PoC:
-* Create a dir with a file named '$(touch pwn).png'
-* Run xscreensaver-demo, configure the vidwhacker directory to above
-  dir and run preview.
-* File "pwn" gets created.
+The creators of Canary Mail, have released version 3.22
+of the software which addresses the issue. The relevant git commit
+can be found here:
 
-I believe this is a low risk security issue. A possible attack
-scenario would be e.g. someone providing an image collection to a
-victim which is large enough that an unusual filename wouldn't be noted.
+https://github.com/canarymail/mailcore2/commit/45acb4efbcaa57a20ac5127dc976538671fce018?branch=45acb4efbcaa57a20ac5127dc976538671fce018&diff=split
 
-The author of xscreensaver disagrees and wrote me he considers this a
-non-issue.
+CVE-2021-26911 was assigned to this issue by MITRE.
 
--- 
-Hanno Böck
-https://hboeck.de/
+Kind regards,
+
+Dimitris
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
