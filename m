@@ -1,95 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/18/5
-Message-Id: <20241D7D-8489-4A8A-82BE-7CFD4F92E1F8@beckweb.net>
-Date: Thu, 18 Mar 2021 14:28:59 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/18/5
+Message-ID: <CALwS-OMachBCyzOmdveGjsz+Ebknrc_Nh6Tq71uH-e4y9DTv5A@mail.gmail.com>
+Date: Thu, 18 Feb 2021 12:53:39 -0500
+From: Bill Lucy <wtlucy@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: CVE-2021-26296: Cross-Site Request Forgery (CSRF) vulnerability in Apache MyFaces
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Description:
+In the default configuration, Apache MyFaces Core versions 2.2.0 to 2.2.13,
+2.3.0 to 2.3.7, 2.3-next-M1 to 2.3-next-M4, and 3.0.0-RC1 use
+cryptographically weak implicit and explicit cross-site request forgery
+(CSRF) tokens. Due to that limitation, it is possible (although difficult)
+for an attacker to calculate a future CSRF token value and to use that
+value to trick a user into executing unwanted actions on an application.
 
-The following releases contain fixes for security vulnerabilities:
+This issue is being tracked as MYFACES-4373
 
-* CloudBees AWS Credentials Plugin 1.28.1
-* Libvirt Agents Plugin 1.9.1
-* Matrix Authorization Strategy Plugin 2.6.6
-* Role-based Authorization Strategy Plugin 3.1.1
-* Warnings Next Generation Plugin 8.5.0
+Mitigation:
+Existing web.xml configuration parameters can be used to direct MyFaces to
+use SecureRandom for CSRF token generation:
 
+org.apache.myfaces.RANDOM_KEY_IN_VIEW_STATE_SESSION_TOKEN=secureRandom
+org.apache.myfaces.RANDOM_KEY_IN_CSRF_SESSION_TOKEN=secureRandom
+org.apache.myfaces.RANDOM_KEY_IN_WEBSOCKET_SESSION_TOKEN=secureRandom
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-03-18/
+Credit:
+Apache MyFaces would like to thank Wolfgang Ettlinger (Certitude Consulting
+GmbH)
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Regards,
+Bill Lucy, MyFaces PMC
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2180 / CVE-2021-21623
-Items (like jobs) can be organized hierarchically in Jenkins, using the
-Folders Plugin or something similar. An item is expected to be accessible
-only if all its ancestors are accessible as well.
-
-Matrix Authorization Strategy Plugin 2.6.5 and earlier does not correctly
-perform permission checks to determine whether an item should be
-accessible.
-
-This allows attackers with Item/Read permission on nested items to access
-them, even if they lack Item/Read permission for parent folders.
-
-
-SECURITY-2182 / CVE-2021-21624
-Items (like jobs) can be organized hierarchically in Jenkins, using the
-Folders Plugin or something similar. An item is expected to be accessible
-only if all its ancestors are accessible as well.
-
-Role-based Authorization Strategy Plugin 3.1 and earlier does not correctly
-perform permission checks to determine whether an item should be
-accessible.
-
-This allows attackers with Item/Read permission on nested items to access
-them, even if they lack Item/Read permission for parent folders.
-
-
-SECURITY-2032 / CVE-2021-21625
-CloudBees AWS Credentials Plugin 1.28 and earlier does not perform a
-permission check in a helper method for HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of AWS credentials stored in Jenkins if any of the following plugins
-are installed:
-
-* Amazon Elastic Container Service (ECS) / Fargate
-* AWS Parameter Store Build Wrapper
-* AWS SAM
-
-Further plugins may use this helper method as well without performing a
-permission check themselves.
-
-Credentials IDs obtained this way can be used as part of an attack to
-capture the credentials using another vulnerability.
-
-
-SECURITY-2041 / CVE-2021-21626
-Warnings Next Generation Plugin 8.4.4 and earlier does not perform
-permission checks in methods implementing form validation.
-
-This allows attackers with Item/Read permission but without Item/Workspace
-or Item/Configure permission to check whether attacker-specified file
-patterns match workspace contents. A sequence of requests can be used to
-effectively list workspace contents.
-
-
-SECURITY-1764 / CVE-2021-21627
-Libvirt Agents Plugin 1.9.0 and earlier does not require POST requests for
-a form submission endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to stop hypervisor domains.
