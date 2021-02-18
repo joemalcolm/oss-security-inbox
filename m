@@ -1,90 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/06/1
-Message-ID: <20211206045814.q3o5m32osc37ra4o@senku>
-Date: Mon, 6 Dec 2021 15:58:14 +1100
-From: Aleksa Sarai <cyphar@...har.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-43784: integer overflow in runc's netlink bytemsg allows malicious configuration to discreetly modify container configuration
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/18/4
+Message-ID: <E42466DE-9ABE-4996-9F6B-D82DA14396B9@secuinfra.com>
+Date: Thu, 18 Feb 2021 15:52:54 +0000
+From: Felix Kosterhon <felix.kosterhon@...uinfra.com>
+To: Steve Grubb <sgrubb@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Vulnerability in the Linux Audit Framework Auditd
 Content-Type: text/plain; charset=utf-8
 
-GitHub Advisory:
-  <https://github.com/opencontainers/runc/security/advisories/GHSA-v95c-p5hm-xq8f>
+Hello Mr. Grubb,
+ 
+thank you for your insight.
+First and foremost we would like to clarify that our intent is not to put blame on anyone but to improve the level of security for the affected systems and the organisations utilising Auditd.
+According to the rules.conf manual page, file-watch rules are meant to monitor any accesses to files based on their permission level.
+For the syscalls mentioned in this report this is not the case.
+ 
+RedHat Inc. shares our perspective on this issue and has assigned a CVE for the vulnerability. Additionally they informed us that they will work together with the Upstream Linux Kernel Developers on behalf of fixing this issue.
+ 
+Furthermore we were asked by RedHat Inc. to share our findings via this mailing list.
+ 
+Kind regards,
+ 
+Felix Kosterhon
+Cyber Defense Analyst
+SECUINFRA GmbH, Germany
 
-This vulnerability was originally thought to be exploitable in released
-versions of runc and thus a CVE was assigned (though it was thought to
-be more difficult than with the yet-unreleased runc tree), but
-subsequent analysis found that it appears to never have been exploitable
-outside of the yet-unreleased runc tree.
+﻿Am 18.02.21, 15:32 schrieb "Steve Grubb" <sgrubb@...hat.com>:
 
-However, out of an abundance of caution we still followed through with
-an emergency release of runc 1.0.3[2] which resolves this issue.
+    Hello,
 
-[ Impact ]
+    I normally do not comment on security announcements, but this needs some 
+    fixing...
 
-In runc, netlink is used internally as a serialization system for
-specifying the relevant container configuration to the C portion of our
-code (responsible for the based namespace setup of containers). In all
-versions of runc prior to 1.0.3, the encoder did not handle the
-possibility of an integer overflow in the 16-bit length field for the
-byte array attribute type, meaning that a large enough malicious byte
-array attribute could result in the length overflowing and the attribute
-contents being parsed as netlink messages for container configuration.
+    On Thursday, February 18, 2021 5:15:20 AM EST Felix Kosterhon wrote:
+    > my name is Felix Kosterhon and i am Cyber Defense Analyst at SECUINFRA
+    > GmbH, Germany.
+    > 
+    > We discovered a security vulnerability in the Linux Audit Framework
+    > (Auditd).
 
-This vulnerability requires the attacker to have some control over the
-configuration of the container and would allow the attacker to bypass
-the namespace restrictions of the container by simply adding their own
-netlink payload which disables all namespaces.
+    Before people start asking for an updated audit package, auditd is not 
+    responsible for this. The Linux Kernel is where any issue might lie. Blaming 
+    auditd  is like saying syslog has a security problem because a login was not 
+    recorded.
 
-Prior to 9c44407, in practice it was fairly difficult to specify an
-arbitrary-length netlink message with most container runtimes. The only
-user-controlled byte array was the namespace paths attributes which can
-be specified in runc's config.json, but as far as we can tell no
-container runtime gives raw access to that configuration setting -- and
-having raw access to that setting would allow the attacker to disable
-namespace protections entirely anyway (setting them to /proc/1/ns/...
-for instance). In addition, each namespace path is limited to 4096 bytes
-(with only 7 namespaces supported by runc at the moment) meaning that
-even with custom namespace paths it appears an attacker still cannot
-shove enough bytes into the netlink bytemsg in order to overflow the
-uint16 counter.
+    > During our research we discovered that the usage of a certain
+    > open-syscall (open_by_handle_at) is not covered by the current file watch
+    > implementation of Auditd.
 
-However, out of an abundance of caution (given how old this bug is) we
-decided to treat it as a potentially exploitable vulnerability with a
-low severity. After 9c44407 (which was not present in any release of
-runc prior to the discovery of this bug), all mount paths are included
-as a giant netlink message which means that this bug becomes
-significantly more exploitable in more reasonable threat scenarios.
+    Where to begin? name_to_handle_at/open_by_handle_at work together. 
+    name_to_handle_at is the syscall that would have the path name and returns a 
+    handle. open_by_handle_at() takes the handle and makes a descriptor. That 
+    means open_by_handle_at() has no idea what the path might be. All it has is 
+    numbers. So, if there was going to be a watch placed, it would be more 
+    meaningful on name_to_handle_at(). Anyone concerned can place a syscall audit 
+    rule on name_to_handle_at() like this:
 
-The main users impacted are those who allow untrusted images with
-untrusted configurations to run on their machines (such as with shared
-cloud infrastructure), though as mentioned above it appears this bug was
-not practically exploitable on any released version of runc to date.
+    -a always,exit -F arch=b32 -S name_to_handle_at  -F auid>=1000 -F auid!=unset
+    -a always,exit -F arch=b64 -S name_to_handle_at -F auid>=1000 -F auid!=unset
 
-[ Patches ]
+    But then...what might use this? All the references I can find seem to 
+    associate this syscall with NFS. And if that is the case, the audit system 
+    doesn't really support remote file systems. Sometimes it does. But that is 
+    more likely accidental than anything planned.
 
-The patch for this is commit d72d057[1] and runc 1.0.3[2] was released with
-this bug fixed.
+    But this does not stop anyone with admin privileges from using the syscall 
+    pair locally.
 
-[ Workarounds ]
+    -Steve
 
-To the extent this is exploitable, disallowing untrusted namespace paths
-in container configuration should eliminate all practical ways of
-exploiting this bug. It should be noted that untrusted namespace paths
-would allow the attacker to disable namespace protections entirely even
-in the absence of this bug.
+    > This allows a local attacker with elevated
+    > privileges (CAP_DAC_READ_SEARCH capability) to read and modify files
+    > without being noticed by the implemented Auditd file watches.
+    >
+    > We disclosed our finding to RedHat, Inc. in November and it will be
+    > published today, Feb 18, under CVE-2020-35501. As suggested by RedHat,
+    > Inc., we want to inform you about this security flaw. If you have any
+    > further questions, we are happy to help you.
+    > 
+    > We would also like to subscribe to your mailing list to stay informed about
+    > current security topics.
+    > 
+    > Best Regards,
+    > 
+    > 
+    > 
+    > Felix Kosterhon
+    > 
+    > Cyber Defense Analyst
+    > 
+    > 
+    > 
+    > 
+    > 
+    > SECUINFRA GmbH
+    > 
+    > Münchener Straße 36
+    > 
+    > 60329 Frankfurt/Main
+    > 
+    > 
+    > 
+    > Mobile:  +49 151 18975666
+    > 
+    > 
+    > 
+    > felix.kosterhon@...uinfra.com
+    > 
+    > www.secuinfra.com
+    > 
+    > 
+    > 
+    > Follow us on XING.
 
-[ Credits ]
 
-Thanks for Felix Wilhelm from Google Project Zero for discovering this
-vulnerability.
 
-[1]: https://github.com/opencontainers/runc/commit/d72d057ba794164c3cce9451a00b72a78b25e1ae
-[2]: https://github.com/opencontainers/runc/releases/tag/v1.0.3
 
--- 
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
