@@ -1,34 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/12/4
-Message-ID: <CAJRvFdp+WMVa5n5DRT53Ov4h59doeLGOz11A89Oa4ou2k++t_Q@mail.gmail.com>
-Date: Mon, 12 Apr 2021 16:09:59 -0500
-From: Mike Drob <mdrob@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-27905: Apache Solr: SSRF vulnerability with the Replication handler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/18/1
+Message-ID: <41A7FAA9-5814-47A7-A9A5-B36D9DE550A8@secuinfra.com>
+Date: Thu, 18 Feb 2021 10:15:20 +0000
+From: Felix Kosterhon <felix.kosterhon@...uinfra.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Vulnerability in the Linux Audit Framework Auditd
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Dear Sir or Madam,
 
-The ReplicationHandler (normally registered at "/replication" under a
-Solr core) has a "masterUrl" (also "leaderUrl" alias) parameter that
-is used to designate another ReplicationHandler on another Solr core
-to replicate index data into the local core.  To prevent a SSRF
-vulnerability, Solr ought to check these parameters against a similar
-configuration it uses for the "shards" parameter.  Prior to this bug
-getting fixed, it did not.
+my name is Felix Kosterhon and i am Cyber Defense Analyst at SECUINFRA GmbH, Germany. 
 
-This problem affects essentially all Solr versions prior to it getting
-fixed in 8.8.2.
+We discovered a security vulnerability in the Linux Audit Framework (Auditd). During our research we discovered that the usage of a certain open-syscall (open_by_handle_at) is not covered by the current file watch implementation of Auditd. This allows a local attacker with elevated privileges (CAP_DAC_READ_SEARCH capability) to read and modify files without being noticed by the implemented Auditd file watches.
 
-This issue is being tracked as SOLR-15217
+We disclosed our finding to RedHat, Inc. in November and it will be published today, Feb 18, under CVE-2020-35501. As suggested by RedHat, Inc., we want to inform you about this security flaw. If you have any further questions, we are happy to help you.
 
-Mitigation:
+We would also like to subscribe to your mailing list to stay informed about current security topics.
 
-Ensure that any access to the replication handler is purely internal
-to Solr.  Typically, it's only accessed externally for
-diagnostic/informational purposes.
+Best Regards,
 
-Credit:
+ 
 
-Reported by Caolinhong(Skay) from QI-ANXIN Cert (QI-ANXIN Technology Group Inc.)
+Felix Kosterhon
 
+Cyber Defense Analyst
+
+ 
+
+ 
+
+SECUINFRA GmbH
+
+Münchener Straße 36
+
+60329 Frankfurt/Main
+
+ 
+
+Mobile:  +49 151 18975666
+
+ 
+
+felix.kosterhon@...uinfra.com
+
+www.secuinfra.com
+
+ 
+
+Follow us on XING.
+
+
+Content of type "text/html" skipped
+
+Download attachment "image001.jpg" of type "image/jpeg" (46782 bytes)
+
+Download attachment "image002.png" of type "image/png" (201747 bytes)
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4196 bytes)
