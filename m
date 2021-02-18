@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6387" "Friday" "12" "August" "2016" "10:10:10" "+0000" "=?gb2312?B?wazSu7q6?=" "lianyihan@360.cn" "<A962A2D04FAB5C4499FEFD15B642FA0A011EF049@EX02.corp.qihoo.net>" "108" "[oss-security] [CVE-2016-6671] ffmpeg buffer overflow when decoding swf" "^Date:" nil nil "8" "2016081210:10:10" "[oss-security] [CVE-2016-6671] ffmpeg buffer overflow when decoding swf" (number mark "U       lianyihan@36 Aug 12  108/6387  " thread-indent "\"[oss-security] [CVE-2016-6671] ffmpeg buffer overflow when decoding swf\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2717" "Thursday" "18" "February" "2021" "09:32:06" "-0500" "Steve Grubb" "sgrubb@redhat.com" nil "100" "Re: [oss-security] Vulnerability in the Linux Audit Framework Auditd" nil nil nil "2" nil nil (number mark "U       sgrubb@redha Feb 18  100/2717  " thread-indent "\"Re: [oss-security] Vulnerability in the Linux Audit Framework Auditd\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Vulnerability in the Linux Audit Framework Auditd" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21676 invoked by uid 550); 12 Aug 2016 11:24:34 -0000
+Received: (qmail 5556 invoked by uid 550); 18 Feb 2021 14:32:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,129 +11,134 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20166 invoked from network); 12 Aug 2016 10:10:23 -0000
-Thread-Topic: [CVE-2016-6671] ffmpeg buffer overflow when decoding swf
-Thread-Index: AdH0gYUExMQEPjaTRNiw3uMEtSaHQg==
-Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A011EF049@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.213.15]
-Content-Type: multipart/alternative;
-	boundary="_000_A962A2D04FAB5C4499FEFD15B642FA0A011EF049EX02corpqihoone_"
-MIME-Version: 1.0
-Date: Fri, 12 Aug 2016 10:10:10 +0000
-From: =?gb2312?B?wazSu7q6?= <lianyihan@360.cn>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [CVE-2016-6671] ffmpeg buffer overflow when decoding swf
+Received: (qmail 5536 invoked from network); 18 Feb 2021 14:32:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1613658734;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2taeg/tla7B8CXc3voHozbDrS9+6n0u88tikUMeoRFs=;
+	b=MHWBC3iR9dMMT6SwPUf3SEIXHRQ7+C9CtBRRR54W8+H+xMm9FJl0BqiOhvHKZXr3Ot8ZDj
+	oL1I2+3pnHmj421kiVm3YB57l/IHkgECo3gsCoP9NgY5ln/PYyeeDjPnpB0pSBXhAuSTpx
+	VZQ/dUYkIjliAjw8TJ7dRfMz+FecRvU=
+X-MC-Unique: ixQzpAG7MyCMAcf3KviAfA-1
+From: Steve Grubb <sgrubb@redhat.com>
 To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Cc: Felix Kosterhon <felix.kosterhon@secuinfra.com>
+Date: Thu, 18 Feb 2021 09:32:06 -0500
+Message-ID: <2132838.iZASKD2KPV@x2>
+Organization: Red Hat
+In-Reply-To: <41A7FAA9-5814-47A7-A9A5-B36D9DE550A8@secuinfra.com>
+References: <41A7FAA9-5814-47A7-A9A5-B36D9DE550A8@secuinfra.com>
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=sgrubb@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+Subject: Re: [oss-security] Vulnerability in the Linux Audit Framework Auditd
 
---_000_A962A2D04FAB5C4499FEFD15B642FA0A011EF049EX02corpqihoone_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+Hello,
 
-DQpIaSAsIEmhr20gTGlhbiAsYSBzZWN1cml0eSByZXNlYXJjaGVyIGluIFFp
-aG9vIDM2MC4NCg0KSSBmb3VuZCBhIHZ1bG5lcmFiaWxpdHkgb2YgZmZtcGVn
-IC4NCg0KVGhpcyBpcyBhIGJ1ZmZlciBvdmVyZmxvdyB2dWxuZXJhYmlsaXR5
-IHdoZW4gZGVjb2Rpbmcgc3dmLCBhbmQgaGFzIGJlZW4gYXNzaWduZWQgdGhl
-IENWRSBpZGVudGlmaWVyIENWRS0yMDE2LTY2NzEgLg0KDQpWZXJzaW9uIEFm
-ZmVjdGVkOiAgPD0zLjEuMQ0KRml4ZWQgVmVyc2lvbjogICAgICAgIDMuMS4y
-DQoNCldlYiBzaXRlOiAgICBodHRwOi8vZmZtcGVnLm9yZy9zZWN1cml0eS5o
-dG1sDQoNClZ1bG5lcmFiaWxpdHkgZGV0YWlsOg0KDQoNCj09PT09PT09PT09
-PT09PT09PSB0ZXN0IGNvbW1hbmQgPT09PT09PT09PT09PT09PT09PT09PT0N
-Cg0KDQoNCkZmbXBlZyAtaSBwb2Muc3dmIC1iOnYgNjQwayAteSBvdXRwdXQu
-dHMNCg0KPT09PT09PT09PT09PT0gYWZmZWN0ZWQgY29kZSBhbmQgY3Jhc2gg
-aW5mbyA9PT09PT09PT09PT09PT09PQ0KDQpPbiBsaWJhdmNvZGVjL3Jhd2Rl
-Yy5jIDoNCg0KcmF3X2RlY29kZSgpDQp7DQqhrQ0KbWVtY3B5KGNvbnRleHQt
-PnBhbGV0dGUtPmRhdGEsIHBhbCwgYXZwa3QtPnNpemUgLSB2aWRfc2l6ZSk7
-ICAgICAgICAgICAgICAgICAgICAgICAgICAvLyBidWZmZXIgb3ZlcmZsb3cN
-CqGtDQp9DQoNCkJhY2sgdHJhY2U6DQogICAgICAgICMwICAweDAwMDA3ZjZh
-MTI4OTU1ZjcgaW4gcmFpc2UgKCkgZnJvbSAvbGliNjQvbGliYy5zby42DQoj
-MSAgMHgwMDAwN2Y2YTEyODk2Y2U4IGluIGFib3J0ICgpIGZyb20gL2xpYjY0
-L2xpYmMuc28uNg0KIzIgIDB4MDAwMDAwMDAwMDRkMGQ4NiBpbiBfX3Nhbml0
-aXplcjo6QWJvcnQoKSAoKQ0KICAgIGF0IC90bXAvbGx2bS0zLjguMHJjMy5z
-cmMvdXRpbHMvcmVsZWFzZS9maW5hbC9sbHZtLnNyYy9wcm9qZWN0cy9jb21w
-aWxlci1ydC9saWIvc2FuaXRpemVyX2NvbW1vbi9zYW5pdGl6ZXJfcG9zaXhf
-bGliY2RlcC5jYzoxMjQNCiMzICAweDAwMDAwMDAwMDA0YmViNjUgaW4gX19z
-YW5pdGl6ZXI6OkRpZSgpICgpDQogICAgYXQgL3RtcC9sbHZtLTMuOC4wcmMz
-LnNyYy91dGlscy9yZWxlYXNlL2ZpbmFsL2xsdm0uc3JjL3Byb2plY3RzL2Nv
-bXBpbGVyLXJ0L2xpYi9zYW5pdGl6ZXJfY29tbW9uL3Nhbml0aXplcl9jb21t
-b24uY2M6MTQ3DQojNCAgMHgwMDAwMDAwMDAwNGI4YTIyIGluIH5TY29wZWRJ
-bkVycm9yUmVwb3J0ICgpIGF0IC90bXAvbGx2bS0zLjguMHJjMy5zcmMvdXRp
-bHMvcmVsZWFzZS9maW5hbC9sbHZtLnNyYy9wcm9qZWN0cy9jb21waWxlci1y
-dC9saWIvYXNhbi9hc2FuX3JlcG9ydC5jYzo3MDkNCiM1ICAweDAwMDAwMDAw
-MDA0YjgzZDEgaW4gUmVwb3J0R2VuZXJpY0Vycm9yICgpIGF0IC90bXAvbGx2
-bS0zLjguMHJjMy5zcmMvdXRpbHMvcmVsZWFzZS9maW5hbC9sbHZtLnNyYy9w
-cm9qZWN0cy9jb21waWxlci1ydC9saWIvYXNhbi9hc2FuX3JlcG9ydC5jYzox
-MTExDQojNiAgMHgwMDAwMDAwMDAwNDljMGUyIGluIF9faW50ZXJjZXB0b3Jf
-bWVtY3B5ICgpDQogICBhdCAvdG1wL2xsdm0tMy44LjByYzMuc3JjL3V0aWxz
-L3JlbGVhc2UvZmluYWwvbGx2bS5zcmMvcHJvamVjdHMvY29tcGlsZXItcnQv
-bGliL2FzYW4vYXNhbl9pbnRlcmNlcHRvcnMuY2M6NDM4DQojNyAgMHgwMDAw
-MDAwMDAxNDQ0ZmRiIGluIHJhd19kZWNvZGUgKGF2Y3R4PTB4NjE5MDAwMDA4
-YzgwLCBkYXRhPTB4NjE1MDAwMDNjNTgwLCBnb3RfZnJhbWU9MHg3ZmZmODlj
-YWEwNDgsIGF2cGt0PTB4N2ZmZjg5Y2E5YTE4KQ0KICAgIGF0IGxpYmF2Y29k
-ZWMvcmF3ZGVjLmM6MzgxDQojOCAgMHgwMDAwMDAwMDAxNWU3ZjE4IGluIGF2
-Y29kZWNfZGVjb2RlX3ZpZGVvMiAoYXZjdHg9MHg2MTkwMDAwMDhjODAsIHBp
-Y3R1cmU9MHg2MTUwMDAwM2M1ODAsIGdvdF9waWN0dXJlX3B0cj0weDdmZmY4
-OWNhYTA0OCwgYXZwa3Q9MHg3ZmZmODljYTlmZjApDQogICAgYXQgbGliYXZj
-b2RlYy91dGlscy5jOjIyMjQNCiM5ICAweDAwMDAwMDAwMDA1Mjg1ZWUgaW4g
-ZGVjb2RlX3ZpZGVvIChpc3Q9MHg2MTQwMDAwMWJhNDAsIHBrdD0weDdmZmY4
-OWNhOWZmMCwgZ290X291dHB1dD0weDdmZmY4OWNhYTA0OCkgYXQgZmZtcGVn
-LmM6MjA4Nw0KIzEwIDB4MDAwMDAwMDAwMDUxNzMzYSBpbiBwcm9jZXNzX2lu
-cHV0X3BhY2tldCAoaXN0PTB4NjE0MDAwMDFiYTQwLCBwa3Q9MHg3ZmZmODlj
-YWE4ODgsIG5vX2VvZj0wKSBhdCBmZm1wZWcuYzoyMzQwDQojMTEgMHgwMDAw
-MDAwMDAwNTFlYzkzIGluIHByb2Nlc3NfaW5wdXQgKGZpbGVfaW5kZXg9MCkg
-YXQgZmZtcGVnLmM6NDAyMA0KIzEyIDB4MDAwMDAwMDAwMDUxNDc2MyBpbiB0
-cmFuc2NvZGVfc3RlcCAoKSBhdCBmZm1wZWcuYzo0MTA4DQojMTMgMHgwMDAw
-MDAwMDAwNTBkM2YxIGluIHRyYW5zY29kZSAoKSBhdCBmZm1wZWcuYzo0MTYy
-DQojMTQgMHgwMDAwMDAwMDAwNTBjMmU5IGluIG1haW4gKGFyZ2M9NiwgYXJn
-dj0weDdmZmY4OWNhYWQxOCkgYXQgZmZtcGVnLmM6NDM1NQ0KDQo9PT09PT09
-PT09PT09PT09PT09PT09IHBhdGNoID09PT09PT09PT09PT09PT09PT09PT09
-PT09PQ0KDQpGb3VuZC1ieTogPGxpYW55aWhhbkAzNjAuY24+DQpTaWduZWQt
-b2ZmLWJ5OiBNaWNoYWVsIE5pZWRlcm1heWVyIDxtaWNoYWVsQG5pZWRlcm1h
-eWVyLmNjPg0KLS0tDQpsaWJhdmNvZGVjL3Jhd2RlYy5jIHwgMjUgKysrKysr
-KysrKysrKysrKystLS0tLS0tLQ0KMSBmaWxlIGNoYW5nZWQsIDE3IGluc2Vy
-dGlvbnMoKyksIDggZGVsZXRpb25zKC0pDQoNCmRpZmYgLS1naXQgYS9saWJh
-dmNvZGVjL3Jhd2RlYy5jIGIvbGliYXZjb2RlYy9yYXdkZWMuYw0KaW5kZXgg
-NzY1ZTU2Ny4uZjk3YTgzOSAxMDA2NDQNCi0tLSBhL2xpYmF2Y29kZWMvcmF3
-ZGVjLmMNCisrKyBiL2xpYmF2Y29kZWMvcmF3ZGVjLmMNCkBAIC0zNjUsMjAg
-KzM2NSwyOSBAQCBzdGF0aWMgaW50IHJhd19kZWNvZGUoQVZDb2RlY0NvbnRl
-eHQgKmF2Y3R4LCB2b2lkICpkYT0NCnRhLCBpbnQgKmdvdF9mcmFtZSwNCiAg
-ICAgaWYgKGF2Y3R4LT5waXhfZm10ID0zRD0zRCBBVl9QSVhfRk1UX1BBTDgp
-IHsNCiAgICAgICAgIGNvbnN0IHVpbnQ4X3QgKnBhbCA9M0QgYXZfcGFja2V0
-X2dldF9zaWRlX2RhdGEoYXZwa3QsIEFWX1BLVF9EQVRBXz0NClBBTEVUVEUs
-DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICBOVUxMKTsNCi0gICAgICAgIGlmIChwYWwpIHsNCi0gICAg
-ICAgICAgICBhdl9idWZmZXJfdW5yZWYoJmNvbnRleHQtPnBhbGV0dGUpOw0K
-KyAgICAgICAgaW50IHJldDsNCisgICAgICAgIGlmICghY29udGV4dC0+cGFs
-ZXR0ZSkNCiAgICAgICAgICAgICBjb250ZXh0LT5wYWxldHRlID0zRCBhdl9i
-dWZmZXJfYWxsb2MoQVZQQUxFVFRFX1NJWkUpOw0KLSAgICAgICAgICAgIGlm
-ICghY29udGV4dC0+cGFsZXR0ZSkgew0KLSAgICAgICAgICAgICAgICBhdl9i
-dWZmZXJfdW5yZWYoJmZyYW1lLT5idWZbMF0pOw0KLSAgICAgICAgICAgICAg
-ICByZXR1cm4gQVZFUlJPUihFTk9NRU0pOw0KLSAgICAgICAgICAgIH0NCisg
-ICAgICAgIGlmICghY29udGV4dC0+cGFsZXR0ZSkgew0KKyAgICAgICAgICAg
-IGF2X2J1ZmZlcl91bnJlZigmZnJhbWUtPmJ1ZlswXSk7DQorICAgICAgICAg
-ICAgcmV0dXJuIEFWRVJST1IoRU5PTUVNKTsNCisgICAgICAgIH0NCisgICAg
-ICAgIHJldCA9M0QgYXZfYnVmZmVyX21ha2Vfd3JpdGFibGUoJmNvbnRleHQt
-PnBhbGV0dGUpOw0KKyAgICAgICAgaWYgKHJldCA8IDApIHsNCisgICAgICAg
-ICAgICBhdl9idWZmZXJfdW5yZWYoJmZyYW1lLT5idWZbMF0pOw0KKyAgICAg
-ICAgICAgIHJldHVybiByZXQ7DQorICAgICAgICB9DQorDQorICAgICAgICBp
-ZiAocGFsKSB7DQogICAgICAgICAgICAgbWVtY3B5KGNvbnRleHQtPnBhbGV0
-dGUtPmRhdGEsIHBhbCwgQVZQQUxFVFRFX1NJWkUpOw0KICAgICAgICAgICAg
-IGZyYW1lLT5wYWxldHRlX2hhc19jaGFuZ2VkID0zRCAxOw0KICAgICAgICAg
-fSBlbHNlIGlmIChjb250ZXh0LT5pc19udXRfcGFsOCkgew0KICAgICAgICAg
-ICAgIGludCB2aWRfc2l6ZSA9M0QgYXZjdHgtPndpZHRoICogYXZjdHgtPmhl
-aWdodDsNCi0gICAgICAgICAgICBpZiAoYXZwa3QtPnNpemUgLSB2aWRfc2l6
-ZSkgew0KKyAgICAgICAgICAgIGludCBwYWxfc2l6ZSA9M0QgYXZwa3QtPnNp
-emUgLSB2aWRfc2l6ZTsNCisNCisgICAgICAgICAgICBpZiAoYXZwa3QtPnNp
-emUgPiB2aWRfc2l6ZSAmJiBwYWxfc2l6ZSA8PTNEIEFWUEFMRVRURV9TSVpF
-KSB7DQogICAgICAgICAgICAgICAgIHBhbCA9M0QgYXZwa3QtPmRhdGEgKyB2
-aWRfc2l6ZTsNCi0gICAgICAgICAgICAgICAgbWVtY3B5KGNvbnRleHQtPnBh
-bGV0dGUtPmRhdGEsIHBhbCwgYXZwa3QtPnNpemUgLSB2aWRfc2l6ZT0NCik7
-DQorICAgICAgICAgICAgICAgIG1lbWNweShjb250ZXh0LT5wYWxldHRlLT5k
-YXRhLCBwYWwsIHBhbF9zaXplKTsNCiAgICAgICAgICAgICAgICAgZnJhbWUt
-PnBhbGV0dGVfaGFzX2NoYW5nZWQgPTNEIDE7DQogICAgICAgICAgICAgfQ0K
-ICAgICAgICAgfQ0K
+I normally do not comment on security announcements, but this needs some=20
+fixing...
 
---_000_A962A2D04FAB5C4499FEFD15B642FA0A011EF049EX02corpqihoone_--
+On Thursday, February 18, 2021 5:15:20 AM EST Felix Kosterhon wrote:
+> my name is Felix Kosterhon and i am Cyber Defense Analyst at SECUINFRA
+> GmbH, Germany.
+>=20
+> We discovered a security vulnerability in the Linux Audit Framework
+> (Auditd).
+
+Before people start asking for an updated audit package, auditd is not=20
+responsible for this. The Linux Kernel is where any issue might lie. Blamin=
+g=20
+auditd  is like saying syslog has a security problem because a login was no=
+t=20
+recorded.
+
+> During our research we discovered that the usage of a certain
+> open-syscall (open_by_handle_at) is not covered by the current file watch
+> implementation of Auditd.
+
+Where to begin? name_to_handle_at/open_by_handle_at work together.=20
+name_to_handle_at is the syscall that would have the path name and returns =
+a=20
+handle. open_by_handle_at() takes the handle and makes a descriptor. That=20
+means open_by_handle_at() has no idea what the path might be. All it has is=
+=20
+numbers. So, if there was going to be a watch placed, it would be more=20
+meaningful on name_to_handle_at(). Anyone concerned can place a syscall aud=
+it=20
+rule on name_to_handle_at() like this:
+
+-a always,exit -F arch=3Db32 -S name_to_handle_at  -F auid>=3D1000 -F auid!=
+=3Dunset
+-a always,exit -F arch=3Db64 -S name_to_handle_at -F auid>=3D1000 -F auid!=
+=3Dunset
+
+But then...what might use this? All the references I can find seem to=20
+associate this syscall with NFS. And if that is the case, the audit system=
+=20
+doesn't really support remote file systems. Sometimes it does. But that is=
+=20
+more likely accidental than anything planned.
+
+But this does not stop anyone with admin privileges from using the syscall=
+=20
+pair locally.
+
+-Steve
+
+> This allows a local attacker with elevated
+> privileges (CAP_DAC_READ_SEARCH capability) to read and modify files
+> without being noticed by the implemented Auditd file watches.
+>
+> We disclosed our finding to RedHat, Inc. in November and it will be
+> published today, Feb 18, under CVE-2020-35501. As suggested by RedHat,
+> Inc., we want to inform you about this security flaw. If you have any
+> further questions, we are happy to help you.
+>=20
+> We would also like to subscribe to your mailing list to stay informed abo=
+ut
+> current security topics.
+>=20
+> Best Regards,
+>=20
+>=20
+>=20
+> Felix Kosterhon
+>=20
+> Cyber Defense Analyst
+>=20
+>=20
+>=20
+>=20
+>=20
+> SECUINFRA GmbH
+>=20
+> M=FCnchener Stra=DFe 36
+>=20
+> 60329 Frankfurt/Main
+>=20
+>=20
+>=20
+> Mobile:  +49 151 18975666
+>=20
+>=20
+>=20
+> felix.kosterhon@secuinfra.com
+>=20
+> www.secuinfra.com
+>=20
+>=20
+>=20
+> Follow us on XING.
+
+
+
+
