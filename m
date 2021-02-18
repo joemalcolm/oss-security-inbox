@@ -1,4 +1,9 @@
-Received: (qmail 23974 invoked by uid 550); 15 May 2022 20:04:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5788" "Thursday" "18" "February" "2021" "11:47:16" "+0000" "Xen.org security team" "security@xen.org" nil "148" "[oss-security] Xen Security Advisory 366 v1 - missed flush in XSA-321 backport" nil nil nil "2" nil nil (number mark "U       security@xen Feb 18  148/5788  " thread-indent "\"[oss-security] Xen Security Advisory 366 v1 - missed flush in XSA-321 backport\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 366 v1 - missed flush in XSA-321 backport" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26174 invoked by uid 550); 18 Feb 2021 11:47:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,215 +12,170 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12094 invoked from network); 15 May 2022 19:47:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=codemonkey-ws.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=PW2480WjVPKIKY446rRVaXwhNEqqDJ4tj4HxXLPqcRY=;
-        b=LJBCLcgVTcPC7PC2lwjtBlrPQeVCGhLrBnK+4BnvE8NEZGec78JpPZmgF3xCTGVLzV
-         PDQPkS7v2I9O5bvM/qjcVLQPAciViHSSipCy84EnnlzX9vn7vqUSXbpJ1Tx5MYwhDfem
-         5NtLnUtxFPEiLmzXLleONPAcRwt7WbsSe95WPiDiahEfvAcTIhnA+563rAqpovDB9SlM
-         CHP7yYJDiGZM/tHAe8FFrhUZ1zANvZ6XGt0Nl+R64Ft/So9g3u8r5KwwcleJ1VX0r2tM
-         aXZmNA5SFzCPjrZH/e/kpv43hc6PAkZy/p/h1MCw3OK0hXQXIpR5e9w8ey5rAxLgwJlB
-         bPKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=PW2480WjVPKIKY446rRVaXwhNEqqDJ4tj4HxXLPqcRY=;
-        b=hR/NxFcZ4mUQVjbZ42fwLFaWdNbGoJbpuI8fDPhfVFITy7uhGM0/YfNKaWXIhnA1iY
-         69eUtM4EJ0dlDXG0BKfy6P0gwLnHBwzfJCKitZ/v179pWsGO0u7QSfpGKbSBaciq86qq
-         XgLmK+KLs0izfr9VuFwcf2e9Czu/ls7Wshwg6TdfEef9GfSqaWpP93vOowv0+0U8js9Z
-         rq0076NnBRQbh5qrCl4xbq0m3NAmoza8klkG8YfyHeXhBszg1Zmd/6BJdLgHk6PMyJi1
-         hA0ctXSxL9Uy+qt4IbOwBa5OoQ+AIMuYF/0Kyl+QW5EgeNQc0OGM+zBpn4rpToLdZoWO
-         2lqg==
-X-Gm-Message-State: AOAM531IxTKwzLVbIaWthWZvT0doZmL43FK6xUN5BQQBEUGMAeTr82Ua
-	4OGyeZow1U7k8CMbuPARoeiyHsih58tjZ/vVjQUyb5c8j+c=
-X-Google-Smtp-Source: ABdhPJyUJ9AlS2+gMVJoIVJ4raxiEpG2zFtYBr3MN/qp6Y43MBx2cy703nDWNUrZx8ePvs3jMxZ9aX9/qdshu42T2cw=
-X-Received: by 2002:a81:7b56:0:b0:2ec:2d65:7ccf with SMTP id
- w83-20020a817b56000000b002ec2d657ccfmr15896936ywc.208.1652644054531; Sun, 15
- May 2022 12:47:34 -0700 (PDT)
+Received: (qmail 26144 invoked from network); 18 Feb 2021 11:47:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=qAwJ86xNj6iy18bFGlL0Zzk4WSB6wYKH7ThjA2nJMbc=; b=bcGgWZH0tqptJxUlJZbVCtjYcp
+	LFW4FUt251tKzjm4otY0GBQoMCyB8XyeeY6drDkaC+tshsCnldctbYVNIh9loeP0DKpWCDANAOodX
+	G0/IwRq008RCT+2y99kvrhTMeWI2hWWfildC8sQFJigWFEOPpQoZPIOGc06X1dkvPXD8=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-References: <20220515162740.GA20526@openwall.com>
-In-Reply-To: <20220515162740.GA20526@openwall.com>
-From: Anthony Liguori <anthony@codemonkey.ws>
-Date: Sun, 15 May 2022 12:47:23 -0700
-Message-ID: <CA+aC4kumz8Zhp3Fw+zcRXFx485RwVMCM4bXCfH8XWjontNtknA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000cf93cd05df122d32"
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1lChm8-0008V9-8E@xenbits.xenproject.org>
+Date: Thu, 18 Feb 2021 11:47:16 +0000
+Subject: [oss-security] Xen Security Advisory 366 v1 - missed flush in XSA-321 backport
 
---000000000000cf93cd05df122d32
-Content-Type: text/plain; charset="UTF-8"
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-On Sun, May 15, 2022 at 9:28 AM Solar Designer <solar@openwall.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Hi,
->
-> This is a lengthy and belated message, yet I think is something we need
-> to discuss in here.
->
-> Context:
->
-> (linux-)distros list policy is generally to treat as public issues for
-> which a fix is public.  For issues that haven't yet been brought to
-> (linux-)distros, this means they shouldn't be - and instead should be
-> brought to oss-security right away.  For issues that have been on
-> (linux-)distros, this means an oss-security posting is to be made as
-> soon as a fix is made public.
->
-> This works well for most distros (where releasing a package update
-> generally implies documenting the update's known security relevance at
-> the same time) and for (linux-)distros list interactions with most
-> projects, with the major exception being the Linux kernel.
->
-> For Linux kernel maintainers, it is customary to post a fix technically
-> publicly but without indication of its security relevance, then work on
-> getting it merged into the various trees, and expect that its security
-> relevance wouldn't be clearly indicated publicly for a while.
->
-> I didn't keep track of statistics, but my impression was that in the
-> last few years for issues handled with linux-distros involved, the
-> maintainers usually reluctantly accepted linux-distros' way of handling
-> them - didn't insist that the reporter would post e.g. to netdev before
-> a "final" patch is ready, agreed on and honored coordinated release
-> dates, and didn't object to linux-distros members asking the reporter to
-> post about the issue to oss-security on the same day that a posting to a
-> Linux kernel list is made.  I was grateful for that, especially knowing
-> that some of this is an inconvenience/overhead for the maintainers.
->
-> The handling was still often problematic (somehow way worse than for
-> other projects, in my impression), but that appeared to be because
-> discoverers/reporters were not familiar with the procedure and with our
-> expectations, or/and because our policy and thus expectations were
-> counter-intuitive for them (I admit this could mean that we were wrong
-> in having such unexpected policy).  This also suggested that many didn't
-> fully read or didn't understand our published policy before posting to
-> linux-distros, which I tried to address by adding clarifications, some
-> emphasized in bold and eventually even in ALL CAPS (not as shouting, but
-> to make these parts less likely overlooked).
->
-> Somehow it seems to have gotten worse this year.  In handling of an
-> issue in February, a reporter planned to ignore our policy after having
-> already shared an issue with linux-distros, and a list member from a
-> major distro tried to enforce the policy.  In discussion that followed,
-> a kernel maintainer (someone I have a lot of respect for, and who I
-> think is also on the kernel security team?) said he had directed the
-> reporter to share the issue with linux-distros despite of the reporter's
-> explicit concerns and non-acceptance of the policy, expecting that
-> linux-distros members would be "reasonable" and won't actually enforce
-> the "unreasonable" policy (I don't recall the exact wording used, but
-> that's the gist of it).  So it was not a case of something unexpected
-> being overlooked by someone new - it was a case of the policy being
-> deliberately violated by someone very experienced.  (Moreover, we also
-> got accused of shouting with the ALL CAPS.)
->
-> linux-distros members and Linux kernel security team didn't arrive at an
-> agreement on how to handle further issues, planning to bring this up for
-> discussion on oss-security - which I am finally doing now.  Meanwhile,
-> the handling was hectic - indeed, people felt discouraged from enforcing
-> the policy.  Another kernel maintainer also mentioned he's no longer
-> directing people to linux-distros (which I find more reasonable than
-> coercing/expecting linux-distros not to enforce a published policy).
->
-> Question:
->
-> Should we address this incompatibility in desired handling of issues by
-> the distros vs. kernel teams, and how?
->
-> Options:
->
-> Off the top of my head, we can do one of:
->
-> 0. Do nothing specific - let things work or fail on their own.
->
-> 1. Adjust linux-distros policy to allow "embargoes" on publicly fixed
-> Linux kernel issues.  (Only for Linux kernel, not for other projects.)
->
-> However, besides not posting to oss-security this probably means also
-> not releasing distro kernel updates until the "embargo" is over (when
-> the changes hit a stable tree maybe?), thus exposing most Linux users to
-> vulnerabilities that some attackers can infer from Linux kernel mailing
-> lists and git commits.
->
-> The current policy:
->
->
-> https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
->
-> already includes an exception in:
->
-> "Please note that in case a fix for an issue is already in a publicly
-> accessible source code repository, we generally consider the issue
-> public (and thus you should post to oss-security right away, not report
-> the issue to (linux-)distros as we'd merely redirect you to oss-security
-> anyway and insist that you make the required posting ASAP).  There can
-> be occasional (rare) exceptions to this, such as if the publicly
-> accessible fix doesn't look like it's for a security issue (e.g., if the
-> corresponding changes were initially made for unrelated reasons and were
-> only later realized to have fixed a non-public security issue) and not
-> revealing this publicly right away is somehow desirable.  You'd have to
-> have very sound reasoning to claim an exception like this and be
-> prepared to lose your argument and if so to post to oss-security ASAP
-> anyway."
->
-> This currently talks about fixes that are already public at the time of
-> reporting to (linux-)distros, it requires "very sound reasoning", and it
-> allows (linux-)distros to insist that the issue be made public ASAP.
->
-> In my understanding, the Linux kernel folks want an exception like this
-> also for publicly fixing issues already being handled with linux-distros
-> involved, and to have the exception granted unconditionally with no way
-> for linux-distros not to agree to it in a given case.  (Please correct
-> me if I misunderstand.)
->
+                    Xen Security Advisory XSA-366
 
-My understanding is that all of the following things are expected to happen
-while under a security@vger.kernel.org embargo:
+                   missed flush in XSA-321 backport
 
-A) Patches are posted to an appropriate public kernel mailing list and
-their correctness is discussed.
+ISSUE DESCRIPTION
+=================
 
-B) Patches are merged into an appropriate maintainer tree.
+An oversight was made when backporting XSA-320, leading entries in the
+IOMMU not being properly updated under certain circumstances.
 
-C) Patches may be merged into Linus' tree and stable trees if appropriate.
+IMPACT
+======
 
-D) Distros may release updates based on (C) as part of normal course of
-operations without explicitly referring to security updates.
+A malicious guest may be able to retain read/write DMA access to
+frames returned to Xen's free pool, and later reused for another
+purpose.  Host crashes (leading to a Denial of Service) and privilege
+escalation cannot be ruled out.
 
-The embargo lifts independent of these operations which really just means
-the underlying details of the CVE are published and any discussion of the
-security concerns of the changes are made public.
+VULNERABLE SYSTEMS
+==================
 
-There have certainly been cases where in the course of (A) or (B), the
-"embargo" breaks because someone realizes and publicly states the security
-implications of the issue that are not part of the embargo group.  This is
-surprisingly uncommon given the number of security fixes that are handled
-this way today.
+Xen versions up to 4.11, from at least 3.2 onwards, are affected.  Xen
+versions 4.12 and newer are not affected.
 
-I think that for linux-distros@, being part of this embargo means we'd have
-to accept A, B, C, and D.
+Only x86 Intel systems are affected.  x86 AMD as well as Arm systems are
+not affected.
 
-Purely from a practical perspective, I think it's useful to have these
-issues go through linux-distros@ and I do think distributions take action
-based on (many of) the reports.
+Only x86 HVM guests using hardware assisted paging (HAP), having a
+passed through PCI device assigned, and having page table sharing
+enabled can leverage the vulnerability.  Note that page table
+sharing will be enabled (by default) only if Xen considers IOMMU and
+CPU large page size support compatible.
 
-I think the policy change would be that specifically for Linux kernel
-issues, we stick to a strict 2 week embargo acknowledging that A, B, C, and
-D may happen.  If there is a public discussion on the security nature of
-the public change, then we'd consider the embargo broken.  There's a small
-chance that the discussion would not trigger security@vger.kernel.org to
-consider the embargo broken and for there to be a conflict but I don't
-think that has ever happened in practice.
+MITIGATION
+==========
 
-I do think we want to make this policy specific to changes under
-security@vger.kernel.org embargo and not specifically apply to any Linux
-change.  Otherwise we'll get dozens of reports of old patches that never
-had a CVE assigned and likely already shipped by most distributions which
-doesn't really help anyone.
+Suppressing the use of page table sharing will avoid the vulnerability
+(command line option "iommu=no-sharept").
 
-Regards,
+Suppressing the use of large HAP pages will avoid the vulnerability
+(command line options "hap_2mb=no hap_1gb=no").
 
-Anthony Liguori
+Not passing through PCI devices to HVM guests will avoid the
+vulnerability.
 
---000000000000cf93cd05df122d32--
+CREDITS
+=======
+
+This issue was reported as a bug by M. Vefa Bicakci, and recognized as
+a security issue by Roger Pau Monne of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa366-4.11.patch      Xen 4.11.x
+
+$ sha256sum xsa366*
+3131c9487b9446655e2e21df4ccf1e003bec471881396d7b2b1a0939f5cbae96  xsa366.meta
+8c8c18ca8425e6167535c3cf774ffeb9dcb4572e81c8d2ff4a73fefede2d4d94  xsa366-4.11.patch
+$
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This was reported and debugged publicly, before the security
+implications were apparent.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAuU5EMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZMCkIAKq1dU6xOMN3lFqY6LeIV+Pn+JQDvJKhDT+lJT9b
+KAP+a44ks5bHHSD6CPyiq5boU5APE7yqiyJnXBycXVDLH6GGjh7uBvc6A00YkeHU
+y08l8jxa6/FAyrvCj5P0pYItALwH0NZDtfUE57ueloYUu3KJnyBRtl9icvx/sCa9
+CUkpKDpS0te+Rk+G57UPDjGvSPwpIh01vphJ5tyf+2Lrk8rsHTJYWQ7eD8A09jCr
+DtSD6FylzEuGGY30vPGLUzXgOm8Nji/WgnXnmmbILCEo8PQs3CcoxN53/F8cYvr6
+NRERHKZFhHoLmUUCImoFcApxzzdt11USDnCdEXiAkrEOYsk=
+=w9OA
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa366.meta"
+Content-Disposition: attachment; filename="xsa366.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAzNjYsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+IjQuMTEiCiAgXSwKICAiVHJlZXMiOiBbCiAgICAieGVuIgogIF0sCiAgIlJl
+Y2lwZXMiOiB7CiAgICAiNC4xMSI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAg
+ICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiODBjYWQ1
+ODRmYjRjMjU5OWFlMTc0MjI2ZTJjOTEzYmIyM2RmM2JmYSIsCiAgICAgICAg
+ICAiUHJlcmVxcyI6IFtdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAg
+ICAgICAgICJ4c2EzNjYtNC4xMS5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
+ICB9CiAgICAgIH0KICAgIH0KICB9Cn0=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa366-4.11.patch"
+Content-Disposition: attachment; filename="xsa366-4.11.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogUm9nZXIgUGF1IE1vbm5lIDxyb2dlci5wYXVAY2l0cml4LmNvbT4K
+U3ViamVjdDogeDg2L2VwdDogZml4IG1pc3NpbmcgSU9NTVUgZmx1c2ggaW4g
+YXRvbWljX3dyaXRlX2VwdF9lbnRyeQoKQmFja3BvcnQgb2YgWFNBLTMyMSBt
+aXNzZWQgYSBmbHVzaCBpbiBhdG9taWNfd3JpdGVfZXB0X2VudHJ5IHdoZW4K
+bGV2ZWwgd2FzIGRpZmZlcmVudCB0aGFuIDAuIFN1Y2ggb21pc3Npb24gd2ls
+bCB1bmRlcm1pbmUgdGhlIGZpeCBmb3IKWFNBLTMyMSwgYmVjYXVzZSBwYWdl
+IHRhYmxlIGVudHJpZXMgY2FjaGVkIGluIHRoZSBJT01NVSBjYW4gZ2V0IG91
+dApvZiBzeW5jIGFuZCBjb250YWluIHN0YWxlIGVudHJpZXMuCgpGaXggdGhp
+cyBieSBzbGlnaHRseSByZS1hcnJhbmdpbmcgdGhlIGNvZGUgdG8gcHJldmVu
+dCB0aGUgZWFybHkgcmV0dXJuCndoZW4gbGV2ZWwgaXMgZGlmZmVyZW50IHRo
+YXQgMC4gTm90ZSB0aGF0IHRoZSBlYXJseSByZXR1cm4gaXMganVzdCBhbgpv
+cHRpbWl6YXRpb24gYmVjYXVzZSBmb3JlaWduIGVudHJpZXMgY2Fubm90IGhh
+dmUgbGV2ZWwgPiAwLgoKVGhpcyBpcyBYU0EtMzY2LgoKUmVwb3J0ZWQtYnk6
+IE0uIFZlZmEgQmljYWtjaSA8bS52LmJAcnVuYm94LmNvbT4KU2lnbmVkLW9m
+Zi1ieTogUm9nZXIgUGF1IE1vbm7DqSA8cm9nZXIucGF1QGNpdHJpeC5jb20+
+ClJldmlld2VkLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+
+Ci0tLQogeGVuL2FyY2gveDg2L21tL3AybS1lcHQuYyB8IDcgKy0tLS0tLQog
+MSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCA2IGRlbGV0aW9ucygt
+KQoKZGlmZiAtLWdpdCBhL3hlbi9hcmNoL3g4Ni9tbS9wMm0tZXB0LmMgYi94
+ZW4vYXJjaC94ODYvbW0vcDJtLWVwdC5jCmluZGV4IDAzNjc3MWY0M2MuLmZk
+ZTJmNWY3ZTMgMTAwNjQ0Ci0tLSBhL3hlbi9hcmNoL3g4Ni9tbS9wMm0tZXB0
+LmMKKysrIGIveGVuL2FyY2gveDg2L21tL3AybS1lcHQuYwpAQCAtNTMsMTIg
+KzUzLDcgQEAgc3RhdGljIGludCBhdG9taWNfd3JpdGVfZXB0X2VudHJ5KGVw
+dF9lbnRyeV90ICplbnRyeXB0ciwgZXB0X2VudHJ5X3QgbmV3LAogICAgIGJv
+b2xfdCBjaGVja19mb3JlaWduID0gKG5ldy5tZm4gIT0gZW50cnlwdHItPm1m
+biB8fAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5ldy5zYV9wMm10
+ICE9IGVudHJ5cHRyLT5zYV9wMm10KTsKIAotICAgIGlmICggbGV2ZWwgKQot
+ICAgIHsKLSAgICAgICAgQVNTRVJUKCFpc19lcHRlX3N1cGVycGFnZSgmbmV3
+KSB8fCAhcDJtX2lzX2ZvcmVpZ24obmV3LnNhX3AybXQpKTsKLSAgICAgICAg
+d3JpdGVfYXRvbWljKCZlbnRyeXB0ci0+ZXB0ZSwgbmV3LmVwdGUpOwotICAg
+ICAgICByZXR1cm4gMDsKLSAgICB9CisgICAgQVNTRVJUKCFsZXZlbCB8fCAh
+aXNfZXB0ZV9zdXBlcnBhZ2UoJm5ldykgfHwgIXAybV9pc19mb3JlaWduKG5l
+dy5zYV9wMm10KSk7CiAKICAgICBpZiAoIHVubGlrZWx5KHAybV9pc19mb3Jl
+aWduKG5ldy5zYV9wMm10KSkgKQogICAgIHsK
+
+--=separator--
