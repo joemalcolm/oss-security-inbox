@@ -1,89 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/04/2
-Message-Id: <26f2884d-ddb7-498a-8a73-ad02e0242ed6@www.fastmail.com>
-Date: Wed, 04 Aug 2021 09:59:02 -0600
-From: "Jeremy Soller" <jeremy@...tem76.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Pop!_OS Membership to linux-distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/18/2
+Message-Id: <E1lChm8-0008V9-8E@xenbits.xenproject.org>
+Date: Thu, 18 Feb 2021 11:47:16 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 366 v1 - missed flush in XSA-321 backport
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 27, 2021, at 11:59 AM, Solar Designer wrote:
-> Hi Jeremy,
-> 
-> On Tue, Jul 20, 2021 at 02:23:26PM -0600, Jeremy Soller wrote:
-> > 3. Have a publicly verifiable track record, dating back at least 1 year and
-> > continuing to present day, of fixing security issues (including some that had
-> > been handled on (linux-)distros, meaning that membership would have been
-> > relevant to you) and releasing the fixes within 10 days (and preferably much
-> > less than that) of the issues being made public (if it takes you ages to fix an
-> > issue, your users wouldn't substantially benefit from the additional time,
-> > often around 7 days and sometimes up to 14 days, that list membership could
-> > give you)
-> > 
-> > Over the history of Pop!_OS, dating back to 2017, we have maintained critical
-> > packages and applied security patches soon after they are made public. Our
-> > membership to this list would significantly help our users stay secure by
-> > allowing us to prepare and test security updates ahead of public disclosure.
-> > Please see our GitHub organization for more evidence: https://github.com/pop-os
-> 
-> I think it'd be most convincing for us all to see specific examples of
-> you having "applied security patches soon after they are made public",
-> with dates public vs. fixed in Pop!_OS.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-How many examples should I provide? The last security patch I did was for
-systemd. We have patches on systemd which means we cannot use the Ubuntu
-version directly, so when, for example, CVE-2020-13529 and CVE-2021-33910
-patches arrived in Ubuntu 21.04 on July 20, 2021, I applied them to our own
-fork of systemd for Pop!_OS 21.04 that same day:
+                    Xen Security Advisory XSA-366
 
-- https://launchpad.net/ubuntu/+source/systemd/247.3-3ubuntu3.4
-- https://github.com/pop-os/systemd/commit/bf008f836b8740f6634d02526d1f38c98fa6699a
+                   missed flush in XSA-321 backport
 
-Pop!_OS needs to participate in linux-distros to ensure we have patches ready
-for our forks of packages that do not come straight from Ubuntu. I listed the
-relevant packages in my original email, many of which we have had to do
-security updates for after some embargo lifts, with very little time to prepare.
+ISSUE DESCRIPTION
+=================
 
-> > 7. Be able and willing to contribute back (see above), preferably in specific
-> > ways announced in advance (so that you're responsible for a specific area and
-> > so that we know what to expect from which member), and demonstrate actual
-> > contributions once you've been a member for a while
-> > 
-> > I am able and willing to contribute back.
-> 
-> Please choose a specific task (or several).
-> 
-> I suggest the statistics task:
-> 
-> "13. Keep track of per-report and per-issue handling and disclosure
-> timelines (at least times of notification of the private list and of
-> actual public disclosure), at regular intervals produce and share
-> statistics (most notably, the average embargo duration) as well as the
-> raw data (except on issues that are still under embargo) by posting to
-> oss-security - primary: Amazon, backup: Gentoo"
-> 
-> As you can see, it is currently assigned to Amazon and Gentoo, but as
-> far as I can see neither is actually handling it now, so I'd like to
-> formally unassign it from them and have another distro handle it.
+An oversight was made when backporting XSA-320, leading entries in the
+IOMMU not being properly updated under certain circumstances.
 
-That would be fine, but I would be curious if there is some reason they have
-not been fulfilling this task.
- 
-> > 9. Have someone already on the private list, or at least someone else who has
-> > been active on oss-security for years but is not affiliated with your distro
-> > nor your organization, vouch for at least one of the people requesting
-> > membership on behalf of your distro (then that one vouched-for person will be
-> > able to vouch for others on your team, in case you'd like multiple people
-> > subscribed)
-> > 
-> > I do not know if I have contacts that are already on the linux-distros list.
-> 
-> It can also be "someone else who has been active on oss-security for
-> years but is not affiliated".  Anyone?
+IMPACT
+======
 
-I believe Tyler Hicks is willing to do this.
+A malicious guest may be able to retain read/write DMA access to
+frames returned to Xen's free pool, and later reused for another
+purpose.  Host crashes (leading to a Denial of Service) and privilege
+escalation cannot be ruled out.
 
-> Thanks,
-> 
-> Alexander
-> 
+VULNERABLE SYSTEMS
+==================
+
+Xen versions up to 4.11, from at least 3.2 onwards, are affected.  Xen
+versions 4.12 and newer are not affected.
+
+Only x86 Intel systems are affected.  x86 AMD as well as Arm systems are
+not affected.
+
+Only x86 HVM guests using hardware assisted paging (HAP), having a
+passed through PCI device assigned, and having page table sharing
+enabled can leverage the vulnerability.  Note that page table
+sharing will be enabled (by default) only if Xen considers IOMMU and
+CPU large page size support compatible.
+
+MITIGATION
+==========
+
+Suppressing the use of page table sharing will avoid the vulnerability
+(command line option "iommu=no-sharept").
+
+Suppressing the use of large HAP pages will avoid the vulnerability
+(command line options "hap_2mb=no hap_1gb=no").
+
+Not passing through PCI devices to HVM guests will avoid the
+vulnerability.
+
+CREDITS
+=======
+
+This issue was reported as a bug by M. Vefa Bicakci, and recognized as
+a security issue by Roger Pau Monne of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa366-4.11.patch      Xen 4.11.x
+
+$ sha256sum xsa366*
+3131c9487b9446655e2e21df4ccf1e003bec471881396d7b2b1a0939f5cbae96  xsa366.meta
+8c8c18ca8425e6167535c3cf774ffeb9dcb4572e81c8d2ff4a73fefede2d4d94  xsa366-4.11.patch
+$
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This was reported and debugged publicly, before the security
+implications were apparent.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAuU5EMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZMCkIAKq1dU6xOMN3lFqY6LeIV+Pn+JQDvJKhDT+lJT9b
+KAP+a44ks5bHHSD6CPyiq5boU5APE7yqiyJnXBycXVDLH6GGjh7uBvc6A00YkeHU
+y08l8jxa6/FAyrvCj5P0pYItALwH0NZDtfUE57ueloYUu3KJnyBRtl9icvx/sCa9
+CUkpKDpS0te+Rk+G57UPDjGvSPwpIh01vphJ5tyf+2Lrk8rsHTJYWQ7eD8A09jCr
+DtSD6FylzEuGGY30vPGLUzXgOm8Nji/WgnXnmmbILCEo8PQs3CcoxN53/F8cYvr6
+NRERHKZFhHoLmUUCImoFcApxzzdt11USDnCdEXiAkrEOYsk=
+=w9OA
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa366.meta" of type "application/octet-stream" (338 bytes)
+
+Download attachment "xsa366-4.11.patch" of type "application/octet-stream" (1512 bytes)
