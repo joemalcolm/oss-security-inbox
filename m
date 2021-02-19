@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2012" "Sunday" "22" "March" "2015" "12:26:50" "+0100" "Florian Weimer" "fw@deneb.enyo.de" "<87twxdb7d1.fsf@mid.deneb.enyo.de>" "44" "Re: [oss-security] membership request  to the closed linux-distros security mailing list" nil nil nil "3" "2015032211:26:50" "[oss-security] membership request to the closed linux-distros security mailing list" (number mark "        fw@deneb.eny Mar 22   44/2012  " thread-indent "\"Re: [oss-security] membership request  to the closed linux-distros security mailing list\"\n") "<20150320145413.GA10416@openwall.com>" ("<550C19ED.9030901@enea.com>" "<20150320145413.GA10416@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1256" "Friday" "19" "February" "2021" "15:59:09" "+0100" "Daniel Beck" "ml@beckweb.net" nil "33" "[oss-security] Vulnerability in Jenkins" nil nil nil "2" nil nil (number mark "U       ml@beckweb.n Feb 19   33/1256  " thread-indent "\"[oss-security] Vulnerability in Jenkins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Vulnerability in Jenkins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18042 invoked by uid 550); 22 Mar 2015 11:27:02 -0000
+Received: (qmail 9527 invoked by uid 550); 19 Feb 2021 14:59:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18024 invoked from network); 22 Mar 2015 11:27:01 -0000
-References: <550C19ED.9030901@enea.com> <20150320145413.GA10416@openwall.com>
-In-Reply-To: <20150320145413.GA10416@openwall.com> (Solar Designer's message
-	of "Fri, 20 Mar 2015 17:54:13 +0300")
-Message-ID: <87twxdb7d1.fsf@mid.deneb.enyo.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Date: Sun, 22 Mar 2015 12:26:50 +0100
-From: Florian Weimer <fw@deneb.enyo.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] membership request  to the closed linux-distros security mailing list
+Received: (qmail 9495 invoked from network); 19 Feb 2021 14:59:22 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
+Message-Id: <7E26B4AC-DFB1-4760-B719-E14133F103B5@beckweb.net>
+Date: Fri, 19 Feb 2021 15:59:09 +0100
 To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.104.15)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1613746762;2aa2b859;
+X-HE-SMSGID: 1lD7FO-0005z9-7j
+Subject: [oss-security] Vulnerability in Jenkins
 
-* Solar Designer:
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-> Oh, and I need to announce that one distro left the list earlier this
-> month: the person previously subscribed for Android determined that "the
-> mail going to those lists hasn't been actionable" for Android.
+The following releases contain fixes for security vulnerabilities:
 
-Well, this can mean basically anything.  Maybe they can't do embargoes
-at all, considering how fixed software is delivered to end users.
+* Jenkins 2.280
 
-> 3. Setup a separate list for primarily non-free software and primarily
-> non-software vendors.  Of the existing linux-distros members, maybe
-> Amazon Linux AMI, MontaVista, and Wind River should be moved there.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-02-19/
 
-Huh?  Isn't Amazon Linux AMI just a piece of software?
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Montavista and Wind River are subsidies of Cavium and Intel, and the
-parent company product security teams should be on a
-(linux-)distros-type list anyway.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-> The idea behind such list is that we'd let people decide who they want
-> to notify: all distros (including this separate list) or just the more
-> free'ish subset (not including this separate list).
+---
 
-Why would you give priority to a free-ish distributions?  What's the
-goal?  We are all on the same Internet, which is why I fail to see the
-benefit of distributing vulnerability information according based on
-this criterion.
+SECURITY-2195 / CVE-2021-22112
+Spring Security 5.4.3 and earlier has a vulnerability that unintentionally
+persisted temporarily elevated privileges in some circumstances in a user's
+session. This issue, CVE-2021-22112, is resolved in Spring Security 5.4.4.
 
-> And indeed, the separation between these sub-lists is unclear.  There
-> will always be doubts where a given vendor belongs.  For example, to me
-> Red Hat is free enough to be on the privileged sub-list, but someone
-> might disagree.
+Jenkins 2.266 through 2.279 (inclusive) include releases of Spring
+Security with this vulnerability.
 
-Being commercial hopefully means that your security team members don't
-need an actual job that pays the bills, which may create additional
-obligations.  If the security team is just a bunch of volunteers, you
-have different potential for conflicts of interest (not sure what's
-worse, an additional job, or commercial pressures).
+We are aware of a sequence of operations in Jenkins 2.275 through 2.278
+(inclusive) that allows attackers with Job/Workspace permission to exploit
+this to switch their identity to SYSTEM, an internal user with all
+permissions.
 
-> Comments?
-
-What's happening on the distros list these days?  Who are the primary
-contributors?  Are there discussions about technical details?  Or is
-it just CRD coordination?  Or do people just drop off pre-advisories?
