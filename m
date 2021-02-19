@@ -1,55 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/29/1
-Message-ID: <20210129100928.GD6548@suse.de>
-Date: Fri, 29 Jan 2021 11:09:28 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/7
+Message-Id: <7E26B4AC-DFB1-4760-B719-E14133F103B5@beckweb.net>
+Date: Fri, 19 Feb 2021 15:59:09 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Linux Kernel: local priv escalation via futexes
+Subject: Vulnerability in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Yesterday a patchset was merged to Linux Kernel mainline, which could be used
-to execute code in the kernel due to bugs in PI futexes.
+The following releases contain fixes for security vulnerabilities:
 
-I am filing a CVE request just now.
+* Jenkins 2.280
 
-Ciao, Marcus
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-02-19/
 
-merge commit:
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-commit c64396cc36c6e60704ab06c1fb1c4a46179c9120
-Merge: e5ff2cb9cf67 34b1a1ce1458
-Author: Linus Torvalds <torvalds@...ux-foundation.org>
-Date:   Thu Jan 28 11:18:43 2021 -0800
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-    Pull locking fixes from Thomas Gleixner:
-     "A set of PI futex fixes:
+---
 
-       - Address a longstanding issue where the user space part of the PI
-         futex is not writeable. The kernel returns with inconsistent state
-         which can in the worst case result in a UAF of a tasks kernel
-         stack.
+SECURITY-2195 / CVE-2021-22112
+Spring Security 5.4.3 and earlier has a vulnerability that unintentionally
+persisted temporarily elevated privileges in some circumstances in a user's
+session. This issue, CVE-2021-22112, is resolved in Spring Security 5.4.4.
 
-         The solution is to establish consistent kernel state which makes
-         future operations on the futex fail because user space and kernel
-         space state are inconsistent. Not a problem as PI futexes
-         fundamentaly require a functional RW mapping and if user space
-         pulls the rug under it, then it can keep the pieces it asked for.
+Jenkins 2.266 through 2.279 (inclusive) include releases of Spring
+Security with this vulnerability.
 
-       - Address an issue where the return value is incorrect in case that
-         the futex was acquired after a timeout/signal made the waiter drop
-         out of the rtmutex wait.
-
-         In one of the corner cases the kernel returned an error code
-         despite having successfully acquired the futex"
-
-    * tag 'locking-urgent-2021-01-28' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip:
-      futex: Handle faults correctly for PI futexes
-      futex: Simplify fixup_pi_state_owner()
-      futex: Use pi_state_update_owner() in put_pi_state()
-      rtmutex: Remove unused argument from rt_mutex_proxy_unlock()
-      futex: Provide and use pi_state_update_owner()
-      futex: Replace pointless printk in fixup_owner()
-      futex: Ensure the correct return value from futex_lock_pi()
+We are aware of a sequence of operations in Jenkins 2.275 through 2.278
+(inclusive) that allows attackers with Job/Workspace permission to exploit
+this to switch their identity to SYSTEM, an internal user with all
+permissions.
 
