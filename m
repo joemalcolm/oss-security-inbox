@@ -1,42 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/11/2
-Message-ID: <CALJHwhT3uLqQEbkVd9f2zMRONWUB3M2_Z60n7jXUPX3=A5d6uA@mail.gmail.com>
-Date: Thu, 11 Mar 2021 17:19:44 +1000
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/4
+Message-Id: <267FB491-4BEA-4D72-912C-BE75DCCB8207@gmail.com>
+Date: Fri, 19 Feb 2021 10:17:05 +0100
+From: Carlton Gibson <carlton.gibson@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-20269: kexec-tools: incorrect permissions on vmcore-dmesg.txt file
+Subject: Django security releases: CVE-2021-23336: Web cache poisoning via ``django.utils.http.limited_parse_qsl()``
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+Reference: https://www.djangoproject.com/weblog/2021/feb/19/security-releases/
 
-A flaw was found in the kexec-tools where it made the incorrect permissions
-on the vmcore-dmesg.txt extracted from the vmcore of a previous kernel
-panic.  It is possible that this could be used to leak kernel internal
-information from a previous execution if it was output to the ring buffer
-or part of the panic backtrace.   An unprivileged user with a local account
-can use this to extract kernel internal information resulting in an
-information leak.
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django team
+is issuing
+`Django 3.1.7 <https://docs.djangoproject.com/en/dev/releases/3.1.7/>`_,
+`Django 3.0.13 <https://docs.djangoproject.com/en/dev/releases/3.0.13/>`_, and
+`Django 2.2.19 <https://docs.djangoproject.com/en/dev/releases/2.1.19/>`_.
+These release addresses the security issue detailed below. We encourage all users of Django to upgrade as soon as possible.
 
-TLDR: The vmcore-dmesg.txt is created world readable and should not be.
+CVE-2021-23336: Web cache poisoning via ``django.utils.http.limited_parse_qsl()``
+=================================================================================
 
-Red Hat Bugzilla:
-  http://bugzilla.redhat.com/CVE-2021-20269
+Django contains a copy of ``urllib.parse.parse_qsl()`` which was added to
+backport some security fixes. A further security fix has been issued recently
+such that ``parse_qsl()`` no longer allows using ``;`` as a query parameter
+separator by default. Django now includes this fix. See `bpo-42967
+<https://bugs.python.org/issue42967>`_ for further details.
+
+This issue has moderate severity, according to the Django security policy.
+
+Affected supported versions
+===========================
+
+* Django 3.2 (currently at beta status)
+* Django 3.1
+* Django 3.0
+* Django 2.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to the 3.2, 3.1, 3.0, and 2.2 release
+branches. The patches may be obtained from the following changesets:
+
+* On the `3.2 release branch <https://github.com/django/django/commit/be8237c7cce24b06aabde0b97afce98ddabbe3b6>`__
+* On the `3.1 release branch <https://github.com/django/django/commit/8f6d431b08cbb418d9144b976e7b972546607851>`__
+* On the `3.0 release branch <https://github.com/django/django/commit/326a926beef869d3341bc9ef737887f0449b6b71>`__
+* On the `2.2 release branch <https://github.com/django/django/commit/fd6b6afd5959b638c62dbf4839ccff97e7f7dfda>`__
+
+The following releases have been issued:
+
+* Django 3.1.7 (`download Django 3.1.7 <https://www.djangoproject.com/m/releases/3.1/Django-3.1.7.tar.gz>`_ | `3.1.7 checksums <https://www.djangoproject.com/m/pgp/Django-3.1.7.checksum.txt>`_)
+* Django 3.0.13 (`download Django 3.0.13 <https://www.djangoproject.com/m/releases/3.0/Django-3.0.13.tar.gz>`_ | `3.0.13 checksums <https://www.djangoproject.com/m/pgp/Django-3.0.13.checksum.txt>`_)
+* Django 2.2.19 (`download Django 2.2.19 <https://www.djangoproject.com/m/releases/2.2/Django-2.2.19.tar.gz>`_ | `2.2.19 checksums <https://www.djangoproject.com/m/pgp/Django-2.2.19.checksum.txt>`_)
+
+The PGP key ID used for these releases is Carlton Gibson: `E17DF5C82B4F9D00
+<https://github.com/carltongibson.gpg>`_.
 
 
-Thank you.
--- 
+Django 3.2 beta 1 will be released in a separate blog post later today.
 
-Wade Mealing
+General notes regarding security reporting
+==========================================
 
-Product Security - Kernel, RHCE
-
-Red Hat
-
-<https://www.redhat.com>
-
-wmealing@...hat.com
-<https://red.ht/sig>
-TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
-
-secalert@...hat.com for urgent response
-
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
