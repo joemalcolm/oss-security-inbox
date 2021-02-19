@@ -1,34 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/30/2
-Message-ID: <5102a4b5-ade4-643b-66f3-41c0f7e4bbcc@vanrees.org>
-Date: Wed, 30 Jun 2021 20:25:34 +0200
-From: Maurits van Rees <maurits@...rees.org>
-To: oss-security@...ts.openwall.com
-Subject: Plone: stored XSS in folder contents
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/8
+Message-ID: <CAKx+4-r0OpY3XpT9njG7OD3TGDvb+7srhPgbYUJ1cqwMvsSq0g@mail.gmail.com>
+Date: Fri, 19 Feb 2021 23:55:50 +0530
+From: Rohit Keshri <rkeshri@...hat.com>
+To: Alexandros Toptsoglou <atoptsoglou@...e.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-20200: Linux kernel: close race between munmap() and expand_upwards()/downwards()
 Content-Type: text/plain; charset=utf-8
 
-A very good day to all you lovely people!
+Hello Alexandros, CVE-2021-20200 is a duplicate of CVE-2020-29369, and we
+are revoking this.
 
-Matt Moreschi discovered a vulnerability in Plone and reported it to the 
-security list, security@...ne.org.
-In Plone 5.0.0 through 5.2.4, Editors are vulnerable to XSS in the 
-folder contents view, if a Contributor has created a folder with a 
-SCRIPT tag in the description field.
-Full information is here: 
-https://plone.org/security/hotfix/20210518/stored-xss-in-folder-contents
-Since we had recently created a hotfix package, we decided to include a 
-fix in a new version, 1.5.
-This is available from 
-https://pypi.org/project/Products.PloneHotfix20210518/1.5/ and 
-https://plone.org/security/hotfix/20210518
-The fix will be included in the affected package plone.app.content 
-3.8.8, which will be included in Plone 5.2.5, expected in July.
+Regards,
+..
+Rohit Keshri / Red Hat Product Security Team
+PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
 
-CVE number is CVE-2021-35959:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-35959
+secalert@...hat.com for urgent response
 
-Thanks,
 
--- 
-Maurits van Rees https://maurits.vanrees.org/
+On Wed, Feb 10, 2021 at 9:03 PM Alexandros Toptsoglou <atoptsoglou@...e.de>
+wrote:
+
+> Hi,
+>
+> is the information listed here correct? Especially the CVE-2021-20200
+> assignment.
+>
+> In project-zero reference at the last comment CVE-2020-29369 is mentioned.
+>
+> Best regards,
+>
+> Alexandros
+>
+> On 2/10/21 4:04 PM, Rohit Keshri wrote:
+> > Hello Team,
+> >
+> > A use-after-free flaw may be seen due to a race problem while in
+> > detach_vmas_to_be_unmapped() in mm/mmap.c in VMA access while
+> > munmap(). This flaw could allow a local attacker with a user privilege
+> > to crash the system, because VMA with VM_GROWSDOWN or VM_GROWSUP flag
+> > set may change their size under mmap_read_lock(). This vulnerability
+> > could even lead to a kernel information leak problem.
+> >
+> >
+> > 'CVE-2021-20200' was assigned by Red Hat.
+> >
+> > References:
+> > https://bugs.chromium.org/p/project-zero/issues/detail?id=2056
+> >
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=246c320a8cfe0b11d81a4af38fa9985ef0cc9a4c
+> >
+> > Thanks and Regards
+> > ..
+> > Rohit Keshri / Red Hat Product Security Team
+> > PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+> >
+> > secalert@...hat.com for urgent response
+> >
+>
+> --
+> Alexandros Toptsoglou <atoptsoglou@...e.de>
+> Security Engineer
+> OpenPGP fingerprint: C270 3848 AA4A 783A 9848  BB06 56A3 3D9C B652 1869
+>
+> SUSE Software Solutions Germany GmbH
+> Maxfeldstr. 5
+> 90409 Nuremberg
+> Germany
+> (HRB 36809, AG Nürnberg)
+> Managing Director: Felix Imendörffer
+>
+>
 
