@@ -1,51 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/2
-Message-ID: <CAFcO6XMiLJqwy=QW0Mv-yruhytSFRwb3yJsdMRVg3Gghm_5u7g@mail.gmail.com>
-Date: Wed, 25 Aug 2021 10:40:29 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/6
+Message-ID: <CAKx+4-rj0qAZMmpuW9txO6ep1rkFD6dJa0nviEfmDmo7NUvsPg@mail.gmail.com>
+Date: Fri, 19 Feb 2021 17:54:27 +0530
+From: Rohit Keshri <rkeshri@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c
+Subject: CVE-2021-3411 kernel: broken KRETPROBES reports corruption of .text section while running a FTRACE stress tester
 Content-Type: text/plain; charset=utf-8
 
-Hi, There was another out-of-bound read bug in qrtr_endpoint_post in
-net/qrtr/qrtr.c in 5.14.0-rc6+ and reproduced it.
+Hello Team,
 
-This check in  qrtr_endpoint_post was incomplete, did not consider size is 0:
-```
-if (len != ALIGN(size, 4) + hdrlen)
-                goto err;
-```
-if size from qrtr_hdr is 0, the result of ALIGN(size, 4) will be 0,
-In case of len == hdrlen and size == 0 in header this check won't fail and
-```
- if (cb->type == QRTR_TYPE_NEW_SERVER) { /* Remote node endpoint can
-bridge other distant nodes */
-             const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
-             qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
- }
-```
-will also read out of bound from data, which is hdrlen allocated block.
+A violation of memory access flaw was found while detecting a padding of
+int3 in the linking state in function can_optimize in
+arch/x86/kernel/kprobes/opt.c. In this problem a local attacker with a
+special user privilege may cause a threat to a system Integrity and
+Confidentiality, and may even lead to a denial of service problem.
+
+'CVE-2021-3411' was assigned by Red Hat.
+
+Credit: Adam 'pi3' Zabrocki
 
 
-#analyze and some details
-https://lists.openwall.net/netdev/2021/08/17/124
-
-#patch
-https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e78c597c3eb
-now not available upstream.
-
-#Timeline
-*2021/8/17 - Vulnerability reported to netdev@...r.kernel.org.
-*2021/8/20 - Vulnerability confirmed and patched.
-*2021/8/23 - Vulnerability reported to secalert@...hat.com.
-*2021/8/25 - Opened on oss-security@...ts.openwall.com.
-
-#Credit
-Active Defense Lab of Venustech.
-
+References:
+https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg2410570.html
+https://lists.openwall.net/linux-kernel/2020/12/11/265
+http://blog.pi3.com.pl/?p=831
 
 Regards,
- butt3rflyh4ck.
+..
+Rohit Keshri / Red Hat Product Security Team
+PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
 
---
-Active Defense Lab of Venustech
+secalert@...hat.com for urgent response
+
