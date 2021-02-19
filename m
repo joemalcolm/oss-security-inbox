@@ -1,31 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/01/7
-Message-ID: <3n67pqq3-9ro6-p138-npo0-n4314s77638n@inai.de>
-Date: Mon, 1 Nov 2021 21:51:38 +0100 (CET)
-From: Jan Engelhardt <jengelh@...i.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Trojan Source Attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/2
+Message-ID: <20210219091737.5582f481@computer>
+Date: Fri, 19 Feb 2021 09:17:37 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: ISC Security Officer <security-officer@....org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: BIND Operational Notification: Enabling the new BIND option "stale-answer-client-timeout" can result in unexpected server termination
 Content-Type: text/plain; charset=utf-8
 
+On Thu, 18 Feb 2021 20:09:47 -0900
+ISC Security Officer <security-officer@....org> wrote:
 
-On Monday 2021-11-01 18:27, Nicholas Boucher wrote:
->
->We have identified an issue affecting all compilers and interpreters that support Unicode.
->[...]
->The attached paper describes an attack paradigm -- which we believe to be novel -- discovered by security researchers at the
->University of Cambridge.
+> 2)  If you already have packages based on 9.16.12, we expect to have
+> a patch ready well before the next maintenance release.  A candidate
+> patch is under review now and can be delivered after review and
+> quality assurance testing.  If you wish to receive updates on the
+> progress of this patch, please e-mail your request to
+> security-officer@....org
 
-Not so novel. At one time, this picture made the rounds
-(https://twitter.com/acronis/status/1019152990022787072 - the pic is likely
-older than this 2018 tweet), and anyone who knew that Unicode had zero-width
-characters already made the connection.
+I am confused by your actions here.
 
-And I can imagine an attacker would rather try to inject Evil Unicode-Based
-Code through a preprocessor of sorts (e.g. a bison .y file), because the output
-of such generators is something few people would ever want to read in detail.
+You warn people about a messed up release (can happen, no problem), you
+say you have a preliminary patch, but you make it extra complicated to
+get that patch? Why not just post the patch?
 
-Even without Unicode, people had been using somehwat-invisible control
-characters for codegolfing; one instance that I recall is the "RC4 in two lines
-of Perl-with-no-modules", anno 2003, which uses a variable name simply named
-<U+0024><U+0003> aka $^C aka ${"\x03"}. U+0003 would not be rendered by most
-X11 terminals outside an editor that knew to recognize the classic control chars.
+Also I read into your words that you don't plan to publish a quick
+followup release, which would be the right thing to do ("we expect to
+have a patch ready well before the next maintenance release" - I read
+that as you don't plan to make a new maintenance release as soon as
+the patch is ready, which would be the right thing to do).
+
+
+-- 
+Hanno Böck
+https://hboeck.de/
