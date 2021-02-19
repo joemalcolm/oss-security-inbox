@@ -1,95 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/22/1
-Message-ID: <fef0f10f-a8db-f14d-eb25-4329f1c914f8@igalia.com>
-Date: Mon, 22 Mar 2021 20:41:36 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0002
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/5
+Message-Id: <82FEB890-2BBE-4E1E-968B-3CC16744C784@isc.org>
+Date: Fri, 19 Feb 2021 11:27:27 +0100
+From: Ondřej Surý <ondrej@....org>
+To: Hanno Böck <hanno@...eck.de>
+Cc: ISC Security Officer <security-officer@....org>, oss-security@...ts.openwall.com
+Subject: Re: BIND Operational Notification: Enabling the new BIND option "stale-answer-client-timeout" can result in unexpected server termination
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0002
-------------------------------------------------------------------------
+Hi Hanno,
 
-Date reported           : March 22, 2021
-Advisory ID             : WSA-2021-0002
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0002.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0002.html
-CVE identifiers         : CVE-2020-27918, CVE-2020-29623, CVE-2020-9947,
-                          CVE-2021-1765, CVE-2021-1789, CVE-2021-1799,
-                          CVE-2021-1801, CVE-2021-1870.
+by the time Michael was writing the message, we were still reviewing
+the fix for the issue.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+The fix has been made public now:
+https://gitlab.isc.org/isc-projects/bind9/-/merge_requests/4714
 
-CVE-2020-27918
-    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
-    Credit to Liu Long of Ant Security Light-Year Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A use after free issue was
-    addressed with improved memory management.
+FTR we are not treating this as a security issue as this is a newly
+introduced option and disabled by default. Same reason why not
+make a new release in a haste. There’s a whole QA machinery
+around the release which means that we would be able to speed
+up the release only by a week or so, and that doesn’t make much
+sense.
 
-CVE-2020-29623
-    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
-    Credit to Simon Hunt of OvalTwo LTD.
-    Impact: A user may be unable to fully delete browsing history.
-    Description: "Clear History and Website Data" did not clear the
-    history in some circumstances. The issue was addressed with improved
-    data deletion.
+Cheers,
+Ondrej
+--
+Ondřej Surý (He/Him)
+ondrej@....org
 
-CVE-2020-9947
-    Versions affected: WebKitGTK before 2.30.0 and WPE WebKit before 2.30.0.
-    Credit to cc working with Trend Micro Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A use after free issue was
-    addressed with improved memory management.
-
-CVE-2021-1765
-    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
-    Credit to Eliya Stein of Confiant.
-    Impact: Maliciously crafted web content may violate iframe
-    sandboxing policy. Description: This issue was addressed with
-    improved iframe sandbox enforcement.
-
-CVE-2021-1789
-    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
-    Credit to @S0rryMybad of 360 Vulcan Team.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A type confusion issue was
-    addressed with improved state handling.
-
-CVE-2021-1799
-    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
-    Credit to Gregory Vishnepolsky & Ben Seri of Armis Security, and
-    Samy Kamkar.
-    Impact: A malicious website may be able to access restricted ports
-    on arbitrary servers, Description: A port redirection issue was
-    addressed with additional port validation.
-
-CVE-2021-1801
-    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
-    Credit to Eliya Stein of Confiant.
-    Impact: Maliciously crafted web content may violate iframe
-    sandboxing policy. Description: This issue was addressed with
-    improved iframe sandbox enforcement.
-
-CVE-2021-1870
-    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
-    Credit to an anonymous researcher.
-    Impact: A remote attacker may be able to cause arbitrary code
-    execution. Apple is aware of a report that this issue may have been
-    actively exploited. Description: A logic issue was addressed with
-    improved restrictions.
+> On 19. 2. 2021, at 9:17, Hanno Böck <hanno@...eck.de> wrote:
+> 
+> On Thu, 18 Feb 2021 20:09:47 -0900
+> ISC Security Officer <security-officer@....org> wrote:
+> 
+>> 2)  If you already have packages based on 9.16.12, we expect to have
+>> a patch ready well before the next maintenance release.  A candidate
+>> patch is under review now and can be delivered after review and
+>> quality assurance testing.  If you wish to receive updates on the
+>> progress of this patch, please e-mail your request to
+>> security-officer@....org
+> 
+> I am confused by your actions here.
+> 
+> You warn people about a messed up release (can happen, no problem), you
+> say you have a preliminary patch, but you make it extra complicated to
+> get that patch? Why not just post the patch?
+> 
+> Also I read into your words that you don't plan to publish a quick
+> followup release, which would be the right thing to do ("we expect to
+> have a patch ready well before the next maintenance release" - I read
+> that as you don't plan to make a new maintenance release as soon as
+> the patch is ready, which would be the right thing to do).
+> 
+> 
+> --
+> Hanno Böck
+> https://hboeck.de/
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-March 22, 2021
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
