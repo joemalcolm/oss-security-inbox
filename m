@@ -1,26 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/5
-Message-ID: <rvudf9$12d5$1@ciao.gmane.io>
-Date: Tue, 9 Feb 2021 16:32:41 -0000 (UTC)
-From: Tavis Ormandy <taviso@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: screen crash processing combining characters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/3
+Message-ID: <c856bf26-33e3-cc79-d597-e023c61fe210@isc.org>
+Date: Thu, 18 Feb 2021 23:26:44 -0900
+From: Michael McNally <mcnally@....org>
+To: Hanno Böck <hanno@...eck.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: BIND Operational Notification: Enabling the new BIND option "stale-answer-client-timeout" can result in unexpected server termination
 Content-Type: text/plain; charset=utf-8
 
-On 2021-02-09, Tavis Ormandy wrote:
-> Hello, I noticed someone posted this to the screen-devel list. I can
-> reproduce it here, just catting the testcase does crash my screen
-> session.
->
-> https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
->
+On 2/18/21 11:17 PM, Hanno Böck wrote:
+> On Thu, 18 Feb 2021 20:09:47 -0900
+> ISC Security Officer <security-officer@....org> wrote:
+> 
+>> 2)  If you already have packages based on 9.16.12, we expect to have
+>> a patch ready well before the next maintenance release.  A candidate
+>> patch is under review now and can be delivered after review and
+>> quality assurance testing.  If you wish to receive updates on the
+>> progress of this patch, please e-mail your request to
+>> security-officer@....org
+> 
+> I am confused by your actions here.
+> 
+> You warn people about a messed up release (can happen, no problem), you
+> say you have a preliminary patch, but you make it extra complicated to
+> get that patch? Why not just post the patch?
 
-In fact, just curl'ing that URL reproduces it here.
+In brief:
 
-Tavis.
+- the flawed releases were issued yesterday
+- this morning the first customer reported the crash to us
+- we isolated the root cause of the reported crash a short time after that
+- we have written a candidate patch, but it has not yet been reviewed
+   or put through our QA process.
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
+I think people here will not fault us for being understandably gun-shy
+about compounding our error further.
 
+We certainly don't want to make it more complicated than necessary
+to obtain a patch, once we have one we are satisfied will safely
+correct the problem without introducing other issues, but we don't
+have that at this moment in time.
+
+However, we were concerned that packagers would very likely be
+scrambling to issue updated patches which correct the CVE we also
+disclosed yesterday, if they had not already prepared them in advance.
+So we thought it was imperative to announce the issue ASAP, even
+while we work on reviewing and testing the candidate patch.
+
+All the same, we know that there will be interest in a patch, so we
+encourage people to request it now and it will be delivered when we
+are satisfied we have screened it properly.
+
+I hope that explains our actions better.  We've been scrambling to
+deal with this and don't have everything perfectly lined up but we
+wanted to be transparent and not compound the problem by sitting
+on information until we had everything neatly tied up.
+
+Michael McNally
+(for ISC Security Officer)
