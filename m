@@ -1,93 +1,194 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/02/1
-Message-Id: <4BDB3183-6E14-41DC-AE08-D67E551EF3B7@gmail.com>
-Date: Wed, 2 Jun 2021 11:34:09 +0200
-From: Carlton Gibson <carlton.gibson@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/1
+Message-ID: <4696a666-a284-041e-ae31-d2c6e844a88c@isc.org>
+Date: Thu, 18 Feb 2021 20:09:47 -0900
+From: ISC Security Officer <security-officer@....org>
 To: oss-security@...ts.openwall.com
-Subject: Django security releases 3.2.4, 3.1.12, and 2.2.24 for CVE-2021-33203 and CVE-2021-33571
+Cc: "security-officer@....org" <security-officer@....org>
+Subject: BIND Operational Notification: Enabling the new BIND option "stale-answer-client-timeout" can result in unexpected server termination
 Content-Type: text/plain; charset=utf-8
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django team
-is issuing
-`Django 3.2.4 <https://docs.djangoproject.com/en/dev/releases/3.2.4/>`_,
-`Django 3.1.12 <https://docs.djangoproject.com/en/dev/releases/3.1.12/>`_, and
-`Django 2.2.24 <https://docs.djangoproject.com/en/dev/releases/2.2.24/>`_.
-These release addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+To the packagers and redistributors of BIND --
 
-CVE-2021-33203: Potential directory traversal via ``admindocs``
-===============================================================
+Regrettably, a problem has been discovered in two of the three public
+release versions of BIND we issued yesterday (17 February).  A change
+to the serve-stale feature in BIND 9.16.12 and BIND 9.17.10 can cause
+the server to exit unexpectedly when that feature is in use.
 
-Staff members could use the ``admindocs``
-``TemplateDetailView`` view to check the existence of arbitrary files.
-Additionally, if (and only if) the default admindocs templates have been
-customized by the developers to also expose the file contents, then not only
-the existence but also the file contents would have been exposed.
+Below is a message we shared with subscribers to our bind-announce
+public list, and I reproduce it here in case any of you did not see
+it there.
 
-As a mitigation, path sanitation is now applied and only files within the
-template root directories can be loaded.
+To most users we are recommending the use of one of the workarounds
+listed in the Workarounds section of the accompanying Operational
+Notification document.  As packagers and redistributors of BIND,
+however, you are generally not in a position to choose your users'
+config options.
 
-This issue has low severity, according to the Django security policy.
+We have a couple of recommendations:
 
-Thanks to Rasmus Lerchedahl Petersen and Rasmus Wriedt Larsen from the CodeQL Python team for the report.
+1)  BIND 9.17.10 is an experiment development release and probably
+not widely used for building packages.  But if you are packaging
+and/or redistributing BIND 9.16.x and have not yet issued updated
+packages based on 9.16.12 you might wish to hold off..  HOWEVER,
+you will have also seen that yesterday we disclosed a vulnerability
+in that version (CVE-2020-8625.)  You might prefer to issue a
+package based on 9.16.11, since the serve-stale bug is not yet
+present in that version, but with the patch diff found in
+https://downloads.isc.org/isc/bind9/9.16.12/patches/CVE-2020-8625.patch
+applied to correct the CVE-2020-8625 vulnerability.
 
-CVE-2021-33571: Possible indeterminate SSRF, RFI, and LFI attacks since validators accepted leading zeros in IPv4 addresses
-===========================================================================================================================
+2)  If you already have packages based on 9.16.12, we expect to have
+a patch ready well before the next maintenance release.  A candidate
+patch is under review now and can be delivered after review and
+quality assurance testing.  If you wish to receive updates on the
+progress of this patch, please e-mail your request to security-officer@....org
 
-``URLValidator``, ``validate_ipv4_address()``, and ``validate_ipv46_address()``
-didn't prohibit leading zeros in octal literals. If you used such values you
-could suffer from indeterminate SSRF, RFI, and LFI attacks.
+We're sorry for the mess this creates.
 
-``validate_ipv4_address()`` and ``validate_ipv46_address()`` validators were not
-affected on Python 3.9.5+.
+Michael McNally
+(for ISC Security Officer)
 
-This issue has medium severity, according to the Django security policy.
 
-Affected supported versions
-===========================
+-----
 
-* Django main branch
-* Django 3.2
-* Django 3.1
-* Django 2.2
 
-Resolution
-==========
+To our users --
 
-Patches to resolve the issue have been applied to Django's main branch and to
-the 3.2, 3.1, and 2.2 release branches. The patches may be obtained from the
-following changesets.
+Yesterday we issued new release versions of BIND (9.11.28, 9.16.12,
+and 9.17.10, plus versions 9.11.28-S1 and 9.16.12-S1 of BIND
+Supported Preview Edition for eligible support customers.)
 
-CVE-2021-33203:
+Unfortunately an issue affecting an extension to the serve-stale
+functionality in the 9.16.12, 9.17.10, and 9.16.12-S1 releases was
+not discovered until after the new versions had been published.
 
-* On the `main branch <https://github.com/django/django/commit/46572de2e92fdeaf047f80c44d52269e54ad68db>`__
-* On the `3.2 release branch <https://github.com/django/django/commit/dfaba12cda060b8b292ae1d271b44bf810b1c5b9>`__
-* On the `3.1 release branch <https://github.com/django/django/commit/20c67a0693c4ede2b09af02574823485e82e4c8f>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/053cc9534d174dc89daba36724ed2dcb36755b90>`__
+The following Operational Notification explains the issue.
 
-CVE-2021-33571:
+ONLY operators who are using serve-stale with one of the three
+BIND versions listed above are at any risk from the defect, and for
+those customers a choice of several effective configuration
+workarounds can be found in the "Workarounds" section of the
+notification.  One of the workaround choices disables serve-stale;
+another reverts the feature to its previous behavior (i.e.: the same
+way it worked in releases containing the serve-stale feature
+prior to the ones just issued.)
 
-* On the `main branch <https://github.com/django/django/commit/e1d787f1b36d13b95187f8f425425ae1b98da188>`__
-* On the `3.2 release branch <https://github.com/django/django/commit/9f75e2e562fa0c0482f3dde6fc7399a9070b4a3d>`__
-* On the `3.1 release branch <https://github.com/django/django/commit/203d4ab9ebcd72fc4d6eb7398e66ed9e474e118e>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/f27c38ab5d90f68c9dd60cabef248a570c0be8fc>`__
+We regret that our error requires operators using serve-stale
+with an affected version of BIND to add the workarounds to their
+configuration in order to avoid hitting the defect, but because
+the workarounds are effective we are not at this time planning
+to issue emergency replacement versions of BIND.  The flaw in the
+revised feature will be fixed in the March 2021 maintenance
+releases, expected on 17 March.
 
-The following releases have been issued:
+That said, we expect that we will have a patch diff tested and
+available sooner than that for operators who for whatever reason
+prefer not to use any of the workarounds but still require the use
+of serve-stale.  If you require a patch diff, please request one
+by e-mail to security-officer@....org
 
-* Django 3.2.4 (`download Django 3.2.4 <https://www.djangoproject.com/m/releases/3.2/Django-3.2.4.tar.gz>`_ | `3.2.4 checksums <https://www.djangoproject.com/m/pgp/Django-3.2.4.checksum.txt>`_)
-* Django 3.1.12 (`download Django 3.1.12 <https://www.djangoproject.com/m/releases/3.1/Django-3.1.12.tar.gz>`_ | `3.1.12 checksums <https://www.djangoproject.com/m/pgp/Django-3.1.12.checksum.txt>`_)
-* Django 2.2.24 (`download Django 2.2.24 <https://www.djangoproject.com/m/releases/2.2/Django-2.2.24.tar.gz>`_ | `2.2.24 checksums <https://www.djangoproject.com/m/pgp/Django-2.2.24.checksum.txt>`_)
+Michael McNally
+ISC Security Officer
 
-The PGP key ID used for these releases is Carlton Gibson: `E17DF5C82B4F9D00
-<https://github.com/carltongibson.gpg>`_.
+-----
 
-General notes regarding security reporting
-==========================================
+Operational Notification: Enabling the new BIND option
+"stale-answer-client-timeout" can result in unexpected server termination
 
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
- 
+
+Posting date:        18 February 2021
+Program impacted:    BIND
+Versions affected:   BIND 9.16.12, BIND 9.16.12-S1 (Supported Preview Edition)
+                      and version 9.17.10 of the 9.17 development branch.
+
+Description:
+
+    The serve-stale feature (available in BIND 9.11-S, 9.16 and 9.17
+    branches) has been undergoing some enhancement to bring it into
+    conformance with RFC 8767. As part of this work, in the BIND
+    February 2021 maintenance releases, we added a new feature:
+    'stale-answer-client-timeout' with a default value of 1800
+    milliseconds. BIND servers that have enabled the returning of
+    stale cached answers (i.e. those that have set "stale-answer-enable yes;"
+    in named.conf or where serve-stale features have been enabled
+    during runtime using "rndc serve-stale on") may experience an
+    unexpected server termination (crash) if stale-answer-client-timeout
+    is applied to a client query that is being processed.
+
+Impact:
+
+    The named process may terminate unexpectedly with an assertion
+    failure in the procedure ns_query_recurse() in query.c.
+
+Workarounds:
+
+    There are three workarounds; if affected by this problem you can
+    choose the one most suited to your needs:
+
+    1) Disable stale answers:
+
+       stale-answer-enable no;
+
+    2) Enable stale answers, but use stale-answer-client-timeout to
+       indicate a preference for serving stale content before attempting
+       to refresh it:
+
+       stale-answer-client-timeout 0;
+
+    3) Enable stale answers but disable the stale-answer-client-timeout
+       (named will not search for a stale answer until an attempt to
+       refresh the data has failed):
+
+       stale-answer-client-timeout off;
+
+Solution:
+
+    Code changes which fix the broken behavior are planned for the
+    March 2021 maintenance releases (due 17 March 2021) but until
+    then the measures suggested in the "Workarounds" section are the
+    best solution for server operators using the affected
+    stale-answer-enable setting.
+
+Note:
+
+    BIND 9.11.28-S1 is unaffected by this problem
+
+    Although the serve-stale feature is present in BIND 9.11 Supported
+    Preview Edition, we had not yet back-ported the new
+    'stale-answer-client-timeout' option when this problem was
+    uncovered.
+
+Do you still have questions? Questions regarding this advisory
+should go to security-officer@....org. To report a new issue, please
+encrypt your message using security-officer@....org's PGP key which
+can be found here: https://www.isc.org/pgpkey/. If you are unable
+to use encrypted email, you may also report new issues at:
+https://www.isc.org/reportbug/.
+
+Note:
+
+    ISC patches only currently supported versions. When possible we indicate EOL versions 
+affected. (For current information on which versions are actively supported, please see 
+https://www.isc.org/download/.)
+
+This Knowledgebase article, found at
+https://kb.isc.org/v1/docs/operational-notification-enabling-new-bind-option-stale-answer-client-timeout-can-result-in-unexpected-server-termination
+is the complete and official operational notification document.
+
+Legal Disclaimer:
+
+    Internet Systems Consortium (ISC) is providing this notice on
+    an "AS IS" basis. No warranty or guarantee of any kind is expressed
+    in this notice and none should be implied. ISC expressly excludes
+    and disclaims any warranties regarding this notice or materials
+    referred to in this notice, including, without limitation, any
+    implied warranty of merchantability, fitness for a particular
+    purpose, absence of hidden defects, or of non-infringement. Your
+    use or reliance on this notice or materials referred to in this
+    notice is at your own risk. ISC may change this notice at any
+    time. A stand-alone copy or paraphrase of the text of this
+    document that omits the document URL is an uncontrolled copy.
+    Uncontrolled copies may lack important information, be out of
+    date, or contain factual errors.
+
