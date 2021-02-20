@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1415" "Monday" "14" "November" "2016" "13:34:55" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<bc666ad7d07148c9989b5e2b083442fc@imshyb02.MITRE.ORG>" "36" "[oss-security] Re: CVE Request: libtiff: read outside buffer in _TIFFPrintField()" nil nil nil "11" "2016111418:34:55" "[oss-security] Re: CVE Request: libtiff: read outside buffer in _TIFFPrintField()" (number mark "U       cve-assign@m Nov 14   36/1415  " thread-indent "\"[oss-security] Re: CVE Request: libtiff: read outside buffer in _TIFFPrintField()\"\n") "<CANMVOuzgr=caMRG=US40q-yfmA5mGH7OakJMvrj4r1g_B3yGiQ@mail.gmail.com>" ("<CANMVOuzgr=caMRG=US40q-yfmA5mGH7OakJMvrj4r1g_B3yGiQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["789" "Saturday" "20" "February" "2021" "09:52:09" "+0800" "Jerry Shao" "jshao@apache.org" nil "26" "[oss-security] CVE-2021-26544: Apache Livy (Incubating) is vulnerable to cross site scripting" nil nil nil "2" nil nil (number mark "U       jshao@apache Feb 20   26/789   " thread-indent "\"[oss-security] CVE-2021-26544: Apache Livy (Incubating) is vulnerable to cross site scripting\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-26544: Apache Livy (Incubating) is vulnerable to cross site scripting" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12200 invoked by uid 550); 14 Nov 2016 18:35:08 -0000
+Received: (qmail 6100 invoked by uid 550); 20 Feb 2021 07:45:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12180 invoked from network); 14 Nov 2016 18:35:07 -0000
-From: <cve-assign@mitre.org>
-To: <brian.carpenter@gmail.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <CANMVOuzgr=caMRG=US40q-yfmA5mGH7OakJMvrj4r1g_B3yGiQ@mail.gmail.com>
-Message-ID: <bc666ad7d07148c9989b5e2b083442fc@imshyb02.MITRE.ORG>
-Date: Mon, 14 Nov 2016 13:34:55 -0500
+Received: (qmail 9866 invoked from network); 20 Feb 2021 01:51:57 -0000
+X-Gm-Message-State: AOAM531EuTfwmy2vPgaAUkg8/86dqqJRbt+IJowHQqVSXRpR3lJdJKf+
+	/cIXhQkaK3MK9gtJRwwpKgKkydgrYv5sfh4Aw94=
+X-Google-Smtp-Source: ABdhPJxbc74bRyraxgSi9tJLOJkhxq1UZZyIdIUPX/XfVarZh7/T2kgDZGcZXip297fVGVRW3MjcdOhNfQKJKu+HwCw=
+X-Received: by 2002:a92:6403:: with SMTP id y3mr6199253ilb.90.1613785903500;
+ Fri, 19 Feb 2021 17:51:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: libtiff: read outside buffer in _TIFFPrintField()
+From: Jerry Shao <jshao@apache.org>
+Date: Sat, 20 Feb 2021 09:52:09 +0800
+X-Gmail-Original-Message-ID: <CANvfmP8oAx1QMY-dStGLA1obfucRF3Us4Vq2EnqE9bORcLXQtA@mail.gmail.com>
+Message-ID: <CANvfmP8oAx1QMY-dStGLA1obfucRF3Us4Vq2EnqE9bORcLXQtA@mail.gmail.com>
+To: user@livy.incubator.apache.org, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000085970a05bbbacfd4"
+Subject: [oss-security] CVE-2021-26544: Apache Livy (Incubating) is vulnerable to cross site scripting
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--00000000000085970a05bbbacfd4
+Content-Type: text/plain; charset="UTF-8"
 
-> http://bugzilla.maptools.org/show_bug.cgi?id=2590
+Description:
 
-> AddressSanitizer: SEGV on unknown address 0x7faf9b2d2000
+Livy server version 0.7.0-incubating (only) is vulnerable to a cross
+site scripting issue in the session name.  A malicious user could use
+this flaw to access logs and results of other users' sessions and run
+jobs with their privileges.  This issue is fixed in Livy
+0.7.1-incubating.
 
->> * libtiff/tif_dirread.c: in TIFFFetchNormalTag(), make sure that
->> values of tags with TIFF_SETGET_C16_ASCII / TIFF_SETGET_C32_ASCII
->> access are null terminated, to avoid potential read outside buffer
->> in _TIFFPrintField().
+This issue is being tracked as
+https://github.com/apache/incubator-livy/commit/4d8a912699683b973eee76d4e91447d769a0cb0d
 
-Use CVE-2016-9297.
+Mitigation:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Users can upgrade to 0.7.1-incubating or apply the patch at the github URL.
 
-iQIcBAEBCAAGBQJYKgMmAAoJEHb/MwWLVhi2PioP/jm0R6nmT1TNWfIenph7XvVp
-rrxXbx0spg1BFsDDvP44kzFYvn4EAH+mCW8HyKpV3dGGLL6PO22cOivt15K0EKKc
-ImyY2E3j8PKR5lzdHcLYGjiBTOT+psZhZtEhaVkELjpgPq4mJqbmbdMyjYMdseav
-+x9r2vptrj6zf875gY23FsEEXEWyF+wML15jViClSmrUYcTZQtR52Sr6IZrUIlDR
-rw4sr7l6M2H92CIrFqGl1ltF23BIjR75vMlxabze244XFoOIWo8cBcI04ncKJ404
-3hDzdeBHLzJFltoKygb8dhGdWF0xfonAG4P6Mt04yFLDBsI1M0Sial6kcrWj2XSh
-Br27MgPKH9gIOLAdUmaUFkO+gu92DEZGUMOtvBJHjRrZ2M1USrIH+bVBAJubdZGb
-L2Y6rVLHhC0pfIA21It4f1JjTsb3PODlSO/mNd6ZF/E37/MDEWoel7BCGBvBnuLg
-NmcxWKDw3kPsxnHhujrHoNHemnOP9lGsCbT8mMX+yCYphUc2+OO4inwAWO2N+gGT
-wFIJRl7TkQUzKNsvUdU0L1+sHjA5T1SKWjrEABfuEAlcUNmLm9AnSfkVMZDbIphm
-765VnjGxzU9dQCcC2L3ZrjbLVEwDMgdXPzJ5ncV9+kmklmFSkQSTBsOD2vgggq5p
-rkvWKAOzbWcHI90QV0lL
-=9TM7
------END PGP SIGNATURE-----
+Credit:
+
+We would like to thank Andras Beni for reporting this issue
+
+References:
+https://github.com/apache/incubator-livy/commit/4d8a912699683b973eee76d4e91447d769a0cb0d
+
+--00000000000085970a05bbbacfd4--
