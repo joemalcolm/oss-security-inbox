@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/28/4
-Message-ID: <20210328213159.1957204a@wim.jer>
-Date: Sun, 28 Mar 2021 21:31:59 +0200
-From: Jeroen Roovers <jer@...all.nl>
-To: Mark J Cox <mark@...nssl.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/20/1
+Message-ID: <CANvfmP8oAx1QMY-dStGLA1obfucRF3Us4Vq2EnqE9bORcLXQtA@mail.gmail.com>
+Date: Sat, 20 Feb 2021 09:52:09 +0800
+From: Jerry Shao <jshao@...che.org>
+To: user@...y.incubator.apache.org, oss-security@...ts.openwall.com
+Subject: CVE-2021-26544: Apache Livy (Incubating) is vulnerable to cross site scripting
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 28 Mar 2021 18:35:29 +0000
-Mark J Cox <mark@...nssl.org> wrote:
+Description:
 
-> Usually that process of waiting for responses takes an extra trip
-> around the sun due to timezones
+Livy server version 0.7.0-incubating (only) is vulnerable to a cross
+site scripting issue in the session name.  A malicious user could use
+this flaw to access logs and results of other users' sessions and run
+jobs with their privileges.  This issue is fixed in Livy
+0.7.1-incubating.
 
-Surely you meant to indicate a day (approximately one full rotation of
-the Earth) here and not a year (one orbit of the Earth around the Sun).
+This issue is being tracked as
+https://github.com/apache/incubator-livy/commit/4d8a912699683b973eee76d4e91447d769a0cb0d
 
+Mitigation:
 
-Kind regards,
-     jer
+Users can upgrade to 0.7.1-incubating or apply the patch at the github URL.
+
+Credit:
+
+We would like to thank Andras Beni for reporting this issue
+
+References:
+https://github.com/apache/incubator-livy/commit/4d8a912699683b973eee76d4e91447d769a0cb0d
+
