@@ -1,24 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/10/2
-Message-ID: <c24bb38a-bd87-3bcb-7831-811e8d8d5405@eenterphace.org>
-Date: Fri, 10 Dec 2021 11:29:48 +0100
-From: Moritz Bechler <mbechler@...terphace.org>
-To: oss-security@...ts.openwall.com, rgoers@...che.org
-Subject: Re: CVE-2021-44228: Apache Log4j2 JNDI features do not protect against attacker controlled LDAP and other JNDI related endpoints
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/22/1
+Message-ID: <YDPiwBU5Mk3lIoEQ@ugly>
+Date: Mon, 22 Feb 2021 17:58:40 +0100
+From: Oswald Buddenhagen <oswald.buddenhagen@....de>
+To: isync-devel@...ts.sourceforge.net
+Cc: oss-security@...ts.openwall.com
+Subject: CVE-2021-20247: isync/mbsync data leak/destruction vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+description:
+
+mbsync didn't validate the mailbox names returned by IMAP LIST/LSUB, 
+which would allow a malicious/compromised server to use specially 
+crafted mailbox names containing '..' path components to access data 
+outside the designated mailbox on the opposite end of the 
+synchronization channel. gory details follow below.
+the attack vector is rather narrow, but the effects can be disastrous.
+the vulnerability has been there "forever", though it wasn't of much 
+concern prior to 1.3 used with a specific configuration.
+
+mitigation:
+
+upgrade to the freshly released v1.3.5 or v1.4.1 available from 
+https://sourceforge.net/projects/isync/files/isync/ , or apply one of 
+the attached patches (patches for earlier versions can be produced 
+easily, should anyone care).
+
+credit:
+
+the possible existence of the vulnerability was suggested by a user who 
+does not wish to be credited. :-D
+
+vulnerability details:
+
+- the victim must be using the Pattern channel option containing the '*' 
+    wildcard. this is fairly likely (even though only those who actually 
+    use hierarchical mailboxes (presumably a minority) actually need that 
+    - others may use the '%' wildcard).
+- if the opposite end is also an IMAP server (which is presumed to be 
+    rare), the exact impact depends on the server. most servers will 
+    expose only a very restricted amount of data to any particular user, 
+    and will likely reject weird paths. also, most servers use '.' as the 
+    hierarchy delimiter, which would make mbsync reject the crafted paths 
+    as non-representable after delimiter translation. however, 
+    uw-imap/panda-imap for example would be vulnerable, as it basically 
+    just exposes the file system via IMAP.
+- the much more common case is the opposite end being a local Maildir 
+    store, which is somewhat similar to the uw-imap case:
+    - users who don't actually use hierarchical mailboxes locally are 
+      usually not vulnerable, as they won't set the SubFolders option, 
+      which will make mbsync reject any mailbox names containing 
+      hierarchy delimiters. (not applicable before v1.3.)
+    - if SubFolders is Maildir++, no attack is possible, as periods are 
+      hierarchy delimiters and are consequently rejected by the 
+      translation. (not applicable before v1.3.)
+    - if SubFolders is Legacy, an attack is limited to hidden 
+      directories, as a '.' is prepended to each subfolder when mapping 
+      to file system paths.
+    - if SubFolders is Verbatim, exposure is unlimited. (not applicable 
+      before v1.3.)
+    - the most likely target are Maildir folders that are synchronized to 
+      other servers (e.g., work vs. private mail stores)
+      - if the victim is using '*' for the SyncState option (which most 
+        users seem to do judging by support requests; the example config 
+        file suggests it), all previously synchronized messages will be 
+        deleted from that folder (that this happens is a seperate bug 
+        that v1.4.1 also fixes), while new messages will be stolen.
+      - otherwise, all messages from that folder will be stolen. i 
+        consider this the main danger of this vulnerability.
+    - non-Maildir paths can be attacked only if they end with one of 
+      {cur,new,tmp}, as this is imposed by the expected Maildir structure.
+      - if no 'cur' is present, the victim must have the Create option set 
+        for that end of the channel (this is likely).
+      - all files from 'tmp' will be deleted
+      - all files from 'cur' and 'new' will be stolen, and in the process 
+        renamed to add some Maildir "decorations"
+      - subdirectories are not affected
+      - in principle the attacker can deposit dangerous files, but these 
+        will also have "weird" names that cannot be influenced much, so 
+        they are unlikely to pose an actual threat. (general content 
+        attacks are neglected here, as they don't require this 
+        vulnerability to be executed.)
+    - the attacked paths must be guessed or known in advance. if guessing 
+      is used and the victim has Create enabled, every attempted target 
+      path will be actually created, so the attacker will leave rather 
+      obvious traces, and might be even noticed before landing a single 
+      hit.
+    - users who run mbsync interactively in verbose mode will likely spot 
+      an attack immediately (this is presumed to be rare; cron jobs are 
+      more likely).
+
+i got an NVSS score of 'high', but there are lots of caveats that would 
+qualify as mitigating factors if the criteria are not interpreted quite 
+as literally (the case of a malicious server does not seem to fit very 
+well).
 
 
-> In previous releases (>2.10) this behavior can be mitigated by setting system property "log4j2.formatMsgNoLookups" to “true” or by removing the JndiLookup class from the classpath (example: zip -q -d log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class). Java 8u121 (see https://www.oracle.com/java/technologies/javase/8u121-relnotes.html) protects against remote code execution by defaulting "com.sun.jndi.rmi.object.trustURLCodebase" and "com.sun.jndi.cosnaming.object.trustURLCodebase" to "false".
+View attachment "reject-funny-mailbox-names--1.3.patch" of type "text/x-diff" (2222 bytes)
 
-
-Please note, that Java 8u121+ does not necessarily protect against 
-remote code execution. There are known exploitation vectors using local 
-naming factories, e.g. a XBean BeanFactory (bundled with Tomcat). Also, 
-both RMI and LDAP lookups can be made to perform Java deserialization on 
-remote input and therefore there is a good chance for secondary RCE 
-exploits.
-
-
-Moritz
+View attachment "reject-funny-mailbox-names--1.4.patch" of type "text/x-diff" (2116 bytes)
