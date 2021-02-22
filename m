@@ -1,4 +1,9 @@
-Received: (qmail 19573 invoked by uid 550); 21 Apr 2025 17:49:36 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["11977" "Monday" "22" "February" "2021" "19:46:25" "+0000" "ISC Security Officer" "security-officer@isc.org" nil "256" "[oss-security] BIND Operational Notification: Zone journal (.jnl) file incompatibility,after upgrading to BIND 9.16.12 and 9.17 - REVISION" nil nil nil "2" nil nil (number mark "U       security-off Feb 22  256/11977 " thread-indent "\"[oss-security] BIND Operational Notification: Zone journal (.jnl) file incompatibility,after upgrading to BIND 9.16.12 and 9.17 - REVISION\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] BIND Operational Notification: Zone journal (.jnl) file incompatibility,after upgrading to BIND 9.16.12 and 9.17 - REVISION" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12043 invoked by uid 550); 22 Feb 2021 20:44:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,57 +12,290 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19551 invoked from network); 21 Apr 2025 17:49:36 -0000
-From: Russ Allbery <eagle@eyrie.org>
-To: Mats Wichmann <mats@wichmann.us>
-Cc: oss-security@lists.openwall.com
-In-Reply-To: <49c8a7b7-0200-4bc6-bfca-4f376dcb3d25@wichmann.us> (Mats
-	Wichmann's message of "Mon, 21 Apr 2025 10:53:28 -0600")
-Organization: The Eyrie
-References: <62e9c3e0-dd06-4d88-8192-1d0add89d0c8@oracle.com>
-	<49c8a7b7-0200-4bc6-bfca-4f376dcb3d25@wichmann.us>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Mon, 21 Apr 2025 10:49:25 -0700
-Message-ID: <871ptls8uy.fsf@hope.eyrie.org>
+Received: (qmail 22036 invoked from network); 22 Feb 2021 19:46:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
+	t=1614023188; bh=MK8RxrRGF4d50OyOEGCyPEMyuy5ixePlfb/W5Ec3AHk=;
+	h=To:Cc:From:Subject:Date;
+	b=AAP1DnKc3g+wmjDnElqHxLTfmVoysivfc5pC4OctoOh+OFU3iWcrZexYIUCaGL8wB
+	 qvSu+tKF2avBaMpP+QmqhlX4Y6mngdmVXhaWTWTUh3++sPMvUZddAtQofkPioTvnHC
+	 ok7KKjQuzRvBtn8GBD9H7OSAhMj4lFNPg+3mlwDA=
+DKIM-Filter: OpenDKIM Filter v2.9.2 zmx1.isc.org 77143160094
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
+	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1614023187;
+	bh=dde/G1quWQh7co04tFsqWU632qyeBpVAX/bIxAX7z/E=;
+	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=hhMHycZ8oHRHts0/LZRM/00+M1WqbYUoXbspKvP9qYAb5AQ4jNryWP7FyfW5j+h9B
+	 kPxbvWIKz+C8VZxtLRAmUVmaScC3Oe74l+BJdX2RIvOuHVS199ys0OHVGDvomZyIOZ
+	 m8QZNvudZ/odmNCtmBFbcgOLYFbqhwTe0I5sAIw4=
+To: oss-security@lists.openwall.com
+Cc: security-officer@isc.org
+From: ISC Security Officer <security-officer@isc.org>
+Organization: Internet Systems Consortium
+Message-ID: <9f61ccca-4561-a338-8779-f8b58eb39ebf@isc.org>
+Date: Mon, 22 Feb 2021 19:46:25 +0000
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] 3 new CVE's in old branch of GNU mailman
-X-Spam: Yes
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] BIND Operational Notification: Zone journal (.jnl) file
+ incompatibility,after upgrading to BIND 9.16.12 and 9.17 - REVISION
 
-Mats Wichmann <mats@wichmann.us> writes:
-> On 4/21/25 10:08, Alan Coopersmith wrote:
+To the packagers and redistributors of BIND --
 
->> 3 new CVE's have been published for GNU Mailman 2.1.39, as bundled with
->> cPanel and WHM, credited to Firudin Davudzada and Musazada Aydan. Note
->> that upstream declared GNU Mailman 2.1 (which requires Python 2), to be
->> end of life back in 2020, and recommends migrations to Mailman 3 (which
->> uses Python 3 instead):
+Following further research, we have revised the Operational Notification
+published at the end of last week as we now have an improved
+understanding of its likely impact on authoritative BIND servers.
+The situation is not quite as serious as originally announced for those
+whose server shutdown process ensures that any pending zone file writes
+to disk are completed, (that is, the zone files on disk after the name
+server has stopped are a full copy of the zones in memory when it was
+running).
 
-> Sadly, a lot of people are stuck with these bundled environments from
-> hosting services where the provider isn't going to provide any kind of
-> upgrade path to Mailman 3.
+Cleanly-shutdown servers, when started again following the upgrade,
+should have no need to perform a zone roll-forward from the old journal
+files.  On restart, named should load all of the zones and start serving
+them without error.
 
-Also, I would not really describe Mailman 3 as an upgrade from Mailman 2.
-It is a different mailing list manager with a different architecture,
-different dependencies, a much different UI, a different archiving system,
-a completely different authentication mechanism, etc. It's essentially a
-different piece of software that has a roughly similar feature set and
-automated migration tools for Mailman 2.
+Although named will have started and correctly loaded its zone files,
+the older incremental transactions in the journal files that were
+written prior to the upgrade will still be unusable.  This means that
+any zone updates made prior to the upgrade will not be accessible to
+named for providing incremental updates (IXFRs).  If requested named
+will instead respond with AXFR.
 
-For planning purposes, it's probably more realistic to view Mailman 2 as
-orphaned, end-of-life software with known security vulnerabilities that
-will require a major migration to retire. Mailman 3 has some useful
-support for that migration and a similar feature set, so it's a good
-candidate for a new mailing list manager to migrate to, but (speaking from
-personal experience) that's what the experience is like: migrating to an
-entirely new mailing list manager.
+Primary authoritative zone administrators may therefore see no problems
+other than an unexpected but short term increase in AXFRs in place of
+IXFRs.
 
-People will probably want to do some due diligence first to see if they
-want to migrate to a different mailing list manager instead, want to
-separate archiving from mailing list management (there are now a bunch of
-good archiving tools that don't also need to manage the list), and so
-forth.
+New incremental updates, added after restarting and in the new format,
+will all be accessible for IXFR and zone recovery.  Over a period of
+time and with periodic journal file pruning (per named.conf option
+max-journal-size) all incremental updates using the old format will be
+removed from the journal files.
 
--- 
-Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
+Please see the revised Operational Notification below for more detail.
+
+Kind regards
+
+Cathy Almond
+ISC Support
+
+-----
+
+Operational Notification: Zone journal (.jnl) file incompatibility
+after upgrading to BIND 9.16.12 and 9.17
+
+Posting date:        19 February 2021; updated 22 February 2021
+Program impacted:    BIND
+Versions affected:   BIND 9.16.12, BIND 9.16.12-S1 (Supported Preview
+                     Edition) and versions 9.17.0 -> 9.17.10 of the 9.17
+                     development branch.
+
+Description:
+
+   All changes made to a zone using dynamic updates or inbound
+   incremental zone update (IXFR) are stored in the zone's journal file.
+   This journal (.jnl) file is automatically created and maintained by
+   named, and will be used when named is re-started after a shutdown or
+   crash to roll-forward (replay) any zone updates that were not yet in
+   the version of the zone on disk when named stopped. A zone's journal
+   file is also used to provide incremental updates (IXFRs) to other
+   servers. DNSSEC-signed zones using inline-signing will also have
+   journal files associated with the signed version of the zone.
+
+   In BIND 9.17.0, we introduced the max-ixfr-ratio option, which is a
+   percentage representing the ratio of IXFR size to the size of the
+   entire zone. This sets the size threshold (expressed as a percentage
+   of the size of the full zone) beyond which named chooses to use an
+   AXFR response rather than IXFR when answering zone transfer requests.
+   This feature has now been back-ported to BIND 9.16, making its debut
+   in the 9.16.12 releases.
+
+   Unfortunately, one feature of this change escaped our notice, both
+   when writing the release documentation for BIND 9.17.0, and then
+   later on, adding the max-ixfr-ratio option to BIND 9.16.12. A small
+   change was required to the journal (.jnl) file format in order to
+   support the calculation of an IXFR size during its preparation. The
+   old format .jnl file is incompatible with the versions of BIND that
+   support the new max-ixfr-ratio option.
+
+   When BIND is upgraded to 9.16.12, 9.16.12-S1 or 9.17 (any version)
+   and then started with journal (.jnl) files present that were created
+   by earlier versions, there may be some problems encountered due to
+   the incompatibility.  Several scenarios exist, here are the two that
+   we believe are most likely to be encountered:
+
+   - On an authoritative server (primary or secondary), where named was
+     shutdown abruptly ('rndc halt' or 'kill -TERM') without flushing
+     the in-memory versions of zones to disk first, some zones on disk
+     will not reload when named is started after upgrading because their
+     .jnl files are incompatible and the latest zone changes cannot be
+     applied to bring the zone up to date. See Workarounds below for
+     potential routes for recovery of any zones in this state.
+
+     Note:
+     --
+     The named.conf option 'flush-zones-on-shutdown' changes the
+     behaviour of named when receiving SIGTERM.  The default is:
+       flush-zones-on-shutdown no;
+     --
+
+   - On an authoritative server (primary or secondary), where named was
+     shutdown using 'rndc stop' and all recent changes written to the
+     zone files first, all zones will load when named is restarted
+     following the upgrade (the increment headers can be read during
+     the journal file walk-through, and there is no need for named
+     to examine the individual change records in the file).  However,
+     this server will not be able to respond to IXFR requests for
+     changes that were made to its zones prior to the upgrade and will
+     send AXFR instead. Eventually (depending on the value of
+     'max-journal-size' in 'named.conf'), during regular pruning, the
+     increments using the old format will be removed.
+
+Impact:
+
+   This problem can affect BIND servers whose authoritative zones are
+   maintained via dynamic updates, or by editing the zone file and
+   reloading on a server with option 'ixfr-from-differences' enabled.
+   Secondary zones that are maintained using incremental updates (IXFR)
+   are similarly at risk. The 'ixfr-from-differences' option may also be
+   used in some environments to generate journal files following an
+   inbound AXFR.  Use of DNSSEC inline-signing zones adds a further
+   layer of complexity to the above scenarios, as both the signed and
+   the unsigned versions of the zone have their own journal files.
+
+Workarounds:
+
+   We do not have a tool available to convert the journal files to the
+   new format, therefore on upgrading, it is advisable (but depending
+   on your circumstances, not absolutely necessary) to start named
+   with the old format journal files removed.
+
+   (Options if you have not yet upgraded:)
+
+   1.  Before upgrading, ensure that named is stopped using rndc stop.
+   This will ensure that all zones are written to disk during the
+   shutdown processing. After named has stopped, delete or relocate all
+   the associated .jnl files so that they are not accessed when named is
+   restarted. named will generate new .jnl files as needed.
+
+   Warning: Do not stop named using rndc halt before upgrading
+   --
+     Using rndc halt instead of rndc stop will stop the server
+     immediately.  Recent changes made through dynamic update or
+     IXFR are not saved to the zone files on disk first (and will
+     need to be rolled-forward from the journal files when named is
+     restarted; this is what you need to prevent so that you can
+     delete them before upgrading).
+   --
+
+   2.  For a provisioning/primary authoritative server, you have another
+   option for ensuring that the zones are written to disk and that the
+   journal files are removed. First, ensure that all dynamic updates are
+   paused, then issue command:
+
+      rndc sync -clean
+
+   Then stop named as normal (you should not need to remove the .jnl
+   files manually as the 'rndc sync -clean' will have taken care of this
+   step).
+
+   (Options if you have already upgraded:)
+
+   3.  If named was stopped before you upgraded using 'rndc stop' and
+   you know that this completed successfully, then you may wish to do
+   nothing, and wait for the older increments to be removed from your
+   .jnl files via periodic pruning.  Alternatively, and for zones that
+   update very infrequently, you may prefer to remove or relocate the
+   .jnl files.
+
+   4.  If you are not sure if your zone files on disk were updated when
+   you stopped named and you have a large number of zones to recover,
+   then it may be easiest to back-out the update, start named to do the
+   roll-forward and load, and then shutdown again (rndc stop) before
+   following option 1. above.
+
+   5.  For zones that are secondary, you can use the rndc utility with
+   the retransfer command to obtain a fresh AXFR of the zone from
+   another server. This will result in its old journal files being
+   deleted and then recreated using the new format following the next
+   inbound IXFR.
+
+   6.  If you have only a small number of zones to recover, then you may
+   prefer to recover (or build) named-checkzone from your pre-upgrade
+   version of BIND and use that to regenerate the zone files from
+   the .jnl files.
+
+   For example, to create a new zone file 'example.com.new' for zone
+   'example.com' by rolling forward from 'example.com.jnl' and
+   'example.com', you would type:
+
+      named-checkzone -jD -o example.com.new example.com example.com
+
+   And then you would:
+
+   - remove files 'example.com.jnl' and 'example.com'
+   - rename 'example.com.new' to 'example.com'.
+
+   Note: Use -f and -F options if your zone files are not in text
+   format. BIND supports several formats of zone file - check which
+   format you need first.
+
+   Hint: Make backup copies of the zone and .jnl files before you run
+   named-checkzone.  The named-checkzone utility, when run with the
+   -jD  options, will apply the journal file changes to the zone and
+   then delete it afterwards. If you make a mistake with the options,
+   you may want to start again; having a backup copy in that situation
+   is essential!
+
+Solution:
+
+   Code changes to support roll-forward from the older format of .jnl
+   files are planned for the March 2021 maintenance releases (due
+   17 March 2021) but until then the measures suggested in the
+   "Workarounds" section should prevent or resolve post-upgrade zone
+   loading problems for Authoritative BIND server operators.
+
+Do you still have questions?
+Questions regarding this notification should go to security-
+officer@isc.org. To report a new issue, please encrypt your message
+using security-officer@isc.org's PGP key which can be found here:
+https://www.isc.org/pgpkey/. If you are unable to use encrypted email,
+you may also report new issues at: https://www.isc.org/reportbug/.
+
+Note:
+
+   ISC patches only currently supported versions. When possible we
+   indicate EOL versions affected. (For current information on which
+   versions are actively supported, please see:
+   https://www.isc.org/download/.)
+
+ISC Security Vulnerability Disclosure Policy:
+
+   Details of our current security advisory policy and practice can be
+   found in the ISC Software Defect and Security Vulnerability
+   Disclosure Policy at https://kb.isc.org/docs/aa-00861.
+
+This Knowledgebase article, found at
+https://kb.isc.org/v1/docs/operational-notification-zone-journal-jnl-file-i=
+ncompatibility-after-upgrading-to-bind-91612-and-917
+is the complete and official
+operational notification document.
+
+Legal Disclaimer:
+
+   Internet Systems Consortium (ISC) is providing this notice on an "AS
+   IS" basis. No warranty or guarantee of any kind is expressed in this
+   notice and none should be implied. ISC expressly excludes and
+   disclaims any warranties regarding this notice or materials referred
+   to in this notice, including, without limitation, any implied
+   warranty of merchantability, fitness for a particular purpose,
+   absence of hidden defects, or of non-infringement. Your use or
+   reliance on this notice or materials referred to in this notice is at
+   your own risk. ISC may change this notice at any time. A stand-alone
+   copy or paraphrase of the text of this document that omits the
+   document URL is an uncontrolled copy. Uncontrolled copies may lack
+   important information, be out of date, or contain factual errors.
