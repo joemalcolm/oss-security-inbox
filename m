@@ -1,38 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/29/1
-Message-ID: <bb03954a-2db8-8c4c-3937-a3c59072abb4@isc.org>
-Date: Wed, 28 Apr 2021 17:09:42 -0800
-From: Michael McNally <mcnally@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/24/3
+Message-Id: <5DAF172D-4EC3-48C9-9A8C-C55B14478B40@beckweb.net>
+Date: Wed, 24 Feb 2021 15:52:03 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Cc: "security-officer@....org" <security-officer@....org>
-Subject: ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-On April 28, 2021, we (Internet Systems Consortium) disclosed three
-vulnerabilities affecting our BIND 9 software:
 
-    CVE-2021-25214: A broken inbound incremental zone update (IXFR)
-    can cause named to terminate unexpectedly
-    https://kb.isc.org/docs/cve-2021-25214
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-    CVE-2021-25215: An assertion check can fail while answering queries for
-    DNAME records that require the DNAME to be processed to resolve itself
-    https://kb.isc.org/docs/cve-2021-25215
+The following releases contain fixes for security vulnerabilities:
 
-    CVE-2021-25216: A second vulnerability in BIND's GSSAPI security policy
-    negotiation can be targeted by a buffer overflow attack
-    https://kb.isc.org/docs/cve-2021-25216
+* Active Choices Plugin 2.5.3
+* Artifact Repository Parameter Plugin 1.0.1
+* Claim Plugin 2.18.2
+* Configuration Slicing Plugin 1.52
+* Repository Connector Plugin 2.0.3
+* Support Core Plugin 2.72.1
 
-New versions of BIND are available from https://www.isc.org/downloads
 
-Operators and package maintainers who prefer to apply patches selectively can
-find individual vulnerability-specific patches in the "patches" subdirectory
-of the release directories for our two stable release branches (9.11 and 9.16)
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-02-24/
 
-   https://downloads.isc.org/isc/bind9/9.11.31/patches
-   https://downloads.isc.org/isc/bind9/9.16.15/patches
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-With the public announcement of these vulnerabilities, the embargo
-period is ended and any updated software packages that have been
-prepared may be released.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2192 / CVE-2021-21616
+Active Choices Plugin 2.5.2 and earlier does not escape reference parameter
+values.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
+
+SECURITY-2003 / CVE-2021-21617
+Configuration Slicing Plugin 1.51 and earlier does not require POST
+requests for the form submission endpoint reconfiguring slices, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to apply different slice configurations
+to attacker-specified jobs.
+
+
+SECURITY-2183 / CVE-2021-21618
+Repository Connector Plugin 2.0.2 and earlier does not escape parameter
+names and descriptions for past builds.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+
+SECURITY-2188 (1) / CVE-2021-21619
+Claim Plugin 2.18.1 and earlier does not escape the user display name shown
+in claims.
+
+This results in a cross-site scripting (XSS) vulnerability exploitable by
+attackers who are able to control the display names of Jenkins users,
+either via the security realm, or directly inside Jenkins.
+
+NOTE: Everyone with a Jenkins account can change their own display name.
+
+
+SECURITY-2188 (2) / CVE-2021-21620
+Claim Plugin 2.18.1 and earlier does not require POST requests for the form
+submission endpoint assigning claims, resulting in a cross-site request
+forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to change claims.
+
+
+SECURITY-2150 / CVE-2021-21621
+Support Core Plugin 2.72 and earlier provides the serialized user
+authentication as part of the "About user (basic authentication details
+only)" information (`user.md`).
+
+In some configurations, this can include the session ID of the user
+creating the support bundle. Attackers with access to support bundle
+content and the Jenkins instance could use this information to impersonate
+the user who created the support bundle.
+
+
+SECURITY-2168 / CVE-2021-21622
+Artifact Repository Parameter Plugin 1.0.0 and earlier does not escape
+parameter names and descriptions.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
 
