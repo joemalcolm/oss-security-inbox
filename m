@@ -1,42 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/26/2
-Message-Id: <406A0181-35A5-49BF-96C5-6EF46B0365E7@beckweb.net>
-Date: Tue, 26 Jan 2021 11:46:34 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Vulnerability in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/24/1
+Message-ID: <000901d70aa4$f97e3070$ec7a9150$@gmail.com>
+Date: Wed, 24 Feb 2021 12:02:49 -0000
+From: "Simon Steiner" <simonsteiner1984@...il.com>
+To: <oss-security@...ts.openwall.com>
+Subject: [CVE-2020-11988] Apache XML Graphics Commons SSRF vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+CVE-2020-11988:
+        Apache XML Graphics Commons SSRF vulnerability
 
-The following releases contain fixes for security vulnerabilities:
+Severity:
+        Medium
 
-* Jenkins 2.276
-* Jenkins LTS 2.263.3
+Vendor:
+        The Apache Software Foundation
+
+Versions Affected:
+        XML Graphics Commons 2.4 and earlier
+
+Description:
+        The Apache XML Graphics Commons library is vulnerable to SSRF via the XMPParser that allow an
+attacker to cause the underlying server to make arbitrary GET requests.
+
+Mitigation:
+        Users should upgrade to XML Graphics Commons 2.6 or later
+
+Credit:
+        This issue was independently reported by 张相浩
+
+References:
+        http://xmlgraphics.apache.org/security.html
+
+The Apache XML Graphics team.
 
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-01-26/
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2197 / CVE-2021-21615
-Due to a time-of-check to time-of-use (TOCTOU) race condition, the file
-browser for workspaces, archived artifacts, and
-`$JENKINS_HOME/userContent/` follows symbolic links to locations outside
-the directory being browsed in Jenkins 2.275 and LTS 2.263.2.
-
-This allows attackers with Job/Workspace permission and the ability to
-control workspace contents, e.g., with Job/Configure permission or the
-ability to change SCM contents, to create symbolic links that allow them to
-access files outside workspaces using the workspace browser.
 
