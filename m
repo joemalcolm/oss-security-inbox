@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/22/1
-Message-ID: <CAADJU10-Sv+qtmNd8PWgx_jSfgOQ4qW7gNARSNmHP8xQEs5y_Q@mail.gmail.com>
-Date: Mon, 22 Nov 2021 14:30:19 +0800
-From: Zexuan Luo <spacewander@...che.org>
-To: announce@...che.org, dev@...six.apache.org, security@...che.org,  oss-security@...ts.openwall.com, niemiec.marcin@...il.com
-Subject: CVE-2021-43557: Apache APISIX: Path traversal in request_uri variable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/24/2
+Message-ID: <000801d70aa4$bbfa3410$33ee9c30$@gmail.com>
+Date: Wed, 24 Feb 2021 12:01:06 -0000
+From: "Simon Steiner" <simonsteiner1984@...il.com>
+To: <oss-security@...ts.openwall.com>
+Subject: [CVE-2020-11987] Apache XML Graphics Batik SSRF vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+CVE-2020-11987:
+        Apache XML Graphics Batik SSRF vulnerability
+
+Severity:
+        Medium
+
+Vendor:
+        The Apache Software Foundation
+
+Versions Affected:
+        Batik 1.13 and earlier
 
 Description:
-
-The uri-block plugin in APISIX uses $request_uri without verification.
-The $request_uri is the full original request URI without
-normalization.
-This makes it possible to construct a URI to bypass the block list on
-some occasions. For instance, when the block list contains
-"^/internal/", a URI like `//internal/` can be used to bypass it.
-
-Some other plugins also have the same issue. And it may affect the
-developer's custom plugin.
-
-This issue is fixed in APISIX 2.10.2.
-Thanks to Marcin Niemiec for reporting the vulnerability.
+        The Apache Batik library is vulnerable to SSRF via the NodePickerPanel that allow an
+attacker to cause the underlying server to make arbitrary GET requests.
 
 Mitigation:
+        Users should upgrade to Batik 1.13 or later
 
-1. Upgrade to APISIX 2.10.2
-2. Carefully review custom code, find & fix the usage of $request_uri
-without verification.
+Credit:
+        This issue was independently reported by 张相浩
+
+References:
+        http://xmlgraphics.apache.org/security.html
+
+The Apache XML Graphics team.
+
+
+
