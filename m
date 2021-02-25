@@ -1,98 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/03/1
-Message-ID: <YLjioqSgPqiOuhsk@cbuissar-ltop.lan>
-Date: Thu, 3 Jun 2021 16:09:38 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/25/4
+Message-ID: <YDgNJsbBFtYumXCp@eldamar.lan>
+Date: Thu, 25 Feb 2021 21:48:38 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-3560 polkit: local privilege escalation using polkit_system_bus_name_get_creds_sync()
+Cc: Steve Grubb <sgrubb@...hat.com>, Felix Kosterhon <felix.kosterhon@...uinfra.com>
+Subject: Re: Vulnerability in the Linux Audit Framework Auditd
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Hi,
 
-This is to report a vulnerability in the `polkit` component
-(https://gitlab.freedesktop.org/polkit/polkit/). This vulnerability is
-rated Important by Red Hat
+On Thu, Feb 18, 2021 at 03:52:54PM +0000, Felix Kosterhon wrote:
+> Hello Mr. Grubb,
+>  
+> thank you for your insight.
+> First and foremost we would like to clarify that our intent is not
+> to put blame on anyone but to improve the level of security for the
+> affected systems and the organisations utilising Auditd.
+> According to the rules.conf manual page, file-watch rules are meant
+> to monitor any accesses to files based on their permission level.
+> For the syscalls mentioned in this report this is not the case.
+>  
+> RedHat Inc. shares our perspective on this issue and has assigned a
+> CVE for the vulnerability. Additionally they informed us that they
+> will work together with the Upstream Linux Kernel Developers on
+> behalf of fixing this issue.
 
-polkit is a toolkit for defining and handling authorizations.  It is
-used for allowing unprivileged processes to speak to privileged
-processes.
+Is there a reference to this which can be followed/tracked? Asking
+because the Red Hat bugzilla entry for CVE-2020-35501 for now would
+still be restricted, but would like to get a better idea on how to
+track this issue within Debian.
 
-The vulnerability can be reliably used by an unprivileged local attacker
-to bypass authorization and escalate permissions up to the root user.
-
-Red Hat proposes a disclosure on Thursday June 3rd (2021/06/03), around
-7:00 AM UTC
-
- == issue description ==
-
-The function `polkit_system_bus_name_get_creds_sync` is used to get the
-uid and pid of the process requesting the action. It does this by
-sending the unique bus name of the requesting process, which is
-typically something like ":1.96", to `dbus-daemon`. These unique names
-are assigned and managed by `dbus-daemon` and cannot be forged, so this
-is a good way to check the privileges of the requesting process.
-
-The vulnerability happens when the requesting process disconnects from
-`dbus-daemon` just before the call to
-`polkit_system_bus_name_get_creds_sync` starts. In this scenario, the
-unique bus name is no longer valid, so `dbus-daemon` sends back an error
-reply. This error case is handled in
-`polkit_system_bus_name_get_creds_sync` by setting the value of the
-`error` parameter, but it still returns `TRUE`, rather than `FALSE`.
-This behavior means that all callers of
-`polkit_system_bus_name_get_creds_sync` need to carefully check whether
-an error was set. If the calling function forgets to check for errors
-then it will think that the uid of the requesting process is 0 (because
-the `AsyncGetBusNameCredsData` struct is zero initialized). In other
-words, it will think that the action was requested by a root process,
-and will therefore allow it.
-
-Most of the callers of `polkit_system_bus_name_get_creds_sync` check the
-error value correctly, and are therefore not vulnerable. But the error
-value is not checked in the following call path:
-
-```
-0 in polkit_system_bus_name_get_creds_sync of polkitsystembusname.c:393
-1 in polkit_system_bus_name_get_user_sync of polkitsystembusname.c:511
-2 in polkit_backend_session_monitor_get_user_for_subject=20
-  of polkitbackendsessionmonitor-systemd.c:303
-3 in check_authorization_sync of polkitbackendinteractiveauthority.c:1113
-4 in check_authorization_sync of polkitbackendinteractiveauthority.c:1223
-5 in polkit_backend_interactive_authority_check_authorization=20
-  of polkitbackendinteractiveauthority.c:971
-6 in server_handle_check_authorization of polkitbackendauthority.c:795
-7 in server_handle_method_call of polkitbackendauthority.c:1274
-```
-
- == Analysis ==
-
-It is believed that the vulnerability was introduced in polkit 0.113,
-via https://gitlab.freedesktop.org/polkit/polkit/-/commit/bfa5036.
-However, some Debian based distros (e.g.: Ubuntu 20.04), based on 0.105,
-appear to also be vulnerable, as the commit was backported.
-
- == Misc and summary ==
-
-- CVE ID & Title: CVE-2021-3560 polkit: local privilege escalation using
-  polkit_system_bus_name_get_creds_sync()
-- Disclosure date/time : Thursday June 3rd (2021/06/03), ~ 7:00 AM UTC
-- Upstream fix: 
-  https://gitlab.freedesktop.org/polkit/polkit/-/commit/a04d13a
-- Red Hat's current CVSS Score: 7.8 -
-  AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
-- Original report:
-  https://gitlab.freedesktop.org/polkit/polkit/-/issues/140
-- Vulnerable versions: from 0.113 until 0.118, but some distributions
-  may have backported the vulnerability.
-- Fixed version : 0.119 (to be released)
-- Original reporter of the vulnerability :
-  Kevin Backhouse (GitHub Security Lab)
-
-Red Hat & upstream would like to thank Kevin Backhouse (GitHub Security
-Lab) for the detailed report & analysis of the flaw.
-
---
-Cedric Buissart
-Red Hat Product Security
-
-Download attachment "signature.asc" of type "application/pgp-signature" (517 bytes)
+Regards,
+Salvatore
