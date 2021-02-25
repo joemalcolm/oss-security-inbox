@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1422" "Tuesday" "10" "January" "2017" "15:50:28" "+0000" "Cesar Pereida Garcia" "cesar.pereidagarcia@tut.fi" "<D159A2841943CE409CC23D3F12A4633A516569@mb2010-3.intra.tut.fi>" "46" "[oss-security] CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL, LibreSSL, BoringSSL)" "^Date:" nil nil "1" "2017011015:50:28" "[oss-security] CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL, LibreSSL, BoringSSL)" (number mark "        cesar.pereid Jan 10   46/1422  " thread-indent "\"[oss-security] CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL, LibreSSL, BoringSSL)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["775" "Thursday" "25" "February" "2021" "16:58:53" "+0530" "P J P" "ppandit@redhat.com" nil "23" "[oss-security] CVE-2021-20257 QEMU: net: e1000: infinite loop while processing transmit descriptors" nil nil nil "2" nil nil (number mark "U       ppandit@redh Feb 25   23/775   " thread-indent "\"[oss-security] CVE-2021-20257 QEMU: net: e1000: infinite loop while processing transmit descriptors\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-20257 QEMU: net: e1000: infinite loop while processing transmit descriptors" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22112 invoked by uid 550); 10 Jan 2017 16:11:21 -0000
+Received: (qmail 13989 invoked by uid 550); 25 Feb 2021 11:29:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11929 invoked from network); 10 Jan 2017 15:50:49 -0000
-X-AuditID: 82e6a020-ef9ff70000000b98-ce-587502c5b682
-Thread-Topic: CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL,
- LibreSSL, BoringSSL)
-Thread-Index: AdJrWOHH397J7xyESKi3+6UWjiUGtw==
-Message-ID: <D159A2841943CE409CC23D3F12A4633A516569@mb2010-3.intra.tut.fi>
-Accept-Language: en-US, fi-FI
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [130.230.76.200]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupgleLIzCtJLcpLzFFi42JperZIWPcEU2mEwd0rWhbL/rs5MHqs7HzM
-	FsAYxWWTkpqTWZZapG+XwJXxfr5XwR7uilkTn7A1MJ7k7GLk5JAQMJFo7P3IAmILCexllJjY
-	ydjFyAVkn2GU+PXmCDuEs5pRou/CE2aQKjYBc4kLc5vBOkQE3CXe/ZnC1sXIwSEsECfR3eYB
-	EU6WuPCthxnC1pOY9e8KE4jNIqAqcfTKFzYQm1fAS6L/1x5GEJtRQFZiefdusHpmAXGJW0/m
-	M0EcJyCxZM95ZghbVOLl43+sELaSxJH789gh6vUkbkydwgZha0ssW/iaGWK+oMTJmU9YJjAK
-	z0IydhaSlllIWmYhaVnAyLKKUSw3MTNHN71cN7+0xFAvOVmvpLRELy1zEyM4wBco7GB8OU3/
-	EKMAB6MSD++DFyURQqyJZcWVuYcYJTmYlER5l30GCvEl5adUZiQWZ8QXleakFh9ilOBgVhLh
-	XfELKMebklhZlVqUD5OS5mBREuct9dcMERJITyxJzU5NLUgtgsnKcHAoSfCe+QfUKFiUmp5a
-	kZaZU4KQZuLgBBnOAzR81jeQ4cUFibnFmekQ+VOMilLivCm/gRICIImM0jy4XkgC8jF+xSgO
-	9Iow75YfQFU8wOQF1/0KaDAT0OBIu2KQwSWJCCmpBsbue6HxK05PfFh2josh6+1mA3+rn3NO
-	mcccmJen+tQ61moqk7VSvaSv0F6v/XeU9Fk4Er8Z1FczvrvDUbrm5cV4/+2Pw1OrbK3Sf9i8
-	Eguf5nCr5oPXt19FeSebozW+fd9pYVrocOPFzQjN/8nBh1Kyjier6tlPftLgc3Fp6xWWhpSz
-	Lew/HJRYijMSDbWYi4oTAdeo+lobAwAA
-Date: Tue, 10 Jan 2017 15:50:28 +0000
-From: Cesar Pereida Garcia <cesar.pereidagarcia@tut.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL,
- LibreSSL, BoringSSL)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 13968 invoked from network); 25 Feb 2021 11:29:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1614252544;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=pN6rw0gEn2+SCfQPm3f29xZfW1zShFrO9R4Xez8XTXg=;
+	b=D3HR0CQuOYsj/9dhvMxrq8UwkY5Dc1ag/32GVsFBMqxiuwMqxq5BxPAYSk2+wkhy+T61vW
+	j8GrZOf4WGBCN2qjM4CjESLh8x36lKX8UJISSHJcet1w+pZHXt5Dc5sHxHNVYnkpUelebv
+	nrvlDE+c/p9llXqXvvSv1CdGiR0Ghso=
+X-MC-Unique: HXlbgxSRNDK9DKY-eTiNbg-1
+Date: Thu, 25 Feb 2021 16:58:53 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+To: oss security list <oss-security@lists.openwall.com>
+cc: Ruhr-University Bochum <bugs-syssec@rub.de>, 
+    Cheolwoo Myung <cwmyung@snu.ac.kr>, Alexander Bulekov <alxndr@bu.edu>
+Message-ID: <o215932q-o26q-5o78-nr77-p0s99088rr23@erqung.pbz>
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ppandit@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] CVE-2021-20257 QEMU: net: e1000: infinite loop while processing
+ transmit descriptors
 
-Attack Vector: Local
+   Hello,
 
-Vendor: OpenSSL, LibreSSL, BoringSSL
+An infinite loop issue was found in the e1000 NIC emulator of the QEMU. It 
+occurs while processing transmit (tx) descriptors in process_tx_desc, if 
+various descriptor fields are initialised with invalid values. A guest may use 
+this flaw to consume cpu cycles on the host resulting in DoS scenario.
 
-Versions Affected:
-OpenSSL 1.0.1u and previous versions
-LibreSSL (pre 6.0 errata 16, pre 5.9 errata 33)
-BoringSSL pre November 2015
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg07428.html
 
-Description:
-The signing function in crypto/ecdsa/ecdsa_ossl.c in certain OpenSSL versio=
-ns and forks
-is vulnerable to timing attacks when signing with the standardized elliptic
-curve P-256 despite featuring constant-time curve operations and modular in=
-version.
-A software defect omits setting the BN_FLG_CONSTTIME flag for nonces, faili=
-ng
-to take a secure code path in the BN_mod_inverse method and therefore resul=
-ting
-in a cache-timing attack vulnerability.
-A malicious user with local access can recover ECDSA P-256 private keys.
+'CVE-2021-20257' assigned by Red Hat Inc.
 
-Mitigation:
-Users of OpenSSL with the affected versions should apply
-the patch available in the manuscript at [1].
+This issue was independently reported by Sergej Schumilo, Cornelius 
+Aschermann, Simon Werner of Ruhr-University Bochum; Cheolwoo Myung of Seoul 
+National University; And Alexander Bulekov (CC'd).
 
-Users of LibreSSL should apply the official patch from OpenBSD [2,3].
 
-Users of BoringSSL should upgrade to a more recent version.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-Credit:
-This issue was reported by Cesar Pereida Garc=EDa and Billy Brumley
-(Tampere University of Technology).
-
-Timeline:
-19 Dec 2016 Disclosure to OpenSSL, LibreSSL, BoringSSL security teams
-29 Dec 2016 Embargo lifted
-
-References:
-[1] http://ia.cr/2016/1195
-[2] https://ftp.openbsd.org/pub/OpenBSD/patches/5.9/common/033_libcrypto.pa=
-tch.sig
-[3] https://ftp.openbsd.org/pub/OpenBSD/patches/6.0/common/016_libcrypto.pa=
-tch.sig
-
-- Cesar=
