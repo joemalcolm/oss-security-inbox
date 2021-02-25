@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1553" "Sunday" "31" "May" "2015" "08:23:15" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150531122315.714A5B2E0A2@smtpvbsrv1.mitre.org>" "44" "[oss-security] Re: CVE request: XSS and CSRF in WP Smiley plugin for WordPress" nil nil nil "5" "2015053112:23:15" "[oss-security] Re: CVE request: XSS and CSRF in WP Smiley plugin for WordPress" (number mark "U       cve-assign@m May 31   44/1553  " thread-indent "\"[oss-security] Re: CVE request: XSS and CSRF in WP Smiley plugin for WordPress\"\n") "<20150529114001.GB739@nixu.com>" ("<20150529114001.GB739@nixu.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1606" "Thursday" "25" "February" "2021" "21:03:50" "+0200" "Jouni Malinen" "j@w1.fi" nil "45" "[oss-security] wpa_supplicant P2P provision discovery processing vulnerability" nil nil nil "2" nil nil (number mark "U       j@w1.fi      Feb 25   45/1606  " thread-indent "\"[oss-security] wpa_supplicant P2P provision discovery processing vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] wpa_supplicant P2P provision discovery processing vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27854 invoked by uid 550); 31 May 2015 12:23:28 -0000
+Received: (qmail 15513 invoked by uid 550); 25 Feb 2021 19:04:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27836 invoked from network); 31 May 2015 12:23:27 -0000
-From: cve-assign@mitre.org
-To: Henri.Salo@nixu.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, joni.hauhia@nixu.com
-In-Reply-To: <20150529114001.GB739@nixu.com>
-Message-Id: <20150531122315.714A5B2E0A2@smtpvbsrv1.mitre.org>
-Date: Sun, 31 May 2015 08:23:15 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: XSS and CSRF in WP Smiley plugin for WordPress
+Received: (qmail 15477 invoked from network); 25 Feb 2021 19:04:05 -0000
+X-Virus-Scanned: Debian amavisd-new at w1.fi
+Date: Thu, 25 Feb 2021 21:03:50 +0200
+From: Jouni Malinen <j@w1.fi>
+To: oss-security@lists.openwall.com
+Message-ID: <20210225190350.GB474115@w1.fi>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] wpa_supplicant P2P provision discovery processing vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Published: February 25, 2021
+Latest version available from: https://w1.fi/security/2021-1/
 
-> Product: WordPress plugin wp-smiley
-> Plugin page: https://wordpress.org/plugins/wp-smiley/
-> Vulnerable Versions: 1.4.1
 
-Your message didn't mention the direct impact of an unauthorized
-change to the s4w&#45;more field.
+Vulnerability
 
-We think you mean something like:
+A vulnerability was discovered in how wpa_supplicant processes P2P
+(Wi-Fi Direct) provision discovery requests. Under a corner case
+condition, an invalid Provision Discovery Request frame could end up
+reaching a state where the oldest peer entry needs to be removed. With
+a suitably constructed invalid frame, this could result in use
+(read+write) of freed memory. This can result in an attacker within
+radio range of the device running P2P discovery being able to cause
+unexpected behavior, including termination of the wpa_supplicant process
+and potentially code execution.
 
-  The vulnerabilities are independent because:
 
-  - if only the CSRF were fixed, then an editor could
-    intentionally conduct an XSS attack against an Administrator
+Vulnerable versions/configurations
 
-  - if only the XSS were fixed, then an attacker could trigger use of
-    their own text for a "More" button within the plugin, e.g.,
-    by replacing the default word "More" with the attacker-supplied
-    word "0wned" - and this would be visible to all site visitors
+wpa_supplicant v1.0-v2.9 with CONFIG_P2P build option enabled
 
-In that case:
+An attacker (or a system controlled by the attacker) needs to be within
+radio range of the vulnerable system to send a set of suitably
+constructed management frames that trigger the corner case to be reached
+in the management of the P2P peer table.
 
-Vulnerability Type:
-  CWE-79: Cross-site scripting          CVE-2015-4139
-  CWE-352: Cross-Site Request Forgery   CVE-2015-4140
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Possible mitigation steps
 
-iQEcBAEBAgAGBQJVavy/AAoJEKllVAevmvmsWe8H/RslzPq3sXdq7b3XlwYNee4R
-tUchh3Qbj6T8mmght34qr1l6uFoqgiZU54kYIoZ8nzwzMFqO/ZJzryQyQekOWcw3
-kWWJMG/0u7rm6hrrwCFcqfqKAsSloKyDJPr1LVBNdMAKOaVsMa21GtgyUGKXihcc
-Nz16spkjHzjnsdVsCHM/MhQYSip8/lw5ldwmKKgzVujnhXo1/fpW+iEIEjHejS77
-2hvTWTaSg/xd+fPCV0trUhQuhAVl6R1dXelv/AXjqXDapZSqgXvoH/0r4/csGFtY
-izDxqGR6cUgOR2Zyw2KBfHyc/IWmVSKP8SJf7JrkCud34ukcP0Qwde/BZbacATU=
-=h122
------END PGP SIGNATURE-----
+- Merge the following commit to wpa_supplicant and rebuild it:
+
+  P2P: Fix a corner case in peer addition based on PD Request
+  
+  This patch is available from https://w1.fi/security/2021-1/
+  
+- Update to wpa_supplicant v2.10 or newer, once available
+
+- Disable P2P (control interface command "P2P_SET disabled 1" or
+  "p2p_disabled=1" in (each, if multiple interfaces used) wpa_supplicant
+  configuration file)
+
+- Disable P2P from the build (remove CONFIG_P2P=y)
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
